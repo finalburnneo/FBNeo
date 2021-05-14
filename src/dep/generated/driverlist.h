@@ -7995,6 +7995,7 @@ DRV		BurnDrvgg_mtaruru;
 DRV		BurnDrvmd_mtaruru;
 DRV		BurnDrvnes_magictarkun;
 DRV		BurnDrvnes_magictarkun2;
+DRV		BurnDrvcv_magtree;
 DRV		BurnDrvMSX_magtree;
 DRV		BurnDrvMSX_magtreea;
 DRV		BurnDrvsg1k_magtree;
@@ -8850,6 +8851,7 @@ DRV		BurnSpecmoonwalk2;
 DRV		BurnSpecmoonwalk3;
 DRV		BurnDrvMoonwara;
 DRV		BurnDrvMoonwar;
+DRV		BurnDrvcv_mopirang;
 DRV		BurnDrvMSX_mopirang;
 DRV		BurnDrvMSX_mopirangb;
 DRV		BurnDrvMSX_mopirangc;
@@ -9982,6 +9984,7 @@ DRV		BurnDrvnes_pacmania;
 DRV		BurnDrvPacmania;
 DRV		BurnDrvmd_pacpanic;
 DRV		BurnDrvsg1k_pacar;
+DRV		BurnDrvcv_pacar;
 DRV		BurnDrvsg1k_pacara;
 DRV		BurnDrvsg1k_pacart;
 DRV		BurnDrvMSX_pachicom;
@@ -10825,6 +10828,7 @@ DRV		BurnDrvPunkshot2;
 DRV		BurnDrvPunkshot;
 DRV		BurnDrvPunkshot2e;
 DRV		BurnDrvnes_purplecapeman;
+DRV		BurnDrvcv_purpdino;
 DRV		BurnDrvPururun;
 DRV		BurnDrvPushmans;
 DRV		BurnDrvPushman;
@@ -10934,6 +10938,7 @@ DRV		BurnDrvmd_pyramid;
 DRV		BurnDrvmd_pyramid2;
 DRV		BurnDrvmd_pyramid3;
 DRV		BurnDrvmd_pyramids;
+DRV		BurnDrvcv_pyrawbc2;
 DRV		BurnDrvMSX_pyramidw;
 DRV		BurnDrvnes_pyramidsra;
 DRV		BurnDrvPyros;
@@ -11414,6 +11419,7 @@ DRV		BurnSpectraxtor2;
 DRV		BurnDrvgg_revenged;
 DRV		BurnDrvRevngr84;
 DRV		BurnDrvRevenger;
+DRV		BurnDrvcv_reversdd;
 DRV		BurnDrvmd_revx;
 DRV		BurnDrvRevxp5;
 DRV		BurnDrvRevx;
@@ -11497,6 +11503,7 @@ DRV		BurnDrvMSX_riyadh;
 DRV		BurnDrvmd_rrash3;
 DRV		BurnDrvmd_rrash3p;
 DRV		BurnSpecRblaster;
+DRV		BurnDrvcv_roadfght;
 DRV		BurnDrvnes_roadfighter;
 DRV		BurnDrvMSX_roadfght;
 DRV		BurnDrvMSX_roadfghta;
@@ -12066,6 +12073,9 @@ DRV		BurnDrvSearchey;
 DRV		BurnDrvSearcheya;
 DRV		BurnDrvSearchp2;
 DRV		BurnDrvMSX_searchformum;
+DRV		BurnDrvcv_sftscj;
+DRV		BurnDrvcv_sftscj2;
+DRV		BurnDrvcv_sftscj3;
 DRV		BurnDrvSecretagj;
 DRV		BurnDrvSecretag;
 DRV		BurnDrvsms_secret;
@@ -25159,6 +25169,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_mtaruru,			// Magical Taruruuto-kun (Jpn)
 	&BurnDrvnes_magictarkun,	// Magical Taruruuto-kun - Fantastic World!! (Japan)
 	&BurnDrvnes_magictarkun2,	// Magical Taruruuto-kun 2 - Mahou Daibouken (Japan)
+	&BurnDrvcv_magtree,			// Magical Tree (HB)
 	&BurnDrvMSX_magtree,		// Magical Tree (Jpn)
 	&BurnDrvMSX_magtreea,		// Magical Tree (Jpn, Alt)
 	&BurnDrvsg1k_magtree,		// Magical Tree (Tw)
@@ -26014,6 +26025,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecmoonwalk3,			// Moonwalker (Part 3 of 3) (48K)
 	&BurnDrvMoonwara,			// Moonwar (older)
 	&BurnDrvMoonwar,			// Moonwar
+	&BurnDrvcv_mopirang,		// Mopiranger (HB)
 	&BurnDrvMSX_mopirang,		// Mopiranger (Jpn)
 	&BurnDrvMSX_mopirangb,		// Mopiranger (Jpn, Alt 2)
 	&BurnDrvMSX_mopirangc,		// Mopiranger (Jpn, Alt 3)
@@ -27146,6 +27158,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPacmania,			// Pac-Mania
 	&BurnDrvmd_pacpanic,		// Pac-Panic (Euro)
 	&BurnDrvsg1k_pacar,			// Pacar (Euro, Jpn)
+	&BurnDrvcv_pacar,			// Pacar (HB)
 	&BurnDrvsg1k_pacara,		// Pacar (Jpn, Alt)
 	&BurnDrvsg1k_pacart,		// Pacar (Tw)
 	&BurnDrvMSX_pachicom,		// Pachi Com (Jpn)
@@ -27989,6 +28002,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPunkshot,			// Punk Shot (US 4 Players)
 	&BurnDrvPunkshot2e,			// Punk Shot (World 2 Players)
 	&BurnDrvnes_purplecapeman,	// Purple Cape Man (HB)
+	&BurnDrvcv_purpdino,		// Purple Dinosaur Massacre (HB)
 	&BurnDrvPururun,			// Pururun
 	&BurnDrvPushmans,			// Pushman (American Sammy license)
 	&BurnDrvPushman,			// Pushman (Korea, set 1)
@@ -28098,6 +28112,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_pyramid2,		// Pyramid Magic II (Jpn, SegaNet)
 	&BurnDrvmd_pyramid3,		// Pyramid Magic III (Jpn, SegaNet)
 	&BurnDrvmd_pyramids,		// Pyramid Magic Special (Jpn, SegaNet)
+	&BurnDrvcv_pyrawbc2,		// Pyramid Warp & Battleship Clapton 2 (HB)
 	&BurnDrvMSX_pyramidw,		// Pyramid Warp (Jpn)
 	&BurnDrvnes_pyramidsra,		// Pyramids of Ra (HB)
 	&BurnDrvPyros,				// Pyros (US)
@@ -28578,6 +28593,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_revenged,		// Revenge of Drancon (USA, Bra)
 	&BurnDrvRevngr84,			// Revenger '84 (set 1)
 	&BurnDrvRevenger,			// Revenger '84 (set 2) [Bad dump, NOT WORKING]
+	&BurnDrvcv_reversdd,		// Reversi and Diamond Dash (HB)
 	&BurnDrvmd_revx,			// Revolution X (Euro, USA)
 	&BurnDrvRevxp5,				// Revolution X (prototype, rev 5.0 5/23/94)
 	&BurnDrvRevx,				// Revolution X (rev 1.0 6/16/94)
@@ -28661,6 +28677,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_rrash3,			// Road 3 Rash - Tour de Force (Euro, USA)
 	&BurnDrvmd_rrash3p,			// Road 3 Rash - World Warriors (USA, Prototype)
 	&BurnSpecRblaster,			// Road Blasters (128K)
+	&BurnDrvcv_roadfght,		// Road Fighter (HB)
 	&BurnDrvnes_roadfighter,	// Road Fighter (Japan)
 	&BurnDrvMSX_roadfght,		// Road Fighter (Jpn)
 	&BurnDrvMSX_roadfghta,		// Road Fighter (Jpn, Alt)
@@ -29230,6 +29247,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSearcheya,			// Search Eye (English / Korean)
 	&BurnDrvSearchp2,			// Search Eye Plus V2.0
 	&BurnDrvMSX_searchformum,	// Search for Mum
+	&BurnDrvcv_sftscj,			// Search For The Stolen Crown Jewels (HB)
+	&BurnDrvcv_sftscj2,			// Search For The Stolen Crown Jewels 2 (HB)
+	&BurnDrvcv_sftscj3,			// Search For The Stolen Crown Jewels 3 (HB)
 	&BurnDrvSecretagj,			// Secret Agent (Japan revision 2)
 	&BurnDrvSecretag,			// Secret Agent (World revision 3)
 	&BurnDrvsms_secret,			// Secret Command (Euro)

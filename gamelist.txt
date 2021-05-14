@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16911 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16921 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -7883,6 +7883,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_mtaruru	|  	| Magical Taruruuto-kun (Jpn)				| 		| 1992	| Sega		| Sega Megadrive| 					|
 | nes_magictarkun|  	| Magical Taruruuto-kun - Fantastic World!! (Japan)	| 		| 1991	| Bandai	| Miscellaneous	| 					|
 | nes_magictarkun2|  	| Magical Taruruuto-kun 2 - Mahou Daibouken (Japan)	| 		| 1992	| Bandai	| Miscellaneous	| 					|
+| cv_magtree	|  	| Magical Tree (HB)					| 		| 2006	| Konami	| ColecoVision	| Published by Opcode Games		|
 | msx_magtree	|  	| Magical Tree (Jpn)					| 		| 1985	| Konami	| MSX		| 					|
 | msx_magtreea	|  	| Magical Tree (Jpn, Alt)				| msx_magtree	| 1985	| Konami	| MSX		| 					|
 | sg1k_magtree	|  	| Magical Tree (Tw)					| 		| 198?	| Aaronix	| Sega SG-1000	| 					|
@@ -8734,6 +8735,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_moonwalk3|  	| Moonwalker (Part 3 of 3) (48K)			| spec_moonwalk	| 1989	| U.S. Gold	| ZX Spectrum	| 					|
 | moonwara	|  	| Moonwar (older)					| moonwar	| 1981	| Stern		| Galaxian	| 					|
 | moonwar	|  	| Moonwar						| 		| 1981	| Stern		| Galaxian	| 					|
+| cv_mopirang	|  	| Mopiranger (HB)					| 		| 2012	| Konami	| ColecoVision	| Published by Team Pixelboy		|
 | msx_mopirang	|  	| Mopiranger (Jpn)					| 		| 1985	| Konami	| MSX		| 					|
 | msx_mopirangb	|  	| Mopiranger (Jpn, Alt 2)				| msx_mopirang	| 1985	| Konami	| MSX		| 					|
 | msx_mopirangc	|  	| Mopiranger (Jpn, Alt 3)				| msx_mopirang	| 1985	| Konami	| MSX		| 					|
@@ -9850,6 +9852,7 @@ This list contains all games supported by FinalBurn Neo.
 | pacmania	|  	| Pac-Mania						| 		| 1987	| Namco		| System 1	| 					|
 | md_pacpanic	|  	| Pac-Panic (Euro)					| 		| 1993	| Namco		| Sega Megadrive| 					|
 | sg1k_pacar	|  	| Pacar (Euro, Jpn)					| 		| 1983	| Sega		| Sega SG-1000	| 					|
+| cv_pacar	|  	| Pacar (HB)						| 		| 2017	| Sega		| ColecoVision	| Published by Team Pixelboy		|
 | sg1k_pacara	|  	| Pacar (Jpn, Alt)					| sg1k_pacar	| 1983	| Sega		| Sega SG-1000	| 					|
 | sg1k_pacart	|  	| Pacar (Tw)						| sg1k_pacar	| 1983?	| Aaronix	| Sega SG-1000	| 					|
 | msx_pachicom	|  	| Pachi Com (Jpn)					| 		| 1985	| Toshiba EMI	| MSX		| 					|
@@ -10677,6 +10680,7 @@ This list contains all games supported by FinalBurn Neo.
 | punkshot	|  	| Punk Shot (US 4 Players)				| 		| 1990	| Konami	| GX907		| 					|
 | punkshot2e	|  	| Punk Shot (World 2 Players)				| punkshot	| 1990	| Konami	| GX907		| 					|
 | nes_purplecapeman|  	| Purple Cape Man (HB)					| 		| 2015	| Vigilante Ninj| Miscellaneous	| 					|
+| cv_purpdino	|  	| Purple Dinosaur Massacre (HB)				| 		| 1996	| John Dondzilla| ColecoVision	| 					|
 | pururun	|  	| Pururun						| 		| 1995	| Metro / Banpre| Miscellaneous	| 					|
 | pushmans	|  	| Pushman (American Sammy license)			| pushman	| 1990	| Comad (America| Miscellaneous	| 					|
 | pushman	|  	| Pushman (Korea, set 1)				| 		| 1990	| Comad		| Miscellaneous	| 					|
@@ -10786,6 +10790,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_pyramid2	|  	| Pyramid Magic II (Jpn, SegaNet)			| 		| 1991	| Sega		| Sega Megadrive| 					|
 | md_pyramid3	|  	| Pyramid Magic III (Jpn, SegaNet)			| 		| 1991	| Sega		| Sega Megadrive| 					|
 | md_pyramids	|  	| Pyramid Magic Special (Jpn, SegaNet)			| 		| 1991	| Sega		| Sega Megadrive| 					|
+| cv_pyrawbc2	|  	| Pyramid Warp & Battleship Clapton 2 (HB)		| 		| 2009	| T&E Soft	| ColecoVision	| Published by Collectorvision Games	|
 | msx_pyramidw	|  	| Pyramid Warp (Jpn)					| 		| 1983	| T&E Soft	| MSX		| 					|
 | nes_pyramidsra|  	| Pyramids of Ra (HB)					| 		| 2019	| Piko Interacti| Miscellaneous	| 					|
 | pyros		|  	| Pyros (US)						| wardner	| 1987	| Toaplan / Tait| Miscellaneous	| 					|
@@ -11260,6 +11265,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_revenged	|  	| Revenge of Drancon (USA, Bra)				| gg_wboy	| 1991	| Sega		| Sega Game Gear| 					|
 | revngr84	|  	| Revenger '84 (set 1)					| 		| 1984	| Epos Corporati| EPOS Tristar	| 					|
 | revenger	|   NW	| Revenger '84 (set 2)					| revngr84	| 1984	| Epos Corporati| EPOS Tristar	| Bad dump				|
+| cv_reversdd	|  	| Reversi and Diamond Dash (HB)				| 		| 2004	| Daniel Bienven| ColecoVision	| 					|
 | md_revx	|  	| Revolution X (Euro, USA)				| 		| 1995	| Acclaim Entert| Sega Megadrive| 					|
 | revxp5	|  	| Revolution X (prototype, rev 5.0 5/23/94)		| revx		| 1994	| Midway	| X Unit	| 					|
 | revx		|  	| Revolution X (rev 1.0 6/16/94)			| 		| 1994	| Midway	| X Unit	| 					|
@@ -11343,6 +11349,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_rrash3	|  	| Road 3 Rash - Tour de Force (Euro, USA)		| 		| 1995	| Electronic Art| Sega Megadrive| 					|
 | md_rrash3p	|  	| Road 3 Rash - World Warriors (USA, Prototype)		| md_rrash3	| 1995	| Electronic Art| Sega Megadrive| 					|
 | spec_rblaster	|  	| Road Blasters (128K)					| 		| 1988	| U.S. Gold	| ZX Spectrum	| 					|
+| cv_roadfght	|  	| Road Fighter (HB)					| 		| 2007	| Konami	| ColecoVision	| Published by Opcode Games		|
 | nes_roadfighter|  	| Road Fighter (Japan)					| 		| 1985	| Konami	| Miscellaneous	| 					|
 | msx_roadfght	|  	| Road Fighter (Jpn)					| 		| 1985	| Konami	| MSX		| 					|
 | msx_roadfghta	|  	| Road Fighter (Jpn, Alt)				| msx_roadfght	| 1985	| Konami	| MSX		| 					|
@@ -11900,6 +11907,9 @@ This list contains all games supported by FinalBurn Neo.
 | searcheya	|  	| Search Eye (English / Korean)				| searchey	| 1999	| Yun Sung	| Miscellaneous	| 					|
 | searchp2	|  	| Search Eye Plus V2.0					| 		| 1999	| Yun Sung	| Miscellaneous	| 					|
 | msx_searchformum|  	| Search for Mum					| 		| 1991	| Triple Soft	| MSX		| 					|
+| cv_sftscj	|  	| Search For The Stolen Crown Jewels (HB)		| 		| 2006	| Good Deal Game| ColecoVision	| 					|
+| cv_sftscj2	|  	| Search For The Stolen Crown Jewels 2 (HB)		| 		| 2007	| Good Deal Game| ColecoVision	| 					|
+| cv_sftscj3	|  	| Search For The Stolen Crown Jewels 3 (HB)		| 		| 2013	| Good Deal Game| ColecoVision	| 					|
 | secretagj	|  	| Secret Agent (Japan revision 2)			| secretag	| 1989	| Data East Corp| DEC0		| 					|
 | secretag	|  	| Secret Agent (World revision 3)			| 		| 1989	| Data East Corp| DEC0		| 					|
 | sms_secret	|  	| Secret Command (Euro)					| 		| 1986	| Sega		| Sega Master Sy| 					|

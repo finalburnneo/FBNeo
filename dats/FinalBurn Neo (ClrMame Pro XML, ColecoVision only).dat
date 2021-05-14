@@ -1991,6 +1991,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="magtree" romof="coleco">
+		<description>Magical Tree (HB) [Homebrew, Published by Opcode Games]</description>
+		<year>2006</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Magical Tree (2006) (Opcode Games).col" size="32768" crc="f4314bb1"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="majikazo" romof="coleco">
 		<description>Majikazo (HB) [Homebrew, SGM - Super Game Module]</description>
 		<year>2015-16</year>
@@ -2224,6 +2236,18 @@
 		<manufacturer>Imagic</manufacturer>
 		<rom name="moonswpr.1" size="8192" crc="cbb291b1"/>
 		<rom name="moonswpr.2" size="8192" crc="ff1c95e8"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mopirang" romof="coleco">
+		<description>Mopiranger (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<year>2012</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Mopiranger (2012) (Team Pixelboy).col" size="32768" crc="a60be082"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -2552,6 +2576,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="pacar" romof="coleco">
+		<description>Pacar (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<year>2017</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="Pacar (2017) (Team Pixelboy).col" size="32768" crc="a82c9593"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="peekaboo" romof="coleco">
 		<description>Peek-A-Boo (HB) [Homebrew, Published by Team Pixelboy]</description>
 		<year>2008</year>
@@ -2719,11 +2755,35 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="purpdino" romof="coleco">
+		<description>Purple Dinosaur Massacre (HB) [Homebrew]</description>
+		<year>1996</year>
+		<manufacturer>John Dondzilla</manufacturer>
+		<rom name="Purple Dinosaur Massacre (1996) (John Dondzilla).col" size="9494" crc="137d6c4c"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="puzzli" romof="coleco">
 		<description>Puzzli (HB) [Homebrew]</description>
 		<year>2011</year>
 		<manufacturer>CollectorVision Games</manufacturer>
 		<rom name="Puzzli (CollectorVision)(2011).rom" size="32768" crc="4236e57e"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pyrawbc2" romof="coleco">
+		<description>Pyramid Warp &amp; Battleship Clapton 2 (HB) [Homebrew, Published by Collectorvision Games]</description>
+		<year>2009</year>
+		<manufacturer>T&amp;E Soft</manufacturer>
+		<rom name="Pyramid Warp &amp; Battle Ship Clapton II (2009) (Collectorvision Games).col" size="32768" crc="f7052b06"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -2842,6 +2902,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="reversdd" romof="coleco">
+		<description>Reversi and Diamond Dash (HB) [Homebrew]</description>
+		<year>2004</year>
+		<manufacturer>Daniel Bienvenu</manufacturer>
+		<rom name="Reversi and Diamond Dash (2004) (Daniel Bienvenu).col" size="29184" crc="2331b6f6"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ripcord" romof="coleco">
 		<description>Rip Cord (HB) [Homebrew, Published by CollectorVision]</description>
 		<year>1979-2017</year>
@@ -2860,6 +2932,18 @@
 		<manufacturer>Activision</manufacturer>
 		<rom name="riveraid.1" size="8192" crc="75640b2a"/>
 		<rom name="riveraid.2" size="8192" crc="5a3305e6"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="roadfght" romof="coleco">
+		<description>Road Fighter (HB) [Homebrew, Published by Opcode Games]</description>
+		<year>2007</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Road Fighter (2007) (Opcode Games).col" size="32768" crc="570b9935"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -3003,6 +3087,42 @@
 		<manufacturer>Sierra On-Line</manufacturer>
 		<rom name="sammylf.1" size="8192" crc="2492bac2"/>
 		<rom name="sammylf.2" size="8192" crc="7fee3b34"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sftscj" romof="coleco">
+		<description>Search For The Stolen Crown Jewels (HB) [Homebrew]</description>
+		<year>2006</year>
+		<manufacturer>Good Deal Games</manufacturer>
+		<rom name="Search For The Stolen Crown Jewels (2006) (Good Deal Games).col" size="28849" crc="ad1ba6ed"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sftscj2" romof="coleco">
+		<description>Search For The Stolen Crown Jewels 2 (HB) [Demo, Homebrew]</description>
+		<year>2007</year>
+		<manufacturer>Good Deal Games</manufacturer>
+		<rom name="Search For The Stolen Crown Jewels 2 (2007) (Good Deal Games).col" size="29256" crc="eaf7d6dc"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sftscj3" romof="coleco">
+		<description>Search For The Stolen Crown Jewels 3 (HB) [Demo, Homebrew]</description>
+		<year>2013</year>
+		<manufacturer>Good Deal Games</manufacturer>
+		<rom name="Search For The Stolen Crown Jewels 3 (2013) (Good Deal Games).col" size="31303" crc="23988ef9"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>

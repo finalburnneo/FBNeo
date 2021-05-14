@@ -1,5 +1,6 @@
 FBNEO_BURN_DIR			:= $(MAIN_FBNEO_DIR)/burn
 FBNEO_BURN_DRIVERS_DIR	:= $(MAIN_FBNEO_DIR)/burn/drv
+FBNEO_BURN_DEVICES_DIR	:= $(MAIN_FBNEO_DIR)/burn/devices
 FBNEO_BURNER_DIR		:= $(MAIN_FBNEO_DIR)/burner
 FBNEO_CPU_DIR			:= $(MAIN_FBNEO_DIR)/cpu
 FBNEO_GENERATED_DIR		:= $(MAIN_FBNEO_DIR)/dep/generated
@@ -14,9 +15,12 @@ ATARI_DIR				:= $(FBNEO_BURN_DRIVERS_DIR)/atari
 CAPCOM_DIR				:= $(FBNEO_BURN_DRIVERS_DIR)/capcom
 CAVE_DIR				:= $(FBNEO_BURN_DRIVERS_DIR)/cave
 CHANNELF_DIR			:= $(FBNEO_BURN_DRIVERS_DIR)/channelf
+COLECO_DIR				:= $(FBNEO_BURN_DRIVERS_DIR)/coleco
 CPS3_DIR				:= $(FBNEO_BURN_DRIVERS_DIR)/cps3
 DATAEAST_DIR			:= $(FBNEO_BURN_DRIVERS_DIR)/dataeast
 GALAXIAN_DIR			:= $(FBNEO_BURN_DRIVERS_DIR)/galaxian
+IREM_DIR				:= $(FBNEO_BURN_DRIVERS_DIR)/irem
+KONAMI_DIR				:= $(FBNEO_BURN_DRIVERS_DIR)/konami
 MD_DIR					:= $(FBNEO_BURN_DRIVERS_DIR)/megadrive
 MIDWAY_DIR				:= $(FBNEO_BURN_DRIVERS_DIR)/midway
 NEOGEO_DIR				:= $(FBNEO_BURN_DRIVERS_DIR)/neogeo
@@ -150,6 +154,7 @@ ifeq ($(LIGHT), 1)
 		$(ARM7_CPU_DIR)/arm7.cpp \
 		$(ADSP2100_CPU_DIR)/adsp2100.cpp \
 		$(I386_CPU_DIR)/i386.cpp \
+		$(FBNEO_BURN_DEVICES_DIR)/sknsspr.cpp \
 		$(CPS3_DIR)/cps3run.cpp \
 		$(CPS3_DIR)/cps3snd.cpp \
 		$(CPS3_DIR)/d_cps3.cpp \
@@ -212,6 +217,8 @@ ifeq ($(LIGHT), 1)
 		$(PST90S_DIR)/d_itech32.cpp \
 		$(PST90S_DIR)/d_dreamwld.cpp \
 		$(PST90S_DIR)/d_macrossp.cpp \
+		$(PST90S_DIR)/d_jchan.cpp \
+		$(PST90S_DIR)/d_galpani3.cpp \
 		$(SEGA_DIR)/d_segas32.cpp \
 		$(SEGA_DIR)/d_sys24.cpp \
 		$(TAITO_DIR)/d_superchs.cpp \
@@ -235,12 +242,12 @@ FBNEO_BURN_DRIVERS_DIRS := $(ATARI_DIR) \
 	$(CAPCOM_DIR) \
 	$(CAVE_DIR) \
 	$(CHANNELF_DIR) \
-	$(FBNEO_BURN_DRIVERS_DIR)/coleco \
+	$(COLECO_DIR) \
 	$(CPS3_DIR) \
 	$(DATAEAST_DIR) \
 	$(GALAXIAN_DIR) \
-	$(FBNEO_BURN_DRIVERS_DIR)/irem \
-	$(FBNEO_BURN_DRIVERS_DIR)/konami \
+	$(IREM_DIR) \
+	$(KONAMI_DIR) \
 	$(MD_DIR) \
 	$(MIDWAY_DIR) \
 	$(FBNEO_BURN_DRIVERS_DIR)/msx \
@@ -355,7 +362,7 @@ INCLUDE_DIRS := $(FBNEO_BURNER_DIR)/win32 \
 	$(FBNEO_LIB_DIR)/zlib \
 	$(FBNEO_LIB_DIR)/lib7z \
 	$(CAPCOM_DIR) \
-	$(FBNEO_BURN_DIR)/drv/konami \
+	$(KONAMI_DIR) \
 	$(DATAEAST_DIR) \
 	$(CAVE_DIR) \
 	$(NEOGEO_DIR) \
@@ -363,7 +370,7 @@ INCLUDE_DIRS := $(FBNEO_BURNER_DIR)/win32 \
 	$(SEGA_DIR) \
 	$(FBNEO_BURN_DIR)/drv/toaplan \
 	$(TAITO_DIR) \
-	$(FBNEO_BURN_DIR)/drv/irem \
+	$(IREM_DIR) \
 	$(FBNEO_GENERATED_DIR) \
 	$(FBNEO_LIB_DIR) \
 	$(UGUI_DIR)

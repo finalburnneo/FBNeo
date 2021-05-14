@@ -4370,6 +4370,9 @@
     <ClCompile Include="..\..\src\burn\drv\konami\k007452.cpp">
       <Filter>Burn\drv\konami</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\snd\digitalk.cpp">
+      <Filter>Burn\snd</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">

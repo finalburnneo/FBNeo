@@ -430,7 +430,7 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 	char setname[128];
 	void *destination = NULL;
 	char szTempPath[MAX_PATH];
-	sprintf(szTempPath, _TtoA(SAMPLE_DIRECTORY));
+	sprintf(szTempPath, "%s", _TtoA(SAMPLE_DIRECTORY));
 
 	// test to see if file exists
 	INT32 nEnableSamples = 0;
@@ -556,7 +556,7 @@ void BurnSampleInitOne(INT32 sample)
 	char setname[128];
 	void *destination = NULL;
 	char szTempPath[MAX_PATH];
-	sprintf(szTempPath, _TtoA(SAMPLE_DIRECTORY));
+	sprintf(szTempPath, "%s", _TtoA(SAMPLE_DIRECTORY));
 
 	strcpy(setname, BurnDrvGetTextA(DRV_SAMPLENAME));
 	sprintf(path, "%s%s.zip", szTempPath, setname);

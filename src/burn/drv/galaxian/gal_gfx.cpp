@@ -42,74 +42,74 @@ INT32 SpriteXOffsets[16]    = { 0, 1, 2, 3, 4, 5, 6, 7, 64, 65, 66, 67, 68, 69, 
 INT32 SpriteYOffsets[16]    = { 0, 8, 16, 24, 32, 40, 48, 56, 128, 136, 144, 152, 160, 168, 176, 184 };
 
 // Tile extend helpers
-void UpperExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32)
+void UpperExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32, INT32)
 {
 	*Code += 0x100;
 }
 
-void PiscesExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32)
+void PiscesExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32, INT32)
 {
 	*Code |= GalGfxBank[0] << 8;
 }
 
-void Batman2ExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32)
+void Batman2ExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32, INT32)
 {
 	if (*Code & 0x80) *Code |= GalGfxBank[0] << 8;
 }
 
-void GmgalaxExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32)
+void GmgalaxExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32, INT32)
 {
 	*Code |= GalGfxBank[0] << 9;
 }
 
-void MooncrstExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32)
+void MooncrstExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32, INT32)
 {
 	if (GalGfxBank[2] && (*Code & 0xc0) == 0x80) *Code = (*Code & 0x3f) | (GalGfxBank[0] << 6) | (GalGfxBank[1] << 7) | 0x0100;
 }
 
-void MoonqsrExtendTileInfo(UINT16 *Code, INT32*, INT32 Attr, INT32)
+void MoonqsrExtendTileInfo(UINT16 *Code, INT32*, INT32 Attr, INT32, INT32)
 {
 	*Code |= (Attr & 0x20) << 3;
 }
 
-void SkybaseExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32)
+void SkybaseExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32, INT32)
 {
 	*Code |= GalGfxBank[2] << 8;
 }
 
-void JumpbugExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32)
+void JumpbugExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32, INT32)
 {
 	if ((*Code & 0xc0) == 0x80 && (GalGfxBank[2] & 0x01)) *Code += 128 + ((GalGfxBank[0] & 0x01) << 6) + ((GalGfxBank[1] & 0x01) << 7) + ((~GalGfxBank[4] & 0x01) << 8);
 }
 
-void FroggerExtendTileInfo(UINT16*, INT32 *Colour, INT32, INT32)
+void FroggerExtendTileInfo(UINT16*, INT32 *Colour, INT32, INT32, INT32)
 {
 	*Colour = ((*Colour >> 1) & 0x03) | ((*Colour << 2) & 0x04);
 }
 
-void MshuttleExtendTileInfo(UINT16 *Code, INT32*, INT32 Attr, INT32)
+void MshuttleExtendTileInfo(UINT16 *Code, INT32*, INT32 Attr, INT32, INT32)
 {
 	*Code |= (Attr & 0x30) << 4;
 }
 
-void Fourin1ExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32)
+void Fourin1ExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32, INT32)
 {
 	*Code |= Fourin1Bank << 8;
 }
 
-void MarinerExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x)
+void MarinerExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x, INT32)
 {
 	UINT8 *Prom = GalProm + 0x120;
 	
 	*Code |= (Prom[x] & 0x01) << 8;
 }
 
-void MimonkeyExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32)
+void MimonkeyExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32, INT32)
 {
 	*Code |= (GalGfxBank[0] << 8) | (GalGfxBank[1] << 9);
 }
 
-void DambustrExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x)
+void DambustrExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x, INT32)
 {
 	if (GalGfxBank[0] == 0) {
 		*Code |= 0x300;
@@ -122,31 +122,51 @@ void DambustrExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x)
 	}
 }
 
-void Ad2083ExtendTileInfo(UINT16 *Code, INT32 *Colour, INT32 Attr, INT32)
+void Ad2083ExtendTileInfo(UINT16 *Code, INT32 *Colour, INT32 Attr, INT32, INT32)
 {
 	INT32 Bank = Attr & 0x30;
 	*Code |= (Bank << 4);
 	*Colour |= ((Attr & 0x40) >> 3);
 }
 
-void RacknrolExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x)
+void RacknrolExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x, INT32)
 {
 	UINT8 Bank = GalGfxBank[x] & 7;	
 	*Code |= Bank << 8;
 }
 
-void HaremExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x)
+void HaremExtendTileInfo(UINT16 *Code, INT32 *color, INT32, INT32 x, INT32)
 {
 	UINT8 Bank = (GalGfxBank[1] >> (x / 4)) & 1;
 	*Code |= Bank * 0x200;
+	*color |= GAL_TMAP_OPAQUE; // all Opaque
 }
 
-void BagmanmcExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32)
+void NamenayoExtendTileInfo(UINT16 *code, INT32 *color, INT32 attr, INT32 x, INT32 y)
+{
+	if (~attr & 1) { // pf/hud
+		INT32 e_at = namenayo_extattr[y & 0x1f];
+		*code += (e_at & 0x38) << 5;
+		*color = (e_at & 0x07);
+		if (x < (0x1f - 8)) *color |= GAL_TMAP_OPAQUE; // pf: opaque, hud: transparent
+	} else {
+		// map
+		*code += ((attr & 0xfe) == 0x20) ? 0x400 : 0;
+	}
+}
+
+void BagmanmcExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32, INT32)
 {
 	*Code |= GalGfxBank[0] << 9;
 }
 
 // Sprite extend helpers
+void NamenayoExtendSpriteInfo(const UINT8 *base, INT32*, INT32*, UINT8*, UINT8*, UINT16 *code, UINT8 *color)
+{
+	*code += (base[2] & 0x08) << 3;
+	*color += 0x08;
+}
+
 void PacmanblExtendSpriteInfo(const UINT8*, INT32 *sx, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*)
 {
 	// Sprites on the topmost row of the maze are ok, everywhere else need
@@ -826,7 +846,7 @@ void DambustrDrawBackground()
 // Char Layer rendering
 static void GalRenderBgLayer(UINT8 *pVideoRam)
 {
-	INT32 mx, my, Attr, Colour, x, y, TileIndex = 0, RamPos;
+	INT32 mx, my, Attr, Colour, x, y, TileIndex = 0, RamPos, DrawOpaque;
 	UINT16 Code;
 	
 	for (my = 0; my < 32; my++) {
@@ -836,7 +856,10 @@ static void GalRenderBgLayer(UINT8 *pVideoRam)
 			Attr = GalSpriteRam[(RamPos * 2) + 1];
 			Colour = Attr  & ((GalColourDepth == 3) ? 0x03 : 0x07);
 			
-			if (GalExtendTileInfoFunction) GalExtendTileInfoFunction(&Code, &Colour, Attr, RamPos);
+			if (GalExtendTileInfoFunction) GalExtendTileInfoFunction(&Code, &Colour, Attr, RamPos, TileIndex >> 5);
+
+			DrawOpaque = Colour & GAL_TMAP_OPAQUE; // extended tile info can tag Opaque this way
+			Colour &= ~GAL_TMAP_OPAQUE;
 
 			if (SfxTilemap) {
 				x = 8 * my;
@@ -854,7 +877,7 @@ static void GalRenderBgLayer(UINT8 *pVideoRam)
 			INT32 px, py;
 		
 			UINT32 nPalette = Colour << GalColourDepth;
-		
+
 			for (py = 0; py < 8; py++) {
 				for (px = 0; px < 8; px++) {
 					UINT8 c = GalChars[(Code * 64) + (py * 8) + px];
@@ -862,7 +885,7 @@ static void GalRenderBgLayer(UINT8 *pVideoRam)
 					if (GalFlipScreenY) c = GalChars[(Code * 64) + ((7 - py) * 8) + px];
 					if (GalFlipScreenX && GalFlipScreenY) c = GalChars[(Code * 64) + ((7 - py) * 8) + (7 - px)];
 				
-					if (c || Harem) {
+					if (c || DrawOpaque) { // Harem, Namenayo has no transparency on this layer
 						INT32 xPos = x + px;
 						INT32 yPos = y + py;
 					

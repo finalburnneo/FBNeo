@@ -189,6 +189,33 @@ static struct BurnInputInfo HaremInputList[] =
 
 STDINPUTINFO(Harem)
 
+static struct BurnInputInfo NamenayoInputList[] =
+{
+	{"Coin 1"            , BIT_DIGITAL   , GalInputPort0 + 7, "p1 coin"   },
+	{"Start 1"           , BIT_DIGITAL   , GalInputPort1 + 7, "p1 start"  },
+	{"Coin 2"            , BIT_DIGITAL   , GalInputPort0 + 6, "p2 coin"   },
+	{"Start 2"           , BIT_DIGITAL   , GalInputPort1 + 6, "p2 start"  },
+
+	{"Up"                , BIT_DIGITAL   , GalInputPort2 + 4, "p1 up"     },
+	{"Down"              , BIT_DIGITAL   , GalInputPort2 + 6, "p1 down"   },
+	{"Left"              , BIT_DIGITAL   , GalInputPort0 + 5, "p1 left"   },
+	{"Right"             , BIT_DIGITAL   , GalInputPort0 + 4, "p1 right"  },
+	{"Fire 1"            , BIT_DIGITAL   , GalInputPort0 + 3, "p1 fire 1" },
+
+	{"Up (Cocktail)"     , BIT_DIGITAL   , GalInputPort0 + 0, "p2 up"     },
+	{"Down (Cocktail)"   , BIT_DIGITAL   , GalInputPort2 + 0, "p2 down"   },
+	{"Left (Cocktail)"   , BIT_DIGITAL   , GalInputPort1 + 5, "p2 left"   },
+	{"Right (Cocktail)"  , BIT_DIGITAL   , GalInputPort1 + 4, "p2 right"  },
+	{"Fire 1 (Cocktail)" , BIT_DIGITAL   , GalInputPort1 + 3, "p2 fire 1" },
+
+	{"Reset"             , BIT_DIGITAL   , &GalReset        , "reset"     },
+	{"Dip 1"             , BIT_DIPSWITCH , GalDip + 0       , "dip"       },
+	{"Dip 2"             , BIT_DIPSWITCH , GalDip + 1       , "dip"       },
+	{"Dip 3"             , BIT_DIPSWITCH , GalDip + 2       , "dip"       },
+};
+
+STDINPUTINFO(Namenayo)
+
 static struct BurnInputInfo AzurianInputList[] =
 {
 	{"Coin 1"            , BIT_DIGITAL   , GalInputPort0 + 4, "p1 coin"   },
@@ -2587,6 +2614,37 @@ static struct BurnDIPInfo HaremDIPList[]=
 };
 
 STDDIPINFO(Harem)
+
+static struct BurnDIPInfo NamenayoDIPList[]=
+{
+	DIP_OFFSET(0x0f)
+
+	{0x00, 0xff, 0xff, 0x00, NULL					},
+	{0x01, 0xff, 0xff, 0x04, NULL					},
+	{0x02, 0xff, 0xff, 0x00, NULL					},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0x01, 0x01, 0x03, 0x03, "None"					},
+	{0x01, 0x01, 0x03, 0x02, "20,000"				},
+	{0x01, 0x01, 0x03, 0x01, "10,000"				},
+	{0x01, 0x01, 0x03, 0x00, "30,000"				},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x01, 0x01, 0x04, 0x00, "Upright"				},
+	{0x01, 0x01, 0x04, 0x04, "Cocktail"				},
+
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x02, 0x01, 0x06, 0x00, "2"					},
+	{0x02, 0x01, 0x06, 0x02, "3"					},
+	{0x02, 0x01, 0x06, 0x04, "4"					},
+	{0x02, 0x01, 0x06, 0x06, "Unlimited"			},
+
+	{0   , 0xfe, 0   ,    2, "Coinage"				},
+	{0x02, 0x01, 0x08, 0x00, "A 1/1 B 1/2"			},
+	{0x02, 0x01, 0x08, 0x08, "A 1/3 B 2/1"			},
+};
+
+STDDIPINFO(Namenayo)
 
 static struct BurnDIPInfo AtlantisbDIPList[]=
 {
@@ -19133,7 +19191,30 @@ static struct BurnRomInfo haremRomDesc[] = {
 STD_ROM_PICK(harem)
 STD_ROM_FN(harem)
 
+// Namennayo (Japan)
+
+static struct BurnRomInfo namenayoRomDesc[] = {
+	{ "1.2d.2763",	0x2000, 0x9830b4be, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 }, //  0 maincpu
+	{ "2.2f.2763",	0x2000, 0xcfaeb2de, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 }, //  1
+	{ "4.2j.2763",	0x2000, 0x4c3e8d42, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 }, //  2
+
+	{ "s1.5c.2732",	0x1000, 0x31d4ebc1, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 }, //  3 audiocpu
+	{ "s2.5d.2732",	0x1000, 0x5e170ba9, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 }, //  4
+
+	{ "5.7d.2763",	0x2000, 0x97245ee5, BRF_GRA | GAL_ROM_TILES_SHARED },        //  5 gfx1
+	{ "6.7f.2763",	0x2000, 0x7185c167, BRF_GRA | GAL_ROM_TILES_SHARED },        //  6
+	{ "7.7h.2763",	0x2000, 0x942ca3c2, BRF_GRA | GAL_ROM_TILES_SHARED },        //  7
+	{ "8.7j.2763",	0x2000, 0x68b5b6bb, BRF_GRA | GAL_ROM_TILES_SHARED },        //  8
+
+	{ "10g.82s123",	0x0020, 0xd8e44fa5, BRF_GRA | GAL_ROM_PROM },           	 //  9 proms
+	{ "10h.82s123",	0x0020, 0x1095e850, BRF_GRA | GAL_ROM_PROM },           	 // 10
+};
+
+STD_ROM_PICK(namenayo)
+STD_ROM_FN(namenayo)
+
 // Scorpion hardware - based on Scramble but with a third AY8910 and a speech chip
+// Harem uses similar HW.
 static struct BurnRomInfo ScorpionRomDesc[] = {
 	{ "1.2d",          0x01000, 0xba1219b4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "2.2f",          0x01000, 0xc3909ab6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -19642,6 +19723,47 @@ struct BurnDriver BurnDrvHarem = {
 	NULL, haremRomInfo, haremRomName, NULL, NULL, NULL, NULL, HaremInputInfo, HaremDIPInfo,
 	HaremInit, KonamiExit, GalFrame, GalDraw, HaremScan,
 	NULL, 392, 224, 256, 3, 4
+};
+
+static void NamenayoPostLoad()
+{
+	MapNamenayo();
+}
+
+static INT32 NamenayoInit()
+{
+	INT32 nRet;
+
+	GalPostLoadCallbackFunction = NamenayoPostLoad;
+	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
+
+	Namenayo = 1;
+
+	nRet = GalInit(); if (nRet) return 1;
+	KonamiSoundInit();
+
+	GalSpriteClipStart = 0;
+	GalSpriteClipEnd = 255;
+
+	GalCalcPaletteFunction = RockclimCalcPalette;
+	GalRenderBackgroundFunction = ScrambleDrawBackground;
+	GalDrawBulletsFunction = ScrambleDrawBullets;
+	GalExtendTileInfoFunction = NamenayoExtendTileInfo;
+	GalExtendSpriteInfoFunction = NamenayoExtendSpriteInfo;
+
+	KonamiPPIInit();
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvNamenayo = {
+	"namenayo", NULL, NULL, NULL, "1982",
+	"Namennayo (Japan)\0", NULL, "Cat's", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MISC, 0,
+	NULL, namenayoRomInfo, namenayoRomName, NULL, NULL, NULL, NULL, NamenayoInputInfo, NamenayoDIPInfo,
+	NamenayoInit, KonamiExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 256, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvScorpion = {

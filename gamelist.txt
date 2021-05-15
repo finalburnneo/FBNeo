@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16921 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16926 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -9048,6 +9048,7 @@ This list contains all games supported by FinalBurn Neo.
 | namcoc75	|   NW	| Namco C75 (M37702) (Bios)				| 		| 1994	| Namco		| NB-1 / NB-2	| BIOS only				|
 | nes_namcoclassic|  	| Namco Classic (Japan)					| 		| 1988	| Namco		| Miscellaneous	| 					|
 | nes_namcoclassicii|  	| Namco Classic II (Japan)				| 		| 1992	| Namco		| Miscellaneous	| 					|
+| namenayo	|  	| Namennayo (Japan)					| 		| 1982	| Cat's		| Miscellaneous	| 					|
 | naname	|  	| Naname de Magic!					| 		| 1994	| Atlus		| Miscellaneous	| 					|
 | nndmseala	| D NW	| Nandemo Seal Iinkai (Astro Boy ver.)			| nndmseal	| 1997	| I'Max / Jaleco| Miscellaneous	| 					|
 | nndmseal	| D NW	| Nandemo Seal Iinkai					| 		| 1997	| I'Max / Jaleco| Miscellaneous	| 					|
@@ -11493,6 +11494,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_rockman1	|  	| Rockman Mega World (Jpn, Alt)				| md_megaman	| 1994	| Capcom	| Sega Megadrive| 					|
 | md_rockmnx3	|  	| Rockman X3						| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | rmancp2j	|  	| Rockman: The Power Battle (950922 Japan)		| megaman	| 1999	| Capcom	| CPS2		| 					|
+| spec_rockman	|  	| Rockman						| 		| 1985	| Mastertronic	| ZX Spectrum	| 					|
 | sms_rocky	|  	| Rocky (World)						| 		| 1987	| Sega		| Sega Master Sy| 					|
 | cv_rocky	|  	| Rocky: Super Action Boxing				| 		| 1983	| Coleco	| ColecoVision	| 					|
 | nes_rodlande	|  	| Rod Land (Europe)					| nes_rodland	| 1993	| Storm		| Miscellaneous	| 					|
@@ -12383,6 +12385,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_smurfply	|  	| Smurf Play and Learn (Prototype)			| 		| 1982	| Coleco	| ColecoVision	| 					|
 | cv_smurfa	|  	| Smurf Rescue in Gargamel's Castle (Alt)		| cv_smurf	| 1982	| Coleco	| ColecoVision	| 					|
 | cv_smurf	|  	| Smurf Rescue in Gargamel's Castle			| 		| 1982	| Coleco	| ColecoVision	| 					|
+| cv_smurfsav	|  	| Smurfs Save the Day (Prototype)			| 		| 1982	| Coleco	| ColecoVision	| 					|
 | msx_snake	|  	| Snake (HB)						| 		| 2021	| Under4Mhz	| MSX		| 					|
 | sg1k_snake	|  	| Snake (HB, v1.04)					| 		| 2021	| Under4Mhz	| Sega SG-1000	| 					|
 | sms_snake	|  	| Snake (HB, v1.04)					| 		| 2021	| Under4Mhz	| Sega Master Sy| 					|
@@ -12919,6 +12922,7 @@ This list contains all games supported by FinalBurn Neo.
 | spotty	|  	| Spotty (Ver. 2.0.2)					| 		| 2001	| Prince Co.	| Miscellaneous	| 					|
 | spec_springbot|  	| Springbot - Mars Attack! (HB, v1.3)			| 		| 2020	| Andy Farrell	| ZX Spectrum	| 					|
 | springer	|  	| Springer						| 		| 1982	| Orca		| Miscellaneous	| 					|
+| cv_spunkysc	|  	| Spunky's Super Car! (HB)				| 		| 2014	| Collectorvisio| ColecoVision	| 					|
 | spec_spyhunt	|  	| Spy Hunter (48K)					| 		| 1985	| U.S. Gold	| ZX Spectrum	| 					|
 | spyhuntp	|  	| Spy Hunter (Playtronic license)			| spyhunt	| 1983	| Bally Midway (| MCR3		| 					|
 | cv_spyhuntp1	|  	| Spy Hunter (Prototype, v13)				| cv_spyhunt	| 1984	| Coleco	| ColecoVision	| 					|
@@ -16434,6 +16438,7 @@ This list contains all games supported by FinalBurn Neo.
 | wrally	|  	| World Rally (Version 1.0, Checksum 0E56)		| 		| 1993	| Gaelco	| Miscellaneous	| 					|
 | wrallya	|  	| World Rally (Version 1.0, Checksum 3873)		| wrally	| 1993	| Gaelco	| Miscellaneous	| 					|
 | wrallyb	|  	| World Rally (Version 1.0, Checksum 8AA2)		| wrally	| 1993	| Gaelco	| Miscellaneous	| 					|
+| wrallyc	|  	| World Rally (Version 1.0, Checksum E586)		| wrally	| 1993	| Gaelco	| Miscellaneous	| 					|
 | wrally2a	|  	| World Rally 2: Twin Racing (EPROM version)		| wrally2	| 1995	| Gaelco	| Miscellaneous	| 					|
 | wrally2	|  	| World Rally 2: Twin Racing (mask ROM version)		| 		| 1995	| Gaelco	| Miscellaneous	| 					|
 | md_wsb95	|  	| World Series Baseball '95 (USA)			| 		| 1995	| Sega		| Sega Megadrive| 					|

@@ -13,7 +13,7 @@
 		<clrmamepro forcenodump="ignore"/>
 	</header>
 	<game name="2010p1" cloneof="2010" romof="2010">
-		<description>2010: The Graphic Action Game (Prototype v44)</description>
+		<description>2010: The Graphic Action Game (Prototype v44) [Prototype]</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="act2010-rv44-chip1.bin" size="8192" crc="d9dc972f"/>
@@ -28,7 +28,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="2010p" cloneof="2010" romof="2010">
-		<description>2010: The Graphic Action Game (Prototype v54)</description>
+		<description>2010: The Graphic Action Game (Prototype v54) [Prototype]</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="act2010-54-chip1-11-9-cd7e.bin" size="8192" crc="d8a55441"/>
@@ -452,7 +452,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="btimem" cloneof="btime" romof="btime">
-		<description>Burgertime (Prototype)</description>
+		<description>Burgertime (Prototype) [Prototype]</description>
 		<year>1983</year>
 		<manufacturer>Mattel</manufacturer>
 		<rom name="btimem.1" size="8192" crc="4e943aeb"/>
@@ -517,7 +517,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cabbagep1" cloneof="cabbage" romof="cabbage">
-		<description>Cabbage Patch Kids: Adventure in the Park (Prototype)</description>
+		<description>Cabbage Patch Kids: Adventure in the Park (Prototype) [Prototype]</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="cabbagep1.1" size="8192" crc="e7214974"/>
@@ -530,7 +530,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cabbagep2" cloneof="cabbage" romof="cabbage">
-		<description>Cabbage Patch Kids: Adventure in the Park (Prototype, Alt)</description>
+		<description>Cabbage Patch Kids: Adventure in the Park (Prototype, Alt) [Prototype]</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="cabbage-patch-chip1-6-30.bin" size="8192" crc="2b793712"/>
@@ -922,7 +922,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="digdug" romof="coleco">
-		<description>Dig Dug (Prototype)</description>
+		<description>Dig Dug (Prototype) [Prototype]</description>
 		<year>1984</year>
 		<manufacturer>Atarisoft</manufacturer>
 		<rom name="digdug.1" size="8192" crc="e13a6484"/>
@@ -1025,7 +1025,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dlair" cloneof="dlairsgm" romof="dlairsgm">
-		<description>Dragon's Lair (Prototype, 0416)</description>
+		<description>Dragon's Lair (Prototype, 0416) [Prototype]</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="dragon80-chip1-4-16-ec4a.bin" size="8192" crc="950950d0"/>
@@ -1076,7 +1076,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mindmstr" romof="coleco">
-		<description>Escape from the Mindmaster (Prototype)</description>
+		<description>Escape from the Mindmaster (Prototype) [Prototype]</description>
 		<year>1983</year>
 		<manufacturer>Epyx</manufacturer>
 		<rom name="mindmstr .1" size="8192" crc="b8280950"/>
@@ -1115,7 +1115,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fallguy" romof="coleco">
-		<description>Fall Guy (Prototype)</description>
+		<description>Fall Guy (Prototype) [Prototype]</description>
 		<year>1983</year>
 		<manufacturer>Fox Video Games</manufacturer>
 		<rom name="fallguy.1" size="8192" crc="f77d3ffd"/>
@@ -1141,7 +1141,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="finaltst" romof="coleco">
-		<description>Final Test Cartridge (Prototype)</description>
+		<description>Final Test Cartridge (Prototype) [Prototype]</description>
 		<year>1982</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="colecovision final test (1982) (coleco).rom" size="8192" crc="3ae4b58c"/>
@@ -1578,7 +1578,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hrally" romof="coleco">
-		<description>Hyper Rally (HB, Prototype) [Homebrew, Tap accel. button for shift]</description>
+		<description>Hyper Rally (HB, Prototype) [Homebrew, Prototype, Tap accel. button for shift]</description>
 		<year>2011</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Hyper Rally (2011)(Team Pixelboy).rom" size="32768" crc="f8b08810"/>
@@ -1677,7 +1677,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="joust" romof="coleco">
-		<description>Joust (Prototype)</description>
+		<description>Joust (Prototype) [Prototype]</description>
 		<year>1983</year>
 		<manufacturer>Atarisoft</manufacturer>
 		<rom name="joust.1" size="8192" crc="99402515"/>
@@ -1979,7 +1979,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mash" romof="coleco">
-		<description>M*A*S*H (Prototype)</description>
+		<description>M*A*S*H (Prototype) [Prototype]</description>
 		<year>1983</year>
 		<manufacturer>Fox Video Games</manufacturer>
 		<rom name="mash.1" size="8192" crc="1bdfdaa5"/>
@@ -2194,7 +2194,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mpatrolp" cloneof="mpatrol" romof="mpatrol">
-		<description>Moon Patrol (Prototype)</description>
+		<description>Moon Patrol (Prototype) [Prototype]</description>
 		<year>1984</year>
 		<manufacturer>Atarisoft</manufacturer>
 		<rom name="Moon Patrol (1984) (Atarisoft) (Prototype).rom" size="32768" crc="fbe12de7"/>
@@ -2528,7 +2528,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="orbit" romof="coleco">
-		<description>Orbit (Prototype)</description>
+		<description>Orbit (Prototype) [Prototype]</description>
 		<year>1983</year>
 		<manufacturer>Parker Brothers</manufacturer>
 		<rom name="orbit.bin" size="8192" crc="2cc6f4aa"/>
@@ -2564,7 +2564,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pacman" romof="coleco">
-		<description>Pac-Man (Prototype)</description>
+		<description>Pac-Man (Prototype) [Prototype]</description>
 		<year>1983</year>
 		<manufacturer>Atarisoft</manufacturer>
 		<rom name="pacman.1" size="8192" crc="c0b0689d"/>
@@ -2716,7 +2716,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="porkys" romof="coleco">
-		<description>Porky's (Prototype)</description>
+		<description>Porky's (Prototype) [Prototype]</description>
 		<year>1983</year>
 		<manufacturer>Fox Video Games</manufacturer>
 		<rom name="porkys.1" size="8192" crc="f5aa5a81"/>
@@ -2729,7 +2729,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="power" romof="coleco">
-		<description>Power Lords: Quest for Volcan (Prototype)</description>
+		<description>Power Lords: Quest for Volcan (Prototype) [Prototype]</description>
 		<year>1984</year>
 		<manufacturer>Probe 2000</manufacturer>
 		<rom name="power.1" size="8192" crc="1137001f"/>
@@ -3297,7 +3297,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="smurfply" romof="coleco">
-		<description>Smurf Play and Learn (Prototype)</description>
+		<description>Smurf Play and Learn (Prototype) [Prototype]</description>
 		<year>1982</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="smurfply.1" size="8192" crc="1397a474"/>
@@ -3328,6 +3328,18 @@
 		<manufacturer>Coleco</manufacturer>
 		<rom name="smurfrgc.1" size="8192" crc="675bf14d"/>
 		<rom name="smurfrgc.2" size="8192" crc="0a1a2b0e"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="smurfsav" romof="coleco">
+		<description>Smurfs Save the Day (Prototype) [Prototype]</description>
+		<year>1982</year>
+		<manufacturer>Coleco</manufacturer>
+		<rom name="Smurfs Save the Day (Prototype).col" size="16384" crc="9a3b8587"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -3422,8 +3434,20 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="spunkysc" romof="coleco">
+		<description>Spunky's Super Car! (HB) [Homebrew]</description>
+		<year>2014</year>
+		<manufacturer>Collectorvision Games</manufacturer>
+		<rom name="Spunky's Super Car! (2014) (Collectorvision Games).col" size="32697" crc="deed811e"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="spyhuntp1" cloneof="spyhunt" romof="spyhunt">
-		<description>Spy Hunter (Prototype, v13)</description>
+		<description>Spy Hunter (Prototype, v13) [Prototype]</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="spy13-chip1.bin" size="8192" crc="01d34c94"/>
@@ -3438,7 +3462,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="spyhuntp" cloneof="spyhunt" romof="spyhunt">
-		<description>Spy Hunter (Prototype, v22)</description>
+		<description>Spy Hunter (Prototype, v22) [Prototype]</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="spyr22-aaad-11-12-chip1.bin" size="8192" crc="f8fd0e1c"/>
@@ -3556,7 +3580,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="steam" romof="coleco">
-		<description>Steamroller (Prototype)</description>
+		<description>Steamroller (Prototype) [Prototype]</description>
 		<year>1984</year>
 		<manufacturer>Activision</manufacturer>
 		<rom name="steam.1" size="8192" crc="dd4f0a05"/>
@@ -3766,7 +3790,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="superdk" romof="coleco">
-		<description>Super DK! (Prototype)</description>
+		<description>Super DK! (Prototype) [Prototype]</description>
 		<year>1982</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="superdk.1" size="8192" crc="36253de5"/>
@@ -3781,7 +3805,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="suprdkjr" romof="coleco">
-		<description>Super DK! Junior (Prototype)</description>
+		<description>Super DK! Junior (Prototype) [Prototype]</description>
 		<year>1983</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="suprdkjr.1" size="8192" crc="85ecf7e3"/>
@@ -3844,7 +3868,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sword" romof="coleco">
-		<description>Sword and Sorcerer (Prototype)</description>
+		<description>Sword and Sorcerer (Prototype) [Prototype]</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="sword-chip1-a176.bin" size="8192" crc="a1548994"/>
@@ -3960,7 +3984,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bbears" romof="coleco">
-		<description>The Berenstain Bears (Prototype)</description>
+		<description>The Berenstain Bears (Prototype) [Prototype]</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="bbears.bin" size="8192" crc="18864abc"/>
@@ -4026,7 +4050,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="yolk" romof="coleco">
-		<description>The Yolks on You (Prototype)</description>
+		<description>The Yolks on You (Prototype) [Prototype]</description>
 		<year>1983</year>
 		<manufacturer>Fox Video Games</manufacturer>
 		<rom name="yolk.1" size="8192" crc="f7220275"/>
@@ -4259,7 +4283,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hustler" romof="coleco">
-		<description>Video Hustler (Prototype)</description>
+		<description>Video Hustler (Prototype) [Prototype]</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="video.bin" size="8192" crc="a9177b20"/>
@@ -4271,7 +4295,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hustler1" cloneof="hustler" romof="hustler">
-		<description>Video Hustler (Prototype, 19840727)</description>
+		<description>Video Hustler (Prototype, 19840727) [Prototype]</description>
 		<year>1984</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="hustler-7-27-84-8c61.bin" size="8192" crc="841d168f"/>
@@ -4283,7 +4307,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wargamesp" cloneof="wargames" romof="wargames">
-		<description>War Games (Prototype, 0417)</description>
+		<description>War Games (Prototype, 0417) [Prototype]</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="wargams17-chip1-4-17-c44a.bin" size="8192" crc="da4bb2f5"/>

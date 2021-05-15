@@ -9172,6 +9172,7 @@ DRV		BurnDrvnamcoc70;
 DRV		BurnDrvnamcoc75;
 DRV		BurnDrvnes_namcoclassic;
 DRV		BurnDrvnes_namcoclassicii;
+DRV		BurnDrvNamenayo;
 DRV		BurnDrvNaname;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvNndmseala;		// no comment [NOT WORKING]
@@ -11647,6 +11648,7 @@ DRV		BurnDrvmd_rockman;
 DRV		BurnDrvmd_rockman1;
 DRV		BurnDrvmd_rockmnx3;
 DRV		BurnDrvCpsRmancp2j;
+DRV		BurnSpecRockman;
 DRV		BurnDrvsms_rocky;
 DRV		BurnDrvcv_rocky;
 DRV		BurnDrvnes_rodlande;
@@ -12557,6 +12559,7 @@ DRV		BurnDrvcv_smurfpnt;
 DRV		BurnDrvcv_smurfply;
 DRV		BurnDrvcv_smurfa;
 DRV		BurnDrvcv_smurf;
+DRV		BurnDrvcv_smurfsav;
 DRV		BurnDrvMSX_snake;
 DRV		BurnDrvsg1k_snake;
 DRV		BurnDrvsms_snake;
@@ -13097,6 +13100,7 @@ DRV		BurnDrvmd_spotgou;
 DRV		BurnDrvSpotty;
 DRV		BurnSpecSpringbot;
 DRV		BurnDrvSpringer;
+DRV		BurnDrvcv_spunkysc;
 DRV		BurnSpecspyhunt;
 DRV		BurnDrvSpyhuntp;
 DRV		BurnDrvcv_spyhuntp1;
@@ -16668,6 +16672,7 @@ DRV		BurnDrvWrallyat;
 DRV		BurnDrvWrally;
 DRV		BurnDrvWrallya;
 DRV		BurnDrvWrallyb;
+DRV		BurnDrvWrallyc;
 DRV		BurnDrvWrally2a;
 DRV		BurnDrvWrally2;
 DRV		BurnDrvmd_wsb95;
@@ -26346,6 +26351,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnamcoc75,			// Namco C75 (M37702) (Bios) [BIOS only, NOT WORKING]
 	&BurnDrvnes_namcoclassic,	// Namco Classic (Japan)
 	&BurnDrvnes_namcoclassicii,	// Namco Classic II (Japan)
+	&BurnDrvNamenayo,			// Namennayo (Japan)
 	&BurnDrvNaname,				// Naname de Magic!
 #if defined FBNEO_DEBUG
 	&BurnDrvNndmseala,			// Nandemo Seal Iinkai (Astro Boy ver.) [no comment, NOT WORKING]
@@ -28821,6 +28827,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_rockman1,		// Rockman Mega World (Jpn, Alt)
 	&BurnDrvmd_rockmnx3,		// Rockman X3
 	&BurnDrvCpsRmancp2j,		// Rockman: The Power Battle (950922 Japan)
+	&BurnSpecRockman,			// Rockman
 	&BurnDrvsms_rocky,			// Rocky (World)
 	&BurnDrvcv_rocky,			// Rocky: Super Action Boxing
 	&BurnDrvnes_rodlande,		// Rod Land (Europe)
@@ -29731,6 +29738,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_smurfply,		// Smurf Play and Learn (Prototype)
 	&BurnDrvcv_smurfa,			// Smurf Rescue in Gargamel's Castle (Alt)
 	&BurnDrvcv_smurf,			// Smurf Rescue in Gargamel's Castle
+	&BurnDrvcv_smurfsav,		// Smurfs Save the Day (Prototype)
 	&BurnDrvMSX_snake,			// Snake (HB)
 	&BurnDrvsg1k_snake,			// Snake (HB, v1.04)
 	&BurnDrvsms_snake,			// Snake (HB, v1.04)
@@ -30271,6 +30279,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSpotty,				// Spotty (Ver. 2.0.2)
 	&BurnSpecSpringbot,			// Springbot - Mars Attack! (HB, v1.3)
 	&BurnDrvSpringer,			// Springer
+	&BurnDrvcv_spunkysc,		// Spunky's Super Car! (HB)
 	&BurnSpecspyhunt,			// Spy Hunter (48K)
 	&BurnDrvSpyhuntp,			// Spy Hunter (Playtronic license)
 	&BurnDrvcv_spyhuntp1,		// Spy Hunter (Prototype, v13)
@@ -33842,6 +33851,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvWrally,				// World Rally (Version 1.0, Checksum 0E56)
 	&BurnDrvWrallya,			// World Rally (Version 1.0, Checksum 3873)
 	&BurnDrvWrallyb,			// World Rally (Version 1.0, Checksum 8AA2)
+	&BurnDrvWrallyc,			// World Rally (Version 1.0, Checksum E586)
 	&BurnDrvWrally2a,			// World Rally 2: Twin Racing (EPROM version)
 	&BurnDrvWrally2,			// World Rally 2: Twin Racing (mask ROM version)
 	&BurnDrvmd_wsb95,			// World Series Baseball '95 (USA)

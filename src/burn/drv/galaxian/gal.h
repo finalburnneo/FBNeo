@@ -60,6 +60,9 @@
 #define GAL_PALETTE_BULLETS_OFFSET			GAL_PALETTE_NUM_COLOURS_PROM + GAL_PALETTE_NUM_COLOURS_STARS
 #define GAL_PALETTE_BACKGROUND_OFFSET			GAL_PALETTE_NUM_COLOURS_PROM + GAL_PALETTE_NUM_COLOURS_STARS + GAL_PALETTE_NUM_COLOURS_BULLETS
 
+// Background tilemap (extend function color token)
+#define GAL_TMAP_OPAQUE         				0x8000
+
 extern INT32 GalScreenUnflipper; // for coctail!
 
 // gal_gfx.cpp
@@ -72,6 +75,7 @@ extern UINT8 GalSpriteClipEnd;
 extern UINT8 FroggerAdjust;
 extern UINT8 Dingo;
 extern UINT8 Harem;
+extern UINT8 Namenayo;
 extern UINT8 GalBackgroundRed;
 extern UINT8 GalBackgroundGreen;
 extern UINT8 GalBackgroundBlue;
@@ -100,47 +104,49 @@ typedef void (*GalCalcPalette)();
 extern GalCalcPalette GalCalcPaletteFunction;
 typedef void (*GalDrawBullet)(INT32, INT32, INT32);
 extern GalDrawBullet GalDrawBulletsFunction;
-typedef void (*GalExtendTileInfo)(UINT16*, INT32*, INT32, INT32);
+typedef void (*GalExtendTileInfo)(UINT16*, INT32*, INT32, INT32, INT32);
 extern GalExtendTileInfo GalExtendTileInfoFunction;
 typedef void (*GalExtendSpriteInfo)(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16*, UINT8*);
 extern GalExtendSpriteInfo GalExtendSpriteInfoFunction;
 typedef void (*GalRenderFrame)();
 extern GalRenderFrame GalRenderFrameFunction;
 
-void UpperExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32);
+void UpperExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32, INT32);
 void UpperExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*);
 void PacmanblExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*);
-void PiscesExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32);
+void PiscesExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32, INT32);
 void PiscesExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*);
-void Batman2ExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32);
-void GmgalaxExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32);
+void Batman2ExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32, INT32);
+void GmgalaxExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32, INT32);
 void GmgalaxExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*);
-void MooncrstExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32);
+void MooncrstExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32, INT32);
 void MooncrstExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*);
-void MoonqsrExtendTileInfo(UINT16 *Code, INT32*, INT32 Attr, INT32);
+void MoonqsrExtendTileInfo(UINT16 *Code, INT32*, INT32 Attr, INT32, INT32);
 void MoonqsrExtendSpriteInfo(const UINT8 *Base, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*);
-void SkybaseExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32);
+void SkybaseExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32, INT32);
 void SkybaseExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*);
 void RockclimExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*);
-void JumpbugExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32);
+void JumpbugExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32, INT32);
 void JumpbugExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*);
-void FroggerExtendTileInfo(UINT16*, INT32 *Colour, INT32, INT32);
+void FroggerExtendTileInfo(UINT16*, INT32 *Colour, INT32, INT32, INT32);
 void FroggerExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16*, UINT8 *Colour);
 void CalipsoExtendSpriteInfo(const UINT8 *Base, INT32*, INT32*, UINT8 *xFlip, UINT8 *yFlip, UINT16 *Code, UINT8*);
-void MshuttleExtendTileInfo(UINT16 *Code, INT32*, INT32 Attr, INT32);
+void MshuttleExtendTileInfo(UINT16 *Code, INT32*, INT32 Attr, INT32, INT32);
 void MshuttleExtendSpriteInfo(const UINT8 *Base, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*);
-void Fourin1ExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32);
+void Fourin1ExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32, INT32);
 void Fourin1ExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*);
 void DkongjrmExtendSpriteInfo(const UINT8 *Base, INT32*, INT32*, UINT8 *xFlip, UINT8*, UINT16 *Code, UINT8*);
-void MarinerExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x);
-void MimonkeyExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32);
+void MarinerExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x, INT32);
+void MimonkeyExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32, INT32);
 void MimonkeyExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*);
-void DambustrExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x);
-void Ad2083ExtendTileInfo(UINT16 *Code, INT32 *Colour, INT32 Attr, INT32);
+void DambustrExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x, INT32);
+void Ad2083ExtendTileInfo(UINT16 *Code, INT32 *Colour, INT32 Attr, INT32, INT32);
 void Ad2083ExtendSpriteInfo(const UINT8 *Base, INT32*, INT32*, UINT8 *xFlip, UINT8*, UINT16 *Code, UINT8*);
-void RacknrolExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x);
-void HaremExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x);
-void BagmanmcExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32);
+void RacknrolExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x, INT32);
+void HaremExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x, INT32);
+void NamenayoExtendTileInfo(UINT16 *code, INT32 *color, INT32 attr, INT32 x, INT32 y);
+void NamenayoExtendSpriteInfo(const UINT8 *base, INT32*, INT32*, UINT8*, UINT8*, UINT16 *code, UINT8 *color);
+void BagmanmcExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32, INT32);
 void BagmanmcExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*);
 void HardCodeGalaxianPROM();
 void HardCodeMooncrstPROM();
@@ -213,6 +219,7 @@ extern UINT8 *GalChars;
 extern UINT8 *GalSprites;
 extern UINT8 *GalTempRom;
 extern UINT8 *digitalk_rom;
+extern UINT8 *namenayo_extattr;
 extern INT32 GalSndROMSize;
 extern UINT32 *GalPalette;
 extern UINT32 GalZ80Rom1Size;
@@ -272,6 +279,7 @@ void MapFrogger();
 void KonamiPPIInit();
 void MapTheend();
 void MapHarem();
+void MapNamenayo();
 void MapTurtles();
 void MapScobra();
 void harem_decrypt_bit_write(UINT8 data);

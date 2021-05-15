@@ -33,6 +33,7 @@ UINT8 *GalChars              = NULL;
 UINT8 *GalSprites            = NULL;
 UINT8 *GalTempRom            = NULL;
 UINT8 *digitalk_rom          = NULL;
+UINT8 *namenayo_extattr      = NULL;
 
 UINT32  *GalPalette            = NULL;
 
@@ -88,6 +89,7 @@ UINT8 CavelonBankSwitch;
 UINT8 GalVBlank;
 UINT8 Dingo = 0;
 UINT8 Harem = 0;
+UINT8 Namenayo = 0;
 
 static inline void GalMakeInputs()
 {
@@ -136,6 +138,10 @@ static INT32 GalMemIndex()
 
 	if (GalSndROMSize) {
 		digitalk_rom   = Next; Next += GalSndROMSize;
+	}
+
+	if (Namenayo) {
+		namenayo_extattr = Next; Next += 0x00020;
 	}
 
 	GalRamEnd              = Next;
@@ -343,7 +349,7 @@ static INT32 GalLoadRoms(bool bLoad)
 				Offset += ri.nLen;
 			}
 			GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
-			GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);		
+			GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);
 			BurnFree(GalTempRom);
 		}
 		
@@ -1231,6 +1237,102 @@ void __fastcall HaremZ80Write(UINT16 a, UINT8 d)
 	}
 }
 
+// Namenayo Memory Map
+UINT8 __fastcall NamenayoZ80Read(UINT16 a)
+{
+	if ((a & 0xf4fc) == 0xf000) {
+		switch (a & 0x300) {
+			case 0x100: return ppi8255_r(0, a & 3);
+			case 0x200: return ppi8255_r(1, a & 3);
+		}
+		return 0xff; // watchdog @ 0xf000
+	}
+
+	if ((a & 0xffe0) == 0xe000) {
+		return namenayo_extattr[a & 0x1f];
+	}
+
+	switch (a) {
+		case 0xf000: {
+			// watchdog read
+			return 0xff;
+		}
+
+		default: {
+			bprintf(PRINT_NORMAL, _T("namenayo Z80 #1 Read => %04X\n"), a);
+		}
+	}
+
+	return 0xff;
+}
+
+void __fastcall NamenayoZ80Write(UINT16 a, UINT8 d)
+{
+	if (a >= 0xc800 && a <= 0xc8ff) {
+		INT32 Offset = a & 0xff;
+
+		GalSpriteRam[Offset] = d;
+
+		if (Offset < 0x40 && ~Offset & 1) {
+			GalScrollVals[Offset >> 1] = d;
+		}
+
+		return;
+	}
+
+	if ((a & 0xf4fc) == 0xf000) {
+		switch (a & 0x300) {
+			case 0x100: ppi8255_w(0, a & 3, d); return;
+			case 0x200: ppi8255_w(1, a & 3, d); return;
+		}
+		return;
+	}
+
+	if ((a & 0xffe0) == 0xe000) {
+		namenayo_extattr[a & 0x1f] = d;
+		return;
+	}
+
+	switch (a) {
+		case 0xd800: {
+			return; // unk?
+		}
+
+		case 0xe801: {
+			GalIrqFire = d & 1;
+			return;
+		}
+
+		case 0xe802: {
+			return; // coin counter
+		}
+
+		case 0xe804: {
+			GalStarsEnable = d & 0x01;
+			if (!GalStarsEnable) GalStarsScrollPos = -1;
+			return;
+		}
+
+		case 0xe806: {
+			GalFlipScreenX = d & 1;
+			return;
+		}
+
+		case 0xe807: {
+			GalFlipScreenY = d & 1;
+			return;
+		}
+
+		case 0x7005: {
+			return; // NOP
+		}
+
+		default: {
+			bprintf(PRINT_NORMAL, _T("namenayo Z80 #1 Write => %04X, %02X\n"), a, d);
+		}
+	}
+}
+
 // The End Memory Map
 UINT8 __fastcall TheendZ80Read(UINT16 a)
 {
@@ -1372,6 +1474,26 @@ void MapHarem()
 	ZetMapArea(0x4c00, 0x4fff, 0, GalVideoRam);
 	ZetMapArea(0x4c00, 0x4fff, 1, GalVideoRam);
 	ZetMapArea(0x4c00, 0x4fff, 2, GalVideoRam);
+	ZetClose();
+}
+
+void MapNamenayo()
+{
+	ZetOpen(0);
+	ZetMemCallback(0x0000, 0xffff, 0);
+	ZetMemCallback(0x0000, 0xffff, 1);
+	ZetMemCallback(0x0000, 0xffff, 2);
+	ZetSetReadHandler(NamenayoZ80Read);
+	ZetSetWriteHandler(NamenayoZ80Write);
+	ZetSetInHandler(TheendZ80PortRead);
+	ZetSetOutHandler(TheendZ80PortWrite);
+	ZetMapMemory(GalZ80Rom1 + 0x0000,	0x0000, 0x3fff, MAP_ROM);
+	ZetMapMemory(GalZ80Rom1 + 0x5000,	0x5000, 0x5fff, MAP_ROM);
+	ZetMapMemory(GalZ80Rom1 + 0x4000,	0x6000, 0x6fff, MAP_ROM);
+
+	ZetMapMemory(GalZ80Ram1,	0x4000, 0x4fff, MAP_RAM);
+	ZetMapMemory(GalVideoRam,	0xd000, 0xd3ff, MAP_RAM);
+	ZetMapMemory(GalSpriteRam,	0xc800, 0xc8ff, MAP_ROM);
 	ZetClose();
 }
 
@@ -1741,6 +1863,10 @@ INT32 GalExit()
 	ScrambleProtectionResult = 0;
 	Dingo = 0;
 	Harem = 0;
+	Namenayo = 0;
+
+	namenayo_extattr = NULL;
+	digitalk_rom = NULL;
 
 	GalZ80Rom1Size = 0;
 	GalZ80Rom1Num = 0;

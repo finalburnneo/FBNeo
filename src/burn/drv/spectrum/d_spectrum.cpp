@@ -19197,6 +19197,25 @@ struct BurnDriver BurnSpecYabbadoo = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Rockman
+
+static struct BurnRomInfo SpecRockmanRomDesc[] = {
+	{ "Rockman (1985)(Mastertronic).tap", 47993, 0xcbe615ae, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecRockman, SpecRockman, Spec128)
+STD_ROM_FN(SpecRockman)
+
+struct BurnDriver BurnSpecRockman = {
+	"spec_rockman", NULL, "spec_spec128", NULL, "1985",
+	"Rockman\0", NULL, "Mastertronic", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	SpectrumGetZipName, SpecRockmanRomInfo, SpecRockmanRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Homebrew Games (Post-2000)
 // Hereunder put only the HB ZX Spectrum games
 

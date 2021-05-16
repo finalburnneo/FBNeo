@@ -595,23 +595,42 @@ STD_ROM_PICK(Pkladiesla)
 STD_ROM_FN(Pkladiesla)
 
 static struct BurnRomInfo DokabenRomDesc[] = {
-	{ "db06.11h",      0x08000, 0x413e0886, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "db07.13h",      0x20000, 0x8bdcf49e, BRF_ESS | BRF_PRG }, //	 1
-	{ "db08.14h",      0x20000, 0x1643bdd9, BRF_ESS | BRF_PRG }, //	 2
+	{ "db_06.11h",     0x08000, 0x413e0886, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "db_07.13h",     0x20000, 0x8bdcf49e, BRF_ESS | BRF_PRG }, //	 1
+	{ "db_08.14h",     0x20000, 0x1643bdd9, BRF_ESS | BRF_PRG }, //	 2
 	
-	{ "db02.1e",       0x20000, 0x9aa8470c, BRF_GRA },	     //  3	Characters
-	{ "db03.2e",       0x20000, 0x3324e43d, BRF_GRA },	     //  4
-	{ "db04.1g",       0x20000, 0xc0c5b6c2, BRF_GRA },	     //  5
-	{ "db05.2g",       0x20000, 0xd2ab25f2, BRF_GRA },	     //  6
+	{ "db_02.1e",      0x20000, 0x9aa8470c, BRF_GRA },	     //  3	Characters
+	{ "db_03.2e",      0x20000, 0x3324e43d, BRF_GRA },	     //  4
+	{ "db_04.1g",      0x20000, 0xc0c5b6c2, BRF_GRA },	     //  5
+	{ "db_05.2g",      0x20000, 0xd2ab25f2, BRF_GRA },	     //  6
 	
-	{ "db10.2k",       0x20000, 0x9e70f7ae, BRF_GRA },	     //  7	Sprites
-	{ "db09.1k",       0x20000, 0x2d9263f7, BRF_GRA },	     //  8
+	{ "db_10.2k",      0x20000, 0x9e70f7ae, BRF_GRA },	     //  7	Sprites
+	{ "db_09.1k",      0x20000, 0x2d9263f7, BRF_GRA },	     //  8
 	
-	{ "db01.1d",       0x20000, 0x62fa6b81, BRF_SND },	     //  9	Samples
+	{ "db_01.1d",      0x20000, 0x62fa6b81, BRF_SND },	     //  9	Samples
 };
 
 STD_ROM_PICK(Dokaben)
 STD_ROM_FN(Dokaben)
+
+static struct BurnRomInfo Dokaben2RomDesc[] = {
+	{ "d2_06.11h",     0x08000, 0x9adcc38c, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "d2_07.13h",     0x20000, 0x43076e32, BRF_ESS | BRF_PRG }, //	 1
+	{ "d2_08.14h",     0x20000, 0xcb9deb7a, BRF_ESS | BRF_PRG }, //	 2
+	
+	{ "d2_02.1e",      0x20000, 0x5dd7b941, BRF_GRA },	     //  3	Characters
+	{ "d2_03.2e",      0x20000, 0xb615e696, BRF_GRA },	     //  4
+	{ "d2_04.1g",      0x20000, 0x56b35605, BRF_GRA },	     //  5
+	{ "d2_05.2g",      0x20000, 0xce98ff74, BRF_GRA },	     //  6
+	
+	{ "d2_10.2k",      0x20000, 0x9b9bfb5f, BRF_GRA },	     //  7	Sprites
+	{ "d2_09.1k",      0x20000, 0x84de2e1d, BRF_GRA },	     //  8
+	
+	{ "db_01.1d",      0x20000, 0x62fa6b81, BRF_SND },	     //  9	Samples
+};
+
+STD_ROM_PICK(Dokaben2)
+STD_ROM_FN(Dokaben2)
 
 static struct BurnRomInfo PangRomDesc[] = {
 	{ "pwe_06.11h",    0x08000, 0x68be52cd, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
@@ -3188,6 +3207,16 @@ struct BurnDriver BurnDrvPkladiesla = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
 	NULL, PkladieslaRomInfo, PkladieslaRomName, NULL, NULL, NULL, NULL, PkladiesInputInfo, NULL,
 	PkladiesInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	NULL, 0x800, 384, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvDokaben2 = {
+	"dokaben2", NULL, NULL, NULL, "1989",
+	"Dokaben 2 (Japan)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	NULL, Dokaben2RomInfo, Dokaben2RomName, NULL, NULL, NULL, NULL, PangInputInfo, NULL,
+	DokabenInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
 

@@ -4208,7 +4208,7 @@
 		<description>Eyra - The Crow Maiden (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>2nd Dimension</manufacturer>
-		<rom name="Eyra - The Crow Maiden (2020)(2nd Dimension).nes" size="40976" crc="e03ea9f9"/>
+		<rom name="Eyra the Crow Maiden (2020)(2nd Dimension).nes" size="40976" crc="1415153d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

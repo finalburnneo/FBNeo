@@ -1348,6 +1348,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="frntlnsce" romof="coleco">
+		<description>Front Line S.C.E. (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<year>2015</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="Front Line S.C.E. (2015) (Team Pixelboy).col" size="32768" crc="832586bf"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="frontlin" romof="coleco">
 		<description>Front Line</description>
 		<year>1983</year>
@@ -3244,6 +3256,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="skyjag" romof="coleco">
+		<description>Sky Jaguar (HB) [Homebrew, Published by Opcode Games]</description>
+		<year>2004</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Sky Jaguar (2004) (Opcode Games).col" size="32768" crc="54d54968"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="danslither" cloneof="slither" romof="slither">
 		<description>Slither (Hack, Joystick Version) [Homebrew]</description>
 		<year>2010</year>
@@ -3377,6 +3401,18 @@
 		<year>2003</year>
 		<manufacturer>Opcode Games</manufacturer>
 		<rom name="Space Invaders Collection (2003) (Opcode Games).rom" size="32768" crc="3098bd4b"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="spaceinvasion" romof="coleco">
+		<description>Space Invasion (HB) [Homebrew]</description>
+		<year>1998</year>
+		<manufacturer>John Dondzilla</manufacturer>
+		<rom name="Space Invasion (1998) (John Dondzilla).col" size="16384" crc="af9b178c"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -4306,6 +4342,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="war" romof="coleco">
+		<description>War (HB) [Homebrew]</description>
+		<year>2014</year>
+		<manufacturer>Gerry Brophy</manufacturer>
+		<rom name="War (2014) (Gerry Brophy).col" size="31933" crc="7f06e25c"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="wargamesp" cloneof="wargames" romof="wargames">
 		<description>War Games (Prototype, 0417) [Prototype]</description>
 		<year>1984</year>
@@ -4349,6 +4397,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="watervil" romof="coleco">
+		<description>Waterville Rescue (HB) [Homebrew]</description>
+		<year>2009</year>
+		<manufacturer>Mike Brent</manufacturer>
+		<rom name="Waterville Rescue (2009) (Mike Brent).col" size="32768" crc="d642fb9e"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="explodingfoot" romof="coleco">
 		<description>Way of the Exploding Foot (HB) [Homebrew]</description>
 		<year>2011</year>
@@ -4367,6 +4427,18 @@
 		<manufacturer>Imagic</manufacturer>
 		<rom name="wingwar.1" size="8192" crc="9aaba834"/>
 		<rom name="wingwar.2" size="8192" crc="442000d0"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="winktrap" romof="coleco">
+		<description>Winky Trap (HB) [Homebrew]</description>
+		<year>2007</year>
+		<manufacturer>Collectorvision Games</manufacturer>
+		<rom name="Winky Trap (2007) (Collectorvision Games).col" size="16384" crc="eaa5f606"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -4424,6 +4496,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="yiear" romof="coleco">
+		<description>Yie-Ar Kung Fu (HB) [Homebrew, Published by Opcode Games]</description>
+		<year>2005</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Yie-Ar Kung Fu (2005) (Opcode Games).col" size="32768" crc="471240bb"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="zaxxonsgm" romof="coleco">
 		<description>Zaxxon Super Game [(SGM) - Published by Team Pixelboy]</description>
 		<year>2012</year>
@@ -4456,6 +4540,18 @@
 		<manufacturer>Activision</manufacturer>
 		<rom name="zenji.1" size="8192" crc="c3bde56a"/>
 		<rom name="zenji.2" size="8192" crc="d2a19d28"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zippyrac" romof="coleco">
+		<description>Zippy Race (HB) [Homebrew, Published by Collectorvision Games]</description>
+		<year>2009</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="Zippy Race (2009) (Opcode Games).col" size="32768" crc="44e6948c"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>

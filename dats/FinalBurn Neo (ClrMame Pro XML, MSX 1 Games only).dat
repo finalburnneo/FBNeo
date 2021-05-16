@@ -48,7 +48,7 @@
 	<game name="180" romof="msx">
 		<description>180 Degrees</description>
 		<year>1986</year>
-		<manufacturer>MAD</manufacturer>
+		<manufacturer>Mastertronic</manufacturer>
 		<rom name="180.rom" size="131072" crc="1369ca55"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -245,7 +245,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="afteroids" romof="msx">
-		<description>Afteroids (Spa)</description>
+		<description>Afteroids (Spa) [Press S to skip intro screen]</description>
 		<year>1988</year>
 		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="Afteroids (1988)(Zigurat Software)(ES).rom" size="131072" crc="8a599dad"/>
@@ -278,7 +278,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="alcazar" romof="msx">
-		<description>Alcazar</description>
+		<description>Alcazar - the Forgetten Fortress</description>
 		<year>1985</year>
 		<manufacturer>Activision</manufacturer>
 		<rom name="alcazar - the Forgotten fortress (1985)(activision).rom" size="16384" crc="3ee454b0"/>
@@ -861,6 +861,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="a8bitjam" romof="msx">
+		<description>Azzurro 8bit Jam (HB, v1.1) [Homebrew]</description>
+		<year>2011</year>
+		<manufacturer>RELEVO</manufacturer>
+		<rom name="Azzurro 8bit Jam v1.1 (2011)(Relevo).rom" size="32768" crc="5b58c730"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bcquest" romof="msx">
 		<description>B.C.'s Quest for Tires (Jpn)</description>
 		<year>1985</year>
@@ -1434,6 +1445,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bbuster" romof="msx">
+		<description>Blockbuster (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Robosoft</manufacturer>
+		<rom name="Blockbuster (2021)(Robosoft).rom" size="32768" crc="a7a2aeae"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bloody" romof="msx">
 		<description>Bloody (Spa)</description>
 		<year>1987</year>
@@ -1864,7 +1886,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bubbler" romof="msx">
-		<description>Bubbler</description>
+		<description>Bubbler [Press 1 or 2 to select Keyboard-Joystick]</description>
 		<year>1987</year>
 		<manufacturer>Ultimate Play The Game</manufacturer>
 		<rom name="Bubbler (1987)(Ultimate Play The Game)(GB).rom" size="131072" crc="0150e22e"/>
@@ -8932,6 +8954,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mutdeep" romof="msx">
+		<description>Mutants From The Deep (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Retroworks</manufacturer>
+		<rom name="Mutants From The Deep (2021)(Retroworks).rom" size="65536" crc="8183bae1"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mystical" romof="msx">
 		<description>Mystical (Euro)</description>
 		<year>1991</year>
@@ -10017,6 +10050,17 @@
 		<year>1984</year>
 		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="pitfall! (japan) (alt 1).rom" size="16384" crc="930aeb2c"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pitman" romof="msx">
+		<description>Pitman (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Pitman (2021)(Under4Mhz).rom" size="32768" crc="c896e810"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -11304,7 +11348,7 @@
 	<game name="snowboard" romof="msx">
 		<description>Snowboarding (HB, v1.01) [Homebrew]</description>
 		<year>2020</year>
-		<manufacturer>Revelo</manufacturer>
+		<manufacturer>RELEVO</manufacturer>
 		<rom name="snowboarding v1.01 (2020)(revelo).rom" size="49152" crc="8efaf6b4"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -12416,7 +12460,7 @@
 	<game name="teodoro" romof="msx">
 		<description>Teodoro No Sabe Volar (HB) [Homebrew]</description>
 		<year>2012</year>
-		<manufacturer>Retroworks/Dimension Z</manufacturer>
+		<manufacturer>Retroworks</manufacturer>
 		<rom name="DMZ002 - Teodoro no sabe volar (English).rom" size="32768" crc="d2d53275"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>

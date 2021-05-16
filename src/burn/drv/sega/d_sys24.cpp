@@ -3090,7 +3090,7 @@ struct BurnDriver BurnDrvHotroda = {
 	"hotroda", "hotrod", NULL, NULL, "1988",
 	"Hot Rod (World, 3 Players, Turbo set 2, Floppy Based)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM24, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM24, GBF_RACING, 0,
 	NULL, hotrodaRomInfo, hotrodaRomName, NULL, NULL, NULL, NULL, HotrodInputInfo, HotrodDIPInfo,
 	HotrodInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3113,7 +3113,7 @@ struct BurnDriver BurnDrvHotrodja = {
 	"hotrodja", "hotrod", NULL, NULL, "1988",
 	"Hot Rod (Japan, 4 Players, Floppy Based, Rev B)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM24, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM24, GBF_RACING, 0,
 	NULL, hotrodjaRomInfo, hotrodjaRomName, NULL, NULL, NULL, NULL, HotrodjInputInfo, HotrodjDIPInfo,
 	HotrodInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3136,7 +3136,7 @@ struct BurnDriver BurnDrvHotrodj = {
 	"hotrodj", "hotrod", NULL, NULL, "1988",
 	"Hot Rod (Japan, 4 Players, Floppy Based, Rev C)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM24, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM24, GBF_RACING, 0,
 	NULL, hotrodjRomInfo, hotrodjRomName, NULL, NULL, NULL, NULL, HotrodjInputInfo, HotrodjDIPInfo,
 	HotrodInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3710,7 +3710,7 @@ struct BurnDriver BurnDrvGground = {
 	"gground", NULL, NULL, NULL, "1988",
 	"Gain Ground (World, 3 Players, Floppy Based, FD1094 317-0058-03d Rev A)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM24, GBF_ACTION | GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 3, HARDWARE_SEGA_SYSTEM24, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, ggroundRomInfo, ggroundRomName, NULL, NULL, NULL, NULL, GgroundInputInfo, GgroundDIPInfo,
 	GgroundInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	384,496, 3, 4

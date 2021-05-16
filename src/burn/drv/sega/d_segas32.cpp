@@ -2496,11 +2496,11 @@ static void system32_sound_init()
 
 	BurnYM3438Init(2, 8053975, &DrvFMIRQHandler, 0);
 	BurnTimerAttach(&ZetConfig, 8053975);
-	BurnYM3438SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
-	BurnYM3438SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
+	BurnYM3438SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	BurnYM3438SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 
 	RF5C68PCMInit(12500000, ZetTotalCycles, 8053975, 1);
-	RF5C68PCMSetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
+	RF5C68PCMSetAllRoutes(0.55, BURN_SND_ROUTE_BOTH);
 }
 
 static void multi32_sound_init()

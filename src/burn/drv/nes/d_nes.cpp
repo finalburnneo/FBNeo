@@ -17590,7 +17590,7 @@ struct BurnDriver BurnDrvnes_batlizard = {
 };
 
 static struct BurnRomInfo nes_eyraRomDesc[] = {
-	{ "Eyra - The Crow Maiden (2020)(2nd Dimension).nes",          40976, 0xe03ea9f9, BRF_ESS | BRF_PRG },
+	{ "Eyra the Crow Maiden (2020)(2nd Dimension).nes",          40976, 0x1415153d, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_eyra)

@@ -8011,8 +8011,160 @@ struct BurnDriver BurnDrvcv_spunkysc = {
     "cv_spunkysc", NULL, "cv_coleco", NULL, "2014",
     "Spunky's Super Car! (HB)\0", NULL, "Collectorvision Games", "ColecoVision",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_RACING, 0,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_RACING, 0,
     CVGetZipName, cv_spunkyscRomInfo, cv_spunkyscRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
+};
+
+// Sky Jaguar (HB)
+
+static struct BurnRomInfo cv_skyjagRomDesc[] = {
+    { "Sky Jaguar (2004) (Opcode Games).col",	32768, 0x54d54968, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_skyjag, cv_skyjag, cv_coleco)
+STD_ROM_FN(cv_skyjag)
+
+struct BurnDriver BurnDrvcv_skyjag = {
+    "cv_skyjag", NULL, "cv_coleco", NULL, "2004",
+    "Sky Jaguar (HB)\0", "Published by Opcode Games", "Konami", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_VERSHOOT, 0,
+    CVGetZipName, cv_skyjagRomInfo, cv_skyjagRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Waterville Rescue (HB)
+
+static struct BurnRomInfo cv_watervilRomDesc[] = {
+    { "Waterville Rescue (2009) (Mike Brent).col",	32768, 0xd642fb9e, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_watervil, cv_watervil, cv_coleco)
+STD_ROM_FN(cv_watervil)
+
+struct BurnDriver BurnDrvcv_watervil = {
+    "cv_watervil", NULL, "cv_coleco", NULL, "2009",
+    "Waterville Rescue (HB)\0", NULL, "Mike Brent", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_HORSHOOT, 0,
+    CVGetZipName, cv_watervilRomInfo, cv_watervilRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Winky Trap (HB)
+
+static struct BurnRomInfo cv_winktrapRomDesc[] = {
+    { "Winky Trap (2007) (Collectorvision Games).col",	16384, 0xeaa5f606, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_winktrap, cv_winktrap, cv_coleco)
+STD_ROM_FN(cv_winktrap)
+
+struct BurnDriver BurnDrvcv_winktrap = {
+    "cv_winktrap", NULL, "cv_coleco", NULL, "2007",
+    "Winky Trap (HB)\0", NULL, "Collectorvision Games", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MAZE, 0,
+    CVGetZipName, cv_winktrapRomInfo, cv_winktrapRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Yie-Ar Kung Fu (HB)
+
+static struct BurnRomInfo cv_yiearRomDesc[] = {
+    { "Yie-Ar Kung Fu (2005) (Opcode Games).col",	32768, 0x471240bb, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_yiear, cv_yiear, cv_coleco)
+STD_ROM_FN(cv_yiear)
+
+struct BurnDriver BurnDrvcv_yiear = {
+    "cv_yiear", NULL, "cv_coleco", NULL, "2005",
+    "Yie-Ar Kung Fu (HB)\0", "Published by Opcode Games", "Konami", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_ACTION, 0,
+    CVGetZipName, cv_yiearRomInfo, cv_yiearRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Zippy Race (HB)
+
+static struct BurnRomInfo cv_zippyracRomDesc[] = {
+    { "Zippy Race (2009) (Opcode Games).col",	32768, 0x44e6948c, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_zippyrac, cv_zippyrac, cv_coleco)
+STD_ROM_FN(cv_zippyrac)
+
+struct BurnDriver BurnDrvcv_zippyrac = {
+    "cv_zippyrac", NULL, "cv_coleco", NULL, "2009",
+    "Zippy Race (HB)\0", "Published by Collectorvision Games", "Sega", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_RACING, 0,
+    CVGetZipName, cv_zippyracRomInfo, cv_zippyracRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Front Line S.C.E. (HB)
+
+static struct BurnRomInfo cv_frntlnsceRomDesc[] = {
+	{ "Front Line S.C.E. (2015) (Team Pixelboy).col",	32768, 0x832586bf, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_frntlnsce, cv_frntlnsce, cv_coleco)
+STD_ROM_FN(cv_frntlnsce)
+
+struct BurnDriver BurnDrvcv_frntlnsce = {
+	"cv_frntlnsce", NULL, "cv_coleco", NULL, "2015",
+	"Front Line S.C.E. (HB)\0", "Published by Team Pixelboy", "Taito", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_VERSHOOT, 0,
+	CVGetZipName, cv_frntlnsceRomInfo, cv_frntlnsceRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Space Invasion (HB)
+
+static struct BurnRomInfo cv_spaceinvasionRomDesc[] = {
+	{ "Space Invasion (1998) (John Dondzilla).col",	16384, 0xaf9b178c, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_spaceinvasion, cv_spaceinvasion, cv_coleco)
+STD_ROM_FN(cv_spaceinvasion)
+
+struct BurnDriver BurnDrvcv_spaceinvasion = {
+	"cv_spaceinvasion", NULL, "cv_coleco", NULL, "1998",
+	"Space Invasion (HB)\0", NULL, "John Dondzilla", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_VERSHOOT, 0,
+	CVGetZipName, cv_spaceinvasionRomInfo, cv_spaceinvasionRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// War (HB)
+
+static struct BurnRomInfo cv_warRomDesc[] = {
+	{ "War (2014) (Gerry Brophy).col",	31933, 0x7f06e25c, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_war, cv_war, cv_coleco)
+STD_ROM_FN(cv_war)
+
+struct BurnDriver BurnDrvcv_war = {
+	"cv_war", NULL, "cv_coleco", NULL, "2014",
+	"War (HB)\0", NULL, "Gerry Brophy", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_ACTION, 0,
+	CVGetZipName, cv_warRomInfo, cv_warRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
 };

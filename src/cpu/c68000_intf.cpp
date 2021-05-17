@@ -15,6 +15,31 @@ INT8* SekM68KContext[SEK_MAX];
 #include "Cyclone.h"
 struct Cyclone c68k[SEK_MAX];
 static bool bCycloneInited = false;
+
+// attempt at implementing an equivalent of virq for cyclone
+static UINT32 c68k_virq_state[SEK_MAX];
+
+static void c68k_set_virq(UINT32 level, UINT32 active)
+{
+	UINT32 state = c68k_virq_state[nSekActive];
+	UINT32 blevel;
+
+	if(active)
+		state |= 1 << level;
+	else
+		state &= ~(1 << level);
+	c68k_virq_state[nSekActive] = state;
+
+	for(blevel = 7; blevel > 0; blevel--)
+		if(state & (1 << blevel))
+			break;
+	c68k[nSekActive].irq = blevel;
+}
+
+static UINT32 c68k_get_virq(UINT32 level)
+{
+	return (c68k_virq_state[nSekActive] & (1 << level)) ? 1 : 0;
+}
 #endif
 
 INT32 nSekCount = -1;							// Number of allocated 68000s
@@ -24,6 +49,7 @@ INT32 nSekActive = -1;								// The cpu which is currently being emulated
 INT32 nSekCyclesTotal, nSekCyclesScanline, nSekCyclesSegment, nSekCyclesDone, nSekCyclesToDo;
 
 INT32 nSekCPUType[SEK_MAX], nSekCycles[SEK_MAX], nSekIRQPending[SEK_MAX], nSekRESETLine[SEK_MAX], nSekHALT[SEK_MAX];
+INT32 nSekVIRQPending[SEK_MAX][8];
 INT32 nSekCyclesToDoCache[SEK_MAX], nSekm68k_ICount[SEK_MAX];
 INT32 nSekCPUOffsetAddress[SEK_MAX];
 
@@ -497,6 +523,11 @@ extern "C" INT32 C68KIRQAcknowledge(INT32 nIRQ)
 		nSekIRQPending[nSekActive] = 0;
 	}
 
+	if (nSekVIRQPending[nSekActive][nIRQ] & SEK_IRQSTATUS_VAUTO) {
+		c68k_set_virq(nIRQ, 0);
+		nSekVIRQPending[nSekActive][nIRQ] = 0;
+	}
+
 	if (pSekExt->IrqCallback) {
 		return pSekExt->IrqCallback(nIRQ);
 	}
@@ -554,10 +585,9 @@ extern "C" INT32 M68KIRQAcknowledge(INT32 nIRQ)
 		nSekIRQPending[nSekActive] = 0;
 	}
 
-	if (nSekIRQPending[nSekActive] & SEK_IRQSTATUS_VAUTO &&
-		(nSekIRQPending[nSekActive] & 0x0007) == nIRQ) {
+	if (nSekVIRQPending[nSekActive][nIRQ] & SEK_IRQSTATUS_VAUTO) {
 		m68k_set_virq(nIRQ, 0);
-		nSekIRQPending[nSekActive] = 0;
+		nSekVIRQPending[nSekActive][nIRQ] = 0;
 	}
 
 	if (pSekExt->IrqCallback) {
@@ -892,6 +922,9 @@ INT32 SekInit(INT32 nCount, INT32 nCPUType)
 	nSekm68k_ICount[nCount] = 0;
 
 	nSekIRQPending[nCount] = 0;
+	for (INT32 i = 0; i < 8; i++) {
+		nSekVIRQPending[nCount][i] = 0;
+	}
 	nSekRESETLine[nCount] = 0;
 	nSekHALT[nCount] = 0;
 
@@ -971,6 +1004,7 @@ void SekReset()
 		c68k[nSekActive].a[7]			= m68k_fetch32(0); // Stack Pointer
 		c68k[nSekActive].membase		= 0;
 		c68k[nSekActive].pc				= c68k[nSekActive].checkpc(m68k_fetch32(4));
+		c68k_virq_state[nSekActive]		= 0;
 	} else {
 #endif
 
@@ -982,6 +1016,9 @@ void SekReset()
 	}
 #endif
 
+	for (INT32 i = 0; i < 8; i++) {
+		nSekVIRQPending[nSekActive][i] = 0;
+	}
 }
 
 void SekReset(INT32 nCPU)
@@ -1323,11 +1360,11 @@ void SekSetVIRQLine(const INT32 line, INT32 nstatus)
 	INT32 status = nstatus << 12; // needed for compatibility
 
 	if (status) {
-		nSekIRQPending[nSekActive] = line | status;
+		nSekVIRQPending[nSekActive][line] = status;
 
 #ifdef EMU_C68K
 		if ((nSekCpuCore == SEK_CORE_C68K) && nSekCPUType[nSekActive] == 0x68000) {
-			// is there an equivalent to m68k_set_virq in cyclone ?
+			c68k_set_virq(line, 1);
 		} else {
 #endif
 
@@ -1342,11 +1379,11 @@ void SekSetVIRQLine(const INT32 line, INT32 nstatus)
 		return;
 	}
 
-	nSekIRQPending[nSekActive] = 0;
+	nSekVIRQPending[nSekActive][line] = 0;
 
 #ifdef EMU_C68K
 	if ((nSekCpuCore == SEK_CORE_C68K) && nSekCPUType[nSekActive] == 0x68000) {
-		// is there an equivalent to m68k_set_virq in cyclone ?
+		c68k_set_virq(line, 0);
 	} else {
 #endif
 
@@ -1914,6 +1951,7 @@ INT32 SekScan(INT32 nAction)
 
 		SCAN_VAR(nSekCPUType[i]);
 		SCAN_VAR(nSekIRQPending[i]);
+		SCAN_VAR(nSekVIRQPending[i]);
 		SCAN_VAR(nSekCycles[i]);
 		SCAN_VAR(nSekRESETLine[i]);
 		SCAN_VAR(nSekHALT[i]);
@@ -1938,6 +1976,7 @@ INT32 SekScan(INT32 nAction)
 				CycloneUnpack(&c68k[i], cyclone_buffer);
 				nSekActive = sekActive;
 			}
+			SCAN_VAR(c68k_virq_state[i]);
 		} else {
 #endif
 #ifdef EMU_M68K

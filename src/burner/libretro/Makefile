@@ -217,6 +217,7 @@ else ifneq (,$(filter $(platform), ps3 psl1ght))
 	ENDIANNESS_DEFINES =  -DWORDS_BIGENDIAN
 	EXTERNAL_ZLIB = 1
 	STATIC_LINKING = 1
+	INCLUDE_7Z_SUPPORT = 0
 
 	ifneq ($(platdef),)
         PLATFORM_DEFINES += -D$(platdef)

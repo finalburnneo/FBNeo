@@ -43563,20 +43563,20 @@ struct BurnDriver BurnDrvmd_bobc206 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Mega Q-Bert v1.1 (HB)
-static struct BurnRomInfo md_megaqbert11RomDesc[] = {
-	{ "Mega Qbert.bin", 0x80000, 0x692a9227, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+// Mega Q-Bert v1.2 (HB)
+static struct BurnRomInfo md_megaqbert12RomDesc[] = {
+	{ "Mega Qbert.bin", 0x80000, 0x8e48002d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_megaqbert11)
-STD_ROM_FN(md_megaqbert11)
+STD_ROM_PICK(md_megaqbert12)
+STD_ROM_FN(md_megaqbert12)
 
-struct BurnDriver BurnDrvmd_megaqbert11 = {
-	"md_megaqbert11", NULL, NULL, NULL, "2016",
-	"Mega Q-Bert (HB, v1.1)\0", NULL, "Jaklub", "Sega Megadrive",
+struct BurnDriver BurnDrvmd_megaqbert12 = {
+	"md_megaqbert12", NULL, NULL, NULL, "2016",
+	"Mega Q-Bert (HB, v1.2)\0", NULL, "Jaklub", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
-	MegadriveGetZipName, md_megaqbert11RomInfo, md_megaqbert11RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
+	MegadriveGetZipName, md_megaqbert12RomInfo, md_megaqbert12RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

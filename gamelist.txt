@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16953 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16955 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3578,6 +3578,7 @@ This list contains all games supported by FinalBurn Neo.
 | dogyuunt	|  	| Dogyuun (test location version)			| dogyuun	| 1992	| Toaplan	| Dual Toaplan G| 					|
 | dogyuun	|  	| Dogyuun						| 		| 1992	| Toaplan	| Dual Toaplan G| 					|
 | dokaben	|  	| Dokaben (Japan)					| 		| 1989	| Capcom	| Miscellaneous	| 					|
+| dokaben2	|  	| Dokaben 2 (Japan)					| 		| 1989	| Capcom	| Miscellaneous	| 					|
 | fds_dokidokipanic|  	| Doki Doki Panic (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | msx_dokidoki	|  	| Doki Doki Penguin Land (Jpn)				| 		| 1985	| Pony Canyon	| MSX		| 					|
 | msx_dokidokia	|  	| Doki Doki Penguin Land (Jpn, Alt)			| msx_dokidoki	| 1985	| Pony Canyon	| MSX		| 					|
@@ -3704,7 +3705,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_ddragon	|  	| Double Dragon (Kor)					| 		| 1989	| Zemina	| MSX		| 					|
 | sms_ddragonk	|  	| Double Dragon (Kor)					| sms_ddragon	| 198?	| Samsung	| Sega Master Sy| 					|
 | doubledr	|  	| Double Dragon (Neo-Geo)				| 		| 1995	| Technos	| Neo Geo MVS	| 					|
-| doubledrsp	| D	| Double Dragon (Special 2017, hack)			| doubledr	| 2017	| hack		| Neo Geo MVS	| 					|
+| doubledrsp	|  	| Double Dragon (Special 2017, hack)			| doubledr	| 2017	| hack		| Neo Geo MVS	| 					|
 | ddragonu	|  	| Double Dragon (US set 1)				| ddragon	| 1987	| [Technos] (Tai| Miscellaneous	| 					|
 | ddragonua	|  	| Double Dragon (US set 2)				| ddragon	| 1987	| [Technos] (Tai| Miscellaneous	| 					|
 | ddragonub	|  	| Double Dragon (US set 3)				| ddragon	| 1987	| [Technos] (Tai| Miscellaneous	| 					|
@@ -15638,6 +15639,7 @@ This list contains all games supported by FinalBurn Neo.
 | earthjkrp	|  	| U.N. Defense Force: Earth Joker (Japan, prototype?)	| earthjkr	| 1993	| Visco		| Taito Misc	| 					|
 | earthjkr	|  	| U.N. Defense Force: Earth Joker (US / Japan, set 1)	| 		| 1993	| Visco		| Taito Misc	| 					|
 | earthjkra	|  	| U.N. Defense Force: Earth Joker (US / Japan, set 2)	| earthjkr	| 1993	| Visco		| Taito Misc	| 					|
+| earthjkrb	|  	| U.N. Defense Force: Earth Joker (US / Japan, set 3)	| earthjkr	| 1993	| Visco		| Taito Misc	| 					|
 | unsquad	|  	| U.N. Squadron (US)					| 		| 1989	| Daipro / Capco| CPS1		| 					|
 | vball2pjb	|  	| U.S. Championship V'ball (bootleg of Japan set)	| vball		| 1988	| bootleg	| Miscellaneous	| 					|
 | vballb	|  	| U.S. Championship V'ball (bootleg of US set)		| vball		| 1988	| bootleg	| Miscellaneous	| 					|

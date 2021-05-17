@@ -3626,6 +3626,7 @@ DRV		BurnDrvDogyuunk;
 DRV		BurnDrvDogyuunt;
 DRV		BurnDrvDogyuun;
 DRV		BurnDrvDokaben;
+DRV		BurnDrvDokaben2;
 DRV		BurnDrvfds_dokidokipanic;
 DRV		BurnDrvMSX_dokidoki;
 DRV		BurnDrvMSX_dokidokia;
@@ -3756,9 +3757,7 @@ DRV		BurnDrvDdragon;
 DRV		BurnDrvMSX_ddragon;
 DRV		BurnDrvsms_ddragonk;
 DRV		BurnDrvdoubledr;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvdoubledrsp;		// no comment
-#endif
+DRV		BurnDrvdoubledrsp;
 DRV		BurnDrvDdragonu;
 DRV		BurnDrvDdragoua;
 DRV		BurnDrvDdragoub;
@@ -15854,6 +15853,7 @@ DRV		BurnDrvMSX_tzr;
 DRV		BurnDrvEarthjkrp;
 DRV		BurnDrvEarthjkr;
 DRV		BurnDrvEarthjkra;
+DRV		BurnDrvEarthjkrb;
 DRV		BurnDrvCpsUnsquad;
 DRV		BurnDrvVball2pjb;
 DRV		BurnDrvVballb;
@@ -20832,6 +20832,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDogyuunt,			// Dogyuun (test location version)
 	&BurnDrvDogyuun,			// Dogyuun
 	&BurnDrvDokaben,			// Dokaben (Japan)
+	&BurnDrvDokaben2,			// Dokaben 2 (Japan)
 	&BurnDrvfds_dokidokipanic,	// Doki Doki Panic (Japan)
 	&BurnDrvMSX_dokidoki,		// Doki Doki Penguin Land (Jpn)
 	&BurnDrvMSX_dokidokia,		// Doki Doki Penguin Land (Jpn, Alt)
@@ -20962,9 +20963,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_ddragon,		// Double Dragon (Kor)
 	&BurnDrvsms_ddragonk,		// Double Dragon (Kor)
 	&BurnDrvdoubledr,			// Double Dragon (Neo-Geo)
-#if defined FBNEO_DEBUG
-	&BurnDrvdoubledrsp,			// Double Dragon (Special 2017, hack) [no comment]
-#endif
+	&BurnDrvdoubledrsp,			// Double Dragon (Special 2017, hack)
 	&BurnDrvDdragonu,			// Double Dragon (US set 1)
 	&BurnDrvDdragoua,			// Double Dragon (US set 2)
 	&BurnDrvDdragoub,			// Double Dragon (US set 3)
@@ -33060,6 +33059,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvEarthjkrp,			// U.N. Defense Force: Earth Joker (Japan, prototype?)
 	&BurnDrvEarthjkr,			// U.N. Defense Force: Earth Joker (US / Japan, set 1)
 	&BurnDrvEarthjkra,			// U.N. Defense Force: Earth Joker (US / Japan, set 2)
+	&BurnDrvEarthjkrb,			// U.N. Defense Force: Earth Joker (US / Japan, set 3)
 	&BurnDrvCpsUnsquad,			// U.N. Squadron (US)
 	&BurnDrvVball2pjb,			// U.S. Championship V'ball (bootleg of Japan set)
 	&BurnDrvVballb,				// U.S. Championship V'ball (bootleg of US set)

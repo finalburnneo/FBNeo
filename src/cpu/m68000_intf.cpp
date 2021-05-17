@@ -870,6 +870,8 @@ extern "C" INT32 M68KIRQAcknowledge(INT32 nIRQ)
 		nSekIRQPending[nSekActive] = 0;
 	}
 
+	// tofix: only supports 1 _AUTO interrupt at a time with SekSetVIRQLine() -dink
+	// plus can get confused if another interrupt _NONE's w/SekSetVIRQLine() before _AUTO irq acks.
 	if (nSekIRQPending[nSekActive] & SEK_IRQSTATUS_VAUTO &&
 		(nSekIRQPending[nSekActive] & 0x0007) == nIRQ) {
 		m68k_set_virq(nIRQ, 0);

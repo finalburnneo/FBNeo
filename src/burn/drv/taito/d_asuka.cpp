@@ -2321,6 +2321,40 @@ struct BurnDriver BurnDrvEarthjkra = {
 };
 
 
+// U.N. Defense Force: Earth Joker (US / Japan, set 3)
+/* Taito PCB: K1100726A / J1100169B */
+
+static struct BurnRomInfo earthjkrbRomDesc[] = {
+	{ "4.ic23",				0x20000, 0x250f09f8, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "3.ic8",				0x20000, 0x88fc1c5d, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "ic30e.ic30",		    0x80000, 0x49d1f77f, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  2
+
+	{ "2.ic27",				0x10000, 0x42ba2566, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  3 Z80 Code
+
+	{ "ej_chr-0.ic3",		0x80000, 0xac675297, BRF_GRA | TAITO_CHARS },				//  4 Characters
+
+	{ "ej_obj-0.ic6",		0x80000, 0x5f21ac47, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
+	{ "1.ic5",				0x10000, 0xcb4891db, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  6
+	{ "0.ic4",				0x10000, 0xb612086f, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  7
+	
+	{ "b68-04.ic32",		0x00144, 0x9be618d1, BRF_OPT },						//  8 plds
+	{ "b68-05.ic43",		0x00104, 0xd6524ccc, BRF_OPT },						//  9
+};
+
+STD_ROM_PICK(earthjkrb)
+STD_ROM_FN(earthjkrb)
+
+struct BurnDriver BurnDrvEarthjkrb = {
+	"earthjkrb", "earthjkr", NULL, NULL, "1993",
+	"U.N. Defense Force: Earth Joker (US / Japan, set 3)\0", NULL, "Visco", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	NULL, earthjkrbRomInfo, earthjkrbRomName, NULL, NULL, NULL, NULL, AsukaInputInfo, EarthjkrDIPInfo,
+	EarthjkrInit, TaitoExit, EtoFrame, DrvDraw, DrvScan, NULL, 0x1000,
+	240, 320, 3, 4
+};
+
+
 // Known to exist (not dumped) a Japanese version with ROMs 3 & 4 also stamped "A" same as above or different version??
 // Also known to exist (not dumped) a US version of Earth Joker, title screen shows "DISTRIBUTED BY ROMSTAR, INC."  ROMs were numbered
 // from 0 through 4 and the fix ROM at IC30 is labeled 1 even though IC5 is also labled as 1 similar to the below set:

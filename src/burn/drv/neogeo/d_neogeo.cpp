@@ -14891,7 +14891,7 @@ static INT32 DoubledrspExit()
     return NeoExit();
 }
 
-struct BurnDriverD BurnDrvdoubledrsp = {
+struct BurnDriver BurnDrvdoubledrsp = {
 	"doubledrsp", "doubledr", "neogeo", NULL, "2017",
 	"Double Dragon (Special 2017, hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,

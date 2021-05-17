@@ -16,6 +16,7 @@ INT32 nSekActive = -1;								// The cpu which is currently being emulated
 INT32 nSekCyclesTotal, nSekCyclesScanline, nSekCyclesSegment, nSekCyclesDone, nSekCyclesToDo;
 
 INT32 nSekCPUType[SEK_MAX], nSekCycles[SEK_MAX], nSekIRQPending[SEK_MAX], nSekRESETLine[SEK_MAX], nSekHALT[SEK_MAX];
+INT32 nSekVIRQPending[SEK_MAX][8];
 INT32 nSekCyclesToDoCache[SEK_MAX], nSekm68k_ICount[SEK_MAX];
 INT32 nSekCPUOffsetAddress[SEK_MAX];
 
@@ -870,10 +871,9 @@ extern "C" INT32 M68KIRQAcknowledge(INT32 nIRQ)
 		nSekIRQPending[nSekActive] = 0;
 	}
 
-	if (nSekIRQPending[nSekActive] & SEK_IRQSTATUS_VAUTO &&
-		(nSekIRQPending[nSekActive] & 0x0007) == nIRQ) {
+	if (nSekVIRQPending[nSekActive][nIRQ] & SEK_IRQSTATUS_VAUTO) {
 		m68k_set_virq(nIRQ, 0);
-		nSekIRQPending[nSekActive] = 0;
+		nSekVIRQPending[nSekActive][nIRQ] = 0;
 	}
 	
 	if (pSekExt->IrqCallback) {
@@ -1189,6 +1189,9 @@ INT32 SekInit(INT32 nCount, INT32 nCPUType)
 	nSekm68k_ICount[nCount] = 0;
 
 	nSekIRQPending[nCount] = 0;
+	for (INT32 i = 0; i < 8; i++) {
+		nSekVIRQPending[nCount][i] = 0;
+	}
 	nSekRESETLine[nCount] = 0;
 	nSekHALT[nCount] = 0;
 
@@ -1277,6 +1280,9 @@ void SekReset()
 
 #ifdef EMU_M68K
 		m68k_pulse_reset();
+		for (INT32 i = 0; i < 8; i++) {
+			nSekVIRQPending[nSekActive][i] = 0;
+		}
 #endif
 
 #ifdef EMU_A68K
@@ -1613,7 +1619,7 @@ void SekSetVIRQLine(const INT32 line, INT32 nstatus)
 	INT32 status = nstatus << 12; // needed for compatibility
 
 	if (status) {
-		nSekIRQPending[nSekActive] = line | status;
+		nSekVIRQPending[nSekActive][line] = status;
 
 #ifdef EMU_M68K
 			m68k_set_virq(line, 1);
@@ -1622,7 +1628,7 @@ void SekSetVIRQLine(const INT32 line, INT32 nstatus)
 		return;
 	}
 
-	nSekIRQPending[nSekActive] = 0;
+	nSekVIRQPending[nSekActive][line] = 0;
 
 #ifdef EMU_M68K
 	m68k_set_virq(line, 0);
@@ -2493,6 +2499,7 @@ INT32 SekScan(INT32 nAction)
 
 		SCAN_VAR(nSekCPUType[i]);
 		SCAN_VAR(nSekIRQPending[i]);
+		SCAN_VAR(nSekVIRQPending[i]);
 		SCAN_VAR(nSekCycles[i]);
 		SCAN_VAR(nSekRESETLine[i]);
 		SCAN_VAR(nSekHALT[i]);

@@ -3417,7 +3417,7 @@ static void sprite_swap_buffers()
 		}                                                                   \
 	}
 
-INT32 draw_one_sprite(UINT16 const *data, INT32 xoffs, INT32 yoffs, const clip_struct clipin, const clip_struct clipout)
+static INT32 draw_one_sprite(UINT16 const *data, INT32 xoffs, INT32 yoffs, const clip_struct clipin, const clip_struct clipout)
 {
 	static const INT32 transparency_masks[4][4] =
 	{

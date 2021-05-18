@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16955 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16957 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -5932,6 +5932,7 @@ This list contains all games supported by FinalBurn Neo.
 | hachamfb	|  	| Hacha Mecha Fighter (19th Sep. 1991, unprotected, boot| hachamf	| 1991	| bootleg	| NMK16		| 					|
 | hachamfp	|  	| Hacha Mecha Fighter (Location Test Prototype, 19th Sep| hachamf	| 1991	| NMK		| NMK16		| 					|
 | hachoo	|  	| Hachoo!						| 		| 1989	| Jaleco	| Mega System 1	| 					|
+| nes_hackmatch	|  	| Hack Match (HB)					| 		| 2021	| Zachtronics	| Miscellaneous	| Original game by Juice (1990)		|
 | spec_hadesnebula|  	| Hades Nebula						| 		| 1987	| Nexus Producti| ZX Spectrum	| 					|
 | spec_mrhair	|  	| Hair Raising Adventures of Mr Hair, the (HB)		| 		| 2019	| Lee Stevenson	| ZX Spectrum	| 					|
 | sms_hajafuin	|  	| Haja no Fuuin (Jpn)					| sms_miracle	| 1987	| Sega		| Sega Master Sy| 					|
@@ -8240,9 +8241,10 @@ This list contains all games supported by FinalBurn Neo.
 | nes_megaman5	|  	| Mega Man 5 (USA)					| 		| 1992	| Capcom	| Miscellaneous	| 					|
 | nes_megaman6	|  	| Mega Man 6 (USA)					| 		| 1994	| Nintendo	| Miscellaneous	| 					|
 | nes_megamancx	|  	| Mega Man CX (USA)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| md_mmworld	|  	| Mega Marble World (HB, v1.9)				| 		| 2018	| Mega Cat Studi| Sega Megadrive| 					|
 | md_mindtris	|  	| Mega Mindtris (HB, v1.2)				| 		| 2018	| 1985 Alternati| Sega Megadrive| 					|
 | spec_megaphoenix|  	| Mega Phoenix (128K)					| 		| 1991	| Dinamic	| ZX Spectrum	| 					|
-| md_megaqbert11|  	| Mega Q-Bert (HB, v1.1)				| 		| 2016	| Jaklub	| Sega Megadrive| 					|
+| md_megaqbert12|  	| Mega Q-Bert (HB, v1.2)				| 		| 2016	| Jaklub	| Sega Megadrive| 					|
 | md_megaswiv	|  	| Mega SWIV (Euro)					| 		| 1994	| Time Warner In| Sega Megadrive| 					|
 | md_megaswivb	|  	| Mega SWIV (Euro, Pirate)				| md_megaswiv	| 1994	| Time Warner In| Sega Megadrive| 					|
 | md_megaswivci	|  	| Mega SWIV (Hack, Color Improvement v1.05)		| md_megaswiv	| 2016	| Time Warner In| Sega Megadrive| 					|

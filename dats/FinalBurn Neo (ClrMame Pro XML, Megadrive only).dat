@@ -8359,7 +8359,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jparks" cloneof="jpark" romof="jpark">
-		<description>Jurassic Park (Hack, Spanish)</description>
+		<description>Jurassic Park (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="jurassic park (hack, spanish).bin" size="2097152" crc="53d3dd70"/>
@@ -8399,7 +8399,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jparkres" cloneof="jparkre" romof="jparkre">
-		<description>Jurassic Park - Rampage Edition (Hack, Spanish)</description>
+		<description>Jurassic Park - Rampage Edition (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="jurassic park - rampage edition (hack, spanish).bin" size="2097152" crc="954efbf2"/>
@@ -8479,7 +8479,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jleagues" cloneof="jleague" romof="jleague">
-		<description>Justice League Task Force (Hack, Spanish)</description>
+		<description>Justice League Task Force (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
 		<manufacturer>Acclaim</manufacturer>
 		<rom name="justice league task force (hack, spanish).bin" size="3145728" crc="09844391"/>
@@ -9239,7 +9239,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lotr" cloneof="strmlord" romof="strmlord">
-		<description>Lord of the Rings (Rus, Hack of Stormlord)</description>
+		<description>Lord of the Rings (Rus, Hack of Stormlord) [Hack]</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="lord of the rings (unl).bin" size="524288" crc="e2a2342a"/>
@@ -9846,6 +9846,14 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mmworld">
+		<description>Mega Marble World (HB, v1.9) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Mega Cat Studios</manufacturer>
+		<rom name="Mega Marble World v1.9 (2018)(Mega Cat Studios).bin" size="2621440" crc="438c7511"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mindtris">
 		<description>Mega Mindtris (HB, v1.2) [Homebrew]</description>
 		<year>2018</year>
@@ -9854,11 +9862,11 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="megaqbert11">
-		<description>Mega Q-Bert (HB, v1.1) [Homebrew]</description>
+	<game name="megaqbert12">
+		<description>Mega Q-Bert (HB, v1.2) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>Jaklub</manufacturer>
-		<rom name="Mega Qbert.bin" size="524288" crc="692a9227"/>
+		<rom name="Mega Qbert.bin" size="524288" crc="8e48002d"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -16754,7 +16762,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="strmlords" cloneof="strmlord" romof="strmlord">
-		<description>Stormlord (Hack, Spanish)</description>
+		<description>Stormlord (Hack, Spanish) [Hack]</description>
 		<year>2020</year>
 		<manufacturer>Razorsoft</manufacturer>
 		<rom name="stormlord (hack, spanish).bin" size="524288" crc="7cb3255c"/>

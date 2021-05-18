@@ -5780,6 +5780,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="hackmatch">
+		<description>Hack Match (HB) [Homebrew, Original game by Juice (1990)]</description>
+		<year>2021</year>
+		<manufacturer>Zachtronics</manufacturer>
+		<rom name="Hack Match (2021)(Zachtronics).nes" size="40976" crc="94554d49"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="halloween86">
 		<description>Halloween'86 (HB) [Homebrew]</description>
 		<year>2016</year>

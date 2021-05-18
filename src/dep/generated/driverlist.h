@@ -6008,6 +6008,7 @@ DRV		BurnDrvHachamfa;
 DRV		BurnDrvHachamfb;
 DRV		BurnDrvHachamfp;
 DRV		BurnDrvHachoo;
+DRV		BurnDrvnes_hackmatch;
 DRV		BurnSpechadesnebula;
 DRV		BurnSpecMrhair;
 DRV		BurnDrvsms_hajafuin;
@@ -8350,9 +8351,10 @@ DRV		BurnDrvnes_megaman4;
 DRV		BurnDrvnes_megaman5;
 DRV		BurnDrvnes_megaman6;
 DRV		BurnDrvnes_megamancx;
+DRV		BurnDrvmd_mmworld;
 DRV		BurnDrvmd_mindtris;
 DRV		BurnSpecMegaphoenix;
-DRV		BurnDrvmd_megaqbert11;
+DRV		BurnDrvmd_megaqbert12;
 DRV		BurnDrvmd_megaswiv;
 DRV		BurnDrvmd_megaswivb;
 DRV		BurnDrvmd_megaswivci;
@@ -23214,6 +23216,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvHachamfb,			// Hacha Mecha Fighter (19th Sep. 1991, unprotected, bootleg Thunder Dragon conversion)
 	&BurnDrvHachamfp,			// Hacha Mecha Fighter (Location Test Prototype, 19th Sep. 1991)
 	&BurnDrvHachoo,				// Hachoo!
+	&BurnDrvnes_hackmatch,		// Hack Match (HB)
 	&BurnSpechadesnebula,		// Hades Nebula
 	&BurnSpecMrhair,			// Hair Raising Adventures of Mr Hair, the (HB)
 	&BurnDrvsms_hajafuin,		// Haja no Fuuin (Jpn)
@@ -25556,9 +25559,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_megaman5,		// Mega Man 5 (USA)
 	&BurnDrvnes_megaman6,		// Mega Man 6 (USA)
 	&BurnDrvnes_megamancx,		// Mega Man CX (USA)
+	&BurnDrvmd_mmworld,			// Mega Marble World (HB, v1.9)
 	&BurnDrvmd_mindtris,		// Mega Mindtris (HB, v1.2)
 	&BurnSpecMegaphoenix,		// Mega Phoenix (128K)
-	&BurnDrvmd_megaqbert11,		// Mega Q-Bert (HB, v1.1)
+	&BurnDrvmd_megaqbert12,		// Mega Q-Bert (HB, v1.2)
 	&BurnDrvmd_megaswiv,		// Mega SWIV (Euro)
 	&BurnDrvmd_megaswivb,		// Mega SWIV (Euro, Pirate)
 	&BurnDrvmd_megaswivci,		// Mega SWIV (Hack, Color Improvement v1.05)

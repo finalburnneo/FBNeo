@@ -307,6 +307,8 @@ else ifeq ($(platform), libnx)
 	CXXFLAGS := $(ASFLAGS) $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
 	CFLAGS += -std=gnu11
 	STATIC_LINKING = 1
+	# 2021-05-18 : disabling 7z again for libnx, it seems the lib version linked to RA is old
+	INCLUDE_7Z_SUPPORT = 0
 	ENDIANNESS_DEFINES := -DLSB_FIRST
 
 # Classic Platforms ####################

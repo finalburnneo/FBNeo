@@ -4614,7 +4614,7 @@ struct BurnDriver BurnDrvArescue = {
 	"arescue", NULL, NULL, NULL, "1992",
 	"Air Rescue (World)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, arescueRomInfo, arescueRomName, NULL, NULL, NULL, NULL, ArescueInputInfo, ArescueDIPInfo,
 	ArescueInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -4682,7 +4682,7 @@ struct BurnDriver BurnDrvArescueu = {
 	"arescueu", "arescue", NULL, NULL, "1992",
 	"Air Rescue (US)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, arescueuRomInfo, arescueuRomName, NULL, NULL, NULL, NULL, ArescueInputInfo, ArescueDIPInfo,
 	ArescueInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -4750,7 +4750,7 @@ struct BurnDriver BurnDrvArescuej = {
 	"arescuej", "arescue", NULL, NULL, "1992",
 	"Air Rescue (Japan)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, arescuejRomInfo, arescuejRomName, NULL, NULL, NULL, NULL, ArescueInputInfo, ArescueDIPInfo,
 	ArescueInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -5255,7 +5255,7 @@ struct BurnDriver BurnDrvSpidman = {
 	"spidman", NULL, NULL, NULL, "1991",
 	"Spider-Man: The Videogame (World)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_SEGA_MISC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_SEGA_MISC, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, spidmanRomInfo, spidmanRomName, NULL, NULL, NULL, NULL, SpidmanInputInfo, SpidmanDIPInfo,
 	SpidmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -5297,7 +5297,7 @@ struct BurnDriver BurnDrvSpidmanu = {
 	"spidmanu", "spidman", NULL, NULL, "1991",
 	"Spider-Man: The Videogame (US, Rev A)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_MISC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_MISC, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, spidmanuRomInfo, spidmanuRomName, NULL, NULL, NULL, NULL, SpidmanuInputInfo, SpidmanuDIPInfo,
 	SpidmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -5339,7 +5339,7 @@ struct BurnDriver BurnDrvSpidmanj = {
 	"spidmanj", "spidman", NULL, NULL, "1991",
 	"Spider-Man: The Videogame (Japan)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_MISC, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, spidmanjRomInfo, spidmanjRomName, NULL, NULL, NULL, NULL, SpidmanInputInfo, SpidmanDIPInfo,
 	SpidmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3

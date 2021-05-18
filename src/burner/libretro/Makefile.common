@@ -431,16 +431,22 @@ endif
 ifeq ($(INCLUDE_7Z_SUPPORT), 1)
 	FBNEO_DEFINES += -DINCLUDE_7Z_SUPPORT -D_7ZIP_PPMD_SUPPPORT -D_7ZIP_ST
 	ifneq ($(STATIC_LINKING), 1)
-		FBNEO_SRC_DIRS += $(FBNEO_LIB_DIR)/lib7z
-		BURN_BLACKLIST += $(FBNEO_LIB_DIR)/lib7z/LzFindMt.c \
-			$(FBNEO_LIB_DIR)/lib7z/LzmaEnc.c \
-			$(FBNEO_LIB_DIR)/lib7z/MtCoder.c \
-			$(FBNEO_LIB_DIR)/lib7z/Lzma2Enc.c \
-			$(FBNEO_LIB_DIR)/lib7z/Bcj2Enc.c \
-			$(FBNEO_LIB_DIR)/lib7z/Threads.c \
-			$(FBNEO_LIB_DIR)/lib7z/Lzma86Enc.c \
-			$(FBNEO_LIB_DIR)/lib7z/LzmaLib.c \
-			$(FBNEO_LIB_DIR)/lib7z/XzEnc.c
+		SOURCES_C += $(FBNEO_LIB_DIR)/lib7z/7zArcIn.c \
+			$(FBNEO_LIB_DIR)/lib7z/7zBuf.c \
+			$(FBNEO_LIB_DIR)/lib7z/7zCrc.c \
+			$(FBNEO_LIB_DIR)/lib7z/7zCrcOpt.c \
+			$(FBNEO_LIB_DIR)/lib7z/7zDec.c \
+			$(FBNEO_LIB_DIR)/lib7z/7zStream.c \
+			$(FBNEO_LIB_DIR)/lib7z/Bcj2.c \
+			$(FBNEO_LIB_DIR)/lib7z/Bra.c \
+			$(FBNEO_LIB_DIR)/lib7z/Bra86.c \
+			$(FBNEO_LIB_DIR)/lib7z/BraIA64.c \
+			$(FBNEO_LIB_DIR)/lib7z/CpuArch.c \
+			$(FBNEO_LIB_DIR)/lib7z/Delta.c \
+			$(FBNEO_LIB_DIR)/lib7z/Lzma2Dec.c \
+			$(FBNEO_LIB_DIR)/lib7z/LzmaDec.c \
+			$(FBNEO_LIB_DIR)/lib7z/Ppmd7.c \
+			$(FBNEO_LIB_DIR)/lib7z/Ppmd7Dec.c
 	endif
 else
 	BURN_BLACKLIST += $(FBNEO_BURNER_DIR)/un7z.cpp

@@ -459,7 +459,7 @@ INT32 WolfUnitInit()
 
     Dcs2kInit(DCS_8K, MHz(10));
     Dcs2kMapSoundROM(DrvSoundROM, 0x1000000);
-	Dcs2kSetVolume(2.25);
+	Dcs2kSetVolume(5.25);
 
     MidwaySerialPicInit(528);
 	MidwaySerialPicReset();

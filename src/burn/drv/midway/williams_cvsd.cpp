@@ -222,6 +222,7 @@ void williams_cvsd_init(UINT8 *prgrom, INT32 prot_start, INT32 prot_end, INT32 s
 
 	DACInit(0, 0, 1, M6809TotalCycles, 2000000);
 	DACSetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
+	DACDCBlock(1);
 
 	protection_start = prot_start;
 	protection_end = prot_end;

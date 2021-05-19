@@ -569,6 +569,8 @@ static void TUnitWrite(UINT32 address, UINT16 value)
 {
 	if (address == 0x01d81070) return; // watchdog
 	if (address == 0x01c00060) return; // ?
+	if (address == 0x01a3d0d0) return; // prot RMW
+	if (address == 0x01a190e0) return; // prot RMW
 
 	bprintf(PRINT_NORMAL, _T("Unmapped Write %x, %x\n"), address, value);
 }
@@ -1133,6 +1135,7 @@ INT32 TUnitInit()
 
 		DACInit(0, 0, 1, M6809TotalCycles, 2000000);
 		DACSetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
+		DACDCBlock(1);
 
 		MSM6295Init(0, /*1000000 / MSM6295_PIN7_HIGH*/8000, 1);
 		MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);

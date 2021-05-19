@@ -625,7 +625,7 @@ static void TxCallback(INT32 port, INT32 data)
             nTxIncrement = adsp->m[m];
             nTxSize = adsp->l[l];
 
-            src -= nTxIncrement;
+            src &= ~0xf;
             adsp->i[nTxIR] = src;
             nTxIRBase = src;
 
@@ -675,9 +675,7 @@ static void DcsIRQ__INT()
     bGenerateIRQ = 1;
 
     if (wrapped) {
-        Adsp2100SetIRQLine(ADSP2105_IRQ1, CPU_IRQSTATUS_ACK);
-        Adsp2100Run(1);
-        Adsp2100SetIRQLine(ADSP2105_IRQ1, CPU_IRQSTATUS_NONE);
+		Adsp2100SetIRQLine(ADSP2105_IRQ1, CPU_IRQSTATUS_AUTO);
     }
 }
 

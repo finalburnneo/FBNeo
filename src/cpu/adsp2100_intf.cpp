@@ -167,7 +167,16 @@ void Adsp2100SetIRQCallback(int (*cb)(int))
 
 void Adsp2100SetIRQLine(int line, int state)
 {
-    adsp21xx_set_irq_line(pADSP, line, state);
+	switch (state) {
+		case CPU_IRQSTATUS_AUTO:
+		case CPU_IRQSTATUS_HOLD:
+			adsp21xx_set_irq_line(pADSP, line, CPU_IRQSTATUS_ACK);
+			adsp21xx_set_irq_line(pADSP, line, CPU_IRQSTATUS_NONE);
+			break;
+		default:
+			adsp21xx_set_irq_line(pADSP, line, state);
+			break;
+	}
 }
 
 

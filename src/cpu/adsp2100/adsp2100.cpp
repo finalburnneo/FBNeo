@@ -1,3 +1,5 @@
+// license:BSD-3-Clause
+// copyright-holders:Aaron Giles
 /***************************************************************************
 
         ADSP2100.c
@@ -964,7 +966,7 @@ int adsp21xx_execute(adsp2100_state *adsp, int cycles)
 		}
 
 		/* parse the instruction */
-		switch (op >> 16)
+		switch ((op >> 16) & 0xff)
 		{
 			case 0x00:
 				/* 00000000 00000000 00000000  NOP */

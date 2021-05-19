@@ -542,7 +542,7 @@ INLINE void modify_address(adsp2100_state *adsp, UINT32 ireg, UINT32 mreg)
 	UINT32 i = adsp->i[ireg];
 	UINT32 l = adsp->l[ireg];
 
-	i += adsp->m[mreg];
+	i = (i + adsp->m[mreg]) & 0x3fff;
 	if (i < base) i += l;
 	else if (i >= base + l) i -= l;
 	adsp->i[ireg] = i;
@@ -570,7 +570,7 @@ INLINE void data_write_dag1(adsp2100_state *adsp, UINT32 op, INT32 val)
 	else
 		WWORD_DATA(adsp, i, val);
 
-	i += adsp->m[mreg];
+	i = (i + adsp->m[mreg]) & 0x3fff;
 	if (i < base) i += l;
 	else if (i >= base + l) i -= l;
 	adsp->i[ireg] = i;
@@ -594,7 +594,7 @@ INLINE UINT32 data_read_dag1(adsp2100_state *adsp, UINT32 op)
 	else
 		res = RWORD_DATA(adsp, i);
 
-	i += adsp->m[mreg];
+	i = (i + adsp->m[mreg]) & 0x3fff;
 	if (i < base) i += l;
 	else if (i >= base + l) i -= l;
 	adsp->i[ireg] = i;
@@ -612,7 +612,7 @@ INLINE void data_write_dag2(adsp2100_state *adsp, UINT32 op, INT32 val)
 
 	WWORD_DATA(adsp, i, val);
 
-	i += adsp->m[mreg];
+	i = (i + adsp->m[mreg]) & 0x3fff;
 	if (i < base) i += l;
 	else if (i >= base + l) i -= l;
 	adsp->i[ireg] = i;
@@ -629,7 +629,7 @@ INLINE UINT32 data_read_dag2(adsp2100_state *adsp, UINT32 op)
 
 	UINT32 res = RWORD_DATA(adsp, i);
 
-	i += adsp->m[mreg];
+	i = (i + adsp->m[mreg]) & 0x3fff;
 	if (i < base) i += l;
 	else if (i >= base + l) i -= l;
 	adsp->i[ireg] = i;
@@ -651,7 +651,7 @@ INLINE void pgm_write_dag2(adsp2100_state *adsp, UINT32 op, INT32 val)
 
 	WWORD_PGM(adsp, i, (val << 8) | adsp->px);
 
-	i += adsp->m[mreg];
+	i = (i + adsp->m[mreg]) & 0x3fff;
 	if (i < base) i += l;
 	else if (i >= base + l) i -= l;
 	adsp->i[ireg] = i;
@@ -671,7 +671,7 @@ INLINE UINT32 pgm_read_dag2(adsp2100_state *adsp, UINT32 op)
 	adsp->px = res;
 	res >>= 8;
 
-	i += adsp->m[mreg];
+	i = (i + adsp->m[mreg]) & 0x3fff;
 	if (i < base) i += l;
 	else if (i >= base + l) i -= l;
 	adsp->i[ireg] = i;
@@ -817,9 +817,9 @@ static void alu_op_ar(adsp2100_state *adsp, int op)
 			/* ABS X */
 			xop = ALU_GETXREG_UNSIGNED(adsp, xop);
 			res = (xop & 0x8000) ? -xop : xop;
+			CLR_FLAGS;
 			if (xop == 0) SET_Z;
 			if (xop == 0x8000) SET_N, SET_V;
-			CLR_S;
 			if (xop & 0x8000) SET_S;
 			break;
 		default:
@@ -943,9 +943,9 @@ static void alu_op_ar_const(adsp2100_state *adsp, int op)
 			/* ABS X */
 			xop = ALU_GETXREG_UNSIGNED(adsp, xop);
 			res = (xop & 0x8000) ? -xop : xop;
+			CLR_FLAGS;
 			if (xop == 0) SET_Z;
 			if (xop == 0x8000) SET_N, SET_V;
-			CLR_S;
 			if (xop & 0x8000) SET_S;
 			break;
 		default:
@@ -1081,9 +1081,9 @@ static void alu_op_af(adsp2100_state *adsp, int op)
 			/* ABS X */
 			xop = ALU_GETXREG_UNSIGNED(adsp, xop);
 			res = (xop & 0x8000) ? -xop : xop;
+			CLR_FLAGS;
 			if (xop == 0) SET_Z;
 			if (xop == 0x8000) SET_N, SET_V;
-			CLR_S;
 			if (xop & 0x8000) SET_S;
 			break;
 		default:
@@ -1204,9 +1204,9 @@ static void alu_op_af_const(adsp2100_state *adsp, int op)
 			/* ABS X */
 			xop = ALU_GETXREG_UNSIGNED(adsp, xop);
 			res = (xop & 0x8000) ? -xop : xop;
+			CLR_FLAGS;
 			if (xop == 0) SET_Z;
 			if (xop == 0x8000) SET_N, SET_V;
-			CLR_S;
 			if (xop & 0x8000) SET_S;
 			break;
 		default:
@@ -1339,9 +1339,9 @@ static void alu_op_none(adsp2100_state *adsp, int op)
 			/* ABS X */
 			xop = ALU_GETXREG_UNSIGNED(adsp, xop);
 			res = (xop & 0x8000) ? -xop : xop;
+			CLR_FLAGS;
 			if (xop == 0) SET_Z;
 			if (xop == 0x8000) SET_N, SET_V;
-			CLR_S;
 			if (xop & 0x8000) SET_S;
 			break;
 	}

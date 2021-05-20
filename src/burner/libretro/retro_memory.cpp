@@ -111,11 +111,27 @@ int StateGetMainRamAcb(BurnArea *pba)
 				nMemoryCount++;
 			}
 			return 0;
+		case HARDWARE_SNK_NGP:
 		case HARDWARE_SNK_NGPC:
 			if ((strcmp(pba->szName, "Main Ram") == 0)) {
-				pMainRamData = pba->Data;
-				nMainRamSize = pba->nLen;
-				bMainRamFound = true;
+				sMemoryDescriptors[nMemoryCount].flags     = RETRO_MEMDESC_SYSTEM_RAM;
+				sMemoryDescriptors[nMemoryCount].ptr       = pba->Data;
+				sMemoryDescriptors[nMemoryCount].start     = 0x00004000;
+				sMemoryDescriptors[nMemoryCount].len       = pba->nLen;
+				sMemoryDescriptors[nMemoryCount].select    = 0;
+				sMemoryDescriptors[nMemoryCount].addrspace = pba->szName;
+				bMemoryMapFound = true;
+				nMemoryCount++;
+			}
+			if ((strcmp(pba->szName, "Shared Ram") == 0)) {
+				sMemoryDescriptors[nMemoryCount].flags     = RETRO_MEMDESC_SYSTEM_RAM;
+				sMemoryDescriptors[nMemoryCount].ptr       = pba->Data;
+				sMemoryDescriptors[nMemoryCount].start     = 0x00007000;
+				sMemoryDescriptors[nMemoryCount].len       = pba->nLen;
+				sMemoryDescriptors[nMemoryCount].select    = 0;
+				sMemoryDescriptors[nMemoryCount].addrspace = pba->szName;
+				bMemoryMapFound = true;
+				nMemoryCount++;
 			}
 			return 0;
 		default:

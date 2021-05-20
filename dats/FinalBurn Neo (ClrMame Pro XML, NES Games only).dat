@@ -1524,6 +1524,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="blackhol">
+		<description>Black Hole - Czarna Dziura (HB, v0.20) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Siudym</manufacturer>
+		<rom name="Black Hole - Czarna Dziura (HB, v0.20)(SIUDYM).nes" size="131088" crc="8fd3a9a7"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="bladebuster">
 		<description>Blade Buster (HB) [Homebrew]</description>
 		<year>2011</year>

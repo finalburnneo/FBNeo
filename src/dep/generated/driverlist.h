@@ -1476,6 +1476,7 @@ DRV		BurnDrvBlkdrgonb;
 DRV		BurnDrvBlkdrgon;
 DRV		BurnDrvBlkheartj;
 DRV		BurnDrvBlkheart;
+DRV		BurnDrvnes_blackhol;
 DRV		BurnDrvBlkhole;
 DRV		BurnSpecBlackhorse;
 DRV		BurnSpecblacklamp;
@@ -2009,6 +2010,7 @@ DRV		BurnDrvcv_cabbage;
 DRV		BurnDrvCachat;
 DRV		BurnDrvCactus;
 DRV		BurnDrvCadashf;
+DRV		BurnDrvCadashgo;
 DRV		BurnDrvCadashg;
 DRV		BurnDrvmd_cadashac;
 DRV		BurnDrvmd_cadashs;
@@ -18684,6 +18686,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBlkdrgon,			// Black Dragon (Japan)
 	&BurnDrvBlkheartj,			// Black Heart (Japan)
 	&BurnDrvBlkheart,			// Black Heart
+	&BurnDrvnes_blackhol,		// Black Hole - Czarna Dziura (HB, v0.20)
 	&BurnDrvBlkhole,			// Black Hole
 	&BurnSpecBlackhorse,		// Black Horse (HB)
 	&BurnSpecblacklamp,			// Black Lamp (128K)
@@ -19217,6 +19220,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCachat,				// Cachat (Japan)
 	&BurnDrvCactus,				// Cactus (bootleg of Saboten Bombers)
 	&BurnDrvCadashf,			// Cadash (France)
+	&BurnDrvCadashgo,			// Cadash (Germany)
 	&BurnDrvCadashg,			// Cadash (Germany, version 1)
 	&BurnDrvmd_cadashac,		// Cadash (Hack, Arcade Colors)
 	&BurnDrvmd_cadashs,			// Cadash (Hack, Spanish)

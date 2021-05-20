@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16957 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16959 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1460,6 +1460,7 @@ This list contains all games supported by FinalBurn Neo.
 | blkdrgon	|  	| Black Dragon (Japan)					| blktiger	| 1987	| Capcom	| Miscellaneous	| 					|
 | blkheartj	|  	| Black Heart (Japan)					| blkheart	| 1991	| UPL		| NMK16		| 					|
 | blkheart	|  	| Black Heart						| 		| 1991	| UPL		| NMK16		| 					|
+| nes_blackhol	|  	| Black Hole - Czarna Dziura (HB, v0.20)		| 		| 2021	| Siudym	| Miscellaneous	| 					|
 | blkhole	|  	| Black Hole						| 		| 1981	| TDS		| Galaxian	| 					|
 | spec_blackhorse|  	| Black Horse (HB)					| 		| 2009	| Digital Brains| ZX Spectrum	| 					|
 | spec_blacklamp|  	| Black Lamp (128K)					| 		| 1988	| Firebird Softw| ZX Spectrum	| 					|
@@ -1987,6 +1988,7 @@ This list contains all games supported by FinalBurn Neo.
 | cachat	|  	| Cachat (Japan)					| 		| 1993	| Taito Corporat| Taito L System| 					|
 | cactus	|  	| Cactus (bootleg of Saboten Bombers)			| sabotenb	| 1992	| bootleg	| NMK16		| 					|
 | cadashf	|  	| Cadash (France)					| cadash	| 1989	| Taito Corporat| Taito Misc	| 					|
+| cadashgo	|  	| Cadash (Germany)					| cadash	| 1989	| Taito Corporat| Taito Misc	| 					|
 | cadashg	|  	| Cadash (Germany, version 1)				| cadash	| 1989	| Taito Corporat| Taito Misc	| 					|
 | md_cadashac	|  	| Cadash (Hack, Arcade Colors)				| md_cadash	| 2018	| Taito - Tor La| Sega Megadrive| 					|
 | md_cadashs	|  	| Cadash (Hack, Spanish)				| md_cadash	| 2020	| Taito		| Sega Megadrive| 					|

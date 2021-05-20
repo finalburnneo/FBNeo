@@ -30,20 +30,21 @@ static INT32 __cdecl StateLenAcb(struct BurnArea* pba)
 	return 0;
 }
 
-static INT32 StateInfo(int* pnLen, int* pnMinVer, INT32 bAll)
+static INT32 StateInfo(int* pnLen, int* pnMinVer, INT32 bAll, INT32 bRead = 1)
 {
 	INT32 nMin = 0;
 	nTotalLen = 0;
 	BurnAcb = StateLenAcb;
 
-	BurnAreaScan(ACB_NVRAM, &nMin);						// Scan nvram
+	// we need to know the read/write context here, otherwise drivers like ngp won't return anything -barbudreadmon
+	BurnAreaScan(ACB_NVRAM | (bRead ? ACB_READ : ACB_WRITE), &nMin);						// Scan nvram
 	if (bAll) {
 		INT32 m;
-		BurnAreaScan(ACB_MEMCARD, &m);					// Scan memory card
+		BurnAreaScan(ACB_MEMCARD | (bRead ? ACB_READ : ACB_WRITE), &m);					// Scan memory card
 		if (m > nMin) {									// Up the minimum, if needed
 			nMin = m;
 		}
-		BurnAreaScan(ACB_VOLATILE, &m);					// Scan volatile ram
+		BurnAreaScan(ACB_VOLATILE | (bRead ? ACB_READ : ACB_WRITE), &m);					// Scan volatile ram
 		if (m > nMin) {									// Up the minimum, if needed
 			nMin = m;
 		}
@@ -153,7 +154,7 @@ INT32 BurnStateLoadEmbed(FILE* fp, INT32 nOffset, INT32 bAll, INT32 (*pLoadGame)
 		}
 	}
 
-	StateInfo(&nLen, &nMin, bAll);
+	StateInfo(&nLen, &nMin, bAll, 0);
 	if (nLen <= 0) {									// No memory to load
 		return -1;
 	}

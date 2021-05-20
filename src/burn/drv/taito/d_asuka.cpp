@@ -1643,23 +1643,23 @@ struct BurnDriver BurnDrvCCHIP = {
 // Cadash (World)
 
 static struct BurnRomInfo cadashRomDesc[] = {
-	{ "c21_14.ic11",		0x20000, 0x5daf13fb, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
-	{ "c21_16.ic15",		0x20000, 0xcbaa2e75, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
-	{ "c21_13.ic10",		0x20000, 0x6b9e0ee9, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
-	{ "c21_17.ic14",		0x20000, 0xbf9a578a, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
+	{ "c21_14.ic11",			0x20000, 0x5daf13fb, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "c21_16.ic15",			0x20000, 0xcbaa2e75, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "c21_13.ic10",			0x20000, 0x6b9e0ee9, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
+	{ "c21_17.ic14",			0x20000, 0xbf9a578a, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
 
-	{ "c21-08.38",			0x10000, 0xdca495a0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  4 Z80 Code
+	{ "c21-08.38",				0x10000, 0xdca495a0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  4 Z80 Code
 
-	{ "c21-02.9",			0x80000, 0x205883b9, BRF_GRA | TAITO_CHARS },						//  5 Characters
+	{ "c21-02.9",				0x80000, 0x205883b9, BRF_GRA | TAITO_CHARS },						//  5 Characters
 
-	{ "c21-01.1",			0x80000, 0x1ff6f39c, BRF_GRA | TAITO_SPRITESA },					//  6 Sprites
+	{ "c21-01.1",				0x80000, 0x1ff6f39c, BRF_GRA | TAITO_SPRITESA },					//  6 Sprites
 
-	{ "c21-07.57",			0x08000, 0xf02292bd, BRF_PRG | BRF_OPT },							//  7 HD64180RP8 code (link)
+	{ "c21-07.57",				0x08000, 0xf02292bd, BRF_PRG | BRF_OPT },							//  7 HD64180RP8 code (link)
 
-	{ "pal16l8b-c21-09.ic34",	0x00104, 0x4b296700, BRF_OPT },									//  8 plds
-	{ "pal16l8b-c21-10.ic45",	0x00104, 0x35642f00, BRF_OPT },									//  9
-	{ "pal16l8b-c21-11-1.ic46",	0x00104, 0xf4791e24, BRF_OPT },									// 10
-	{ "pal20l8b-c21-12.ic47",	0x00144, 0xbbc2cc97, BRF_OPT },									// 11
+	{ "pal16l8b-c21-09.ic34",	0x00104, 0x4b296700, BRF_OPT },										//  8 plds
+	{ "pal16l8b-c21-10.ic45",	0x00104, 0x35642f00, BRF_OPT },										//  9
+	{ "pal16l8b-c21-11-1.ic46",	0x00104, 0xf4791e24, BRF_OPT },										// 10
+	{ "pal20l8b-c21-12.ic47",	0x00144, 0xbbc2cc97, BRF_OPT },										// 11
 };
 
 STD_ROM_PICK(cadash)
@@ -1684,23 +1684,23 @@ struct BurnDriver BurnDrvCadash = {
 // Cadash (Japan, version 2)
 
 static struct BurnRomInfo cadashjRomDesc[] = {
-	{ "c21_04-2.ic11",		0x20000, 0x7a9c1828, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
-	{ "c21_06-2.ic15",		0x20000, 0xc9d6440a, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
-	{ "c21_03-2.ic10",		0x20000, 0x30afc320, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
-	{ "c21_05-2.ic14",		0x20000, 0x2bc93209, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
+	{ "c21_04-2.ic11",			0x20000, 0x7a9c1828, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "c21_06-2.ic15",			0x20000, 0xc9d6440a, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "c21_03-2.ic10",			0x20000, 0x30afc320, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
+	{ "c21_05-2.ic14",			0x20000, 0x2bc93209, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
 
-	{ "c21-08.38",			0x10000, 0xdca495a0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  4 Z80 Code
+	{ "c21-08.38",				0x10000, 0xdca495a0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  4 Z80 Code
 
-	{ "c21-02.9",			0x80000, 0x205883b9, BRF_GRA | TAITO_CHARS },						//  5 Characters
+	{ "c21-02.9",				0x80000, 0x205883b9, BRF_GRA | TAITO_CHARS },						//  5 Characters
 
-	{ "c21-01.1",			0x80000, 0x1ff6f39c, BRF_GRA | TAITO_SPRITESA },					//  6 Sprites
+	{ "c21-01.1",				0x80000, 0x1ff6f39c, BRF_GRA | TAITO_SPRITESA },					//  6 Sprites
 
-	{ "c21-07.57",			0x08000, 0xf02292bd, BRF_PRG | BRF_OPT },							//  7 HD64180RP8 code (link)
+	{ "c21-07.57",				0x08000, 0xf02292bd, BRF_PRG | BRF_OPT },							//  7 HD64180RP8 code (link)
 	
-	{ "pal16l8b-c21-09.ic34",	0x00104, 0x4b296700, BRF_OPT },									//  8 plds
-	{ "pal16l8b-c21-10.ic45",	0x00104, 0x35642f00, BRF_OPT },									//  9
-	{ "pal16l8b-c21-11-1.ic46",	0x00104, 0xf4791e24, BRF_OPT },									// 10
-	{ "pal20l8b-c21-12.ic47",	0x00144, 0xbbc2cc97, BRF_OPT },									// 11
+	{ "pal16l8b-c21-09.ic34",	0x00104, 0x4b296700, BRF_OPT },										//  8 plds
+	{ "pal16l8b-c21-10.ic45",	0x00104, 0x35642f00, BRF_OPT },										//  9
+	{ "pal16l8b-c21-11-1.ic46",	0x00104, 0xf4791e24, BRF_OPT },										// 10
+	{ "pal20l8b-c21-12.ic47",	0x00144, 0xbbc2cc97, BRF_OPT },										// 11
 };
 
 STD_ROM_PICK(cadashj)
@@ -1720,23 +1720,23 @@ struct BurnDriver BurnDrvCadashj = {
 // Cadash (Japan, version 1)
 
 static struct BurnRomInfo cadashj1RomDesc[] = {
-	{ "c21_04-1.ic11",		0x20000, 0xcc22ebe5, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
-	{ "c21_06-1.ic15",		0x20000, 0x26e03304, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
-	{ "c21_03-1.ic10",		0x20000, 0xc54888ed, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
-	{ "c21_05-1.ic14",		0x20000, 0x834018d2, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
+	{ "c21_04-1.ic11",			0x20000, 0xcc22ebe5, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "c21_06-1.ic15",			0x20000, 0x26e03304, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "c21_03-1.ic10",			0x20000, 0xc54888ed, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
+	{ "c21_05-1.ic14",			0x20000, 0x834018d2, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
 
-	{ "c21-08.38",			0x10000, 0xdca495a0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  4 Z80 Code
+	{ "c21-08.38",				0x10000, 0xdca495a0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  4 Z80 Code
 
-	{ "c21-02.9",			0x80000, 0x205883b9, BRF_GRA | TAITO_CHARS },						//  5 Characters
+	{ "c21-02.9",				0x80000, 0x205883b9, BRF_GRA | TAITO_CHARS },						//  5 Characters
 
-	{ "c21-01.1",			0x80000, 0x1ff6f39c, BRF_GRA | TAITO_SPRITESA },					//  6 Sprites
+	{ "c21-01.1",				0x80000, 0x1ff6f39c, BRF_GRA | TAITO_SPRITESA },					//  6 Sprites
 
-	{ "c21-07.57",			0x08000, 0xf02292bd, BRF_PRG | BRF_OPT },							//  7 HD64180RP8 code (link)
+	{ "c21-07.57",				0x08000, 0xf02292bd, BRF_PRG | BRF_OPT },							//  7 HD64180RP8 code (link)
 	
-	{ "pal16l8b-c21-09.ic34",	0x00104, 0x4b296700, BRF_OPT },									//  8 plds
-	{ "pal16l8b-c21-10.ic45",	0x00104, 0x35642f00, BRF_OPT },									//  9
-	{ "pal16l8b-c21-11-1.ic46",	0x00104, 0xf4791e24, BRF_OPT },									// 10
-	{ "pal20l8b-c21-12.ic47",	0x00144, 0xbbc2cc97, BRF_OPT },									// 11
+	{ "pal16l8b-c21-09.ic34",	0x00104, 0x4b296700, BRF_OPT },										//  8 plds
+	{ "pal16l8b-c21-10.ic45",	0x00104, 0x35642f00, BRF_OPT },										//  9
+	{ "pal16l8b-c21-11-1.ic46",	0x00104, 0xf4791e24, BRF_OPT },										// 10
+	{ "pal20l8b-c21-12.ic47",	0x00144, 0xbbc2cc97, BRF_OPT },										// 11
 };
 
 STD_ROM_PICK(cadashj1)
@@ -1756,23 +1756,23 @@ struct BurnDriver BurnDrvCadashj1 = {
 // Cadash (Japan, oldest version)
 
 static struct BurnRomInfo cadashjoRomDesc[] = {
-	{ "c21_04.ic11",		0x20000, 0xbe7d3f12, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
-	{ "c21_06.ic15",		0x20000, 0x1db3fe02, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
-	{ "c21_03.ic10",		0x20000, 0x7e31c5a3, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
-	{ "c21_05.ic14",		0x20000, 0xa4f4901d, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
+	{ "c21_04.ic11",			0x20000, 0xbe7d3f12, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "c21_06.ic15",			0x20000, 0x1db3fe02, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "c21_03.ic10",			0x20000, 0x7e31c5a3, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
+	{ "c21_05.ic14",			0x20000, 0xa4f4901d, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
 
-	{ "c21-08.38",			0x10000, 0xdca495a0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  4 Z80 Code
+	{ "c21-08.38",				0x10000, 0xdca495a0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  4 Z80 Code
 
-	{ "c21-02.9",			0x80000, 0x205883b9, BRF_GRA | TAITO_CHARS },						//  5 Characters
+	{ "c21-02.9",				0x80000, 0x205883b9, BRF_GRA | TAITO_CHARS },						//  5 Characters
 
-	{ "c21-01.1",			0x80000, 0x1ff6f39c, BRF_GRA | TAITO_SPRITESA },					//  6 Sprites
+	{ "c21-01.1",				0x80000, 0x1ff6f39c, BRF_GRA | TAITO_SPRITESA },					//  6 Sprites
 
-	{ "c21-07.57",			0x08000, 0xf02292bd, BRF_PRG | BRF_OPT },							//  7 HD64180RP8 code (link)
+	{ "c21-07.57",				0x08000, 0xf02292bd, BRF_PRG | BRF_OPT },							//  7 HD64180RP8 code (link)
 	
-	{ "pal16l8b-c21-09.ic34",	0x00104, 0x4b296700, BRF_OPT },									//  8 plds
-	{ "pal16l8b-c21-10.ic45",	0x00104, 0x35642f00, BRF_OPT },									//  9
-	{ "pal16l8b-c21-11-1.ic46",	0x00104, 0xf4791e24, BRF_OPT },									// 10
-	{ "pal20l8b-c21-12.ic47",	0x00144, 0xbbc2cc97, BRF_OPT },									// 11
+	{ "pal16l8b-c21-09.ic34",	0x00104, 0x4b296700, BRF_OPT },										//  8 plds
+	{ "pal16l8b-c21-10.ic45",	0x00104, 0x35642f00, BRF_OPT },										//  9
+	{ "pal16l8b-c21-11-1.ic46",	0x00104, 0xf4791e24, BRF_OPT },										// 10
+	{ "pal20l8b-c21-12.ic47",	0x00144, 0xbbc2cc97, BRF_OPT },										// 11
 };
 
 STD_ROM_PICK(cadashjo)
@@ -1792,23 +1792,23 @@ struct BurnDriver BurnDrvCadashjo = {
 // Cadash (US, version 2)
 
 static struct BurnRomInfo cadashuRomDesc[] = {
-	{ "c21_14-2.ic11",		0x20000, 0xf823d418, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
-	{ "c21_16-2.ic15",		0x20000, 0x90165577, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
-	{ "c21_13-2.ic10",		0x20000, 0x92dcc3ae, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
-	{ "c21_15-2.ic14",		0x20000, 0xf915d26a, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
+	{ "c21_14-2.ic11",			0x20000, 0xf823d418, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "c21_16-2.ic15",			0x20000, 0x90165577, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "c21_13-2.ic10",			0x20000, 0x92dcc3ae, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
+	{ "c21_15-2.ic14",			0x20000, 0xf915d26a, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
 
-	{ "c21-08.38",			0x10000, 0xdca495a0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  4 Z80 Code
+	{ "c21-08.38",				0x10000, 0xdca495a0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  4 Z80 Code
 
-	{ "c21-02.9",			0x80000, 0x205883b9, BRF_GRA | TAITO_CHARS },						//  5 Characters
+	{ "c21-02.9",				0x80000, 0x205883b9, BRF_GRA | TAITO_CHARS },						//  5 Characters
 
-	{ "c21-01.1",			0x80000, 0x1ff6f39c, BRF_GRA | TAITO_SPRITESA },					//  6 Sprites
+	{ "c21-01.1",				0x80000, 0x1ff6f39c, BRF_GRA | TAITO_SPRITESA },					//  6 Sprites
 
-	{ "c21-07.57",			0x08000, 0xf02292bd, BRF_PRG | BRF_OPT },							//  7 HD64180RP8 code (link)
+	{ "c21-07.57",				0x08000, 0xf02292bd, BRF_PRG | BRF_OPT },							//  7 HD64180RP8 code (link)
 	
-	{ "pal16l8b-c21-09.ic34",	0x00104, 0x4b296700, BRF_OPT },									//  8 plds
-	{ "pal16l8b-c21-10.ic45",	0x00104, 0x35642f00, BRF_OPT },									//  9
-	{ "pal16l8b-c21-11-1.ic46",	0x00104, 0xf4791e24, BRF_OPT },									// 10
-	{ "pal20l8b-c21-12.ic47",	0x00144, 0xbbc2cc97, BRF_OPT },									// 11
+	{ "pal16l8b-c21-09.ic34",	0x00104, 0x4b296700, BRF_OPT },										//  8 plds
+	{ "pal16l8b-c21-10.ic45",	0x00104, 0x35642f00, BRF_OPT },										//  9
+	{ "pal16l8b-c21-11-1.ic46",	0x00104, 0xf4791e24, BRF_OPT },										// 10
+	{ "pal20l8b-c21-12.ic47",	0x00144, 0xbbc2cc97, BRF_OPT },										// 11
 };
 
 STD_ROM_PICK(cadashu)
@@ -1828,23 +1828,23 @@ struct BurnDriver BurnDrvCadashu = {
 // Cadash (US, version 1?)
 
 static struct BurnRomInfo cadashu1RomDesc[] = {
-	{ "c21_14-x.ic11",		0x20000, 0x64f22e5e, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
-	{ "c21_16-x.ic15",		0x20000, 0x77f5d79f, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
-	{ "c21_13-x.ic10",		0x20000, 0x488fd6d6, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
-	{ "c21_15-x.ic14",		0x20000, 0x3a44a8b4, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
+	{ "c21_14-x.ic11",			0x20000, 0x64f22e5e, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "c21_16-x.ic15",			0x20000, 0x77f5d79f, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "c21_13-x.ic10",			0x20000, 0x488fd6d6, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
+	{ "c21_15-x.ic14",			0x20000, 0x3a44a8b4, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
 
-	{ "c21-08.38",			0x10000, 0xdca495a0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  4 Z80 Code
+	{ "c21-08.38",				0x10000, 0xdca495a0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  4 Z80 Code
 
-	{ "c21-02.9",			0x80000, 0x205883b9, BRF_GRA | TAITO_CHARS },						//  5 Characters
+	{ "c21-02.9",				0x80000, 0x205883b9, BRF_GRA | TAITO_CHARS },						//  5 Characters
 
-	{ "c21-01.1",			0x80000, 0x1ff6f39c, BRF_GRA | TAITO_SPRITESA },					//  6 Sprites
+	{ "c21-01.1",				0x80000, 0x1ff6f39c, BRF_GRA | TAITO_SPRITESA },					//  6 Sprites
 
-	{ "c21-07.57",			0x08000, 0xf02292bd, BRF_PRG | BRF_OPT },							//  7 HD64180RP8 code (link)
+	{ "c21-07.57",				0x08000, 0xf02292bd, BRF_PRG | BRF_OPT },							//  7 HD64180RP8 code (link)
 	
-	{ "pal16l8b-c21-09.ic34",	0x00104, 0x4b296700, BRF_OPT },									//  8 plds
-	{ "pal16l8b-c21-10.ic45",	0x00104, 0x35642f00, BRF_OPT },									//  9
-	{ "pal16l8b-c21-11-1.ic46",	0x00104, 0xf4791e24, BRF_OPT },									// 10
-	{ "pal20l8b-c21-12.ic47",	0x00144, 0xbbc2cc97, BRF_OPT },									// 11
+	{ "pal16l8b-c21-09.ic34",	0x00104, 0x4b296700, BRF_OPT },										//  8 plds
+	{ "pal16l8b-c21-10.ic45",	0x00104, 0x35642f00, BRF_OPT },										//  9
+	{ "pal16l8b-c21-11-1.ic46",	0x00104, 0xf4791e24, BRF_OPT },										// 10
+	{ "pal20l8b-c21-12.ic47",	0x00144, 0xbbc2cc97, BRF_OPT },										// 11
 };
 
 STD_ROM_PICK(cadashu1)
@@ -1864,23 +1864,23 @@ struct BurnDriver BurnDrvCadashu1 = {
 // Cadash (Italy)
 
 static struct BurnRomInfo cadashiRomDesc[] = {
-	{ "c21_27-1.ic11",		0x20000, 0xd1d9e613, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
-	{ "c21_29-1.ic15",		0x20000, 0x142256ef, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
-	{ "c21_26-1.ic10",		0x20000, 0xc9cf6e30, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
-	{ "c21_28-1.ic14",		0x20000, 0x641fc9dd, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
+	{ "c21_27-1.ic11",			0x20000, 0xd1d9e613, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "c21_29-1.ic15",			0x20000, 0x142256ef, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "c21_26-1.ic10",			0x20000, 0xc9cf6e30, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
+	{ "c21_28-1.ic14",			0x20000, 0x641fc9dd, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
 
-	{ "c21-08.38",			0x10000, 0xdca495a0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  4 Z80 Code
+	{ "c21-08.38",				0x10000, 0xdca495a0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  4 Z80 Code
 
-	{ "c21-02.9",			0x80000, 0x205883b9, BRF_GRA | TAITO_CHARS },						//  5 Characters
+	{ "c21-02.9",				0x80000, 0x205883b9, BRF_GRA | TAITO_CHARS },						//  5 Characters
 
-	{ "c21-01.1",			0x80000, 0x1ff6f39c, BRF_GRA | TAITO_SPRITESA },					//  6 Sprites
+	{ "c21-01.1",				0x80000, 0x1ff6f39c, BRF_GRA | TAITO_SPRITESA },					//  6 Sprites
 
-	{ "c21-07.57",			0x08000, 0xf02292bd, BRF_PRG | BRF_OPT },							//  7 HD64180RP8 code (link)
+	{ "c21-07.57",				0x08000, 0xf02292bd, BRF_PRG | BRF_OPT },							//  7 HD64180RP8 code (link)
 	
-	{ "pal16l8b-c21-09.ic34",	0x00104, 0x4b296700, BRF_OPT },									//  8 plds
-	{ "pal16l8b-c21-10.ic45",	0x00104, 0x35642f00, BRF_OPT },									//  9
-	{ "pal16l8b-c21-11-1.ic46",	0x00104, 0xf4791e24, BRF_OPT },									// 10
-	{ "pal20l8b-c21-12.ic47",	0x00144, 0xbbc2cc97, BRF_OPT },									// 11
+	{ "pal16l8b-c21-09.ic34",	0x00104, 0x4b296700, BRF_OPT },										//  8 plds
+	{ "pal16l8b-c21-10.ic45",	0x00104, 0x35642f00, BRF_OPT },										//  9
+	{ "pal16l8b-c21-11-1.ic46",	0x00104, 0xf4791e24, BRF_OPT },										// 10
+	{ "pal20l8b-c21-12.ic47",	0x00144, 0xbbc2cc97, BRF_OPT },										// 11
 };
 
 STD_ROM_PICK(cadashi)
@@ -1900,23 +1900,23 @@ struct BurnDriver BurnDrvCadashi = {
 // Cadash (France)
 
 static struct BurnRomInfo cadashfRomDesc[] = {
-	{ "c21_19.ic11",		0x20000, 0x4d70543b, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
-	{ "c21_21.ic15",		0x20000, 0x0e5b9950, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
-	{ "c21_18.ic10",		0x20000, 0x8a19e59b, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
-	{ "c21_20.ic14",		0x20000, 0xb96acfd9, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
+	{ "c21_19.ic11",			0x20000, 0x4d70543b, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "c21_21.ic15",			0x20000, 0x0e5b9950, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "c21_18.ic10",			0x20000, 0x8a19e59b, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
+	{ "c21_20.ic14",			0x20000, 0xb96acfd9, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
 
-	{ "c21-08.38",			0x10000, 0xdca495a0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  4 Z80 Code
+	{ "c21-08.38",				0x10000, 0xdca495a0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  4 Z80 Code
 
-	{ "c21-02.9",			0x80000, 0x205883b9, BRF_GRA | TAITO_CHARS },						//  5 Characters
+	{ "c21-02.9",				0x80000, 0x205883b9, BRF_GRA | TAITO_CHARS },						//  5 Characters
 
-	{ "c21-01.1",			0x80000, 0x1ff6f39c, BRF_GRA | TAITO_SPRITESA },					//  6 Sprites
+	{ "c21-01.1",				0x80000, 0x1ff6f39c, BRF_GRA | TAITO_SPRITESA },					//  6 Sprites
 
-	{ "c21-07.57",			0x08000, 0xf02292bd, BRF_PRG | BRF_OPT },							//  7 HD64180RP8 code (link)
+	{ "c21-07.57",				0x08000, 0xf02292bd, BRF_PRG | BRF_OPT },							//  7 HD64180RP8 code (link)
 	
-	{ "pal16l8b-c21-09.ic34",	0x00104, 0x4b296700, BRF_OPT },									//  8 plds
-	{ "pal16l8b-c21-10.ic45",	0x00104, 0x35642f00, BRF_OPT },									//  9
-	{ "pal16l8b-c21-11-1.ic46",	0x00104, 0xf4791e24, BRF_OPT },									// 10
-	{ "pal20l8b-c21-12.ic47",	0x00144, 0xbbc2cc97, BRF_OPT },									// 11
+	{ "pal16l8b-c21-09.ic34",	0x00104, 0x4b296700, BRF_OPT },										//  8 plds
+	{ "pal16l8b-c21-10.ic45",	0x00104, 0x35642f00, BRF_OPT },										//  9
+	{ "pal16l8b-c21-11-1.ic46",	0x00104, 0xf4791e24, BRF_OPT },										// 10
+	{ "pal20l8b-c21-12.ic47",	0x00144, 0xbbc2cc97, BRF_OPT },										// 11
 };
 
 STD_ROM_PICK(cadashf)
@@ -1936,23 +1936,23 @@ struct BurnDriver BurnDrvCadashf = {
 // Cadash (Germany, version 1)
 
 static struct BurnRomInfo cadashgRomDesc[] = {
-	{ "c21_23-1.ic11",		0x20000, 0x30ddbabe, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
-	{ "c21_25-1.ic15",		0x20000, 0x24e10611, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
-	{ "c21_22-1.ic10",		0x20000, 0xdaf58b2d, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
-	{ "c21_24-1.ic14",		0x20000, 0x2359b93e, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
+	{ "c21_23-1.ic11",			0x20000, 0x30ddbabe, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "c21_25-1.ic15",			0x20000, 0x24e10611, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "c21_22-1.ic10",			0x20000, 0xdaf58b2d, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
+	{ "c21_24-1.ic14",			0x20000, 0x2359b93e, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
 
-	{ "c21-08.38",			0x10000, 0xdca495a0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  4 Z80 Code
+	{ "c21-08.38",				0x10000, 0xdca495a0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  4 Z80 Code
 
-	{ "c21-02.9",			0x80000, 0x205883b9, BRF_GRA | TAITO_CHARS },						//  5 Characters
+	{ "c21-02.9",				0x80000, 0x205883b9, BRF_GRA | TAITO_CHARS },						//  5 Characters
 
-	{ "c21-01.1",			0x80000, 0x1ff6f39c, BRF_GRA | TAITO_SPRITESA },					//  6 Sprites
+	{ "c21-01.1",				0x80000, 0x1ff6f39c, BRF_GRA | TAITO_SPRITESA },					//  6 Sprites
 
-	{ "c21-07.57",			0x08000, 0xf02292bd, BRF_PRG | BRF_OPT },							//  7 HD64180RP8 code (link)
+	{ "c21-07.57",				0x08000, 0xf02292bd, BRF_PRG | BRF_OPT },							//  7 HD64180RP8 code (link)
 	
-	{ "pal16l8b-c21-09.ic34",	0x00104, 0x4b296700, BRF_OPT },									//  8 plds
-	{ "pal16l8b-c21-10.ic45",	0x00104, 0x35642f00, BRF_OPT },									//  9
-	{ "pal16l8b-c21-11-1.ic46",	0x00104, 0xf4791e24, BRF_OPT },									// 10
-	{ "pal20l8b-c21-12.ic47",	0x00144, 0xbbc2cc97, BRF_OPT },									// 11
+	{ "pal16l8b-c21-09.ic34",	0x00104, 0x4b296700, BRF_OPT },										//  8 plds
+	{ "pal16l8b-c21-10.ic45",	0x00104, 0x35642f00, BRF_OPT },										//  9
+	{ "pal16l8b-c21-11-1.ic46",	0x00104, 0xf4791e24, BRF_OPT },										// 10
+	{ "pal20l8b-c21-12.ic47",	0x00144, 0xbbc2cc97, BRF_OPT },										// 11
 };
 
 STD_ROM_PICK(cadashg)
@@ -1964,6 +1964,42 @@ struct BurnDriver BurnDrvCadashg = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, cadashgRomInfo, cadashgRomName, NULL, NULL, NULL, NULL, CadashInputInfo, CadashDIPInfo,
+	CadashInit, TaitoExit, CadashFrame, DrvDraw, DrvScan, NULL, 0x1000,
+	320, 240, 4, 3
+};
+
+
+// Cadash (Germany)
+
+static struct BurnRomInfo cadashgoRomDesc[] = {
+	{ "c21_23.ic11",			0x20000, 0xfad37785, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "c21_25.ic15",			0x20000, 0x594dda9f, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "c21_22.ic10",			0x20000, 0x7610a9b4, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
+	{ "c21_24.ic14",			0x20000, 0x551d947e, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
+
+	{ "c21-08.38",				0x10000, 0xdca495a0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  4 Z80 Code
+
+	{ "c21-02.9",				0x80000, 0x205883b9, BRF_GRA | TAITO_CHARS },						//  5 Characters
+
+	{ "c21-01.1",				0x80000, 0x1ff6f39c, BRF_GRA | TAITO_SPRITESA },					//  6 Sprites
+
+	{ "c21-07.57",				0x08000, 0xf02292bd, BRF_PRG | BRF_OPT },							//  7 HD64180RP8 code (link)
+	
+	{ "pal16l8b-c21-09.ic34",	0x00104, 0x4b296700, BRF_OPT },										//  8 plds
+	{ "pal16l8b-c21-10.ic45",	0x00104, 0x35642f00, BRF_OPT },										//  9
+	{ "pal16l8b-c21-11-1.ic46",	0x00104, 0xf4791e24, BRF_OPT },										// 10
+	{ "pal20l8b-c21-12.ic47",	0x00144, 0xbbc2cc97, BRF_OPT },										// 11
+};
+
+STD_ROM_PICK(cadashgo)
+STD_ROM_FN(cadashgo)
+
+struct BurnDriver BurnDrvCadashgo = {
+	"cadashgo", "cadash", NULL, NULL, "1989",
+	"Cadash (Germany)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
+	NULL, cadashgoRomInfo, cadashgoRomName, NULL, NULL, NULL, NULL, CadashInputInfo, CadashDIPInfo,
 	CadashInit, TaitoExit, CadashFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	320, 240, 4, 3
 };

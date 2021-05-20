@@ -17538,6 +17538,24 @@ STD_ROM_FN(nes_atrainj)
 
 // Homebrew (hand-added)
 
+
+static struct BurnRomInfo nes_blackholRomDesc[] = {
+	{ "Black Hole - Czarna Dziura (HB, v0.20)(SIUDYM).nes",          131088, 0x8fd3a9a7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_blackhol)
+STD_ROM_FN(nes_blackhol)
+
+struct BurnDriver BurnDrvnes_blackhol = {
+	"nes_blackhol", NULL, NULL, NULL, "2021",
+	"Black Hole - Czarna Dziura (HB, v0.20)\0", NULL, "Siudym", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_SHOOT, 0,
+	NESGetZipName, nes_blackholRomInfo, nes_blackholRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_hackmatchRomDesc[] = {
 	{ "Hack Match (2021)(Zachtronics).nes",          40976, 0x94554d49, BRF_ESS | BRF_PRG },
 };

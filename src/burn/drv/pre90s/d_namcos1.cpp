@@ -1,6 +1,10 @@
 // FB Alpha Namco System 1 driver module
 // Based on MAME driver by Ernesto Corvi
 
+// Note:
+// Dip values are bitswapped compared to latest mame
+
+
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "m6800_intf.h"
@@ -502,11 +506,15 @@ STDDIPINFO(Faceoff)
 
 static struct BurnDIPInfo BerabohmDIPList[]=
 {
-	{0x1a, 0xff, 0xff, 0xa1, NULL			},
+	{0x1a, 0xff, 0xff, 0xb1, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Freeze"		},
 	{0x1a, 0x01, 0x01, 0x01, "Off"			},
 	{0x1a, 0x01, 0x01, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
+	{0x1a, 0x01, 0x10, 0x00, "Off"			},
+	{0x1a, 0x01, 0x10, 0x10, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Invulnerability"	},
 	{0x1a, 0x01, 0x20, 0x20, "Off"			},

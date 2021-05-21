@@ -1478,11 +1478,11 @@ static void PCM2DecryptP()
 	UINT8* pTemp = (UINT8*)BurnMalloc(0x400000);
 
 	if (pTemp) {
-		memmove(pTemp, Neo68KROMActive + 0x100000, 0x400000);
+		memcpy(pTemp, Neo68KROMActive + 0x100000, 0x400000);
 
 		for (INT32 i = 0; i < 4; i++) {
-			memmove(Neo68KROMActive + 0x100000 + i * 0x100000, pTemp + 0x000000 + (((((i + 2) & 1) << 2) | ((i + 2) & 2)) << 19), 0x80000);
-			memmove(Neo68KROMActive + 0x180000 + i * 0x100000, pTemp + 0x080000 + (((((i + 1) & 1) << 2) | ((i + 1) & 2)) << 19), 0x80000);
+			memcpy(Neo68KROMActive + 0x100000 + i * 0x100000, pTemp + 0x000000 + (((((i + 2) & 1) << 2) | ((i + 2) & 2)) << 19), 0x80000);
+			memcpy(Neo68KROMActive + 0x180000 + i * 0x100000, pTemp + 0x080000 + (((((i + 1) & 1) << 2) | ((i + 1) & 2)) << 19), 0x80000);
 		}
 
 		BurnFree(pTemp);
@@ -1493,7 +1493,7 @@ static void PCM2DecryptV(INT32 size, INT32 bit)
 {
 	for (INT32 i = 0; i < (size / 2) - (2 << bit); i += (2 << bit)) {
 		UINT16 buffer[8];
-		memmove(buffer, ((UINT16*)(YM2610ADPCMAROM[nNeoActiveSlot])) + i, (2 << bit) * 2);
+		memcpy(buffer, ((UINT16*)(YM2610ADPCMAROM[nNeoActiveSlot])) + i, (2 << bit) * 2);
 		for (INT32 j = (2 << bit) - 1; j >= 0; j--) {
 			((UINT16*)(YM2610ADPCMAROM[nNeoActiveSlot]))[i + j] = buffer[j ^ (1 << bit)];
 		}
@@ -1507,7 +1507,7 @@ static void PCM2DecryptV2(const PCM2DecryptV2Info* const pInfo)
 	UINT8* pTemp = (UINT8*)BurnMalloc(0x01000000);
 
 	if (pTemp) {
-		memmove(pTemp, YM2610ADPCMAROM[nNeoActiveSlot], 0x01000000);
+		memcpy(pTemp, YM2610ADPCMAROM[nNeoActiveSlot], 0x01000000);
 
 		for (INT32 i = 0; i < 0x01000000; i++) {
 			INT32 nAddress = ((i & 0x00FEFFFE) | ((i & 0x00010000) >> 16) | ((i & 0x00000001) << 16)) ^ pInfo->nAddressOffset;
@@ -1526,10 +1526,10 @@ static void PCM2DecryptP2(const PCM2DecryptP2Info* const pInfo)
 	UINT8* pTemp = (UINT8*)BurnMalloc(0x800000);
 
 	if (pTemp) {
-		memmove(pTemp, Neo68KROMActive, 0x800000);
+		memcpy(pTemp, Neo68KROMActive, 0x800000);
 
 		for (INT32 i = 0; i < 16; i++) {
-			memmove(Neo68KROMActive + i * 0x80000, pTemp + pInfo->nAddressOffset[i], 0x80000);
+			memcpy(Neo68KROMActive + i * 0x80000, pTemp + pInfo->nAddressOffset[i], 0x80000);
 		}
 
 		BurnFree(pTemp);
@@ -1702,10 +1702,10 @@ static void DoPerm(INT32 g) // 0 - cthd2003, 1 - svcboot
 			b = tbl[idx[g][(i >> (5 ^ g)) & 0x0f]];
 			k = BITSWAP08(j, 7, 6, 5, 4, b[3], b[2], b[1], b[0]);
 
-			memmove (dst + (j << 7), NeoSpriteROM[nNeoActiveSlot] + (i << 11) + (k << 7), 0x80);
+			memcpy (dst + (j << 7), NeoSpriteROM[nNeoActiveSlot] + (i << 11) + (k << 7), 0x80);
 		}
 
-		memmove (NeoSpriteROM[nNeoActiveSlot] + (i << 11), dst, 0x800);
+		memcpy (NeoSpriteROM[nNeoActiveSlot] + (i << 11), dst, 0x800);
 	}
 }
 
@@ -5385,10 +5385,10 @@ static void kogCallback()
 		static const INT32 sec[] = { 0x3, 0x8, 0x7, 0xc, 0x1, 0xa, 0x6, 0xd };
 
 		for (i = 0; i < 0x100000 / 0x020000; i++)
-			memmove (dst + i * 0x020000, Neo68KROMActive + sec[i] * 0x020000, 0x020000);
+			memcpy (dst + i * 0x020000, Neo68KROMActive + sec[i] * 0x020000, 0x020000);
 
-		memmove (dst + 0x090000, Neo68KROMActive + 0x040000, 0x004000);
-		memmove (Neo68KROMActive, dst, 0x100000);
+		memcpy (dst + 0x090000, Neo68KROMActive + 0x040000, 0x004000);
+		memcpy (Neo68KROMActive, dst, 0x100000);
 		BurnFree (dst);
 	}
 
@@ -5402,9 +5402,9 @@ static void kogCallback()
 		}
 	}
 
-	memmove (Neo68KROMActive + 0x0007a6, Neo68KROMActive + 0x0907a6, 0x000006);
-	memmove (Neo68KROMActive + 0x0007c6, Neo68KROMActive + 0x0907c6, 0x000006);
-	memmove (Neo68KROMActive + 0x0007e6, Neo68KROMActive + 0x0907e6, 0x000006);
+	memcpy (Neo68KROMActive + 0x0007a6, Neo68KROMActive + 0x0907a6, 0x000006);
+	memcpy (Neo68KROMActive + 0x0007c6, Neo68KROMActive + 0x0907c6, 0x000006);
+	memcpy (Neo68KROMActive + 0x0007e6, Neo68KROMActive + 0x0907e6, 0x000006);
 	memmove (Neo68KROMActive + 0x100000, Neo68KROMActive + 0x200000, 0x400000);
 
 	*((UINT16 *)(Neo68KROMActive + 0x924ac)) = BURN_ENDIAN_SWAP_INT16(0x0009);
@@ -5814,32 +5814,32 @@ static void kof98Decrypt()
 		return;
 	}
 
-	memmove(pTemp, Neo68KROMActive, 0x200000);
+	memcpy(pTemp, Neo68KROMActive, 0x200000);
 
 	for (INT32 i = 0x0800; i < 0x100000; i += 0x0200) {
 		for (INT32 j = 0; j < 0x0100; j += 0x10) {
 			for (INT32 k = 0; k < 8; k++) {
-				memmove(&Neo68KROMActive[i + j + k * 2 +      0], &pTemp[i + j + sec[k] + 0x0100], 2);
-				memmove(&Neo68KROMActive[i + j + k * 2 + 0x0100], &pTemp[i + j + sec[k] +      0], 2);
+				memcpy(&Neo68KROMActive[i + j + k * 2 +      0], &pTemp[i + j + sec[k] + 0x0100], 2);
+				memcpy(&Neo68KROMActive[i + j + k * 2 + 0x0100], &pTemp[i + j + sec[k] +      0], 2);
 			}
 			if (i >= 0x080000 && i < 0x0c0000) {
 				for (INT32 k = 0; k < 4; k++) {
-					memmove(&Neo68KROMActive[i + j + pos[k] +      0], &pTemp[i + j + pos[k] +      0], 2);
-					memmove(&Neo68KROMActive[i + j + pos[k] + 0x0100], &pTemp[i + j + pos[k] + 0x0100], 2);
+					memcpy(&Neo68KROMActive[i + j + pos[k] +      0], &pTemp[i + j + pos[k] +      0], 2);
+					memcpy(&Neo68KROMActive[i + j + pos[k] + 0x0100], &pTemp[i + j + pos[k] + 0x0100], 2);
 				}
 			}
 			if (i >= 0x0c0000) {
 				for (INT32 k = 0; k < 4; k++) {
-					memmove(&Neo68KROMActive[i + j + pos[k] +      0], &pTemp[i + j + pos[k] + 0x0100], 2);
-					memmove(&Neo68KROMActive[i + j + pos[k] + 0x0100], &pTemp[i + j + pos[k] +      0], 2);
+					memcpy(&Neo68KROMActive[i + j + pos[k] +      0], &pTemp[i + j + pos[k] + 0x0100], 2);
+					memcpy(&Neo68KROMActive[i + j + pos[k] + 0x0100], &pTemp[i + j + pos[k] +      0], 2);
 				}
 			}
 		}
 
-		memmove(&Neo68KROMActive[i + 0x000000], &pTemp[i + 0x000000], 2);
-		memmove(&Neo68KROMActive[i + 0x000002], &pTemp[i + 0x100000], 2);
-		memmove(&Neo68KROMActive[i + 0x000100], &pTemp[i + 0x000100], 2);
-		memmove(&Neo68KROMActive[i + 0x000102], &pTemp[i + 0x100100], 2);
+		memcpy(&Neo68KROMActive[i + 0x000000], &pTemp[i + 0x000000], 2);
+		memcpy(&Neo68KROMActive[i + 0x000002], &pTemp[i + 0x100000], 2);
+		memcpy(&Neo68KROMActive[i + 0x000100], &pTemp[i + 0x000100], 2);
+		memcpy(&Neo68KROMActive[i + 0x000102], &pTemp[i + 0x100100], 2);
 	}
 
 	memmove(&Neo68KROMActive[0x100000], &Neo68KROMActive[0x200000], 0x400000);
@@ -6352,7 +6352,7 @@ static void kof99SMADecrypt()
 
 	for (INT32 i = 0; i < 0x600000 / 2; i += 0x0800 / 2) {
 		UINT16 nBuffer[0x0800 / 2];
-		memmove(nBuffer, &((UINT16*)(Neo68KROMActive + 0x100000))[i], 0x0800);
+		memcpy(nBuffer, &((UINT16*)(Neo68KROMActive + 0x100000))[i], 0x0800);
 		for (INT32 j = 0; j < 0x0800 / 2; j++) {
 			((UINT16*)(Neo68KROMActive + 0x100000))[i + j] = BURN_ENDIAN_SWAP_INT16(nBuffer[BITSWAP24(j, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 6, 2, 4, 9, 8, 3, 1, 7, 0, 5)]);
 		}
@@ -6662,7 +6662,7 @@ static void garouSMADecrypt()
 
 	for (INT32 i = 0; i < 0x800000 / 2; i += 0x8000 / 2) {
 		UINT16 nBuffer[0x8000 / 2];
-		memmove(nBuffer, &((UINT16*)(Neo68KROMActive + 0x100000))[i], 0x8000);
+		memcpy(nBuffer, &((UINT16*)(Neo68KROMActive + 0x100000))[i], 0x8000);
 		for (INT32 j = 0; j < 0x8000 / 2; j++) {
 			((UINT16*)(Neo68KROMActive + 0x100000))[i + j] = BURN_ENDIAN_SWAP_INT16(nBuffer[BITSWAP24(j, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 9, 4, 8, 3, 13, 6, 2, 7, 0, 12, 1, 11, 10, 5)]);
 		}
@@ -6765,7 +6765,7 @@ static void garouhSMADecrypt()
 
 	for (INT32 i = 0; i < 0x800000 / 2; i += 0x8000 / 2) {
 		UINT16 nBuffer[0x8000 / 2];
-		memmove(nBuffer, &((UINT16*)(Neo68KROMActive + 0x100000))[i], 0x8000);
+		memcpy(nBuffer, &((UINT16*)(Neo68KROMActive + 0x100000))[i], 0x8000);
 		for (INT32 j = 0; j < 0x8000 / 2; j++) {
 			((UINT16*)(Neo68KROMActive + 0x100000))[i + j] = BURN_ENDIAN_SWAP_INT16(nBuffer[BITSWAP24(j, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 12, 8, 1, 7, 11, 3, 13, 10, 6, 9, 5, 4, 0, 2)]);
 		}
@@ -7007,7 +7007,7 @@ static void mslug3SMADecrypt()
 
 	for (INT32 i = 0; i < 0x800000 / 2; i += 0x010000 / 2) {
 		UINT16 nBuffer[0x010000 / 2];
-		memmove(nBuffer, &((UINT16*)(Neo68KROMActive + 0x100000))[i], 0x010000);
+		memcpy(nBuffer, &((UINT16*)(Neo68KROMActive + 0x100000))[i], 0x010000);
 		for (INT32 j = 0; j < 0x010000 / 2; j++) {
 			((UINT16*)(Neo68KROMActive + 0x100000))[i + j] = BURN_ENDIAN_SWAP_INT16(nBuffer[BITSWAP24(j, 23, 22, 21, 20, 19, 18, 17, 16, 15, 2, 11, 0, 14, 6, 4, 13, 8, 9, 3, 10, 7, 5, 12, 1)]);
 		}
@@ -7111,7 +7111,7 @@ static void mslug3aSMADecrypt()
 
 	for (INT32 i = 0; i < 0x800000 / 2; i += 0x010000 / 2) {
 		UINT16 nBuffer[0x010000 / 2];
-		memmove(nBuffer, &((UINT16*)(Neo68KROMActive + 0x100000))[i], 0x010000);
+		memcpy(nBuffer, &((UINT16*)(Neo68KROMActive + 0x100000))[i], 0x010000);
 		for (INT32 j = 0; j < 0x010000 / 2; j++) {
 			((UINT16*)(Neo68KROMActive + 0x100000))[i + j] = BURN_ENDIAN_SWAP_INT16(nBuffer[BITSWAP24(j, 23,22,21,20,19,18,17,16,15,12,0,11,3,4,13,6,8,14,7,5,2,10,9,1)]);
 		}
@@ -7313,7 +7313,7 @@ static void kof2000SMADecrypt()
 
 	for (INT32 i = 0; i < 0x63A000 / 2; i += 0x0800 / 2) {
 		UINT16 nBuffer[0x0800 / 2];
-		memmove(nBuffer, &((UINT16*)(Neo68KROMActive + 0x100000))[i], 0x0800);
+		memcpy(nBuffer, &((UINT16*)(Neo68KROMActive + 0x100000))[i], 0x0800);
 		for (INT32 j = 0; j < 0x0800 / 2; j++) {
 			((UINT16*)(Neo68KROMActive + 0x100000))[i + j] = BURN_ENDIAN_SWAP_INT16(nBuffer[BITSWAP24(j, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 4, 1, 3, 8, 6, 2, 7, 0, 9, 5)]);
 		}
@@ -7785,7 +7785,7 @@ static void ct2k3spCallback()
 			dst[i] = NeoTextROM[nNeoActiveSlot][j];
 		}
 
-		memmove (NeoTextROM[nNeoActiveSlot], dst, 0x040000 );
+		memcpy (NeoTextROM[nNeoActiveSlot], dst, 0x040000 );
 
 		BurnFree (dst);
 	}
@@ -7970,13 +7970,13 @@ void kof2002b_gfx_decrypt(UINT8 *src, INT32 nLen)
 
 	for (i = 0; i < nLen; i+= 0x10000)
 	{
-		memmove (dst, src + i, 0x10000);
+		memcpy (dst, src + i, 0x10000);
 
 		for (j = 0; j < 0x10000 / 0x80; j++)
 		{
 			m = tbl[(j >> 3) & 7];
 			k = BITSWAP16(j, 15, 14, 13, 12, 11, 10, 9, m[5], m[4], m[3], 5, 4, 3, m[2], m[1], m[0]);
-			memmove (src + i + k * 0x80, dst + j * 0x80, 0x80);
+			memcpy (src + i + k * 0x80, dst + j * 0x80, 0x80);
 		}
 	}
 }
@@ -8183,8 +8183,8 @@ STD_ROM_FN(kf2k2mp2)
 
 static void kf2k2mp2Callback()
 {
-	memmove (Neo68KROMActive + 0x000000, Neo68KROMActive + 0x1c0000, 0x040000);
-	memmove (Neo68KROMActive + 0x0c0000, Neo68KROMActive + 0x100000, 0x040000);
+	memcpy (Neo68KROMActive + 0x000000, Neo68KROMActive + 0x1c0000, 0x040000);
+	memcpy (Neo68KROMActive + 0x0c0000, Neo68KROMActive + 0x100000, 0x040000);
 	memmove (Neo68KROMActive + 0x100000, Neo68KROMActive + 0x200000, 0x400000);
 
 	lans2004_sx_decode();
@@ -8307,11 +8307,11 @@ static void kof10thCallback()
 				k = BITSWAP24(j,23,22,21,20,19,18,17,16,15,14,13,12,11,2,9,8,7,1,5,4,3,10,6,0);
 				dst[k] = Neo68KROMActive[i + j];
 			}
-			memmove (Neo68KROMActive + i, dst, 0x100000);
+			memcpy (Neo68KROMActive + i, dst, 0x100000);
 		}
 
 		memmove (Neo68KROMActive + 0x100000, Neo68KROMActive, 0x700000);
-		memmove (Neo68KROMActive, dst, 0x100000);
+		memcpy (Neo68KROMActive, dst, 0x100000);
 		BurnFree (dst);
 	}
 
@@ -8449,11 +8449,11 @@ static void kf10thepCallback()
 		UINT32 sec[8] = { 0x3, 0x8, 0x7, 0xC, 0x1, 0xA, 0x6, 0xD };
 
 		for (i = 0; i < 8; i++)
-			memmove (dst + i * 0x20000, Neo68KROMActive + sec[i] * 0x20000, 0x20000);
+			memcpy (dst + i * 0x20000, Neo68KROMActive + sec[i] * 0x20000, 0x20000);
 
-		memmove (dst + 0x0002e0, Neo68KROMActive + 0x0402e0, 0x06a);
-		memmove (dst + 0x0f92bc, Neo68KROMActive + 0x0492bc, 0xb9e);
-		memmove (Neo68KROMActive, dst, 0x100000);
+		memcpy (dst + 0x0002e0, Neo68KROMActive + 0x0402e0, 0x06a);
+		memcpy (dst + 0x0f92bc, Neo68KROMActive + 0x0492bc, 0xb9e);
+		memcpy (Neo68KROMActive, dst, 0x100000);
 		BurnFree (dst);
 	}
 
@@ -8535,10 +8535,10 @@ static void kf2k5uniCallback()
 			k = BITSWAP08(j, 7, 3, 4, 5, 6, 1, 2, 0);
 			dst[j] = Neo68KROMActive[i + k];
 		}
-		memmove (Neo68KROMActive + i, dst, 0x80);
+		memcpy (Neo68KROMActive + i, dst, 0x80);
 	}
 
-	memmove(Neo68KROMActive, Neo68KROMActive + 0x600000, 0x100000);
+	memcpy(Neo68KROMActive, Neo68KROMActive + 0x600000, 0x100000);
 
 	for (i = 0; i < 0x30000; i++)
 		NeoZ80ROMActive[i] = BITSWAP08(NeoZ80ROMActive[i], 4, 5, 6, 7, 0, 1, 2, 3);
@@ -8597,12 +8597,12 @@ static void kof2k4seCallback()
 
 	if (dst)
 	{
-		memmove (dst,                        Neo68KROMActive + 0x000000, 0x100000);
-		memmove (Neo68KROMActive + 0x000000, Neo68KROMActive + 0x400000, 0x100000);
-		memmove (Neo68KROMActive + 0x400000, dst,                        0x100000);
-		memmove (dst,                        Neo68KROMActive + 0x100000, 0x100000);
-		memmove (Neo68KROMActive + 0x100000, Neo68KROMActive + 0x300000, 0x100000);
-		memmove (Neo68KROMActive + 0x300000, dst,                        0x100000);
+		memcpy (dst,                        Neo68KROMActive + 0x000000, 0x100000);
+		memcpy (Neo68KROMActive + 0x000000, Neo68KROMActive + 0x400000, 0x100000);
+		memcpy (Neo68KROMActive + 0x400000, dst,                        0x100000);
+		memcpy (dst,                        Neo68KROMActive + 0x100000, 0x100000);
+		memcpy (Neo68KROMActive + 0x100000, Neo68KROMActive + 0x300000, 0x100000);
+		memcpy (Neo68KROMActive + 0x300000, dst,                        0x100000);
 
 		BurnFree (dst);
 	}
@@ -8670,12 +8670,12 @@ static void mslug5Callback()
 		*((UINT16 *)(Neo68KROMActive + i + 1)) = BURN_ENDIAN_SWAP_INT16(rom16);
 	}
 
-	memmove (Neo68KROMActive + 0x700000, Neo68KROMActive, 0x100000);
+	memcpy (Neo68KROMActive + 0x700000, Neo68KROMActive, 0x100000);
 
 	for (i = 0; i < 0x100000 / 0x010000; i++)
 	{
 		j = BITSWAP08(i, 7, 6, 5, 4, 1, 0, 3, 2) * 0x010000;
-		memmove (Neo68KROMActive + i * 0x010000, Neo68KROMActive + 0x700000 + j, 0x010000);
+		memcpy (Neo68KROMActive + i * 0x010000, Neo68KROMActive + 0x700000 + j, 0x010000);
 	}
 
 	for (i = 0x100000; i < 0x700000; i += 0x100000)
@@ -8683,10 +8683,10 @@ static void mslug5Callback()
 		for (j = 0; j < 0x100000; j+=0x100)
 		{
 			k = ((j & 0xf00) ^ 0x700) + (BITSWAP08((j >> 12), 5, 4, 7, 6, 1, 0, 3, 2 ) << 12);
-			memmove (Neo68KROMActive + 0x700000 + j, Neo68KROMActive + i + k, 0x100);
+			memcpy (Neo68KROMActive + 0x700000 + j, Neo68KROMActive + i + k, 0x100);
 		}
 
-		memmove (Neo68KROMActive + i, Neo68KROMActive + 0x700000, 0x100000);
+		memcpy (Neo68KROMActive + i, Neo68KROMActive + 0x700000, 0x100000);
 	}
 }
 
@@ -8899,12 +8899,12 @@ static void svcCallback()
 		*((UINT16 *)(Neo68KROMActive + i + 1)) = BURN_ENDIAN_SWAP_INT16(rom16);
 	}
 
-	memmove (Neo68KROMActive + 0x700000, Neo68KROMActive, 0x100000);
+	memcpy (Neo68KROMActive + 0x700000, Neo68KROMActive, 0x100000);
 
 	for (i = 0; i < 0x0100000 / 0x10000; i++)
 	{
 		j = BITSWAP08(i, 7, 6, 5, 4, 2, 3, 0, 1);
-		memmove (Neo68KROMActive + i * 0x010000, Neo68KROMActive + 0x700000 + j * 0x010000, 0x010000);
+		memcpy (Neo68KROMActive + i * 0x010000, Neo68KROMActive + 0x700000 + j * 0x010000, 0x010000);
 	}
 
 	for (i = 0x100000; i < 0x700000; i += 0x100000)
@@ -8914,10 +8914,10 @@ static void svcCallback()
 			k  = BITSWAP08(j >> 12, 4, 5, 6, 7, 1, 0, 3, 2 ) << 12;
 			k |= (j & 0x00f00) ^ 0x00a00;
 
-			memmove (Neo68KROMActive + 0x700000 + j, Neo68KROMActive + i + k, 0x100);
+			memcpy (Neo68KROMActive + 0x700000 + j, Neo68KROMActive + i + k, 0x100);
 		}
 
-		memmove (Neo68KROMActive + i, Neo68KROMActive + 0x700000, 0x100000);
+		memcpy (Neo68KROMActive + i, Neo68KROMActive + 0x700000, 0x100000);
 	}
 }
 
@@ -9070,7 +9070,7 @@ static void svcbootCallback()
 	INT32 i, j, k;
 	for (i = 0x100000; i < 0x800000; i+=0x100000)
 	{
-		memmove (Neo68KROMActive, Neo68KROMActive + i, 0x100000);
+		memcpy (Neo68KROMActive, Neo68KROMActive + i, 0x100000);
 
 		for (j = 0; j < 0x100000; j++)
 		{
@@ -9079,7 +9079,7 @@ static void svcbootCallback()
 		}
 	}
 
-	memmove (Neo68KROMActive, Neo68KROMActive + 0x700000, 0x100000);
+	memcpy (Neo68KROMActive, Neo68KROMActive + 0x700000, 0x100000);
 
 	svcboot_sx_decode();
 	svcboot_decode();
@@ -9157,11 +9157,11 @@ static void svcplusCallback()
 				dst[j] = Neo68KROMActive[i + k];
 			}
 
-			memmove (Neo68KROMActive + i, dst, 0x100000);
+			memcpy (Neo68KROMActive + i, dst, 0x100000);
 		}
 
 		memmove (Neo68KROMActive + 0x100000, Neo68KROMActive, 0x500000);
-		memmove (Neo68KROMActive, dst, 0x100000);
+		memcpy (Neo68KROMActive, dst, 0x100000);
 
 		BurnFree (dst);
 	}
@@ -9230,9 +9230,9 @@ static void svcplusaCallback()
 	UINT8 *dst = (UINT8*)BurnMalloc(0x100000);
 	if (dst)
 	{
-		memmove (dst, Neo68KROMActive + 0x500000, 0x100000);
+		memcpy (dst, Neo68KROMActive + 0x500000, 0x100000);
 		memmove (Neo68KROMActive + 0x100000, Neo68KROMActive, 0x500000);
-		memmove (Neo68KROMActive, dst, 0x100000);
+		memcpy (Neo68KROMActive, dst, 0x100000);
 		BurnFree (dst);
 		dst = NULL;
 	}
@@ -9307,7 +9307,7 @@ static void svcsplusCallback()
 	INT32 i, j, k;
 	for (i = 0x100000; i < 0x800000; i+=0x10000)
 	{
-		memmove (Neo68KROMActive, Neo68KROMActive + i, 0x10000);
+		memcpy (Neo68KROMActive, Neo68KROMActive + i, 0x10000);
 
 		for (j = 0; j < 0x10000; j++)
 		{
@@ -9316,7 +9316,7 @@ static void svcsplusCallback()
 		}
 	}
 
-	memmove (Neo68KROMActive, Neo68KROMActive + 0x600000, 0x100000);
+	memcpy (Neo68KROMActive, Neo68KROMActive + 0x600000, 0x100000);
 
 	*((UINT16*)(Neo68KROMActive + 0x9e90)) = BURN_ENDIAN_SWAP_INT16(0x000f); // Enable S. Plus
 	*((UINT16*)(Neo68KROMActive + 0x9e92)) = BURN_ENDIAN_SWAP_INT16(0xc9c0);
@@ -9526,11 +9526,11 @@ static void samsho5b_sx_decode()
 {
 	UINT8 *Buf = (UINT8*)BurnMalloc(0x20000);
 	if (Buf) {
-		memmove(Buf, NeoTextROM[nNeoActiveSlot], 0x20000);
+		memcpy(Buf, NeoTextROM[nNeoActiveSlot], 0x20000);
 
 		for (INT32 i = 0; i < 0x20000; i += 0x10) {
-			memmove(&NeoTextROM[nNeoActiveSlot][i + 0], &Buf[i + 8], 8);
-			memmove(&NeoTextROM[nNeoActiveSlot][i + 8], &Buf[i + 0], 8);
+			memcpy(&NeoTextROM[nNeoActiveSlot][i + 0], &Buf[i + 8], 8);
+			memcpy(&NeoTextROM[nNeoActiveSlot][i + 8], &Buf[i + 0], 8);
 		}
 
 		BurnFree(Buf);
@@ -9561,11 +9561,11 @@ static void samsho5bCallback()
 				dst[j] = Neo68KROMActive[i + k];
 			}
 
-			memmove (Neo68KROMActive + i, dst, 0x100000);
+			memcpy (Neo68KROMActive + i, dst, 0x100000);
 		}
 
 		memmove (Neo68KROMActive + 0x100000, Neo68KROMActive, 0x700000);
-		memmove (Neo68KROMActive, dst, 0x100000);
+		memcpy (Neo68KROMActive, dst, 0x100000);
 
 		BurnFree (dst);
 	}
@@ -9658,7 +9658,7 @@ void kf2k3pcb_bios_decode()
 		if (BURN_ENDIAN_SWAP_INT16(dst[i]) & 0x0020) dst[i] ^= BURN_ENDIAN_SWAP_INT16(0x0008);
 	}
 
-	memmove (src, dst, 0x80000);
+	memcpy (src, dst, 0x80000);
 
 	BurnFree (dst);
 }
@@ -9678,14 +9678,14 @@ static void kf2k3pcbCallback()
 		*((UINT16 *)(Neo68KROMActive + i + 1)) = BURN_ENDIAN_SWAP_INT16(rom16);
 	}
 
-	memmove (Neo68KROMActive + 0x700000, Neo68KROMActive, 0x100000);
+	memcpy (Neo68KROMActive + 0x700000, Neo68KROMActive, 0x100000);
 
 	for (i = 0; i < 0x0100000 / 0x10000; i++) {
 		j = BITSWAP08(i, 7, 6, 5, 4, 1, 0, 3, 2);
-		memmove (Neo68KROMActive + i * 0x010000, Neo68KROMActive + 0x700000 + j * 0x010000, 0x010000);
+		memcpy (Neo68KROMActive + i * 0x010000, Neo68KROMActive + 0x700000 + j * 0x010000, 0x010000);
 	}
 
-	memmove (Neo68KROMActive + 0x200000, Neo68KROMActive + 0x100000, 0x600000);
+	memcpy (Neo68KROMActive + 0x200000, Neo68KROMActive + 0x100000, 0x600000);
 
 	for (i = 0x200000; i < 0x900000; i += 0x100000)
 	{
@@ -9694,10 +9694,10 @@ static void kf2k3pcbCallback()
 			k  = (j & 0xf00) ^ 0x00300;
 			k |= BITSWAP08(j >> 12, 4, 5, 6, 7, 1, 0, 3, 2 ) << 12;
 
-			memmove (Neo68KROMActive + 0x100000 + j, Neo68KROMActive + i + k, 0x100);
+			memcpy (Neo68KROMActive + 0x100000 + j, Neo68KROMActive + i + k, 0x100);
 		}
 
-		memmove (Neo68KROMActive + i, Neo68KROMActive + 0x100000, 0x100000);
+		memcpy (Neo68KROMActive + i, Neo68KROMActive + 0x100000, 0x100000);
 	}
 }
 
@@ -9784,11 +9784,11 @@ static void kof2003Callback()
 		*((UINT16 *)(Neo68KROMActive + i + 1)) = BURN_ENDIAN_SWAP_INT16(rom16);
 	}
 
-	memmove (Neo68KROMActive + 0x700000, Neo68KROMActive, 0x100000);
+	memcpy (Neo68KROMActive + 0x700000, Neo68KROMActive, 0x100000);
 
 	for (i = 0; i < 0x0100000 / 0x10000; i++) {
 		j = BITSWAP08(i, 7, 6, 5, 4, 0, 1, 2, 3);
-		memmove (Neo68KROMActive + i * 0x010000, Neo68KROMActive + 0x700000 + j * 0x010000, 0x010000);
+		memcpy (Neo68KROMActive + i * 0x010000, Neo68KROMActive + 0x700000 + j * 0x010000, 0x010000);
 	}
 
 	memmove (Neo68KROMActive + 0x200000, Neo68KROMActive + 0x100000, 0x600000);
@@ -9800,10 +9800,10 @@ static void kof2003Callback()
 			k  = (j & 0xf00) ^ 0x00800;
 			k |= BITSWAP08(j >> 12, 4, 5, 6, 7, 1, 0, 3, 2 ) << 12;
 
-			memmove (Neo68KROMActive + 0x100000 + j, Neo68KROMActive + i + k, 0x100);
+			memcpy (Neo68KROMActive + 0x100000 + j, Neo68KROMActive + i + k, 0x100);
 		}
 
-		memmove (Neo68KROMActive + i, Neo68KROMActive + 0x100000, 0x100000);
+		memcpy (Neo68KROMActive + i, Neo68KROMActive + 0x100000, 0x100000);
 	}
 }
 
@@ -9884,11 +9884,11 @@ static void kof2003hCallback()
 		*((UINT16 *)(Neo68KROMActive + i + 1)) = BURN_ENDIAN_SWAP_INT16(rom16);
 	}
 
-	memmove (Neo68KROMActive + 0x700000, Neo68KROMActive, 0x100000);
+	memcpy (Neo68KROMActive + 0x700000, Neo68KROMActive, 0x100000);
 
 	for (i = 0; i < 0x0100000 / 0x10000; i++) {
 		j = BITSWAP08(i, 7, 6, 5, 4, 1, 0, 3, 2);
-		memmove (Neo68KROMActive + i * 0x010000, Neo68KROMActive + 0x700000 + j * 0x010000, 0x010000);
+		memcpy (Neo68KROMActive + i * 0x010000, Neo68KROMActive + 0x700000 + j * 0x010000, 0x010000);
 	}
 
 	memmove (Neo68KROMActive + 0x200000, Neo68KROMActive + 0x100000, 0x600000);
@@ -9900,10 +9900,10 @@ static void kof2003hCallback()
 			k  = (j & 0xf00) ^ 0x00400;
 			k |= BITSWAP08(j >> 12, 6, 7, 4, 5, 0, 1, 2, 3) << 12;
 
-			memmove (Neo68KROMActive + 0x100000 + j, Neo68KROMActive + i + k, 0x100);
+			memcpy (Neo68KROMActive + 0x100000 + j, Neo68KROMActive + i + k, 0x100);
 		}
 
-		memmove (Neo68KROMActive + i, Neo68KROMActive + 0x100000, 0x100000);
+		memcpy (Neo68KROMActive + i, Neo68KROMActive + 0x100000, 0x100000);
 	}
 }
 
@@ -9974,7 +9974,7 @@ UINT16 __fastcall kf2k3blReadWordProtection(UINT32)
 static void kf2k3blCallback()
 {
 	memmove (Neo68KROMActive + 0x100000, Neo68KROMActive, 0x700000);
-	memmove (Neo68KROMActive, Neo68KROMActive + 0x700000, 0x100000);
+	memcpy (Neo68KROMActive, Neo68KROMActive + 0x700000, 0x100000);
 
 	lans2004_sx_decode();
 }
@@ -10052,7 +10052,7 @@ static void kf2k3blaCallback()
 	{
 		for (i = 0; i < 0x700000; i += 0x100000)
 		{
-			memmove(dst, Neo68KROMActive + i, 0x100000);
+			memcpy(dst, Neo68KROMActive + i, 0x100000);
 
 			for (j = 0; j < 0x100000; j++)
 			{
@@ -10192,7 +10192,7 @@ static void kf2k3uplCallback()
 {
 	INT32 i, j;
 	memmove (Neo68KROMActive + 0x100000, Neo68KROMActive, 0x600000);
-	memmove (Neo68KROMActive, Neo68KROMActive + 0x700000, 0x100000);
+	memcpy (Neo68KROMActive, Neo68KROMActive + 0x700000, 0x100000);
 
 	for(i = 0; i < 0x2000; i++) {
 		j = (i & 0x1f00) | BITSWAP08(i & 0xff, 7, 1, 5, 4, 3, 2, 6, 0) ;
@@ -12424,11 +12424,11 @@ static void lans2004Callback()
 		static const INT32 sec[] = { 0x3, 0x8, 0x7, 0xc, 0x1, 0xa, 0x6, 0xd };
 
 		for (i = 0; i < 8; i++)
-			memmove (dst + i * 0x20000, Neo68KROMActive + sec[i] * 0x20000, 0x20000);
+			memcpy (dst + i * 0x20000, Neo68KROMActive + sec[i] * 0x20000, 0x20000);
 
-		memmove (dst + 0x0bbb00, Neo68KROMActive + 0x045b00, 0x001710);
-		memmove (dst + 0x02fff0, Neo68KROMActive + 0x1a92be, 0x000010);
-		memmove (Neo68KROMActive, dst, 0x100000);
+		memcpy (dst + 0x0bbb00, Neo68KROMActive + 0x045b00, 0x001710);
+		memcpy (dst + 0x02fff0, Neo68KROMActive + 0x1a92be, 0x000010);
+		memcpy (Neo68KROMActive, dst, 0x100000);
 		BurnFree (dst);
 	}
 
@@ -13852,7 +13852,7 @@ static void matrimblCallback()
 
 	if (dst)
 	{
-		memmove(dst, NeoZ80ROMActive, 0x020000);
+		memcpy(dst, NeoZ80ROMActive, 0x020000);
 
 		for(i = 0; i < 0x020000; i++) {
 					 j  = i;
@@ -14737,9 +14737,9 @@ static void cthd2k3aCallback()
 	UINT8 *pTemp = (UINT8*)BurnMalloc(0x500000);
 	if (pTemp) {
 		for (i = 0; i < 0x500000 / 0x20000; i++) {
-			memmove(pTemp + (i * 0x20000), Neo68KROMActive + (nBank[i] * 0x20000), 0x20000);
+			memcpy(pTemp + (i * 0x20000), Neo68KROMActive + (nBank[i] * 0x20000), 0x20000);
 		}
-		memmove(Neo68KROMActive, pTemp, 0x500000);
+		memcpy(Neo68KROMActive, pTemp, 0x500000);
 		BurnFree(pTemp);
 	}
 
@@ -15622,13 +15622,13 @@ static void mslug5b2Callback()
 	UINT8 *pTemp = (UINT8*)BurnMalloc(0x500000);
 
 	if (pTemp) {
-		memmove(pTemp, Neo68KROMActive, 0x500000);
+		memcpy(pTemp, Neo68KROMActive, 0x500000);
 		memset(Neo68KROMActive, 0, 0x500000);
-		memmove(Neo68KROMActive + 0x000000, pTemp + 0x000000, 0x100000);
-		memmove(Neo68KROMActive + 0x100000, pTemp + 0x100000, 0x100000);
-		memmove(Neo68KROMActive + 0x300000, pTemp + 0x200000, 0x100000);
-		memmove(Neo68KROMActive + 0x200000, pTemp + 0x300000, 0x100000);
-		memmove(Neo68KROMActive + 0x400000, pTemp + 0x400000, 0x100000);
+		memcpy(Neo68KROMActive + 0x000000, pTemp + 0x000000, 0x100000);
+		memcpy(Neo68KROMActive + 0x100000, pTemp + 0x100000, 0x100000);
+		memcpy(Neo68KROMActive + 0x300000, pTemp + 0x200000, 0x100000);
+		memcpy(Neo68KROMActive + 0x200000, pTemp + 0x300000, 0x100000);
+		memcpy(Neo68KROMActive + 0x400000, pTemp + 0x400000, 0x100000);
 
 		BurnFree(pTemp);
 	}
@@ -16481,7 +16481,7 @@ static void kof96epCallback()
 			if (pTemp[i] - Neo68KROMActive[i] == 8) pTemp[i] = Neo68KROMActive[i];
 		}
 
-		memmove(Neo68KROMActive, pTemp, 0x80000);
+		memcpy(Neo68KROMActive, pTemp, 0x80000);
 
 		BurnFree(pTemp);
 	}
@@ -16626,7 +16626,7 @@ static void kof97oro_px_decode()
 		tmp[i + (0x100000/2)] = src[(i ^ 0xfffef) + (0x100000/2)];
 	}
 
-	memmove (src, tmp, 0x500000);
+	memcpy (src, tmp, 0x500000);
 
 	BurnFree (tmp);
 }
@@ -19026,25 +19026,25 @@ static void kf2k4plsCallback()
 	UINT8 *pTemp = (UINT8*)BurnMalloc(0x600000);
 
 	if (pTemp) {
-		memmove(pTemp, Neo68KROMActive, 0x600000);
-		memmove(Neo68KROMActive + 0x000000, pTemp + 0x000000, 0x100000);
-		memmove(Neo68KROMActive + 0x500000, pTemp + 0x100000, 0x100000);
-		memmove(Neo68KROMActive + 0x400000, pTemp + 0x200000, 0x100000);
-		memmove(Neo68KROMActive + 0x300000, pTemp + 0x300000, 0x100000);
-		memmove(Neo68KROMActive + 0x200000, pTemp + 0x400000, 0x100000);
-		memmove(Neo68KROMActive + 0x100000, pTemp + 0x500000, 0x100000);
+		memcpy(pTemp, Neo68KROMActive, 0x600000);
+		memcpy(Neo68KROMActive + 0x000000, pTemp + 0x000000, 0x100000);
+		memcpy(Neo68KROMActive + 0x500000, pTemp + 0x100000, 0x100000);
+		memcpy(Neo68KROMActive + 0x400000, pTemp + 0x200000, 0x100000);
+		memcpy(Neo68KROMActive + 0x300000, pTemp + 0x300000, 0x100000);
+		memcpy(Neo68KROMActive + 0x200000, pTemp + 0x400000, 0x100000);
+		memcpy(Neo68KROMActive + 0x100000, pTemp + 0x500000, 0x100000);
 
 		memset(pTemp, 0, 0x600000);
-		memmove(pTemp + 0x000000, Neo68KROMActive + 0x000000, 0x100000);
-		memmove(pTemp + 0x100000, Neo68KROMActive + 0x500000, 0x100000);
-		memmove(Neo68KROMActive + 0x000000, pTemp + 0x1a0000, 0x020000);
-		memmove(Neo68KROMActive + 0x020000, pTemp + 0x080000, 0x020000);
-		memmove(Neo68KROMActive + 0x040000, pTemp + 0x140000, 0x020000);
-		memmove(Neo68KROMActive + 0x060000, pTemp + 0x000000, 0x020000);
-		memmove(Neo68KROMActive + 0x080000, pTemp + 0x180000, 0x020000);
-		memmove(Neo68KROMActive + 0x0a0000, pTemp + 0x0a0000, 0x020000);
-		memmove(Neo68KROMActive + 0x0c0000, pTemp + 0x100000, 0x020000);
-		memmove(Neo68KROMActive + 0x0e0000, pTemp + 0x040000, 0x020000);
+		memcpy(pTemp + 0x000000, Neo68KROMActive + 0x000000, 0x100000);
+		memcpy(pTemp + 0x100000, Neo68KROMActive + 0x500000, 0x100000);
+		memcpy(Neo68KROMActive + 0x000000, pTemp + 0x1a0000, 0x020000);
+		memcpy(Neo68KROMActive + 0x020000, pTemp + 0x080000, 0x020000);
+		memcpy(Neo68KROMActive + 0x040000, pTemp + 0x140000, 0x020000);
+		memcpy(Neo68KROMActive + 0x060000, pTemp + 0x000000, 0x020000);
+		memcpy(Neo68KROMActive + 0x080000, pTemp + 0x180000, 0x020000);
+		memcpy(Neo68KROMActive + 0x0a0000, pTemp + 0x0a0000, 0x020000);
+		memcpy(Neo68KROMActive + 0x0c0000, pTemp + 0x100000, 0x020000);
+		memcpy(Neo68KROMActive + 0x0e0000, pTemp + 0x040000, 0x020000);
 
 		BurnFree(pTemp);
 	}

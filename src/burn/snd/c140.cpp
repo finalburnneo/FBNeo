@@ -498,6 +498,10 @@ UINT8 c140_read(UINT16 offset)
 {
 	UpdateStream(0);
 	offset &= 0x1ff;
+	if ((offset & 0xf) == 0x5) {
+		C140_VOICE const &v = m_voi[offset >> 4];
+		return (v.key ? 0x40 : 0x00) | (v.mode & 0x3f);
+	}
 	return m_REG[offset];
 }
 

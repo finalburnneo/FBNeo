@@ -54,6 +54,7 @@ static struct BurnInputInfo NgpInputList[] = {
 	{"P1 Right",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",	BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
+	{"Option",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Config",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -64,7 +65,7 @@ STDINPUTINFO(Ngp)
 
 static struct BurnDIPInfo NgpDIPList[]=
 {
-	{0x08, 0xff, 0xff, 0x00, NULL		},
+	{0x09, 0xff, 0xff, 0x00, NULL		},
 };
 
 STDDIPINFO(Ngp)

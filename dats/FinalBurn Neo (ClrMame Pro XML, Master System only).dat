@@ -36,6 +36,14 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="acreflux">
+		<description>Acid Reflux (HB, v1.1) [Homebrew]</description>
+		<year>2016</year>
+		<manufacturer>furrtek &amp; robotwo</manufacturer>
+		<rom name="Acid Reflux v1.1 (2016)(furrtek &amp; robotwo).sms" size="32768" crc="9d9919df"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="actionfg1" cloneof="actionfg" romof="actionfg">
 		<description>Action Fighter (Euro, Jpn, v1)</description>
 		<year>1986</year>
@@ -769,6 +777,14 @@
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-15643-f.ic1" size="262144" crc="c0e25d62"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="candykid">
+		<description>CandyKid (HB, v3.0) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>SteveProXNA</manufacturer>
+		<rom name="CandyKid v3.0 (2020)(SteveProXNA).sms" size="262144" crc="890bb775"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1940,6 +1956,14 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="gravbeam">
+		<description>Gravity Beam: Master Gaiden (HB) [Homebrew]</description>
+		<year>2013</year>
+		<manufacturer>Neko-MrD</manufacturer>
+		<rom name="Gravity Beam Master Gaiden (2013)(Neko-MrD).sms" size="32768" crc="829fd975"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="greatbas">
 		<description>Great Baseball (Euro, USA, Bra)</description>
 		<year>1985</year>
@@ -2244,6 +2268,14 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="iceforce">
+		<description>Ice Force (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Alex1975Br</manufacturer>
+		<rom name="Ice Force (2021)(Alex1975Br).sms" size="65536" crc="da5f2e58"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="impmiss">
 		<description>Impossible Mission (Euro, Bra)</description>
 		<year>1990</year>
@@ -2404,6 +2436,14 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ksolitaire">
+		<description>Klondike Solitaire (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Klondike Solitaire (2021)(Under4Mhz).sms" size="49152" crc="a4011448"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="knightm2">
 		<description>Knightmare II - The Maze of Galious (Kor)</description>
 		<year>199?</year>
@@ -2441,6 +2481,14 @@
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-11069.ic1" size="131072" crc="1e949d1f"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="kunkun2">
+		<description>KunKun &amp; KokoKun 2 (HB) [Homebrew]</description>
+		<year>2011</year>
+		<manufacturer>Bock</manufacturer>
+		<rom name="KunKun &amp; KokoKun 2 (2011)(Bock).sms" size="65536" crc="5173b648"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2577,6 +2625,14 @@
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mahjong sengoku jidai (japan) (beta).bin" size="131072" crc="996b2a07"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="msolitaire">
+		<description>Mahjong Solitaire (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Mahjong Solitaire (2021)(Under4Mhz).sms" size="32768" crc="bed37331"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3156,6 +3212,14 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="pitman">
+		<description>Pitman (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Pitman (2021)(Under4Mhz).sms" size="32768" crc="cd45ad76"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="pooyan">
 		<description>Pooyan (Kor)</description>
 		<year>19??</year>
@@ -3697,6 +3761,14 @@
 		<year>1997</year>
 		<manufacturer>Tec Toy</manufacturer>
 		<rom name="sitio do picapau amarelo (brazil).bin" size="1048576" crc="abdf3923"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="skbn">
+		<description>SKBN (HB, v1.3) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Raphael Assenat</manufacturer>
+		<rom name="SKBN v1.3 (2021)(raphnet).sms" size="131072" crc="1d811c2a"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

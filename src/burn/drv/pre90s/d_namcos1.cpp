@@ -2895,7 +2895,7 @@ struct BurnDriver BurnDrvGalaga88a = {
 };
 
 
-// World Stadium (Japan)
+// Pro Yakyuu World Stadium (Japan)
 
 static struct BurnRomInfo wsRomDesc[] = {
 	{ "ws1_snd0.bin",	0x10000, 0x45a87810, 1 | BRF_PRG | BRF_ESS }, //  0 Sound m6809 Code
@@ -2938,7 +2938,7 @@ static INT32 WsInit()
 
 struct BurnDriver BurnDrvWs = {
 	"ws", NULL, NULL, NULL, "1988",
-	"World Stadium (Japan)\0", NULL, "Namco", "System 1",
+	"Pro Yakyuu World Stadium (Japan)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, wsRomInfo, wsRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -2947,7 +2947,7 @@ struct BurnDriver BurnDrvWs = {
 };
 
 
-// Beraboh Man (Japan, Rev C)
+// Chou Zetsurinjin Berabowman (Japan, Rev C)
 
 static struct BurnRomInfo berabohmRomDesc[] = {
 	{ "bm1_s0.bin",		0x10000, 0xd5d53cb1, 1 | BRF_PRG | BRF_ESS }, //  0 Sound m6809 Code
@@ -2995,7 +2995,7 @@ static INT32 BerabohmInit()
 
 struct BurnDriver BurnDrvBerabohm = {
 	"berabohm", NULL, NULL, NULL, "1988",
-	"Beraboh Man (Japan, Rev C)\0", NULL, "Namco", "System 1",
+	"Chou Zetsurinjin Berabowman (Japan, Rev C)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, berabohmRomInfo, berabohmRomName, NULL, NULL, NULL, NULL, BerabohmInputInfo, BerabohmDIPInfo,
@@ -3004,7 +3004,7 @@ struct BurnDriver BurnDrvBerabohm = {
 };
 
 
-// Beraboh Man (Japan, Rev B)
+// Chou Zetsurinjin Berabowman (Japan, Rev B)
 
 static struct BurnRomInfo berabohmbRomDesc[] = {
 	{ "bm1_s0.bin",		0x10000, 0xd5d53cb1, 1 | BRF_PRG | BRF_ESS }, //  0 Sound m6809 Code
@@ -3045,7 +3045,7 @@ STD_ROM_FN(berabohmb)
 
 struct BurnDriver BurnDrvBerabohmb = {
 	"berabohmb", "berabohm", NULL, NULL, "1988",
-	"Beraboh Man (Japan, Rev B)\0", NULL, "Namco", "System 1",
+	"Chou Zetsurinjin Berabowman (Japan, Rev B)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, berabohmbRomInfo, berabohmbRomName, NULL, NULL, NULL, NULL, BerabohmInputInfo, BerabohmDIPInfo,
@@ -3213,7 +3213,7 @@ struct BurnDriver BurnDrvBakutotu = {
 };
 
 
-// World Court (Japan)
+// Pro Tennis World Court (Japan)
 
 static struct BurnRomInfo wldcourtRomDesc[] = {
 	{ "wc1_snd0.bin",	0x10000, 0x17a6505d, 1 | BRF_PRG | BRF_ESS }, //  0 Sound m6809 Code
@@ -3251,7 +3251,7 @@ static INT32 WldcourtInit()
 
 struct BurnDriver BurnDrvWldcourt = {
 	"wldcourt", NULL, NULL, NULL, "1988",
-	"World Court (Japan)\0", NULL, "Namco", "System 1",
+	"Pro Tennis World Court (Japan)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, wldcourtRomInfo, wldcourtRomName, NULL, NULL, NULL, NULL, DrvInputInfo, WldcourtDIPInfo,
@@ -3629,7 +3629,7 @@ struct BurnDriver BurnDrvBlastoff = {
 };
 
 
-// World Stadium '89 (Japan)
+// Pro Yakyuu World Stadium '89 (Japan)
 
 static struct BurnRomInfo ws89RomDesc[] = {
 	{ "w91_snd0.bin",	0x10000, 0x52b84d5a, 1 | BRF_PRG | BRF_ESS }, //  0 Sound m6809 Code
@@ -3672,7 +3672,7 @@ static INT32 Ws89Init()
 
 struct BurnDriver BurnDrvWs89 = {
 	"ws89", "ws", NULL, NULL, "1989",
-	"World Stadium '89 (Japan)\0", NULL, "Namco", "System 1",
+	"Pro Yakyuu World Stadium '89 (Japan)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, ws89RomInfo, ws89RomName, NULL, NULL, NULL, NULL, DrvInputInfo, Ws89DIPInfo,
@@ -3730,7 +3730,7 @@ struct BurnDriver BurnDrvDangseed = {
 };
 
 
-// World Stadium '90 (Japan)
+// Pro Yakyuu World Stadium '90 (Japan)
 
 static struct BurnRomInfo ws90RomDesc[] = {
 	{ "w91_snd0.bin",	0x10000, 0x52b84d5a, 1 | BRF_PRG | BRF_ESS }, //  0 Sound m6809 Code
@@ -3773,7 +3773,7 @@ static INT32 Ws90Init()
 
 struct BurnDriver BurnDrvWs90 = {
 	"ws90", "ws", NULL, NULL, "1990",
-	"World Stadium '90 (Japan)\0", NULL, "Namco", "System 1",
+	"Pro Yakyuu World Stadium '90 (Japan)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, ws90RomInfo, ws90RomName, NULL, NULL, NULL, NULL, DrvInputInfo, Ws90DIPInfo,

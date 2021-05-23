@@ -24,7 +24,7 @@ FBNEO_DEFINES :=
 
 include $(LOCAL_PATH)/../Makefile.common
 
-COMMON_FLAGS := -DUSE_SPEEDHACKS -D__LIBRETRO__ -DANDROID -Wno-write-strings -DLSB_FIRST $(FBNEO_DEFINES)
+COMMON_FLAGS := -DUSE_SPEEDHACKS -D__LIBRETRO__ -DANDROID -Wno-write-strings  -fno-builtin-memmove -DLSB_FIRST $(FBNEO_DEFINES)
 
 # Build shared library including static C module
 include $(CLEAR_VARS)

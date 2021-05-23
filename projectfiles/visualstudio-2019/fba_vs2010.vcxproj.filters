@@ -1078,6 +1078,30 @@
     <ClInclude Include="..\..\src\burn\drv\konami\k007452.h">
       <Filter>Burn\drv\konami</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\dep\libs\lib7z\Blake2.h">
+      <Filter>libs\7z</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dep\libs\lib7z\BwtSort.h">
+      <Filter>libs\7z</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dep\libs\lib7z\DllSecur.h">
+      <Filter>libs\7z</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dep\libs\lib7z\HuffEnc.h">
+      <Filter>libs\7z</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dep\libs\lib7z\Lzma2DecMt.h">
+      <Filter>libs\7z</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dep\libs\lib7z\MtDec.h">
+      <Filter>libs\7z</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dep\libs\lib7z\Ppmd8.h">
+      <Filter>libs\7z</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dep\libs\lib7z\Sha1.h">
+      <Filter>libs\7z</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -4372,6 +4396,36 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\snd\digitalk.cpp">
       <Filter>Burn\snd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\Blake2s.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\BwtSort.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\DllSecur.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\HuffEnc.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\Lzma2DecMt.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\MtDec.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\Ppmd8.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\Ppmd8Dec.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\Ppmd8Enc.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\Sha1.c">
+      <Filter>libs\7z</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

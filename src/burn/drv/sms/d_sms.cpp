@@ -29310,3 +29310,174 @@ struct BurnDriver BurnDrvsms_zeloliv = {
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
+
+// Acid Reflux (HB, v1.1)
+
+static struct BurnRomInfo sms_acrefluxRomDesc[] = {
+	{ "Acid Reflux v1.1 (2016)(furrtek & robotwo).sms",	32768, 0x9d9919df, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_acreflux)
+STD_ROM_FN(sms_acreflux)
+
+struct BurnDriver BurnDrvsms_acreflux = {
+	"sms_acreflux", NULL, NULL, NULL, "2016",
+	"Acid Reflux (HB, v1.1)\0", NULL, "furrtek & robotwo", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_acrefluxRomInfo, sms_acrefluxRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// CandyKid (HB, v3.0)
+
+static struct BurnRomInfo sms_candykidRomDesc[] = {
+	{ "CandyKid v3.0 (2020)(SteveProXNA).sms",	262144, 0x890bb775, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_candykid)
+STD_ROM_FN(sms_candykid)
+
+struct BurnDriver BurnDrvsms_candykid = {
+	"sms_candykid", NULL, NULL, NULL, "2020",
+	"CandyKid (HB, v3.0)\0", NULL, "SteveProXNA", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_candykidRomInfo, sms_candykidRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Gravity Beam: Master Gaiden (HB)
+
+static struct BurnRomInfo sms_gravbeamRomDesc[] = {
+	{ "Gravity Beam Master Gaiden (2013)(Neko-MrD).sms",	32768, 0x829fd975, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_gravbeam)
+STD_ROM_FN(sms_gravbeam)
+
+struct BurnDriver BurnDrvsms_gravbeam = {
+	"sms_gravbeam", NULL, NULL, NULL, "2013",
+	"Gravity Beam: Master Gaiden (HB)\0", NULL, "Neko-MrD", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_gravbeamRomInfo, sms_gravbeamRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Ice Force (HB)
+
+static struct BurnRomInfo sms_iceforceRomDesc[] = {
+	{ "Ice Force (2021)(Alex1975Br).sms",	65536, 0xda5f2e58, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_iceforce)
+STD_ROM_FN(sms_iceforce)
+
+struct BurnDriver BurnDrvsms_iceforce = {
+	"sms_iceforce", NULL, NULL, NULL, "2021",
+	"Ice Force (HB)\0", NULL, "Alex1975Br", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VERSHOOT, 0,
+	SMSGetZipName, sms_iceforceRomInfo, sms_iceforceRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Klondike Solitaire (HB)
+
+static struct BurnRomInfo sms_ksolitaireRomDesc[] = {
+	{ "Klondike Solitaire (2021)(Under4Mhz).sms",	49152, 0xa4011448, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_ksolitaire)
+STD_ROM_FN(sms_ksolitaire)
+
+struct BurnDriver BurnDrvsms_ksolitaire = {
+	"sms_ksolitaire", NULL, NULL, NULL, "2021",
+	"Klondike Solitaire (HB)\0", NULL, "Under4Mhz", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_CASINO, 0,
+	SMSGetZipName, sms_ksolitaireRomInfo, sms_ksolitaireRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// KunKun & KokoKun 2 (HB)
+
+static struct BurnRomInfo sms_kunkun2RomDesc[] = {
+	{ "KunKun & KokoKun 2 (2011)(Bock).sms",	65536, 0x5173b648, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_kunkun2)
+STD_ROM_FN(sms_kunkun2)
+
+struct BurnDriver BurnDrvsms_kunkun2 = {
+	"sms_kunkun2", NULL, NULL, NULL, "2011",
+	"KunKun & KokoKun 2 (HB)\0", NULL, "Bock", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_kunkun2RomInfo, sms_kunkun2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Mahjong Solitaire (HB)
+
+static struct BurnRomInfo sms_msolitaireRomDesc[] = {
+	{ "Mahjong Solitaire (2021)(Under4Mhz).sms",	32768, 0xbed37331, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_msolitaire)
+STD_ROM_FN(sms_msolitaire)
+
+struct BurnDriver BurnDrvsms_msolitaire = {
+	"sms_msolitaire", NULL, NULL, NULL, "2021",
+	"Mahjong Solitaire (HB)\0", NULL, "Under4Mhz", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MAHJONG | GBF_PUZZLE, 0,
+	SMSGetZipName, sms_msolitaireRomInfo, sms_msolitaireRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Pitman (HB)
+
+static struct BurnRomInfo sms_pitmanRomDesc[] = {
+	{ "Pitman (2021)(Under4Mhz).sms",	32768, 0xcd45ad76, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_pitman)
+STD_ROM_FN(sms_pitman)
+
+struct BurnDriver BurnDrvsms_pitman = {
+	"sms_pitman", NULL, NULL, NULL, "2021",
+	"Pitman (HB)\0", NULL, "Under4Mhz", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_pitmanRomInfo, sms_pitmanRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// SKBN (HB, v1.3)
+
+static struct BurnRomInfo sms_skbnRomDesc[] = {
+	{ "SKBN v1.3 (2021)(raphnet).sms",	131072, 0x1d811c2a, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_skbn)
+STD_ROM_FN(sms_skbn)
+
+struct BurnDriver BurnDrvsms_skbn = {
+	"sms_skbn", NULL, NULL, NULL, "2021",
+	"SKBN (HB, v1.3)\0", NULL, "Raphael Assenat", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_skbnRomInfo, sms_skbnRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};

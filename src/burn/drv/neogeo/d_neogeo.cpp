@@ -9685,7 +9685,7 @@ static void kf2k3pcbCallback()
 		memcpy (Neo68KROMActive + i * 0x010000, Neo68KROMActive + 0x700000 + j * 0x010000, 0x010000);
 	}
 
-	memcpy (Neo68KROMActive + 0x200000, Neo68KROMActive + 0x100000, 0x600000);
+	memmove (Neo68KROMActive + 0x200000, Neo68KROMActive + 0x100000, 0x600000);
 
 	for (i = 0x200000; i < 0x900000; i += 0x100000)
 	{

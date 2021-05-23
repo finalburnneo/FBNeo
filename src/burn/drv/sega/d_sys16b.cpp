@@ -2024,7 +2024,7 @@ STDDIPINFO(Toryumon)
 static struct BurnDIPInfo TturfDIPList[]=
 {
 	// Default Values
-	{0x15, 0xff, 0xff, 0x2c, NULL                                 },
+	{0x15, 0xff, 0xff, 0x2f, NULL                                 },
 	{0x16, 0xff, 0xff, 0xff, NULL                                 },
 
 	// Dip 1

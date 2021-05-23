@@ -561,8 +561,13 @@ static INT32 DrvInit(INT32 game)
 	AY8910Init(1, 1250000, 1);
 	AY8910SetPorts(0, &ay8910_0_read_A, &ay8910_0_read_B, NULL, NULL);
 	AY8910SetPorts(1, &ay8910_1_read_A, &ay8910_1_read_B, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
+	if (game == 0) {
+		AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
+		AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
+	} else {
+		AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
+		AY8910SetAllRoutes(1, 0.10, BURN_SND_ROUTE_BOTH);
+	}
     AY8910SetBuffered(ZetTotalCycles, (game_select ? 5000000 : 3355700));
 
 	sp0256_init(DrvSndROM, 3355700);

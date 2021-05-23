@@ -2455,8 +2455,8 @@ static struct BurnRomInfo rpatrolRomDesc[] = {
 	{ "6.6l.2732",	0x1000, 0xb38d8aca, 2 | BRF_GRA },           //  5 gfx1
 	{ "7.6p.2732",	0x1000, 0xbc2bddf9, 2 | BRF_GRA },           //  6
 
-	{ "9.2t",		0x0800, 0x065651a5, 3 | BRF_GRA },           //  7 gfx2
-	{ "8.2s",		0x0800, 0x59747c31, 3 | BRF_GRA },           //  8
+	{ "8.2s",		0x0800, 0x59747c31, 3 | BRF_GRA },           //  7 gfx2
+	{ "9.2t",		0x0800, 0x065651a5, 3 | BRF_GRA },           //  8
 
 	{ "mb7051.1b",	0x0020, 0xf9a2383b, 6 | BRF_GRA },           //  9 proms
 	{ "mb7051.1c",	0x0020, 0x1743bd26, 6 | BRF_GRA },           // 10
@@ -2490,8 +2490,8 @@ static struct BurnRomInfo rpatrolnRomDesc[] = {
 	{ "6.6l.2732",	0x1000, 0xb38d8aca, 2 | BRF_GRA },           //  5 gfx1
 	{ "7.6p.2732",	0x1000, 0xbc2bddf9, 2 | BRF_GRA },           //  6
 
-	{ "9.2t",		0x0800, 0x065651a5, 3 | BRF_GRA },           //  7 gfx2
-	{ "8.2s",		0x0800, 0x59747c31, 3 | BRF_GRA },           //  8
+	{ "8.2s",		0x0800, 0x59747c31, 3 | BRF_GRA },           //  7 gfx2
+	{ "9.2t",		0x0800, 0x065651a5, 3 | BRF_GRA },           //  8
 
 	{ "mb7051.1b",	0x0020, 0xf9a2383b, 6 | BRF_GRA },           //  9 proms
 	{ "mb7051.1c",	0x0020, 0x1743bd26, 6 | BRF_GRA },           // 10

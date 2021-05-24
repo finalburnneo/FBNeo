@@ -9646,7 +9646,7 @@ struct BurnDriver BurnDrvMSX_issun = {
 	"msx_issun", NULL, "msx_msx", NULL, "1987",
 	"Issunboushi no Donnamondai (Jpn)\0", NULL, "Casio", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_issunRomInfo, MSX_issunRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -9666,7 +9666,7 @@ struct BurnDriver BurnDrvMSX_issuna = {
 	"msx_issuna", "msx_issun", "msx_msx", NULL, "1987",
 	"Issunboushi no Donnamondai (Jpn, Alt)\0", NULL, "Casio", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_issunaRomInfo, MSX_issunaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -9686,7 +9686,7 @@ struct BurnDriver BurnDrvMSX_issunh = {
 	"msx_issunh", "msx_issun", "msx_msx", NULL, "1987",
 	"Issunboushi no Donnamondai (Jpn, Hacked?)\0", NULL, "Angel?", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_issunhRomInfo, MSX_issunhRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -9706,7 +9706,7 @@ struct BurnDriver BurnDrvMSX_jpwinkle = {
 	"msx_jpwinkle", NULL, "msx_msx", NULL, "1986",
 	"J.P. Winkle (Jpn)\0", NULL, "ASCII ~ MSX Magazine", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_jpwinkleRomInfo, MSX_jpwinkleRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -9726,7 +9726,7 @@ struct BurnDriver BurnDrvMSX_jpwinklek = {
 	"msx_jpwinklek", "msx_jpwinkle", "msx_msx", NULL, "198?",
 	"J.P. Winkle (Kor)\0", NULL, "Zemina", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_jpwinklekRomInfo, MSX_jpwinklekRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -20905,7 +20905,7 @@ struct BurnDriver BurnDrvMSX_turbogirl = {
 	272, 228, 4, 3
 };
 
-// Super Suwanggi - Super Altered Beast
+// Super Suwanggi - Super Altered Beast (Kor)
 
 static struct BurnRomInfo MSX_suwanggiRomDesc[] = {
 	{ "Super Suwanggi - Super Altered Beast (1990)(Clover)[ASCII16k].rom",	0x10000, 0xe953f2ab, BRF_PRG | BRF_ESS },
@@ -20916,9 +20916,9 @@ STD_ROM_FN(MSX_suwanggi)
 
 struct BurnDriver BurnDrvMSX_suwanggi = {
 	"msx_suwanggi", NULL, "msx_msx", NULL, "1990",
-	"Super Suwanggi - Super Altered Beast\0", NULL, "Clover", "MSX",
+	"Super Suwanggi - Super Altered Beast (Kor)\0", NULL, "Clover", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_SCRFIGHT, 0,
 	MSXGetZipName, MSX_suwanggiRomInfo, MSX_suwanggiRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -23669,7 +23669,7 @@ struct BurnDriver BurnDrvMSX_mrmole = {
 	272, 228, 4, 3
 };
 
-// Altered Beast
+// Altered Beast (Euro)
 
 static struct BurnRomInfo MSX_alteredbeastRomDesc[] = {
 	{ "alteredbeast.rom",	0x40000, 0xbb5cd0f1, BRF_PRG | BRF_ESS },
@@ -23680,9 +23680,9 @@ STD_ROM_FN(MSX_alteredbeast)
 
 struct BurnDriver BurnDrvMSX_alteredbeast = {
 	"msx_alteredbeast", NULL, "msx_msx", NULL, "1988",
-	"Altered Beast\0", "Choose 'B' Cursor from menu.", "Activision / Amusement Factory", "MSX",
+	"Altered Beast (Euro)\0", "Choose 'B' Cursor from menu", "Activision / Amusement Factory", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_SCRFIGHT, 0,
 	MSXGetZipName, MSX_alteredbeastRomInfo, MSX_alteredbeastRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursorDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -27470,25 +27470,6 @@ struct BurnDriver BurnDrvMSX_cotracer = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_HORSHOOT, 0,
 	MSXGetZipName, MSX_cotracerRomInfo, MSX_cotracerRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
-	272, 228, 4, 3
-};
-
-// Little Samurai - Issunhoushi No Donnamondai (Jpn)
-
-static struct BurnRomInfo MSX_littlesamRomDesc[] = {
-	{ "Little Samurai - Issunhoushi No Donnamondai (1987)(Casio).rom",	32768, 0xa7c43855, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(MSX_littlesam, MSX_littlesam, msx_msx)
-STD_ROM_FN(MSX_littlesam)
-
-struct BurnDriver BurnDrvMSX_littlesam = {
-	"msx_littlesam", NULL, "msx_msx", NULL, "1987",
-	"Little Samurai - Issunhoushi No Donnamondai (Jpn)\0", NULL, "Casio", "MSX",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
-	MSXGetZipName, MSX_littlesamRomInfo, MSX_littlesamRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

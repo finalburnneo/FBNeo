@@ -835,59 +835,9 @@ error:
 
 static int percent_parser(const char *value)
 {
-	INT32 nVal = 100;
-	if (strcmp(value, "100%") == 0)
+	INT32 nVal = atoi(value);
+	if (nVal == 0)
 		nVal = 100;
-	else if (strcmp(value, "110%") == 0)
-		nVal = 110;
-	else if (strcmp(value, "120%") == 0)
-		nVal = 120;
-	else if (strcmp(value, "130%") == 0)
-		nVal = 130;
-	else if (strcmp(value, "140%") == 0)
-		nVal = 140;
-	else if (strcmp(value, "150%") == 0)
-		nVal = 150;
-	else if (strcmp(value, "160%") == 0)
-		nVal = 160;
-	else if (strcmp(value, "170%") == 0)
-		nVal = 170;
-	else if (strcmp(value, "180%") == 0)
-		nVal = 180;
-	else if (strcmp(value, "190%") == 0)
-		nVal = 190;
-	else if (strcmp(value, "200%") == 0)
-		nVal = 200;
-	else if (strcmp(value, "95%") == 0)
-		nVal = 95;
-	else if (strcmp(value, "90%") == 0)
-		nVal = 90;
-	else if (strcmp(value, "85%") == 0)
-		nVal = 85;
-	else if (strcmp(value, "80%") == 0)
-		nVal = 80;
-	else if (strcmp(value, "75%") == 0)
-		nVal = 75;
-	else if (strcmp(value, "70%") == 0)
-		nVal = 70;
-	else if (strcmp(value, "65%") == 0)
-		nVal = 65;
-	else if (strcmp(value, "60%") == 0)
-		nVal = 60;
-	else if (strcmp(value, "55%") == 0)
-		nVal = 55;
-	else if (strcmp(value, "50%") == 0)
-		nVal = 50;
-	else if (strcmp(value, "45%") == 0)
-		nVal = 45;
-	else if (strcmp(value, "40%") == 0)
-		nVal = 40;
-	else if (strcmp(value, "35%") == 0)
-		nVal = 35;
-	else if (strcmp(value, "30%") == 0)
-		nVal = 30;
-	else if (strcmp(value, "25%") == 0)
-		nVal = 25;
 
 	return (int)((double)nVal * 256.0 / 100.0 + 0.5);
 }

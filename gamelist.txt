@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16989 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16990 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -8935,6 +8935,7 @@ This list contains all games supported by FinalBurn Neo.
 | mrtnt		|  	| Mr. TNT						| 		| 1982	| Telko		| Pac-man	| 					|
 | msx_mrwong	|  	| Mr. Wong's Loopy Laundry (Euro)			| 		| 1984	| Artic Computin| MSX		| 					|
 | donight	|  	| Mr.Do's Nightmare (hack by Krazy Ivan)		| 		| 2013	| Krazy Ivan	| Galaxian	| 					|
+| mrsdyna	|  	| Mrs. Dynamite						| 		| 1982	| Universal	| Miscellaneous	| 					|
 | mspactwin	|  	| Ms PacMan Twin (Argentina)				| 		| 1992	| SUSILU	| Miscellaneous	| 					|
 | mspacman	|  	| MS Pacman						| 		| 1980	| Namco		| Pac-man	| 					|
 | mspacmat	|  	| Ms. Pac Attack					| mspacman	| 1980	| hack		| Pac-man	| 					|

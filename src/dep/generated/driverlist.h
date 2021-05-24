@@ -9049,6 +9049,7 @@ DRV		BurnDrvnes_mrsplash;
 DRV		BurnDrvmrtnt;
 DRV		BurnDrvMSX_mrwong;
 DRV		BurnDrvDonight;
+DRV		BurnDrvMrsdyna;
 DRV		BurnDrvMspactwin;
 DRV		BurnDrvmspacman;
 DRV		BurnDrvmspacmat;
@@ -26283,6 +26284,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmrtnt,				// Mr. TNT
 	&BurnDrvMSX_mrwong,			// Mr. Wong's Loopy Laundry (Euro)
 	&BurnDrvDonight,			// Mr.Do's Nightmare (hack by Krazy Ivan)
+	&BurnDrvMrsdyna,			// Mrs. Dynamite
 	&BurnDrvMspactwin,			// Ms PacMan Twin (Argentina)
 	&BurnDrvmspacman,			// MS Pacman
 	&BurnDrvmspacmat,			// Ms. Pac Attack

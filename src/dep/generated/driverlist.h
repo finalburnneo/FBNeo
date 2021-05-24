@@ -565,6 +565,7 @@ DRV		BurnSpecaltbeast;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvAltbeastbl;		// no Sound [NOT WORKING]
 #endif
+DRV		BurnDrvMSX_alteredbeast;
 DRV		BurnDrvmd_altbeast;
 DRV		BurnDrvsms_altbeast;
 DRV		BurnDrvmd_altbeasts;
@@ -574,7 +575,6 @@ DRV		BurnDrvAltbeast5d;
 DRV		BurnDrvAltbeast5;
 DRV		BurnDrvAltbeast6;
 DRV		BurnDrvAltbeast;
-DRV		BurnDrvMSX_alteredbeast;
 DRV		BurnDrvmd_alterego;
 DRV		BurnDrvnes_amagon;
 DRV		BurnDrvcv_amazing;
@@ -7782,7 +7782,6 @@ DRV		BurnDrvnes_littlninbro;
 DRV		BurnSpecLittlepuff;
 DRV		BurnDrvnes_littlesamsonh;
 DRV		BurnDrvnes_littlesamson;
-DRV		BurnDrvMSX_littlesam;
 DRV		BurnDrvLivequiz;
 DRV		BurnDrvMSX_livingstone;
 DRV		BurnDrvMSX_livingstone2;
@@ -17800,6 +17799,7 @@ static struct BurnDriver* pDriver[] = {
 #if defined FBNEO_DEBUG
 	&BurnDrvAltbeastbl,			// Altered Beast (Datsu bootleg) [no Sound, NOT WORKING]
 #endif
+	&BurnDrvMSX_alteredbeast,	// Altered Beast (Euro)
 	&BurnDrvmd_altbeast,		// Altered Beast (Euro, USA)
 	&BurnDrvsms_altbeast,		// Altered Beast (Euro, USA, Bra)
 	&BurnDrvmd_altbeasts,		// Altered Beast (Hack, Spanish)
@@ -17809,7 +17809,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAltbeast5,			// Altered Beast (set 5, FD1094 317-0069)
 	&BurnDrvAltbeast6,			// Altered Beast (set 6, 8751 317-0076)
 	&BurnDrvAltbeast,			// Altered Beast (set 8, 8751 317-0078)
-	&BurnDrvMSX_alteredbeast,	// Altered Beast
 	&BurnDrvmd_alterego,		// AlterEgo Remastered (HB)
 	&BurnDrvnes_amagon,			// Amagon (USA)
 	&BurnDrvcv_amazing,			// Amazing Bumpman
@@ -25017,7 +25016,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecLittlepuff,		// Little Puff in Dragonland (128K)
 	&BurnDrvnes_littlesamsonh,	// Little Samson (Restoration & Sound Hack)
 	&BurnDrvnes_littlesamson,	// Little Samson (USA)
-	&BurnDrvMSX_littlesam,		// Little Samurai - Issunhoushi No Donnamondai (Jpn)
 	&BurnDrvLivequiz,			// Live Quiz Show
 	&BurnDrvMSX_livingstone,	// Livingstone Supongo (Spa)
 	&BurnDrvMSX_livingstone2,	// Livingstone Supongo II (Spa)
@@ -31402,7 +31400,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSsf2xjr1,		// Super Street Fighter II X - grand master challenge (super street fighter 2 X 940223 Japan)
 	&BurnDrvCpsSsf2xj,			// Super Street Fighter II X - grand master challenge (super street fighter 2 X 940311 Japan)
 	&BurnSpecSuperstuntman,		// Super Stuntman
-	&BurnDrvMSX_suwanggi,		// Super Suwanggi - Super Altered Beast
+	&BurnDrvMSX_suwanggi,		// Super Suwanggi - Super Altered Beast (Kor)
 	&BurnDrvcv_suprtank,		// Super Tank (HB)
 	&BurnDrvsg1k_supertnk,		// Super Tank (Jpn)
 	&BurnDrvsg1k_supertnkk,		// Super Tank (Kor)

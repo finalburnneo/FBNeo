@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16990 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16989 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -557,6 +557,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_alterego	|  	| Alter Ego (HB)					| 		| 2011	| RetroSouls	| ZX Spectrum	| 					|
 | spec_altbeast	|  	| Altered Beast (128K)					| 		| 1988-89| Activision	| ZX Spectrum	| 					|
 | altbeastbl	| D NW	| Altered Beast (Datsu bootleg)				| altbeast	| 1988	| bootleg (Datsu| System 16B	| no Sound				|
+| msx_alteredbeast|  	| Altered Beast (Euro)					| 		| 1988	| Activision / A| MSX		| Choose 'B' Cursor from menu		|
 | md_altbeast	|  	| Altered Beast (Euro, USA)				| 		| 1989	| Sega		| Sega Megadrive| 					|
 | sms_altbeast	|  	| Altered Beast (Euro, USA, Bra)			| 		| 1988	| Sega		| Sega Master Sy| 					|
 | md_altbeasts	|  	| Altered Beast (Hack, Spanish)				| md_altbeast	| 2017	| Sega		| Sega Megadrive| 					|
@@ -566,7 +567,6 @@ This list contains all games supported by FinalBurn Neo.
 | altbeast5	|  	| Altered Beast (set 5, FD1094 317-0069)		| altbeast	| 1988	| Sega		| System 16B	| 					|
 | altbeast6	|  	| Altered Beast (set 6, 8751 317-0076)			| altbeast	| 1988	| Sega		| System 16B	| 					|
 | altbeast	|  	| Altered Beast (set 8, 8751 317-0078)			| 		| 1988	| Sega		| System 16B	| 					|
-| msx_alteredbeast|  	| Altered Beast						| 		| 1988	| Activision / A| MSX		| Choose 'B' Cursor from menu.		|
 | md_alterego	|  	| AlterEgo Remastered (HB)				| 		| 2020	| RetroSouls	| Sega Megadrive| 					|
 | nes_amagon	|  	| Amagon (USA)						| 		| 1989	| Sammy		| Miscellaneous	| 					|
 | cv_amazing	|  	| Amazing Bumpman					| 		| 1986	| Telegames	| ColecoVision	| 					|
@@ -7680,7 +7680,6 @@ This list contains all games supported by FinalBurn Neo.
 | spec_littlepuff|  	| Little Puff in Dragonland (128K)			| 		| 1990	| Codemasters	| ZX Spectrum	| 					|
 | nes_littlesamsonh|  	| Little Samson (Restoration & Sound Hack)		| nes_littlesamson| 1992	| Taito		| Miscellaneous	| 					|
 | nes_littlesamson|  	| Little Samson (USA)					| 		| 1992	| Taito		| Miscellaneous	| 					|
-| msx_littlesam	|  	| Little Samurai - Issunhoushi No Donnamondai (Jpn)	| 		| 1987	| Casio		| MSX		| 					|
 | livequiz	|  	| Live Quiz Show					| 		| 1999	| Andamiro Enter| Andamiro Midas| 					|
 | msx_livingstone|  	| Livingstone Supongo (Spa)				| 		| 1986	| Opera Soft	| MSX		| 					|
 | msx_livingstone2|  	| Livingstone Supongo II (Spa)				| 		| 1989	| Opera Soft	| MSX		| 					|
@@ -13979,7 +13978,7 @@ This list contains all games supported by FinalBurn Neo.
 | ssf2xjr1	|  	| Super Street Fighter II X - grand master challenge (su| ssf2t		| 1994	| Capcom	| CPS2		| 					|
 | ssf2xj	|  	| Super Street Fighter II X - grand master challenge (su| ssf2t		| 1994	| Capcom	| CPS2		| 					|
 | spec_superstuntman|  	| Super Stuntman					| 		| 1988	| Codemasters	| ZX Spectrum	| 					|
-| msx_suwanggi	|  	| Super Suwanggi - Super Altered Beast			| 		| 1990	| Clover	| MSX		| 					|
+| msx_suwanggi	|  	| Super Suwanggi - Super Altered Beast (Kor)		| 		| 1990	| Clover	| MSX		| 					|
 | cv_suprtank	|  	| Super Tank (HB)					| 		| 1986-2011| Sega		| ColecoVision	| Published by Team Pixelboy		|
 | sg1k_supertnk	|  	| Super Tank (Jpn)					| 		| 1986	| Sega		| Sega SG-1000	| 					|
 | sg1k_supertnkk|  	| Super Tank (Kor)					| sg1k_supertnk	| 1986?	| Unknown	| Sega SG-1000	| 					|

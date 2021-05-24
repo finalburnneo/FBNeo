@@ -454,7 +454,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="alteredbeast" romof="msx">
-		<description>Altered Beast [Choose 'B' Cursor from menu.]</description>
+		<description>Altered Beast (Euro) [Choose 'B' Cursor from menu]</description>
 		<year>1988</year>
 		<manufacturer>Activision / Amusement Factory</manufacturer>
 		<rom name="alteredbeast.rom" size="262144" crc="bb5cd0f1"/>
@@ -7567,17 +7567,6 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="littlesam" romof="msx">
-		<description>Little Samurai - Issunhoushi No Donnamondai (Jpn)</description>
-		<year>1987</year>
-		<manufacturer>Casio</manufacturer>
-		<rom name="Little Samurai - Issunhoushi No Donnamondai (1987)(Casio).rom" size="32768" crc="a7c43855"/>
-		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
-		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
-		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
-		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="livingstone" romof="msx">
 		<description>Livingstone Supongo (Spa)</description>
 		<year>1986</year>
@@ -12304,7 +12293,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="suwanggi" romof="msx">
-		<description>Super Suwanggi - Super Altered Beast</description>
+		<description>Super Suwanggi - Super Altered Beast (Kor)</description>
 		<year>1990</year>
 		<manufacturer>Clover</manufacturer>
 		<rom name="Super Suwanggi - Super Altered Beast (1990)(Clover)[ASCII16k].rom" size="65536" crc="e953f2ab"/>

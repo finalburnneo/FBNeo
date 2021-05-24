@@ -153,6 +153,7 @@ static INT16 DrvGun3 = 0;
 static INT32 has_shift = 0;
 
 static INT32 is_suzuka = 0;
+static INT32 is_finallap = 0;
 static INT32 is_fourtrax = 0;
 static INT32 is_dirtfoxj = 0;
 static INT32 is_luckywld = 0;
@@ -2088,7 +2089,7 @@ static INT32 FinallapInit()
 	BurnAllocMemIndex();
 
 	{
-		if (Namcos2GetRoms(0x200000)) return 1;
+		if (Namcos2GetRoms(0)) return 1;
 
 		DrvGfxDecode(); // decode sprites
 		decode_layer_tiles();
@@ -2102,6 +2103,8 @@ static INT32 FinallapInit()
 	namcos2_mcu_init();
 
 	GenericTilesInit();
+
+	is_finallap = 1;
 
 	has_shift = 1;
 	BurnShiftInit(SHIFT_POSITION_BOTTOM_RIGHT, SHIFT_COLOR_GREEN, 80);
@@ -2231,6 +2234,7 @@ static INT32 Namcos2Exit()
 
 	has_shift = 0;
 	is_suzuka = 0;
+	is_finallap = 0;
 	is_fourtrax = 0;
 	is_dirtfoxj = 0;
 	is_luckywld = 0;
@@ -2995,22 +2999,25 @@ static void draw_sprites_bank(INT32 spritebank)
 		INT32 sizey=((word0>>10)&0x3f)+1;
 		INT32 sizex=(word3>>10)&0x3f;
 
-		if((word0&0x0200)==0) sizex>>=1;
+		INT32 size = (word0 >> 9) & 1; // 1 = 32x32, 0 = 16x16
 
-		if((sizey-1) && sizex )
+		if (is_finallap) size = (word1 >> 13) & 1;
+
+		if (size == 0) sizex >>= 1;
+
+		if ((sizey-1) && sizex )
 		{
 			INT32 color  = (word3>>4)&0x000f;
-			INT32 code   = word1 & 0x3fff;
+			INT32 code   = word1 & ((is_finallap) ? 0x1fff : 0x3fff);
 			INT32 ypos   = (0x1ff-(word0&0x01ff))-0x50+0x02;
 			INT32 xpos   = (offset4&0x03ff)-0x50+0x07;
 			INT32 flipy  = word1&0x8000;
 			INT32 flipx  = word1&0x4000;
-			INT32 scalex = (sizex<<16)/((word0&0x0200)?0x20:0x10);
-			INT32 scaley = (sizey<<16)/((word0&0x0200)?0x20:0x10);
-			if(scalex && scaley)
-			{
-				INT32 size = (word0 >> 9) & 1; // 1 = 32x32, 0 = 16x16
+			INT32 scalex = (sizex<<16)/((size)?0x20:0x10);
+			INT32 scaley = (sizey<<16)/((size)?0x20:0x10);
 
+			if (scalex && scaley)
+			{
 				if (size == 1) code >>= 2;
 
 				zdrawgfxzoom( size ? DrvGfxROM0 : DrvGfxROM1, size ? 32 : 16, code, color * 256, flipx,flipy, xpos,ypos, scalex,scaley, priority, loop, 0);

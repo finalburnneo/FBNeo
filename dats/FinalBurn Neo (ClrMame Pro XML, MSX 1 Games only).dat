@@ -100,6 +100,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="m36e" cloneof="m36" romof="m36">
+		<description>A Life Planet - M36 - Mother Brain has been aliving (English) [English translation + new font]</description>
+		<year>1987-2017</year>
+		<manufacturer>Pixel - Hubz</manufacturer>
+		<rom name="A Life M36 Planet engT (1987)(Pixel).rom" size="131072" crc="015da0a4"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="m36" romof="msx">
 		<description>A Life Planet - M36 - Mother Brain has been aliving (Jpn)</description>
 		<year>1987</year>
@@ -124,7 +135,7 @@
 	</game>
 	<game name="ae" romof="msx">
 		<description>A.E. (Jpn)</description>
-		<year>1982</year>
+		<year>1982-83</year>
 		<manufacturer>Toshiba EMI</manufacturer>
 		<rom name="a.e. (japan).rom" size="16384" crc="2e1b3dd4"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
@@ -158,7 +169,7 @@
 	<game name="abusimbel" romof="msx">
 		<description>Abu Simbel Profanation</description>
 		<year>1986</year>
-		<manufacturer>Dinamic</manufacturer>
+		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="abusimbel.rom" size="131072" crc="603a0c0d"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -730,9 +741,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="amc" romof="msx">
-		<description>Astro Marine Corps (Spa) [Uses joyport #2. Press 'M' for Grenade.]</description>
+		<description>Astro Marine Corps (Spa) [Uses joyport #2. Press 'M' for Grenade]</description>
 		<year>1989</year>
-		<manufacturer>Dinamic Software?</manufacturer>
+		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="astro marine corps (1989)(dinamic software)(es).rom" size="131072" crc="60f99d30"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -1327,7 +1338,7 @@
 	<game name="bestwarr" romof="msx">
 		<description>Bestial Warrior (Spa)</description>
 		<year>1989</year>
-		<manufacturer>Dinamic Software</manufacturer>
+		<manufacturer>Zeus Soft - Dinamic Software</manufacturer>
 		<rom name="bestial warrior (1989)(dinamic software)(es)[run'cas-'].cas" size="65790" crc="06073712"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -2194,7 +2205,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ctrueno" romof="msx">
-		<description>Capitan Trueno (Spa) [Uses joyport #2]</description>
+		<description>Capitan Trueno, el (Spa) [Use joyport #2]</description>
 		<year>1989</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Capitan Trueno (1989)(Dinamic Software)(ES).rom" size="131072" crc="b1b434be"/>
@@ -2890,7 +2901,7 @@
 	<game name="cotracer" romof="msx">
 		<description>Comando Tracer (Spa)</description>
 		<year>1988-89</year>
-		<manufacturer>Zeus Soft. - Dinamic</manufacturer>
+		<manufacturer>Zeus Soft - Dinamic Software</manufacturer>
 		<rom name="Comando Tracer (1989)(Dinamic).rom" size="131072" crc="c876b802"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -3031,7 +3042,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="congobongo" romof="msx">
-		<description>Congo Bongo</description>
+		<description>Congo Bongo (Jpn)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Congo Bongo (1983)(Sega)(JP).rom" size="65536" crc="cb054111"/>
@@ -4054,6 +4065,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="earthatk" romof="msx">
+		<description>Earth Attack (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>The Geps</manufacturer>
+		<rom name="Earth Attack (2021)(TheGeps).rom" size="32768" crc="c9596ccb"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="eatblue" romof="msx">
 		<description>Eat Blue! (HB) [Homebrew]</description>
 		<year>2004</year>
@@ -4740,7 +4762,7 @@
 	<game name="freefight" romof="msx">
 		<description>Freedom Fighter (HB) [Homebrew]</description>
 		<year>2020</year>
-		<manufacturer>Geppo</manufacturer>
+		<manufacturer>The Geps</manufacturer>
 		<rom name="freedom fighter (2020)(geppo).rom" size="131072" crc="15e0b97e"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -5532,7 +5554,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hammboy" romof="msx">
-		<description>Hammer Boy (Spa) [Keyboard control only.]</description>
+		<description>Hammer Boy (Spa) [Keyboard control only]</description>
 		<year>1991</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="hammer boy (1991)(dinamic software)(es)(side a)[run'cas-'].cas" size="55954" crc="907a6931"/>
@@ -5876,7 +5898,7 @@
 	<game name="hundra" romof="msx">
 		<description>Hundra (Spa)</description>
 		<year>1988</year>
-		<manufacturer>Dinamic Software</manufacturer>
+		<manufacturer>Zeus Soft - Dinamic Software</manufacturer>
 		<rom name="hundra (1988)(dinamic software)(es)[run'cas-'].cas" size="48893" crc="e0ad7798"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -7721,6 +7743,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="magmag" romof="msx">
+		<description>Mag the Magician (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Radastan</manufacturer>
+		<rom name="Mag the Magician (2019)(Radastan).rom" size="32768" crc="3d2ab5c1"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="magtower" romof="msx">
 		<description>Magic Tower Adventure (HB) [Homebrew]</description>
 		<year>2017</year>
@@ -7825,6 +7858,17 @@
 		<year>1984</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="konami's mahjong (japan).rom" size="32768" crc="114198e5"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="msolitaire" romof="msx">
+		<description>Mahjong Solitaire (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Mahjong Solitaire (2021)(Under4Mhz).rom" size="32768" crc="059b8cb9"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -8427,8 +8471,8 @@
 	</game>
 	<game name="molee" cloneof="mole" romof="mole">
 		<description>Mole (English)</description>
-		<year>1983</year>
-		<manufacturer>ASCII Corp.</manufacturer>
+		<year>1983-2016</year>
+		<manufacturer>ASCII Corp. - gdx</manufacturer>
 		<rom name="Mole (English) (1983).rom" size="16384" crc="5ffea0ad"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -9717,8 +9761,8 @@
 	</game>
 	<game name="parodiuse" cloneof="parodius" romof="parodius">
 		<description>Parodius - Tako Saves Earth (English)</description>
-		<year>1988</year>
-		<manufacturer>Konami</manufacturer>
+		<year>1988-2002</year>
+		<manufacturer>Konami - A&amp;L Soft</manufacturer>
 		<rom name="parodius (eng).rom" size="131072" crc="68dea3f0"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -9885,6 +9929,29 @@
 		<year>1987</year>
 		<manufacturer>T.Yoshida</manufacturer>
 		<rom name="perspective.rom" size="262144" crc="2c4eead6"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="phantis" cloneof="gameovr2" romof="gameovr2">
+		<description>Phantis (Spa)</description>
+		<year>1987</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Phantis (1987)(Dinamic Software)(es)(Side A)[RUN'CAS-'].cas" size="47979" crc="82073596"/>
+		<rom name="Phantis (1987)(Dinamic Software)(es)(Side B)[RUN'CAS-'].cas" size="46693" crc="b21699eb"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="phantom2" cloneof="vampire" romof="vampire">
+		<description>Phantomas 2 (Spa)</description>
+		<year>1987</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Phantomas 2 (1987)(Dinamic Software)(ES)[RUN'CAS-'].cas" size="45359" crc="5b62821c"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -10166,6 +10233,28 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="polacad" romof="msx">
+		<description>Police Academy (Euro)</description>
+		<year>1986</year>
+		<manufacturer>Eaglesoft</manufacturer>
+		<rom name="Police Academy (1986)(Eaglesoft)(NL)[RUN'CAS-'].cas" size="48384" crc="11b77a24"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="polacad2" romof="msx">
+		<description>Police Academy II (Euro)</description>
+		<year>1987</year>
+		<manufacturer>Methodic Solutions</manufacturer>
+		<rom name="Police Academy II (1987)(Methodic Solutions)(NL)[RUN'CAS-'].cas" size="46944" crc="24b47702"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="pooyan" romof="msx">
 		<description>Pooyan (Jpn)</description>
 		<year>1985</year>
@@ -10424,6 +10513,17 @@
 		<year>1990</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="r.a.m. (1990)(topo soft)(es)[run'cas-'].cas" size="65880" crc="497462cc"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="racecity" romof="msx">
+		<description>Race City (Spa) [Small sound glitches]</description>
+		<year>1988</year>
+		<manufacturer>Genesis Soft - Iber Soft</manufacturer>
+		<rom name="Race City (1988)(Iber Soft)(ES)[RUN'CAS-'].cas" size="48514" crc="aa100ad2"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -11433,6 +11533,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="snowman" romof="msx">
+		<description>Snowman, The (Euro)</description>
+		<year>1984</year>
+		<manufacturer>Quicksilva</manufacturer>
+		<rom name="Snowman, The (1984)(Quicksilva)(GB)[BLOAD'CAS-',R].cas" size="20191" crc="5f5db8c5"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sofia" romof="msx">
 		<description>Sofia (Jpn)</description>
 		<year>1988</year>
@@ -11648,6 +11759,17 @@
 		<year>1986</year>
 		<manufacturer>Irem</manufacturer>
 		<rom name="spelunker (japan) (alt 1).rom" size="32768" crc="4c738b64"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="spirits" romof="msx">
+		<description>Spirits (Spa)</description>
+		<year>1987</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Spirits (1987)(Topo Soft)(ES)[RUN'CAS-'].cas" size="43129" crc="a712f6fa"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -11956,6 +12078,17 @@
 		<year>1985</year>
 		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="bousoutokkyuusosa.rom" size="16384" crc="b6063493"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="stormbringer" romof="msx">
+		<description>Stormbringer (Euro)</description>
+		<year>1987</year>
+		<manufacturer>Mastertronic</manufacturer>
+		<rom name="Stormbringer (1987)(Mastertronic Added Dimension)(GB)[RUN'CAS-'].cas" size="47621" crc="b5548779"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12308,6 +12441,17 @@
 		<year>1985</year>
 		<manufacturer>Sony Spain</manufacturer>
 		<rom name="super tripper (spain).rom" size="32768" crc="0c36f5bd"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="survivor" romof="msx">
+		<description>Survivor (Spa)</description>
+		<year>1987</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Survivor (1987)(Topo Soft)(ES)[RUN'CAS-'].cas" size="50684" crc="b53471a6"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -13615,7 +13759,7 @@
 	</game>
 	<game name="vampire" romof="msx">
 		<description>Vampire (Euro)</description>
-		<year>1987</year>
+		<year>1986</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Vampire(1987)(Codemasters)[RUN'CAS-'].cas" size="45536" crc="ddfaa430"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>

@@ -1737,6 +1737,25 @@ static bool retro_load_game_common()
 
 	gui_show = false;
 
+#ifdef FBNEO_DEBUG
+	for (nBurnDrvActive=0; nBurnDrvActive<nBurnDrvCount; nBurnDrvActive++)
+	{
+		if (BurnDrvGetFlags() & BDF_CLONE) {
+			if (BurnDrvGetTextA(DRV_PARENT) == NULL)
+			{
+				HandleMessage(RETRO_LOG_INFO, "Clone %s is missing parent\n", BurnDrvGetTextA(DRV_NAME));
+			}
+		}
+		else
+		{
+			if (BurnDrvGetTextA(DRV_PARENT) != NULL)
+			{
+				HandleMessage(RETRO_LOG_INFO, "%s has a parent but isn't marked as clone\n", BurnDrvGetTextA(DRV_NAME));
+			}
+		}
+	}
+#endif
+
 	nBurnDrvActive = BurnDrvGetIndexByName(g_driver_name);
 	if (nBurnDrvActive < nBurnDrvCount) {
 

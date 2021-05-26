@@ -668,13 +668,34 @@ extern "C" INT32 BurnDrvInit()
 	BurnCacheSizeAspect_Internal();
 
 	CheatInit();
+#ifdef ANDROID
+	bprintf(0, _T("CheatInit done.\n"));
+#endif
 	HiscoreInit();
+#ifdef ANDROID
+	bprintf(0, _T("HiscoreInit done.\n"));
+#endif
 	BurnStateInit();
+#ifdef ANDROID
+	bprintf(0, _T("BurnStateInit done.\n"));
+#endif
 	BurnInitMemoryManager();
+#ifdef ANDROID
+	bprintf(0, _T("BurnInitMemoryManager done.\n"));
+#endif
 	BurnRandomInit();
+#ifdef ANDROID
+	bprintf(0, _T("BurnRandomInit done.\n"));
+#endif
 	BurnSoundDCFilterReset();
+#ifdef ANDROID
+	bprintf(0, _T("BurnSoundDCFilterReset done.\n"));
+#endif
 
 	nReturnValue = pDriver[nBurnDrvActive]->Init();	// Forward to drivers function
+#ifdef ANDROID
+	bprintf(0, _T("BurnDrvInit done.\n"));
+#endif
 
 	nMaxPlayers = pDriver[nBurnDrvActive]->Players;
 

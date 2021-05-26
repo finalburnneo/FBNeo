@@ -2568,7 +2568,7 @@ struct BurnDriver BurnDrvGalpanise = {
 	"galpanise", "galpanis", "skns", NULL, "1997",
 	"Gals Panic S - Extra Edition (Europe, set 2)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpaniseRomInfo, galpaniseRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsNoSpeedhackDIPInfo,
 	GalpanisInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3

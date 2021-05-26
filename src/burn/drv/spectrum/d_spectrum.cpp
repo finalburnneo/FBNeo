@@ -5683,7 +5683,7 @@ struct BurnDriver BurnSpecgberet = {
 	"spec_gberet", NULL, "spec_spec128", NULL, "1986",
 	"Green Beret (128K)\0", NULL, "Imagine Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecgberetRomInfo, SpecgberetRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -8532,7 +8532,7 @@ struct BurnDriver BurnSpecrex_48 = {
 	"spec_rex_48", NULL, "spec_spectrum", NULL, "1988",
 	"Rex (Part 1 of 2) (48K)\0", NULL, "Martech Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_RUNGUN, 0,
 	SpectrumGetZipName, Specrex_48RomInfo, Specrex_48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3

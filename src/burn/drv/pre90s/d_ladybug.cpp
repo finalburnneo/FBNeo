@@ -1748,7 +1748,7 @@ static struct BurnRomInfo mrsdynaRomDesc[] = {
 
 	{ "mrsd-10-1.a2",	0x0020, 0x4a819ad4, 6 | BRF_GRA },           // 10 proms
 	{ "mrsd-10-2.l3",	0x0020, 0x2d926a3a, 6 | BRF_GRA },           // 11
-	{ "mrsd-10-3.c1",	0x0020, 0x27fa3a50, 6 | BRF_GRA },           // 12
+	{ "mrsd-10-3.c1",	0x0020, 0x27fa3a50, 6 | BRF_OPT },           // 12
 };
 
 STD_ROM_PICK(mrsdyna)

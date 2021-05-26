@@ -6252,7 +6252,7 @@ struct BurnDriver BurnDrvTharrier = {
 	"tharrier", NULL, NULL, NULL, "1989",
 	"Task Force Harrier\0", NULL, "UPL", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, tharrierRomInfo, tharrierRomName, NULL, NULL, NULL, NULL, TharrierInputInfo, TharrierDIPInfo,
 	TharrierInit, DrvExit, DrvFrame, TharrierDraw, DrvScan, NULL, 0x200,
 	224, 256, 3, 4

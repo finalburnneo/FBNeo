@@ -2418,7 +2418,7 @@ struct BurnDriver BurnDrvTwotiger = {
 	"twotiger", NULL, "midssio", "twotiger", "1984",
 	"Two Tigers (dedicated)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, twotigerRomInfo, twotigerRomName, NULL, NULL, TwotigerSampleInfo, TwotigerSampleName, TwotigerInputInfo, TwotigerDIPInfo,
 	TwotigerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3

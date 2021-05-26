@@ -31081,7 +31081,7 @@ struct BurnDriver BurnDrvmd_starwarsp = {
 	"md_starwarsp", NULL, NULL, NULL, "1994",
 	"Star Wars (Prototype, 19930125)\0", NULL, "Sega Interactive", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
 	MegadriveGetZipName, md_starwarspRomInfo, md_starwarspRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -43521,7 +43521,7 @@ struct BurnDriver BurnDrvmd_tbolt2a = {
 	"md_tbolt2a", NULL, NULL, NULL, "1995",
 	"Thunderbolt II (Unprotected, Prototype)\0", NULL, "SUN GREEN", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
 	MegadriveGetZipName, md_tbolt2aRomInfo, md_tbolt2aRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3

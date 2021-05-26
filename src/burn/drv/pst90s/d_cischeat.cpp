@@ -3512,7 +3512,7 @@ struct BurnDriver BurnDrvArmchmp2o2 = {
 	"armchmp2o2", "armchmp2", NULL, NULL, "1992",
 	"Arm Champs II v2.6\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, armchmp2o2RomInfo, armchmp2o2RomName, NULL, NULL, NULL, NULL, Armchmp2InputInfo, Armchmp2DIPInfo,
 	Armchmp2Init, DrvExit, Single68KFrame, ScudhammDraw, DrvScan, &DrvRecalc, 0x4000,
 	224, 256, 3, 4

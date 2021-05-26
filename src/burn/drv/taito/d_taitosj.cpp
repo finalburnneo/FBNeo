@@ -3394,7 +3394,7 @@ struct BurnDriver BurnDrvTinstar = {
 	"tinstar", NULL, NULL, NULL, "1983",
 	"The Tin Star (A10, 4 PCB version)\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, tinstarRomInfo, tinstarRomName, NULL, NULL, NULL, NULL, DualStickInputInfo, TinstarDIPInfo,
 	TinstarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
@@ -3439,7 +3439,7 @@ struct BurnDriver BurnDrvTinstara = {
 	"tinstara", "tinstar", NULL, NULL, "1983",
 	"The Tin Star (TS, 5 PCB version)\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, tinstaraRomInfo, tinstaraRomName, NULL, NULL, NULL, NULL, DualStickInputInfo, TinstarDIPInfo,
 	TinstarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3

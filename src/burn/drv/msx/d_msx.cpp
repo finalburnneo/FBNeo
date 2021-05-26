@@ -22540,7 +22540,7 @@ struct BurnDriver BurnDrvMSX_showjumph = {
 	"msx_showjumph", NULL, "msx_msx", NULL, "1985",
 	"Harvey Smith's Showjumper (Euro, Hacked Protection)\0", NULL, "Software Projects", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_showjumphRomInfo, MSX_showjumphRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3

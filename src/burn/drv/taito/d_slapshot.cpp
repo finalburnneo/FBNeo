@@ -998,7 +998,7 @@ struct BurnDriver BurnDrvSlapshotj = {
 	"slapshotj", "slapshot", NULL, NULL, "1994",
 	"Slap Shot (Ver 2.2 J)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, SlapshotjRomInfo, SlapshotjRomName, NULL, NULL, NULL, NULL, SlapshotInputInfo, SlapshotDIPInfo,
 	SlapshotInit, SlapshotExit, SlapshotFrame, SlapshotDraw, SlapshotScan,
 	NULL, 0x2000, 320, 224, 4, 3

@@ -5437,7 +5437,7 @@ struct BurnDriver BurnDrvPuzzlia = {
 	"puzzlia", "puzzli", NULL, NULL, "1995",
 	"Puzzli (revision A)\0", NULL, "Metro / Banpresto", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, puzzliaRomInfo, puzzliaRomName, NULL, NULL, NULL, NULL, PuzzliInputInfo, PuzzliDIPInfo,
 	puzzliaInit, DrvExit, NoZ80Frame, i4x00_draw, DrvScan, &DrvRecalc, 0x1000,
 	320, 224, 4, 3

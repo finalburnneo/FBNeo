@@ -769,7 +769,7 @@ struct BurnDriver BurnDrvRocktris = {
 	"rocktris", NULL, NULL, NULL, "1994",
 	"Rock Tris\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, rocktrisRomInfo, rocktrisRomName, NULL, NULL, NULL, NULL, RocktrisInputInfo, RocktrisDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 240, 4, 3

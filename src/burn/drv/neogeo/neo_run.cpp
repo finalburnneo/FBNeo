@@ -579,9 +579,6 @@ static INT32 LoadRoms()
 			nCodeSize[nNeoActiveSlot] += ri.nLen;
 		}
 		nCodeSize[nNeoActiveSlot] = (nCodeSize[nNeoActiveSlot] + 0x0FFFFF) & ~0x0FFFFF;
-#ifdef ANDROID
-		bprintf(0, _T("nCodeSize[%d] = %x.\n"), nNeoActiveSlot, nCodeSize[nNeoActiveSlot]);
-#endif
 
 		nSpriteSize[nNeoActiveSlot] = 0;
 

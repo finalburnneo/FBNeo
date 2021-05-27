@@ -2078,7 +2078,7 @@ struct BurnDriver BurnDrvRecordbr = {
 	"recordbr", NULL, NULL, NULL, "1988",
 	"Recordbreaker (World)\0", NULL, "Taito Corporation Japan", "Taito H System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, recordbrRomInfo, recordbrRomName, NULL, NULL, NULL, NULL, RecordbrInputInfo, RecordbrDIPInfo,
 	SyvalionInit, DrvExit, DrvFrame, RecordbrDraw, DrvScan, NULL, 0x210,
 	320, 240, 4, 3

@@ -395,6 +395,70 @@ static struct BurnDIPInfo SraiderDIPList[]=
 
 STDDIPINFO(Sraider)
 
+static struct BurnDIPInfo MrsdynaDIPList[]=
+{
+	{0x0f, 0xff, 0xff, 0xdf, NULL				},
+	{0x10, 0xff, 0xff, 0xff, NULL				},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"			},
+	{0x0f, 0x01, 0x01, 0x01, "Off"				},
+	{0x0f, 0x01, 0x01, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"			},
+	{0x0f, 0x01, 0x02, 0x02, "Off"				},
+	{0x0f, 0x01, 0x02, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "High Score Names"		},
+	{0x0f, 0x01, 0x04, 0x00, "3 Letters"			},
+	{0x0f, 0x01, 0x04, 0x04, "12 Letters"			},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"			},
+	{0x0f, 0x01, 0x08, 0x08, "Off"				},
+	{0x0f, 0x01, 0x08, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"			},
+	{0x0f, 0x01, 0x10, 0x10, "Off"				},
+	{0x0f, 0x01, 0x10, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"			},
+	{0x0f, 0x01, 0x20, 0x00, "Upright"			},
+	{0x0f, 0x01, 0x20, 0x20, "Cocktail"			},
+
+	{0   , 0xfe, 0   ,    4, "Lives"			},
+	{0x0f, 0x01, 0xc0, 0x00, "2"				},
+	{0x0f, 0x01, 0xc0, 0xc0, "3"				},
+	{0x0f, 0x01, 0xc0, 0x80, "4"				},
+	{0x0f, 0x01, 0xc0, 0x40, "5"				},
+
+	{0   , 0xfe, 0   ,    11, "Coin A"			},
+	{0x10, 0x01, 0x0f, 0x06, "4 Coins 1 Credits"		},
+	{0x10, 0x01, 0x0f, 0x08, "3 Coins 1 Credits"		},
+	{0x10, 0x01, 0x0f, 0x0a, "2 Coins 1 Credits"		},
+	{0x10, 0x01, 0x0f, 0x07, "3 Coins 2 Credits"		},
+	{0x10, 0x01, 0x0f, 0x09, "2 Coins 2 Credits"		},
+	{0x10, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
+	{0x10, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"		},
+	{0x10, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"		},
+	{0x10, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"		},
+	{0x10, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"		},
+	{0x10, 0x01, 0x0f, 0x00, "Free Play"			},
+
+	{0   , 0xfe, 0   ,    11, "Coin B"			},
+	{0x10, 0x01, 0xf0, 0x60, "4 Coins 1 Credits"		},
+	{0x10, 0x01, 0xf0, 0x80, "3 Coins 1 Credits"		},
+	{0x10, 0x01, 0xf0, 0xa0, "2 Coins 1 Credits"		},
+	{0x10, 0x01, 0xf0, 0x70, "3 Coins 2 Credits"		},
+	{0x10, 0x01, 0xf0, 0x90, "2 Coins 2 Credits"		},
+	{0x10, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
+	{0x10, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"		},
+	{0x10, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"		},
+	{0x10, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"		},
+	{0x10, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"		},
+	{0x10, 0x01, 0xf0, 0x00, "Free Play"			},
+};
+
+STDDIPINFO(Mrsdyna)
+
 static void __fastcall ladybug_write(UINT16 address, UINT8 data)
 {
 	switch (address & 0xf000)
@@ -850,6 +914,79 @@ static INT32 SraiderInit()
 	return 0;
 }
 
+static INT32 MrsdynaInit()
+{
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
+
+	{
+		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM0 + 0x02000,  1, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM0 + 0x04000,  2, 1)) return 1;
+
+		if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  3, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM1 + 0x02000,  4, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM1 + 0x04000,  5, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM0 + 0x00000,  6, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x01000,  7, 1)) return 1;
+		
+		if (BurnLoadRom(DrvGfxROM1 + 0x00000,  8, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x01000,  9, 1)) return 1;
+		
+		if (BurnLoadRom(DrvColPROM + 0x00000, 10, 1)) return 1;
+		if (BurnLoadRom(DrvColPROM + 0x00020, 11, 1)) return 1;
+
+		SraiderPaletteInit();
+		DrvGfxDecode();
+	}
+
+	ZetInit(0);
+	ZetOpen(0);
+	ZetMapMemory(DrvZ80ROM0, 0x0000, 0x5fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM0, 0x6000, 0x6fff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM, 0x7000, 0x73ff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM, 0xd000, 0xd3ff, MAP_RAM);
+	ZetMapMemory(DrvColRAM, 0xd400, 0xd7ff, MAP_RAM);
+	ZetSetWriteHandler(sraider_main_write);
+	ZetSetReadHandler(ladybug_read);
+	ZetClose();
+
+	ZetInit(1);
+	ZetOpen(1);
+	ZetMapMemory(DrvZ80ROM1, 0x0000, 0x5fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM1, 0x6000, 0x63ff, MAP_RAM);
+	ZetMapMemory(DrvGridRAM, 0xe000, 0xe0ff, MAP_RAM);
+	ZetSetWriteHandler(sraider_sub_write);
+	ZetSetReadHandler(sraider_sub_read);
+	ZetSetOutHandler(sraider_sub_out);
+	ZetClose();
+
+	SN76489Init(0, 4000000, 0);
+	SN76489Init(1, 4000000, 1);
+	SN76489Init(2, 4000000, 1);
+	SN76489Init(3, 4000000, 1);
+	SN76489Init(4, 4000000, 1);
+	SN76496SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(1, 0.45, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(2, 0.45, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(3, 0.45, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(4, 0.45, BURN_SND_ROUTE_BOTH);
+    SN76496SetBuffered(ZetTotalCycles, 4000000);
+
+	GenericTilesInit();
+
+	DrvDoReset();
+
+	fourwaymode = 1;
+
+	return 0;
+}
+
 static INT32 DrvExit()
 {
 	GenericTilesExit();
@@ -973,6 +1110,11 @@ static void draw_sprites()
 				INT32 sy    = (DrvSprRAM[offs + i + 0] & 0x0f) + offs / 4 - 32;
 
 				if (size) {
+					Draw16x16MaskTile(pTransDraw, code, sx, sy - 8, flipx, flipy, color, 2, 0, 0, DrvGfxROM1);
+				} else {
+					Draw8x8MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 2, 0, 0, DrvGfxROM2);
+				}
+#if 0
 					if (flipy) {
 						if (flipx) {
 							Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 8, color, 2, 0, 0, DrvGfxROM1);
@@ -1001,6 +1143,7 @@ static void draw_sprites()
 						}
 					}
 				}
+#endif
 			}
 		}
 	}
@@ -1093,6 +1236,24 @@ static INT32 DrvDraw()
 	draw_layer();
 
 	draw_sprites();
+
+	BurnTransferCopy(DrvPalette);
+
+	return 0;
+}
+
+static INT32 MrsdynaDraw()
+{
+	if (DrvRecalc) {
+		SraiderPaletteInit();
+		DrvRecalc = 0;
+	}
+
+	BurnTransferClear();
+
+	if (nBurnLayer & 1) draw_layer();
+
+	if (nSpriteEnable & 1) draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -1565,5 +1726,40 @@ struct BurnDriver BurnDrvSraider = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, sraiderRomInfo, sraiderRomName, NULL, NULL, NULL, NULL, SraiderInputInfo, SraiderDIPInfo,
 	SraiderInit, DrvExit, SraiderFrame, SraiderDraw, DrvScan, &DrvRecalc, 0x82,
+	192, 240, 3, 4
+};
+
+// Mrs. Dynamite
+
+static struct BurnRomInfo mrsdynaRomDesc[] = {
+	{ "mrsd-8203a-r4.f3",	0x2000, 0xc944062c, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "mrsd-8203a-n4.f2",	0x2000, 0xd1b9c7bb, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "mrsd-8203a-m4.f1",	0x2000, 0xd25b1dfe, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "mrsd-8203a-h6.f4",	0x2000, 0x04f8617b, 2 | BRF_PRG | BRF_ESS }, //  3 sub
+	{ "mrsd-8203a-j6.f5",	0x2000, 0x1ffb5fc3, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "mrsd-8203a-l6.f6",	0x2000, 0x5a0f5030, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "mrsd-8203b-k6.f10",	0x1000, 0xe33cb26e, 3 | BRF_GRA },           //  6 gfx1
+	{ "mrsd-8203b-l6.f11",	0x1000, 0xa327ba05, 3 | BRF_GRA },           //  7
+
+	{ "mrsd-8203b-m2.f7",	0x1000, 0xa00ae797, 4 | BRF_GRA },           //  8 gfx2
+	{ "mrsd-8203b-n2.f8",	0x1000, 0x81f2bdbd, 4 | BRF_GRA },           //  9
+
+	{ "mrsd-10-1.a2",	0x0020, 0x4a819ad4, 6 | BRF_GRA },           // 10 proms
+	{ "mrsd-10-2.l3",	0x0020, 0x2d926a3a, 6 | BRF_GRA },           // 11
+	{ "mrsd-10-3.c1",	0x0020, 0x27fa3a50, 6 | BRF_OPT },           // 12
+};
+
+STD_ROM_PICK(mrsdyna)
+STD_ROM_FN(mrsdyna)
+
+struct BurnDriver BurnDrvMrsdyna = {
+	"mrsdyna", NULL, NULL, NULL, "1982",
+	"Mrs. Dynamite\0", NULL, "Universal", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
+	NULL, mrsdynaRomInfo, mrsdynaRomName, NULL, NULL, NULL, NULL, SraiderInputInfo, MrsdynaDIPInfo,
+	MrsdynaInit, DrvExit, SraiderFrame, MrsdynaDraw, DrvScan, &DrvRecalc, 0x82,
 	192, 240, 3, 4
 };

@@ -8659,9 +8659,15 @@ static void mslug5Callback()
 	INT32 i, j, k;
 	for (i = 0; i < 0x100000; i++)
 		Neo68KROMActive[i] ^= Neo68KROMActive[0x0fffe0 + (i & 0x1f)];
+#ifdef ANDROID
+	bprintf(0, _T("mslug5Callback step 1.\n"));
+#endif
 
 	for (i = 0x100000; i < 0x700000; i++)
 		Neo68KROMActive[i] ^= ~Neo68KROMActive[0x7fffe0 + (i & 0x1f)];
+#ifdef ANDROID
+	bprintf(0, _T("mslug5Callback step 2.\n"));
+#endif
 
 	for (i = 0x100000; i < 0x0500000; i += 4)
 	{
@@ -8669,14 +8675,23 @@ static void mslug5Callback()
 		rom16 = BITSWAP16(rom16, 15, 14, 13, 12, 10, 11, 8, 9, 6, 7, 4, 5, 3, 2, 1, 0);
 		*((UINT16 *)(Neo68KROMActive + i + 1)) = BURN_ENDIAN_SWAP_INT16(rom16);
 	}
+#ifdef ANDROID
+	bprintf(0, _T("mslug5Callback step 3.\n"));
+#endif
 
 	memcpy (Neo68KROMActive + 0x700000, Neo68KROMActive, 0x100000);
+#ifdef ANDROID
+	bprintf(0, _T("mslug5Callback step 4.\n"));
+#endif
 
 	for (i = 0; i < 0x100000 / 0x010000; i++)
 	{
 		j = BITSWAP08(i, 7, 6, 5, 4, 1, 0, 3, 2) * 0x010000;
 		memcpy (Neo68KROMActive + i * 0x010000, Neo68KROMActive + 0x700000 + j, 0x010000);
 	}
+#ifdef ANDROID
+	bprintf(0, _T("mslug5Callback step 5.\n"));
+#endif
 
 	for (i = 0x100000; i < 0x700000; i += 0x100000)
 	{
@@ -8688,6 +8703,9 @@ static void mslug5Callback()
 
 		memcpy (Neo68KROMActive + i, Neo68KROMActive + 0x700000, 0x100000);
 	}
+#ifdef ANDROID
+	bprintf(0, _T("mslug5Callback step 6.\n"));
+#endif
 }
 
 static INT32 mslug5Init()
@@ -8698,11 +8716,17 @@ static INT32 mslug5Init()
 	NeoCallbackActive->pInitialise = mslug5Callback;
 
 	nRet = NeoPVCInit();
+#ifdef ANDROID
+	bprintf(0, _T("NeoPVCInit done.\n"));
+#endif
 
 	if (nRet == 0) {
 		const PCM2DecryptV2Info Info = { 0x4e001, 0xfe2cf6, { 0xc3, 0xfd, 0x81, 0xac, 0x6d, 0xe7, 0xbf, 0x9e } };
 
 		PCM2DecryptV2(&Info);
+#ifdef ANDROID
+		bprintf(0, _T("PCM2DecryptV2 done.\n"));
+#endif
 	}
 
 	return nRet;

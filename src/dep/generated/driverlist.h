@@ -10355,12 +10355,12 @@ DRV		BurnDrvPhoenixa;
 DRV		BurnDrvPhoenixb;
 DRV		BurnDrvPhoenixdal;
 DRV		BurnDrvPhoenixgu;
-DRV		BurnDrvPhoenixha;
-DRV		BurnDrvPhoenixi;
-DRV		BurnDrvPhoenixc;
 DRV		BurnDrvPhoenixc2;
 DRV		BurnDrvPhoenixc3;
 DRV		BurnDrvPhoenixc4;
+DRV		BurnDrvPhoenixha;
+DRV		BurnDrvPhoenixi;
+DRV		BurnDrvPhoenixc;
 DRV		BurnDrvPhoenixs;
 DRV		BurnDrvPhoenix3;
 DRV		BurnDrvPhoenixj;
@@ -27603,12 +27603,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPhoenixb,			// Phoenix (Centuri, set 2)
 	&BurnDrvPhoenixdal,			// Phoenix (D&L bootleg)
 	&BurnDrvPhoenixgu,			// Phoenix (G. Universal Video bootleg)
+	&BurnDrvPhoenixc2,			// Phoenix (G.G.I. Corporation, set 1)
+	&BurnDrvPhoenixc3,			// Phoenix (G.G.I. Corporation, set 2)
+	&BurnDrvPhoenixc4,			// Phoenix (G.G.I. Corporation, set 3)
 	&BurnDrvPhoenixha,			// Phoenix (Hellomat Automaten bootleg)
 	&BurnDrvPhoenixi,			// Phoenix (IDI bootleg) [no comment, NOT WORKING]
-	&BurnDrvPhoenixc,			// Phoenix (Irecsa / G.G.I Corp, set 1)
-	&BurnDrvPhoenixc2,			// Phoenix (Irecsa / G.G.I Corp, set 2)
-	&BurnDrvPhoenixc3,			// Phoenix (Irecsa / G.G.I Corp, set 3)
-	&BurnDrvPhoenixc4,			// Phoenix (Irecsa / G.G.I Corp, set 4)
+	&BurnDrvPhoenixc,			// Phoenix (Irecsa / G.G.I. Corporation)
 	&BurnDrvPhoenixs,			// Phoenix (Sonic, Spanish bootleg)
 	&BurnDrvPhoenix3,			// Phoenix (T.P.N. bootleg)
 	&BurnDrvPhoenixj,			// Phoenix (Taito Japan)

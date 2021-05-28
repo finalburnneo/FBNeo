@@ -10221,12 +10221,12 @@ This list contains all games supported by FinalBurn Neo.
 | phoenixb	|  	| Phoenix (Centuri, set 2)				| phoenix	| 1980	| Amstar (Centur| Miscellaneous	| 					|
 | phoenixdal	|  	| Phoenix (D&L bootleg)					| phoenix	| 1980	| bootleg (D&L)	| Miscellaneous	| 					|
 | phoenixgu	|  	| Phoenix (G. Universal Video bootleg)			| phoenix	| 1981	| bootleg? (G. U| Miscellaneous	| 					|
+| phoenixc2	|  	| Phoenix (G.G.I. Corporation, set 1)			| phoenix	| 1981	| bootleg (G.G.I| Miscellaneous	| 					|
+| phoenixc3	|  	| Phoenix (G.G.I. Corporation, set 2)			| phoenix	| 1981	| bootleg (G.G.I| Miscellaneous	| 					|
+| phoenixc4	|  	| Phoenix (G.G.I. Corporation, set 3)			| phoenix	| 1981	| bootleg (G.G.I| Miscellaneous	| 					|
 | phoenixha	|  	| Phoenix (Hellomat Automaten bootleg)			| phoenix	| 1981	| bootleg (Hello| Miscellaneous	| 					|
 | phoenixi	|   NW	| Phoenix (IDI bootleg)					| phoenix	| 1981	| bootleg (IDI)	| Miscellaneous	| 					|
-| phoenixc	|  	| Phoenix (Irecsa / G.G.I Corp, set 1)			| phoenix	| 1981	| bootleg? (Irec| Miscellaneous	| 					|
-| phoenixc2	|  	| Phoenix (Irecsa / G.G.I Corp, set 2)			| phoenix	| 1981	| bootleg? (Irec| Miscellaneous	| 					|
-| phoenixc3	|  	| Phoenix (Irecsa / G.G.I Corp, set 3)			| phoenix	| 1981	| bootleg? (Irec| Miscellaneous	| 					|
-| phoenixc4	|  	| Phoenix (Irecsa / G.G.I Corp, set 4)			| phoenix	| 1981	| bootleg? (Irec| Miscellaneous	| 					|
+| phoenixc	|  	| Phoenix (Irecsa / G.G.I. Corporation)			| phoenix	| 1981	| bootleg? (Irec| Miscellaneous	| 					|
 | phoenixs	|  	| Phoenix (Sonic, Spanish bootleg)			| phoenix	| 1981	| bootleg (Sonic| Miscellaneous	| 					|
 | phoenix3	|  	| Phoenix (T.P.N. bootleg)				| phoenix	| 1980	| bootleg (T.P.N| Miscellaneous	| 					|
 | phoenixj	|  	| Phoenix (Taito Japan)					| phoenix	| 1980	| Amstar (Taito | Miscellaneous	| 					|

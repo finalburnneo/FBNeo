@@ -104,6 +104,24 @@ static inline UINT64 BURN_ENDIAN_SWAP_INT64(UINT64 x)
 
 #endif
 
+// macros to prevent misaligned address access
+#define BURN_UNALIGNED_READ16(x) (\
+	(UINT16) ((UINT8 *) (x))[1] << 8 | \
+	(UINT16) ((UINT8 *) (x))[0])
+#define BURN_UNALIGNED_READ32(x) (\
+	(UINT32) ((UINT8 *) (x))[3] << 24 | \
+	(UINT32) ((UINT8 *) (x))[2] << 16 | \
+	(UINT32) ((UINT8 *) (x))[1] << 8 | \
+	(UINT32) ((UINT8 *) (x))[0])
+#define BURN_UNALIGNED_WRITE16(x, y) ( \
+	((UINT8 *) (x))[0] = (UINT8) (y), \
+	((UINT8 *) (x))[1] = (UINT8) ((y) >> 8))
+#define BURN_UNALIGNED_WRITE32(x, y) ( \
+	((UINT8 *) (x))[0] = (UINT8) (y), \
+	((UINT8 *) (x))[1] = (UINT8) ((y) >> 8), \
+	((UINT8 *) (x))[2] = (UINT8) ((y) >> 16), \
+	((UINT8 *) (x))[3] = (UINT8) ((y) >> 24))
+
 // ---------------------------------------------------------------------------
 // Driver information
 

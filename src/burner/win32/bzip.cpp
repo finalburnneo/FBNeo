@@ -416,7 +416,7 @@ int BzipOpen(bool bootApp)
 			break;
 		}
 
-		for (int d = 0; d < DIRS_MAX; d++) {
+		for (int d = 0; d < DIRS_MAX; d++) { // Traverse the user-configured rom paths
 			TCHAR szFullName[MAX_PATH];
 
 			_stprintf(szFullName, _T("%s%hs"), szAppRomPaths[d], szName);
@@ -434,16 +434,6 @@ int BzipOpen(bool bootApp)
 
 				z++;
 				if (z >= BZIP_MAX) break;
-
-				// Look further in the last 15 paths specified, so you can put files with ROMs
-				// used only by FB Alpha there without causing problems with dat files
-				if (d < DIRS_MAX - 16) {
-					d = DIRS_MAX - 16;
-				} else {
-					if (d >= DIRS_MAX - 1) {
-						break;
-					}
-				}
 			}
 		}
 

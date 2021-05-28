@@ -8654,18 +8654,6 @@ static struct BurnRomInfo mslug5RomDesc[] = {
 STDROMPICKEXT(mslug5, mslug5, neogeo)
 STD_ROM_FN(mslug5)
 
-#ifdef ANDROID
-#define BURN_UNALIGNED_READ16(x) (\
-	(UINT16) ((UINT8 *) (x))[1] << 8 | \
-	(UINT16) ((UINT8 *) (x))[0])
-#define BURN_UNALIGNED_WRITE16(x, y) ( \
-	((UINT8 *) (x))[0] = (UINT8) (y), \
-	((UINT8 *) (x))[1] = (UINT8) ((y) >> 8))
-#else
-#define BURN_UNALIGNED_READ16(x) (*(UINT16 *) (x))
-#define BURN_UNALIGNED_WRITE16(x, y) (*(UINT16 *) (x) = (y))
-#endif
-
 static void mslug5Callback()
 {
 	INT32 i, j, k;
@@ -8677,9 +8665,9 @@ static void mslug5Callback()
 
 	for (i = 0x100000; i < 0x0500000; i += 4)
 	{
-		UINT16 rom16 = BURN_ENDIAN_SWAP_INT16(BURN_UNALIGNED_READ16(Neo68KROMActive + i + 1));
+		UINT16 rom16 = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(Neo68KROMActive + i + 1)));
 		rom16 = BITSWAP16(rom16, 15, 14, 13, 12, 10, 11, 8, 9, 6, 7, 4, 5, 3, 2, 1, 0);
-		BURN_UNALIGNED_WRITE16(Neo68KROMActive + i + 1, BURN_ENDIAN_SWAP_INT16(rom16));
+		*((UINT16 *)(Neo68KROMActive + i + 1)) = BURN_ENDIAN_SWAP_INT16(rom16);
 	}
 
 	memcpy (Neo68KROMActive + 0x700000, Neo68KROMActive, 0x100000);

@@ -559,19 +559,19 @@ static void __fastcall sraider_sub_out(UINT16 port, UINT8 data)
 		return;
 
 		case 0x08:
-			SN76496Write(1, data);
+			SN76496Write(1, data);  // hi explosion
 		return;
 
 		case 0x10:
-			SN76496Write(2, data);
+			SN76496Write(2, data);  // mid explosion
 		return;
 
 		case 0x18:
-			SN76496Write(3, data);
+			SN76496Write(3, data);  // low explosion
 		return;
 
 		case 0x20:
-			SN76496Write(4, data);
+			SN76496Write(4, data);  // lower explosion
 		return;
 	}
 }
@@ -898,11 +898,11 @@ static INT32 SraiderInit()
 	SN76489Init(2, 4000000, 1);
 	SN76489Init(3, 4000000, 1);
 	SN76489Init(4, 4000000, 1);
-	SN76496SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
-	SN76496SetRoute(1, 0.60, BURN_SND_ROUTE_BOTH);
-	SN76496SetRoute(2, 0.60, BURN_SND_ROUTE_BOTH);
-	SN76496SetRoute(3, 0.60, BURN_SND_ROUTE_BOTH);
-	SN76496SetRoute(4, 0.60, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(1, 0.40, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(2, 0.40, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(3, 0.40, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(4, 0.40, BURN_SND_ROUTE_BOTH);
     SN76496SetBuffered(ZetTotalCycles, 4000000);
 
 	GenericTilesInit();
@@ -1114,36 +1114,6 @@ static void draw_sprites()
 				} else {
 					Draw8x8MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 2, 0, 0, DrvGfxROM2);
 				}
-#if 0
-					if (flipy) {
-						if (flipx) {
-							Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 8, color, 2, 0, 0, DrvGfxROM1);
-						} else {
-							Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy - 8, color, 2, 0, 0, DrvGfxROM1);
-						}
-					} else {
-						if (flipx) {
-							Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy - 8, color, 2, 0, 0, DrvGfxROM1);
-						} else {
-							Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy - 8, color, 2, 0, 0, DrvGfxROM1);
-						}
-					}
-				} else {
-					if (flipy) {
-						if (flipx) {
-							Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0, DrvGfxROM2);
-						} else {
-							Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0, DrvGfxROM2);
-						}
-					} else {
-						if (flipx) {
-							Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0, DrvGfxROM2);
-						} else {
-							Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0, DrvGfxROM2);
-						}
-					}
-				}
-#endif
 			}
 		}
 	}
@@ -1295,6 +1265,7 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	ZetNewFrame();
 	INT32 coin = 0;
 
 	{
@@ -1314,12 +1285,12 @@ static INT32 DrvFrame()
 		if ((~previous & 1) && (~DrvInputs[3] & 1)) coin |= 1;
 		if ((~previous & 2) && (~DrvInputs[3] & 2)) coin |= 2;
 		DrvInputs[1] &= 0x7f;
-	}
 
-	if (fourwaymode) {
-		// Convert to 4-way
-		ProcessJoystick(&DrvInputs[0], 0, 3,1,0,2, INPUT_4WAY | INPUT_ISACTIVELOW);
-		ProcessJoystick(&DrvInputs[1], 1, 3,1,0,2, INPUT_4WAY | INPUT_ISACTIVELOW);
+		if (fourwaymode) {
+			// Convert to 4-way
+			ProcessJoystick(&DrvInputs[0], 0, 3,1,0,2, INPUT_4WAY | INPUT_ISACTIVELOW);
+			ProcessJoystick(&DrvInputs[1], 1, 3,1,0,2, INPUT_4WAY | INPUT_ISACTIVELOW);
+		}
 	}
 
 	ZetOpen(0);
@@ -1359,11 +1330,19 @@ static INT32 SraiderFrame()
 		DrvDoReset();
 	}
 
+	ZetNewFrame();
+
 	{
 		memset (DrvInputs, 0xff, 2);
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
+		}
+
+		if (fourwaymode) {
+			// Convert to 4-way
+			ProcessJoystick(&DrvInputs[0], 0, 3,1,0,2, INPUT_4WAY | INPUT_ISACTIVELOW);
+			ProcessJoystick(&DrvInputs[1], 1, 3,1,0,2, INPUT_4WAY | INPUT_ISACTIVELOW);
 		}
 	}
 
@@ -1384,7 +1363,8 @@ static INT32 SraiderFrame()
 	}
 
 	if (pBurnSoundOut) {
-        SN76496Update(pBurnSoundOut, nBurnSoundLen);
+		SN76496Update(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 	}
 
 	if (pBurnDraw) {

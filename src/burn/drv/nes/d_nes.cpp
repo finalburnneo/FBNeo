@@ -22152,6 +22152,40 @@ struct BurnDriver BurnDrvnes_basesloaii = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_basesloaded3RomDesc[] = {
+	{ "Bases Loaded 3 (USA).nes",          393232, 0x1bdd1704, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_basesloaded3)
+STD_ROM_FN(nes_basesloaded3)
+
+struct BurnDriver BurnDrvnes_basesloaded3 = {
+	"nes_basesloaded3", NULL, NULL, NULL, "1991",
+	"Bases Loaded 3 (USA)\0", NULL, "Jaleco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_basesloaded3RomInfo, nes_basesloaded3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_basesloaded4RomDesc[] = {
+	{ "Bases Loaded 4 (USA).nes",          393232, 0x0dee9ec1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_basesloaded4)
+STD_ROM_FN(nes_basesloaded4)
+
+struct BurnDriver BurnDrvnes_basesloaded4 = {
+	"nes_basesloaded4", NULL, NULL, NULL, "1993",
+	"Bases Loaded 4 (USA)\0", NULL, "Jaleco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_basesloaded4RomInfo, nes_basesloaded4RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_bashibazRomDesc[] = {
 	{ "Bashi Bazook - Morphoid Masher (USA) (Proto).nes",          262160, 0x11c92b5d, BRF_ESS | BRF_PRG },
 };
@@ -42394,6 +42428,23 @@ struct BurnDriver BurnDrvnes_tetris = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_tetrisRomInfo, nes_tetrisRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_tetrisjRomDesc[] = {
+	{ "Tetris (BPS) (Japan).nes",          49168, 0x6cb86f4e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tetrisj)
+STD_ROM_FN(nes_tetrisj)
+
+struct BurnDriver BurnDrvnes_tetrisj = {
+	"nes_tetrisj", "nes_tetris", NULL, NULL, "1988",
+	"Tetris (BPS) (Japan)\0", NULL, "Bullet-Proof Software", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_tetrisjRomInfo, nes_tetrisjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

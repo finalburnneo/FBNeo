@@ -77,6 +77,9 @@ There is also a few games marked as not working, try one of their clones.
 ### I patched game XXX and can't run it, why ?
 Because it's considered a bad rom since the crcs won't match, however there is a method to use a patched romset, if you put the patched version of the romset into `SYSTEM_DIRECTORY/fbneo/patched` it will work (NB: you can strip it of any file that don't differ from non-patched romset if you want)
 
+### I bought unibios from http://unibios.free.fr/ and can't run it, why ?
+Same as above.
+
 ### Game XXX has graphical glitches, why ?
 Write a report with details on the issue and your platform.
 
@@ -125,6 +128,3 @@ That driver was disabled for now, it doesn't meet our quality criteria.
 
 ### Hiscore won't save, why ?
 You need to copy [hiscore.dat](/metadata/hiscore.dat) to `SYSTEM_DIRECTORY/fbneo/` and to have the hiscore core option enabled. It doesn't guarantee hiscores will work for a specific game though, sometimes a driver could just be missing the necessary support code for hiscores (or hiscore.dat might not be listing the romset). You can request support in the issue tracker as long as the request is reasonable (avoid making a list of several dozens/hundreds of games if you don't want to be ignored). There are also some cases where libretro features will prevent hiscores from working properly, runahead is a well-known case but there might be other savestates-related features causing issues.
-
-### On my android device, game XXX is closing my app at launch, why ?
-Android OS has one of the worst features ever created : it kills an app if it considers it's not responding fast enough, no question asked ! Furthermore the criteria to decide it's not fast enough is different from a device to another. That's called ANR and that's something you can supposedly workaround by enabling some option about ANR (Application Not Responding) inside Android's hidden developper menu. Some people also reported that those ANR issues would disappear after changing from a controller to another, or after switching from a version of retroarch to another. Some games like `kof2003`, `svc` and `mslug5` are known for being affected by this issue on some android devices, and we can't do anything about it since it's not an internal program error.

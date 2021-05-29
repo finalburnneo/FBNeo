@@ -1148,6 +1148,22 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="basesloaded3">
+		<description>Bases Loaded 3 (USA)</description>
+		<year>1991</year>
+		<manufacturer>Jaleco</manufacturer>
+		<rom name="Bases Loaded 3 (USA).nes" size="393232" crc="1bdd1704"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="basesloaded4">
+		<description>Bases Loaded 4 (USA)</description>
+		<year>1993</year>
+		<manufacturer>Jaleco</manufacturer>
+		<rom name="Bases Loaded 4 (USA).nes" size="393232" crc="0dee9ec1"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="basesloaii">
 		<description>Bases Loaded II - Second Season (USA)</description>
 		<year>1990</year>
@@ -13225,6 +13241,14 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Tetrastar - The Fighter (Japan).nes" size="524304" crc="16745bf4"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="tetrisj" cloneof="tetris" romof="tetris">
+		<description>Tetris (BPS) (Japan)</description>
+		<year>1988</year>
+		<manufacturer>Bullet-Proof Software</manufacturer>
+		<rom name="Tetris (BPS) (Japan).nes" size="49168" crc="6cb86f4e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

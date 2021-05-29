@@ -634,7 +634,7 @@ char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, int /*nOutSize*/
 }
 
 // addition to support loading of roms without crc check
-static int find_rom_by_name(char *name, const ZipEntry *list, unsigned elems)
+static int find_rom_by_name(char* name, const ZipEntry *list, unsigned elems, uint32_t* nCrc)
 {
 	unsigned i = 0;
 	for (i = 0; i < elems; i++)
@@ -642,6 +642,7 @@ static int find_rom_by_name(char *name, const ZipEntry *list, unsigned elems)
 		if (list[i].szName) {
 			if( strcmp(list[i].szName, name) == 0 )
 			{
+				*nCrc = list[i].nCrc;
 				return i;
 			}
 		}
@@ -654,7 +655,7 @@ static int find_rom_by_name(char *name, const ZipEntry *list, unsigned elems)
 	return -1;
 }
 
-static int find_rom_by_crc(uint32_t crc, const ZipEntry *list, unsigned elems)
+static int find_rom_by_crc(uint32_t crc, const ZipEntry *list, unsigned elems, char** szName)
 {
 	unsigned i = 0;
 	for (i = 0; i < elems; i++)
@@ -662,6 +663,7 @@ static int find_rom_by_crc(uint32_t crc, const ZipEntry *list, unsigned elems)
 		if (list[i].szName) {
 			if (list[i].nCrc == crc)
 			{
+				*szName = list[i].szName;
 				return i;
 			}
 		}
@@ -854,36 +856,27 @@ static bool open_archive()
 				continue;
 			}
 
-			int index = find_rom_by_crc(ri.nCrc, list, count);
+			char *real_rom_name;
+			uint32_t real_rom_crc;
+			int index = find_rom_by_crc(ri.nCrc, list, count, &real_rom_name);
 
 			BurnDrvGetRomName(&rom_name, i, 0);
 
-			bool bad_crc = false;
-			bool use_patched = false;
+			bool unknown_crc = false;
 
-			if (index < 0 && strncmp("uni-bios_", rom_name, 9) == 0)
-			{
-				index = find_rom_by_name(rom_name, list, count);
-				if (index >= 0)
-					bad_crc = true;
-			}
-
-			// Load patched romset if it exists
 			if (index < 0 && g_find_list_path[z].ignoreCrc && bPatchedRomsetsEnabled)
 			{
-				index = find_rom_by_name(rom_name, list, count);
+				index = find_rom_by_name(rom_name, list, count, &real_rom_crc);
 				if (index >= 0)
-					use_patched = true;
+					unknown_crc = true;
 			}
 
 			if (index >= 0)
 			{
-				if (use_patched)
-					HandleMessage(RETRO_LOG_WARN, "[FBNeo] Using patched ROM with name %s from archive %s\n", rom_name, g_find_list_path[z].path.c_str());
-				else if (bad_crc)
-					HandleMessage(RETRO_LOG_WARN, "[FBNeo] Using ROM with bad CRC and name %s from archive %s\n", rom_name, g_find_list_path[z].path.c_str());
+				if (unknown_crc)
+					HandleMessage(RETRO_LOG_WARN, "[FBNeo] Using ROM with unknown crc 0x%08x and name %s from archive %s\n", real_rom_crc, rom_name, g_find_list_path[z].path.c_str());
 				else
-					HandleMessage(RETRO_LOG_INFO, "[FBNeo] Using ROM with good CRC and name %s from archive %s\n", rom_name, g_find_list_path[z].path.c_str());
+					HandleMessage(RETRO_LOG_INFO, "[FBNeo] Using ROM with known crc 0x%08x and name %s from archive %s\n", ri.nCrc, real_rom_name, g_find_list_path[z].path.c_str());
 			}
 			else
 			{

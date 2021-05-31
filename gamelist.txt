@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17028 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17040 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -556,6 +556,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_alterego	|  	| Alter Ego (HB)					| 		| 2011	| The New Image	| MSX		| 					|
 | nes_alterego	|  	| Alter Ego (HB)					| 		| 2011	| Shiru		| Miscellaneous	| 					|
 | spec_alterego	|  	| Alter Ego (HB)					| 		| 2011	| RetroSouls	| ZX Spectrum	| 					|
+| nes_altercation|  	| Altercation (HB, v0.1)				| 		| 2021	| Scottlowe	| Miscellaneous	| 					|
 | spec_altbeast	|  	| Altered Beast (128K)					| 		| 1988-89| Activision	| ZX Spectrum	| 					|
 | altbeastbl	| D NW	| Altered Beast (Datsu bootleg)				| altbeast	| 1988	| bootleg (Datsu| System 16B	| no Sound				|
 | msx_alteredbeast|  	| Altered Beast (Euro)					| 		| 1988	| Activision / A| MSX		| Choose 'B' Cursor from menu		|
@@ -696,6 +697,7 @@ This list contains all games supported by FinalBurn Neo.
 | arian		|  	| Arian Mission						| aso		| 1985	| SNK		| Miscellaneous	| 					|
 | arkarea	|  	| Ark Area						| 		| 1988	| UPL		| Miscellaneous	| 					|
 | nes_arkaderush|  	| Arkade Rush (HB)					| 		| 2021	| Nathan Tolbert| Miscellaneous	| 					|
+| nes_arkarush	|  	| Arkade Rush (HB)					| 		| 2021	| Nathan Tolbert| Miscellaneous	| 					|
 | md_arkagisr	|  	| Arkagis Revolution (HB)				| 		| 2019	| Sik		| Sega Megadrive| 					|
 | spec_arkanoid	|  	| Arkanoid (48K)					| 		| 1987	| Imagine Softwa| ZX Spectrum	| 					|
 | arkgcbl	|  	| Arkanoid (bootleg on Block hardware)			| arkanoid	| 1986	| bootleg	| Arkanoid	| 					|
@@ -2876,6 +2878,7 @@ This list contains all games supported by FinalBurn Neo.
 | crkdownu	|  	| Crack Down (US, Floppy Based, FD1094 317-0058-04d)	| crkdown	| 1989	| Sega		| System 24	| 					|
 | md_crkdownu	|  	| Crack Down (USA)					| md_crkdown	| 1991	| Sage's Creatio| Sega Megadrive| 					|
 | crkdown	|  	| Crack Down (World, Floppy Based, FD1094 317-0058-04c)	| 		| 1989	| Sega		| System 24	| 					|
+| nes_crapjob	|  	| Crap Job (HB)						| 		| 2021	| Oniric Factor	| Miscellaneous	| 					|
 | nes_crashnboy	|  	| Crash 'n' the Boys - Street Challenge (USA)		| 		| 1992	| Technos	| Miscellaneous	| 					|
 | hocrash	|  	| Crash (bootleg of Head On)				| headon	| 1979	| bootleg (Frabe| Vic Dual	| No sound				|
 | md_crash	|  	| Crash Bandicoot (Rus)					| md_zero	| 199?	| <unknown>	| Sega Megadrive| 					|
@@ -7531,6 +7534,8 @@ This list contains all games supported by FinalBurn Neo.
 | lastsurvd	|  	| Last Survivor (FD1094 317-0083 decrypted)		| lastsurv	| 1987	| Sega		| X-Board	| 					|
 | lastsurv	|  	| Last Survivor (FD1094 317-0083)			| 		| 1987	| Sega		| X-Board	| 					|
 | spec_lastvampire|  	| Last Vampire, The					| 		| 1990	| Atlantis	| ZX Spectrum	| 					|
+| nes_lawestj	|  	| Law of the West (Japan)				| nes_laweste	| 1987	| Pony Canyon	| Miscellaneous	| 					|
+| nes_laweste	|  	| Law of the West (T-Eng)				| 		| 1987-2020| Pony Canyon - | Miscellaneous	| 					|
 | nes_lawnmower	|  	| Lawn Mower (HB)					| 		| 2011	| Shiru		| Miscellaneous	| 					|
 | nes_laylaj	|  	| Layla (Japan)						| nes_layla	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_layla	|  	| Layla (T-Eng)						| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -11275,6 +11280,10 @@ This list contains all games supported by FinalBurn Neo.
 | nes_redarremerii|  	| Red Arremer II (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | redbaron	|  	| Red Baron (Revised Hardware)				| 		| 1980	| Atari		| Miscellaneous	| 					|
 | redbarona	|  	| Red Baron						| redbaron	| 1980	| Atari		| Miscellaneous	| 					|
+| redclashs	|  	| Red Clash (Suntronics)				| redclash	| 1982	| Kaneko (Suntro| Miscellaneous	| NO Sound				|
+| redclasht	|  	| Red Clash (Tehkan, set 1)				| redclash	| 1981	| Kaneko (Tehkan| Miscellaneous	| NO Sound				|
+| redclashta	|  	| Red Clash (Tehkan, set 2)				| redclash	| 1981	| Kaneko (Tehkan| Miscellaneous	| NO Sound				|
+| redclash	|  	| Red Clash						| 		| 1981	| Kaneko	| Miscellaneous	| NO Sound				|
 | redearthr1	|  	| Red Earth / War-Zard (Euro 961023)			| redearth	| 1996	| Capcom	| CPS-3		| 					|
 | redearth	|  	| Red Earth / War-Zard (Euro 961121)			| 		| 1996	| Capcom	| CPS-3		| 					|
 | redhawke	|  	| Red Hawk (Excellent Co., Ltd)				| stagger1	| 1997	| Afega (Excelle| NMK16		| 					|
@@ -16924,6 +16933,9 @@ This list contains all games supported by FinalBurn Neo.
 | zero2		|   NW	| Zero (set 2, Defender bootleg)			| defender	| 1980	| bootleg (Amtec| 6809 System	| 					|
 | pce_zero4c	|  	| Zero 4 Champ (v1.5)					| 		| 1991	| Media Rings Co| PC Engine	| 					|
 | pce_zero4ca	|  	| Zero 4 Champ						| pce_zero4c	| 1991	| Media Rings Co| PC Engine	| 					|
+| zerohouri	|  	| Zero Hour (Inder)					| zerohour	| 1980	| bootleg (Inder| Miscellaneous	| 					|
+| zerohour	|  	| Zero Hour (set 1)					| 		| 1980	| Universal	| Miscellaneous	| 					|
+| zerohoura	|  	| Zero Hour (set 2)					| zerohour	| 1980	| Universal	| Miscellaneous	| 					|
 | zeropntj	|  	| Zero Point (Japan)					| zeropnt	| 1998	| Unico		| Unico		| 					|
 | zeropnt	|  	| Zero Point (set 1)					| 		| 1998	| Unico		| Unico		| 					|
 | zeropnta	|  	| Zero Point (set 2)					| zeropnt	| 1998	| Unico		| Unico		| 					|

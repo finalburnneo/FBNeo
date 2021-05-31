@@ -644,6 +644,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="altercation">
+		<description>Altercation (HB, v0.1) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Scottlowe</manufacturer>
+		<rom name="Altercation v0.1 (2021)(Scottlowe).nes" size="40976" crc="27288df5"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="amagon">
 		<description>Amagon (USA)</description>
 		<year>1989</year>
@@ -745,6 +753,14 @@
 		<year>2021</year>
 		<manufacturer>Nathan Tolbert</manufacturer>
 		<rom name="Arkade Rush (HB)(2021)(Nathan Tolbert).nes" size="32784" crc="d40c212e"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="arkarush">
+		<description>Arkade Rush (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Nathan Tolbert</manufacturer>
+		<rom name="Arkade Rush (2021)(Nathan Tolbert).nes" size="32784" crc="d40c212e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -2697,6 +2713,14 @@
 		<year>2016</year>
 		<manufacturer>Cowlitz</manufacturer>
 		<rom name="Cowlitz Gamers Adventure (HB).nes" size="32784" crc="0ae2354b"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="crapjob">
+		<description>Crap Job (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Oniric Factor</manufacturer>
+		<rom name="Crap Job (2021)(Oniric Factor).nes" size="524304" crc="cfa265ab"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -7521,6 +7545,22 @@
 		<year>1990</year>
 		<manufacturer>Mindscape</manufacturer>
 		<rom name="Last Starfighter, The (USA).nes" size="65552" crc="26bceffd"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="lawestj" cloneof="laweste" romof="laweste">
+		<description>Law of the West (Japan)</description>
+		<year>1987</year>
+		<manufacturer>Pony Canyon</manufacturer>
+		<rom name="Law of the West Jpn (1987)(Pony Canyon).nes" size="131088" crc="9d1b5c98"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="laweste">
+		<description>Law of the West (T-Eng) [Hack]</description>
+		<year>1987-2020</year>
+		<manufacturer>Pony Canyon - GAFF Translations</manufacturer>
+		<rom name="Law of the West T-Eng (2020)(GAFF Translations).nes" size="262160" crc="34437445"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

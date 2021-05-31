@@ -562,6 +562,7 @@ DRV		BurnDrvMSX_alpineski;
 DRV		BurnDrvMSX_alterego;
 DRV		BurnDrvnes_alterego;
 DRV		BurnSpecalterego;
+DRV		BurnDrvnes_altercation;
 DRV		BurnSpecaltbeast;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvAltbeastbl;		// no Sound [NOT WORKING]
@@ -704,6 +705,7 @@ DRV		BurnDrvArgus;
 DRV		BurnDrvArian;
 DRV		BurnDrvArkarea;
 DRV		BurnDrvnes_arkaderush;
+DRV		BurnDrvnes_arkarush;
 DRV		BurnDrvmd_arkagisr;
 DRV		BurnSpecarkanoid;
 DRV		BurnDrvarkgcbl;
@@ -2912,6 +2914,7 @@ DRV		BurnDrvCrkdownj;
 DRV		BurnDrvCrkdownu;
 DRV		BurnDrvmd_crkdownu;
 DRV		BurnDrvCrkdown;
+DRV		BurnDrvnes_crapjob;
 DRV		BurnDrvnes_crashnboy;
 DRV		BurnDrvHocrash;
 DRV		BurnDrvmd_crash;
@@ -7631,6 +7634,8 @@ DRV		BurnDrvKyustrkr;
 DRV		BurnDrvLastsurvd;
 DRV		BurnDrvLastsurv;
 DRV		BurnSpecLastvampire;
+DRV		BurnDrvnes_lawestj;
+DRV		BurnDrvnes_laweste;
 DRV		BurnDrvnes_lawnmower;
 DRV		BurnDrvnes_laylaj;
 DRV		BurnDrvnes_layla;
@@ -11423,6 +11428,10 @@ DRV		BurnDrvRecordbr;
 DRV		BurnDrvnes_redarremerii;
 DRV		BurnDrvRedbaron;
 DRV		BurnDrvRedbarona;
+DRV		BurnDrvRedclashs;
+DRV		BurnDrvRedclasht;
+DRV		BurnDrvRedclashta;
+DRV		BurnDrvRedclash;
 DRV		BurnDrvRedearthr1;
 DRV		BurnDrvRedearth;
 DRV		BurnDrvRedhawke;
@@ -17160,6 +17169,9 @@ DRV		BurnDrvZero;
 DRV		BurnDrvZero2;
 DRV		BurnDrvpce_zero4c;
 DRV		BurnDrvpce_zero4ca;
+DRV		BurnDrvZerohouri;
+DRV		BurnDrvZerohour;
+DRV		BurnDrvZerohoura;
 DRV		BurnDrvZeropntj;
 DRV		BurnDrvZeropnt;
 DRV		BurnDrvZeropnta;
@@ -17835,6 +17847,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_alterego,		// Alter Ego (HB)
 	&BurnDrvnes_alterego,		// Alter Ego (HB)
 	&BurnSpecalterego,			// Alter Ego (HB)
+	&BurnDrvnes_altercation,	// Altercation (HB, v0.1)
 	&BurnSpecaltbeast,			// Altered Beast (128K)
 #if defined FBNEO_DEBUG
 	&BurnDrvAltbeastbl,			// Altered Beast (Datsu bootleg) [no Sound, NOT WORKING]
@@ -17977,6 +17990,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvArian,				// Arian Mission
 	&BurnDrvArkarea,			// Ark Area
 	&BurnDrvnes_arkaderush,		// Arkade Rush (HB)
+	&BurnDrvnes_arkarush,		// Arkade Rush (HB)
 	&BurnDrvmd_arkagisr,		// Arkagis Revolution (HB)
 	&BurnSpecarkanoid,			// Arkanoid (48K)
 	&BurnDrvarkgcbl,			// Arkanoid (bootleg on Block hardware)
@@ -20185,6 +20199,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCrkdownu,			// Crack Down (US, Floppy Based, FD1094 317-0058-04d)
 	&BurnDrvmd_crkdownu,		// Crack Down (USA)
 	&BurnDrvCrkdown,			// Crack Down (World, Floppy Based, FD1094 317-0058-04c)
+	&BurnDrvnes_crapjob,		// Crap Job (HB)
 	&BurnDrvnes_crashnboy,		// Crash 'n' the Boys - Street Challenge (USA)
 	&BurnDrvHocrash,			// Crash (bootleg of Head On)
 	&BurnDrvmd_crash,			// Crash Bandicoot (Rus)
@@ -24904,6 +24919,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvLastsurvd,			// Last Survivor (FD1094 317-0083 decrypted)
 	&BurnDrvLastsurv,			// Last Survivor (FD1094 317-0083)
 	&BurnSpecLastvampire,		// Last Vampire, The
+	&BurnDrvnes_lawestj,		// Law of the West (Japan)
+	&BurnDrvnes_laweste,		// Law of the West (T-Eng)
 	&BurnDrvnes_lawnmower,		// Lawn Mower (HB)
 	&BurnDrvnes_laylaj,			// Layla (Japan)
 	&BurnDrvnes_layla,			// Layla (T-Eng)
@@ -28696,6 +28713,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_redarremerii,	// Red Arremer II (Japan)
 	&BurnDrvRedbaron,			// Red Baron (Revised Hardware)
 	&BurnDrvRedbarona,			// Red Baron
+	&BurnDrvRedclashs,			// Red Clash (Suntronics)
+	&BurnDrvRedclasht,			// Red Clash (Tehkan, set 1)
+	&BurnDrvRedclashta,			// Red Clash (Tehkan, set 2)
+	&BurnDrvRedclash,			// Red Clash
 	&BurnDrvRedearthr1,			// Red Earth / War-Zard (Euro 961023)
 	&BurnDrvRedearth,			// Red Earth / War-Zard (Euro 961121)
 	&BurnDrvRedhawke,			// Red Hawk (Excellent Co., Ltd)
@@ -34433,6 +34454,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvZero2,				// Zero (set 2, Defender bootleg) [no comment, NOT WORKING]
 	&BurnDrvpce_zero4c,			// Zero 4 Champ (v1.5)
 	&BurnDrvpce_zero4ca,		// Zero 4 Champ
+	&BurnDrvZerohouri,			// Zero Hour (Inder)
+	&BurnDrvZerohour,			// Zero Hour (set 1)
+	&BurnDrvZerohoura,			// Zero Hour (set 2)
 	&BurnDrvZeropntj,			// Zero Point (Japan)
 	&BurnDrvZeropnt,			// Zero Point (set 1)
 	&BurnDrvZeropnta,			// Zero Point (set 2)

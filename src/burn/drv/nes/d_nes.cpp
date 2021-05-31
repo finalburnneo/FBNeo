@@ -17534,10 +17534,97 @@ STD_ROM_FN(nes_atrainj)
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Law of the West (T-Eng)
+static struct BurnRomInfo nes_lawesteRomDesc[] = {
+	{ "Law of the West T-Eng (2020)(GAFF Translations).nes",          262160, 0x34437445, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_laweste)
+STD_ROM_FN(nes_laweste)
+
+	struct BurnDriver BurnDrvnes_laweste = {
+	"nes_laweste", NULL, NULL, NULL, "1987-2020",
+	"Law of the West (T-Eng)\0", NULL, "Pony Canyon - GAFF Translations", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_SHOOT | GBF_ADV, 0,
+	NESGetZipName, nes_lawesteRomInfo, nes_lawesteRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Law of the West (Japan)
+static struct BurnRomInfo nes_lawestjRomDesc[] = {
+	{ "Law of the West Jpn (1987)(Pony Canyon).nes",          131088, 0x9d1b5c98, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_lawestj)
+STD_ROM_FN(nes_lawestj)
+
+	struct BurnDriver BurnDrvnes_lawestj = {
+	"nes_lawestj", "nes_laweste", NULL, NULL, "1987",
+	"Law of the West (Japan)\0", NULL, "Pony Canyon", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_SHOOT | GBF_ADV, 0,
+	NESGetZipName, nes_lawestjRomInfo, nes_lawestjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
 
+
+static struct BurnRomInfo nes_altercationRomDesc[] = {
+	{ "Altercation v0.1 (2021)(Scottlowe).nes",          40976, 0x27288df5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_altercation)
+STD_ROM_FN(nes_altercation)
+
+struct BurnDriver BurnDrvnes_altercation = {
+	"nes_altercation", NULL, NULL, NULL, "2021",
+	"Altercation (HB, v0.1)\0", NULL, "Scottlowe", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_altercationRomInfo, nes_altercationRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_arkarushRomDesc[] = {
+	{ "Arkade Rush (2021)(Nathan Tolbert).nes",          32784, 0xd40c212e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_arkarush)
+STD_ROM_FN(nes_arkarush)
+
+struct BurnDriver BurnDrvnes_arkarush = {
+	"nes_arkarush", NULL, NULL, NULL, "2021",
+	"Arkade Rush (HB)\0", NULL, "Nathan Tolbert", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_arkarushRomInfo, nes_arkarushRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_crapjobRomDesc[] = {
+	{ "Crap Job (2021)(Oniric Factor).nes",          524304, 0xcfa265ab, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_crapjob)
+STD_ROM_FN(nes_crapjob)
+
+struct BurnDriver BurnDrvnes_crapjob = {
+	"nes_crapjob", NULL, NULL, NULL, "2021",
+	"Crap Job (HB)\0", NULL, "Oniric Factor", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_crapjobRomInfo, nes_crapjobRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_blackholRomDesc[] = {
 	{ "Black Hole - Czarna Dziura (HB, v0.20)(SIUDYM).nes",          131088, 0x8fd3a9a7, BRF_ESS | BRF_PRG },

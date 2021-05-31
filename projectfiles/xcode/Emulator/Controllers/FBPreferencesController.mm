@@ -19,17 +19,24 @@
 @interface FBPreferencesController()
 
 - (void) resetDipSwitches:(NSArray *) switches;
+- (void) resetButtonList;
+- (void) resetInputDevices;
 
 @end
 
 @implementation FBPreferencesController
 {
     NSArray<FBDipSetting *> *dipSwitches;
+    NSMutableArray<NSDictionary *> *_inputDeviceList;
+    NSMutableDictionary<NSString *, NSDictionary *> *_inputDeviceMap;
+    NSString *_selectedInputDeviceId;
 }
 
 - (id) init
 {
     if (self = [super initWithWindowNibName:@"Preferences"]) {
+        _inputDeviceList = [NSMutableArray new];
+        _inputDeviceMap = [NSMutableDictionary new];
     }
 
     return self;
@@ -38,10 +45,32 @@
 - (void) awakeFromNib
 {
     [self.runloop addObserver:self];
+    _selectedInputDeviceId = @"keyboard";
+    NSDictionary *kybd = @{ @"id": @"keyboard",
+                            @"title": NSLocalizedString(@"Keyboard", @"Device") };
+    [_inputDeviceList addObject:kybd];
+    [_inputDeviceMap setObject:kybd
+                        forKey:@"keyboard"];
+
+    AKGamepadManager *gm = AKGamepadManager.sharedInstance;
+    for (int i = 0, n = (int) gm.gamepadCount; i < n; i++) {
+        AKGamepad *gamepad = [gm gamepadAtIndex:i];
+        NSString *key = gamepad.vendorProductString;
+        NSDictionary *gp = @{ @"id": key,
+                              @"title": gamepad.name };
+
+        [_inputDeviceList addObject:gp];
+        [_inputDeviceMap setObject:gp
+                            forKey:key];
+    }
+
+    [self resetInputDevices];
+    [gm addObserver:self];
 }
 
 - (void) dealloc
 {
+    [AKGamepadManager.sharedInstance removeObserver:self];
     [self.runloop removeObserver:self];
 }
 
@@ -51,6 +80,81 @@
 {
     toolbar.selectedItemIdentifier = [NSUserDefaults.standardUserDefaults objectForKey:@"selectedPreferencesTab"];
     [self resetDipSwitches:[self.runloop dipSwitches]];
+}
+
+#pragma mark - AKGamepadDelegate
+
+- (void) gamepadDidConnect:(AKGamepad *) gamepad
+{
+    NSString *key = gamepad.vendorProductString;
+    @synchronized (_inputDeviceList) {
+        if (![_inputDeviceMap objectForKey:key]) {
+            NSDictionary *gp = @{ @"id": key,
+                                  @"title": gamepad.name };
+            [_inputDeviceMap setObject:gp
+                                forKey:key];
+            [_inputDeviceList addObject:gp];
+        }
+    }
+    [self resetInputDevices];
+}
+
+- (void) gamepadDidDisconnect:(AKGamepad *) gamepad
+{
+    NSString *key = gamepad.vendorProductString;
+    @synchronized (_inputDeviceList) {
+        NSDictionary *gp = [_inputDeviceMap objectForKey:key];
+        [_inputDeviceMap removeObjectForKey:key];
+        [_inputDeviceList removeObject:gp];
+    }
+    [self resetInputDevices];
+}
+
+- (void) gamepad:(AKGamepad *) gamepad
+        xChanged:(NSInteger) newValue
+          center:(NSInteger) center
+       eventData:(AKGamepadEventData *) eventData
+{
+    // FIXME!!
+//    if ([[gamepad vendorProductString] isEqualToString:_selectedInputDeviceId]) {
+//        if ([[self window] firstResponder] == _joyCaptureView) {
+//            if (center - newValue > FXDeadzoneSize) {
+//                [_joyCaptureView captureCode:FXGamepadLeft];
+//            } else if (newValue - center > FXDeadzoneSize) {
+//                [_joyCaptureView captureCode:FXGamepadRight];
+//            }
+//        }
+//    }
+}
+
+- (void) gamepad:(AKGamepad *) gamepad
+        yChanged:(NSInteger) newValue
+          center:(NSInteger) center
+       eventData:(AKGamepadEventData *) eventData
+{
+    // FIXME!!
+//    if ([[gamepad vendorProductString] isEqualToString:_selectedInputDeviceId]) {
+//        if ([[self window] firstResponder] == _joyCaptureView) {
+//            if (center - newValue > FXDeadzoneSize) {
+//                [_joyCaptureView captureCode:FXGamepadUp];
+//            } else if (newValue - center > FXDeadzoneSize) {
+//                [_joyCaptureView captureCode:FXGamepadDown];
+//            }
+//        }
+//    }
+}
+
+- (void) gamepad:(AKGamepad *) gamepad
+          button:(NSUInteger) index
+          isDown:(BOOL) isDown
+       eventData:(AKGamepadEventData *) eventData
+{
+    // FIXME!!
+//    if ([[gamepad vendorProductString] isEqualToString:_selectedInputDeviceId]) {
+//        if ([[self window] firstResponder] == _joyCaptureView) {
+//            [_joyCaptureView captureCode:FXMakeButton(index)];
+//        }
+//    }
 }
 
 #pragma mark - Actions
@@ -199,6 +303,51 @@ objectValueForTableColumn:(NSTableColumn *) tableColumn
     dipSwitches = switches;
     restoreDipButton.enabled = dipswitchTableView.enabled = dipSwitches.count > 0;
     [dipswitchTableView reloadData];
+}
+
+- (void) resetButtonList
+{
+    [inputTableView abortEditing];
+/* FIXME!!
+    NSInteger index = inputDevicesPopUp.indexOfSelectedItem;
+    if (index < _inputDeviceList.count) {
+        _selectedInputDeviceId = [[_inputDeviceList objectAtIndex:index] objectForKey:@"id"];
+    }
+
+    [_inputList removeAllObjects];
+
+    BOOL isKeyboard = [@"keyboard" isEqualToString:_selectedInputDeviceId];
+    FXEmulatorController *emulator = [[FXAppDelegate sharedInstance] emulator];
+
+    [[[emulator driver] buttons] enumerateObjectsUsingBlock:^(FXButton *b, NSUInteger idx, BOOL *stop) {
+        if (isKeyboard) {
+            FXButtonConfig *bc = [FXButtonConfig new];
+            [bc setName:[b name]];
+            [bc setTitle:[b title]];
+            [bc setVirtualCode:[b code]];
+            [_inputList addObject:bc];
+        } else if ([b playerIndex] == 1) {
+            FXButtonConfig *bc = [FXButtonConfig new];
+            [bc setName:[b name]];
+            [bc setTitle:[b neutralTitle]];
+            [bc setVirtualCode:[b code]];
+            [_inputList addObject:bc];
+        }
+    }];
+    [inputTableView setEnabled:[_inputList count] > 0];
+    [inputTableView reloadData];
+ */
+}
+
+- (void) resetInputDevices
+{
+    [inputDevicesPopUp removeAllItems];
+    [_inputDeviceList enumerateObjectsUsingBlock:^(NSDictionary *gp, NSUInteger idx, BOOL *stop) {
+        [inputDevicesPopUp addItemWithTitle:[gp objectForKey:@"title"]];
+    }];
+
+    [inputDevicesPopUp selectItemAtIndex:0]; // select the keyboard
+    [self resetButtonList];
 }
 
 @end

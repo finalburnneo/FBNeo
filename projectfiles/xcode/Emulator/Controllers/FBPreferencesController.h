@@ -15,13 +15,16 @@
 #import <Cocoa/Cocoa.h>
 
 #import "FBMainThread.h"
+#import "AKGamepadManager.h"
 
-@interface FBPreferencesController : NSWindowController<NSTabViewDelegate, NSTableViewDataSource, FBMainThreadDelegate>
+@interface FBPreferencesController : NSWindowController<NSTabViewDelegate, NSTableViewDataSource, FBMainThreadDelegate, AKGamepadEventDelegate>
 {
     IBOutlet NSToolbar *toolbar;
     IBOutlet NSTabView *contentTabView;
     IBOutlet NSTableView *dipswitchTableView;
+    IBOutlet NSTableView *inputTableView;
     IBOutlet NSButton *restoreDipButton;
+    IBOutlet NSPopUpButton *inputDevicesPopUp;
 }
 
 - (IBAction) tabChanged:(id) sender;

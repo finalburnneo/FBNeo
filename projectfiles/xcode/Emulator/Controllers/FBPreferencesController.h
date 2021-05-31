@@ -22,8 +22,9 @@
     IBOutlet NSToolbar *toolbar;
     IBOutlet NSTabView *contentTabView;
     IBOutlet NSTableView *dipswitchTableView;
-    IBOutlet NSTableView *inputTableView;
+    IBOutlet NSTableView *joyInputTableView;
     IBOutlet NSButton *restoreDipButton;
+    IBOutlet NSButton *restoreJoyButton;
     IBOutlet NSPopUpButton *inputDevicesPopUp;
 }
 

@@ -21,6 +21,7 @@
 - (void) resetDipSwitches:(NSArray *) switches;
 - (void) resetButtonList;
 - (void) resetInputDevices;
+- (NSString *) selectedInputDeviceId;
 
 @end
 
@@ -28,8 +29,8 @@
 {
     NSArray<FBDipSetting *> *dipSwitches;
     NSMutableArray<NSDictionary *> *_inputDeviceList;
+    NSMutableArray<FBInputInfo *> *_joyInputInfoList;
     NSMutableDictionary<NSString *, NSDictionary *> *_inputDeviceMap;
-    NSString *_selectedInputDeviceId;
 }
 
 - (id) init
@@ -37,6 +38,7 @@
     if (self = [super initWithWindowNibName:@"Preferences"]) {
         _inputDeviceList = [NSMutableArray new];
         _inputDeviceMap = [NSMutableDictionary new];
+        _joyInputInfoList = [NSMutableArray new];
     }
 
     return self;
@@ -45,12 +47,6 @@
 - (void) awakeFromNib
 {
     [self.runloop addObserver:self];
-    _selectedInputDeviceId = @"keyboard";
-    NSDictionary *kybd = @{ @"id": @"keyboard",
-                            @"title": NSLocalizedString(@"Keyboard", @"Device") };
-    [_inputDeviceList addObject:kybd];
-    [_inputDeviceMap setObject:kybd
-                        forKey:@"keyboard"];
 
     AKGamepadManager *gm = AKGamepadManager.sharedInstance;
     for (int i = 0, n = (int) gm.gamepadCount; i < n; i++) {
@@ -235,8 +231,11 @@ didSelectTabViewItem:(NSTabViewItem *) tabViewItem
 
 - (NSInteger) numberOfRowsInTableView:(NSTableView *)tableView
 {
-    if (tableView == dipswitchTableView)
+    if (tableView == dipswitchTableView) {
         return dipSwitches.count;
+    } else if (tableView == joyInputTableView) {
+        return _joyInputInfoList.count;
+    }
 
     return 0;
 }
@@ -264,6 +263,11 @@ objectValueForTableColumn:(NSTableColumn *) tableColumn
                 [tableColumn.dataCell addItemWithTitle:name];
             }
             return @(sw.selectedIndex);
+        }
+    } else if (tableView == joyInputTableView) {
+        FBInputInfo *iinfo = [_joyInputInfoList objectAtIndex:row];
+        if ([tableColumn.identifier isEqualToString:@"title"]) {
+            return iinfo.neutralTitle;
         }
     }
 
@@ -294,9 +298,19 @@ objectValueForTableColumn:(NSTableColumn *) tableColumn
                   success:(BOOL) success
 {
     [self resetDipSwitches:[self.runloop dipSwitches]];
+    [self resetButtonList];
 }
 
 #pragma mark - Private
+
+- (NSString *) selectedInputDeviceId
+{
+    int selectedDeviceIndex = inputDevicesPopUp.indexOfSelectedItem;
+    if (selectedDeviceIndex >= 0) {
+        return [[_inputDeviceList objectAtIndex:selectedDeviceIndex] objectForKey:@"id"];
+    }
+    return nil;
+}
 
 - (void) resetDipSwitches:(NSArray *) switches
 {
@@ -307,36 +321,22 @@ objectValueForTableColumn:(NSTableColumn *) tableColumn
 
 - (void) resetButtonList
 {
-    [inputTableView abortEditing];
-/* FIXME!!
-    NSInteger index = inputDevicesPopUp.indexOfSelectedItem;
-    if (index < _inputDeviceList.count) {
-        _selectedInputDeviceId = [[_inputDeviceList objectAtIndex:index] objectForKey:@"id"];
+    [joyInputTableView abortEditing];
+    [_joyInputInfoList removeAllObjects];
+
+    NSString *selectedDeviceId = [self selectedInputDeviceId];
+    if (selectedDeviceId) {
+        FBInput *input = AppDelegate.sharedInstance.input;
+        [AppDelegate.sharedInstance.input.allInputs enumerateObjectsUsingBlock:^(FBInputInfo *iinfo, NSUInteger idx, BOOL *stop) {
+            if (iinfo.playerIndex == 1) {
+                [_joyInputInfoList addObject:iinfo];
+            }
+        }];
     }
 
-    [_inputList removeAllObjects];
-
-    BOOL isKeyboard = [@"keyboard" isEqualToString:_selectedInputDeviceId];
-    FXEmulatorController *emulator = [[FXAppDelegate sharedInstance] emulator];
-
-    [[[emulator driver] buttons] enumerateObjectsUsingBlock:^(FXButton *b, NSUInteger idx, BOOL *stop) {
-        if (isKeyboard) {
-            FXButtonConfig *bc = [FXButtonConfig new];
-            [bc setName:[b name]];
-            [bc setTitle:[b title]];
-            [bc setVirtualCode:[b code]];
-            [_inputList addObject:bc];
-        } else if ([b playerIndex] == 1) {
-            FXButtonConfig *bc = [FXButtonConfig new];
-            [bc setName:[b name]];
-            [bc setTitle:[b neutralTitle]];
-            [bc setVirtualCode:[b code]];
-            [_inputList addObject:bc];
-        }
-    }];
-    [inputTableView setEnabled:[_inputList count] > 0];
-    [inputTableView reloadData];
- */
+    joyInputTableView.enabled = _joyInputInfoList.count > 0;
+    restoreJoyButton.enabled = joyInputTableView.enabled;
+    [joyInputTableView reloadData];
 }
 
 - (void) resetInputDevices
@@ -346,7 +346,10 @@ objectValueForTableColumn:(NSTableColumn *) tableColumn
         [inputDevicesPopUp addItemWithTitle:[gp objectForKey:@"title"]];
     }];
 
-    [inputDevicesPopUp selectItemAtIndex:0]; // select the keyboard
+    inputDevicesPopUp.enabled = inputDevicesPopUp.numberOfItems;
+    if (inputDevicesPopUp.numberOfItems > 0) {
+        [inputDevicesPopUp selectItemAtIndex:inputDevicesPopUp.numberOfItems - 1];
+    }
     [self resetButtonList];
 }
 

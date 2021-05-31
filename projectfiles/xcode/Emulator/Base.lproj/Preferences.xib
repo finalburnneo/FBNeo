@@ -11,8 +11,9 @@
                 <outlet property="contentTabView" destination="oE3-Es-MKD" id="sqi-Yy-NZ7"/>
                 <outlet property="dipswitchTableView" destination="Riy-Ok-IZT" id="eHL-jy-A8e"/>
                 <outlet property="inputDevicesPopUp" destination="sk8-nL-CMn" id="OXk-OX-Sl2"/>
-                <outlet property="inputTableView" destination="w2L-aO-5yK" id="ihu-7W-6d2"/>
+                <outlet property="joyInputTableView" destination="w2L-aO-5yK" id="pCU-pB-6GJ"/>
                 <outlet property="restoreDipButton" destination="M0W-M1-aRD" id="dHM-Qp-shl"/>
+                <outlet property="restoreJoyButton" destination="m7E-tJ-5pF" id="ANH-Uz-61g"/>
                 <outlet property="toolbar" destination="EZn-6C-tNE" id="URm-K2-UMI"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
@@ -128,7 +129,7 @@
                                                 <rect key="frame" x="1" y="0.0" width="558" height="291"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="Wtz-Wf-vp1" id="w2L-aO-5yK">
+                                                    <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="Wtz-Wf-vp1" id="w2L-aO-5yK" userLabel="Joystick TableView">
                                                         <rect key="frame" x="0.0" y="0.0" width="558" height="266"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <size key="intercellSpacing" width="3" height="2"/>
@@ -136,7 +137,7 @@
                                                         <tableViewGridLines key="gridStyleMask" vertical="YES"/>
                                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                         <tableColumns>
-                                                            <tableColumn identifier="name" editable="NO" width="116" minWidth="40" maxWidth="1000" id="dBb-jS-ggE">
+                                                            <tableColumn identifier="title" editable="NO" width="116" minWidth="40" maxWidth="1000" id="dBb-jS-ggE">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Description">
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -148,7 +149,7 @@
                                                                 </textFieldCell>
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             </tableColumn>
-                                                            <tableColumn identifier="button" width="436" minWidth="40" maxWidth="1000" id="cm7-Je-q9F">
+                                                            <tableColumn identifier="input" width="436" minWidth="40" maxWidth="1000" id="cm7-Je-q9F">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Input">
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -180,7 +181,7 @@
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </tableHeaderView>
                                         </scrollView>
-                                        <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sk8-nL-CMn">
+                                        <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sk8-nL-CMn" userLabel="Gamepad Dropdown">
                                             <rect key="frame" x="18" y="356" width="238" height="25"/>
                                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="0tm-fT-5R6" id="U8O-di-wHm">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -227,7 +228,7 @@
                                                 <rect key="frame" x="1" y="0.0" width="558" height="234"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="1qu-Rf-lqe" id="Riy-Ok-IZT">
+                                                    <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="1qu-Rf-lqe" id="Riy-Ok-IZT" userLabel="DIPSwitch TableView">
                                                         <rect key="frame" x="0.0" y="0.0" width="558" height="209"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <size key="intercellSpacing" width="3" height="2"/>

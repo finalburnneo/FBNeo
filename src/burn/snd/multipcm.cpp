@@ -128,6 +128,7 @@ static INT16 *mixer_buffer_left = NULL;
 static INT16 *mixer_buffer_right = NULL;
 static INT32 samples_from; // "re"sampler
 static INT32 add_to_stream;
+static double volume;
 
 /*******************************
         ENVELOPE SECTION
@@ -478,6 +479,11 @@ void MultiPCMReset()
 	}
 }
 
+void MultiPCMSetVolume(double vol)
+{
+	volume = vol;
+}
+
 void MultiPCMInit(INT32 clock, UINT8 *SndROM, INT32 bAdd)
 {
 	int i;
@@ -492,6 +498,8 @@ void MultiPCMInit(INT32 clock, UINT8 *SndROM, INT32 bAdd)
 
 	mixer_buffer_left = (INT16*)BurnMalloc(2 * sizeof(INT16) * chip.Rate);
 	mixer_buffer_right = mixer_buffer_left + ((INT32)chip.Rate);
+
+	volume = 1.00;
 
 	//Volume+pan table
 	for(i=0;i<0x800;++i)
@@ -686,8 +694,8 @@ void MultiPCMUpdate(INT16 *buffer, INT32 samples_len)
 	{
 		INT32 k = (samples_from * j) / nBurnSoundLen;
 
-		INT32 l = (add_to_stream) ? lmix[k] + buffer[0] : lmix[k];
-		INT32 r = (add_to_stream) ? rmix[k] + buffer[1] : rmix[k];
+		INT32 l = (add_to_stream) ? (lmix[k] * volume) + buffer[0] : (lmix[k] * volume);
+		INT32 r = (add_to_stream) ? (rmix[k] * volume) + buffer[1] : (rmix[k] * volume);
 		buffer[0] = BURN_SND_CLIP(l);
 		buffer[1] = BURN_SND_CLIP(r);
 		buffer += 2;

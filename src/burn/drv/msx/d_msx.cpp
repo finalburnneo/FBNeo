@@ -1456,6 +1456,8 @@ static INT32 DrvInit()
 	BurnSetRefreshRate((Hertz60) ? 60.0 : 50.0);
 
 	ZetInit(0);
+	z80_set_cycle_tables_msx();
+
 	ZetOpen(0);
 
 	ZetSetOutHandler(msx_write_port);

@@ -24676,10 +24676,10 @@ STDROMPICKEXT(MSX_quartet, MSX_quartet, msx_msx)
 STD_ROM_FN(MSX_quartet)
 
 struct BurnDriver BurnDrvMSX_quartet = {
-	"msx_quartet", NULL, "msx_msx", NULL, "2019",
+	"msx_quartet", "msx_quartetx", "msx_msx", NULL, "2019",
 	"Quartet (HB, v1.2)\0", NULL, "Ilkke and bitsofbas", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_quartetRomInfo, MSX_quartetRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -25600,10 +25600,10 @@ STDROMPICKEXT(MSX_nogalsdemo, MSX_nogalsdemo, msx_msx)
 STD_ROM_FN(MSX_nogalsdemo)
 
 struct BurnDriver BurnDrvMSX_nogalsdemo = {
-	"msx_nogalsdemo", NULL, "msx_msx", NULL, "2018",
+	"msx_nogalsdemo", "msx_nogals", "msx_msx", NULL, "2018",
 	"Nogalious Demo (HB)\0", NULL, "LuegoLu3go", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_nogalsdemoRomInfo, MSX_nogalsdemoRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -27892,6 +27892,44 @@ struct BurnDriver BurnDrvMSX_jawbrk2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_jawbrk2RomInfo, MSX_jawbrk2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Nogalious (HB)
+
+static struct BurnRomInfo MSX_nogalsRomDesc[] = {
+	{ "Nogalious (2019)(LUEGOLU3GO Studio).rom",	524288, 0x7321d4f4, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_nogals, MSX_nogals, msx_msx)
+STD_ROM_FN(MSX_nogals)
+
+struct BurnDriver BurnDrvMSX_nogals = {
+	"msx_nogals", NULL, "msx_msx", NULL, "2019",
+	"Nogalious (HB)\0", NULL, "LuegoLu3go", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_nogalsRomInfo, MSX_nogalsRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Quartet (HB, v1.3)
+
+static struct BurnRomInfo MSX_quartetxRomDesc[] = {
+	{ "Quartet v1.3 (2019)(Ilkke and bitsofbas).rom",	49152, 0x266b023d, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_quartetx, MSX_quartetx, msx_msx)
+STD_ROM_FN(MSX_quartetx)
+
+struct BurnDriver BurnDrvMSX_quartetx = {
+	"msx_quartetx", NULL, "msx_msx", NULL, "2019",
+	"Quartet (HB, v1.3)\0", "Extra options and 2P co-op mode", "Ilkke and bitsofbas", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_MSX, GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_quartetxRomInfo, MSX_quartetxRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

@@ -922,7 +922,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 				if (cur_map->scrollx_table != NULL)
 					sx = (x + cur_map->scrollx_table[(y * cur_map->scroll_rows) / scrymod] - x_offset) % scrxmod;
 				else
-					sx = (x + cur_map->scrolly - x_offset) % scrxmod;
+					sx = (x + cur_map->scrollx - x_offset) % scrxmod;
 
 				INT32 sy = (y + cur_map->scrolly_table[(sx * cur_map->scroll_cols) / scrxmod] - y_offset) % scrymod;
 

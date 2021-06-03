@@ -17,8 +17,7 @@ Here is the build status of the other versions for which we don't supply a binar
 ![SDL2](https://github.com/finalburnneo/FBNeo/workflows/SDL2%20CI/badge.svg)
 ![SDL1.2](https://github.com/finalburnneo/FBNeo/workflows/SDL1.2%20CI/badge.svg)
 ![macOS](https://github.com/finalburnneo/FBNeo/workflows/macOS%20CI/badge.svg)
-![VS X64](https://github.com/finalburnneo/FBNeo/workflows/VS2019%20x64%20CI/badge.svg)
-![VS win32](https://github.com/finalburnneo/FBNeo/workflows/VS2019%20win32%20CI/badge.svg)
+
 
 # Ports
 

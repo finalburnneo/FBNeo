@@ -152,6 +152,59 @@ static const int keyCodeToFbk[] = {
 static unsigned char keyState[256];
 static unsigned char simKeyState[256];
 
+#pragma mark - FBInputInfo
+
+@implementation FBInputInfo
+
+- (instancetype) init
+{
+    if (self = [super init]) {
+    }
+    return self;
+}
+
+- (instancetype) initWithCode:(NSString *) code
+                        title:(NSString *) title
+{
+    if (self = [super init]) {
+        _code = code;
+        _title = title;
+    }
+    return self;
+}
+
+- (int) playerIndex
+{
+    if (_code.length < 4) {
+        return false;
+    }
+    char digit = [_code characterAtIndex:1];
+    if ([_code characterAtIndex:0] == 'p'
+        && digit >= '0' && digit <= '9'
+        && [_code characterAtIndex:2] == ' ') {
+        return digit - '0';
+    }
+    return -1;
+}
+
+- (NSString *) neutralTitle
+{
+    if (_title.length < 4) {
+        return _title;
+    }
+    char digit = [_title characterAtIndex:1];
+    if ([_title characterAtIndex:0] == 'P'
+        && digit >= '0' && digit <= '9'
+        && [_title characterAtIndex:2] == ' ') {
+        return [_title substringFromIndex:3];
+    }
+    return _title;
+}
+
+@end
+
+#pragma mark - FBInput
+
 @implementation FBInput
 
 #pragma mark - Init and dealloc
@@ -202,6 +255,28 @@ static unsigned char simKeyState[256];
             return YES;
 
     return NO;
+}
+
+- (NSArray<FBInputInfo *> *) allInputs
+{
+    NSMutableArray<FBInputInfo *> *inputs = [NSMutableArray array];
+    if (nBurnDrvActive == ~0U) {
+        return inputs;
+    }
+    struct BurnInputInfo bii;
+    for (int i = 0; i < 0x1000; i++) {
+        if (BurnDrvGetInputInfo(&bii, i)) {
+            break;
+        }
+        if (bii.nType == BIT_DIGITAL) {
+            [inputs addObject:[[FBInputInfo alloc] initWithCode:[NSString stringWithCString:bii.szInfo
+                                                                                   encoding:NSASCIIStringEncoding]
+                                                          title:[NSString stringWithCString:bii.szName
+                                                                                   encoding:NSASCIIStringEncoding]]];
+        }
+    }
+
+    return inputs;
 }
 
 @end

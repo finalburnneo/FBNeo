@@ -1496,17 +1496,61 @@ static struct BurnRomInfo scionRomDesc[] = {
 
 STD_ROM_PICK(scion)
 STD_ROM_FN(scion)
+/*Comparing files sc6 and 6.9F
+0000002E: DD 00
+0000002F: 7E 00
+00000030: 0F 00
+00000031: CB 00
+00000032: AF 00
+00000033: C3 00
+00000034: 2E 00
+00000035: 01 00
+00000122: 00 DD
+00000123: 3E 7E
+00000124: 10 0E
+0000012B: C3 DD
+0000012C: 2E 7E
+0000012D: 00 0F
+00000146: 3E DD
+00000147: 0F 7E
+00000148: 00 4C */
 
 static INT32 ScionInit()
 {
 	Scionmodeoffset = 8*2; // 2 8x8char offset
 
-	return DrvInit(StingerLoadRoms);
+	INT32 rc = DrvInit(StingerLoadRoms);
+
+	if (!rc) {
+		// patch sound cpu prot
+		DrvZ80ROM1[0x2e] = 0x00;
+		DrvZ80ROM1[0x2f] = 0x00;
+		DrvZ80ROM1[0x30] = 0x00;
+		DrvZ80ROM1[0x31] = 0x00;
+		DrvZ80ROM1[0x32] = 0x00;
+		DrvZ80ROM1[0x33] = 0x00;
+		DrvZ80ROM1[0x34] = 0x00;
+		DrvZ80ROM1[0x35] = 0x00;
+
+		DrvZ80ROM1[0x122] = 0xdd;
+		DrvZ80ROM1[0x123] = 0x7e;
+		DrvZ80ROM1[0x124] = 0x0e;
+
+		DrvZ80ROM1[0x12b] = 0xdd;
+		DrvZ80ROM1[0x12c] = 0x7e;
+		DrvZ80ROM1[0x12d] = 0x0f;
+
+		DrvZ80ROM1[0x146] = 0xdd;
+		DrvZ80ROM1[0x147] = 0x7e;
+		DrvZ80ROM1[0x148] = 0x4c;
+	}
+
+	return rc;
 }
 
 struct BurnDriver BurnDrvScion = {
 	"scion", NULL, NULL, "stinger", "1984",
-	"Scion\0", "Music horribly broken, use scionc instead!", "Seibu Denshi", "Miscellaneous",
+	"Scion\0", NULL, "Seibu Denshi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, scionRomInfo, scionRomName, NULL, NULL, stingerSampleInfo, stingerSampleName, ScionInputInfo, ScionDIPInfo,

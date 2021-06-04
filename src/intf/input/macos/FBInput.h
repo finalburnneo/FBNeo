@@ -18,6 +18,18 @@
 #define FBN_RMB 0x2
 #define FBN_MMB 0x4
 
+@interface FBInputInfo : NSObject
+
+@property NSString *code;
+@property NSString *title;
+
+- (instancetype) initWithCode:(NSString *) code
+                        title:(NSString *) title;
+- (int) playerIndex;
+- (NSString *) neutralTitle;
+
+@end
+
 @interface FBInput : NSObject
 
 @property NSPoint mouseCoords;
@@ -28,5 +40,6 @@
 - (void) keyDown:(NSEvent *) theEvent;
 - (void) keyUp:(NSEvent *) theEvent;
 - (void) flagsChanged:(NSEvent *) theEvent;
+- (NSArray<FBInputInfo *> *) allInputs;
 
 @end

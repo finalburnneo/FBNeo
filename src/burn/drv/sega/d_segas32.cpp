@@ -2520,6 +2520,7 @@ static void multi32_sound_init()
 	BurnYM3438SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 
 	MultiPCMInit(32215900 / 4, DrvPCMROM, 1);
+	MultiPCMSetVolume(0.35);
 }
 
 static void v25_prot_write(UINT32 offset, UINT32 data, UINT32 /*mask*/)

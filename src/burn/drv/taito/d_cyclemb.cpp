@@ -255,8 +255,6 @@ static void update_dial(INT32 player)
 		if (dial != 0) {
 			dial_reverse[player] = dial < 0;
 			dial_mabou[player] = (dial_mabou[player] + abs(dial)) & 0x1f;
-
-			bprintf(0, _T("dial  rev %x   mabou %x    delta %x\n"),dial_reverse[player],dial_mabou[player], abs(dial));
 		}
 
 	}

@@ -8,6 +8,7 @@
 #include "z80_intf.h"
 #include "burn_ym2203.h"
 #include "burn_gun.h" // trackball
+#include <math.h> // abs()
 
 static UINT8 *AllMem;
 static UINT8 *AllRam;

@@ -247,7 +247,7 @@ static INT8 dial_read(INT32 player)
 static void update_dial(INT32 player)
 {
 	if (is_cyclemb) {
-		INT8 dial = dial_read(player);
+		INT32 dial = dial_read(player);
 
 		if (dial < -0x1f) dial = -0x1f;
 		if (dial > 0x1f) dial = 0x1f;
@@ -255,8 +255,6 @@ static void update_dial(INT32 player)
 		if (dial != 0) {
 			dial_reverse[player] = dial < 0;
 			dial_mabou[player] = (dial_mabou[player] + abs(dial)) & 0x1f;
-
-			bprintf(0, _T("dial  rev %x   mabou %x    delta %x\n"),dial_reverse[player],dial_mabou[player], abs(dial));
 		}
 
 	}

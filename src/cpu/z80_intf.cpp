@@ -341,7 +341,7 @@ struct z80pstack {
 static z80pstack pstack[MAX_PSTACK];
 static INT32 pstacknum = 0;
 
-static void ZetCPUPush(INT32 nCPU)
+void ZetCPUPush(INT32 nCPU)
 {
 	z80pstack *p = &pstack[pstacknum++];
 
@@ -359,7 +359,7 @@ static void ZetCPUPush(INT32 nCPU)
 	}
 }
 
-static void ZetCPUPop()
+void ZetCPUPop()
 {
 	z80pstack *p = &pstack[--pstacknum];
 

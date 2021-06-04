@@ -79,6 +79,10 @@ void ZetSetPC(INT32 n, UINT16 value);
 void ZetSetR(INT32 n, UINT16 value);
 void ZetSetSP(INT32 n, UINT16 value);
 
+void ZetCPUPush(INT32 nCPU);
+void ZetCPUPop();
+
+
 void ZetSetReadHandler(UINT8 (__fastcall *pHandler)(UINT16));
 void ZetSetWriteHandler(void (__fastcall *pHandler)(UINT16, UINT8));
 void ZetSetInHandler(UINT8 (__fastcall *pHandler)(UINT16));

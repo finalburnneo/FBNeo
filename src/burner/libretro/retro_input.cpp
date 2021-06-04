@@ -13,7 +13,7 @@ static unsigned nDiagInputHoldFrameDelay = 0;
 static unsigned nSwitchCode = 0;
 static unsigned nMahjongKeyboards = 0;
 static unsigned nMaxControllers = 0;
-static int nDeviceType[MAX_PLAYERS];
+static unsigned nDeviceType[MAX_PLAYERS];
 static int nLibretroInputBitmask[MAX_PLAYERS];
 static std::vector<retro_input_descriptor> normal_input_descriptors;
 static struct KeyBind sKeyBinds[255];
@@ -26,7 +26,7 @@ static bool bAllDiagInputPressed = true;
 static bool bDiagComboActivated = false;
 static bool bVolumeIsFireButton = false;
 static bool bInputInitialized = false;
-static bool bControllersNeedRefresh = false;
+static bool bControllersNeedRefresh = true;
 static char* pDirections[MAX_PLAYERS][6];
 
 // Macros
@@ -35,6 +35,14 @@ UINT32 nMaxMacro = 0;
 
 void retro_set_input_state(retro_input_state_t cb) { input_cb = cb; }
 void retro_set_input_poll(retro_input_poll_t cb) { poll_cb = cb; }
+void retro_set_controller_port_device(unsigned port, unsigned device)
+{
+	if (port < nMaxControllers && nDeviceType[port] != device)
+	{
+		nDeviceType[port] = device;
+		bControllersNeedRefresh = true;
+	}
+}
 
 void SetDiagInpHoldFrameDelay(unsigned val)
 {
@@ -415,7 +423,10 @@ static INT32 GameInpAnalog2RetroInpAnalog(struct GameInp* pgi, unsigned port, un
 			pgi->nInput = GIT_JOYAXIS_FULL;
 			pgi->Input.JoyAxis.nAxis = axis;
 			pgi->Input.JoyAxis.nJoy = (UINT8)port;
-			if (nDeviceType[port] == RETRO_DEVICE_NONE) return 0;
+			if (nDeviceType[port] == RETRO_DEVICE_NONE) {
+				sAxiBinds[port][axis] = AxiBind();
+				return 0;
+			}
 			sAxiBinds[port][axis].index = index;
 			sAxiBinds[port][axis].id = id;
 			retro_input_descriptor descriptor;
@@ -446,7 +457,10 @@ static INT32 GameInpAnalog2RetroInpAnalog(struct GameInp* pgi, unsigned port, un
 			pgi->nInput = GIT_MOUSEAXIS;
 			pgi->Input.MouseAxis.nAxis = axis;
 			pgi->Input.MouseAxis.nMouse = (UINT8)port;
-			if (nDeviceType[port] == RETRO_DEVICE_NONE) return 0;
+			if (nDeviceType[port] == RETRO_DEVICE_NONE) {
+				sAxiBinds[port][axis] = AxiBind();
+				return 0;
+			}
 			sAxiBinds[port][axis].index = index;
 			sAxiBinds[port][axis].id = id;
 			retro_input_descriptor descriptor;
@@ -463,7 +477,10 @@ static INT32 GameInpAnalog2RetroInpAnalog(struct GameInp* pgi, unsigned port, un
 			pgi->nInput = GIT_DIRECT_COORD;
 			pgi->Input.MouseAxis.nAxis = axis;
 			pgi->Input.MouseAxis.nMouse = (UINT8)port;
-			if (nDeviceType[port] == RETRO_DEVICE_NONE) return 0;
+			if (nDeviceType[port] == RETRO_DEVICE_NONE) {
+				sAxiBinds[port][axis] = AxiBind();
+				return 0;
+			}
 			sAxiBinds[port][axis].index = index;
 			sAxiBinds[port][axis].id = id;
 			retro_input_descriptor descriptor;
@@ -489,7 +506,10 @@ static INT32 GameInpDigital2RetroInpKey(struct GameInp* pgi, unsigned port, unsi
 	{
 		if (!bInputInitialized)
 			pgi->Input.Switch.nCode = (UINT16)(nSwitchCode++);
-		if (nDeviceType[port] == RETRO_DEVICE_NONE) return 0;
+		if (nDeviceType[port] == RETRO_DEVICE_NONE) {
+			sKeyBinds[pgi->Input.Switch.nCode] = KeyBind();
+			return 0;
+		}
 		sKeyBinds[pgi->Input.Switch.nCode].id = id;
 		sKeyBinds[pgi->Input.Switch.nCode].port = port;
 		sKeyBinds[pgi->Input.Switch.nCode].device = device;
@@ -499,7 +519,10 @@ static INT32 GameInpDigital2RetroInpKey(struct GameInp* pgi, unsigned port, unsi
 	{
 		if (!bInputInitialized)
 			pgi->Macro.Switch.nCode = (UINT16)(nSwitchCode++);
-		if (nDeviceType[port] == RETRO_DEVICE_NONE) return 0;
+		if (nDeviceType[port] == RETRO_DEVICE_NONE) {
+			sKeyBinds[pgi->Input.Switch.nCode] = KeyBind();
+			return 0;
+		}
 		sKeyBinds[pgi->Macro.Switch.nCode].id = id;
 		sKeyBinds[pgi->Macro.Switch.nCode].port = port;
 		sKeyBinds[pgi->Macro.Switch.nCode].device = device;
@@ -547,7 +570,10 @@ static INT32 GameInpDigital2RetroInpAnalogRight(struct GameInp* pgi, unsigned po
 	pgi->nInput = GIT_SWITCH;
 	if (!bInputInitialized)
 		pgi->Input.Switch.nCode = (UINT16)(nSwitchCode++);
-	if (nDeviceType[port] == RETRO_DEVICE_NONE) return 0;
+	if (nDeviceType[port] == RETRO_DEVICE_NONE) {
+		sKeyBinds[pgi->Input.Switch.nCode] = KeyBind();
+		return 0;
+	}
 	sKeyBinds[pgi->Input.Switch.nCode].id = id;
 	sKeyBinds[pgi->Input.Switch.nCode].port = port;
 	sKeyBinds[pgi->Input.Switch.nCode].device = RETRO_DEVICE_ANALOG;
@@ -2380,7 +2406,7 @@ static bool PollDiagInput()
 void SetControllerInfo()
 {
 	for (int i = 0; i < MAX_PLAYERS; i++)
-		nDeviceType[i] = -1;
+		nDeviceType[i] = RETRO_DEVICE_NONE;
 
 	int nHardwareCode = BurnDrvGetHardwareCode();
 
@@ -2580,8 +2606,8 @@ static void BurnerHandlerKeyCallback()
 
 static void RefreshControllers()
 {
-	// All devices id were set, we can do the following
-	if (bControllersNeedRefresh) {
+	if (bControllersNeedRefresh)
+	{
 		GameInpReassign();
 		SetInputDescriptors();
 		RefreshLightgunCrosshair();
@@ -2591,6 +2617,7 @@ static void RefreshControllers()
 
 void InputMake(void)
 {
+	// make sure controllers are properly set before polling
 	RefreshControllers();
 
 	for (int i = 0; i < MAX_PLAYERS; i++)
@@ -2693,15 +2720,6 @@ void InputMake(void)
 				}
 			}
 		}
-	}
-}
-
-void retro_set_controller_port_device(unsigned port, unsigned device)
-{
-	if (port < nMaxControllers && nDeviceType[port] != device)
-	{
-		nDeviceType[port] = device;
-		bControllersNeedRefresh = true;
 	}
 }
 

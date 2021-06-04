@@ -1360,6 +1360,7 @@ DRV		BurnDrvDdp2t;
 DRV		BurnDrvDdp2;
 DRV		BurnDrvnes_beerslinger;
 DRV		BurnDrvnes_beetlejuice;
+DRV		BurnDrvMSX_beez;
 DRV		BurnDrvmd_begprince;
 DRV		BurnDrvcv_bejeweled;
 DRV		BurnDrvBlswhstla;
@@ -3096,6 +3097,7 @@ DRV		BurnDrvmd_cyborgj;
 DRV		BurnDrvmd_cyborgjp;
 DRV		BurnDrvMSX_cyborgz;
 DRV		BurnDrvsms_cyborgz;
+DRV		BurnDrvCyclemb;
 DRV		BurnDrvnes_cyclerac;
 DRV		BurnSpecCygnusalpha;
 DRV		BurnDrvCyvernJ;
@@ -4266,6 +4268,7 @@ DRV		BurnDrvEgghunt;
 DRV		BurnDrvfds_eggerland;
 DRV		BurnDrvfds_eggerlansouenota;
 DRV		BurnDrvMSX_eggerlnd;
+DRV		BurnDrvMSX_eggerlnd2;
 DRV		BurnDrveggor;
 DRV		BurnDrveggs;
 DRV		BurnDrvnes_egyptj;
@@ -6747,6 +6750,7 @@ DRV		BurnDrvnes_janggunuiadeul;
 DRV		BurnDrvmd_janout;
 DRV		BurnDrvmd_jantei;
 DRV		BurnDrvmd_draxos;
+DRV		BurnDrvMSX_jawbrk2;
 DRV		BurnDrvMSX_jaws;
 DRV		BurnDrvnes_jaws;
 DRV		BurnDrvnes_jaysilent;
@@ -9750,6 +9754,7 @@ DRV		BurnDrvmd_nobuhaoc;
 DRV		BurnDrvmd_nobuzenk;
 DRV		BurnDrvmd_nobuamb;
 DRV		BurnSpecnodesofyesod;
+DRV		BurnDrvMSX_nogals;
 DRV		BurnDrvMSX_nogalsdemo;
 DRV		BurnDrvMSX_nohzdyve;
 DRV		BurnSpecNohzdyve;
@@ -11025,6 +11030,7 @@ DRV		BurnDrvmd_pyramids;
 DRV		BurnDrvcv_pyrawbc2;
 DRV		BurnDrvMSX_pyramidw;
 DRV		BurnDrvnes_pyramidsra;
+DRV		BurnDrvMSX_pyroman;
 DRV		BurnDrvPyros;
 DRV		BurnDrvnes_qboy;
 DRV		BurnDrvcv_qberta;
@@ -11064,6 +11070,7 @@ DRV		BurnSpecquartet;
 DRV		BurnDrvQuarteta;
 DRV		BurnDrvsms_quartet;
 DRV		BurnDrvMSX_quartet;
+DRV		BurnDrvMSX_quartetx;
 DRV		BurnDrvQuartet;
 DRV		BurnDrvQuartet2;
 DRV		BurnDrvQuartet2a;
@@ -11497,6 +11504,7 @@ DRV		BurnDrvsms_rescuems;
 DRV		BurnDrvRescue;
 DRV		BurnDrvmd_resq;
 DRV		BurnSpecRestlessandre;
+DRV		BurnDrvMSX_retaliot;
 DRV		BurnSpecRetroforce;
 DRV		BurnSpecRetroinv128;
 DRV		BurnDrvRetofinvb1;
@@ -12563,6 +12571,7 @@ DRV		BurnDrvSkyalert;
 DRV		BurnDrvSkyarmy;
 DRV		BurnDrvSkybase;
 DRV		BurnDrvnes_skydestroyer;
+DRV		BurnDrvSkydest;
 DRV		BurnDrvMSX_skydiver;
 DRV		BurnDrvSkyfox;
 DRV		BurnSpecSkyhighstuntman;
@@ -12593,6 +12602,7 @@ DRV		BurnDrvSkywolf2;
 DRV		BurnDrvSkywolf3;
 DRV		BurnDrvMSX_skyfox;
 DRV		BurnDrvMSX_skygaldo;
+DRV		BurnDrvMSX_skyhawk;
 DRV		BurnDrvnes_slalom;
 DRV		BurnDrvmd_slamshaq;
 DRV		BurnSpecslapfigh;
@@ -12728,6 +12738,7 @@ DRV		BurnDrvpce_soldblas;
 DRV		BurnDrvAmazont;
 DRV		BurnDrvAmazon;
 DRV		BurnSpecsoldfort;
+DRV		BurnDrvMSX_soldlight;
 DRV		BurnDrvmd_chaosengs;
 DRV		BurnDrvmd_soldfort;
 DRV		BurnDrvmd_soleil;
@@ -12922,6 +12933,7 @@ DRV		BurnDrvmd_souledge;
 DRV		BurnDrvmd_souledgea;
 DRV		BurnDrvmd_sndtool;
 DRV		BurnDrvmd_southia;
+DRV		BurnDrvMSX_soviet;
 DRV		BurnSpecsovietpart1;
 DRV		BurnSpecsovietpart2;
 DRV		BurnDrvsg1k_spacearmb;
@@ -13249,6 +13261,7 @@ DRV		BurnSpecStarblade;
 DRV		BurnDrvMSX_starblaz;
 DRV		BurnDrvMSX_starblazb;
 DRV		BurnDrvMSX_starblaza;
+DRV		BurnDrvMSX_starbowls;
 DRV		BurnDrvmd_starchaser;
 DRV		BurnDrvmd_starctrl;
 DRV		BurnDrvmd_starcruse;
@@ -18645,6 +18658,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDdp2,				// Bee Storm - DoDonPachi II (V102, World)
 	&BurnDrvnes_beerslinger,	// BeerSlinger (HB)
 	&BurnDrvnes_beetlejuice,	// Beetlejuice (USA)
+	&BurnDrvMSX_beez,			// BeeZ (HB)
 	&BurnDrvmd_begprince,		// Beggar Prince - English Version (HB, rev1)
 	&BurnDrvcv_bejeweled,		// Bejeweled (HB)
 	&BurnDrvBlswhstla,			// Bells & Whistles (Asia, version M)
@@ -20381,6 +20395,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_cyborgjp,		// Cyborg Justice (Prototype)
 	&BurnDrvMSX_cyborgz,		// Cyborg Z (Kor)
 	&BurnDrvsms_cyborgz,		// Cyborg Z (Kor)
+	&BurnDrvCyclemb,			// Cycle Maabou (Japan)
 	&BurnDrvnes_cyclerac,		// Cycle Race - Road Man (Japan)
 	&BurnSpecCygnusalpha,		// Cygnus - Alpha (HB)
 	&BurnDrvCyvernJ,			// Cyvern (Japan)
@@ -21551,6 +21566,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfds_eggerland,		// Egger Land (Japan)
 	&BurnDrvfds_eggerlansouenota,// Egger Land - Souzouhe no Tabidachi (Japan)
 	&BurnDrvMSX_eggerlnd,		// Eggerland Mystery (Jpn)
+	&BurnDrvMSX_eggerlnd2,		// Eggerland Mystery 2- Meikyushinwa (Jpn)
 	&BurnDrveggor,				// Eggor
 	&BurnDrveggs,				// Eggs
 	&BurnDrvnes_egyptj,			// Egypt (Japan)
@@ -24032,6 +24048,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_janout,			// Janou Touryuumon (Jpn)
 	&BurnDrvmd_jantei,			// Jantei Monogatari (Jpn)
 	&BurnDrvmd_draxos,			// Jashin Draxos (Jpn, Kor)
+	&BurnDrvMSX_jawbrk2,		// Jaw Breaker 2 (HB)
 	&BurnDrvMSX_jaws,			// Jaws (Spa?)
 	&BurnDrvnes_jaws,			// Jaws (USA)
 	&BurnDrvnes_jaysilent,		// Jay and Silent Bob Mall Brawl (HB)
@@ -27035,6 +27052,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_nobuzenk,		// Nobunaga no Yabou - Zenkokuban (Jpn)
 	&BurnDrvmd_nobuamb,			// Nobunaga's Ambition (USA)
 	&BurnSpecnodesofyesod,		// Nodes of Yesod
+	&BurnDrvMSX_nogals,			// Nogalious (HB)
 	&BurnDrvMSX_nogalsdemo,		// Nogalious Demo (HB)
 	&BurnDrvMSX_nohzdyve,		// Nohzdyve (HB)
 	&BurnSpecNohzdyve,			// Nohzdyve (HB)
@@ -28310,6 +28328,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_pyrawbc2,		// Pyramid Warp & Battleship Clapton 2 (HB)
 	&BurnDrvMSX_pyramidw,		// Pyramid Warp (Jpn)
 	&BurnDrvnes_pyramidsra,		// Pyramids of Ra (HB)
+	&BurnDrvMSX_pyroman,		// Pyro-Man (Euro)
 	&BurnDrvPyros,				// Pyros (US)
 	&BurnDrvnes_qboy,			// Q Boy (Asia) (Unl)
 	&BurnDrvcv_qberta,			// Q*bert (Alt)
@@ -28349,6 +28368,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvQuarteta,			// Quartet (8751 315-5194)
 	&BurnDrvsms_quartet,		// Quartet (Euro, USA)
 	&BurnDrvMSX_quartet,		// Quartet (HB, v1.2)
+	&BurnDrvMSX_quartetx,		// Quartet (HB, v1.3)
 	&BurnDrvQuartet,			// Quartet (Rev A, 8751 317-unknown)
 	&BurnDrvQuartet2,			// Quartet 2 (8751 317-0010)
 	&BurnDrvQuartet2a,			// Quartet 2 (unprotected)
@@ -28782,6 +28802,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRescue,				// Rescue
 	&BurnDrvmd_resq,			// Resq (Euro, Prototype)
 	&BurnSpecRestlessandre,		// Restless Andre (HB)
+	&BurnDrvMSX_retaliot,		// Retaliot (HB)
 	&BurnSpecRetroforce,		// Retroforce (HB)
 	&BurnSpecRetroinv128,		// Retroinvaders (128K) (HB)
 	&BurnDrvRetofinvb1,			// Return of the Invaders (bootleg no MCU set 1)
@@ -29848,6 +29869,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSkyarmy,			// Sky Army
 	&BurnDrvSkybase,			// Sky Base
 	&BurnDrvnes_skydestroyer,	// Sky Destroyer (Japan)
+	&BurnDrvSkydest,			// Sky Destroyer (Japan)
 	&BurnDrvMSX_skydiver,		// Sky Diver (Jpn)
 	&BurnDrvSkyfox,				// Sky Fox
 	&BurnSpecSkyhighstuntman,	// Sky High Stuntman (128K)
@@ -29878,6 +29900,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSkywolf3,			// Sky Wolf (set 3)
 	&BurnDrvMSX_skyfox,			// SkyFox - Paina (HB)
 	&BurnDrvMSX_skygaldo,		// Skygaldo (Jpn)
+	&BurnDrvMSX_skyhawk,		// Skyhawk (Euro)
 	&BurnDrvnes_slalom,			// Slalom (USA)
 	&BurnDrvmd_slamshaq,		// Slam - Shaq vs. the Legends (Prototype)
 	&BurnSpecslapfigh,			// Slap Fight (128K)
@@ -30013,6 +30036,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAmazont,			// Soldier Girl Amazon (Tecfri license)
 	&BurnDrvAmazon,				// Soldier Girl Amazon
 	&BurnSpecsoldfort,			// Soldier of Fortune (48K)
+	&BurnDrvMSX_soldlight,		// Soldier of Light (Spa)
 	&BurnDrvmd_chaosengs,		// Soldiers of Fortune (Hack, Spanish)
 	&BurnDrvmd_soldfort,		// Soldiers of Fortune (USA)
 	&BurnDrvmd_soleil,			// Soleil (Euro)
@@ -30207,6 +30231,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_souledgea,		// Soul Edge vs Samurai Spirits (Pirate, Cracked)
 	&BurnDrvmd_sndtool,			// Sound Tool v2.2?
 	&BurnDrvmd_southia,			// South Island Adventure (Hack, V0.3)
+	&BurnDrvMSX_soviet,			// Soviet (Euro)
 	&BurnSpecsovietpart1,		// Soviet (Part 1 of 2)
 	&BurnSpecsovietpart2,		// Soviet (Part 2 of 2)
 	&BurnDrvsg1k_spacearmb,		// Space Armor (Jpn, v10, OMV)
@@ -30534,6 +30559,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_starblaz,		// Star Blazer (Jpn)
 	&BurnDrvMSX_starblazb,		// Star Blazer (Jpn, Alt 2)
 	&BurnDrvMSX_starblaza,		// Star Blazer (Jpn, Alt)
+	&BurnDrvMSX_starbowls,		// Star Bowls (Spa)
 	&BurnDrvmd_starchaser,		// Star Chaser (HB)
 	&BurnDrvmd_starctrl,		// Star Control (USA)
 	&BurnDrvmd_starcruse,		// Star Cruiser (Hack, English)

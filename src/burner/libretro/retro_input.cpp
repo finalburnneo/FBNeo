@@ -13,8 +13,8 @@ static unsigned nDiagInputHoldFrameDelay = 0;
 static unsigned nSwitchCode = 0;
 static unsigned nMahjongKeyboards = 0;
 static unsigned nMaxControllers = 0;
-static int nDeviceType[MAX_PLAYERS] = { -1,  };
-static int nLibretroInputBitmask[MAX_PLAYERS] = { -1, };
+static int nDeviceType[MAX_PLAYERS];
+static int nLibretroInputBitmask[MAX_PLAYERS];
 static std::vector<retro_input_descriptor> normal_input_descriptors;
 static struct KeyBind sKeyBinds[255];
 static struct AxiBind sAxiBinds[MAX_PLAYERS][8]; // MAX_PLAYERS players with up to 8 axis
@@ -26,6 +26,7 @@ static bool bAllDiagInputPressed = true;
 static bool bDiagComboActivated = false;
 static bool bVolumeIsFireButton = false;
 static bool bInputInitialized = false;
+static bool bControllersNeedRefresh = false;
 static char* pDirections[MAX_PLAYERS][6];
 
 // Macros
@@ -2378,6 +2379,9 @@ static bool PollDiagInput()
 
 void SetControllerInfo()
 {
+	for (int i = 0; i < MAX_PLAYERS; i++)
+		nDeviceType[i] = -1;
+
 	int nHardwareCode = BurnDrvGetHardwareCode();
 
 	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM) {
@@ -2574,8 +2578,21 @@ static void BurnerHandlerKeyCallback()
 	}
 }
 
+static void RefreshControllers()
+{
+	// All devices id were set, we can do the following
+	if (bControllersNeedRefresh) {
+		GameInpReassign();
+		SetInputDescriptors();
+		RefreshLightgunCrosshair();
+		bControllersNeedRefresh = false;
+	}
+}
+
 void InputMake(void)
 {
+	RefreshControllers();
+
 	for (int i = 0; i < MAX_PLAYERS; i++)
 		nLibretroInputBitmask[i] = -1;
 
@@ -2684,18 +2701,7 @@ void retro_set_controller_port_device(unsigned port, unsigned device)
 	if (port < nMaxControllers && nDeviceType[port] != device)
 	{
 		nDeviceType[port] = device;
-		bool bAllDevicesReady = true;
-		for (int i = 0; i < nMaxControllers; i++)
-		{
-			if (nDeviceType[i] == -1)
-				bAllDevicesReady = false;
-		}
-		// All devices id were set, we can do the following
-		if (bAllDevicesReady) {
-			GameInpReassign();
-			SetInputDescriptors();
-			RefreshLightgunCrosshair();
-		}
+		bControllersNeedRefresh = true;
 	}
 }
 

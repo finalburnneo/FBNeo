@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17053 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17058 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3398,6 +3398,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_destroyr	|  	| Destroyer (Spa)					| 		| 1986	| Mind Games Esp| MSX		| 					|
 | nes_destroyer	|  	| Destroyer (Unl)					| 		| 1992	| Mega Soft	| Miscellaneous	| 					|
 | cv_destruct	|  	| Destructor						| 		| 1984	| Coleco	| ColecoVision	| Select w/ Controller #2		|
+| cv_destructsce|  	| Destructor S.C.E (HB)					| cv_destruct	| 2010	| Coleco	| ColecoVision	| Published by Team Pixelboy		|
 | nes_destructorel|  	| Destructor, El (Spain) (Gluk Video) (Unl)		| 		| 1992	| Gluk Video	| Miscellaneous	| 					|
 | detatwin	|  	| Detana!! Twin Bee (Japan ver. J)			| blswhstl	| 1991	| Konami	| GX060		| 					|
 | pce_twinbee	|  	| Detana!! Twinbee					| 		| 1992	| Konami	| PC Engine	| 					|
@@ -5027,6 +5028,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_frog	|  	| Frog (Spa)						| 		| 1985	| Advance	| MSX		| 					|
 | froggers	|  	| Frog							| frogger	| 1981	| bootleg	| Galaxian	| 					|
 | cps1frog	|  	| Frog Feast (CPS-1)					| 		| 2006	| Rastersoft (Ho| CPS1		| 					|
+| cv_frogfeast	|  	| Frog Feast (HB)					| 		| 2007	| Unknown	| ColecoVision	| 					|
 | ngfrog	|  	| Frog Feast (Neo Geo)					| 		| 2006	| Rastersoft	| Neo Geo MVS	| 					|
 | pgmfrog	|  	| Frog Feast (PGM)					| 		| 2006	| RasterSoft	| PolyGameMaster| 					|
 | spec_frogger	|  	| Frogger (48K)						| 		| 1983	| A & F Software| ZX Spectrum	| 					|
@@ -7325,6 +7327,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_kongolf	|  	| Konami's Golf (Jpn)					| 		| 1985	| Konami	| MSX		| 					|
 | msx_kongolfb	|  	| Konami's Golf (Jpn, Alt 2)				| msx_kongolf	| 1985	| Konami	| MSX		| 					|
 | msx_kongolfa	|  	| Konami's Golf (Jpn, Alt)				| msx_kongolf	| 1985	| Konami	| MSX		| 					|
+| cv_pingpong	|  	| Konami's Ping-Pong (HB)				| 		| 2011	| Konami	| ColecoVision	| Published by Team Pixelboy		|
 | msx_pingpong	|  	| Konami's Ping-Pong (Jpn)				| 		| 1985	| Konami	| MSX		| 					|
 | msx_pingpongb	|  	| Konami's Ping-Pong (Jpn, Alt 2)			| msx_pingpong	| 1985	| Konami	| MSX		| 					|
 | msx_pingpongc	|  	| Konami's Ping-Pong (Jpn, Alt 3)			| msx_pingpong	| 1985	| Konami	| MSX		| 					|
@@ -8229,6 +8232,7 @@ This list contains all games supported by FinalBurn Neo.
 | chf_mazea	|  	| Maze / Jailbreak / Blind-man's-bluff / Trailblazer (Al| chf_maze	| 1977	| Fairchild	| Channel F	| 					|
 | chf_maze	|  	| Maze / Jailbreak / Blind-man's-bluff / Trailblazer	| 		| 1977	| Fairchild	| Channel F	| 					|
 | sms_mazehunt	|  	| Maze Hunter 3-D (Euro, USA, Bra)			| 		| 1988	| Sega		| Sega Master Sy| 					|
+| cv_mazemaniac	|  	| Maze Maniac (HB)					| 		| 2006	| Charles-Mathie| ColecoVision	| 					|
 | msx_mazemax	|  	| Maze Max						| 		| 1985	| Loriciels	| MSX		| 					|
 | mofflott	|  	| Maze of Flott (Japan)					| 		| 1989	| Taito Corporat| Taito Misc	| 					|
 | sms_mazewalk	|  	| Maze Walker (Jpn)					| sms_mazehunt	| 1988	| Sega		| Sega Master Sy| 					|
@@ -8925,6 +8929,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_mrhair2	|  	| Mr Hair & The Fly (HB)				| 		| 2021	| BitmapSoft	| ZX Spectrum	| 					|
 | spec_mrheli	|  	| Mr Heli (48K)						| 		| 1989	| Firebird	| ZX Spectrum	| 					|
 | spec_mrheli128rm|  	| Mr Heli Remastered (128K) (HB)			| spec_mrheli	| 2014	| Rafal Miazga	| ZX Spectrum	| Trainer version			|
+| cv_mrchin	|  	| Mr. Chin (HB)						| 		| 2008	| Collectorvisio| ColecoVision	| 					|
 | msx_mrchin	|  	| Mr. Chin (Jpn)					| 		| 1984	| HAL Kenkyuujo	| MSX		| 					|
 | msx_mrchink	|  	| Mr. Chin (Kor)					| msx_mrchin	| 198?	| Zemina	| MSX		| 					|
 | msx_mrcrack	|  	| Mr. Cracksman (HB)					| 		| 2013	| RELEVO	| MSX		| 					|

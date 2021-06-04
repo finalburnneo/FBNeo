@@ -3442,6 +3442,7 @@ DRV		BurnDrvnes_destianemp;
 DRV		BurnDrvMSX_destroyr;
 DRV		BurnDrvnes_destroyer;
 DRV		BurnDrvcv_destruct;
+DRV		BurnDrvcv_destructsce;
 DRV		BurnDrvnes_destructorel;
 DRV		BurnDrvDetatwin;
 DRV		BurnDrvpce_twinbee;
@@ -5087,6 +5088,7 @@ DRV		BurnDrvFrogg;
 DRV		BurnDrvMSX_frog;
 DRV		BurnDrvFroggers;
 DRV		BurnDrvCpsCps1frog;
+DRV		BurnDrvcv_frogfeast;
 DRV		BurnDrvngfrog;
 DRV		BurnDrvPgmfrog;
 DRV		BurnSpecfrogger;
@@ -7425,6 +7427,7 @@ DRV		BurnDrvMSX_konfootba;
 DRV		BurnDrvMSX_kongolf;
 DRV		BurnDrvMSX_kongolfb;
 DRV		BurnDrvMSX_kongolfa;
+DRV		BurnDrvcv_pingpong;
 DRV		BurnDrvMSX_pingpong;
 DRV		BurnDrvMSX_pingpongb;
 DRV		BurnDrvMSX_pingpongc;
@@ -8335,6 +8338,7 @@ DRV		BurnDrvMSX_mayhem;
 DRV		BurnDrvCHF_mazea;
 DRV		BurnDrvCHF_maze;
 DRV		BurnDrvsms_mazehunt;
+DRV		BurnDrvcv_mazemaniac;
 DRV		BurnDrvMSX_Mazemax;
 DRV		BurnDrvMofflott;
 DRV		BurnDrvsms_mazewalk;
@@ -9037,6 +9041,7 @@ DRV		BurnDrvsg1k_castlet;
 DRV		BurnSpecMrhair2;
 DRV		BurnSpecMrheli;
 DRV		BurnSpecMrheli128rm;
+DRV		BurnDrvcv_mrchin;
 DRV		BurnDrvMSX_mrchin;
 DRV		BurnDrvMSX_mrchink;
 DRV		BurnDrvMSX_mrcrack;
@@ -20740,6 +20745,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_destroyr,		// Destroyer (Spa)
 	&BurnDrvnes_destroyer,		// Destroyer (Unl)
 	&BurnDrvcv_destruct,		// Destructor
+	&BurnDrvcv_destructsce,		// Destructor S.C.E (HB)
 	&BurnDrvnes_destructorel,	// Destructor, El (Spain) (Gluk Video) (Unl)
 	&BurnDrvDetatwin,			// Detana!! Twin Bee (Japan ver. J)
 	&BurnDrvpce_twinbee,		// Detana!! Twinbee
@@ -22385,6 +22391,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_frog,			// Frog (Spa)
 	&BurnDrvFroggers,			// Frog
 	&BurnDrvCpsCps1frog,		// Frog Feast (CPS-1)
+	&BurnDrvcv_frogfeast,		// Frog Feast (HB)
 	&BurnDrvngfrog,				// Frog Feast (Neo Geo)
 	&BurnDrvPgmfrog,			// Frog Feast (PGM)
 	&BurnSpecfrogger,			// Frogger (48K)
@@ -24723,6 +24730,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_kongolf,		// Konami's Golf (Jpn)
 	&BurnDrvMSX_kongolfb,		// Konami's Golf (Jpn, Alt 2)
 	&BurnDrvMSX_kongolfa,		// Konami's Golf (Jpn, Alt)
+	&BurnDrvcv_pingpong,		// Konami's Ping-Pong (HB)
 	&BurnDrvMSX_pingpong,		// Konami's Ping-Pong (Jpn)
 	&BurnDrvMSX_pingpongb,		// Konami's Ping-Pong (Jpn, Alt 2)
 	&BurnDrvMSX_pingpongc,		// Konami's Ping-Pong (Jpn, Alt 3)
@@ -25633,6 +25641,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCHF_mazea,			// Maze / Jailbreak / Blind-man's-bluff / Trailblazer (Alt)
 	&BurnDrvCHF_maze,			// Maze / Jailbreak / Blind-man's-bluff / Trailblazer
 	&BurnDrvsms_mazehunt,		// Maze Hunter 3-D (Euro, USA, Bra)
+	&BurnDrvcv_mazemaniac,		// Maze Maniac (HB)
 	&BurnDrvMSX_Mazemax,		// Maze Max
 	&BurnDrvMofflott,			// Maze of Flott (Japan)
 	&BurnDrvsms_mazewalk,		// Maze Walker (Jpn)
@@ -26335,6 +26344,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecMrhair2,			// Mr Hair & The Fly (HB)
 	&BurnSpecMrheli,			// Mr Heli (48K)
 	&BurnSpecMrheli128rm,		// Mr Heli Remastered (128K) (HB)
+	&BurnDrvcv_mrchin,			// Mr. Chin (HB)
 	&BurnDrvMSX_mrchin,			// Mr. Chin (Jpn)
 	&BurnDrvMSX_mrchink,		// Mr. Chin (Kor)
 	&BurnDrvMSX_mrcrack,		// Mr. Cracksman (HB)

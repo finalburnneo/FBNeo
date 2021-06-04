@@ -921,6 +921,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="destructsce" cloneof="destruct" romof="destruct">
+		<description>Destructor S.C.E (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<year>2010</year>
+		<manufacturer>Coleco</manufacturer>
+		<rom name="Destructor SCE (2010) (Team Pixelboy).col" size="32768" crc="2a9fcbfa"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="digdug" romof="coleco">
 		<description>Dig Dug (Prototype) [Prototype]</description>
 		<year>1984</year>
@@ -1301,6 +1313,18 @@
 		<rom name="frenzy.1" size="8192" crc="5111bca0"/>
 		<rom name="frenzy.2" size="8192" crc="5453c668"/>
 		<rom name="frenzy.3" size="8192" crc="0c7bedf0"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="frogfeast" romof="coleco">
+		<description>Frog Feast (HB) [Homebrew]</description>
+		<year>2007</year>
+		<manufacturer>Unknown</manufacturer>
+		<rom name="Frog Feast (2007) (Unknown).col" size="21760" crc="cb941eb4"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -1901,6 +1925,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="pingpong" romof="coleco">
+		<description>Konami's Ping-Pong (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<year>2011</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Konami's Ping-Pong (2011) (Team Pixelboy).col" size="32768" crc="344cb482"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="krtetris" romof="coleco">
 		<description>Kralizec Tetris (HB) [Homebrew, Published by Team Pixelboy]</description>
 		<year>2017</year>
@@ -2056,6 +2092,18 @@
 		<year>1983-2009</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Mario Brothers Final Edition (2009) (Rev D) (CollectorVision).rom" size="131072" crc="2e09af0a"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mazemaniac" romof="coleco">
+		<description>Maze Maniac (HB) [Homebrew]</description>
+		<year>2006</year>
+		<manufacturer>Charles-Mathieu Boyer</manufacturer>
+		<rom name="Maze Maniac (2006) (Charles-Mathieu Boyer).col" size="32640" crc="44bfaf23"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -2338,6 +2386,18 @@
 		<manufacturer>Coleco</manufacturer>
 		<rom name="mtrap.1" size="8192" crc="c99d687f"/>
 		<rom name="mtrap.2" size="8192" crc="0dde86c7"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mrchin" romof="coleco">
+		<description>Mr. Chin (HB) [Homebrew]</description>
+		<year>2008</year>
+		<manufacturer>Collectorvision Games</manufacturer>
+		<rom name="Mr. Chin (2008) (Collectorvision Games).col" size="32768" crc="9ab11795"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>

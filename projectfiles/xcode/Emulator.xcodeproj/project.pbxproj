@@ -1025,6 +1025,9 @@
 		FEC0A0E424ACDFBF0015AABF /* d_cischeat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEC0A0E324ACDFBE0015AABF /* d_cischeat.cpp */; };
 		FEC28FD1266471FE00EF37C2 /* d_redclash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEC28FD0266471FE00EF37C2 /* d_redclash.cpp */; };
 		FEC28FD22664774B00EF37C2 /* Alloc.c in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1DE323561A650065200C /* Alloc.c */; };
+		FEC28FE6266481BD00EF37C2 /* AKGamepad.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC28FE0266481BD00EF37C2 /* AKGamepad.m */; };
+		FEC28FE7266481BD00EF37C2 /* AKGamepadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC28FE2266481BD00EF37C2 /* AKGamepadManager.m */; };
+		FEC28FE8266481BD00EF37C2 /* AKGamepadEventData.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC28FE3266481BD00EF37C2 /* AKGamepadEventData.m */; };
 		FEC5D3D6235C136F00ABA9FB /* FBVideo.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */; };
 		FEC5D3D9235C160600ABA9FB /* FBScreenView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */; };
 		FED03ADE23FAF8E900E99A10 /* mdeeprom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FED03ADD23FAF8E900E99A10 /* mdeeprom.cpp */; };
@@ -2622,6 +2625,12 @@
 		FEC0A0E124A6F99A0015AABF /* d_magmax.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_magmax.cpp; sourceTree = "<group>"; };
 		FEC0A0E324ACDFBE0015AABF /* d_cischeat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_cischeat.cpp; sourceTree = "<group>"; };
 		FEC28FD0266471FE00EF37C2 /* d_redclash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_redclash.cpp; sourceTree = "<group>"; };
+		FEC28FE0266481BD00EF37C2 /* AKGamepad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKGamepad.m; sourceTree = "<group>"; };
+		FEC28FE1266481BD00EF37C2 /* AKGamepadEventData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKGamepadEventData.h; sourceTree = "<group>"; };
+		FEC28FE2266481BD00EF37C2 /* AKGamepadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKGamepadManager.m; sourceTree = "<group>"; };
+		FEC28FE3266481BD00EF37C2 /* AKGamepadEventData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKGamepadEventData.m; sourceTree = "<group>"; };
+		FEC28FE4266481BD00EF37C2 /* AKGamepad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKGamepad.h; sourceTree = "<group>"; };
+		FEC28FE5266481BD00EF37C2 /* AKGamepadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKGamepadManager.h; sourceTree = "<group>"; };
 		FEC5D3D4235C136E00ABA9FB /* FBVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBVideo.h; sourceTree = "<group>"; };
 		FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBVideo.mm; sourceTree = "<group>"; };
 		FEC5D3D7235C160600ABA9FB /* FBScreenView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBScreenView.h; sourceTree = "<group>"; };
@@ -3291,6 +3300,7 @@
 			children = (
 				FE811001236B6B29000B5F73 /* generated */,
 				FE1B1DA923561A640065200C /* libs */,
+				FEC28FDE266481BD00EF37C2 /* macos */,
 				FEA5E79B23564A3200DA2D9D /* scripts */,
 			);
 			name = dep;
@@ -5047,6 +5057,27 @@
 			path = scripts;
 			sourceTree = "<group>";
 		};
+		FEC28FDE266481BD00EF37C2 /* macos */ = {
+			isa = PBXGroup;
+			children = (
+				FEC28FDF266481BD00EF37C2 /* hid */,
+			);
+			path = macos;
+			sourceTree = "<group>";
+		};
+		FEC28FDF266481BD00EF37C2 /* hid */ = {
+			isa = PBXGroup;
+			children = (
+				FEC28FE0266481BD00EF37C2 /* AKGamepad.m */,
+				FEC28FE1266481BD00EF37C2 /* AKGamepadEventData.h */,
+				FEC28FE2266481BD00EF37C2 /* AKGamepadManager.m */,
+				FEC28FE3266481BD00EF37C2 /* AKGamepadEventData.m */,
+				FEC28FE4266481BD00EF37C2 /* AKGamepad.h */,
+				FEC28FE5266481BD00EF37C2 /* AKGamepadManager.h */,
+			);
+			path = hid;
+			sourceTree = "<group>";
+		};
 		FEDF04C325EB472400F3EDD9 /* m377 */ = {
 			isa = PBXGroup;
 			children = (
@@ -6144,6 +6175,7 @@
 				FE1B267723561A770065200C /* d_taitob.cpp in Sources */,
 				FE556116258E95B600A19F2D /* filter_neon_intrinsics.c in Sources */,
 				FE1B24E923561A760065200C /* d_badlands.cpp in Sources */,
+				FEC28FE6266481BD00EF37C2 /* AKGamepad.m in Sources */,
 				FE1B243123561A750065200C /* Bra.c in Sources */,
 				FE1B250523561A760065200C /* d_shadfrce.cpp in Sources */,
 				FE1B268323561A770065200C /* pgm_crypt.cpp in Sources */,
@@ -6238,6 +6270,7 @@
 				FE1B271023561A780065200C /* d_qbert.cpp in Sources */,
 				FE1B24B223561A750065200C /* d_m58.cpp in Sources */,
 				FE1B270023561A780065200C /* d_holeland.cpp in Sources */,
+				FEC28FE7266481BD00EF37C2 /* AKGamepadManager.m in Sources */,
 				FE1B261F23561A770065200C /* d_cps3.cpp in Sources */,
 				FE1B259523561A760065200C /* d_deco32.cpp in Sources */,
 				FE1B27D723561A790065200C /* mb87078.cpp in Sources */,
@@ -6337,6 +6370,7 @@
 				FE1B24D623561A750065200C /* d_sailormn.cpp in Sources */,
 				FE1B267023561A770065200C /* d_superchs.cpp in Sources */,
 				FE2BC6B523615C3400B9D150 /* FBLogViewerController.m in Sources */,
+				FEC28FE8266481BD00EF37C2 /* AKGamepadEventData.m in Sources */,
 				FE1B25C623561A760065200C /* d_ddribble.cpp in Sources */,
 				FE1B254123561A760065200C /* d_blmbycar.cpp in Sources */,
 				FE1B244C23561A750065200C /* 7zCrcOpt.c in Sources */,

@@ -8168,3 +8168,98 @@ struct BurnDriver BurnDrvcv_war = {
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
+
+// Destructor S.C.E (HB)
+
+static struct BurnRomInfo cv_destructsceRomDesc[] = {
+	{ "Destructor SCE (2010) (Team Pixelboy).col",	32768, 0x2a9fcbfa, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_destructsce, cv_destructsce, cv_coleco)
+STD_ROM_FN(cv_destructsce)
+
+struct BurnDriver BurnDrvcv_destructsce = {
+	"cv_destructsce", "cv_destruct", "cv_coleco", NULL, "2010",
+	"Destructor S.C.E (HB)\0", "Published by Team Pixelboy", "Coleco", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	CVGetZipName, cv_destructsceRomInfo, cv_destructsceRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Frog Feast (HB)
+
+static struct BurnRomInfo cv_frogfeastRomDesc[] = {
+	{ "Frog Feast (2007) (Unknown).col",	21760, 0xcb941eb4, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_frogfeast, cv_frogfeast, cv_coleco)
+STD_ROM_FN(cv_frogfeast)
+
+struct BurnDriver BurnDrvcv_frogfeast = {
+	"cv_frogfeast", NULL, "cv_coleco", NULL, "2007",
+	"Frog Feast (HB)\0", NULL, "Unknown", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	CVGetZipName, cv_frogfeastRomInfo, cv_frogfeastRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Konami's Ping-Pong (HB)
+
+static struct BurnRomInfo cv_pingpongRomDesc[] = {
+	{ "Konami's Ping-Pong (2011) (Team Pixelboy).col",	32768, 0x344cb482, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_pingpong, cv_pingpong, cv_coleco)
+STD_ROM_FN(cv_pingpong)
+
+struct BurnDriver BurnDrvcv_pingpong = {
+	"cv_pingpong", NULL, "cv_coleco", NULL, "2011",
+	"Konami's Ping-Pong (HB)\0", "Published by Team Pixelboy", "Konami", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	CVGetZipName, cv_pingpongRomInfo, cv_pingpongRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Maze Maniac (HB)
+
+static struct BurnRomInfo cv_mazemaniacRomDesc[] = {
+	{ "Maze Maniac (2006) (Charles-Mathieu Boyer).col",	32640, 0x44bfaf23, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_mazemaniac, cv_mazemaniac, cv_coleco)
+STD_ROM_FN(cv_mazemaniac)
+
+struct BurnDriver BurnDrvcv_mazemaniac = {
+	"cv_mazemaniac", NULL, "cv_coleco", NULL, "2006",
+	"Maze Maniac (HB)\0", NULL, "Charles-Mathieu Boyer", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	CVGetZipName, cv_mazemaniacRomInfo, cv_mazemaniacRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Mr. Chin (HB)
+
+static struct BurnRomInfo cv_mrchinRomDesc[] = {
+	{ "Mr. Chin (2008) (Collectorvision Games).col",	32768, 0x9ab11795, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_mrchin, cv_mrchin, cv_coleco)
+STD_ROM_FN(cv_mrchin)
+
+struct BurnDriver BurnDrvcv_mrchin = {
+	"cv_mrchin", NULL, "cv_coleco", NULL, "2008",
+	"Mr. Chin (HB)\0", NULL, "Collectorvision Games", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	CVGetZipName, cv_mrchinRomInfo, cv_mrchinRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};

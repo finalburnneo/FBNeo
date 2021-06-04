@@ -27,22 +27,12 @@ static bool bDiagComboActivated = false;
 static bool bVolumeIsFireButton = false;
 static bool bInputInitialized = false;
 static bool bControllersNeedRefresh = true;
+static bool bControllersSetOnce = false;
 static char* pDirections[MAX_PLAYERS][6];
 
 // Macros
 UINT32 nMacroCount = 0;
 UINT32 nMaxMacro = 0;
-
-void retro_set_input_state(retro_input_state_t cb) { input_cb = cb; }
-void retro_set_input_poll(retro_input_poll_t cb) { poll_cb = cb; }
-void retro_set_controller_port_device(unsigned port, unsigned device)
-{
-	if (port < nMaxControllers && nDeviceType[port] != device)
-	{
-		nDeviceType[port] = device;
-		bControllersNeedRefresh = true;
-	}
-}
 
 void SetDiagInpHoldFrameDelay(unsigned val)
 {
@@ -415,7 +405,7 @@ static inline int CinpMouseAxis(int port, int axis)
 // Analog to analog mapping
 static INT32 GameInpAnalog2RetroInpAnalog(struct GameInp* pgi, unsigned port, unsigned axis, unsigned id, int index, char *szn, UINT8 nInput = GIT_JOYAXIS_FULL, INT32 nSliderValue = 0x8000, INT16 nSliderSpeed = 0x0800, INT16 nSliderCenter = 10)
 {
-	if(bButtonMapped) return 0;
+	if(bButtonMapped || !(pgi->nType & BIT_GROUP_ANALOG)) return 0;
 	switch (nInput)
 	{
 		case GIT_JOYAXIS_FULL:
@@ -500,7 +490,7 @@ static INT32 GameInpAnalog2RetroInpAnalog(struct GameInp* pgi, unsigned port, un
 // Digital to digital mapping
 static INT32 GameInpDigital2RetroInpKey(struct GameInp* pgi, unsigned port, unsigned id, char *szn, unsigned device = RETRO_DEVICE_JOYPAD, unsigned nInput = GIT_SWITCH)
 {
-	if(bButtonMapped) return 0;
+	if(bButtonMapped || pgi->nType != BIT_DIGITAL) return 0;
 	pgi->nInput = nInput;
 	if(nInput == GIT_SWITCH)
 	{
@@ -566,7 +556,7 @@ static INT32 GameInpDigital2RetroInpKey(struct GameInp* pgi, unsigned port, unsi
 // szn is the descriptor text
 static INT32 GameInpDigital2RetroInpAnalogRight(struct GameInp* pgi, unsigned port, unsigned id, unsigned position, char *szn)
 {
-	if(bButtonMapped) return 0;
+	if(bButtonMapped || pgi->nType != BIT_DIGITAL) return 0;
 	pgi->nInput = GIT_SWITCH;
 	if (!bInputInitialized)
 		pgi->Input.Switch.nCode = (UINT16)(nSwitchCode++);
@@ -2478,6 +2468,9 @@ static void SetFakeInputDescriptors()
 {
 	// WIP : if left analog mapped but not dpad, or reverse, do something to dual map
 	for (int i = 0; i < MAX_PLAYERS; i++) {
+		if (nDeviceType[i] == RETRO_DEVICE_NONE) {
+			continue;
+		}
 		if (pDirections[i][PGI_ANALOG_X] != NULL && pDirections[i][PGI_LEFT] == NULL && pDirections[i][PGI_RIGHT] == NULL)
 		{
 			retro_input_descriptor descriptor;
@@ -2612,6 +2605,7 @@ static void RefreshControllers()
 		SetInputDescriptors();
 		RefreshLightgunCrosshair();
 		bControllersNeedRefresh = false;
+		bControllersSetOnce = true;
 	}
 }
 
@@ -2731,9 +2725,6 @@ void RefreshLightgunCrosshair()
 
 void InputInit()
 {
-	for (int i = 0; i < MAX_PLAYERS; i++)
-		for (int j = 0; j < 8; j++)
-			sAxiBinds[i][j].index = -1;
 	nSwitchCode = 0;
 
 	normal_input_descriptors.clear();
@@ -2752,4 +2743,17 @@ void InputDeInit()
 	}
 
 	bInputInitialized = false;
+}
+
+void retro_set_input_state(retro_input_state_t cb) { input_cb = cb; }
+void retro_set_input_poll(retro_input_poll_t cb) { poll_cb = cb; }
+void retro_set_controller_port_device(unsigned port, unsigned device)
+{
+	if (port < nMaxControllers && nDeviceType[port] != device)
+	{
+		nDeviceType[port] = device;
+		bControllersNeedRefresh = true;
+		if (bControllersSetOnce)
+			RefreshControllers();
+	}
 }

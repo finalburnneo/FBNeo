@@ -247,7 +247,7 @@ static INT8 dial_read(INT32 player)
 static void update_dial(INT32 player)
 {
 	if (is_cyclemb) {
-		INT8 dial = dial_read(player);
+		INT32 dial = dial_read(player);
 
 		if (dial < -0x1f) dial = -0x1f;
 		if (dial > 0x1f) dial = 0x1f;

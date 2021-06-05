@@ -90,6 +90,7 @@ Your hardware is probably too slow to run the game with normal settings. Try the
 * Try lowering CPU clock in core options
 * Try disabling rewind, runahead, or any other retroarch setting known for increasing overhead.
 * Try lowering audio settings in the core options.
+* A last resort on arm platforms would be to enable cyclone in core options, however keep in mind some games will stop working from this.
 * If it is not enough, upgrade/overclock your hardware, or use another core.
 
 We won't accept requests for "making the core faster", as far as we are concerned this core has a good balance between accuracy & speed, and for the most part will already run really well on cheap arm socs (rpi3, ...).

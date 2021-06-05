@@ -6439,9 +6439,9 @@ static struct BurnRomInfo suzuka8hRomDesc[] = {
 
 	{ "eh2-sha0.bin",	0x80000, 0x7f24619c, 0x08 | BRF_GRA },           // 18 Layer Tiles Mask Data
 
-	{ "eh1-d0.bin",		0x40000, 0xb43e5dfa, 0x09 | BRF_PRG | BRF_ESS }, // 19 Shared 68K Data
-	{ "eh1-d1.bin",		0x40000, 0x9825d5bf, 0x09 | BRF_PRG | BRF_ESS }, // 20
-	{ "eh1-d3.bin",		0x40000, 0xf46d301f, 0x09 | BRF_PRG | BRF_ESS }, // 21
+	{ "eh1-d0.13s",		0x40000, 0xb43e5dfa, 0x09 | BRF_PRG | BRF_ESS }, // 19 Shared 68K Data
+	{ "eh1-d1.13p",		0x40000, 0x9825d5bf, 0x09 | BRF_PRG | BRF_ESS }, // 20
+	{ "eh1-d3.13n",		0x40000, 0xf46d301f, 0x09 | BRF_PRG | BRF_ESS }, // 21
 
 	{ "ehs1_landdt.10w",	0x00100, 0xcde7e8a6, 0x0c | BRF_GRA },           // 22 c45_road:clut
 
@@ -6506,9 +6506,9 @@ static struct BurnRomInfo suzuka8hjRomDesc[] = {
 
 	{ "eh1-sha0.bin",	0x80000, 0x39585cf9, 0x08 | BRF_GRA },           // 18 Layer Tiles Mask Data
 
-	{ "eh1-d0.bin",		0x40000, 0xb43e5dfa, 0x09 | BRF_PRG | BRF_ESS }, // 19 Shared 68K Data
-	{ "eh1-d1.bin",		0x40000, 0x9825d5bf, 0x09 | BRF_PRG | BRF_ESS }, // 20
-	{ "eh1-d3.bin",		0x40000, 0xf46d301f, 0x09 | BRF_PRG | BRF_ESS }, // 21
+	{ "eh1-d0.13s",		0x40000, 0xb43e5dfa, 0x09 | BRF_PRG | BRF_ESS }, // 19 Shared 68K Data
+	{ "eh1-d1.13p",		0x40000, 0x9825d5bf, 0x09 | BRF_PRG | BRF_ESS }, // 20
+	{ "eh1-d3.13n",		0x40000, 0xf46d301f, 0x09 | BRF_PRG | BRF_ESS }, // 21
 
 	{ "ehs1_landdt.10w",	0x00100, 0xcde7e8a6, 0x0c | BRF_GRA },           // 22 C45 Color Look-up
 
@@ -6567,8 +6567,8 @@ static struct BurnRomInfo suzuk8h2RomDesc[] = {
 	{ "ehs1-sha0.7n",	0x80000, 0x0f0e2dbf, 0x08 | BRF_GRA },           // 23 Layer Tiles Mask Data
 
 	{ "ehs1-dat0.13s",	0x80000, 0x12a202fb, 0x09 | BRF_PRG | BRF_ESS }, // 24 Shared 68K Data
-	{ "ehs1-dat1.13r",	0x80000, 0x91790905, 0x09 | BRF_PRG | BRF_ESS }, // 25
-	{ "ehs1-dat2.13p",	0x80000, 0x087da1f3, 0x09 | BRF_PRG | BRF_ESS }, // 26
+	{ "ehs1-dat1.13p",	0x80000, 0x91790905, 0x09 | BRF_PRG | BRF_ESS }, // 25
+	{ "ehs1-dat2.13r",	0x80000, 0x087da1f3, 0x09 | BRF_PRG | BRF_ESS }, // 26
 	{ "ehs1-dat3.13n",	0x80000, 0x85aecb3f, 0x09 | BRF_PRG | BRF_ESS }, // 27
 
 	{ "ehs1-landdt.10w",	0x00100, 0xcde7e8a6, 0x0c | BRF_GRA },           // 28 C45 Color Look-up
@@ -6644,8 +6644,8 @@ static struct BurnRomInfo suzuk8h2jRomDesc[] = {
 	{ "ehs1-sha0.7n",	0x80000, 0x0f0e2dbf, 0x08 | BRF_GRA },           // 23 Layer Tiles Mask Data
 
 	{ "ehs1-dat0.13s",	0x80000, 0x12a202fb, 0x09 | BRF_PRG | BRF_ESS }, // 24 Shared 68K Data
-	{ "ehs1-dat1.13r",	0x80000, 0x91790905, 0x09 | BRF_PRG | BRF_ESS }, // 25
-	{ "ehs1-dat2.13p",	0x80000, 0x087da1f3, 0x09 | BRF_PRG | BRF_ESS }, // 26
+	{ "ehs1-dat1.13p",	0x80000, 0x91790905, 0x09 | BRF_PRG | BRF_ESS }, // 25
+	{ "ehs1-dat2.13r",	0x80000, 0x087da1f3, 0x09 | BRF_PRG | BRF_ESS }, // 26
 	{ "ehs1-dat3.13n",	0x80000, 0x85aecb3f, 0x09 | BRF_PRG | BRF_ESS }, // 27
 
 	{ "ehs1-landdt.10w",	0x00100, 0xcde7e8a6, 0x0c | BRF_GRA },           // 28 C45 Color Look-up
@@ -6959,8 +6959,8 @@ static struct BurnRomInfo finalap2RomDesc[] = {
 
 	{ "fls2sha",		0x40000, 0xf7b40a85, 0x08 | BRF_GRA },           // 23 Layer Tiles Mask Data
 
-	{ "fls2dat0",		0x40000, 0xf1af432c, 0x09 | BRF_PRG | BRF_ESS }, // 24 Shared 68K Data
-	{ "fls2dat1",		0x40000, 0x8719533e, 0x09 | BRF_PRG | BRF_ESS }, // 25
+	{ "fls2dat0.13s",	0x40000, 0xf1af432c, 0x09 | BRF_PRG | BRF_ESS }, // 24 Shared 68K Data
+	{ "fls2dat1.13p",	0x40000, 0x8719533e, 0x09 | BRF_PRG | BRF_ESS }, // 25
 
 	{ "fl1-3.5b",		0x00100, 0xd179d99a, 0x0c | BRF_GRA },           // 26 C45 Color Look-up
 
@@ -7020,8 +7020,8 @@ static struct BurnRomInfo finalap2jRomDesc[] = {
 
 	{ "fls2sha",		0x40000, 0xf7b40a85, 0x08 | BRF_GRA },           // 23 Layer Tiles Mask Data
 
-	{ "fls2dat0",		0x40000, 0xf1af432c, 0x09 | BRF_PRG | BRF_ESS }, // 24 Shared 68K Data
-	{ "fls2dat1",		0x40000, 0x8719533e, 0x09 | BRF_PRG | BRF_ESS }, // 25
+	{ "fls2dat0.13s",	0x40000, 0xf1af432c, 0x09 | BRF_PRG | BRF_ESS }, // 24 Shared 68K Data
+	{ "fls2dat1.13p",	0x40000, 0x8719533e, 0x09 | BRF_PRG | BRF_ESS }, // 25
 
 	{ "fl1-3.5b",		0x00100, 0xd179d99a, 0x0c | BRF_GRA },           // 26 C45 Color Look-up
 
@@ -7335,8 +7335,8 @@ static struct BurnRomInfo finalap3blRomDesc[] = {
 
 	{ "flt2_sha.bin",	0x40000, 0x6986565b, 0x08 | BRF_GRA },           // 23 Layer Tiles Mask Data
 
-	{ "flt1d0",		0x20000, 0x80004966, 0x09 | BRF_PRG | BRF_ESS }, // 24 Shared 68K Data
-	{ "flt1d1",		0x20000, 0xa2e93e8c, 0x09 | BRF_PRG | BRF_ESS }, // 25
+	{ "flt1d0.13s",		0x20000, 0x80004966, 0x09 | BRF_PRG | BRF_ESS }, // 24 Shared 68K Data
+	{ "flt1d1.13p",		0x20000, 0xa2e93e8c, 0x09 | BRF_PRG | BRF_ESS }, // 25
 
 	{ "fl1-3.5b",		0x00100, 0xd179d99a, 0x0c | BRF_GRA },           // 26 C45 Color Look-up
 
@@ -7407,8 +7407,8 @@ static struct BurnRomInfo fourtraxRomDesc[] = {
 	{ "fx_sha.7n",		0x20000, 0xf7aa4af7, 0x08 | BRF_GRA },           // 31 Layer Tiles Mask Data
 
 	{ "fx_dat0.13s",	0x40000, 0x63abf69b, 0x09 | BRF_PRG | BRF_ESS }, // 32 Shared 68K Data
-	{ "fx_dat1.13r",	0x40000, 0x725bed14, 0x09 | BRF_PRG | BRF_ESS }, // 33
-	{ "fx_dat2.13p",	0x40000, 0x71e4a5a0, 0x09 | BRF_PRG | BRF_ESS }, // 34
+	{ "fx_dat1.13p",	0x40000, 0x725bed14, 0x09 | BRF_PRG | BRF_ESS }, // 33
+	{ "fx_dat2.13r",	0x40000, 0x71e4a5a0, 0x09 | BRF_PRG | BRF_ESS }, // 34
 	{ "fx_dat3.13n",	0x40000, 0x605725f7, 0x09 | BRF_PRG | BRF_ESS }, // 35
 
 	{ "fx1_1.5b",		0x00100, 0x85ffd753, 0x0c | BRF_GRA },           // 36 C45 Color Look-up
@@ -7430,7 +7430,75 @@ struct BurnDriver BurnDrvFourtrax = {
 };
 
 
-// Four Trax (Asia)
+// Four Trax (Japan)
+
+static struct BurnRomInfo fourtraxjRomDesc[] = {
+	{ "fx1_mp0.11d",	0x20000, 0x35a690b1, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
+	{ "fx1_mp1.13d",	0x20000, 0x005bda8b, 0x01 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "fx1_sp0.11k",	0x20000, 0x48548e78, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
+	{ "fx1_sp1.13k",	0x20000, 0xd2861383, 0x02 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "fx1_sd0.7j",		0x20000, 0xacccc934, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+
+#if !defined ROM_VERIFY
+	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
+	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+
+	{ "fx_obj-0.4c",	0x40000, 0x1aa60ffa, 0x15 | BRF_GRA },           //  7 Sprites
+	{ "fx_obj-1.3c",	0x40000, 0x7509bc09, 0x15 | BRF_GRA },           //  8
+	{ "fx_obj-4.4a",	0x40000, 0x30add52a, 0x15 | BRF_GRA },           //  9
+	{ "fx_obj-5.3a",	0x40000, 0xe3cd2776, 0x15 | BRF_GRA },           // 10
+	{ "fx_obj-8.8c",	0x40000, 0xb165acab, 0x15 | BRF_GRA },           // 11
+	{ "fx_obj-9.7c",	0x40000, 0x90f0735b, 0x15 | BRF_GRA },           // 12
+	{ "fx_obj-12.8a",	0x40000, 0xf5e23b78, 0x15 | BRF_GRA },           // 13
+	{ "fx_obj-13.7a",	0x40000, 0x04a25007, 0x15 | BRF_GRA },           // 14
+	{ "fx_obj-2.2c",	0x40000, 0x243affc7, 0x15 | BRF_GRA },           // 15
+	{ "fx_obj-3.1c",	0x40000, 0xb7e5d17d, 0x15 | BRF_GRA },           // 16
+	{ "fx_obj-6.2a",	0x40000, 0xa2d5ce4a, 0x15 | BRF_GRA },           // 17
+	{ "fx_obj-7.1a",	0x40000, 0x4d91c929, 0x15 | BRF_GRA },           // 18
+	{ "fx_obj-10.6c",	0x40000, 0x7a01e86f, 0x15 | BRF_GRA },           // 19
+	{ "fx_obj-11.5c",	0x40000, 0x514b3fe5, 0x15 | BRF_GRA },           // 20
+	{ "fx_obj-14.6a",	0x40000, 0xc1658c77, 0x15 | BRF_GRA },           // 21
+	{ "fx_obj-15.5a",	0x40000, 0x2bc909b3, 0x15 | BRF_GRA },           // 22
+
+	{ "fx_chr-0.11n",	0x20000, 0x6658c1c3, 0x06 | BRF_GRA },           // 23 Layer Tiles
+	{ "fx_chr-1.11p",	0x20000, 0x3a888943, 0x06 | BRF_GRA },           // 24
+	{ "fx2_chr-2.11r",	0x20000, 0xfdf1e86b, 0x06 | BRF_GRA },           // 25
+	{ "fx_chr-3.11s",	0x20000, 0x47fa7e61, 0x06 | BRF_GRA },           // 26
+	{ "fx_chr-4.9n",	0x20000, 0xc720c5f5, 0x06 | BRF_GRA },           // 27
+	{ "fx_chr-5.9p",	0x20000, 0x9eacdbc8, 0x06 | BRF_GRA },           // 28
+	{ "fx_chr-6.9r",	0x20000, 0xc3dba42e, 0x06 | BRF_GRA },           // 29
+	{ "fx_chr-7.9s",	0x20000, 0xc009f3ae, 0x06 | BRF_GRA },           // 30
+
+	{ "fx_sha.7n",		0x20000, 0xf7aa4af7, 0x08 | BRF_GRA },           // 31 Layer Tiles Mask Data
+
+	{ "fx_dat0.13s",	0x40000, 0x63abf69b, 0x09 | BRF_PRG | BRF_ESS }, // 32 Shared 68K Data
+	{ "fx_dat1.13p",	0x40000, 0x725bed14, 0x09 | BRF_PRG | BRF_ESS }, // 33
+	{ "fx_dat2.13r",	0x40000, 0x71e4a5a0, 0x09 | BRF_PRG | BRF_ESS }, // 34
+	{ "fx_dat3.13n",	0x40000, 0x605725f7, 0x09 | BRF_PRG | BRF_ESS }, // 35
+
+	{ "fx1_1.5b",		0x00100, 0x85ffd753, 0x0c | BRF_GRA },           // 36 C45 Color Look-up
+
+	{ "fx_voi-1.3m",	0x80000, 0x6173364f, 0x0a | BRF_SND },           // 37 C140 Samples
+};
+
+STD_ROM_PICK(fourtraxj)
+STD_ROM_FN(fourtraxj)
+
+struct BurnDriver BurnDrvFourtraxj = {
+	"fourtraxj", "fourtrax", NULL, NULL, "1989",
+	"Four Trax (Japan)\0", "Imperfect graphics", "Namco", "System 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	NULL, fourtraxjRomInfo, fourtraxjRomName, NULL, NULL, NULL, NULL, FourtraxInputInfo, FourtraxDIPInfo,
+	FourtraxInit, Namcos2Exit, DrvFrame, FinallapDraw, DrvScan, &DrvRecalc, 0x4000,
+	288, 224, 4, 3
+};
+
+
+// Four Trax (US?, censored banners)
 
 static struct BurnRomInfo fourtraxaRomDesc[] = {
 	{ "fx4_mpr-0a.11d",	0x20000, 0xf147cd6b, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
@@ -7475,8 +7543,8 @@ static struct BurnRomInfo fourtraxaRomDesc[] = {
 	{ "fx_sha.7n",		0x20000, 0xf7aa4af7, 0x08 | BRF_GRA },           // 31 Layer Tiles Mask Data
 
 	{ "fx_dat0.13s",	0x40000, 0x63abf69b, 0x09 | BRF_PRG | BRF_ESS }, // 32 Shared 68K Data
-	{ "fx_dat1.13r",	0x40000, 0x725bed14, 0x09 | BRF_PRG | BRF_ESS }, // 33
-	{ "fx_dat2.13p",	0x40000, 0x71e4a5a0, 0x09 | BRF_PRG | BRF_ESS }, // 34
+	{ "fx_dat1.13p",	0x40000, 0x725bed14, 0x09 | BRF_PRG | BRF_ESS }, // 33
+	{ "fx_dat2.13r",	0x40000, 0x71e4a5a0, 0x09 | BRF_PRG | BRF_ESS }, // 34
 	{ "fx_dat3.13n",	0x40000, 0x605725f7, 0x09 | BRF_PRG | BRF_ESS }, // 35
 
 	{ "fx1_1.5b",		0x00100, 0x85ffd753, 0x0c | BRF_GRA },           // 36 C45 Color Look-up
@@ -7489,7 +7557,7 @@ STD_ROM_FN(fourtraxa)
 
 struct BurnDriver BurnDrvFourtraxa = {
 	"fourtraxa", "fourtrax", NULL, NULL, "1989",
-	"Four Trax (Asia)\0", "Imperfect graphics", "Namco", "System 2",
+	"Four Trax (US?, censored banners)\0", "Imperfect graphics", "Namco (Atari license?)", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, fourtraxaRomInfo, fourtraxaRomName, NULL, NULL, NULL, NULL, FourtraxInputInfo, FourtraxDIPInfo,

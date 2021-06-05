@@ -16589,18 +16589,18 @@ struct BurnDriver BurnDrvkof97pla = {
 // The King of Fighters '97 oroshi plus 2003
 
 static struct BurnRomInfo kof97oroRomDesc[] = {
-	{ "orochi-p1.bin",  0x0100000, 0x6DCB2946, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "orochi-p21.bin", 0x0200000, 0x6E1C4D8C, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "orochi-p29.bin", 0x0200000, 0x4C7C0221, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "orochi-p1.bin",  0x0100000, 0x6dcb2946, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "orochi-p21.bin", 0x0200000, 0x6e1c4d8c, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "orochi-p29.bin", 0x0200000, 0x4c7c0221, 1 | BRF_ESS | BRF_PRG }, //  2
 
-	{ "orochi-s1.bin",  0x0020000, 0x4EE2149A, 2 | BRF_GRA },           //  3 Text layer tiles
+	{ "orochi-s1.bin",  0x0020000, 0x4ee2149a, 2 | BRF_GRA },           //  3 Text layer tiles
 
-	{ "orochi-c1.bin",  0x1000000, 0xF13E841C, 3 | BRF_GRA },           //  4 Sprite data
-	{ "orochi-c2.bin",  0x1000000, 0x2DB1F6D3, 3 | BRF_GRA },           //  5
-	{ "orochi-c51.bin", 0x0200000, 0xA90340CB, 3 | BRF_GRA },           //  6
-	{ "orochi-c61.bin", 0x0200000, 0x188E351A, 3 | BRF_GRA },           //  7
-	{ "orochi-c52.bin", 0x0200000, 0xD4EEC50A, 3 | BRF_GRA },           //  8
-	{ "orochi-c62.bin", 0x0200000, 0x031B1AD5, 3 | BRF_GRA },           //  9
+	{ "orochi-c1.bin",  0x1000000, 0xf13e841c, 3 | BRF_GRA },           //  4 Sprite data
+	{ "orochi-c2.bin",  0x1000000, 0x2db1f6d3, 3 | BRF_GRA },           //  5
+	{ "orochi-c51.bin", 0x0200000, 0xa90340cb, 3 | BRF_GRA },           //  6
+	{ "orochi-c61.bin", 0x0200000, 0x188e351a, 3 | BRF_GRA },           //  7
+	{ "orochi-c52.bin", 0x0200000, 0xd4eec50a, 3 | BRF_GRA },           //  8
+	{ "orochi-c62.bin", 0x0200000, 0x031b1ad5, 3 | BRF_GRA },           //  9
 
 	{ "orochi-m1.bin",  0x0020000, 0x45348747, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
@@ -20593,31 +20593,22 @@ struct BurnDriver BurnDrvNblktiger = {
 // https://ozzyouzo.itch.io/teot
 
 static struct BurnRomInfo teotRomDesc[] = {
-	{ "teot-p1.bin",    0x100000, 0x3ab0b686, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "teot-p2.bin",    0x100000, 0x258909d5, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
+	{ "teot-p1.bin",    0x0100000, 0x9038ff78, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "teot-p2.bin",    0x0800000, 0xfe363160, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
 
-	{ "teot-s1.bin",    0x020000, 0xa545b593, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "teot-s1.bin",    0x0020000, 0xa545b593, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "teot-c1.bin",    0x800000, 0x94080cf2, 3 | BRF_GRA },           //  3 Sprite data
-	{ "teot-c2.bin",    0x800000, 0xfb5116b6, 3 | BRF_GRA },           //  4
+	{ "teot-c1.bin",    0x1000000, 0x28872e1f, 3 | BRF_GRA },           //  3 Sprite data
+	{ "teot-c2.bin",    0x1000000, 0xfe31d1fc, 3 | BRF_GRA },           //  4
 #if 0
-	{ "teot-c3.bin",    0x800000, 0x94080cf2, 3 | BRF_GRA },           //  Duplicate Sprite data files
-	{ "teot-c4.bin",    0x800000, 0xfb5116b6, 3 | BRF_GRA },           //
-	{ "teot-c5.bin",    0x800000, 0x94080cf2, 3 | BRF_GRA },           //  
-	{ "teot-c6.bin",    0x800000, 0xfb5116b6, 3 | BRF_GRA },           //
-	{ "teot-c7.bin",    0x800000, 0x94080cf2, 3 | BRF_GRA },           //  
-	{ "teot-c8.bin",    0x800000, 0xfb5116b6, 3 | BRF_GRA },           //
+	{ "teot-c3.bin",    0x1000000, 0x28872e1f, 3 | BRF_GRA },           //  Duplicate Sprite data files
+	{ "teot-c4.bin",    0x1000000, 0xfe31d1fc, 3 | BRF_GRA },
 #endif
 
-	{ "teot-m1.bin",    0x010000, 0x62bd5336, 4 | BRF_ESS | BRF_PRG }, //  5 Z80 code
+	{ "teot-m1.bin",    0x0010000, 0x31b05f06, 4 | BRF_ESS | BRF_PRG }, //  5 Z80 code
 
-	{ "teot-v1.bin",    0x100000, 0xa0906304, 5 | BRF_SND },           //  6 Sound data
-	{ "teot-v2.bin",    0x100000, 0xc5e10c1a, 5 | BRF_SND },           //  7
-	{ "teot-v3.bin",    0x100000, 0xcb78034b, 5 | BRF_SND },           //  8
-	{ "teot-v4.bin",    0x100000, 0x4a2d0d6d, 5 | BRF_SND },           //  9
-	{ "teot-v5.bin",    0x100000, 0x51285019, 5 | BRF_SND },           // 10
-	{ "teot-v6.bin",    0x100000, 0x03641f40, 5 | BRF_SND },           // 11
-	{ "teot-v7.bin",    0x100000, 0xe425eff3, 5 | BRF_SND },           // 12
+	{ "teot-v1.bin",    0x0800000, 0x299d84cf, 5 | BRF_SND },           //  6 Sound data
+	{ "teot-v2.bin",    0x0800000, 0xaced6c72, 5 | BRF_SND },           //  7
 };
 
 STDROMPICKEXT(teot, teot, neogeo)

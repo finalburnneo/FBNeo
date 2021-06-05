@@ -14,6 +14,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "AKGamepadManager.h"
+
 #define FBN_LMB 0x1
 #define FBN_RMB 0x2
 #define FBN_MMB 0x4
@@ -30,7 +32,7 @@
 
 @end
 
-@interface FBInput : NSObject
+@interface FBInput : NSObject<AKGamepadEventDelegate>
 
 @property NSPoint mouseCoords;
 @property uint8 mouseButtonStates;
@@ -41,5 +43,6 @@
 - (void) keyUp:(NSEvent *) theEvent;
 - (void) flagsChanged:(NSEvent *) theEvent;
 - (NSArray<FBInputInfo *> *) allInputs;
+- (void) setFocus:(BOOL) focus;
 
 @end

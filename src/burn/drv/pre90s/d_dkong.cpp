@@ -2021,13 +2021,13 @@ static INT32 s2650DkongFrame()
 
 
 
-// Radar Scope
+// Radar Scope (TRS02, rev. D)
 
 static struct BurnRomInfo radarscpRomDesc[] = {
-	{ "trs2c5fc",	0x1000, 0x40949e0d, 1 }, //  0 maincpu
-	{ "trs2c5gc",	0x1000, 0xafa8c49f, 1 }, //  1
-	{ "trs2c5hc",	0x1000, 0x51b8263d, 1 }, //  2
-	{ "trs2c5kc",	0x1000, 0x1f0101f7, 1 }, //  3
+	{ "trs2c5fd",	0x1000, 0x80bbcbb3, 1 }, //  0 maincpu
+	{ "trs2c5gd",	0x1000, 0xafa8c49f, 1 }, //  1
+	{ "trs2c5hd",	0x1000, 0xe3ad4239, 1 }, //  2
+	{ "trs2c5kd",	0x1000, 0x260a3ec4, 1 }, //  3
 
 	{ "trs2s3i",	0x0800, 0x78034f14, 2 }, //  4 soundcpu
 
@@ -2190,10 +2190,50 @@ static INT32 Dkong3Scan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvRadarscp = {
 	"radarscp", NULL, NULL, NULL, "1980",
-	"Radar Scope\0", "No sound", "Nintendo", "Miscellaneous",
+	"Radar Scope (TRS02, rev. D)\0", "No sound", "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, radarscpRomInfo, radarscpRomName, NULL, NULL, NULL, NULL, RadarscpInputInfo, RadarscpDIPInfo,
+	radarscpInit, DrvExit, DrvFrame, radarscpDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Radar Scope (TRS02?, rev. C)
+
+static struct BurnRomInfo radarscpcRomDesc[] = {
+	{ "trs2c5fc",	0x1000, 0x40949e0d, 1 }, //  0 maincpu
+	{ "trs2c5gc",	0x1000, 0xafa8c49f, 1 }, //  1
+	{ "trs2c5hc",	0x1000, 0x51b8263d, 1 }, //  2
+	{ "trs2c5kc",	0x1000, 0x1f0101f7, 1 }, //  3
+
+	{ "trs2s3i",	0x0800, 0x78034f14, 2 }, //  4 soundcpu
+
+	{ "trs2v3gc",	0x0800, 0xf095330e, 3 }, //  5 gfx1
+	{ "trs2v3hc",	0x0800, 0x15a316f0, 3 }, //  6
+
+	{ "trs2v3dc",	0x0800, 0xe0bb0db9, 4 }, //  7 gfx2
+	{ "trs2v3cc",	0x0800, 0x6c4e7dad, 4 }, //  8
+	{ "trs2v3bc",	0x0800, 0x6fdd63f1, 4 }, //  9
+	{ "trs2v3ac",	0x0800, 0xbbf62755, 4 }, // 10
+
+	{ "rs2-x.xxx",	0x0100, 0x54609d61, 6 }, // 11 proms
+	{ "rs2-c.xxx",	0x0100, 0x79a7d831, 6 }, // 12
+	{ "rs2-v.1hc",	0x0100, 0x1b828315, 6 }, // 13
+
+	{ "trs2v3ec",	0x0800, 0x0eca8d6b, 5 }, // 14 gfx3
+};
+
+STD_ROM_PICK(radarscpc)
+STD_ROM_FN(radarscpc)
+
+
+struct BurnDriver BurnDrvRadarscpc = {
+	"radarscpc", "radarscp", NULL, NULL, "1980",
+	"Radar Scope (TRS02?, rev. C)\0", "No sound", "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, radarscpcRomInfo, radarscpcRomName, NULL, NULL, NULL, NULL, RadarscpInputInfo, RadarscpDIPInfo,
 	radarscpInit, DrvExit, DrvFrame, radarscpDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

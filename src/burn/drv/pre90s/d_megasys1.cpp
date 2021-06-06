@@ -3943,7 +3943,7 @@ struct BurnDriver BurnDrvIganinju = {
 };
 
 
-// The Astyanax
+// The Astyanax (EPROM version)
 
 static struct BurnRomInfo astyanaxRomDesc[] = {
 	{ "astyan2.bin",	0x20000, 0x1b598dcc, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
@@ -3979,7 +3979,7 @@ static struct BurnRomInfo astyanaxRomDesc[] = {
 	{ "astyan7.bin",	0x20000, 0x319418cc, 8 | BRF_SND },           // 22 OKI #1 Samples
 	{ "astyan8.bin",	0x20000, 0x5e5d2a22, 8 | BRF_SND },           // 23
 
-	{ "rd.bpr",				0x00200, 0x85b30ac4, 9 | BRF_GRA },           // 24 Priority PROM
+	{ "rd.bpr",			0x00200, 0x85b30ac4, 9 | BRF_GRA },           // 24 Priority PROM
 };
 
 STD_ROM_PICK(astyanax)
@@ -3998,10 +3998,52 @@ static INT32 astyanaxInit()
 
 struct BurnDriver BurnDrvAstyanax = {
 	"astyanax", NULL, NULL, NULL, "1989",
-	"The Astyanax\0", NULL, "Jaleco", "Mega System 1",
+	"The Astyanax (EPROM version)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, astyanaxRomInfo, astyanaxRomName, NULL, NULL, NULL, NULL, Common3ButtonInputInfo, AstyanaxDIPInfo,
+	astyanaxInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 224, 4, 3
+};
+
+
+// The Astyanax (mask ROM version)
+
+static struct BurnRomInfo astyanaxaRomDesc[] = {
+	{ "astyan2.bin",	0x20000, 0x1b598dcc, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
+	{ "astyan1.bin",	0x20000, 0x1a1ad3cf, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "astyan3.bin",	0x10000, 0x097b53a6, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "astyan4.bin",	0x10000, 0x1e1cbdb2, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "astyan5.bin",	0x10000, 0x11c74045, 2 | BRF_PRG | BRF_ESS }, //  4 68k #1 Code
+	{ "astyan6.bin",	0x10000, 0xeecd4b16, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "m50747",			0x01000, 0x00000000, 0 | BRF_NODUMP },        //
+
+	{ "14.bin",			0x80000, 0x37388363, 3 | BRF_GRA },           //  7 Tilemap #0 Tiles
+	
+	{ "18.bin",			0x80000, 0x76932191, 4 | BRF_GRA },           //  8 Tilemap #1 Tiles
+	
+	{ "astyan19.bin",	0x20000, 0x98158623, 5 | BRF_GRA },           //  9 Tilemap #2 Tiles
+
+	{ "23.bin",			0x80000, 0x9bd34a6b, 6 | BRF_GRA },           // 10 Sprites
+	
+	{ "10.bin",			0x80000, 0xd888ab84, 7 | BRF_SND },           // 11 OKI #0 Samples
+	
+	{ "8.bin",			0x80000, 0x8d060fe9, 8 | BRF_SND },           // 12 OKI #1 Samples
+	
+	{ "rd.bpr",			0x00200, 0x85b30ac4, 9 | BRF_GRA },           // 13 Priority PROM
+};
+
+STD_ROM_PICK(astyanaxa)
+STD_ROM_FN(astyanaxa)
+
+struct BurnDriver BurnDrvAstyanaxa = {
+	"astyanaxa", "astyanax", NULL, NULL, "1989",
+	"The Astyanax (mask ROM version)\0", NULL, "Jaleco", "Mega System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	NULL, astyanaxaRomInfo, astyanaxaRomName, NULL, NULL, NULL, NULL, Common3ButtonInputInfo, AstyanaxDIPInfo,
 	astyanaxInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };

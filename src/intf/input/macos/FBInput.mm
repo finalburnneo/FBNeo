@@ -18,6 +18,8 @@
 
 #include "burner.h"
 
+#define DEBUG_GP
+
 static const int keyCodeCount = 0x80;
 static const int keyCodeToFbk[] = {
     FBK_A, // 00
@@ -206,18 +208,167 @@ static unsigned char simKeyState[256];
 #pragma mark - FBInput
 
 @implementation FBInput
+{
+    BOOL _hasFocus;
+}
 
 #pragma mark - Init and dealloc
 
 - (instancetype) init
 {
     if (self = [super init]) {
+        [AKGamepadManager.sharedInstance addObserver:self];
+        _hasFocus = NO;
     }
 
     return self;
 }
 
+- (void) dealloc
+{
+    [AKGamepadManager.sharedInstance removeObserver:self];
+}
+
+#pragma mark - AKGamepadDelegate
+
+- (void) gamepadDidConnect:(AKGamepad *) gamepad
+{
+    // FIXME!!
+//    NSString *gpId = [gamepad vendorProductString];
+//    FXButtonMap *map = [_config mapWithId:gpId];
+//    if (!map) {
+//        map = [self defaultGamepadMap:gamepad];
+//        [map setDeviceId:gpId];
+//        [_config setMap:map];
+//    }
+
+#ifdef DEBUG_GP
+    NSLog(@"Gamepad \"%@\" connected to port %i",
+          gamepad.name, (int) gamepad.index);
+#endif
+}
+
+- (void) gamepadDidDisconnect:(AKGamepad *) gamepad
+{
+#ifdef DEBUG_GP
+    NSLog(@"Gamepad \"%@\" disconnected from port %i",
+          gamepad.name, (int) gamepad.index);
+#endif
+}
+
+- (void) gamepad:(AKGamepad *) gamepad
+        xChanged:(NSInteger) newValue
+          center:(NSInteger) center
+       eventData:(AKGamepadEventData *) eventData
+{
+    // FIXME!!
+//    FXButtonMap *map = [_config mapWithId:[gamepad vendorProductString]];
+//    if (map) {
+//        int leftCode = [self remap:map
+//                          toPlayer:(int) [gamepad index]
+//                        deviceCode:FXGamepadLeft];
+//        int rightCode = [self remap:map
+//                           toPlayer:(int) [gamepad index]
+//                         deviceCode:FXGamepadRight];
+//        if (center - newValue > FXDeadzoneSize) {
+//            if (leftCode != FXMappingNotFound) {
+//                _inputStates[leftCode] = YES;
+//            }
+//            if (rightCode != FXMappingNotFound) {
+//                _inputStates[rightCode] = NO;
+//            }
+//        } else if (newValue - center > FXDeadzoneSize) {
+//            if (leftCode != FXMappingNotFound) {
+//                _inputStates[leftCode] = NO;
+//            }
+//            if (rightCode != FXMappingNotFound) {
+//                _inputStates[rightCode] = YES;
+//            }
+//        } else {
+//            if (leftCode != FXMappingNotFound) {
+//                _inputStates[leftCode] = NO;
+//            }
+//            if (rightCode != FXMappingNotFound) {
+//                _inputStates[rightCode] = NO;
+//            }
+//        }
+//    }
+#ifdef DEBUG_GP
+    NSLog(@"Joystick X: %ld (center: %ld) on gamepad %@",
+          newValue, center, gamepad);
+#endif
+}
+
+- (void) gamepad:(AKGamepad *) gamepad
+        yChanged:(NSInteger) newValue
+          center:(NSInteger) center
+       eventData:(AKGamepadEventData *) eventData
+{
+    // FIXME!!
+//    FXButtonMap *map = [_config mapWithId:[gamepad vendorProductString]];
+//    if (map) {
+//        int upCode = [self remap:map
+//                        toPlayer:(int) [gamepad index]
+//                      deviceCode:FXGamepadUp];
+//        int downCode = [self remap:map
+//                          toPlayer:(int) [gamepad index]
+//                        deviceCode:FXGamepadDown];
+//        if (center - newValue > FXDeadzoneSize) {
+//            if (upCode != FXMappingNotFound) {
+//                _inputStates[upCode] = YES;
+//            }
+//            if (downCode != FXMappingNotFound) {
+//                _inputStates[downCode] = NO;
+//            }
+//        } else if (newValue - center > FXDeadzoneSize) {
+//            if (upCode != FXMappingNotFound) {
+//                _inputStates[upCode] = NO;
+//            }
+//            if (downCode != FXMappingNotFound) {
+//                _inputStates[downCode] = YES;
+//            }
+//        } else {
+//            if (upCode != FXMappingNotFound) {
+//                _inputStates[upCode] = NO;
+//            }
+//            if (downCode != FXMappingNotFound) {
+//                _inputStates[downCode] = NO;
+//            }
+//        }
+//    }
+#ifdef DEBUG_GP
+    NSLog(@"Joystick Y: %ld (center: %ld) on gamepad %@",
+          newValue, center, gamepad);
+#endif
+}
+
+- (void) gamepad:(AKGamepad *) gamepad
+          button:(NSUInteger) index
+          isDown:(BOOL) isDown
+       eventData:(AKGamepadEventData *) eventData
+{
+    // FIXME!!
+//    FXButtonMap *map = [_config mapWithId:[gamepad vendorProductString]];
+//    if (map) {
+//        int code = [self remap:map
+//                      toPlayer:(int) [gamepad index]
+//                    deviceCode:(int) FXMakeButton(index)];
+//        if (code != FXMappingNotFound) {
+//            _inputStates[code] = isDown;
+//        }
+//    }
+#ifdef DEBUG_GP
+    NSLog(@"Button %ld %@ on gamepad %@", index, gamepad,
+          isDown ? @"down" : @"up");
+#endif
+}
+
 #pragma mark - Interface
+
+- (void) setFocus:(BOOL) focus
+{
+    _hasFocus = focus;
+}
 
 - (void) simReset
 {

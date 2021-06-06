@@ -17592,23 +17592,6 @@ struct BurnDriver BurnDrvnes_altercation = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_arkarushRomDesc[] = {
-	{ "Arkade Rush (2021)(Nathan Tolbert).nes",          32784, 0xd40c212e, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_arkarush)
-STD_ROM_FN(nes_arkarush)
-
-struct BurnDriver BurnDrvnes_arkarush = {
-	"nes_arkarush", NULL, NULL, NULL, "2021",
-	"Arkade Rush (HB)\0", NULL, "Nathan Tolbert", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
-	NESGetZipName, nes_arkarushRomInfo, nes_arkarushRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 static struct BurnRomInfo nes_crapjobRomDesc[] = {
 	{ "Crap Job (2021)(Oniric Factor).nes",          524304, 0xcfa265ab, BRF_ESS | BRF_PRG },
 };

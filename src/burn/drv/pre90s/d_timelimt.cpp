@@ -39,87 +39,89 @@ static INT32 watchdog;
 static INT32 TimelimtMode = 0;
 
 static struct BurnInputInfo TimelimtInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dips",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dips",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Timelimt)
 
 static struct BurnInputInfo ProgressInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dips",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dips",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Progress)
 
 static struct BurnDIPInfo TimelimtDIPList[]=
 {
-	{0x08, 0xff, 0xff, 0x01, NULL				},
+	DIP_OFFSET(0x08)
+	{0x00, 0xff, 0xff, 0x01, NULL						},
 
-	{0   , 0xfe, 0   ,    8, "Coinage"			},
-	{0x08, 0x01, 0x07, 0x00, "2 Coins 1 Credits"		},
-	{0x08, 0x01, 0x07, 0x01, "1 Coin  1 Credits"		},
-	{0x08, 0x01, 0x07, 0x02, "1 Coin  2 Credits"		},
-	{0x08, 0x01, 0x07, 0x03, "1 Coin  3 Credits"		},
-	{0x08, 0x01, 0x07, 0x04, "1 Coin  4 Credits"		},
-	{0x08, 0x01, 0x07, 0x05, "1 Coin  5 Credits"		},
-	{0x08, 0x01, 0x07, 0x06, "1 Coin  6 Credits"		},
-	{0x08, 0x01, 0x07, 0x07, "1 Coin  7 Credits"		},
+	{0   , 0xfe, 0   ,    8, "Coinage"					},
+	{0x00, 0x01, 0x07, 0x00, "2 Coins 1 Credits"		},
+	{0x00, 0x01, 0x07, 0x01, "1 Coin  1 Credits"		},
+	{0x00, 0x01, 0x07, 0x02, "1 Coin  2 Credits"		},
+	{0x00, 0x01, 0x07, 0x03, "1 Coin  3 Credits"		},
+	{0x00, 0x01, 0x07, 0x04, "1 Coin  4 Credits"		},
+	{0x00, 0x01, 0x07, 0x05, "1 Coin  5 Credits"		},
+	{0x00, 0x01, 0x07, 0x06, "1 Coin  6 Credits"		},
+	{0x00, 0x01, 0x07, 0x07, "1 Coin  7 Credits"		},
 
-	{0   , 0xfe, 0   ,    2, "Lives"			},
-	{0x08, 0x01, 0x10, 0x00, "3"				},
-	{0x08, 0x01, 0x10, 0x10, "5"				},
+	{0   , 0xfe, 0   ,    2, "Lives"					},
+	{0x00, 0x01, 0x10, 0x00, "3"						},
+	{0x00, 0x01, 0x10, 0x10, "5"						},
 
 	{0   , 0xfe, 0   ,    2, "Invincibility (Cheat)"	},
-	{0x08, 0x01, 0x80, 0x00, "Off"				},
-	{0x08, 0x01, 0x80, 0x80, "On"				},
+	{0x00, 0x01, 0x80, 0x00, "Off"						},
+	{0x00, 0x01, 0x80, 0x80, "On"						},
 };
 
 STDDIPINFO(Timelimt)
 
 static struct BurnDIPInfo ProgressDIPList[]=
 {
-	{0x0a, 0xff, 0xff, 0x01, NULL				},
+	DIP_OFFSET(0x0a)
+	{0x00, 0xff, 0xff, 0x01, NULL						},
 
-	{0   , 0xfe, 0   ,    8, "Coinage"			},
-	{0x0a, 0x01, 0x07, 0x00, "2 Coins 1 Credits"		},
-	{0x0a, 0x01, 0x07, 0x01, "1 Coin  1 Credits"		},
-	{0x0a, 0x01, 0x07, 0x02, "1 Coin  2 Credits"		},
-	{0x0a, 0x01, 0x07, 0x03, "1 Coin  3 Credits"		},
-	{0x0a, 0x01, 0x07, 0x04, "1 Coin  4 Credits"		},
-	{0x0a, 0x01, 0x07, 0x05, "1 Coin  5 Credits"		},
-	{0x0a, 0x01, 0x07, 0x06, "1 Coin  6 Credits"		},
-	{0x0a, 0x01, 0x07, 0x07, "1 Coin  7 Credits"		},
+	{0   , 0xfe, 0   ,    8, "Coinage"					},
+	{0x00, 0x01, 0x07, 0x00, "2 Coins 1 Credits"		},
+	{0x00, 0x01, 0x07, 0x01, "1 Coin  1 Credits"		},
+	{0x00, 0x01, 0x07, 0x02, "1 Coin  2 Credits"		},
+	{0x00, 0x01, 0x07, 0x03, "1 Coin  3 Credits"		},
+	{0x00, 0x01, 0x07, 0x04, "1 Coin  4 Credits"		},
+	{0x00, 0x01, 0x07, 0x05, "1 Coin  5 Credits"		},
+	{0x00, 0x01, 0x07, 0x06, "1 Coin  6 Credits"		},
+	{0x00, 0x01, 0x07, 0x07, "1 Coin  7 Credits"		},
 
-	{0   , 0xfe, 0   ,    2, "Lives"			},
-	{0x0a, 0x01, 0x10, 0x00, "3"				},
-	{0x0a, 0x01, 0x10, 0x10, "5"				},
+	{0   , 0xfe, 0   ,    2, "Lives"					},
+	{0x00, 0x01, 0x10, 0x00, "3"						},
+	{0x00, 0x01, 0x10, 0x10, "5"						},
 
-	{0   , 0xfe, 0   ,    2, "Bonus Life"			},
-	{0x0a, 0x01, 0x20, 0x00, "20,000 & 100,000"		},
-	{0x0a, 0x01, 0x20, 0x20, "50,000 & 200,000"		},
+	{0   , 0xfe, 0   ,    2, "Bonus Life"				},
+	{0x00, 0x01, 0x20, 0x00, "20,000 & 100,000"			},
+	{0x00, 0x01, 0x20, 0x20, "50,000 & 200,000"			},
 
 	{0   , 0xfe, 0   ,    2, "Invincibility (Cheat)"	},
-	{0x0a, 0x01, 0x80, 0x00, "Off"				},
-	{0x0a, 0x01, 0x80, 0x80, "On"				},
+	{0x00, 0x01, 0x80, 0x00, "Off"						},
+	{0x00, 0x01, 0x80, 0x80, "On"						},
 };
 
 STDDIPINFO(Progress)
@@ -199,7 +201,7 @@ static void __fastcall timelimt_sound_write_port(UINT16 port, UINT8 data)
 		case 0x8d:
 		case 0x8e:
 		case 0x8f:
-			AY8910Write((port & 2) ? 1 : 0, port & 1, data);
+			AY8910Write((port & 2) >> 1, port & 1, data);
 		return;
 	}
 }
@@ -212,7 +214,7 @@ static UINT8 __fastcall timelimt_sound_read_port(UINT16 port)
 		case 0x8d:
 		case 0x8e:
 		case 0x8f:
-			return AY8910Read((port & 2) ? 1 : 0);
+			return AY8910Read((port & 2) >> 1);
 	}
 
 	return 0;
@@ -400,11 +402,12 @@ static INT32 DrvInit()
 	ZetClose();
 
 	AY8910Init(0, 1536000, 0);
-	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(1, 1536000, 1);
 	AY8910SetPorts(1, &timelimt_ay8910_1_portA_read, NULL, NULL, NULL);
-	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 3072000);
 
 	GenericTilesInit();
 
@@ -477,19 +480,7 @@ static void draw_sprites()
 		INT32 flipx = DrvSprRAM[offs+1] & 0x40;
 		INT32 color = attr & 0x07;
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x40, DrvGfxROM2);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x40, DrvGfxROM2);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x40, DrvGfxROM2);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x40, DrvGfxROM2);
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 3, 0, 0x40, DrvGfxROM2);
 	}
 }
 
@@ -564,6 +555,8 @@ static INT32 DrvFrame()
 	//           1f = skull 0xae
 	*/
 
+	ZetNewFrame();
+
 	{
 		DrvInputs[0] = 0;
 		DrvInputs[1] = 0x03;
@@ -581,17 +574,13 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = nCyclesTotal[0] / nInterleave;
-
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nSegment);
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1) && nmi_enable && nCurrentFrame & 1) ZetNmi();
 		ZetClose();
 
-		nSegment = nCyclesTotal[1] / nInterleave;
-
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nSegment);
+		CPU_RUN(1, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 	}
@@ -630,6 +619,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nmi_enable);
 		SCAN_VAR(scrollx);
 		SCAN_VAR(scrolly);
+		SCAN_VAR(watchdog);
 	}
 
 	return 0;

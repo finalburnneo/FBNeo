@@ -267,7 +267,7 @@
 	<game name="abusimpr" romof="spectrum">
 		<description>Abu Simbel Profanation (48K)</description>
 		<year>1987</year>
-		<manufacturer>Gremlin Graphics Software</manufacturer>
+		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Abu Simbel Profanation (1987)(Gremlin Graphics Software)[re-release].z80" size="39605" crc="54092dfb"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -516,9 +516,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="alienevolution" romof="spec128">
-		<description>Alien Evolution</description>
+		<description>Alien Evolution (128K)</description>
 		<year>1987</year>
-		<manufacturer>Gremlin</manufacturer>
+		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Alien Evolution (1987)(Gremlin).tap" size="49510" crc="a16b45f5"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -931,7 +931,7 @@
 	<game name="aufwiemo" romof="spec128">
 		<description>Auf Wiedersehen Monty (128K)</description>
 		<year>1987</year>
-		<manufacturer>Gremlin Graphics Software</manufacturer>
+		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Auf Wiedersehen Monty (1987)(Gremlin Graphics)(128k).z80" size="69375" crc="49580b2d"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -941,7 +941,7 @@
 	<game name="aufwiemo_48" cloneof="aufwiemo" romof="aufwiemo">
 		<description>Auf Wiedersehen Monty (48K)</description>
 		<year>1987</year>
-		<manufacturer>Gremlin Graphics Software</manufacturer>
+		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Auf Wiedersehen Monty (1987)(Gremlin Graphics)[a4].z80" size="49182" crc="1851b7fa"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -969,7 +969,7 @@
 	<game name="avenger" romof="spec128">
 		<description>Avenger (128K)</description>
 		<year>1986</year>
-		<manufacturer>Gremlin Graphics Software</manufacturer>
+		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Avenger 128K (1986)(Gremlin Graphics).z80" size="45683" crc="8ac4d620"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -1131,7 +1131,7 @@
 	<game name="basilmouse" romof="spectrum">
 		<description>Basil the Great Mouse Detective (48K)</description>
 		<year>1987</year>
-		<manufacturer>Gremlin Graphics Software</manufacturer>
+		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Basil the Great Mouse Detective 48K (1987)(Gremlin Graphics).z80" size="38391" crc="b5e12867"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -1449,7 +1449,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bloodbrothers1" romof="spec128">
-		<description>Blood Brothers (Module 1)</description>
+		<description>Blood Brothers (128K) (Module 1)</description>
 		<year>1988</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Blood Brothers (Module 1)(1988)(Gremlin Graphics).z80" size="42931" crc="b32fcea7"/>
@@ -1459,7 +1459,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bloodbrothers2" cloneof="bloodbrothers1" romof="bloodbrothers1">
-		<description>Blood Brothers (Module 2)</description>
+		<description>Blood Brothers (128K) (Module 2)</description>
 		<year>1988</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Blood Brothers (Module 2)(1988)(Gremlin Graphics).z80" size="42790" crc="3fc07585"/>
@@ -1469,7 +1469,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bloodbrothers3" cloneof="bloodbrothers1" romof="bloodbrothers1">
-		<description>Blood Brothers (Module 3)</description>
+		<description>Blood Brothers (128K) (Module 3)</description>
 		<year>1988</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Blood Brothers (Module 3)(1988)(Gremlin Graphics).z80" size="42935" crc="735098ec"/>
@@ -1568,7 +1568,7 @@
 	<game name="bonnieclyde" romof="spec128">
 		<description>Bonnie and Clyde (HB) [Homebrew]</description>
 		<year>2020</year>
-		<manufacturer>Zosya</manufacturer>
+		<manufacturer>Zosya Entertainment</manufacturer>
 		<rom name="Bonnie and Clyde (1986)(Zosya).tap" size="47115" crc="f075ba62"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -1660,7 +1660,7 @@
 	<game name="bounder" romof="spec128">
 		<description>Bounder (128K)</description>
 		<year>1986</year>
-		<manufacturer>Gremlin Graphics Software</manufacturer>
+		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Bounder (1986)(Gremlin Graphics Software)(128k).z80" size="42033" crc="65b1da45"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -3679,7 +3679,7 @@
 	<game name="drift" romof="spec128">
 		<description>Drift! (HB) [Homebrew, Designed esclusively for 128K system]</description>
 		<year>2019</year>
-		<manufacturer>Zosya</manufacturer>
+		<manufacturer>Zosya Entertainment</manufacturer>
 		<rom name="Drift! (2019)(Zosya).tap" size="128215" crc="35e3f19b"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -4182,7 +4182,7 @@
 	<game name="finalmatrix" romof="spec128">
 		<description>Final Matrix, The (128K)</description>
 		<year>1987</year>
-		<manufacturer>Gremlin Graphics Software</manufacturer>
+		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Final Matrix, The (1987)(Gremlin Graphics Software)(128k).z80" size="48883" crc="a7f15f73"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -4364,7 +4364,7 @@
 	<game name="foty" romof="spectrum">
 		<description>Footballer of the Year (48K)</description>
 		<year>1986</year>
-		<manufacturer>Gremlin Graphics Software</manufacturer>
+		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Footballer of the Year (1986)(Gremlin Graphics Software).z80" size="33079" crc="2af522d0"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -4373,7 +4373,7 @@
 	<game name="foty2" romof="spectrum">
 		<description>Footballer of the Year 2 (48K)</description>
 		<year>1987</year>
-		<manufacturer>Gremlin Graphics Software</manufacturer>
+		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Footballer of the Year 2 (1987)(Gremlin Graphics Software).z80" size="36239" crc="3722f534"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -4525,7 +4525,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gamessummered" romof="spec128">
-		<description>Games - Summer Edition, The</description>
+		<description>Games - Summer Edition, The (128K)</description>
 		<year>1989</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Games - Summer Edition, The (1989)(U.S. Gold).tap" size="354208" crc="e8b9a3d0"/>
@@ -4575,7 +4575,7 @@
 	<game name="glinht" romof="spectrum">
 		<description>Gary Lineker's Hot-Shot! (48K)</description>
 		<year>1988</year>
-		<manufacturer>Gremlin Graphics Software</manufacturer>
+		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Gary Lineker's Hot-Shot! (1988)(Gremlin Graphics Software).z80" size="35338" crc="18e1d943"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -4584,7 +4584,7 @@
 	<game name="glss" romof="spec128">
 		<description>Gary Lineker's Super Skills (128K)</description>
 		<year>1988</year>
-		<manufacturer>Gremlin Graphics Software</manufacturer>
+		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Gary Lineker's Super Skills (1988)(Gremlin Graphics Software)[128K].z80" size="77423" crc="fcb98fd1"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -4594,7 +4594,7 @@
 	<game name="glsss" romof="spectrum">
 		<description>Gary Lineker's Super Star Soccer (48K)</description>
 		<year>1987</year>
-		<manufacturer>Gremlin Graphics Software</manufacturer>
+		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Gary Lineker's Super Star Soccer (1987)(Gremlin Graphics Software).z80" size="40004" crc="700248d9"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -4843,21 +4843,21 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="goodyrecolour" romof="spec128">
-		<description>Goody (Recoloured)(Spanish)</description>
+	<game name="goodyes" romof="spec128">
+		<description>Goody (128K) (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Opera Soft</manufacturer>
-		<rom name="Goody (1987)(Opera Soft)(Recoloured)(es).tap" size="56242" crc="8b02e960"/>
+		<rom name="Goody (1987)(Opera Soft)(es).tap" size="48558" crc="2fd4f11b"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="goodyes" romof="spec128">
-		<description>Goody (Spanish)</description>
-		<year>1987</year>
-		<manufacturer>Opera Soft</manufacturer>
-		<rom name="Goody (1987)(Opera Soft)(es).tap" size="48558" crc="2fd4f11b"/>
+	<game name="goodyrecolour" cloneof="goodyes" romof="goodyes">
+		<description>Goody Recoloured (128K) (HB) [Hack, Homebrew]</description>
+		<year>2012</year>
+		<manufacturer>Rafal Miazga</manufacturer>
+		<rom name="Goody (1987)(Opera Soft)(Recoloured)(es).tap" size="56242" crc="8b02e960"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -5032,7 +5032,7 @@
 	<game name="hatehate" romof="spectrum">
 		<description>H.A.T.E. - Hostile All Terrain Encounter (48K)</description>
 		<year>1989</year>
-		<manufacturer>Gremlin Graphics Software</manufacturer>
+		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="H.A.T.E. - Hostile All Terrain Encounter (1989)(Vortex Software).z80" size="41334" crc="21ff36ab"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -5712,7 +5712,7 @@
 	<game name="jacknip_128" romof="spec128">
 		<description>Jack the Nipper (128k)</description>
 		<year>1986</year>
-		<manufacturer>Gremlin Graphics Software</manufacturer>
+		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Jack the Nipper (1986)(Gremlin Graphics Software)(128k).z80" size="38751" crc="a82eca8c"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -5722,7 +5722,7 @@
 	<game name="jacknip2_128" romof="spec128">
 		<description>Jack the Nipper II - In Coconut Capers (128k)</description>
 		<year>1987</year>
-		<manufacturer>Gremlin Graphics Software</manufacturer>
+		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Jack the Nipper II - In Coconut Capers (1987)(Gremlin Graphics Software)(128k).z80" size="44582" crc="da98bfe7"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -5962,6 +5962,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="junglequeen" romof="spec128">
+		<description>Jungle Queen (128K) (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Gabriele Amore</manufacturer>
+		<rom name="Jungle Queen (2020)(Gabriele Amore).tap" size="38168" crc="46eaa69d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="junglewarfare" romof="spec128">
 		<description>Jungle Warfare (48K)</description>
 		<year>1989</year>
@@ -5977,6 +5987,15 @@
 		<year>1990</year>
 		<manufacturer>Zigurat</manufacturer>
 		<rom name="Jungle Warrior 48K ES (1990)(Zigurat).tap" size="46516" crc="7eaa77fe"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="justagal" romof="spectrum">
+		<description>Just A Gal (48K) (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Zosya Entertainment</manufacturer>
+		<rom name="Just A Gal (2019)(Zosya Entertainment).tap" size="47039" crc="70b2bfdc"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -6555,7 +6574,7 @@
 	<game name="lotustc" romof="spec128">
 		<description>Lotus Esprit Turbo Challenge (128K)</description>
 		<year>1990</year>
-		<manufacturer>Gremlin Graphics Software</manufacturer>
+		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Lotus Esprit Turbo Challenge (1990)(Gremlin Graphics Software)(128k).z80" size="88502" crc="e2a3503d"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -6755,9 +6774,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="mask" romof="spec128">
-		<description>Mask</description>
+		<description>Mask (48K-128K)</description>
 		<year>1987</year>
-		<manufacturer>Gremlin</manufacturer>
+		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Mask (1987)(Gremlin).z80" size="92283" crc="cdd8c4b1"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -7223,6 +7242,34 @@
 		<rom name="More Tea Vicar (2012)(Cronosoft).tap" size="60372" crc="cb451c56"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="moritz" romof="spectrum">
+		<description>Moritz (48K) (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>Sebastian Braunert</manufacturer>
+		<rom name="Moritz 48k (2017)(Sebastian Braunert).z80" size="39114" crc="f0f22000"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="moritzautobath" romof="spec128">
+		<description>Moritz on the Autobahn (128K) (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Sebastian Braunert</manufacturer>
+		<rom name="Moritz on the Autobahn 128K (2020)(Sebastian Braunert).tap" size="64072" crc="de66f32f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="moritzstriker" romof="spectrum">
+		<description>Moritz the Striker (48K) (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Sebastian Braunert</manufacturer>
+		<rom name="Moritz the Striker 48K (2020)(Sebastian Braunert).tap" size="60560" crc="b1402da9"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -8897,7 +8944,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="redshift" romof="spec128">
-		<description>Redshift (HB) [Homebrew]</description>
+		<description>Redshift (128K) (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Ariel Ruiz</manufacturer>
 		<rom name="Redshift (2019)(Ariel Ruiz).tap" size="79855" crc="2198fb31"/>
@@ -9516,6 +9563,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="safecracker" romof="spectrum">
+		<description>Safecracker (HB) [Homebrew]</description>
+		<year>2010</year>
+		<manufacturer>Rafal Miazga</manufacturer>
+		<rom name="Safecracker (2010)(Rafal Miazga).tap" size="24134" crc="bb92aeb8"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="salamand" romof="spectrum">
 		<description>Salamander (48K)</description>
 		<year>1987</year>
@@ -9668,8 +9724,18 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="sector" romof="spec128">
+		<description>Sector (128K) (HB) [Homebrew]</description>
+		<year>2013</year>
+		<manufacturer>RetroSouls</manufacturer>
+		<rom name="Sector (2013)(RetroSouls).z80" size="27939" crc="103cfccf"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sectinvn" romof="spec128">
-		<description>Sector Invasion (HB) [Homebrew]</description>
+		<description>Sector Invasion (128K) (HB) [Homebrew]</description>
 		<year>2014</year>
 		<manufacturer>Retrosouls</manufacturer>
 		<rom name="Sector Invasion (2014).tap" size="38873" crc="275c56d5"/>
@@ -9693,6 +9759,16 @@
 		<year>1992</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Sergeant Seymour Robotcop (1992)(Codemasters).tap" size="35548" crc="2ecf649d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="setaisho" romof="spec128">
+		<description>Seto Taisho Vs Yokai (128K) (HB) [Homebrew]</description>
+		<year>2016</year>
+		<manufacturer>Monument Microgames</manufacturer>
+		<rom name="Seto Taisho Vs Yokai (2016)(Monument Microgames).tap" size="83481" crc="4a0550ce"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -9885,7 +9961,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sirfred_128" romof="spec128">
-		<description>Sir Fred (128k)</description>
+		<description>Sir Fred (128K)</description>
 		<year>1986</year>
 		<manufacturer>Mikro-Gen</manufacturer>
 		<rom name="Sir Fred (1986)(Mikro-Gen)(128k).z80" size="43189" crc="b57f2c22"/>
@@ -10188,7 +10264,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="spacecrusade" romof="spec128">
-		<description>Space Crusade</description>
+		<description>Space Crusade (128K)</description>
 		<year>1992</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Space Crusade (1992)(Gremlin Graphics).tap" size="70110" crc="a46b2859"/>
@@ -10354,6 +10430,15 @@
 		<year>1988</year>
 		<manufacturer>Databyte</manufacturer>
 		<rom name="Spy vs Spy III - Arctic Antics (1988)(Databyte).z80" size="31302" crc="9bf7db2a"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sqijzx" romof="spectrum">
+		<description>Sqij ZX (48K) (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Psytronik Software</manufacturer>
+		<rom name="Sqij ZX (2018)(Psytronik Software).tap" size="46020" crc="d0af1a22"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10827,6 +10912,16 @@
 		<year>1991</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Super Monaco GP (1991)(U.S. Gold)[128K].z80" size="57484" crc="6a1dcc87"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="supmoritz" romof="spec128">
+		<description>Super Moritz (128K) (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Sebastian Braunert</manufacturer>
+		<rom name="Super Moritz 128K (2018)(Sebastian Braunert).tap" size="51661" crc="62e77ef9"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -11828,7 +11923,7 @@
 	<game name="vallation" romof="spec128">
 		<description>Vallation (128K) (HB) [Homebrew]</description>
 		<year>2017</year>
-		<manufacturer>Psytronik</manufacturer>
+		<manufacturer>Psytronik Software</manufacturer>
 		<rom name="Vallation (2017)(Psytronik).tap" size="68513" crc="a30a4662"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -11977,7 +12072,7 @@
 	<game name="wanmonmo" romof="spectrum">
 		<description>Wanted! Monty Mole (48K)</description>
 		<year>1984</year>
-		<manufacturer>Gremlin Graphics Software</manufacturer>
+		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Monty Mole (1984)(Gremlin Graphics).z80" size="40056" crc="2e7a94b2"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

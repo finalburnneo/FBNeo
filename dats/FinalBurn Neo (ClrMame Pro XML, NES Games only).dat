@@ -756,14 +756,6 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="arkarush">
-		<description>Arkade Rush (HB) [Homebrew]</description>
-		<year>2021</year>
-		<manufacturer>Nathan Tolbert</manufacturer>
-		<rom name="Arkade Rush (2021)(Nathan Tolbert).nes" size="32784" crc="d40c212e"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
 	<game name="arkanoid">
 		<description>Arkanoid (USA)</description>
 		<year>1987</year>

@@ -922,7 +922,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="destructsce" cloneof="destruct" romof="destruct">
-		<description>Destructor S.C.E (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<description>Destructor S.C.E. (Hack, Standard Controller Edition) [Hack, Homebrew, Published by Team Pixelboy]</description>
 		<year>2010</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="Destructor SCE (2010) (Team Pixelboy).col" size="32768" crc="2a9fcbfa"/>
@@ -1080,6 +1080,18 @@
 		<year>2014</year>
 		<manufacturer>CollectorVision</manufacturer>
 		<rom name="Dungeons and Trolls (2014)(CollectorVision).col" size="30187" crc="a227fdaa"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="easterbunny" romof="coleco">
+		<description>Easter Bunny (HB) [Homebrew]</description>
+		<year>2007</year>
+		<manufacturer>Daniel Bienvenu</manufacturer>
+		<rom name="Easter Bunny (2007)(Daniel Bienvenu).rom" size="5888" crc="5c494be5"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -1372,8 +1384,8 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="frntlnsce" romof="coleco">
-		<description>Front Line S.C.E. (HB) [Homebrew, Published by Team Pixelboy]</description>
+	<game name="frntlnsce" cloneof="frontlin" romof="frontlin">
+		<description>Front Line S.C.E. (Hack, Standard Controller Edition) [Hack, Homebrew, Published by Team Pixelboy]</description>
 		<year>2015</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="Front Line S.C.E. (2015) (Team Pixelboy).col" size="32768" crc="832586bf"/>
@@ -1470,6 +1482,18 @@
 		<year>2006</year>
 		<manufacturer>Daniel Bienvenu</manufacturer>
 		<rom name="Ghostblaster (2006)(Daniel Bienvenu).rom" size="32768" crc="7e93e6f3"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ghostrap" romof="coleco">
+		<description>Ghost Trap (HB) [Homebrew]</description>
+		<year>2009</year>
+		<manufacturer>Coleco</manufacturer>
+		<rom name="Ghost Trap (2009)(Coleco).col" size="12288" crc="26269393"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -1993,6 +2017,18 @@
 		<manufacturer>Fisher-Price</manufacturer>
 		<rom name="lnklogic.1" size="8192" crc="918f12c0"/>
 		<rom name="lnklogic.2" size="8192" crc="d8f49994"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="loderunner" romof="coleco">
+		<description>Lode Runner (HB) [Homebrew]</description>
+		<year>2009</year>
+		<manufacturer>Coleco</manufacturer>
+		<rom name="Lode Runner (2002)(Steve Begin).rom" size="32768" crc="a2128f74"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -3329,7 +3365,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="danslither" cloneof="slither" romof="slither">
-		<description>Slither (Hack, Joystick Version) [Homebrew]</description>
+		<description>Slither (Hack, Joystick Version) [Hack, Homebrew]</description>
 		<year>2010</year>
 		<manufacturer>Daniel Bienvenu</manufacturer>
 		<rom name="danslither.rom" size="16426" crc="92624cff"/>

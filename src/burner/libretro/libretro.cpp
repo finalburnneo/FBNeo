@@ -1118,6 +1118,7 @@ void retro_run()
 	{
 		gui_draw();
 		video_cb(gui_get_framebuffer(), nGameWidth, nGameHeight, nGameWidth * sizeof(unsigned));
+		audio_batch_cb(g_audio_buf, nBurnSoundLen);
 		return;
 	}
 
@@ -1905,6 +1906,9 @@ static bool retro_load_game_common()
 	}
 
 end:
+	nBurnSoundRate = 48000;
+	nBurnFPS = 6000;
+	init_audio_buffer(nBurnSoundRate, nBurnFPS);
 	return true;
 }
 

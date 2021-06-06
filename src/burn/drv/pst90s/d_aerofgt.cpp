@@ -3429,8 +3429,8 @@ struct BurnDriver BurnDrvSpinlbrj = {
 
 static struct BurnRomInfo spinlbrupRomDesc[] = {
 	{ "spb0-e.ic98",  				0x010000, 0x421eaff2, BRF_ESS | BRF_PRG }, // 68000 code swapped
-	{ "sbp0-o.ic104",  				0x010000, 0x9576d508, BRF_ESS | BRF_PRG },
-	{ "sbp1-e.ic93",  				0x010000, 0xd6444d1e, BRF_ESS | BRF_PRG },
+	{ "spb0-o.ic104",  				0x010000, 0x9576d508, BRF_ESS | BRF_PRG },
+	{ "spb1-e.ic93",  				0x010000, 0xd6444d1e, BRF_ESS | BRF_PRG },
 	{ "spb1-o.ic94", 				0x010000, 0xa3f7bd8e, BRF_ESS | BRF_PRG },
 
 	{ "ic15",         				0x080000, 0xe318cf3a, BRF_GRA },		   // gfx 1

@@ -94,6 +94,7 @@
 
 - (void) windowDidBecomeKey:(NSNotification *) notification
 {
+    [self.input setFocus:YES];
     if (isAutoPaused && self.runloop.isPaused)
         self.runloop.paused = NO;
     isAutoPaused = NO;
@@ -104,6 +105,7 @@
 
 - (void) windowDidResignKey:(NSNotification *) notification
 {
+    [self.input setFocus:NO];
     [self unlockCursor];
 
     if ([NSUserDefaults.standardUserDefaults boolForKey:@"pauseWhenInactive"]

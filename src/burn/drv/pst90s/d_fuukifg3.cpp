@@ -1256,29 +1256,29 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Asura Blade - Sword of Dynasty (Japan)
 
 static struct BurnRomInfo asurabldRomDesc[] = {
-	{ "pgm3.u1",	0x080000, 0x053e9758, 1 | BRF_PRG | BRF_ESS }, //  0 68ec020 Code
-	{ "pgm2.u2",	0x080000, 0x16b656ca, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "pgm1.u3",	0x080000, 0x35104452, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "pgm0.u4",	0x080000, 0x68615497, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "pgm3.u1",		0x080000, 0x053e9758, 1 | BRF_PRG | BRF_ESS }, //  0 68ec020 Code
+	{ "pgm2.u2",		0x080000, 0x16b656ca, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "pgm1.u3",		0x080000, 0x35104452, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "pgm0.u4",		0x080000, 0x68615497, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "srom.u7",	0x080000, 0xbb1deb89, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+	{ "srom.u7",		0x080000, 0xbb1deb89, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 
-	{ "pcm.u6",		0x400000, 0xac72225a, 3 | BRF_SND },           //  5 Samples
+	{ "pcm.u6",			0x400000, 0xac72225a, 3 | BRF_SND },           //  5 Samples
 
-	{ "bg1113.u23",	0x400000, 0x94338267, 4 | BRF_GRA },           //  6 Background Tiles 0
-	{ "bg1012.u22",	0x400000, 0xd717a0a1, 4 | BRF_GRA },           //  7
+	{ "bg1113.u23",		0x400000, 0x94338267, 4 | BRF_GRA },           //  6 Background Tiles 0
+	{ "bg1012.u22",		0x400000, 0xd717a0a1, 4 | BRF_GRA },           //  7
 
-	{ "bg2123.u24",	0x400000, 0x4acfc469, 5 | BRF_GRA },           //  8 Background Tiles 1
-	{ "bg2022.u25",	0x400000, 0xee312cd3, 5 | BRF_GRA },           //  9
+	{ "bg2123.u24",		0x400000, 0x4acfc469, 5 | BRF_GRA },           //  8 Background Tiles 1
+	{ "bg2022.u25",		0x400000, 0xee312cd3, 5 | BRF_GRA },           //  9
 
-	{ "map.u5",		0x200000, 0xe681155e, 6 | BRF_GRA },           // 10 Character Tiles
+	{ "map.u5",			0x200000, 0xe681155e, 6 | BRF_GRA },           // 10 Character Tiles
 
-	{ "sp23.u14",	0x400000, 0x7df492eb, 7 | BRF_GRA },           // 11 Sprite Tiles
-	{ "sp45.u15",	0x400000, 0x1890f42a, 7 | BRF_GRA },           // 12
-	{ "sp67.u16",	0x400000, 0xa48f1ef0, 7 | BRF_GRA },           // 13
-	{ "sp89.u17",	0x400000, 0x6b024362, 7 | BRF_GRA },           // 14
-	{ "spab.u18",	0x400000, 0x803d2d8c, 7 | BRF_GRA },           // 15
-	{ "spcd.u19",	0x400000, 0x42e5c26e, 7 | BRF_GRA },           // 16
+	{ "sp23.u14",		0x400000, 0x7df492eb, 7 | BRF_GRA },           // 11 Sprite Tiles
+	{ "sp45.u15",		0x400000, 0x1890f42a, 7 | BRF_GRA },           // 12
+	{ "sp67.u16",		0x400000, 0xa48f1ef0, 7 | BRF_GRA },           // 13
+	{ "sp89.u17",		0x400000, 0x6b024362, 7 | BRF_GRA },           // 14
+	{ "spab.u18",		0x400000, 0x803d2d8c, 7 | BRF_GRA },           // 15
+	{ "spcd.u19",		0x400000, 0x42e5c26e, 7 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(asurabld)
@@ -1302,34 +1302,34 @@ struct BurnDriver BurnDrvAsurabld = {
 };
 
 
-// Asura Buster - Eternal Warriors (Japan)
+// Asura Buster - Eternal Warriors (USA)
 
 static struct BurnRomInfo asurabusRomDesc[] = {
-	{ "pgm3.u1",	0x080000, 0x2c6b5271, 1 | BRF_PRG | BRF_ESS }, //  0 68ec020 Code
-	{ "pgm2.u2",	0x080000, 0x8f8694ec, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "pgm1.u3",	0x080000, 0x0a040f0f, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "pgm0.u4",	0x080000, 0x9b71e9d8, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "uspgm3.u1",		0x080000, 0xe152cec9, 1 | BRF_PRG | BRF_ESS }, //  0 68ec020 Code
+	{ "uspgm2.u2",		0x080000, 0xb19787db, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "uspgm1.u3",		0x080000, 0x6588e51a, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "uspgm0.u4",		0x080000, 0x981e6ff1, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "srom.u7",	0x080000, 0x368da389, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+	{ "srom.u7",		0x080000, 0x368da389, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 
-	{ "opm.u6",		0x400000, 0x31b05be4, 3 | BRF_SND },           //  5 Samples
+	{ "opm.u6",			0x400000, 0x31b05be4, 3 | BRF_SND },           //  5 Samples
 
-	{ "bg1113.u23",	0x400000, 0x5f8657e6, 4 | BRF_GRA },           //  6 Background Tiles 0
-	{ "bg1012.u22",	0x400000, 0xe3fb9af0, 4 | BRF_GRA },           //  7
+	{ "bg1113.u23",		0x400000, 0x5f8657e6, 4 | BRF_GRA },           //  6 Background Tiles 0
+	{ "bg1012.u22",		0x400000, 0xe3fb9af0, 4 | BRF_GRA },           //  7
 
-	{ "bg2123.u24",	0x400000, 0xc4ebb86b, 5 | BRF_GRA },           //  8 Background Tiles 1
-	{ "bg2022.u25",	0x400000, 0xf46eda52, 5 | BRF_GRA },           //  9
+	{ "bg2123.u24",		0x400000, 0xc4ebb86b, 5 | BRF_GRA },           //  8 Background Tiles 1
+	{ "bg2022.u25",		0x400000, 0xf46eda52, 5 | BRF_GRA },           //  9
 
-	{ "map.u5",		0x200000, 0xbd179dc5, 6 | BRF_GRA },           // 10 Character Tiles
+	{ "map.u5",			0x200000, 0xbd179dc5, 6 | BRF_GRA },           // 10 Character Tiles
 
-	{ "sp01.u13",	0x400000, 0x5edea463, 7 | BRF_GRA },           // 11 Sprite Tiles
-	{ "sp23.u14",	0x400000, 0x91b1b0de, 7 | BRF_GRA },           // 12
-	{ "sp45.u15",	0x400000, 0x96c69aac, 7 | BRF_GRA },           // 13
-	{ "sp67.u16",	0x400000, 0x7c3d83bf, 7 | BRF_GRA },           // 14
-	{ "sp89.u17",	0x400000, 0xcb1e14f8, 7 | BRF_GRA },           // 15
-	{ "spab.u18",	0x400000, 0xe5a4608d, 7 | BRF_GRA },           // 16
-	{ "spcd.u19",	0x400000, 0x99bfbe32, 7 | BRF_GRA },           // 17
-	{ "spef.u20",	0x400000, 0xc9c799cc, 7 | BRF_GRA },           // 18
+	{ "sp01.u13",		0x400000, 0x5edea463, 7 | BRF_GRA },           // 11 Sprite Tiles
+	{ "sp23.u14",		0x400000, 0x91b1b0de, 7 | BRF_GRA },           // 12
+	{ "sp45.u15",		0x400000, 0x96c69aac, 7 | BRF_GRA },           // 13
+	{ "sp67.u16",		0x400000, 0x7c3d83bf, 7 | BRF_GRA },           // 14
+	{ "sp89.u17",		0x400000, 0xcb1e14f8, 7 | BRF_GRA },           // 15
+	{ "spab.u18",		0x400000, 0xe5a4608d, 7 | BRF_GRA },           // 16
+	{ "spcd.u19",		0x400000, 0x99bfbe32, 7 | BRF_GRA },           // 17
+	{ "spef.u20",		0x400000, 0xc9c799cc, 7 | BRF_GRA },           // 18
 };
 
 STD_ROM_PICK(asurabus)
@@ -1337,7 +1337,7 @@ STD_ROM_FN(asurabus)
 
 struct BurnDriver BurnDrvAsurabus = {
 	"asurabus", NULL, NULL, NULL, "2000",
-	"Asura Buster - Eternal Warriors (Japan)\0", NULL, "Fuuki", "FG-3",
+	"Asura Buster - Eternal Warriors (USA)\0", NULL, "Fuuki", "FG-3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, asurabusRomInfo, asurabusRomName, NULL, NULL, NULL, NULL, AsurabldInputInfo, AsurabusDIPInfo,
@@ -1346,9 +1346,97 @@ struct BurnDriver BurnDrvAsurabus = {
 };
 
 
+// Asura Buster - Eternal Warriors (Japan, set 1)
+
+static struct BurnRomInfo asurabusjRomDesc[] = {
+	{ "pgm3.u1",		0x080000, 0x2c6b5271, 1 | BRF_PRG | BRF_ESS }, //  0 68ec020 Code
+	{ "pgm2.u2",		0x080000, 0x8f8694ec, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "pgm1.u3",		0x080000, 0x0a040f0f, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "pgm0.u4",		0x080000, 0x9b71e9d8, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "srom.u7",		0x080000, 0x368da389, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+
+	{ "opm.u6",			0x400000, 0x31b05be4, 3 | BRF_SND },           //  5 Samples
+
+	{ "bg1113.u23",		0x400000, 0x5f8657e6, 4 | BRF_GRA },           //  6 Background Tiles 0
+	{ "bg1012.u22",		0x400000, 0xe3fb9af0, 4 | BRF_GRA },           //  7
+
+	{ "bg2123.u24",		0x400000, 0xc4ebb86b, 5 | BRF_GRA },           //  8 Background Tiles 1
+	{ "bg2022.u25",		0x400000, 0xf46eda52, 5 | BRF_GRA },           //  9
+
+	{ "map.u5",			0x200000, 0xbd179dc5, 6 | BRF_GRA },           // 10 Character Tiles
+
+	{ "sp01.u13",		0x400000, 0x5edea463, 7 | BRF_GRA },           // 11 Sprite Tiles
+	{ "sp23.u14",		0x400000, 0x91b1b0de, 7 | BRF_GRA },           // 12
+	{ "sp45.u15",		0x400000, 0x96c69aac, 7 | BRF_GRA },           // 13
+	{ "sp67.u16",		0x400000, 0x7c3d83bf, 7 | BRF_GRA },           // 14
+	{ "sp89.u17",		0x400000, 0xcb1e14f8, 7 | BRF_GRA },           // 15
+	{ "spab.u18",		0x400000, 0xe5a4608d, 7 | BRF_GRA },           // 16
+	{ "spcd.u19",		0x400000, 0x99bfbe32, 7 | BRF_GRA },           // 17
+	{ "spef.u20",		0x400000, 0xc9c799cc, 7 | BRF_GRA },           // 18
+};
+
+STD_ROM_PICK(asurabusj)
+STD_ROM_FN(asurabusj)
+
+struct BurnDriver BurnDrvAsurabusj = {
+	"asurabusj", "asurabus", NULL, NULL, "2000",
+	"Asura Buster - Eternal Warriors (Japan, set 1)\0", NULL, "Fuuki", "FG-3",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	NULL, asurabusjRomInfo, asurabusjRomName, NULL, NULL, NULL, NULL, AsurabldInputInfo, AsurabusDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	320, 240, 4, 3
+};
+
+
+// Asura Buster - Eternal Warriors (Japan, set 2)
+
+static struct BurnRomInfo asurabusjaRomDesc[] = {
+	{ "pgm3_583a.u1",	0x080000, 0x46ab3b0e, 1 | BRF_PRG | BRF_ESS }, //  0 68ec020 Code
+	{ "pgm2_0ff4.u2",	0x080000, 0xfa7aa289, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "pgm1_bac7.u3",	0x080000, 0x67364e19, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "pgm0_193a.u4",	0x080000, 0x94d39c64, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "srom.u7",		0x080000, 0x368da389, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+
+	{ "opm.u6",			0x400000, 0x31b05be4, 3 | BRF_SND },           //  5 Samples
+
+	{ "bg1113.u23",		0x400000, 0x5f8657e6, 4 | BRF_GRA },           //  6 Background Tiles 0
+	{ "bg1012.u22",		0x400000, 0xe3fb9af0, 4 | BRF_GRA },           //  7
+
+	{ "bg2123.u24",		0x400000, 0xc4ebb86b, 5 | BRF_GRA },           //  8 Background Tiles 1
+	{ "bg2022.u25",		0x400000, 0xf46eda52, 5 | BRF_GRA },           //  9
+
+	{ "map.u5",			0x200000, 0xbd179dc5, 6 | BRF_GRA },           // 10 Character Tiles
+
+	{ "sp01.u13",		0x400000, 0x5edea463, 7 | BRF_GRA },           // 11 Sprite Tiles
+	{ "sp23.u14",		0x400000, 0x91b1b0de, 7 | BRF_GRA },           // 12
+	{ "sp45.u15",		0x400000, 0x96c69aac, 7 | BRF_GRA },           // 13
+	{ "sp67.u16",		0x400000, 0x7c3d83bf, 7 | BRF_GRA },           // 14
+	{ "sp89.u17",		0x400000, 0xcb1e14f8, 7 | BRF_GRA },           // 15
+	{ "spab.u18",		0x400000, 0xe5a4608d, 7 | BRF_GRA },           // 16
+	{ "spcd.u19",		0x400000, 0x99bfbe32, 7 | BRF_GRA },           // 17
+	{ "spef.u20",		0x400000, 0xc9c799cc, 7 | BRF_GRA },           // 18
+};
+
+STD_ROM_PICK(asurabusja)
+STD_ROM_FN(asurabusja)
+
+struct BurnDriver BurnDrvAsurabusja = {
+	"asurabusja", "asurabus", NULL, NULL, "2000",
+	"Asura Buster - Eternal Warriors (Japan, set 2)\0", NULL, "Fuuki", "FG-3",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	NULL, asurabusjaRomInfo, asurabusjaRomName, NULL, NULL, NULL, NULL, AsurabldInputInfo, AsurabusDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	320, 240, 4, 3
+};
+
+
 // Asura Buster - Eternal Warriors (Japan) (ARCADIA review build)
 
-static struct BurnRomInfo asurabusaRomDesc[] = {
+static struct BurnRomInfo asurabusjrRomDesc[] = {
 	{ "24-31.pgm3",	0x080000, 0xcfcb9c75, 1 | BRF_PRG | BRF_ESS }, //  0 68ec020 Code
 	{ "16-23.pgm2",	0x080000, 0xe4d07738, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "8-15.pgm1",	0x080000, 0x1dd67fe7, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -1376,15 +1464,15 @@ static struct BurnRomInfo asurabusaRomDesc[] = {
 	{ "spef.u20",	0x400000, 0xc9c799cc, 7 | BRF_GRA },           // 18
 };
 
-STD_ROM_PICK(asurabusa)
-STD_ROM_FN(asurabusa)
+STD_ROM_PICK(asurabusjr)
+STD_ROM_FN(asurabusjr)
 
-struct BurnDriver BurnDrvAsurabusa = {
-	"asurabusa", "asurabus", NULL, NULL, "2000",
+struct BurnDriver BurnDrvAsurabusjr = {
+	"asurabusjr", "asurabus", NULL, NULL, "2000",
 	"Asura Buster - Eternal Warriors (Japan) (ARCADIA review build)\0", NULL, "Fuuki", "FG-3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
-	NULL, asurabusaRomInfo, asurabusaRomName, NULL, NULL, NULL, NULL, AsurabusaInputInfo, AsurabusDIPInfo,
+	NULL, asurabusjrRomInfo, asurabusjrRomName, NULL, NULL, NULL, NULL, AsurabusaInputInfo, AsurabusDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	320, 240, 4, 3
 };

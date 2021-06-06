@@ -645,7 +645,7 @@ struct BurnDriver BurnDrvAliens2 = {
 
 static struct BurnRomInfo aliens3RomDesc[] = {
 	{ "875_w3_2.e24",	0x10000, 0xf917f7b5, 1 | BRF_PRG | BRF_ESS }, //  0 Konami CPU Code
-	{ "875_w3_1.c24",	0x20000, 0x3c0006fb, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "875_c01.c24",	0x20000, 0x3c0006fb, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "875_b03.g04",	0x08000, 0x1ac4d283, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
@@ -673,6 +673,43 @@ struct BurnDriver BurnDrvAliens3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM | GBF_HORSHOOT, 0,
 	NULL, aliens3RomInfo, aliens3RomName, NULL, NULL, NULL, NULL, AliensInputInfo, AliensDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	288, 224, 4, 3
+};
+
+
+// Aliens (World set 4)
+
+static struct BurnRomInfo aliens4RomDesc[] = {
+	{ "875_d02.e24",	0x10000, 0x1dc46780, 1 | BRF_PRG | BRF_ESS }, //  0 Konami CPU Code
+	{ "875_c01.c24",	0x20000, 0x3c0006fb, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "875_b03.g04",	0x08000, 0x1ac4d283, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "875b11.k13",		0x80000, 0x89c5c885, 3 | BRF_GRA },           //  3 Background Tiles
+	{ "875b12.k19",		0x80000, 0xea6bdc17, 3 | BRF_GRA },           //  4
+	{ "875b07.j13",		0x40000, 0xe9c56d66, 3 | BRF_GRA },           //  5
+	{ "875b08.j19",		0x40000, 0xf9387966, 3 | BRF_GRA },           //  6
+
+	{ "875b10.k08",		0x80000, 0x0b1035b1, 4 | BRF_GRA },           //  7 Sprites
+	{ "875b09.k02",		0x80000, 0xe76b3c19, 4 | BRF_GRA },           //  8
+	{ "875b06.j08",		0x40000, 0x081a0566, 4 | BRF_GRA },           //  9
+	{ "875b05.j02",		0x40000, 0x19a261f2, 4 | BRF_GRA },           // 10
+
+	{ "875b04.e05",		0x40000, 0x4e209ac8, 5 | BRF_SND },           // 11 K007232 Samples
+
+	{ "821a08.h14",		0x00100, 0x7da55800, 6 | BRF_OPT },           // 12 Timing Proms
+};
+
+STD_ROM_PICK(aliens4)
+STD_ROM_FN(aliens4)
+
+struct BurnDriver BurnDrvAliens4 = {
+	"aliens4", "aliens", NULL, NULL, "1990",
+	"Aliens (World set 4)\0", NULL, "Konami", "GX875",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM | GBF_HORSHOOT, 0,
+	NULL, aliens4RomInfo, aliens4RomName, NULL, NULL, NULL, NULL, AliensInputInfo, AliensDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	288, 224, 4, 3
 };

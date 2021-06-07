@@ -16,6 +16,7 @@
 		FE0A7EAA239B8A7E001E6997 /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE0A7EA8239B8A7E001E6997 /* About.xib */; };
 		FE0A7EAD239B8B4F001E6997 /* FBAboutController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0A7EAB239B8B4E001E6997 /* FBAboutController.m */; };
 		FE10C79B266BEFB000CA965B /* d_cyclemb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE10C79A266BEFB000CA965B /* d_cyclemb.cpp */; };
+		FE10C7A3266DDB9600CA965B /* d_shangkid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE10C7A2266DDB9600CA965B /* d_shangkid.cpp */; };
 		FE1B1092235615940065200C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1091235615940065200C /* AppDelegate.m */; };
 		FE1B1094235615950065200C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE1B1093235615950065200C /* Assets.xcassets */; };
 		FE1B1097235615950065200C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE1B1095235615950065200C /* MainMenu.xib */; };
@@ -1125,6 +1126,7 @@
 		FE0A7EAB239B8B4E001E6997 /* FBAboutController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBAboutController.m; sourceTree = "<group>"; };
 		FE0A7EAC239B8B4F001E6997 /* FBAboutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBAboutController.h; sourceTree = "<group>"; };
 		FE10C79A266BEFB000CA965B /* d_cyclemb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_cyclemb.cpp; sourceTree = "<group>"; };
+		FE10C7A2266DDB9600CA965B /* d_shangkid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_shangkid.cpp; sourceTree = "<group>"; };
 		FE1B108D235615940065200C /* FinalBurn Neo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FinalBurn Neo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE1B1090235615940065200C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FE1B1091235615940065200C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -4545,6 +4547,7 @@
 				FE1B216B23561A6E0065200C /* d_seicross.cpp */,
 				FE1B219F23561A6E0065200C /* d_senjyo.cpp */,
 				FE1B212A23561A6D0065200C /* d_sf.cpp */,
+				FE10C7A2266DDB9600CA965B /* d_shangkid.cpp */,
 				FE1B215E23561A6D0065200C /* d_shisen.cpp */,
 				FE1B216223561A6D0065200C /* d_sidearms.cpp */,
 				FE1B219423561A6E0065200C /* d_skyarmy.cpp */,
@@ -6392,6 +6395,7 @@
 				FE1B23D323561A750065200C /* m6809.cpp in Sources */,
 				FE1B258023561A760065200C /* d_backfire.cpp in Sources */,
 				FE1B26AD23561A770065200C /* d_toypop.cpp in Sources */,
+				FE10C7A3266DDB9600CA965B /* d_shangkid.cpp in Sources */,
 				FE1B25BA23561A760065200C /* k053251.cpp in Sources */,
 				FE1B276923561A790065200C /* timer.cpp in Sources */,
 				FE1B258C23561A760065200C /* d_darkseal.cpp in Sources */,

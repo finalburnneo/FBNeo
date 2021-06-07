@@ -18,9 +18,12 @@
 
 #include "burner.h"
 
-#define DEBUG_GP
+//#define DEBUG_GP
 
 static const int keyCodeCount = 0x80;
+static const int maxJoysticks = 8;
+static const int maxJoyButtons = 128;
+static const int deadzoneWidth = 50;
 static const int keyCodeToFbk[] = {
     FBK_A, // 00
     FBK_S, // 01
@@ -153,6 +156,7 @@ static const int keyCodeToFbk[] = {
 };
 static unsigned char keyState[256];
 static unsigned char simKeyState[256];
+static unsigned char joyState[maxJoysticks][256];
 
 #pragma mark - FBInputInfo
 
@@ -261,38 +265,11 @@ static unsigned char simKeyState[256];
           center:(NSInteger) center
        eventData:(AKGamepadEventData *) eventData
 {
-    // FIXME!!
-//    FXButtonMap *map = [_config mapWithId:[gamepad vendorProductString]];
-//    if (map) {
-//        int leftCode = [self remap:map
-//                          toPlayer:(int) [gamepad index]
-//                        deviceCode:FXGamepadLeft];
-//        int rightCode = [self remap:map
-//                           toPlayer:(int) [gamepad index]
-//                         deviceCode:FXGamepadRight];
-//        if (center - newValue > FXDeadzoneSize) {
-//            if (leftCode != FXMappingNotFound) {
-//                _inputStates[leftCode] = YES;
-//            }
-//            if (rightCode != FXMappingNotFound) {
-//                _inputStates[rightCode] = NO;
-//            }
-//        } else if (newValue - center > FXDeadzoneSize) {
-//            if (leftCode != FXMappingNotFound) {
-//                _inputStates[leftCode] = NO;
-//            }
-//            if (rightCode != FXMappingNotFound) {
-//                _inputStates[rightCode] = YES;
-//            }
-//        } else {
-//            if (leftCode != FXMappingNotFound) {
-//                _inputStates[leftCode] = NO;
-//            }
-//            if (rightCode != FXMappingNotFound) {
-//                _inputStates[rightCode] = NO;
-//            }
-//        }
-//    }
+    if (gamepad.index >= maxJoysticks) {
+        return;
+    }
+    joyState[gamepad.index][0x00] = center - newValue > deadzoneWidth; // L
+    joyState[gamepad.index][0x01] = newValue - center > deadzoneWidth; // R
 #ifdef DEBUG_GP
     NSLog(@"Joystick X: %ld (center: %ld) on gamepad %@",
           newValue, center, gamepad);
@@ -304,38 +281,11 @@ static unsigned char simKeyState[256];
           center:(NSInteger) center
        eventData:(AKGamepadEventData *) eventData
 {
-    // FIXME!!
-//    FXButtonMap *map = [_config mapWithId:[gamepad vendorProductString]];
-//    if (map) {
-//        int upCode = [self remap:map
-//                        toPlayer:(int) [gamepad index]
-//                      deviceCode:FXGamepadUp];
-//        int downCode = [self remap:map
-//                          toPlayer:(int) [gamepad index]
-//                        deviceCode:FXGamepadDown];
-//        if (center - newValue > FXDeadzoneSize) {
-//            if (upCode != FXMappingNotFound) {
-//                _inputStates[upCode] = YES;
-//            }
-//            if (downCode != FXMappingNotFound) {
-//                _inputStates[downCode] = NO;
-//            }
-//        } else if (newValue - center > FXDeadzoneSize) {
-//            if (upCode != FXMappingNotFound) {
-//                _inputStates[upCode] = NO;
-//            }
-//            if (downCode != FXMappingNotFound) {
-//                _inputStates[downCode] = YES;
-//            }
-//        } else {
-//            if (upCode != FXMappingNotFound) {
-//                _inputStates[upCode] = NO;
-//            }
-//            if (downCode != FXMappingNotFound) {
-//                _inputStates[downCode] = NO;
-//            }
-//        }
-//    }
+    if (gamepad.index >= maxJoysticks) {
+        return;
+    }
+    joyState[gamepad.index][0x02] = center - newValue > deadzoneWidth; // U
+    joyState[gamepad.index][0x03] = newValue - center > deadzoneWidth; // D
 #ifdef DEBUG_GP
     NSLog(@"Joystick Y: %ld (center: %ld) on gamepad %@",
           newValue, center, gamepad);
@@ -347,16 +297,10 @@ static unsigned char simKeyState[256];
           isDown:(BOOL) isDown
        eventData:(AKGamepadEventData *) eventData
 {
-    // FIXME!!
-//    FXButtonMap *map = [_config mapWithId:[gamepad vendorProductString]];
-//    if (map) {
-//        int code = [self remap:map
-//                      toPlayer:(int) [gamepad index]
-//                    deviceCode:(int) FXMakeButton(index)];
-//        if (code != FXMappingNotFound) {
-//            _inputStates[code] = isDown;
-//        }
-//    }
+    if (gamepad.index >= maxJoysticks || index > maxJoyButtons) {
+        return;
+    }
+    joyState[gamepad.index][0x80+index-1] = isDown;
 #ifdef DEBUG_GP
     NSLog(@"Button %ld %@ on gamepad %@", index, gamepad,
           isDown ? @"down" : @"up");
@@ -472,6 +416,7 @@ int MacOSinpInit()
 {
     memset(keyState, 0, sizeof(keyState));
     memset(simKeyState, 0, sizeof(simKeyState));
+    memset(joyState, 0, sizeof(joyState));
     return 0;
 }
 
@@ -513,13 +458,8 @@ int MacOSinpState(int nCode)
         return 0;
 
     if (nCode < 0x8000) {
-        // FIXME!!
-//        // Codes 4000-8000 = Joysticks
-//        int nJoyNumber = (nCode - 0x4000) >> 8;
-//
-//        // Find the joystick state in our array
-//        return JoystickState(nJoyNumber, nCode & 0xFF);
-        return 0;
+        int joyIndex = (nCode - 0x4000) >> 8;
+        return joyState[joyIndex][nCode & 0xff];
     }
 
     if (nCode < 0xC000) {

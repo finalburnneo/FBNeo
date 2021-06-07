@@ -124,6 +124,7 @@ DRV		BurnDrvnes_3dbatworru;
 DRV		BurnDrvnes_3dblock;
 DRV		BurnSpec3dsnooker;
 DRV		BurnSpec3dstarfighter;
+DRV		BurnSpec3dstarstrike;
 DRV		BurnSpec3dtetris;
 DRV		BurnDrvPuzzl3x3;
 DRV		BurnDrvPuzzl3x3a;
@@ -2422,6 +2423,7 @@ DRV		BurnDrvmd_chester;
 DRV		BurnDrvmd_chesterws;
 DRV		BurnDrvmd_chesterw;
 DRV		BurnDrvnes_chestfie;
+DRV		BurnSpecChevychase;
 DRV		BurnDrvtg_chewman;
 DRV		BurnDrvChewing;
 DRV		BurnDrvmd_chichi;
@@ -2476,12 +2478,17 @@ DRV		BurnDrvtg_chinawar;
 DRV		BurnDrvmd_chinesec;
 DRV		BurnDrvmd_chinf3;
 DRV		BurnDrvmd_chinf3a;
+DRV		BurnDrvChinhero2;
+DRV		BurnDrvChinhero3;
+DRV		BurnDrvChinhero;
+DRV		BurnDrvChinherot;
 DRV		BurnDrvnes_chipndalresrac;
 DRV		BurnDrvnes_chipndalresra;
 DRV		BurnDrvnes_chipndalresra2c;
 DRV		BurnDrvnes_chipndalresra2;
 DRV		BurnDrvcndi;
 DRV		BurnSpecChiprescue;
+DRV		BurnSpecChipchal;
 DRV		BurnDrvmd_chipsch;
 DRV		BurnDrvnes_chitesenvaz;
 DRV		BurnDrvfds_chitetaiord;
@@ -4135,6 +4142,7 @@ DRV		BurnDrvDynablst;
 DRV		BurnDrvDcclubj;
 DRV		BurnDrvDcclubfd;
 DRV		BurnDrvDcclub;
+DRV		BurnDrvDynamski;
 DRV		BurnDrvnes_dynamitebatman;
 DRV		BurnDrvDynabomb;
 DRV		BurnDrvnes_dynamitebowl;
@@ -6311,6 +6319,7 @@ DRV		BurnDrvHoccer;
 DRV		BurnDrvHoccer2;
 DRV		BurnDrvCHF_builtin;
 DRV		BurnDrvnes_hogansalley;
+DRV		BurnDrvHiryuken;
 DRV		BurnDrvnes_hokutonoken;
 DRV		BurnDrvsms_hokuto;
 DRV		BurnDrvsms_hokutotw;
@@ -12345,6 +12354,7 @@ DRV		BurnDrvShangha3j;
 DRV		BurnDrvShangha3u;
 DRV		BurnDrvShangha3up;
 DRV		BurnDrvShangha3;
+DRV		BurnDrvShangkid;
 DRV		BurnDrvngpc_shanghaipj;
 DRV		BurnDrvngpc_shanghaipu;
 DRV		BurnDrvngpc_shanghai;
@@ -13283,6 +13293,7 @@ DRV		BurnSpecStarblade;
 DRV		BurnDrvMSX_starblaz;
 DRV		BurnDrvMSX_starblazb;
 DRV		BurnDrvMSX_starblaza;
+DRV		BurnSpecStarbowls;
 DRV		BurnDrvMSX_starbowls;
 DRV		BurnDrvmd_starchaser;
 DRV		BurnDrvmd_starctrl;
@@ -15709,6 +15720,7 @@ DRV		BurnDrvpce_toyshopb;
 DRV		BurnDrvmd_toystory;
 DRV		BurnDrvmd_toystorys;
 DRV		BurnDrvmd_toystoryu;
+DRV		BurnSpecCelicagt;
 DRV		BurnDrvToypop;
 DRV		BurnDrvmd_toys;
 DRV		BurnDrvTrackfldc;
@@ -17446,6 +17458,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_3dblock,		// 3D Block (Unl)
 	&BurnSpec3dsnooker,			// 3D Snooker (48K)
 	&BurnSpec3dstarfighter,		// 3D Starfighter (48K)
+	&BurnSpec3dstarstrike,		// 3D Starstrike (48K)
 	&BurnSpec3dtetris,			// 3D-Tetris (48K)
 	&BurnDrvPuzzl3x3,			// 3X3 Puzzle (Enterprise)
 	&BurnDrvPuzzl3x3a,			// 3X3 Puzzle (Normal)
@@ -19744,6 +19757,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_chesterws,		// Chester Cheetah - Wild Wild Quest (Hack, Spanish)
 	&BurnDrvmd_chesterw,		// Chester Cheetah - Wild Wild Quest (USA)
 	&BurnDrvnes_chestfie,		// Chester Field - Ankoku Shin e no Chousen (Japan)
+	&BurnSpecChevychase,		// Chevy Chase (128K)
 	&BurnDrvtg_chewman,			// Chew Man Fu
 	&BurnDrvChewing,			// Chewing Gum
 	&BurnDrvmd_chichi,			// Chi Chi's Pro Challenge Golf (USA)
@@ -19798,12 +19812,17 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_chinesec,		// Chinese Chess
 	&BurnDrvmd_chinf3,			// Chinese Fighter III (Chi) [Imperfect Protection Emulation, NOT WORKING]
 	&BurnDrvmd_chinf3a,			// Chinese Fighter III (Chi, Unprotected?)
+	&BurnDrvChinhero2,			// Chinese Hero (older, set 1)
+	&BurnDrvChinhero3,			// Chinese Hero (older, set 2)
+	&BurnDrvChinhero,			// Chinese Hero
+	&BurnDrvChinherot,			// Chinese Heroe (Taito)
 	&BurnDrvnes_chipndalresrac,	// Chip 'n Dale - Rescue Rangers (USA) - Castellano v0.9
 	&BurnDrvnes_chipndalresra,	// Chip 'n Dale - Rescue Rangers (USA)
 	&BurnDrvnes_chipndalresra2c,// Chip 'n Dale - Rescue Rangers 2 (USA) - Castellano v0.99
 	&BurnDrvnes_chipndalresra2,	// Chip 'n Dale - Rescue Rangers 2 (USA)
 	&BurnDrvcndi,				// Chip n Dale (Intro demo)
 	&BurnSpecChiprescue,		// Chip Rescue (HB)
+	&BurnSpecChipchal,			// Chip's Challenge (128K)
 	&BurnDrvmd_chipsch,			// Chip's Challenge (HB, v1.4)
 	&BurnDrvnes_chitesenvaz,	// Chitei Senkuu Vazolder (Japan)
 	&BurnDrvfds_chitetaiord,	// Chitei Tairiku Ordola (Japan)
@@ -21457,6 +21476,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDcclubj,			// Dynamic Country Club (Japan, ROM Based)
 	&BurnDrvDcclubfd,			// Dynamic Country Club (US, Floppy Based, FD1094 317-0058-09d)
 	&BurnDrvDcclub,				// Dynamic Country Club (World, ROM Based)
+	&BurnDrvDynamski,			// Dynamic Ski
 	&BurnDrvnes_dynamitebatman,	// Dynamite Batman (Japan)
 	&BurnDrvDynabomb,			// Dynamite Bomber (Korea, Rev 1.5)
 	&BurnDrvnes_dynamitebowl,	// Dynamite Bowl (Japan)
@@ -23633,6 +23653,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvHoccer2,			// Hoccer (set 2)
 	&BurnDrvCHF_builtin,		// Hockey + Tennis
 	&BurnDrvnes_hogansalley,	// Hogan's Alley (USA)
+	&BurnDrvHiryuken,			// Hokuha Syourin Hiryu no Ken
 	&BurnDrvnes_hokutonoken,	// Hokuto no Ken (Japan)
 	&BurnDrvsms_hokuto,			// Hokuto no Ken (Jpn)
 	&BurnDrvsms_hokutotw,		// Hokuto no Ken (Tw)
@@ -29667,6 +29688,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvShangha3u,			// Shanghai III (US)
 	&BurnDrvShangha3up,			// Shanghai III (US, prototype)
 	&BurnDrvShangha3,			// Shanghai III (World)
+	&BurnDrvShangkid,			// Shanghai Kid
 	&BurnDrvngpc_shanghaipj,	// Shanghai Mini (Jpn, Prototype)
 	&BurnDrvngpc_shanghaipu,	// Shanghai Mini (USA, Prototype)
 	&BurnDrvngpc_shanghai,		// Shanghai Mini (World)
@@ -30605,6 +30627,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_starblaz,		// Star Blazer (Jpn)
 	&BurnDrvMSX_starblazb,		// Star Blazer (Jpn, Alt 2)
 	&BurnDrvMSX_starblaza,		// Star Blazer (Jpn, Alt)
+	&BurnSpecStarbowls,			// Star Bowls (48K)
 	&BurnDrvMSX_starbowls,		// Star Bowls (Spa)
 	&BurnDrvmd_starchaser,		// Star Chaser (HB)
 	&BurnDrvmd_starctrl,		// Star Control (USA)
@@ -33031,6 +33054,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_toystory,		// Toy Story (Euro)
 	&BurnDrvmd_toystorys,		// Toy Story (Hack, Spanish)
 	&BurnDrvmd_toystoryu,		// Toy Story (USA)
+	&BurnSpecCelicagt,			// Toyota Celica GT Rally (128K)
 	&BurnDrvToypop,				// Toypop
 	&BurnDrvmd_toys,			// Toys (USA)
 	&BurnDrvTrackfldc,			// Track & Field (Centuri)
@@ -33058,7 +33082,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfds_trans,			// Transformers - The Headmasters (Japan)
 	&BurnDrvmd_transf3,			// Transformers 3 (Rus)
 	&BurnDrvTransfrm,			// Transformer
-	&BurnSpecTransmuter,		// Transmuter
+	&BurnSpecTransmuter,		// Transmuter (48K)
 	&BurnSpectrthlast,			// Trantor - The Last Stormtrooper (48K)
 	&BurnDrvMSX_trantor,		// Trantor - The Last Stormtrooper (Euro)
 	&BurnSpecTranzam,			// Tranz Am (16K)

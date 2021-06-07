@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17077 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17089 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -122,6 +122,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_3dblock	|  	| 3D Block (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | spec_3dsnooker|  	| 3D Snooker (48K)					| 		| 1990	| Players Premie| ZX Spectrum	| 					|
 | spec_3dstarfighter|  	| 3D Starfighter (48K)					| 		| 1988	| Codemasters	| ZX Spectrum	| 					|
+| spec_3dstarstrike|  	| 3D Starstrike (48K)					| 		| 1984	| Realtime Games| ZX Spectrum	| 					|
 | spec_3dtetris	|  	| 3D-Tetris (48K)					| 		| 1989	| Antic		| ZX Spectrum	| 					|
 | 3x3puzzl	|  	| 3X3 Puzzle (Enterprise)				| 		| 1998	| Ace Enterprise| Miscellaneous	| 					|
 | 3x3puzzla	|  	| 3X3 Puzzle (Normal)					| 3x3puzzl	| 1998	| Ace Enterprise| Miscellaneous	| 					|
@@ -2372,7 +2373,7 @@ This list contains all games supported by FinalBurn Neo.
 | chelnovj	|  	| Chelnov - Atomic Runner (Japan)			| chelnov	| 1988	| Data East Corp| Miscellaneous	| 					|
 | chelnovu	|  	| Chelnov - Atomic Runner (US)				| chelnov	| 1988	| Data East USA	| Miscellaneous	| 					|
 | chelnov	|  	| Chelnov - Atomic Runner (World)			| 		| 1988	| Data East Corp| Miscellaneous	| 					|
-| spec_cheqflag	|  	| Chequered Flag (48K)					| 		| 1982	| Sinclair Resea| ZX Spectrum	| 					|
+| spec_cheqflag	|  	| Chequered Flag (48K)					| 		| 1982	| Sinclair Resea| ZX Spectrum	| A-F to steer, 0 to accelerate, I to br|
 | chqflagj	|  	| Chequered Flag (Japan)				| chqflag	| 1988	| Konami	| Miscellaneous	| 					|
 | chqflag	|  	| Chequered Flag					| 		| 1988	| Konami	| Miscellaneous	| 					|
 | nes_cherilpc	|  	| Cheril Perils Classic (HB)				| 		| 2018	| Mojon Twins	| Miscellaneous	| 					|
@@ -2390,6 +2391,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_chesterws	|  	| Chester Cheetah - Wild Wild Quest (Hack, Spanish)	| md_chesterw	| 2019	| Kaneko	| Sega Megadrive| 					|
 | md_chesterw	|  	| Chester Cheetah - Wild Wild Quest (USA)		| 		| 1992	| Kaneko	| Sega Megadrive| 					|
 | nes_chestfie	|  	| Chester Field - Ankoku Shin e no Chousen (Japan)	| 		| 1987	| Vic Tokai	| Miscellaneous	| 					|
+| spec_chevychase|  	| Chevy Chase (128K)					| 		| 1991	| Hi-Tec	| ZX Spectrum	| 					|
 | tg_chewman	|  	| Chew Man Fu						| 		| 1990	| NEC		| TurboGrafx 16	| 					|
 | chewing	|  	| Chewing Gum						| luctoday	| 1980	| unknown	| Galaxian	| 					|
 | md_chichi	|  	| Chi Chi's Pro Challenge Golf (USA)			| 		| 1993	| Virgin Interac| Sega Megadrive| 					|
@@ -2444,12 +2446,17 @@ This list contains all games supported by FinalBurn Neo.
 | md_chinesec	|  	| Chinese Chess						| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_chinf3	|   NW	| Chinese Fighter III (Chi)				| 		| 199?	| <unlicensed>	| Sega Megadrive| Imperfect Protection Emulation	|
 | md_chinf3a	|  	| Chinese Fighter III (Chi, Unprotected?)		| md_chinf3	| 199?	| <unlicensed>	| Sega Megadrive| 					|
+| chinhero2	|  	| Chinese Hero (older, set 1)				| chinhero	| 1984	| Taiyo		| Miscellaneous	| 					|
+| chinhero3	|  	| Chinese Hero (older, set 2)				| chinhero	| 1984	| Taiyo		| Miscellaneous	| 					|
+| chinhero	|  	| Chinese Hero						| 		| 1984	| Taiyo		| Miscellaneous	| 					|
+| chinherot	|  	| Chinese Heroe (Taito)					| chinhero	| 1984	| Taiyo (Taito l| Miscellaneous	| 					|
 | nes_chipndalresrac|  	| Chip 'n Dale - Rescue Rangers (USA) - Castellano v0.9	| nes_chipndalresra| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_chipndalresra|  	| Chip 'n Dale - Rescue Rangers (USA)			| 		| 1990	| Capcom	| Miscellaneous	| 					|
 | nes_chipndalresra2c|  	| Chip 'n Dale - Rescue Rangers 2 (USA) - Castellano v0.| nes_chipndalresra2| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_chipndalresra2|  	| Chip 'n Dale - Rescue Rangers 2 (USA)			| 		| 1994	| Capcom	| Miscellaneous	| 					|
 | cndi		|  	| Chip n Dale (Intro demo)				| 		| 2009	| Sergi		| Neo Geo MVS	| You must use the Universe BIOS and set|
 | spec_chiprescue|  	| Chip Rescue (HB)					| 		| 2019	| romancha	| ZX Spectrum	| Press 0 to start			|
+| spec_chipchal	|  	| Chip's Challenge (128K)				| 		| 1990	| U.S. Gold	| ZX Spectrum	| 					|
 | md_chipsch	|  	| Chip's Challenge (HB, v1.4)				| 		| 2020	| PortableDev	| Sega Megadrive| 					|
 | nes_chitesenvaz|  	| Chitei Senkuu Vazolder (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | fds_chitetaiord|  	| Chitei Tairiku Ordola (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -4079,6 +4086,7 @@ This list contains all games supported by FinalBurn Neo.
 | dcclubj	|  	| Dynamic Country Club (Japan, ROM Based)		| dcclub	| 1991	| Sega		| System 24	| 					|
 | dcclubfd	|  	| Dynamic Country Club (US, Floppy Based, FD1094 317-005| dcclub	| 1991	| Sega		| System 24	| 					|
 | dcclub	|  	| Dynamic Country Club (World, ROM Based)		| 		| 1991	| Sega		| System 24	| 					|
+| dynamski	|  	| Dynamic Ski						| 		| 1984	| Taiyo		| Miscellaneous	| 					|
 | nes_dynamitebatman|  	| Dynamite Batman (Japan)				| nes_batmaretjok| 1991	| Sunsoft	| Miscellaneous	| 					|
 | dynabomb	|  	| Dynamite Bomber (Korea, Rev 1.5)			| 		| 2000	| Limenko	| Miscellaneous	| 					|
 | nes_dynamitebowl|  	| Dynamite Bowl (Japan)					| 		| 1987	| Toemiland	| Miscellaneous	| 					|
@@ -6233,6 +6241,7 @@ This list contains all games supported by FinalBurn Neo.
 | hoccer2	|  	| Hoccer (set 2)					| hoccer	| 1983	| Eastern Micro | Miscellaneous	| 					|
 | chf_builtin	|  	| Hockey + Tennis					| 		| 1976	| Fairchild	| Channel F	| Channel F built-in games		|
 | nes_hogansalley|  	| Hogan's Alley (USA)					| 		| 1984	| Nintendo	| Miscellaneous	| 					|
+| hiryuken	|  	| Hokuha Syourin Hiryu no Ken				| shangkid	| 1985	| Taiyo (Taito l| Miscellaneous	| 					|
 | nes_hokutonoken|  	| Hokuto no Ken (Japan)					| 		| 1986	| Toei Animation| Miscellaneous	| 					|
 | sms_hokuto	|  	| Hokuto no Ken (Jpn)					| sms_blackblt	| 1986	| Sega		| Sega Master Sy| 					|
 | sms_hokutotw	|  	| Hokuto no Ken (Tw)					| sms_blackblt	| 1986?	| Aaronix	| Sega Master Sy| 					|
@@ -12183,6 +12192,7 @@ This list contains all games supported by FinalBurn Neo.
 | shangha3u	|  	| Shanghai III (US)					| shangha3	| 1993	| Sunsoft	| Miscellaneous	| 					|
 | shangha3up	|  	| Shanghai III (US, prototype)				| shangha3	| 1993	| Sunsoft	| Miscellaneous	| 					|
 | shangha3	|  	| Shanghai III (World)					| 		| 1993	| Sunsoft	| Miscellaneous	| 					|
+| shangkid	|  	| Shanghai Kid						| 		| 1985	| Taiyo (Data Ea| Miscellaneous	| 					|
 | ngp_shanghaipj|  	| Shanghai Mini (Jpn, Prototype)			| ngp_shanghai	| 1999	| SNK		| NeoGeo Pocket | 					|
 | ngp_shanghaipu|  	| Shanghai Mini (USA, Prototype)			| ngp_shanghai	| 1999	| SNK		| NeoGeo Pocket | 					|
 | ngp_shanghai	|  	| Shanghai Mini (World)					| 		| 1999	| SNK		| NeoGeo Pocket | 					|
@@ -13111,6 +13121,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_starblaz	|  	| Star Blazer (Jpn)					| 		| 1985	| Sony		| MSX		| 					|
 | msx_starblazb	|  	| Star Blazer (Jpn, Alt 2)				| msx_starblaz	| 1985	| Sony		| MSX		| 					|
 | msx_starblaza	|  	| Star Blazer (Jpn, Alt)				| msx_starblaz	| 1985	| Sony		| MSX		| 					|
+| spec_starbowls|  	| Star Bowls (48K)					| 		| 1991	| Zigurat Softwa| ZX Spectrum	| 					|
 | msx_starbowls	|  	| Star Bowls (Spa)					| 		| 1991	| Zigurat Softwa| MSX		| 					|
 | md_starchaser	|  	| Star Chaser (HB)					| 		| 2014	| Sik		| Sega Megadrive| 					|
 | md_starctrl	|  	| Star Control (USA)					| 		| 1991	| Ballistic	| Sega Megadrive| 					|
@@ -15509,6 +15520,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_toystory	|  	| Toy Story (Euro)					| 		| 1996	| Sega		| Sega Megadrive| 					|
 | md_toystorys	|  	| Toy Story (Hack, Spanish)				| md_toystory	| 2018	| Disney Interac| Sega Megadrive| 					|
 | md_toystoryu	|  	| Toy Story (USA)					| md_toystory	| 1996	| Disney Interac| Sega Megadrive| 					|
+| spec_celicagt	|  	| Toyota Celica GT Rally (128K)				| 		| 1991	| Gremlin Graphi| ZX Spectrum	| 					|
 | toypop	|  	| Toypop						| 		| 1986	| Namco		| Miscellaneous	| 					|
 | md_toys	|  	| Toys (USA)						| 		| 1993	| Absolute Enter| Sega Megadrive| 					|
 | trackfldc	|  	| Track & Field (Centuri)				| trackfld	| 1983	| Konami (Centur| Miscellaneous	| 					|
@@ -15534,7 +15546,7 @@ This list contains all games supported by FinalBurn Neo.
 | fds_trans	|  	| Transformers - The Headmasters (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_transf3	|  	| Transformers 3 (Rus)					| md_mazinwar	| 199?	| <unknown>	| Sega Megadrive| 					|
 | transfrm	|  	| Transformer						| 		| 1986	| Sega		| System E	| 					|
-| spec_transmuter|  	| Transmuter						| 		| 1987	| Codemasters	| ZX Spectrum	| 					|
+| spec_transmuter|  	| Transmuter (48K)					| 		| 1987	| Codemasters	| ZX Spectrum	| 					|
 | spec_trthlast	|  	| Trantor - The Last Stormtrooper (48K)			| 		| 1987	| Go!		| ZX Spectrum	| 					|
 | msx_trantor	|  	| Trantor - The Last Stormtrooper (Euro)		| 		| 1987	| Go!		| MSX		| 					|
 | spec_tranzam	|  	| Tranz Am (16K)					| 		| 1983	| Ultimate Play | ZX Spectrum	| 					|

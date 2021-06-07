@@ -156,6 +156,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="3dstarstrike" romof="spectrum">
+		<description>3D Starstrike (48K)</description>
+		<year>1984</year>
+		<manufacturer>Realtime Games</manufacturer>
+		<rom name="3D Starstrike (1984)(Realtime Games).z80" size="45116" crc="8bcdf6a3"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="3dtetris" romof="spectrum">
 		<description>3D-Tetris (48K)</description>
 		<year>1989</year>
@@ -2233,7 +2242,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cheqflag" romof="spectrum">
-		<description>Chequered Flag (48K)</description>
+		<description>Chequered Flag (48K) [A-F to steer, 0 to accelerate, I to brake and M-N to shift gears]</description>
 		<year>1982</year>
 		<manufacturer>Sinclair Research</manufacturer>
 		<rom name="Chequered Flag (1982)(Sinclair Research).z80" size="36463" crc="be6e657f"/>
@@ -2257,6 +2266,16 @@
 		<manufacturer>Mojon Twins</manufacturer>
 		<rom name="Cherils Perils (2010)(Mojon Twins).z80" size="38505" crc="bf144935"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="chevychase" romof="spec128">
+		<description>Chevy Chase (128K)</description>
+		<year>1991</year>
+		<manufacturer>Hi-Tec</manufacturer>
+		<rom name="Chevy Chase 128K (1991)(Hi-Tec).z80" size="85403" crc="6d88b22c"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2284,6 +2303,16 @@
 		<year>2019</year>
 		<manufacturer>romancha</manufacturer>
 		<rom name="Chip Rescue (2019)(romancha).tap" size="19111" crc="917b33c6"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="chipchal" romof="spec128">
+		<description>Chip's Challenge (128K)</description>
+		<year>1990</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Chip's Challenge 128K (1990)(U.S. Gold)(128K).tap" size="142333" crc="fcb9eb9a"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -10482,6 +10511,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="starbowls" romof="spectrum">
+		<description>Star Bowls (48K)</description>
+		<year>1991</year>
+		<manufacturer>Zigurat Software</manufacturer>
+		<rom name="Star Bowls (1991)(Zigurat Software).tap" size="47077" crc="10eb1995"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="stardragon" romof="spec128">
 		<description>Star Dragon (128K)</description>
 		<year>1991</year>
@@ -11650,6 +11688,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="celicagt" romof="spec128">
+		<description>Toyota Celica GT Rally (128K)</description>
+		<year>1991</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
+		<rom name="Toyota Celica GT Rally (1991)(Gremlin Graphics).tap" size="97948" crc="153240dc"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="tracfiel" romof="spectrum">
 		<description>Track and Field (48K)</description>
 		<year>1988</year>
@@ -11660,7 +11708,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="transmuter" romof="spectrum">
-		<description>Transmuter</description>
+		<description>Transmuter (48K)</description>
 		<year>1987</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Transmuter (1987)(Codemasters).tap" size="48599" crc="626052a5"/>

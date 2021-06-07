@@ -1904,6 +1904,7 @@ static bool retro_load_game_common()
 		HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Read https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo\n");
 		goto end;
 	}
+	return true;
 
 end:
 	nBurnSoundRate = 48000;

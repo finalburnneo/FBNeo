@@ -288,7 +288,7 @@ STDDIPINFO(Popeyef)
 
 static const res_net_decode_info popeye_7051_decode_info =
 {
-	1, 0, 31, { 0, 0, 0 }, { 0, 3, 6 }, { 7, 7, 3 }
+	1, 0, 15, { 0, 0, 0 }, { 0, 3, 6 }, { 7, 7, 3 }
 };
 
 static const res_net_decode_info popeye_7052_decode_info =

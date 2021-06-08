@@ -28,7 +28,7 @@ static TCHAR* szClass = _T("FinalBurn Neo");					// Window class name
 HWND hScrnWnd = NULL;									// Handle to the screen window
 HWND hRebar = NULL;										// Handle to the Rebar control containing the menu
 
-static bool bMaximised;
+static bool bMaximized;
 static int nPrevWidth, nPrevHeight;
 
 static int bBackFromHibernation = 0;
@@ -3146,7 +3146,7 @@ static int OnSysCommand(HWND, UINT sysCommand, int, int)
 static void OnSize(HWND, UINT state, int cx, int cy)
 {
 	if (state == SIZE_MINIMIZED) {
-		bMaximised = false;
+		bMaximized = false;
 	} else {
 		bool bSizeChanged = false;
 
@@ -3157,16 +3157,16 @@ static void OnSize(HWND, UINT state, int cx, int cy)
 		}
 
 		if (state == SIZE_MAXIMIZED) {
-			if (!bMaximised) {
+			if (!bMaximized) {
 				bSizeChanged = true;
 			}
-			bMaximised = true;
+			bMaximized = true;
 		}
 		if (state == SIZE_RESTORED) {
-			if (bMaximised) {
+			if (bMaximized) {
 				bSizeChanged = true;
 			}
-			bMaximised = false;
+			bMaximized = false;
 		}
 
 		if (bSizeChanged) {
@@ -3440,7 +3440,13 @@ int ScrnSize()
 
 	MenuUpdate();
 
-	bMaximised = false;
+	if (bMaximized) {
+		// At this point: game window is maximized
+		// different game is selected
+		// usually the game window would be re-created using the "Window Size" selection
+		// -but- since the game window was maximized, it should stay that way.
+		PostMessage(hScrnWnd, WM_SYSCOMMAND, SC_MAXIMIZE, 0);
+	}
 
 	MoveWindow(hScrnWnd, x, y, w, h, true);
 

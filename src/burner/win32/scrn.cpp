@@ -2230,7 +2230,8 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_INPUT_AUTOFIRE_RATE_1: nAutoFireRate = 22; break;
 		case MENU_INPUT_AUTOFIRE_RATE_2: nAutoFireRate = 12; break;
 		case MENU_INPUT_AUTOFIRE_RATE_3: nAutoFireRate =  8; break;
-		case MENU_INPUT_AUTOFIRE_RATE_4: nAutoFireRate =  4; break;
+		case MENU_INPUT_AUTOFIRE_RATE_4: nAutoFireRate =  6; break;
+		case MENU_INPUT_AUTOFIRE_RATE_5: nAutoFireRate =  4; break;
 
 		case MENU_PRIORITY_REALTIME: // bad idea, this will freeze the entire system.
 			break;

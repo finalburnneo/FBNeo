@@ -1785,6 +1785,12 @@ static INT32 DrvDraw()
 	return 0;
 }
 
+static void cancel_opposing(UINT8 *inp)
+{
+	if ((*inp & 0x03) == 0x00) *inp |= 0x03;
+	if ((*inp & 0x0c) == 0x00) *inp |= 0x0c;
+}
+
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -1810,6 +1816,11 @@ static INT32 DrvFrame()
 		if (has_gun) {
 			BurnGunMakeInputs(0, Analog[0], Analog[1]);
 			BurnGunMakeInputs(1, Analog[2], Analog[3]);
+		} else {
+			cancel_opposing(&DrvInputs[0]);
+			cancel_opposing(&DrvInputs[1]);
+			cancel_opposing(&DrvInputs[2]);
+			cancel_opposing(&DrvInputs[3]);
 		}
 	}
 

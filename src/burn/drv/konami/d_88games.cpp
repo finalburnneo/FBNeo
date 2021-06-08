@@ -47,13 +47,13 @@ static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo games88InputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 start"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
@@ -69,89 +69,90 @@ static struct BurnInputInfo games88InputList[] = {
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p4 fire 2"	},
 	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p4 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(games88)
 
 static struct BurnDIPInfo games88DIPList[]=
 {
-	{0x14, 0xff, 0xff, 0xf0, NULL			},
-	{0x15, 0xff, 0xff, 0xff, NULL			},
-	{0x16, 0xff, 0xff, 0x7b, NULL			},
+	DIP_OFFSET(0x14)
+	{0x00, 0xff, 0xff, 0xf0, NULL					},
+	{0x01, 0xff, 0xff, 0xff, NULL					},
+	{0x02, 0xff, 0xff, 0x7b, NULL					},
 
-//	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-//	{0x14, 0x01, 0x10, 0x10, "Off"			},
-//	{0x14, 0x01, 0x10, 0x00, "On"			},
+//	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+//	{0x00, 0x01, 0x10, 0x10, "Off"					},
+//	{0x00, 0x01, 0x10, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "World Records"	},
-	{0x14, 0x01, 0x20, 0x20, "Don't Erase"		},
-	{0x14, 0x01, 0x20, 0x00, "Erase on Reset"	},
+	{0   , 0xfe, 0   ,    2, "World Records"		},
+	{0x00, 0x01, 0x20, 0x20, "Don't Erase"			},
+	{0x00, 0x01, 0x20, 0x00, "Erase on Reset"		},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x14, 0x01, 0x40, 0x40, "Off"			},
-	{0x14, 0x01, 0x40, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x00, 0x01, 0x40, 0x40, "Off"					},
+	{0x00, 0x01, 0x40, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,   16, "Coin A"		},
-	{0x15, 0x01, 0x0f, 0x02, "4 Coins 1 Credit"	  },
-	{0x15, 0x01, 0x0f, 0x05, "3 Coins 1 Credit"	  },
-	{0x15, 0x01, 0x0f, 0x08, "2 Coins 1 Credit"	  },
-	{0x15, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"	},
-	{0x15, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"	},
-	{0x15, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"	  },
-	{0x15, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"	},
-	{0x15, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"	},
-	{0x15, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"	},
-	{0x15, 0x01, 0x0f, 0x06, "2 Coins 5 Credits"	},
-	{0x15, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"	},
-	{0x15, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"	},
-	{0x15, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
-	{0x15, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
-	{0x15, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
-	{0x15, 0x01, 0x0f, 0x00, "Free Play"		},
+	{0   , 0xfe, 0   ,   16, "Coin A"				},
+	{0x01, 0x01, 0x0f, 0x02, "4 Coins 1 Credit"	  	},
+	{0x01, 0x01, 0x0f, 0x05, "3 Coins 1 Credit"	  	},
+	{0x01, 0x01, 0x0f, 0x08, "2 Coins 1 Credit"	  	},
+	{0x01, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"	},
+	{0x01, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"	},
+	{0x01, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"	  	},
+	{0x01, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"	},
+	{0x01, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"	},
+	{0x01, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"	},
+	{0x01, 0x01, 0x0f, 0x06, "2 Coins 5 Credits"	},
+	{0x01, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"	},
+	{0x01, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"	},
+	{0x01, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
+	{0x01, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
+	{0x01, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
+	{0x01, 0x01, 0x0f, 0x00, "Free Play"			},
 
-	{0   , 0xfe, 0   ,   16, "Coin B"		},
-	{0x15, 0x01, 0xf0, 0x20, "4 Coins 1 Credit"	  },
-	{0x15, 0x01, 0xf0, 0x50, "3 Coins 1 Credit"	  },
-	{0x15, 0x01, 0xf0, 0x80, "2 Coins 1 Credit"	  },
-	{0x15, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"	},
-	{0x15, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"	},
-	{0x15, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"	  },
-	{0x15, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"	},
-	{0x15, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"	},
-	{0x15, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"	},
-	{0x15, 0x01, 0xf0, 0x60, "2 Coins 5 Credits"	},
-	{0x15, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"	},
-	{0x15, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"	},
-	{0x15, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
-	{0x15, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
-	{0x15, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
-	{0x15, 0x01, 0xf0, 0x00, "No Coin B"		},
+	{0   , 0xfe, 0   ,   16, "Coin B"				},
+	{0x01, 0x01, 0xf0, 0x20, "4 Coins 1 Credit"	  	},
+	{0x01, 0x01, 0xf0, 0x50, "3 Coins 1 Credit"	  	},
+	{0x01, 0x01, 0xf0, 0x80, "2 Coins 1 Credit"	  	},
+	{0x01, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"	},
+	{0x01, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"	},
+	{0x01, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"	  	},
+	{0x01, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"	},
+	{0x01, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"	},
+	{0x01, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"	},
+	{0x01, 0x01, 0xf0, 0x60, "2 Coins 5 Credits"	},
+	{0x01, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"	},
+	{0x01, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"	},
+	{0x01, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
+	{0x01, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
+	{0x01, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
+	{0x01, 0x01, 0xf0, 0x00, "No Coin B"			},
 
-//	{0   , 0xfe, 0   ,    4, "Cabinet"		},
-//	{0x16, 0x01, 0x06, 0x06, "Cocktail"		},
-//	{0x16, 0x01, 0x06, 0x04, "Cocktail (A)"		},
-//	{0x16, 0x01, 0x06, 0x02, "Upright"		},
-//	{0x16, 0x01, 0x06, 0x00, "Upright (D)"		},
+//	{0   , 0xfe, 0   ,    4, "Cabinet"				},
+//	{0x02, 0x01, 0x06, 0x06, "Cocktail"				},
+//	{0x02, 0x01, 0x06, 0x04, "Cocktail (A)"			},
+//	{0x02, 0x01, 0x06, 0x02, "Upright"				},
+//	{0x02, 0x01, 0x06, 0x00, "Upright (D)"			},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x16, 0x01, 0x60, 0x60, "Easy"			},
-	{0x16, 0x01, 0x60, 0x40, "Normal"		},
-	{0x16, 0x01, 0x60, 0x20, "Hard"			},
-	{0x16, 0x01, 0x60, 0x00, "Hardest"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x02, 0x01, 0x60, 0x60, "Easy"					},
+	{0x02, 0x01, 0x60, 0x40, "Normal"				},
+	{0x02, 0x01, 0x60, 0x20, "Hard"					},
+	{0x02, 0x01, 0x60, 0x00, "Hardest"				},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x16, 0x01, 0x80, 0x80, "Off"			},
-	{0x16, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x02, 0x01, 0x80, 0x80, "Off"					},
+	{0x02, 0x01, 0x80, 0x00, "On"					},
 };
 
 STDDIPINFO(games88)
 
-void games88_main_write(UINT16 address, UINT8 data)
+static void games88_main_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -194,7 +195,7 @@ void games88_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 games88_main_read(UINT16 address)
+static UINT8 games88_main_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -220,9 +221,9 @@ UINT8 games88_main_read(UINT16 address)
 			return DrvBankRAM[address & 0x7ff];
 		} else {
 			if (zoomreadroms) {
-				return K051316ReadRom(0, address & 0x7ff); // k051316_rom_0
+				return K051316ReadRom(0, address & 0x7ff);
 			} else {
-				return K051316Read(0, address & 0x7ff); // k051316_0
+				return K051316Read(0, address & 0x7ff);
 			}
 		}
 	}
@@ -234,7 +235,7 @@ UINT8 games88_main_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall games88_sound_write(UINT16 address, UINT8 data)
+static void __fastcall games88_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -258,7 +259,7 @@ void __fastcall games88_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall games88_sound_read(UINT16 address)
+static UINT8 __fastcall games88_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -286,7 +287,7 @@ static void games88_set_lines(INT32 lines)
 		konamiMapMemory(DrvPalRAM, 0x1000, 0x1fff, MAP_RAM);
 	} else {
 		konamiMapMemory(DrvKonROM + nBank + 0x1000, 0x1000, 0x1fff, MAP_ROM);
-		konamiMapMemory(DrvKonROM +         0x0000, 0x1000, 0x1fff, MAP_WRITE); // unmap writes
+		konamiMapMemory(DrvPalRAM, 0x1000, 0x1fff, MAP_WRITE);
 	}
 
 	videobank = lines & 0x10;
@@ -353,9 +354,9 @@ static INT32 MemIndex()
 	DrvGfxROM0		= Next; Next += 0x080000;
 	DrvGfxROM1		= Next; Next += 0x100000;
 	DrvGfxROM2		= Next; Next += 0x040000;
-	DrvGfxROMExp0		= Next; Next += 0x100000;
-	DrvGfxROMExp1		= Next; Next += 0x200000;
-	DrvGfxROMExp2		= Next; Next += 0x080000;
+	DrvGfxROMExp0	= Next; Next += 0x100000;
+	DrvGfxROMExp1	= Next; Next += 0x200000;
+	DrvGfxROMExp2	= Next; Next += 0x080000;
 
 	DrvSndROM0		= Next; Next += 0x020000;
 	DrvSndROM1		= Next; Next += 0x020000;
@@ -384,12 +385,7 @@ static INT32 DrvInit()
 {
 	GenericTilesInit();
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvKonROM  + 0x008000,  0, 1)) return 1;
@@ -441,8 +437,8 @@ static INT32 DrvInit()
 	konamiInit(0);
 	konamiOpen(0);
 	konamiMapMemory(DrvPalRAM + 0x0000,	0x1000, 0x1fff, MAP_RAM);
-	konamiMapMemory(DrvKonRAM,		0x2000, 0x2fff, MAP_RAM); 
-	konamiMapMemory(DrvNVRAM,		0x3000, 0x37ff, MAP_RAM);
+	konamiMapMemory(DrvKonRAM,			0x2000, 0x2fff, MAP_RAM);
+	konamiMapMemory(DrvNVRAM,			0x3000, 0x37ff, MAP_RAM);
 	konamiMapMemory(DrvKonROM + 0x8000,	0x8000, 0xffff, MAP_ROM);
 	konamiSetWriteHandler(games88_main_write);
 	konamiSetReadHandler(games88_main_read);
@@ -451,16 +447,14 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM);
-	ZetMapArea(0x8000, 0x87ff, 0, DrvZ80RAM);
-	ZetMapArea(0x8000, 0x87ff, 1, DrvZ80RAM);
-	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM);
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM, 0x8000, 0x87ff, MAP_RAM);
 	ZetSetWriteHandler(games88_sound_write);
 	ZetSetReadHandler(games88_sound_read);
 	ZetClose();
 
-	BurnYM2151Init(3579545);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
+	BurnTimerAttachZet(3579545);
 	BurnYM2151SetAllRoutes(0.75, BURN_SND_ROUTE_BOTH);
 
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvSndROM0);
@@ -498,7 +492,7 @@ static INT32 DrvExit()
 	BurnYM2151Exit();
 	UPD7759Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -551,7 +545,6 @@ static INT32 DrvFrame()
 	konamiNewFrame();
 	ZetNewFrame();
 
-	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 100;
 	INT32 nCyclesTotal[2] = { (((3000000 / 60) * 133) / 100) /* 33% overclock */, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -562,24 +555,13 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		CPU_RUN(0, konami);
-		CPU_RUN(1, Zet);
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
+		CPU_RUN_TIMER(1);
 	}
 
 	if (K052109_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		if (nSegmentLength) {
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-		}
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		UPD7759Render(pBurnSoundOut, nBurnSoundLen);
 	}
 

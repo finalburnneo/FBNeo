@@ -186,7 +186,7 @@ UINT8 K051960Read(UINT32 Offset)
 {
 	if (K051960ReadRoms) {
 		K051960RomOffset = (Offset & 0x3fc) >> 2;
-		K0519060FetchRomData(Offset & 3);
+		return K0519060FetchRomData(Offset & 3);
 	}
 	
 	return K051960Ram[Offset];

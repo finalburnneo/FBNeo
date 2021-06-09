@@ -439,8 +439,8 @@ static INT32 DrvDoReset()
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	ZetReset(0);
-	ZetReset(1);
-	ZetReset(2);
+	ZetSetRESETLine(1, 1);
+	ZetSetRESETLine(2, 1);
 
 	AY8910Reset(0);
 	DACReset();

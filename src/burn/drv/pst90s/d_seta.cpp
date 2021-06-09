@@ -5442,8 +5442,6 @@ UINT8 __fastcall downtown_prot_read(UINT32 address)
 		if (address >= 0x200100 && address <= 0x20010b) {
 			char *waltz = "WALTZ0";
 			return waltz[(address & 0x0f) / 2];
-		} else {
-			return 0;
 		}
 	}
 
@@ -6297,6 +6295,8 @@ static UINT8 downtown_sub_read(UINT16 address)
 static void downtown68kInit()
 {
 	downtown_protram = DrvNVRAM;
+
+	memset(DrvNVRAM, 0xff, 0x400);
 
 	SekInit(0, 0x68000);
 	SekOpen(0);

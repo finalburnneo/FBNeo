@@ -1907,18 +1907,6 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				POST_INITIALISE_MESSAGE;
 			}
 			break;
-		case MENU_DSOUND_11025:
-			if (!bDrvOkay) {
-				nAudSampleRate[0] = 11025;
-				POST_INITIALISE_MESSAGE;
-			}
-			break;
-		case MENU_DSOUND_22050:
-			if (!bDrvOkay) {
-				nAudSampleRate[0] = 22050;
-				POST_INITIALISE_MESSAGE;
-			}
-			break;
 		case MENU_DSOUND_44100:
 			if (!bDrvOkay) {
 				nAudSampleRate[0] = 44100;
@@ -1935,18 +1923,6 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_XAUDIO_NOSOUND:
 			if (!bDrvOkay) {
 				nAudSampleRate[1] = 0;
-				POST_INITIALISE_MESSAGE;
-			}
-			break;
-		case MENU_XAUDIO_11025:
-			if (!bDrvOkay) {
-				nAudSampleRate[1] = 11025;
-				POST_INITIALISE_MESSAGE;
-			}
-			break;
-		case MENU_XAUDIO_22050:
-			if (!bDrvOkay) {
-				nAudSampleRate[1] = 22050;
 				POST_INITIALISE_MESSAGE;
 			}
 			break;

@@ -522,13 +522,9 @@
 #define MENU_XAUDIO_BASS                    10202
 #define MENU_XAUDIO_REVERB                  10203
 #define MENU_DSOUND_NOSOUND					10210
-#define MENU_DSOUND_11025               	10211
-#define MENU_DSOUND_22050               	10212
 #define MENU_DSOUND_44100               	10213
 #define MENU_DSOUND_48000               	10214
 #define MENU_XAUDIO_NOSOUND					10220
-#define MENU_XAUDIO_11025                   10221
-#define MENU_XAUDIO_22050                   10222
 #define MENU_XAUDIO_44100                   10223
 #define MENU_XAUDIO_48000                   10224
 #define MENU_INTERPOLATE_0					10230

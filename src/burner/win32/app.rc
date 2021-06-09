@@ -1459,8 +1459,6 @@ BEGIN
 		MENUITEM "Use Low-pass filter",					MENU_DSOUND_BASS
 		MENUITEM SEPARATOR
 		MENUITEM "Sound disabled",					MENU_DSOUND_NOSOUND
-        	MENUITEM "11025Hz samplerate",					MENU_DSOUND_11025
-        	MENUITEM "22050Hz samplerate",					MENU_DSOUND_22050
         	MENUITEM "44100Hz samplerate",					MENU_DSOUND_44100
         	MENUITEM "48000Hz samplerate",					MENU_DSOUND_48000
 	END
@@ -1474,8 +1472,6 @@ BEGIN
 		MENUITEM "Use reverb",						MENU_XAUDIO_REVERB
 		MENUITEM SEPARATOR
 		MENUITEM "Sound disabled",					MENU_XAUDIO_NOSOUND
-        	MENUITEM "11025Hz samplerate",					MENU_XAUDIO_11025
-        	MENUITEM "22050Hz samplerate",					MENU_XAUDIO_22050
         	MENUITEM "44100Hz samplerate",					MENU_XAUDIO_44100
         	MENUITEM "48000Hz samplerate",					MENU_XAUDIO_48000
 	END

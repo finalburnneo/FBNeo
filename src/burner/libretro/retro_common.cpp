@@ -215,8 +215,6 @@ static const struct retro_core_option_definition var_fbneo_samplerate = {
 	"Samplerate",
 	"Configure samplerate, it could impact performances, closing & starting game again is required",
 	{
-		{ "11025", NULL },
-		{ "22050", NULL },
 		{ "44100", NULL },
 		{ "48000", NULL },
 		{ NULL, NULL },
@@ -1025,10 +1023,6 @@ void check_variables(void)
 				g_audio_samplerate = 48000;
 			else if (strcmp(var.value, "44100") == 0)
 				g_audio_samplerate = 44100;
-			else if (strcmp(var.value, "22050") == 0)
-				g_audio_samplerate = 22050;
-			else if (strcmp(var.value, "11025") == 0)
-				g_audio_samplerate = 11025;
 			else
 				g_audio_samplerate = 48000;
 		}

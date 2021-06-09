@@ -713,7 +713,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="arcofyesod" romof="spec128">
-		<description>Arc of Yesod, The</description>
+		<description>Arc of Yesod, The (128K)</description>
 		<year>1985</year>
 		<manufacturer>Thor Computer Software</manufacturer>
 		<rom name="Arc of Yesod, The (1985)(Thor Computer Software).tap" size="74016" crc="b4c5351b"/>
@@ -1487,6 +1487,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bloody" romof="spectrum">
+		<description>Bloody (Spanish) (48K)</description>
+		<year>1987</year>
+		<manufacturer>Genesis Soft</manufacturer>
+		<rom name="Bloody ES (1987)(Genesis Soft).tap" size="28033" crc="ae89fdd6"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bmxfrees" romof="spec128">
 		<description>BMX Freestyle Simulator (128K)</description>
 		<year>1989</year>
@@ -1657,6 +1666,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bounces" romof="spectrum">
+		<description>Bounces (48K)</description>
+		<year>1986</year>
+		<manufacturer>Beyond</manufacturer>
+		<rom name="Bounces (1986)(Beyond).z80" size="35649" crc="bd312347"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bbredux" romof="spectrum">
 		<description>Bouncing Bomb Redux (48K) (HB) [Homebrew]</description>
 		<year>2012</year>
@@ -1702,6 +1720,15 @@
 		<rom name="Brainache (1987)(Codemasters).tap" size="49898" crc="28592736"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bravestarr" romof="spectrum">
+		<description>BraveStarr (48K)</description>
+		<year>1987</year>
+		<manufacturer>Go!</manufacturer>
+		<rom name="BraveStarr (1987)(Go!).tap" size="47812" crc="e4da9cc1"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2766,13 +2793,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="crosswize" romof="spec128">
-		<description>Crosswize</description>
+	<game name="crosswize" romof="spectrum">
+		<description>Crosswize (48K)</description>
 		<year>1988</year>
 		<manufacturer>Firebird Software</manufacturer>
 		<rom name="Crosswize (1988)(Firebird Software).tap" size="50407" crc="8a6d909b"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4524,6 +4550,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="fury" romof="spec128">
+		<description>Fury, The (128K)</description>
+		<year>1988</year>
+		<manufacturer>Martech Games</manufacturer>
+		<rom name="Fury, The (1988)(Martech Games).tap" size="47954" crc="7ecbb308"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="gloc" romof="spec128">
 		<description>G-LOC (128K)</description>
 		<year>1992</year>
@@ -4867,6 +4903,26 @@
 		<year>2009</year>
 		<manufacturer>RetroWorks</manufacturer>
 		<rom name="Gommy Defensor Medieval EN (2009)(RetroWorks).tap" size="43940" crc="c2c41f87"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gonzzalezz1" romof="spec128">
+		<description>Gonzzalezz Part 1 (Spanish) (128K)</description>
+		<year>1989</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Gonzzalezz ES Part 1 (1989)(Opera Soft).tap" size="48329" crc="f9309baa"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gonzzalezz2" cloneof="gonzzalezz1" romof="gonzzalezz1">
+		<description>Gonzzalezz Part 2 (Spanish) (128K)</description>
+		<year>1989</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Gonzzalezz ES Part 2 (1989)(Opera Soft).tap" size="48329" crc="d9041f4b"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -7755,13 +7811,22 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="nodesofyesod" romof="spec128">
-		<description>Nodes of Yesod</description>
+	<game name="noyesod128" romof="spec128">
+		<description>Nodes of Yesod (128K)</description>
 		<year>1985</year>
 		<manufacturer>Odin Computer Graphics</manufacturer>
-		<rom name="Nodes of Yesod (1985)(Odin Computer Graphics).tap" size="76905" crc="1c251259"/>
+		<rom name="Nodes of Yesod 128K (1985)(Odin Computer Graphics).tap" size="83920" crc="dea25751"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="noyesod48" cloneof="noyesod128" romof="noyesod128">
+		<description>Nodes of Yesod (48K)</description>
+		<year>1985</year>
+		<manufacturer>Odin Computer Graphics</manufacturer>
+		<rom name="Nodes of Yesod 48K (1985)(Odin Computer Graphics).tap" size="36898" crc="1b5fe585"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -9629,6 +9694,25 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="sanxion128" romof="spec128">
+		<description>Sanxion - The Spectrum Remix (128K)</description>
+		<year>1989</year>
+		<manufacturer>Thalamus</manufacturer>
+		<rom name="Sanxion - The Spectrum Remix (1989)(Thalamus)(128K).tap" size="48009" crc="0cb4ad4d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sanxion48" cloneof="sanxion128" romof="sanxion128">
+		<description>Sanxion - The Spectrum Remix (48K)</description>
+		<year>1989</year>
+		<manufacturer>Thalamus</manufacturer>
+		<rom name="Sanxion - The Spectrum Remix (1989)(Thalamus)(48K-128K).z80" size="19615" crc="97a506fa"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="satan" romof="spec128">
 		<description>Satan (Part 1 of 2) (128K)</description>
 		<year>1989</year>
@@ -9729,6 +9813,15 @@
 		<year>1990</year>
 		<manufacturer>Grandslam Entertainments</manufacturer>
 		<rom name="Scramble Spirits (1990)(Grandslam Entertainments).z80" size="37575" crc="f292ffc7"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="scubadive" romof="spectrum">
+		<description>Scuba Dive (48K)</description>
+		<year>1983</year>
+		<manufacturer>Durell</manufacturer>
+		<rom name="Scuba Dive (1983)(Durell).z80" size="28778" crc="fc1543e0"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10186,7 +10279,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="soldfort" romof="spectrum">
-		<description>Soldier of Fortune (48K)</description>
+		<description>Soldier of Fortune (48K) [Press ENTER to select Control Mode]</description>
 		<year>1988</year>
 		<manufacturer>Firebird Software</manufacturer>
 		<rom name="Soldier Of Fortune (1988)(Firebird).z80" size="44543" crc="c3dc26df"/>
@@ -11032,13 +11125,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="superwonderboy" romof="spec128">
-		<description>Super Wonder Boy</description>
+	<game name="superwonderboy" romof="spectrum">
+		<description>Super Wonder Boy (48K)</description>
 		<year>1989</year>
 		<manufacturer>Activision</manufacturer>
 		<rom name="Super Wonder Boy (1989)(Activision).tap" size="169846" crc="179244d3"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -11841,6 +11933,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="tusker" romof="spec128">
+		<description>Tusker (128K)</description>
+		<year>1989</year>
+		<manufacturer>System 3</manufacturer>
+		<rom name="Tusker 128K (1989)(System 3).tap" size="135053" crc="4802c727"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="tuttut" romof="spectrum">
 		<description>Tut-Tut (HB, v1.04) [Homebrew, Improved version of ZX81 Tut-Tut]</description>
 		<year>2020</year>
@@ -12161,6 +12263,15 @@
 		<year>1988</year>
 		<manufacturer>Imagine Software</manufacturer>
 		<rom name="WEC Le Mans (1988)(Imagine Software).z80" size="41534" crc="83a8e1f7"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="westbank" romof="spectrum">
+		<description>West Bank (48K) [1-2-3 to shoot, O-P to move]</description>
+		<year>1985</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
+		<rom name="West Bank (1985)(Gremlin Graphics).tap" size="56654" crc="d211a5a9"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

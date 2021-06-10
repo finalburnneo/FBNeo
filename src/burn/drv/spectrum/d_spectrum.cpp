@@ -19881,6 +19881,25 @@ struct BurnDriver BurnSpecWestbank = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Treinador de Futebol (Portuguese) (48K)
+
+static struct BurnRomInfo SpecTrfutebolRomDesc[] = {
+	{ "Treinador de Futebol PT (1983)(Microbyte Software).z80", 34576, 0x49dbc0b8, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecTrfutebol, SpecTrfutebol, Spectrum)
+STD_ROM_FN(SpecTrfutebol)
+
+struct BurnDriver BurnSpecTrfutebol = {
+	"spec_trfutebol", NULL, "spec_spectrum", NULL, "1983",
+	"Treinador de Futebol (Portuguese) (48K)\0", NULL, "Microbyte Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_STRATEGY, 0,
+	SpectrumGetZipName, SpecTrfutebolRomInfo, SpecTrfutebolRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Homebrew Games (Post-2000)
 // Hereunder put only the HB ZX Spectrum games
 

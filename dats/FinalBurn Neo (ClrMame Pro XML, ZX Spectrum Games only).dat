@@ -11845,6 +11845,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="trfutebol" romof="spectrum">
+		<description>Treinador de Futebol (Portuguese) (48K)</description>
+		<year>1983</year>
+		<manufacturer>Microbyte Software</manufacturer>
+		<rom name="Treinador de Futebol PT (1983)(Microbyte Software).z80" size="34576" crc="49dbc0b8"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="trinidad" romof="spec128">
 		<description>Trinidad (HB) [Homebrew]</description>
 		<year>2020</year>

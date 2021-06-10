@@ -15774,6 +15774,7 @@ DRV		BurnDrvCtisland;
 DRV		BurnDrvCtisland2;
 DRV		BurnDrvnes_treasuremaster;
 DRV		BurnDrvtotc;
+DRV		BurnSpecTrfutebol;
 DRV		BurnDrvsms_treinam;
 DRV		BurnDrvTripool;
 DRV		BurnDrvTripoola;
@@ -33121,6 +33122,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCtisland2,			// Treasure Island (DECO Cassette) (US) (set 2)
 	&BurnDrvnes_treasuremaster,	// Treasure Master (USA)
 	&BurnDrvtotc,				// Treasure of the Caribbean
+	&BurnSpecTrfutebol,			// Treinador de Futebol (Portuguese) (48K)
 	&BurnDrvsms_treinam,		// Treinamento Do Mymo (Bra)
 	&BurnDrvTripool,			// Tri-Pool (Casino Tech)
 	&BurnDrvTripoola,			// Tri-Pool (Costal Games)

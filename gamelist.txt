@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17102 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17103 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -15572,6 +15572,7 @@ This list contains all games supported by FinalBurn Neo.
 | ctisland2	|  	| Treasure Island (DECO Cassette) (US) (set 2)		| ctisland	| 1981	| Data East Corp| Cassette Syste| 					|
 | nes_treasuremaster|  	| Treasure Master (USA)					| 		| 1991	| American Softw| Miscellaneous	| 					|
 | totc		|  	| Treasure of the Caribbean				| 		| 2011	| FACE Corporati| Neo Geo MVS	| 					|
+| spec_trfutebol|  	| Treinador de Futebol (Portuguese) (48K)		| 		| 1983	| Microbyte Soft| ZX Spectrum	| 					|
 | sms_treinam	|  	| Treinamento Do Mymo (Bra)				| 		| 19??	| Tec Toy	| Sega Master Sy| 					|
 | tripool	|  	| Tri-Pool (Casino Tech)				| 		| 1981	| Noma (Casino T| Jack the Giant| 					|
 | tripoola	|  	| Tri-Pool (Costal Games)				| tripool	| 1981	| Noma (Costal G| Jack the Giant| 					|

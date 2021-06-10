@@ -10,6 +10,8 @@ static HWND hInpdGi = NULL, hInpdPci = NULL, hInpdAnalog = NULL;	// Combo boxes
 
 int bClearInputIgnoreCheckboxMessage = 0;		// For clear input on afire macro.
 
+static int bInittingCheckboxes = 0;
+
 // Update which input is using which PC input
 static int InpdUseUpdate()
 {
@@ -241,6 +243,9 @@ int InpdListMake(int bBuild)
 		j++;
 	}
 
+	// Init Autofire checkboxes.
+	bInittingCheckboxes = 1;
+
 	struct GameInp* pgi = GameInp + nGameInpCount;
 	for (unsigned int i = 0; i < nMacroCount; i++, pgi++) {
 		LVITEM LvItem;
@@ -264,7 +269,7 @@ int InpdListMake(int bBuild)
 		j++;
 	}
 
-	pgi = NULL;
+	bInittingCheckboxes = 0;
 
 	InpdUseUpdate();
 
@@ -625,15 +630,9 @@ INT32 HardwarePresetWrite(FILE* h)
 		if (pgi->nInput & GIT_GROUP_MACRO) {
 			switch (pgi->nInput) {
 			case GIT_MACRO_AUTO:									// Auto-assigned macros
-				if (ListView_GetCheckState(hInpdList, i) &&
-					_stricmp("System Pause", pgi->Macro.szName) != 0 &&
-					_stricmp("System FFWD", pgi->Macro.szName) != 0 &&
-					_stricmp("System Frame", pgi->Macro.szName) != 0 &&
-					_stricmp("System Load State", pgi->Macro.szName) != 0 &&
-					_stricmp("System Save State", pgi->Macro.szName) != 0 &&
-					_stricmp("System UNDO State", pgi->Macro.szName) != 0
-					)
+				if (pgi->Macro.nSysMacro == 15) { // Autofire magic number
 					_ftprintf(h, _T("afire  \"%hs\"\n"), pgi->Macro.szName);  // Create autofire (afire) tag
+				}
 				_ftprintf(h, _T("macro  \"%hs\" "), pgi->Macro.szName);
 				break;
 			case GIT_MACRO_CUSTOM:									// Custom macros
@@ -830,7 +829,7 @@ static void SliderExit()
 	}
 
 	nAnalogSpeed = (int)((double)nVal * 256.0 / 100.0 + 0.5);
-	bprintf(0, _T("  * Analog Speed: %X\n"), nAnalogSpeed);
+	//bprintf(0, _T("  * Analog Speed: %X\n"), nAnalogSpeed);
 }
 
 static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
@@ -866,27 +865,10 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			ListItemActivate();
 			return 0;
 		}
-		if (Id == IDCANCEL && Notify == BN_CLICKED) {  // Save the state of auto-fire before sending WM_CLOSE messages
-			struct GameInp* pgi = GameInp;
-			int nCount = SendMessage(hInpdList, LVM_GETITEMCOUNT, 0, 0);
-
-			if (nCount > 0)
-				for (int i = 0; i < nCount; i++, pgi++) {
-					// Setting Auto-Fire
-					pgi->Macro.nSysMacro = ListView_GetCheckState(hInpdList, i) ? 15 : 0;
-					// Exclude system macros
-					if ((_stricmp("System Pause", pgi->Macro.szName) == 0 ||
-						_stricmp("System FFWD", pgi->Macro.szName) == 0 ||
-						_stricmp("System Frame", pgi->Macro.szName) == 0 ||
-						_stricmp("System Load State", pgi->Macro.szName) == 0 ||
-						_stricmp("System Save State", pgi->Macro.szName) == 0 ||
-						_stricmp("System UNDO State", pgi->Macro.szName) == 0) &&
-						pgi->Macro.nSysMacro > 1)
-						pgi->Macro.nSysMacro = 1;
-				}
-
+		if (Id == IDCANCEL && Notify == BN_CLICKED) {
 
 			SendMessage(hDlg, WM_CLOSE, 0, 0);
+
 			return 0;
 		}
 
@@ -1029,9 +1011,6 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		int Id = LOWORD(wParam);
 		NMHDR* pnm = (NMHDR*)lParam;
 
-		struct GameInp* pgi = NULL;
-		struct BurnInputInfo bii;
-
 		if (Id == IDC_INPD_LIST && pnm->code == LVN_ITEMACTIVATE) {
 			ListItemActivate();
 		}
@@ -1042,36 +1021,45 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			}
 		}
 		if (Id == IDC_INPD_LIST && pnm->code == LVN_ITEMCHANGED) {
-			/* Clear the checkboxs before the non Marco buttons 
+			/* Clear the checkboxs before the non Macro buttons
 			   After that, you should not access these checkboxes that have been eliminated
 			   Otherwise, the program will throw an exception due to incorrect access */
 			NMLISTVIEW* pNMListView = (NMLISTVIEW*)pnm;
-			pgi = GameInp + pNMListView->iItem;
+			struct GameInp *pgi = GameInp + pNMListView->iItem;
 
-			LVITEM LvItem;
-			memset(&LvItem, 0, sizeof(LvItem));
+			if (pNMListView->iItem < nGameInpCount || pgi->Macro.nSysMacro == 1) {
+				// Item is a normal game input or system macro, tell system not to draw
+				// checkbox.
+				LVITEM LvItem;
+				memset(&LvItem, 0, sizeof(LvItem));
 
-			memset(&bii, 0, sizeof(bii));
-			BurnDrvGetInputInfo(&bii, pNMListView->iItem);
-
-			if (pgi->Macro.nSysMacro == 1 || bii.szName) {
 				LvItem.iItem = pNMListView->iItem;
 				LvItem.mask = LVIF_STATE;
 				LvItem.stateMask = LVIS_STATEIMAGEMASK;
 				LvItem.state = 0;
 
 				SendMessage(hInpdList, LVM_SETITEM, 0, (LPARAM)&LvItem);
+				return 0;
 			}
-			// Avoid accessing checkboxes that have been eliminated
-			if (! pgi->Input.pVal && pgi->Macro.nSysMacro !=1 && pgi->Macro.szName)
+
+			// Avoid setting checkboxes that haven't been mapped yet
+			if (!pgi->Input.pVal && pgi->Macro.nSysMacro != 1 && pgi->Macro.szName) {
 				// Check that the checkbox is properly checked
-				if (ListView_GetCheckState(hInpdList, pNMListView->iItem)){
+				if (ListView_GetCheckState(hInpdList, pNMListView->iItem)) {
 					ListView_SetCheckState(hInpdList, pNMListView->iItem, 0);
 					if (bClearInputIgnoreCheckboxMessage == 0) {
 						MessageBox(hInpdDlg, FBALoadStringEx(hAppInst, IDS_ERR_MACRO_NOT_MAPPING, true), NULL, MB_ICONWARNING);
 					}
 					bClearInputIgnoreCheckboxMessage = 0;
 				}
+			} else {
+				if (bInittingCheckboxes == 0) { // Avoid race-condition w/InpdListMake()
+					// Checkbox value changed, update input struct
+					if (pgi->Macro.szName && pgi->Macro.nSysMacro != 1) { // Exclude System Macro's
+						pgi->Macro.nSysMacro = ListView_GetCheckState(hInpdList, pNMListView->iItem) ? 15 : 0;
+					}
+				}
+			}
 		}
 		if (Id == IDC_INPD_LIST && pnm->code == NM_CUSTOMDRAW) {
 			NMLVCUSTOMDRAW* plvcd = (NMLVCUSTOMDRAW*)lParam;

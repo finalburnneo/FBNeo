@@ -924,7 +924,7 @@ struct m68kpstack {
 static m68kpstack pstack[MAX_PSTACK];
 static INT32 pstacknum = 0;
 
-static void SekCPUPush(INT32 nCPU)
+void SekCPUPush(INT32 nCPU)
 {
 	m68kpstack *p = &pstack[pstacknum++];
 
@@ -942,7 +942,7 @@ static void SekCPUPush(INT32 nCPU)
 	}
 }
 
-static void SekCPUPop()
+void SekCPUPop()
 {
 	m68kpstack *p = &pstack[--pstacknum];
 

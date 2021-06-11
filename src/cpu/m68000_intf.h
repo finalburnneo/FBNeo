@@ -134,8 +134,11 @@ void SekSetCyclesScanline(INT32 nCycles);
 void SekClose();
 void SekOpen(const INT32 i);
 INT32 SekGetActive();
-INT32 SekShouldInterrupt();
+INT32 SekShouldInterrupt(); // megadrive
 void SekBurnUntilInt();
+
+void SekCPUPush(INT32 nCPU);
+void SekCPUPop();
 
 #define SEK_IRQSTATUS_NONE  (0x0000)
 #define SEK_IRQSTATUS_VAUTO (0x4000)

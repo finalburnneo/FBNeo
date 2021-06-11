@@ -32,30 +32,12 @@ static void fd1094_setstate_and_decrypt(INT32 state)
 			break;
 	}
 
-	INT32 nActiveCPU = SekGetActive();
-
 	fd1094_state = state;
 
-	if (nActiveCPU == -1) {
-		SekOpen(nFD1094CPU);
-	} else {
-		if (nActiveCPU != nFD1094CPU) {
-			SekClose();
-			SekOpen(nFD1094CPU);
-		}
-	}
-
+	SekCPUPush(nFD1094CPU);
 	// force a flush of the prefetch cache
 	m68k_set_reg(M68K_REG_PREF_ADDR, 0x1000);
-
-	if (nActiveCPU == -1) {
-		SekClose();
-	} else {
-		if (nActiveCPU != nFD1094CPU) {
-			SekClose();
-			SekOpen(nActiveCPU);
-		}
-	}
+	SekCPUPop();
 
 	/* set the FD1094 state ready to decrypt.. */
 	state = fd1094_set_state(fd1094_key, state);
@@ -67,21 +49,10 @@ static void fd1094_setstate_and_decrypt(INT32 state)
 		{
 			/* copy cached state */
 			s24_fd1094_userregion = fd1094_cacheregion[i];
-			if (nActiveCPU == -1) {
-				SekOpen(nFD1094CPU);
-				fd1094_callback((UINT8*)s24_fd1094_userregion);
-				SekClose();
-			} else {
-				if (nActiveCPU == nFD1094CPU) {
-					fd1094_callback((UINT8*)s24_fd1094_userregion);
-				} else {
-					SekClose();
-					SekOpen(nFD1094CPU);
-					fd1094_callback((UINT8*)s24_fd1094_userregion);
-					SekClose();
-					SekOpen(nActiveCPU);
-				}
-			}
+
+			SekCPUPush(nFD1094CPU);
+			fd1094_callback((UINT8*)s24_fd1094_userregion);
+			SekCPUPop();
 
 			return;
 		}
@@ -98,21 +69,10 @@ static void fd1094_setstate_and_decrypt(INT32 state)
 
 	/* copy newly decrypted data to user region */
 	s24_fd1094_userregion = fd1094_cacheregion[fd1094_current_cacheposition];
-	if (nActiveCPU == -1) {
-		SekOpen(nFD1094CPU);
-		fd1094_callback((UINT8*)s24_fd1094_userregion);
-		SekClose();
-	} else {
-		if (nActiveCPU == nFD1094CPU) {
-			fd1094_callback((UINT8*)s24_fd1094_userregion);
-		} else {
-			SekClose();
-			SekOpen(nFD1094CPU);
-			fd1094_callback((UINT8*)s24_fd1094_userregion);
-			SekClose();
-			SekOpen(nActiveCPU);
-		}
-	}
+
+	SekCPUPush(nFD1094CPU);
+	fd1094_callback((UINT8*)s24_fd1094_userregion);
+	SekCPUPop();
 
 	fd1094_current_cacheposition++;
 
@@ -152,29 +112,13 @@ static INT32 __fastcall fd1094_rte_callback (void)
 
 void s24_fd1094_kludge_reset_values(void)
 {
-	INT32 nActiveCPU = SekGetActive();
-
 	for (INT32 i = 0; i < 4; i++) {
 		s24_fd1094_userregion[i] = fd1094_decode(i, fd1094_cpuregion[i], fd1094_key, 1);
 	}
 
-	if (nActiveCPU == -1) {
-		SekOpen(nFD1094CPU);
-	} else {
-		if (nActiveCPU != nFD1094CPU) {
-			SekClose();
-			SekOpen(nFD1094CPU);
-		}
-	}
+	SekCPUPush(nFD1094CPU);
 	fd1094_callback((UINT8*)s24_fd1094_userregion);
-	if (nActiveCPU == -1) {
-		SekClose();
-	} else {
-		if (nActiveCPU != nFD1094CPU) {
-			SekClose();
-			SekOpen(nActiveCPU);
-		}
-	}
+	SekCPUPop();
 }
 
 

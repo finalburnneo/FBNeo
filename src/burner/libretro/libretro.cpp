@@ -2261,6 +2261,8 @@ INT32 BurnStateLoadEmbed(FILE* fp, INT32 nOffset, INT32 bAll, INT32 (*pLoadGame)
 
 	fseek(fp, nChunkData + 0x30, SEEK_SET);            // Read current frame
 	fread(&nCurrentFrame, 1, 4, fp);               //
+	// This function is only used at boot to load eeproms, and eeproms probably shouldn't set nCurrentFrame
+	nCurrentFrame = 0;
 
 	fseek(fp, 0x0C, SEEK_CUR);                     // Move file pointer to the start of the compressed block
 	Def = (UINT8*)malloc(nDefLen);

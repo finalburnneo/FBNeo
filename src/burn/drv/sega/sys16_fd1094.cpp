@@ -6,6 +6,7 @@
 static UINT8 *fd1094_key; // the memory region containing key
 static UINT16 *fd1094_cpuregion; // the CPU region with encrypted code
 static UINT32  fd1094_cpuregionsize; // the size of this region in bytes
+static UINT32  fd1094_cpuregionmask;
 
 UINT16* fd1094_userregion; // a user region where the current decrypted state is put and executed from
 static UINT16* fd1094_cacheregion[S16_NUMCACHE]; // a cache region where S16_NUMCACHE states are stored to improve performance
@@ -60,17 +61,17 @@ static void fd1094_setstate_and_decrypt(INT32 state)
 			INT32 nActiveCPU = SekGetActive();
 			if (nActiveCPU == -1) {
 				SekOpen(nFD1094CPU);
-				SekMapMemory((UINT8*)fd1094_userregion, 0x000000, 0x0fffff, MAP_FETCH);
+				SekMapMemory((UINT8*)fd1094_userregion, 0x000000, fd1094_cpuregionmask, MAP_FETCH);
 //				if (System18Banking) SekMapMemory((UINT8*)fd1094_userregion + 0x200000, 0x200000, 0x27ffff, MAP_FETCH);
 				SekClose();
 			} else {
 				if (nActiveCPU == nFD1094CPU) {
-					SekMapMemory((UINT8*)fd1094_userregion, 0x000000, 0x0fffff, MAP_FETCH);
+					SekMapMemory((UINT8*)fd1094_userregion, 0x000000, fd1094_cpuregionmask, MAP_FETCH);
 //					if (System18Banking) SekMapMemory((UINT8*)fd1094_userregion + 0x200000, 0x200000, 0x27ffff, MAP_FETCH);
 				} else {
 					SekClose();
 					SekOpen(nFD1094CPU);
-					SekMapMemory((UINT8*)fd1094_userregion, 0x000000, 0x0fffff, MAP_FETCH);
+					SekMapMemory((UINT8*)fd1094_userregion, 0x000000, fd1094_cpuregionmask, MAP_FETCH);
 //					if (System18Banking) SekMapMemory((UINT8*)fd1094_userregion + 0x200000, 0x200000, 0x27ffff, MAP_FETCH);
 					SekClose();
 					SekOpen(nActiveCPU);
@@ -96,17 +97,17 @@ static void fd1094_setstate_and_decrypt(INT32 state)
 	INT32 nActiveCPU = SekGetActive();
 	if (nActiveCPU == -1) {
 		SekOpen(nFD1094CPU);
-		SekMapMemory((UINT8*)fd1094_userregion, 0x000000, 0x0fffff, MAP_FETCH);
+		SekMapMemory((UINT8*)fd1094_userregion, 0x000000, fd1094_cpuregionmask, MAP_FETCH);
 //		if (System18Banking) SekMapMemory((UINT8*)fd1094_userregion + 0x200000, 0x200000, 0x27ffff, MAP_FETCH);
 		SekClose();
 	} else {
 		if (nActiveCPU == nFD1094CPU) {
-			SekMapMemory((UINT8*)fd1094_userregion, 0x000000, 0x0fffff, MAP_FETCH);
+			SekMapMemory((UINT8*)fd1094_userregion, 0x000000, fd1094_cpuregionmask, MAP_FETCH);
 //			if (System18Banking) SekMapMemory((UINT8*)fd1094_userregion + 0x200000, 0x200000, 0x27ffff, MAP_FETCH);
 		} else {
 			SekClose();
 			SekOpen(nFD1094CPU);
-			SekMapMemory((UINT8*)fd1094_userregion, 0x000000, 0x0fffff, MAP_FETCH);
+			SekMapMemory((UINT8*)fd1094_userregion, 0x000000, fd1094_cpuregionmask, MAP_FETCH);
 //			if (System18Banking) SekMapMemory((UINT8*)fd1094_userregion + 0x200000, 0x200000, 0x27ffff, MAP_FETCH);
 			SekClose();
 			SekOpen(nActiveCPU);
@@ -158,7 +159,7 @@ void fd1094_kludge_reset_values(void)
 	}
 		
 	SekOpen(nFD1094CPU);
-	SekMapMemory((UINT8*)fd1094_userregion, 0x000000, 0x0fffff, MAP_FETCH);
+	SekMapMemory((UINT8*)fd1094_userregion, 0x000000, fd1094_cpuregionmask, MAP_FETCH);
 //	if (System18Banking) SekMapMemory((UINT8*)fd1094_userregion + 0x200000, 0x200000, 0x27ffff, MAP_FETCH);
 	SekClose();
 }
@@ -187,13 +188,24 @@ void fd1094_driver_init(INT32 nCPU)
 	if (nFD1094CPU == 0) {
 		fd1094_cpuregion = (UINT16*)System16Rom;
 		fd1094_cpuregionsize = System16RomSize;
+		fd1094_cpuregionmask = System16RomSize - 1;
+		if (fd1094_cpuregionsize > 0x100000) {
+			fd1094_cpuregionmask = 0xfffff;
+		}
 	}
 	
 	if (nFD1094CPU == 1) {
 		fd1094_cpuregion = (UINT16*)System16Rom2;
 		fd1094_cpuregionsize = System16Rom2Size;
+		fd1094_cpuregionmask = System16Rom2Size - 1;
+		if (fd1094_cpuregionsize > 0x100000) {
+			fd1094_cpuregionmask = 0xfffff;
+		}
 	}
-	
+
+	// Remove this bprintf() below if everything seems find with Sega FD1094 games -dink
+	bprintf(0, _T("--FD1094 debug(dink)-- cpu %d   romsize %x   rommask %x\n"), nFD1094CPU, fd1094_cpuregionsize, fd1094_cpuregionmask);
+
 	if (nFD1094CPU >= 2) {
 		bprintf(PRINT_ERROR, _T("Invalid CPU called for FD1094 Driver Init\n"));
 	}

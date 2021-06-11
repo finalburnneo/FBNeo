@@ -3565,8 +3565,10 @@ INT32 System16BRender()
 	// tiles_generic priority mixer: mix-all
 	GenericTilesPRIMASK = 0xff;
 
-	if (!System16VideoEnable) {
-		return 0;
+	if (!System16IgnoreVideoEnable) {
+		if (!System16VideoEnable) {
+			return 0;
+		}
 	}
 	System16BUpdateTileValues();
 

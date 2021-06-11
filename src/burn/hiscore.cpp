@@ -25,6 +25,7 @@ INT32 EnableHiscores;
 static INT32 HiscoresInUse;
 static INT32 WriteCheck1;
 static INT32 LetsTryToApply = 0;
+static INT32 nLoadingFrameDelay = 0;
 
 struct cheat_core {
 	cpu_core_config *cpuconfig;
@@ -228,6 +229,12 @@ void HiscoreSearch(FILE *fp, const char *name)
 				} else {
 					if (mode == FETCH_DATA) break;
 				}
+			} else if (strncmp("@delay=", buffer, 7) == 0) {
+				nLoadingFrameDelay = atof(buffer+7) * (nBurnFPS / 100.0);
+
+#if 1 && defined FBNEO_DEBUG
+				bprintf(PRINT_IMPORTANT, _T("Hi Score loading should be delayed by %d frames ?\n"), nLoadingFrameDelay);
+#endif
 			} else {
 				if (is_mem_range(buffer)) {
 					if (nHiscoreNumRanges < HISCORE_MAX_RANGES) {

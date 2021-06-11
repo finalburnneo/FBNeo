@@ -332,9 +332,7 @@ static INT32 System16DoReset()
 			ZetClose();
 		} else {
 			if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_YM2413) {
-				ZetOpen(0);
 				BurnYM2413Reset();
-				ZetClose();
 			} else {
 				ZetOpen(0);
 				BurnYM2151Reset();

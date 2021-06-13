@@ -214,7 +214,12 @@ void SkybaseExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT1
 
 void RockclimExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*)
 {
-	if (GalGfxBank[2]) *Code |= 0x40;
+	if ((*Code & 0x30) == 0x20) {
+		if (GalGfxBank[2] & 1) {
+			INT32 bank = (((GalGfxBank[0] & 1) << 5) | ((GalGfxBank[1] & 1) << 4));
+			*Code = (0x40 + bank) | (*Code & 0x0f);
+		}
+	}
 }
 
 void JumpbugExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*)

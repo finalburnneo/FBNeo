@@ -11326,42 +11326,6 @@ struct BurnDriver BurnDrvblazstar = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Blazing Star Stage Select Mod by Clear Paper, NeoCverA, JustinG
-
-static struct BurnRomInfo blazstarcmRomDesc[] = {
-	{ "239-p1_cm.p1",    0x100000, 0x077ba687, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "239-p2.sp2",   0x200000, 0x9a9f4154, 1 | BRF_ESS | BRF_PRG }, //  1
-
-	{ "239-s1.s1",    0x020000, 0xd56cb498, 2 | BRF_GRA },           //  2 Text layer tiles
-
-	{ "239-c1.c1",    0x400000, 0x84f6d584, 3 | BRF_GRA },           //  3 Sprite data
-	{ "239-c2.c2",    0x400000, 0x05a0cb22, 3 | BRF_GRA },           //  4
-	{ "239-c3.c3",    0x400000, 0x5fb69c9e, 3 | BRF_GRA },           //  5
-	{ "239-c4.c4",    0x400000, 0x0be028c4, 3 | BRF_GRA },           //  6
-	{ "239-c5.c5",    0x400000, 0x74bae5f8, 3 | BRF_GRA },           //  7
-	{ "239-c6.c6",    0x400000, 0x4e0700d2, 3 | BRF_GRA },           //  8
-	{ "239-c7.c7",    0x400000, 0x010ff4fd, 3 | BRF_GRA },           //  9
-	{ "239-c8.c8",    0x400000, 0xdb60460e, 3 | BRF_GRA },           // 10
-
-	{ "239-m1.m1",    0x020000, 0xd31a3aea, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
-
-	{ "239-v1.v1",    0x400000, 0x1b8d5bf7, 5 | BRF_SND },           // 12 Sound data
-	{ "239-v2.v2",    0x400000, 0x74cf0a70, 5 | BRF_SND },           // 13
-};
-
-STDROMPICKEXT(blazstarcm, blazstarcm, neogeo)
-STD_ROM_FN(blazstarcm)
-
-struct BurnDriver BurnDrvblazstarcm = {
-	"blazstarcm", "blazstar", "neogeo", NULL, "2020",
-	"Blazing Star (Stage Select Hack)\0", NULL, "Clear Paper, NeoCverA, JustinG", "Neo Geo MVS",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_HORSHOOT, 0,
-	NULL, blazstarcmRomInfo, blazstarcmRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
-	0x1000,	304, 224, 4, 3
-};
-
 // Prehistoric Isle 2
 /* Original Version, Encrypted GFX */ /* MVS ONLY RELEASE */
 
@@ -14636,6 +14600,42 @@ struct BurnDriver BurnDrvAof3bh = {
 	NULL, aof3bhRomInfo, aof3bhRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
+};
+
+// Blazing Star Stage Select Mod by Clear Paper, NeoCverA, JustinG
+
+static struct BurnRomInfo blazstarcmRomDesc[] = {
+	{ "239-p1_cm.p1",    0x100000, 0x077ba687, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "239-p2.sp2",   0x200000, 0x9a9f4154, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "239-s1.s1",    0x020000, 0xd56cb498, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "239-c1.c1",    0x400000, 0x84f6d584, 3 | BRF_GRA },           //  3 Sprite data
+	{ "239-c2.c2",    0x400000, 0x05a0cb22, 3 | BRF_GRA },           //  4
+	{ "239-c3.c3",    0x400000, 0x5fb69c9e, 3 | BRF_GRA },           //  5
+	{ "239-c4.c4",    0x400000, 0x0be028c4, 3 | BRF_GRA },           //  6
+	{ "239-c5.c5",    0x400000, 0x74bae5f8, 3 | BRF_GRA },           //  7
+	{ "239-c6.c6",    0x400000, 0x4e0700d2, 3 | BRF_GRA },           //  8
+	{ "239-c7.c7",    0x400000, 0x010ff4fd, 3 | BRF_GRA },           //  9
+	{ "239-c8.c8",    0x400000, 0xdb60460e, 3 | BRF_GRA },           // 10
+
+	{ "239-m1.m1",    0x020000, 0xd31a3aea, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "239-v1.v1",    0x400000, 0x1b8d5bf7, 5 | BRF_SND },           // 12 Sound data
+	{ "239-v2.v2",    0x400000, 0x74cf0a70, 5 | BRF_SND },           // 13
+};
+
+STDROMPICKEXT(blazstarcm, blazstarcm, neogeo)
+STD_ROM_FN(blazstarcm)
+
+struct BurnDriver BurnDrvblazstarcm = {
+	"blazstarcm", "blazstar", "neogeo", NULL, "2020",
+	"Blazing Star (Stage Select Hack)\0", NULL, "Clear Paper, NeoCverA, JustinG", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_HORSHOOT, 0,
+	NULL, blazstarcmRomInfo, blazstarcmRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
 };
 
 // Breakers Revenge (Boss Hack)

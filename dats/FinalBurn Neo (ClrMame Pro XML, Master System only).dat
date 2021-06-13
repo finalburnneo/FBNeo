@@ -2205,7 +2205,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="highsce" cloneof="highsc" romof="highsc">
-		<description>High School! Kimengumi (T-eng)</description>
+		<description>High School! Kimengumi (T-Eng) [Hack]</description>
 		<year>2005</year>
 		<manufacturer>Sega - SMS Power!</manufacturer>
 		<rom name="high school! kimengumi (t-eng1.00).sms" size="131072" crc="8a296a3e"/>
@@ -3181,7 +3181,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pstarje" cloneof="pstar" romof="pstar">
-		<description>Phantasy Star (Jpn, T-Eng v2.00) [YM2413 FM sound chip supported]</description>
+		<description>Phantasy Star (Jpn, T-Eng v2.00) [Hack, YM2413 FM sound chip supported]</description>
 		<year>2020</year>
 		<manufacturer>Sega - SMS Power!</manufacturer>
 		<rom name="phantasy star (j) [t-eng2.00].sms" size="524288" crc="a04cf71a"/>
@@ -5109,10 +5109,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="wingwarriors">
-		<description>Wing Warriors (HB, April 18, 2019 Test) [Homebrew]</description>
-		<year>2019</year>
+		<description>Wing Warriors (HB) [Homebrew]</description>
+		<year>2020</year>
 		<manufacturer>Kitmaker</manufacturer>
-		<rom name="WingWarriors.sms" size="131072" crc="14e13a82"/>
+		<rom name="Wing Warriors (2020)(Kitmaker Ent.).sms" size="131072" crc="8c384703"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

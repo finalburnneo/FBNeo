@@ -355,7 +355,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="alien8h" cloneof="alien8" romof="alien8">
-		<description>Alien 8 (Jpn, Hacked?)</description>
+		<description>Alien 8 (Jpn, Hacked?) [Hack]</description>
 		<year>1987</year>
 		<manufacturer>A.C.G.</manufacturer>
 		<rom name="alien 8 (japan) (alt 1).rom" size="32768" crc="3b4ed316"/>
@@ -436,6 +436,17 @@
 		<year>1986</year>
 		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="alpha roid (japan) (alt 1).rom" size="32768" crc="716dc9af"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="asquadron" romof="msx">
+		<description>Alpha Squadron (Jpn)</description>
+		<year>1984</year>
+		<manufacturer>AG Corp.</manufacturer>
+		<rom name="Alpha Squadron (1984)(AG Corp.).rom" size="16384" crc="055254e0"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -987,6 +998,17 @@
 		<year>1986</year>
 		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="back to the future (japan) (alt 1).rom" size="32768" crc="795c7aa1"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bakerman" romof="msx">
+		<description>Bakerman (HB) [Homebrew]</description>
+		<year>2008</year>
+		<manufacturer>AG Software</manufacturer>
+		<rom name="Bakerman (2008)(AG Software).rom" size="16384" crc="8528b797"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -3431,6 +3453,28 @@
 		<year>1987</year>
 		<manufacturer>T&amp;E Soft</manufacturer>
 		<rom name="lh532020" size="262144" crc="99198ed9"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dambustra" cloneof="dambustr" romof="dambustr">
+		<description>Dam Busters, The (Euro)</description>
+		<year>1985</year>
+		<manufacturer>Erbe Software</manufacturer>
+		<rom name="Dam Busters, The (1985)(Erbe Software)[RUN'CAS-'].cas" size="35183" crc="b24fde2d"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dambustr" romof="msx">
+		<description>Dam Busters, The (Jpn)</description>
+		<year>1985</year>
+		<manufacturer>Comptiq</manufacturer>
+		<rom name="dam busters, the (japan) (alt 1).rom" size="32768" crc="711a7a6e"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -6269,6 +6313,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ink" romof="msx">
+		<description>INK - Exxon Surfing (HB) [Homebrew]</description>
+		<year>2006</year>
+		<manufacturer>Matra</manufacturer>
+		<rom name="INK - Exxon Surfing (2006)(Matra).rom" size="49152" crc="35823fd5"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ik" romof="msx">
 		<description>International Karate (Euro)</description>
 		<year>1986</year>
@@ -6428,6 +6483,17 @@
 		<year>1986</year>
 		<manufacturer>Gremlin Graphics Software</manufacturer>
 		<rom name="Jack the Nipper (1986)(Gremlin Graphics Software)(GB).rom" size="131072" crc="666725ec"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="projecta" romof="msx">
+		<description>Jackie Chan in Project A (Jpn)</description>
+		<year>1984</year>
+		<manufacturer>Pony Canyon</manufacturer>
+		<rom name="Jackie Chan in Project A (1984)(Pony Canyon)(JP)[CLOAD + RUN].cas" size="28566" crc="6d143671"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -9759,6 +9825,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="pairlogic" romof="msx">
+		<description>Pair Logic (HB) [Homebrew]</description>
+		<year>2005</year>
+		<manufacturer>AG Software</manufacturer>
+		<rom name="Pair Logic (2005)(AG Software).rom" size="8192" crc="e03cb45d"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="pairs" romof="msx">
 		<description>Pairs (Jpn)</description>
 		<year>1983</year>
@@ -9968,6 +10045,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="perfectfit" romof="msx">
+		<description>Perfect Fit (HB) [Homebrew]</description>
+		<year>2008</year>
+		<manufacturer>Paxanga Soft</manufacturer>
+		<rom name="Perfect Fit (2008)(Paxanga Soft).rom" size="32768" crc="91f8b81f"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="perspective" romof="msx">
 		<description>Perspective (v1.1)</description>
 		<year>1987</year>
@@ -10083,7 +10171,7 @@
 		<description>Pinball Blaster (Euro)</description>
 		<year>1988</year>
 		<manufacturer>Eurosoft</manufacturer>
-		<rom name="pinball blaster (europe).rom" size="65536" crc="68fe9580"/>
+		<rom name="Pinball Blaster (1988)(Eurosoft)[RUN'CAS-'].cas" size="68224" crc="710b9bda"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -10299,6 +10387,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="poogaboo" romof="msx">
+		<description>Poogaboo (Spa) [Swap Joyport in DIPswitch to use joystick]</description>
+		<year>1991</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Poogaboo (1991)(Opera Soft)(ES)[BLOAD'CAS-',R].cas" size="66368" crc="ce7a6084"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="pooyan" romof="msx">
 		<description>Pooyan (Jpn)</description>
 		<year>1985</year>
@@ -10326,6 +10425,17 @@
 		<year>1986</year>
 		<manufacturer>Boram Soft</manufacturer>
 		<rom name="poppaq the fish (1986)(ascii)[cr boram soft].rom" size="16384" crc="cc36e779"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="postmortem" romof="msx">
+		<description>Post Mortem (Spa)</description>
+		<year>1988</year>
+		<manufacturer>Genesis Soft - Iber Soft</manufacturer>
+		<rom name="Post Mortem (1988)(Iber Soft)(ES)[RUN'CAS-'].cas" size="43146" crc="7ed5b9c5"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -10436,6 +10546,17 @@
 		<year>1983</year>
 		<manufacturer>T&amp;E Soft</manufacturer>
 		<rom name="pyramid warp (japan).rom" size="8192" crc="0aec8ddb"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pyramidwex" romof="msx">
+		<description>Pyramid Warp Enhanced (HB) [Homebrew, Remastered version]</description>
+		<year>2021</year>
+		<manufacturer>Bitcaffe, Nenefranz, theNestruo</manufacturer>
+		<rom name="Pyramid Warp Enhanced (2021)(Bitcaffe-Nenefranz-theNestruo).rom" size="32768" crc="a7cdfff9"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12998,28 +13119,6 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dambustr" romof="msx">
-		<description>The Dam Busters (Euro?)</description>
-		<year>1985</year>
-		<manufacturer>Comptiq</manufacturer>
-		<rom name="dam busters, the (japan) (alt 1).rom" size="32768" crc="711a7a6e"/>
-		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
-		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
-		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
-		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="dambustra" cloneof="dambustr" romof="dambustr">
-		<description>The Dam Busters (Jpn)</description>
-		<year>1985</year>
-		<manufacturer>Comptiq</manufacturer>
-		<rom name="dam busters, the (japan).rom" size="32768" crc="6fde5bca"/>
-		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
-		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
-		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
-		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="dcrystal" romof="msx">
 		<description>The Demon Crystal (Jpn)</description>
 		<year>1986</year>
@@ -13928,6 +14027,17 @@
 		<year>2020</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Vexed (2020)(Under4Mhz).rom" size="32768" crc="1ae7d805"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="viajecentro" romof="msx">
+		<description>Viaje al Centro de la Tierra (Spa)</description>
+		<year>1989</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Viaje al Centro de la Tierra (1989)(Topo Soft)(ES)[RUN'CAS-'].cas" size="139146" crc="aeae84ea"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

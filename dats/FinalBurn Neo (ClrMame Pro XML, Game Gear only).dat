@@ -349,7 +349,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sailormse" cloneof="sailorms" romof="sailorms">
-		<description>Bishoujo Senshi Sailor Moon S (T-Eng v1.1)</description>
+		<description>Bishoujo Senshi Sailor Moon S (T-Eng, v1.1) [Hack]</description>
 		<year>2019</year>
 		<manufacturer>Bandai - Supper</manufacturer>
 		<rom name="bishoujo senshi sailor moon s (t-eng1.1).gg" size="1048576" crc="a9a6f271"/>
@@ -796,6 +796,14 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="cocakide" cloneof="cocakid" romof="cocakid">
+		<description>Coca Cola Kid (T-Eng, v1.1) [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Sega - SMS Power!</manufacturer>
+		<rom name="Coca-Cola Kid T-Eng v1.1 (2018)(SMS Power).gg" size="524288" crc="ea32dbc5"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="columns">
 		<description>Columns (Euro, USA, Bra)</description>
 		<year>1990</year>
@@ -853,7 +861,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="crayone" cloneof="crayon" romof="crayon">
-		<description>Crayon Shin-chan - Taiketsu! Kantamu Panic!! (T-Eng)</description>
+		<description>Crayon Shin-chan - Taiketsu! Kantamu Panic!! (T-Eng) [Hack]</description>
 		<year>2018</year>
 		<manufacturer>Bandai - Psyklax</manufacturer>
 		<rom name="Crayon Shin-Chan - Taiketsu! Tankam Panic!! (T-Eng).gg" size="524288" crc="48c18828"/>
@@ -1365,7 +1373,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="eternlege" cloneof="eternleg" romof="eternleg">
-		<description>Eternal Legend - Eien no Densetsu (T-Eng)</description>
+		<description>Eternal Legend - Eien no Densetsu (T-Eng) [Hack]</description>
 		<year>2020</year>
 		<manufacturer>Sega - Supper</manufacturer>
 		<rom name="eternal legend (t-eng).gg" size="1048576" crc="ab7ab2e3"/>
@@ -1701,7 +1709,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="godzillae" cloneof="godzilla" romof="godzilla">
-		<description>Godzilla - Kaijuu Daishingeki (T-Eng, v1.1)</description>
+		<description>Godzilla - Kaijuu Daishingeki (T-Eng, v1.1) [Hack]</description>
 		<year>2019</year>
 		<manufacturer>Sega - Supper</manufacturer>
 		<rom name="godzilla - kaijuu daishingeki (english translation).gg" size="1048576" crc="fc0ac103"/>
@@ -2245,7 +2253,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="madoumone" cloneof="madoumon" romof="madoumon">
-		<description>Madou Monogatari I - 3-Tsu no Madoukyuu (T-Eng)</description>
+		<description>Madou Monogatari I - 3-Tsu no Madoukyuu (T-Eng) [Hack]</description>
 		<year>2010</year>
 		<manufacturer>Sega - SSTranslations</manufacturer>
 		<rom name="madou monogatari i - 3-tsu no madoukyuu (english translation).gg" size="524288" crc="b289011d"/>
@@ -2261,7 +2269,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="madoumn2e" cloneof="madoumn2" romof="madoumn2">
-		<description>Madou Monogatari II - Arle 16-Sai (T-Eng, v1.2)</description>
+		<description>Madou Monogatari II - Arle 16-Sai (T-Eng, v1.2) [Hack]</description>
 		<year>2020</year>
 		<manufacturer>Sega - Supper</manufacturer>
 		<rom name="madou monogatari ii - arle 16-sai (T+Eng1.2).gg" size="1048576" crc="ef7d7c02"/>
@@ -2285,7 +2293,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="madoumn3e" cloneof="madoumn3" romof="madoumn3">
-		<description>Madou Monogatari III - Kyuukyoku Joou-sama (T-Eng, v1.2)</description>
+		<description>Madou Monogatari III - Kyuukyoku Joou-sama (T-Eng, v1.2) [Hack]</description>
 		<year>2020</year>
 		<manufacturer>Sega - Supper</manufacturer>
 		<rom name="madou monogatari iii - kyuukyoku joou-sama (english translation).gg" size="1048576" crc="e90126c0"/>
@@ -2297,6 +2305,14 @@
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-17115.ic1" size="524288" crc="8f82a6b9"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="rayearthe" cloneof="rayearth" romof="rayearth">
+		<description>Magic Knight Rayearth (T-Eng) [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Sega - Filler</manufacturer>
+		<rom name="Magic Knight Rayearth T-Eng (2018)(Filler).gg" size="524288" crc="6c9b8b15"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2493,7 +2509,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="moldorane" cloneof="moldoran" romof="moldoran">
-		<description>Moldorian - Hikari to Yami no Sister (T-Eng, v1.1)</description>
+		<description>Moldorian - Hikari to Yami no Sister (T-Eng, v1.1) [Hack]</description>
 		<year>2019</year>
 		<manufacturer>Sega - Supper</manufacturer>
 		<rom name="moldorian - hikari to yami no shisutaa (t-eng1.1).gg" size="1048576" crc="7ab0081f"/>
@@ -4980,19 +4996,19 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sylvane" cloneof="sylvan" romof="sylvan">
-		<description>Sylvan Tale (Hack, T-Eng)</description>
-		<year>2001</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="sylvan tale (english translation).gg" size="524288" crc="5d803486"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="sylvan">
 		<description>Sylvan Tale (Jpn)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sylvan tale (japan).bin" size="524288" crc="45ef2062"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sylvane" cloneof="sylvan" romof="sylvan">
+		<description>Sylvan Tale (T-Eng) [Hack]</description>
+		<year>2001</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="sylvan tale (english translation).gg" size="524288" crc="5d803486"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5857,6 +5873,14 @@
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-14994.ic1" size="131072" crc="ce1108fd"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="wingwarriors">
+		<description>Wing Warriors (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Kitmaker</manufacturer>
+		<rom name="Wing Warriors (2020)(Kitmaker Ent.).gg" size="131072" crc="a9a8218e"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

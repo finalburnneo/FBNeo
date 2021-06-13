@@ -1449,6 +1449,8 @@ inline static INT32 MegadriveSynchroniseStreamPAL(INT32 nSoundRate)
 
 // ---------------------------------------------------------------
 
+static INT32 res_check(); // forward
+
 static INT32 MegadriveResetDo()
 {
 	memset (RamStart, 0, RamEnd - RamStart);
@@ -1558,6 +1560,8 @@ static INT32 MegadriveResetDo()
 		RamIO[0x0a] = 0xff;
 		RamIO[0x0d] = 0xfb;
 	}
+
+	res_check();
 
 	return 0;
 }
@@ -4558,23 +4562,71 @@ static INT32 PicoLine(INT32 /*scan*/)
 	return 0;
 }
 
+#ifndef __LIBRETRO__
+static UINT8 *pBurnDrawBAD      = NULL;
+#endif
+
+static INT32 screen_width = 0;
+
+static INT32 res_check()
+{
+	if ((MegadriveDIP[1] & 3) == 3 && (~RamVReg->reg[12] & 1)) {
+		INT32 Height;
+		BurnDrvGetVisibleSize(&screen_width, &Height);
+
+		if (screen_width != 256) {
+			bprintf(0, _T("switching to 256 x 224 mode\n"));
+			BurnDrvSetVisibleSize(256, 224);
+			Reinitialise();
+#ifndef __LIBRETRO__
+			pBurnDrawBAD = pBurnDraw; // note: invalidated pBurnDraw
+#endif
+			return 1;
+		}
+	} else {
+		INT32 Height;
+		BurnDrvGetVisibleSize(&screen_width, &Height);
+
+		if (screen_width != 320) {
+			bprintf(0, _T("switching to 320 x 240 mode\n"));
+			BurnDrvSetVisibleSize(320, 240);
+			Reinitialise();
+#ifndef __LIBRETRO__
+			pBurnDrawBAD = pBurnDraw; // note: invalidated pBurnDraw
+#endif
+			return 1;
+		}
+	}
+	return 0;
+}
+
 INT32 MegadriveDraw()
 {
+#ifndef __LIBRETRO__
+	if (pBurnDrawBAD == pBurnDraw) {
+		// Reinitialise() could take 1-2 frames to complete, during that time
+		// we can't draw since pBurnDraw is invalid.
+		bprintf(0, _T("MegadriveDraw(): ignored this draw (waiting for re-init)!\n"));
+		return 0;
+	} else pBurnDrawBAD = NULL;
+#endif
 	if (bMegadriveRecalcPalette) {
 	    for (INT32 i=0; i< 0x40; i++)
 			CalcCol(i, BURN_ENDIAN_SWAP_INT16(RamPal[i]));
 		bMegadriveRecalcPalette = 0;
 	}
 
+	if (res_check()) return 0; // resolution changed?
+
 	UINT16 *pDest = (UINT16 *)pBurnDraw;
 
-	if ((RamVReg->reg[12]&1) || !(MegadriveDIP[1] & 0x03)) {
-
+	if ((RamVReg->reg[12]&1) || ((MegadriveDIP[1] & 0x03) == 0 || (MegadriveDIP[1] & 0x03) == 3) ) {
+		// Normal / "Screen Resize"
 		for (INT32 j=0; j < 224; j++) {
 			UINT16 *pSrc = LineBuf + (j * 320);
-			for (INT32 i = 0; i < 320; i++)
+			for (INT32 i = 0; i < screen_width; i++)
 				pDest[i] = pSrc[i];
-			pDest += 320;
+			pDest += screen_width;
 		}
 
 	} else {

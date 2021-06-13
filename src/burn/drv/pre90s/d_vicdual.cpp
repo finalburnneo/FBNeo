@@ -3493,7 +3493,7 @@ static struct BurnRomInfo carhntdsRomDesc[] = {
 	{ "epr631.u2",			0x0400, 0x6766c7e5, 1 | BRF_PRG | BRF_ESS }, // 14
 	{ "epr632.u1",			0x0400, 0xae68b7d5, 1 | BRF_PRG | BRF_ESS }, // 15
 
-	{ "316.0390.u49",		0x0020, 0xa0811288, 1 | BRF_GRA },           // 16 Color data
+	{ "316-0390.u49",		0x0020, 0xa0811288, 1 | BRF_GRA },           // 16 Color data
 };
 
 STD_ROM_PICK(carhntds)
@@ -3510,6 +3510,45 @@ struct BurnDriverD BurnDrvCarhntds = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, carhntdsRomInfo, carhntdsRomName, NULL, NULL, NULL, NULL, CarhntdsInputInfo, CarhntdsDIPInfo,
+	CarhntdsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
+	224, 256, 3, 4
+};
+
+
+// Invinco / Car Hunt (Germany)
+
+static struct BurnRomInfo invcarhtRomDesc[] = {
+	{ "411.u33",			0x0800, 0xefefba5f, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "412.u32",			0x0400, 0x8fe401e2, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "413.u31",			0x0400, 0x61ba1046, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "414.u30",			0x0400, 0x4a521dbb, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "415.u29",			0x0400, 0xce12b71c, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "416.u28",			0x0400, 0x6899d59c, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "417.u27",			0x0400, 0x26cef14e, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "418.u26",			0x0400, 0x02b1f507, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "419.u8",				0x0400, 0x42385c4d, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "420.u7",				0x0400, 0xee83d873, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "421.u6",				0x0400, 0x2faa2e76, 1 | BRF_PRG | BRF_ESS }, // 10
+	{ "422.u5",				0x0400, 0xf8e5dc61, 1 | BRF_PRG | BRF_ESS }, // 11
+	{ "423.u4",				0x0400, 0xd783eb72, 1 | BRF_PRG | BRF_ESS }, // 12
+	{ "424.u3",				0x0400, 0x8fd4f3d4, 1 | BRF_PRG | BRF_ESS }, // 13
+	{ "425.u2",				0x0400, 0xb0552cd4, 1 | BRF_PRG | BRF_ESS }, // 14
+	{ "426.u1",				0x0400, 0xb611061b, 1 | BRF_PRG | BRF_ESS }, // 15
+
+	{ "316-0389.u49",		0x0020, 0x95cfe0d2, 1 | BRF_GRA },           // 16 Color data
+	
+	{ "316-0206.u14",		0x0020, 0x9617d796, 0 | BRF_OPT },           // 17 Unused prom
+};
+
+STD_ROM_PICK(invcarht)
+STD_ROM_FN(invcarht)
+
+struct BurnDriverD BurnDrvInvcarht = {
+	"invcarht", NULL, NULL, NULL, "1979",
+	"Invinco / Car Hunt (Germany)\0", "No sound", "Sega", "Vic Dual",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, invcarhtRomInfo, invcarhtRomName, NULL, NULL, NULL, NULL, CarhntdsInputInfo, CarhntdsDIPInfo,
 	CarhntdsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
 };
@@ -3797,8 +3836,8 @@ static struct BurnRomInfo nsubRomDesc[] = {
 
 	{ "pr-69.u11",			0x0020, 0xc94dd091, 1 | BRF_GRA },           //  8 Color data
 
-	{ "pr33.u82",			0x0020, 0xe60a7960, 0 | BRF_OPT },           //  9 Unused PROMs
-	{ "pr34.u83",			0x0020, 0xa1506b9d, 0 | BRF_OPT },           // 10
+	{ "pr-33.u82",			0x0020, 0xe60a7960, 0 | BRF_OPT },           //  9 Unused PROMs
+	{ "pr-34.u83",			0x0020, 0xa1506b9d, 0 | BRF_OPT },           // 10
 };
 
 STD_ROM_PICK(nsub)

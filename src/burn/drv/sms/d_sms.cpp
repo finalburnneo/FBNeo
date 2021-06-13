@@ -18539,7 +18539,7 @@ struct BurnDriver BurnDrvgg_madoumone = {
 	"gg_madoumone", "gg_madoumon", NULL, NULL, "2010",
 	"Madou Monogatari I - 3-Tsu no Madoukyuu (T-Eng)\0", NULL, "Sega - SSTranslations", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_madoumoneRomInfo, gg_madoumoneRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -25522,9 +25522,9 @@ STD_ROM_FN(gg_sylvane)
 
 struct BurnDriver BurnDrvgg_sylvane = {
 	"gg_sylvane", "gg_sylvan", NULL, NULL, "2001",
-	"Sylvan Tale (Hack, T-Eng)\0", NULL, "Sega", "Sega Game Gear",
+	"Sylvan Tale (T-Eng)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_sylvaneRomInfo, gg_sylvaneRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -27777,22 +27777,21 @@ struct BurnDriver BurnDrvsms_fpigarus = {
 // Wing Warriors (HB)
 
 static struct BurnRomInfo sms_wingwarriorsRomDesc[] = {
-	{ "WingWarriors.sms",	0x20000, 0x14e13a82, BRF_PRG | BRF_ESS },
+	{ "Wing Warriors (2020)(Kitmaker Ent.).sms",	131072, 0x8c384703, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_wingwarriors)
 STD_ROM_FN(sms_wingwarriors)
 
 struct BurnDriver BurnDrvsms_wingwarriors = {
-	"sms_wingwarriors", NULL, NULL, NULL, "2019",
-	"Wing Warriors (HB, April 18, 2019 Test)\0", NULL, "Kitmaker", "Sega Master System",
+	"sms_wingwarriors", NULL, NULL, NULL, "2020",
+	"Wing Warriors (HB)\0", NULL, "Kitmaker", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VERSHOOT, 0,
 	SMSGetZipName, sms_wingwarriorsRomInfo, sms_wingwarriorsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
-
 
 // pcmenc demo 1 - https://github.com/maxim-zhao/pcmenc
 
@@ -27980,7 +27979,7 @@ struct BurnDriver BurnDrvgg_godzillae = {
 	"gg_godzillae", "gg_godzilla", NULL, NULL, "2019",
 	"Godzilla - Kaijuu Daishingeki (T-Eng, v1.1)\0", NULL, "Sega - Supper", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_STRATEGY, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_GAME_GEAR, GBF_STRATEGY, 0,
 	GGGetZipName, gg_godzillaeRomInfo, gg_godzillaeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28000,7 +27999,7 @@ struct BurnDriver BurnDrvgg_madoumn3e = {
 	"gg_madoumn3e", "gg_madoumn3", NULL, NULL, "2020",
 	"Madou Monogatari III - Kyuukyoku Joou-sama (T-Eng, v1.2)\0", NULL, "Sega - Supper", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_madoumn3eRomInfo, gg_madoumn3eRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28020,7 +28019,7 @@ struct BurnDriver BurnDrvsms_pstarje = {
 	"sms_pstarje", "sms_pstar", NULL, NULL, "2020",
 	"Phantasy Star (Jpn, T-Eng v2.00)\0", "YM2413 FM sound chip supported", "Sega - SMS Power!", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RPG, 0,
 	SMSGetZipName, sms_pstarjeRomInfo, sms_pstarjeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28158,9 +28157,9 @@ STD_ROM_FN(sms_highsce)
 
 struct BurnDriver BurnDrvsms_highsce = {
 	"sms_highsce", "sms_highsc", NULL, NULL, "2005",
-	"High School! Kimengumi (T-eng)\0", NULL, "Sega - SMS Power!", "Sega Master System",
+	"High School! Kimengumi (T-Eng)\0", NULL, "Sega - SMS Power!", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_highsceRomInfo, sms_highsceRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28178,9 +28177,9 @@ STD_ROM_FN(gg_sailormse)
 
 struct BurnDriver BurnDrvgg_sailormse = {
 	"gg_sailormse", "gg_sailorms", NULL, NULL, "2019",
-	"Bishoujo Senshi Sailor Moon S (T-Eng v1.1)\0", NULL, "Bandai - Supper", "Sega Game Gear",
+	"Bishoujo Senshi Sailor Moon S (T-Eng, v1.1)\0", NULL, "Bandai - Supper", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_GAME_GEAR, GBF_SCRFIGHT, 0,
 	GGGetZipName, gg_sailormseRomInfo, gg_sailormseRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28200,7 +28199,7 @@ struct BurnDriver BurnDrvgg_crayone = {
 	"gg_crayone", "gg_crayon", NULL, NULL, "2018",
 	"Crayon Shin-chan - Taiketsu! Kantamu Panic!! (T-Eng)\0", NULL, "Bandai - Psyklax", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MINIGAMES, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MINIGAMES, 0,
 	GGGetZipName, gg_crayoneRomInfo, gg_crayoneRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28220,7 +28219,7 @@ struct BurnDriver BurnDrvgg_eternlege = {
 	"gg_eternlege", "gg_eternleg", NULL, NULL, "2020",
 	"Eternal Legend - Eien no Densetsu (T-Eng)\0", NULL, "Sega - Supper", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_eternlegeRomInfo, gg_eternlegeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28240,7 +28239,7 @@ struct BurnDriver BurnDrvgg_moldorane = {
 	"gg_moldorane", "gg_moldoran", NULL, NULL, "2019",
 	"Moldorian - Hikari to Yami no Sister (T-Eng, v1.1)\0", NULL, "Sega - Supper", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_moldoraneRomInfo, gg_moldoraneRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28279,7 +28278,7 @@ struct BurnDriver BurnDrvgg_madoumn2e = {
 	"gg_madoumn2e", "gg_madoumn2", NULL, NULL, "2020",
 	"Madou Monogatari II - Arle 16-Sai (T-Eng, v1.2)\0", NULL, "Sega - Supper", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_madoumn2eRomInfo, gg_madoumn2eRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -29478,6 +29477,63 @@ struct BurnDriver BurnDrvsms_skbn = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_skbnRomInfo, sms_skbnRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Wing Warriors GG (HB)
+
+static struct BurnRomInfo gg_wingwarriorsRomDesc[] = {
+	{ "Wing Warriors (2020)(Kitmaker Ent.).gg",	131072, 0xa9a8218e, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_wingwarriors)
+STD_ROM_FN(gg_wingwarriors)
+
+struct BurnDriver BurnDrvgg_wingwarriors = {
+	"gg_wingwarriors", NULL, NULL, NULL, "2020",
+	"Wing Warriors (HB)\0", NULL, "Kitmaker", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_VERSHOOT, 0,
+	GGGetZipName, gg_wingwarriorsRomInfo, gg_wingwarriorsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Coca Cola Kid (T-Eng, v1.1)
+
+static struct BurnRomInfo gg_cocakideRomDesc[] = {
+	{ "Coca-Cola Kid T-Eng v1.1 (2018)(SMS Power).gg",	524288, 0xea32dbc5, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_cocakide)
+STD_ROM_FN(gg_cocakide)
+
+struct BurnDriver BurnDrvgg_cocakide = {
+	"gg_cocakide", "gg_cocakid", NULL, NULL, "2018",
+	"Coca Cola Kid (T-Eng, v1.1)\0", NULL, "Sega - SMS Power!", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PLATFORM, 0,
+	GGGetZipName, gg_cocakideRomInfo, gg_cocakideRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Magic Knight Rayearth (T-Eng)
+
+static struct BurnRomInfo gg_rayeartheRomDesc[] = {
+	{ "Magic Knight Rayearth T-Eng (2018)(Filler).gg",	524288, 0x6c9b8b15, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_rayearthe)
+STD_ROM_FN(gg_rayearthe)
+
+struct BurnDriver BurnDrvgg_rayearthe = {
+	"gg_rayearthe", "gg_rayearth", NULL, NULL, "2018",
+	"Magic Knight Rayearth (T-Eng)\0", NULL, "Sega - Filler", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
+	GGGetZipName, gg_rayeartheRomInfo, gg_rayeartheRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

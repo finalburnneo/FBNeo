@@ -221,7 +221,7 @@ static struct BurnInputInfo Megadrive5pInputList[] = {
 STDINPUTINFO(Megadrive5p)
 
 static struct BurnDIPInfo MegadriveDIPList[] = {
-	{0x1a,	0xff, 0xff, 0x01,  NULL               },
+	{0x1a,	0xff, 0xff, 0x03,  NULL               },
 
 	{0,	0xfe, 0,       5, "Hardware"          },
 	{0x19,	0x01, 0xc1, 0x01, "Auto Detect"       },
@@ -258,7 +258,7 @@ static struct BurnDIPInfo UNTSCRegionDIPList[] = {
 };
 
 static struct BurnDIPInfo Megadrive3pDIPList[] = {
-	{0x26,	0xff, 0xff, 0x01,  NULL               },
+	{0x26,	0xff, 0xff, 0x03,  NULL               },
 
 	{0,	0xfe, 0,       5, "Hardware"          },
 	{0x25,	0x01, 0xc1, 0x01, "Auto Detect"       },
@@ -271,10 +271,11 @@ static struct BurnDIPInfo Megadrive3pDIPList[] = {
 	{0x25,	0x01, 0x20, 0x20, "No"                },
 	{0x25,	0x01, 0x20, 0x00, "Yes"               },
 #endif
-	{0,	0xfe, 0,       3, "32-Col Mode Draw"  },
+	{0,	0xfe, 0,       4, "32-Col Mode Draw"  },
 	{0x26,	0x01, 0x03, 0x00, "No Change"         },
 	{0x26,	0x01, 0x03, 0x01, "Center"            },
 	{0x26,	0x01, 0x03, 0x02, "Inner Zoom"        },
+	{0x26,  0x01, 0x03, 0x03, "Resize Screen/Window"},
 };
 
 static struct BurnDIPInfo AutoDetectRegion3pDIPList[] = {
@@ -282,7 +283,7 @@ static struct BurnDIPInfo AutoDetectRegion3pDIPList[] = {
 };
 
 static struct BurnDIPInfo Megadrive4pDIPList[] = {
-	{0x32,	0xff, 0xff, 0x01,  NULL               },
+	{0x32,	0xff, 0xff, 0x03,  NULL               },
 
 	{0,	0xfe, 0,       5, "Hardware"          },
 	{0x31,	0x01, 0xc1, 0x01, "Auto Detect"       },
@@ -295,10 +296,11 @@ static struct BurnDIPInfo Megadrive4pDIPList[] = {
 	{0x31,	0x01, 0x20, 0x20, "No"                },
 	{0x31,	0x01, 0x20, 0x00, "Yes"               },
 #endif
-	{0,	0xfe, 0,       3, "32-Col Mode Draw"  },
+	{0,	0xfe, 0,       4, "32-Col Mode Draw"  },
 	{0x32,	0x01, 0x03, 0x00, "No Change"         },
 	{0x32,	0x01, 0x03, 0x01, "Center"            },
 	{0x32,	0x01, 0x03, 0x02, "Inner Zoom"        },
+	{0x32,  0x01, 0x03, 0x03, "Resize Screen/Window"},
 };
 
 static struct BurnDIPInfo AutoDetectRegion4pDIPList[] = {
@@ -306,7 +308,7 @@ static struct BurnDIPInfo AutoDetectRegion4pDIPList[] = {
 };
 
 static struct BurnDIPInfo Megadrive5pDIPList[] = {
-	{0x3e,	0xff, 0xff, 0x01,  NULL               },
+	{0x3e,	0xff, 0xff, 0x03,  NULL               },
 
 	{0,	0xfe, 0,       5, "Hardware"          },
 	{0x3d,	0x01, 0xc1, 0x01, "Auto Detect"       },
@@ -319,10 +321,11 @@ static struct BurnDIPInfo Megadrive5pDIPList[] = {
 	{0x3d,	0x01, 0x20, 0x20, "No"                },
 	{0x3d,	0x01, 0x20, 0x00, "Yes"               },
 #endif
-	{0,	0xfe, 0,       3, "32-Col Mode Draw"  },
+	{0,	0xfe, 0,       4, "32-Col Mode Draw"  },
 	{0x3e,	0x01, 0x03, 0x00, "No Change"         },
 	{0x3e,	0x01, 0x03, 0x01, "Center"            },
 	{0x3e,	0x01, 0x03, 0x02, "Inner Zoom"        },
+	{0x3e,  0x01, 0x03, 0x03, "Resize Screen/Window"},
 };
 
 static struct BurnDIPInfo AutoDetectRegion5pDIPList[] = {

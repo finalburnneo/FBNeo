@@ -234,10 +234,11 @@ static struct BurnDIPInfo MegadriveDIPList[] = {
 	{0x19,	0x01, 0x20, 0x20, "No"                },
 	{0x19,	0x01, 0x20, 0x00, "Yes"               },
 #endif
-	{0,	0xfe, 0,       3, "32-Col Mode Draw"  },
+	{0,	0xfe, 0,       4, "32-Col Mode Draw"  },
 	{0x1a,	0x01, 0x03, 0x00, "No Change"         },
 	{0x1a,	0x01, 0x03, 0x01, "Center"            },
 	{0x1a,	0x01, 0x03, 0x02, "Inner Zoom"        },
+	{0x1a,  0x01, 0x03, 0x03, "Resize Screen/Window"},
 };
 
 static struct BurnDIPInfo AutoDetectRegionDIPList[] = {

@@ -892,7 +892,7 @@ static struct BurnRomInfo soldividRomDesc[] = {
 	{ "6l.u8",			0x400000, 0xf01b816e, 2 | BRF_GRA },           //  6
 	{ "6h.u37",			0x400000, 0xfdd57361, 2 | BRF_GRA },           //  7
 
-	{ "sound.bin",		0x400000, 0xe98f8d45, 3 | BRF_SND },           //  8 Samples
+	{ "sound.u32",		0x400000, 0xe98f8d45, 3 | BRF_SND },           //  8 Samples
 };
 
 STD_ROM_PICK(soldivid)
@@ -956,7 +956,7 @@ static struct BurnRomInfo soldividkRomDesc[] = {
 	{ "6l.u8",			0x400000, 0xf01b816e, 2 | BRF_GRA },           //  6
 	{ "6h.u37",			0x400000, 0xfdd57361, 2 | BRF_GRA },           //  7
 
-	{ "sound.bin",		0x400000, 0xe98f8d45, 3 | BRF_SND },           //  8 Samples
+	{ "sound.u32",		0x400000, 0xe98f8d45, 3 | BRF_SND },           //  8 Samples
 };
 
 STD_ROM_PICK(soldividk)
@@ -1043,7 +1043,7 @@ struct BurnDriver BurnDrvS1945ii = {
 };
 
 
-// Daraku Tenshi - The Fallen Angels
+// The Fallen Angels (World) / Daraku Tenshi - The Fallen Angels (Japan)
 
 static struct BurnRomInfo darakuRomDesc[] = {
 	{ "4_prog_l.u18",	0x080000, 0x660b4609, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
@@ -1117,7 +1117,7 @@ static INT32 DarakuInit()
 
 struct BurnDriver BurnDrvDaraku = {
 	"daraku", NULL, NULL, NULL, "1998",
-	"Daraku Tenshi - The Fallen Angels\0", NULL, "Psikyo", "PS3-V1",
+	"The Fallen Angels (World) / Daraku Tenshi - The Fallen Angels (Japan)\0", NULL, "Psikyo", "PS3-V1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VSFIGHT, 0,
 	NULL, darakuRomInfo, darakuRomName, NULL, NULL, NULL, NULL, Common4ButtonInputInfo, DarakuDIPInfo,

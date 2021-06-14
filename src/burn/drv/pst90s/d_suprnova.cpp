@@ -2507,7 +2507,7 @@ struct BurnDriver BurnDrvGalpanidx = {
 };
 
 
-// Gals Panic S - Extra Edition (Europe, set 1)
+// Gals Panic S - Extra Edition (Europe, revision 1)
 
 static struct BurnRomInfo galpanisRomDesc[] = {
 	{ "gps-000-e1.u10",	0x100000, 0xb9ea3c44, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
@@ -2536,7 +2536,7 @@ static INT32 GalpanisInit()
 
 struct BurnDriver BurnDrvGalpanis = {
 	"galpanis", NULL, "skns", NULL, "1997",
-	"Gals Panic S - Extra Edition (Europe, set 1)\0", NULL, "Kaneko", "Super Kaneko Nova System",
+	"Gals Panic S - Extra Edition (Europe, revision 1)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpanisRomInfo, galpanisRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsNoSpeedhackDIPInfo,
@@ -2575,7 +2575,7 @@ struct BurnDriver BurnDrvGalpanise = {
 };
 
 
-// Gals Panic S - Extra Edition (Japan)
+// Gals Panic S - Extra Edition (Japan, revision 1)
 
 static struct BurnRomInfo galpanisjRomDesc[] = {
 	{ "gps-000-j1.u10",	0x100000, 0xc6938c3f, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
@@ -2604,7 +2604,7 @@ static INT32 GalpanisjInit()
 
 struct BurnDriver BurnDrvGalpanisj = {
 	"galpanisj", "galpanis", "skns", NULL, "1997",
-	"Gals Panic S - Extra Edition (Japan)\0", NULL, "Kaneko", "Super Kaneko Nova System",
+	"Gals Panic S - Extra Edition (Japan, revision 1)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpanisjRomInfo, galpanisjRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsNoSpeedhackDIPInfo,
@@ -2651,7 +2651,7 @@ struct BurnDriver BurnDrvGalpanisa = {
 };
 
 
-// Gals Panic S - Extra Edition (Korea)
+// Gals Panic S - Extra Edition (Korea, revision 1)
 
 static struct BurnRomInfo galpaniskRomDesc[] = {
 	{ "gps-000-k1.u10",	0x100000, 0xc9ff3d8a, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
@@ -2680,10 +2680,40 @@ static INT32 GalpaniskInit()
 
 struct BurnDriver BurnDrvGalpanisk = {
 	"galpanisk", "galpanis", "skns", NULL, "1997",
-	"Gals Panic S - Extra Edition (Korea)\0", NULL, "Kaneko", "Super Kaneko Nova System",
+	"Gals Panic S - Extra Edition (Korea, revision 1)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpaniskRomInfo, galpaniskRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsNoSpeedhackDIPInfo,
+	GalpaniskInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Gals Panic S - Extra Edition (Korea)
+
+static struct BurnRomInfo galpaniskaRomDesc[] = {
+	{ "gps-000-k0.u10",	0x100000, 0xbe74128c, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "gps-001-k0.u8",	0x100000, 0x701f793d, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "gps-100-00.u24",	0x400000, 0xa1a7acf2, 2 | BRF_GRA },           //  2 Sprites
+	{ "gps-101-00.u20",	0x400000, 0x49f764b6, 2 | BRF_GRA },           //  3
+	{ "gps-102-00.u17",	0x400000, 0x51980272, 2 | BRF_GRA },           //  4
+
+	{ "gps-200-00.u16",	0x400000, 0xc146a09e, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "gps-201-00.u13",	0x400000, 0x9dfa2dc6, 3 | BRF_GRA },           //  6
+
+	{ "gps-300-00.u4",	0x400000, 0x9e4da8e3, 5 | BRF_SND },           //  7 YMZ280b Samples
+};
+
+STDROMPICKEXT(galpaniska, galpaniska, skns)
+STD_ROM_FN(galpaniska)
+
+struct BurnDriver BurnDrvGalpaniska = {
+	"galpaniska", "galpanis", "skns", NULL, "1997",
+	"Gals Panic S - Extra Edition (Korea)\0", NULL, "Kaneko", "Super Kaneko Nova System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
+	NULL, galpaniskaRomInfo, galpaniskaRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsNoSpeedhackDIPInfo,
 	GalpaniskInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
@@ -3028,7 +3058,7 @@ struct BurnDriver BurnDrvSenknow = {
 };
 
 
-// VS Mahjong Otome Ryouran
+// VS Mahjong Otome Ryouran (revision 2)
 
 static struct BurnRomInfo ryouranRomDesc[] = {
 	{ "or-000-j2.u10",	0x080000, 0xcba8ca4e, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
@@ -3060,7 +3090,7 @@ static INT32 RyouranInit()
 
 struct BurnDriver BurnDrvRyouran = {
 	"ryouran", NULL, "skns", NULL, "1998",
-	"VS Mahjong Otome Ryouran\0", NULL, "Electro Design", "Super Kaneko Nova System",
+	"VS Mahjong Otome Ryouran (revision 2)\0", NULL, "Electro Design", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KANEKO_SKNS, GBF_MAHJONG, 0,
 	NULL, ryouranRomInfo, ryouranRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsDIPInfo, //Skns_1pInputInfo, Skns_1pDIPInfo,
@@ -3068,6 +3098,35 @@ struct BurnDriver BurnDrvRyouran = {
 	320, 240, 4, 3
 };
 
+
+// VS Mahjong Otome Ryouran (revision 1)
+
+static struct BurnRomInfo ryouranoRomDesc[] = {
+	{ "or000j1.u10",	0x080000, 0xd93aa491, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "or001j1.u8",		0x080000, 0xf466e5e9, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "or100-00.u24",	0x400000, 0xe9c7695b, 2 | BRF_GRA },           //  2 Sprites
+	{ "or101-00.u20",	0x400000, 0xfe06bf12, 2 | BRF_GRA },           //  3
+	{ "or102-00.u17",	0x400000, 0xf2a5237b, 2 | BRF_GRA },           //  4
+
+	{ "or200-00.u16",	0x400000, 0x4c4701a8, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "or201-00.u13",	0x400000, 0xa94064aa, 3 | BRF_GRA },           //  6
+
+	{ "or300-00.u4",	0x400000, 0xa3f64b79, 5 | BRF_SND },           //  7 YMZ280b Samples
+};
+
+STDROMPICKEXT(ryourano, ryourano, skns)
+STD_ROM_FN(ryourano)
+
+struct BurnDriver BurnDrvRyourano = {
+	"ryourano", "ryouran", "skns", NULL, "1998",
+	"VS Mahjong Otome Ryouran (revision 1)\0", NULL, "Electro Design", "Super Kaneko Nova System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MAHJONG, 0,
+	NULL, ryouranoRomInfo, ryouranoRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsDIPInfo, //Skns_1pInputInfo, Skns_1pDIPInfo,
+	RyouranInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
 
 // VS Block Breaker (Europe)
 

@@ -5000,7 +5000,7 @@ struct BurnDriver BurnDrvmschamps = {
 };
 
 
-// Crush Roller (Kural Samno)
+// Crush Roller (set 1)
 
 static struct BurnRomInfo crushRomDesc[] = {
 	{ "crushkrl.6e",  0x1000, 0xa8dd8f54, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -5055,7 +5055,7 @@ static INT32 crushInit()
 
 struct BurnDriver BurnDrvcrush = {
 	"crush", NULL, NULL, NULL, "1981",
-	"Crush Roller (Kural Samno)\0", NULL, "Kural Samno Electric", "Pac-man",
+	"Crush Roller (set 1)\0", NULL, "Alpha Denshi Co. / Kural Samno Electric, Ltd.", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION | GBF_ACTION, 0,
 	NULL, crushRomInfo, crushRomName, NULL, NULL, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
@@ -5087,7 +5087,7 @@ STD_ROM_FN(crushbl)
 
 struct BurnDriver BurnDrvcrushbl = {
 	"crushbl", "crush", NULL, NULL, "1981",
-	"Crush Roller (bootleg set 1)\0", NULL, "Kural Samno Electric", "Pac-man",
+	"Crush Roller (bootleg set 1)\0", NULL, "bootleg", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, crushblRomInfo, crushblRomName, NULL, NULL, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
@@ -5164,7 +5164,7 @@ struct BurnDriver BurnDrvcrushbl3 = {
 };
 
 
-// Crush Roller (Kural Esco - bootleg?)
+// Crush Roller (set 2)
 
 static struct BurnRomInfo crush2RomDesc[] = {
 	{ "tp1",          0x0800, 0xf276592e, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -5193,7 +5193,7 @@ STD_ROM_FN(crush2)
 
 struct BurnDriver BurnDrvcrush2 = {
 	"crush2", "crush", NULL, NULL, "1981",
-	"Crush Roller (Kural Esco - bootleg?)\0", NULL, "Kural Esco Electric", "Pac-man",
+	"Crush Roller (set 2)\0", NULL, "Alpha Denshi Co. / Kural Esco Electric, Ltd.", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, crush2RomInfo, crush2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
@@ -5202,7 +5202,39 @@ struct BurnDriver BurnDrvcrush2 = {
 };
 
 
-// Crush Roller (Kural - bootleg?)
+// Crush Roller (set 3)
+
+static struct BurnRomInfo crush3RomDesc[] = {
+	{ "l.6e",  		  0x1000, 0x50a1a776, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "2.6f",  		  0x1000, 0x5b03c1f8, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "3.6h",  		  0x1000, 0xae5b39fb, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "4.6j",  		  0x1000, 0xddf63743, 1 | BRF_ESS | BRF_PRG },	//  3
+
+	{ "5.5e",  		  0x1000, 0xb1c86cd7, 2 | BRF_GRA },			//  4 Graphics
+	{ "6.5f",  		  0x1000, 0xb5c14376, 2 | BRF_GRA },			//  5
+
+	{ "82s123.7f",    0x0020, 0xff344446, 3 | BRF_GRA },			//  6 Color Prom
+	{ "82s129.4a",    0x0100, 0x63efb927, 3 | BRF_GRA },			//  7
+
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
+	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
+};
+
+STD_ROM_PICK(crush3)
+STD_ROM_FN(crush3)
+
+struct BurnDriver BurnDrvcrush3 = {
+	"crush3", "crush", NULL, NULL, "1981",
+	"Crush Roller (set 3)\0", NULL, "Alpha Denshi Co. / Kural Electric, Ltd.", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION | GBF_ACTION, 0,
+	NULL, crush3RomInfo, crush3RomName, NULL, NULL, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
+	crushInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Crush Roller (set 4)
 
 static struct BurnRomInfo crush4RomDesc[] = {
 	{ "unkmol.4e",    0x0800, 0x49150ddf, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -5256,7 +5288,7 @@ static INT32 crush4Init()
 
 struct BurnDriver BurnDrvcrush4 = {
 	"crush4", "crush", NULL, NULL, "1981",
-	"Crush Roller (Kural - bootleg?)\0", NULL, "Kural Electric", "Pac-man",
+	"Crush Roller (set 4)\0", NULL, "Alpha Denshi Co. / Kural Electric, Ltd.", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, crush4RomInfo, crush4RomName, NULL, NULL, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
@@ -5265,18 +5297,18 @@ struct BurnDriver BurnDrvcrush4 = {
 };
 
 
-// Crush Roller (Kural TWT)
+// Crush Roller (set 5)
 
 static struct BurnRomInfo crush5RomDesc[] = {
-	{ "crtwt.2",     0x10000, 0xadbd21f7, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code (banked)
+	{ "crtwt.2",      0x10000, 0xadbd21f7, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code (banked)
 
-	{ "crtwt.1",      0x4000, 0x4250a9ea, 2 | BRF_GRA },		//  1 Graphics
+	{ "crtwt.1",      0x04000, 0x4250a9ea, 2 | BRF_GRA },		    //  1 Graphics
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  2 Color Proms
-	{ "82s129.bin",   0x0100, 0x2bc5d339, 3 | BRF_GRA },		//  3
+	{ "82s123.7f",    0x00020, 0x2fc650bd, 3 | BRF_GRA },		    //  2 Color Proms
+	{ "82s129.bin",   0x00100, 0x2bc5d339, 3 | BRF_GRA },		    //  3
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  4 Sound Prom
-	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  5 Timing Prom (not used)
+	{ "82s126.1m",    0x00100, 0xa9cc86bf, 4 | BRF_SND },		    //  4 Sound Prom
+	{ "82s126.3m",    0x00100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  5 Timing Prom (not used)
 };
 
 STD_ROM_PICK(crush5)
@@ -5306,7 +5338,7 @@ static INT32 crush5Init()
 
 struct BurnDriver BurnDrvcrush5 = {
 	"crush5", "crush", NULL, NULL, "1981",
-	"Crush Roller (Kural TWT)\0", NULL, "Kural TWT", "Pac-man",
+	"Crush Roller (set 5)\0", NULL, "Alpha Denshi Co. / Kural TWT", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, crush5RomInfo, crush5RomName, NULL, NULL, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
@@ -5315,7 +5347,7 @@ struct BurnDriver BurnDrvcrush5 = {
 };
 
 
-// Paint Roller
+// Paint Roller (bootleg of Crush Roller)
 
 static struct BurnRomInfo paintrlrRomDesc[] = {
 	{ "paintrlr.1",   0x0800, 0x556d20b5, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -5327,15 +5359,15 @@ static struct BurnRomInfo paintrlrRomDesc[] = {
 	{ "paintrlr.4",   0x0800, 0x0fd5884b, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "paintrlr.8",   0x0800, 0x4900114a, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "tpa",          0x0800, 0xc7617198, 2 | BRF_GRA },		//  8 Graphics
-	{ "mbrush.5h",    0x0800, 0xc15b6967, 2 | BRF_GRA },		//  9
-	{ "mbrush.5f",    0x0800, 0xd5bc5cb8, 2 | BRF_GRA },		// 10
-	{ "tpd",          0x0800, 0xd35d1caf, 2 | BRF_GRA },		// 11
+	{ "tpa",          0x0800, 0xc7617198, 2 | BRF_GRA },		    //  8 Graphics
+	{ "mbrush.5h",    0x0800, 0xc15b6967, 2 | BRF_GRA },		    //  9
+	{ "mbrush.5f",    0x0800, 0xd5bc5cb8, 2 | BRF_GRA },		    // 10
+	{ "tpd",          0x0800, 0xd35d1caf, 2 | BRF_GRA },		    // 11
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Proms
-	{ "2s140.4a",     0x0100, 0x63efb927, 3 | BRF_GRA },		// 13
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		    // 12 Color Proms
+	{ "2s140.4a",     0x0100, 0x63efb927, 3 | BRF_GRA },		    // 13
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		    // 14 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (unused)
 };
 
@@ -5344,7 +5376,7 @@ STD_ROM_FN(paintrlr)
 
 struct BurnDriver BurnDrvpaintrlr = {
 	"paintrlr", "crush", NULL, NULL, "1981",
-	"Paint Roller\0", NULL, "bootleg", "Pac-man",
+	"Paint Roller (bootleg of Crush Roller)\0", NULL, "bootleg", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, paintrlrRomInfo, paintrlrRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mbrushDIPInfo,
@@ -5353,7 +5385,39 @@ struct BurnDriver BurnDrvpaintrlr = {
 };
 
 
-// Crush Roller (Sidam bootleg)
+// Painter (hack of Crush Roller)
+
+static struct BurnRomInfo painterRomDesc[] = {
+	{ "pain1.6e",     		  0x1000, 0xfb2eb6dc, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "pain2.6f",     		  0x1000, 0x39f92fb0, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "pain3.6h",     		  0x1000, 0xf80435b1, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "pain4-pennello2.6j",   0x1000, 0x0cb678dc, 1 | BRF_ESS | BRF_PRG },	//  3
+	
+	{ "pain5.5e",             0x1000, 0xbd819afc, 2 | BRF_GRA },		    //  4 Graphics
+	{ "pain6.5f",    		  0x1000, 0x014e5ed3, 2 | BRF_GRA },		    //  5
+	
+	{ "82s123.7f",            0x0020, 0x2fc650bd, 3 | BRF_GRA },		    // 	6 Color Proms
+	{ "2s140.4a",     		  0x0100, 0x63efb927, 3 | BRF_GRA },			//  7
+
+	{ "82s126.1m",    		  0x0100, 0xa9cc86bf, 4 | BRF_SND },		    //  8 Sound Prom
+	{ "82s126.3m",    		  0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (unused)
+};
+
+STD_ROM_PICK(painter)
+STD_ROM_FN(painter)
+
+struct BurnDriver BurnDrvpainter = {
+	"painter", "crush", NULL, NULL, "1981",
+	"Painter (hack of Crush Roller)\0", NULL, "hack (Monshine Ent. Co.)", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, painterRomInfo, painterRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mbrushDIPInfo,
+	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Crush Roller (bootleg set 4)
 
 static struct BurnRomInfo crushsRomDesc[] = {
 	{ "11105-0.0j",   0x1000, 0xdd425429, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -5380,7 +5444,7 @@ static INT32 crushsInit()
 
 struct BurnDriver BurnDrvcrushs = {
 	"crushs", "crush", NULL, NULL, "19??",
-	"Crush Roller (Sidam bootleg)\0", NULL, "[Kural] (Sidam bootleg)", "Pac-man",
+	"Crush Roller (bootleg set 4)\0", NULL, "bootleg (Sidam)", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, crushsRomInfo, crushsRomName, NULL, NULL, NULL, NULL, DrvInputInfo, crushsDIPInfo,
@@ -5389,7 +5453,7 @@ struct BurnDriver BurnDrvcrushs = {
 };
 
 
-// Make Trax (set 1)
+// Make Trax (US set 1)
 
 static struct BurnRomInfo maketraxRomDesc[] = {
 	{ "maketrax.6e",  0x1000, 0x0150fb4a, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -5417,7 +5481,7 @@ static INT32 maketraxInit()
 
 struct BurnDriver BurnDrvmaketrax = {
 	"maketrax", "crush", NULL, NULL, "1981",
-	"Make Trax (set 1)\0", NULL, "[Kural] (Williams license)", "Pac-man",
+	"Make Trax (US set 1)\0", NULL, "Alpha Denshi Co. / Kural (Williams license)", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, maketraxRomInfo, maketraxRomName, NULL, NULL, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
@@ -5426,7 +5490,7 @@ struct BurnDriver BurnDrvmaketrax = {
 };
 
 
-// Make Trax (set 2)
+// Make Trax (US set 2)
 
 static struct BurnRomInfo maketrxbRomDesc[] = {
 	{ "maketrax.6e",  0x1000, 0x0150fb4a, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -5449,7 +5513,7 @@ STD_ROM_FN(maketrxb)
 
 struct BurnDriver BurnDrvmaketrxb = {
 	"maketrxb", "crush", NULL, NULL, "1981",
-	"Make Trax (set 2)\0", NULL, "[Kural] (Williams license)", "Pac-man",
+	"Make Trax (US set 2)\0", NULL, "Alpha Denshi Co. / Kural (Williams license)", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, maketrxbRomInfo, maketrxbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
@@ -5458,7 +5522,7 @@ struct BurnDriver BurnDrvmaketrxb = {
 };
 
 
-// Magic Brush
+// Magic Brush (bootleg of Crush Roller)
 
 static struct BurnRomInfo mbrushRomDesc[] = {
 	{ "mbrush.6e",    0x1000, 0x750fbff7, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -5495,7 +5559,7 @@ static INT32 mbrushInit()
 
 struct BurnDriver BurnDrvmbrush = {
 	"mbrush", "crush", NULL, NULL, "1981",
-	"Magic Brush\0", NULL, "bootleg", "Pac-man",
+	"Magic Brush (bootleg of Crush Roller)\0", NULL, "bootleg (Olympia)", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, mbrushRomInfo, mbrushRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mbrushDIPInfo,
@@ -5504,7 +5568,7 @@ struct BurnDriver BurnDrvmbrush = {
 };
 
 
-// Korosuke Roller
+// Korosuke Roller (Japan)
 
 static struct BurnRomInfo korosukeRomDesc[] = {
 	{ "kr.6e",        0x1000, 0x69f6e2da, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -5559,7 +5623,7 @@ static INT32 korosukeInit()
 
 struct BurnDriver BurnDrvkorosuke = {
 	"korosuke", "crush", NULL, NULL, "1981",
-	"Korosuke Roller\0", NULL, "Kural Electric", "Pac-man",
+	"Korosuke Roller (Japan)\0", NULL, "Alpha Denshi Co. / Kural Electric, Ltd.", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, korosukeRomInfo, korosukeRomName, NULL, NULL, NULL, NULL, korosukeInputInfo, korosukeDIPInfo,

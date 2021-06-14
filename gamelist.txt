@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17116 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17121 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2985,14 +2985,15 @@ This list contains all games supported by FinalBurn Neo.
 | msx_crusadera	|  	| Crusader (Jpn, Alt)					| msx_crusader	| 1985	| Pony Canyon	| MSX		| 					|
 | msx_crusaderk	|  	| Crusader (Kor)					| msx_crusader	| 198?	| Clover	| MSX		| 					|
 | md_crusader	|  	| Crusader of Centy (USA)				| md_soleil	| 1994	| Atlus		| Sega Megadrive| 					|
-| crushbl	|  	| Crush Roller (bootleg set 1)				| crush		| 1981	| Kural Samno El| Pac-man	| 					|
+| crushbl	|  	| Crush Roller (bootleg set 1)				| crush		| 1981	| bootleg	| Pac-man	| 					|
 | crushbl2	|  	| Crush Roller (bootleg set 2)				| crush		| 1981	| bootleg	| Pac-man	| 					|
 | crushbl3	|  	| Crush Roller (bootleg set 3)				| crush		| 1981	| bootleg	| Pac-man	| 					|
-| crush4	|  	| Crush Roller (Kural - bootleg?)			| crush		| 1981	| Kural Electric| Pac-man	| 					|
-| crush2	|  	| Crush Roller (Kural Esco - bootleg?)			| crush		| 1981	| Kural Esco Ele| Pac-man	| 					|
-| crush		|  	| Crush Roller (Kural Samno)				| 		| 1981	| Kural Samno El| Pac-man	| 					|
-| crush5	|  	| Crush Roller (Kural TWT)				| crush		| 1981	| Kural TWT	| Pac-man	| 					|
-| crushs	|  	| Crush Roller (Sidam bootleg)				| crush		| 19??	| [Kural] (Sidam| Pac-man	| 					|
+| crushs	|  	| Crush Roller (bootleg set 4)				| crush		| 19??	| bootleg (Sidam| Pac-man	| 					|
+| crush		|  	| Crush Roller (set 1)					| 		| 1981	| Alpha Denshi C| Pac-man	| 					|
+| crush2	|  	| Crush Roller (set 2)					| crush		| 1981	| Alpha Denshi C| Pac-man	| 					|
+| crush3	|   NW	| Crush Roller (set 3)					| crush		| 1981	| Alpha Denshi C| Pac-man	| 					|
+| crush4	|  	| Crush Roller (set 4)					| crush		| 1981	| Alpha Denshi C| Pac-man	| 					|
+| crush5	|  	| Crush Roller (set 5)					| crush		| 1981	| Alpha Denshi C| Pac-man	| 					|
 | ngp_crushrol	|  	| Crush Roller (World)					| 		| 1999	| SNK		| NeoGeo Pocket | 					|
 | crusherm	|  	| Crusher Makochan (Japan)				| 		| 1999	| Takumi	| Miscellaneous	| 					|
 | md_crying	|  	| Crying - Aseimei Sensou (Jpn)				| md_biohazrb	| 1992	| Sega		| Sega Megadrive| 					|
@@ -3183,7 +3184,6 @@ This list contains all games supported by FinalBurn Neo.
 | spec_danterrifik2|  	| Danterrifik 2 (HB)					| 		| 2020	| Toku Soft	| ZX Spectrum	| 					|
 | spec_danterrifik3|  	| Danterrifik III (HB)					| 		| 2021	| Toku Soft	| ZX Spectrum	| 					|
 | nes_daoshuai	|  	| Dao Shuai (Asia) (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| daraku	|  	| Daraku Tenshi - The Fallen Angels			| 		| 1998	| Psikyo	| PS3-V1	| 					|
 | sms_darc10	|  	| DARC (HB, v1.0)					| 		| 2015	| Zipper	| Sega Master Sy| Turn ON 'FM Emulation' in Dips for mus|
 | dariuse	|  	| Darius (Extra) (Japan)				| darius	| 1986	| Taito Corporat| Taito Misc	| 					|
 | dariuso	|  	| Darius (Japan old version)				| darius	| 1986	| Taito Corporat| Taito Misc	| 					|
@@ -5261,10 +5261,11 @@ This list contains all games supported by FinalBurn Neo.
 | galpani4k	|  	| Gals Panic 4 (Korea)					| galpani4	| 1996	| Kaneko	| Super Kaneko N| 					|
 | galpanidx	|  	| Gals Panic DX (Asia)					| galpani4	| 2001	| Kaneko	| Super Kaneko N| 					|
 | galpanisa	|  	| Gals Panic S - Extra Edition (Asia)			| galpanis	| 1997	| Kaneko	| Super Kaneko N| 					|
-| galpanis	|  	| Gals Panic S - Extra Edition (Europe, set 1)		| 		| 1997	| Kaneko	| Super Kaneko N| 					|
+| galpanis	|  	| Gals Panic S - Extra Edition (Europe, revision 1)	| 		| 1997	| Kaneko	| Super Kaneko N| 					|
 | galpanise	|  	| Gals Panic S - Extra Edition (Europe, set 2)		| galpanis	| 1997	| Kaneko	| Super Kaneko N| 					|
-| galpanisj	|  	| Gals Panic S - Extra Edition (Japan)			| galpanis	| 1997	| Kaneko	| Super Kaneko N| 					|
-| galpanisk	|  	| Gals Panic S - Extra Edition (Korea)			| galpanis	| 1997	| Kaneko	| Super Kaneko N| 					|
+| galpanisj	|  	| Gals Panic S - Extra Edition (Japan, revision 1)	| galpanis	| 1997	| Kaneko	| Super Kaneko N| 					|
+| galpaniska	|  	| Gals Panic S - Extra Edition (Korea)			| galpanis	| 1997	| Kaneko	| Super Kaneko N| 					|
+| galpanisk	|  	| Gals Panic S - Extra Edition (Korea, revision 1)	| galpanis	| 1997	| Kaneko	| Super Kaneko N| 					|
 | galpans2a	|  	| Gals Panic S2 (Asia)					| galpans2	| 1999	| Kaneko	| Super Kaneko N| 					|
 | galpans2	|  	| Gals Panic S2 (Europe)				| 		| 1999	| Kaneko	| Super Kaneko N| 					|
 | galpans2j	|  	| Gals Panic S2 (Japan)					| galpans2	| 1999	| Kaneko	| Super Kaneko N| 					|
@@ -6569,6 +6570,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_invasion	|  	| Invasion of the big pixels (HB, Tech-demo)		| 		| 2008	| noice		| MSX		| 					|
 | spec_invzombie|  	| Invasion of the Zombie Monsters (HB)			| 		| 2010	| RELEVO	| ZX Spectrum	| 					|
 | msx_invazm	|  	| Invasion of the Zombie Monsters (HB, RLV904)		| 		| 2010	| RELEVO	| MSX		| 					|
+| invcarht	| D	| Invinco / Car Hunt (Germany)				| 		| 1979	| Sega		| Vic Dual	| No sound				|
 | invds		| D	| Invinco / Deep Scan					| 		| 1979	| Sega		| Vic Dual	| No sound				|
 | invho2	| D	| Invinco / Head On 2					| 		| 1979	| Sega		| Vic Dual	| No sound				|
 | invinco	| D	| Invinco						| 		| 1979	| Sega		| Vic Dual	| No sound				|
@@ -7383,7 +7385,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_proyak89	|  	| Kore Ga Pro Yakyuu '89				| 		| 1989	| Intec		| PC Engine	| 					|
 | pce_proyak90	|  	| Kore Ga Pro Yakyuu '90				| 		| 1990	| Intec		| PC Engine	| 					|
 | korokoro	|  	| Koro Koro Quest (Japan)				| 		| 1999	| Takumi	| Cave		| 					|
-| korosuke	|  	| Korosuke Roller					| crush		| 1981	| Kural Electric| Pac-man	| 					|
+| korosuke	|  	| Korosuke Roller (Japan)				| crush		| 1981	| Alpha Denshi C| Pac-man	| 					|
 | nes_kosatak	|  	| Kosmity Atakujo (HB, v10.07.2020)			| 		| 2020	| sdm2		| Miscellaneous	| 					|
 | myangel	|  	| Kosodate Quiz My Angel (Japan)			| 		| 1996	| Namco		| Newer Seta	| 					|
 | myangel2	|  	| Kosodate Quiz My Angel 2 (Japan)			| 		| 1996	| Namco		| Newer Seta	| 					|
@@ -7924,7 +7926,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_magmag	|  	| Mag the Magician (HB)					| 		| 2017	| Radasten	| ZX Spectrum	| 					|
 | spec_magentajim|  	| Magenta Jim (HB)					| 		| 2020	| Gaz Marshall	| ZX Spectrum	| 					|
 | nes_magicblock|  	| Magic Block (Mega Soft)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| mbrush	|  	| Magic Brush						| crush		| 1981	| bootleg	| Pac-man	| 					|
+| mbrush	|  	| Magic Brush (bootleg of Crush Roller)			| crush		| 1981	| bootleg (Olymp| Pac-man	| 					|
 | magicbubc	|  	| Magic Bubble (Adult version, YS-0211 PCB)		| magicbub	| 199?	| Yun Sung	| Yun Sung 16 Bi| 					|
 | magicbuba	|  	| Magic Bubble (Adult version, YS-1302 PCB, set 1)	| magicbub	| 199?	| Yun Sung	| Yun Sung 16 Bi| 					|
 | magicbubb	|  	| Magic Bubble (Adult version, YS-1302 PCB, set 2)	| magicbub	| 199?	| Yun Sung	| Yun Sung 16 Bi| 					|
@@ -8063,8 +8065,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_makaimuraarcade|  	| Makaimura Arcade (Japan)				| nes_ghostsngoblins| 1989?	| Nintendo	| Miscellaneous	| 					|
 | msx_makethemfall|  	| Make Them Fall (HB)					| 		| 2021	| Robosoft	| MSX		| 					|
 | msx_makethemjump|  	| Make Them Jump (HB)					| 		| 2021	| Robosoft	| MSX		| 					|
-| maketrax	|  	| Make Trax (set 1)					| crush		| 1981	| [Kural] (Willi| Pac-man	| 					|
-| maketrxb	|  	| Make Trax (set 2)					| crush		| 1981	| [Kural] (Willi| Pac-man	| 					|
+| maketrax	|  	| Make Trax (US set 1)					| crush		| 1981	| Alpha Denshi C| Pac-man	| 					|
+| maketrxb	|  	| Make Trax (US set 2)					| crush		| 1981	| Alpha Denshi C| Pac-man	| 					|
 | pce_makyoden	|  	| Makyou Densetsu					| 		| 1988	| Victor Interac| PC Engine	| 					|
 | makyosen	|  	| Makyou Senshi (Japan)					| gondo		| 1987	| Data East Corp| DEC8		| 					|
 | msx_malaika12	|  	| Malaika (HB, v1.2)					| 		| 2013	| RELEVO	| MSX		| 					|
@@ -10008,7 +10010,8 @@ This list contains all games supported by FinalBurn Neo.
 | paddlema	|  	| Paddle Mania						| 		| 1988	| SNK		| Alpha 68k	| 					|
 | samsho4k	|  	| Pae Wang Jeon Seol / Legend of a Warrior (Korean censo| samsho4	| 1996	| SNK		| Neo Geo MVS	| 					|
 | msx_paipanic	|  	| Pai Panic (Jpn)					| 		| 1983	| ASCII		| MSX		| 					|
-| paintrlr	|  	| Paint Roller						| crush		| 1981	| bootleg	| Pac-man	| 					|
+| paintrlr	|  	| Paint Roller (bootleg of Crush Roller)		| crush		| 1981	| bootleg	| Pac-man	| 					|
+| painter	|  	| Painter (hack of Crush Roller)			| crush		| 1981	| hack (Monshine| Pac-man	| 					|
 | msx_pairlogic	|  	| Pair Logic (HB)					| 		| 2005	| AG Software	| MSX		| 					|
 | msx_pairs	|  	| Pairs (Jpn)						| 		| 1983	| ASCII		| MSX		| 					|
 | msx_pairsa	|  	| Pairs (Jpn, Alt)					| msx_pairs	| 1983	| ASCII		| MSX		| 					|
@@ -14786,6 +14789,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_flstory	|  	| The Fairyland Story (Jpn)				| 		| 1987	| Hot-B		| MSX		| 					|
 | msx_flstorya	|  	| The Fairyland Story (Jpn, Alt)			| msx_flstory	| 1987	| Hot-B		| MSX		| 					|
 | flstory	|  	| The FairyLand Story					| 		| 1985	| Taito		| Miscellaneous	| 					|
+| daraku	|  	| The Fallen Angels (World) / Daraku Tenshi - The Fallen| 		| 1998	| Psikyo	| PS3-V1	| 					|
 | froundl	|  	| The Final Round (ver. L)				| fround	| 1988	| Konami	| GX870		| 					|
 | fround	|  	| The Final Round (ver. M)				| 		| 1988	| Konami	| GX870		| 					|
 | sms_flash	|  	| The Flash (Euro, Bra)					| 		| 1993	| Sega		| Sega Master Sy| 					|
@@ -16166,7 +16170,8 @@ This list contains all games supported by FinalBurn Neo.
 | vblokbrka	|  	| VS Block Breaker (Asia)				| vblokbrk	| 1997	| Kaneko / Media| Super Kaneko N| 					|
 | vblokbrk	|  	| VS Block Breaker (Europe)				| 		| 1997	| Kaneko / Media| Super Kaneko N| 					|
 | vsgongf	|  	| VS Gong Fight						| 		| 1984	| Kaneko	| Miscellaneous	| 					|
-| ryouran	|  	| VS Mahjong Otome Ryouran				| 		| 1998	| Electro Design| Super Kaneko N| 					|
+| ryourano	|  	| VS Mahjong Otome Ryouran (revision 1)			| ryouran	| 1998	| Electro Design| Super Kaneko N| 					|
+| ryouran	|  	| VS Mahjong Otome Ryouran (revision 2)			| 		| 1998	| Electro Design| Super Kaneko N| 					|
 | fds_vsexcitebike|  	| Vs. Excitebike (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | bnstars	|  	| Vs. Janshi Brandnew Stars (Ver 1.1, MegaSystem32 Versi| bnstars1	| 1997	| Jaleco	| MegaSystem 32	| 					|
 | bnstars1	|   NW	| Vs. Janshi Brandnew Stars				| 		| 1997	| Jaleco	| Miscellaneous	| Not currently emulated		|

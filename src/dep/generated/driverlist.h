@@ -3026,11 +3026,12 @@ DRV		BurnDrvmd_crusader;
 DRV		BurnDrvcrushbl;
 DRV		BurnDrvcrushbl2;
 DRV		BurnDrvcrushbl3;
-DRV		BurnDrvcrush4;
-DRV		BurnDrvcrush2;
-DRV		BurnDrvcrush;
-DRV		BurnDrvcrush5;
 DRV		BurnDrvcrushs;
+DRV		BurnDrvcrush;
+DRV		BurnDrvcrush2;
+DRV		BurnDrvcrush3;
+DRV		BurnDrvcrush4;
+DRV		BurnDrvcrush5;
 DRV		BurnDrvngpc_crushrol;
 DRV		BurnDrvCrusherm;
 DRV		BurnDrvmd_crying;
@@ -3223,7 +3224,6 @@ DRV		BurnSpecdanterrifik;
 DRV		BurnSpecdanterrifik2;
 DRV		BurnSpecdanterrifik3;
 DRV		BurnDrvnes_daoshuai;
-DRV		BurnDrvDaraku;
 DRV		BurnDrvsms_darc;
 DRV		BurnDrvDariuse;
 DRV		BurnDrvDariuso;
@@ -5328,6 +5328,7 @@ DRV		BurnDrvGalpanisa;
 DRV		BurnDrvGalpanis;
 DRV		BurnDrvGalpanise;
 DRV		BurnDrvGalpanisj;
+DRV		BurnDrvGalpaniska;
 DRV		BurnDrvGalpanisk;
 DRV		BurnDrvGalpans2a;
 DRV		BurnDrvGalpans2;
@@ -6652,6 +6653,7 @@ DRV		BurnDrvMSX_invasion;
 DRV		BurnSpecInvzombie;
 DRV		BurnDrvMSX_invazm;
 #if defined FBNEO_DEBUG
+DRV		BurnDrvInvcarht;		// No sound
 DRV		BurnDrvInvds;			// No sound
 DRV		BurnDrvInvho2;			// No sound
 DRV		BurnDrvInvinco;			// No sound
@@ -10137,6 +10139,7 @@ DRV		BurnDrvPaddlema;
 DRV		BurnDrvSamSho4k;
 DRV		BurnDrvMSX_paipanic;
 DRV		BurnDrvpaintrlr;
+DRV		BurnDrvpainter;
 DRV		BurnDrvMSX_pairlogic;
 DRV		BurnDrvMSX_pairs;
 DRV		BurnDrvMSX_pairsa;
@@ -14978,6 +14981,7 @@ DRV		BurnDrvFlstoryj;
 DRV		BurnDrvMSX_flstory;
 DRV		BurnDrvMSX_flstorya;
 DRV		BurnDrvFlstory;
+DRV		BurnDrvDaraku;
 DRV		BurnDrvFroundl;
 DRV		BurnDrvFround;
 DRV		BurnDrvsms_flash;
@@ -16380,6 +16384,7 @@ DRV		BurnDrvVs10yard;
 DRV		BurnDrvVblokbrka;
 DRV		BurnDrvVblokbrk;
 DRV		BurnDrvVsgongf;
+DRV		BurnDrvRyourano;
 DRV		BurnDrvRyouran;
 DRV		BurnDrvfds_vsexcitebike;
 DRV		BurnDrvBnstars;
@@ -20387,11 +20392,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcrushbl,			// Crush Roller (bootleg set 1)
 	&BurnDrvcrushbl2,			// Crush Roller (bootleg set 2)
 	&BurnDrvcrushbl3,			// Crush Roller (bootleg set 3)
-	&BurnDrvcrush4,				// Crush Roller (Kural - bootleg?)
-	&BurnDrvcrush2,				// Crush Roller (Kural Esco - bootleg?)
-	&BurnDrvcrush,				// Crush Roller (Kural Samno)
-	&BurnDrvcrush5,				// Crush Roller (Kural TWT)
-	&BurnDrvcrushs,				// Crush Roller (Sidam bootleg)
+	&BurnDrvcrushs,				// Crush Roller (bootleg set 4)
+	&BurnDrvcrush,				// Crush Roller (set 1)
+	&BurnDrvcrush2,				// Crush Roller (set 2)
+	&BurnDrvcrush3,				// Crush Roller (set 3) [no comment, NOT WORKING]
+	&BurnDrvcrush4,				// Crush Roller (set 4)
+	&BurnDrvcrush5,				// Crush Roller (set 5)
 	&BurnDrvngpc_crushrol,		// Crush Roller (World)
 	&BurnDrvCrusherm,			// Crusher Makochan (Japan)
 	&BurnDrvmd_crying,			// Crying - Aseimei Sensou (Jpn)
@@ -20584,7 +20590,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecdanterrifik2,		// Danterrifik 2 (HB)
 	&BurnSpecdanterrifik3,		// Danterrifik III (HB)
 	&BurnDrvnes_daoshuai,		// Dao Shuai (Asia) (Unl)
-	&BurnDrvDaraku,				// Daraku Tenshi - The Fallen Angels
 	&BurnDrvsms_darc,			// DARC (HB, v1.0)
 	&BurnDrvDariuse,			// Darius (Extra) (Japan)
 	&BurnDrvDariuso,			// Darius (Japan old version)
@@ -22686,10 +22691,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGalpani4k,			// Gals Panic 4 (Korea)
 	&BurnDrvGalpanidx,			// Gals Panic DX (Asia)
 	&BurnDrvGalpanisa,			// Gals Panic S - Extra Edition (Asia)
-	&BurnDrvGalpanis,			// Gals Panic S - Extra Edition (Europe, set 1)
+	&BurnDrvGalpanis,			// Gals Panic S - Extra Edition (Europe, revision 1)
 	&BurnDrvGalpanise,			// Gals Panic S - Extra Edition (Europe, set 2)
-	&BurnDrvGalpanisj,			// Gals Panic S - Extra Edition (Japan)
-	&BurnDrvGalpanisk,			// Gals Panic S - Extra Edition (Korea)
+	&BurnDrvGalpanisj,			// Gals Panic S - Extra Edition (Japan, revision 1)
+	&BurnDrvGalpaniska,			// Gals Panic S - Extra Edition (Korea)
+	&BurnDrvGalpanisk,			// Gals Panic S - Extra Edition (Korea, revision 1)
 	&BurnDrvGalpans2a,			// Gals Panic S2 (Asia)
 	&BurnDrvGalpans2,			// Gals Panic S2 (Europe)
 	&BurnDrvGalpans2j,			// Gals Panic S2 (Japan)
@@ -24013,6 +24019,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecInvzombie,			// Invasion of the Zombie Monsters (HB)
 	&BurnDrvMSX_invazm,			// Invasion of the Zombie Monsters (HB, RLV904)
 #if defined FBNEO_DEBUG
+	&BurnDrvInvcarht,			// Invinco / Car Hunt (Germany) [No sound]
 	&BurnDrvInvds,				// Invinco / Deep Scan [No sound]
 	&BurnDrvInvho2,				// Invinco / Head On 2 [No sound]
 	&BurnDrvInvinco,			// Invinco [No sound]
@@ -24844,7 +24851,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_proyak89,		// Kore Ga Pro Yakyuu '89
 	&BurnDrvpce_proyak90,		// Kore Ga Pro Yakyuu '90
 	&BurnDrvKorokoro,			// Koro Koro Quest (Japan)
-	&BurnDrvkorosuke,			// Korosuke Roller
+	&BurnDrvkorosuke,			// Korosuke Roller (Japan)
 	&BurnDrvnes_kosatak,		// Kosmity Atakujo (HB, v10.07.2020)
 	&BurnDrvMyangel,			// Kosodate Quiz My Angel (Japan)
 	&BurnDrvMyangel2,			// Kosodate Quiz My Angel 2 (Japan)
@@ -25391,7 +25398,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecMagmag,			// Mag the Magician (HB)
 	&BurnSpecMagentajim,		// Magenta Jim (HB)
 	&BurnDrvnes_magicblock,		// Magic Block (Mega Soft)
-	&BurnDrvmbrush,				// Magic Brush
+	&BurnDrvmbrush,				// Magic Brush (bootleg of Crush Roller)
 	&BurnDrvMagicbubc,			// Magic Bubble (Adult version, YS-0211 PCB)
 	&BurnDrvMagicbuba,			// Magic Bubble (Adult version, YS-1302 PCB, set 1)
 	&BurnDrvMagicbubb,			// Magic Bubble (Adult version, YS-1302 PCB, set 2)
@@ -25530,8 +25537,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_makaimuraarcade,// Makaimura Arcade (Japan)
 	&BurnDrvMSX_makethemfall,	// Make Them Fall (HB)
 	&BurnDrvMSX_makethemjump,	// Make Them Jump (HB)
-	&BurnDrvmaketrax,			// Make Trax (set 1)
-	&BurnDrvmaketrxb,			// Make Trax (set 2)
+	&BurnDrvmaketrax,			// Make Trax (US set 1)
+	&BurnDrvmaketrxb,			// Make Trax (US set 2)
 	&BurnDrvpce_makyoden,		// Makyou Densetsu
 	&BurnDrvMakyosen,			// Makyou Senshi (Japan)
 	&BurnDrvMSX_malaika,		// Malaika (HB, v1.2)
@@ -27497,7 +27504,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPaddlema,			// Paddle Mania
 	&BurnDrvSamSho4k,			// Pae Wang Jeon Seol / Legend of a Warrior (Korean censored Samurai Shodown IV)
 	&BurnDrvMSX_paipanic,		// Pai Panic (Jpn)
-	&BurnDrvpaintrlr,			// Paint Roller
+	&BurnDrvpaintrlr,			// Paint Roller (bootleg of Crush Roller)
+	&BurnDrvpainter,			// Painter (hack of Crush Roller)
 	&BurnDrvMSX_pairlogic,		// Pair Logic (HB)
 	&BurnDrvMSX_pairs,			// Pairs (Jpn)
 	&BurnDrvMSX_pairsa,			// Pairs (Jpn, Alt)
@@ -32339,6 +32347,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_flstory,		// The Fairyland Story (Jpn)
 	&BurnDrvMSX_flstorya,		// The Fairyland Story (Jpn, Alt)
 	&BurnDrvFlstory,			// The FairyLand Story
+	&BurnDrvDaraku,				// The Fallen Angels (World) / Daraku Tenshi - The Fallen Angels (Japan)
 	&BurnDrvFroundl,			// The Final Round (ver. L)
 	&BurnDrvFround,				// The Final Round (ver. M)
 	&BurnDrvsms_flash,			// The Flash (Euro, Bra)
@@ -33741,7 +33750,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvVblokbrka,			// VS Block Breaker (Asia)
 	&BurnDrvVblokbrk,			// VS Block Breaker (Europe)
 	&BurnDrvVsgongf,			// VS Gong Fight
-	&BurnDrvRyouran,			// VS Mahjong Otome Ryouran
+	&BurnDrvRyourano,			// VS Mahjong Otome Ryouran (revision 1)
+	&BurnDrvRyouran,			// VS Mahjong Otome Ryouran (revision 2)
 	&BurnDrvfds_vsexcitebike,	// Vs. Excitebike (Japan)
 	&BurnDrvBnstars,			// Vs. Janshi Brandnew Stars (Ver 1.1, MegaSystem32 Version)
 	&BurnDrvBnstars1,			// Vs. Janshi Brandnew Stars [Not currently emulated, NOT WORKING]

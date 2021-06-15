@@ -373,7 +373,7 @@ static INT32 DrvDoReset()
 
 	blitter_irq = 0;
 	for (INT32 i = 0; i < 4; i++) {
-		GenericTilemapAllTilesDirty(i);	
+		GenericTilemapAllTilesDirty(i);
 		update_tilemap[i] = 1;
 	}
 
@@ -693,13 +693,14 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 32;
-	INT32 nCyclesTotal = (INT32)((INT64)24000000 * nBurnCPUSpeedAdjust / (0x0100 * 60));
+	INT32 nCyclesTotal[1] = { (INT32)((INT64)24000000 * nBurnCPUSpeedAdjust / (0x0100 * 60)) };
+	INT32 nCyclesDone[1] = { 0 };
 
 	SekOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		SekRun(nCyclesTotal / nInterleave);
+		CPU_RUN(0, Sek);
 		if (blitter_irq) { SekSetIRQLine(4, CPU_IRQSTATUS_AUTO); blitter_irq = 0; }
 	}
 
@@ -741,6 +742,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		i5000sndScan(nAction, pnMin);
 
 		SCAN_VAR(blitter_irq);
+	}
+
+	if (nAction & ACB_WRITE) {
+		for (INT32 i = 0; i < 4; i++) {
+			GenericTilemapAllTilesDirty(i);
+			update_tilemap[i] = 1;
+		}
 	}
 
 	return 0;

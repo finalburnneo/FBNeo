@@ -640,6 +640,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x5da28b4f) ? ALT_TIMING : 0; // cmc! wall demo
 	NESMode |= (ROMCRC == 0xab862073) ? ALT_TIMING : 0; // ultimate frogger champ.
 	NESMode |= (ROMCRC == 0x2a798367) ? ALT_TIMING : 0; // jy 45-in-1
+	NESMode |= (ROMCRC == 0x4d58c832) ? IS_PAL : 0; // Hammerin' Harry
 	NESMode |= (ROMCRC == 0x149e367f) ? IS_PAL : 0; // Lion King, The
 	NESMode |= (ROMCRC == 0xbf80b241) ? IS_PAL : 0; // Mr. Gimmick
 	NESMode |= (ROMCRC == 0x4cf12d39) ? IS_PAL : 0; // Elite
@@ -24974,6 +24975,23 @@ struct BurnDriver BurnDrvnes_daikunogensan2 = {
 	NESGetZipName, nes_daikunogensan2RomInfo, nes_daikunogensan2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_hammerinharryRomDesc[] = {
+	{ "Hammerin' Harry (Europe).nes",          262160, 0x4d58c832, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hammerinharry)
+STD_ROM_FN(nes_hammerinharry)
+
+struct BurnDriver BurnDrvnes_hammerinharry = {
+	"nes_hammerinharry", "nes_daikunogensan", NULL, NULL, "1992",
+	"Hammerin' Harry (Europe)\0", NULL, "Irem", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_hammerinharryRomInfo, nes_hammerinharryRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
 };
 
 static struct BurnRomInfo nes_dannysulsindheRomDesc[] = {

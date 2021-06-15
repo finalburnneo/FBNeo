@@ -42,18 +42,18 @@ static UINT8 *DrvZ80Bank;
 static INT32 redraw_zoom_tiles;
 
 static struct BurnInputInfo Tail2nosInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 8,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 start"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 11,	"service"	},
 	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 14,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Tail2nos)
@@ -365,18 +365,18 @@ static INT32 MemIndex()
 
 	AllRam		= Next;
 
-	soundlatch 	= Next; Next += 0x000001;
-	char_bank 	= Next; Next += 0x000001;
-	video_enable 	= Next; Next += 0x000001;
-	pal_bank 	= Next; Next += 0x000001;
-	DrvZ80Bank	= Next; Next += 0x000001;
+	soundlatch 	= Next; Next += 0x000001 + 3; // +3 align variable memory
+	char_bank 	= Next; Next += 0x000001 + 3;
+	video_enable= Next; Next += 0x000001 + 3;
+	pal_bank 	= Next; Next += 0x000001 + 3;
+	DrvZ80Bank	= Next; Next += 0x000001 + 3;
 
 	DrvSprRAM	= Next; Next += 0x001000;
 	Drv68KRAM	= Next; Next += 0x004000;
 	DrvPalRAM	= Next; Next += 0x001000;
 	DrvVidRAM	= Next; Next += 0x001000;
 	DrvZoomRAM	= Next; Next += 0x020000;
-	DrvZoomRAMExp	= Next; Next += 0x040000;
+	DrvZoomRAMExp= Next; Next += 0x040000;
 
 	DrvZ80RAM	= Next; Next += 0x000800;
 
@@ -389,12 +389,7 @@ static INT32 MemIndex()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM + 0x000001,	 0, 2)) return 1;
@@ -485,7 +480,7 @@ static INT32 DrvExit()
 	SekExit();
 	ZetExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -531,19 +526,7 @@ static void draw_sprites()
 		INT32 flipx = attr & 0x1000;
 		INT32 flipy = attr & 0x0800;
 
-		if (flipy) {
-			if (flipx) {
-				RenderCustomTile_Mask_FlipXY_Clip(pTransDraw, 16, 32, 0, sx+4, sy-9, color, 4, 0x0f, 0, DrvGfxROM1 + (code * 0x200));
-			} else {
-				RenderCustomTile_Mask_FlipY_Clip(pTransDraw, 16, 32, 0, sx+4, sy-9, color, 4, 0x0f, 0, DrvGfxROM1 + (code * 0x200));
-			}
-		} else {
-			if (flipx) {
-				RenderCustomTile_Mask_FlipX_Clip(pTransDraw, 16, 32, 0, sx+4, sy-9, color, 4, 0x0f, 0, DrvGfxROM1 + (code * 0x200));
-			} else {
-				RenderCustomTile_Mask_Clip(pTransDraw, 16, 32, 0, sx+4, sy-9, color, 4, 0x0f, 0, DrvGfxROM1 + (code * 0x200));
-			}
-		}
+		DrawCustomMaskTile(pTransDraw, 16, 32, 0, sx+4, sy-9+2, flipx, flipy, color, 4, 0x0f, 0, DrvGfxROM1 + (code * 0x200));
 	}
 }
 
@@ -558,8 +541,7 @@ static INT32 DrvDraw()
 
 	BurnTransferClear();
 
-	if (*video_enable)
-	{
+	if (*video_enable) {
 		K051316WrapEnable(0, 1);
 
 		if (redraw_zoom_tiles) {
@@ -567,11 +549,9 @@ static INT32 DrvDraw()
 			redraw_zoom_tiles = 0;
 		}
 
-		K051316_zoom_draw(0, 0 | K051316_16BIT);
-		draw_sprites();
-		draw_layer();
-	} else {
-		BurnTransferClear();
+		if (nBurnLayer & 1) K051316_zoom_draw(0, 0 | K051316_16BIT | K051316_OPAQUE);
+		if (nSpriteEnable & 1) draw_sprites();
+		if (nBurnLayer & 2) draw_layer();
 	}
 
 	BurnTransferCopy(DrvPalette);
@@ -595,9 +575,7 @@ static INT32 DrvFrame()
 	SekNewFrame();
 	ZetNewFrame();
 
-	INT32 nSegment;
 	INT32 nInterleave = 100;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 10000000 / 60, 5000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -606,21 +584,15 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nSegment = nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += SekRun(nSegment);
+		CPU_RUN(0, Sek);
 
-		BurnTimerUpdate(SekTotalCycles() / 2);
+		CPU_RUN_TIMER(1);
 	}
 
 	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
-	BurnTimerEndFrame(nCyclesTotal[1]);
-
 	if (pBurnSoundOut) {
-		nSegment = nBurnSoundLen - nSoundBufferPos;
-		if (nSegment > 0) {
-			BurnYM2608Update(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-		}
+		BurnYM2608Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();
@@ -633,7 +605,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -663,11 +635,11 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		bankswitch(0, DrvZ80Bank[0]);
 		ZetClose();
 
-		DrvRecalc = 1;
-
 		for (INT32 i = 0; i < 0x20000; i+=2) {
 			graphics_ram_expand_one(i);
 		}
+
+		redraw_zoom_tiles = 1;
 	}
 
 	return 0;

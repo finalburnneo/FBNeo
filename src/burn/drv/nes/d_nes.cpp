@@ -49,6 +49,7 @@ static UINT32 NESMode = 0;
 #define NO_WORKRAM		0x0001 // 6000-7fff reads data openbus
 #define BUS_CONFLICTS	0x0002 // rom conflicts with writes, needs special handling
 #define ALT_MMC3        0x0004 // alternate mmc3 scanline timing
+#define BAD_HOMEBREW    0x0008 // writes OAMDATA while rendering (can't possibly work on a real NES/FC)
 #define USE_4SCORE      0x0100 // 4-Player device (NES)
 #define USE_HORI4P      0x0200 // 4-Player device Mode 2 (Famicom)
 #define USE_ZAPPER      0x0400 // Zapper Gun device
@@ -631,6 +632,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0xa905cc12) ? NO_WORKRAM : 0; // Bill & Ted
 	NESMode |= (ROMCRC == 0xd2f19ba1) ? NO_WORKRAM : 0; // Haradius Zero
 	NESMode |= (ROMCRC == 0x585f3500) ? ALT_MMC3 : 0; // Darkwing Duck (T-Chi)
+	NESMode |= (ROMCRC == 0x38f65b2d) ? BAD_HOMEBREW : 0; // Battler (HB)
 	NESMode |= (ROMCRC == 0x560142bc) ? ALT_TIMING2 : 0; // don doko don 2
 	NESMode |= (ROMCRC == 0x3616c7dd) ? ALT_TIMING : 0; // days of thunder
 	NESMode |= (ROMCRC == 0xeb506bf9) ? ALT_TIMING : 0; // star wars
@@ -8494,7 +8496,7 @@ static void ppu_write(UINT16 reg, UINT8 data)
 
 		case 4: // OAMDATA
 			//bprintf(0, _T("Frame %04x:  OAMDATA[%X]  %X      scanline %d  pixel %d\n"), nCurrentFrame, oamAddr, data, scanline, pixel);
-			if (RENDERING && (scanline < 241 || scanline == prerender_line)) {
+			if (RENDERING && (scanline < 241 || scanline == prerender_line) && (~NESMode & BAD_HOMEBREW)) {
 				bprintf(0, _T("write OAM prohibited.  scanline %d\n"), scanline);
 				return;
 			}
@@ -17571,10 +17573,96 @@ STD_ROM_FN(nes_lawestj)
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// War on Wheels (USA) (Proto)
+static struct BurnRomInfo nes_wowheelsRomDesc[] = {
+	{ "War on Wheels (Proto)(2006)(Jaleco).nes",          393232, 0xc957dcb0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_wowheels)
+STD_ROM_FN(nes_wowheels)
+
+	struct BurnDriver BurnDrvnes_wowheels = {
+	"nes_wowheels", NULL, NULL, NULL, "1991-2006",
+	"War on Wheels (USA) (Proto)\0", NULL, "Jaleco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_wowheelsRomInfo, nes_wowheelsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
 
+
+static struct BurnRomInfo nes_battlerRomDesc[] = {
+	{ "Battler (2015)(Karu Gamo).nes",          40976, 0x38f65b2d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_battler)
+STD_ROM_FN(nes_battler)
+
+struct BurnDriver BurnDrvnes_battler = {
+	"nes_battler", NULL, NULL, NULL, "2015",
+	"Battler (HB)\0", NULL, "Karu Gamo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SHOOT, 0,
+	NESGetZipName, nes_battlerRomInfo, nes_battlerRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_bomberboxartRomDesc[] = {
+	{ "Bomberman - BoxArt v1.02 (2017)(Corpse Grinder).nes",          32784, 0xcb68a7fc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_bomberboxart)
+STD_ROM_FN(nes_bomberboxart)
+
+struct BurnDriver BurnDrvnes_bomberboxart = {
+	"nes_bomberboxart", NULL, NULL, NULL, "2017",
+	"Bomberman - BoxArt (HB, v1.02)\0", NULL, "Corpse Grinder", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION | GBF_MAZE, 0,
+	NESGetZipName, nes_bomberboxartRomInfo, nes_bomberboxartRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_ggggRomDesc[] = {
+	{ "Gold Guardian Gun Girl (2020)(Good Tune).nes",          40976, 0xa0e59e67, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_gggg)
+STD_ROM_FN(nes_gggg)
+
+struct BurnDriver BurnDrvnes_gggg = {
+	"nes_gggg", NULL, NULL, NULL, "2020",
+	"Gold Guardian Gun Girl (HB)\0", NULL, "Good Tune", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SHOOT, 0,
+	NESGetZipName, nes_ggggRomInfo, nes_ggggRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_justiceRomDesc[] = {
+	{ "Justice (2020)(Unknown).nes",          196624, 0x5a8b8f13, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_justice)
+STD_ROM_FN(nes_justice)
+
+struct BurnDriver BurnDrvnes_justice = {
+	"nes_justice", NULL, NULL, NULL, "2020",
+	"Justice (HB)\0", NULL, "Unknown", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	NESGetZipName, nes_justiceRomInfo, nes_justiceRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_altercationRomDesc[] = {
 	{ "Altercation v0.1 (2021)(Scottlowe).nes",          40976, 0x27288df5, BRF_ESS | BRF_PRG },

@@ -211,6 +211,7 @@ void K051316Reset();
 void K051316Exit();
 
 #define K051316_16BIT	(1<<8)
+#define K051316_OPAQUE  (2<<8)
 
 void K051316RedrawTiles(INT32 chip);
 

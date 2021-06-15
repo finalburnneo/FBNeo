@@ -5844,6 +5844,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="hammerinharry" cloneof="daikunogensan" romof="daikunogensan">
+		<description>Hammerin' Harry (Europe)</description>
+		<year>1992</year>
+		<manufacturer>Irem</manufacturer>
+		<rom name="Hammerin' Harry (Europe).nes" size="262160" crc="4d58c832"/>
+		<video orientation="horizontal" width="256" height="232" aspectx="256" aspecty="232"/>
+		<driver status="good"/>
+	</game>
 	<game name="happycamper">
 		<description>Happy Camper (USA) (Proto)</description>
 		<year>1989?</year>

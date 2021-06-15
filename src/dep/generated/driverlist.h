@@ -122,6 +122,7 @@ DRV		BurnDrvmd_3ninja;
 DRV		BurnDrvDunk3on3;
 DRV		BurnDrvnes_3dbatworru;
 DRV		BurnDrvnes_3dblock;
+DRV		BurnSpecLunattack;
 DRV		BurnSpec3dsnooker;
 DRV		BurnSpec3dstarfighter;
 DRV		BurnSpec3dstarstrike;
@@ -1438,6 +1439,7 @@ DRV		BurnSpecBillythekid;
 DRV		BurnDrvmd_bimini;
 DRV		BurnDrvnes_binaryland;
 DRV		BurnDrvMSX_binarylnd;
+DRV		BurnSpecBiniax;
 DRV		BurnDrvBioatack;
 DRV		BurnDrvnes_bioforceape;
 DRV		BurnDrvnes_biohazardc;
@@ -3076,6 +3078,7 @@ DRV		BurnDrvMSX_Currojimenez;
 DRV		BurnDrvmd_curse;
 DRV		BurnDrvmd_cursep;
 DRV		BurnDrvmd_curseibay;
+DRV		BurnSpecSherwood;
 DRV		BurnDrvCurvebal;
 DRV		BurnDrvmd_custodian;
 DRV		BurnDrvCutefght;
@@ -3611,6 +3614,7 @@ DRV		BurnDrvngpc_divealrb;
 DRV		BurnDrvngpc_divealrm;
 DRV		BurnDrvngpc_divealrbj;
 DRV		BurnDrvnes_diveman;
+DRV		BurnSpecDiver;
 DRV		BurnDrvDiverboy;
 DRV		BurnDrvmd_divine;
 DRV		BurnSpecdizdowra;
@@ -3770,6 +3774,7 @@ DRV		BurnDrvDonpachi;
 DRV		BurnDrvnes_doodleworld;
 DRV		BurnDrvnes_doolybravoland;
 DRV		BurnSpecdoomdemo;
+DRV		BurnSpecDoompit;
 DRV		BurnDrvmd_doomtrop;
 DRV		BurnDrvnes_doordoor;
 DRV		BurnDrvMSX_doordoor;
@@ -4321,13 +4326,13 @@ DRV		BurnDrvElvactr;
 DRV		BurnDrvMSX_elidon;
 DRV		BurnDrvmd_elimdowns;
 DRV		BurnDrvmd_elimdown;
+DRV		BurnSpecEliminator;
 DRV		BurnDrvElim2c;
 DRV		BurnDrvElim2;
 DRV		BurnDrvElim2a;
 DRV		BurnDrvElim4;
 DRV		BurnDrvElim4p;
 DRV		BurnDrvnes_elimiboadue;
-DRV		BurnSpecEliminator;
 DRV		BurnSpecelite;
 DRV		BurnDrvnes_elite;
 DRV		BurnDrvmd_elit95;
@@ -5112,6 +5117,7 @@ DRV		BurnDrvCpsCps1frog;
 DRV		BurnDrvcv_frogfeast;
 DRV		BurnDrvngfrog;
 DRV		BurnDrvPgmfrog;
+DRV		BurnSpecFrogger2009;
 DRV		BurnSpecfrogger;
 DRV		BurnDrvmd_froggers;
 DRV		BurnDrvMSX_frogger;
@@ -6089,6 +6095,7 @@ DRV		BurnSpechammerboy1;
 DRV		BurnSpechammerboy2;
 DRV		BurnDrvMSX_hammboy;
 DRV		BurnSpecHammerfist;
+DRV		BurnDrvnes_hammerinharry;
 DRV		BurnDrvHharryu;
 DRV		BurnDrvHharry;
 DRV		BurnDrvHharryb;
@@ -6266,6 +6273,7 @@ DRV		BurnSpecHeroquestwitchlord;
 DRV		BurnDrvsms_had;
 DRV		BurnDrvcv_heroesar;
 DRV		BurnDrvMSX_heroesarena;
+DRV		BurnSpecHerorescue;
 DRV		BurnDrvmd_herzog;
 DRV		BurnDrvmd_herzogs;
 DRV		BurnDrvmd_herzogj;
@@ -6361,6 +6369,7 @@ DRV		BurnDrvmd_homea2;
 DRV		BurnDrvnes_homealo2;
 DRV		BurnDrvsg1k_homemj1;
 DRV		BurnDrvsg1k_homemj;
+DRV		BurnSpecHomebrew;
 DRV		BurnDrvHomo;
 DRV		BurnDrvHoneydol;
 DRV		BurnDrvRedfoxwp2;
@@ -6869,6 +6878,7 @@ DRV		BurnSpecjoebld2;
 DRV		BurnSpecjoebld2_48;
 DRV		BurnSpecjoebld3_128;
 DRV		BurnSpecjoebld3;
+DRV		BurnSpecJoeblob;
 DRV		BurnDrvsms_joemont;
 DRV		BurnDrvmd_joemont;
 DRV		BurnDrvmd_joemont2a;
@@ -9285,6 +9295,7 @@ DRV		BurnDrvnamcoc75;
 DRV		BurnDrvnes_namcoclassic;
 DRV		BurnDrvnes_namcoclassicii;
 DRV		BurnDrvNamenayo;
+DRV		BurnSpecNanako;
 DRV		BurnDrvNaname;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvNndmseala;		// no comment [NOT WORKING]
@@ -9848,6 +9859,7 @@ DRV		BurnDrvOfftwall;		// no comment [NOT WORKING]
 #endif
 DRV		BurnDrvpce_offthewall;
 DRV		BurnDrvOffensiv;
+DRV		BurnSpecOhmummy;
 DRV		BurnDrvmd_ohmummy;
 DRV		BurnDrvMSX_ohmummy;
 DRV		BurnDrvOhmygod;
@@ -10320,6 +10332,7 @@ DRV		BurnDrvMSX_pentagram;
 DRV		BurnDrvmd_ppengo;
 DRV		BurnDrvcv_pepper2;
 DRV		BurnSpecPercypenguin;
+DRV		BurnSpecPottypigeon;
 DRV		BurnDrvMSX_perezthemouse;
 DRV		BurnDrvPbillrds;
 DRV		BurnDrvPbillrd;
@@ -10776,6 +10789,7 @@ DRV		BurnDrvPwheelsj;
 DRV		BurnDrvmd_powerbal;
 DRV		BurnDrvCpsPgearr1;
 DRV		BurnDrvCpsPgear;
+DRV		BurnSpecPrezu;
 DRV		BurnDrvnes_predator;
 DRV		BurnDrvsms_predatr2b;
 DRV		BurnDrvsms_predatr2;
@@ -10950,6 +10964,7 @@ DRV		BurnDrvPulsar;			// No sound
 #endif
 DRV		BurnDrvmd_pulsemane;
 DRV		BurnDrvmd_pulseman;
+DRV		BurnSpecPulsoids;
 DRV		BurnDrvpulstar;
 DRV		BurnDrvnes_pulveration;
 DRV		BurnSpecPumpkinpoe;
@@ -11135,6 +11150,7 @@ DRV		BurnDrvmd_qpoker;
 DRV		BurnDrvMSX_queenglf;
 DRV		BurnDrvMSX_queenglfa;
 DRV		BurnDrvMSX_queenglfb;
+DRV		BurnSpecQuestelements;
 DRV		BurnDrvcv_quintanaa;
 DRV		BurnDrvcv_quintana;
 DRV		BurnDrvcv_questgc;
@@ -11999,6 +12015,8 @@ DRV		BurnDrvSalamand;
 DRV		BurnDrvSalamandj;
 DRV		BurnDrvMSX_salamandk;
 DRV		BurnDrvpce_salamand;
+DRV		BurnSpecSamallardes;
+DRV		BurnSpecSamallarden;
 DRV		BurnDrvSamesame;
 DRV		BurnDrvSamesamenh;
 DRV		BurnDrvSamesame2;
@@ -12989,6 +13007,8 @@ DRV		BurnDrvmd_soulblada;
 DRV		BurnDrvmd_soulblad;
 DRV		BurnDrvmd_souledge;
 DRV		BurnDrvmd_souledgea;
+DRV		BurnSpecSouls;
+DRV		BurnSpecSoulsrmd;
 DRV		BurnDrvmd_sndtool;
 DRV		BurnDrvmd_southia;
 DRV		BurnDrvMSX_soviet;
@@ -14488,6 +14508,7 @@ DRV		BurnDrvnes_takesschaj;
 DRV		BurnDrvnes_takesscha;
 DRV		BurnDrvtg_taknhoop;
 DRV		BurnDrvgg_talespin;
+DRV		BurnSpecTalesgrupp;
 DRV		BurnDrvMSX_top;
 DRV		BurnDrvmd_talespin;
 DRV		BurnDrvmd_talespins;
@@ -16438,6 +16459,7 @@ DRV		BurnDrvWwallyjd;
 DRV		BurnDrvWwallyj;
 DRV		BurnDrvsms_wpayton;
 DRV		BurnDrvMSX_wampcola;
+DRV		BurnSpecWanderers;
 DRV		BurnDrvmd_waniwani;
 DRV		BurnDrvnes_wanpakuduck;
 DRV		BurnDrvnes_wanpakoknogouwo;
@@ -17356,6 +17378,7 @@ DRV		BurnDrvmd_zouzou;
 DRV		BurnSpecZub;
 DRV		BurnDrvnes_zunousengal;
 DRV		BurnDrvZupapa;
+DRV		BurnSpecZxdestroyer;
 DRV		BurnSpecSpec128BIOS;
 DRV		BurnSpecSpec128;
 DRV		BurnSpecSpectrumBIOS;
@@ -17488,6 +17511,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDunk3on3,			// 3 On 3 Dunk Madness (US, prototype? 1997/02/04)
 	&BurnDrvnes_3dbatworru,		// 3-D Battles of World Runner, The (USA)
 	&BurnDrvnes_3dblock,		// 3D Block (Unl)
+	&BurnSpecLunattack,			// 3D Lunattack (48K)
 	&BurnSpec3dsnooker,			// 3D Snooker (48K)
 	&BurnSpec3dstarfighter,		// 3D Starfighter (48K)
 	&BurnSpec3dstarstrike,		// 3D Starstrike (48K)
@@ -18804,6 +18828,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_bimini,			// Bimini Run (USA)
 	&BurnDrvnes_binaryland,		// Binary Land (Japan)
 	&BurnDrvMSX_binarylnd,		// Binary Land
+	&BurnSpecBiniax,			// Biniax 2.0 (128K) (HB)
 	&BurnDrvBioatack,			// Bio Attack
 	&BurnDrvnes_bioforceape,	// Bio Force Ape (Japan) (En) (Proto)
 	&BurnDrvnes_biohazardc,		// Bio Hazard (China)
@@ -20442,6 +20467,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_curse,			// Curse (Jpn)
 	&BurnDrvmd_cursep,			// Curse (Prototype, 19900626)
 	&BurnDrvmd_curseibay,		// Curse of Illmoore Bay, the (HB)
+	&BurnSpecSherwood,			// Curse of Sherwood, The (48K)
 	&BurnDrvCurvebal,			// Curve Ball
 	&BurnDrvmd_custodian,		// Custodian MD (HB)
 	&BurnDrvCutefght,			// Cute Fighter
@@ -20977,6 +21003,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvngpc_divealrm,		// Dive Alert - Matt's Version (Euro, USA)
 	&BurnDrvngpc_divealrbj,		// Dive Alert - Rebecca Hen (Jpn)
 	&BurnDrvnes_diveman,		// Dive Man (Unl)
+	&BurnSpecDiver,				// Diver - Mystery of the Deep (128K) (HB)
 	&BurnDrvDiverboy,			// Diver Boy
 	&BurnDrvmd_divine,			// Divine Sealing (Jpn)
 	&BurnSpecdizdowra,			// Dizzy - Down the Rapids (128K)
@@ -21136,6 +21163,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_doodleworld,	// Doodle World (HB)
 	&BurnDrvnes_doolybravoland,	// Dooly Bravo Land (Korea)
 	&BurnSpecdoomdemo,			// Doom (demo) (128K)
+	&BurnSpecDoompit,			// Doom Pit (128K) (HB)
 	&BurnDrvmd_doomtrop,		// Doom Troopers - The Mutant Chronicles (USA)
 	&BurnDrvnes_doordoor,		// Door Door (Japan)
 	&BurnDrvMSX_doordoor,		// Doordoor (Jpn)
@@ -21687,13 +21715,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_elidon,			// Elidon (Euro)
 	&BurnDrvmd_elimdowns,		// Eliminate Down (Hack, Spanish)
 	&BurnDrvmd_elimdown,		// Eliminate Down (Jpn)
+	&BurnSpecEliminator,		// Eliminator (128K)
 	&BurnDrvElim2c,				// Eliminator (2 Players, cocktail)
 	&BurnDrvElim2,				// Eliminator (2 Players, set 1)
 	&BurnDrvElim2a,				// Eliminator (2 Players, set 2)
 	&BurnDrvElim4,				// Eliminator (4 Players)
 	&BurnDrvElim4p,				// Eliminator (4 Players, prototype)
 	&BurnDrvnes_elimiboadue,	// Eliminator Boat Duel (USA)
-	&BurnSpecEliminator,		// Eliminator
 	&BurnSpecelite,				// Elite (128K)
 	&BurnDrvnes_elite,			// Elite (Europe)
 	&BurnDrvmd_elit95,			// Elitserien 95 (Swe)
@@ -22478,6 +22506,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_frogfeast,		// Frog Feast (HB)
 	&BurnDrvngfrog,				// Frog Feast (Neo Geo)
 	&BurnDrvPgmfrog,			// Frog Feast (PGM)
+	&BurnSpecFrogger2009,		// Frogger (128K) (HB)
 	&BurnSpecfrogger,			// Frogger (48K)
 	&BurnDrvmd_froggers,		// Frogger (Hack, Spanish)
 	&BurnDrvMSX_frogger,		// Frogger (Jpn)
@@ -23455,6 +23484,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpechammerboy2,		// Hammer Boy (Part 2 of 2) (128K)
 	&BurnDrvMSX_hammboy,		// Hammer Boy (Spa)
 	&BurnSpecHammerfist,		// Hammerfist (48K)
+	&BurnDrvnes_hammerinharry,	// Hammerin' Harry (Europe)
 	&BurnDrvHharryu,			// Hammerin' Harry (US, M84 hardware)
 	&BurnDrvHharry,				// Hammerin' Harry (World, M81 hardware))
 	&BurnDrvHharryb,			// Hammerin' Harry (World, M84 hardware bootleg)
@@ -23632,6 +23662,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_had,			// Heroes Against Demons (HB, v1.03)
 	&BurnDrvcv_heroesar,		// Heroes Arena (HB)
 	&BurnDrvMSX_heroesarena,	// Heroes Arena (HB)
+	&BurnSpecHerorescue,		// Heroes Rescue (HB)
 	&BurnDrvmd_herzog,			// Herzog Zwei (Euro, USA)
 	&BurnDrvmd_herzogs,			// Herzog Zwei (Hack, Spanish)
 	&BurnDrvmd_herzogj,			// Herzog Zwei (Jpn)
@@ -23727,6 +23758,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_homealo2,		// Home Alone 2 - Lost in New York (USA)
 	&BurnDrvsg1k_homemj1,		// Home Mahjong (Jpn, v0)
 	&BurnDrvsg1k_homemj,		// Home Mahjong (Jpn, v1)
+	&BurnSpecHomebrew,			// Homebrew (48K) (HB)
 	&BurnDrvHomo,				// Homo
 	&BurnDrvHoneydol,			// Honey Dolls
 	&BurnDrvRedfoxwp2,			// Hong Hu Zhanji II (China, set 1)
@@ -24235,6 +24267,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecjoebld2_48,		// Joe Blade II (48K)
 	&BurnSpecjoebld3_128,		// Joe Blade III (128K)
 	&BurnSpecjoebld3,			// Joe Blade III (Trainer)(48K)
+	&BurnSpecJoeblob,			// Joe Blob (128K) (HB, v2)
 	&BurnDrvsms_joemont,		// Joe Montana Football (Euro, USA, Bra)
 	&BurnDrvmd_joemont,			// Joe Montana Football (World)
 	&BurnDrvmd_joemont2a,		// Joe Montana II Sports Talk Football (World)
@@ -26651,6 +26684,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_namcoclassic,	// Namco Classic (Japan)
 	&BurnDrvnes_namcoclassicii,	// Namco Classic II (Japan)
 	&BurnDrvNamenayo,			// Namennayo (Japan)
+	&BurnSpecNanako,			// Nanako in Classic Japanese Monster Castle (48K) (HB)
 	&BurnDrvNaname,				// Naname de Magic!
 #if defined FBNEO_DEBUG
 	&BurnDrvNndmseala,			// Nandemo Seal Iinkai (Astro Boy ver.) [no comment, NOT WORKING]
@@ -27214,6 +27248,7 @@ static struct BurnDriver* pDriver[] = {
 #endif
 	&BurnDrvpce_offthewall,		// Off the Wall (Prototype)
 	&BurnDrvOffensiv,			// Offensive (Spanish bootleg of Scramble)
+	&BurnSpecOhmummy,			// Oh Mummy (16K)
 	&BurnDrvmd_ohmummy,			// Oh Mummy (HB)
 	&BurnDrvMSX_ohmummy,		// Oh Mummy!! (Euro)
 	&BurnDrvOhmygod,			// Oh My God!
@@ -27686,6 +27721,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_ppengo,			// Pepenga Pengo (Jpn)
 	&BurnDrvcv_pepper2,			// Pepper II
 	&BurnSpecPercypenguin,		// Percy Penguin (HB)
+	&BurnSpecPottypigeon,		// Percy the Potty Pigeon (48K)
 	&BurnDrvMSX_perezthemouse,	// Perez the Mouse (HB, V1.1)
 	&BurnDrvPbillrds,			// Perfect Billiard (MC-8123, 317-5008)
 	&BurnDrvPbillrd,			// Perfect Billiard
@@ -28142,6 +28178,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_powerbal,		// Powerball (USA)
 	&BurnDrvCpsPgearr1,			// Powered Gear - strategic variant armor equipment (940916 Japan)
 	&BurnDrvCpsPgear,			// Powered Gear - strategic variant armor equipment (941024 Japan)
+	&BurnSpecPrezu,				// Pre-ZU (128K) (HB)
 	&BurnDrvnes_predator,		// Predator (USA)
 	&BurnDrvsms_predatr2b,		// Predator 2 (Bra)
 	&BurnDrvsms_predatr2,		// Predator 2 (Euro)
@@ -28316,6 +28353,7 @@ static struct BurnDriver* pDriver[] = {
 #endif
 	&BurnDrvmd_pulsemane,		// Pulseman (Hack, English)
 	&BurnDrvmd_pulseman,		// Pulseman (Jpn)
+	&BurnSpecPulsoids,			// Pulsoids (128K)
 	&BurnDrvpulstar,			// Pulstar
 	&BurnDrvnes_pulveration,	// Pulveration (Unl)
 	&BurnSpecPumpkinpoe,		// Pumpkin Poe (HB)
@@ -28501,6 +28539,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_queenglf,		// Queen's Golf (Jpn)
 	&BurnDrvMSX_queenglfa,		// Queen's Golf (Jpn, Alt)
 	&BurnDrvMSX_queenglfb,		// Queen's Golf (Jpn, Hacked?)
+	&BurnSpecQuestelements,		// Quest for Elements (HB)
 	&BurnDrvcv_quintanaa,		// Quest for Quintana Roo (Alt)
 	&BurnDrvcv_quintana,		// Quest for Quintana Roo
 	&BurnDrvcv_questgc,			// Quest for the Golden Chalice (HB)
@@ -29365,6 +29404,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSalamandj,			// Salamander (version J)
 	&BurnDrvMSX_salamandk,		// Salamander - Operation X (Kor)
 	&BurnDrvpce_salamand,		// Salamander
+	&BurnSpecSamallardes,		// Sam Mallard - el Caso del Cisne Desaparecido (Spanish) (HB, v1.2)
+	&BurnSpecSamallarden,		// Sam Mallard - the Case of the Missing Swan (English) (HB, v1.2)
 	&BurnDrvSamesame,			// Same! Same! Same! (1P set)
 	&BurnDrvSamesamenh,			// Same! Same! Same! (1P set, NEW VER! hack)
 	&BurnDrvSamesame2,			// Same! Same! Same! (2P set)
@@ -30355,6 +30396,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_soulblad,		// Soul Blade
 	&BurnDrvmd_souledge,		// Soul Edge vs Samurai Spirits (Pirate) [no comment, NOT WORKING]
 	&BurnDrvmd_souledgea,		// Soul Edge vs Samurai Spirits (Pirate, Cracked)
+	&BurnSpecSouls,				// Souls (Spanish) (HB)
+	&BurnSpecSoulsrmd,			// Souls Remaster (Spanish) (HB)
 	&BurnDrvmd_sndtool,			// Sound Tool v2.2?
 	&BurnDrvmd_southia,			// South Island Adventure (Hack, V0.3)
 	&BurnDrvMSX_soviet,			// Soviet (Euro)
@@ -31854,6 +31897,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_takesscha,		// Takeshi's Challenge (T-Eng)
 	&BurnDrvtg_taknhoop,		// Takin' It to the Hoop
 	&BurnDrvgg_talespin,		// Tale Spin (Euro, USA)
+	&BurnSpecTalesgrupp,		// Tales of Grupp, The (Spanish) (HB)
 	&BurnDrvMSX_top,			// Tales of Popolon (HB)
 	&BurnDrvmd_talespin,		// TaleSpin (Euro, USA)
 	&BurnDrvmd_talespins,		// TaleSpin (Hack, Spanish)
@@ -33804,6 +33848,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvWwallyj,			// Wally wo Sagase! (rev B, Japan, FD1094 317-0197B)
 	&BurnDrvsms_wpayton,		// Walter Payton Football (USA)
 	&BurnDrvMSX_wampcola,		// Wamp Cola (Spa)
+	&BurnSpecWanderers,			// Wanderers Chained In The Dark (128K) (HB)
 	&BurnDrvmd_waniwani,		// Wani Wani World (Jpn)
 	&BurnDrvnes_wanpakuduck,	// Wanpaku Duck Yume Bouken (T-Chi)
 	&BurnDrvnes_wanpakoknogouwo,// Wanpaku Kokkun no Gourmet World (Japan)
@@ -34722,6 +34767,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecZub,				// Zub (128K)
 	&BurnDrvnes_zunousengal,	// Zunou Senkan Galg (Japan)
 	&BurnDrvZupapa,				// Zupapa!
+	&BurnSpecZxdestroyer,		// ZX Destroyer (HB)
 	&BurnSpecSpec128BIOS,		// ZX Spectrum 128 [BIOS Only, NOT WORKING]
 	&BurnSpecSpec128,			// ZX Spectrum 128
 	&BurnSpecSpectrumBIOS,		// ZX Spectrum [BIOS Only, NOT WORKING]

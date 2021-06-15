@@ -399,13 +399,13 @@ static INT32 MemIndex()
 
 	AllRam			= Next;
 
-	Drv68KRAM		= Next; Next += 0x0100000;
-	DrvPalRAM		= Next; Next += 0x0100000;
-	DrvVidRAM[0]	= Next; Next += 0x0200000; // only first 4000 accessible by cpu
-	DrvVidRAM[1]	= Next; Next += 0x0200000; // ""
-	DrvVidRAM[2]	= Next; Next += 0x0200000; // ""
-	DrvVidRAM[3]	= Next; Next += 0x0200000; // ""
-	DrvSprRAM		= Next; Next += 0x0040000;
+	Drv68KRAM		= Next; Next += 0x010000;
+	DrvPalRAM		= Next; Next += 0x010000;
+	DrvVidRAM[0]	= Next; Next += 0x020000; // only first 4000 accessible by cpu
+	DrvVidRAM[1]	= Next; Next += 0x020000; // ""
+	DrvVidRAM[2]	= Next; Next += 0x020000; // ""
+	DrvVidRAM[3]	= Next; Next += 0x020000; // ""
+	DrvSprRAM		= Next; Next += 0x004000;
 
 	tilemapregs[0]	= (UINT32*)Next; Next += 0x000008 * sizeof(UINT32);
 	tilemapregs[1]	= (UINT32*)Next; Next += 0x000008 * sizeof(UINT32);

@@ -2013,6 +2013,8 @@ static INT32 DrvDoReset()
 
 	BurnRandomSetSeed(0xbeef1eaf);
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -4615,7 +4617,7 @@ struct BurnDriver BurnDrvArescue = {
 	"arescue", NULL, NULL, NULL, "1992",
 	"Air Rescue (World)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, arescueRomInfo, arescueRomName, NULL, NULL, NULL, NULL, ArescueInputInfo, ArescueDIPInfo,
 	ArescueInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -4683,7 +4685,7 @@ struct BurnDriver BurnDrvArescueu = {
 	"arescueu", "arescue", NULL, NULL, "1992",
 	"Air Rescue (US)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, arescueuRomInfo, arescueuRomName, NULL, NULL, NULL, NULL, ArescueInputInfo, ArescueDIPInfo,
 	ArescueInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -4751,7 +4753,7 @@ struct BurnDriver BurnDrvArescuej = {
 	"arescuej", "arescue", NULL, NULL, "1992",
 	"Air Rescue (Japan)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, arescuejRomInfo, arescuejRomName, NULL, NULL, NULL, NULL, ArescueInputInfo, ArescueDIPInfo,
 	ArescueInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -4835,7 +4837,7 @@ struct BurnDriver BurnDrvArabfgt = {
 	"arabfgt", NULL, NULL, NULL, "1991",
 	"Arabian Fight (World)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_SEGA_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_SEGA_MISC, GBF_SCRFIGHT, 0,
 	NULL, arabfgtRomInfo, arabfgtRomName, NULL, NULL, NULL, NULL, ArabfgtInputInfo, ArabfgtDIPInfo,
 	ArabfgtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -4876,7 +4878,7 @@ struct BurnDriver BurnDrvArabfgtu = {
 	"arabfgtu", "arabfgt", NULL, NULL, "1991",
 	"Arabian Fight (US)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_SEGA_MISC, GBF_SCRFIGHT, 0,
 	NULL, arabfgtuRomInfo, arabfgtuRomName, NULL, NULL, NULL, NULL, ArabfgtuInputInfo, ArabfgtuDIPInfo,
 	ArabfgtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -4917,7 +4919,7 @@ struct BurnDriver BurnDrvArabfgtj = {
 	"arabfgtj", "arabfgt", NULL, NULL, "1991",
 	"Arabian Fight (Japan)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_SEGA_MISC, GBF_SCRFIGHT, 0,
 	NULL, arabfgtjRomInfo, arabfgtjRomName, NULL, NULL, NULL, NULL, ArabfgtInputInfo, ArabfgtDIPInfo,
 	ArabfgtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -5256,7 +5258,7 @@ struct BurnDriver BurnDrvSpidman = {
 	"spidman", NULL, NULL, NULL, "1991",
 	"Spider-Man: The Videogame (World)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_SEGA_MISC, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_SEGA_MISC, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, spidmanRomInfo, spidmanRomName, NULL, NULL, NULL, NULL, SpidmanInputInfo, SpidmanDIPInfo,
 	SpidmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -5298,7 +5300,7 @@ struct BurnDriver BurnDrvSpidmanu = {
 	"spidmanu", "spidman", NULL, NULL, "1991",
 	"Spider-Man: The Videogame (US, Rev A)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_MISC, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_SEGA_MISC, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, spidmanuRomInfo, spidmanuRomName, NULL, NULL, NULL, NULL, SpidmanuInputInfo, SpidmanuDIPInfo,
 	SpidmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -5340,7 +5342,7 @@ struct BurnDriver BurnDrvSpidmanj = {
 	"spidmanj", "spidman", NULL, NULL, "1991",
 	"Spider-Man: The Videogame (Japan)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_MISC, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_SEGA_MISC, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, spidmanjRomInfo, spidmanjRomName, NULL, NULL, NULL, NULL, SpidmanInputInfo, SpidmanDIPInfo,
 	SpidmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -5729,7 +5731,7 @@ struct BurnDriver BurnDrvAlien3 = {
 	"alien3", NULL, NULL, NULL, "1993",
 	"Alien3: The Gun (World)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, alien3RomInfo, alien3RomName, NULL, NULL, NULL, NULL, Alien3InputInfo, Alien3DIPInfo,
 	Alien3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -5771,7 +5773,7 @@ struct BurnDriver BurnDrvAlien3u = {
 	"alien3u", "alien3", NULL, NULL, "1993",
 	"Alien3: The Gun (US, Rev A)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, alien3uRomInfo, alien3uRomName, NULL, NULL, NULL, NULL, Alien3InputInfo, Alien3DIPInfo,
 	Alien3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -5813,7 +5815,7 @@ struct BurnDriver BurnDrvAlien3j = {
 	"alien3j", "alien3", NULL, NULL, "1993",
 	"Alien3: The Gun (Japan)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, alien3jRomInfo, alien3jRomName, NULL, NULL, NULL, NULL, Alien3InputInfo, Alien3DIPInfo,
 	Alien3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -5948,7 +5950,7 @@ struct BurnDriver BurnDrvBrival = {
 	"brival", NULL, NULL, NULL, "1992",
 	"Burning Rival (World)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_VSFIGHT, 0,
 	NULL, brivalRomInfo, brivalRomName, NULL, NULL, NULL, NULL, BrivalInputInfo, BrivalDIPInfo,
 	BrivalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	416, 224, 4, 3
@@ -5987,7 +5989,7 @@ struct BurnDriver BurnDrvBrivalj = {
 	"brivalj", "brival", NULL, NULL, "1992",
 	"Burning Rival (Japan)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_VSFIGHT, 0,
 	NULL, brivaljRomInfo, brivaljRomName, NULL, NULL, NULL, NULL, BrivalInputInfo, BrivalDIPInfo,
 	BrivalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	416, 224, 4, 3
@@ -6224,7 +6226,7 @@ struct BurnDriver BurnDrvF1en = {
 	"f1en", NULL, NULL, NULL, "1991",
 	"F1 Exhaust Note (World, Rev A)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_SEGA_MISC, GBF_RACING, 0,
 	NULL, f1enRomInfo, f1enRomName, NULL, NULL, NULL, NULL, F1enInputInfo, F1enDIPInfo,
 	F1enInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -6288,7 +6290,7 @@ struct BurnDriver BurnDrvF1enu = {
 	"f1enu", "f1en", NULL, NULL, "1991",
 	"F1 Exhaust Note (US, Rev A)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_SEGA_MISC, GBF_RACING, 0,
 	NULL, f1enuRomInfo, f1enuRomName, NULL, NULL, NULL, NULL, F1enInputInfo, F1enDIPInfo,
 	F1enInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -6352,7 +6354,7 @@ struct BurnDriver BurnDrvF1enj = {
 	"f1enj", "f1en", NULL, NULL, "1991",
 	"F1 Exhaust Note (Japan, Rev A)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_SEGA_MISC, GBF_RACING, 0,
 	NULL, f1enjRomInfo, f1enjRomName, NULL, NULL, NULL, NULL, F1enInputInfo, F1enDIPInfo,
 	F1enInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -6876,7 +6878,7 @@ struct BurnDriver BurnDrvSlipstrm = {
 	"slipstrm", NULL, NULL, NULL, "1995",
 	"Slip Stream (Brazil 950515)\0", NULL, "Capcom", "Sega System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_SEGA_MISC, GBF_RACING, 0,
 	NULL, slipstrmRomInfo, slipstrmRomName, NULL, NULL, NULL, NULL, SlipstrmInputInfo, SlipstrmDIPInfo,
 	SlipstrmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	416, 224, 4, 3
@@ -6915,7 +6917,7 @@ struct BurnDriver BurnDrvSlipstrmh = {
 	"slipstrmh", "slipstrm", NULL, NULL, "1995",
 	"Slip Stream (Hispanic 950515)\0", NULL, "Capcom", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_SEGA_MISC, GBF_RACING, 0,
 	NULL, slipstrmhRomInfo, slipstrmhRomName, NULL, NULL, NULL, NULL, SlipstrmInputInfo, SlipstrmDIPInfo,
 	SlipstrmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	416, 224, 4, 3
@@ -7459,7 +7461,7 @@ struct BurnDriver BurnDrvOrunners = {
 	"orunners", NULL, NULL, NULL, "1992",
 	"OutRunners (World)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
 	NULL, orunnersRomInfo, orunnersRomName, NULL, NULL, NULL, NULL, OrunnersInputInfo, OrunnersDIPInfo,
 	OrunnersInit, DrvExit, DrvFrame, MultiDraw, DrvScan, &DrvRecalc, 0x8000,
 	640, 224, 8, 3
@@ -7499,7 +7501,7 @@ struct BurnDriver BurnDrvOrunnersu = {
 	"orunnersu", "orunners", NULL, NULL, "1992",
 	"OutRunners (US)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
 	NULL, orunnersuRomInfo, orunnersuRomName, NULL, NULL, NULL, NULL, OrunnersInputInfo, OrunnersDIPInfo,
 	OrunnersInit, DrvExit, DrvFrame, MultiDraw, DrvScan, &DrvRecalc, 0x8000,
 	640, 224, 8, 3
@@ -7539,7 +7541,7 @@ struct BurnDriver BurnDrvOrunnersj = {
 	"orunnersj", "orunners", NULL, NULL, "1992",
 	"OutRunners (Japan)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
 	NULL, orunnersjRomInfo, orunnersjRomName, NULL, NULL, NULL, NULL, OrunnersInputInfo, OrunnersDIPInfo,
 	OrunnersInit, DrvExit, DrvFrame, MultiDraw, DrvScan, &DrvRecalc, 0x8000,
 	640, 224, 8, 3
@@ -7603,7 +7605,7 @@ struct BurnDriver BurnDrvScross = {
 	"scross", NULL, NULL, NULL, "1992",
 	"Stadium Cross (World)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
 	NULL, scrossRomInfo, scrossRomName, NULL, NULL, NULL, NULL, ScrossInputInfo, ScrossDIPInfo,
 	ScrossInit, DrvExit, DrvFrame, MultiDraw, DrvScan, &DrvRecalc, 0x8000,
 	640, 224, 8, 3
@@ -7645,7 +7647,7 @@ struct BurnDriver BurnDrvScrossa = {
 	"scrossa", "scross", NULL, NULL, "1992",
 	"Stadium Cross (World, alt)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
 	NULL, scrossaRomInfo, scrossaRomName, NULL, NULL, NULL, NULL, ScrossInputInfo, ScrossDIPInfo,
 	ScrossInit, DrvExit, DrvFrame, MultiDraw, DrvScan, &DrvRecalc, 0x8000,
 	640, 224, 8, 3
@@ -7685,7 +7687,7 @@ struct BurnDriver BurnDrvScrossu = {
 	"scrossu", "scross", NULL, NULL, "1992",
 	"Stadium Cross (US)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
 	NULL, scrossuRomInfo, scrossuRomName, NULL, NULL, NULL, NULL, ScrossInputInfo, ScrossDIPInfo,
 	ScrossInit, DrvExit, DrvFrame, MultiDraw, DrvScan, &DrvRecalc, 0x8000,
 	640, 224, 8, 3

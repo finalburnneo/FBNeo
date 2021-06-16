@@ -293,7 +293,7 @@ static const struct retro_core_option_definition var_fbneo_cyclone = {
 static const struct retro_core_option_definition var_fbneo_neogeo_mode = {
 	"fbneo-neogeo-mode",
 	"Neo-Geo mode",
-	"Load appropriate bios depending on your choice, under the condition such a bios is compatible with the running game, changing this will restart your game",
+	"Load appropriate bios depending on your choice, under the condition such a bios is compatible with the running game",
 	{
 		{ "DIPSWITCH", "Use bios specified in BIOS dipswitch below" },
 		{ "MVS", "Use MVS bios" },

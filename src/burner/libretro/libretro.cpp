@@ -53,7 +53,6 @@ static INT32 nGameWidth = 640;
 static INT32 nGameHeight = 480;
 static INT32 nGameMaximumGeometry;
 static INT32 nNextGeometryCall = RETRO_ENVIRONMENT_SET_GEOMETRY;
-static INT32 bDisableSerialize = 0;
 
 extern INT32 EnableHiscores;
 
@@ -507,10 +506,6 @@ static bool apply_dipswitches_from_variables()
 			}
 		}
 	}
-
-	// Override the NeoGeo bios DIP Switch by the main one (for the moment)
-	if (is_neogeo_game)
-		set_neo_system_bios();
 
 	return dip_changed;
 }
@@ -1111,7 +1106,6 @@ void retro_reset()
 void retro_run()
 {
 	pBurnDraw = pVidImage;
-	bDisableSerialize = 0;
 	bool bSkipFrame = false;
 
 	if (gui_show && nGameWidth > 0 && nGameHeight > 0)
@@ -1192,7 +1186,6 @@ void retro_run()
 
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE_UPDATE, &updated) && updated)
 	{
-		neo_geo_modes old_g_opt_neo_geo_mode = g_opt_neo_geo_mode;
 		UINT32 old_nVerticalMode = nVerticalMode;
 		UINT32 old_nFrameskipType = nFrameskipType;
 
@@ -1208,14 +1201,6 @@ void retro_run()
 			struct retro_system_av_info av_info;
 			retro_get_system_av_info(&av_info);
 			environ_cb(RETRO_ENVIRONMENT_SET_GEOMETRY, &av_info);
-		}
-
-		// reset the game if the user changed the bios
-		if (old_g_opt_neo_geo_mode != g_opt_neo_geo_mode)
-		{
-			retro_reset();
-			// Readahead randomly crashes the core when switching bios
-			bDisableSerialize = 1;
 		}
 
 		if (old_nFrameskipType != nFrameskipType)
@@ -1248,9 +1233,6 @@ static int burn_dummy_state_cb(BurnArea *pba)
 
 size_t retro_serialize_size()
 {
-	if (bDisableSerialize == 1)
-		return 0;
-
 	// This is the size for retro_serialize, so it wants ACB_FULLSCAN | ACB_READ
 	// retro_unserialize doesn't call this function
 	INT32 nAction = ACB_FULLSCAN | ACB_READ;
@@ -1280,9 +1262,6 @@ size_t retro_serialize_size()
 
 bool retro_serialize(void *data, size_t size)
 {
-	if (bDisableSerialize == 1)
-		return false;
-
 #if 0
 	// Used to convert a standalone savestate we are loading into something usable by the libretro port
 	char convert_save_path[MAX_PATH];
@@ -1317,9 +1296,6 @@ bool retro_serialize(void *data, size_t size)
 
 bool retro_unserialize(const void *data, size_t size)
 {
-	if (bDisableSerialize == 1)
-		return false;
-
 	// We want ACB_FULLSCAN | ACB_WRITE for loading states
 	INT32 nAction = ACB_FULLSCAN | ACB_WRITE;
 
@@ -1829,6 +1805,10 @@ static bool retro_load_game_common()
 		// Apply dipswitches
 		apply_dipswitches_from_variables();
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Applied dipswitches from core options\n");
+
+		// Override the NeoGeo bios DIP Switch by the main one (for the moment)
+		if (is_neogeo_game)
+			set_neo_system_bios();
 
 		// Initialize game driver
 		if(BurnDrvInit() == 0)

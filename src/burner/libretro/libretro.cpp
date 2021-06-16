@@ -73,7 +73,7 @@ INT32 nAudSegLen = 0;
 
 static UINT8* pVidImage = NULL;
 static bool bVidImageNeedRealloc = false;
-static int16_t *g_audio_buf = NULL;
+static int16_t *pAudBuffer = NULL;
 
 // Frameskipping v2 Support
 #define FRAMESKIP_MAX 30
@@ -1103,6 +1103,17 @@ void retro_reset()
 	ForceFrameStep(1);
 }
 
+static void VideoBufferInit()
+{
+	size_t nSize = nGameWidth * nGameHeight * nBurnBpp;
+	if (pVidImage)
+		pVidImage = (UINT8*)realloc(pVidImage, nSize);
+	else
+		pVidImage = (UINT8*)malloc(nSize);
+	if (pVidImage)
+		memset(pVidImage, 0, nSize);
+}
+
 void retro_run()
 {
 	pBurnDraw = pVidImage;
@@ -1112,7 +1123,7 @@ void retro_run()
 	{
 		gui_draw();
 		video_cb(gui_get_framebuffer(), nGameWidth, nGameHeight, nGameWidth * sizeof(unsigned));
-		audio_batch_cb(g_audio_buf, nBurnSoundLen);
+		audio_batch_cb(pAudBuffer, nBurnSoundLen);
 		return;
 	}
 
@@ -1167,17 +1178,14 @@ void retro_run()
 	ForceFrameStep(bSkipFrame);
 
 	if (bLowPassFilterEnabled)
-		DspDo(g_audio_buf, nBurnSoundLen);
-	audio_batch_cb(g_audio_buf, nBurnSoundLen);
+		DspDo(pAudBuffer, nBurnSoundLen);
+	audio_batch_cb(pAudBuffer, nBurnSoundLen);
 	bool updated = false;
 
 	if (bVidImageNeedRealloc)
 	{
 		bVidImageNeedRealloc = false;
-		if (pVidImage)
-			pVidImage = (UINT8*)realloc(pVidImage, nGameWidth * nGameHeight * nBurnBpp);
-		else
-			pVidImage = (UINT8*)malloc(nGameWidth * nGameHeight * nBurnBpp);
+		VideoBufferInit();
 		// current frame will be corrupted, let's dupe instead
 		video_cb(NULL, nGameWidth, nGameHeight, nBurnPitch);
 	}
@@ -1436,15 +1444,18 @@ static void SetColorDepth()
 	nBurnPitch = nGameWidth * nBurnBpp;
 }
 
-static void init_audio_buffer(INT32 sample_rate, INT32 fps)
+static void AudioBufferInit(INT32 sample_rate, INT32 fps)
 {
 	nAudSegLen = (sample_rate * 100 + (fps >> 1)) / fps;
-	if (g_audio_buf)
-		g_audio_buf = (int16_t*)realloc(g_audio_buf, nAudSegLen<<2 * sizeof(int16_t));
+	size_t nSize = nAudSegLen<<2 * sizeof(int16_t);
+	if (pAudBuffer)
+		pAudBuffer = (int16_t*)realloc(pAudBuffer, nSize);
 	else
-		g_audio_buf = (int16_t*)calloc(nAudSegLen<<2, sizeof(int16_t));
+		pAudBuffer = (int16_t*)malloc(nSize);
+	if (pAudBuffer)
+		memset(pAudBuffer, 0, nSize);
 	nBurnSoundLen = nAudSegLen;
-	pBurnSoundOut = g_audio_buf;
+	pBurnSoundOut = pAudBuffer;
 }
 
 static void extract_basename(char *buf, const char *path, size_t size, char *prefix)
@@ -1792,7 +1803,7 @@ static bool retro_load_game_common()
 		// Announcing to fbneo which samplerate we want
 		// Some game drivers won't initialize with an undefined nBurnSoundLen
 		nBurnSoundRate = g_audio_samplerate;
-		init_audio_buffer(nBurnSoundRate, 6000);
+		AudioBufferInit(nBurnSoundRate, 6000);
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Samplerate set to %d\n", nBurnSoundRate);
 
 		// Start CD reader emulation if needed
@@ -1830,7 +1841,7 @@ static bool retro_load_game_common()
 		}
 
 		// Now we know real game fps, let's initialize sound buffer again
-		init_audio_buffer(nBurnSoundRate, nBurnFPS);
+		AudioBufferInit(nBurnSoundRate, nBurnFPS);
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Adjusted audio buffer to match driver's refresh rate (%f Hz)\n", (nBurnFPS/100.0f));
 
 		// Get MainRam for RetroAchievements support
@@ -1864,10 +1875,7 @@ static bool retro_load_game_common()
 		SetRotation();
 		SetColorDepth();
 
-		if (pVidImage)
-			pVidImage = (UINT8*)realloc(pVidImage, nGameWidth * nGameHeight * nBurnBpp);
-		else
-			pVidImage = (UINT8*)malloc(nGameWidth * nGameHeight * nBurnBpp);
+		VideoBufferInit();
 
 		if (pVidImage == NULL) {
 			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Failed allocating framebuffer memory\n", g_driver_name);
@@ -1892,7 +1900,7 @@ static bool retro_load_game_common()
 end:
 	nBurnSoundRate = 48000;
 	nBurnFPS = 6000;
-	init_audio_buffer(nBurnSoundRate, nBurnFPS);
+	AudioBufferInit(nBurnSoundRate, nBurnFPS);
 	return true;
 }
 
@@ -2059,9 +2067,9 @@ void retro_unload_game(void)
 			free(pVidImage);
 			pVidImage = NULL;
 		}
-		if (g_audio_buf) {
-			free(g_audio_buf);
-			g_audio_buf = NULL;
+		if (pAudBuffer) {
+			free(pAudBuffer);
+			pAudBuffer = NULL;
 		}
 		BurnDrvExit();
 		if (nGameType == RETRO_GAME_TYPE_NEOCD)

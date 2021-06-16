@@ -1008,6 +1008,10 @@ void check_variables(void)
 				EnableHiscores = false;
 		}
 	}
+	else
+	{
+		EnableHiscores = false;
+	}
 
 	var.key = var_fbneo_allow_patched_romsets.key;
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))

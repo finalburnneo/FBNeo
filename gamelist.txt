@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17144 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17149 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1274,6 +1274,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_battlecity|  	| BattleCity (Japan)					| 		| 1985	| Namco		| Miscellaneous	| 					|
 | sms_bmaniacs	|  	| Battlemaniacs (Bra)					| 		| 1994	| Tec Toy	| Sega Master Sy| 					|
 | md_battlems	|  	| Battlemaster (USA)					| 		| 1991	| Arena Entertai| Sega Megadrive| 					|
+| nes_battler	|  	| Battler (HB)						| 		| 2015	| Karu Gamo	| Miscellaneous	| 					|
 | gg_bship	|  	| Battleship (Euro, USA)				| 		| 1993	| Mindscape	| Sega Game Gear| 					|
 | nes_battleshipc|  	| Battleship (USA) - Castellano v1.0			| nes_battleship| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_battleship|  	| Battleship (USA)					| 		| 1993	| Mindscape	| Miscellaneous	| 					|
@@ -1663,6 +1664,7 @@ This list contains all games supported by FinalBurn Neo.
 | tg_bombmn93	|  	| Bomberman '93						| 		| 1990	| Hudson Soft	| TurboGrafx 16	| 					|
 | pce_bombmn94	|  	| Bomberman '94						| 		| 1993	| Hudson	| PC Engine	| 					|
 | nes_bomberman	|  	| Bomberman (USA)					| 		| 1989	| Hudson Soft	| Miscellaneous	| 					|
+| nes_bomberboxart|  	| Bomberman - BoxArt (HB, v1.02)			| 		| 2017	| Corpse Grinder| Miscellaneous	| 					|
 | pce_bombmnub	|  	| Bomberman - Users Battle				| 		| 19??	| Hudson	| PC Engine	| 					|
 | nes_bombermanii|  	| Bomberman II (USA)					| 		| 1993	| Hudson Soft	| Miscellaneous	| 					|
 | pce_bombman	|  	| Bomberman						| 		| 1990	| Hudson	| PC Engine	| 					|
@@ -5595,6 +5597,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_gokiburi	|  	| Gokiburi Daisakusen. Bug Bomb (Jpn)			| 		| 1983	| Magicsoft	| MSX		| 					|
 | sms_dumpmats	|  	| Gokuaku Doumei Dump Matsumoto (Jpn)			| sms_prowres	| 1986	| Sega		| Sega Master Sy| 					|
 | pce_chukatai	|  	| Gokuraku! Chuka Taisen				| 		| 1992	| Taito		| PC Engine	| 					|
+| nes_gggg	|  	| Gold Guardian Gun Girl (HB)				| 		| 2020	| Good Tune	| Miscellaneous	| 					|
 | goldmedlb	|  	| Gold Medalist (bootleg)				| goldmedl	| 1988	| bootleg	| Alpha 68k	| 					|
 | goldmedl	|  	| Gold Medalist (set 1)					| 		| 1988	| SNK		| Alpha 68k	| 					|
 | goldmedla	|  	| Gold Medalist (set 2)					| goldmedl	| 1988	| SNK		| Alpha 68k	| 					|
@@ -6958,6 +6961,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_justbreedc|  	| Just Breed (Japan) - Castellano v2.0			| nes_justbreed	| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_justbreedj|  	| Just Breed (Japan)					| nes_justbreed	| 1992	| Enix		| Miscellaneous	| 					|
 | nes_justbreed	|  	| Just Breed (T-Eng)					| 		| 1992	| Enix		| Miscellaneous	| 					|
+| nes_justice	|  	| Justice (HB)						| 		| 2020	| Unknown	| Miscellaneous	| 					|
 | nes_justiceduel|  	| Justice Duel (HB)					| 		| 2019	| Mega Cat Studi| Miscellaneous	| 					|
 | md_jleagues	|  	| Justice League Task Force (Hack, Spanish)		| md_jleague	| 2019	| Acclaim	| Sega Megadrive| 					|
 | md_jleague	|  	| Justice League Task Force (World)			| 		| 1995	| Acclaim Entert| Sega Megadrive| 					|
@@ -16262,6 +16266,7 @@ This list contains all games supported by FinalBurn Neo.
 | warofbugg	| D NW	| War of the Bugs or Monsterous Manouvers in a Mushroom | warofbug	| 1981	| Armenia	| Galaxian	| 					|
 | warofbugu	|  	| War of the Bugs or Monsterous Manouvers in a Mushroom | warofbug	| 1981	| Armenia	| Galaxian	| 					|
 | warofbug	|  	| War of the Bugs or Monsterous Manouvers in a Mushroom | 		| 1981	| Armenia	| Galaxian	| 					|
+| nes_wowheels	|  	| War on Wheels (USA) (Proto)				| 		| 1991-2006| Jaleco	| Miscellaneous	| 					|
 | cv_warroom	|  	| War Room						| 		| 1983	| Probe 2000	| ColecoVision	| 					|
 | warzardr1	|  	| War-Zard / Red Earth (Japan 961023)			| redearth	| 1996	| Capcom	| CPS-3		| 					|
 | warzard	|  	| War-Zard / Red Earth (Japan 961121)			| redearth	| 1996	| Capcom	| CPS-3		| 					|

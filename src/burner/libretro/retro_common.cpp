@@ -597,7 +597,8 @@ void set_environment()
 	else
 		vars_systems.push_back(&var_fbneo_frameskip);
 	vars_systems.push_back(&var_fbneo_cpu_speed_adjust);
-	vars_systems.push_back(&var_fbneo_hiscores);
+	if (BurnDrvGetFlags() & BDF_HISCORE_SUPPORTED)
+		vars_systems.push_back(&var_fbneo_hiscores);
 	vars_systems.push_back(&var_fbneo_allow_patched_romsets);
 	if (nGameType != RETRO_GAME_TYPE_NEOCD)
 		vars_systems.push_back(&var_fbneo_samplerate);
@@ -996,13 +997,16 @@ void check_variables(void)
 		}
 	}
 
-	var.key = var_fbneo_hiscores.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (BurnDrvGetFlags() & BDF_HISCORE_SUPPORTED)
 	{
-		if (strcmp(var.value, "enabled") == 0)
-			EnableHiscores = true;
-		else
-			EnableHiscores = false;
+		var.key = var_fbneo_hiscores.key;
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+		{
+			if (strcmp(var.value, "enabled") == 0)
+				EnableHiscores = true;
+			else
+				EnableHiscores = false;
+		}
 	}
 
 	var.key = var_fbneo_allow_patched_romsets.key;

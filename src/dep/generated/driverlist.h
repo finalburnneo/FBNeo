@@ -1286,6 +1286,7 @@ DRV		BurnDrvBzone;
 DRV		BurnDrvnes_battlecity;
 DRV		BurnDrvsms_bmaniacs;
 DRV		BurnDrvmd_battlems;
+DRV		BurnDrvnes_battler;
 DRV		BurnDrvgg_bship;
 DRV		BurnDrvnes_battleshipc;
 DRV		BurnDrvnes_battleship;
@@ -1681,6 +1682,7 @@ DRV		BurnDrvpce_bombmn93;
 DRV		BurnDrvtg_bombmn93;
 DRV		BurnDrvpce_bombmn94;
 DRV		BurnDrvnes_bomberman;
+DRV		BurnDrvnes_bomberboxart;
 DRV		BurnDrvpce_bombmnub;
 DRV		BurnDrvnes_bombermanii;
 DRV		BurnDrvpce_bombman;
@@ -5665,6 +5667,7 @@ DRV		BurnDrvGoindol;
 DRV		BurnDrvMSX_gokiburi;
 DRV		BurnDrvsms_dumpmats;
 DRV		BurnDrvpce_chukatai;
+DRV		BurnDrvnes_gggg;
 DRV		BurnDrvGoldmedlb;
 DRV		BurnDrvGoldmedl;
 DRV		BurnDrvGoldmedla;
@@ -7048,6 +7051,7 @@ DRV		BurnSpecJustagal;
 DRV		BurnDrvnes_justbreedc;
 DRV		BurnDrvnes_justbreedj;
 DRV		BurnDrvnes_justbreed;
+DRV		BurnDrvnes_justice;
 DRV		BurnDrvnes_justiceduel;
 DRV		BurnDrvmd_jleagues;
 DRV		BurnDrvmd_jleague;
@@ -16478,6 +16482,7 @@ DRV		BurnDrvWarofbugg;		// no comment [NOT WORKING]
 #endif
 DRV		BurnDrvWarofbugu;
 DRV		BurnDrvWarofbug;
+DRV		BurnDrvnes_wowheels;
 DRV		BurnDrvcv_warroom;
 DRV		BurnDrvWarzardr1;
 DRV		BurnDrvWarzard;
@@ -18675,6 +18680,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_battlecity,		// BattleCity (Japan)
 	&BurnDrvsms_bmaniacs,		// Battlemaniacs (Bra)
 	&BurnDrvmd_battlems,		// Battlemaster (USA)
+	&BurnDrvnes_battler,		// Battler (HB)
 	&BurnDrvgg_bship,			// Battleship (Euro, USA)
 	&BurnDrvnes_battleshipc,	// Battleship (USA) - Castellano v1.0
 	&BurnDrvnes_battleship,		// Battleship (USA)
@@ -19070,6 +19076,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvtg_bombmn93,		// Bomberman '93
 	&BurnDrvpce_bombmn94,		// Bomberman '94
 	&BurnDrvnes_bomberman,		// Bomberman (USA)
+	&BurnDrvnes_bomberboxart,	// Bomberman - BoxArt (HB, v1.02)
 	&BurnDrvpce_bombmnub,		// Bomberman - Users Battle
 	&BurnDrvnes_bombermanii,	// Bomberman II (USA)
 	&BurnDrvpce_bombman,		// Bomberman
@@ -23054,6 +23061,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_gokiburi,		// Gokiburi Daisakusen. Bug Bomb (Jpn)
 	&BurnDrvsms_dumpmats,		// Gokuaku Doumei Dump Matsumoto (Jpn)
 	&BurnDrvpce_chukatai,		// Gokuraku! Chuka Taisen
+	&BurnDrvnes_gggg,			// Gold Guardian Gun Girl (HB)
 	&BurnDrvGoldmedlb,			// Gold Medalist (bootleg)
 	&BurnDrvGoldmedl,			// Gold Medalist (set 1)
 	&BurnDrvGoldmedla,			// Gold Medalist (set 2)
@@ -24437,6 +24445,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_justbreedc,		// Just Breed (Japan) - Castellano v2.0
 	&BurnDrvnes_justbreedj,		// Just Breed (Japan)
 	&BurnDrvnes_justbreed,		// Just Breed (T-Eng)
+	&BurnDrvnes_justice,		// Justice (HB)
 	&BurnDrvnes_justiceduel,	// Justice Duel (HB)
 	&BurnDrvmd_jleagues,		// Justice League Task Force (Hack, Spanish)
 	&BurnDrvmd_jleague,			// Justice League Task Force (World)
@@ -33867,6 +33876,7 @@ static struct BurnDriver* pDriver[] = {
 #endif
 	&BurnDrvWarofbugu,			// War of the Bugs or Monsterous Manouvers in a Mushroom Maze (US)
 	&BurnDrvWarofbug,			// War of the Bugs or Monsterous Manouvers in a Mushroom Maze
+	&BurnDrvnes_wowheels,		// War on Wheels (USA) (Proto)
 	&BurnDrvcv_warroom,			// War Room
 	&BurnDrvWarzardr1,			// War-Zard / Red Earth (Japan 961023)
 	&BurnDrvWarzard,			// War-Zard / Red Earth (Japan 961121)

@@ -1324,6 +1324,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="battler">
+		<description>Battler (HB) [Homebrew]</description>
+		<year>2015</year>
+		<manufacturer>Karu Gamo</manufacturer>
+		<rom name="Battler (2015)(Karu Gamo).nes" size="40976" crc="38f65b2d"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="battleshipc" cloneof="battleship" romof="battleship">
 		<description>Battleship (USA) - Castellano v1.0</description>
 		<year>1989 ?</year>
@@ -1697,6 +1705,14 @@
 		<year>1989</year>
 		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="Bomberman (USA).nes" size="24592" crc="b9804046"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="bomberboxart">
+		<description>Bomberman - BoxArt (HB, v1.02) [Hack, Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>Corpse Grinder</manufacturer>
+		<rom name="Bomberman - BoxArt v1.02 (2017)(Corpse Grinder).nes" size="32784" crc="cb68a7fc"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -5452,6 +5468,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="gggg">
+		<description>Gold Guardian Gun Girl (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Good Tune</manufacturer>
+		<rom name="Gold Guardian Gun Girl (2020)(Good Tune).nes" size="40976" crc="a0e59e67"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="goldenaxeiii">
 		<description>Golden Axe III (Unl)</description>
 		<year>1989?</year>
@@ -6841,6 +6865,14 @@
 		<year>1992</year>
 		<manufacturer>Enix</manufacturer>
 		<rom name="Just Breed (T-Eng).nes" size="786448" crc="a4863269"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="justice">
+		<description>Justice (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Unknown</manufacturer>
+		<rom name="Justice (2020)(Unknown).nes" size="196624" crc="5a8b8f13"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -14233,6 +14265,14 @@
 		<year>1991</year>
 		<manufacturer>Gluk Video</manufacturer>
 		<rom name="War in the Gulf (Unl).nes" size="262160" crc="e45d5d88"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="wowheels">
+		<description>War on Wheels (USA) (Proto)</description>
+		<year>1991-2006</year>
+		<manufacturer>Jaleco</manufacturer>
+		<rom name="War on Wheels (Proto)(2006)(Jaleco).nes" size="393232" crc="c957dcb0"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

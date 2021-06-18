@@ -1,6 +1,7 @@
 #include <vector>
 #include "retro_common.h"
 #include "retro_input.h"
+#include "burn_gun.h"
 
 bool bStreetFighterLayout = false;
 bool bLibretroSupportsBitmasks = false;
@@ -2735,7 +2736,7 @@ void InputInit()
 	bInputInitialized = true;
 }
 
-void InputDeInit()
+void InputExit()
 {
 	if (GameInp) {
 		free(GameInp);

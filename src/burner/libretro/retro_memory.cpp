@@ -1,4 +1,5 @@
 // Cheevos support
+#include "retro_common.h"
 #include "retro_memory.h"
 
 void* pMainRamData = NULL;
@@ -143,6 +144,32 @@ int StateGetMainRamAcb(BurnArea *pba)
 			}
 			return 0;
 	}
+}
+
+void CheevosInit()
+{
+	INT32 nMin = 0;
+	BurnAcb = StateGetMainRamAcb;
+	BurnAreaScan(ACB_FULLSCAN, &nMin);
+	if (bMainRamFound) {
+		HandleMessage(RETRO_LOG_INFO, "[Cheevos] System RAM set to %p, size is %zu\n", pMainRamData, nMainRamSize);
+	}
+	if (bMemoryMapFound) {
+		struct retro_memory_map sMemoryMap = {};
+		sMemoryMap.descriptors = sMemoryDescriptors;
+		sMemoryMap.num_descriptors = nMemoryCount;
+		environ_cb(RETRO_ENVIRONMENT_SET_MEMORY_MAPS, &sMemoryMap);
+	}
+}
+
+void CheevosExit()
+{
+	pMainRamData = NULL;
+	nMainRamSize = 0;
+	bMainRamFound = false;
+	nMemoryCount = 0;
+	memset(sMemoryDescriptors, 0, sizeof(sMemoryDescriptors));
+	bMemoryMapFound = false;
 }
 
 void *retro_get_memory_data(unsigned id)

@@ -1,9 +1,6 @@
 #ifndef __RETRO_INPUT__
 #define __RETRO_INPUT__
 
-#include "burner.h"
-#include "burn_gun.h"
-
 struct KeyBind
 {
 	unsigned id;
@@ -48,7 +45,7 @@ void SetDiagInpHoldFrameDelay(unsigned val);
 void RefreshLightgunCrosshair();
 void InputMake(void);
 void InputInit();
-void InputDeInit();
+void InputExit();
 void SetControllerInfo();
 
 extern bool bLibretroSupportsBitmasks;

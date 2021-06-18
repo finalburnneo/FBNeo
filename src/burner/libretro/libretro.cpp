@@ -1844,19 +1844,8 @@ static bool retro_load_game_common()
 		AudioBufferInit(nBurnSoundRate, nBurnFPS);
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Adjusted audio buffer to match driver's refresh rate (%f Hz)\n", (nBurnFPS/100.0f));
 
-		// Get MainRam for RetroAchievements support
-		INT32 nMin = 0;
-		BurnAcb = StateGetMainRamAcb;
-		BurnAreaScan(ACB_FULLSCAN, &nMin);
-		if (bMainRamFound) {
-			HandleMessage(RETRO_LOG_INFO, "[Cheevos] System RAM set to %p, size is %zu\n", pMainRamData, nMainRamSize);
-		}
-		if (bMemoryMapFound) {
-			struct retro_memory_map sMemoryMap = {};
-			sMemoryMap.descriptors = sMemoryDescriptors;
-			sMemoryMap.num_descriptors = nMemoryCount;
-			environ_cb(RETRO_ENVIRONMENT_SET_MEMORY_MAPS, &sMemoryMap);
-		}
+		// Expose Ram for cheevos/cheats support
+		CheevosInit();
 
 		// Loading minimal savestate (handle some machine settings)
 		snprintf_nowarn (g_autofs_path, sizeof(g_autofs_path), "%s%cfbneo%c%s.fs", g_save_dir, PATH_DEFAULT_SLASH_C(), PATH_DEFAULT_SLASH_C(), BurnDrvGetTextA(DRV_NAME));
@@ -2063,28 +2052,21 @@ void retro_unload_game(void)
 		}
 		if (BurnStateSave(g_autofs_path, 0) == 0 && path_is_valid(g_autofs_path))
 			HandleMessage(RETRO_LOG_INFO, "[FBNeo] EEPROM succesfully saved to %s\n", g_autofs_path);
-		if (pVidImage) {
-			free(pVidImage);
-			pVidImage = NULL;
-		}
-		if (pAudBuffer) {
-			free(pAudBuffer);
-			pAudBuffer = NULL;
-		}
 		BurnDrvExit();
 		if (nGameType == RETRO_GAME_TYPE_NEOCD)
 			CDEmuExit();
+		driver_inited = false;
 	}
-	InputDeInit();
-	driver_inited = false;
-
-	// Reset RetroAchievements stuff
-	pMainRamData = NULL;
-	nMainRamSize = 0;
-	bMainRamFound = false;
-	nMemoryCount = 0;
-	memset(sMemoryDescriptors, 0, sizeof(sMemoryDescriptors));
-	bMemoryMapFound = false;
+	if (pVidImage) {
+		free(pVidImage);
+		pVidImage = NULL;
+	}
+	if (pAudBuffer) {
+		free(pAudBuffer);
+		pAudBuffer = NULL;
+	}
+	InputExit();
+	CheevosExit();
 }
 
 unsigned retro_get_region() { return RETRO_REGION_NTSC; }

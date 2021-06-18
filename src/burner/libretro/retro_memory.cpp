@@ -2,14 +2,14 @@
 #include "retro_common.h"
 #include "retro_memory.h"
 
-void* pMainRamData = NULL;
-size_t nMainRamSize = 0;
-bool bMainRamFound = false;
-int nMemoryCount = 0;
-struct retro_memory_descriptor sMemoryDescriptors[10] = {};
-bool bMemoryMapFound = false;
+static void* pMainRamData = NULL;
+static size_t nMainRamSize = 0;
+static bool bMainRamFound = false;
+static int nMemoryCount = 0;
+static struct retro_memory_descriptor sMemoryDescriptors[10] = {};
+static bool bMemoryMapFound = false;
 
-int StateGetMainRamAcb(BurnArea *pba)
+static int StateGetMainRamAcb(BurnArea *pba)
 {
 	if(!pba->szName)
 		return 0;

@@ -48,6 +48,4 @@ void InputInit();
 void InputExit();
 void SetControllerInfo();
 
-extern bool bLibretroSupportsBitmasks;
-
 #endif

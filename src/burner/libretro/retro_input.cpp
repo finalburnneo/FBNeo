@@ -4,7 +4,6 @@
 #include "burn_gun.h"
 
 bool bStreetFighterLayout = false;
-bool bLibretroSupportsBitmasks = false;
 
 static retro_input_state_t input_cb;
 static retro_input_poll_t poll_cb;
@@ -29,6 +28,7 @@ static bool bVolumeIsFireButton = false;
 static bool bInputInitialized = false;
 static bool bControllersNeedRefresh = true;
 static bool bControllersSetOnce = false;
+static bool bLibretroSupportsBitmasks = false;
 static char* pDirections[MAX_PLAYERS][6];
 
 // Macros
@@ -2726,6 +2726,9 @@ void RefreshLightgunCrosshair()
 
 void InputInit()
 {
+	if (environ_cb(RETRO_ENVIRONMENT_GET_INPUT_BITMASKS, NULL))
+		bLibretroSupportsBitmasks = true;
+
 	nSwitchCode = 0;
 
 	normal_input_descriptors.clear();
@@ -2744,6 +2747,7 @@ void InputExit()
 	}
 
 	bInputInitialized = false;
+	bLibretroSupportsBitmasks = false;
 }
 
 void retro_set_input_state(retro_input_state_t cb) { input_cb = cb; }

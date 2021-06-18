@@ -1049,9 +1049,6 @@ void retro_init()
 	else
 		log_cb = log_dummy;
 
-	if (environ_cb(RETRO_ENVIRONMENT_GET_INPUT_BITMASKS, NULL))
-		bLibretroSupportsBitmasks = true;
-
 	libretro_msg_interface_version = 0;
 	environ_cb(RETRO_ENVIRONMENT_GET_MESSAGE_INTERFACE_VERSION, &libretro_msg_interface_version);
 
@@ -1080,7 +1077,6 @@ void retro_deinit()
 {
 	DspExit();
 	BurnLibExit();
-	bLibretroSupportsBitmasks = false;
 }
 
 void retro_reset()

@@ -357,17 +357,17 @@ void K053245SpritesRender(INT32 chip)
 				c = ((c & 0x3f) | (code & ~0x3f)) & K053245MaskExp[chip];
 
 				if (shadow) {
-					konami_render_zoom_shadow_tile(gfxdata, c, nBpp[chip], color, sx, sy, fx, fy, 16, 16, zw << 12, zh << 12, pri, 0);
+					konami_render_zoom_shadow_sprite(gfxdata, c, nBpp[chip], color, sx, sy, fx, fy, 16, 16, zw << 12, zh << 12, pri, 0);
 					continue;
 				}
 
 				if (zoomx == 0x10000 && zoomy == 0x10000)
 				{
-					konami_draw_16x16_prio_tile(gfxdata, c, nBpp[chip], color, sx, sy, fx, fy, pri);
+					konami_draw_16x16_prio_sprite(gfxdata, c, nBpp[chip], color, sx, sy, fx, fy, pri);
 				}
 				else
 				{
-					konami_draw_16x16_priozoom_tile(gfxdata, c, nBpp[chip], color, 0, sx, sy, fx, fy, 16, 16, zw << 12, zh << 12, pri);
+					konami_draw_16x16_priozoom_sprite(gfxdata, c, nBpp[chip], color, 0, sx, sy, fx, fy, 16, 16, zw << 12, zh << 12, pri);
 				}
 			}
 		}

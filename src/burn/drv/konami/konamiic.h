@@ -34,15 +34,17 @@ void konami_rom_deinterleave_4(UINT8 *src, INT32 len);
 // internal
 void KonamiAllocateBitmaps();
 void konami_draw_16x16_tile(UINT8 *gfx, INT32 code, INT32 bpp, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy);
-void konami_draw_16x16_prio_tile(UINT8 *gfx, INT32 code, INT32 bpp, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, UINT32 priority);
+void konami_draw_16x16_prio_sprite(UINT8 *gfx, INT32 code, INT32 bpp, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, UINT32 priority);
 void konami_draw_16x16_zoom_tile(UINT8 *gfx, INT32 code, INT32 bpp, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy);
-void konami_draw_16x16_priozoom_tile(UINT8 *gfx, INT32 code, INT32 bpp, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT32 priority);
-void konami_render_zoom_shadow_tile(UINT8 *gfx, INT32 code, INT32 bpp, INT32 color, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT32 priority, INT32 shadow);
+void konami_draw_16x16_priozoom_sprite(UINT8 *gfx, INT32 code, INT32 bpp, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT32 priority);
+void konami_render_zoom_shadow_sprite(UINT8 *gfx, INT32 code, INT32 bpp, INT32 color, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT32 priority, INT32 shadow);
 
 // game-specific modes
 void konami_set_highlight_mode(INT32 mode);
 void konami_set_highlight_over_sprites_mode(INT32 mode);
 void konami_set_layer_shadow_inhibit_mode(INT32 mode);
+void konami_set_highlight_intensity(INT32 mode);
+void konami_set_shadow_intensity(INT32 mode);
 
 // k051960 / k052109 shared
 //---------------------------------------------------------------------------------------------------------------

@@ -114,10 +114,10 @@ void K051960SpritesRender(INT32 min_priority, INT32 max_priority)
 					c &= K051960RomExpMask;
 
 					if (Shadow) {
-						konami_render_zoom_shadow_tile(K051960RomExp, c, nBpp, Colour, sx, sy, xFlip, yFlip, 16, 16, 0x10000, 0x10000, (max_priority ==-1) ? Pri:0xffffffff, 0);
+						konami_render_zoom_shadow_sprite(K051960RomExp, c, nBpp, Colour, sx, sy, xFlip, yFlip, 16, 16, 0x10000, 0x10000, (max_priority ==-1) ? Pri:0xffffffff, 0);
 					} else {
 						if (max_priority == -1) {
-							konami_draw_16x16_prio_tile(K051960RomExp, c, nBpp, Colour, sx, sy, xFlip, yFlip, Pri);
+							konami_draw_16x16_prio_sprite(K051960RomExp, c, nBpp, Colour, sx, sy, xFlip, yFlip, Pri);
 						} else {
 							konami_draw_16x16_tile(K051960RomExp, c, nBpp, Colour, sx, sy, xFlip, yFlip);
 						}
@@ -150,10 +150,10 @@ void K051960SpritesRender(INT32 min_priority, INT32 max_priority)
 					c &= K051960RomExpMask;
 
 					if (Shadow) {
-						konami_render_zoom_shadow_tile(K051960RomExp, c, nBpp, Colour, sx, sy, xFlip, yFlip, 16, 16, zw << 12, zh << 12, (max_priority ==-1) ? Pri:0xffffffff, 0);
+						konami_render_zoom_shadow_sprite(K051960RomExp, c, nBpp, Colour, sx, sy, xFlip, yFlip, 16, 16, zw << 12, zh << 12, (max_priority ==-1) ? Pri:0xffffffff, 0);
 					} else {
 						if (max_priority == -1) {
-							konami_draw_16x16_priozoom_tile(K051960RomExp, c, nBpp, Colour, 0, sx, sy, xFlip, yFlip, 16, 16, zw << 12, zh << 12, Pri);
+							konami_draw_16x16_priozoom_sprite(K051960RomExp, c, nBpp, Colour, 0, sx, sy, xFlip, yFlip, 16, 16, zw << 12, zh << 12, Pri);
 						} else {
 							konami_draw_16x16_zoom_tile(K051960RomExp, c, nBpp, Colour, 0, sx, sy, xFlip, yFlip, 16, 16, zw << 12, zh << 12);
 						}

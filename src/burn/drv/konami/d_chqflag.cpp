@@ -689,7 +689,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 256/2;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 3000000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -701,8 +701,13 @@ static INT32 DrvFrame()
 		CPU_RUN(0, konami);
 		CPU_RUN_TIMER(1);
 
-		if ((i&0xf)==0 && nNmiEnable) konamiSetIrqLine(0x20, CPU_IRQSTATUS_ACK); // iq_132 fix me!
-		if (i == 120 && K051960_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_ACK);
+		if ((i&0x1f)==0 && nNmiEnable) konamiSetIrqLine(0x20, CPU_IRQSTATUS_ACK); // iq_132 fix me!
+		if (i == 240) {
+			if (K051960_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_ACK);
+			if (pBurnDraw) {
+				DrvDraw();
+			}
+		}
 	}
 
 	if (pBurnSoundOut) {
@@ -718,10 +723,6 @@ static INT32 DrvFrame()
 
 	konamiClose();
 	ZetClose();
-
-	if (pBurnDraw) {
-		DrvDraw();
-	}
 
 	return 0;
 }

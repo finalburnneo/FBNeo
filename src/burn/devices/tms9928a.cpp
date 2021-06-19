@@ -9,8 +9,8 @@
 #define TMS9928A_TOTAL_VERT_PAL             313
 
 #define TMS9928A_HORZ_DISPLAY_START         (2 + 14 + 8 + 13)
-#define TMS9928A_VERT_DISPLAY_START_PAL     16
-#define TMS9928A_VERT_DISPLAY_START_NTSC    16
+#define TMS9928A_VERT_DISPLAY_START_PAL     (13 + 51)
+#define TMS9928A_VERT_DISPLAY_START_NTSC    (13 + 27)
 
 static INT32 TMS9928A_palette[16] = {
 	0x000000, 0x000000, 0x21c842, 0x5edc78, 0x5455ed, 0x7d76fc, 0xd4524d, 0x42ebf5,
@@ -44,7 +44,7 @@ typedef struct {
 
 	INT32 LimitSprites;
 	INT32 top_border;
-	INT32 bottom_border;
+	//INT32 bottom_border;
 	INT32 vertical_size;
 
 	void (*INTCallback)(INT32);
@@ -179,9 +179,11 @@ void TMS9928AInit(INT32 model, INT32 vram, INT32 borderx, INT32 bordery, void (*
 
 	tms.INTCallback = INTCallback;
 
-	tms.top_border		= TMS9928A_VERT_DISPLAY_START_NTSC;
-	tms.bottom_border	= ((tms.model == TMS9929) || (tms.model == TMS9929A)) ? 51 : 24;
-	tms.vertical_size   = TMS9928A_TOTAL_VERT_NTSC;
+	INT32 is50hz = ((tms.model == TMS9929) || (tms.model == TMS9929A));
+
+	tms.top_border		= (is50hz) ? TMS9928A_VERT_DISPLAY_START_PAL : TMS9928A_VERT_DISPLAY_START_NTSC;
+	//tms.bottom_border	= (is50hz) ? 51 : 24;
+	tms.vertical_size   = (is50hz) ? TMS9928A_TOTAL_VERT_PAL : TMS9928A_TOTAL_VERT_NTSC;
 
 	tms.vramsize = vram;
 	tms.vMem = (UINT8*)BurnMalloc(tms.vramsize);
@@ -562,15 +564,7 @@ static void TMS9928AScanline_INT(INT32 vpos)
 
 void TMS9928AScanline(INT32 vpos)
 {
-	if (vpos==0) // draw the border on the first scanline, border shouldn't use any cpu
-	{            // to render.  this keeps cv defender's radar working.
-		for (INT32 i = 0; i < tms.top_border+1; i++)
-		{
-			TMS9928AScanline_INT(i);
-		}
-	} else {
-		TMS9928AScanline_INT(vpos + tms.top_border);
-	}
+	TMS9928AScanline_INT(vpos);
 }
 
 INT32 TMS9928ADraw()
@@ -582,7 +576,7 @@ INT32 TMS9928ADraw()
 		{
 			for (INT32 x = 0; x < nScreenWidth; x++)
 			{
-				pTransDraw[y * nScreenWidth + x] = tms.tmpbmp[y * TMS9928A_TOTAL_HORZ + ((TMS9928A_HORZ_DISPLAY_START/2)+10)+x];
+				pTransDraw[y * nScreenWidth + x] = tms.tmpbmp[(y + tms.top_border - 16) * TMS9928A_TOTAL_HORZ + ((TMS9928A_HORZ_DISPLAY_START/2)+10)+x];
 			}
 		}
 	}

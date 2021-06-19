@@ -778,6 +778,7 @@ DRV		BurnDrvCpsArmwar;
 DRV		BurnDrvCpsArmwaru;
 DRV		BurnSpecarmymvs;
 DRV		BurnDrvMSX_armymove;
+DRV		BurnDrvMSX_arnodash;
 DRV		BurnDrvsg1k_arnodash;
 DRV		BurnDrvmd_arnoldp;
 DRV		BurnDrvmd_arrows;
@@ -1029,6 +1030,7 @@ DRV		BurnDrvsms_backtof3;
 DRV		BurnDrvmd_backtof3cf;
 DRV		BurnDrvmd_backtof3s;
 DRV		BurnDrvmd_backtof3u;
+DRV		BurnDrvMSX_gantan;
 DRV		BurnDrvBackfire;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvBackfirea;		// Set inputs to \"Joystick\" in test mode [NOT WORKING]
@@ -1046,6 +1048,7 @@ DRV		BurnDrvmd_badomen;
 DRV		BurnDrvnes_badstrbra;
 DRV		BurnSpecbadlands;
 DRV		BurnSpecbadlandse;
+DRV		BurnDrvMSX_bagman;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvBagmanmc;		// Bad Colours [NOT WORKING]
 #endif
@@ -3706,6 +3709,8 @@ DRV		BurnDrvDondokod;
 DRV		BurnDrvnes_dondokodon2j;
 DRV		BurnDrvnes_dondokodon2;
 DRV		BurnDrvpce_dondoko;
+DRV		BurnDrvMSX_donquijote1;
+DRV		BurnDrvMSX_donquijote2;
 DRV		BurnDrvnes_donaldduck;
 DRV		BurnDrvgg_donald42;
 DRV		BurnDrvgg_donaldld;
@@ -4998,6 +5003,7 @@ DRV		BurnDrvnes_flighint;
 DRV		BurnDrvMSX_fsim;
 DRV		BurnDrvmd_flink;
 DRV		BurnSpecFlintstones;
+DRV		BurnDrvMSX_flintstones;
 DRV		BurnDrvnes_flintresdinhopj;
 DRV		BurnDrvnes_flintresdinhop;
 DRV		BurnDrvnes_flintsuratdinpe;
@@ -7918,6 +7924,7 @@ DRV		BurnSpecBrunilda;
 DRV		BurnSpecBrunildait;
 DRV		BurnSpecBrunildaru;
 DRV		BurnSpecBrunildaes;
+DRV		BurnDrvMSX_jardineszwz;
 DRV		BurnSpecLostcavern;
 DRV		BurnSpecLostcaverneasy;
 DRV		BurnSpecLims128;
@@ -8764,6 +8771,7 @@ DRV		BurnDrvMineswpr4;
 DRV		BurnDrvMineswpr;
 DRV		BurnDrvmd_miniplanets;
 DRV		BurnDrvnes_miniputt;
+DRV		BurnDrvMSX_minimagos;
 DRV		BurnDrvsms_minimsx;
 DRV		BurnDrvminivadr;
 DRV		BurnDrvMmonkeyj;
@@ -14797,6 +14805,7 @@ DRV		BurnDrvTerraf;
 DRV		BurnSpecTerrahawks;
 DRV		BurnDrvMSX_terramex;
 DRV		BurnDrvCterrani;
+DRV		BurnDrvMSX_terrorpods;
 DRV		BurnDrvgg_tesserae;
 DRV		BurnDrvmd_td2;
 DRV		BurnSpectestdrv2;
@@ -15429,6 +15438,7 @@ DRV		BurnDrvcv_thexder;
 DRV		BurnDrvThief;
 DRV		BurnDrvMSX_tbback;
 DRV		BurnDrvmd_thomas;
+DRV		BurnDrvMSX_thor;
 DRV		BurnDrvtrally;
 DRV		BurnSpec3octopuses;
 DRV		BurnDrvnes_threestooges;
@@ -17277,6 +17287,7 @@ DRV		BurnDrvZero;
 DRV		BurnDrvZero2;
 DRV		BurnDrvpce_zero4c;
 DRV		BurnDrvpce_zero4ca;
+DRV		BurnDrvMSX_zerocis;
 DRV		BurnDrvZerohouri;
 DRV		BurnDrvZerohour;
 DRV		BurnDrvZerohoura;
@@ -18172,6 +18183,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsArmwaru,			// Armored Warriors (941024 USA)
 	&BurnSpecarmymvs,			// Army Moves (128K)
 	&BurnDrvMSX_armymove,		// Army Moves (Euro)
+	&BurnDrvMSX_arnodash,		// Arno Dash (HB)
 	&BurnDrvsg1k_arnodash,		// Arno Dash (HB)
 	&BurnDrvmd_arnoldp,			// Arnold Palmer Tournament Golf (Euro, USA)
 	&BurnDrvmd_arrows,			// Arrow Flash (Hack, Spanish)
@@ -18423,6 +18435,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_backtof3cf,		// Back to the Future Part III (Hack, Color Fix)
 	&BurnDrvmd_backtof3s,		// Back to the Future Part III (Hack, Spanish)
 	&BurnDrvmd_backtof3u,		// Back to the Future Part III (USA)
+	&BurnDrvMSX_gantan,			// Back to the Gantan - Year of the Rat (HB)
 	&BurnDrvBackfire,			// Backfire! (set 1)
 #if defined FBNEO_DEBUG
 	&BurnDrvBackfirea,			// Backfire! (set 2) [Set inputs to \"Joystick\" in test mode, NOT WORKING]
@@ -18440,6 +18453,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_badstrbra,		// Bad Street Brawler (USA)
 	&BurnSpecbadlands,			// Badlands (Domark) (48K)
 	&BurnSpecbadlandse,			// Badlands (Erbe Software) (48K)
+	&BurnDrvMSX_bagman,			// Bag Man (HB)
 #if defined FBNEO_DEBUG
 	&BurnDrvBagmanmc,			// Bagman (bootleg on Moon Cresta hardware set 1) [Bad Colours, NOT WORKING]
 #endif
@@ -21100,6 +21114,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_dondokodon2j,	// Don Doko Don 2 (Japan)
 	&BurnDrvnes_dondokodon2,	// Don Doko Don 2 (T-Eng)
 	&BurnDrvpce_dondoko,		// Don Doko Don!
+	&BurnDrvMSX_donquijote1,	// Don Quijote - Parte I (Spa)
+	&BurnDrvMSX_donquijote2,	// Don Quijote - Parte II (Spa)
 	&BurnDrvnes_donaldduck,		// Donald Duck (Japan)
 	&BurnDrvgg_donald42,		// Donald Duck no 4-Tsu no Hihou (Jpn)
 	&BurnDrvgg_donaldld,		// Donald Duck no Lucky Dime (Jpn)
@@ -22392,6 +22408,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_fsim,			// Flight Simulator - Gyorai Kougeki (Jpn)
 	&BurnDrvmd_flink,			// Flink (Euro)
 	&BurnSpecFlintstones,		// Flintstones, the (128K)
+	&BurnDrvMSX_flintstones,	// Flintstones, The (Euro)
 	&BurnDrvnes_flintresdinhopj,// Flintstones, The - The Rescue of Dino & Hoppy (Japan)
 	&BurnDrvnes_flintresdinhop,	// Flintstones, The - The Rescue of Dino & Hoppy (USA)
 	&BurnDrvnes_flintsuratdinpe,// Flintstones, The - The Surprise at Dinosaur Peak! (USA)
@@ -25312,6 +25329,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecBrunildait,		// Los Amores De Brunilda (Italian) (HB, v1.4)
 	&BurnSpecBrunildaru,		// Los Amores De Brunilda (Russian) (HB, v1.4)
 	&BurnSpecBrunildaes,		// Los Amores De Brunilda (Spanish) (HB, v1.4)
+	&BurnDrvMSX_jardineszwz,	// Los Jardines de Zee Wang Zu (HB)
 	&BurnSpecLostcavern,		// Lost Cavern (HB)
 	&BurnSpecLostcaverneasy,	// Lost Cavern - Easy (HB)
 	&BurnSpecLims128,			// Lost In My Spectrum (128K) (HB)
@@ -26158,6 +26176,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMineswpr,			// Minesweeper
 	&BurnDrvmd_miniplanets,		// Mini Planets (HB, Rev2)
 	&BurnDrvnes_miniputt,		// Mini Putt (Japan)
+	&BurnDrvMSX_minimagos,		// MiniMagos (HB)
 	&BurnDrvsms_minimsx,		// MiniMSX (HB)
 	&BurnDrvminivadr,			// Minivader
 	&BurnDrvMmonkeyj,			// Minky Monkey (Japan)
@@ -32191,6 +32210,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecTerrahawks,		// Terrahawks (HB)
 	&BurnDrvMSX_terramex,		// Terramex (Euro)
 	&BurnDrvCterrani,			// Terranean (DECO Cassette) (US)
+	&BurnDrvMSX_terrorpods,		// Terrorpods
 	&BurnDrvgg_tesserae,		// Tesserae (Euro, USA)
 	&BurnDrvmd_td2,				// Test Drive II - The Duel (Euro, USA)
 	&BurnSpectestdrv2,			// Test Drive II - The Duel
@@ -32823,6 +32843,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvThief,				// Thief
 	&BurnDrvMSX_tbback,			// Thing Bounces Back (Euro)
 	&BurnDrvmd_thomas,			// Thomas the Tank Engine & Friends (USA)
+	&BurnDrvMSX_thor,			// Thor (Spa)
 	&BurnDrvtrally,				// Thrash Rally (ALM-003)(ALH-003)
 	&BurnSpec3octopuses,		// Three Octopuses (HB)
 	&BurnDrvnes_threestooges,	// Three Stooges (USA)
@@ -34671,6 +34692,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvZero2,				// Zero (set 2, Defender bootleg) [no comment, NOT WORKING]
 	&BurnDrvpce_zero4c,			// Zero 4 Champ (v1.5)
 	&BurnDrvpce_zero4ca,		// Zero 4 Champ
+	&BurnDrvMSX_zerocis,		// ZERO and the Castle of Infinite Sadness (HB)
 	&BurnDrvZerohouri,			// Zero Hour (Inder)
 	&BurnDrvZerohour,			// Zero Hour (set 1)
 	&BurnDrvZerohoura,			// Zero Hour (set 2)

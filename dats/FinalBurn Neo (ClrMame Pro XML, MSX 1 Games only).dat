@@ -740,6 +740,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="arnodash" romof="msx">
+		<description>Arno Dash (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Arno Dash (2021)(Under4Mhz).rom" size="32768" crc="c29d7e34"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="astrobls" romof="msx">
 		<description>Astro Blaster (Euro)</description>
 		<year>1988</year>
@@ -998,6 +1009,28 @@
 		<year>1986</year>
 		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="back to the future (japan) (alt 1).rom" size="32768" crc="795c7aa1"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gantan" romof="msx">
+		<description>Back to the Gantan - Year of the Rat (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Nao</manufacturer>
+		<rom name="Back to the Gantan (2020)(Nao).rom" size="524288" crc="171d176b"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bagman" romof="msx">
+		<description>Bag Man (HB) [Homebrew]</description>
+		<year>2007</year>
+		<manufacturer>AG Software</manufacturer>
+		<rom name="Bag Man (2007)(AG Software).rom" size="16384" crc="c3a33d26"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -3790,6 +3823,28 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="donquijote1" romof="msx">
+		<description>Don Quijote - Parte I (Spa)</description>
+		<year>1987</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Don Quijote (1987)(Dinamic Software)(es)(Side A)[RUN'CAS-'].cas" size="54252" crc="68395271"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="donquijote2" cloneof="donquijote1" romof="donquijote1">
+		<description>Don Quijote - Parte II (Spa) [Password: EL BALSAMO DE FIERABRAS]</description>
+		<year>1987</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Don Quijote (1987)(Dinamic Software)(es)(Side B)[RUN'CAS-'].cas" size="51442" crc="833d4f52"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="doordoor" romof="msx">
 		<description>Doordoor (Jpn)</description>
 		<year>1985</year>
@@ -4741,6 +4796,17 @@
 		<year>1988</year>
 		<manufacturer>subLOGIC</manufacturer>
 		<rom name="rp231024d" size="131072" crc="a6165bd4"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="flintstones" romof="msx">
+		<description>Flintstones, The (Euro)</description>
+		<year>1988</year>
+		<manufacturer>Grandslam Entertainments</manufacturer>
+		<rom name="Flintstones, The (1988)(Grandslam Entertainments)[BLOAD'CAS-',R].cas" size="72561" crc="a51a32fd"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7776,6 +7842,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="jardineszwz" romof="msx">
+		<description>Los Jardines de Zee Wang Zu (HB) [Homebrew]</description>
+		<year>2006</year>
+		<manufacturer>Jos'b</manufacturer>
+		<rom name="Los Jardines de Zee Wang Zu (2006)(Jos'b).rom" size="16384" crc="b88a7fde"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="lotlot" romof="msx">
 		<description>Lot Lot (Jpn)</description>
 		<year>1985</year>
@@ -8463,6 +8540,17 @@
 		<year>1987</year>
 		<manufacturer>Mastertronic</manufacturer>
 		<rom name="milk race (1987)(mastertronic)(gb)[run'cas-'].cas" size="46608" crc="74ce546e"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="minimagos" romof="msx">
+		<description>MiniMagos (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>Fran Games</manufacturer>
+		<rom name="MiniMagos (2017)(Fran Games).rom" size="24576" crc="d8a841ed"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12976,6 +13064,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="terrorpods" romof="msx">
+		<description>Terrorpods</description>
+		<year>1989</year>
+		<manufacturer>Melbourne House</manufacturer>
+		<rom name="Terrorpods (1989)(Melbourne House).rom" size="65536" crc="b88a5069"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="tetrahor" romof="msx">
 		<description>Tetra Horror (Jpn)</description>
 		<year>1983</year>
@@ -13388,6 +13487,17 @@
 		<year>1987</year>
 		<manufacturer>Gremlin Graphics Software</manufacturer>
 		<rom name="thing bounces back (1987)(gremlin graphics software)[bload'cas-',r].cas" size="67282" crc="3838a116"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="thor" romof="msx">
+		<description>Thor (Spa)</description>
+		<year>1988</year>
+		<manufacturer>Proein Soft Line</manufacturer>
+		<rom name="Thor (1988)(Proein Soft Line)(es)[RUN'CAS-'].cas" size="45441" crc="dbf1df15"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -14698,6 +14808,17 @@
 		<year>1984</year>
 		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="zenji (japan).rom" size="16384" crc="77b3b0b9"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zerocis" romof="msx">
+		<description>ZERO and the Castle of Infinite Sadness (HB) [Homebrew]</description>
+		<year>2014-16</year>
+		<manufacturer>Jos'b</manufacturer>
+		<rom name="ZERO and the Castle of Infinite Sadness (2014-16)(Dioniso).rom" size="49152" crc="7b6f90ef"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

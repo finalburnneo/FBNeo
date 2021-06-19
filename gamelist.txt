@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17149 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17160 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -770,6 +770,7 @@ This list contains all games supported by FinalBurn Neo.
 | armwaru	|  	| Armored Warriors (941024 USA)				| armwar	| 1994	| Capcom	| CPS2		| 					|
 | spec_armymvs	|  	| Army Moves (128K)					| 		| 1986	| Imagine Softwa| ZX Spectrum	| 					|
 | msx_armymove	|  	| Army Moves (Euro)					| 		| 1987	| Dinamic Softwa| MSX		| 					|
+| msx_arnodash	|  	| Arno Dash (HB)					| 		| 2021	| Under4Mhz	| MSX		| 					|
 | sg1k_arnodash	|  	| Arno Dash (HB)					| 		| 2020	| Under4MHz	| Sega SG-1000	| 					|
 | md_arnoldp	|  	| Arnold Palmer Tournament Golf (Euro, USA)		| 		| 1989	| Sega		| Sega Megadrive| 					|
 | md_arrows	|  	| Arrow Flash (Hack, Spanish)				| md_arrow	| 2019	| Renovation	| Sega Megadrive| 					|
@@ -1021,6 +1022,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_backtof3cf	|  	| Back to the Future Part III (Hack, Color Fix)		| md_backtof3	| 2019	| Arena Entertai| Sega Megadrive| 					|
 | md_backtof3s	|  	| Back to the Future Part III (Hack, Spanish)		| md_backtof3	| 2018	| Arena		| Sega Megadrive| 					|
 | md_backtof3u	|  	| Back to the Future Part III (USA)			| md_backtof3	| 1991	| Arena Entertai| Sega Megadrive| 					|
+| msx_gantan	|  	| Back to the Gantan - Year of the Rat (HB)		| 		| 2020	| Nao		| MSX		| 					|
 | backfire	|  	| Backfire! (set 1)					| 		| 1995	| Data East Corp| DECO IC16	| 					|
 | backfirea	| D NW	| Backfire! (set 2)					| backfire	| 1995	| Data East Corp| DECO IC16	| Set inputs to \"Joystick\" in test mod|
 | chf_backgamm	|  	| Backgammon / Acey-Deucey				| 		| 1977	| Fairchild	| Channel F	| 					|
@@ -1036,6 +1038,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_badstrbra	|  	| Bad Street Brawler (USA)				| 		| 1989	| Mattel	| Miscellaneous	| 					|
 | spec_badlands	|  	| Badlands (Domark) (48K)				| 		| 1990	| Domark	| ZX Spectrum	| 					|
 | spec_badlandse|  	| Badlands (Erbe Software) (48K)			| spec_badlands	| 1990	| Erbe Software	| ZX Spectrum	| 					|
+| msx_bagman	|  	| Bag Man (HB)						| 		| 2007	| AG Software	| MSX		| 					|
 | bagmanmc	| D NW	| Bagman (bootleg on Moon Cresta hardware set 1)	| bagman	| 1982	| bootleg	| Galaxian	| Bad Colours				|
 | bagmanm2	|   NW	| Bagman (bootleg on Moon Cresta hardware set 2)	| bagman	| 1982	| Valadon Automa| Galaxian	| Bad Colours				|
 | bagmans3	|   NW	| Bagman (Stern Electronics, revision A3)		| bagman	| 1982	| Valadon Automa| Miscellaneous	| 					|
@@ -3658,6 +3661,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_dondokodon2j|  	| Don Doko Don 2 (Japan)				| nes_dondokodon2| 1992	| Taito		| Miscellaneous	| 					|
 | nes_dondokodon2|  	| Don Doko Don 2 (T-Eng)				| 		| 1992	| Taito		| Miscellaneous	| 					|
 | pce_dondoko	|  	| Don Doko Don!						| 		| 1990	| Taito		| PC Engine	| 					|
+| msx_donquijote1|  	| Don Quijote - Parte I (Spa)				| 		| 1987	| Dinamic Softwa| MSX		| 					|
+| msx_donquijote2|  	| Don Quijote - Parte II (Spa)				| msx_donquijote1| 1987	| Dinamic Softwa| MSX		| Password: EL BALSAMO DE FIERABRAS	|
 | nes_donaldduck|  	| Donald Duck (Japan)					| 		| 1988	| Kemco		| Miscellaneous	| 					|
 | gg_donald42	|  	| Donald Duck no 4-Tsu no Hihou (Jpn)			| gg_deepduck	| 1993	| Sega		| Sega Game Gear| 					|
 | gg_donaldld	|  	| Donald Duck no Lucky Dime (Jpn)			| gg_luckydim	| 1991	| Sega		| Sega Game Gear| 					|
@@ -4938,6 +4943,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_fsim	|  	| Flight Simulator - Gyorai Kougeki (Jpn)		| 		| 1988	| subLOGIC	| MSX		| 					|
 | md_flink	|  	| Flink (Euro)						| 		| 1994	| Sony Imagesoft| Sega Megadrive| 					|
 | spec_flintstones|  	| Flintstones, the (128K)				| 		| 1988	| Grandslam	| ZX Spectrum	| 					|
+| msx_flintstones|  	| Flintstones, The (Euro)				| 		| 1988	| Grandslam Ente| MSX		| 					|
 | nes_flintresdinhopj|  	| Flintstones, The - The Rescue of Dino & Hoppy (Japan)	| nes_flintresdinhop| 1991	| Taito		| Miscellaneous	| 					|
 | nes_flintresdinhop|  	| Flintstones, The - The Rescue of Dino & Hoppy (USA)	| 		| 1991	| Taito		| Miscellaneous	| 					|
 | nes_flintsuratdinpe|  	| Flintstones, The - The Surprise at Dinosaur Peak! (USA| 		| 1994	| Taito		| Miscellaneous	| 					|
@@ -7816,6 +7822,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_brunildait|  	| Los Amores De Brunilda (Italian) (HB, v1.4)		| spec_brunilda	| 2013	| RetroWorks	| ZX Spectrum	| 					|
 | spec_brunildaru|  	| Los Amores De Brunilda (Russian) (HB, v1.4)		| spec_brunilda	| 2013	| RetroWorks	| ZX Spectrum	| 					|
 | spec_brunildaes|  	| Los Amores De Brunilda (Spanish) (HB, v1.4)		| spec_brunilda	| 2013	| RetroWorks	| ZX Spectrum	| 					|
+| msx_jardineszwz|  	| Los Jardines de Zee Wang Zu (HB)			| 		| 2006	| Jos'b		| MSX		| 					|
 | spec_lostcavern|  	| Lost Cavern (HB)					| 		| 2021	| Isaiasdiaz	| ZX Spectrum	| 					|
 | spec_lostcaverneasy|  	| Lost Cavern - Easy (HB)				| spec_lostcavern| 2021	| Isaiasdiaz	| ZX Spectrum	| 					|
 | spec_lims128	|  	| Lost In My Spectrum (128K) (HB)			| 		| 2021	| ZankleSoft	| ZX Spectrum	| 					|
@@ -8656,6 +8663,7 @@ This list contains all games supported by FinalBurn Neo.
 | mineswpr	|  	| Minesweeper						| 		| 1977	| Amutech	| Miscellaneous	| 					|
 | md_miniplanets|  	| Mini Planets (HB, Rev2)				| 		| 2016	| Sik		| Sega Megadrive| 					|
 | nes_miniputt	|  	| Mini Putt (Japan)					| 		| 1991	| A Wave	| Miscellaneous	| 					|
+| msx_minimagos	|  	| MiniMagos (HB)					| 		| 2017	| Fran Games	| MSX		| 					|
 | sms_minimsx	|  	| MiniMSX (HB)						| 		| 2021	| MIKGAMES	| Sega Master Sy| 					|
 | minivadr	|  	| Minivader						| 		| 1990	| Taito Corporat| Minivader	| 					|
 | mmonkeyj	|  	| Minky Monkey (Japan)					| mmonkey	| 1982	| Technos Japan | Miscellaneous	| 					|
@@ -14605,6 +14613,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_terrahawks|  	| Terrahawks (HB)					| 		| 2014	| Gary James	| ZX Spectrum	| 					|
 | msx_terramex	|  	| Terramex (Euro)					| 		| 1988	| Grandslam Ente| MSX		| 					|
 | cterrani	|  	| Terranean (DECO Cassette) (US)			| 		| 1981	| Data East Corp| Cassette Syste| 					|
+| msx_terrorpods|  	| Terrorpods						| 		| 1989	| Melbourne Hous| MSX		| 					|
 | gg_tesserae	|  	| Tesserae (Euro, USA)					| 		| 1993	| GameTek	| Sega Game Gear| 					|
 | md_td2	|  	| Test Drive II - The Duel (Euro, USA)			| 		| 1992	| Ballistic	| Sega Megadrive| 					|
 | spec_testdrv2	|  	| Test Drive II - The Duel				| 		| 1989	| Accolade	| ZX Spectrum	| 					|
@@ -15235,6 +15244,7 @@ This list contains all games supported by FinalBurn Neo.
 | thief		|  	| Thief							| 		| 1981	| Pacific Novelt| Miscellaneous	| 					|
 | msx_tbback	|  	| Thing Bounces Back (Euro)				| 		| 1987	| Gremlin Graphi| MSX		| 					|
 | md_thomas	|  	| Thomas the Tank Engine & Friends (USA)		| 		| 1993	| THQ		| Sega Megadrive| 					|
+| msx_thor	|  	| Thor (Spa)						| 		| 1988	| Proein Soft Li| MSX		| 					|
 | trally	|  	| Thrash Rally (ALM-003)(ALH-003)			| 		| 1991	| Alpha Denshi C| Neo Geo MVS	| 					|
 | spec_3octopuses|  	| Three Octopuses (HB)					| 		| 2017	| kas29		| ZX Spectrum	| 					|
 | nes_threestooges|  	| Three Stooges (USA)					| 		| 1989	| Activision	| Miscellaneous	| 					|
@@ -17041,6 +17051,7 @@ This list contains all games supported by FinalBurn Neo.
 | zero2		|   NW	| Zero (set 2, Defender bootleg)			| defender	| 1980	| bootleg (Amtec| 6809 System	| 					|
 | pce_zero4c	|  	| Zero 4 Champ (v1.5)					| 		| 1991	| Media Rings Co| PC Engine	| 					|
 | pce_zero4ca	|  	| Zero 4 Champ						| pce_zero4c	| 1991	| Media Rings Co| PC Engine	| 					|
+| msx_zerocis	|  	| ZERO and the Castle of Infinite Sadness (HB)		| 		| 2014-16| Jos'b		| MSX		| 					|
 | zerohouri	|  	| Zero Hour (Inder)					| zerohour	| 1980	| bootleg (Inder| Miscellaneous	| 					|
 | zerohour	|  	| Zero Hour (set 1)					| 		| 1980	| Universal	| Miscellaneous	| 					|
 | zerohoura	|  	| Zero Hour (set 2)					| zerohour	| 1980	| Universal	| Miscellaneous	| 					|

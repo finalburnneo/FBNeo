@@ -107,10 +107,10 @@ static const struct retro_core_option_definition var_fbneo_vertical_mode = {
 	},
 	"disabled"
 };
-static const struct retro_core_option_definition var_fbneo_frameskip = {
-	"fbneo-frameskip",
-	"Frameskip",
-	"Skip rendering of X frames out of X+1",
+static const struct retro_core_option_definition var_fbneo_fixed_frameskip = {
+	"fbneo-fixed-frameskip",
+	"Fixed Frameskip",
+	"Skip rendering at a fixed rate of X frames out of X+1",
 	{
 		{ "0", "No skipping" },
 		{ "1", "Skip rendering of 1 frames out of 2" },
@@ -125,9 +125,10 @@ static const struct retro_core_option_definition var_fbneo_frameskip = {
 static const struct retro_core_option_definition var_fbneo_frameskip_v2 = {
 	"fbneo-frameskip-v2",
 	"Frameskip",
-	"Skip frames to avoid audio buffer under-run (crackling). Improves performance at the expense of visual smoothness. 'Auto' skips frames when advised by the frontend. 'Manual' utilises the 'Frameskip Threshold (%)' setting.",
+	"Skip frames to avoid audio buffer under-run (crackling). Improves performance at the expense of visual smoothness. 'Auto' skips frames when advised by the frontend. 'Manual' uses the 'Frameskip Threshold (%)' setting. 'Fixed' uses the 'Fixed Frameskip' setting.",
 	{
 		{ "disabled", NULL },
+		{ "Fixed", NULL },
 		{ "Auto", NULL },
 		{ "Manual", NULL },
 		{ NULL, NULL },
@@ -594,8 +595,7 @@ void set_environment()
 		vars_systems.push_back(&var_fbneo_frameskip_v2);
 		vars_systems.push_back(&var_fbneo_frameskip_v2_threshold);
 	}
-	else
-		vars_systems.push_back(&var_fbneo_frameskip);
+	vars_systems.push_back(&var_fbneo_fixed_frameskip);
 	vars_systems.push_back(&var_fbneo_cpu_speed_adjust);
 	if (BurnDrvGetFlags() & BDF_HISCORE_SUPPORTED)
 		vars_systems.push_back(&var_fbneo_hiscores);
@@ -878,34 +878,34 @@ void check_variables(void)
 		{
 			if (strcmp(var.value, "disabled") == 0)
 				nFrameskipType = 0;
-			else if (strcmp(var.value, "Auto") == 0)
+			else if (strcmp(var.value, "Fixed") == 0)
 				nFrameskipType = 1;
-			else if (strcmp(var.value, "Manual") == 0)
+			else if (strcmp(var.value, "Auto") == 0)
 				nFrameskipType = 2;
+			else if (strcmp(var.value, "Manual") == 0)
+				nFrameskipType = 3;
 		}
 
-		var.key             = var_fbneo_frameskip_v2_threshold.key;
+		var.key = var_fbneo_frameskip_v2_threshold.key;
 		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
 			nFrameskipThreshold = strtol(var.value, NULL, 10);
 	}
-	else
+
+	var.key = var_fbneo_fixed_frameskip.key;
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
 	{
-		var.key = var_fbneo_frameskip.key;
-		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
-		{
-			if (strcmp(var.value, "0") == 0)
-				nFrameskip = 1;
-			else if (strcmp(var.value, "1") == 0)
-				nFrameskip = 2;
-			else if (strcmp(var.value, "2") == 0)
-				nFrameskip = 3;
-			else if (strcmp(var.value, "3") == 0)
-				nFrameskip = 4;
-			else if (strcmp(var.value, "4") == 0)
-				nFrameskip = 5;
-			else if (strcmp(var.value, "5") == 0)
-				nFrameskip = 6;
-		}
+		if (strcmp(var.value, "0") == 0)
+			nFrameskip = 1;
+		else if (strcmp(var.value, "1") == 0)
+			nFrameskip = 2;
+		else if (strcmp(var.value, "2") == 0)
+			nFrameskip = 3;
+		else if (strcmp(var.value, "3") == 0)
+			nFrameskip = 4;
+		else if (strcmp(var.value, "4") == 0)
+			nFrameskip = 5;
+		else if (strcmp(var.value, "5") == 0)
+			nFrameskip = 6;
 	}
 
 	if (pgi_diag)

@@ -1126,14 +1126,14 @@ void retro_run()
 	InputMake();
 
 	// Check whether current frame should be skipped
-	if ((nFrameskipType > 0) && retro_audio_buff_active)
+	if ((nFrameskipType > 1) && retro_audio_buff_active)
 	{
 		switch (nFrameskipType)
 		{
-			case 1:
+			case 2:
 				bSkipFrame = retro_audio_buff_underrun;
 			break;
-			case 2:
+			case 3:
 				bSkipFrame = (retro_audio_buff_occupancy < nFrameskipThreshold);
 			break;
 		}
@@ -1146,13 +1146,13 @@ void retro_run()
 		else
 			nFrameskipCounter++;
 	}
-	else if (!bLibretroSupportsAudioBuffStatus)
+	else if (!bLibretroSupportsAudioBuffStatus || nFrameskipType == 1)
 		bSkipFrame = !(nCurrentFrame % nFrameskip == 0);
 
 	// if frameskip settings have changed, update frontend audio latency
 	if (bUpdateAudioLatency)
 	{
-		if (nFrameskipType > 0)
+		if (nFrameskipType > 1)
 		{
 			float frame_time_msec = 100000.0f / nBurnFPS;
 			nAudioLatency = (UINT32)((6.0f * frame_time_msec) + 0.5f);
@@ -1781,7 +1781,7 @@ static bool retro_load_game_common()
 		set_environment();
 		check_variables();
 
-		if (nFrameskipType > 0)
+		if (nFrameskipType > 1)
 			bUpdateAudioLatency = true;
 
 #ifdef USE_CYCLONE

@@ -2160,7 +2160,7 @@ STD_ROM_FN(sngkacea)
 
 struct BurnDriver BurnDrvSamuraiA = {
 	"samuraia", NULL, NULL, NULL, "1993",
-	"Samurai Aces (World)\0", NULL, "Psikyo / Banpresto", "Psikyo 68EC020",
+	"Samurai Aces (World)\0", NULL, "Psikyo (Banpresto license)", "Psikyo 68EC020",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
 	NULL, samuraiaRomInfo, samuraiaRomName, NULL, NULL, NULL, NULL, gunbirdInputInfo, samuraiaDIPInfo,
@@ -2170,7 +2170,7 @@ struct BurnDriver BurnDrvSamuraiA = {
 
 struct BurnDriver BurnDrvSngkAce = {
 	"sngkace", "samuraia", NULL, NULL, "1993",
-	"Sengoku Ace (Japan, set 1)\0", NULL, "Psikyo / Banpresto", "Psikyo 68EC020",
+	"Sengoku Ace (Japan, set 1)\0", NULL, "Psikyo (Banpresto license)", "Psikyo 68EC020",
 	L"\u6226\u56FD\u30A8\u30FC\u30B9 (Japan, set 1)\0Sengoku Ace\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
 	NULL, sngkaceRomInfo, sngkaceRomName, NULL, NULL, NULL, NULL, gunbirdInputInfo, sngkaceDIPInfo,
@@ -2180,7 +2180,7 @@ struct BurnDriver BurnDrvSngkAce = {
 
 struct BurnDriver BurnDrvSngkAcea = {
 	"sngkacea", "samuraia", NULL, NULL, "1993",
-	"Sengoku Ace (Japan, set 2)\0", NULL, "Psikyo / Banpresto", "Psikyo 68EC020",
+	"Sengoku Ace (Japan, set 2)\0", NULL, "Psikyo (Banpresto license)", "Psikyo 68EC020",
 	L"\u6226\u56FD\u30A8\u30FC\u30B9 (Japan, set 2)\0Sengoku Ace\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
 	NULL, sngkaceaRomInfo, sngkaceaRomName, NULL, NULL, NULL, NULL, gunbirdInputInfo, sngkaceDIPInfo,
@@ -2626,8 +2626,8 @@ STD_ROM_FN(tengaij)
 
 struct BurnDriver BurnDrvTengaij = {
 	"tengaij", "tengai", NULL, NULL, "1996",
-	"Tengai\0Sengoku Blade - sengoku Ace episode II\0", NULL, "Psikyo", "Psikyo 68EC020",
-	L"Tengai\0\u6226\u56FD\u30D6\u30EC\u30FC\u30C9 - sengoku Ace episode II\0", NULL, NULL, NULL,
+	"Sengoku Blade - sengoku Ace episode II (Japan)\0Tengai (World)\0", NULL, "Psikyo", "Psikyo 68EC020",
+	L"\u6226\u56FD\u30D6\u30EC\u30FC\u30C9 - sengoku Ace episode II (Japan)\0Tengai (World)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_HORSHOOT, 0,
 	NULL, tengaijRomInfo, tengaijRomName, NULL, NULL, NULL, NULL, gunbirdInputInfo, tengaijDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &PsikyoRecalcPalette, 0x1000,

@@ -1875,10 +1875,10 @@ STD_ROM_FN(MSX_blckony2)
 
 struct BurnDriver BurnDrvMSX_blckony2 = {
 	"msx_blckony2", NULL, "msx_msx", NULL, "1986",
-	"The Black Onyx II - Search For The Fire Crystal (Jpn)\0", "to use controller set 'Map Cursor Keys to Joy' in DIPswitch", "ASCII", "MSX",
+	"The Black Onyx II - Search For The Fire Crystal (Jpn)\0", NULL, "ASCII", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_RPG, 0,
-	MSXGetZipName, MSX_blckony2RomInfo, MSX_blckony2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJapanDIPInfo,
+	MSXGetZipName, MSX_blckony2RomInfo, MSX_blckony2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJapanJoyCursorDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -8893,7 +8893,7 @@ struct BurnDriver BurnDrvMSX_harapeko = {
 	"Harapeko Pakkun (Jpn)\0", "Press 0 to restart level", "ASCII", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
-	MSXGetZipName, MSX_harapekoRomInfo, MSX_harapekoRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	MSXGetZipName, MSX_harapekoRomInfo, MSX_harapekoRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJapanJoyCursorDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -20223,7 +20223,7 @@ struct BurnDriver BurnDrvMSX_gonzzalezz = {
 	"msx_gonzzalezz", NULL, "msx_msx", NULL, "1989",
 	"Gonzzalezz \0", NULL, "Opera Soft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_gonzzalezzRomInfo, MSX_gonzzalezzRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -20242,7 +20242,7 @@ struct BurnDriver BurnDrvMSX_feud = {
 	"msx_feud", NULL, "msx_msx", NULL, "1987",
 	"Feud\0", NULL, "Bulldog", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ADV, 0,
 	MSXGetZipName, MSX_feudRomInfo, MSX_feudRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -20261,7 +20261,7 @@ struct BurnDriver BurnDrvMSX_headheels = {
 	"msx_headheels", NULL, "msx_msx", NULL, "1987",
 	"Head over Heels\0", NULL, "Ocean Software", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ADV, 0,
 	MSXGetZipName, MSX_headheelsRomInfo, MSX_headheelsRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3

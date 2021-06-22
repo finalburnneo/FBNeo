@@ -1843,7 +1843,7 @@ static UINT8 Gforce2ProcessAnalogControls(UINT16 value)
 
 		// Throttle
 		case 2: {
-			return ProcessAnalog(System16AnalogPort2, 1, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x01, 0x80);
+			return ProcessAnalog(System16AnalogPort2, 0, INPUT_DEADZONE, 0x01, 0xff);
 		}
 	}
 	

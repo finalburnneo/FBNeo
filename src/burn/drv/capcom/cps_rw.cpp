@@ -533,19 +533,19 @@ INT32 CpsRwGetInp()
 	if (Forgottn) {
 		// Handle analog controls
 		if (fFakeDip & 0x80) {
-			if (CpsDigUD[0]) nDial055 += 4080; // p1
-			if (CpsDigUD[1]) nDial055 -= 4080;
-			if (CpsDigUD[2]) nDial05d += 4080; // p2
-			if (CpsDigUD[3]) nDial05d -= 4080;
-			nDial055 += (INT32)((INT16)CpsInp055) * 4;
-			nDial05d += (INT32)((INT16)CpsInp05d) * 4;
+			if (CpsDigUD[0]) nDial055 += 1<<13; // p1
+			if (CpsDigUD[1]) nDial055 -= 1<<13;
+			if (CpsDigUD[2]) nDial05d += 1<<13; // p2
+			if (CpsDigUD[3]) nDial05d -= 1<<13;
+			nDial055 += (INT32)((INT16)CpsInp055)<<3;
+			nDial05d += (INT32)((INT16)CpsInp05d)<<3;
 		} else {
-			if (CpsDigUD[0]) nDial055 -= 4080; // p1
-			if (CpsDigUD[1]) nDial055 += 4080;
-			if (CpsDigUD[2]) nDial05d -= 4080; // p2
-			if (CpsDigUD[3]) nDial05d += 4080;
-			nDial055 -= (INT32)((INT16)CpsInp055) * 4;
-			nDial05d -= (INT32)((INT16)CpsInp05d) * 4;
+			if (CpsDigUD[0]) nDial055 -= 1<<13; // p1
+			if (CpsDigUD[1]) nDial055 += 1<<13;
+			if (CpsDigUD[2]) nDial05d -= 1<<13; // p2
+			if (CpsDigUD[3]) nDial05d += 1<<13;
+			nDial055 -= (INT32)((INT16)CpsInp055)<<3;
+			nDial05d -= (INT32)((INT16)CpsInp05d)<<3;
 		}
 	}
 	

@@ -4534,3 +4534,79 @@ struct BurnDriver BurnDrvsg1k_vexed = {
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
+
+// Arno Dash 2 (HB, v1.03)
+
+static struct BurnRomInfo sg1k_arnodash2RomDesc[] = {
+	{ "Arno Dash 2 v1.03 (2020)(Under4Mhz).sg",	32768, 0xe0478a53, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_arnodash2)
+STD_ROM_FN(sg1k_arnodash2)
+
+struct BurnDriver BurnDrvsg1k_arnodash2 = {
+	"sg1k_arnodash2", NULL, NULL, NULL, "2020",
+	"Arno Dash 2 (HB, v1.03)\0", NULL, "Under4Mhz", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
+	SG1KGetZipName, sg1k_arnodash2RomInfo, sg1k_arnodash2RomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Klondike Solitaire (HB, v1.04)
+
+static struct BurnRomInfo sg1k_ksolitaireRomDesc[] = {
+	{ "Klondike Solitaire v1.04 (2020)(Under4Mhz).sg",	32768, 0x5f9f8b15, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_ksolitaire)
+STD_ROM_FN(sg1k_ksolitaire)
+
+struct BurnDriver BurnDrvsg1k_ksolitaire = {
+	"sg1k_ksolitaire", NULL, NULL, NULL, "2020",
+	"Klondike Solitaire (HB, v1.04)\0", NULL, "Under4Mhz", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_CASINO, 0,
+	SG1KGetZipName, sg1k_ksolitaireRomInfo, sg1k_ksolitaireRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Mahjong Solitaire (HB, v1.07)
+
+static struct BurnRomInfo sg1k_msolitaireRomDesc[] = {
+	{ "Mahjong Solitaire v1.07 (2020)(Under4Mhz).sg",	32768, 0x1b14b1c2, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_msolitaire)
+STD_ROM_FN(sg1k_msolitaire)
+
+struct BurnDriver BurnDrvsg1k_msolitaire = {
+	"sg1k_msolitaire", NULL, NULL, NULL, "2020",
+	"Mahjong Solitaire (HB, v1.07)\0", NULL, "Under4Mhz", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_PUZZLE, 0,
+	SG1KGetZipName, sg1k_msolitaireRomInfo, sg1k_msolitaireRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Pitman (HB, v1.03)
+
+static struct BurnRomInfo sg1k_pitmanRomDesc[] = {
+	{ "Pitman v1.03 (2021)(Under4Mhz).sg",	32768, 0xe325f022, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_pitman)
+STD_ROM_FN(sg1k_pitman)
+
+struct BurnDriver BurnDrvsg1k_pitman = {
+	"sg1k_pitman", NULL, NULL, NULL, "2021",
+	"Pitman (HB, v1.03)\0", NULL, "Under4Mhz", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_PUZZLE, 0,
+	SG1KGetZipName, sg1k_pitmanRomInfo, sg1k_pitmanRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};

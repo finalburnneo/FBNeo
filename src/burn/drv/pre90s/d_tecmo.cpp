@@ -835,7 +835,7 @@ static INT32 SilkwormInit()
 			if (BurnLoadRom(DrvGfxROM3 + i * 0x10000, i + 12, 1)) return 1;
 		}
 
-		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "silkwormb")) {
+		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "silkwormb") || !strcmp(BurnDrvGetTextA(DRV_NAME), "silkwormb2")) {
 			bprintf(0, _T("silkwormb fix\n"));
 			if (BurnLoadRom(DrvGfxROM3 + 0x38000, 15, 1)) return 1;
 		}
@@ -1575,7 +1575,7 @@ struct BurnDriver BurnDrvSilkwrmp = {
 	256, 224, 4, 3
 };
 
-// Silk Worm (bootleg)
+// Silk Worm (bootleg, set 1)
 
 static struct BurnRomInfo silkwormbRomDesc[] = {
 	{ "e3.4",		    0x10000, 0x3d86fd58, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
@@ -1607,10 +1607,50 @@ STD_ROM_FN(silkwormb)
 
 struct BurnDriver BurnDrvSilkwormb = {
 	"silkwormb", "silkworm", NULL, NULL, "1988",
-	"Silk Worm (bootleg)\0", NULL, "Tecmo", "Miscellaneous",
+	"Silk Worm (bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, silkwormbRomInfo, silkwormbRomName, NULL, NULL, NULL, NULL, SilkwormInputInfo, SilkwormDIPInfo,
+	SilkwormInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 224, 4, 3
+};
+
+// Silk Worm (bootleg, set 2)
+
+static struct BurnRomInfo silkwormb2RomDesc[] = {
+	{ "280100_pc-4.4",		0x10000, 0xa10f2414, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
+	{ "280100_pc-5.5",		0x10000, 0xa6c7bb51, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "280100_pc-3.3",		0x08000, 0x5a880df9, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 Code
+
+	{ "280100_pc-2.2",		0x08000, 0xe80a1cd9, 3 | BRF_GRA },	          //  3 - Characters
+
+	{ "280100_pc-6.6",		0x10000, 0x1138d159, 4 | BRF_GRA },	      	  //  4 - Sprites
+	{ "280100_pc-7.7",		0x10000, 0xd96214f7, 4 | BRF_GRA },	          //  5
+	{ "280100_pc-8.8",		0x10000, 0x0494b38e, 4 | BRF_GRA },	          //  6
+	{ "280100_pc-9.9",		0x10000, 0x8ce3cdf5, 4 | BRF_GRA },	          //  7
+
+	{ "280100_pc-10.10",	0x10000, 0x8c7138bb, 5 | BRF_GRA },	          //  8 - Foreground Tiles
+	{ "280100_pc-11.11",	0x08000, 0xc0c4687d, 5 | BRF_GRA },	          //  9
+	{ "280100_pc-12.12",	0x10000, 0xbb0f568f, 5 | BRF_GRA },	          // 10
+	{ "280100_pc-13.13",	0x08000, 0xfc472811, 5 | BRF_GRA },	          // 11
+
+	{ "280100_pc-14.14",	0x10000, 0x409df64b, 6 | BRF_GRA },	      	  // 12 - Background Tiles
+	{ "280100_pc-15.15",	0x08000, 0xb02acdb6, 6 | BRF_GRA },	      	  // 13
+	{ "280100_pc-16.16",	0x08000, 0xcaf7b25e, 6 | BRF_GRA },	      	  // 14
+	{ "280100_pc-17.17",	0x08000, 0x7ec93873, 6 | BRF_GRA },	          // 15
+
+};
+
+STD_ROM_PICK(silkwormb2)
+STD_ROM_FN(silkwormb2)
+
+struct BurnDriver BurnDrvSilkwormb2 = {
+	"silkwormb2", "silkworm", NULL, NULL, "1988",
+	"Silk Worm (bootleg, set 2)\0", NULL, "Tecmo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, silkwormb2RomInfo, silkwormb2RomName, NULL, NULL, NULL, NULL, SilkwormInputInfo, SilkwormDIPInfo,
 	SilkwormInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };

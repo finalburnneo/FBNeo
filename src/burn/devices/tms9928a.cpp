@@ -175,7 +175,7 @@ void TMS9928AInit(INT32 model, INT32 vram, INT32 borderx, INT32 bordery, void (*
 
 	memset(&tms, 0, sizeof(tms));
 	tms.model = model;
-	tms.revA = 1;
+	tms.revA = (tms.model == TMS99x8A || tms.model == TMS9929A);
 
 	tms.INTCallback = INTCallback;
 

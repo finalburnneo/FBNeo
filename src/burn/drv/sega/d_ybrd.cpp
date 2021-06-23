@@ -13,7 +13,8 @@ static struct BurnInputInfo Gforce2InputList[] = {
 
 	A("Left/Right"       , BIT_ANALOG_REL, &System16AnalogPort0,   "p1 x-axis"  ),
 	A("Up/Down"          , BIT_ANALOG_REL, &System16AnalogPort1,   "p1 y-axis"  ),
-	A("Throttle"         , BIT_ANALOG_REL, &System16AnalogPort2,   "p1 z-axis"  ),
+	A("Accelerate"       , BIT_ANALOG_REL, &System16AnalogPort2,   "p1 fire 3"  ),
+	A("Brake"            , BIT_ANALOG_REL, &System16AnalogPort3,   "p1 fire 4"  ),
 	{"Shoot"             , BIT_DIGITAL   , System16InputPort0 + 4, "p1 fire 1"  },
 	{"Missile"           , BIT_DIGITAL   , System16InputPort0 + 5, "p1 fire 2"  },
 	
@@ -156,38 +157,38 @@ Dip Defs
 static struct BurnDIPInfo Gforce2DIPList[]=
 {
 	// Default Values
-	{0x0b, 0xff, 0xff, 0x7e, NULL                                 },
-	{0x0c, 0xff, 0xff, 0xff, NULL                                 },
+	{0x0c, 0xff, 0xff, 0x7e, NULL                                 },
+	{0x0d, 0xff, 0xff, 0xff, NULL                                 },
 
 	// Dip 1
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"                        },
-	{0x0b, 0x01, 0x01, 0x01, "Off"                                },
-	{0x0b, 0x01, 0x01, 0x00, "On"                                 },
+	{0x0c, 0x01, 0x01, 0x01, "Off"                                },
+	{0x0c, 0x01, 0x01, 0x00, "On"                                 },
 	
 	{0   , 0xfe, 0   , 4   , "Energy Timer"                       },
-	{0x0b, 0x01, 0x06, 0x04, "Easy"                               },
-	{0x0b, 0x01, 0x06, 0x06, "Normal"                             },
-	{0x0b, 0x01, 0x06, 0x02, "Hard"                               },
-	{0x0b, 0x01, 0x06, 0x00, "Hardest"                            },
+	{0x0c, 0x01, 0x06, 0x04, "Easy"                               },
+	{0x0c, 0x01, 0x06, 0x06, "Normal"                             },
+	{0x0c, 0x01, 0x06, 0x02, "Hard"                               },
+	{0x0c, 0x01, 0x06, 0x00, "Hardest"                            },
 	
 	{0   , 0xfe, 0   , 2   , "Shield Strength"                    },
-	{0x0b, 0x01, 0x08, 0x08, "Weak"                               },
-	{0x0b, 0x01, 0x08, 0x00, "Strong"                             },
+	{0x0c, 0x01, 0x08, 0x08, "Weak"                               },
+	{0x0c, 0x01, 0x08, 0x00, "Strong"                             },
 	
 	{0   , 0xfe, 0   , 4   , "Difficulty"                         },
-	{0x0b, 0x01, 0x30, 0x20, "Easy"                               },
-	{0x0b, 0x01, 0x30, 0x30, "Normal"                             },
-	{0x0b, 0x01, 0x30, 0x10, "Hard"                               },
-	{0x0b, 0x01, 0x30, 0x00, "Hardest"                            },
+	{0x0c, 0x01, 0x30, 0x20, "Easy"                               },
+	{0x0c, 0x01, 0x30, 0x30, "Normal"                             },
+	{0x0c, 0x01, 0x30, 0x10, "Hard"                               },
+	{0x0c, 0x01, 0x30, 0x00, "Hardest"                            },
 	
 	{0   , 0xfe, 0   , 4   , "Cabinet"                            },
-	{0x0b, 0x01, 0xc0, 0xc0, "Super Deluxe"                       },
-	{0x0b, 0x01, 0xc0, 0x80, "Deluxe"                             },
-	{0x0b, 0x01, 0xc0, 0x40, "Upright"                            },
-	{0x0b, 0x01, 0xc0, 0x00, "City"                               },
+	{0x0c, 0x01, 0xc0, 0xc0, "Super Deluxe"                       },
+	{0x0c, 0x01, 0xc0, 0x80, "Deluxe"                             },
+	{0x0c, 0x01, 0xc0, 0x40, "Upright"                            },
+	{0x0c, 0x01, 0xc0, 0x00, "City"                               },
 	
 	// Dip 2
-	YBOARD_COINAGE(0x0c)
+	YBOARD_COINAGE(0x0d)
 };
 
 STDDIPINFO(Gforce2)
@@ -1841,9 +1842,11 @@ static UINT8 Gforce2ProcessAnalogControls(UINT16 value)
 			return ProcessAnalog(System16AnalogPort1, 1, INPUT_DEADZONE, 0x01, 0xff);
 		}
 
-		// Throttle
+		// Brake/Accelerate
 		case 2: {
-			return ProcessAnalog(System16AnalogPort2, 0, INPUT_DEADZONE, 0x01, 0xff);
+			// ignore accelerate if brake is pressed, the dlx cabinet with its 2 pedals might be doing something like this
+			UINT8 Brake = ProcessAnalog(System16AnalogPort3, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x80, 0xff);
+			return (Brake > 0x80 ? Brake : ProcessAnalog(System16AnalogPort2, 1, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x20, 0x80));
 		}
 	}
 	

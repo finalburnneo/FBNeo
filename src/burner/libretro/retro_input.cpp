@@ -773,6 +773,8 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 		(drvname && strcmp(drvname, "slipstrm") == 0) ||
 		(parentrom && strcmp(parentrom, "orunners") == 0) ||
 		(drvname && strcmp(drvname, "orunners") == 0) ||
+		(parentrom && strcmp(parentrom, "gforce2") == 0) ||
+		(drvname && strcmp(drvname, "gforce2") == 0) ||
 		(parentrom && strcmp(parentrom, "scross") == 0) ||
 		(drvname && strcmp(drvname, "scross") == 0)
 	) {
@@ -1075,8 +1077,6 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 	// Air Rescue
 	if ((parentrom && strcmp(parentrom, "gloc") == 0) ||
 		(drvname && strcmp(drvname, "gloc") == 0) ||
-		(parentrom && strcmp(parentrom, "gforce2") == 0) ||
-		(drvname && strcmp(drvname, "gforce2") == 0) ||
 		(parentrom && strcmp(parentrom, "rascot") == 0) ||
 		(drvname && strcmp(drvname, "rascot") == 0) ||
 		(parentrom && strcmp(parentrom, "arescue") == 0) ||

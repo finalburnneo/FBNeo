@@ -5576,8 +5576,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gunfrghta" cloneof="gunfrght" romof="gunfrght">
-		<description>Gun Fright (Jpn, Hacked?)</description>
-		<year>1985</year>
+		<description>Gun Fright (Jpn, Hacked?) [Hack]</description>
+		<year>1986</year>
 		<manufacturer>A.C.G.</manufacturer>
 		<rom name="gunfright (1986)(ultimate play the game).rom" size="32768" crc="31fe5c5b"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
@@ -5664,7 +5664,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hero" romof="msx">
-		<description>H.E.R.O. (Jpn)</description>
+		<description>H.E.R.O. (Jpn) [Press a Num Key to select difficulty level and start game]</description>
 		<year>1984</year>
 		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="h.e.r.o. (japan).rom" size="16384" crc="97ab0d70"/>
@@ -5753,7 +5753,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="harapeko" romof="msx">
-		<description>Harapeko Pakkun (Jpn)</description>
+		<description>Harapeko Pakkun (Jpn) [Press 0 to restart level]</description>
 		<year>1984</year>
 		<manufacturer>ASCII</manufacturer>
 		<rom name="harapeko pakkun (japan).rom" size="8192" crc="145bb27b"/>
@@ -13163,6 +13163,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="blckonyxen" cloneof="blckonyx" romof="blckonyx">
+		<description>The Black Onyx (English, v1.2) [Hack]</description>
+		<year>1985-2011</year>
+		<manufacturer>ASCII - Polaris</manufacturer>
+		<rom name="Black Onyx, The T-Eng v1.2 (2011)(Polaris).rom" size="32768" crc="b97baccc"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="blckonyx" romof="msx">
 		<description>The Black Onyx (Jpn)</description>
 		<year>1985</year>
@@ -14817,7 +14828,7 @@
 	<game name="zerocis" romof="msx">
 		<description>ZERO and the Castle of Infinite Sadness (HB) [Homebrew]</description>
 		<year>2014-16</year>
-		<manufacturer>Jos'b</manufacturer>
+		<manufacturer>Dioniso</manufacturer>
 		<rom name="ZERO and the Castle of Infinite Sadness (2014-16)(Dioniso).rom" size="49152" crc="7b6f90ef"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>

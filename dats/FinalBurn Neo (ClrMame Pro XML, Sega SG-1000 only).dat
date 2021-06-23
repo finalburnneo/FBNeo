@@ -44,6 +44,14 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="arnodash2">
+		<description>Arno Dash 2 (HB, v1.03) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Arno Dash 2 v1.03 (2020)(Under4Mhz).sg" size="32768" crc="e0478a53"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bankp">
 		<description>Bank Panic (Jpn)</description>
 		<year>1985</year>
@@ -804,6 +812,14 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ksolitaire">
+		<description>Klondike Solitaire (HB, v1.04) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Klondike Solitaire v1.04 (2020)(Under4Mhz).sg" size="32768" crc="5f9f8b15"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="moyuchua">
 		<description>Knightmare, Moyu Chuanqi (Tw)</description>
 		<year>1986?</year>
@@ -873,6 +889,14 @@
 		<year>1983?</year>
 		<manufacturer>Aaronix</manufacturer>
 		<rom name="mahjong (tw).bin" size="24576" crc="bc823a89"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="msolitaire">
+		<description>Mahjong Solitaire (HB, v1.07) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Mahjong Solitaire v1.07 (2020)(Under4Mhz).sg" size="32768" crc="1b14b1c2"/>
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1105,6 +1129,14 @@
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="pitfall ii - the lost caverns (japan) (alt).bin" size="32768" crc="3db74761"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pitman">
+		<description>Pitman (HB, v1.03) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Pitman v1.03 (2021)(Under4Mhz).sg" size="32768" crc="e325f022"/>
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

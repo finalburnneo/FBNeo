@@ -11125,7 +11125,7 @@ struct BurnDriver BurnDrvmd_ejimu = {
 
 // Earthworm Jim (Prototype, 19940728)
 static struct BurnRomInfo md_ejimpRomDesc[] = {
-	{ "earthworm jim (prototype- jul 28,1994).bin", 0x300000, 0x1c07b337, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "earthworm jim (prototype- jul 28,1994).bin", 0x300000, 0x24aa391b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ejimp)

@@ -100,13 +100,14 @@ struct PicoVideo {
 	UINT8 reg[0x20];
 	UINT32 command;		// 32-bit Command
 	UINT8 pending;		// 1 if waiting for second half of 32-bit command
-	UINT8 type;		// Command type (v/c/vsram read/write)
+	UINT8 type;			// Command type (v/c/vsram read/write)
 	UINT16 addr;		// Read/Write address
 	INT32 status;		// Status bits
 	UINT8 pending_ints;	// pending interrupts: ??VH????
-	INT8 lwrite_cnt;        // VDP write count during active display line
-	UINT16 v_counter;       // V-counter
+	INT8 lwrite_cnt;    // VDP write count during active display line
+	UINT16 v_counter;   // V-counter
 	INT32 h_mask;
+	INT32 field;		// for interlace mode 2.  -dink
 };
 
 #define SR_MAPPED   (1 << 0)
@@ -228,6 +229,7 @@ static UINT32 Z80BankPos = 0;
 static INT32 dma_xfers = 0; // vdp dma
 static INT32 rendstatus = 0; // status of vdp renderer
 static INT32 BlankedLine = 0;
+static INT32 interlacemode2 = 0;
 
 static UINT8 Hardware;
 static UINT8 DrvSECAM = 0;	// NTSC
@@ -402,9 +404,9 @@ static INT32 MemIndex()
 
 	MegadriveCurPal		= (UINT32 *) Next; Next += 0x000040 * sizeof(UINT32) * 4;
 
-	HighColFull	= Next; Next += (8 + 320 + 8) * 240 + 1 + 3; // +3 alignment
+	HighColFull	= Next; Next += (8 + 320 + 8) * ((240 + 1) * 2);
 
-	LineBuf     = (UINT16 *) Next; Next += 320 * 320 * sizeof(UINT16); // palete-processed line-buffer (dink / for sonic mode)
+	LineBuf     = (UINT16 *) Next; Next += 320 * (240 * 2) * sizeof(UINT16); // palete-processed line-buffer (dink / for sonic mode)
 
 	HighCacheA	= (INT32 *) Next; Next += (41+1) * sizeof(INT32);	// caches for high layers
 	HighCacheB	= (INT32 *) Next; Next += (41+1) * sizeof(INT32);
@@ -1076,8 +1078,9 @@ static void __fastcall MegadriveVideoWriteWord(UINT32 sekAddress, UINT16 wordVal
 				}
 
 				// Blank last line
-				if (num == 1 && !(wordValue&0x40) && SekCyclesLine() <= (488-390))
+				if (num == 1 && !(wordValue&0x40) && SekCyclesLine() <= (488-390)) {
 					BlankedLine = 1;
+				}
 
 				UINT8 oldreg = RamVReg->reg[num];
 				RamVReg->reg[num] = wordValue & 0xff;
@@ -1550,6 +1553,7 @@ static INT32 MegadriveResetDo()
 	Scanline = 0;
 	rendstatus = 0;
 	bMegadriveRecalcPalette = 1;
+	interlacemode2 = 0;
 
 	SekCyclesReset();
 	z80CyclesReset();
@@ -3871,7 +3875,7 @@ static void DrawLayer(INT32 plane, INT32 *hcache, INT32 cellskip, INT32 maxcells
 		vscroll = BURN_ENDIAN_SWAP_INT16(RamSVid[plane]); // Get vertical scroll value
 
 		// Find the line in the name table
-		ts.line=(vscroll+(Scanline<<1))&((ymask<<1)|1);
+		ts.line=(vscroll+(Scanline<<1)+RamVReg->field)&((ymask<<1)|1);
 		ts.nametab+=(ts.line>>4)<<shift[width];
 
 		if (nBurnLayer & 1) DrawStripInterlace(&ts);
@@ -4141,12 +4145,12 @@ static void DrawSpriteInterlace(UINT32 *sprite)
 	width=(height>>2)&3; height&=3;
 	width++; height++; // Width and height in tiles
 
-	row=(Scanline<<1)-sy; // Row of the sprite we are on
+	row=((Scanline<<1)+RamVReg->field)-sy; // Row of the sprite we are on
 
 	code=sprite[1];
 	sx=((code>>16)&0x1ff)-0x78; // X
 
-	if (code&0x1000) row^=(16<<height)-1; // Flip Y
+	if (code&0x1000) row^=(8<<height)-1; // Flip Y
 
 	tile=code&0x3ff; // Tile number
 	tile+=row>>4; // Tile number increases going down
@@ -4171,7 +4175,7 @@ static void DrawSpriteInterlace(UINT32 *sprite)
 
 static void DrawAllSpritesInterlace(INT32 pri, INT32 maxwidth)
 {
-	INT32 i,u,table,link=0,sline=Scanline<<1;
+	INT32 i,u,table,link=0,sline=((Scanline<<1)+RamVReg->field);
 	UINT32 *sprites[80]; // Sprite index
 
 	table = RamVReg->reg[5]&0x7f;
@@ -4503,6 +4507,13 @@ static INT32 DrawDisplay(INT32 sh)
 	return 0;
 }
 
+static void SetHighCol(INT32 line)
+{
+	INT32 offset = 0;
+	if (!(RamVReg->reg[1] & 8)) offset = 8;
+	HighCol = HighColFull + ( (offset + line) * (8 + 320 + 8) );
+}
+
 static void PicoFrameStart()
 {
 	// prepare to do this frame
@@ -4512,9 +4523,9 @@ static void PicoFrameStart()
 	Scanline = 0;
 	BlankedLine = 0;
 
-	INT32 offset = 0;
-	if (!(RamVReg->reg[1] & 8)) offset = 8;
-	HighCol = HighColFull + ( (offset + Scanline) * (8 + 320 + 8) );  // the FIRST line.
+	interlacemode2 = ((RamVReg->reg[12] & (4|2)) == (4|2));
+
+	SetHighCol(0); // start rendering here
 
 	PrepareSprites(1);
 }
@@ -4525,14 +4536,14 @@ static INT32 PicoLine(INT32 /*scan*/)
 
 	BackFill(RamVReg->reg[7], sh);
 
-	if (BlankedLine && Scanline > 0)  // blank last line stuff
-	{
-		INT32 offset = 0;
-		if (!(RamVReg->reg[1] & 8)) offset = 8;
+	INT32 offset = 0;
+	if (!(RamVReg->reg[1] & 8)) offset = 8;
 
+	if (BlankedLine && Scanline > 0 && !interlacemode2)  // blank last line stuff
+	{
 		{ // copy blanked line to previous line
-			UINT16 *pDest = LineBuf + ((Scanline-1) * 320);
-			UINT8 *pSrc = HighColFull + (Scanline + offset)*(8+320+8) + 8;
+			UINT16 *pDest = LineBuf + ((Scanline-1) * 320) + ((interlacemode2 & RamVReg->field) * 240 * 320);
+			UINT8 *pSrc = HighColFull + (Scanline + offset + ((interlacemode2 & RamVReg->field) * 240))*(8+320+8) + 8;
 
 			for (INT32 i = 0; i < 320; i++)
 				pDest[i] = MegadriveCurPal[pSrc[i]];
@@ -4545,13 +4556,11 @@ static INT32 PicoLine(INT32 /*scan*/)
 		DrawDisplay(sh);
 
 	{
-		INT32 offset = 0;
-		if (!(RamVReg->reg[1] & 8)) offset = 8;
-		HighCol = HighColFull + ( (offset + Scanline + 1) * (8 + 320 + 8) ); // Set-up pointer to next line to be rendered to (see: PicoFrameStart();)
+		SetHighCol(Scanline + 1); // Set-up pointer to next line to be rendered to (see: PicoFrameStart();)
 
 		{ // copy current line to linebuf, for mid-screen palette changes (referred to as SONIC rendering mode, for water & etc.)
-			UINT16 *pDest = LineBuf + (Scanline * 320);
-			UINT8 *pSrc = HighColFull + (Scanline + offset)*(8+320+8) + 8;
+			UINT16 *pDest = LineBuf + (Scanline * 320) + ((interlacemode2 & RamVReg->field) * 240 * 320);
+			UINT8 *pSrc = HighColFull + (Scanline + offset + ((interlacemode2 & RamVReg->field) * 240))*(8+320+8) + 8;
 
 			for (INT32 i = 0; i < 320; i++)
 				pDest[i] = MegadriveCurPal[pSrc[i]];
@@ -4570,11 +4579,26 @@ static INT32 screen_width = 0;
 
 static INT32 res_check()
 {
+	if ((RamVReg->reg[12] & (4|2)) == (4|2)) { // interlace mode 2
+		INT32 Height;
+		BurnDrvGetVisibleSize(&screen_width, &Height);
+
+		if (Height != (224*2)) {
+			bprintf(0, _T("switching to 320 x (224*2) mode\n"));
+			BurnDrvSetVisibleSize(320, (224*2));
+			Reinitialise();
+#ifndef __LIBRETRO__
+			pBurnDrawBAD = pBurnDraw; // note: invalidated pBurnDraw
+#endif
+			return 1;
+		}
+	}
+	else
 	if ((MegadriveDIP[1] & 3) == 3 && (~RamVReg->reg[12] & 1)) {
 		INT32 Height;
 		BurnDrvGetVisibleSize(&screen_width, &Height);
 
-		if (screen_width != 256) {
+		if (screen_width != 256 || Height != 224) {
 			bprintf(0, _T("switching to 256 x 224 mode\n"));
 			BurnDrvSetVisibleSize(256, 224);
 			Reinitialise();
@@ -4587,9 +4611,9 @@ static INT32 res_check()
 		INT32 Height;
 		BurnDrvGetVisibleSize(&screen_width, &Height);
 
-		if (screen_width != 320) {
-			bprintf(0, _T("switching to 320 x 240 mode\n"));
-			BurnDrvSetVisibleSize(320, 240);
+		if (screen_width != 320 || Height != 224) {
+			bprintf(0, _T("switching to 320 x 224 mode\n"));
+			BurnDrvSetVisibleSize(320, 224);
 			Reinitialise();
 #ifndef __LIBRETRO__
 			pBurnDrawBAD = pBurnDraw; // note: invalidated pBurnDraw
@@ -4620,6 +4644,16 @@ INT32 MegadriveDraw()
 
 	UINT16 *pDest = (UINT16 *)pBurnDraw;
 
+	if (interlacemode2) {
+		//+ ((interlacemode2 & RamVreg->field) * 224)
+		// Normal / "Screen Resize"
+		for (INT32 j=0; j < 224*2; j++) {
+			UINT16 *pSrc = LineBuf + ((j/2) * 320) + ((j&1) * 240 * 320);
+			for (INT32 i = 0; i < screen_width; i++)
+				pDest[i] = pSrc[i];
+			pDest += screen_width;
+		}
+	} else
 	if ((RamVReg->reg[12]&1) || ((MegadriveDIP[1] & 0x03) == 0 || (MegadriveDIP[1] & 0x03) == 3) ) {
 		// Normal / "Screen Resize"
 		for (INT32 j=0; j < 224; j++) {
@@ -4805,8 +4839,18 @@ INT32 MegadriveFrame()
 		}
 
 		// decide if we draw this line
-		if ((!(RamVReg->reg[1]&8) && y<=224) || ((RamVReg->reg[1]&8) && y<240))
+		if ((!(RamVReg->reg[1]&8) && y<=224) || ((RamVReg->reg[1]&8) && y<240)) {
+			if (interlacemode2) {
+				RamVReg->field = 0;
+				SetHighCol(y);
 				PicoLine(y);
+				RamVReg->field = 1;
+				SetHighCol(y + 240);
+				PicoLine(y);
+			} else {
+				PicoLine(y);
+			}
+		}
 
 		if (Z80HasBus && !MegadriveZ80Reset) {
 			z80CyclesSync(1);

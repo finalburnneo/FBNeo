@@ -56,6 +56,7 @@ typedef union {
 // PS3
 #elif defined(__CELLOS_LV2__)
 #include <ppu_intrinsics.h>
+#include <math.h>
 #define BURN_ENDIAN_SWAP_INT8(x)				(x^1)
 #define BURN_ENDIAN_SWAP_INT16(x)				({uint16_t tt; __sthbrx(&tt, x); tt;})
 #define BURN_ENDIAN_SWAP_INT32(x)				({uint32_t tt; __stwbrx(&tt, x); tt;})

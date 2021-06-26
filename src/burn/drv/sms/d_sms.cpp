@@ -28119,8 +28119,28 @@ struct BurnDriver BurnDrvsms_badapple = {
 	"sms_badapple", NULL, NULL, NULL, "2017",
 	"Bad Apple (HB, Tech-Demo)\0", NULL, "SMS Power!", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
 	SMSGetZipName, sms_badappleRomInfo, sms_badappleRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+
+// Be No Sqr (HB, Tech-Demo)
+
+static struct BurnRomInfo sms_benosqrRomDesc[] = {
+	{ "Be No Sqr 1.01.sms",	524288, 0xee701be6, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_benosqr)
+STD_ROM_FN(sms_benosqr)
+
+struct BurnDriver BurnDrvsms_benosqr = {
+	"sms_benosqr", NULL, NULL, NULL, "2016",
+	"Be No Sqr (HB, Tech-Demo)\0", NULL, "psidum, sim, slimeball", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
+	SMSGetZipName, sms_benosqrRomInfo, sms_benosqrRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

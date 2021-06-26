@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17179 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17180 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1312,6 +1312,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_bcquest	|  	| BC's Quest for Tires					| 		| 1983	| Sierra On-Line| ColecoVision	| 					|
 | md_bcdverifier|  	| BCD Verifier (HB, Test)				| 		| 2016	| Flamewing	| Sega Megadrive| 					|
 | pce_beball	|  	| Be Ball						| 		| 1990	| Hudson	| PC Engine	| 					|
+| sms_benosqr	|  	| Be No Sqr (HB, Tech-Demo)				| 		| 2016	| psidum, sim, s| Sega Master Sy| 					|
 | spec_beabugsi	|  	| Beach Buggy Simulator (48K)				| 		| 1988	| Silverbird Sof| ZX Spectrum	| 					|
 | msx_beachead	|  	| Beach-Head (Euro)					| 		| 19??	| Access Softwar| MSX		| 					|
 | beaminv	| D	| Beam Invader						| 		| 1979	| Teknon Kogyo	| Miscellaneous	| No sound				|
@@ -13452,7 +13453,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_streefigii|  	| Street Fighter II - The World Warrior (Unl)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | sf2ly		|  	| Street Fighter II - The World Warrior (with bosses lik| sf2		| 1991	| Capcom	| CPS1		| 					|
 | nes_streefigiihac|  	| Street Fighter II Hack (Hack of SFIII)		| nes_streefigiii| 1989?	| Nintendo	| Miscellaneous	| 					|
-| sf2mix	|  	| Street Fighter II Mix (v0.99a)			| sf2ce		| 2020	| Hack		| CPS1		| 					|
+| sf2mix	|  	| Street Fighter II Mix (v1.0)				| sf2ce		| 2021	| Hack		| CPS1		| 					|
 | sf2cebltw	|  	| Street Fighter II' - Champion Edition (920313 'Taiwan'| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceeabl	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceeab2	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|

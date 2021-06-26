@@ -549,7 +549,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="badapple">
-		<description>Bad Apple (HB, Tech-Demo) [Homebrew]</description>
+		<description>Bad Apple (HB, Tech-Demo) [Demo, Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>SMS Power!</manufacturer>
 		<rom name="bad apple v100.sms" size="4194304" crc="38434560"/>
@@ -641,6 +641,14 @@
 		<year>1994</year>
 		<manufacturer>Tec Toy</manufacturer>
 		<rom name="battlemaniacs (brazil).bin" size="262144" crc="1cbb7bf1"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="benosqr">
+		<description>Be No Sqr (HB, Tech-Demo) [Demo, Homebrew]</description>
+		<year>2016</year>
+		<manufacturer>psidum, sim, slimeball</manufacturer>
+		<rom name="Be No Sqr 1.01.sms" size="524288" crc="ee701be6"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

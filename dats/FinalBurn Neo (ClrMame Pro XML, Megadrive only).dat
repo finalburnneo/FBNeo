@@ -5185,7 +5185,7 @@
 		<description>Earthworm Jim (Prototype, 19940728)</description>
 		<year>1994</year>
 		<manufacturer>Virgin Interactive</manufacturer>
-		<rom name="earthworm jim (prototype- jul 28,1994).bin" size="3145728" crc="1c07b337"/>
+		<rom name="earthworm jim (prototype- jul 28,1994).bin" size="3145728" crc="24aa391b"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

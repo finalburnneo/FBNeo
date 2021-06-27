@@ -2229,6 +2229,14 @@ static INT32 GameInpOtherOne(struct GameInp* pgi, char* szi, char *szn)
 		pgi_diag = pgi;
 	}
 
+	// If no unique nCode was set yet, make sure we set one
+	if(!bButtonMapped && !bInputInitialized) {
+		if (pgi->nInput == GIT_SWITCH)
+			pgi->Input.Switch.nCode = (UINT16)(nSwitchCode++);
+		if (pgi->nInput == GIT_MACRO_AUTO)
+			pgi->Macro.Switch.nCode = (UINT16)(nSwitchCode++);
+	}
+
 	return 0;
 }
 

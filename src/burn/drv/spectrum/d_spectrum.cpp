@@ -27310,7 +27310,7 @@ struct BurnDriver BurnSpecMsolitaire = {
 	"Mahjong Solitaire (128K) (HB)\0", NULL, "Under4Mhz", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
-	SpectrumGetZipName, SpecMsolitaireRomInfo, SpecMsolitaireRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecMsolitaireRomInfo, SpecMsolitaireRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

@@ -27299,7 +27299,7 @@ struct BurnDriver BurnSpecAkenesp = {
 // Mahjong Solitaire (128K) (HB)
 
 static struct BurnRomInfo SpecMsolitaireRomDesc[] = {
-	{ "Mahjong Solitaire 128K (2021)(Under4Mhz).tap", 21304, 0x1795bf99, BRF_ESS | BRF_PRG },
+	{ "Mahjong Solitaire 128K (2021)(Under4Mhz).tap", 20934, 0xc3a7afed, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecMsolitaire, SpecMsolitaire, Spec128)

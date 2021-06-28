@@ -21,9 +21,11 @@ struct RomBiosInfo mvs_bioses[] = {
 	{NULL, 0, 0, NULL, 0 }
 };
 
+// Not following original order here, let's be more consistent with MVS order,
+// and most people prefer Asia (english language) anyway
 struct RomBiosInfo aes_bioses[] = {
-	{"neo-po.bin",        0x16d0c132, 0x0f, "AES Japan"                      ,  1 },
-	{"neo-epo.bin",       0xd27a71f1, 0x10, "AES Asia"                       ,  2 },
+	{"neo-epo.bin",       0xd27a71f1, 0x10, "AES Asia"                       ,  1 },
+	{"neo-po.bin",        0x16d0c132, 0x0f, "AES Japan"                      ,  2 },
 	{"neodebug.bin",      0x698ebb7d, 0x11, "Development Kit"                ,  3 },
 	{NULL, 0, 0, NULL, 0 }
 };

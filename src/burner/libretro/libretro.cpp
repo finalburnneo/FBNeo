@@ -1081,10 +1081,6 @@ void retro_deinit()
 
 void retro_reset()
 {
-	// restore the NeoSystem because it was changed during the gameplay
-	if (is_neogeo_game)
-		set_neo_system_bios();
-
 	if (pgi_reset)
 	{
 		pgi_reset->Input.nVal = 1;
@@ -1092,9 +1088,12 @@ void retro_reset()
 	}
 
 	check_variables();
-
 	apply_dipswitches_from_variables();
 	apply_cheats_from_variables();
+
+	// restore the NeoSystem because it was changed during the gameplay
+	if (is_neogeo_game)
+		set_neo_system_bios();
 
 	ForceFrameStep(1);
 }

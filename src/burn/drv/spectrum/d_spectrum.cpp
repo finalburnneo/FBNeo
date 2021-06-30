@@ -21902,19 +21902,19 @@ struct BurnDriver BurnSpecMrkungfu = {
 
 // OctuKitty (HB)
 
-static struct BurnRomInfo SpecOctuKttyRomDesc[] = {
-	{ "OctuKtty (2018)(UltraNarwhal).tap", 43800, 0x28b574a6, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo SpecOctukttyRomDesc[] = {
+	{ "OctuKitty (2018)(UltraNarwhal).tap", 43800, 0x28b574a6, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecOctuKtty, SpecOctuKtty, Spec128)
-STD_ROM_FN(SpecOctuKtty)
+STDROMPICKEXT(SpecOctuktty, SpecOctuktty, Spec128)
+STD_ROM_FN(SpecOctuktty)
 
-struct BurnDriver BurnSpecOctuKtty = {
-	"spec_octuKtty", NULL, "spec_spec128", NULL, "2018",
+struct BurnDriver BurnSpecOctuktty = {
+	"spec_octuktty", NULL, "spec_spec128", NULL, "2018",
 	"OctuKitty (HB)\0", NULL, "UltraNarwhal", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_PUZZLE, 0,
-	SpectrumGetZipName, SpecOctuKttyRomInfo, SpecOctuKttyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecOctukttyRomInfo, SpecOctukttyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

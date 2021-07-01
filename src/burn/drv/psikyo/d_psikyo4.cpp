@@ -42,10 +42,11 @@ static UINT8 DrvMah8[8];
 static UINT8 DrvMah9[8];
 static UINT8 DrvMahs[10];
 static UINT32 DrvInputs[2];
-static UINT8 DrvDips[2];
+static UINT8 DrvDips[3];
 static UINT8 DrvReset;
 
 static INT32 mahjong = 0;
+static INT32 loderndf = 0;
 static INT32 nGfxMask;
 
 static UINT32 speedhack_address = ~0;
@@ -97,6 +98,7 @@ static struct BurnInputInfo LoderndfInputList[] = {
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Loderndf)
@@ -134,6 +136,7 @@ static struct BurnInputInfo HotdebutInputList[] = {
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Hotdebut)
@@ -187,56 +190,75 @@ static struct BurnInputInfo HotgmckInputList[] = {
 	{"Service",		BIT_DIGITAL,	DrvMah1 + 4,	"service"	},
 	{"Service",		BIT_DIGITAL,	DrvMah1 + 7,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Hotgmck)
 
 static struct BurnDIPInfo LoderndfDIPList[]=
 {
-	{0x27, 0xff, 0xff, 0x60, NULL					},
-	{0x28, 0xff, 0xff, 0x01, NULL					},
+	DIP_OFFSET(0x27)
+	{0x00, 0xff, 0xff, 0x60, NULL					},
+	{0x01, 0xff, 0xff, 0x01, NULL					},
+	{0x02, 0xff, 0xff, 0x01, NULL					},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"				},
-	{0x27, 0x01, 0x20, 0x20, "Off"					},
-	{0x27, 0x01, 0x20, 0x00, "On"					},
+	{0x00, 0x01, 0x20, 0x20, "Off"					},
+	{0x00, 0x01, 0x20, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Debug"				},
-	{0x27, 0x01, 0x40, 0x40, "Off"					},
-	{0x27, 0x01, 0x40, 0x00, "On"					},
+	{0x00, 0x01, 0x40, 0x40, "Off"					},
+	{0x00, 0x01, 0x40, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Region"				},
-	{0x28, 0x01, 0x03, 0x00, "Japan (Shows Version Number)"		},
-	{0x28, 0x01, 0x03, 0x01, "World (Does Not Show Version Number)"	},
+	{0x01, 0x01, 0x03, 0x00, "Japan (Shows Version Number)"		},
+	{0x01, 0x01, 0x03, 0x01, "World (Does Not Show Version Number)"	},
+
+	{0   , 0xfe, 0   ,    2, "Multi-Screen Mode"	},
+	{0x02, 0x01, 0x01, 0x01, "Disabled"				},
+	{0x02, 0x01, 0x01, 0x00, "Enabled"				},
 };
 
 STDDIPINFO(Loderndf)
 
 static struct BurnDIPInfo HotdebutDIPList[]=
 {
-	{0x1b, 0xff, 0xff, 0x60, NULL		},
+	DIP_OFFSET(0x1b)
+	{0x00, 0xff, 0xff, 0x60, NULL		},
+	{0x01, 0xff, 0xff, 0x01, NULL		},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"	},
-	{0x1b, 0x01, 0x20, 0x20, "Off"		},
-	{0x1b, 0x01, 0x20, 0x00, "On"		},
+	{0x00, 0x01, 0x20, 0x20, "Off"		},
+	{0x00, 0x01, 0x20, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Debug"	},
-	{0x1b, 0x01, 0x40, 0x40, "Off"		},
-	{0x1b, 0x01, 0x40, 0x00, "On"		},
+	{0x00, 0x01, 0x40, 0x40, "Off"		},
+	{0x00, 0x01, 0x40, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Multi-Screen Mode"	},
+	{0x01, 0x01, 0x01, 0x01, "Disabled"				},
+	{0x01, 0x01, 0x01, 0x00, "Enabled"				},
 };
 
 STDDIPINFO(Hotdebut)
 
 static struct BurnDIPInfo HotgmckDIPList[]=
 {
-	{0x2d, 0xff, 0xff, 0x60, NULL		},
+	DIP_OFFSET(0x2d)
+	{0x00, 0xff, 0xff, 0x60, NULL		},
+	{0x01, 0xff, 0xff, 0x01, NULL		},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"	},
-	{0x2d, 0x01, 0x20, 0x20, "Off"		},
-	{0x2d, 0x01, 0x20, 0x00, "On"		},
+	{0x00, 0x01, 0x20, 0x20, "Off"		},
+	{0x00, 0x01, 0x20, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Debug"	},
-	{0x2d, 0x01, 0x40, 0x40, "Off"		},
-	{0x2d, 0x01, 0x40, 0x00, "On"		},
+	{0x00, 0x01, 0x40, 0x40, "Off"		},
+	{0x00, 0x01, 0x40, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Multi-Screen Mode"	},
+	{0x01, 0x01, 0x01, 0x01, "Disabled"				},
+	{0x01, 0x01, 0x01, 0x00, "Enabled"				},
 };
 
 STDDIPINFO(Hotgmck)
@@ -600,6 +622,27 @@ static INT32 MemIndex(INT32 gfx_len)
 	return 0;
 }
 
+static INT32 MultiScreenCheck()
+{
+	INT32 screensize = (DrvDips[loderndf ? 2 : 1] & 1) ? 320 : 640;
+	if (screensize != nScreenWidth)
+	{
+		BurnTransferSetDimensions(screensize, nScreenHeight);
+		GenericTilesSetClipRaw(0, screensize, 0, nScreenHeight);
+		BurnDrvSetVisibleSize(screensize, nScreenHeight);
+		if (screensize == 320) {
+			BurnDrvSetAspect(4, 3);
+		} else {
+			BurnDrvSetAspect(8, 3);
+		}
+		Reinitialise();
+
+		return 1; // don't draw this time around
+	}
+
+	return 0;
+}
+
 static INT32 DrvDoReset()
 {
 	Sh2Reset();
@@ -622,6 +665,8 @@ static INT32 DrvDoReset()
 		pcmbank_previous = ~0;
 		set_pcm_bank();
 	}
+
+	MultiScreenCheck();
 
 	return 0;
 }
@@ -745,6 +790,7 @@ static INT32 DrvExit()
 	BurnFree(AllMem);
 
 	mahjong = 0;
+	loderndf = 0;
 
 	return 0;
 }
@@ -862,22 +908,38 @@ static INT32 DrvDraw()
 	DrvRecalcPalette();
 	BurnTransferClear();
 
-	for (INT32 y = 0; y < nScreenHeight; y++) {
-		for (INT32 x = 0; x < 320; x++) {
-			pTransDraw[y * 640 + x] = 0x1000;
-			pTempDraw[y * 320+x] = 0x1001;
-		}
+	if (MultiScreenCheck()) {
+		return 1; // if mode changed, don't draw this time around
 	}
 
-	nScreenWidth = 640;
-	draw_sprites(pTransDraw, 0x0000);	// left screen
+	if (~DrvDips[loderndf ? 2 : 1] & 1) {
+		for (INT32 y = 0; y < nScreenHeight; y++) {
+			for (INT32 x = 0; x < 320; x++) {
+				pTransDraw[y * 640 + x] = 0x1000;
+				pTempDraw[y * 320+x] = 0x1001;
+			}
+		}
 
-	nScreenWidth = 320;
-	draw_sprites(pTempDraw, 0x2000);	// right screen
+		nScreenWidth = 640;
+		draw_sprites(pTransDraw, 0x0000);	// left screen
 
-	nScreenWidth = 640;
-	for (INT32 y = 0; y < nScreenHeight; y++) {
-		memcpy (pTransDraw + y * 640 + 320, pTempDraw + y * 320, 320 * sizeof(INT16));
+		nScreenWidth = 320;
+		draw_sprites(pTempDraw, 0x2000);	// right screen
+
+		nScreenWidth = 640;
+		for (INT32 y = 0; y < nScreenHeight; y++) {
+			memcpy (pTransDraw + y * 640 + 320, pTempDraw + y * 320, 320 * sizeof(INT16));
+		}
+	}
+	else {
+		for (INT32 y = 0; y < nScreenHeight; y++) {
+			for (INT32 x = 0; x < 320; x++) {
+				pTransDraw[y * 320 + x] = 0x1001;
+			}
+		}
+
+		nScreenWidth = 320;
+		draw_sprites(pTransDraw, 0x0000);
 	}
 
 	BurnTransferCopy(DrvPalette);
@@ -1315,6 +1377,8 @@ static INT32 LoderndfInit()
 	speedhack_pc[0] = 0x00001B3E;
 	speedhack_pc[1] = 0x00001B40;
 
+	loderndf = 1;
+
 	return DrvInit(LoderndfLoadCallback, 0x2000000);
 }
 
@@ -1351,6 +1415,8 @@ static INT32 LoderndfaInit()
 	speedhack_address = 0x0020;
 	speedhack_pc[0] = 0x00001B4A;
 	speedhack_pc[1] = 0x00001B4C;
+
+	loderndf = 1;
 
 	return DrvInit(LoderndfLoadCallback, 0x2000000);
 }

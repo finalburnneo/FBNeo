@@ -388,6 +388,8 @@ DRV		BurnSpecairwolf2;
 DRV		BurnDrvAirwolf;
 DRV		BurnDrvAjaxj;
 DRV		BurnDrvAjax;
+DRV		BurnSpecAkane;
+DRV		BurnSpecAkenesp;
 DRV		BurnDrvfds_akitsunofusnoka;
 DRV		BurnDrvnes_akiraj;
 DRV		BurnDrvmd_akirap;
@@ -8165,6 +8167,7 @@ DRV		BurnDrvMjnquestb;
 DRV		BurnDrvsms_mjsengok;
 DRV		BurnDrvsms_mjsengokp;
 DRV		BurnDrvpce_mjwars;
+DRV		BurnSpecMsolitaire;
 DRV		BurnDrvMSX_msolitaire;
 DRV		BurnDrvsms_msolitaire;
 DRV		BurnDrvsg1k_msolitaire;
@@ -9874,7 +9877,7 @@ DRV		BurnDrvMSX_obliter;
 DRV		BurnDrvpce_oboccha;
 DRV		BurnDrvCocean1a;
 DRV		BurnDrvCocean6b;
-DRV		BurnSpecOctuKtty;
+DRV		BurnSpecOctuktty;
 DRV		BurnSpecOddi128k;
 DRV		BurnSpecOddi48k;
 DRV		BurnDrvOedfighta;
@@ -11988,6 +11991,7 @@ DRV		BurnDrvSvg;
 DRV		BurnDrvMSX_sabotaje;
 DRV		BurnDrvSabotenb;
 DRV		BurnDrvSabotenba;
+DRV		BurnSpecSabotur2speed;
 DRV		BurnSpecsabotur2;
 DRV		BurnSpecsabotur2std_48;
 DRV		BurnSpecsabotur2_48;
@@ -15706,6 +15710,7 @@ DRV		BurnDrvToobin;
 DRV		BurnDrvnes_toobin;
 DRV		BurnSpecToobin;
 DRV		BurnDrvMSX_toolblocks;
+DRV		BurnSpecTopcat;
 DRV		BurnDrvmd_topfight;
 DRV		BurnDrvmd_topf2k5;
 DRV		BurnDrvmd_topgear2;
@@ -15834,6 +15839,7 @@ DRV		BurnDrvMSX_trantor;
 DRV		BurnSpecTranzam;
 DRV		BurnSpectradooth;
 DRV		BurnSpecTrashman;
+DRV		BurnSpecTttvol1;
 DRV		BurnDrvTravrusab;
 DRV		BurnDrvTravrusa;
 DRV		BurnDrvmd_traysia;
@@ -17292,6 +17298,7 @@ DRV		BurnDrvsms_zaxxon3d;
 DRV		BurnDrvsms_zaxxon3dp;
 DRV		BurnDrvcv_zaxxonsgm;
 DRV		BurnDrvcv_zaxxon;
+DRV		BurnDrvnes_zdey;
 DRV		BurnDrvsms_zeloliv;
 DRV		BurnDrvzedblade;
 DRV		BurnDrvZektor;
@@ -17519,7 +17526,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCps19xxa,			// 19XX - the war against destiny (960104 Asia)
 	&BurnDrvCps19xx,			// 19XX - the war against destiny (960104 Euro)
 	&BurnDrvCps19xxj,			// 19XX - the war against destiny (960104 Japan, yellow case)
-	&BurnSpec1stdivmanager,		// 1st Division Manager
+	&BurnSpec1stdivmanager,		// 1st Division Manager (128K)
 	&BurnDrvmd_2psymmac,		// 2 in 1 - Psycho Pinball & Micro Machines (Euro)
 	&BurnDrvOpenice,			// 2 On 2 Open Ice Challenge (rev 1.21)
 	&BurnDrvOpenicea,			// 2 On 2 Open Ice Challenge (rev 1.2A)
@@ -17534,10 +17541,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvbba2020,			// 2020 Super Baseball (set 2)
 	&BurnDrvbbh2020,			// 2020 Super Baseball (set 3)
 	&BurnDrvmd_2020bbj,			// 2020 Toshi Super Baseball (Jpn)
-	&BurnSpec2088,				// 2088
+	&BurnSpec2088,				// 2088 (48K)
 	&BurnDrvpce_21emon,			// 21 Emon - Mezase Hotel ou!!
 	&BurnSpec21erotic,			// 21 Erotic
-	&BurnSpec2112ad,			// 2112 AD
+	&BurnSpec2112ad,			// 2112 AD (48K)
 	&BurnDrv3Countb,			// 3 Count Bout / Fire Suplex (NGM-043)(NGH-043)
 	&BurnDrv3Countba,			// 3 Count Bout / Fire Suplex (NGM-043)
 	&BurnDrvmd_3in1fwt,			// 3 in 1 Flashback - World Championship Soccer - Tecmo World Cup 92 (Pirate)
@@ -17586,7 +17593,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_8bitrhylan,		// 8-Bit Rhythm Land (HB)
 	&BurnDrvEighthundredfatha,	// 800 Fathoms (older)
 	&BurnDrvEighthundredfath,	// 800 Fathoms
-	&BurnSpec911ts,				// 911 TS
+	&BurnSpec911ts,				// 911 TS - Tiger Shark (48K)
 	&BurnDrvsms_94swc,			// 94 Super World Cup Soccer (Kor)
 	&BurnDrvmd_bugslifea,		// A Bug's Life (Alt?)
 	&BurnDrvmd_bugslife,		// A Bug's Life
@@ -17813,6 +17820,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAirwolf,			// Airwolf
 	&BurnDrvAjaxj,				// Ajax (Japan)
 	&BurnDrvAjax,				// Ajax
+	&BurnSpecAkane,				// Akane (English) (HB)
+	&BurnSpecAkenesp,			// Akane (Spanish) (HB)
 	&BurnDrvfds_akitsunofusnoka,// Aki to Tsukasa no Fushigi no Kabe (Japan)
 	&BurnDrvnes_akiraj,			// Akira (Japan)
 	&BurnDrvmd_akirap,			// Akira (Prototype)
@@ -25590,6 +25599,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_mjsengok,		// Mahjong Sengoku Jidai (Jpn, HK)
 	&BurnDrvsms_mjsengokp,		// Mahjong Sengoku Jidai (Jpn, Prototype)
 	&BurnDrvpce_mjwars,			// Mahjong Shikyaku Retsuden - Mahjong Wars
+	&BurnSpecMsolitaire,		// Mahjong Solitaire (128K) (HB)
 	&BurnDrvMSX_msolitaire,		// Mahjong Solitaire (HB)
 	&BurnDrvsms_msolitaire,		// Mahjong Solitaire (HB)
 	&BurnDrvsg1k_msolitaire,	// Mahjong Solitaire (HB, v1.07)
@@ -27299,7 +27309,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_oboccha,		// Obocchama-kun
 	&BurnDrvCocean1a,			// Ocean to Ocean (Medal) (DECO Cassette MD) (No.10/Ver.1,Japan)
 	&BurnDrvCocean6b,			// Ocean to Ocean (Medal) (DECO Cassette MD) (No.10/Ver.6,US)
-	&BurnSpecOctuKtty,			// OctuKitty (HB)
+	&BurnSpecOctuktty,			// OctuKitty (HB)
 	&BurnSpecOddi128k,			// Oddi The Viking (128K) (HB)
 	&BurnSpecOddi48k,			// Oddi The Viking (48K) (HB)
 	&BurnDrvOedfighta,			// Oedo Fight (Japan, Bloodless version)
@@ -28418,7 +28428,7 @@ static struct BurnDriver* pDriver[] = {
 #endif
 	&BurnDrvmd_pulsemane,		// Pulseman (Hack, English)
 	&BurnDrvmd_pulseman,		// Pulseman (Jpn)
-	&BurnSpecPulsoids,			// Pulsoids (128K)
+	&BurnSpecPulsoids,			// Pulsoid (128K)
 	&BurnDrvpulstar,			// Pulstar
 	&BurnDrvnes_pulveration,	// Pulveration (Unl)
 	&BurnSpecPumpkinpoe,		// Pumpkin Poe (HB)
@@ -29413,6 +29423,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_sabotaje,		// Sabotaje (Spa)
 	&BurnDrvSabotenb,			// Saboten Bombers (set 1)
 	&BurnDrvSabotenba,			// Saboten Bombers (set 2)
+	&BurnSpecSabotur2speed,		// Saboteur II - Avenging Angel (128K) (Speed-up Hack)
 	&BurnSpecsabotur2,			// Saboteur II - Avenging Angel (128K)
 	&BurnSpecsabotur2std_48,	// Saboteur II - Avenging Angel (48K)
 	&BurnSpecsabotur2_48,		// Saboteur II - Avenging Angel (Trainer)(48K)
@@ -33131,6 +33142,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_toobin,			// Toobin' (USA)
 	&BurnSpecToobin,			// Toobin'
 	&BurnDrvMSX_toolblocks,		// Tool Blocks (HB)
+	&BurnSpecTopcat,			// Top Cat in Beverly Hills Cats (48K) (HB)
 	&BurnDrvmd_topfight,		// Top Fighter 2000 MK VIII
 	&BurnDrvmd_topf2k5,			// Top Fighter 2005
 	&BurnDrvmd_topgear2,		// Top Gear 2 (USA)
@@ -33259,6 +33271,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecTranzam,			// Tranz Am (16K)
 	&BurnSpectradooth,			// Trap Door, The (48K)
 	&BurnSpecTrashman,			// Trashman
+	&BurnSpecTttvol1,			// Travel Through Time Volume 1 - Northern Lights (128K) (HB)
 	&BurnDrvTravrusab,			// Traverse USA (bootleg)
 	&BurnDrvTravrusa,			// Traverse USA / Zippy Race
 	&BurnDrvmd_traysia,			// Traysia (USA)
@@ -34717,6 +34730,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_zaxxon3dp,		// Zaxxon 3-D (World, Prototype)
 	&BurnDrvcv_zaxxonsgm,		// Zaxxon Super Game
 	&BurnDrvcv_zaxxon,			// Zaxxon
+	&BurnDrvnes_zdey,			// Zdey the Game (HB)
 	&BurnDrvsms_zeloliv,		// Ze Legende of Oliv (HB)
 	&BurnDrvzedblade,			// Zed Blade / Operation Ragnarok
 	&BurnDrvZektor,				// Zektor (revision B)

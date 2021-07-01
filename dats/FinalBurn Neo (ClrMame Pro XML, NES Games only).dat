@@ -4048,7 +4048,7 @@
 		<description>E.T. - The Extra Terrestrial (HB) [Homebrew]</description>
 		<year>2014</year>
 		<manufacturer>Khan Games</manufacturer>
-		<rom name="E.T. - The Extra Terrestrial (HB).nes" size="131088" crc="ad871918"/>
+		<rom name="E.T. (2014)(Khan Games).nes" size="131088" crc="c1878830"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -9173,7 +9173,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mrsplash">
-		<description>Mr. Splash (HB) [Homebrew]</description>
+		<description>Mr. Splash (HB) [Homebrew, No one player mode]</description>
 		<year>2008</year>
 		<manufacturer>Project F</manufacturer>
 		<rom name="Mr. Splash (HB).nes" size="750052" crc="8b86978b"/>
@@ -14753,6 +14753,14 @@
 		<year>1987</year>
 		<manufacturer>FCI</manufacturer>
 		<rom name="Zanac (USA).nes" size="131088" crc="2165c0c2"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="zdey">
+		<description>Zdey the Game (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Art'Cade</manufacturer>
+		<rom name="Zdey the Game (2020)(Art'Cade).nes" size="524304" crc="fd4036e1"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

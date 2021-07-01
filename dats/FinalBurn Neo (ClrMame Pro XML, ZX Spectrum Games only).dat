@@ -100,7 +100,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="1stdivmanager" romof="spec128">
-		<description>1st Division Manager</description>
+		<description>1st Division Manager (128K)</description>
 		<year>1991</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="1st Division Manager (1991)(Codemasters).z80" size="47446" crc="57fed4fa"/>
@@ -109,13 +109,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="2088" romof="spec128">
-		<description>2088</description>
+	<game name="2088" romof="spectrum">
+		<description>2088 (48K)</description>
 		<year>1988</year>
 		<manufacturer>Zeppelin Games</manufacturer>
 		<rom name="2088 (1988)(Zeppelin Games).tap" size="28306" crc="decaeb6e"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -128,13 +127,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="2112ad" romof="spec128">
-		<description>2112 AD</description>
+	<game name="2112ad" romof="spectrum">
+		<description>2112 AD (48K) [Q, A, N, M and 0 to play]</description>
 		<year>1985</year>
 		<manufacturer>Design Design</manufacturer>
 		<rom name="2112 AD (1985)(Design Design).tap" size="45602" crc="ca5a76f1"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -252,13 +250,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="911ts" romof="spec128">
-		<description>911 TS</description>
+	<game name="911ts" romof="spectrum">
+		<description>911 TS - Tiger Shark (48K) [Z, X, O, and P to play]</description>
 		<year>1985</year>
 		<manufacturer>Elite Systems</manufacturer>
 		<rom name="911 TS (1985)(Elite Systems).tap" size="47921" crc="303db330"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -532,6 +529,26 @@
 		<manufacturer>Encore</manufacturer>
 		<rom name="Airwolf II (1987)(Encore).z80" size="39648" crc="8f6671ec"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="akane" romof="spec128">
+		<description>Akane (English) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Hicks</manufacturer>
+		<rom name="Akane EN (2021)(Hicks).tap" size="46316" crc="a7a5dcf1"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="akenesp" cloneof="akane" romof="akane">
+		<description>Akane (Spanish) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Hicks</manufacturer>
+		<rom name="Akane ES (2021)(Hicks).tap" size="46353" crc="3138f6ad"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -6954,6 +6971,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="msolitaire" romof="spec128">
+		<description>Mahjong Solitaire (128K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Mahjong Solitaire 128K (2021)(Under4Mhz).tap" size="20934" crc="c3a7afed"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="majikazo" romof="spectrum">
 		<description>Majikazo (HB) [Homebrew, Adaptation of Lemonize's MSX version]</description>
 		<year>2012</year>
@@ -8078,11 +8105,11 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="octuKtty" romof="spec128">
+	<game name="octuktty" romof="spec128">
 		<description>OctuKitty (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>UltraNarwhal</manufacturer>
-		<rom name="OctuKtty (2018)(UltraNarwhal).tap" size="43800" crc="28b574a6"/>
+		<rom name="OctuKitty (2018)(UltraNarwhal).tap" size="43800" crc="28b574a6"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -8924,7 +8951,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pulsoids" romof="spec128">
-		<description>Pulsoids (128K)</description>
+		<description>Pulsoid (128K)</description>
 		<year>1988</year>
 		<manufacturer>Mastertronic</manufacturer>
 		<rom name="Pulsoids (1988)(Mastertronic).tap" size="35011" crc="9d1fc1e3"/>
@@ -9854,6 +9881,16 @@
 		<manufacturer>Domark</manufacturer>
 		<rom name="S.T.U.N. Runner 48K (1990)(Domark).z80" size="35693" crc="96a08e01"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sabotur2speed" cloneof="sabotur2" romof="sabotur2">
+		<description>Saboteur II - Avenging Angel (128K) (Speed-up Hack) [Hack, Homebrew]</description>
+		<year>2015</year>
+		<manufacturer>Alex Rider</manufacturer>
+		<rom name="Saboteur 2 128K Speed-up (2015)(Alex Rider) .tap" size="60290" crc="468098f8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -12026,6 +12063,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="topcat" romof="spectrum">
+		<description>Top Cat in Beverly Hills Cats (48K) (HB)</description>
+		<year>1991</year>
+		<manufacturer>Hi-Tec</manufacturer>
+		<rom name="Top Cat in Beverly Hills Cats 48K (1991)(Hi-Tec).z80" size="43855" crc="08eb7b04"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="tornadoecr" romof="spec128">
 		<description>Tornado ECR</description>
 		<year>1991</year>
@@ -12145,6 +12191,16 @@
 		<year>1984</year>
 		<manufacturer>New Generation</manufacturer>
 		<rom name="Trashman (1984)(New Generation).tap" size="33845" crc="79aac256"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tttvol1" romof="spec128">
+		<description>Travel Through Time Volume 1 - Northern Lights (128K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Zosya Entertainment</manufacturer>
+		<rom name="Travel Through Time Volume 1 Northern Lights (2021)(Zosya Ent.).tap" size="126588" crc="c792257f"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

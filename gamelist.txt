@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17180 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17187 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -94,7 +94,7 @@ This list contains all games supported by FinalBurn Neo.
 | 19xxa		|  	| 19XX - the war against destiny (960104 Asia)		| 19xx		| 1995	| Capcom	| CPS2		| 					|
 | 19xx		|  	| 19XX - the war against destiny (960104 Euro)		| 		| 1995	| Capcom	| CPS2		| 					|
 | 19xxj		|  	| 19XX - the war against destiny (960104 Japan, yellow c| 19xx		| 1996	| Capcom	| CPS2		| 					|
-| spec_1stdivmanager|  	| 1st Division Manager					| 		| 1991	| Codemasters	| ZX Spectrum	| 					|
+| spec_1stdivmanager|  	| 1st Division Manager (128K)				| 		| 1991	| Codemasters	| ZX Spectrum	| 					|
 | md_2psymmac	|  	| 2 in 1 - Psycho Pinball & Micro Machines (Euro)	| 		| 1993	| Codemasters	| Sega Megadrive| 					|
 | openice	|  	| 2 On 2 Open Ice Challenge (rev 1.21)			| 		| 1995	| Midway	| MIDWAY Wolf-Un| 					|
 | openicea	|  	| 2 On 2 Open Ice Challenge (rev 1.2A)			| openice	| 1995	| Midway	| MIDWAY Wolf-Un| 					|
@@ -107,10 +107,10 @@ This list contains all games supported by FinalBurn Neo.
 | 2020bba	|  	| 2020 Super Baseball (set 2)				| 2020bb	| 1991	| SNK / Pallas	| Neo Geo MVS	| 					|
 | 2020bbh	|  	| 2020 Super Baseball (set 3)				| 2020bb	| 1991	| SNK / Pallas	| Neo Geo AES	| 					|
 | md_2020bbj	|  	| 2020 Toshi Super Baseball (Jpn)			| md_2020bb	| 1994	| Electronic Art| Sega Megadrive| 					|
-| spec_2088	|  	| 2088							| 		| 1988	| Zeppelin Games| ZX Spectrum	| 					|
+| spec_2088	|  	| 2088 (48K)						| 		| 1988	| Zeppelin Games| ZX Spectrum	| 					|
 | pce_21emon	|  	| 21 Emon - Mezase Hotel ou!!				| 		| 1994	| NEC Home Elect| PC Engine	| 					|
 | spec_21erotic	|  	| 21 Erotic						| 		| 1995	| JardaSoft	| ZX Spectrum	| 					|
-| spec_2112ad	|  	| 2112 AD						| 		| 1985	| Design Design	| ZX Spectrum	| 					|
+| spec_2112ad	|  	| 2112 AD (48K)						| 		| 1985	| Design Design	| ZX Spectrum	| Q, A, N, M and 0 to play		|
 | 3countb	|  	| 3 Count Bout / Fire Suplex (NGM-043)(NGH-043)		| 		| 1993	| SNK		| Neo Geo MVS	| 					|
 | 3countba	|  	| 3 Count Bout / Fire Suplex (NGM-043)			| 3countb	| 1993	| SNK		| Neo Geo MVS	| 					|
 | md_3in1fwt	|  	| 3 in 1 Flashback - World Championship Soccer - Tecmo W| 		| 199?	| <unknown>	| Sega Megadrive| 					|
@@ -159,7 +159,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_8bitrhylan|  	| 8-Bit Rhythm Land (HB)				| 		| 2018	| Columbus Circl| Miscellaneous	| 					|
 | 800fatha	|  	| 800 Fathoms (older)					| mariner	| 1981	| Amenip (US Bil| Galaxian	| 					|
 | 800fath	|  	| 800 Fathoms						| mariner	| 1981	| Amenip (US Bil| Galaxian	| 					|
-| spec_911ts	|  	| 911 TS						| 		| 1985	| Elite Systems	| ZX Spectrum	| 					|
+| spec_911ts	|  	| 911 TS - Tiger Shark (48K)				| 		| 1985	| Elite Systems	| ZX Spectrum	| Z, X, O, and P to play		|
 | sms_94swc	|  	| 94 Super World Cup Soccer (Kor)			| 		| 1994	| Daou Infosys	| Sega Master Sy| 					|
 | md_bugslifea	|  	| A Bug's Life (Alt?)					| md_bugslife	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_bugslife	|  	| A Bug's Life						| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
@@ -384,6 +384,8 @@ This list contains all games supported by FinalBurn Neo.
 | airwolf	|  	| Airwolf						| 		| 1987	| Kyugo		| Miscellaneous	| 					|
 | ajaxj		|  	| Ajax (Japan)						| ajax		| 1987	| Konami	| GX770		| 					|
 | ajax		|  	| Ajax							| 		| 1987	| Konami	| GX770		| 					|
+| spec_akane	|  	| Akane (English) (HB)					| 		| 2021	| Hicks		| ZX Spectrum	| 					|
+| spec_akenesp	|  	| Akane (Spanish) (HB)					| spec_akane	| 2021	| Hicks		| ZX Spectrum	| 					|
 | fds_akitsunofusnoka|  	| Aki to Tsukasa no Fushigi no Kabe (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_akiraj	|  	| Akira (Japan)						| nes_akira	| 1988	| Taito		| Miscellaneous	| 					|
 | md_akirap	|  	| Akira (Prototype)					| 		| 1993	| Black Pearl So| Sega Megadrive| 					|
@@ -8059,6 +8061,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_mjsengok	|  	| Mahjong Sengoku Jidai (Jpn, HK)			| 		| 1987	| Sega		| Sega Master Sy| 					|
 | sms_mjsengokp	|  	| Mahjong Sengoku Jidai (Jpn, Prototype)		| sms_mjsengok	| 1987	| Sega		| Sega Master Sy| 					|
 | pce_mjwars	|  	| Mahjong Shikyaku Retsuden - Mahjong Wars		| 		| 1990	| Nihon Bussan	| PC Engine	| 					|
+| spec_msolitaire|  	| Mahjong Solitaire (128K) (HB)				| 		| 2021	| Under4Mhz	| ZX Spectrum	| 					|
 | msx_msolitaire|  	| Mahjong Solitaire (HB)				| 		| 2021	| Under4Mhz	| MSX		| 					|
 | sms_msolitaire|  	| Mahjong Solitaire (HB)				| 		| 2021	| Under4Mhz	| Sega Master Sy| 					|
 | sg1k_msolitaire|  	| Mahjong Solitaire (HB, v1.07)				| 		| 2020	| Under4Mhz	| Sega SG-1000	| 					|
@@ -9042,7 +9045,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_mrnutz	|  	| Mr. Nutz (Euro)					| 		| 1994	| Ocean		| Sega Megadrive| 					|
 | md_mrnutzs	|  	| Mr. Nutz (Hack, Spanish)				| md_mrnutz	| 2019	| Ocean		| Sega Megadrive| 					|
 | md_mrnutz2	|  	| Mr. Nutz - Hoppin' Mad (Prototype)			| 		| 1994	| Ocean		| Sega Megadrive| 					|
-| nes_mrsplash	|  	| Mr. Splash (HB)					| 		| 2008	| Project F	| Miscellaneous	| 					|
+| nes_mrsplash	|  	| Mr. Splash (HB)					| 		| 2008	| Project F	| Miscellaneous	| No one player mode			|
 | mrtnt		|  	| Mr. TNT						| 		| 1982	| Telko		| Pac-man	| 					|
 | msx_mrwong	|  	| Mr. Wong's Loopy Laundry (Euro)			| 		| 1984	| Artic Computin| MSX		| 					|
 | donight	|  	| Mr.Do's Nightmare (hack by Krazy Ivan)		| 		| 2013	| Krazy Ivan	| Galaxian	| 					|
@@ -9750,7 +9753,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_oboccha	|  	| Obocchama-kun						| 		| 1991	| Namcot	| PC Engine	| 					|
 | cocean1a	|  	| Ocean to Ocean (Medal) (DECO Cassette MD) (No.10/Ver.1| 		| 1981	| Data East Corp| Cassette Syste| 					|
 | cocean6b	|  	| Ocean to Ocean (Medal) (DECO Cassette MD) (No.10/Ver.6| cocean1a	| 1981	| Data East Corp| Cassette Syste| 					|
-| spec_octuKtty	|  	| OctuKitty (HB)					| 		| 2018	| UltraNarwhal	| ZX Spectrum	| 					|
+| spec_octuktty	|  	| OctuKitty (HB)					| 		| 2018	| UltraNarwhal	| ZX Spectrum	| 					|
 | spec_oddi128k	|  	| Oddi The Viking (128K) (HB)				| 		| 2010	| Digital Brains| ZX Spectrum	| 					|
 | spec_oddi48k	|  	| Oddi The Viking (48K) (HB)				| spec_oddi128k	| 2010	| Digital Brains| ZX Spectrum	| 					|
 | oedfighta	|  	| Oedo Fight (Japan, Bloodless version)			| bloodwar	| 1994	| Kaneko	| Kaneko16	| 					|
@@ -10851,7 +10854,7 @@ This list contains all games supported by FinalBurn Neo.
 | pulsar	| D	| Pulsar						| 		| 1981	| Sega		| Vic Dual	| No sound				|
 | md_pulsemane	|  	| Pulseman (Hack, English)				| md_pulseman	| 2007	| Sega		| Sega Megadrive| 					|
 | md_pulseman	|  	| Pulseman (Jpn)					| 		| 1994	| Sega		| Sega Megadrive| 					|
-| spec_pulsoids	|  	| Pulsoids (128K)					| 		| 1988	| Mastertronic	| ZX Spectrum	| 					|
+| spec_pulsoids	|  	| Pulsoid (128K)					| 		| 1988	| Mastertronic	| ZX Spectrum	| 					|
 | pulstar	|  	| Pulstar						| 		| 1995	| Aicom		| Neo Geo MVS	| 					|
 | nes_pulveration|  	| Pulveration (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | spec_pumpkinpoe|  	| Pumpkin Poe (HB)					| 		| 2020	| Ariel Endaraue| ZX Spectrum	| 					|
@@ -11834,6 +11837,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_sabotaje	|  	| Sabotaje (Spa)					| 		| 1987	| Genesis Soft	| MSX		| 					|
 | sabotenb	|  	| Saboten Bombers (set 1)				| 		| 1992	| NMK / Tecmo	| NMK16		| 					|
 | sabotenba	|  	| Saboten Bombers (set 2)				| sabotenb	| 1992	| NMK / Tecmo	| NMK16		| 					|
+| spec_sabotur2speed|  	| Saboteur II - Avenging Angel (128K) (Speed-up Hack)	| spec_sabotur2	| 2015	| Alex Rider	| ZX Spectrum	| 					|
 | spec_sabotur2	|  	| Saboteur II - Avenging Angel (128K)			| 		| 1987	| Durell Softwar| ZX Spectrum	| 					|
 | spec_sabotur2std_48|  	| Saboteur II - Avenging Angel (48K)			| spec_sabotur2	| 1987	| Durell Softwar| ZX Spectrum	| 					|
 | spec_sabotur2_48|  	| Saboteur II - Avenging Angel (Trainer)(48K)		| spec_sabotur2	| 1987	| Durell Softwar| ZX Spectrum	| 					|
@@ -15508,6 +15512,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_toobin	|  	| Toobin' (USA)						| 		| 1989	| Tengen	| Miscellaneous	| 					|
 | spec_toobin	|  	| Toobin'						| 		| 1989	| Domark	| ZX Spectrum	| 					|
 | msx_toolblocks|  	| Tool Blocks (HB)					| 		| 2021	| Ray2Day	| MSX		| 					|
+| spec_topcat	|  	| Top Cat in Beverly Hills Cats (48K) (HB)		| 		| 1991	| Hi-Tec	| ZX Spectrum	| 					|
 | md_topfight	|  	| Top Fighter 2000 MK VIII				| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_topf2k5	|  	| Top Fighter 2005					| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_topgear2	|  	| Top Gear 2 (USA)					| 		| 1994	| Vic Tokai	| Sega Megadrive| 					|
@@ -15632,6 +15637,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_tranzam	|  	| Tranz Am (16K)					| 		| 1983	| Ultimate Play | ZX Spectrum	| 					|
 | spec_tradooth	|  	| Trap Door, The (48K)					| 		| 1986	| Piranha	| ZX Spectrum	| 					|
 | spec_trashman	|  	| Trashman						| 		| 1984	| New Generation| ZX Spectrum	| 					|
+| spec_tttvol1	|  	| Travel Through Time Volume 1 - Northern Lights (128K) | 		| 2021	| Zosya Entertai| ZX Spectrum	| 					|
 | travrusab	|  	| Traverse USA (bootleg)				| travrusa	| 1983	| bootleg (I.P.)| Miscellaneous	| 					|
 | travrusa	|  	| Traverse USA / Zippy Race				| 		| 1983	| Irem		| Miscellaneous	| 					|
 | md_traysia	|  	| Traysia (USA)						| 		| 1992	| Renovation	| Sega Megadrive| 					|
@@ -17056,6 +17062,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_zaxxon3dp	|  	| Zaxxon 3-D (World, Prototype)				| sms_zaxxon3d	| 1987	| Sega		| Sega Master Sy| 					|
 | cv_zaxxonsgm	|  	| Zaxxon Super Game					| 		| 2012	| Coleco	| ColecoVision	| (SGM) - Published by Team Pixelboy	|
 | cv_zaxxon	|  	| Zaxxon						| 		| 1982	| Coleco	| ColecoVision	| 					|
+| nes_zdey	|  	| Zdey the Game (HB)					| 		| 2020	| Art'Cade	| Miscellaneous	| 					|
 | sms_zeloliv	|  	| Ze Legende of Oliv (HB)				| 		| 2019	| OscarB	| Sega Master Sy| 					|
 | zedblade	|  	| Zed Blade / Operation Ragnarok			| 		| 1994	| NMK		| Neo Geo MVS	| 					|
 | zektor	|  	| Zektor (revision B)					| 		| 1982	| Sega		| G80 Vector	| 					|

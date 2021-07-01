@@ -6305,12 +6305,12 @@ static void Kaneko16RenderSprite_PrioBuffer(UINT32 Code, UINT32 Colour, INT32 Fl
 				INT32 x, xIndex = xIndexBase;
 				for (x = sx; x <ex; x++) {
 					INT32 c = Source[xIndex >> 16];
-					if (c != 0) {
+					if (c != 0 && (x >= 0 && x < nScreenWidth)) {
 						// If we haven't drawn a sprite here yet, do so.
 						if (!(pri[x] & 0x10))
 						{
 							if (pri[x] < priority) {
-								if (x >= 0 && x < nScreenWidth) pPixel[x] = (c | Colour | Kaneko16SpritesColourOffset) & Kaneko16SpritesColourMask;
+								pPixel[x] = (c | Colour | Kaneko16SpritesColourOffset) & Kaneko16SpritesColourMask;
 							}
 							// Mark that we (tried to) draw a sprite.
 							pri[x] |= 0x10;

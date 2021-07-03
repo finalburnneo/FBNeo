@@ -854,11 +854,14 @@ static INT32 DrvFrame()
 	i8080Close();
 
 	if (pBurnSoundOut) {
-		if (phoenixmode)
+		if (phoenixmode) {
 			phoenix_sound_update(pBurnSoundOut, nBurnSoundLen);
+		}
 
-		if (pleiads)
+		if (pleiads) {
 			pleiads_sound_update(pBurnSoundOut, nBurnSoundLen);
+		}
+		BurnSoundDCFilter();
 	}
 
 	return 0;

@@ -539,6 +539,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		pleiads_sound_update(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 	}
 
 	if (pBurnDraw) {

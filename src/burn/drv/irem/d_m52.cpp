@@ -5,6 +5,7 @@
 #include "z80_intf.h"
 #include "irem_sound.h"
 #include "bitswap.h"
+#include "resnet.h"
 
 static UINT8 *AllMem;
 static UINT8 *AllRam;
@@ -365,8 +366,10 @@ static INT32 DrvGfxDecode()
 	return 0;
 }
 
- static INT32 DrvInit()
+static INT32 DrvInit()
 {
+	BurnSetRefreshRate(56.737589);
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -445,37 +448,53 @@ static INT32 DrvExit()
 
 static void DrvPaletteInit()
 {
-#define combine_3_weights(w, b0, b1, b2) ((((b0 * w[2]) + (b1 * w[1]) + (b2 * w[0])) * 255) / (w[0]+w[1]+w[2]))
-#define combine_2_weights(w, b0, b1) ((((b0 * w[1]) + (b1 * w[0])) * 255) / (w[0]+w[1]))
-
 	UINT32 tmp[64];	
-	
+
 	static const INT32 resistances_3[3] = { 1000, 470, 220 };
 	static const INT32 resistances_2[2]  = { 470, 220 };
+	double weights_r[3], weights_g[3], weights_b[3], scale;
 
+	/* compute palette information for characters/backgrounds */
+	scale = compute_resistor_weights(0, 255, -1.0,
+			3, resistances_3, weights_r, 0, 0,
+			3, resistances_3, weights_g, 0, 0,
+			2, resistances_2, weights_b, 0, 0);
+
+	/* character palette */
 	for (INT32 i = 0; i < 512; i++)
 	{
 		UINT8 promval = DrvColPROM[0x000 + i];
-		INT32 r = combine_3_weights(resistances_3, BIT(promval,0), BIT(promval,1), BIT(promval,2));
-		INT32 g = combine_3_weights(resistances_3, BIT(promval,3), BIT(promval,4), BIT(promval,5));
-		INT32 b = combine_2_weights(resistances_2, BIT(promval,6), BIT(promval,7));
+		INT32 r = combine_3_weights(weights_r, BIT(promval,0), BIT(promval,1), BIT(promval,2));
+		INT32 g = combine_3_weights(weights_g, BIT(promval,3), BIT(promval,4), BIT(promval,5));
+		INT32 b = combine_2_weights(weights_b, BIT(promval,6), BIT(promval,7));
 
 		DrvPalette[i] = BurnHighCol(r,g,b,0);
 	}
 
+	/* background palette */
 	for (INT32 i = 0; i < 32; i++)
 	{
 		UINT8 promval = DrvColPROM[0x200 + i];
-		INT32 r = combine_3_weights(resistances_3, BIT(promval,0), BIT(promval,1), BIT(promval,2));
-		INT32 g = combine_3_weights(resistances_3, BIT(promval,3), BIT(promval,4), BIT(promval,5));
-		INT32 b = combine_2_weights(resistances_2, BIT(promval,6), BIT(promval,7));
+		INT32 r = combine_3_weights(weights_r, BIT(promval,0), BIT(promval,1), BIT(promval,2));
+		INT32 g = combine_3_weights(weights_g, BIT(promval,3), BIT(promval,4), BIT(promval,5));
+		INT32 b = combine_2_weights(weights_b, BIT(promval,6), BIT(promval,7));
 
 		tmp[i] = BurnHighCol(r,g,b,0);
-		
-		promval = DrvColPROM[0x220 + i];
-		r = combine_2_weights(resistances_2, BIT(promval,6), BIT(promval,7));
-		g = combine_3_weights(resistances_3, BIT(promval,3), BIT(promval,4), BIT(promval,5));
-		b = combine_3_weights(resistances_3, BIT(promval,0), BIT(promval,1), BIT(promval,2));
+	}
+
+	/* compute palette information for sprites */
+	compute_resistor_weights(0, 255, scale,
+			2, resistances_2, weights_r, 470, 0,
+			3, resistances_3, weights_g, 470, 0,
+			3, resistances_3, weights_b, 470, 0);
+
+	/* sprite palette */
+	for (INT32 i = 0; i < 32; i++)
+	{
+		UINT8 promval = DrvColPROM[0x220 + i];
+		INT32 r = combine_2_weights(weights_r, BIT(promval,6), BIT(promval,7));
+		INT32 g = combine_3_weights(weights_g, BIT(promval,3), BIT(promval,4), BIT(promval,5));
+		INT32 b = combine_3_weights(weights_b, BIT(promval,0), BIT(promval,1), BIT(promval,2));
 
 		tmp[32 + i] = BurnHighCol(r,g,b,0);
 	}

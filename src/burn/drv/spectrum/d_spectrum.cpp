@@ -27599,3 +27599,79 @@ struct BurnDriver BurnSpecSuperhair48 = {
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
+
+// Devwill Too ZX (English) (128K) (HB)
+
+static struct BurnRomInfo SpecDwtoozx128RomDesc[] = {
+	{ "Devwill Too ZX 128K (2020)(Amaweks).tap", 47275, 0xc7bde450, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDwtoozx128, SpecDwtoozx128, Spec128)
+STD_ROM_FN(SpecDwtoozx128)
+
+struct BurnDriver BurnSpecDwtoozx128 = {
+	"spec_dwtoozx128", NULL, "spec_spec128", NULL, "2020",
+	"Devwill Too ZX (English) (128K) (HB)\0", NULL, "Amaweks", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecDwtoozx128RomInfo, SpecDwtoozx128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Devwill Too ZX (English) (48K) (HB)
+
+static struct BurnRomInfo SpecDwtoozx48RomDesc[] = {
+	{ "Devwill Too ZX 48K (2020)(Amaweks).tap", 38406, 0x016e9d43, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDwtoozx48, SpecDwtoozx48, Spectrum)
+STD_ROM_FN(SpecDwtoozx48)
+
+struct BurnDriver BurnSpecDwtoozx48 = {
+	"spec_dwtoozx48", "spec_dwtoozx128", "spec_spectrum", NULL, "2020",
+	"Devwill Too ZX (English) (48K) (HB)\0", NULL, "Amaweks", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecDwtoozx48RomInfo, SpecDwtoozx48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Devwill Too ZX (Portuguese) (128K) (HB)
+
+static struct BurnRomInfo SpecDwtoozx128ptRomDesc[] = {
+	{ "Devwill Too ZX 128K PT (2020)(Amaweks).tap", 47275, 0xd8b4d123, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDwtoozx128pt, SpecDwtoozx128pt, Spec128)
+STD_ROM_FN(SpecDwtoozx128pt)
+
+struct BurnDriver BurnSpecDwtoozx128pt = {
+	"spec_dwtoozx128pt", "spec_dwtoozx128", "spec_spec128", NULL, "2020",
+	"Devwill Too ZX (Portuguese) (128K) (HB)\0", NULL, "Amaweks", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecDwtoozx128ptRomInfo, SpecDwtoozx128ptRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Devwill Too ZX (Portuguese) (48K) (HB)
+
+static struct BurnRomInfo SpecDwtoozx48ptRomDesc[] = {
+	{ "Devwill Too ZX 48K PT (2020)(Amaweks).tap", 38283, 0xe31c2804, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDwtoozx48pt, SpecDwtoozx48pt, Spectrum)
+STD_ROM_FN(SpecDwtoozx48pt)
+
+struct BurnDriver BurnSpecDwtoozx48pt = {
+	"spec_dwtoozx48pt", "spec_dwtoozx128", "spec_spectrum", NULL, "2020",
+	"Devwill Too ZX (Portuguese) (48K) (HB)\0", NULL, "Amaweks", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecDwtoozx48ptRomInfo, SpecDwtoozx48ptRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

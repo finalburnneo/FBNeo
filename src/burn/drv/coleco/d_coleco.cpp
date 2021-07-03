@@ -8320,3 +8320,41 @@ struct BurnDriver BurnDrvcv_loderunner = {
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
+
+// Memotech MTX Series Vol 1 (HB)
+
+static struct BurnRomInfo cv_mmtxvol1RomDesc[] = {
+	{ "Memotech_MTX_Series_-_vol_1_PD_2013.col",	31448, 0xf8b5bb4f, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_mmtxvol1, cv_mmtxvol1, cv_coleco)
+STD_ROM_FN(cv_mmtxvol1)
+
+struct BurnDriver BurnDrvcv_mmtxvol1 = {
+	"cv_mmtxvol1", NULL, "cv_coleco", NULL, "2013",
+	"Memotech MTX Series Vol 1 (HB)\0", NULL, "Coleco", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PLATFORM, 0,
+	CVGetZipName, cv_mmtxvol1RomInfo, cv_mmtxvol1RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Memotech MTX Series Vol 2 (HB)
+
+static struct BurnRomInfo cv_mmtxvol2RomDesc[] = {
+	{ "Memotech_MTX_Series_-_vol_2_PD_2013.col",	27839, 0x06ff3853, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_mmtxvol2, cv_mmtxvol2, cv_coleco)
+STD_ROM_FN(cv_mmtxvol2)
+
+struct BurnDriver BurnDrvcv_mmtxvol2 = {
+	"cv_mmtxvol2", NULL, "cv_coleco", NULL, "2013",
+	"Memotech MTX Series Vol 2 (HB)\0", NULL, "Coleco", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PLATFORM, 0,
+	CVGetZipName, cv_mmtxvol2RomInfo, cv_mmtxvol2RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};

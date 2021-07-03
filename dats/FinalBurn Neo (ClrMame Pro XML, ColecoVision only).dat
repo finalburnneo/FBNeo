@@ -2208,6 +2208,30 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mmtxvol1" romof="coleco">
+		<description>Memotech MTX Series Vol 1 (HB) [Homebrew]</description>
+		<year>2013</year>
+		<manufacturer>Coleco</manufacturer>
+		<rom name="Memotech_MTX_Series_-_vol_1_PD_2013.col" size="31448" crc="f8b5bb4f"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mmtxvol2" romof="coleco">
+		<description>Memotech MTX Series Vol 2 (HB) [Homebrew]</description>
+		<year>2013</year>
+		<manufacturer>Coleco</manufacturer>
+		<rom name="Memotech_MTX_Series_-_vol_2_PD_2013.col" size="27839" crc="06ff3853"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="meteosho" romof="coleco">
 		<description>Meteoric Shower</description>
 		<year>1983</year>

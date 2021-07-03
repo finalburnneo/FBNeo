@@ -1135,6 +1135,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="baldyzx" romof="spectrum">
+		<description>Baldy ZX (48K) (HB) [Homebrew]</description>
+		<year>2015</year>
+		<manufacturer>Paul Jenkinson</manufacturer>
+		<rom name="Baldy ZX 48K (2015)(Paul Jenkinson).tap" size="35494" crc="a7a3b233"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ballbreak128" romof="spec128">
 		<description>Ballbreaker (128K) [A, Z and Space to select options]</description>
 		<year>1988</year>
@@ -1159,6 +1168,16 @@
 		<year>2020</year>
 		<manufacturer>Andy McDermott</manufacturer>
 		<rom name="Bandito (2020)(Andy McDermott).tap" size="34018" crc="3591be21"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bangmash" romof="spec128">
+		<description>Bangers and Mash</description>
+		<year>1990</year>
+		<manufacturer>Alternative</manufacturer>
+		<rom name="Bangers and Mash (1990)(Alternative).tap" size="74560" crc="d5225cf2"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -1508,6 +1527,15 @@
 		<rom name="Blade Warrior (1988)(Codemasters).tap" size="41844" crc="d8bff571"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="blazthund" romof="spectrum">
+		<description>Blazing Thunder (48K)</description>
+		<year>1990</year>
+		<manufacturer>Hi-Tec</manufacturer>
+		<rom name="Blazing Thunder 48K (1990)(Hi-Tec).z80" size="41048" crc="41afcb85"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3242,6 +3270,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="deathpit" romof="spectrum">
+		<description>Death Pit (48K)</description>
+		<year>1985</year>
+		<manufacturer>Durell Software</manufacturer>
+		<rom name="Death Pit (1985)(Durell).tap" size="47673" crc="9ee83a80"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="deathstalker" romof="spectrum">
 		<description>Death Stalker</description>
 		<year>1988</year>
@@ -3367,6 +3404,36 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="dwtoozxen" romof="spec128">
+		<description>Devwill Too ZX (English) (128K) (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Amaweks</manufacturer>
+		<rom name="Devwill Too ZX 128K EN (2020)(Amaweks).tap" size="47275" crc="c7bde450"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dwtoozxpt" cloneof="dwtoozxen" romof="dwtoozxen">
+		<description>Devwill Too ZX (Portuguese) (128K) (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Amaweks</manufacturer>
+		<rom name="Devwill Too ZX 128K PT (2020)(Amaweks).tap" size="47275" crc="d8b4d123"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dwtoozxes" cloneof="dwtoozxen" romof="dwtoozxen">
+		<description>Devwill Too ZX (Spanish) (128K) (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Amaweks</manufacturer>
+		<rom name="Devwill Too ZX 128K ES (2020)(Amaweks).tap" size="47275" crc="c3283ba1"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="dingo" romof="spec128">
 		<description>Dingo (HB) [Homebrew]</description>
 		<year>2015</year>
@@ -3436,7 +3503,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dizzyrstd" cloneof="dizzy_48" romof="dizzy_48">
-		<description>Dizzy - The Ultimate Cartoon Adventure (Russian)(128k)</description>
+		<description>Dizzy - The Ultimate Cartoon Adventure (Russian) (128K) [Hack]</description>
 		<year>1987</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Dizzy - The Ultimate Cartoon Adventure (1987)(Codemasters)(ru)(Standard)(128k).z80" size="46792" crc="6d8d0a2a"/>
@@ -3446,7 +3513,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dizzy" cloneof="dizzy_48" romof="dizzy_48">
-		<description>Dizzy - The Ultimate Cartoon Adventure (Trainer)(128K)</description>
+		<description>Dizzy - The Ultimate Cartoon Adventure (Trainer) (128K) [Hack]</description>
 		<year>1987</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Dizzy - The Ultimate Cartoon Adventure (1987)(Codemasters)[128K].z80" size="47149" crc="30bb57e1"/>
@@ -3456,7 +3523,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dizzyr" cloneof="dizzy_48" romof="dizzy_48">
-		<description>Dizzy - The Ultimate Cartoon Adventure (Trainer)(Russian)(128K)</description>
+		<description>Dizzy - The Ultimate Cartoon Adventure (Trainer) (Russian) (128K) [Hack]</description>
 		<year>1987</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Dizzy - The Ultimate Cartoon Adventure (1987)(Codemasters)(ru)[128K].z80" size="51260" crc="27b9e86c"/>
@@ -3476,20 +3543,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="dizzy1extrus" cloneof="dizzy1ext" romof="dizzy1ext">
-		<description>Dizzy 1 Extended (HB, Russian) [Homebrew]</description>
+		<description>Dizzy 1 Extended (Russian) (HB) [Homebrew]</description>
 		<year>2021</year>
 		<manufacturer>Dr. Titus</manufacturer>
 		<rom name="Dizzy 1 Extended (2021)(Titus)(Rus).tap" size="38214" crc="9df57a5a"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="dizzy3andahalf" romof="spec128">
-		<description>Dizzy 3 &amp; a Half</description>
-		<year>1988</year>
-		<manufacturer>Codemasters</manufacturer>
-		<rom name="Dizzy 3 &amp; a Half (1988)(Codemasters).tap" size="25241" crc="8a82c837"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -3514,11 +3571,21 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dizzy2r" romof="spec128">
-		<description>Dizzy II - Treasure Island Dizzy (Russian) (128K)</description>
+	<game name="dizzy2r" cloneof="dizzy2" romof="dizzy2">
+		<description>Dizzy II - Treasure Island Dizzy (Russian) (128K) [Hack]</description>
 		<year>1988</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Dizzy II - Treasure Island Dizzy (1988)(Codemasters)(ru)[128K].z80" size="57508" crc="ccc7f01b"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dizzy3andahalf" romof="spec128">
+		<description>Dizzy III (Three).. and a Half</description>
+		<year>1988</year>
+		<manufacturer>Codemasters</manufacturer>
+		<rom name="Dizzy 3 &amp; a Half (1988)(Codemasters).tap" size="25241" crc="8a82c837"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -3544,7 +3611,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dizzy3r" cloneof="dizzy3" romof="dizzy3">
-		<description>Dizzy III - Fantasy World Dizzy (Russian) (128K)</description>
+		<description>Dizzy III - Fantasy World Dizzy (Russian) (128K) [Hack]</description>
 		<year>1989</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Dizzy III - Fantasy World Dizzy (1989)(Codemasters)(ru)[128K].z80" size="62141" crc="1ae2c460"/>
@@ -3630,7 +3697,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dizzy7r" cloneof="dizzy7" romof="dizzy7">
-		<description>Dizzy VII - Crystal Kingdom Dizzy (Russian) (128K)</description>
+		<description>Dizzy VII - Crystal Kingdom Dizzy (Russian) (128K) [Hack]</description>
 		<year>1993</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Dizzy VII - Crystal Kingdom Dizzy (1993)(Codemasters)(ru)[128K].z80" size="61746" crc="d6b0801d"/>
@@ -3650,7 +3717,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="djpuff" romof="spec128">
-		<description>DJ Puff</description>
+		<description>DJ Puff (128K)</description>
 		<year>1992</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="DJ Puff (1992)(Codemasters).z80" size="66937" crc="38340567"/>
@@ -4730,6 +4797,25 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="futknight" romof="spec128">
+		<description>Future Knight (128K)</description>
+		<year>1986</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
+		<rom name="Future Knight (1986)(Gremlin Graphics).tap" size="53471" crc="fc50df19"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="futurelooter" romof="spectrum">
+		<description>Future Looter (48K) (HB) [Homebrew]</description>
+		<year>2011</year>
+		<manufacturer>Timmy</manufacturer>
+		<rom name="Future Looter 48K (2011)(Timmy).tap" size="46338" crc="01962866"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="gloc" romof="spec128">
 		<description>G-LOC (128K)</description>
 		<year>1992</year>
@@ -5754,7 +5840,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="impossamole" romof="spec128">
-		<description>Impossamole</description>
+		<description>Impossamole (128K)</description>
 		<year>1990</year>
 		<manufacturer>The Edge Software</manufacturer>
 		<rom name="Impossamole (1990)(Gremlin Graphics Software).tap" size="152632" crc="f1c505c7"/>
@@ -7209,13 +7295,30 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="metalman" romof="spec128">
-		<description>Metal Man (HB, russian) [Homebrew]</description>
-		<year>2014</year>
+	<game name="metalman" romof="spectrum">
+		<description>Metal Man (Russian) (48K) (HB) [Homebrew]</description>
+		<year>1997-2010</year>
 		<manufacturer>Oleg Origin</manufacturer>
 		<rom name="Metal Man (2014)(Oleg Origin).tap" size="48298" crc="ef74d54b"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="metalmanrmx" romof="spectrum">
+		<description>Metal Man Remixed (English) (48K) (HB) [Homebrew]</description>
+		<year>2015</year>
+		<manufacturer>Oleg Origin</manufacturer>
+		<rom name="Metal Man Remixed 48K EN (2015)(Origin, Oleg).tap" size="126688" crc="0f6c6bb5"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="metalmanrmxru" cloneof="metalmanrmx" romof="metalmanrmx">
+		<description>Metal Man Remixed (Russian) (48K) (HB) [Homebrew]</description>
+		<year>2015</year>
+		<manufacturer>Oleg Origin</manufacturer>
+		<rom name="Metal Man Remixed 48K RU (2015)(Origin, Oleg).tap" size="126688" crc="beac0298"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -9958,6 +10061,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="stdragon" romof="spec128">
+		<description>Saint Dragon (128K)</description>
+		<year>1990</year>
+		<manufacturer>Storm Software</manufacturer>
+		<rom name="St. Dragon (1990)(Storm Software).tap" size="188760" crc="6bb077c8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="salamand" romof="spectrum">
 		<description>Salamander (48K)</description>
 		<year>1987</year>
@@ -10232,6 +10345,24 @@
 		<year>1991</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Seymour Take One (1991)(Codemasters).z80" size="34186" crc="21645f38"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sgthtraindayen" romof="spectrum">
+		<description>Sgt. Helmet - Training Day (English) (48K) (HB) [Homebrew]</description>
+		<year>2013</year>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="Sgt. Helmet - Training Day EN (2013)(The Mojon Twins).tap" size="43229" crc="aed97757"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sgthtraindayes" cloneof="sgthtraindayen" romof="sgthtraindayen">
+		<description>Sgt. Helmet - Training Day (Spanish) (48K) (HB) [Homebrew]</description>
+		<year>2013</year>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="Sgt. Helmet - Training Day ES (2013)(The Mojon Twins).tap" size="43285" crc="2de72a6c"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10907,16 +11038,6 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="stdragon" romof="spec128">
-		<description>St. Dragon</description>
-		<year>1990</year>
-		<manufacturer>Storm Software</manufacturer>
-		<rom name="St. Dragon (1990)(Storm Software).tap" size="188760" crc="6bb077c8"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="stainlesssteel" romof="spec128">
 		<description>Stainless Steel</description>
 		<year>1986</year>
@@ -11168,7 +11289,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="strider2" romof="spec128">
-		<description>Strider II</description>
+		<description>Strider II (128K)</description>
 		<year>1990</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Strider II (1990)(U.S. Gold).tap" size="138788" crc="d1b065fc"/>
@@ -11217,12 +11338,21 @@
 		<driver status="good"/>
 	</game>
 	<game name="stuntmanseymour" romof="spec128">
-		<description>Stunt Man Seymour</description>
+		<description>Stunt Man Seymour (128K)</description>
 		<year>1992</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Stunt Man Seymour (1992)(Codemasters).tap" size="51574" crc="098c5ba8"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="subchase" romof="spectrum">
+		<description>Sub Chase (16K) [Q and P to move, keys from 1 to 9 to use depth charges]</description>
+		<year>1983</year>
+		<manufacturer>Gem Software</manufacturer>
+		<rom name="Sub Chase 16K (1983)(Gem Software).z80" size="7701" crc="211cd8c0"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -11315,13 +11445,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="supergman" romof="spec128">
-		<description>Super G-Man</description>
+	<game name="supergman" romof="spectrum">
+		<description>Super G-Man (48K)</description>
 		<year>1987</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Super G-Man (1987)(Codemasters).tap" size="44091" crc="4e83dd70"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -11362,7 +11491,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="superhero" romof="spectrum">
-		<description>Super Hero</description>
+		<description>Super Hero (48K)</description>
 		<year>1988</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Super Hero (1988)(Codemasters).tap" size="51573" crc="26d19439"/>
@@ -11473,6 +11602,25 @@
 		<rom name="Superbike Trans-Am (1989)(Codemasters).z80" size="40870" crc="28322d99"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="superhair128" romof="spec128">
+		<description>SuperHair (128K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Bitmap Soft</manufacturer>
+		<rom name="SuperHair 128K (2021)(Bitmap Soft).tap" size="65034" crc="252c0023"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="superhair48" cloneof="superhair128" romof="superhair128">
+		<description>SuperHair (48K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Bitmap Soft</manufacturer>
+		<rom name="SuperHair 48K (2021)(Bitmap Soft).tap" size="48216" crc="96c8b90a"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -12480,13 +12628,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="vigilante" romof="spec128">
-		<description>Vigilante</description>
+	<game name="vigilante" romof="spectrum">
+		<description>Vigilante (48K)</description>
 		<year>1989</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Vigilante (1989)(U.S. Gold).tap" size="110650" crc="372bf21f"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

@@ -3583,7 +3583,7 @@
 	<game name="decathln" romof="msx">
 		<description>Decathlon (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>Pony Canyon</manufacturer>
+		<manufacturer>Pony Canyon - Activision</manufacturer>
 		<rom name="decathlon (japan).rom" size="16384" crc="f99b1c22"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -3685,6 +3685,28 @@
 		<year>1986</year>
 		<manufacturer>Mind Games Espa??a</manufacturer>
 		<rom name="destroyer (1986)(mind games espana)(es)[run'cas-'].cas" size="50815" crc="bad9355d"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dwtoomsxen" romof="msx">
+		<description>Devwill Too MSX (English) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Amaweks</manufacturer>
+		<rom name="Devwill Too MSX EN (2021)(Amaweks).rom" size="49152" crc="6b264498"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dwtoomsxpt" cloneof="dwtoomsxen" romof="dwtoomsxen">
+		<description>Devwill Too MSX (Portuguese) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Amaweks</manufacturer>
+		<rom name="Devwill Too MSX PT (2021)(Amaweks).rom" size="49152" crc="dabb15f4"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

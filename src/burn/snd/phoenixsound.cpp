@@ -52,13 +52,44 @@ static INT32 tone1_vco1_cap;
 static INT32 tone1_level;
 static INT32 tone2_level;
 
+static INT32 tone1_vco1_output, tone1_vco1_counter, tone1_vco1_level;
+static INT32 tone1_vco2_output, tone1_vco2_counter, tone1_vco2_level;
+static INT32 tone1_vco_counter, tone1_vco_level, tone1_vco_rate, tone1_vco_charge;
+static INT32 tone1_counter, tone1_divisor, tone1_output;
+static INT32 tone2_vco_counter, tone2_vco_level;
+static INT32 tone2_counter, tone2_divisor, tone2_output;
+static INT32 c24_counter, c24_level;
+static INT32 c25_counter, c25_level;
+static INT32 noise_counter, noise_polyoffs, noise_polybit, noise_lowpass_counter, noise_lowpass_polybit;
+
 static UINT32 *poly18 = NULL;
 
 static INT32 phoenixsnd_initted = 0;
 
+void phoenix_sound_scan(INT32 nAction, INT32 *pnMin)
+{
+	bprintf(0, _T("phoenix_scan\n"));
+	tms36xx_scan(nAction, pnMin);
+
+	SCAN_VAR(sound_latch_a);
+	SCAN_VAR(sound_latch_b);
+	SCAN_VAR(tone1_vco1_cap);
+	SCAN_VAR(tone1_level);
+	SCAN_VAR(tone2_level);
+
+	SCAN_VAR(tone1_vco1_output); SCAN_VAR(tone1_vco1_counter); SCAN_VAR(tone1_vco1_level);
+	SCAN_VAR(tone1_vco2_output); SCAN_VAR(tone1_vco2_counter); SCAN_VAR(tone1_vco2_level);
+	SCAN_VAR(tone1_vco_counter); SCAN_VAR(tone1_vco_level); SCAN_VAR(tone1_vco_rate); SCAN_VAR(tone1_vco_charge);
+	SCAN_VAR(tone1_counter); SCAN_VAR(tone1_divisor); SCAN_VAR(tone1_output);
+	SCAN_VAR(tone2_vco_counter); SCAN_VAR(tone2_vco_level);
+	SCAN_VAR(tone2_counter); SCAN_VAR(tone2_divisor); SCAN_VAR(tone2_output);
+	SCAN_VAR(c24_counter); SCAN_VAR(c24_level);
+	SCAN_VAR(c25_counter); SCAN_VAR(c25_level);
+	SCAN_VAR(noise_counter); SCAN_VAR(noise_polyoffs); SCAN_VAR(noise_polybit); SCAN_VAR(noise_lowpass_counter); SCAN_VAR(noise_lowpass_polybit);
+}
+
 static INT32 tone1_vco1(INT32 samplerate)
 {
-    static INT32 output, counter, level;
 	/*
 	 * L447 (NE555): Ra=47k, Rb=100k, C = 0.01uF, 0.48uF, 1.01uF or 1.48uF
      * charge times = 0.639*(Ra+Rb)*C = 0.0092s, 0.0451s, 0.0949s, 0.1390s
@@ -70,7 +101,7 @@ static INT32 tone1_vco1(INT32 samplerate)
 	#define C18d	1.48e-6
 	#define R40 	47000
 	#define R41 	100000
-    static INT32 rate[2][4] = {
+    static const INT32 rate[2][4] = {
 		{
 			(int)(double)(VMAX*2/3/(0.693*(R40+R41)*C18a)),
 			(int)(double)(VMAX*2/3/(0.693*(R40+R41)*C18b)),
@@ -84,47 +115,45 @@ static INT32 tone1_vco1(INT32 samplerate)
 			(int)(double)(VMAX*2/3/(0.693*R41*C18d))
         }
 	};
-	if( output )
+	if( tone1_vco1_output )
 	{
-		if (level > VMAX*1/3)
+		if (tone1_vco1_level > VMAX*1/3)
 		{
-			counter -= rate[1][tone1_vco1_cap];
-			if( counter <= 0 )
+			tone1_vco1_counter -= rate[1][tone1_vco1_cap];
+			if( tone1_vco1_counter <= 0 )
 			{
-				INT32 steps = -counter / samplerate + 1;
-				counter += steps * samplerate;
-				if( (level -= steps) <= VMAX*1/3 )
+				INT32 steps = -tone1_vco1_counter / samplerate + 1;
+				tone1_vco1_counter += steps * samplerate;
+				if( (tone1_vco1_level -= steps) <= VMAX*1/3 )
 				{
-					level = VMAX*1/3;
-                    output = 0;
+					tone1_vco1_level = VMAX*1/3;
+                    tone1_vco1_output = 0;
 				}
 			}
 		}
 	}
 	else
 	{
-		if (level < VMAX*2/3)
+		if (tone1_vco1_level < VMAX*2/3)
 		{
-			counter -= rate[0][tone1_vco1_cap];
-			if( counter <= 0 )
+			tone1_vco1_counter -= rate[0][tone1_vco1_cap];
+			if( tone1_vco1_counter <= 0 )
 			{
-                INT32 steps = -counter / samplerate + 1;
-				counter += steps * samplerate;
-				if( (level += steps) >= VMAX*2/3 )
+                INT32 steps = -tone1_vco1_counter / samplerate + 1;
+				tone1_vco1_counter += steps * samplerate;
+				if( (tone1_vco1_level += steps) >= VMAX*2/3 )
 				{
-					level = VMAX*2/3;
-					output = 1;
+					tone1_vco1_level = VMAX*2/3;
+					tone1_vco1_output = 1;
 				}
 			}
 		}
 	}
-	return output;
+	return tone1_vco1_output;
 }
 
 static INT32 tone1_vco2(INT32 samplerate)
 {
-	static INT32 output, counter, level;
-
 	/*
 	 * L517 (NE555): Ra=570k, Rb=570k, C=10uF
 	 * charge time = 0.639*(Ra+Rb)*C = 7.9002s
@@ -134,64 +163,63 @@ static INT32 tone1_vco2(INT32 samplerate)
 	#define R43 570000
 	#define R44 570000
 
-	if( output )
+	if( tone1_vco2_output )
 	{
-		if (level > VMIN)
+		if (tone1_vco2_level > VMIN)
 		{
-			counter -= (int)(VMAX*2/3 / (0.693 * R44 * C20));
-			if( counter <= 0 )
+			tone1_vco2_counter -= (int)(VMAX*2/3 / (0.693 * R44 * C20));
+			if( tone1_vco2_counter <= 0 )
 			{
-				INT32 steps = -counter / samplerate + 1;
-				counter += steps * samplerate;
-				if( (level -= steps) <= VMAX*1/3 )
+				INT32 steps = -tone1_vco2_counter / samplerate + 1;
+				tone1_vco2_counter += steps * samplerate;
+				if( (tone1_vco2_level -= steps) <= VMAX*1/3 )
 				{
-					level = VMAX*1/3;
-					output = 0;
+					tone1_vco2_level = VMAX*1/3;
+					tone1_vco2_output = 0;
 				}
 			}
 		}
 	}
 	else
 	{
-		if (level < VMAX)
+		if (tone1_vco2_level < VMAX)
 		{
-			counter -= (int)(VMAX*2/3 / (0.693 * (R43 + R44) * C20));
-			if( counter <= 0 )
+			tone1_vco2_counter -= (int)(VMAX*2/3 / (0.693 * (R43 + R44) * C20));
+			if( tone1_vco2_counter <= 0 )
 			{
-				INT32 steps = -counter / samplerate + 1;
-				counter += steps * samplerate;
-				if( (level += steps) >= VMAX*2/3 )
+				INT32 steps = -tone1_vco2_counter / samplerate + 1;
+				tone1_vco2_counter += steps * samplerate;
+				if( (tone1_vco2_level += steps) >= VMAX*2/3 )
 				{
-					level = VMAX*2/3;
-					output = 1;
+					tone1_vco2_level = VMAX*2/3;
+					tone1_vco2_output = 1;
 				}
 			}
 		}
 	}
 
-	return output;
+	return tone1_vco2_output;
 }
 
 static INT32 tone1_vco(INT32 samplerate, INT32 vco1, INT32 vco2)
 {
-	static INT32 counter, level, rate, charge;
 	INT32 voltage;
 
-	if (level != charge)
+	if (tone1_vco_level != tone1_vco_charge)
     {
         /* charge or discharge C22 */
-        counter -= rate;
-        while( counter <= 0 )
+        tone1_vco_counter -= tone1_vco_rate;
+        while( tone1_vco_counter <= 0 )
         {
-            counter += samplerate;
-            if( level < charge )
+            tone1_vco_counter += samplerate;
+            if( tone1_vco_level < tone1_vco_charge )
             {
-				if( ++level == charge )
+				if( ++tone1_vco_level == tone1_vco_charge )
                     break;
             }
             else
             {
-				if( --level == charge )
+				if( --tone1_vco_level == tone1_vco_charge )
                     break;
             }
         }
@@ -216,9 +244,9 @@ static INT32 tone1_vco(INT32 samplerate, INT32 vco1, INT32 vco2)
 			 *			   |
 			 *			  0V
 			 */
-			charge = VMAX;
-			rate = (int)((charge - level) / (RP * C22));
-			voltage = level + (VMAX-level) * R46 / (R46 + R42);
+			tone1_vco_charge = VMAX;
+			tone1_vco_rate = (int)((tone1_vco_charge - tone1_vco_level) / (RP * C22));
+			voltage = tone1_vco_level + (VMAX-tone1_vco_level) * R46 / (R46 + R42);
 		}
 		else
 		{
@@ -233,12 +261,12 @@ static INT32 tone1_vco(INT32 samplerate, INT32 vco1, INT32 vco2)
 			 *			  0V
              */
 			/* simplification: charge = (R42 + R46) / (R42 + R45 + R46); */
-            charge = VMAX * 27 / 50;
-			if (charge >= level)
-				rate = (int)((charge - level) / (R45 * C22));
+            tone1_vco_charge = VMAX * 27 / 50;
+			if (tone1_vco_charge >= tone1_vco_level)
+				tone1_vco_rate = (int)((tone1_vco_charge - tone1_vco_level) / (R45 * C22));
 			else
-				rate = (int)((level - charge) / ((R46+R42) * C22));
-			voltage = level * R42 / (R46 + R42);
+				tone1_vco_rate = (int)((tone1_vco_level - tone1_vco_charge) / ((R46+R42) * C22));
+			voltage = tone1_vco_level * R42 / (R46 + R42);
 		}
 	}
 	else
@@ -256,12 +284,12 @@ static INT32 tone1_vco(INT32 samplerate, INT32 vco1, INT32 vco2)
 			 *			  0V
 			 */
 			/* simplification: charge = VMAX * R45 / (R42 + R45 + R46); */
-            charge = VMAX * 23 / 50;
-			if (charge >= level)
-				rate = (int)((charge - level) / ((R42 + R46) * C22));
+            tone1_vco_charge = VMAX * 23 / 50;
+			if (tone1_vco_charge >= tone1_vco_level)
+				tone1_vco_rate = (int)((tone1_vco_charge - tone1_vco_level) / ((R42 + R46) * C22));
 			else
-				rate = (int)((level - charge) / (R45 * C22));
-			voltage = level + (VMAX - level) * R46 / (R42 + R46);
+				tone1_vco_rate = (int)((tone1_vco_level - tone1_vco_charge) / (R45 * C22));
+			voltage = tone1_vco_level + (VMAX - tone1_vco_level) * R46 / (R42 + R46);
 		}
 		else
 		{
@@ -275,9 +303,9 @@ static INT32 tone1_vco(INT32 samplerate, INT32 vco1, INT32 vco2)
 			 *			   |
 			 *			  0V
 			 */
-			charge = VMIN;
-			rate = (int)((level - charge) / (RP * C22));
-			voltage = level * R42 / (R46 + R42);
+			tone1_vco_charge = VMIN;
+			tone1_vco_rate = (int)((tone1_vco_level - tone1_vco_charge) / (RP * C22));
+			voltage = tone1_vco_level * R42 / (R46 + R42);
 		}
 	}
 
@@ -289,32 +317,29 @@ static INT32 tone1_vco(INT32 samplerate, INT32 vco1, INT32 vco2)
 
 static INT32 tone1(INT32 samplerate)
 {
-	static INT32 counter, divisor, output;
 	INT32 vco1 = tone1_vco1(samplerate);
 	INT32 vco2 = tone1_vco2(samplerate);
 	INT32 frequency = tone1_vco(samplerate, vco1, vco2);
 
 	if( (sound_latch_a & 15) != 15 )
 	{
-		counter -= frequency;
-		while( counter <= 0 )
+		tone1_counter -= frequency;
+		while( tone1_counter <= 0 )
 		{
-			counter += samplerate;
-			if( ++divisor == 16 )
+			tone1_counter += samplerate;
+			if( ++tone1_divisor == 16 )
 			{
-				divisor = sound_latch_a & 15;
-				output ^= 1;
+				tone1_divisor = sound_latch_a & 15;
+				tone1_output ^= 1;
 			}
 		}
 	}
 
-	return output ? tone1_level : -tone1_level;
+	return tone1_output ? tone1_level : -tone1_level;
 }
 
 static INT32 tone2_vco(INT32 samplerate)
 {
-	static INT32 counter, level;
-
 	/*
 	 * This is how the tone2 part of the circuit looks like.
 	 * I was having a hard time to guesstimate the results
@@ -355,24 +380,24 @@ static INT32 tone2_vco(INT32 samplerate)
 
 	if( (sound_latch_b & 0x10) == 0 )
 	{
-		counter -= (C7_MAX - level) * 12 / (R23 * C7) / 5;
-		if( counter <= 0 )
+		tone2_vco_counter -= (C7_MAX - tone2_vco_level) * 12 / (R23 * C7) / 5;
+		if( tone2_vco_counter <= 0 )
 		{
-			INT32 n = (-counter / samplerate) + 1;
-			counter += n * samplerate;
-			if( (level += n) > C7_MAX)
-				level = C7_MAX;
+			INT32 n = (-tone2_vco_counter / samplerate) + 1;
+			tone2_vco_counter += n * samplerate;
+			if( (tone2_vco_level += n) > C7_MAX)
+				tone2_vco_level = C7_MAX;
 		}
 	}
 	else
 	{
-		counter -= (level - C7_MIN) * 12 / (R22pR24 * C7) / 5;
-		if( counter <= 0 )
+		tone2_vco_counter -= (tone2_vco_level - C7_MIN) * 12 / (R22pR24 * C7) / 5;
+		if( tone2_vco_counter <= 0 )
 		{
-			INT32 n = (-counter / samplerate) + 1;
-			counter += n * samplerate;
-			if( (level -= n) < C7_MIN)
-				level = C7_MIN;
+			INT32 n = (-tone2_vco_counter / samplerate) + 1;
+			tone2_vco_counter += n * samplerate;
+			if( (tone2_vco_level -= n) < C7_MIN)
+				tone2_vco_level = C7_MIN;
 		}
 	}
 	/*
@@ -380,33 +405,31 @@ static INT32 tone2_vco(INT32 samplerate)
 	 * Ra = R25 (47k), Rb = R26 (47k), C = C8 (0.001uF)
 	 * frequency 1.44/((Ra+2*Rb)*C) = 10212 Hz
 	 */
-	return 10212 * level / 32768;
+	return 10212 * tone2_vco_level / 32768;
 }
 
 static INT32 tone2(INT32 samplerate)
 {
-	static INT32 counter, divisor, output;
 	INT32 frequency = tone2_vco(samplerate);
 
 	if( (sound_latch_b & 15) != 15 )
 	{
-		counter -= frequency;
-		while( counter <= 0 )
+		tone2_counter -= frequency;
+		while( tone2_counter <= 0 )
 		{
-			counter += samplerate;
-			if( ++divisor == 16 )
+			tone2_counter += samplerate;
+			if( ++tone2_divisor == 16 )
 			{
-				divisor = sound_latch_b & 15;
-				output ^= 1;
+				tone2_divisor = sound_latch_b & 15;
+				tone2_output ^= 1;
 			}
 		}
 	}
-	return output ? tone2_level : -tone2_level;
+	return tone2_output ? tone2_level : -tone2_level;
 }
 
 static INT32 update_c24(INT32 samplerate)
 {
-	static INT32 counter, level;
 	/*
 	 * Noise frequency control (Port B):
 	 * Bit 6 lo charges C24 (6.8u) via R51 (330) and when
@@ -419,38 +442,37 @@ static INT32 update_c24(INT32 samplerate)
 	#define R52 20000
 	if( sound_latch_a & 0x40 )
 	{
-		if (level > VMIN)
+		if (c24_level > VMIN)
 		{
-			counter -= (int)((level - VMIN) / (R52 * C24));
-			if( counter <= 0 )
+			c24_counter -= (int)((c24_level - VMIN) / (R52 * C24));
+			if( c24_counter <= 0 )
 			{
-				INT32 n = -counter / samplerate + 1;
-				counter += n * samplerate;
-				if( (level -= n) < VMIN)
-					level = VMIN;
+				INT32 n = -c24_counter / samplerate + 1;
+				c24_counter += n * samplerate;
+				if( (c24_level -= n) < VMIN)
+					c24_level = VMIN;
 			}
 		}
     }
 	else
 	{
-		if (level < VMAX)
+		if (c24_level < VMAX)
 		{
-			counter -= (int)((VMAX - level) / ((R51+R49) * C24));
-			if( counter <= 0 )
+			c24_counter -= (int)((VMAX - c24_level) / ((R51+R49) * C24));
+			if( c24_counter <= 0 )
 			{
-				INT32 n = -counter / samplerate + 1;
-				counter += n * samplerate;
-				if( (level += n) > VMAX)
-					level = VMAX;
+				INT32 n = -c24_counter / samplerate + 1;
+				c24_counter += n * samplerate;
+				if( (c24_level += n) > VMAX)
+					c24_level = VMAX;
 			}
 		}
     }
-	return VMAX - level;
+	return VMAX - c24_level;
 }
 
 static INT32 update_c25(INT32 samplerate)
 {
-	static INT32 counter, level;
 	/*
 	 * Bit 7 hi charges C25 (6.8u) over a R50 (1k) and R53 (330) and when
 	 * bit 7 is lo, C25 is discharged through R54 (47k)
@@ -463,39 +485,37 @@ static INT32 update_c25(INT32 samplerate)
 
 	if( sound_latch_a & 0x80 )
 	{
-		if (level < VMAX)
+		if (c25_level < VMAX)
 		{
-			counter -= (int)((VMAX - level) / ((R50+R53) * C25));
-			if( counter <= 0 )
+			c25_counter -= (int)((VMAX - c25_level) / ((R50+R53) * C25));
+			if( c25_counter <= 0 )
 			{
-				INT32 n = -counter / samplerate + 1;
-				counter += n * samplerate;
-				if( (level += n) > VMAX )
-					level = VMAX;
+				INT32 n = -c25_counter / samplerate + 1;
+				c25_counter += n * samplerate;
+				if( (c25_level += n) > VMAX )
+					c25_level = VMAX;
 			}
 		}
 	}
 	else
 	{
-		if (level > VMIN)
+		if (c25_level > VMIN)
 		{
-			counter -= (int)((level - VMIN) / (R54 * C25));
-			if( counter <= 0 )
+			c25_counter -= (int)((c25_level - VMIN) / (R54 * C25));
+			if( c25_counter <= 0 )
 			{
-				INT32 n = -counter / samplerate + 1;
-				counter += n * samplerate;
-				if( (level -= n) < VMIN )
-					level = VMIN;
+				INT32 n = -c25_counter / samplerate + 1;
+				c25_counter += n * samplerate;
+				if( (c25_level -= n) < VMIN )
+					c25_level = VMIN;
 			}
 		}
 	}
-	return level;
+	return c25_level;
 }
-
 
 static INT32 noise(INT32 samplerate)
 {
-	static INT32 counter, polyoffs, polybit, lowpass_counter, lowpass_polybit;
 	INT32 vc24 = update_c24(samplerate);
 	INT32 vc25 = update_c25(samplerate);
 	INT32 sum = 0, level, frequency;
@@ -518,25 +538,25 @@ static INT32 noise(INT32 samplerate)
 	 * R71 (2700 Ohms) parallel to R73 (47k Ohms) = approx. 2553 Ohms
 	 * maxfreq = 1.44 / ((2553+2*1000) * 0.05e-6) = approx. 6325 Hz
 	 */
-	counter -= frequency;
-	if( counter <= 0 )
+	noise_counter -= frequency;
+	if( noise_counter <= 0 )
 	{
-		INT32 n = (-counter / samplerate) + 1;
-		counter += n * samplerate;
-		polyoffs = (polyoffs + n) & 0x3ffff;
-		polybit = (poly18[polyoffs>>5] >> (polyoffs & 31)) & 1;
+		INT32 n = (-noise_counter / samplerate) + 1;
+		noise_counter += n * samplerate;
+		noise_polyoffs = (noise_polyoffs + n) & 0x3ffff;
+		noise_polybit = (poly18[noise_polyoffs>>5] >> (noise_polyoffs & 31)) & 1;
 	}
-	if (!polybit)
+	if (!noise_polybit)
 		sum += vc24;
 
 	/* 400Hz crude low pass filter: this is only a guess!! */
-	lowpass_counter -= 400;
-	if( lowpass_counter <= 0 )
+	noise_lowpass_counter -= 400;
+	if( noise_lowpass_counter <= 0 )
 	{
-		lowpass_counter += samplerate;
-		lowpass_polybit = polybit;
+		noise_lowpass_counter += samplerate;
+		noise_lowpass_polybit = noise_polybit;
 	}
-	if (!lowpass_polybit)
+	if (!noise_lowpass_polybit)
 		sum += vc25;
 
 	return sum;
@@ -598,6 +618,17 @@ void phoenix_sound_reset()
 	tone1_vco1_cap = 0;
 	tone1_level = VMAX;
 	tone2_level = VMAX;
+
+	tone1_vco1_output = tone1_vco1_counter = tone1_vco1_level = 0;
+	tone1_vco2_output = tone1_vco2_counter = tone1_vco2_level = 0;
+	tone1_vco_counter = tone1_vco_level = tone1_vco_rate = tone1_vco_charge = 0;
+	tone1_counter = tone1_divisor = tone1_output = 0;
+	tone2_vco_counter = tone2_vco_level = 0;
+	tone2_counter = tone2_divisor = tone2_output = 0;
+	c24_counter = c24_level = 0;
+	c25_counter = c25_level = 0;
+	noise_counter = noise_polyoffs = noise_polybit = noise_lowpass_counter = noise_lowpass_polybit = 0;
+
 	tms36xx_reset();
 }
 

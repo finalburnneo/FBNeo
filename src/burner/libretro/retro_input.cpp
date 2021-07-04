@@ -2762,6 +2762,44 @@ void retro_set_input_state(retro_input_state_t cb) { input_cb = cb; }
 void retro_set_input_poll(retro_input_poll_t cb) { poll_cb = cb; }
 void retro_set_controller_port_device(unsigned port, unsigned device)
 {
+#if 1
+	// Retroarch is ignoring what i want, so let's force valid values
+	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM)
+	{
+		switch(port)
+		{
+			case 0:
+			case 1:
+				if(device != RETRO_DEVICE_JOYPAD)
+				{
+					device = RETRO_DEVICE_JOYPAD;
+					HandleMessage(RETRO_LOG_INFO, "[FBNeo] Unknown device type for port %d, forcing \"Joystick\" instead\n", port);
+				}
+				break;
+			case 2:
+				if(device != RETRO_DEVICE_KEYBOARD)
+				{
+					device = RETRO_DEVICE_KEYBOARD;
+					HandleMessage(RETRO_LOG_INFO, "[FBNeo] Unknown device type for port %d, forcing \"Keyboard\" instead\n", port);
+				}
+				break;
+		}
+	}
+	else
+	{
+		if (device != RETROPAD_CLASSIC &&
+			device != RETROPAD_MODERN &&
+			device != RETROMOUSE_BALL &&
+			device != RETROMOUSE_FULL &&
+			device != RETRO_DEVICE_POINTER &&
+			device != RETRO_DEVICE_LIGHTGUN)
+		{
+			device = RETROPAD_CLASSIC;
+			HandleMessage(RETRO_LOG_INFO, "[FBNeo] Unknown device type for port %d, forcing \"Classic\" instead\n", port);
+		}
+	}
+#endif
+
 	if (port < nMaxControllers && nDeviceType[port] != device)
 	{
 		nDeviceType[port] = device;

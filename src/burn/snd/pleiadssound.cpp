@@ -54,27 +54,67 @@ static INT32 noise_freq;
 static INT32 polybit_resistor;
 static INT32 opamp_resistor;
 
+static INT32 tone1_counter, tone1_divisor, tone1_output;
+static INT32 pb4_counter, pb4_level;
+static INT32 tone23_counter2, tone23_output2, tone23_counter3, tone23_output3;
+#define PC4_MIN (int)(VMAX * 7 / 50)
+static INT32 pc4_counter, pc4_level;
+static INT32 pc5_counter, pc5_level;
+static INT32 pa5_counter, pa5_level;
+static INT32 tone4_counter, tone4_output;
+static INT32 pa6_counter, pa6_level;
+static INT32 noise_counter, noise_polyoffs;
+
+void pleiads_sound_scan(INT32 nAction, INT32 *pnMin)
+{
+	tms36xx_scan(nAction, pnMin);
+
+	SCAN_VAR(sound_latch_a);
+	SCAN_VAR(sound_latch_b);
+	SCAN_VAR(sound_latch_c);
+
+	SCAN_VAR(tone1_counter);
+	SCAN_VAR(tone1_divisor);
+	SCAN_VAR(tone1_output);
+	SCAN_VAR(pb4_counter);
+	SCAN_VAR(pb4_level);
+	SCAN_VAR(tone23_counter2);
+	SCAN_VAR(tone23_output2);
+	SCAN_VAR(tone23_counter3);
+	SCAN_VAR(tone23_output3);
+	SCAN_VAR(pc4_counter);
+	SCAN_VAR(pc4_level);
+	SCAN_VAR(pc5_counter);
+	SCAN_VAR(pc5_level);
+	SCAN_VAR(pa5_counter);
+	SCAN_VAR(pa5_level);
+	SCAN_VAR(tone4_counter);
+	SCAN_VAR(tone4_output);
+	SCAN_VAR(pa6_counter);
+	SCAN_VAR(pa6_level);
+	SCAN_VAR(noise_counter);
+	SCAN_VAR(noise_polyoffs);
+}
+
 /*****************************************************************************
  * Tone #1 is a fixed 8 kHz signal divided by 1 to 15.
  *****************************************************************************/
 static INT32 tone1(INT32 samplerate)
 {
-	static INT32 counter, divisor, output;
-
 	if( (sound_latch_a & 15) != 15 )
 	{
-		counter -= TONE1_CLOCK;
-		while( counter <= 0 )
+		tone1_counter -= TONE1_CLOCK;
+		while( tone1_counter <= 0 )
 		{
-			counter += samplerate;
-			if( ++divisor == 16 )
+			tone1_counter += samplerate;
+			if( ++tone1_divisor == 16 )
 			{
-				divisor = sound_latch_a & 15;
-				output ^= 1;
+				tone1_divisor = sound_latch_a & 15;
+				tone1_output ^= 1;
 			}
 		}
 	}
-	return output ? VMAX : -VMAX;
+	return tone1_output ? VMAX : -VMAX;
 }
 
 /*****************************************************************************
@@ -84,43 +124,40 @@ static INT32 tone1(INT32 samplerate)
  *****************************************************************************/
 static INT32 update_pb4(INT32 samplerate)
 {
-	static INT32 counter, level;
-
 	/* bit 4 of latch B: charge 10uF (C28/C68) through 10k (R19/R25) */
 	if( sound_latch_b & 0x10 )
 	{
-		if( level < VMAX )
+		if( pb4_level < VMAX )
 		{
-			counter -= (int)((VMAX - level) / pb4_charge_time);
-			if( counter <= 0 )
+			pb4_counter -= (int)((VMAX - pb4_level) / pb4_charge_time);
+			if( pb4_counter <= 0 )
 			{
-				INT32 n = (-counter / samplerate) + 1;
-				counter += n * samplerate;
-				if( (level += n) > VMAX )
-					level = VMAX;
+				INT32 n = (-pb4_counter / samplerate) + 1;
+				pb4_counter += n * samplerate;
+				if( (pb4_level += n) > VMAX )
+					pb4_level = VMAX;
 			}
 		}
 	}
 	else
 	{
-		if( level > VMIN )
+		if( pb4_level > VMIN )
 		{
-			counter -= (int)((level - VMIN) / pb4_discharge_time);
-			if( counter <= 0 )
+			pb4_counter -= (int)((pb4_level - VMIN) / pb4_discharge_time);
+			if( pb4_counter <= 0 )
 			{
-				INT32 n = (-counter / samplerate) + 1;
-				counter += n * samplerate;
-				if( (level -= n) < VMIN)
-					level = VMIN;
+				INT32 n = (-pb4_counter / samplerate) + 1;
+				pb4_counter += n * samplerate;
+				if( (pb4_level -= n) < VMIN)
+					pb4_level = VMIN;
 			}
 		}
 	}
-	return level;
+	return pb4_level;
 }
 
 static INT32 tone23(INT32 samplerate)
 {
-	static INT32 counter2, output2, counter3, output3;
 	INT32 level = VMAX - update_pb4(samplerate);
 	INT32 sum = 0;
 
@@ -131,25 +168,25 @@ static INT32 tone23(INT32 samplerate)
     /* modulate timers from the upper 556 with the voltage on Cxx on PB4. */
 	if( level < VMAX )
 	{
-		counter2 -= tone2_max_freq * level / 32768;
-		if( counter2 <= 0 )
+		tone23_counter2 -= tone2_max_freq * level / 32768;
+		if( tone23_counter2 <= 0 )
 		{
-			INT32 n = (-counter2 / samplerate) + 1;
-			counter2 += n * samplerate;
-			output2 = (output2 + n) & 1;
+			INT32 n = (-tone23_counter2 / samplerate) + 1;
+			tone23_counter2 += n * samplerate;
+			tone23_output2 = (tone23_output2 + n) & 1;
 		}
 
-		counter3 -= tone3_max_freq*1/3 + tone3_max_freq*2/3 * level / 33768;
-		if( counter3 <= 0 )
+		tone23_counter3 -= tone3_max_freq*1/3 + tone3_max_freq*2/3 * level / 33768;
+		if( tone23_counter3 <= 0 )
 		{
-			INT32 n = (-counter2 / samplerate) + 1;
-			counter3 += samplerate;
-			output3 = (output3 + n) & 1;
+			INT32 n = (-tone23_counter2 / samplerate) + 1;
+			tone23_counter3 += samplerate;
+			tone23_output3 = (tone23_output3 + n) & 1;
 		}
 	}
 
-	sum += (output2) ? VMAX : -VMAX;
-	sum += (output3) ? VMAX : -VMAX;
+	sum += (tone23_output2) ? VMAX : -VMAX;
+	sum += (tone23_output3) ? VMAX : -VMAX;
 
 	return sum / 2;
 }
@@ -163,117 +200,108 @@ static INT32 tone23(INT32 samplerate)
  *****************************************************************************/
 static INT32 update_c_pc4(INT32 samplerate)
 {
-	#define PC4_MIN (int)(VMAX * 7 / 50)
-
-	static INT32 counter, level = PC4_MIN;
-
 	/* bit 4 of latch C: (part of videoreg_w) hi? */
 	if (sound_latch_c & 0x10)
 	{
-		if (level < VMAX)
+		if (pc4_level < VMAX)
 		{
-			counter -= (int)((VMAX - level) / pc4_charge_time);
-			if( counter <= 0 )
+			pc4_counter -= (int)((VMAX - pc4_level) / pc4_charge_time);
+			if( pc4_counter <= 0 )
 			{
-				INT32 n = (-counter / samplerate) + 1;
-				counter += n * samplerate;
-				if( (level += n) > VMAX )
-					level = VMAX;
+				INT32 n = (-pc4_counter / samplerate) + 1;
+				pc4_counter += n * samplerate;
+				if( (pc4_level += n) > VMAX )
+					pc4_level = VMAX;
 			}
 		}
 	}
 	else
 	{
-		if (level > PC4_MIN)
+		if (pc4_level > PC4_MIN)
 		{
-			counter -= (int)((level - PC4_MIN) / pc4_discharge_time);
-			if( counter <= 0 )
+			pc4_counter -= (int)((pc4_level - PC4_MIN) / pc4_discharge_time);
+			if( pc4_counter <= 0 )
 			{
-				INT32 n = (-counter / samplerate) + 1;
-				counter += n * samplerate;
-				if( (level -= n) < PC4_MIN )
-					level = PC4_MIN;
+				INT32 n = (-pc4_counter / samplerate) + 1;
+				pc4_counter += n * samplerate;
+				if( (pc4_level -= n) < PC4_MIN )
+					pc4_level = PC4_MIN;
 			}
 		}
 	}
-	return level;
+	return pc4_level;
 }
 
 static INT32 update_c_pc5(INT32 samplerate)
 {
-	static INT32 counter, level;
-
 	/* bit 5 of latch C: charge or discharge C52 */
 	if (sound_latch_c & 0x20)
 	{
-		if (level < VMAX)
+		if (pc5_level < VMAX)
 		{
-			counter -= (int)((VMAX - level) / pc5_charge_time);
-			if( counter <= 0 )
+			pc5_counter -= (int)((VMAX - pc5_level) / pc5_charge_time);
+			if( pc5_counter <= 0 )
 			{
-				INT32 n = (-counter / samplerate) + 1;
-				counter += n * samplerate;
-				if( (level += n) > VMAX )
-					level = VMAX;
+				INT32 n = (-pc5_counter / samplerate) + 1;
+				pc5_counter += n * samplerate;
+				if( (pc5_level += n) > VMAX )
+					pc5_level = VMAX;
 			}
 		}
 	}
 	else
 	{
-		if (level > VMIN)
+		if (pc5_level > VMIN)
 		{
-			counter -= (int)((level - VMIN) / pc5_discharge_time);
-			if( counter <= 0 )
+			pc5_counter -= (int)((pc5_level - VMIN) / pc5_discharge_time);
+			if( pc5_counter <= 0 )
 			{
-				INT32 n = (-counter / samplerate) + 1;
-				counter += samplerate;
-				if( (level -= n) < VMIN )
-					level = VMIN;
+				INT32 n = (-pc5_counter / samplerate) + 1;
+				pc5_counter += samplerate;
+				if( (pc5_level -= n) < VMIN )
+					pc5_level = VMIN;
 			}
 		}
 	}
-	return level;
+	return pc5_level;
 }
 
 static INT32 update_c_pa5(INT32 samplerate)
 {
-	static INT32 counter, level;
-
 	/* bit 5 of latch A: charge or discharge C63 */
 	if (sound_latch_a & 0x20)
 	{
-		if (level < VMAX)
+		if (pa5_level < VMAX)
 		{
-			counter -= (int)((VMAX - level) / pa5_charge_time);
-			if( counter <= 0 )
+			pa5_counter -= (int)((VMAX - pa5_level) / pa5_charge_time);
+			if( pa5_counter <= 0 )
 			{
-				INT32 n = (-counter / samplerate) + 1;
-				counter += n * samplerate;
-				if( (level += n) > VMAX )
-					level = VMAX;
+				INT32 n = (-pa5_counter / samplerate) + 1;
+				pa5_counter += n * samplerate;
+				if( (pa5_level += n) > VMAX )
+					pa5_level = VMAX;
 			}
 		}
 	}
 	else
 	{
-		if (level > VMIN)
+		if (pa5_level > VMIN)
 		{
-			counter -= (int)((level - VMIN) / pa5_discharge_time);
-			if( counter <= 0 )
+			pa5_counter -= (int)((pa5_level - VMIN) / pa5_discharge_time);
+			if( pa5_counter <= 0 )
 			{
-				INT32 n = (-counter / samplerate) + 1;
-				counter += samplerate;
-				if( (level -= n) < VMIN )
-					level = VMIN;
+				INT32 n = (-pa5_counter / samplerate) + 1;
+				pa5_counter += samplerate;
+				if( (pa5_level -= n) < VMIN )
+					pa5_level = VMIN;
 			}
 		}
 	}
-	return level;
+	return pa5_level;
 }
 
 static INT32 tone4(INT32 samplerate)
 {
-	static INT32 counter, output;
 	INT32 level = update_c_pc4(samplerate);
 	INT32 vpc5 = update_c_pc5(samplerate);
 	INT32 vpa5 = update_c_pa5(samplerate);
@@ -288,19 +316,19 @@ static INT32 tone4(INT32 samplerate)
 	else
 		level = level * polybit_resistor / (opamp_resistor + polybit_resistor);
 
-	counter -= tone4_max_freq * level / 32768;
-	if( counter <= 0 )
+	tone4_counter -= tone4_max_freq * level / 32768;
+	if( tone4_counter <= 0 )
 	{
-		INT32 n = (-counter / samplerate) + 1;
-		counter += n * samplerate;
-		output = (output + n) & 1;
+		INT32 n = (-tone4_counter / samplerate) + 1;
+		tone4_counter += n * samplerate;
+		tone4_output = (tone4_output + n) & 1;
 	}
 
 	/* mix the two signals */
 	sum = vpc5 * pa5_resistor / (pa5_resistor + pc5_resistor) +
 		  vpa5 * pc5_resistor / (pa5_resistor + pc5_resistor);
 
-	return (output) ? sum : -sum;
+	return (tone4_output) ? sum : -sum;
 }
 
 /*****************************************************************************
@@ -311,46 +339,42 @@ static INT32 tone4(INT32 samplerate)
  *****************************************************************************/
 static INT32 update_c_pa6(INT32 samplerate)
 {
-	static INT32 counter, level;
-
 	/* bit 6 of latch A: charge or discharge C63 */
 	if (sound_latch_a & 0x40)
 	{
-		if (level < VMAX)
+		if (pa6_level < VMAX)
 		{
-			counter -= (int)((VMAX - level) / pa6_charge_time);
-			if( counter <= 0 )
+			pa6_counter -= (int)((VMAX - pa6_level) / pa6_charge_time);
+			if( pa6_counter <= 0 )
 			{
-				INT32 n = (-counter / samplerate) + 1;
-				counter += n * samplerate;
-				if( (level += n) > VMAX )
-					level = VMAX;
+				INT32 n = (-pa6_counter / samplerate) + 1;
+				pa6_counter += n * samplerate;
+				if( (pa6_level += n) > VMAX )
+					pa6_level = VMAX;
 			}
 		}
 	}
 	else
 	{
 		/* only discharge of poly bit is active */
-		if (polybit && level > VMIN)
+		if (polybit && pa6_level > VMIN)
 		{
 			/* discharge 10uF through 10k -> 0.1s */
-			counter -= (int)((level - VMIN) / 0.1);
-			if( counter <= 0 )
+			pa6_counter -= (int)((pa6_level - VMIN) / 0.1);
+			if( pa6_counter <= 0 )
 			{
-				INT32 n = (-counter / samplerate) + 1;
-				counter += n * samplerate;
-				if( (level -= n) < VMIN )
-					level = VMIN;
+				INT32 n = (-pa6_counter / samplerate) + 1;
+				pa6_counter += n * samplerate;
+				if( (pa6_level -= n) < VMIN )
+					pa6_level = VMIN;
 			}
 		}
 	}
-	return level;
+	return pa6_level;
 }
-
 
 static INT32 noise(INT32 samplerate)
 {
-	static INT32 counter, polyoffs;
 	INT32 c_pa6_level = update_c_pa6(samplerate);
 	INT32 sum = 0;
 
@@ -359,16 +383,16 @@ static INT32 noise(INT32 samplerate)
 	 * CV2 input of lower 556 is connected via 2k resistor
 	 */
 	if ( sound_latch_a & 0x10 )
-		counter -= noise_freq * 2 / 3; /* ????? */
+		noise_counter -= noise_freq * 2 / 3; /* ????? */
 	else
-		counter -= noise_freq * 1 / 3; /* ????? */
+		noise_counter -= noise_freq * 1 / 3; /* ????? */
 
-	if( counter <= 0 )
+	if( noise_counter <= 0 )
 	{
-		INT32 n = (-counter / samplerate) + 1;
-		counter += n * samplerate;
-		polyoffs = (polyoffs + n) & 0x3ffff;
-		polybit = (poly18[polyoffs>>5] >> (polyoffs & 31)) & 1;
+		INT32 n = (-noise_counter / samplerate) + 1;
+		noise_counter += n * samplerate;
+		noise_polyoffs = (noise_polyoffs + n) & 0x3ffff;
+		polybit = (poly18[noise_polyoffs>>5] >> (noise_polyoffs & 31)) & 1;
 	}
 
 	/* The polynome output bit is used to gate bits 6 + 7 of
@@ -507,6 +531,20 @@ void pleiads_sound_deinit()
 static void internal_reset()
 {
 	sound_latch_a = sound_latch_b = sound_latch_c = 0;
+
+	tone1_counter = tone1_divisor = tone1_output = 0;
+	pb4_counter = pb4_level = 0;
+	tone23_counter2 = tone23_output2 = tone23_counter3 = tone23_output3 = 0;
+
+	pc4_level = PC4_MIN;
+
+	pc4_counter = pc4_level = 0;
+	pc5_counter = pc5_level = 0;
+	pa5_counter = pa5_level = 0;
+	tone4_counter = tone4_output = 0;
+	pa6_counter = pa6_level = 0;
+	noise_counter = noise_polyoffs = 0;
+
 	tms36xx_reset();
 }
 

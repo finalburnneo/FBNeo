@@ -312,6 +312,30 @@ else ifeq ($(platform), libnx)
 	INCLUDE_7Z_SUPPORT = 0
 	ENDIANNESS_DEFINES := -DLSB_FIRST
 
+# Funkey S
+else ifeq ($(platform), funkey)
+	TARGET := $(TARGET_NAME)_libretro.so
+	fpic := -fPIC
+	SHARED := -shared -Wl,-no-undefined -Wl,--version-script=$(VERSION_SCRIPT)
+	PLATFORM_FLAGS = -marm -mtune=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard
+	USE_EXPERIMENTAL_FLAGS = 1
+	HAVE_NEON = 1
+	USE_CYCLONE = 1
+	LIGHT = 1
+	ARCH = arm
+	ENDIANNESS_DEFINES := -DLSB_FIRST
+	ifeq ($(shell echo `$(CC) -dumpversion` "< 4.9" | bc -l), 1)
+		PLATFORM_FLAGS += -march=armv7-a
+	else
+		PLATFORM_FLAGS += -march=armv7ve
+		# If gcc is 5.0 or later
+		ifeq ($(shell echo `$(CC) -dumpversion` ">= 5" | bc -l), 1)
+			LDFLAGS += -static-libgcc -static-libstdc++
+		endif
+	endif
+	CFLAGS += $(PLATFORM_FLAGS)
+	CXXFLAGS += $(PLATFORM_FLAGS)
+
 # Classic Platforms ####################
 # Platform affix = classic_<ISA>_<µARCH>
 # Help at https://modmyclassic.com/comp

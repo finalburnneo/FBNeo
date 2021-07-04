@@ -567,6 +567,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		ZetScan(nAction);
 
+		pleiads_sound_scan(nAction, pnMin);
+
 		SCAN_VAR(cocktail);
 		SCAN_VAR(palettereg);
 		SCAN_VAR(bankreg);

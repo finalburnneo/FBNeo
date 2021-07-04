@@ -4,4 +4,4 @@ void phoenix_sound_control_b_w(INT32 address, UINT8 data);
 void phoenix_sound_reset();
 void phoenix_sound_init();
 void phoenix_sound_deinit();
-
+void phoenix_sound_scan(INT32 nAction, INT32 *pnMin);

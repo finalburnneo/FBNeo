@@ -7,4 +7,5 @@ void naughtyb_sound_reset();
 void popflame_sound_reset();
 void pleiads_sound_init(INT32 naughtybpopflamer);
 void pleiads_sound_deinit();
+void pleiads_sound_scan(INT32 nAction, INT32 *pnMin);
 

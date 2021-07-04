@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17207 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17208 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -555,6 +555,7 @@ This list contains all games supported by FinalBurn Neo.
 | alphamis	|  	| Alpha Mission						| aso		| 1985	| SNK		| Miscellaneous	| 					|
 | alphaone	|  	| Alpha One (prototype, 3 lives)			| mhavoc	| 1983	| Atari		| Miscellaneous	| 					|
 | alphaonea	|  	| Alpha One (prototype, 5 lives)			| mhavoc	| 1983	| Atari		| Miscellaneous	| 					|
+| alpha1v	|  	| Alpha One (Vision Electronics)			| 		| 1988	| Vision Electro| Miscellaneous	| 					|
 | msx_aroid	|  	| Alpha Roid (Jpn)					| 		| 1986	| Pony Canyon	| MSX		| 					|
 | msx_aroida	|  	| Alpha Roid (Jpn, Alt)					| msx_aroid	| 1986	| Pony Canyon	| MSX		| 					|
 | msx_asquadron	|  	| Alpha Squadron (Jpn)					| 		| 1984	| AG Corp.	| MSX		| 					|

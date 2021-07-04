@@ -561,6 +561,7 @@ DRV		BurnDrvAlpham2p;
 DRV		BurnDrvAlphamis;
 DRV		BurnDrvAlphaone;
 DRV		BurnDrvAlphaonea;
+DRV		BurnDrvAlpha1v;
 DRV		BurnDrvMSX_aroid;
 DRV		BurnDrvMSX_aroida;
 DRV		BurnDrvMSX_asquadron;
@@ -18013,6 +18014,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAlphamis,			// Alpha Mission
 	&BurnDrvAlphaone,			// Alpha One (prototype, 3 lives)
 	&BurnDrvAlphaonea,			// Alpha One (prototype, 5 lives)
+	&BurnDrvAlpha1v,			// Alpha One (Vision Electronics)
 	&BurnDrvMSX_aroid,			// Alpha Roid (Jpn)
 	&BurnDrvMSX_aroida,			// Alpha Roid (Jpn, Alt)
 	&BurnDrvMSX_asquadron,		// Alpha Squadron (Jpn)

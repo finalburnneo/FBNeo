@@ -6651,7 +6651,7 @@
 		<description>La Reliquia (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Angel Colaso</manufacturer>
-		<rom name="La Reliquia (2020)(Angel Colaso).tap" size="46629" crc="183c5158"/>
+		<rom name="La Reliquia (2020)(Angel Colaso).tap" size="46885" crc="8164dbff"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

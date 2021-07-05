@@ -2620,6 +2620,7 @@ DRV		BurnDrvCircusc4;
 DRV		BurnDrvsg1k_circusc;
 DRV		BurnDrvpce_circusld;
 DRV		BurnDrvCischeat;
+DRV		BurnDrvmd_citadel;
 DRV		BurnDrvCitybombj;
 DRV		BurnDrvCitybomb;
 DRV		BurnDrvMSX_citycon;
@@ -15808,6 +15809,7 @@ DRV		BurnDrvTkdenshoa;
 DRV		BurnDrvTkdensho;
 DRV		BurnDrvnes_toukonclub;
 DRV		BurnSpectour91;
+DRV		BurnDrvmd_tourmaline;
 DRV		BurnSpectrmline;
 DRV		BurnDrvarkatour;
 DRV		BurnDrvCprogolfj;
@@ -20073,6 +20075,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_circusc,		// Circus Charlie (Tw)
 	&BurnDrvpce_circusld,		// Circus Lido
 	&BurnDrvCischeat,			// Cisco Heat
+	&BurnDrvmd_citadel,			// Citadel of Chaos, The (HB, rev2.0)
 	&BurnDrvCitybombj,			// City Bomber (Japan)
 	&BurnDrvCitybomb,			// City Bomber (World)
 	&BurnDrvMSX_citycon,		// City Connection (Jpn)
@@ -33261,6 +33264,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTkdensho,			// Toukidenshou - Angel Eyes (VER. 960614)
 	&BurnDrvnes_toukonclub,		// Toukon Club (Japan)
 	&BurnSpectour91,			// Tour 91 (Spanish)
+	&BurnDrvmd_tourmaline,		// Tourmaline (HB)
 	&BurnSpectrmline,			// Tourmaline (HB)
 	&BurnDrvarkatour,			// Tournament Arkanoid (US)
 	&BurnDrvCprogolfj,			// Tournament Pro Golf (DECO Cassette) (Japan)

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17208 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17210 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2588,6 +2588,7 @@ This list contains all games supported by FinalBurn Neo.
 | sg1k_circusc	|  	| Circus Charlie (Tw)					| 		| 198?	| Aaronix	| Sega SG-1000	| 					|
 | pce_circusld	|  	| Circus Lido						| 		| 1991	| Yuni Post	| PC Engine	| 					|
 | cischeat	|  	| Cisco Heat						| 		| 1990	| Jaleco	| Miscellaneous	| Imperfect graphics			|
+| md_citadel	|  	| Citadel of Chaos, The (HB, rev2.0)			| 		| 2021	| Studio Vetea	| Sega Megadrive| 					|
 | citybombj	|  	| City Bomber (Japan)					| citybomb	| 1987	| Konami	| GX787		| 					|
 | citybomb	|  	| City Bomber (World)					| 		| 1987	| Konami	| GX787		| 					|
 | msx_citycon	|  	| City Connection (Jpn)					| 		| 1986	| Nihon Dexter	| MSX		| 					|
@@ -15608,6 +15609,7 @@ This list contains all games supported by FinalBurn Neo.
 | tkdensho	|  	| Toukidenshou - Angel Eyes (VER. 960614)		| 		| 1996	| Tecmo		| Miscellaneous	| 					|
 | nes_toukonclub|  	| Toukon Club (Japan)					| 		| 1992	| Jaleco	| Miscellaneous	| 					|
 | spec_tour91	|  	| Tour 91 (Spanish)					| 		| 1991	| Topo Soft	| ZX Spectrum	| 					|
+| md_tourmaline	|  	| Tourmaline (HB)					| 		| 2021	| RetroSouls	| Sega Megadrive| 					|
 | spec_trmline	|  	| Tourmaline (HB)					| 		| 2016	| RetroSouls	| ZX Spectrum	| 					|
 | arkatour	|  	| Tournament Arkanoid (US)				| 		| 1987	| Taito America | Arkanoid	| 					|
 | cprogolfj	|  	| Tournament Pro Golf (DECO Cassette) (Japan)		| cprogolf	| 1981	| Data East Corp| Cassette Syste| 					|

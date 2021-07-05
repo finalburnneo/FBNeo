@@ -21770,7 +21770,7 @@ struct BurnDriver BurnSpecJetpacrx = {
 // La Reliquia (HB)
 
 static struct BurnRomInfo SpecLareliquiaRomDesc[] = {
-	{ "La Reliquia (2020)(Angel Colaso).tap", 46629, 0x183c5158, BRF_ESS | BRF_PRG },
+	{ "La Reliquia (2020)(Angel Colaso).tap", 46885, 0x8164dbff, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecLareliquia, SpecLareliquia, Spec128)

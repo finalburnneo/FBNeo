@@ -6176,6 +6176,7 @@ void RenderPrioSprite(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 t
 	}
 }
 
+
 void RenderZoomedPrioTranstabSpriteOffset(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT8 *tab, UINT32 color_offset, INT32 priority)
 {
 #if defined FBNEO_DEBUG
@@ -6243,3 +6244,43 @@ void RenderZoomedPrioTranstabSprite(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 
 	RenderZoomedPrioTranstabSpriteOffset(dest, gfx, code, color, t, sx, sy, fx, fy, width, height, zoomx, zoomy, tab, 0x00, priority);
 }
 
+
+void RenderPrioTransmaskSprite(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 tmask, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 priority)
+{
+#if defined FBNEO_DEBUG
+	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderPrioTransmaskSprite called without init\n"));
+#endif
+
+	if (sx < (nScreenWidthMin - (width - 1)) || sy < (nScreenHeightMin - (height - 1)) || sx >= nScreenWidthMax || sy >= nScreenHeightMax) return;
+
+	UINT8 *gfx_base = gfx + (code * width * height);
+
+	priority |= 1 << 31;
+
+	INT32 flipx = fx ? (width - 1) : 0;
+	INT32 flipy = fy ? (height - 1) : 0;
+
+	for (INT32 y = 0; y < height; y++, sy++)
+	{
+		if (sy < nScreenHeightMin || sy >= nScreenHeightMax) continue;
+
+		UINT16 *dst = dest + sy * nScreenWidth + sx;
+		UINT8 *pri = pPrioDraw + sy * nScreenWidth + sx;
+
+		for (INT32 x = 0; x < width; x++, sx++)
+		{
+			if (sx < nScreenWidthMin || sx >= nScreenWidthMax) continue;
+
+			INT32 pxl = gfx_base[(y ^ flipy) * width + (x ^ flipx)];
+
+			if ((tmask & (1 << pxl)) == 0) {
+				if ((priority & (1 << pri[x])) == 0) {
+					dst[x] = pxl + color;
+				}
+				pri[x] = 0x1f;
+			}
+		}
+
+		sx -= width;
+	}
+}

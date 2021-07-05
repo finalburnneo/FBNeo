@@ -78,7 +78,7 @@ STDINPUTINFO(Senjyo)
 
 static struct BurnDIPInfo SenjyoDIPList[]=
 {
-	{0x0f, 0xff, 0xff, 0xc0, NULL					},
+	{0x0f, 0xff, 0xff, 0x80, NULL					},
 	{0x10, 0xff, 0xff, 0x43, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"				},
@@ -740,33 +740,32 @@ static void DrvPaletteUpdate()
 
 static void draw_bgbitmap()
 {
-	INT32 stripes = DrvVidRegs[0x27];
+	INT32 stripe = DrvVidRegs[0x27];
 
-	if (stripes == 0xff) {
+	if (stripe == 0xff) {
 		BurnTransferClear();
 		return;
 	}
 
 	INT32 pen = 0;
 	INT32 count = 0;
-	INT32 strwid = stripes;
-	if (strwid == 0) strwid = 0x100;
+	if (stripe == 0) stripe = 0x100;
 	INT32 flip = (flipscreen ? 0xff : 0);
+	if (flip) stripe ^= 0xff;
 
 	for (INT32 x = 0; x < nScreenWidth; x++)
 	{
-		UINT16 *dst = pTransDraw + (x ^ flip);
-		UINT16 color = pen + 0x180;
+		UINT16 *dst = pTransDraw + (x^flip);
+		UINT16 color = (pen & 0xf) + 0x180;
 
 		for (INT32 y = 0; y < nScreenHeight; y++) {
-			dst[(y^flip)*nScreenWidth] = color;
+			dst[((y^flip) % 224) * nScreenWidth] = color;
 		}
 
 		count += 0x10;
-		if (count >= strwid)
-		{
-			pen = (pen + 1) & 0x0f;
-			count -= strwid;
+		if (count >= stripe) {
+			pen++;
+			count -= stripe;
 		}
 	}
 }
@@ -780,7 +779,7 @@ static void draw_radar()
 			if (DrvRadarRAM[offs] & (1 << x))
 			{
 				INT32 sx = (8 * (offs % 8) + x) + 256-64;
-				INT32 sy = ((offs & 0x1ff) / 8) + 96-16;
+				INT32 sy = ((offs & 0x1ff) / 8) + 96-(flipscreen ? -16 : 16);
 
 				if (flipscreen)
 				{
@@ -821,13 +820,10 @@ static void draw_sprites(INT32 bigmask, INT32 priority)
 				flipx = !flipx;
 				flipy = !flipy;
 
-				if (big)
-				{
+				if (big) {
 					sx = 224 - sx;
 					sy = 226 - sy;
-				}
-				else
-				{
+				} else {
 					sx = 240 - sx;
 					sy = 242 - sy;
 				}
@@ -835,35 +831,10 @@ static void draw_sprites(INT32 bigmask, INT32 priority)
 
 			sy -= 16;
 
-			if (big)
-			{
-				if (flipy) {
-					if (flipx) {
-						Render32x32Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x140, DrvGfxROM5);
-					} else {
-						Render32x32Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x140, DrvGfxROM5);
-					}
-				} else {
-					if (flipx) {
-						Render32x32Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x140, DrvGfxROM5);
-					} else {
-						Render32x32Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x140, DrvGfxROM5);
-					}
-				}
+			if (big) {
+				Draw32x32MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 3, 0, 0x140, DrvGfxROM5);
 			} else {
-				if (flipy) {
-					if (flipx) {
-						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x140, DrvGfxROM4);
-					} else {
-						Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x140, DrvGfxROM4);
-					}
-				} else {
-					if (flipx) {
-						Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x140, DrvGfxROM4);
-					} else {
-						Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x140, DrvGfxROM4);
-					}
-				}
+				Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 3, 0, 0x140, DrvGfxROM4);
 			}
 		}
 	}
@@ -880,14 +851,20 @@ static void common_draw(INT32 scrollhack, INT32 spritemask) // senj = 0x80, star
 		GenericTilemapSetScrollCol(0, i, DrvVidRegs[i]);
 	}
 
-	GenericTilemapSetScrollX(1, DrvVidRegs[0x35]);
+	GenericTilemapSetFlip(TMAP_GLOBAL, (flipscreen) ? TMAP_FLIPXY : 0);
+
+	INT32 scrollx = (flipscreen) ? -DrvVidRegs[0x35] : DrvVidRegs[0x35];
+
+	GenericTilemapSetScrollX(1, scrollx);
 	GenericTilemapSetScrollY(1, DrvVidRegs[0x30] + (DrvVidRegs[0x31] * 256));
 
 	scrollhack = scrollhack ? 8 : 0;
-	GenericTilemapSetScrollX(2, DrvVidRegs[0x2d + scrollhack]);
+	scrollx = (flipscreen) ? -DrvVidRegs[0x2d + scrollhack] : DrvVidRegs[0x2d + scrollhack];
+	GenericTilemapSetScrollX(2, scrollx);
 	GenericTilemapSetScrollY(2, DrvVidRegs[0x28 + scrollhack] + (DrvVidRegs[0x29 + scrollhack] * 256));
 
-	GenericTilemapSetScrollX(3, DrvVidRegs[0x25]);
+	scrollx = (flipscreen) ? -DrvVidRegs[0x25] : DrvVidRegs[0x25];
+	GenericTilemapSetScrollX(3, scrollx);
 	GenericTilemapSetScrollY(3, DrvVidRegs[0x20] + (DrvVidRegs[0x21] * 256));
 
 	BurnTransferClear();
@@ -897,12 +874,13 @@ static void common_draw(INT32 scrollhack, INT32 spritemask) // senj = 0x80, star
 	if (nBurnLayer & 0x02) GenericTilemapDraw(3, pTransDraw, 0);
 	if (nSpriteEnable & 2) draw_sprites(spritemask, 1);
 	if (nBurnLayer & 0x04) GenericTilemapDraw(2, pTransDraw, 0);
-	if (nSpriteEnable &8 ) draw_sprites(spritemask, 2);
+	if (nSpriteEnable & 4) draw_sprites(spritemask, 2);
 	if (nBurnLayer & 0x08) GenericTilemapDraw(1, pTransDraw, 0);
 	if (nSpriteEnable & 0x10) draw_sprites(spritemask, 3);
 	if (nSpriteEnable & 0x20) GenericTilemapDraw(0, pTransDraw, 0);
 	if (nSpriteEnable & 0x40) draw_radar();
 
+	BurnTransferFlip(flipscreen, flipscreen); // unflip coctail for netplay/etc
 	BurnTransferCopy(DrvPalette);
 }
 
@@ -982,6 +960,7 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		SN76496Update(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 	}
 
 	if (pBurnDraw) {
@@ -1016,6 +995,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(sounddata);
 		SCAN_VAR(soundclock);
 		SCAN_VAR(soundstop);
+
+		SCAN_VAR(hold_coin);
 	}
 
 	return 0;

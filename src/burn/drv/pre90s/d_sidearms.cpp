@@ -1427,8 +1427,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(sprite_enable);
 		SCAN_VAR(bglayer_enable);
 		SCAN_VAR(bank_data);
-		SCAN_VAR(bgscrollx[2]);
-		SCAN_VAR(bgscrolly[2]);
 
 		SCAN_VAR(starscrollx);
 		SCAN_VAR(starscrolly);

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17210 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17217 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3635,7 +3635,10 @@ This list contains all games supported by FinalBurn Neo.
 | md_djboyu	|  	| DJ Boy (USA)						| md_djboy	| 1990	| Kaneko	| Sega Megadrive| 					|
 | djboy		|  	| DJ Boy (World)					| 		| 1989	| Kaneko	| Miscellaneous	| 					|
 | spec_djpuff	|  	| DJ Puff (128K)					| 		| 1992	| Codemasters	| ZX Spectrum	| 					|
+| dorunrunc	|  	| Do! Run Run (Do's Castle hardware, set 1)		| dorunrun	| 1984	| Universal	| Miscellaneous	| 					|
+| dorunrunca	|  	| Do! Run Run (Do's Castle hardware, set 2)		| dorunrun	| 1984	| Universal	| Miscellaneous	| 					|
 | dorunrun	|  	| Do! Run Run (set 1)					| 		| 1984	| Universal	| Miscellaneous	| 					|
+| dorunrun2	|  	| Do! Run Run (set 2)					| dorunrun	| 1984	| Universal	| Miscellaneous	| 					|
 | dockman	|  	| Dock Man						| 		| 1982	| Taito Corporat| Miscellaneous	| 					|
 | chf_dodgeit	|  	| Dodge It						| 		| 1978	| Fairchild	| Channel F	| 					|
 | dodgeman	|  	| Dodge Man						| 		| 1983	| Omori Electric| Miscellaneous	| 					|
@@ -9029,6 +9032,7 @@ This list contains all games supported by FinalBurn Neo.
 | mrdig		|  	| Mr. Dig						| 		| 2000	| Sun		| Miscellaneous	| 					|
 | msx_mrdo	|  	| Mr. Do (Jpn)						| 		| 1984	| Nihon Columbia| MSX		| 					|
 | msx_mrdok	|  	| Mr. Do (Kor)						| msx_mrdo	| 198?	| Zemina	| MSX		| 					|
+| douni		|  	| Mr. Do vs. Unicorns					| docastle	| 1983	| Universal	| Miscellaneous	| 					|
 | cv_mrdoa	|  	| Mr. Do! (Alt)						| cv_mrdo	| 1983	| Coleco	| ColecoVision	| 					|
 | mrdobl	|  	| Mr. Do! (bootleg)					| mrdo		| 1982	| Bootleg	| Miscellaneous	| 					|
 | mrdofix	|  	| Mr. Do! (bugfixed)					| mrdo		| 1982	| Universal (Tai| Miscellaneous	| 					|
@@ -9040,6 +9044,8 @@ This list contains all games supported by FinalBurn Neo.
 | cv_docastle	|  	| Mr. Do!'s Castle					| 		| 1983	| Parker Brother| ColecoVision	| 					|
 | cv_mrdo	|  	| Mr. Do!						| 		| 1983	| Coleco	| ColecoVision	| 					|
 | mrdo		|  	| Mr. Do!						| 		| 1982	| Universal	| Miscellaneous	| 					|
+| docastleo	|  	| Mr. Do's Castle (older)				| docastle	| 1983	| Universal	| Miscellaneous	| 					|
+| docastle2	|  	| Mr. Do's Castle (set 2)				| docastle	| 1983	| Universal	| Miscellaneous	| 					|
 | msx_mrdowild	|  	| Mr. Do's Wild Ride (Jpn)				| 		| 1985	| Nihon Columbia| MSX		| 					|
 | msx_mrdowildh	|  	| Mr. Do's Wild Ride (Jpn, Hacked?)			| msx_mrdowild	| 1985	| Angel?	| MSX		| 					|
 | dowild	|  	| Mr. Do's Wild Ride					| 		| 1984	| Universal	| Miscellaneous	| 					|
@@ -14064,6 +14070,7 @@ This list contains all games supported by FinalBurn Neo.
 | spang		|  	| Super Pang (World 900914)				| 		| 1990	| Mitchell	| Miscellaneous	| 					|
 | nes_superpang2|  	| Super Pang 2 (Taiwan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | msx_spenguin	|  	| Super Penguin						| 		| 198?	| Sieco		| MSX		| 					|
+| spiero	|  	| Super Pierrot (Japan)					| dorunrun	| 1987	| Universal	| Miscellaneous	| 					|
 | nes_superpinball|  	| Super Pinball (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_superpitfall|  	| Super Pitfall (USA)					| 		| 1987	| Activision	| Miscellaneous	| 					|
 | nes_superpit30t|  	| Super Pitfall 30th Anniversary Ed.(HB)		| 		| 2016	| NESRocks	| Miscellaneous	| 					|

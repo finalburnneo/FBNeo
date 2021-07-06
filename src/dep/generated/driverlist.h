@@ -3683,7 +3683,10 @@ DRV		BurnDrvDjboyua;
 DRV		BurnDrvmd_djboyu;
 DRV		BurnDrvDjboy;
 DRV		BurnSpecDjpuff;
+DRV		BurnDrvDorunrunc;
+DRV		BurnDrvDorunrunca;
 DRV		BurnDrvDorunrun;
+DRV		BurnDrvDorunrun2;
 DRV		BurnDrvDockman;
 DRV		BurnDrvCHF_dodgeit;
 DRV		BurnDrvDodgeman;
@@ -9141,6 +9144,7 @@ DRV		BurnDrvMSX_mrcrack;
 DRV		BurnDrvMrdig;
 DRV		BurnDrvMSX_mrdo;
 DRV		BurnDrvMSX_mrdok;
+DRV		BurnDrvDouni;
 DRV		BurnDrvcv_mrdoa;
 DRV		BurnDrvmrdobl;
 DRV		BurnDrvmrdofix;
@@ -9152,6 +9156,8 @@ DRV		BurnDrvMSX_mrdovsun;
 DRV		BurnDrvcv_docastle;
 DRV		BurnDrvcv_mrdo;
 DRV		BurnDrvmrdo;
+DRV		BurnDrvDocastleo;
+DRV		BurnDrvDocastle2;
 DRV		BurnDrvMSX_mrdowild;
 DRV		BurnDrvMSX_mrdowildh;
 DRV		BurnDrvDowild;
@@ -14252,6 +14258,7 @@ DRV		BurnDrvnes_superpang;
 DRV		BurnDrvSpang;
 DRV		BurnDrvnes_superpang2;
 DRV		BurnDrvMSX_spenguin;
+DRV		BurnDrvSpiero;
 DRV		BurnDrvnes_superpinball;
 DRV		BurnDrvnes_superpitfall;
 DRV		BurnDrvnes_superpit30t;
@@ -21138,7 +21145,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_djboyu,			// DJ Boy (USA)
 	&BurnDrvDjboy,				// DJ Boy (World)
 	&BurnSpecDjpuff,			// DJ Puff (128K)
+	&BurnDrvDorunrunc,			// Do! Run Run (Do's Castle hardware, set 1)
+	&BurnDrvDorunrunca,			// Do! Run Run (Do's Castle hardware, set 2)
 	&BurnDrvDorunrun,			// Do! Run Run (set 1)
+	&BurnDrvDorunrun2,			// Do! Run Run (set 2)
 	&BurnDrvDockman,			// Dock Man
 	&BurnDrvCHF_dodgeit,		// Dodge It
 	&BurnDrvDodgeman,			// Dodge Man
@@ -26596,6 +26606,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMrdig,				// Mr. Dig
 	&BurnDrvMSX_mrdo,			// Mr. Do (Jpn)
 	&BurnDrvMSX_mrdok,			// Mr. Do (Kor)
+	&BurnDrvDouni,				// Mr. Do vs. Unicorns
 	&BurnDrvcv_mrdoa,			// Mr. Do! (Alt)
 	&BurnDrvmrdobl,				// Mr. Do! (bootleg)
 	&BurnDrvmrdofix,			// Mr. Do! (bugfixed)
@@ -26607,6 +26618,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_docastle,		// Mr. Do!'s Castle
 	&BurnDrvcv_mrdo,			// Mr. Do!
 	&BurnDrvmrdo,				// Mr. Do!
+	&BurnDrvDocastleo,			// Mr. Do's Castle (older)
+	&BurnDrvDocastle2,			// Mr. Do's Castle (set 2)
 	&BurnDrvMSX_mrdowild,		// Mr. Do's Wild Ride (Jpn)
 	&BurnDrvMSX_mrdowildh,		// Mr. Do's Wild Ride (Jpn, Hacked?)
 	&BurnDrvDowild,				// Mr. Do's Wild Ride
@@ -31707,6 +31720,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSpang,				// Super Pang (World 900914)
 	&BurnDrvnes_superpang2,		// Super Pang 2 (Taiwan)
 	&BurnDrvMSX_spenguin,		// Super Penguin
+	&BurnDrvSpiero,				// Super Pierrot (Japan)
 	&BurnDrvnes_superpinball,	// Super Pinball (Japan)
 	&BurnDrvnes_superpitfall,	// Super Pitfall (USA)
 	&BurnDrvnes_superpit30t,	// Super Pitfall 30th Anniversary Ed.(HB)

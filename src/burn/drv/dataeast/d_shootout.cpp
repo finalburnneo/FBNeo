@@ -278,6 +278,8 @@ static void ym2203_write_port_A(UINT32, UINT32 data)
 		return;
 	}
 
+	if (M6502GetActive() == -1) return;
+
 	bankswitch(data);
 }
 

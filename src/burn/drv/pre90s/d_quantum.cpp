@@ -348,12 +348,7 @@ static INT32 MemIndex()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	memset (DrvNVRAM, 0xff, 0x200);
 
@@ -420,7 +415,7 @@ static INT32 DrvExit()
 
 	BurnTrackballExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -535,37 +530,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		*pnMin = 0x029722;
 	}
 
-	if (nAction & ACB_MEMORY_ROM) {
-		ba.Data		= Drv68KROM;
-		ba.nLen		= 0x14000;
-		ba.nAddress	= 0;
-		ba.szName	= "68K ROM";
-		BurnAcb(&ba);
-	}
-
-	if (nAction & ACB_MEMORY_RAM) {
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = DrvColRAM;
-		ba.nLen	  = 0x0020;
-		ba.szName = "Color Ram";
-		ba.nAddress	= 0x950000;
-		BurnAcb(&ba);
-		
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = DrvVectorRAM;
-		ba.nLen	  = 0x2000;
-		ba.szName = "Vector Ram";
-		ba.nAddress	= 0x800000;
-		BurnAcb(&ba);
-		
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = Drv68KRAM;
-		ba.nLen	  = 0x4000;
-		ba.szName = "68K Ram";
-		ba.nAddress	= 0x018000;
-		BurnAcb(&ba);
-	}
-
 	if (nAction & ACB_NVRAM) {
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = DrvNVRAM;
@@ -576,6 +540,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_VOLATILE) {
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = AllRam;
+		ba.nLen	  = RamEnd - AllRam;
+		ba.szName = "All Ram";
+		BurnAcb(&ba);
+
 		SekScan(nAction);
 
 		avgdvg_scan(nAction, pnMin);
@@ -586,12 +556,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(avgOK);
 
 		pokey_scan(nAction, pnMin);
-	}
-
-	if (nAction & ACB_WRITE) {
-		if (avgOK) {
-			avgdvg_go();
-		}
 	}
 
 	return 0;

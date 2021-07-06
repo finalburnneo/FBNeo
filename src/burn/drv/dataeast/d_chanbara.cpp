@@ -157,6 +157,8 @@ static void chanbara_ay_writeB(UINT32, UINT32 data)
 
 	flipscreen = data & 0x02;
 
+	if (M6809GetActive() == -1) return;
+
 	bankswitch(data & 0x04);
 }
 

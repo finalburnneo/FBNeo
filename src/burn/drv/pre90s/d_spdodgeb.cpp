@@ -809,7 +809,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_WRITE) {
+		M6502Open(0);
 		bankswitch(bankdata);
+		M6502Close();
 	}
 
 	return 0;

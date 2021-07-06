@@ -3811,8 +3811,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			memset (roz_dirty_tile, 1, 0x10000);
 			roz_update_tiles = 1;
 
-			c45RoadState(nAction); // and here!
-
 			M6809Open(0);
 			sound_bankswitch(sound_bank);
 			M6809Close();

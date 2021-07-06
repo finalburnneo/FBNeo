@@ -1,4 +1,4 @@
-// Mr. Do's Castle emu-layer for FB Alpha by dink, based on the MAME driver by Brad Oliver.
+// Mr. Do's Castle emu-layer for FB Neo by dink, based on the MAME driver by Brad Oliver.
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -24,46 +24,48 @@ static UINT8 *DrvSharedRAM1;
 static UINT8 *DrvVidRAM;
 static UINT8 *DrvSpriteRAM;
 
-static UINT32 *Palette, *DrvPalette;
+static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
+
+static INT32 nExtraCycles[2];
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
-static UINT8 DrvDip[3] = {0, 0, 0};
+static UINT8 DrvDip[3] = { 0, 0, 0 };
 static UINT8 DrvInput[3];
 static UINT8 DrvReset;
 
 static INT32 flipscreen = 0;
 
-static UINT8 cpu0frozen = 0;
 static UINT8 dorunrunmode = 0;
 
 static struct BurnInputInfo DocastleInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"},
-	{"P1 Start",	BIT_DIGITAL,	DrvJoy2 + 3,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"},
-	{"P1 Right",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"},
-	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 1"},
-	{"P1 Button 2",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 2"},
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
+	{"P1 Start",	BIT_DIGITAL,	DrvJoy2 + 3,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Right",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
+	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 1"	},
+	{"P1 Button 2",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 coin"},
-	{"P2 Start",	BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 left"},
-	{"P2 Right",	BIT_DIGITAL,	DrvJoy1 + 4,	"p2 right"},
-	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
-	{"P2 Button 2",	BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"},
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 coin"	},
+	{"P2 Start",	BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 left"	},
+	{"P2 Right",	BIT_DIGITAL,	DrvJoy1 + 4,	"p2 right"	},
+	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
+	{"P2 Button 2",	BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	    "reset"},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 2,    "service"},
-	{"Tilt",		BIT_DIGITAL,	DrvJoy3 + 0,    "tilt"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	    "dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	    "dip"},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDip + 2,	    "dip"},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	    "reset"		},
+	{"Service Mode",BIT_DIGITAL,	DrvJoy3 + 1,    "diag"		},
+	{"Service",		BIT_DIGITAL,	DrvJoy3 + 2,    "service"	},
+	{"Tilt",		BIT_DIGITAL,	DrvJoy3 + 0,    "tilt"		},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	    "dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	    "dip"		},
+	{"Dip C",		BIT_DIPSWITCH,	DrvDip + 2,	    "dip"		},
 };
 
 STDINPUTINFO(Docastle)
@@ -71,355 +73,349 @@ STDINPUTINFO(Docastle)
 
 static struct BurnDIPInfo DocastleDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0x08, NULL		},
-	{0x14, 0xff, 0xff, 0xdf, NULL		},
-	{0x15, 0xff, 0xff, 0xff, NULL		},
+	DIP_OFFSET(0x14)
+	{0x00, 0xff, 0xff, 0x08, NULL						},
+	{0x01, 0xff, 0xff, 0xff, NULL						},
+	{0x02, 0xff, 0xff, 0xff, NULL						},
 
-	{0   , 0xfe, 0   ,    2, "Freeze"		},
-	{0x13, 0x01, 0x08, 0x08, "Off"		},
-	{0x13, 0x01, 0x08, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "Freeze"					},
+	{0x00, 0x01, 0x08, 0x08, "Off"						},
+	{0x00, 0x01, 0x08, 0x00, "On"						},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x14, 0x01, 0x03, 0x03, "1 (Beginner)"		},
-	{0x14, 0x01, 0x03, 0x02, "2"		},
-	{0x14, 0x01, 0x03, 0x01, "3"		},
-	{0x14, 0x01, 0x03, 0x00, "4 (Advanced)"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"				},
+	{0x01, 0x01, 0x03, 0x03, "1 (Beginner)"				},
+	{0x01, 0x01, 0x03, 0x02, "2"						},
+	{0x01, 0x01, 0x03, 0x01, "3"						},
+	{0x01, 0x01, 0x03, 0x00, "4 (Advanced)"				},
 
-	{0   , 0xfe, 0   ,    2, "Rack Test"		},
-	{0x14, 0x01, 0x04, 0x04, "Off"		},
-	{0x14, 0x01, 0x04, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "Rack Test"				},
+	{0x01, 0x01, 0x04, 0x04, "Off"						},
+	{0x01, 0x01, 0x04, 0x00, "On"						},
 
-	{0   , 0xfe, 0   ,    2, "Advance Level on Getting Diamond"		},
-	{0x14, 0x01, 0x08, 0x08, "On"		},
-	{0x14, 0x01, 0x08, 0x00, "Off"		},
+	{0   , 0xfe, 0   ,    2, "Advance Level on Getting Diamond"	},
+	{0x01, 0x01, 0x08, 0x08, "On"						},
+	{0x01, 0x01, 0x08, 0x00, "Off"						},
 
 	{0   , 0xfe, 0   ,    2, "Difficulty of EXTRA"		},
-	{0x14, 0x01, 0x10, 0x10, "Easy"		},
-	{0x14, 0x01, 0x10, 0x00, "Difficult"		},
+	{0x01, 0x01, 0x10, 0x10, "Easy"						},
+	{0x01, 0x01, 0x10, 0x00, "Difficult"				},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x14, 0x01, 0x20, 0x00, "Upright"		},
-	{0x14, 0x01, 0x20, 0x20, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"					},
+	{0x01, 0x01, 0x20, 0x00, "Upright"					},
+	{0x01, 0x01, 0x20, 0x20, "Cocktail"					},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x14, 0x01, 0xc0, 0x00, "2"		},
-	{0x14, 0x01, 0xc0, 0xc0, "3"		},
-	{0x14, 0x01, 0xc0, 0x80, "4"		},
-	{0x14, 0x01, 0xc0, 0x40, "5"		},
+	{0   , 0xfe, 0   ,    4, "Lives"					},
+	{0x01, 0x01, 0xc0, 0x00, "2"						},
+	{0x01, 0x01, 0xc0, 0xc0, "3"						},
+	{0x01, 0x01, 0xc0, 0x80, "4"						},
+	{0x01, 0x01, 0xc0, 0x40, "5"						},
 
-	{0   , 0xfe, 0   ,    11, "Coin B"		},
-	{0x15, 0x01, 0x0f, 0x06, "4 Coins 1 Credits"		},
-	{0x15, 0x01, 0x0f, 0x08, "3 Coins 1 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0a, "2 Coins 1 Credits"		},
-	{0x15, 0x01, 0x0f, 0x07, "3 Coins 2 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
-	{0x15, 0x01, 0x0f, 0x09, "2 Coins 3 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"		},
-	{0x15, 0x01, 0x0f, 0x00, "Free Play"		},
+	{0   , 0xfe, 0   ,    11, "Coin B"					},
+	{0x02, 0x01, 0x0f, 0x06, "4 Coins 1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x08, "3 Coins 1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0a, "2 Coins 1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x07, "3 Coins 2 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x09, "2 Coins 3 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"		},
+	{0x02, 0x01, 0x0f, 0x00, "Free Play"				},
 
-	{0   , 0xfe, 0   ,    11, "Coin A"		},
-	{0x15, 0x01, 0xf0, 0x60, "4 Coins 1 Credits"		},
-	{0x15, 0x01, 0xf0, 0x80, "3 Coins 1 Credits"		},
-	{0x15, 0x01, 0xf0, 0xa0, "2 Coins 1 Credits"		},
-	{0x15, 0x01, 0xf0, 0x70, "3 Coins 2 Credits"		},
-	{0x15, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
-	{0x15, 0x01, 0xf0, 0x90, "2 Coins 3 Credits"		},
-	{0x15, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"		},
-	{0x15, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"		},
-	{0x15, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"		},
-	{0x15, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"		},
-	{0x15, 0x01, 0xf0, 0x00, "Free Play"		},
+	{0   , 0xfe, 0   ,    11, "Coin A"					},
+	{0x02, 0x01, 0xf0, 0x60, "4 Coins 1 Credits"		},
+	{0x02, 0x01, 0xf0, 0x80, "3 Coins 1 Credits"		},
+	{0x02, 0x01, 0xf0, 0xa0, "2 Coins 1 Credits"		},
+	{0x02, 0x01, 0xf0, 0x70, "3 Coins 2 Credits"		},
+	{0x02, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
+	{0x02, 0x01, 0xf0, 0x90, "2 Coins 3 Credits"		},
+	{0x02, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"		},
+	{0x02, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"		},
+	{0x02, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"		},
+	{0x02, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"		},
+	{0x02, 0x01, 0xf0, 0x00, "Free Play"				},
 };
 
 STDDIPINFO(Docastle)
 
 static struct BurnDIPInfo DorunrunDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0x08, NULL		},
-	{0x14, 0xff, 0xff, 0xdf, NULL		},
-	{0x15, 0xff, 0xff, 0xff, NULL		},
+	DIP_OFFSET(0x14)
+	{0x00, 0xff, 0xff, 0x08, NULL						},
+	{0x01, 0xff, 0xff, 0xff, NULL						},
+	{0x02, 0xff, 0xff, 0xff, NULL						},
 
-	{0   , 0xfe, 0   ,    2, "Freeze"		},
-	{0x13, 0x01, 0x08, 0x08, "Off"		},
-	{0x13, 0x01, 0x08, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "Freeze"					},
+	{0x00, 0x01, 0x08, 0x08, "Off"						},
+	{0x00, 0x01, 0x08, 0x00, "On"						},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x14, 0x01, 0x03, 0x03, "1 (Beginner)"		},
-	{0x14, 0x01, 0x03, 0x02, "2"		},
-	{0x14, 0x01, 0x03, 0x01, "3"		},
-	{0x14, 0x01, 0x03, 0x00, "4 (Advanced)"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"				},
+	{0x01, 0x01, 0x03, 0x03, "1 (Beginner)"				},
+	{0x01, 0x01, 0x03, 0x02, "2"						},
+	{0x01, 0x01, 0x03, 0x01, "3"						},
+	{0x01, 0x01, 0x03, 0x00, "4 (Advanced)"				},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x14, 0x01, 0x04, 0x00, "Off"		},
-	{0x14, 0x01, 0x04, 0x04, "On"		},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"				},
+	{0x01, 0x01, 0x04, 0x00, "Off"						},
+	{0x01, 0x01, 0x04, 0x04, "On"						},
 #if 0
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x14, 0x01, 0x08, 0x08, "Off"		},
-	{0x14, 0x01, 0x08, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"				},
+	{0x01, 0x01, 0x08, 0x08, "Off"						},
+	{0x01, 0x01, 0x08, 0x00, "On"						},
 #endif
 	{0   , 0xfe, 0   ,    2, "Difficulty of EXTRA"		},
-	{0x14, 0x01, 0x10, 0x10, "Easy"		},
-	{0x14, 0x01, 0x10, 0x00, "Difficult"		},
+	{0x01, 0x01, 0x10, 0x10, "Easy"						},
+	{0x01, 0x01, 0x10, 0x00, "Difficult"				},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x14, 0x01, 0x20, 0x00, "Upright"		},
-	{0x14, 0x01, 0x20, 0x20, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"					},
+	{0x01, 0x01, 0x20, 0x00, "Upright"					},
+	{0x01, 0x01, 0x20, 0x20, "Cocktail"					},
 
-	{0   , 0xfe, 0   ,    2, "Special"		},
-	{0x14, 0x01, 0x40, 0x40, "Given"		},
-	{0x14, 0x01, 0x40, 0x00, "Not Given"		},
+	{0   , 0xfe, 0   ,    2, "Special"					},
+	{0x01, 0x01, 0x40, 0x40, "Given"					},
+	{0x01, 0x01, 0x40, 0x00, "Not Given"				},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x14, 0x01, 0x80, 0x80, "3"		},
-	{0x14, 0x01, 0x80, 0x00, "5"		},
+	{0   , 0xfe, 0   ,    2, "Lives"					},
+	{0x01, 0x01, 0x80, 0x80, "3"						},
+	{0x01, 0x01, 0x80, 0x00, "5"						},
 
-	{0   , 0xfe, 0   ,    11, "Coin B"		},
-	{0x15, 0x01, 0x0f, 0x06, "4 Coins 1 Credits"		},
-	{0x15, 0x01, 0x0f, 0x08, "3 Coins 1 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0a, "2 Coins 1 Credits"		},
-	{0x15, 0x01, 0x0f, 0x07, "3 Coins 2 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
-	{0x15, 0x01, 0x0f, 0x09, "2 Coins 3 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"		},
-	{0x15, 0x01, 0x0f, 0x00, "Free Play"		},
+	{0   , 0xfe, 0   ,    11, "Coin B"					},
+	{0x02, 0x01, 0x0f, 0x06, "4 Coins 1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x08, "3 Coins 1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0a, "2 Coins 1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x07, "3 Coins 2 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x09, "2 Coins 3 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"		},
+	{0x02, 0x01, 0x0f, 0x00, "Free Play"				},
 
-	{0   , 0xfe, 0   ,    11, "Coin A"		},
-	{0x15, 0x01, 0xf0, 0x60, "4 Coins 1 Credits"		},
-	{0x15, 0x01, 0xf0, 0x80, "3 Coins 1 Credits"		},
-	{0x15, 0x01, 0xf0, 0xa0, "2 Coins 1 Credits"		},
-	{0x15, 0x01, 0xf0, 0x70, "3 Coins 2 Credits"		},
-	{0x15, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
-	{0x15, 0x01, 0xf0, 0x90, "2 Coins 3 Credits"		},
-	{0x15, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"		},
-	{0x15, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"		},
-	{0x15, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"		},
-	{0x15, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"		},
-	{0x15, 0x01, 0xf0, 0x00, "Free Play"		},
+	{0   , 0xfe, 0   ,    11, "Coin A"					},
+	{0x02, 0x01, 0xf0, 0x60, "4 Coins 1 Credits"		},
+	{0x02, 0x01, 0xf0, 0x80, "3 Coins 1 Credits"		},
+	{0x02, 0x01, 0xf0, 0xa0, "2 Coins 1 Credits"		},
+	{0x02, 0x01, 0xf0, 0x70, "3 Coins 2 Credits"		},
+	{0x02, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
+	{0x02, 0x01, 0xf0, 0x90, "2 Coins 3 Credits"		},
+	{0x02, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"		},
+	{0x02, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"		},
+	{0x02, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"		},
+	{0x02, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"		},
+	{0x02, 0x01, 0xf0, 0x00, "Free Play"				},
 };
 
 STDDIPINFO(Dorunrun)
 
 static struct BurnDIPInfo DowildDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0x08, NULL		},
-	{0x14, 0xff, 0xff, 0xdf, NULL		},
-	{0x15, 0xff, 0xff, 0xff, NULL		},
+	DIP_OFFSET(0x14)
+	{0x00, 0xff, 0xff, 0x08, NULL						},
+	{0x01, 0xff, 0xff, 0xff, NULL						},
+	{0x02, 0xff, 0xff, 0xff, NULL						},
 
-	{0   , 0xfe, 0   ,    2, "Freeze"		},
-	{0x13, 0x01, 0x08, 0x08, "Off"		},
-	{0x13, 0x01, 0x08, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "Freeze"					},
+	{0x00, 0x01, 0x08, 0x08, "Off"						},
+	{0x00, 0x01, 0x08, 0x00, "On"						},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x14, 0x01, 0x03, 0x03, "1 (Beginner)"		},
-	{0x14, 0x01, 0x03, 0x02, "2"		},
-	{0x14, 0x01, 0x03, 0x01, "3"		},
-	{0x14, 0x01, 0x03, 0x00, "4 (Advanced)"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"				},
+	{0x01, 0x01, 0x03, 0x03, "1 (Beginner)"				},
+	{0x01, 0x01, 0x03, 0x02, "2"						},
+	{0x01, 0x01, 0x03, 0x01, "3"						},
+	{0x01, 0x01, 0x03, 0x00, "4 (Advanced)"				},
 
-	{0   , 0xfe, 0   ,    2, "Rack Test"		},
-	{0x14, 0x01, 0x04, 0x04, "Off"		},
-	{0x14, 0x01, 0x04, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "Rack Test"				},
+	{0x01, 0x01, 0x04, 0x04, "Off"						},
+	{0x01, 0x01, 0x04, 0x00, "On"						},
 #if 0
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x14, 0x01, 0x08, 0x08, "Off"		},
-	{0x14, 0x01, 0x08, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"				},
+	{0x01, 0x01, 0x08, 0x08, "Off"						},
+	{0x01, 0x01, 0x08, 0x00, "On"						},
 #endif
 	{0   , 0xfe, 0   ,    2, "Difficulty of EXTRA"		},
-	{0x14, 0x01, 0x10, 0x10, "Easy"		},
-	{0x14, 0x01, 0x10, 0x00, "Difficult"		},
+	{0x01, 0x01, 0x10, 0x10, "Easy"						},
+	{0x01, 0x01, 0x10, 0x00, "Difficult"				},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x14, 0x01, 0x20, 0x00, "Upright"		},
-	{0x14, 0x01, 0x20, 0x20, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"					},
+	{0x01, 0x01, 0x20, 0x00, "Upright"					},
+	{0x01, 0x01, 0x20, 0x20, "Cocktail"					},
 
-	{0   , 0xfe, 0   ,    2, "Special"		},
-	{0x14, 0x01, 0x40, 0x40, "Given"		},
-	{0x14, 0x01, 0x40, 0x00, "Not Given"		},
+	{0   , 0xfe, 0   ,    2, "Special"					},
+	{0x01, 0x01, 0x40, 0x40, "Given"					},
+	{0x01, 0x01, 0x40, 0x00, "Not Given"				},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x14, 0x01, 0x80, 0x80, "3"		},
-	{0x14, 0x01, 0x80, 0x00, "5"		},
+	{0   , 0xfe, 0   ,    2, "Lives"					},
+	{0x01, 0x01, 0x80, 0x80, "3"						},
+	{0x01, 0x01, 0x80, 0x00, "5"						},
 
-	{0   , 0xfe, 0   ,    11, "Coin B"		},
-	{0x15, 0x01, 0x0f, 0x06, "4 Coins 1 Credits"		},
-	{0x15, 0x01, 0x0f, 0x08, "3 Coins 1 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0a, "2 Coins 1 Credits"		},
-	{0x15, 0x01, 0x0f, 0x07, "3 Coins 2 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
-	{0x15, 0x01, 0x0f, 0x09, "2 Coins 3 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"		},
-	{0x15, 0x01, 0x0f, 0x00, "Free Play"		},
+	{0   , 0xfe, 0   ,    11, "Coin B"					},
+	{0x02, 0x01, 0x0f, 0x06, "4 Coins 1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x08, "3 Coins 1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0a, "2 Coins 1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x07, "3 Coins 2 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x09, "2 Coins 3 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"		},
+	{0x02, 0x01, 0x0f, 0x00, "Free Play"				},
 
-	{0   , 0xfe, 0   ,    11, "Coin A"		},
-	{0x15, 0x01, 0xf0, 0x60, "4 Coins 1 Credits"		},
-	{0x15, 0x01, 0xf0, 0x80, "3 Coins 1 Credits"		},
-	{0x15, 0x01, 0xf0, 0xa0, "2 Coins 1 Credits"		},
-	{0x15, 0x01, 0xf0, 0x70, "3 Coins 2 Credits"		},
-	{0x15, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
-	{0x15, 0x01, 0xf0, 0x90, "2 Coins 3 Credits"		},
-	{0x15, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"		},
-	{0x15, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"		},
-	{0x15, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"		},
-	{0x15, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"		},
-	{0x15, 0x01, 0xf0, 0x00, "Free Play"		},
+	{0   , 0xfe, 0   ,    11, "Coin A"					},
+	{0x02, 0x01, 0xf0, 0x60, "4 Coins 1 Credits"		},
+	{0x02, 0x01, 0xf0, 0x80, "3 Coins 1 Credits"		},
+	{0x02, 0x01, 0xf0, 0xa0, "2 Coins 1 Credits"		},
+	{0x02, 0x01, 0xf0, 0x70, "3 Coins 2 Credits"		},
+	{0x02, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
+	{0x02, 0x01, 0xf0, 0x90, "2 Coins 3 Credits"		},
+	{0x02, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"		},
+	{0x02, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"		},
+	{0x02, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"		},
+	{0x02, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"		},
+	{0x02, 0x01, 0xf0, 0x00, "Free Play"				},
 };
 
 STDDIPINFO(Dowild)
 
 static struct BurnDIPInfo JjackDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0x08, NULL		},
-	{0x14, 0xff, 0xff, 0xdf, NULL		},
-	{0x15, 0xff, 0xff, 0xff, NULL		},
+	DIP_OFFSET(0x14)
+	{0x00, 0xff, 0xff, 0x08, NULL						},
+	{0x01, 0xff, 0xff, 0xff, NULL						},
+	{0x02, 0xff, 0xff, 0xff, NULL						},
 
-	{0   , 0xfe, 0   ,    2, "Freeze"		},
-	{0x13, 0x01, 0x08, 0x08, "Off"		},
-	{0x13, 0x01, 0x08, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "Freeze"					},
+	{0x00, 0x01, 0x08, 0x08, "Off"						},
+	{0x00, 0x01, 0x08, 0x00, "On"						},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty?"		},
-	{0x14, 0x01, 0x03, 0x03, "Easy"		},
-	{0x14, 0x01, 0x03, 0x02, "Medium"		},
-	{0x14, 0x01, 0x03, 0x01, "Hard"		},
-	{0x14, 0x01, 0x03, 0x00, "Hardest"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty?"				},
+	{0x01, 0x01, 0x03, 0x03, "Easy"						},
+	{0x01, 0x01, 0x03, 0x02, "Medium"					},
+	{0x01, 0x01, 0x03, 0x01, "Hard"						},
+	{0x01, 0x01, 0x03, 0x00, "Hardest"					},
 
-	{0   , 0xfe, 0   ,    2, "Rack Test"		},
-	{0x14, 0x01, 0x04, 0x04, "Off"		},
-	{0x14, 0x01, 0x04, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "Rack Test"				},
+	{0x01, 0x01, 0x04, 0x04, "Off"						},
+	{0x01, 0x01, 0x04, 0x00, "On"						},
 #if 0
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x14, 0x01, 0x08, 0x08, "Off"		},
-	{0x14, 0x01, 0x08, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"				},
+	{0x01, 0x01, 0x08, 0x08, "Off"						},
+	{0x01, 0x01, 0x08, 0x00, "On"						},
 #endif
-	{0   , 0xfe, 0   ,    2, "Extra?"		},
-	{0x14, 0x01, 0x10, 0x10, "Easy"		},
-	{0x14, 0x01, 0x10, 0x00, "Hard"		},
+	{0   , 0xfe, 0   ,    2, "Extra?"					},
+	{0x01, 0x01, 0x10, 0x10, "Easy"						},
+	{0x01, 0x01, 0x10, 0x00, "Hard"						},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x14, 0x01, 0x20, 0x00, "Upright"		},
-	{0x14, 0x01, 0x20, 0x20, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"					},
+	{0x01, 0x01, 0x20, 0x00, "Upright"					},
+	{0x01, 0x01, 0x20, 0x20, "Cocktail"					},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x14, 0x01, 0xc0, 0x00, "2"		},
-	{0x14, 0x01, 0xc0, 0xc0, "3"		},
-	{0x14, 0x01, 0xc0, 0x80, "4"		},
-	{0x14, 0x01, 0xc0, 0x40, "5"		},
+	{0   , 0xfe, 0   ,    4, "Lives"					},
+	{0x01, 0x01, 0xc0, 0x00, "2"						},
+	{0x01, 0x01, 0xc0, 0xc0, "3"						},
+	{0x01, 0x01, 0xc0, 0x80, "4"						},
+	{0x01, 0x01, 0xc0, 0x40, "5"						},
 
-	{0   , 0xfe, 0   ,    11, "Coin B"		},
-	{0x15, 0x01, 0x0f, 0x06, "4 Coins 1 Credits"		},
-	{0x15, 0x01, 0x0f, 0x08, "3 Coins 1 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0a, "2 Coins 1 Credits"		},
-	{0x15, 0x01, 0x0f, 0x07, "3 Coins 2 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
-	{0x15, 0x01, 0x0f, 0x09, "2 Coins 3 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"		},
-	{0x15, 0x01, 0x0f, 0x00, "Free Play"		},
+	{0   , 0xfe, 0   ,    11, "Coin B"					},
+	{0x02, 0x01, 0x0f, 0x06, "4 Coins 1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x08, "3 Coins 1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0a, "2 Coins 1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x07, "3 Coins 2 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x09, "2 Coins 3 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"		},
+	{0x02, 0x01, 0x0f, 0x00, "Free Play"				},
 
-	{0   , 0xfe, 0   ,    11, "Coin A"		},
-	{0x15, 0x01, 0xf0, 0x60, "4 Coins 1 Credits"		},
-	{0x15, 0x01, 0xf0, 0x80, "3 Coins 1 Credits"		},
-	{0x15, 0x01, 0xf0, 0xa0, "2 Coins 1 Credits"		},
-	{0x15, 0x01, 0xf0, 0x70, "3 Coins 2 Credits"		},
-	{0x15, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
-	{0x15, 0x01, 0xf0, 0x90, "2 Coins 3 Credits"		},
-	{0x15, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"		},
-	{0x15, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"		},
-	{0x15, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"		},
-	{0x15, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"		},
-	{0x15, 0x01, 0xf0, 0x00, "Free Play"		},
+	{0   , 0xfe, 0   ,    11, "Coin A"					},
+	{0x02, 0x01, 0xf0, 0x60, "4 Coins 1 Credits"		},
+	{0x02, 0x01, 0xf0, 0x80, "3 Coins 1 Credits"		},
+	{0x02, 0x01, 0xf0, 0xa0, "2 Coins 1 Credits"		},
+	{0x02, 0x01, 0xf0, 0x70, "3 Coins 2 Credits"		},
+	{0x02, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
+	{0x02, 0x01, 0xf0, 0x90, "2 Coins 3 Credits"		},
+	{0x02, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"		},
+	{0x02, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"		},
+	{0x02, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"		},
+	{0x02, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"		},
+	{0x02, 0x01, 0xf0, 0x00, "Free Play"				},
 };
 
 STDDIPINFO(Jjack)
 
 static struct BurnDIPInfo KickridrDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0x08, NULL		},
-	{0x14, 0xff, 0xff, 0xdf, NULL		},
-	{0x15, 0xff, 0xff, 0xff, NULL		},
+	DIP_OFFSET(0x14)
+	{0x00, 0xff, 0xff, 0x08, NULL						},
+	{0x01, 0xff, 0xff, 0xff, NULL						},
+	{0x02, 0xff, 0xff, 0xff, NULL						},
 
-	{0   , 0xfe, 0   ,    2, "Freeze"		},
-	{0x13, 0x01, 0x08, 0x08, "Off"		},
-	{0x13, 0x01, 0x08, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "Freeze"					},
+	{0x00, 0x01, 0x08, 0x08, "Off"						},
+	{0x00, 0x01, 0x08, 0x00, "On"						},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty?"		},
-	{0x14, 0x01, 0x03, 0x03, "Easy"		},
-	{0x14, 0x01, 0x03, 0x02, "Medium"		},
-	{0x14, 0x01, 0x03, 0x01, "Hard"		},
-	{0x14, 0x01, 0x03, 0x00, "Hardest"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty?"				},
+	{0x01, 0x01, 0x03, 0x03, "Easy"						},
+	{0x01, 0x01, 0x03, 0x02, "Medium"					},
+	{0x01, 0x01, 0x03, 0x01, "Hard"						},
+	{0x01, 0x01, 0x03, 0x00, "Hardest"					},
 
-	{0   , 0xfe, 0   ,    2, "Rack Test"		},
-	{0x14, 0x01, 0x04, 0x04, "Off"		},
-	{0x14, 0x01, 0x04, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "Rack Test"				},
+	{0x01, 0x01, 0x04, 0x04, "Off"						},
+	{0x01, 0x01, 0x04, 0x00, "On"						},
 #if 0
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x14, 0x01, 0x08, 0x08, "Off"		},
-	{0x14, 0x01, 0x08, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"				},
+	{0x01, 0x01, 0x08, 0x08, "Off"						},
+	{0x01, 0x01, 0x08, 0x00, "On"						},
 #endif
-	{0   , 0xfe, 0   ,    2, "DSW4"		},
-	{0x14, 0x01, 0x10, 0x10, "Off"		},
-	{0x14, 0x01, 0x10, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "DSW4"						},
+	{0x01, 0x01, 0x10, 0x10, "Off"						},
+	{0x01, 0x01, 0x10, 0x00, "On"						},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x14, 0x01, 0x20, 0x00, "Upright"		},
-	{0x14, 0x01, 0x20, 0x20, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"					},
+	{0x01, 0x01, 0x20, 0x00, "Upright"					},
+	{0x01, 0x01, 0x20, 0x20, "Cocktail"					},
 
-	{0   , 0xfe, 0   ,    2, "DSW2"		},
-	{0x14, 0x01, 0x40, 0x40, "Off"		},
-	{0x14, 0x01, 0x40, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "DSW2"						},
+	{0x01, 0x01, 0x40, 0x40, "Off"						},
+	{0x01, 0x01, 0x40, 0x00, "On"						},
 
-	{0   , 0xfe, 0   ,    2, "DSW1"		},
-	{0x14, 0x01, 0x80, 0x00, "Off"		},
-	{0x14, 0x01, 0x80, 0x80, "On"		},
+	{0   , 0xfe, 0   ,    2, "DSW1"						},
+	{0x01, 0x01, 0x80, 0x00, "Off"						},
+	{0x01, 0x01, 0x80, 0x80, "On"						},
 
-	{0   , 0xfe, 0   ,    11, "Coin B"		},
-	{0x15, 0x01, 0x0f, 0x06, "4 Coins 1 Credits"		},
-	{0x15, 0x01, 0x0f, 0x08, "3 Coins 1 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0a, "2 Coins 1 Credits"		},
-	{0x15, 0x01, 0x0f, 0x07, "3 Coins 2 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
-	{0x15, 0x01, 0x0f, 0x09, "2 Coins 3 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"		},
-	{0x15, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"		},
-	{0x15, 0x01, 0x0f, 0x00, "Free Play"		},
+	{0   , 0xfe, 0   ,    11, "Coin B"					},
+	{0x02, 0x01, 0x0f, 0x06, "4 Coins 1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x08, "3 Coins 1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0a, "2 Coins 1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x07, "3 Coins 2 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x09, "2 Coins 3 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"		},
+	{0x02, 0x01, 0x0f, 0x00, "Free Play"				},
 
-	{0   , 0xfe, 0   ,    11, "Coin A"		},
-	{0x15, 0x01, 0xf0, 0x60, "4 Coins 1 Credits"		},
-	{0x15, 0x01, 0xf0, 0x80, "3 Coins 1 Credits"		},
-	{0x15, 0x01, 0xf0, 0xa0, "2 Coins 1 Credits"		},
-	{0x15, 0x01, 0xf0, 0x70, "3 Coins 2 Credits"		},
-	{0x15, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
-	{0x15, 0x01, 0xf0, 0x90, "2 Coins 3 Credits"		},
-	{0x15, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"		},
-	{0x15, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"		},
-	{0x15, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"		},
-	{0x15, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"		},
-	{0x15, 0x01, 0xf0, 0x00, "Free Play"		},
+	{0   , 0xfe, 0   ,    11, "Coin A"					},
+	{0x02, 0x01, 0xf0, 0x60, "4 Coins 1 Credits"		},
+	{0x02, 0x01, 0xf0, 0x80, "3 Coins 1 Credits"		},
+	{0x02, 0x01, 0xf0, 0xa0, "2 Coins 1 Credits"		},
+	{0x02, 0x01, 0xf0, 0x70, "3 Coins 2 Credits"		},
+	{0x02, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
+	{0x02, 0x01, 0xf0, 0x90, "2 Coins 3 Credits"		},
+	{0x02, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"		},
+	{0x02, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"		},
+	{0x02, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"		},
+	{0x02, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"		},
+	{0x02, 0x01, 0xf0, 0x00, "Free Play"				},
 };
 
 STDDIPINFO(Kickridr)
-
-static void DrvMakeInputs()
-{
-	UINT8 *DrvJoy[3] = { DrvJoy1, DrvJoy2, DrvJoy3 };
-	UINT32 DrvJoyInit[3] = { 0, 0xff, 0xff };
-
-	CompileInput(DrvJoy, (void*)DrvInput, 3, 8, DrvJoyInit);
-
-	ProcessJoystick(&DrvInput[0], 0, 1,3,2,0, INPUT_4WAY);
-	ProcessJoystick(&DrvInput[0], 1, 5,7,6,4, INPUT_4WAY | INPUT_MAKEACTIVELOW);
-}
 
 static UINT8 shared0r(UINT8 offs)
 {
@@ -434,8 +430,7 @@ static UINT8 shared1r(UINT8 offs)
 static void shared0w(UINT8 offs, UINT8 data)
 {
 	if (offs == 8) {
-		cpu0frozen = 0;
-		ZetRunEnd();
+		ZetSetHALT(0, 0);
 	}
 	DrvSharedRAM0[offs] = data;
 }
@@ -443,14 +438,13 @@ static void shared0w(UINT8 offs, UINT8 data)
 static void shared1w(UINT8 offs, UINT8 data)
 {
 	if (offs == 8) {
-		cpu0frozen = 1;
-		ZetRunEnd();
+		ZetSetHALT(0, 1);
 	}
 	DrvSharedRAM1[offs] = data;
 }
 
 static UINT8 __fastcall docastle_cpu0_read(UINT16 address)
-{ 
+{
 	if (address >= 0xa000 && address <= 0xa008)
 		return shared0r(address & 0xf);
 
@@ -472,7 +466,13 @@ static void __fastcall docastle_cpu0_write(UINT16 address, UINT8 data)
 
 		case 0xb800:
 		case 0xe000:
-			ZetNmi(1);
+			{
+				INT32 cyc = ZetTotalCycles(0) - ZetTotalCycles(1);
+				if (cyc > 0) {
+					ZetRun(1, cyc); // synchronize subcpu before sending nmi.
+				}
+				ZetNmi(1);
+			}
 		return;
 	}
 }
@@ -526,17 +526,13 @@ static void __fastcall docastle_cpu1_write(UINT16 address, UINT8 data)
 
 static UINT8 __fastcall docastle_cpu1_read(UINT16 address)
 {
-	if ((address & 0xff70) == 0xc000) { // 0xc08x mirror
-		address &= 0xff7f;
-	}
-
 	if (address >= 0xa000 && address <= 0xa008)
 		return shared1r(address & 0xf);
 
 	if (address >= 0xe000 && address <= 0xe008) // dorunrun+
 		return shared1r(address & 0xf);
 
-	switch (address)
+	switch (address & 0xff7f)
 	{
 		case 0xc001: return DrvDip[2];
 		case 0xc002: return DrvDip[1];
@@ -546,7 +542,7 @@ static UINT8 __fastcall docastle_cpu1_read(UINT16 address)
 		case 0xc007: return (DrvInput[2] & ~0x08) | (DrvDip[0] & 0x08);
 
 		case 0xc004:
-			flipscreen = (address & 0x80) ? 1 : 0;
+			flipscreen = (address & 0x80) >> 7;
 			return flipscreen;
 	}
 
@@ -566,7 +562,6 @@ static INT32 MemIndex()
 
 	DrvProm         = Next; Next += 0x00200;
 
-	Palette	        = (UINT32 *)Next; Next += 0x00800 * sizeof(UINT32);
 	DrvPalette      = (UINT32 *)Next; Next += 0x00800 * sizeof(UINT32);
 
 	AllRam			= Next;
@@ -593,115 +588,53 @@ static INT32 DrvDoReset()
 
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	for (INT32 i = 0; i < 3; i++) {
-		ZetOpen(i);
-		ZetReset();
-		ZetClose();
-	}
+	ZetReset(0);
+	ZetReset(1);
+	ZetReset(2);
 
 	SN76496Reset();
 	HiscoreReset();
 
 	flipscreen = 0;
-	cpu0frozen = 0;
+
+	nExtraCycles[0] = nExtraCycles[1] = 0;
 
 	return 0;
 }
 
-static INT32 DrvPaletteInit()
-{ // mostly c&p from mame
+static void DrvPaletteInit()
+{
 	UINT8 *color_prom = DrvProm;
-	UINT8 priority = dorunrunmode; // set 0 for Mr. Do's Castle, 1 for Do's Wild Ride/Do Run Run
 
-	for (INT32 i = 0; i < 256;i++)
+	for (INT32 i = 0; i < 0x100; i++)
 	{
-		INT32 bit0,bit1,bit2,r,g,b;
+		INT32 bit0 = (*color_prom >> 5) & 0x01;
+		INT32 bit1 = (*color_prom >> 6) & 0x01;
+		INT32 bit2 = (*color_prom >> 7) & 0x01;
+		INT32 r = 0x23 * bit0 + 0x4b * bit1 + 0x91 * bit2;
 
-		/* red component */
-		bit0 = (*color_prom >> 5) & 0x01;
-		bit1 = (*color_prom >> 6) & 0x01;
-		bit2 = (*color_prom >> 7) & 0x01;
-		r = 0x23 * bit0 + 0x4b * bit1 + 0x91 * bit2;
-		/* green component */
 		bit0 = (*color_prom >> 2) & 0x01;
 		bit1 = (*color_prom >> 3) & 0x01;
 		bit2 = (*color_prom >> 4) & 0x01;
-		g = 0x23 * bit0 + 0x4b * bit1 + 0x91 * bit2;
-		/* blue component */
+		INT32 g = 0x23 * bit0 + 0x4b * bit1 + 0x91 * bit2;
+
 		bit0 = 0;
 		bit1 = (*color_prom >> 0) & 0x01;
 		bit2 = (*color_prom >> 1) & 0x01;
-		b = 0x23 * bit0 + 0x4b * bit1 + 0x91 * bit2;
+		INT32 b = 0x23 * bit0 + 0x4b * bit1 + 0x91 * bit2;
 
-		Palette[i] = BurnHighCol(r, g, b, 0);
+		DrvPalette[((i & ~0x07) * 2) + (i & ~0xf8) + (0 << 3)] = BurnHighCol(r, g, b, 0);
+		DrvPalette[((i & ~0x07) * 2) + (i & ~0xf8) + (1 << 3)] = BurnHighCol(r, g, b, 0);
 		color_prom++;
 	}
-
-	Palette[256] = BurnHighCol(1, 1, 1, 0);
-	Palette[257] = BurnHighCol(2, 2, 2, 0);
-
-	for (INT32 i = 0;i < 32;i++)
-	{
-		for (INT32 j = 0;j < 8;j++)
-		{
-			DrvPalette[16*i+j] = Palette[8*i+j];
-			DrvPalette[16*i+j+8] = Palette[8*i+j];
-		}
-	}
-	/* now create a table with only the colors which have priority over sprites, used */
-	/* to draw the foreground. */
-	for (INT32 i = 0;i < 32;i++)
-	{
-		for (INT32 j = 0;j < 8;j++)
-		{
-			if (priority == 0)	/* Do's Castle */
-			{
-				DrvPalette[32*16+16*i+j] = Palette[256];	/* high bit clear means less priority than sprites */
-				DrvPalette[32*16+16*i+j+8] = Palette[8*i+j];
-			}
-			else	/* Do Wild Ride, Do Run Run, Kick Rider */
-			{
-				DrvPalette[32*16+16*i+j] = Palette[8*i+j];
-				DrvPalette[32*16+16*i+j+8] = Palette[256];	/* high bit set means less priority than sprites */
-			}
-		}
-	}
-
-	/* sprites */
-	/* sprites have 4 bitplanes, but they actually have only 8 colors. The fourth */
-	/* plane is used for transparency. */
-	for (INT32 i = 0;i < 32;i++)
-	{
-		/* build two versions of the colortable, one with the covering color
-           mapped to transparent, and one with all colors but the covering one
-           mapped to transparent. */
-		for (INT32 j = 0;j < 16;j++)
-		{
-			if (j < 8)
-				DrvPalette[64*16+16*i+j] = Palette[256];	/* high bit clear means transparent */
-			else if (j == 15)
-				DrvPalette[64*16+16*i+j] = Palette[256];	/* sprite covering color */
-			else
-				DrvPalette[64*16+16*i+j] = Palette[8*i+(j&7)];
-		}
-		for (INT32 j = 0;j < 16;j++)
-		{
-			if (j == 15)
-				DrvPalette[64*16+32*16+16*i+j] = Palette[257];	/* sprite covering color */
-			else
-				DrvPalette[64*16+32*16+16*i+j] = Palette[256];
-		}
-	}
-
-	return 0;
 }
 
 static INT32 GraphicsDecode()
 {
-	static INT32 TilePlanes[4] = { 0, 1, 2, 3 };
-	static INT32 TileYOffs[8]  = { 0, 32, 64, 96, 128, 160, 192, 224 };
-	static INT32 SpriXOffs[16] = { 0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60 };
-	static INT32 SpriYOffs[16] = { 0, 64, 128, 192, 256, 320, 384, 448, 512, 576, 640, 704,768, 832, 896, 960 };
+	static INT32 Planes[4]		= { STEP4(0, 1) };
+	static INT32 TileYOffs[8]	= { STEP8(0, 32) };
+	static INT32 XOffs[16]		= { STEP16(0, 4) };
+	static INT32 SpriYOffs[16]	= { STEP16(0, 64) };
 
 	UINT8 *tmp = (UINT8*)BurnMalloc(0x8000);
 	if (tmp == NULL) {
@@ -710,25 +643,28 @@ static INT32 GraphicsDecode()
 
 	memcpy (tmp, DrvGfx0, 0x04000);
 
-	GfxDecode(0x200, 4,  8,  8, TilePlanes, SpriXOffs, TileYOffs, 0x100, tmp, DrvGfx0);
+	GfxDecode(0x200, 4,  8,  8, Planes, XOffs, TileYOffs, 0x100, tmp, DrvGfx0);
 
 	memcpy (tmp, DrvGfx1, 0x08000);
 
-	GfxDecode(0x100, 4, 16, 16, TilePlanes, SpriXOffs, SpriYOffs, 0x400, tmp, DrvGfx1);
+	GfxDecode(0x100, 4, 16, 16, Planes, XOffs, SpriYOffs, 0x400, tmp, DrvGfx1);
 
 	BurnFree (tmp);
 
 	return 0;
 }
 
+static tilemap_callback( fg )
+{
+	INT32 Code = DrvVidRAM[offs] + 0x08 * (DrvVidRAM[0x0400 + offs] & 0x20);
+	INT32 Color = DrvVidRAM[0x0400 + offs] & 0x1f;
+
+	TILE_SET_INFO(1, Code, Color, 0);
+}
+
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (dorunrunmode) {
 		if (BurnLoadRom(DrvRom0 + 0 * 0x2000, 0, 1)) return 1;
@@ -746,9 +682,6 @@ static INT32 DrvInit()
 
 		if (BurnLoadRom(DrvGfx0,  6, 1)) return 1;
 		if (BurnLoadRom(DrvProm, 11, 1)) return 1;
-
-		if (GraphicsDecode()) return 1;
-		DrvPaletteInit();
 	} else 	{
 		if (BurnLoadRom(DrvRom0 + 0 * 0x2000, 0, 1)) return 1;
 		if (BurnLoadRom(DrvRom0 + 1 * 0x2000, 1, 1)) return 1;
@@ -765,10 +698,10 @@ static INT32 DrvInit()
 
 		if (BurnLoadRom(DrvGfx0,  6, 1)) return 1;
 		if (BurnLoadRom(DrvProm, 11, 1)) return 1;
-
-		if (GraphicsDecode()) return 1;
-		DrvPaletteInit();
 	}
+
+	if (GraphicsDecode()) return 1;
+	DrvPaletteInit();
 
 	ZetInit(0);
 	ZetOpen(0);
@@ -808,16 +741,20 @@ static INT32 DrvInit()
 	ZetClose();
 
 	SN76489AInit(0, 4000000, 0);
-	SN76496SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
 	SN76489AInit(1, 4000000, 1);
-	SN76496SetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(1, 0.40, BURN_SND_ROUTE_BOTH);
 	SN76489AInit(2, 4000000, 1);
-	SN76496SetRoute(2, 0.20, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(2, 0.40, BURN_SND_ROUTE_BOTH);
 	SN76489AInit(3, 4000000, 1);
-	SN76496SetRoute(3, 0.20, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(3, 0.40, BURN_SND_ROUTE_BOTH);
 	SN76496SetBuffered(ZetTotalCycles, 4000000);
 
 	GenericTilesInit();
+	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, fg_map_callback, 8, 8, 32, 32);
+	GenericTilemapSetGfx(1, DrvGfx0, 4,  8,  8, 0x200 * 8 * 8, 0x00, 0x3f);
+	GenericTilemapSetTransSplit(0, 0, (dorunrunmode) ? 0xff00 : 0x00ff, 0x0000);
+	GenericTilemapSetOffsets(TMAP_GLOBAL, -8, -32);
 
 	DrvDoReset();
 
@@ -830,103 +767,29 @@ static INT32 DrvExit()
 	ZetExit();
 	GenericTilesExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	dorunrunmode = 0;
 
 	return 0;
 }
 
-static void RenderTileCPMP(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height, INT32 offset, INT32 mode, UINT8 *gfxrom)
-{
-	UINT16 *dest = pTransDraw;
-	UINT8 *gfx = gfxrom;
-
-	INT32 flip = 0;
-	if (flipy) flip |= (height - 1) * width;
-	if (flipx) flip |= width - 1;
-
-	gfx += code * width * height;
-
-	for (INT32 y = 0; y < height; y++, sy++) {
-		if (sy < 0 || sy >= nScreenHeight) continue;
-
-		for (INT32 x = 0; x < width; x++, sx++) {
-			if (sx < 0 || sx >= nScreenWidth) continue;
-
-			INT32 pxl = gfx[((y * width) + x) ^ flip];
-
-			//if (counter>0) bprintf(0, _T("%X,"), pxl); // debug - leave in.
-
-			// in Jumping Jack(dorunrunmode), pxl's that are 0xf leave black crap on the screen which should be transparent, fix: (pxl == 0xf && dorunrunmode) for mode 2
-			// in Mr.Do's Wild Ride, bonus text with a black background is covered up by sprites, fix: display pxl==0
-			if (mode == 2 && (/*!pxl || */!(pxl & 0x08) || (pxl == 0xf && dorunrunmode))) continue; // Do's Castle fg, Do! RunRun sprites
-			if (mode == 1 && (/*!pxl || */(pxl & 0x08))) continue; // Do! Run Run fg
-
-			dest[sy * nScreenWidth + sx] = pxl | (color << 4) | offset;
-		}
-		sx -= width;
-	}
-}
-
-static void draw_chars(INT32 front) {
-	for (INT32 offs = 0x380; offs > 0; offs--) {
-		INT32 sx = 8 * (offs % 32);
-		INT32 sy = 8 * (offs / 32);
-
-		sy -= 32;
-		sx -= 8;
-
-		INT32 code  = DrvVidRAM[0x0000 + offs] + 8 * (DrvVidRAM[0x0400 + offs] & 0x20);
-		INT32 color = DrvVidRAM[0x0400 + offs] & 0x1f;
-
-		if (sx < 0 || sy < 0 || sx >= nScreenWidth || sy >= nScreenHeight) continue;
-
-		if (front)
-			RenderTileCPMP(code, color, sx, sy, 0, 0, 8, 8, 0x200, ((dorunrunmode) ? 1 : 2), DrvGfx0);
-		else
-			Render8x8Tile(pTransDraw, code, sx, sy, color, 4, 0, DrvGfx0);
-
-	}
-}
-
 static void draw_sprites()
 {
-	UINT8 *spriteram = DrvSpriteRAM;
-
-	for (INT32 offs = 0; offs < 0x200; offs += 4)
+	for (INT32 offs = 0x200 - 4; offs >= 0; offs -= 4)
 	{
-		INT32 code,color,flipx,flipy,sx,sy;
-
-		code = spriteram[offs + 3] & 0x1ff;
-		color = spriteram[offs + 2] & 0x1f;
-		sx = ((spriteram[offs + 1] + 8) & 0xff) - 8;
-		sy = spriteram[offs];
-		flipx = spriteram[offs + 2] & 0x40;
-		flipy = spriteram[offs + 2] & 0x80;
+		INT32 code = DrvSpriteRAM[offs + 3] & 0x1ff;
+		INT32 color = DrvSpriteRAM[offs + 2] & 0x3f;
+		INT32 sx = ((DrvSpriteRAM[offs + 1] + 8) & 0xff) - 8;
+		INT32 sy = DrvSpriteRAM[offs];
+		INT32 flipx = DrvSpriteRAM[offs + 2] & 0x40;
+		INT32 flipy = DrvSpriteRAM[offs + 2] & 0x80;
 
 		sy -= 32;
 		sx -= 8;
 
-		if (dorunrunmode) {
-			// Games on DoRunRun hardware need kludges and other weird and wonderful things
-			RenderTileCPMP(code, color, sx, sy, flipx, flipy, 16, 16, 64*16 /* == 0x400 */, 2, DrvGfx1);
-		} else {
-			// use regular mask rendering for Mr. Do's Castle hardware
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 64*16, DrvGfx1);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 64*16, DrvGfx1);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, 64*16, DrvGfx1);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 64*16, DrvGfx1);
-				}
-			}
-		}
+		RenderPrioTransmaskSprite(pTransDraw, DrvGfx1, code, (color << 4), 0x80ff, sx, sy, flipx, flipy, 16, 16, 0);
+		RenderPrioTransmaskSprite(pTransDraw, DrvGfx1, code, (color << 4), 0x7fff, sx, sy, flipx, flipy, 16, 16, 2);
 	}
 }
 
@@ -939,9 +802,12 @@ static INT32 DrvDraw()
 
 	BurnTransferClear();
 
-	if (nBurnLayer & 2) draw_chars(0);
-	if (nBurnLayer & 4) draw_sprites();
-	if (nBurnLayer & 8) draw_chars(1);
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER1);
+
+	memset(pPrioDraw, 1, nScreenWidth * nScreenHeight);
+	if (nSpriteEnable & 1) draw_sprites();
+
+	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -950,31 +816,40 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	DrvMakeInputs();
-
 	if (DrvReset) {
 		DrvDoReset();
 	}
 
 	ZetNewFrame();
 
-	// we need a very high interleave here to sync the cpu's -or- dips & music/sfx won't work
-	INT32 nInterleave = 264*16;
+	{
+		UINT8 *DrvJoy[3] = { DrvJoy1, DrvJoy2, DrvJoy3 };
+		UINT32 DrvJoyInit[3] = { 0, 0xff, 0xff };
+
+		CompileInput(DrvJoy, (void*)DrvInput, 3, 8, DrvJoyInit);
+
+		// Both DrvInput[0], not a typo!
+		ProcessJoystick(&DrvInput[0], 0, 1,3,2,0, INPUT_4WAY);
+		ProcessJoystick(&DrvInput[0], 1, 5,7,6,4, INPUT_4WAY | INPUT_MAKEACTIVELOW);
+	}
+
+	INT32 nInterleave = 264;
 	INT32 nCyclesTotal[3] = { 4000000 / 60, 4000000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], 0 };
+
+	ZetIdle(0, nExtraCycles[0]); // With CPU_RUN_SYNCINT() we must pre-load the cpu core's cycle counter with the roll-over cycles.
+	ZetIdle(1, nExtraCycles[1]); //
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		ZetOpen(0);
-		if (!cpu0frozen) {
-			CPU_RUN(0, Zet);
-		}
-		if (i == 192*16) {
+		CPU_RUN_SYNCINT(0, Zet);
+		if (i == 192) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 
 		ZetOpen(1);
-		CPU_RUN(1, Zet);
+		CPU_RUN_SYNCINT(1, Zet);
 		if ((i % (nInterleave / 8)) == ((nInterleave / 8) - 1)) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
@@ -988,8 +863,12 @@ static INT32 DrvFrame()
 #endif
 	}
 
+	nExtraCycles[0] = ZetTotalCycles(0) - nCyclesTotal[0];
+	nExtraCycles[1] = ZetTotalCycles(1) - nCyclesTotal[1];
+
 	if (pBurnSoundOut) {
 		SN76496Update(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 	}
 
 	if (pBurnDraw) {
@@ -1015,10 +894,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnAcb(&ba);
 
 		ZetScan(nAction);
-
 		SN76496Scan(nAction, pnMin);
 
-		SCAN_VAR(cpu0frozen);
+		SCAN_VAR(flipscreen);
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;
@@ -1060,6 +939,112 @@ struct BurnDriver BurnDrvdocastle = {
 	192, 240, 3, 4
 };
 
+// Mr. Do's Castle (set 2)
+
+static struct BurnRomInfo docastle2RomDesc[] = {
+	{ "a1",				0x2000, 0x0d81fafc, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "a2",				0x2000, 0xa13dc4ac, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "a3",				0x2000, 0xa1f04ffb, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "a4",				0x2000, 0x1fb14aa6, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "a10",			0x4000, 0x45f7f69b, 2 | BRF_GRA },           //  4 slave
+
+	{ "01d.bin",		0x0200, 0x2747ca77, 3 | BRF_PRG | BRF_ESS }, //  5 cpu3
+
+	{ "03a_a5.bin",		0x4000, 0x0636b8f4, 4 | BRF_GRA },           //  6 gfx1
+
+	{ "04m_a6.bin",		0x2000, 0x3bbc9b26, 5 | BRF_GRA },           //  7 gfx2
+	{ "04l_a7.bin",		0x2000, 0x3dfaa9d1, 5 | BRF_GRA },           //  8
+	{ "04j_a8.bin",		0x2000, 0x9afb16e9, 5 | BRF_GRA },           //  9
+	{ "04h_a9.bin",		0x2000, 0xaf24bce0, 5 | BRF_GRA },           // 10
+
+	{ "09c.bin",		0x0200, 0x066f52bc, 6 | BRF_GRA },           // 11 proms
+};
+
+STD_ROM_PICK(docastle2)
+STD_ROM_FN(docastle2)
+
+struct BurnDriver BurnDrvDocastle2 = {
+	"docastle2", "docastle", NULL, NULL, "1983",
+	"Mr. Do's Castle (set 2)\0", NULL, "Universal", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, docastle2RomInfo, docastle2RomName, NULL, NULL, NULL, NULL, DocastleInputInfo, DocastleDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	192, 240, 3, 4
+};
+
+
+// Mr. Do's Castle (older)
+
+static struct BurnRomInfo docastleoRomDesc[] = {
+	{ "c1.bin",			0x2000, 0xc9ce96ab, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "c2.bin",			0x2000, 0x42b28369, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "c3.bin",			0x2000, 0xc8c13124, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "c4.bin",			0x2000, 0x7ca78471, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "dorev10.bin",	0x4000, 0x4b1925e3, 2 | BRF_GRA },           //  4 slave
+
+	{ "01d.bin",		0x0200, 0x2747ca77, 3 | BRF_PRG | BRF_ESS }, //  5 cpu3
+
+	{ "03a_a5.bin",		0x4000, 0x0636b8f4, 4 | BRF_GRA },           //  6 gfx1
+
+	{ "dorev6.bin",		0x2000, 0x9e335bf8, 5 | BRF_GRA },           //  7 gfx2
+	{ "dorev7.bin",		0x2000, 0xf5d5701d, 5 | BRF_GRA },           //  8
+	{ "dorev8.bin",		0x2000, 0x7143ca68, 5 | BRF_GRA },           //  9
+	{ "dorev9.bin",		0x2000, 0x893fc004, 5 | BRF_GRA },           // 10
+
+	{ "dorevc9.bin",	0x0200, 0x96624ebe, 6 | BRF_GRA },           // 11 proms
+};
+
+STD_ROM_PICK(docastleo)
+STD_ROM_FN(docastleo)
+
+struct BurnDriver BurnDrvDocastleo = {
+	"docastleo", "docastle", NULL, NULL, "1983",
+	"Mr. Do's Castle (older)\0", NULL, "Universal", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, docastleoRomInfo, docastleoRomName, NULL, NULL, NULL, NULL, DocastleInputInfo, DocastleDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	192, 240, 3, 4
+};
+
+// Mr. Do vs. Unicorns
+
+static struct BurnRomInfo douniRomDesc[] = {
+	{ "dorev1.bin",		0x2000, 0x1e2cbb3c, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "dorev2.bin",		0x2000, 0x18418f83, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dorev3.bin",		0x2000, 0x7b9e2061, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dorev4.bin",		0x2000, 0xe013954d, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "dorev10.bin",	0x4000, 0x4b1925e3, 2 | BRF_GRA },           //  4 slave
+
+	{ "01d.bin",		0x0200, 0x2747ca77, 3 | BRF_PRG | BRF_ESS }, //  5 cpu3
+
+	{ "03a_a5.bin",		0x4000, 0x0636b8f4, 4 | BRF_GRA },           //  6 gfx1
+
+	{ "dorev6.bin",		0x2000, 0x9e335bf8, 5 | BRF_GRA },           //  7 gfx2
+	{ "dorev7.bin",		0x2000, 0xf5d5701d, 5 | BRF_GRA },           //  8
+	{ "dorev8.bin",		0x2000, 0x7143ca68, 5 | BRF_GRA },           //  9
+	{ "dorev9.bin",		0x2000, 0x893fc004, 5 | BRF_GRA },           // 10
+
+	{ "dorevc9.bin",	0x0200, 0x96624ebe, 6 | BRF_GRA },           // 11 proms
+};
+
+STD_ROM_PICK(douni)
+STD_ROM_FN(douni)
+
+struct BurnDriver BurnDrvDouni = {
+	"douni", "docastle", NULL, NULL, "1983",
+	"Mr. Do vs. Unicorns\0", NULL, "Universal", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, douniRomInfo, douniRomName, NULL, NULL, NULL, NULL, DocastleInputInfo, DocastleDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	192, 240, 3, 4
+};
+
 static INT32 DorunrunDrvInit()
 {
 	dorunrunmode = 1;
@@ -1079,14 +1064,14 @@ static struct BurnRomInfo dorunrunRomDesc[] = {
 
 	{ "bprom2.bin",		0x0200, 0x2747ca77, 3 | BRF_PRG | BRF_ESS }, //  5 cpu3
 
-	{ "27128.a3",		0x4000, 0x4be96dcf, 4 | BRF_GRA }, //  6 gfx1
+	{ "27128.a3",		0x4000, 0x4be96dcf, 4 | BRF_GRA }, 			 //  6 gfx1
 
-	{ "2764.m4",		0x2000, 0x4bb231a0, 5 | BRF_GRA }, //  7 gfx2
-	{ "2764.l4",		0x2000, 0x0c08508a, 5 | BRF_GRA }, //  8
-	{ "2764.j4",		0x2000, 0x79287039, 5 | BRF_GRA }, //  9
-	{ "2764.h4",		0x2000, 0x523aa999, 5 | BRF_GRA }, // 10
+	{ "2764.m4",		0x2000, 0x4bb231a0, 5 | BRF_GRA }, 			 //  7 gfx2
+	{ "2764.l4",		0x2000, 0x0c08508a, 5 | BRF_GRA },			 //  8
+	{ "2764.j4",		0x2000, 0x79287039, 5 | BRF_GRA },			 //  9
+	{ "2764.h4",		0x2000, 0x523aa999, 5 | BRF_GRA },			 // 10
 
-	{ "dorunrun.clr",	0x0100, 0xd5bab5d5, 6 | BRF_GRA }, // 11 proms
+	{ "dorunrun.clr",	0x0100, 0xd5bab5d5, 6 | BRF_GRA },			 // 11 proms
 };
 
 STD_ROM_PICK(dorunrun)
@@ -1098,6 +1083,147 @@ struct BurnDriver BurnDrvDorunrun = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, dorunrunRomInfo, dorunrunRomName, NULL, NULL, NULL, NULL, DocastleInputInfo, DorunrunDIPInfo,
+	DorunrunDrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	240, 192, 4, 3
+};
+
+// Do! Run Run (set 2)
+
+static struct BurnRomInfo dorunrun2RomDesc[] = {
+	{ "p1",				0x2000, 0x12a99365, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "l1",				0x2000, 0x38609287, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "k1",				0x2000, 0x099aaf54, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "n1",				0x2000, 0x4f8fcbae, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "27128.p7",		0x4000, 0x8b06d461, 2 | BRF_GRA },           //  4 slave
+
+	{ "bprom2.bin",		0x0200, 0x2747ca77, 3 | BRF_PRG | BRF_ESS }, //  5 cpu3
+
+	{ "27128.a3",		0x4000, 0x4be96dcf, 4 | BRF_GRA },           //  6 gfx1
+
+	{ "2764.m4",		0x2000, 0x4bb231a0, 5 | BRF_GRA },           //  7 gfx2
+	{ "2764.l4",		0x2000, 0x0c08508a, 5 | BRF_GRA },           //  8
+	{ "2764.j4",		0x2000, 0x79287039, 5 | BRF_GRA },           //  9
+	{ "2764.h4",		0x2000, 0x523aa999, 5 | BRF_GRA },           // 10
+
+	{ "dorunrun.clr",	0x0100, 0xd5bab5d5, 6 | BRF_GRA },           // 11 proms
+};
+
+STD_ROM_PICK(dorunrun2)
+STD_ROM_FN(dorunrun2)
+
+struct BurnDriver BurnDrvDorunrun2 = {
+	"dorunrun2", "dorunrun", NULL, NULL, "1984",
+	"Do! Run Run (set 2)\0", NULL, "Universal", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, dorunrun2RomInfo, dorunrun2RomName, NULL, NULL, NULL, NULL, DocastleInputInfo, DorunrunDIPInfo,
+	DorunrunDrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	240, 192, 4, 3
+};
+
+// Do! Run Run (Do's Castle hardware, set 1)
+
+static struct BurnRomInfo dorunruncRomDesc[] = {
+	{ "rev-0-1.p1",		0x2000, 0x49906ebd, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "rev-0-2.n1",		0x2000, 0xdbe3e7db, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rev-0-3.l1",		0x2000, 0xe9b8181a, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "rev-0-4.k1",		0x2000, 0xa63d0b89, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "rev-0-2.n7",		0x4000, 0x6dac2fa3, 2 | BRF_GRA },           //  4 slave
+
+	{ "bprom2.bin",		0x0200, 0x2747ca77, 3 | BRF_PRG | BRF_ESS }, //  5 cpu3
+
+	{ "rev-0-5.a3",		0x4000, 0xe20795b7, 4 | BRF_GRA },           //  6 gfx1
+
+	{ "2764.m4",		0x2000, 0x4bb231a0, 5 | BRF_GRA },           //  7 gfx2
+	{ "2764.l4",		0x2000, 0x0c08508a, 5 | BRF_GRA },           //  8
+	{ "2764.j4",		0x2000, 0x79287039, 5 | BRF_GRA },           //  9
+	{ "2764.h4",		0x2000, 0x523aa999, 5 | BRF_GRA },           // 10
+
+	{ "dorunrun.clr",	0x0100, 0xd5bab5d5, 6 | BRF_GRA },           // 11 proms
+};
+
+STD_ROM_PICK(dorunrunc)
+STD_ROM_FN(dorunrunc)
+
+struct BurnDriver BurnDrvDorunrunc = {
+	"dorunrunc", "dorunrun", NULL, NULL, "1984",
+	"Do! Run Run (Do's Castle hardware, set 1)\0", NULL, "Universal", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, dorunruncRomInfo, dorunruncRomName, NULL, NULL, NULL, NULL, DocastleInputInfo, DorunrunDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	240, 192, 4, 3
+};
+
+
+// Do! Run Run (Do's Castle hardware, set 2)
+
+static struct BurnRomInfo dorunruncaRomDesc[] = {
+	{ "runrunc_p1",		0x2000, 0xa8d789c6, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "runrunc_n1",		0x2000, 0xf8c8a9f4, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "runrunc_l1",		0x2000, 0x223927ca, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "runrunc_k1",		0x2000, 0x5edd6752, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "rev-0-2.n7",		0x4000, 0x6dac2fa3, 2 | BRF_GRA },           //  4 slave
+
+	{ "bprom2.bin",		0x0200, 0x2747ca77, 3 | BRF_PRG | BRF_ESS }, //  5 cpu3
+
+	{ "rev-0-5.a3",		0x4000, 0xe20795b7, 4 | BRF_GRA },           //  6 gfx1
+
+	{ "2764.m4",		0x2000, 0x4bb231a0, 5 | BRF_GRA },           //  7 gfx2
+	{ "2764.l4",		0x2000, 0x0c08508a, 5 | BRF_GRA },           //  8
+	{ "2764.j4",		0x2000, 0x79287039, 5 | BRF_GRA },           //  9
+	{ "2764.h4",		0x2000, 0x523aa999, 5 | BRF_GRA },           // 10
+
+	{ "dorunrun.clr",	0x0100, 0xd5bab5d5, 6 | BRF_GRA },           // 11 proms
+};
+
+STD_ROM_PICK(dorunrunca)
+STD_ROM_FN(dorunrunca)
+
+struct BurnDriver BurnDrvDorunrunca = {
+	"dorunrunca", "dorunrun", NULL, NULL, "1984",
+	"Do! Run Run (Do's Castle hardware, set 2)\0", NULL, "Universal", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, dorunruncaRomInfo, dorunruncaRomName, NULL, NULL, NULL, NULL, DocastleInputInfo, DorunrunDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	240, 192, 4, 3
+};
+
+// Super Pierrot (Japan)
+
+static struct BurnRomInfo spieroRomDesc[] = {
+	{ "sp1.bin",		0x2000, 0x08d23e38, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "sp3.bin",		0x2000, 0xfaa0c18c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sp4.bin",		0x2000, 0x639b4e5d, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sp2.bin",		0x2000, 0x3a29ccb0, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "27128.p7",		0x4000, 0x8b06d461, 2 | BRF_GRA },           //  4 slave
+
+	{ "bprom2.bin",		0x0200, 0x2747ca77, 3 | BRF_PRG | BRF_ESS }, //  5 cpu3
+
+	{ "sp5.bin",		0x4000, 0x1b704bb0, 4 | BRF_GRA },           //  6 gfx1
+
+	{ "sp6.bin",		0x2000, 0x00f893a7, 5 | BRF_GRA },           //  7 gfx2
+	{ "sp7.bin",		0x2000, 0x173e5c6a, 5 | BRF_GRA },           //  8
+	{ "sp8.bin",		0x2000, 0x2e66525a, 5 | BRF_GRA },           //  9
+	{ "sp9.bin",		0x2000, 0x9c571525, 5 | BRF_GRA },           // 10
+
+	{ "bprom1.bin",		0x0200, 0xfc1b66ff, 6 | BRF_GRA },           // 11 proms
+};
+
+STD_ROM_PICK(spiero)
+STD_ROM_FN(spiero)
+
+struct BurnDriver BurnDrvSpiero = {
+	"spiero", "dorunrun", NULL, NULL, "1987",
+	"Super Pierrot (Japan)\0", NULL, "Universal", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, spieroRomInfo, spieroRomName, NULL, NULL, NULL, NULL, DocastleInputInfo, DorunrunDIPInfo,
 	DorunrunDrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 192, 4, 3
 };
@@ -1114,14 +1240,14 @@ static struct BurnRomInfo dowildRomDesc[] = {
 
 	{ "8300b-2",        0x0200, 0x2747ca77, 3 | BRF_PRG | BRF_ESS }, //  5 cpu3
 
-	{ "w5",		        0x4000, 0xb294b151, 4 | BRF_GRA }, //  6 gfx1
+	{ "w5",		        0x4000, 0xb294b151, 4 | BRF_GRA },			 //  6 gfx1
 
-	{ "w6",		        0x2000, 0x57e0208b, 5 | BRF_GRA }, //  7 gfx2
-	{ "w7",		        0x2000, 0x5001a6f7, 5 | BRF_GRA }, //  8
-	{ "w8",		        0x2000, 0xec503251, 5 | BRF_GRA }, //  9
-	{ "w9",		        0x2000, 0xaf7bd7eb, 5 | BRF_GRA }, // 10
+	{ "w6",		        0x2000, 0x57e0208b, 5 | BRF_GRA },			 //  7 gfx2
+	{ "w7",		        0x2000, 0x5001a6f7, 5 | BRF_GRA },			 //  8
+	{ "w8",		        0x2000, 0xec503251, 5 | BRF_GRA },			 //  9
+	{ "w9",		        0x2000, 0xaf7bd7eb, 5 | BRF_GRA },			 // 10
 
-	{ "dowild.clr",	    0x0100, 0xa703dea5, 6 | BRF_GRA }, // 11 proms
+	{ "dowild.clr",	    0x0100, 0xa703dea5, 6 | BRF_GRA },			 // 11 proms
 };
 
 STD_ROM_PICK(dowild)
@@ -1147,16 +1273,16 @@ static struct BurnRomInfo jjackRomDesc[] = {
 
 	{ "j0.bin",	        0x4000, 0xab042f04, 2 | BRF_PRG | BRF_ESS }, //  4 slave
 
-	{ "bprom2.bin",	    0x0200, 0x2747ca77, 3 | BRF_GRA }, //  5 cpu3
+	{ "bprom2.bin",	    0x0200, 0x2747ca77, 3 | BRF_GRA },			 //  5 cpu3
 
-	{ "j5.bin",	        0x4000, 0x75038ff9, 4 | BRF_GRA }, //  6 gfx1
+	{ "j5.bin",	        0x4000, 0x75038ff9, 4 | BRF_GRA },			 //  6 gfx1
 
-	{ "j6.bin",	        0x2000, 0x5937bd7b, 5 | BRF_GRA }, //  7 gfx2
-	{ "j7.bin",	        0x2000, 0xcf8ae8e7, 5 | BRF_GRA }, //  8
-	{ "j8.bin",	        0x2000, 0x84f6fc8c, 5 | BRF_GRA }, //  9
-	{ "j9.bin",	        0x2000, 0x3f9bb09f, 5 | BRF_GRA }, // 10
+	{ "j6.bin",	        0x2000, 0x5937bd7b, 5 | BRF_GRA },			 //  7 gfx2
+	{ "j7.bin",	        0x2000, 0xcf8ae8e7, 5 | BRF_GRA },			 //  8
+	{ "j8.bin",	        0x2000, 0x84f6fc8c, 5 | BRF_GRA },			 //  9
+	{ "j9.bin",	        0x2000, 0x3f9bb09f, 5 | BRF_GRA },			 // 10
 
-	{ "bprom1.bin",	    0x0200, 0x2f0955f2, 6 | BRF_GRA }, // 11 proms
+	{ "bprom1.bin",	    0x0200, 0x2f0955f2, 6 | BRF_GRA },			 // 11 proms
 };
 
 STD_ROM_PICK(jjack)
@@ -1185,14 +1311,14 @@ static struct BurnRomInfo kickridrRomDesc[] = {
 
 	{ "8300b-2",	    0x0200, 0x2747ca77, 3 | BRF_PRG | BRF_ESS }, //  5 cpu3
 
-	{ "k5",			    0x4000, 0x3f7d7e49, 4 | BRF_GRA }, //  6 gfx1
+	{ "k5",			    0x4000, 0x3f7d7e49, 4 | BRF_GRA },			 //  6 gfx1
 
-	{ "k6",			    0x2000, 0x94252ed3, 5 | BRF_GRA }, //  7 gfx2
-	{ "k7",			    0x2000, 0x7ef2420e, 5 | BRF_GRA }, //  8
-	{ "k8",			    0x2000, 0x29bed201, 5 | BRF_GRA }, //  9
-	{ "k9",			    0x2000, 0x847584d3, 5 | BRF_GRA }, // 10
+	{ "k6",			    0x2000, 0x94252ed3, 5 | BRF_GRA },			 //  7 gfx2
+	{ "k7",			    0x2000, 0x7ef2420e, 5 | BRF_GRA },			 //  8
+	{ "k8",			    0x2000, 0x29bed201, 5 | BRF_GRA },			 //  9
+	{ "k9",			    0x2000, 0x847584d3, 5 | BRF_GRA },			 // 10
 
-	{ "kickridr.clr",	0x0100, 0x73ec281c, 6 | BRF_GRA }, // 11 proms
+	{ "kickridr.clr",	0x0100, 0x73ec281c, 6 | BRF_GRA },			 // 11 proms
 };
 
 STD_ROM_PICK(kickridr)

@@ -1236,6 +1236,9 @@ static int burn_dummy_state_cb(BurnArea *pba)
 
 size_t retro_serialize_size()
 {
+	if (!driver_inited)
+		return 0;
+
 	// This is the size for retro_serialize, so it wants ACB_FULLSCAN | ACB_READ
 	// retro_unserialize doesn't call this function
 	INT32 nAction = ACB_FULLSCAN | ACB_READ;
@@ -1265,6 +1268,9 @@ size_t retro_serialize_size()
 
 bool retro_serialize(void *data, size_t size)
 {
+	if (!driver_inited)
+		return true;
+
 #if 0
 	// Used to convert a standalone savestate we are loading into something usable by the libretro port
 	char convert_save_path[MAX_PATH];
@@ -1299,6 +1305,9 @@ bool retro_serialize(void *data, size_t size)
 
 bool retro_unserialize(const void *data, size_t size)
 {
+	if (!driver_inited)
+		return true;
+
 	// We want ACB_FULLSCAN | ACB_WRITE for loading states
 	INT32 nAction = ACB_FULLSCAN | ACB_WRITE;
 

@@ -63,11 +63,13 @@ static INT32 DrvReset()
 		*((UINT16*)(CpsReg + 0x4E)) = BURN_ENDIAN_SWAP_INT16(0x0200);
 		*((UINT16*)(CpsReg + 0x50)) = BURN_ENDIAN_SWAP_INT16(nCpsNumScanlines);
 		*((UINT16*)(CpsReg + 0x52)) = BURN_ENDIAN_SWAP_INT16(nCpsNumScanlines);
+
+		// CPS-2 uses Object Banks
+		SekOpen(0);
+		CpsMapObjectBanks(0);
+		SekClose();
 	}
 
-	SekOpen(0);
-	CpsMapObjectBanks(0);
-	SekClose();
 
 	nCpsCyclesExtra = 0;
 

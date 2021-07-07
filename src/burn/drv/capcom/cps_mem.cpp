@@ -85,12 +85,6 @@ void CpsDoMapObjectBanks(INT32 nBank)
 {
 	nCpsObjectBank = nBank;
 
-	// some cps1 bootlegs (sf2b, sf2ceb, ...) are trying to write on CpsRam708
-	// however CpsRam708 is not even allocated for cps1
-	// it might be related to gfx corruption seen in some stages ?
-	if (Cps != 2)
-		return;
-
 	if (nCpsObjectBank) {
 		SekMapMemory(CpsRam708 + 0x8000, 0x708000, 0x709FFF, MAP_RAM);
 		SekMapMemory(CpsRam708 + 0x8000, 0x70A000, 0x70BFFF, MAP_RAM);
@@ -438,9 +432,12 @@ INT32 CpsAreaScan(INT32 nAction, INT32 *pnMin)
 
 		if (nAction & ACB_WRITE) {						// Palette could have changed
 			CpsRecalcPal = 1;
-			SekOpen(0);
-			CpsDoMapObjectBanks(nCpsObjectBank);        // Re-Map object banks
-			SekClose();
+
+			if (Cps == 2) {
+				SekOpen(0);
+				CpsDoMapObjectBanks(nCpsObjectBank);    // Re-Map object banks
+				SekClose();
+			}
 		}
 	}
 

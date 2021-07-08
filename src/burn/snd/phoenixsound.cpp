@@ -11,6 +11,7 @@
 #include <math.h>
 #include "burnint.h"
 #include "tms36xx.h"
+#include "rescap.h"
 
 /****************************************************************************
  * 4006
@@ -68,7 +69,6 @@ static INT32 phoenixsnd_initted = 0;
 
 void phoenix_sound_scan(INT32 nAction, INT32 *pnMin)
 {
-	bprintf(0, _T("phoenix_scan\n"));
 	tms36xx_scan(nAction, pnMin);
 
 	SCAN_VAR(sound_latch_a);
@@ -101,18 +101,19 @@ static INT32 tone1_vco1(INT32 samplerate)
 	#define C18d	1.48e-6
 	#define R40 	47000
 	#define R41 	100000
-    static const INT32 rate[2][4] = {
+
+	static const INT32 rate[2][4] = {
 		{
-			(int)(double)(VMAX*2/3/(0.693*(R40+R41)*C18a)),
-			(int)(double)(VMAX*2/3/(0.693*(R40+R41)*C18b)),
-			(int)(double)(VMAX*2/3/(0.693*(R40+R41)*C18c)),
-			(int)(double)(VMAX*2/3/(0.693*(R40+R41)*C18d))
+			(int)(double)(VMAX*2/3/(1.639*(R40+R41)*C18a)),
+			(int)(double)(VMAX*2/3/(1.639*(R40+R41)*C18b)),
+			(int)(double)(VMAX*2/3/(1.639*(R40+R41)*C18c)),
+			(int)(double)(VMAX*2/3/(1.639*(R40+R41)*C18d))
 		},
 		{
-			(int)(double)(VMAX*2/3/(0.693*R41*C18a)),
-			(int)(double)(VMAX*2/3/(0.693*R41*C18b)),
-			(int)(double)(VMAX*2/3/(0.693*R41*C18c)),
-			(int)(double)(VMAX*2/3/(0.693*R41*C18d))
+			(int)(double)(VMAX*2/3/(1.639*R41*C18a)),
+			(int)(double)(VMAX*2/3/(1.639*R41*C18b)),
+			(int)(double)(VMAX*2/3/(1.639*R41*C18c)),
+			(int)(double)(VMAX*2/3/(1.639*R41*C18d))
         }
 	};
 	if( tone1_vco1_output )
@@ -159,15 +160,15 @@ static INT32 tone1_vco2(INT32 samplerate)
 	 * charge time = 0.639*(Ra+Rb)*C = 7.9002s
 	 * discharge time = 0.639*Rb*C = 3.9501s
 	 */
-	#define C20 10.0e-6
-	#define R43 570000
-	#define R44 570000
+	#define C20 1.0e-6
+	#define R43 510000
+	#define R44 510000
 
 	if( tone1_vco2_output )
 	{
 		if (tone1_vco2_level > VMIN)
 		{
-			tone1_vco2_counter -= (int)(VMAX*2/3 / (0.693 * R44 * C20));
+			tone1_vco2_counter -= (int)(VMAX*2/3 / (1.639 * R44 * C20));
 			if( tone1_vco2_counter <= 0 )
 			{
 				INT32 steps = -tone1_vco2_counter / samplerate + 1;
@@ -184,7 +185,7 @@ static INT32 tone1_vco2(INT32 samplerate)
 	{
 		if (tone1_vco2_level < VMAX)
 		{
-			tone1_vco2_counter -= (int)(VMAX*2/3 / (0.693 * (R43 + R44) * C20));
+			tone1_vco2_counter -= (int)(VMAX*2/3 / (1.639 * (R43 + R44) * C20));
 			if( tone1_vco2_counter <= 0 )
 			{
 				INT32 steps = -tone1_vco2_counter / samplerate + 1;
@@ -229,9 +230,9 @@ static INT32 tone1_vco(INT32 samplerate, INT32 vco1, INT32 vco2)
 	{
 		#define C22 100.0e-6
 		#define R42 10000
-		#define R45 51000
-		#define R46 51000
-		#define RP	27777	/* R42+R46 parallel with R45 */
+		#define R45 5100
+		#define R46 5100
+		#define RP	5048//27777	/* R42+R46 parallel with R45 */
 		if( vco1 )
 		{
 			/*		R42 10k
@@ -312,7 +313,7 @@ static INT32 tone1_vco(INT32 samplerate, INT32 vco1, INT32 vco2)
 	/* L507 (NE555): Ra=20k, Rb=20k, C=0.001uF
 	 * frequency 1.44/((Ra+2*Rb)*C) = 24kHz
 	 */
-	return 24000*1/3 + 24000*2/3 * voltage / 32768;
+	return (24000*2/3) + (24000*2/3) * voltage / 32768;
 }
 
 static INT32 tone1(INT32 samplerate)
@@ -367,15 +368,16 @@ static INT32 tone2_vco(INT32 samplerate)
 	 * 0.7V + (12V - 0.7V) * 33000 / (100000 + 33000) +
 	 *		  (12V - 5.7V) * 47000 / (100000 + 47000) = 5.51V
      */
-
-    #define C7  6.8e-6
+	// 0.7 + (12 - 0.7) * 33000 / (100000 + 33000)  = 3.50 + 0.75 =
+	// 0.7 + (12 - 0.7) * 470 / (100000 + 470) = 0.75
+    #define C7  (6.8e-6)
     #define R23 100000
-	#define R22 47000
+	#define R22 470
 	#define R24 33000
-	#define R22pR24 19388
+	#define R22pR24 24812 // actually r23 parallel w/24 -dink
 
-	#define C7_MIN (VMAX * 254 / 500)
-	#define C7_MAX (VMAX * 551 / 500)
+	#define C7_MIN (VMAX * 075 / 551)
+	#define C7_MAX (VMAX * 425 / 551)
 	#define C7_DIFF (C7_MAX - C7_MIN)
 
 	if( (sound_latch_b & 0x10) == 0 )
@@ -405,10 +407,10 @@ static INT32 tone2_vco(INT32 samplerate)
 	 * Ra = R25 (47k), Rb = R26 (47k), C = C8 (0.001uF)
 	 * frequency 1.44/((Ra+2*Rb)*C) = 10212 Hz
 	 */
-	return 10212 * tone2_vco_level / 32768;
+	return (10234 + (0x27*100)) * tone2_vco_level / 32768;
 }
 
-static INT32 tone2(INT32 samplerate)
+static INT32 tone2_pre(INT32 samplerate)
 {
 	INT32 frequency = tone2_vco(samplerate);
 
@@ -426,6 +428,25 @@ static INT32 tone2(INT32 samplerate)
 		}
 	}
 	return tone2_output ? tone2_level : -tone2_level;
+}
+
+static INT16 tone2_rc_filt(INT16 sam)
+{
+	double filt = 0.0;
+	double cap = 0.0;
+
+	if (filt == 0.0) {
+		filt = 1.0 - exp(-1.0 / ((1.0/(1.0/RES_K(10) + 1.0/RES_K(100))) * CAP_U(.047) * nBurnSoundRate));
+		cap = 0.0;
+	}
+
+	cap += (sam - cap) * filt;
+	return cap * 7.00;
+}
+
+static INT32 tone2(INT32 samplerate)
+{
+	return (sound_latch_b & 0x20) ? tone2_rc_filt(tone2_pre(samplerate)) : tone2_pre(samplerate);
 }
 
 static INT32 update_c24(INT32 samplerate)
@@ -590,6 +611,7 @@ void phoenix_sound_control_a_w(INT32 address, UINT8 data)
 	sound_latch_a = data;
 
 	tone1_vco1_cap = (sound_latch_a >> 4) & 3;
+
 	if( sound_latch_a & 0x20 )
 		tone1_level = VMAX * 10000 / (10000+10000);
 	else
@@ -603,10 +625,10 @@ void phoenix_sound_control_b_w(INT32 address, UINT8 data)
 
 	sound_latch_b = data;
 
-	if( sound_latch_b & 0x20 )
-		tone2_level = VMAX * 10 / 11;
-	else
-		tone2_level = VMAX;
+//	if( sound_latch_b & 0x20 )
+//		tone2_level = VMAX;// * 10 / 11;
+//	else
+	tone2_level = VMAX; // attenuated by rc.filter -dink
 
 	/* eventually change the tune that the MM6221AA is playing */
 	mm6221aa_tune_w(sound_latch_b >> 6);

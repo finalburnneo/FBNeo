@@ -1112,17 +1112,26 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnYM3812Scan(nAction, pnMin);
 
-		SCAN_VAR(z80_halt);
 		SCAN_VAR(irq_enable);
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(bgrambank);
 		SCAN_VAR(fgrombank);
 		SCAN_VAR(displayenable);
+
+		SCAN_VAR(z80_halt);
 		SCAN_VAR(main_ram_seg);
 		SCAN_VAR(dsp_addr_w);
 		SCAN_VAR(dsp_execute);
 		SCAN_VAR(dsp_BIO);
+		SCAN_VAR(dsp_on);
+
+		SCAN_VAR(scrollx);
+		SCAN_VAR(scrolly);
+		SCAN_VAR(vidramoffs);
+
 		SCAN_VAR(main_bank);
+		SCAN_VAR(coin_lockout);
+		SCAN_VAR(previous_coin);
 
 		if (nAction & ACB_WRITE) {
 			ZetOpen(0);

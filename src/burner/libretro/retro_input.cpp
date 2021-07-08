@@ -511,7 +511,7 @@ static INT32 GameInpDigital2RetroInpKey(struct GameInp* pgi, unsigned port, unsi
 		if (!bInputInitialized)
 			pgi->Macro.Switch.nCode = (UINT16)(nSwitchCode++);
 		if (nDeviceType[port] == RETRO_DEVICE_NONE) {
-			sKeyBinds[pgi->Input.Switch.nCode] = KeyBind();
+			sKeyBinds[pgi->Macro.Switch.nCode] = KeyBind();
 			return 0;
 		}
 		sKeyBinds[pgi->Macro.Switch.nCode].id = id;

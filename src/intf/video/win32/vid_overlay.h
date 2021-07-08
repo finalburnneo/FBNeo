@@ -9,6 +9,7 @@ void DetectorGetState(int &state, int &score1, int &score2, int &start1, int &st
 
 void VidOverlayInit(IDirect3DDevice9Ex *device);
 void VidOverlayEnd();
+void VidOverlayQuit();
 void VidOverlayRender(const RECT& dest, int gameWidth, int gameHeight, int scan_intensity);
 
 void VidOverlaySetGameInfo(const wchar_t *p1, const wchar_t *p2, int spectator, int ranked, int player);

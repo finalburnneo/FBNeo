@@ -519,7 +519,7 @@ int ConfigAppSave()
 	VAR(bVidBigOverlay);
 	_ftprintf(h, _T("\n// Show Fightcade scores in unranked mode (only for games with detectors)\n"));
 	VAR(bVidShowInputs);
-	_ftprintf(h, _T("\n// Show Fightcade overlay inputs\n"));
+	_ftprintf(h, _T("\n// Show Fightcade overlay debug inputs\n"));
 	VAR(bVidUnrankedScores);
 	_ftprintf(h, _T("\n// Save Fightcade overlay data to files in realtime (for Streaming)\n"));
 	VAR(bVidSaveOverlayFiles);

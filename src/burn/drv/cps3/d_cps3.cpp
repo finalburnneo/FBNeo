@@ -1750,12 +1750,12 @@ struct BurnDriver BurnDrvWarzardr1 = {
 
 static struct BurnRomInfo sfiii4nRomDesc[] = {
 
-	{ "sfiii3_japan_nocd.29f400.u2",	0x080000, 0x1edc6366, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "sfiii3_japan_nocd.29f400.u2",	0x080000, 0x1EDC6366, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 
-	{ "4rd-simm1.0",					0x200000, 0xca97f95e, BRF_ESS | BRF_PRG },
-	{ "4rd-simm1.1",					0x200000, 0x5bc7faa6, BRF_ESS | BRF_PRG },
-	{ "4rd-simm1.2",					0x200000, 0xec2eaa29, BRF_ESS | BRF_PRG },
-	{ "4rd-simm1.3",					0x200000, 0x41c4ce7c, BRF_ESS | BRF_PRG },
+	{ "4rd-simm1.0",					0x200000, 0x2963AA89, BRF_ESS | BRF_PRG },
+	{ "4rd-simm1.1",					0x200000, 0x3D4038E9, BRF_ESS | BRF_PRG },
+	{ "4rd-simm1.2",					0x200000, 0xD5A580CE, BRF_ESS | BRF_PRG },
+	{ "4rd-simm1.3",					0x200000, 0x1686FA39, BRF_ESS | BRF_PRG },
 	{ "sfiii3-simm2.0",					0x200000, 0x06eb969e, BRF_ESS | BRF_PRG },
 	{ "sfiii3-simm2.1",					0x200000, 0xe7039f82, BRF_ESS | BRF_PRG },
 	{ "sfiii3-simm2.2",					0x200000, 0x645c96f7, BRF_ESS | BRF_PRG },
@@ -1782,8 +1782,8 @@ static struct BurnRomInfo sfiii4nRomDesc[] = {
 	{ "sfiii3-simm5.3",					0x200000, 0x333754e0, BRF_GRA },
 	{ "sfiii3-simm5.4",					0x200000, 0x78f6d417, BRF_GRA },
 	{ "sfiii3-simm5.5",					0x200000, 0x8ccad9b1, BRF_GRA },
-	{ "4rd-simm5.6",					0x200000, 0xe9b61a56, BRF_GRA },
-	{ "4rd-simm5.7",					0x200000, 0x8db3a249, BRF_GRA },
+	{ "4rd-simm5.6",					0x200000, 0x85DE59E5, BRF_GRA },
+	{ "4rd-simm5.7",					0x200000, 0xEE7E29B3, BRF_GRA },
 	{ "sfiii3-simm6.0",					0x200000, 0x8da69042, BRF_GRA },
 	{ "sfiii3-simm6.1",					0x200000, 0x1c8c7ac4, BRF_GRA },
 	{ "sfiii3-simm6.2",					0x200000, 0xa671341d, BRF_GRA },

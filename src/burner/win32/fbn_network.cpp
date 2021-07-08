@@ -87,8 +87,9 @@ int NetworkGetInput()
 	}
 	for (i = 0; i < nCommonInputs; i++, j++) {
 		BurnDrvGetInputInfo(&bii, i + nCommonOffset);
+		bool allow_reset = !strcmp(BurnDrvGetTextA(DRV_NAME), "sf2hf") && kNetVersion >= NET_VERSION_RESET_SF2HF;
 		bool can_tilt = !kNetGame || strcmp(bii.szName, "Tilt");
-		bool can_reset = !kNetGame || VidOverlayCanReset() || (strcmp(bii.szName, "Reset") && strcmp(bii.szName, "Diagnostic") && strcmp(bii.szName, "Service") && strcmp(bii.szName, "Test"));
+		bool can_reset = !kNetGame || VidOverlayCanReset() || (strcmp(bii.szName, "Reset") && strcmp(bii.szName, "Diagnostic") && strcmp(bii.szName, "Service") && strcmp(bii.szName, "Test")) || allow_reset;
 		if (*bii.pVal && can_tilt && can_reset) {
 			nControls[j >> 3] |= (1 << (j & 7));
 		}

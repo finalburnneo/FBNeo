@@ -35,6 +35,7 @@ static const float FNT_CHAT = 0.24f;
 static const float FNT_SCALE = 1.0f;
 static const float FNT_SEPARATION = 0.09f;
 
+
 //------------------------------------------------------------------------------------------------------------------------------
 // render vars
 //------------------------------------------------------------------------------------------------------------------------------
@@ -969,27 +970,24 @@ void VidOverlayInit(IDirect3DDevice9Ex *device)
 	DeleteFileA("fightcade/started.inf");
 
 #ifdef TEST_OVERLAY
-	VidOverlaySetGameInfo(_T("Kinikkuman#2,10"), _T("shine#3,8"), false, 10, 0);
+	VidOverlaySetGameInfo(_T("Bender#2,10"), _T("Iori#3,8"), false, 10, 0);
 	VidOverlaySetGameSpectators(13);
-	VidOverlayAddChatLine(_T("Kinikkuman"), _T("test line 1"));
-	VidOverlayAddChatLine(_T("shine"), _T("good game!"));
+	VidOverlayAddChatLine(_T("Bender"), _T("test line 1"));
+	VidOverlayAddChatLine(_T("Iori"), _T("good game!"));
 	VidOverlayAddChatLine(_T("System"), _T("You guys chat too much"));
-	VidOverlayAddChatLine(_T("Kinikkuman"), _T("omg"));
+	VidOverlayAddChatLine(_T("Bender"), _T("omg"));
 	VidOverlayAddChatLine(_T("System"), _T("Too much buttons pressed, autofire detected?"));
-	VidOverlayAddChatLine(_T("Kinikkuman"), _T("lorem ipsum chat text"));
-	VidOverlayAddChatLine(_T("Kinikkuman"), _T("this is another lorem ipsum chat text, something longer and longer and longer"));
-	VidOverlayAddChatLine(_T("shine"), _T("Jackie Chan will be best new addition to Fightcade - also Daraku Tenshi"));
-	VidOverlayAddChatLine(_T("shine"), _T("Día Completón ííííí"));
-	VidOverlayAddChatLine(_T("shine"), _T("test line 11, last line"));
+	VidOverlayAddChatLine(_T("Bender"), _T("lorem ipsum chat text"));
+	VidOverlayAddChatLine(_T("Bender"), _T("this is another lorem ipsum chat text, something longer and longer and longer"));
+	VidOverlayAddChatLine(_T("Iori"), _T("Jackie Chan will be best new addition to Fightcade!"));
+	VidOverlayAddChatLine(_T("Iori"), _T("Día Completo"));
+	VidOverlayAddChatLine(_T("Iori"), _T("test line 11, last line"));
 	VidOverlaySetSystemMessage(_T("System message"));
 #endif
 }
 
 void VidOverlayEnd()
 {
-	if (gameDetector.state == GameDetector::ST_WAIT_WINNER) {
-		QuarkSendChatCmd("quit", 'S');
-	}
 	renderer.End();
 	font.End();
 	inputs_spr.End();
@@ -1000,6 +998,13 @@ void VidOverlayEnd()
 		badges_spr[i].End();
 	}
 	pD3DDevice = NULL;
+}
+
+void VidOverlayQuit()
+{
+	if (game_ranked && gameDetector.state == GameDetector::ST_WAIT_WINNER) {
+		QuarkSendChatCmd("quit", 'S');
+	}
 }
 
 void VidOverlaySetSize(const RECT &dest, float size)

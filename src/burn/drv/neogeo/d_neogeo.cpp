@@ -15881,6 +15881,41 @@ struct BurnDriver BurnDrvkof97xt = {
 	0x1000,	304, 224, 4, 3
 };
 
+// The King of Fighters '97 Random Select Optimized Edition (Hack)
+
+static struct BurnRomInfo kof97tRomDesc[] = {
+	{ "232t-p1.bin", 0x100000, 0x53D9851D, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "232t-p2.bin", 0x400000, 0xD9E51750, 1 | BRF_ESS | BRF_PRG }, //  1 
+
+	{ "232t-s1.bin", 0x020000, 0x87C6585D, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "232t-c1.bin", 0x800000, 0x848040CB, 3 | BRF_GRA },           //  3 Sprite data
+	{ "232t-c2.bin", 0x800000, 0xD01AD7C9, 3 | BRF_GRA },           //  4 
+	{ "232-c3.bin",  0x800000, 0x581d6618, 3 | BRF_GRA },           //  5 
+	{ "232-c4.bin",  0x800000, 0x49bb1e68, 3 | BRF_GRA },           //  6 
+	{ "232t-c5.bin", 0x800000, 0x7BB13FF4, 3 | BRF_GRA },           //  7 
+	{ "232t-c6.bin", 0x800000, 0x6846A8A5, 3 | BRF_GRA },           //  8 
+
+	{ "232-m1.bin",  0x020000, 0x45348747, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "232-v1.bin",  0x400000, 0x22a2b5b5, 5 | BRF_SND },           // 10 Sound data
+	{ "232-v2.bin",  0x400000, 0x2304e744, 5 | BRF_SND },           // 11 
+	{ "232-v3.bin",  0x400000, 0x759eb954, 5 | BRF_SND },           // 12 
+};
+
+STDROMPICKEXT(kof97t, kof97t, neogeo)
+STD_ROM_FN(kof97t)
+
+struct BurnDriver BurnDrvkof97t = {
+	"kof97t", "kof97", "neogeo", NULL, "2020",
+	"The King of Fighters '97 Random Select Optimized Edition (Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof97tRomInfo, kof97tRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
 // The King of Fighters '98 (Anniversary Edition, EGHT hack)
 
 static struct BurnRomInfo kof98aeRomDesc[] = {
@@ -18264,6 +18299,41 @@ struct BurnDriver BurnDrvmslug4dg = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug4dgRomInfo, mslug4dgRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// GOTVG  Metal Slug 4 (Last Bullet Hack)
+static struct BurnRomInfo mslug4lwRomDesc[] = {
+	{ "263-p1.bin", 0x100000, 0xAD713169, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "263-p2.bin", 0x800000, 0x427EED0B, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "263-s1.bin", 0x020000, 0xa9446774, 2 | BRF_GRA },
+
+	{ "263-c1.bin",	0x800000, 0x361ddda6, 3 | BRF_GRA },
+	{ "263-c2.bin",	0x800000, 0x15d192c4, 3 | BRF_GRA },
+	{ "263-c3.bin",	0x800000, 0xe296612c, 3 | BRF_GRA },
+	{ "263-c4.bin",	0x800000, 0xc22e3ad0, 3 | BRF_GRA },
+	{ "263-c5.bin",	0x400000, 0x288cd91f, 3 | BRF_GRA },
+	{ "263-c6.bin",	0x400000, 0xb015aeee, 3 | BRF_GRA },
+
+	{ "263-m1.bin", 0x020000, 0x49B1453E, 4 | BRF_ESS | BRF_PRG },
+
+	{ "263-v1.bin",	0x400000, 0x8cb5a9ef, 5 | BRF_SND },
+	{ "263-v2.bin",	0x400000, 0xC9572C14, 5 | BRF_SND },
+	{ "263-v3.bin",	0x400000, 0xE7C14624, 5 | BRF_SND },
+	{ "263-v4.bin",	0x800000, 0xB1E5AC70, 5 | BRF_SND }, 
+};
+
+STDROMPICKEXT(mslug4lw, mslug4lw, neogeo)
+STD_ROM_FN(mslug4lw)
+
+struct BurnDriver BurnDrvmslug4lw = {
+	"mslug4lw", NULL, "neogeo", NULL, "2020",
+	"Metal Slug 4 (Last Bullet Remix Hack)\0", NULL, "hack", "Neo Geo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug4lwRomInfo, mslug4lwRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

@@ -1771,8 +1771,8 @@ struct BurnDriver BurnDrvHishouza = {
 // Flying Shark (bootleg with 8741)
 
 static struct BurnRomInfo fsharkbtRomDesc[] = {
-	{ "r18",		0x10000, 0xef30f563, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "r17",		0x10000, 0x0e18d25f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "r18",			0x10000, 0xef30f563, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "r17",			0x10000, 0x0e18d25f, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "b02_16.l5",		0x08000, 0xcdd1a153, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
 
@@ -1850,10 +1850,10 @@ static struct BurnRomInfo fnsharkRomDesc[] = {
 	{ "10.ic116",		0x08000, 0x4bd099ff, 5 | BRF_GRA },           // 14
 	{ "9.ic117",		0x08000, 0x230f1582, 5 | BRF_GRA },           // 15
 
-	{ "1.ic54",		0x10000, 0x2234b424, 6 | BRF_GRA },           // 16 Sprites
-	{ "2.ic53",		0x10000, 0x30d4c9a8, 6 | BRF_GRA },           // 17
-	{ "3.ic52",		0x10000, 0x64f3d88f, 6 | BRF_GRA },           // 18
-	{ "4.ic51",		0x10000, 0x3b23a9fc, 6 | BRF_GRA },           // 19
+	{ "1.ic54",			0x10000, 0x2234b424, 6 | BRF_GRA },           // 16 Sprites
+	{ "2.ic53",			0x10000, 0x30d4c9a8, 6 | BRF_GRA },           // 17
+	{ "3.ic52",			0x10000, 0x64f3d88f, 6 | BRF_GRA },           // 18
+	{ "4.ic51",			0x10000, 0x3b23a9fc, 6 | BRF_GRA },           // 19
 
 	{ "82s129.ic41",	0x00100, 0x24e7d62f, 0 | BRF_OPT },           // 20 Proms (not used)
 	{ "82s129.ic40",	0x00100, 0xa50cef09, 0 | BRF_OPT },           // 21
@@ -1876,6 +1876,59 @@ struct BurnDriver BurnDrvFnshark = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
 	NULL, fnsharkRomInfo, fnsharkRomName, NULL, NULL, NULL, NULL, FsharkInputInfo, HishouzaDIPInfo,
+	bootInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
+	240, 320, 3, 4
+};
+
+
+// Sky Shark (bootleg)
+
+static struct BurnRomInfo skysharkbRomDesc[] = {
+	{ "1r.ic18",		0x10000, 0xea4bcb43, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "1q.ic17",		0x10000, 0xd1f39ed2, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "1p.ic16",		0x08000, 0xf0b98af2, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+
+	// This set uses 4 (four) Fujitsu MB7132E PROMs for the MCU, named "1-A", "1-B", "1-C" and "1-D" on a small subboard along with the TMS320C10NL.
+	// These ROMs are currently undumped, so we're using the DSP code from the other sets.
+	{ "82s191_r.bin",	0x00800, 0x5b96ae3f, 7 | BRF_PRG | BRF_ESS }, //  3 TMS32010 code
+	{ "82s191_l.bin",	0x00800, 0xd5dfc8dd, 7 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "1g.ic7",			0x04000, 0x9d3f698d, 3 | BRF_GRA },           //  5 Text characters
+	{ "1e.ic5",			0x04000, 0x543bbb81, 3 | BRF_GRA },           //  6
+	{ "1f.ic6",			0x04000, 0xd357f494, 3 | BRF_GRA },           //  7
+
+	{ "1l.ic12",		0x08000, 0x733b9997, 4 | BRF_GRA },           //  8 Background tiles
+	{ "1o.ic15",		0x08000, 0x8b70ef32, 4 | BRF_GRA },           //  9
+	{ "1n.ic14",		0x08000, 0xf711ba7d, 4 | BRF_GRA },           // 10
+	{ "1m.ic13",		0x08000, 0x62532cd3, 4 | BRF_GRA },           // 11
+
+	{ "1h.ic8",			0x08000, 0xef0cf49c, 5 | BRF_GRA },           // 12 Foreground tiles
+	{ "1k.ic11",		0x08000, 0xf5799422, 5 | BRF_GRA },           // 13
+	{ "1j.ic10",		0x08000, 0x4bd099ff, 5 | BRF_GRA },           // 14
+	{ "1i.ic9",			0x08000, 0x230f1582, 5 | BRF_GRA },           // 15
+
+	{ "1a.ic1",			0x10000, 0x2234b424, 6 | BRF_GRA },           // 16 Sprites
+	{ "1b.ic2",			0x10000, 0x30d4c9a8, 6 | BRF_GRA },           // 17
+	{ "1c.ic3",			0x10000, 0x64f3d88f, 6 | BRF_GRA },           // 18
+	{ "1d.ic4",			0x10000, 0x3b23a9fc, 6 | BRF_GRA },           // 19
+
+	{ "82s129.ic41",	0x00100, 0x24e7d62f, 0 | BRF_OPT },           // 20 Proms (not used)
+	{ "82s129.ic40",	0x00100, 0xa50cef09, 0 | BRF_OPT },           // 21
+	{ "82s123.ic42",	0x00020, 0xf72482db, 0 | BRF_OPT },           // 22
+	{ "82s123.ic50",	0x00020, 0xbc88cced, 0 | BRF_OPT },           // 23
+	{ "82s123.ic99",	0x00020, 0x4fb5df2a, 0 | BRF_OPT },           // 24
+};
+
+STD_ROM_PICK(skysharkb)
+STD_ROM_FN(skysharkb)
+
+struct BurnDriver BurnDrvSkysharkb = {
+	"skysharkb", "fshark", NULL, NULL, "1987",
+	"Sky Shark (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
+	NULL, skysharkbRomInfo, skysharkbRomName, NULL, NULL, NULL, NULL, FsharkInputInfo, HishouzaDIPInfo,
 	bootInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
 	240, 320, 3, 4
 };

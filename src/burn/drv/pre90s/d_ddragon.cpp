@@ -2117,8 +2117,8 @@ static INT32 DrvMachineInit()
 		m6805SetWriteHandler(DrvMCUWriteByte);
 	}
 
-	nCyclesTotal[0] = (INT32)((double)3000000 / 57.44853);
-	nCyclesTotal[1] = (INT32)((double)1500000 / 57.44853);
+	nCyclesTotal[0] = (INT32)((double)3000000 * nBurnCPUSpeedAdjust / (57.44853 * 0x0100));
+	nCyclesTotal[1] = (INT32)((double)1500000 * nBurnCPUSpeedAdjust / (57.44853 * 0x0100));
 	nCyclesTotal[2] = (INT32)((double)1500000 / 57.44853);
 
 	GenericTilesInit();
@@ -2176,8 +2176,8 @@ static INT32 Drv2MachineInit()
 	MSM6295Init(0, 1056000 / 132, 1);
 	MSM6295SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
 
-	nCyclesTotal[0] = (INT32)((double)3000000 / 57.44853);
-	nCyclesTotal[1] = (INT32)((double)4000000 / 57.44853);
+	nCyclesTotal[0] = (INT32)((double)3000000 * nBurnCPUSpeedAdjust / (57.44853 * 0x0100));
+	nCyclesTotal[1] = (INT32)((double)4000000 * nBurnCPUSpeedAdjust / (57.44853 * 0x0100));
 	nCyclesTotal[2] = (INT32)((double)3579545 / 57.44853);
 	nCyclesTotal[3] = (INT32)((double)4000000 / 57.44853); // darktower
 

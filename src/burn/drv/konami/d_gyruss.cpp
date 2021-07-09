@@ -1005,7 +1005,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 }
 
 
-// Gyruss (Konami)
+// Gyruss 
 
 static struct BurnRomInfo gyrussRomDesc[] = {
 	{ "gyrussk.1",		0x2000, 0xc673b43d, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
@@ -1036,7 +1036,7 @@ STD_ROM_FN(gyruss)
 
 struct BurnDriver BurnDrvGyruss = {
 	"gyruss", NULL, NULL, NULL, "1983",
-	"Gyruss (Konami)\0", NULL, "Konami", "GX347",
+	"Gyruss\0", NULL, "Konami", "GX347",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, gyrussRomInfo, gyrussRomName, NULL, NULL, NULL, NULL, GyrussInputInfo, GyrussDIPInfo,
@@ -1085,26 +1085,26 @@ struct BurnDriver BurnDrvGyrussce = {
 };
 
 
-// Gyruss (bootleg)
+// Gyruss (bootleg?)
 
 static struct BurnRomInfo gyrussbRomDesc[] = {
-	{ "1.bin",		0x2000, 0x6bc21c10, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
-	{ "2.bin",		0x2000, 0xa4ec03e4, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "3.bin",		0x2000, 0x27454a98, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "1.bin",			0x2000, 0x6bc21c10, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
+	{ "2.bin",			0x2000, 0xa4ec03e4, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.bin",			0x2000, 0x27454a98, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "9.bin",		0x2000, 0x822bf27e, 2 | BRF_PRG | BRF_ESS }, //  3 Sub M6809 Code
+	{ "9.bin",			0x2000, 0x822bf27e, 2 | BRF_PRG | BRF_ESS }, //  3 Sub M6809 Code
 
-	{ "11.bin",		0x2000, 0xf4ae1c17, 3 | BRF_PRG | BRF_ESS }, //  4 Audio Z80 Code
-	{ "12.bin",		0x2000, 0xba498115, 3 | BRF_PRG | BRF_ESS }, //  5
+	{ "11.bin",			0x2000, 0xf4ae1c17, 3 | BRF_PRG | BRF_ESS }, //  4 Audio Z80 Code
+	{ "12.bin",			0x2000, 0xba498115, 3 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "13.bin",		0x1000, 0x3f9b5dea, 4 | BRF_PRG | BRF_ESS }, //  6 Audio i8039
+	{ "13.bin",			0x1000, 0x3f9b5dea, 4 | BRF_PRG | BRF_ESS }, //  6 Audio i8039
 
-	{ "6.bin",		0x2000, 0xc949db10, 5 | BRF_GRA },           //  7 Sprites
-	{ "5.bin",		0x2000, 0x4f22411a, 5 | BRF_GRA },           //  8
-	{ "8.bin",		0x2000, 0x47cd1fbc, 5 | BRF_GRA },           //  9
-	{ "7.bin",		0x2000, 0x8e8d388c, 5 | BRF_GRA },           // 10
+	{ "6.bin",			0x2000, 0xc949db10, 5 | BRF_GRA },           //  7 Sprites
+	{ "5.bin",			0x2000, 0x4f22411a, 5 | BRF_GRA },           //  8
+	{ "8.bin",			0x2000, 0x47cd1fbc, 5 | BRF_GRA },           //  9
+	{ "7.bin",			0x2000, 0x8e8d388c, 5 | BRF_GRA },           // 10
 
-	{ "4.bin",		0x2000, 0x27d8329b, 6 | BRF_GRA },           // 11 Background Tiles
+	{ "4.bin",			0x2000, 0x27d8329b, 6 | BRF_GRA },           // 11 Background Tiles
 
 	{ "gyrussk.pr3",	0x0020, 0x98782db3, 7 | BRF_GRA },           // 12 Color Proms
 	{ "gyrussk.pr1",	0x0100, 0x7ed057de, 7 | BRF_GRA },           // 13
@@ -1116,7 +1116,7 @@ STD_ROM_FN(gyrussb)
 
 struct BurnDriver BurnDrvGyrussb = {
 	"gyrussb", "gyruss", NULL, NULL, "1983",
-	"Gyruss (bootleg)\0", NULL, "bootleg", "GX347",
+	"Gyruss (bootleg?)\0", NULL, "bootleg?", "GX347",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, gyrussbRomInfo, gyrussbRomName, NULL, NULL, NULL, NULL, GyrussInputInfo, GyrussDIPInfo,
@@ -1125,12 +1125,12 @@ struct BurnDriver BurnDrvGyrussb = {
 };
 
 
-// Venus
+// Venus (bootleg of Gyruss)
 
 static struct BurnRomInfo venusRomDesc[] = {
-	{ "r1",			0x2000, 0xd030abb1, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
-	{ "r2",			0x2000, 0xdbf65d4d, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "r3",			0x2000, 0xdb246fcd, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "r1",				0x2000, 0xd030abb1, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
+	{ "r2",				0x2000, 0xdbf65d4d, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "r3",				0x2000, 0xdb246fcd, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "gyrussk.9",		0x2000, 0x822bf27e, 2 | BRF_PRG | BRF_ESS }, //  3 Sub M6809 Code
 
@@ -1156,7 +1156,7 @@ STD_ROM_FN(venus)
 
 struct BurnDriver BurnDrvVenus = {
 	"venus", "gyruss", NULL, NULL, "1983",
-	"Venus\0", NULL, "bootleg", "GX347",
+	"Venus (bootleg of Gyruss)\0", NULL, "bootleg", "GX347",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, venusRomInfo, venusRomName, NULL, NULL, NULL, NULL, GyrussInputInfo, GyrussDIPInfo,

@@ -1351,15 +1351,15 @@ static struct BurnRomInfo tetrisp2RomDesc[] = {
 	{ "tet2_4_ver2.8.ic59",		0x080000, 0xe67f9c51, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "tet2_1_ver2.8.ic65",		0x080000, 0x5020a4ed, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "96019-01.9",			0x400000, 0x06f7dc64, 0x02 | BRF_GRA },           //  2 Sprites
-	{ "96019-02.8",			0x400000, 0x3e613bed, 0x02 | BRF_GRA },           //  3
+	{ "96019-01.9",				0x400000, 0x06f7dc64, 0x02 | BRF_GRA },           //  2 Sprites
+	{ "96019-02.8",				0x400000, 0x3e613bed, 0x02 | BRF_GRA },           //  3
 
-	{ "96019-06.13",		0x400000, 0x16f7093c, 0x03 | BRF_GRA },           //  4 Background and Rotation tiles
-	{ "96019-04.6",			0x100000, 0xb849dec9, 0x03 | BRF_GRA },           //  5
+	{ "96019-06.13",			0x400000, 0x16f7093c, 0x03 | BRF_GRA },           //  4 Background and Rotation tiles
+	{ "96019-04.6",				0x100000, 0xb849dec9, 0x03 | BRF_GRA },           //  5
 
-	{ "tetp2-10.ic27",		0x080000, 0x34dd1bad, 0x04 | BRF_GRA },           //  6 Foreground Tiles
+	{ "tetp2-10.ic27",			0x080000, 0x34dd1bad, 0x04 | BRF_GRA },           //  6 Foreground Tiles
 
-	{ "96019-07.7",			0x400000, 0xa8a61954, 0x05 | BRF_SND },           //  7 YMZ280b Samples
+	{ "96019-07.7",				0x400000, 0xa8a61954, 0x05 | BRF_SND },           //  7 YMZ280b Samples
 };
 
 STD_ROM_PICK(tetrisp2)
@@ -1382,15 +1382,15 @@ static struct BurnRomInfo tetrisp2aRomDesc[] = {
 	{ "tet2_4_ver2.7.ic59",		0x080000, 0x3070bfde, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "tet2_1_ver2.7.ic65",		0x080000, 0xfe3eb1d2, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "96019-01.9",			0x400000, 0x06f7dc64, 0x02 | BRF_GRA },           //  2 Sprites
-	{ "96019-02.8",			0x400000, 0x3e613bed, 0x02 | BRF_GRA },           //  3
+	{ "96019-01.9",				0x400000, 0x06f7dc64, 0x02 | BRF_GRA },           //  2 Sprites
+	{ "96019-02.8",				0x400000, 0x3e613bed, 0x02 | BRF_GRA },           //  3
 
-	{ "96019-06.13",		0x400000, 0x16f7093c, 0x03 | BRF_GRA },           //  4 Background and Rotation tiles
-	{ "96019-04.6",			0x100000, 0xb849dec9, 0x03 | BRF_GRA },           //  5
+	{ "96019-06.13",			0x400000, 0x16f7093c, 0x03 | BRF_GRA },           //  4 Background and Rotation tiles
+	{ "96019-04.6",				0x100000, 0xb849dec9, 0x03 | BRF_GRA },           //  5
 
-	{ "tetp2-10.ic27",		0x080000, 0x34dd1bad, 0x04 | BRF_GRA },           //  6 Foreground Tiles
+	{ "tetp2-10.ic27",			0x080000, 0x34dd1bad, 0x04 | BRF_GRA },           //  6 Foreground Tiles
 
-	{ "96019-07.7",			0x400000, 0xa8a61954, 0x05 | BRF_SND },           //  7 YMZ280b Samples
+	{ "96019-07.7",				0x400000, 0xa8a61954, 0x05 | BRF_SND },           //  7 YMZ280b Samples
 };
 
 STD_ROM_PICK(tetrisp2a)
@@ -1413,15 +1413,15 @@ static struct BurnRomInfo tetrisp2jRomDesc[] = {
 	{ "tet2_4_ver2.2.ic59",		0x080000, 0x5bfa32c8, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "tet2_1_ver2.2.ic65",		0x080000, 0x919116d0, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "96019-01.9",			0x400000, 0x06f7dc64, 0x02 | BRF_GRA },           //  2 Sprites
-	{ "96019-02.8",			0x400000, 0x3e613bed, 0x02 | BRF_GRA },           //  3
+	{ "96019-01.9",				0x400000, 0x06f7dc64, 0x02 | BRF_GRA },           //  2 Sprites
+	{ "96019-02.8",				0x400000, 0x3e613bed, 0x02 | BRF_GRA },           //  3
 
-	{ "96019-06.13",		0x400000, 0x16f7093c, 0x03 | BRF_GRA },           //  4 Background and Rotation tiles
-	{ "96019-04.6",			0x100000, 0xb849dec9, 0x03 | BRF_GRA },           //  5
+	{ "96019-06.13",			0x400000, 0x16f7093c, 0x03 | BRF_GRA },           //  4 Background and Rotation tiles
+	{ "96019-04.6",				0x100000, 0xb849dec9, 0x03 | BRF_GRA },           //  5
 
-	{ "tetp2-10.ic27",		0x080000, 0x34dd1bad, 0x04 | BRF_GRA },           //  6 Foreground Tiles
+	{ "tetp2-10.ic27",			0x080000, 0x34dd1bad, 0x04 | BRF_GRA },           //  6 Foreground Tiles
 
-	{ "96019-07.7",			0x400000, 0xa8a61954, 0x05 | BRF_SND },           //  7 YMZ280b Samples
+	{ "96019-07.7",				0x400000, 0xa8a61954, 0x05 | BRF_SND },           //  7 YMZ280b Samples
 };
 
 STD_ROM_PICK(tetrisp2j)
@@ -1444,15 +1444,15 @@ static struct BurnRomInfo tetrisp2jaRomDesc[] = {
 	{ "tet2_ic4_ver2.1.ic59",	0x080000, 0x5bfa32c8, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "tet2_ic1_ver2.1.ic65",	0x080000, 0x5b5f8377, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "96019-01.9",			0x400000, 0x06f7dc64, 0x02 | BRF_GRA },           //  2 Sprites
-	{ "96019-02.8",			0x400000, 0x3e613bed, 0x02 | BRF_GRA },           //  3
+	{ "96019-01.9",				0x400000, 0x06f7dc64, 0x02 | BRF_GRA },           //  2 Sprites
+	{ "96019-02.8",				0x400000, 0x3e613bed, 0x02 | BRF_GRA },           //  3
 
-	{ "96019-06.13",		0x400000, 0x16f7093c, 0x03 | BRF_GRA },           //  4 Background and Rotation tiles
-	{ "96019-04.6",			0x100000, 0xb849dec9, 0x03 | BRF_GRA },           //  5
+	{ "96019-06.13",			0x400000, 0x16f7093c, 0x03 | BRF_GRA },           //  4 Background and Rotation tiles
+	{ "96019-04.6",				0x100000, 0xb849dec9, 0x03 | BRF_GRA },           //  5
 
-	{ "tetp2-10.ic27",		0x080000, 0x34dd1bad, 0x04 | BRF_GRA },           //  6 Foreground Tiles
+	{ "tetp2-10.ic27",			0x080000, 0x34dd1bad, 0x04 | BRF_GRA },           //  6 Foreground Tiles
 
-	{ "96019-07.7",			0x400000, 0xa8a61954, 0x05 | BRF_SND },           //  7 YMZ280b Samples
+	{ "96019-07.7",				0x400000, 0xa8a61954, 0x05 | BRF_SND },           //  7 YMZ280b Samples
 };
 
 STD_ROM_PICK(tetrisp2ja)
@@ -1483,21 +1483,21 @@ static struct BurnRomInfo rocknRomDesc[] = {
 
 	{ "rock_n_1_vj-98344_10.bin",	0x080000, 0x918663a8, 0x04 | BRF_GRA },           //  6 Foreground Tiles
 
-	{ "sound00",			0x400000, 0xc354f753, 0x05 | BRF_SND },           //  7 YMZ280b Samples
-	{ "sound01",			0x400000, 0x5b42999e, 0x05 | BRF_SND },           //  8
-	{ "sound02",			0x400000, 0x8306f302, 0x05 | BRF_SND },           //  9
-	{ "sound03",			0x400000, 0x3fda842c, 0x05 | BRF_SND },           // 10
-	{ "sound04",			0x400000, 0x86d4f289, 0x05 | BRF_SND },           // 11
-	{ "sound05",			0x400000, 0xf8dbf47d, 0x05 | BRF_SND },           // 12
-	{ "sound06",			0x400000, 0x525aff97, 0x05 | BRF_SND },           // 13
-	{ "sound07",			0x400000, 0x5bd8bb95, 0x05 | BRF_SND },           // 14
-	{ "sound08",			0x400000, 0x304c1643, 0x05 | BRF_SND },           // 15
-	{ "sound09",			0x400000, 0x78c22c56, 0x05 | BRF_SND },           // 16
-	{ "sound10",			0x400000, 0xd5e8d8a5, 0x05 | BRF_SND },           // 17
-	{ "sound11",			0x400000, 0x569ef4dd, 0x05 | BRF_SND },           // 18
-	{ "sound12",			0x400000, 0xaae8d59c, 0x05 | BRF_SND },           // 19
-	{ "sound13",			0x400000, 0x9ec1459b, 0x05 | BRF_SND },           // 20
-	{ "sound14",			0x400000, 0xb26f9a81, 0x05 | BRF_SND },           // 21
+	{ "sound00",					0x400000, 0xc354f753, 0x05 | BRF_SND },           //  7 YMZ280b Samples
+	{ "sound01",					0x400000, 0x5b42999e, 0x05 | BRF_SND },           //  8
+	{ "sound02",					0x400000, 0x8306f302, 0x05 | BRF_SND },           //  9
+	{ "sound03",					0x400000, 0x3fda842c, 0x05 | BRF_SND },           // 10
+	{ "sound04",					0x400000, 0x86d4f289, 0x05 | BRF_SND },           // 11
+	{ "sound05",					0x400000, 0xf8dbf47d, 0x05 | BRF_SND },           // 12
+	{ "sound06",					0x400000, 0x525aff97, 0x05 | BRF_SND },           // 13
+	{ "sound07",					0x400000, 0x5bd8bb95, 0x05 | BRF_SND },           // 14
+	{ "sound08",					0x400000, 0x304c1643, 0x05 | BRF_SND },           // 15
+	{ "sound09",					0x400000, 0x78c22c56, 0x05 | BRF_SND },           // 16
+	{ "sound10",					0x400000, 0xd5e8d8a5, 0x05 | BRF_SND },           // 17
+	{ "sound11",					0x400000, 0x569ef4dd, 0x05 | BRF_SND },           // 18
+	{ "sound12",					0x400000, 0xaae8d59c, 0x05 | BRF_SND },           // 19
+	{ "sound13",					0x400000, 0x9ec1459b, 0x05 | BRF_SND },           // 20
+	{ "sound14",					0x400000, 0xb26f9a81, 0x05 | BRF_SND },           // 21
 };
 
 STD_ROM_PICK(rockn)
@@ -1517,8 +1517,8 @@ struct BurnDriver BurnDrvRockn = {
 // Rock'n Tread (Japan, alternate)
 
 static struct BurnRomInfo rocknaRomDesc[] = {
-	{ "rock_n_1_vj-98344_1",	0x080000, 0x6078fa48, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "rock_n_1_vj-98344_4",	0x080000, 0xc8310bd0, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "rock_n_1_vj-98344_1",		0x080000, 0x6078fa48, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "rock_n_1_vj-98344_4",		0x080000, 0xc8310bd0, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "rock_n_1_vj-98344_8.bin",	0x200000, 0xfa3f6f9c, 0x02 | BRF_GRA },           //  2 Sprites
 	{ "rock_n_1_vj-98344_9.bin",	0x200000, 0x3d12a688, 0x02 | BRF_GRA },           //  3
@@ -1528,21 +1528,21 @@ static struct BurnRomInfo rocknaRomDesc[] = {
 
 	{ "rock_n_1_vj-98344_10.bin",	0x080000, 0x918663a8, 0x04 | BRF_GRA },           //  6 Foreground Tiles
 
-	{ "sound00",			0x400000, 0xc354f753, 0x05 | BRF_SND },           //  7 YMZ280b Samples
-	{ "sound01",			0x400000, 0x5b42999e, 0x05 | BRF_SND },           //  8
-	{ "sound02",			0x400000, 0x8306f302, 0x05 | BRF_SND },           //  9
-	{ "sound03",			0x400000, 0x3fda842c, 0x05 | BRF_SND },           // 10
-	{ "sound04",			0x400000, 0x86d4f289, 0x05 | BRF_SND },           // 11
-	{ "sound05",			0x400000, 0xf8dbf47d, 0x05 | BRF_SND },           // 12
-	{ "sound06",			0x400000, 0x525aff97, 0x05 | BRF_SND },           // 13
-	{ "sound07",			0x400000, 0x5bd8bb95, 0x05 | BRF_SND },           // 14
-	{ "sound08",			0x400000, 0x304c1643, 0x05 | BRF_SND },           // 15
-	{ "sound09",			0x400000, 0x78c22c56, 0x05 | BRF_SND },           // 16
-	{ "sound10",			0x400000, 0xd5e8d8a5, 0x05 | BRF_SND },           // 17
-	{ "sound11",			0x400000, 0x569ef4dd, 0x05 | BRF_SND },           // 18
-	{ "sound12",			0x400000, 0xaae8d59c, 0x05 | BRF_SND },           // 19
-	{ "sound13",			0x400000, 0x9ec1459b, 0x05 | BRF_SND },           // 20
-	{ "sound14",			0x400000, 0xb26f9a81, 0x05 | BRF_SND },           // 21
+	{ "sound00",					0x400000, 0xc354f753, 0x05 | BRF_SND },           //  7 YMZ280b Samples
+	{ "sound01",					0x400000, 0x5b42999e, 0x05 | BRF_SND },           //  8
+	{ "sound02",					0x400000, 0x8306f302, 0x05 | BRF_SND },           //  9
+	{ "sound03",					0x400000, 0x3fda842c, 0x05 | BRF_SND },           // 10
+	{ "sound04",					0x400000, 0x86d4f289, 0x05 | BRF_SND },           // 11
+	{ "sound05",					0x400000, 0xf8dbf47d, 0x05 | BRF_SND },           // 12
+	{ "sound06",					0x400000, 0x525aff97, 0x05 | BRF_SND },           // 13
+	{ "sound07",					0x400000, 0x5bd8bb95, 0x05 | BRF_SND },           // 14
+	{ "sound08",					0x400000, 0x304c1643, 0x05 | BRF_SND },           // 15
+	{ "sound09",					0x400000, 0x78c22c56, 0x05 | BRF_SND },           // 16
+	{ "sound10",					0x400000, 0xd5e8d8a5, 0x05 | BRF_SND },           // 17
+	{ "sound11",					0x400000, 0x569ef4dd, 0x05 | BRF_SND },           // 18
+	{ "sound12",					0x400000, 0xaae8d59c, 0x05 | BRF_SND },           // 19
+	{ "sound13",					0x400000, 0x9ec1459b, 0x05 | BRF_SND },           // 20
+	{ "sound14",					0x400000, 0xb26f9a81, 0x05 | BRF_SND },           // 21
 };
 
 STD_ROM_PICK(rockna)
@@ -1573,28 +1573,28 @@ static struct BurnRomInfo rockn2RomDesc[] = {
 
 	{ "rock_n_2_vj-98344_10_v1.0",	0x080000, 0xae74d5b3, 0x04 | BRF_GRA },           //  6 Foreground Tiles
 
-	{ "sound00",			0x400000, 0x4e9611a3, 0x05 | BRF_SND },           //  7 YMZ280b Samples
-	{ "sound01",			0x400000, 0xec600f13, 0x05 | BRF_SND },           //  8
-	{ "sound02",			0x400000, 0x8306f302, 0x05 | BRF_SND },           //  9
-	{ "sound03",			0x400000, 0x3fda842c, 0x05 | BRF_SND },           // 10
-	{ "sound04",			0x400000, 0x86d4f289, 0x05 | BRF_SND },           // 11
-	{ "sound05",			0x400000, 0xf8dbf47d, 0x05 | BRF_SND },           // 12
-	{ "sound06",			0x400000, 0x06f7bd63, 0x05 | BRF_SND },           // 13
-	{ "sound07",			0x400000, 0x22f042f6, 0x05 | BRF_SND },           // 14
-	{ "sound08",			0x400000, 0xdd294d8e, 0x05 | BRF_SND },           // 15
-	{ "sound09",			0x400000, 0x8fedee6e, 0x05 | BRF_SND },           // 16
-	{ "sound10",			0x400000, 0x01292f11, 0x05 | BRF_SND },           // 17
-	{ "sound11",			0x400000, 0x20dc76ba, 0x05 | BRF_SND },           // 18
-	{ "sound12",			0x400000, 0x11fff0bc, 0x05 | BRF_SND },           // 19
-	{ "sound13",			0x400000, 0x2367dd18, 0x05 | BRF_SND },           // 20
-	{ "sound14",			0x400000, 0x75ced8c0, 0x05 | BRF_SND },           // 21
-	{ "sound15",			0x400000, 0xaeaca380, 0x05 | BRF_SND },           // 22
-	{ "sound16",			0x400000, 0x21d50e32, 0x05 | BRF_SND },           // 23
-	{ "sound17",			0x400000, 0xde785a2a, 0x05 | BRF_SND },           // 24
-	{ "sound18",			0x400000, 0x18cabb1e, 0x05 | BRF_SND },           // 25
-	{ "sound19",			0x400000, 0x33c89e53, 0x05 | BRF_SND },           // 26
-	{ "sound20",			0x400000, 0x89c1b088, 0x05 | BRF_SND },           // 27
-	{ "sound21",			0x400000, 0x13db74bd, 0x05 | BRF_SND },           // 28
+	{ "sound00",					0x400000, 0x4e9611a3, 0x05 | BRF_SND },           //  7 YMZ280b Samples
+	{ "sound01",					0x400000, 0xec600f13, 0x05 | BRF_SND },           //  8
+	{ "sound02",					0x400000, 0x8306f302, 0x05 | BRF_SND },           //  9
+	{ "sound03",					0x400000, 0x3fda842c, 0x05 | BRF_SND },           // 10
+	{ "sound04",					0x400000, 0x86d4f289, 0x05 | BRF_SND },           // 11
+	{ "sound05",					0x400000, 0xf8dbf47d, 0x05 | BRF_SND },           // 12
+	{ "sound06",					0x400000, 0x06f7bd63, 0x05 | BRF_SND },           // 13
+	{ "sound07",					0x400000, 0x22f042f6, 0x05 | BRF_SND },           // 14
+	{ "sound08",					0x400000, 0xdd294d8e, 0x05 | BRF_SND },           // 15
+	{ "sound09",					0x400000, 0x8fedee6e, 0x05 | BRF_SND },           // 16
+	{ "sound10",					0x400000, 0x01292f11, 0x05 | BRF_SND },           // 17
+	{ "sound11",					0x400000, 0x20dc76ba, 0x05 | BRF_SND },           // 18
+	{ "sound12",					0x400000, 0x11fff0bc, 0x05 | BRF_SND },           // 19
+	{ "sound13",					0x400000, 0x2367dd18, 0x05 | BRF_SND },           // 20
+	{ "sound14",					0x400000, 0x75ced8c0, 0x05 | BRF_SND },           // 21
+	{ "sound15",					0x400000, 0xaeaca380, 0x05 | BRF_SND },           // 22
+	{ "sound16",					0x400000, 0x21d50e32, 0x05 | BRF_SND },           // 23
+	{ "sound17",					0x400000, 0xde785a2a, 0x05 | BRF_SND },           // 24
+	{ "sound18",					0x400000, 0x18cabb1e, 0x05 | BRF_SND },           // 25
+	{ "sound19",					0x400000, 0x33c89e53, 0x05 | BRF_SND },           // 26
+	{ "sound20",					0x400000, 0x89c1b088, 0x05 | BRF_SND },           // 27
+	{ "sound21",					0x400000, 0x13db74bd, 0x05 | BRF_SND },           // 28
 };
 
 STD_ROM_PICK(rockn2)
@@ -1625,27 +1625,27 @@ static struct BurnRomInfo rockn3RomDesc[] = {
 
 	{ "rock_n_3_vj-98344_10_v1.0",	0x080000, 0x8100039e, 0x04 | BRF_GRA },           //  6 Foreground Tiles
 
-	{ "mr99029-01.ic28",		0x400000, 0xe2f69042, 0x05 | BRF_SND },           //  7 YMZ280b Samples
-	{ "mr99029-02.ic1",		0x400000, 0xb328b18f, 0x05 | BRF_SND },           //  8
-	{ "mr99029-03.ic2",		0x400000, 0xf46438e3, 0x05 | BRF_SND },           //  9
-	{ "mr99029-04.ic3",		0x400000, 0xb979e887, 0x05 | BRF_SND },           // 10
-	{ "mr99029-05.ic4",		0x400000, 0x0bb2c212, 0x05 | BRF_SND },           // 11
-	{ "mr99029-06.ic5",		0x400000, 0x3116e437, 0x05 | BRF_SND },           // 12
-	{ "mr99029-07.ic6",		0x400000, 0x26b37ef6, 0x05 | BRF_SND },           // 13
-	{ "mr99029-08.ic7",		0x400000, 0x1dd3f4e3, 0x05 | BRF_SND },           // 14
-	{ "mr99029-09.ic8",		0x400000, 0xa1b03d67, 0x05 | BRF_SND },           // 15
-	{ "mr99029-10.ic10",		0x400000, 0x35107aac, 0x05 | BRF_SND },           // 16
-	{ "mr99029-11.ic11",		0x400000, 0x059ec592, 0x05 | BRF_SND },           // 17
-	{ "mr99029-12.ic12",		0x400000, 0x84d4badb, 0x05 | BRF_SND },           // 18
-	{ "mr99029-13.ic13",		0x400000, 0x4527a9b7, 0x05 | BRF_SND },           // 19
-	{ "mr99029-14.ic14",		0x400000, 0xbfa4b7ce, 0x05 | BRF_SND },           // 20
-	{ "mr99029-15.ic15",		0x400000, 0xa2ccd2ce, 0x05 | BRF_SND },           // 21
-	{ "mr99029-16.ic16",		0x400000, 0x95baf678, 0x05 | BRF_SND },           // 22
-	{ "mr99029-17.ic17",		0x400000, 0x5883c84b, 0x05 | BRF_SND },           // 23
-	{ "mr99029-18.ic19",		0x400000, 0xf92098ce, 0x05 | BRF_SND },           // 24
-	{ "mr99029-19.ic20",		0x400000, 0xdbb2c228, 0x05 | BRF_SND },           // 25
-	{ "mr99029-20.ic21",		0x400000, 0x9efdae1c, 0x05 | BRF_SND },           // 26
-	{ "mr99029-21.ic22",		0x400000, 0x5f301b83, 0x05 | BRF_SND },           // 27
+	{ "mr99029-01.ic28",			0x400000, 0xe2f69042, 0x05 | BRF_SND },           //  7 YMZ280b Samples
+	{ "mr99029-02.ic1",				0x400000, 0xb328b18f, 0x05 | BRF_SND },           //  8
+	{ "mr99029-03.ic2",				0x400000, 0xf46438e3, 0x05 | BRF_SND },           //  9
+	{ "mr99029-04.ic3",				0x400000, 0xb979e887, 0x05 | BRF_SND },           // 10
+	{ "mr99029-05.ic4",				0x400000, 0x0bb2c212, 0x05 | BRF_SND },           // 11
+	{ "mr99029-06.ic5",				0x400000, 0x3116e437, 0x05 | BRF_SND },           // 12
+	{ "mr99029-07.ic6",				0x400000, 0x26b37ef6, 0x05 | BRF_SND },           // 13
+	{ "mr99029-08.ic7",				0x400000, 0x1dd3f4e3, 0x05 | BRF_SND },           // 14
+	{ "mr99029-09.ic8",				0x400000, 0xa1b03d67, 0x05 | BRF_SND },           // 15
+	{ "mr99029-10.ic10",			0x400000, 0x35107aac, 0x05 | BRF_SND },           // 16
+	{ "mr99029-11.ic11",			0x400000, 0x059ec592, 0x05 | BRF_SND },           // 17
+	{ "mr99029-12.ic12",			0x400000, 0x84d4badb, 0x05 | BRF_SND },           // 18
+	{ "mr99029-13.ic13",			0x400000, 0x4527a9b7, 0x05 | BRF_SND },           // 19
+	{ "mr99029-14.ic14",			0x400000, 0xbfa4b7ce, 0x05 | BRF_SND },           // 20
+	{ "mr99029-15.ic15",			0x400000, 0xa2ccd2ce, 0x05 | BRF_SND },           // 21
+	{ "mr99029-16.ic16",			0x400000, 0x95baf678, 0x05 | BRF_SND },           // 22
+	{ "mr99029-17.ic17",			0x400000, 0x5883c84b, 0x05 | BRF_SND },           // 23
+	{ "mr99029-18.ic19",			0x400000, 0xf92098ce, 0x05 | BRF_SND },           // 24
+	{ "mr99029-19.ic20",			0x400000, 0xdbb2c228, 0x05 | BRF_SND },           // 25
+	{ "mr99029-20.ic21",			0x400000, 0x9efdae1c, 0x05 | BRF_SND },           // 26
+	{ "mr99029-21.ic22",			0x400000, 0x5f301b83, 0x05 | BRF_SND },           // 27
 };
 
 STD_ROM_PICK(rockn3)
@@ -1676,16 +1676,16 @@ static struct BurnRomInfo rockn4RomDesc[] = {
 
 	{ "rock_n_4_vj-98344_10.bin",	0x100000, 0x37d50259, 0x04 | BRF_GRA },           //  6 Foreground Tiles
 
-	{ "sound00",			0x400000, 0x918ea8eb, 0x05 | BRF_SND },           //  7 YMZ280b Samples
-	{ "sound01",			0x400000, 0xc548e51e, 0x05 | BRF_SND },           //  8
-	{ "sound02",			0x400000, 0xffda0253, 0x05 | BRF_SND },           //  9
-	{ "sound03",			0x400000, 0x1f813af5, 0x05 | BRF_SND },           // 10
-	{ "sound04",			0x400000, 0x035c4ff3, 0x05 | BRF_SND },           // 11
-	{ "sound05",			0x400000, 0x0f01f7b0, 0x05 | BRF_SND },           // 12
-	{ "sound06",			0x400000, 0x31574b1c, 0x05 | BRF_SND },           // 13
-	{ "sound07",			0x400000, 0x388e2c91, 0x05 | BRF_SND },           // 14
-	{ "sound08",			0x400000, 0x6e7e3f23, 0x05 | BRF_SND },           // 15
-	{ "sound09",			0x400000, 0x39fa512f, 0x05 | BRF_SND },           // 16
+	{ "sound00",				0x400000, 0x918ea8eb, 0x05 | BRF_SND },           //  7 YMZ280b Samples
+	{ "sound01",				0x400000, 0xc548e51e, 0x05 | BRF_SND },           //  8
+	{ "sound02",				0x400000, 0xffda0253, 0x05 | BRF_SND },           //  9
+	{ "sound03",				0x400000, 0x1f813af5, 0x05 | BRF_SND },           // 10
+	{ "sound04",				0x400000, 0x035c4ff3, 0x05 | BRF_SND },           // 11
+	{ "sound05",				0x400000, 0x0f01f7b0, 0x05 | BRF_SND },           // 12
+	{ "sound06",				0x400000, 0x31574b1c, 0x05 | BRF_SND },           // 13
+	{ "sound07",				0x400000, 0x388e2c91, 0x05 | BRF_SND },           // 14
+	{ "sound08",				0x400000, 0x6e7e3f23, 0x05 | BRF_SND },           // 15
+	{ "sound09",				0x400000, 0x39fa512f, 0x05 | BRF_SND },           // 16
 };
 
 STD_ROM_PICK(rockn4)
@@ -1705,8 +1705,8 @@ struct BurnDriver BurnDrvRockn4 = {
 // Nandemo Seal Iinkai
 
 static struct BurnRomInfo nndmsealRomDesc[] = {
-	{ "1.1",			0x040000, 0x45acea25, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "3.3",			0x040000, 0x0754d96a, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "1.1",				0x040000, 0x45acea25, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "3.3",				0x040000, 0x0754d96a, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "mr97006-02.5",		0x200000, 0x4793f84e, 0x03 | BRF_GRA },           //  2 Background and Rotation tiles
 	{ "mr97001-01.6",		0x200000, 0xdd648e8a, 0x03 | BRF_GRA },           //  3
@@ -1731,11 +1731,11 @@ struct BurnDriverD BurnDrvNndmseal = {
 };
 
 
-// Nandemo Seal Iinkai (Astro Boy ver.)
+// Nandemo Seal Iinkai (Astro Boy ver. 1.0?)
 
 static struct BurnRomInfo nndmsealaRomDesc[] = {
-	{ "1.ic1",			0x040000, 0x4eab8565, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "3.ic3",			0x040000, 0x054ba50f, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "1.ic1",				0x040000, 0x4eab8565, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "3.ic3",				0x040000, 0x054ba50f, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "mr97032-02.ic5",		0x200000, 0x460f16bd, 0x03 | BRF_GRA },           //  2 Background and Rotation tiles
 	{ "mr97032-01.ic2",		0x400000, 0x18c1a394, 0x03 | BRF_GRA },           //  3
@@ -1750,7 +1750,7 @@ STD_ROM_FN(nndmseala)
 
 struct BurnDriverD BurnDrvNndmseala = {
 	"nndmseala", "nndmseal", NULL, NULL, "1997",
-	"Nandemo Seal Iinkai (Astro Boy ver.)\0", NULL, "I'Max / Jaleco", "Miscellaneous",
+	"Nandemo Seal Iinkai (Astro Boy ver. 1.0?)\0", NULL, "I'Max / Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, nndmsealaRomInfo, nndmsealaRomName, NULL, NULL, NULL, NULL, NndmsealInputInfo, NndmsealDIPInfo,
@@ -1758,3 +1758,58 @@ struct BurnDriverD BurnDrvNndmseala = {
 	320, 240, 4, 3
 };
 
+
+// Nandemo Seal Iinkai (Astro Boy ver. 1.1)
+
+static struct BurnRomInfo nndmsealbRomDesc[] = {
+	{ "1-ver1.1.ic1",		0x040000, 0xb0845ef3, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "3-ver1.1.ic3",		0x040000, 0x405a51f6, 0x01 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "mr98009-02.ic6",		0x200000, 0x94f1a8ba, 0x03 | BRF_GRA },           //  2 Background and Rotation tiles
+	{ "mr98009-01.ic2",		0x400000, 0xb3451bd0, 0x03 | BRF_GRA },           //  3
+
+	{ "mr98009-03.ic10",	0x100000, 0xf0574f06, 0x04 | BRF_GRA },           //  4 Foreground Tiles
+
+	{ "mr97016-04.ic12",	0x200000, 0xf421232b, 0x05 | BRF_SND },           //  5 OKI M6295 Samples
+};
+
+STD_ROM_PICK(nndmsealb)
+STD_ROM_FN(nndmsealb)
+
+struct BurnDriverD BurnDrvNndmsealb = {
+	"nndmsealb", "nndmseal", NULL, NULL, "1997",
+	"Nandemo Seal Iinkai (Astro Boy ver. 1.1)\0", NULL, "I'Max / Jaleco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, nndmsealbRomInfo, nndmsealbRomName, NULL, NULL, NULL, NULL, NndmsealInputInfo, NndmsealDIPInfo,
+	NndmsealaInit, DrvExit, RocknFrame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Nandemo Seal Iinkai (alternate ver. 1.0)
+
+static struct BurnRomInfo nndmsealcRomDesc[] = {
+	{ "ver1.0.ic1",			0x040000, 0xcd75ae3f, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "ver1.0.ic3",			0x040000, 0x42a0eb1c, 0x01 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "mr98058-02.ic7",		0x400000, 0x9d8401e3, 0x03 | BRF_GRA },           //  2 Background and Rotation tiles
+	{ "mr98058-01.ic2",		0x400000, 0xa10848f0, 0x03 | BRF_GRA },           //  3
+
+	{ "mr98058-03.ic10",	0x100000, 0x4696609b, 0x04 | BRF_GRA },           //  4 Foreground Tiles
+
+	{ "mr97016-04.ic16",	0x200000, 0xf421232b, 0x05 | BRF_SND },           //  5 OKI M6295 Samples
+};
+
+STD_ROM_PICK(nndmsealc)
+STD_ROM_FN(nndmsealc)
+
+struct BurnDriverD BurnDrvNndmsealc = {
+	"nndmsealc", "nndmseal", NULL, NULL, "1997",
+	"Nandemo Seal Iinkai (alternate ver. 1.0)\0", NULL, "I'Max / Jaleco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, nndmsealcRomInfo, nndmsealcRomName, NULL, NULL, NULL, NULL, NndmsealInputInfo, NndmsealDIPInfo,
+	NndmsealaInit, DrvExit, RocknFrame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
+	320, 240, 4, 3
+};

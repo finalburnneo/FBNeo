@@ -524,22 +524,23 @@ STD_ROM_PICK(Newfant)
 STD_ROM_FN(Newfant)
 
 // Rom information
+// Comad 940630 PCB
 static struct BurnRomInfo NewfantaRomDesc[] = {
-	{ "prog2.12",   		0x080000, 0xde43a457, BRF_ESS | BRF_PRG }, // 68000 code
-	{ "prog1.07",   		0x080000, 0x370b45be, BRF_ESS | BRF_PRG },
-	{ "iscr2.10",  			0x080000, 0x4f2da2eb, BRF_ESS | BRF_PRG },
-	{ "iscr1.05",			0x080000, 0x63c6894f, BRF_ESS | BRF_PRG },
-	{ "iscr4.09",  			0x080000, 0x725741ec, BRF_ESS | BRF_PRG },
-	{ "iscr3.04",			0x080000, 0x51d6b362, BRF_ESS | BRF_PRG },
-	{ "iscr6.08", 			0x080000, 0x178b2ef3, BRF_ESS | BRF_PRG },
-	{ "iscr5.03",			0x080000, 0xd2b5c5fa, BRF_ESS | BRF_PRG },
-	{ "iscr8.11", 			0x080000, 0xf4148528, BRF_ESS | BRF_PRG },
-	{ "iscr7.06",			0x080000, 0x2dee0c31, BRF_ESS | BRF_PRG },
+	{ "12.ue17",   			0x080000, 0xde43a457, BRF_ESS | BRF_PRG }, // 68000 code
+	{ "7.ud17",   			0x080000, 0x370b45be, BRF_ESS | BRF_PRG },
+	{ "10.ue16b",  			0x080000, 0x4f2da2eb, BRF_ESS | BRF_PRG },
+	{ "5.ue16a",			0x080000, 0x63c6894f, BRF_ESS | BRF_PRG },
+	{ "9.ue15b",  			0x080000, 0x725741ec, BRF_ESS | BRF_PRG },
+	{ "4.ue15a",			0x080000, 0x51d6b362, BRF_ESS | BRF_PRG },
+	{ "8.ue14b", 			0x080000, 0x178b2ef3, BRF_ESS | BRF_PRG },
+	{ "3.ue14a",			0x080000, 0xd2b5c5fa, BRF_ESS | BRF_PRG },
+	{ "11.ue20b", 			0x080000, 0xf4148528, BRF_ESS | BRF_PRG },
+	{ "6.ue20a",			0x080000, 0x2dee0c31, BRF_ESS | BRF_PRG },
 
-	{ "obj1.13",    		0x080000, 0x832cd451, BRF_GRA },			  // graphics
+	{ "13.u5",    			0x080000, 0x832cd451, BRF_GRA },			  // graphics
 
-	{ "musc1.01",   		0x080000, 0x10347fce, BRF_SND },			  // PCM
-	{ "musc2.02",   		0x080000, 0xb9646a8c, BRF_SND },
+	{ "1.ub6",   			0x080000, 0x10347fce, BRF_SND },			  // PCM
+	{ "2.uc6",   			0x080000, 0xb9646a8c, BRF_SND },
 };
 
 STD_ROM_PICK(Newfanta)

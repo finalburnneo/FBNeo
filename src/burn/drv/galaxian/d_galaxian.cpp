@@ -16815,6 +16815,28 @@ static struct BurnRomInfo BomberRomDesc[] = {
 STD_ROM_PICK(Bomber)
 STD_ROM_FN(Bomber)
 
+static struct BurnRomInfo SpcmissionRomDesc[] = {
+	{ "3l.bin",        0x00800, 0xb3e7f1bb, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "3k.bin",        0x00800, 0x1fca370c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "3h.bin",        0x00800, 0x8a714167, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "3f.bin",        0x00800, 0xdd380a22, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "3e.bin",        0x00800, 0x92980e72, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "3d.bin",        0x00800, 0x9fd96374, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "3c.bin",        0x00800, 0x88ac07a0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "3a.bin",        0x00800, 0x75232e09, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "8k.bin",        0x00800, 0x97ba15e8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "8l.bin",        0x00800, 0x6510761d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+
+	{ "5f.bin",        0x00800, 0x4708845b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "5h.bin",        0x00800, 0x11fd2887, BRF_GRA | GAL_ROM_TILES_SHARED },
+		
+	{ "mb7051.bin",     0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Spcmission)
+STD_ROM_FN(Spcmission)
+
 static struct BurnRomInfo AtlantisRomDesc[] = {
 	{ "2c",            0x00800, 0x0e485b9a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "2e",            0x00800, 0xc1640513, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -18671,7 +18693,7 @@ struct BurnDriver BurnDrvKamikazesp = {
 
 struct BurnDriver BurnDrvStrfbomb = {
 	"strfbomb", "scramble", NULL, NULL, "1981",
-	"Strafe Bomb\0", NULL, "Omni", "Galaxian",
+	"Strafe Bomb\0", NULL, "bootleg (Omni)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, StrfbombRomInfo, StrfbombRomName, NULL, NULL, NULL, NULL, ScrambleInputInfo, StrfbombDIPInfo,
@@ -18681,7 +18703,7 @@ struct BurnDriver BurnDrvStrfbomb = {
 
 struct BurnDriver BurnDrvExplorer = {
 	"explorer", "scramble", NULL, NULL, "1981",
-	"Explorer\0", NULL, "bootleg", "Galaxian",
+	"Explorer\0", NULL, "bootleg (Sidam)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, ExplorerRomInfo, ExplorerRomName, NULL, NULL, NULL, NULL, ExplorerInputInfo, ExplorerDIPInfo,
@@ -18691,10 +18713,20 @@ struct BurnDriver BurnDrvExplorer = {
 
 struct BurnDriver BurnDrvBomber = {
 	"bomber", "scramble", NULL, NULL, "1981",
-	"Bomber (bootleg of Scramble)\0", NULL, "bootleg", "Galaxian",
+	"Bomber (bootleg of Scramble)\0", NULL, "bootleg (Alca)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, BomberRomInfo, BomberRomName, NULL, NULL, NULL, NULL, ScrambleInputInfo, ScrambleDIPInfo,
+	ScrambleInit, KonamiExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvSpcmission = {
+	"spcmission", "scramble", NULL, NULL, "1981",
+	"Space Mission (SegaSA / Sonic, Spanish bootleg of Scramble)\0", NULL, "bootleg (SegaSA / Sonic)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
+	NULL, SpcmissionRomInfo, SpcmissionRomName, NULL, NULL, NULL, NULL, ScrambleInputInfo, ScrambleDIPInfo,
 	ScrambleInit, KonamiExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

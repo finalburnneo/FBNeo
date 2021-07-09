@@ -698,7 +698,7 @@ static INT32 DrvDoReset(INT32 full_reset)
 	if (EEPROMAvailable() == 0) {
 		if (TaitoDefaultEEProm[0] != 0) {
 			EEPROMFill((const UINT8*)TaitoDefaultEEProm, 0, 128);
-		} else if (f3_game == RECALH || f3_game == GSEEKER ) {
+		} else if (f3_game == RECALH ) {
 			static const UINT8 recalh_eeprom[128] =	{
 				0x85,0x54,0x00,0x00,0x30,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xf3,0x35,
 				0x00,0x01,0x86,0xa0,0x00,0x13,0x04,0x13,0x00,0x00,0xc3,0x50,0x00,0x19,0x00,0x0a,
@@ -2059,6 +2059,8 @@ static struct BurnRomInfo gseekerRomDesc[] = {
 
 	{ "d40_01.rom",		0x200000, 0xee312e95, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "d40_02.rom",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 13
+	
+	{ "gseeker.nv",		0x000080, 0x3e24cc80, TAITO_DEFAULT_EEPROM },     // 14 eeprom
 };
 
 STD_ROM_PICK(gseeker)
@@ -2101,6 +2103,8 @@ static struct BurnRomInfo gseekerjRomDesc[] = {
 
 	{ "d40_01.rom",		0x200000, 0xee312e95, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "d40_02.rom",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 13
+	
+	{ "gseeker.nv",		0x000080, 0x3e24cc80, TAITO_DEFAULT_EEPROM },     // 14 eeprom
 };
 
 STD_ROM_PICK(gseekerj)
@@ -2138,6 +2142,8 @@ static struct BurnRomInfo gseekeruRomDesc[] = {
 
 	{ "d40_01.rom",		0x200000, 0xee312e95, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "d40_02.rom",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 13
+	
+	{ "gseeker.nv",		0x000080, 0x3e24cc80, TAITO_DEFAULT_EEPROM },     // 14 eeprom
 };
 
 STD_ROM_PICK(gseekeru)

@@ -5205,7 +5205,7 @@ struct BurnDriver BurnDrvcrush2 = {
 // Crush Roller (set 3)
 
 static struct BurnRomInfo crush3RomDesc[] = {
-	{ "l.6e",  		  0x1000, 0x50a1a776, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "1.6e",  		  0x1000, 0x50a1a776, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
 	{ "2.6f",  		  0x1000, 0x5b03c1f8, 1 | BRF_ESS | BRF_PRG },	//  1
 	{ "3.6h",  		  0x1000, 0xae5b39fb, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "4.6j",  		  0x1000, 0xddf63743, 1 | BRF_ESS | BRF_PRG },	//  3
@@ -5216,8 +5216,8 @@ static struct BurnRomInfo crush3RomDesc[] = {
 	{ "82s123.7f",    0x0020, 0xff344446, 3 | BRF_GRA },			//  6 Color Prom
 	{ "82s129.4a",    0x0100, 0x63efb927, 3 | BRF_GRA },			//  7
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
-	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
+	{ "82s129.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
+	{ "82s129.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
 };
 
 STD_ROM_PICK(crush3)

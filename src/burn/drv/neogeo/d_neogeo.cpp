@@ -13595,7 +13595,7 @@ static INT32 mslug4Init()
 
 struct BurnDriver BurnDrvmslug4 = {
 	"mslug4", NULL, "neogeo", NULL, "2002",
-	"Metal Slug 4 (NGM-2630)\0", NULL, "Mega", "Neo Geo MVS",
+	"Metal Slug 4 (NGM-2630)\0", NULL, "Mega / Noise Factory / Playmore", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug4RomInfo, mslug4RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -13633,7 +13633,7 @@ STD_ROM_FN(mslug4h)
 
 struct BurnDriver BurnDrvmslug4h = {
 	"mslug4h", "mslug4", "neogeo", NULL, "2002",
-	"Metal Slug 4 (NGH-2630)\0", NULL, "Mega", "Neo Geo MVS",
+	"Metal Slug 4 (NGH-2630)\0", NULL, "Mega / Noise Factory / Playmore", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug4hRomInfo, mslug4hRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

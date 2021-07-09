@@ -441,6 +441,8 @@ static INT32 DrvDoReset()
 	crtc_timer = 0;
 	crtc_timer_enable = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1079,7 +1081,7 @@ struct BurnDriver BurnDrvHatris = {
 	"hatris", NULL, "ym2608", NULL, "1990",
 	"Hatris (US)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, hatrisRomInfo, hatrisRomName, NULL, NULL, NULL, NULL, HatrisInputInfo, HatrisDIPInfo,
 	hatrisInit, DrvExit, DrvFrame, FromanceDraw, DrvScan, &DrvRecalc, 0x800,
 	352, 240, 4, 3
@@ -1109,7 +1111,7 @@ struct BurnDriver BurnDrvHatrisj = {
 	"hatrisj", "hatris", "ym2608", NULL, "1990",
 	"Hatris (Japan)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, hatrisjRomInfo, hatrisjRomName, NULL, NULL, NULL, NULL, HatrisInputInfo, HatrisDIPInfo,
 	hatrisInit, DrvExit, DrvFrame, FromanceDraw, DrvScan, &DrvRecalc, 0x800,
 	352, 240, 4, 3

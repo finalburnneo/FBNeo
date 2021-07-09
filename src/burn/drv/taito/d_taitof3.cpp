@@ -698,7 +698,7 @@ static INT32 DrvDoReset(INT32 full_reset)
 	if (EEPROMAvailable() == 0) {
 		if (TaitoDefaultEEProm[0] != 0) {
 			EEPROMFill((const UINT8*)TaitoDefaultEEProm, 0, 128);
-		} else if (f3_game == RECALH || f3_game == GSEEKER ) {
+		} else if (f3_game == RECALH ) {
 			static const UINT8 recalh_eeprom[128] =	{
 				0x85,0x54,0x00,0x00,0x30,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xf3,0x35,
 				0x00,0x01,0x86,0xa0,0x00,0x13,0x04,0x13,0x00,0x00,0xc3,0x50,0x00,0x19,0x00,0x0a,
@@ -803,6 +803,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 	sound_cpu_in_reset = 1;
 	watchdog = 0;
 	previous_coin = 0;
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -2057,6 +2059,8 @@ static struct BurnRomInfo gseekerRomDesc[] = {
 
 	{ "d40_01.rom",		0x200000, 0xee312e95, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "d40_02.rom",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 13
+	
+	{ "gseeker.nv",		0x000080, 0x3e24cc80, TAITO_DEFAULT_EEPROM },     // 14 eeprom
 };
 
 STD_ROM_PICK(gseeker)
@@ -2099,6 +2103,8 @@ static struct BurnRomInfo gseekerjRomDesc[] = {
 
 	{ "d40_01.rom",		0x200000, 0xee312e95, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "d40_02.rom",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 13
+	
+	{ "gseeker.nv",		0x000080, 0x3e24cc80, TAITO_DEFAULT_EEPROM },     // 14 eeprom
 };
 
 STD_ROM_PICK(gseekerj)
@@ -2136,6 +2142,8 @@ static struct BurnRomInfo gseekeruRomDesc[] = {
 
 	{ "d40_01.rom",		0x200000, 0xee312e95, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "d40_02.rom",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 13
+	
+	{ "gseeker.nv",		0x000080, 0x3e24cc80, TAITO_DEFAULT_EEPROM },     // 14 eeprom
 };
 
 STD_ROM_PICK(gseekeru)
@@ -3364,7 +3372,7 @@ struct BurnDriver BurnDrvDariusg = {
 	"dariusg", NULL, NULL, NULL, "1994",
 	"Darius Gaiden - Silver Hawk (Ver 2.5O 1994/09/19)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, dariusgRomInfo, dariusgRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
 	dariusgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 232, 4, 3
@@ -3401,7 +3409,7 @@ struct BurnDriver BurnDrvDariusgj = {
 	"dariusgj", "dariusg", NULL, NULL, "1994",
 	"Darius Gaiden - Silver Hawk (Ver 2.5J 1994/09/19)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, dariusgjRomInfo, dariusgjRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
 	dariusgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 232, 4, 3
@@ -3438,7 +3446,7 @@ struct BurnDriver BurnDrvDariusgu = {
 	"dariusgu", "dariusg", NULL, NULL, "1994",
 	"Darius Gaiden - Silver Hawk (Ver 2.5A 1994/09/19)\0", NULL, "Taito America Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, dariusguRomInfo, dariusguRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
 	dariusgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 232, 4, 3
@@ -3475,7 +3483,7 @@ struct BurnDriver BurnDrvDariusgx = {
 	"dariusgx", NULL, NULL, NULL, "1994",
 	"Darius Gaiden - Silver Hawk Extra Version (Ver 2.7J 1995/03/06) (Official Hack)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, dariusgxRomInfo, dariusgxRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
 	dariusgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 232, 4, 3

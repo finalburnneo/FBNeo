@@ -764,9 +764,9 @@ static struct BurnRomInfo mototourRomDesc[] = {
 	{ "mt1-2.c3",		0x2000, 0x3a046dd1, 3 | BRF_GRA },           //  6
 	{ "mt1-3.a3",		0x2000, 0x1cc3d3f4, 3 | BRF_GRA },           //  7
 
-	{ "mt1-8..n3",		0x2000, 0x600a57f5, 4 | BRF_GRA },           //  8 Sprite tiles
-	{ "mt1-9..m3",		0x2000, 0x6f9f2a4e, 4 | BRF_GRA },           //  9
-	{ "mt1-10..k3",		0x2000, 0xd958def5, 4 | BRF_GRA },           // 10
+	{ "mt1-8.n3",		0x2000, 0x600a57f5, 4 | BRF_GRA },           //  8 Sprite tiles
+	{ "mt1-9.m3",		0x2000, 0x6f9f2a4e, 4 | BRF_GRA },           //  9
+	{ "mt1-10.k3",		0x2000, 0xd958def5, 4 | BRF_GRA },           // 10
 
 	{ "mmi6349.k2",		0x0200, 0xc9724350, 5 | BRF_GRA },           // 11 Color data
 	{ "prom1.f1",		0x0020, 0xa1130007, 5 | BRF_GRA },           // 12
@@ -782,6 +782,43 @@ struct BurnDriver BurnDrvMototour = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, mototourRomInfo, mototourRomName, NULL, NULL, NULL, NULL, TravrusaInputInfo, TravrusaDIPInfo,
+	travrusaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 240, 3, 4
+};
+
+
+// MotoTour / Zippy Race (Assa version of Tecfri license)
+
+static struct BurnRomInfo mototouraRomDesc[] = {
+	{ "a-00288_assa_m5_mp1.m3",		0x2000, 0xfe643567, 1 | BRF_PRG | BRF_ESS }, //  0  Z80 Code
+	{ "a-00288_assa_m5_mp2.l3",		0x2000, 0x38d9d0f5, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "a-00288_assa_m5_mp3.k3",		0x2000, 0xefd325f2, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "a-00288_assa_m5_mp4.j3",		0x2000, 0x5a69a393, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "snd.a1",						0x1000, 0xd1385740, 2 | BRF_GRA },           //  4 M6803 Code
+
+	{ "a-00288_assa_m5_mf1.e3",		0x2000, 0x65cb269a, 3 | BRF_GRA },           //  5 Background tiles
+	{ "a-00288_assa_m5_mf2.c3",		0x2000, 0x3a046dd1, 3 | BRF_GRA },           //  6
+	{ "a-00288_assa_m5_mf3.a3",		0x2000, 0x1cc3d3f4, 3 | BRF_GRA },           //  7
+
+	{ "a-00288_assa_m5_mm8.n3",		0x2000, 0x600a57f5, 4 | BRF_GRA },           //  8 Sprite tiles
+	{ "a-00288_assa_m5_mm9.m3",		0x2000, 0x6f9f2a4e, 4 | BRF_GRA },           //  9
+	{ "a-00288_assa_m5_mm10.k3",	0x2000, 0xd958def5, 4 | BRF_GRA },           // 10
+
+	{ "mmi6349.k2",					0x0200, 0xc9724350, 5 | BRF_GRA },           // 11 Color data
+	{ "prom1.f1",					0x0020, 0xa1130007, 5 | BRF_GRA },           // 12
+	{ "prom2.h2",					0x0100, 0x76062638, 5 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(mototoura)
+STD_ROM_FN(mototoura)
+
+struct BurnDriver BurnDrvMototoura = {
+	"mototoura", "travrusa", NULL, NULL, "1983",
+	"MotoTour / Zippy Race (Assa version of Tecfri license)\0", NULL, "Irem (Tecfri license / Assa)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	NULL, mototouraRomInfo, mototouraRomName, NULL, NULL, NULL, NULL, TravrusaInputInfo, TravrusaDIPInfo,
 	travrusaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 240, 3, 4
 };

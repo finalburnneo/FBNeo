@@ -25521,6 +25521,25 @@ struct BurnDriver BurnDrvmd_contraj = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Contra - Hard Corps INVASION (Hack v3.3)
+// https://www.romhacking.net/hacks/4381/
+static struct BurnRomInfo md_contrainvRomDesc[] = {
+	{ "contra - hard corps invasion (hack v3.3).bin", 0x400000, 0xe1735c02, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_contrainv)
+STD_ROM_FN(md_contrainv)
+
+struct BurnDriver BurnDrvmd_contrainv = {
+	"md_contrainv", "md_contra", NULL, NULL, "2020",
+	"Contra - Hard Corps Invasion (Hack v3.3)\0", NULL, "IT.GAMER", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
+	MegadriveGetZipName, md_contrainvRomInfo, md_contrainvRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Probotector (Euro)
 static struct BurnRomInfo md_probotRomDesc[] = {
 	{ "probotector (euro).bin", 0x200000, 0xbc597d48, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

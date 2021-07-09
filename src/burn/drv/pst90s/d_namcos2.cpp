@@ -3010,7 +3010,7 @@ static void draw_sprites_bank(INT32 spritebank)
 			INT32 color  = (word3>>4)&0x000f;
 			INT32 code   = word1 & ((is_finallap) ? 0x1fff : 0x3fff);
 			INT32 ypos   = (0x1ff-(word0&0x01ff))-0x50+0x02;
-			INT32 xpos   = (offset4&0x03ff)-0x50+0x07;
+			INT32 xpos   = (offset4&0x07ff)-0x50+0x07;
 			INT32 flipy  = word1&0x8000;
 			INT32 flipx  = word1&0x4000;
 			INT32 scalex = (sizex<<16)/((size)?0x20:0x10);
@@ -7343,7 +7343,7 @@ static struct BurnRomInfo finalap3blRomDesc[] = {
 
 	{ "04544191.6r",	0x02000, 0x90db1bf6, 0x00 | BRF_GRA | BRF_OPT }, // 29 Sprite Zoom (Unused)
 
-	{ "finalap3.nv",	0x02000, 0xefbc6274, 0x0b | BRF_PRG | BRF_ESS }, // 30 Default NV RAM
+	{ "finalap3bl.nv",	0x02000, 0x60226586, 0x0b | BRF_PRG | BRF_ESS }, // 30 Default NV RAM
 };
 
 STD_ROM_PICK(finalap3bl)
@@ -7463,7 +7463,7 @@ static struct BurnRomInfo fourtraxjRomDesc[] = {
 
 	{ "fx_chr-0.11n",	0x20000, 0x6658c1c3, 0x06 | BRF_GRA },           // 23 Layer Tiles
 	{ "fx_chr-1.11p",	0x20000, 0x3a888943, 0x06 | BRF_GRA },           // 24
-	{ "fx2_chr-2.11r",	0x20000, 0xfdf1e86b, 0x06 | BRF_GRA },           // 25
+	{ "fx_chr-2.11r",	0x20000, 0x179e4ec6, 0x06 | BRF_GRA },           // 25
 	{ "fx_chr-3.11s",	0x20000, 0x47fa7e61, 0x06 | BRF_GRA },           // 26
 	{ "fx_chr-4.9n",	0x20000, 0xc720c5f5, 0x06 | BRF_GRA },           // 27
 	{ "fx_chr-5.9p",	0x20000, 0x9eacdbc8, 0x06 | BRF_GRA },           // 28

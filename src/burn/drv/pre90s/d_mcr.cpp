@@ -3104,8 +3104,7 @@ static void demoderb_op4_write(UINT8, UINT8 data)
 
 static UINT8 demoderb_ip1_read(UINT8)
 {
-    UINT8 ipt = DrvInputs[1] & 0x03;
-    ipt |= (((input_playernum) ? ~BurnTrackballRead(1, 0) : ~BurnTrackballRead(0, 0)) << 2) & 0x3f;
+    UINT8 ipt = (DrvInputs[1] & 0x03) | (~BurnTrackballRead(input_playernum, 0) << 2);
 
     BurnTrackballUpdate(input_playernum);
 
@@ -3114,8 +3113,7 @@ static UINT8 demoderb_ip1_read(UINT8)
 
 static UINT8 demoderb_ip2_read(UINT8)
 {
-    UINT8 ipt = DrvInputs[2] & 0x03;
-    ipt |= (((input_playernum) ? ~BurnTrackballRead(1, 1) : ~BurnTrackballRead(0, 1)) << 2) & 0x3f;
+    UINT8 ipt = (DrvInputs[2] & 0x03) | (~BurnTrackballRead(input_playernum, 1) << 2);
 
     BurnTrackballUpdate(input_playernum);
 

@@ -8021,7 +8021,7 @@
 	<game name="mslug4h" cloneof="mslug4" romof="mslug4">
 		<description>Metal Slug 4 (NGH-2630)</description>
 		<year>2002</year>
-		<manufacturer>Mega</manufacturer>
+		<manufacturer>Mega / Noise Factory / Playmore</manufacturer>
 		<rom name="263-ph1.p1" size="1048576" crc="c67f5c8d"/>
 		<rom name="263-ph2.sp2" size="4194304" crc="bc3ec89e"/>
 		<rom name="263-c1.c1" merge="263-c1.c1" size="8388608" crc="84865f8a"/>
@@ -8077,7 +8077,7 @@
 	<game name="mslug4" romof="neogeo">
 		<description>Metal Slug 4 (NGM-2630)</description>
 		<year>2002</year>
-		<manufacturer>Mega</manufacturer>
+		<manufacturer>Mega / Noise Factory / Playmore</manufacturer>
 		<rom name="263-p1.p1" size="1048576" crc="27e4def3"/>
 		<rom name="263-p2.sp2" size="4194304" crc="fdb7aed8"/>
 		<rom name="263-c1.c1" size="8388608" crc="84865f8a"/>

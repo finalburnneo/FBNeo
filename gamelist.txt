@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17217 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17224 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1663,7 +1663,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_bobc206	|  	| Bomb on Basic City (HB, v2.06)			| 		| 2016	| Studio Vetea	| Sega Megadrive| 					|
 | nes_bombsweeper|  	| Bomb Sweeper (HB)					| 		| 2002	| SNOWBRO	| Miscellaneous	| 					|
 | cv_bomblast	|  	| Bomb'n Blast (HB)					| 		| 2011	| CollectorVisio| ColecoVision	| 					|
-| bomber	|  	| Bomber (bootleg of Scramble)				| scramble	| 1981	| bootleg	| Galaxian	| 					|
+| bomber	|  	| Bomber (bootleg of Scramble)				| scramble	| 1981	| bootleg (Alca)| Galaxian	| 					|
 | msx_bombking	|  	| Bomber King (Jpn)					| 		| 1988	| Hudson Soft	| MSX		| 					|
 | bombrman	|  	| Bomber Man (Japan)					| dynablst	| 1991	| Irem (licensed| Irem M90	| 					|
 | fds_bomberman	|  	| Bomber Man (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -2822,6 +2822,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_contra	|  	| Contra (USA)						| 		| 1988	| Konami	| Miscellaneous	| 					|
 | md_contras	|  	| Contra - Hard Corps (Hack, Spanish)			| md_contra	| 2013	| Konami	| Sega Megadrive| 					|
 | md_contra	|  	| Contra - Hard Corps (USA, Kor)			| 		| 1994	| Konami	| Sega Megadrive| 					|
+| md_contrainv	|  	| Contra - Hard Corps Invasion (Hack v3.3)		| md_contra	| 2020	| IT.GAMER	| Sega Megadrive| 					|
 | nes_contrredfalwar|  	| Contra - Red Falcon War (USA)				| nes_contra	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_contrrevredfal|  	| Contra - Revenge of the Red Falcon (USA)		| nes_contra	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_contraj	|  	| Contra - The Hard Corps (Jpn)				| md_contra	| 1994	| Konami	| Sega Megadrive| 					|
@@ -4464,7 +4465,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_expedition|  	| Expedition (HB)					| 		| 2017	| Mega Cat Studi| Miscellaneous	| 					|
 | nes_explodingfist|  	| Exploding Fist (USA, Prototype)			| 		| 0000	| Tradewest	| Miscellaneous	| 					|
 | cexplore	|  	| Explorer (DECO Cassette) (US)				| 		| 1982	| Data East Corp| Cassette Syste| 					|
-| explorer	|  	| Explorer						| scramble	| 1981	| bootleg	| Galaxian	| 					|
+| explorer	|  	| Explorer						| scramble	| 1981	| bootleg (Sidam| Galaxian	| 					|
 | explbrkrk	|  	| Explosive Breaker (Korea)				| explbrkr	| 1992	| Kaneko	| Kaneko16	| 					|
 | explbrkr	|  	| Explosive Breaker (World)				| 		| 1992	| Kaneko	| Kaneko16	| 					|
 | exprraidi	|  	| Express Raider (Italy)				| exprraid	| 1986	| Data East Corp| Miscellaneous	| 					|
@@ -6026,13 +6027,13 @@ This list contains all games supported by FinalBurn Neo.
 | gyrodinet	|  	| Gyrodine (Taito Corporation license)			| gyrodine	| 1984	| Crux (Taito Co| Miscellaneous	| 					|
 | gyrodine	|  	| Gyrodine						| 		| 1984	| Crux		| Miscellaneous	| 					|
 | nes_gyromite	|  	| Gyromite (USA)					| 		| 1987	| Nintendo	| Miscellaneous	| 					|
-| gyrussb	|  	| Gyruss (bootleg)					| gyruss	| 1983	| bootleg	| GX347		| 					|
+| gyrussb	|  	| Gyruss (bootleg?)					| gyruss	| 1983	| bootleg?	| GX347		| 					|
 | gyrussce	|  	| Gyruss (Centuri)					| gyruss	| 1983	| Konami (Centur| GX347		| 					|
 | fds_gyruss1	|  	| Gyruss (Japan)					| fds_gyruss	| 1989?	| Nintendo	| Miscellaneous	| 					|
-| gyruss	|  	| Gyruss (Konami)					| 		| 1983	| Konami	| GX347		| 					|
 | fds_gyruss	|  	| Gyruss (T-eng)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_gyruss	|  	| Gyruss (USA)						| 		| 1989	| Ultra Games	| Miscellaneous	| 					|
 | cv_gyruss	|  	| Gyruss						| 		| 1984	| Parker Brother| ColecoVision	| 					|
+| gyruss	|  	| Gyruss						| 		| 1983	| Konami	| GX347		| 					|
 | msx_gyruss	|  	| Gyruss						| 		| 1984	| Parker Bros.	| MSX		| 					|
 | spec_hatehate	|  	| H.A.T.E. - Hostile All Terrain Encounter (48K)	| 		| 1989	| Gremlin Graphi| ZX Spectrum	| 					|
 | msx_hero	|  	| H.E.R.O. (Jpn)					| 		| 1984	| Pony Canyon	| MSX		| Press a Num Key to select difficulty l|
@@ -7074,6 +7075,7 @@ This list contains all games supported by FinalBurn Neo.
 | karatblz	|  	| Karate Blazers (World, set 1)				| 		| 1991	| Video System C| Video System	| 					|
 | karatblza	|  	| Karate Blazers (World, set 2)				| karatblz	| 1991	| Video System C| Video System	| 					|
 | karatblzt	|  	| Karate Blazers (World, Tecmo license)			| karatblz	| 1991	| Video System C| Video System	| 					|
+| kchamptec	|  	| Karate Champ (Tecfri bootleg)				| kchamp	| 1984	| bootleg (Tecfr| Miscellaneous	| 					|
 | kchampvs	|  	| Karate Champ (US VS version, set 1)			| kchamp	| 1984	| Data East USA	| Miscellaneous	| 					|
 | kchampvs2	|  	| Karate Champ (US VS version, set 2)			| kchamp	| 1984	| Data East USA	| Miscellaneous	| 					|
 | kchampvs3	|  	| Karate Champ (US VS version, set 3)			| kchamp	| 1984	| Data East USA	| Miscellaneous	| 					|
@@ -8511,8 +8513,8 @@ This list contains all games supported by FinalBurn Neo.
 | mslug3	|  	| Metal Slug 3 (NGM-2560)				| 		| 2000	| SNK		| Neo Geo MVS	| 					|
 | mslug3a	|  	| Metal Slug 3 (NGM-2560, earlier)			| mslug3	| 2000	| SNK		| Neo Geo MVS	| 					|
 | mslug4dg	|  	| Metal Slug 4 (Multifunction Hack, 20171225)		| mslug4	| 2017	| hack		| Neo Geo	| 					|
-| mslug4h	|  	| Metal Slug 4 (NGH-2630)				| mslug4	| 2002	| Mega		| Neo Geo MVS	| 					|
-| mslug4	|  	| Metal Slug 4 (NGM-2630)				| 		| 2002	| Mega		| Neo Geo MVS	| 					|
+| mslug4h	|  	| Metal Slug 4 (NGH-2630)				| mslug4	| 2002	| Mega / Noise F| Neo Geo MVS	| 					|
+| mslug4	|  	| Metal Slug 4 (NGM-2630)				| 		| 2002	| Mega / Noise F| Neo Geo MVS	| 					|
 | ms4plus	|  	| Metal Slug 4 Plus (bootleg)				| mslug4	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | mslug5b	|  	| Metal Slug 5 (bootleg, set 1)				| mslug5	| 2003	| bootleg	| Neo Geo MVS	| 					|
 | mslug5b2	|  	| Metal Slug 5 (bootleg, set 2)				| mslug5	| 2003	| bootleg	| Neo Geo MVS	| 					|
@@ -9005,6 +9007,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_motorcitpat|  	| Motor City Patrol (USA)				| 		| 1992	| Matchbox	| Miscellaneous	| 					|
 | motorace	|  	| MotoRace USA						| travrusa	| 1983	| Irem (Williams| Miscellaneous	| 					|
 | motos		|  	| Motos							| 		| 1985	| Namco		| Miscellaneous	| 					|
+| mototoura	|  	| MotoTour / Zippy Race (Assa version of Tecfri license)| travrusa	| 1983	| Irem (Tecfri l| Miscellaneous	| 					|
 | mototour	|  	| MotoTour / Zippy Race (Tecfri license)		| travrusa	| 1983	| Irem (Tecfri l| Miscellaneous	| 					|
 | nes_mottoabudek|  	| Mottomo Abunai Deka (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | sg1k_hangon2t2|  	| Motuo Feiche (Tw)					| sg1k_hangon2	| 1985?	| Unknown	| Sega SG-1000	| 					|
@@ -9231,7 +9234,9 @@ This list contains all games supported by FinalBurn Neo.
 | namenayo	|  	| Namennayo (Japan)					| 		| 1982	| Cat's		| Miscellaneous	| 					|
 | spec_nanako	|  	| Nanako in Classic Japanese Monster Castle (48K) (HB)	| 		| 2007	| Computer Emuzo| ZX Spectrum	| 					|
 | naname	|  	| Naname de Magic!					| 		| 1994	| Atlus		| Miscellaneous	| 					|
-| nndmseala	| D NW	| Nandemo Seal Iinkai (Astro Boy ver.)			| nndmseal	| 1997	| I'Max / Jaleco| Miscellaneous	| 					|
+| nndmsealc	| D NW	| Nandemo Seal Iinkai (alternate ver. 1.0)		| nndmseal	| 1997	| I'Max / Jaleco| Miscellaneous	| 					|
+| nndmseala	| D NW	| Nandemo Seal Iinkai (Astro Boy ver. 1.0?)		| nndmseal	| 1997	| I'Max / Jaleco| Miscellaneous	| 					|
+| nndmsealb	| D NW	| Nandemo Seal Iinkai (Astro Boy ver. 1.1)		| nndmseal	| 1997	| I'Max / Jaleco| Miscellaneous	| 					|
 | nndmseal	| D NW	| Nandemo Seal Iinkai					| 		| 1997	| I'Max / Jaleco| Miscellaneous	| 					|
 | pce_nantet	|  	| Nantettatte Engine					| 		| 2017	| Atherbyte	| PC Engine	| 					|
 | nes_nantebasj	|  	| Nantettatte!! Baseball (Japan)			| nes_nantebas	| 1990	| Sunsoft	| Miscellaneous	| 					|
@@ -12561,6 +12566,7 @@ This list contains all games supported by FinalBurn Neo.
 | skylancr	|  	| Sky Lancer						| 		| 1983	| Orca		| Miscellaneous	| 					|
 | skyraidr	|  	| Sky Raiders						| uniwars	| 1980	| bootleg	| Galaxian	| 					|
 | skyrobo	|  	| Sky Robo						| 		| 1989	| Nichibutsu	| Miscellaneous	| 					|
+| skysharkb	|  	| Sky Shark (bootleg)					| fshark	| 1987	| bootleg	| Miscellaneous	| 					|
 | skyshark	|  	| Sky Shark (US, set 1)					| fshark	| 1987	| Toaplan / Tait| Miscellaneous	| 					|
 | skysharka	|  	| Sky Shark (US, set 2)					| fshark	| 1987	| Toaplan / Tait| Miscellaneous	| 					|
 | nes_skyshark	|  	| Sky Shark (USA) (Rev 0A)				| 		| 1989	| Taito		| Miscellaneous	| 					|
@@ -12998,6 +13004,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_spacmaze	|  	| Space Maze Attack (Jpn)				| 		| 1983	| HAL Kenkyuujo	| MSX		| 					|
 | msx_spacmazeb	|  	| Space Maze Attack (Jpn, Alt 2)			| msx_spacmaze	| 1983	| HAL Kenkyuujo	| MSX		| 					|
 | msx_spacmazea	|  	| Space Maze Attack (Jpn, Alt)				| msx_spacmaze	| 1983	| HAL Kenkyuujo	| MSX		| 					|
+| spcmission	|  	| Space Mission (SegaSA / Sonic, Spanish bootleg of Scra| scramble	| 1981	| bootleg (SegaS| Galaxian	| 					|
 | spec_thehardy	|  	| Space Monsters meet The Hardy (HB)			| 		| 2019	| Mayhem	| ZX Spectrum	| 					|
 | sg1k_spacemnt	|  	| Space Mountain (Jpn, OMV)				| 		| 1983	| Tsukuda Origin| Sega SG-1000	| 					|
 | msx_spacemouse|  	| Space Mouse (HB)					| 		| 201x	| H. Kobo	| MSX		| 					|
@@ -13381,7 +13388,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_stormlord21|  	| Stormlord II: Deliverance (Part 1 of 3)(128K)		| 		| 1990	| Hewson Consult| ZX Spectrum	| 					|
 | spec_stormlord22|  	| Stormlord II: Deliverance (Part 2 of 3)(128K)		| spec_stormlord21| 1990	| Hewson Consult| ZX Spectrum	| 					|
 | spec_stormlord23|  	| Stormlord II: Deliverance (Part 3 of 3)(128K)		| spec_stormlord21| 1990	| Hewson Consult| ZX Spectrum	| 					|
-| strfbomb	|  	| Strafe Bomb						| scramble	| 1981	| Omni		| Galaxian	| 					|
+| strfbomb	|  	| Strafe Bomb						| scramble	| 1981	| bootleg (Omni)| Galaxian	| 					|
 | spec_stranded25|  	| Stranded 2.5 (HB)					| 		| 2007	| Bob Smith	| ZX Spectrum	| 					|
 | msx_stranglp	|  	| Strange Loop (Jpn)					| 		| 1987	| Nihon Dexter	| MSX		| 					|
 | pce_stratego	|  	| Stratego						| 		| 1992	| Victor Interac| PC Engine	| 					|
@@ -16124,7 +16131,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_venom	|  	| Venom & Spider-Man - Separation Anxiety (Euro, USA)	| 		| 1995	| Acclaim Entert| Sega Megadrive| 					|
 | md_venoms	|  	| Venom & Spider-Man - Separation Anxiety (Hack, Spanish| md_venom	| 2019	| Acclaim	| Sega Megadrive| 					|
 | cv_venture	|  	| Venture						| 		| 1982	| Coleco	| ColecoVision	| 					|
-| venus		|  	| Venus							| gyruss	| 1983	| bootleg	| GX347		| 					|
+| venus		|  	| Venus (bootleg of Gyruss)				| gyruss	| 1983	| bootleg	| GX347		| 					|
 | verbena	|  	| Verbena (bootleg of Carnival)				| carnival	| 1980	| bootleg (Cocom| Vic Dual	| 					|
 | md_vermilj	|  	| Vermilion (Jpn)					| md_vermil	| 1989	| Sega		| Sega Megadrive| 					|
 | md_verytex	|  	| Verytex (Jpn)						| 		| 1991	| Asmik Ace	| Sega Megadrive| 					|

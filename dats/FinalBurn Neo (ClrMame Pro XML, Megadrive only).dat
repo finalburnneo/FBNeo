@@ -3517,6 +3517,14 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="contrainv" cloneof="contra" romof="contra">
+		<description>Contra - Hard Corps Invasion (Hack v3.3) [Hack]</description>
+		<year>2020</year>
+		<manufacturer>IT.GAMER</manufacturer>
+		<rom name="contra - hard corps invasion (hack v3.3).bin" size="4194304" crc="e1735c02"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="contraj" cloneof="contra" romof="contra">
 		<description>Contra - The Hard Corps (Jpn)</description>
 		<year>1994</year>

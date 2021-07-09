@@ -2856,6 +2856,7 @@ DRV		BurnDrvnes_contracast;
 DRV		BurnDrvnes_contra;
 DRV		BurnDrvmd_contras;
 DRV		BurnDrvmd_contra;
+DRV		BurnDrvmd_contrainv;
 DRV		BurnDrvnes_contrredfalwar;
 DRV		BurnDrvnes_contrrevredfal;
 DRV		BurnDrvmd_contraj;
@@ -6101,10 +6102,10 @@ DRV		BurnDrvnes_gyromite;
 DRV		BurnDrvGyrussb;
 DRV		BurnDrvGyrussce;
 DRV		BurnDrvfds_gyruss1;
-DRV		BurnDrvGyruss;
 DRV		BurnDrvfds_gyruss;
 DRV		BurnDrvnes_gyruss;
 DRV		BurnDrvcv_gyruss;
+DRV		BurnDrvGyruss;
 DRV		BurnDrvMSX_gyruss;
 DRV		BurnSpechatehate;
 DRV		BurnDrvMSX_hero;
@@ -7164,6 +7165,7 @@ DRV		BurnDrvKaratblu;
 DRV		BurnDrvKaratblz;
 DRV		BurnDrvKaratbla;
 DRV		BurnDrvKaratblt;
+DRV		BurnDrvKchamptec;
 DRV		BurnDrvKchampvs;
 DRV		BurnDrvKchampvs2;
 DRV		BurnDrvKchampvs3;
@@ -9117,6 +9119,7 @@ DRV		BurnDrvcv_mtcracer;
 DRV		BurnDrvnes_motorcitpat;
 DRV		BurnDrvMotorace;
 DRV		BurnDrvMotos;
+DRV		BurnDrvMototoura;
 DRV		BurnDrvMototour;
 DRV		BurnDrvnes_mottoabudek;
 DRV		BurnDrvsg1k_hangon2t2;
@@ -9350,7 +9353,9 @@ DRV		BurnDrvNamenayo;
 DRV		BurnSpecNanako;
 DRV		BurnDrvNaname;
 #if defined FBNEO_DEBUG
+DRV		BurnDrvNndmsealc;		// no comment [NOT WORKING]
 DRV		BurnDrvNndmseala;		// no comment [NOT WORKING]
+DRV		BurnDrvNndmsealb;		// no comment [NOT WORKING]
 DRV		BurnDrvNndmseal;		// no comment [NOT WORKING]
 #endif
 DRV		BurnDrvpce_nantet;
@@ -12727,6 +12732,7 @@ DRV		BurnDrvskylance;
 DRV		BurnDrvskylancr;
 DRV		BurnDrvSkyraidr;
 DRV		BurnDrvSkyrobo;
+DRV		BurnDrvSkysharkb;
 DRV		BurnDrvSkyshark;
 DRV		BurnDrvSkysharka;
 DRV		BurnDrvnes_skyshark;
@@ -13168,6 +13174,7 @@ DRV		BurnSpecSpacejunk;
 DRV		BurnDrvMSX_spacmaze;
 DRV		BurnDrvMSX_spacmazeb;
 DRV		BurnDrvMSX_spacmazea;
+DRV		BurnDrvSpcmission;
 DRV		BurnSpecThehardy;
 DRV		BurnDrvsg1k_spacemnt;
 DRV		BurnDrvMSX_spacemouse;
@@ -20318,6 +20325,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_contra,			// Contra (USA)
 	&BurnDrvmd_contras,			// Contra - Hard Corps (Hack, Spanish)
 	&BurnDrvmd_contra,			// Contra - Hard Corps (USA, Kor)
+	&BurnDrvmd_contrainv,		// Contra - Hard Corps Invasion (Hack v3.3)
 	&BurnDrvnes_contrredfalwar,	// Contra - Red Falcon War (USA)
 	&BurnDrvnes_contrrevredfal,	// Contra - Revenge of the Red Falcon (USA)
 	&BurnDrvmd_contraj,			// Contra - The Hard Corps (Jpn)
@@ -23560,13 +23568,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGyrodinet,			// Gyrodine (Taito Corporation license)
 	&BurnDrvGyrodine,			// Gyrodine
 	&BurnDrvnes_gyromite,		// Gyromite (USA)
-	&BurnDrvGyrussb,			// Gyruss (bootleg)
+	&BurnDrvGyrussb,			// Gyruss (bootleg?)
 	&BurnDrvGyrussce,			// Gyruss (Centuri)
 	&BurnDrvfds_gyruss1,		// Gyruss (Japan)
-	&BurnDrvGyruss,				// Gyruss (Konami)
 	&BurnDrvfds_gyruss,			// Gyruss (T-eng)
 	&BurnDrvnes_gyruss,			// Gyruss (USA)
 	&BurnDrvcv_gyruss,			// Gyruss
+	&BurnDrvGyruss,				// Gyruss
 	&BurnDrvMSX_gyruss,			// Gyruss
 	&BurnSpechatehate,			// H.A.T.E. - Hostile All Terrain Encounter (48K)
 	&BurnDrvMSX_hero,			// H.E.R.O. (Jpn)
@@ -24626,6 +24634,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKaratblz,			// Karate Blazers (World, set 1)
 	&BurnDrvKaratbla,			// Karate Blazers (World, set 2)
 	&BurnDrvKaratblt,			// Karate Blazers (World, Tecmo license)
+	&BurnDrvKchamptec,			// Karate Champ (Tecfri bootleg)
 	&BurnDrvKchampvs,			// Karate Champ (US VS version, set 1)
 	&BurnDrvKchampvs2,			// Karate Champ (US VS version, set 2)
 	&BurnDrvKchampvs3,			// Karate Champ (US VS version, set 3)
@@ -26579,6 +26588,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_motorcitpat,	// Motor City Patrol (USA)
 	&BurnDrvMotorace,			// MotoRace USA
 	&BurnDrvMotos,				// Motos
+	&BurnDrvMototoura,			// MotoTour / Zippy Race (Assa version of Tecfri license)
 	&BurnDrvMototour,			// MotoTour / Zippy Race (Tecfri license)
 	&BurnDrvnes_mottoabudek,	// Mottomo Abunai Deka (Japan)
 	&BurnDrvsg1k_hangon2t2,		// Motuo Feiche (Tw)
@@ -26812,7 +26822,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecNanako,			// Nanako in Classic Japanese Monster Castle (48K) (HB)
 	&BurnDrvNaname,				// Naname de Magic!
 #if defined FBNEO_DEBUG
-	&BurnDrvNndmseala,			// Nandemo Seal Iinkai (Astro Boy ver.) [no comment, NOT WORKING]
+	&BurnDrvNndmsealc,			// Nandemo Seal Iinkai (alternate ver. 1.0) [no comment, NOT WORKING]
+	&BurnDrvNndmseala,			// Nandemo Seal Iinkai (Astro Boy ver. 1.0?) [no comment, NOT WORKING]
+	&BurnDrvNndmsealb,			// Nandemo Seal Iinkai (Astro Boy ver. 1.1) [no comment, NOT WORKING]
 	&BurnDrvNndmseal,			// Nandemo Seal Iinkai [no comment, NOT WORKING]
 #endif
 	&BurnDrvpce_nantet,			// Nantettatte Engine
@@ -30189,6 +30201,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvskylancr,			// Sky Lancer
 	&BurnDrvSkyraidr,			// Sky Raiders
 	&BurnDrvSkyrobo,			// Sky Robo
+	&BurnDrvSkysharkb,			// Sky Shark (bootleg)
 	&BurnDrvSkyshark,			// Sky Shark (US, set 1)
 	&BurnDrvSkysharka,			// Sky Shark (US, set 2)
 	&BurnDrvnes_skyshark,		// Sky Shark (USA) (Rev 0A)
@@ -30630,6 +30643,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_spacmaze,		// Space Maze Attack (Jpn)
 	&BurnDrvMSX_spacmazeb,		// Space Maze Attack (Jpn, Alt 2)
 	&BurnDrvMSX_spacmazea,		// Space Maze Attack (Jpn, Alt)
+	&BurnDrvSpcmission,			// Space Mission (SegaSA / Sonic, Spanish bootleg of Scramble)
 	&BurnSpecThehardy,			// Space Monsters meet The Hardy (HB)
 	&BurnDrvsg1k_spacemnt,		// Space Mountain (Jpn, OMV)
 	&BurnDrvMSX_spacemouse,		// Space Mouse (HB)
@@ -33794,7 +33808,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_venom,			// Venom & Spider-Man - Separation Anxiety (Euro, USA)
 	&BurnDrvmd_venoms,			// Venom & Spider-Man - Separation Anxiety (Hack, Spanish)
 	&BurnDrvcv_venture,			// Venture
-	&BurnDrvVenus,				// Venus
+	&BurnDrvVenus,				// Venus (bootleg of Gyruss)
 	&BurnDrvVerbena,			// Verbena (bootleg of Carnival)
 	&BurnDrvmd_vermilj,			// Vermilion (Jpn)
 	&BurnDrvmd_verytex,			// Verytex (Jpn)

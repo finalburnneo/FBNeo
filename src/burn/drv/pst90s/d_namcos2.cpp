@@ -3010,7 +3010,7 @@ static void draw_sprites_bank(INT32 spritebank)
 			INT32 color  = (word3>>4)&0x000f;
 			INT32 code   = word1 & ((is_finallap) ? 0x1fff : 0x3fff);
 			INT32 ypos   = (0x1ff-(word0&0x01ff))-0x50+0x02;
-			INT32 xpos   = (offset4&0x03ff)-0x50+0x07;
+			INT32 xpos   = (offset4&0x07ff)-0x50+0x07;
 			INT32 flipy  = word1&0x8000;
 			INT32 flipx  = word1&0x4000;
 			INT32 scalex = (sizex<<16)/((size)?0x20:0x10);

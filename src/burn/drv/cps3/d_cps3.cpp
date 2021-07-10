@@ -2089,15 +2089,15 @@ static struct BurnRomInfo sfiii3bhRomDesc[] = {
 	{ "sfiii3-simm6.7",					0x200000, 0xcc5f4187, BRF_GRA },
 	{ "sfiii3-simm6.7",					0x200000, 0xcc5f4187, BRF_GRA },
 	{ "10bh.10",					0x200000, 0xb18be430, BRF_GRA },
-	{ "20.20",					0x200000, 0x5ca8faba, BRF_GRA },
-	{ "30.30",					0x200000, 0xb37cf960, BRF_GRA },
-	{ "31.31",					0x200000, 0x450ec982, BRF_GRA },
-	{ "40.40",					0x200000, 0x632c965f, BRF_GRA },
-	{ "41.41",					0x200000, 0x7a4c5f33, BRF_GRA },
-	{ "50.50",					0x200000, 0x8562358e, BRF_GRA },
-	{ "51.51",					0x200000, 0x7baf234b, BRF_GRA },
-	{ "60.60",					0x200000, 0xbc9487b7, BRF_GRA },
-	{ "61.61",					0x200000, 0xb813a1b1, BRF_GRA },
+	{ "20.20",					0x200000, 0x5ca8faba, BRF_ESS | BRF_PRG },
+	{ "30.30",					0x200000, 0xb37cf960, BRF_ESS | BRF_PRG },
+	{ "31.31",					0x200000, 0x450ec982, BRF_ESS | BRF_PRG },
+	{ "40.40",					0x200000, 0x632c965f, BRF_ESS | BRF_PRG }
+	{ "41.41",					0x200000, 0x7a4c5f33, BRF_ESS | BRF_PRG }
+	{ "50.50",					0x200000, 0x8562358e, BRF_ESS | BRF_PRG }
+	{ "51.51",					0x200000, 0x7baf234b, BRF_ESS | BRF_PRG }
+	{ "60.60",					0x200000, 0xbc9487b7, BRF_ESS | BRF_PRG }
+	{ "61.61",					0x200000, 0xb813a1b1, BRF_ESS | BRF_PRG }
 };
 
 STD_ROM_PICK(sfiii3bh)
@@ -2154,14 +2154,14 @@ static struct BurnRomInfo sfiii2bhRomDesc[] = {
 	{ "sfiii2-simm5.5",			0x200000, 0x520c0af6, BRF_GRA },
 	{ "sfiii2-simm5.6",			0x200000, 0x2edc5986, BRF_GRA },
 	{ "sfiii2-simm5.7",			0x200000, 0x93ffa199, BRF_GRA },
-	{ "10bh.10",			0x200000, 0x503d6401, BRF_GRA },
-	{ "20.20",			0x200000, 0x38090460, BRF_GRA },
-	{ "30.31",			0x200000, 0x77c197c0, BRF_GRA },
-	{ "31.31",			0x200000, 0x7470a6f2, BRF_GRA },
-	{ "40.40",			0x200000, 0x01a85ced, BRF_GRA },
-	{ "41.41",			0x200000, 0xfb346d74, BRF_GRA },
-	{ "50.51",			0x200000, 0x32f79449, BRF_GRA },
-	{ "51.51",			0x200000, 0x1102b8eb, BRF_GRA },
+	{ "10bh.10",			0x200000, 0x503d6401, BRF_ESS | BRF_PRG }
+	{ "20.20",			0x200000, 0x38090460, BRF_ESS | BRF_PRG }
+	{ "30.31",			0x200000, 0x77c197c0, BRF_ESS | BRF_PRG }
+	{ "31.31",			0x200000, 0x7470a6f2, BRF_ESS | BRF_PRG }
+	{ "40.40",			0x200000, 0x01a85ced, BRF_ESS | BRF_PRG }
+	{ "41.41",			0x200000, 0xfb346d74, BRF_ESS | BRF_PRG }
+	{ "50.51",			0x200000, 0x32f79449, BRF_ESS | BRF_PRG }
+	{ "51.51",			0x200000, 0x1102b8eb, BRF_ESS | BRF_PRG }
 };
 
 STD_ROM_PICK(sfiii2bh)
@@ -2171,7 +2171,7 @@ struct BurnDriver BurnDrvSfiii2bh = {
 	"sfiii2bh", "sfiii2", NULL, NULL, "1997",
 	"Street Fighter III 2nd Impact: Giant Attack | Boss Hack\0", NULL, "hack", "CPS-3",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK,, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, FBF_SF,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, FBF_SF,
 	NULL, sfiii2bhRomInfo, sfiii2bhRomName, NULL, NULL, NULL, NULL, cps3InputInfo, sfiiiwideusaDIPInfo,
 	sfiii2Init, cps3Exit, cps3Frame, DrvCps3Draw, cps3Scan, &cps3_palette_change, 0x40000,
 	384, 224, 4, 3

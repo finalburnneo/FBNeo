@@ -2039,7 +2039,7 @@ struct BurnDriver BurnDrvSfiii3th = {
 };
 
 // -------------------------------------------------------------------------
-// Street Fighter III 3rd Strike: Fight for the Future (Boss Hack)
+// Street Fighter III 3rd Strike: Fight for the Future (Boss Hack by yumeji)
 // Play as Gill and Shin Akuma.
 // -------------------------------------------------------------------------
 
@@ -2047,47 +2047,6 @@ static struct BurnRomInfo sfiii3bhRomDesc[] = {
     
 	{ "sfiii3_japan_nocd.29f400.u2",	0x080000, 0x1edc6366, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 
-	{ "sfiii3-simm1.0",					0x200000, 0x11dfd3cd, BRF_ESS | BRF_PRG },
-	{ "sfiii3-simm1.1",					0x200000, 0xc50585e6, BRF_ESS | BRF_PRG },
-	{ "sfiii3-simm1.2",					0x200000, 0x8e011d9b, BRF_ESS | BRF_PRG },
-	{ "sfiii3-simm1.3",					0x200000, 0xdca8d92f, BRF_ESS | BRF_PRG },
-	{ "sfiii3-simm2.0",					0x200000, 0x06eb969e, BRF_ESS | BRF_PRG },
-	{ "sfiii3-simm2.1",					0x200000, 0xe7039f82, BRF_ESS | BRF_PRG },
-	{ "sfiii3-simm2.2",					0x200000, 0x645c96f7, BRF_ESS | BRF_PRG },
-	{ "sfiii3-simm2.3",					0x200000, 0x610efab1, BRF_ESS | BRF_PRG },
-	{ "sfiii3-simm3.0",					0x200000, 0x7baa1f79, BRF_GRA },
-	{ "sfiii3-simm3.1",					0x200000, 0x234bf8fe, BRF_GRA },
-	{ "sfiii3-simm3.2",					0x200000, 0xd9ebc308, BRF_GRA },
-	{ "sfiii3-simm3.3",					0x200000, 0x293cba77, BRF_GRA },
-	{ "sfiii3-simm3.4",					0x200000, 0x6055e747, BRF_GRA },
-	{ "sfiii3-simm3.5",					0x200000, 0x499aa6fc, BRF_GRA },
-	{ "sfiii3-simm3.6",					0x200000, 0x6c13879e, BRF_GRA },
-	{ "sfiii3-simm3.7",					0x200000, 0xcf4f8ede, BRF_GRA },
-	{ "sfiii3-simm4.0",					0x200000, 0x091fd5ba, BRF_GRA },
-	{ "sfiii3-simm4.1",					0x200000, 0x0bca8917, BRF_GRA },
-	{ "sfiii3-simm4.2",					0x200000, 0xa0fd578b, BRF_GRA },
-	{ "sfiii3-simm4.3",					0x200000, 0x4bf8c699, BRF_GRA },
-	{ "sfiii3-simm4.4",					0x200000, 0x137b8785, BRF_GRA },
-	{ "sfiii3-simm4.5",					0x200000, 0x4fb70671, BRF_GRA },
-	{ "sfiii3-simm4.6",					0x200000, 0x832374a4, BRF_GRA },
-	{ "sfiii3-simm4.7",					0x200000, 0x1c88576d, BRF_GRA },
-	{ "sfiii3-simm5.0",					0x200000, 0xc67d9190, BRF_GRA },
-	{ "sfiii3-simm5.1",					0x200000, 0x6cb79868, BRF_GRA },
-	{ "sfiii3-simm5.2",					0x200000, 0xdf69930e, BRF_GRA },
-	{ "sfiii3-simm5.3",					0x200000, 0x333754e0, BRF_GRA },
-	{ "sfiii3-simm5.4",					0x200000, 0x78f6d417, BRF_GRA },
-	{ "sfiii3-simm5.5",					0x200000, 0x8ccad9b1, BRF_GRA },
-	{ "3rd-simm5.6",					0x200000, 0x7fffb6d4, BRF_GRA },
-	{ "3rd-simm5.7",					0x200000, 0x2dfcd4a6, BRF_GRA },
-	{ "sfiii3-simm6.0",					0x200000, 0x8da69042, BRF_GRA },
-	{ "sfiii3-simm6.1",					0x200000, 0x1c8c7ac4, BRF_GRA },
-	{ "sfiii3-simm6.2",					0x200000, 0xa671341d, BRF_GRA },
-	{ "sfiii3-simm6.3",					0x200000, 0x1a990249, BRF_GRA },
-	{ "sfiii3-simm6.4",					0x200000, 0x20cb39ac, BRF_GRA },
-	{ "sfiii3-simm6.5",					0x200000, 0x5f844b2f, BRF_GRA },
-	{ "sfiii3-simm6.6",					0x200000, 0x450e8d28, BRF_GRA },
-	{ "sfiii3-simm6.7",					0x200000, 0xcc5f4187, BRF_GRA },
-	{ "sfiii3-simm6.7",					0x200000, 0xcc5f4187, BRF_GRA },
 	{ "10bh.10",					0x200000, 0xb18be430, BRF_GRA },
 	{ "20.20",					0x200000, 0x5ca8faba, BRF_ESS | BRF_PRG },
 	{ "30.30",					0x200000, 0xb37cf960, BRF_ESS | BRF_PRG },
@@ -2115,45 +2074,11 @@ struct BurnDriver BurnDrvSfiii3bh = {
 
 
 // ----------------------------------------------------
-// Street Fighter III 2nd Impact: Giant Attack (Boss Hack)
+// Street Fighter III 2nd Impact: Giant Attack (Boss Hack by Yumeji)
 // ----------------------------------------------------
 
 static struct BurnRomInfo sfiii2bhRomDesc[] = {
 	
-	{ "sfiii3_japan_nocd.29f400.u2",	0x080000, 0x1edc6366, BRF_ESS | BRF_BIOS },	// SH-2 Bios
-
-	{ "sfiii2-simm1.0",			0x200000, 0x2d666f0b, BRF_ESS | BRF_PRG },
-	{ "sfiii2-simm1.1",			0x200000, 0x2a3a8ef6, BRF_ESS | BRF_PRG },
-	{ "sfiii2-simm1.2",			0x200000, 0x161d2206, BRF_ESS | BRF_PRG },
-	{ "sfiii2-simm1.3",			0x200000, 0x87ded8a3, BRF_ESS | BRF_PRG },
-	{ "sfiii2-simm2.0",			0x200000, 0x94a4ce0f, BRF_ESS | BRF_PRG },
-	{ "sfiii2-simm2.1",			0x200000, 0x67585033, BRF_ESS | BRF_PRG },
-	{ "sfiii2-simm2.2",			0x200000, 0xfabffcd5, BRF_ESS | BRF_PRG },
-	{ "sfiii2-simm2.3",			0x200000, 0x623c09ca, BRF_ESS | BRF_PRG },
-	{ "sfiii2-simm3.0",			0x200000, 0xdab2d766, BRF_GRA },
-	{ "sfiii2-simm3.1",			0x200000, 0x1f2aa34b, BRF_GRA },
-	{ "sfiii2-simm3.2",			0x200000, 0x6f1a04eb, BRF_GRA },
-	{ "sfiii2-simm3.3",			0x200000, 0xe05ef205, BRF_GRA },
-	{ "sfiii2-simm3.4",			0x200000, 0xaffb074f, BRF_GRA },
-	{ "sfiii2-simm3.5",			0x200000, 0x6962872e, BRF_GRA },
-	{ "sfiii2-simm3.6",			0x200000, 0x6eed87de, BRF_GRA },
-	{ "sfiii2-simm3.7",			0x200000, 0xe18f479e, BRF_GRA },
-	{ "sfiii2-simm4.0",			0x200000, 0x764c2503, BRF_GRA },
-	{ "sfiii2-simm4.1",			0x200000, 0x3e16af6e, BRF_GRA },
-	{ "sfiii2-simm4.2",			0x200000, 0x215705e6, BRF_GRA },
-	{ "sfiii2-simm4.3",			0x200000, 0xe30cbd9c, BRF_GRA },
-	{ "sfiii2-simm4.4",			0x200000, 0x4185ded9, BRF_GRA },
-	{ "sfiii2-simm4.5",			0x200000, 0x4e8db013, BRF_GRA },
-	{ "sfiii2-simm4.6",			0x200000, 0x08df48ce, BRF_GRA },
-	{ "sfiii2-simm4.7",			0x200000, 0xbb8f80a5, BRF_GRA },
-	{ "sfiii2-simm5.0",			0x200000, 0xebdc4787, BRF_GRA },
-	{ "sfiii2-simm5.1",			0x200000, 0x6b7c550e, BRF_GRA },
-	{ "sfiii2-simm5.2",			0x200000, 0x56ff8c50, BRF_GRA },
-	{ "sfiii2-simm5.3",			0x200000, 0x3f2ac3e9, BRF_GRA },
-	{ "sfiii2-simm5.4",			0x200000, 0x48cda50e, BRF_GRA },
-	{ "sfiii2-simm5.5",			0x200000, 0x520c0af6, BRF_GRA },
-	{ "sfiii2-simm5.6",			0x200000, 0x2edc5986, BRF_GRA },
-	{ "sfiii2-simm5.7",			0x200000, 0x93ffa199, BRF_GRA },
 	{ "10bh.10",			0x200000, 0x503d6401, BRF_ESS | BRF_PRG }
 	{ "20.20",			0x200000, 0x38090460, BRF_ESS | BRF_PRG }
 	{ "30.31",			0x200000, 0x77c197c0, BRF_ESS | BRF_PRG }

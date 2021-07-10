@@ -783,9 +783,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 		}
 		if (strcmp("Brake", description) == 0) {
 			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 3, RETRO_DEVICE_ID_JOYPAD_L2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
-		}
-		// scross uses digital for Brake
-		if (strcmp("Brake", description) == 0) {
+			// scross uses digital for Brake
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L2, description);
 		}
 		if (strcmp("Gear", description) == 0) {
@@ -1321,13 +1319,27 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 
 	// Ground Effects / Super Ground Effects
 	// WEC Le Mans 24
+	// Cisco Heat
+	// Big Run
+	// Grand Prix Star
+	// F-1 Grand Prix Star II
 	if ((parentrom && strcmp(parentrom, "groundfx") == 0) ||
 		(drvname && strcmp(drvname, "groundfx") == 0) ||
 		(parentrom && strcmp(parentrom, "wecleman") == 0) ||
-		(drvname && strcmp(drvname, "wecleman") == 0)
+		(drvname && strcmp(drvname, "wecleman") == 0) ||
+		(parentrom && strcmp(parentrom, "cischeat") == 0) ||
+		(drvname && strcmp(drvname, "cischeat") == 0) ||
+		(parentrom && strcmp(parentrom, "bigrun") == 0) ||
+		(drvname && strcmp(drvname, "bigrun") == 0) ||
+		(parentrom && strcmp(parentrom, "f1gpstar") == 0) ||
+		(drvname && strcmp(drvname, "f1gpstar") == 0) ||
+		(parentrom && strcmp(parentrom, "f1gpstr2") == 0) ||
+		(drvname && strcmp(drvname, "f1gpstr2") == 0)
 	) {
 		if (strcmp("Accelerator", description) == 0) {
 			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_JOYPAD_R2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
+			// cischeat uses digital for accelerator
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R2, description);
 		}
 		if (strcmp("Brake", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L2, description);
@@ -1340,6 +1352,9 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 		}
 		if (strcmp("Gear Shift", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_B, description);
+		}
+		if (strcmp("Horn", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);
 		}
 	}
 

@@ -1229,6 +1229,22 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ballz3dp1" cloneof="ballz3d" romof="ballz3d">
+		<description>Ballz 3D (prototype 199409xx)</description>
+		<year>1994</year>
+		<manufacturer>Accolade</manufacturer>
+		<rom name="ballz.32d3.bin" size="2097152" crc="d349ab90"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ballz3dp2" cloneof="ballz3d" romof="ballz3d">
+		<description>Ballz 3D (USA, prototype 199406xx)</description>
+		<year>1994</year>
+		<manufacturer>Accolade</manufacturer>
+		<rom name="ballz 3d - fighting at its ballziest (june prototype).bin" size="2097152" crc="c89ad87e"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="baoxiao">
 		<description>Bao Xiao San Guo</description>
 		<year>199?</year>
@@ -1806,10 +1822,18 @@
 		<driver status="good"/>
 	</game>
 	<game name="biohazrbs" cloneof="biohazrb" romof="biohazrb">
-		<description>Bio Hazard Battle (Hack, Spanish)</description>
+		<description>Bio Hazard Battle (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="bio hazard battle (hack, spanish).bin" size="1048576" crc="5a025101"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="biohazrbp1" cloneof="biohazrb" romof="biohazrb">
+		<description>Bio Hazard Battle (Prototype)</description>
+		<year>1992</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="bio hazard battle (prototype).bin" size="1048576" crc="4f19a73d"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4053,6 +4077,14 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="darwinp" cloneof="darwin" romof="darwin">
+		<description>Darwin 4081 (Prototype, 19900221)</description>
+		<year>1990</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="darwin 4081 (prototype - feb 21, 1990).bin" size="524288" crc="db68d1ac"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="dashdesp1" cloneof="dashdes" romof="dashdes">
 		<description>Dashin' Desperadoes (Euro, Prototype)</description>
 		<year>1993</year>
@@ -4260,6 +4292,14 @@
 		<rom name="demolition man (usa) (beta).bin" size="2097152" crc="57ffad7a"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="preliminary"/>
+	</game>
+	<game name="asteborg">
+		<description>Demons of Asteborg (HB, Demo) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>NeoFID Studios</manufacturer>
+		<rom name="Demons of Asteborg DEMO (2020)(Neofid Studios).bin" size="3407872" crc="8163415e"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
 	</game>
 	<game name="desrtdem">
 		<description>Desert Demolition (Euro, USA)</description>
@@ -4566,7 +4606,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jungles" cloneof="jungle" romof="jungle">
-		<description>Disney's The Jungle Book (Hack, Spanish)</description>
+		<description>Disney's The Jungle Book (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="disney's the jungle book (hack, spanish).bin" size="2097152" crc="5c4a909c"/>
@@ -4578,6 +4618,14 @@
 		<year>1994</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="jungle book, the (usa).bin" size="2097152" crc="3fb6d92e"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="junglep" cloneof="jungle" romof="jungle">
+		<description>Disney's The Jungle Book (WCES 1994 prototype)</description>
+		<year>1994</year>
+		<manufacturer>Virgin Interactive</manufacturer>
+		<rom name="the jungle book (wces 1994 prototype).bin" size="1048576" crc="20b97d87"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -6509,7 +6557,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="glocs" cloneof="gloc" romof="gloc">
-		<description>G-Loc Air Battle (Hack, Spanish)</description>
+		<description>G-Loc Air Battle (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="g-loc air battle (hack, spanish).bin" size="1048576" crc="dc326396"/>
@@ -6565,7 +6613,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ggrounds" cloneof="gground" romof="gground">
-		<description>Gain Ground (Hack, Spanish)</description>
+		<description>Gain Ground (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="gain ground (hack, spanish).bin" size="524288" crc="eb5e835c"/>
@@ -15243,11 +15291,19 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ship">
+	<game name="ship1" cloneof="ship" romof="ship">
 		<description>Ship (Prototype)</description>
 		<year>199?</year>
 		<manufacturer>Technopop</manufacturer>
 		<rom name="ship (prototype).bin" size="131072" crc="4cdc9f16"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ship">
+		<description>Ship (Visitor Prototype)</description>
+		<year>199?</year>
+		<manufacturer>Technopop</manufacturer>
+		<rom name="ship (visitor prototype).bin" size="262144" crc="852b5511"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -16049,11 +16105,35 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="sonic2p11" cloneof="sonic2" romof="sonic2">
+		<description>Sonic the Hedgehog 2 (CENSOR Prototype)</description>
+		<year>1992</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="sonic the hedgehog 2 (censor prototype).bin" size="1048576" crc="5667eced"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sonic2p2" cloneof="sonic2" romof="sonic2">
 		<description>Sonic the Hedgehog 2 (Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic the hedgehog 2 (prototype).bin" size="1048576" crc="eea21b5c"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sonic2p10" cloneof="sonic2" romof="sonic2">
+		<description>Sonic the Hedgehog 2 (Prototype, 19920821)</description>
+		<year>1992</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="sonic the hedgehog 2 (prototype - aug 21, 1992).bin" size="1048576" crc="370b3ce5"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sonic2p9" cloneof="sonic2" romof="sonic2">
+		<description>Sonic the Hedgehog 2 (Prototype, 19920918)</description>
+		<year>1992</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="sonic the hedgehog 2 (prototype - sep 14, 1992).bin" size="1048576" crc="0be8afa7"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -16126,6 +16206,22 @@
 		<year>1994?</year>
 		<manufacturer>&lt;unlicensed&gt;</manufacturer>
 		<rom name="sonic the hedgehog 3 (pirate).bin" size="2097152" crc="c818f6fd"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sonic3p2" cloneof="sonic3" romof="sonic3">
+		<description>Sonic the Hedgehog 3 (Prototype, 19931103)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="sonic the hedgehog 3 (prototype - nov 3, 1993).bin" size="2097152" crc="e4a16a49"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sonic3p1" cloneof="sonic3" romof="sonic3">
+		<description>Sonic the Hedgehog 3 (Prototype, 19931120)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="sonic the hedgehog 3 (prototype - nov 20, 1993).bin" size="2097152" crc="ebc0af69"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -22827,10 +22923,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="xenocrisis">
-		<description>Xeno Crisis (HB, USA) [Homebrew]</description>
+		<description>Xeno Crisis (HB, World) [Homebrew, Multi-Language]</description>
 		<year>2019</year>
 		<manufacturer>Bitmap Bureau</manufacturer>
-		<rom name="Xenocrises.bin" size="4194304" crc="ac5f4cca"/>
+		<rom name="Xeno Crisis.bin" size="4194304" crc="ac5f4cca"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

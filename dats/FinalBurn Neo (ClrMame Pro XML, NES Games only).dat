@@ -1252,6 +1252,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="batterychad">
+		<description>Battery Chad - Shock the World (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Formula Fanboy</manufacturer>
+		<rom name="Battery Chad - Shock the World (2019)(Formula Fanboy).nes" size="524304" crc="030c4355"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="battlebaseball">
 		<description>Battle Baseball (Japan)</description>
 		<year>1989?</year>
@@ -4988,6 +4996,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="frog">
+		<description>Frog (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Boston Breams</manufacturer>
+		<rom name="Frog (2020)(Boston Breams).nes" size="393232" crc="06d96b55"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="frombelow">
 		<description>From Below (HB, v1.0) [Homebrew]</description>
 		<year>2020</year>
@@ -5897,6 +5913,14 @@
 		<year>1991</year>
 		<manufacturer>GameTek</manufacturer>
 		<rom name="Harlem Globetrotters (USA).nes" size="262160" crc="43ddc8a3"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="harrydwarf">
+		<description>Harry Dwarf (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Byte-off</manufacturer>
+		<rom name="Harry Dwarf (2019)(Byte-off).nes" size="524304" crc="e2469697"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -11772,6 +11796,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="slowmole">
+		<description>Slow Mole (HB, v1.1) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Erik Rosenlund</manufacturer>
+		<rom name="Slow Mole v1.1 (2021)(Erik Rosenlund).nes" size="524304" crc="eadc4e8b"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="smashtvc" cloneof="smashtv" romof="smashtv">
 		<description>Smash T.V. (USA) - Castellano v1.0</description>
 		<year>1989 ?</year>
@@ -14777,6 +14809,14 @@
 		<year>1988</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Zelda II - The Adventure of Link (USA).nes" size="262160" crc="e3c788b0"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="zeldakong" cloneof="donkeykong" romof="donkeykong">
+		<description>Zelda Kong (HB, Global Hack) [Hack, Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Zero Meaning</manufacturer>
+		<rom name="Zelda Kong (2021)(Zero Meaning).nes" size="24592" crc="4c801a11"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

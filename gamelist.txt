@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17224 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17241 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1087,6 +1087,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_balloonmonster|  	| Balloon Monster (Unl)					| 		| 1992	| Gluk Video	| Miscellaneous	| 					|
 | msx_balloonpunch|  	| Balloon Punch						| 		| 1989	| Satico	| MSX		| 					|
 | md_ballz3d	|  	| Ballz 3D (Euro, USA)					| 		| 1994	| Accolade	| Sega Megadrive| 					|
+| md_ballz3dp1	|  	| Ballz 3D (prototype 199409xx)				| md_ballz3d	| 1994	| Accolade	| Sega Megadrive| 					|
+| md_ballz3dp2	|  	| Ballz 3D (USA, prototype 199406xx)			| md_ballz3d	| 1994	| Accolade	| Sega Megadrive| 					|
 | nes_baltron	|  	| Baltron (Japan)					| 		| 1986	| Toei Animation| Miscellaneous	| 					|
 | sms_balbalok	|  	| Baluba Balok (HB)					| 		| 2017	| MikGames	| Sega Master Sy| 					|
 | baluba	|  	| Baluba-louk no Densetsu (Japan)			| 		| 1986	| Able Corp, Ltd| Miscellaneous	| 					|
@@ -1211,6 +1213,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_btanukib	|  	| Batten Tanuki no Daibouken (Jpn, Alt)			| msx_btanuki	| 1986	| Tecno Soft	| MSX		| 					|
 | msx_btanuki	|  	| Batten Tanuki no Daibouken (Jpn, v1.03)		| 		| 1986	| Tecno Soft	| MSX		| 					|
 | gg_batterup	|  	| Batter Up (Euro, USA)					| 		| 1991	| Namco		| Sega Game Gear| 					|
+| nes_batterychad|  	| Battery Chad - Shock the World (HB)			| 		| 2019	| Formula Fanboy| Miscellaneous	| 					|
 | battlntsj	|  	| Battlantis (Japan, program code E)			| battlnts	| 1987	| Konami	| GX777		| 					|
 | battlntsa	|  	| Battlantis (program code F)				| battlnts	| 1987	| Konami	| GX777		| 					|
 | battlnts	|  	| Battlantis (program code G)				| 		| 1987	| Konami	| GX777		| 					|
@@ -1447,6 +1450,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_biohazard	|  	| Bio Hazard (T-Eng)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_biohazrb	|  	| Bio Hazard Battle (Euro, USA)				| 		| 1992	| Sega		| Sega Megadrive| 					|
 | md_biohazrbs	|  	| Bio Hazard Battle (Hack, Spanish)			| md_biohazrb	| 2018	| Sega		| Sega Megadrive| 					|
+| md_biohazrbp1	|  	| Bio Hazard Battle (Prototype)				| md_biohazrb	| 1992	| Sega		| Sega Megadrive| 					|
 | md_biohazrbp	|  	| Bio Hazard Battle (USA, Prototype)			| md_biohazrb	| 1992	| Sega		| Sega Megadrive| 					|
 | fds_biomirbokupa|  	| Bio Miracle Bokutte Upa (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_biomirbokupa|  	| Bio Miracle Bokutte Upa (Japan)			| 		| 1993	| Konami	| Miscellaneous	| 					|
@@ -3265,6 +3269,7 @@ This list contains all games supported by FinalBurn Neo.
 | tg_darkwing	|  	| Darkwing Duck						| 		| 1992	| TTI		| TurboGrafx 16	| 					|
 | darwin	|  	| Darwin 4078 (Japan)					| 		| 1986	| Data East Corp| Miscellaneous	| 					|
 | md_darwin	|  	| Darwin 4081 (Jpn, Kor)				| 		| 1990	| Sega		| Sega Megadrive| 					|
+| md_darwinp	|  	| Darwin 4081 (Prototype, 19900221)			| md_darwin	| 1990	| Sega		| Sega Megadrive| 					|
 | nes_dashgalinalias|  	| Dash Galaxy in the Alien Asylum (USA)			| 		| 1990	| Data East	| Miscellaneous	| 					|
 | nes_dashyarou	|  	| Dash Yarou (Japan)					| 		| 1990	| Visco		| Miscellaneous	| 					|
 | md_dashdesp1	|  	| Dashin' Desperadoes (Euro, Prototype)			| md_dashdes	| 1993	| Data East	| Sega Megadrive| 					|
@@ -3393,6 +3398,7 @@ This list contains all games supported by FinalBurn Neo.
 | demonwld3	|  	| Demon's World / Horror Story (set 4)			| demonwld	| 1989	| Toaplan	| Toaplan BCU-2 | 					|
 | demonwld4	|  	| Demon's World / Horror Story (set 5)			| demonwld	| 1989	| Toaplan	| Toaplan BCU-2 | 					|
 | msx_demonia	|  	| Demonia						| 		| 1986	| Microids	| MSX		| 					|
+| md_asteborg	|  	| Demons of Asteborg (HB, Demo)				| 		| 2020	| NeoFID Studios| Sega Megadrive| 					|
 | nes_dengeki	|  	| Dengeki - Big Bang! (Japan)				| nes_clashatdem| 1989?	| Nintendo	| Miscellaneous	| 					|
 | spec_denizen	|  	| Denizen						| 		| 1988	| Players	| ZX Spectrum	| 					|
 | denjinmk	|  	| Denjin Makai (set 1)					| 		| 1994	| Winkysoft (Ban| Miscellaneous	| 					|
@@ -3580,6 +3586,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_jungle	|  	| Disney's The Jungle Book (Euro)			| 		| 1994	| Virgin Interac| Sega Megadrive| 					|
 | md_jungles	|  	| Disney's The Jungle Book (Hack, Spanish)		| md_jungle	| 2018	| Virgin Interac| Sega Megadrive| 					|
 | md_jungleu	|  	| Disney's The Jungle Book (USA)			| md_jungle	| 1994	| Virgin Interac| Sega Megadrive| 					|
+| md_junglep	|  	| Disney's The Jungle Book (WCES 1994 prototype)	| md_jungle	| 1994	| Virgin Interac| Sega Megadrive| 					|
 | sms_lionkingc	|  	| Disney's The Lion King (Euro, Bra) - Castellano v1.0	| sms_lionking	| 2021	| Sega		| Sega Master Sy| 					|
 | sms_lionking	|  	| Disney's The Lion King (Euro, Bra)			| 		| 1994	| Virgin Interac| Sega Master Sy| 					|
 | gg_lionkingp9	|  	| Disney's The Lion King (Prototype, 19940803)		| gg_lionking	| 1994	| Virgin Interac| Sega Game Gear| 					|
@@ -5088,6 +5095,7 @@ This list contains all games supported by FinalBurn Neo.
 | fspiderb	|  	| Frog & Spiders (bootleg?)				| 		| 1981	| Taito Corporat| Miscellaneous	| 					|
 | frogf		|  	| Frog (Falcon bootleg)					| frogger	| 1981	| bootleg	| Galaxian	| 					|
 | frogg		|  	| Frog (Galaxian hardware)				| frogger	| 1981	| bootleg	| Galaxian	| 					|
+| nes_frog	|  	| Frog (HB)						| 		| 2020	| Boston Breams	| Miscellaneous	| 					|
 | msx_frog	|  	| Frog (Spa)						| 		| 1985	| Advance	| MSX		| 					|
 | froggers	|  	| Frog							| frogger	| 1981	| bootleg	| Galaxian	| 					|
 | cps1frog	|  	| Frog Feast (CPS-1)					| 		| 2006	| Rastersoft (Ho| CPS1		| 					|
@@ -6119,6 +6127,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_hardball	|  	| HardBall! (USA)					| 		| 1991	| Ballistic	| Sega Megadrive| 					|
 | harem		|  	| Harem							| 		| 1983	| I.G.R.	| Galaxian	| 					|
 | nes_harleglo	|  	| Harlem Globetrotters (USA)				| 		| 1991	| GameTek	| Miscellaneous	| 					|
+| nes_harrydwarf|  	| Harry Dwarf (HB)					| 		| 2019	| Byte-off	| Miscellaneous	| 					|
 | md_hpotter	|  	| Harry Potter (Rus)					| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | md_hpotter2	|  	| Harry Potter and the Chamber of Secrets (Rus)		| md_mickmack	| 199?	| <unknown>	| Sega Megadrive| 					|
 | msx_showjumph	|  	| Harvey Smith's Showjumper (Euro, Hacked Protection)	| 		| 1985	| Software Proje| MSX		| 					|
@@ -12379,7 +12388,8 @@ This list contains all games supported by FinalBurn Neo.
 | md_shinobi3u	|  	| Shinobi III - Return of the Ninja Master (USA)	| md_shinobi3	| 1993	| Sega		| Sega Megadrive| 					|
 | md_shinobi3umj|  	| Shinobi III - Return of the Ninja Master (USA, MIJET H| md_shinobi3	| 1993	| Sega		| Sega Megadrive| 					|
 | pce_shinobi	|  	| Shinobi						| 		| 1989	| Asmik		| PC Engine	| 					|
-| md_ship	|  	| Ship (Prototype)					| 		| 199?	| Technopop	| Sega Megadrive| 					|
+| md_ship1	|  	| Ship (Prototype)					| md_ship	| 199?	| Technopop	| Sega Megadrive| 					|
+| md_ship	|  	| Ship (Visitor Prototype)				| 		| 199?	| Technopop	| Sega Megadrive| 					|
 | shippumd	|  	| Shippu Mahou Daisakusen - Kingdom Grandprix		| kingdmgp	| 1994	| Raizing / 8ing| Toaplan GP9001| 					|
 | pce_shiryo	|  	| Shiryou Sensen					| 		| 1989	| Victor Interac| PC Engine	| 					|
 | shisen	|  	| Shisensho - Joshiryo-Hen (Japan)			| matchit	| 1989	| Tamtex	| Miscellaneous	| 					|
@@ -12611,6 +12621,7 @@ This list contains all games supported by FinalBurn Neo.
 | slithera	|  	| Slither (set 2)					| slither	| 1982	| Century II	| Miscellaneous	| Press 'P2 Start' to exit settings scre|
 | cv_slither	|  	| Slither						| 		| 1983	| Coleco	| ColecoVision	| 					|
 | chf_slotmchn	|  	| Slot Machine						| 		| 1980	| Zircon	| Channel F	| 					|
+| nes_slowmole	|  	| Slow Mole (HB, v1.1)					| 		| 2021	| Erik Rosenlund| Miscellaneous	| 					|
 | cv_slurpy	|  	| Slurpy						| 		| 1984	| Xonox		| ColecoVision	| 					|
 | slyspy2	|  	| Sly Spy (US revision 2)				| secretag	| 1989	| Data East USA	| DEC0		| 					|
 | slyspy3	|  	| Sly Spy (US revision 3)				| secretag	| 1989	| Data East USA	| DEC0		| 					|
@@ -12853,9 +12864,12 @@ This list contains all games supported by FinalBurn Neo.
 | md_sonic2p5	|  	| Sonic the Hedgehog 2 (Beta 6, 19920922, 19.42)	| md_sonic2	| 1992	| Sega		| Sega Megadrive| 					|
 | md_sonic2p4	|  	| Sonic the Hedgehog 2 (Beta 7, 19920924, 09.26)	| md_sonic2	| 1992	| Sega		| Sega Megadrive| 					|
 | md_sonic2p3	|  	| Sonic the Hedgehog 2 (Beta 8, 19920924, 19.27)	| md_sonic2	| 1992	| Sega		| Sega Megadrive| 					|
+| md_sonic2p11	|  	| Sonic the Hedgehog 2 (CENSOR Prototype)		| md_sonic2	| 1992	| Sega		| Sega Megadrive| 					|
 | sms_sonic2	|  	| Sonic The Hedgehog 2 (Euro, Bra, Kor, v1)		| 		| 1992	| Sega		| Sega Master Sy| 					|
 | sms_sonic2a	|  	| Sonic The Hedgehog 2 (Euro, Bra, v0)			| sms_sonic2	| 1992	| Sega		| Sega Master Sy| 					|
 | md_sonic2p2	|  	| Sonic the Hedgehog 2 (Prototype)			| md_sonic2	| 1992	| Sega		| Sega Megadrive| 					|
+| md_sonic2p10	|  	| Sonic the Hedgehog 2 (Prototype, 19920821)		| md_sonic2	| 1992	| Sega		| Sega Megadrive| 					|
+| md_sonic2p9	|  	| Sonic the Hedgehog 2 (Prototype, 19920918)		| md_sonic2	| 1992	| Sega		| Sega Megadrive| 					|
 | gg_sonic2d	|  	| Sonic The Hedgehog 2 (Rolling Demo)			| gg_sonic2	| 1992	| Sega		| Sega Game Gear| 					|
 | gg_sonic2	|  	| Sonic The Hedgehog 2 (World)				| 		| 1992	| Sega		| Sega Game Gear| 					|
 | md_sonic2a	|  	| Sonic the Hedgehog 2 (World)				| md_sonic2	| 1992	| Sega		| Sega Megadrive| 					|
@@ -12867,6 +12881,8 @@ This list contains all games supported by FinalBurn Neo.
 | md_sonic3	|  	| Sonic the Hedgehog 3 (Euro)				| 		| 1994	| Sega		| Sega Megadrive| 					|
 | md_sonic3j	|  	| Sonic the Hedgehog 3 (Jpn, Kor)			| md_sonic3	| 1994	| Sega		| Sega Megadrive| 					|
 | md_sonic3pir	|  	| Sonic the Hedgehog 3 (Pirate)				| md_sonic3	| 1994?	| <unlicensed>	| Sega Megadrive| 					|
+| md_sonic3p2	|  	| Sonic the Hedgehog 3 (Prototype, 19931103)		| md_sonic3	| 1994	| Sega		| Sega Megadrive| 					|
+| md_sonic3p1	|  	| Sonic the Hedgehog 3 (Prototype, 19931120)		| md_sonic3	| 1994	| Sega		| Sega Megadrive| 					|
 | md_sonic3u	|  	| Sonic the Hedgehog 3 (USA)				| md_sonic3	| 1994	| Sega		| Sega Megadrive| 					|
 | md_s3comp	|  	| Sonic the Hedgehog 3 Complete (World, Hack)		| md_sks3	| 2013	| Tiddles	| Sega Megadrive| 					|
 | md_sonic31	|  	| Sonic the Hedgehog 3 in 1 (World, Hack)		| 		| 2011	| vladikcomper	| Sega Megadrive| 					|
@@ -16924,7 +16940,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_xecutorremix|  	| Xecutor - Remix					| 		| 1987	| ACE Software	| ZX Spectrum	| 					|
 | spec_xecutor	|  	| Xecutor						| 		| 1987	| ACE Software	| ZX Spectrum	| 					|
 | spec_xeno	|  	| Xeno (48K)						| 		| 1986	| A'n'F		| ZX Spectrum	| 					|
-| md_xenocrisis	|  	| Xeno Crisis (HB, USA)					| 		| 2019	| Bitmap Bureau	| Sega Megadrive| 					|
+| md_xenocrisis	|  	| Xeno Crisis (HB, World)				| 		| 2019	| Bitmap Bureau	| Sega Megadrive| Multi-Language			|
 | spec_xeno2	|  	| Xeno II (16K)						| 		| 1983	| Anirog	| ZX Spectrum	| 					|
 | spec_xenon	|  	| Xenon (48K)						| 		| 1988	| Melbourne Hous| ZX Spectrum	| 					|
 | msx_xenon	|  	| Xenon (Spa)						| 		| 1988	| Dro Soft	| MSX		| 					|
@@ -17105,6 +17121,7 @@ This list contains all games supported by FinalBurn Neo.
 | zektor	|  	| Zektor (revision B)					| 		| 1982	| Sega		| G80 Vector	| 					|
 | nes_zeldaiic	|  	| Zelda II - The Adventure of Link (Europe) (Rev 2) - Ca| nes_zeldaii	| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_zeldaii	|  	| Zelda II - The Adventure of Link (USA)		| 		| 1988	| Nintendo	| Miscellaneous	| 					|
+| nes_zeldakong	|  	| Zelda Kong (HB, Global Hack)				| nes_donkeykong| 2021	| Zero Meaning	| Miscellaneous	| 					|
 | fds_zeldanodenj|  	| Zelda no Densetsu - The Hyrule Fantasy (Japan)	| fds_zeldanoden| 1989?	| Nintendo	| Miscellaneous	| 					|
 | fds_zeldanoden|  	| Zelda no Densetsu - The Hyrule Fantasy (T-Eng)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | msx_baduk	|  	| Zemmix Baduk Gyosil (Kor)				| 		| 19??	| Unknown	| MSX		| 					|

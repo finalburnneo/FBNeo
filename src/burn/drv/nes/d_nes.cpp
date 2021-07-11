@@ -17631,7 +17631,7 @@ struct BurnDriver BurnDrvnes_frog = {
 };
 
 static struct BurnRomInfo nes_harrydwarfRomDesc[] = {
-	{ "Harry Dwarf (2019)(Byte-off).nes",          524304, 0xe2469697, BRF_ESS | BRF_PRG },
+	{ "Harry Dwarf (2019)(Byte-off).nes",          524304, 0xf51e13d4, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_harrydwarf)

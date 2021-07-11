@@ -2717,8 +2717,8 @@ static INT32 DrvFrame()
 		}
 	}
 
-	nExtraCycles[0] = nCyclesDone[0] - (INT32)((double)nCyclesTotal[0] * nBurnCPUSpeedAdjust / 0x0100);
-	nExtraCycles[1] = nCyclesDone[1] - (INT32)((double)nCyclesTotal[1] * nBurnCPUSpeedAdjust / 0x0100);
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesToDo[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesToDo[1];
 	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
 	nExtraCycles[3] = nCyclesDone[3] - nCyclesTotal[3];
 

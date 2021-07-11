@@ -376,6 +376,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="alienseu" romof="msx">
+		<description>Aliens (Euro) [Press Enter to move through the doors]</description>
+		<year>1987</year>
+		<manufacturer>Mr. Micro - Electric Dreams</manufacturer>
+		<rom name="Aliens (1987)(Electric Dreams)[BLOAD'CAS-',R].cas" size="54825" crc="0f28dc37"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="aliens" romof="msx">
 		<description>Aliens - Alien 2 (Jpn)</description>
 		<year>1987</year>
@@ -6379,6 +6390,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="indy3" romof="msx">
+		<description>Indiana Jones and the Last Crusade (Spa) [Enable Key-Clicker (DIPswitches) for 1-bit DAC sound effects]</description>
+		<year>1989</year>
+		<manufacturer>U.S. Gold - Erbe Software</manufacturer>
+		<rom name="Indiana Jones and the Last Crusade (1989)(Erbe Software)(es)(Side A)[RUN'CAS-'].cas" size="41970" crc="2204d60c"/>
+		<rom name="Indiana Jones and the Last Crusade (1989)(Erbe Software)(es)(Side B)[RUN'CAS-'].cas" size="104154" crc="c6814441"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="indy" romof="msx">
 		<description>Indiana Jones and the Temple of Doom (Euro)</description>
 		<year>1987</year>
@@ -8854,6 +8877,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="moonwalker" romof="msx">
+		<description>Moonwalker - The Computer Game (Euro)</description>
+		<year>1989</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Moonwalker (1989)(US Gold)[RUN'CAS-'].cas" size="236833" crc="7bbf605f"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mopirang" romof="msx">
 		<description>Mopiranger (Jpn)</description>
 		<year>1985</year>
@@ -10948,6 +10982,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="raven" romof="msx">
+		<description>Raven (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Micha Mulder</manufacturer>
+		<rom name="Raven (2021)(Micha Mulder).rom" size="16384" crc="456435f0"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="realtenn" romof="msx">
 		<description>Real Tennis (Jpn)</description>
 		<year>1983</year>
@@ -11924,6 +11969,17 @@
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="Soviet (1990)(Opera Soft)(Side A)[BLOAD'CAS-',R].cas" size="102992" crc="eac0c700"/>
 		<rom name="Soviet (1990)(Opera Soft)(Side B)[BLOAD'CAS-',R].cas" size="119128" crc="183dcfb4"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sp8inv" romof="msx">
+		<description>Sp8 Invaders (HB) [Homebrew, Enable Key-Clicker (DIPswitches) for 1-bit DAC sound effects]</description>
+		<year>2009</year>
+		<manufacturer>Dioniso</manufacturer>
+		<rom name="Sp8 Invaders (2009)(Dioniso).rom" size="8192" crc="a327b2de"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

@@ -5920,7 +5920,7 @@
 		<description>Harry Dwarf (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Byte-off</manufacturer>
-		<rom name="Harry Dwarf (2019)(Byte-off).nes" size="524304" crc="e2469697"/>
+		<rom name="Harry Dwarf (2019)(Byte-off).nes" size="524304" crc="f51e13d4"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

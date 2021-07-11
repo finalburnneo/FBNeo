@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17241 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17250 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -521,6 +521,7 @@ This list contains all games supported by FinalBurn Neo.
 | alien3u	|  	| Alien3: The Gun (US, Rev A)				| alien3	| 1993	| Sega		| System 32	| 					|
 | alien3	|  	| Alien3: The Gun (World)				| 		| 1993	| Sega		| System 32	| 					|
 | aliensa	|  	| Aliens (Asia)						| aliens	| 1990	| Konami	| GX875		| 					|
+| msx_alienseu	|  	| Aliens (Euro)						| 		| 1987	| Mr. Micro - El| MSX		| Press Enter to move through the doors	|
 | aliensj	|  	| Aliens (Japan set 1)					| aliens	| 1990	| Konami	| GX875		| 					|
 | aliensj2	|  	| Aliens (Japan set 2)					| aliens	| 1990	| Konami	| GX875		| 					|
 | aliensu	|  	| Aliens (US set 1)					| aliens	| 1990	| Konami	| GX875		| 					|
@@ -4442,6 +4443,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_excitral	|  	| Exciting Rally - World Rally Championship (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | fds_excitsoc	|  	| Exciting Soccer - Konami Cup (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | exedexes	|  	| Exed Exes						| 		| 1985	| Capcom	| Miscellaneous	| 					|
+| exerionb	|  	| Exerion (bootleg)					| exerion	| 1983	| bootleg	| Miscellaneous	| 					|
 | sg1k_exerion	|  	| Exerion (Euro, Jpn)					| 		| 1983	| Sega		| Sega SG-1000	| 					|
 | nes_exerion	|  	| Exerion (Japan)					| 		| 1985	| Jaleco	| Miscellaneous	| 					|
 | msx_exerion	|  	| Exerion (Jpn)						| 		| 1984	| Jaleco	| MSX		| 					|
@@ -4449,9 +4451,11 @@ This list contains all games supported by FinalBurn Neo.
 | msx_exeriona	|  	| Exerion (Jpn, Alt)					| msx_exerion	| 1984	| Jaleco	| MSX		| 					|
 | msx_exerionk	|  	| Exerion (Kor)						| msx_exerion	| 198?	| Zemina	| MSX		| 					|
 | sg1k_exerionk	|  	| Exerion (Kor)						| sg1k_exerion	| 198?	| Samsung	| Sega SG-1000	| 					|
+| exeriont	|  	| Exerion (Taito)					| exerion	| 1983	| Jaleco (Taito | Miscellaneous	| 					|
 | sg1k_exeriont	|  	| Exerion (Tw)						| sg1k_exerion	| 1983?	| Aaronix	| Sega SG-1000	| 					|
 | msx_exerion2	|  	| Exerion II - Zorni (Jpn)				| 		| 1985	| Toshiba EMI	| MSX		| 					|
 | msx_exerion2a	|  	| Exerion II - Zorni (Jpn, Alt)				| msx_exerion2	| 1985	| Toshiba EMI	| MSX		| 					|
+| exerion	|  	| Exerion						| 		| 1983	| Jaleco	| Miscellaneous	| 					|
 | exerizerb	|  	| Exerizer (Japan) (bootleg)				| skyfox	| 1987	| Jaleco	| Miscellaneous	| 					|
 | exerizer	|  	| Exerizer (Japan)					| skyfox	| 1987	| Jaleco	| Miscellaneous	| 					|
 | md_exile	|  	| Exile (USA)						| 		| 1991	| Renovation	| Sega Megadrive| 					|
@@ -6568,6 +6572,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_indycrusp	|  	| Indiana Jones and the Last Crusade (Euro, Prototype)	| sms_indycrus	| 1990	| U.S. Gold	| Sega Master Sy| 					|
 | gg_indycrus	|  	| Indiana Jones and the Last Crusade (Euro, USA)	| 		| 1992	| U.S. Gold	| Sega Game Gear| 					|
 | md_indycruss	|  	| Indiana Jones and the Last Crusade (Hack, Spanish)	| md_indycrus	| 2018	| SU.S. Gold	| Sega Megadrive| 					|
+| msx_indy3	|  	| Indiana Jones and the Last Crusade (Spa)		| 		| 1989	| U.S. Gold - Er| MSX		| Enable Key-Clicker (DIPswitches) for 1|
 | nes_indiajonandlascrt|  	| Indiana Jones and the Last Crusade (USA) (Taito)	| nes_indiajonandlascr| 1991	| Taito		| Miscellaneous	| 					|
 | nes_indiajonandlascr|  	| Indiana Jones and the Last Crusade (USA) (UBI Soft)	| 		| 1993	| UBI Soft	| Miscellaneous	| 					|
 | md_indycrusu	|  	| Indiana Jones and the Last Crusade (USA)		| md_indycrus	| 1992	| U.S. Gold	| Sega Megadrive| 					|
@@ -6635,6 +6640,7 @@ This list contains all games supported by FinalBurn Neo.
 | iqblock	|  	| IQ-Block						| 		| 1993	| IGS		| Miscellaneous	| 					|
 | md_iraqwara	|  	| Iraq War 2003 (Alt)					| md_iraqwar	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_iraqwar	|  	| Iraq War 2003						| 		| 199?	| Tomsoft	| Sega Megadrive| 					|
+| irion		|  	| Irion							| exerion	| 1983	| bootleg	| Miscellaneous	| 					|
 | ironfort	|  	| Iron Fortress						| 		| 1998	| Eolith	| Miscellaneous	| 					|
 | ironhors	|  	| Iron Horse						| 		| 1986	| Konami	| GX560		| 					|
 | gg_ironman	|  	| Iron Man X-O Manowar in Heavy Metal (Euro, USA)	| 		| 1996	| Acclaim Entert| Sega Game Gear| 					|
@@ -8914,6 +8920,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_moonwalk	|  	| Moonwalker (Part 1 of 3) (48K)			| 		| 1989	| U.S. Gold	| ZX Spectrum	| 					|
 | spec_moonwalk2|  	| Moonwalker (Part 2 of 3) (48K)			| spec_moonwalk	| 1989	| U.S. Gold	| ZX Spectrum	| 					|
 | spec_moonwalk3|  	| Moonwalker (Part 3 of 3) (48K)			| spec_moonwalk	| 1989	| U.S. Gold	| ZX Spectrum	| 					|
+| msx_moonwalker|  	| Moonwalker - The Computer Game (Euro)			| 		| 1989	| U.S. Gold	| MSX		| 					|
 | moonwara	|  	| Moonwar (older)					| moonwar	| 1981	| Stern		| Galaxian	| 					|
 | moonwar	|  	| Moonwar						| 		| 1981	| Stern		| Galaxian	| 					|
 | cv_mopirang	|  	| Mopiranger (HB)					| 		| 2012	| Konami	| ColecoVision	| Published by Team Pixelboy		|
@@ -11401,6 +11408,7 @@ This list contains all games supported by FinalBurn Neo.
 | chf_ratmal	|  	| Rat' Mal (Ger)					| chf_hangman	| 197?	| SABA		| Channel F	| 					|
 | spec_ratatat	|  	| Rat-A-Tat (HB)					| 		| 2020	| JoeSoft	| ZX Spectrum	| 					|
 | msx_raththa	|  	| Rath-Tha (Spa)					| 		| 1989	| Positive	| MSX		| 					|
+| msx_raven	|  	| Raven (HB)						| 		| 2021	| Micha Mulder	| MSX		| 					|
 | rayforce	|  	| Ray Force (Ver 2.3A 1994/01/20)			| gunlock	| 1993	| Taito Corporat| Taito F3 Syste| 					|
 | rayforcej	|  	| Ray Force (Ver 2.3J 1994/01/20)			| gunlock	| 1993	| Taito Corporat| Taito F3 Syste| 					|
 | razmataz	|   NW	| Razzmatazz						| 		| 1983	| Sega		| Zaxxon	| 					|
@@ -12929,6 +12937,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_soviet	|  	| Soviet (Euro)						| 		| 1990	| Opera Soft	| MSX		| 					|
 | spec_sovietpart1|  	| Soviet (Part 1 of 2)					| 		| 1990	| Opera Soft	| ZX Spectrum	| 					|
 | spec_sovietpart2|  	| Soviet (Part 2 of 2)					| spec_sovietpart1| 1990	| Opera Soft	| ZX Spectrum	| 					|
+| msx_sp8inv	|  	| Sp8 Invaders (HB)					| 		| 2009	| Dioniso	| MSX		| Enable Key-Clicker (DIPswitches) for 1|
 | sg1k_spacearmb|  	| Space Armor (Jpn, v10, OMV)				| sg1k_spacearm	| 1984	| Tsukuda Origin| Sega SG-1000	| 					|
 | sg1k_spacearm	|  	| Space Armor (Jpn, v20, OMV)				| 		| 1984	| Tsukuda Origin| Sega SG-1000	| 					|
 | sg1k_spacearma|  	| Space Armor (Jpn, v20, OMV, Alt)			| sg1k_spacearm	| 1984	| Tsukuda Origin| Sega SG-1000	| 					|

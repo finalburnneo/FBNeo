@@ -525,6 +525,7 @@ DRV		BurnDrvAlien3j;
 DRV		BurnDrvAlien3u;
 DRV		BurnDrvAlien3;
 DRV		BurnDrvAliensa;
+DRV		BurnDrvMSX_alienseu;
 DRV		BurnDrvAliensj;
 DRV		BurnDrvAliensj2;
 DRV		BurnDrvAliensu;
@@ -4498,6 +4499,7 @@ DRV		BurnDrvExcthour;
 DRV		BurnDrvnes_excitral;
 DRV		BurnDrvfds_excitsoc;
 DRV		BurnDrvExedexes;
+DRV		BurnDrvExerionb;
 DRV		BurnDrvsg1k_exerion;
 DRV		BurnDrvnes_exerion;
 DRV		BurnDrvMSX_exerion;
@@ -4505,9 +4507,11 @@ DRV		BurnDrvMSX_exerionb;
 DRV		BurnDrvMSX_exeriona;
 DRV		BurnDrvMSX_exerionk;
 DRV		BurnDrvsg1k_exerionk;
+DRV		BurnDrvExeriont;
 DRV		BurnDrvsg1k_exeriont;
 DRV		BurnDrvMSX_exerion2;
 DRV		BurnDrvMSX_exerion2a;
+DRV		BurnDrvExerion;
 DRV		BurnDrvExerizrb;
 DRV		BurnDrvExerizer;
 DRV		BurnDrvmd_exile;
@@ -6648,6 +6652,7 @@ DRV		BurnDrvsms_indycrus;
 DRV		BurnDrvsms_indycrusp;
 DRV		BurnDrvgg_indycrus;
 DRV		BurnDrvmd_indycruss;
+DRV		BurnDrvMSX_indy3;
 DRV		BurnDrvnes_indiajonandlascrt;
 DRV		BurnDrvnes_indiajonandlascr;
 DRV		BurnDrvmd_indycrusu;
@@ -6719,6 +6724,7 @@ DRV		BurnDrvInvinco;			// No sound
 DRV		BurnDrvIqblock;
 DRV		BurnDrvmd_iraqwara;
 DRV		BurnDrvmd_iraqwar;
+DRV		BurnDrvIrion;
 DRV		BurnDrvIronfort;
 DRV		BurnDrvIronhors;
 DRV		BurnDrvgg_ironman;
@@ -9024,6 +9030,7 @@ DRV		BurnDrvcv_moonswpr;
 DRV		BurnSpecmoonwalk;
 DRV		BurnSpecmoonwalk2;
 DRV		BurnSpecmoonwalk3;
+DRV		BurnDrvMSX_moonwalker;
 DRV		BurnDrvMoonwara;
 DRV		BurnDrvMoonwar;
 DRV		BurnDrvcv_mopirang;
@@ -11549,6 +11556,7 @@ DRV		BurnDrvpce_rastan2;
 DRV		BurnDrvCHF_ratmal;
 DRV		BurnSpecRatatat;
 DRV		BurnDrvMSX_raththa;
+DRV		BurnDrvMSX_raven;
 DRV		BurnDrvRayforce;
 DRV		BurnDrvRayforcej;
 DRV		BurnDrvRazmataz;
@@ -13097,6 +13105,7 @@ DRV		BurnDrvmd_southia;
 DRV		BurnDrvMSX_soviet;
 DRV		BurnSpecsovietpart1;
 DRV		BurnSpecsovietpart2;
+DRV		BurnDrvMSX_sp8inv;
 DRV		BurnDrvsg1k_spacearmb;
 DRV		BurnDrvsg1k_spacearm;
 DRV		BurnDrvsg1k_spacearma;
@@ -18011,6 +18020,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAlien3u,			// Alien3: The Gun (US, Rev A)
 	&BurnDrvAlien3,				// Alien3: The Gun (World)
 	&BurnDrvAliensa,			// Aliens (Asia)
+	&BurnDrvMSX_alienseu,		// Aliens (Euro)
 	&BurnDrvAliensj,			// Aliens (Japan set 1)
 	&BurnDrvAliensj2,			// Aliens (Japan set 2)
 	&BurnDrvAliensu,			// Aliens (US set 1)
@@ -21984,6 +21994,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_excitral,		// Exciting Rally - World Rally Championship (Japan)
 	&BurnDrvfds_excitsoc,		// Exciting Soccer - Konami Cup (Japan)
 	&BurnDrvExedexes,			// Exed Exes
+	&BurnDrvExerionb,			// Exerion (bootleg)
 	&BurnDrvsg1k_exerion,		// Exerion (Euro, Jpn)
 	&BurnDrvnes_exerion,		// Exerion (Japan)
 	&BurnDrvMSX_exerion,		// Exerion (Jpn)
@@ -21991,9 +22002,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_exeriona,		// Exerion (Jpn, Alt)
 	&BurnDrvMSX_exerionk,		// Exerion (Kor)
 	&BurnDrvsg1k_exerionk,		// Exerion (Kor)
+	&BurnDrvExeriont,			// Exerion (Taito)
 	&BurnDrvsg1k_exeriont,		// Exerion (Tw)
 	&BurnDrvMSX_exerion2,		// Exerion II - Zorni (Jpn)
 	&BurnDrvMSX_exerion2a,		// Exerion II - Zorni (Jpn, Alt)
+	&BurnDrvExerion,			// Exerion
 	&BurnDrvExerizrb,			// Exerizer (Japan) (bootleg)
 	&BurnDrvExerizer,			// Exerizer (Japan)
 	&BurnDrvmd_exile,			// Exile (USA)
@@ -24134,6 +24147,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_indycrusp,		// Indiana Jones and the Last Crusade (Euro, Prototype)
 	&BurnDrvgg_indycrus,		// Indiana Jones and the Last Crusade (Euro, USA)
 	&BurnDrvmd_indycruss,		// Indiana Jones and the Last Crusade (Hack, Spanish)
+	&BurnDrvMSX_indy3,			// Indiana Jones and the Last Crusade (Spa)
 	&BurnDrvnes_indiajonandlascrt,// Indiana Jones and the Last Crusade (USA) (Taito)
 	&BurnDrvnes_indiajonandlascr,// Indiana Jones and the Last Crusade (USA) (UBI Soft)
 	&BurnDrvmd_indycrusu,		// Indiana Jones and the Last Crusade (USA)
@@ -24205,6 +24219,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvIqblock,			// IQ-Block
 	&BurnDrvmd_iraqwara,		// Iraq War 2003 (Alt)
 	&BurnDrvmd_iraqwar,			// Iraq War 2003
+	&BurnDrvIrion,				// Irion
 	&BurnDrvIronfort,			// Iron Fortress
 	&BurnDrvIronhors,			// Iron Horse
 	&BurnDrvgg_ironman,			// Iron Man X-O Manowar in Heavy Metal (Euro, USA)
@@ -26510,6 +26525,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecmoonwalk,			// Moonwalker (Part 1 of 3) (48K)
 	&BurnSpecmoonwalk2,			// Moonwalker (Part 2 of 3) (48K)
 	&BurnSpecmoonwalk3,			// Moonwalker (Part 3 of 3) (48K)
+	&BurnDrvMSX_moonwalker,		// Moonwalker - The Computer Game (Euro)
 	&BurnDrvMoonwara,			// Moonwar (older)
 	&BurnDrvMoonwar,			// Moonwar
 	&BurnDrvcv_mopirang,		// Mopiranger (HB)
@@ -29035,6 +29051,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCHF_ratmal,			// Rat' Mal (Ger)
 	&BurnSpecRatatat,			// Rat-A-Tat (HB)
 	&BurnDrvMSX_raththa,		// Rath-Tha (Spa)
+	&BurnDrvMSX_raven,			// Raven (HB)
 	&BurnDrvRayforce,			// Ray Force (Ver 2.3A 1994/01/20)
 	&BurnDrvRayforcej,			// Ray Force (Ver 2.3J 1994/01/20)
 	&BurnDrvRazmataz,			// Razzmatazz [no comment, NOT WORKING]
@@ -30583,6 +30600,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_soviet,			// Soviet (Euro)
 	&BurnSpecsovietpart1,		// Soviet (Part 1 of 2)
 	&BurnSpecsovietpart2,		// Soviet (Part 2 of 2)
+	&BurnDrvMSX_sp8inv,			// Sp8 Invaders (HB)
 	&BurnDrvsg1k_spacearmb,		// Space Armor (Jpn, v10, OMV)
 	&BurnDrvsg1k_spacearm,		// Space Armor (Jpn, v20, OMV)
 	&BurnDrvsg1k_spacearma,		// Space Armor (Jpn, v20, OMV, Alt)

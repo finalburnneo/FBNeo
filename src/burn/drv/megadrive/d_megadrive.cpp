@@ -1207,7 +1207,7 @@ struct BurnDriver BurnDrvmd_sonic3j = {
 
 // Sonic the Hedgehog 3 (Prototype, 19931120)
 static struct BurnRomInfo md_sonic3p1RomDesc[] = {
-	{ "sonic the hedgehog 3 (prototype - nov 20, 1993)", 0x200000, 0xebc0af69, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "sonic the hedgehog 3 (prototype - nov 20, 1993).bin", 0x200000, 0xebc0af69, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sonic3p1)
@@ -1225,7 +1225,7 @@ struct BurnDriver BurnDrvmd_sonic3p1 = {
 
 // Sonic the Hedgehog 3 (Prototype, 19931103)
 static struct BurnRomInfo md_sonic3p2RomDesc[] = {
-	{ "sonic the hedgehog 3 (prototype - nov 3, 1993)", 0x200000, 0xe4a16a49, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "sonic the hedgehog 3 (prototype - nov 3, 1993).bin", 0x200000, 0xe4a16a49, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sonic3p2)

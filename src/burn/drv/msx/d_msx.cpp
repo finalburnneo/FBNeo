@@ -22280,7 +22280,7 @@ struct BurnDriver BurnDrvMSX_indy = {
 	"msx_indy", NULL, "msx_msx", NULL, "1987",
 	"Indiana Jones and the Temple of Doom (Euro)\0", NULL, "U.S. Gold", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC | GBF_ADV, 0,
 	MSXGetZipName, MSX_indyRomInfo, MSX_indyRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -22299,7 +22299,7 @@ struct BurnDriver BurnDrvMSX_inca = {
 	"msx_inca", NULL, "msx_msx", NULL, "1987",
 	"Inca (Euro)\0", NULL, "Eaglesoft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_incaRomInfo, MSX_incaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -22318,7 +22318,7 @@ struct BurnDriver BurnDrvMSX_icebreak = {
 	"msx_icebreak", NULL, "msx_msx", NULL, "1990",
 	"Ice-Breaker (Spa)\0", NULL, "Topo Soft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_SHOOT | GBF_RACING, 0,
 	MSXGetZipName, MSX_icebreakRomInfo, MSX_icebreakRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -22337,7 +22337,7 @@ struct BurnDriver BurnDrvMSX_iceking = {
 	"msx_iceking", NULL, "msx_msx", NULL, "1986",
 	"The Ice King (Euro)\0", NULL, "CDS Micro Systems", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_icekingRomInfo, MSX_icekingRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -22356,7 +22356,7 @@ struct BurnDriver BurnDrvMSX_rambo3 = {
 	"msx_rambo3", NULL, "msx_msx", NULL, "1988",
 	"Rambo III (Euro)\0", NULL, "Ocean Software", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_MISC | GBF_ADV, 0,
 	MSXGetZipName, MSX_rambo3RomInfo, MSX_rambo3RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -22375,7 +22375,7 @@ struct BurnDriver BurnDrvMSX_psychpig = {
 	"msx_psychpig", NULL, "msx_msx", NULL, "1988",
 	"Psycho Pig U.X.B. (Euro)\0", NULL, "U.S. Gold", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_psychpigRomInfo, MSX_psychpigRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -22395,7 +22395,7 @@ struct BurnDriver BurnDrvMSX_punchy = {
 	"msx_punchy", NULL, "msx_msx", NULL, "1984",
 	"Punchy (Euro)\0", NULL, "Mr. Micro", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_punchyRomInfo, MSX_punchyRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -25487,7 +25487,7 @@ struct BurnDriver BurnDrvMSX_dgnraven = {
 	"msx_dgnraven", NULL, "msx_msx", NULL, "2009",
 	"Dodgin Raven (HB)\0", NULL, "Karoshi Corp.", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_dgnravenRomInfo, MSX_dgnravenRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXEuropeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -28525,6 +28525,102 @@ struct BurnDriver BurnDrvMSX_dwtoomsxpt = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_dwtoomsxptRomInfo, MSX_dwtoomsxptRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Aliens (Euro)
+
+static struct BurnRomInfo MSX_alienseuRomDesc[] = {
+	{ "Aliens (1987)(Electric Dreams)[BLOAD'CAS-',R].cas",	54825, 0x0f28dc37, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_alienseu, MSX_alienseu, msx_msx)
+STD_ROM_FN(MSX_alienseu)
+
+struct BurnDriver BurnDrvMSX_alienseu = {
+	"msx_alienseu", NULL, "msx_msx", NULL, "1987",
+	"Aliens (Euro)\0", "Press Enter to move through the doors", "Mr. Micro - Electric Dreams", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_SHOOT | GBF_ADV, 0,
+	MSXGetZipName, MSX_alienseuRomInfo, MSX_alienseuRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXKeyClickDIPInfo,
+	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Indiana Jones and the Last Crusade (Spa)
+
+static struct BurnRomInfo MSX_indy3RomDesc[] = {
+	{ "Indiana Jones and the Last Crusade (1989)(Erbe Software)(es)(Side A)[RUN'CAS-'].cas",	41970, 0x2204d60c, BRF_PRG | BRF_ESS },
+	{ "Indiana Jones and the Last Crusade (1989)(Erbe Software)(es)(Side B)[RUN'CAS-'].cas",	104154, 0xc6814441, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_indy3, MSX_indy3, msx_msx)
+STD_ROM_FN(MSX_indy3)
+
+struct BurnDriver BurnDrvMSX_indy3 = {
+	"msx_indy3", NULL, "msx_msx", NULL, "1989",
+	"Indiana Jones and the Last Crusade (Spa)\0", "Enable Key-Clicker (DIPswitches) for 1-bit DAC sound effects", "U.S. Gold - Erbe Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PLATFORM | GBF_ADV, 0,
+	MSXGetZipName, MSX_indy3RomInfo, MSX_indy3RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Moonwalker (Euro)
+
+static struct BurnRomInfo MSX_moonwalkerRomDesc[] = {
+	{ "Moonwalker (1989)(US Gold)[RUN'CAS-'].cas",	236833, 0x7bbf605f, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_moonwalker, MSX_moonwalker, msx_msx)
+STD_ROM_FN(MSX_moonwalker)
+
+struct BurnDriver BurnDrvMSX_moonwalker = {
+	"msx_moonwalker", NULL, "msx_msx", NULL, "1989",
+	"Moonwalker - The Computer Game (Euro)\0", NULL, "U.S. Gold", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_MISC | GBF_ADV, 0,
+	MSXGetZipName, MSX_moonwalkerRomInfo, MSX_moonwalkerRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Raven (HB)
+
+static struct BurnRomInfo MSX_ravenRomDesc[] = {
+	{ "Raven (2021)(Micha Mulder).rom",	16384, 0x456435f0, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_raven, MSX_raven, msx_msx)
+STD_ROM_FN(MSX_raven)
+
+struct BurnDriver BurnDrvMSX_raven = {
+	"msx_raven", NULL, "msx_msx", NULL, "2021",
+	"Raven (HB)\0", NULL, "Micha Mulder", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_ravenRomInfo, MSX_ravenRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Sp8 Invaders (HB)
+
+static struct BurnRomInfo MSX_sp8invRomDesc[] = {
+	{ "Sp8 Invaders (2009)(Dioniso).rom",	8192, 0xa327b2de, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_sp8inv, MSX_sp8inv, msx_msx)
+STD_ROM_FN(MSX_sp8inv)
+
+struct BurnDriver BurnDrvMSX_sp8inv = {
+	"msx_sp8inv", NULL, "msx_msx", NULL, "2009",
+	"Sp8 Invaders (HB)\0", "Enable Key-Clicker (DIPswitches) for 1-bit DAC sound effects", "Dioniso", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_SHOOT, 0,
+	MSXGetZipName, MSX_sp8invRomInfo, MSX_sp8invRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

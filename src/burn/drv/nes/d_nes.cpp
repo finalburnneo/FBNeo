@@ -17596,6 +17596,91 @@ STD_ROM_FN(nes_wowheels)
 // Homebrew (hand-added)
 
 
+static struct BurnRomInfo nes_batterychadRomDesc[] = {
+	{ "Battery Chad - Shock the World (2019)(Formula Fanboy).nes",          524304, 0x030c4355, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_batterychad)
+STD_ROM_FN(nes_batterychad)
+
+struct BurnDriver BurnDrvnes_batterychad = {
+	"nes_batterychad", NULL, NULL, NULL, "2019",
+	"Battery Chad - Shock the World (HB)\0", NULL, "Formula Fanboy", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_batterychadRomInfo, nes_batterychadRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_frogRomDesc[] = {
+	{ "Frog (2020)(Boston Breams).nes",          393232, 0x06d96b55, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_frog)
+STD_ROM_FN(nes_frog)
+
+struct BurnDriver BurnDrvnes_frog = {
+	"nes_frog", NULL, NULL, NULL, "2020",
+	"Frog (HB)\0", NULL, "Boston Breams", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_frogRomInfo, nes_frogRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_harrydwarfRomDesc[] = {
+	{ "Harry Dwarf (2019)(Byte-off).nes",          524304, 0xe2469697, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_harrydwarf)
+STD_ROM_FN(nes_harrydwarf)
+
+struct BurnDriver BurnDrvnes_harrydwarf = {
+	"nes_harrydwarf", NULL, NULL, NULL, "2019",
+	"Harry Dwarf (HB)\0", NULL, "Byte-off", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM | GBF_PUZZLE, 0,
+	NESGetZipName, nes_harrydwarfRomInfo, nes_harrydwarfRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_slowmoleRomDesc[] = {
+	{ "Slow Mole v1.1 (2021)(Erik Rosenlund).nes",          524304, 0xeadc4e8b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_slowmole)
+STD_ROM_FN(nes_slowmole)
+
+struct BurnDriver BurnDrvnes_slowmole = {
+	"nes_slowmole", NULL, NULL, NULL, "2021",
+	"Slow Mole (HB, v1.1)\0", NULL, "Erik Rosenlund", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_slowmoleRomInfo, nes_slowmoleRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_zeldakongRomDesc[] = {
+	{ "Zelda Kong (2021)(Zero Meaning).nes",          24592, 0x4c801a11, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_zeldakong)
+STD_ROM_FN(nes_zeldakong)
+
+struct BurnDriver BurnDrvnes_zeldakong = {
+	"nes_zeldakong", "nes_donkeykong", NULL, NULL, "2021",
+	"Zelda Kong (HB, Global Hack)\0", NULL, "Zero Meaning", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_zeldakongRomInfo, nes_zeldakongRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_zdeyRomDesc[] = {
 	{ "Zdey the Game (2020)(Art'Cade).nes",          524304, 0xfd4036e1, BRF_ESS | BRF_PRG },
 };

@@ -8,6 +8,10 @@ bool bStreetFighterLayout = false;
 static retro_input_state_t input_cb;
 static retro_input_poll_t poll_cb;
 
+#define MAX_KEYBINDS        255
+#define SWITCH_NCODE_RESET  (MAX_KEYBINDS+1)
+#define SWITCH_NCODE_DIAG   (MAX_KEYBINDS+2)
+
 static unsigned nDiagInputComboStartFrame = 0;
 static unsigned nDiagInputHoldFrameDelay = 0;
 static unsigned nSwitchCode = 0;
@@ -16,7 +20,7 @@ static unsigned nMaxControllers = 0;
 static unsigned nDeviceType[MAX_PLAYERS];
 static int nLibretroInputBitmask[MAX_PLAYERS];
 static std::vector<retro_input_descriptor> normal_input_descriptors;
-static struct KeyBind sKeyBinds[255];
+static struct KeyBind sKeyBinds[MAX_KEYBINDS];
 static struct AxiBind sAxiBinds[MAX_PLAYERS][8]; // MAX_PLAYERS players with up to 8 axis
 static INT32 pointerValues[MAX_PLAYERS][2];
 static bool bAnalogRightMappingDone[MAX_PLAYERS][2][2];
@@ -310,6 +314,8 @@ static inline int input_cb_wrapper(unsigned port, unsigned device, unsigned inde
 
 static inline int CinpState(int nCode)
 {
+	if (nCode >= MAX_KEYBINDS)
+		return 0;
 	unsigned id = sKeyBinds[nCode].id;
 	unsigned port = sKeyBinds[nCode].port;
 	int index = sKeyBinds[nCode].index;
@@ -2240,7 +2246,7 @@ static INT32 GameInpOtherOne(struct GameInp* pgi, char* szi, char *szn)
 	if (strcmp(szi, "reset") == 0) {
 		pgi->nInput = GIT_SWITCH;
 		if (!bInputInitialized)
-			pgi->Input.Switch.nCode = (UINT16)(nSwitchCode++);
+			pgi->Input.Switch.nCode = SWITCH_NCODE_RESET;
 		bButtonMapped = true;
 		pgi_reset = pgi;
 	}
@@ -2249,7 +2255,7 @@ static INT32 GameInpOtherOne(struct GameInp* pgi, char* szi, char *szn)
 	if (strcmp(szi, "diag") == 0 || strcmp(szi, "diagnostics") == 0) {
 		pgi->nInput = GIT_SWITCH;
 		if (!bInputInitialized)
-			pgi->Input.Switch.nCode = (UINT16)(nSwitchCode++);
+			pgi->Input.Switch.nCode = SWITCH_NCODE_DIAG;
 		bButtonMapped = true;
 		pgi_diag = pgi;
 	}

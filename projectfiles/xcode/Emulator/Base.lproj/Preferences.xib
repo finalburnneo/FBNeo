@@ -149,12 +149,12 @@
                                                                 </textFieldCell>
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             </tableColumn>
-                                                            <tableColumn identifier="input" width="436" minWidth="40" maxWidth="1000" id="cm7-Je-q9F">
+                                                            <tableColumn identifier="input" width="175" minWidth="40" maxWidth="1000" id="cm7-Je-q9F">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Input">
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                                 </tableHeaderCell>
-                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="RVy-6E-fG0">
+                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="center" title="Text Cell" id="RVy-6E-fG0" customClass="AKCaptureFieldCell">
                                                                     <font key="font" metaFont="smallSystem"/>
                                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -226,7 +226,7 @@
                                             <rect key="frame" x="20" y="145" width="560" height="235"/>
                                             <clipView key="contentView" id="EC8-81-kOL">
                                                 <rect key="frame" x="1" y="0.0" width="558" height="234"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="1qu-Rf-lqe" id="Riy-Ok-IZT" userLabel="DIPSwitch TableView">
                                                         <rect key="frame" x="0.0" y="0.0" width="558" height="209"/>

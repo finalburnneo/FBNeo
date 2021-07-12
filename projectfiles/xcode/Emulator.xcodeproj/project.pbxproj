@@ -1016,6 +1016,10 @@
 		FE92E3FA2458859600693C0C /* d_f-32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE92E3F72458859500693C0C /* d_f-32.cpp */; };
 		FE92E3FB2458859600693C0C /* d_eolith16.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE92E3F82458859500693C0C /* d_eolith16.cpp */; };
 		FE92E3FC2458859600693C0C /* d_goori.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE92E3F92458859600693C0C /* d_goori.cpp */; };
+		FE96B126269BF91D00DC6A88 /* AKCaptureFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96B124269BF91C00DC6A88 /* AKCaptureFieldCell.m */; };
+		FE96B129269BFB0800DC6A88 /* FBInputMap.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96B128269BFB0800DC6A88 /* FBInputMap.m */; };
+		FE96B12C269C183300DC6A88 /* NSString+Etc.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96B12B269C183300DC6A88 /* NSString+Etc.m */; };
+		FE96B12E269C1B4900DC6A88 /* d_exerion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE96B12D269C1B4900DC6A88 /* d_exerion.cpp */; };
 		FEA1AB8823B5D49700D6082A /* d_spdodgeb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AB8723B5D49700D6082A /* d_spdodgeb.cpp */; };
 		FEA35F6F246A6E04008938BC /* d_pasha2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA35F6D246A6E03008938BC /* d_pasha2.cpp */; };
 		FEA35F70246A6E04008938BC /* d_shangha3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA35F6E246A6E03008938BC /* d_shangha3.cpp */; };
@@ -1032,6 +1036,7 @@
 		FEC28FE8266481BD00EF37C2 /* AKGamepadEventData.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC28FE3266481BD00EF37C2 /* AKGamepadEventData.m */; };
 		FEC5D3D6235C136F00ABA9FB /* FBVideo.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */; };
 		FEC5D3D9235C160600ABA9FB /* FBScreenView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */; };
+		FEC8DDD9269B78110012F22B /* FBJoyCaptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC8DDD8269B78110012F22B /* FBJoyCaptureView.m */; };
 		FED03ADE23FAF8E900E99A10 /* mdeeprom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FED03ADD23FAF8E900E99A10 /* mdeeprom.cpp */; };
 		FED7CBC325494A6C00193EED /* d_spectrum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207923561A6B0065200C /* d_spectrum.cpp */; };
 		FEDA8F89235D226F007A4D26 /* FBInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEDA8F87235D226E007A4D26 /* FBInput.mm */; };
@@ -2611,6 +2616,14 @@
 		FE92E3F72458859500693C0C /* d_f-32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "d_f-32.cpp"; sourceTree = "<group>"; };
 		FE92E3F82458859500693C0C /* d_eolith16.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_eolith16.cpp; sourceTree = "<group>"; };
 		FE92E3F92458859600693C0C /* d_goori.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_goori.cpp; sourceTree = "<group>"; };
+		FE96B123269BF64200DC6A88 /* FBInputConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBInputConstants.h; sourceTree = "<group>"; };
+		FE96B124269BF91C00DC6A88 /* AKCaptureFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKCaptureFieldCell.m; sourceTree = "<group>"; };
+		FE96B125269BF91C00DC6A88 /* AKCaptureFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKCaptureFieldCell.h; sourceTree = "<group>"; };
+		FE96B127269BFB0800DC6A88 /* FBInputMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBInputMap.h; sourceTree = "<group>"; };
+		FE96B128269BFB0800DC6A88 /* FBInputMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBInputMap.m; sourceTree = "<group>"; };
+		FE96B12A269C183300DC6A88 /* NSString+Etc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Etc.h"; sourceTree = "<group>"; };
+		FE96B12B269C183300DC6A88 /* NSString+Etc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Etc.m"; sourceTree = "<group>"; };
+		FE96B12D269C1B4900DC6A88 /* d_exerion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_exerion.cpp; sourceTree = "<group>"; };
 		FE9A990D235F82C900507894 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		FEA1AB8723B5D49700D6082A /* d_spdodgeb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_spdodgeb.cpp; sourceTree = "<group>"; };
 		FEA35F6D246A6E03008938BC /* d_pasha2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_pasha2.cpp; sourceTree = "<group>"; };
@@ -2639,6 +2652,8 @@
 		FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBVideo.mm; sourceTree = "<group>"; };
 		FEC5D3D7235C160600ABA9FB /* FBScreenView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBScreenView.h; sourceTree = "<group>"; };
 		FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBScreenView.mm; sourceTree = "<group>"; };
+		FEC8DDD7269B78110012F22B /* FBJoyCaptureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBJoyCaptureView.h; sourceTree = "<group>"; };
+		FEC8DDD8269B78110012F22B /* FBJoyCaptureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBJoyCaptureView.m; sourceTree = "<group>"; };
 		FED03ADC23FAF8E900E99A10 /* mdeeprom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mdeeprom.h; sourceTree = "<group>"; };
 		FED03ADD23FAF8E900E99A10 /* mdeeprom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mdeeprom.cpp; sourceTree = "<group>"; };
 		FEDA8F87235D226E007A4D26 /* FBInput.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBInput.mm; sourceTree = "<group>"; };
@@ -2756,8 +2771,12 @@
 		FE0A7E9E2394B87B001E6997 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FE96B125269BF91C00DC6A88 /* AKCaptureFieldCell.h */,
+				FE96B124269BF91C00DC6A88 /* AKCaptureFieldCell.m */,
 				FE0A7EA22394ED90001E6997 /* FBDropFileScrollView.h */,
 				FE0A7EA32394ED91001E6997 /* FBDropFileScrollView.m */,
+				FEC8DDD7269B78110012F22B /* FBJoyCaptureView.h */,
+				FEC8DDD8269B78110012F22B /* FBJoyCaptureView.m */,
 				FE0A7EA02394B87B001E6997 /* FBRomSetStatusAsNSImage.h */,
 				FE0A7E9F2394B87B001E6997 /* FBRomSetStatusAsNSImage.m */,
 				FEC5D3D7235C160600ABA9FB /* FBScreenView.h */,
@@ -4448,6 +4467,7 @@
 				FE1B211A23561A6D0065200C /* d_espial.cpp */,
 				FE1B211E23561A6D0065200C /* d_ettrivia.cpp */,
 				FE1B210123561A6D0065200C /* d_exedexes.cpp */,
+				FE96B12D269C1B4900DC6A88 /* d_exerion.cpp */,
 				FEFE604823C7805A00535CE2 /* d_exprraid.cpp */,
 				FEA608DD25BC0EEB00E20B0D /* d_exterm.cpp */,
 				FE1B219323561A6E0065200C /* d_fantland.cpp */,
@@ -4931,6 +4951,8 @@
 				FEED9E1D2358B48C00B7AF83 /* main.cpp */,
 				FE9A990D235F82C900507894 /* main.h */,
 				FEA5E79023563F5400DA2D9D /* misc.cpp */,
+				FE96B12A269C183300DC6A88 /* NSString+Etc.h */,
+				FE96B12B269C183300DC6A88 /* NSString+Etc.m */,
 				FE1B287E23561D1A0065200C /* tchar.h */,
 			);
 			path = macos;
@@ -5165,6 +5187,9 @@
 			children = (
 				FEDA8F88235D226E007A4D26 /* FBInput.h */,
 				FEDA8F87235D226E007A4D26 /* FBInput.mm */,
+				FE96B123269BF64200DC6A88 /* FBInputConstants.h */,
+				FE96B127269BFB0800DC6A88 /* FBInputMap.h */,
+				FE96B128269BFB0800DC6A88 /* FBInputMap.m */,
 			);
 			path = macos;
 			sourceTree = "<group>";
@@ -5447,6 +5472,7 @@
 				FE1B260E23561A760065200C /* toa_bcu2.cpp in Sources */,
 				FE1B27D823561A790065200C /* x2212.cpp in Sources */,
 				FE1B23A023561A750065200C /* m68kcpu.c in Sources */,
+				FE96B12E269C1B4900DC6A88 /* d_exerion.cpp in Sources */,
 				FE1B25A923561A760065200C /* d_88games.cpp in Sources */,
 				FE1B241723561A750065200C /* pngwio.c in Sources */,
 				FE1B245823561A750065200C /* gzlib.c in Sources */,
@@ -5545,6 +5571,7 @@
 				FE1B25DC23561A760065200C /* d_gberet.cpp in Sources */,
 				FE1B262A23561A770065200C /* d_psikyosh.cpp in Sources */,
 				FE1B279B23561A790065200C /* iremga20.cpp in Sources */,
+				FEC8DDD9269B78110012F22B /* FBJoyCaptureView.m in Sources */,
 				FEED9E1C235845EE00B7AF83 /* FBMainThread.mm in Sources */,
 				FE1B253C23561A760065200C /* d_pirates.cpp in Sources */,
 				FE1B24CC23561A750065200C /* d_dodonpachi.cpp in Sources */,
@@ -6039,6 +6066,7 @@
 				FE92E3FC2458859600693C0C /* d_goori.cpp in Sources */,
 				FEED9E0823576E1900B7AF83 /* stated.cpp in Sources */,
 				FE1B25E623561A760065200C /* d_ultraman.cpp in Sources */,
+				FE96B12C269C183300DC6A88 /* NSString+Etc.m in Sources */,
 				FE1B278623561A790065200C /* flower.cpp in Sources */,
 				FE1B257E23561A760065200C /* d_cbuster.cpp in Sources */,
 				FE1B24E623561A760065200C /* d_klax.cpp in Sources */,
@@ -6121,6 +6149,7 @@
 				FE1B254723561A760065200C /* d_seta.cpp in Sources */,
 				FE1B254923561A760065200C /* d_glass.cpp in Sources */,
 				FE1B24FA23561A760065200C /* d_tumbleb.cpp in Sources */,
+				FE96B129269BFB0800DC6A88 /* FBInputMap.m in Sources */,
 				FE1B264E23561A770065200C /* d_taitoh.cpp in Sources */,
 				FE1B25F423561A760065200C /* midwayic.cpp in Sources */,
 				FEFB2E7925A9A0A0005D9281 /* tms34010.cpp in Sources */,
@@ -6304,6 +6333,7 @@
 				FE1B250D23561A760065200C /* d_ssv.cpp in Sources */,
 				FE1B251723561A760065200C /* d_midas.cpp in Sources */,
 				FE1B269723561A770065200C /* d_williams.cpp in Sources */,
+				FE96B126269BF91D00DC6A88 /* AKCaptureFieldCell.m in Sources */,
 				FE1B262C23561A770065200C /* cpsrd.cpp in Sources */,
 				FEE347C424CC0E3E00DD28E6 /* d_x2222.cpp in Sources */,
 				FE1B25CD23561A760065200C /* d_parodius.cpp in Sources */,

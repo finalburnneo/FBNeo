@@ -2,6 +2,7 @@
 
 #define MAX_TILEMAPS	32	// number of tile maps allowed
 #define MAX_GFXNUM
+#define MAX_SPLIT_CATEGORY 16
 
 struct GenericTilemap {
 	UINT8 initialized;
@@ -374,16 +375,21 @@ void GenericTilemapSetTransSplit(INT32 which, INT32 category, UINT16 layer0, UIN
 		bprintf (PRINT_ERROR, _T("GenericTilemapSetTransSplit(%d, %d, 0x%4.4x, 0x%4.4x); called with impossible tilemap number!\n"), which, category, layer0, layer1);
 		return;
 	}
+
+	if (category >= MAX_SPLIT_CATEGORY) {
+		bprintf(PRINT_ERROR, _T("GenericTilemapSetTransSplit(): increase MAX_SPLIT_CATEGORY!\n"));
+		return;
+	}
 #endif
 
 	cur_map = &maps[which];
 
 	if (category == 0) {
-		GenericTilemapCategoryConfig(0, 4);
+		GenericTilemapCategoryConfig(which, MAX_SPLIT_CATEGORY);
 	}
 
-	GenericTilemapSetTransMask(0, 0 | (category & 1), layer0); // TMAP_DRAWLAYER0
-	GenericTilemapSetTransMask(0, 2 | (category & 1), layer1); // TMAP_DRAWLAYER1
+	GenericTilemapSetTransMask(which, (category * 2) | 0, layer0); // TMAP_DRAWLAYER0
+	GenericTilemapSetTransMask(which, (category * 2) | 1, layer1); // TMAP_DRAWLAYER1
 }
 
 void GenericTilemapSetTransMask(INT32 which, INT32 category, UINT16 transmask)
@@ -896,7 +902,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 
 	GenericTilesPRIMASK = priority_mask;
 
-	INT32 category_or = (priority & TMAP_DRAWLAYER1) ? 2 : 0;
+	INT32 category_or = (priority & TMAP_DRAWLAYER1) ? 1 : 0;
 	INT32 opaque = priority & TMAP_FORCEOPAQUE;
 	INT32 opaque2 = priority & TMAP_DRAWOPAQUE;
 	INT32 tgroup = (priority >> 8) & 0xff;
@@ -950,8 +956,8 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 
 				cur_map->pTile(offset, &sTileData);
 
-				UINT32 category = sTileData.category | category_or;
-				
+				UINT32 category = (sTileData.category * 2) | category_or;
+
 				if (category && (cur_map->flags & TMAP_TRANSMASK)) {
 					if (cur_map->transparent[category] == NULL) {
 						category = 0;
@@ -1061,8 +1067,8 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 
 				cur_map->pTile(offset, &sTileData);
 
-				UINT32 category = sTileData.category | category_or;
-				
+				UINT32 category = (sTileData.category * 2) | category_or;
+
 				if (category && (cur_map->flags & TMAP_TRANSMASK)) {
 					if (cur_map->transparent[category] == NULL) {
 						category = 0;
@@ -1210,7 +1216,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 
 				cur_map->pTile(offset, &sTileData);
 
-				UINT32 category = sTileData.category | category_or;
+				UINT32 category = (sTileData.category * 2) | category_or;
 
 				if (category && (cur_map->flags & TMAP_TRANSMASK)) {
 					if (cur_map->transparent[category] == NULL) {
@@ -1406,7 +1412,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 
 		cur_map->pTile(offset, &sTileData);
 
-		UINT32 category = sTileData.category | category_or;
+		UINT32 category = (sTileData.category * 2) | category_or;
 
 		if (category && (cur_map->flags & TMAP_TRANSMASK)) {
 			if (cur_map->transparent[category] == NULL) {

@@ -15,6 +15,7 @@
 #import "FBInput.h"
 
 #import "AppDelegate.h"
+#import "NSString+Etc.h"
 
 #include "burner.h"
 
@@ -372,6 +373,34 @@ static unsigned char joyState[maxJoysticks][256];
     }
 
     return inputs;
+}
+
+- (FBInputMap *) loadMapForDeviceId:(NSString *) deviceId
+                            setName:(NSString *) setName
+{
+    NSString *path = [AppDelegate.sharedInstance.inputMapPath stringByAppendingPathComponent:
+                      [[NSString stringWithFormat:@"%@-%@.inp", setName, deviceId] sanitizeForFilename]];
+
+    FBInputMap *map = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    if (!map) {
+        map = [FBInputMap new];
+    }
+
+    return map;
+}
+
+- (BOOL) saveMap:(FBInputMap *) map
+     forDeviceId:(NSString *) deviceId
+         setName:(NSString *) setName
+{
+    NSString *path = [AppDelegate.sharedInstance.inputMapPath stringByAppendingPathComponent:
+                      [[NSString stringWithFormat:@"%@-%@.inp", setName, deviceId] sanitizeForFilename]];
+    if ([NSKeyedArchiver archiveRootObject:map
+                                    toFile:path]) {
+        map.isDirty = NO;
+        return YES;
+    }
+    return NO;
 }
 
 @end

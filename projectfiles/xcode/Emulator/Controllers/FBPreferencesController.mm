@@ -15,6 +15,9 @@
 #import "FBPreferencesController.h"
 
 #import "NSWindowController+Core.h"
+#import "FBJoyCaptureView.h"
+#import "FBInputConstants.h"
+#import "FBInputMap.h"
 
 @interface FBPreferencesController()
 
@@ -22,6 +25,7 @@
 - (void) resetButtonList;
 - (void) resetInputDevices;
 - (NSString *) selectedInputDeviceId;
+- (void) saveInputMap;
 
 @end
 
@@ -31,6 +35,8 @@
     NSMutableArray<NSDictionary *> *_inputDeviceList;
     NSMutableArray<FBInputInfo *> *_joyInputInfoList;
     NSMutableDictionary<NSString *, NSDictionary *> *_inputDeviceMap;
+    FBJoyCaptureView *_joyCaptureView;
+    FBInputMap *_joyInputMap;
 }
 
 - (id) init
@@ -78,6 +84,26 @@
     [self resetDipSwitches:[self.runloop dipSwitches]];
 }
 
+- (id) windowWillReturnFieldEditor:(NSWindow *) sender
+                          toObject:(id) anObject
+{
+    if (anObject == joyInputTableView) {
+        if (!_joyCaptureView) {
+            _joyCaptureView = [FBJoyCaptureView new];
+        }
+        return _joyCaptureView;
+    }
+
+    return nil;
+}
+
+#pragma mark - NSWindowDelegate
+
+- (void) windowDidResignKey:(NSNotification *) notification
+{
+    [self saveInputMap];
+}
+
 #pragma mark - AKGamepadDelegate
 
 - (void) gamepadDidConnect:(AKGamepad *) gamepad
@@ -111,16 +137,15 @@
           center:(NSInteger) center
        eventData:(AKGamepadEventData *) eventData
 {
-    // FIXME!!
-//    if ([[gamepad vendorProductString] isEqualToString:_selectedInputDeviceId]) {
-//        if ([[self window] firstResponder] == _joyCaptureView) {
-//            if (center - newValue > FXDeadzoneSize) {
-//                [_joyCaptureView captureCode:FXGamepadLeft];
-//            } else if (newValue - center > FXDeadzoneSize) {
-//                [_joyCaptureView captureCode:FXGamepadRight];
-//            }
-//        }
-//    }
+    if ([gamepad.vendorProductString isEqualToString:self.selectedInputDeviceId]) {
+        if (self.window.firstResponder == _joyCaptureView) {
+            if (center - newValue > FBDeadzoneSize) {
+                [_joyCaptureView captureCode:FBGamepadLeft];
+            } else if (newValue - center > FBDeadzoneSize) {
+                [_joyCaptureView captureCode:FBGamepadRight];
+            }
+        }
+    }
 }
 
 - (void) gamepad:(AKGamepad *) gamepad
@@ -128,16 +153,15 @@
           center:(NSInteger) center
        eventData:(AKGamepadEventData *) eventData
 {
-    // FIXME!!
-//    if ([[gamepad vendorProductString] isEqualToString:_selectedInputDeviceId]) {
-//        if ([[self window] firstResponder] == _joyCaptureView) {
-//            if (center - newValue > FXDeadzoneSize) {
-//                [_joyCaptureView captureCode:FXGamepadUp];
-//            } else if (newValue - center > FXDeadzoneSize) {
-//                [_joyCaptureView captureCode:FXGamepadDown];
-//            }
-//        }
-//    }
+    if ([gamepad.vendorProductString isEqualToString:self.selectedInputDeviceId]) {
+        if (self.window.firstResponder == _joyCaptureView) {
+            if (center - newValue > FBDeadzoneSize) {
+                [_joyCaptureView captureCode:FBGamepadUp];
+            } else if (newValue - center > FBDeadzoneSize) {
+                [_joyCaptureView captureCode:FBGamepadDown];
+            }
+        }
+    }
 }
 
 - (void) gamepad:(AKGamepad *) gamepad
@@ -145,12 +169,11 @@
           isDown:(BOOL) isDown
        eventData:(AKGamepadEventData *) eventData
 {
-    // FIXME!!
-//    if ([[gamepad vendorProductString] isEqualToString:_selectedInputDeviceId]) {
-//        if ([[self window] firstResponder] == _joyCaptureView) {
-//            [_joyCaptureView captureCode:FXMakeButton(index)];
-//        }
-//    }
+    if ([gamepad.vendorProductString isEqualToString:self.selectedInputDeviceId]) {
+        if (self.window.firstResponder == _joyCaptureView) {
+            [_joyCaptureView captureCode:FBMakeButton(index)];
+        }
+    }
 }
 
 #pragma mark - Actions
@@ -268,6 +291,9 @@ objectValueForTableColumn:(NSTableColumn *) tableColumn
         FBInputInfo *iinfo = [_joyInputInfoList objectAtIndex:row];
         if ([tableColumn.identifier isEqualToString:@"title"]) {
             return iinfo.neutralTitle;
+        } else if ([tableColumn.identifier isEqualToString:@"input"]) {
+            int deviceCode = [_joyInputMap physicalCodeForVirtual:iinfo.code];
+            return [FBJoyCaptureView descriptionForCode:deviceCode];
         }
     }
 
@@ -283,6 +309,13 @@ objectValueForTableColumn:(NSTableColumn *) tableColumn
         if ([tableColumn.identifier isEqualToString:@"value"]) {
             dipSwitches[row].selectedIndex = [object intValue];
             [self.runloop applyDip:dipSwitches[row].switches[[object intValue]]];
+        }
+    } else if (tableView == joyInputTableView) {
+        FBInputInfo *iinfo = [_joyInputInfoList objectAtIndex:row];
+        if ([tableColumn.identifier isEqualToString:@"input"]) {
+            int code = [FBJoyCaptureView codeForDescription:object];
+            [_joyInputMap mapVirtualCode:iinfo.code
+                              toPhysical:code];
         }
     }
 }
@@ -324,10 +357,14 @@ objectValueForTableColumn:(NSTableColumn *) tableColumn
     [joyInputTableView abortEditing];
     [_joyInputInfoList removeAllObjects];
 
+    [self saveInputMap];
+
     NSString *selectedDeviceId = [self selectedInputDeviceId];
-    if (selectedDeviceId) {
-        FBInput *input = AppDelegate.sharedInstance.input;
-        [AppDelegate.sharedInstance.input.allInputs enumerateObjectsUsingBlock:^(FBInputInfo *iinfo, NSUInteger idx, BOOL *stop) {
+    NSString *setName = self.runloop.setName;
+    if (selectedDeviceId && setName) {
+        _joyInputMap = [self.input loadMapForDeviceId:selectedDeviceId
+                                              setName:setName];
+        [self.input.allInputs enumerateObjectsUsingBlock:^(FBInputInfo *iinfo, NSUInteger idx, BOOL *stop) {
             if (iinfo.playerIndex == 1) {
                 [_joyInputInfoList addObject:iinfo];
             }
@@ -351,6 +388,22 @@ objectValueForTableColumn:(NSTableColumn *) tableColumn
         [inputDevicesPopUp selectItemAtIndex:inputDevicesPopUp.numberOfItems - 1];
     }
     [self resetButtonList];
+}
+
+- (void) saveInputMap
+{
+    if (!_joyInputMap.isDirty) {
+        return;
+    }
+    NSLog(@"Saving input map...");
+
+    NSString *selectedDeviceId = [self selectedInputDeviceId];
+    NSString *setName = self.runloop.setName;
+    if (selectedDeviceId && setName) {
+        [self.input saveMap:_joyInputMap
+                forDeviceId:selectedDeviceId
+                    setName:setName];
+    }
 }
 
 @end

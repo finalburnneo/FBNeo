@@ -36,6 +36,7 @@
 @property (readonly) NSString *supportPath;
 @property (readonly) NSString *nvramPath;
 @property (readonly) NSString *dipSwitchPath;
+@property (readonly) NSString *inputMapPath;
 
 @property (readonly) NSSet<NSString *> *supportedFormats;
 

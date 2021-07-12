@@ -15,6 +15,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "AKGamepadManager.h"
+#import "FBInputMap.h"
 
 #define FBN_LMB 0x1
 #define FBN_RMB 0x2
@@ -44,5 +45,10 @@
 - (void) flagsChanged:(NSEvent *) theEvent;
 - (NSArray<FBInputInfo *> *) allInputs;
 - (void) setFocus:(BOOL) focus;
+- (FBInputMap *) loadMapForDeviceId:(NSString *) deviceId
+                            setName:(NSString *) setName;
+- (BOOL) saveMap:(FBInputMap *) map
+     forDeviceId:(NSString *) deviceId
+         setName:(NSString *) setName;
 
 @end

@@ -8,6 +8,10 @@ struct KeyBind
 	unsigned device;
 	int index;
 	unsigned position;
+	KeyBind()
+	{
+		device = RETRO_DEVICE_NONE;
+	}
 };
 
 struct AxiBind
@@ -51,6 +55,7 @@ void RefreshLightgunCrosshair();
 void InputMake(void);
 void InputInit();
 void InputExit();
+void SetDefaultDeviceTypes();
 void SetControllerInfo();
 
 #endif

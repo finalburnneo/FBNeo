@@ -1770,6 +1770,9 @@ static bool retro_load_game_common()
 		// Define nMaxPlayers early;
 		nMaxPlayers = BurnDrvGetMaxPlayers();
 
+		// Set sane default device types
+		SetDefaultDeviceTypes();
+
 		// Initialize inputs
 		InputInit();
 

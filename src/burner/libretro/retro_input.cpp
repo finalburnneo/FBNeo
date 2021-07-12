@@ -310,43 +310,41 @@ static inline int input_cb_wrapper(unsigned port, unsigned device, unsigned inde
 
 static inline int CinpState(int nCode)
 {
+	unsigned device = sKeyBinds[nCode].device;
+
+	// Ignore unmapped
+	if (device == RETRO_DEVICE_NONE)
+		return 0;
+
 	unsigned id = sKeyBinds[nCode].id;
 	unsigned port = sKeyBinds[nCode].port;
 	int index = sKeyBinds[nCode].index;
 	if (index == -1)
 	{
-		int ret;
-		ret = input_cb_wrapper(port, sKeyBinds[nCode].device, 0, id);
+		if (input_cb_wrapper(port, device, 0, id))
+			return 1;
 
 		// Handle fake analog inputs
 		if (pDirections[port][PGI_ANALOG_X] == NULL && pDirections[port][PGI_LEFT] != NULL && pDirections[port][PGI_RIGHT] != NULL)
 		{
 			int s = input_cb_wrapper(port, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_LEFT, RETRO_DEVICE_ID_ANALOG_X);
-			if (s < -FAKE_ANALOG_DEADZONE && id == RETRO_DEVICE_ID_JOYPAD_LEFT)
-				ret = 1;
-			if (s > FAKE_ANALOG_DEADZONE && id == RETRO_DEVICE_ID_JOYPAD_RIGHT)
-				ret = 1;
+			if ((s < -FAKE_ANALOG_DEADZONE && id == RETRO_DEVICE_ID_JOYPAD_LEFT) || (s > FAKE_ANALOG_DEADZONE && id == RETRO_DEVICE_ID_JOYPAD_RIGHT))
+				return 1;
 		}
 		if (pDirections[port][PGI_ANALOG_Y] == NULL && pDirections[port][PGI_UP] != NULL && pDirections[port][PGI_DOWN] != NULL)
 		{
 			int s = input_cb_wrapper(port, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_LEFT, RETRO_DEVICE_ID_ANALOG_Y);
-			if (s < -FAKE_ANALOG_DEADZONE && id == RETRO_DEVICE_ID_JOYPAD_UP)
-				ret = 1;
-			if (s > FAKE_ANALOG_DEADZONE && id == RETRO_DEVICE_ID_JOYPAD_DOWN)
-				ret = 1;
+			if ((s < -FAKE_ANALOG_DEADZONE && id == RETRO_DEVICE_ID_JOYPAD_UP) || (s > FAKE_ANALOG_DEADZONE && id == RETRO_DEVICE_ID_JOYPAD_DOWN))
+				return 1;
 		}
-
-		return ret;
 	}
 	else
 	{
-		int s = input_cb_wrapper(port, sKeyBinds[nCode].device, index, id);
+		int s = input_cb_wrapper(port, device, index, id);
 		unsigned position = sKeyBinds[nCode].position;
 		// Using a large deadzone when mapping microswitches to analog axis
 		// Or said axis become way too sensitive and some game become unplayable (assault)
-		if(s < -FAKE_ANALOG_DEADZONE && position == JOY_NEG)
-			return 1;
-		if(s > FAKE_ANALOG_DEADZONE && position == JOY_POS)
+		if ((s < -FAKE_ANALOG_DEADZONE && position == JOY_NEG) || (s > FAKE_ANALOG_DEADZONE && position == JOY_POS))
 			return 1;
 	}
 	return 0;
@@ -414,10 +412,6 @@ static INT32 GameInpAnalog2RetroInpAnalog(struct GameInp* pgi, unsigned port, un
 			pgi->nInput = GIT_JOYAXIS_FULL;
 			pgi->Input.JoyAxis.nAxis = axis;
 			pgi->Input.JoyAxis.nJoy = (UINT8)port;
-			if (nDeviceType[port] == RETRO_DEVICE_NONE) {
-				sAxiBinds[port][axis] = AxiBind();
-				return 0;
-			}
 			sAxiBinds[port][axis].index = index;
 			sAxiBinds[port][axis].id = id;
 			retro_input_descriptor descriptor;
@@ -448,10 +442,6 @@ static INT32 GameInpAnalog2RetroInpAnalog(struct GameInp* pgi, unsigned port, un
 			pgi->nInput = GIT_MOUSEAXIS;
 			pgi->Input.MouseAxis.nAxis = axis;
 			pgi->Input.MouseAxis.nMouse = (UINT8)port;
-			if (nDeviceType[port] == RETRO_DEVICE_NONE) {
-				sAxiBinds[port][axis] = AxiBind();
-				return 0;
-			}
 			sAxiBinds[port][axis].index = index;
 			sAxiBinds[port][axis].id = id;
 			retro_input_descriptor descriptor;
@@ -468,10 +458,6 @@ static INT32 GameInpAnalog2RetroInpAnalog(struct GameInp* pgi, unsigned port, un
 			pgi->nInput = GIT_DIRECT_COORD;
 			pgi->Input.MouseAxis.nAxis = axis;
 			pgi->Input.MouseAxis.nMouse = (UINT8)port;
-			if (nDeviceType[port] == RETRO_DEVICE_NONE) {
-				sAxiBinds[port][axis] = AxiBind();
-				return 0;
-			}
 			sAxiBinds[port][axis].index = index;
 			sAxiBinds[port][axis].id = id;
 			retro_input_descriptor descriptor;
@@ -495,11 +481,9 @@ static INT32 GameInpDigital2RetroInpKey(struct GameInp* pgi, unsigned port, unsi
 	pgi->nInput = nInput;
 	if(nInput == GIT_SWITCH)
 	{
-		if (!bInputInitialized)
+		if (!bInputInitialized) {
 			pgi->Input.Switch.nCode = (UINT16)(nSwitchCode++);
-		if (nDeviceType[port] == RETRO_DEVICE_NONE) {
-			sKeyBinds[pgi->Input.Switch.nCode] = KeyBind();
-			return 0;
+			HandleMessage(RETRO_LOG_DEBUG, "[FBNeo] nSwitchCode 0x%02X : P%d %s\n", pgi->Input.Switch.nCode, port+1, szn);
 		}
 		sKeyBinds[pgi->Input.Switch.nCode].id = id;
 		sKeyBinds[pgi->Input.Switch.nCode].port = port;
@@ -508,11 +492,9 @@ static INT32 GameInpDigital2RetroInpKey(struct GameInp* pgi, unsigned port, unsi
 	}
 	if(nInput == GIT_MACRO_AUTO)
 	{
-		if (!bInputInitialized)
+		if (!bInputInitialized) {
 			pgi->Macro.Switch.nCode = (UINT16)(nSwitchCode++);
-		if (nDeviceType[port] == RETRO_DEVICE_NONE) {
-			sKeyBinds[pgi->Macro.Switch.nCode] = KeyBind();
-			return 0;
+			HandleMessage(RETRO_LOG_DEBUG, "[FBNeo] nSwitchCode 0x%02X : P%d %s\n", pgi->Macro.Switch.nCode, port+1, szn);
 		}
 		sKeyBinds[pgi->Macro.Switch.nCode].id = id;
 		sKeyBinds[pgi->Macro.Switch.nCode].port = port;
@@ -559,11 +541,9 @@ static INT32 GameInpDigital2RetroInpAnalogRight(struct GameInp* pgi, unsigned po
 {
 	if(bButtonMapped || pgi->nType != BIT_DIGITAL) return 0;
 	pgi->nInput = GIT_SWITCH;
-	if (!bInputInitialized)
+	if (!bInputInitialized) {
 		pgi->Input.Switch.nCode = (UINT16)(nSwitchCode++);
-	if (nDeviceType[port] == RETRO_DEVICE_NONE) {
-		sKeyBinds[pgi->Input.Switch.nCode] = KeyBind();
-		return 0;
+		HandleMessage(RETRO_LOG_DEBUG, "[FBNeo] nSwitchCode 0x%02X : P%d %s\n", pgi->Input.Switch.nCode, port+1, szn);
 	}
 	sKeyBinds[pgi->Input.Switch.nCode].id = id;
 	sKeyBinds[pgi->Input.Switch.nCode].port = port;
@@ -595,8 +575,10 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 	if (strncmp("Volume", description, 6) == 0)
 	{
 		pgi->nInput = GIT_SWITCH;
-		if (!bInputInitialized)
+		if (!bInputInitialized) {
 			pgi->Input.Switch.nCode = (UINT16)(nSwitchCode++);
+			HandleMessage(RETRO_LOG_DEBUG, "[FBNeo] nSwitchCode 0x%02X : P%d %s (not mapped)\n", pgi->Input.Switch.nCode, nPlayer+1, szn);
+		}
 		bButtonMapped = true;
 		return 0;
 	}
@@ -2256,10 +2238,14 @@ static INT32 GameInpOtherOne(struct GameInp* pgi, char* szi, char *szn)
 
 	// If no unique nCode was set yet, make sure we set one
 	if(!bButtonMapped && !bInputInitialized) {
-		if (pgi->nInput == GIT_SWITCH)
+		if (pgi->nInput == GIT_SWITCH) {
 			pgi->Input.Switch.nCode = (UINT16)(nSwitchCode++);
-		if (pgi->nInput == GIT_MACRO_AUTO)
+			HandleMessage(RETRO_LOG_DEBUG, "[FBNeo] nSwitchCode 0x%02X : %s (not mapped)\n", pgi->Input.Switch.nCode, szn);
+		}
+		if (pgi->nInput == GIT_MACRO_AUTO) {
 			pgi->Macro.Switch.nCode = (UINT16)(nSwitchCode++);
+			HandleMessage(RETRO_LOG_DEBUG, "[FBNeo] nSwitchCode 0x%02X : %s (not mapped)\n", pgi->Macro.Switch.nCode, szn);
+		}
 	}
 
 	return 0;
@@ -2427,11 +2413,34 @@ static bool PollDiagInput()
 	return false;
 }
 
+void SetDefaultDeviceTypes()
+{
+	int nHardwareCode = BurnDrvGetHardwareCode();
+
+	for (int i = 0; i < MAX_PLAYERS; i++) {
+		// Retroarch is ignoring what i want, so let's force valid values
+		if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM)
+		{
+			switch(i)
+			{
+				case 0:
+				case 1:
+					nDeviceType[i] = RETRO_DEVICE_JOYPAD;
+					break;
+				case 2:
+					nDeviceType[i] = RETRO_DEVICE_KEYBOARD;
+					break;
+			}
+		}
+		else
+		{
+			nDeviceType[i] = RETROPAD_CLASSIC;
+		}
+	}
+}
+
 void SetControllerInfo()
 {
-	for (int i = 0; i < MAX_PLAYERS; i++)
-		nDeviceType[i] = RETRO_DEVICE_NONE;
-
 	int nHardwareCode = BurnDrvGetHardwareCode();
 
 	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM) {
@@ -2502,7 +2511,8 @@ static void SetFakeInputDescriptors()
 {
 	// WIP : if left analog mapped but not dpad, or reverse, do something to dual map
 	for (int i = 0; i < MAX_PLAYERS; i++) {
-		if (nDeviceType[i] == RETRO_DEVICE_NONE) {
+		// only do that dual map stuff if we are using some kind of retropad
+		if (nDeviceType[i] != RETROPAD_CLASSIC && nDeviceType[i] != RETROPAD_MODERN) {
 			continue;
 		}
 		if (pDirections[i][PGI_ANALOG_X] != NULL && pDirections[i][PGI_LEFT] == NULL && pDirections[i][PGI_RIGHT] == NULL)

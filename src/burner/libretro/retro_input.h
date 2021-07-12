@@ -20,13 +20,18 @@ struct AxiBind
 	}
 };
 
-#define MAX_PLAYERS 6
+#define MAX_PLAYERS         6                // highest number of supported players is 6 for xmen6p and a few other games
+#define MAX_AXISES          6                // libretro supports 6 analog axises (2 analog button + 2 analog sticks), 4 would probably be sufficient for FBNeo though
+#define MAX_KEYBINDS        255              // max number of inputs/macros we can assign
+#define SWITCH_NCODE_RESET  (MAX_KEYBINDS+1) // fixed switch ncode for reset button
+#define SWITCH_NCODE_DIAG   (MAX_KEYBINDS+2) // fixed switch ncode for diag button
 
 #define RETROPAD_CLASSIC	RETRO_DEVICE_ANALOG
 #define RETROPAD_MODERN		RETRO_DEVICE_SUBCLASS(RETRO_DEVICE_ANALOG, 1)
 #define RETROMOUSE_BALL		RETRO_DEVICE_SUBCLASS(RETRO_DEVICE_ANALOG, 2)
 #define RETROMOUSE_FULL		RETRO_DEVICE_SUBCLASS(RETRO_DEVICE_MOUSE, 1)
 
+#define GIT_SPECIAL_SWITCH	(0x03)
 #define GIT_DIRECT_COORD	(0x11)
 
 #define JOY_NEG 0

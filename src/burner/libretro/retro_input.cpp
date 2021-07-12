@@ -8,10 +8,6 @@ bool bStreetFighterLayout = false;
 static retro_input_state_t input_cb;
 static retro_input_poll_t poll_cb;
 
-#define MAX_KEYBINDS        255
-#define SWITCH_NCODE_RESET  (MAX_KEYBINDS+1)
-#define SWITCH_NCODE_DIAG   (MAX_KEYBINDS+2)
-
 static unsigned nDiagInputComboStartFrame = 0;
 static unsigned nDiagInputHoldFrameDelay = 0;
 static unsigned nSwitchCode = 0;
@@ -314,8 +310,6 @@ static inline int input_cb_wrapper(unsigned port, unsigned device, unsigned inde
 
 static inline int CinpState(int nCode)
 {
-	if (nCode >= MAX_KEYBINDS)
-		return 0;
 	unsigned id = sKeyBinds[nCode].id;
 	unsigned port = sKeyBinds[nCode].port;
 	int index = sKeyBinds[nCode].index;
@@ -2244,7 +2238,7 @@ static INT32 GameInpOtherOne(struct GameInp* pgi, char* szi, char *szn)
 
 	// Store the pgi that controls the reset input
 	if (strcmp(szi, "reset") == 0) {
-		pgi->nInput = GIT_SWITCH;
+		pgi->nInput = GIT_SPECIAL_SWITCH;
 		if (!bInputInitialized)
 			pgi->Input.Switch.nCode = SWITCH_NCODE_RESET;
 		bButtonMapped = true;
@@ -2253,7 +2247,7 @@ static INT32 GameInpOtherOne(struct GameInp* pgi, char* szi, char *szn)
 
 	// Store the pgi that controls the diagnostic input
 	if (strcmp(szi, "diag") == 0 || strcmp(szi, "diagnostics") == 0) {
-		pgi->nInput = GIT_SWITCH;
+		pgi->nInput = GIT_SPECIAL_SWITCH;
 		if (!bInputInitialized)
 			pgi->Input.Switch.nCode = SWITCH_NCODE_DIAG;
 		bButtonMapped = true;
@@ -2704,6 +2698,12 @@ void InputMake(void)
 
 				break;
 			}
+			case GIT_SPECIAL_SWITCH:
+				// used for special inputs like diag and reset, we are not "mapping" those,
+				// so we just want their state to be reset at every frame, nothing else
+				pgi->Input.nVal = 0;
+				*(pgi->Input.pVal) = pgi->Input.nVal;
+				break;
 			case GIT_MOUSEAXIS:						// Mouse axis
 				pgi->Input.nVal = (UINT16)(CinpMouseAxis(pgi->Input.MouseAxis.nMouse, pgi->Input.MouseAxis.nAxis) * nAnalogSpeed);
 				*(pgi->Input.pShortVal) = pgi->Input.nVal;
@@ -2768,8 +2768,22 @@ void InputInit()
 	if (environ_cb(RETRO_ENVIRONMENT_GET_INPUT_BITMASKS, NULL))
 		bLibretroSupportsBitmasks = true;
 
+	// make sure everything is clean before processing this games's inputs
 	nSwitchCode = 0;
-
+	for (int i = 0; i < MAX_KEYBINDS; i++)
+		sKeyBinds[i] = KeyBind();
+	for (int i = 0; i < MAX_PLAYERS; i++)
+		for (int j = 0; j < MAX_AXISES; j++)
+			sAxiBinds[i][j] = AxiBind();
+	for (int i = 0; i < MAX_PLAYERS; i++)
+		for (int j = 0; j < 6; j++)
+			pDirections[i][j] = NULL;
+	for (int i = 0; i < MAX_PLAYERS; i++)
+		for (int j = 0; j < 2; j++)
+			for (int k = 0; k < 2; k++)
+				bAnalogRightMappingDone[i][j][k] = false;
+	pgi_reset = NULL;
+	pgi_diag = NULL;
 	normal_input_descriptors.clear();
 
 	GameInpInit();

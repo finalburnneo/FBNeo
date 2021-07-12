@@ -915,8 +915,6 @@ void check_variables(void)
 		var.key = var_fbneo_diagnostic_input.key;
 		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
 		{
-			diag_input = NULL;
-			SetDiagInpHoldFrameDelay(0);
 			if (strcmp(var.value, "Hold Start") == 0)
 			{
 				diag_input = diag_input_start;
@@ -966,6 +964,11 @@ void check_variables(void)
 			{
 				diag_input = diag_input_select_l_r;
 				SetDiagInpHoldFrameDelay(60);
+			}
+			else
+			{
+				diag_input = NULL;
+				SetDiagInpHoldFrameDelay(0);
 			}
 		}
 	}

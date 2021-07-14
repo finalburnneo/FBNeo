@@ -161,6 +161,11 @@ static struct BurnDIPInfo MSXJoySwapDIPList[]=
 	{0x17, 0xff, 0xff, 0x30, NULL		},
 };
 
+static struct BurnDIPInfo MSXJoySwapKeyClickerDIPList[]=
+{
+	{0x17, 0xff, 0xff, 0x30+0x02, NULL		},
+};
+
 static struct BurnDIPInfo MSXMapCursorToJoy1DIPList[]=
 {
 	{0x17, 0xff, 0xff, 0x80, NULL		},
@@ -171,6 +176,16 @@ static struct BurnDIPInfo MSXMapCursorToJoy1_60hzDIPList[]=
 	{0x17, 0xff, 0xff, 0x80+0x10, NULL		},
 };
 
+static struct BurnDIPInfo MSXMapCursorToJoy1KeyClickerDIPList[]=
+{
+	{0x17, 0xff, 0xff, 0x80, NULL		},
+};
+
+static struct BurnDIPInfo MSXMapCursorToJoy1_60hzKeyClickerDIPList[]=
+{
+	{0x17, 0xff, 0xff, 0x80+0x10+0x02, NULL		},
+};
+
 static struct BurnDIPInfo MSXKeyClickerDACDIPList[]=
 {
 	{0x17, 0xff, 0xff, 0x02, NULL		},
@@ -179,11 +194,14 @@ static struct BurnDIPInfo MSXKeyClickerDACDIPList[]=
 STDDIPINFOEXT(MSX, MSXDefault, MSX)
 STDDIPINFOEXT(MSXJapan, MSXJBIOS, MSX)
 STDDIPINFOEXT(MSXJoyport2, MSXJoySwap, MSX)
+STDDIPINFOEXT(MSXKeyClickJoyport2, MSXJoySwapKeyClicker, MSX)
 STDDIPINFOEXT(MSXJapanJoyCursor, MSXJBIOSMapCursorToJoy1, MSX)
 STDDIPINFOEXT(MSXEuropeJoyport2, MSX50hzJoySwap, MSX)
 STDDIPINFOEXT(MSXEurope, MSX50hz, MSX)
 STDDIPINFOEXT(MSXJoyCursor, MSXMapCursorToJoy1, MSX)
+STDDIPINFOEXT(MSXJoyCursorKeyClick, MSXMapCursorToJoy1KeyClicker, MSX)
 STDDIPINFOEXT(MSXJoyCursor60hz, MSXMapCursorToJoy1_60hz, MSX)
+STDDIPINFOEXT(MSXJoyCursor60hzKeyClick, MSXMapCursorToJoy1_60hzKeyClicker, MSX)
 STDDIPINFOEXT(MSXKeyClick, MSXKeyClickerDAC, MSX)
 
 // ROM mapper types:

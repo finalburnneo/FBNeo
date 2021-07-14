@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17250 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17260 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3490,6 +3490,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_diabloii	|  	| Diablo II (Hack)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_dialqo	|  	| Dial Q o Mawase! (Jpn)				| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_dialqoc	|  	| Dial Q o Mawase! (T-Chi)				| md_dialqo	| 2001	| <unlicensed>	| Sega Megadrive| 					|
+| cv_ddash	|  	| Diamond Dash (HB)					| 		| 2011	| NewColeco	| ColecoVision	| 					|
+| cv_ddash2	|  	| Diamond Dash 2 (HB)					| 		| 2021	| Under4Mhz	| ColecoVision	| 					|
 | diamond	|  	| Diamond Run						| 		| 1985	| KH Video	| Miscellaneous	| 					|
 | sms_dicktr	|  	| Dick Tracy (Euro, USA, Bra)				| 		| 1990	| Sega		| Sega Master Sy| 					|
 | md_dicktrs	|  	| Dick Tracy (Hack, Spanish)				| md_dicktr	| 2019	| Sega		| Sega Megadrive| 					|
@@ -5342,6 +5344,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_gameovr2	|  	| Game Over II (Spa)					| 		| 1988	| Dinamic Softwa| MSX		| 					|
 | nes_gameparty	|  	| Game Party (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_gameto	|  	| Game Toshokan (Jpn, Rev. A)				| 		| 1990	| Sega		| Sega Megadrive| 					|
+| cv_gpvic20	|  	| GamePack Vic-20 (HB)					| 		| 2003	| Daniel Bienven| ColecoVision	| 					|
 | spec_gamessummered|  	| Games - Summer Edition, The (128K)			| 		| 1989	| U.S. Gold	| ZX Spectrum	| 					|
 | spec_gameswintered|  	| Games - Winter Edition, The				| 		| 1988	| U.S. Gold	| ZX Spectrum	| 					|
 | pce_gecd	| D NW	| Games Express CD Card					| 		| 19??	| Games Express	| PC Engine	| 					|
@@ -8095,6 +8098,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_mjsengokp	|  	| Mahjong Sengoku Jidai (Jpn, Prototype)		| sms_mjsengok	| 1987	| Sega		| Sega Master Sy| 					|
 | pce_mjwars	|  	| Mahjong Shikyaku Retsuden - Mahjong Wars		| 		| 1990	| Nihon Bussan	| PC Engine	| 					|
 | spec_msolitaire|  	| Mahjong Solitaire (128K) (HB)				| 		| 2021	| Under4Mhz	| ZX Spectrum	| 					|
+| cv_msolitaire	|  	| Mahjong Solitaire (HB)				| 		| 2021	| Under4Mhz	| ColecoVision	| 					|
 | msx_msolitaire|  	| Mahjong Solitaire (HB)				| 		| 2021	| Under4Mhz	| MSX		| 					|
 | sms_msolitaire|  	| Mahjong Solitaire (HB)				| 		| 2021	| Under4Mhz	| Sega Master Sy| 					|
 | sg1k_msolitaire|  	| Mahjong Solitaire (HB, v1.07)				| 		| 2020	| Under4Mhz	| Sega SG-1000	| 					|
@@ -9658,6 +9662,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_nikkan	|  	| Nikkan Sports Pro Yakyuu Van (Jpn)			| 		| 1991	| Sega		| Sega Megadrive| 					|
 | pce_nikopun	| D NW	| Niko Niko, Pun					| 		| 1991	| NHK Enterprise| PC Engine	| Locks up in-game?			|
 | nes_nimnom	|  	| Nim & Nom (HB, v1.2)					| 		| 2018	| Metakrill	| Miscellaneous	| 					|
+| cv_nim	|  	| Nim (HB)						| 		| 2000	| Daniel Bienven| ColecoVision	| 					|
 | nes_deadfoxc	|  	| Ningen Heiki - Dead Fox (T-Chi, v2.0)			| nes_codenam	| 2010	| Capcom	| Miscellaneous	| 					|
 | ninja		|  	| Ninja (315-5102)					| seganinj	| 1985	| Sega		| System 1	| 					|
 | nbbatmano	|  	| Ninja Baseball Batman (One Key Edition, Hack)		| nbbatman	| 2020-09-06| Hack		| Irem M92	| 					|
@@ -10417,6 +10422,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_picpuzzle	|  	| Picture Puzzle (Jpn)					| 		| 1983	| HAL Laboratory| MSX		| 					|
 | msx_picpuzzle2|  	| Picture Puzzle 2nd version (HB)			| 		| 2004	| Karoshi Corpor| MSX		| 					|
 | md_psolar	|  	| Pier Solar and the Great Architects (World) (En,Es,Pt)| 		| 2010	| WaterMelon	| Sega Megadrive| 64 Mbit (8MB) cartridge		|
+| cv_pillars	|  	| Pillars (HB)						| 		| 2021	| Under4Mhz	| ColecoVision	| 					|
 | msx_pillbox	|  	| Pillbox (Jpn)						| 		| 1983	| Magicsoft	| MSX		| 					|
 | msx_pillboxa	|  	| Pillbox (Jpn, Alt)					| msx_pillbox	| 1983	| Magicsoft	| MSX		| 					|
 | spec_pilotatk	|  	| Pilot Attack (HB, v1.1)				| 		| 2017	| The Future Was| ZX Spectrum	| 					|
@@ -10500,6 +10506,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_pitfightb	|  	| PitFighter - The Ultimate Challenge (Bra)		| sms_pitfight	| 1991	| Tec Toy	| Sega Master Sy| 					|
 | sms_pitfight	|  	| PitFighter - The Ultimate Challenge (Euro)		| 		| 1991	| Domark	| Sega Master Sy| 					|
 | spec_pitman	|  	| Pitman (48K) (HB)					| 		| 2021	| Under4Mhz	| ZX Spectrum	| 					|
+| cv_pitman	|  	| Pitman (HB)						| 		| 2021	| Under4Mhz	| ColecoVision	| 					|
 | msx_pitman	|  	| Pitman (HB)						| 		| 2021	| Under4Mhz	| MSX		| 					|
 | sms_pitman	|  	| Pitman (HB)						| 		| 2021	| Under4Mhz	| Sega Master Sy| 					|
 | sg1k_pitman	|  	| Pitman (HB, v1.03)					| 		| 2021	| Under4Mhz	| Sega SG-1000	| 					|
@@ -12654,6 +12661,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_smurfa	|  	| Smurf Rescue in Gargamel's Castle (Alt)		| cv_smurf	| 1982	| Coleco	| ColecoVision	| 					|
 | cv_smurf	|  	| Smurf Rescue in Gargamel's Castle			| 		| 1982	| Coleco	| ColecoVision	| 					|
 | cv_smurfsav	|  	| Smurfs Save the Day (Prototype)			| 		| 1982	| Coleco	| ColecoVision	| 					|
+| cv_snake	|  	| Snake (HB)						| 		| 2021	| Under4Mhz	| ColecoVision	| 					|
 | msx_snake	|  	| Snake (HB)						| 		| 2021	| Under4Mhz	| MSX		| 					|
 | sg1k_snake	|  	| Snake (HB, v1.04)					| 		| 2021	| Under4Mhz	| Sega SG-1000	| 					|
 | sms_snake	|  	| Snake (HB, v1.04)					| 		| 2021	| Under4Mhz	| Sega Master Sy| 					|
@@ -13300,6 +13308,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_starpaws	|  	| Star Paws (128K)					| 		| 1988	| Software Proje| ZX Spectrum	| 					|
 | starrkr	| D	| Star Raker						| brdrline	| 1981	| Sega		| Vic Dual	| No sound				|
 | spec_starrunner|  	| Star Runner						| 		| 1987	| Codemasters	| ZX Spectrum	| 					|
+| cv_starsoldier|  	| Star Soldier (HB)					| 		| 2015	| CollectorVisio| ColecoVision	| SGM - Super Game Module		|
 | msx_starsold	|  	| Star Soldier (Jpn)					| 		| 1986	| Hudson Soft	| MSX		| 					|
 | msx_starsolda	|  	| Star Soldier (Jpn, Alt)				| msx_starsold	| 1986	| Hudson Soft	| MSX		| 					|
 | nes_starsoldier|  	| Star Soldier (USA)					| 		| 1989	| Taxan		| Miscellaneous	| 					|
@@ -13761,6 +13770,7 @@ This list contains all games supported by FinalBurn Neo.
 | s1945ii	|  	| Strikers 1945 II					| 		| 1997	| Psikyo	| PS3-V1	| 					|
 | s1945p	|  	| Strikers 1945 Plus					| 		| 1999	| Psikyo	| Neo Geo MVS	| 					|
 | pce_stripf2	|  	| Strip Fighter II					| 		| 19??	| Game Express	| PC Engine	| 					|
+| cv_strippoker	|  	| Strip Poker (HB)					| 		| 2014	| NewColeco	| ColecoVision	| 					|
 | strongx	|  	| Strong X						| stratgyx	| 1982	| bootleg	| Galaxian	| 					|
 | spec_strykercryptsoftrogan|  	| Stryker - In the Crypts of Trogan		| 		| 1992	| Codemasters	| ZX Spectrum	| 					|
 | stuntair	|  	| Stunt Air						| 		| 1983	| Nuova Videotro| Miscellaneous	| 					|

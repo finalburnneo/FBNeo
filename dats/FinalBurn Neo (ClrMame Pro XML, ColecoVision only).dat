@@ -933,6 +933,30 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ddash" romof="coleco">
+		<description>Diamond Dash (HB) [Homebrew]</description>
+		<year>2011</year>
+		<manufacturer>NewColeco</manufacturer>
+		<rom name="Diamond Dash (2011)(NewColeco).rom" size="3858" crc="e386b1b7"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ddash2" romof="coleco">
+		<description>Diamond Dash 2 (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Diamond Dash 2 (2021)(Under4Mhz).rom" size="32768" crc="5576dec3"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="digdug" romof="coleco">
 		<description>Dig Dug (Prototype) [Prototype]</description>
 		<year>1984</year>
@@ -1445,6 +1469,18 @@
 		<rom name="galaxian.2" size="8192" crc="9390df8b"/>
 		<rom name="galaxian.3" size="8192" crc="dd5465ce"/>
 		<rom name="galaxian.4" size="8192" crc="b4293435"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gpvic20" romof="coleco">
+		<description>GamePack Vic-20 (HB) [Homebrew]</description>
+		<year>2003</year>
+		<manufacturer>Daniel Bienvenu</manufacturer>
+		<rom name="GamePack Vic-20 (2003)(Daniel Bienvenu).rom" size="8192" crc="5b4ad168"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -2087,6 +2123,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="msolitaire" romof="coleco">
+		<description>Mahjong Solitaire (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Mahjong Solitaire (2021)(Under4Mhz).rom" size="32768" crc="6ed6a2e1"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="majikazo" romof="coleco">
 		<description>Majikazo (HB) [Homebrew, SGM - Super Game Module]</description>
 		<year>2015-16</year>
@@ -2556,6 +2604,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="nim" romof="coleco">
+		<description>Nim (HB) [Homebrew]</description>
+		<year>2000</year>
+		<manufacturer>Daniel Bienvenu</manufacturer>
+		<rom name="Nim (2000) (Daniel Bienvenu).rom" size="6912" crc="9c059a51"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ninjaprincess" romof="coleco">
 		<description>Ninja Princess (HB) [Homebrew, Published by Team Pixelboy]</description>
 		<year>2011</year>
@@ -2745,6 +2805,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="pillars" romof="coleco">
+		<description>Pillars (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Pillars (2021)(Under4Mhz).rom" size="32768" crc="5a49b249"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="pitfall2a" romof="coleco">
 		<description>Pitfall II Arcade (HB) [Homebrew, Published by Team Pixelboy]</description>
 		<year>2010</year>
@@ -2776,6 +2848,18 @@
 		<manufacturer>Activision</manufacturer>
 		<rom name="pitfall.1" size="8192" crc="27bc4115"/>
 		<rom name="pitfall.2" size="8192" crc="24c3fc26"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pitman" romof="coleco">
+		<description>Pitman (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Pitman (2021)(Under4Mhz).rom" size="32768" crc="50998610"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -3491,6 +3575,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="snake" romof="coleco">
+		<description>Snake (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Snake (2021)(Under4Mhz).rom" size="14114" crc="edd4c690"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="soknight" romof="coleco">
 		<description>So You Want To Be A Knight (HB) [Homebrew]</description>
 		<year>2015</year>
@@ -3696,6 +3792,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="starsoldier" romof="coleco">
+		<description>Star Soldier (HB) [Homebrew, SGM - Super Game Module]</description>
+		<year>2015</year>
+		<manufacturer>CollectorVision</manufacturer>
+		<rom name="Star Soldier SGM (2016)(CollectorVision).rom" size="131072" crc="3e7d0520"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="startrek" romof="coleco">
 		<description>Star Trek: Strategic Operations Simulator </description>
 		<year>1984</year>
@@ -3778,6 +3886,18 @@
 		<manufacturer>Telegames</manufacturer>
 		<rom name="strikeit.1" size="8192" crc="7b26040d"/>
 		<rom name="strikeit.2" size="8192" crc="3a2d6226"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="strippoker" romof="coleco">
+		<description>Strip Poker (HB) [Homebrew]</description>
+		<year>2014</year>
+		<manufacturer>NewColeco</manufacturer>
+		<rom name="Strip Poker (2014)(NewColeco).rom" size="32768" crc="d80b6cff"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>

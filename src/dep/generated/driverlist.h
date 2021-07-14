@@ -3534,6 +3534,8 @@ DRV		BurnDrvmd_diablo;
 DRV		BurnDrvnes_diabloii;
 DRV		BurnDrvmd_dialqo;
 DRV		BurnDrvmd_dialqoc;
+DRV		BurnDrvcv_ddash;
+DRV		BurnDrvcv_ddash2;
 DRV		BurnDrvDiamond;
 DRV		BurnDrvsms_dicktr;
 DRV		BurnDrvmd_dicktrs;
@@ -5406,6 +5408,7 @@ DRV		BurnDrvMSX_gameover;
 DRV		BurnDrvMSX_gameovr2;
 DRV		BurnDrvnes_gameparty;
 DRV		BurnDrvmd_gameto;
+DRV		BurnDrvcv_gpvic20;
 DRV		BurnSpecGamessummered;
 DRV		BurnSpecGameswintered;
 #if defined FBNEO_DEBUG
@@ -8201,6 +8204,7 @@ DRV		BurnDrvsms_mjsengok;
 DRV		BurnDrvsms_mjsengokp;
 DRV		BurnDrvpce_mjwars;
 DRV		BurnSpecMsolitaire;
+DRV		BurnDrvcv_msolitaire;
 DRV		BurnDrvMSX_msolitaire;
 DRV		BurnDrvsms_msolitaire;
 DRV		BurnDrvsg1k_msolitaire;
@@ -9782,6 +9786,7 @@ DRV		BurnDrvmd_nikkan;
 DRV		BurnDrvpce_nikopun;		// Locks up in-game? [NOT WORKING]
 #endif
 DRV		BurnDrvnes_nimnom;
+DRV		BurnDrvcv_nim;
 DRV		BurnDrvnes_deadfoxc;
 DRV		BurnDrvNinja;
 DRV		BurnDrvNbbatmano;
@@ -10551,6 +10556,7 @@ DRV		BurnDrvngpc_picturep;
 DRV		BurnDrvMSX_picpuzzle;
 DRV		BurnDrvMSX_picpuzzle2;
 DRV		BurnDrvmd_psolar;
+DRV		BurnDrvcv_pillars;
 DRV		BurnDrvMSX_pillbox;
 DRV		BurnDrvMSX_pillboxa;
 DRV		BurnSpecpilotatk;
@@ -10634,6 +10640,7 @@ DRV		BurnDrvcv_pitfall;
 DRV		BurnDrvsms_pitfightb;
 DRV		BurnDrvsms_pitfight;
 DRV		BurnSpecPitman;
+DRV		BurnDrvcv_pitman;
 DRV		BurnDrvMSX_pitman;
 DRV		BurnDrvsms_pitman;
 DRV		BurnDrvsg1k_pitman;
@@ -12822,6 +12829,7 @@ DRV		BurnDrvcv_smurfply;
 DRV		BurnDrvcv_smurfa;
 DRV		BurnDrvcv_smurf;
 DRV		BurnDrvcv_smurfsav;
+DRV		BurnDrvcv_snake;
 DRV		BurnDrvMSX_snake;
 DRV		BurnDrvsg1k_snake;
 DRV		BurnDrvsms_snake;
@@ -13474,6 +13482,7 @@ DRV		BurnSpecStarpaws;
 DRV		BurnDrvStarrkr;			// No sound
 #endif
 DRV		BurnSpecStarrunner;
+DRV		BurnDrvcv_starsoldier;
 DRV		BurnDrvMSX_starsold;
 DRV		BurnDrvMSX_starsolda;
 DRV		BurnDrvnes_starsoldier;
@@ -13937,6 +13946,7 @@ DRV		BurnDrvS1945iii;
 DRV		BurnDrvS1945ii;
 DRV		BurnDrvs1945p;
 DRV		BurnDrvpce_stripf2;
+DRV		BurnDrvcv_strippoker;
 DRV		BurnDrvStrongx;
 DRV		BurnSpecStrykercryptsoftrogan;
 DRV		BurnDrvStuntair;
@@ -21029,6 +21039,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_diabloii,		// Diablo II (Hack)
 	&BurnDrvmd_dialqo,			// Dial Q o Mawase! (Jpn)
 	&BurnDrvmd_dialqoc,			// Dial Q o Mawase! (T-Chi)
+	&BurnDrvcv_ddash,			// Diamond Dash (HB)
+	&BurnDrvcv_ddash2,			// Diamond Dash 2 (HB)
 	&BurnDrvDiamond,			// Diamond Run
 	&BurnDrvsms_dicktr,			// Dick Tracy (Euro, USA, Bra)
 	&BurnDrvmd_dicktrs,			// Dick Tracy (Hack, Spanish)
@@ -22901,6 +22913,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_gameovr2,		// Game Over II (Spa)
 	&BurnDrvnes_gameparty,		// Game Party (Japan)
 	&BurnDrvmd_gameto,			// Game Toshokan (Jpn, Rev. A)
+	&BurnDrvcv_gpvic20,			// GamePack Vic-20 (HB)
 	&BurnSpecGamessummered,		// Games - Summer Edition, The (128K)
 	&BurnSpecGameswintered,		// Games - Winter Edition, The
 #if defined FBNEO_DEBUG
@@ -25696,6 +25709,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_mjsengokp,		// Mahjong Sengoku Jidai (Jpn, Prototype)
 	&BurnDrvpce_mjwars,			// Mahjong Shikyaku Retsuden - Mahjong Wars
 	&BurnSpecMsolitaire,		// Mahjong Solitaire (128K) (HB)
+	&BurnDrvcv_msolitaire,		// Mahjong Solitaire (HB)
 	&BurnDrvMSX_msolitaire,		// Mahjong Solitaire (HB)
 	&BurnDrvsms_msolitaire,		// Mahjong Solitaire (HB)
 	&BurnDrvsg1k_msolitaire,	// Mahjong Solitaire (HB, v1.07)
@@ -27277,6 +27291,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_nikopun,		// Niko Niko, Pun [Locks up in-game?, NOT WORKING]
 #endif
 	&BurnDrvnes_nimnom,			// Nim & Nom (HB, v1.2)
+	&BurnDrvcv_nim,				// Nim (HB)
 	&BurnDrvnes_deadfoxc,		// Ningen Heiki - Dead Fox (T-Chi, v2.0)
 	&BurnDrvNinja,				// Ninja (315-5102)
 	&BurnDrvNbbatmano,			// Ninja Baseball Batman (One Key Edition, Hack)
@@ -28046,6 +28061,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_picpuzzle,		// Picture Puzzle (Jpn)
 	&BurnDrvMSX_picpuzzle2,		// Picture Puzzle 2nd version (HB)
 	&BurnDrvmd_psolar,			// Pier Solar and the Great Architects (World) (En,Es,Pt) (Rev C) (HB)
+	&BurnDrvcv_pillars,			// Pillars (HB)
 	&BurnDrvMSX_pillbox,		// Pillbox (Jpn)
 	&BurnDrvMSX_pillboxa,		// Pillbox (Jpn, Alt)
 	&BurnSpecpilotatk,			// Pilot Attack (HB, v1.1)
@@ -28129,6 +28145,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_pitfightb,		// PitFighter - The Ultimate Challenge (Bra)
 	&BurnDrvsms_pitfight,		// PitFighter - The Ultimate Challenge (Euro)
 	&BurnSpecPitman,			// Pitman (48K) (HB)
+	&BurnDrvcv_pitman,			// Pitman (HB)
 	&BurnDrvMSX_pitman,			// Pitman (HB)
 	&BurnDrvsms_pitman,			// Pitman (HB)
 	&BurnDrvsg1k_pitman,		// Pitman (HB, v1.03)
@@ -30317,6 +30334,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_smurfa,			// Smurf Rescue in Gargamel's Castle (Alt)
 	&BurnDrvcv_smurf,			// Smurf Rescue in Gargamel's Castle
 	&BurnDrvcv_smurfsav,		// Smurfs Save the Day (Prototype)
+	&BurnDrvcv_snake,			// Snake (HB)
 	&BurnDrvMSX_snake,			// Snake (HB)
 	&BurnDrvsg1k_snake,			// Snake (HB, v1.04)
 	&BurnDrvsms_snake,			// Snake (HB, v1.04)
@@ -30969,6 +30987,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvStarrkr,			// Star Raker [No sound]
 #endif
 	&BurnSpecStarrunner,		// Star Runner
+	&BurnDrvcv_starsoldier,		// Star Soldier (HB)
 	&BurnDrvMSX_starsold,		// Star Soldier (Jpn)
 	&BurnDrvMSX_starsolda,		// Star Soldier (Jpn, Alt)
 	&BurnDrvnes_starsoldier,	// Star Soldier (USA)
@@ -31432,6 +31451,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvS1945ii,			// Strikers 1945 II
 	&BurnDrvs1945p,				// Strikers 1945 Plus
 	&BurnDrvpce_stripf2,		// Strip Fighter II
+	&BurnDrvcv_strippoker,		// Strip Poker (HB)
 	&BurnDrvStrongx,			// Strong X
 	&BurnSpecStrykercryptsoftrogan,// Stryker - In the Crypts of Trogan
 	&BurnDrvStuntair,			// Stunt Air

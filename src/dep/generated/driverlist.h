@@ -1857,6 +1857,7 @@ DRV		BurnSpecbrickrick;
 DRV		BurnDrvMSX_britishbob;
 DRV		BurnDrvBrix;
 DRV		BurnDrvMSX_bronx;
+DRV		BurnDrvBronx;
 DRV		BurnSpecBronxstcop;
 DRV		BurnDrvMSX_brosadv;
 DRV		BurnDrvMSX_brosadva;
@@ -2742,6 +2743,7 @@ DRV		BurnDrvMSX_colballa;
 DRV		BurnDrvCHF_clrorgan;
 DRV		BurnSpecColoristic;
 DRV		BurnDrvMSX_colt36;
+DRV		BurnDrvColt;
 DRV		BurnDrvgg_columns;
 DRV		BurnDrvsms_columnsc;
 DRV		BurnDrvsms_columns;
@@ -3148,6 +3150,7 @@ DRV		BurnDrvMSX_cyborgz;
 DRV		BurnDrvsms_cyborgz;
 DRV		BurnDrvCyclemb;
 DRV		BurnDrvnes_cyclerac;
+DRV		BurnDrvCyclshtg;
 DRV		BurnSpecCygnusalpha;
 DRV		BurnDrvCyvernJ;
 DRV		BurnDrvCyvern;
@@ -9358,6 +9361,7 @@ DRV		BurnDrvsg1k_nsubt;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvNsub;			// no comment
 #endif
+DRV		BurnDrvNycaptor;
 DRV		BurnDrvmd_nakaf1gp;
 DRV		BurnDrvmd_f1heromd;
 DRV		BurnDrvmd_nakaf1sl;
@@ -19362,6 +19366,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_britishbob,		// British Bob (HB)
 	&BurnDrvBrix,				// Brix
 	&BurnDrvMSX_bronx,			// Bronx (Spa)
+	&BurnDrvBronx,				// Bronx
 	&BurnSpecBronxstcop,		// Bronx Street Cop (128K)
 	&BurnDrvMSX_brosadv,		// Brother Adventure - Hyeongje Moheom (Kor)
 	&BurnDrvMSX_brosadva,		// Brother Adventure - Hyeongje Moheom (Kor, Alt)
@@ -20247,6 +20252,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCHF_clrorgan,		// Color Organ (Prototype)
 	&BurnSpecColoristic,		// Coloristic (HB)
 	&BurnDrvMSX_colt36,			// Colt 36 (Spa)
+	&BurnDrvColt,				// Colt
 	&BurnDrvgg_columns,			// Columns (Euro, USA, Bra)
 	&BurnDrvsms_columnsc,		// Columns (Euro, USA, Bra, Kor) - Castellano v1.0
 	&BurnDrvsms_columns,		// Columns (Euro, USA, Bra, Kor)
@@ -20653,6 +20659,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_cyborgz,		// Cyborg Z (Kor)
 	&BurnDrvCyclemb,			// Cycle Maabou (Japan)
 	&BurnDrvnes_cyclerac,		// Cycle Race - Road Man (Japan)
+	&BurnDrvCyclshtg,			// Cycle Shooting [Not Emulated, GFX/layer priority issues, NOT WORKING]
 	&BurnSpecCygnusalpha,		// Cygnus - Alpha (HB)
 	&BurnDrvCyvernJ,			// Cyvern (Japan)
 	&BurnDrvCyvern,				// Cyvern (US)
@@ -26863,6 +26870,7 @@ static struct BurnDriver* pDriver[] = {
 #if defined FBNEO_DEBUG
 	&BurnDrvNsub,				// N-Sub (upright) [no comment]
 #endif
+	&BurnDrvNycaptor,			// N.Y. Captor
 	&BurnDrvmd_nakaf1gp,		// Nakajima Satoru Kanshuu F1 Grand Prix (Jpn)
 	&BurnDrvmd_f1heromd,		// Nakajima Satoru Kanshuu F1 Hero MD (Jpn)
 	&BurnDrvmd_nakaf1sl,		// Nakajima Satoru Kanshuu F1 Super License (Jpn)

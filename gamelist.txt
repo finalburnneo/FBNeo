@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17260 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17264 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1837,6 +1837,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_britishbob|  	| British Bob (HB)					| 		| 2009	| RELEVO	| MSX		| 					|
 | brix		|  	| Brix							| zzyzzyxx	| 1982	| Cinematronics | Jack the Giant| 					|
 | msx_bronx	|  	| Bronx (Spa)						| 		| 1989	| Animagic	| MSX		| 					|
+| bronx		|  	| Bronx							| cyclshtg	| 1986	| bootleg	| Miscellaneous	| GFX/layer priority issues		|
 | spec_bronxstcop|  	| Bronx Street Cop (128K)				| 		| 1989	| Virgin Mastert| ZX Spectrum	| 					|
 | msx_brosadv	|  	| Brother Adventure - Hyeongje Moheom (Kor)		| 		| 1987	| Zemina	| MSX		| 					|
 | msx_brosadva	|  	| Brother Adventure - Hyeongje Moheom (Kor, Alt)	| msx_brosadv	| 1987	| Zemina	| MSX		| 					|
@@ -2710,6 +2711,7 @@ This list contains all games supported by FinalBurn Neo.
 | chf_clrorgan	|  	| Color Organ (Prototype)				| 		| 19??	| Zircon	| Channel F	| 					|
 | spec_coloristic|  	| Coloristic (HB)					| 		| 2020	| Martin Borik	| ZX Spectrum	| 					|
 | msx_colt36	|  	| Colt 36 (Spa)						| 		| 1987	| Topo Soft	| MSX		| 					|
+| colt		|  	| Colt							| nycaptor	| 1986	| bootleg	| Miscellaneous	| 					|
 | gg_columns	|  	| Columns (Euro, USA, Bra)				| 		| 1990	| Sega		| Sega Game Gear| 					|
 | sms_columnsc	|  	| Columns (Euro, USA, Bra, Kor) - Castellano v1.0	| sms_columns	| 2021	| Sega		| Sega Master Sy| 					|
 | sms_columns	|  	| Columns (Euro, USA, Bra, Kor)				| 		| 1990	| Sega		| Sega Master Sy| 					|
@@ -3110,6 +3112,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_cyborgz	|  	| Cyborg Z (Kor)					| 		| 1991	| Zemina	| Sega Master Sy| 					|
 | cyclemb	|  	| Cycle Maabou (Japan)					| 		| 1984	| Taito Corporat| Miscellaneous	| 					|
 | nes_cyclerac	|  	| Cycle Race - Road Man (Japan)				| 		| 1988	| Tokyo Shoseki	| Miscellaneous	| 					|
+| cyclshtg	|   NW	| Cycle Shooting					| 		| 1986	| Taito		| Miscellaneous	| Not Emulated, GFX/layer priority issue|
 | spec_cygnusalpha|  	| Cygnus - Alpha (HB)					| 		| 2020	| ILFORD	| ZX Spectrum	| 					|
 | cyvernj	|  	| Cyvern (Japan)					| cyvern	| 1998	| Kaneko	| Super Kaneko N| 					|
 | cyvern	|  	| Cyvern (US)						| 		| 1998	| Kaneko	| Super Kaneko N| 					|
@@ -9240,6 +9243,7 @@ This list contains all games supported by FinalBurn Neo.
 | sg1k_nsubb	|  	| N-Sub (Jpn, Alt)					| sg1k_nsub	| 1983	| Sega		| Sega SG-1000	| 					|
 | sg1k_nsubt	|  	| N-Sub (Tw)						| sg1k_nsub	| 1983?	| Aaronix	| Sega SG-1000	| 					|
 | nsub		| D	| N-Sub (upright)					| 		| 1980	| Sega		| Miscellaneous	| 					|
+| nycaptor	|  	| N.Y. Captor						| 		| 1985	| Taito		| Miscellaneous	| 					|
 | md_nakaf1gp	|  	| Nakajima Satoru Kanshuu F1 Grand Prix (Jpn)		| 		| 1991	| Varie		| Sega Megadrive| 					|
 | md_f1heromd	|  	| Nakajima Satoru Kanshuu F1 Hero MD (Jpn)		| 		| 1992	| Varie		| Sega Megadrive| 					|
 | md_nakaf1sl	|  	| Nakajima Satoru Kanshuu F1 Super License (Jpn)	| 		| 1992	| Varie		| Sega Megadrive| 					|

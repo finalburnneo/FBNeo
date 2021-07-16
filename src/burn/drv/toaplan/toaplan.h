@@ -186,7 +186,7 @@ inline static UINT16 ToaScanlineRegister()
 
 	}
 
-	return nFlags | nCurrentScanline;
+	return nFlags | ((nCurrentScanline > 255) ? 0xff : nCurrentScanline);
 }
 
 inline static UINT16 ToaScanlineRegisterLoctest() // bgaregga location test

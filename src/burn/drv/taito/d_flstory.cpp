@@ -1,8 +1,6 @@
 // FB Alpha Fairyland story driver module
 // Based on MAME driver by Nicola Salmoria
 
-// Todo: victnine
-
 #include "tiles_generic.h"
 #include "taito_m68705.h"
 #include "z80_intf.h"
@@ -35,16 +33,15 @@ static INT32 nmi_enable;
 static INT32 pending_nmi;
 static INT32 char_bank = 0;
 static UINT8 m_gfxctrl;
-static INT32 mcu_select;
 
-static UINT8  DrvJoy1[8];
-static UINT8  DrvJoy2[8];
-static UINT8  DrvJoy3[8];
-static UINT8  DrvJoy4[8];
-static UINT8  DrvJoy5[8];
-static UINT8  DrvDips[3];
-static UINT8  DrvInputs[5];
-static UINT8  DrvReset;
+static UINT8 DrvJoy1[8];
+static UINT8 DrvJoy2[8];
+static UINT8 DrvJoy3[8];
+static UINT8 DrvJoy4[8];
+static UINT8 DrvJoy5[8];
+static UINT8 DrvDips[3];
+static UINT8 DrvInputs[5];
+static UINT8 DrvReset;
 
 static UINT8 *flipscreen;
 static UINT8 *soundlatch;
@@ -57,55 +54,55 @@ static UINT8 m_snd_ctrl1;
 static UINT8 m_snd_ctrl2;
 
 static struct BurnInputInfo FlstoryInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 3,	"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 3,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Flstory)
 
 static struct BurnInputInfo RumbaInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 5,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 4,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 5,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 4,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 3,	"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 3,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Rumba)
@@ -309,30 +306,30 @@ static struct BurnDIPInfo FlstoryDIPList[]=
 STDDIPINFO(Flstory)
 
 static struct BurnInputInfo Onna34roInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 5,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 4,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 5,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 4,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 3,	"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 3,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Onna34ro)
@@ -441,11 +438,11 @@ static struct BurnDIPInfo Onna34roDIPList[]=
 STDDIPINFO(Onna34ro)
 
 static struct BurnInputInfo VictnineInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 5,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 4,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 2"	},
@@ -454,11 +451,11 @@ static struct BurnInputInfo VictnineInputList[] = {
 	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy4 + 4,	"p1 fire 5"	},
 	{"P1 Button 6",		BIT_DIGITAL,	DrvJoy4 + 5,	"p1 fire 6"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 5,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 4,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 fire 2"	},
@@ -467,12 +464,12 @@ static struct BurnInputInfo VictnineInputList[] = {
 	{"P2 Button 5",		BIT_DIGITAL,	DrvJoy5 + 4,	"p2 fire 5"	},
 	{"P2 Button 6",		BIT_DIGITAL,	DrvJoy5 + 5,	"p2 fire 6"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 3,	"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 3,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Victnine)
@@ -551,7 +548,7 @@ static struct BurnDIPInfo VictnineDIPList[]=
 
 STDDIPINFO(Victnine)
 
-static void gfxctrl_write(INT32 data)
+static void gfxctrl_write(INT32 data) // victnine, rumba
 {
 	m_gfxctrl = data;
 
@@ -559,6 +556,7 @@ static void gfxctrl_write(INT32 data)
 
 	ZetMapArea(0xdd00, 0xddff, 0, DrvPalRAM + 0x000 + bank);
 	ZetMapArea(0xdd00, 0xddff, 1, DrvPalRAM + 0x000 + bank);
+
 	ZetMapArea(0xde00, 0xdeff, 0, DrvPalRAM + 0x200 + bank);
 	ZetMapArea(0xde00, 0xdeff, 1, DrvPalRAM + 0x200 + bank);
 
@@ -569,100 +567,10 @@ static void gfxctrl_write(INT32 data)
 
 	char_bank = (data & 0x10) >> 4;
 
-	if (data & 4) *flipscreen = (~data & 0x01);
-}
-
-static void onna34ro_mcu_write(INT32 data)
-{
-	INT32 score_adr = (ZetReadByte(0xe29e) << 8) + ZetReadByte(0xe29d);
-
-	mcu_sent = 1;
-
-	switch (data)
-	{
-		case 0x0e:
-			from_mcu = 0xff;
-			break;
-
-		case 0x01:
-			from_mcu = 0x6a;
-			break;
-
-		case 0x40: if(score_adr >= 0xe000 && score_adr < 0xe800) from_mcu = ZetReadByte(score_adr);
-			break;
-
-		case 0x41: if(score_adr >= 0xe000 && score_adr < 0xe800) from_mcu = ZetReadByte(score_adr+1);
-			break;
-
-		case 0x42: if(score_adr >= 0xe000 && score_adr < 0xe800) from_mcu = ZetReadByte(score_adr+2) & 0x0f;
-			break;
-
-		default:
-			from_mcu = 0x80;
-	}
-}
-
-static const UINT8 victnine_mcu_data[0x100] =
-{
-	0x3e, 0x08, 0xdd, 0x29, 0xcb, 0x14, 0xfd, 0x29,
-	0xcb, 0x15, 0xd9, 0x29, 0xd9, 0x30, 0x0d, 0xd9,
-	0x19, 0xd9, 0xdd, 0x09, 0x30, 0x01, 0x24, 0xfd,
-	0x19, 0x30, 0x01, 0x2c, 0x3d, 0x20, 0xe3, 0xc9,
-	0x11, 0x14, 0x00, 0x19, 0x7e, 0x32, 0xed, 0xe4,
-	0x2a, 0x52, 0xe5, 0x22, 0xe9, 0xe4, 0x2a, 0x54,
-	0xe5, 0x22, 0xeb, 0xe4, 0x21, 0x2a, 0xe6, 0xfe,
-	0x06, 0x38, 0x02, 0xcb, 0xc6, 0xcb, 0xce, 0xc9,
-	0x06, 0x00, 0x3a, 0xaa, 0xe4, 0x07, 0x07, 0x07,
-	0xb0, 0x47, 0x3a, 0xab, 0xe4, 0x07, 0x07, 0xb0,
-	0x47, 0x3a, 0xac, 0xe4, 0xe6, 0x03, 0xb0, 0x21,
-	0xe3, 0xe6, 0xc9, 0x38, 0xe1, 0x29, 0x07, 0xc9,
-	0x23, 0x7e, 0x47, 0xe6, 0x1f, 0x32, 0x0c, 0xe6,
-	0x78, 0xe6, 0xe0, 0x07, 0x07, 0x47, 0xe6, 0x03,
-	0x28, 0x06, 0xcb, 0x7a, 0x28, 0x02, 0xc6, 0x02,
-	0x32, 0x0a, 0xe6, 0x78, 0xe6, 0x80, 0xc9, 0x3a,
-	0x21, 0x29, 0xe5, 0x7e, 0xe6, 0xf8, 0xf6, 0x01,
-	0x77, 0x23, 0x3a, 0x0a, 0xe6, 0x77, 0x21, 0x08,
-	0xe6, 0xcb, 0xc6, 0xcb, 0x8e, 0x3a, 0x2b, 0xe5,
-	0x21, 0xff, 0xe5, 0xfe, 0x02, 0xc9, 0x1f, 0xc6,
-	0x47, 0x3a, 0xaa, 0xe4, 0xa7, 0x21, 0x00, 0xe5,
-	0x28, 0x03, 0x21, 0x1b, 0xe5, 0x70, 0x3a, 0xaa,
-	0xe4, 0xee, 0x01, 0x32, 0xaa, 0xe4, 0x21, 0xb0,
-	0xe4, 0x34, 0x23, 0x36, 0x00, 0xc9, 0x2b, 0xb2,
-	0xaf, 0x77, 0x12, 0x23, 0x13, 0x3c, 0xfe, 0x09,
-	0x20, 0xf7, 0x3e, 0x01, 0x32, 0xad, 0xe4, 0x21,
-	0x48, 0xe5, 0xcb, 0xfe, 0xc9, 0x32, 0xe5, 0xaa,
-	0x21, 0x00, 0x13, 0xe4, 0x47, 0x1b, 0xa1, 0xc9,
-	0x00, 0x08, 0x04, 0x0c, 0x05, 0x0d, 0x06, 0x0e,
-	0x22, 0x66, 0xaa, 0x22, 0x33, 0x01, 0x11, 0x88,
-	0x06, 0x05, 0x03, 0x04, 0x08, 0x01, 0x03, 0x02,
-	0x06, 0x07, 0x02, 0x03, 0x15, 0x17, 0x11, 0x13
-};
-
-static void victnine_mcu_write(INT32 data)
-{
-	INT32 seed = ZetReadByte(0xe685);
-
-	if (!seed && (data & 0x37) == 0x37)
-	{
-		from_mcu = 0xa6;
-	}
-	else
-	{
-		data += seed;
-
-		if ((data & ~0x1f) == 0xa0)
-		{
-			mcu_select = data & 0x1f;
-		}
-		else if (data < 0x20)
-		{
-			INT32 offset = mcu_select * 8 + data;
-			from_mcu = victnine_mcu_data[offset];
-		}
-		else if (data >= 0x38 && data <= 0x3a)
-		{
-			from_mcu = ZetReadByte(0xe691 - 0x38 + data);
-		}
+	if ((select_game == 2) || (select_game == 3)) { // victnine, rumba
+		if (data & 4) *flipscreen = (data & 0x01);
+	} else {                                        // all others
+		if (data & 4) *flipscreen = (~data & 0x01);
 	}
 }
 
@@ -681,13 +589,7 @@ static void __fastcall flstory_main_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0xd000:
-			if (select_game == 2) {
-				victnine_mcu_write(data);
-			} else if (select_game == 10) {
-				onna34ro_mcu_write(data);
-			} else {
-				standard_taito_mcu_write(data);
-			}
+			standard_taito_mcu_write(data);
 		return;
 
 		case 0xd400:
@@ -713,14 +615,7 @@ static UINT8 __fastcall flstory_main_read(UINT16 address)
 	switch (address)
 	{
 		case 0xd000:
-			if (select_game == 10) {
-				return from_mcu;
-			}
-			if (select_game == 2) {
-				return from_mcu - ZetReadByte(0xe685);
-			} else {
-				return standard_taito_mcu_read();
-			}
+			return standard_taito_mcu_read();
 
 		case 0xd400:
 			snd_flag = 0;
@@ -749,8 +644,8 @@ static UINT8 __fastcall flstory_main_read(UINT16 address)
 			if (!main_sent) res |= 0x01;
 			if (mcu_sent) res |= 0x02;
 
-			if (select_game == 2) res |= DrvInputs[3];
-			if (select_game == 10) res = 0x03; // onna always returns 3
+			if (select_game == 2) res |= (DrvInputs[3] & 0xfc);
+			if (select_game == 10) res = 0x03; // onna32roa always returns 3
 			return res;
 		}
 
@@ -787,7 +682,7 @@ static void ta7630_init()
 */
 }
 
-static void sound_control_0_w(UINT8 data)
+static void sound_volume0(UINT8 data)
 {
 	double vol;
 	m_snd_ctrl0 = data & 0xff;
@@ -799,7 +694,7 @@ static void sound_control_0_w(UINT8 data)
 	MSM5232SetRoute(vol, BURN_SND_MSM5232_ROUTE_3);
 }
 
-static void sound_control_1_w(UINT8 data)
+static void sound_volume1(UINT8 data)
 {
 	double vol;
 	m_snd_ctrl1 = data & 0xff;
@@ -846,12 +741,12 @@ static void __fastcall flstory_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xcc00:
-			sound_control_0_w(data);
-			break;
+			sound_volume0(data);
+		break;
 
 		case 0xce00:
-			sound_control_1_w(data);
-			break;
+			sound_volume1(data);
+		break;
 
 		case 0xd800:
 			snd_data = data;
@@ -860,8 +755,7 @@ static void __fastcall flstory_sound_write(UINT16 address, UINT8 data)
 
 		case 0xda00:
 			nmi_enable = 1;
-			if (pending_nmi)
-			{
+			if (pending_nmi) {
 				ZetNmi();
 				pending_nmi = 0;
 			}
@@ -888,7 +782,6 @@ static UINT8 __fastcall flstory_sound_read(UINT16 address)
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	ZetReset(0);
@@ -907,7 +800,6 @@ static INT32 DrvDoReset()
 	nmi_enable = 0;
 	pending_nmi = 0;
 	char_bank = 0;
-	mcu_select = 0;
 
 	return 0;
 }
@@ -969,15 +861,10 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
-		if (select_game == 0) {
+		if (select_game == 0) { // flstory
 			if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
 			if (BurnLoadRom(DrvZ80ROM0 + 0x04000,  1, 1)) return 1;
 			if (BurnLoadRom(DrvZ80ROM0 + 0x08000,  2, 1)) return 1;
@@ -995,7 +882,7 @@ static INT32 DrvInit()
 			if (BurnLoadRom(DrvGfxROM0 + 0x1c000, 12, 1)) return 1;
 	
 			if (BurnLoadRom(DrvMcuROM  + 0x00000, 13, 1)) return 1;
-		} else if (select_game == 1) {
+		} else if (select_game == 1) { // onna32ro
 			if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
 			if (BurnLoadRom(DrvZ80ROM0 + 0x04000,  1, 1)) return 1;
 			if (BurnLoadRom(DrvZ80ROM0 + 0x08000,  2, 1)) return 1;
@@ -1016,7 +903,7 @@ static INT32 DrvInit()
 			if (BurnLoadRom(DrvGfxROM0 + 0x1c000, 15, 1)) return 1;
 			
 			if (BurnLoadRom(DrvMcuROM  + 0x00000, 16, 1)) return 1;
-		} else if (select_game == 2) {
+		} else if (select_game == 2) { // victnine
 			if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
 			if (BurnLoadRom(DrvZ80ROM0 + 0x02000,  1, 1)) return 1;
 			if (BurnLoadRom(DrvZ80ROM0 + 0x04000,  2, 1)) return 1;
@@ -1039,7 +926,9 @@ static INT32 DrvInit()
 			if (BurnLoadRom(DrvGfxROM0 + 0x12000, 17, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x14000, 18, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x16000, 19, 1)) return 1;
-		} else if (select_game == 3) {
+
+			if (BurnLoadRom(DrvMcuROM  + 0x00000, 20, 1)) return 1;
+		} else if (select_game == 3) { // rumba
 			if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
 			if (BurnLoadRom(DrvZ80ROM0 + 0x04000,  1, 1)) return 1;
 			if (BurnLoadRom(DrvZ80ROM0 + 0x08000,  2, 1)) return 1;
@@ -1054,7 +943,7 @@ static INT32 DrvInit()
 			if (BurnLoadRom(DrvGfxROM0 + 0x00000,  8, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x06000,  9, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x04000, 10, 1)) return 1;
-		} else if (select_game == 10) {
+		} else if (select_game == 10) { // onna32roa (bootleg, no mcu)
 			if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
 			if (BurnLoadRom(DrvZ80ROM0 + 0x04000,  1, 1)) return 1;
 			if (BurnLoadRom(DrvZ80ROM0 + 0x08000,  2, 1)) return 1;
@@ -1144,44 +1033,6 @@ static INT32 DrvInit()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
-{
-	struct BurnArea ba;
-
-	if (pnMin) {
-		*pnMin = 0x029707;
-	}
-
-	if (nAction & ACB_VOLATILE) {
-		memset(&ba, 0, sizeof(ba));
-
-		ba.Data	  = AllRam;
-		ba.nLen	  = RamEnd - AllRam;
-		ba.szName = "All Ram";
-		BurnAcb(&ba);
-
-		ZetScan(nAction);
-		m68705_taito_scan(nAction);
-		AY8910Scan(nAction, pnMin);
-		MSM5232Scan(nAction, pnMin);
-		DACScan(nAction, pnMin);
-
-		SCAN_VAR(snd_data);
-		SCAN_VAR(snd_flag);
-		SCAN_VAR(nmi_enable);
-		SCAN_VAR(pending_nmi);
-		SCAN_VAR(char_bank);
-		SCAN_VAR(mcu_select);
-		SCAN_VAR(m_snd_ctrl0);
-		SCAN_VAR(m_snd_ctrl1);
-		SCAN_VAR(m_snd_ctrl2);
-
-		DrvRecalc = 1;
-	}
-
-	return 0;
-}
-
 static INT32 DrvExit()
 {
 	GenericTilesExit();
@@ -1193,7 +1044,7 @@ static INT32 DrvExit()
 	MSM5232Exit();
 	DACExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -1227,19 +1078,7 @@ static void draw_background_layer(INT32 type, INT32 priority)
 		if (priority && !prio) continue;
 
 		if (type == 1) { // first background layer
-			if (flipy) {
-				if (flipx) {
-					Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color >> 4, 4, 0, DrvGfxROM0);
-				} else {
-					Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy, color >> 4, 4, 0, DrvGfxROM0);
-				}
-			} else {
-				if (flipx) {
-					Render8x8Tile_FlipX_Clip(pTransDraw, code, sx, sy, color >> 4, 4, 0, DrvGfxROM0);
-				} else {
-					Render8x8Tile_Clip(pTransDraw, code, sx, sy, color >> 4, 4, 0, DrvGfxROM0);
-				}
-			}
+			Draw8x8Tile(pTransDraw, code, sx, sy, flipx, flipy, color >> 4, 4, 0, DrvGfxROM0);
 		}
 		else if (type == 6) { // not used (for now)
 			if (flipy) {
@@ -1300,20 +1139,7 @@ static void victnine_draw_background_layer()
 		INT32 flipx = attr & 0x40;
 		INT32 color = attr & 0x07;
 
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM0);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM0);
-			}
-		}
-
+		Draw8x8Tile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 0, DrvGfxROM0);
 	}
 }
 
@@ -1329,7 +1155,7 @@ static void draw_sprites(INT32 pri, INT32 type)
 			INT32 sy    = DrvSprRAM[offs + 0];
 			INT32 attr  = DrvSprRAM[offs + 1];
 			INT32 code  = DrvSprRAM[offs + 2];
-			if (type) {
+			if (type) { // victnine
 				code += (attr & 0x20) << 3;
 			} else {
 				code += ((attr & 0x30) << 4);
@@ -1341,61 +1167,43 @@ static void draw_sprites(INT32 pri, INT32 type)
 
 			if (*flipscreen)
 			{
-				sx = (240 - sx) & 0xff;
-				sy = sy - 1;
+				if (type) { // victnine
+					sx = (240 - sx + 1) & 0xff;
+					sy = sy + 1;
+				} else {
+					sx = (240 - sx) & 0xff;
+					sy = sy - 1;
+				}
 
 				flipx ^= 0x40;
 				flipx ^= 0x80;
+			} else {
+				if (type) { // victnine
+					sy = 240 - sy + 1;
+				} else {
+					sy = 240 - sy - 1;
+				}
 			}
-			else
-				sy = 240 - sy - 1;
 
 			sy -= 16;
 
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, attr & 0x0f, 4, 15, 0x100, DrvGfxROM1);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, attr & 0x0f, 4, 15, 0x100, DrvGfxROM1);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, attr & 0x0f, 4, 15, 0x100, DrvGfxROM1);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, attr & 0x0f, 4, 15, 0x100, DrvGfxROM1);
-				}
-			}
-
-			if (sx > 240) {
-				if (flipy) {
-					if (flipx) {
-						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx - 256, sy, attr & 0x0f, 4, 15, 0x100, DrvGfxROM1);
-					} else {
-						Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx - 256, sy, attr & 0x0f, 4, 15, 0x100, DrvGfxROM1);
-					}
-				} else {
-					if (flipx) {
-						Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx - 256, sy, attr & 0x0f, 4, 15, 0x100, DrvGfxROM1);
-					} else {
-						Render16x16Tile_Mask_Clip(pTransDraw, code, sx - 256, sy, attr & 0x0f, 4, 15, 0x100, DrvGfxROM1);
-					}
-				}
-			}
+			Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, attr & 0x0f, 4, 15, 0x100, DrvGfxROM1);
+			Draw16x16MaskTile(pTransDraw, code, sx - 256, sy, flipx, flipy, attr & 0x0f, 4, 15, 0x100, DrvGfxROM1);
 		}
 	}
 }
 
 static inline void DrvRecalcPalette()
 {
-	UINT8 r,g,b;
 	for (INT32 i = 0; i < 0x200; i++) {
 		INT32 d = DrvPalRAM[i] | (DrvPalRAM[i + 0x200] << 8);
-		b = (d >> 8) & 0x0f;
-		g = (d >> 4) & 0x0f;
-		r = d & 0x0f;
+		UINT8 b = (d >> 8) & 0x0f;
+		UINT8 g = (d >> 4) & 0x0f;
+		UINT8 r = d & 0x0f;
 		DrvPalette[i] = BurnHighCol((r << 4) | r, (g << 4) | g, (b << 4) | b, 0);
 	}
 }
+
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
@@ -1457,24 +1265,20 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = nCyclesTotal[0] / nInterleave;
-
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nSegment);
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		CPU_RUN(0, Zet);
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		nSegment = nCyclesTotal[1] / nInterleave;
-		nCyclesDone[1] += ZetRun(nSegment);
-		if (i == (nInterleave / 2) - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
-		if (i == (nInterleave / 1) - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		CPU_RUN(1, Zet);
+		if (i == (nInterleave / 2) - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		if (i == (nInterleave / 1) - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
-		if (select_game == 0 || select_game == 1 || select_game == 3) {
+		if (select_game != 10) {
 			m6805Open(0);
-			nSegment = nCyclesTotal[2] / nInterleave;
-			nCyclesDone[2] += m6805Run(nSegment);
+			CPU_RUN(2, m6805);
 			m6805Close();
 		}
 	}
@@ -1491,6 +1295,41 @@ static INT32 DrvFrame()
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
+	}
+
+	return 0;
+}
+
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
+{
+	struct BurnArea ba;
+
+	if (pnMin) {
+		*pnMin = 0x029707;
+	}
+
+	if (nAction & ACB_VOLATILE) {
+		memset(&ba, 0, sizeof(ba));
+
+		ba.Data	  = AllRam;
+		ba.nLen	  = RamEnd - AllRam;
+		ba.szName = "All Ram";
+		BurnAcb(&ba);
+
+		ZetScan(nAction);
+		m68705_taito_scan(nAction);
+		AY8910Scan(nAction, pnMin);
+		MSM5232Scan(nAction, pnMin);
+		DACScan(nAction, pnMin);
+
+		SCAN_VAR(snd_data);
+		SCAN_VAR(snd_flag);
+		SCAN_VAR(nmi_enable);
+		SCAN_VAR(pending_nmi);
+		SCAN_VAR(char_bank);
+		SCAN_VAR(m_snd_ctrl0);
+		SCAN_VAR(m_snd_ctrl1);
+		SCAN_VAR(m_snd_ctrl2);
 	}
 
 	return 0;

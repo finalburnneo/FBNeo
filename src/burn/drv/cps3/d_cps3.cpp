@@ -2083,7 +2083,7 @@ STD_ROM_PICK(jojobanrb)
 STD_ROM_FN(jojobanrb)
 
 struct BurnDriver BurnDrvJojobanrb = {
-	"jojobanrb" "jojoba", NULL, NULL, "2021",
+	"jojobanrb", "jojoba", NULL, NULL, "2021",
 	"JoJo's Bizarre Adventure: Heritage for the Future / JoJo no Kimyou na Bouken: Mirai e no Isan (Rainbow Edition v1.0.1 2021)\0", NULL, "hack", "CPS-3",
 	"JoJo's Bizarre Adventure\0\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A: \u672A\u6765\u3078\u306E\u907A\u7523 (Rainbow Edition v1.0.1 2021)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS3 | HARDWARE_CAPCOM_CPS3_NO_CD, GBF_VSFIGHT, 0,

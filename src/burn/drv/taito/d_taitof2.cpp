@@ -8536,6 +8536,7 @@ static INT32 LiquidkInit()
 	if (TaitoLoadRoms(1)) return 1;
 	
 	TC0100SCNInit(0, TaitoNumChar, 3, 8, 0, TaitoPriorityMap);
+	TC0100SCNLiquidKludge();
 	TC0140SYTInit(0);
 	TC0360PRIInit();
 	TC0220IOCInit();

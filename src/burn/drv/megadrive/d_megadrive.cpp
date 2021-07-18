@@ -31696,7 +31696,7 @@ STD_ROM_FN(md_sf2)
 
 struct BurnDriver BurnDrvmd_sf2 = {
 	"md_sf2", NULL, NULL, NULL, "1993",
-	"Street Fighter II' - Special Champion Edition (Euro)\0", NULL, "Sega", "Sega Megadrive",
+	"Street Fighter II' - Special Champion Edition (Euro)\0", NULL, "Capcom", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_sf2RomInfo, md_sf2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -43766,6 +43766,60 @@ struct BurnDriver BurnDrvmd_fatalsmarties = {
 
 // -- Prototype/Hack additions below --
 
+// Super Street Fighter II - The New Challengers (Hack, Color and Graphic)
+static struct BurnRomInfo md_ssf2cgRomDesc[] = {
+	{ "Super Street Fighter II (hack-2021).md", 5242880, 0xf390add2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ssf2cg)
+STD_ROM_FN(md_ssf2cg)
+
+struct BurnDriver BurnDrvmd_ssf2cg = {
+	"md_ssf2cg", "md_ssf2", NULL, NULL, "2021",
+	"Super Street Fighter II - The New Challengers (Hack, Color and Graphic)\0", NULL, "Lord Hiryu", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_ssf2cgRomInfo, md_ssf2cgRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Street Fighter II' - Hyper Champion Edition (Hack, v2)
+static struct BurnRomInfo md_sf2hce2RomDesc[] = {
+	{ "Street Fighter II' - Hyper Champion Edition (hack-2021).md", 3145728, 0xe5c620a9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sf2hce2)
+STD_ROM_FN(md_sf2hce2)
+
+struct BurnDriver BurnDrvmd_sf2hce2 = {
+	"md_sf2hce2", "md_sf2", NULL, NULL, "2020-21",
+	"Street Fighter II' - Hyper Champion Edition (Hack, v2)\0", NULL, "Lord Hiryu", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_sf2hce2RomInfo, md_sf2hce2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Street Fighter II' - The World Warrior Plus (Hack)
+static struct BurnRomInfo md_sf2wwpRomDesc[] = {
+	{ "Street Fighter II' - World Warrior Plus (hack-2021).md", 3145728, 0x8fad3a36, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sf2wwp)
+STD_ROM_FN(md_sf2wwp)
+
+struct BurnDriver BurnDrvmd_sf2wwp = {
+	"md_sf2wwp", "md_sf2", NULL, NULL, "2021",
+	"Street Fighter II' - The World Warrior Plus (Hack)\0", NULL, "Lord Hiryu", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_sf2wwpRomInfo, md_sf2wwpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Thunderbolt II
 static struct BurnRomInfo md_tbolt2RomDesc[] = {
 	{ "thunderbolt ii.bin", 0x80000, 0xd5fcc49f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -51789,7 +51843,7 @@ STD_ROM_FN(md_sf2hce)
 
 struct BurnDriver BurnDrvmd_sf2hce = {
 	"md_sf2hce", "md_sf2", NULL, NULL, "2020",
-	"Street Fighter II' - Hyper Champion Edition (Hack)\0", NULL, "Capcom", "Sega Megadrive",
+	"Street Fighter II' - Hyper Champion Edition (Hack)\0", NULL, "Lord Hiryu", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_sf2hceRomInfo, md_sf2hceRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

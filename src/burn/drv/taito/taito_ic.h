@@ -80,6 +80,7 @@ void TC0100SCNSetClipArea(INT32 Chip, INT32 ClipWidth, INT32 ClipHeight, INT32 C
 void TC0100SCNSetPaletteOffset(INT32 Chip, INT32 PaletteOffset);
 void TC0100SCNExit();
 void TC0100SCNScan(INT32 nAction);
+void TC0100SCNLiquidKludge();
 
 // TC0110PCR
 extern UINT32 *TC0110PCRPalette;

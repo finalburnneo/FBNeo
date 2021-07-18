@@ -35,6 +35,14 @@ static UINT16 *pTC0100SCNBgTempDraw[TC0100SCN_MAX_CHIPS] = { NULL, };
 static UINT16 *pTC0100SCNFgTempDraw[TC0100SCN_MAX_CHIPS] = { NULL, };
 static INT32 TC0100SCNNum = 0;
 
+// TOFIX/NOTE: this is temporary, find real source of problem someday -dink july 2021
+static INT32 liquid_kludge = 0;
+
+void TC0100SCNLiquidKludge()
+{
+	liquid_kludge = 23 - 8;
+}
+
 #define PLOTPIXEL(x, po) if (pTileData[x]) {pPixel[x] = nPalette | pTileData[x] | po;}
 #define PLOTPIXEL_FLIPX(x, a, po) if (pTileData[a]) {pPixel[x] = nPalette | pTileData[a] | po;}
 
@@ -246,7 +254,7 @@ void TC0100SCNRenderBgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc, INT32 Priorit
 	if (TC0100SCNFlip[Chip]) ySrc = (256 + 16 - ySrc) & HeightMask;
 
 	for (y = 0; y < TC0100SCNClipHeight[Chip]; y++) {
-		xSrc = (BgScrollX[Chip] - BURN_ENDIAN_SWAP_INT16(ScrollRam[(y + dyScroll) & 0x1ff]) + dxScroll + TC0100SCNClipStartX[Chip]) & WidthMask;
+		xSrc = (BgScrollX[Chip] - BURN_ENDIAN_SWAP_INT16(ScrollRam[(y + dyScroll + liquid_kludge) & 0x1ff]) + dxScroll + TC0100SCNClipStartX[Chip]) & WidthMask;
 		if(TC0100SCNFlip[Chip]) xSrc = (256 - 58 - xSrc) & WidthMask;
 		if (TC0100SCNFlipScreenX[Chip]) xSrc = (256 - 64 - xSrc) & WidthMask;
 
@@ -536,6 +544,8 @@ void TC0100SCNInit(INT32 Chip, INT32 nNumTiles, INT32 xOffset, INT32 yOffset, IN
 
 	TaitoIC_TC0100SCNInUse = 1;
 	TC0100SCNNum++;
+
+	liquid_kludge = 0;
 }
 
 void TC0100SCNSetColourDepth(INT32 Chip, INT32 ColourDepth)
@@ -607,6 +617,8 @@ void TC0100SCNExit()
 	}
 
 	TC0100SCNNum = 0;
+
+	liquid_kludge = 0;
 }
 
 void TC0100SCNScan(INT32 nAction)

@@ -156,7 +156,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aaargh" romof="msx">
-		<description>Aaargh! (Spa)</description>
+		<description>Aaargh! (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Dro Soft</manufacturer>
 		<rom name="aaargh! (1989)(dro soft)(es)[run'cas-'].cas" size="164708" crc="1cdc6750"/>
@@ -222,7 +222,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="adel" romof="msx">
-		<description>Adel (Spa)</description>
+		<description>Adel (Spanish)</description>
 		<year>1986</year>
 		<manufacturer>Mind Games Espana</manufacturer>
 		<rom name="adel (1986)(mind games espana)(es)[run'cas-'].cas" size="45249" crc="62db7bde"/>
@@ -256,7 +256,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="afteroids" romof="msx">
-		<description>Afteroids (Spa) [Press S to skip intro screen]</description>
+		<description>Afteroids (Spanish) [Press S to skip intro screen]</description>
 		<year>1988</year>
 		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="Afteroids (1988)(Zigurat Software)(ES).rom" size="131072" crc="8a599dad"/>
@@ -300,7 +300,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="alehop" romof="msx">
-		<description>Ale Hop! (Spa)</description>
+		<description>Ale Hop! (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="Ale Hop! (1988)(Topo Soft)(ES).rom" size="131072" crc="c2694922"/>
@@ -509,7 +509,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="amomundo" romof="msx">
-		<description>Amo del Mundo (Spa)</description>
+		<description>Amo del Mundo (Spanish)</description>
 		<year>1990</year>
 		<manufacturer>Positive</manufacturer>
 		<rom name="amo del mundo (1990)(positive)(es)[run'cas-'][martos].cas" size="48465" crc="8419ee76"/>
@@ -520,7 +520,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="amotopuf" romof="msx">
-		<description>Amoto's Puf (Spa)</description>
+		<description>Amoto's Puf (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>SPE</manufacturer>
 		<rom name="amoto's puf (1988)(spe)(es)[run'cas-'].cas" size="33352" crc="aa21b91d"/>
@@ -762,6 +762,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="aspargp" romof="msx">
+		<description>Aspar GP Master (Spanish)</description>
+		<year>1988</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Aspar GP Master (1988)(Dinamic).rom" size="65536" crc="62d71a05"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="astrobls" romof="msx">
 		<description>Astro Blaster (Euro)</description>
 		<year>1988</year>
@@ -774,7 +785,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="amc" romof="msx">
-		<description>Astro Marine Corps (Spa) [Uses joyport #2. Press 'M' for Grenade]</description>
+		<description>Astro Marine Corps (Spanish) [Uses joyport #2. Press 'M' for Grenade]</description>
 		<year>1989</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="astro marine corps (1989)(dinamic software)(es).rom" size="131072" crc="60f99d30"/>
@@ -1170,7 +1181,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="barb2" romof="msx">
-		<description>Barbarian II - The Dungeon of Drax (Spa)</description>
+		<description>Barbarian II - The Dungeon of Drax (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Erbe Software</manufacturer>
 		<rom name="barbarian ii - the dungeon of drax (1988)(erbe software)(es)[run'cas-'].cas" size="123234" crc="d557cf7a"/>
@@ -1216,7 +1227,7 @@
 	<game name="batman10" cloneof="batman" romof="batman">
 		<description>Batman (v1.0 special s/l rom)</description>
 		<year>1987</year>
-		<manufacturer>Ocean</manufacturer>
+		<manufacturer>Ocean Software</manufacturer>
 		<rom name="BATMAN.ROM" size="65536" crc="21e671f0"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -1413,7 +1424,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bestwarr" romof="msx">
-		<description>Bestial Warrior (Spa)</description>
+		<description>Bestial Warrior (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Zeus Soft - Dinamic Software</manufacturer>
 		<rom name="bestial warrior (1989)(dinamic software)(es)[run'cas-'].cas" size="65790" crc="06073712"/>
@@ -1468,7 +1479,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="blackbeard" romof="msx">
-		<description>Blackbeard (Spa) [Uses joyport #2]</description>
+		<description>Blackbeard (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="Blackbeard (1988)(Topo Soft)(ES).rom" size="131072" crc="6e566a11"/>
@@ -1556,7 +1567,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bloody" romof="msx">
-		<description>Bloody (Spa)</description>
+		<description>Bloody (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>P.J. Software</manufacturer>
 		<rom name="bloody (1987)(p.j. software)(es)[run'cas-'].cas" size="23361" crc="eaa520de"/>
@@ -1622,7 +1633,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="boing2" romof="msx">
-		<description>Boing Boing (Spa)</description>
+		<description>Boing Boing (Spanish)</description>
 		<year>1985</year>
 		<manufacturer>Sony Spain</manufacturer>
 		<rom name="boing boing (spain).rom" size="8192" crc="f44e7fcd"/>
@@ -1952,7 +1963,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bronx" romof="msx">
-		<description>Bronx (Spa)</description>
+		<description>Bronx (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Animagic</manufacturer>
 		<rom name="bronx (1989)(animagic)(es)[run'cas-'].cas" size="102338" crc="7b6597bf"/>
@@ -2051,7 +2062,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bumpyspa" romof="msx">
-		<description>Bumpy (Grupo de Trabajo)</description>
+		<description>Bumpy (Grupo de Trabajo) (Spanish)</description>
 		<year>19xx</year>
 		<manufacturer>Grupo de Trabajo Software</manufacturer>
 		<rom name="Bumpy (19xx)(Grupo de Trabajo Software)(es)[RUN'CAS-'].cas" size="17485" crc="8c8342a6"/>
@@ -2062,7 +2073,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bumpy" romof="msx">
-		<description>Bumpy (Loriciels)</description>
+		<description>Bumpy (Loriciels) (Euro)</description>
 		<year>1989</year>
 		<manufacturer>Loriciels</manufacturer>
 		<rom name="bumpy (1989)(loriciels)(fr)[run'cas-'].cas" size="48851" crc="c5ae9a42"/>
@@ -2194,7 +2205,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="camelotw" romof="msx">
-		<description>Camelot Warriors (Spa)</description>
+		<description>Camelot Warriors (Spanish)</description>
 		<year>1986</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Camelot Warriors (1986)(Dinamic Software)(ES).rom" size="131072" crc="89a53f23"/>
@@ -2282,7 +2293,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ctrueno" romof="msx">
-		<description>Capitan Trueno, el (Spa) [Use joyport #2]</description>
+		<description>Capitan Trueno, el (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Capitan Trueno (1989)(Dinamic Software)(ES).rom" size="131072" crc="b1b434be"/>
@@ -2370,7 +2381,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="csainz" romof="msx">
-		<description>Carlos Sainz - Campeonato del Mundo (Spa)</description>
+		<description>Carlos Sainz - Campeonato del Mundo (Spanish)</description>
 		<year>1990</year>
 		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="carlos sainz (1990)(zigurat software)(es)[run'cas-'].cas" size="66139" crc="e8eb4c98"/>
@@ -2436,7 +2447,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="caverndeath" romof="msx">
-		<description>Cavern of Death (Spa) [Select 1-Teclado to play]</description>
+		<description>Cavern of Death (Spanish) [Select 1-Teclado to play]</description>
 		<year>1987</year>
 		<manufacturer>Dro Soft</manufacturer>
 		<rom name="Cavern of Death (1987)(Dro Soft)(ES)[RUN'CAS-'].cas" size="15799" crc="085982e4"/>
@@ -2910,7 +2921,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="coliseum" romof="msx">
-		<description>Coliseum (Spa)</description>
+		<description>Coliseum (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="Coliseum (1988)(Topo Soft)(es)[RUN'CAS-'].cas" size="53090" crc="7cc9c63c"/>
@@ -2965,7 +2976,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="colt36" romof="msx">
-		<description>Colt 36 (Spa)</description>
+		<description>Colt 36 (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="Colt 36 (1987)(Topo Soft)(ES).rom" size="65536" crc="7ce25b7c"/>
@@ -2976,7 +2987,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cotracer" romof="msx">
-		<description>Comando Tracer (Spa)</description>
+		<description>Comando Tracer (Spanish)</description>
 		<year>1988-89</year>
 		<manufacturer>Zeus Soft - Dinamic Software</manufacturer>
 		<rom name="Comando Tracer (1989)(Dinamic).rom" size="131072" crc="c876b802"/>
@@ -3130,7 +3141,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="corsarios" romof="msx">
-		<description>Corsarios (Spa) [Uses joyport #2]</description>
+		<description>Corsarios (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="Corsarios (1989)(Opera Soft)(ES).rom" size="131072" crc="64005d08"/>
@@ -3141,7 +3152,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cosanost" romof="msx">
-		<description>Cosa Nostra (Spa)</description>
+		<description>Cosa Nostra (Spanish)</description>
 		<year>1986</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="cosa nostra (1986)(opera soft)(es)[bload'cas-',r].cas" size="41769" crc="da23ba44"/>
@@ -3152,7 +3163,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="csheriff" romof="msx">
-		<description>Cosmic Sheriff (Spa)</description>
+		<description>Cosmic Sheriff (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="cosmic sheriff (1989)(dinamic software)(es)[run'cas-'].cas" size="47035" crc="e1984c54"/>
@@ -3361,7 +3372,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cyberbig" romof="msx">
-		<description>Cyberbig (Spa)</description>
+		<description>Cyberbig (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Animagic</manufacturer>
 		<rom name="cyberbig (1989)(animagic)(es)[run'cas-'].cas" size="59179" crc="99023cf9"/>
@@ -3680,7 +3691,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="desperado" romof="msx">
-		<description>Desperado (Spa)</description>
+		<description>Desperado (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="desperado (1987)(topo soft)(es)(side a)[run'cas-'].cas" size="42554" crc="fe84991c"/>
@@ -3692,7 +3703,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="destroyr" romof="msx">
-		<description>Destroyer (Spa)</description>
+		<description>Destroyer (Spanish)</description>
 		<year>1986</year>
 		<manufacturer>Mind Games Espa??a</manufacturer>
 		<rom name="destroyer (1986)(mind games espana)(es)[run'cas-'].cas" size="50815" crc="bad9355d"/>
@@ -3780,7 +3791,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dipdip" romof="msx">
-		<description>Dip Dip (Spa)</description>
+		<description>Dip Dip (Spanish)</description>
 		<year>1985</year>
 		<manufacturer>Indescomp</manufacturer>
 		<rom name="Dip Dip (1985)(Indescomp)(ES).rom" size="16384" crc="9a2cc849"/>
@@ -3857,7 +3868,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="donquijote1" romof="msx">
-		<description>Don Quijote - Parte I (Spa)</description>
+		<description>Don Quijote - Parte I (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Don Quijote (1987)(Dinamic Software)(es)(Side A)[RUN'CAS-'].cas" size="54252" crc="68395271"/>
@@ -3868,10 +3879,21 @@
 		<driver status="good"/>
 	</game>
 	<game name="donquijote2" cloneof="donquijote1" romof="donquijote1">
-		<description>Don Quijote - Parte II (Spa) [Password: EL BALSAMO DE FIERABRAS]</description>
+		<description>Don Quijote - Parte II (Spanish) [Password: EL BALSAMO DE FIERABRAS]</description>
 		<year>1987</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Don Quijote (1987)(Dinamic Software)(es)(Side B)[RUN'CAS-'].cas" size="51442" crc="833d4f52"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dkongeu" romof="msx">
+		<description>Donkey Kong (Euro)</description>
+		<year>1986</year>
+		<manufacturer>Ocean Software</manufacturer>
+		<rom name="Donkey Kong (1986)(Ocean Software)[RUN'CAS-'].cas" size="35415" crc="defeed2e"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -4275,7 +4297,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sideral" romof="msx">
-		<description>El Motorista Sideral (Spa)</description>
+		<description>El Motorista Sideral (Spanish)</description>
 		<year>1986</year>
 		<manufacturer>Anaya Multimedia</manufacturer>
 		<rom name="motorista sideral, el (1986)(anaya multimedia)(es)[run'cas-'].cas" size="25647" crc="8b07f4f6"/>
@@ -4286,7 +4308,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mundoper" romof="msx">
-		<description>El Mundo Perdido (Spa)</description>
+		<description>El Mundo Perdido (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="mundo perdido, el (1988)(topo soft)(es)[run'cas-'].cas" size="64327" crc="488a17b0"/>
@@ -4880,9 +4902,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="ffruit" romof="msx">
-		<description>Forbidden Fruit (Spa)</description>
+		<description>Forbidden Fruit (Spanish)</description>
 		<year>1985</year>
-		<manufacturer>Mind Games Espa??a</manufacturer>
+		<manufacturer>Mind Games Espana</manufacturer>
 		<rom name="forbidden fruit (1985)(mind games espana)(es)[cload + run].cas" size="16303" crc="945a9dd0"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -4913,7 +4935,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fredhard" romof="msx">
-		<description>Freddy Hardest (Spa)</description>
+		<description>Freddy Hardest (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="freddy hardest (1987)(dinamic software)(es)(side a)[run'cas-'].cas" size="53007" crc="9e24261a"/>
@@ -4936,7 +4958,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="frog" romof="msx">
-		<description>Frog (Spa)</description>
+		<description>Frog (Spanish)</description>
 		<year>1985</year>
 		<manufacturer>Advance</manufacturer>
 		<rom name="frog (1985)(advance)(es)[bload'cas-',r].cas" size="5905" crc="e57e0f60"/>
@@ -5145,7 +5167,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gameover" romof="msx">
-		<description>Game Over (Spa)</description>
+		<description>Game Over (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Game Over (1988)(Dinamic Software)(ES).rom" size="131072" crc="dfbbdf10"/>
@@ -5156,7 +5178,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gameovr2" romof="msx">
-		<description>Game Over II (Spa)</description>
+		<description>Game Over II (Euro)</description>
 		<year>1988</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="game over ii (1988)(dinamic software)(es)(side a)[re-release of phantis][run'cas-'].cas" size="50115" crc="12de1170"/>
@@ -5213,7 +5235,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ghost" romof="msx">
-		<description>Ghost (Spa)</description>
+		<description>Ghost (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Mind Games Espana</manufacturer>
 		<rom name="ghost (1989)(mind games espana)(es)[run'cas-'].cas" size="48855" crc="c3d65cb5"/>
@@ -5257,7 +5279,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="glass" romof="msx">
-		<description>Glass (Spa)</description>
+		<description>Glass (Spanish)</description>
 		<year>1985</year>
 		<manufacturer>Quicksilva</manufacturer>
 		<rom name="glass (1985)(quicksilva)(es-gb)[run'cas-'].cas" size="33495" crc="9902f154"/>
@@ -5369,7 +5391,7 @@
 	<game name="gommy" romof="msx">
 		<description>Gommy (HB) [Homebrew]</description>
 		<year>2013</year>
-		<manufacturer>Retroworks/Dimension Z/NENEFRANZ</manufacturer>
+		<manufacturer>Retroworks/Dimension Z/Nenefranz</manufacturer>
 		<rom name="DMZ-004_Gommy MD_msx.rom" size="16384" crc="66b27261"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -5411,7 +5433,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="goody" romof="msx">
-		<description>Goody (Spa)</description>
+		<description>Goody (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="goody (1987)(opera soft)(es)[bload'cas-',r].cas" size="56640" crc="8ce47b52"/>
@@ -5488,7 +5510,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gremlins2" romof="msx">
-		<description>Gremlins 2 - La Nueva Generacion (Spa)</description>
+		<description>Gremlins 2 - La Nueva Generacion (Spanish)</description>
 		<year>1990</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="Gremlins 2 - La Nueva Generacion (1990)(Topo Soft)(es)[RUN'CAS-'].cas" size="183842" crc="0fa5a208"/>
@@ -5708,7 +5730,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="habilit" romof="msx">
-		<description>Habilit (Spa)</description>
+		<description>Habilit (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Iber Soft</manufacturer>
 		<rom name="habilit (1988)(iber soft)(es)[run'cas-'].cas" size="40311" crc="b48a02de"/>
@@ -5719,7 +5741,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hammboy" romof="msx">
-		<description>Hammer Boy (Spa) [Keyboard control only]</description>
+		<description>Hammer Boy (Spanish) [Keyboard controls only]</description>
 		<year>1991</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="hammer boy (1991)(dinamic software)(es)(side a)[run'cas-'].cas" size="55954" crc="907a6931"/>
@@ -5841,9 +5863,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="heatseek" romof="msx">
-		<description>Heat Seeker - Missil (Spa)</description>
+		<description>Heat Seeker - Missil (Spanish)</description>
 		<year>1986</year>
-		<manufacturer>Mind Games Espa??a</manufacturer>
+		<manufacturer>Mind Games Espana</manufacturer>
 		<rom name="heat seeker - missil (1986)(mind games espana)(es)[run'cas-'][martos].cas" size="34905" crc="7515587f"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -5918,7 +5940,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="highwayen" romof="msx">
-		<description>Highway Encounter (Spa)</description>
+		<description>Highway Encounter (Spanish)</description>
 		<year>1985</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="highway encounter (1985)(dinamic software)(es)[run'cas-'].cas" size="42005" crc="1c036ed9"/>
@@ -6017,7 +6039,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hostages" romof="msx">
-		<description>Hostages (Spa, Hacked by Martos)</description>
+		<description>Hostages (Spanish, Hacked by Martos)</description>
 		<year>1990</year>
 		<manufacturer>Erbe Software</manufacturer>
 		<rom name="hostages (1990)(erbe)(es)(en)(m martos)[run'cas-'].cas" size="140106" crc="1a6e23df"/>
@@ -6061,7 +6083,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hundra" romof="msx">
-		<description>Hundra (Spa)</description>
+		<description>Hundra (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Zeus Soft - Dinamic Software</manufacturer>
 		<rom name="hundra (1988)(dinamic software)(es)[run'cas-'].cas" size="48893" crc="e0ad7798"/>
@@ -6336,7 +6358,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="icebreak" romof="msx">
-		<description>Ice-Breaker (Spa)</description>
+		<description>Ice-Breaker (Spanish)</description>
 		<year>1990</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="ice-breaker (1990)(topo soft)(es)[run'cas-'].cas" size="77732" crc="5079a19c"/>
@@ -6391,7 +6413,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="indy3" romof="msx">
-		<description>Indiana Jones and the Last Crusade (Spa) [Enable Key-Clicker (DIPswitches) for 1-bit DAC sound effects]</description>
+		<description>Indiana Jones and the Last Crusade (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>U.S. Gold - Erbe Software</manufacturer>
 		<rom name="Indiana Jones and the Last Crusade (1989)(Erbe Software)(es)(Side A)[RUN'CAS-'].cas" size="41970" crc="2204d60c"/>
@@ -6612,7 +6634,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jackcity" romof="msx">
-		<description>Jackson City (Spa)</description>
+		<description>Jackson City (Spanish)</description>
 		<year>1990</year>
 		<manufacturer>G.LL. Software</manufacturer>
 		<rom name="jackson city (1990)(g.ll. software)(es)[run'cas-'][ctrl][martos].cas" size="66990" crc="7cdfa5b3"/>
@@ -6656,7 +6678,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jaws" romof="msx">
-		<description>Jaws (Spa?)</description>
+		<description>Jaws (Euro) [Use Space and Enter to select options]</description>
 		<year>1989</year>
 		<manufacturer>A.M.H.</manufacturer>
 		<rom name="jaws (1989)(screen 7)[run'cas-'].cas" size="49114" crc="908478e6"/>
@@ -6821,7 +6843,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jungwarr" romof="msx">
-		<description>Jungle Warrior (Spa)</description>
+		<description>Jungle Warrior (Spanish)</description>
 		<year>1990</year>
 		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="jungle warrior (1990)(zigurat software)(es)[run'cas-'].cas" size="59609" crc="df10a5b8"/>
@@ -6887,7 +6909,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="khazzad" romof="msx">
-		<description>Khazzad-Dum (Spa)</description>
+		<description>Khazzad-Dum (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>System 4</manufacturer>
 		<rom name="khazzad-dum (1989)(system 4)(es)[run'cas-'].cas" size="41694" crc="27c10ddf"/>
@@ -6953,7 +6975,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kingleon" romof="msx">
-		<description>King Leonard (Spa)</description>
+		<description>King Leonard (Spanish)</description>
 		<year>1986</year>
 		<manufacturer>Mind Games Espa??a</manufacturer>
 		<rom name="king leonard (1986)(mind games espana)(es)[bload'cas-',r].cas" size="39559" crc="0f752c47"/>
@@ -7547,7 +7569,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kubus" romof="msx">
-		<description>Kubus</description>
+		<description>Kubus (Euro)</description>
 		<year>1985</year>
 		<manufacturer>Kuma Computers</manufacturer>
 		<rom name="Kubus (1985)(Kuma Computers)(GB)[RUN'CAS-'].cas" size="29439" crc="45b48497"/>
@@ -7668,7 +7690,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="abadcrim" romof="msx">
-		<description>La Abadia del Crimen (Spa)</description>
+		<description>La Abadia del Crimen (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="abadia del crimen, la (1988)(opera soft)(es)[bload'cas-',r].cas" size="103840" crc="812afd46"/>
@@ -7712,7 +7734,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lastmission" romof="msx">
-		<description>Last Mission (Spa)</description>
+		<description>Last Mission (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="Last Mission, The (1987)(Opera Soft)(ES).rom" size="131072" crc="494b9bc0"/>
@@ -7800,7 +7822,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="livingstone" romof="msx">
-		<description>Livingstone Supongo (Spa)</description>
+		<description>Livingstone Supongo (Spanish)</description>
 		<year>1986</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="Livingstone Supongo (1986)(Opera Soft)(ES).rom" size="131072" crc="cea7e9bc"/>
@@ -7811,7 +7833,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="livingstone2" romof="msx">
-		<description>Livingstone Supongo II (Spa)</description>
+		<description>Livingstone Supongo II (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="Livingstone Supongo II (1989)(Opera Soft)(ES).rom" size="131072" crc="5410c622"/>
@@ -7877,7 +7899,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lorna" romof="msx">
-		<description>Lorna (Spa)</description>
+		<description>Lorna (Spanish)</description>
 		<year>1990</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="lorna (1990)(topo soft)(es)[run'cas-'].cas" size="123842" crc="2ae741cc"/>
@@ -8372,7 +8394,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mazemax" romof="msx">
-		<description>Maze Max</description>
+		<description>Maze Max (Euro)</description>
 		<year>1985</year>
 		<manufacturer>Loriciels</manufacturer>
 		<rom name="Maze Max (1985)(Loriciels)(FR)[BLOAD'CAS-',R].cas" size="12693" crc="2d5ae9d9"/>
@@ -8427,7 +8449,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="meganova" romof="msx">
-		<description>Meganova (Spa)</description>
+		<description>Meganova (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="meganova (1988)(dinamic software)(es)[run'cas-'].cas" size="75343" crc="a055f596"/>
@@ -8504,7 +8526,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="merlin" romof="msx">
-		<description>Merlin (Spa)</description>
+		<description>Merlin (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Mind Games Espana</manufacturer>
 		<rom name="merlin (1987)(mind games espana)(es)[bload'cas-',r].cas" size="22039" crc="66826eaa"/>
@@ -8515,7 +8537,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="metropolis" romof="msx">
-		<description>Metropolis (Spa)</description>
+		<description>Metropolis (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="Metropolis (1989)(Topo Soft)(es)[RUN'CAS-'].cas" size="59068" crc="1afafaeb"/>
@@ -8966,7 +8988,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mortadelo" romof="msx">
-		<description>Mortadelo y Filemon (Spa)</description>
+		<description>Mortadelo y Filemon (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Dro Soft</manufacturer>
 		<rom name="Mortadelo y Filemon (1988)(Dro Soft)(ES).rom" size="131072" crc="ff4852f4"/>
@@ -8977,7 +8999,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mortadelo2" romof="msx">
-		<description>Mortadelo y Filemon II - Safari Callejero (Spa)</description>
+		<description>Mortadelo y Filemon II - Safari Callejero (Spanish)</description>
 		<year>1990</year>
 		<manufacturer>Dro Soft</manufacturer>
 		<rom name="Mortadelo y Filemon II - Safari Callejero (1990)(Dro Soft)(ES).rom" size="131072" crc="0c6a21b2"/>
@@ -9274,7 +9296,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mutanzone" romof="msx">
-		<description>Mutan Zone</description>
+		<description>Mutan Zone (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="Mutan Zone (1989)(Opera Soft)(ES)(Side A)[BLOAD'CAS-',R].cas" size="56127" crc="448bb17b"/>
@@ -9695,7 +9717,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nuclearbowls" romof="msx">
-		<description>Nuclear Bowls</description>
+		<description>Nuclear Bowls (Spanish)</description>
 		<year>1986</year>
 		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="Nuclear Bowls (1986)(Zigurat Software)(ES)[RUN'CAS-'].cas" size="60679" crc="6e5e451d"/>
@@ -9739,7 +9761,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="obliter" romof="msx">
-		<description>Obliterator (Spa)</description>
+		<description>Obliterator (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Dro Soft</manufacturer>
 		<rom name="obliterator (1989)(dro soft)(es)[run'cas-'].cas" size="58007" crc="e9653411"/>
@@ -10181,7 +10203,7 @@
 	<game name="perezthemouse" romof="msx">
 		<description>Perez the Mouse (HB, V1.1) [Homebrew]</description>
 		<year>2011</year>
-		<manufacturer>theNestruo Wonder</manufacturer>
+		<manufacturer>Nestruo &amp; Wonder</manufacturer>
 		<rom name="Perez the Mouse 1.1 (2011) (theNestruo Wonder).cas" size="22915" crc="cc8d9d62"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -10212,7 +10234,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="phantis" cloneof="gameovr2" romof="gameovr2">
-		<description>Phantis (Spa)</description>
+		<description>Phantis (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Phantis (1987)(Dinamic Software)(es)(Side A)[RUN'CAS-'].cas" size="47979" crc="82073596"/>
@@ -10224,7 +10246,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="phantom2" cloneof="vampire" romof="vampire">
-		<description>Phantomas 2 (Spa)</description>
+		<description>Phantomas 2 (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Phantomas 2 (1987)(Dinamic Software)(ES)[RUN'CAS-'].cas" size="45359" crc="5b62821c"/>
@@ -10488,7 +10510,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="podero" romof="msx">
-		<description>Poder Oscuro, El (Spa)</description>
+		<description>Poder Oscuro, El (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="Poder Oscuro, El (1988)(Zigurat Software)(ES).rom" size="131072" crc="dc6eef71"/>
@@ -10532,7 +10554,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="poogaboo" romof="msx">
-		<description>Poogaboo (Spa) [Swap Joyport in DIPswitch to use joystick]</description>
+		<description>Poogaboo (Spanish) [Swap Joyport in DIPswitch to use joystick]</description>
 		<year>1991</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="Poogaboo (1991)(Opera Soft)(ES)[BLOAD'CAS-',R].cas" size="66368" crc="ce7a6084"/>
@@ -10576,7 +10598,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="postmortem" romof="msx">
-		<description>Post Mortem (Spa)</description>
+		<description>Post Mortem (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Genesis Soft - Iber Soft</manufacturer>
 		<rom name="Post Mortem (1988)(Iber Soft)(ES)[RUN'CAS-'].cas" size="43146" crc="7ed5b9c5"/>
@@ -10699,7 +10721,7 @@
 	<game name="pyramidwex" romof="msx">
 		<description>Pyramid Warp Enhanced (HB) [Homebrew, Remastered version]</description>
 		<year>2021</year>
-		<manufacturer>Bitcaffe, Nenefranz, theNestruo</manufacturer>
+		<manufacturer>Bitcaffe, Nenefranz, Nestruo</manufacturer>
 		<rom name="Pyramid Warp Enhanced (2021)(Bitcaffe-Nenefranz-theNestruo).rom" size="32768" crc="a7cdfff9"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -10840,7 +10862,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ram" romof="msx">
-		<description>R.A.M. (Spa)</description>
+		<description>R.A.M. (Spanish)</description>
 		<year>1990</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="r.a.m. (1990)(topo soft)(es)[run'cas-'].cas" size="65880" crc="497462cc"/>
@@ -10851,7 +10873,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="racecity" romof="msx">
-		<description>Race City (Spa) [Small sound glitches]</description>
+		<description>Race City (Spanish) [Small sound glitches]</description>
 		<year>1988</year>
 		<manufacturer>Genesis Soft - Iber Soft</manufacturer>
 		<rom name="Race City (1988)(Iber Soft)(ES)[RUN'CAS-'].cas" size="48514" crc="aa100ad2"/>
@@ -10972,7 +10994,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="raththa" romof="msx">
-		<description>Rath-Tha (Spa)</description>
+		<description>Rath-Tha (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Positive</manufacturer>
 		<rom name="rath-tha (1989)(positive)(es)[run'cas-'].cas" size="58095" crc="d804222d"/>
@@ -11060,7 +11082,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rescatl" romof="msx">
-		<description>Rescate Atlantida (Spa)</description>
+		<description>Rescate Atlantida (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="rescate atlantida (1989)(dinamic software)(es)[run'cas-'].cas" size="119946" crc="39411ccb"/>
@@ -11226,7 +11248,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rockroll" romof="msx">
-		<description>Rock 'n Roller (Spa)</description>
+		<description>Rock 'n Roller (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="rock 'n roller (1988)(topo soft)(es)[run'cas-'].cas" size="52209" crc="cc0bc2e0"/>
@@ -11346,8 +11368,30 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="soloen" romof="msx">
+		<description>S.o.L.o. (English) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Angel Colaso</manufacturer>
+		<rom name="S.o.L.o. EN (2021)(Angel Colaso).rom" size="49152" crc="b06abc90"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="soloes" cloneof="soloen" romof="soloen">
+		<description>S.o.L.o. (Spanish) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Angel Colaso</manufacturer>
+		<rom name="S.o.L.o. ES (2021)(Angel Colaso).rom" size="49152" crc="3b426a04"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sabotaje" romof="msx">
-		<description>Sabotaje (Spa)</description>
+		<description>Sabotaje (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Genesis Soft</manufacturer>
 		<rom name="Sabotaje (1988)(P.J. Software)(es)[RUN'CAS-'].cas" size="35367" crc="38af0372"/>
@@ -11589,6 +11633,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="sensha" romof="msx">
+		<description>Sensha (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Ochixim</manufacturer>
+		<rom name="Sensha (2021)(Ochixn).rom" size="32768" crc="ea84771c"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sewersam" romof="msx">
 		<description>Sewer Sam (Jpn)</description>
 		<year>1984</year>
@@ -11766,7 +11821,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="skulexil" romof="msx">
-		<description>Skull Exilon (Spa)</description>
+		<description>Skull Exilon (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Iber Soft</manufacturer>
 		<rom name="skull exilon (1988)(iber soft)(es)[aka safari x][run'cas-'].cas" size="30695" crc="ec4e2be2"/>
@@ -11920,7 +11975,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="soldlight" romof="msx">
-		<description>Soldier of Light (Spa)</description>
+		<description>Soldier of Light (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Animagic</manufacturer>
 		<rom name="Soldier of Light (1989)(Animagic).rom" size="131072" crc="cab9cea9"/>
@@ -11976,7 +12031,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sp8inv" romof="msx">
-		<description>Sp8 Invaders (HB) [Homebrew, Enable Key-Clicker (DIPswitches) for 1-bit DAC sound effects]</description>
+		<description>Sp8 Invaders (HB) [Homebrew]</description>
 		<year>2009</year>
 		<manufacturer>Dioniso</manufacturer>
 		<rom name="Sp8 Invaders (2009)(Dioniso).rom" size="8192" crc="a327b2de"/>
@@ -12164,7 +12219,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="spirits" romof="msx">
-		<description>Spirits (Spa)</description>
+		<description>Spirits (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="Spirits (1987)(Topo Soft)(ES)[RUN'CAS-'].cas" size="43129" crc="a712f6fa"/>
@@ -12175,9 +12230,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="splash" romof="msx">
-		<description>Splash (Spa)</description>
+		<description>Splash (Spanish)</description>
 		<year>1986</year>
-		<manufacturer>Mind Games Espa??a</manufacturer>
+		<manufacturer>Mind Games Espana</manufacturer>
 		<rom name="splash (1986)(mind games espana)(es)[run'cas-'].cas" size="33427" crc="68943e75"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -12296,7 +12351,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="starbowls" romof="msx">
-		<description>Star Bowls (Spa)</description>
+		<description>Star Bowls (Spanish)</description>
 		<year>1991</year>
 		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="Star Bowls (1991)(Zigurat Software)(ES)[RUN'CAS-'].cas" size="50295" crc="589b10e9"/>
@@ -12465,6 +12520,17 @@
 		<year>1985</year>
 		<manufacturer>ASCII</manufacturer>
 		<rom name="stepper (japan).rom" size="16384" crc="0fb7df8f"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="stevedored" romof="msx">
+		<description>Stevedore Demo (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Nestruo &amp; Wonder</manufacturer>
+		<rom name="Stevedore - demo (2020) (Nestruo &amp; Wonder).rom" size="32768" crc="4923fd7a"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12846,7 +12912,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="suptrip" romof="msx">
-		<description>Supertripper (Spa)</description>
+		<description>Supertripper (Spanish)</description>
 		<year>1985</year>
 		<manufacturer>Sony Spain</manufacturer>
 		<rom name="super tripper (spain).rom" size="32768" crc="0c36f5bd"/>
@@ -12857,7 +12923,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="survivor" romof="msx">
-		<description>Survivor (Spa)</description>
+		<description>Survivor (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="Survivor (1987)(Topo Soft)(ES)[RUN'CAS-'].cas" size="50684" crc="b53471a6"/>
@@ -13099,7 +13165,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tension" romof="msx">
-		<description>Tension (Spa)</description>
+		<description>Tension (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>System 4</manufacturer>
 		<rom name="Tension (1988)(System 4)(ES).rom" size="32768" crc="3d78462c"/>
@@ -13583,7 +13649,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="thor" romof="msx">
-		<description>Thor (Spa)</description>
+		<description>Thor (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Proein Soft Line</manufacturer>
 		<rom name="Thor (1988)(Proein Soft Line)(es)[RUN'CAS-'].cas" size="45441" crc="dbf1df15"/>
@@ -13759,7 +13825,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="titanic" romof="msx">
-		<description>Titanic (Spa)</description>
+		<description>Titanic (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="titanic (1988)(topo soft)(es)(side a)[run'cas-'].cas" size="49920" crc="7e7a8653"/>
@@ -13958,7 +14024,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tuma7" romof="msx">
-		<description>Tuma 7 (Spa)</description>
+		<description>Tuma 7 (Spanish)</description>
 		<year>1990</year>
 		<manufacturer>Delta Software</manufacturer>
 		<rom name="Tuma 7 (1990)(Delta Software)(ES).rom" size="131072" crc="61cb184d"/>
@@ -13969,7 +14035,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="turbogirl" romof="msx">
-		<description>Turbo Girl (Spa)</description>
+		<description>Turbo Girl (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Turbo Girl (1988)(Dinamic Software)(ES).rom" size="131072" crc="6fded825"/>
@@ -14134,7 +14200,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="undergnd" romof="msx">
-		<description>Underground (Spa)</description>
+		<description>Underground (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>System 4</manufacturer>
 		<rom name="underground (1988)(system 4)(es)[run'cas-'].cas" size="45184" crc="0019e507"/>
@@ -14233,7 +14299,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="viajecentro" romof="msx">
-		<description>Viaje al Centro de la Tierra (Spa)</description>
+		<description>Viaje al Centro de la Tierra (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="Viaje al Centro de la Tierra (1989)(Topo Soft)(ES)[RUN'CAS-'].cas" size="139146" crc="aeae84ea"/>
@@ -14321,7 +14387,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wampcola" romof="msx">
-		<description>Wamp Cola (Spa)</description>
+		<description>Wamp Cola (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Iber Soft</manufacturer>
 		<rom name="wamp cola (1988)(iber soft)(es)[aka dracula][run'cas-'].cas" size="19787" crc="a6438fe8"/>
@@ -14431,7 +14497,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="whopper" romof="msx">
-		<description>Whopper Chase (Spa)</description>
+		<description>Whopper Chase (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Erbe Software</manufacturer>
 		<rom name="whopper chase (1987)(erbe software)(es)[run'cas-'][martos].cas" size="36675" crc="7c28051b"/>
@@ -14519,7 +14585,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wrangler" romof="msx">
-		<description>Wrangler (Spa)</description>
+		<description>Wrangler (Spanish)</description>
 		<year>1985</year>
 		<manufacturer>Sony Spain</manufacturer>
 		<rom name="wrangler (spain).rom" size="16384" crc="7185f5e8"/>
@@ -14541,7 +14607,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xenon" romof="msx">
-		<description>Xenon (Spa)</description>
+		<description>Xenon (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Dro Soft</manufacturer>
 		<rom name="xenon (1988)(dro soft)(es)[run'cas-'].cas" size="74546" crc="4ad26b8f"/>
@@ -14760,6 +14826,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="youkaiyarmd" cloneof="youkaiya" romof="youkaiya">
+		<description>Youkai Yashiki - Ghost House Remastered (HB) [Hack, Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Yazioh &amp; Nestruo</manufacturer>
+		<rom name="Youkai Yashiki - Ghost House Remastered (2021)(Yazioh &amp; Nestruo).rom" size="32768" crc="2239eaf2"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="pengadvk2" cloneof="pengadv" romof="pengadv">
 		<description>Yume Tairiku Adventure (Kor, Screen Software)</description>
 		<year>1988</year>
@@ -14958,10 +15035,10 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="zombieinc12" romof="msx">
-		<description>Zombie Incident (HB, v1.2) [Homebrew]</description>
-		<year>2013</year>
-		<manufacturer>NENEFRANZ</manufacturer>
+	<game name="zombieinc" romof="msx">
+		<description>Zombie Incident (HB, v1.3) [Homebrew]</description>
+		<year>2012</year>
+		<manufacturer>Nenefranz</manufacturer>
 		<rom name="ZombieIncident.rom" size="49152" crc="0d5c497a"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -14981,7 +15058,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zona0" romof="msx">
-		<description>Zona 0 (Spa)</description>
+		<description>Zona 0 (Spanish)</description>
 		<year>1991</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="zona 0 (1991)(topo soft)(es)[run'cas-'].cas" size="69486" crc="0b919291"/>

@@ -43786,7 +43786,7 @@ struct BurnDriver BurnDrvmd_ssf2cg = {
 
 // Street Fighter II' - Hyper Champion Edition (Hack, v2)
 static struct BurnRomInfo md_sf2hce2RomDesc[] = {
-	{ "Street Fighter II' - Hyper Champion Edition (hack-2021).md", 3145728, 0xe5c620a9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Street Fighter II' - Hyper Champion Edition (hack-2021).md", 3145728, 0x20f8d578, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sf2hce2)

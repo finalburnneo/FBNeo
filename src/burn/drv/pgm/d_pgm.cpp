@@ -660,6 +660,20 @@ static struct BurnDIPInfo svgtwDIPList[] = {
 	{0x2E,  0x01, 0x07, 0xff, "Don't Change"					},
 };
 
+static struct BurnDIPInfo svghkDIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x04, NULL								},
+
+	{0,	0xFE, 0,	8,    "Region (Fake)"						},
+	{0x2E,	0x01, 0x07,	0x00, "China"							},
+	{0x2E,	0x01, 0x07,	0x01, "Taiwan"							},
+	{0x2E,	0x01, 0x07,	0x02, "Japan"							},
+	{0x2E,	0x01, 0x07,	0x03, "Korea"							},
+	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"						},
+	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"				},
+	{0x2E,  0x01, 0x07, 0x06, "World"							},
+	{0x2E,  0x01, 0x07, 0xff, "Don't Change"					},
+};
+
 STDDIPINFOEXT(orlegend,		pgm,	orlegend		)
 STDDIPINFOEXT(orld111c, 	pgm,	orld111c		)
 STDDIPINFOEXT(orld111t, 	pgm,	orld111t		)
@@ -708,6 +722,7 @@ STDDIPINFOEXT(dwex,		    pgm,	dwex	 		)
 STDDIPINFOEXT(dwex101cn,	pgm,	dwex101cn	 	)
 STDDIPINFOEXT(svg,			pgm,	svg	 			)
 STDDIPINFOEXT(svgtw,		pgm,	svgtw	 		)
+STDDIPINFOEXT(svghk,		pgm,	svghk	 		)
 STDDIPINFOEXT(dmnfrntpcb,   jamma,	dmnfrntpcb		)
 STDDIPINFOEXT(dmnfrntpcba,  jamma,	dmnfrntpcba		)
 STDDIPINFOEXT(thegladpcb,   jamma,	thegladpcb		)
@@ -4890,6 +4905,47 @@ struct BurnDriver BurnDrvkovshp101 = {
 };
 
 
+/* Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (V101 alt, China)
+
+   IGS PCB-0490-00-GZ
+   IGS PCB-0491-00-GZ-A 
+   SCREEN VER PIC: V101 CHINA
+   ROM TYPES: U10 ST M27C322
+   CREDITS TO: "GC8TECH.COM"
+
+static struct BurnRomInfo kovshp101aRomDesc[] = {
+	{ "s__s_m-101cn.u10",	    	0x0400000, 0xe1d89a19, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	
+	{ "s_s_fntcg_u3.u3",    		0x0400000, 0x164b3c94, 2 | BRF_GRA },			//  1 Tile data
+	{ "s_s_fntcg_u7.u7",    		0x0400000, 0xb1fae5e8, 2 | BRF_GRA },			//  2
+
+	{ "s_s_b-cg_u22.u22",			0x0800000, 0xd8167834, 3 | BRF_GRA },			//  3 Sprite Color Data
+	{ "s_s_b-cg_u23.u23",			0x0800000, 0xff7a4373, 3 | BRF_GRA }, 	        //  4 
+	{ "s_s_b-cg_u24.u24",			0x0800000, 0xe7a32959, 3 | BRF_GRA }, 	        //  5
+	{ "s_s_b-cg_u25.u25",			0x0800000, 0x4fd3413e, 3 | BRF_GRA }, 	        //  6
+
+	{ "s_s_b-map_u15.u15",			0x0800000, 0x7d3cd059, 4 | BRF_GRA },			//  7 Sprite Masks & Color Indexes
+	{ "s_s_b-map_u16.u16",			0x0800000, 0x60999757, 4 | BRF_GRA },			//  8
+
+	{ "s_s_wave_u1.u1",	   			0x0400000, 0x3ada4fd6, 5 | BRF_SND },			//  9 Samples
+
+	{ "kovsh_v100_china.asic", 		0x0004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS }, // 10 Internal ARM7 Rom
+};
+kovshp
+STDROMPICKEXT(kovshp101a, kovshp101a, pgm)
+STD_ROM_FN(kovshp101a)
+
+struct BurnDriver BurnDrvkovshp101a = {
+	"kovshp101a", "kovshp", "pgm", NULL, "2004",
+	"Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (V101 alr, China)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
+	L"Knights of Valour Super Heroes Plus\0\u4E09\u56FD\u6218\u7EAA\0\u4E71\u4E16\u67AD\u96C4 (V101 alt, China)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovshp101aRomInfo, kovshp101aRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshp101DIPInfo,
+	kovshpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+}; */
+
+
 // Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (V100, China)
 
 /* IGS PCB-0490-00-GZ
@@ -5293,6 +5349,53 @@ struct BurnDriverD BurnDrvSvgtw = {
 	L"S.V.G. - Spectral vs Generation\0\u5723\u9B54\u4E16\u7EAA (V100, Taiwan)\0", NULL, NULL, NULL,
 	BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, svgtwRomInfo, svgtwRomName, NULL, NULL, NULL, NULL, pgmInputInfo, svgtwDIPInfo,
+	svgtwInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// S.V.G. - Spectral vs Generation (V100, Hong Kong)
+
+/* IGS PCB-0529-02-HH
+   SCREEN VER PIC: M68K VERSION V100 06/20/05 11:36:15 V100 
+   ROM TYPES: U30 MX MX27C4096DC
+   ROM TYPES: U26 ST M27C322
+   ROM TYPES: U36 ST M27C322
+   CREDITS TO: "XeD" */
+   
+static struct BurnRomInfo svghkRomDesc[] = {
+	{ "v101hk_u30.u30",				0x0080000, 0x8d0405e4, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "igs_t05601w016.u29",			0x0200000, 0x03e110dc, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "igs_a05601w064.u3",			0x0800000, 0xea6453e4, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "igs_a05602w064.u4",			0x0800000, 0x6d00621b, 3 | BRF_GRA },			//  3
+	{ "igs_a05603w064.u6",			0x0800000, 0x7b71c64f, 3 | BRF_GRA },			//  4
+	{ "igs_a05604w032.u8",			0x0400000, 0x9452a567, 3 | BRF_GRA },			//  5
+
+	{ "igs_b05601w064.u9",			0x0800000, 0x35c0a489, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
+	{ "igs_b05602w064.u11",			0x0800000, 0x8aad3f85, 4 | BRF_GRA },			//  7
+
+	{ "igs_w05601b064.u5",			0x0800000, 0xbfe61a71, 5 | BRF_SND },			//  8 Samples
+	{ "igs_w05602b032.u7",			0x0400000, 0x0685166d, 5 | BRF_SND },			//  9
+
+//	{ "svg_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 10 Internal ARM7 Rom
+	{ "svgpcb_igs027a_execute_only_area", 	0x0000188, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 10 Internal ARM7 Rom
+	{ "svgcpb_igs027a_v100_japan.bin", 	0x0003e78, 0x7a59da5d, 7 | BRF_PRG | BRF_ESS },		// 11 Internal ARM7 Rom
+
+	{ "v101hk_u26.u26",				0x0400000, 0x42b0d5a9, 8 | BRF_PRG | BRF_ESS },	// 12 External ARM7 Rom
+	{ "v101hk_u36.u36",				0x0400000, 0xbf15a47a, 8 | BRF_PRG | BRF_ESS },	// 13
+};
+
+STDROMPICKEXT(svghk, svghk, pgm)
+STD_ROM_FN(svghk)
+
+struct BurnDriverD BurnDrvSvghk = {
+	"svghk", "svg", "pgm", NULL, "2005",
+	"S.V.G. - Spectral vs Generation (V100, Hong Kong)\0", "Incomplete dump", "IGS", "PolyGameMaster",
+	L"S.V.G. - Spectral vs Generation\0\u5723\u9B54\u4E16\u7EAA (V100, Hong Kong)\0", NULL, NULL, NULL,
+	BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, svghkRomInfo, svghkRomName, NULL, NULL, NULL, NULL, pgmInputInfo, svghkDIPInfo,
 	svgtwInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

@@ -1195,6 +1195,37 @@ static struct BurnRomInfo ArmwarRomDesc[] = {
 STD_ROM_PICK(Armwar)
 STD_ROM_FN(Armwar)
 
+static struct BurnRomInfo ArmwarbRomDesc[] = {
+	{ "pwgb.03b",      0x080000, 0xd0161e14, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pwgb.04b",      0x080000, 0x7fb39864, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pwgb.05b",      0x080000, 0x52a1c12c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pwg.06",        0x080000, 0x87a60ce8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pwg.07",        0x080000, 0xf7b148df, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pwg.08",        0x080000, 0xcc62823e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pwg.09a",       0x080000, 0x4c26baee, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pwg.10",        0x080000, 0x07c4fb28, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "pwg.13m",       0x400000, 0xae8fe08e, CPS2_GFX | BRF_GRA },
+	{ "pwg.15m",       0x400000, 0xdb560f58, CPS2_GFX | BRF_GRA },
+	{ "pwg.17m",       0x400000, 0xbc475b94, CPS2_GFX | BRF_GRA },
+	{ "pwg.19m",       0x400000, 0x07439ff7, CPS2_GFX | BRF_GRA },
+	{ "pwg.14m",       0x100000, 0xc3f9ba63, CPS2_GFX | BRF_GRA },
+	{ "pwg.16m",       0x100000, 0x815b0e7b, CPS2_GFX | BRF_GRA },
+	{ "pwg.18m",       0x100000, 0x0109c71b, CPS2_GFX | BRF_GRA },
+	{ "pwg.20m",       0x100000, 0xeb75ffbe, CPS2_GFX | BRF_GRA },
+
+	{ "pwg.01",        0x020000, 0x18a5c0e4, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "pwg.02",        0x020000, 0xc9dfffa6, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "pwg.11m",       0x200000, 0xa78f7433, CPS2_QSND | BRF_SND },
+	{ "pwg.12m",       0x200000, 0x77438ed0, CPS2_QSND | BRF_SND },
+	
+	{ "armwarb.key",   0x000014, 0xeeb97bdb, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Armwarb)
+STD_ROM_FN(Armwarb)
+
 static struct BurnRomInfo Armwarr1RomDesc[] = {
 	{ "pwge.03b",      0x080000, 0xe822e3e9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "pwge.04b",      0x080000, 0x4f89de39, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -9053,6 +9084,16 @@ struct BurnDriver BurnDrvCpsArmwar = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
 	NULL, ArmwarRomInfo, ArmwarRomName, NULL, NULL, NULL, NULL, ArmwarInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsArmwarb = {
+	"armwarb", "armwar", NULL, NULL, "1994",
+	"Armored Warriors (941024 Brazil)\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
+	NULL, ArmwarbRomInfo, ArmwarbRomName, NULL, NULL, NULL, NULL, ArmwarInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

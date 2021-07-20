@@ -13892,10 +13892,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="tortillaen" romof="msx">
-		<description>Tortilla Sunrise EN (HB) [Homebrew, English-language version]</description>
+		<description>Tortilla Sunrise (English) (HB, v1.1) [Homebrew, Redefine controls before starting to play]</description>
 		<year>2021</year>
 		<manufacturer>Tortilla Yonkers</manufacturer>
-		<rom name="Tortilla Sunrise EN (2021)(Tortilla Yonkers).rom" size="32768" crc="e3a9b34b"/>
+		<rom name="Tortilla Sunrise v1.1 EN (2021)(Tortilla Yonkers).rom" size="32768" crc="d7ebfcfd"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -13903,10 +13903,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="tortillaes" cloneof="tortillaen" romof="tortillaen">
-		<description>Tortilla Sunrise ES (HB) [Homebrew, Spanish-language version]</description>
+		<description>Tortilla Sunrise (Spanish) (HB, v1.1) [Homebrew, Redefine controls before starting to play]</description>
 		<year>2021</year>
 		<manufacturer>Tortilla Yonkers</manufacturer>
-		<rom name="Tortilla Sunrise ES (2021)(Tortilla Yonkers).rom" size="32768" crc="71a69b10"/>
+		<rom name="Tortilla Sunrise v1.1 ES (2021)(Tortilla Yonkers).rom" size="32768" crc="d983aec4"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

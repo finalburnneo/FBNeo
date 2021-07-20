@@ -551,6 +551,8 @@ static INT32 PgmDoReset()
 
 	nCyclesDone[0] = nCyclesDone[1] = nCyclesDone[2] = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 

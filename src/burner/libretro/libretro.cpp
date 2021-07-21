@@ -1081,6 +1081,10 @@ void retro_deinit()
 
 void retro_reset()
 {
+	// Saving minimal savestate (handle some machine settings)
+	if (BurnStateSave(g_autofs_path, 0) == 0 && path_is_valid(g_autofs_path))
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] EEPROM succesfully saved to %s\n", g_autofs_path);
+
 	if (pgi_reset)
 	{
 		pgi_reset->Input.nVal = 1;
@@ -1096,6 +1100,13 @@ void retro_reset()
 		set_neo_system_bios();
 
 	ForceFrameStep(1);
+
+	// Loading minimal savestate (handle some machine settings)
+	if (BurnStateLoad(g_autofs_path, 0, NULL) == 0) {
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] EEPROM succesfully loaded from %s\n", g_autofs_path);
+		// eeproms are loading nCurrentFrame, but we probably don't want this
+		nCurrentFrame = 0;
+	}
 }
 
 static void VideoBufferInit()
@@ -2057,6 +2068,7 @@ void retro_unload_game(void)
 				bMemCardFC1Format = true;
 			MemCardEject();
 		}
+		// Saving minimal savestate (handle some machine settings)
 		if (BurnStateSave(g_autofs_path, 0) == 0 && path_is_valid(g_autofs_path))
 			HandleMessage(RETRO_LOG_INFO, "[FBNeo] EEPROM succesfully saved to %s\n", g_autofs_path);
 		BurnDrvExit();
@@ -2395,7 +2407,7 @@ INT32 BurnStateSave(TCHAR* szName, INT32 bAll)
 		StateInfo(&nLen, &nVer, 0);
 	}
 	if (nLen <= 0) {                           // No data, so exit without creating a savestate
-		return 0;                              // Don't return an error code
+		return 1;                              // Return an error code so we know no savestate was created
 	}
 
 	FILE* fp = fopen(szName, _T("wb"));

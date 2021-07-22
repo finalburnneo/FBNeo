@@ -29557,3 +29557,155 @@ struct BurnDriver BurnDrvgg_rayearthe = {
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
+
+// Arno Dash (HB, v1.03)
+
+static struct BurnRomInfo sms_arnodashRomDesc[] = {
+	{ "Arno Dash v1.03 (2021)(Under4Mhz).sms",	32768, 0x3dcdb2e0, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_arnodash)
+STD_ROM_FN(sms_arnodash)
+
+struct BurnDriver BurnDrvsms_arnodash = {
+	"sms_arnodash", NULL, NULL, NULL, "2021",
+	"Arno Dash (HB, v1.03)\0", NULL, "Under4Mhz", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_arnodashRomInfo, sms_arnodashRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Arno Dash 2 (HB, v1.03)
+
+static struct BurnRomInfo sms_arnodash2RomDesc[] = {
+	{ "Arno Dash 2 v1.03 (2021)(Under4Mhz).sms",	32768, 0x9091d61a, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_arnodash2)
+STD_ROM_FN(sms_arnodash2)
+
+struct BurnDriver BurnDrvsms_arnodash2 = {
+	"sms_arnodash2", NULL, NULL, NULL, "2021",
+	"Arno Dash 2 (HB, v1.03)\0", NULL, "Under4Mhz", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_arnodash2RomInfo, sms_arnodash2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Gaudream (HB, v0.04)
+
+static struct BurnRomInfo sms_gaudreamRomDesc[] = {
+	{ "Gaudream v0.04 (2015)(1985 Alternativo).sms",	131072, 0xff2e1ea4, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_gaudream)
+STD_ROM_FN(sms_gaudream)
+
+struct BurnDriver BurnDrvsms_gaudream = {
+	"sms_gaudream", NULL, NULL, NULL, "2015",
+	"Gaudream (HB, v0.04)\0", NULL, "1985 Alternativo", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_gaudreamRomInfo, sms_gaudreamRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Gemitas (HB)
+
+static struct BurnRomInfo sms_gemitasRomDesc[] = {
+	{ "Gemitas (2018)(Cyttorak).sms",	65536, 0xd0f12c3e, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_gemitas)
+STD_ROM_FN(sms_gemitas)
+
+struct BurnDriver BurnDrvsms_gemitas = {
+	"sms_gemitas", NULL, NULL, NULL, "2018",
+	"Gemitas (HB)\0", NULL, "Cyttorak", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_gemitasRomInfo, sms_gemitasRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 224, 4, 3
+};
+
+// Gotris (HB, v0.8)
+
+static struct BurnRomInfo sms_gotrisRomDesc[] = {
+	{ "Gotris v0.8 (2019)(1985 Alternativo).sms",	65536, 0xadb0efa6, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_gotris)
+STD_ROM_FN(sms_gotris)
+
+struct BurnDriver BurnDrvsms_gotris = {
+	"sms_gotris", NULL, NULL, NULL, "2018",
+	"Gotris (HB, v0.8)\0", NULL, "1985 Alternativo", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_gotrisRomInfo, sms_gotrisRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// KunKun & KokoKun (HB)
+
+static struct BurnRomInfo sms_kunkunRomDesc[] = {
+	{ "KunKun & KokoKun (2006)(Bock).sms",	32768, 0x7e15a103, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_kunkun)
+STD_ROM_FN(sms_kunkun)
+
+struct BurnDriver BurnDrvsms_kunkun = {
+	"sms_kunkun", NULL, NULL, NULL, "2006",
+	"KunKun & KokoKun (HB)\0", NULL, "Bock", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_kunkunRomInfo, sms_kunkunRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// NanoWars 8k (HB, v0.7)
+
+static struct BurnRomInfo sms_nanowarsRomDesc[] = {
+	{ "NanoWars8k v0.7 (2006)(haroldoop).sms",	32768, 0xa06d065c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_nanowars)
+STD_ROM_FN(sms_nanowars)
+
+struct BurnDriver BurnDrvsms_nanowars = {
+	"sms_nanowars", NULL, NULL, NULL, "2006",
+	"NanoWars 8k (HB, v0.7)\0", NULL, "haroldoop", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION | GBF_MAZE, 0,
+	SMSGetZipName, sms_nanowarsRomInfo, sms_nanowarsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Sub Rescue (HB, v0.3)
+
+static struct BurnRomInfo sms_subrescueRomDesc[] = {
+	{ "Sub Rescue v0.3 (2021)(haroldoop).sms",	32768, 0x06a41efd, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_subrescue)
+STD_ROM_FN(sms_subrescue)
+
+struct BurnDriver BurnDrvsms_subrescue = {
+	"sms_subrescue", NULL, NULL, NULL, "2021",
+	"Sub Rescue (HB, v0.3)\0", NULL, "haroldoop", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_subrescueRomInfo, sms_subrescueRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};

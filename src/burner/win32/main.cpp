@@ -857,6 +857,8 @@ int AppMessage(MSG *pMsg)
 	if (IsDialogMessage(hInpsDlg, pMsg))	 return 0;
 	if (IsDialogMessage(hInpcDlg, pMsg))	 return 0;
 
+	if (IsDialogMessage(LuaConsoleHWnd, pMsg)) return 0;
+
 	return 1; // Didn't process this message
 }
 

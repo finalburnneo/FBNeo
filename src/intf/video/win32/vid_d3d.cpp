@@ -2136,6 +2136,8 @@ static int vidBurnToSurf()
 	memset(&ddsd, 0, sizeof(ddsd));
 	ddsd.dwSize = sizeof(ddsd);
 
+	FBA_LuaGui((unsigned char*)ddsd.lpSurface,ddsd.dwWidth,ddsd.dwHeight,nVidImageBPP,ddsd.lPitch);
+
 	if (nVidTransferMethod <= 0) {
 		if (nPreScaleEffect) {
 

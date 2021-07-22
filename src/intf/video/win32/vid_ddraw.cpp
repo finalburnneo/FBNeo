@@ -1012,6 +1012,8 @@ static int vidBurnToSurf()
 		}
 	}
 
+	FBA_LuaGui((unsigned char*)ddsd.lpSurface,ddsd.dwWidth,ddsd.dwHeight,nVidImageBPP,ddsd.lPitch);
+
 	bDtosScan = bScan;
 
 	if (nRotateGame & 2 && bNoHWFlip) {

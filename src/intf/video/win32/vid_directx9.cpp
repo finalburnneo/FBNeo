@@ -1115,6 +1115,8 @@ static int dx9MemToSurf()
 			memcpy(pd, ps, s);
 		}
 
+		FBA_LuaGui(pd, nVidImageWidth, nVidImageHeight, nVidImageBPP, p);
+
 		pSurface->UnlockRect();
 	}
 
@@ -2145,6 +2147,8 @@ static int dx9AltRender()
 					break;
 			}
 		}
+
+		FBA_LuaGui(pd, nVidImageWidth, nVidImageHeight, nVidImageBPP, pitch);
 
 		pTexture->UnlockRect(0);
 	}

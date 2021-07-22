@@ -54,4 +54,49 @@ struct ButtonToggle {
 	}
 };
 
+// E-Z HoldCoin logic (see pgm_run.cpp, d_discoboy.cpp)
+template <int N>
+struct HoldCoin {
+	UINT8 prev[N];
+	UINT8 counter[N];
+
+	void reset() {
+		memset(&prev, 0, sizeof(prev));
+		memset(&counter, 0, sizeof(counter));
+	}
+
+	void scan() {
+		SCAN_VAR(prev);
+		SCAN_VAR(counter);
+	}
+
+	void check(UINT8 num, UINT8 &inp, UINT8 bit, UINT8 hold_count) {
+		if ((prev[num] & bit) != (inp & bit) && (inp & bit) && !counter[num]) {
+			counter[num] = hold_count + 1;
+		}
+		prev[num] = (inp & bit);
+		if (counter[num]) {
+			counter[num]--;
+			inp |= bit;
+		}
+		if (!counter[num]) {
+			inp &= ~bit;
+		}
+	}
+
+	void checklow(UINT8 num, UINT8 &inp, UINT8 bit, UINT8 hold_count) {
+		if ((prev[num] & bit) != (inp & bit) && (~inp & bit) && !counter[num]) {
+			counter[num] = hold_count + 1;
+		}
+		prev[num] = (inp & bit);
+		if (counter[num]) {
+			counter[num]--;
+			inp &= ~bit;
+		}
+		if (!counter[num]) {
+			inp |= bit;
+		}
+	}
+};
+
 #endif

@@ -2620,6 +2620,424 @@ struct BurnDriver BurnDrvDkongf = {
 };
 
 
+// Donkey Kong Crazy Barrels Edition
+
+static struct BurnRomInfo dkcbarrelRomDesc[] = {
+	{ "dkcbarrel.5et",	0x1000, 0x78e37c41, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "dkcbarrel.5ct",	0x1000, 0xa46cbb85, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dkcbarrel.5bt",	0x1000, 0x07da5b15, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dkcbarrel.5at",	0x1000, 0x515e0639, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 | BRF_PRG | BRF_ESS }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "v_5h_b.bin",		0x0800, 0x12c8c95d, 3 | BRF_GRA },           //  6 gfx1
+	{ "v_3pt.bin",		0x0800, 0x15e9c5e9, 3 | BRF_GRA },           //  7
+
+	{ "l_4m_b.bin",		0x0800, 0x59f8054d, 4 | BRF_GRA },           //  8 gfx2
+	{ "l_4n_b.bin",		0x0800, 0x672e4714, 4 | BRF_GRA },           //  9
+	{ "l_4r_b.bin",		0x0800, 0xfeaa59ee, 4 | BRF_GRA },           // 10
+	{ "l_4s_b.bin",		0x0800, 0x20f2ef7e, 4 | BRF_GRA },           // 11
+
+	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 | BRF_GRA },           // 12 proms
+	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 | BRF_GRA },           // 13
+	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 | BRF_GRA },           // 14
+};
+
+STD_ROM_PICK(dkcbarrel)
+STD_ROM_FN(dkcbarrel)
+
+struct BurnDriver BurnDrvDkcbarrel = {
+	"dkcbarrel", "dkong", NULL, NULL, "2019",
+	"Donkey Kong Crazy Barrels Edition\0", NULL, "Paul Goes", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkcbarrelRomInfo, dkcbarrelRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong Freerun Edition
+
+static struct BurnRomInfo dkfreerunRomDesc[] = {
+	{ "dkfreerun.5et",	0x1000, 0x2b85ddf0, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "dkfreerun.5ct",	0x1000, 0xef7e15d7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dkfreerun.5bt",	0x1000, 0xcb390d7c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dkfreerun.5at",	0x1000, 0x76fb86ba, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 | BRF_PRG | BRF_ESS }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "v_5h_b.bin",		0x0800, 0x12c8c95d, 3 | BRF_GRA },           //  6 gfx1
+	{ "v_3pt.bin",		0x0800, 0x15e9c5e9, 3 | BRF_GRA },           //  7
+
+	{ "l_4m_b.bin",		0x0800, 0x59f8054d, 4 | BRF_GRA },           //  8 gfx2
+	{ "l_4n_b.bin",		0x0800, 0x672e4714, 4 | BRF_GRA },           //  9
+	{ "l_4r_b.bin",		0x0800, 0xfeaa59ee, 4 | BRF_GRA },           // 10
+	{ "l_4s_b.bin",		0x0800, 0x20f2ef7e, 4 | BRF_GRA },           // 11
+
+	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 | BRF_GRA },           // 12 proms
+	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 | BRF_GRA },           // 13
+	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 | BRF_GRA },           // 14
+};
+
+STD_ROM_PICK(dkfreerun)
+STD_ROM_FN(dkfreerun)
+
+struct BurnDriver BurnDrvDkfreerun = {
+	"dkfreerun", "dkong", NULL, NULL, "2019",
+	"Donkey Kong Freerun Edition\0", NULL, "Paul Goes", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkfreerunRomInfo, dkfreerunRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong Randomized Edition v1.01
+
+static struct BurnRomInfo dkongran1RomDesc[] = {
+	{ "dkongran1.5et",	0x1000, 0xfc29f234, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "dkongran1.5ct",	0x1000, 0x49e16508, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dkongchm.5bt",	0x1000, 0xfce41e06, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dkongran1.5at",	0x1000, 0x86723e5d, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 | BRF_PRG | BRF_ESS }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "v_5h_b.ran1",	0x0800, 0x17ef76ad, 3 | BRF_GRA },           //  6 gfx1
+	{ "v_3pt.ran1",		0x0800, 0x49d408cd, 3 | BRF_GRA },           //  7
+
+	{ "l_4m_b.bin",		0x0800, 0x59f8054d, 4 | BRF_GRA },           //  8 gfx2
+	{ "l_4n_b.bin",		0x0800, 0x672e4714, 4 | BRF_GRA },           //  9
+	{ "l_4r_b.bin",		0x0800, 0xfeaa59ee, 4 | BRF_GRA },           // 10
+	{ "l_4s_b.bin",		0x0800, 0x20f2ef7e, 4 | BRF_GRA },           // 11
+
+	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 | BRF_GRA },           // 12 proms
+	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 | BRF_GRA },           // 13
+	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 | BRF_GRA },           // 14
+};
+
+STD_ROM_PICK(dkongran1)
+STD_ROM_FN(dkongran1)
+
+struct BurnDriver BurnDrvDkongran1 = {
+	"dkongran1", "dkong", NULL, NULL, "2020",
+	"Donkey Kong Randomized Edition v1.01\0", NULL, "Paul Goes", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkongran1RomInfo, dkongran1RomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong League Championship v1.00
+
+static struct BurnRomInfo dkongchmRomDesc[] = {
+	{ "dkongchm.5et",	0x1000, 0x26890d72, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "dkongchm.5ct",	0x1000, 0xd5965c23, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dkongchm.5bt",	0x1000, 0xfce41e06, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dkongchm.5at",	0x1000, 0xc48a4053, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 | BRF_PRG | BRF_ESS }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "v_5h_b.chm",		0x0800, 0xa7a3772b, 3 | BRF_GRA },           //  6 gfx1
+	{ "v_3pt.chm",		0x0800, 0x72b0b861, 3 | BRF_GRA },           //  7
+
+	{ "l_4m_b.bin",		0x0800, 0x59f8054d, 4 | BRF_GRA },           //  8 gfx2
+	{ "l_4n_b.bin",		0x0800, 0x672e4714, 4 | BRF_GRA },           //  9
+	{ "l_4r_b.bin",		0x0800, 0xfeaa59ee, 4 | BRF_GRA },           // 10
+	{ "l_4s_b.bin",		0x0800, 0x20f2ef7e, 4 | BRF_GRA },           // 11
+
+	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 | BRF_GRA },           // 12 proms
+	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 | BRF_GRA },           // 13
+	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 | BRF_GRA },           // 14
+};
+
+STD_ROM_PICK(dkongchm)
+STD_ROM_FN(dkongchm)
+
+struct BurnDriver BurnDrvDkongchm = {
+	"dkongchm", "dkong", NULL, NULL, "2020",
+	"Donkey Kong League Championship v1.00\0", NULL, "Paul Goes", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkongchmRomInfo, dkongchmRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong Championship Edition v1.01
+
+static struct BurnRomInfo dkongchm1RomDesc[] = {
+	{ "dkongchm.5et",	0x1000, 0x26890d72, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "dkongchm.5ct",	0x1000, 0xd5965c23, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dkongchm.5bt",	0x1000, 0xfce41e06, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dkongchm1.5at",	0x1000, 0x458ff9b9, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 | BRF_PRG | BRF_ESS }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "v_5h_b.bin",		0x0800, 0x12c8c95d, 3 | BRF_GRA },           //  6 gfx1
+	{ "v_3pt.bin",		0x0800, 0x15e9c5e9, 3 | BRF_GRA },           //  7
+
+	{ "l_4m_b.bin",		0x0800, 0x59f8054d, 4 | BRF_GRA },           //  8 gfx2
+	{ "l_4n_b.bin",		0x0800, 0x672e4714, 4 | BRF_GRA },           //  9
+	{ "l_4r_b.bin",		0x0800, 0xfeaa59ee, 4 | BRF_GRA },           // 10
+	{ "l_4s_b.bin",		0x0800, 0x20f2ef7e, 4 | BRF_GRA },           // 11
+
+	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 | BRF_GRA },           // 12 proms
+	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 | BRF_GRA },           // 13
+	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 | BRF_GRA },           // 14
+};
+
+STD_ROM_PICK(dkongchm1)
+STD_ROM_FN(dkongchm1)
+
+struct BurnDriver BurnDrvDkongchm1 = {
+	"dkongchm1", "dkong", NULL, NULL, "2020",
+	"Donkey Kong Championship Edition v1.01\0", NULL, "Paul Goes", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkongchm1RomInfo, dkongchm1RomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong Springs Trainer
+
+static struct BurnRomInfo dkongstRomDesc[] = {
+	{ "dkongst.5et",	0x1000, 0x8fb6e908, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "dkongst.5ct",	0x1000, 0xc9d766ea, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dkongst.5bt",	0x1000, 0xaef88ff5, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dkongst.5at",	0x1000, 0x5cf3774b, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 | BRF_PRG | BRF_ESS }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "v_5h_b.bin",		0x0800, 0x12c8c95d, 3 | BRF_GRA },           //  6 gfx1
+	{ "v_3pt.bin",		0x0800, 0x15e9c5e9, 3 | BRF_GRA },           //  7
+
+	{ "l_4m_b.bin",		0x0800, 0x59f8054d, 4 | BRF_GRA },           //  8 gfx2
+	{ "l_4n_b.bin",		0x0800, 0x672e4714, 4 | BRF_GRA },           //  9
+	{ "l_4r_b.bin",		0x0800, 0xfeaa59ee, 4 | BRF_GRA },           // 10
+	{ "l_4s_b.bin",		0x0800, 0x20f2ef7e, 4 | BRF_GRA },           // 11
+
+	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 | BRF_GRA },           // 12 proms
+	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 | BRF_GRA },           // 13
+	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 | BRF_GRA },           // 14
+};
+
+STD_ROM_PICK(dkongst)
+STD_ROM_FN(dkongst)
+
+struct BurnDriver BurnDrvDkongst = {
+	"dkongst", "dkong", NULL, NULL, "2019",
+	"Donkey Kong Springs Trainer\0", NULL, "Sock Master", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkongstRomInfo, dkongstRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong Springs Trainer 2
+
+static struct BurnRomInfo dkongst2RomDesc[] = {
+	{ "dkongst2.5et",	0x1000, 0x21ddc6cc, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "dkongst2.5ct",	0x1000, 0xfa14da2c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dkongst2.5bt",	0x1000, 0x32a8f924, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dkongst2.5at",	0x0f00, 0x27b9c90d, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 | BRF_PRG | BRF_ESS }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "v_5h_b.bin",		0x0800, 0x12c8c95d, 3 | BRF_GRA },           //  6 gfx1
+	{ "v_3pt.bin",		0x0800, 0x15e9c5e9, 3 | BRF_GRA },           //  7
+
+	{ "l_4m_b.bin",		0x0800, 0x59f8054d, 4 | BRF_GRA },           //  8 gfx2
+	{ "l_4n_b.bin",		0x0800, 0x672e4714, 4 | BRF_GRA },           //  9
+	{ "l_4r_b.bin",		0x0800, 0xfeaa59ee, 4 | BRF_GRA },           // 10
+	{ "l_4s_b.bin",		0x0800, 0x20f2ef7e, 4 | BRF_GRA },           // 11
+
+	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 | BRF_GRA },           // 12 proms
+	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 | BRF_GRA },           // 13
+	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 | BRF_GRA },           // 14
+};
+
+STD_ROM_PICK(dkongst2)
+STD_ROM_FN(dkongst2)
+
+struct BurnDriver BurnDrvDkongst2 = {
+	"dkongst2", "dkong", NULL, NULL, "2020",
+	"Donkey Kong Springs Trainer 2\0", NULL, "Sock Master", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkongst2RomInfo, dkongst2RomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong Skip Start v1.00
+
+static struct BurnRomInfo dkongssRomDesc[] = {
+	{ "dkongss.5et",	0x1000, 0x87c65c59, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "c_5ct_g.bin",	0x1000, 0x5ec461ec, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dkongss.5bt",	0x1000, 0xf31c0c47, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dkongss.5at",	0x1000, 0x87d58e2e, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 | BRF_PRG | BRF_ESS }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "v_5h_b.bin",		0x0800, 0x12c8c95d, 3 | BRF_GRA },           //  6 gfx1
+	{ "v_3pt.bin",		0x0800, 0x15e9c5e9, 3 | BRF_GRA },           //  7
+
+	{ "l_4m_b.bin",		0x0800, 0x59f8054d, 4 | BRF_GRA },           //  8 gfx2
+	{ "l_4n_b.bin",		0x0800, 0x672e4714, 4 | BRF_GRA },           //  9
+	{ "l_4r_b.bin",		0x0800, 0xfeaa59ee, 4 | BRF_GRA },           // 10
+	{ "l_4s_b.bin",		0x0800, 0x20f2ef7e, 4 | BRF_GRA },           // 11
+
+	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 | BRF_GRA },           // 12 proms
+	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 | BRF_GRA },           // 13
+	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 | BRF_GRA },           // 14
+};
+
+STD_ROM_PICK(dkongss)
+STD_ROM_FN(dkongss)
+
+struct BurnDriver BurnDrvDkongss = {
+	"dkongss", "dkong", NULL, NULL, "2020",
+	"Donkey Kong Skip Start v1.00\0", NULL, "Paul Goes", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkongssRomInfo, dkongssRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong On the Run v1.02
+
+static struct BurnRomInfo dkongotrRomDesc[] = {
+	{ "dkongotr.5et",	0x1000, 0xfd64526a, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "dkongotr.5ct",	0x1000, 0x6d692d1b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dkongotr.5bt",	0x1000, 0xd029c495, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dkongotr.5at",	0x1000, 0x9b58b813, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 | BRF_PRG | BRF_ESS }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "dkongotr.5h",	0x0800, 0x0d588de5, 3 | BRF_GRA },           //  6 gfx1
+	{ "dkongotr.3pt",	0x0800, 0xbfb2c04f, 3 | BRF_GRA },           //  7
+
+	{ "dkongotr.4m",	0x0800, 0xf224b2bc, 4 | BRF_GRA },           //  8 gfx2
+	{ "dkongotr.4n",	0x0800, 0xdef8bca4, 4 | BRF_GRA },           //  9
+	{ "dkongotr.4r",	0x0800, 0x59e3e846, 4 | BRF_GRA },           // 10
+	{ "dkongotr.4s",	0x0800, 0xb5a2e920, 4 | BRF_GRA },           // 11
+
+	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 | BRF_GRA },           // 12 proms
+	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 | BRF_GRA },           // 13
+	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 | BRF_GRA },           // 14
+};
+
+STD_ROM_PICK(dkongotr)
+STD_ROM_FN(dkongotr)
+
+struct BurnDriver BurnDrvDkongotr = {
+	"dkongotr", "dkong", NULL, NULL, "2020",
+	"Donkey Kong On the Run v1.02\0", NULL, "Paul Goes", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkongotrRomInfo, dkongotrRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong In the Dark v1.02
+
+static struct BurnRomInfo dkongitdRomDesc[] = {
+	{ "dkongitd.5et",	0x1000, 0xabddd83e, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "dkongitd.5ct",	0x1000, 0xee146d99, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dkongchm.5bt",	0x1000, 0xfce41e06, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dkongitd.5at",	0x1000, 0x6b8d5524, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 | BRF_PRG | BRF_ESS }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "dkongitd.5h",	0x0800, 0x3d4ea8f8, 3 | BRF_GRA },           //  6 gfx1
+	{ "dkongitd.3pt",	0x0800, 0x0979cf74, 3 | BRF_GRA },           //  7
+
+	{ "dkongitd.4m",	0x0800, 0x21a04aa5, 4 | BRF_GRA },           //  8 gfx2
+	{ "dkongitd.4n",	0x0800, 0x27ddec12, 4 | BRF_GRA },           //  9
+	{ "dkongitd.4r",	0x0800, 0xddfee3e1, 4 | BRF_GRA },           // 10
+	{ "dkongitd.4s",	0x0800, 0x42d26b1b, 4 | BRF_GRA },           // 11
+
+	{ "dkongitd.2k",	0x0100, 0x8d918467, 5 | BRF_GRA },           // 12 proms
+	{ "dkongitd.2j",	0x0100, 0x9aadf04a, 5 | BRF_GRA },           // 13
+	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 | BRF_GRA },           // 14
+};
+
+STD_ROM_PICK(dkongitd)
+STD_ROM_FN(dkongitd)
+
+struct BurnDriver BurnDrvDkongitd = {
+	"dkongitd", "dkong", NULL, NULL, "2020",
+	"Donkey Kong In the Dark v1.02\0", NULL, "Paul Goes", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkongitdRomInfo, dkongitdRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong Twisted Jungle v1.05
+
+static struct BurnRomInfo dkongtjRomDesc[] = {
+	{ "dkongtj.5et",	0x1000, 0x63e2a483, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "dkongtj.5ct",	0x1000, 0xed5c7b13, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dkongtj.5bt",	0x1000, 0xb1990430, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dkongtj.5at",	0x1000, 0xb4e0240a, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 | BRF_PRG | BRF_ESS }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "dkongtj.5h",		0x0800, 0xfccb93d6, 3 | BRF_GRA },           //  6 gfx1
+	{ "dkongtj.3pt",	0x0800, 0x95408f9f, 3 | BRF_GRA },           //  7
+
+	{ "dkongtj.4m",		0x0800, 0x5e77597e, 4 | BRF_GRA },           //  8 gfx2
+	{ "dkongtj.4n",		0x0800, 0x715c29ff, 4 | BRF_GRA },           //  9
+	{ "dkongtj.4r",		0x0800, 0x7b24438d, 4 | BRF_GRA },           // 10
+	{ "dkongtj.4s",		0x0800, 0x57d3989a, 4 | BRF_GRA },           // 11
+
+	{ "dkongtj.2k",		0x0100, 0x84be5373, 5 | BRF_GRA },           // 12 proms
+	{ "dkongtj.2j",		0x0100, 0xa81ca93c, 5 | BRF_GRA },           // 13
+	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 | BRF_GRA },           // 14
+};
+
+STD_ROM_PICK(dkongtj)
+STD_ROM_FN(dkongtj)
+
+struct BurnDriver BurnDrvDkongtj = {
+	"dkongtj", "dkong", NULL, NULL, "2021",
+	"Donkey Kong Twisted Jungle v1.05\0", NULL, "Paul Goes", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkongtjRomInfo, dkongtjRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
 // Donkey Kong Barrelpalooza v1.06
 
 static struct BurnRomInfo dkongbpRomDesc[] = {
@@ -2651,7 +3069,7 @@ struct BurnDriver BurnDrvDkongbp = {
 	"dkongbp", "dkong", NULL, NULL, "2021",
 	"Donkey Kong Barrelpalooza v1.06\0", NULL, "Paul Goes", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkongbpRomInfo, dkongbpRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
 	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -3203,120 +3621,6 @@ struct BurnDriver BurnDrvDkpace = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkpaceRomInfo, dkpaceRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongDIPInfo,
-	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
-	224, 256, 3, 4
-};
-
-
-// Donkey Kong Crazy Barrels Edition by Paul Goes
-
-static struct BurnRomInfo dkcbarrelRomDesc[] = {
-	{ "dkcbarrel.5et",	0x1000, 0x78e37c41, 1 }, //  0 maincpu
-	{ "dkcbarrel.5ct",	0x1000, 0xa46cbb85, 1 }, //  1
-	{ "dkcbarrel.5bt",	0x1000, 0x07da5b15, 1 }, //  2
-	{ "dkcbarrel.5at",	0x1000, 0x515e0639, 1 }, //  3
-
-	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 }, //  4 soundcpu
-	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 }, //  5
-
-	{ "v_5h_b.bin",		0x0800, 0x12c8c95d, 3 }, //  6 gfx1
-	{ "v_3pt.bin",		0x0800, 0x15e9c5e9, 3 }, //  7
-
-	{ "l_4m_b.bin",		0x0800, 0x59f8054d, 4 }, //  8 gfx2
-	{ "l_4n_b.bin",		0x0800, 0x672e4714, 4 }, //  9
-	{ "l_4r_b.bin",		0x0800, 0xfeaa59ee, 4 }, // 10
-	{ "l_4s_b.bin",		0x0800, 0x20f2ef7e, 4 }, // 11
-
-	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 }, // 12 proms
-	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 }, // 13
-	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 }, // 14
-};
-
-STD_ROM_PICK(dkcbarrel)
-STD_ROM_FN(dkcbarrel)
-
-struct BurnDriver BurnDrvDkcbarrel = {
-	"dkcbarrel", "dkong", NULL, "dkong", "2019",
-	"Donkey Kong Crazy Barrels Edition\0", NULL, "Hack (Paul Goes)", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, dkcbarrelRomInfo, dkcbarrelRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongDIPInfo,
-	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
-	224, 256, 3, 4
-};
-
-
-// Donkey Kong Randomized Edition v1.01 by Paul Goes
-
-static struct BurnRomInfo dkongran1RomDesc[] = {
-	{ "dkongran1.5et",	0x1000, 0xfc29f234, 1 }, //  0 maincpu
-	{ "dkongran1.5ct",	0x1000, 0x49e16508, 1 }, //  1
-	{ "dkongchm.5bt",	0x1000, 0xfce41e06, 1 }, //  2
-	{ "dkongran1.5at",	0x1000, 0x86723e5d, 1 }, //  3
-
-	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 }, //  4 soundcpu
-	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 }, //  5
-
-	{ "v_5h_b.ran1",	0x0800, 0x17ef76ad, 3 }, //  6 gfx1
-	{ "v_3pt.ran1",		0x0800, 0x49d408cd, 3 }, //  7
-
-	{ "l_4m_b.bin",		0x0800, 0x59f8054d, 4 }, //  8 gfx2
-	{ "l_4n_b.bin",		0x0800, 0x672e4714, 4 }, //  9
-	{ "l_4r_b.bin",		0x0800, 0xfeaa59ee, 4 }, // 10
-	{ "l_4s_b.bin",		0x0800, 0x20f2ef7e, 4 }, // 11
-
-	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 }, // 12 proms
-	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 }, // 13
-	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 }, // 14
-};
-
-STD_ROM_PICK(dkongran1)
-STD_ROM_FN(dkongran1)
-
-struct BurnDriver BurnDrvDkongran1 = {
-	"dkongran1", "dkong", NULL, "dkong", "2020",
-	"Donkey Kong Randomized Edition v1.01\0", NULL, "Hack (Paul Goes)", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, dkongran1RomInfo, dkongran1RomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongDIPInfo,
-	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
-	224, 256, 3, 4
-};
-
-
-// Donkey Kong On the Run v1.02 by Paul Goes
-
-static struct BurnRomInfo dkongotrRomDesc[] = {
-	{ "dkongotr.5et",	0x1000, 0xfd64526a, 1 }, //  0 maincpu
-	{ "dkongotr.5ct",	0x1000, 0x6d692d1b, 1 }, //  1
-	{ "dkongotr.5bt",	0x1000, 0xd029c495, 1 }, //  2
-	{ "dkongotr.5at",	0x1000, 0x9b58b813, 1 }, //  3
-
-	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 }, //  4 soundcpu
-	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 }, //  5
-
-	{ "dkongotr.5h",	0x0800, 0x0d588de5, 3 }, //  6 gfx1
-	{ "dkongotr.3pt",	0x0800, 0xbfb2c04f, 3 }, //  7
-
-	{ "dkongotr.4m",	0x0800, 0xf224b2bc, 4 }, //  8 gfx2
-	{ "dkongotr.4n",	0x0800, 0xdef8bca4, 4 }, //  9
-	{ "dkongotr.4r",	0x0800, 0x59e3e846, 4 }, // 10
-	{ "dkongotr.4s",	0x0800, 0xb5a2e920, 4 }, // 11
-
-	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 }, // 12 proms
-	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 }, // 13
-	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 }, // 14
-};
-
-STD_ROM_PICK(dkongotr)
-STD_ROM_FN(dkongotr)
-
-struct BurnDriver BurnDrvDkongotr = {
-	"dkongotr", "dkong", NULL, "dkong", "2020",
-	"Donkey Kong On the Run v1.02\0", NULL, "Hack (Paul Goes)", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, dkongotrRomInfo, dkongotrRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongDIPInfo,
 	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

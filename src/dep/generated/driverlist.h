@@ -3787,12 +3787,16 @@ DRV		BurnDrvDkong3b;
 DRV		BurnDrvDkong3j;
 DRV		BurnDrvDkong3;
 DRV		BurnDrvnes_donkeykong3;
+DRV		BurnDrvDkongbp;
+DRV		BurnDrvDkongchm1;
 DRV		BurnDrvDkchrmx;
 DRV		BurnDrvnes_donkekoncou4;
 DRV		BurnDrvDkcbarrel;
 DRV		BurnDrvDkongf;
+DRV		BurnDrvDkfreerun;
 DRV		BurnDrvDkongx11;
 DRV		BurnDrvDkongx;
+DRV		BurnDrvDkongitd;
 DRV		BurnSpecdkongjr;
 DRV		BurnDrvDkongjrb;
 DRV		BurnDrvDkongjrj;
@@ -3810,14 +3814,19 @@ DRV		BurnDrvDkongjrpb;		// no comment [NOT WORKING]
 DRV		BurnDrvDkongjr;
 DRV		BurnDrvDkongjr2;
 DRV		BurnDrvcv_dkongjr;
+DRV		BurnDrvDkongchm;
 DRV		BurnDrvDkongotr;
 DRV		BurnDrvDkpace;
 DRV		BurnDrvDkongran1;
 DRV		BurnSpecDkreload;
 DRV		BurnDrvDkrdemo;
 DRV		BurnDrvDkongrev;
+DRV		BurnDrvDkongss;
 DRV		BurnDrvDkspkyrmx;
+DRV		BurnDrvDkongst2;
+DRV		BurnDrvDkongst;
 DRV		BurnDrvDktrainer;
+DRV		BurnDrvDkongtj;
 DRV		BurnDrvcv_dkong;
 DRV		BurnDrvDonpachihk;
 DRV		BurnDrvDonpachijs;
@@ -3969,6 +3978,7 @@ DRV		BurnDrvnes_dragobalshelonnonaj;
 DRV		BurnDrvnes_dragobalshelonnona;
 DRV		BurnDrvnes_dragobal3gokden;
 DRV		BurnDrvmd_dbzec;
+DRV		BurnDrvmd_dbzvc;
 DRV		BurnDrvmd_dbz;
 DRV		BurnDrvnes_dragobalzkyosajinj;
 DRV		BurnDrvnes_dragobalzkyosajin;
@@ -21327,12 +21337,16 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDkong3j,			// Donkey Kong 3 (Japan)
 	&BurnDrvDkong3,				// Donkey Kong 3 (US)
 	&BurnDrvnes_donkeykong3,	// Donkey Kong 3 (USA)
+	&BurnDrvDkongbp,			// Donkey Kong Barrelpalooza v1.06
+	&BurnDrvDkongchm1,			// Donkey Kong Championship Edition v1.01
 	&BurnDrvDkchrmx,			// Donkey Kong Christmas Remix (Hack)
 	&BurnDrvnes_donkekoncou4,	// Donkey Kong Country 4 (Unl)
 	&BurnDrvDkcbarrel,			// Donkey Kong Crazy Barrels Edition
 	&BurnDrvDkongf,				// Donkey Kong Foundry (hack)
+	&BurnDrvDkfreerun,			// Donkey Kong Freerun Edition
 	&BurnDrvDkongx11,			// Donkey Kong II - Jumpman Returns (hack, V1.1)
 	&BurnDrvDkongx,				// Donkey Kong II - Jumpman Returns (hack, V1.2)
+	&BurnDrvDkongitd,			// Donkey Kong In the Dark v1.02
 	&BurnSpecdkongjr,			// Donkey Kong Jr. (48K)
 	&BurnDrvDkongjrb,			// Donkey Kong Jr. (bootleg)
 	&BurnDrvDkongjrj,			// Donkey Kong Jr. (Japan)
@@ -21350,14 +21364,19 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDkongjr,			// Donkey Kong Junior (US set F-2)
 	&BurnDrvDkongjr2,			// Donkey Kong Junior (US, bootleg?)
 	&BurnDrvcv_dkongjr,			// Donkey Kong Junior
+	&BurnDrvDkongchm,			// Donkey Kong League Championship v1.00
 	&BurnDrvDkongotr,			// Donkey Kong On the Run v1.02
 	&BurnDrvDkpace,				// Donkey Kong Pace
 	&BurnDrvDkongran1,			// Donkey Kong Randomized Edition v1.01
 	&BurnSpecDkreload,			// Donkey Kong Reloaded (HB)
 	&BurnDrvDkrdemo,			// Donkey Kong Remix (Demo)
 	&BurnDrvDkongrev,			// Donkey Kong Reverse (Hack)
+	&BurnDrvDkongss,			// Donkey Kong Skip Start v1.00
 	&BurnDrvDkspkyrmx,			// Donkey Kong Spooky Remix (Hack)
+	&BurnDrvDkongst2,			// Donkey Kong Springs Trainer 2
+	&BurnDrvDkongst,			// Donkey Kong Springs Trainer
 	&BurnDrvDktrainer,			// Donkey Kong Trainer 1.01
+	&BurnDrvDkongtj,			// Donkey Kong Twisted Jungle v1.05
 	&BurnDrvcv_dkong,			// Donkey Kong
 	&BurnDrvDonpachihk,			// DonPachi (Hong Kong, ver. 1.10, 95/05/17)
 	&BurnDrvDonpachijs,			// DonPachi (Japan, ver. 1.01, 95/05/11 satsuei)
@@ -21509,10 +21528,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_dragobalshelonnona,// Dragon Ball - Shen Long no Nazo (T-Eng)
 	&BurnDrvnes_dragobal3gokden,// Dragon Ball 3 - Gokuu Den (Japan)
 	&BurnDrvmd_dbzec,			// Dragon Ball Z - Buyuu Retsuden (Hack, Enhanced Colors)
+	&BurnDrvmd_dbzvc,			// Dragon Ball Z - Buyuu Retsuden (Hack, New Voices v2)
 	&BurnDrvmd_dbz,				// Dragon Ball Z - Buyuu Retsuden (Jpn)
 	&BurnDrvnes_dragobalzkyosajinj,// Dragon Ball Z - Kyoushuu! Saiya Jin (Japan)
 	&BurnDrvnes_dragobalzkyosajin,// Dragon Ball Z - Kyoushuu! Saiya Jin (T-Eng)
-	&BurnDrvmd_dbzf,			// Dragon Ball Z - L'Appel du Destin (Fra)
+	&BurnDrvmd_dbzf,			// Dragon Ball Z - L'Appel du Destin (France)
 	&BurnDrvmd_dbzs,			// Dragon Ball Z - L'Appel Du Destin (Hack, Spanish)
 	&BurnDrvnes_dragobalzsupbu2j,// Dragon Ball Z - Super Butouden 2 (Japan)
 	&BurnDrvnes_dragobalzsupbu2,// Dragon Ball Z - Super Butouden 2 (T-Eng)

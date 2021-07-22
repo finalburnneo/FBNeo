@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17293 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17303 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3739,12 +3739,16 @@ This list contains all games supported by FinalBurn Neo.
 | dkong3j	|  	| Donkey Kong 3 (Japan)					| dkong3	| 1983	| Nintendo	| Miscellaneous	| 					|
 | dkong3	|  	| Donkey Kong 3 (US)					| 		| 1983	| Nintendo of Am| Miscellaneous	| 					|
 | nes_donkeykong3|  	| Donkey Kong 3 (USA)					| 		| 1984	| Nintendo	| Miscellaneous	| 					|
+| dkongbp	|  	| Donkey Kong Barrelpalooza v1.06			| dkong		| 2021	| Paul Goes	| Miscellaneous	| 					|
+| dkongchm1	|  	| Donkey Kong Championship Edition v1.01		| dkong		| 2020	| Paul Goes	| Miscellaneous	| 					|
 | dkchrmx	|  	| Donkey Kong Christmas Remix (Hack)			| dkong		| 2017	| Sock Master	| Miscellaneous	| 					|
 | nes_donkekoncou4|  	| Donkey Kong Country 4 (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| dkcbarrel	|  	| Donkey Kong Crazy Barrels Edition			| dkong		| 2019	| Hack (Paul Goe| Miscellaneous	| 					|
+| dkcbarrel	|  	| Donkey Kong Crazy Barrels Edition			| dkong		| 2019	| Paul Goes	| Miscellaneous	| 					|
 | dkongf	|  	| Donkey Kong Foundry (hack)				| dkong		| 2004	| hack (Jeff Kul| Miscellaneous	| 					|
+| dkfreerun	|  	| Donkey Kong Freerun Edition				| dkong		| 2019	| Paul Goes	| Miscellaneous	| 					|
 | dkongx11	|  	| Donkey Kong II - Jumpman Returns (hack, V1.1)		| dkong		| 2006	| hack (Braze Te| Miscellaneous	| 					|
 | dkongx	|  	| Donkey Kong II - Jumpman Returns (hack, V1.2)		| dkong		| 2006	| hack (Braze Te| Miscellaneous	| 					|
+| dkongitd	|  	| Donkey Kong In the Dark v1.02				| dkong		| 2020	| Paul Goes	| Miscellaneous	| 					|
 | spec_dkongjr	|  	| Donkey Kong Jr. (48K)					| 		| 19xx	| Sir Clive and | ZX Spectrum	| 					|
 | dkongjrb	|  	| Donkey Kong Jr. (bootleg)				| dkongjr	| 1982	| bootleg	| Miscellaneous	| 					|
 | dkongjrj	|  	| Donkey Kong Jr. (Japan)				| dkongjr	| 1982	| Nintendo	| Miscellaneous	| 					|
@@ -3758,14 +3762,19 @@ This list contains all games supported by FinalBurn Neo.
 | dkongjr	|  	| Donkey Kong Junior (US set F-2)			| 		| 1982	| Nintendo of Am| Miscellaneous	| 					|
 | dkongjr2	|  	| Donkey Kong Junior (US, bootleg?)			| dkongjr	| 1982	| Nintendo	| Miscellaneous	| 					|
 | cv_dkongjr	|  	| Donkey Kong Junior					| 		| 1983	| Coleco	| ColecoVision	| 					|
-| dkongotr	|  	| Donkey Kong On the Run v1.02				| dkong		| 2020	| Hack (Paul Goe| Miscellaneous	| 					|
+| dkongchm	|  	| Donkey Kong League Championship v1.00			| dkong		| 2020	| Paul Goes	| Miscellaneous	| 					|
+| dkongotr	|  	| Donkey Kong On the Run v1.02				| dkong		| 2020	| Paul Goes	| Miscellaneous	| 					|
 | dkpace	|  	| Donkey Kong Pace					| dkong		| 2016	| Hack (Sock Mas| Miscellaneous	| 					|
-| dkongran1	|  	| Donkey Kong Randomized Edition v1.01			| dkong		| 2020	| Hack (Paul Goe| Miscellaneous	| 					|
+| dkongran1	|  	| Donkey Kong Randomized Edition v1.01			| dkong		| 2020	| Paul Goes	| Miscellaneous	| 					|
 | spec_dkreload	|  	| Donkey Kong Reloaded (HB)				| 		| 2013	| Gabriele Amore| ZX Spectrum	| 					|
 | dkrdemo	|  	| Donkey Kong Remix (Demo)				| dkong		| 2015	| Hack (Sockmast| Miscellaneous	| 					|
 | dkongrev	|  	| Donkey Kong Reverse (Hack)				| dkong		| 2019	| Hack (Paul Goe| Miscellaneous	| 					|
+| dkongss	|  	| Donkey Kong Skip Start v1.00				| dkong		| 2020	| Paul Goes	| Miscellaneous	| 					|
 | dkspkyrmx	|  	| Donkey Kong Spooky Remix (Hack)			| dkong		| 2018	| Sock Master	| Miscellaneous	| 					|
+| dkongst2	|  	| Donkey Kong Springs Trainer 2				| dkong		| 2020	| Sock Master	| Miscellaneous	| 					|
+| dkongst	|  	| Donkey Kong Springs Trainer				| dkong		| 2019	| Sock Master	| Miscellaneous	| 					|
 | dktrainer	|  	| Donkey Kong Trainer 1.01				| dkong		| 2016	| Hack (Sock Mas| Miscellaneous	| 					|
+| dkongtj	|  	| Donkey Kong Twisted Jungle v1.05			| dkong		| 2021	| Paul Goes	| Miscellaneous	| 					|
 | cv_dkong	|  	| Donkey Kong						| 		| 1982	| Coleco	| ColecoVision	| 					|
 | donpachihk	|  	| DonPachi (Hong Kong, ver. 1.10, 95/05/17)		| donpachi	| 1995	| Atlus / Cave	| Cave		| 					|
 | donpachijs	|  	| DonPachi (Japan, ver. 1.01, 95/05/11 satsuei)		| donpachi	| 1995	| Atlus / Cave	| Cave		| 					|
@@ -3905,7 +3914,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_dragon	|  	| Dragon - The Bruce Lee Story (Euro)			| 		| 1994	| Virgin Interac| Sega Game Gear| 					|
 | md_dragon	|  	| Dragon - The Bruce Lee Story (Euro)			| 		| 1993	| Virgin Interac| Sega Megadrive| 					|
 | sms_dragon	|  	| Dragon - The Bruce Lee Story (Euro)			| 		| 1994	| Virgin Interac| Sega Master Sy| 					|
-| md_dragons	|  	| Dragon - The Bruce Lee Story (Hack, Spanish)		| md_dragon	| 2018	| Acclaim	| Sega Megadrive| 					|
+| md_dragons	|  	| Dragon - The Bruce Lee Story (Hack, Spanish)		| md_dragon	| 2018	| Wave		| Sega Megadrive| 					|
 | gg_dragonu	|  	| Dragon - The Bruce Lee Story (USA)			| gg_dragon	| 1995	| Acclaim Entert| Sega Game Gear| 					|
 | md_dragonu	|  	| Dragon - The Bruce Lee Story (USA)			| md_dragon	| 1994	| Acclaim Entert| Sega Megadrive| 					|
 | msx_drgnatck	|  	| Dragon Attack (Jpn)					| 		| 1983	| HAL Kenkyuujo	| MSX		| 					|
@@ -3916,12 +3925,13 @@ This list contains all games supported by FinalBurn Neo.
 | nes_dragobalshelonnonaj|  	| Dragon Ball - Shen Long no Nazo (Japan)	| nes_dragonpower| 1986	| Bandai	| Miscellaneous	| 					|
 | nes_dragobalshelonnona|  	| Dragon Ball - Shen Long no Nazo (T-Eng)	| nes_dragonpower| 1986	| Bandai	| Miscellaneous	| 					|
 | nes_dragobal3gokden|  	| Dragon Ball 3 - Gokuu Den (Japan)			| 		| 1989	| Bandai	| Miscellaneous	| 					|
-| md_dbzec	|  	| Dragon Ball Z - Buyuu Retsuden (Hack, Enhanced Colors)| md_dbz	| 2020	| Bandai	| Sega Megadrive| 					|
+| md_dbzec	|  	| Dragon Ball Z - Buyuu Retsuden (Hack, Enhanced Colors)| md_dbz	| 2020	| Donus87	| Sega Megadrive| 					|
+| md_dbzvc	|  	| Dragon Ball Z - Buyuu Retsuden (Hack, New Voices v2)	| md_dbz	| 2021	| KanonZombie	| Sega Megadrive| 					|
 | md_dbz	|  	| Dragon Ball Z - Buyuu Retsuden (Jpn)			| 		| 1994	| Bandai	| Sega Megadrive| 					|
 | nes_dragobalzkyosajinj|  	| Dragon Ball Z - Kyoushuu! Saiya Jin (Japan)	| nes_dragobalzkyosajin| 1990	| Bandai	| Miscellaneous	| 					|
 | nes_dragobalzkyosajin|  	| Dragon Ball Z - Kyoushuu! Saiya Jin (T-Eng)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| md_dbzf	|  	| Dragon Ball Z - L'Appel du Destin (Fra)		| md_dbz	| 1994	| Bandai	| Sega Megadrive| 					|
-| md_dbzs	|  	| Dragon Ball Z - L'Appel Du Destin (Hack, Spanish)	| md_dbz	| 2018	| Bandai	| Sega Megadrive| 					|
+| md_dbzf	|  	| Dragon Ball Z - L'Appel du Destin (France)		| md_dbz	| 1994	| Bandai	| Sega Megadrive| 					|
+| md_dbzs	|  	| Dragon Ball Z - L'Appel Du Destin (Hack, Spanish)	| md_dbz	| 2018	| Luceid	| Sega Megadrive| 					|
 | nes_dragobalzsupbu2j|  	| Dragon Ball Z - Super Butouden 2 (Japan)		| nes_dragobalzsupbu2| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_dragobalzsupbu2|  	| Dragon Ball Z - Super Butouden 2 (T-Eng)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_dragobalzsupbu2c|  	| Dragon Ball Z - Super Butouden 2 (Unl) - Castellano v1| nes_dragobalzsupbu2| 1989 ?| Nintendo	| Miscellaneous	| 					|
@@ -4008,7 +4018,7 @@ This list contains all games supported by FinalBurn Neo.
 | tg_dragcrse	|  	| Dragon's Curse					| 		| 1990	| NEC		| TurboGrafx 16	| 					|
 | md_shangh3	|  	| Dragon's Eye Plus - Shanghai III (Jpn)		| 		| 1991	| Home Data	| Sega Megadrive| 					|
 | md_dfury	|  	| Dragon's Fury (Euro, USA)				| 		| 1992	| Tengen	| Sega Megadrive| 					|
-| md_dfurys	|  	| Dragon's Fury (Hack, Spanish)				| md_dfury	| 2019	| Tengen	| Sega Megadrive| 					|
+| md_dfurys	|  	| Dragon's Fury (Hack, Spanish)				| md_dfury	| 2019	| Wave		| Sega Megadrive| 					|
 | dragonsh	|  	| Dragon's Heaven (development board)			| 		| 1996	| Face		| Neo Geo MVS	| 					|
 | cv_dlair	|  	| Dragon's Lair (Prototype, 0416)			| cv_dlairsgm	| 1984	| Coleco	| ColecoVision	| 					|
 | nes_dragonslairc|  	| Dragon's Lair (USA) - Castellano v1.0			| nes_dragonslair| 1989 ?| Nintendo	| Miscellaneous	| 					|
@@ -4016,7 +4026,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_dlair	|  	| Dragon's Lair (USA, Prototype)			| 		| 199?	| Taito		| Sega Megadrive| 					|
 | cv_dlairsgm	|  	| Dragon's Lair SGM					| 		| 2012	| Coleco	| ColecoVision	| (SGM) - Published by Team Pixelboy	|
 | md_dragnrev	|  	| Dragon's Revenge (Euro, USA)				| 		| 1993	| Tengen	| Sega Megadrive| 					|
-| md_dragnrevs	|  	| Dragon's Revenge (Hack, Spanish)			| md_dragnrev	| 2019	| Tengen	| Sega Megadrive| 					|
+| md_dragnrevs	|  	| Dragon's Revenge (Hack, Spanish)			| md_dragnrev	| 2019	| Wave		| Sega Megadrive| 					|
 | md_dragnrevj	|  	| Dragon's Revenge (Jpn)				| md_dragnrev	| 1993	| Tengen	| Sega Megadrive| 					|
 | dbza		|  	| Dragonball Z (rev A)					| dbz		| 1993	| Banpresto	| Miscellaneous	| 					|
 | dbz		|  	| Dragonball Z (rev B)					| 		| 1993	| Banpresto	| Miscellaneous	| 					|

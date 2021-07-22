@@ -854,7 +854,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="asscreed" cloneof="dlair" romof="dlair">
-		<description>Assassins Creed (Rus)</description>
+		<description>Assassins Creed (Rus) [Hack]</description>
 		<year>199?</year>
 		<manufacturer>&lt;unlicensed&gt;</manufacturer>
 		<rom name="assassins creed (unl).bin" size="1048576" crc="3f2d6ccc"/>
@@ -4878,9 +4878,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragons" cloneof="dragon" romof="dragon">
-		<description>Dragon - The Bruce Lee Story (Hack, Spanish)</description>
+		<description>Dragon - The Bruce Lee Story (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
-		<manufacturer>Acclaim</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="dragon - the bruce lee story (hack, spanish).bin" size="2097152" crc="30766d12"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4902,10 +4902,18 @@
 		<driver status="good"/>
 	</game>
 	<game name="dbzec" cloneof="dbz" romof="dbz">
-		<description>Dragon Ball Z - Buyuu Retsuden (Hack, Enhanced Colors)</description>
+		<description>Dragon Ball Z - Buyuu Retsuden (Hack, Enhanced Colors) [Hack]</description>
 		<year>2020</year>
-		<manufacturer>Bandai</manufacturer>
+		<manufacturer>Donus87</manufacturer>
 		<rom name="dragon ball z - buyuu retsuden (Hack, Enhanced Colors).bin" size="2097152" crc="31834e9c"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dbzvc" cloneof="dbz" romof="dbz">
+		<description>Dragon Ball Z - Buyuu Retsuden (Hack, New Voices v2) [Hack]</description>
+		<year>2021</year>
+		<manufacturer>KanonZombie</manufacturer>
+		<rom name="Dragon Ball Z - Buyuu Retsuden (Jap)(voice hack v2).md" size="2321812" crc="1e91792d"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4918,7 +4926,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dbzf" cloneof="dbz" romof="dbz">
-		<description>Dragon Ball Z - L'Appel du Destin (Fra)</description>
+		<description>Dragon Ball Z - L'Appel du Destin (France)</description>
 		<year>1994</year>
 		<manufacturer>Bandai</manufacturer>
 		<rom name="dragon ball z - l'appel du destin (france).bin" size="2097152" crc="f035c737"/>
@@ -4926,9 +4934,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="dbzs" cloneof="dbz" romof="dbz">
-		<description>Dragon Ball Z - L'Appel Du Destin (Hack, Spanish)</description>
+		<description>Dragon Ball Z - L'Appel Du Destin (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
-		<manufacturer>Bandai</manufacturer>
+		<manufacturer>Luceid</manufacturer>
 		<rom name="dragon ball z - l'appel du destin (hack, spanish).bin" size="2097152" crc="a1e5e963"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4966,9 +4974,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="dfurys" cloneof="dfury" romof="dfury">
-		<description>Dragon's Fury (Hack, Spanish)</description>
+		<description>Dragon's Fury (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
-		<manufacturer>Tengen</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="dragon's fury (hack, spanish).bin" size="524288" crc="120aaabe"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4990,9 +4998,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragnrevs" cloneof="dragnrev" romof="dragnrev">
-		<description>Dragon's Revenge (Hack, Spanish)</description>
+		<description>Dragon's Revenge (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
-		<manufacturer>Tengen</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="dragon's revenge (hack, spanish).bin" size="1048576" crc="8847d12b"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

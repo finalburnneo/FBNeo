@@ -842,8 +842,7 @@ static void kabukiz_sound_bankswitch(UINT32, UINT32 data)
 
 		if (ZetGetActive() == -1) return;
 
-		ZetMapArea(0x8000, 0xbfff, 0, DrvZ80ROM2 + 0x8000 + 0x4000 * (data & 0x07));
-		ZetMapArea(0x8000, 0xbfff, 2, DrvZ80ROM2 + 0x8000 + 0x4000 * (data & 0x07));
+		ZetMapMemory(DrvZ80ROM2 + 0x4000 * (data & 0x07), 0x8000, 0xbfff, MAP_ROM);
 	}
 }
 

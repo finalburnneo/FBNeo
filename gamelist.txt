@@ -16021,10 +16021,10 @@ This list contains all games supported by FinalBurn Neo.
 | nes_ultimmorkom3|  	| Ultimate Mortal Kombat 3 (Unl)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_umk3u	|  	| Ultimate Mortal Kombat 3 (USA)			| md_umk3	| 1996	| Williams	| Sega Megadrive| 					|
 | md_umk3h	|  	| Ultimate Mortal Kombat 3 Arcade (Hack, V0.71)		| md_umk3	| 2012?	| Nemesis_c	| Sega Megadrive| 					|
-| umk3uc	|  	| Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2021-| umk3		| 2021	| hack		| MIDWAY Wolf-Un| 					|
 | md_umk3mh	|  	| Ultimate Mortal Kombat 3 Mini V13 (Hack)		| md_umk3	| 2011	| Nemesis_c, r57| Sega Megadrive| 					|
 | umk3pb1	|  	| Ultimate Mortal Kombat 3 Plus (Hack, Beta 1)		| umk3		| 2019	| Midway	| MIDWAY Wolf-Un| 					|
 | umk3te	|  	| Ultimate Mortal Kombat 3 Tournament Edition (hack, V2.| umk3		| 2018	| Midway	| MIDWAY Wolf-Un| 					|
+| umk3uk	|  	| Ultimate Mortal Kombat 3 Uk (Hack, Ver. 2021-07-20)	| umk3		| 2021	| hack		| MIDWAY Wolf-Un| 					|
 | md_umk3t	|  	| Ultimate Mortal Kombat Trilogy Hack rev.5149		| 		| 2017	| KABAL_MK	| Sega Megadrive| 					|
 | md_ultqixs	|  	| Ultimate Qix (Hack, Spanish)				| md_ultqix	| 2019	| Taito		| Sega Megadrive| 					|
 | md_ultqix	|  	| Ultimate Qix (USA)					| 		| 1991	| Taito		| Sega Megadrive| 					|

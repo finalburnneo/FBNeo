@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17303 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17313 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -783,7 +783,9 @@ This list contains all games supported by FinalBurn Neo.
 | msx_armymove	|  	| Army Moves (Euro)					| 		| 1987	| Dinamic Softwa| MSX		| 					|
 | msx_arnodash	|  	| Arno Dash (HB)					| 		| 2021	| Under4Mhz	| MSX		| 					|
 | sg1k_arnodash	|  	| Arno Dash (HB)					| 		| 2020	| Under4MHz	| Sega SG-1000	| 					|
+| sms_arnodash	|  	| Arno Dash (HB, v1.03)					| 		| 2021	| Under4Mhz	| Sega Master Sy| 					|
 | sg1k_arnodash2|  	| Arno Dash 2 (HB, v1.03)				| 		| 2020	| Under4Mhz	| Sega SG-1000	| 					|
+| sms_arnodash2	|  	| Arno Dash 2 (HB, v1.03)				| 		| 2021	| Under4Mhz	| Sega Master Sy| 					|
 | md_arnoldp	|  	| Arnold Palmer Tournament Golf (Euro, USA)		| 		| 1989	| Sega		| Sega Megadrive| 					|
 | md_arrows	|  	| Arrow Flash (Hack, Spanish)				| md_arrow	| 2019	| Renovation	| Sega Megadrive| 					|
 | md_arrowp	|  	| Arrow Flash (USA, Prototype)				| md_arrow	| 1990	| Renovation	| Sega Megadrive| 					|
@@ -3558,6 +3560,8 @@ This list contains all games supported by FinalBurn Neo.
 | fds_dirtypaij	|  	| Dirty Pair - Project Eden (Japan)			| fds_dirtypai	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | fds_dirtypai	|  	| Dirty Pair - Project Eden (T-Eng)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | msx_discwarr	|  	| Disc Warrior (Euro)					| 		| 1984	| Alligata Softw| MSX		| 					|
+| discoboyp	|  	| Disco Boy (Promat license?)				| discoboy	| 1993	| Soft Art Co.	| Miscellaneous	| 					|
+| discoboy	|  	| Disco Boy						| 		| 1993	| Soft Art Co.	| Miscellaneous	| 					|
 | spec_discodan	|  	| Disco Dan						| 		| 1984	| Gem Software	| ZX Spectrum	| 					|
 | cdiscon1	|  	| Disco No.1 (DECO Cassette) (US)			| 		| 1982	| Data East Corp| Cassette Syste| 					|
 | discof	|  	| Disco No.1 (Rev.F)					| disco		| 1982	| Data East	| Miscellaneous	| 					|
@@ -5440,6 +5444,7 @@ This list contains all games supported by FinalBurn Neo.
 | gatedoom1	|  	| Gate of Doom (US revision 1)				| darkseal	| 1990	| Data East Corp| DECO IC16	| 					|
 | gatedoom	|  	| Gate of Doom (US revision 4)				| darkseal	| 1990	| Data East Corp| DECO IC16	| 					|
 | cv_apshai	|  	| Gateway to Apshai					| 		| 1984	| Epyx		| ColecoVision	| 					|
+| sms_gaudream	|  	| Gaudream (HB, v0.04)					| 		| 2015	| 1985 Alternati| Sega Master Sy| 					|
 | gauntlet2pg1	|  	| Gauntlet (2 Players, German, rev 1)			| gauntlet	| 1985	| Atari Games	| Atari Gauntlet| 					|
 | gauntlet2pg	|  	| Gauntlet (2 Players, German, rev 4)			| gauntlet	| 1985	| Atari Games	| Atari Gauntlet| 					|
 | gauntlet2pj2	|  	| Gauntlet (2 Players, Japanese rev 2)			| gauntlet	| 1985	| Atari Games	| Atari Gauntlet| 					|
@@ -5499,6 +5504,7 @@ This list contains all games supported by FinalBurn Neo.
 | geminij	|  	| Gemini Wing (Japan)					| gemini	| 1987	| Tecmo		| Miscellaneous	| 					|
 | gemini	|  	| Gemini Wing (World)					| 		| 1987	| Tecmo		| Miscellaneous	| 					|
 | geminib	|  	| Gemini Wing (World, bootleg)				| gemini	| 1987	| Tecmo		| Miscellaneous	| 					|
+| sms_gemitas	|  	| Gemitas (HB)						| 		| 2018	| Cyttorak	| Sega Master Sy| 					|
 | md_gems	|  	| GEMS v2.8						| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | spec_generdigital|  	| Generacio Digital (HB)				| 		| 2019	| Catalunya Radi| ZX Spectrum	| Select keyboard to play - game inputs |
 | md_genchaos	|  	| General Chaos (Euro, USA)				| 		| 1994	| Electronic Art| Sega Megadrive| 					|
@@ -5789,6 +5795,7 @@ This list contains all games supported by FinalBurn Neo.
 | gorkans	|  	| Gorkans						| mrtnt		| 1983	| Techstar	| Pac-man	| 					|
 | gotcha	|  	| Got-cha Mini Game Festival				| 		| 1997	| Dongsung	| Miscellaneous	| 					|
 | nes_gotcha	|  	| Gotcha! - The Sport! (USA)				| 		| 1987	| LJN		| Miscellaneous	| 					|
+| sms_gotris	|  	| Gotris (HB, v0.8)					| 		| 2018	| 1985 Alternati| Sega Master Sy| 					|
 | plegends	|  	| Gouketsuji Gaiden Legends (USA, ver. 95/06/20)	| 		| 1995	| Atlus / KM Int| Cave		| 					|
 | plegendsj	|  	| Gouketsuji Gaiden Saikyou Densetsu (Japan, ver. 95/06/| plegends	| 1995	| Atlus		| Cave		| 					|
 | powerinsj	|  	| Gouketsuji Ichizoku (Japan)				| powerins	| 1993	| Atlus		| Miscellaneous	| 					|
@@ -7537,6 +7544,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_kunichan	|  	| Kuni-chan no Game Tengoku (Jpn)			| 		| 1991	| Sega		| Sega Game Gear| 					|
 | gg_kunichn2	|  	| Kuni-chan no Game Tengoku Part 2 (Jpn)		| 		| 1992	| Sega		| Sega Game Gear| 					|
 | nes_kuniokunnoneksole|  	| Kunio-kun no Nekketsu Soccer League (Japan)		| 		| 1993	| Technos	| Miscellaneous	| 					|
+| sms_kunkun	|  	| KunKun & KokoKun (HB)					| 		| 2006	| Bock		| Sega Master Sy| 					|
 | sms_kunkun2	|  	| KunKun & KokoKun 2 (HB)				| 		| 2011	| Bock		| Sega Master Sy| 					|
 | kurikintj	|  	| Kuri Kinton (Japan)					| kurikint	| 1988	| Taito Corporat| Taito L System| 					|
 | kurikintu	|  	| Kuri Kinton (US)					| kurikint	| 1988	| Taito America | Taito L System| 					|
@@ -9282,6 +9290,7 @@ This list contains all games supported by FinalBurn Neo.
 | nndmseala	| D NW	| Nandemo Seal Iinkai (Astro Boy ver. 1.0?)		| nndmseal	| 1997	| I'Max / Jaleco| Miscellaneous	| 					|
 | nndmsealb	| D NW	| Nandemo Seal Iinkai (Astro Boy ver. 1.1)		| nndmseal	| 1997	| I'Max / Jaleco| Miscellaneous	| 					|
 | nndmseal	| D NW	| Nandemo Seal Iinkai					| 		| 1997	| I'Max / Jaleco| Miscellaneous	| 					|
+| sms_nanowars	|  	| NanoWars 8k (HB, v0.7)				| 		| 2006	| haroldoop	| Sega Master Sy| 					|
 | pce_nantet	|  	| Nantettatte Engine					| 		| 2017	| Atherbyte	| PC Engine	| 					|
 | nes_nantebasj	|  	| Nantettatte!! Baseball (Japan)			| nes_nantebas	| 1990	| Sunsoft	| Miscellaneous	| 					|
 | nes_nantebas	|  	| Nantettatte!! Baseball (T-eng)			| 		| 1990	| Sunsoft	| Miscellaneous	| 					|
@@ -13817,6 +13826,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_stupmart	|  	| Stupid Martians (HB, v1.1)				| 		| 2020	| Visualedu	| MSX		| 					|
 | spec_subchase	|  	| Sub Chase (16K)					| 		| 1983	| Gem Software	| ZX Spectrum	| Q and P to move, keys from 1 to 9 to u|
 | subhunt	| D	| Sub Hunter (Gremlin / Taito)				| depthch	| 1977	| Gremlin (Taito| Vic Dual	| No sound				|
+| sms_subrescue	|  	| Sub Rescue (HB, v0.3)					| 		| 2021	| haroldoop	| Sega Master Sy| 					|
 | msx_subacuatic|  	| Subacuatic (HB)					| 		| 2012	| RELEVO / The M| MSX		| 					|
 | spec_subacquatic|  	| Subaquatic Reloaded (HB)				| 		| 2010	| Mojon Twins	| ZX Spectrum	| 					|
 | spec_subbueto	|  	| Subbuteo - The Computer Game (128K)			| 		| 1990	| Electronic Zoo| ZX Spectrum	| 					|

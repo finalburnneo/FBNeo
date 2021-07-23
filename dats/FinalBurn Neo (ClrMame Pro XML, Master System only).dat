@@ -396,6 +396,22 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="arnodash">
+		<description>Arno Dash (HB, v1.03) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Arno Dash v1.03 (2021)(Under4Mhz).sms" size="32768" crc="3dcdb2e0"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="arnodash2">
+		<description>Arno Dash 2 (HB, v1.03) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Arno Dash 2 v1.03 (2021)(Under4Mhz).sms" size="32768" crc="9091d61a"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="tvcolos" cloneof="asterix" romof="asterix">
 		<description>As Aventuras da TV Colosso (Bra)</description>
 		<year>1996</year>
@@ -1772,6 +1788,14 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="gaudream">
+		<description>Gaudream (HB, v0.04) [Homebrew]</description>
+		<year>2015</year>
+		<manufacturer>1985 Alternativo</manufacturer>
+		<rom name="Gaudream v0.04 (2015)(1985 Alternativo).sms" size="131072" crc="ff2e1ea4"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="gauntlet">
 		<description>Gauntlet (Euro, Bra)</description>
 		<year>1990</year>
@@ -1786,6 +1810,14 @@
 		<manufacturer>Future Driver</manufacturer>
 		<rom name="punpun_20151031b.sms" size="262144" crc="b35ebcdf"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gemitas">
+		<description>Gemitas (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Cyttorak</manufacturer>
+		<rom name="Gemitas (2018)(Cyttorak).sms" size="65536" crc="d0f12c3e"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="georgeko">
@@ -1953,6 +1985,14 @@
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-11935f.ic1" size="262144" crc="a51376fe"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gotris">
+		<description>Gotris (HB, v0.8) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>1985 Alternativo</manufacturer>
+		<rom name="Gotris v0.8 (2019)(1985 Alternativo).sms" size="65536" crc="adb0efa6"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2492,6 +2532,14 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="kunkun">
+		<description>KunKun &amp; KokoKun (HB) [Homebrew]</description>
+		<year>2006</year>
+		<manufacturer>Bock</manufacturer>
+		<rom name="KunKun &amp; KokoKun (2006)(Bock).sms" size="32768" crc="7e15a103"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="kunkun2">
 		<description>KunKun &amp; KokoKun 2 (HB) [Homebrew]</description>
 		<year>2011</year>
@@ -2945,6 +2993,14 @@
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="my hero (usa, europe).bin" merge="my hero (usa, europe).bin" size="32768" crc="62f0c23d"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="nanowars">
+		<description>NanoWars 8k (HB, v0.7) [Homebrew]</description>
+		<year>2006</year>
+		<manufacturer>haroldoop</manufacturer>
+		<rom name="NanoWars8k v0.7 (2006)(haroldoop).sms" size="32768" crc="a06d065c"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4169,6 +4225,14 @@
 		<year>1992</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="strider ii (europe).bin" size="262144" crc="b8f0915a"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="subrescue">
+		<description>Sub Rescue (HB, v0.3) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>haroldoop</manufacturer>
+		<rom name="Sub Rescue v0.3 (2021)(haroldoop).sms" size="32768" crc="06a41efd"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

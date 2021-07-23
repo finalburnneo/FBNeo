@@ -791,7 +791,9 @@ DRV		BurnSpecarmymvs;
 DRV		BurnDrvMSX_armymove;
 DRV		BurnDrvMSX_arnodash;
 DRV		BurnDrvsg1k_arnodash;
+DRV		BurnDrvsms_arnodash;
 DRV		BurnDrvsg1k_arnodash2;
+DRV		BurnDrvsms_arnodash2;
 DRV		BurnDrvmd_arnoldp;
 DRV		BurnDrvmd_arrows;
 DRV		BurnDrvmd_arrowp;
@@ -3606,6 +3608,8 @@ DRV		BurnDrvnes_dirtyhar;
 DRV		BurnDrvfds_dirtypaij;
 DRV		BurnDrvfds_dirtypai;
 DRV		BurnDrvMSX_discwarr;
+DRV		BurnDrvDiscoboyp;
+DRV		BurnDrvDiscoboy;
 DRV		BurnSpecDiscodan;
 DRV		BurnDrvCdiscon1;
 DRV		BurnDrvDiscof;
@@ -5510,6 +5514,7 @@ DRV		BurnDrvGaryoret;
 DRV		BurnDrvGatedom1;
 DRV		BurnDrvGatedoom;
 DRV		BurnDrvcv_apshai;
+DRV		BurnDrvsms_gaudream;
 DRV		BurnDrvGauntlet2pg1;
 DRV		BurnDrvGauntlet2pg;
 DRV		BurnDrvGauntlet2pj2;
@@ -5569,6 +5574,7 @@ DRV		BurnSpecGeminiwing;
 DRV		BurnDrvGeminij;
 DRV		BurnDrvGemini;
 DRV		BurnDrvGeminib;
+DRV		BurnDrvsms_gemitas;
 DRV		BurnDrvmd_gems;
 DRV		BurnSpecGenerdigital;
 DRV		BurnDrvmd_genchaos;
@@ -5859,6 +5865,7 @@ DRV		BurnDrvMSX_ggeftsdp;
 DRV		BurnDrvgorkans;
 DRV		BurnDrvGotcha;
 DRV		BurnDrvnes_gotcha;
+DRV		BurnDrvsms_gotris;
 DRV		BurnDrvPlegends;
 DRV		BurnDrvPlegendsj;
 DRV		BurnDrvPowerinj;
@@ -7637,6 +7644,7 @@ DRV		BurnDrvKungfut;
 DRV		BurnDrvgg_kunichan;
 DRV		BurnDrvgg_kunichn2;
 DRV		BurnDrvnes_kuniokunnoneksole;
+DRV		BurnDrvsms_kunkun;
 DRV		BurnDrvsms_kunkun2;
 DRV		BurnDrvKurikintj;
 DRV		BurnDrvKurikintu;
@@ -9402,6 +9410,7 @@ DRV		BurnDrvNndmseala;		// no comment [NOT WORKING]
 DRV		BurnDrvNndmsealb;		// no comment [NOT WORKING]
 DRV		BurnDrvNndmseal;		// no comment [NOT WORKING]
 #endif
+DRV		BurnDrvsms_nanowars;
 DRV		BurnDrvpce_nantet;
 DRV		BurnDrvnes_nantebasj;
 DRV		BurnDrvnes_nantebas;
@@ -13997,6 +14006,7 @@ DRV		BurnSpecSubchase;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvSubhunt;			// No sound
 #endif
+DRV		BurnDrvsms_subrescue;
 DRV		BurnDrvMSX_subacuatic;
 DRV		BurnSpecsubacquatic;
 DRV		BurnSpecsubbueto;
@@ -18341,7 +18351,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_armymove,		// Army Moves (Euro)
 	&BurnDrvMSX_arnodash,		// Arno Dash (HB)
 	&BurnDrvsg1k_arnodash,		// Arno Dash (HB)
+	&BurnDrvsms_arnodash,		// Arno Dash (HB, v1.03)
 	&BurnDrvsg1k_arnodash2,		// Arno Dash 2 (HB, v1.03)
+	&BurnDrvsms_arnodash2,		// Arno Dash 2 (HB, v1.03)
 	&BurnDrvmd_arnoldp,			// Arnold Palmer Tournament Golf (Euro, USA)
 	&BurnDrvmd_arrows,			// Arrow Flash (Hack, Spanish)
 	&BurnDrvmd_arrowp,			// Arrow Flash (USA, Prototype)
@@ -21156,6 +21168,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfds_dirtypaij,		// Dirty Pair - Project Eden (Japan)
 	&BurnDrvfds_dirtypai,		// Dirty Pair - Project Eden (T-Eng)
 	&BurnDrvMSX_discwarr,		// Disc Warrior (Euro)
+	&BurnDrvDiscoboyp,			// Disco Boy (Promat license?)
+	&BurnDrvDiscoboy,			// Disco Boy
 	&BurnSpecDiscodan,			// Disco Dan
 	&BurnDrvCdiscon1,			// Disco No.1 (DECO Cassette) (US)
 	&BurnDrvDiscof,				// Disco No.1 (Rev.F)
@@ -23060,6 +23074,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGatedom1,			// Gate of Doom (US revision 1)
 	&BurnDrvGatedoom,			// Gate of Doom (US revision 4)
 	&BurnDrvcv_apshai,			// Gateway to Apshai
+	&BurnDrvsms_gaudream,		// Gaudream (HB, v0.04)
 	&BurnDrvGauntlet2pg1,		// Gauntlet (2 Players, German, rev 1)
 	&BurnDrvGauntlet2pg,		// Gauntlet (2 Players, German, rev 4)
 	&BurnDrvGauntlet2pj2,		// Gauntlet (2 Players, Japanese rev 2)
@@ -23119,6 +23134,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGeminij,			// Gemini Wing (Japan)
 	&BurnDrvGemini,				// Gemini Wing (World)
 	&BurnDrvGeminib,			// Gemini Wing (World, bootleg)
+	&BurnDrvsms_gemitas,		// Gemitas (HB)
 	&BurnDrvmd_gems,			// GEMS v2.8
 	&BurnSpecGenerdigital,		// Generacio Digital (HB)
 	&BurnDrvmd_genchaos,		// General Chaos (Euro, USA)
@@ -23409,6 +23425,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgorkans,			// Gorkans
 	&BurnDrvGotcha,				// Got-cha Mini Game Festival
 	&BurnDrvnes_gotcha,			// Gotcha! - The Sport! (USA)
+	&BurnDrvsms_gotris,			// Gotris (HB, v0.8)
 	&BurnDrvPlegends,			// Gouketsuji Gaiden Legends (USA, ver. 95/06/20)
 	&BurnDrvPlegendsj,			// Gouketsuji Gaiden Saikyou Densetsu (Japan, ver. 95/06/20)
 	&BurnDrvPowerinj,			// Gouketsuji Ichizoku (Japan)
@@ -25187,6 +25204,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_kunichan,		// Kuni-chan no Game Tengoku (Jpn)
 	&BurnDrvgg_kunichn2,		// Kuni-chan no Game Tengoku Part 2 (Jpn)
 	&BurnDrvnes_kuniokunnoneksole,// Kunio-kun no Nekketsu Soccer League (Japan)
+	&BurnDrvsms_kunkun,			// KunKun & KokoKun (HB)
 	&BurnDrvsms_kunkun2,		// KunKun & KokoKun 2 (HB)
 	&BurnDrvKurikintj,			// Kuri Kinton (Japan)
 	&BurnDrvKurikintu,			// Kuri Kinton (US)
@@ -26952,6 +26970,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvNndmsealb,			// Nandemo Seal Iinkai (Astro Boy ver. 1.1) [no comment, NOT WORKING]
 	&BurnDrvNndmseal,			// Nandemo Seal Iinkai [no comment, NOT WORKING]
 #endif
+	&BurnDrvsms_nanowars,		// NanoWars 8k (HB, v0.7)
 	&BurnDrvpce_nantet,			// Nantettatte Engine
 	&BurnDrvnes_nantebasj,		// Nantettatte!! Baseball (Japan)
 	&BurnDrvnes_nantebas,		// Nantettatte!! Baseball (T-eng)
@@ -31547,6 +31566,7 @@ static struct BurnDriver* pDriver[] = {
 #if defined FBNEO_DEBUG
 	&BurnDrvSubhunt,			// Sub Hunter (Gremlin / Taito) [No sound]
 #endif
+	&BurnDrvsms_subrescue,		// Sub Rescue (HB, v0.3)
 	&BurnDrvMSX_subacuatic,		// Subacuatic (HB)
 	&BurnSpecsubacquatic,		// Subaquatic Reloaded (HB)
 	&BurnSpecsubbueto,			// Subbuteo - The Computer Game (128K)

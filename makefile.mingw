@@ -21,6 +21,7 @@ endif
 #
 
 # Specify the name of the executable file, without ".exe"
+WINDRES=windres
 NAME = fbneo
 COMPILENAME = 3
 
@@ -594,7 +595,7 @@ $(objdir)cpu/m68k/m68kops.o: $(objdir)cpu/m68k/m68kmake.exe $(objdir)dep/generat
 	@$(CC) $(CFLAGS) -c $(objdir)dep/generated/m68kops.c -o $(objdir)cpu/m68k/m68kops.o
 
 $(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kops.c: $(objdir)cpu/m68k/m68kmake.exe $(srcdir)cpu/m68k/m68k_in.c
-	$(objdir)/cpu/m68k/m68kmake $(objdir)dep/generated/ $(srcdir)cpu/m68k/m68k_in.c
+	$(objdir)/cpu/m68k/m68kmake.exe $(objdir)dep/generated/ $(srcdir)cpu/m68k/m68k_in.c
 
 $(objdir)cpu/m68k/m68kmake.exe: $(srcdir)cpu/m68k/m68kmake.c
 	@echo Compiling Musashi MC680x0 core \(m68kmake.c\)...
@@ -686,7 +687,7 @@ endif
 %.o:	%.rc
 	@echo Compiling resource file $(<F)...
 ifdef GCC345
-	@windres $(DEF) $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F) $(foreach dir,$(alldir),--include-dir $(srcdir)$(dir))
+	@$(WINDRES) $(DEF) $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F) $(foreach dir,$(alldir),--include-dir $(srcdir)$(dir))
 endif
 ifdef GCC452
 	@windres $(DEF) $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F) $(foreach dir,$(alldir),--include-dir $(srcdir)$(dir))
@@ -700,9 +701,9 @@ endif
 endif
 ifdef GCC510
 ifdef BUILD_X64_EXE
-	@windres -F pe-x86-64 $(DEF) $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F) $(foreach dir,$(alldir),--include-dir $(srcdir)$(dir))
+	@$(WINDRES) -F pe-x86-64 $(DEF) $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F) $(foreach dir,$(alldir),--include-dir $(srcdir)$(dir))
 else
-	@windres -F pe-i386 $(DEF) $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F) $(foreach dir,$(alldir),--include-dir $(srcdir)$(dir))
+	@$(WINDRES) -F pe-i386 $(DEF) $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F) $(foreach dir,$(alldir),--include-dir $(srcdir)$(dir))
 endif
 endif
 

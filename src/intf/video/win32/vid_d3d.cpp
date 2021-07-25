@@ -7,7 +7,7 @@
 #if !defined BUILD_X64_EXE
 
 // #include "vid_directx_support.h"
-#include <InitGuid.h>
+#include <initguid.h>
 #include "vid_softfx.h"
 
 // #define ENABLE_PROFILING FBNEO_DEBUG

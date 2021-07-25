@@ -30,6 +30,11 @@ static int nFastSpeed = 6;
 static int prevPause = 0, prevFFWD = 0, prevFrame = 0, prevSState = 0, prevLState = 0, prevUState = 0;
 UINT32 prevPause_debounce = 0;
 
+void EmulatorAppDoFast(bool dofast) {
+	bAppDoFast = dofast;
+	bAppDoFasttoggled = 0;
+}
+
 static void CheckSystemMacros() // These are the Pause / FFWD macros added to the input dialog
 {
 	// Pause
@@ -178,6 +183,11 @@ int RunFrame(int bDraw, int bPause)
 			}
 		}
 
+		CallRegisteredLuaFunctions(LUACALL_BEFOREEMULATION);
+		if (FBA_LuaUsingJoypad()) {
+			FBA_LuaReadJoypad();
+		}
+
 		if (nReplayStatus == 1) {
 			RecordInput();						// Write input to file
 		}
@@ -199,6 +209,9 @@ int RunFrame(int bDraw, int bPause)
 				nDoFPS = nFramesRendered + 30;
 			}
 		}
+
+		FBA_LuaFrameBoundary();
+		CallRegisteredLuaFunctions(LUACALL_AFTEREMULATION);
 
 #ifdef INCLUDE_AVI_RECORDING
 		if (nAviStatus) {
@@ -530,6 +543,13 @@ int RunMessageLoop()
 							case VK_MENU: {
 								continue;
 							}
+							case '1':
+							case '2':
+							case '3':
+							case '4':
+							case '5':
+								CallRegisteredLuaFunctions((LuaCallID)(LUACALL_HOTKEY_1 + Msg.wParam - '1'));
+								break;
 						}
 					} else {
 

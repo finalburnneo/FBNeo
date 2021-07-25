@@ -61,6 +61,7 @@ typedef struct tagIMAGE {
 
 #ifndef __LIBRETRO__
 #include "interface.h"
+#include "luaengine.h"
 #endif
 
 #define IMG_FREE		(1 << 0)

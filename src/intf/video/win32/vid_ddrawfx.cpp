@@ -400,6 +400,8 @@ static int MemToSurf()
 			return 1;
 		}
 
+		FBA_LuaGui((unsigned char*)ddsd.lpSurface,ddsd.dwWidth,ddsd.dwHeight,nVidImageBPP,ddsd.lPitch);
+
 		unsigned char *pd, *ps;
 
 		unsigned char* VidSurf = (unsigned char*)ddsdVid.lpSurface;

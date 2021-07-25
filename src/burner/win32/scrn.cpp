@@ -1124,6 +1124,22 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			SetPauseMode(1);
 			break;
 
+		case ID_LUA_OPEN:
+			if (UseDialogs()) {
+				if (!LuaConsoleHWnd) {
+					InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
+					LuaConsoleHWnd = CreateDialog(hAppInst, MAKEINTRESOURCE(IDD_LUA), NULL, (DLGPROC) DlgLuaScriptDialog);
+				}
+				else
+					SetForegroundWindow(LuaConsoleHWnd);
+			}
+			break;
+		case ID_LUA_CLOSE_ALL:
+			if (LuaConsoleHWnd) {
+				PostMessage(LuaConsoleHWnd, WM_CLOSE, 0, 0);
+			}
+			break;
+
 #ifdef INCLUDE_AVI_RECORDING
 			case MENU_AVISTART:
 			if (AviStart()) {

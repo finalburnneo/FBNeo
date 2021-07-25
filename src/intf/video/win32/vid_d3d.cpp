@@ -7,7 +7,7 @@
 #if !defined BUILD_X64_EXE
 
 // #include "vid_directx_support.h"
-#include <InitGuid.h>
+#include <initguid.h>
 #include "vid_softfx.h"
 
 // #define ENABLE_PROFILING FBNEO_DEBUG
@@ -2135,6 +2135,8 @@ static int vidBurnToSurf()
 	// Lock the surface so we can write to it
 	memset(&ddsd, 0, sizeof(ddsd));
 	ddsd.dwSize = sizeof(ddsd);
+
+	FBA_LuaGui((unsigned char*)ddsd.lpSurface,ddsd.dwWidth,ddsd.dwHeight,nVidImageBPP,ddsd.lPitch);
 
 	if (nVidTransferMethod <= 0) {
 		if (nPreScaleEffect) {

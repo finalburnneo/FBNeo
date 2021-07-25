@@ -1,0 +1,19 @@
+Pre-Building:
+
+1) download and run visual studio 2019 IDE community edition installer from https://visualstudio.microsoft.com/ 
+2) select Desktop development with C++
+3) next you will need a perl interpreter for windows. I recommend ActivePerl (https://www.activestate.com/products/activeperl/downloads/). I usually use the oldest version available. Make sure that you have enabled the checkbox to add perl to the current path.
+4) Then you need NASM for the assembly files. Go here: https://www.nasm.us/ and download the latest stable version. You need to put nasm.exe somewhere in your path. As I am a savage I have always put it in my windows directory, but I do not recommend this for a number of reasons.
+
+Building
+1) checkout the code using git (Optionally: fork it first!)
+2) in the checked out code, open projectfiles then visualstudio-2015, then open fba_vs2015.sln
+3) select the correctly platform and build type. 
+4) hit build!
+
+
+
+
+
+
+

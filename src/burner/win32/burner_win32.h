@@ -465,6 +465,10 @@ void LoadFavorites();
 void AddFavorite_Ext(UINT8 addf);
 INT32 CheckFavorites(char *name);
 
+// luaconsole.cpp
+extern HWND LuaConsoleHWnd;
+void UpdateLuaConsole(const wchar_t* fname);
+
 // ---------------------------------------------------------------------------
 // Debugger
 

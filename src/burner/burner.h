@@ -61,6 +61,7 @@ typedef struct tagIMAGE {
 
 #ifndef __LIBRETRO__
 #include "interface.h"
+#include "luaengine.h"
 #endif
 
 #define IMG_FREE		(1 << 0)
@@ -219,6 +220,10 @@ INT32 BurnStateUNDO(TCHAR* szName);
 // statec.cpp
 INT32 BurnStateCompress(UINT8** pDef, INT32* pnDefLen, INT32 bAll);
 INT32 BurnStateDecompress(UINT8* Def, INT32 nDefLen, INT32 bAll);
+
+// nvram.cpp
+INT32 BurnNvramLoad(TCHAR* szName);
+INT32 BurnNvramSave(TCHAR* szName);
 
 // zipfn.cpp
 struct ZipEntry { char* szName;	UINT32 nLen; UINT32 nCrc; };

@@ -3,7 +3,7 @@
 #include "aud_dsp.h"
 #include <math.h>
 
-#include <InitGuid.h>
+#include <initguid.h>
 #define DIRECTSOUND_VERSION  0x0300			// Only need version from DirectX 3
 #include <dsound.h>
 

@@ -2,7 +2,7 @@
 #include "aud_dsp.h"
 
 //#ifdef _MSC_VER
-#include <InitGuid.h>
+#include <initguid.h>
 #include <xaudio2.h>
 #include <xaudio2fx.h>
 

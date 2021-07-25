@@ -86,6 +86,9 @@ mingw471: FORCE
 
 mingw510: FORCE
 	@$(MAKE) -s -f makefile.mingw GCC510=1
+#cross compile in linux only 32 bit for now
+mingwcc: FORCE
+	@$(MAKE) -s -f makefile.mingw GCC510=1 CC=i686-w64-mingw32-gcc CXX=i686-w64-mingw32-g++-win32  WINDRES=i686-w64-mingw32-windres
 
 mamemingw: FORCE
 	@$(MAKE) -s -f makefile.mamemingw

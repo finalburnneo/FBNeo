@@ -6,7 +6,7 @@
  #include "vid_directx_support.h" 
 #endif
 
-#include <InitGuid.h>
+#include <initguid.h>
 #define DIRECT3D_VERSION 0x0700							// Use this Direct3D version
 
 #if defined BUILD_X64_EXE
@@ -1011,6 +1011,8 @@ static int vidBurnToSurf()
 			memset(((unsigned char*)ddsd.lpSurface) + y * ddsd.lPitch, 0, ddsd.lPitch);
 		}
 	}
+
+	FBA_LuaGui((unsigned char*)ddsd.lpSurface,ddsd.dwWidth,ddsd.dwHeight,nVidImageBPP,ddsd.lPitch);
 
 	bDtosScan = bScan;
 

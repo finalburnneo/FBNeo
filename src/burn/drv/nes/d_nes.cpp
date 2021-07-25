@@ -17596,6 +17596,125 @@ STD_ROM_FN(nes_wowheels)
 // Homebrew (hand-added)
 
 
+static struct BurnRomInfo nes_evildeadRomDesc[] = {
+	{ "Evil Dead Ash lives! (2020)(Crying Onion).nes",          262160, 0x2ce2ead0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_evildead)
+STD_ROM_FN(nes_evildead)
+
+struct BurnDriver BurnDrvnes_evildead = {
+	"nes_evildead", NULL, NULL, NULL, "2020",
+	"Evil Dead - Ash lives! (Hack)\0", NULL, "Crying Onion", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_evildeadRomInfo, nes_evildeadRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_gyromiteseRomDesc[] = {
+	{ "Gyromite Special Edition (2014)(the jabu).nes",          40976, 0x1495d355, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_gyromitese)
+STD_ROM_FN(nes_gyromitese)
+
+struct BurnDriver BurnDrvnes_gyromitese = {
+	"nes_gyromitese", "nes_gyromite", NULL, NULL, "2014",
+	"Gyromite Special Edition (Hack)\0", "This hack allows to play the game on a traditional controller", "the Jabu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_gyromiteseRomInfo, nes_gyromiteseRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_pacmanxRomDesc[] = {
+	{ "Pac-Man Xtreme (2016)(KaBooM!).nes",          40976, 0xee653ac8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_pacmanx)
+STD_ROM_FN(nes_pacmanx)
+
+struct BurnDriver BurnDrvnes_pacmanx = {
+	"nes_pacmanx", NULL, NULL, NULL, "2016",
+	"Pac-Man Xtreme (Hack)\0", NULL, "KaBooM!", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MAZE, 0,
+	NESGetZipName, nes_pacmanxRomInfo, nes_pacmanxRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_smb8enRomDesc[] = {
+	{ "Super Mario Bros 8 hack eng (2021)(Crying Onion).nes",          393232, 0x1f5d9f05, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smb8en)
+STD_ROM_FN(nes_smb8en)
+
+struct BurnDriver BurnDrvnes_smb8en = {
+	"nes_smb8en", NULL, NULL, NULL, "2021",
+	"Super Mario Bros 8 (English) (Hack)\0", NULL, "Crying Onion", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_smb8enRomInfo, nes_smb8enRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_smb8esRomDesc[] = {
+	{ "Super Mario Bros 8 hack spa (2021)(Crying Onion).nes",          393232, 0xef9c0a4f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smb8es)
+STD_ROM_FN(nes_smb8es)
+
+struct BurnDriver BurnDrvnes_smb8es = {
+	"nes_smb8es", "nes_smb8en", NULL, NULL, "2021",
+	"Super Mario Bros 8 (Spanish) (Hack)\0", NULL, "Crying Onion", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_smb8esRomInfo, nes_smb8esRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_smb8seRomDesc[] = {
+	{ "Super Mario Bros 8 SE hack (2021)(Crying Onion).nes",          393232, 0xaa5822c0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smb8se)
+STD_ROM_FN(nes_smb8se)
+
+struct BurnDriver BurnDrvnes_smb8se = {
+	"nes_smb8se", "nes_smb8en", NULL, NULL, "2021",
+	"Super Mario Bros 8 Special Edition (Hack)\0", "Don Doko Don 2 tribute edition", "Crying Onion", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_smb8seRomInfo, nes_smb8seRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_spiritimpelRomDesc[] = {
+	{ "Spirit Impel (2020)(Passe Gaming).nes",          524304, 0x146f8f6c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_spiritimpel)
+STD_ROM_FN(nes_spiritimpel)
+
+struct BurnDriver BurnDrvnes_spiritimpel = {
+	"nes_spiritimpel", NULL, NULL, NULL, "2020",
+	"Spirit Impel (HB)\0", NULL, "Passe Gaming", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
+	NESGetZipName, nes_spiritimpelRomInfo, nes_spiritimpelRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_batterychadRomDesc[] = {
 	{ "Battery Chad - Shock the World (2019)(Formula Fanboy).nes",          524304, 0x030c4355, BRF_ESS | BRF_PRG },
 };
@@ -31167,6 +31286,23 @@ struct BurnDriver BurnDrvnes_ikariwariii = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_iceicehocchaRomDesc[] = {
+	{ "Ice Ice! Hockey Challenge (T-Eng).nes",          262160, 0xd61c628e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_iceicehoccha)
+STD_ROM_FN(nes_iceicehoccha)
+
+struct BurnDriver BurnDrvnes_iceicehoccha = {
+	"nes_iceicehoccha", NULL, NULL, NULL, "1989?",
+	"Ice Ice! Hockey Challenge (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_iceicehocchaRomInfo, nes_iceicehocchaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_ikeikenekhocbuRomDesc[] = {
 	{ "Ike Ike! Nekketsu Hockey-bu - Subette Koronde Dairantou (Japan).nes",          262160, 0x920be27c, BRF_ESS | BRF_PRG },
 };
@@ -31175,10 +31311,10 @@ STD_ROM_PICK(nes_ikeikenekhocbu)
 STD_ROM_FN(nes_ikeikenekhocbu)
 
 struct BurnDriver BurnDrvnes_ikeikenekhocbu = {
-	"nes_ikeikenekhocbu", NULL, NULL, NULL, "1992",
+	"nes_ikeikenekhocbu", "nes_iceicehoccha", NULL, NULL, "1992",
 	"Ike Ike! Nekketsu Hockey-bu - Subette Koronde Dairantou (Japan)\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_ikeikenekhocbuRomInfo, nes_ikeikenekhocbuRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
 	NESHori4pInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

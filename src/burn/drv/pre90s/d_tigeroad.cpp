@@ -1,10 +1,10 @@
 // FB Alpha Tiger Road driver module
 // Based on MAME driver by Phil Stroffolino
-// F1 Dream protection code by Eric Hustvedt
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
+#include "mcs51.h"
 #include "burn_ym2203.h"
 #include "msm5205.h"
 
@@ -14,6 +14,7 @@ static UINT8 *AllRam;
 static UINT8 *RamEnd;
 static UINT8 *Drv68KROM;
 static UINT8 *DrvZ80ROM;
+static UINT8 *DrvMCURom;
 static UINT8 *DrvSndROM;
 static UINT8 *DrvGfxROM0;
 static UINT8 *DrvGfxROM1;
@@ -42,226 +43,226 @@ static UINT8 *soundlatch2;
 static UINT8 *flipscreen;
 static UINT8 *bgcharbank;
 static UINT8 *coin_lockout;
+static UINT8 *last_port3; // f1dream mcu
 
 static INT32 nF1dream = 0;
 static INT32 toramich = 0;
 
 static struct BurnInputInfo TigeroadInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 14,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 14,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 8,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 15,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 15,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 9,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 11,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDip + 0,		"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDip + 1,		"dip"		},
 };
 
 STDINPUTINFO(Tigeroad)
 
 static struct BurnDIPInfo TigeroadDIPList[] =
 {
-	// Default Values
-	{0x11, 0xff, 0xff, 0xff, NULL			},
-	{0x12, 0xff, 0xff, 0xfb, NULL			},
+	DIP_OFFSET(0x11)
+	{0x00, 0xff, 0xff, 0xff, NULL					},
+	{0x01, 0xff, 0xff, 0xfb, NULL					},
 
-	{0   , 0xfe, 0   ,    8, "Coin B"		},
-	{0x11, 0x01, 0x07, 0x00, "4 Coins 1 Credits "	},
-	{0x11, 0x01, 0x07, 0x01, "3 Coins 1 Credits "	},
-	{0x11, 0x01, 0x07, 0x02, "2 Coins 1 Credits "	},
-	{0x11, 0x01, 0x07, 0x07, "1 Coin 1 Credits "	},
-	{0x11, 0x01, 0x07, 0x06, "1 Coin 2 Credits "	},
-	{0x11, 0x01, 0x07, 0x05, "1 Coin 3 Credits "	},
-	{0x11, 0x01, 0x07, 0x04, "1 Coin 4 Credits "	},
-	{0x11, 0x01, 0x07, 0x03, "1 Coin 6 Credits "	},
+	{0   , 0xfe, 0   ,    8, "Coin B"				},
+	{0x00, 0x01, 0x07, 0x00, "4 Coins 1 Credits "	},
+	{0x00, 0x01, 0x07, 0x01, "3 Coins 1 Credits "	},
+	{0x00, 0x01, 0x07, 0x02, "2 Coins 1 Credits "	},
+	{0x00, 0x01, 0x07, 0x07, "1 Coin 1 Credits "	},
+	{0x00, 0x01, 0x07, 0x06, "1 Coin 2 Credits "	},
+	{0x00, 0x01, 0x07, 0x05, "1 Coin 3 Credits "	},
+	{0x00, 0x01, 0x07, 0x04, "1 Coin 4 Credits "	},
+	{0x00, 0x01, 0x07, 0x03, "1 Coin 6 Credits "	},
 
-	{0   , 0xfe, 0   ,    8, "Coin A"		},
-	{0x11, 0x01, 0x38, 0x00, "4 Coins 1 Credits "	},
-	{0x11, 0x01, 0x38, 0x08, "3 Coins 1 Credits "	},
-	{0x11, 0x01, 0x38, 0x10, "2 Coins 1 Credits "	},
-	{0x11, 0x01, 0x38, 0x38, "1 Coin 1 Credits "	},
-	{0x11, 0x01, 0x38, 0x30, "1 Coin 2 Credits "	},
-	{0x11, 0x01, 0x38, 0x28, "1 Coin 3 Credits "	},
-	{0x11, 0x01, 0x38, 0x20, "1 Coin 4 Credits "	},
-	{0x11, 0x01, 0x38, 0x18, "1 Coin 6 Credits "	},
+	{0   , 0xfe, 0   ,    8, "Coin A"				},
+	{0x00, 0x01, 0x38, 0x00, "4 Coins 1 Credits "	},
+	{0x00, 0x01, 0x38, 0x08, "3 Coins 1 Credits "	},
+	{0x00, 0x01, 0x38, 0x10, "2 Coins 1 Credits "	},
+	{0x00, 0x01, 0x38, 0x38, "1 Coin 1 Credits "	},
+	{0x00, 0x01, 0x38, 0x30, "1 Coin 2 Credits "	},
+	{0x00, 0x01, 0x38, 0x28, "1 Coin 3 Credits "	},
+	{0x00, 0x01, 0x38, 0x20, "1 Coin 4 Credits "	},
+	{0x00, 0x01, 0x38, 0x18, "1 Coin 6 Credits "	},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x11, 0x01, 0x40, 0x00, "On"			},
-	{0x11, 0x01, 0x40, 0x40, "Off"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x00, 0x01, 0x40, 0x00, "On"					},
+	{0x00, 0x01, 0x40, 0x40, "Off"					},
 
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x00, 0x01, 0x80, 0x80, "Off"					},
+	{0x00, 0x01, 0x80, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x11, 0x01, 0x80, 0x80, "Off"			},
-	{0x11, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x01, 0x01, 0x03, 0x03, "3"					},
+	{0x01, 0x01, 0x03, 0x02, "4"					},
+	{0x01, 0x01, 0x03, 0x01, "5"					},
+	{0x01, 0x01, 0x03, 0x00, "7"					},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x12, 0x01, 0x03, 0x03, "3"			},
-	{0x12, 0x01, 0x03, 0x02, "4"			},
-	{0x12, 0x01, 0x03, 0x01, "5"			},
-	{0x12, 0x01, 0x03, 0x00, "7"			},
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x01, 0x01, 0x04, 0x00, "Upright"				},
+	{0x01, 0x01, 0x04, 0x04, "Cocktail"				},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x12, 0x01, 0x04, 0x00, "Upright"		},
-	{0x12, 0x01, 0x04, 0x04, "Cocktail"		},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0x01, 0x01, 0x18, 0x18, "20000 70000 70000"	},
+	{0x01, 0x01, 0x18, 0x10, "20000 80000 80000"	},
+	{0x01, 0x01, 0x18, 0x08, "30000 80000 80000"	},
+	{0x01, 0x01, 0x18, 0x00, "30000 90000 90000"	},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x18, 0x18, "20000 70000 70000"	},
-	{0x12, 0x01, 0x18, 0x10, "20000 80000 80000"	},
-	{0x12, 0x01, 0x18, 0x08, "30000 80000 80000"	},
-	{0x12, 0x01, 0x18, 0x00, "30000 90000 90000"	},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x01, 0x01, 0x60, 0x20, "Very_Easy"			},
+	{0x01, 0x01, 0x60, 0x40, "Easy"					},
+	{0x01, 0x01, 0x60, 0x60, "Normal"				},
+	{0x01, 0x01, 0x60, 0x00, "Difficult"			},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x12, 0x01, 0x60, 0x20, "Very_Easy"		},
-	{0x12, 0x01, 0x60, 0x40, "Easy"			},
-	{0x12, 0x01, 0x60, 0x60, "Normal"		},
-	{0x12, 0x01, 0x60, 0x00, "Difficult"		},
-
-	{0   , 0xfe, 0   ,    2, "Allow_Continue"	},
-	{0x12, 0x01, 0x80, 0x00, "No"			},
-	{0x12, 0x01, 0x80, 0x80, "Yes"			},
+	{0   , 0xfe, 0   ,    2, "Allow_Continue"		},
+	{0x01, 0x01, 0x80, 0x00, "No"					},
+	{0x01, 0x01, 0x80, 0x80, "Yes"					},
 };
 
 STDDIPINFO(Tigeroad)
 
 static struct BurnDIPInfo ToramichDIPList[] =
 {
-	// Default Values
-	{0x11, 0xff, 0xff, 0xff, NULL			},
-	{0x12, 0xff, 0xff, 0xfb, NULL			},
+	DIP_OFFSET(0x11)
+	{0x00, 0xff, 0xff, 0xff, NULL					},
+	{0x01, 0xff, 0xff, 0xfb, NULL					},
 
-	{0   , 0xfe, 0   ,    8, "Coin B"		},
-	{0x11, 0x01, 0x07, 0x00, "4 Coins 1 Credits "	},
-	{0x11, 0x01, 0x07, 0x01, "3 Coins 1 Credits "	},
-	{0x11, 0x01, 0x07, 0x02, "2 Coins 1 Credits "	},
-	{0x11, 0x01, 0x07, 0x07, "1 Coin 1 Credits "	},
-	{0x11, 0x01, 0x07, 0x06, "1 Coin 2 Credits "	},
-	{0x11, 0x01, 0x07, 0x05, "1 Coin 3 Credits "	},
-	{0x11, 0x01, 0x07, 0x04, "1 Coin 4 Credits "	},
-	{0x11, 0x01, 0x07, 0x03, "1 Coin 6 Credits "	},
+	{0   , 0xfe, 0   ,    8, "Coin B"				},
+	{0x00, 0x01, 0x07, 0x00, "4 Coins 1 Credits "	},
+	{0x00, 0x01, 0x07, 0x01, "3 Coins 1 Credits "	},
+	{0x00, 0x01, 0x07, 0x02, "2 Coins 1 Credits "	},
+	{0x00, 0x01, 0x07, 0x07, "1 Coin 1 Credits "	},
+	{0x00, 0x01, 0x07, 0x06, "1 Coin 2 Credits "	},
+	{0x00, 0x01, 0x07, 0x05, "1 Coin 3 Credits "	},
+	{0x00, 0x01, 0x07, 0x04, "1 Coin 4 Credits "	},
+	{0x00, 0x01, 0x07, 0x03, "1 Coin 6 Credits "	},
 
-	{0   , 0xfe, 0   ,    8, "Coin A"		},
-	{0x11, 0x01, 0x38, 0x00, "4 Coins 1 Credits "	},
-	{0x11, 0x01, 0x38, 0x08, "3 Coins 1 Credits "	},
-	{0x11, 0x01, 0x38, 0x10, "2 Coins 1 Credits "	},
-	{0x11, 0x01, 0x38, 0x38, "1 Coin 1 Credits "	},
-	{0x11, 0x01, 0x38, 0x30, "1 Coin 2 Credits "	},
-	{0x11, 0x01, 0x38, 0x28, "1 Coin 3 Credits "	},
-	{0x11, 0x01, 0x38, 0x20, "1 Coin 4 Credits "	},
-	{0x11, 0x01, 0x38, 0x18, "1 Coin 6 Credits "	},
+	{0   , 0xfe, 0   ,    8, "Coin A"				},
+	{0x00, 0x01, 0x38, 0x00, "4 Coins 1 Credits "	},
+	{0x00, 0x01, 0x38, 0x08, "3 Coins 1 Credits "	},
+	{0x00, 0x01, 0x38, 0x10, "2 Coins 1 Credits "	},
+	{0x00, 0x01, 0x38, 0x38, "1 Coin 1 Credits "	},
+	{0x00, 0x01, 0x38, 0x30, "1 Coin 2 Credits "	},
+	{0x00, 0x01, 0x38, 0x28, "1 Coin 3 Credits "	},
+	{0x00, 0x01, 0x38, 0x20, "1 Coin 4 Credits "	},
+	{0x00, 0x01, 0x38, 0x18, "1 Coin 6 Credits "	},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x11, 0x01, 0x40, 0x00, "On"			},
-	{0x11, 0x01, 0x40, 0x40, "Off"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x00, 0x01, 0x40, 0x00, "On"					},
+	{0x00, 0x01, 0x40, 0x40, "Off"					},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x11, 0x01, 0x80, 0x80, "Off"			},
-	{0x11, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x00, 0x01, 0x80, 0x80, "Off"					},
+	{0x00, 0x01, 0x80, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x12, 0x01, 0x03, 0x03, "3"			},
-	{0x12, 0x01, 0x03, 0x02, "4"			},
-	{0x12, 0x01, 0x03, 0x01, "5"			},
-	{0x12, 0x01, 0x03, 0x00, "7"			},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x01, 0x01, 0x03, 0x03, "3"					},
+	{0x01, 0x01, 0x03, 0x02, "4"					},
+	{0x01, 0x01, 0x03, 0x01, "5"					},
+	{0x01, 0x01, 0x03, 0x00, "7"					},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x12, 0x01, 0x04, 0x00, "Upright"		},
-	{0x12, 0x01, 0x04, 0x04, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x01, 0x01, 0x04, 0x00, "Upright"				},
+	{0x01, 0x01, 0x04, 0x04, "Cocktail"				},
 
-	{0   , 0xfe, 0   ,    2, "Bonus Life"		},
-	{0x12, 0x01, 0x08, 0x08, "20000 70000 70000"	},
-	{0x12, 0x01, 0x08, 0x00, "20000 80000 80000"	},
+	{0   , 0xfe, 0   ,    2, "Bonus Life"			},
+	{0x01, 0x01, 0x08, 0x08, "20000 70000 70000"	},
+	{0x01, 0x01, 0x08, 0x00, "20000 80000 80000"	},
 
 	{0   , 0xfe, 0   ,    2, "Allow Level Select"	},
-	{0x12, 0x01, 0x10, 0x10, "No"			},
-	{0x12, 0x01, 0x10, 0x00, "Yes"			},
+	{0x01, 0x01, 0x10, 0x10, "No"					},
+	{0x01, 0x01, 0x10, 0x00, "Yes"					},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x12, 0x01, 0x60, 0x40, "Easy"			},
-	{0x12, 0x01, 0x60, 0x60, "Normal"		},
-	{0x12, 0x01, 0x60, 0x20, "Difficult"		},
-	{0x12, 0x01, 0x60, 0x00, "Very Difficult"	},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x01, 0x01, 0x60, 0x40, "Easy"					},
+	{0x01, 0x01, 0x60, 0x60, "Normal"				},
+	{0x01, 0x01, 0x60, 0x20, "Difficult"			},
+	{0x01, 0x01, 0x60, 0x00, "Very Difficult"		},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
-	{0x12, 0x01, 0x80, 0x00, "No"			},
-	{0x12, 0x01, 0x80, 0x80, "Yes"			},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x01, 0x01, 0x80, 0x00, "No"					},
+	{0x01, 0x01, 0x80, 0x80, "Yes"					},
 };
 
 STDDIPINFO(Toramich)
 
 static struct BurnDIPInfo F1dreamDIPList[] =
 {
-	// Default Values
-	{0x11, 0xff, 0xff, 0xff, NULL			},
-	{0x12, 0xff, 0xff, 0xbb, NULL			},
+	DIP_OFFSET(0x11)
+	{0x00, 0xff, 0xff, 0xff, NULL					},
+	{0x01, 0xff, 0xff, 0xff, NULL					},
 
-	{0   , 0xfe, 0   ,    8, "Coin B"		},
-	{0x11, 0x01, 0x07, 0x00, "4 Coins 1 Credits "	},
-	{0x11, 0x01, 0x07, 0x01, "3 Coins 1 Credits "	},
-	{0x11, 0x01, 0x07, 0x02, "2 Coins 1 Credits "	},
-	{0x11, 0x01, 0x07, 0x07, "1 Coin 1 Credits "	},
-	{0x11, 0x01, 0x07, 0x06, "1 Coin 2 Credits "	},
-	{0x11, 0x01, 0x07, 0x05, "1 Coin 3 Credits "	},
-	{0x11, 0x01, 0x07, 0x04, "1 Coin 4 Credits "	},
-	{0x11, 0x01, 0x07, 0x03, "1 Coin 6 Credits "	},
+	{0   , 0xfe, 0   ,    8, "Coin B"				},
+	{0x00, 0x01, 0x07, 0x00, "4 Coins 1 Credits "	},
+	{0x00, 0x01, 0x07, 0x01, "3 Coins 1 Credits "	},
+	{0x00, 0x01, 0x07, 0x02, "2 Coins 1 Credits "	},
+	{0x00, 0x01, 0x07, 0x07, "1 Coin 1 Credits "	},
+	{0x00, 0x01, 0x07, 0x06, "1 Coin 2 Credits "	},
+	{0x00, 0x01, 0x07, 0x05, "1 Coin 3 Credits "	},
+	{0x00, 0x01, 0x07, 0x04, "1 Coin 4 Credits "	},
+	{0x00, 0x01, 0x07, 0x03, "1 Coin 6 Credits "	},
 
-	{0   , 0xfe, 0   ,    8, "Coin A"		},
-	{0x11, 0x01, 0x38, 0x00, "4 Coins 1 Credits "	},
-	{0x11, 0x01, 0x38, 0x08, "3 Coins 1 Credits "	},
-	{0x11, 0x01, 0x38, 0x10, "2 Coins 1 Credits "	},
-	{0x11, 0x01, 0x38, 0x38, "1 Coin 1 Credits "	},
-	{0x11, 0x01, 0x38, 0x30, "1 Coin 2 Credits "	},
-	{0x11, 0x01, 0x38, 0x28, "1 Coin 3 Credits "	},
-	{0x11, 0x01, 0x38, 0x20, "1 Coin 4 Credits "	},
-	{0x11, 0x01, 0x38, 0x18, "1 Coin 6 Credits "	},
+	{0   , 0xfe, 0   ,    8, "Coin A"				},
+	{0x00, 0x01, 0x38, 0x00, "4 Coins 1 Credits "	},
+	{0x00, 0x01, 0x38, 0x08, "3 Coins 1 Credits "	},
+	{0x00, 0x01, 0x38, 0x10, "2 Coins 1 Credits "	},
+	{0x00, 0x01, 0x38, 0x38, "1 Coin 1 Credits "	},
+	{0x00, 0x01, 0x38, 0x30, "1 Coin 2 Credits "	},
+	{0x00, 0x01, 0x38, 0x28, "1 Coin 3 Credits "	},
+	{0x00, 0x01, 0x38, 0x20, "1 Coin 4 Credits "	},
+	{0x00, 0x01, 0x38, 0x18, "1 Coin 6 Credits "	},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x11, 0x01, 0x40, 0x00, "On"			},
-	{0x11, 0x01, 0x40, 0x40, "Off"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x00, 0x01, 0x40, 0x00, "On"					},
+	{0x00, 0x01, 0x40, 0x40, "Off"					},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x11, 0x01, 0x80, 0x80, "Off"			},
-	{0x11, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x00, 0x01, 0x80, 0x80, "Off"					},
+	{0x00, 0x01, 0x80, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x12, 0x01, 0x03, 0x03, "3"			},
-	{0x12, 0x01, 0x03, 0x02, "4"			},
-	{0x12, 0x01, 0x03, 0x01, "5"			},
-	{0x12, 0x01, 0x03, 0x00, "7"			},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x01, 0x01, 0x03, 0x03, "3"					},
+	{0x01, 0x01, 0x03, 0x02, "4"					},
+	{0x01, 0x01, 0x03, 0x01, "5"					},
+	{0x01, 0x01, 0x03, 0x00, "7"					},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x12, 0x01, 0x04, 0x00, "Upright"		},
-	{0x12, 0x01, 0x04, 0x04, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x01, 0x01, 0x04, 0x00, "Upright"				},
+	{0x01, 0x01, 0x04, 0x04, "Cocktail"				},
 
-	{0   , 0xfe, 0   ,    4, "F1 Up Point"		},
-	{0x12, 0x01, 0x18, 0x18, "12"			},
-	{0x12, 0x01, 0x18, 0x10, "16"			},
-	{0x12, 0x01, 0x18, 0x08, "18"			},
-	{0x12, 0x01, 0x18, 0x00, "20"			},
+	{0   , 0xfe, 0   ,    4, "F1 Up Point"			},
+	{0x01, 0x01, 0x18, 0x18, "12"					},
+	{0x01, 0x01, 0x18, 0x10, "16"					},
+	{0x01, 0x01, 0x18, 0x08, "18"					},
+	{0x01, 0x01, 0x18, 0x00, "20"					},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x12, 0x01, 0x20, 0x20, "Normal"		},
-	{0x12, 0x01, 0x20, 0x00, "Difficult"		},
+	{0   , 0xfe, 0   ,    2, "Difficulty"			},
+	{0x01, 0x01, 0x20, 0x20, "Normal"				},
+	{0x01, 0x01, 0x20, 0x00, "Difficult"			},
 
-	{0   , 0xfe, 0   ,    2, "Version"		},
-	{0x12, 0x01, 0x40, 0x00, "International"	},
-	{0x12, 0x01, 0x40, 0x40, "Japan"		},
+	{0   , 0xfe, 0   ,    2, "Version"				},
+	{0x01, 0x01, 0x40, 0x00, "International"		},
+	{0x01, 0x01, 0x40, 0x40, "Japan"				},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
-	{0x12, 0x01, 0x80, 0x00, "No"			},
-	{0x12, 0x01, 0x80, 0x80, "Yes"			},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x01, 0x01, 0x80, 0x00, "No"					},
+	{0x01, 0x01, 0x80, 0x80, "Yes"					},
 };
 
 STDDIPINFO(F1dream)
@@ -270,11 +271,9 @@ static void palette_write(INT32 offset)
 {
 	UINT16 data = *((UINT16 *)(DrvPalRAM + offset + 0x200));
 
-	UINT8 r,g,b;
-
-	r = (data >> 8) & 0x0f;
-	g = (data >> 4) & 0x0f;
-	b = (data >> 0) & 0x0f;
+	UINT8 r = (data >> 8) & 0x0f;
+	UINT8 g = (data >> 4) & 0x0f;
+	UINT8 b = (data >> 0) & 0x0f;
 
 	r |= r << 4;
 	g |= g << 4;
@@ -283,102 +282,47 @@ static void palette_write(INT32 offset)
 	DrvPalette[offset / 2] = BurnHighCol(r, g, b, 0);
 }
 
-static const UINT16 f1dream_613ea_lookup[16] = {
-0x0052, 0x0031, 0x00a7, 0x0043, 0x0007, 0x008a, 0x00b1, 0x0066, 0x009f, 0x00cc, 0x0009, 0x004d, 0x0033, 0x0028, 0x00d0, 0x0025};
-
-static const UINT16 f1dream_613eb_lookup[256] = {
-0x0001, 0x00b5, 0x00b6, 0x00b6, 0x00b6, 0x00b6, 0x00b6, 0x00b6, 0x00b7, 0x0001, 0x00b8, 0x002f, 0x002f, 0x002f, 0x002f, 0x00b9,
-0x00aa, 0x0031, 0x00ab, 0x00ab, 0x00ab, 0x00ac, 0x00ad, 0x00ad, 0x00ae, 0x00af, 0x00b0, 0x00b1, 0x00b2, 0x00b3, 0x00b4, 0x0091,
-0x009c, 0x009d, 0x009e, 0x009f, 0x00a0, 0x00a1, 0x00a2, 0x00a3, 0x00a4, 0x00a5, 0x00a6, 0x00a7, 0x00a8, 0x00a9, 0x009b, 0x0091,
-0x00bc, 0x0092, 0x000b, 0x0009, 0x0093, 0x0094, 0x0095, 0x0096, 0x0097, 0x0073, 0x0001, 0x0098, 0x0099, 0x009a, 0x009b, 0x0091,
-0x00bc, 0x007b, 0x000b, 0x0008, 0x0087, 0x0088, 0x0089, 0x008a, 0x007f, 0x008b, 0x008c, 0x008d, 0x008e, 0x008f, 0x0090, 0x0091,
-0x00bd, 0x007b, 0x000b, 0x0007, 0x007c, 0x007d, 0x007e, 0x0001, 0x007f, 0x0080, 0x0081, 0x0082, 0x0083, 0x0084, 0x0085, 0x0086,
-0x00bc, 0x0070, 0x000b, 0x0006, 0x0071, 0x0072, 0x0073, 0x0001, 0x0074, 0x000d, 0x0075, 0x0076, 0x0077, 0x0078, 0x0079, 0x007a,
-0x00bc, 0x00ba, 0x000a, 0x0005, 0x0065, 0x0066, 0x0067, 0x0068, 0x0068, 0x0069, 0x006a, 0x006b, 0x006c, 0x006d, 0x006e, 0x006f,
-0x00bc, 0x0059, 0x0001, 0x0004, 0x005a, 0x005b, 0x0001, 0x005c, 0x005d, 0x005e, 0x005f, 0x0060, 0x0061, 0x0062, 0x0063, 0x0064,
-0x0014, 0x004d, 0x0001, 0x0003, 0x004e, 0x004f, 0x0050, 0x0051, 0x0052, 0x0001, 0x0053, 0x0054, 0x0055, 0x0056, 0x0057, 0x0058,
-0x0014, 0x0043, 0x0001, 0x0002, 0x0044, 0x0045, 0x0046, 0x0047, 0x0048, 0x0049, 0x00bb, 0x004a, 0x004b, 0x004c, 0x0001, 0x0001,
-0x0014, 0x002b, 0x0001, 0x0038, 0x0039, 0x003a, 0x003b, 0x0031, 0x003c, 0x003d, 0x003e, 0x003f, 0x0040, 0x0041, 0x0042, 0x0001,
-0x0014, 0x002d, 0x0001, 0x002e, 0x002f, 0x0030, 0x0031, 0x0032, 0x0033, 0x0034, 0x0035, 0x0036, 0x0001, 0x0014, 0x0037, 0x0001,
-0x0014, 0x0021, 0x0022, 0x0023, 0x0024, 0x0025, 0x0026, 0x0027, 0x0028, 0x0029, 0x0001, 0x0001, 0x0001, 0x002a, 0x002b, 0x002c,
-0x0014, 0x0015, 0x0016, 0x0017, 0x0018, 0x0019, 0x001a, 0x001b, 0x001c, 0x001d, 0x001e, 0x001e, 0x001e, 0x001e, 0x001f, 0x0020,
-0x000c, 0x000d, 0x000e, 0x0001, 0x000f, 0x0010, 0x0011, 0x0012, 0x000d, 0x000d, 0x000d, 0x000d, 0x000d, 0x000d, 0x000d, 0x0013 };
-
-static const UINT16 f1dream_17b74_lookup[128] = {
-0x0003, 0x0040, 0x0005, 0x0080, 0x0003, 0x0080, 0x0005, 0x00a0, 0x0003, 0x0040, 0x0005, 0x00c0, 0x0003, 0x0080, 0x0005, 0x00e0,
-0x0003, 0x0040, 0x0006, 0x0000, 0x0003, 0x0080, 0x0006, 0x0020, 0x0003, 0x0040, 0x0006, 0x0040, 0x0003, 0x0080, 0x0006, 0x0060,
-0x0000, 0x00a0, 0x0009, 0x00e0, 0x0000, 0x00e0, 0x000a, 0x0000, 0x0000, 0x00a0, 0x000a, 0x0020, 0x0000, 0x00e0, 0x000a, 0x0040,
-0x0000, 0x00a0, 0x000a, 0x0060, 0x0000, 0x00e0, 0x000a, 0x0080, 0x0000, 0x00a0, 0x000a, 0x00a0, 0x0000, 0x00e0, 0x000a, 0x00c0,
-0x0003, 0x0040, 0x0005, 0x0080, 0x0003, 0x0080, 0x0005, 0x00a0, 0x0003, 0x0040, 0x0005, 0x00c0, 0x0003, 0x0080, 0x0005, 0x00e0,
-0x0003, 0x0040, 0x0006, 0x0000, 0x0003, 0x0080, 0x0006, 0x0020, 0x0003, 0x0040, 0x0006, 0x0040, 0x0003, 0x0080, 0x0006, 0x0060,
-0x0000, 0x00a0, 0x0009, 0x00e0, 0x0000, 0x00e0, 0x000a, 0x0000, 0x0000, 0x00a0, 0x000a, 0x0020, 0x0000, 0x00e0, 0x000a, 0x0040,
-0x0000, 0x00a0, 0x000a, 0x0060, 0x0000, 0x00e0, 0x000a, 0x0080, 0x0000, 0x00a0, 0x000a, 0x00a0, 0x0000, 0x00e0, 0x000a, 0x00c0 };
-
-static const UINT16 f1dream_2450_lookup[32] = {
-0x0003, 0x0080, 0x0006, 0x0060, 0x0000, 0x00e0, 0x000a, 0x00c0, 0x0003, 0x0080, 0x0006, 0x0060, 0x0000, 0x00e0, 0x000a, 0x00c0,
-0x0003, 0x0080, 0x0006, 0x0060, 0x0000, 0x00e0, 0x000a, 0x00c0, 0x0003, 0x0080, 0x0006, 0x0060, 0x0000, 0x00e0, 0x000a, 0x00c0 };
-
-static void f1dream_protection_w()
+static void mcu_write_port(INT32 port, UINT8 data)
 {
-	INT32 indx;
-	INT32 value = 255;
-	INT32 prevpc = SekGetPC(0)-8;
-	UINT16* ram16 = (UINT16*)Drv68KRAM;
-
-	if (prevpc == 0x244c)
-	{
-		indx = ram16[0x3ff0/2];
-		ram16[0x3fe6/2] = f1dream_2450_lookup[indx];
-		ram16[0x3fe8/2] = f1dream_2450_lookup[++indx];
-		ram16[0x3fea/2] = f1dream_2450_lookup[++indx];
-		ram16[0x3fec/2] = f1dream_2450_lookup[++indx];
+	if (port >= 0x7f0 && port <= 0x7ff) {
+		UINT16* ram16 = (UINT16*)Drv68KRAM;
+		ram16[(0x3fe0 / 2) + (port & 0xf)] = (ram16[(0x3fe0 / 2) + (port & 0xf)] & 0xff00) | data;
 	}
-	else if (prevpc == 0x613a)
-	{
-		if (ram16[0x3ff6/2] < 15)
-		{
-			indx = f1dream_613ea_lookup[ram16[0x3ff6/2]] - ram16[0x3ff4/2];
-			if (indx > 255)
-			{
-				indx <<= 4;
-				indx += ram16[0x3ff6/2] & 0x00ff;
-				value = f1dream_613eb_lookup[indx & 0xff];
+
+	switch (port) {
+		case MCS51_PORT_P1: {
+			*soundlatch = data;
+		}
+		break;
+
+		case MCS51_PORT_P3: {
+			if (((*last_port3 & 1) ^ (data & 1)) && (~data & 1)) {
+				SekSetHALT(0, 0);
 			}
+			*last_port3 = data;
 		}
-
-		ram16[0x3ff2/2] = value;
-	}
-	else if (prevpc == 0x17b70)
-	{
-		if (ram16[0x3ff0/2] >= 0x04) indx = 128;
-		else if (ram16[0x3ff0/2] > 0x02) indx = 96;
-		else if (ram16[0x3ff0/2] == 0x02) indx = 64;
-		else if (ram16[0x3ff0/2] == 0x01) indx = 32;
-		else indx = 0;
-
-		indx += ram16[0x3fee/2];
-		if (indx < 128)
-		{
-			ram16[0x3fe6/2] = f1dream_17b74_lookup[indx];
-			ram16[0x3fe8/2] = f1dream_17b74_lookup[++indx];
-			ram16[0x3fea/2] = f1dream_17b74_lookup[++indx];
-			ram16[0x3fec/2] = f1dream_17b74_lookup[++indx];
-		}
-		else
-		{
-			ram16[0x3fe6/2] = 0x00ff;
-			ram16[0x3fe8/2] = 0x00ff;
-			ram16[0x3fea/2] = 0x00ff;
-			ram16[0x3fec/2] = 0x00ff;
-		}
-	}
-	else if ((prevpc == 0x27f8) || (prevpc == 0x511a) || (prevpc == 0x5142) || (prevpc == 0x516a))
-	{
-		*soundlatch = ram16[0x3ffc/2] & 0xff;
+		break;
 	}
 }
 
-void __fastcall tigeroad_write_byte(UINT32 address, UINT8 data)
+static UINT8 mcu_read_port(INT32 port)
+{
+	if (port >= 0x7f0 && port <= 0x7ff) {
+		UINT16* ram16 = (UINT16*)Drv68KRAM;
+		return ram16[(0x3fe0 / 2) + (port & 0xf)];
+	}
+
+	return 0xff;
+}
+
+static void mcu_sync()
+{
+	INT32 todo = ((double)SekTotalCycles() * (10000000/12) / 10000000) - mcs51TotalCycles();
+
+	mcs51Run((todo > 0) ? todo : 0);
+}
+
+static void __fastcall tigeroad_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -390,7 +334,9 @@ void __fastcall tigeroad_write_byte(UINT32 address, UINT8 data)
 
 		case 0xfe4002:
 			if (nF1dream) {
-				f1dream_protection_w();
+				mcu_sync();
+				mcs51_set_irq_line(MCS51_INT0_LINE, CPU_IRQSTATUS_HOLD);
+				SekSetHALT(1);
 			} else {
 				*soundlatch = data;
 			}
@@ -398,7 +344,7 @@ void __fastcall tigeroad_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-void __fastcall tigeroad_write_word(UINT32 address, UINT16 data)
+static void __fastcall tigeroad_write_word(UINT32 address, UINT16 data)
 {
 	if (address >= 0xff8200 && address <= 0xff867f) {
 		*((UINT16*)(DrvPalRAM + (address - 0xff8000))) = data;
@@ -421,7 +367,7 @@ void __fastcall tigeroad_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-UINT8 __fastcall tigeroad_read_byte(UINT32 address)
+static UINT8 __fastcall tigeroad_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -441,7 +387,7 @@ UINT8 __fastcall tigeroad_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT16 __fastcall tigeroad_read_word(UINT32 address)
+static UINT16 __fastcall tigeroad_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -458,29 +404,20 @@ UINT16 __fastcall tigeroad_read_word(UINT32 address)
 	return 0;
 }
 
-void __fastcall tigeroad_sound_write(UINT16 address, UINT8 data)
+static void __fastcall tigeroad_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
 		case 0x8000:
-			BurnYM2203Write(0, 0, data);
-		return;
-
 		case 0x8001:
-			BurnYM2203Write(0, 1, data);
-		return;
-
 		case 0xa000:
-			BurnYM2203Write(1, 0, data);
-		return;
-
 		case 0xa001:
-			BurnYM2203Write(1, 1, data);
+			BurnYM2203Write(address / 0xa000, address & 1, data);
 		return;
 	}
 }
 
-void __fastcall tigeroad_sound_out(UINT16 port, UINT8 data)
+static void __fastcall tigeroad_sound_out(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
@@ -490,15 +427,13 @@ void __fastcall tigeroad_sound_out(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall tigeroad_sound_read(UINT16 address)
+static UINT8 __fastcall tigeroad_sound_read(UINT16 address)
 {
 	switch (address)
 	{
 		case 0x8000:
-			return BurnYM2203Read(0, 0);
-
 		case 0xa000:
-			return BurnYM2203Read(1, 0);
+			return BurnYM2203Read(address / 0xa000, 0);
 
 		case 0xe000:
 			return *soundlatch;
@@ -507,22 +442,20 @@ UINT8 __fastcall tigeroad_sound_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall tigeroad_sample_out(UINT16 port, UINT8 data)
+static void __fastcall tigeroad_sample_out(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
 		case 0x01:
-			SekOpen(0);
 			MSM5205ResetWrite(0, (data >> 7) & 1);
 			MSM5205DataWrite(0, data);
 			MSM5205VCLKWrite(0, 1);
 			MSM5205VCLKWrite(0, 0);
-			SekClose();
 		return;
 	}
 }
 
-UINT8 __fastcall tigeroad_sample_in(UINT16 port)
+static UINT8 __fastcall tigeroad_sample_in(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -535,44 +468,33 @@ UINT8 __fastcall tigeroad_sample_in(UINT16 port)
 
 static void TigeroadIRQHandler(INT32, INT32 nStatus)
 {
-	if (nStatus & 1) {
-		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 inline static INT32 DrvMSM5205SynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)((double)SekTotalCycles() * nSoundRate / 10000000);
+	return (INT64)((double)ZetTotalCycles() * nSoundRate / 3579545);
 }
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	SekOpen(0);
-	SekReset();
-	SekClose();
+	SekReset(0);
 
 	ZetOpen(0);
 	ZetReset();
+	BurnYM2203Reset();
 	ZetClose();
 
-	BurnYM2203Reset();
-	
-	if (toramich) {
-		ZetOpen(1);
-		ZetReset();
-		ZetClose();
-		
-		MSM5205Reset();
+	if (nF1dream) {
+		mcs51_reset();
 	}
 
-	if (pBurnSoundOut) { // fix ym2203 junk..
-		BurnSoundClear();
+	if (toramich) {
+		ZetReset(1);
+
+		MSM5205Reset();
 	}
 
 	HiscoreReset();
@@ -586,6 +508,7 @@ static INT32 MemIndex()
 
 	Drv68KROM	= Next; Next += 0x040000;
 	DrvZ80ROM	= Next; Next += 0x008000;
+	DrvMCURom   = Next; Next += 0x010000;
 	DrvSndROM	= Next; Next += 0x010000;
 
 	DrvGfxROM0	= Next; Next += 0x020000;
@@ -595,7 +518,7 @@ static INT32 MemIndex()
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0240 * sizeof(UINT32);
 
-	DrvTransMask	= Next; Next += 0x000010;
+	DrvTransMask= Next; Next += 0x000010;
 
 	AllRam		= Next;
 
@@ -607,13 +530,14 @@ static INT32 MemIndex()
 
 	DrvZ80RAM	= Next; Next += 0x000800;
 
-	DrvScrollRAM	= Next; Next += 0x000004;
+	DrvScrollRAM= Next; Next += 0x000004;
 
 	soundlatch	= Next; Next += 0x000001;
 	soundlatch2	= Next; Next += 0x000001;
 	flipscreen	= Next; Next += 0x000001;
 	bgcharbank	= Next; Next += 0x000001;
-	coin_lockout	= Next; Next += 0x000001;
+	coin_lockout= Next; Next += 0x000001;
+	last_port3	= Next; Next += 0x000001;
 
 	RamEnd		= Next;
 
@@ -625,21 +549,13 @@ static INT32 MemIndex()
 static INT32 DrvGfxDecode()
 {
 	INT32 Plane0[4]  = { ((0x20000 * 8) * 4) + 4, ((0x20000 * 8) * 4) + 0, 4, 0 };
-	INT32 XOffs0[32] = { 0, 1, 2, 3, 8+0, 8+1, 8+2, 8+3,
-			   64*8+0, 64*8+1, 64*8+2, 64*8+3, 64*8+8+0, 64*8+8+1, 64*8+8+2, 64*8+8+3,
-			   2*64*8+0, 2*64*8+1, 2*64*8+2, 2*64*8+3, 2*64*8+8+0, 2*64*8+8+1, 2*64*8+8+2, 2*64*8+8+3,
-			   3*64*8+0, 3*64*8+1, 3*64*8+2, 3*64*8+3, 3*64*8+8+0, 3*64*8+8+1, 3*64*8+8+2, 3*64*8+8+3 };
-	INT32 YOffs0[32] = { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16,
-			   8*16, 9*16, 10*16, 11*16, 12*16, 13*16, 14*16, 15*16,
-		   	   16*16, 17*16, 18*16, 19*16, 20*16, 21*16, 22*16, 23*16,
-			   24*16, 25*16, 26*16, 27*16, 28*16, 29*16, 30*16, 31*16 };
+	INT32 XOffs0[32] = { STEP4(0, 1), STEP4(8, 1), STEP4(64*8, 1), STEP4(64*8+8, 1),
+						 STEP4(2*64*8, 1), STEP4(2*64*8+8, 1), STEP4(3*64*8, 1), STEP4(3*64*8+8, 1) };
+	INT32 YOffs0[32] = { STEP32(0, 16) };
 
 	INT32 Plane1[4]  = { (0x20000*8)*3, (0x20000*8)*2, (0x20000*8)*1, (0x20000*8)*0 };
-	INT32 XOffs1[16] = { 0, 1, 2, 3, 4, 5, 6, 7,
-			16*8+0, 16*8+1, 16*8+2, 16*8+3, 16*8+4, 16*8+5, 16*8+6, 16*8+7 };
-	INT32 YOffs1[16] = { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
-			8*8, 9*8, 10*8, 11*8, 12*8, 13*8, 14*8, 15*8 };
-
+	INT32 XOffs1[16] = { STEP8(0, 1), STEP8(16*8, 1) };
+	INT32 YOffs1[16] = { STEP16(0, 8) };
 
 	UINT8 *tmp = (UINT8*)BurnMalloc(0x100000);
 	if (tmp == NULL) {
@@ -669,12 +585,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit(INT32 (*pInitCallback)())
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (pInitCallback()) return 1;
@@ -697,11 +608,8 @@ static INT32 DrvInit(INT32 (*pInitCallback)())
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM);
-	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80RAM);
-	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80RAM);
-	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80RAM);
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM, 0xc000, 0xc7ff, MAP_RAM);
 	ZetSetWriteHandler(tigeroad_sound_write);
 	ZetSetReadHandler(tigeroad_sound_read);
 	ZetSetOutHandler(tigeroad_sound_out);
@@ -709,10 +617,8 @@ static INT32 DrvInit(INT32 (*pInitCallback)())
 
 	if (toramich) {
 		ZetInit(1);
-
 		ZetOpen(1);
-		ZetMapArea(0x0000, 0xffff, 0, DrvSndROM);
-		ZetMapArea(0x0000, 0xffff, 2, DrvSndROM);
+		ZetMapMemory(DrvSndROM, 0x0000, 0xffff, MAP_ROM);
 		ZetSetOutHandler(tigeroad_sample_out);
 		ZetSetInHandler(tigeroad_sample_in);
 		ZetClose();
@@ -732,6 +638,13 @@ static INT32 DrvInit(INT32 (*pInitCallback)())
 		MSM5205SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	}
 
+	if (nF1dream) {
+		mcs51_init();
+		mcs51_set_program_data(DrvMCURom);
+		mcs51_set_write_handler(mcu_write_port);
+		mcs51_set_read_handler(mcu_read_port);
+	}
+
 	GenericTilesInit();
 
 	DrvDoReset();
@@ -748,7 +661,9 @@ static INT32 DrvExit()
 
 	SekExit();
 	ZetExit();
-
+	if (nF1dream) {
+		mcs51_exit();
+	}
 	BurnFree (AllMem);
 
 	nF1dream = 0;
@@ -787,19 +702,8 @@ static void draw_sprites()
 
 			sy = (240 - sy) - 16;
 
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, tile_number, sx, sy, color, 4, 15, 0x100, DrvGfxROM2);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, tile_number, sx, sy, color, 4, 15, 0x100, DrvGfxROM2);	
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, tile_number, sx, sy, color, 4, 15, 0x100, DrvGfxROM2);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, tile_number, sx, sy, color, 4, 15, 0x100, DrvGfxROM2);	
-				}
-			}
+
+			Draw16x16MaskTile(pTransDraw, tile_number, sx, sy, flipx, flipy, color, 4, 15, 0x100, DrvGfxROM2);
 		}
 	}
 }
@@ -823,7 +727,7 @@ static void draw_32x32_mask_tile(INT32 sx, INT32 sy, INT32 code, INT32 color, IN
 				for (INT32 x = 31; x >= 0; x--)
 				{
 					if ((sx+x) < 0 || (sx+x) >= nScreenWidth) continue;
-		
+
 					if (DrvTransMask[src[x^0x1f]])
 						dst[sx+x] = src[x^0x1f] | color;
 				}
@@ -831,7 +735,7 @@ static void draw_32x32_mask_tile(INT32 sx, INT32 sy, INT32 code, INT32 color, IN
 				for (INT32 x = 0; x < 32; x++)
 				{
 					if ((sx+x) < 0 || (sx+x) >= nScreenWidth) continue;
-		
+
 					if (DrvTransMask[src[x]])
 						dst[sx+x] = src[x] | color;
 				}
@@ -884,19 +788,7 @@ static void draw_background(INT32 priority)
 			}
 
 			if (!priority) {
-				if (flipy) {
-					if (flipx) {
-						Render32x32Tile_FlipXY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, DrvGfxROM1);
-					} else {
-						Render32x32Tile_FlipY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, DrvGfxROM1);
-					}
-				} else {
-					if (flipx) {
-						Render32x32Tile_FlipX_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, DrvGfxROM1);
-					} else {
-						Render32x32Tile_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, DrvGfxROM1);
-					}
-				}
+				Draw32x32Tile(pTransDraw, code, sx, sy - 16, flipx, flipy, color, 4, 0, DrvGfxROM1);
 			} else {
 				draw_32x32_mask_tile(sx, sy - 16, code, color << 4, flipx, flipy);
 			}
@@ -954,12 +846,12 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	memset (pTransDraw, 0, nScreenWidth * nScreenHeight * 2);
+	BurnTransferClear();
 
-	draw_background(0);
-	draw_sprites();
-	draw_background(1);
-	draw_text_layer();
+	if (nBurnLayer & 1) draw_background(0);
+	if (nSpriteEnable & 1) draw_sprites();
+	if (nBurnLayer & 2) draw_background(1);
+	if (nBurnLayer & 4) draw_text_layer();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -973,8 +865,8 @@ static INT32 DrvFrame()
 	}
 
 	{
-		DrvInputs[0] = ~0;
-		DrvInputs[1] = ~0;
+		DrvInputs[0] = 0xffff;
+		DrvInputs[1] = 0xffff;
 
 		for (INT32 i = 0; i < 16; i++)
 		{
@@ -985,66 +877,50 @@ static INT32 DrvFrame()
 		DrvInputs[1] |= *coin_lockout << 8;
 	}
 
-	INT32 nCyclesTotal[3] = { 10000000 / 60, 3579545 / 60, 3579545 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesTotal[4] = { 10000000 / 60, 3579545 / 60, 3579545 / 60, 10000000 / 60 / 12 };
+	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
 
 	SekNewFrame();
 	ZetNewFrame();
-	
-	INT32 nInterleave = 10;
-	INT32 MSMIRQSlice[67];
-	
-	if (toramich) {
-		nInterleave = MSM5205CalcInterleave(0, 10000000);
-	
-		for (INT32 i = 0; i < 67; i++) {
-			MSMIRQSlice[i] = (INT32)((double)((nInterleave * (i + 1)) / 68));
+	if (nF1dream) mcs51NewFrame();
+
+	INT32 nInterleave = 67*4; //268 for ez-irq of toramich second z80
+
+	if (toramich) { MSM5205NewFrame(0, 10000000, nInterleave); }
+
+	for (INT32 i = 0; i < nInterleave; i++) {
+		SekOpen(0);
+		CPU_RUN(0, Sek);
+		if (i == (nInterleave - 1)) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		SekClose();
+
+		ZetOpen(0);
+		CPU_RUN_TIMER(1);
+		ZetClose();
+
+		if (toramich) {
+			ZetOpen(1);
+			CPU_RUN(2, Zet);
+			MSM5205Update();
+			if ((i&3) == 3) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			ZetClose();
+		}
+
+		if (nF1dream) {
+			CPU_RUN_SYNCINT(3, mcs51);
 		}
 	}
-	
-	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext, nCyclesSegment;
 
-		nCurrentCPU = 0;
-		SekOpen(0);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == (nInterleave - 1)) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-		if (toramich) MSM5205Update();
-		SekClose();
-		
+	if (pBurnSoundOut) {
 		ZetOpen(0);
-		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		ZetClose();
-		
 		if (toramich) {
-			nCurrentCPU = 2;
 			ZetOpen(1);
-			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-			nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-			for (INT32 j = 0; j < 67; j++) {
-				if (i == MSMIRQSlice[j]) {
-					ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
-					nCyclesDone[nCurrentCPU] += ZetRun(1000);
-				}
-			}
+			MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 			ZetClose();
 		}
 	}
-	
-	ZetOpen(0);
-	BurnTimerEndFrame(nCyclesTotal[1]);
-	if (pBurnSoundOut) {
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		if (toramich) {
-			SekOpen(0);
-			MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
-			SekClose();
-		}
-	}
-	ZetClose();	
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -1058,7 +934,7 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029698;
 	}
@@ -1074,6 +950,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
 		ZetScan(nAction);
+
+		if (nF1dream) {
+			mcs51_scan(nAction);
+		}
 
 		BurnYM2203Scan(nAction, pnMin);
 		if (toramich) {
@@ -1445,7 +1325,7 @@ static struct BurnRomInfo f1dreamRomDesc[] = {
 
 	{ "tr.9e",		0x00100, 0xec80ae36, 7 | BRF_GRA | BRF_OPT }, // 15 Priority Proms (unused)
 	
-	{ "f1.9j",   	0x01000, 0xc8e6075c, 0 | BRF_OPT },
+	{ "f1.9j",   	0x01000, 0xc8e6075c, 0 | BRF_PRG | BRF_ESS }, // 16 Protection MCU
 };
 
 STD_ROM_PICK(f1dream)
@@ -1471,6 +1351,8 @@ static INT32 F1dreamLoadRoms()
 
 	if (BurnLoadRom(DrvGfxROM3 + 0x00000, 14, 1)) return 1;
 
+	if (BurnLoadRom(DrvMCURom  + 0x00000, 16, 1)) return 1;
+
 	return 0;
 }
 
@@ -1483,9 +1365,9 @@ static INT32 F1dreamInit()
 
 struct BurnDriver BurnDrvF1dream = {
 	"f1dream", NULL, NULL, NULL, "1988",
-	"F-1 Dream\0", "Game is bugged, use the bootleg instead.", "Capcom (Romstar license)", "Miscellaneous",
+	"F-1 Dream\0", NULL, "Capcom (Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARWARE_CAPCOM_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RACING, 0,
 	NULL, f1dreamRomInfo, f1dreamRomName, NULL, NULL, NULL, NULL, TigeroadInputInfo, F1dreamDIPInfo,
 	F1dreamInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3

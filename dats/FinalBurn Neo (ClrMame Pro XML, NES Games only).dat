@@ -4212,6 +4212,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="evildead">
+		<description>Evil Dead - Ash lives! (Hack) [Hack, Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Crying Onion</manufacturer>
+		<rom name="Evil Dead Ash lives! (2020)(Crying Onion).nes" size="262160" crc="2ce2ead0"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="excitebike">
 		<description>Excitebike (Japan, USA)</description>
 		<year>1984</year>
@@ -5852,6 +5860,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="gyromitese" cloneof="gyromite" romof="gyromite">
+		<description>Gyromite Special Edition (Hack) [Hack, This hack allows to play the game on a traditional controller]</description>
+		<year>2014</year>
+		<manufacturer>the Jabu</manufacturer>
+		<rom name="Gyromite Special Edition (2014)(the jabu).nes" size="40976" crc="1495d355"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="gyruss">
 		<description>Gyruss (USA)</description>
 		<year>1989</year>
@@ -6316,6 +6332,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="iceicehoccha">
+		<description>Ice Ice! Hockey Challenge (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Ice Ice! Hockey Challenge (T-Eng).nes" size="262160" crc="d61c628e"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="ikariwarriors">
 		<description>Ikari Warriors (USA) (Rev A)</description>
 		<year>1987</year>
@@ -6340,7 +6364,7 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="ikeikenekhocbu">
+	<game name="ikeikenekhocbu" cloneof="iceicehoccha" romof="iceicehoccha">
 		<description>Ike Ike! Nekketsu Hockey-bu - Subette Koronde Dairantou (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Technos</manufacturer>
@@ -9828,6 +9852,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="pacmanx">
+		<description>Pac-Man Xtreme (Hack) [Hack, Homebrew]</description>
+		<year>2016</year>
+		<manufacturer>KaBooM!</manufacturer>
+		<rom name="Pac-Man Xtreme (2016)(KaBooM!).nes" size="40976" crc="ee653ac8"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="pacmania">
 		<description>Pac-Mania (USA) (Unl)</description>
 		<year>1990</year>
@@ -12028,6 +12060,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="spiritimpel">
+		<description>Spirit Impel (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Passe Gaming</manufacturer>
+		<rom name="Spirit Impel (2020)(Passe Gaming).nes" size="524304" crc="146f8f6c"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="splathou">
 		<description>Splatter House - Wanpaku Graffiti (Japan)</description>
 		<year>1989</year>
@@ -12529,6 +12569,30 @@
 		<year>2020</year>
 		<manufacturer>infidelity</manufacturer>
 		<rom name="Super Mario All Stars NES (Hack).nes" size="2097168" crc="be155d3e"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="smb8en">
+		<description>Super Mario Bros 8 (English) (Hack) [Hack, Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Crying Onion</manufacturer>
+		<rom name="Super Mario Bros 8 hack eng (2021)(Crying Onion).nes" size="393232" crc="1f5d9f05"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="smb8es" cloneof="smb8en" romof="smb8en">
+		<description>Super Mario Bros 8 (Spanish) (Hack) [Hack, Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Crying Onion</manufacturer>
+		<rom name="Super Mario Bros 8 hack spa (2021)(Crying Onion).nes" size="393232" crc="ef9c0a4f"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="smb8se" cloneof="smb8en" romof="smb8en">
+		<description>Super Mario Bros 8 Special Edition (Hack) [Hack, Homebrew, Don Doko Don 2 tribute edition]</description>
+		<year>2021</year>
+		<manufacturer>Crying Onion</manufacturer>
+		<rom name="Super Mario Bros 8 SE hack (2021)(Crying Onion).nes" size="393232" crc="aa5822c0"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

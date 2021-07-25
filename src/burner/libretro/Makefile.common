@@ -126,6 +126,8 @@ BURN_BLACKLIST := $(ADSP2100_CPU_DIR)/2100ops.c \
 	$(FBNEO_BURNER_DIR)/gami.cpp \
 	$(FBNEO_BURNER_DIR)/gamc.cpp \
 	$(FBNEO_BURNER_DIR)/dynhuff.cpp \
+	$(FBNEO_BURNER_DIR)/luaengine.cpp \
+	$(FBNEO_BURNER_DIR)/luasav.cpp \
 	$(FBNEO_BURN_DIR)/drv/capcom/ctv_make.cpp \
 	$(PGM_DIR)/pgm_sprite_create.cpp \
 	$(FBNEO_INTERFACE_DIR)/audio/aud_interface.cpp \

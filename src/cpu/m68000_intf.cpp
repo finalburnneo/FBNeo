@@ -1512,9 +1512,16 @@ void SekSetHALT(INT32 nStatus)
 
 	if (nSekActive != -1)
 	{
-		if (nSekHALT[nSekActive] && nStatus == 0)
+		if (nSekHALT[nSekActive] == 1 && nStatus == 0)
 		{
 			//bprintf(0, _T("SEK: cleared HALT.\n"));
+		}
+
+		if (nSekHALT[nSekActive] == 0 && nStatus == 1)
+		{
+			//bprintf(0, _T("SEK: entered HALT.\n"));
+			// we must halt in the cpu core too
+			SekRunEnd();
 		}
 
 		nSekHALT[nSekActive] = nStatus;

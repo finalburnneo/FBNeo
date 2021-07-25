@@ -1,6 +1,6 @@
 alldir	+= 	burner burner/win32 dep/kaillera/client dep/libs/libpng dep/libs/lib7z dep/libs/zlib intf intf/video \
 			intf/video/scalers 	intf/video/win32 intf/audio intf/audio/win32 intf/input intf/input/win32 intf/cd intf/cd/win32 \
-			intf/perfcount intf/perfcount/win32 dep/generated
+			intf/perfcount intf/perfcount/win32 dep/generated dep/libs/lua
 
 depobj	+= 	about.o bzip.o choose_monitor.o cona.o debugger.o drv.o d3dkmt_sync.o fba_kaillera.o gameinfo.o image_win32.o \
 			inpc.o inpcheat.o inpd.o inpdipsw.o inps.o ips_manager.o localise.o localise_download.o localise_gamelist.o main.o \
@@ -8,6 +8,11 @@ depobj	+= 	about.o bzip.o choose_monitor.o cona.o debugger.o drv.o d3dkmt_sync.o
 			progress.o replay.o res.o roms.o run.o scrn.o sel.o sfactd.o splash.o stated.o support_paths.o systeminfo.o wave.o \
 			\
 			conc.o cong.o dat.o dynhuff.o gamc.o gami.o image.o ioapi.o misc.o nvram.o sshot.o state.o statec.o unzip.o zipfn.o \
+			luaconsole.o luaengine.o luasav.o \
+			\
+			lapi.o lauxlib.o lbaselib.o lcode.o ldblib.o ldebug.o ldo.o ldump.o lfunc.o lgc.o linit.o liolib.o llex.o \
+			lmathlib.o lmem.o loadlib.o lobject.o lopcodes.o loslib.o lparser.o lstate.o lstring.o lstrlib.o ltable.o \
+			ltablib.o ltm.o lundump.o lvm.o lzio.o print.o \
 			\
 			adler32.o compress.o crc32.o deflate.o gzclose.o gzlib.o gzread.o gzwrite.o infback.o inffast.o inflate.o inftrees.o \
 			trees.o uncompr.o zutil.o \

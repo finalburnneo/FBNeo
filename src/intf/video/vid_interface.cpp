@@ -418,7 +418,9 @@ INT32 VidFrameCallback(bool bRedraw)        // Called from blitter  (VidFrame() 
 			VidDoTransTopVidImage();
 		}
 
+#if defined (BUILD_WIN32) || defined (INCLUDE_LUA_SUPPORT)
 		FBA_LuaGui((unsigned char*)pVidImage, nVidImageWidth, nVidImageHeight, nVidImageBPP, nVidImagePitch);
+#endif
 	}
 
 	return 0;

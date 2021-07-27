@@ -1349,7 +1349,7 @@ static int joypad_set(lua_State *L) {
 
 	// Set up for taking control of the indicated controller
 	lua_joypads_used = 1;
-	memset(lua_joypads,0,0x0100);
+	memset(lua_joypads,0,sizeof(lua_joypads));
 
 	// Update the values of all the inputs
 	for (i = 0, pgi = GameInp; i < nGameInpCount; i++, pgi++) {
@@ -4088,7 +4088,7 @@ UINT32 FBA_LuaReadJoypad() {
 		}
 
 		lua_joypads_used = 0;
-		memset(lua_joypads,0,0x0100);
+		memset(lua_joypads,0,sizeof(lua_joypads));
 		return 0;
 	}
 	else

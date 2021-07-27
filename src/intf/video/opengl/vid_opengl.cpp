@@ -138,7 +138,7 @@ static INT32 oglFrame(bool bRedraw)
     if (bDrvOkay) {
         pBurnSoundOut = nAudNextSound;
         nBurnSoundLen = nAudSegLen;
-        BurnDrvFrame();
+		VidFrameCallback(bRedraw);
     }
 
     pBurnDraw = NULL;

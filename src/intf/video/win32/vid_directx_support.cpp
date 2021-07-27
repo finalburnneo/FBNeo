@@ -336,7 +336,7 @@ int VidSEnterFullscreenMode(int nZoom, int nDepth)
 		nDepth = 16;
 	}
 
-	if (FAILED(pDD->SetCooperativeLevel(hVidWnd, DDSCL_ALLOWREBOOT | DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN))) {
+	if (FAILED(pDD->SetCooperativeLevel(hVidWnd, DDSCL_ALLOWREBOOT | DDSCL_EXCLUSIVE | DDSCL_FPUPRESERVE | DDSCL_FULLSCREEN))) {
 		return 1;
 	}
 

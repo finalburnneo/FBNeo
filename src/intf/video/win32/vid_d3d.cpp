@@ -266,7 +266,7 @@ static void SetViewMatrix(float fNearPlane)
 static void SetProjectionMatrix(float fNearPlane)
 {
 	// Set projection matrix for perspective
-	memset(&matProjection, 0, sizeof(D3DMATRIX));
+	memset(&matProjection.m, 0, sizeof(matProjection.m));
 
 	float fFarPlane = 1000.0f;
 	float Q = fFarPlane / (fFarPlane - fNearPlane);
@@ -1311,7 +1311,7 @@ static int vidInit()
 		} else {
 			nZoomlevel = nScreenSize;
 		}
-		if (VidSEnterFullscreenMode(nZoomlevel, 0)) {
+		if (VidSEnterFullscreenMode(nZoomlevel, 0)) { // FPU Precision fix in this function.
 			vidExit();
 			return 1;
 		}
@@ -1330,7 +1330,8 @@ static int vidInit()
 		nVidScrnWidth = rect.right - rect.left;
 		nVidScrnHeight = rect.bottom - rect.top;
 
-		pDD->SetCooperativeLevel(hVidWnd, DDSCL_NORMAL);
+		// don't allow d3d7 to mess with fpu precision/regs/etc (FPU Precision fix)
+		pDD->SetCooperativeLevel(NULL, DDSCL_NORMAL | DDSCL_FPUPRESERVE);
 	}
 
 #ifdef PRINT_DEBUG_INFO
@@ -2136,8 +2137,6 @@ static int vidBurnToSurf()
 	memset(&ddsd, 0, sizeof(ddsd));
 	ddsd.dwSize = sizeof(ddsd);
 
-	FBA_LuaGui((unsigned char*)ddsd.lpSurface,ddsd.dwWidth,ddsd.dwHeight,nVidImageBPP,ddsd.lPitch);
-
 	if (nVidTransferMethod <= 0) {
 		if (nPreScaleEffect) {
 
@@ -2189,9 +2188,6 @@ static int vidBurnToSurf()
 
 	return 0;
 }
-
-INT32 VidDoFrameCallback();
-
 
 // Run one frame and render the screen
 static int vidFrame(bool bRedraw)			// bRedraw = 0
@@ -2260,18 +2256,8 @@ static int vidFrame(bool bRedraw)			// bRedraw = 0
 	vidRenderImageA();
 #endif
 
-	if (bDrvOkay) {
-		if (bRedraw) {						// Redraw current frame
-			if (BurnDrvRedraw()) {
-				BurnDrvFrame();				// No redraw function provided, advance one frame
-			}
-		} else {
-			BurnDrvFrame();					// Run one frame and draw the screen
-		}
+	VidFrameCallback(bRedraw);				// Run emulation for 1 frame / render image
 
-		if ((BurnDrvGetFlags() & BDF_16BIT_ONLY) && pVidTransCallback)
-			pVidTransCallback();
-	}
 #ifdef ENABLE_PROFILING
 	ProfileProfileEnd(0);
 	ProfileProfileStart(1);

@@ -266,7 +266,7 @@ static void SetViewMatrix(float fNearPlane)
 static void SetProjectionMatrix(float fNearPlane)
 {
 	// Set projection matrix for perspective
-	matProjection = D3DMATRIX(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+	memset(&matProjection, 0, sizeof(matProjection));
 
 	float fFarPlane = 1000.0f;
 	float Q = fFarPlane / (fFarPlane - fNearPlane);

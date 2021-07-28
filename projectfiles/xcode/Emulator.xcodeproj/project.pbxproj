@@ -975,6 +975,9 @@
 		FE1E0C822454F7D600C774C3 /* d_tubep.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1E0C812454F7D600C774C3 /* d_tubep.cpp */; };
 		FE1E0C842456832100C774C3 /* d_eolith.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1E0C832456832100C774C3 /* d_eolith.cpp */; };
 		FE232A8324FA215200D3B388 /* d_mdarcbl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE232A8224FA215200D3B388 /* d_mdarcbl.cpp */; };
+		FE29616D26B14DD300A90D6B /* d_missile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE29616C26B14DD300A90D6B /* d_missile.cpp */; };
+		FE29616F26B14DE800A90D6B /* d_discoboy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE29616E26B14DE800A90D6B /* d_discoboy.cpp */; };
+		FE29617126B14DFB00A90D6B /* d_nycaptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE29617026B14DFB00A90D6B /* d_nycaptor.cpp */; };
 		FE2BC6AB23615B3400B9D150 /* LogViewer.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE2BC6A923615B3400B9D150 /* LogViewer.xib */; };
 		FE2BC6B523615C3400B9D150 /* FBLogViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2BC6B423615C3300B9D150 /* FBLogViewerController.m */; };
 		FE2BC6B7236265C000B9D150 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE2BC6B6236265BF00B9D150 /* Sparkle.framework */; };
@@ -2561,6 +2564,9 @@
 		FE1E0C812454F7D600C774C3 /* d_tubep.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_tubep.cpp; sourceTree = "<group>"; };
 		FE1E0C832456832100C774C3 /* d_eolith.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_eolith.cpp; sourceTree = "<group>"; };
 		FE232A8224FA215200D3B388 /* d_mdarcbl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_mdarcbl.cpp; sourceTree = "<group>"; };
+		FE29616C26B14DD300A90D6B /* d_missile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_missile.cpp; sourceTree = "<group>"; };
+		FE29616E26B14DE800A90D6B /* d_discoboy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_discoboy.cpp; sourceTree = "<group>"; };
+		FE29617026B14DFB00A90D6B /* d_nycaptor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_nycaptor.cpp; sourceTree = "<group>"; };
 		FE2BC6AA23615B3400B9D150 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LogViewer.xib; sourceTree = "<group>"; };
 		FE2BC6B323615C3300B9D150 /* FBLogViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBLogViewerController.h; sourceTree = "<group>"; };
 		FE2BC6B423615C3300B9D150 /* FBLogViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBLogViewerController.m; sourceTree = "<group>"; };
@@ -3754,24 +3760,25 @@
 			isa = PBXGroup;
 			children = (
 				FE1B1F0023561A670065200C /* d_akkaarrh.cpp */,
-				FE1B1F0123561A670065200C /* WHATSNEW.txt */,
+				FE1B1F0923561A670065200C /* d_arcadecl.cpp */,
 				FE1B1F0223561A670065200C /* d_atarig1.cpp */,
+				FE1B1F1223561A670065200C /* d_badlands.cpp */,
+				FE1B1F0B23561A670065200C /* d_batman.cpp */,
 				FE1B1F0323561A670065200C /* d_blstroid.cpp */,
-				FE1B1F0423561A670065200C /* d_toobin.cpp */,
+				FE1B1F0A23561A670065200C /* d_eprom.cpp */,
+				FE1B1F1023561A670065200C /* d_gauntlet.cpp */,
+				FE1B1F0F23561A670065200C /* d_klax.cpp */,
+				FE29616C26B14DD300A90D6B /* d_missile.cpp */,
 				FE1B1F0523561A670065200C /* d_offtwall.cpp */,
 				FE1B1F0623561A670065200C /* d_rampart.cpp */,
+				FE1B1F1123561A670065200C /* d_relief.cpp */,
+				FE1B1F0E23561A670065200C /* d_shuuz.cpp */,
+				FE1B1F0D23561A670065200C /* d_skullxbo.cpp */,
+				FE1B1F0C23561A670065200C /* d_thunderj.cpp */,
+				FE1B1F0423561A670065200C /* d_toobin.cpp */,
 				FE1B1F0723561A670065200C /* d_vindictr.cpp */,
 				FE1B1F0823561A670065200C /* d_xybots.cpp */,
-				FE1B1F0923561A670065200C /* d_arcadecl.cpp */,
-				FE1B1F0A23561A670065200C /* d_eprom.cpp */,
-				FE1B1F0B23561A670065200C /* d_batman.cpp */,
-				FE1B1F0C23561A670065200C /* d_thunderj.cpp */,
-				FE1B1F0D23561A670065200C /* d_skullxbo.cpp */,
-				FE1B1F0E23561A670065200C /* d_shuuz.cpp */,
-				FE1B1F0F23561A670065200C /* d_klax.cpp */,
-				FE1B1F1023561A670065200C /* d_gauntlet.cpp */,
-				FE1B1F1123561A670065200C /* d_relief.cpp */,
-				FE1B1F1223561A670065200C /* d_badlands.cpp */,
+				FE1B1F0123561A670065200C /* WHATSNEW.txt */,
 			);
 			path = atari;
 			sourceTree = "<group>";
@@ -3799,6 +3806,7 @@
 				FE1B1F4623561A680065200C /* d_dcon.cpp */,
 				FE1B1F7223561A680065200C /* d_ddragon3.cpp */,
 				FE1B1F2A23561A680065200C /* d_deniam.cpp */,
+				FE29616E26B14DE800A90D6B /* d_discoboy.cpp */,
 				FE1B1F2423561A680065200C /* d_diverboy.cpp */,
 				FE1B1F7623561A680065200C /* d_dooyong.cpp */,
 				FE1B1F3E23561A680065200C /* d_dreamwld.cpp */,
@@ -4329,6 +4337,7 @@
 				FE1B20BD23561A6C0065200C /* d_mexico86.cpp */,
 				FE1B20B223561A6C0065200C /* d_minivdr.cpp */,
 				FE1B20B623561A6C0065200C /* d_msisaac.cpp */,
+				FE29617026B14DFB00A90D6B /* d_nycaptor.cpp */,
 				FE1B20B923561A6C0065200C /* d_othunder.cpp */,
 				FE1B20C323561A6C0065200C /* d_qix.cpp */,
 				FE1B20DC23561A6C0065200C /* d_retofinv.cpp */,
@@ -5438,6 +5447,7 @@
 				FE1B25B723561A760065200C /* d_spy.cpp in Sources */,
 				FE1B272223561A780065200C /* d_mcr.cpp in Sources */,
 				FE2FEF0824CDEB2F0047F3A5 /* d_galastrm.cpp in Sources */,
+				FE29616D26B14DD300A90D6B /* d_missile.cpp in Sources */,
 				FE1B25FA23561A760065200C /* d_coleco.cpp in Sources */,
 				FE1B27BB23561A790065200C /* resnet.cpp in Sources */,
 				FE43A42125CF20E0004EACE7 /* d_xunit.cpp in Sources */,
@@ -6058,6 +6068,7 @@
 				FE1B25DD23561A760065200C /* d_nemesis.cpp in Sources */,
 				FE1B275623561A780065200C /* d_flipjack.cpp in Sources */,
 				FE1B266B23561A770065200C /* tc0150rod.cpp in Sources */,
+				FE29616F26B14DE800A90D6B /* d_discoboy.cpp in Sources */,
 				FE1B253F23561A760065200C /* d_patapata.cpp in Sources */,
 				FE1B263A23561A770065200C /* kabuki.cpp in Sources */,
 				FE1B269023561A770065200C /* d_alinvade.cpp in Sources */,
@@ -6281,6 +6292,7 @@
 				FE1B25FD23561A760065200C /* neo_text.cpp in Sources */,
 				FE1B283C23561A7A0065200C /* conc.cpp in Sources */,
 				FE1B257023561A760065200C /* gal_gfx.cpp in Sources */,
+				FE29617126B14DFB00A90D6B /* d_nycaptor.cpp in Sources */,
 				FE1B26F023561A780065200C /* d_matmania.cpp in Sources */,
 				FE1B26E023561A780065200C /* d_dynduke.cpp in Sources */,
 				FE1B273023561A780065200C /* d_munchmo.cpp in Sources */,

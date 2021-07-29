@@ -61,6 +61,9 @@ typedef struct tagIMAGE {
 
 #ifndef __LIBRETRO__
 #include "interface.h"
+#endif
+
+#if defined (INCLUDE_LUA_SUPPORT) || defined (BUILD_WIN32)
 #include "luaengine.h"
 #endif
 

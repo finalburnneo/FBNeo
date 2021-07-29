@@ -1007,15 +1007,11 @@ int ProcessCmdLine()
 			if (nOptD) {
 				nVidDepth = nOptD;
 			}
-		} else {
-			if (_tcscmp(szOpt2, _T("-a")) == 0) {
-				bVidArcaderes = 1;
-			} else {
-				if (_tcscmp(szOpt2, _T("-w")) == 0) {
-					nCmdOptUsed = 2;
-					bFullscreen = 0;
-				} 
-			}
+		} else if (_tcscmp(szOpt2, _T("-a")) == 0) {
+			bVidArcaderes = 1;
+		} else if (_tcscmp(szOpt2, _T("-w")) == 0) {
+			nCmdOptUsed = 2;
+			bFullscreen = 0;
 		}
 
 		if (bFullscreen) {
@@ -1025,106 +1021,107 @@ int ProcessCmdLine()
 		if (_tcscmp(&szName[_tcslen(szName) - 3], _T(".fs")) == 0) {
 			if (BurnStateLoad(szName, 1, &DrvInitCallback)) {
 				return 1;
-			} else {
-//				bRunPause = 1;
 			}
-		} else {
-			if (_tcscmp(&szName[_tcslen(szName) - 3], _T(".fr")) == 0) {
-				if (StartReplay(szName)) {
-					return 1;
-				}
-			} else {
-				bQuietLoading = true;
+		} else if (_tcscmp(&szName[_tcslen(szName) - 3], _T(".fr")) == 0) {
+			if (StartReplay(szName)) {
+				return 1;
+			}
+		} else if (_tcscmp(&szName[_tcslen(szName) - 4], _T(".lua")) == 0) {
+			// Command: lua file
+			FBA_LoadLuaCode(TCHARToANSI(szName, NULL, 0));
+			//bVidAutoSwitchFullDisable = true;
+		}
+		else {
+			bQuietLoading = true;
 
-				for (i = 0; i < nBurnDrvCount; i++) {
-					nBurnDrvActive = i;
-					if ((_tcscmp(BurnDrvGetText(DRV_NAME), szName) == 0) && (!(BurnDrvGetFlags() & BDF_BOARDROM))) {
-						TCHAR* szIps = _tcsstr(szCmdLine, _T("-ips"));  // Handling -ips additional parameters
-						if (szIps) {  // With -ips parameters
-							szIps += _tcslen(_T("-ips"));  // The parameter does not contain the identifier itself
+			for (i = 0; i < nBurnDrvCount; i++) {
+				nBurnDrvActive = i;
+				if ((_tcscmp(BurnDrvGetText(DRV_NAME), szName) == 0) && (!(BurnDrvGetFlags() & BDF_BOARDROM))) {
+					TCHAR* szIps = _tcsstr(szCmdLine, _T("-ips"));  // Handling -ips additional parameters
+					if (szIps) {  // With -ips parameters
+						szIps += _tcslen(_T("-ips"));  // The parameter does not contain the identifier itself
 
-							FILE* fp = NULL;
-							int nList = 0;  // Sequence of DAT array
-							TCHAR szTmp[1024];
-							TCHAR szDat[MAX_PATH];
-							TCHAR szDatList[1024 / 2][MAX_PATH];  // Comma separated, at least 2 characters
-							TCHAR* argv = _tcstok(szIps, _T(","));
+						FILE* fp = NULL;
+						int nList = 0;  // Sequence of DAT array
+						TCHAR szTmp[1024];
+						TCHAR szDat[MAX_PATH];
+						TCHAR szDatList[1024 / 2][MAX_PATH];  // Comma separated, at least 2 characters
+						TCHAR* argv = _tcstok(szIps, _T(","));
 
-							if (argv) {  // Argv may be null
-								memset(szTmp, '\0', 1024 * sizeof(TCHAR));
-								_tcscpy(szTmp, argv);
-								argv = szTmp;
-							}
+						if (argv) {  // Argv may be null
+							memset(szTmp, '\0', 1024 * sizeof(TCHAR));
+							_tcscpy(szTmp, argv);
+							argv = szTmp;
+						}
 
-							while (argv != NULL) {
-								int nIndex = 0;
+						while (argv != NULL) {
+							int nIndex = 0;
 
-								while (argv[0] != '\0') {
-									if (argv[0] != '\"')
-										argv++, nIndex++;
-									else {
-										_tcstok(++argv, _T("\""));  // Remove double quotation marks
+							while (argv[0] != '\0') {
+								if (argv[0] != '\"')
+									argv++, nIndex++;
+								else {
+									_tcstok(++argv, _T("\""));  // Remove double quotation marks
 										nIndex = 0;
 										break;
-									}
 								}
-								argv -= nIndex;  // Returns the first digit of a string
-
-								while (argv[0] != '\0') {
-									memset(szDat, '\0', MAX_PATH * sizeof(TCHAR));
-									if (_tcsstr(argv, _T(".dat")))
-										_stprintf(szDat, _T("%s%s/%s"), szAppIpsPath, BurnDrvGetText(DRV_NAME), argv);
-									else
-										_stprintf(szDat, _T("%s%s/%s.dat"), szAppIpsPath, BurnDrvGetText(DRV_NAME), argv);
-									fp = _tfopen(szDat, _T("r"));
-									if (fp) {  // ips dat exists
-										fclose(fp);
-										memset(szDatList[nList], '\0', MAX_PATH * sizeof(TCHAR));
-										if (_tcsstr(argv, _T(".dat")))
-											_stprintf(szDatList[nList++], _T("%s"), argv);
-										else
-											_stprintf(szDatList[nList++], _T("%s.dat"), argv);
-										break;
-									}
-									argv++;  // Filter out invalid spaces in parameters
-								}
-								argv = _tcstok(NULL, _T(","));
 							}
+							argv -= nIndex;  // Returns the first digit of a string
 
-							if (nList > 0) {
-								TCHAR szIni[64] = { '\0' };
-								_stprintf(szIni, _T("config\\ips\\%s.ini"), BurnDrvGetText(DRV_NAME));
-
-								fp = _tfopen(szIni, _T("w"));
-								if (fp) {  // write in
-									_ftprintf(fp, _T("// ") _T(APP_TITLE) _T(" v%s --- IPS Config File for %s (%s)\n\n"), szAppBurnVer, BurnDrvGetText(DRV_NAME), BurnDrvGetText(DRV_FULLNAME));
-									for (int x = 0; x < nList; x++)
-										_ftprintf(fp, _T("%s\n"), szDatList[x]);
-
+							while (argv[0] != '\0') {
+								memset(szDat, '\0', MAX_PATH * sizeof(TCHAR));
+								if (_tcsstr(argv, _T(".dat")))
+									_stprintf(szDat, _T("%s%s/%s"), szAppIpsPath, BurnDrvGetText(DRV_NAME), argv);
+								else
+									_stprintf(szDat, _T("%s%s/%s.dat"), szAppIpsPath, BurnDrvGetText(DRV_NAME), argv);
+								fp = _tfopen(szDat, _T("r"));
+								if (fp) {  // ips dat exists
 									fclose(fp);
+									memset(szDatList[nList], '\0', MAX_PATH * sizeof(TCHAR));
+									if (_tcsstr(argv, _T(".dat")))
+										_stprintf(szDatList[nList++], _T("%s"), argv);
+									else
+										_stprintf(szDatList[nList++], _T("%s.dat"), argv);
+									break;
 								}
+								argv++;  // Filter out invalid spaces in parameters
+								}
+							argv = _tcstok(NULL, _T(","));
+						}
+
+						if (nList > 0) {
+							TCHAR szIni[64] = { '\0' };
+							_stprintf(szIni, _T("config\\ips\\%s.ini"), BurnDrvGetText(DRV_NAME));
+
+							fp = _tfopen(szIni, _T("w"));
+							if (fp) {  // write in
+								_ftprintf(fp, _T("// ") _T(APP_TITLE) _T(" v%s --- IPS Config File for %s (%s)\n\n"), szAppBurnVer, BurnDrvGetText(DRV_NAME), BurnDrvGetText(DRV_FULLNAME));
+								for (int x = 0; x < nList; x++)
+									_ftprintf(fp, _T("%s\n"), szDatList[x]);
+
+								fclose(fp);
 							}
 						}
-							
-						bDoIpsPatch = _tcsstr(szCmdLine, _T("-ips"));
-						if (bDoIpsPatch) LoadIpsActivePatches();
-
-						if (DrvInit(i, true)) { // failed (bad romset, etc.)
-							nVidFullscreen = 0; // Don't get stuck in fullscreen mode
-						}
-
-						bDoIpsPatch = false;
-						break;
 					}
-				}
 
-				bQuietLoading = false;
+					bDoIpsPatch = _tcsstr(szCmdLine, _T("-ips"));
+					if (bDoIpsPatch) LoadIpsActivePatches();
 
-				if (i == nBurnDrvCount) {
-					FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_NOSUPPORT), szName, _T(APP_TITLE));
-					FBAPopupDisplay(PUF_TYPE_ERROR);
-					return 1;
+					if (DrvInit(i, true)) { // failed (bad romset, etc.)
+						nVidFullscreen = 0; // Don't get stuck in fullscreen mode
+					}
+
+					bDoIpsPatch = false;
+					break;
 				}
+			}
+
+			bQuietLoading = false;
+
+			if (i == nBurnDrvCount) {
+				FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_NOSUPPORT), szName, _T(APP_TITLE));
+				FBAPopupDisplay(PUF_TYPE_ERROR);
+				return 1;
 			}
 		}
 	}
@@ -1164,6 +1161,7 @@ static void CreateSupportFolders()
 		{_T("support/cabinets/")},
 		{_T("support/pcbs/")},
 		{_T("support/history/")},
+		{_T("support/lua/")},
 		{_T("neocdiso/")},
 		// rom directories
 		{_T("roms/arcade/")},

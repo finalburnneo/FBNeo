@@ -484,15 +484,7 @@ static int FbRunFrame(bool bRedraw)
 		return 1;
 	}
 
-	if (bDrvOkay) {
-		if (bRedraw) {								// Redraw current frame
-			if (BurnDrvRedraw()) {
-				BurnDrvFrame();						// No redraw function provided, advance one frame
-			}
-		} else {
-			BurnDrvFrame();							// Run one frame and draw the screen
-		}
-	}
+	VidFrameCallback(bRedraw);
 
 	return 0;
 }

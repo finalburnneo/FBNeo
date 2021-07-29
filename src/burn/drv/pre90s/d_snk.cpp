@@ -2233,7 +2233,7 @@ static void RotateDoTick() {
 			} else {
 				RotateLeft(&nRotate[i]);  // ++
 			}
-			bprintf(0, _T("p%X target %X mempos %X nRotate %X.\n"), i, nRotateTarget[0], *rotate_gunpos[0] & 0x0f, nRotate[0]);
+			bprintf(0, _T("p%X target %X mempos %X nRotate %X.\n"), i, nRotateTarget[i], *rotate_gunpos[i] & 0x0f, nRotate[i]);
 			nRotateTry[i]++;
 			if (nRotateTry[i] > 10) nRotateTarget[i] = -1; // don't get stuck in a loop if something goes horribly wrong here.
 		} else {

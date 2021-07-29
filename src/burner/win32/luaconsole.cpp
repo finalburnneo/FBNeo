@@ -134,7 +134,7 @@ INT_PTR CALLBACK DlgLuaScriptDialog(HWND hDlg, UINT msg, WPARAM wParam, LPARAM l
 			r.left -= width2;
 		}
 
-		SetWindowPos(hDlg, NULL, r.left, r.top, NULL, NULL, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+		SetWindowPos(hDlg, NULL, r.left, r.top, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
 
 		RECT r3;
 		GetClientRect(hDlg, &r3);
@@ -267,7 +267,7 @@ INT_PTR CALLBACK DlgLuaScriptDialog(HWND hDlg, UINT msg, WPARAM wParam, LPARAM l
 				luaofn.lpstrDefExt = _T("lua");
 				luaofn.nMaxFile = MAX_PATH;
 				luaofn.Flags = OFN_HIDEREADONLY | OFN_FILEMUSTEXIST | OFN_EXPLORER; // hide previously-ignored read-only checkbox (the real read-only box is in the open-movie dialog itself)
-				luaofn.lpstrInitialDir=_T(".\\");
+				luaofn.lpstrInitialDir = _T(".\\support\lua");
 				if(GetOpenFileName( &luaofn ))
 				{
 					SetWindowText(GetDlgItem(hDlg, IDC_EDIT_LUAPATH), szFileName);

@@ -645,11 +645,9 @@ static void TUnitSoundWrite(UINT32 address, UINT16 value)
 			}
 
 			case SOUND_DCS: {
-
-				Dcs2kResetWrite(~value & 0x100);
 				dcs_sound_sync();
+				Dcs2kResetWrite(~value & 0x100);
 				Dcs2kDataWrite(value & 0xff);
-				Dcs2kRun(20);
 
 				DrvFakeSound = 128;
 				break;

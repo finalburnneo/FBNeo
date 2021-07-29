@@ -480,9 +480,7 @@ static INT32 DrvDoReset(void)
 {
 	for (INT32 i = 0; i < NAMCO_BRD_CPU_COUNT; i ++)
 	{
-		ZetOpen(i);
-		ZetReset();
-		ZetClose();
+		ZetReset(i);
 	}
 
 	BurnSampleReset();
@@ -1120,14 +1118,10 @@ static void namcoZ80WriteSound(UINT16 Offset, UINT8 dta)
 static void namcoZ80WriteCPU1Irq(UINT16 Offset, UINT8 dta)
 {
 	cpus.CPU[CPU1].fireIRQ = dta & 0x01;
+
 	if (!cpus.CPU[CPU1].fireIRQ)
 	{
-		INT32 nActive = ZetGetActive();
-		ZetClose();
-		ZetOpen(CPU1);
-		ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
-		ZetClose();
-		ZetOpen(nActive);
+		ZetSetIRQLine(CPU1, 0, CPU_IRQSTATUS_NONE);
 	}
 
 }
@@ -1137,12 +1131,7 @@ static void namcoZ80WriteCPU2Irq(UINT16 Offset, UINT8 dta)
 	cpus.CPU[CPU2].fireIRQ = dta & 0x01;
 	if (!cpus.CPU[CPU2].fireIRQ)
 	{
-		INT32 nActive = ZetGetActive();
-		ZetClose();
-		ZetOpen(CPU2);
-		ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
-		ZetClose();
-		ZetOpen(nActive);
+		ZetSetIRQLine(CPU2, 0, CPU_IRQSTATUS_NONE);
 	}
 
 }
@@ -1157,15 +1146,8 @@ static void namcoZ80WriteCPUReset(UINT16 Offset, UINT8 dta)
 {
 	if (!(dta & 0x01))
 	{
-		INT32 nActive = ZetGetActive();
-		ZetClose();
-		ZetOpen(CPU2);
-		ZetReset();
-		ZetClose();
-		ZetOpen(CPU3);
-		ZetReset();
-		ZetClose();
-		ZetOpen(nActive);
+		ZetReset(CPU2);
+		ZetReset(CPU3);
 		cpus.CPU[CPU2].halt = 1;
 		cpus.CPU[CPU3].halt = 1;
 		namcoCustomReset();
@@ -2685,7 +2667,7 @@ struct BurnDriver BurnDrvGalagamf =
 	/* GetSampleInfo func = */                   GalagaSampleInfo,
 	/* GetSampleName func = */                   GalagaSampleName,
 	/* GetInputInfo func = */                    GalagaInputInfo,
-	/* GetDIPInfo func = */                      GalagaDIPInfo,
+	/* GetDIPInfo func = */                      GalagamwDIPInfo,
 	/* Init func = */                            galagaInit,
 	/* Exit func = */                            DrvExit,
 	/* Frame func = */                           DrvFrame,

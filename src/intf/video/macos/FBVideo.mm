@@ -165,13 +165,7 @@ static int MacOSVideoFrame(bool redraw)
     if (pVidImage == NULL || bRunPause)
         return 0;
 
-    if (redraw) {
-        if (BurnDrvRedraw()) {
-            BurnDrvFrame();
-        }
-    } else {
-        BurnDrvFrame();
-    }
+	VidFrameCallback(redraw);
 
     return 0;
 }

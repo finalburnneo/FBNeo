@@ -39,6 +39,9 @@ INCLUDE_7Z_SUPPORT = 1
 # Include AVI recording support (uses Video For Windows)
 INCLUDE_AVI_RECORDING = 1
 
+# Include LUA support (on Windows Standalone, LUA is enabled regardless)
+#INCLUDE_LUA_SUPPORT = 1
+
 # Include symbols and other debug information in the executable
 #SYMBOL = 1
 

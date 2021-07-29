@@ -757,8 +757,10 @@ static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 	int Offset, Size;
 	UINT8* mem8 = NULL;
 
-	if (NULL == (f = fopen(ips_path, "rb")))
+	if (NULL == (f = fopen(ips_path, "rb"))) {
+		bprintf(0, _T("IPS - Can't open file %S!  Aborting.\n"), ips_path);
 		return;
+	}
 
 	memset(buf, 0, sizeof(buf));
 	fread(buf, 1, 5, f);

@@ -400,8 +400,6 @@ static int MemToSurf()
 			return 1;
 		}
 
-		FBA_LuaGui((unsigned char*)ddsd.lpSurface,ddsd.dwWidth,ddsd.dwHeight,nVidImageBPP,ddsd.lPitch);
-
 		unsigned char *pd, *ps;
 
 		unsigned char* VidSurf = (unsigned char*)ddsdVid.lpSurface;
@@ -440,18 +438,7 @@ static int Frame(bool bRedraw)								// bRedraw = 0
 		PrimClear();
 	}
 
-	if (bDrvOkay) {
-		if (bRedraw) {								// Redraw current frame
-			if (BurnDrvRedraw()) {
-				BurnDrvFrame();						// No redraw function provided, advance one frame
-			}
-		} else {
-			BurnDrvFrame();							// Run one frame and draw the screen
-		}
-
-		if ((BurnDrvGetFlags() & BDF_16BIT_ONLY) && pVidTransCallback)
-			pVidTransCallback();
-	}
+	VidFrameCallback(bRedraw);						// Run emulation for 1 frame / render image
 
 	MemToSurf();									// Copy the memory buffer to the directdraw buffer for later blitting
 

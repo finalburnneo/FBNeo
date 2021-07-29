@@ -70,9 +70,7 @@ static int Frame(bool bRedraw)						// bRedraw = 0
 	nBurnPitch=VidMemPitch;
 	pBurnDraw=VidMem;
 
-	if (bDrvOkay) {
-		BurnDrvFrame();							// Run one frame and draw the screen
-	}
+	VidFrameCallback(bRedraw);
 
 	unsigned char* ps = VidMem;
 	unsigned char* pd = (unsigned char*)g_pBlitBuff;

@@ -145,8 +145,6 @@ INT32 nVidImageDepth = 0;							// Memory buffer bits per pixel
 UINT32 (__cdecl *VidHighCol) (INT32 r, INT32 g, INT32 b, INT32 i);
 static bool bVidRecalcPalette;
 												// Translation to native Bpp for games flagged with BDF_16BIT_ONLY
-static void VidDoFrameCallback();
-void (*pVidTransCallback)(void) = NULL;         // Callback for video driver, after BurnDrvFrame() / BurnDrvRedraw() (see win32/vid_d3d.cpp:vidFrame() for example)
 static UINT8* pVidTransImage = NULL;
 static UINT32* pVidTransPalette = NULL;
 static INT32 bSkipNextFrame = 0;
@@ -230,7 +228,6 @@ INT32 VidInit()
 
 				pVidTransPalette = (UINT32*)malloc(32768 * sizeof(UINT32));
 				pVidTransImage = (UINT8*)malloc(nVidImageWidth * nVidImageHeight * sizeof(INT16));
-				pVidTransCallback = VidDoFrameCallback;
 
 				BurnHighCol = HighCol15;
 
@@ -328,9 +325,6 @@ INT32 VidExit()
 			free(pVidTransImage);
 			pVidTransImage = NULL;
 		}
-		if (pVidTransCallback) {
-			pVidTransCallback = NULL;
-		}
 
 		return nRet;
 	} else {
@@ -338,7 +332,7 @@ INT32 VidExit()
 	}
 }
 
-static void VidDoFrameCallback()
+static void VidDoTransTopVidImage()
 {
 		UINT16* pSrc = (UINT16*)pVidTransImage;
 		UINT8* pDest = pVidImage;
@@ -396,10 +390,6 @@ static INT32 VidDoFrame(bool bRedraw)
 
 		pBurnDraw = NULL;
 		nBurnPitch = 0;
-
-		if (!pVidTransCallback) {
-			VidDoFrameCallback();
-		}
 	} else {
 		pBurnDraw = pVidImage;
 		nBurnPitch = nVidImagePitch;
@@ -411,6 +401,29 @@ static INT32 VidDoFrame(bool bRedraw)
 	}
 
 	return nRet;
+}
+
+INT32 VidFrameCallback(bool bRedraw)        // Called from blitter  (VidFrame() -> VidDoFrame() -> Blitter -> this.)
+{
+	if (bDrvOkay) {
+		if (bRedraw) {						// Redraw current frame
+			if (BurnDrvRedraw()) {
+				BurnDrvFrame();				// No redraw function provided, advance one frame
+			}
+		} else {
+			BurnDrvFrame();					// Run one frame and draw the screen
+		}
+
+		if (BurnDrvGetFlags() & BDF_16BIT_ONLY) {
+			VidDoTransTopVidImage();
+		}
+
+#if defined (BUILD_WIN32) || defined (INCLUDE_LUA_SUPPORT)
+		FBA_LuaGui((unsigned char*)pVidImage, nVidImageWidth, nVidImageHeight, nVidImageBPP, nVidImagePitch);
+#endif
+	}
+
+	return 0;
 }
 
 INT32 VidReInitialise()

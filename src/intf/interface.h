@@ -159,7 +159,7 @@ INT32 VidInit();
 INT32 VidExit();
 INT32 VidReInitialise();
 INT32 VidFrame();
-extern void (*pVidTransCallback)(void);
+INT32 VidFrameCallback(bool bRedraw);        // Called from blitter  (VidFrame() -> VidDoFrame() -> Blitter -> this.)
 INT32 VidRedraw();
 INT32 VidRecalcPal();
 INT32 VidPaint(INT32 bValidate);

@@ -322,25 +322,8 @@ static int Frame(bool bRedraw)                                          // bRedr
 		return 1;
 	}
 
-	if (bDrvOkay)
-	{
-		if (bRedraw)
-		{                   // Redraw current frame
-			if (BurnDrvRedraw())
-			{
-				BurnDrvFrame();                                             // No redraw function provided, advance one frame
-			}
-		}
-		else
-		{
-			BurnDrvFrame();                                // Run one frame and draw the screen
-		}
+	VidFrameCallback(bRedraw);
 
-		if ((BurnDrvGetFlags() & BDF_16BIT_ONLY) && pVidTransCallback)
-		{
-			pVidTransCallback();
-		}
-	}
 	return 0;
 }
 

@@ -1115,8 +1115,6 @@ static int dx9MemToSurf()
 			memcpy(pd, ps, s);
 		}
 
-		FBA_LuaGui(pd, nVidImageWidth, nVidImageHeight, nVidImageBPP, p);
-
 		pSurface->UnlockRect();
 	}
 
@@ -1324,18 +1322,7 @@ static int dx9Frame(bool bRedraw)					// bRedraw = 0
 //	ProfileProfileStart(0);
 #endif
 
-	if (bDrvOkay) {
-		if (bRedraw) {								// Redraw current frame
-			if (BurnDrvRedraw()) {
-				BurnDrvFrame();						// No redraw function provided, advance one frame
-			}
-		} else {
-			BurnDrvFrame();							// Run one frame and draw the screen
-		}
-
-		if ((BurnDrvGetFlags() & BDF_16BIT_ONLY) && pVidTransCallback)
-			pVidTransCallback();
-	}
+	VidFrameCallback(bRedraw);						// Run emulation for 1 frame / render image
 
 #ifdef ENABLE_PROFILING
 //	ProfileProfileEnd(0);
@@ -2148,8 +2135,6 @@ static int dx9AltRender()
 			}
 		}
 
-		FBA_LuaGui(pd, nVidImageWidth, nVidImageHeight, nVidImageBPP, pitch);
-
 		pTexture->UnlockRect(0);
 	}
 
@@ -2207,21 +2192,9 @@ static int dx9AltFrame(bool bRedraw)	// bRedraw = 0
 		}
 
 		return 1;                    // Skip this frame, pBurnDraw pointer not valid (dx9AltReset() -> dx9AltTextureInit() -> VidSAllocVidImage())
-
 	}
 
-	if (bDrvOkay) {
-		if (bRedraw) {				// Redraw current frame
-			if (BurnDrvRedraw()) {
-				BurnDrvFrame();		// No redraw function provided, advance one frame
-			}
-		} else {
-			BurnDrvFrame();			// Run one frame and draw the screen
-		}
-
-		if ((BurnDrvGetFlags() & BDF_16BIT_ONLY) && pVidTransCallback)
-			pVidTransCallback();
-	}
+	VidFrameCallback(bRedraw);		 // Run emulation for 1 frame / render image
 
 	dx9AltRender();
 

@@ -14313,6 +14313,7 @@ DRV		BurnDrvmd_smb;
 DRV		BurnDrvmd_smbb;
 DRV		BurnDrvmd_smba;
 DRV		BurnDrvMarukin;
+DRV		BurnDrvnes_smaruo;
 DRV		BurnDrvSgmast;
 DRV		BurnDrvpce_smcrush;
 DRV		BurnDrvSuprmatk;
@@ -31894,6 +31895,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_smbb,			// Super Mario World ~ Super Mario Bros. (Pirate, Alt 2)
 	&BurnDrvmd_smba,			// Super Mario World ~ Super Mario Bros. (Pirate, Alt)
 	&BurnDrvMarukin,			// Super Marukin-Ban (Japan 901017)
+	&BurnDrvnes_smaruo,			// Super Maruo
 	&BurnDrvSgmast,				// Super Masters Golf (World?, Floppy Based, FD1094 317-0058-05d?)
 	&BurnDrvpce_smcrush,		// Super Metal Crusher
 	&BurnDrvSuprmatk,			// Super Missile Attack (for rev 1)

@@ -12748,6 +12748,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="smaruo">
+		<description>Super Maruo</description>
+		<year>199?</year>
+		<manufacturer>Unknown</manufacturer>
+		<rom name="Super Maruo (Unknown).nes" size="49168" crc="e5334399"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="superpainter">
 		<description>Super Painter (HB) [Homebrew]</description>
 		<year>2015</year>

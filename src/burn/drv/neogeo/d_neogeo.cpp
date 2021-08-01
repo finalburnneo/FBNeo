@@ -15340,10 +15340,11 @@ struct BurnDriver BurnDrvmslug2dg = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug 2 - Super Vehicle-001/II (CZXInc FC2 Version, hack)
+// Metal Slug 2 - Super Vehicle-001/II (CZXINc FC2 Ver.2 20210415, hack)
+// GOTVG
 
 static struct BurnRomInfo mslug2fmRomDesc[] = {
-	{ "241-p1fm.bin", 0x100000, 0xd734944b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "241-p1fm.bin", 0x100000, 0x487173f6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "241-p2fm.bin", 0x200000, 0x37a118fc, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "241-s1.s1",    0x020000, 0xf3d32f0f, 2 | BRF_GRA },           //  2 Text layer tiles
@@ -15363,8 +15364,8 @@ STDROMPICKEXT(mslug2fm, mslug2fm, neogeo)
 STD_ROM_FN(mslug2fm)
 
 struct BurnDriver BurnDrvmslug2fm = {
-	"mslug2fm", "mslug2", "neogeo", NULL, "2015",
-	"Metal Slug 2 - Super Vehicle-001/II (CZXInc FC2 Version, hack)\0", NULL, "hack", "Neo Geo MVS",
+	"mslug2fm", "mslug2", "neogeo", NULL, "2021",
+	"Metal Slug 2 - Super Vehicle-001/II (CZXINc FC2 Ver.2 20210415, hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug2fmRomInfo, mslug2fmRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

@@ -4272,6 +4272,59 @@ static void vrc6_cycle()
 #undef mapper24_irqcount
 #undef mapper24_irqcycle
 
+// ---[ mapper 227 xxx-in-1, Waixing Bio Hazard
+#define mapper227_mirror	(mapper_regs[0])
+#define mapper227_S         (mapper_regs[1])
+#define mapper227_L         (mapper_regs[2])
+#define mapper227_P         (mapper_regs[3])
+#define mapper227_O         (mapper_regs[4])
+
+static void mapper227_write(UINT16 address, UINT8 data)
+{
+	mapper227_P = ((address >> 2) & 0x1f) | ((address & 0x100) >> 3);
+	mapper227_S = address & 0x01;
+	mapper227_L = address & (1 << 9);
+	mapper227_O = address & (1 << 7);
+
+	mapper227_mirror = address & 0x02;
+
+	mapper_map();
+}
+
+static void mapper227_map()
+{
+	if (mapper227_O) {
+		if (mapper227_S) {
+			mapper_map_prg(32, 0, mapper227_P >> 1);
+		} else {
+			mapper_map_prg(16, 0, mapper227_P);
+			mapper_map_prg(16, 1, mapper227_P);
+		}
+	} else {
+		if (mapper227_S) {
+			if (mapper227_L) {
+				mapper_map_prg(16, 0, mapper227_P & 0x3e);
+				mapper_map_prg(16, 1, mapper227_P | 0x07);
+			} else {
+				mapper_map_prg(16, 0, mapper227_P & 0x3e);
+				mapper_map_prg(16, 1, mapper227_P & 0x38);
+			}
+		} else {
+			if (mapper227_L) {
+				mapper_map_prg(16, 0, mapper227_P);
+				mapper_map_prg(16, 1, mapper227_P | 0x07);
+			} else {
+				mapper_map_prg(16, 0, mapper227_P);
+				mapper_map_prg(16, 1, mapper227_P & 0x38);
+			}
+		}
+	}
+
+	mapper_map_chr( 8, 0, 0);
+
+	set_mirroring((mapper227_mirror & 0x02) ? HORIZONTAL : VERTICAL);
+}
+
 // --[ mapper 228: Action52
 #define mapper228_mirror	(mapper_regs[0x1f - 0])
 #define mapper228_prg		(mapper_regs[0x1f - 1])
@@ -7453,6 +7506,14 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_map();
 			nes_ext_sound_cb = vrc6_mixer; // vrc6 sound
 			mapper_scan_cb = vrc6_scan;
+			retval = 0;
+			break;
+		}
+
+		case 227: { // xxx-in-1, Waixing Bio Hazard
+			mapper_write = mapper227_write;
+			mapper_map   = mapper227_map;
+			mapper_map();
 			retval = 0;
 			break;
 		}

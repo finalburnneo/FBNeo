@@ -23173,7 +23173,7 @@ struct BurnDriver BurnDrvnes_bioforceape = {
 };
 
 static struct BurnRomInfo nes_biohazardcRomDesc[] = {
-	{ "Bio Hazard (China).nes",          1048592, 0x5d27121f, BRF_ESS | BRF_PRG },
+	{ "Bio Hazard (China).nes",          1048592, 0xb4c8012d, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_biohazardc)

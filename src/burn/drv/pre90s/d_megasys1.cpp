@@ -3577,6 +3577,38 @@ struct BurnDriver BurnDrvP47 = {
 	256, 224, 4, 3
 };
 
+/*
+The Japanese version of P-47 can be found in 2 different ROM board configurations:
+'Normal' rev - full split EPROMs
+Type B rev - 4x 2mb HN62312 and 1x HN62321 mask ROMs
+
+Type B on the left, normal on the right
+
+p-47_1_rom1.bin = p47j_1.bin          | Main CPU
+p-47_3_rom2.bin = p47j_3.bin          /
+
+p-47_9_rom8.bin = p47j_9.bin          | Audio CPU
+p-47_19_rom7.bin = p47j_19.bin        /
+
+rom4.bin = p47j_5.bin + p47j_6.bin    | Scroll0
+p-47_7_rom3.bin = p47j_7.bin**        /
+
+rom5.bin = p47j_23.bin                | Scroll1
+rom6.bin = p47j_12.bin                /
+
+p-47_16_rom12.bin = p47j_16.bin       | Scroll2
+
+rom11.bin = p47j_27.bin + p47j_18.bin | Sprites
+p-47_26_rom13.bin = p47j_26.bin       /
+
+rom9.bin = p47j_20.bin + p47j_21.bin  | OKI1
+
+rom10.bin = p47j_10.bin + p47j_11.bin | OKI2
+
+p-47.14m = p-47.14m                   | PROMS
+
+**p-47_7_rom3.bin is a 27512 compatible mask rom. The existing P47j set is 1mb. The 2nd half of the data is not present on the type B boardset.
+*/
 
 // P-47 - The Freedom Fighter (Japan)
 
@@ -3629,30 +3661,30 @@ static struct BurnRomInfo p47jeRomDesc[] = {
 	{ "export_p-47_3.rom2",	0x20000, 0x37185412, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
 	{ "export_p-47_1.rom1",	0x20000, 0x3925dd4f, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "p47j_9.bin",		0x10000, 0xffcf318e, 2 | BRF_PRG | BRF_ESS }, //  2 68k #1 Code
-	{ "p47j_19.bin",	0x10000, 0xadb8c12e, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "p47j_9.bin",			0x10000, 0xffcf318e, 2 | BRF_PRG | BRF_ESS }, //  2 68k #1 Code
+	{ "p47j_19.bin",		0x10000, 0xadb8c12e, 2 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "p47j_5.bin",		0x20000, 0xfe65b65c, 3 | BRF_GRA },           //  4 Tilemap #0 Tiles
-	{ "p47j_6.bin",		0x20000, 0xe191d2d2, 3 | BRF_GRA },           //  5
-	{ "p47j_7.bin",		0x20000, 0xf77723b7, 3 | BRF_GRA },           //  6
+	{ "p47j_5.bin",			0x20000, 0xfe65b65c, 3 | BRF_GRA },           //  4 Tilemap #0 Tiles
+	{ "p47j_6.bin",			0x20000, 0xe191d2d2, 3 | BRF_GRA },           //  5
+	{ "p47j_7.bin",			0x20000, 0xf77723b7, 3 | BRF_GRA },           //  6
 
-	{ "p47j_23.bin",	0x20000, 0x6e9bc864, 4 | BRF_GRA },           //  7 Tilemap #1 Tiles
-	{ "p47j_12.bin",	0x20000, 0x5268395f, 4 | BRF_GRA },           //  8
+	{ "p47j_23.bin",		0x20000, 0x6e9bc864, 4 | BRF_GRA },           //  7 Tilemap #1 Tiles
+	{ "p47j_12.bin",		0x20000, 0x5268395f, 4 | BRF_GRA },           //  8
 
-	{ "p47j_16.bin",	0x10000, 0x30e44375, 5 | BRF_GRA },           //  9 Tilemap #2 Tiles
+	{ "p47j_16.bin",		0x10000, 0x30e44375, 5 | BRF_GRA },           //  9 Tilemap #2 Tiles
 
-	{ "p47j_27.bin",	0x20000, 0x9e2bde8e, 6 | BRF_GRA },           // 10 Sprites
-	{ "p47j_18.bin",	0x20000, 0x29d8f676, 6 | BRF_GRA },           // 11
+	{ "p47j_27.bin",		0x20000, 0x9e2bde8e, 6 | BRF_GRA },           // 10 Sprites
+	{ "p47j_18.bin",		0x20000, 0x29d8f676, 6 | BRF_GRA },           // 11
 	{ "export_17.rom15",	0x20000, 0xb6c2e241, 6 | BRF_GRA },           // 12
-	{ "p47j_26.bin",	0x20000, 0x4d07581a, 6 | BRF_GRA },           // 13
+	{ "p47j_26.bin",		0x20000, 0x4d07581a, 6 | BRF_GRA },           // 13
 
-	{ "p47j_20.bin",	0x20000, 0x2ed53624, 7 | BRF_SND },           // 14 OKI #0 Samples
-	{ "p47j_21.bin",	0x20000, 0x6f56b56d, 7 | BRF_SND },           // 15
+	{ "p47j_20.bin",		0x20000, 0x2ed53624, 7 | BRF_SND },           // 14 OKI #0 Samples
+	{ "p47j_21.bin",		0x20000, 0x6f56b56d, 7 | BRF_SND },           // 15
 
-	{ "p47j_10.bin",	0x20000, 0xb9d79c1e, 8 | BRF_SND },           // 16 OKI #1 Samples
-	{ "p47j_11.bin",	0x20000, 0xfa0d1887, 8 | BRF_SND },           // 17
+	{ "p47j_10.bin",		0x20000, 0xb9d79c1e, 8 | BRF_SND },           // 16 OKI #1 Samples
+	{ "p47j_11.bin",		0x20000, 0xfa0d1887, 8 | BRF_SND },           // 17
 
-	{ "p-47.14m",		0x00200, 0x1d877538, 9 | BRF_GRA },           // 18 Priority PROM
+	{ "p-47.14m",			0x00200, 0x1d877538, 9 | BRF_GRA },           // 18 Priority PROM
 };
 
 STD_ROM_PICK(p47je)
@@ -3742,7 +3774,7 @@ static struct BurnRomInfo tshingenRomDesc[] = {
 	{ "takeda5.bin",	0x10000, 0xfbdc51c0, 2 | BRF_PRG | BRF_ESS }, //  2 68k #1 Code
 	{ "takeda6.bin",	0x10000, 0x8fa65b69, 2 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "m50747",		0x01000, 0x00000000, 0 | BRF_NODUMP },        //  4 MCU Code
+	{ "m50747",			0x01000, 0x00000000, 0 | BRF_NODUMP },        //  4 MCU Code
 
 	{ "takeda11.bin",	0x20000, 0xbf0b40a6, 3 | BRF_GRA },           //  5 Tilemap #0 Tiles
 	{ "shing_12.rom",	0x20000, 0x5e4adedb, 3 | BRF_GRA },           //  6
@@ -5289,23 +5321,25 @@ static struct BurnRomInfo edfblRomDesc[] = {
 	{ "02.bin",		0x40000, 0x19a0dfa0, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
 	{ "01.bin",		0x40000, 0xfc893ad0, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "07.bin",		0x40000, 0x4495c228, 3 | BRF_GRA },           //  2 Tilemap #0 Tiles
-	{ "06.bin",		0x40000, 0x3e37f226, 3 | BRF_GRA },           //  3
+	{ "pic",		0x02000, 0x00000000, 0 | BRF_NODUMP },    	  //  2 PIC, 28 pin, part number scratched off
+	
+	{ "07.bin",		0x40000, 0x4495c228, 3 | BRF_GRA },           //  3 Tilemap #0 Tiles
+	{ "06.bin",		0x40000, 0x3e37f226, 3 | BRF_GRA },           //  4
 
-	{ "03.bin",		0x40000, 0xeea24345, 4 | BRF_GRA },           //  4 Tilemap #1 Tiles
-	{ "04.bin",		0x40000, 0x2cfe9439, 4 | BRF_GRA },           //  5
+	{ "03.bin",		0x40000, 0xeea24345, 4 | BRF_GRA },           //  5 Tilemap #1 Tiles
+	{ "04.bin",		0x40000, 0x2cfe9439, 4 | BRF_GRA },           //  6
 
-	{ "05.bin",		0x20000, 0x96e38983, 5 | BRF_GRA },           //  6 Tilemap #2 Tiles
+	{ "05.bin",		0x20000, 0x96e38983, 5 | BRF_GRA },           //  7 Tilemap #2 Tiles
 
-	{ "09.bin",		0x40000, 0xe89d27c0, 6 | BRF_GRA },           //  7 Sprites
-	{ "08.bin",		0x40000, 0x603ac969, 6 | BRF_GRA },           //  8
+	{ "09.bin",		0x40000, 0xe89d27c0, 6 | BRF_GRA },           //  8 Sprites
+	{ "08.bin",		0x40000, 0x603ac969, 6 | BRF_GRA },           //  9
 
-	{ "12.bin",		0x10000, 0xe645f447, 7 | BRF_SND },           //  9 OKI #0 Samples
+	{ "12.bin",		0x10000, 0xe645f447, 7 | BRF_SND },           // 10 OKI #0 Samples
 
-	{ "11.bin",		0x40000, 0x5a8896cb, 8 | BRF_SND },           // 10 okibanks
-	{ "10.bin",		0x40000, 0xbaa7c91b, 8 | BRF_SND },           // 11
+	{ "11.bin",		0x40000, 0x5a8896cb, 8 | BRF_SND },           // 11 okibanks
+	{ "10.bin",		0x40000, 0xbaa7c91b, 8 | BRF_SND },           // 12
 
-	{ "rd.20n",		0x00200, 0x1d877538, 9 | BRF_GRA },           // 12 Priority PROM
+	{ "rd.20n",		0x00200, 0x1d877538, 9 | BRF_GRA },           // 13 Priority PROM
 };
 
 STD_ROM_PICK(edfbl)

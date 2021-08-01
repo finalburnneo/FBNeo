@@ -862,7 +862,6 @@ INT32 pgmFrame()
 		hold_coin.check(1, PgmInput[4], 2, 7);
 		hold_coin.check(2, PgmInput[4], 4, 7);
 		hold_coin.check(3, PgmInput[4], 8, 7);
-		bprintf(0, _T("pgminp %X\n"), PgmInput[4]);
 	}
 
 	SekNewFrame();

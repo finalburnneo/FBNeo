@@ -236,7 +236,7 @@ static void YM3526Render(INT32 nSegmentLength)
 	if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("YM3526Render called without init\n"));
 #endif
 
-	if (nYM3526Position >= nSegmentLength) {
+	if (nYM3526Position >= nSegmentLength || !pBurnSoundOut) {
 		return;
 	}
 
@@ -255,6 +255,8 @@ static void YM3526UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 #if defined FBNEO_DEBUG
 	if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("YM3526UpdateResample called without init\n"));
 #endif
+
+	if (!pBurnSoundOut) return;
 
 	INT32 nSegmentLength = nSegmentEnd;
 	INT32 nSamplesNeeded = nSegmentEnd * nBurnYM3526SoundRate / nBurnSoundRate + 1;
@@ -323,6 +325,8 @@ static void YM3526UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 #if defined FBNEO_DEBUG
 	if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("YM3526UpdateNormal called without init\n"));
 #endif
+
+	if (!pBurnSoundOut) return;
 
 	INT32 nSegmentLength = nSegmentEnd;
 

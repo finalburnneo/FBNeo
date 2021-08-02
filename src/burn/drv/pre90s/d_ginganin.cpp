@@ -49,27 +49,27 @@ static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo GinganinInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 12,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 12,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 14,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 13,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 6,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 7,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Ginganin)
@@ -196,7 +196,7 @@ static void ginganin_sound_write(UINT16 address, UINT8 data)
 			if (MC6840_flag && MC6840_reg0 != MC6840_tempo && MC6840_reg0 != 0) {
 				MC6840_tempo = MC6840_reg0;
 			}
-		}			
+		}
 		return;
 
 		case 0x0801:
@@ -228,7 +228,7 @@ static UINT8 ginganin_sound_read(UINT16 address)
 	if (address == 0x1800) {
 		return *soundlatch;
 	}
-	
+
 	bprintf(PRINT_NORMAL, _T("read %x\n"), address);
 
 	return 0;
@@ -314,7 +314,7 @@ static INT32 MemIndex()
 	DrvTxtRAM		= Next; Next += 0x000800;
 	DrvSprRAM		= Next; Next += 0x000800;
 
-	layer_control		= (UINT16*)Next; Next += 0x000001 * sizeof(UINT16);
+	layer_control	= (UINT16*)Next; Next += 0x000001 * sizeof(UINT16);
 	soundlatch		= Next; Next += 0x000001;
 	flipscreen		= Next; Next += 0x000001;
 
@@ -392,7 +392,7 @@ static INT32 DrvInit()
 
 	AY8910Init(0, 3579545 / 2, 0);
 	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
-	
+
 	BurnY8950Init(1, 3579545, DrvSndROM, 0x20000, NULL, 0, NULL, &DrvSynchroniseStream, 1);
 	BurnTimerAttachY8950(&M6809Config, 1000000);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
@@ -512,19 +512,7 @@ static void draw_sprites()
 			flipy ^= 0x8000;
 		}
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0x0f, 0x100, DrvGfxROM3);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0x0f, 0x100, DrvGfxROM3);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0x0f, 0x100, DrvGfxROM3);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0x0f, 0x100, DrvGfxROM3);
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, sx, sy - 16, flipx, flipy, color, 4, 0x0f, 0x100, DrvGfxROM3);
 	}
 }
 
@@ -534,23 +522,12 @@ static INT32 DrvDraw()
 		DrvRecalcPalette();
 	}
 
-	if (*layer_control & 0x01) {
-		draw_layer(DrvGfxROM4, DrvGfxROM0, 0x300, 0x200, 2, 0);
-	} else {
-		BurnTransferClear();
-	}
+	BurnTransferClear();
 
-	if (*layer_control & 0x02) {
-		draw_layer(DrvFgRAM,   DrvGfxROM1, 0x200, 0x100, 0, 1);
-	}
-
-	if (*layer_control & 0x08) {
-		draw_sprites();
-	}
-
-	if (*layer_control & 0x04) {
-		draw_txt_layer();
-	}
+	if (*layer_control & 0x01 && nBurnLayer & 1) draw_layer(DrvGfxROM4, DrvGfxROM0, 0x300, 0x200, 2, 0);
+	if (*layer_control & 0x02 && nBurnLayer & 2) draw_layer(DrvFgRAM,   DrvGfxROM1, 0x200, 0x100, 0, 1);
+	if (*layer_control & 0x08 && nSpriteEnable & 1) draw_sprites();
+	if (*layer_control & 0x04 && nBurnLayer & 4) draw_txt_layer();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -567,7 +544,7 @@ static void sound_interrupt()
 	if (MC6840_flag) {
 		if (MC6840_ctr > MC6840_tempo) {
 			MC6840_ctr = 0;
-			M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		} else {
 			MC6840_ctr++;
 		}
@@ -591,7 +568,7 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 60;
 	INT32 nCyclesTotal[2] = { 6000000 / 60, 1000000 / 60 };
 	INT32 nCyclesDone[2]  = { 0, 0 };
-	
+
 	M6809NewFrame();
 
 	SekOpen(0);
@@ -599,27 +576,22 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment;
-
-		nSegment = nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += SekRun(nSegment);
+		CPU_RUN(0, Sek);
 		if (i == (nInterleave - 1)) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
-		nSegment = nCyclesTotal[1] / nInterleave;
-		BurnTimerUpdateY8950(i * (nCyclesTotal[1] / nInterleave));
+		BurnTimerUpdateY8950((i + 1) * (nCyclesTotal[1] / nInterleave));
 		sound_interrupt();
 	}
 
 	SekClose();
-	
+
 	BurnTimerEndFrameY8950(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
-		
 		BurnY8950Update(pBurnSoundOut, nBurnSoundLen);
 	}
-	
+
 	M6809Close();
 
 	if (pBurnDraw) {
@@ -629,7 +601,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -637,7 +609,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029722;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

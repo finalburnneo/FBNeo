@@ -42,31 +42,31 @@ static UINT8 DrvReset;
 static INT32 watchdog;
 
 static struct BurnInputInfo JailbrekInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Jailbrek)
@@ -258,7 +258,7 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	DrvM6809ROM		= Next; Next += 0x008000;
-	DrvM6809DecROM		= Next; Next += 0x008000;
+	DrvM6809DecROM	= Next; Next += 0x008000;
 
 	DrvGfxROM0		= Next; Next += 0x010000;
 	DrvGfxROM1		= Next; Next += 0x020000;
@@ -277,8 +277,8 @@ static INT32 MemIndex()
 	DrvVidRAM		= Next; Next += 0x000800;
 	DrvSprRAM		= Next; Next += 0x000100;
 
-	DrvM6809RAM0		= Next; Next += 0x000f00;
-	DrvM6809RAM1		= Next; Next += 0x000100;
+	DrvM6809RAM0	= Next; Next += 0x000f00;
+	DrvM6809RAM1	= Next; Next += 0x000100;
 
 	DrvScrxRAM		= Next; Next += 0x000040;
 
@@ -334,37 +334,37 @@ static INT32 DrvInit()
 		if (BurnDrvGetFlags() & BDF_BOOTLEG)
 		{
 			if (BurnLoadRom(DrvM6809ROM + 0x00000,  0, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvGfxROM0  + 0x00000,  1, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvGfxROM1  + 0x00000,  2, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM1  + 0x08000,  3, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvColPROM  + 0x00000,  4, 1)) return 1;
 			if (BurnLoadRom(DrvColPROM  + 0x00020,  5, 1)) return 1;
 			if (BurnLoadRom(DrvColPROM  + 0x00040,  6, 1)) return 1;
 			if (BurnLoadRom(DrvColPROM  + 0x00140,  7, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvVLMROM   + 0x00000,  8, 1)) return 1;
 		}
 		else
 		{
 			if (BurnLoadRom(DrvM6809ROM + 0x00000,  0, 1)) return 1;
 			if (BurnLoadRom(DrvM6809ROM + 0x04000,  1, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvGfxROM0  + 0x00000,  2, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0  + 0x04000,  3, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvGfxROM1  + 0x00000,  4, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM1  + 0x04000,  5, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM1  + 0x08000,  6, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM1  + 0x0c000,  7, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvColPROM  + 0x00000,  8, 1)) return 1;
 			if (BurnLoadRom(DrvColPROM  + 0x00020,  9, 1)) return 1;
 			if (BurnLoadRom(DrvColPROM  + 0x00040, 10, 1)) return 1;
 			if (BurnLoadRom(DrvColPROM  + 0x00140, 11, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvVLMROM   + 0x00000, 12, 1)) return 1;
 			memcpy (DrvVLMROM, DrvVLMROM + 0x2000, 0x2000);
 		}
@@ -560,7 +560,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, M6809);
 
 		if (i < 8 && nmi_enable) M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 
@@ -607,6 +607,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nmi_enable);
 		SCAN_VAR(irq_enable);
 		SCAN_VAR(flipscreen);
+		SCAN_VAR(watchdog);
 	}
 
 	return 0;

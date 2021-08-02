@@ -1233,7 +1233,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		deco_146_104_scan();
 
-	//	EEPROMScan(nAction, pnMin);
+		EEPROMScan(nAction, pnMin);
 
 		YMZ280BScan(nAction, pnMin);
 

@@ -44,31 +44,31 @@ static INT32 firq_enable;
 static INT32 ajax_priority;
 
 static struct BurnInputInfo AjaxInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Ajax)
@@ -170,7 +170,7 @@ static void ajax_main_bankswitch(INT32 data)
 	konamiMapMemory(DrvKonROM + nBank, 0x6000, 0x7fff, MAP_ROM);
 }
 
-void ajax_main_write(UINT16 address, UINT8 data)
+static void ajax_main_write(UINT16 address, UINT8 data)
 {
 	if (address <= 0x1c0)
 	{
@@ -207,7 +207,7 @@ void ajax_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 ajax_main_read(UINT16 address)
+static UINT8 ajax_main_read(UINT16 address)
 {
 	if (address <= 0x01c0) {
 		switch ((address & 0x1c0) >> 6)
@@ -264,7 +264,7 @@ static void ajax_sub_bankswitch(UINT8 data)
 	M6809MapMemory(DrvM6809ROM + nBank, 0x8000, 0x9fff, MAP_ROM); 
 }
 
-void ajax_sub_write(UINT16 address, UINT8 data)
+static void ajax_sub_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xf800) == 0x0000) {
 		K051316Write(0, address & 0x7ff, data);
@@ -287,7 +287,7 @@ void ajax_sub_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 ajax_sub_read(UINT16 address)
+static UINT8 ajax_sub_read(UINT16 address)
 {
 	if ((address & 0xf800) == 0x0000) {
 		return K051316Read(0, address & 0x7ff);
@@ -304,7 +304,7 @@ UINT8 ajax_sub_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall ajax_sound_write(UINT16 address, UINT8 data)
+static void __fastcall ajax_sound_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xfff0) == 0xa000) {
 		K007232WriteReg(0, address & 0x0f, data);
@@ -337,7 +337,7 @@ void __fastcall ajax_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall ajax_sound_read(UINT16 address)
+static UINT8 __fastcall ajax_sound_read(UINT16 address)
 {
 	if ((address & 0xfff0) == 0xa000) {
 		return K007232ReadReg(0, address & 0x0f);
@@ -441,8 +441,8 @@ static INT32 MemIndex()
 	DrvGfxROM0		= Next; Next += 0x080000;
 	DrvGfxROM1		= Next; Next += 0x100000;
 	DrvGfxROM2		= Next; Next += 0x080000;
-	DrvGfxROMExp0		= Next; Next += 0x100000;
-	DrvGfxROMExp1		= Next; Next += 0x200000;
+	DrvGfxROMExp0	= Next; Next += 0x100000;
+	DrvGfxROMExp1	= Next; Next += 0x200000;
 
 	DrvSndROM0		= Next; Next += 0x040000;
 	DrvSndROM1		= Next; Next += 0x080000;
@@ -580,9 +580,10 @@ static INT32 DrvInit(INT32 type)
 	ZetSetReadHandler(ajax_sound_read);
 	ZetClose();
 	
-	BurnYM2151Init(3579545);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachZet(3579545);
 
 	K007232Init(0, 3579545, DrvSndROM0, 0x40000);
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback0);
@@ -663,6 +664,8 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	ZetNewFrame();
+
 	{
 		memset (DrvInputs, 0xff, 3);
 		for (INT32 i = 0; i < 8; i++) {
@@ -678,7 +681,6 @@ static INT32 DrvFrame()
 		if ((DrvInputs[2] & 0x0c) == 0) DrvInputs[2] |= 0x0c;
 	}
 
-	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 100;
 	INT32 nCyclesTotal[3] = { (((3000000 / 60) * 133) / 100) /* 33% overclock */, 3000000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
@@ -689,34 +691,17 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = (nCyclesTotal[0] / nInterleave) * (i + 1);
-		nCyclesDone[0] += konamiRun(nSegment - nCyclesDone[0]);
-
-		nCyclesDone[1] += M6809Run(nSegment - nCyclesDone[1]);
-		nSegment = (nCyclesTotal[2] / nInterleave) * (i + 1);
-
-		nCyclesDone[2] += ZetRun(nSegment - nCyclesDone[2]);
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			K007232Update(0, pSoundBuf, nSegmentLength);
-			K007232Update(1, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
+		CPU_RUN(0, konami);
+		CPU_RUN(1, M6809);
+		CPU_RUN_TIMER(2); // z80
 	}
 
 	if (K051960_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		if (nSegmentLength) {
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			K007232Update(0, pSoundBuf, nSegmentLength);
-			K007232Update(1, pSoundBuf, nSegmentLength);
-		}
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		K007232Update(0, pBurnSoundOut, nBurnSoundLen);
+		K007232Update(1, pBurnSoundOut, nBurnSoundLen);
 	}
 
 	konamiClose();
@@ -730,7 +715,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -738,9 +723,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029705;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
-
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;
 		ba.szName = "All Ram";
@@ -754,6 +738,9 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		K007232Scan(nAction, pnMin);
 
 		KonamiICScan(nAction);
+
+		SCAN_VAR(firq_enable);
+		SCAN_VAR(ajax_priority);
 	}
 
 	if (nAction & ACB_WRITE) {

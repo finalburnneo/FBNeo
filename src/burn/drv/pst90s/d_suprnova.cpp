@@ -1145,7 +1145,7 @@ static INT32 DrvInit(INT32 bios)
 	Sh2SetReadWordHandler (1,		suprnova_hack_read_word);
 	Sh2SetReadLongHandler (1,		suprnova_hack_read_long);
 
-	if (!strncmp(BurnDrvGetTextA(DRV_NAME), "galpanis", 8)) {
+	if (!strncmp(BurnDrvGetTextA(DRV_NAME), "galpanis", 8) || !strncmp(BurnDrvGetTextA(DRV_NAME), "panicstr", 8)) {
 		bprintf(0, _T("Note (soundfix): switching Busy Loop Speedhack to mode #2 for galpanis*.\n"));
 		sh2_busyloop_speedhack_mode2 = 1;
 	}
@@ -1153,8 +1153,8 @@ static INT32 DrvInit(INT32 bios)
 	if (!sixtyhz) BurnSetRefreshRate(59.5971);
 
 	YMZ280BInit(16666666, NULL);
-	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
-	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
+	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 0.65, BURN_SND_ROUTE_LEFT);
+	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 0.65, BURN_SND_ROUTE_RIGHT);
 
 	skns_init();
 	skns_sprite_kludge(sprite_kludge_x, sprite_kludge_y);

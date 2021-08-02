@@ -816,12 +816,15 @@ void K054539Scan(INT32 nAction, INT32 *)
 				info->rom + 0x20000*data;
 			info->cur_limit = data == 0x80 ? 0x4000 : 0x20000;
 
-			for (INT32 chip = 0; chip < 2; chip++) {
-				nFractionalPosition[chip] = 0;
-				nPosition[chip] = 0;
+			if (~nAction & ACB_RUNAHEAD) {
+				for (INT32 chip = 0; chip < 2; chip++) {
+					nFractionalPosition[chip] = 0;
+					nPosition[chip] = 0;
+				}
+
+				memset(soundbuf[0], 0, (800 * sizeof(INT16) * 2) * 4);
+				memset(soundbuf[1], 0, (800 * sizeof(INT16) * 2) * 4);
 			}
-			memset(soundbuf[0], 0, (800 * sizeof(INT16) * 2) * 4);
-			memset(soundbuf[1], 0, (800 * sizeof(INT16) * 2) * 4);
 		}
 	}
 }

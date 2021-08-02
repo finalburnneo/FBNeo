@@ -37,28 +37,28 @@ static UINT8 DrvInputs[3];
 static INT32 watchdog;
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
-	{"Dip D",		BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 };
 
 STDINPUTINFO(Drv)
@@ -361,6 +361,7 @@ static INT32 DrvDoReset(INT32 clear_ram)
 	}
 
 	HD6309Open(0);
+	bankswitch(0);
 	HD6309Reset();
 	HD6309Close();
 
@@ -368,6 +369,8 @@ static INT32 DrvDoReset(INT32 clear_ram)
 	ZetReset();
 	BurnYM3812Reset();
 	ZetClose();
+
+	K007342Reset();
 
 	HD6309Bank = 0;
 	soundlatch = 0;
@@ -380,7 +383,7 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvHD6309ROM		= Next; Next += 0x020000;
+	DrvHD6309ROM	= Next; Next += 0x020000;
 	DrvZ80ROM		= Next; Next += 0x008000;
 
 	DrvGfxROM0		= Next; Next += 0x080000;
@@ -393,10 +396,10 @@ static INT32 MemIndex()
 	DrvZ80RAM		= Next; Next += 0x000800;
 	DrvPalRAM		= Next; Next += 0x000100;
 
-	K007342VidRAM[0]	= Next; Next += 0x002000;
-	K007342ScrRAM[0]	= Next; Next += 0x000200;
+	K007342VidRAM[0]= Next; Next += 0x002000;
+	K007342ScrRAM[0]= Next; Next += 0x000200;
 
-	K007420RAM[0]		= Next; Next += 0x000200;
+	K007420RAM[0]	= Next; Next += 0x000200;
 
 	RamEnd			= Next;
 	MemEnd			= Next;
@@ -414,12 +417,7 @@ static void DrvGfxExpand(UINT8 *src, INT32 len)
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvHD6309ROM + 0x08000,  0, 1)) return 1;
@@ -547,15 +545,16 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] =  { 12000000 / 4 / 60, 4000000 / 60 }; // hd6309 has internal divider
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	HD6309Open(0);
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
+		CPU_RUN(0, HD6309);
+		//HD6309Run(nCyclesTotal[0] / nInterleave);
 
-		HD6309Run(nCyclesTotal[0] / nInterleave);
-
-		if (i == 248 && K007342_irq_enabled()) HD6309SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == 240 && K007342_irq_enabled()) HD6309SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
 		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
 	}
@@ -568,7 +567,7 @@ static INT32 DrvFrame()
 
 	HD6309Close();
 	ZetClose();
-	
+
 	if (pBurnDraw) {
 		DrvDraw();
 	}
@@ -576,7 +575,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -596,11 +595,14 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		HD6309Scan(nAction);
 		ZetScan(nAction);
 
+		K007342Scan(nAction);
+
 		BurnYM3812Scan(nAction, pnMin);
 
 		SCAN_VAR(HD6309Bank);
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(spritebank);
+		SCAN_VAR(watchdog);
 	}
 
 	if (nAction & ACB_WRITE) {

@@ -30,6 +30,14 @@ static double YM2203RightVolumes[4 * MAX_YM2203];
 
 INT32 bYM2203UseSeperateVolumes; // support custom Taito panning hardware
 
+static void stupid_timer_hack()
+{
+	// only 1 person knows the reasoning behind this hack, and we fired him.
+	// TOFIX/TODO: figure out what's going on here.
+
+	dTime += 100.0 / nBurnFPS;
+}
+
 // ----------------------------------------------------------------------------
 // Dummy functions
 
@@ -52,7 +60,7 @@ static void AY8910Render(INT32 nSegmentLength)
 	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203 AY8910Render called without init\n"));
 #endif
 
-	if (nAY8910Position >= nSegmentLength) {
+	if (nAY8910Position >= nSegmentLength || !pBurnSoundOut) {
 		return;
 	}
 
@@ -89,7 +97,7 @@ static void YM2203Render(INT32 nSegmentLength)
 	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("YM2203Render called without init\n"));
 #endif
 
-	if (nYM2203Position >= nSegmentLength) {
+	if (nYM2203Position >= nSegmentLength || !pBurnSoundOut) {
 		return;
 	}
 
@@ -150,6 +158,8 @@ static void YM2203UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 #if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("YM2203UpdateResample called without init\n"));
 #endif
+
+	//if (!pBurnSoundOut) return;
 
 	INT32 nSegmentLength = nSegmentEnd;
 	INT32 nSamplesNeeded = nSegmentEnd * nBurnYM2203SoundRate / nBurnSoundRate + 1;
@@ -267,8 +277,6 @@ static void YM2203UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 		nTotalRightSample = BURN_SND_CLIP(nTotalRightSample);
 			
 		if (bYM2203AddSignal) {
-			//pSoundBuf[i + 0] += nTotalLeftSample;
-			//pSoundBuf[i + 1] += nTotalRightSample;
 			pSoundBuf[i + 0] = BURN_SND_CLIP(pSoundBuf[i + 0] + nTotalLeftSample);
 			pSoundBuf[i + 1] = BURN_SND_CLIP(pSoundBuf[i + 1] + nTotalRightSample);
 		} else {
@@ -307,7 +315,7 @@ static void YM2203UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 		nYM2203Position = nExtraSamples;
 		nAY8910Position = nExtraSamples;
 
-		dTime += 100.0 / nBurnFPS;
+		stupid_timer_hack();
 	}
 }
 
@@ -316,6 +324,8 @@ static void YM2203UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 #if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("YM2203UpdateNormal called without init\n"));
 #endif
+
+//	if (!pBurnSoundOut) return;
 
 	INT32 nSegmentLength = nSegmentEnd;
 	INT32 i;
@@ -521,7 +531,7 @@ static void YM2203UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 		nYM2203Position = nExtraSamples;
 		nAY8910Position = nExtraSamples;
 
-		dTime += 100.0 / nBurnFPS;
+		stupid_timer_hack();
 	}
 }
 

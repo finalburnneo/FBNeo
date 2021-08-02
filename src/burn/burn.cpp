@@ -60,6 +60,8 @@ INT32 nFMInterpolation = 0;			// Desired interpolation level for FM sound
 UINT8 nBurnLayer = 0xFF;	// Can be used externally to select which layers to show
 UINT8 nSpriteEnable = 0xFF;	// Can be used externally to select which layers to show
 
+INT32 bRunAhead = 0;
+
 INT32 nMaxPlayers;
 
 bool bSaveCRoms = 0;

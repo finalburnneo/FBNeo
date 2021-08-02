@@ -5,7 +5,6 @@ int bRunPause = 0;
 int bAltPause = 0;
 
 int bAlwaysDrawFrames = 0;
-int bRunAhead = 0;
 
 static bool bShowFPS = false;
 static unsigned int nDoFPS = 0;

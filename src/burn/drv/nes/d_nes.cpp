@@ -17726,8 +17726,42 @@ struct BurnDriver BurnDrvnes_mkrotfs = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_nesertgolfRomDesc[] = {
+	{ "NESert Golfing (2019)(Unknown).nes",          32784, 0xcb43ec95, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_nesertgolf)
+STD_ROM_FN(nes_nesertgolf)
+
+struct BurnDriver BurnDrvnes_nesertgolf = {
+	"nes_nesertgolf", NULL, NULL, NULL, "2019",
+	"NESert Golfing (HB)\0", NULL, "Unknown", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_nesertgolfRomInfo, nes_nesertgolfRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_nesertgolfteRomDesc[] = {
+	{ "NESert Golfing - Tournament Edition (2019)(Unknown).nes",          32784, 0xdb28a4e8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_nesertgolfte)
+STD_ROM_FN(nes_nesertgolfte)
+
+struct BurnDriver BurnDrvnes_nesertgolfte = {
+	"nes_nesertgolfte", "nes_nesertgolf", NULL, NULL, "2019",
+	"NESert Golfing - Tournament Edition (HB)\0", NULL, "Unknown", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 4, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_nesertgolfteRomInfo, nes_nesertgolfteRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_rockm5mpRomDesc[] = {
-	{ "Rockman 5 - Metropolis (2021)(Stalkermaestro).nes",          524304, 0x6a192e5f, BRF_ESS | BRF_PRG },
+	{ "Rockman 5 - Metropolis (2021)(Stalkermaestro).nes",          524304, 0x0911f8bf, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_rockm5mp)

@@ -5,6 +5,7 @@ int bRunPause = 0;
 int bAltPause = 0;
 
 int bAlwaysDrawFrames = 0;
+int bRunAhead = 0;
 
 static bool bShowFPS = false;
 static unsigned int nDoFPS = 0;
@@ -195,8 +196,17 @@ int RunFrame(int bDraw, int bPause)
 		if (bDraw) {                            // Draw Frame
 			nFramesRendered++;
 
-			if (VidFrame()) {					// Do one frame
-				AudBlankSound();
+			if (!bRunAhead) {// || bAppDoFast) {
+				if (VidFrame()) {				// Do one frame w/o RunAhead
+					AudBlankSound();
+				}
+			} else {
+				pBurnDraw = NULL;
+				BurnDrvFrame();
+				StateRunAheadSave();
+				pBurnSoundOut = NULL;
+				VidFrame();
+				StateRunAheadLoad();
 			}
 		} else {								// frame skipping
 			pBurnDraw = NULL;					// Make sure no image is drawn

@@ -670,6 +670,7 @@ extern "C" INT32 BurnDrvInit()
 	CheatInit();
 	HiscoreInit();
 	BurnStateInit();
+	StateRunAheadInit();
 	BurnInitMemoryManager();
 	BurnRandomInit();
 	BurnSoundDCFilterReset();
@@ -714,6 +715,7 @@ extern "C" INT32 BurnDrvExit()
 	CheatExit();
 	CheatSearchExit();
 	BurnStateExit();
+	StateRunAheadExit();
 
 	nBurnCPUSpeedAdjust = 0x0100;
 
@@ -946,6 +948,71 @@ INT32 BurnAreaScan(INT32 nAction, INT32* pnMin)
 	}
 
 	return nRet;
+}
+
+// --------- State-ing for RunAhead ----------
+static INT32 nTotalLenRunAhead = 0;
+static UINT8 *RunAheadBuffer = NULL;
+static UINT8 *pRunAheadBuffer = NULL;
+
+void StateRunAheadInit()
+{
+	nTotalLenRunAhead = 0;
+	RunAheadBuffer = NULL;
+	pRunAheadBuffer = NULL;
+}
+
+void StateRunAheadExit()
+{
+	if (RunAheadBuffer != NULL) {
+		free (RunAheadBuffer);
+		StateRunAheadInit(); // reset vars
+	}
+}
+
+static INT32 __cdecl RunAheadLenAcb(struct BurnArea* pba)
+{
+	nTotalLenRunAhead += pba->nLen;
+
+	return 0;
+}
+
+static INT32 __cdecl RunAheadReadAcb(struct BurnArea* pba)
+{
+	memcpy(pRunAheadBuffer, pba->Data, pba->nLen);
+	pRunAheadBuffer += pba->nLen;
+
+	return 0;
+}
+
+static INT32 __cdecl RunAheadWriteAcb(struct BurnArea* pba)
+{
+	memcpy(pba->Data, pRunAheadBuffer, pba->nLen);
+	pRunAheadBuffer += pba->nLen;
+
+	return 0;
+}
+
+void StateRunAheadSave()
+{
+	if (RunAheadBuffer == NULL) { // Initialise on first RunAhead frame instead of driver init, to ensure emulation is ready
+		nTotalLenRunAhead = 0;
+		BurnAcb = RunAheadLenAcb; // Get length of RunAhead buffer
+		BurnAreaScan(ACB_FULLSCAN | ACB_READ | ACB_RUNAHEAD, NULL);
+
+		RunAheadBuffer = (UINT8*)malloc (nTotalLenRunAhead);
+		bprintf(0, _T(" **  RunAhead initted, state size $%x.\n"), nTotalLenRunAhead);
+	}
+	pRunAheadBuffer = RunAheadBuffer;
+	BurnAcb = RunAheadReadAcb;
+	BurnAreaScan(ACB_FULLSCAN | ACB_READ | ACB_RUNAHEAD, NULL);
+}
+
+void StateRunAheadLoad()
+{
+	pRunAheadBuffer = RunAheadBuffer;
+	BurnAcb = RunAheadWriteAcb;
+	BurnAreaScan(ACB_FULLSCAN | ACB_WRITE | ACB_RUNAHEAD, NULL);
 }
 
 // ----------------------------------------------------------------------------

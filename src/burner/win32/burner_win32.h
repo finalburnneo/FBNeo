@@ -236,6 +236,7 @@ extern INT32 BurnShiftEnabled;
 extern int bRunPause;
 extern int bAltPause;
 extern int bAlwaysDrawFrames;
+extern int bRunAhead;
 extern int kNetGame;
 int RunIdle();
 int RunFrame(int bDraw, int bPause);

@@ -1033,6 +1033,7 @@ BEGIN
 		MENUITEM "Enable VSync (Windowed)",						MENU_VIDEOVSYNC
 		MENUITEM "Enable DWM Sync (Windowed)",				MENU_DWMFIX
 		MENUITEM "Auto Frameskip",								MENU_AUTOFRAMESKIP
+		MENUITEM "Enable RunAhead",								MENU_RUNAHEAD
     END
     POPUP "Audio"
     BEGIN

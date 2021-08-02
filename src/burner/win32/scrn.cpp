@@ -1907,6 +1907,10 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			POST_INITIALISE_MESSAGE;
 			break;
 
+		case MENU_RUNAHEAD:
+			bRunAhead = !bRunAhead;
+			break;
+
 		case MENU_AUD_PLUGIN_1:
 			AudSelect(0);
 			POST_INITIALISE_MESSAGE;

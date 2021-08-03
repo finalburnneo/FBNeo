@@ -1272,7 +1272,19 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 
 	// Lucky & Wild
 	// Dirt Fox
-	if ((parentrom && strcmp(parentrom, "luckywld") == 0) ||
+	// Final Lap
+	// Four Trax
+	// Suzuka 8 Hours 2
+	// Suzuka 8 Hours
+	if ((parentrom && strcmp(parentrom, "finallap") == 0) ||
+		(drvname && strcmp(drvname, "finallap") == 0) ||
+		(parentrom && strcmp(parentrom, "fourtrax") == 0) ||
+		(drvname && strcmp(drvname, "fourtrax") == 0) ||
+		(parentrom && strcmp(parentrom, "suzuk8h2") == 0) ||
+		(drvname && strcmp(drvname, "suzuk8h2") == 0) ||
+		(parentrom && strcmp(parentrom, "suzuka8h") == 0) ||
+		(drvname && strcmp(drvname, "suzuka8h") == 0) ||
+		(parentrom && strcmp(parentrom, "luckywld") == 0) ||
 		(drvname && strcmp(drvname, "luckywld") == 0) ||
 		(parentrom && strcmp(parentrom, "dirtfoxj") == 0) ||
 		(drvname && strcmp(drvname, "dirtfoxj") == 0) ||
@@ -1291,7 +1303,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 		if (strcmp("Gun Y", description) == 0) {
 			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 5, RETRO_DEVICE_ID_ANALOG_Y, RETRO_DEVICE_INDEX_ANALOG_RIGHT, description);
 		}
-		if (strcmp("Gear Up", description) == 0) {
+		if (strcmp("Gear Up", description) == 0 || strcmp("Gear", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
 		}
 		if (strcmp("Gear Down", description) == 0) {

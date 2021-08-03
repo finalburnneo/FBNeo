@@ -86,11 +86,11 @@ Write a report with details on the issue and your platform.
 ### Game XXX runs slowly, why ?
 Your hardware is probably too slow to run the game with normal settings. Try the following :
 * Check if there is a speedhack dipswitch in the core options, set it to "yes".
-* Try setting a value for frameskip in core options (note : recent retroarch versions allow an auto-frameskip feature).
-* Try lowering CPU clock in core options
 * Try disabling rewind, runahead, or any other retroarch setting known for increasing overhead.
+* Try setting a value for frameskip in core options (note : recent retroarch versions allow an auto-frameskip feature).
+* Try lowering CPU clock in core options (note : some games don't support this feature).
 * Try lowering audio settings in the core options.
-* A last resort on arm platforms would be to enable cyclone in core options, however keep in mind some games will stop working from this.
+* A last resort on arm platforms would be to enable cyclone in core options, however keep in mind some games will stop working from this, so it's recommended to only enable it per-game if it's actually helping with performance on that specific game.
 * If it is not enough, upgrade/overclock your hardware, or use another core.
 
 We won't accept requests for "making the core faster", as far as we are concerned this core has a good balance between accuracy & speed, and for the most part will already run really well on cheap arm socs (rpi3, ...).

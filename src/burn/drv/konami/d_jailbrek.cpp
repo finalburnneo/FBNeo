@@ -27,6 +27,8 @@ static UINT8 *DrvTransLut;
 static UINT32 *DrvPalette;
 static UINT8  DrvRecalc;
 
+static INT32 nExtraCycles;
+
 static UINT8 scrolldirection;
 static UINT8 nmi_enable;
 static UINT8 irq_enable;
@@ -250,6 +252,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	HiscoreReset();
 
+	nExtraCycles = 0;
+
 	return 0;
 }
 
@@ -323,12 +327,7 @@ static void M6809Decode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnDrvGetFlags() & BDF_BOOTLEG)
@@ -554,7 +553,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 9;
 	INT32 nCyclesTotal[1] = { 1536000 / 60 };
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesDone[1] = { nExtraCycles };
 
 	M6809Open(0);
 
@@ -573,6 +572,8 @@ static INT32 DrvFrame()
 	}
 
 	M6809Close();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -608,6 +609,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(irq_enable);
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(watchdog);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;

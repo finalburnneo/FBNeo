@@ -48,27 +48,27 @@ static UINT8 DrvReset;
 static INT32 watchdog;
 
 static struct BurnInputInfo PandorasInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Pandoras)
@@ -155,11 +155,9 @@ static void interrupt_control(INT32 offset, UINT8 data, INT32 cpu)
 		case 0x00:
 		{
 			if (data == 0) {
-				M6809Close();
-				M6809Open(0);
+				M6809CPUPush(0);
 				M6809SetIRQLine(CPU_IRQLINE_IRQ, CPU_IRQSTATUS_NONE);
-				M6809Close();
-				M6809Open(cpu);
+				M6809CPUPop();
 			}
 			irq_enable[0] = data;
 		}
@@ -177,11 +175,9 @@ static void interrupt_control(INT32 offset, UINT8 data, INT32 cpu)
 		case 0x06:
 		{
 			if (data == 0) {
-				M6809Close();
-				M6809Open(1);
+				M6809CPUPush(1);
 				M6809SetIRQLine(CPU_IRQLINE_IRQ, CPU_IRQSTATUS_NONE);
-				M6809Close();
-				M6809Open(cpu);
+				M6809CPUPop();
 			}
 			irq_enable[1] = data;
 		}
@@ -190,11 +186,9 @@ static void interrupt_control(INT32 offset, UINT8 data, INT32 cpu)
 		{
 			return;	// disable NMI. Why???
 
-			M6809Close();
-			M6809Open(1);
+			M6809CPUPush(1);
 			M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
-			M6809Close();
-			M6809Open(cpu);
+			M6809CPUPop();
 		}
 		return;
 	}
@@ -224,11 +218,9 @@ static void pandoras_main_write(UINT16 address, UINT8 data)
 
 		case 0x2000:
 			if (!firq_trigger[1] && data) {
-				M6809Close();
-				M6809Open(1);
+				M6809CPUPush(1);
 				M6809SetIRQLine(CPU_IRQLINE_FIRQ, CPU_IRQSTATUS_AUTO);
-				M6809Close();
-				M6809Open(0);
+				M6809CPUPop();
 			}
 			firq_trigger[1] = data;
 		return;
@@ -254,11 +246,9 @@ static void pandoras_sub_write(UINT16 address, UINT8 data)
 
 		case 0xa000:
 			if (!firq_trigger[0] && data) {
-				M6809Close();
-				M6809Open(0);
+				M6809CPUPush(0);
 				M6809SetIRQLine(CPU_IRQLINE_FIRQ, CPU_IRQSTATUS_AUTO);
-				M6809Close();
-				M6809Open(1);
+				M6809CPUPop();
 			}
 			firq_trigger[0] = data;
 		return;
@@ -367,24 +357,14 @@ static UINT8 AY8910_0_port_B_Read(UINT32)
 	return (ZetTotalCycles() / 512) & 0xf;
 }
 
-static INT32 DrvSyncDAC()
-{
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (1789772.0000 / (nBurnFPS / 100.0000))));
-}
-
 static INT32 DrvDoReset(INT32 clear_ram)
 {
 	if (clear_ram) {
 		memset (AllRam, 0, RamEnd - AllRam);
 	}
 
-	M6809Open(0);
-	M6809Reset();
-	M6809Close();
-
-	M6809Open(1);
-	M6809Reset();
-	M6809Close();
+	M6809Reset(0);
+	M6809Reset(1);
 
 	ZetOpen(0);
 	ZetReset();
@@ -485,12 +465,7 @@ static void DrvGfxExpand(UINT8 *rom, UINT32 len)
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM  + 0x0000,  0, 1)) return 1;
@@ -562,10 +537,10 @@ static INT32 DrvInit()
 
 	AY8910Init(0, 1789772, 0);
 	AY8910SetPorts(0, &AY8910_0_port_A_Read, &AY8910_0_port_B_Read, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.35, BURN_SND_ROUTE_BOTH);
     AY8910SetBuffered(ZetTotalCycles, 1789772);
 
-	DACInit(0, 0, 1, DrvSyncDAC);
+	DACInit(0, 0, 1, ZetTotalCycles, 1789772);
 	DACSetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -586,7 +561,7 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 	DACExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -617,19 +592,7 @@ static void draw_layer(INT32 priority)
 			flipy = !flipy;
 		}
 
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0x100, DrvGfxROM1);
-			} else {
-				Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0x100, DrvGfxROM1);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0x100, DrvGfxROM1);
-			} else {
-				Render8x8Tile_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0x100, DrvGfxROM1);
-			}
-		}
+		Draw8x8Tile(pTransDraw, code, sx, sy - 16, flipx, flipy, color, 4, 0x100, DrvGfxROM1);
 	}
 }
 
@@ -699,26 +662,23 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6809Open(0);
-		INT32 nSegment = (nCyclesTotal[0] * (i + 1)) / nInterleave;
-		nCyclesDone[0] += M6809Run(nSegment - nCyclesDone[0]);
+		CPU_RUN(0, M6809);
 		if (i == (nInterleave - 1) && irq_enable[0]) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
-		nSegment = M6809TotalCycles();
 		M6809Close();
 
 		M6809Open(1);
-		nCyclesDone[1] += M6809Run(nSegment - M6809TotalCycles());
+		CPU_RUN(1, M6809);
 		if (i == (nInterleave - 1) && irq_enable[1]) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		M6809Close();
 
-		nSegment = (nCyclesTotal[2] * (i + 1)) / nInterleave;
-		nCyclesDone[2] += ZetRun(nSegment - nCyclesDone[2]);
+		CPU_RUN(2, Zet);
 
-		nSegment = (nCyclesTotal[3] * (i + 1)) / nInterleave;
-		nCyclesDone[3] += I8039Run(nSegment - nCyclesDone[3]);
+		CPU_RUN(3, I8039);
 	}
 
 	if (pBurnSoundOut) {
-        AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -760,11 +720,11 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(soundlatch2);
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(scrolly);
+		SCAN_VAR(watchdog);
+		SCAN_VAR(i8039_status);
 
-		SCAN_VAR(irq_enable[0]);
-		SCAN_VAR(irq_enable[1]);
-		SCAN_VAR(firq_trigger[0]);
-		SCAN_VAR(firq_trigger[1]);
+		SCAN_VAR(irq_enable);
+		SCAN_VAR(firq_trigger);
 	}
 
 	return 0;

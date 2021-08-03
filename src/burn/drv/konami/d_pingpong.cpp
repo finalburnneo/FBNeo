@@ -46,50 +46,50 @@ static INT32 nNMIMask;
 static INT32 cashquiz = 0;
 
 static struct BurnInputInfo PingpongInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 left"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 5,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvInputs + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvInputs + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvInputs + 2,	"dip"		},
-	{"Dip D",		BIT_DIPSWITCH,	DrvInputs + 3,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvInputs + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvInputs + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvInputs + 2,	"dip"		},
+	{"Dip D",			BIT_DIPSWITCH,	DrvInputs + 3,	"dip"		},
 };
 
 STDINPUTINFO(Pingpong)
 
 static struct BurnInputInfo MerlinmmInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy5 + 4,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 4,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 5,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 7,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 right"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvInputs + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvInputs + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvInputs + 2,	"dip"		},
-	{"Dip D",		BIT_DIPSWITCH,	DrvInputs + 3,	"dip"		},
-	{"Dip E",		BIT_DIPSWITCH,	DrvInputs + 4,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvInputs + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvInputs + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvInputs + 2,	"dip"		},
+	{"Dip D",			BIT_DIPSWITCH,	DrvInputs + 3,	"dip"		},
+	{"Dip E",			BIT_DIPSWITCH,	DrvInputs + 4,	"dip"		},
 };
 
 STDINPUTINFO(Merlinmm)
 
 static struct BurnInputInfo CashquizInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy5 + 4,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 4,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 2"	},
@@ -97,18 +97,18 @@ static struct BurnInputInfo CashquizInputList[] = {
 	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 4"	},
 	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 5"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy5 + 5,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy5 + 5,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvInputs + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvInputs + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvInputs + 2,	"dip"		},
-	{"Dip D",		BIT_DIPSWITCH,	DrvInputs + 3,	"dip"		},
-	{"Dip E",		BIT_DIPSWITCH,	DrvInputs + 4,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvInputs + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvInputs + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvInputs + 2,	"dip"		},
+	{"Dip D",			BIT_DIPSWITCH,	DrvInputs + 3,	"dip"		},
+	{"Dip E",			BIT_DIPSWITCH,	DrvInputs + 4,	"dip"		},
 };
 
 STDINPUTINFO(Cashquiz)
@@ -457,12 +457,7 @@ static void DrvPrgDecode(UINT8 *ROM, INT32 len)
 
 static INT32 PingpongInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM  + 0x0000,  0, 1)) return 1;
@@ -491,6 +486,7 @@ static INT32 PingpongInit()
 
 	SN76496Init(0, 18432000/8, 0);
 	SN76496SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+    SN76496SetBuffered(ZetTotalCycles, 3072000);
 
 	nNMIMask = 0x1f;
 
@@ -503,12 +499,7 @@ static INT32 PingpongInit()
 
 static INT32 MerlinmmInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM  + 0x0000,  0, 1)) return 1;
@@ -538,7 +529,8 @@ static INT32 MerlinmmInit()
 	ZetClose();
 
 	SN76496Init(0, 18432000/8, 0);
-	SN76496SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(0, 0.65, BURN_SND_ROUTE_BOTH);
+    SN76496SetBuffered(ZetTotalCycles, 3072000);
 
 	nNMIMask = 0x1ff;
 
@@ -553,12 +545,7 @@ static INT32 CashquizInit()
 {
 	cashquiz = 1;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM  + 0x0000,  0, 1)) return 1;
@@ -620,7 +607,7 @@ static INT32 DrvExit()
 
 	SN76496Exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	cashquiz = 0;
 
@@ -676,19 +663,7 @@ static void draw_layer()
 		INT32 flipx = attr & 0x40;
 		INT32 flipy = attr & 0x80;
 
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_FlipXY(pTransDraw, code, sx, sy, color, 2, 0, DrvGfxROM0);	
-			} else {
-				Render8x8Tile_FlipY(pTransDraw, code, sx, sy, color, 2, 0, DrvGfxROM0);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_FlipX(pTransDraw, code, sx, sy, color, 2, 0, DrvGfxROM0);	
-			} else {
-				Render8x8Tile(pTransDraw, code, sx, sy, color, 2, 0, DrvGfxROM0);
-			}
-		}
+		Draw8x8Tile(pTransDraw, code, sx, sy, flipx, flipy, color, 2, 0, DrvGfxROM0);
 	}
 }
 
@@ -722,8 +697,9 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	draw_layer();
-	draw_sprites();
+	BurnTransferClear();
+	if (nBurnLayer & 1) draw_layer();
+	if (nSpriteEnable & 1) draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -754,15 +730,15 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 262;
-	INT32 nCyclesTotal = 3072000 / 60;
-	INT32 nCyclesDone  = 0;
+	INT32 nCyclesTotal[1] = { 3072000 / 60 };
+	INT32 nCyclesDone[1]  = { 0 };
 
     ZetNewFrame();
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone += ZetRun(((i + 1) * nCyclesTotal / nInterleave) - nCyclesDone);
+		CPU_RUN(0, Zet);
 
 		if (i == 240 && irq_enable) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		if ((i & nNMIMask) == 0 && nmi_enable) ZetNmi();
@@ -791,7 +767,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
     if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
-
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;
 		ba.szName = "All Ram";
@@ -803,6 +778,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(irq_enable);
 		SCAN_VAR(nmi_enable);
+		SCAN_VAR(question_addr_low_data);
+		SCAN_VAR(question_addr_high_data);
+		SCAN_VAR(question_addr_high);
 	}
 
 	if (nAction & ACB_NVRAM) {

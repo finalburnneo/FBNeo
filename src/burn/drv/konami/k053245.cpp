@@ -31,7 +31,7 @@ INT32 K053245Reset()
 		memset (K053245Ram[i], 0, 0x800);
 		memset (K053245Buf[i], 0, 0x800);
 		memset (K053244Regs[i], 0, 0x10);
-	
+
 		K053244Bank[i] = 0;
 	}
 
@@ -119,36 +119,26 @@ void K053244BankSelect(INT32 chip, INT32 bank)
 
 UINT8 K053245Read(INT32 chip, INT32 offset)
 {
-	return K053245Ram[chip][offset ^ 1]; //
+	return K053245Ram[chip][offset ^ 1];
 }
 
 void K053245Write(INT32 chip, INT32 offset, INT32 data)
 {
-	K053245Ram[chip][offset ^ 1] = data; //
+	K053245Ram[chip][offset ^ 1] = data;
 }
 
 UINT16 K053245ReadWord(INT32 chip, INT32 offset)
 {
 	UINT16 *ret = (UINT16*)K053245Ram[chip];
 
-#if 0
-	INT32 r = ret[offset];
-
-	return (r << 8) | (r >> 8);
-#else
 	return BURN_ENDIAN_SWAP_INT16(ret[offset]);
-#endif
 }
 
 void K053245WriteWord(INT32 chip, INT32 offset, INT32 data)
 {
 	UINT16 *ret = (UINT16*)K053245Ram[chip];
 
-#if 0
-	ret[offset] = (data << 8) | (data >> 8);
-#else
 	ret[offset] = BURN_ENDIAN_SWAP_INT16(data);
-#endif
 }
 
 UINT8 K053244Read(INT32 chip, INT32 offset)
@@ -377,32 +367,24 @@ void K053245SpritesRender(INT32 chip)
 void K053245Scan(INT32 nAction)
 {
 	struct BurnArea ba;
-	
+
 	if (nAction & ACB_MEMORY_RAM) {
-		for (INT32 i = 0; i < 2; i++) {
-			if (K053245Ram[i]) {
-				memset(&ba, 0, sizeof(ba));
-				ba.Data	  = K053245Ram[i];
-				ba.nLen	  = 0x800;
-				ba.szName = "K053245 Ram";
-				BurnAcb(&ba);
-
-				ba.Data	  = K053245Buf[i];
-				ba.nLen	  = 0x800;
-				ba.szName = "K053245 Buffer";
-				BurnAcb(&ba);
-			}
-
+		for (INT32 i = 0; i < K053245Active; i++) {
 			memset(&ba, 0, sizeof(ba));
-			ba.Data	  = K053244Regs[i];
-			ba.nLen	  = 0x010;
-			ba.szName = "K053244 Registers";
-			BurnAcb(&ba);	
+			ba.Data	  = K053245Ram[i];
+			ba.nLen	  = 0x800;
+			ba.szName = "K053245 Ram";
+			BurnAcb(&ba);
+
+			ba.Data	  = K053245Buf[i];
+			ba.nLen	  = 0x800;
+			ba.szName = "K053245 Buffer";
+			BurnAcb(&ba);
 		}
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
-		SCAN_VAR(K053244Bank[0]);
-		SCAN_VAR(K053244Bank[1]);
+		SCAN_VAR(K053244Bank);
+		SCAN_VAR(K053244Regs);
 	}
 }

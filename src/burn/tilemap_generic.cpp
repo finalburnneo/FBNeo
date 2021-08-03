@@ -390,6 +390,8 @@ void GenericTilemapSetTransSplit(INT32 which, INT32 category, UINT16 layer0, UIN
 
 	GenericTilemapSetTransMask(which, (category * 2) | 0, layer0); // TMAP_DRAWLAYER0
 	GenericTilemapSetTransMask(which, (category * 2) | 1, layer1); // TMAP_DRAWLAYER1
+
+	cur_map->flags |= TMAP_TRANSSPLIT;
 }
 
 void GenericTilemapSetTransMask(INT32 which, INT32 category, UINT16 transmask)
@@ -956,7 +958,9 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 
 				cur_map->pTile(offset, &sTileData);
 
-				UINT32 category = (sTileData.category * 2) | category_or;
+				UINT32 category = (cur_map->flags & TMAP_TRANSSPLIT) ?
+					((sTileData.category * 2) | category_or) :
+					(sTileData.category | category_or);
 
 				if (category && (cur_map->flags & TMAP_TRANSMASK)) {
 					if (cur_map->transparent[category] == NULL) {
@@ -1067,7 +1071,9 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 
 				cur_map->pTile(offset, &sTileData);
 
-				UINT32 category = (sTileData.category * 2) | category_or;
+				UINT32 category = (cur_map->flags & TMAP_TRANSSPLIT) ?
+					((sTileData.category * 2) | category_or) :
+					(sTileData.category | category_or);
 
 				if (category && (cur_map->flags & TMAP_TRANSMASK)) {
 					if (cur_map->transparent[category] == NULL) {
@@ -1216,7 +1222,9 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 
 				cur_map->pTile(offset, &sTileData);
 
-				UINT32 category = (sTileData.category * 2) | category_or;
+				UINT32 category = (cur_map->flags & TMAP_TRANSSPLIT) ?
+					((sTileData.category * 2) | category_or) :
+					(sTileData.category | category_or);
 
 				if (category && (cur_map->flags & TMAP_TRANSMASK)) {
 					if (cur_map->transparent[category] == NULL) {
@@ -1412,7 +1420,9 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 
 		cur_map->pTile(offset, &sTileData);
 
-		UINT32 category = (sTileData.category * 2) | category_or;
+		UINT32 category = (cur_map->flags & TMAP_TRANSSPLIT) ?
+			((sTileData.category * 2) | category_or) :
+			(sTileData.category | category_or);
 
 		if (category && (cur_map->flags & TMAP_TRANSMASK)) {
 			if (cur_map->transparent[category] == NULL) {

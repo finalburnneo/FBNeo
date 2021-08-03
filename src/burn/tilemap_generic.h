@@ -31,6 +31,7 @@
 
 // set tilemap to use a transparency mask (is set when using GenericTilemapSetTransMask())
 #define TMAP_TRANSMASK		(1 << 10)
+#define TMAP_TRANSSPLIT     (1 << 11)
 
 // Tile defines (used in tilemap_callback)
 

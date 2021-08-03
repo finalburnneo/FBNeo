@@ -1061,6 +1061,8 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 	// Air Rescue
 	if ((parentrom && strcmp(parentrom, "gloc") == 0) ||
 		(drvname && strcmp(drvname, "gloc") == 0) ||
+		(parentrom && strcmp(parentrom, "strkfgtr") == 0) ||
+		(drvname && strcmp(drvname, "strkfgtr") == 0) ||
 		(parentrom && strcmp(parentrom, "rascot") == 0) ||
 		(drvname && strcmp(drvname, "rascot") == 0) ||
 		(parentrom && strcmp(parentrom, "arescue") == 0) ||

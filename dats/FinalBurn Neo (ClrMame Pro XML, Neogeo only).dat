@@ -7437,10 +7437,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug2fm" cloneof="mslug2" romof="mslug2">
-		<description>Metal Slug 2 - Super Vehicle-001/II (CZXInc FC2 Version, hack) [Hack]</description>
-		<year>2015</year>
+		<description>Metal Slug 2 - Super Vehicle-001/II (CZXINc FC2 Ver.2 20210415, hack) [Hack]</description>
+		<year>2021</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="241-p1fm.bin" size="1048576" crc="d734944b"/>
+		<rom name="241-p1fm.bin" size="1048576" crc="487173f6"/>
 		<rom name="241-p2fm.bin" size="2097152" crc="37a118fc"/>
 		<rom name="241-s1.s1" merge="241-s1.s1" size="131072" crc="f3d32f0f"/>
 		<rom name="241-c1.c1" merge="241-c1.c1" size="8388608" crc="394b5e0d"/>

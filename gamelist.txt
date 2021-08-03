@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17335 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17345 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1883,6 +1883,7 @@ This list contains all games supported by FinalBurn Neo.
 | bublboblr	|  	| Bubble Bobble (US, Ver 5.1)				| bublbobl	| 1986	| Taito America | Taito Misc	| 					|
 | nes_bubblebobble|  	| Bubble Bobble (USA)					| 		| 1988	| Taito		| Miscellaneous	| 					|
 | spec_bubothad	|  	| Bubble Bobble - The Adventure (128K)			| 		| 1993	| AP's Adventure| ZX Spectrum	| 					|
+| nes_bubblebobbledx|  	| Bubble Bobble Deluxe (Hack, HB)			| nes_bubblebobble| 2018	| Polar Hacker	| Miscellaneous	| 					|
 | bublbob2p	|  	| Bubble Bobble II (Ver 0.0J 1993/12/13, prototype)	| bublbob2	| 1994	| Taito Corporat| Taito F3 Syste| 					|
 | bublbob2o	|  	| Bubble Bobble II (Ver 2.5O 1994/10/05)		| bublbob2	| 1994	| Taito Corporat| Taito F3 Syste| 					|
 | bublbob2	|  	| Bubble Bobble II (Ver 2.6O 1994/12/16)		| 		| 1994	| Taito Corporat| Taito F3 Syste| 					|
@@ -5940,6 +5941,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_growl	|  	| Growl (USA)						| 		| 1991	| Taito		| Sega Megadrive| 					|
 | growla	|  	| Growl (World)						| growl		| 1990	| Taito America | Taito F2	| 					|
 | growl		|  	| Growl (World, Rev 1)					| 		| 1990	| Taito Corporat| Taito F2	| 					|
+| nes_gruni	|  	| Gruniozerca (HB)					| 		| 2017	| Lukasz Kur	| Miscellaneous	| 					|
 | nes_gruni2	|  	| Gruniozerca 2 - The Great Cavy Rescue! (HB)		| 		| 2019	| Lukasz Kur & M| Miscellaneous	| 					|
 | nes_gruni3	|  	| Gruniozerca 3 - The Great Cavy Clean-Up! (HB)		| 		| 2019	| Lukasz Kur & M| Miscellaneous	| 					|
 | spec_gryzor	|  	| Gryzor (128K)						| 		| 1987	| Ocean		| ZX Spectrum	| 					|
@@ -8108,6 +8110,7 @@ This list contains all games supported by FinalBurn Neo.
 | magix		|  	| Magix / Rock						| 		| 1995	| Yun Sung	| Miscellaneous	| 					|
 | fds_magmapro	|  	| Magma Project - Hacker (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_magmax	|  	| Magmax (USA)						| 		| 1988	| FCI		| Miscellaneous	| 					|
+| nes_magnilocase|  	| Magnilo Case, The (HB)				| 		| 2021	| Dalyen Retroga| Miscellaneous	| 					|
 | msx_empcity	|  	| Magnum Kiki Ippatsu - Empire City 1931 (Jpn)		| 		| 1988	| Toshiba EMI	| MSX		| 					|
 | msx_empcitya	|  	| Magnum Kiki Ippatsu - Empire City 1931 (Jpn, Alt)	| msx_empcity	| 1988	| Toshiba EMI	| MSX		| 					|
 | nes_maharajaj	|  	| Maharaja (Japan)					| nes_maharaja	| 1989	| Sunsoft	| Miscellaneous	| 					|
@@ -8401,11 +8404,11 @@ This list contains all games supported by FinalBurn Neo.
 | cv_mecha8	|  	| Mecha-8 (HB)						| 		| 2013	| Team Pixelboy	| ColecoVision	| SGM - Super Game Module		|
 | msx_mecha8	|  	| Mecha-8 (HB)						| 		| 2011	| Oscar Toledo G| MSX		| 					|
 | cv_mecha9	|  	| Mecha-9 (HB)						| 		| 2015	| Oscar Toledo G| ColecoVision	| SGM - Super Game Module		|
-| mechattj	|  	| Mechanized Attack (Japan)				| mechatt	| 1989	| SNK		| Miscellaneous	| Music occasionally breaks w/savestates|
-| mechattu	|  	| Mechanized Attack (US)				| mechatt	| 1989	| SNK		| Miscellaneous	| Music occasionally breaks w/savestates|
-| mechattu1	|  	| Mechanized Attack (US, Version 1, Single Player)	| mechatt	| 1989	| SNK		| Miscellaneous	| Music occasionally breaks w/savestates|
+| mechattj	|  	| Mechanized Attack (Japan)				| mechatt	| 1989	| SNK		| Miscellaneous	| 					|
+| mechattu	|  	| Mechanized Attack (US)				| mechatt	| 1989	| SNK		| Miscellaneous	| 					|
+| mechattu1	|  	| Mechanized Attack (US, Version 1, Single Player)	| mechatt	| 1989	| SNK		| Miscellaneous	| 					|
 | nes_mechaatt	|  	| Mechanized Attack (USA)				| 		| 1990	| SNK		| Miscellaneous	| 					|
-| mechatt	|  	| Mechanized Attack (World)				| 		| 1989	| SNK		| Miscellaneous	| Music occasionally breaks w/savestates|
+| mechatt	|  	| Mechanized Attack (World)				| 		| 1989	| SNK		| Miscellaneous	| 					|
 | md_medalc	|  	| Medal City (Jpn, SegaNet)				| 		| 1991	| Sega		| Sega Megadrive| 					|
 | md_m3dnoah	|  	| Mega 3D Noah's Ark (HB)				| 		| 2017	| Piko Interacti| Sega Megadrive| Original game by Wisdom Tree		|
 | md_meganser	|  	| Mega Anser (Jpn)					| 		| 199?	| <unknown>	| Sega Megadrive| 					|
@@ -8561,7 +8564,7 @@ This list contains all games supported by FinalBurn Neo.
 | ngp_mslug2ndd	|  	| Metal Slug - 2nd Mission (Demo)			| ngp_mslug2nd	| 2000	| SNK		| NeoGeo Pocket | 					|
 | ngp_mslug2nd	|  	| Metal Slug - 2nd Mission (World)			| 		| 2000	| SNK		| NeoGeo Pocket | 					|
 | mslug		|  	| Metal Slug - Super Vehicle-001			| 		| 1996	| Nazca		| Neo Geo MVS	| 					|
-| mslug2fm	|  	| Metal Slug 2 - Super Vehicle-001/II (CZXInc FC2 Versio| mslug2	| 2015	| hack		| Neo Geo MVS	| 					|
+| mslug2fm	|  	| Metal Slug 2 - Super Vehicle-001/II (CZXINc FC2 Ver.2 | mslug2	| 2021	| hack		| Neo Geo MVS	| 					|
 | mslug2dg	|  	| Metal Slug 2 - Super Vehicle-001/II (Multifunction Hac| mslug2	| 2017	| hack		| Neo Geo MVS	| 					|
 | mslug2	|  	| Metal Slug 2 - Super Vehicle-001/II (NGM-2410) (NGH-24| 		| 1998	| SNK		| Neo Geo MVS	| 					|
 | mslug2t	|  	| Metal Slug 2 Turbo (NGM-9410)				| mslug2	| 2015	| Hack		| Neo Geo MVS	| 					|
@@ -8657,6 +8660,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_mickeyuc	|  	| Mickey's Ultimate Challenge (Bra)			| 		| 1998	| Tec Toy	| Sega Master Sy| 					|
 | gg_mickeyuc	|  	| Mickey's Ultimate Challenge (Euro, USA)		| 		| 1994	| Hi Tech Expres| Sega Game Gear| 					|
 | md_mickeyuc	|  	| Mickey's Ultimate Challenge (USA)			| 		| 1994	| Hi Tech Expres| Sega Megadrive| 					|
+| nes_mkrotfs	|  	| Micro Knight - Revenge of the Four Skulls (HB)	| 		| 2017	| Unknown	| Miscellaneous	| 					|
 | md_micromacc	|  	| Micro Machines (Can)					| md_micromac	| 1993	| Codemasters	| Sega Megadrive| 					|
 | gg_micromac	|  	| Micro Machines (Euro)					| 		| 1993	| Codemasters	| Sega Game Gear| 					|
 | sms_micromac	|  	| Micro Machines (Euro)					| 		| 1994	| Codemasters	| Sega Master Sy| 					|
@@ -9529,6 +9533,8 @@ This list contains all games supported by FinalBurn Neo.
 | neotris	|  	| NeoTRIS (Free Beta 2 Ver. 202009)			| 		| 2020	| Chipsonsteroid| Neo Geo MVS	| 					|
 | nes_nesopetougol|  	| NES Open Tournament Golf (USA)			| 		| 1991	| Nintendo	| Miscellaneous	| 					|
 | nes_nescape	|  	| NEScape (HB)						| 		| 2019	| Khan Games	| Miscellaneous	| 					|
+| nes_nesertgolf|  	| NESert Golfing (HB)					| 		| 2019	| Unknown	| Miscellaneous	| 					|
+| nes_nesertgolfte|  	| NESert Golfing - Tournament Edition (HB)		| nes_nesertgolf| 2019	| Unknown	| Miscellaneous	| 					|
 | msx_nkoshien	|  	| Nessen Koushien (Jpn)					| 		| 1984	| Casio		| MSX		| 					|
 | netwars	|  	| Net Wars						| 		| 1983	| Orca (Esco Tra| Miscellaneous	| 					|
 | spec_netherworld|  	| Netherworld (128K)					| 		| 1988	| Hewson Consult| ZX Spectrum	| 					|
@@ -11273,6 +11279,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_radrexu	|  	| Radical Rex (USA)					| md_radrex	| 1994	| Activision	| Sega Megadrive| 					|
 | nes_rafworld	|  	| Raf World (Japan)					| nes_journsil	| 1990	| Sunsoft	| Miscellaneous	| 					|
 | raflesia	|  	| Rafflesia (315-5162)					| 		| 1986	| Coreland / Seg| System 1	| 					|
+| raflesiau	|  	| Rafflesia (not encrypted)				| raflesia	| 1986	| Coreland / Seg| System 1	| 					|
 | rotdh		|  	| Rage of the Dragons (NGH-2640)			| rotd		| 2002	| Evoga / Playmo| Neo Geo MVS	| 					|
 | rotd		|  	| Rage of the Dragons (NGM-264?)			| 		| 2002	| Evoga / Playmo| Neo Geo MVS	| 					|
 | spec_ragnablock|  	| Ragnablock (HB)					| 		| 2006	| Computer Emuzo| ZX Spectrum	| 					|
@@ -11794,6 +11801,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_rockm4	|  	| Rockman 4 - Aratanaru Yabou!! (Japan)			| nes_megaman4	| 1991	| Capcom	| Miscellaneous	| 					|
 | nes_rockm4mi	|  	| Rockman 4 - Minus Infinity (Hack)			| nes_megaman4	| 2015	| Nintendo	| Miscellaneous	| 					|
 | nes_rockm5	|  	| Rockman 5 - Blues no Wana! (Japan)			| nes_megaman5	| 1992	| Capcom	| Miscellaneous	| 					|
+| nes_rockm5mp	|  	| Rockman 5 - Metropolis (Hack, HB)			| nes_megaman5	| 2021	| Stalkermaestro| Miscellaneous	| 					|
 | nes_rockm6	|  	| Rockman 6 - Shijou Saidai no Tatakai!! (Japan)	| nes_megaman6	| 1993	| Capcom	| Miscellaneous	| 					|
 | md_rockman	|  	| Rockman Mega World (Jpn)				| md_megaman	| 1994	| Capcom	| Sega Megadrive| 					|
 | md_rockman1	|  	| Rockman Mega World (Jpn, Alt)				| md_megaman	| 1994	| Capcom	| Sega Megadrive| 					|
@@ -15857,6 +15865,8 @@ This list contains all games supported by FinalBurn Neo.
 | ngp_tsunapn2	|  	| Tsunagete Pon! 2 (Jpn)				| ngp_puzzlnk2	| 1999	| SNK		| NeoGeo Pocket | 					|
 | nes_tsupparioozumou|  	| Tsuppari Oozumou (Japan)				| 		| 1987	| Tecmo		| Miscellaneous	| 					|
 | pce_tsuppari	|  	| Tsuppari Oozumou - Heisei Ban				| 		| 1993	| Naxat		| PC Engine	| 					|
+| nes_tsurikicsanj|  	| Tsuri Kichi Sanpei - Blue Marlin Hen (Japan)		| nes_tsurikicsan| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_tsurikicsan|  	| Tsuri Kichi Sanpei - Blue Marlin Hen (T-Eng)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | pce_baibai	|  	| Tsuru Teruhito no Jissen Kabushiki Bai Bai Game	| 		| 1989	| Intec		| PC Engine	| 					|
 | sms_ttoriui	|  	| Ttoriui Moheom (Kor)					| sms_myhero	| 19??	| Unknown	| Sega Master Sy| 					|
 | tubepb	|  	| Tube Panic (bootleg)					| tubep		| 1984	| bootleg	| Miscellaneous	| 					|

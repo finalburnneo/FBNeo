@@ -1472,7 +1472,7 @@
 		<description>Bio Hazard (China)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
-		<rom name="Bio Hazard (China).nes" size="1048592" crc="75914cb8"/>
+		<rom name="Bio Hazard (China).nes" size="1048592" crc="b4c8012d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -1480,7 +1480,7 @@
 		<description>Bio Hazard (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
-		<rom name="Bio Hazard (T-Eng).nes" size="1048592" crc="8ca694fc"/>
+		<rom name="Bio Hazard (T-Eng).nes" size="1048592" crc="4dffd969"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -1825,6 +1825,14 @@
 		<year>1988</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="Bubble Bobble (USA).nes" size="163856" crc="d3a91b41"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="bubblebobbledx" cloneof="bubblebobble" romof="bubblebobble">
+		<description>Bubble Bobble Deluxe (Hack, HB) [Hack, Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Polar Hacker</manufacturer>
+		<rom name="Bubble Bobble Deluxe (2021)(Polar Hacker).nes" size="163856" crc="198125ce"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -5692,6 +5700,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="gruni">
+		<description>Gruniozerca (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>Lukasz Kur</manufacturer>
+		<rom name="Gruniozerca (2017)(Lukasz Kur).nes" size="40976" crc="2ea66761"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="gruni2">
 		<description>Gruniozerca 2 - The Great Cavy Rescue! (HB) [Homebrew]</description>
 		<year>2019</year>
@@ -8236,6 +8252,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="magnilocase">
+		<description>Magnilo Case, The (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Dalyen Retrogames</manufacturer>
+		<rom name="The Magnilo Case (2021)(Dalyen Retrogames).nes" size="524304" crc="6ff47dba"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="maharajaj" cloneof="maharaja" romof="maharaja">
 		<description>Maharaja (Japan)</description>
 		<year>1989</year>
@@ -8817,6 +8841,14 @@
 		<year>1988</year>
 		<manufacturer>Capcom</manufacturer>
 		<rom name="Mickey Mousecapade (USA).nes" size="65552" crc="3341274d"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="mkrotfs">
+		<description>Micro Knight - Revenge of the Four Skulls (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>Unknown</manufacturer>
+		<rom name="Micro Knight RotFS (2017)(Unknown).nes" size="131088" crc="bc44af32"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -9433,6 +9465,22 @@
 		<year>2019</year>
 		<manufacturer>Khan Games</manufacturer>
 		<rom name="NEScape (HB).nes" size="524304" crc="60b6ad99"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="nesertgolf">
+		<description>NESert Golfing (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Unknown</manufacturer>
+		<rom name="NESert Golfing (2019)(Unknown).nes" size="32784" crc="cb43ec95"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="nesertgolfte" cloneof="nesertgolf" romof="nesertgolf">
+		<description>NESert Golfing - Tournament Edition (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Unknown</manufacturer>
+		<rom name="NESert Golfing - Tournament Edition (2019)(Unknown).nes" size="32784" crc="db28a4e8"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -11097,6 +11145,14 @@
 		<year>1992</year>
 		<manufacturer>Capcom</manufacturer>
 		<rom name="Rockman 5 - Blues no Wana! (Japan).nes" size="524304" crc="9d01e44c"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="rockm5mp" cloneof="megaman5" romof="megaman5">
+		<description>Rockman 5 - Metropolis (Hack, HB) [Hack, Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Stalkermaestro</manufacturer>
+		<rom name="Rockman 5 - Metropolis (2021)(Stalkermaestro).nes" size="524304" crc="0911f8bf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -13921,6 +13977,22 @@
 		<year>1987</year>
 		<manufacturer>Tecmo</manufacturer>
 		<rom name="Tsuppari Oozumou (Japan).nes" size="65552" crc="dfc7c0c2"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="tsurikicsanj" cloneof="tsurikicsan" romof="tsurikicsan">
+		<description>Tsuri Kichi Sanpei - Blue Marlin Hen (Japan)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Tsuri Kichi Sanpei - Blue Marlin Hen (Japan).nes" size="131088" crc="99ef9cc3"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="tsurikicsan">
+		<description>Tsuri Kichi Sanpei - Blue Marlin Hen (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Tsuri Kichi Sanpei - Blue Marlin Hen (T-Eng).nes" size="131088" crc="a3479469"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

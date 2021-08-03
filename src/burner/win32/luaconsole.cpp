@@ -39,7 +39,7 @@ struct WindowInfo {
 	ControlLayoutState layoutState [numControlLayoutInfos];
 } windowInfo;
 
-void PrintToWindowConsole(int hDlgAsInt, const char* str)
+void PrintToWindowConsole(INT_PTR hDlgAsInt, const char* str)
 {
 	HWND hDlg = (HWND)hDlgAsInt;
 	HWND hConsole = GetDlgItem(hDlg, IDC_LUACONSOLE);
@@ -61,7 +61,7 @@ void PrintToWindowConsole(int hDlgAsInt, const char* str)
 	}
 }
 
-void WinLuaOnStart(int hDlgAsInt)
+void WinLuaOnStart(INT_PTR hDlgAsInt)
 {
 	HWND hDlg = (HWND)hDlgAsInt;
 	//LuaPerWindowInfo& info = LuaWindowInfo[hDlg];
@@ -73,7 +73,7 @@ void WinLuaOnStart(int hDlgAsInt)
 //	Show_Genesis_Screen(HWnd); // otherwise we might never show the first thing the script draws
 }
 
-void WinLuaOnStop(int hDlgAsInt)
+void WinLuaOnStop(INT_PTR hDlgAsInt)
 {
 	HWND hDlg = (HWND)hDlgAsInt;
 	//LuaPerWindowInfo& info = LuaWindowInfo[hDlg];
@@ -246,8 +246,8 @@ INT_PTR CALLBACK DlgLuaScriptDialog(HWND hDlg, UINT msg, WPARAM wParam, LPARAM l
 				SendDlgItemMessage(hDlg,IDC_EDIT_LUAPATH,WM_GETTEXT,(WPARAM)512,(LPARAM)temp);
 				// tell the OS to open the file with its associated editor,
 				// without blocking on it or leaving a command window open.
-				if((int)ShellExecuteA(NULL, "edit", _TtoA(temp), NULL, NULL, SW_SHOWNORMAL) == SE_ERR_NOASSOC)
-					if((int)ShellExecuteA(NULL, "open", _TtoA(temp), NULL, NULL, SW_SHOWNORMAL) == SE_ERR_NOASSOC)
+				if((INT_PTR)ShellExecuteA(NULL, "edit", _TtoA(temp), NULL, NULL, SW_SHOWNORMAL) == SE_ERR_NOASSOC)
+					if((INT_PTR)ShellExecuteA(NULL, "open", _TtoA(temp), NULL, NULL, SW_SHOWNORMAL) == SE_ERR_NOASSOC)
 						ShellExecuteA(NULL, NULL, "notepad", _TtoA(temp), NULL, SW_SHOWNORMAL);
 			}	break;
 
@@ -267,7 +267,7 @@ INT_PTR CALLBACK DlgLuaScriptDialog(HWND hDlg, UINT msg, WPARAM wParam, LPARAM l
 				luaofn.lpstrDefExt = _T("lua");
 				luaofn.nMaxFile = MAX_PATH;
 				luaofn.Flags = OFN_HIDEREADONLY | OFN_FILEMUSTEXIST | OFN_EXPLORER; // hide previously-ignored read-only checkbox (the real read-only box is in the open-movie dialog itself)
-				luaofn.lpstrInitialDir = _T(".\\support\lua");
+				luaofn.lpstrInitialDir = _T(".\\support\\lua");
 				if(GetOpenFileName( &luaofn ))
 				{
 					SetWindowText(GetDlgItem(hDlg, IDC_EDIT_LUAPATH), szFileName);

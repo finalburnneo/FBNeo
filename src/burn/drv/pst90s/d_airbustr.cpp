@@ -500,12 +500,7 @@ static INT32 DrvInit()
 {
 	is_bootleg = BurnDrvGetFlags() & BDF_BOOTLEG;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x000000,  0, 1)) return 1;
@@ -615,7 +610,7 @@ static INT32 DrvExit()
 
 	BurnYM2203Exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -661,11 +656,13 @@ static INT32 DrvDraw()
 {
 	DrvRecalcPalette();
 
-	draw_layer(0, 3, 6, 2, 5);
-	draw_layer(1, 1, 8, 0, 7);
+	BurnTransferClear();
+
+	if (nBurnLayer & 1) draw_layer(0, 3, 6, 2, 5);
+	if (nBurnLayer & 2) draw_layer(1, 1, 8, 0, 7);
 
 	pandora_flipscreen = *flipscreen;
-	pandora_update(pTransDraw);
+	if (nBurnLayer & 4) pandora_update(pTransDraw);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -700,7 +697,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Zet);
 		if (i == 240) {
 			ZetSetVector(0xff);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
@@ -712,7 +709,7 @@ static INT32 DrvFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		CPU_RUN(1, Zet);
 		if (i == 240) {
 			ZetSetVector(0xfd);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
@@ -720,16 +717,20 @@ static INT32 DrvFrame()
 		ZetClose();
 
 		ZetOpen(2);
-		BurnTimerUpdate((i + 1) * nCyclesTotal[2] / nInterleave);
+		CPU_RUN_TIMER(2);
 		if (i == 240) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+
+			if (pBurnDraw) {
+				BurnDrvRedraw();
+			}
+
+			pandora_buffer_sprites();
 		}
 		ZetClose();
 	}
 
 	ZetOpen(2);
-	BurnTimerEndFrame(nCyclesTotal[2]);
-
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
@@ -738,12 +739,6 @@ static INT32 DrvFrame()
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
-	
-	if (pBurnDraw) {
-		BurnDrvRedraw();
-	}
-
-	pandora_buffer_sprites();
 
 	return 0;
 }
@@ -758,7 +753,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
-
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;
 		ba.szName = "All Ram";

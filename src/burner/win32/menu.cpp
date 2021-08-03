@@ -941,6 +941,7 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_FORCE60HZ, bForce60Hz ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_VIDEOVSYNC, bVidVSync ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_AUTOFRAMESKIP, !bAlwaysDrawFrames ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_RUNAHEAD, bRunAhead ? MF_CHECKED : MF_UNCHECKED);
 
 	var = nAudSelect + MENU_AUD_PLUGIN_1;
 	CheckMenuRadioItem(hMenu, MENU_AUD_PLUGIN_1, MENU_AUD_PLUGIN_8, var, MF_BYCOMMAND);

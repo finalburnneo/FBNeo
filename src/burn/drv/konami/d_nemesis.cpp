@@ -3451,6 +3451,7 @@ static INT32 NemesisFrame()
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 		K005289Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -3535,6 +3536,7 @@ static INT32 KonamigtFrame()
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 		K005289Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -3833,6 +3835,7 @@ static INT32 Gx400Frame()
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 		vlm5030Update(0, pBurnSoundOut, nBurnSoundLen);
 		K005289Update(pBurnSoundOut, nBurnSoundLen);
 	}

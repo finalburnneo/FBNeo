@@ -4715,8 +4715,8 @@ static INT32 PackbangInit()
 	SekSetWriteWordHandler(0, BerlwallWriteWord);
 	SekClose();
 
-	AY8910Init(0, 2000000, 0);
-	AY8910Init(1, 2000000, 1);
+	AY8910Init(0, 1000000, 0);
+	AY8910Init(1, 1000000, 1);
 	AY8910SetPorts(0, &Kaneko16Dip0Read, &Kaneko16Dip1Read, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
@@ -4724,7 +4724,7 @@ static INT32 PackbangInit()
 
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, (12000000 / 6) / 132, 1);
-	MSM6295SetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	// Reset the driver
 	BerlwallDoReset();
@@ -5645,7 +5645,7 @@ static INT32 ShogwarrInit()
 	SekOpen(0);
 	SekMapMemory(Kaneko16Rom          , 0x000000, 0x03ffff, MAP_ROM);
 	SekMapMemory(Kaneko16Ram          , 0x100000, 0x10ffff, MAP_RAM);
-	SekMapMemory(Kaneko16MCURam	  , 0x200000, 0x20ffff, MAP_RAM);
+	SekMapMemory(Kaneko16MCURam	      , 0x200000, 0x20ffff, MAP_RAM);
 	SekMapMemory(Kaneko16PaletteRam   , 0x380000, 0x380fff, MAP_RAM);
 	SekMapMemory(Kaneko16SpriteRam    , 0x580000, 0x581fff, MAP_RAM);
 	SekMapMemory(Kaneko16Video1Ram    , 0x600000, 0x600fff, MAP_RAM);
@@ -7228,6 +7228,7 @@ static INT32 ExplbrkrFrame()
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -7552,7 +7553,7 @@ static INT32 ShogwarrScan(INT32 nAction, INT32 *pnMin)
 		}
 	}
 
-	return Kaneko16Scan(nAction, pnMin);;
+	return Kaneko16Scan(nAction, pnMin);
 }
 
 /*==============================================================================================

@@ -35,11 +35,12 @@ static UINT8 *soundlatch2;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT32 current_4800_bank = 0;
+static INT32 main_bank;
+static INT32 current_4800_bank;
 static INT32 layer_colorbase[4];
-static INT32 sprite_colorbase = 0;
-static INT32 sound_nmi_enable = 0;
-static INT32 screen_flip = 0;
+static INT32 sprite_colorbase;
+static INT32 sound_nmi_enable;
+static INT32 screen_flip;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvReset;
@@ -79,23 +80,23 @@ STDINPUTINFO(Lethalen)
 
 static struct BurnDIPInfo LethalenDIPList[]=
 {
-	{0x0f, 0xff, 0xff, 0xd8, NULL			},
+	{0x0f, 0xff, 0xff, 0xd8, NULL				},
 
-	{0   , 0xfe, 0   ,    2, "Language"		},
-	{0x0f, 0x01, 0x10, 0x10, "English"		},
-	{0x0f, 0x01, 0x10, 0x00, "Spanish"		},
+	{0   , 0xfe, 0   ,    2, "Language"			},
+	{0x0f, 0x01, 0x10, 0x10, "English"			},
+	{0x0f, 0x01, 0x10, 0x00, "Spanish"			},
 
 	{0   , 0xfe, 0   ,    2, "Game Type"		},
-	{0x0f, 0x01, 0x20, 0x20, "Street"		},
-	{0x0f, 0x01, 0x20, 0x00, "Arcade"		},
+	{0x0f, 0x01, 0x20, 0x20, "Street"			},
+	{0x0f, 0x01, 0x20, 0x00, "Arcade"			},
 
 	{0   , 0xfe, 0   ,    2, "Coin Mechanism"	},
-	{0x0f, 0x01, 0x40, 0x40, "Common"		},
+	{0x0f, 0x01, 0x40, 0x40, "Common"			},
 	{0x0f, 0x01, 0x40, 0x00, "Independent"		},
 
 	{0   , 0xfe, 0   ,    2, "Sound Output"		},
-	{0x0f, 0x01, 0x80, 0x00, "Mono"			},
-	{0x0f, 0x01, 0x80, 0x80, "Stereo"		},
+	{0x0f, 0x01, 0x80, 0x00, "Mono"				},
+	{0x0f, 0x01, 0x80, 0x80, "Stereo"			},
 };
 
 STDDIPINFO(Lethalen)
@@ -143,9 +144,9 @@ static UINT8 gunsaux_r()
 
 static void bankswitch(INT32 bank)
 {
-	bank = (bank & 0x1f) * 0x2000;
+	main_bank = bank & 0x1f;
 
-	HD6309MapMemory(DrvMainROM + bank, 0x0000, 0x1fff, MAP_ROM);
+	HD6309MapMemory(DrvMainROM + main_bank * 0x2000, 0x0000, 0x1fff, MAP_ROM);
 }
 
 static void lethal_main_write(UINT16 address, UINT8 data)
@@ -385,6 +386,7 @@ static INT32 DrvDoReset()
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	HD6309Open(0);
+	bankswitch(0);
 	HD6309Reset();
 	HD6309Close();
 
@@ -407,6 +409,7 @@ static INT32 DrvDoReset()
 	layer_colorbase[2] = 0x80;
 	layer_colorbase[3] = 0xc0;
 
+	current_4800_bank = 0;
 	sound_nmi_enable = 0;
 
 	HiscoreReset();
@@ -422,15 +425,15 @@ static INT32 MemIndex()
 	DrvZ80ROM		= Next; Next += 0x010000;
 
 	DrvGfxROM0		= Next; Next += 0x400000;
-	DrvGfxROMExp0		= Next; Next += 0x400000;
+	DrvGfxROMExp0	= Next; Next += 0x400000;
 	DrvGfxROM1		= Next; Next += 0x400000;
-	DrvGfxROMExp1		= Next; Next += 0x800000;
+	DrvGfxROMExp1	= Next; Next += 0x800000;
 
 	DrvSndROM		= Next; Next += 0x200000;
 
 	DrvEeprom		= Next; Next += 0x000080;
 
-	konami_palette32	= (UINT32*)Next;
+	konami_palette32= (UINT32*)Next;
 	DrvPalette		= (UINT32*)Next; Next += 0x2000 * sizeof(UINT32);
 
 	AllRam			= Next;
@@ -480,12 +483,7 @@ static INT32 DrvInit(INT32 flipy)
 
 	GenericTilesInit();
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM + 0x000000,  0, 1)) return 1;
@@ -571,7 +569,7 @@ static INT32 DrvExit()
 
 	BurnGunExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -676,12 +674,12 @@ static INT32 DrvFrame()
 		}
 
 		if (!ReloadGun0)
-			BurnGunMakeInputs(0, (INT16)LethalGun0, (INT16)LethalGun1);
+			BurnGunMakeInputs(0, LethalGun0, LethalGun1);
 		if (!ReloadGun1)
-			BurnGunMakeInputs(1, (INT16)LethalGun2, (INT16)LethalGun3);
+			BurnGunMakeInputs(1, LethalGun2, LethalGun3);
 	}
 
-	INT32 nInterleave = nBurnSoundLen;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 3000000 / 60, 6000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -689,17 +687,9 @@ static INT32 DrvFrame()
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nNext, nCyclesSegment;
+		CPU_RUN(0, HD6309);
+		CPU_RUN(1, Zet);
 
-		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[0];
-		nCyclesSegment = HD6309Run(nCyclesSegment);
-		nCyclesDone[0] += nCyclesSegment;
-
-		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[1];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[1] += nCyclesSegment;
 		if ((i % (nInterleave / 8)) == ((nInterleave / 8) - 1) && sound_nmi_enable) {
 			ZetNmi();
 		}
@@ -734,7 +724,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
-
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;
 		ba.szName = "All Ram";
@@ -744,6 +733,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 
 		K054539Scan(nAction, pnMin);
+		EEPROMScan(nAction, pnMin);
 
 		KonamiICScan(nAction);
 		BurnGunScan();
@@ -752,6 +742,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(sound_nmi_enable);
 		SCAN_VAR(layer_colorbase);
 		SCAN_VAR(sprite_colorbase);
+		SCAN_VAR(main_bank);
+	}
+
+	if (nAction & ACB_WRITE) {
+		HD6309Open(0);
+		bankswitch(main_bank);
+		HD6309Close();
 	}
 
 	return 0;

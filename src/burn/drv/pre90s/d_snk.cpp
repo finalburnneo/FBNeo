@@ -6680,6 +6680,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (game_select == 5)
 			AY8910Scan(nAction, pnMin);
 
+		SCAN_VAR(sound_status);
+		SCAN_VAR(soundlatch);
+		SCAN_VAR(flipscreen);
+
 		SCAN_VAR(sp16_scrolly);
 		SCAN_VAR(sp16_scrollx);
 		SCAN_VAR(sp32_scrolly);

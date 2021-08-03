@@ -32,6 +32,7 @@ static UINT8 *nDrvRomBank;
 static INT32 layer_colorbase[3];
 static INT32 sprite_colorbase;
 static INT32 layerpri[3];
+static INT32 arm_nmi;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -40,35 +41,33 @@ static UINT8 DrvDips[3];
 static UINT8 DrvReset;
 static UINT8 DrvInputs[3];
 
-static INT32 nCyclesDone[2];
-
 static struct BurnInputInfo ParodiusInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Diagnostics",		BIT_DIGITAL,	DrvJoy3 + 1,	"diag"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Diagnostics",		BIT_DIGITAL,	DrvJoy3 + 1,	"diag"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Parodius)
@@ -155,7 +154,7 @@ static struct BurnDIPInfo ParodiusDIPList[]=
 
 STDDIPINFO(Parodius)
 
-void parodius_main_write(UINT16 address, UINT8 data)
+static void parodius_main_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -209,7 +208,7 @@ void parodius_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 parodius_main_read(UINT16 address)
+static UINT8 parodius_main_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -261,7 +260,7 @@ UINT8 parodius_main_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall parodius_sound_write(UINT16 address, UINT8 data)
+static void __fastcall parodius_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -274,8 +273,8 @@ void __fastcall parodius_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xfa00:
-			nCyclesDone[1] += ZetRun(100);
-			ZetNmi();
+			arm_nmi = 1;
+			ZetRunEnd();
 		return;
 	}
 
@@ -284,7 +283,7 @@ void __fastcall parodius_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall parodius_sound_read(UINT16 address)
+static UINT8 __fastcall parodius_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -360,9 +359,9 @@ static INT32 MemIndex()
 	DrvZ80ROM		= Next; Next += 0x010000;
 
 	DrvGfxROM0		= Next; Next += 0x100000;
-	DrvGfxROMExp0		= Next; Next += 0x200000;
+	DrvGfxROMExp0	= Next; Next += 0x200000;
 	DrvGfxROM1		= Next; Next += 0x100000;
-	DrvGfxROMExp1		= Next; Next += 0x200000;
+	DrvGfxROMExp1	= Next; Next += 0x200000;
 
 	DrvSndROM		= Next; Next += 0x080000;
 
@@ -388,12 +387,7 @@ static INT32 DrvInit()
 {
 	GenericTilesInit();
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvKonROM  + 0x010000,  0, 1)) return 1;
@@ -442,9 +436,10 @@ static INT32 DrvInit()
 	K053245Init(0, DrvGfxROM1, DrvGfxROMExp1, 0xfffff, K053245Callback);
 	K053245SetSpriteOffset(0, -112, -16);
 
-	BurnYM2151Init(3579545);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachZet(3579545);
 
 	K053260Init(0, 3579545, DrvSndROM, 0x80000);
 	K053260SetRoute(0, BURN_SND_K053260_ROUTE_1, 0.70, BURN_SND_ROUTE_LEFT);
@@ -467,7 +462,7 @@ static INT32 DrvExit()
 	BurnYM2151Exit();
 	K053260Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -494,7 +489,7 @@ static INT32 DrvDraw()
 	layer[2] = 2;
 
 	konami_sortlayers3(layer,layerpri);
-	
+
 	KonamiClearBitmaps(DrvPalette[16 * bg_colorbase]);
 
 	if (nBurnLayer & 1) K052109RenderLayer(layer[0], 0, 1);
@@ -532,45 +527,30 @@ static INT32 DrvFrame()
 		if ((DrvInputs[1] & 0x18) == 0) DrvInputs[1] |= 0x18;
 	}
 
-	INT32 nInterleave = nBurnSoundLen;
-	INT32 nSoundBufferPos = 0;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 3000000 / 60, 3579545 / 60 };
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	INT32 nCyclesDone[2] = { 0, 0 };
 	
 	ZetOpen(0);
 	konamiOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nNext, nCyclesSegment;
+		CPU_RUN(0, konami);
 
-		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[0];
-		nCyclesSegment = konamiRun(nCyclesSegment);
-		nCyclesDone[0] += nCyclesSegment;
-
-		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[1];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[1] += nCyclesSegment;
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			K053260Update(0, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
+		arm_nmi = 0;
+		CPU_RUN_TIMER(1);
+		if (arm_nmi) {
+			arm_nmi = 0;
+			BurnTimerUpdate(ZetTotalCycles() + 179); // 50ns @ 3579545
+			ZetNmi();
 		}
 	}
 
 	if (K052109_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			K053260Update(0, pSoundBuf, nSegmentLength);
-		}
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		K053260Update(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
 	konamiClose();
@@ -583,7 +563,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -591,9 +571,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029705;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
-
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;
 		ba.szName = "All Ram";
@@ -605,6 +584,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		BurnYM2151Scan(nAction, pnMin);
 
 		KonamiICScan(nAction);
+
+		K053260Scan(nAction, pnMin);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -616,7 +597,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 	return 0;
 }
 
-	
+
 // Parodius DA! (World, set 1)
 
 static struct BurnRomInfo parodiusRomDesc[] = {

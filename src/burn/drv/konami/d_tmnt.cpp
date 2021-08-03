@@ -6457,10 +6457,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnYM2151Scan(nAction, pnMin);
 
 		// Scan critical driver variables
-		SCAN_VAR(nCyclesDone);
-		SCAN_VAR(nCyclesSegment);
-		SCAN_VAR(DrvDip);
-		SCAN_VAR(DrvInput);
 		SCAN_VAR(bIrqEnable);
 		SCAN_VAR(DrvSoundLatch);
 		SCAN_VAR(TitleSoundLatch);
@@ -6511,6 +6507,11 @@ static INT32 CuebrickScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		KonamiICScan(nAction);
+
+		SCAN_VAR(CuebrickSndIrqFire);
+		SCAN_VAR(bIrqEnable);
+		SCAN_VAR(DrvNvRamBank);
+		SCAN_VAR(PriorityFlag);
 		SCAN_VAR(CuebrickSndIrqFire);
 	}
 

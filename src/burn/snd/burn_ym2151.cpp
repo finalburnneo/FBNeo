@@ -35,7 +35,7 @@ static void YM2151Render(INT32 nSegmentLength)
 	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("YM2151Render called without init\n"));
 #endif
 
-	if (nYM2151Position >= nSegmentLength) {
+	if (nYM2151Position >= nSegmentLength || !pBurnSoundOut) {
 		return;
 	}
 

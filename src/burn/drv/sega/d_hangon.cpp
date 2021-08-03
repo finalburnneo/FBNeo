@@ -1131,7 +1131,7 @@ static struct BurnRomInfo SharrierRomDesc[] = {
 	
 	{ "epr-6844.ic123",   0x02000, 0xe3ec7bd6, SYS16_ROM_PROM | BRF_GRA },
 	
-	{ "315-5163a.ic32",   0x01000, 0x00000000, BRF_NODUMP },
+	{ "315-5163a.ic32",   0x01000, 0x203dffeb, BRF_OPT },
 };
 
 

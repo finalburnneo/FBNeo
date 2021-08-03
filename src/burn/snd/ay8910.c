@@ -69,6 +69,8 @@ static INT16 *soundbuf[MAX_8910];
 extern INT32 nBurnSoundLen;
 extern INT32 nBurnFPS;
 extern UINT32 nCurrentFrame;
+extern INT16 *pBurnSoundOut;
+extern INT32 FM_IS_POSTLOADING;
 
 // Streambuffer handling
 static INT32 SyncInternal()
@@ -79,7 +81,7 @@ static INT32 SyncInternal()
 
 static void UpdateStream(INT32 chip, INT32 samples_len)
 {
-    if (!ay8910_buffered) return;
+    if (!ay8910_buffered || !pBurnSoundOut) return;
     if (samples_len > nBurnSoundLen) samples_len = nBurnSoundLen;
 
 	INT32 nSamplesNeeded = samples_len - nPosition[chip];
@@ -353,7 +355,7 @@ static void AYWriteReg(INT32 chip, INT32 r, INT32 v)
             /* update the output buffer before changing the register */
             if (ay8910_buffered) UpdateStream(chip, SyncInternal());
 
-            AYStreamUpdate(); // for ym-cores
+            if (!FM_IS_POSTLOADING) AYStreamUpdate(); // for ym-cores
 		}
 	}
 

@@ -156,10 +156,20 @@ static int RunFrame(int bDraw, int bPause)
 	if (bDraw)
 	{
 		nFramesRendered++;
-		if (VidFrame())
-		{
-		 	AudBlankSound();
+
+		if (!bRunAhead || bAppDoFast) {     // Run-Ahead feature 				-dink aug 02, 2021
+			if (VidFrame()) {				// Do one frame w/o RunAhead or if FFWD is pressed.
+				AudBlankSound();
+			}
+		} else {
+			pBurnDraw = NULL;               // Do one frame w/RunAhead
+			BurnDrvFrame();
+			StateRunAheadSave();
+			pBurnSoundOut = NULL;
+			VidFrame();
+			StateRunAheadLoad();
 		}
+
 		VidPaint(0);                                              // paint the screen (no need to validate)
 	}
 	else

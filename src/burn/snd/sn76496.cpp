@@ -53,7 +53,7 @@ static INT32 SyncInternal()
 
 static void UpdateStream(INT32 chip, INT32 samples_len)
 {
-    if (!sn76496_buffered) return;
+    if (!sn76496_buffered || !pBurnSoundOut) return;
     if (samples_len > nBurnSoundLen) samples_len = nBurnSoundLen;
 
 	INT32 nSamplesNeeded = samples_len;

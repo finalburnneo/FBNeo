@@ -18,8 +18,6 @@ static UINT8 M62InputPort2[8]       = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 M62Dip[2]              = {0, 0};
 static UINT8 M62Input[3]            = {0x00, 0x00, 0x00};
 static UINT8 M62Reset               = 0;
-static INT32 M62Z80BankAddress      = 0;
-static INT32 M62Z80BankAddress2     = 0;
 
 static UINT32  M62Z80RomSize          = 0;
 static UINT32  M62PromSize            = 0;
@@ -55,6 +53,9 @@ static INT32 M62CharHScroll;
 static INT32 M62CharVScroll;
 static INT32 M62FlipScreen;
 static INT32 M62SpriteHeightPromOffset;
+
+static INT32 M62Z80BankAddress      = 0;
+static INT32 M62Z80BankAddress2     = 0;
 
 static UINT32 M62PaletteEntries;
 static INT32 M62Z80Clock = 0;
@@ -4664,6 +4665,9 @@ static INT32 M62Scan(INT32 nAction, INT32 *pnMin)
 #ifdef USE_SAMPLE_HACK
 		BurnSampleScan(nAction, pnMin);
 #endif
+		SCAN_VAR(M62Z80BankAddress);
+		SCAN_VAR(M62Z80BankAddress2);
+
 		SCAN_VAR(M62BackgroundHScroll);
 		SCAN_VAR(M62BackgroundVScroll);
 		SCAN_VAR(M62CharHScroll);

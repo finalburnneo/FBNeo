@@ -305,12 +305,7 @@ static INT32 MemIndex()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x0000,  0, 1)) return 1;
@@ -347,6 +342,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	TimepltSndInit(DrvZ80ROM1, DrvZ80RAM1, 1);
+	TimepltSndVol(0.65, 0.65);
 
 	GenericTilesInit();
 
@@ -362,8 +358,7 @@ static INT32 DrvExit()
 
 	GenericTilesExit();
 
-	BurnFree (AllMem);
-	AllMem = NULL;
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -391,19 +386,7 @@ static void draw_layer()
 		if (sy > 239 || sy < 16) continue;
 		sy -= 16;
 
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_FlipXY(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_FlipY(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM0);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_FlipX(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM0);
-			}
-		}
+		Draw8x8Tile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 0, DrvGfxROM0);
 	}
 }
 
@@ -505,6 +488,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		TimepltSndUpdate(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 	}
 
 	if (pBurnDraw) {
@@ -524,7 +508,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
-
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;
 		ba.szName = "All Ram";

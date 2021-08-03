@@ -398,7 +398,7 @@ static INT32 MemIndex()
 	AllRam			= Next;
 
 	DrvSprRAM		= Next; Next += 0x001000;
-	DrvPandoraRAM		= Next; Next += 0x001000;
+	DrvPandoraRAM	= Next; Next += 0x001000;
 	DrvZ80RAM0		= Next; Next += 0x001000;
 	DrvZ80RAM1		= Next; Next += 0x001000;
 	DrvShareRAM		= Next; Next += 0x002000;
@@ -418,12 +418,7 @@ static INT32 DrvInit(INT32 select)
 {
 	BurnSetRefreshRate(58);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x000000,  0, 1)) return 1;
@@ -634,9 +629,6 @@ static INT32 DrvFrame()
 	INT32 nCyclesDone[4] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2], nExtraCycles[3] };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-
-		INT32 nSegment;
-
 		ZetOpen(0);
 		if (i == 64*4) {
 			ZetSetVector(0xff);
@@ -646,23 +638,20 @@ static INT32 DrvFrame()
 			ZetSetVector(0xfd);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
-		nSegment = (nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0];
-		nCyclesDone[0] += ZetRun(nSegment);
+		CPU_RUN(0, Zet);
 		ZetClose();
 
 		ZetOpen(1);
 		if (i == 240*4) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-		nSegment = (nCyclesTotal[1] * (i + 1) / nInterleave) - nCyclesDone[1];
-		nCyclesDone[1] += ZetRun(nSegment);
+		CPU_RUN(1, Zet);
 		ZetClose();
 
 		ZetOpen(2);
 		if (i == 240*4) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-		BurnTimerUpdate((i + 1) * nCyclesTotal[2] / nInterleave);
+		CPU_RUN_TIMER(2);
 		ZetClose();
 
-		nSegment = (nCyclesTotal[3] * (i + 1) / nInterleave) - nCyclesDone[3];
-		nCyclesDone[3] += mermaidRun(nSegment);
+		CPU_RUN(3, mermaid);
 
 		if (i == 239*4) {
 			pandora_buffer_sprites();
@@ -674,12 +663,9 @@ static INT32 DrvFrame()
 	}
 
 	ZetOpen(2);
-	BurnTimerEndFrame(nCyclesTotal[2]);
-
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
 	ZetClose();
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];

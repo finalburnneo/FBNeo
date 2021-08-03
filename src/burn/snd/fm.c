@@ -728,6 +728,8 @@ static INT32	out_delta[4];	/* channel output NONE,LEFT,RIGHT or CENTER for YM260
 static UINT32	LFO_AM;			/* runtime LFO calculations helper */
 static INT32	LFO_PM;			/* runtime LFO calculations helper */
 
+INT32 FM_IS_POSTLOADING = 0;
+
 /* log output level */
 #define LOG_ERR  3      /* ERROR       */
 #define LOG_WAR  2      /* WARNING     */
@@ -1886,6 +1888,14 @@ static void FMsave_state_st(const char *state_name,int num,FM_ST *ST)
 #if FM_BUSY_FLAG_SUPPORT
 	state_save_register_double(state_name, num, "BusyExpire", &ST->BusyExpire , 1);
 #endif
+	// experi-dink-mental
+	state_save_register_UINT8 (state_name, num, "index"   , &ST->index   , 1);
+	state_save_register_int   (state_name, num, "clock", &ST->clock  );
+	state_save_register_int   (state_name, num, "rate", &ST->rate  );
+	state_save_register_double(state_name, num, "freqbase", &ST->freqbase , 1);
+	state_save_register_double(state_name, num, "TimerBase", &ST->TimerBase , 1);
+
+	// end experimental
 	state_save_register_UINT8 (state_name, num, "address"   , &ST->address , 1);
 	state_save_register_UINT8 (state_name, num, "IRQ"       , &ST->irq     , 1);
 	state_save_register_UINT8 (state_name, num, "IRQ MASK"  , &ST->irqmask , 1);
@@ -2391,11 +2401,12 @@ void YM2203ResetChip(int num)
 static void YM2203_postload(void)
 {
 	int num , r;
+	FM_IS_POSTLOADING = 1;
 
 	for(num=0;num<YM2203NumChips;num++)
 	{
 		/* prescaler */
-		OPNPrescaler_w(&FM2203[num].OPN,1,1);
+		//OPNPrescaler_w(&FM2203[num].OPN,1,1);
 
 		/* SSG registers */
 		for(r=0;r<16;r++)
@@ -2406,6 +2417,7 @@ static void YM2203_postload(void)
 
 		/* OPN registers */
 		/* DT / MULTI , TL , KS / AR , AMON / DR , SR , SL / RR , SSG-EG */
+#if 0
 		for(r=0x30;r<0x9e;r++)
 			if((r&3) != 3)
 				OPNWriteReg(&FM2203[num].OPN,r,FM2203[num].REGS[r]);
@@ -2416,7 +2428,9 @@ static void YM2203_postload(void)
 
 		/* channels */
 		/*FM_channel_postload(FM2203[num].CH,3);*/
+#endif
 	}
+	FM_IS_POSTLOADING = 0;
 	cur_chip = NULL;
 }
 
@@ -2428,12 +2442,22 @@ static void YM2203_save_state(void)
 	for(num=0;num<YM2203NumChips;num++)
 	{
 		state_save_register_UINT8 (statename, num, "regs"   , FM2203[num].REGS   , 256);
-		FMsave_state_st(statename,num,&FM2203[num].OPN.ST);
+		FMsave_state_st(statename,num,&FM2203[num].OPN.ST);  // good
 		FMsave_state_channel(statename,num,FM2203[num].CH,3);
 		/* 3slots */
 		state_save_register_UINT32 (statename, num, "slot3fc" , FM2203[num].OPN.SL3.fc , 3);
 		state_save_register_UINT8  (statename, num, "slot3fh" , &FM2203[num].OPN.SL3.fn_h , 1);
 		state_save_register_UINT8  (statename, num, "slot3kc" , FM2203[num].OPN.SL3.kcode , 3);
+		state_save_register_UINT32 (statename, num, "slot3bfn" , FM2203[num].OPN.SL3.block_fnum , 3);
+		// dink added
+		state_save_register_UINT32 (statename, num, "lfo_cnt" , &FM2203[num].OPN.lfo_cnt , 1);
+		state_save_register_UINT32 (statename, num, "lfo_inc" , &FM2203[num].OPN.lfo_inc , 1);
+
+		state_save_register_UINT32 (statename, num, "eg_cnt" , &FM2203[num].OPN.eg_cnt , 1);
+		state_save_register_UINT32 (statename, num, "eg_timer" , &FM2203[num].OPN.eg_timer , 1);
+		state_save_register_UINT32 (statename, num, "eg_timer_add" , &FM2203[num].OPN.eg_timer_add , 1);
+		state_save_register_UINT32 (statename, num, "eg_timer_overflow" , &FM2203[num].OPN.eg_timer_overflow , 1);
+
 	}
 	state_save_register_func_postload(YM2203_postload);
 }
@@ -2567,7 +2591,7 @@ int YM2203TimerOver(int n,int c)
 	}
 	else
 	{	/* Timer A */
-		YM2203UpdateReq(n);
+		if (!FM_IS_POSTLOADING) YM2203UpdateReq(n);
 		/* timer update */
 		TimerAOver( &(F2203->OPN.ST) );
 		/* CSM mode key,TL control */
@@ -3099,6 +3123,8 @@ static void YM2608_postload(void)
 {
 	int num , r;
 
+	FM_IS_POSTLOADING = 1;
+
 	for(num=0;num<YM2608NumChips;num++)
 	{
 		YM2608 *F2608 = &(FM2608[num]);
@@ -3138,6 +3164,9 @@ static void YM2608_postload(void)
 		/* Delta-T ADPCM unit */
 		YM_DELTAT_postload(&F2608->deltaT , &F2608->REGS[0x100] );
 	}
+
+	FM_IS_POSTLOADING = 0;
+
 	cur_chip = NULL;
 }
 
@@ -3159,6 +3188,14 @@ static void YM2608_save_state(void)
 		state_save_register_UINT8 (statename, num, "slot3kc" , F2608->OPN.SL3.kcode, 3);
 		/* address register1 */
 		state_save_register_UINT8 (statename, num, "addr_A1" , &F2608->addr_A1 ,1);
+
+		/* fix states with ym2608 -dink july 31, 2021 */
+		state_save_register_UINT8 (statename, num, "arrivedFlag", &F2608->adpcm_arrivedEndAddress , 1);
+		state_save_register_UINT8 (statename, num, "adpcmTL", &F2608->adpcmTL , 1);
+		state_save_register_UINT32(statename, num, "adpcmreg" , &F2608->adpcmreg[0]   , 0x30);
+		state_save_register_UINT8 (statename, num, "flagmask", &F2608->flagmask , 1);
+		state_save_register_UINT8 (statename, num, "irqmask", &F2608->irqmask , 1);
+
 		/* rythm(ADPCMA) */
 		FMsave_state_adpcma(statename,num,F2608->adpcm);
 		/* Delta-T ADPCM unit */
@@ -3502,7 +3539,7 @@ int YM2608TimerOver(int n,int c)
 		break;
 	case 0:
 		{	/* Timer A */
-			YM2608UpdateReq(n);
+			if (!FM_IS_POSTLOADING) YM2608UpdateReq(n);
 			/* timer update */
 			TimerAOver( &(F2608->OPN.ST) );
 			/* CSM mode key,TL controll */
@@ -3817,6 +3854,8 @@ static void YM2610_postload(void)
 {
 	int num , r;
 
+	FM_IS_POSTLOADING = 1;
+
 	for(num=0;num<YM2610NumChips;num++)
 	{
 		YM2610 *F2610 = &(FM2610[num]);
@@ -3858,6 +3897,9 @@ static void YM2610_postload(void)
 		/* Delta-T ADPCM unit */
 		YM_DELTAT_postload(&F2610->deltaT , &F2610->REGS[0x010] );
 	}
+
+	FM_IS_POSTLOADING = 0;
+
 	cur_chip = NULL;
 }
 
@@ -4199,7 +4241,7 @@ int YM2610TimerOver(int n,int c)
 	}
 	else
 	{	/* Timer A */
-		YM2610UpdateReq(n);
+		if (!FM_IS_POSTLOADING) YM2610UpdateReq(n);
 		/* timer update */
 		TimerAOver( &(F2610->OPN.ST) );
 		/* CSM mode key,TL controll */
@@ -4365,6 +4407,8 @@ static void YM2612_postload(void)
 {
 	int num , r;
 
+	FM_IS_POSTLOADING = 1;
+
 	for(num=0;num<YM2612NumChips;num++)
 	{
 		/* DAC data & port */
@@ -4388,6 +4432,9 @@ static void YM2612_postload(void)
 		/* channels */
 		/*FM_channel_postload(FM2612[num].CH,6);*/
 	}
+
+	FM_IS_POSTLOADING = 0;
+
 	cur_chip = NULL;
 }
 
@@ -4601,7 +4648,7 @@ int YM2612TimerOver(int n,int c)
 	}
 	else
 	{	/* Timer A */
-		YM2612UpdateReq(n);
+		if (!FM_IS_POSTLOADING) YM2612UpdateReq(n);
 		/* timer update */
 		TimerAOver( &(F2612->OPN.ST) );
 		/* CSM mode key,TL controll */

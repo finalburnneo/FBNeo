@@ -1759,7 +1759,7 @@ static INT32 DrvFrame()
 	}
 
 	SekNewFrame(); // cpu sync
-	ZetNewFrame(); // timer
+	if (game_select == 0) ZetNewFrame(); // timer
 
 	{
 		DrvInputs[0] = (game_select) ? 0xff : 0;

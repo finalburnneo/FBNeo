@@ -236,6 +236,7 @@ extern INT32 BurnShiftEnabled;
 extern int bRunPause;
 extern int bAltPause;
 extern int bAlwaysDrawFrames;
+//extern INT32 bRunAhead;  // in burn.h! (partially platform agnostic feature)
 extern int kNetGame;
 int RunIdle();
 int RunFrame(int bDraw, int bPause);

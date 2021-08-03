@@ -35,7 +35,7 @@ static void YMF271Render(INT32 nSegmentLength)
 	if (!DebugSnd_YMF271Initted) bprintf(PRINT_ERROR, _T("YMF271Render called without init\n"));
 #endif
 
-	if (nYMF271Position >= nSegmentLength) {
+	if (nYMF271Position >= nSegmentLength || !pBurnSoundOut) {
 		return;
 	}
 
@@ -274,7 +274,7 @@ void BurnYMF271Scan(INT32 nAction, INT32* pnMin)
 	BurnTimerScan(nAction, pnMin);
 	ymf271_scan(nAction);
 
-	if (nAction & ACB_WRITE) {
+	if (nAction & ACB_WRITE && ~nAction & ACB_RUNAHEAD) {
 		nYMF271Position = 0;
 		nFractionalPosition = 0;
 		memset(pBuffer, 0, 4096 * 2 * sizeof(INT16));

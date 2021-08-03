@@ -44,14 +44,13 @@ static INT32 DrvRearHorizScrollHi;
 static INT32 DrvSampleAddress;
 
 static INT32 nCyclesDone[2], nCyclesTotal[2];
-static INT32 nCyclesSegment;
 
 static UINT8 DrvHasYM2203 = 0;
 static UINT8 DrvKikcubicDraw = 0;
 
 #define VECTOR_INIT		0
-#define YM2151_ASSERT		1
-#define YM2151_CLEAR		2
+#define YM2151_ASSERT	1
+#define YM2151_CLEAR	2
 #define Z80_ASSERT		3
 #define Z80_CLEAR		4
 
@@ -919,13 +918,17 @@ static void DrvSetVector(INT32 Status)
 	}
 	
 	if (DrvIrqVector == 0xff) {
-//		ZetSetVector(DrvIrqVector);
-		ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+		// close irq?
 	} else {
 		ZetSetVector(DrvIrqVector);
-		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-		nCyclesDone[1] += ZetRun(1000);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 	}
+}
+
+static void bank_switch(INT32 data)
+{
+	DrvRomBank = data & 0x07;
+	ZetMapMemory(DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000), 0x8000, 0xbfff, MAP_ROM);
 }
 
 static INT32 DrvDoReset()
@@ -941,7 +944,7 @@ static INT32 DrvDoReset()
 		BurnYM2203Reset();
 	} else {
 		BurnYM2151Reset();
-	}	
+	}
 	
 	DACReset();
 	
@@ -1105,11 +1108,9 @@ static void __fastcall VigilanteZ80PortWrite1(UINT16 a, UINT8 d)
 	switch (a) {
 		case 0x00: {
 			DrvSoundLatch = d;
-			ZetClose();
-			ZetOpen(1);
+			ZetCPUPush(1);
 			DrvSetVector(Z80_ASSERT);
-			ZetClose();
-			ZetOpen(0);
+			ZetCPUPop();
 			return;
 		}
 		
@@ -1119,9 +1120,7 @@ static void __fastcall VigilanteZ80PortWrite1(UINT16 a, UINT8 d)
 		}
 		
 		case 0x04: {
-			DrvRomBank = d & 0x07;
-			ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
-			ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
+			bank_switch(d);
 			return;
 		}
 		
@@ -1237,20 +1236,16 @@ static void __fastcall KikcubicZ80PortWrite1(UINT16 a, UINT8 d)
 		}
 		
 		case 0x04: {
-			DrvRomBank = d & 0x07;
-			ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
-			ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
+			bank_switch(d);
 			return;
 		}
 		
 		case 0x06: {
 			if (d == 0x20) return; // ???
 			DrvSoundLatch = d;
-			ZetClose();
-			ZetOpen(1);
+			ZetCPUPush(1);
 			DrvSetVector(Z80_ASSERT);
-			ZetClose();
-			ZetOpen(0);
+			ZetCPUPop();
 			return;
 		}
 		
@@ -1560,11 +1555,12 @@ static INT32 DrvInit()
 	ZetMapArea(0xf000, 0xffff, 2, DrvZ80Ram2             );
 	ZetClose();
 
-	nCyclesTotal[0] = 3579645 / 55;
+	nCyclesTotal[0] = 3579645 / 55;   // 3579_6_45??? -dink
 	nCyclesTotal[1] = 3579645 / 55;
 	
 	GenericTilesInit();
-	BurnYM2151Init(3579645);
+	BurnYM2151InitBuffered(3579645, 1, NULL, 0);
+	BurnTimerAttachZet(3579645);
 	BurnYM2151SetIrqHandler(&VigilantYM2151IrqHandler);	
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.55, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.55, BURN_SND_ROUTE_RIGHT);
@@ -1671,7 +1667,8 @@ static INT32 DrvcInit()
 	nCyclesTotal[1] = 3579645 / 55;
 	
 	GenericTilesInit();
-	BurnYM2151Init(3579645);
+	BurnYM2151InitBuffered(3579645, 1, NULL, 0);
+	BurnTimerAttachZet(3579645);
 	BurnYM2151SetIrqHandler(&VigilantYM2151IrqHandler);	
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.55, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.55, BURN_SND_ROUTE_RIGHT);
@@ -1773,7 +1770,8 @@ static INT32 DrvbInit()
 	nCyclesTotal[1] = 3579645 / 55;
 	
 	GenericTilesInit();
-	BurnYM2151Init(3579645);
+	BurnYM2151InitBuffered(3579645, 1, NULL, 0);
+	BurnTimerAttachZet(3579645);
 	BurnYM2151SetIrqHandler(&VigilantYM2151IrqHandler);	
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.55, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.55, BURN_SND_ROUTE_RIGHT);
@@ -2005,7 +2003,8 @@ static INT32 KikcubicInit()
 	nCyclesTotal[1] = 3579645 / 55;
 	
 	GenericTilesInit();
-	BurnYM2151Init(3579645);
+	BurnYM2151InitBuffered(3579645, 1, NULL, 0);
+	BurnTimerAttachZet(3579645);
 	BurnYM2151SetIrqHandler(&VigilantYM2151IrqHandler);	
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.55, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.55, BURN_SND_ROUTE_RIGHT);
@@ -2276,76 +2275,39 @@ static INT32 KikcubicDraw()
 static INT32 DrvFrame()
 {
 	INT32 nInterleave = 256; // dac needs 128 NMIs
-	INT32 nSoundBufferPos = 0;
-	
+
 	if (DrvReset) DrvDoReset();
 
 	DrvMakeInputs();
 
 	nCyclesDone[0] = nCyclesDone[1] = 0;
-	
-	ZetNewFrame();
-	
-	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
 
-		nCurrentCPU = 0;
-		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
+	ZetNewFrame();
+
+	for (INT32 i = 0; i < nInterleave; i++) {
+		ZetOpen(0);
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
-		nCurrentCPU = 1;
-		ZetOpen(nCurrentCPU);
-		if (!DrvHasYM2203) {
-			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-			nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		} else {
-			BurnTimerUpdate(i * (nCyclesTotal[nCurrentCPU] / nInterleave));
-		}
-		if (i & 1) {
-			ZetNmi();
-		}
-		ZetClose();
-		
-		if (pBurnSoundOut && !DrvHasYM2203) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			ZetOpen(1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			ZetClose();
-			nSoundBufferPos += nSegmentLength;
-		}
-	}
-	
-	if (DrvHasYM2203) {
 		ZetOpen(1);
-		BurnTimerEndFrame(nCyclesTotal[1]);
+		CPU_RUN_TIMER(1);
+		if (i & 1) ZetNmi();
 		ZetClose();
 	}
-	
+
+	ZetOpen(1);
 	if (pBurnSoundOut && !DrvHasYM2203) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		
-		if (nSegmentLength) {
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			ZetOpen(1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			ZetClose();			
-		}
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
-	
+
 	if (DrvHasYM2203 && pBurnSoundOut) {
-		ZetOpen(1);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
-	
+	ZetClose();
+
 	if (pBurnDraw) {
 		if (DrvKikcubicDraw) {
 			KikcubicDraw();
@@ -2382,14 +2344,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		}
 		DACScan(nAction, pnMin);
 
-		// Scan critical driver variables
-		SCAN_VAR(nCyclesDone);
-		SCAN_VAR(nCyclesSegment);
 		SCAN_VAR(DrvRomBank);
 		SCAN_VAR(DrvSoundLatch);
-		SCAN_VAR(DrvDip);
-		SCAN_VAR(DrvInput);
 		SCAN_VAR(DrvIrqVector);
+
 		SCAN_VAR(DrvRearColour);
 		SCAN_VAR(DrvRearDisable);
 		SCAN_VAR(DrvHorizScrollLo);
@@ -2401,8 +2359,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	
 	if (nAction & ACB_WRITE) {
 		ZetOpen(0);
-		ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
-		ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
+		bank_switch(DrvRomBank);
 		ZetClose();
 	}
 

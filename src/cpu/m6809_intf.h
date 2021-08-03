@@ -48,6 +48,9 @@ INT32 M6809Scan(INT32 nAction);
 UINT16 M6809GetPC();
 UINT16 M6809GetPrevPC();
 
+void M6809CPUPush(INT32 nCPU);
+void M6809CPUPop();
+
 UINT8 M6809ReadByte(UINT16 Address);
 void M6809WriteByte(UINT16 Address, UINT8 Data);
 

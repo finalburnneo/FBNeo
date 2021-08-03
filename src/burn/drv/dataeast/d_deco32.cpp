@@ -3773,6 +3773,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (game_select == 3) {
 			tattass_eeprom_scan();
 			decobsmt_scan(nAction, pnMin);
+		} else {
+			EEPROMScan(nAction, pnMin);
 		}
 
 		if (game_select == 4) {

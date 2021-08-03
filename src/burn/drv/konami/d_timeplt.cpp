@@ -746,7 +746,8 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		TimepltSndUpdate(pBurnSoundOut, nBurnSoundLen);
-//		tc8830fUpdate(pBurnSoundOut, nBurnSoundLen);
+		//tc8830fUpdate(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 	}
 
 	if (pBurnDraw) {
@@ -777,6 +778,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		SCAN_VAR(nmi_enable);
 		SCAN_VAR(last_sound_irq);
+		SCAN_VAR(watchdog);
 	}
 
 	return 0;

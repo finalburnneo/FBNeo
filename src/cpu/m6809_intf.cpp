@@ -57,7 +57,7 @@ struct m6809pstack {
 static m6809pstack pstack[MAX_PSTACK];
 static INT32 pstacknum = 0;
 
-static void M6809CPUPush(INT32 nCPU)
+void M6809CPUPush(INT32 nCPU)
 {
 	m6809pstack *p = &pstack[pstacknum++];
 
@@ -75,7 +75,7 @@ static void M6809CPUPush(INT32 nCPU)
 	}
 }
 
-static void M6809CPUPop()
+void M6809CPUPop()
 {
 	m6809pstack *p = &pstack[--pstacknum];
 

@@ -755,7 +755,7 @@ static void apu_update(struct nesapu_info *info)
 	INT32 square1, square2, square3, square4;
 
 //------------------------------------------------------------------------------------------------------
-	if (info->pSyncCallback == NULL) return;
+	if (info->pSyncCallback == NULL || pBurnSoundOut == NULL) return;
 	INT32 position;
 
 	if (info->fill_buffer_hack) {
@@ -815,13 +815,13 @@ void nesapuUpdate(INT32 chip, INT16 *buffer, INT32 samples)
 
 	struct nesapu_info *info = &nesapu_chips[chip];
 
-	info->fill_buffer_hack = 1;
-	apu_update(info);
-
 	if (pBurnSoundOut == NULL) {
 		info->current_position = 0;
 		return;
 	}
+
+	info->fill_buffer_hack = 1;
+	apu_update(info);
 
 	INT16 *source = info->stream + 5;
 

@@ -74,6 +74,7 @@
 #define YM_DELTAT_DECODE_MIN (-(YM_DELTAT_DECODE_RANGE))
 #define YM_DELTAT_DECODE_MAX ((YM_DELTAT_DECODE_RANGE)-1)
 
+extern INT32 FM_IS_POSTLOADING; // dink was here! jul31, 2021
 
 /* Forecast to next Forecast (rate = *8) */
 /* 1/8 , 3/8 , 5/8 , 7/8 , 9/8 , 11/8 , 13/8 , 15/8 */
@@ -259,7 +260,7 @@ value:   START, REC, MEMDAT, REPEAT, SPOFF, x,x,RESET   meaning:
 			DELTAT->PCM_BSY = 0;
 
 			/* set BRDY flag */
-			if(DELTAT->status_set_handler)
+			if(DELTAT->status_set_handler && !FM_IS_POSTLOADING)
 				if(DELTAT->status_change_BRDY_bit)
 					(DELTAT->status_set_handler)(DELTAT->status_change_which_chip, DELTAT->status_change_BRDY_bit);
 		}
@@ -341,7 +342,7 @@ value:   START, REC, MEMDAT, REPEAT, SPOFF, x,x,RESET   meaning:
 			 	DELTAT->now_addr+=2; /* two nibbles at a time */
 
 				/* reset BRDY bit in status register, which means we are processing the write */
-				if(DELTAT->status_reset_handler)
+				if(DELTAT->status_reset_handler && !FM_IS_POSTLOADING)
 					if(DELTAT->status_change_BRDY_bit)
 						(DELTAT->status_reset_handler)(DELTAT->status_change_which_chip, DELTAT->status_change_BRDY_bit);
 
@@ -350,7 +351,7 @@ value:   START, REC, MEMDAT, REPEAT, SPOFF, x,x,RESET   meaning:
 	* For now, we don't really do this; we simply reset and set the flag in zero time, so that the IRQ will work.
 	*/
 				/* set BRDY bit in status register */
-				if(DELTAT->status_set_handler)
+				if(DELTAT->status_set_handler && !FM_IS_POSTLOADING)
 					if(DELTAT->status_change_BRDY_bit)
 						(DELTAT->status_set_handler)(DELTAT->status_change_which_chip, DELTAT->status_change_BRDY_bit);
 
@@ -358,7 +359,7 @@ value:   START, REC, MEMDAT, REPEAT, SPOFF, x,x,RESET   meaning:
 			else
 			{
 				/* set EOS bit in status register */
-				if(DELTAT->status_set_handler)
+				if(DELTAT->status_set_handler && !FM_IS_POSTLOADING)
 					if(DELTAT->status_change_EOS_bit)
 						(DELTAT->status_set_handler)(DELTAT->status_change_which_chip, DELTAT->status_change_EOS_bit);
 			}
@@ -372,7 +373,7 @@ value:   START, REC, MEMDAT, REPEAT, SPOFF, x,x,RESET   meaning:
 			DELTAT->CPU_data = v;
 
 			/* Reset BRDY bit in status register, which means we are full of data */
-			if(DELTAT->status_reset_handler)
+			if(DELTAT->status_reset_handler && !FM_IS_POSTLOADING)
 				if(DELTAT->status_change_BRDY_bit)
 					(DELTAT->status_reset_handler)(DELTAT->status_change_which_chip, DELTAT->status_change_BRDY_bit);
 			return;
@@ -438,28 +439,49 @@ void YM_DELTAT_ADPCM_Reset(YM_DELTAT *DELTAT,int pan,int emulation_mode)
 			(DELTAT->status_set_handler)(DELTAT->status_change_which_chip, DELTAT->status_change_BRDY_bit);
 }
 
-void YM_DELTAT_postload(YM_DELTAT *DELTAT,UINT8 *regs)
+void YM_DELTAT_postload(YM_DELTAT *DELTAT,UINT8 *regszz)
 {
+
+#if 0
+	//	postload not needed for this -dink july31, 2021
 	int r;
 
 	/* to keep adpcml */
 	DELTAT->volume = 0;
 	/* update */
 	for(r=1;r<16;r++)
-		YM_DELTAT_ADPCM_Write(DELTAT,r,regs[r]);
+		YM_DELTAT_ADPCM_Write(DELTAT,r,DELTAT->reg[r]);
 	DELTAT->reg[0] = regs[0];
-
+#endif
 	/* current rom data */
 	if (DELTAT->memory)
 		DELTAT->now_data = *(DELTAT->memory + (DELTAT->now_addr>>1) );
-
 }
+
 void YM_DELTAT_savestate(const char *statename,int num,YM_DELTAT *DELTAT)
 {
 #ifdef _STATE_H
+	// hooked up proper deltaT states -dink july31, 2021
+	// hint: mechatt now works with run-ahead! :)
+	state_save_register_UINT8 (statename, num, "DeltaT.now_data" , &DELTAT->now_data, 1);
+	state_save_register_UINT8 (statename, num, "DeltaT.CPU_data" , &DELTAT->CPU_data, 1);
 	state_save_register_UINT8 (statename, num, "DeltaT.portstate", &DELTAT->portstate, 1);
-	state_save_register_UINT32(statename, num, "DeltaT.address"  , &DELTAT->now_addr , 1);
-	state_save_register_UINT32(statename, num, "DeltaT.step"     , &DELTAT->now_step , 1);
+	state_save_register_UINT8 (statename, num, "DeltaT.control2" , &DELTAT->control2, 1);
+	state_save_register_UINT8 (statename, num, "DeltaT.portshift", &DELTAT->portshift, 1);
+	state_save_register_UINT8 (statename, num, "DeltaT.DRAMportshift", &DELTAT->DRAMportshift, 1);
+	state_save_register_UINT8 (statename, num, "DeltaT.memread"  , &DELTAT->memread, 1);
+	state_save_register_UINT8 (statename, num, "DeltaT.PCM_BSY"  , &DELTAT->PCM_BSY, 1);
+	state_save_register_UINT8 (statename, num, "DeltaT.reg"      , &DELTAT->reg[0], 16);
+
+	state_save_register_UINT32(statename, num, "DeltaT.now_addr" , &DELTAT->now_addr , 1);
+	state_save_register_UINT32(statename, num, "DeltaT.now_step" , &DELTAT->now_step , 1);
+	state_save_register_UINT32(statename, num, "DeltaT.step"     , &DELTAT->step , 1);
+	state_save_register_UINT32(statename, num, "DeltaT.start"    , &DELTAT->start , 1);
+	state_save_register_UINT32(statename, num, "DeltaT.limit"    , &DELTAT->limit , 1);
+	state_save_register_UINT32(statename, num, "DeltaT.end"      , &DELTAT->end , 1);
+	state_save_register_UINT32(statename, num, "DeltaT.delta"    , &DELTAT->delta , 1);
+
+	state_save_register_INT32 (statename, num, "DeltaT.volume"   , &DELTAT->volume   , 1);
 	state_save_register_INT32 (statename, num, "DeltaT.acc"      , &DELTAT->acc      , 1);
 	state_save_register_INT32 (statename, num, "DeltaT.prev_acc" , &DELTAT->prev_acc , 1);
 	state_save_register_INT32 (statename, num, "DeltaT.adpcmd"   , &DELTAT->adpcmd   , 1);

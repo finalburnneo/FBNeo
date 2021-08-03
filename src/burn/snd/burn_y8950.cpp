@@ -237,7 +237,7 @@ static void Y8950Render(INT32 nSegmentLength)
 	if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("Y8950Render called without init\n"));
 #endif
 
-	if (nY8950Position >= nSegmentLength) {
+	if (nY8950Position >= nSegmentLength || !pBurnSoundOut) {
 		return;
 	}
 
@@ -260,6 +260,8 @@ static void Y8950UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 #if defined FBNEO_DEBUG
 	if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("Y8950UpdateResample called without init\n"));
 #endif
+
+	if (!pBurnSoundOut) return;
 
 	INT32 nSegmentLength = nSegmentEnd;
 	INT32 nSamplesNeeded = nSegmentEnd * nBurnY8950SoundRate / nBurnSoundRate + 1;
@@ -352,6 +354,8 @@ static void Y8950UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 #if defined FBNEO_DEBUG
 	if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("Y8950UpdateNormal called without init\n"));
 #endif
+
+	if (!pBurnSoundOut) return;
 
 	INT32 nSegmentLength = nSegmentEnd;
 

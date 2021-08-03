@@ -310,7 +310,7 @@ static void vlm5030_update(struct vlm5030_info *chip)
 	INT32 u[11];
 
 //------------------------------------------------------------------------------------------------------
-	if (chip->pSyncCallback == NULL) return;
+	if (chip->pSyncCallback == NULL || !pBurnSoundOut) return;
 	INT32 position;
 
 	if (chip->fill_buffer_hack) {

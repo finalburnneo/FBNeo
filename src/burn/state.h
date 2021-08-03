@@ -13,7 +13,13 @@
 #endif
 
 /* Scan driver data */
-INT32 BurnAreaScan(INT32 nAction, INT32* pnMin);
+INT32 BurnAreaScan(INT32 nAction, INT32* pnMin); // burn.cpp
+
+/* Run-A-head */
+void StateRunAheadInit();
+void StateRunAheadExit();
+void StateRunAheadSave();
+void StateRunAheadLoad();
 
 /* flags to use for nAction */
 #define ACB_READ		 (1<<0)
@@ -25,7 +31,8 @@ INT32 BurnAreaScan(INT32 nAction, INT32* pnMin);
 #define ACB_MEMORY_RAM	 (1<<5)
 #define ACB_DRIVER_DATA	 (1<<6)
 
-#define ACB_NET_OPT		 (1<<7)
+#define ACB_NET_OPT		 (1<<7) // exclusions for net games
+#define ACB_RUNAHEAD	 (1<<7) // exclusions for runahead  (same value as ACB_NET_OPT for now)
 
 #define ACB_FULLSCAN	(ACB_NVRAM | ACB_MEMCARD | ACB_MEMORY_RAM | ACB_DRIVER_DATA)
 

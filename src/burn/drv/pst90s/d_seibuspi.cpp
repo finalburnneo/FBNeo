@@ -2298,7 +2298,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (sound_system == 0) MSM6295Scan(nAction, pnMin);
 
 		if (sound_system == 1) ZetScan(nAction);
-		if (sound_system == 1) BurnYMF271Scan(nAction, pnMin);
+		if (sound_system == 1) {bprintf(0, _T("scan ymf271 from seibuspi.\n")); BurnYMF271Scan(nAction, pnMin);}
 		if (sound_system == 1 && rom_based_z80 == 0 && has_eeprom == 0) intelflash_scan(nAction, pnMin);
 		if (sound_system == 2) YMZ280BScan(nAction, pnMin);
 

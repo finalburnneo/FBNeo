@@ -904,10 +904,10 @@ static INT32 MemIndex()
 
 	DrvZ80RAM	= Next; Next += 0x001000;
 
-	DrvNvRAMBank= Next; Next += 0x000001;
-
 	scrollx		= (UINT16*)Next; Next += 0x00004 * sizeof(UINT16);
 	scrolly		= (UINT16*)Next; Next += 0x00004 * sizeof(UINT16);
+
+	DrvNvRAMBank= Next; Next += 0x000001;
 
 	soundlatch	= Next; Next += 0x000001;
 	soundlatch2	= Next; Next += 0x000001;
@@ -1493,6 +1493,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(twin16_CPUA_register);
 		SCAN_VAR(twin16_CPUB_register);
 		SCAN_VAR(sprite_timer);
+		SCAN_VAR(need_process_spriteram);
 
 		SCAN_VAR(nExtraCycles);
 	}

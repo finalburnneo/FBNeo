@@ -270,6 +270,8 @@ extern INT32 nBurnBpp;						// Bytes per pixel (2, 3, or 4)
 extern UINT8 nBurnLayer;			// Can be used externally to select which layers to show
 extern UINT8 nSpriteEnable;			// Can be used externally to select which Sprites to show
 
+extern INT32 bRunAhead;             // "Run Ahead" lag-reduction technique on/off
+
 extern INT32 nBurnSoundRate;					// Samplerate of sound
 extern INT32 nBurnSoundLen;					// Length in samples per frame
 extern INT16* pBurnSoundOut;				// Pointer to output buffer

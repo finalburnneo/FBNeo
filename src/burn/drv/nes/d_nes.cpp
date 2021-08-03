@@ -4272,6 +4272,59 @@ static void vrc6_cycle()
 #undef mapper24_irqcount
 #undef mapper24_irqcycle
 
+// ---[ mapper 227 xxx-in-1, Waixing Bio Hazard
+#define mapper227_mirror	(mapper_regs[0])
+#define mapper227_S         (mapper_regs[1])
+#define mapper227_L         (mapper_regs[2])
+#define mapper227_P         (mapper_regs[3])
+#define mapper227_O         (mapper_regs[4])
+
+static void mapper227_write(UINT16 address, UINT8 data)
+{
+	mapper227_P = ((address >> 2) & 0x1f) | ((address & 0x100) >> 3);
+	mapper227_S = address & 0x01;
+	mapper227_L = address & (1 << 9);
+	mapper227_O = address & (1 << 7);
+
+	mapper227_mirror = address & 0x02;
+
+	mapper_map();
+}
+
+static void mapper227_map()
+{
+	if (mapper227_O) {
+		if (mapper227_S) {
+			mapper_map_prg(32, 0, mapper227_P >> 1);
+		} else {
+			mapper_map_prg(16, 0, mapper227_P);
+			mapper_map_prg(16, 1, mapper227_P);
+		}
+	} else {
+		if (mapper227_S) {
+			if (mapper227_L) {
+				mapper_map_prg(16, 0, mapper227_P & 0x3e);
+				mapper_map_prg(16, 1, mapper227_P | 0x07);
+			} else {
+				mapper_map_prg(16, 0, mapper227_P & 0x3e);
+				mapper_map_prg(16, 1, mapper227_P & 0x38);
+			}
+		} else {
+			if (mapper227_L) {
+				mapper_map_prg(16, 0, mapper227_P);
+				mapper_map_prg(16, 1, mapper227_P | 0x07);
+			} else {
+				mapper_map_prg(16, 0, mapper227_P);
+				mapper_map_prg(16, 1, mapper227_P & 0x38);
+			}
+		}
+	}
+
+	mapper_map_chr( 8, 0, 0);
+
+	set_mirroring((mapper227_mirror & 0x02) ? HORIZONTAL : VERTICAL);
+}
+
 // --[ mapper 228: Action52
 #define mapper228_mirror	(mapper_regs[0x1f - 0])
 #define mapper228_prg		(mapper_regs[0x1f - 1])
@@ -7453,6 +7506,14 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_map();
 			nes_ext_sound_cb = vrc6_mixer; // vrc6 sound
 			mapper_scan_cb = vrc6_scan;
+			retval = 0;
+			break;
+		}
+
+		case 227: { // xxx-in-1, Waixing Bio Hazard
+			mapper_write = mapper227_write;
+			mapper_map   = mapper227_map;
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -17614,6 +17675,125 @@ STD_ROM_FN(nes_smaruo)
 // Homebrew (hand-added)
 
 
+static struct BurnRomInfo nes_bubblebobbledxRomDesc[] = {
+	{ "Bubble Bobble Deluxe (2021)(Polar Hacker).nes",          163856, 0x198125ce, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_bubblebobbledx)
+STD_ROM_FN(nes_bubblebobbledx)
+
+struct BurnDriver BurnDrvnes_bubblebobbledx = {
+	"nes_bubblebobbledx", "nes_bubblebobble", NULL, NULL, "2018",
+	"Bubble Bobble Deluxe (Hack, HB)\0", NULL, "Polar Hacker", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_bubblebobbledxRomInfo, nes_bubblebobbledxRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_gruniRomDesc[] = {
+	{ "Gruniozerca (2017)(Lukasz Kur).nes",          40976, 0x2ea66761, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_gruni)
+STD_ROM_FN(nes_gruni)
+
+struct BurnDriver BurnDrvnes_gruni = {
+	"nes_gruni", NULL, NULL, NULL, "2017",
+	"Gruniozerca (HB)\0", NULL, "Lukasz Kur", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_gruniRomInfo, nes_gruniRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_mkrotfsRomDesc[] = {
+	{ "Micro Knight RotFS (2017)(Unknown).nes",          131088, 0xbc44af32, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mkrotfs)
+STD_ROM_FN(nes_mkrotfs)
+
+struct BurnDriver BurnDrvnes_mkrotfs = {
+	"nes_mkrotfs", NULL, NULL, NULL, "2017",
+	"Micro Knight - Revenge of the Four Skulls (HB)\0", NULL, "Unknown", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_mkrotfsRomInfo, nes_mkrotfsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_nesertgolfRomDesc[] = {
+	{ "NESert Golfing (2019)(Unknown).nes",          32784, 0xcb43ec95, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_nesertgolf)
+STD_ROM_FN(nes_nesertgolf)
+
+struct BurnDriver BurnDrvnes_nesertgolf = {
+	"nes_nesertgolf", NULL, NULL, NULL, "2019",
+	"NESert Golfing (HB)\0", NULL, "Unknown", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_nesertgolfRomInfo, nes_nesertgolfRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_nesertgolfteRomDesc[] = {
+	{ "NESert Golfing - Tournament Edition (2019)(Unknown).nes",          32784, 0xdb28a4e8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_nesertgolfte)
+STD_ROM_FN(nes_nesertgolfte)
+
+struct BurnDriver BurnDrvnes_nesertgolfte = {
+	"nes_nesertgolfte", "nes_nesertgolf", NULL, NULL, "2019",
+	"NESert Golfing - Tournament Edition (HB)\0", NULL, "Unknown", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 4, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_nesertgolfteRomInfo, nes_nesertgolfteRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_rockm5mpRomDesc[] = {
+	{ "Rockman 5 - Metropolis (2021)(Stalkermaestro).nes",          524304, 0x0911f8bf, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_rockm5mp)
+STD_ROM_FN(nes_rockm5mp)
+
+struct BurnDriver BurnDrvnes_rockm5mp = {
+	"nes_rockm5mp", "nes_megaman5", NULL, NULL, "2021",
+	"Rockman 5 - Metropolis (Hack, HB)\0", NULL, "Stalkermaestro", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_rockm5mpRomInfo, nes_rockm5mpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_magnilocaseRomDesc[] = {
+	{ "The Magnilo Case (2021)(Dalyen Retrogames).nes",          524304, 0x6ff47dba, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_magnilocase)
+STD_ROM_FN(nes_magnilocase)
+
+struct BurnDriver BurnDrvnes_magnilocase = {
+	"nes_magnilocase", NULL, NULL, NULL, "2021",
+	"Magnilo Case, The (HB)\0", NULL, "Dalyen Retrogames", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ADV | GBF_PUZZLE, 0,
+	NESGetZipName, nes_magnilocaseRomInfo, nes_magnilocaseRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_evildeadRomDesc[] = {
 	{ "Evil Dead Ash lives! (2020)(Crying Onion).nes",          262160, 0x2ce2ead0, BRF_ESS | BRF_PRG },
 };
@@ -23027,7 +23207,7 @@ struct BurnDriver BurnDrvnes_bioforceape = {
 };
 
 static struct BurnRomInfo nes_biohazardcRomDesc[] = {
-	{ "Bio Hazard (China).nes",          1048592, 0x75914cb8, BRF_ESS | BRF_PRG },
+	{ "Bio Hazard (China).nes",          1048592, 0xb4c8012d, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_biohazardc)
@@ -23044,7 +23224,7 @@ struct BurnDriver BurnDrvnes_biohazardc = {
 };
 
 static struct BurnRomInfo nes_biohazardRomDesc[] = {
-	{ "Bio Hazard (T-Eng).nes",          1048592, 0x8ca694fc, BRF_ESS | BRF_PRG },
+	{ "Bio Hazard (T-Eng).nes",          1048592, 0x4dffd969, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_biohazard)
@@ -43662,6 +43842,41 @@ struct BurnDriver BurnDrvnes_tsupparioozumou = {
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
+
+static struct BurnRomInfo nes_tsurikicsanjRomDesc[] = {
+	{ "Tsuri Kichi Sanpei - Blue Marlin Hen (Japan).nes",          131088, 0x99ef9cc3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tsurikicsanj)
+STD_ROM_FN(nes_tsurikicsanj)
+
+struct BurnDriver BurnDrvnes_tsurikicsanj = {
+	"nes_tsurikicsanj", "nes_tsurikicsan", NULL, NULL, "1989?",
+	"Tsuri Kichi Sanpei - Blue Marlin Hen (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_tsurikicsanjRomInfo, nes_tsurikicsanjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_tsurikicsanRomDesc[] = {
+	{ "Tsuri Kichi Sanpei - Blue Marlin Hen (T-Eng).nes",          131088, 0xa3479469, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tsurikicsan)
+STD_ROM_FN(nes_tsurikicsan)
+
+struct BurnDriver BurnDrvnes_tsurikicsan = {
+	"nes_tsurikicsan", NULL, NULL, NULL, "1989?",
+	"Tsuri Kichi Sanpei - Blue Marlin Hen (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_tsurikicsanRomInfo, nes_tsurikicsanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 
 static struct BurnRomInfo nes_twincobraRomDesc[] = {
 	{ "Twin Cobra (USA).nes",          262160, 0x24643875, BRF_ESS | BRF_PRG },

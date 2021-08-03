@@ -50,7 +50,7 @@ static void AY8910Render(INT32 nSegmentLength)
 	if (!DebugSnd_YM2610Initted) bprintf(PRINT_ERROR, _T("BurnYM2610 AY8910Render called without init\n"));
 #endif
 
-	if (nAY8910Position >= nSegmentLength) {
+	if (nAY8910Position >= nSegmentLength || !pBurnSoundOut) {
 		return;
 	}
 
@@ -71,7 +71,7 @@ static void YM2610Render(INT32 nSegmentLength)
 	if (!DebugSnd_YM2610Initted) bprintf(PRINT_ERROR, _T("YM2610Render called without init\n"));
 #endif
 
-	if (nYM2610Position >= nSegmentLength) {
+	if (nYM2610Position >= nSegmentLength || !pBurnSoundOut) {
 		return;
 	}
 
@@ -93,6 +93,8 @@ static void YM2610UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 #if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2610Initted) bprintf(PRINT_ERROR, _T("YM2610UpdateResample called without init\n"));
 #endif
+
+	if (!pBurnSoundOut) return;
 
 	INT32 nSegmentLength = nSegmentEnd;
 	INT32 nSamplesNeeded = nSegmentEnd * nBurnYM2610SoundRate / nBurnSoundRate + 1;
@@ -241,6 +243,8 @@ static void YM2610UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 #if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2610Initted) bprintf(PRINT_ERROR, _T("YM2610UpdateNormal called without init\n"));
 #endif
+
+	if (!pBurnSoundOut) return;
 
 	INT32 nSegmentLength = nSegmentEnd;
 

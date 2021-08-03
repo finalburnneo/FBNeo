@@ -430,7 +430,7 @@ static INT32 DrvInit()
 	BurnYM2203Init(1, 3072000, NULL, 0);
 	BurnTimerAttachZet(3072000);
 	BurnYM2203SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetPSGVolume(0, 1.00);
+	BurnYM2203SetPSGVolume(0, 0.50);
 
 	GenericTilesInit();
 
@@ -588,13 +588,14 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 3072000 / 30, 3072000 / 30 };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	M6809Open(0);
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		M6809Run(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, M6809);
 
 		if (i == 240 && (DrvIRQEnable[0] & 0x04)) M6809SetIRQLine(1, CPU_IRQSTATUS_AUTO); // firq
 		if ((i&0x3f)==0 && (DrvIRQEnable[0] & 0x01)) M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO); // nmi

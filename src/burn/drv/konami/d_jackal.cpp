@@ -58,35 +58,35 @@ static UINT32 nRotateTime[2]        = {0, 0};
 static UINT8  game_rotates = 0;
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 start"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 start"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Drv)
 
 static struct BurnInputInfo DrvrotateInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 start"	},
 	{"P1 Left",		    BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
@@ -98,23 +98,23 @@ static struct BurnInputInfo DrvrotateInputList[] = {
 	{"P1 Rotate Right",    BIT_DIGITAL, DrvFakeInput + 1, "p1 rotate right" },
 	{"P1 Button 3 (rotate)" , BIT_DIGITAL  , DrvFakeInput + 4,  "p1 fire 3" },
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 start"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 	{"P2 Rotate Left",     BIT_DIGITAL, DrvFakeInput + 2, "p2 rotate left" },
 	{"P2 Rotate Right",    BIT_DIGITAL, DrvFakeInput + 3, "p2 rotate right" },
 	{"P2 Button 3 (rotate)" , BIT_DIGITAL  , DrvFakeInput + 5,  "p2 fire 3" },
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Drvrotate)
@@ -626,8 +626,7 @@ static INT32 MemIndex()
 static INT32 DrvGfxDecode()
 {
 	INT32 Planes[8] = { STEP4(0,1), STEP4(0x40000*8, 1) };
-	INT32 XOffs[16] = {  0*4, 1*4, 2*4, 3*4, 4*4, 5*4, 6*4, 7*4, 32*8+0*4, 32*8+1*4, 32*8+2*4, 32*8+3*4, 32*8+4*4, 32*8+5*4, 32*8+6*4, 32*8+7*4 };
-	//STEP8(0,4), STEP8(32*8, ??)
+	INT32 XOffs[16] = { STEP8(0,4), STEP8(32*8, 4) };
 	INT32 YOffs[16] = { STEP8(0,32), STEP8(16*32,32) };
 
 	UINT8 *tmp = (UINT8*)BurnMalloc(0x80000);
@@ -734,9 +733,10 @@ static INT32 DrvInit()
 	M6809SetReadHandler(jackal_sub_read);
 	M6809Close();
 
-	BurnYM2151Init(3580000);
+	BurnYM2151InitBuffered(3580000, 1, NULL, 0);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachM6809(1843200);
 
 	GenericTilesInit();
 	if (game_rotates)
@@ -823,19 +823,7 @@ static void draw_layer()
 		if (sy < -7) sy += 256;
 		if (sx < -7) sx += 256;
 
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, 0, 8, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy, 0, 8, 0, DrvGfxROM0);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx, sy, 0, 8, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Clip(pTransDraw, code, sx, sy, 0, 8, 0, DrvGfxROM0);
-			}
-		}
+		Draw8x8Tile(pTransDraw, code, sx, sy, flipx, flipy, 0, 8, 0, DrvGfxROM0);
 	}
 }
 
@@ -847,35 +835,11 @@ static void draw_sprite(INT32 bank, INT32 code, INT32 color, INT32 sx, INT32 sy,
 
 	if (bank & 8) // 8x8
 	{
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM2);
-			} else {
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM2);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM2);
-			} else {
-				Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM2);
-			}
-		}
+		Draw8x8MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 0, 0, DrvGfxROM2);
 	}
 	else // 16x16
 	{
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 0, 0, DrvGfxROM1);
 	}
 }
 
@@ -1003,39 +967,27 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 100;
-	INT32 nCyclesTotal[2] = { 1536000 / 60, ((1536000 * 12) / 10) / 60 };
-	INT32 nSoundBufferPos = 0;
-
+	INT32 nCyclesTotal[2] = { 1536000 / 60, 1843200 / 60 };
+	INT32 nCyclesDone[2] = { 0, 0 };
 	M6809NewFrame();
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6809Open(0);
-		M6809Run(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, M6809);
 		if (i == (nInterleave - 1) && DrvIRQEnable)
 			M6809SetIRQLine(0x00, CPU_IRQSTATUS_AUTO);
 		M6809Close();
 
 		M6809Open(1);
-		M6809Run(nCyclesTotal[1] / nInterleave);
+		CPU_RUN_TIMER(1);
 		if (i == (nInterleave - 1) && DrvIRQEnable)
 			M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO); // nmi
 		M6809Close();
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		if (nSegmentLength) {
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-		}
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

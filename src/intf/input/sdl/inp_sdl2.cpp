@@ -292,9 +292,8 @@ static int SDLinpJoystickInit(int i)
 
    temp = SDL_GameControllerOpen(i);
    mapping = SDL_GameControllerMapping(temp);
-   printf("mapping %s\n",mapping);   
-   bind = SDL_GameControllerGetBindForButton(temp, SDL_CONTROLLER_BUTTON_A );
-   
+   printf("mapping %s\n",mapping);
+
    bind = SDL_GameControllerGetBindForButton(temp, SDL_CONTROLLER_BUTTON_A );
    buttons[i][0] = bind.value.button;
 
@@ -529,7 +528,8 @@ static int JoystickState(int i, int nSubCode)
 	if (nSubCode < 0x10) {										// Joystick directions
 		const int DEADZONE = 0x4000;
 
-		if (SDL_JoystickNumAxes(JoyList[i]) <= nSubCode) {
+		// we have two checks per axis
+		if (SDL_JoystickNumAxes(JoyList[i])*2 <= nSubCode) {
 			return 0;
 		}
 

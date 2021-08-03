@@ -2469,23 +2469,51 @@ static struct BurnRomInfo RaflesiaRomDesc[] = {
 
 	{ "epr-7420.120",      0x002000, 0x14387666, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 
-	{ "epr-7419.62",       0x002000, 0xbfd5f34c, BRF_GRA },		  //  4 Tiles
-	{ "epr-7418.61",       0x002000, 0xf8cbc9b6, BRF_GRA },		  //  5 Tiles
-	{ "epr-7417.64",       0x002000, 0xe63501bc, BRF_GRA },		  //  6 Tiles
-	{ "epr-7416.63",       0x002000, 0x093e5693, BRF_GRA },		  //  7 Tiles
-	{ "epr-7415.66",       0x002000, 0x1a8d6bd6, BRF_GRA },		  //  8 Tiles
-	{ "epr-7414.65",       0x002000, 0x5d20f218, BRF_GRA },		  //  9 Tiles
+	{ "epr-7419.62",       0x002000, 0xbfd5f34c, BRF_GRA },		  	  //  4 Tiles
+	{ "epr-7418.61",       0x002000, 0xf8cbc9b6, BRF_GRA },		  	  //  5 Tiles
+	{ "epr-7417.64",       0x002000, 0xe63501bc, BRF_GRA },		  	  //  6 Tiles
+	{ "epr-7416.63",       0x002000, 0x093e5693, BRF_GRA },		  	  //  7 Tiles
+	{ "epr-7415.66",       0x002000, 0x1a8d6bd6, BRF_GRA },		  	  //  8 Tiles
+	{ "epr-7414.65",       0x002000, 0x5d20f218, BRF_GRA },		  	  //  9 Tiles
 
-	{ "epr-7407.117",      0x004000, 0xf09fc057, BRF_GRA },		  //  10 Sprites
-	{ "epr-7409.04",       0x004000, 0x819fedb8, BRF_GRA },		  //  11 Sprites
-	{ "epr-7408.110",      0x004000, 0x3189f33c, BRF_GRA },		  //  12 Sprites
-	{ "epr-7410.05",       0x004000, 0xced74789, BRF_GRA },		  //  13 Sprites
+	{ "epr-7407.117",      0x004000, 0xf09fc057, BRF_GRA },		  	  // 10 Sprites
+	{ "epr-7409.04",       0x004000, 0x819fedb8, BRF_GRA },		  	  // 11 Sprites
+	{ "epr-7408.110",      0x004000, 0x3189f33c, BRF_GRA },		  	  // 12 Sprites
+	{ "epr-7410.05",       0x004000, 0xced74789, BRF_GRA },		  	  // 13 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 14 Timing PROM
 };
 
 STD_ROM_PICK(Raflesia)
 STD_ROM_FN(Raflesia)
+
+static struct BurnRomInfo RaflesiauRomDesc[] = {
+	{ "ic129",      	   0x002000, 0x6f4931b0, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "ic130",      	   0x002000, 0xec46e21b, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
+	{ "ic131",       	   0x002000, 0xe035ff6b, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
+	{ "ic132",       	   0x002000, 0x6527aae7, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
+	{ "ic133",       	   0x002000, 0xe13dd5e4, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
+	{ "ic134",       	   0x002000, 0xa0aa4729, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
+
+	{ "ic3",      		   0x002000, 0x7353cc2e, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
+
+	{ "epr-7419.82",       0x002000, 0xbfd5f34c, BRF_GRA },		  	  //  4 Tiles
+	{ "epr-7418.65",       0x002000, 0xf8cbc9b6, BRF_GRA },		  	  //  5 Tiles
+	{ "epr-7417.81",       0x002000, 0xe63501bc, BRF_GRA },		  	  //  6 Tiles
+	{ "epr-7416.64",       0x002000, 0x093e5693, BRF_GRA },		  	  //  7 Tiles
+	{ "epr-7415.80",       0x002000, 0x1a8d6bd6, BRF_GRA },		  	  //  8 Tiles
+	{ "epr-7414.63",       0x002000, 0x5d20f218, BRF_GRA },		  	  //  9 Tiles
+
+	{ "epr-7407.3",        0x004000, 0xf09fc057, BRF_GRA },		  	  // 10 Sprites
+	{ "epr-7409.1",        0x004000, 0x819fedb8, BRF_GRA },		  	  // 11 Sprites
+	{ "epr-7408.4",        0x004000, 0x3189f33c, BRF_GRA },		  	  // 12 Sprites
+	{ "epr-7410.2",        0x004000, 0xced74789, BRF_GRA },		  	  // 13 Sprites
+
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 14 Timing PROM
+};
+
+STD_ROM_PICK(Raflesiau)
+STD_ROM_FN(Raflesiau)
 
 static struct BurnRomInfo RegulusRomDesc[] = {
 	{ "epr-5640a.129",     0x002000, 0xdafb1528, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
@@ -5639,6 +5667,11 @@ static INT32 RaflesiaInit()
 	return System1Init(3, 0x4000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
 }
 
+static INT32 RaflesiauInit()
+{
+	return System1Init(6, 0x2000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
+}
+
 static INT32 RegulusInit()
 {
 	DecodeFunction = regulus_decode;
@@ -6772,6 +6805,16 @@ struct BurnDriver BurnDrvRaflesia = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, RaflesiaRomInfo, RaflesiaRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, RaflesiaDIPInfo,
 	RaflesiaInit, System1Exit, System1Frame, System1Render, System1Scan,
+	NULL, 0x800, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvRaflesiau = {
+	"raflesiau", "raflesia", NULL, NULL, "1986",
+	"Rafflesia (not encrypted)\0", NULL, "Coreland / Sega", "System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	NULL, RaflesiauRomInfo, RaflesiauRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, RaflesiaDIPInfo,
+	RaflesiauInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 256, 3, 4
 };
 

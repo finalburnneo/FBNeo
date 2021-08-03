@@ -1,6 +1,7 @@
 // FB Alpha Beast Busters and Mechanized Attack driver module
 // Based on MAME driver by Bryan McPhail
 
+// Solved both ym2608 + deltaT problems July 31, 2021 -dink
 // Problem:
 // Mechanized Attack, music lost on savestate load
 // I _think_ it's something to do with the ymdeltat part of the ym2608
@@ -1697,7 +1698,7 @@ STD_ROM_FN(mechatt)
 
 struct BurnDriver BurnDrvMechatt = {
 	"mechatt", NULL, "ym2608", NULL, "1989",
-	"Mechanized Attack (World)\0", "Music occasionally breaks w/savestates", "SNK", "Miscellaneous",
+	"Mechanized Attack (World)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, mechattRomInfo, mechattRomName, NULL, NULL, NULL, NULL, MechattInputInfo, MechattDIPInfo,
@@ -1755,7 +1756,7 @@ STD_ROM_FN(mechattj)
 
 struct BurnDriver BurnDrvMechattj = {
 	"mechattj", "mechatt", "ym2608", NULL, "1989",
-	"Mechanized Attack (Japan)\0", "Music occasionally breaks w/savestates", "SNK", "Miscellaneous",
+	"Mechanized Attack (Japan)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, mechattjRomInfo, mechattjRomName, NULL, NULL, NULL, NULL, MechattInputInfo, MechattDIPInfo,
@@ -1795,7 +1796,7 @@ STD_ROM_FN(mechattu)
 
 struct BurnDriver BurnDrvMechattu = {
 	"mechattu", "mechatt", "ym2608", NULL, "1989",
-	"Mechanized Attack (US)\0", "Music occasionally breaks w/savestates", "SNK", "Miscellaneous",
+	"Mechanized Attack (US)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, mechattuRomInfo, mechattuRomName, NULL, NULL, NULL, NULL, MechattInputInfo, MechattuDIPInfo,
@@ -1853,7 +1854,7 @@ STD_ROM_FN(mechattu1)
 
 struct BurnDriver BurnDrvMechattu1 = {
 	"mechattu1", "mechatt", "ym2608", NULL, "1989",
-	"Mechanized Attack (US, Version 1, Single Player)\0", "Music occasionally breaks w/savestates", "SNK", "Miscellaneous",
+	"Mechanized Attack (US, Version 1, Single Player)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, mechattu1RomInfo, mechattu1RomName, NULL, NULL, NULL, NULL, MechattInputInfo, MechattuDIPInfo,

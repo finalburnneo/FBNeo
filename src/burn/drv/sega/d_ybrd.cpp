@@ -1864,7 +1864,7 @@ static UINT8 GlocProcessAnalogControls(UINT16 value)
 
 		// Throttle [?]
 		case 4: {
-			return ProcessAnalog(System16AnalogPort2, 1, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x01, 0x80);
+			return ProcessAnalog(System16AnalogPort2, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x01, 0x80);
 		}
 
 		// Left/Right

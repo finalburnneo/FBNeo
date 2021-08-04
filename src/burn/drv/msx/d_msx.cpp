@@ -15890,7 +15890,7 @@ struct BurnDriver BurnDrvMSX_stepup = {
 	"msx_stepup", NULL, "msx_msx", NULL, "1983",
 	"Step Up (Jpn)\0", NULL, "HAL Kenkyuujo", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_stepupRomInfo, MSX_stepupRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -15910,7 +15910,7 @@ struct BurnDriver BurnDrvMSX_stepupa = {
 	"msx_stepupa", "msx_stepup", "msx_msx", NULL, "1983",
 	"Step Up (Jpn, Alt)\0", NULL, "HAL Kenkyuujo", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_stepupaRomInfo, MSX_stepupaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -15930,7 +15930,7 @@ struct BurnDriver BurnDrvMSX_stepupk = {
 	"msx_stepupk", "msx_stepup", "msx_msx", NULL, "198?",
 	"Step Up (Kor)\0", NULL, "Zemina", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_stepupkRomInfo, MSX_stepupkRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -15950,7 +15950,7 @@ struct BurnDriver BurnDrvMSX_stepper = {
 	"msx_stepper", NULL, "msx_msx", NULL, "1985",
 	"Stepper (Jpn)\0", NULL, "ASCII", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_stepperRomInfo, MSX_stepperRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -25963,7 +25963,7 @@ struct BurnDriver BurnDrvMSX_jaasta = {
 	"msx_jaasta", NULL, "msx_msx", NULL, "2020",
 	"Jaasta (HB, v1.2)\0", NULL, "Uninteresting", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ADV, 0,
 	MSXGetZipName, MSX_jaastaRomInfo, MSX_jaastaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -28944,5 +28944,24 @@ struct BurnDriver BurnDrvMSX_zerofighter = {
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_SHOOT, 0,
 	MSXGetZipName, MSX_zerofighterRomInfo, MSX_zerofighterRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Step (HB, v1.1)
+
+static struct BurnRomInfo MSX_stepRomDesc[] = {
+	{ "Step v1.1 (2021)(Uninteresting).rom",	131072, 0xb1c22749, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_step, MSX_step, msx_msx)
+STD_ROM_FN(MSX_step)
+
+struct BurnDriver BurnDrvMSX_step = {
+	"msx_step", NULL, "msx_msx", NULL, "2021",
+	"Step (HB, v1.1)\0", NULL, "Uninteresting", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_ADV, 0,
+	MSXGetZipName, MSX_stepRomInfo, MSX_stepRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

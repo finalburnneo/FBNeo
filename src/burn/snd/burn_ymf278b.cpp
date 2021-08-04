@@ -37,7 +37,7 @@ static void YMF278BRender(INT32 nSegmentLength)
 	if (!DebugSnd_YMF278BInitted) bprintf(PRINT_ERROR, _T("YMF278BRender called without init\n"));
 #endif
 
-	if (nYMF278BPosition >= nSegmentLength) {
+	if (nYMF278BPosition >= nSegmentLength || !pBurnSoundOut) {
 		return;
 	}
 

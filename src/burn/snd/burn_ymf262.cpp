@@ -37,7 +37,7 @@ static void YMF262Render(INT32 nSegmentLength)
 	if (!DebugSnd_YMF262Initted) bprintf(PRINT_ERROR, _T("YMF262Render called without init\n"));
 #endif
 
-	if (nYMF262Position >= nSegmentLength) {
+	if (nYMF262Position >= nSegmentLength || !pBurnSoundOut) {
 		return;
 	}
 

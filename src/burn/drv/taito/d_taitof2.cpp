@@ -21,6 +21,7 @@ static INT32 Driftout = 0;
 static INT32 bNoClearOpposites = 0;
 
 INT32 TaitoF2SpriteType;
+
 INT32 TaitoF2SpritesFlipScreen;
 INT32 TaitoF2PrepareSprites;
 INT32 TaitoF2SpritesDisabled, TaitoF2SpritesActiveArea, TaitoF2SpritesMasterScrollX, TaitoF2SpritesMasterScrollY;
@@ -4878,7 +4879,6 @@ static INT32 MemIndex()
 	TaitoZ80Rom1                    = Next; Next += TaitoZ80Rom1Size;
 	TaitoYM2610ARom                 = Next; Next += TaitoYM2610ARomSize;
 	TaitoYM2610BRom                 = Next; Next += TaitoYM2610BRomSize;
-	if (TaitoNumMSM6295) {MSM6295ROM = Next; Next += 0x40000; }
 	TaitoMSM6295Rom                 = Next; Next += TaitoMSM6295RomSize;
 
 	cchip_rom                       = Next; Next += TaitoCCHIPBIOSSize;
@@ -7342,6 +7342,13 @@ void __fastcall Yuyugogo68KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
+static void z80_bank(INT32 bank)
+{
+	TaitoZ80Bank = bank;
+
+	ZetMapMemory(TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000), 0x4000, 0x7fff, MAP_ROM);
+}
+
 UINT8 __fastcall TaitoF2Z80Read(UINT16 a)
 {
 	switch (a) {
@@ -7428,9 +7435,7 @@ void __fastcall TaitoF2Z80Write(UINT16 a, UINT8 d)
 		}
 		
 		case 0xf200: {
-			TaitoZ80Bank = (d - 1) & 7;
-			ZetMapArea(0x4000, 0x7fff, 0, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
-			ZetMapArea(0x4000, 0x7fff, 2, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
+			z80_bank((d - 1) & 7);
 			return;
 		}
 		
@@ -7517,14 +7522,21 @@ UINT8 __fastcall DriveoutZ80Read(UINT16 a)
 	return 0;
 }
 
+static void DriveoutMSM6295Bank(INT32 bank)
+{
+	DriveoutOkiBank = bank;
+
+	MSM6295SetBank(0, TaitoMSM6295Rom + ((DriveoutOkiBank & 3) * 0x20000), 0x00000, 0x1ffff);
+	MSM6295SetBank(0, TaitoMSM6295Rom + 0x80000, 0x20000, 0x3ffff);
+}
+
 void __fastcall DriveoutZ80Write(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0x9000: {
-			if ((d & 4)) {
-				DriveoutOkiBank = (d & 3);
-				memcpy(MSM6295ROM, TaitoMSM6295Rom + (DriveoutOkiBank * 0x40000), 0x40000);
-			}			
+			if (d & 4) {
+				DriveoutMSM6295Bank(d);
+			}
 			return;
 		}
 		
@@ -7792,7 +7804,8 @@ static INT32 CamltryaInit()
 	
 	MSM6295Init(0, (4224000 / 4) / 132, 1);
 	MSM6295SetRoute(0, 0.10, BURN_SND_ROUTE_BOTH);
-	
+	MSM6295SetBank(0, TaitoMSM6295Rom, 0x00000, 0x3ffff);
+
 	nTaitoCyclesTotal[1] = (24000000 / 4) / 60;
 
 	TaitoXOffset = 3;
@@ -8108,19 +8121,6 @@ static INT32 DriveoutInit()
 	MemIndex();
 	
 	if (TaitoLoadRoms(1)) return 1;
-	
-	UINT8 *TempRom = (UINT8*)BurnMalloc(0x100000);
-	memcpy(TempRom, TaitoMSM6295Rom, 0x100000);
-	memset(TaitoMSM6295Rom, 0, 0x100000);
-	memcpy(TaitoMSM6295Rom + 0x00000, TempRom + 0x00000, 0x20000);
-	memcpy(TaitoMSM6295Rom + 0x20000, TempRom + 0x80000, 0x20000);
-	memcpy(TaitoMSM6295Rom + 0x40000, TempRom + 0x20000, 0x20000);
-	memcpy(TaitoMSM6295Rom + 0x60000, TempRom + 0x80000, 0x20000);
-	memcpy(TaitoMSM6295Rom + 0x80000, TempRom + 0x40000, 0x20000);
-	memcpy(TaitoMSM6295Rom + 0xa0000, TempRom + 0x80000, 0x20000);
-	memcpy(TaitoMSM6295Rom + 0xc0000, TempRom + 0x60000, 0x20000);
-	memcpy(TaitoMSM6295Rom + 0xe0000, TempRom + 0x80000, 0x20000);
-	BurnFree(TempRom);
 	
 	TC0100SCNInit(0, TaitoNumChar, 3, 8, 0, NULL);
 	TC0360PRIInit();
@@ -10833,7 +10833,7 @@ static INT32 TaitoF2Frame()
 	if (pBurnDraw) BurnDrvRedraw();
 	
 	TaitoF2SpriteBufferFunction();
-		
+
 	return 0;
 }
 
@@ -10924,16 +10924,26 @@ static INT32 TaitoF2Scan(INT32 nAction, INT32 *pnMin)
 		if (TaitoNumYM2203) { // cameltrya..
 			BurnYM2203Scan(nAction, pnMin);
 			MSM6295Scan(nAction, pnMin);
-		} else {
+		}
+
+		if (TaitoNumYM2610) {
 			BurnYM2610Scan(nAction, pnMin);
 		}
-		
-		SCAN_VAR(TaitoInput);
+
 		SCAN_VAR(TaitoZ80Bank);
+
+		SCAN_VAR(TaitoF2SpritesFlipScreen);
+		SCAN_VAR(TaitoF2PrepareSprites);
+		SCAN_VAR(TaitoF2SpritesDisabled);
+		SCAN_VAR(TaitoF2SpritesActiveArea);
+		SCAN_VAR(TaitoF2SpritesMasterScrollX);
+		SCAN_VAR(TaitoF2SpritesMasterScrollY);
+		SCAN_VAR(TaitoF2SpriteBlendMode);
 		SCAN_VAR(TaitoF2SpriteBank);
 		SCAN_VAR(TaitoF2SpriteBankBuffered);
-		SCAN_VAR(nTaitoCyclesDone);
-		SCAN_VAR(nTaitoCyclesSegment);
+		SCAN_VAR(TaitoF2TilePriority);
+		SCAN_VAR(TaitoF2SpritePriority);
+
 		SCAN_VAR(YesnoDip);
 		SCAN_VAR(MjnquestInput);
 		SCAN_VAR(DriveoutSoundNibble);
@@ -10941,21 +10951,15 @@ static INT32 TaitoF2Scan(INT32 nAction, INT32 *pnMin)
 	}
 	
 	if (nAction & ACB_WRITE) {
-		if (TaitoZ80Bank) {
-			ZetOpen(0);
-			ZetMapArea(0x4000, 0x7fff, 0, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
-			ZetMapArea(0x4000, 0x7fff, 2, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
-			ZetClose();
-		}
-		
+		ZetOpen(0);
+		z80_bank(TaitoZ80Bank);
+		ZetClose();
+
 		if (DriveoutOkiBank) {
-			memcpy(MSM6295ROM, TaitoMSM6295Rom + (DriveoutOkiBank * 0x40000), 0x40000);
+			DriveoutMSM6295Bank(DriveoutOkiBank);
 		}
-		
-		TaitoF2SpriteBufferFunction();
-		TaitoF2HandleSpriteBuffering();
 	}
-	
+
 	return 0;
 }
 
@@ -11215,7 +11219,7 @@ struct BurnDriver BurnDrvGunfront = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_TAITOF2, GBF_VERSHOOT, 0,
 	NULL, GunfrontRomInfo, GunfrontRomName, NULL, NULL, NULL, NULL, GunfrontInputInfo, GunfrontDIPInfo,
-	GunfrontInit, TaitoF2Exit, TaitoF2Frame, TaitoF2Draw, TaitoF2Scan,
+	GunfrontInit, TaitoF2Exit, TaitoF2Frame, TaitoF2PriDraw, TaitoF2Scan,
 	NULL, 0x2000, 224, 320, 3, 4
 };
 
@@ -11225,7 +11229,7 @@ struct BurnDriver BurnDrvGunfrontj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_TAITOF2, GBF_VERSHOOT, 0,
 	NULL, GunfrontjRomInfo, GunfrontjRomName, NULL, NULL, NULL, NULL, GunfrontInputInfo, GunfrontjDIPInfo,
-	GunfrontInit, TaitoF2Exit, TaitoF2Frame, TaitoF2Draw, TaitoF2Scan,
+	GunfrontInit, TaitoF2Exit, TaitoF2Frame, TaitoF2PriDraw, TaitoF2Scan,
 	NULL, 0x2000, 224, 320, 3, 4
 };
 

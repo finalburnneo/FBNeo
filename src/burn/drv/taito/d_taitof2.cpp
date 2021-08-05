@@ -8784,6 +8784,7 @@ static INT32 NinjakInit()
 	
 	TC0100SCNInit(0, TaitoNumChar, 0, 8, 0, TaitoPriorityMap);
 	TC0140SYTInit(0);
+	TC0360PRIInit();
 	
 #ifdef BUILD_A68K
 	SwitchToMusashi();
@@ -8807,6 +8808,7 @@ static INT32 NinjakInit()
 		
 	// Reset the driver
 	TaitoF2DoReset();
+	SpritePriWritebackMode = 0;
 
 	return 0;
 }
@@ -11359,7 +11361,7 @@ struct BurnDriver BurnDrvNinjakj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, NinjakjRomInfo, NinjakjRomName, NULL, NULL, NULL, NULL, NinjakInputInfo, NinjakjDIPInfo,
-	NinjakInit, TaitoF2Exit, TaitoF2Frame, TaitoF2Draw, TaitoF2Scan,
+	NinjakInit, TaitoF2Exit, TaitoF2Frame, TaitoF2PriDraw, TaitoF2Scan,
 	NULL, 0x2000, 320, 224, 4, 3
 };
 
@@ -11369,7 +11371,7 @@ struct BurnDriver BurnDrvNinjaku = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, NinjakuRomInfo, NinjakuRomName, NULL, NULL, NULL, NULL, NinjakInputInfo, NinjakuDIPInfo,
-	NinjakInit, TaitoF2Exit, TaitoF2Frame, TaitoF2Draw, TaitoF2Scan,
+	NinjakInit, TaitoF2Exit, TaitoF2Frame, TaitoF2PriDraw, TaitoF2Scan,
 	NULL, 0x2000, 320, 224, 4, 3
 };
 

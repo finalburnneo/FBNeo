@@ -56,6 +56,7 @@ void RF5C68PCMUpdate_internal(INT16* left, INT16 *right, INT32 length);
 
 static void UpdateStream(INT32 samples_len)
 {
+	if (!pBurnSoundOut) return;
     if (samples_len > nBurnSoundLen) samples_len = nBurnSoundLen;
 
 	INT64 nSamplesNeeded = ((((((our_freq * 1000) / nBurnFPS) * samples_len) / nBurnSoundLen)) / 10) + 1;

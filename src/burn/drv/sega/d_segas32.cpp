@@ -4480,6 +4480,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(misc_io_data);
 
+		SCAN_VAR(timer_0_cycles);
+		SCAN_VAR(timer_1_cycles);
+
+		SCAN_VAR(system32_displayenable);
+
 		SCAN_VAR(nExtraCycles);
 
 		BurnRandomScan(nAction);

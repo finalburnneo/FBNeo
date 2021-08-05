@@ -9,6 +9,7 @@ DRV		BurnDrv99lstwark;
 DRV		BurnDrvlstwar99;
 DRV		BurnDrvlstwar99a;
 DRV		BurnSpeclicencetokill;
+DRV		BurnDrvMSX_lic2kill;
 DRV		BurnSpec007liveandletdie;
 DRV		BurnDrvMSX_007tld;
 DRV		BurnSpec007spywholovedme;
@@ -4371,6 +4372,7 @@ DRV		BurnDrvMSX_eggerlnd;
 DRV		BurnDrvMSX_eggerlnd2;
 DRV		BurnDrveggor;
 DRV		BurnDrveggs;
+DRV		BurnDrvMSX_eggy;
 DRV		BurnDrvnes_egyptj;
 DRV		BurnDrvnes_egypt;
 DRV		BurnDrvEightballact;
@@ -7593,6 +7595,8 @@ DRV		BurnSpeckong;
 DRV		BurnSpeckong2;
 DRV		BurnSpeckongsrevenge1;
 DRV		BurnSpeckongsrevenge2;
+DRV		BurnDrvMSX_kongrevp1;
+DRV		BurnDrvMSX_kongrevp2;
 DRV		BurnDrvpce_proyak89;
 DRV		BurnDrvpce_proyak90;
 DRV		BurnDrvKorokoro;
@@ -7896,7 +7900,6 @@ DRV		BurnDrvmd_lhxj;
 DRV		BurnDrvLiblrabl;
 DRV		BurnDrvLiberate;
 DRV		BurnDrvmd_liberty;
-DRV		BurnDrvMSX_lic2kill;
 DRV		BurnDrvnes_lifeforce;
 DRV		BurnDrvMSX_lifefastln;
 DRV		BurnDrvLifefrcej;
@@ -7996,6 +7999,7 @@ DRV		BurnDrvnes_logjammers;
 DRV		BurnDrvcv_logiclvl;
 DRV		BurnDrvLogicpro;
 DRV		BurnDrvLogicpr2;
+DRV		BurnDrvMSX_logicrmd;
 DRV		BurnDrvnes_lonerangerthe;
 DRV		BurnDrvmd_long;
 DRV		BurnDrvLooper;
@@ -10675,6 +10679,7 @@ DRV		BurnDrvPitnrun;
 DRV		BurnDrvPitnruna;
 DRV		BurnDrvPitfight3;
 DRV		BurnDrvPitfight;
+DRV		BurnDrvMSX_pitstop;
 DRV		BurnDrvmd_pitfight1;
 DRV		BurnDrvmd_pitfight;
 DRV		BurnDrvPitapat;
@@ -11854,6 +11859,7 @@ DRV		BurnSpecrobocop;
 DRV		BurnDrvMSX_robocop;
 DRV		BurnDrvrobocopi;
 DRV		BurnDrvRobocopj;
+DRV		BurnDrvMSX_seicorobocop;
 DRV		BurnDrvRobocopb2;
 DRV		BurnDrvRobocopu0;
 DRV		BurnDrvRobocopu;
@@ -11886,7 +11892,6 @@ DRV		BurnDrvmd_robotermp;
 DRV		BurnDrvmd_robotermp1;
 DRV		BurnDrvmd_robotermu;
 DRV		BurnDrvnes_robocvster;
-DRV		BurnDrvMSX_seicorobocop;
 DRV		BurnDrvnes_robodemons;
 DRV		BurnDrvMSX_robofrog;
 DRV		BurnDrvMSX_robofroga;
@@ -12758,6 +12763,7 @@ DRV		BurnSpecsirababol2;
 DRV		BurnSpecsirababoldx;
 DRV		BurnDrvnes_sirababolr;
 DRV		BurnSpecsirfred_128;
+DRV		BurnDrvMSX_sirfred;
 DRV		BurnDrvcv_lancelot;
 DRV		BurnDrvSirio2;
 DRV		BurnSpecsirwoodg1;
@@ -12895,6 +12901,7 @@ DRV		BurnDrvcv_smurfply;
 DRV		BurnDrvcv_smurfa;
 DRV		BurnDrvcv_smurf;
 DRV		BurnDrvcv_smurfsav;
+DRV		BurnDrvMSX_snailmaze;
 DRV		BurnDrvcv_snake;
 DRV		BurnDrvMSX_snake;
 DRV		BurnDrvsg1k_snake;
@@ -13627,6 +13634,7 @@ DRV		BurnDrvmd_steeltalj;
 DRV		BurnDrvmd_steeltalp;
 DRV		BurnSpecSteg;
 DRV		BurnDrvnes_steinsgate;
+DRV		BurnDrvMSX_step;
 DRV		BurnDrvMSX_stepup;
 DRV		BurnDrvMSX_stepupa;
 DRV		BurnDrvMSX_stepupk;
@@ -16244,6 +16252,7 @@ DRV		BurnDrvDangarj;
 DRV		BurnDrvDangarbt;
 DRV		BurnDrvUfosensi;
 DRV		BurnDrvnes_ufouria;
+DRV		BurnDrvMSX_ulises;
 DRV		BurnDrvnes_ultimaexodus;
 DRV		BurnDrvnes_ultimexorem;
 DRV		BurnDrvnes_ultimqueava;
@@ -17475,6 +17484,7 @@ DRV		BurnDrvZero2;
 DRV		BurnDrvpce_zero4c;
 DRV		BurnDrvpce_zero4ca;
 DRV		BurnDrvMSX_zerocis;
+DRV		BurnDrvMSX_zerofighter;
 DRV		BurnDrvZerohouri;
 DRV		BurnDrvZerohour;
 DRV		BurnDrvZerohoura;
@@ -17601,6 +17611,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvlstwar99,			// '99: The Last War (set 1)
 	&BurnDrvlstwar99a,			// '99: The Last War (set 2)
 	&BurnSpeclicencetokill,		// 007 - Licence to Kill (128K)
+	&BurnDrvMSX_lic2kill,		// 007 - Licence to Kill (Euro)
 	&BurnSpec007liveandletdie,	// 007 - Live and Let Die (128K)
 	&BurnDrvMSX_007tld,			// 007 - The Living Daylights (Euro)
 	&BurnSpec007spywholovedme,	// 007 - The Spy Who Loved Me (128K)
@@ -21963,6 +21974,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_eggerlnd2,		// Eggerland Mystery 2- Meikyushinwa (Jpn)
 	&BurnDrveggor,				// Eggor
 	&BurnDrveggs,				// Eggs
+	&BurnDrvMSX_eggy,			// Eggy (Jpn)
 	&BurnDrvnes_egyptj,			// Egypt (Japan)
 	&BurnDrvnes_egypt,			// Egypt (T-Eng)
 	&BurnDrvEightballact,		// Eight Ball Action (DK conversion) [Parent set for working drivers, NOT WORKING]
@@ -25185,6 +25197,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpeckong2,				// Kong 2 - Kong Strikes Back (48K)
 	&BurnSpeckongsrevenge1,		// Kong's Revenge (Part 1)
 	&BurnSpeckongsrevenge2,		// Kong's Revenge (Part 2)
+	&BurnDrvMSX_kongrevp1,		// Kong's Revenge - Part 1 (Spanish)
+	&BurnDrvMSX_kongrevp2,		// Kong's Revenge - Part 2 (Spanish)
 	&BurnDrvpce_proyak89,		// Kore Ga Pro Yakyuu '89
 	&BurnDrvpce_proyak90,		// Kore Ga Pro Yakyuu '90
 	&BurnDrvKorokoro,			// Koro Koro Quest (Japan)
@@ -25488,7 +25502,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvLiblrabl,			// Libble Rabble
 	&BurnDrvLiberate,			// Liberation
 	&BurnDrvmd_liberty,			// Liberty or Death (USA)
-	&BurnDrvMSX_lic2kill,		// Licence to Kill (Euro)
 	&BurnDrvnes_lifeforce,		// Life Force (USA)
 	&BurnDrvMSX_lifefastln,		// Life in the Fast Lane
 	&BurnDrvLifefrcej,			// Lifeforce (Japan)
@@ -25588,6 +25601,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_logiclvl,		// Logic Levels
 	&BurnDrvLogicpro,			// Logic Pro (Japan)
 	&BurnDrvLogicpr2,			// Logic Pro 2 (Japan)
+	&BurnDrvMSX_logicrmd,		// Logic Remastered (HB, v1.2)
 	&BurnDrvnes_lonerangerthe,	// Lone Ranger, The (USA)
 	&BurnDrvmd_long,			// Long (Chi) [no comment, NOT WORKING]
 	&BurnDrvLooper,				// Looper
@@ -28267,6 +28281,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPitnruna,			// Pit & Run - F-1 Race (set 2)
 	&BurnDrvPitfight3,			// Pit Fighter (rev 3)
 	&BurnDrvPitfight,			// Pit Fighter (rev 9)
+	&BurnDrvMSX_pitstop,		// Pit Stop
 	&BurnDrvmd_pitfight1,		// Pit-Fighter (World)
 	&BurnDrvmd_pitfight,		// Pit-Fighter (World, Rev. A)
 	&BurnDrvPitapat,			// Pitapat Puzzle
@@ -29446,6 +29461,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_robocop,		// Robocop (Euro)
 	&BurnDrvrobocopi,			// Robocop (Intro demo)
 	&BurnDrvRobocopj,			// Robocop (Japan)
+	&BurnDrvMSX_seicorobocop,	// RoboCop (Jpn)
 	&BurnDrvRobocopb2,			// Robocop (Red Corporation World bootleg)
 	&BurnDrvRobocopu0,			// Robocop (US revision 0)
 	&BurnDrvRobocopu,			// Robocop (US revision 1)
@@ -29478,7 +29494,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_robotermp1,		// Robocop Versus The Terminator (Prototype, Alt)
 	&BurnDrvmd_robotermu,		// RoboCop versus The Terminator (USA)
 	&BurnDrvnes_robocvster,		// RoboCop Vs The Terminator (USA)
-	&BurnDrvMSX_seicorobocop,	// RoboCop
 	&BurnDrvnes_robodemons,		// Robodemons (USA) (Unl)
 	&BurnDrvMSX_robofrog,		// Robofrog (Jpn)
 	&BurnDrvMSX_robofroga,		// Robofrog (Jpn, Alt)
@@ -30350,6 +30365,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecsirababoldx,		// Sir Ababol DX (HB)
 	&BurnDrvnes_sirababolr,		// Sir Ababol Remastered Edition (HB)
 	&BurnSpecsirfred_128,		// Sir Fred (128K)
+	&BurnDrvMSX_sirfred,		// Sir Fred (Spanish)
 	&BurnDrvcv_lancelot,		// Sir Lancelot
 	&BurnDrvSirio2,				// Sirio II (Calfesa S.L. Spanish Moon Cresta bootleg)
 	&BurnSpecsirwoodg1,			// Sirwood (Part 1 of 3) (128K)
@@ -30487,6 +30503,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_smurfa,			// Smurf Rescue in Gargamel's Castle (Alt)
 	&BurnDrvcv_smurf,			// Smurf Rescue in Gargamel's Castle
 	&BurnDrvcv_smurfsav,		// Smurfs Save the Day (Prototype)
+	&BurnDrvMSX_snailmaze,		// Snail Maze (HB)
 	&BurnDrvcv_snake,			// Snake (HB)
 	&BurnDrvMSX_snake,			// Snake (HB)
 	&BurnDrvsg1k_snake,			// Snake (HB, v1.04)
@@ -31219,6 +31236,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_steeltalp,		// Steel Talons (USA, Prototype)
 	&BurnSpecSteg,				// Steg the Slug (128K)
 	&BurnDrvnes_steinsgate,		// Steins Gate (HB)
+	&BurnDrvMSX_step,			// Step (HB, v1.1)
 	&BurnDrvMSX_stepup,			// Step Up (Jpn)
 	&BurnDrvMSX_stepupa,		// Step Up (Jpn, Alt)
 	&BurnDrvMSX_stepupk,		// Step Up (Kor)
@@ -33836,6 +33854,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDangarbt,			// Ufo Robo Dangar (bootleg)
 	&BurnDrvUfosensi,			// Ufo Senshi Yohko Chan (MC-8123, 317-0064)
 	&BurnDrvnes_ufouria,		// Ufouria - The Saga (Europe)
+	&BurnDrvMSX_ulises,			// Ulises (Spanish)
 	&BurnDrvnes_ultimaexodus,	// Ultima - Exodus (USA)
 	&BurnDrvnes_ultimexorem,	// Ultima - Exodus Remastered (USA)(Hack)
 	&BurnDrvnes_ultimqueava,	// Ultima - Quest of the Avatar (USA)
@@ -35067,6 +35086,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_zero4c,			// Zero 4 Champ (v1.5)
 	&BurnDrvpce_zero4ca,		// Zero 4 Champ
 	&BurnDrvMSX_zerocis,		// ZERO and the Castle of Infinite Sadness (HB)
+	&BurnDrvMSX_zerofighter,	// Zero Fighter (Jpn)
 	&BurnDrvZerohouri,			// Zero Hour (Inder)
 	&BurnDrvZerohour,			// Zero Hour (set 1)
 	&BurnDrvZerohoura,			// Zero Hour (set 2)

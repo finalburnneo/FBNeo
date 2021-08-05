@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17345 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17355 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -11,6 +11,7 @@ This list contains all games supported by FinalBurn Neo.
 | 99lstwar	|  	| '99: The Last War (set 1)				| repulse	| 1985	| Crux / Proma	| Miscellaneous	| 					|
 | 99lstwara	|  	| '99: The Last War (set 2)				| repulse	| 1985	| Crux / Proma	| Miscellaneous	| 					|
 | spec_licencetokill|  	| 007 - Licence to Kill (128K)				| 		| 1989	| Domark	| ZX Spectrum	| 					|
+| msx_lic2kill	|  	| 007 - Licence to Kill (Euro)				| 		| 1989	| Domark	| MSX		| 					|
 | spec_007liveandletdie|  	| 007 - Live and Let Die (128K)				| 		| 1988	| Domark	| ZX Spectrum	| 					|
 | msx_007tld	|  	| 007 - The Living Daylights (Euro)			| 		| 1987	| Domark	| MSX		| 					|
 | spec_007spywholovedme|  	| 007 - The Spy Who Loved Me (128K)			| 		| 1990	| Domark	| ZX Spectrum	| 					|
@@ -3153,7 +3154,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_dnawarrior|  	| D.N.A. Warrior (128K)					| 		| 1989	| Cascade Games	| ZX Spectrum	| 					|
 | sg1k_dayu	|  	| Da Yu (Tw)						| sg1k_chackn	| 1985?	| Unknown	| Sega SG-1000	| 					|
 | dacholer	|  	| Dacholer						| 		| 1983	| Nichibutsu	| Miscellaneous	| 					|
-| msx_daedalian	|  	| Daedalian Opus (HB)					| 		| 2006	| Karoshi Corp.	| MSX		| 					|
+| msx_daedalian	|  	| Daedalian Opus (HB)					| 		| 2006	| Karoshi Corpor| MSX		| 					|
 | gg_daffy	|  	| Daffy Duck in Hollywood (Euro)			| 		| 1994	| Sega		| Sega Game Gear| 					|
 | md_daffy	|  	| Daffy Duck in Hollywood (Euro)			| 		| 1994	| Sega		| Sega Megadrive| 					|
 | sms_daffy	|  	| Daffy Duck in Hollywood (Euro, Bra)			| 		| 1994	| Sega		| Sega Master Sy| 					|
@@ -3670,7 +3671,7 @@ This list contains all games supported by FinalBurn Neo.
 | dockman	|  	| Dock Man						| 		| 1982	| Taito Corporat| Miscellaneous	| 					|
 | chf_dodgeit	|  	| Dodge It						| 		| 1978	| Fairchild	| Channel F	| 					|
 | dodgeman	|  	| Dodge Man						| 		| 1983	| Omori Electric| Miscellaneous	| 					|
-| msx_dgnraven	|  	| Dodgin Raven (HB)					| 		| 2009	| Karoshi Corp.	| MSX		| 					|
+| msx_dgnraven	|  	| Dodgin Raven (HB)					| 		| 2009	| Karoshi Corpor| MSX		| 					|
 | ddonpacha	|  	| DoDonPachi (Arrange Mode version 1.1, hack by Trap15)	| ddonpach	| 2012	| hack / Trap15	| Cave		| 					|
 | ddonpach	|  	| DoDonPachi (International, master ver. 97/02/05)	| 		| 1997	| Atlus / Cave	| Cave		| 					|
 | ddonpachj	|  	| DoDonPachi (Japan, master ver. 97/02/05)		| ddonpach	| 1997	| Atlus / Cave	| Cave		| 					|
@@ -4315,6 +4316,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_eggerlnd2	|  	| Eggerland Mystery 2- Meikyushinwa (Jpn)		| 		| 1986	| HAL Laboratory| MSX		| Mapper SCC version			|
 | eggor		|  	| Eggor							| 		| 1982	| Telko		| Pac-man	| 					|
 | eggs		|  	| Eggs							| scregg	| 1983	| [Technos] Univ| Miscellaneous	| 					|
+| msx_eggy	|  	| Eggy (Jpn)						| 		| 1985	| Bothtec	| MSX		| 					|
 | nes_egyptj	|  	| Egypt (Japan)						| nes_egypt	| 1991	| Human Entertai| Miscellaneous	| 					|
 | nes_egypt	|  	| Egypt (T-Eng)						| 		| 1991	| Human Entertai| Miscellaneous	| 					|
 | 8ballact	|   NW	| Eight Ball Action (DK conversion)			| 		| 1984	| Seatongrove Lt| Miscellaneous	| Parent set for working drivers	|
@@ -6053,7 +6055,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_gunstarjs	|  	| Gunstar Heroes (Jpn, Sample)				| md_gunstar	| 1993	| Sega		| Sega Megadrive| 					|
 | md_gunstarc	|  	| Gunstar Heroes (T-Chi)				| md_gunstar	| 2018	| Treasure	| Sega Megadrive| 					|
 | md_gunstaru	|  	| Gunstar Heroes (USA)					| md_gunstar	| 1993	| Sega		| Sega Megadrive| 					|
-| msx_gurulogic	|  	| Guru Logic (HB, v2)					| 		| 2003	| Karoshi Corp.	| MSX		| 					|
+| msx_gurulogic	|  	| Guru Logic (HB, v2)					| 		| 2003	| Karoshi Corpor| MSX		| 					|
 | gururin	|  	| Gururin						| 		| 1994	| Face		| Neo Geo MVS	| 					|
 | gussun	|  	| Gussun Oyoyo (Japan)					| riskchal	| 1993	| Irem		| Irem M90	| 					|
 | cv_gustbust	|  	| Gust Buster						| 		| 1983	| Sunrise Softwa| ColecoVision	| 					|
@@ -7493,6 +7495,8 @@ This list contains all games supported by FinalBurn Neo.
 | spec_kong2	|  	| Kong 2 - Kong Strikes Back (48K)			| 		| 1985	| Ocean		| ZX Spectrum	| 					|
 | spec_kongsrevenge1|  	| Kong's Revenge (Part 1)				| 		| 1991	| Zigurat Softwa| ZX Spectrum	| 					|
 | spec_kongsrevenge2|  	| Kong's Revenge (Part 2)				| spec_kongsrevenge1| 1991	| Zigurat Softwa| ZX Spectrum	| 					|
+| msx_kongrevp1	|  	| Kong's Revenge - Part 1 (Spanish)			| 		| 1991	| Zigurat Softwa| MSX		| 					|
+| msx_kongrevp2	|  	| Kong's Revenge - Part 2 (Spanish)			| msx_kongrevp1	| 1991	| Zigurat Softwa| MSX		| Password: CHIRIPA - use num-keys from |
 | pce_proyak89	|  	| Kore Ga Pro Yakyuu '89				| 		| 1989	| Intec		| PC Engine	| 					|
 | pce_proyak90	|  	| Kore Ga Pro Yakyuu '90				| 		| 1990	| Intec		| PC Engine	| 					|
 | korokoro	|  	| Koro Koro Quest (Japan)				| 		| 1999	| Takumi	| Cave		| 					|
@@ -7592,7 +7596,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_labbaye	|  	| L'Abbaye Des Morts (HB)				| 		| 2010	| 2010 Locomalit| Sega Megadrive| 					|
 | msx_labbaye	|  	| L'Abbaye des Morts (HB, v1.2)				| 		| 2020	| Retro Deluxe	| MSX		| 					|
 | msx_abadcrim	|  	| La Abadia del Crimen (Spanish)			| 		| 1988	| Opera Soft	| MSX		| 					|
-| msx_lacorona	|  	| La Corona Encantada (HB)				| 		| 2009	| Karoshi	| MSX		| 					|
+| msx_lacorona	|  	| La Corona Encantada (HB)				| 		| 2009	| Karoshi Corpor| MSX		| 					|
 | lagirl	|  	| LA Girl						| plgirls	| 1992	| bootleg	| Taito L System| 					|
 | msx_reliquia	|  	| La Reliquia (HB)					| 		| 2020	| Roolandoo	| MSX		| 					|
 | spec_lareliquia|  	| La Reliquia (HB)					| 		| 2020	| Angel Colaso	| ZX Spectrum	| 					|
@@ -7794,7 +7798,6 @@ This list contains all games supported by FinalBurn Neo.
 | liblrabl	|  	| Libble Rabble						| 		| 1983	| Namco		| Miscellaneous	| 					|
 | liberate	|  	| Liberation						| 		| 1984	| Data East Corp| Miscellaneous	| 					|
 | md_liberty	|  	| Liberty or Death (USA)				| 		| 1994	| Koei		| Sega Megadrive| 					|
-| msx_lic2kill	|  	| Licence to Kill (Euro)				| 		| 1989	| Domark	| MSX		| 					|
 | nes_lifeforce	|  	| Life Force (USA)					| 		| 1988	| Konami	| Miscellaneous	| 					|
 | msx_lifefastln|  	| Life in the Fast Lane					| 		| 1987	| Methodic Solut| MSX		| 					|
 | lifefrcej	|  	| Lifeforce (Japan)					| salamand	| 1987	| Konami	| GX587		| 					|
@@ -7894,6 +7897,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_logiclvl	|  	| Logic Levels						| 		| 1984	| Fisher-Price	| ColecoVision	| 					|
 | logicpro	|  	| Logic Pro (Japan)					| croquis	| 1996	| Deniam	| Deniam-16b Har| 					|
 | logicpr2	|  	| Logic Pro 2 (Japan)					| 		| 1997	| Deniam	| Deniam-16c Har| 					|
+| msx_logicrmd	|  	| Logic Remastered (HB, v1.2)				| 		| 2021	| Platty Soft	| MSX		| 					|
 | nes_lonerangerthe|  	| Lone Ranger, The (USA)				| 		| 1991	| Konami	| Miscellaneous	| 					|
 | md_long	|   NW	| Long (Chi)						| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | looper	|  	| Looper						| changes	| 1982	| Orca		| Miscellaneous	| 					|
@@ -10541,6 +10545,7 @@ This list contains all games supported by FinalBurn Neo.
 | pitnruna	|  	| Pit & Run - F-1 Race (set 2)				| pitnrun	| 1984	| Taito Corporat| Miscellaneous	| Missing analog sounds and some gfx eff|
 | pitfight3	|  	| Pit Fighter (rev 3)					| pitfight	| 1990	| Atari Games	| Miscellaneous	| 					|
 | pitfight	|  	| Pit Fighter (rev 9)					| 		| 1990	| Atari Games	| Miscellaneous	| 					|
+| msx_pitstop	|  	| Pit Stop						| 		| 1983	| Epyx		| MSX		| 					|
 | md_pitfight1	|  	| Pit-Fighter (World)					| md_pitfight	| 1991	| Tengen	| Sega Megadrive| 					|
 | md_pitfight	|  	| Pit-Fighter (World, Rev. A)				| 		| 1991	| Tengen	| Sega Megadrive| 					|
 | pitapat	|  	| Pitapat Puzzle					| 		| 1997	| F2 System	| Miscellaneous	| 					|
@@ -11706,6 +11711,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_robocop	|  	| Robocop (Euro)					| 		| 1988	| Ocean Software| MSX		| 					|
 | robocopi	|  	| Robocop (Intro demo)					| 		| 2009	| Sergi		| Neo Geo MVS	| You must use the Universe BIOS and set|
 | robocopj	|  	| Robocop (Japan)					| robocop	| 1988	| Data East Corp| DEC0		| 					|
+| msx_seicorobocop|  	| RoboCop (Jpn)						| 		| 1992	| Sieco		| MSX		| 					|
 | robocopb2	|  	| Robocop (Red Corporation World bootleg)		| robocop	| 1989	| bootleg	| DEC0		| 					|
 | robocopu0	|  	| Robocop (US revision 0)				| robocop	| 1988	| Data East USA	| DEC0		| 					|
 | robocopu	|  	| Robocop (US revision 1)				| robocop	| 1988	| Data East USA	| DEC0		| 					|
@@ -11738,7 +11744,6 @@ This list contains all games supported by FinalBurn Neo.
 | md_robotermp1	|  	| Robocop Versus The Terminator (Prototype, Alt)	| md_roboterm	| 1994	| Virgin Interac| Sega Megadrive| 					|
 | md_robotermu	|  	| RoboCop versus The Terminator (USA)			| md_roboterm	| 1994	| Virgin Games	| Sega Megadrive| 					|
 | nes_robocvster|  	| RoboCop Vs The Terminator (USA)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| msx_seicorobocop|  	| RoboCop						| 		| 1992	| Sieco		| MSX		| 					|
 | nes_robodemons|  	| Robodemons (USA) (Unl)				| 		| 1990	| Color Dreams	| Miscellaneous	| 					|
 | msx_robofrog	|  	| Robofrog (Jpn)					| 		| 1985	| ASCII		| MSX		| 					|
 | msx_robofroga	|  	| Robofrog (Jpn, Alt)					| msx_robofrog	| 1985	| ASCII		| MSX		| 					|
@@ -12592,6 +12597,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_sirababoldx|  	| Sir Ababol DX (HB)					| 		| 2013	| Mojon Twins	| ZX Spectrum	| 					|
 | nes_sirababolr|  	| Sir Ababol Remastered Edition (HB)			| nes_sirababol	| 2016	| Mojon Twins	| Miscellaneous	| 					|
 | spec_sirfred_128|  	| Sir Fred (128K)					| 		| 1986	| Mikro-Gen	| ZX Spectrum	| 					|
+| msx_sirfred	|  	| Sir Fred (Spanish)					| 		| 1986	| Zigurat Softwa| MSX		| Select '2 cursores' to use joystick	|
 | cv_lancelot	|  	| Sir Lancelot						| 		| 1983	| Xonox		| ColecoVision	| 					|
 | sirio2	|  	| Sirio II (Calfesa S.L. Spanish Moon Cresta bootleg)	| mooncrst	| 1980?	| bootleg (Calfe| Galaxian	| 					|
 | spec_sirwoodg1|  	| Sirwood (Part 1 of 3) (128K)				| 		| 1990	| Opera Soft	| ZX Spectrum	| 					|
@@ -12725,6 +12731,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_smurfa	|  	| Smurf Rescue in Gargamel's Castle (Alt)		| cv_smurf	| 1982	| Coleco	| ColecoVision	| 					|
 | cv_smurf	|  	| Smurf Rescue in Gargamel's Castle			| 		| 1982	| Coleco	| ColecoVision	| 					|
 | cv_smurfsav	|  	| Smurfs Save the Day (Prototype)			| 		| 1982	| Coleco	| ColecoVision	| 					|
+| msx_snailmaze	|  	| Snail Maze (HB)					| 		| 2004	| Karoshi Corpor| MSX		| 					|
 | cv_snake	|  	| Snake (HB)						| 		| 2021	| Under4Mhz	| ColecoVision	| 					|
 | msx_snake	|  	| Snake (HB)						| 		| 2021	| Under4Mhz	| MSX		| 					|
 | sg1k_snake	|  	| Snake (HB, v1.04)					| 		| 2021	| Under4Mhz	| Sega SG-1000	| 					|
@@ -12997,7 +13004,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_sokobank	|  	| Soukoban (Kor)					| msx_sokoban	| 1984?	| Qnix		| MSX		| 					|
 | sg1k_sokobank	|  	| Soukoban (Kor)					| sg1k_sokoban	| 1985?	| Unknown	| Sega SG-1000	| 					|
 | sg1k_sokobant	|  	| Soukoban (Tw)						| sg1k_sokoban	| 1985?	| Unknown	| Sega SG-1000	| 					|
-| msx_sokobanpe	|  	| Soukoban Pocket Edition (HB)				| 		| 2004	| Karoshi Corp.	| MSX		| 					|
+| msx_sokobanpe	|  	| Soukoban Pocket Edition (HB)				| 		| 2004	| Karoshi Corpor| MSX		| 					|
 | md_soulblada	|  	| Soul Blade (Alt)					| md_soulblad	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_soulblad	|  	| Soul Blade						| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_souledge	|   NW	| Soul Edge vs Samurai Spirits (Pirate)			| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
@@ -13451,6 +13458,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_steeltalp	|  	| Steel Talons (USA, Prototype)				| md_steeltal	| 1992	| Tengen	| Sega Megadrive| 					|
 | spec_steg	|  	| Steg the Slug (128K)					| 		| 1992	| Codemasters	| ZX Spectrum	| 					|
 | nes_steinsgate|  	| Steins Gate (HB)					| 		| 2018	| Chiyomaru	| Miscellaneous	| 					|
+| msx_step	|  	| Step (HB, v1.1)					| 		| 2021	| Uninteresting	| MSX		| 					|
 | msx_stepup	|  	| Step Up (Jpn)						| 		| 1983	| HAL Kenkyuujo	| MSX		| 					|
 | msx_stepupa	|  	| Step Up (Jpn, Alt)					| msx_stepup	| 1983	| HAL Kenkyuujo	| MSX		| 					|
 | msx_stepupk	|  	| Step Up (Kor)						| msx_stepup	| 198?	| Zemina	| MSX		| 					|
@@ -16034,6 +16042,7 @@ This list contains all games supported by FinalBurn Neo.
 | dangarbt	|  	| Ufo Robo Dangar (bootleg)				| dangar	| 1986	| Nichibutsu	| Miscellaneous	| 					|
 | ufosensi	|  	| Ufo Senshi Yohko Chan (MC-8123, 317-0064)		| 		| 1988	| Sega		| System 2	| 					|
 | nes_ufouria	|  	| Ufouria - The Saga (Europe)				| 		| 1992	| Sunsoft	| Miscellaneous	| 					|
+| msx_ulises	|  	| Ulises (Spanish)					| 		| 1989	| Opera Soft	| MSX		| 					|
 | nes_ultimaexodus|  	| Ultima - Exodus (USA)					| 		| 1989	| FCI		| Miscellaneous	| 					|
 | nes_ultimexorem|  	| Ultima - Exodus Remastered (USA)(Hack)		| nes_ultimaexodus| 2020	| Fox Cunning	| Miscellaneous	| 					|
 | nes_ultimqueava|  	| Ultima - Quest of the Avatar (USA)			| 		| 1990	| FCI		| Miscellaneous	| 					|
@@ -17237,6 +17246,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_zero4c	|  	| Zero 4 Champ (v1.5)					| 		| 1991	| Media Rings Co| PC Engine	| 					|
 | pce_zero4ca	|  	| Zero 4 Champ						| pce_zero4c	| 1991	| Media Rings Co| PC Engine	| 					|
 | msx_zerocis	|  	| ZERO and the Castle of Infinite Sadness (HB)		| 		| 2014-16| Dioniso	| MSX		| 					|
+| msx_zerofighter|  	| Zero Fighter (Jpn)					| 		| 1984	| Hudson Soft	| MSX		| 					|
 | zerohouri	|  	| Zero Hour (Inder)					| zerohour	| 1980	| bootleg (Inder| Miscellaneous	| 					|
 | zerohour	|  	| Zero Hour (set 1)					| 		| 1980	| Universal	| Miscellaneous	| 					|
 | zerohoura	|  	| Zero Hour (set 2)					| zerohour	| 1980	| Universal	| Miscellaneous	| 					|

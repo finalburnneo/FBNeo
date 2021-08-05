@@ -45,15 +45,15 @@ extern Z80_Regs Z80;
 #define inline __inline
 #endif
 
-static void(*info_print)(int uid, const char* str);
-static void(*info_onstart)(int uid);
-static void(*info_onstop)(int uid);
-static int info_uid;
+static void(*info_print)(INT64 uid, const char* str);
+static void(*info_onstart)(INT64 uid);
+static void(*info_onstop)(INT64 uid);
+static INT64 info_uid;
 #ifdef WIN32
 extern INT_PTR CALLBACK DlgLuaScriptDialog(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
-extern void PrintToWindowConsole(int hDlgAsInt, const char* str);
-extern void WinLuaOnStart(int hDlgAsInt);
-extern void WinLuaOnStop(int hDlgAsInt);
+extern void PrintToWindowConsole(INT64 hDlgAsInt, const char* str);
+extern void WinLuaOnStart(INT64 hDlgAsInt);
+extern void WinLuaOnStop(INT64 hDlgAsInt);
 #endif
 
 void EmulatorAppDoFast(bool dofast);
@@ -3962,7 +3962,7 @@ int FBA_LoadLuaCode(const char *filename) {
 	info_onstop = WinLuaOnStop;
 	//if(!LuaConsoleHWnd)
 	//	LuaConsoleHWnd = CreateDialog(hAppInst, MAKEINTRESOURCE(IDD_LUA), NULL, (DLGPROC) DlgLuaScriptDialog);
-	info_uid = (int)LuaConsoleHWnd;
+	info_uid = (INT64)LuaConsoleHWnd;
 #else
 	info_print = NULL;
 	info_onstart = NULL;

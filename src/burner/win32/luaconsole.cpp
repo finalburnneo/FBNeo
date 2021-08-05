@@ -39,7 +39,7 @@ struct WindowInfo {
 	ControlLayoutState layoutState [numControlLayoutInfos];
 } windowInfo;
 
-void PrintToWindowConsole(INT_PTR hDlgAsInt, const char* str)
+void PrintToWindowConsole(INT64 hDlgAsInt, const char* str)
 {
 	HWND hDlg = (HWND)hDlgAsInt;
 	HWND hConsole = GetDlgItem(hDlg, IDC_LUACONSOLE);
@@ -61,7 +61,7 @@ void PrintToWindowConsole(INT_PTR hDlgAsInt, const char* str)
 	}
 }
 
-void WinLuaOnStart(INT_PTR hDlgAsInt)
+void WinLuaOnStart(INT64 hDlgAsInt)
 {
 	HWND hDlg = (HWND)hDlgAsInt;
 	//LuaPerWindowInfo& info = LuaWindowInfo[hDlg];
@@ -73,7 +73,7 @@ void WinLuaOnStart(INT_PTR hDlgAsInt)
 //	Show_Genesis_Screen(HWnd); // otherwise we might never show the first thing the script draws
 }
 
-void WinLuaOnStop(INT_PTR hDlgAsInt)
+void WinLuaOnStop(INT64 hDlgAsInt)
 {
 	HWND hDlg = (HWND)hDlgAsInt;
 	//LuaPerWindowInfo& info = LuaWindowInfo[hDlg];

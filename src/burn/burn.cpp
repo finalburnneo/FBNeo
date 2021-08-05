@@ -968,8 +968,9 @@ void StateRunAheadExit()
 {
 	if (RunAheadBuffer != NULL) {
 		free (RunAheadBuffer);
-		StateRunAheadInit(); // reset vars
 	}
+
+	StateRunAheadInit(); // reset vars
 }
 
 static INT32 __cdecl RunAheadLenAcb(struct BurnArea* pba)

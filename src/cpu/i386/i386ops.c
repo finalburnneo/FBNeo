@@ -872,7 +872,7 @@ static void I386OP(or_al_i8)(void)			// Opcode 0x0c
 	src = FETCH();
 	dst = REG8(AL);
 	dst = OR8(dst, src);
-	REG8(EAX) = dst;
+	REG8(AL) = dst;
 	CYCLES(CYCLES_ALU_IMM_ACC);
 }
 
@@ -1182,7 +1182,7 @@ static void I386OP(sbb_al_i8)(void)			// Opcode 0x1c
 	src = FETCH() + I.CF;
 	dst = REG8(AL);
 	dst = SUB8(dst, src);
-	REG8(EAX) = dst;
+	REG8(AL) = dst;
 	CYCLES(CYCLES_ALU_IMM_ACC);
 }
 
@@ -1552,9 +1552,9 @@ static void I386OP(sub_al_i8)(void)			// Opcode 0x2c
 {
 	UINT8 src, dst;
 	src = FETCH();
-	dst = REG8(EAX);
+	dst = REG8(AL);
 	dst = SUB8(dst, src);
-	REG8(EAX) = dst;
+	REG8(AL) = dst;
 	CYCLES(CYCLES_ALU_IMM_ACC);
 }
 

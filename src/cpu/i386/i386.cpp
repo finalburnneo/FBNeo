@@ -88,7 +88,7 @@ static UINT16 program_read_word_32le(UINT32 address)
 {
 	UINT16 *ptr = (UINT16*)memmap[0][address >> MAP_PAGE_SHIFT];
 	if (ptr) {
-		return ptr[(address & MAP_PAGE_MASK) / 2];
+		return BURN_ENDIAN_SWAP_INT16(ptr[(address & MAP_PAGE_MASK) / 2]);
 	}
 
 	if (program_read_word) {
@@ -103,7 +103,7 @@ static UINT32 program_read_dword_32le(UINT32 address)
 {
 	UINT32 *ptr = (UINT32*)memmap[0][address >> MAP_PAGE_SHIFT];
 	if (ptr) {
-		return ptr[(address & MAP_PAGE_MASK) / 4];
+		return BURN_ENDIAN_SWAP_INT32(ptr[(address & MAP_PAGE_MASK) / 4]);
 	}
 
 	if (program_read_dword) {
@@ -138,7 +138,7 @@ static void program_write_word_32le(UINT32 address, UINT16 data)
 {
 	UINT16 *ptr = (UINT16*)memmap[1][address >> MAP_PAGE_SHIFT];
 	if (ptr) {
-		ptr[(address & MAP_PAGE_MASK) / 2] = data;
+		ptr[(address & MAP_PAGE_MASK) / 2] = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
@@ -155,7 +155,7 @@ static void program_write_dword_32le(UINT32 address, UINT32 data)
 	UINT32 *ptr = (UINT32*)memmap[1][address >> MAP_PAGE_SHIFT];
 
 	if (ptr) {
-		ptr[(address & MAP_PAGE_MASK) / 4] = data;
+		ptr[(address & MAP_PAGE_MASK) / 4] = BURN_ENDIAN_SWAP_INT32(data);
 		return;
 	}
 

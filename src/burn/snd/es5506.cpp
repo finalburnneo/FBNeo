@@ -1034,10 +1034,12 @@ void ES5506Scan(INT32 nAction, INT32* pnMin)
 	}
 
 	if (nAction & ACB_WRITE) {
-		nFractionalPosition = 0;
-		nPosition = 0;
+		if (~nAction & ACB_RUNAHEAD) {
+			nFractionalPosition = 0;
+			nPosition = 0;
+			memset(chip->scratch, 0, 2 * MAX_SAMPLE_CHUNK * sizeof(INT32));
+		}
 		nSampleSize = (UINT32)chip->sample_rate * (1 << 16) / nBurnSoundRate;
-		memset(chip->scratch, 0, 2 * MAX_SAMPLE_CHUNK * sizeof(INT32));
 	}
 }
 

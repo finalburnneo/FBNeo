@@ -256,7 +256,7 @@ void BurnYMF262Scan(INT32 nAction, INT32* pnMin)
 	BurnTimerScan(nAction, pnMin);
 	ymf262_save_state(ymfchip, nAction);
 
-	if (nAction & ACB_WRITE) {
+	if (nAction & ACB_WRITE && ~nAction & ACB_RUNAHEAD) {
 		nYMF262Position = 0;
 		nFractionalPosition = 0;
 		memset(pBuffer, 0, 4096 * 2 * sizeof(INT16));

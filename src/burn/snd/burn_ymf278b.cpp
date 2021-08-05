@@ -318,7 +318,7 @@ void BurnYMF278BScan(INT32 nAction, INT32* pnMin)
 
 	ymf278b_scan(nAction, pnMin);
 
-	if (nAction & ACB_WRITE) {
+	if (nAction & ACB_WRITE && ~nAction & ACB_RUNAHEAD) {
 		nYMF278BPosition = 0;
 		nFractionalPosition = 0;
 		memset(pBuffer, 0, 4096 * 2 * sizeof(INT16));

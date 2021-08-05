@@ -53,6 +53,7 @@ static UINT8 DrvReset;
 static INT32 nEnableRaster[3];
 
 static INT32 asurablade = 0;
+static INT32 is_usa = 0;
 
 static struct BurnInputInfo AsurabldInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
@@ -591,12 +592,7 @@ static void DrvCalculateTransTab(UINT8 *src, UINT8 *dst, INT32 t, INT32 w, INT32
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x0000001,	 0, 4)) return 1;
@@ -696,9 +692,10 @@ static INT32 DrvExit()
 	SekExit();
 	ZetExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	asurablade = 0;
+	is_usa = 0;
 
 	return 0;
 }
@@ -766,7 +763,6 @@ static void draw_sprites()
 		}
 	}
 }
-
 
 static void draw_background_layer(UINT8 *ram, UINT8 *gfx, UINT8 *tab, INT32 coloff, INT32 soff, INT32 prio)
 {
@@ -915,8 +911,8 @@ static void draw_foreground_layer(UINT8 *ram, INT32 prio)
 {
 	UINT16 *vram = (UINT16*)ram;
 
-	INT32 scrolly =  DrvScrollBuf[0x200] & 0xff;
-	INT32 scrollx = (DrvScrollBuf[0x200] >> 16) & 0x1ff;
+	INT32 scrolly =  (DrvScrollBuf[0x200] + (is_usa ? 8 : 0)) & 0xff;
+	INT32 scrollx = ((DrvScrollBuf[0x200] >> 16) + (is_usa ? 16 : 0)) & 0x1ff;
 
 	for (INT32 offs = 0; offs < 64 * 32; offs++)
 	{
@@ -954,8 +950,8 @@ static void draw_foreground_layer_byline(UINT8 *ram, INT32 prio)
 
 	for (INT32 y = 0; y < nScreenHeight; y++)
 	{
-		INT32 scrolly = ((DrvScrollBuf[512 + y] & 0xffff) + y) & 0x0ff;
-		INT32 scrollx = (DrvScrollBuf[512 + y] >> 16) & 0x1ff;
+		INT32 scrolly = ((DrvScrollBuf[512 + y] & 0xffff) + y + (is_usa ? 8 : 0)) & 0x0ff;
+		INT32 scrollx = ((DrvScrollBuf[512 + y] >> 16) + (is_usa ? 16 : 0)) & 0x1ff;
 
 		INT32 yy = scrolly & 0xf8;
 		INT32 yo = (scrolly & 0x07) << 3;
@@ -1135,9 +1131,9 @@ static INT32 DrvDraw()
 
 	enable_rasters();
 
-	fuuki32_draw_layer(tm_back,   buffer, 1);
-	fuuki32_draw_layer(tm_middle, buffer, 2);
-	fuuki32_draw_layer(tm_front,  buffer, 4);
+	if (nBurnLayer & 1) fuuki32_draw_layer(tm_back,   buffer, 1);
+	if (nBurnLayer & 2) fuuki32_draw_layer(tm_middle, buffer, 2);
+	if (nBurnLayer & 4) fuuki32_draw_layer(tm_front,  buffer, 4);
 
 	if (nSpriteEnable & 1) draw_sprites();
 
@@ -1186,7 +1182,7 @@ static INT32 DrvFrame()
 		if (i == 248) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO); // level 1
 		if (i == 240) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO); // vblank
 
-		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
+		CPU_RUN_TIMER(1);
 
 		// hack -- save scroll/offset registers so the
 		// lines can be drawn in one pass -- should save
@@ -1205,8 +1201,6 @@ static INT32 DrvFrame()
 			tilebank_buf[0] = tilebank[0];
 		}
 	}
-
-	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
 		BurnYMF278BUpdate(nBurnSoundLen);
@@ -1301,6 +1295,12 @@ struct BurnDriver BurnDrvAsurabld = {
 	320, 240, 4, 3
 };
 
+static INT32 USAInit()
+{
+	is_usa = 1;
+
+	return DrvInit();
+}
 
 // Asura Buster - Eternal Warriors (USA)
 
@@ -1341,7 +1341,7 @@ struct BurnDriver BurnDrvAsurabus = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, asurabusRomInfo, asurabusRomName, NULL, NULL, NULL, NULL, AsurabldInputInfo, AsurabusDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	USAInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	320, 240, 4, 3
 };
 

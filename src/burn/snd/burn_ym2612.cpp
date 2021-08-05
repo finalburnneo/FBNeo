@@ -45,7 +45,7 @@ static void YM2612Render(INT32 nSegmentLength)
 	if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("YM2612Render called without init\n"));
 #endif
 	
-	if (nYM2612Position >= nSegmentLength) {
+	if (nYM2612Position >= nSegmentLength || !pBurnSoundOut) {
 		return;
 	}
 

@@ -12,6 +12,7 @@ static UINT8 *AllRam;
 static UINT8 *RamEnd;
 static UINT8 *DrvM6809ROM;
 static UINT8 *DrvM6809ROMDec;
+static UINT8 *DrvM6809Vectors;
 static UINT8 *DrvZ80ROM;
 static UINT8 *DrvGfxROM0;
 static UINT8 *DrvGfxROM1;
@@ -163,6 +164,13 @@ STDDIPINFO(Rocnrope)
 
 static UINT8 rocnrope_read(UINT16 address)
 {
+	if ((address & 0xff00) == 0xff00) {
+		if (address >= 0xfff2 && address <= 0xfffd) {
+			return DrvM6809Vectors[address & 0xf];
+		}
+		return DrvM6809ROM[address];
+	}
+
 	switch (address)
 	{
 		case 0x3080:
@@ -231,7 +239,7 @@ static void rocnrope_write(UINT16 address, UINT8 data)
 		case 0x818b:
 		case 0x818c:
 		case 0x818d:
-			DrvM6809ROM[0xfff0 + (address & 0xf)] = data;
+			DrvM6809Vectors[address & 0xf] = data;
 		return;
 	}
 }
@@ -242,9 +250,7 @@ static INT32 DrvDoReset(INT32 clear_ram)
 		memset(AllRam, 0, RamEnd - AllRam);
 	}
 
-	M6809Open(0);
-	M6809Reset();
-	M6809Close();
+	M6809Reset(0);
 
 	TimepltSndReset();
 
@@ -273,7 +279,8 @@ static INT32 MemIndex()
 
 	AllRam			= Next;
 
-	DrvM6809RAM		= Next; Next += 0x001010;
+	DrvM6809RAM		= Next; Next += 0x001000;
+	DrvM6809Vectors = Next; Next += 0x000010;
 	DrvSprRAM		= Next; Next += 0x000800;
 	DrvColRAM		= Next; Next += 0x000400;
 	DrvVidRAM		= Next; Next += 0x000400;
@@ -320,12 +327,7 @@ static void M6809Decode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvM6809ROM + 0x06000,  0, 1)) return 1;
@@ -366,13 +368,14 @@ static INT32 DrvInit()
 	M6809MapMemory(DrvColRAM,		0x4800, 0x4bff, MAP_RAM);
 	M6809MapMemory(DrvVidRAM,		0x4c00, 0x4fff, MAP_RAM);
 	M6809MapMemory(DrvM6809RAM,		0x5000, 0x5fff, MAP_RAM);
-	M6809MapMemory(DrvM6809ROM + 0x6000,	0x6000, 0xffff, MAP_READ);
+	M6809MapMemory(DrvM6809ROM + 0x6000,	0x6000, 0xfeff, MAP_READ); // ff00 - ffff in read handler
 	M6809MapMemory(DrvM6809ROMDec + 0x6000,	0x6000, 0xffff, MAP_FETCH);
 	M6809SetWriteHandler(rocnrope_write);
 	M6809SetReadHandler(rocnrope_read);
 	M6809Close();
 
 	TimepltSndInit(DrvZ80ROM, DrvZ80RAM, 0);
+	TimepltSndVol(0.65, 0.65);
 
 	GenericTilesInit();
 
@@ -389,7 +392,7 @@ static INT32 DrvExit()
 
 	TimepltSndExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -436,19 +439,7 @@ static void draw_layer()
 		INT32 flipx = attr & 0x40;
 		INT32 flipy = attr & 0x20;
 
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_FlipXY(pTransDraw, code, sx, sy - 16, color, 4, 0x100, DrvGfxROM1);
-			} else {
-				Render8x8Tile_FlipY(pTransDraw, code, sx, sy - 16, color, 4, 0x100, DrvGfxROM1);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_FlipX(pTransDraw, code, sx, sy - 16, color, 4, 0x100, DrvGfxROM1);
-			} else {
-				Render8x8Tile(pTransDraw, code, sx, sy - 16, color, 4, 0x100, DrvGfxROM1);
-			}
-		}
+		Draw8x8Tile(pTransDraw, code, sx, sy - 16, flipx, flipy, color, 4, 0x100, DrvGfxROM1);
 	}
 }
 
@@ -552,7 +543,6 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
-
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;
 		ba.szName = "All Ram";
@@ -564,15 +554,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		TimepltSndScan(nAction, pnMin);
 
 		SCAN_VAR(irq_enable);
-	}
-
-	// Read and write irq vectors
-	if (nAction & ACB_READ) {
-		memcpy (DrvM6809RAM + 0x1000, DrvM6809ROM + 0xfff2, 0x0c);
-	}
-
-	if (nAction & ACB_WRITE) {
-		memcpy (DrvM6809ROM + 0xfff2, DrvM6809RAM + 0x1000, 0x0c);
+		SCAN_VAR(watchdog);
 	}
 
 	return 0;

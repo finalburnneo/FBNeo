@@ -365,6 +365,11 @@ void EEPROMScan(INT32 nAction, INT32* pnMin)
 		ba.szName	= "Serial Buffer";
 		BurnAcb(&ba);
 
+		if (nAction & ACB_RUNAHEAD) {
+			// we _must_ scan eeprom data when in RunAhead mode or corruption is a possibility
+			ScanVar(eeprom_data, MEMORY_SIZE, "eeprom_data");
+		}
+
 		SCAN_VAR(serial_count);
 		SCAN_VAR(eeprom_data_bits);
 		SCAN_VAR(eeprom_read_address);

@@ -6456,15 +6456,15 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		
 		BurnYM2151Scan(nAction, pnMin);
 
-		// Scan critical driver variables
 		SCAN_VAR(bIrqEnable);
 		SCAN_VAR(DrvSoundLatch);
 		SCAN_VAR(TitleSoundLatch);
 		SCAN_VAR(PlayTitleSample);
 		SCAN_VAR(TitleSamplePos);
 		SCAN_VAR(PriorityFlag);
-		//SCAN_VAR(dim_c);
-		//SCAN_VAR(dim_v);
+		SCAN_VAR(DrvVBlank);
+		SCAN_VAR(dim_c);
+		SCAN_VAR(dim_v);
 
 		BurnRandomScan(nAction);
 	}
@@ -6506,29 +6506,10 @@ static INT32 CuebrickScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
-		KonamiICScan(nAction);
-
 		SCAN_VAR(CuebrickSndIrqFire);
-		SCAN_VAR(bIrqEnable);
 		SCAN_VAR(DrvNvRamBank);
-		SCAN_VAR(PriorityFlag);
-		SCAN_VAR(CuebrickSndIrqFire);
 	}
 
-	return DrvScan(nAction, pnMin);
-}
-
-static INT32 BlswhstlScan(INT32 nAction, INT32 *pnMin)
-{
-	if (nAction & ACB_DRIVER_DATA) {
-		ZetScan(nAction);
-		K053260Scan(nAction, pnMin);
-				
-		SCAN_VAR(InitEEPROMCount);
-	}
-	
-	EEPROMScan(nAction, pnMin);
-	
 	return DrvScan(nAction, pnMin);
 }
 
@@ -6537,13 +6518,12 @@ static INT32 SsridersScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
 		K053260Scan(nAction, pnMin);
-				
+
 		SCAN_VAR(InitEEPROMCount);
-		SCAN_VAR(DrvVBlank);
+
+		EEPROMScan(nAction, pnMin);
 	}
-	
-	EEPROMScan(nAction, pnMin);
-	
+
 	return DrvScan(nAction, pnMin);
 }
 
@@ -6733,7 +6713,7 @@ struct BurnDriver BurnDrvBlswhstl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, BlswhstlRomInfo, BlswhstlRomName, NULL, NULL, NULL, NULL, BlswhstlInputInfo, NULL,
-	BlswhstlInit, BlswhstlExit, BlswhstlFrame, BlswhstlDraw, BlswhstlScan,
+	BlswhstlInit, BlswhstlExit, BlswhstlFrame, BlswhstlDraw, SsridersScan,
 	NULL, 0x810, 224, 280, 3, 4
 };
 
@@ -6743,7 +6723,7 @@ struct BurnDriver BurnDrvBlswhstla = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, BlswhstlaRomInfo, BlswhstlaRomName, NULL, NULL, NULL, NULL, BlswhstlInputInfo, NULL,
-	BlswhstlInit, BlswhstlExit, BlswhstlFrame, BlswhstlDraw, BlswhstlScan,
+	BlswhstlInit, BlswhstlExit, BlswhstlFrame, BlswhstlDraw, SsridersScan,
 	NULL, 0x810, 224, 280, 3, 4
 };
 
@@ -6753,7 +6733,7 @@ struct BurnDriver BurnDrvDetatwin = {
 	L"\u51FA\u305F\u306A!! Twin Bee \u30C4\u30A4\u30F3\u30D3\u30FC (Japan, version J)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, DetatwinRomInfo, DetatwinRomName, NULL, NULL, NULL, NULL, BlswhstlInputInfo, NULL,
-	BlswhstlInit, BlswhstlExit, BlswhstlFrame, BlswhstlDraw, BlswhstlScan,
+	BlswhstlInit, BlswhstlExit, BlswhstlFrame, BlswhstlDraw, SsridersScan,
 	NULL, 0x810, 224, 280, 3, 4
 };
 

@@ -43,29 +43,29 @@ static UINT8 DrvReset;
 static INT32 thunderx = 0;
 
 static struct BurnInputInfo ThunderxInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Thunderx)
@@ -341,20 +341,16 @@ static void thunderx_videobank(INT32 data)
 	nDrvKonamiBank[0] = data;
 	layer_priority = data & 0x08;
 
-	if (data & 0x01) {
+	if (data & 0x10) {
+		konamiMapMemory(pmcram, 0x5800, 0x5fff, MAP_RAM);
+	} else if (data & 0x01) {
 		konamiMapMemory(DrvBankRAM, 0x5800, 0x5fff, MAP_RAM);
-	} else if (data & 0x10) {
-		if (thunderx_1f98_data & 2) {
-			konamiMapMemory(pmcram + 0x800, 0x5800, 0x5fff, MAP_RAM);
-		} else {
-			konamiMapMemory(pmcram, 0x5800, 0x5fff, MAP_RAM); // junk?
-		}
 	} else {
 		konamiMapMemory(DrvPalRAM,  0x5800, 0x5fff, MAP_RAM);
 	}
 }
 
-void scontra_main_write(UINT16 address, UINT8 data)
+static void scontra_main_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -389,7 +385,7 @@ void scontra_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 scontra_main_read(UINT16 address)
+static UINT8 scontra_main_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -429,7 +425,7 @@ static void scontra_snd_bankswitch_w(INT32 data)
 	k007232_set_bank(0, bank_A, bank_B );
 }
 
-void __fastcall scontra_sound_write(UINT16 address, UINT8 data)
+static void __fastcall scontra_sound_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xfff0) == 0xb000) {
 		K007232WriteReg(0, address & 0x0f, data);
@@ -452,7 +448,7 @@ void __fastcall scontra_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall scontra_sound_read(UINT16 address)
+static UINT8 __fastcall scontra_sound_read(UINT16 address)
 {
 	if ((address & 0xfff0) == 0xb000) {
 		return K007232ReadReg(0, address & 0x0f);
@@ -500,12 +496,12 @@ static void K051960Callback(INT32 *, INT32 *color,INT32 *priority, INT32 *)
 
 static void thunderx_set_lines(INT32 lines)
 {
-	nDrvKonamiBank[0] = lines;
+	nDrvKonamiBank[1] = lines;
 
 	INT32 nBank = 0x10000 + (((lines & 0x0f) ^ 0x08) * 0x2000);
 	if (nBank >= 0x28000) nBank -= 0x20000;
 
-	konamiMapMemory(DrvKonROM + nBank, 0x6000, 0x7fff, MAP_ROM); 
+	konamiMapMemory(DrvKonROM + nBank, 0x6000, 0x7fff, MAP_ROM);
 }
 
 static INT32 DrvDoReset()
@@ -543,8 +539,8 @@ static INT32 MemIndex()
 
 	DrvGfxROM0		= Next; Next += 0x100000;
 	DrvGfxROM1		= Next; Next += 0x100000;
-	DrvGfxROMExp0		= Next; Next += 0x200000;
-	DrvGfxROMExp1		= Next; Next += 0x200000;
+	DrvGfxROMExp0	= Next; Next += 0x200000;
+	DrvGfxROMExp1	= Next; Next += 0x200000;
 
 	DrvSndROM		= Next; Next += 0x080000;
 
@@ -560,7 +556,7 @@ static INT32 MemIndex()
 
 	soundlatch		= Next; Next += 0x000001;
 
-	nDrvKonamiBank		= Next; Next += 0x000002;
+	nDrvKonamiBank	= Next; Next += 0x000002;
 
 	pmcram			= Next; Next += 0x001000;
 
@@ -574,12 +570,7 @@ static INT32 DrvInit(INT32 type)
 {
 	GenericTilesInit();
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (type) {
@@ -681,8 +672,9 @@ static INT32 DrvInit(INT32 type)
 	ZetSetReadHandler(scontra_sound_read);
 	ZetClose();
 
-	BurnYM2151Init(3579545);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
 	BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
+	BurnTimerAttachZet(3579545);
 
 	K007232Init(0, 3579545, DrvSndROM, 0x80000);
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
@@ -715,7 +707,7 @@ static INT32 DrvExit()
 	K007232Exit();
 	BurnYM2151Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -770,7 +762,6 @@ static INT32 DrvFrame()
 	konamiNewFrame();
 	ZetNewFrame();
 
-	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 100;
 	INT32 nCyclesTotal[2] = { 3000000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -780,32 +771,15 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = (nCyclesTotal[0] / nInterleave) * (i + 1);
-
-		nCyclesDone[0] += konamiRun(nSegment - nCyclesDone[0]);
-
-		nSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
-
-		nCyclesDone[1] += ZetRun(nSegment - nCyclesDone[1]);
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			K007232Update(0, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
+		CPU_RUN(0, konami);
+		CPU_RUN_TIMER(1);
 	}
 
 	if (K052109_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		if (nSegmentLength) {
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			K007232Update(0, pSoundBuf, nSegmentLength);
-		}
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		K007232Update(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
 	konamiClose();
@@ -818,7 +792,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -826,9 +800,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029705;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
-
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;
 		ba.szName = "All Ram";
@@ -841,11 +814,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		K007232Scan(nAction, pnMin);
 
 		KonamiICScan(nAction);
-	}
 
-	if (nAction & ACB_DRIVER_DATA) {
 		SCAN_VAR(thunderx_1f98_data);
-
 		SCAN_VAR(layer_priority);
 	}
 

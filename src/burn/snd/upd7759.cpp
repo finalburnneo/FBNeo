@@ -431,6 +431,8 @@ void UPD7759Update(INT32 chip, INT32 nLength)
 
 static void UpdateStream(INT32 chip)
 {
+	if (!pBurnSoundOut) return;
+
 	Chip = Chips[chip];
 
 	INT32 framelen = Chip->resamp.samples_to_source(nBurnSoundLen);

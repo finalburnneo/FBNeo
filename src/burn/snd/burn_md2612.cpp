@@ -46,7 +46,7 @@ static void MD2612Render(INT32 nSegmentLength)
 	if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("MD2612Render called without init\n"));
 #endif
 	
-	if (nMD2612Position >= nSegmentLength) {
+	if (nMD2612Position >= nSegmentLength || !pBurnSoundOut) {
 		return;
 	}
 
@@ -258,9 +258,11 @@ void BurnMD2612Scan(INT32 nAction, INT32* pnMin)
 		if (nAction & ACB_WRITE) {
 			MDYM2612LoadContext();
 
-			nMD2612Position = 0;
-			nFractionalPosition = 0;
-			memset(pBuffer, 0, 4096 * 2 * 1 * sizeof(INT16));
+			if (~nAction & ACB_RUNAHEAD) {
+				nMD2612Position = 0;
+				nFractionalPosition = 0;
+				memset(pBuffer, 0, 4096 * 2 * 1 * sizeof(INT16));
+			}
 		} else {
 			MDYM2612SaveContext();
 		}

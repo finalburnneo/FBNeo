@@ -4484,6 +4484,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(timer_1_cycles);
 
 		SCAN_VAR(system32_displayenable);
+		SCAN_VAR(system32_tilebank_external);
 
 		SCAN_VAR(nExtraCycles);
 

@@ -47,6 +47,11 @@ static UINT8 *linemap_primap = NULL;
 
 static void (*m_callback)(INT32 layer, INT32 *code, INT32 *color, INT32 *flags);
 
+UINT16 K056832GetVram(INT32 address)
+{
+	return K056832VideoRAM[address];
+}
+
 void K056832Reset()
 {
 	memset (K056832VideoRAM, 0, 0x2000 * 0x11 * 2);
@@ -396,7 +401,7 @@ UINT8 K056832HalfRamReadByte(UINT32 offset)
 void K056832RamWriteWord(UINT32 offset, UINT16 data)
 {
 	offset = (offset & 0x1fff) / 2;
-
+//	if (data == 0xda02) { bprintf(0, _T("fog @ %x  %x\n"), m_selected_page_x4096 + (offset), data); }
 	K056832VideoRAM[m_selected_page_x4096 + (offset)] = BURN_ENDIAN_SWAP_INT16(data);
 }
 

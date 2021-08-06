@@ -3458,6 +3458,7 @@ DRV		BurnDrvDemonwld3;
 DRV		BurnDrvDemonwld4;
 DRV		BurnDrvMSX_demonia;
 DRV		BurnDrvmd_asteborg;
+DRV		BurnDrvmd_asteborgd;
 DRV		BurnDrvnes_dengeki;
 DRV		BurnSpecDenizen;
 DRV		BurnDrvDenjinmk;
@@ -21059,7 +21060,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDemonwld3,			// Demon's World / Horror Story (set 4)
 	&BurnDrvDemonwld4,			// Demon's World / Horror Story (set 5)
 	&BurnDrvMSX_demonia,		// Demonia
-	&BurnDrvmd_asteborg,		// Demons of Asteborg (HB, Demo)
+	&BurnDrvmd_asteborg,		// Demons of Asteborg (HB)
+	&BurnDrvmd_asteborgd,		// Demons of Asteborg (HB, Demo)
 	&BurnDrvnes_dengeki,		// Dengeki - Big Bang! (Japan)
 	&BurnSpecDenizen,			// Denizen (128K)
 	&BurnDrvDenjinmk,			// Denjin Makai (set 1)

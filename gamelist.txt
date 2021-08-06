@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17355 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17356 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3415,7 +3415,8 @@ This list contains all games supported by FinalBurn Neo.
 | demonwld3	|  	| Demon's World / Horror Story (set 4)			| demonwld	| 1989	| Toaplan	| Toaplan BCU-2 | 					|
 | demonwld4	|  	| Demon's World / Horror Story (set 5)			| demonwld	| 1989	| Toaplan	| Toaplan BCU-2 | 					|
 | msx_demonia	|  	| Demonia						| 		| 1986	| Microids	| MSX		| 					|
-| md_asteborg	|  	| Demons of Asteborg (HB, Demo)				| 		| 2020	| NeoFID Studios| Sega Megadrive| 					|
+| md_asteborg	|  	| Demons of Asteborg (HB)				| 		| 2021	| NeoFID Studios| Sega Megadrive| 					|
+| md_asteborgd	|  	| Demons of Asteborg (HB, Demo)				| md_asteborg	| 2020	| NeoFID Studios| Sega Megadrive| 					|
 | nes_dengeki	|  	| Dengeki - Big Bang! (Japan)				| nes_clashatdem| 1989?	| Nintendo	| Miscellaneous	| 					|
 | spec_denizen	|  	| Denizen (128K)					| 		| 1988	| Players	| ZX Spectrum	| 					|
 | denjinmk	|  	| Denjin Makai (set 1)					| 		| 1994	| Winkysoft (Ban| Miscellaneous	| 					|

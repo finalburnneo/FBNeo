@@ -4294,6 +4294,14 @@
 		<driver status="preliminary"/>
 	</game>
 	<game name="asteborg">
+		<description>Demons of Asteborg (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>NeoFID Studios</manufacturer>
+		<rom name="Demons of Asteborg (2021)(NEOfit Studios).bin" size="15397620" crc="67283fbe"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="asteborgd" cloneof="asteborg" romof="asteborg">
 		<description>Demons of Asteborg (HB, Demo) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>NeoFID Studios</manufacturer>

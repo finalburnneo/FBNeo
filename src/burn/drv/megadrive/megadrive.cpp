@@ -40,7 +40,7 @@
 #define TOTAL_68K_CYCLES        ((488 * 262) * 60)
 #define TOTAL_68K_CYCLES_PAL    ((488 * 312) * 50)
 
-#define MAX_CARTRIDGE_SIZE      0xc00000
+#define MAX_CARTRIDGE_SIZE      0xf00000
 #define MAX_SRAM_SIZE           0x010000
 
 // PicoDrive Sek interface
@@ -1544,7 +1544,7 @@ static INT32 MegadriveResetDo()
 	RamVReg->reg[0x01] = 0x04;
 	RamVReg->reg[0x0c] = 0x81;
 	RamVReg->reg[0x0f] = 0x02;
-	RamVReg->status = 0x3428 | ((MegadriveDIP[0] & 0x40) >> 6); // 'always set' bits | vblank | collision | pal
+	RamVReg->status = 0x3408 | ((MegadriveDIP[0] & 0x40) >> 6); // 'always set' bits | vblank | collision | pal
 	RamVReg->rotate = 0;
 
 	RamMisc->Bank68k = 0;
@@ -1789,46 +1789,49 @@ static void __fastcall JCartCtrlWriteWord(UINT32 /*sekAddress*/, UINT16 wordValu
 	RamMisc->JCartIOData[1] = (wordValue & 1) << 6;
 }
 
+static void __fastcall MegadriveSRAMToggleWriteByte(UINT32 sekAddress, UINT8 byteValue);
+
 static void __fastcall Ssf2BankWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
+	bprintf(0, _T("ssf2bank_wb %x   %x\n"), sekAddress, byteValue);
 	switch (sekAddress) {
 		case 0xa130f1: {
-			if (byteValue == 2) memcpy(RomMain + 0x000000, RomMain + 0x400000 + (((byteValue & 0x0f) - 2) * 0x080000), 0x080000);
+			MegadriveSRAMToggleWriteByte(sekAddress, byteValue);
 			return;
 		}
 
 		case 0xa130f3: {
-			memcpy(RomMain + 0x080000, RomMain + 0x400000 + ((byteValue & 0xf) * 0x080000), 0x080000);
+			memcpy(RomMain + 0x080000, OriginalRom + ((byteValue & 0x3f) * 0x080000), 0x080000);
 			return;
 		}
 
 		case 0xa130f5: {
-			memcpy(RomMain + 0x100000, RomMain + 0x400000 + ((byteValue & 0xf) * 0x080000), 0x080000);
+			memcpy(RomMain + 0x100000, OriginalRom + ((byteValue & 0x3f) * 0x080000), 0x080000);
 			return;
 		}
 
 		case 0xa130f7: {
-			memcpy(RomMain + 0x180000, RomMain + 0x400000 + ((byteValue & 0xf) * 0x080000), 0x080000);
+			memcpy(RomMain + 0x180000, OriginalRom + ((byteValue & 0x3f) * 0x080000), 0x080000);
 			return;
 		}
 
 		case 0xa130f9: {
-			memcpy(RomMain + 0x200000, RomMain + 0x400000 + ((byteValue & 0xf) * 0x080000), 0x080000);
+			memcpy(RomMain + 0x200000, OriginalRom + ((byteValue & 0x3f) * 0x080000), 0x080000);
 			return;
 		}
 
 		case 0xa130fb: {
-			memcpy(RomMain + 0x280000, RomMain + 0x400000 + ((byteValue & 0xf) * 0x080000), 0x080000);
+			memcpy(RomMain + 0x280000, OriginalRom + ((byteValue & 0x3f) * 0x080000), 0x080000);
 			return;
 		}
 
 		case 0xa130fd: {
-			memcpy(RomMain + 0x300000, RomMain + 0x400000 + ((byteValue & 0xf) * 0x080000), 0x080000);
+			memcpy(RomMain + 0x300000, OriginalRom + ((byteValue & 0x3f) * 0x080000), 0x080000);
 			return;
 		}
 
 		case 0xa130ff: {
-			memcpy(RomMain + 0x380000, RomMain + 0x400000 + ((byteValue & 0xf) * 0x080000), 0x080000);
+			memcpy(RomMain + 0x380000, OriginalRom + ((byteValue & 0x3f) * 0x080000), 0x080000);
 			return;
 		}
 	}
@@ -2484,12 +2487,8 @@ static void SetupCustomCartridgeMappers()
 	}
 
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SSF2) {
-		OriginalRom = (UINT8*)BurnMalloc(0x500000);
-		memcpy(OriginalRom, RomMain, 0x500000);
-
-		memcpy(RomMain + 0x800000, OriginalRom + 0x400000, 0x100000);
-		memcpy(RomMain + 0x400000, OriginalRom + 0x000000, 0x400000);
-		memcpy(RomMain + 0x000000, OriginalRom + 0x000000, 0x400000);
+		OriginalRom = (UINT8*)BurnMalloc(MAX_CARTRIDGE_SIZE);
+		memcpy(OriginalRom, RomMain, MAX_CARTRIDGE_SIZE);
 
 		SekOpen(0);
 		SekMapHandler(7, 0xa130f0, 0xa130ff, MAP_WRITE);
@@ -3070,6 +3069,7 @@ static void MegadriveSetupSRAM()
 		if (RomSize <= RamMisc->SRamStart) {
 			RamMisc->SRamActive = 1;
 		}
+
 	}
 
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_BEGGAR) {

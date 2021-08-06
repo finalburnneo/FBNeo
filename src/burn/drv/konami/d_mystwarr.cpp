@@ -3076,7 +3076,7 @@ struct BurnDriver BurnDrvMystwarr = {
 	"mystwarr", NULL, NULL, NULL, "1993",
 	"Mystic Warriors (ver EAA)\0", NULL, "Konami", "GX128",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DISABLED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, mystwarrRomInfo, mystwarrRomName, NULL, NULL, NULL, NULL, MystwarrInputInfo, MystwarrDIPInfo,
 	MystwarrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x0800,
 	288, 224, 4, 3
@@ -3117,7 +3117,7 @@ struct BurnDriver BurnDrvMystwarru = {
 	"mystwarru", "mystwarr", NULL, NULL, "1993",
 	"Mystic Warriors (ver UAA)\0", NULL, "Konami", "GX128",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DISABLED | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, mystwarruRomInfo, mystwarruRomName, NULL, NULL, NULL, NULL, MystwarrInputInfo, MystwarrDIPInfo,
 	MystwarrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x0800,
 	288, 224, 4, 3
@@ -3158,7 +3158,7 @@ struct BurnDriver BurnDrvMystwarrj = {
 	"mystwarrj", "mystwarr", NULL, NULL, "1993",
 	"Mystic Warriors (ver JAA)\0", NULL, "Konami", "GX128",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DISABLED | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, mystwarrjRomInfo, mystwarrjRomName, NULL, NULL, NULL, NULL, MystwarrInputInfo, MystwarrDIPInfo,
 	MystwarrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x0800,
 	288, 224, 4, 3
@@ -3199,7 +3199,7 @@ struct BurnDriver BurnDrvMystwarra = {
 	"mystwarra", "mystwarr", NULL, NULL, "1993",
 	"Mystic Warriors (ver AAB)\0", NULL, "Konami", "GX128",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DISABLED | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, mystwarraRomInfo, mystwarraRomName, NULL, NULL, NULL, NULL, MystwarrInputInfo, MystwarrDIPInfo,
 	MystwarrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x0800,
 	288, 224, 4, 3
@@ -3240,7 +3240,7 @@ struct BurnDriver BurnDrvMystwarraa = {
 	"mystwarraa", "mystwarr", NULL, NULL, "1993",
 	"Mystic Warriors (ver AAA)\0", NULL, "Konami", "GX128",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DISABLED | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, mystwarraaRomInfo, mystwarraaRomName, NULL, NULL, NULL, NULL, MystwarrInputInfo, MystwarrDIPInfo,
 	MystwarrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x0800,
 	288, 224, 4, 3

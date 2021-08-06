@@ -195,12 +195,12 @@ int RunFrame(int bDraw, int bPause)
 		if (bDraw) {                            // Draw Frame
 			nFramesRendered++;
 
-			if (!bRunAhead || (BurnDrvGetFlags() & BDF_RUNAHEAD_DISABLED)) {// || bAppDoFast) {
+			if (!bRunAhead) { // || bAppDoFast) { *todink: put this back in the if clause when not in WIP.
 				if (VidFrame()) {				// Do one frame w/o RunAhead
 					AudBlankSound();
 				}
 			} else {
-				pBurnDraw = NULL;
+				pBurnDraw = (BurnDrvGetFlags() & BDF_RUNAHEAD_DRAWSYNC) pBurnDraw = pVidImage : NULL;
 				BurnDrvFrame();
 				StateRunAheadSave();
 				pBurnSoundOut = NULL;

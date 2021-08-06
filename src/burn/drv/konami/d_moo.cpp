@@ -53,6 +53,7 @@ static UINT8 DrvDips[1];
 static INT32 sound_nmi_enable = 0;
 static INT32 irq5_timer = 0;
 static UINT16 control_data = 0;
+static INT32 fogcnt = 0;
 static INT32 alpha = 0;
 static UINT8 z80_bank;
 
@@ -807,7 +808,7 @@ static void moo_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority)
 static void moo_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32 */*flags*/)
 {
 	*color = layer_colorbase[layer] | (*color >> 2 & 0x0f);
-//	if (layer == 1 && *code == 0xda02 && zmask == 0xffff) { fogcnt = 10; } // moomesa fog alpha hack
+	if (layer == 1 && *code == 0xda02 && zmask == 0xffff) fogcnt = 10; // moomesa only
 }
 
 static INT32 DrvDoReset()
@@ -845,6 +846,8 @@ static INT32 DrvDoReset()
 
 	sound_nmi_enable = 0;
 	z80_bank = 0;
+
+	fogcnt = 0;
 
 	return 0;
 }
@@ -1193,8 +1196,9 @@ static INT32 DrvDraw()
 	enable_alpha = K054338_read_register(K338_REG_CONTROL) & K338_CTL_MIXPRI;
 
 	if (zmask == 0xffff) { // moo mesa
-		if (K056832GetVram(0x1711) == 0xda02) {
+		if (fogcnt) {
 			enable_alpha = 1;
+			fogcnt--;
 		}
 	}
 
@@ -1208,7 +1212,7 @@ static INT32 DrvDraw()
 
 	if (nSpriteEnable & 1) K053247SpritesRender();
 
-	if (255-alpha > -1 && (K053251GetPriority(2) == 0x07) ) { // Bucky title, draw layer after sprites for alpha over sprites effect
+	if (255-alpha > -1 && ((K053251GetPriority(2) == 0x07) || (fogcnt)) ) { // Bucky title, draw layer after sprites for alpha over sprites effect
 		if (nBurnLayer & (1<<layers[2])) K056832Draw(layers[2], K056832_SET_ALPHA(255-alpha), 4);
 	}
 
@@ -1304,7 +1308,7 @@ static INT32 DrvFrame()
 	ZetClose();
 	SekClose();
 
-	// K054338_alpha_level_moo() needs to do an edge detection. frameskipping/ffwd can mess this up, as it used to be in DrvDraw().  Now it's here.
+	// K054338_alpha_level_moo() needs to do an edge detection. frameskipping/ffwd can mess this up.
 	alpha = (zmask == 0xffff) ? K054338_alpha_level_moo(1) : K054338_set_alpha_level(1);
 
 	if (pBurnDraw) {
@@ -1348,6 +1352,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(irq5_timer);
 
 		SCAN_VAR(control_data);
+		SCAN_VAR(fogcnt);
 		SCAN_VAR(alpha);
 	}
 
@@ -1394,7 +1399,7 @@ struct BurnDriver BurnDrvMoomesa = {
 	"moomesa", NULL, NULL, NULL, "1992",
 	"Wild West C.O.W.-Boys of Moo Mesa (ver EAB)\0", NULL, "Konami", "GX151",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, moomesaRomInfo, moomesaRomName, NULL, NULL, NULL, NULL, MooInputInfo, MooDIPInfo,
 	MooInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
@@ -1431,7 +1436,7 @@ struct BurnDriver BurnDrvMoomesauac = {
 	"moomesauac", "moomesa", NULL, NULL, "1992",
 	"Wild West C.O.W.-Boys of Moo Mesa (ver UAC)\0", NULL, "Konami", "GX151",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, moomesauacRomInfo, moomesauacRomName, NULL, NULL, NULL, NULL, MooInputInfo, MooDIPInfo,
 	MooInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
@@ -1468,7 +1473,7 @@ struct BurnDriver BurnDrvMoomesauab = {
 	"moomesauab", "moomesa", NULL, NULL, "1992",
 	"Wild West C.O.W.-Boys of Moo Mesa (ver UAB)\0", NULL, "Konami", "GX151",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, moomesauabRomInfo, moomesauabRomName, NULL, NULL, NULL, NULL, MooInputInfo, MooDIPInfo,
 	MooInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
@@ -1505,7 +1510,7 @@ struct BurnDriver BurnDrvMoomesaaab = {
 	"moomesaaab", "moomesa", NULL, NULL, "1992",
 	"Wild West C.O.W.-Boys of Moo Mesa (ver AAB)\0", NULL, "Konami", "GX151",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, moomesaaabRomInfo, moomesaaabRomName, NULL, NULL, NULL, NULL, MooInputInfo, MooDIPInfo,
 	MooInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
@@ -1550,7 +1555,7 @@ struct BurnDriverD BurnDrvMoomesabl = {
 	"moomesabl", "moomesa", NULL, NULL, "1992",
 	"Wild West C.O.W.-Boys of Moo Mesa (bootleg)\0", NULL, "bootleg", "GX151",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_NOT_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, moomesablRomInfo, moomesablRomName, NULL, NULL, NULL, NULL, MooInputInfo, MooDIPInfo,
 	moomesablInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3

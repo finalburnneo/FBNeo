@@ -959,6 +959,10 @@ static UINT8 *pRunAheadBuffer = NULL;
 
 void StateRunAheadInit()
 {
+	if (bRunAhead && (BurnDrvGetFlags() & BDF_RUNAHEAD_DISABLED)) {
+		bprintf(PRINT_ERROR, _T(" ** RunAhead: Driver requests RunAhead DISABLED for this game.\n"));
+	}
+
 	nTotalLenRunAhead = 0;
 	RunAheadBuffer = NULL;
 	pRunAheadBuffer = NULL;
@@ -970,7 +974,9 @@ void StateRunAheadExit()
 		free (RunAheadBuffer);
 	}
 
-	StateRunAheadInit(); // reset vars
+	nTotalLenRunAhead = 0;
+	RunAheadBuffer = NULL;
+	pRunAheadBuffer = NULL;
 }
 
 static INT32 __cdecl RunAheadLenAcb(struct BurnArea* pba)
@@ -1004,7 +1010,7 @@ void StateRunAheadSave()
 		BurnAreaScan(ACB_FULLSCAN | ACB_READ | ACB_RUNAHEAD, NULL);
 
 		RunAheadBuffer = (UINT8*)malloc (nTotalLenRunAhead);
-		bprintf(0, _T(" **  RunAhead initted, state size $%x.\n"), nTotalLenRunAhead);
+		bprintf(0, _T(" ** RunAhead initted, state size $%x.\n"), nTotalLenRunAhead);
 	}
 	pRunAheadBuffer = RunAheadBuffer;
 	BurnAcb = RunAheadReadAcb;

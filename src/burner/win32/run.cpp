@@ -195,7 +195,7 @@ int RunFrame(int bDraw, int bPause)
 		if (bDraw) {                            // Draw Frame
 			nFramesRendered++;
 
-			if (!bRunAhead) {// || bAppDoFast) {
+			if (!bRunAhead || (BurnDrvGetFlags() & BDF_RUNAHEAD_DISABLED)) {// || bAppDoFast) {
 				if (VidFrame()) {				// Do one frame w/o RunAhead
 					AudBlankSound();
 				}

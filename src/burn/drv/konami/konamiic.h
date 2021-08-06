@@ -182,6 +182,7 @@ void K056832SetGlobalOffsets(INT32 minx, INT32 miny);
 void K056832SetLayerOffsets(INT32 layer, INT32 xoffs, INT32 yoffs);
 void K056832SetExtLinescroll();
 void K056832SetLinemap();
+UINT16 K056832GetVram(INT32 address);
 INT32 K056832IsIrqEnabled();
 void K056832ReadAvac(INT32 *mode, INT32 *data);
 UINT16 K056832ReadRegister(int reg);

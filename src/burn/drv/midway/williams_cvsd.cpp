@@ -278,6 +278,7 @@ INT32 williams_cvsd_scan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(talkback);
 		SCAN_VAR(bankdata);
+		SCAN_VAR(bankpos);
 		SCAN_VAR(sound_in_reset);
 		SCAN_VAR(ym_inreset);
 	}

@@ -27,35 +27,35 @@ static UINT8 DrvReset;
 static UINT8 DrvInputs[2];
 
 static struct BurnInputInfo XorworldInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip",				BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Xorworld)
 
 static struct BurnDIPInfo XorworldDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0xc7, NULL			},
+	{0x11, 0xff, 0xff, 0xc7, NULL					},
 
-	{0   , 0xfe, 0   ,    8, "Coinage"		},
+	{0   , 0xfe, 0   ,    8, "Coinage"				},
 	{0x11, 0x01, 0x07, 0x00, "3 Coins 1 Credits"	},
 	{0x11, 0x01, 0x07, 0x01, "2 Coins 2 Credits"	},
 	{0x11, 0x01, 0x07, 0x07, "1 Coin  1 Credits"	},
@@ -65,31 +65,31 @@ static struct BurnDIPInfo XorworldDIPList[]=
 	{0x11, 0x01, 0x07, 0x03, "1 Coin  5 Credits"	},
 	{0x11, 0x01, 0x07, 0x02, "1 Coin  6 Credits"	},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x11, 0x01, 0x08, 0x08, "Off"			},
-	{0x11, 0x01, 0x08, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x11, 0x01, 0x08, 0x08, "Off"					},
+	{0x11, 0x01, 0x08, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x11, 0x01, 0x60, 0x40, "Easy"			},
-	{0x11, 0x01, 0x60, 0x60, "Normal"		},
-	{0x11, 0x01, 0x60, 0x20, "Hard"			},
-	{0x11, 0x01, 0x60, 0x00, "Hardest"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x11, 0x01, 0x60, 0x40, "Easy"					},
+	{0x11, 0x01, 0x60, 0x60, "Normal"				},
+	{0x11, 0x01, 0x60, 0x20, "Hard"					},
+	{0x11, 0x01, 0x60, 0x00, "Hardest"				},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x11, 0x01, 0x80, 0x80, "Off"			},
-	{0x11, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x11, 0x01, 0x80, 0x80, "Off"					},
+	{0x11, 0x01, 0x80, 0x00, "On"					},
 };
 
 STDDIPINFO(Xorworld)
 
-void __fastcall xorworld_write_byte(UINT32 address, UINT8 data)
+static void __fastcall xorworld_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
 		case 0x800001:
 			saa1099DataWrite(0, data);
 		return;
-	
+
 		case 0x800003:
 			saa1099ControlWrite(0, data);
 		return;
@@ -108,7 +108,7 @@ void __fastcall xorworld_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall xorworld_read_byte(UINT32 address)
+static UINT8 __fastcall xorworld_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -235,12 +235,7 @@ static void xorworldPatch() // protection hack
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x00001,  0, 2)) return 1;
@@ -269,7 +264,7 @@ static INT32 DrvInit()
 	SekClose();
 
 	saa1099Init(0, 8000000, 0);
-	saa1099SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
+	saa1099SetAllRoutes(0, 0.65, BURN_SND_ROUTE_BOTH);
 
 	EEPROMInit(&eeprom_interface_93C46);
 
@@ -290,7 +285,7 @@ static INT32 DrvExit()
 
 	saa1099Exit(0);
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -336,8 +331,10 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	draw_layer();
-	draw_sprites();
+	BurnTransferClear();
+
+	if (nBurnLayer & 1) draw_layer();
+	if (nSpriteEnable & 1) draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -415,7 +412,7 @@ static struct BurnRomInfo xorworldRomDesc[] = {
 	{ "c13.bin",	0x10000, 0x615a864d, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "b13.bin",	0x10000, 0x632e8ee5, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "d9.bin",	0x10000, 0xda8d4d65, 2 | BRF_GRA },           //  2 Tiles and Sprites
+	{ "d9.bin",		0x10000, 0xda8d4d65, 2 | BRF_GRA },           //  2 Tiles and Sprites
 	{ "d10.bin",	0x10000, 0x3b1d6f24, 2 | BRF_GRA },           //  3
 
 	{ "b4.bin",	0x00100, 0x75e468af, 3 | BRF_GRA },           //  4 Color PROMs

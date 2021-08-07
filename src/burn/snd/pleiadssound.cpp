@@ -606,7 +606,7 @@ void pleiads_sound_reset()
 	  freq = 1.44 / ((100000+2*1000) * 0.01e-6) = approx. 1412 Hz */
 	noise_freq = 1412;	/* higher noise rate than popflame/naughtyb??? */
 
-	custom_volume = 0.60;
+	custom_volume = 0.40;
 
 	internal_reset();
 	//return common_sh_start(msound, "Custom (Pleiads)");

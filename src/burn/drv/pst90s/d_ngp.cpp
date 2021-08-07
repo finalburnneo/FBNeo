@@ -836,6 +836,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 		k1geScan(nAction, pnMin);
 		t6w28Scan(nAction, pnMin);
+		DACScan(nAction, pnMin);
 
 		// scan flash structures, up to but not including the pointer (*data)
 		ScanVar(&m_flash_chip[0], STRUCT_SIZE_HELPER(flash_struct, state), "flash0");
@@ -847,7 +848,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(io_reg);
 	}
 
-	if (nAction & ACB_NVRAM)
+	if (nAction & ACB_NVRAM && ~nAction & ACB_RUNAHEAD)
 	{
 		INT32 size = 0;
 
@@ -872,7 +873,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			BurnAcb(&ba);
 		}
 
-		if (nAction & ACB_WRITE) // write to game <- read from state
+		if (nAction & ACB_WRITE && ~nAction & ACB_RUNAHEAD) // write to game <- read from state
 		{
 			SCAN_VAR(size);
 

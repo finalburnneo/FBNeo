@@ -320,6 +320,7 @@ static void digitalker_update_INT(INT32 samples); // forward
 
 static void UpdateStream(INT32 end)
 {
+	if (!pBurnSoundOut) return;
 	INT32 framelen = resamp.samples_to_source(nBurnSoundLen);
 	INT32 position = (end) ? framelen : SyncUPD(framelen);
 

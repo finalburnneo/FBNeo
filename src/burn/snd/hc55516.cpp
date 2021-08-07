@@ -64,6 +64,7 @@ static INT32 SyncInternal()
 
 static void UpdateStream(INT32 length)
 {
+	if (!pBurnSoundOut) return;
 	if (length > samples_from) length = samples_from;
 
 	length -= nCurrentPosition;

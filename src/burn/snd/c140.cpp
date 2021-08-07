@@ -107,6 +107,7 @@ void c140_update_INT(INT32 samples_len); //forward
 
 static void UpdateStream(INT32 end)
 {
+	if (!pBurnSoundOut) return;
 	if (end == 0 && uses_sync == 0) return;
 
 	INT32 framelen = samples_to_source(nBurnSoundLen);
@@ -248,7 +249,7 @@ void c140_scan(INT32 nAction, INT32 *)
 	SCAN_VAR(m_REG);
 	SCAN_VAR(m_voi);
 
-	if (nAction & ACB_WRITE) {
+	if (nAction & ACB_WRITE && ~nAction & ACB_RUNAHEAD) {
 		nFractionalPosition = 0;
 		nPosition = 0;
 		memset(m_mixer_buffer_left, 0, 2 * sizeof(INT16) * m_sample_rate);

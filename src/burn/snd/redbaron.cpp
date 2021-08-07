@@ -26,6 +26,8 @@ static INT32 SyncInternal()
 
 static void UpdateStream(INT32 length)
 {
+	if (!pBurnSoundOut) return;
+
 	if (length > FRAME_SIZE) length = FRAME_SIZE;
 
 	length -= nCurrentPosition;

@@ -129,6 +129,8 @@ static void MSM5205StreamUpdate(INT32 chip, INT32 end)
 {
 	voice = &chips[chip];
 
+	if (!pBurnSoundOut) return;
+
 	UINT32 len = (end) ? nBurnSoundLen : voice->stream_sync((nBurnSoundLen * nBurnFPS) / 100);
 	if (len > (UINT32)nBurnSoundLen) len = nBurnSoundLen;
 	UINT32 pos = voice->streampos;

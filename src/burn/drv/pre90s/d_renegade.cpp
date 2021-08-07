@@ -1072,8 +1072,10 @@ static INT32 DrvFrame()
 	
 	M6809Open(0);
 	BurnTimerEndFrameYM3526(nCyclesTotal[1]);
-	BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
-	MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
+	if (pBurnSoundOut) {
+		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
+		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
+	}
 	M6809Close();
 	
 	if (pBurnDraw) DrvDraw();

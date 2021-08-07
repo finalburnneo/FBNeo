@@ -4072,6 +4072,42 @@ struct BurnDriver BurnDrvQzshowby = {
 };
 
 
+// Bubble Buster (USA, B-System)
+// Purportedly a location test version, but has the same version number and build date as the released Japanese set below
+
+static struct BurnRomInfo bublbustRomDesc[] = {
+	{ "p.bobble_prg_h_usa_6-15_c681.ic18",		0x040000, 0xba83e398, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "p.bobble_prg_l_usa_6-15_e9e1.ic2",		0x040000, 0xa12cb3f2, TAITO_68KROM1_BYTESWAP }, //  1
+
+	{ "prg_snd.ic27",							0x020000, 0x2f288fe0, TAITO_Z80ROM1 },			//  2 Z80 Code
+
+	{ "p.bobble_chr-1l_6-14_eaa0.ic11_ch_1_0l",	0x040000, 0x8d3fa2f0, TAITO_CHARS_BYTESWAP },	//  3 Graphics Tiles
+	{ "p.bobble_chr-1h_6-14_1515.ic12_ch_1_0h",	0x040000, 0xa2eb4d32, TAITO_CHARS_BYTESWAP },	//  4
+	{ "p.bobble_chr-0l_6-14_86d5.ic7_ch_0_0l",	0x040000, 0x80f1aab0, TAITO_CHARS_BYTESWAP },	//  5
+	{ "p.bobble_chr-0h_6-14_d180.ic8_ch_0_0h",	0x040000, 0xd773cac8, TAITO_CHARS_BYTESWAP },	//  6
+
+	{ "ach0-kaigai.ic15_ach_0",					0x080000, 0xf203ae52, TAITO_YM2610A },			//  7 YM2610 A Samples
+};
+
+STD_ROM_PICK(bublbust)
+STD_ROM_FN(bublbust)
+
+static INT32 PbobbleInit()
+{
+	return CommonInit(PbobbleInitCallback, 0, 1, 3, 5, 3);
+}
+
+struct BurnDriver BurnDrvBublbust = {
+	"bublbust", NULL, NULL, NULL, "1994",
+	"Bubble Buster (USA, B-System)\0", NULL, "Taito America Corporation", "Taito B System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_BREAKOUT, 0,
+	NULL, bublbustRomInfo, bublbustRomName, NULL, NULL, NULL, NULL, PbobbleInputInfo, PbobbleDIPInfo,
+	PbobbleInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
+	320, 224, 4, 3
+};
+
+
 // Puzzle Bobble (Japan, B-System)
 
 static struct BurnRomInfo pbobbleRomDesc[] = {
@@ -4089,16 +4125,11 @@ static struct BurnRomInfo pbobbleRomDesc[] = {
 STD_ROM_PICK(pbobble)
 STD_ROM_FN(pbobble)
 
-static INT32 PbobbleInit()
-{
-	return CommonInit(PbobbleInitCallback, 0, 1, 3, 5, 3);
-}
-
 struct BurnDriver BurnDrvPbobble = {
-	"pbobble", NULL, NULL, NULL, "1994",
+	"pbobble", "bublbust", NULL, NULL, "1994",
 	"Puzzle Bobble (Japan, B-System)\0", NULL, "Taito Corporation", "Taito B System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_BREAKOUT, 0,
 	NULL, pbobbleRomInfo, pbobbleRomName, NULL, NULL, NULL, NULL, PbobbleInputInfo, PbobbleDIPInfo,
 	PbobbleInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	320, 224, 4, 3

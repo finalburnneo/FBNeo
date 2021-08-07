@@ -113,8 +113,6 @@ static TCHAR szMemoryCardFile[MAX_PATH];
 static int nMinVersion;
 static bool bMemCardFC1Format;
 
-static bool driver_inited;
-
 // UGUI
 static bool gui_show = false;
 
@@ -139,10 +137,6 @@ TCHAR szAppBurnVer[16];
 static int nDIPOffset;
 
 const int nConfigMinVersion = 0x020921;
-
-static uint8_t *write_state_ptr;
-static const uint8_t *read_state_ptr;
-static unsigned state_size;
 
 int HandleMessage(enum retro_log_level level, TCHAR* szFormat, ...)
 {
@@ -1222,141 +1216,6 @@ void retro_run()
 	}
 }
 
-static int burn_write_state_cb(BurnArea *pba)
-{
-	memcpy(write_state_ptr, pba->Data, pba->nLen);
-	write_state_ptr += pba->nLen;
-	return 0;
-}
-
-static int burn_read_state_cb(BurnArea *pba)
-{
-	memcpy(pba->Data, read_state_ptr, pba->nLen);
-	read_state_ptr += pba->nLen;
-	return 0;
-}
-
-static int burn_dummy_state_cb(BurnArea *pba)
-{
-#ifdef FBNEO_DEBUG
-	HandleMessage(RETRO_LOG_INFO, "state debug: name %s, len %d\n", pba->szName, pba->nLen);
-#endif
-	state_size += pba->nLen;
-	return 0;
-}
-
-static INT32 LibretroAreaScan(INT32 nAction)
-{
-	// The following value is required in savestates for some games (xmen6p, ...),
-	// on standalone, this value is stored in savestate files headers,
-	// or has special logic in standalone runahead
-	SCAN_VAR(nCurrentFrame);
-
-	BurnAreaScan(nAction, 0);
-
-	return 0;
-}
-
-size_t retro_serialize_size()
-{
-	if (!driver_inited)
-		return 0;
-
-	// This is the size for retro_serialize, so it wants ACB_FULLSCAN | ACB_READ
-	// retro_unserialize doesn't call this function
-	INT32 nAction = ACB_FULLSCAN | ACB_READ;
-
-	// Tweaking from context
-	int result = -1;
-	environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &result);
-	kNetGame = result & 4 ? 1 : 0;
-	if (kNetGame == 1) {
-		// Hiscores are causing desync in netplay
-		EnableHiscores = false;
-		// Some data isn't required for netplay
-		nAction |= ACB_NET_OPT;
-	}
-
-	// Don't try to cache state size, it's causing more issues than it solves (ngp)
-	state_size = 0;
-	BurnAcb = burn_dummy_state_cb;
-
-	LibretroAreaScan(nAction);
-
-	return state_size;
-}
-
-bool retro_serialize(void *data, size_t size)
-{
-	if (!driver_inited)
-		return true;
-
-#if 0
-	// Used to convert a standalone savestate we are loading into something usable by the libretro port
-	char convert_save_path[MAX_PATH];
-	snprintf_nowarn (convert_save_path, sizeof(convert_save_path), "%s%cfbneo%c%s.save", g_save_dir, PATH_DEFAULT_SLASH_C(), PATH_DEFAULT_SLASH_C(), BurnDrvGetTextA(DRV_NAME));
-	BurnStateLoad(convert_save_path, 1, NULL);
-#endif
-
-	// We want ACB_FULLSCAN | ACB_READ for saving states
-	INT32 nAction = ACB_FULLSCAN | ACB_READ;
-
-	// Tweaking from context
-	int result = -1;
-	environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &result);
-	kNetGame = result & 4 ? 1 : 0;
-	if (kNetGame == 1) {
-		// Hiscores are causing desync in netplay
-		EnableHiscores = false;
-		// Some data isn't required for netplay
-		nAction |= ACB_NET_OPT;
-	}
-
-	BurnAcb = burn_write_state_cb;
-	write_state_ptr = (uint8_t*)data;
-
-	LibretroAreaScan(nAction);
-
-	return true;
-}
-
-bool retro_unserialize(const void *data, size_t size)
-{
-	if (!driver_inited)
-		return true;
-
-	// We want ACB_FULLSCAN | ACB_WRITE for loading states
-	INT32 nAction = ACB_FULLSCAN | ACB_WRITE;
-
-	// Tweaking from context
-	int result = -1;
-	environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &result);
-	kNetGame = result & 4 ? 1 : 0;
-	if (kNetGame == 1) {
-		// Hiscores are causing desync in netplay
-		EnableHiscores = false;
-		// Some data isn't required for netplay
-		nAction |= ACB_NET_OPT;
-	}
-
-	BurnAcb = burn_read_state_cb;
-	read_state_ptr = (const uint8_t*)data;
-
-	LibretroAreaScan(nAction);
-
-	// Some driver require to recalc palette after loading savestates
-	BurnRecalcPal();
-
-#if 0
-	// Used to convert a libretro savestate we are loading into something usable by standalone
-	char convert_save_path[MAX_PATH];
-	snprintf_nowarn (convert_save_path, sizeof(convert_save_path), "%s%cfbneo%c%s.save", g_save_dir, PATH_DEFAULT_SLASH_C(), PATH_DEFAULT_SLASH_C(), BurnDrvGetTextA(DRV_NAME));
-	BurnStateSave(convert_save_path, 1);
-#endif
-
-	return true;
-}
-
 void retro_cheat_reset() {}
 void retro_cheat_set(unsigned, bool, const char *) {}
 
@@ -1364,7 +1223,7 @@ void retro_get_system_av_info(struct retro_system_av_info *info)
 {
 	int game_aspect_x, game_aspect_y;
 	bVidImageNeedRealloc = true;
-	if (driver_inited)
+	if (nBurnDrvActive != ~0U)
 		BurnDrvGetAspect(&game_aspect_x, &game_aspect_y);
 	else
 	{
@@ -1731,9 +1590,6 @@ static bool retro_load_game_common()
 	// Initialize HDD path
 	snprintf_nowarn (szAppHDDPath, sizeof(szAppHDDPath), "%s%c", g_rom_dir, PATH_DEFAULT_SLASH_C());
 
-	// Intialize state_size (for serialization)
-	state_size = 0;
-
 	gui_show = false;
 
 #ifdef FBNEO_DEBUG
@@ -1888,15 +1744,14 @@ static bool retro_load_game_common()
 		VideoBufferInit();
 
 		if (pVidImage == NULL) {
-			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Failed allocating framebuffer memory\n", g_driver_name);
-			return false;
+			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Failed allocating framebuffer memory\n");
+			goto end;
 		}
 
 		apply_cheats_from_variables();
 
 		// Initialization done
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Driver %s was successfully started : game's full name is %s\n", g_driver_name, BurnDrvGetTextA(DRV_FULLNAME));
-		driver_inited = true;
 	}
 	else
 	{
@@ -1910,6 +1765,7 @@ static bool retro_load_game_common()
 end:
 	nBurnSoundRate = 48000;
 	nBurnFPS = 6000;
+	nBurnDrvActive = ~0U;
 	AudioBufferInit(nBurnSoundRate, nBurnFPS);
 	return true;
 }
@@ -2063,7 +1919,7 @@ bool retro_load_game_special(unsigned game_type, const struct retro_game_info *i
 
 void retro_unload_game(void)
 {
-	if (driver_inited)
+	if (nBurnDrvActive != ~0U)
 	{
 		if (is_neogeo_game && nMemcardMode != 0) {
 			// Force newer format if the file doesn't exist yet
@@ -2077,7 +1933,7 @@ void retro_unload_game(void)
 		BurnDrvExit();
 		if (nGameType == RETRO_GAME_TYPE_NEOCD)
 			CDEmuExit();
-		driver_inited = false;
+		nBurnDrvActive = ~0U;
 	}
 	if (pVidImage) {
 		free(pVidImage);

@@ -1937,7 +1937,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nExtraCycles);
 	}
 
-	if (nAction & ACB_WRITE) {
+	if (nAction & ACB_WRITE && ~nAction & ACB_RUNAHEAD) {
 		ResetRozDirty();
 	}
 

@@ -211,6 +211,8 @@ static void c6280_stream_update()
 {
 	c6280_t *p = &chip[0];
 
+	if (!pBurnSoundOut) return;
+
 	INT32 end = c6280_sync_get_offset_end();
 	INT32 start = c6280_previous_offset;
 

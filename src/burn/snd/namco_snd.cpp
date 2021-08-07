@@ -74,7 +74,7 @@ static INT32 SyncInternal()
 
 static void UpdateStream(INT32 samples_len)
 {
-    if (!namco_buffered) return;
+    if (!namco_buffered || !pBurnSoundOut) return;
     if (samples_len > nBurnSoundLen) samples_len = nBurnSoundLen;
 
 	INT32 nSamplesNeeded = samples_len;

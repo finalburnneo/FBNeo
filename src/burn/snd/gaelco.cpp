@@ -356,7 +356,7 @@ void gaelcosnd_scan(INT32 nAction, INT32 *)
 	SCAN_VAR(m_channel);
 	SCAN_VAR(m_sndregs);
 
-	if (nAction & ACB_WRITE) {
+	if (nAction & ACB_WRITE && ~nAction & ACB_RUNAHEAD) {
 		nFractionalPosition = 0;
 		nPosition = 0;
 		memset(sample_buffer, 0, 8000 * sizeof(INT16) * 2);

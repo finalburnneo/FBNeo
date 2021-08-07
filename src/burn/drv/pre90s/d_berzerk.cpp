@@ -5,6 +5,7 @@
 #include "z80_intf.h"
 #include "bitswap.h"
 #include "s14001a.h"
+#include "downsample.h"
 
 static UINT8 *AllMem;
 static UINT8 *AllRam;
@@ -523,27 +524,25 @@ static UINT32 sh6840_clock_count;
 
 static UINT8 exidy_sfxctrl;
 
-static UINT32 nSampleSize;
-static INT32 samples_from; // samples per frame
+static Downsampler resamp;
+static INT32 nPosition;
 static INT16 *mixer_buffer;
-static INT32 nCurrentPosition;
-static INT32 nFractionalPosition;
 
 static void exidy_sound_init()
 {
-	samples_from = (INT32)((double)((SH8253_CLOCK * 100) / nBurnFPS) + 0.5);
-	nSampleSize = (UINT64)SH8253_CLOCK * (1 << 16) / nBurnSoundRate;
+	resamp.init(SH8253_CLOCK, nBurnSoundRate, 0);
+
 	mixer_buffer = (INT16*)BurnMalloc(2 * sizeof(INT16) * SH8253_CLOCK);
-	nCurrentPosition = 0;
-	nFractionalPosition = 0;
 
 	sh6840_clocks_per_sample = (int)((double)SH6840_CLOCK / (double)SH8253_CLOCK * (double)(1 << 24));
+
 	s14001a_init(DrvSndROM, ZetTotalCycles, 2500000);
 }
 
 static void exidy_sound_exit()
 {
 	BurnFree(mixer_buffer);
+
 	s14001a_exit();
 }
 
@@ -580,6 +579,8 @@ static void exidy_sound_reset()
 	sh6840_LFSR_1 = 0xffffffff;
 	sh6840_LFSR_2 = 0xffffffff;
 	sh6840_LFSR_3 = 0xffffffff;
+
+	nPosition = 0;
 }
 
 static void exidy_sound_write(UINT8 offset, UINT8 data)
@@ -814,68 +815,49 @@ static void exidy_update(INT16 *buffer, INT32 length)
 }
 
 // Streambuffer handling
-static INT32 SyncInternal()
+static INT32 SyncInternal(INT32 cycles)
 {
-	return (INT32)(float)(samples_from * (ZetTotalCycles() / (2500000 / (nBurnFPS / 100.0000))));
+	return (INT32)(float)(cycles * (ZetTotalCycles() / (2500000 / (nBurnFPS / 100.0000))));
 }
 
-static void UpdateStream(INT32 length)
+static void UpdateStream(INT32 end)
 {
-	length -= nCurrentPosition;
-	if (length <= 0) return;
+	if (!pBurnSoundOut) return;
 
-	INT16 *mix = mixer_buffer + 5 + nCurrentPosition;
-	memset(mix, 0, length * sizeof(INT16));
-	exidy_update(mix, length);
-	nCurrentPosition += length;
+	INT32 framelen = resamp.samples_to_source(nBurnSoundLen);
+	INT32 position = (end) ? framelen : SyncInternal(framelen);
+
+	if (position > framelen) position = framelen;
+
+	INT32 samples = position - nPosition;
+
+	if (samples < 1) return;
+
+	INT16 *mix = mixer_buffer + nPosition;
+	memset(mix, 0, samples * sizeof(INT16));
+	exidy_update(mix, samples);
+	nPosition += samples;
 }
 
 static void exidy_sync_stream()
 {
-	UpdateStream(SyncInternal());
+	UpdateStream(0);
 }
 
 void exidy_render(INT16 *buffer, INT32 length)
 {
-	if (mixer_buffer == NULL || samples_from == 0) return;
+	if (mixer_buffer == NULL) return;
 
 	if (length != nBurnSoundLen) {
 		bprintf(0, _T("exidy_render(): once per frame, please!\n"));
 		return;
 	}
 
-	UpdateStream(samples_from);
+	UpdateStream(1);
 
-	INT16 *pBufL = mixer_buffer + 5;
+	resamp.resample(mixer_buffer, buffer, length, 0.55, BURN_SND_ROUTE_BOTH);
 
-	for (INT32 i = (nFractionalPosition & 0xFFFF0000) >> 15; i < (length << 1); i += 2, nFractionalPosition += nSampleSize) {
-		INT32 nLeftSample[4] = {0, 0, 0, 0};
-		INT32 nTotalLeftSample; // it's mono!
-
-		nLeftSample[0] += (INT32)(pBufL[(nFractionalPosition >> 16) - 3]);
-		nLeftSample[1] += (INT32)(pBufL[(nFractionalPosition >> 16) - 2]);
-		nLeftSample[2] += (INT32)(pBufL[(nFractionalPosition >> 16) - 1]);
-		nLeftSample[3] += (INT32)(pBufL[(nFractionalPosition >> 16) - 0]);
-
-		nTotalLeftSample  = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3]);
-		nTotalLeftSample  = BURN_SND_CLIP(nTotalLeftSample * 0.45);
-
-		buffer[i + 0] = nTotalLeftSample;
-		buffer[i + 1] = nTotalLeftSample;
-	}
-	nCurrentPosition = 0;
-
-	if (length >= nBurnSoundLen) {
-		INT32 nExtraSamples = samples_from - (nFractionalPosition >> 16);
-
-		for (INT32 i = -4; i < nExtraSamples; i++) {
-			pBufL[i] = pBufL[(nFractionalPosition >> 16) + i];
-		}
-
-		nFractionalPosition &= 0xFFFF;
-
-		nCurrentPosition = nExtraSamples;
-	}
+	nPosition = 0;
 }
 
 static void berzerk_sound_write(UINT8 offset, UINT8 data)
@@ -1042,9 +1024,7 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
 
 	// sound
 	exidy_sound_reset();
@@ -1086,12 +1066,7 @@ static INT32 MemIndex()
 
 static INT32 DrvInit(INT32 berzerk)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	moonwarp_mode = !strcmp(BurnDrvGetTextA(DRV_NAME), "moonwarp");
 
@@ -1113,7 +1088,6 @@ static INT32 DrvInit(INT32 berzerk)
 			if (BurnLoadRom(DrvZ80ROM + 0x2000,  k++, 1)) return 1;
 			if (BurnLoadRom(DrvZ80ROM + 0x3000,  k++, 1)) return 1;
 			if (BurnLoadRom(DrvZ80ROM + 0xc000,  k++, 1)) return 1;
-		
 		}
 
 		if (BurnLoadRom(DrvSndROM + 0x0000,  k++, 1)) return 1;
@@ -1162,7 +1136,7 @@ static INT32 DrvExit()
 	GenericTilesExit();
 	ZetExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	moonwarp_mode = 0;
 
@@ -1189,7 +1163,7 @@ static void draw_layer()
 		UINT16 *dst = pTransDraw + (y - 32) * nScreenWidth;
 		UINT8 *vsrc = DrvVidRAM + (y * 32);
 		UINT8 *csrc = DrvColRAM + ((y / 4) * 32);
-		
+
 		for (INT32 x = 0; x < 256; x += 8)
 		{
 			INT32 data = vsrc[x/8];

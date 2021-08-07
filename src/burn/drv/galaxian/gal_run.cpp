@@ -2145,9 +2145,11 @@ INT32 GalFrame()
 	}
 
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_SCORPIONAY8910) {
-		ZetOpen(1);
-		digitalker_update(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
+		if (pBurnSoundOut) {
+			ZetOpen(1);
+			digitalker_update(pBurnSoundOut, nBurnSoundLen);
+			ZetClose();
+		}
 	}
 
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_MSHUTTLEAY8910) {

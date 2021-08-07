@@ -64,13 +64,9 @@ void K053251Scan(INT32 nAction)
 		ba.szName = "K053251 Ram";
 		BurnAcb(&ba);
 
-		SCAN_VAR(K053251PalIndex[0]);
-		SCAN_VAR(K053251PalIndex[1]);
-		SCAN_VAR(K053251PalIndex[2]);
-		SCAN_VAR(K053251PalIndex[3]);
-		SCAN_VAR(K053251PalIndex[4]);
+		SCAN_VAR(K053251PalIndex);
 
-		if (nAction & ACB_WRITE) {
+		if (nAction & ACB_WRITE && ~nAction & ACB_RUNAHEAD) {
 			K053251ResetIndexes();
 		}
 	}

@@ -101,6 +101,7 @@ static void c352_update_INT(int samples); // forward
 
 static void UpdateStream(INT32 end)
 {
+	if (!pBurnSoundOut) return;
 	if (end == 0 && uses_sync == 0) return;
 
 	INT32 framelen = resampL.samples_to_source(nBurnSoundLen);
@@ -424,7 +425,8 @@ void c352_scan(INT32 nAction, INT32 *)
 	SCAN_VAR(m_control);
 	SCAN_VAR(m_c352_v);
 
-	if (nAction & ACB_WRITE) {
+	if (nAction & ACB_WRITE && ~nAction & ACB_RUNAHEAD) {
+		// nothing
 	}
 }
 

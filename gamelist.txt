@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17356 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17360 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1893,6 +1893,7 @@ This list contains all games supported by FinalBurn Neo.
 | bublcave11	|  	| Bubble Bobble: Lost Cave V1.1				| bublbobl	| 2013	| hack (Bisboch | Taito Misc	| 					|
 | boblcave	|  	| Bubble Bobble: Lost Cave V1.2 (for Bobble Bobble PCB)	| bublbobl	| 2013	| hack (Bisboch | Taito Misc	| 					|
 | bublcave	|  	| Bubble Bobble: Lost Cave V1.2				| bublbobl	| 2013	| hack (Bisboch | Taito Misc	| 					|
+| bublbust	|  	| Bubble Buster (USA, B-System)				| 		| 1994	| Taito America | Taito B System| 					|
 | spec_bubbdizz	|  	| Bubble Dizzy (128K)					| 		| 1991	| Codemasters	| ZX Spectrum	| 					|
 | spec_bubbdizz_48|  	| Bubble Dizzy (48K)					| spec_bubbdizz	| 1991	| Codemasters	| ZX Spectrum	| 					|
 | bubblemj	|  	| Bubble Memories: The Story Of Bubble Bobble III (Ver 2| bubblem	| 1995	| Taito Corporat| Taito F3 Syste| 					|
@@ -8578,6 +8579,7 @@ This list contains all games supported by FinalBurn Neo.
 | mslug3h	|  	| Metal Slug 3 (NGH-2560)				| mslug3	| 2000	| SNK		| Neo Geo MVS	| 					|
 | mslug3	|  	| Metal Slug 3 (NGM-2560)				| 		| 2000	| SNK		| Neo Geo MVS	| 					|
 | mslug3a	|  	| Metal Slug 3 (NGM-2560, earlier)			| mslug3	| 2000	| SNK		| Neo Geo MVS	| 					|
+| mslug4lw	|  	| Metal Slug 4 (Last Bullet Remix Hack)			| mslug4	| 2017	| hack		| Neo Geo	| 					|
 | mslug4dg	|  	| Metal Slug 4 (Multifunction Hack, 20171225)		| mslug4	| 2017	| hack		| Neo Geo	| 					|
 | mslug4h	|  	| Metal Slug 4 (NGH-2630)				| mslug4	| 2002	| Mega / Noise F| Neo Geo MVS	| 					|
 | mslug4	|  	| Metal Slug 4 (NGM-2630)				| 		| 2002	| Mega / Noise F| Neo Geo MVS	| 					|
@@ -10297,8 +10299,8 @@ This list contains all games supported by FinalBurn Neo.
 | md_pebbleu	|  	| Pebble Beach Golf Links (USA)				| md_pebble	| 1993	| Sega		| Sega Megadrive| 					|
 | cv_peekaboo	|  	| Peek-A-Boo (HB)					| 		| 2008	| Nintendo	| ColecoVision	| Published by Team Pixelboy		|
 | nes_peekaboopoker|  	| Peek-A-Boo Poker (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| peekaboo	|  	| Peek-a-Boo! (Japan, ver. 1.1)				| 		| 1993	| Jaleco	| Mega System 1	| 					|
 | peekaboou	|  	| Peek-a-Boo! (North America, ver 1.0)			| peekaboo	| 1993	| Jaleco	| Mega System 1	| 					|
-| peekaboo	|  	| Peek-a-Boo!						| 		| 1993	| Jaleco	| Mega System 1	| 					|
 | nes_peepartime|  	| Peepar Time (Japan)					| 		| 1990	| Sanritsu	| Miscellaneous	| 					|
 | msx_peetan	|  	| Peetan (Jpn)						| 		| 1984	| Nihon Columbia| MSX		| 					|
 | msx_pegasus	|  	| Pegasus (Jpn)						| 		| 1986	| Victor	| MSX		| 					|
@@ -11026,7 +11028,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_tantr	|  	| Puzzle and Action Tant~R (Jpn)			| 		| 1994	| Sega		| Sega Game Gear| 					|
 | puzlbanga	|  	| Puzzle Bang Bang (Korea, version 2.8 / 990106)	| suplup	| 1999	| Omega System	| Miscellaneous	| 					|
 | puzlbang	|  	| Puzzle Bang Bang (Korea, version 2.9 / 990108)	| suplup	| 1999	| Omega System	| Miscellaneous	| 					|
-| pbobble	|  	| Puzzle Bobble (Japan, B-System)			| 		| 1994	| Taito Corporat| Taito B System| 					|
+| pbobble	|  	| Puzzle Bobble (Japan, B-System)			| bublbust	| 1994	| Taito Corporat| Taito B System| 					|
 | gg_pbobble	|  	| Puzzle Bobble (Jpn)					| gg_bam	| 1996	| Taito		| Sega Game Gear| 					|
 | pbobblenb	|  	| Puzzle Bobble / Bust-A-Move (Neo-Geo) (bootleg)	| pbobblen	| 1994	| Taito		| Neo Geo MVS	| 					|
 | pbobblen	|  	| Puzzle Bobble / Bust-A-Move (Neo-Geo) (NGM-083)	| 		| 1994	| Taito		| Neo Geo MVS	| 					|
@@ -11950,7 +11952,7 @@ This list contains all games supported by FinalBurn Neo.
 | ssmissin	|  	| S.S. Mission						| 		| 1992	| Comad		| NMK16		| 					|
 | spec_stunrun128k|  	| S.T.U.N. Runner (128K)				| 		| 1990	| Domark	| ZX Spectrum	| 					|
 | spec_stunrun48k|  	| S.T.U.N. Runner (48K)					| spec_stunrun128k| 1990	| Domark	| ZX Spectrum	| 					|
-| svghk		| D NW	| S.V.G. - Spectral vs Generation (V100, Hong Kong)	| svg		| 2005	| IGS		| PolyGameMaster| Incomplete dump			|
+| svghk		|  	| S.V.G. - Spectral vs Generation (V100, Hong Kong)	| svg		| 2005	| IGS		| PolyGameMaster| Incomplete dump			|
 | svgpcb	|  	| S.V.G. - Spectral vs Generation (V100, Japan, Single P| svg		| 2005	| IGS		| PolyGameMaster| 					|
 | svgtw		| D NW	| S.V.G. - Spectral vs Generation (V100, Taiwan)	| svg		| 2005	| IGS		| PolyGameMaster| Incomplete dump			|
 | svg		|  	| S.V.G. - Spectral vs Generation (V200, China)		| 		| 2005	| IGS		| PolyGameMaster| 					|
@@ -16052,6 +16054,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_ultima4p	|  	| Ultima IV - Quest of the Avatar (Euro, Prototype)	| sms_ultima4	| 1990	| Sega		| Sega Master Sy| 					|
 | uecology	|  	| Ultimate Ecology (931203 Japan)			| ecofghtr	| 1993	| Capcom	| CPS2		| 					|
 | nes_ultimfrocha|  	| Ultimate Frogger Champion (HB)			| 		| 2019	| Khan Games	| Miscellaneous	| 					|
+| md_ultgargoyle|  	| Ultimate Gargoyles (Hack)				| md_gargoyle	| 2021	| BillyTime! Gam| Sega Megadrive| 					|
 | nes_ultimleasoci|  	| Ultimate League Soccer (Italy)			| nes_ultimleasoc| 1991	| AVE		| Miscellaneous	| 					|
 | nes_ultimleasoc|  	| Ultimate League Soccer (USA)				| 		| 1991	| AVE		| Miscellaneous	| 					|
 | md_umk3	|  	| Ultimate Mortal Kombat 3 (Euro)			| 		| 1996	| Acclaim Entert| Sega Megadrive| 					|
@@ -16665,6 +16668,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_wolverinec|  	| Wolverine (USA) - Castellano v1.0			| nes_wolverine	| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_wolverine	|  	| Wolverine (USA)					| 		| 1991	| LJN		| Miscellaneous	| 					|
 | md_wolverin	|  	| Wolverine - Adamantium Rage (Euro, USA)		| 		| 1994	| Acclaim Entert| Sega Megadrive| 					|
+| md_wolverinredux|  	| Wolverine - Adamantium Redux (Hack)			| md_wolverin	| 2021	| BillyTime! Gam| Sega Megadrive| 					|
 | wonder3	|  	| Wonder 3 (910520 Japan)				| 3wonders	| 1991	| Capcom	| CPS1		| 					|
 | spec_wboy	|  	| Wonder Boy (128K)					| 		| 1987	| Activision	| ZX Spectrum	| 					|
 | gg_wboy	|  	| Wonder Boy (Euro)					| 		| 1991	| Sega		| Sega Game Gear| 					|

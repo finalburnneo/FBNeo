@@ -1913,6 +1913,7 @@ DRV		BurnDrvBublcave10;
 DRV		BurnDrvBublcave11;
 DRV		BurnDrvBoblcave;
 DRV		BurnDrvBublcave;
+DRV		BurnDrvBublbust;
 DRV		BurnSpecbubbdizz;
 DRV		BurnSpecbubbdizz_48;
 DRV		BurnDrvBubblemj;
@@ -8684,6 +8685,7 @@ DRV		BurnDrvmslug3v;
 DRV		BurnDrvmslug3h;
 DRV		BurnDrvmslug3;
 DRV		BurnDrvmslug3a;
+DRV		BurnDrvmslug4lw;
 DRV		BurnDrvmslug4dg;
 DRV		BurnDrvmslug4h;
 DRV		BurnDrvmslug4;
@@ -10431,8 +10433,8 @@ DRV		BurnDrvmd_pebble;
 DRV		BurnDrvmd_pebbleu;
 DRV		BurnDrvcv_peekaboo;
 DRV		BurnDrvnes_peekaboopoker;
-DRV		BurnDrvPeekaboou;
 DRV		BurnDrvPeekaboo;
+DRV		BurnDrvPeekaboou;
 DRV		BurnDrvnes_peepartime;
 DRV		BurnDrvMSX_peetan;
 DRV		BurnDrvMSX_pegasus;
@@ -12102,9 +12104,7 @@ DRV		BurnDrvmd_manovers;
 DRV		BurnDrvSsmissin;
 DRV		BurnSpecStunrun128k;
 DRV		BurnSpecStunrun48k;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvSvghk;			// Incomplete dump [NOT WORKING]
-#endif
+DRV		BurnDrvSvghk;
 DRV		BurnDrvSvgpcb;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvSvgtw;			// Incomplete dump [NOT WORKING]
@@ -16262,6 +16262,7 @@ DRV		BurnDrvsms_ultima4;
 DRV		BurnDrvsms_ultima4p;
 DRV		BurnDrvCpsUecology;
 DRV		BurnDrvnes_ultimfrocha;
+DRV		BurnDrvmd_ultgargoyle;
 DRV		BurnDrvnes_ultimleasoci;
 DRV		BurnDrvnes_ultimleasoc;
 DRV		BurnDrvmd_umk3;
@@ -16889,6 +16890,7 @@ DRV		BurnDrvnes_wolfling;
 DRV		BurnDrvnes_wolverinec;
 DRV		BurnDrvnes_wolverine;
 DRV		BurnDrvmd_wolverin;
+DRV		BurnDrvmd_wolverinredux;
 DRV		BurnDrvCpsWonder3;
 DRV		BurnSpecwboy;
 DRV		BurnDrvgg_wboy;
@@ -19516,6 +19518,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBublcave11,			// Bubble Bobble: Lost Cave V1.1
 	&BurnDrvBoblcave,			// Bubble Bobble: Lost Cave V1.2 (for Bobble Bobble PCB)
 	&BurnDrvBublcave,			// Bubble Bobble: Lost Cave V1.2
+	&BurnDrvBublbust,			// Bubble Buster (USA, B-System)
 	&BurnSpecbubbdizz,			// Bubble Dizzy (128K)
 	&BurnSpecbubbdizz_48,		// Bubble Dizzy (48K)
 	&BurnDrvBubblemj,			// Bubble Memories: The Story Of Bubble Bobble III (Ver 2.3J 1996/02/07)
@@ -26287,6 +26290,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmslug3h,			// Metal Slug 3 (NGH-2560)
 	&BurnDrvmslug3,				// Metal Slug 3 (NGM-2560)
 	&BurnDrvmslug3a,			// Metal Slug 3 (NGM-2560, earlier)
+	&BurnDrvmslug4lw,			// Metal Slug 4 (Last Bullet Remix Hack)
 	&BurnDrvmslug4dg,			// Metal Slug 4 (Multifunction Hack, 20171225)
 	&BurnDrvmslug4h,			// Metal Slug 4 (NGH-2630)
 	&BurnDrvmslug4,				// Metal Slug 4 (NGM-2630)
@@ -28034,8 +28038,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_pebbleu,			// Pebble Beach Golf Links (USA)
 	&BurnDrvcv_peekaboo,		// Peek-A-Boo (HB)
 	&BurnDrvnes_peekaboopoker,	// Peek-A-Boo Poker (Unl)
+	&BurnDrvPeekaboo,			// Peek-a-Boo! (Japan, ver. 1.1)
 	&BurnDrvPeekaboou,			// Peek-a-Boo! (North America, ver 1.0)
-	&BurnDrvPeekaboo,			// Peek-a-Boo!
 	&BurnDrvnes_peepartime,		// Peepar Time (Japan)
 	&BurnDrvMSX_peetan,			// Peetan (Jpn)
 	&BurnDrvMSX_pegasus,		// Pegasus (Jpn)
@@ -29705,9 +29709,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSsmissin,			// S.S. Mission
 	&BurnSpecStunrun128k,		// S.T.U.N. Runner (128K)
 	&BurnSpecStunrun48k,		// S.T.U.N. Runner (48K)
-#if defined FBNEO_DEBUG
-	&BurnDrvSvghk,				// S.V.G. - Spectral vs Generation (V100, Hong Kong) [Incomplete dump, NOT WORKING]
-#endif
+	&BurnDrvSvghk,				// S.V.G. - Spectral vs Generation (V100, Hong Kong)
 	&BurnDrvSvgpcb,				// S.V.G. - Spectral vs Generation (V100, Japan, Single PCB Version)
 #if defined FBNEO_DEBUG
 	&BurnDrvSvgtw,				// S.V.G. - Spectral vs Generation (V100, Taiwan) [Incomplete dump, NOT WORKING]
@@ -33865,6 +33867,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_ultima4p,		// Ultima IV - Quest of the Avatar (Euro, Prototype)
 	&BurnDrvCpsUecology,		// Ultimate Ecology (931203 Japan)
 	&BurnDrvnes_ultimfrocha,	// Ultimate Frogger Champion (HB)
+	&BurnDrvmd_ultgargoyle,		// Ultimate Gargoyles (Hack)
 	&BurnDrvnes_ultimleasoci,	// Ultimate League Soccer (Italy)
 	&BurnDrvnes_ultimleasoc,	// Ultimate League Soccer (USA)
 	&BurnDrvmd_umk3,			// Ultimate Mortal Kombat 3 (Euro)
@@ -34492,6 +34495,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_wolverinec,		// Wolverine (USA) - Castellano v1.0
 	&BurnDrvnes_wolverine,		// Wolverine (USA)
 	&BurnDrvmd_wolverin,		// Wolverine - Adamantium Rage (Euro, USA)
+	&BurnDrvmd_wolverinredux,	// Wolverine - Adamantium Redux (Hack)
 	&BurnDrvCpsWonder3,			// Wonder 3 (910520 Japan)
 	&BurnSpecwboy,				// Wonder Boy (128K)
 	&BurnDrvgg_wboy,			// Wonder Boy (Euro)

@@ -510,7 +510,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aliensoli" cloneof="aliensol" romof="aliensol">
-		<description>Alien Soldier (Hack, Italian)</description>
+		<description>Alien Soldier (Hack, Italian) [Hack]</description>
 		<year>2002</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="alien soldier (italian translation).bin" size="2097152" crc="e5e614a5"/>
@@ -518,7 +518,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aliensols" cloneof="aliensol" romof="aliensol">
-		<description>Alien Soldier (Hack, Spanish)</description>
+		<description>Alien Soldier (Hack, Spanish) [Hack]</description>
 		<year>2020</year>
 		<manufacturer>Treasure</manufacturer>
 		<rom name="alien soldier (hack, spanish).bin" size="2097152" crc="ab991070"/>
@@ -534,7 +534,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="astorms" cloneof="astorm" romof="astorm">
-		<description>Alien Storm (Hack, Spanish)</description>
+		<description>Alien Storm (Hack, Spanish) [Hack]</description>
 		<year>2020</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Alien Storm (hack, spanish).bin" size="524288" crc="f79748ce"/>
@@ -6741,7 +6741,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gargoyles" cloneof="gargoyle" romof="gargoyle">
-		<description>Gargoyles (Hack, Spanish)</description>
+		<description>Gargoyles (Hack, Spanish) [Hack]</description>
 		<year>2017</year>
 		<manufacturer>Buena Vista Interactive</manufacturer>
 		<rom name="gargoyles (hack, spanish).bin" size="3145728" crc="9547f2ff"/>
@@ -6877,7 +6877,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ghostbsts" cloneof="ghostbst" romof="ghostbst">
-		<description>Ghostbusters (Hack, Spanish)</description>
+		<description>Ghostbusters (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ghostbusters (hack, spanish).bin" size="524288" crc="4ed2c651"/>
@@ -6919,7 +6919,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ghoulss" cloneof="ghouls" romof="ghouls">
-		<description>Ghouls'n Ghosts (Hack, Spanish)</description>
+		<description>Ghouls'n Ghosts (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ghouls'n ghosts (hack, spanish).bin" size="655360" crc="f71cd080"/>
@@ -14508,7 +14508,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="manovers" cloneof="manover" romof="manover">
-		<description>S.S. Lucifer - Man Overboard! (Hack, Spanish)</description>
+		<description>S.S. Lucifer - Man Overboard! (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="s.s. lucifer - man overboard! (hack, spanish).bin" size="1048576" crc="17edbbfe"/>
@@ -14516,7 +14516,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sagaias" cloneof="sagaia" romof="sagaia">
-		<description>Sagaia (Hack, Spanish)</description>
+		<description>Sagaia (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="sagaia (hack, spanish).bin" size="1048576" crc="29e1fb66"/>
@@ -14532,7 +14532,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sswords" cloneof="ssword" romof="ssword">
-		<description>Saint Sword (Hack, Spanish)</description>
+		<description>Saint Sword (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="saint sword (hack, spanish).bin" size="524288" crc="fe603ec4"/>
@@ -20866,6 +20866,14 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ultgargoyle" cloneof="gargoyle" romof="gargoyle">
+		<description>Ultimate Gargoyles (Hack) [Hack]</description>
+		<year>2021</year>
+		<manufacturer>BillyTime! Games</manufacturer>
+		<rom name="Ultimate Gargoyles (2021)(BillyTime! Games).bin" size="4194304" crc="766665bc"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="umk3">
 		<description>Ultimate Mortal Kombat 3 (Euro)</description>
 		<year>1996</year>
@@ -21850,6 +21858,14 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="wolverinredux" cloneof="wolverin" romof="wolverin">
+		<description>Wolverine - Adamantium Redux (Hack) [Hack]</description>
+		<year>2021</year>
+		<manufacturer>BillyTime! Games</manufacturer>
+		<rom name="Wolverine Adamantium Redux (2021)(BillyTime! Games).bin" size="2621440" crc="ab3f89b0"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="wboy3">
 		<description>Wonder Boy III - Monster Lair (Euro) ~ Monster Lair (Jpn)</description>
 		<year>1991</year>
@@ -21883,7 +21899,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wboymwi" cloneof="wboymw" romof="wboymw">
-		<description>Wonder Boy in Monster World (Hack, Italian)</description>
+		<description>Wonder Boy in Monster World (Hack, Italian) [Hack]</description>
 		<year>2008</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-14556 (italian translation).bin" size="786432" crc="aae9f03d"/>

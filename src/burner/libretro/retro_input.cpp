@@ -1323,6 +1323,8 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 		(drvname && strcmp(drvname, "groundfx") == 0) ||
 		(parentrom && strcmp(parentrom, "wecleman") == 0) ||
 		(drvname && strcmp(drvname, "wecleman") == 0) ||
+		(parentrom && strcmp(parentrom, "hotchase") == 0) ||
+		(drvname && strcmp(drvname, "hotchase") == 0) ||
 		(parentrom && strcmp(parentrom, "cischeat") == 0) ||
 		(drvname && strcmp(drvname, "cischeat") == 0) ||
 		(parentrom && strcmp(parentrom, "bigrun") == 0) ||

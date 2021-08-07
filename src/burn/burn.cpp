@@ -963,6 +963,10 @@ void StateRunAheadInit()
 		bprintf(PRINT_ERROR, _T(" ** RunAhead: Driver requests DRAW SYNC for this game.\n"));
 	}
 
+	if (bRunAhead && (BurnDrvGetFlags() & BDF_RUNAHEAD_DISABLED)) {
+		bprintf(PRINT_ERROR, _T(" ** RunAhead: Driver requests RunAhead DISABLED for this game.\n"));
+	}
+
 	nTotalLenRunAhead = 0;
 	RunAheadBuffer = NULL;
 	pRunAheadBuffer = NULL;

@@ -473,5 +473,12 @@ void K052109Scan(INT32 nAction)
 		SCAN_VAR(K052109FlipEnable);
 		SCAN_VAR(K052109_irq_enabled);
 		SCAN_VAR(has_extra_video_ram);
+
+		SCAN_VAR(K052109EnableRows);
+		SCAN_VAR(K052109EnableLine);
+		SCAN_VAR(K052109ScrollRows);
+		SCAN_VAR(K052109EnableCols);
+		SCAN_VAR(K052109ScrollCols);
+
 	}
 }

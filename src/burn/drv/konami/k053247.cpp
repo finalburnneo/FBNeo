@@ -32,8 +32,8 @@ void (*K053247Callback)(INT32 *code, INT32 *color, INT32 *priority);
 void K053247Reset()
 {
 	memset (K053247Ram,  0, 0x1000);
-	memset (K053247Regs, 0, 16 * sizeof (UINT16));
-	memset (K053246Regs, 0, 8);
+	memset (K053247Regs, 0, sizeof(K053247Regs));
+	memset (K053246Regs, 0, sizeof(K053246Regs));
 
 	K053246_OBJCHA_line = 0; // clear
 }
@@ -50,12 +50,12 @@ void K053247Scan(INT32 nAction)
 		BurnAcb(&ba);
 
 		ba.Data	  = K053247Regs;
-		ba.nLen	  = 0x0010 * sizeof(UINT16);
+		ba.nLen	  = sizeof(K053247Regs);
 		ba.szName = "K053247 Regs";
 		BurnAcb(&ba);
 
 		ba.Data	  = K053246Regs;
-		ba.nLen	  = 0x0008;
+		ba.nLen	  = sizeof(K053246Regs);
 		ba.szName = "K053246 Regs";
 		BurnAcb(&ba);
 
@@ -100,7 +100,8 @@ void K053247Exit()
 
 	K053247Flags = 0;
 
-	memset (K053247Regs, 0, 16 * sizeof(UINT16));
+	memset (K053247Regs, 0, sizeof(K053247Regs));
+	memset (K053246Regs, 0, sizeof(K053246Regs));
 }
 
 void K053247Export(UINT8 **ram, UINT8 **gfx, void (**callback)(INT32 *, INT32 *, INT32 *), INT32 *dx, INT32 *dy)

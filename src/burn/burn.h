@@ -413,6 +413,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define BDF_DEMO										(1 << 10)
 #define BDF_HISCORE_SUPPORTED							(1 << 11)
 #define BDF_RUNAHEAD_DRAWSYNC                           (1 << 12)
+#define BDF_RUNAHEAD_DISABLED                           (1 << 13)
 
 // Flags for the hardware member
 // Format: 0xDDEEFFFF, where DD: Manufacturer, EE: Hardware platform, FFFF: Flags (used by driver)

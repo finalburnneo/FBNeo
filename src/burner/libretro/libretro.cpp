@@ -1245,6 +1245,18 @@ static int burn_dummy_state_cb(BurnArea *pba)
 	return 0;
 }
 
+static INT32 LibretroAreaScan(INT32 nAction)
+{
+	// The following value is required in savestates for some games (xmen6p, ...),
+	// on standalone, this value is stored in savestate files headers,
+	// or has special logic in standalone runahead
+	SCAN_VAR(nCurrentFrame);
+
+	BurnAreaScan(nAction, 0);
+
+	return 0;
+}
+
 size_t retro_serialize_size()
 {
 	if (!driver_inited)
@@ -1269,11 +1281,8 @@ size_t retro_serialize_size()
 	state_size = 0;
 	BurnAcb = burn_dummy_state_cb;
 
-	// The following value is required in savestates for some games (xmen6p, ...)
-	// On standalone, this value is stored in savestate files headers
-	SCAN_VAR(nCurrentFrame);
+	LibretroAreaScan(nAction);
 
-	BurnAreaScan(nAction, 0);
 	return state_size;
 }
 
@@ -1306,11 +1315,8 @@ bool retro_serialize(void *data, size_t size)
 	BurnAcb = burn_write_state_cb;
 	write_state_ptr = (uint8_t*)data;
 
-	// The following value is required in savestates for some games (xmen6p, ...)
-	// On standalone, this value is stored in savestate files headers
-	SCAN_VAR(nCurrentFrame);
+	LibretroAreaScan(nAction);
 
-	BurnAreaScan(nAction, 0);
 	return true;
 }
 
@@ -1336,10 +1342,7 @@ bool retro_unserialize(const void *data, size_t size)
 	BurnAcb = burn_read_state_cb;
 	read_state_ptr = (const uint8_t*)data;
 
-	// The following value is required in savestates for some games (xmen6p, ...)
-	// On standalone, this value is stored in savestate files headers
-	SCAN_VAR(nCurrentFrame);
-	BurnAreaScan(nAction, 0);
+	LibretroAreaScan(nAction);
 
 	// Some driver require to recalc palette after loading savestates
 	BurnRecalcPal();

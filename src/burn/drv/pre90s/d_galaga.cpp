@@ -411,7 +411,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin);
 static INT32 namcoInitBoard(void)
 {
 	// Allocate and Blank all required memory
-	memory.all.start = NULL;
+	memset(&memory, 0, sizeof(memory));
 	namcoMemIndex();
 
 	memory.all.start = (UINT8 *)BurnMalloc(memory.all.size);

@@ -37,7 +37,6 @@ struct cdimgCDROM_TOC { UINT8 FirstTrack; UINT8 LastTrack; UINT8 ImageType; TCHA
 static cdimgCDROM_TOC* cdimgTOC;
 
 static FILE*  cdimgFile = NULL;
-static int    cdimgFileSize = 0;
 static int    cdimgTrack = 0;
 static int    cdimgLBA = 0;
 
@@ -46,6 +45,8 @@ CDEmuStatusValue CDEmuStatus;
 TCHAR CDEmuImage[MAX_PATH];
 
 static int    cdimgSamples = 0;
+
+static int    re_sync = 0;
 
 // identical to the format used in clonecd .sub files, can use memcpy
 struct QData { UINT8 Control; char track; char index; MSF MSFrel; char unused; MSF MSFabs; unsigned short CRC; };
@@ -454,7 +455,6 @@ static int cdimgExit()
 		fclose(cdimgFile);
 	cdimgFile = NULL;
 
-	cdimgFileSize = 0;
 	cdimgTrack = 0;
 	cdimgLBA = 0;
 
@@ -470,6 +470,8 @@ static int cdimgExit()
 
 static int cdimgInit()
 {
+	re_sync = 0;
+
 	cdimgTOC = (cdimgCDROM_TOC*)malloc(sizeof(cdimgCDROM_TOC));
 	if (cdimgTOC == NULL)
 		return 1;
@@ -521,7 +523,9 @@ static int cdimgInit()
 
 	{
 		char buf[2048];
-		FILE* h = fopen(cdimgTOC->Image, _T("rb"));	cdimgLBA++;
+		FILE* h = fopen(cdimgTOC->Image, _T("rb"));
+
+		cdimgLBA++;
 
 		if (h)
 		{
@@ -631,8 +635,15 @@ static int cdimgLoadSector(int LBA, char* pBuffer)
 {
 	if (CDEmuStatus == playing) return 0; // data loading
 
-	if (LBA != cdimgLBA || cdimgFile == NULL)
+	if (CDEmuStatus == seeking) {
+		LBA -= cd_pregap; // when seeking, we must account for pregap
+		re_sync = 1;
+	}
+
+	if (LBA != cdimgLBA || cdimgFile == NULL || re_sync)
 	{
+		re_sync = 0;
+
 		if (cdimgFile == NULL)
 		{
 			cdimgStop();
@@ -644,11 +655,12 @@ static int cdimgLoadSector(int LBA, char* pBuffer)
 
 		//bprintf(PRINT_IMPORTANT, _T("    loading data at LBA %08u 0x%08X\n"), (LBA - cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTrack].Address)) * 2352, LBA * 2352);
 
-		if (fseek(cdimgFile, (LBA - cd_pregap) * 2352, SEEK_SET))
+		if (fseek(cdimgFile, (LBA) * 2352, SEEK_SET))
 		{
 			dprintf(_T("*** couldn't seek (LBA %08u)\n"), LBA);
 
-			//cdimgStop(); // stopping here will break ssrpg
+			//cdimgStop(); // stopping here will break ssrpg,
+			// game will seek away & recover from this.
 
 			return 0;
 		}
@@ -664,7 +676,7 @@ static int cdimgLoadSector(int LBA, char* pBuffer)
 
 	if (status)
 	{
-		dprintf(_T("*** couldn't read from file\n"));
+		dprintf(_T("*** couldn't read from file - iso corrupt or truncated?\n"));
 
 		cdimgStop();
 
@@ -899,9 +911,17 @@ static INT32 cdimgScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(CDEmuStatus);
 		SCAN_VAR(cdimgTrack);
 		SCAN_VAR(cdimgLBA);
+
+		SCAN_VAR(cdimgOutputPosition);
+		SCAN_VAR(cdimgSamples);
+		SCAN_VAR(cdimgOutputbufferSize);
 	}
 
-	if (nAction & ACB_WRITE) {
+	if (nAction & ACB_WRITE && nAction & ACB_RUNAHEAD) { // run-ahead system state load
+		re_sync = 1;
+	}
+
+	if (nAction & ACB_WRITE && ~nAction & ACB_RUNAHEAD) {
 		cdimgCloseFile();
 	}
 

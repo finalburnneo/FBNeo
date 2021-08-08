@@ -1589,7 +1589,7 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 #endif
 		}
 
-		if (nAction & ACB_WRITE) {
+		if (nAction & ACB_WRITE && ~nAction & ACB_RUNAHEAD) {
 			INT32 nNewBIOS = nBIOS;
 			INT32 nBank;
 
@@ -1649,6 +1649,7 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 
 				NeoSetSystemType();
 			}
+
 
 			nPrevBurnCPUSpeedAdjust = -1;
 		}

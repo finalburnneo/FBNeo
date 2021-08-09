@@ -42,91 +42,91 @@ static UINT8 DrvDips[3];
 static UINT8 DrvJoy1[32];
 
 static struct BurnInputInfo Common2ButtonInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 24,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 31,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 30,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 28,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 31,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 30,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 28,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 29,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 27,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 26,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 16,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 23,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 22,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 20,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 23,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 22,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 20,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 21,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 19,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 18,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",       BIT_DIPSWITCH,  DrvDips + 2,    "dip"       },
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",       	BIT_DIPSWITCH,  DrvDips + 2,    "dip"       },
 };
 
 STDINPUTINFO(Common2Button)
 
 static struct BurnInputInfo Common3ButtonInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 24,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 31,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 30,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 28,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 31,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 30,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 28,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 29,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 27,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 26,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 25,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 16,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 23,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 22,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 20,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 23,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 22,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 20,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 21,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 19,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 18,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 17,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",       BIT_DIPSWITCH,  DrvDips + 2,    "dip"       },
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",       	BIT_DIPSWITCH,  DrvDips + 2,    "dip"       },
 };
 
 STDINPUTINFO(Common3Button)
 
 static struct BurnInputInfo Common4ButtonInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 24,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 31,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 30,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 28,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 31,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 30,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 28,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 29,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 27,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 26,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 15,	"p1 fire 3"	},
 	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 14,	"p1 fire 4"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 16,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 23,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 22,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 20,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 23,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 22,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 20,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 21,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 19,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 18,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 fire 3"	},
 	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 fire 4"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",       BIT_DIPSWITCH,  DrvDips + 2,    "dip"       },
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",       	BIT_DIPSWITCH,  DrvDips + 2,    "dip"       },
 };
 
 STDINPUTINFO(Common4Button)
@@ -360,12 +360,12 @@ static void graphics_bank()
 	}
 }
 
-void __fastcall psx_write_long(UINT32 , UINT32)
+static void __fastcall psx_write_long(UINT32 , UINT32)
 {
 	// Keep sh2 from crashing with Space Bomber
 }
 
-void __fastcall ps3v1_write_word(UINT32 address, UINT16 data)
+static void __fastcall ps3v1_write_word(UINT32 address, UINT16 data)
 {
 	address &= 0xc7ffffff;
 #ifdef LSB_FIRST
@@ -378,7 +378,7 @@ void __fastcall ps3v1_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall ps3v1_write_byte(UINT32 address, UINT8 data)
+static void __fastcall ps3v1_write_byte(UINT32 address, UINT8 data)
 {
 	address &= 0xc7ffffff;
 
@@ -431,7 +431,7 @@ void __fastcall ps3v1_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall ps3v1_read_byte(UINT32 address)
+static UINT8 __fastcall ps3v1_read_byte(UINT32 address)
 {
 	address &= 0xc7ffffff;
 
@@ -458,7 +458,7 @@ UINT8 __fastcall ps3v1_read_byte(UINT32 address)
 
 //-----------------------------------------------------------------------------------------
 
-void __fastcall ps5_write_word(UINT32 address, UINT16 data)
+static void __fastcall ps5_write_word(UINT32 address, UINT16 data)
 {
 	address &= 0xc7ffffff;
 #ifdef LSB_FIRST
@@ -471,7 +471,7 @@ void __fastcall ps5_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall ps5_write_byte(UINT32 address, UINT8 data)
+static void __fastcall ps5_write_byte(UINT32 address, UINT8 data)
 {
 	address &= 0xc7ffffff;
 
@@ -523,7 +523,7 @@ void __fastcall ps5_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall ps5_read_byte(UINT32 address)
+static UINT8 __fastcall ps5_read_byte(UINT32 address)
 {
 	address &= 0xc7ffffff;
 
@@ -551,7 +551,7 @@ UINT8 __fastcall ps5_read_byte(UINT32 address)
 //-------------------------------------------------------------------------------------
 // Some hackery to eat up some idle cycles. 
 
-UINT32 __fastcall hack_read_long(UINT32 a)
+static UINT32 __fastcall hack_read_long(UINT32 a)
 {
 	a &= 0xfffff;
 
@@ -572,7 +572,7 @@ UINT32 __fastcall hack_read_long(UINT32 a)
 	return *((UINT32*)(DrvSh2RAM + a));
 }
 
-UINT16 __fastcall hack_read_word(UINT32 a)
+static UINT16 __fastcall hack_read_word(UINT32 a)
 {
 #ifdef LSB_FIRST
 	return *((UINT16 *)(DrvSh2RAM + ((a & 0xfffff) ^ 2)));
@@ -581,7 +581,7 @@ UINT16 __fastcall hack_read_word(UINT32 a)
 #endif
 }
 
-UINT8 __fastcall hack_read_byte(UINT32 a)
+static UINT8 __fastcall hack_read_byte(UINT32 a)
 {
 #ifdef LSB_FIRST
 	return DrvSh2RAM[(a & 0xfffff) ^ 3];
@@ -599,10 +599,7 @@ static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 
 static void DrvIRQCallback(INT32, INT32 nStatus)
 {
-	if (nStatus)
-		Sh2SetIRQLine(12, CPU_IRQSTATUS_ACK);
-	else
-		Sh2SetIRQLine(12, CPU_IRQSTATUS_NONE);
+	Sh2SetIRQLine(12, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvDoReset()
@@ -637,28 +634,28 @@ static INT32 MemIndex(INT32 gfxsize)
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvSh2ROM		= Next; Next += 0x0200000;
+	DrvSh2ROM			= Next; Next += 0x0200000;
 
 	pPsikyoshTiles		= Next; Next += gfxsize + 0x20000 /* empty banking */;
 
-	DrvSndROM		= Next; Next += 0x0400000;
+	DrvSndROM			= Next; Next += 0x0400000;
 
-	DrvEEPROM		= Next; Next += 0x0000100;
+	DrvEEPROM			= Next; Next += 0x0000100;
 
-	AllRam			= Next;
+	AllRam				= Next;
 
-	DrvZoomRAM		= Next; Next += 0x0010000;
-	DrvPalRAM		= Next; Next += 0x0010000;
-	DrvSprRAM		= Next; Next += 0x0010000;
-	DrvVidRegs		= Next; Next += 0x0000200;
-	DrvSh2RAM		= Next; Next += 0x0100000;
-	DrvSprBuf		= Next; Next += 0x0004000;
+	DrvZoomRAM			= Next; Next += 0x0010000;
+	DrvPalRAM			= Next; Next += 0x0010000;
+	DrvSprRAM			= Next; Next += 0x0010000;
+	DrvVidRegs			= Next; Next += 0x0000200;
+	DrvSh2RAM			= Next; Next += 0x0100000;
+	DrvSprBuf			= Next; Next += 0x0004000;
 
-	RamEnd			= Next;
+	RamEnd				= Next;
 
 	pBurnDrvPalette		= (UINT32  *)Next; Next += 0x1400 * sizeof(UINT32);
 
-	DrvBgRAM		= DrvSprRAM + 0x004000;
+	DrvBgRAM			= DrvSprRAM + 0x004000;
 
 	pPsikyoshPalRAM		= (UINT32*)DrvPalRAM;
 	pPsikyoshSpriteBuffer	= (UINT32*)DrvSprBuf;
@@ -854,7 +851,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (pnMin != NULL) {
 		*pnMin =  0x029707;
 	}
-	
+
 	if (nAction & ACB_MEMORY_RAM) {
 		ba.Data		= AllRam;
 		ba.nLen		= RamEnd - AllRam;
@@ -862,15 +859,17 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName	= "All RAM";
 		BurnAcb(&ba);
 	}
-	
+
 	if (nAction & ACB_DRIVER_DATA) {
 		Sh2Scan(nAction);
 		BurnYMF278BScan(nAction, pnMin);
-		
+
 		SCAN_VAR(sample_offs);
 	}
 
-	if (nAction & ACB_WRITE) {
+	EEPROMScan(nAction, pnMin);
+
+	if (nAction & ACB_WRITE && ~nAction & ACB_RUNAHEAD) {
 		previous_graphics_bank = -1;
 		graphics_bank();
 	}

@@ -720,7 +720,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Mag Max
+// Mag Max (set 1)
 
 static struct BurnRomInfo magmaxRomDesc[] = {
 	{ "1.3b",		0x4000, 0x33793cbb, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -767,10 +767,66 @@ STD_ROM_FN(magmax)
 
 struct BurnDriver BurnDrvMagmax = {
 	"magmax", NULL, NULL, NULL, "1985",
-	"Mag Max\0", NULL, "Nichibutsu", "Miscellaneous",
+	"Mag Max (set 1)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, magmaxRomInfo, magmaxRomName, NULL, NULL, NULL, NULL, MagmaxInputInfo, MagmaxDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x210,
+	256, 224, 4, 3
+};
+
+
+// Mag Max (set 2)
+
+static struct BurnRomInfo magmaxaRomDesc[] = {
+	{ "1.3b",		0x4000, 0xf112b450, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "6.3d",		0x4000, 0x89a6d9e3, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "2.5b",		0x4000, 0x53560842, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "7.5d",		0x4000, 0xe20c2c05, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "3.6b",		0x2000, 0xa1276b61, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "8.6d",		0x2000, 0xda172797, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "15.17b",		0x2000, 0x5f2016b7, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 Code
+	{ "16.18b",		0x2000, 0x055e3126, 2 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "23.15g",		0x2000, 0xa7471da2, 3 | BRF_GRA },           //  8 Characters
+
+	{ "17.3e",		0x2000, 0x8e305b2e, 4 | BRF_GRA },           //  9 Sprites
+	{ "18.5e",		0x2000, 0x14c55a60, 4 | BRF_GRA },           // 10
+	{ "19.6e",		0x2000, 0xfa4141d8, 4 | BRF_GRA },           // 11
+	{ "20.3g",		0x2000, 0x6fa3918b, 4 | BRF_GRA },           // 12
+	{ "21.5g",		0x2000, 0xdd52eda4, 4 | BRF_GRA },           // 13
+	{ "22.6g",		0x2000, 0x4afc98ff, 4 | BRF_GRA },           // 14
+
+	{ "4.18b",		0x2000, 0x1550942e, 5 | BRF_GRA },           // 15 Background Data
+	{ "5.20b",		0x2000, 0x3b93017f, 5 | BRF_GRA },           // 16
+	{ "9.18d",		0x2000, 0x9ecc9ab8, 5 | BRF_GRA },           // 17
+	{ "10.20d",		0x2000, 0xe2ff7293, 5 | BRF_GRA },           // 18
+	{ "11.15f",		0x2000, 0x91f3edb6, 5 | BRF_GRA },           // 19
+	{ "12.17f",		0x2000, 0x99771eff, 5 | BRF_GRA },           // 20
+	{ "13.18f",		0x2000, 0x75f30159, 5 | BRF_GRA },           // 21
+	{ "14.20f",		0x2000, 0x96babcba, 5 | BRF_GRA },           // 22
+
+	{ "mag_b.14d",	0x0100, 0xa0fb7297, 6 | BRF_GRA },           // 23 Background Control PROMs
+	{ "mag_c.15d",	0x0100, 0xd84a6f78, 6 | BRF_GRA },           // 24
+
+	{ "mag_e.10f",	0x0100, 0x75e4f06a, 7 | BRF_GRA },           // 25 Color PROMs
+	{ "mag_d.10e",	0x0100, 0x34b6a6e3, 7 | BRF_GRA },           // 26
+	{ "mag_a.10d",	0x0100, 0xa7ea7718, 7 | BRF_GRA },           // 27
+	{ "mag_g.2e",	0x0100, 0x830be358, 7 | BRF_GRA },           // 28
+
+	{ "mag_f.13b",	0x0100, 0x4a6f9a6d, 0 | BRF_OPT },           // 29 Video Control Data
+};
+
+STD_ROM_PICK(magmaxa)
+STD_ROM_FN(magmaxa)
+
+struct BurnDriver BurnDrvMagmaxa = {
+	"magmaxa", "magmax", NULL, NULL, "1985",
+	"Mag Max (set 2)\0", NULL, "Nichibutsu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, magmaxaRomInfo, magmaxaRomName, NULL, NULL, NULL, NULL, MagmaxInputInfo, MagmaxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x210,
 	256, 224, 4, 3
 };

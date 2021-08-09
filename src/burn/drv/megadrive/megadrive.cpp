@@ -143,6 +143,8 @@ struct PicoMisc {
 
 	UINT32 RealtecBankAddr;
 	UINT32 RealtecBankSize;
+
+	UINT8 MapperBank[0x10];
 };
 
 struct TileStrip
@@ -1460,6 +1462,7 @@ inline static INT32 MegadriveSynchroniseStreamPAL(INT32 nSoundRate)
 // ---------------------------------------------------------------
 
 static INT32 res_check(); // forward
+static void __fastcall Ssf2BankWriteByte(UINT32 sekAddress, UINT8 byteValue); // forward
 
 static INT32 MegadriveResetDo()
 {
@@ -1534,6 +1537,12 @@ static INT32 MegadriveResetDo()
 
 	RamMisc->I2CClk = 0;
 	RamMisc->I2CMem = 0;
+
+	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SSF2) {
+		for (INT32 i = 0; i < 7; i++) {
+			Ssf2BankWriteByte(0xa130f3 + (i*2), i + 1);
+		}
+	}
 
 	memset(JoyPad, 0, sizeof(struct MegadriveJoyPad));
 	teamplayer_reset();
@@ -1793,45 +1802,24 @@ static void __fastcall MegadriveSRAMToggleWriteByte(UINT32 sekAddress, UINT8 byt
 
 static void __fastcall Ssf2BankWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
-	bprintf(0, _T("ssf2bank_wb %x   %x\n"), sekAddress, byteValue);
 	switch (sekAddress) {
 		case 0xa130f1: {
 			MegadriveSRAMToggleWriteByte(sekAddress, byteValue);
 			return;
 		}
 
-		case 0xa130f3: {
-			memcpy(RomMain + 0x080000, OriginalRom + ((byteValue & 0x3f) * 0x080000), 0x080000);
-			return;
-		}
-
-		case 0xa130f5: {
-			memcpy(RomMain + 0x100000, OriginalRom + ((byteValue & 0x3f) * 0x080000), 0x080000);
-			return;
-		}
-
-		case 0xa130f7: {
-			memcpy(RomMain + 0x180000, OriginalRom + ((byteValue & 0x3f) * 0x080000), 0x080000);
-			return;
-		}
-
-		case 0xa130f9: {
-			memcpy(RomMain + 0x200000, OriginalRom + ((byteValue & 0x3f) * 0x080000), 0x080000);
-			return;
-		}
-
-		case 0xa130fb: {
-			memcpy(RomMain + 0x280000, OriginalRom + ((byteValue & 0x3f) * 0x080000), 0x080000);
-			return;
-		}
-
-		case 0xa130fd: {
-			memcpy(RomMain + 0x300000, OriginalRom + ((byteValue & 0x3f) * 0x080000), 0x080000);
-			return;
-		}
-
+		case 0xa130f3:
+		case 0xa130f5:
+		case 0xa130f7:
+		case 0xa130f9:
+		case 0xa130fb:
+		case 0xa130fd:
 		case 0xa130ff: {
-			memcpy(RomMain + 0x380000, OriginalRom + ((byteValue & 0x3f) * 0x080000), 0x080000);
+			INT32 bank = (sekAddress & 0xf) >> 1;
+
+			memcpy(RomMain + (0x080000 * bank), OriginalRom + ((byteValue & 0x3f) * 0x080000), 0x080000);
+
+			RamMisc->MapperBank[bank] = byteValue;
 			return;
 		}
 	}
@@ -4899,6 +4887,13 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 	{
 		md_eeprom_stm95_scan(nAction);
 	}
+
+	if (nAction & ACB_WRITE && (BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SSF2) {
+		for (INT32 i = 0; i < 7; i++) {
+			Ssf2BankWriteByte(0xa130f3 + (i*2), RamMisc->MapperBank[i+1]);
+		}
+	}
+
 
 	return 0;
 }

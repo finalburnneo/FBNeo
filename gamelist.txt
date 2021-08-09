@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17360 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17361 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -8040,7 +8040,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_mafatconc	|  	| Mafat Conspiracy - Golgo 13 (USA) - Castellano v1.1	| nes_mafatcon	| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_mafatcon	|  	| Mafat Conspiracy - Golgo 13 (USA)			| 		| 1990	| Vic Tokai	| Miscellaneous	| 					|
 | md_mafia	|  	| Mafia (Rus)						| md_dicktr	| 199?	| <unknown>	| Sega Megadrive| 					|
-| magmax	|  	| Mag Max						| 		| 1985	| Nichibutsu	| Miscellaneous	| 					|
+| magmax	|  	| Mag Max (set 1)					| 		| 1985	| Nichibutsu	| Miscellaneous	| 					|
+| magmaxa	|  	| Mag Max (set 2)					| magmax	| 1985	| Nichibutsu	| Miscellaneous	| 					|
 | msx_magmag	|  	| Mag the Magician (HB)					| 		| 2019	| Radastan	| MSX		| 					|
 | spec_magmag	|  	| Mag the Magician (HB)					| 		| 2017	| Radasten	| ZX Spectrum	| 					|
 | spec_magentajim|  	| Magenta Jim (HB)					| 		| 2020	| Gaz Marshall	| ZX Spectrum	| 					|

@@ -8147,6 +8147,7 @@ DRV		BurnDrvnes_mafatconc;
 DRV		BurnDrvnes_mafatcon;
 DRV		BurnDrvmd_mafia;
 DRV		BurnDrvMagmax;
+DRV		BurnDrvMagmaxa;
 DRV		BurnDrvMSX_magmag;
 DRV		BurnSpecMagmag;
 DRV		BurnSpecMagentajim;
@@ -25751,7 +25752,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_mafatconc,		// Mafat Conspiracy - Golgo 13 (USA) - Castellano v1.1
 	&BurnDrvnes_mafatcon,		// Mafat Conspiracy - Golgo 13 (USA)
 	&BurnDrvmd_mafia,			// Mafia (Rus)
-	&BurnDrvMagmax,				// Mag Max
+	&BurnDrvMagmax,				// Mag Max (set 1)
+	&BurnDrvMagmaxa,			// Mag Max (set 2)
 	&BurnDrvMSX_magmag,			// Mag the Magician (HB)
 	&BurnSpecMagmag,			// Mag the Magician (HB)
 	&BurnSpecMagentajim,		// Magenta Jim (HB)

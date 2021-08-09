@@ -675,7 +675,7 @@ void TC0180VCUScan(INT32 nAction)
 		BurnAcb(&ba);
 
 		ba.Data	  = TC0180VCUFbRAM;
-		ba.nLen	  = 0x00800;
+		ba.nLen	  = 0x40000;
 		ba.szName = "Framebuffer RAM";
 		BurnAcb(&ba);
 

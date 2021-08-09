@@ -134,7 +134,7 @@ void PC090OJScan(INT32 nAction)
 		ba.szName = "PC090OJ Ram";
 		BurnAcb(&ba);
 	}
-	
+
 	if (nAction & ACB_DRIVER_DATA) {
 		SCAN_VAR(PC090OJSpriteCtrl);
 	}

@@ -692,7 +692,8 @@ static UINT16 __fastcall battlegReadWord(UINT32 sekAddress)
 	switch (sekAddress) {
 
 		case 0x21C03C:
-			return (location_test) ? ToaScanlineRegisterLoctest() : ToaScanlineRegister();
+			return ToaScanlineRegister();
+			//return (location_test) ? ToaScanlineRegisterLoctest() : ToaScanlineRegister();
 
 		case 0x300004:
 			return ToaGP9001ReadRAM_Hi(0);

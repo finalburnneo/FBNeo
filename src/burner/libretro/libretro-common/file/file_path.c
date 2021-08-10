@@ -87,41 +87,53 @@ const char *path_get_archive_delim(const char *path)
 
    buf[0] = '\0';
 
+   /* We search for delimiters after the last slash
+    * in the file path to avoid capturing delimiter
+    * characters in any parent directory names.
+    * If there are no slashes in the file name, then
+    * the path is just the file basename - in this
+    * case we search the path in its entirety */
    if (!last_slash)
-      return NULL;
+      last_slash = path;
 
-   /* Find delimiter position */
-   delim = strrchr(last_slash, '#');
+   /* Find delimiter position
+    * > Since filenames may contain '#' characters,
+    *   must loop until we find the first '#' that
+    *   is directly *after* a compression extension */
+   delim = strchr(last_slash, '#');
 
-   if (!delim)
-      return NULL;
-
-   /* Check whether this is a known archive type
-    * > Note: The code duplication here is
-    *   deliberate, to maximise performance */
-   if (delim - last_slash > 4)
+   while (delim)
    {
-      strlcpy(buf, delim - 4, sizeof(buf));
-      buf[4] = '\0';
+      /* Check whether this is a known archive type
+       * > Note: The code duplication here is
+       *   deliberate, to maximise performance */
+      if (delim - last_slash > 4)
+      {
+         strlcpy(buf, delim - 4, sizeof(buf));
+         buf[4] = '\0';
 
-      string_to_lower(buf);
+         string_to_lower(buf);
 
-      /* Check if this is a '.zip', '.apk' or '.7z' file */
-      if (string_is_equal(buf,     ".zip") ||
-          string_is_equal(buf,     ".apk") ||
-          string_is_equal(buf + 1, ".7z"))
-         return delim;
-   }
-   else if (delim - last_slash > 3)
-   {
-      strlcpy(buf, delim - 3, sizeof(buf));
-      buf[3] = '\0';
+         /* Check if this is a '.zip', '.apk' or '.7z' file */
+         if (string_is_equal(buf,     ".zip") ||
+             string_is_equal(buf,     ".apk") ||
+             string_is_equal(buf + 1, ".7z"))
+            return delim;
+      }
+      else if (delim - last_slash > 3)
+      {
+         strlcpy(buf, delim - 3, sizeof(buf));
+         buf[3] = '\0';
 
-      string_to_lower(buf);
+         string_to_lower(buf);
 
-      /* Check if this is a '.7z' file */
-      if (string_is_equal(buf, ".7z"))
-         return delim;
+         /* Check if this is a '.7z' file */
+         if (string_is_equal(buf, ".7z"))
+            return delim;
+      }
+
+      delim++;
+      delim = strchr(delim, '#');
    }
 
    return NULL;
@@ -509,7 +521,7 @@ void path_basedir(char *path)
    if (last)
       last[1] = '\0';
    else
-      snprintf(path, 3, "." PATH_DEFAULT_SLASH());
+      strlcpy(path, "." PATH_DEFAULT_SLASH(), 3);
 }
 
 /**
@@ -574,6 +586,16 @@ const char *path_basename(const char *path)
    return path;
 }
 
+/* Specialized version */
+const char *path_basename_nocompression(const char *path)
+{
+   /* We cut at the last slash */
+   const char *last  = find_last_slash(path);
+   if (last)
+      return last + 1;
+   return path;
+}
+
 /**
  * path_is_absolute:
  * @path               : path
@@ -628,16 +650,31 @@ bool path_is_absolute(const char *path)
 char *path_resolve_realpath(char *buf, size_t size, bool resolve_symlinks)
 {
 #if !defined(RARCH_CONSOLE) && defined(RARCH_INTERNAL)
-   char tmp[PATH_MAX_LENGTH];
 #ifdef _WIN32
-   strlcpy(tmp, buf, sizeof(tmp));
-   if (!_fullpath(buf, tmp, size))
+   char *ret = NULL;
+   wchar_t abs_path[PATH_MAX_LENGTH];
+   wchar_t *rel_path = utf8_to_utf16_string_alloc(buf);
+
+   if (rel_path)
    {
-      strlcpy(buf, tmp, size);
-      return NULL;
+      if (_wfullpath(abs_path, rel_path, PATH_MAX_LENGTH))
+      {
+         char *tmp = utf16_to_utf8_string_alloc(abs_path);
+
+         if (tmp)
+         {
+            strlcpy(buf, tmp, size);
+            free(tmp);
+            ret = buf;
+         }
+      }
+
+      free(rel_path);
    }
-   return buf;
+
+   return ret;
 #else
+   char tmp[PATH_MAX_LENGTH];
    size_t t;
    char *p;
    const char *next;
@@ -1189,7 +1226,7 @@ void path_basedir_wrapper(char *path)
    if (last)
       last[1] = '\0';
    else
-      snprintf(path, 3, "." PATH_DEFAULT_SLASH());
+      strlcpy(path, "." PATH_DEFAULT_SLASH(), 3);
 }
 
 #if !defined(RARCH_CONSOLE) && defined(RARCH_INTERNAL)

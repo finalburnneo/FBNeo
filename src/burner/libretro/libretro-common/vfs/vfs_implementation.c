@@ -62,6 +62,9 @@
 #  include <sys/dirent.h>
 #  include <orbisFile.h>
 #  endif
+#  if defined(WIIU)
+#  include <malloc.h>
+#  endif
 #endif
 
 #include <fcntl.h>
@@ -130,8 +133,11 @@
 #include <pspkernel.h>
 #endif
 
+#if defined(__PS3__) || defined(__PSL1GHT__)
+#include <defines/ps3_defines.h>
 #if defined(__PSL1GHT__)
 #include <lv2/sysfs.h>
+#endif
 #endif
 
 #if defined(VITA)
@@ -443,6 +449,14 @@ libretro_vfs_implementation_file *retro_vfs_file_open_impl(
          stream->buf = (char*)calloc(1, 0x10000);
          if (stream->fp)
             setvbuf(stream->fp, stream->buf, _IOFBF, 0x10000);
+      }
+#elif defined(WIIU)
+      if (stream->scheme != VFS_SCHEME_CDROM)
+      {
+         const int bufsize = 128*1024;
+         stream->buf = (char*)memalign(0x40, bufsize);
+         if (stream->fp)
+            setvbuf(stream->fp, stream->buf, _IOFBF, bufsize);
       }
 #elif !defined(PSP)
       if (stream->scheme != VFS_SCHEME_CDROM)

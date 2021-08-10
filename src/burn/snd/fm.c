@@ -2406,7 +2406,7 @@ static void YM2203_postload(void)
 	for(num=0;num<YM2203NumChips;num++)
 	{
 		/* prescaler */
-		//OPNPrescaler_w(&FM2203[num].OPN,1,1);
+		OPNPrescaler_w(&FM2203[num].OPN,1,1);
 
 		/* SSG registers */
 		for(r=0;r<16;r++)
@@ -2417,7 +2417,6 @@ static void YM2203_postload(void)
 
 		/* OPN registers */
 		/* DT / MULTI , TL , KS / AR , AMON / DR , SR , SL / RR , SSG-EG */
-#if 0
 		for(r=0x30;r<0x9e;r++)
 			if((r&3) != 3)
 				OPNWriteReg(&FM2203[num].OPN,r,FM2203[num].REGS[r]);
@@ -2428,7 +2427,6 @@ static void YM2203_postload(void)
 
 		/* channels */
 		/*FM_channel_postload(FM2203[num].CH,3);*/
-#endif
 	}
 	FM_IS_POSTLOADING = 0;
 	cur_chip = NULL;

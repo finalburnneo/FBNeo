@@ -862,6 +862,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="armageddon" romof="spectrum">
+		<description>Armageddon (16K)</description>
+		<year>1983</year>
+		<manufacturer>Ocean</manufacturer>
+		<rom name="Armageddon 16K (1983)(Ocean).tap" size="13845" crc="398b3aa5"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="armymvs" romof="spec128">
 		<description>Army Moves (128K)</description>
 		<year>1986</year>
@@ -1038,9 +1047,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="autocrash" romof="spec128">
-		<description>Autocrash</description>
+		<description>AutoCrash (Spanish)</description>
 		<year>1991</year>
-		<manufacturer>Zigurat</manufacturer>
+		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="Autocrash (1991)(Zigurat).tap" size="49550" crc="02fe192c"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -1076,13 +1085,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bcbill" romof="spec128">
-		<description>B.C. Bill</description>
+	<game name="bcbill" romof="spectrum">
+		<description>B.C. Bill (48K)</description>
 		<year>1984</year>
 		<manufacturer>Imagine</manufacturer>
 		<rom name="B.C. Bill (1984)(Imagine).tap" size="30496" crc="61b2d9bf"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1869,6 +1877,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bountybob" romof="spectrum">
+		<description>Bounty Bob Strikes Back! (48K)</description>
+		<year>1984</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Bounty Bob Strikes Back! 48K (1984)(U.S. Gold).z80" size="45436" crc="de0b2094"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bountyhunter" romof="spec128">
 		<description>Bounty Hunter (128K)</description>
 		<year>1989</year>
@@ -1895,6 +1912,15 @@
 		<rom name="Brainache (1987)(Codemasters).tap" size="49898" crc="28592736"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="brainstorm" romof="spectrum">
+		<description>Brainstorm (48K)</description>
+		<year>1985</year>
+		<manufacturer>Bubble Bus Software</manufacturer>
+		<rom name="Brainstorm 48K (1985)(Bubble Bus).tap" size="48514" crc="f52bcc89"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3829,6 +3855,24 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="donquijote1" romof="spectrum">
+		<description>Don Quijote de la Mancha - Parte I (Spanish) (48K)</description>
+		<year>1987</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Don Quijote de la Mancha (1987)(Dinamic)(ES)(Side A).tap" size="49387" crc="1ac98966"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="donquijote2" cloneof="donquijote1" romof="donquijote1">
+		<description>Don Quijote de la Mancha - Parte II (Spanish) (48K) [Password: EL INGENIOSO HIDALGO]</description>
+		<year>1987</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Don Quijote de la Mancha (1987)(Dinamic)(ES)(Side B).tap" size="49387" crc="042db349"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="dkong" romof="spectrum">
 		<description>Donkey Kong (48K)</description>
 		<year>1986</year>
@@ -4546,7 +4590,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="firefly" romof="spec128">
-		<description>Firefly</description>
+		<description>Firefly (128K)</description>
 		<year>1988</year>
 		<manufacturer>Ocean</manufacturer>
 		<rom name="Firefly (1988)(Ocean).tap" size="45885" crc="4c890b6f"/>
@@ -4851,6 +4895,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="fkngmili" romof="spectrum">
+		<description>Fucking Mili (English) (48K) (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>EJVG</manufacturer>
+		<rom name="Fucking Mili (2020)(EJVG).tap" size="39535" crc="04778248"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="fury" romof="spec128">
 		<description>Fury, The (128K)</description>
 		<year>1988</year>
@@ -5126,6 +5179,25 @@
 		<rom name="Gimme Bright v2.0 (2011)(Climacus).tap" size="31391" crc="d58d7107"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="glazx128" romof="spec128">
+		<description>GlaZX (128K) (HB) [Homebrew, 2 players mode only]</description>
+		<year>2019</year>
+		<manufacturer>EugenyN</manufacturer>
+		<rom name="GlaZX 128K (2019)(EugenyN).tap" size="33322" crc="0160767e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="glazx48" cloneof="glazx128" romof="glazx128">
+		<description>GlaZX (48K) (HB) [Homebrew, 2 players mode only]</description>
+		<year>2019</year>
+		<manufacturer>EugenyN</manufacturer>
+		<rom name="GlaZX 48K (2019)(EugenyN).tap" size="33710" crc="262b66f7"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -6654,7 +6726,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kong2" romof="spectrum">
-		<description>Kong 2 - Kong Strikes Back (48K)</description>
+		<description>Kong 2 - Kong Strikes Back (48K) [Press J to select the controller type]</description>
 		<year>1985</year>
 		<manufacturer>Ocean</manufacturer>
 		<rom name="Kong 2 - Kong Strikes Back (1985)(Ocean).z80" size="28643" crc="9f2f534a"/>
@@ -6663,7 +6735,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kongsrevenge1" romof="spec128">
-		<description>Kong's Revenge (Part 1)</description>
+		<description>Kong's Revenge - Part 1 (Spanish) (128K)</description>
 		<year>1991</year>
 		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="Kong's Revenge (Part 1)(1991)(Zigurat Software).tap" size="56868" crc="20a7e7ce"/>
@@ -6673,7 +6745,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kongsrevenge2" cloneof="kongsrevenge1" romof="kongsrevenge1">
-		<description>Kong's Revenge (Part 2)</description>
+		<description>Kong's Revenge - Part 2 (Spanish) (128K) [Password: CHIRIPA - use num-keys from 1 to 7 to set password]</description>
 		<year>1991</year>
 		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="Kong's Revenge (Part 2)(1991)(Zigurat Software).tap" size="56868" crc="df77b41f"/>
@@ -6783,6 +6855,15 @@
 		<year>1983</year>
 		<manufacturer>Quicksilva</manufacturer>
 		<rom name="Laser Zone (1983)(Quicksilva).tap" size="17800" crc="701e7685"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lastduel" romof="spectrum">
+		<description>Last Duel (48K)</description>
+		<year>1989</year>
+		<manufacturer>Go!</manufacturer>
+		<rom name="Last Duel (1989)(Go!).tap" size="171660" crc="ca2ae42a"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -8171,6 +8252,56 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ninjacarnagen" romof="spec128">
+		<description>Ninja Carnage (English) (128K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Resistance</manufacturer>
+		<rom name="Ninja Carnage 128K Eng (2021)(Resistance).tap" size="237825" crc="2f6c9195"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ninjacarnagfr" cloneof="ninjacarnagen" romof="ninjacarnagen">
+		<description>Ninja Carnage (French) (128K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Resistance</manufacturer>
+		<rom name="Ninja Carnage 128K Fre (2021)(Resistance).tap" size="237835" crc="d5c829fb"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ninjacarnagge" cloneof="ninjacarnagen" romof="ninjacarnagen">
+		<description>Ninja Carnage (German) (128K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Resistance</manufacturer>
+		<rom name="Ninja Carnage 128K Ger (2021)(Resistance).tap" size="238054" crc="6fea53d8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ninjacarnagit" cloneof="ninjacarnagen" romof="ninjacarnagen">
+		<description>Ninja Carnage (Italian) (128K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Resistance</manufacturer>
+		<rom name="Ninja Carnage 128K Ita (2021)(Resistance).tap" size="238053" crc="d06b1569"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ninjacarnages" cloneof="ninjacarnagen" romof="ninjacarnagen">
+		<description>Ninja Carnage (Spanish) (128K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Resistance</manufacturer>
+		<rom name="Ninja Carnage 128K Spa (2021)(Resistance).tap" size="237993" crc="9e930e3f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ninjagaiden" romof="spec128">
 		<description>Ninja Gaiden Shadow Warriors (HB) [Homebrew]</description>
 		<year>2018</year>
@@ -8574,6 +8705,15 @@
 		<year>1988</year>
 		<manufacturer>Grandslam Entertainments</manufacturer>
 		<rom name="Pac-Mania (1988)(Grandslam Entertainments).z80" size="31923" crc="b7706dc6"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pmslimers" romof="spectrum">
+		<description>Pacman the Curse of the Slimers (48K) (HB, v1.1) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>DEFB Studio</manufacturer>
+		<rom name="Pacman the Curse of the Slimers v1.1 (2020)(DEFB Studio).z80" size="25176" crc="e554c91e"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9222,13 +9362,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="putamili" romof="spec128">
-		<description>Puta Mili (HB) [Homebrew]</description>
+	<game name="putamili" cloneof="fkngmili" romof="fkngmili">
+		<description>Puta Mili (Spanish) (48K) (HB) [Homebrew]</description>
 		<year>2020</year>
-		<manufacturer>ejvg</manufacturer>
-		<rom name="Puta Mili (2020)(ejvg).tap" size="39535" crc="04778248"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<manufacturer>EJVG</manufacturer>
+		<rom name="Puta Mili (2020)(EJVG).tap" size="39542" crc="e1014a13"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -11917,6 +12056,15 @@
 		<rom name="Tank battle (2020)(kas29).tap" size="44955" crc="2d909b3c"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tardigrade" romof="spectrum">
+		<description>Tardigrade (48K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Dave Hughes</manufacturer>
+		<rom name="Tardigrade (2021)(Dave Hughes).tap" size="15763" crc="579ce6ba"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

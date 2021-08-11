@@ -380,7 +380,7 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_layer_1 = {
 	NULL,
 	"For debugging",
 	NULL,
-	NULL,
+	"debug",
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -394,7 +394,7 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_layer_2 = {
 	NULL,
 	"For debugging",
 	NULL,
-	NULL,
+	"debug",
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -408,7 +408,7 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_layer_3 = {
 	NULL,
 	"For debugging",
 	NULL,
-	NULL,
+	"debug",
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -422,7 +422,7 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_layer_4 = {
 	NULL,
 	"For debugging",
 	NULL,
-	NULL,
+	"debug",
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -436,7 +436,7 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_1 = {
 	NULL,
 	"For debugging",
 	NULL,
-	NULL,
+	"debug",
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -450,7 +450,7 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_2 = {
 	NULL,
 	"For debugging",
 	NULL,
-	NULL,
+	"debug",
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -464,7 +464,7 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_3 = {
 	NULL,
 	"For debugging",
 	NULL,
-	NULL,
+	"debug",
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -478,7 +478,7 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_4 = {
 	NULL,
 	"For debugging",
 	NULL,
-	NULL,
+	"debug",
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -492,7 +492,7 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_5 = {
 	NULL,
 	"For debugging",
 	NULL,
-	NULL,
+	"debug",
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -506,7 +506,7 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_6 = {
 	NULL,
 	"For debugging",
 	NULL,
-	NULL,
+	"debug",
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -520,7 +520,7 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_7 = {
 	NULL,
 	"For debugging",
 	NULL,
-	NULL,
+	"debug",
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -534,7 +534,7 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_8 = {
 	NULL,
 	"For debugging",
 	NULL,
-	NULL,
+	"debug",
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -690,20 +690,6 @@ void set_environment()
 #ifdef USE_CYCLONE
 	vars_systems.push_back(&var_fbneo_cyclone);
 #endif
-#ifdef FBNEO_DEBUG
-	vars_systems.push_back(&var_fbneo_debug_layer_1);
-	vars_systems.push_back(&var_fbneo_debug_layer_2);
-	vars_systems.push_back(&var_fbneo_debug_layer_3);
-	vars_systems.push_back(&var_fbneo_debug_layer_4);
-	vars_systems.push_back(&var_fbneo_debug_sprite_1);
-	vars_systems.push_back(&var_fbneo_debug_sprite_2);
-	vars_systems.push_back(&var_fbneo_debug_sprite_3);
-	vars_systems.push_back(&var_fbneo_debug_sprite_4);
-	vars_systems.push_back(&var_fbneo_debug_sprite_5);
-	vars_systems.push_back(&var_fbneo_debug_sprite_6);
-	vars_systems.push_back(&var_fbneo_debug_sprite_7);
-	vars_systems.push_back(&var_fbneo_debug_sprite_8);
-#endif
 
 	if (pgi_diag)
 	{
@@ -734,6 +720,22 @@ void set_environment()
 	vars_systems.push_back(&var_fbneo_fm_interpolation);
 	vars_systems.push_back(&var_fbneo_lowpass_filter);
 
+#ifdef FBNEO_DEBUG
+	// Debug settings
+	vars_systems.push_back(&var_fbneo_debug_layer_1);
+	vars_systems.push_back(&var_fbneo_debug_layer_2);
+	vars_systems.push_back(&var_fbneo_debug_layer_3);
+	vars_systems.push_back(&var_fbneo_debug_layer_4);
+	vars_systems.push_back(&var_fbneo_debug_sprite_1);
+	vars_systems.push_back(&var_fbneo_debug_sprite_2);
+	vars_systems.push_back(&var_fbneo_debug_sprite_3);
+	vars_systems.push_back(&var_fbneo_debug_sprite_4);
+	vars_systems.push_back(&var_fbneo_debug_sprite_5);
+	vars_systems.push_back(&var_fbneo_debug_sprite_6);
+	vars_systems.push_back(&var_fbneo_debug_sprite_7);
+	vars_systems.push_back(&var_fbneo_debug_sprite_8);
+#endif
+
 	int nbr_vars = vars_systems.size();
 	int nbr_dips = dipswitch_core_options.size();
 	int nbr_cheats = cheat_core_options.size();
@@ -755,21 +757,21 @@ void set_environment()
 	// Add the DIP switches core options
 	for (int dip_idx = 0; dip_idx < nbr_dips; dip_idx++)
 	{
-		option_defs_us[idx_var].category_key = "dipswitch";
-		option_defs_us[idx_var].key = dipswitch_core_options[dip_idx].option_name.c_str();
-		option_defs_us[idx_var].desc = dipswitch_core_options[dip_idx].friendly_name.c_str();
+		option_defs_us[idx_var].category_key     = "dipswitch";
+		option_defs_us[idx_var].key              = dipswitch_core_options[dip_idx].option_name.c_str();
+		option_defs_us[idx_var].desc             = dipswitch_core_options[dip_idx].friendly_name.c_str();
 		option_defs_us[idx_var].desc_categorized = dipswitch_core_options[dip_idx].friendly_name_categorized.c_str();
+		option_defs_us[idx_var].default_value    = dipswitch_core_options[dip_idx].default_bdi.szText;
 		// Instead of filtering out the dips, make the description a warning if it's a neogeo game using a different default bios
 		if (neogeo_use_specific_default_bios && is_neogeo_game && dipswitch_core_options[dip_idx].friendly_name.compare("[Dipswitch] BIOS") == 0)
-			option_defs_us[idx_var].info = "THIS NEOGEO GAME USES A DIFFERENT DEFAULT BIOS, CHANGE IT AT YOUR OWN RISK";
+			option_defs_us[idx_var].info         = "THIS NEOGEO GAME USES A DIFFERENT DEFAULT BIOS, CHANGE IT AT YOUR OWN RISK";
 		else
-			option_defs_us[idx_var].info = "Dipswitch setting, setting is specific to the running romset";
+			option_defs_us[idx_var].info         = "Dipswitch setting, setting is specific to the running romset";
 		for (int dip_value_idx = 0; dip_value_idx < dipswitch_core_options[dip_idx].values.size(); dip_value_idx++)
 		{
 			option_defs_us[idx_var].values[dip_value_idx].value = dipswitch_core_options[dip_idx].values[dip_value_idx].friendly_name.c_str();
 		}
 		option_defs_us[idx_var].values[dipswitch_core_options[dip_idx].values.size()].value = NULL;
-		option_defs_us[idx_var].default_value = dipswitch_core_options[dip_idx].default_bdi.szText;
 		if (option_defs_us[idx_var].default_value == NULL) HandleMessage(RETRO_LOG_ERROR, "Default value for '%s' not found, it's a bug, please report it\n", option_defs_us[idx_var].desc);
 		idx_var++;
 	}
@@ -777,17 +779,17 @@ void set_environment()
 	// Add the cheats core options
 	for (int cheat_idx = 0; cheat_idx < nbr_cheats; cheat_idx++)
 	{
-		option_defs_us[idx_var].category_key = "cheat";
-		option_defs_us[idx_var].key = cheat_core_options[cheat_idx].option_name.c_str();
-		option_defs_us[idx_var].desc = cheat_core_options[cheat_idx].friendly_name.c_str();
+		option_defs_us[idx_var].category_key     = "cheat";
+		option_defs_us[idx_var].key              = cheat_core_options[cheat_idx].option_name.c_str();
+		option_defs_us[idx_var].desc             = cheat_core_options[cheat_idx].friendly_name.c_str();
 		option_defs_us[idx_var].desc_categorized = cheat_core_options[cheat_idx].friendly_name_categorized.c_str();
-		option_defs_us[idx_var].info = "Specific to the running romset and your cheat database";
+		option_defs_us[idx_var].default_value    = cheat_core_options[cheat_idx].default_value.c_str();
+		option_defs_us[idx_var].info             = "Specific to the running romset and your cheat database";
 		for (int cheat_value_idx = 0; cheat_value_idx < cheat_core_options[cheat_idx].values.size(); cheat_value_idx++)
 		{
 			option_defs_us[idx_var].values[cheat_value_idx].value = cheat_core_options[cheat_idx].values[cheat_value_idx].friendly_name.c_str();
 		}
 		option_defs_us[idx_var].values[cheat_core_options[cheat_idx].values.size()].value = NULL;
-		option_defs_us[idx_var].default_value = cheat_core_options[cheat_idx].default_value.c_str();
 		idx_var++;
 	}
 
@@ -815,6 +817,13 @@ void set_environment()
 			"Cheat",
 			"Enable Cheats"
 		},
+#ifdef FBNEO_DEBUG
+		{
+			"debug",
+			"Debug",
+			"Configure Debug Features"
+		},
+#endif
 		{ NULL, NULL, NULL },
 	};
 

@@ -1190,12 +1190,7 @@ static INT32 MemIndex()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (GetRoms()) return 1;
 
@@ -1242,7 +1237,7 @@ static INT32 DrvExit()
 
 	AY8910Exit(0);
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	arkanoid_bootleg_id = 0;
 
@@ -1371,6 +1366,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 	}
 
 	return 0;
@@ -1400,8 +1396,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		AY8910Scan(nAction, pnMin);
 
-		SCAN_VAR(nAnalogAxis[0]);
-		SCAN_VAR(nAnalogAxis[1]);
+		SCAN_VAR(nAnalogAxis);
 		SCAN_VAR(arkanoid_bootleg_cmd);
 		SCAN_VAR(nExtraCycles);
 		SCAN_VAR(portC_latch);

@@ -939,7 +939,7 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		MSM5232Update(pBurnSoundOut, nBurnSoundLen);
-
+		BurnSoundDCFilter();
 		if (!sound_enabled) BurnSoundClear();
 	}
 

@@ -84,10 +84,10 @@ static INT32 gun_input_bit = 0;
 static INT32 gun_input_src = 0;
 static INT32 flipflop = 0;
 
-static INT32 watchdog_enable = 0;
+static INT32 watchdog_enable = 0; // not dynamic (config @ game init)
 static INT32 watchdog = 0;
 static INT32 flipscreen;
-static INT32 m65c02_mode = 0;
+static INT32 m65c02_mode = 0; // not dynamic (config @ game init)
 static INT32 m65c02_bank = 0;
 static INT32 sub_ctrl_data = 0;
 static INT32 has_2203 = 0;
@@ -3944,7 +3944,7 @@ static void set_pcm_bank(INT32 data)
 	{
 		INT32 samples_len = DrvROMLen[3];
 		//bprintf(0, _T("seta_samples_bank[%X] new_bank[%X] samples_len[%x]\n"), seta_samples_bank, new_bank, samples_len);
-		seta_samples_bank = new_bank;
+		seta_samples_bank = data;
 
 		if (samples_len == 0x240000 || samples_len == 0x1c0000 || samples_len == 0x80000) // eightfrc, blandia
 		{
@@ -4003,7 +4003,7 @@ static void set_pcm_bank(INT32 data)
 //-----------------------------------------------------------------------------------------------------------------------------------
 // drgnunit
 
-UINT16 __fastcall drgnunit_read_word(UINT32 address)
+static UINT16 __fastcall drgnunit_read_word(UINT32 address)
 {
 	SetaReadDips(0x600000)
 
@@ -4022,7 +4022,7 @@ UINT16 __fastcall drgnunit_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall drgnunit_read_byte(UINT32 address)
+static UINT8 __fastcall drgnunit_read_byte(UINT32 address)
 {
 	SetaReadDips(0x600000)
 
@@ -4044,14 +4044,14 @@ UINT8 __fastcall drgnunit_read_byte(UINT32 address)
 	return 0;
 }
 
-void __fastcall drgnunit_write_word(UINT32 address, UINT16 data)
+static void __fastcall drgnunit_write_word(UINT32 address, UINT16 data)
 {
 	SetaVidRAMCtrlWriteWord(0, 0x800000)
 
 	SetVidRAMRegsWriteWord(0x500000)
 }
 
-void __fastcall drgnunit_write_byte(UINT32 address, UINT8 data)
+static void __fastcall drgnunit_write_byte(UINT32 address, UINT8 data)
 {
 	SetaVidRAMCtrlWriteByte(0, 0x800000)
 
@@ -4061,7 +4061,7 @@ void __fastcall drgnunit_write_byte(UINT32 address, UINT8 data)
 //-----------------------------------------------------------------------------------------------------------------------------------
 // thunderl, wits
 
-UINT16 __fastcall thunderl_read_word(UINT32 address)
+static UINT16 __fastcall thunderl_read_word(UINT32 address)
 {
 	SetaReadDips(0x600000)
 
@@ -4095,7 +4095,7 @@ UINT16 __fastcall thunderl_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall thunderl_read_byte(UINT32 address)
+static UINT8 __fastcall thunderl_read_byte(UINT32 address)
 {
 	SetaReadDips(0x600000)
 
@@ -4129,12 +4129,12 @@ UINT8 __fastcall thunderl_read_byte(UINT32 address)
 	return 0;
 }
 
-void __fastcall thunderl_write_word(UINT32 address, UINT16 data)
+static void __fastcall thunderl_write_word(UINT32 address, UINT16 data)
 {
 	SetVidRAMRegsWriteWord(0x500000)
 }
 
-void __fastcall thunderl_write_byte(UINT32 address, UINT8 data)
+static void __fastcall thunderl_write_byte(UINT32 address, UINT8 data)
 {
 	SetVidRAMRegsWriteByte(0x500000)
 }
@@ -4142,7 +4142,7 @@ void __fastcall thunderl_write_byte(UINT32 address, UINT8 data)
 //-----------------------------------------------------------------------------------------------------------------------------------
 // daioh
 
-UINT16 __fastcall daioh_read_word(UINT32 address)
+static UINT16 __fastcall daioh_read_word(UINT32 address)
 {
 	SetaReadDips(0x300000)
 	SetaReadDips(0x400008)
@@ -4170,7 +4170,7 @@ UINT16 __fastcall daioh_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall daioh_read_byte(UINT32 address)
+static UINT8 __fastcall daioh_read_byte(UINT32 address)
 {
 	SetaReadDips(0x300000)
 	SetaReadDips(0x400008)
@@ -4203,7 +4203,7 @@ UINT8 __fastcall daioh_read_byte(UINT32 address)
 	return 0;
 }
 
-void __fastcall daioh_write_word(UINT32 address, UINT16 data)
+static void __fastcall daioh_write_word(UINT32 address, UINT16 data)
 {
 	SetVidRAMRegsWriteWord(0x500000)
 
@@ -4228,7 +4228,7 @@ void __fastcall daioh_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall daioh_write_byte(UINT32 address, UINT8 data)
+static void __fastcall daioh_write_byte(UINT32 address, UINT8 data)
 {
 	SetVidRAMRegsWriteByte(0x500000)
 
@@ -4258,7 +4258,7 @@ void __fastcall daioh_write_byte(UINT32 address, UINT8 data)
 //-----------------------------------------------------------------------------------------------------------------------------------
 // msgundam
 
-void __fastcall msgundam_write_word(UINT32 address, UINT16 data)
+static void __fastcall msgundam_write_word(UINT32 address, UINT16 data)
 {
 	SetaVidRAMCtrlWriteWord(0, 0xb00000)
 	SetaVidRAMCtrlWriteWord(1, 0xb80000)
@@ -4281,7 +4281,7 @@ void __fastcall msgundam_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall msgundam_write_byte(UINT32 address, UINT8 data)
+static void __fastcall msgundam_write_byte(UINT32 address, UINT8 data)
 {
 	SetaVidRAMCtrlWriteByte(0, 0xb00000)
 	SetaVidRAMCtrlWriteByte(1, 0xb80000)
@@ -4309,7 +4309,7 @@ void __fastcall msgundam_write_byte(UINT32 address, UINT8 data)
 //-----------------------------------------------------------------------------------------------------------------------------------
 // kamenrid
 
-UINT16 __fastcall kamenrid_read_word(UINT32 address)
+static UINT16 __fastcall kamenrid_read_word(UINT32 address)
 {
 	SetaReadDips(0x500004)
 
@@ -4331,7 +4331,7 @@ UINT16 __fastcall kamenrid_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall kamenrid_read_byte(UINT32 address)
+static UINT8 __fastcall kamenrid_read_byte(UINT32 address)
 {
 	SetaReadDips(0x500004)
 
@@ -4439,7 +4439,7 @@ static UINT16 krzybowl_input_read(INT32 offset)
 	return 0;
 }
 
-UINT16 __fastcall madshark_read_word(UINT32 address)
+static UINT16 __fastcall madshark_read_word(UINT32 address)
 {
 	SetaReadDips(0x300000)
 	SetaReadDips(0x500008)
@@ -4467,7 +4467,7 @@ UINT16 __fastcall madshark_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall madshark_read_byte(UINT32 address)
+static UINT8 __fastcall madshark_read_byte(UINT32 address)
 {
 	SetaReadDips(0x300000)
 	SetaReadDips(0x500008)
@@ -4501,7 +4501,7 @@ UINT8 __fastcall madshark_read_byte(UINT32 address)
 	return 0;
 }
 
-void __fastcall madshark_write_word(UINT32 address, UINT16 data)
+static void __fastcall madshark_write_word(UINT32 address, UINT16 data)
 {
 	SetVidRAMRegsWriteWord(0x600000)
 	SetaVidRAMCtrlWriteWord(0, 0x900000)
@@ -4515,7 +4515,7 @@ void __fastcall madshark_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall madshark_write_byte(UINT32 address, UINT8 data)
+static void __fastcall madshark_write_byte(UINT32 address, UINT8 data)
 {
 	SetVidRAMRegsWriteByte(0x600000)
 	SetaVidRAMCtrlWriteByte(0, 0x900000)
@@ -4548,7 +4548,16 @@ static const UINT16 keroppi_protection_word[] = {
 static UINT16 pairslove_protram[0x100];
 static UINT16 pairslove_protram_old[0x100];
 
-UINT16 __fastcall pairlove_read_word(UINT32 address)
+static void keroppi_pairslove_scan()
+{
+	SCAN_VAR(keroppi_prize_hop);
+	SCAN_VAR(keroppi_protection_count);
+	SCAN_VAR(keroppi_timer_frame);
+	SCAN_VAR(pairslove_protram);
+	SCAN_VAR(pairslove_protram_old);
+}
+
+static UINT16 __fastcall pairlove_read_word(UINT32 address)
 {
 	SetaReadDips(0x300000)
 
@@ -4600,7 +4609,7 @@ UINT16 __fastcall pairlove_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall pairlove_read_byte(UINT32 address)
+static UINT8 __fastcall pairlove_read_byte(UINT32 address)
 {
 	SetaReadDips(0x300000)
 
@@ -4656,7 +4665,7 @@ UINT8 __fastcall pairlove_read_byte(UINT32 address)
 	return 0;
 }
 
-void __fastcall pairlove_write_word(UINT32 address, UINT16 data)
+static void __fastcall pairlove_write_word(UINT32 address, UINT16 data)
 {
 	SetVidRAMRegsWriteWord(0x400000)
 
@@ -4678,7 +4687,7 @@ void __fastcall pairlove_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall pairlove_write_byte(UINT32 address, UINT8 data)
+static void __fastcall pairlove_write_byte(UINT32 address, UINT8 data)
 {
 	SetVidRAMRegsWriteByte(0x400000)
 
@@ -4704,7 +4713,7 @@ void __fastcall pairlove_write_byte(UINT32 address, UINT8 data)
 //-----------------------------------------------------------------------------------------------------------------------------------
 // downtown, metafox, twineagl, arbelester 
 
-void __fastcall downtown_write_word(UINT32 address, UINT16 data)
+static void __fastcall downtown_write_word(UINT32 address, UINT16 data)
 {
 	SetaVidRAMCtrlWriteWord(0, 0x800000)
 
@@ -4755,7 +4764,7 @@ static void sub_ctrl_w(INT32 offset, UINT8 data)
 	}
 }
 
-void __fastcall downtown_write_byte(UINT32 address, UINT8 data)
+static void __fastcall downtown_write_byte(UINT32 address, UINT8 data)
 {
 	SetaVidRAMCtrlWriteByte(0, 0x800000)
 
@@ -4807,7 +4816,7 @@ static INT32 kiwame_inputs_read(INT32 offset)
 	return 0;
 }
 
-UINT16 __fastcall kiwame_read_word(UINT32 address)
+static UINT16 __fastcall kiwame_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -4828,7 +4837,7 @@ UINT16 __fastcall kiwame_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall kiwame_read_byte(UINT32 address)
+static UINT8 __fastcall kiwame_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -4897,22 +4906,22 @@ static void zombraid_gun_write(INT32 data)
 	old_clock = data & 1;
 }
 
-void __fastcall zombraid_gun_write_word(UINT32 address, UINT16 data)
+static void __fastcall zombraid_gun_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & ~1) == 0xf00000) zombraid_gun_write(data);
 }
 
-void __fastcall zombraid_gun_write_byte(UINT32 address, UINT8 data)
+static void __fastcall zombraid_gun_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & ~1) == 0xf00000) zombraid_gun_write(data);
 }
 
-UINT16 __fastcall zombraid_gun_read_word(UINT32 )
+static UINT16 __fastcall zombraid_gun_read_word(UINT32 )
 {
 	return zombraid_gun_read();
 }
 
-UINT8 __fastcall zombraid_gun_read_byte(UINT32 )
+static UINT8 __fastcall zombraid_gun_read_byte(UINT32 )
 {
 	return zombraid_gun_read();
 }
@@ -4920,7 +4929,7 @@ UINT8 __fastcall zombraid_gun_read_byte(UINT32 )
 //-----------------------------------------------------------------------------------------------------------------------------------
 // utoukond sound handler
 
-void __fastcall utoukond_sound_write(UINT16 address, UINT8 data)
+static void __fastcall utoukond_sound_write(UINT16 address, UINT8 data)
 {
 	if (address >= 0xf000) { // x1_010
 		setaSoundRegWriteByte8bit(address & 0xfff, data);
@@ -4928,7 +4937,7 @@ void __fastcall utoukond_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall  utoukond_sound_read(UINT16 address)
+static UINT8 __fastcall  utoukond_sound_read(UINT16 address)
 {
 	if (address >= 0xf000) {
 		return x1010_sound_read(address & 0xfff);
@@ -4936,7 +4945,7 @@ UINT8 __fastcall  utoukond_sound_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall utoukond_sound_write_port(UINT16 port, UINT8 data)
+static void __fastcall utoukond_sound_write_port(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
@@ -4949,7 +4958,7 @@ void __fastcall utoukond_sound_write_port(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall utoukond_sound_read_port(UINT16 port)
+static UINT8 __fastcall utoukond_sound_read_port(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -4970,19 +4979,19 @@ UINT8 __fastcall utoukond_sound_read_port(UINT16 port)
 //-----------------------------------------------------------------------------------------------------------------------------------
 // wiggie / superbar sound handler
 
-void __fastcall wiggie_sound_write_word(UINT32 a, UINT16 d)
+static void __fastcall wiggie_sound_write_word(UINT32 a, UINT16 d)
 {
 	bprintf(0, _T("sww %X:%X."),a,d);
 
 }
 
-void __fastcall wiggie_sound_write_byte(UINT32 address, UINT8 data)
+static void __fastcall wiggie_sound_write_byte(UINT32 address, UINT8 data)
 {
 	soundlatch = data;
 	ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 }
 
-void __fastcall wiggie_sound_write(UINT16 address, UINT8 data)
+static void __fastcall wiggie_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -4992,7 +5001,7 @@ void __fastcall wiggie_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall wiggie_sound_read(UINT16 address)
+static UINT8 __fastcall wiggie_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -5010,7 +5019,7 @@ UINT8 __fastcall wiggie_sound_read(UINT16 address)
 //-----------------------------------------------------------------------------------------------------------------------------------
 // usclssic 
 
-void __fastcall usclssic_write_word(UINT32 address, UINT16 data)
+static void __fastcall usclssic_write_word(UINT32 address, UINT16 data)
 {
 	SetaVidRAMCtrlWriteWord(0, 0xa00000)
 
@@ -5024,7 +5033,6 @@ void __fastcall usclssic_write_word(UINT32 address, UINT16 data)
 
 		case 0xb40010:
 			soundlatch = data;
-
 			M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 			SekRunEnd();
 		return;
@@ -5035,7 +5043,7 @@ void __fastcall usclssic_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall usclssic_write_byte(UINT32 address, UINT8 data)
+static void __fastcall usclssic_write_byte(UINT32 address, UINT8 data)
 {
 	SetaVidRAMCtrlWriteByte(0, 0xa00000)
 
@@ -5080,7 +5088,7 @@ static UINT8 uclssic_trackball_read(INT32 offset)
 	return ret ^ 0xff;
 }
 
-UINT16 __fastcall usclssic_read_word(UINT32 address)
+static UINT16 __fastcall usclssic_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -5109,7 +5117,7 @@ UINT16 __fastcall usclssic_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall usclssic_read_byte(UINT32 address)
+static UINT8 __fastcall usclssic_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -5359,7 +5367,7 @@ static UINT16 calibr50_input_read(INT32 offset)
 	return 0;
 }
 
-UINT16 __fastcall calibr50_read_word(UINT32 address)
+static UINT16 __fastcall calibr50_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -5378,7 +5386,7 @@ UINT16 __fastcall calibr50_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall calibr50_read_byte(UINT32 address)
+static UINT8 __fastcall calibr50_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -5401,7 +5409,7 @@ UINT8 __fastcall calibr50_read_byte(UINT32 address)
 	return 0;
 }
 
-void __fastcall calibr50_write_word(UINT32 address, UINT16 data)
+static void __fastcall calibr50_write_word(UINT32 address, UINT16 data)
 {
 	SetaVidRAMCtrlWriteWord(0, 0x800000)
 
@@ -5416,7 +5424,7 @@ void __fastcall calibr50_write_word(UINT32 address, UINT16 data)
 	//bprintf(0, _T("ww: %X."), address);
 }
 
-void __fastcall calibr50_write_byte(UINT32 address, UINT8 data)
+static void __fastcall calibr50_write_byte(UINT32 address, UINT8 data)
 {
 	SetaVidRAMCtrlWriteByte(0, 0x800000)
 
@@ -5436,7 +5444,7 @@ void __fastcall calibr50_write_byte(UINT32 address, UINT8 data)
 
 static UINT8 *downtown_protram;
 
-UINT8 __fastcall downtown_prot_read(UINT32 address)
+static UINT8 __fastcall downtown_prot_read(UINT32 address)
 {
 	if (downtown_protram[0xf8] == 0xa3) {
 		if (address >= 0x200100 && address <= 0x20010b) {
@@ -5450,22 +5458,22 @@ UINT8 __fastcall downtown_prot_read(UINT32 address)
 
 // twineagle, downtown, calibr50, tndrcade, arbalester, metafox etc. uses these below
 
-UINT8 __fastcall twineagl_sharedram_read_byte(UINT32 address)
+static UINT8 __fastcall twineagl_sharedram_read_byte(UINT32 address)
 {
 	return DrvShareRAM[(address&0xfff)>>1];
 }
 
-UINT16 __fastcall twineagl_sharedram_read_word(UINT32 address)
+static UINT16 __fastcall twineagl_sharedram_read_word(UINT32 address)
 {
 	return DrvShareRAM[(address&0xfff)>>1]&0xff;
 }
 
-void __fastcall twineagl_sharedram_write_word(UINT32 address, UINT16 data)
+static void __fastcall twineagl_sharedram_write_word(UINT32 address, UINT16 data)
 {
 	DrvShareRAM[(address&0xfff)>>1] = data&0xff;
 }
 
-void __fastcall twineagl_sharedram_write_byte(UINT32 address, UINT8 data)
+static void __fastcall twineagl_sharedram_write_byte(UINT32 address, UINT8 data)
 {
 	DrvShareRAM[(address&0xfff)>>1] = data;
 }
@@ -5474,7 +5482,7 @@ void __fastcall twineagl_sharedram_write_byte(UINT32 address, UINT8 data)
 //-----------------------------------------------------------------------------------------------------------------------------------
 // crazy fight
 
-UINT16 __fastcall crazyfgt_read_word(UINT32 address)
+static UINT16 __fastcall crazyfgt_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -5496,7 +5504,7 @@ UINT16 __fastcall crazyfgt_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall crazyfgt_read_byte(UINT32 address)
+static UINT8 __fastcall crazyfgt_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -5518,7 +5526,7 @@ UINT8 __fastcall crazyfgt_read_byte(UINT32 address)
 	return 0;
 }
 
-void __fastcall crazyfgt_write_byte(UINT32 address, UINT8 data)
+static void __fastcall crazyfgt_write_byte(UINT32 address, UINT8 data)
 {
 	SetaVidRAMCtrlWriteByte(1, 0x900000)
 	SetaVidRAMCtrlWriteByte(0, 0x980000)
@@ -5537,7 +5545,7 @@ void __fastcall crazyfgt_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-void __fastcall crazyfgt_write_word(UINT32 address, UINT16 data)
+static void __fastcall crazyfgt_write_word(UINT32 address, UINT16 data)
 {
 	SetaVidRAMCtrlWriteWord(1, 0x900000)
 	SetaVidRAMCtrlWriteWord(0, 0x980000)
@@ -6124,14 +6132,14 @@ static void krzybowl68kInit()
 	SekClose();
 }
 
-void __fastcall triplfun_sound_write_byte(UINT32 address, UINT8 data)
+static void __fastcall triplfun_sound_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & ~1) == 0x500006) {
 		MSM6295Write(0, data);
 	}
 }
 
-UINT8 __fastcall triplfun_sound_read_byte(UINT32)
+static UINT8 __fastcall triplfun_sound_read_byte(UINT32)
 {
 	return MSM6295Read(0);
 }
@@ -6258,9 +6266,9 @@ static UINT16 downtown_input_read(INT32 offset)
 
 static void m65c02_sub_bankswitch(UINT8 d)
 {
-	m65c02_bank = d >> 4;
+	m65c02_bank = d;
 
-	M6502MapMemory(DrvSubROM + 0xc000 + (m65c02_bank * 0x4000), 0x8000, 0xbfff, MAP_ROM);
+	M6502MapMemory(DrvSubROM + 0xc000 + ((m65c02_bank >> 4) * 0x4000), 0x8000, 0xbfff, MAP_ROM);
 }
 
 static void downtown_sub_write(UINT16 address, UINT8 data)
@@ -6496,7 +6504,7 @@ static void kiwame68kInit()
 	}
 }
 
-UINT8 __fastcall twineagle_extram_read_byte(UINT32 address)
+static UINT8 __fastcall twineagle_extram_read_byte(UINT32 address)
 {
 	return DrvNVRAM[address & 0x3fe];
 }
@@ -6940,12 +6948,12 @@ static INT32 MemIndex()
 	DrvSprRAM1		= Next; Next += 0x014000;
 
 	DrvVidRAM0		= Next; Next += 0x010000;
-	DrvVIDCTRLRAM0		= Next; Next += 0x000008;
+	DrvVIDCTRLRAM0	= Next; Next += 0x000008;
 
 	DrvVidRAM1		= Next; Next += 0x010000;
-	DrvVIDCTRLRAM1		= Next; Next += 0x000008;
+	DrvVIDCTRLRAM1	= Next; Next += 0x000008;
 
-	DrvVideoRegs		= Next; Next += 0x000008;
+	DrvVideoRegs	= Next; Next += 0x000008;
 
 	tilebank		= Next; Next += 0x000004;
 	tile_offset		= (UINT32*)Next; Next += 0x000001 * sizeof(UINT32);
@@ -7267,19 +7275,7 @@ static void draw_sprites_map()
 			sy = ((sy + 8) & 0x0ff) - 8;
 			sy = ((sy+16-VideoOffsets[2][0])&0xff)-16;
 
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, ColorDepths[0], 0, 0, DrvGfxROM0);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, ColorDepths[0], 0, 0, DrvGfxROM0);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, ColorDepths[0], 0, 0, DrvGfxROM0);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, ColorDepths[0], 0, 0, DrvGfxROM0);
-				}
-			}
+			Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, ColorDepths[0], 0, 0, DrvGfxROM0);
 		}
 	}
 }
@@ -7330,45 +7326,7 @@ static void draw_sprites()
 		sy = ((((0xf0 - sy) - (-2) + 8)) & 0x0ff) - 8;
 		sy = ((yoffs+sy+16-VideoOffsets[2][0])&0xff)-16;
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, ColorDepths[0], 0, ColorOffsets[0], DrvGfxROM0);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, ColorDepths[0], 0, ColorOffsets[0], DrvGfxROM0);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, ColorDepths[0], 0, ColorOffsets[0], DrvGfxROM0);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, ColorDepths[0], 0, ColorOffsets[0], DrvGfxROM0);
-			}
-		}
-	}
-}
-
-// this is needed because some color depths (specifically 6 bits per pixel) need colors added rather than xored.
-static void RenderTile(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 trans_col, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height)
-{
-	INT32 flip = 0;
-	if (flipy) flip |= (height - 1) * width;
-	if (flipx) flip |= width - 1;
-
-	gfx += code * width * height;
-
-	for (INT32 y = 0; y < height; y++, sy++) {
-		if (sy < 0 || sy >= nScreenHeight) continue;
-
-		for (INT32 x = 0; x < width; x++, sx++) {
-			if (sx < 0 || sx >= nScreenWidth) continue;
-
-			INT32 pxl = gfx[((y * width) + x) ^ flip];
-
-			if (pxl == trans_col) continue;
-
-			dest[sy * nScreenWidth + sx] = pxl + color;
-		}
-
-		sx -= width;
+		Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, ColorDepths[0], 0, ColorOffsets[0], DrvGfxROM0);
 	}
 }
 
@@ -7422,39 +7380,10 @@ static void draw_layer(UINT8 *ram, UINT8 *gfx, INT32 num, INT32 opaque, INT32 sc
 			flipy ^= 0x4000;
 		}
 
-		if (depth == 6) {
-			RenderTile(pTransDraw, gfx, code, (color * (1<<depth)) + color_offset, opaque * 0xfff, sx, sy, flipx, flipy, 16, 16);
-			continue;
-		}
-
 		if (opaque) {
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, depth, color_offset, gfx);
-				} else {
-					Render16x16Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, depth, color_offset, gfx);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, depth, color_offset, gfx);
-				} else {
-					Render16x16Tile_Clip(pTransDraw, code, sx, sy, color, depth, color_offset, gfx);
-				}
-			}
+			Draw16x16Tile(pTransDraw, code, sx, sy, flipx, flipy, color, depth, color_offset, gfx);
 		} else {
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, depth, 0, color_offset, gfx);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, depth, 0, color_offset, gfx);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, depth, 0, color_offset, gfx);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, depth, 0, color_offset, gfx);
-				}
-			}
+			Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, depth, 0, color_offset, gfx);
 		}
 	}
 }
@@ -7576,9 +7505,7 @@ static INT32 zombraidDraw()
 {
 	seta2layerDraw();
 
-	for (INT32 i = 0; i < BurnDrvGetMaxPlayers(); i++) {
-		BurnGunDrawTarget(i, BurnGunX[i] >> 8, BurnGunY[i] >> 8);
-	}
+	BurnGunDrawTargets();
 
 	return 0;
 }
@@ -7774,7 +7701,7 @@ static void Drv68k_Calibr50_FrameCallback()
 
 		CPU_RUN(1, M6502);
 		if (usclssic) {
-			if (i == 240) M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			if (i == 240) M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		} else {// calibr50
 			if ((i%64) == 63) M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
@@ -8096,10 +8023,16 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		x1010_scan(nAction, pnMin);
 		BurnYM3812Scan(nAction, pnMin);
 		BurnYM3438Scan(nAction, pnMin);
-		if (has_2203)
+		if (has_2203) {
 			BurnYM2203Scan(nAction, pnMin);
+		}
 		MSM6295Scan(nAction, pnMin);
 
+		SCAN_VAR(soundlatch);
+		SCAN_VAR(soundlatch2);
+
+		SCAN_VAR(watchdog);
+		SCAN_VAR(flipscreen);
 		SCAN_VAR(seta_samples_bank);
 		SCAN_VAR(usclssic_port_select);
 		SCAN_VAR(gun_input_bit);
@@ -8107,6 +8040,25 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(m65c02_bank);
 		SCAN_VAR(sub_ctrl_data);
 		SCAN_VAR(flipflop);
+
+		if (trackball_mode) {
+			SCAN_VAR(track_x);
+			SCAN_VAR(track_y);
+			SCAN_VAR(track_x_last);
+			SCAN_VAR(track_y_last);
+			SCAN_VAR(track_x2);
+			SCAN_VAR(track_y2);
+			SCAN_VAR(track_x2_last);
+			SCAN_VAR(track_y2_last);
+		}
+		if (game_rotates) {
+			SCAN_VAR(nRotateHoldInput);
+			SCAN_VAR(nRotate);
+			SCAN_VAR(nRotateTarget);
+			SCAN_VAR(nRotateTry);
+			SCAN_VAR(nRotateTime);
+		}
+		keroppi_pairslove_scan();
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -8118,6 +8070,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			M6502Open(0);
 			m65c02_sub_bankswitch(m65c02_bank);
 			M6502Close();
+		}
+		if (game_rotates) {
+			nRotateTime[0] = nRotateTime[1] = 0;
 		}
 	}
 
@@ -8501,7 +8456,7 @@ STD_ROM_FN(daioh)
 
 static INT32 daiohInit()
 {
-	DrvSetVideoOffsets(1, 1, -1, -1);
+	DrvSetVideoOffsets(0, 0, -1, -1);
 	DrvSetColorOffsets(0, 0x400, 0x200);
 
 	return DrvInit(daioh68kInit, 16000000, SET_IRQLINES(1, 2), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 2, 2));

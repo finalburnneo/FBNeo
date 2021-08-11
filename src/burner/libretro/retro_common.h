@@ -115,6 +115,7 @@ struct dipswitch_core_option
 {
 	std::string option_name;
 	std::string friendly_name;
+	std::string friendly_name_categorized;
 	BurnDIPInfo default_bdi;
 	std::vector<dipswitch_core_option_value> values;
 };
@@ -131,6 +132,7 @@ struct cheat_core_option
 	std::string default_value;
 	std::string option_name;
 	std::string friendly_name;
+	std::string friendly_name_categorized;
 	std::vector<cheat_core_option_value> values;
 };
 

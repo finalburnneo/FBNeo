@@ -85,11 +85,14 @@ static UINT8 diag_input_select_a_b[] =  {RETRO_DEVICE_ID_JOYPAD_SELECT, RETRO_DE
 static UINT8 diag_input_select_l_r[] =  {RETRO_DEVICE_ID_JOYPAD_SELECT, RETRO_DEVICE_ID_JOYPAD_L, RETRO_DEVICE_ID_JOYPAD_R, RETRO_DEVICE_ID_JOYPAD_EMPTY };
 
 // Global core options
-static const struct retro_core_option_definition var_empty = { NULL, NULL, NULL, {{0}}, NULL };
-static const struct retro_core_option_definition var_fbneo_allow_depth_32 = {
+static const struct retro_core_option_v2_definition var_empty = { NULL, NULL, NULL, NULL, NULL, NULL, {{0}}, NULL };
+static const struct retro_core_option_v2_definition var_fbneo_allow_depth_32 = {
 	"fbneo-allow-depth-32",
 	"Use 32-bits color depth when available",
+	NULL,
 	"Change pixel format, some games require this to render properly, it could impact performances on some platforms",
+	NULL,
+	NULL,
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -97,10 +100,13 @@ static const struct retro_core_option_definition var_fbneo_allow_depth_32 = {
 	},
 	"enabled"
 };
-static const struct retro_core_option_definition var_fbneo_vertical_mode = {
+static const struct retro_core_option_v2_definition var_fbneo_vertical_mode = {
 	"fbneo-vertical-mode",
 	"Vertical mode",
+	NULL,
 	"Rotate display for vertical screens",
+	NULL,
+	NULL,
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -109,10 +115,13 @@ static const struct retro_core_option_definition var_fbneo_vertical_mode = {
 	},
 	"disabled"
 };
-static const struct retro_core_option_definition var_fbneo_fixed_frameskip = {
+static const struct retro_core_option_v2_definition var_fbneo_fixed_frameskip = {
 	"fbneo-fixed-frameskip",
 	"Fixed Frameskip",
+	NULL,
 	"When 'Frameskip' is set to 'Fixed', or if the frontend doesn't support the alternative 'Frameskip' mode, skip rendering at a fixed rate of X frames out of X+1",
+	NULL,
+	"frameskip",
 	{
 		{ "0", "No skipping" },
 		{ "1", "Skip rendering of 1 frames out of 2" },
@@ -124,10 +133,13 @@ static const struct retro_core_option_definition var_fbneo_fixed_frameskip = {
 	},
 	"0"
 };
-static const struct retro_core_option_definition var_fbneo_frameskip_type = {
+static const struct retro_core_option_v2_definition var_fbneo_frameskip_type = {
 	"fbneo-frameskip-type",
 	"Frameskip",
+	NULL,
 	"Skip frames to avoid audio buffer under-run (crackling). Improves performance at the expense of visual smoothness. 'Auto' skips frames when advised by the frontend. 'Manual' uses the 'Frameskip Threshold (%)' setting. 'Fixed' uses the 'Fixed Frameskip' setting.",
+	NULL,
+	"frameskip",
 	{
 		{ "disabled", NULL },
 		{ "Fixed", NULL },
@@ -137,10 +149,13 @@ static const struct retro_core_option_definition var_fbneo_frameskip_type = {
 	},
 	"disabled"
 };
-static const struct retro_core_option_definition var_fbneo_frameskip_manual_threshold = {
+static const struct retro_core_option_v2_definition var_fbneo_frameskip_manual_threshold = {
 	"fbneo-frameskip-manual-threshold",
 	"Frameskip Threshold (%)",
+	NULL,
 	"When 'Frameskip' is set to 'Manual', specifies the audio buffer occupancy threshold (percentage) below which frames will be skipped. Higher values reduce the risk of crackling by causing frames to be dropped more frequently.",
+	NULL,
+	"frameskip",
 	{
 		{ "15", NULL },
 		{ "18", NULL },
@@ -162,19 +177,25 @@ static const struct retro_core_option_definition var_fbneo_frameskip_manual_thre
 	},
 	"33"
 };
-static const struct retro_core_option_definition var_fbneo_cpu_speed_adjust = {
+static const struct retro_core_option_v2_definition var_fbneo_cpu_speed_adjust = {
 	"fbneo-cpu-speed-adjust",
 	"CPU clock",
+	NULL,
 	"Change emulated cpu frequency for various systems, by increasing you can fix native slowdowns in some games, by decreasing you can help performance on low-end devices",
+	NULL,
+	NULL,
 	{
 		PERCENT_VALUES
 	},
 	"100%"
 };
-static const struct retro_core_option_definition var_fbneo_diagnostic_input = {
+static const struct retro_core_option_v2_definition var_fbneo_diagnostic_input = {
 	"fbneo-diagnostic-input",
 	"Diagnostic Input",
+	NULL,
 	"Configure button combination to enter cabinet service menu",
+	NULL,
+	NULL,
 	{
 		{ "None", NULL },
 		{ "Hold Start", NULL },
@@ -191,10 +212,13 @@ static const struct retro_core_option_definition var_fbneo_diagnostic_input = {
 	},
 	"Hold Start"
 };
-static const struct retro_core_option_definition var_fbneo_hiscores = {
+static const struct retro_core_option_v2_definition var_fbneo_hiscores = {
 	"fbneo-hiscores",
 	"Hiscores",
+	NULL,
 	"Enable high scores support, you also need the file hiscore.dat in your system/fbneo/ folder",
+	NULL,
+	NULL,
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -202,10 +226,13 @@ static const struct retro_core_option_definition var_fbneo_hiscores = {
 	},
 	"enabled"
 };
-static const struct retro_core_option_definition var_fbneo_allow_patched_romsets = {
+static const struct retro_core_option_v2_definition var_fbneo_allow_patched_romsets = {
 	"fbneo-allow-patched-romsets",
 	"Allow patched romsets",
+	NULL,
 	"Allow romsets from your system/fbneo/patched/ folder to override your romsets, crcs will be ignored but sizes and names must still match, you need to close content for this setting to take effect",
+	NULL,
+	NULL,
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -213,10 +240,13 @@ static const struct retro_core_option_definition var_fbneo_allow_patched_romsets
 	},
 	"enabled"
 };
-static const struct retro_core_option_definition var_fbneo_samplerate = {
+static const struct retro_core_option_v2_definition var_fbneo_samplerate = {
 	"fbneo-samplerate",
 	"Samplerate",
+	NULL,
 	"Configure samplerate, it could impact performances, closing & starting game again is required",
+	NULL,
+	"audio",
 	{
 		{ "44100", NULL },
 		{ "48000", NULL },
@@ -224,10 +254,13 @@ static const struct retro_core_option_definition var_fbneo_samplerate = {
 	},
 	"48000"
 };
-static const struct retro_core_option_definition var_fbneo_sample_interpolation = {
+static const struct retro_core_option_v2_definition var_fbneo_sample_interpolation = {
 	"fbneo-sample-interpolation",
 	"Sample Interpolation",
+	NULL,
 	"Configure sample interpolation, it could impact performances",
+	NULL,
+	"audio",
 	{
 		{ "disabled", NULL },
 		{ "2-point 1st order", NULL },
@@ -236,10 +269,13 @@ static const struct retro_core_option_definition var_fbneo_sample_interpolation 
 	},
 	"4-point 3rd order"
 };
-static const struct retro_core_option_definition var_fbneo_fm_interpolation = {
+static const struct retro_core_option_v2_definition var_fbneo_fm_interpolation = {
 	"fbneo-fm-interpolation",
 	"FM Interpolation",
+	NULL,
 	"Configure FM interpolation, it could impact performances",
+	NULL,
+	"audio",
 	{
 		{ "disabled", NULL },
 		{ "4-point 3rd order", NULL },
@@ -247,10 +283,13 @@ static const struct retro_core_option_definition var_fbneo_fm_interpolation = {
 	},
 	"4-point 3rd order"
 };
-static const struct retro_core_option_definition var_fbneo_lowpass_filter = {
+static const struct retro_core_option_v2_definition var_fbneo_lowpass_filter = {
 	"fbneo-lowpass-filter",
 	"LowPass Filter",
+	NULL,
 	"Enable LowPass Filter",
+	NULL,
+	"audio",
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -258,19 +297,25 @@ static const struct retro_core_option_definition var_fbneo_lowpass_filter = {
 	},
 	"disabled"
 };
-static const struct retro_core_option_definition var_fbneo_analog_speed = {
+static const struct retro_core_option_v2_definition var_fbneo_analog_speed = {
 	"fbneo-analog-speed",
 	"Analog Speed",
+	NULL,
 	"Mitigate analog controls speed, some games might require low values to be playable",
+	NULL,
+	NULL,
 	{
 		PERCENT_VALUES
 	},
 	"100%"
 };
-static const struct retro_core_option_definition var_fbneo_lightgun_hide_crosshair = {
+static const struct retro_core_option_v2_definition var_fbneo_lightgun_hide_crosshair = {
 	"fbneo-lightgun-hide-crosshair",
 	"No crosshair with lightgun device",
+	NULL,
 	"Hide crosshair if you play with a lightgun device",
+	NULL,
+	NULL,
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -279,10 +324,13 @@ static const struct retro_core_option_definition var_fbneo_lightgun_hide_crossha
 	"enabled"
 };
 #ifdef USE_CYCLONE
-static const struct retro_core_option_definition var_fbneo_cyclone = {
+static const struct retro_core_option_v2_definition var_fbneo_cyclone = {
 	"fbneo-cyclone",
 	"Enable cyclone",
+	NULL,
 	"Use at your own risk, it could improve performance on some emulated systems for low-end devices, but there are known side effects : savestates won't be compatible with normal interpreter, and some systems won't work",
+	NULL,
+	NULL,
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -293,10 +341,13 @@ static const struct retro_core_option_definition var_fbneo_cyclone = {
 #endif
 
 // Neo Geo core options
-static const struct retro_core_option_definition var_fbneo_neogeo_mode = {
+static const struct retro_core_option_v2_definition var_fbneo_neogeo_mode = {
 	"fbneo-neogeo-mode",
 	"Neo-Geo mode",
+	NULL,
 	"Load appropriate bios depending on your choice, under the condition such a bios is compatible with the running game",
+	NULL,
+	NULL,
 	{
 		{ "DIPSWITCH", "Use bios specified in BIOS dipswitch below" },
 		{ "MVS", "Use MVS bios" },
@@ -306,10 +357,13 @@ static const struct retro_core_option_definition var_fbneo_neogeo_mode = {
 	},
 	"DIPSWITCH"
 };
-static const struct retro_core_option_definition var_fbneo_memcard_mode = {
+static const struct retro_core_option_v2_definition var_fbneo_memcard_mode = {
 	"fbneo-memcard-mode",
 	"Memory card mode",
+	NULL,
 	"Change the behavior for the memory card",
+	NULL,
+	NULL,
 	{
 		{ "disabled", NULL },
 		{ "shared", NULL },
@@ -320,10 +374,13 @@ static const struct retro_core_option_definition var_fbneo_memcard_mode = {
 };
 
 #ifdef FBNEO_DEBUG
-static const struct retro_core_option_definition var_fbneo_debug_layer_1 = {
+static const struct retro_core_option_v2_definition var_fbneo_debug_layer_1 = {
 	"fbneo-debug-layer-1",
 	"Layer 1",
+	NULL,
 	"For debugging",
+	NULL,
+	NULL,
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -331,10 +388,13 @@ static const struct retro_core_option_definition var_fbneo_debug_layer_1 = {
 	},
 	"enabled"
 };
-static const struct retro_core_option_definition var_fbneo_debug_layer_2 = {
+static const struct retro_core_option_v2_definition var_fbneo_debug_layer_2 = {
 	"fbneo-debug-layer-2",
 	"Layer 2",
+	NULL,
 	"For debugging",
+	NULL,
+	NULL,
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -342,10 +402,13 @@ static const struct retro_core_option_definition var_fbneo_debug_layer_2 = {
 	},
 	"enabled"
 };
-static const struct retro_core_option_definition var_fbneo_debug_layer_3 = {
+static const struct retro_core_option_v2_definition var_fbneo_debug_layer_3 = {
 	"fbneo-debug-layer-3",
 	"Layer 3",
+	NULL,
 	"For debugging",
+	NULL,
+	NULL,
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -353,10 +416,13 @@ static const struct retro_core_option_definition var_fbneo_debug_layer_3 = {
 	},
 	"enabled"
 };
-static const struct retro_core_option_definition var_fbneo_debug_layer_4 = {
+static const struct retro_core_option_v2_definition var_fbneo_debug_layer_4 = {
 	"fbneo-debug-layer-4",
 	"Layer 4",
+	NULL,
 	"For debugging",
+	NULL,
+	NULL,
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -364,10 +430,13 @@ static const struct retro_core_option_definition var_fbneo_debug_layer_4 = {
 	},
 	"enabled"
 };
-static const struct retro_core_option_definition var_fbneo_debug_sprite_1 = {
+static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_1 = {
 	"fbneo-debug-sprite-1",
 	"Sprite 1",
+	NULL,
 	"For debugging",
+	NULL,
+	NULL,
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -375,10 +444,13 @@ static const struct retro_core_option_definition var_fbneo_debug_sprite_1 = {
 	},
 	"enabled"
 };
-static const struct retro_core_option_definition var_fbneo_debug_sprite_2 = {
+static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_2 = {
 	"fbneo-debug-sprite-2",
 	"Sprite 2",
+	NULL,
 	"For debugging",
+	NULL,
+	NULL,
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -386,10 +458,13 @@ static const struct retro_core_option_definition var_fbneo_debug_sprite_2 = {
 	},
 	"enabled"
 };
-static const struct retro_core_option_definition var_fbneo_debug_sprite_3 = {
+static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_3 = {
 	"fbneo-debug-sprite-3",
 	"Sprite 3",
+	NULL,
 	"For debugging",
+	NULL,
+	NULL,
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -397,10 +472,13 @@ static const struct retro_core_option_definition var_fbneo_debug_sprite_3 = {
 	},
 	"enabled"
 };
-static const struct retro_core_option_definition var_fbneo_debug_sprite_4 = {
+static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_4 = {
 	"fbneo-debug-sprite-4",
 	"Sprite 4",
+	NULL,
 	"For debugging",
+	NULL,
+	NULL,
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -408,10 +486,13 @@ static const struct retro_core_option_definition var_fbneo_debug_sprite_4 = {
 	},
 	"enabled"
 };
-static const struct retro_core_option_definition var_fbneo_debug_sprite_5 = {
+static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_5 = {
 	"fbneo-debug-sprite-5",
 	"Sprite 5",
+	NULL,
 	"For debugging",
+	NULL,
+	NULL,
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -419,10 +500,13 @@ static const struct retro_core_option_definition var_fbneo_debug_sprite_5 = {
 	},
 	"enabled"
 };
-static const struct retro_core_option_definition var_fbneo_debug_sprite_6 = {
+static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_6 = {
 	"fbneo-debug-sprite-6",
 	"Sprite 6",
+	NULL,
 	"For debugging",
+	NULL,
+	NULL,
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -430,10 +514,13 @@ static const struct retro_core_option_definition var_fbneo_debug_sprite_6 = {
 	},
 	"enabled"
 };
-static const struct retro_core_option_definition var_fbneo_debug_sprite_7 = {
+static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_7 = {
 	"fbneo-debug-sprite-7",
 	"Sprite 7",
+	NULL,
 	"For debugging",
+	NULL,
+	NULL,
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -441,10 +528,13 @@ static const struct retro_core_option_definition var_fbneo_debug_sprite_7 = {
 	},
 	"enabled"
 };
-static const struct retro_core_option_definition var_fbneo_debug_sprite_8 = {
+static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_8 = {
 	"fbneo-debug-sprite-8",
 	"Sprite 8",
+	NULL,
 	"For debugging",
+	NULL,
+	NULL,
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
@@ -575,8 +665,8 @@ void evaluate_neogeo_bios_mode(const char* drvname)
 
 void set_environment()
 {
-	std::vector<const retro_core_option_definition*> vars_systems;
-	struct retro_core_option_definition *vars;
+	std::vector<const retro_core_option_v2_definition*> vars_systems;
+	struct retro_core_option_v2_definition *option_defs_us;
 #ifdef _MSC_VER
 #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
 	#ifndef FORCE_USE_VFS
@@ -592,21 +682,9 @@ void set_environment()
 	// Add the Global core options
 	vars_systems.push_back(&var_fbneo_allow_depth_32);
 	vars_systems.push_back(&var_fbneo_vertical_mode);
-	if (bLibretroSupportsAudioBuffStatus)
-	{
-		vars_systems.push_back(&var_fbneo_frameskip_type);
-		vars_systems.push_back(&var_fbneo_frameskip_manual_threshold);
-	}
-	vars_systems.push_back(&var_fbneo_fixed_frameskip);
-	vars_systems.push_back(&var_fbneo_cpu_speed_adjust);
 	if (BurnDrvGetFlags() & BDF_HISCORE_SUPPORTED)
 		vars_systems.push_back(&var_fbneo_hiscores);
 	vars_systems.push_back(&var_fbneo_allow_patched_romsets);
-	if (nGameType != RETRO_GAME_TYPE_NEOCD)
-		vars_systems.push_back(&var_fbneo_samplerate);
-	vars_systems.push_back(&var_fbneo_sample_interpolation);
-	vars_systems.push_back(&var_fbneo_fm_interpolation);
-	vars_systems.push_back(&var_fbneo_lowpass_filter);
 	vars_systems.push_back(&var_fbneo_analog_speed);
 	vars_systems.push_back(&var_fbneo_lightgun_hide_crosshair);
 #ifdef USE_CYCLONE
@@ -627,7 +705,6 @@ void set_environment()
 	vars_systems.push_back(&var_fbneo_debug_sprite_8);
 #endif
 
-
 	if (pgi_diag)
 	{
 		vars_systems.push_back(&var_fbneo_diagnostic_input);
@@ -640,6 +717,22 @@ void set_environment()
 			vars_systems.push_back(&var_fbneo_neogeo_mode);
 		vars_systems.push_back(&var_fbneo_memcard_mode);
 	}
+	vars_systems.push_back(&var_fbneo_cpu_speed_adjust);
+
+	// Frameskip settings
+	if (bLibretroSupportsAudioBuffStatus)
+	{
+		vars_systems.push_back(&var_fbneo_frameskip_type);
+		vars_systems.push_back(&var_fbneo_frameskip_manual_threshold);
+	}
+	vars_systems.push_back(&var_fbneo_fixed_frameskip);
+
+	// Audio settings
+	if (nGameType != RETRO_GAME_TYPE_NEOCD)
+		vars_systems.push_back(&var_fbneo_samplerate);
+	vars_systems.push_back(&var_fbneo_sample_interpolation);
+	vars_systems.push_back(&var_fbneo_fm_interpolation);
+	vars_systems.push_back(&var_fbneo_lowpass_filter);
 
 	int nbr_vars = vars_systems.size();
 	int nbr_dips = dipswitch_core_options.size();
@@ -649,159 +742,234 @@ void set_environment()
 	log_cb(RETRO_LOG_INFO, "set_environment: SYSTEM: %d, DIPSWITCH: %d\n", nbr_vars, nbr_dips);
 #endif
 
-	vars = (struct retro_core_option_definition*)calloc(nbr_vars + nbr_dips + nbr_cheats + 1, sizeof(struct retro_core_option_definition));
+	option_defs_us = (struct retro_core_option_v2_definition*)calloc(nbr_vars + nbr_dips + nbr_cheats + 1, sizeof(struct retro_core_option_v2_definition));
 
 	int idx_var = 0;
 
 	// Add the System core options
 	for (int i = 0; i < nbr_vars; i++, idx_var++)
 	{
-		vars[idx_var] = *vars_systems[i];
+		option_defs_us[idx_var] = *vars_systems[i];
 	}
 
 	// Add the DIP switches core options
 	for (int dip_idx = 0; dip_idx < nbr_dips; dip_idx++)
 	{
-		vars[idx_var].key = dipswitch_core_options[dip_idx].option_name.c_str();
-		vars[idx_var].desc = dipswitch_core_options[dip_idx].friendly_name.c_str();
+		option_defs_us[idx_var].category_key = "dipswitch";
+		option_defs_us[idx_var].key = dipswitch_core_options[dip_idx].option_name.c_str();
+		option_defs_us[idx_var].desc = dipswitch_core_options[dip_idx].friendly_name.c_str();
+		option_defs_us[idx_var].desc_categorized = dipswitch_core_options[dip_idx].friendly_name_categorized.c_str();
 		// Instead of filtering out the dips, make the description a warning if it's a neogeo game using a different default bios
 		if (neogeo_use_specific_default_bios && is_neogeo_game && dipswitch_core_options[dip_idx].friendly_name.compare("[Dipswitch] BIOS") == 0)
-			vars[idx_var].info = "THIS NEOGEO GAME USES A DIFFERENT DEFAULT BIOS, CHANGE IT AT YOUR OWN RISK";
+			option_defs_us[idx_var].info = "THIS NEOGEO GAME USES A DIFFERENT DEFAULT BIOS, CHANGE IT AT YOUR OWN RISK";
 		else
-			vars[idx_var].info = "Dipswitch setting, setting is specific to the running romset";
+			option_defs_us[idx_var].info = "Dipswitch setting, setting is specific to the running romset";
 		for (int dip_value_idx = 0; dip_value_idx < dipswitch_core_options[dip_idx].values.size(); dip_value_idx++)
 		{
-			vars[idx_var].values[dip_value_idx].value = dipswitch_core_options[dip_idx].values[dip_value_idx].friendly_name.c_str();
+			option_defs_us[idx_var].values[dip_value_idx].value = dipswitch_core_options[dip_idx].values[dip_value_idx].friendly_name.c_str();
 		}
-		vars[idx_var].values[dipswitch_core_options[dip_idx].values.size()].value = NULL;
-		vars[idx_var].default_value = dipswitch_core_options[dip_idx].default_bdi.szText;
-		if (vars[idx_var].default_value == NULL) HandleMessage(RETRO_LOG_ERROR, "Default value for '%s' not found, it's a bug, please report it\n", vars[idx_var].desc);
+		option_defs_us[idx_var].values[dipswitch_core_options[dip_idx].values.size()].value = NULL;
+		option_defs_us[idx_var].default_value = dipswitch_core_options[dip_idx].default_bdi.szText;
+		if (option_defs_us[idx_var].default_value == NULL) HandleMessage(RETRO_LOG_ERROR, "Default value for '%s' not found, it's a bug, please report it\n", option_defs_us[idx_var].desc);
 		idx_var++;
 	}
 
 	// Add the cheats core options
 	for (int cheat_idx = 0; cheat_idx < nbr_cheats; cheat_idx++)
 	{
-		vars[idx_var].key = cheat_core_options[cheat_idx].option_name.c_str();
-		vars[idx_var].desc = cheat_core_options[cheat_idx].friendly_name.c_str();
-		vars[idx_var].info = "Specific to the running romset and your cheat database";
+		option_defs_us[idx_var].category_key = "cheat";
+		option_defs_us[idx_var].key = cheat_core_options[cheat_idx].option_name.c_str();
+		option_defs_us[idx_var].desc = cheat_core_options[cheat_idx].friendly_name.c_str();
+		option_defs_us[idx_var].desc_categorized = cheat_core_options[cheat_idx].friendly_name_categorized.c_str();
+		option_defs_us[idx_var].info = "Specific to the running romset and your cheat database";
 		for (int cheat_value_idx = 0; cheat_value_idx < cheat_core_options[cheat_idx].values.size(); cheat_value_idx++)
 		{
-			vars[idx_var].values[cheat_value_idx].value = cheat_core_options[cheat_idx].values[cheat_value_idx].friendly_name.c_str();
+			option_defs_us[idx_var].values[cheat_value_idx].value = cheat_core_options[cheat_idx].values[cheat_value_idx].friendly_name.c_str();
 		}
-		vars[idx_var].values[cheat_core_options[cheat_idx].values.size()].value = NULL;
-		vars[idx_var].default_value = cheat_core_options[cheat_idx].default_value.c_str();
+		option_defs_us[idx_var].values[cheat_core_options[cheat_idx].values.size()].value = NULL;
+		option_defs_us[idx_var].default_value = cheat_core_options[cheat_idx].default_value.c_str();
 		idx_var++;
 	}
 
-	vars[idx_var] = var_empty;
+	option_defs_us[idx_var] = var_empty;
 
+	static struct retro_core_option_v2_category option_cats_us[] =
+	{
+		{
+			"frameskip",
+			"Frameskip Settings",
+			"Configure Frameskip Settings"
+		},
+		{
+			"audio",
+			"Audio Settings",
+			"Configure Audio Settings"
+		},
+		{
+			"dipswitch",
+			"DIP Switches",
+			"Configure DIP Switches"
+		},
+		{
+			"cheat",
+			"Cheat",
+			"Enable Cheats"
+		},
+		{ NULL, NULL, NULL },
+	};
+
+	struct retro_core_options_v2 options_us = {
+		option_cats_us,
+		option_defs_us
+	};
+
+	bool libretro_supports_option_categories = false;
 	unsigned version = 0;
 
-	if (environ_cb(RETRO_ENVIRONMENT_GET_CORE_OPTIONS_VERSION, &version) && (version == 1))
+	if (!environ_cb(RETRO_ENVIRONMENT_GET_CORE_OPTIONS_VERSION, &version))
+		version = 0;
+
+	if (version >= 2)
 	{
-		struct retro_core_options_intl core_options_intl;
-
-		core_options_intl.us    = vars;
-		core_options_intl.local = NULL;
-
-		environ_cb(RETRO_ENVIRONMENT_SET_CORE_OPTIONS_INTL, &core_options_intl);
+		libretro_supports_option_categories = environ_cb(RETRO_ENVIRONMENT_SET_CORE_OPTIONS_V2, &options_us);
 	}
 	else
 	{
-		size_t i;
-		size_t num_options               = 0;
-		struct retro_variable *variables = NULL;
-		char **values_buf                = NULL;
+		size_t i, j;
+		size_t num_options                                     = 0;
+		struct retro_core_option_definition *option_v1_defs_us = NULL;
+		struct retro_variable *variables                       = NULL;
+		char **values_buf                                      = NULL;
 
-		/* Determine number of options */
+		/* Determine total number of options */
 		while (true)
 		{
-			if (vars[num_options].key)
+			if (option_defs_us[num_options].key)
 				num_options++;
 			else
 				break;
 		}
 
-		/* Allocate arrays */
-		variables  = (struct retro_variable *)calloc(num_options + 1, sizeof(struct retro_variable));
-		values_buf = (char **)calloc(num_options, sizeof(char *));
-
-		if (!variables || !values_buf)
-			goto error;
-
-		/* Copy parameters from option_defs_us array */
-		for (i = 0; i < num_options; i++)
+		if (version >= 1)
 		{
-			const char *key                        = vars[i].key;
-			const char *desc                       = vars[i].desc;
-			const char *default_value              = vars[i].default_value;
-			struct retro_core_option_value *values = vars[i].values;
-			size_t buf_len                         = 3;
-			size_t default_index                   = 0;
+			/* Allocate US array */
+			option_v1_defs_us = (struct retro_core_option_definition *)calloc(num_options + 1, sizeof(struct retro_core_option_definition));
 
-			values_buf[i] = NULL;
-
-			if (desc)
+			/* Copy parameters from option_defs_us array */
+			for (i = 0; i < num_options; i++)
 			{
-				size_t num_values = 0;
+				struct retro_core_option_v2_definition *option_def_us = &option_defs_us[i];
+				struct retro_core_option_value *option_values         = option_def_us->values;
+				struct retro_core_option_definition *option_v1_def_us = &option_v1_defs_us[i];
+				struct retro_core_option_value *option_v1_values      = option_v1_def_us->values;
 
-				/* Determine number of values */
-				while (true)
+				option_v1_def_us->key           = option_def_us->key;
+				option_v1_def_us->desc          = option_def_us->desc;
+				option_v1_def_us->info          = option_def_us->info;
+				option_v1_def_us->default_value = option_def_us->default_value;
+
+				/* Values must be copied individually... */
+				while (option_values->value)
 				{
-					if (values[num_values].value)
-					{
-						/* Check if this is the default value */
-						if (default_value)
-							if (strcmp(values[num_values].value, default_value) == 0)
-								default_index = num_values;
+					option_v1_values->value = option_values->value;
+					option_v1_values->label = option_values->label;
 
-						buf_len += strlen(values[num_values].value);
-						num_values++;
-					}
-					else
-						break;
-				}
-
-				if (num_values > 0)
-				{
-					size_t j;
-
-					buf_len += num_values - 1;
-					buf_len += strlen(desc);
-
-					values_buf[i] = (char *)calloc(buf_len, sizeof(char));
-					if (!values_buf[i])
-						goto error;
-
-					strcpy(values_buf[i], desc);
-					strcat(values_buf[i], "; ");
-
-					/* Default value goes first */
-					strcat(values_buf[i], values[default_index].value);
-
-					/* Add remaining values */
-					for (j = 0; j < num_values; j++)
-					{
-						if (j != default_index)
-						{
-							strcat(values_buf[i], "|");
-							strcat(values_buf[i], values[j].value);
-						}
-					}
+					option_values++;
+					option_v1_values++;
 				}
 			}
 
-			variables[i].key   = key;
-			variables[i].value = values_buf[i];
+			environ_cb(RETRO_ENVIRONMENT_SET_CORE_OPTIONS, option_v1_defs_us);
+		}
+		else
+		{
+
+			/* Allocate arrays */
+			variables  = (struct retro_variable *)calloc(num_options + 1, sizeof(struct retro_variable));
+			values_buf = (char **)calloc(num_options, sizeof(char *));
+
+			if (!variables || !values_buf)
+				goto error;
+
+			/* Copy parameters from option_defs_us array */
+			for (i = 0; i < num_options; i++)
+			{
+				const char *key                        = option_defs_us[i].key;
+				const char *desc                       = option_defs_us[i].desc;
+				const char *default_value              = option_defs_us[i].default_value;
+				struct retro_core_option_value *values = option_defs_us[i].values;
+				size_t buf_len                         = 3;
+				size_t default_index                   = 0;
+
+				values_buf[i] = NULL;
+
+				if (desc)
+				{
+					size_t num_values = 0;
+
+					/* Determine number of values */
+					while (true)
+					{
+						if (values[num_values].value)
+						{
+							/* Check if this is the default value */
+							if (default_value)
+								if (strcmp(values[num_values].value, default_value) == 0)
+									default_index = num_values;
+
+							buf_len += strlen(values[num_values].value);
+							num_values++;
+						}
+						else
+							break;
+					}
+
+					if (num_values > 0)
+					{
+
+						buf_len += num_values - 1;
+						buf_len += strlen(desc);
+
+						values_buf[i] = (char *)calloc(buf_len, sizeof(char));
+						if (!values_buf[i])
+							goto error;
+
+						strcpy(values_buf[i], desc);
+						strcat(values_buf[i], "; ");
+
+						/* Default value goes first */
+						strcat(values_buf[i], values[default_index].value);
+
+						/* Add remaining values */
+						for (j = 0; j < num_values; j++)
+						{
+							if (j != default_index)
+							{
+								strcat(values_buf[i], "|");
+								strcat(values_buf[i], values[j].value);
+							}
+						}
+					}
+				}
+
+				variables[i].key   = key;
+				variables[i].value = values_buf[i];
+			}
+
+			/* Set variables */
+			environ_cb(RETRO_ENVIRONMENT_SET_VARIABLES, variables);
+
 		}
 
-		/* Set variables */
-		environ_cb(RETRO_ENVIRONMENT_SET_VARIABLES, variables);
-
 error:
-
 		/* Clean up */
+
+		if (option_v1_defs_us)
+		{
+			free(option_v1_defs_us);
+			option_v1_defs_us = NULL;
+		}
+
 		if (values_buf)
 		{
 			for (i = 0; i < num_options; i++)

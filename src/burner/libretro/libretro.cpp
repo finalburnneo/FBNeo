@@ -359,6 +359,7 @@ static int create_variables_from_dipswitches()
 			}
 
 			dip_option->friendly_name = SSTR( "[Dipswitch] " << option_name.c_str() );
+			dip_option->friendly_name_categorized = option_name.c_str();
 
 			std::replace( option_name.begin(), option_name.end(), ' ', '_');
 			std::replace( option_name.begin(), option_name.end(), '=', '_');
@@ -531,6 +532,7 @@ static int create_variables_from_cheats()
 			cheat_core_option *cheat_option = &cheat_core_options.back();
 			std::string option_name = pCurrentCheat->szCheatName;
 			cheat_option->friendly_name = SSTR( "[Cheat] " << option_name.c_str() );
+			cheat_option->friendly_name_categorized = option_name.c_str();
 			std::replace( option_name.begin(), option_name.end(), ' ', '_');
 			std::replace( option_name.begin(), option_name.end(), '=', '_');
 			cheat_option->option_name = SSTR( "fbneo-cheat-" << drvname << "-" << option_name.c_str() );

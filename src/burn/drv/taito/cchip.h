@@ -13,6 +13,8 @@ INT32 cchip_run(INT32 cyc);
 void  cchip_reset();
 INT32 cchip_scan(INT32 nAction);
 
+#define cchip_Run cchip_run
+
 extern UINT8 *cchip_rom;
 extern UINT8 *cchip_eeprom;
 extern UINT8 cchip_active;

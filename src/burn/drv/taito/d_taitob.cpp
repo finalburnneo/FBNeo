@@ -1717,7 +1717,9 @@ static INT32 DrvDoReset(INT32 reset_ram)
 	ZetClose();
 
 	if (sound_config == 0) {
+		ZetOpen(0);
 		BurnYM2610Reset();
+		ZetClose();
 	} else {
 		ZetOpen(0);
 		BurnYM2203Reset();

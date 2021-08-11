@@ -12,9 +12,10 @@
 #include "upd7810_intf.h"
 
 static UINT8 TaitoInputConfig;
+
 static INT32 AsukaADPCMPos;
 static INT32 AsukaADPCMData;
-static INT32 coin_inserted_counter[2];
+static HoldCoin<2> hold_coin;
 
 static struct BurnInputInfo CadashInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	TC0220IOCInputPort2 + 0,	"p1 coin"	},
@@ -1141,7 +1142,7 @@ static INT32 DrvDoReset()
 	AsukaADPCMPos = 0;
 	AsukaADPCMData = -1;
 
-	memset (coin_inserted_counter, 0, sizeof(coin_inserted_counter));
+	hold_coin.reset();
 
 	return 0;
 }
@@ -1169,8 +1170,8 @@ static INT32 MemIndex()
 
 	TaitoZ80Ram1		= Next; Next += 0x002000;
 
-	TaitoRamEnd		= Next;
-	TaitoMemEnd		= Next;
+	TaitoRamEnd			= Next;
+	TaitoMemEnd			= Next;
 
 	return 0;
 }
@@ -1280,11 +1281,12 @@ static void BonzeZ80Setup()
 
 static void CadashSoundSetup()
 {
-	BurnYM2151Init(4000000);
+	BurnYM2151InitBuffered(4000000, 1, NULL, 0);
 	BurnYM2151SetIrqHandler(&CadashYM2151IRQHandler);
 	BurnYM2151SetPortHandler(&DrvSoundBankSwitch);
 	BurnYM2151SetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
-	
+	BurnTimerAttachZet(4000000);
+
 	TaitoNumYM2151  = 1;
 	TaitoNumYM2610  = 0;
 	TaitoNumMSM5205 = 0;
@@ -1292,10 +1294,11 @@ static void CadashSoundSetup()
 
 static void AsukaSoundSetup()
 {
-	BurnYM2151Init(4000000);
+	BurnYM2151InitBuffered(4000000, 1, NULL, 0);
 	BurnYM2151SetIrqHandler(&CadashYM2151IRQHandler);
 	BurnYM2151SetPortHandler(&DrvSoundBankSwitch);
 	BurnYM2151SetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
+	BurnTimerAttachZet(4000000);
 
 	MSM5205Init(0, DrvSynchroniseStream, 384000, AsukaMSM5205Vck, MSM5205_S48_4B, 1);
 	MSM5205SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
@@ -1315,7 +1318,7 @@ static void BonzeSoundSetup()
 	BurnYM2610SetRoute(BURN_SND_YM2610_AY8910_ROUTE, 0.25, BURN_SND_ROUTE_BOTH);
 
 	TaitoNumYM2151  = 0;
-	TaitoNumYM2610  = 1; 
+	TaitoNumYM2610  = 1;
 	TaitoNumMSM5205 = 0;
 }
 
@@ -1397,39 +1400,19 @@ static INT32 CadashFrame()
 	ZetOpen(0);
 
 	INT32 nInterleave = 100;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 16000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nCycleSegment;
-
-		nCycleSegment = (nCyclesTotal[0] / nInterleave) * (i+1);
-		if (i == (nInterleave - 1)) nCycleSegment -= 500; //?
-		nCyclesDone[0] += SekRun(nCycleSegment - SekTotalCycles());
-
-		nCycleSegment = (nCyclesTotal[1] / nInterleave) * (i+1);
-		nCyclesDone[1] += ZetRun(nCycleSegment - ZetTotalCycles());
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
+		CPU_RUN(0, Sek);
+		CPU_RUN_TIMER(1);
+		if (i == (nInterleave - 2)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 	}
 
-	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-	SekRun(500);
-	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
-
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-		}
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();
@@ -1458,40 +1441,23 @@ static INT32 EtoFrame() // Using for asuka too, but needs msm5205
 
 	INT32 nInterleave = 100;
 	if (TaitoNumMSM5205) nInterleave = MSM5205CalcInterleave(0, 4000000);
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 8000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nCycleSegment;
+		CPU_RUN(0, Sek);
+		CPU_RUN_TIMER(1);
 
-		nCycleSegment = (nCyclesTotal[0] / nInterleave) * (i+1);
-		nCyclesDone[0] += SekRun(nCycleSegment - SekTotalCycles());
-
-		nCycleSegment = (nCyclesTotal[1] / nInterleave) * (i+1);
-		nCyclesDone[1] += ZetRun(nCycleSegment - ZetTotalCycles());
 		if (TaitoNumMSM5205) MSM5205Update();
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-		}
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		if (TaitoNumMSM5205) MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
-	
-	if (TaitoNumMSM5205) MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 
 	ZetClose();
 	SekClose();
@@ -1522,15 +1488,8 @@ static INT32 BonzeFrame()
 			TaitoInput[3] ^= (TaitoInputPort3[i] & 1) << i;
 		}
 
-		// coin pulser
-		for (INT32 i = 0; i < 2; i++) {
-			if (TaitoInput[1] & (1 << i)) {
-				coin_inserted_counter[i]++;
-				if (coin_inserted_counter[i] >= 2) TaitoInput[1] &= ~(1 << i);
-			} else {
-				coin_inserted_counter[i] = 0;
-			}
-		}
+		hold_coin.check(0, TaitoInput[1], 1<<0, 2);
+		hold_coin.check(1, TaitoInput[1], 1<<1, 2);
 
 		cchip_loadports(TaitoInput[0], TaitoInput[1], TaitoInput[2], TaitoInput[3]);
 	}
@@ -1548,18 +1507,16 @@ static INT32 BonzeFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(((nCyclesTotal[0] * (i + 1)) / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Sek);
 		if (i == 248) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
-		BurnTimerUpdate((nCyclesTotal[1] * (i + 1)) / nInterleave);
+		CPU_RUN_TIMER(1);
 
 		if (cchip_active) {
-			nCyclesDone[2] += cchip_run(((nCyclesTotal[2] * (i + 1)) / nInterleave) - nCyclesDone[2]);
+			CPU_RUN(2, cchip_);
 			if (i == 248) cchip_interrupt();
 		}
 	}
-
-	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
 		BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
@@ -1596,14 +1553,19 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		TaitoICScan(nAction);
 
+		hold_coin.scan();
+
+		SCAN_VAR(AsukaADPCMPos);
+		SCAN_VAR(AsukaADPCMData);
+		SCAN_VAR(TaitoWatchdog);
+		SCAN_VAR(TaitoZ80Bank);
+
 		ZetOpen(0); // ZetOpen() here because it uses ZetMapArea() in the PortHandler of the YM
 		if (TaitoNumYM2151) BurnYM2151Scan(nAction, pnMin);
 		if (TaitoNumYM2610) BurnYM2610Scan(nAction, pnMin);
 		if (TaitoNumMSM5205) MSM5205Scan(nAction, pnMin);
-
-		SCAN_VAR(TaitoZ80Bank);
 		ZetClose();
-        }
+	}
 
 	if (nAction & ACB_WRITE) {
 		ZetOpen(0);

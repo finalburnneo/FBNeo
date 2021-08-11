@@ -1063,8 +1063,7 @@ static void DrvSoundInit(INT32 type)
 
 static void DrvSoundExit()
 {
-	for (INT32 i = 0; i < numSN; i++)
-		SN76477_exit(i);
+	SN76477_exit();
 
 	BurnSampleExit();
 
@@ -1686,8 +1685,7 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		snk_sound_update(pBurnSoundOut, nBurnSoundLen);
 		memset(FilterBUF, 0, 0x2000);
-		for (INT32 i = 0; i < numSN; i++)
-			SN76477_sound_update(i, FilterBUF, nBurnSoundLen);
+		SN76477_sound_update(FilterBUF, nBurnSoundLen);
 		if (LP1 && LP2) {
 			LP1->Filter(FilterBUF, nBurnSoundLen);  // Left
 			LP2->Filter(FilterBUF+1, nBurnSoundLen); // Right
@@ -1737,6 +1735,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(sasuke_counter);
 
 		snk6502_sound_savestate();
+		SN76477_scan(nAction, pnMin);
 	}
 
 	if (nAction & ACB_WRITE) {

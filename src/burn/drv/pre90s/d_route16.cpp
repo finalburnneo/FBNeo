@@ -470,7 +470,7 @@ static INT32 DrvDoReset()
 	ZetOpen(1);
 	ZetReset();
 	DACReset();
-	SN76477_reset(0);
+	SN76477_reset();
 	ZetClose();
 
 	AY8910Reset(0);
@@ -614,7 +614,7 @@ static INT32 DrvInit()
 static INT32 DrvExit()
 {
 	AY8910Exit(0);
-	SN76477_exit(0);
+	SN76477_exit();
 	DACExit();
 
 	ZetExit();
@@ -773,7 +773,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
-		SN76477_sound_update(0, pBurnSoundOut, nBurnSoundLen);
+		SN76477_sound_update(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -802,6 +802,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		ZetScan(nAction);
 		AY8910Scan(nAction, pnMin);
+		SN76477_scan(nAction, pnMin);
 
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(palette_1);

@@ -203,11 +203,13 @@ int RunFrame(int bDraw, int bPause)
 				pBurnDraw = (BurnDrvGetFlags() & BDF_RUNAHEAD_DRAWSYNC) ? pVidImage : NULL;
 				BurnDrvFrame();
 				StateRunAheadSave();
+				INT16 *pBurnSoundOut_temp = pBurnSoundOut;
 				pBurnSoundOut = NULL;
 				nCurrentFrame++;
 				VidFrame();
 				nCurrentFrame--;
 				StateRunAheadLoad();
+				pBurnSoundOut = pBurnSoundOut_temp; // restore pointer, for wav & avi writer
 			}
 		} else {								// frame skipping
 			pBurnDraw = NULL;					// Make sure no image is drawn

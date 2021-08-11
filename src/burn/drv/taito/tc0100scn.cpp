@@ -650,6 +650,14 @@ void TC0100SCNScan(INT32 nAction)
 		SCAN_VAR(TC0100SCNFlip);
 		SCAN_VAR(TC0100SCNGfxBank);
 		SCAN_VAR(TC0100SCNDblWidth);
+
+		if (nAction & ACB_RUNAHEAD) {
+			SCAN_VAR(TC0100SCNBgLayerUpdate);
+			SCAN_VAR(TC0100SCNFgLayerUpdate);
+			SCAN_VAR(TC0100SCNCharLayerUpdate);
+			SCAN_VAR(TC0100SCNCharRamUpdate);
+		}
+
 		if (nAction & ACB_WRITE && ~nAction & ACB_RUNAHEAD) {
 			for (INT32 i = 0;i < TC0100SCNNum; i++) {
 				// re-draw the the screen after loading the savestate

@@ -387,12 +387,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM  + 0x0000,  0, 1)) return 1;
@@ -463,9 +458,9 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	ZetExit();
-	SN76477_exit(0);
+	SN76477_exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -564,7 +559,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		sound_tone_render(pBurnSoundOut, nBurnSoundLen);
-		SN76477_sound_update(0, pBurnSoundOut, nBurnSoundLen);
+		SN76477_sound_update(pBurnSoundOut, nBurnSoundLen);
 
 		if (!sound_enable)
 			memset (pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
@@ -595,21 +590,26 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		ZetScan(nAction);
 
+		SN76477_scan(nAction, pnMin);
+
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(irq_mask);
+		SCAN_VAR(sound_enable);
+		SCAN_VAR(last_snd);
+
 		SCAN_VAR(collision_address);
 		SCAN_VAR(collision_address_clear);
+
 		SCAN_VAR(crbaloon_tone_step);
 		SCAN_VAR(crbaloon_tone_pos);
 		SCAN_VAR(crbaloon_tone_freq);
-		SCAN_VAR(sound_enable);
-		SCAN_VAR(last_snd);
-		SCAN_VAR(sound_laugh_trig);
-		SCAN_VAR(sound_laugh);
-		SCAN_VAR(sound_appear_trig);
-		SCAN_VAR(sound_appear);
 		SCAN_VAR(envelope_ctr);
 		SCAN_VAR(sound_data08);
+
+		SCAN_VAR(sound_laugh);
+		SCAN_VAR(sound_laugh_trig);
+		SCAN_VAR(sound_appear_trig);
+		SCAN_VAR(sound_appear);
 	}
 
 	return 0;
@@ -638,7 +638,7 @@ struct BurnDriver BurnDrvCrbaloon = {
 	"crbaloon", NULL, NULL, NULL, "1980",
 	"Crazy Balloon (set 1)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_TAITO, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_TAITO, GBF_MAZE | GBF_ACTION, 0,
 	NULL, crbaloonRomInfo, crbaloonRomName, NULL, NULL, NULL, NULL, CrbaloonInputInfo, CrbaloonDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32,
 	224, 256, 3, 4
@@ -667,7 +667,7 @@ struct BurnDriver BurnDrvCrbaloon2 = {
 	"crbaloon2", "crbaloon", NULL, NULL, "1980",
 	"Crazy Balloon (set 2)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_TAITO, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC  | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_TAITO, GBF_MAZE | GBF_ACTION, 0,
 	NULL, crbaloon2RomInfo, crbaloon2RomName, NULL, NULL, NULL, NULL, CrbaloonInputInfo, CrbaloonDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32,
 	224, 256, 3, 4

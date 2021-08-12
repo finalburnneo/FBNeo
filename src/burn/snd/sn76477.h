@@ -78,9 +78,10 @@ void SN76477_set_vco_cap(INT32 chip, double cap);
 void SN76477_set_pitch_voltage(INT32 chip, double voltage);
 void SN76477_set_vco_voltage(INT32 chip, double voltage);
 void SN76477_set_mastervol(INT32 chip, double vol);
-void SN76477_sound_update(INT32 param, INT16 *buffer, INT32 length);
+void SN76477_sound_update(INT16 *buffer, INT32 length);
 void SN76477_set_enable(INT32 chip, INT32 enable);
 
 void SN76477_init(INT32 num);
-void SN76477_reset(INT32 num);
-void SN76477_exit(INT32 num);
+void SN76477_reset();
+void SN76477_exit();
+void SN76477_scan(INT32 nAction, INT32* pnMin);

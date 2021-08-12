@@ -1140,12 +1140,12 @@ static INT32 DrvFrame()
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
+	}
 
-		if (has_subcpu) { // cbombers sprites 3 frames ahead of tiles
-			memcpy(TaitoSpriteRamBuffered3, TaitoSpriteRamBuffered2, 0x4000);
-			memcpy(TaitoSpriteRamBuffered2, TaitoSpriteRamBuffered,  0x4000);
-			memcpy(TaitoSpriteRamBuffered,  TaitoSpriteRam,			 0x4000);
-		}
+	if (has_subcpu) { // cbombers sprites 3 frames ahead of tiles
+		memcpy(TaitoSpriteRamBuffered3, TaitoSpriteRamBuffered2, 0x4000);
+		memcpy(TaitoSpriteRamBuffered2, TaitoSpriteRamBuffered,  0x4000);
+		memcpy(TaitoSpriteRamBuffered,  TaitoSpriteRam,			 0x4000);
 	}
 
 	return 0;

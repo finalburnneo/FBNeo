@@ -1197,7 +1197,8 @@ static void draw_text(INT32 paloffset, INT32 transp)
 		}
 
 		sx -= tx_scroll_x;
-		sy -= (tx_scroll_y - tx_offset_y) + ((game == 1) ? 16 : 32);
+		sy = (sy - (tx_scroll_y - tx_offset_y)) & 0xff; // wraps @ 256px, 8,8,32,32 tmap. -dink aug2021
+		sy -= ((game == 1) ? 16 : 32);
 
 		INT32 code  = BURN_ENDIAN_SWAP_INT16(vidram[0x400 + offs]) & 0x07ff;
 		INT32 color = (BURN_ENDIAN_SWAP_INT16(vidram[0x000 + offs]) >> 4) & 0x0f;

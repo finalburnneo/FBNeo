@@ -42,9 +42,11 @@
 #define VMIN	0x0000
 #define VMAX	0x7fff
 
+static double mastervol;
+static INT32 samplerate; 		/* from Machine->sample_rate */
+static INT32 sn76477_num = 0;
+
 struct SN76477 {
-	double mastervol;
-	INT32 samplerate; 		/* from Machine->sample_rate */
 	INT32 vol;				/* current volume (attack/decay) */
 	INT32 vol_count;			/* volume adjustment counter */
 	INT32 vol_rate;			/* volume adjustment rate - dervied from attack/decay */
@@ -111,7 +113,7 @@ static void attack_decay(INT32 param)
 		/* start ATTACK */
 		sn->vol_rate = ( sn->attack_time > 0 ) ? VMAX / sn->attack_time : VMAX;
 		sn->vol_step = +1;
-		LOG(2,("SN76477 #%d: ATTACK rate %d/%d = %d/sec\n", param, sn->vol_rate, sn->samplerate, sn->vol_rate/sn->samplerate));
+		LOG(2,("SN76477 #%d: ATTACK rate %d/%d = %d/sec\n", param, sn->vol_rate, samplerate, sn->vol_rate/samplerate));
     }
 	else
 	{
@@ -119,7 +121,7 @@ static void attack_decay(INT32 param)
 		sn->vol = VMAX; /* just in case... */
 		sn->vol_rate = ( sn->decay_time > 0 ) ? VMAX / sn->decay_time : VMAX;
 		sn->vol_step = -1;
-		LOG(2,("SN76477 #%d: DECAY rate %d/%d = %d/sec\n", param, sn->vol_rate, sn->samplerate, sn->vol_rate/sn->samplerate));
+		LOG(2,("SN76477 #%d: DECAY rate %d/%d = %d/sec\n", param, sn->vol_rate, samplerate, sn->vol_rate/samplerate));
     }
 }
 
@@ -318,7 +320,7 @@ void SN76477_enable_w(INT32 chip, INT32 data)
 		{
 		case 0: /* VCO */
 			if( sn->vco_res > 0 && sn->vco_cap > 0 )
-				sn->envelope_timer = (sn->samplerate * TIME_IN_HZ(0.64/(sn->vco_res * sn->vco_cap))) / 1000;
+				sn->envelope_timer = (samplerate * TIME_IN_HZ(0.64/(sn->vco_res * sn->vco_cap))) / 1000;
 			else
 				oneshot_envelope_cb(chip);
 			break;
@@ -333,7 +335,7 @@ void SN76477_enable_w(INT32 chip, INT32 data)
 		default:  /* VCO with alternating polariy */
 			/* huh? */
 			if( sn->vco_res > 0 && sn->vco_cap > 0 )
-				sn->envelope_timer = (sn->samplerate * TIME_IN_HZ(0.64/(sn->vco_res * sn->vco_cap)/2)) / 1000;
+				sn->envelope_timer = (samplerate * TIME_IN_HZ(0.64/(sn->vco_res * sn->vco_cap)/2)) / 1000;
 			else
 				oneshot_envelope_cb(chip);
 			break;
@@ -345,7 +347,7 @@ void SN76477_enable_w(INT32 chip, INT32 data)
 		{
 		case 0: /* VCO */
 			if( sn->vco_res > 0 && sn->vco_cap > 0 )
-				sn->envelope_timer = (sn->samplerate * TIME_IN_HZ(0.64/(sn->vco_res * sn->vco_cap))) / 1000;
+				sn->envelope_timer = (samplerate * TIME_IN_HZ(0.64/(sn->vco_res * sn->vco_cap))) / 1000;
 			else
 				oneshot_envelope_cb(chip);
 			break;
@@ -358,7 +360,7 @@ void SN76477_enable_w(INT32 chip, INT32 data)
 		default:  /* VCO with alternating polariy */
 			/* huh? */
 			if( sn->vco_res > 0 && sn->vco_cap > 0 )
-				sn->envelope_timer = (sn->samplerate * TIME_IN_HZ(0.64/(sn->vco_res * sn->vco_cap)/2)) / 1000;
+				sn->envelope_timer = (samplerate * TIME_IN_HZ(0.64/(sn->vco_res * sn->vco_cap)/2)) / 1000;
 			else
 				oneshot_envelope_cb(chip);
 			break;
@@ -417,7 +419,7 @@ void SN76477_set_filter_res(INT32 chip, double res)
 		LOG(1,("SN76477 #%d: NOISE FILTER freqency %d\n", chip, sn->noise_freq));
 	}
 	else
-		sn->noise_freq = sn->samplerate;
+		sn->noise_freq = samplerate;
 }
 
 /*****************************************************************************
@@ -437,7 +439,7 @@ void SN76477_set_filter_cap(INT32 chip, double cap)
 		LOG(1,("SN76477 #%d: NOISE FILTER freqency %d\n", chip, sn->noise_freq));
 	}
 	else
-		sn->noise_freq = sn->samplerate;
+		sn->noise_freq = samplerate;
 }
 
 /*****************************************************************************
@@ -519,7 +521,7 @@ void SN76477_set_amplitude_res(INT32 chip, double res)
 			LOG(3,("%d\n", vol));
 #endif
 			if( vol > 32767 ) vol = 32767;
-			sn->vol_lookup[i] = vol * sn->mastervol / 100;
+			sn->vol_lookup[i] = vol * mastervol / 100;
 		}
 		LOG(1,("SN76477 #%d: volume range from -%d to +%d (clip at %d%%)\n", chip, sn->vol_lookup[VMAX-VMIN], sn->vol_lookup[VMAX-VMIN], clip * 100 / 256));
 	}
@@ -553,7 +555,7 @@ void SN76477_set_feedback_res(INT32 chip, double res)
 			if( vol > 32767 && !clip ) clip = i;
 #endif
 			if( vol > 32767 ) vol = 32767;
-			sn->vol_lookup[i] = vol * sn->mastervol / 100;
+			sn->vol_lookup[i] = vol * mastervol / 100;
 		}
 		LOG(1,("SN76477 #%d: volume range from -%d to +%d (clip at %d%%)\n", chip, sn->vol_lookup[VMAX-VMIN], sn->vol_lookup[VMAX-VMIN], clip * 100 / 256));
 	}
@@ -725,9 +727,7 @@ void SN76477_set_oneshot_cap(INT32 chip, double cap)
 
 void SN76477_set_mastervol(INT32 chip, double vol)
 {
-	struct SN76477 *sn = sn76477[chip];
-
-    sn->mastervol = vol;
+    mastervol = vol;
 }
 
 #define UPDATE_SLF															\
@@ -738,7 +738,7 @@ void SN76477_set_mastervol(INT32 chip, double vol)
 	sn->slf_count -= sn->slf_freq;											\
 	while( sn->slf_count <= 0 ) 											\
 	{																		\
-		sn->slf_count += sn->samplerate;									\
+		sn->slf_count += samplerate;									\
 		sn->slf_out ^= 1;													\
 	}
 
@@ -753,7 +753,7 @@ void SN76477_set_mastervol(INT32 chip, double vol)
 		/* VCO is controlled by SLF */										\
 		if( sn->slf_dir == 0 )												\
 		{																	\
-			sn->slf_level -= sn->slf_freq * 2 * 5.0 / sn->samplerate;		\
+			sn->slf_level -= sn->slf_freq * 2 * 5.0 / samplerate;		\
 			if( sn->slf_level <= 0.0 )										\
 			{																\
                 sn->slf_level = 0.0;                                        \
@@ -763,7 +763,7 @@ void SN76477_set_mastervol(INT32 chip, double vol)
 		else																\
 		if( sn->slf_dir == 1 )												\
 		{																	\
-			sn->slf_level += sn->slf_freq * 2 * 5.0 / sn->samplerate;		\
+			sn->slf_level += sn->slf_freq * 2 * 5.0 / samplerate;		\
 			if( sn->slf_level >= 5.0 )										\
 			{																\
 				sn->slf_level = 5.0;										\
@@ -780,7 +780,7 @@ void SN76477_set_mastervol(INT32 chip, double vol)
 	sn->vco_count -= sn->vco_step;											\
 	while( sn->vco_count <= 0 ) 											\
 	{																		\
-		sn->vco_count += sn->samplerate;									\
+		sn->vco_count += samplerate;									\
 		sn->vco_out ^= 1;													\
 	}
 
@@ -797,7 +797,7 @@ void SN76477_set_mastervol(INT32 chip, double vol)
 	sn->noise_count -= sn->noise_freq;										\
 	while( sn->noise_count <= 0 )											\
 	{																		\
-		sn->noise_count = sn->samplerate;									\
+		sn->noise_count = samplerate;									\
 		sn->noise_out = sn->noise_poly & 1; 								\
 	}
 
@@ -808,8 +808,8 @@ void SN76477_set_mastervol(INT32 chip, double vol)
 	sn->vol_count -= sn->vol_rate;											\
 	if( sn->vol_count <= 0 )												\
 	{																		\
-		INT32 n = - sn->vol_count / sn->samplerate + 1; /* number of steps */ \
-		sn->vol_count += n * sn->samplerate;								\
+		INT32 n = - sn->vol_count / samplerate + 1; /* number of steps */ \
+		sn->vol_count += n * samplerate;								\
 		sn->vol += n * sn->vol_step;										\
 		if( sn->vol < VMIN ) sn->vol = VMIN;								\
 		if( sn->vol > VMAX ) sn->vol = VMAX;								\
@@ -827,7 +827,7 @@ static void SN76477_update_0(INT32 chip, INT16 *buffer, INT32 length)
 	{
 		UPDATE_VCO;
 		UPDATE_VOLUME;
-		INT16 sam = BURN_SND_CLIP((sn->vco_out ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]) * sn->mastervol);
+		INT16 sam = BURN_SND_CLIP((sn->vco_out ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]) * mastervol);
 		*buffer = BURN_SND_CLIP(*buffer + sam);
 		buffer++;
 		*buffer = BURN_SND_CLIP(*buffer + sam);
@@ -846,7 +846,7 @@ static void SN76477_update_1(INT32 chip, INT16 *buffer, INT32 length)
 	{
 		UPDATE_SLF;
 		UPDATE_VOLUME;
-		INT16 sam = BURN_SND_CLIP((sn->slf_out ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]) * sn->mastervol);
+		INT16 sam = BURN_SND_CLIP((sn->slf_out ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]) * mastervol);
 		*buffer = BURN_SND_CLIP(*buffer + sam);
 		buffer++;
 		*buffer = BURN_SND_CLIP(*buffer + sam);
@@ -865,7 +865,7 @@ static void SN76477_update_2(INT32 chip, INT16 *buffer, INT32 length)
 	{
 		UPDATE_NOISE;
 		UPDATE_VOLUME;
-		INT16 sam = BURN_SND_CLIP((sn->noise_out ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]) * sn->mastervol);
+		INT16 sam = BURN_SND_CLIP((sn->noise_out ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]) * mastervol);
 		*buffer = BURN_SND_CLIP(*buffer + sam);
 		buffer++;
 		*buffer = BURN_SND_CLIP(*buffer + sam);
@@ -885,7 +885,7 @@ static void SN76477_update_3(INT32 chip, INT16 *buffer, INT32 length)
 		UPDATE_VCO;
 		UPDATE_NOISE;
 		UPDATE_VOLUME;
-		INT16 sam = BURN_SND_CLIP(((sn->vco_out & sn->noise_out) ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]) * sn->mastervol);
+		INT16 sam = BURN_SND_CLIP(((sn->vco_out & sn->noise_out) ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]) * mastervol);
 		*buffer = BURN_SND_CLIP(*buffer + sam);
 		buffer++;
 		*buffer = BURN_SND_CLIP(*buffer + sam);
@@ -905,7 +905,7 @@ static void SN76477_update_4(INT32 chip, INT16 *buffer, INT32 length)
 		UPDATE_SLF;
 		UPDATE_NOISE;
 		UPDATE_VOLUME;
-		INT16 sam = BURN_SND_CLIP(((sn->slf_out & sn->noise_out) ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]) * sn->mastervol);
+		INT16 sam = BURN_SND_CLIP(((sn->slf_out & sn->noise_out) ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]) * mastervol);
 		*buffer = BURN_SND_CLIP(*buffer + sam);
 		buffer++;
 		*buffer = BURN_SND_CLIP(*buffer + sam);
@@ -926,7 +926,7 @@ static void SN76477_update_5(INT32 chip, INT16 *buffer, INT32 length)
 		UPDATE_VCO;
 		UPDATE_NOISE;
 		UPDATE_VOLUME;
-		INT16 sam = BURN_SND_CLIP(((sn->vco_out & sn->slf_out & sn->noise_out) ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]) * sn->mastervol);
+		INT16 sam = BURN_SND_CLIP(((sn->vco_out & sn->slf_out & sn->noise_out) ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]) * mastervol);
 		*buffer = BURN_SND_CLIP(*buffer + sam);
 		buffer++;
 		*buffer = BURN_SND_CLIP(*buffer + sam);
@@ -946,7 +946,7 @@ static void SN76477_update_6(INT32 chip, INT16 *buffer, INT32 length)
 		UPDATE_SLF;
 		UPDATE_VCO;
 		UPDATE_VOLUME;
-		INT16 sam = BURN_SND_CLIP(((sn->vco_out & sn->slf_out) ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]) * sn->mastervol);
+		INT16 sam = BURN_SND_CLIP(((sn->vco_out & sn->slf_out) ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]) * mastervol);
 		*buffer = BURN_SND_CLIP(*buffer + sam);
 		buffer++;
 		*buffer = BURN_SND_CLIP(*buffer + sam);
@@ -967,7 +967,7 @@ static void SN76477_update_7(INT32 chip, INT16 *buffer, INT32 length)
 	}
 }
 
-void SN76477_sound_update(INT32 param, INT16 *buffer, INT32 length)
+void SN76477_sound_update_INT(INT32 param, INT16 *buffer, INT32 length)
 {
 	struct SN76477 *sn = sn76477[param];
 	if( sn->enable )
@@ -1006,16 +1006,33 @@ void SN76477_sound_update(INT32 param, INT16 *buffer, INT32 length)
 	}
 }
 
-void SN76477_exit(INT32 num) // yea, needs work. I know..
+void SN76477_sound_update(INT16 *buffer, INT32 length)
 {
-	BurnFree(sn76477[num]);
+	for (INT32 i = 0; i < sn76477_num; i++) {
+		SN76477_sound_update_INT(i, buffer, length);
+	}
 }
 
-void SN76477_reset(INT32 num)
+void SN76477_exit()
+{
+	for (INT32 i = 0; i < sn76477_num; i++) {
+		BurnFree(sn76477[i]);
+	}
+	sn76477_num = 0;
+}
+
+void SN76477_reset_INT(INT32 num)
 {
 	SN76477_mixer_w(num, 0x07);		/* turn off mixing */
 	SN76477_envelope_w(num, 0x03);	/* envelope inputs open */
 	SN76477_enable_w(num, 0x01);		/* enable input open */
+}
+
+void SN76477_reset()
+{
+	for (INT32 i = 0; i < sn76477_num; i++) {
+		SN76477_reset_INT(i);
+	}
 }
 
 void SN76477_init(INT32 num)
@@ -1034,11 +1051,20 @@ void SN76477_init(INT32 num)
 	}
 	memset(sn76477[num], 0, sizeof(struct SN76477));
 
-	sn76477[num]->samplerate = nBurnSoundRate;
+	sn76477_num = num + 1;
+
+	samplerate = nBurnSoundRate;
+	mastervol = 1.00;
 
 	sn76477[num]->envelope_timer = 0;
 	sn76477[num]->oneshot_timer = 0;
-	sn76477[num]->mastervol = 1.00;
 
-	SN76477_reset(num);
+	SN76477_reset_INT(num);
+}
+
+void SN76477_scan(INT32 nAction, INT32* pnMin)
+{
+	for (INT32 i = 0; i < sn76477_num; i++) {
+		ScanVar(sn76477, sizeof(SN76477), "sn76477 chippy");
+	}
 }

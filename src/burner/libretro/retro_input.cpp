@@ -1413,6 +1413,15 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 		}
 	}
 
+	// Hot Rod
+	if ((parentrom && strcmp(parentrom, "hotrod") == 0) ||
+		(drvname && strcmp(drvname, "hotrod") == 0)
+	) {
+		if (strcmp("Accelerator", description) == 0) {
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_JOYPAD_R2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
+		}
+	}
+
 	// Wacko (map aim to right stick)
 	if ((parentrom && strcmp(parentrom, "wacko") == 0) ||
 		(drvname && strcmp(drvname, "wacko") == 0)

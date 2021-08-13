@@ -183,30 +183,32 @@ size_t retro_get_memory_size(unsigned id)
 }
 
 // Savestates support
-static uint8_t *pStateWrite;
-static const uint8_t *pStateRead;
-static UINT32 nStateSize;
+static UINT8 *pStateBuffer;
+static UINT32 nStateLen;
 
 static int StateWriteAcb(BurnArea *pba)
 {
-	memcpy(pStateWrite, pba->Data, pba->nLen);
-	pStateWrite += pba->nLen;
+	memcpy(pStateBuffer, pba->Data, pba->nLen);
+	pStateBuffer += pba->nLen;
+
 	return 0;
 }
 
 static int StateReadAcb(BurnArea *pba)
 {
-	memcpy(pba->Data, pStateRead, pba->nLen);
-	pStateRead += pba->nLen;
+	memcpy(pba->Data, pStateBuffer, pba->nLen);
+	pStateBuffer += pba->nLen;
+
 	return 0;
 }
 
-static int StateSizeAcb(BurnArea *pba)
+static int StateLenAcb(BurnArea *pba)
 {
 #ifdef FBNEO_DEBUG
 	HandleMessage(RETRO_LOG_INFO, "state debug: name %s, len %d\n", pba->szName, pba->nLen);
 #endif
-	nStateSize += pba->nLen;
+	nStateLen += pba->nLen;
+
 	return 0;
 }
 
@@ -233,9 +235,9 @@ size_t retro_serialize_size()
 	INT32 nAction = ACB_FULLSCAN | ACB_READ;
 
 	// Tweaking from context
-	int result = -1;
-	environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &result);
-	kNetGame = result & 4 ? 1 : 0;
+	int nAudioVideoEnable = -1;
+	environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &nAudioVideoEnable);
+	kNetGame = nAudioVideoEnable & 4 ? 1 : 0;
 	if (kNetGame == 1) {
 		// Hiscores are causing desync in netplay
 		EnableHiscores = false;
@@ -244,12 +246,12 @@ size_t retro_serialize_size()
 	}
 
 	// Don't try to cache state size, it's causing more issues than it solves (ngp)
-	nStateSize = 0;
-	BurnAcb = StateSizeAcb;
+	nStateLen = 0;
+	BurnAcb = StateLenAcb;
 
 	LibretroAreaScan(nAction);
 
-	return nStateSize;
+	return nStateLen;
 }
 
 bool retro_serialize(void *data, size_t size)
@@ -268,9 +270,9 @@ bool retro_serialize(void *data, size_t size)
 	INT32 nAction = ACB_FULLSCAN | ACB_READ;
 
 	// Tweaking from context
-	int result = -1;
-	environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &result);
-	kNetGame = result & 4 ? 1 : 0;
+	int nAudioVideoEnable = -1;
+	environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &nAudioVideoEnable);
+	kNetGame = nAudioVideoEnable & 4 ? 1 : 0;
 	if (kNetGame == 1) {
 		// Hiscores are causing desync in netplay
 		EnableHiscores = false;
@@ -279,7 +281,7 @@ bool retro_serialize(void *data, size_t size)
 	}
 
 	BurnAcb = StateWriteAcb;
-	pStateWrite = (uint8_t*)data;
+	pStateBuffer = (UINT8*)data;
 
 	LibretroAreaScan(nAction);
 
@@ -295,9 +297,9 @@ bool retro_unserialize(const void *data, size_t size)
 	INT32 nAction = ACB_FULLSCAN | ACB_WRITE;
 
 	// Tweaking from context
-	int result = -1;
-	environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &result);
-	kNetGame = result & 4 ? 1 : 0;
+	int nAudioVideoEnable = -1;
+	environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &nAudioVideoEnable);
+	kNetGame = nAudioVideoEnable & 4 ? 1 : 0;
 	if (kNetGame == 1) {
 		// Hiscores are causing desync in netplay
 		EnableHiscores = false;
@@ -306,7 +308,7 @@ bool retro_unserialize(const void *data, size_t size)
 	}
 
 	BurnAcb = StateReadAcb;
-	pStateRead = (const uint8_t*)data;
+	pStateBuffer = (UINT8*)data;
 
 	LibretroAreaScan(nAction);
 

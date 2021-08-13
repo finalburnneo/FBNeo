@@ -1118,7 +1118,23 @@ static void VideoBufferInit()
 
 void retro_run()
 {
-	pBurnDraw = pVidImage;
+#if 0
+	// Disabled for now since retroarch might not be totally reliable about it ?
+	int nAudioVideoEnable = -1;
+	environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &nAudioVideoEnable);
+
+	// Only draw when required by frontend or core
+	pBurnDraw = ((BurnDrvGetFlags() & BDF_RUNAHEAD_DRAWSYNC) || (nAudioVideoEnable & 1)) ? pVidImage : NULL;
+	// Disabling audio seems broken in retroarch at the moment with runahead,
+	// i think it's playing back sound from all frames it ran or something, even when it says it won't,
+	// 2-instances with its hard-disabled-audio seems ok
+	// pBurnSoundOut = nAudioVideoEnable & 2 && !(nAudioVideoEnable & 8) ? pAudBuffer : NULL;
+	pBurnSoundOut = !(nAudioVideoEnable & 8) ? pAudBuffer : NULL;
+#else
+	pBurnDraw = pVidImage; // set to NULL to skip frame rendering
+	pBurnSoundOut = pAudBuffer; // set to NULL to skip sound rendering
+#endif
+
 	bool bSkipFrame = false;
 
 	if (gui_show && nGameWidth > 0 && nGameHeight > 0)
@@ -1334,7 +1350,6 @@ static void AudioBufferInit(INT32 sample_rate, INT32 fps)
 	if (pAudBuffer)
 		memset(pAudBuffer, 0, nSize);
 	nBurnSoundLen = nAudSegLen;
-	pBurnSoundOut = pAudBuffer;
 }
 
 static void extract_basename(char *buf, const char *path, size_t size, char *prefix)

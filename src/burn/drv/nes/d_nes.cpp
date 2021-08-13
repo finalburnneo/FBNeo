@@ -634,6 +634,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x585f3500) ? ALT_MMC3 : 0; // Darkwing Duck (T-Chi)
 	NESMode |= (ROMCRC == 0x38f65b2d) ? BAD_HOMEBREW : 0; // Battler (HB)
 	NESMode |= (ROMCRC == 0x560142bc) ? ALT_TIMING2 : 0; // don doko don 2
+	NESMode |= (ROMCRC == 0x70eac605) ? ALT_TIMING : 0; // deblock
 	NESMode |= (ROMCRC == 0x3616c7dd) ? ALT_TIMING : 0; // days of thunder
 	NESMode |= (ROMCRC == 0xeb506bf9) ? ALT_TIMING : 0; // star wars
 	NESMode |= (ROMCRC == 0xa2d504a8) ? ALT_TIMING : 0; // assimilate
@@ -13264,6 +13265,40 @@ struct BurnDriver BurnDrvnes_maniacmanunc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_bloodwarjRomDesc[] = {
+	{ "Bloody Warriors - Shan-Go no Gyakushuu (Japan).nes",          262160, 0x5cb5676f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_bloodwarj)
+STD_ROM_FN(nes_bloodwarj)
+
+struct BurnDriver BurnDrvnes_bloodwarj = {
+	"nes_bloodwarj", "nes_bloodwar", NULL, NULL, "1990",
+	"Bloody Warriors - Shan-Go no Gyakushuu (Japan)\0", NULL, "Toei Animation", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_bloodwarjRomInfo, nes_bloodwarjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_bloodwarRomDesc[] = {
+	{ "Bloody Warriors - Shan-Go no Gyakushuu (T-Eng).nes",          262160, 0xc06584e5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_bloodwar)
+STD_ROM_FN(nes_bloodwar)
+
+struct BurnDriver BurnDrvnes_bloodwar = {
+	"nes_bloodwar", NULL, NULL, NULL, "1990",
+	"Bloody Warriors - Shan-Go no Gyakushuu (T-Eng)\0", NULL, "Toei Animation", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_bloodwarRomInfo, nes_bloodwarRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_blockoutRomDesc[] = {
 	{ "Block Out (USA).nes",          131088, 0xdeff01f6, BRF_ESS | BRF_PRG },
 };
@@ -17674,6 +17709,23 @@ STD_ROM_FN(nes_smaruo)
 
 // Homebrew (hand-added)
 
+
+static struct BurnRomInfo nes_carpetsharkRomDesc[] = {
+	{ "Carpet Shark (2021)(Fista Productions).nes",          524304, 0x8ab5f2e0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_carpetshark)
+STD_ROM_FN(nes_carpetshark)
+
+struct BurnDriver BurnDrvnes_carpetshark = {
+	"nes_carpetshark", NULL, NULL, NULL, "2021",
+	"Carpet Shark (HB)\0", NULL, "Fista Productions", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_carpetsharkRomInfo, nes_carpetsharkRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_bubblebobbledxRomDesc[] = {
 	{ "Bubble Bobble Deluxe (2021)(Polar Hacker).nes",          163856, 0x198125ce, BRF_ESS | BRF_PRG },
@@ -29827,11 +29879,28 @@ STD_ROM_PICK(nes_getsufuumaden)
 STD_ROM_FN(nes_getsufuumaden)
 
 struct BurnDriver BurnDrvnes_getsufuumaden = {
-	"nes_getsufuumaden", NULL, NULL, NULL, "1987",
+	"nes_getsufuumaden", "nes_legenfum", NULL, NULL, "1987",
 	"Getsu Fuuma Den (Japan)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_getsufuumadenRomInfo, nes_getsufuumadenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_legenfumRomDesc[] = {
+	{ "The Legend of Fuma (T-Eng).nes",          393232, 0xdad72cc9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_legenfum)
+STD_ROM_FN(nes_legenfum)
+
+struct BurnDriver BurnDrvnes_legenfum = {
+	"nes_legenfum", NULL, NULL, NULL, "1989?",
+	"The Legend of Fuma (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_legenfumRomInfo, nes_legenfumRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

@@ -1492,9 +1492,9 @@ static INT32 DrvFrame()
 
 			if (pBurnDraw) {
 				BurnDrvRedraw();
-				memcpy(DrvSprRAM,  DrvSprRAM1, 0x2000);
-				memcpy(DrvSprRAM1, DrvSprRAM2, 0x2000);
 			}
+			memcpy(DrvSprRAM,  DrvSprRAM1, 0x2000);
+			memcpy(DrvSprRAM1, DrvSprRAM2, 0x2000);
 		}
 
 		CPU_RUN_TIMER(1);

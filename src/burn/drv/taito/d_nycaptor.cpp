@@ -847,6 +847,17 @@ static UINT8 packedbcd_to_dec(UINT8 pbcd)
 	return ((pbcd >> 4) & 0xf) * 10 + (pbcd & 0xf);
 }
 
+static void Update_Spot()
+{
+	spot_data = 0;
+
+	if (coin_flip == 0) { // nycaptor
+		// get the scene from ram, each scene (spot) uses a different priority system
+		spot_data = packedbcd_to_dec(DrvShareRAM[0x296]);
+		if (spot_data > 0) spot_data--;
+	}
+}
+
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
@@ -855,14 +866,6 @@ static INT32 DrvDraw()
 	}
 
 	BurnTransferClear();
-
-	spot_data = 0;
-
-	if (coin_flip == 0) { // nycaptor
-		// get the scene from ram, each scene (spot) uses a different priority system
-		spot_data = packedbcd_to_dec(DrvShareRAM[0x296]);
-		if (spot_data > 0) spot_data--;
-	}
 
 	for (INT32 i = 0; i < 32; i++) {
 		GenericTilemapSetScrollCol(0, i, DrvSprRAM[0xa0 + i] + 0x10);
@@ -1000,6 +1003,8 @@ static INT32 DrvFrame()
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
+
+	Update_Spot();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();

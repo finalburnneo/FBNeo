@@ -762,6 +762,7 @@ DRV		BurnDrvArmchmp2;
 DRV		BurnDrvArmwrest;
 DRV		BurnDrvnes_armadilloj;
 DRV		BurnDrvnes_armadillo;
+DRV		BurnSpecArmageddon;
 DRV		BurnDrvcv_armagedn;
 DRV		BurnDrvfds_armananokisekij;
 DRV		BurnDrvfds_armananokiseki;
@@ -1819,6 +1820,7 @@ DRV		BurnDrvBballs;
 DRV		BurnSpecBbredux;
 DRV		BurnSpecbounder;
 DRV		BurnDrvMSX_bounder;
+DRV		BurnSpecBountybob;
 DRV		BurnSpecBountyhunter;
 DRV		BurnDrvBowlrama;
 DRV		BurnDrvCHF_bowling;
@@ -1834,6 +1836,7 @@ DRV		BurnDrvBradley;
 DRV		BurnDrvcv_brainstr;
 DRV		BurnSpecBrainache;
 DRV		BurnDrvBrain;
+DRV		BurnSpecBrainstorm;
 DRV		BurnDrvgg_dracula;
 DRV		BurnDrvmd_dracula;
 DRV		BurnDrvsms_dracula;
@@ -3769,6 +3772,8 @@ DRV		BurnDrvnes_dondokodon2;
 DRV		BurnDrvpce_dondoko;
 DRV		BurnDrvMSX_donquijote1;
 DRV		BurnDrvMSX_donquijote2;
+DRV		BurnSpecDonquijote1;
+DRV		BurnSpecDonquijote2;
 DRV		BurnDrvnes_donaldduck;
 DRV		BurnDrvgg_donald42;
 DRV		BurnDrvgg_donaldld;
@@ -5239,6 +5244,7 @@ DRV		BurnSpecFruitmachinesim2;
 DRV		BurnDrvMSX_fruitpanic;
 DRV		BurnDrvMSX_fruitsrc;
 DRV		BurnDrvMSX_fruitsrca;
+DRV		BurnSpecFkngmili;
 DRV		BurnDrvnes_fudoumyououden;
 DRV		BurnDrvFjbuster;
 DRV		BurnDrvFullthrl;
@@ -5710,6 +5716,8 @@ DRV		BurnDrvGlass10;
 DRV		BurnDrvGlass10a;
 DRV		BurnDrvGlasskr;
 DRV		BurnDrvGlass;
+DRV		BurnSpecGlazx128;
+DRV		BurnSpecGlazx48;
 DRV		BurnDrvmd_gleylance;
 DRV		BurnDrvmd_gleylanc;
 DRV		BurnDrvMSX_glider;
@@ -7341,18 +7349,6 @@ DRV		BurnDrvpce_kikikai;
 DRV		BurnDrvngpc_kikousei;
 DRV		BurnSpeckikstrt2;
 DRV		BurnDrvMSX_killmice;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvKinstp47;		// Works best in 64-bit build [NOT WORKING]
-DRV		BurnDrvKinst13;			// Works best in 64-bit build [NOT WORKING]
-DRV		BurnDrvKinst14;			// Works best in 64-bit build [NOT WORKING]
-DRV		BurnDrvKinst15ai;		// Works best in 64-bit build [NOT WORKING]
-DRV		BurnDrvKinst;			// Works best in 64-bit build [NOT WORKING]
-DRV		BurnDrvKinst210;		// Works best in 64-bit build [NOT WORKING]
-DRV		BurnDrvKinst211;		// Works best in 64-bit build [NOT WORKING]
-DRV		BurnDrvKinst213;		// Works best in 64-bit build [NOT WORKING]
-DRV		BurnDrvKinst214ai;		// Works best in 64-bit build [NOT WORKING]
-DRV		BurnDrvKinst2;			// Works best in 64-bit build [NOT WORKING]
-#endif
 DRV		BurnDrvgg_kineticc;
 DRV		BurnSpecKinetik;
 DRV		BurnDrvcv_kingball;
@@ -7596,8 +7592,8 @@ DRV		BurnDrvKong;
 DRV		BurnSpeckong;
 DRV		BurnSpeckong2;
 DRV		BurnSpeckongsrevenge1;
-DRV		BurnSpeckongsrevenge2;
 DRV		BurnDrvMSX_kongrevp1;
+DRV		BurnSpeckongsrevenge2;
 DRV		BurnDrvMSX_kongrevp2;
 DRV		BurnDrvpce_proyak89;
 DRV		BurnDrvpce_proyak90;
@@ -7764,6 +7760,7 @@ DRV		BurnDrvgg_lastact;
 DRV		BurnDrvnes_lastactionhero;
 DRV		BurnDrvnes_lastarmageddon;
 DRV		BurnDrvmd_lastbtle;
+DRV		BurnSpecLastduel;
 DRV		BurnDrvLsstduelb;
 DRV		BurnDrvLastduelj;
 DRV		BurnDrvLastduel;
@@ -9855,6 +9852,11 @@ DRV		BurnDrvNbbatmanu;
 DRV		BurnDrvNbbatman;
 DRV		BurnDrvmd_ninjab;
 DRV		BurnDrvmd_ninjabt;
+DRV		BurnSpecNinjacarnagen;
+DRV		BurnSpecNinjacarnagfr;
+DRV		BurnSpecNinjacarnagge;
+DRV		BurnSpecNinjacarnagit;
+DRV		BurnSpecNinjacarnages;
 DRV		BurnDrvncombath;
 DRV		BurnDrvncombat;
 DRV		BurnDrvncommand;
@@ -10280,6 +10282,7 @@ DRV		BurnDrvpce_pachikun;
 DRV		BurnDrvPackbang;
 DRV		BurnDrvpacketman;
 DRV		BurnDrvclubpacm;
+DRV		BurnSpecPmslimers;
 DRV		BurnDrvMSX_pacobomb;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvPacominv;		// No sound
@@ -14738,6 +14741,7 @@ DRV		BurnDrvTapperb;
 DRV		BurnDrvRbtapper;
 DRV		BurnDrvSutapper;
 DRV		BurnDrvcv_tapper;
+DRV		BurnSpecTardigrade;
 DRV		BurnDrvnes_targetrenegadec;
 DRV		BurnDrvmd_trgearths;
 DRV		BurnDrvmd_trgearth;
@@ -18368,6 +18372,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvArmwrest,			// Arm Wrestling
 	&BurnDrvnes_armadilloj,		// Armadillo (Japan)
 	&BurnDrvnes_armadillo,		// Armadillo (T-eng)
+	&BurnSpecArmageddon,		// Armageddon (16K)
 	&BurnDrvcv_armagedn,		// Armageddon (HB)
 	&BurnDrvfds_armananokisekij,// Armana no Kiseki (Japan)
 	&BurnDrvfds_armananokiseki,	// Armana no Kiseki (T-Eng)
@@ -18570,7 +18575,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAurail,				// Aurail (set 3, US, unprotected)
 	&BurnDrvmd_austrarl,		// Australian Rugby League (Euro)
 	&BurnDrvmd_austrarlp,		// Australian Rugby League (Prototype)
-	&BurnSpecAutocrash,			// Autocrash
+	&BurnSpecAutocrash,			// AutoCrash (Spanish)
 	&BurnDrvnes_avmahjongclubc,	// AV Mahjong Club (T-Chi) (Unl)
 	&BurnDrvpce_avpoker,		// AV Poker
 	&BurnDrvnes_avpregirfig,	// AV Pretty Girl Fight (Unl)
@@ -18609,7 +18614,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBwings,				// B-Wings (Japan new Ver.)
 	&BurnDrvBwingso,			// B-Wings (Japan old Ver.)
 	&BurnDrvnes_bwings,			// B-Wings (Japan)
-	&BurnSpecBcbill,			// B.C. Bill
+	&BurnSpecBcbill,			// B.C. Bill (48K)
 	&BurnDrvBonkadv,			// B.C. Kid / Bonk's Adventure / Kyukyoku!! PC Genjin
 	&BurnDrvBcstry,				// B.C. Story (set 1)
 	&BurnDrvBcstrya,			// B.C. Story (set 2)
@@ -19425,6 +19430,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecBbredux,			// Bouncing Bomb Redux (48K) (HB)
 	&BurnSpecbounder,			// Bounder (128K)
 	&BurnDrvMSX_bounder,		// Bounder (Euro)
+	&BurnSpecBountybob,			// Bounty Bob Strikes Back! (48K)
 	&BurnSpecBountyhunter,		// Bounty Hunter (128K)
 	&BurnDrvBowlrama,			// Bowl-O-Rama
 	&BurnDrvCHF_bowling,		// Bowling
@@ -19440,6 +19446,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_brainstr,		// Brain Strainers
 	&BurnSpecBrainache,			// Brainache
 	&BurnDrvBrain,				// Brain
+	&BurnSpecBrainstorm,		// Brainstorm (48K)
 	&BurnDrvgg_dracula,			// Bram Stoker's Dracula (Euro)
 	&BurnDrvmd_dracula,			// Bram Stoker's Dracula (Euro)
 	&BurnDrvsms_dracula,		// Bram Stoker's Dracula (Euro)
@@ -21375,6 +21382,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_dondoko,		// Don Doko Don!
 	&BurnDrvMSX_donquijote1,	// Don Quijote - Parte I (Spanish)
 	&BurnDrvMSX_donquijote2,	// Don Quijote - Parte II (Spanish)
+	&BurnSpecDonquijote1,		// Don Quijote de la Mancha - Parte I (Spanish) (48K)
+	&BurnSpecDonquijote2,		// Don Quijote de la Mancha - Parte II (Spanish) (48K)
 	&BurnDrvnes_donaldduck,		// Donald Duck (Japan)
 	&BurnDrvgg_donald42,		// Donald Duck no 4-Tsu no Hihou (Jpn)
 	&BurnDrvgg_donaldld,		// Donald Duck no Lucky Dime (Jpn)
@@ -22601,7 +22610,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvFiretrapa,			// Fire Trap (US)
 	&BurnDrvFiretrap,			// Fire Trap (US, rev A)
 	&BurnDrvFirebeas,			// Firebeast (prototype)
-	&BurnSpecFirefly,			// Firefly
+	&BurnSpecFirefly,			// Firefly (128K)
 	&BurnDrvMSX_firehawk,		// Firehawk (Euro)
 	&BurnDrvnes_firehouserescue,// Firehouse Rescue (USA)
 	&BurnSpecFirelord,			// Firelord (48K)
@@ -22845,6 +22854,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_fruitpanic,		// Fruit Panic
 	&BurnDrvMSX_fruitsrc,		// Fruit Search (Jpn)
 	&BurnDrvMSX_fruitsrca,		// Fruit Search (Jpn, Alt)
+	&BurnSpecFkngmili,			// Fucking Mili (English) (48K) (HB)
 	&BurnDrvnes_fudoumyououden,	// Fudou Myouou Den (Japan)
 	&BurnDrvFjbuster,			// Fujiyama Buster (Japan)
 	&BurnDrvFullthrl,			// Full Throttle (Japan)
@@ -23316,6 +23326,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGlass10a,			// Glass (Ver 1.0, Break Edition) (set 2)
 	&BurnDrvGlasskr,			// Glass (Ver 1.1, Break Edition, Version 1994) (censored, unprotected)
 	&BurnDrvGlass,				// Glass (Ver 1.1, Break Edition, Version 1994)
+	&BurnSpecGlazx128,			// GlaZX (128K) (HB)
+	&BurnSpecGlazx48,			// GlaZX (48K) (HB)
 	&BurnDrvmd_gleylance,		// GleyLancer (Hack, English)
 	&BurnDrvmd_gleylanc,		// GleyLancer (Jpn)
 	&BurnDrvMSX_glider,			// Glider (Jpn)
@@ -24947,18 +24959,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvngpc_kikousei,		// Kikou Seiki Unitron - Sono Tsuide. Hikari Umareru Chi Yori. (Jpn)
 	&BurnSpeckikstrt2,			// Kikstart 2 (48K)
 	&BurnDrvMSX_killmice,		// Kill Mice (HB)
-#if defined FBNEO_DEBUG
-	&BurnDrvKinstp47,			// Killer Instinct (ROM proto ver. 4.7) [Works best in 64-bit build, NOT WORKING]
-	&BurnDrvKinst13,			// Killer Instinct (ROM ver. 1.3) [Works best in 64-bit build, NOT WORKING]
-	&BurnDrvKinst14,			// Killer Instinct (ROM ver. 1.4) [Works best in 64-bit build, NOT WORKING]
-	&BurnDrvKinst15ai,			// Killer Instinct (ROM ver. 1.5 AnyIDE) [Works best in 64-bit build, NOT WORKING]
-	&BurnDrvKinst,				// Killer Instinct (ROM ver. 1.5d) [Works best in 64-bit build, NOT WORKING]
-	&BurnDrvKinst210,			// Killer Instinct II (ROM ver. 1.0) [Works best in 64-bit build, NOT WORKING]
-	&BurnDrvKinst211,			// Killer Instinct II (ROM ver. 1.1) [Works best in 64-bit build, NOT WORKING]
-	&BurnDrvKinst213,			// Killer Instinct II (ROM ver. 1.3) [Works best in 64-bit build, NOT WORKING]
-	&BurnDrvKinst214ai,			// Killer Instinct II (ROM ver. 1.4 AnyIDE) [Works best in 64-bit build, NOT WORKING]
-	&BurnDrvKinst2,				// Killer Instinct II (ROM ver. 1.4) [Works best in 64-bit build, NOT WORKING]
-#endif
 	&BurnDrvgg_kineticc,		// Kinetic Connection (Jpn)
 	&BurnSpecKinetik,			// Kinetik (48K)
 	&BurnDrvcv_kingball,		// King & Balloon (HB)
@@ -25201,9 +25201,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKong,				// Kong (Donkey Kong conversion on Galaxian hardware)
 	&BurnSpeckong,				// Kong (Ocean) (48K)
 	&BurnSpeckong2,				// Kong 2 - Kong Strikes Back (48K)
-	&BurnSpeckongsrevenge1,		// Kong's Revenge (Part 1)
-	&BurnSpeckongsrevenge2,		// Kong's Revenge (Part 2)
+	&BurnSpeckongsrevenge1,		// Kong's Revenge - Part 1 (Spanish) (128K)
 	&BurnDrvMSX_kongrevp1,		// Kong's Revenge - Part 1 (Spanish)
+	&BurnSpeckongsrevenge2,		// Kong's Revenge - Part 2 (Spanish) (128K)
 	&BurnDrvMSX_kongrevp2,		// Kong's Revenge - Part 2 (Spanish)
 	&BurnDrvpce_proyak89,		// Kore Ga Pro Yakyuu '89
 	&BurnDrvpce_proyak90,		// Kore Ga Pro Yakyuu '90
@@ -25370,6 +25370,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_lastactionhero,	// Last Action Hero (USA)
 	&BurnDrvnes_lastarmageddon,	// Last Armageddon (Japan)
 	&BurnDrvmd_lastbtle,		// Last Battle (Euro, USA, Kor)
+	&BurnSpecLastduel,			// Last Duel (48K)
 	&BurnDrvLsstduelb,			// Last Duel (bootleg)
 	&BurnDrvLastduelj,			// Last Duel (Japan)
 	&BurnDrvLastduel,			// Last Duel (US New Ver.)
@@ -27461,6 +27462,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvNbbatman,			// Ninja Baseball Batman (World)
 	&BurnDrvmd_ninjab,			// Ninja Burai Densetsu (Jpn)
 	&BurnDrvmd_ninjabt,			// Ninja Burai Densetsu (T-Chi)
+	&BurnSpecNinjacarnagen,		// Ninja Carnage (English) (128K) (HB)
+	&BurnSpecNinjacarnagfr,		// Ninja Carnage (French) (128K) (HB)
+	&BurnSpecNinjacarnagge,		// Ninja Carnage (German) (128K) (HB)
+	&BurnSpecNinjacarnagit,		// Ninja Carnage (Italian) (128K) (HB)
+	&BurnSpecNinjacarnages,		// Ninja Carnage (Spanish) (128K) (HB)
 	&BurnDrvncombath,			// Ninja Combat (NGH-009)
 	&BurnDrvncombat,			// Ninja Combat (NGM-009)
 	&BurnDrvncommand,			// Ninja Commando
@@ -27886,6 +27892,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPackbang,			// Pack'n Bang Bang (Prototype)
 	&BurnDrvpacketman,			// Packetman (bootleg)
 	&BurnDrvclubpacm,			// Pacman Club / Club Lambada (Argentina)
+	&BurnSpecPmslimers,			// Pacman the Curse of the Slimers (48K) (HB, v1.1)
 	&BurnDrvMSX_pacobomb,		// Paco el Bombas REDUX (HB)
 #if defined FBNEO_DEBUG
 	&BurnDrvPacominv,			// Pacom Invader [No sound]
@@ -28740,7 +28747,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPushman,			// Pushman (Korea, set 1)
 	&BurnDrvPushmana,			// Pushman (Korea, set 2)
 	&BurnDrvnes_pussnboo,		// Puss 'n Boots - Pero's Great Adventure (USA)
-	&BurnSpecPutamili,			// Puta Mili (HB)
+	&BurnSpecPutamili,			// Puta Mili (Spanish) (48K) (HB)
 	&BurnDrvsms_puttputt,		// Putt and Putter (Euro, Bra)
 	&BurnDrvsms_puttputtp,		// Putt and Putter (Euro, Prototype)
 	&BurnDrvgg_puttputt,		// Putt and Putter (Euro, USA, Bra)
@@ -32344,6 +32351,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRbtapper,			// Tapper (Root Beer)
 	&BurnDrvSutapper,			// Tapper (Suntory)
 	&BurnDrvcv_tapper,			// Tapper
+	&BurnSpecTardigrade,		// Tardigrade (48K) (HB)
 	&BurnDrvnes_targetrenegadec,// Target - Renegade (USA) - Castellano v1.0
 	&BurnDrvmd_trgearths,		// Target Earth (Hack, Spanish)
 	&BurnDrvmd_trgearth,		// Target Earth (USA)

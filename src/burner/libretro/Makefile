@@ -643,11 +643,7 @@ generate-files:
 	@mkdir -p $(FBNEO_GENERATED_DIR) 2>/dev/null || /bin/true
 	@echo "Generating $(FBNEO_GENERATED_DIR)/driverlist.h..."
 	@echo ""
-ifeq ($(LIGHT), 0)
-	$(PERL) $(FBNEO_SCRIPTS_DIR)/gamelist.pl -o $(FBNEO_GENERATED_DIR)/driverlist.h -l $(MAIN_FBNEO_DIR)/../gamelist.txt $(FBNEO_BURN_DRIVERS_DIRS)
-else
-	$(PERL) $(FBNEO_SCRIPTS_DIR)/gamelist.pl -o $(FBNEO_GENERATED_DIR)/driverlist.h -l $(MAIN_FBNEO_DIR)/../gamelist.txt $(filter-out $(BURN_BLACKLIST),$(foreach dir,$(FBNEO_BURN_DRIVERS_DIRS),$(wildcard $(dir)/*.cpp)))
-endif
+	$(PERL) $(FBNEO_SCRIPTS_DIR)/gamelist.pl -o $(FBNEO_GENERATED_DIR)/driverlist.h -l $(MAIN_FBNEO_DIR)/../gamelist.txt $(SOURCES_CXX)
 	@echo ""
 	@echo "Generating $(FBNEO_GENERATED_DIR)/neo_sprite_func.h..."
 	@echo ""

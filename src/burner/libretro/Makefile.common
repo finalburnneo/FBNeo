@@ -379,17 +379,35 @@ INCLUDE_DIRS := $(FBNEO_BURNER_DIR)/win32 \
 
 ARM_FLAGS =
 
-ifeq ($(USE_X64_DRC), 1)
-	FBNEO_DEFINES  += -DXBYAK_NO_OP_NAMES -DMIPS3_X64_DRC
-	FBNEO_SRC_DIRS += $(MIPS3_X64_DRC_CPU_DIR)
-	ifeq (,$(findstring msvc,$(platform)))
-		CXXFLAGS += -std=gnu++11
-	endif
-else
-	ifeq (,$(findstring msvc,$(platform)))
-		CXXFLAGS += -std=gnu++98
-	endif
+ifeq (,$(findstring msvc,$(platform)))
+	CFLAGS += -std=gnu99
 endif
+
+ifeq (,$(findstring msvc,$(platform)))
+	CXXFLAGS += -std=gnu++98
+endif
+
+#ifeq ($(USE_X64_DRC), 1)
+#	FBNEO_DEFINES  += -DXBYAK_NO_OP_NAMES -DMIPS3_X64_DRC
+#	FBNEO_SRC_DIRS += $(MIPS3_X64_DRC_CPU_DIR)
+#	ifeq (,$(findstring msvc,$(platform)))
+#		CXXFLAGS += -std=gnu++11
+#	endif
+#else
+#	ifeq (,$(findstring msvc,$(platform)))
+#		CXXFLAGS += -std=gnu++98
+#	endif
+#endif
+
+# removing everything related to kinst as it's not worth keeping and only causing issues :
+# - the driver is tagged as not working and for debug builds only
+# - the related mips3 cpu core won't even build with recentish version of gcc (11+ ?)
+BURN_BLACKLIST += $(FBNEO_CPU_DIR)/mips3_intf.cpp \
+	$(MIPS3_CPU_DIR)/cop0.cpp \
+	$(MIPS3_CPU_DIR)/cop1.cpp \
+	$(MIPS3_CPU_DIR)/mips3.cpp \
+	$(MIDWAY_DIR)/d_kinst.cpp \
+	$(MIDWAY_DIR)/ide.cpp
 
 ifeq ($(USE_CYCLONE), 1)
 	FBNEO_DEFINES		+= -DUSE_CYCLONE
@@ -464,10 +482,6 @@ SOURCES_CXX += $(LIBRETRO_DIR)/libretro.cpp \
 
 SOURCES_C += $(UGUI_DIR)/ugui.c \
 	$(LIBRETRO_DIR)/ugui_tools.c
-
-ifeq (,$(findstring msvc,$(platform)))
-	CFLAGS += -std=gnu99
-endif
 
 # GIT HASH
 GIT_VERSION := " $(shell git rev-parse --short HEAD || echo unknown)"

@@ -363,12 +363,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
@@ -453,7 +448,7 @@ static INT32 DrvExit()
 	AY8910Exit(1);
 	AY8910Exit(2);
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	set2 = 0;
 
@@ -496,19 +491,7 @@ static void draw_road()
 				+ ((( DrvGfxROM3[offs + 0x4000 + ( backgroundpage * 1024 )] & 0xc0 ) >> 6 ) * 256 );
 		INT32 color = backgroundcolor & 0x1f;
 
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM1);
-			} else {
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM1);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM1);
-			} else {
-				Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM1);
-			}
-		}
+		Draw8x8MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 3, 0, 0, DrvGfxROM1);
 	}
 }
 
@@ -531,19 +514,7 @@ static void draw_text()
 			sx -= 2; // offset
 		sy -= 2*8; // offset
 
-		if (screen_flipy) {
-			if (screen_flipx) {
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx * 8, sy, color, 3, 0, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx * 8, sy, color, 3, 0, 0, DrvGfxROM0);
-			}
-		} else {
-			if (screen_flipx) {
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx * 8, sy, color, 3, 0, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Mask_Clip(pTransDraw, code, sx * 8, sy, color, 3, 0, 0, DrvGfxROM0);
-			}
-		}
+		Draw8x8MaskTile(pTransDraw, code, sx * 8, sy, screen_flipx, screen_flipy, color, 3, 0, 0, DrvGfxROM0);
 	}
 }
 
@@ -574,19 +545,7 @@ static void draw_sprites()
 
 			INT32 code = (attr & 0x3f) + (bank * 0x40);
 
-			if (flipy == 0) {
-				if (flipx) {
-					Render32x32Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM2);
-				} else {
-					Render32x32Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM2);
-				}
-			} else {
-				if (flipx) {
-					Render32x32Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM2);
-				} else {
-					Render32x32Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM2);
-				}
-			}
+			Draw32x32MaskTile(pTransDraw, code, sx, sy, flipx, !flipy, color, 3, 0, 0, DrvGfxROM2);
 		}
 	}
 }
@@ -598,13 +557,11 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = backgroundpen;
-	}
+	BurnTransferClear(backgroundpen);
 
-	if (nBurnLayer & 2) draw_road();
-	if (nBurnLayer & 4) draw_sprites();
-	if (nBurnLayer & 8) draw_text();
+	if (nBurnLayer & 1) draw_road();
+	if (nSpriteEnable & 1) draw_sprites();
+	if (nBurnLayer & 2) draw_text();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -633,21 +590,20 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = nCyclesTotal[0] / nInterleave;
-
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nSegment);
+		CPU_RUN(0, Zet);
 		if (nmi_mask && i == (nInterleave - 1)) ZetNmi();
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nSegment / 2);
+		CPU_RUN(1, Zet);
 		if (sound_nmi_mask && (i % (nInterleave / 4)) == ((nInterleave / 4) - 1)) ZetNmi();
 		ZetClose();
 	}
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 	}
 
 	if (pBurnDraw) {

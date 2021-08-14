@@ -30,6 +30,8 @@ static UINT8 *DrvVidRAM1;
 static UINT32 *DrvPalette;
 static UINT8  DrvRecalc;
 
+static INT32 nExtraCycles[4];
+
 static UINT8 *flipscreen;
 static UINT8 *nBank;
 
@@ -41,99 +43,97 @@ static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo ExzisusInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 5,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
-	{"Tilt",		BIT_DIGITAL,	DrvJoy3 + 1,	"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	DrvJoy3 + 1,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Exzisus)
 
 static struct BurnDIPInfo ExzisusDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0xfe, NULL			},
-	{0x14, 0xff, 0xff, 0xff, NULL			},
+	DIP_OFFSET(0x13)
+	{0x00, 0xff, 0xff, 0xfe, NULL					},
+	{0x01, 0xff, 0xff, 0xff, NULL					},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x13, 0x01, 0x01, 0x00, "Upright"		},
-	{0x13, 0x01, 0x01, 0x01, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x00, 0x01, 0x01, 0x00, "Upright"				},
+	{0x00, 0x01, 0x01, 0x01, "Cocktail"				},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x13, 0x01, 0x02, 0x02, "Off"			},
-	{0x13, 0x01, 0x02, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x00, 0x01, 0x02, 0x02, "Off"					},
+	{0x00, 0x01, 0x02, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x13, 0x01, 0x04, 0x04, "Off"			},
-	{0x13, 0x01, 0x04, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x00, 0x01, 0x04, 0x04, "Off"					},
+	{0x00, 0x01, 0x04, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x13, 0x01, 0x08, 0x00, "Off"			},
-	{0x13, 0x01, 0x08, 0x08, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x00, 0x01, 0x08, 0x00, "Off"					},
+	{0x00, 0x01, 0x08, 0x08, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"		},
-	{0x13, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
-	{0x13, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
-	{0x13, 0x01, 0x30, 0x00, "2 Coins 3 Credits"	},
-	{0x13, 0x01, 0x30, 0x20, "1 Coin  2 Credits"	},
+	{0   , 0xfe, 0   ,    4, "Coin A"				},
+	{0x00, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x30, 0x00, "2 Coins 3 Credits"	},
+	{0x00, 0x01, 0x30, 0x20, "1 Coin  2 Credits"	},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"		},
-	{0x13, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
-	{0x13, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"	},
-	{0x13, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"	},
-	{0x13, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"	},
+	{0   , 0xfe, 0   ,    4, "Coin B"				},
+	{0x00, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"	},
+	{0x00, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"	},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x14, 0x01, 0x03, 0x02, "Easy"			},
-	{0x14, 0x01, 0x03, 0x03, "Medium"		},
-	{0x14, 0x01, 0x03, 0x01, "Hard"			},
-	{0x14, 0x01, 0x03, 0x00, "Hardest"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x01, 0x01, 0x03, 0x02, "Easy"					},
+	{0x01, 0x01, 0x03, 0x03, "Medium"				},
+	{0x01, 0x01, 0x03, 0x01, "Hard"					},
+	{0x01, 0x01, 0x03, 0x00, "Hardest"				},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x14, 0x01, 0x0c, 0x08, "100k and every 150k"	},
-	{0x14, 0x01, 0x0c, 0x0c, "150k and every 200k"	},
-	{0x14, 0x01, 0x0c, 0x04, "150k"			},
-	{0x14, 0x01, 0x0c, 0x00, "200k"			},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0x01, 0x01, 0x0c, 0x08, "100k and every 150k"	},
+	{0x01, 0x01, 0x0c, 0x0c, "150k and every 200k"	},
+	{0x01, 0x01, 0x0c, 0x04, "150k"					},
+	{0x01, 0x01, 0x0c, 0x00, "200k"					},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x14, 0x01, 0x30, 0x00, "2"			},
-	{0x14, 0x01, 0x30, 0x30, "3"			},
-	{0x14, 0x01, 0x30, 0x20, "4"			},
-	{0x14, 0x01, 0x30, 0x10, "5"			},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x01, 0x01, 0x30, 0x00, "2"					},
+	{0x01, 0x01, 0x30, 0x30, "3"					},
+	{0x01, 0x01, 0x30, 0x20, "4"					},
+	{0x01, 0x01, 0x30, 0x10, "5"					},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode (buggy)"	},
-	{0x14, 0x01, 0x80, 0x80, "Off"			},
-	{0x14, 0x01, 0x80, 0x00, "On"			},
+	{0x01, 0x01, 0x80, 0x80, "Off"					},
+	{0x01, 0x01, 0x80, 0x00, "On"					},
 };
 
 STDDIPINFO(Exzisus)
 
 static void bankswitch(INT32 cpu, INT32 data)
 {
-	if ((data & 0x0f) >= 2)
-	{
-		nBank[cpu] = (data & 0x0f);
+	nBank[cpu] = (data & 0x0f);
 
-		ZetMapMemory((cpu ? DrvZ80ROM1 : DrvZ80ROM0) + ((nBank[cpu] - 2) * 0x4000) + 0x8000, 0x8000, 0xbfff, MAP_ROM);
-	}
+	ZetMapMemory((cpu ? DrvZ80ROM1 : DrvZ80ROM0) + ((nBank[cpu]) * 0x4000), 0x8000, 0xbfff, MAP_ROM);
 
 	*flipscreen = data & 0x40;
 }
@@ -147,11 +147,7 @@ static void __fastcall exzisus_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xf404:
-			ZetClose();
-			ZetOpen(2);
-			ZetReset();
-			ZetClose();
-			ZetOpen(0);
+			ZetReset(2);
 		return;
 	}
 }
@@ -163,13 +159,13 @@ static void __fastcall exzisus_cpub_write(UINT16 address, UINT8 data)
 		case 0xf000:
 			ZetClose();
 			TC0140SYTPortWrite(data);
-			ZetOpen(0);
+			ZetOpen(1);
 		return;
 
 		case 0xf001:
 			ZetClose();
 			TC0140SYTCommWrite(data);
-			ZetOpen(0);
+			ZetOpen(1);
 		return;
 
 		case 0xf400:
@@ -218,11 +214,8 @@ static void __fastcall exzisus_sound_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0x9000:
-			BurnYM2151SelectRegister(data);
-		return;
-
 		case 0x9001:
-			BurnYM2151WriteRegister(data);
+			BurnYM2151Write(address & 1, data);
 		return;
 
 		case 0xa000:
@@ -259,17 +252,9 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
-
-	ZetOpen(1);
-	ZetReset();
-	ZetClose();
-
-	ZetOpen(2);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
+	ZetReset(1);
+	ZetReset(2);
 
 	ZetOpen(3);
 	ZetReset();
@@ -278,6 +263,8 @@ static INT32 DrvDoReset()
 	ZetClose();
 
 	HiscoreReset();
+
+	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = nExtraCycles[3] = 0;
 
 	return 0;
 }
@@ -304,8 +291,8 @@ static INT32 MemIndex()
 	DrvZ80RAM2		= Next; Next += 0x001000;
 	DrvZ80RAM3		= Next; Next += 0x001000;
 
-	DrvSharedRAMAB		= Next; Next += 0x000800;
-	DrvSharedRAMAC		= Next; Next += 0x001000;
+	DrvSharedRAMAB	= Next; Next += 0x000800;
+	DrvSharedRAMAC	= Next; Next += 0x001000;
 
 	DrvObjRAM0		= Next; Next += 0x000600;
 	DrvObjRAM1		= Next; Next += 0x000600;
@@ -348,25 +335,23 @@ static void DrvPaletteInit()
 {
 	for (INT32 i = 0; i < 0x400; i++)
 	{
-		int bit0,bit1,bit2,bit3,r,g,b;
-
-		bit0 = (DrvColPROM[i + 0x000] >> 0) & 0x01;
-		bit1 = (DrvColPROM[i + 0x000] >> 1) & 0x01;
-		bit2 = (DrvColPROM[i + 0x000] >> 2) & 0x01;
-		bit3 = (DrvColPROM[i + 0x000] >> 3) & 0x01;
-		r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
+		INT32 bit0 = (DrvColPROM[i + 0x000] >> 0) & 0x01;
+		INT32 bit1 = (DrvColPROM[i + 0x000] >> 1) & 0x01;
+		INT32 bit2 = (DrvColPROM[i + 0x000] >> 2) & 0x01;
+		INT32 bit3 = (DrvColPROM[i + 0x000] >> 3) & 0x01;
+		INT32 r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 
 		bit0 = (DrvColPROM[i + 0x400] >> 0) & 0x01;
 		bit1 = (DrvColPROM[i + 0x400] >> 1) & 0x01;
 		bit2 = (DrvColPROM[i + 0x400] >> 2) & 0x01;
 		bit3 = (DrvColPROM[i + 0x400] >> 3) & 0x01;
-		g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
+		INT32 g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 
 		bit0 = (DrvColPROM[i + 0x800] >> 0) & 0x01;
 		bit1 = (DrvColPROM[i + 0x800] >> 1) & 0x01;
 		bit2 = (DrvColPROM[i + 0x800] >> 2) & 0x01;
 		bit3 = (DrvColPROM[i + 0x800] >> 3) & 0x01;
-		b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
+		INT32 b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 
 		DrvPalette[i] = BurnHighCol(r,g,b,0);
 	}
@@ -374,12 +359,7 @@ static void DrvPaletteInit()
 
 static INT32 DrvInit(INT32 bigcolprom)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
@@ -426,10 +406,10 @@ static INT32 DrvInit(INT32 bigcolprom)
 	ZetInit(0);
 	ZetOpen(0);
 	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, MAP_ROM);
-	ZetMapMemory(DrvSharedRAMAC,	0xe000, 0xefff, MAP_RAM);
+	ZetMapMemory(DrvSharedRAMAC,0xe000, 0xefff, MAP_RAM);
 	ZetMapMemory(DrvObjRAM1,	0xc000, 0xc5ff, MAP_RAM);
 	ZetMapMemory(DrvVidRAM1,	0xc600, 0xdfff, MAP_RAM);
-	ZetMapMemory(DrvSharedRAMAB,	0xf800, 0xffff, MAP_RAM);
+	ZetMapMemory(DrvSharedRAMAB,0xf800, 0xffff, MAP_RAM);
 	ZetSetWriteHandler(exzisus_main_write);
 	ZetClose();
 
@@ -439,7 +419,7 @@ static INT32 DrvInit(INT32 bigcolprom)
 	ZetMapMemory(DrvObjRAM0,	0xc000, 0xc5ff, MAP_RAM);
 	ZetMapMemory(DrvVidRAM0,	0xc600, 0xdfff, MAP_RAM);
 	ZetMapMemory(DrvZ80RAM1,	0xe000, 0xefff, MAP_RAM);
-	ZetMapMemory(DrvSharedRAMAB,	0xf800, 0xffff, MAP_RAM);
+	ZetMapMemory(DrvSharedRAMAB,0xf800, 0xffff, MAP_RAM);
 	ZetSetWriteHandler(exzisus_cpub_write);
 	ZetSetReadHandler(exzisus_cpub_read);
 	ZetClose();
@@ -449,7 +429,7 @@ static INT32 DrvInit(INT32 bigcolprom)
 	ZetMapMemory(DrvZ80ROM2,	0x0000, 0x7fff, MAP_ROM);
 	ZetMapMemory(DrvObjRAM1,	0x8000, 0x85ff, MAP_RAM);
 	ZetMapMemory(DrvVidRAM1,	0x8600, 0x9fff, MAP_RAM);
-	ZetMapMemory(DrvSharedRAMAC,	0xa000, 0xafff, MAP_RAM);
+	ZetMapMemory(DrvSharedRAMAC,0xa000, 0xafff, MAP_RAM);
 	ZetMapMemory(DrvZ80RAM2,	0xb000, 0xbfff, MAP_RAM);
 	ZetClose();
 
@@ -461,10 +441,11 @@ static INT32 DrvInit(INT32 bigcolprom)
 	ZetSetReadHandler(exzisus_sound_read);
 	ZetClose();
 
-	BurnYM2151Init(4000000);
+	BurnYM2151InitBuffered(4000000, 1, NULL, 0);
 	BurnYM2151SetIrqHandler(&exzisusYM2151IrqHandler);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachZet(4000000);
 
 	TC0140SYTInit(3);
 
@@ -484,21 +465,20 @@ static INT32 DrvExit()
 	TC0140SYTReset();
 	BurnYM2151Exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
 
 static void TC0010VCU(UINT8 *ObjRAM, UINT8 *VidRAM, UINT8 *gfx, INT32 color_offset)
 {
-	int offs;
-	int sx, sy, xc, yc;
-	int gfx_num, gfx_attr, gfx_offs;
+	INT32 sx, sy;
+	INT32 gfx_num, gfx_attr, gfx_offs;
 
 	sx = 0;
-	for (offs = 0 ; offs < 0x600; offs += 4)
+	for (INT32 offs = 0 ; offs < 0x600; offs += 4)
 	{
-		int height;
+		INT32 height;
 
 		if ( !(*(UINT32 *)(&ObjRAM[offs])) )
 		{
@@ -534,17 +514,15 @@ static void TC0010VCU(UINT8 *ObjRAM, UINT8 *VidRAM, UINT8 *gfx, INT32 color_offs
 
 		sy = 256 - (height << 3) - (ObjRAM[offs]);
 
-		for (xc = 0 ; xc < 2 ; xc++)
+		for (INT32 xc = 0 ; xc < 2 ; xc++)
 		{
-			int goffs = gfx_offs;
-			for (yc = 0 ; yc < height ; yc++)
+			INT32 goffs = gfx_offs;
+			for (INT32 yc = 0 ; yc < height ; yc++)
 			{
-				int code, color, x, y;
-
-				code  = (VidRAM[goffs + 1] << 8) | VidRAM[goffs];
-				color = (VidRAM[goffs + 1] >> 6) | (gfx_attr & 0x0f);
-				x = (sx + (xc << 3)) & 0xff;
-				y = (sy + (yc << 3)) & 0xff;
+				INT32 code  = (VidRAM[goffs + 1] << 8) | VidRAM[goffs];
+				INT32 color = (VidRAM[goffs + 1] >> 6) | (gfx_attr & 0x0f);
+				INT32 x = (sx + (xc << 3)) & 0xff;
+				INT32 y = (sy + (yc << 3)) & 0xff;
 
 				if (*flipscreen)
 				{
@@ -572,9 +550,7 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x3ff;
-	}
+	BurnTransferClear(0x3ff);
 
 	TC0010VCU(DrvObjRAM0, DrvVidRAM0, DrvGfxROM0, 0x000);
 	TC0010VCU(DrvObjRAM1, DrvVidRAM1, DrvGfxROM1, 0x100);
@@ -602,58 +578,39 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nSegment;
-	INT32 nInterleave = 10;
-	INT32 nSoundBufferPos = 0;
+	INT32 nInterleave = 10; // must be 10, else unwanted contentions between cpu
 	INT32 nCyclesTotal[4] = { 6000000 / 60, 6000000 / 60, 6000000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
-	
+	INT32 nCyclesDone[4] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2], 0 };
+
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-
-		nSegment = nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += ZetRun(nSegment);
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
-
-		nSegment = ZetTotalCycles();
-
+		CPU_RUN(0, Zet);
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[0] += ZetRun(nSegment - ZetTotalCycles());
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		CPU_RUN(1, Zet);
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(2);
-		nCyclesDone[0] += ZetRun(nSegment - ZetTotalCycles());
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		CPU_RUN(2, Zet);
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(3);
-		nCyclesDone[0] += ZetRun(nSegment - ZetTotalCycles());
-
-		if (pBurnSoundOut) {
-			nSegment = nBurnSoundLen / nInterleave;
-
-			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-
-			nSoundBufferPos += nSegment;
-		}
-
+		CPU_RUN_TIMER(3);
 		ZetClose();
 	}
 
-	ZetOpen(3);
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
 
 	if (pBurnSoundOut) {
-		nSegment = nBurnSoundLen - nSoundBufferPos;
-		if (nSegment > 0) {
-			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-		}
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -666,7 +623,7 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029698;
 	}
@@ -684,18 +641,18 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnYM2151Scan(nAction, pnMin);
 		TC0140SYTScan(nAction);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {
 		ZetOpen(0);
-		bankswitch(0,nBank[0]);
+		bankswitch(0, nBank[0]);
 		ZetClose();
 
 		ZetOpen(1);
-		bankswitch(0,nBank[1]);
+		bankswitch(1, nBank[1]);
 		ZetClose();
-
-		DrvRecalc = 1;
 	}
 
 	return 0;

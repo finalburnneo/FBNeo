@@ -1652,6 +1652,22 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="bloodwarj" cloneof="bloodwar" romof="bloodwar">
+		<description>Bloody Warriors - Shan-Go no Gyakushuu (Japan)</description>
+		<year>1990</year>
+		<manufacturer>Toei Animation</manufacturer>
+		<rom name="Bloody Warriors - Shan-Go no Gyakushuu (Japan).nes" size="262160" crc="5cb5676f"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="bloodwar">
+		<description>Bloody Warriors - Shan-Go no Gyakushuu (T-Eng)</description>
+		<year>1990</year>
+		<manufacturer>Toei Animation</manufacturer>
+		<rom name="Bloody Warriors - Shan-Go no Gyakushuu (T-Eng).nes" size="262160" crc="c06584e5"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="blowemout">
 		<description>Blow'Em Out! (HB) [Homebrew]</description>
 		<year>2018</year>
@@ -2049,6 +2065,14 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Captain Tsubasa Vol. II - Super Striker (T-eng).nes" size="393232" crc="465917f7"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="carpetshark">
+		<description>Carpet Shark (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Fista Productions</manufacturer>
+		<rom name="Carpet Shark (2021)(Fista Productions).nes" size="524304" crc="8ab5f2e0"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -5372,7 +5396,7 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="getsufuumaden">
+	<game name="getsufuumaden" cloneof="legenfum" romof="legenfum">
 		<description>Getsu Fuuma Den (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Konami</manufacturer>
@@ -13521,6 +13545,14 @@
 		<year>1988</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Tetsuwan Atom (Japan).nes" size="262160" crc="6673e5da"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="legenfum">
+		<description>The Legend of Fuma (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="The Legend of Fuma (T-Eng).nes" size="393232" crc="dad72cc9"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

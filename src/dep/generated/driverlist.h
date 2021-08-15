@@ -1632,6 +1632,8 @@ DRV		BurnDrvnes_bloodfall;
 DRV		BurnDrvmd_bloodsht;
 DRV		BurnSpecBloody;
 DRV		BurnDrvMSX_bloody;
+DRV		BurnDrvnes_bloodwarj;
+DRV		BurnDrvnes_bloodwar;
 DRV		BurnDrvtg_blodwolf;
 DRV		BurnDrvMSX_blowup;
 DRV		BurnDrvmd_blowemout;
@@ -2247,6 +2249,7 @@ DRV		BurnDrvCarnivalha;		// No sound [NOT WORKING]
 #endif
 DRV		BurnDrvCarnival;
 DRV		BurnDrvcv_carnival;
+DRV		BurnDrvnes_carpetshark;
 DRV		BurnDrvCpsCawingbl;
 DRV		BurnDrvCpsCawingb2;
 DRV		BurnDrvCpsCawingr1;
@@ -12397,6 +12400,7 @@ DRV		BurnSpecseadragon;
 DRV		BurnDrvSfposeid;
 DRV		BurnDrvMSX_seahuntr;
 DRV		BurnDrvMSX_seaking;
+DRV		BurnDrvSeawolft;
 DRV		BurnSpecSeahawk;
 DRV		BurnDrvmd_seaquest;
 DRV		BurnDrvmd_seaquestu;
@@ -15399,6 +15403,7 @@ DRV		BurnDrvLastday;
 DRV		BurnDrvLastdaya;
 DRV		BurnDrvlastsold;
 DRV		BurnDrvmd_lawnmowr;
+DRV		BurnDrvnes_legenfum;
 DRV		BurnDrvLkageb;
 DRV		BurnDrvLkageb2;
 DRV		BurnDrvLkageb3;
@@ -19242,6 +19247,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_bloodsht,		// Bloodshot ~ Battle Frenzy (Euro)
 	&BurnSpecBloody,			// Bloody (Spanish) (48K)
 	&BurnDrvMSX_bloody,			// Bloody (Spanish)
+	&BurnDrvnes_bloodwarj,		// Bloody Warriors - Shan-Go no Gyakushuu (Japan)
+	&BurnDrvnes_bloodwar,		// Bloody Warriors - Shan-Go no Gyakushuu (T-Eng)
 	&BurnDrvtg_blodwolf,		// Bloody Wolf
 	&BurnDrvMSX_blowup,			// Blow Up
 	&BurnDrvmd_blowemout,		// Blow'em Out (HB)
@@ -19857,6 +19864,7 @@ static struct BurnDriver* pDriver[] = {
 #endif
 	&BurnDrvCarnival,			// Carnival (upright)
 	&BurnDrvcv_carnival,		// Carnival
+	&BurnDrvnes_carpetshark,	// Carpet Shark (HB)
 	&BurnDrvCpsCawingbl,		// Carrier Air Wing (bootleg set 1 (with 2xYM2203 + 2xMSM5205), U.S. navy 901012 etc)
 	&BurnDrvCpsCawingb2,		// Carrier Air Wing (bootleg set 2 (with 2xYM2203 + 2xMSM5205), U.S. navy 901012 etc)
 	&BurnDrvCpsCawingr1,		// Carrier Air Wing (U.S. navy 901009 etc)
@@ -30007,6 +30015,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSfposeid,			// Sea Fighter Poseidon
 	&BurnDrvMSX_seahuntr,		// Sea Hunter (Euro)
 	&BurnDrvMSX_seaking,		// Sea King (Euro)
+	&BurnDrvSeawolft,			// Sea Wolf (Tecfri)
 	&BurnSpecSeahawk,			// Seahawk
 	&BurnDrvmd_seaquest,		// SeaQuest DSV (Euro)
 	&BurnDrvmd_seaquestu,		// SeaQuest DSV (USA)
@@ -33009,6 +33018,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvLastdaya,			// The Last Day (set 2)
 	&BurnDrvlastsold,			// The Last Soldier (Korean release of The Last Blade)
 	&BurnDrvmd_lawnmowr,		// The Lawnmower Man (Euro, USA)
+	&BurnDrvnes_legenfum,		// The Legend of Fuma (T-Eng)
 	&BurnDrvLkageb,				// The Legend of Kage (bootleg set 1)
 	&BurnDrvLkageb2,			// The Legend of Kage (bootleg set 2)
 	&BurnDrvLkageb3,			// The Legend of Kage (bootleg set 3)

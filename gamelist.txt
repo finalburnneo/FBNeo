@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17367 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17372 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1614,6 +1614,8 @@ This list contains all games supported by FinalBurn Neo.
 | md_bloodsht	|  	| Bloodshot ~ Battle Frenzy (Euro)			| 		| 1994	| Acclaim Entert| Sega Megadrive| 					|
 | spec_bloody	|  	| Bloody (Spanish) (48K)				| 		| 1987	| Genesis Soft	| ZX Spectrum	| 					|
 | msx_bloody	|  	| Bloody (Spanish)					| 		| 1987	| P.J. Software	| MSX		| 					|
+| nes_bloodwarj	|  	| Bloody Warriors - Shan-Go no Gyakushuu (Japan)	| nes_bloodwar	| 1990	| Toei Animation| Miscellaneous	| 					|
+| nes_bloodwar	|  	| Bloody Warriors - Shan-Go no Gyakushuu (T-Eng)	| 		| 1990	| Toei Animation| Miscellaneous	| 					|
 | tg_blodwolf	|  	| Bloody Wolf						| 		| 1990	| NEC		| TurboGrafx 16	| 					|
 | msx_blowup	|  	| Blow Up						| 		| 1988	| Eurosoft	| MSX		| 					|
 | md_blowemout	|  	| Blow'em Out (HB)					| 		| 2017	| 2nd Dimension	| Sega Megadrive| 					|
@@ -2219,6 +2221,7 @@ This list contains all games supported by FinalBurn Neo.
 | carnivalha	| D NW	| Carnival (Head On hardware, set 2)			| carnival	| 1980	| Sega		| Vic Dual	| No sound				|
 | carnival	|  	| Carnival (upright)					| 		| 1980	| Sega		| Vic Dual	| 					|
 | cv_carnival	|  	| Carnival						| 		| 1982	| Coleco	| ColecoVision	| 					|
+| nes_carpetshark|  	| Carpet Shark (HB)					| 		| 2021	| Fista Producti| Miscellaneous	| 					|
 | cawingbl	|  	| Carrier Air Wing (bootleg set 1 (with 2xYM2203 + 2xMSM| cawing	| 1990	| bootleg	| CPS1		| 					|
 | cawingb2	|  	| Carrier Air Wing (bootleg set 2 (with 2xYM2203 + 2xMSM| cawing	| 1990	| bootleg	| CPS1		| 					|
 | cawingr1	|  	| Carrier Air Wing (U.S. navy 901009 etc)		| cawing	| 1990	| Capcom	| CPS1		| 					|
@@ -5550,7 +5553,7 @@ This list contains all games supported by FinalBurn Neo.
 | getstarb2	|  	| Get Star (bootleg set 2)				| grdian	| 1986	| bootleg	| Miscellaneous	| 					|
 | getstarj	|  	| Get Star (Japan)					| grdian	| 1986	| Toaplan / Tait| Miscellaneous	| 					|
 | nes_getemgary	|  	| Get'Em Gary (HB)					| 		| 2016	| Second Dimensi| Miscellaneous	| 					|
-| nes_getsufuumaden|  	| Getsu Fuuma Den (Japan)				| 		| 1987	| Konami	| Miscellaneous	| 					|
+| nes_getsufuumaden|  	| Getsu Fuuma Den (Japan)				| nes_legenfum	| 1987	| Konami	| Miscellaneous	| 					|
 | gg_ggaleste	|  	| GG Aleste (Jpn)					| 		| 1991	| Compile	| Sega Game Gear| 					|
 | gg_ggdora	|  	| GG Doraemon - Noranosuke no Yabou (Jpn)		| 		| 1993	| Sega		| Sega Game Gear| 					|
 | gg_ggport	|  	| GG Portrait - Pai Chen (Jpn)				| 		| 1996	| Sega		| Sega Game Gear| 					|
@@ -12239,6 +12242,7 @@ This list contains all games supported by FinalBurn Neo.
 | sfposeid	|  	| Sea Fighter Poseidon					| 		| 1984	| Taito Corporat| Taito SJ Syste| 					|
 | msx_seahuntr	|  	| Sea Hunter (Euro)					| 		| 1984	| DynaData?	| MSX		| 					|
 | msx_seaking	|  	| Sea King (Euro)					| 		| 1986	| Players Softwa| MSX		| 					|
+| seawolft	|  	| Sea Wolf (Tecfri)					| sauro		| 1987	| Tecfri	| Miscellaneous	| 					|
 | spec_seahawk	|  	| Seahawk						| 		| 1990	| Atlantis Softw| ZX Spectrum	| 					|
 | md_seaquest	|  	| SeaQuest DSV (Euro)					| 		| 1994	| THQ		| Sega Megadrive| 					|
 | md_seaquestu	|  	| SeaQuest DSV (USA)					| md_seaquest	| 1994	| Black Pearl	| Sega Megadrive| 					|
@@ -15209,6 +15213,7 @@ This list contains all games supported by FinalBurn Neo.
 | lastdaya	|  	| The Last Day (set 2)					| lastday	| 1990	| Dooyong	| Miscellaneous	| 					|
 | lastsold	|  	| The Last Soldier (Korean release of The Last Blade)	| lastblad	| 1997	| SNK		| Neo Geo MVS	| 					|
 | md_lawnmowr	|  	| The Lawnmower Man (Euro, USA)				| 		| 1994	| Time Warner In| Sega Megadrive| 					|
+| nes_legenfum	|  	| The Legend of Fuma (T-Eng)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | lkageb	|  	| The Legend of Kage (bootleg set 1)			| lkage		| 1984	| bootleg	| Miscellaneous	| 					|
 | lkageb2	|  	| The Legend of Kage (bootleg set 2)			| lkage		| 1984	| bootleg	| Miscellaneous	| 					|
 | lkageb3	|  	| The Legend of Kage (bootleg set 3)			| lkage		| 1984	| bootleg	| hardware	| 					|

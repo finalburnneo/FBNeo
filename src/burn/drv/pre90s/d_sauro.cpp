@@ -1137,6 +1137,48 @@ struct BurnDriver BurnDrvSaurob = {
 };
 
 
+// Sea Wolf (Tecfri)
+
+static struct BurnRomInfo seawolftRomDesc[] = {
+	{ "1.bin",			0x8000, 0xbd8bd328, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "2.bin",			0x8000, 0x870b05ef, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "tmm24256ap.bin",	0x8000, 0x0d501e1b, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+
+	{ "4.bin",			0x8000, 0x4b77cb0f, 3 | BRF_GRA },           //  3 Background Tiles
+	{ "3.bin",			0x8000, 0x883bb7d1, 3 | BRF_GRA },           //  4
+
+	{ "6.bin",			0x8000, 0x9b617cda, 4 | BRF_GRA },           //  5 Foreground Tiles
+	{ "5.bin",			0x8000, 0xa6e2640d, 4 | BRF_GRA },           //  6
+
+	{ "10.bin",			0x8000, 0xb93f5487, 5 | BRF_GRA },           //  7 Sprites
+	{ "9.bin",			0x8000, 0x0964ac95, 5 | BRF_GRA },           //  8
+	{ "8.bin",			0x8000, 0xe71726a9, 5 | BRF_GRA },           //  9
+	{ "7.bin",			0x8000, 0x8a700276, 5 | BRF_GRA },           // 10
+
+	// PROMs not dumped on this PCB
+	{ "82s137-3.bin",	0x0400, 0xd52c4cd0, 6 | BRF_GRA },           // 11 Color data
+	{ "82s137-2.bin",	0x0400, 0xc3e96d5d, 6 | BRF_GRA },           // 12
+	{ "82s137-1.bin",	0x0400, 0xbdfcf00c, 6 | BRF_GRA },           // 13
+
+	// SP0256 mask ROM, not dumped on this PCB, but it's a generic GI ROM
+	{ "sp0256-al2.bin",	0x0800, 0xb504ac15, 7 | BRF_GRA },           // 14 Speech data
+};
+
+STD_ROM_PICK(seawolft)
+STD_ROM_FN(seawolft)
+
+struct BurnDriver BurnDrvSeawolft = {
+	"seawolft", "sauro", NULL, NULL, "1987",
+	"Sea Wolf (Tecfri)\0", NULL, "Tecfri", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, seawolftRomInfo, seawolftRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
+	SauroInit, DrvExit, SauroFrame, SauroDraw, DrvScan, &DrvRecalc, 0x400,
+	240, 224, 4, 3
+};
+
+
 // Tricky Doc (set 1)
 
 static struct BurnRomInfo trckydocRomDesc[] = {

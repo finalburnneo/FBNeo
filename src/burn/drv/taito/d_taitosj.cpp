@@ -1160,6 +1160,16 @@ static void ram_decode(INT32 offset)
 	}
 }
 
+static void sync_mcu()
+{
+	if (has_mcu) {
+		INT32 cyc = (ZetTotalCycles(0) * (3000000 / 4) / 4000000) - m6805TotalCycles();
+		if (cyc > 0) {
+			m6805Run(cyc);
+		}
+	}
+}
+
 static void bankswitch(INT32 data)
 {
 	rom_bank = data;
@@ -1194,7 +1204,7 @@ static void __fastcall taitosj_main_write(UINT16 address, UINT8 data)
 		case 0x8800:
 		{
 			if (has_mcu == 0) return;
-
+			sync_mcu();
 			zready = 1;
 			m68705SetIrqLine(0, 1);
 			fromz80 = data;
@@ -1284,11 +1294,13 @@ static UINT8 __fastcall taitosj_main_read(UINT16 address)
 	switch (address)
 	{
 		case 0x8800:
+			sync_mcu();
 			zaccept = 1;
 			return toz80;
 
 		case 0x8801:
 			if (has_mcu) {
+				sync_mcu();
 				return ~((zready << 0) | (zaccept << 1));
 			}
 			return 0xff;
@@ -1703,12 +1715,7 @@ static INT32 DrvLoadRoms()
 
 static INT32 CommonInit(INT32 coinstate, INT32 charramxor, INT32 kikstart)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (DrvLoadRoms()) return 1;
 
@@ -1807,7 +1814,7 @@ static INT32 DrvExit()
 	AY8910Exit(3);
 	DACExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	input2_xor = 0;
 	has_mcu = 0;
@@ -2437,12 +2444,12 @@ static INT32 DrvFrame()
 
 		if (has_mcu) {
 			ZetOpen(0);
-			CPU_RUN(2, m6805);
+			CPU_RUN_SYNCINT(2, m6805);
 			ZetClose();
 		}
 
 		sound_irq_timer++;
-		if (sound_irq_timer == 420)
+		if (sound_irq_timer >= 420)
 			sound_irq_timer = 0;
 	}
 
@@ -2481,6 +2488,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnAcb(&ba);
 
 		ZetScan(nAction);
+		m6805Scan(nAction);
+
 		AY8910Scan(nAction, pnMin);
 		DACScan(nAction, pnMin);
 		BurnWatchdogScan(nAction);
@@ -2498,6 +2507,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(protection_value);
 		SCAN_VAR(dac_volume);
 		SCAN_VAR(dac_out_data);
+		SCAN_VAR(sound_irq_timer);
 		SCAN_VAR(toz80);
 		SCAN_VAR(fromz80);
 		SCAN_VAR(mcu_address);
@@ -2506,7 +2516,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(zready);
 		SCAN_VAR(zaccept);
 		SCAN_VAR(busreq);
-		SCAN_VAR(sound_irq_timer);
 		SCAN_VAR(kikstart_gears);
 	}
 

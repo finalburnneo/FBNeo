@@ -846,7 +846,7 @@ static void Darius2CpuAReset(UINT16 d)
 	}
 }
 
-UINT8 __fastcall Darius268K1ReadByte(UINT32 a)
+static UINT8 __fastcall Darius268K1ReadByte(UINT32 a)
 {
 	switch (a) {
 		default: {
@@ -857,7 +857,7 @@ UINT8 __fastcall Darius268K1ReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Darius268K1WriteByte(UINT32 a, UINT8 d)
+static void __fastcall Darius268K1WriteByte(UINT32 a, UINT8 d)
 {
 	TC0100SCNTripleScreenByteWrite_Map(0x280000, 0x293fff)
 	TC0100SCN1ByteWrite_Map(0x2c0000, 0x2d3fff)
@@ -870,7 +870,7 @@ void __fastcall Darius268K1WriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Darius268K1ReadWord(UINT32 a)
+static UINT16 __fastcall Darius268K1ReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x200000: {
@@ -905,7 +905,7 @@ UINT16 __fastcall Darius268K1ReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Darius268K1WriteWord(UINT32 a, UINT16 d)
+static void __fastcall Darius268K1WriteWord(UINT32 a, UINT16 d)
 {
 	TC0100SCN0CtrlWordWrite_Map(0x2a0000)
 	TC0100SCN1CtrlWordWrite_Map(0x2e0000)
@@ -971,7 +971,7 @@ void __fastcall Darius268K1WriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall Darius268K2ReadByte(UINT32 a)
+static UINT8 __fastcall Darius268K2ReadByte(UINT32 a)
 {
 	switch (a) {		
 		default: {
@@ -982,7 +982,7 @@ UINT8 __fastcall Darius268K2ReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Darius268K2WriteByte(UINT32 a, UINT8 d)
+static void __fastcall Darius268K2WriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		default: {
@@ -991,7 +991,7 @@ void __fastcall Darius268K2WriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Darius268K2ReadWord(UINT32 a)
+static UINT16 __fastcall Darius268K2ReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x200000: {
@@ -1006,7 +1006,7 @@ UINT16 __fastcall Darius268K2ReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Darius268K2WriteWord(UINT32 a, UINT16 d)
+static void __fastcall Darius268K2WriteWord(UINT32 a, UINT16 d)
 {
 	TC0100SCNTripleScreenWordWrite_Map(0x280000, 0x293fff)
 	
@@ -1047,7 +1047,7 @@ void __fastcall Darius268K2WriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall Darius2d68KReadByte(UINT32 a)
+static UINT8 __fastcall Darius2d68KReadByte(UINT32 a)
 {
 	switch (a) {
 		default: {
@@ -1058,7 +1058,7 @@ UINT8 __fastcall Darius2d68KReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Darius2d68KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall Darius2d68KWriteByte(UINT32 a, UINT8 d)
 {
 	TC0100SCNDualScreenByteWrite_Map(0x200000, 0x213fff)
 	TC0100SCN1ByteWrite_Map(0x240000, 0x25ffff)
@@ -1070,7 +1070,7 @@ void __fastcall Darius2d68KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Darius2d68KReadWord(UINT32 a)
+static UINT16 __fastcall Darius2d68KReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x400002: {
@@ -1104,7 +1104,7 @@ UINT16 __fastcall Darius2d68KReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Darius2d68KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Darius2d68KWriteWord(UINT32 a, UINT16 d)
 {
 	TC0100SCNDualScreenWordWrite_Map(0x200000, 0x213fff)
 	
@@ -1162,7 +1162,7 @@ void __fastcall Darius2d68KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall Warriorb68KReadByte(UINT32 a)
+static UINT8 __fastcall Warriorb68KReadByte(UINT32 a)
 {
 	TC0510NIOHalfWordRead_Map(0x800000)
 
@@ -1175,7 +1175,7 @@ UINT8 __fastcall Warriorb68KReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Warriorb68KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall Warriorb68KWriteByte(UINT32 a, UINT8 d)
 {
 	TC0100SCNDualScreenByteWrite_Map(0x300000, 0x313fff)
 	TC0100SCN1ByteWrite_Map(0x340000, 0x35ffff)
@@ -1187,7 +1187,7 @@ void __fastcall Warriorb68KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Warriorb68KReadWord(UINT32 a)
+static UINT16 __fastcall Warriorb68KReadWord(UINT32 a)
 {
 	TC0510NIOHalfWordRead_Map(0x800000)
 	
@@ -1212,7 +1212,7 @@ UINT16 __fastcall Warriorb68KReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Warriorb68KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Warriorb68KWriteWord(UINT32 a, UINT16 d)
 {
 	TC0100SCNDualScreenWordWrite_Map(0x300000, 0x313fff)
 	TC0100SCN1WordWrite_Map(0x340000, 0x35ffff)
@@ -1258,7 +1258,7 @@ void __fastcall Warriorb68KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall Darius2Z80Read(UINT16 a)
+static UINT8 __fastcall Darius2Z80Read(UINT16 a)
 {
 	switch (a) {
 		case 0xe000: {
@@ -1286,7 +1286,14 @@ UINT8 __fastcall Darius2Z80Read(UINT16 a)
 	return 0;
 }
 
-void __fastcall Darius2Z80Write(UINT16 a, UINT8 d)
+static void bank_switch(INT32 data)
+{
+	TaitoZ80Bank = data;
+
+	ZetMapMemory(TaitoZ80Rom1 + 0x4000 + (((TaitoZ80Bank - 1) & 7) * 0x4000), 0x4000, 0x7fff, MAP_ROM);
+}
+
+static void __fastcall Darius2Z80Write(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xe000: {
@@ -1355,9 +1362,7 @@ void __fastcall Darius2Z80Write(UINT16 a, UINT8 d)
 		}
 		
 		case 0xf200: {
-			TaitoZ80Bank = (d - 1) & 7;
-			ZetMapArea(0x4000, 0x7fff, 0, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
-			ZetMapArea(0x4000, 0x7fff, 2, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
+			bank_switch(d);
 			return;
 		}
 		
@@ -1972,7 +1977,7 @@ static INT32 Darius2Frame()
 		}
 		
 		ZetOpen(0);
-		BurnTimerUpdate(i * (nTaitoCyclesTotal[2] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nTaitoCyclesTotal[2] / nInterleave));
 		ZetClose();
 	}
 	
@@ -2014,7 +2019,7 @@ static INT32 Darius2dFrame()
 		SekClose();
 		
 		ZetOpen(0);
-		BurnTimerUpdate(i * (nTaitoCyclesTotal[1] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nTaitoCyclesTotal[1] / nInterleave));
 		ZetClose();
 	}
 	
@@ -2055,17 +2060,12 @@ static INT32 Darius2Scan(INT32 nAction, INT32 *pnMin)
 		if (TaitoNumYM2610) BurnYM2610Scan(nAction, pnMin);
 
 		SCAN_VAR(TaitoCpuACtrl);
-
-		SCAN_VAR(TaitoInput);
 		SCAN_VAR(TaitoZ80Bank);
-		SCAN_VAR(nTaitoCyclesDone);
-		SCAN_VAR(nTaitoCyclesSegment);
 	}
 	
-	if (nAction & ACB_WRITE && TaitoZ80Bank) {
+	if (nAction & ACB_WRITE) {
 		ZetOpen(0);
-		ZetMapArea(0x4000, 0x7fff, 0, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
-		ZetMapArea(0x4000, 0x7fff, 2, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
+		bank_switch(TaitoZ80Bank);
 		ZetClose();
 	}
 	

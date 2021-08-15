@@ -1730,3 +1730,175 @@ void install_protection_asic27a_puzlstar()
 	SekClose();
 }
 
+#if 0
+static UINT32 photoy2k_seqpos;
+
+static UINT32 photoy2k_spritenum()
+{
+	switch((photoy2k_seqpos >> 10) & 0xf)
+	{
+		case 0x0:
+		case 0xa:
+			return BITSWAP16(photoy2k_seqpos, 15,14,13,12,11,10, 0,8,3,1,5,9,4,2,6,7) ^ 0x124;
+		case 0x1:
+		case 0xb:
+			return BITSWAP16(photoy2k_seqpos, 15,14,13,12,11,10, 5,1,7,4,0,8,3,6,9,2) ^ 0x088;
+		case 0x2:
+		case 0x8:
+			return BITSWAP16(photoy2k_seqpos, 15,14,13,12,11,10, 3,5,9,7,6,4,1,8,2,0) ^ 0x011;
+		case 0x3:
+		case 0x9:
+			return BITSWAP16(photoy2k_seqpos, 15,14,13,12,11,10, 1,8,3,6,0,4,5,2,9,7) ^ 0x154;
+		case 0x4:
+		case 0xe:
+			return BITSWAP16(photoy2k_seqpos, 15,14,13,12,11,10, 2,1,7,4,5,8,3,6,9,0) ^ 0x0a9;
+		case 0x5:
+		case 0xf:
+			return BITSWAP16(photoy2k_seqpos, 15,14,13,12,11,10, 9,4,6,8,2,1,7,5,3,0) ^ 0x201;
+		case 0x6:
+		case 0xd:
+			return BITSWAP16(photoy2k_seqpos, 15,14,13,12,11,10, 4,6,0,8,9,7,3,5,1,2) ^ 0x008;
+		case 0x7:
+		case 0xc:
+			return BITSWAP16(photoy2k_seqpos, 15,14,13,12,11,10, 8,9,3,2,0,1,6,7,5,4) ^ 0x000;
+	}
+	
+	return 0;
+}
+
+static UINT16 photoy2k_decode_sprite()
+{
+	UINT8 salt = PGMARMROM[0x1cfc + (asic27a_sim_regs[0x23] >> 1)] >> ((asic27a_sim_regs[0x23] & 1) * 4); // lsb of command 23 value selects high or low nibble of salt data
+
+	return (asic27a_sim_regs[0x22] & ~0x210a) | ((salt & 0x01) << 1) | ((salt & 0x02) << 2) | ((salt & 0x04) << 6) | ((salt & 0x08) << 10);
+}
+
+static void photoy2k_asic27a_sim_command(UINT8 command)
+{
+	switch (command)
+	{
+		case 0x23: // Address for 'salt' look-up for decode_sprite
+		case 0x22: // Data to be 'salted' for decode_sprite
+			asic27a_sim_response = 0x880000;
+		break;
+
+		case 0x21: // Actually perform sprite decode
+			asic27a_sim_response = photoy2k_decode_sprite();
+		break;
+		
+		case 0x20: // Get high byte value for sprite decode (just return value written to command 21)
+			asic27a_sim_response = asic27a_sim_regs[0x21];
+		break;
+
+		case 0x30: // Advance sprite number position
+			photoy2k_seqpos++;
+			asic27a_sim_response = photoy2k_spritenum();
+		break;
+
+		case 0x32: // Set sprite number position
+			photoy2k_seqpos = asic27a_sim_value << 4;
+			asic27a_sim_response = photoy2k_spritenum();
+		break;
+
+		case 0xae: // Bonus round look-up table
+			asic27a_sim_response = PGMARMROM[0x193C + (asic27a_sim_value * 4)];
+		break;
+
+		case 0xba: // Another look-up table
+			asic27a_sim_response = PGMARMROM[0x1888 + (asic27a_sim_value * 4)];
+		break;
+
+	// from kov
+		case 0x99: // Reset
+			asic27a_sim_key = 0;
+			asic27a_sim_response = 0x880000;
+		break;
+
+        case 0xc0: // Text layer 'x' select
+            asic27a_sim_response = 0x880000;
+        break;
+
+        case 0xc3: // Text layer offset
+            asic27a_sim_response = 0x904000 + ((asic27a_sim_regs[0xc0] + (asic27a_sim_value * 0x40)) * 4);
+        break;
+
+        case 0xcb: // Background layer 'x' select
+            asic27a_sim_response = 0x880000;
+        break;
+
+        case 0xcc: // Background layer offset
+        {
+            INT32 y = asic27a_sim_value;
+            if (0xf < y) y = y & 0xf;
+            if (y & 0x400) y = -(0x400 - (y & 0x3ff));
+            asic27a_sim_response = 0x900000 + (((asic27a_sim_regs[0xcb] + y * 64) * 4));
+        }
+        break;
+
+        case 0xd0: // Text palette offset
+            asic27a_sim_response = 0xa01000 + (asic27a_sim_value * 0x20);
+        break;
+
+        case 0xdc: // Background palette offset
+            asic27a_sim_response = 0xa00800 + (asic27a_sim_value * 0x40);
+        break;
+
+        case 0xe0: // Sprite palette offset
+            asic27a_sim_response = 0xa00000 + ((asic27a_sim_value & 0x1f) * 0x40);
+        break;
+
+		default:
+			asic27a_sim_response = 0x880000;
+	//		bprintf (0, _T("Unknown command: %2.2x, Value: %4.4x\n"), command, asic27a_sim_value);
+	}
+}
+
+static void photoy2k_sim_reset()
+{
+    photoy2k_seqpos = 0;
+    asic27a_sim_reset();
+}
+
+static INT32 photoy2k_sim_scan(INT32 nAction, INT32 *pnMin)
+{
+	asic27a_sim_scan(nAction, pnMin);
+
+	if (nAction & ACB_DRIVER_DATA) {
+		SCAN_VAR(photoy2k_seqpos);
+	}
+
+	return 0;
+}
+
+void install_protection_asic27a_photoy2k_sim()
+{
+	PGMARMROM = (UINT8*)BurnMalloc(0x4000);
+
+	// load arm7 data for use in table look-up commands (ae, ba)
+	{
+		char* pRomName;
+		struct BurnRomInfo ri;
+
+		for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++) {
+			BurnDrvGetRomInfo(&ri, i);
+
+			if (ri.nLen == 0x4000) {
+				BurnLoadRom(PGMARMROM, i, 1); 
+			}
+		}
+	}
+
+	pPgmResetCallback 		= photoy2k_sim_reset;
+	pPgmScanCallback 		= photoy2k_sim_scan;
+	asic27a_sim_command 	= photoy2k_asic27a_sim_command;
+
+	SekOpen(0);
+	SekMapMemory(PGMUSER0,		0x4f0000, 0x4f003f | 0x3ff, MAP_READ); // shared overlay ram (not writeable by 68k)
+
+	SekMapHandler(4,			0x500000, 0x500005, MAP_READ | MAP_WRITE);
+	SekSetReadWordHandler(4, 	asic27a_sim_read);
+	SekSetWriteWordHandler(4, 	asic27a_sim_write);
+	SekClose();
+}
+#endif
+

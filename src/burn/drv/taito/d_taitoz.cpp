@@ -6782,20 +6782,20 @@ static INT32 EnforceDraw()
 	TC0110PCRRecalcPaletteStep1RBSwap();
 	
 	if (TC0100SCNBottomLayer(0)) {
-		if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoChars);
-		if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoChars);
+		if (nBurnLayer & 2 && !(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoChars);
+		if (nBurnLayer & 1 && !(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoChars);
 	} else {
-		if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoChars);
-		if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoChars);
+		if (nBurnLayer & 1 && !(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoChars);
+		if (nBurnLayer & 2 && !(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoChars);
 	}
 	
-	ContcircRenderSprites(1, 24);
+	if (nSpriteEnable & 1) ContcircRenderSprites(1, 24);
 	
-	TC0150RODDraw(-3 + 8, 0xc0, 1, 0, 1, 2);
+	if (nBurnLayer & 4) TC0150RODDraw(-3 + 8, 0xc0, 1, 0, 1, 2);
 	
-	ContcircRenderSprites(0, 24);
+	if (nSpriteEnable & 2) ContcircRenderSprites(0, 24);
 	
-	if (!(Disable & 0x04)) TC0100SCNRenderCharLayer(0);
+	if (nBurnLayer & 8 && !(Disable & 0x04)) TC0100SCNRenderCharLayer(0);
 	BurnTransferCopy(TC0110PCRPalette);
 
 	return 0;

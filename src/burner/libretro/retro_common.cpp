@@ -98,7 +98,8 @@ static const struct retro_core_option_v2_definition var_fbneo_allow_depth_32 = {
 		{ "enabled", NULL },
 		{ NULL, NULL },
 	},
-	"enabled"
+	"enabled",
+        "bool"
 };
 static const struct retro_core_option_v2_definition var_fbneo_vertical_mode = {
 	"fbneo-vertical-mode",
@@ -113,7 +114,8 @@ static const struct retro_core_option_v2_definition var_fbneo_vertical_mode = {
 		{ "alternate", NULL },
 		{ NULL, NULL },
 	},
-	"disabled"
+	"disabled",
+        "bool"
 };
 static const struct retro_core_option_v2_definition var_fbneo_fixed_frameskip = {
 	"fbneo-fixed-frameskip",
@@ -131,7 +133,8 @@ static const struct retro_core_option_v2_definition var_fbneo_fixed_frameskip = 
 		{ "5", "Skip rendering of 5 frames out of 6" },
 		{ NULL, NULL },
 	},
-	"0"
+	"0",
+        "int"
 };
 static const struct retro_core_option_v2_definition var_fbneo_frameskip_type = {
 	"fbneo-frameskip-type",
@@ -147,7 +150,8 @@ static const struct retro_core_option_v2_definition var_fbneo_frameskip_type = {
 		{ "Manual", NULL },
 		{ NULL, NULL },
 	},
-	"disabled"
+	"disabled",
+        NULL
 };
 static const struct retro_core_option_v2_definition var_fbneo_frameskip_manual_threshold = {
 	"fbneo-frameskip-manual-threshold",
@@ -175,7 +179,8 @@ static const struct retro_core_option_v2_definition var_fbneo_frameskip_manual_t
 		{ "60", NULL },
 		{ NULL, NULL },
 	},
-	"33"
+	"33",
+        "int"
 };
 static const struct retro_core_option_v2_definition var_fbneo_cpu_speed_adjust = {
 	"fbneo-cpu-speed-adjust",
@@ -187,7 +192,8 @@ static const struct retro_core_option_v2_definition var_fbneo_cpu_speed_adjust =
 	{
 		PERCENT_VALUES
 	},
-	"100%"
+	"100%",
+        NULL
 };
 static const struct retro_core_option_v2_definition var_fbneo_diagnostic_input = {
 	"fbneo-diagnostic-input",
@@ -210,7 +216,8 @@ static const struct retro_core_option_v2_definition var_fbneo_diagnostic_input =
 		{ "Hold Select + L + R", NULL },
 		{ NULL, NULL },
 	},
-	"Hold Start"
+	"Hold Start",
+        NULL
 };
 static const struct retro_core_option_v2_definition var_fbneo_hiscores = {
 	"fbneo-hiscores",
@@ -224,7 +231,8 @@ static const struct retro_core_option_v2_definition var_fbneo_hiscores = {
 		{ "enabled", NULL },
 		{ NULL, NULL },
 	},
-	"enabled"
+	"enabled",
+        "bool"
 };
 static const struct retro_core_option_v2_definition var_fbneo_allow_patched_romsets = {
 	"fbneo-allow-patched-romsets",
@@ -238,7 +246,8 @@ static const struct retro_core_option_v2_definition var_fbneo_allow_patched_roms
 		{ "enabled", NULL },
 		{ NULL, NULL },
 	},
-	"enabled"
+	"enabled",
+        "bool"
 };
 static const struct retro_core_option_v2_definition var_fbneo_samplerate = {
 	"fbneo-samplerate",
@@ -252,7 +261,8 @@ static const struct retro_core_option_v2_definition var_fbneo_samplerate = {
 		{ "48000", NULL },
 		{ NULL, NULL },
 	},
-	"48000"
+	"48000",
+        NULL
 };
 static const struct retro_core_option_v2_definition var_fbneo_sample_interpolation = {
 	"fbneo-sample-interpolation",
@@ -267,7 +277,8 @@ static const struct retro_core_option_v2_definition var_fbneo_sample_interpolati
 		{ "4-point 3rd order", NULL },
 		{ NULL, NULL },
 	},
-	"4-point 3rd order"
+	"4-point 3rd order",
+        NULL
 };
 static const struct retro_core_option_v2_definition var_fbneo_fm_interpolation = {
 	"fbneo-fm-interpolation",
@@ -281,7 +292,8 @@ static const struct retro_core_option_v2_definition var_fbneo_fm_interpolation =
 		{ "4-point 3rd order", NULL },
 		{ NULL, NULL },
 	},
-	"4-point 3rd order"
+	"4-point 3rd order",
+        NULL
 };
 static const struct retro_core_option_v2_definition var_fbneo_lowpass_filter = {
 	"fbneo-lowpass-filter",
@@ -295,7 +307,8 @@ static const struct retro_core_option_v2_definition var_fbneo_lowpass_filter = {
 		{ "enabled", NULL },
 		{ NULL, NULL },
 	},
-	"disabled"
+	"disabled",
+        "bool"
 };
 static const struct retro_core_option_v2_definition var_fbneo_analog_speed = {
 	"fbneo-analog-speed",
@@ -307,7 +320,8 @@ static const struct retro_core_option_v2_definition var_fbneo_analog_speed = {
 	{
 		PERCENT_VALUES
 	},
-	"100%"
+	"100%",
+        NULL
 };
 static const struct retro_core_option_v2_definition var_fbneo_lightgun_hide_crosshair = {
 	"fbneo-lightgun-hide-crosshair",
@@ -321,7 +335,8 @@ static const struct retro_core_option_v2_definition var_fbneo_lightgun_hide_cros
 		{ "enabled", NULL },
 		{ NULL, NULL },
 	},
-	"enabled"
+	"enabled",
+        "bool"
 };
 #ifdef USE_CYCLONE
 static const struct retro_core_option_v2_definition var_fbneo_cyclone = {
@@ -336,7 +351,8 @@ static const struct retro_core_option_v2_definition var_fbneo_cyclone = {
 		{ "enabled", NULL },
 		{ NULL, NULL },
 	},
-	"disabled"
+	"disabled",
+        "bool"
 };
 #endif
 
@@ -355,7 +371,8 @@ static const struct retro_core_option_v2_definition var_fbneo_neogeo_mode = {
 		{ "UNIBIOS", "Use UNIBIOS bios" },
 		{ NULL, NULL },
 	},
-	"DIPSWITCH"
+	"DIPSWITCH",
+        NULL
 };
 static const struct retro_core_option_v2_definition var_fbneo_memcard_mode = {
 	"fbneo-memcard-mode",
@@ -370,7 +387,8 @@ static const struct retro_core_option_v2_definition var_fbneo_memcard_mode = {
 		{ "per-game", NULL },
 		{ NULL, NULL },
 	},
-	"disabled"
+	"disabled",
+        NULL
 };
 
 #ifdef FBNEO_DEBUG
@@ -386,7 +404,8 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_layer_1 = {
 		{ "enabled", NULL },
 		{ NULL, NULL },
 	},
-	"enabled"
+	"enabled",
+        "bool"
 };
 static const struct retro_core_option_v2_definition var_fbneo_debug_layer_2 = {
 	"fbneo-debug-layer-2",
@@ -400,7 +419,8 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_layer_2 = {
 		{ "enabled", NULL },
 		{ NULL, NULL },
 	},
-	"enabled"
+	"enabled",
+        "bool"
 };
 static const struct retro_core_option_v2_definition var_fbneo_debug_layer_3 = {
 	"fbneo-debug-layer-3",
@@ -414,7 +434,8 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_layer_3 = {
 		{ "enabled", NULL },
 		{ NULL, NULL },
 	},
-	"enabled"
+	"enabled",
+        "bool"
 };
 static const struct retro_core_option_v2_definition var_fbneo_debug_layer_4 = {
 	"fbneo-debug-layer-4",
@@ -428,7 +449,8 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_layer_4 = {
 		{ "enabled", NULL },
 		{ NULL, NULL },
 	},
-	"enabled"
+	"enabled",
+        "bool"
 };
 static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_1 = {
 	"fbneo-debug-sprite-1",
@@ -442,7 +464,8 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_1 = {
 		{ "enabled", NULL },
 		{ NULL, NULL },
 	},
-	"enabled"
+	"enabled",
+        "bool"
 };
 static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_2 = {
 	"fbneo-debug-sprite-2",
@@ -456,7 +479,8 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_2 = {
 		{ "enabled", NULL },
 		{ NULL, NULL },
 	},
-	"enabled"
+	"enabled",
+        "bool"
 };
 static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_3 = {
 	"fbneo-debug-sprite-3",
@@ -470,7 +494,8 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_3 = {
 		{ "enabled", NULL },
 		{ NULL, NULL },
 	},
-	"enabled"
+	"enabled",
+        "bool"
 };
 static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_4 = {
 	"fbneo-debug-sprite-4",
@@ -484,7 +509,8 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_4 = {
 		{ "enabled", NULL },
 		{ NULL, NULL },
 	},
-	"enabled"
+	"enabled",
+        "bool"
 };
 static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_5 = {
 	"fbneo-debug-sprite-5",
@@ -498,7 +524,8 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_5 = {
 		{ "enabled", NULL },
 		{ NULL, NULL },
 	},
-	"enabled"
+	"enabled",
+        "bool"
 };
 static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_6 = {
 	"fbneo-debug-sprite-6",
@@ -512,7 +539,8 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_6 = {
 		{ "enabled", NULL },
 		{ NULL, NULL },
 	},
-	"enabled"
+	"enabled",
+        "bool"
 };
 static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_7 = {
 	"fbneo-debug-sprite-7",
@@ -526,7 +554,8 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_7 = {
 		{ "enabled", NULL },
 		{ NULL, NULL },
 	},
-	"enabled"
+	"enabled",
+        "bool"
 };
 static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_8 = {
 	"fbneo-debug-sprite-8",
@@ -540,7 +569,8 @@ static const struct retro_core_option_v2_definition var_fbneo_debug_sprite_8 = {
 		{ "enabled", NULL },
 		{ NULL, NULL },
 	},
-	"enabled"
+	"enabled",
+        "bool"
 };
 #endif
 

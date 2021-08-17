@@ -197,17 +197,17 @@ static INT32 MemIndex()
 
 	TaitoRamStart		= Next;
 
-	TaitoF3SoundRam		= Next; Next += 0x0100000;
-	TaitoF3SharedRam	= Next; Next += 0x00080000;
-	TaitoES5510DSPRam	= Next; Next += 0x00020000;
-	TaitoES5510GPR		= (UINT32*)Next; Next += 0x0003000;
-	TaitoES5510DRAM		= (UINT16*)Next; Next += 0x4000000;
+	TaitoF3SoundRam		= Next; Next += 0x010000;	// 64 KB
+	TaitoF3SharedRam	= Next; Next += 0x000800;	// 2 KB
+	TaitoES5510DSPRam	= Next; Next += 0x000200;	// 512 Bytes
+	TaitoES5510GPR		= (UINT32 *)Next; Next += 0x000300;	// 192x4 Bytes
+	TaitoES5510DRAM		= (UINT16 *)Next; Next += 0x400000;	// 4 MB
 
-	Taito68KRam1		= Next; Next += 0x0200000;
-	Taito68KRam2		= Next; Next += 0x0040000;
-	TaitoSpriteRam		= Next; Next += 0x0020000;
+	Taito68KRam1		= Next; Next += 0x020000;
+	Taito68KRam2		= Next; Next += 0x004000;
+	TaitoSpriteRam		= Next; Next += 0x002000;
 
-	TaitoPaletteRam		= Next; Next += 0x0020000;
+	TaitoPaletteRam		= Next; Next += 0x002000;
 
 	TaitoRamEnd			= Next;
 
@@ -546,7 +546,7 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		SekOpen(0);
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Sek);
 
 		if (i == 255)
 		{

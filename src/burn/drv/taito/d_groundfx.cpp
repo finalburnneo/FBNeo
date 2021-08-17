@@ -258,19 +258,19 @@ static INT32 MemIndex()
 
 	TaitoRamStart		= Next;
 
-	TaitoSharedRam		= Next; Next += 0x0004000;
-	TaitoSpriteRam		= Next; Next += 0x0040000;
-	Taito68KRam1		= Next; Next += 0x0200000;
-	TaitoPaletteRam		= Next; Next += 0x0100000;
+	TaitoSharedRam		= Next; Next += 0x000400;
+	TaitoSpriteRam		= Next; Next += 0x004000;
+	Taito68KRam1		= Next; Next += 0x020000;
+	TaitoPaletteRam		= Next; Next += 0x010000;
 
 //	TC0100SCNRam[0]		= Next; Next += 0x010000; // allocated in init
 //	TC0480SCPRam		= Next; Next += 0x010000; // allocated in init
 
-	TaitoF3SoundRam		= Next; Next += 0x0100000;	// 64 KB
-	TaitoF3SharedRam	= Next; Next += 0x0008000;	// 2 KB
-	TaitoES5510DSPRam	= Next; Next += 0x0002000;	// 512 Bytes
-	TaitoES5510GPR		= (UINT32 *)Next; Next += 0x0003000;	// 192x4 Bytes
-	TaitoES5510DRAM		= (UINT16 *)Next; Next += 0x4000000;	// 4 MB
+	TaitoF3SoundRam		= Next; Next += 0x010000;	// 64 KB
+	TaitoF3SharedRam	= Next; Next += 0x000800;	// 2 KB
+	TaitoES5510DSPRam	= Next; Next += 0x000200;	// 512 Bytes
+	TaitoES5510GPR		= (UINT32 *)Next; Next += 0x000300;	// 192x4 Bytes
+	TaitoES5510DRAM		= (UINT16 *)Next; Next += 0x400000;	// 4 MB
 
 	TaitoRamEnd		= Next;
 
@@ -654,14 +654,13 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal = 20000000 / 60;
-	INT32 nCyclesDone = 0;
+	INT32 nCyclesTotal[1] = { 20000000 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		SekOpen(0);
-
-		nCyclesDone += SekRun(((i + 1) * nCyclesTotal / nInterleave) - nCyclesDone);
+		CPU_RUN(0, Sek);
 
 		if (i == 255)
 		{
@@ -676,7 +675,6 @@ static INT32 DrvFrame()
 
 			interrupt5_timer--;
 		}
-
 		SekClose();
 
 		TaitoF3CpuUpdate(nInterleave, i);

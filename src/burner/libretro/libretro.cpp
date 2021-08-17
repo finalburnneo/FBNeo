@@ -467,7 +467,7 @@ static bool apply_dipswitches_from_variables()
 		dipswitch_core_option *dip_option = &dipswitch_core_options[dip_idx];
 
 		var.key = dip_option->option_name.c_str();
-		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) == false)
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) == false || !var.value)
 			continue;
 
 		for (int dip_value_idx = 0; dip_value_idx < dip_option->values.size(); dip_value_idx++)
@@ -535,7 +535,7 @@ static int create_variables_from_cheats()
 			cheat_option->friendly_name_categorized = option_name.c_str();
 			std::replace( option_name.begin(), option_name.end(), ' ', '_');
 			std::replace( option_name.begin(), option_name.end(), '=', '_');
-			cheat_option->option_name = SSTR( "fbneo-cheat-" << drvname << "-" << option_name.c_str() );
+			cheat_option->option_name = SSTR( "fbneo-cheat-" << num << "-" << drvname << "-" << option_name.c_str() );
 			cheat_option->num = num;
 			cheat_option->values.reserve(count);
 			cheat_option->values.assign(count, cheat_core_option_value());
@@ -568,7 +568,7 @@ static int apply_cheats_from_variables()
 		cheat_core_option *cheat_option = &cheat_core_options[cheat_idx];
 
 		var.key = cheat_option->option_name.c_str();
-		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) == false)
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) == false || !var.value)
 			continue;
 
 		for (int cheat_value_idx = 0; cheat_value_idx < cheat_option->values.size(); cheat_value_idx++)

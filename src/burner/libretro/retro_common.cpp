@@ -1025,13 +1025,13 @@ void check_variables(void)
 	struct retro_variable var = {0};
 
 	var.key = var_fbneo_cpu_speed_adjust.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		nBurnCPUSpeedAdjust = percent_parser(var.value);
 	}
 
 	var.key = var_fbneo_allow_depth_32.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		if (strcmp(var.value, "enabled") == 0)
 			bAllowDepth32 = true;
@@ -1040,7 +1040,7 @@ void check_variables(void)
 	}
 
 	var.key = var_fbneo_vertical_mode.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		if (strcmp(var.value, "enabled") == 0)
 			nVerticalMode = 1;
@@ -1053,7 +1053,7 @@ void check_variables(void)
 	if (bLibretroSupportsAudioBuffStatus)
 	{
 		var.key = var_fbneo_frameskip_type.key;
-		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 		{
 			if (strcmp(var.value, "disabled") == 0)
 				nFrameskipType = 0;
@@ -1066,12 +1066,12 @@ void check_variables(void)
 		}
 
 		var.key = var_fbneo_frameskip_manual_threshold.key;
-		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 			nFrameskipThreshold = strtol(var.value, NULL, 10);
 	}
 
 	var.key = var_fbneo_fixed_frameskip.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		if (strcmp(var.value, "0") == 0)
 			nFrameskip = 1;
@@ -1090,7 +1090,7 @@ void check_variables(void)
 	if (pgi_diag)
 	{
 		var.key = var_fbneo_diagnostic_input.key;
-		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 		{
 			if (strcmp(var.value, "Hold Start") == 0)
 			{
@@ -1155,7 +1155,7 @@ void check_variables(void)
 		if (allow_neogeo_mode)
 		{
 			var.key = var_fbneo_neogeo_mode.key;
-			if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+			if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 			{
 				if (strcmp(var.value, "MVS") == 0)
 					g_opt_neo_geo_mode = NEO_GEO_MODE_MVS;
@@ -1168,7 +1168,7 @@ void check_variables(void)
 			}
 		}
 		var.key = var_fbneo_memcard_mode.key;
-		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 		{
 			if (strcmp(var.value, "disabled") == 0)
 				nMemcardMode = 0;
@@ -1182,7 +1182,7 @@ void check_variables(void)
 	if (BurnDrvGetFlags() & BDF_HISCORE_SUPPORTED)
 	{
 		var.key = var_fbneo_hiscores.key;
-		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 		{
 			if (strcmp(var.value, "enabled") == 0)
 				EnableHiscores = true;
@@ -1196,7 +1196,7 @@ void check_variables(void)
 	}
 
 	var.key = var_fbneo_allow_patched_romsets.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		if (strcmp(var.value, "enabled") == 0)
 			bPatchedRomsetsEnabled = true;
@@ -1207,7 +1207,7 @@ void check_variables(void)
 	if (nGameType != RETRO_GAME_TYPE_NEOCD)
 	{
 		var.key = var_fbneo_samplerate.key;
-		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 		{
 			if (strcmp(var.value, "48000") == 0)
 				g_audio_samplerate = 48000;
@@ -1224,7 +1224,7 @@ void check_variables(void)
 	}
 
 	var.key = var_fbneo_sample_interpolation.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		if (strcmp(var.value, "4-point 3rd order") == 0)
 			nInterpolation = 3;
@@ -1237,7 +1237,7 @@ void check_variables(void)
 	}
 
 	var.key = var_fbneo_fm_interpolation.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		if (strcmp(var.value, "4-point 3rd order") == 0)
 			nFMInterpolation = 3;
@@ -1248,7 +1248,7 @@ void check_variables(void)
 	}
 
 	var.key = var_fbneo_lowpass_filter.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		if (strcmp(var.value, "enabled") == 0)
 			bLowPassFilterEnabled = true;
@@ -1257,13 +1257,13 @@ void check_variables(void)
 	}
 
 	var.key = var_fbneo_analog_speed.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		nAnalogSpeed = percent_parser(var.value);
 	}
 
 	var.key = var_fbneo_lightgun_hide_crosshair.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		if (strcmp(var.value, "enabled") == 0)
 			bLightgunHideCrosshairEnabled = true;
@@ -1274,7 +1274,7 @@ void check_variables(void)
 
 #ifdef USE_CYCLONE
 	var.key = var_fbneo_cyclone.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		if (strcmp(var.value, "enabled") == 0)
 			bCycloneEnabled = true;
@@ -1285,7 +1285,7 @@ void check_variables(void)
 
 #ifdef FBNEO_DEBUG
 	var.key = var_fbneo_debug_layer_1.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		if (strcmp(var.value, "enabled") == 0)
 			nBurnLayer |= 1;
@@ -1294,7 +1294,7 @@ void check_variables(void)
 	}
 
 	var.key = var_fbneo_debug_layer_2.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		if (strcmp(var.value, "enabled") == 0)
 			nBurnLayer |= 2;
@@ -1303,7 +1303,7 @@ void check_variables(void)
 	}
 
 	var.key = var_fbneo_debug_layer_3.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		if (strcmp(var.value, "enabled") == 0)
 			nBurnLayer |= 4;
@@ -1312,7 +1312,7 @@ void check_variables(void)
 	}
 
 	var.key = var_fbneo_debug_layer_4.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		if (strcmp(var.value, "enabled") == 0)
 			nBurnLayer |= 8;
@@ -1321,7 +1321,7 @@ void check_variables(void)
 	}
 
 	var.key = var_fbneo_debug_sprite_1.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		if (strcmp(var.value, "enabled") == 0)
 			nSpriteEnable |= 0x01;
@@ -1330,7 +1330,7 @@ void check_variables(void)
 	}
 
 	var.key = var_fbneo_debug_sprite_2.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		if (strcmp(var.value, "enabled") == 0)
 			nSpriteEnable |= 0x02;
@@ -1339,7 +1339,7 @@ void check_variables(void)
 	}
 
 	var.key = var_fbneo_debug_sprite_3.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		if (strcmp(var.value, "enabled") == 0)
 			nSpriteEnable |= 0x04;
@@ -1348,7 +1348,7 @@ void check_variables(void)
 	}
 
 	var.key = var_fbneo_debug_sprite_4.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		if (strcmp(var.value, "enabled") == 0)
 			nSpriteEnable |= 0x08;
@@ -1357,7 +1357,7 @@ void check_variables(void)
 	}
 
 	var.key = var_fbneo_debug_sprite_5.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		if (strcmp(var.value, "enabled") == 0)
 			nSpriteEnable |= 0x10;
@@ -1366,7 +1366,7 @@ void check_variables(void)
 	}
 
 	var.key = var_fbneo_debug_sprite_6.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		if (strcmp(var.value, "enabled") == 0)
 			nSpriteEnable |= 0x20;
@@ -1375,7 +1375,7 @@ void check_variables(void)
 	}
 
 	var.key = var_fbneo_debug_sprite_7.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		if (strcmp(var.value, "enabled") == 0)
 			nSpriteEnable |= 0x40;
@@ -1384,7 +1384,7 @@ void check_variables(void)
 	}
 
 	var.key = var_fbneo_debug_sprite_8.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		if (strcmp(var.value, "enabled") == 0)
 			nSpriteEnable |= 0x80;

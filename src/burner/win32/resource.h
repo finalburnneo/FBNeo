@@ -60,7 +60,8 @@
 #define IDR_MENU_AUD_PLUGIN_1				130
 #define IDR_MENU_AUD_PLUGIN_2				131
 #define	IDR_MENU_GAMESEL					140
-#define IDR_ACCELERATOR                 	150
+#define	IDR_MENU_LUAWINDOW					150
+#define IDR_ACCELERATOR                 	160
 
 #define IDD_REPLAYINP                   233
 #define IDD_RECORDINP                   234

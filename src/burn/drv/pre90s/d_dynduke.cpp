@@ -46,103 +46,99 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
 
-static const INT32 nInterleave = 256;
-static const INT32 nCyclesTotal[3] = { 8000000 / 60, 8000000 / 60, 3579545 / 60 };
-static INT32 nCyclesDone[3]  = { 0, 0, 0 };
-
 static struct BurnInputInfo DyndukeInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Dynduke)
 
 static struct BurnDIPInfo DyndukeDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0xff, NULL			},
-	{0x14, 0xff, 0xff, 0xf7, NULL			},
+	{0x13, 0xff, 0xff, 0xff, NULL					},
+	{0x14, 0xff, 0xff, 0xf7, NULL					},
 
-	{0   , 0xfe, 0   ,    2, "Coin Mode"		},
-	{0x13, 0x01, 0x01, 0x01, "Mode 1"		},
-	{0x13, 0x01, 0x01, 0x00, "Mode 2"		},
+	{0   , 0xfe, 0   ,    2, "Coin Mode"			},
+	{0x13, 0x01, 0x01, 0x01, "Mode 1"				},
+	{0x13, 0x01, 0x01, 0x00, "Mode 2"				},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"		},
+	{0   , 0xfe, 0   ,    4, "Coin A"				},
 	{0x13, 0x01, 0x06, 0x00, "5 Coins 1 Credits"	},
 	{0x13, 0x01, 0x06, 0x02, "3 Coins 1 Credits"	},
 	{0x13, 0x01, 0x06, 0x04, "2 Coins 1 Credits"	},
 	{0x13, 0x01, 0x06, 0x06, "1 Coin  1 Credits"	},
 
-	{0   , 0xfe, 0   ,    5, "Coin B"		},
+	{0   , 0xfe, 0   ,    5, "Coin B"				},
 	{0x13, 0x01, 0x18, 0x18, "1 Coin  2 Credits"	},
 	{0x13, 0x01, 0x18, 0x10, "1 Coin  3 Credits"	},
 	{0x13, 0x01, 0x18, 0x08, "1 Coin  5 Credits"	},
 	{0x13, 0x01, 0x18, 0x00, "1 Coin  6 Credits"	},
-	{0x13, 0x01, 0x18, 0x00, "Free Play"		},
+	{0x13, 0x01, 0x18, 0x00, "Free Play"			},
 
-	{0   , 0xfe, 0   ,    5, "Coinage"		},
+	{0   , 0xfe, 0   ,    5, "Coinage"				},
 	{0x13, 0x01, 0x1e, 0x18, "4 Coins 1 Credits"	},
 	{0x13, 0x01, 0x1e, 0x1a, "3 Coins 1 Credits"	},
 	{0x13, 0x01, 0x1e, 0x1c, "2 Coins 1 Credits"	},
 	{0x13, 0x01, 0x1e, 0x1e, "1 Coin  1 Credits"	},
-	{0x13, 0x01, 0x1e, 0x00, "Free Play"		},
+	{0x13, 0x01, 0x1e, 0x00, "Free Play"			},
 
-	{0   , 0xfe, 0   ,    2, "Starting Coin"	},
-	{0x13, 0x01, 0x20, 0x20, "Normal"		},
-	{0x13, 0x01, 0x20, 0x00, "X 2"			},
+	{0   , 0xfe, 0   ,    2, "Starting Coin"		},
+	{0x13, 0x01, 0x20, 0x20, "Normal"				},
+	{0x13, 0x01, 0x20, 0x00, "X 2"					},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x13, 0x01, 0x40, 0x40, "Upright"		},
-	{0x13, 0x01, 0x40, 0x00, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x13, 0x01, 0x40, 0x40, "Upright"				},
+	{0x13, 0x01, 0x40, 0x00, "Cocktail"				},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x13, 0x01, 0x80, 0x80, "Off"			},
-	{0x13, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x13, 0x01, 0x80, 0x80, "Off"					},
+	{0x13, 0x01, 0x80, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x14, 0x01, 0x0c, 0x0c, "80K 100K+"		},
-	{0x14, 0x01, 0x0c, 0x08, "100K 100K+"		},
-	{0x14, 0x01, 0x0c, 0x04, "120K 100K+"		},
-	{0x14, 0x01, 0x0c, 0x00, "120K 120K+"		},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0x14, 0x01, 0x0c, 0x0c, "80K 100K+"			},
+	{0x14, 0x01, 0x0c, 0x08, "100K 100K+"			},
+	{0x14, 0x01, 0x0c, 0x04, "120K 100K+"			},
+	{0x14, 0x01, 0x0c, 0x00, "120K 120K+"			},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x14, 0x01, 0x30, 0x30, "Normal"		},
-	{0x14, 0x01, 0x30, 0x20, "Easy"			},
-	{0x14, 0x01, 0x30, 0x10, "Hard"			},
-	{0x14, 0x01, 0x30, 0x00, "Hardest"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x14, 0x01, 0x30, 0x30, "Normal"				},
+	{0x14, 0x01, 0x30, 0x20, "Easy"					},
+	{0x14, 0x01, 0x30, 0x10, "Hard"					},
+	{0x14, 0x01, 0x30, 0x00, "Hardest"				},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
-	{0x14, 0x01, 0x40, 0x00, "Off"			},
-	{0x14, 0x01, 0x40, 0x40, "On"			},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x14, 0x01, 0x40, 0x00, "Off"					},
+	{0x14, 0x01, 0x40, 0x40, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x14, 0x01, 0x80, 0x00, "Off"			},
-	{0x14, 0x01, 0x80, 0x80, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x14, 0x01, 0x80, 0x00, "Off"					},
+	{0x14, 0x01, 0x80, 0x80, "On"					},
 };
 
 STDDIPINFO(Dynduke)
 
-void __fastcall master_write(UINT32 address, UINT8 data)
+static void __fastcall master_write(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -159,7 +155,7 @@ void __fastcall master_write(UINT32 address, UINT8 data)
 			*bg_enable	= ~data & 0x01;
 			*fg_enable	= ~data & 0x02;
 			*txt_enable	= ~data & 0x04;
-			*sprite_enable	= ~data & 0x08;
+			*sprite_enable= ~data & 0x08;
 			*flipscreen	=  data & 0x40;
 		return;
 	}
@@ -170,7 +166,7 @@ void __fastcall master_write(UINT32 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall master_read(UINT32 address)
+static UINT8 __fastcall master_read(UINT32 address)
 {
 	switch (address)
 	{
@@ -209,7 +205,7 @@ static inline void palette_update_entry(INT32 entry)
 	DrvPalette[entry] = BurnHighCol((r<<4)|r, (g<<4)|g, (b<<4)|b, 0);
 }
 
-void __fastcall slave_write(UINT32 address, UINT8 data)
+static void __fastcall slave_write(UINT32 address, UINT8 data)
 {
 	if ((address & 0xff000) == 0x07000) {
 		DrvPalRAM[(address & 0xfff)] = data;
@@ -343,7 +339,7 @@ static INT32 MemIndex()
 	DrvV30ROM1		= Next; Next += 0x100000;
 
 	SeibuZ80ROM		= Next; Next += 0x020000;
-	SeibuZ80DecROM		= Next; Next += 0x020000;
+	SeibuZ80DecROM	= Next; Next += 0x020000;
 
 	DrvGfxROM0		= Next; Next += 0x040000;
 	DrvGfxROM1		= Next; Next += 0x200000;
@@ -353,7 +349,7 @@ static INT32 MemIndex()
 	MSM6295ROM		= Next;
 	DrvSndROM		= Next; Next += 0x020000;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x0800 * sizeof(UINT32);
+	DrvPalette		= (UINT32*)Next; Next += 0x0801 * sizeof(UINT32); // 0x800 = black
 
 	AllRam			= Next;
 
@@ -378,7 +374,7 @@ static INT32 MemIndex()
 	bg_enable		= Next; Next += 0x000001;
 	fg_enable		= Next; Next += 0x000001;
 	txt_enable		= Next; Next += 0x000001;
-	sprite_enable		= Next; Next += 0x000001;
+	sprite_enable	= Next; Next += 0x000001;
 	flipscreen		= Next; Next += 0x000001;
 
 	RamEnd			= Next;
@@ -390,12 +386,7 @@ static INT32 MemIndex()
 
 static INT32 DrvInit(void (*pV30MapCallback)())
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvV30ROM0 + 0x0a0000,  0, 2)) return 1;
@@ -465,7 +456,7 @@ static INT32 DrvInit(void (*pV30MapCallback)())
 	VezSetWriteHandler(slave_write);
 	VezClose();
 
-	seibu_sound_init(0, 0x20000, 3579545, 3579545, 1320000 / 132);
+	seibu_sound_init(0, 0x20000, 3579545, 3579545, 1320000 / MSM6295_PIN7_LOW);
 
 	GenericTilesInit();
 
@@ -482,7 +473,7 @@ static INT32 DrvExit()
 
 	seibu_sound_exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -524,28 +515,18 @@ static void draw_sprites(INT32 pri)
 			flipy = !flipy;
 		}
 
+		sy -= 16;
+
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 15, 0, DrvGfxROM3);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 15, 0, DrvGfxROM3);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy - 16, color, 4, 15, 0, DrvGfxROM3);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy - 16, color, 4, 15, 0, DrvGfxROM3);
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 15, 0, DrvGfxROM3);
 	}
 }
 
 static void draw_bg_layer(INT32 priority)
 {
 	if (*bg_enable == 0) {
-		if (priority == 0) BurnTransferClear();
+		if (priority == 0) BurnTransferClear(0x800);
 		return;
 	}
 
@@ -633,6 +614,8 @@ static void draw_fg_layer()
 
 static void draw_tx_layer()
 {
+	if (*txt_enable == 0) return;
+
 	UINT16 *vram = (UINT16*)DrvTxtRAM;
 
 	for (INT32 offs = (32 * 2); offs < (32 * 32) - (32 * 2); offs++)
@@ -655,12 +638,12 @@ static INT32 DrvDraw()
 		for (INT32 i = 0; i < 0x1000 / 2; i++) {
 			palette_update_entry(i);
 		}
+		DrvPalette[0x800] = 0;
+
 		DrvRecalc = 0;
 	}
 
-	if ((nBurnLayer & 1) == 0) {
-		BurnTransferClear();
-	}
+	BurnTransferClear(0x800);
 
 	if (nSpriteEnable & 1) draw_sprites(0); // ?
 	if (nBurnLayer & 1) draw_bg_layer(0x00);
@@ -695,22 +678,21 @@ static INT32 DrvFrame()
 		seibu_coin_input = (DrvJoy3[0] & 1) | ((DrvJoy3[1] & 1) << 1);
 	}
 
-	nCyclesDone[0] = nCyclesDone[1] = nCyclesDone[2] = 0;
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[3] = { 8000000 / 60, 8000000 / 60, 3579545 / 60 };
+	INT32 nCyclesDone[3]  = { 0, 0, 0 };
 
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = nCyclesTotal[0] / nInterleave;
-
 		VezOpen(0);
-		nCyclesDone[0] += VezRun(nSegment);
+		CPU_RUN(0, Vez);
 		if (i == 240) VezSetIRQLineAndVector(0, 0xc8/4, CPU_IRQSTATUS_ACK);
-
 		VezClose();
 
 		VezOpen(1);
-		nCyclesDone[1] += VezRun(nSegment);
+		CPU_RUN(1, Vez);
 		if (i == 240) VezSetIRQLineAndVector(0, 0xc8/4, CPU_IRQSTATUS_ACK);
 		VezClose();
 
@@ -729,7 +711,7 @@ static INT32 DrvFrame()
 		DrvDraw();
 	}
 
-	memcpy (DrvSprBuf, DrvSprRAM, 0x800);
+	memcpy (DrvSprBuf, DrvSprRAM, 0x1000);
 
 	return 0;
 }
@@ -737,7 +719,7 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029719;
 	}
@@ -749,7 +731,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 	}
-	
+
 	if (nAction & ACB_DRIVER_DATA)
 	{
 		VezScan(nAction);

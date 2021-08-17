@@ -123,9 +123,6 @@ static UINT8 mcu_analog_ctrl;
 static UINT8 mcu_analog_complete;
 static UINT8 mcu_analog_data;
 
-static UINT32 maincpu_run_cycles = 0;
-static UINT32 maincpu_run_ended = 0;
-
 static INT32 key_sendval;
 static UINT16 (*key_prot_read)(UINT8 offset) = NULL;
 static void (*key_prot_write)(UINT8 offset, UINT16 data) = NULL;
@@ -547,11 +544,7 @@ static UINT16 c148_read_write(UINT32 offset, UINT16 data, INT32 w)
 			{
 				audio_cpu_in_reset = ~data & 1;
 				if (audio_cpu_in_reset) M6809Reset();
-				else {
-					maincpu_run_cycles = SekTotalCycles();
-					maincpu_run_ended = 1;
-					SekRunEnd();
-				}
+				else SekRunEnd(); // give audio cpu chance to boot
 			}
 			return 0;
 
@@ -562,14 +555,11 @@ static UINT16 c148_read_write(UINT32 offset, UINT16 data, INT32 w)
 				if (sub_cpu_in_reset)
 				{
 					hd63705Reset();
-
 					SekReset(1);
 				}
 				else
 				{
-					maincpu_run_cycles = SekTotalCycles();
-					maincpu_run_ended = 1;
-					SekRunEnd();
+					SekRunEnd(); // give sub cpus chance to boot
 				}
 			}
 			return 0;
@@ -1243,11 +1233,8 @@ static void namcos2_sound_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0x4000:
-			BurnYM2151SelectRegister(data);
-		return;
-
 		case 0x4001:
-			BurnYM2151WriteRegister(data);
+			BurnYM2151Write(address & 1, data);
 		return;
 
 		case 0xc000:
@@ -1436,9 +1423,10 @@ static void namcos2_sound_init()
 	M6809SetReadHandler(namcos2_sound_read);
 	M6809Close();
 
-	BurnYM2151Init(3579545);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0); // clock, use_timer, sync_callback, add2stream
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachM6809(2048000);
 
 	c140_init(21333, C140_TYPE_SYSTEM2, DrvSndROM);
 	c140_set_sync(M6809TotalCycles, 2048000);
@@ -3551,7 +3539,6 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 264*2;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[4] = { (INT32)((double)12288000 / 60.606061), (INT32)((double)12288000 / 60.606061), (INT32)((double)2048000 / 60.606061), (INT32)((double)2048000 / 1 / 60.606061) };
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
 	INT32 vbloffs = 8;
@@ -3594,7 +3581,7 @@ static INT32 DrvFrame()
 		if (pBurnDraw && pDrvDrawLine && i&1)
 			pDrvDrawLine(i/2);
 
-		if (i == (240+vbloffs)*2) {
+		if (i == (240+vbloffs)*2 && has_shift) {
 			if (pBurnDraw) {
 				BurnDrvRedraw();
 			}
@@ -3613,35 +3600,28 @@ static INT32 DrvFrame()
 		}
 
 		if (audio_cpu_in_reset) {
-			CPU_IDLE(2, M6809);
+			CPU_IDLE_SYNCINT(2, M6809);
 		} else {
-			CPU_RUN(2, M6809);
+			CPU_RUN_TIMER(2);
 
 			if (i == 1*2 || i == 133*2) {
 				M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 				M6809SetIRQLine(1, CPU_IRQSTATUS_HOLD);
 			}
 		}
-
-		if (pBurnSoundOut && i%8 == 7) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		if (nSegmentLength) {
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-		}
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		c140_update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	m6805Close();
 	M6809Close();
+
+	if (pBurnDraw && !has_shift) {
+		BurnDrvRedraw();
+	}
 
 	return 0;
 }

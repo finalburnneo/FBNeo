@@ -49,7 +49,6 @@
 #define IDD_GAMEINFO						81
 #define IDD_DOWNLOAD_LOCAL					82
 #define IDD_CHOOSEMONITOR					83
-#define IDD_LUA								84
 
 #define IDR_MENU                        	100
 #define IDR_MENU_BLITTER_1					110
@@ -65,6 +64,7 @@
 
 #define IDD_REPLAYINP                   233
 #define IDD_RECORDINP                   234
+#define IDD_LUA                         235
 
 #define MENU_MENU_0							2000
 #define MENU_MENU_1							2001
@@ -243,6 +243,8 @@
 #define IDC_BUTTON_LUAEDIT					20370
 #define IDC_LUACONSOLE_CLEAR				20371
 #define IDC_LUACONSOLE_CHOOSEFONT			20372
+#define IDC_LUACONSOLE_OUTPUT               20373
+#define IDC_LUACONSOLE_SCRIPTFILE           20374
 
 #define IDC_GFX_VIEWER_HORI_1				20400
 #define IDC_GFX_VIEWER_HORI_2				20401

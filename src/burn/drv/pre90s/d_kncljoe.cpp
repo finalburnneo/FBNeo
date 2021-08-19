@@ -24,6 +24,8 @@ static UINT8 *DrvM6803RAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
+static INT32 nExtraCycles[2];
+
 static UINT8 *soundlatch;
 static UINT8 *flipscreen;
 static UINT8 *sprite_bank;
@@ -39,6 +41,8 @@ static UINT8 DrvJoy3[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
+
+static HoldCoin<2> hold_coin;
 
 static struct BurnInputInfo KncljoeInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 coin"	},
@@ -68,60 +72,61 @@ STDINPUTINFO(Kncljoe)
 
 static struct BurnDIPInfo KncljoeDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0xff, NULL				},
-	{0x12, 0xff, 0xff, 0x7f, NULL				},
+	DIP_OFFSET(0x11)
+	{0x00, 0xff, 0xff, 0xff, NULL						},
+	{0x01, 0xff, 0xff, 0x7f, NULL						},
 
-	{0   , 0xfe, 0   ,    8, "Coin A"			},
-	{0x11, 0x01, 0x07, 0x00, "5 Coins 1 Credits"		},
-	{0x11, 0x01, 0x07, 0x04, "4 Coins 1 Credits"		},
-	{0x11, 0x01, 0x07, 0x02, "3 Coins 1 Credits"		},
-	{0x11, 0x01, 0x07, 0x06, "2 Coins 1 Credits"		},
-	{0x11, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
-	{0x11, 0x01, 0x07, 0x03, "1 Coin  2 Credits"		},
-	{0x11, 0x01, 0x07, 0x05, "1 Coin  3 Credits"		},
-	{0x11, 0x01, 0x07, 0x01, "1 Coin  5 Credits"		},
+	{0   , 0xfe, 0   ,    8, "Coin A"					},
+	{0x00, 0x01, 0x07, 0x00, "5 Coins 1 Credits"		},
+	{0x00, 0x01, 0x07, 0x04, "4 Coins 1 Credits"		},
+	{0x00, 0x01, 0x07, 0x02, "3 Coins 1 Credits"		},
+	{0x00, 0x01, 0x07, 0x06, "2 Coins 1 Credits"		},
+	{0x00, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
+	{0x00, 0x01, 0x07, 0x03, "1 Coin  2 Credits"		},
+	{0x00, 0x01, 0x07, 0x05, "1 Coin  3 Credits"		},
+	{0x00, 0x01, 0x07, 0x01, "1 Coin  5 Credits"		},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"			},
-	{0x11, 0x01, 0x18, 0x00, "3 Coins 1 Credits"		},
-	{0x11, 0x01, 0x18, 0x10, "2 Coins 1 Credits"		},
-	{0x11, 0x01, 0x18, 0x18, "1 Coin  1 Credits"		},
-	{0x11, 0x01, 0x18, 0x08, "1 Coin  2 Credits"		},
+	{0   , 0xfe, 0   ,    4, "Coin B"					},
+	{0x00, 0x01, 0x18, 0x00, "3 Coins 1 Credits"		},
+	{0x00, 0x01, 0x18, 0x10, "2 Coins 1 Credits"		},
+	{0x00, 0x01, 0x18, 0x18, "1 Coin  1 Credits"		},
+	{0x00, 0x01, 0x18, 0x08, "1 Coin  2 Credits"		},
 
 	{0   , 0xfe, 0   ,    2, "Infinite Energy (Cheat)"	},
-	{0x11, 0x01, 0x20, 0x20, "Off"				},
-	{0x11, 0x01, 0x20, 0x00, "On"				},
+	{0x00, 0x01, 0x20, 0x20, "Off"						},
+	{0x00, 0x01, 0x20, 0x00, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Free Play (Not Working)"	},
-	{0x11, 0x01, 0x40, 0x40, "Off"				},
-	{0x11, 0x01, 0x40, 0x00, "On"				},
+	{0x00, 0x01, 0x40, 0x40, "Off"						},
+	{0x00, 0x01, 0x40, 0x00, "On"						},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x11, 0x01, 0x80, 0x80, "Off"				},
-	{0x11, 0x01, 0x80, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Service Mode"				},
+	{0x00, 0x01, 0x80, 0x80, "Off"						},
+	{0x00, 0x01, 0x80, 0x00, "On"						},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"			},
-	{0x12, 0x01, 0x02, 0x02, "Upright"			},
-	{0x12, 0x01, 0x02, 0x00, "Cocktail"			},
+	{0   , 0xfe, 0   ,    2, "Cabinet"					},
+	{0x01, 0x01, 0x02, 0x02, "Upright"					},
+	{0x01, 0x01, 0x02, 0x00, "Cocktail"					},
 
-	{0   , 0xfe, 0   ,    2, "Lives"			},
-	{0x12, 0x01, 0x04, 0x04, "3"				},
-	{0x12, 0x01, 0x04, 0x00, "5"				},
+	{0   , 0xfe, 0   ,    2, "Lives"					},
+	{0x01, 0x01, 0x04, 0x04, "3"						},
+	{0x01, 0x01, 0x04, 0x00, "5"						},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
-	{0x12, 0x01, 0x18, 0x18, "10k and every 20k"		},
-	{0x12, 0x01, 0x18, 0x10, "20k and every 40k"		},
-	{0x12, 0x01, 0x18, 0x08, "30k and every 60k"		},
-	{0x12, 0x01, 0x18, 0x00, "40k and every 80k"		},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"				},
+	{0x01, 0x01, 0x18, 0x18, "10k and every 20k"		},
+	{0x01, 0x01, 0x18, 0x10, "20k and every 40k"		},
+	{0x01, 0x01, 0x18, 0x08, "30k and every 60k"		},
+	{0x01, 0x01, 0x18, 0x00, "40k and every 80k"		},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty?"			},
-	{0x12, 0x01, 0x60, 0x60, "Easy"				},
-	{0x12, 0x01, 0x60, 0x40, "Medium"			},
-	{0x12, 0x01, 0x60, 0x20, "Hard"				},
-	{0x12, 0x01, 0x60, 0x00, "Hardest"			},
+	{0   , 0xfe, 0   ,    4, "Difficulty?"				},
+	{0x01, 0x01, 0x60, 0x60, "Easy"						},
+	{0x01, 0x01, 0x60, 0x40, "Medium"					},
+	{0x01, 0x01, 0x60, 0x20, "Hard"						},
+	{0x01, 0x01, 0x60, 0x00, "Hardest"					},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x12, 0x01, 0x80, 0x80, "Off"				},
-	{0x12, 0x01, 0x80, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"				},
+	{0x01, 0x01, 0x80, 0x80, "Off"						},
+	{0x01, 0x01, 0x80, 0x00, "On"						},
 };
 
 STDDIPINFO(Kncljoe)
@@ -147,10 +152,14 @@ static void __fastcall kncljoe_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xd801: {
-			*flipscreen = 0; //(data & 0x01) >> 0;  // avoid flipping screen w/2players
-
+			//bprintf(0, _T("___d801:   %x\n"), data);
+			*flipscreen = data & 0x01;
 			if (((data & 0x04) >> 2) != *sprite_bank) {
-				memset (DrvZ80RAM + 0x0100, 0, 0x180);
+				//bprintf(0, _T("spritebank change:  %x\n"), (data & 0x04) >> 2);
+				// TODO/TOFIX: figure out how to clear bad sprites at end of
+				// boss fight without this silly memset hack..
+				// note: this hack depends on main cpu/54 to work right.
+				memset (DrvZ80RAM + 0x100, 0x00, 0x180);
 			}
 
 			*sprite_bank= (data & 0x04) >> 2;
@@ -184,7 +193,7 @@ static UINT8 __fastcall kncljoe_main_read(UINT16 address)
 		case 0xd804:
 			return DrvDips[1];
 
-		case 0xd807: // nop
+		case 0xd807:
 		case 0xd817:
 			return 0;
 	}
@@ -209,7 +218,7 @@ static UINT8 kncljoe_sound_read(UINT16 address)
 	}
 
 	return 0;
-}	
+}
 
 static void kncljoe_sound_write(UINT16 address, UINT8 data)
 {
@@ -238,12 +247,12 @@ static void kncljoe_sound_write_port(UINT16 port, UINT8 data)
 {
 	switch (port & 0x1ff)
 	{
-		case 0x100:
+		case M6803_PORT1:
 			m6803_port1_data = data;
 		return;
 
-		case 0x101:
-			if ((m6803_port2_data & 0x09) == 0x09 && (data & 0x01) == 0x00) {
+		case M6803_PORT2:
+			if ((m6803_port2_data & 0x09) == 0x09 && ~data & 0x01) {
 				AY8910Write(0, (~m6803_port2_data >> 2) & 1, m6803_port1_data);
 			}
 			m6803_port2_data = data;
@@ -255,19 +264,30 @@ static UINT8 kncljoe_sound_read_port(UINT16 port)
 {
 	switch (port & 0x1ff)
 	{
-		case 0x100:
+		case M6803_PORT1:
 			if (m6803_port2_data & 0x08) {
 				return AY8910Read(0);
 			}
 			return 0xff;
+
+		case M6803_PORT2:
+			return 0x00;
 	}
 
-	return 0;
+	return 0xff;
 }
 
 static UINT8 ay8910_port_A_read(unsigned int)
 {
 	return *soundlatch;
+}
+
+static tilemap_callback( bg )
+{
+	INT32 Attr = DrvVidRAM[2 * offs + 1];
+	INT32 Code = DrvVidRAM[2 * offs + 0] + ((Attr & 0xc0) << 2) + (*tile_bank << 10);
+
+	TILE_SET_INFO(0, Code, Attr & 0xf, TILE_FLIPXY((Attr & 0x30) >> 4));
 }
 
 static INT32 DrvDoReset()
@@ -286,6 +306,10 @@ static INT32 DrvDoReset()
 
 	m6803_port1_data = 0;
 	m6803_port2_data = 0;
+
+	hold_coin.reset();
+
+	nExtraCycles[0] = nExtraCycles[1] = 0;
 
 	return 0;
 }
@@ -386,12 +410,7 @@ static INT32 MemIndex()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM  + 0x00000,  0, 1)) return 1;
@@ -443,9 +462,9 @@ static INT32 DrvInit()
 	M6803SetReadPortHandler(kncljoe_sound_read_port);
 	M6803Close();
 
-	AY8910Init(0, 894886, 0);
+	AY8910Init(0, 3579545/4, 0);
 	AY8910SetPorts(0, &ay8910_port_A_read, NULL, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.15/2, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(M6803TotalCycles, 3579545);
 
 	SN76489Init(0, 3579545, 1);
@@ -455,6 +474,10 @@ static INT32 DrvInit()
 	SN76496SetBuffered(ZetTotalCycles, 6000000);
 
 	GenericTilesInit();
+	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 64, 32);
+	GenericTilemapSetGfx(0, DrvGfxROM0, 3, 8, 8, 0x800 * 8*8, 0x00, 0x0f);
+	GenericTilemapSetScrollRows(0, 4);
+	GenericTilemapSetOffsets(TMAP_GLOBAL, -8, 0);
 
 	DrvDoReset();
 
@@ -471,76 +494,33 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 	SN76496Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
 
-static void draw_layer()
+static void draw_sprites(INT32 layer)
 {
-	for (INT32 offs = 0; offs < 64 * 32; offs++)
-	{
-		INT32 sx = (offs & 0x3f) << 3;
-		INT32 sy = (offs >> 6) << 3;
-
-		if (sy < 0xc0) {
-			sx -= (*scrollx + 8) & 0x1ff;
-			if (sx < -7) sx += 512;
-		} else {
-			sx -= 8;
-		}
-
-		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
-
-		INT32 attr  = DrvVidRAM[offs * 2 + 1];
-		INT32 code  = DrvVidRAM[offs * 2 + 0] | ((attr & 0xc0) << 2) | (*tile_bank << 10);
-
-		INT32 color = attr & 0x0f;
-		INT32 flipx = attr & 0x20;
-		INT32 flipy = attr & 0x10;
-
-		if (*flipscreen) {
-			flipx = !flipx;
-			sx = 218 - sx;
-		} else {
-			flipy = !flipy;
-			sy ^= 0xf8;
-		}
-
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, DrvGfxROM0);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 3, 0, DrvGfxROM0);
-			}
-		}
-	}
-}
-
-static void draw_sprites()
-{
-
+	INT32 bank_mask[2] = { 0x3ff, 0x1ff };
 	if (*flipscreen) {
 		GenericTilesSetClip(0, nScreenWidth, 0, nScreenHeight-64);
 	} else {
 		GenericTilesSetClip(0, nScreenWidth, 64, nScreenHeight);
 	}
 
-	for (INT32 i = 0; i < 4; i++)
+//	bprintf(0, _T("spritepri  %x\tspritebank  %x\ttilebank  %x\n"), layer, *sprite_bank, *tile_bank);
 	{
 		for (INT32 j = 0x7c; j >= 0; j -= 4)
 		{
-			INT32 offs = ((~i & 1) << 8) | ((~i & 2) << 6) | j;
+			INT32 offs = ((~layer & 1) << 8) | ((~layer & 2) << 6) | j;
 
 			INT32 sy    = DrvSprRAM[offs + 0];
 			INT32 attr  = DrvSprRAM[offs + 1];
-			INT32 code  = DrvSprRAM[offs + 2] | ((attr & 0x10) << 5) | ((attr & 0x20) << 3) | (*sprite_bank << 10);
+			INT32 code  = DrvSprRAM[offs + 2] | ((attr & 0x10) << 5) | ((attr & 0x20) << 3);
+			code &= bank_mask[*sprite_bank];
+//			if (code & 0xff)
+//				bprintf(0, _T("code:   %x\toffs:  %x.   %02x  %02x  %02x  %02x\n"), code, offs,DrvSprRAM[offs + 0],DrvSprRAM[offs + 1],DrvSprRAM[offs + 2],DrvSprRAM[offs + 3]);
+			code |= (*sprite_bank << 10);
 			INT32 sx    = DrvSprRAM[offs + 3];
 
 			INT32 flipx =  attr & 0x40;
@@ -556,21 +536,8 @@ static void draw_sprites()
 			}
 
 			if (sx >= 248) sx -= 256;
-			if (code >= 0x600) code &= 0x5ff;
 
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx - 8, sy, color, 3, 0, 0x80, DrvGfxROM1);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx - 8, sy, color, 3, 0, 0x80, DrvGfxROM1);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx - 8, sy, color, 3, 0, 0x80, DrvGfxROM1);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, code, sx - 8, sy, color, 3, 0, 0x80, DrvGfxROM1);
-				}
-			}
+			Draw16x16MaskTile(pTransDraw, code, sx - 8, sy, flipx, flipy, color, 3, 0, 0x80, DrvGfxROM1);
 		}
 	}
 	GenericTilesClearClip();
@@ -584,10 +551,19 @@ static INT32 DrvDraw()
 	}
 
 	BurnTransferClear();
+	GenericTilemapSetFlip(0, (*flipscreen) ? TMAP_FLIPX : TMAP_FLIPY);
+	GenericTilemapSetScrollRow(0, 0, *scrollx);
+	GenericTilemapSetScrollRow(0, 1, *scrollx);
+	GenericTilemapSetScrollRow(0, 2, *scrollx);
+	GenericTilemapSetScrollRow(0, 3, 0);
 
-	if (nBurnLayer & 1) draw_layer();
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER0 | 0, 0);
+	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER1 | 1, 0);
 
-	if (nSpriteEnable & 1) draw_sprites();
+	if (nSpriteEnable & 1) draw_sprites(0);
+	if (nSpriteEnable & 2) draw_sprites(1);
+	if (nSpriteEnable & 4) draw_sprites(2);
+	if (nSpriteEnable & 8) draw_sprites(3);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -600,6 +576,9 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	ZetNewFrame();
+	M6803NewFrame();
+
 	{
 		memset (DrvInputs, 0xff, 3);
 		for (INT32 i = 0; i < 8; i++) {
@@ -607,11 +586,13 @@ static INT32 DrvFrame()
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
-	}
 
-	INT32 nInterleave = 66; // for sound nmi
-	INT32 nCyclesTotal[2] = { 6000000 / 60, 3579545 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+		hold_coin.checklow(0, DrvInputs[0], 4, 3);
+		hold_coin.checklow(1, DrvInputs[0], 8, 3);
+	}
+	INT32 nInterleave = 256;  // main cpu must be / 54, or sprite issues! (coin up during attract -> missing sprite on cutscene, etc)
+	INT32 nCyclesTotal[2] = { 6000000 / 54, 3579545 / 60 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	ZetOpen(0);
 	M6803Open(0);
@@ -619,19 +600,23 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		CPU_RUN(0, Zet);
-		if (i == 60) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
 		CPU_RUN(1, M6803);
-		M6803SetIRQLine(M6803_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
+		if ((i%3) == 0)
+			M6803SetIRQLine(M6803_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 	}
 
 	M6803Close();
 	ZetClose();
 
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
-		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
-		SN76496Update(1, pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter(); // prevent dc offset caused by ay8910
+		SN76496Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -665,6 +650,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(m6803_port1_data);
 		SCAN_VAR(m6803_port2_data);
+
+		SCAN_VAR(nExtraCycles);
+
+		hold_coin.scan();
 	}
 
 	return 0;

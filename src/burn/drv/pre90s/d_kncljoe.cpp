@@ -156,10 +156,6 @@ static void __fastcall kncljoe_main_write(UINT16 address, UINT8 data)
 			*flipscreen = data & 0x01;
 			if (((data & 0x04) >> 2) != *sprite_bank) {
 				//bprintf(0, _T("spritebank change:  %x\n"), (data & 0x04) >> 2);
-				// TODO/TOFIX: figure out how to clear bad sprites at end of
-				// boss fight without this silly memset hack..
-				// note: this hack depends on main cpu/54 to work right.
-				memset (DrvZ80RAM + 0x100, 0x00, 0x180);
 			}
 
 			*sprite_bank= (data & 0x04) >> 2;
@@ -503,9 +499,35 @@ static void draw_sprites(INT32 layer)
 {
 	INT32 bank_mask[2] = { 0x3ff, 0x1ff };
 	if (*flipscreen) {
-		GenericTilesSetClip(0, nScreenWidth, 0, nScreenHeight-64);
+		switch (layer) {
+			case 0: // N/A - HUD
+				GenericTilesSetClip(0, nScreenWidth, 192, 256);
+				break;
+			case 1:
+				GenericTilesSetClip(0, nScreenWidth, 128, 192);
+				break;
+			case 2:
+				GenericTilesSetClip(0, nScreenWidth, 64, 128);
+				break;
+			case 3:
+				GenericTilesSetClip(0, nScreenWidth, 0,  64);
+				break;
+		}
 	} else {
-		GenericTilesSetClip(0, nScreenWidth, 64, nScreenHeight);
+		switch (layer) {
+			case 0:
+				GenericTilesSetClip(0, nScreenWidth, 0,  64);
+				break;
+			case 1:
+				GenericTilesSetClip(0, nScreenWidth, 64, 128);
+				break;
+			case 2:
+				GenericTilesSetClip(0, nScreenWidth, 128, 192);
+				break;
+			case 3:
+				GenericTilesSetClip(0, nScreenWidth, 192, 256);
+				break;
+		}
 	}
 
 //	bprintf(0, _T("spritepri  %x\tspritebank  %x\ttilebank  %x\n"), layer, *sprite_bank, *tile_bank);

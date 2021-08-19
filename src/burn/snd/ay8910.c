@@ -706,34 +706,12 @@ void AY8910Update(INT32 chip, INT16 **buffer, INT32 length)
 	}
 }
 
+// RE: PSG->UpdateStepN  -dink aug2021
+// noise channel gets a /2 divider.  this gives
+// kncljoe punch the right timbre without affecting other sounds.
+// note: also fixes "pepper" sound pitch in btime
 
 void AY8910_set_clock(INT32 chip, INT32 clock)
-{
-	struct AY8910 *PSG = &AYPSG[chip];
-	
-#if defined FBNEO_DEBUG
-#ifdef __GNUC__ 
-	if (!DebugSnd_AY8910Initted) bprintf(PRINT_ERROR, _T("AY8910_set_clock called without init\n"));
-	if (chip > num) bprintf(PRINT_ERROR, _T("AY8910_set_clock called with invalid chip number %x\n"), chip);
-#endif
-#endif
-
-	/* the step clock for the tone and noise generators is the chip clock    */
-	/* divided by 8; for the envelope generator of the AY-3-8910, it is half */
-	/* that much (clock/16), but the envelope of the YM2149 goes twice as    */
-	/* fast, therefore again clock/8.                                        */
-	/* Here we calculate the number of steps which happen during one sample  */
-	/* at the given sample rate. No. of events = sample rate / (clock/8).    */
-	/* STEP is a multiplier used to turn the fraction into a fixed point     */
-	/* number.                                                               */
-	PSG->UpdateStep = ((double)STEP * PSG->SampleRate * 8 + clock/2) / clock;
-	PSG->UpdateStepN = ((double)STEP * PSG->SampleRate * 8 + clock/2) / clock;
-}
-
-// this is same as above, except noise channel gets a /2 divider.  this gives
-// kncljoe punch the right timbre without affecting other sounds. -dink aug2021
-// note: havn't verified, but I think mame's current ay8910 core does this by default.
-void AY8910_set_clock_noisedivider(INT32 chip, INT32 clock)
 {
 	struct AY8910 *PSG = &AYPSG[chip];
 	

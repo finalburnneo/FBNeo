@@ -1128,7 +1128,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			if (UseDialogs()) {
 				if (!LuaConsoleHWnd) {
 					InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
-					LuaConsoleHWnd = CreateDialog(hAppInst, MAKEINTRESOURCE(IDD_LUA), NULL, (DLGPROC) DlgLuaScriptDialog);
+					LuaConsoleHWnd = FBACreateDialog(hAppInst, MAKEINTRESOURCE(IDD_LUA), hScrnWnd, (DLGPROC)DlgLuaScriptDialog);
 				}
 				else
 					SetForegroundWindow(LuaConsoleHWnd);

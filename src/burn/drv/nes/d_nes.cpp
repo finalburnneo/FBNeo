@@ -24584,6 +24584,40 @@ struct BurnDriver BurnDrvnes_chestfie = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_chiisobajRomDesc[] = {
+	{ "Chiisana Obake - Acchi Socchi Kocchi (Japan).nes",          262160, 0x305fa5d6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_chiisobaj)
+STD_ROM_FN(nes_chiisobaj)
+
+struct BurnDriver BurnDrvnes_chiisobaj = {
+	"nes_chiisobaj", "nes_chiisoba", NULL, NULL, "1989?",
+	"Chiisana Obake - Acchi Socchi Kocchi (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_chiisobajRomInfo, nes_chiisobajRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_chiisobaRomDesc[] = {
+	{ "Chiisana Obake - Acchi Socchi Kocchi (T-Eng).nes",          262160, 0x46dd3c86, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_chiisoba)
+STD_ROM_FN(nes_chiisoba)
+
+struct BurnDriver BurnDrvnes_chiisoba = {
+	"nes_chiisoba", NULL, NULL, NULL, "1989?",
+	"Chiisana Obake - Acchi Socchi Kocchi (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_chiisobaRomInfo, nes_chiisobaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_chikichimacmouraRomDesc[] = {
 	{ "Chiki Chiki Machine Mou Race (Japan).nes",          262160, 0xfda7b555, BRF_ESS | BRF_PRG },
 };

@@ -824,7 +824,7 @@
 		<description>Aspect Star N (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Nicole Express</manufacturer>
-		<rom name="Aspect Star N (HB).nes" size="40976" crc="857dbdca"/>
+		<rom name="Aspect Star N (2019)(Nicole Express).nes" size="24592" crc="14b70f98"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -1401,6 +1401,14 @@
 		<year>1991</year>
 		<manufacturer>LJN</manufacturer>
 		<rom name="Beetlejuice (USA).nes" size="131088" crc="1b2bad13"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="berserk">
+		<description>Berserk (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Parisoft</manufacturer>
+		<rom name="Berzerk (2019)(Parisoft).nes" size="65552" crc="25a46b45"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -2308,6 +2316,22 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="chiisobaj" cloneof="chiisoba" romof="chiisoba">
+		<description>Chiisana Obake - Acchi Socchi Kocchi (Japan)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Chiisana Obake - Acchi Socchi Kocchi (Japan).nes" size="262160" crc="305fa5d6"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="chiisoba">
+		<description>Chiisana Obake - Acchi Socchi Kocchi (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Chiisana Obake - Acchi Socchi Kocchi (T-Eng).nes" size="262160" crc="46dd3c86"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="chikichimacmoura" cloneof="wackyraces" romof="wackyraces">
 		<description>Chiki Chiki Machine Mou Race (Japan)</description>
 		<year>1989?</year>
@@ -2761,6 +2785,14 @@
 		<year>2016</year>
 		<manufacturer>Cowlitz</manufacturer>
 		<rom name="Cowlitz Gamers Adventure (HB).nes" size="32784" crc="0ae2354b"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="cowligamlostadv">
+		<description>Cowlitz Gamers Lost Adventure (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Cowlitz</manufacturer>
+		<rom name="Cowlitz Gamers Lost Adventure (2020)(Cowlitz).nes" size="65552" crc="6ded904f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -3943,7 +3975,7 @@
 	<game name="driar">
 		<description>Driar (HB) [Homebrew]</description>
 		<year>2018</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>Eriksson &amp; Adolfsson</manufacturer>
 		<rom name="Driar (2012)(Eriksson &amp; Adolfsson).nes" size="131088" crc="2c31ce23"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12156,6 +12188,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="splitsecond">
+		<description>Split Second (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Skadiet</manufacturer>
+		<rom name="Split Second (2019)(Skadiet).nes" size="24592" crc="a26a6c89"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="spot">
 		<description>Spot (USA)</description>
 		<year>1990</year>
@@ -12809,6 +12849,14 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Super Mario Bros. Two Players (Hack).nes" size="73744" crc="393bc874"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="smunlimdx">
+		<description>Super Mario Unlimited Deluxe (GlobalHack, v2.4) [Hack, Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Frantik</manufacturer>
+		<rom name="Super Mario Unlimited Deluxe v2.4 (2021)(Frantik).nes" size="196624" crc="e4198a92"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -13489,6 +13537,14 @@
 		<year>1990</year>
 		<manufacturer>Vic Tokai</manufacturer>
 		<rom name="Terra Cresta (USA).nes" size="131088" crc="e9b1dfad"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="teslavsedison">
+		<description>Tesla vs Edison (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Radnek</manufacturer>
+		<rom name="Tesla vs Edison (2018)(Radtek).nes" size="40976" crc="7d646297"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

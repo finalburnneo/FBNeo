@@ -376,11 +376,22 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="alienattack" romof="msx">
+	<game name="alienattack" cloneof="alienattackv3" romof="alienattackv3">
 		<description>Alien Attack (HB, v1.06) [Homebrew]</description>
-		<year>2021</year>
+		<year>2020</year>
 		<manufacturer>Marcos Daniel</manufacturer>
 		<rom name="Alien Attack v1.06 (2021)(Marcos Daniel).rom" size="262144" crc="fdf8501c"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="alienattackv3" romof="msx">
+		<description>Alien Attack (HB, v3.0) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Marcos Daniel</manufacturer>
+		<rom name="Alien Attack v3.0 (2021)(Marcos Daniel).rom" size="262144" crc="8b5fcc0c"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -994,7 +1005,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dooly" romof="msx">
-		<description>Baby Dinosaur Dooly</description>
+		<description>Baby Dinosaur Dooly (Kor)</description>
 		<year>1991</year>
 		<manufacturer>Daou</manufacturer>
 		<rom name="dooly.rom" size="32768" crc="71a1b1ec"/>
@@ -1941,7 +1952,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="breakoutt" romof="msx">
-		<description>Break Out!</description>
+		<description>Break Out! - The Great Computer Adventure (Jpn)</description>
 		<year>1985</year>
 		<manufacturer>Toshiba-EMI</manufacturer>
 		<rom name="Break Out! (1985)(Toshiba-EMI)(JP)[needs 64k in slot 2].rom" size="131072" crc="784d5f7f"/>
@@ -2106,7 +2117,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="inspecteurz" cloneof="bullmigt" romof="bullmigt">
-		<description>Buru to Marty Kikiippatsu. Inspecteur Z</description>
+		<description>Buru to Marty Kikiippatsu - Inspecteur Z</description>
 		<year>1986</year>
 		<manufacturer>HAL Laboratory</manufacturer>
 		<rom name="Buru to Marty Kikiippatsu. Inspecteur Z (1986)(HAL Laboratory)(JP).rom" size="32768" crc="57a1bfb3"/>
@@ -2650,6 +2661,17 @@
 		<year>1984</year>
 		<manufacturer>Sony</manufacturer>
 		<rom name="chess (japan).rom" size="16384" crc="11eed1c7"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="chicago30s" romof="msx">
+		<description>Chicago 30's (Spanish)</description>
+		<year>1988</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Chicago 30's (1988)(Topo Soft)(es)[RUN'CAS-'].cas" size="52794" crc="09aa5840"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -3834,6 +3856,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="dothesame" romof="msx">
+		<description>Do the Same (HB, v1.1) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>EM - JMeric</manufacturer>
+		<rom name="Do The Same v1.1 (2021)(EM, JMeric).rom" size="32768" crc="220709e4"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="dgnraven" romof="msx">
 		<description>Dodgin Raven (HB) [Homebrew]</description>
 		<year>2009</year>
@@ -4598,6 +4631,17 @@
 		<year>1985</year>
 		<manufacturer>ASCII</manufacturer>
 		<rom name="fairy (japan).rom" size="16384" crc="314728c3"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="fantfootball" romof="msx">
+		<description>Fantastic Football (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Zoran Majcenic, Daniel Simon</manufacturer>
+		<rom name="Fantastic Football (2021)(Zoran Majcenic).rom" size="49152" crc="51e1fe56"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7924,7 +7968,7 @@
 		<description>Logic Remastered (HB, v1.2) [Homebrew]</description>
 		<year>2021</year>
 		<manufacturer>Platty Soft</manufacturer>
-		<rom name="Logic Remastered v1.2 (2021)(Platty Soft).rom" size="262144" crc="c92f91b7"/>
+		<rom name="Logic Remastered v1.2 (48KB Version) (2021)(Platty Soft).rom" size="49152" crc="856b7dbb"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12560,10 +12604,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="step" romof="msx">
-		<description>Step (HB, v1.1) [Homebrew]</description>
+		<description>Step (HB, v1.2) [Homebrew]</description>
 		<year>2021</year>
 		<manufacturer>Uninteresting</manufacturer>
-		<rom name="Step v1.1 (2021)(Uninteresting).rom" size="131072" crc="b1c22749"/>
+		<rom name="Step v1.2 (2021)(Uninteresting).rom" size="131072" crc="03379ef8"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -13301,6 +13345,17 @@
 		<year>1989</year>
 		<manufacturer>Melbourne House</manufacturer>
 		<rom name="Terrorpods (1989)(Melbourne House).rom" size="65536" crc="b88a5069"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="testdrive2" romof="msx">
+		<description>Test Drive II - The Duel (Euro)</description>
+		<year>1989</year>
+		<manufacturer>Dro Soft</manufacturer>
+		<rom name="Test Drive II - The Duel (1989)(Dro Soft)[RUN'CAS-'].cas" size="52554" crc="9c2772df"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -14364,6 +14419,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="venganza" romof="msx">
+		<description>Venganza - La Sierva de la Muerte (Spanish) (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Salgue79</manufacturer>
+		<rom name="Venganza - La Sierva de la Muerte (2019)(Salgue79).rom" size="2097152" crc="bea65bd5"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="vesikauhu" romof="msx">
 		<description>Vesikauhu (HB, Tech-demo) [Homebrew]</description>
 		<year>2000</year>
@@ -14710,6 +14776,17 @@
 		<year>1988</year>
 		<manufacturer>Dro Soft</manufacturer>
 		<rom name="xenon (1988)(dro soft)(es)[run'cas-'].cas" size="74546" crc="4ad26b8f"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="xor2021" romof="msx">
+		<description>XOR 2021 (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Timmy</manufacturer>
+		<rom name="XOR 2021 (2021)(Timmy).rom" size="32768" crc="8f90e4e0"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

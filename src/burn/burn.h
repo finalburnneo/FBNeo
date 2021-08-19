@@ -601,6 +601,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_MSX_MAPPER_DOOLY                       (0x06)
 #define HARDWARE_MSX_MAPPER_RTYPE                       (0x07)
 #define HARDWARE_MSX_MAPPER_CROSS_BLAIM                 (0x08)
+#define HARDWARE_MSX_MAPPER_48K                         (0x09)
 
 #define HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_EEPROM			(1)
 #define HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM			(2)

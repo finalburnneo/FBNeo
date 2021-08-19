@@ -31,7 +31,6 @@ extern INT32 ay8910burgertime_mode;
 extern INT32 ay8910_index_ym;
 
 void AY8910_set_clock(INT32 chip, INT32 clock);
-void AY8910_set_clock_noisedivider(INT32 chip, INT32 clock); // noise channel is /2
 
 void AY8910Write(INT32 chip, INT32 a, INT32 data);
 INT32 AY8910Read(INT32 chip);

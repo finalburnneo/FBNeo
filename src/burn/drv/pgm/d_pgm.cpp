@@ -189,6 +189,18 @@ static struct BurnDIPInfo killbld104DIPList[] = {
 	{0x2E,	0x01, 0xFF,	0x21, "World"							},
 };
 
+static struct BurnDIPInfo killbld100DIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x16, NULL								},
+
+	{0,		0xFE, 0,	6,    "Region (Fake)"					},
+	{0x2E,	0x01, 0xFF,	0x16, "Taiwan"							},
+	{0x2E,	0x01, 0xFF,	0x17, "China"							},
+	{0x2E,	0x01, 0xFF,	0x18, "Hong Kong"						},
+	{0x2E,	0x01, 0xFF,	0x19, "Japan"							},
+	{0x2E,	0x01, 0xFF,	0x20, "Korea"							},
+	{0x2E,	0x01, 0xFF,	0x21, "World"							},
+};
+
 static struct BurnDIPInfo photoy2kDIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x01, NULL								},
 
@@ -692,6 +704,7 @@ STDDIPINFOEXT(kov2p203,     pgm,	kov2p203		)
 STDDIPINFOEXT(kovassga,    	pgm,	kovassga		)
 STDDIPINFOEXT(killbld,	 	pgm,	killbld			)
 STDDIPINFOEXT(killbld104,	pgm,	killbld104		)
+STDDIPINFOEXT(killbld100,	pgm,	killbld100		)
 STDDIPINFOEXT(photoy2k, 	pgm,	photoy2k		)
 STDDIPINFOEXT(py2k104, 	    pgm,	py2k104			)
 STDDIPINFOEXT(py2k103, 		pgm,	py2k103			)
@@ -1562,6 +1575,52 @@ struct BurnDriver BurnDrvKillbld104 = {
 	L"The Killing Blade\0\u50B2\u5251\u72C2\u5200 (V104)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_VSFIGHT, 0,
 	NULL, killbld104RomInfo, killbld104RomName, NULL, NULL, NULL, NULL, pgmInputInfo, killbld104DIPInfo,
+	killbldInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// The Killing Blade (V100, Taiwan)
+
+/* IGS PCB NO-0179 MADE IN TAIWAN
+   IGS PCB NO-0178 MADE IN TAIWAN
+   SCREEN VER PIC: GAME DOES NOT SHOW VERSION ON SCREEN.
+   ROM TYPES: U2  ST M27C512
+   ROM TYPES: U3 U4 U5 U6  MX MX27C4000
+   CREDITS TO: "XeD" */
+
+static struct BurnRomInfo killbld100RomDesc[] = {
+	{ "kb_u3_v100.u3",				0x0080000, 0xba3233a9, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "kb_u6_v100.u6",				0x0080000, 0x55ae1d39, 1 | BRF_PRG | BRF_ESS },	//  1
+	{ "kb_u4_v100.u4",				0x0080000, 0xd56a8407, 1 | BRF_PRG | BRF_ESS },	//  2
+	{ "kb_u5_v100.u5",				0x0080000, 0x99afff2b, 1 | BRF_PRG | BRF_ESS },	//  3
+
+	{ "pgm_t0300.u14",				0x0400000, 0x0922f7d9, 2 | BRF_GRA },			//  4 Tile data
+
+	{ "pgm_a0300.u9",				0x0400000, 0x3f9455d3, 3 | BRF_GRA },			//  5 Sprite Color Data
+	{ "pgm_a0301.u10",				0x0400000, 0x92776889, 3 | BRF_GRA },			//  6
+	{ "pgm_a0303.u11",				0x0400000, 0x33f5cc69, 3 | BRF_GRA },			//  7
+	{ "pgm_a0306.u12",				0x0400000, 0xcc018a8e, 3 | BRF_GRA },			//  8
+	{ "pgm_a0307.u2",				0x0400000, 0xbc772e39, 3 | BRF_GRA },			//  9
+
+	{ "pgm_b0300.u13",				0x0400000, 0x7f876981, 4 | BRF_GRA },			// 10 Sprite Masks & Color Indexes
+	{ "pgm_b0302.u14",				0x0400000, 0xeea9c502, 4 | BRF_GRA },			// 11
+	{ "pgm_b0303.u15",				0x0200000, 0x77a9652e, 4 | BRF_GRA },			// 12
+
+	{ "pgm_m0300.u1",				0x0400000, 0x93159695, 5 | BRF_SND },			// 13 Samples
+
+	{ "kb_u2_v100.u2",				0x0010000, 0x6fbbdcb7, 9 | BRF_PRG | BRF_ESS },	// 14 Protection Data
+};
+
+STDROMPICKEXT(killbld100, killbld100, pgm)
+STD_ROM_FN(killbld100)
+
+struct BurnDriver BurnDrvKillbld100 = {
+	"killbld100", "killbld", "pgm", NULL, "1998",
+	"The Killing Blade (V100, Taiwan)\0", NULL, "IGS", "PolyGameMaster",
+	L"The Killing Blade\0\u50B2\u5251\u72C2\u5200 (V100, Taiwan)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_VSFIGHT, 0,
+	NULL, killbld100RomInfo, killbld100RomName, NULL, NULL, NULL, NULL, pgmInputInfo, killbld100DIPInfo,
 	killbldInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

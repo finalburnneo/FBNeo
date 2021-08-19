@@ -409,6 +409,7 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 262;
 	INT32 nCyclesTotal[1] = { master_clock / 60 };
 	INT32 nCyclesDone[1] = { 0 };
+	INT32 nSoundBufferPos = 0;
 
 	M6502Open(0);
 
@@ -423,6 +424,12 @@ static INT32 DrvFrame()
         }
 
 		if (i == 240) vblank = 0;
+		if (pBurnSoundOut && !is_Bootleg) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			pokey_update(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	M6502Close();
@@ -431,7 +438,11 @@ static INT32 DrvFrame()
 		if (is_Bootleg) { // Bootleg set 2 sound system
 			SN76496Update(pBurnSoundOut, nBurnSoundLen);
 		} else {
-			pokey_update(pBurnSoundOut, nBurnSoundLen);
+			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			if (nSegmentLength) {
+				pokey_update(pSoundBuf, nSegmentLength);
+			}
 		}
 	}
 

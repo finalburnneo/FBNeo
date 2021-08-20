@@ -42,135 +42,136 @@ static INT32 gaelco_encryption_param1;
 static INT32 has_sound_cpu = 0;
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Drv)
 
 static struct BurnInputInfo BigkarnkInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Bigkarnk)
 
 static struct BurnInputInfo LastkmInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Lastkm)
 
 static struct BurnDIPInfo BigkarnkDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0xff, NULL				},
-	{0x13, 0xff, 0xff, 0xce, NULL				},
-	{0x14, 0xff, 0xff, 0xfe, NULL				},
-
-	{0   , 0xfe, 0   ,    11, "Coin A"			},
-	{0x12, 0x01, 0x0f, 0x07, "4 Coins 1 Credits"		},
-	{0x12, 0x01, 0x0f, 0x08, "3 Coins 1 Credits"		},
-	{0x12, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"		},
-	{0x12, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
-	{0x12, 0x01, 0x0f, 0x06, "2 Coins 3 Credits"		},
-	{0x12, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"		},
-	{0x12, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"		},
-	{0x12, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"		},
-	{0x12, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"		},
-	{0x12, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"		},
-	{0x12, 0x01, 0x0f, 0x00, "Free Play (if Coin B too)"	},
-
-	{0   , 0xfe, 0   ,    11, "Coin B"			},
-	{0x12, 0x01, 0xf0, 0x70, "4 Coins 1 Credits"		},
-	{0x12, 0x01, 0xf0, 0x80, "3 Coins 1 Credits"		},
-	{0x12, 0x01, 0xf0, 0x90, "2 Coins 1 Credits"		},
-	{0x12, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
-	{0x12, 0x01, 0xf0, 0x60, "2 Coins 3 Credits"		},
-	{0x12, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"		},
-	{0x12, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"		},
-	{0x12, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"		},
-	{0x12, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"		},
-	{0x12, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"		},
-	{0x12, 0x01, 0xf0, 0x00, "Free Play (if Coin A too)"	},
+	DIP_OFFSET(0x12)
+	{0x00, 0xff, 0xff, 0xce, NULL				}, // dip 0/1 swapped compared to other games
+	{0x01, 0xff, 0xff, 0xff, NULL				},
+	{0x02, 0xff, 0xff, 0xfe, NULL				},
 
 	{0   , 0xfe, 0   ,    8, "Difficulty"			},
-	{0x13, 0x01, 0x07, 0x07, "0"				},
-	{0x13, 0x01, 0x07, 0x06, "1"				},
-	{0x13, 0x01, 0x07, 0x05, "2"				},
-	{0x13, 0x01, 0x07, 0x04, "3"				},
-	{0x13, 0x01, 0x07, 0x03, "4"				},
-	{0x13, 0x01, 0x07, 0x02, "5"				},
-	{0x13, 0x01, 0x07, 0x01, "6"				},
-	{0x13, 0x01, 0x07, 0x00, "7"				},
+	{0x00, 0x01, 0x07, 0x07, "0"				},
+	{0x00, 0x01, 0x07, 0x06, "1"				},
+	{0x00, 0x01, 0x07, 0x05, "2"				},
+	{0x00, 0x01, 0x07, 0x04, "3"				},
+	{0x00, 0x01, 0x07, 0x03, "4"				},
+	{0x00, 0x01, 0x07, 0x02, "5"				},
+	{0x00, 0x01, 0x07, 0x01, "6"				},
+	{0x00, 0x01, 0x07, 0x00, "7"				},
 
 	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x13, 0x01, 0x18, 0x18, "1"				},
-	{0x13, 0x01, 0x18, 0x10, "2"				},
-	{0x13, 0x01, 0x18, 0x08, "3"				},
-	{0x13, 0x01, 0x18, 0x00, "4"				},
+	{0x00, 0x01, 0x18, 0x18, "1"				},
+	{0x00, 0x01, 0x18, 0x10, "2"				},
+	{0x00, 0x01, 0x18, 0x08, "3"				},
+	{0x00, 0x01, 0x18, 0x00, "4"				},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x13, 0x01, 0x20, 0x20, "Off"				},
-	{0x13, 0x01, 0x20, 0x00, "On"				},
+	{0x00, 0x01, 0x20, 0x20, "Off"				},
+	{0x00, 0x01, 0x20, 0x00, "On"				},
 
 	{0   , 0xfe, 0   ,    2, "Impact"			},
-	{0x13, 0x01, 0x40, 0x00, "Off"				},
-	{0x13, 0x01, 0x40, 0x40, "On"				},
+	{0x00, 0x01, 0x40, 0x00, "Off"				},
+	{0x00, 0x01, 0x40, 0x40, "On"				},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x13, 0x01, 0x80, 0x80, "Off"				},
-	{0x13, 0x01, 0x80, 0x00, "On"				},
+	{0x00, 0x01, 0x80, 0x80, "Off"				},
+	{0x00, 0x01, 0x80, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    11, "Coin A"			},
+	{0x01, 0x01, 0x0f, 0x07, "4 Coins 1 Credits"		},
+	{0x01, 0x01, 0x0f, 0x08, "3 Coins 1 Credits"		},
+	{0x01, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"		},
+	{0x01, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
+	{0x01, 0x01, 0x0f, 0x06, "2 Coins 3 Credits"		},
+	{0x01, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"		},
+	{0x01, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"		},
+	{0x01, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"		},
+	{0x01, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"		},
+	{0x01, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"		},
+	{0x01, 0x01, 0x0f, 0x00, "Free Play (if Coin B too)"	},
+
+	{0   , 0xfe, 0   ,    11, "Coin B"			},
+	{0x01, 0x01, 0xf0, 0x70, "4 Coins 1 Credits"		},
+	{0x01, 0x01, 0xf0, 0x80, "3 Coins 1 Credits"		},
+	{0x01, 0x01, 0xf0, 0x90, "2 Coins 1 Credits"		},
+	{0x01, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
+	{0x01, 0x01, 0xf0, 0x60, "2 Coins 3 Credits"		},
+	{0x01, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"		},
+	{0x01, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"		},
+	{0x01, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"		},
+	{0x01, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"		},
+	{0x01, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"		},
+	{0x01, 0x01, 0xf0, 0x00, "Free Play (if Coin A too)"	},
 
 	{0   , 0xfe, 0   ,    2, "Go to test mode now"		},
-	{0x14, 0x01, 0x02, 0x02, "Off"				},
-	{0x14, 0x01, 0x02, 0x00, "On"				},
+	{0x02, 0x01, 0x02, 0x02, "Off"				},
+	{0x02, 0x01, 0x02, 0x00, "On"				},
 };
 
 STDDIPINFO(Bigkarnk)
@@ -640,27 +641,21 @@ static UINT16 __fastcall main_read_word(UINT32 address)
 	switch (address)
 	{
 		case 0x700000:
-		case 0x700001:
 			return DrvDips[1];
 
 		case 0x700002:
-		case 0x700003:
 			return DrvDips[0];
 
 		case 0x700004:
-		case 0x700005:
 			return DrvInputs[0];
 
 		case 0x700006:
-		case 0x700007:
 			return DrvInputs[1];
 
 		case 0x700008:
-		case 0x700009:
 			return DrvInputs[2];
 
 		case 0x70000e:
-		case 0x70000f:
 			return MSM6295Read(0);
 	}
 
@@ -671,27 +666,21 @@ static UINT8 __fastcall main_read_byte(UINT32 address)
 {
 	switch (address)
 	{
-		case 0x700000:
 		case 0x700001:
 			return DrvDips[1];
 
-		case 0x700002:
 		case 0x700003:
 			return DrvDips[0];
 
-		case 0x700004:
 		case 0x700005:
 			return DrvInputs[0];
 
-		case 0x700006:
 		case 0x700007:
 			return DrvInputs[1];
 
-		case 0x700008:
 		case 0x700009:
 			return DrvInputs[2];
 
-		case 0x70000e:
 		case 0x70000f:
 			return MSM6295Read(0);
 	}
@@ -767,9 +756,9 @@ static INT32 DrvDoReset()
 
 	M6809Open(0);
 	M6809Reset();
+	BurnYM3812Reset();
 	M6809Close();
 
-	BurnYM3812Reset();
 	MSM6295Reset(0);
 
 	memcpy (DrvSndROM, DrvSndROM + 0x040000, 0x030000);
@@ -1241,6 +1230,7 @@ static INT32 BigkarnkFrame()
 		BurnTimerEndFrameYM3812(2216750 / 60);
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter(); // big karnak distortion w/lp filter
 	}
 
 	SekClose();
@@ -1256,7 +1246,7 @@ static INT32 BigkarnkFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029698;
 	}

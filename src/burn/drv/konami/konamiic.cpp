@@ -11,6 +11,7 @@ UINT32 KonamiIC_K053250InUse = 0;
 UINT32 KonamiIC_K055555InUse = 0;
 UINT32 KonamiIC_K054338InUse = 0;
 UINT32 KonamiIC_K056832InUse = 0;
+UINT32 KonamiIC_GX_MixerInUse = 0;
 
 UINT32 *konami_bitmap32 = NULL;
 UINT8  *konami_priority_bitmap = NULL;
@@ -146,7 +147,7 @@ void KonamiICReset()
 	if (KonamiIC_K055555InUse) K055555Reset();
 	if (KonamiIC_K054338InUse) K054338Reset();
 	if (KonamiIC_K056832InUse) K056832Reset();
-
+//	if (KonamiIC_GX_MixerInUse)
 	K053251Reset();
 	K054000Reset();
 	K051733Reset();
@@ -180,6 +181,7 @@ void KonamiICExit()
 	if (KonamiIC_K055555InUse) K055555Exit();
 	if (KonamiIC_K054338InUse) K054338Exit();
 	if (KonamiIC_K056832InUse) K056832Exit();
+	if (KonamiIC_GX_MixerInUse) konamigx_mixer_exit();
 
 	KonamiIC_K051960InUse = 0;
 	KonamiIC_K052109InUse = 0;
@@ -190,6 +192,7 @@ void KonamiICExit()
 	KonamiIC_K055555InUse = 0;
 	KonamiIC_K054338InUse = 0;
 	KonamiIC_K056832InUse = 0;
+	KonamiIC_GX_MixerInUse = 0;
 
 	highlight_over_sprites_mode = 0;
 	highlight_mode = 0;
@@ -213,6 +216,7 @@ void KonamiICScan(INT32 nAction)
 	if (KonamiIC_K055555InUse) K055555Scan(nAction);
 	if (KonamiIC_K054338InUse) K054338Scan(nAction);
 	if (KonamiIC_K056832InUse) K056832Scan(nAction);
+	if (KonamiIC_GX_MixerInUse) konamigx_scan(nAction);
 
 	K053251Scan(nAction);
 	K054000Scan(nAction);

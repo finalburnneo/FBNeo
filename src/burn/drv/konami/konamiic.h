@@ -10,6 +10,7 @@ extern UINT32 KonamiIC_K053250InUse;
 extern UINT32 KonamiIC_K055555InUse;
 extern UINT32 KonamiIC_K054338InUse;
 extern UINT32 KonamiIC_K056832InUse;
+extern UINT32 KonamiIC_GX_MixerInUse;
 
 extern UINT8 *konami_priority_bitmap;
 extern UINT32 *konami_bitmap32;
@@ -508,6 +509,7 @@ void K055555Scan(INT32 nAction);
 
 void konamigx_mixer_init(int objdma);
 void konamigx_mixer_exit();
+void konamigx_scan(INT32 nAction);
 void konamigx_mixer_primode(int mode);
 void konamigx_mixer(int sub1 /*extra tilemap 1*/, int sub1flags, int sub2 /*extra tilemap 2*/, int sub2flags, int mixerflags, int extra_bitmap /*extra tilemap 3*/, int rushingheroes_hack);
 extern INT32 konamigx_mystwarr_kludge;

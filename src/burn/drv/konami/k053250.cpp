@@ -78,12 +78,10 @@ void K053250Scan(INT32 nAction)
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
-		ba.Data	  = regs;
-		ba.nLen	  = 8;
-		ba.szName = "K053250 Regs";
-		BurnAcb(&ba);
+		SCAN_VAR(regs);
 
 		SCAN_VAR(page);
+		SCAN_VAR(frame);
 	}
 }
 

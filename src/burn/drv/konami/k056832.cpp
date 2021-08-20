@@ -1068,31 +1068,25 @@ void K056832Scan(INT32 nAction)
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
-		for (INT32 i = 0; i < 0x20; i++) {
-			SCAN_VAR(k056832Regs[i]);
-			SCAN_VAR(k056832Regsb[i]);
-		}
+		SCAN_VAR(k056832Regs);
+		SCAN_VAR(k056832Regsb);
 
-		for (INT32 i = 0; i < 16; i++) {
-			SCAN_VAR(m_layer_assoc_with_page[i]);
-		}
+		SCAN_VAR(m_layer_assoc_with_page);
 
-		for (INT32 i = 0; i < 8; i++) {
-			SCAN_VAR(m_layer_tile_mode[i]);
-			SCAN_VAR(m_lsram_page[i][0]);
-			SCAN_VAR(m_lsram_page[i][1]);
-		}
-
-		SCAN_VAR(m_use_ext_linescroll); // ?
-		SCAN_VAR(m_layer_association); // ?
+		SCAN_VAR(m_use_ext_linescroll);
+		SCAN_VAR(m_layer_association);
 		SCAN_VAR(m_active_layer);
+		SCAN_VAR(m_layer_assoc_with_page);
 		SCAN_VAR(m_selected_page);
 		SCAN_VAR(m_selected_page_x4096);
+		SCAN_VAR(m_lsram_page);
 		SCAN_VAR(m_default_layer_association);
 		SCAN_VAR(m_uses_tile_banks);
 		SCAN_VAR(m_cur_tile_bank);
+		SCAN_VAR(m_layer_tile_mode);
+		SCAN_VAR(m_page_tile_mode);
+
 		SCAN_VAR(m_cur_gfx_banks);
-		SCAN_VAR(m_num_gfx_banks);
 		SCAN_VAR(tilemap_flip);
 		SCAN_VAR(m_rom_half);
 	}

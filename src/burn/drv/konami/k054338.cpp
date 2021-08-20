@@ -45,6 +45,7 @@ void K054338Scan(INT32 nAction)
 		ba.szName = "K054338 Regs";
 		BurnAcb(&ba);
 
+		SCAN_VAR(m_shd_rgb);
 		SCAN_VAR(alpha_cache);
 	}
 }

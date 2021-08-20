@@ -80,6 +80,8 @@ void konamigx_precache_registers()
 
 void konamigx_mixer_init(INT32 objdma)
 {
+	KonamiIC_GX_MixerInUse = 1;
+
 	m_gx_objdma = 0;
 	m_gx_primode = 0;
 
@@ -114,6 +116,18 @@ void konamigx_mixer_exit()
 	BurnFree(gx_objpool);
 	m_gx_objdma = 0;
 	konamigx_mystwarr_kludge = 0;
+}
+
+void konamigx_scan(INT32 nAction)
+{
+	if (nAction & ACB_MEMORY_RAM) {
+		ScanVar(gx_shdzbuf, 512 * 256 * 2, "gx shd z buf");
+		ScanVar(gx_objzbuf, 512 * 256 * 2, "gx obj z buf");
+		if (m_gx_objdma && gx_spriteram) {
+			ScanVar(gx_spriteram, 0x1000, "gx spriteram");
+		}
+		ScanVar(gx_objpool, GX_MAX_OBJECTS * sizeof(GX_OBJ), "gx obj pool");
+	}
 }
 
 static void gx_wipezbuf(INT32 noshadow)

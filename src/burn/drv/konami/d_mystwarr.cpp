@@ -2735,8 +2735,6 @@ static INT32 DrvExit()
 
 	KonamiICExit();
 
-	konamigx_mixer_exit();
-
 	SekExit();
 	ZetExit();
 

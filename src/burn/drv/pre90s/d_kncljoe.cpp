@@ -497,71 +497,43 @@ static INT32 DrvExit()
 
 static void draw_sprites(INT32 layer)
 {
-	INT32 bank_mask[2] = { 0x3ff, 0x1ff };
+	// each sprite layer is a 64v quadrant -dink aug 2021
 	if (*flipscreen) {
-		switch (layer) {
-			case 0: // N/A - HUD
-				GenericTilesSetClip(0, nScreenWidth, 192, 256);
-				break;
-			case 1:
-				GenericTilesSetClip(0, nScreenWidth, 128, 192);
-				break;
-			case 2:
-				GenericTilesSetClip(0, nScreenWidth, 64, 128);
-				break;
-			case 3:
-				GenericTilesSetClip(0, nScreenWidth, 0,  64);
-				break;
-		}
+		GenericTilesSetClip(0, nScreenWidth, (3 - layer) * 64, ((3 - layer) + 1) * 64);
 	} else {
-		switch (layer) {
-			case 0:
-				GenericTilesSetClip(0, nScreenWidth, 0,  64);
-				break;
-			case 1:
-				GenericTilesSetClip(0, nScreenWidth, 64, 128);
-				break;
-			case 2:
-				GenericTilesSetClip(0, nScreenWidth, 128, 192);
-				break;
-			case 3:
-				GenericTilesSetClip(0, nScreenWidth, 192, 256);
-				break;
-		}
+		GenericTilesSetClip(0, nScreenWidth, layer * 64, (layer + 1) * 64);
 	}
 
-//	bprintf(0, _T("spritepri  %x\tspritebank  %x\ttilebank  %x\n"), layer, *sprite_bank, *tile_bank);
+	for (INT32 j = 0x7c; j >= 0; j -= 4)
 	{
-		for (INT32 j = 0x7c; j >= 0; j -= 4)
+		const INT32 bank_mask[2] = { 0x3ff, 0x1ff };
+
+		INT32 offs = ((~layer & 1) << 8) | ((~layer & 2) << 6) | j;
+
+		INT32 sy    = DrvSprRAM[offs + 0];
+		INT32 attr  = DrvSprRAM[offs + 1];
+		INT32 code  = DrvSprRAM[offs + 2] | ((attr & 0x10) << 5) | ((attr & 0x20) << 3);
+		code &= bank_mask[*sprite_bank];
+		code |= (*sprite_bank << 10);
+		INT32 sx    = DrvSprRAM[offs + 3];
+
+		INT32 flipx =  attr & 0x40;
+		INT32 flipy = ~attr & 0x80;
+		INT32 color =  attr & 0x0f;
+
+		if (*flipscreen)
 		{
-			INT32 offs = ((~layer & 1) << 8) | ((~layer & 2) << 6) | j;
-
-			INT32 sy    = DrvSprRAM[offs + 0];
-			INT32 attr  = DrvSprRAM[offs + 1];
-			INT32 code  = DrvSprRAM[offs + 2] | ((attr & 0x10) << 5) | ((attr & 0x20) << 3);
-			code &= bank_mask[*sprite_bank];
-//			if (code & 0xff)
-//				bprintf(0, _T("code:   %x\toffs:  %x.   %02x  %02x  %02x  %02x\n"), code, offs,DrvSprRAM[offs + 0],DrvSprRAM[offs + 1],DrvSprRAM[offs + 2],DrvSprRAM[offs + 3]);
-			code |= (*sprite_bank << 10);
-			INT32 sx    = DrvSprRAM[offs + 3];
-
-			INT32 flipx =  attr & 0x40;
-			INT32 flipy = ~attr & 0x80;
-			INT32 color =  attr & 0x0f;
-
-			if (*flipscreen)
-			{
-				flipx = !flipx;
-				flipy = !flipy;
-				sx = 240 - sx;
-				sy = 240 - sy;
-			}
-
-			if (sx >= 248) sx -= 256;
-
-			Draw16x16MaskTile(pTransDraw, code, sx - 8, sy, flipx, flipy, color, 3, 0, 0x80, DrvGfxROM1);
+			flipx = !flipx;
+			flipy = !flipy;
+			sx = 240 - sx;
+			sy = 240 - sy;
 		}
+
+		if (sx >= 248) sx -= 256;
+
+		Draw16x16MaskTile(pTransDraw, code, sx - 8, sy, flipx, flipy, color, 3, 0, 0x80, DrvGfxROM1);
 	}
+
 	GenericTilesClearClip();
 }
 
@@ -579,8 +551,7 @@ static INT32 DrvDraw()
 	GenericTilemapSetScrollRow(0, 2, *scrollx);
 	GenericTilemapSetScrollRow(0, 3, 0);
 
-	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER0 | 0, 0);
-	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER1 | 1, 0);
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
 
 	if (nSpriteEnable & 1) draw_sprites(0);
 	if (nSpriteEnable & 2) draw_sprites(1);
@@ -612,8 +583,8 @@ static INT32 DrvFrame()
 		hold_coin.checklow(0, DrvInputs[0], 4, 3);
 		hold_coin.checklow(1, DrvInputs[0], 8, 3);
 	}
-	INT32 nInterleave = 256;  // main cpu must be / 54, or sprite issues! (coin up during attract -> missing sprite on cutscene, etc)
-	INT32 nCyclesTotal[2] = { 6000000 / 54, 3579545 / 60 };
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[2] = { (INT32)((double)6000000 / 59.17), 3579545 / 60 };
 	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	ZetOpen(0);
@@ -625,7 +596,7 @@ static INT32 DrvFrame()
 		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
 		CPU_RUN(1, M6803);
-		if ((i%3) == 0)
+		if ((i%4) == 0)
 			M6803SetIRQLine(M6803_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 	}
 

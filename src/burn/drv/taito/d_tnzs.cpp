@@ -617,13 +617,11 @@ static void __fastcall bankswitch0(UINT8 data)
 	// CPU #0 expects CPU #1 to be stopped while reset line is triggered.
 	if ((~data & 0x10) != cpu1_reset) {
 		INT32 cycles = ZetTotalCycles();
-		ZetClose();
-		ZetOpen(1);
+		ZetCPUPush(1);
 		cycles -= ZetTotalCycles();
-		ZetIdle(cycles);
+		if (cycles > 0) ZetIdle(cycles);
 		if (~data & 0x10) ZetReset();
-		ZetClose();
-		ZetOpen(0);
+		ZetCPUPop();
 	}
 
 	cpu1_reset = ~data & 0x10;
@@ -634,13 +632,10 @@ static void __fastcall bankswitch0(UINT8 data)
 
 	// Low banks are RAM regions high ones are ROM.
 	if ((data & 6) == 0) {
-		ZetMapArea(0x8000, 0xbfff, 0, DrvZ80RAM0 + bank);
-		ZetMapArea(0x8000, 0xbfff, 1, DrvZ80RAM0 + bank);
-		ZetMapArea(0x8000, 0xbfff, 2, DrvZ80RAM0 + bank);
+		ZetMapMemory(DrvZ80RAM0 + bank, 0x8000, 0xbfff, MAP_RAM);
 	} else {
-		ZetMapArea(0x8000, 0xbfff, 0, DrvZ80ROM0 + 0x10000 + bank);
-		ZetMapArea(0x8000, 0xbfff, 1, DrvZ80ROM0 + 0x10000);
-		ZetMapArea(0x8000, 0xbfff, 2, DrvZ80ROM0 + 0x10000 + bank);
+		ZetUnmapMemory(0x8000, 0xbfff, MAP_RAM); // ? just incase? -dink
+		ZetMapMemory(DrvZ80ROM0 + 0x10000 + bank, 0x8000, 0xbfff, MAP_ROM);
 	}
 }
 
@@ -654,8 +649,7 @@ static void __fastcall bankswitch1(UINT8 data)
 
 	*coin_lockout = ~data & 0x30;
 
-	ZetMapArea(0x8000, 0x9fff, 0, DrvZ80ROM1 + 0x08000 + 0x2000 * (data & 3));
-	ZetMapArea(0x8000, 0x9fff, 2, DrvZ80ROM1 + 0x08000 + 0x2000 * (data & 3));
+	ZetMapMemory(DrvZ80ROM1 + 0x08000 + 0x2000 * (data & 3), 0x8000, 0x9fff, MAP_ROM);
 }
 
 static void __fastcall tnzs_cpu0_write(UINT16 address, UINT8 data)
@@ -703,7 +697,7 @@ static void __fastcall tnzsb_cpu1_write(UINT16 address, UINT8 data)
 
 		case 0xb004:
 			*soundlatch = data;
-			ZetSetVector(2, 0xff);
+			//ZetSetVector(2, 0xff);
 			ZetSetIRQLine(2, 0, CPU_IRQSTATUS_HOLD);
 		break;
 	}
@@ -849,6 +843,8 @@ static void kabukiz_sound_bankswitch(UINT32, UINT32 data)
 static void kabukiz_dac_write(UINT32, UINT32 data)
 {
 	if (game_kabukiz && data != 0xff) {
+		if (ZetGetActive() == -1) return;
+
 		DACSignedWrite(0, data);
 	}
 }
@@ -928,16 +924,19 @@ static INT32 DrvDoReset()
 
 	tnzs_mcu_reset();
 
+	ZetOpen(1);
 	if (tnzs_mcu_type() == MCU_NONE_JPOPNICS) {
 		BurnYM2151Reset();
 	} else {
 		BurnYM2203Reset();
 	}
+	ZetClose();
 
 	DACReset();
 
 	kageki_sample_pos = 0;
 	kageki_sample_select = -1;
+	kageki_csport_sel = 0;
 
 	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = 0;
 
@@ -1081,12 +1080,7 @@ static INT32 insectx_gfx_decode()
 
 static INT32 Type1Init(INT32 mcutype)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	system_type = 1;
 
@@ -1331,8 +1325,9 @@ static INT32 Type1Init(INT32 mcutype)
 	tnzs_mcu_init(mcutype);
 
 	if (mcutype == MCU_NONE_JPOPNICS) {
-		BurnYM2151Init(3000000); // jpopnics
+		BurnYM2151InitBuffered(3000000, 1, NULL, 0); // jpopnics
 		BurnYM2151SetAllRoutes(0.30, BURN_SND_ROUTE_BOTH);
+		BurnTimerAttachZet(6000000);
 	} else {
 		BurnYM2203Init(1, 3000000, NULL, 0);
 		BurnYM2203SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
@@ -1367,12 +1362,7 @@ static INT32 Type1Init(INT32 mcutype)
 
 static INT32 Type2Init()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	system_type = 2;
 
@@ -1488,7 +1478,7 @@ static INT32 DrvExit()
 	if (tnzs_mcu_type() == MCU_NONE_JPOPNICS) BurnYM2151Exit();
 	DACExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	BurnTrackballExit();
 
@@ -1542,33 +1532,9 @@ static void kageki_sample_render(INT16 *pSoundBuf, INT32 nLength)
 static void draw_16x16(INT32 sx, INT32 sy, INT32 code, INT32 color, INT32 flipx, INT32 flipy, INT32 transp)
 {
 	if (transp) {
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM);
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 0, 0, DrvGfxROM);
 	} else {
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM);
-			} else {
-				Render16x16Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM);
-			} else {
-				Render16x16Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM);
-			}
-		}
+		Draw16x16Tile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 0, DrvGfxROM);
 	}
 }
 
@@ -1761,9 +1727,8 @@ static INT32 DrvFrame()
 	assemble_inputs();
 
 	INT32 nInterleave = 256;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[3] = { 6000000 / 60, 6000000 / 60, 6000000 / 60 };
-	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2] };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		// Run Z80 #0
@@ -1778,10 +1743,11 @@ static INT32 DrvFrame()
 		// Run Z80 #1
 		ZetOpen(1);
 		if (!cpu1_reset) {
-			if (system_type == 1 && tnzs_mcu_type() != MCU_NONE_JPOPNICS)
-				BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
-			else
+			if (system_type == 1) {
+				CPU_RUN_TIMER(1);
+			} else {
 				CPU_RUN(1, Zet);
+			}
 		}
 		if (i == 240)
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
@@ -1791,7 +1757,7 @@ static INT32 DrvFrame()
 		if (tnzs_mcu_type() == MCU_NONE)
 		{
 			ZetOpen(2);
-			BurnTimerUpdate((i + 1) * (nCyclesTotal[2] / nInterleave));
+			CPU_RUN_TIMER(2);
 			ZetClose();
 		}
 
@@ -1802,37 +1768,12 @@ static INT32 DrvFrame()
 
 			sprite_buffer(DrvObjCtrl[1]);
 		}
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			ZetOpen(2);
-			if (tnzs_mcu_type() == MCU_NONE_JPOPNICS) {
-				BurnYM2151Render(pSoundBuf, nSegmentLength);
-			}
-			ZetClose();
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
-	ZetOpen(1);
-	if (!cpu1_reset) {
-		if (system_type == 1 && tnzs_mcu_type() != MCU_NONE_JPOPNICS)
-			BurnTimerEndFrame(nCyclesTotal[1]);
-	}
-	ZetClose();
 
 	ZetOpen(2);
-	if (tnzs_mcu_type() == MCU_NONE) {
-		BurnTimerEndFrame(nCyclesTotal[2]);
-	}
-
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			if (tnzs_mcu_type() == MCU_NONE_JPOPNICS) {
-				BurnYM2151Render(pSoundBuf, nSegmentLength);
-			}
+		if (tnzs_mcu_type() == MCU_NONE_JPOPNICS) {
+			BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		}
 
 		if (tnzs_mcu_type() != MCU_NONE_JPOPNICS) {

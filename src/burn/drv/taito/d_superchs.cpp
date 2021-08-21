@@ -863,6 +863,8 @@ static INT32 SuperchsScan(INT32 nAction, INT32 *pnMin)
 		TaitoF3SoundScan(nAction, pnMin);
 		BurnShiftScan(nAction);
 
+		EEPROMScan(nAction, pnMin);
+
 		SCAN_VAR(SuperchsCoinWord);
 		SCAN_VAR(SuperchsCpuACtrl);
 		SCAN_VAR(analog_adder);

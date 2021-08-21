@@ -10670,15 +10670,13 @@ static INT32 ThundfoxDraw()
 {
 	INT32 Disable1 = TC0100SCNCtrl[0][6] & 0xf7;
 	INT32 Disable2 = TC0100SCNCtrl[1][6] & 0xf7;
-	
+
 	BurnTransferClear();
 	TaitoF2CalcPalette();
-	
+
 	INT32 TilePri[2][3];
 	INT32 Layer[2][3];
 
-	TaitoF2MakeSpriteList();
-	
 	Layer[0][0] = TC0100SCNBottomLayer(0);
 	Layer[0][1] = Layer[0][0] ^ 1;
 	Layer[0][2] = 2;
@@ -10697,9 +10695,11 @@ static INT32 ThundfoxDraw()
 	TaitoF2SpritePriority[1] = TC0360PRIRegs[6] >> 4;
 	TaitoF2SpritePriority[2] = TC0360PRIRegs[7] & 0x0f;
 	TaitoF2SpritePriority[3] = TC0360PRIRegs[7] >> 4;
-	
+
+	TaitoF2MakeSpriteList();
+
 //	bprintf(PRINT_NORMAL, _T("Layer0-0 %x, Layer 0-1 %x, Layer 0-2 %x, Layer1-0 %x, Layer 1-1 %x, Layer 1-2 %x, Sprite 0 %x, Sprite 1 %x, Sprite 2 %x, Sprite 3 %x\n"), TilePri[0][0], TilePri[0][1], TilePri[0][2], TilePri[1][0], TilePri[1][1], TilePri[1][2], TaitoF2SpritePriority[0], TaitoF2SpritePriority[1], TaitoF2SpritePriority[2], TaitoF2SpritePriority[3]);
-	
+
 	for (INT32 i = 0; i < 16; i++) {
 		if (TilePri[1][0] == i) { 
 			if (TC0100SCNBottomLayer(1)) {
@@ -10736,7 +10736,7 @@ static INT32 ThundfoxDraw()
 		if (TilePri[1][2] == i) { if (!(Disable2 & 0x04)) TC0100SCNRenderCharLayer(1); }
 		if (TilePri[0][2] == i) { if (!(Disable1 & 0x04)) TC0100SCNRenderCharLayer(0); }
 	}
-	
+
 	BurnTransferCopy(TaitoPalette);
 
 	return 0;

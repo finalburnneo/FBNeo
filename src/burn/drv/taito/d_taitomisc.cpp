@@ -483,8 +483,8 @@ static void TopspeedMakeInputs()
 
 	if ((TC0220IOCDip[0] & 3) == 2)
 	{ // digital pedals
-		UINT8 Accel = ProcessAnalog(TaitoAnalogPort1, 0, INPUT_LINEAR | INPUT_DEADZONE | INPUT_MIGHTBEDIGITAL, 0x00, 0x08);
-		UINT8 Brake = ProcessAnalog(TaitoAnalogPort2, 0, INPUT_LINEAR | INPUT_DEADZONE | INPUT_MIGHTBEDIGITAL, 0x00, 0x08);
+		UINT8 Accel = ProcessAnalog(TaitoAnalogPort1, 0, INPUT_LINEAR | INPUT_DEADZONE | INPUT_MIGHTBEDIGITAL, 0x00, 0x07);
+		UINT8 Brake = ProcessAnalog(TaitoAnalogPort2, 0, INPUT_LINEAR | INPUT_DEADZONE | INPUT_MIGHTBEDIGITAL, 0x00, 0x07);
 		Accel = (Accel > 0) ? 0x00 : 0x20;
 		Brake = (Brake > 0) ? 0x00 : 0x20;
 		TC0220IOCInput[0] = (TC0220IOCInput[0] & ~0x20) | Brake;
@@ -493,8 +493,8 @@ static void TopspeedMakeInputs()
 	else
 	{ // analog pedals
 		const UINT8 matrix[8] = { 0x00, 0x20, 0x60, 0x40, 0xc0, 0xe0, 0xa0, 0x80 };
-		UINT8 Accel = matrix[ProcessAnalog(TaitoAnalogPort1, 0, INPUT_LINEAR | INPUT_DEADZONE | INPUT_MIGHTBEDIGITAL, 0x00, 0x08) & 7];
-		UINT8 Brake = matrix[ProcessAnalog(TaitoAnalogPort2, 0, INPUT_LINEAR | INPUT_DEADZONE | INPUT_MIGHTBEDIGITAL, 0x00, 0x08) & 7];
+		UINT8 Accel = matrix[ProcessAnalog(TaitoAnalogPort1, 0, INPUT_LINEAR | INPUT_DEADZONE | INPUT_MIGHTBEDIGITAL, 0x00, 0x07) & 7];
+		UINT8 Brake = matrix[ProcessAnalog(TaitoAnalogPort2, 0, INPUT_LINEAR | INPUT_DEADZONE | INPUT_MIGHTBEDIGITAL, 0x00, 0x07) & 7];
 
 		TC0220IOCInput[0] = (TC0220IOCInput[0] & ~0xe0) | Brake;
 		TC0220IOCInput[1] = (TC0220IOCInput[1] & ~0xe0) | Accel;

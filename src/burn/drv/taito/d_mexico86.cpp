@@ -681,12 +681,7 @@ static INT32 DrvGfxDecode(INT32 swap)
 
 static INT32 DrvInit(INT32 game)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (game == 0) // kiki
 	{
@@ -861,7 +856,7 @@ static INT32 DrvExit()
 
 	BurnYM2203Exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	has_mcu = 0;
 	has_sub = 0;
@@ -1205,7 +1200,7 @@ static INT32 DrvFrame()
 		if (nSoundCPUHalted) {
 			CPU_IDLE_SYNCINT(1, Zet);
 		} else {
-			BurnTimerUpdate((nCyclesTotal[1] / nInterleave) * (i + 1));
+			CPU_RUN_TIMER(1);
 		}
 		if (i == 255) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
@@ -1238,15 +1233,10 @@ static INT32 DrvFrame()
 		}
 	}
 
-	ZetOpen(1);
-
-	BurnTimerEndFrame(nCyclesTotal[1]);
-
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter(); // kicknrun intro, dc offset from ay
 	}
-
-	ZetClose();
 
 	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 

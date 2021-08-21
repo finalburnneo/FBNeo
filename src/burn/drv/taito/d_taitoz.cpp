@@ -5927,8 +5927,8 @@ static INT32 TaitoZExit()
 	Sci = 0;
 	TaitoZINT6timer = 0;
 
-	if (bUseGun)
-		BurnGunExit();
+	//if (bUseGun)
+	//	BurnGunExit(); // exit's in TaitoExit() above!
 	bUseGun = 0;
 
 	if (bUseShifter)
@@ -7011,6 +7011,10 @@ static INT32 TaitoZScan(INT32 nAction, INT32 *pnMin)
 		if (TaitoNumZ80s) ZetScan(nAction);
 
 		BurnYM2610Scan(nAction, pnMin);
+
+		if (TaitoNumEEPROM) {
+			EEPROMScan(nAction, pnMin);
+		}
 
 		if (bUseGun)
 			BurnGunScan();

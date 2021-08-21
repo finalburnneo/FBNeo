@@ -699,6 +699,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnAcb(&ba);
 
 		ZetScan(nAction);
+		m68705_taito_scan(nAction);
 
 		AY8910Scan(nAction, pnMin);
 		MSM5232Scan(nAction, pnMin);

@@ -40,30 +40,31 @@ static UINT8 DrvReset;
 static INT32 vblank = 0;
 
 static struct BurnInputInfo WwfsstarInputList[] = {
-	{"Start 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"Start 2",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-	{"Start 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p3 start"	},
 
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 coin"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"}	,
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"}	,
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 coin"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 3,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"P3 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p3 start"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 3,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Wwfsstar)
@@ -124,12 +125,11 @@ static struct BurnDIPInfo WwfsstarDIPList[]=
 
 STDDIPINFO(Wwfsstar)
 
-void __fastcall wwfsstar_main_write_byte(UINT32 , UINT8 )
+static void __fastcall wwfsstar_main_write_byte(UINT32 , UINT8 )
 {
-
 }
 
-void __fastcall wwfsstar_main_write_word(UINT32 address, UINT16 data)
+static void __fastcall wwfsstar_main_write_word(UINT32 address, UINT16 data)
 {
 	switch (address)
 	{
@@ -160,7 +160,7 @@ void __fastcall wwfsstar_main_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-UINT8 __fastcall wwfsstar_main_read_byte(UINT32 address)
+static UINT8 __fastcall wwfsstar_main_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -189,7 +189,7 @@ UINT8 __fastcall wwfsstar_main_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT16 __fastcall wwfsstar_main_read_word(UINT32 address)
+static UINT16 __fastcall wwfsstar_main_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -212,7 +212,7 @@ UINT16 __fastcall wwfsstar_main_read_word(UINT32 address)
 	return 0;
 }
 
-void __fastcall wwfsstar_sound_write(UINT16 address, UINT8 data)
+static void __fastcall wwfsstar_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -230,7 +230,7 @@ void __fastcall wwfsstar_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall wwfsstar_sound_read(UINT16 address)
+static UINT8 __fastcall wwfsstar_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -239,7 +239,7 @@ UINT8 __fastcall wwfsstar_sound_read(UINT16 address)
 			return BurnYM2151Read();
 
 		case 0x9800:
-			return MSM6295Read(0); 
+			return MSM6295Read(0);
 
 		case 0xa000:
 			return *soundlatch;
@@ -250,11 +250,7 @@ UINT8 __fastcall wwfsstar_sound_read(UINT16 address)
 
 static void DrvYM2151IrqHandler(INT32 Irq)
 {
-	if (Irq) {
-		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (Irq) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvDoReset()
@@ -267,11 +263,10 @@ static INT32 DrvDoReset()
 
 	ZetOpen(0);
 	ZetReset();
+	BurnYM2151Reset();
 	ZetClose();
 
-	BurnYM2151Reset();
-
-	MSM6295Reset(0);
+	MSM6295Reset();
 
 	vblank = 1;
 
@@ -352,12 +347,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (strcmp(BurnDrvGetTextA(DRV_NAME), "wwfsstarb") == 0) {
@@ -458,19 +448,17 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM);
-	ZetMapArea(0x8000, 0x87ff, 0, DrvZ80RAM);
-	ZetMapArea(0x8000, 0x87ff, 1, DrvZ80RAM);
-	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM);
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM, 0x8000, 0x87ff, MAP_RAM);
 	ZetSetWriteHandler(wwfsstar_sound_write);
 	ZetSetReadHandler(wwfsstar_sound_read);
 	ZetClose();
 
-	BurnYM2151Init(3579545);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.45, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.45, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachZet(3579545);
 
 	MSM6295Init(0, 1056000 / 132, 1);
 	MSM6295SetRoute(0, 0.47, BURN_SND_ROUTE_BOTH);
@@ -615,20 +603,8 @@ static void draw_sprites()
 					}
 				}
 
-				if (flipy) {
-					if (flipx) {
-						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, number+count, xpos, yy, color, 4, 0, 0, DrvGfxROM1);
-					} else {
-						Render16x16Tile_Mask_FlipY_Clip(pTransDraw, number+count, xpos, yy, color, 4, 0, 0, DrvGfxROM1);
-					}
-				} else {
-					if (flipx) {
-						Render16x16Tile_Mask_FlipX_Clip(pTransDraw, number+count, xpos, yy, color, 4, 0, 0, DrvGfxROM1);
-					} else {
-						Render16x16Tile_Mask_Clip(pTransDraw, number+count, xpos, yy, color, 4, 0, 0, DrvGfxROM1);
-					}
-				}
-			}
+				Draw16x16MaskTile(pTransDraw, number+count, xpos, yy, flipx, flipy, color, 4, 0, 0, DrvGfxROM1);
+		   }
 		}
 
 		source+=5;
@@ -637,12 +613,11 @@ static void draw_sprites()
 
 static void DrvPaletteRecalculate()
 {
-	UINT8 r,g,b;
 	UINT16 *p = (UINT16*)DrvPalRAM;
 	for (INT32 i = 0; i < 0x180; i++) {
-		r = (p[i] >> 0) & 0x0f;
-		b = (p[i] >> 8) & 0x0f;
-		g = (p[i] >> 4) & 0x0f;
+		UINT8 r = (p[i] >> 0) & 0x0f;
+		UINT8 b = (p[i] >> 8) & 0x0f;
+		UINT8 g = (p[i] >> 4) & 0x0f;
 
 		r |= r << 4;
 		g |= g << 4;
@@ -669,8 +644,8 @@ static INT32 DrvDraw()
 
 static inline void interrupt(INT32 scanline)
 {
-	if (scanline == 0)		vblank = 0;
-	if (scanline == (240-1))	vblank = 1;
+	if (scanline == 0)			vblank = 0;
+	if (scanline == (240-1))	vblank = 1; // must be 1 line before vbl irq to avoid deadlock after 3rd match
 	if ((scanline & 0x0f) == 0)	SekSetIRQLine(5, CPU_IRQSTATUS_ACK);
 	if (scanline == 240)		SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
 }
@@ -680,6 +655,8 @@ static INT32 DrvFrame()
 	if (DrvReset) {
 		DrvDoReset();
 	}
+
+	ZetNewFrame();
 
 	{
 		memset (DrvInputs, 0xff, 3 * sizeof(INT16));
@@ -691,7 +668,6 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 10000000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -699,39 +675,25 @@ static INT32 DrvFrame()
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nSegment;
-
-		nSegment = nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += SekRun(nSegment);
+		CPU_RUN(0, Sek);
 		if (i >= 8 && i <= 248) interrupt(i - 8);
 
-		nSegment = nCyclesTotal[1] / nInterleave;
-		nCyclesDone[1] += ZetRun(nSegment);
-		
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			MSM6295Render(0,pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
+		if (i == 248) { // draw at vbl
+			if (pBurnDraw) {
+				DrvDraw();
+			}
 		}
+
+		CPU_RUN_TIMER(1);
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			MSM6295Render(0,pSoundBuf, nSegmentLength);
-		}
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();
 	SekClose();
-
-	if (pBurnDraw) {
-		DrvDraw();
-	}
 
 	return 0;
 }

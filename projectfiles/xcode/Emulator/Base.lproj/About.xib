@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17156" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17156"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -56,13 +56,12 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="258" id="3t0-b9-F0g"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="176" id="5Lc-o3-S2q"/>
                                 </constraints>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="mqu-HR-p0a">
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="mqu-HR-p0a" userLabel="Ⓒ 2014-2021 Akop Karapetyan © 2004-2021 Team FB Alpha © 2001 Dave  ">
                                     <font key="font" metaFont="system"/>
-                                    <string key="title">Ⓒ 2020 Akop Karapetyan © 2004-2020 Team FB Neo © 2001 Dave  You may freely use, modify, and distribute both the FB Neo source code and binary, however restrictions apply to the FB Neo original material.  See License below for more information.
+                                    <string key="title">Ⓒ 2021 Akop Karapetyan © 2004-2021 Team FB Neo © 2001 Dave  You may freely use, modify, and distribute both the FB Neo source code and binary, however restrictions apply to the FB Neo original material.  See License below for more information.
 </string>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                    <string key="userLabel">Ⓒ 2014-2019 Akop Karapetyan © 2004-2018 Team FB Alpha © 2001 Dave  For FBA license information, see "FinalBurn Alpha License" below.  For license information on FinalBurn X and its components, see "FinalBurn X License" below.</string>
                                 </textFieldCell>
                             </textField>
                         </subviews>

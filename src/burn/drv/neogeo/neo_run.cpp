@@ -2405,19 +2405,14 @@ static void __fastcall neogeoWriteWordVideo(UINT32 sekAddress, UINT16 wordValue)
 
 static void __fastcall neogeoWriteByteVideo(UINT32 sekAddress, UINT8 byteValue)
 {
-//	bprintf(PRINT_NORMAL, _T("  - Attempt to write byte 0x%06X ->   0x%02X\n"), sekAddress, byteValue);
+	//bprintf(PRINT_NORMAL, _T("  - Attempt to write byte 0x%06X ->   0x%02X\n"), sekAddress, byteValue);
 
-#if 1
-	if ((sekAddress & 1) == 0) {
-		neogeoWriteWordVideo(sekAddress, byteValue);
-	}
-#else
-	if (sekAddress & 1) {
-		neogeoWriteWordVideo(sekAddress, byteValue);
+	if (~sekAddress & 1) {
+		//bprintf(0, _T("neogeoWriteByteVideo(%x, %x): let's byte-smearing mode!\n"), sekAddress, byteValue);
+		neogeoWriteWordVideo(sekAddress, byteValue | (byteValue << 8));
 	} else {
-		neogeoWriteWordVideo(sekAddress, (byteValue << 8));
+		//bprintf(0, _T("neogeoWriteByteVideo(%x, %x): illegal access.\n"), sekAddress, byteValue);
 	}
-#endif
 
 #if 1 && defined USE_SPEEDHACKS
 	bForcePartialRender |= bForceUpdateOnStatusRead;

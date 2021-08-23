@@ -45,10 +45,6 @@
 
 - (NSString *) setName
 {
-    if (!bDrvOkay) {
-        return nil;
-    }
-
     return [NSString stringWithCString:BurnDrvGetText(DRV_NAME)
                               encoding:NSASCIIStringEncoding];
 }

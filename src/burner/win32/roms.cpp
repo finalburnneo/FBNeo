@@ -392,6 +392,7 @@ static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 			hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
 
 			if (hParent == NULL) {
+#if 0
 				RECT rect;
 				int x, y;
 
@@ -404,6 +405,9 @@ static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 				SetWindowPos(hDlg, HWND_TOPMOST, (rect.right - rect.left) / 2 - x / 2, (rect.bottom - rect.top) / 2 - y / 2, x, y, 0);
 				RedrawWindow(hDlg, NULL, NULL, 0);
 				ShowWindow(hDlg, SW_SHOWNORMAL);
+#endif
+				WndInMid(hDlg, hParent);
+				SetFocus(hDlg);		// Enable Esc=close
 			} else {
 				WndInMid(hDlg, hParent);
 				SetFocus(hDlg);		// Enable Esc=close

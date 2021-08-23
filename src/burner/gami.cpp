@@ -31,6 +31,10 @@ UINT8 macroSystemUNDOState = 0;
 #define HW_MISC ( (! HW_NEOGEO) && (! HW_NES) && ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SEGA_MEGADRIVE) )
 #define SETS_VS ( (BurnDrvGetGenreFlags() & GBF_VSFIGHT) && ((BurnDrvGetFamilyFlags() & FBF_SF) || (BurnDrvGetFamilyFlags() & FBF_DSTLK) || (BurnDrvGetFamilyFlags() &FBF_PWRINST) || HW_NEOGEO) )
 
+#ifdef BUILD_MACOS
+int MacOSinpInitControls(struct GameInp *pgi, const char *szi);
+#endif
+
 // ---------------------------------------------------------------------------
 
 // Check if the left alt (menu) key is mapped
@@ -2018,10 +2022,15 @@ INT32 GameInpDefault()
 			pgi->nInput = GIT_CONSTANT;
 			continue;
 		}
-
+#ifdef BUILD_MACOS
+        if (MacOSinpInitControls(pgi, bii.szInfo) == 0) {
+            continue; // NOTE: prevents 'GameInpAutoOne' from being called
+        }
+#endif
 		GameInpAutoOne(pgi, bii.szInfo);
 	}
 
+#ifndef BUILD_MACOS
 	// Fill in macros still undefined
 	for (i = 0; i < nMacroCount; i++, pgi++) {
 		if (pgi->nInput != GIT_MACRO_AUTO || pgi->Macro.nMode) {	// Already defined - leave it alone
@@ -2030,6 +2039,7 @@ INT32 GameInpDefault()
 
 		GameInpAutoOne(pgi, pgi->Macro.szName);
 	}
+#endif
 
 	return 0;
 }

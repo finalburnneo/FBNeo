@@ -1371,10 +1371,10 @@ static INT32 DrvFrame()
 	AssembleInputs();
 
 	INT32 nInterleave = 262;
-	INT32 nTotalCycles[3] = { 8000000 / (nBurnFPS / 100), 6000000 / (nBurnFPS / 100), 4000000 / (nBurnFPS / 100) };
+	INT32 nCyclesTotal[3] = { 8000000 / (nBurnFPS / 100), 6000000 / (nBurnFPS / 100), 4000000 / (nBurnFPS / 100) };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
-	if (usemcu) nTotalCycles[2] /= 12; // i8751 internal divider (12)
+	if (usemcu) nCyclesTotal[2] /= 12; // i8751 internal divider (12)
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -1383,7 +1383,7 @@ static INT32 DrvFrame()
 	{
 		CPU_RUN(0, Sek);
 
-		BurnTimerUpdateYM3812((i + 1) * (nTotalCycles[1] / nInterleave));
+		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
 
 		if (i & 1) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO); // 130 per frame (based on nInterleave = 262)
 
@@ -1400,7 +1400,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	BurnTimerEndFrameYM3812(nTotalCycles[1]);
+	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 
 	SekSetIRQLine(irqline, (usemcu) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_AUTO);
 

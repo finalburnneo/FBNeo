@@ -79,95 +79,95 @@ static INT32 Kozuremode = 0;
 static INT32 Skyrobo = 0;
 
 static struct BurnInputInfo ArmedfInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 11,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 8,	"service"	},
-	{"Tilt",		BIT_DIGITAL,	DrvJoy2 + 10,	"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",       BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 8,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	DrvJoy2 + 10,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",       	BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Armedf)
 
 static struct BurnInputInfo Cclimbr2InputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 start"	},
-	{"P1 Up 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Up 1",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
 	{"P1 Down 1",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
 	{"P1 Left 1",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right 1",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
-	{"P1 Up 2",		BIT_DIGITAL,	DrvJoy1 + 4,	"p3 up"		},
+	{"P1 Up 2",			BIT_DIGITAL,	DrvJoy1 + 4,	"p3 up"		},
 	{"P1 Down 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p3 down"	},
 	{"P1 Left 2",		BIT_DIGITAL,	DrvJoy1 + 6,	"p3 left"	},
 	{"P1 Right 2",		BIT_DIGITAL,	DrvJoy1 + 7,	"p3 right"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 11,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 start"	},
-	{"P2 Up 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Up 1",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
 	{"P2 Down 1",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
 	{"P2 Left 1",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
 	{"P2 Right 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
-	{"P2 Up 2",		BIT_DIGITAL,	DrvJoy2 + 4,	"p4 up"		},
+	{"P2 Up 2",			BIT_DIGITAL,	DrvJoy2 + 4,	"p4 up"		},
 	{"P2 Down 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p4 down"	},
 	{"P2 Left 2",		BIT_DIGITAL,	DrvJoy2 + 6,	"p4 left"	},
 	{"P2 Right 2",		BIT_DIGITAL,	DrvJoy2 + 7,	"p4 right"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 8,	"service"	},
-	{"Tilt",		BIT_DIGITAL,	DrvJoy2 + 10,	"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",       BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 8,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	DrvJoy2 + 10,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",       	BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Cclimbr2)
 
 static struct BurnInputInfo BigfghtrInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 11,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 8,	"service"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
-	{"Dip C",       BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 8,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",       	BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Bigfghtr)
@@ -534,7 +534,7 @@ static struct BurnDIPInfo TerrafDIPList[]=
 	{0x15, 0x01, 0xc0, 0x40, "Hard"					},
 	{0x15, 0x01, 0xc0, 0x00, "Hardest"				},
 
-{0   , 0xfe, 0   ,    4, "Coin A"				},
+	{0   , 0xfe, 0   ,    4, "Coin A"				},
 	{0x16, 0x01, 0x03, 0x01, "2 Coins 1 Credits"			},
 	{0x16, 0x01, 0x03, 0x03, "1 Coin  1 Credits"			},
 	{0x16, 0x01, 0x03, 0x02, "1 Coin  2 Credits"			},
@@ -1356,8 +1356,6 @@ static INT32 DrvDraw()
 
 	BurnTransferCopy(DrvPalette);
 
-	memcpy (DrvSprBuf, DrvSprRAM, 0x1000);
-
 	return 0;
 }
 
@@ -1372,7 +1370,6 @@ static INT32 DrvFrame()
 
 	AssembleInputs();
 
-	INT32 nSegment;
 	INT32 nInterleave = 262;
 	INT32 nTotalCycles[3] = { 8000000 / (nBurnFPS / 100), 6000000 / (nBurnFPS / 100), 4000000 / (nBurnFPS / 100) };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
@@ -1384,24 +1381,20 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nNext = (i + 1) * nTotalCycles[0] / nInterleave;
-		nSegment = nNext - nCyclesDone[0];
-		nCyclesDone[0] += SekRun(nSegment);
+		CPU_RUN(0, Sek);
 
 		BurnTimerUpdateYM3812((i + 1) * (nTotalCycles[1] / nInterleave));
 
 		if (i & 1) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO); // 130 per frame (based on nInterleave = 262)
 
 		if (usemcu) {
-			mcs51Run((nTotalCycles[2] / nInterleave));
+			CPU_RUN(2, mcs51);
 		}
 
 		if (Terrafjb) {
 			ZetClose();
 			ZetOpen(1);
-			nNext = (i + 1) * nTotalCycles[2] / nInterleave;
-			nSegment = nNext - nCyclesDone[2];
-			nCyclesDone[2] += ZetRun(nSegment);
+			CPU_RUN(2, Zet);
 			ZetClose();
 			ZetOpen(0);
 		}
@@ -1422,6 +1415,8 @@ static INT32 DrvFrame()
 	if (pBurnDraw) {
 		DrvDraw();
 	}
+
+	memcpy (DrvSprBuf, DrvSprRAM, 0x1000);
 
 	return 0;
 }

@@ -552,6 +552,8 @@ void BurnGunScan()
 		SCAN_VAR(PaddleLast);
 
 		SCAN_VAR(DIAL_INC);
+		SCAN_VAR(DIAL_VEL);
+		SCAN_VAR(DIAL_VELx);
 		SCAN_VAR(DrvJoyT);
 	} else {
 		// guns only!

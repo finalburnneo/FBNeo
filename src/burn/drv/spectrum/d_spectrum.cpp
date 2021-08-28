@@ -19163,7 +19163,7 @@ struct BurnDriver BurnSpecMcarpet = {
 // Munsters, The (128K)
 
 static struct BurnRomInfo SpecMunstersRomDesc[] = {
-	{ "Munsters, The (1989)(Again Again).tap", 78848, 0xe12e896e, BRF_ESS | BRF_PRG },
+	{ "Munsters, The (1989)(Again Again).tap", 78341, 0x37451ece, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecMunsters, SpecMunsters, Spec128)

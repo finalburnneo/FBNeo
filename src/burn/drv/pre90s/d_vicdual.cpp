@@ -30,6 +30,9 @@ static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT8 coin_status;
+static INT32 coin_timer;
+static UINT8 coin_last;
+
 static UINT8 palette_bank;
 static UINT8 samurai_protection;
 
@@ -1069,7 +1072,7 @@ static UINT8 __fastcall heiankyo_read_port(UINT16 port)
 			return (DrvInputs[1] & ~0x0c) | get_composite_blank_comp(8);
 
 		case 0x02:
-			return (DrvInputs[2] & ~0x2a) | get_timer_value(8);
+			return (DrvInputs[2] & ~0x2e) | get_timer_value(8);
 
 		case 0x03:
 			return (DrvInputs[3] & ~0x0c) | (DrvDips[1] & 0x04) | get_coin_status(8);
@@ -1508,6 +1511,7 @@ static INT32 DrvDoReset()
 	}
 
 	coin_status = 0;
+	coin_timer = 0;
 	palette_bank = 0;
 	samurai_protection = 0;
 
@@ -1618,7 +1622,8 @@ static UINT8 i8039_in_reset;
 
 static void CarnivalSoundWrite1(UINT8 data)
 {
-	UINT8 Low = (i8039_port1_state ^ data) & ~data;
+	UINT8 Low  = (i8039_port1_state ^ data) & ~data;
+	UINT8 High = (i8039_port1_state ^ data) & data;
 
 	i8039_port1_state = data;
 
@@ -1628,14 +1633,32 @@ static void CarnivalSoundWrite1(UINT8 data)
 	if (Low & CARNIVAL_CLANG)
 		BurnSamplePlay(3);
 
-	if (Low & CARNIVAL_DUCK1)
+	if (Low & CARNIVAL_DUCK1) {
+		BurnSampleSetLoop(4, true);
 		BurnSamplePlay(4);
+	}
+	if (High & CARNIVAL_DUCK1) {
+		BurnSampleSetLoop(4, false);
+		BurnSampleStop(4);
+	}
 
-	if (Low & CARNIVAL_DUCK2)
+	if (Low & CARNIVAL_DUCK2) {
+		BurnSampleSetLoop(5, true);
 		BurnSamplePlay(5);
+	}
+	if (High & CARNIVAL_DUCK2) {
+		BurnSampleSetLoop(5, false);
+		BurnSampleStop(5);
+	}
 
-	if (Low & CARNIVAL_DUCK3)
+	if (Low & CARNIVAL_DUCK3) {
+		BurnSampleSetLoop(6, true);
 		BurnSamplePlay(6);
+	}
+	if (High & CARNIVAL_DUCK3) {
+		BurnSampleSetLoop(6, false);
+		BurnSampleStop(6);
+	}
 
 	if (Low & CARNIVAL_PIPEHIT)
 		BurnSamplePlay(7);
@@ -1660,9 +1683,9 @@ static void CarnivalSoundWrite2(UINT8 data)
 		BurnSamplePlay(8);
 
 	if (~data & 0x10) {
-		I8039Reset();
 		i8039_in_reset = 1;
 	} else {
+		I8039Reset();
 		i8039_in_reset = 0;
 	}
 }
@@ -1708,6 +1731,7 @@ static void CarnivalSoundInit()
 	carnival_sound = 1;
 	AY8910Init(0, 3579545 / 3, 1);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(I8039TotalCycles, 3579545 / 15);
 
 	I8039Init(0);
 	I8039Open(0);
@@ -1757,12 +1781,7 @@ static void CarnivalSoundExit()
 
 static INT32 DrvInit(INT32 romsize, INT32 rambase, INT32 has_z80ram, void (__fastcall *wp)(UINT16,UINT8), UINT8 (__fastcall *rp)(UINT16), void (*z80_cb)(), void (*rom_cb)())
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (DrvLoadRoms()) return 1;
 
@@ -1817,7 +1836,7 @@ static INT32 DrvExit()
 	if (carnival_sound)
 		CarnivalSoundExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -1877,6 +1896,8 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
+	BurnTransferClear();
+
 	draw_layer();
 
 	BurnTransferCopy(DrvPalette);
@@ -1891,6 +1912,7 @@ static INT32 DrvFrame()
 	}
 
 	ZetNewFrame();
+	I8039NewFrame();
 
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -1905,20 +1927,15 @@ static INT32 DrvFrame()
 		}
 
 		{ // nutso coin handling stuff.
-			static UINT8 last_coin = 0;
-
-			if (DrvJoy1[0] & 1 && last_coin == 0) {
-				ZetOpen(0);
-				ZetReset();
-				nCyclesDone[0] += ZetRun(4000); // give some cycles for coin to be read
-				coin_status = 0;
-				ZetClose();
+			if (DrvJoy1[0] & 1 && coin_last == 0) {
+				ZetReset(0);
+				coin_timer = 4;
 			}
-			last_coin = DrvJoy1[0] & 1;
+			coin_last = DrvJoy1[0] & 1;
 		}
 	}
 
-	INT32 nInterleave = 10;
+	INT32 nInterleave = 262;
 	INT32 nCyclesTotal[2] = { 1933560 / 60, 3579545 / 15 / 60 };
 
 	ZetOpen(0);
@@ -1926,10 +1943,26 @@ static INT32 DrvFrame()
 	if (carnival_sound)	I8039Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Zet);
 
-		if (carnival_sound && !i8039_in_reset)
-			nCyclesDone[1] += I8039Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		if (carnival_sound) {
+			if (i8039_in_reset) {
+				CPU_IDLE_SYNCINT(1, I8039);
+			} else {
+				CPU_RUN_SYNCINT(1, I8039);
+			}
+		}
+
+		if (i == 224 && pBurnDraw) {
+			BurnDrvRedraw();
+		}
+	}
+
+	if (coin_timer > 0) {
+		coin_timer--;
+		if (coin_timer == 0) {
+			coin_status = 0;
+		}
 	}
 
 	if (carnival_sound)	I8039Close();
@@ -1940,10 +1973,6 @@ static INT32 DrvFrame()
 		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 		if (carnival_sound)
 			AY8910Render(pBurnSoundOut, nBurnSoundLen);
-	}
-
-	if (pBurnDraw) {
-		BurnDrvRedraw();
 	}
 
 	return 0;
@@ -1973,6 +2002,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		}
 
 		SCAN_VAR(coin_status);
+		SCAN_VAR(coin_timer);
+		SCAN_VAR(coin_last);
 		SCAN_VAR(palette_bank);
 		SCAN_VAR(samurai_protection);
 	}

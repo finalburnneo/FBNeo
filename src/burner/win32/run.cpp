@@ -206,7 +206,9 @@ int RunFrame(int bDraw, int bPause)
 				INT16 *pBurnSoundOut_temp = pBurnSoundOut;
 				pBurnSoundOut = NULL;
 				nCurrentFrame++;
+				bBurnRunAheadFrame = 1;
 				VidFrame();
+				bBurnRunAheadFrame = 0;
 				nCurrentFrame--;
 				StateRunAheadLoad();
 				pBurnSoundOut = pBurnSoundOut_temp; // restore pointer, for wav & avi writer

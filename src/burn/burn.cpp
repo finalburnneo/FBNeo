@@ -956,6 +956,8 @@ INT32 BurnAreaScan(INT32 nAction, INT32* pnMin)
 static INT32 nTotalLenRunAhead = 0;
 static UINT8 *RunAheadBuffer = NULL;
 static UINT8 *pRunAheadBuffer = NULL;
+// for drivers, hiscore, etc, to recognize that this is the "runahead frame"
+INT32 bBurnRunAheadFrame = 0;
 
 void StateRunAheadInit()
 {
@@ -970,6 +972,8 @@ void StateRunAheadInit()
 	nTotalLenRunAhead = 0;
 	RunAheadBuffer = NULL;
 	pRunAheadBuffer = NULL;
+
+	bBurnRunAheadFrame = 0;
 }
 
 void StateRunAheadExit()
@@ -981,6 +985,8 @@ void StateRunAheadExit()
 	nTotalLenRunAhead = 0;
 	RunAheadBuffer = NULL;
 	pRunAheadBuffer = NULL;
+
+	bBurnRunAheadFrame = 0;
 }
 
 static INT32 __cdecl RunAheadLenAcb(struct BurnArea* pba)

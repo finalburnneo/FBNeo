@@ -270,7 +270,10 @@ extern INT32 nBurnBpp;						// Bytes per pixel (2, 3, or 4)
 extern UINT8 nBurnLayer;			// Can be used externally to select which layers to show
 extern UINT8 nSpriteEnable;			// Can be used externally to select which Sprites to show
 
-extern INT32 bRunAhead;             // "Run Ahead" lag-reduction technique on/off
+extern INT32 bRunAhead;             // "Run Ahead" lag-reduction technique UI option (on/off)
+
+extern INT32 bBurnRunAheadFrame;    // for drivers, hiscore, etc, to recognize that this is the "runahead frame"
+                                    // for instance, you wouldn't want to apply hi-score data on a "runahead frame"
 
 extern INT32 nBurnSoundRate;					// Samplerate of sound
 extern INT32 nBurnSoundLen;					// Length in samples per frame

@@ -1,4 +1,7 @@
 // Fast Freddy / Jump Coaster HW emu-layer for FB Alpha, Based on the MAME driver by Zsolt Vasvari
+
+// TODO: imago missing stars
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "flt_rc.h"
@@ -41,66 +44,66 @@ static INT32 fastfred_soundlatch = 0;
 static INT32 fastfred_scroll[32];
 static INT32 fastfred_color_select[32];
 
-static UINT8 imago_sprites[0x800*3];
+static UINT8 *imago_sprites; // memindex()
 static UINT16 imago_sprites_address;
 static UINT8 imago_sprites_bank;
 
 static struct BurnInputInfo CommonInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
-	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"},
-	{"P1 Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"},
-	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"},
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
+	{"P1 Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
+	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"},
-	{"P2 Start",	BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"},
-	{"P2 Right",	BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"},
-	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy1 + 7,	"p2 fire 1"},
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Start",	BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Right",	BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
+	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy1 + 7,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	    "reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	    "reset"		},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Common)
 
 static struct BurnInputInfo ImagoInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 coin"},
-	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"},
-	{"P1 Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"},
-	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"},
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 coin"	},
+	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
+	{"P1 Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
+	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"	},
 
-	{"P2 Start",	BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"},
+	{"P2 Start",	BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	    "reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	    "reset"		},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Imago)
 
 static struct BurnInputInfo TwoBtnInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
-	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"},
-	{"P1 Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"},
-	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"},
-	{"P1 Button 2",	BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"},
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
+	{"P1 Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
+	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"	},
+	{"P1 Button 2",	BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"},
-	{"P2 Start",	BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"},
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Start",	BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	    "reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	    "reset"		},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(TwoBtn)
@@ -439,7 +442,7 @@ static INT32 ImagoSpritesDecode() // for sprite dma in 0_w
 	INT32 spritexoffs[16] = { 0, 1, 2, 3, 4, 5, 6, 7, 8*8+0, 8*8+1, 8*8+2, 8*8+3, 8*8+4, 8*8+5, 8*8+6, 8*8+7 };
 	INT32 spriteyoffs[16] = { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8, 16*8, 17*8, 18*8, 19*8, 20*8, 21*8, 22*8, 23*8 };
 
-	GfxDecode(0x40, 3,  16,  16, spriteplanes, spritexoffs, spriteyoffs, 0x100, &imago_sprites[0], GfxImagoSprites);
+	GfxDecode(0x40, 3,  16,  16, spriteplanes, spritexoffs, spriteyoffs, 0x100, imago_sprites, GfxImagoSprites);
 
 	return 0;
 }
@@ -479,7 +482,7 @@ static void __fastcall fastfred_cpu0_write(UINT16 address, UINT8 data)
 	if (imagomode && address >= 0xb800 && address <= 0xbfff) {
 		UINT8 *rom = Gfx1;
 		UINT8 sprites_data;
-		UINT32 offset = address - 0xb800;
+		UINT32 offset = address & 0x7ff;
 
 		sprites_data = rom[imago_sprites_address + 0x2000*0 + imago_sprites_bank * 0x1000];
 		imago_sprites[offset + 0x800*0] = sprites_data;
@@ -660,11 +663,8 @@ static INT32 DrvDoReset()
 	memset(fastfred_scroll, 0, sizeof(fastfred_scroll));
 	memset(fastfred_color_select, 0, sizeof(fastfred_color_select));
 
-	memset(&imago_sprites, 0, sizeof(imago_sprites));
 	imago_sprites_address = 0;
 	imago_sprites_bank = 0;
-
-	DrvReset = 0;
 
 	for (INT32 i = 0; i < 2; i++) {
 		ZetOpen(i);
@@ -706,7 +706,7 @@ static INT32 DrvPaletteInit()
 	}
 
 	if (imagomode) {
-		DrvPalette[0x100+0x40+0] = BurnHighCol(0x15, 0x00, 0x00, 0);
+		DrvPalette[0x100+0x40+0] = BurnHighCol(0x40, 0x00, 0x00, 0);
 		DrvPalette[0x100+0x40+1] = BurnHighCol(0x00, 0x00, 0x00, 0);
 	}
 
@@ -863,31 +863,30 @@ static INT32 MemIndex()
 
 	AllRam			= Next;
 
-	DrvMainRAM      = Next; Next += 0x10000;
-	DrvVidRAM       = Next; Next += 0x10000;
-	DrvFGVidRAM     = Next; Next += 0x10000;
-	DrvAttrRAM      = Next; Next += 0x10000;
-	DrvSubRAM       = Next; Next += 0x10000;
+	DrvMainRAM      = Next; Next += 0x00800;
+	DrvVidRAM       = Next; Next += 0x00400;
+	DrvFGVidRAM     = Next; Next += 0x00800;
+	DrvAttrRAM      = Next; Next += 0x00400;
+	DrvSubRAM       = Next; Next += 0x00400;
+
+	imago_sprites   = Next; Next += 0x01800;
 
 	RamEnd			= Next;
 
-	MemEnd         = Next;
+	MemEnd			= Next;
 
 	return 0;
 }
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (DrvLoadRoms()) return 1;
+
 		if (DrvPaletteInit()) return 1;
+
 		if (fastfred_hardware_type == 3) {
 			if (ImagoGraphicsDecode()) return 1;
 		} else {
@@ -897,7 +896,6 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-
 	ZetMapMemory(Rom0, 0x0000, 0xbfff, MAP_ROM);
 	ZetMapMemory(DrvMainRAM, 0xc000, 0xc7ff, MAP_RAM);
 
@@ -932,6 +930,7 @@ static INT32 DrvInit()
 	AY8910Init(1, 1536000, 1);
 	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.10, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 1536000);
 
    	// for boggy '84, remove horrible hiss on one of the ay's channels using LPF.
 	filter_rc_init(0, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 0); // (CAP_P(0) = passthru / mix only)
@@ -959,7 +958,7 @@ static INT32 DrvExit()
 
 	filter_rc_exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 	fastfred_hardware_type = 0;
 	flyboymode = 0;
 	boggy84mode = 0;
@@ -1028,19 +1027,7 @@ static void draw_sprites()
 
 		INT32 color = fastfred_colorbank | (fastfred_spriteram[offs + 2] & 7);
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, (imagomode) ? GfxImagoSprites : Gfx1);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, (imagomode) ? GfxImagoSprites : Gfx1);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, (imagomode) ? GfxImagoSprites : Gfx1);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, (imagomode) ? GfxImagoSprites : Gfx1);
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 3, 0, 0, (imagomode) ? GfxImagoSprites : Gfx1);
 	}
 }
 
@@ -1068,19 +1055,7 @@ static void draw_chars()
 
 		sx <<= 3;
 
-		if (fastfred_flipscreeny) {
-			if (fastfred_flipscreenx) {
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx0);
-			} else {
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx0);
-			}
-		} else {
-			if (fastfred_flipscreenx) {
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx0);
-			} else {
-				Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx0);
-			}
-		}
+		Draw8x8MaskTile(pTransDraw, code, sx, sy, fastfred_flipscreenx, fastfred_flipscreeny, color, 3, 0, 0, Gfx0);
 	}
 }
 
@@ -1099,19 +1074,7 @@ static void draw_web()
 		if (sy < -7) sy += 256;
 		if (sx < -7) sx += 256;
 
-		if (fastfred_flipscreeny) {
-			if (fastfred_flipscreenx) {
-				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 1, 0x140, Gfx3);
-			} else {
-				Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 1, 0x140, Gfx3);
-			}
-		} else {
-			if (fastfred_flipscreenx) {
-				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 1, 0x140, Gfx3);
-			} else {
-				Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 1, 0x140, Gfx3);
-			}
-		}
+		Draw8x8Tile(pTransDraw, code, sx, sy, fastfred_flipscreenx, fastfred_flipscreeny, color, 1, 0x140, Gfx3);
 	}
 }
 
@@ -1130,19 +1093,7 @@ static void draw_imagofg()
 		if (sy < -7) sy += 256;
 		if (sx < -7) sx += 256;
 
-		if (fastfred_flipscreeny) {
-			if (fastfred_flipscreenx) {
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx2);
-			} else {
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx2);
-			}
-		} else {
-			if (fastfred_flipscreenx) {
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx2);
-			} else {
-				Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx2);
-			}
-		}
+		Draw8x8MaskTile(pTransDraw, code, sx, sy, fastfred_flipscreenx, fastfred_flipscreeny, color, 3, 0, 0, Gfx2);
 	}
 }
 
@@ -1154,11 +1105,7 @@ static INT32 ImagoDraw()
 		DrvRecalc = 0;
 	}
 
-	{ // fill background
-		for (INT32 offs = 0; offs < nScreenWidth * nScreenHeight; offs++) {
-			pTransDraw[offs] = fastfred_background_color;
-		}
-	}
+	BurnTransferClear(fastfred_background_color);
 
 	if (nBurnLayer & 1) draw_web();
 	// draw_stars();
@@ -1178,11 +1125,7 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	{ // fill background
-		for (INT32 offs = 0; offs < nScreenWidth * nScreenHeight; offs++) {
-			pTransDraw[offs] = fastfred_background_color;
-		}
-	}
+	BurnTransferClear(fastfred_background_color);
 
 	if (nBurnLayer & 1) draw_chars();
 
@@ -1193,46 +1136,39 @@ static INT32 DrvDraw()
 	return 0;
 }
 
-static void DrvMakeInputs()
-{
-	// Reset Inputs (all active HIGH)
-	DrvInput[0] = 0;
-	DrvInput[1] = 0;
-
-	// Compile Digital Inputs
-	for (INT32 i = 0; i < 8; i++) {
-		DrvInput[0] |= (DrvJoy1[i] & 1) << i;
-		DrvInput[1] |= (DrvJoy2[i] & 1) << i;
-	}
-}
-
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
 		DrvDoReset();
 	}
 
-	DrvMakeInputs();
+	ZetNewFrame();
+
+	{
+		DrvInput[0] = 0;
+		DrvInput[1] = 0;
+
+		for (INT32 i = 0; i < 8; i++) {
+			DrvInput[0] ^= (DrvJoy1[i] & 1) << i;
+			DrvInput[1] ^= (DrvJoy2[i] & 1) << i;
+		}
+	}
 
 	INT32 nInterleave = 128;
-	INT32 nCyclesDone[2] = { 0, 0 };
 	INT32 nCyclesTotal[2] = { 3108000 / 60, 1536000 / 60 };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nCycleSegment;
-
 		ZetOpen(0);
-		nCycleSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
-		nCyclesDone[0] += ZetRun(nCycleSegment);
+		CPU_RUN(0, Zet);
 		if (i == ( nInterleave - 1) && fastfred_cpu0_interrupt_enable) ZetNmi();
 		ZetClose();
 
-		if (~fastfred_hardware_type & 1) continue;
+		if (~fastfred_hardware_type & 1) continue; // jumpcoas & boggy84
 
 		ZetOpen(1);
-		nCycleSegment = (nCyclesTotal[1] - nCyclesDone[1]) / (nInterleave - i);
-		nCyclesDone[1] += ZetRun(nCycleSegment);
+		CPU_RUN(1, Zet);
 		if (fastfred_cpu1_interrupt_enable && (i % (nInterleave / 4)) == ((nInterleave / 4) - 1)) ZetNmi();
 		ZetClose();
 	}
@@ -1283,6 +1219,15 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(fastfred_soundlatch);
 		SCAN_VAR(fastfred_scroll);
 		SCAN_VAR(fastfred_color_select);
+
+		if (imagomode) {
+			SCAN_VAR(imago_sprites_address);
+			SCAN_VAR(imago_sprites_bank);
+		}
+	}
+
+	if (imagomode & nAction & ACB_WRITE) {
+		ImagoSpritesDecode();
 	}
 
 	return 0;
@@ -1754,8 +1699,7 @@ static INT32 imagoInit()
 	INT32 nRet = DrvInit();
 	if (!nRet) {
 		memmove (Rom0 + 0x2000, Rom0 + 0x1000, 0x5000);
-		memset (Rom0 + 0x1000, 0, 0x1000);		
-
+		memset (Rom0 + 0x1000, 0, 0x1000);
 	}
 	return nRet;
 }
@@ -1795,7 +1739,7 @@ STD_ROM_FN(imago)
 
 struct BurnDriver BurnDrvImago = {
 	"imago", NULL, NULL, NULL, "1984",
-	"Imago (cocktail set)\0", NULL, "Acom", "Miscellaneous",
+	"Imago (cocktail set)\0", "Missing stars", "Acom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, imagoRomInfo, imagoRomName, NULL, NULL, NULL, NULL, ImagoInputInfo, ImagoDIPInfo,
@@ -1839,12 +1783,10 @@ STD_ROM_FN(imagoa)
 
 struct BurnDriver BurnDrvImagoa = {
 	"imagoa", "imago", NULL, NULL, "1983",
-	"Imago (no cocktail set)\0", NULL, "Acom", "Miscellaneous",
+	"Imago (no cocktail set)\0", "Missing stars", "Acom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, imagoaRomInfo, imagoaRomName, NULL, NULL, NULL, NULL, ImagoInputInfo, ImagoDIPInfo,
 	imagoInit, DrvExit, DrvFrame, ImagoDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
-
-

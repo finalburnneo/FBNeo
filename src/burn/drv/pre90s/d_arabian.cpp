@@ -36,26 +36,26 @@ static UINT8 DrvInputs[8];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo ArabianInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy4 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy4 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy4 + 1,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy4 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy4 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy4 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy5 + 0,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy6 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy6 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy6 + 1,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy6 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy6 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy6 + 1,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy6 + 0,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy7 + 0,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 3,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 3,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Arabian)
@@ -387,7 +387,7 @@ static INT32 MemIndex()
 	DrvTempBmp		= Next; Next += 256 * 256;
 
 	flipscreen		= Next; Next += 0x000001;
-	arabian_color		= Next; Next += 0x000001;
+	arabian_color	= Next; Next += 0x000001;
 
 	RamEnd			= Next;
 	MemEnd			= Next;
@@ -461,19 +461,14 @@ static void DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM + 0x0000, 0, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM + 0x2000, 1, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM + 0x4000, 2, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM + 0x6000, 3, 1)) return 1;
-	
+
 		if (BurnLoadRom(DrvGfxROM + 0x0000, 4, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM + 0x2000, 5, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM + 0x4000, 6, 1)) return 1;
@@ -495,7 +490,8 @@ static INT32 DrvInit()
 
 	AY8910Init(0, 1500000, 0);
 	AY8910SetPorts(0, NULL, NULL, ay8910_porta_w, ay8910_portb_w);
-	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 3000000);
 
 	GenericTilesInit();
 
@@ -511,7 +507,7 @@ static INT32 DrvExit()
 	ZetExit();
 	AY8910Exit(0);
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -566,6 +562,8 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	ZetNewFrame();
+
 	{
 		memset (DrvInputs, 0, 8);
 		for (INT32 i = 0; i < 8; i++) {
@@ -579,7 +577,7 @@ static INT32 DrvFrame()
 		DrvInputs[1] = DrvDips[0];
 		DrvInputs[2] |= 1;
 		DrvInputs[7] = DrvDips[1];
-	}		
+	}
 
 	ZetOpen(0);
 	ZetRun(3000000 / 60);
@@ -597,7 +595,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -605,7 +603,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

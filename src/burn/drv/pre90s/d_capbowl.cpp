@@ -6,6 +6,7 @@
 #include "dac.h"
 #include "burn_ym2203.h"
 #include "tms34061.h"
+#include "burn_gun.h" // trackball
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -38,25 +39,23 @@ static UINT8 DrvReset;
 
 static INT16 DrvAnalogPort0 = 0;
 static INT16 DrvAnalogPort1 = 0;
-static INT32 track_x_last = 0;
-static INT32 track_y_last = 0;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo CapbowlInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 7,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 start"	},
 	A("P1 Trackball X", BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
 	A("P1 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 #undef A
 
@@ -64,16 +63,16 @@ STDINPUTINFO(Capbowl)
 
 static struct BurnDIPInfo CapbowlDIPList[]=
 {
-	{0x0a, 0xff, 0xff, 0x40, NULL		},
-	{0x0b, 0xff, 0xff, 0x00, NULL		},
+	{0x0a, 0xff, 0xff, 0x40, NULL			},
+	{0x0b, 0xff, 0xff, 0x00, NULL			},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"	},
-	{0x0a, 0x01, 0x40, 0x40, "Upright"	},
-	{0x0a, 0x01, 0x40, 0x00, "Cocktail"	},
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x0a, 0x01, 0x40, 0x40, "Upright"		},
+	{0x0a, 0x01, 0x40, 0x00, "Cocktail"		},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"	},
-	{0x0b, 0x01, 0x01, 0x00, "Off"		},
-	{0x0b, 0x01, 0x01, 0x01, "On"		},
+	{0x0b, 0x01, 0x01, 0x00, "Off"			},
+	{0x0b, 0x01, 0x01, 0x01, "On"			},
 };
 
 STDDIPINFO(Capbowl)
@@ -87,63 +86,6 @@ static void bankswitch(INT32 d)
 	int bank = 0x08000 + (((d & 0x0c) >> 1) | (d & 1)) * 0x4000;
 
 	M6809MapMemory(DrvMainROM + bank, 0x0000, 0x3fff, MAP_ROM);
-}
-
-static void TrackReset()
-{
-	track_x_last = 0;
-	track_y_last = 0;
-}
-
-static UINT8 ananice(INT16 anaval)
-{
-	if (anaval > 1024) anaval = 1024;
-	if (anaval < -1024) anaval = -1024; // clamp huge values so don't overflow INT8 conversion (mouse)
-
-	return (anaval >> 4) & 0xff;
-}
-
-static UINT8 ProcessTrack(UINT8 pad)
-{
-	if ((pad & 0xf0) == 0xf0 || pad < 0x10) pad = 0;
-	pad = (pad>>4);
-	if (pad & 0x10) pad = 0x15-pad;
-
-	return pad;
-}
-
-static UINT8 TrackY()
-{
-	UINT8 pad = ananice(DrvAnalogPort1);
-
-	pad = ProcessTrack(0xff - pad) & 0xf; // reversed
-	if (pad) track_y_last = pad;
-
-	return ((pad) ? pad : track_y_last);
-}
-
-static UINT8 TrackX()
-{
-	UINT8 pad = ananice(DrvAnalogPort0);
-
-	pad = ProcessTrack(pad) & 0xf;
-	if (pad) track_x_last = pad;
-
-	return ((pad) ? pad : track_x_last);
-}
-
-static void TrackTick()
-{ // executes once every 8th frame to simulate linear deceleration
-	if (!(nCurrentFrame & 8)) return;
-	if (track_y_last !=0) {
-		if (track_y_last>0 && track_y_last < 9) track_y_last--;
-		else if (track_y_last > 9) { track_y_last++; if (track_y_last>0xf) track_y_last = 0; }
-	}
-
-	if (track_x_last !=0) {
-		if (track_x_last>0 && track_x_last < 9) track_x_last--;
-		else if (track_x_last > 9) { track_x_last++; if (track_x_last>0xf) track_x_last = 0; }
-	}
 }
 
 static void main_write(UINT16 a, UINT8 d)
@@ -178,17 +120,13 @@ static void main_write(UINT16 a, UINT8 d)
 		case 0x6000:
 		{
 			*soundlatch = d;
-			M6809Close();
-			M6809Open(1);
-			M6809SetIRQLine(M6809_IRQ_LINE, CPU_IRQSTATUS_AUTO);
-			M6809Close();
-			M6809Open(0);
+			M6809SetIRQLine(1, M6809_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 		}
 		return;
 
 		case 0x6800:
 			watchdog = 0;
-			TrackReset();
+			BurnTrackballReadReset();
 		return;
 	}
 }
@@ -220,10 +158,10 @@ static UINT8 main_read(UINT16 a)
 			return 0;
 
 		case 0x7000:
-			return (DrvInputs[0] & 0xb0) | (DrvDips[0] & 0x40) | TrackY(); // track Y
+			return (DrvInputs[0] & 0xb0) | (DrvDips[0] & 0x40) | (BurnTrackballRead(0, 1) & 0x0f); // Y
 
 		case 0x7800:
-			return (DrvInputs[1] & 0xf0) | TrackX(); // track X
+			return (DrvInputs[1] & 0xf0) | (BurnTrackballRead(0, 0) & 0x0f); // X
 	}
 
 	return 0;
@@ -271,11 +209,6 @@ static UINT8 capbowl_ym2203_portA(UINT32)
 static void capbowl_ym2203_write_portB(UINT32, UINT32 )
 {
 	// ticket handling
-}
-
-static INT32 DrvSyncDAC()
-{
-	return (INT32)(float)(nBurnSoundLen * (M6809TotalCycles() / (2000000.000 / (nBurnFPS / 100.000))));
 }
 
 static void DrvFMIRQCallback(INT32 , INT32 state)
@@ -336,8 +269,6 @@ static INT32 DrvDoReset(int clear_mem)
 
 	tms34061_reset();
 
-	memset (DrvNVRAM, 0x01, 0x800);
-
 	watchdog = 0;
 	blitter_addr = 0;
 
@@ -381,12 +312,7 @@ static void DrvPaletteInit()
 
 static INT32 DrvInit(INT32 game)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		game_select = game;
@@ -439,12 +365,16 @@ static INT32 DrvInit(INT32 game)
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.15, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.15, BURN_SND_ROUTE_BOTH);
 
-	DACInit(0, 0, 1, DrvSyncDAC);
+	DACInit(0, 0, 1, M6809TotalCycles, 2000000);
 	DACSetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
 
 	tms34061_init(8, 0x10000, draw_layer, tms34061_interrupt);
 
 	GenericTilesInit();
+
+	BurnTrackballInit(2);
+
+	memset (DrvNVRAM, 0xaa, 0x800);
 
 	DrvDoReset(1);
 
@@ -455,6 +385,8 @@ static INT32 DrvExit()
 {
 	GenericTilesExit();
 
+	BurnTrackballExit();
+
 	DACExit();
 
 	BurnYM2203Exit();
@@ -463,7 +395,7 @@ static INT32 DrvExit()
 
 	tms34061_exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -484,8 +416,7 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	watchdog++;
-	if (watchdog > 120) {
+	if (++watchdog > 120) {
 		DrvDoReset(0);
 	}
 
@@ -500,57 +431,44 @@ static INT32 DrvFrame()
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
-	}
 
-	TrackTick();
+		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_REVERSED);
+		BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 0x01, 0x07);
+		BurnTrackballUpdate(0);
+	}
 
 	M6809NewFrame();
 
 	INT32 nInterleave = 256; // scanlines
-	INT32 nCyclesSegment = 0;
 	INT32 nCyclesTotal[2] =  { 4000000 / 57, 2000000 / 57 };
 	INT32 nCyclesDone[2] =  { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
 		tms34061_current_scanline = i;
 
-		nCurrentCPU = 0;
-		M6809Open(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += M6809Run(nCyclesSegment);
-
+		M6809Open(0);
+		CPU_RUN(0, M6809);
 		tms34061_interrupt();
-
 		if (((i + ((game_select) ? 0x10 : 0x00)) & 0x1f) == 0x1f) { // force draw every 32 scanlines
 			draw_layer();
 		}
-
 		M6809Close();
 
-		nCurrentCPU = 1;
-		M6809Open(nCurrentCPU);
-		BurnTimerUpdate((i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave);
+		M6809Open(1);
+		CPU_RUN_TIMER(1);
 		M6809Close();
 	}
 
 	M6809Open(0);
 	if (DrvDips[1] & 0x01) {
-		M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO); // NMI
+		M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO); // NMI - service mode
 	}
 	M6809Close();
-
-	M6809Open(1);
-	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	M6809Close();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -587,12 +505,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		M6809Scan(nAction);
 
 		tms34061_scan(nAction, pnMin);
-
 		BurnYM2203Scan(nAction, pnMin);
-		BurnTimerScan(nAction, pnMin);
 		DACScan(nAction, pnMin);
+		BurnTrackballScan();
 
 		SCAN_VAR(blitter_addr);
+		SCAN_VAR(watchdog);
 	}
 
 	if (nAction & ACB_WRITE) {

@@ -542,12 +542,7 @@ static void adpcm_decode(UINT8 *rom)
 
 static INT32 DrvInit(INT32 select)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	// joystick version
 	if (select == 0)
@@ -650,7 +645,7 @@ static INT32 DrvExit()
 
 	BurnTrackballExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	is_joyver = 0;
 
@@ -896,7 +891,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		seibu_sound_scan(nAction, pnMin);
 
-		if (!is_joyver)	BurnTrackballScan();
+		SCAN_VAR(TballPrev); // joy and tball!
+
+		if (!is_joyver)	{
+			BurnTrackballScan();
+		}
 	}
 
 	return 0;

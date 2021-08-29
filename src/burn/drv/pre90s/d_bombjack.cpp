@@ -305,12 +305,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit(INT32 load_type)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (load_type == 0)
 	{
@@ -423,7 +418,7 @@ static INT32 DrvExit()
 	AY8910Exit(1);
 	AY8910Exit(2);
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -509,19 +504,7 @@ static void draw_sprites()
 		} else {
 			code &= 0x7f; // ??
 
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM2);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM2);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM2);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM2);
-				}
-			}
+			Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 3, 0, 0, DrvGfxROM2);
 		}
 	}
 }
@@ -592,6 +575,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 	}
 
 	if (pBurnDraw) {

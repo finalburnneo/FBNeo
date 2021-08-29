@@ -439,7 +439,9 @@ void BurnGunMakeInputs(INT32 num, INT16 x, INT16 y)
 #endif
 
 	if (num > MAX_GUNS - 1) return;
-	
+
+	if (bBurnRunAheadFrame) return; // remove jitter w/runahead
+
 	const INT32 MinX = -8 * 0x100;
 	const INT32 MinY = -8 * 0x100;
 
@@ -552,6 +554,8 @@ void BurnGunScan()
 		SCAN_VAR(PaddleLast);
 
 		SCAN_VAR(DIAL_INC);
+		SCAN_VAR(DIAL_VEL);
+		SCAN_VAR(DIAL_VELx);
 		SCAN_VAR(DrvJoyT);
 	} else {
 		// guns only!

@@ -591,8 +591,9 @@ static INT32 Cop01Init()
 	AY8910Init(1, 1250000, 1);
 	AY8910Init(2, 1250000, 1);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.12, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(2, 0.12, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(2, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 3000000);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 64, 32);
@@ -802,7 +803,7 @@ static INT32 Cop01Frame()
 		DrvDoReset();
 	}
 
-	//ZetNewFrame();
+	ZetNewFrame();
 
 	{
 		memset (DrvInputs, 0xff, 3);

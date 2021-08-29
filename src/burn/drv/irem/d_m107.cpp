@@ -95,7 +95,7 @@ static struct BurnInputInfo FirebarrInputList[] = {
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 3"	},
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvButton + 4,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvInput + 5,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvInput + 6,	"dip"		},
@@ -143,7 +143,7 @@ static struct BurnInputInfo Dsoccr94InputList[] = {
 	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy4 + 5,	"p4 fire 1"	},
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy4 + 6,	"p4 fire 2"	},
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvButton + 4,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvInput + 5,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvInput + 6,	"dip"		},
@@ -300,7 +300,6 @@ static void m107YM2151IRQHandler(INT32 nStatus)
 	if (VezGetActive() == -1) return;
 
 	VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP0, 0xff/*default*/, nStatus ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
-	VezRun(100);
 }
 
 static UINT8 __fastcall m107ReadByte(UINT32 address)
@@ -369,8 +368,8 @@ static void set_pf_info(INT32 layer)
 
 	INT32 data = (pf_control[layer][5] << 8) + pf_control[layer][4];
 
-	ptr->enable		= (~data >> 7) & 1;
-	ptr->vram		= (UINT16*)(DrvVidRAM + (((data >> 8) & 0x0f) * 0x1000));
+	ptr->enable				= (~data >> 7) & 1;
+	ptr->vram				= (UINT16*)(DrvVidRAM + (((data >> 8) & 0x0f) * 0x1000));
 	ptr->enable_rowscroll	= data & 0x03;
 }
 
@@ -552,37 +551,37 @@ static INT32 DrvDoReset()
 static INT32 MemIndex(INT32 gfxlen1, INT32 gfxlen2)
 {
 	UINT8 *Next; Next = Mem;
-	DrvV33ROM 	= Next; Next += 0x100000;
-	DrvV30ROM	= Next; Next += 0x020000;
-	DrvGfxROM0	= Next; Next += gfxlen1 * 2;
-	DrvGfxROM1	= Next; Next += gfxlen2 * 2;
+	DrvV33ROM 		= Next; Next += 0x100000;
+	DrvV30ROM		= Next; Next += 0x020000;
+	DrvGfxROM0		= Next; Next += gfxlen1 * 2;
+	DrvGfxROM1		= Next; Next += gfxlen2 * 2;
 
 	if (spritesystem == 1) {
 		DrvSprTable	= Next; Next += 0x040000;
 	}
 
-	DrvSndROM	= Next; Next += 0x100000;
+	DrvSndROM		= Next; Next += 0x100000;
 
 	RamPrioBitmap	= Next; Next += 320 * 240;
 
-	RamStart	= Next;
+	RamStart		= Next;
 
-	DrvSprRAM	= Next; Next += 0x001000;
-	DrvSprBuf	= Next; Next += 0x001000;
-	DrvVidRAM	= Next; Next += 0x010000;
-	DrvV33RAM	= Next; Next += 0x010000;
-	DrvV30RAM	= Next; Next += 0x004000;
-	DrvPalRAM	= Next; Next += 0x001000;
+	DrvSprRAM		= Next; Next += 0x001000;
+	DrvSprBuf		= Next; Next += 0x001000;
+	DrvVidRAM		= Next; Next += 0x010000;
+	DrvV33RAM		= Next; Next += 0x010000;
+	DrvV30RAM		= Next; Next += 0x004000;
+	DrvPalRAM		= Next; Next += 0x001000;
 
-	sound_status= Next; Next += 0x000004; // 2
-	sound_latch	= Next; Next += 0x000004; // 1
+	sound_status	= Next; Next += 0x000004; // 2
+	sound_latch		= Next; Next += 0x000004; // 1
 
 	pf_control[0]	= Next; Next += 0x000008;
 	pf_control[1]	= Next; Next += 0x000008;
 	pf_control[2]	= Next; Next += 0x000008;
 	pf_control[3]	= Next; Next += 0x000008;
 
-	RamEnd		= Next;
+	RamEnd			= Next;
 
 	// scanned separately from ram due to pointers in structs
 	m107_layers[0]	= (struct _m107_layer*)Next; Next += sizeof(struct _m107_layer);
@@ -590,9 +589,9 @@ static INT32 MemIndex(INT32 gfxlen1, INT32 gfxlen2)
 	m107_layers[2]	= (struct _m107_layer*)Next; Next += sizeof(struct _m107_layer);
 	m107_layers[3]	= (struct _m107_layer*)Next; Next += sizeof(struct _m107_layer);
 
-	DrvPalette	= (UINT32 *) Next; Next += 0x0800 * sizeof(UINT32);
+	DrvPalette		= (UINT32 *) Next; Next += 0x0800 * sizeof(UINT32);
 
-	MemEnd		= Next;
+	MemEnd			= Next;
 	return 0;
 }
 
@@ -685,9 +684,10 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), const UINT8 *sound_decrypt_tab
 
 	irq_vectorbase = vectorbase;
 
-	BurnYM2151Init(3579545);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
 	YM2151SetIrqHandler(0, &m107YM2151IRQHandler);
-	BurnYM2151SetAllRoutes(0.40, BURN_SND_ROUTE_BOTH);
+	BurnYM2151SetAllRoutes(0.25, BURN_SND_ROUTE_BOTH);
+	BurnTimerAttachVez(7159090);
 
 	iremga20_init(0, DrvSndROM, 0x100000, 3579545);
 	itemga20_set_route(0, 1.00, BURN_SND_ROUTE_BOTH);
@@ -709,7 +709,7 @@ static INT32 DrvExit()
 	VezExit();
 
 	BurnFree(Mem);
-	
+
 	nPrevScreenPos = 0;
 	has_bankswitch = 0;
 
@@ -1011,67 +1011,36 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 256; // scanlines
+	INT32 nInterleave = 256 * 8; // * 8 for tight sync
 	INT32 nCyclesTotal[2] = { 0, 0 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
-	INT32 nSoundBufferPos = 0;
 	nCyclesTotal[0] = (INT32)((INT64)(config_cpu_speed / 60) * nBurnCPUSpeedAdjust / 0x0100);
 	nCyclesTotal[1] = (INT32)((INT64)(7159090 / 60) * nBurnCPUSpeedAdjust / 0x0100);
-
-	if (pBurnSoundOut) {
-		BurnSoundClear();
-	}
-
-	nInterleave = 256 * 8; // * 8 for tight sync
 
 	vblank = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		VezOpen(0);
-		INT32 segment = nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += VezRun(segment);
+		CPU_RUN(0, Vez);
 		if ((i&7)==7) scanline_interrupts(i/8); // update at hblank?
-
-		segment = (VezTotalCycles() * 7159) / (config_cpu_speed / 1000);
-
 		VezClose();
 
 		VezOpen(1);
-
-		{
-			if (sound_cpu_reset) {
-				VezIdle(segment - VezTotalCycles());
-			} else {
-				nCyclesDone[1] += VezRun(segment - VezTotalCycles());
-			}
+		if (sound_cpu_reset) {
+			VezIdle(nCyclesTotal[1] / nInterleave);
+		} else {
+			CPU_RUN_TIMER(1);
 		}
-
-		if (pBurnSoundOut && (i&7)==7) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			iremga20_update(0, pSoundBuf, nSegmentLength);
-			
-			nSoundBufferPos += nSegmentLength;
-		}
-
 		VezClose();
 	}
 
 	VezOpen(1);
-
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		if (nSegmentLength) {
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			iremga20_update(0, pSoundBuf, nSegmentLength);
-		}
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		iremga20_update(0, pBurnSoundOut, nBurnSoundLen);
 	}
-	
 	VezClose();
 
 	return 0;
@@ -1125,10 +1094,6 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 			m107Bankswitch(nBankswitchData);
 			VezClose();
 		}
-
-		VezOpen(1);
-		m107YM2151IRQHandler(0);
-		VezClose();
 	}
 
 	return 0;

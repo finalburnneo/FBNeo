@@ -298,7 +298,7 @@ extern INT32 VidSNewTinyMsg(const TCHAR* pText, INT32 nRGB = 0, INT32 nDuration 
 
 INT32 CheatApply()
 {
-	if (!bCheatsEnabled || HW_NES) { // NES cheats use Game Genie codes
+	if (!bCheatsEnabled || HW_NES || bBurnRunAheadFrame) { // NES cheats use Game Genie codes
 		return 0;
 	}
 

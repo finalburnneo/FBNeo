@@ -2125,6 +2125,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(speech_control);
 		SCAN_VAR(last_command);
 		SCAN_VAR(dac_data);
+		SCAN_VAR(analog_last);
 	}
 
 	if (nAction & ACB_NVRAM) {

@@ -34,6 +34,8 @@ static UINT16 *pSpriteDraw;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
+static INT32 nExtraCycles[2];
+
 static UINT8 *soundlatch;
 static UINT8 *flipscreen;
 
@@ -57,83 +59,83 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
-static INT32 previous_coin[2];
+static HoldCoin<2> hold_coin;
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Drv)
 
 static struct BurnInputInfo Drv2InputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Drv2)
 
 static struct BurnInputInfo OmegafInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Omegaf)
@@ -935,7 +937,7 @@ static void __fastcall omegaf_main_write(UINT16 address, UINT8 data)
 			{
 				m_omegaf_io_protection_input = m_omegaf_io_protection[0];
 			}
-		
+
 			m_omegaf_io_protection[address - 0xc004] = data;
 		}
 		return;
@@ -1098,7 +1100,9 @@ static INT32 DrvDoReset()
 
 	ninjakd2_sample_offset = -1;
 
-	previous_coin[0] = previous_coin[1] = 0;
+	hold_coin.reset();
+
+	nExtraCycles[0] = nExtraCycles[1] = 0;
 
 	HiscoreReset();
 
@@ -1209,12 +1213,7 @@ static void gfx_unscramble(INT32 gfxlen)
 
 static INT32 Ninjakd2CommonInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
@@ -1292,12 +1291,7 @@ static INT32 Ninjakd2DecryptedInit()
 
 static INT32 MnightInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
@@ -1353,12 +1347,7 @@ static INT32 MnightInit()
 
 static INT32 RobokidInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x10000,  0, 1)) return 1;
@@ -1436,12 +1425,7 @@ static INT32 RobokidInit()
 
 static INT32 OmegafInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x10000,  0, 1)) return 1;
@@ -1502,7 +1486,7 @@ static INT32 DrvExit()
 
 	ZetExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -1538,19 +1522,7 @@ static void draw_bg_layer()
 		INT32 flipy = attr & 0x20;
 		INT32 color = attr & 0x0f;
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM2);
-			} else {
-				Render16x16Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM2);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM2);
-			} else {
-				Render16x16Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM2);
-			}
-		}
+		Draw16x16Tile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 0, DrvGfxROM2);
 	}
 }
 
@@ -1577,19 +1549,8 @@ static void draw_mnight_bg_layer()
 		INT32 flipy = attr & 0x20;
 		INT32 color = attr & 0x0f;
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM2);
-			} else {
-				Render16x16Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM2);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM2);
-			} else {
-				Render16x16Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM2);
-			}
-		}
+
+		Draw16x16Tile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 0, DrvGfxROM2);
 	}
 }
 
@@ -1640,19 +1601,7 @@ static void draw_fg_layer(INT32 color_offset)
 		INT32 flipy = attr & 0x20;
 		INT32 color = attr & 0x0f;
 
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 32, color, 4, 0xf, color_offset, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy - 32, color, 4, 0xf, color_offset, DrvGfxROM0);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy - 32, color, 4, 0xf, color_offset, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy - 32, color, 4, 0xf, color_offset, DrvGfxROM0);
-			}
-		}
+		Draw8x8MaskTile(pTransDraw, code, sx, sy - 32, flipx, flipy, color, 4, 0xf, color_offset, DrvGfxROM0);
 	}
 }
 
@@ -1699,19 +1648,7 @@ static void draw_sprites(INT32 color_offset, INT32 robokid)
 				{
 					int const tile = code ^ (x << big_xshift) ^ (y << big_yshift);
 
-					if (flipy) {
-						if (flipx) {
-							Render16x16Tile_Mask_FlipXY_Clip(pSpriteDraw, tile, sx + 16*x, (sy + 16*y) - 32, color, 4, 0xf, color_offset, DrvGfxROM1);
-						} else {
-							Render16x16Tile_Mask_FlipY_Clip(pSpriteDraw, tile, sx + 16*x, (sy + 16*y) - 32, color, 4, 0xf, color_offset, DrvGfxROM1);
-						}
-					} else {
-						if (flipx) {
-							Render16x16Tile_Mask_FlipX_Clip(pSpriteDraw, tile, sx + 16*x, (sy + 16*y) - 32, color, 4, 0xf, color_offset, DrvGfxROM1);
-						} else {
-							Render16x16Tile_Mask_Clip(pSpriteDraw, tile, sx + 16*x, (sy + 16*y) - 32, color, 4, 0xf, color_offset, DrvGfxROM1);
-						}
-					}
+					Draw16x16MaskTile(pSpriteDraw, tile, sx + 16*x, (sy + 16*y) - 32, flipx, flipy, color, 4, 0xf, color_offset, DrvGfxROM1);
 
 					++sprites_drawn;
 
@@ -1906,52 +1843,38 @@ static INT32 DrvFrame()
 		DrvClearOpposites(&DrvInputs[1]);
 		DrvClearOpposites(&DrvInputs[2]);
 
-		previous_coin[0] = (DrvInputs[0] & 0x40) ? 0 : (previous_coin[0] + 1);
-		previous_coin[1] = (DrvInputs[0] & 0x80) ? 0 : (previous_coin[1] + 1);
-		if (previous_coin[0] >= 4) DrvInputs[0] |= 0x40;
-		if (previous_coin[1] >= 4) DrvInputs[0] |= 0x80;
+		hold_coin.checklow(0, DrvInputs[0], 1 << 6, 3);
+		hold_coin.checklow(1, DrvInputs[0], 1 << 7, 3);
 	}
 
 	ZetNewFrame();
 
-	INT32 nCycleSegment;
 	INT32 nInterleave = 10;
 	INT32 nCyclesTotal[2] = { 6000000 / 60, 5000000 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCycleSegment = nCyclesTotal[0] / nInterleave;
-
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCycleSegment);
-
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave-1))
 		{
 			ZetSetVector(0xd7);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
-
 		ZetClose();
 
-		nCycleSegment = nCyclesTotal[1] / nInterleave;
-
 		ZetOpen(1);
-	//	nCyclesDone[1] += ZetRun(nCycleSegment);
-		BurnTimerUpdate((i + 1) * nCycleSegment);
+		CPU_RUN_TIMER(1);
 		ZetClose();
 	}
 
-	ZetOpen(1);
-
-	BurnTimerEndFrame(nCyclesTotal[1]);
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		ninjakd2_sample_player(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -1983,30 +1906,29 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnYM2203Scan(nAction, pnMin);
 
-		for (INT32 i = 0; i < 3; i++) {
-			SCAN_VAR(scrollx[i]);
-			SCAN_VAR(scrolly[i]);
-			SCAN_VAR(tilemap_enable[i]);
-			SCAN_VAR(m_omegaf_io_protection[i]);
-			SCAN_VAR(nZ80RamBank[i]);
-		}
+		SCAN_VAR(scrollx);
+		SCAN_VAR(scrolly);
+		SCAN_VAR(tilemap_enable);
+		SCAN_VAR(overdraw_enable);
 
 		SCAN_VAR(nZ80RomBank);
+		SCAN_VAR(nZ80RamBank);
 
-		SCAN_VAR(overdraw_enable);
+		SCAN_VAR(m_omegaf_io_protection);
 		SCAN_VAR(m_omegaf_io_protection_input);
 		SCAN_VAR(m_omegaf_io_protection_tic);
 
 		SCAN_VAR(ninjakd2_sample_offset);
+
+		SCAN_VAR(nExtraCycles);
+
+		hold_coin.scan();
 	}
 
 	if (nAction & ACB_WRITE) {
-		DrvRecalc = 1;
-
 		ZetOpen(0);
 		ninjakd2_bankswitch(nZ80RomBank);
 		ZetClose();
-
 	}
 
 	return 0;

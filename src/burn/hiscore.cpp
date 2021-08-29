@@ -423,7 +423,7 @@ void HiscoreApply()
 	if (!Debug_HiscoreInitted) bprintf(PRINT_ERROR, _T("HiscoreApply called without init\n"));
 #endif
 
-	if (!CheckHiscoreAllowed() || !HiscoresInUse) return;
+	if (!CheckHiscoreAllowed() || !HiscoresInUse || bBurnRunAheadFrame) return;
 
 	UINT8 WriteCheckOk = 0;
 	

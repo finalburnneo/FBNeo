@@ -83,6 +83,7 @@ static INT16 DrvAnalogPort0 = 0;
 static INT16 DrvAnalogPort1 = 0;
 static INT16 DrvAnalogPort2 = 0;
 static INT16 DrvAnalogPort3 = 0;
+
 static INT32 TrackX[2] = { 0, 0 };
 static INT32 TrackY[2] = { 0, 0 };
 
@@ -96,18 +97,10 @@ static INT32 spdball = 0;
 static INT32 uses_hc55516 = 0;
 static INT32 uses_colprom = 0;
 
-// dc-blocking filter for DAC
-static INT16 dac_lastin_r;
-static INT16 dac_lastout_r;
-static INT16 dac_lastin_l;
-static INT16 dac_lastout_l;
-
 // raster update helpers
 static INT32 lastline;
 static void (*pStartDraw)() = NULL;
 static void (*pDrawScanline)() = NULL;
-
-static INT32 nCyclesDone[3];
 
 static struct BurnInputInfo DefenderInputList[] = {
 	{"P1 Coin",					BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
@@ -127,7 +120,7 @@ static struct BurnInputInfo DefenderInputList[] = {
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
-	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"service2"	},
+	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"diag"		},
 	{"High Score Reset",		BIT_DIGITAL,	DrvJoy3 + 3,	"service3"	},
 	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 6,	"tilt"		},
 };
@@ -149,7 +142,7 @@ static struct BurnInputInfo MaydayInputList[] = {
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Test Credit",				BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
-	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"service2"	},
+	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"diag"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service3"	},
 };
 
@@ -217,7 +210,7 @@ static struct BurnInputInfo StargateInputList[] = {
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
-	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"service2"	},
+	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"diag"		},
 	{"High Score reset",		BIT_DIGITAL,	DrvJoy3 + 3,	"diag"		},
 	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 6,	"tilt"		},
 };
@@ -241,8 +234,8 @@ static struct BurnInputInfo RobotronInputList[] = {
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
-	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"service2"	},
-	{"High Score Reset",		BIT_DIGITAL,	DrvJoy3 + 3,	"service3"		},
+	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"diag"		},
+	{"High Score Reset",		BIT_DIGITAL,	DrvJoy3 + 3,	"service3"	},
 	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 6,	"tilt"		},
 };
 
@@ -261,7 +254,7 @@ static struct BurnInputInfo BubblesInputList[] = {
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
-	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"service2"	},
+	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"diag"		},
 	{"High Score Reset",		BIT_DIGITAL,	DrvJoy3 + 3,	"service3"	},
 	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 6,	"tilt"		},
 };
@@ -294,7 +287,7 @@ static struct BurnInputInfo SplatInputList[] = {
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
-	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"service2"	},
+	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"diag"		},
 	{"High Score Reset",		BIT_DIGITAL,	DrvJoy3 + 3,	"service3"	},
 	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 6,	"tilt"		},
 };
@@ -316,7 +309,7 @@ static struct BurnInputInfo JoustInputList[] = {
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
-	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"service2"	},
+	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"diag"		},
 	{"High Score Reset",		BIT_DIGITAL,	DrvJoy3 + 3,	"service3"	},
 	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 6,	"tilt"		},
 };
@@ -349,7 +342,7 @@ static struct BurnInputInfo SpdballInputList[] = {
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
-	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"service2"	},
+	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"diag"		},
 	{"High Score Reset",		BIT_DIGITAL,	DrvJoy3 + 3,	"service3"	},
 	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 6,	"tilt"		},
 };
@@ -377,7 +370,7 @@ static struct BurnInputInfo AlienarInputList[] = {
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
-	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"service2"	},
+	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"diag"		},
 	{"High Score Reset",		BIT_DIGITAL,	DrvJoy3 + 3,	"service3"	},
 	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 6,	"tilt"		},
 };
@@ -399,7 +392,7 @@ static struct BurnInputInfo SinistarInputList[] = {
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
-	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"service2"	},
+	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"diag"		},
 	{"High Score Reset",		BIT_DIGITAL,	DrvJoy3 + 3,	"service3"	},
 	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 6,	"tilt"		},
 };
@@ -423,7 +416,7 @@ static struct BurnInputInfo BlasterInputList[] = {
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
-	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"service2"	},
+	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"diag"		},
 	{"High Score Reset",		BIT_DIGITAL,	DrvJoy3 + 3,	"service3"	},
 	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 6,	"tilt"		},
 };
@@ -443,7 +436,7 @@ static struct BurnInputInfo LottofunInputList[] = {
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
-	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"service2"	},
+	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"diag"		},
 	{"High Score Reset",		BIT_DIGITAL,	DrvJoy3 + 3,	"service3"	},
 	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 6,	"tilt"		},
 };
@@ -995,9 +988,9 @@ static void sync_sound(INT32 num)
 	INT32 cyc = (INT32)(((double)((double)M6809TotalCycles() * 894886) / 1000000)+0.5);
 	INT32 todo = cyc - M6800TotalCycles();
 	//bprintf(0, _T("m6809 cyc: %d  m6800 cyc: %d.    cyc: %d  todo %d.\n"), M6809TotalCycles(), M6800TotalCycles(), cyc, todo);
-	// Adding in a couple cycles to prevent lost soundcommands.  This is OK since we lose a few cycles/frame due to division & rounding loss.
+	// Adding in a couple cycles to prevent lost soundcommands.  CPU_RUN_SYNCINT in DrvFrame() will compensate.
 	if (todo < 1) todo = 15;
-	nCyclesDone[num + 1] += M6800Run(todo + 10);
+	M6800Run(todo + 10);
 }
 
 static void pia1_out_b(UINT16 , UINT8 data)
@@ -1014,14 +1007,12 @@ static void pia1_out_b(UINT16 , UINT8 data)
 		UINT8 r_data = (data >> 1 & 0x40) | (data & 0x3f) | 0x80;
 
 		M6800Open(0);
-		//bprintf(0, _T("0) "));
 		sync_sound(0);
 		pia_set_input_b(2, l_data);
 		pia_set_input_cb1(2, (l_data == 0xff) ? 0 : 1);
 		M6800Close();
 
 		M6800Open(1);
-		//bprintf(0, _T("1) "));
 		sync_sound(1);
 		pia_set_input_b(4, r_data);
 		pia_set_input_cb1(4, (r_data == 0xff) ? 0 : 1);
@@ -1167,11 +1158,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	blaster_video_control = 0;
 	blaster_color0 = 0;
 
-	dac_lastin_r = 0;
-	dac_lastout_r = 0;
-	dac_lastin_l = 0;
-	dac_lastout_l = 0;
-
 	TrackX[0] = TrackX[1] = 0;
 	TrackY[0] = TrackY[1] = 0;
 
@@ -1303,15 +1289,10 @@ static void blitter_init(INT32 blitter_config, UINT8 *prom)
 			blitter_remap[i * 256 + j] = (table[j >> 4] << 4) | table[j & 0x0f];
 	}
 }
-//DrvInit(0, 1, 12, -1, 0);
+
 static INT32 DrvInit(INT32 maptype, INT32 loadtype, INT32 x_adjust, INT32 blitter_config, INT32 blitter_clip_addr)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (DrvRomLoad(loadtype)) return 1;
@@ -1382,6 +1363,7 @@ static INT32 DrvInit(INT32 maptype, INT32 loadtype, INT32 x_adjust, INT32 blitte
 
 	DACInit(0, 0, 0, M6800TotalCycles, 894886);
 	DACSetRoute(0, 0.35, BURN_SND_ROUTE_BOTH);
+	DACDCBlock(1);
 
 	if (maptype == 2) // blaster, pia config & l+r dac
 	{
@@ -1400,7 +1382,7 @@ static INT32 DrvInit(INT32 maptype, INT32 loadtype, INT32 x_adjust, INT32 blitte
 
 	blitter_clip_address = blitter_clip_addr;
 	blitter_init(blitter_config, (uses_colprom) ? DrvColPROM : NULL);
-	
+
 	GenericTilesInit();
 
 	screen_x_adjust = x_adjust;
@@ -1423,7 +1405,7 @@ static INT32 DrvExit()
 	if (uses_hc55516)
 		hc55516_exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	memset (DrvDips, 0, 3);
 
@@ -1600,24 +1582,6 @@ static INT32 BlasterDraw()
 	return 0;
 }
 
-static void dcfilter_dac()
-{
-	for (INT32 i = 0; i < nBurnSoundLen; i++) {
-		INT16 r = pBurnSoundOut[i*2+0];
-		INT16 l = pBurnSoundOut[i*2+1];
-
-		INT16 outr = r - dac_lastin_r + 0.995 * dac_lastout_r;
-		INT16 outl = l - dac_lastin_l + 0.995 * dac_lastout_l;
-
-		dac_lastin_r = r;
-		dac_lastout_r = outr;
-		dac_lastin_l = l;
-		dac_lastout_l = outl;
-		pBurnSoundOut[i*2+0] = outr;
-		pBurnSoundOut[i*2+1] = outl;
-	}
-}
-
 static INT32 DrvFrame()
 {
 	BurnWatchdogUpdate();
@@ -1682,8 +1646,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 1000000 / 60, 894886 / 60, 894886 / 60 };
-	//INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2] };
-	nCyclesDone[0] = nExtraCycles[0]; nCyclesDone[1] = nExtraCycles[1]; nCyclesDone[2] = nExtraCycles[2];
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2] };
 
 	M6809Open(0);
 
@@ -1693,7 +1656,7 @@ static INT32 DrvFrame()
 	{
 		scanline = i;
 
-		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, M6809);
 
 		if (scanline % 8 == 0) {
 			pia_set_input_cb1(1, scanline & 0x20);
@@ -1704,12 +1667,12 @@ static INT32 DrvFrame()
 			pia_set_input_ca1(1, scanline >= 240 ? 1 : 0);
 
 		M6800Open(0);
-		nCyclesDone[1] += M6800Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		CPU_RUN_SYNCINT(1, M6800);
 		M6800Close();
 
 		if (blaster) {
 			M6800Open(1);
-			nCyclesDone[2] += M6800Run(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
+			CPU_RUN_SYNCINT(2, M6800);
 			M6800Close();
 		}
 	}
@@ -1717,7 +1680,6 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		M6800Open(0);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
-		dcfilter_dac();
 		if (uses_hc55516)
 			hc55516_update(pBurnSoundOut, nBurnSoundLen);
 		M6800Close();
@@ -1726,9 +1688,15 @@ static INT32 DrvFrame()
 	M6809Close();
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
-	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
-	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
-	
+	M6800Open(0);
+	nExtraCycles[1] = M6800TotalCycles() - nCyclesTotal[1];
+	M6800Close();
+	if (blaster) {
+		M6800Open(1);
+		nExtraCycles[2] = M6800TotalCycles() - nCyclesTotal[2];
+		M6800Close();
+	}
+
 	if (pBurnDraw) {
 		if (pStartDraw)
 			DrvDrawEnd();

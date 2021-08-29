@@ -1008,21 +1008,11 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="atvsim" romof="spec128">
-		<description>ATV Simulator - All Terrain Vehicle (128K)</description>
-		<year>1987</year>
-		<manufacturer>Codemasters</manufacturer>
-		<rom name="ATV Simulator - All Terrain Vehicle (1987)(Codemasters)[128K].z80" size="43247" crc="e1fc4bb9"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="atvsim_48" cloneof="atvsim" romof="atvsim">
+	<game name="atvsim" romof="spectrum">
 		<description>ATV Simulator - All Terrain Vehicle (48K)</description>
 		<year>1987</year>
 		<manufacturer>Codemasters</manufacturer>
-		<rom name="ATV Simulator - All Terrain Vehicle (1987)(Codemasters).z80" size="41549" crc="80171771"/>
+		<rom name="ATV Simulator (1987)(Codemasters).tap" size="47048" crc="373a50ad"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1072,6 +1062,42 @@
 		<rom name="Avenger 128K (1986)(Gremlin Graphics).z80" size="45683" crc="8ac4d620"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="avespacial2" cloneof="avespacial1" romof="avespacial1">
+		<description>Aventura Espacial, La - En los Dominios del Cerebelo (Spanish) [PASSWORD: CANES VENATICI]</description>
+		<year>1990</year>
+		<manufacturer>Aventuras A.D.</manufacturer>
+		<rom name="Aventura Espacial, La - En los Dominios del Cerebelo (1990)(Aventuras AD).z80" size="40915" crc="06d2fd5c"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="avespacial1" romof="spectrum">
+		<description>Aventura Espacial, La - Explorando Mundos (Spanish)</description>
+		<year>1990</year>
+		<manufacturer>Aventuras A.D.</manufacturer>
+		<rom name="Aventura Espacial, La - Explorando Mundos (1990)(Aventuras AD).z80" size="45676" crc="c46932a5"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="avoriginal1" romof="spectrum">
+		<description>Aventura Original - Parte 1 - La Busqueda (Spanish)</description>
+		<year>1989</year>
+		<manufacturer>Aventuras A.D.</manufacturer>
+		<rom name="Aventura Original - Parte 1 - La Busqueda (1989)(Aventuras AD).z80" size="46750" crc="ce246950"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="avoriginal2" cloneof="avoriginal1" romof="avoriginal1">
+		<description>Aventura Original - Parte 2 - El Encuentro (Spanish) [PASSWORD: TIMACUS]</description>
+		<year>1989</year>
+		<manufacturer>Aventuras A.D.</manufacturer>
+		<rom name="Aventura Original - Parte 2 - El Encuentro (1989)(Aventuras AD).z80" size="47212" crc="126a3c19"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1156,6 +1182,15 @@
 		<year>1990</year>
 		<manufacturer>Erbe Software</manufacturer>
 		<rom name="Badlands (1990)(Erbe Software)[re-release].z80" size="49182" crc="13128782"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="baffojones" romof="spectrum">
+		<description>Baffo Jones (48K) (HB) [Homebrew]</description>
+		<year>2015</year>
+		<manufacturer>Gabriele Amore</manufacturer>
+		<rom name="Baffo Jones 48K (2015)(Gabriele Amore).tap" size="34142" crc="2edb29b5"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4530,6 +4565,24 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="fedzen" romof="spectrum">
+		<description>Federation Z (English) (48K) (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Furillo Productions</manufacturer>
+		<rom name="Federation Z EN 48K (2020)(Furillo Productions).tap" size="44748" crc="fd72043c"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="fedzes" cloneof="fedzen" romof="fedzen">
+		<description>Federation Z (Spanish) (48K) (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Furillo Productions</manufacturer>
+		<rom name="Federation Z ES 48K (2020)(Furillo Productions).tap" size="44747" crc="10e79d9d"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="fernmartbasketm" romof="spec128">
 		<description>Fernando Martin Basket Master (Spanish) (128K)</description>
 		<year>1987</year>
@@ -4776,6 +4829,15 @@
 		<rom name="Forgotten Worlds (1989)(U.S. Gold)[128K].z80" size="57413" crc="33ef767e"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="forward2past" romof="spectrum">
+		<description>Forward to the Past (48K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Sloanysoft</manufacturer>
+		<rom name="Forward to the Past (2021)(Sloanysoft).tap" size="31362" crc="e6b298c4"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5817,6 +5879,16 @@
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Human Killing Machine (1989)(U.S. Gold).tap" size="83940" crc="fac2e471"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="humans" romof="spec128">
+		<description>Humans, The (128K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Gabriele Amore</manufacturer>
+		<rom name="Humans, The (2021)(Gabriele Amore).tap" size="53285" crc="ceb5401e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -7210,6 +7282,25 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mrage128" romof="spec128">
+		<description>Mage Rage (128K) (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Joesoft</manufacturer>
+		<rom name="Mage Rage 128K (2020)(Joesoft).tap" size="45368" crc="7561c99e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mrage48" cloneof="mrage128" romof="mrage128">
+		<description>Mage Rage (48K) (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Joesoft</manufacturer>
+		<rom name="Mage Rage 48K (2019)(Joesoft).tap" size="40082" crc="685ad69b"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="magentajim" romof="spec128">
 		<description>Magenta Jim (HB) [Homebrew]</description>
 		<year>2020</year>
@@ -8002,7 +8093,7 @@
 		<description>Munsters, The (128K)</description>
 		<year>1989</year>
 		<manufacturer>Again Again</manufacturer>
-		<rom name="Munsters, The (1989)(Again Again).tap" size="78848" crc="e12e896e"/>
+		<rom name="Munsters, The (1989)(Again Again).tap" size="78341" crc="37451ece"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -12709,6 +12800,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="troll" romof="spec128">
+		<description>Troll (128K)</description>
+		<year>1988</year>
+		<manufacturer>Palace Software</manufacturer>
+		<rom name="Troll 128K (1988)(Palace Software).tap" size="47794" crc="d3af2582"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="trom" romof="spectrum">
 		<description>Trom (16K)</description>
 		<year>1983</year>
@@ -13441,6 +13542,24 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="yenght" romof="spectrum">
+		<description>Yenght - La Fuente de la Juventud (Spanish)</description>
+		<year>1984</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Yenght - La Fuente de la Juventud ES (1984)(Dinamic).tap" size="45958" crc="36df229a"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="yeti" romof="spectrum">
+		<description>Yeti (48K)</description>
+		<year>1988</year>
+		<manufacturer>Destiny</manufacturer>
+		<rom name="Yeti 48K (1988)(Destiny).tap" size="48009" crc="0536775c"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="yiarkufu" romof="spec128">
 		<description>Yie Ar Kung-Fu (128K)</description>
 		<year>1985</year>
@@ -13605,7 +13724,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zorro" romof="spectrum">
-		<description>Zorro [After options menu press ENTER to begin the game]</description>
+		<description>Zorro (48K) [After options menu press ENTER to begin the game]</description>
 		<year>1986</year>
 		<manufacturer>U.S. Gold - DataSoft</manufacturer>
 		<rom name="Zorro (1986)(U.S. Gold).z80" size="37618" crc="9f7b2443"/>

@@ -9302,7 +9302,7 @@
 	</game>
 	<game name="mrgimmick" cloneof="gimmick" romof="gimmick">
 		<description>Mr. Gimmick (Europe)</description>
-		<year>0000</year>
+		<year>1993</year>
 		<manufacturer>Sunsoft</manufacturer>
 		<rom name="Mr. Gimmick (Europe).nes" size="393232" crc="bf80b241"/>
 		<video orientation="horizontal" width="256" height="232" aspectx="256" aspecty="232"/>

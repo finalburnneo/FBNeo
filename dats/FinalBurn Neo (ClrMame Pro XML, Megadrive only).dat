@@ -197,6 +197,14 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="abyssal">
+		<description>Abyssal Infants (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>kakoeimon</manufacturer>
+		<rom name="Abyssal Infants (2021)(kakoeimon).bin" size="845624" crc="b893bea7"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="action52s" cloneof="action52" romof="action52">
 		<description>Action 52 (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
@@ -494,7 +502,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="alien3s" cloneof="alien3" romof="alien3">
-		<description>Alien 3 (Hack, Spanish)</description>
+		<description>Alien 3 (Hack, Spanish) [Hack]</description>
 		<year>2020</year>
 		<manufacturer>Arena</manufacturer>
 		<rom name="alien3 (hack, spanish).bin" size="524288" crc="701d308e"/>
@@ -1912,8 +1920,16 @@
 	<game name="bloodsht">
 		<description>Bloodshot ~ Battle Frenzy (Euro)</description>
 		<year>1994</year>
-		<manufacturer>Acclaim Entertainment</manufacturer>
+		<manufacturer>Domark</manufacturer>
 		<rom name="es210.bin" size="2097152" crc="f9f2bceb"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bloodshtfix" cloneof="bloodsht" romof="bloodsht">
+		<description>Bloodshot ~ Battle Frenzy (Hack, Texture Fix) [Hack]</description>
+		<year>1994-2021</year>
+		<manufacturer>Domark - Diogo Ribeiro</manufacturer>
+		<rom name="Blood Shot Texture Fix (2021)(Diogo Ribeiro).bin" size="2097152" crc="f99c0fdf"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2606,7 +2622,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="castlills" cloneof="castlill" romof="castlill">
-		<description>Castle Of Illusion Starring Mickey Mouse (Hack, Spanish)</description>
+		<description>Castle Of Illusion Starring Mickey Mouse (Hack, Spanish) [Hack]</description>
 		<year>2014</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="castle of illusion starring mickey mouse (hack, spanish).bin" size="524288" crc="7813743d"/>
@@ -2614,7 +2630,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cvaniaec" cloneof="cvania" romof="cvania">
-		<description>Castlevania - Bloodlines (Hack, Enhanced Colors)</description>
+		<description>Castlevania - Bloodlines (Hack, Enhanced Colors) [Hack]</description>
 		<year>2014</year>
 		<manufacturer>Konami - Pyron</manufacturer>
 		<rom name="castlevania - bloodlines (hack - enhanced colors).md" size="1048576" crc="5ffdffa7"/>
@@ -2622,7 +2638,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cvanias" cloneof="cvania" romof="cvania">
-		<description>Castlevania - Bloodlines (Hack, Spanish)</description>
+		<description>Castlevania - Bloodlines (Hack, Spanish) [Hack]</description>
 		<year>2017</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="castlevania - bloodlines (hack, spanish).bin" size="1048576" crc="6107d697"/>
@@ -2646,7 +2662,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cvaniap" cloneof="cvania" romof="cvania">
-		<description>Castlevania - The New Generation (Euro, Prototype)</description>
+		<description>Castlevania - The New Generation (Euro, Prototype) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="castlevania - the new generation (euro) (beta).bin" size="1048576" crc="84cd103a"/>
@@ -3018,6 +3034,14 @@
 		<year>2021</year>
 		<manufacturer>Studio Vetea</manufacturer>
 		<rom name="Citadel of Chaos (2021)(Studio Vetea).bin" size="3807254" crc="48bf71e9"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="clanofheroes">
+		<description>Clan of Heroes - Generals of the Yang Family (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Piko Interactive</manufacturer>
+		<rom name="Clan of Heroes - Generals of the Yang Family (2018)(Piko Interactive).md" size="2097152" crc="aeb3c10c"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4318,7 +4342,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="desrtdemp9" cloneof="desrtdem" romof="desrtdem">
-		<description>Desert Demolition (Prototype, 19941206)</description>
+		<description>Desert Demolition (Prototype, 19941206) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="desert demolition (prototype - dec 06, 1994).bin" size="970925" crc="d27fe9e5"/>
@@ -4326,7 +4350,7 @@
 		<driver status="preliminary"/>
 	</game>
 	<game name="desrtdemp8" cloneof="desrtdem" romof="desrtdem">
-		<description>Desert Demolition (Prototype, 19941208)</description>
+		<description>Desert Demolition (Prototype, 19941208) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="desert demolition (prototype - dec 08, 1994).bin" size="1040312" crc="69aaeab6"/>
@@ -4334,7 +4358,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="desrtdemp6" cloneof="desrtdem" romof="desrtdem">
-		<description>Desert Demolition (Prototype, 19941212)</description>
+		<description>Desert Demolition (Prototype, 19941212) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="desert demolition (prototype - dec 12, 1994).bin" size="969096" crc="5dad49d7"/>
@@ -4342,7 +4366,7 @@
 		<driver status="preliminary"/>
 	</game>
 	<game name="desrtdemp7" cloneof="desrtdem" romof="desrtdem">
-		<description>Desert Demolition (Prototype, 19941212-B)</description>
+		<description>Desert Demolition (Prototype, 19941212-B) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="desert demolition (prototype - dec 12, 1994 - b).bin" size="1048576" crc="16f19283"/>
@@ -4350,7 +4374,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="desrtdemp5" cloneof="desrtdem" romof="desrtdem">
-		<description>Desert Demolition (Prototype, 19941213)</description>
+		<description>Desert Demolition (Prototype, 19941213) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="desert demolition (prototype - dec 13, 1994).bin" size="1040028" crc="375dee15"/>
@@ -4358,7 +4382,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="desrtdemp4" cloneof="desrtdem" romof="desrtdem">
-		<description>Desert Demolition (Prototype, 19941214)</description>
+		<description>Desert Demolition (Prototype, 19941214) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="desert demolition (prototype - dec 14, 1994).bin" size="1040028" crc="39f9f304"/>
@@ -4366,7 +4390,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="desrtdemp3" cloneof="desrtdem" romof="desrtdem">
-		<description>Desert Demolition (Prototype, 19941215)</description>
+		<description>Desert Demolition (Prototype, 19941215) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="desert demolition (prototype - dec 15, 1994).bin" size="1040028" crc="5109736a"/>
@@ -4374,7 +4398,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="desrtdemp2" cloneof="desrtdem" romof="desrtdem">
-		<description>Desert Demolition (Prototype, 19941216)</description>
+		<description>Desert Demolition (Prototype, 19941216) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="desert demolition (prototype - dec 16, 1994).bin" size="1048576" crc="573fabfb"/>
@@ -4382,7 +4406,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="desrtdemp1" cloneof="desrtdem" romof="desrtdem">
-		<description>Desert Demolition (Prototype, 19941219)</description>
+		<description>Desert Demolition (Prototype, 19941219) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="desert demolition (prototype - dec 19, 1994).bin" size="1040028" crc="b0ece758"/>
@@ -4398,7 +4422,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dstrikes" cloneof="dstrike" romof="dstrike">
-		<description>Desert Strike (Hack, Spanish)</description>
+		<description>Desert Strike (Hack, Spanish) [Hack]</description>
 		<year>2017</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="desert strike (hack, spanish).bin" size="1048576" crc="09a27380"/>
@@ -4446,10 +4470,18 @@
 		<driver status="good"/>
 	</game>
 	<game name="devwilltoo">
-		<description>Devwill Too (HB) [Homebrew]</description>
+		<description>Devwill Too (English) (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Devwill Too.bin" size="4194304" crc="34031793"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="devwilltoopt" cloneof="devwilltoo" romof="devwilltoo">
+		<description>Devwill Too (Portuguese) (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Mega Cat Studios</manufacturer>
+		<rom name="Devwill Too MD (Pt-BR) (2020)(Mega Cat Studios).bin" size="3538944" crc="c14fc0d4"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -10575,10 +10607,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="miniplanets">
-		<description>Mini Planets (HB, Rev2) [Homebrew]</description>
+		<description>Mini Planets (HB, Rev3) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>Sik</manufacturer>
-		<rom name="Miniplanets-REV02.bin" size="262144" crc="48460e4a"/>
+		<rom name="Miniplanets (2017)(Sik)(Rev3).bin" size="262144" crc="8ea40d2f"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -13370,6 +13402,14 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="projmd">
+		<description>Project MD (HB) [Homebrew]</description>
+		<year>2012</year>
+		<manufacturer>Sik</manufacturer>
+		<rom name="Project MD (2012-04-29)(Sik).bin" size="786432" crc="b193e549"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="psyoblade" cloneof="psyoblad" romof="psyoblad">
 		<description>Psy-O-Blade (Hack, English)</description>
 		<year>2015</year>
@@ -13998,7 +14038,7 @@
 		<description>Rick Dangerous 2 (HB, v1.1) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>PortableDev</manufacturer>
-		<rom name="rickdangerous2_v11.bin" size="1310720" crc="4366add7"/>
+		<rom name="Rick Dangerous 2 v1.1 FrameCounterFix.bin" size="1310720" crc="cc8de65e"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -14060,7 +14100,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ristars" cloneof="ristar" romof="ristar">
-		<description>Ristar (Hack, Spanish)</description>
+		<description>Ristar (Hack, Spanish) [Hack]</description>
 		<year>2017</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ristar (hack, spanish).bin" size="2097152" crc="adaf912c"/>
@@ -14068,7 +14108,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ristarp4" cloneof="ristar" romof="ristar">
-		<description>Ristar (Prototype, 19940701)</description>
+		<description>Ristar (Prototype, 19940701) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ristar (prototype - jul 01, 1994).bin" size="2097152" crc="7c5c7a0a"/>
@@ -14076,7 +14116,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ristarp3" cloneof="ristar" romof="ristar">
-		<description>Ristar (Prototype, 19940718)</description>
+		<description>Ristar (Prototype, 19940718) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ristar (prototype - jul 18, 1994).bin" size="2097152" crc="6becccc9"/>
@@ -14084,7 +14124,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ristarp2" cloneof="ristar" romof="ristar">
-		<description>Ristar (Prototype, 19940812)</description>
+		<description>Ristar (Prototype, 19940812) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ristar (prototype - aug 12, 1994).bin" size="2097152" crc="4371f046"/>
@@ -14092,7 +14132,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ristarp1" cloneof="ristar" romof="ristar">
-		<description>Ristar (Prototype, 19940826)</description>
+		<description>Ristar (Prototype, 19940826) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ristar (prototype - aug 26, 1994).bin" size="2097152" crc="d0c74fdd"/>
@@ -14116,7 +14156,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rrash3p" cloneof="rrash3" romof="rrash3">
-		<description>Road 3 Rash - World Warriors (USA, Prototype)</description>
+		<description>Road 3 Rash - World Warriors (USA, Prototype) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="road rash 3 (usa) (alpha).bin" size="2097152" crc="b6626083"/>
@@ -14132,7 +14172,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="roadrashs" cloneof="roadrash" romof="roadrash">
-		<description>Road Rash (Hack, Spanish)</description>
+		<description>Road Rash (Hack, Spanish) [Hack]</description>
 		<year>2014</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="road rash (hack, spanish).bin" size="786432" crc="373d2fba"/>
@@ -14156,7 +14196,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rrash2s" cloneof="rrash2" romof="rrash2">
-		<description>Road Rash II (Hack, Spanish)</description>
+		<description>Road Rash II (Hack, Spanish) [Hack]</description>
 		<year>2013</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="road rash ii (hack, spanish).bin" size="1048576" crc="a8ec5695"/>
@@ -14180,7 +14220,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="roadblstp" cloneof="roadblst" romof="roadblst">
-		<description>RoadBlasters (Prototype, 19910627)</description>
+		<description>RoadBlasters (Prototype, 19910627) [Prototype]</description>
 		<year>1991</year>
 		<manufacturer>Tengen</manufacturer>
 		<rom name="roadblasters (prototype - jun 27, 1991).bin" size="524288" crc="e4ef86b9"/>
@@ -14204,7 +14244,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="robocop3s" cloneof="robocop3" romof="robocop3">
-		<description>Robocop 3 (Hack, Spanish)</description>
+		<description>Robocop 3 (Hack, Spanish) [Hack]</description>
 		<year>2017</year>
 		<manufacturer>Flying Edge</manufacturer>
 		<rom name="robocop 3 (hack, spanish).bin" size="524288" crc="eecbff56"/>
@@ -14220,7 +14260,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="roboterms" cloneof="roboterm" romof="roboterm">
-		<description>Robocop versus The Terminator (Hack, Spanish)</description>
+		<description>Robocop versus The Terminator (Hack, Spanish) [Hack]</description>
 		<year>2017</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="robocop versus the terminator (hack, spanish).bin" size="2097152" crc="431feb53"/>
@@ -14236,7 +14276,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="robotermp" cloneof="roboterm" romof="roboterm">
-		<description>RoboCop versus The Terminator (Prototype)</description>
+		<description>RoboCop versus The Terminator (Prototype) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="robocop versus the terminator (beta).bin" size="2097152" crc="2487049f"/>
@@ -14244,7 +14284,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="robotermp1" cloneof="roboterm" romof="roboterm">
-		<description>Robocop Versus The Terminator (Prototype, Alt)</description>
+		<description>Robocop Versus The Terminator (Prototype, Alt) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="robocop versus the terminator (beta) (alt).bin" size="2097152" crc="ecebff29"/>

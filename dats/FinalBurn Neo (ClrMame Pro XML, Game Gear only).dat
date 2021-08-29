@@ -133,7 +133,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="astergrep3" cloneof="astergre" romof="astergre">
-		<description>Asterix and the Great Rescue (Prototype, 19940125)</description>
+		<description>Asterix and the Great Rescue (Prototype, 19940125) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="asterix (prototype - jan 25,  1994).bin" size="524288" crc="ba45f00f"/>
@@ -141,7 +141,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="astergrep5" cloneof="astergre" romof="astergre">
-		<description>Asterix and the Great Rescue (Prototype, 19940216)</description>
+		<description>Asterix and the Great Rescue (Prototype, 19940216) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="asterix (prototype - feb 16,  1994).bin" size="524288" crc="1e8d735c"/>
@@ -149,7 +149,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="astergrep4" cloneof="astergre" romof="astergre">
-		<description>Asterix and the Great Rescue (Prototype, 19940222)</description>
+		<description>Asterix and the Great Rescue (Prototype, 19940222) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="asterix (prototype - feb 22,  1994).bin" size="524288" crc="31bd3d8a"/>
@@ -157,7 +157,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="astergrep2" cloneof="astergre" romof="astergre">
-		<description>Asterix and the Great Rescue (Prototype, 19940313)</description>
+		<description>Asterix and the Great Rescue (Prototype, 19940313) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="asterix (prototype - mar 13,  1994).bin" size="524288" crc="faf09846"/>
@@ -165,7 +165,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="astergrep1" cloneof="astergre" romof="astergre">
-		<description>Asterix and the Great Rescue (Prototype, 19940315)</description>
+		<description>Asterix and the Great Rescue (Prototype, 19940315) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="asterix (prototype - mar 15,  1994).bin" size="524288" crc="66d8eb63"/>
@@ -189,7 +189,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="axbattlrp" cloneof="axbattlr" romof="axbattlr">
-		<description>Ax Battler - A Legend of Golden Axe (Euro, USA, Prototype v2.0)</description>
+		<description>Ax Battler - A Legend of Golden Axe (Euro, USA, Prototype v2.0) [Prototype]</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ax battler - a legend of golden axe [v2.0] [proto].bin" size="262144" crc="3435ab54"/>
@@ -221,7 +221,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="smgp2p" cloneof="smgp2" romof="smgp2">
-		<description>Ayrton Senna's Super Monaco GP II (Euro, USA, Prototype)</description>
+		<description>Ayrton Senna's Super Monaco GP II (Euro, USA, Prototype) [Prototype]</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ayrton senna's super monaco gp ii (proto).bin" size="262144" crc="6afb8ec6"/>
@@ -261,7 +261,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="barbie">
-		<description>Barbie Super Model (Prototype)</description>
+		<description>Barbie Super Model (Prototype) [Prototype]</description>
 		<year>199?</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="barbie super model (unknown) (proto).bin" size="262144" crc="03a0ce9e"/>
@@ -325,7 +325,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="beavisp" cloneof="beavis" romof="beavis">
-		<description>Beavis and Butt-head (Prototype?)</description>
+		<description>Beavis and Butt-head (Prototype?) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Viacom New Media</manufacturer>
 		<rom name="beavis and butt-head (usa).bin" size="524288" crc="3858f14f"/>
@@ -357,7 +357,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonkersp13" cloneof="bonkers" romof="bonkers">
-		<description>Bonkers Wax Up! (Prototype, 19941031)</description>
+		<description>Bonkers Wax Up! (Prototype, 19941031) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="bonkers wax up! (prototype - oct 31,  1994).bin" size="524288" crc="777dfd80"/>
@@ -365,7 +365,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonkersp12" cloneof="bonkers" romof="bonkers">
-		<description>Bonkers Wax Up! (Prototype, 19941115)</description>
+		<description>Bonkers Wax Up! (Prototype, 19941115) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="bonkers wax up! (prototype - nov 15,  1994).bin" size="524288" crc="85510a57"/>
@@ -373,7 +373,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonkersp11" cloneof="bonkers" romof="bonkers">
-		<description>Bonkers Wax Up! (Prototype, 19941121)</description>
+		<description>Bonkers Wax Up! (Prototype, 19941121) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="bonkers wax up! (prototype - nov 21,  1994).bin" size="524288" crc="dab43f8f"/>
@@ -381,7 +381,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonkersp10" cloneof="bonkers" romof="bonkers">
-		<description>Bonkers Wax Up! (Prototype, 19941123)</description>
+		<description>Bonkers Wax Up! (Prototype, 19941123) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="bonkers wax up! (prototype - nov 23,  1994).bin" size="524288" crc="1b081950"/>
@@ -389,7 +389,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonkersp09" cloneof="bonkers" romof="bonkers">
-		<description>Bonkers Wax Up! (Prototype, 19941126)</description>
+		<description>Bonkers Wax Up! (Prototype, 19941126) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="bonkers wax up! (prototype - nov 26,  1994).bin" size="524288" crc="eb3f22c2"/>
@@ -397,7 +397,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonkersp08" cloneof="bonkers" romof="bonkers">
-		<description>Bonkers Wax Up! (Prototype, 19941129)</description>
+		<description>Bonkers Wax Up! (Prototype, 19941129) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="bonkers wax up! (prototype - nov 29,  1994).bin" size="524288" crc="ad6a62fa"/>
@@ -417,6 +417,14 @@
 		<year>1992</year>
 		<manufacturer>Sony Imagesoft</manufacturer>
 		<rom name="dracula (bram stoker's) (us).bin" size="262144" crc="d966ec47"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="breakthru">
+		<description>Break Thru! (Prototype / Unreleased) [Prototype]</description>
+		<year>199?</year>
+		<manufacturer>Spectrum HoloByte</manufacturer>
+		<rom name="BreakThru! (Proto)(Unl)(Patched).gg" size="131072" crc="6edd48a6"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -525,7 +533,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop24" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950505)</description>
+		<description>Chicago Syndicate (Prototype, 19950505) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - may 05,  1995).bin" size="524288" crc="a5fa4eaf"/>
@@ -533,7 +541,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop23" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950601)</description>
+		<description>Chicago Syndicate (Prototype, 19950601) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jun 01,  1995).bin" size="524288" crc="448c6890"/>
@@ -541,7 +549,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop22" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950605)</description>
+		<description>Chicago Syndicate (Prototype, 19950605) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jun 05,  1995).bin" size="524288" crc="af43b940"/>
@@ -549,7 +557,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop21" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950607)</description>
+		<description>Chicago Syndicate (Prototype, 19950607) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jun 07,  1995).bin" size="524288" crc="9b2fd7f3"/>
@@ -557,7 +565,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop20" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950608)</description>
+		<description>Chicago Syndicate (Prototype, 19950608) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jun 08,  1995).bin" size="524288" crc="2036d4b7"/>
@@ -565,7 +573,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop19" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950612)</description>
+		<description>Chicago Syndicate (Prototype, 19950612) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jun 12,  1995).bin" size="524288" crc="f2c24745"/>
@@ -573,7 +581,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop18" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950614)</description>
+		<description>Chicago Syndicate (Prototype, 19950614) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jun 14,  1995).bin" size="524288" crc="463a2197"/>
@@ -581,7 +589,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop17" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950619)</description>
+		<description>Chicago Syndicate (Prototype, 19950619) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jun 19,  1995).bin" size="524288" crc="3cdb35b1"/>
@@ -589,7 +597,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop16" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950620)</description>
+		<description>Chicago Syndicate (Prototype, 19950620) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jun 20,  1995).bin" size="524288" crc="bf82cf83"/>
@@ -597,7 +605,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop15" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950622)</description>
+		<description>Chicago Syndicate (Prototype, 19950622) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jun 22,  1995).bin" size="524288" crc="4ac79cec"/>
@@ -605,7 +613,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop14" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950626)</description>
+		<description>Chicago Syndicate (Prototype, 19950626) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jun 26,  1995).bin" size="524288" crc="abe696e5"/>
@@ -613,7 +621,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop13" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950628)</description>
+		<description>Chicago Syndicate (Prototype, 19950628) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jun 28,  1995).bin" size="524288" crc="5cd07aed"/>
@@ -621,7 +629,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop11" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950629)</description>
+		<description>Chicago Syndicate (Prototype, 19950629) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jun 29,  1995).bin" size="524288" crc="e1112763"/>
@@ -629,7 +637,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop12" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950629-B)</description>
+		<description>Chicago Syndicate (Prototype, 19950629-B) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jun 29,  1995 - b).bin" size="524288" crc="d3614e4e"/>
@@ -637,7 +645,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop10" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950630-B)</description>
+		<description>Chicago Syndicate (Prototype, 19950630-B) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jun 30,  1995 - b).bin" size="524288" crc="f68a3581"/>
@@ -645,7 +653,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop09" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950703)</description>
+		<description>Chicago Syndicate (Prototype, 19950703) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jul 03,  1995).bin" size="524288" crc="e3c0ea98"/>
@@ -653,7 +661,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop08" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950705)</description>
+		<description>Chicago Syndicate (Prototype, 19950705) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jul 05,  1995).bin" size="524288" crc="4158e203"/>
@@ -661,7 +669,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop07" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950707)</description>
+		<description>Chicago Syndicate (Prototype, 19950707) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jul 07,  1995).bin" size="524288" crc="e44d1b01"/>
@@ -669,7 +677,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop06" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950710)</description>
+		<description>Chicago Syndicate (Prototype, 19950710) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jul 10,  1995).bin" size="524288" crc="42becef6"/>
@@ -677,7 +685,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop05" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950711)</description>
+		<description>Chicago Syndicate (Prototype, 19950711) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jul 11,  1995).bin" size="524288" crc="afe46aa8"/>
@@ -685,7 +693,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop04" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950719)</description>
+		<description>Chicago Syndicate (Prototype, 19950719) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jul 19,  1995).bin" size="524288" crc="dd5f9327"/>
@@ -693,7 +701,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop03" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950720)</description>
+		<description>Chicago Syndicate (Prototype, 19950720) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jul 20,  1995).bin" size="524288" crc="b0597a54"/>
@@ -701,7 +709,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop01" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950721)</description>
+		<description>Chicago Syndicate (Prototype, 19950721) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jul 21,  1995).bin" size="524288" crc="8e149bb8"/>
@@ -709,7 +717,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicagop02" cloneof="chicago" romof="chicago">
-		<description>Chicago Syndicate (Prototype, 19950721-B)</description>
+		<description>Chicago Syndicate (Prototype, 19950721-B) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chicago syndicate (prototype - jul 21,  1995 - b).bin" size="524288" crc="26ced733"/>
@@ -741,7 +749,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chuckrckp" cloneof="chuckrck" romof="chuckrck">
-		<description>Chuck Rock (World, Prototype)</description>
+		<description>Chuck Rock (World, Prototype) [Prototype]</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chuck rock (proto).bin" size="262144" crc="cb3a1d23"/>
@@ -869,7 +877,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="crazyfac">
-		<description>Crazy Faces (Euro, Prototype)</description>
+		<description>Crazy Faces (Euro, Prototype) [Prototype]</description>
 		<year>1993</year>
 		<manufacturer>Domark</manufacturer>
 		<rom name="crazy faces [proto].bin" size="131072" crc="46ad6257"/>
@@ -893,7 +901,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cutthrp" cloneof="cutthr" romof="cutthr">
-		<description>Cutthroat Island (Prototype 19950916)</description>
+		<description>Cutthroat Island (Prototype 19950916) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Acclaim Entertainment</manufacturer>
 		<rom name="cutthroat island [proto].bin" size="524288" crc="6352ef00"/>
@@ -933,7 +941,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="defoasisp" cloneof="defoasis" romof="defoasis">
-		<description>Defenders of Oasis (Euro, USA, Prototype)</description>
+		<description>Defenders of Oasis (Euro, USA, Prototype) [Prototype]</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="defenders of oasis (proto).bin" size="262144" crc="c674eccc"/>
@@ -1013,7 +1021,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aladdinp3" cloneof="aladdin" romof="aladdin">
-		<description>Disney's Aladdin (Prototype, 19931229)</description>
+		<description>Disney's Aladdin (Prototype, 19931229) [Prototype]</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="aladdin (prototype - dec 29,  1993).bin" size="524288" crc="5b1f717f"/>
@@ -1021,7 +1029,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aladdinp2" cloneof="aladdin" romof="aladdin">
-		<description>Disney's Aladdin (Prototype, 19940111)</description>
+		<description>Disney's Aladdin (Prototype, 19940111) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="aladdin (prototype - jan 11,  1994).bin" size="524288" crc="8a1693ab"/>
@@ -1029,7 +1037,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aladdinp1" cloneof="aladdin" romof="aladdin">
-		<description>Disney's Aladdin (Prototype, 19940113)</description>
+		<description>Disney's Aladdin (Prototype, 19940113) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="aladdin (prototype - jan 13,  1994).bin" size="524288" crc="75a7f142"/>
@@ -1053,7 +1061,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonkersp05" cloneof="bonkers" romof="bonkers">
-		<description>Disney's Bonkers Wax Up! (Prototype, 19941207-C)</description>
+		<description>Disney's Bonkers Wax Up! (Prototype, 19941207-C) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="bonkers wax up! (prototype - dec 07,  1994 - c).bin" size="524288" crc="edaf25e7"/>
@@ -1061,7 +1069,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonkersp04" cloneof="bonkers" romof="bonkers">
-		<description>Disney's Bonkers Wax Up! (Prototype, 19941208-B)</description>
+		<description>Disney's Bonkers Wax Up! (Prototype, 19941208-B) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="bonkers wax up! (prototype - dec 08,  1994 - b).bin" size="524288" crc="9907a738"/>
@@ -1069,7 +1077,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonkersp03" cloneof="bonkers" romof="bonkers">
-		<description>Disney's Bonkers Wax Up! (Prototype, 19941208-C)</description>
+		<description>Disney's Bonkers Wax Up! (Prototype, 19941208-C) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="bonkers wax up! (prototype - dec 08,  1994 - c).bin" size="524288" crc="91258adc"/>
@@ -1077,7 +1085,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonkersp02" cloneof="bonkers" romof="bonkers">
-		<description>Disney's Bonkers Wax Up! (Prototype, 19941211)</description>
+		<description>Disney's Bonkers Wax Up! (Prototype, 19941211) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="bonkers wax up! (prototype - dec 11,  1994).bin" size="524288" crc="9a405d0d"/>
@@ -1085,7 +1093,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonkersp01" cloneof="bonkers" romof="bonkers">
-		<description>Disney's Bonkers Wax Up! (Prototype, 19941212-D)</description>
+		<description>Disney's Bonkers Wax Up! (Prototype, 19941212-D) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="bonkers wax up! (prototype - dec 12,  1994 - d).bin" size="524288" crc="6d295894"/>
@@ -1093,7 +1101,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lionkingp9" cloneof="lionking" romof="lionking">
-		<description>Disney's The Lion King (Prototype, 19940803)</description>
+		<description>Disney's The Lion King (Prototype, 19940803) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="lion king, the (prototype - aug 03,  1994).bin" size="514313" crc="aacb7387"/>
@@ -1101,7 +1109,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lionkingp8" cloneof="lionking" romof="lionking">
-		<description>Disney's The Lion King (Prototype, 19940811)</description>
+		<description>Disney's The Lion King (Prototype, 19940811) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="lion king, the (prototype - aug 11,  1994).bin" size="514450" crc="214c13dc"/>
@@ -1109,7 +1117,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lionkingp7" cloneof="lionking" romof="lionking">
-		<description>Disney's The Lion King (Prototype, 19940812)</description>
+		<description>Disney's The Lion King (Prototype, 19940812) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="lion king, the (prototype - aug 12,  1994).bin" size="514478" crc="0e80efe0"/>
@@ -1117,7 +1125,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lionkingp6" cloneof="lionking" romof="lionking">
-		<description>Disney's The Lion King (Prototype, 19940813)</description>
+		<description>Disney's The Lion King (Prototype, 19940813) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="lion king, the (prototype - aug 13,  1994).bin" size="514482" crc="8250c11e"/>
@@ -1125,7 +1133,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lionkingp5" cloneof="lionking" romof="lionking">
-		<description>Disney's The Lion King (Prototype, 19940814)</description>
+		<description>Disney's The Lion King (Prototype, 19940814) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="lion king, the (prototype - aug 14,  1994).bin" size="514486" crc="eb10a2d4"/>
@@ -1133,7 +1141,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lionkingp4" cloneof="lionking" romof="lionking">
-		<description>Disney's The Lion King (Prototype, 19940816)</description>
+		<description>Disney's The Lion King (Prototype, 19940816) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="lion king, the (prototype - aug 16,  1994).bin" size="514486" crc="c6af9643"/>
@@ -1141,7 +1149,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonkersp07" cloneof="bonkers" romof="bonkers">
-		<description>Disneys Bonkers Wax Up! (Prototype, 19941203)</description>
+		<description>Disneys Bonkers Wax Up! (Prototype, 19941203) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="bonkers wax up! (prototype - dec 03,  1994).bin" size="524288" crc="63429025"/>
@@ -1149,7 +1157,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonkersp06" cloneof="bonkers" romof="bonkers">
-		<description>Disneys Bonkers Wax Up! (Prototype, 19941205)</description>
+		<description>Disneys Bonkers Wax Up! (Prototype, 19941205) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="bonkers wax up! (prototype - dec 05,  1994).bin" size="524288" crc="c2229b6e"/>
@@ -1197,7 +1205,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ddragonp" cloneof="ddragon" romof="ddragon">
-		<description>Double Dragon (Euro, USA, Prototype)</description>
+		<description>Double Dragon (Euro, USA, Prototype) [Prototype]</description>
 		<year>1993</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="double dragon (usa, europe) (beta).bin" size="262144" crc="331904c0"/>
@@ -1285,7 +1293,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dheadp3" cloneof="dhead" romof="dhead">
-		<description>Dynamite Headdy (Prototype, 19940615)</description>
+		<description>Dynamite Headdy (Prototype, 19940615) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="dynamite headdy (prototype - jun 15,  1994).bin" size="524288" crc="7bf339c0"/>
@@ -1293,7 +1301,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dheadp2" cloneof="dhead" romof="dhead">
-		<description>Dynamite Headdy (Prototype, 19940701)</description>
+		<description>Dynamite Headdy (Prototype, 19940701) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="dynamite headdy (prototype - jul 01,  1994).bin" size="524288" crc="49389319"/>
@@ -1301,7 +1309,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dheadp1" cloneof="dhead" romof="dhead">
-		<description>Dynamite Headdy (Prototype, 19940705)</description>
+		<description>Dynamite Headdy (Prototype, 19940705) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="dynamite headdy (prototype - jul 05,  1994).bin" size="524288" crc="c7bea89a"/>
@@ -1733,7 +1741,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gpriderp" cloneof="gprider" romof="gprider">
-		<description>GP Rider (Prototype, 19940104)</description>
+		<description>GP Rider (Prototype, 19940104) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="gp rider (prototype - jan 04,  1994).bin" size="524288" crc="12e4f6db"/>
@@ -2133,7 +2141,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="legndillp6" cloneof="legndill" romof="legndill">
-		<description>Legend of Illusion Starring Mickey Mouse (Prototype, 19940922)</description>
+		<description>Legend of Illusion Starring Mickey Mouse (Prototype, 19940922) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="legend of illusion starring mickey mouse (prototype - sep 22,  1994).bin" size="524288" crc="1cc16ad9"/>
@@ -2141,7 +2149,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="legndillp4" cloneof="legndill" romof="legndill">
-		<description>Legend of Illusion Starring Mickey Mouse (Prototype, 19940930)</description>
+		<description>Legend of Illusion Starring Mickey Mouse (Prototype, 19940930) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="legend of illusion starring mickey mouse (prototype - sep 30,  1994).bin" size="524288" crc="63020617"/>
@@ -2149,7 +2157,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="legndillp5" cloneof="legndill" romof="legndill">
-		<description>Legend of Illusion Starring Mickey Mouse (Prototype, 19940930-SEL)</description>
+		<description>Legend of Illusion Starring Mickey Mouse (Prototype, 19940930-SEL) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="legend of illusion starring mickey mouse (prototype - sep 30,  1994 - sel).bin" size="524288" crc="a0565a5c"/>
@@ -2157,7 +2165,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="legndillp3" cloneof="legndill" romof="legndill">
-		<description>Legend of Illusion Starring Mickey Mouse (Prototype, 19941011)</description>
+		<description>Legend of Illusion Starring Mickey Mouse (Prototype, 19941011) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="legend of illusion starring mickey mouse (prototype - oct 11,  1994).bin" size="524288" crc="f9d4cee9"/>
@@ -2165,7 +2173,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="legndillp2" cloneof="legndill" romof="legndill">
-		<description>Legend of Illusion Starring Mickey Mouse (Prototype, 19941014)</description>
+		<description>Legend of Illusion Starring Mickey Mouse (Prototype, 19941014) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="legend of illusion starring mickey mouse (prototype - oct 14,  1994).bin" size="524288" crc="670ede92"/>
@@ -2173,7 +2181,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="legndillp1" cloneof="legndill" romof="legndill">
-		<description>Legend of Illusion Starring Mickey Mouse (Prototype, 19941017)</description>
+		<description>Legend of Illusion Starring Mickey Mouse (Prototype, 19941017) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="legend of illusion starring mickey mouse (prototype - oct 17,  1994).bin" size="524288" crc="de8545af"/>
@@ -2189,7 +2197,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lemmingsp" cloneof="lemmings" romof="lemmings">
-		<description>Lemmings (World, Prototype)</description>
+		<description>Lemmings (World, Prototype) [Prototype]</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="lemmings (world) (beta).bin" size="262144" crc="51548f61"/>
@@ -2197,7 +2205,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lemming2">
-		<description>Lemmings 2 - The Tribes (Euro, Prototype)</description>
+		<description>Lemmings 2 - The Tribes (Euro, Prototype) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Psygnosis</manufacturer>
 		<rom name="lemmings 2 - the tribes [proto].bin" size="524288" crc="fbc807e1"/>
@@ -2389,7 +2397,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lastbibse" cloneof="lastbibs" romof="lastbibs">
-		<description>Megami Tensei Gaiden - Last Bible S (Hack, English)</description>
+		<description>Megami Tensei Gaiden - Last Bible S (Hack, English) [Hack]</description>
 		<year>2018</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="megami tensei gaiden - last bible s (english translation).gg" size="524288" crc="1a1cb7f8"/>
@@ -2469,7 +2477,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mmprp" cloneof="mmpr" romof="mmpr">
-		<description>Mighty Morphin Power Rangers (Prototype, 19940716)</description>
+		<description>Mighty Morphin Power Rangers (Prototype, 19940716) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mighty morphin power rangers (prototype - jul 16,  1994).bin" size="524288" crc="2887f04a"/>
@@ -2485,7 +2493,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mmprtmp" cloneof="mmprtm" romof="mmprtm">
-		<description>Mighty Morphin Power Rangers - The Movie (Prototype, 19950530)</description>
+		<description>Mighty Morphin Power Rangers - The Movie (Prototype, 19950530) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mighty morphin power rangers - the movie (prototype - may 30,  1995).bin" size="524288" crc="8c665203"/>
@@ -2605,7 +2613,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nazpyoarp" cloneof="nazpyoar" romof="nazpyoar">
-		<description>Nazo Puyo Arle no Roux (Jpn, Prototype)</description>
+		<description>Nazo Puyo Arle no Roux (Jpn, Prototype) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nazo puyo arle no roux (japan) (development edition).bin" size="262144" crc="4c874466"/>
@@ -2677,7 +2685,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp30" cloneof="nbaact" romof="nbaact">
-		<description>NBA Action Starring David Robinson (Prototype, 19931128)</description>
+		<description>NBA Action Starring David Robinson (Prototype, 19931128) [Prototype]</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nba action starring david robinson (prototype - nov 28,  1993).bin" size="262144" crc="31084021"/>
@@ -2685,7 +2693,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp29" cloneof="nbaact" romof="nbaact">
-		<description>NBA Action Starring David Robinson (Prototype, 19931201)</description>
+		<description>NBA Action Starring David Robinson (Prototype, 19931201) [Prototype]</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nba action starring david robinson (prototype - dec 01,  1993).bin" size="262144" crc="8c089da5"/>
@@ -2693,7 +2701,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp28" cloneof="nbaact" romof="nbaact">
-		<description>NBA Action Starring David Robinson (Prototype, 19940104)</description>
+		<description>NBA Action Starring David Robinson (Prototype, 19940104) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nba action starring david robinson (prototype - jan 04,  1994).bin" size="262144" crc="c658b5b3"/>
@@ -2701,7 +2709,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp27" cloneof="nbaact" romof="nbaact">
-		<description>NBA Action Starring David Robinson (Prototype, 19940106)</description>
+		<description>NBA Action Starring David Robinson (Prototype, 19940106) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nba action starring david robinson (prototype - jan 06,  1994).bin" size="262144" crc="41dabd84"/>
@@ -2709,7 +2717,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp26" cloneof="nbaact" romof="nbaact">
-		<description>NBA Action Starring David Robinson (Prototype, 19940110)</description>
+		<description>NBA Action Starring David Robinson (Prototype, 19940110) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nba action starring david robinson (prototype - jan 10,  1994).bin" size="262144" crc="a34b2b4c"/>
@@ -2717,7 +2725,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp25" cloneof="nbaact" romof="nbaact">
-		<description>NBA Action Starring David Robinson (Prototype, 19940124)</description>
+		<description>NBA Action Starring David Robinson (Prototype, 19940124) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nba action starring david robinson (prototype - jan 24,  1994).bin" size="262144" crc="9824f77d"/>
@@ -2725,7 +2733,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp24" cloneof="nbaact" romof="nbaact">
-		<description>NBA Action Starring David Robinson (Prototype, 19940129)</description>
+		<description>NBA Action Starring David Robinson (Prototype, 19940129) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nba action starring david robinson (prototype - jan 29,  1994).bin" size="262144" crc="0d6bf79d"/>
@@ -2733,7 +2741,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp23" cloneof="nbaact" romof="nbaact">
-		<description>NBA Action Starring David Robinson (Prototype, 19940202)</description>
+		<description>NBA Action Starring David Robinson (Prototype, 19940202) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nba action starring david robinson (prototype - feb 02,  1994).bin" size="262144" crc="f9d5500b"/>
@@ -2741,7 +2749,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp22" cloneof="nbaact" romof="nbaact">
-		<description>NBA Action Starring David Robinson (Prototype, 19940203)</description>
+		<description>NBA Action Starring David Robinson (Prototype, 19940203) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nba action starring david robinson (prototype - feb 03,  1994).bin" size="262144" crc="e2341dce"/>
@@ -2749,7 +2757,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp21" cloneof="nbaact" romof="nbaact">
-		<description>NBA Action Starring David Robinson (Prototype, 19940206)</description>
+		<description>NBA Action Starring David Robinson (Prototype, 19940206) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nba action starring david robinson (prototype - feb 06,  1994).bin" size="262144" crc="07649147"/>
@@ -2757,7 +2765,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp20" cloneof="nbaact" romof="nbaact">
-		<description>NBA Action Starring David Robinson (Prototype, 19940208)</description>
+		<description>NBA Action Starring David Robinson (Prototype, 19940208) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nba action starring david robinson (prototype - feb 08,  1994).bin" size="262144" crc="5e089fbc"/>
@@ -2765,7 +2773,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp19" cloneof="nbaact" romof="nbaact">
-		<description>NBA Action Starring David Robinson (Prototype, 19940212)</description>
+		<description>NBA Action Starring David Robinson (Prototype, 19940212) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nba action starring david robinson (prototype - feb 12,  1994).bin" size="262144" crc="0c0f6b4c"/>
@@ -2773,7 +2781,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp17" cloneof="nbaact" romof="nbaact">
-		<description>NBA Action Starring David Robinson (Prototype, 19940217)</description>
+		<description>NBA Action Starring David Robinson (Prototype, 19940217) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nba action starring david robinson (prototype - feb 17,  1994).bin" size="262144" crc="c4b3328c"/>
@@ -2781,7 +2789,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp16" cloneof="nbaact" romof="nbaact">
-		<description>NBA Action Starring David Robinson (Prototype, 19940220)</description>
+		<description>NBA Action Starring David Robinson (Prototype, 19940220) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nba action starring david robinson (prototype - feb 20,  1994).bin" size="262144" crc="91e3026c"/>
@@ -2789,7 +2797,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp15" cloneof="nbaact" romof="nbaact">
-		<description>NBA Action Starring David Robinson (Prototype, 19940221)</description>
+		<description>NBA Action Starring David Robinson (Prototype, 19940221) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nba action starring david robinson (prototype - feb 21,  1994).bin" size="262144" crc="9265f8c3"/>
@@ -2797,7 +2805,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp14" cloneof="nbaact" romof="nbaact">
-		<description>NBA Action Starring David Robinson (Prototype, 19940224)</description>
+		<description>NBA Action Starring David Robinson (Prototype, 19940224) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nba action starring david robinson (prototype - feb 24,  1994).bin" size="262144" crc="21a79f63"/>
@@ -2805,7 +2813,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp12" cloneof="nbaact" romof="nbaact">
-		<description>NBA Action Starring David Robinson (Prototype, 19940225)</description>
+		<description>NBA Action Starring David Robinson (Prototype, 19940225) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nba action starring david robinson (prototype - feb 25,  1994).bin" size="262144" crc="afc8a69e"/>
@@ -2813,7 +2821,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp13" cloneof="nbaact" romof="nbaact">
-		<description>NBA Action Starring David Robinson (Prototype, 19940225-B)</description>
+		<description>NBA Action Starring David Robinson (Prototype, 19940225-B) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nba action starring david robinson (prototype - feb 25,  1994 - b).bin" size="262144" crc="188a319e"/>
@@ -2821,7 +2829,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp11" cloneof="nbaact" romof="nbaact">
-		<description>NBA Action Starring David Robinson (Prototype, 19940226)</description>
+		<description>NBA Action Starring David Robinson (Prototype, 19940226) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nba action starring david robinson (prototype - feb 26,  1994).bin" size="262144" crc="6896b65d"/>
@@ -2829,7 +2837,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp10" cloneof="nbaact" romof="nbaact">
-		<description>NBA Action Starring David Robinson (Prototype, 19940227)</description>
+		<description>NBA Action Starring David Robinson (Prototype, 19940227) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nba action starring david robinson (prototype - feb 27,  1994).bin" size="262144" crc="ab721f11"/>
@@ -2837,7 +2845,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp09" cloneof="nbaact" romof="nbaact">
-		<description>NBA Action Starring David Robinson (Prototype, 19940228)</description>
+		<description>NBA Action Starring David Robinson (Prototype, 19940228) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nba action starring david robinson (prototype - feb 28,  1994).bin" size="262144" crc="82e882d6"/>
@@ -2845,7 +2853,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp18" cloneof="nbaact" romof="nbaact">
-		<description>NBA Action Starring David Robinson (Prototype, 19941215)</description>
+		<description>NBA Action Starring David Robinson (Prototype, 19941215) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nba action starring david robinson (prototype - feb 15,  1994).bin" size="262144" crc="e73b02a4"/>
@@ -2893,7 +2901,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nfl95p13" cloneof="nfl95" romof="nfl95">
-		<description>NFL '95 (Prototype, 19940808)</description>
+		<description>NFL '95 (Prototype, 19940808) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nfl '95 (prototype - aug 08,  1994).bin" size="524288" crc="8cd96d95"/>
@@ -2901,7 +2909,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nfl95p11" cloneof="nfl95" romof="nfl95">
-		<description>NFL '95 (Prototype, 19940825)</description>
+		<description>NFL '95 (Prototype, 19940825) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nfl '95 (prototype - aug 25,  1994).bin" size="524288" crc="fe140eaa"/>
@@ -2909,7 +2917,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nfl95p12" cloneof="nfl95" romof="nfl95">
-		<description>NFL '95 (Prototype, 19940825-A)</description>
+		<description>NFL '95 (Prototype, 19940825-A) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nfl '95 (prototype - aug 25,  1994 - a).bin" size="524288" crc="7f769052"/>
@@ -2917,7 +2925,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nfl95p10" cloneof="nfl95" romof="nfl95">
-		<description>NFL '95 (Prototype, 19940826)</description>
+		<description>NFL '95 (Prototype, 19940826) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nfl '95 (prototype - aug 26,  1994).bin" size="524288" crc="f77138dd"/>
@@ -2925,7 +2933,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nfl95p09" cloneof="nfl95" romof="nfl95">
-		<description>NFL '95 (Prototype, 19940831)</description>
+		<description>NFL '95 (Prototype, 19940831) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nfl '95 (prototype - aug 31,  1994).bin" size="524288" crc="a3b046e7"/>
@@ -2933,7 +2941,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nfl95p08" cloneof="nfl95" romof="nfl95">
-		<description>NFL '95 (Prototype, 19940902)</description>
+		<description>NFL '95 (Prototype, 19940902) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nfl '95 (prototype - sep 02,  1994).bin" size="524288" crc="3978387b"/>
@@ -2941,7 +2949,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nfl95p07" cloneof="nfl95" romof="nfl95">
-		<description>NFL '95 (Prototype, 19940908)</description>
+		<description>NFL '95 (Prototype, 19940908) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nfl '95 (prototype - sep 08,  1994).bin" size="524288" crc="ff70a26f"/>
@@ -2949,7 +2957,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nfl95p06" cloneof="nfl95" romof="nfl95">
-		<description>NFL '95 (Prototype, 19940910)</description>
+		<description>NFL '95 (Prototype, 19940910) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nfl '95 (prototype - sep 10,  1994).bin" size="524288" crc="132db489"/>
@@ -2957,7 +2965,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nfl95p05" cloneof="nfl95" romof="nfl95">
-		<description>NFL '95 (Prototype, 19940911-B)</description>
+		<description>NFL '95 (Prototype, 19940911-B) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nfl '95 (prototype - sep 11,  1994 - b).bin" size="524288" crc="c57c6afd"/>
@@ -2965,7 +2973,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nfl95p04" cloneof="nfl95" romof="nfl95">
-		<description>NFL '95 (Prototype, 19940911-C)</description>
+		<description>NFL '95 (Prototype, 19940911-C) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nfl '95 (prototype - sep 11,  1994 - c).bin" size="524288" crc="088e4b6d"/>
@@ -2973,7 +2981,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nfl95p03" cloneof="nfl95" romof="nfl95">
-		<description>NFL '95 (Prototype, 19940912)</description>
+		<description>NFL '95 (Prototype, 19940912) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nfl '95 (prototype - sep 12,  1994).bin" size="524288" crc="b38f48b6"/>
@@ -2981,7 +2989,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nfl95p01" cloneof="nfl95" romof="nfl95">
-		<description>NFL '95 (Prototype, 19940914)</description>
+		<description>NFL '95 (Prototype, 19940914) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nfl '95 (prototype - sep 14,  1994).bin" size="524288" crc="474a162b"/>
@@ -2989,7 +2997,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nfl95p02" cloneof="nfl95" romof="nfl95">
-		<description>NFL '95 (Prototype, 19940914-F)</description>
+		<description>NFL '95 (Prototype, 19940914-F) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nfl '95 (prototype - sep 14,  1994 - f).bin" size="524288" crc="2828cb66"/>
@@ -3021,7 +3029,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp17" cloneof="nhlas" romof="nhlas">
-		<description>NHL All-Star Hockey (Prototype, 19941215)</description>
+		<description>NHL All-Star Hockey (Prototype, 19941215) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nhl all-star hockey (prototype - dec 15,  1994).bin" size="524288" crc="e583d999"/>
@@ -3029,7 +3037,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp16" cloneof="nhlas" romof="nhlas">
-		<description>NHL All-Star Hockey (Prototype, 19941222)</description>
+		<description>NHL All-Star Hockey (Prototype, 19941222) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nhl all-star hockey (prototype - dec 22,  1994).bin" size="524288" crc="dfba792a"/>
@@ -3037,7 +3045,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp15" cloneof="nhlas" romof="nhlas">
-		<description>NHL All-Star Hockey (Prototype, 19941229)</description>
+		<description>NHL All-Star Hockey (Prototype, 19941229) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nhl all-star hockey (prototype - dec 29,  1994).bin" size="524288" crc="e14d071b"/>
@@ -3045,7 +3053,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp14" cloneof="nhlas" romof="nhlas">
-		<description>NHL All-Star Hockey (Prototype, 19941231)</description>
+		<description>NHL All-Star Hockey (Prototype, 19941231) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nhl all-star hockey (prototype - dec 31,  1994).bin" size="524288" crc="8a2b6323"/>
@@ -3053,7 +3061,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp13" cloneof="nhlas" romof="nhlas">
-		<description>NHL All-Star Hockey (Prototype, 19950102)</description>
+		<description>NHL All-Star Hockey (Prototype, 19950102) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nhl all-star hockey (prototype - jan 02,  1995).bin" size="524288" crc="2551f22c"/>
@@ -3061,7 +3069,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp12" cloneof="nhlas" romof="nhlas">
-		<description>NHL All-Star Hockey (Prototype, 19950103)</description>
+		<description>NHL All-Star Hockey (Prototype, 19950103) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nhl all-star hockey (prototype - jan 03,  1995).bin" size="524288" crc="ece5633b"/>
@@ -3069,7 +3077,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp11" cloneof="nhlas" romof="nhlas">
-		<description>NHL All-Star Hockey (Prototype, 19950107)</description>
+		<description>NHL All-Star Hockey (Prototype, 19950107) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nhl all-star hockey (prototype - jan 07,  1995).bin" size="524288" crc="82504476"/>
@@ -3077,7 +3085,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp10" cloneof="nhlas" romof="nhlas">
-		<description>NHL All-Star Hockey (Prototype, 19950111)</description>
+		<description>NHL All-Star Hockey (Prototype, 19950111) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nhl all-star hockey (prototype - jan 11,  1995).bin" size="524288" crc="49f8b9e4"/>
@@ -3085,7 +3093,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp09" cloneof="nhlas" romof="nhlas">
-		<description>NHL All-Star Hockey (Prototype, 19950113)</description>
+		<description>NHL All-Star Hockey (Prototype, 19950113) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nhl all-star hockey (prototype - jan 13,  1995).bin" size="524288" crc="87d8fe13"/>
@@ -3093,7 +3101,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp08" cloneof="nhlas" romof="nhlas">
-		<description>NHL All-Star Hockey (Prototype, 19950116)</description>
+		<description>NHL All-Star Hockey (Prototype, 19950116) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nhl all-star hockey (prototype - jan 16,  1995).bin" size="524288" crc="50dcf5b6"/>
@@ -3101,7 +3109,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp07" cloneof="nhlas" romof="nhlas">
-		<description>NHL All-Star Hockey (Prototype, 19950120)</description>
+		<description>NHL All-Star Hockey (Prototype, 19950120) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nhl all-star hockey (prototype - jan 20 ,1995).bin" size="524288" crc="499b06c2"/>
@@ -3109,7 +3117,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp06" cloneof="nhlas" romof="nhlas">
-		<description>NHL All-Star Hockey (Prototype, 19950121)</description>
+		<description>NHL All-Star Hockey (Prototype, 19950121) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nhl all-star hockey (prototype - jan 21,  1995).bin" size="524288" crc="16af7995"/>
@@ -3117,7 +3125,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp02" cloneof="nhlas" romof="nhlas">
-		<description>NHL All-Star Hockey (Prototype, 19950124)</description>
+		<description>NHL All-Star Hockey (Prototype, 19950124) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nhl all-star hockey (prototype - jan 24,  1995).bin" size="524288" crc="74be3c4c"/>
@@ -3125,7 +3133,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp05" cloneof="nhlas" romof="nhlas">
-		<description>NHL All-Star Hockey (Prototype, 19950124-A)</description>
+		<description>NHL All-Star Hockey (Prototype, 19950124-A) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nhl all-star hockey (prototype - jan 24,  1995 - a).bin" size="524288" crc="0b1c38f4"/>
@@ -3133,7 +3141,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp04" cloneof="nhlas" romof="nhlas">
-		<description>NHL All-Star Hockey (Prototype, 19950124-B)</description>
+		<description>NHL All-Star Hockey (Prototype, 19950124-B) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nhl all-star hockey (prototype - jan 24,  1995 - b).bin" size="524288" crc="0a4a6830"/>
@@ -3141,7 +3149,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp03" cloneof="nhlas" romof="nhlas">
-		<description>NHL All-Star Hockey (Prototype, 19950124-C)</description>
+		<description>NHL All-Star Hockey (Prototype, 19950124-C) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nhl all-star hockey (prototype - jan 24,  1995 - c).bin" size="524288" crc="54f5efb2"/>
@@ -3149,7 +3157,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp01" cloneof="nhlas" romof="nhlas">
-		<description>NHL All-Star Hockey (Prototype, 19950125)</description>
+		<description>NHL All-Star Hockey (Prototype, 19950125) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nhl all-star hockey (prototype - jan 25,  1995).bin" size="524288" crc="a587b13e"/>
@@ -3277,7 +3285,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pacintim">
-		<description>Pac-In-Time (Prototype)</description>
+		<description>Pac-In-Time (Prototype) [Prototype]</description>
 		<year>199?</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="pac-in-time (unknown) (proto).bin" size="262144" crc="64c28e20"/>
@@ -3405,7 +3413,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pstargdne" cloneof="pstargdn" romof="pstargdn">
-		<description>Phantasy Star Gaiden (Hack, English)</description>
+		<description>Phantasy Star Gaiden (Hack, English) [Hack]</description>
 		<year>1999</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="phantasy star gaiden (english translation).gg" size="262144" crc="1c98154a"/>
@@ -3693,7 +3701,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ristarp5" cloneof="ristar" romof="ristar">
-		<description>Ristar - The Shooting Star (Prototype, 19940909)</description>
+		<description>Ristar - The Shooting Star (Prototype, 19940909) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ristar (prototype - sep 09,  1994).bin" size="524288" crc="a1c214bd"/>
@@ -3701,7 +3709,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ristarp4" cloneof="ristar" romof="ristar">
-		<description>Ristar - The Shooting Star (Prototype, 19941019)</description>
+		<description>Ristar - The Shooting Star (Prototype, 19941019) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ristar (prototype - oct 19,  1994).bin" size="524288" crc="672d38d5"/>
@@ -3709,7 +3717,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ristarp3" cloneof="ristar" romof="ristar">
-		<description>Ristar - The Shooting Star (Prototype, 19941026)</description>
+		<description>Ristar - The Shooting Star (Prototype, 19941026) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ristar (prototype - oct 26,  1994).bin" size="524288" crc="a302413c"/>
@@ -3717,7 +3725,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ristarp2" cloneof="ristar" romof="ristar">
-		<description>Ristar - The Shooting Star (Prototype, 19941101)</description>
+		<description>Ristar - The Shooting Star (Prototype, 19941101) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ristar (prototype - nov 01,  1994).bin" size="524288" crc="44fa6ae6"/>
@@ -3725,7 +3733,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ristarp1" cloneof="ristar" romof="ristar">
-		<description>Ristar - The Shooting Star (Prototype, 19941102)</description>
+		<description>Ristar - The Shooting Star (Prototype, 19941102) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ristar (prototype - nov 02,  1994).bin" size="524288" crc="302d2b4b"/>
@@ -3773,7 +3781,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="royalstne" cloneof="royalstn" romof="royalstn">
-		<description>Royal Stone - Hirakareshi Toki no Tobira (Hack, English)</description>
+		<description>Royal Stone - Hirakareshi Toki no Tobira (Hack, English) [Hack]</description>
 		<year>2013</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="royal stone - hirakareshi toki no tobira (english translation).gg" size="524288" crc="e4677b07"/>
@@ -3917,7 +3925,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shinfrgfe" cloneof="shinfrgf" romof="shinfrgf">
-		<description>Shining Force Gaiden - Final Conflict (Hack, English)</description>
+		<description>Shining Force Gaiden - Final Conflict (Hack, English) [Hack]</description>
 		<year>2006</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="shining force gaiden - final conflict (english translation).gg" size="524288" crc="23bac434"/>
@@ -3949,7 +3957,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shinfrc2p4" cloneof="shinfrc2" romof="shinfrc2">
-		<description>Shining Force II - The Sword of Hajya (Prototype, 19940427)</description>
+		<description>Shining Force II - The Sword of Hajya (Prototype, 19940427) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="shining force ii (prototype - apr 27,  1994).bin" size="524288" crc="65e5345c"/>
@@ -3957,7 +3965,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shinfrc2p3" cloneof="shinfrc2" romof="shinfrc2">
-		<description>Shining Force II - The Sword of Hajya (Prototype, 19940530)</description>
+		<description>Shining Force II - The Sword of Hajya (Prototype, 19940530) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="shining force ii (prototype - may 30,  1994).bin" size="524288" crc="e97ec011"/>
@@ -3965,7 +3973,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shinfrc2p2" cloneof="shinfrc2" romof="shinfrc2">
-		<description>Shining Force II - The Sword of Hajya (Prototype, 19940627)</description>
+		<description>Shining Force II - The Sword of Hajya (Prototype, 19940627) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="shining force ii (prototype - jun 27,  1994).bin" size="524288" crc="8bfc56c3"/>
@@ -3973,7 +3981,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shinfrc2p1" cloneof="shinfrc2" romof="shinfrc2">
-		<description>Shining Force II - The Sword of Hajya (Prototype, 19940708)</description>
+		<description>Shining Force II - The Sword of Hajya (Prototype, 19940708) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="shining force ii (prototype - jul 08,  1994).bin" size="524288" crc="80dca91d"/>
@@ -4061,7 +4069,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicblsp6" cloneof="sonicbls" romof="sonicbls">
-		<description>Sonic Blast (Prototype 611, 19960531, 13.49)</description>
+		<description>Sonic Blast (Prototype 611, 19960531, 13.49) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic blast (prototype 611 - may 31,  1996, 13.49).bin" size="524288" crc="c09ef45b"/>
@@ -4069,7 +4077,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicblsp5" cloneof="sonicbls" romof="sonicbls">
-		<description>Sonic Blast (Prototype 74, 19960717, 09.11)</description>
+		<description>Sonic Blast (Prototype 74, 19960717, 09.11) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic blast (prototype 74 - jul 17,  1996, 09.11).bin" size="1048576" crc="362b186d"/>
@@ -4077,7 +4085,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicblsp4" cloneof="sonicbls" romof="sonicbls">
-		<description>Sonic Blast (Prototype 806, 19960806, 18.37)</description>
+		<description>Sonic Blast (Prototype 806, 19960806, 18.37) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic blast (prototype 806 - aug 06,  1996, 18.37).bin" size="1048576" crc="19dad067"/>
@@ -4085,7 +4093,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicblsp3" cloneof="sonicbls" romof="sonicbls">
-		<description>Sonic Blast (Prototype 821, 19960822, 09.38)</description>
+		<description>Sonic Blast (Prototype 821, 19960822, 09.38) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic blast (prototype 821 - aug 22,  1996, 09.38).bin" size="1048576" crc="5eecb549"/>
@@ -4093,7 +4101,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicblsp2" cloneof="sonicbls" romof="sonicbls">
-		<description>Sonic Blast (Prototype 827, 19960828, 11.13)</description>
+		<description>Sonic Blast (Prototype 827, 19960828, 11.13) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic blast (prototype 827 - aug 28,  1996, 11.13).bin" size="1048576" crc="e6847ac0"/>
@@ -4101,7 +4109,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicblsp1" cloneof="sonicbls" romof="sonicbls">
-		<description>Sonic Blast (Prototype 94, 19960902, 17.47)</description>
+		<description>Sonic Blast (Prototype 94, 19960902, 17.47) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic blast (prototype 94 - sep 02,  1996, 17.47).bin" size="1048576" crc="2f22a352"/>
@@ -4157,7 +4165,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sspinp20" cloneof="sspin" romof="sspin">
-		<description>Sonic Spinball (Prototype 0307, 19940307, 05.24)</description>
+		<description>Sonic Spinball (Prototype 0307, 19940307, 05.24) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic spinball (prototype 0307 - mar 07,  1994, 05.24).bin" size="524288" crc="3283580d"/>
@@ -4165,7 +4173,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sspinp19" cloneof="sspin" romof="sspin">
-		<description>Sonic Spinball (Prototype 031094, 19940310, 17.41)</description>
+		<description>Sonic Spinball (Prototype 031094, 19940310, 17.41) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic spinball (prototype 031094 - mar 10,  1994, 17.41).bin" size="524288" crc="1a736612"/>
@@ -4173,7 +4181,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sspinp18" cloneof="sspin" romof="sspin">
-		<description>Sonic Spinball (Prototype 031194, 19940311, 12.09)</description>
+		<description>Sonic Spinball (Prototype 031194, 19940311, 12.09) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic spinball (prototype 031194 - mar 11,  1994, 12.09).bin" size="524288" crc="1aed8f62"/>
@@ -4181,7 +4189,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sspinp17" cloneof="sspin" romof="sspin">
-		<description>Sonic Spinball (Prototype 032194, 19940321, 07.12)</description>
+		<description>Sonic Spinball (Prototype 032194, 19940321, 07.12) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic spinball (prototype 032194 - mar 21,  1994, 07.12).bin" size="524288" crc="46657b4e"/>
@@ -4189,7 +4197,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sspinp16" cloneof="sspin" romof="sspin">
-		<description>Sonic Spinball (Prototype 0328, 19940328, 06.54)</description>
+		<description>Sonic Spinball (Prototype 0328, 19940328, 06.54) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic spinball (prototype 0328 - mar 28,  1994, 06.54).bin" size="524288" crc="1233c3e3"/>
@@ -4197,7 +4205,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sspinp15" cloneof="sspin" romof="sspin">
-		<description>Sonic Spinball (Prototype 0329, 19940329, 07.35)</description>
+		<description>Sonic Spinball (Prototype 0329, 19940329, 07.35) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic spinball (prototype 0329 - mar 29,  1994, 07.35).bin" size="524288" crc="aa7aedb0"/>
@@ -4205,7 +4213,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sspinp14" cloneof="sspin" romof="sspin">
-		<description>Sonic Spinball (Prototype 0330, 19940330, 06.54)</description>
+		<description>Sonic Spinball (Prototype 0330, 19940330, 06.54) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic spinball (prototype 0330 - mar 30,  1994, 06.54).bin" size="524288" crc="2ca34ab2"/>
@@ -4213,7 +4221,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sspinp13" cloneof="sspin" romof="sspin">
-		<description>Sonic Spinball (Prototype 0405, 19940405, 18.07)</description>
+		<description>Sonic Spinball (Prototype 0405, 19940405, 18.07) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic spinball (prototype 0405 - apr 05,  1994, 18.07).bin" size="524288" crc="09b913d5"/>
@@ -4221,7 +4229,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sspinp12" cloneof="sspin" romof="sspin">
-		<description>Sonic Spinball (Prototype 0412, 19940412, 07.26)</description>
+		<description>Sonic Spinball (Prototype 0412, 19940412, 07.26) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic spinball (prototype 0412 - apr 12,  1994, 07.26).bin" size="524288" crc="f8a432f6"/>
@@ -4229,7 +4237,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sspinp11" cloneof="sspin" romof="sspin">
-		<description>Sonic Spinball (Prototype 0413, 19940413, 02.54)</description>
+		<description>Sonic Spinball (Prototype 0413, 19940413, 02.54) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic spinball (prototype 0413 - apr 13,  1994, 02.54).bin" size="524288" crc="1f1abf2c"/>
@@ -4237,7 +4245,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sspinp10" cloneof="sspin" romof="sspin">
-		<description>Sonic Spinball (Prototype 0415, 19940415, 17.33)</description>
+		<description>Sonic Spinball (Prototype 0415, 19940415, 17.33) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic spinball (prototype 0415 - apr 15,  1994, 17.33).bin" size="524288" crc="e3b5cd1e"/>
@@ -4245,7 +4253,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sspinp09" cloneof="sspin" romof="sspin">
-		<description>Sonic Spinball (Prototype 0421, 19940421, 05.30)</description>
+		<description>Sonic Spinball (Prototype 0421, 19940421, 05.30) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic spinball (prototype 0421 - apr 21,  1994, 05.30).bin" size="524288" crc="bbaecf7c"/>
@@ -4253,7 +4261,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sspinp08" cloneof="sspin" romof="sspin">
-		<description>Sonic Spinball (Prototype 0427, 19940427, 04.51)</description>
+		<description>Sonic Spinball (Prototype 0427, 19940427, 04.51) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic spinball (prototype 0427 - apr 27,  1994, 04.51).bin" size="376832" crc="07d32244"/>
@@ -4261,7 +4269,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sspinp07" cloneof="sspin" romof="sspin">
-		<description>Sonic Spinball (Prototype 0429, 19940429, 06.01)</description>
+		<description>Sonic Spinball (Prototype 0429, 19940429, 06.01) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic spinball (prototype 0429 - apr 29,  1994, 06.01).bin" size="524288" crc="30a7d062"/>
@@ -4269,7 +4277,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sspinp06" cloneof="sspin" romof="sspin">
-		<description>Sonic Spinball (Prototype 0430, 19940429, 21.48)</description>
+		<description>Sonic Spinball (Prototype 0430, 19940429, 21.48) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic spinball (prototype 0430 - apr 29,  1994, 21.48).bin" size="524288" crc="221c4ba4"/>
@@ -4277,7 +4285,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sspinp04" cloneof="sspin" romof="sspin">
-		<description>Sonic Spinball (Prototype 0505, 19940505, 04.47)</description>
+		<description>Sonic Spinball (Prototype 0505, 19940505, 04.47) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic spinball (prototype 0505 - may 05,  1994, 04.47).bin" size="524288" crc="be76bf30"/>
@@ -4285,7 +4293,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sspinp03" cloneof="sspin" romof="sspin">
-		<description>Sonic Spinball (Prototype 0506, 19940506, 13.04)</description>
+		<description>Sonic Spinball (Prototype 0506, 19940506, 13.04) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic spinball (prototype 0506 - may 06,  1994, 13.04).bin" size="524288" crc="a4833d27"/>
@@ -4293,7 +4301,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sspinp02" cloneof="sspin" romof="sspin">
-		<description>Sonic Spinball (Prototype 0525, 19940525, 13.24)</description>
+		<description>Sonic Spinball (Prototype 0525, 19940525, 13.24) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic spinball (prototype 0525 - may 25,  1994, 13.24).bin" size="524288" crc="a035fd5c"/>
@@ -4301,7 +4309,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sspinp01" cloneof="sspin" romof="sspin">
-		<description>Sonic Spinball (Prototype 0530, 19940530, 23.25)</description>
+		<description>Sonic Spinball (Prototype 0530, 19940530, 23.25) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic spinball (prototype 0530 - may 30,  1994, 23.25).bin" size="524288" crc="6107819d"/>
@@ -4309,7 +4317,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sspinp05" cloneof="sspin" romof="sspin">
-		<description>Sonic Spinball (Prototype 503B, 19940503, 19.27)</description>
+		<description>Sonic Spinball (Prototype 503B, 19940503, 19.27) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic spinball (prototype 503b - may 03,  1994, 19.27).bin" size="524288" crc="e2fe976a"/>
@@ -4333,7 +4341,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicp" cloneof="sonic" romof="sonic">
-		<description>Sonic The Hedgehog (World, Prototype)</description>
+		<description>Sonic The Hedgehog (World, Prototype) [Prototype]</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic the hedgehog (world) (proto).bin" size="262144" crc="816c0a1e"/>
@@ -4349,7 +4357,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonictrip" cloneof="sonictri" romof="sonictri">
-		<description>Sonic The Hedgehog - Triple Trouble (Prototype 0808, 19940808, 18.05)</description>
+		<description>Sonic The Hedgehog - Triple Trouble (Prototype 0808, 19940808, 18.05) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic the hedgehog - triple trouble (prototype 0808 - aug 08,  1994, 18.05).bin" size="524288" crc="80eb7cfb"/>
@@ -4413,7 +4421,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="spirou">
-		<description>Spirou (Euro, Prototype)</description>
+		<description>Spirou (Euro, Prototype) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Infogrames</manufacturer>
 		<rom name="spirou (europe) (proto).bin" size="524288" crc="ab622adc"/>
@@ -4429,7 +4437,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sporttrvp12" cloneof="sporttrv" romof="sporttrv">
-		<description>Sports Trivia (Prototype, 19950308)</description>
+		<description>Sports Trivia (Prototype, 19950308) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - mar 08,  1995).bin" size="131072" crc="c38d41c3"/>
@@ -4437,7 +4445,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sporttrvp11" cloneof="sporttrv" romof="sporttrv">
-		<description>Sports Trivia (Prototype, 19950309)</description>
+		<description>Sports Trivia (Prototype, 19950309) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - mar 09,  1995).bin" size="131072" crc="34407fe9"/>
@@ -4445,7 +4453,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sporttrvp10" cloneof="sporttrv" romof="sporttrv">
-		<description>Sports Trivia (Prototype, 19950313)</description>
+		<description>Sports Trivia (Prototype, 19950313) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - mar 13,  1995).bin" size="262144" crc="a8d1ac51"/>
@@ -4453,7 +4461,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sporttrvp09" cloneof="sporttrv" romof="sporttrv">
-		<description>Sports Trivia (Prototype, 19950316-1MEG)</description>
+		<description>Sports Trivia (Prototype, 19950316-1MEG) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - mar 16,  1995 - 1meg).bin" size="131072" crc="464f1b51"/>
@@ -4461,7 +4469,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sporttrvp08" cloneof="sporttrv" romof="sporttrv">
-		<description>Sports Trivia (Prototype, 19950316-2MEG)</description>
+		<description>Sports Trivia (Prototype, 19950316-2MEG) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - mar 16,  1995 - 2meg).bin" size="262144" crc="caf87d8b"/>
@@ -4469,7 +4477,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sporttrvp07" cloneof="sporttrv" romof="sporttrv">
-		<description>Sports Trivia (Prototype, 19950317-2MEG)</description>
+		<description>Sports Trivia (Prototype, 19950317-2MEG) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - mar 17,  1995 - 2meg).bin" size="262144" crc="43bb6b10"/>
@@ -4477,7 +4485,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sporttrvp06" cloneof="sporttrv" romof="sporttrv">
-		<description>Sports Trivia (Prototype, 19950320-2MEG)</description>
+		<description>Sports Trivia (Prototype, 19950320-2MEG) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - mar 20,  1995 - 2meg).bin" size="262144" crc="e7aff566"/>
@@ -4485,7 +4493,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sporttrvp05" cloneof="sporttrv" romof="sporttrv">
-		<description>Sports Trivia (Prototype, 19950320-QTEST)</description>
+		<description>Sports Trivia (Prototype, 19950320-QTEST) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - mar 20,  1995 - qtest).bin" size="262144" crc="a3e57816"/>
@@ -4493,7 +4501,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep24" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950321-2MEG)</description>
+		<description>Sports Trivia (Prototype, 19950321-2MEG) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - mar 21,  1995 - 2meg).bin" size="262144" crc="18cf6145"/>
@@ -4501,7 +4509,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep23" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950323-2MEG)</description>
+		<description>Sports Trivia (Prototype, 19950323-2MEG) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - mar 23,  1995 - 2meg).bin" size="262144" crc="27816c09"/>
@@ -4509,7 +4517,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep22" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950323-ALGOTEST)</description>
+		<description>Sports Trivia (Prototype, 19950323-ALGOTEST) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - mar 23,  1995 - algotest).bin" size="262144" crc="9a8ad5ca"/>
@@ -4517,7 +4525,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep21" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950323-QTEST)</description>
+		<description>Sports Trivia (Prototype, 19950323-QTEST) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - mar 23,  1995 - qtest).bin" size="262144" crc="acb7e580"/>
@@ -4525,7 +4533,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep20" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950327-2MEG)</description>
+		<description>Sports Trivia (Prototype, 19950327-2MEG) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - mar 27,  1995 - 2meg).bin" size="262144" crc="517bd817"/>
@@ -4533,7 +4541,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep19" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950327-ALGOTEST)</description>
+		<description>Sports Trivia (Prototype, 19950327-ALGOTEST) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - mar 27,  1995 - algotest).bin" size="262144" crc="511b1d24"/>
@@ -4541,7 +4549,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep18" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950329-2MEG)</description>
+		<description>Sports Trivia (Prototype, 19950329-2MEG) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - mar 29,  1995 - 2meg).bin" size="262144" crc="e906fbd8"/>
@@ -4549,7 +4557,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep17" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950329-ALGOTEST)</description>
+		<description>Sports Trivia (Prototype, 19950329-ALGOTEST) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - mar 29,  1995 - algotest).bin" size="262144" crc="e80459b3"/>
@@ -4557,7 +4565,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep16" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950329-QTEST)</description>
+		<description>Sports Trivia (Prototype, 19950329-QTEST) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - mar 29,  1995 - qtest).bin" size="262144" crc="05047357"/>
@@ -4565,7 +4573,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep15" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950330-2MEG-D)</description>
+		<description>Sports Trivia (Prototype, 19950330-2MEG-D) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - mar 30,  1995 - 2meg - d).bin" size="262144" crc="302b9b36"/>
@@ -4573,7 +4581,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep14" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950330-QTEST)</description>
+		<description>Sports Trivia (Prototype, 19950330-QTEST) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - mar 30,  1995 - qtest).bin" size="262144" crc="f3f9a87b"/>
@@ -4581,7 +4589,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep13" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950403-2MEG)</description>
+		<description>Sports Trivia (Prototype, 19950403-2MEG) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - apr 03,  1995 - 2meg).bin" size="262144" crc="3e3d6728"/>
@@ -4589,7 +4597,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep12" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950403-QTEST)</description>
+		<description>Sports Trivia (Prototype, 19950403-QTEST) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - apr 03,  1995 - qtest).bin" size="262144" crc="c68762e6"/>
@@ -4597,7 +4605,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep11" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950404-2MEG)</description>
+		<description>Sports Trivia (Prototype, 19950404-2MEG) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - apr 04,  1995 - 2meg).bin" size="262144" crc="d61a366f"/>
@@ -4605,7 +4613,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep10" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950405-2MEG-B)</description>
+		<description>Sports Trivia (Prototype, 19950405-2MEG-B) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - apr 05,  1995 - 2meg - b).bin" size="262144" crc="818ec54c"/>
@@ -4613,7 +4621,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep09" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950405-2MEG-C)</description>
+		<description>Sports Trivia (Prototype, 19950405-2MEG-C) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - apr 05,  1995 - 2meg - c).bin" size="262144" crc="f88a55f4"/>
@@ -4621,7 +4629,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep08" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950405-QTEST)</description>
+		<description>Sports Trivia (Prototype, 19950405-QTEST) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - apr 05,  1995 - qtest).bin" size="262144" crc="93b98f19"/>
@@ -4629,7 +4637,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep07" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950406-2MEG)</description>
+		<description>Sports Trivia (Prototype, 19950406-2MEG) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - apr 06,  1995 - 2meg).bin" size="262144" crc="cab74070"/>
@@ -4637,7 +4645,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep06" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950407-2MEG)</description>
+		<description>Sports Trivia (Prototype, 19950407-2MEG) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - apr 07,  1995 - 2meg).bin" size="262144" crc="352e8b8c"/>
@@ -4645,7 +4653,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep05" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950407-QTEST)</description>
+		<description>Sports Trivia (Prototype, 19950407-QTEST) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - apr 07,  1995 - qtest).bin" size="262144" crc="961ae378"/>
@@ -4653,7 +4661,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep04" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950411-2MEG)</description>
+		<description>Sports Trivia (Prototype, 19950411-2MEG) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - apr 11,  1995 - 2meg).bin" size="262144" crc="8bdb184d"/>
@@ -4661,7 +4669,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep03" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950412-2MEG)</description>
+		<description>Sports Trivia (Prototype, 19950412-2MEG) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - apr 12,  1995 - 2meg).bin" size="262144" crc="1e360a20"/>
@@ -4669,7 +4677,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sporttrvp04" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950425-1MEG)</description>
+		<description>Sports Trivia (Prototype, 19950425-1MEG) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - apr 25,  1995 - 1meg).bin" size="131072" crc="895af58a"/>
@@ -4677,7 +4685,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sporttrvp03" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950425-QTEST)</description>
+		<description>Sports Trivia (Prototype, 19950425-QTEST) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - apr 25,  1995 - qtest).bin" size="131072" crc="7524957c"/>
@@ -4685,7 +4693,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sporttrvp02" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950427-1MEG)</description>
+		<description>Sports Trivia (Prototype, 19950427-1MEG) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - apr 27,  1995 - 1meg).bin" size="131072" crc="7898919f"/>
@@ -4693,7 +4701,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep02" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950428-2MEG)</description>
+		<description>Sports Trivia (Prototype, 19950428-2MEG) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - apr 28,  1995 - 2meg).bin" size="262144" crc="26470d2b"/>
@@ -4701,7 +4709,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sprtrvcep01" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950502-2MEG)</description>
+		<description>Sports Trivia (Prototype, 19950502-2MEG) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - may 02,  1995 - 2meg).bin" size="262144" crc="15e7e261"/>
@@ -4709,7 +4717,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sporttrvp01" cloneof="sprtrvce" romof="sprtrvce">
-		<description>Sports Trivia (Prototype, 19950504-1MEG)</description>
+		<description>Sports Trivia (Prototype, 19950504-1MEG) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega?</manufacturer>
 		<rom name="sports trivia (prototype - may 04,  1995 - 1meg).bin" size="131072" crc="bba4cf7b"/>
@@ -4773,7 +4781,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sheroa" cloneof="shero" romof="shero">
-		<description>Street Hero (USA, Prototype Alt, SMS Mode)</description>
+		<description>Street Hero (USA, Prototype Alt, SMS Mode) [Prototype]</description>
 		<year>1993</year>
 		<manufacturer>Innovation Tech</manufacturer>
 		<rom name="street hero [proto 1] (us).bin" size="524288" crc="fb481971"/>
@@ -4781,7 +4789,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shero">
-		<description>Street Hero (USA, Prototype, SMS Mode)</description>
+		<description>Street Hero (USA, Prototype, SMS Mode) [Prototype]</description>
 		<year>1993</year>
 		<manufacturer>Innovation Tech</manufacturer>
 		<rom name="street hero [proto 0] (us).bin" size="524288" crc="9fa727a0"/>
@@ -4837,7 +4845,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="supercolp7" cloneof="supercol" romof="supercol">
-		<description>Super Columns (Prototype, 19941111)</description>
+		<description>Super Columns (Prototype, 19941111) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="super columns (prototype - nov 11,  1994).bin" size="131072" crc="f28f89d1"/>
@@ -4845,7 +4853,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="supercolp6" cloneof="supercol" romof="supercol">
-		<description>Super Columns (Prototype, 19941201)</description>
+		<description>Super Columns (Prototype, 19941201) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="super columns (prototype - dec 01,  1994).bin" size="131072" crc="56cf1d4f"/>
@@ -4853,7 +4861,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="supercolp5" cloneof="supercol" romof="supercol">
-		<description>Super Columns (Prototype, 19941215)</description>
+		<description>Super Columns (Prototype, 19941215) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="super columns (prototype - dec 15,  1994).bin" size="131072" crc="abe92434"/>
@@ -4861,7 +4869,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="supercolp4" cloneof="supercol" romof="supercol">
-		<description>Super Columns (Prototype, 19941221)</description>
+		<description>Super Columns (Prototype, 19941221) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="super columns (prototype - dec 21,  1994).bin" size="131072" crc="81451fc0"/>
@@ -4869,7 +4877,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="supercolp3" cloneof="supercol" romof="supercol">
-		<description>Super Columns (Prototype, 19941226)</description>
+		<description>Super Columns (Prototype, 19941226) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="super columns (prototype - dec 26,  1994).bin" size="131072" crc="5c4c633d"/>
@@ -4877,7 +4885,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="supercolp2" cloneof="supercol" romof="supercol">
-		<description>Super Columns (Prototype, 19941228)</description>
+		<description>Super Columns (Prototype, 19941228) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="super columns (prototype - dec 28,  1994).bin" size="131072" crc="3d931952"/>
@@ -4885,7 +4893,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="supercolp1" cloneof="supercol" romof="supercol">
-		<description>Super Columns (Prototype, 19950106)</description>
+		<description>Super Columns (Prototype, 19950106) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="super columns (prototype - jan 06,  1995).bin" size="131072" crc="096f4ff5"/>
@@ -4981,7 +4989,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="supermanp" cloneof="superman" romof="superman">
-		<description>Superman - The Man of Steel (Euro, Prototype)</description>
+		<description>Superman - The Man of Steel (Euro, Prototype) [Prototype]</description>
 		<year>1993</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="superman - the man of steel (proto).bin" size="262144" crc="aa3f2172"/>
@@ -5133,7 +5141,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp14" cloneof="tazmars" romof="tazmars">
-		<description>Taz in Escape from Mars (Prototype, 19940511)</description>
+		<description>Taz in Escape from Mars (Prototype, 19940511) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="taz in escape from mars (prototype - may 11,  1994).bin" size="262144" crc="030f396a"/>
@@ -5141,7 +5149,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp13" cloneof="tazmars" romof="tazmars">
-		<description>Taz in Escape from Mars (Prototype, 19940810)</description>
+		<description>Taz in Escape from Mars (Prototype, 19940810) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="taz in escape from mars (prototype - aug 10,  1994).bin" size="524288" crc="92388016"/>
@@ -5149,7 +5157,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp12" cloneof="tazmars" romof="tazmars">
-		<description>Taz in Escape from Mars (Prototype, 19940812)</description>
+		<description>Taz in Escape from Mars (Prototype, 19940812) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="taz in escape from mars (prototype - aug 12,  1994).bin" size="524288" crc="a43fdfad"/>
@@ -5157,7 +5165,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp11" cloneof="tazmars" romof="tazmars">
-		<description>Taz in Escape from Mars (Prototype, 19940814)</description>
+		<description>Taz in Escape from Mars (Prototype, 19940814) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="taz in escape from mars (prototype - aug 14,  1994).bin" size="524288" crc="9267d968"/>
@@ -5165,7 +5173,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp10" cloneof="tazmars" romof="tazmars">
-		<description>Taz in Escape from Mars (Prototype, 19940819)</description>
+		<description>Taz in Escape from Mars (Prototype, 19940819) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="taz in escape from mars (prototype - aug 19,  1994).bin" size="524288" crc="57747640"/>
@@ -5173,7 +5181,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp09" cloneof="tazmars" romof="tazmars">
-		<description>Taz in Escape from Mars (Prototype, 19940823)</description>
+		<description>Taz in Escape from Mars (Prototype, 19940823) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="taz in escape from mars (prototype - aug 23,  1994).bin" size="524288" crc="6cd0fd78"/>
@@ -5181,7 +5189,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp08" cloneof="tazmars" romof="tazmars">
-		<description>Taz in Escape from Mars (Prototype, 19940829-B)</description>
+		<description>Taz in Escape from Mars (Prototype, 19940829-B) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="taz in escape from mars (prototype - aug 29,  1994 - b).bin" size="524288" crc="3c03919d"/>
@@ -5189,7 +5197,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp07" cloneof="tazmars" romof="tazmars">
-		<description>Taz in Escape from Mars (Prototype, 19940830)</description>
+		<description>Taz in Escape from Mars (Prototype, 19940830) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="taz in escape from mars (prototype - aug 30,  1994).bin" size="524288" crc="09679b89"/>
@@ -5197,7 +5205,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp06" cloneof="tazmars" romof="tazmars">
-		<description>Taz in Escape from Mars (Prototype, 19940902)</description>
+		<description>Taz in Escape from Mars (Prototype, 19940902) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="taz in escape from mars (prototype - sep 02,  1994).bin" size="524288" crc="18913d93"/>
@@ -5205,7 +5213,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp05" cloneof="tazmars" romof="tazmars">
-		<description>Taz in Escape from Mars (Prototype, 19940905-B)</description>
+		<description>Taz in Escape from Mars (Prototype, 19940905-B) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="taz in escape from mars (prototype - sep 05,  1994 - b).bin" size="524288" crc="d84a631c"/>
@@ -5213,7 +5221,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp04" cloneof="tazmars" romof="tazmars">
-		<description>Taz in Escape from Mars (Prototype, 19940905-C)</description>
+		<description>Taz in Escape from Mars (Prototype, 19940905-C) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="taz in escape from mars (prototype - sep 05,  1994 - c).bin" size="524288" crc="61330a58"/>
@@ -5221,7 +5229,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp03" cloneof="tazmars" romof="tazmars">
-		<description>Taz in Escape from Mars (Prototype, 19940906-D)</description>
+		<description>Taz in Escape from Mars (Prototype, 19940906-D) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="taz in escape from mars (prototype - sep 06,  1994 - d).bin" size="524288" crc="1f040bca"/>
@@ -5229,7 +5237,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp02" cloneof="tazmars" romof="tazmars">
-		<description>Taz in Escape from Mars (Prototype, 19940909-B)</description>
+		<description>Taz in Escape from Mars (Prototype, 19940909-B) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="taz in escape from mars (prototype - sep 09,  1994 - b).bin" size="524288" crc="c867da05"/>
@@ -5237,7 +5245,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp01" cloneof="tazmars" romof="tazmars">
-		<description>Taz in Escape from Mars (Prototype, 19940910)</description>
+		<description>Taz in Escape from Mars (Prototype, 19940910) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="taz in escape from mars (prototype - sep 10,  1994).bin" size="524288" crc="faf4bec0"/>
@@ -5253,7 +5261,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tempojrp9" cloneof="tempojr" romof="tempojr">
-		<description>Tempo Jr. (Prototype, 19941128)</description>
+		<description>Tempo Jr. (Prototype, 19941128) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tempo jr. (prototype - nov 28,  1994).bin" size="524288" crc="a33b5b92"/>
@@ -5261,7 +5269,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tempojrp8" cloneof="tempojr" romof="tempojr">
-		<description>Tempo Jr. (Prototype, 19941205)</description>
+		<description>Tempo Jr. (Prototype, 19941205) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tempo jr. (prototype - dec 05,  1994).bin" size="524288" crc="3475d48e"/>
@@ -5269,7 +5277,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tempojrp7" cloneof="tempojr" romof="tempojr">
-		<description>Tempo Jr. (Prototype, 19941212)</description>
+		<description>Tempo Jr. (Prototype, 19941212) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tempo jr. (prototype - dec 12,  1994).bin" size="524288" crc="fb9a5885"/>
@@ -5277,7 +5285,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tempojrp6" cloneof="tempojr" romof="tempojr">
-		<description>Tempo Jr. (Prototype, 19941226)</description>
+		<description>Tempo Jr. (Prototype, 19941226) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tempo jr. (prototype - dec 26,  1994).bin" size="524288" crc="e484e41c"/>
@@ -5285,7 +5293,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tempojrp5" cloneof="tempojr" romof="tempojr">
-		<description>Tempo Jr. (Prototype, 19950117)</description>
+		<description>Tempo Jr. (Prototype, 19950117) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tempo jr. (prototype - jan 17,  1995).bin" size="524288" crc="ab6dc88c"/>
@@ -5293,7 +5301,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tempojrp4" cloneof="tempojr" romof="tempojr">
-		<description>Tempo Jr. (Prototype, 19950120)</description>
+		<description>Tempo Jr. (Prototype, 19950120) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tempo jr. (prototype - jan 20,  1995).bin" size="524288" crc="96d64b16"/>
@@ -5301,7 +5309,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tempojrp3" cloneof="tempojr" romof="tempojr">
-		<description>Tempo Jr. (Prototype, 19950131)</description>
+		<description>Tempo Jr. (Prototype, 19950131) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tempo jr. (prototype - jan 31,  1995).bin" size="524288" crc="7afedf36"/>
@@ -5309,7 +5317,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tempojrp2" cloneof="tempojr" romof="tempojr">
-		<description>Tempo Jr. (Prototype, 19950206)</description>
+		<description>Tempo Jr. (Prototype, 19950206) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tempo jr. (prototype - feb 06,  1995).bin" size="524288" crc="3ef6551c"/>
@@ -5317,7 +5325,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tempojrp1" cloneof="tempojr" romof="tempojr">
-		<description>Tempo Jr. (Prototype, 19950215)</description>
+		<description>Tempo Jr. (Prototype, 19950215) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tempo jr. (prototype - feb 15,  1995).bin" size="524288" crc="79e83d67"/>
@@ -5621,7 +5629,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lionkingp2" cloneof="lionking" romof="lionking">
-		<description>The Lion King (Prototype, 19940817)</description>
+		<description>The Lion King (Prototype, 19940817) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="lion king, the (prototype - aug 17,  1994).bin" size="514538" crc="4214c474"/>
@@ -5629,7 +5637,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lionkingp3" cloneof="lionking" romof="lionking">
-		<description>The Lion King (Prototype, 19940817-2)</description>
+		<description>The Lion King (Prototype, 19940817-2) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="lion king, the (prototype - aug 17,  1994 - 2).bin" size="514618" crc="b65030d0"/>
@@ -5637,7 +5645,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lionkingp1" cloneof="lionking" romof="lionking">
-		<description>The Lion King (Prototype, 19940820)</description>
+		<description>The Lion King (Prototype, 19940820) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="lion king, the (prototype - aug 20,  1994).bin" size="523862" crc="3d0b31a2"/>
@@ -5861,7 +5869,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wildsnake">
-		<description>WildSnake (Prototype / Unreleased)</description>
+		<description>WildSnake (Prototype / Unreleased) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Spectrum HoloByte</manufacturer>
 		<rom name="WildSnake [Proto].gg" size="131072" crc="d460cc7f"/>
@@ -6021,7 +6029,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmenglp2" cloneof="xmengl" romof="xmengl">
-		<description>X-Men - Gamemaster's Legacy (Prototype 36, 19940831)</description>
+		<description>X-Men - Gamemaster's Legacy (Prototype 36, 19940831) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="x-men - gamemaster's legacy (prototype 36 - aug 31,  1994).bin" size="524288" crc="271a0a1d"/>
@@ -6029,7 +6037,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmenglp1" cloneof="xmengl" romof="xmengl">
-		<description>X-Men - Gamemaster's Legacy (Prototype 51, 19940906)</description>
+		<description>X-Men - Gamemaster's Legacy (Prototype 51, 19940906) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="x-men - gamemaster's legacy (prototype 51 - sep 06,  1994).bin" size="524288" crc="a3cf94ba"/>
@@ -6037,7 +6045,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmenglp3" cloneof="xmengl" romof="xmengl">
-		<description>X-Men - Gamemaster's Legacy (Prototype, 19940810)</description>
+		<description>X-Men - Gamemaster's Legacy (Prototype, 19940810) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="x-men - gamemaster's legacy (prototype - aug 10,  1994).bin" size="524288" crc="66cc4034"/>
@@ -6053,7 +6061,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmenmojop7" cloneof="xmenmojo" romof="xmenmojo">
-		<description>X-Men - Mojo World (Prototype, 19960605)</description>
+		<description>X-Men - Mojo World (Prototype, 19960605) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="x-men - mojo world (prototype - jun 05,  1996).bin" size="524288" crc="626f9987"/>
@@ -6061,7 +6069,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmenmojop6" cloneof="xmenmojo" romof="xmenmojo">
-		<description>X-Men - Mojo World (Prototype, 19960613)</description>
+		<description>X-Men - Mojo World (Prototype, 19960613) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="x-men - mojo world (prototype - jun 13,  1996).bin" size="524288" crc="c4f3ced4"/>
@@ -6069,7 +6077,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmenmojop5" cloneof="xmenmojo" romof="xmenmojo">
-		<description>X-Men - Mojo World (Prototype, 19960624)</description>
+		<description>X-Men - Mojo World (Prototype, 19960624) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="x-men - mojo world (prototype - jun 24,  1996).bin" size="524288" crc="78001a5d"/>
@@ -6077,7 +6085,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmenmojop4" cloneof="xmenmojo" romof="xmenmojo">
-		<description>X-Men - Mojo World (Prototype, 19960625)</description>
+		<description>X-Men - Mojo World (Prototype, 19960625) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="x-men - mojo world (prototype - jun 25,  1996).bin" size="524288" crc="d4d2f077"/>
@@ -6085,7 +6093,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmenmojop3" cloneof="xmenmojo" romof="xmenmojo">
-		<description>X-Men - Mojo World (Prototype, 19960627)</description>
+		<description>X-Men - Mojo World (Prototype, 19960627) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="x-men - mojo world (prototype - jun 27,  1996).bin" size="524288" crc="425ac73f"/>
@@ -6093,7 +6101,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmenmojop2" cloneof="xmenmojo" romof="xmenmojo">
-		<description>X-Men - Mojo World (Prototype, 19960628)</description>
+		<description>X-Men - Mojo World (Prototype, 19960628) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="x-men - mojo world (prototype - jun 28,  1996).bin" size="524288" crc="d44925ea"/>
@@ -6101,7 +6109,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmenmojop1" cloneof="xmenmojo" romof="xmenmojo">
-		<description>X-Men - Mojo World (Prototype, 19960629)</description>
+		<description>X-Men - Mojo World (Prototype, 19960629) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="x-men - mojo world (prototype - jun 29,  1996).bin" size="524288" crc="ba71da19"/>
@@ -6109,7 +6117,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="yogibear">
-		<description>Yogi Bear in Yogi Bear's Goldrush (Prototype)</description>
+		<description>Yogi Bear in Yogi Bear's Goldrush (Prototype) [Prototype]</description>
 		<year>199?</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="yogi bear in yogi bear's goldrush (unknown) (proto).bin" size="262144" crc="e678f264"/>
@@ -6173,7 +6181,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zoopp" cloneof="zoop" romof="zoop">
-		<description>Zoop (USA, Prototype)</description>
+		<description>Zoop (USA, Prototype) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Viacom New Media</manufacturer>
 		<rom name="zoop (europe).bin" size="131072" crc="f397f041"/>

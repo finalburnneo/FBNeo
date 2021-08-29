@@ -939,7 +939,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="averno" romof="msx">
-		<description>Averno</description>
+		<description>Averno (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Proein Soft Line</manufacturer>
 		<rom name="Averno (1989)(Proein Soft Line)(ES)[RUN'CAS-'].cas" size="20446" crc="9d6996a4"/>
@@ -1534,7 +1534,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="blasteroids" romof="msx">
-		<description>Blasteroids</description>
+		<description>Blasteroids (Euro)</description>
 		<year>1987</year>
 		<manufacturer>Image Works</manufacturer>
 		<rom name="Blasteroids (1987)(Image Works)[BLOAD'CAS-',R].cas" size="72561" crc="e9016d52"/>
@@ -1912,6 +1912,17 @@
 		<year>1987</year>
 		<manufacturer>Methodic Solutions</manufacturer>
 		<rom name="bounce (1987)(methodic solutions)(nl)[run'cas-'].cas" size="19606" crc="ddbff717"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bouncblock" romof="msx">
+		<description>Bouncing Block (Spanish)</description>
+		<year>1988</year>
+		<manufacturer>Idealogic</manufacturer>
+		<rom name="Bouncing Block (1988)(Idealogic).rom" size="16384" crc="cf270c3b"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -3735,6 +3746,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="destroyer" romof="msx">
+		<description>Destroyer (HB) [Homebrew]</description>
+		<year>2014</year>
+		<manufacturer>RetroWorks</manufacturer>
+		<rom name="Destroyer (2014)(RetroWorks).rom" size="16384" crc="1e4f0071"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="destroyr" romof="msx">
 		<description>Destroyer (Spanish)</description>
 		<year>1986</year>
@@ -4950,6 +4972,17 @@
 		<year>1983</year>
 		<manufacturer>ASCII</manufacturer>
 		<rom name="flipper slipper (japan) (alt 1).rom" size="16384" crc="f0b5fe8d"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="flyguy" romof="msx">
+		<description>FlyGuy (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Robosoft</manufacturer>
+		<rom name="FlyGuy (2021)(Robosoft).rom" size="32768" crc="955fc82b"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -10051,6 +10084,17 @@
 		<year>1984</year>
 		<manufacturer>Casio</manufacturer>
 		<rom name="casio pachinko-u.f.o. (japan).rom" size="16384" crc="4088efaa"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pacific" romof="msx">
+		<description>Pacific (HB, v1.2.4) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Andre Baptista</manufacturer>
+		<rom name="Pacific v1.2.4 (2020)(Andre Baptista).rom" size="16384" crc="0811de0a"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -15205,6 +15249,17 @@
 		<year>1985</year>
 		<manufacturer>dB-Soft</manufacturer>
 		<rom name="zexas limited (japan) (alt 1).rom" size="32768" crc="01a73292"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zipper" romof="msx">
+		<description>Zipper (Jpn)</description>
+		<year>1985</year>
+		<manufacturer>Kuma Computers</manufacturer>
+		<rom name="Zipper (1985)(Kuma Computers).rom" size="32768" crc="339ae471"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

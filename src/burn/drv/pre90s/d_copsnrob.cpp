@@ -2,12 +2,12 @@
 // Based on MAME driver by Zsolt Vasvari
 
 // to do:
-//	hook up analog inputs
-//	make samples from MAME discrete sounds
+//	procure & hook-up samples
 
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "samples.h"
+#include "burn_gun.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -39,82 +39,85 @@ static UINT8 DrvJoy4[8];
 static UINT8 DrvDips[1];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
+static INT16 Analog[4];
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo CopsnrobInputList[] = {
-	{"Coin 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
-	{"CoiN 2",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 coin"	},
-	{"Start 1",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
-	{"Start 2",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
+	{"Coin 1",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
+	{"Coin 2",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 coin"	},
+	{"Start 1",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
+	{"Start 2",			BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
 
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy4 + 4,	"p1 fire 3"	}, // PLACEHOLDER
+	A("P1 Gun",     	BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"),
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 fire 2"	},
 
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy4 + 5,	"p2 fire 3"	}, // PLACEHOLDER
+	A("P2 Gun",     	BIT_ANALOG_REL, &Analog[1],		"p2 x-axis"),
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 fire 2"	},
 
-	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy4 + 6,	"p3 fire 3"	}, // PLACEHOLDER
+	A("P3 Gun",     	BIT_ANALOG_REL, &Analog[2],		"p3 x-axis"),
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy3 + 5,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy4 + 2,	"p3 fire 2"	},
 
-	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy4 + 7,	"p4 fire 3"	}, // PLACEHOLDER
+	A("P4 Gun",     	BIT_ANALOG_REL, &Analog[3],		"p4 x-axis"),
 	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p4 fire 1"	},
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy4 + 3,	"p4 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Copsnrob)
 
 static struct BurnDIPInfo CopsnrobDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0x03, NULL			},
+	DIP_OFFSET(0x11)
+	{0x00, 0xff, 0xff, 0x03, NULL				},
 
-	{0   , 0xfe, 0   ,    4, "Coinage"		},
-	{0x11, 0x01, 0x03, 0x03, "1 Coin/1 Player"	},
-	{0x11, 0x01, 0x03, 0x02, "1 Coin/2 Players"	},
-	{0x11, 0x01, 0x03, 0x01, "1 Coin/Game"		},
-	{0x11, 0x01, 0x03, 0x00, "2 Coins/1 Player"	},
+	{0   , 0xfe, 0   ,    4, "Coinage"			},
+	{0x00, 0x01, 0x03, 0x03, "1 Coin/1 Player"	},
+	{0x00, 0x01, 0x03, 0x02, "1 Coin/2 Players"	},
+	{0x00, 0x01, 0x03, 0x01, "1 Coin/Game"		},
+	{0x00, 0x01, 0x03, 0x00, "2 Coins/1 Player"	},
 
 	{0   , 0xfe, 0   ,    4, "Time Limit"		},
-	{0x11, 0x01, 0x0c, 0x0c, "1min"			},
-	{0x11, 0x01, 0x0c, 0x08, "1min 45sec"		},
-	{0x11, 0x01, 0x0c, 0x04, "2min 20sec"		},
-	{0x11, 0x01, 0x0c, 0x00, "3min"			},
+	{0x00, 0x01, 0x0c, 0x0c, "1min"				},
+	{0x00, 0x01, 0x0c, 0x08, "1min 45sec"		},
+	{0x00, 0x01, 0x0c, 0x04, "2min 20sec"		},
+	{0x00, 0x01, 0x0c, 0x00, "3min"				},
 };
 
 STDDIPINFO(Copsnrob)
 
+const INT32 trackball_divider = 0x3;
+
+static UINT8 anlg(INT32 in)
+{
+	const UINT8 gunmap[7] = { 0x3f, 0x5f, 0x6f, 0x77, 0x7b, 0x7d, 0x7e };
+	UINT8 an = BurnTrackballRead(in) / trackball_divider;
+
+	return gunmap[an & 7] | ((~DrvJoy4[in] << 7) & 0x80);
+}
+
 static UINT8 copsnrob_read(UINT16 address)
 {
-	UINT8 ret;
-
 	switch (address & 0x1fff)
 	{
 		case 0x1000:
 			return vblank ? 0 : 0x80;
 
 		case 0x1002:
-			ret = (DrvJoy4[0] ? 0x80 : 0);
-		//	ret |= analog[0];
-			return ret; // analog 1
+			return anlg(0);
 
 		case 0x1006:
-			ret = (DrvJoy4[1] ? 0x80 : 0);
-		//	ret |= analog[1];	
-			return ret; // analog 2
+			return anlg(1);
 
 		case 0x100a:
-			ret = (DrvJoy4[2] ? 0x80 : 0);
-		//	ret |= analog[2];
-			return ret; // analog 3
+			return anlg(2);
 
 		case 0x100e:
-			ret = (DrvJoy4[3] ? 0x80 : 0);
-		//	ret |= analog[3];
-			return ret; // analog 4
+			return anlg(3);
 
 		case 0x1012:
 			return (DrvDips[0] & 0xf) | (DrvInputs[2] & 0xf0);
@@ -208,11 +211,11 @@ static INT32 MemIndex()
 
 	AllRam			= Next;
 
-	DrvM6502RAM0		= Next; Next += 0x000200;
-	DrvM6502RAM1		= Next; Next += 0x000100;
+	DrvM6502RAM0	= Next; Next += 0x000200;
+	DrvM6502RAM1	= Next; Next += 0x000100;
 	DrvVidRAM		= Next; Next += 0x000400;
 	DrvTruckRAM		= Next; Next += 0x000100;
-	DrvBulletRAM		= Next; Next += 0x000100;
+	DrvBulletRAM	= Next; Next += 0x000100;
 
 	car_y			= Next; Next += 0x000004;
 	car_image		= Next; Next += 0x000004;
@@ -258,12 +261,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvM6502ROM + 0x0000,  0, 1)) return 1;
@@ -288,15 +286,13 @@ static INT32 DrvInit()
 
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
-	for (INT32 i = 0; i < 0x10000; i+= 0x2000)
-	{
-		M6502MapMemory(DrvM6502RAM0,		0x0000 + i, 0x01ff + i, MAP_RAM);
-		M6502MapMemory(DrvTruckRAM,		0x0700 + i, 0x07ff + i, MAP_WRITE); // no read
-		M6502MapMemory(DrvBulletRAM,		0x0800 + i, 0x08ff + i, MAP_RAM);
-		M6502MapMemory(DrvM6502RAM1,		0x0b00 + i, 0x0bff + i, MAP_RAM);
-		M6502MapMemory(DrvVidRAM,		0x0c00 + i, 0x0fff + i, MAP_RAM);
-		M6502MapMemory(DrvM6502ROM,		0x1200 + i, 0x1fff + i, MAP_ROM);
-	}
+	M6502SetAddressMask(0x1fff);
+	M6502MapMemory(DrvM6502RAM0,		0x0000, 0x01ff, MAP_RAM);
+	M6502MapMemory(DrvTruckRAM,			0x0700, 0x07ff, MAP_WRITE); // no read
+	M6502MapMemory(DrvBulletRAM,		0x0800, 0x08ff, MAP_RAM);
+	M6502MapMemory(DrvM6502RAM1,		0x0b00, 0x0bff, MAP_RAM);
+	M6502MapMemory(DrvVidRAM,			0x0c00, 0x0fff, MAP_RAM);
+	M6502MapMemory(DrvM6502ROM,			0x1200, 0x1fff, MAP_ROM);
 	M6502SetWriteHandler(copsnrob_write);
 	M6502SetReadHandler(copsnrob_read);
 	M6502Close();
@@ -306,6 +302,8 @@ static INT32 DrvInit()
 	GenericTilesInit();
 	GenericTilemapInit(0, flipx_map_scan, background_map_callback, 8, 8, 32, 32);
 	GenericTilemapSetGfx(0, DrvGfxROM0, 1, 8, 8, 0x1000, 0, 0);
+
+	BurnTrackballInit(2);
 
 	DrvDoReset();
 
@@ -320,21 +318,20 @@ static INT32 DrvExit()
 
 	// samples?
 
-	BurnFree(AllMem);
+	BurnTrackballExit();
+
+	BurnFreeMemIndex();
 
 	return 0;
 }
 
 static void draw_cars()
 {
-
 	INT32 pos[4] = { 0xe4, 0xc4, 0x24, 0x04 };
 
 	for (INT32 i = 0; i < 4; i++)
 	{
-		if (car_y[i] == 0) return;
-
-		Render32x32Tile_Mask_Clip(pTransDraw, car_image[i], pos[i], 256 - car_y[i], 0, 1, 0, 0, DrvGfxROM1);
+		Draw32x32MaskTile(pTransDraw, car_image[i], pos[i], 256 - car_y[i], (i & 2) ? 0 : 1, 0, 0, 1, 0, 0, DrvGfxROM1);
 	}
 }
 
@@ -406,8 +403,6 @@ static INT32 DrvFrame()
 	}
 
 	{
-		// static const ioport_value gun_table[] = {0x3f, 0x5f, 0x6f, 0x77, 0x7b, 0x7d, 0x7e};
-
 		memset (DrvInputs, 0xff, 3);
 
 		for (INT32 i = 0; i < 8; i++) {
@@ -415,15 +410,31 @@ static INT32 DrvFrame()
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
+
+		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
+		BurnTrackballConfigStartStopPoints(0, 0, 7*trackball_divider, 0, 7*trackball_divider);
+		BurnTrackballFrame(0, Analog[0], Analog[1], 0x00, 0x01);
+		BurnTrackballUpdate(0);
+
+		BurnTrackballConfig(1, AXIS_NORMAL, AXIS_NORMAL);
+		BurnTrackballConfigStartStopPoints(1, 0, 7*trackball_divider, 0, 7*trackball_divider);
+		BurnTrackballFrame(1, Analog[2], Analog[3], 0x00, 0x01);
+		BurnTrackballUpdate(1);
 	}
 
-	INT32 nCyclesTotal = (894886 + (((nCurrentFrame & 3) == 3) ? 1 : 0)) / 60; // 894886.25
+	INT32 nInterleave = 262;
+	INT32 nCyclesTotal[1] = { (894886 + (((nCurrentFrame & 3) == 3) ? 1 : 0)) / 60 }; // 894886.25
+	INT32 nCyclesDone[1] =  { 0 };
+
+	vblank = 0;
 
 	M6502Open(0);
-	vblank = 0;
-	M6502Run((nCyclesTotal * 208) / 256);
-	vblank = 1;
-	M6502Run((nCyclesTotal *  48) / 256);
+
+	for (INT32 i = 0; i < nInterleave; i++) {
+		CPU_RUN(0, M6502);
+		if (i == 200) vblank = 1;
+	}
+
 	M6502Close();
 
 	if (pBurnSoundOut) {
@@ -437,7 +448,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -445,7 +456,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -456,6 +467,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		M6502Scan(nAction);
 
 		// samples?
+
+		BurnGunScan();
 
 		SCAN_VAR(truck_y);
 	}
@@ -498,7 +511,7 @@ struct BurnDriverD BurnDrvCopsnrob = {
 	"copsnrob", NULL, NULL, NULL, "1976",
 	"Cops'n Robbers\0", "No sound", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, copsnrobRomInfo, copsnrobRomName, NULL, NULL, NULL, NULL, CopsnrobInputInfo, CopsnrobDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	256, 208, 4, 3

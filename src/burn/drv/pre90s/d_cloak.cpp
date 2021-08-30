@@ -43,10 +43,10 @@ static UINT8 DrvInputs[4];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo CloakInputList[] = {
-	{"Coin A",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 coin"	},
-	{"Coin B",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 coin"	},
-	{"Start 1",		BIT_DIGITAL,	DrvJoy4 + 7,	"p1 start"	},
-	{"Start 2",		BIT_DIGITAL,	DrvJoy4 + 6,	"p2 start"	},
+	{"Coin A",			BIT_DIGITAL,	DrvJoy3 + 3,	"p1 coin"	},
+	{"Coin B",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 coin"	},
+	{"Start 1",			BIT_DIGITAL,	DrvJoy4 + 7,	"p1 start"	},
+	{"Start 2",			BIT_DIGITAL,	DrvJoy4 + 6,	"p2 start"	},
 	{"P1 Left Up",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 up"		},
 	{"P1 Left Down",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 down"	},
 	{"P1 Left Left",	BIT_DIGITAL,	DrvJoy1 + 7,	"p1 left"	},
@@ -59,36 +59,36 @@ static struct BurnInputInfo CloakInputList[] = {
 
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 5,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 5,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Cloak)
 
 static struct BurnDIPInfo CloakDIPList[]=
 {
-	{0x0f, 0xff, 0xff, 0x02, NULL			},
+	{0x0f, 0xff, 0xff, 0x02, NULL					},
 
-	{0   , 0xfe, 0   ,    4, "Credits"		},
-	{0x0f, 0x01, 0x03, 0x02, "1 Credit/1 Game"	},
-	{0x0f, 0x01, 0x03, 0x01, "1 Credit/2 Games"	},
-	{0x0f, 0x01, 0x03, 0x03, "2 Credits/1 Game"	},
-	{0x0f, 0x01, 0x03, 0x00, "Free Play"		},
+	{0   , 0xfe, 0   ,    4, "Credits"				},
+	{0x0f, 0x01, 0x03, 0x02, "1 Credit/1 Game"		},
+	{0x0f, 0x01, 0x03, 0x01, "1 Credit/2 Games"		},
+	{0x0f, 0x01, 0x03, 0x03, "2 Credits/1 Game"		},
+	{0x0f, 0x01, 0x03, 0x00, "Free Play"			},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"		},
+	{0   , 0xfe, 0   ,    4, "Coin B"				},
 	{0x0f, 0x01, 0x0c, 0x00, "1 Coin  1 Credits"	},
 	{0x0f, 0x01, 0x0c, 0x04, "1 Coin  4 Credits"	},
 	{0x0f, 0x01, 0x0c, 0x08, "1 Coin  5 Credits"	},
 	{0x0f, 0x01, 0x0c, 0x0c, "1 Coin  6 Credits"	},
 
-	{0   , 0xfe, 0   ,    2, "Coin A"		},
+	{0   , 0xfe, 0   ,    2, "Coin A"				},
 	{0x0f, 0x01, 0x10, 0x00, "1 Coin  1 Credits"	},
 	{0x0f, 0x01, 0x10, 0x10, "1 Coin  2 Credits"	},
 
-	{0   , 0xfe, 0   ,    0, "Demo Freeze Mode"	},
-	{0x0f, 0x01, 0x40, 0x00, "Off"			},
-	{0x0f, 0x01, 0x40, 0x40, "On"			},
+	{0   , 0xfe, 0   ,    0, "Demo Freeze Mode"		},
+	{0x0f, 0x01, 0x40, 0x00, "Off"					},
+	{0x0f, 0x01, 0x40, 0x40, "On"					},
 };
 
 STDDIPINFO(Cloak)
@@ -289,7 +289,7 @@ static UINT8 cloak_sub_read(UINT16 address)
 {
 	if (address < 0x0008 || (address >= 0x0010 && address <= 0x07ff)) {
 		return DrvM6502RAM1[address & 0x7ff];
-	}	
+	}
 
 	if ((address & 0xfff8) == 0x0008) {
 		return adjust_xy_r(address);
@@ -330,29 +330,29 @@ static INT32 MemIndex()
 	DrvM6502ROM0		= Next; Next += 0x010000;
 	DrvM6502ROM1		= Next; Next += 0x010000;
 
-	DrvGfxROM0		= Next; Next += 0x004000;
-	DrvGfxROM1		= Next; Next += 0x004000;
+	DrvGfxROM0			= Next; Next += 0x004000;
+	DrvGfxROM1			= Next; Next += 0x004000;
 
-	DrvNVRAM		= Next; Next += 0x000200;
+	DrvNVRAM			= Next; Next += 0x000200;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x0040 * sizeof(UINT32);
+	DrvPalette			= (UINT32*)Next; Next += 0x0040 * sizeof(UINT32);
 
-	AllRam			= Next;
+	AllRam				= Next;
 
 	DrvM6502RAM0		= Next; Next += 0x000800;
 	DrvM6502RAM1		= Next; Next += 0x000800;
-	DrvVidRAM		= Next; Next += 0x000800;
-	DrvShareRAM		= Next; Next += 0x000800;
-	DrvSprRAM		= Next; Next += 0x000100;
+	DrvVidRAM			= Next; Next += 0x000800;
+	DrvShareRAM			= Next; Next += 0x000800;
+	DrvSprRAM			= Next; Next += 0x000100;
 
-	DrvPalRAM		= (UINT16*)Next; Next += 0x0040 * 2;
+	DrvPalRAM			= (UINT16*)Next; Next += 0x0040 * 2;
 
-	bitmap[0]		= Next; Next += 256 * 256;
-	bitmap[1]		= Next; Next += 256 * 256;
+	bitmap[0]			= Next; Next += 256 * 256;
+	bitmap[1]			= Next; Next += 256 * 256;
 
-	RamEnd			= Next;
+	RamEnd				= Next;
 
-	MemEnd			= Next;
+	MemEnd				= Next;
 
 	return 0;
 }
@@ -383,12 +383,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvM6502ROM0 + 0x4000,  0, 1)) return 1;
@@ -436,7 +431,7 @@ static INT32 DrvInit()
 	M6502SetReadHandler(cloak_sub_read);
 	M6502Close();
 
-	PokeyInit(1250000, 2, 1.00, 0);
+	PokeyInit(1250000, 2, 0.75, 0);
 
 	GenericTilesInit();
 
@@ -452,7 +447,7 @@ static INT32 DrvExit()
 	M6502Exit();
 	PokeyExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -511,7 +506,6 @@ static void draw_bitmap()
 
 			if (pen) {
 				pTransDraw[((y - 24) * nScreenWidth) + ((x - 6) & 0xff)] = 0x10 | ((x & 0x80) >> 4) | pen;
-					//0x10 | ((x >> 4) & 8) | pen;
 			}
 		}
 	}
@@ -538,19 +532,7 @@ static void draw_sprites()
 			sy -= 24;
 		}
 
-		if (flipy) {
-			if (flipx) {
-				RenderCustomTile_Mask_FlipXY_Clip(pTransDraw, 8, 16, code, sx, sy, color, 4, 0, 0x20, DrvGfxROM1);
-			} else {
-				RenderCustomTile_Mask_FlipY_Clip(pTransDraw, 8, 16, code, sx, sy, color, 4, 0, 0x20, DrvGfxROM1);
-			}
-		} else {
-			if (flipx) {
-				RenderCustomTile_Mask_FlipX_Clip(pTransDraw, 8, 16, code, sx, sy, color, 4, 0, 0x20, DrvGfxROM1);
-			} else {
-				RenderCustomTile_Mask_Clip(pTransDraw, 8, 16, code, sx, sy, color, 4, 0, 0x20, DrvGfxROM1);
-			}
-		}
+		DrawCustomMaskTile(pTransDraw, 8, 16, code, sx, sy, flipx, flipy, color, 4, 0, 0x20, DrvGfxROM1);
 	}
 }
 
@@ -565,7 +547,7 @@ static INT32 DrvDraw()
 
 	if (nBurnLayer & 1) draw_layer();
 	if (nBurnLayer & 2) draw_bitmap();
-	if (nBurnLayer & 4) draw_sprites();
+	if (nSpriteEnable & 1) draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -578,8 +560,7 @@ static INT32 DrvFrame()
 		DrvDoReset(1);
 	}
 
-	watchdog++;
-	if (watchdog >= 180) {
+	if (++watchdog >= 180) {
 		DrvDoReset(0);
 	}
 
@@ -602,12 +583,12 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6502Open(0);
-		nCyclesDone[0] += M6502Run(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, M6502);
 		if ((i & 0x3f) == 0x3f) M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		M6502Close();
 
 		M6502Open(1);
-		nCyclesDone[1] += M6502Run(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(1, M6502);
 		if ((i & 0x7f) == 0x7f) M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		M6502Close();
 
@@ -657,6 +638,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(video_selected);
 		SCAN_VAR(video_address_x);
 		SCAN_VAR(video_address_y);
+		SCAN_VAR(watchdog);
 	}
 
 	return 0;

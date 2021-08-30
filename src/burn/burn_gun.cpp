@@ -330,12 +330,22 @@ void BurnPaddleGetDial(BurnDialINF &dial, INT32 num, INT32 isB)
 	}
 }
 
-UINT8 BurnTrackballRead(INT32 dev, INT32 isB)
+UINT8 BurnTrackballRead(INT32 dev) // linear device #
+{
+	return BurnTrackballRead(dev >> 1, dev & 1);
+}
+
+UINT8 BurnTrackballRead(INT32 dev, INT32 isB) // 2 axis per device #
 {
 	if (isB)
 		return TrackB[dev] & 0xff;
 	else
 		return TrackA[dev] & 0xff;
+}
+
+UINT16 BurnTrackballReadWord(INT32 dev)
+{
+	return BurnTrackballReadWord(dev >> 1, dev & 1);
 }
 
 UINT16 BurnTrackballReadWord(INT32 dev, INT32 isB)
@@ -344,6 +354,11 @@ UINT16 BurnTrackballReadWord(INT32 dev, INT32 isB)
 		return TrackB[dev] & 0xffff;
 	else
 		return TrackA[dev] & 0xffff;
+}
+
+INT32 BurnTrackballReadSigned(INT32 dev)
+{
+	return BurnTrackballReadSigned(dev >> 1, dev & 1);
 }
 
 INT32 BurnTrackballReadSigned(INT32 dev, INT32 isB)

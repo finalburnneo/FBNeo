@@ -44,6 +44,7 @@ static UINT8 DrvCPUIRQVector;
 static UINT8 xScroll;
 static UINT8 yScroll;
 static UINT8 DrvLastBang;
+
 static INT32 rallyx = 0;
 static INT32 junglermode = 0; // jungler, locomtn, tactician, commsega use this
 static INT32 junglerinputs = 0; // jungler has different dips than the others.
@@ -1949,7 +1950,7 @@ static INT32 JunglerFrame()
 
 	JunglerMakeInputs();
 
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 256*2;
 	INT32 nCyclesTotal[2] = { (18432000 / 6) / 60, (14318180 / 8) / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -1970,6 +1971,7 @@ static INT32 JunglerFrame()
 
 	if (pBurnSoundOut) {
 		TimepltSndUpdate(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 	}
 
 	if (pBurnDraw) DrvDrawJungler();
@@ -1998,7 +2000,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		if (junglermode) {
 			TimepltSndScan(nAction, pnMin);
-			SCAN_VAR(last_sound_irq);
 		}
 
 		if (rallyx) {

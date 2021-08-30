@@ -860,12 +860,7 @@ static INT32 DrvRomLoad(INT32 *banked_prg)
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	INT32 banked_prog = 0;
 	if (DrvRomLoad(&banked_prog)) return 1;
@@ -970,7 +965,7 @@ static INT32 DrvExit()
 	is_slither = 0;
 	is_zookeep = 0;
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -1081,10 +1076,8 @@ static INT32 DrvFrame()
 		if (is_slither) {
 			BurnTrackballConfig(0, AXIS_NORMAL, AXIS_REVERSED);
 			BurnTrackballConfig(1, AXIS_NORMAL, AXIS_REVERSED);
-			BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 1, 2);
-			BurnTrackballFrame(1, DrvAnalogPort2, DrvAnalogPort3, 1, 2);
-			BurnTrackballUpdateSlither(0);
-			BurnTrackballUpdateSlither(1);
+			BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 0, 2);
+			BurnTrackballFrame(1, DrvAnalogPort2, DrvAnalogPort3, 0, 2);
 		}
 	}
 
@@ -1136,7 +1129,7 @@ static INT32 DrvFrame()
 			partial_update();
 		}
 
-		if (is_slither && (i%(120*8)) == (120*8)-1) {
+		if (is_slither && (i % (88*8)) == 0) { // update 3x / frame
 			BurnTrackballUpdateSlither(0);
 			BurnTrackballUpdateSlither(1);
 		}

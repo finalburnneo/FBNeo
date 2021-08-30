@@ -346,7 +346,7 @@ static INT32 MemIndex()
 
 	DrvSprRAM		= Next; Next += 0x000800;
 	DrvVidRAM		= Next; Next += 0x008000;
-	
+
 	DrvPalRAM		= (UINT16*)Next; Next += 0x000040 * sizeof(UINT16);
 
 	RamEnd			= Next;
@@ -378,12 +378,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		INT32 k = 0;
@@ -425,7 +420,7 @@ static INT32 DrvInit()
 
 	BurnWatchdogInit(DrvDoReset, 180);
 
-	PokeyInit(1250000, 2, 0.50, 0);
+	PokeyInit(1250000, 2, 1.25, 0);
 	PokeyAllPotCallback(1, pokey_1_callback);
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 
@@ -462,7 +457,7 @@ static INT32 DrvExit()
 
 	PokeyExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	is_firebeast = 0;
 
@@ -590,8 +585,8 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 262;
-	INT32 nTotalCycles = 1250000 / 60;
-	INT32 nCyclesDone = 0;
+	INT32 nCyclesTotal[1] = { 1250000 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
 
 	M6502Open(0);
 
@@ -601,7 +596,8 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++) {
 		vblank = (~DrvVidPROM[i & 0xff] >> 1) & 1;
 
-		nCyclesDone += M6502Run(((i + 1) * nTotalCycles / nInterleave) - nCyclesDone);
+		CPU_RUN(0, M6502);
+
 		if ((i%64) == 63) {
 			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			irq_state = 1;

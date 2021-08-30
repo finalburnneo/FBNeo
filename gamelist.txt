@@ -14248,7 +14248,7 @@ This list contains all games supported by FinalBurn Neo.
 | spnchouta	|  	| Super Punch-Out!! (Rev A)				| spnchout	| 1984	| Nintendo	| Miscellaneous	| 					|
 | spnchout	|  	| Super Punch-Out!! (Rev B)				| 		| 1984	| Nintendo	| Miscellaneous	| 					|
 | spf2tb	|  	| Super Puzzle Fighter II Turbo (Boss Hack)(USA 960620)	| spf2t		| 200?	| Hack		| CPS2		| 					|
-| spf2tcb	|  	| Super Puzzle Fighter II Turbo (Color Blind Hack)	| spf2t		| 1996	| Capcom	| CPS2		| 					|
+| spf2tcb	|  	| Super Puzzle Fighter II Turbo (Color Blind Hack)	| spf2t		| 2021	| Capcom	| CPS2		| 					|
 | spf2ta	|  	| Super Puzzle Fighter II Turbo (Super Puzzle Fighter 2 | spf2t		| 1996	| Capcom	| CPS2		| 					|
 | spf2t		|  	| Super Puzzle Fighter II Turbo (Super Puzzle Fighter 2 | 		| 1996	| Capcom	| CPS2		| 					|
 | spf2th	|  	| Super Puzzle Fighter II Turbo (Super Puzzle Fighter 2 | spf2t		| 1996	| Capcom	| CPS2		| 					|

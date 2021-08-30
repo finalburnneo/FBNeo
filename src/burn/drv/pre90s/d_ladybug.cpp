@@ -735,12 +735,7 @@ static INT32 DorodonDecode()
 
 static INT32 DrvInit(INT32 game_select)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		switch (game_select)
@@ -841,12 +836,7 @@ static INT32 DrvInit(INT32 game_select)
 
 static INT32 SraiderInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
@@ -916,12 +906,7 @@ static INT32 SraiderInit()
 
 static INT32 MrsdynaInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
@@ -994,7 +979,7 @@ static INT32 DrvExit()
 	ZetExit();
 	SN76496Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	ladybug = 0;
 
@@ -1017,7 +1002,7 @@ static void draw_layer()
 
 		if (*flipscreen) {
 			sx = 240 - sx;
-			sy = 196 - sy;	
+			sy = 196 - sy;
 
 			Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, (sy * 8) - 32, color, 2, 0, 0, DrvGfxROM0);
 		} else {

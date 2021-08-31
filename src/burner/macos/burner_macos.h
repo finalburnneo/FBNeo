@@ -12,7 +12,7 @@ typedef struct tagRECT {
 } RECT,*PRECT,*LPRECT;
 typedef const RECT *LPCRECT;
 
-typedef unsigned int DWORD;
+typedef unsigned long DWORD;
 typedef unsigned char BYTE;
 
 #ifndef MAX_PATH

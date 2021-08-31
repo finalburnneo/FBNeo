@@ -1,5 +1,5 @@
 /* XzIn.c - Xz input
-2021-04-01 : Igor Pavlov : Public domain */
+2018-07-04 : Igor Pavlov : Public domain */
 
 #include "Precomp.h"
 
@@ -152,7 +152,7 @@ static SRes Xz_ReadBackward(CXzStream *p, ILookInStream *stream, Int64 *startOff
 {
   UInt64 indexSize;
   Byte buf[XZ_STREAM_FOOTER_SIZE];
-  UInt64 pos = (UInt64)*startOffset;
+  UInt64 pos = *startOffset;
 
   if ((pos & 3) != 0 || pos < XZ_STREAM_FOOTER_SIZE)
     return SZ_ERROR_NO_ARCHIVE;
@@ -202,13 +202,8 @@ static SRes Xz_ReadBackward(CXzStream *p, ILookInStream *stream, Int64 *startOff
   if (!XzFlags_IsSupported(p->flags))
     return SZ_ERROR_UNSUPPORTED;
 
-  {
-    /* to eliminate GCC 6.3 warning:
-       dereferencing type-punned pointer will break strict-aliasing rules */
-    const Byte *buf_ptr = buf;
-    if (GetUi32(buf_ptr) != CrcCalc(buf + 4, 6))
-      return SZ_ERROR_ARCHIVE;
-  }
+  if (GetUi32(buf) != CrcCalc(buf + 4, 6))
+    return SZ_ERROR_ARCHIVE;
 
   indexSize = ((UInt64)GetUi32(buf + 4) + 1) << 2;
 
@@ -227,7 +222,7 @@ static SRes Xz_ReadBackward(CXzStream *p, ILookInStream *stream, Int64 *startOff
       return SZ_ERROR_ARCHIVE;
     pos -= (totalSize + XZ_STREAM_HEADER_SIZE);
     RINOK(LookInStream_SeekTo(stream, pos));
-    *startOffset = (Int64)pos;
+    *startOffset = pos;
   }
   {
     CXzStreamFlags headerFlags;
@@ -299,12 +294,12 @@ SRes Xzs_ReadBackward(CXzs *p, ILookInStream *stream, Int64 *startOffset, ICompr
     SRes res;
     Xz_Construct(&st);
     res = Xz_ReadBackward(&st, stream, startOffset, alloc);
-    st.startOffset = (UInt64)*startOffset;
+    st.startOffset = *startOffset;
     RINOK(res);
     if (p->num == p->numAllocated)
     {
-      const size_t newNum = p->num + p->num / 4 + 1;
-      void *data = ISzAlloc_Alloc(alloc, newNum * sizeof(CXzStream));
+      size_t newNum = p->num + p->num / 4 + 1;
+      Byte *data = (Byte *)ISzAlloc_Alloc(alloc, newNum * sizeof(CXzStream));
       if (!data)
         return SZ_ERROR_MEM;
       p->numAllocated = newNum;
@@ -316,8 +311,8 @@ SRes Xzs_ReadBackward(CXzs *p, ILookInStream *stream, Int64 *startOffset, ICompr
     p->streams[p->num++] = st;
     if (*startOffset == 0)
       break;
-    RINOK(LookInStream_SeekTo(stream, (UInt64)*startOffset));
-    if (progress && ICompressProgress_Progress(progress, (UInt64)(endOffset - *startOffset), (UInt64)(Int64)-1) != SZ_OK)
+    RINOK(LookInStream_SeekTo(stream, *startOffset));
+    if (progress && ICompressProgress_Progress(progress, endOffset - *startOffset, (UInt64)(Int64)-1) != SZ_OK)
       return SZ_ERROR_PROGRESS;
   }
   return SZ_OK;

@@ -1,5 +1,5 @@
 /* MtCoder.c -- Multi-thread Coder
-2021-02-09 : Igor Pavlov : Public domain */
+2018-07-04 : Igor Pavlov : Public domain */
 
 #include "Precomp.h"
 
@@ -7,7 +7,7 @@
 
 #ifndef _7ZIP_ST
 
-static SRes MtProgressThunk_Progress(const ICompressProgress *pp, UInt64 inSize, UInt64 outSize)
+SRes MtProgressThunk_Progress(const ICompressProgress *pp, UInt64 inSize, UInt64 outSize)
 {
   CMtProgressThunk *thunk = CONTAINER_FROM_VTBL(pp, CMtProgressThunk, vt);
   UInt64 inSize2 = 0;
@@ -70,7 +70,8 @@ static void MtCoderThread_Destruct(CMtCoderThread *t)
   {
     t->stop = 1;
     Event_Set(&t->startEvent);
-    Thread_Wait_Close(&t->thread);
+    Thread_Wait(&t->thread);
+    Thread_Close(&t->thread);
   }
 
   Event_Close(&t->startEvent);
@@ -341,7 +342,7 @@ static THREAD_FUNC_RET_TYPE THREAD_FUNC_CALL_TYPE ThreadFunc(void *pp)
   for (;;)
   {
     if (Event_Wait(&t->startEvent) != 0)
-      return (THREAD_FUNC_RET_TYPE)SZ_ERROR_THREAD;
+      return SZ_ERROR_THREAD;
     if (t->stop)
       return 0;
     {
@@ -357,7 +358,7 @@ static THREAD_FUNC_RET_TYPE THREAD_FUNC_CALL_TYPE ThreadFunc(void *pp)
         unsigned numFinished = (unsigned)InterlockedIncrement(&mtc->numFinishedThreads);
         if (numFinished == mtc->numStartedThreads)
           if (Event_Set(&mtc->finishedEvent) != 0)
-            return (THREAD_FUNC_RET_TYPE)SZ_ERROR_THREAD;
+            return SZ_ERROR_THREAD;
       }
       #endif
     }

@@ -1,5 +1,5 @@
 /* MtDec.h -- Multi-thread Decoder
-2020-03-05 : Igor Pavlov : Public domain */
+2018-07-04 : Igor Pavlov : Public domain */
 
 #ifndef __MT_DEC_H
 #define __MT_DEC_H
@@ -108,12 +108,11 @@ typedef struct
   */
   SRes (*Write)(void *p, unsigned coderIndex,
       BoolInt needWriteToStream,
-      const Byte *src, size_t srcSize, BoolInt isCross,
+      const Byte *src, size_t srcSize,
       // int srcFinished,
       BoolInt *needContinue,
       BoolInt *canRecode);
-
-} IMtDecCallback2;
+} IMtDecCallback;
 
 
 
@@ -133,7 +132,7 @@ typedef struct _CMtDec
   ICompressProgress *progress;
   ISzAllocPtr alloc;
 
-  IMtDecCallback2 *mtCallback;
+  IMtDecCallback *mtCallback;
   void *mtCallbackObject;
 
   

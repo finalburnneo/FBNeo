@@ -1,5 +1,5 @@
 /* Bcj2Enc.c -- BCJ2 Encoder (Converter for x86 code)
-2021-02-09 : Igor Pavlov : Public domain */
+2019-02-02 : Igor Pavlov : Public domain */
 
 #include "Precomp.h"
 
@@ -104,7 +104,7 @@ static void Bcj2Enc_Encode_2(CBcj2Enc *p)
         const Byte *src = p->src;
         const Byte *srcLim;
         Byte *dest;
-        SizeT num = (SizeT)(p->srcLim - src);
+        SizeT num = p->srcLim - src;
 
         if (p->finishMode == BCJ2_ENC_FINISH_MODE_CONTINUE)
         {
@@ -118,7 +118,7 @@ static void Bcj2Enc_Encode_2(CBcj2Enc *p)
         dest = p->bufs[BCJ2_STREAM_MAIN];
         if (num > (SizeT)(p->lims[BCJ2_STREAM_MAIN] - dest))
         {
-          num = (SizeT)(p->lims[BCJ2_STREAM_MAIN] - dest);
+          num = p->lims[BCJ2_STREAM_MAIN] - dest;
           if (num == 0)
           {
             p->state = BCJ2_STREAM_MAIN;
@@ -152,7 +152,7 @@ static void Bcj2Enc_Encode_2(CBcj2Enc *p)
           break;
         }
         
-        num = (SizeT)(src - p->src);
+        num = src - p->src;
         
         if (src == srcLim)
         {

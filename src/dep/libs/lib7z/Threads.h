@@ -5,7 +5,7 @@
 #define __7Z_THREADS_H
 
 #ifdef _WIN32
-#include <windows.h>
+#include <Windows.h>
 #else
 
 #if !defined(__APPLE__) && !defined(_AIX)

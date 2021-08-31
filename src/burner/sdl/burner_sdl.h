@@ -20,7 +20,7 @@ typedef const RECT* LPCRECT;
 #include <windows.h>
 #endif
 
-typedef unsigned long   DWORD;
+typedef unsigned int   DWORD;
 typedef unsigned char   BYTE;
 
 #ifndef MAX_PATH

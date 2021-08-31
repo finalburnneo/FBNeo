@@ -161,7 +161,7 @@ INT32 ZipGetList(struct ZipEntry** pList, INT32* pnListCount)
 				}
 			}
 
-			UINT64 size = SzArEx_GetFileSize(&_7ZipFile->db, i);
+			UINT32 size = (UINT32)SzArEx_GetFileSize(&_7ZipFile->db, i);
 			UINT32 crc = _7ZipFile->db.CRCs.Vals[i];
 
 			SzArEx_GetFileNameUtf16(&_7ZipFile->db, i, temp);
@@ -359,7 +359,7 @@ INT32 __cdecl ZipLoadOneFile(char* arcName, const char* fileName, void** Dest, I
 			return 1;
 		}
 
-		UINT64 size = SzArEx_GetFileSize(&_7ZipFile->db, nCurrFile);
+		UINT32 size = (UINT32)SzArEx_GetFileSize(&_7ZipFile->db, nCurrFile);
 		UINT32 crc = _7ZipFile->db.CRCs.Vals[nCurrFile];
 
 		_7ZipFile->curr_file_idx = nCurrFile;

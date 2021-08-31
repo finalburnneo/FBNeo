@@ -250,7 +250,7 @@ int _7z_search_crc_match(_7z_file *new_7z, UINT32 search_crc, const char* search
 		bool crcmatch = false;
 		bool namematch = false;
 
-		UINT32 size = (UINT32)SzArEx_GetFileSize(&new_7z->db, i);
+		UINT64 size = SzArEx_GetFileSize(&new_7z->db, i);
 		UINT32 crc = new_7z->db.CRCs.Vals[i];
 
 		/* Check for a name match */

@@ -5,7 +5,7 @@ typedef unsigned char BYTE;
 /*
 typedef unsigned short WORD;
 */
-typedef unsigned int DWORD;
+typedef unsigned long DWORD;
 
 extern int bDrvOkay;
 extern int bRunPause;

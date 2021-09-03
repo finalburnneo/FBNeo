@@ -4,6 +4,7 @@
 /*
     finished:
 		carnival (w/sound)
+		heiankyo alien (w/sound)
 
 	to do:
 	  	bugtest
@@ -35,6 +36,10 @@ static UINT8 coin_last;
 
 static UINT8 palette_bank;
 static UINT8 samurai_protection;
+// sound
+static UINT8 port1_state;
+static UINT8 port2_state;
+static INT32 sample_latch;
 
 static UINT8 DrvJoy1[1]; // coin
 static UINT8 DrvJoy2[8];
@@ -44,6 +49,8 @@ static UINT8 DrvJoy5[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvInputs[4];
 static UINT8 DrvReset;
+
+static INT32 nExtraCycles[1];
 
 static INT32 carnival_sound = 0;
 
@@ -1054,10 +1061,13 @@ static UINT8 __fastcall alphaho_read_port(UINT16 port)
 	return 0;
 }
 
-static void __fastcall heiankyo_write_port(UINT16 port, UINT8/* data*/)
+static void HeiankyoSoundWrite1(UINT16 port, UINT8 data); // forward for now..
+static void HeiankyoSoundWrite2(UINT16 port, UINT8 data);
+
+static void __fastcall heiankyo_write_port(UINT16 port, UINT8 data)
 {
-//	if (port & 1) // audio
-//	if (port & 2) // audio
+	if (port & 1) HeiankyoSoundWrite1(port, data);
+	if (port & 2) HeiankyoSoundWrite2(port, data);
 	if (port & 8) coin_status = 1;
 }
 
@@ -1078,7 +1088,7 @@ static UINT8 __fastcall heiankyo_read_port(UINT16 port)
 			return (DrvInputs[3] & ~0x0c) | (DrvDips[1] & 0x04) | get_coin_status(8);
 	}
 
-	return 0;
+	return 0xff;
 }
 
 static void __fastcall pulsar_write_port(UINT16 port, UINT8 data)
@@ -1515,6 +1525,12 @@ static INT32 DrvDoReset()
 	palette_bank = 0;
 	samurai_protection = 0;
 
+	port1_state = 0x00;
+	port2_state = 0x00;
+	sample_latch = 0;
+
+	nExtraCycles[0] = 0;
+
 	return 0;
 }
 
@@ -1602,11 +1618,84 @@ static INT32 DrvLoadRoms()
 	return 0;
 }
 
+// Heiankyo Alien sound logic. -dink sept. 2021
+#define PLAYING(x) (BurnSampleGetStatus(x) == SAMPLE_PLAYING)
+
+static INT32 out_hole = 0;
+
+// heiankyo sound
+static void HeiankyoSoundWrite1(UINT16 port, UINT8 data)
+{
+	UINT8 Low  = (port1_state ^ data) & ~data;
+	UINT8 High = (port1_state ^ data) & data;
+
+	port1_state = data;
+
+	if (Low & 0x80) {
+		BurnSamplePlay(5); // shovel
+		return; // shovel has priority
+	}
+
+	if (High & 0x4 && !PLAYING(6)) // more appear (you're taking too long)
+		BurnSamplePlay(6);
+
+	if (High & 0x8 && !PLAYING(2)) {
+		BurnSamplePlay(2); // alien in hole
+		BurnSampleStop(3); // stop "aliens moving"
+	}
+	if (Low & 0x8) {
+		BurnSampleStop(2); // stop "alien in hole"
+		out_hole = 10;     // start countdown timer
+	}
+	if (Low & 0x20)
+		BurnSamplePlay(0); // aliens appear
+
+	if (Low || High) bprintf(0, _T("p1 low:  %x\thi:  %x\tframe:  %d\n"), Low, High, nCurrentFrame);
+}
+
+static void HeiankyoSoundWrite2(UINT16 port, UINT8 data)
+{
+	palette_bank = (data >> 6) & 3;
+	data &= 0x3f;
+
+	UINT8 Low  = (port2_state ^ data) & ~data;
+	UINT8 High = (port2_state ^ data) & data;
+	UINT8 Resume_Moving = 0;
+
+	port2_state = data;
+
+	if (Low || High) bprintf(0, _T("p2 low:  %x\thi:  %x\tframe:  %d\n"), Low, High, nCurrentFrame);
+
+	if (out_hole > 0) {
+		// if aliens escape a hole, we need to re-trigger the "aliens moving" sample loop after a short time
+		out_hole--;
+		if (out_hole == 0 && sample_latch) {
+			Resume_Moving = 1;
+		}
+	}
+
+	if ((Low & 0x8 || Resume_Moving) && !PLAYING(4) && !PLAYING(3) && !PLAYING(2) && !PLAYING(1)) {
+		sample_latch = 1;
+		BurnSamplePlay(3); // aliens moving
+		BurnSampleSetLoop(3, true);
+	}
+	if (High & 0x8) {
+		sample_latch = 0;
+		BurnSampleStop(3); // STOP aliens moving
+	}
+
+	if (Low & 0x20 && !PLAYING(4))
+		BurnSamplePlay(4); // hero death
+
+	if (Low & 0x10 && !PLAYING(1)) { // note: also played when hero death.
+		BurnSamplePlay(1); // alien death
+		BurnSampleStop(2); // stop "alien in hole"
+	}
+}
+
 // carnival sound board
 static UINT8 ay8910_bus;
 static UINT8 ay8910_data;
-static UINT8 i8039_port1_state;
-static UINT8 i8039_port2_state;
 static UINT8 i8039_in_reset;
 
 #define CARNIVAL_RIFLE        0x01
@@ -1622,10 +1711,10 @@ static UINT8 i8039_in_reset;
 
 static void CarnivalSoundWrite1(UINT8 data)
 {
-	UINT8 Low  = (i8039_port1_state ^ data) & ~data;
-	UINT8 High = (i8039_port1_state ^ data) & data;
+	UINT8 Low  = (port1_state ^ data) & ~data;
+	UINT8 High = (port1_state ^ data) & data;
 
-	i8039_port1_state = data;
+	port1_state = data;
 
 	if (Low & CARNIVAL_RIFLE)
 		BurnSamplePlay(9);
@@ -1672,9 +1761,9 @@ static void CarnivalSoundWrite1(UINT8 data)
 
 static void CarnivalSoundWrite2(UINT8 data)
 {
-	UINT8 Low = (i8039_port2_state ^ data) & ~data;
+	UINT8 Low = (port2_state ^ data) & ~data;
 
-	i8039_port2_state = data;
+	port2_state = data;
 
 	if (Low & CARNIVAL_BEAR)
 		BurnSamplePlay(0);
@@ -1705,7 +1794,7 @@ static void ay8910_check_latch()
 static UINT8 __fastcall i8039_sound_read_port(UINT32 port)
 {
 	if (port == I8039_t1)
-		return (~i8039_port2_state & 0x08) >> 3;
+		return (~port2_state & 0x08) >> 3;
 
 	return 0;
 }
@@ -1755,8 +1844,8 @@ static void CarnivalSoundReset()
 
 	ay8910_bus = 0;
 	ay8910_data = 0;
-	i8039_port1_state = 0;
-	i8039_port2_state = 0;
+	port1_state = 0;
+	port2_state = 0;
 	i8039_in_reset = 0;
 }
 
@@ -1767,8 +1856,6 @@ static void CarnivalSoundScan(INT32 nAction, INT32 *pnMin)
 
 	SCAN_VAR(ay8910_bus);
 	SCAN_VAR(ay8910_data);
-	SCAN_VAR(i8039_port1_state);
-	SCAN_VAR(i8039_port2_state);
 	SCAN_VAR(i8039_in_reset);
 }
 
@@ -1914,8 +2001,6 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 	I8039NewFrame();
 
-	INT32 nCyclesDone[2] = { 0, 0 };
-
 	{
 		memset (DrvInputs, 0xff, 4);
 
@@ -1937,6 +2022,8 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 262;
 	INT32 nCyclesTotal[2] = { 1933560 / 60, 3579545 / 15 / 60 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], 0 };
+	INT32 nSoundBufferPos = 0;
 
 	ZetOpen(0);
 
@@ -1956,6 +2043,14 @@ static INT32 DrvFrame()
 		if (i == 224 && pBurnDraw) {
 			BurnDrvRedraw();
 		}
+
+		// BurnSample needs several updates per frame when using BurnSampleGetStatus()
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			BurnSampleRender(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	if (coin_timer > 0) {
@@ -1969,8 +2064,15 @@ static INT32 DrvFrame()
 
 	ZetClose();
 
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnSoundOut) {
-		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			BurnSampleRender(pSoundBuf, nSegmentLength);
+		}
+//		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 		if (carnival_sound)
 			AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
@@ -2006,6 +2108,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(coin_last);
 		SCAN_VAR(palette_bank);
 		SCAN_VAR(samurai_protection);
+
+		SCAN_VAR(port1_state);
+		SCAN_VAR(port2_state);
+		SCAN_VAR(sample_latch);
+		SCAN_VAR(out_hole); // heiankyo timer
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;
@@ -2343,6 +2452,20 @@ struct BurnDriverD BurnDrvAlphaho = {
 };
 
 
+static struct BurnSampleInfo heiankyoSampleDesc[] = {
+	{ "alien appear", SAMPLE_NOLOOP },
+	{ "alien death", SAMPLE_NOLOOP },
+	{ "alien in hole", SAMPLE_NOLOOP },
+	{ "aliens moving", SAMPLE_NOLOOP },
+	{ "hero death", SAMPLE_NOLOOP },
+	{ "shovel", SAMPLE_NOLOOP },
+	{ "more appear", SAMPLE_NOLOOP },
+	{ "", 0 }
+};
+
+STD_SAMPLE_PICK(heiankyo)
+STD_SAMPLE_FN(heiankyo)
+
 // Heiankyo Alien
 
 static struct BurnRomInfo heiankyoRomDesc[] = {
@@ -2375,9 +2498,6 @@ static void heiankyo_callback()
 	// gap after .u3 of 0x800
 	memmove (DrvZ80ROM + 0x3800, DrvZ80ROM + 0x3000, 0x0800);
 	memset (DrvZ80ROM + 0x3000, 0, 0x800);
-	
-	// halves of color prom are swapped, only first bank used
-	memcpy (DrvColPROM, DrvColPROM + 0x10, 0x0008);
 }
 
 static INT32 HeiankyoInit()
@@ -2385,12 +2505,12 @@ static INT32 HeiankyoInit()
 	return DrvInit(0x4000, 0x8000, 0, heiankyo_write_port, heiankyo_read_port, NULL, heiankyo_callback);
 }
 
-struct BurnDriverD BurnDrvHeiankyo = {
-	"heiankyo", NULL, NULL, NULL, "1979",
-	"Heiankyo Alien\0", "No sound", "Denki Onkyo", "Vic Dual",
+struct BurnDriver BurnDrvHeiankyo = {
+	"heiankyo", NULL, NULL, "heiankyo", "1979",
+	"Heiankyo Alien\0", NULL, "Denki Onkyo", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, heiankyoRomInfo, heiankyoRomName, NULL, NULL, NULL, NULL, HeiankyoInputInfo, HeiankyoDIPInfo,
+	NULL, heiankyoRomInfo, heiankyoRomName, NULL, NULL, heiankyoSampleInfo, heiankyoSampleName, HeiankyoInputInfo, HeiankyoDIPInfo,
 	HeiankyoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
 };

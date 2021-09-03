@@ -2792,9 +2792,12 @@ struct BurnDriver BurnDrvPuzzli2 = {
 
 // Puzzli 2 Super (V200)
 
+/* IGS PCB NO- 0259 MADE IN TAIWAN
+   IGS PCB NO- 0258 MADE IN TAIWAN */
+   
 static struct BurnRomInfo puzzli2sRomDesc[] = {
-	{ "2sp_v200.u4",   				0x0080000, 0xfa5c86c1, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "2sp_v200.u3",   				0x0080000, 0x2a5ba8a6, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "puzzli2s_v200_u4.u4",   		0x0080000, 0xfa5c86c1, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "puzzli2s_v200_u3.u3",   		0x0080000, 0x2a5ba8a6, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "pgm_t0900.u9",	   			0x0200000, 0x70615611, 2 | BRF_GRA },			//  2 Tile data
 

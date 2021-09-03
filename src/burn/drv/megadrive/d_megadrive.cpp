@@ -43297,9 +43297,9 @@ struct BurnDriver BurnDrvmd_clanofheroes = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Demons of Asteborg (HB)
+// Demons of Asteborg v1.1 (HB)
 static struct BurnRomInfo md_asteborgRomDesc[] = {
-	{ "Demons of Asteborg (2021)(NEOfit Studios).bin", 15397620, 0x67283fbe, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Demons of Asteborg v1.1 (2021)(NEOfit Studios).bin", 15335424, 0xaacb216e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_asteborg)
@@ -43307,10 +43307,28 @@ STD_ROM_FN(md_asteborg)
 
 struct BurnDriver BurnDrvmd_asteborg = {
 	"md_asteborg", NULL, NULL, NULL, "2021",
-	"Demons of Asteborg (HB)\0", NULL, "NeoFID Studios", "Sega Megadrive",
+	"Demons of Asteborg v1.1 (HB)\0", NULL, "NeoFID Studios", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2 | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RUNGUN | GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_asteborgRomInfo, md_asteborgRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Demons of Asteborg v1.0 (HB)
+static struct BurnRomInfo md_asteborg10RomDesc[] = {
+	{ "Demons of Asteborg v1.0 (2021)(NEOfit Studios).bin", 15397620, 0x67283fbe, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_asteborg10)
+STD_ROM_FN(md_asteborg10)
+
+struct BurnDriver BurnDrvmd_asteborg10 = {
+	"md_asteborg10", "md_asteborg", NULL, NULL, "2021",
+	"Demons of Asteborg v1.0 (HB)\0", NULL, "NeoFID Studios", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2 | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RUNGUN | GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_asteborg10RomInfo, md_asteborg10RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

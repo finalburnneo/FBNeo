@@ -222,21 +222,14 @@ void BurnSampleChannelPlay(INT32 channel, INT32 sample, bool loop)
 	if (channel >= MAX_CHANNEL) bprintf(PRINT_ERROR, _T("BurnSampleChannelPlay called with invalid channel (%d), max is %d\n"), channel, MAX_CHANNEL);
 #endif
 
-	sample_channels[channel] = sample;
-
 	if (sample >= nTotalSamples) return;
 
-	sample_ptr = &samples[sample];
+	BurnSampleChannelStop(channel);
 
-	if (sample_ptr->flags & SAMPLE_IGNORE) return;
+	sample_channels[channel] = sample;
 
-	if (sample_ptr->flags & SAMPLE_NOSTORE) {
-		BurnSampleInitOne(sample);
-	}
-
-	sample_ptr->playing = 1;
-	sample_ptr->position = 0;
-	sample_ptr->loop = (loop ? 1 : 0);
+	BurnSamplePlay(sample);
+	BurnSampleSetLoop(sample, loop);
 }
 
 void BurnSamplePause(INT32 sample)

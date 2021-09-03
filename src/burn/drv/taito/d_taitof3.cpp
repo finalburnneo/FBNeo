@@ -3991,6 +3991,44 @@ struct BurnDriverD BurnDrvBubsymphb = {
 };
 
 
+// Seoul Symphony (Bubble Symphony bootleg with OKI6295)
+// extremely similar to bubsymphb (i.e. the only differences in the program ROMs are copyright removals). 2 PCB set: 70121 MAIN + ROM board
+
+static struct BurnRomInfo bubsymphbaRomDesc[] = {
+	{ "2-27c2000.bin",	0x40000, 0xb26728fa, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "3-27c2000.bin",	0x40000, 0xd7406de1, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "4-27c2000.bin",	0x40000, 0x5a45a291, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "5-27c2000.bin",	0x40000, 0xaad3806b, TAITO_68KROM1_BYTESWAP32 }, //  3
+
+	{ "8-27c4000.bin",	0x80000, 0x22d7eeb5, TAITO_SPRITESA },           //  4 Sprites
+	{ "9-27c4000.bin",	0x80000, 0xb8f7b1c6, TAITO_SPRITESA },           //  5
+	{ "10-27c4000.bin",	0x80000, 0xd4981f73, TAITO_SPRITESA },           //  6
+	{ "7-27c4000.bin",	0x80000, 0xc1c35f7b, TAITO_SPRITESA },           //  7
+	{ "6-27c4000.bin",	0x80000, 0x35a60e28, TAITO_SPRITESA },           //  8
+
+	{ "13-27c4000.bin",	0x80000, 0x5d87b202, TAITO_CHARS },              //  9 Layer Tiles
+	{ "12-27c4000.bin",	0x80000, 0x95add6ec, TAITO_CHARS },              // 10
+	{ "11-27c4000.bin",	0x80000, 0x69f814b1, TAITO_CHARS },              // 11
+	{ "14-27c4000.bin",	0x80000, 0x8be51e5a, TAITO_CHARS },              // 12
+	{ "15-27c4000.bin",	0x80000, 0x45b3cf43, TAITO_CHARS },              // 13
+
+	{ "1-27c4000.bin",	0x80000, 0x26bdc617, TAITO_MSM6295 },            // 14 oki
+};
+
+STD_ROM_PICK(bubsymphba)
+STD_ROM_FN(bubsymphba)
+
+struct BurnDriverD BurnDrvBubsymphba = {
+	"bubsymphba", "bublbob2", NULL, NULL, "1994",
+	"Seoul Symphony (Bubble Symphony bootleg with OKI6295)\0", NULL, "bootleg (SOFTV)", "Taito F3 System",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	NULL, bubsymphbaRomInfo, bubsymphbaRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
+	bubsymphbInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &TaitoF3PalRecalc, 0x2000,
+	320, 224, 4, 3
+};
+
+
 // Bubble Symphony (Ver 2.5A 1994/10/05)
 
 static struct BurnRomInfo bubsymphuRomDesc[] = {

@@ -832,7 +832,7 @@ struct BurnDriver BurnDrvFunkyjetj = {
 };
 
 
-// Sotsugyo Shousho
+// Sotsugyo Shousho (Japan)
 
 static struct BurnRomInfo sotsugyoRomDesc[] = {
 	{ "03.12f",			0x40000, 0xd175dfd1, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -853,10 +853,40 @@ STD_ROM_FN(sotsugyo)
 
 struct BurnDriver BurnDrvSotsugyo = {
 	"sotsugyo", NULL, NULL, NULL, "1995",
-	"Sotsugyo Shousho\0", NULL, "Mitchell (Atlus license)", "DECO IC16",
-	L"\u5352\u696D\u8A3C\u66F8\0Sotsugyo Shousho\0", NULL, NULL, NULL,
+	"Sotsugyo Shousho (Japan)\0", NULL, "Mitchell (Atlus license)", "DECO IC16",
+	L"\u5352\u696D\u8A3C\u66F8\0Sotsugyo Shousho (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MINIGAMES, 0,
 	NULL, sotsugyoRomInfo, sotsugyoRomName, NULL, NULL, NULL, NULL, FunkyjetInputInfo, SotsugyoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	320, 240, 4, 3
+};
+
+
+// Jor-eop Jeungmyeongseo (Korea)
+
+static struct BurnRomInfo sotsugyokRomDesc[] = {
+	{ "27c020.12f",		0x40000, 0x147a794d, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "27c020.13f",		0x40000, 0xd59f270e, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "27c512.16f",		0x10000, 0xbaf5ec93, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
+
+	{ "27c4000.2f",		0x80000, 0x8a76a083, 3 | BRF_GRA },           //  3 Characters & Background Tiles
+
+	{ "27c4000.4a",		0x80000, 0x69de4049, 4 | BRF_GRA },           //  4 Sprites
+	{ "27c4000.2a",		0x80000, 0x9092cc83, 4 | BRF_GRA },           //  5
+
+	{ "27c010.15h",		0x20000, 0x1ea43f48, 5 | BRF_SND },           //  6 OKI M6295 Samples
+};
+
+STD_ROM_PICK(sotsugyok)
+STD_ROM_FN(sotsugyok)
+
+struct BurnDriver BurnDrvSotsugyok = {
+	"sotsugyok", "sotsugyo", NULL, NULL, "1995",
+	"Jor-eop Jeungmyeongseo (Korea)\0", NULL, "Mitchell", "DECO IC16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MINIGAMES, 0,
+	NULL, sotsugyokRomInfo, sotsugyokRomName, NULL, NULL, NULL, NULL, FunkyjetInputInfo, SotsugyoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };

@@ -17458,10 +17458,10 @@ STD_ROM_PICK(nes_earthboundzero)
 STD_ROM_FN(nes_earthboundzero)
 
 struct BurnDriver BurnDrvnes_earthboundzero = {
-	"nes_earthboundzero", "nes_earthbound", NULL, NULL, "1989 ?",
+	"nes_earthboundzero", "nes_earthbound", NULL, NULL, "201?",
 	"Earth Bound Zero (USA)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_earthboundzeroRomInfo, nes_earthboundzeroRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17477,10 +17477,10 @@ STD_ROM_PICK(nes_earthboundzeroc)
 STD_ROM_FN(nes_earthboundzeroc)
 
 struct BurnDriver BurnDrvnes_earthboundzeroc = {
-	"nes_earthboundzeroc", "nes_earthbound", NULL, NULL, "1989 ?",
+	"nes_earthboundzeroc", "nes_earthbound", NULL, NULL, "201?",
 	"Earth Bound Zero (USA) - Castellano v0.99\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_earthboundzerocRomInfo, nes_earthboundzerocRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17496,10 +17496,10 @@ STD_ROM_PICK(nes_dai2jisuprotajc)
 STD_ROM_FN(nes_dai2jisuprotajc)
 
 struct BurnDriver BurnDrvnes_dai2jisuprotajc = {
-	"nes_dai2jisuprotajc", "nes_dai2jisuprota", NULL, NULL, "1989 ?",
+	"nes_dai2jisuprotajc", "nes_dai2jisuprota", NULL, NULL, "201?",
 	"Dai-2-ji Super Robot Taisen (Japan) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_STRATEGY, 0,
 	NESGetZipName, nes_dai2jisuprotajcRomInfo, nes_dai2jisuprotajcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17565,20 +17565,20 @@ struct BurnDriver BurnDrvnes_grandmasterjc = {
 // A Ressha de Ikou (T-Eng)
 // https://www.romhacking.net/
 static struct BurnRomInfo nes_atrainRomDesc[] = {
-{ "a ressha de ikou (t-eng).nes",          147472, 0xfd7bc532, BRF_ESS | BRF_PRG },
+	{ "a ressha de ikou (t-eng).nes",          147472, 0xfd7bc532, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_atrain)
 STD_ROM_FN(nes_atrain)
 
 struct BurnDriver BurnDrvnes_atrain = {
-"nes_atrain", NULL, NULL, NULL, "1989 ?",
-"A Ressha de Ikou (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
-NULL, NULL, NULL, NULL,
-BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_MISC, 0,
-NESGetZipName, nes_atrainRomInfo, nes_atrainRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+	"nes_atrain", NULL, NULL, NULL, "201?",
+	"A Ressha de Ikou (T-Eng)\0", NULL, "Pony Canyon", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_STRATEGY, 0,
+	NESGetZipName, nes_atrainRomInfo, nes_atrainRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
 // A Ressha de Ikou (Japan)
@@ -17593,7 +17593,7 @@ STD_ROM_FN(nes_atrainj)
 	"nes_atrainj", "nes_atrain", NULL, NULL, "1991",
 	"A Ressha de Ikou (Japan)\0", NULL, "Pony Canyon", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_STRATEGY, 0,
 	NESGetZipName, nes_atrainjRomInfo, nes_atrainjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17675,6 +17675,57 @@ STD_ROM_FN(nes_smaruo)
 
 // Homebrew (hand-added)
 
+
+static struct BurnRomInfo nes_etdxRomDesc[] = {
+	{ "E.T. The Extra Terrestrial DX (2019)(pacnsacdave).nes",          524304, 0xac82d2b4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_etdx)
+STD_ROM_FN(nes_etdx)
+
+struct BurnDriver BurnDrvnes_etdx = {
+	"nes_etdx", "nes_et", NULL, NULL, "2019",
+	"E.T. - The Extra Terrestrial DX (HB)\0", NULL, "Khan Games -pacnsacdave", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
+	NESGetZipName, nes_etdxRomInfo, nes_etdxRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_minibrixRomDesc[] = {
+	{ "Mini Brix Battle (2016)(Aleff Correa).nes",          40976, 0x07781bee, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_minibrix)
+STD_ROM_FN(nes_minibrix)
+
+struct BurnDriver BurnDrvnes_minibrix = {
+	"nes_minibrix", NULL, NULL, NULL, "2016",
+	"Mini Brix Battle (HB)\0", NULL, "Aleff Correa", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_BREAKOUT, 0,
+	NESGetZipName, nes_minibrixRomInfo, nes_minibrixRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_nessyrobotRomDesc[] = {
+	{ "Nessy The NES Robot mmc30 (2021)(Daniel T. Gaming).nes",          524304, 0xeac62d7d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_nessyrobot)
+STD_ROM_FN(nes_nessyrobot)
+
+struct BurnDriver BurnDrvnes_nessyrobot = {
+	"nes_nessyrobot", NULL, NULL, NULL, "2021",
+	"Nessy the NES Robot (HB, v1.25)\0", NULL, "Daniel T. Gaming", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	NESGetZipName, nes_nessyrobotRomInfo, nes_nessyrobotRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_berserkRomDesc[] = {
 	{ "Berzerk (2019)(Parisoft).nes",          65552, 0x25a46b45, BRF_ESS | BRF_PRG },
@@ -18705,7 +18756,7 @@ STD_ROM_FN(nes_witchnwiz)
 
 struct BurnDriver BurnDrvnes_witchnwiz = {
 	"nes_witchnwiz", NULL, NULL, NULL, "2021",
-	"Witch n' Wiz (HB)\0", NULL, "Matt Hughson", "Miscellaneous",
+	"Witch n' Wiz (HB)\0", "NESDev 2020-21 Edition", "Matt Hughson", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE | GBF_PLATFORM, 0,
 	NESGetZipName, nes_witchnwizRomInfo, nes_witchnwizRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -19661,7 +19712,7 @@ struct BurnDriver BurnDrvnes_et = {
 	"nes_et", NULL, NULL, NULL, "2014",
 	"E.T. - The Extra Terrestrial (HB)\0", NULL, "Khan Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_etRomInfo, nes_etRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

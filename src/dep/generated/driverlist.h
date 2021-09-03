@@ -187,8 +187,8 @@ DRV		BurnDrvgg_aaharima;
 DRV		BurnDrvmd_aaharima;
 DRV		BurnDrvmd_aaahhrm;
 DRV		BurnDrvmd_aaahhrmu;
-DRV		BurnDrvMSX_aaargh;
 DRV		BurnSpecAaargh;
+DRV		BurnDrvMSX_aaargh;
 DRV		BurnSpecAbadcrim;
 DRV		BurnDrvnes_abadox;
 DRV		BurnDrvabscam;
@@ -3479,8 +3479,9 @@ DRV		BurnDrvDemonwld2;
 DRV		BurnDrvDemonwld3;
 DRV		BurnDrvDemonwld4;
 DRV		BurnDrvMSX_demonia;
-DRV		BurnDrvmd_asteborg;
 DRV		BurnDrvmd_asteborgd;
+DRV		BurnDrvmd_asteborg10;
+DRV		BurnDrvmd_asteborg;
 DRV		BurnDrvnes_dengeki;
 DRV		BurnSpecDenizen;
 DRV		BurnDrvDenjinmk;
@@ -6365,9 +6366,7 @@ DRV		BurnDrvHeberpop;
 DRV		BurnDrvnes_hector87;
 DRV		BurnDrvsg1k_heibaiqi;
 DRV		BurnDrvmd_heitao;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvHeiankyo;		// No sound
-#endif
+DRV		BurnDrvHeiankyo;
 DRV		BurnDrvnes_heisetenbakj;
 DRV		BurnDrvnes_heisetenbak;
 DRV		BurnDrvcv_helifire;
@@ -6823,6 +6822,24 @@ DRV		BurnDrvMSX_issuna;
 DRV		BurnDrvMSX_issunh;
 DRV		BurnDrvmd_itcame;
 DRV		BurnDrvcv_onlyrock;
+DRV		BurnSpecIt1944en1;
+DRV		BurnSpecIt1944de1;
+DRV		BurnSpecIt1944it1;
+DRV		BurnSpecIt1944pt1;
+DRV		BurnSpecIt1944ru1;
+DRV		BurnSpecIt1944es1;
+DRV		BurnSpecIt1944en2;
+DRV		BurnSpecIt1944de2;
+DRV		BurnSpecIt1944it2;
+DRV		BurnSpecIt1944pt2;
+DRV		BurnSpecIt1944ru2;
+DRV		BurnSpecIt1944es2;
+DRV		BurnSpecIt1944en3;
+DRV		BurnSpecIt1944de3;
+DRV		BurnSpecIt1944it3;
+DRV		BurnSpecIt1944pt3;
+DRV		BurnSpecIt1944ru3;
+DRV		BurnSpecIt1944es3;
 DRV		BurnSpecItaliansupercar;
 DRV		BurnDrvItaten;
 DRV		BurnDrvnes_ivanirostessuoffro;
@@ -7055,6 +7072,7 @@ DRV		BurnDrvJollyjgr;
 DRV		BurnDrvltorb1;
 DRV		BurnDrvnes_jongbou;
 DRV		BurnDrvjongpute;
+DRV		BurnDrvSotsugyok;
 DRV		BurnDrvnes_jordavsbir;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvJsk;				// Unemulated CPU [NOT WORKING]
@@ -7253,6 +7271,7 @@ DRV		BurnDrvKamikazesp;
 DRV		BurnDrvKamikcab;
 DRV		BurnDrvKangarooa;
 DRV		BurnDrvKangaroob;
+DRV		BurnDrvKangarool;
 DRV		BurnDrvKangaroo;
 DRV		BurnDrvnes_kanshnagkannotogots;
 DRV		BurnDrvnes_karakkendenmuslo;
@@ -12521,6 +12540,9 @@ DRV		BurnDrvsms_sensible;
 DRV		BurnDrvmd_sensiblep;
 DRV		BurnDrvmd_sensibie;
 DRV		BurnSpecthesentinel;
+#if defined FBNEO_DEBUG
+DRV		BurnDrvBubsymphba;		// no comment [NOT WORKING]
+#endif
 DRV		BurnSpecSergeantseymourrobotcop;
 DRV		BurnDrvsg1k_serizawa;
 DRV		BurnDrvmd_sesame;
@@ -17766,7 +17788,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_2020bbj,			// 2020 Toshi Super Baseball (Jpn)
 	&BurnSpec2088,				// 2088 (48K)
 	&BurnDrvpce_21emon,			// 21 Emon - Mezase Hotel ou!!
-	&BurnSpec21erotic,			// 21 Erotic
+	&BurnSpec21erotic,			// 21 Erotic (48K)
 	&BurnSpec2112ad,			// 2112 AD (48K)
 	&BurnDrv3Countb,			// 3 Count Bout / Fire Suplex (NGM-043)(NGH-043)
 	&BurnDrv3Countba,			// 3 Count Bout / Fire Suplex (NGM-043)
@@ -17790,10 +17812,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_4in1pb,			// 4 in 1 (Pirate)
 	&BurnDrvsms_4pak,			// 4 PAK All Action (Aus)
 	&BurnDrv4play,				// 4 player input test
-	&BurnSpec4soccersims1,		// 4 Soccer Simulators - 11-a-Side Soccer
-	&BurnSpec4soccersims2,		// 4 Soccer Simulators - Indoor Soccer
-	&BurnSpec4soccersims3,		// 4 Soccer Simulators - Soccer Skills
-	&BurnSpec4soccersims4,		// 4 Soccer Simulators - Street Soccer
+	&BurnSpec4soccersims1,		// 4 Soccer Simulators - 11-a-Side Soccer (128K)
+	&BurnSpec4soccersims2,		// 4 Soccer Simulators - Indoor Soccer (128K)
+	&BurnSpec4soccersims3,		// 4 Soccer Simulators - Soccer Skills (128K)
+	&BurnSpec4soccersims4,		// 4 Soccer Simulators - Street Soccer (128K)
 	&BurnDrvFourdwarrio,		// 4-D Warriors (315-5162)
 	&BurnDrvcv_421,				// 421 (HB)
 	&BurnDrvgg_5in1fun,			// 5 in 1 Funpak (USA)
@@ -17841,8 +17863,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_aaharima,		// Aa Harimanada (Jpn)
 	&BurnDrvmd_aaahhrm,			// AAAHH!!! Real Monsters (Euro)
 	&BurnDrvmd_aaahhrmu,		// AAAHH!!! Real Monsters (USA)
+	&BurnSpecAaargh,			// Aaargh! (48K)
 	&BurnDrvMSX_aaargh,			// Aaargh! (Spanish)
-	&BurnSpecAaargh,			// Aaargh!
 	&BurnSpecAbadcrim,			// Abadia del Crimen, La (Spanish) (128K)
 	&BurnDrvnes_abadox,			// Abadox - The Deadly Inner War (USA)
 	&BurnDrvabscam,				// Abscam
@@ -17989,7 +18011,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecafteroids,			// Afteroids (48K) (Spanish)
 	&BurnDrvMSX_afteroids,		// Afteroids (Spanish)
 	&BurnDrvAoh,				// Age Of Heroes - Silkroad 2 (v0.63 - 2001/02/07)
-	&BurnSpecAgentorange,		// Agent Orange
+	&BurnSpecAgentorange,		// Agent Orange (48K)
 	&BurnDrvSuperbon,			// Agent Super Bond (scobra hardware)
 	&BurnDrvAgentx1,			// Agent X (prototype, rev 1)
 	&BurnDrvAgentx2,			// Agent X (prototype, rev 2)
@@ -17999,7 +18021,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_agidooly,		// Agigongnyong Dooly (Kor)
 	&BurnDrvAgressb,			// Agress (English bootleg)
 	&BurnDrvAgress,				// Agress
-	&BurnSpecAhdiddums,			// Ah Diddums
+	&BurnSpecAhdiddums,			// Ah Diddums (48K)
 	&BurnDrvKoshien,			// Ah Eikou no Koshien (Japan)
 	&BurnDrvfds_aisenshinicol,	// Ai Senshi Nicol (Japan)
 	&BurnDrvAirass,				// Air Assault (World)
@@ -21133,8 +21155,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDemonwld3,			// Demon's World / Horror Story (set 4)
 	&BurnDrvDemonwld4,			// Demon's World / Horror Story (set 5)
 	&BurnDrvMSX_demonia,		// Demonia
-	&BurnDrvmd_asteborg,		// Demons of Asteborg (HB)
 	&BurnDrvmd_asteborgd,		// Demons of Asteborg (HB, Demo)
+	&BurnDrvmd_asteborg10,		// Demons of Asteborg v1.0 (HB)
+	&BurnDrvmd_asteborg,		// Demons of Asteborg v1.1 (HB)
 	&BurnDrvnes_dengeki,		// Dengeki - Big Bang! (Japan)
 	&BurnSpecDenizen,			// Denizen (128K)
 	&BurnDrvDenjinmk,			// Denjin Makai (set 1)
@@ -24019,9 +24042,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_hector87,		// Hector '87 (Japan)
 	&BurnDrvsg1k_heibaiqi,		// Hei Bai Qi (Tw)
 	&BurnDrvmd_heitao,			// Hei Tao 2 - Super Big 2 (Chi)
-#if defined FBNEO_DEBUG
-	&BurnDrvHeiankyo,			// Heiankyo Alien [No sound]
-#endif
+	&BurnDrvHeiankyo,			// Heiankyo Alien
 	&BurnDrvnes_heisetenbakj,	// Heisei Tensai Bakabon (Japan)
 	&BurnDrvnes_heisetenbak,	// Heisei Tensai Bakabon (T-Eng)
 	&BurnDrvcv_helifire,		// HeliFire (HB)
@@ -24477,6 +24498,24 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_issunh,			// Issunboushi no Donnamondai (Jpn, Hacked?)
 	&BurnDrvmd_itcame,			// It Came from the Desert (USA)
 	&BurnDrvcv_onlyrock,		// It's Only Rock 'n' Roll
+	&BurnSpecIt1944en1,			// Italia 1944 - Part 1 (English) (48K) (HB)
+	&BurnSpecIt1944de1,			// Italia 1944 - Part 1 (German) (48K) (HB)
+	&BurnSpecIt1944it1,			// Italia 1944 - Part 1 (Italian) (48K) (HB)
+	&BurnSpecIt1944pt1,			// Italia 1944 - Part 1 (Portuguese) (48K) (HB)
+	&BurnSpecIt1944ru1,			// Italia 1944 - Part 1 (Russian) (48K) (HB)
+	&BurnSpecIt1944es1,			// Italia 1944 - Part 1 (Spanish) (48K) (HB)
+	&BurnSpecIt1944en2,			// Italia 1944 - Part 2 (English) (48K) (HB)
+	&BurnSpecIt1944de2,			// Italia 1944 - Part 2 (German) (48K) (HB)
+	&BurnSpecIt1944it2,			// Italia 1944 - Part 2 (Italian) (48K) (HB)
+	&BurnSpecIt1944pt2,			// Italia 1944 - Part 2 (Portuguese) (48K) (HB)
+	&BurnSpecIt1944ru2,			// Italia 1944 - Part 2 (Russian) (48K) (HB)
+	&BurnSpecIt1944es2,			// Italia 1944 - Part 2 (Spanish) (48K) (HB)
+	&BurnSpecIt1944en3,			// Italia 1944 - Part 3 (English) (48K) (HB)
+	&BurnSpecIt1944de3,			// Italia 1944 - Part 3 (German) (48K) (HB)
+	&BurnSpecIt1944it3,			// Italia 1944 - Part 3 (Italian) (48K) (HB)
+	&BurnSpecIt1944pt3,			// Italia 1944 - Part 3 (Portuguese) (48K) (HB)
+	&BurnSpecIt1944ru3,			// Italia 1944 - Part 3 (Russian) (48K) (HB)
+	&BurnSpecIt1944es3,			// Italia 1944 - Part 3 (Spanish) (48K) (HB)
 	&BurnSpecItaliansupercar,	// Italian Supercar (128K)
 	&BurnDrvItaten,				// Itazura Tenshi (Japan)
 	&BurnDrvnes_ivanirostessuoffro,// Ivan 'Ironman' Stewart's Super Off Road (USA)
@@ -24709,6 +24748,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvltorb1,				// Jonas Indiana and the Lost Temple of RA (20050717)
 	&BurnDrvnes_jongbou,		// Jongbou (Japan)
 	&BurnDrvjongpute,			// Jongputer [no comment, NOT WORKING]
+	&BurnDrvSotsugyok,			// Jor-eop Jeungmyeongseo (Korea)
 	&BurnDrvnes_jordavsbir,		// Jordan vs Bird - One On One (USA)
 #if defined FBNEO_DEBUG
 	&BurnDrvJsk,				// Joryuu Syougi Kyoushitsu (Japan) [Unemulated CPU, NOT WORKING]
@@ -24907,6 +24947,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKamikcab,			// Kamikaze Cabbie
 	&BurnDrvKangarooa,			// Kangaroo (Atari)
 	&BurnDrvKangaroob,			// Kangaroo (bootleg)
+	&BurnDrvKangarool,			// Kangaroo (Loewen-Automaten)
 	&BurnDrvKangaroo,			// Kangaroo
 	&BurnDrvnes_kanshnagkannotogots,// Kanshakudama Nage Kantarou no Toukaidou Gojuusan Tsugi (Japan)
 	&BurnDrvnes_karakkendenmuslo,// Karakuri Kengou Den Musashi Lord - Karakuribito Hashiru (Japan)
@@ -26193,7 +26234,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_mcdonaldj,		// McDonald's Treasure Land Adventure (Jpn)
 	&BurnDrvmd_mcdonaldjp,		// McDonald's Treasure Land Adventure (Jpn, Prototype)
 	&BurnDrvmd_mcdonaldu,		// McDonald's Treasure Land Adventure (USA)
-	&BurnSpecMeanstreak,		// Mean Streak
+	&BurnSpecMeanstreak,		// Mean Streak (128K)
 	&BurnDrvcv_mecha8,			// Mecha-8 (HB)
 	&BurnDrvMSX_mecha8,			// Mecha-8 (HB)
 	&BurnDrvcv_mecha9,			// Mecha-9 (HB)
@@ -30175,6 +30216,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_sensiblep,		// Sensible Soccer (Prototype)
 	&BurnDrvmd_sensibie,		// Sensible Soccer - International Edition (Euro)
 	&BurnSpecthesentinel,		// Sentinel, The
+#if defined FBNEO_DEBUG
+	&BurnDrvBubsymphba,			// Seoul Symphony (Bubble Symphony bootleg with OKI6295) [no comment, NOT WORKING]
+#endif
 	&BurnSpecSergeantseymourrobotcop,// Sergeant Seymour Robotcop (128K)
 	&BurnDrvsg1k_serizawa,		// Serizawa Hachidan no Tsumeshogi (Jpn)
 	&BurnDrvmd_sesame,			// Sesame Street Counting Cafe (USA)
@@ -30858,7 +30902,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKokoroj2,			// Soreike Kokology Vol. 2 - Kokoro no Tanteikyoku
 	&BurnDrvngpc_hanadojo,		// Soreike!! Hanafuda Doujou (Jpn)
 	&BurnDrvSos,				// SOS
-	&BurnDrvSotsugyo,			// Sotsugyo Shousho
+	&BurnDrvSotsugyo,			// Sotsugyo Shousho (Japan)
 	&BurnDrvSoukobdx,			// Souko Ban Deluxe (Japan, SB1)
 	&BurnDrvgg_sokoban,			// Soukoban (Jpn)
 	&BurnDrvsg1k_sokoban,		// Soukoban (Jpn)

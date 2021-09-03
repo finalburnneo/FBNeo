@@ -119,7 +119,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="21erotic" romof="spectrum">
-		<description>21 Erotic</description>
+		<description>21 Erotic (48K)</description>
 		<year>1995</year>
 		<manufacturer>JardaSoft</manufacturer>
 		<rom name="21 Erotic (1995)(JardaSoft).tap" size="10336" crc="80cb68c0"/>
@@ -182,7 +182,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="4soccersims1" romof="spec128">
-		<description>4 Soccer Simulators - 11-a-Side Soccer</description>
+		<description>4 Soccer Simulators - 11-a-Side Soccer (128K)</description>
 		<year>1989</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="4 Soccer Simulators - 11-a-Side Soccer (1989)(Codemasters).z80" size="44128" crc="7409c0ec"/>
@@ -192,7 +192,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="4soccersims2" romof="spec128">
-		<description>4 Soccer Simulators - Indoor Soccer</description>
+		<description>4 Soccer Simulators - Indoor Soccer (128K)</description>
 		<year>1989</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="4 Soccer Simulators - Indoor Soccer (1989)(Codemasters).z80" size="43850" crc="fa35acd5"/>
@@ -202,7 +202,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="4soccersims3" romof="spec128">
-		<description>4 Soccer Simulators - Soccer Skills</description>
+		<description>4 Soccer Simulators - Soccer Skills (128K)</description>
 		<year>1989</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="4 Soccer Simulators - Soccer Skills (1989)(Codemasters).z80" size="45681" crc="387466c5"/>
@@ -212,7 +212,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="4soccersims4" romof="spec128">
-		<description>4 Soccer Simulators - Street Soccer</description>
+		<description>4 Soccer Simulators - Street Soccer (128K)</description>
 		<year>1989</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="4 Soccer Simulators - Street Soccer (1989)(Codemasters).z80" size="45164" crc="b2e7be10"/>
@@ -269,13 +269,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="aaargh" romof="spec128">
-		<description>Aaargh!</description>
+	<game name="aaargh" romof="spectrum">
+		<description>Aaargh! (48K)</description>
 		<year>1989</year>
 		<manufacturer>Binary Design</manufacturer>
 		<rom name="Aaargh! (1989)(Binary Design).tap" size="96865" crc="11417dd7"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -502,18 +501,17 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="agentorange" romof="spec128">
-		<description>Agent Orange</description>
+	<game name="agentorange" romof="spectrum">
+		<description>Agent Orange (48K)</description>
 		<year>1987</year>
 		<manufacturer>Icon Design</manufacturer>
 		<rom name="Agent Orange (1987)(Icon Design).tap" size="43566" crc="112aedd9"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="ahdiddums" romof="spec128">
-		<description>Ah Diddums</description>
+		<description>Ah Diddums (48K)</description>
 		<year>1983</year>
 		<manufacturer>Imagine</manufacturer>
 		<rom name="Ah Diddums (1983)(Imagine).tap" size="8490" crc="e5b88c3b"/>
@@ -6254,6 +6252,168 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="it1944en1" romof="spectrum">
+		<description>Italia 1944 - Part 1 (English) (48K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Italia 1944 - EN - 1 (2021)(Zankle Soft).tap" size="24615" crc="8dff1e08"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="it1944de1" romof="spectrum">
+		<description>Italia 1944 - Part 1 (German) (48K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Italia 1944 - DE - 1 (2021)(Zankle Soft).tap" size="24615" crc="d7e57dbb"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="it1944it1" romof="spectrum">
+		<description>Italia 1944 - Part 1 (Italian) (48K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Italia 1944 - IT - 1 (2021)(Zankle Soft).tap" size="24615" crc="9cfc36d8"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="it1944pt1" romof="spectrum">
+		<description>Italia 1944 - Part 1 (Portuguese) (48K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Italia 1944 - PT - 1 (2021)(Zankle Soft).tap" size="24615" crc="e667c757"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="it1944ru1" romof="spectrum">
+		<description>Italia 1944 - Part 1 (Russian) (48K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Italia 1944 - RU - 1 (2021)(Zankle Soft).tap" size="24872" crc="d19cae77"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="it1944es1" romof="spectrum">
+		<description>Italia 1944 - Part 1 (Spanish) (48K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Italia 1944 - ES - 1 (2021)(Zankle Soft).tap" size="24615" crc="a8e4e7e6"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="it1944en2" cloneof="it1944en1" romof="it1944en1">
+		<description>Italia 1944 - Part 2 (English) (48K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Italia 1944 - EN - 2 (2021)(Zankle Soft).tap" size="30415" crc="071b0ee0"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="it1944de2" cloneof="it1944de1" romof="it1944de1">
+		<description>Italia 1944 - Part 2 (German) (48K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Italia 1944 - DE - 2 (2021)(Zankle Soft).tap" size="30415" crc="a70c5a81"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="it1944it2" cloneof="it1944it1" romof="it1944it1">
+		<description>Italia 1944 - Part 2 (Italian) (48K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Italia 1944 - IT - 2 (2021)(Zankle Soft).tap" size="30415" crc="8f81d1d5"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="it1944pt2" cloneof="it1944pt1" romof="it1944pt1">
+		<description>Italia 1944 - Part 2 (Portuguese) (48K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Italia 1944 - PT - 2 (2021)(Zankle Soft).tap" size="30415" crc="307d7033"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="it1944ru2" cloneof="it1944ru1" romof="it1944ru1">
+		<description>Italia 1944 - Part 2 (Russian) (48K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Italia 1944 - RU - 2 (2021)(Zankle Soft).tap" size="30415" crc="b228c967"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="it1944es2" cloneof="it1944es1" romof="it1944es1">
+		<description>Italia 1944 - Part 2 (Spanish) (48K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Italia 1944 - ES - 2 (2021)(Zankle Soft).tap" size="30415" crc="b02b00f4"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="it1944en3" cloneof="it1944en1" romof="it1944en1">
+		<description>Italia 1944 - Part 3 (English) (48K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Italia 1944 - EN - 3 (2021)(Zankle Soft).tap" size="18512" crc="5e3962d4"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="it1944de3" cloneof="it1944de1" romof="it1944de1">
+		<description>Italia 1944 - Part 3 (German) (48K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Italia 1944 - DE - 3 (2021)(Zankle Soft).tap" size="18589" crc="29fb67bc"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="it1944it3" cloneof="it1944it1" romof="it1944it1">
+		<description>Italia 1944 - Part 3 (Italian) (48K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Italia 1944 - IT - 3 (2021)(Zankle Soft).tap" size="18567" crc="6dd65bbb"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="it1944pt3" cloneof="it1944pt1" romof="it1944pt1">
+		<description>Italia 1944 - Part 3 (Portuguese) (48K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Italia 1944 - PT - 3 (2021)(Zankle Soft).tap" size="18550" crc="06746558"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="it1944ru3" cloneof="it1944ru1" romof="it1944ru1">
+		<description>Italia 1944 - Part 3 (Russian) (48K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Italia 1944 - RU - 3 (2021)(Zankle Soft).tap" size="18486" crc="a05231de"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="it1944es3" cloneof="it1944es1" romof="it1944es1">
+		<description>Italia 1944 - Part 3 (Spanish) (48K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Italia 1944 - ES - 3 (2021)(Zankle Soft).tap" size="18580" crc="ed7119d7"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="italiansupercar" romof="spec128">
 		<description>Italian Supercar (128K)</description>
 		<year>1990</year>
@@ -7483,7 +7643,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="meanstreak" romof="spec128">
-		<description>Mean Streak</description>
+		<description>Mean Streak (128K)</description>
 		<year>1987</year>
 		<manufacturer>Mirrorsoft</manufacturer>
 		<rom name="Mean Streak (1987)(Mirrorsoft).tap" size="66912" crc="eaa7cbc4"/>

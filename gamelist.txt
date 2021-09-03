@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17411 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17433 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -110,7 +110,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_2020bbj	|  	| 2020 Toshi Super Baseball (Jpn)			| md_2020bb	| 1994	| Electronic Art| Sega Megadrive| 					|
 | spec_2088	|  	| 2088 (48K)						| 		| 1988	| Zeppelin Games| ZX Spectrum	| 					|
 | pce_21emon	|  	| 21 Emon - Mezase Hotel ou!!				| 		| 1994	| NEC Home Elect| PC Engine	| 					|
-| spec_21erotic	|  	| 21 Erotic						| 		| 1995	| JardaSoft	| ZX Spectrum	| 					|
+| spec_21erotic	|  	| 21 Erotic (48K)					| 		| 1995	| JardaSoft	| ZX Spectrum	| 					|
 | spec_2112ad	|  	| 2112 AD (48K)						| 		| 1985	| Design Design	| ZX Spectrum	| Q, A, N, M and 0 to play		|
 | 3countb	|  	| 3 Count Bout / Fire Suplex (NGM-043)(NGH-043)		| 		| 1993	| SNK		| Neo Geo MVS	| 					|
 | 3countba	|  	| 3 Count Bout / Fire Suplex (NGM-043)			| 3countb	| 1993	| SNK		| Neo Geo MVS	| 					|
@@ -134,10 +134,10 @@ This list contains all games supported by FinalBurn Neo.
 | md_4in1pb	|  	| 4 in 1 (Pirate)					| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | sms_4pak	|  	| 4 PAK All Action (Aus)				| 		| 1995	| HES		| Sega Master Sy| 					|
 | 4play		|  	| 4 player input test					| 		| ???	| SNK		| Neo Geo MVS	| 4 player  input test cartridge	|
-| spec_4soccersims1|  	| 4 Soccer Simulators - 11-a-Side Soccer		| 		| 1989	| Codemasters	| ZX Spectrum	| 					|
-| spec_4soccersims2|  	| 4 Soccer Simulators - Indoor Soccer			| 		| 1989	| Codemasters	| ZX Spectrum	| 					|
-| spec_4soccersims3|  	| 4 Soccer Simulators - Soccer Skills			| 		| 1989	| Codemasters	| ZX Spectrum	| 					|
-| spec_4soccersims4|  	| 4 Soccer Simulators - Street Soccer			| 		| 1989	| Codemasters	| ZX Spectrum	| 					|
+| spec_4soccersims1|  	| 4 Soccer Simulators - 11-a-Side Soccer (128K)		| 		| 1989	| Codemasters	| ZX Spectrum	| 					|
+| spec_4soccersims2|  	| 4 Soccer Simulators - Indoor Soccer (128K)		| 		| 1989	| Codemasters	| ZX Spectrum	| 					|
+| spec_4soccersims3|  	| 4 Soccer Simulators - Soccer Skills (128K)		| 		| 1989	| Codemasters	| ZX Spectrum	| 					|
+| spec_4soccersims4|  	| 4 Soccer Simulators - Street Soccer (128K)		| 		| 1989	| Codemasters	| ZX Spectrum	| 					|
 | 4dwarrio	|  	| 4-D Warriors (315-5162)				| 		| 1985	| Coreland / Seg| System 1	| 					|
 | cv_421	|  	| 421 (HB)						| 		| 2002	| Mathieu Proulx| ColecoVision	| 					|
 | gg_5in1fun	|  	| 5 in 1 Funpak (USA)					| 		| 1994	| Interplay	| Sega Game Gear| 					|
@@ -185,8 +185,8 @@ This list contains all games supported by FinalBurn Neo.
 | md_aaharima	|  	| Aa Harimanada (Jpn)					| 		| 1993	| Sega		| Sega Megadrive| 					|
 | md_aaahhrm	|  	| AAAHH!!! Real Monsters (Euro)				| 		| 1995	| Viacom New Med| Sega Megadrive| 					|
 | md_aaahhrmu	|  	| AAAHH!!! Real Monsters (USA)				| md_aaahhrm	| 1995	| Viacom New Med| Sega Megadrive| 					|
+| spec_aaargh	|  	| Aaargh! (48K)						| 		| 1989	| Binary Design	| ZX Spectrum	| 					|
 | msx_aaargh	|  	| Aaargh! (Spanish)					| 		| 1989	| Dro Soft	| MSX		| 					|
-| spec_aaargh	|  	| Aaargh!						| 		| 1989	| Binary Design	| ZX Spectrum	| 					|
 | spec_abadcrim	|  	| Abadia del Crimen, La (Spanish) (128K)		| 		| 1988	| Opera Soft	| ZX Spectrum	| A, K, L and Space to control the main |
 | nes_abadox	|  	| Abadox - The Deadly Inner War (USA)			| 		| 1990	| Milton Bradley| Miscellaneous	| 					|
 | abscam	|  	| Abscam						| puckman	| 1981	| GL (US Billiar| Pac-man	| 					|
@@ -333,7 +333,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_afteroids|  	| Afteroids (48K) (Spanish)				| 		| 1988	| Zigurat Softwa| ZX Spectrum	| 					|
 | msx_afteroids	|  	| Afteroids (Spanish)					| 		| 1988	| Zigurat Softwa| MSX		| Press S to skip intro screen		|
 | aoh		|  	| Age Of Heroes - Silkroad 2 (v0.63 - 2001/02/07)	| 		| 2001	| Unico		| Miscellaneous	| 					|
-| spec_agentorange|  	| Agent Orange						| 		| 1987	| Icon Design	| ZX Spectrum	| 					|
+| spec_agentorange|  	| Agent Orange (48K)					| 		| 1987	| Icon Design	| ZX Spectrum	| 					|
 | superbon	|  	| Agent Super Bond (scobra hardware)			| 		| 1985	| Signaton USA	| Galaxian	| Bad Colours				|
 | agentx1	|  	| Agent X (prototype, rev 1)				| cloak		| 1983	| Atari		| Miscellaneous	| 					|
 | agentx2	|  	| Agent X (prototype, rev 2)				| cloak		| 1983	| Atari		| Miscellaneous	| 					|
@@ -343,7 +343,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_agidooly	|  	| Agigongnyong Dooly (Kor)				| sms_dinodool	| 1991	| Daou Infosys	| Sega Master Sy| 					|
 | agressb	|  	| Agress (English bootleg)				| agress	| 2003	| Palco		| Miscellaneous	| 					|
 | agress	|  	| Agress						| 		| 1991	| Palco		| Miscellaneous	| 					|
-| spec_ahdiddums|  	| Ah Diddums						| 		| 1983	| Imagine	| ZX Spectrum	| 					|
+| spec_ahdiddums|  	| Ah Diddums (48K)					| 		| 1983	| Imagine	| ZX Spectrum	| 					|
 | koshien	|  	| Ah Eikou no Koshien (Japan)				| 		| 1990	| Taito Corporat| Taito F2	| 					|
 | fds_aisenshinicol|  	| Ai Senshi Nicol (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | airass	|  	| Air Assault (World)					| 		| 1993	| Irem		| Irem M107	| 					|
@@ -3437,8 +3437,9 @@ This list contains all games supported by FinalBurn Neo.
 | demonwld3	|  	| Demon's World / Horror Story (set 4)			| demonwld	| 1989	| Toaplan	| Toaplan BCU-2 | 					|
 | demonwld4	|  	| Demon's World / Horror Story (set 5)			| demonwld	| 1989	| Toaplan	| Toaplan BCU-2 | 					|
 | msx_demonia	|  	| Demonia						| 		| 1986	| Microids	| MSX		| 					|
-| md_asteborg	|  	| Demons of Asteborg (HB)				| 		| 2021	| NeoFID Studios| Sega Megadrive| 					|
 | md_asteborgd	|  	| Demons of Asteborg (HB, Demo)				| md_asteborg	| 2020	| NeoFID Studios| Sega Megadrive| 					|
+| md_asteborg10	|  	| Demons of Asteborg v1.0 (HB)				| md_asteborg	| 2021	| NeoFID Studios| Sega Megadrive| 					|
+| md_asteborg	|  	| Demons of Asteborg v1.1 (HB)				| 		| 2021	| NeoFID Studios| Sega Megadrive| 					|
 | nes_dengeki	|  	| Dengeki - Big Bang! (Japan)				| nes_clashatdem| 1989?	| Nintendo	| Miscellaneous	| 					|
 | spec_denizen	|  	| Denizen (128K)					| 		| 1988	| Players	| ZX Spectrum	| 					|
 | denjinmk	|  	| Denjin Makai (set 1)					| 		| 1994	| Winkysoft (Ban| Miscellaneous	| 					|
@@ -6291,7 +6292,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_hector87	|  	| Hector '87 (Japan)					| 		| 1987	| Hudson Soft	| Miscellaneous	| 					|
 | sg1k_heibaiqi	|  	| Hei Bai Qi (Tw)					| sg1k_othello	| 1985?	| Aaronix	| Sega SG-1000	| 					|
 | md_heitao	|  	| Hei Tao 2 - Super Big 2 (Chi)				| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
-| heiankyo	| D	| Heiankyo Alien					| 		| 1979	| Denki Onkyo	| Vic Dual	| No sound				|
+| heiankyo	|  	| Heiankyo Alien					| 		| 1979	| Denki Onkyo	| Vic Dual	| 					|
 | nes_heisetenbakj|  	| Heisei Tensai Bakabon (Japan)				| nes_heisetenbak| 1991	| Namco		| Miscellaneous	| 					|
 | nes_heisetenbak|  	| Heisei Tensai Bakabon (T-Eng)				| 		| 1991	| Namco		| Miscellaneous	| 					|
 | cv_helifire	|  	| HeliFire (HB)						| 		| 1980-2013| Nintendo	| ColecoVision	| Published by CollectorVision		|
@@ -6739,6 +6740,24 @@ This list contains all games supported by FinalBurn Neo.
 | msx_issunh	|  	| Issunboushi no Donnamondai (Jpn, Hacked?)		| msx_issun	| 1987	| Angel?	| MSX		| 					|
 | md_itcame	|  	| It Came from the Desert (USA)				| 		| 1990	| Electronic Art| Sega Megadrive| 					|
 | cv_onlyrock	|  	| It's Only Rock 'n' Roll				| 		| 1984	| K-Tel		| ColecoVision	| 					|
+| spec_it1944en1|  	| Italia 1944 - Part 1 (English) (48K) (HB)		| 		| 2021	| Zankle Soft	| ZX Spectrum	| 					|
+| spec_it1944de1|  	| Italia 1944 - Part 1 (German) (48K) (HB)		| 		| 2021	| Zankle Soft	| ZX Spectrum	| 					|
+| spec_it1944it1|  	| Italia 1944 - Part 1 (Italian) (48K) (HB)		| 		| 2021	| Zankle Soft	| ZX Spectrum	| 					|
+| spec_it1944pt1|  	| Italia 1944 - Part 1 (Portuguese) (48K) (HB)		| 		| 2021	| Zankle Soft	| ZX Spectrum	| 					|
+| spec_it1944ru1|  	| Italia 1944 - Part 1 (Russian) (48K) (HB)		| 		| 2021	| Zankle Soft	| ZX Spectrum	| 					|
+| spec_it1944es1|  	| Italia 1944 - Part 1 (Spanish) (48K) (HB)		| 		| 2021	| Zankle Soft	| ZX Spectrum	| 					|
+| spec_it1944en2|  	| Italia 1944 - Part 2 (English) (48K) (HB)		| spec_it1944en1| 2021	| Zankle Soft	| ZX Spectrum	| 					|
+| spec_it1944de2|  	| Italia 1944 - Part 2 (German) (48K) (HB)		| spec_it1944de1| 2021	| Zankle Soft	| ZX Spectrum	| 					|
+| spec_it1944it2|  	| Italia 1944 - Part 2 (Italian) (48K) (HB)		| spec_it1944it1| 2021	| Zankle Soft	| ZX Spectrum	| 					|
+| spec_it1944pt2|  	| Italia 1944 - Part 2 (Portuguese) (48K) (HB)		| spec_it1944pt1| 2021	| Zankle Soft	| ZX Spectrum	| 					|
+| spec_it1944ru2|  	| Italia 1944 - Part 2 (Russian) (48K) (HB)		| spec_it1944ru1| 2021	| Zankle Soft	| ZX Spectrum	| 					|
+| spec_it1944es2|  	| Italia 1944 - Part 2 (Spanish) (48K) (HB)		| spec_it1944es1| 2021	| Zankle Soft	| ZX Spectrum	| 					|
+| spec_it1944en3|  	| Italia 1944 - Part 3 (English) (48K) (HB)		| spec_it1944en1| 2021	| Zankle Soft	| ZX Spectrum	| 					|
+| spec_it1944de3|  	| Italia 1944 - Part 3 (German) (48K) (HB)		| spec_it1944de1| 2021	| Zankle Soft	| ZX Spectrum	| 					|
+| spec_it1944it3|  	| Italia 1944 - Part 3 (Italian) (48K) (HB)		| spec_it1944it1| 2021	| Zankle Soft	| ZX Spectrum	| 					|
+| spec_it1944pt3|  	| Italia 1944 - Part 3 (Portuguese) (48K) (HB)		| spec_it1944pt1| 2021	| Zankle Soft	| ZX Spectrum	| 					|
+| spec_it1944ru3|  	| Italia 1944 - Part 3 (Russian) (48K) (HB)		| spec_it1944ru1| 2021	| Zankle Soft	| ZX Spectrum	| 					|
+| spec_it1944es3|  	| Italia 1944 - Part 3 (Spanish) (48K) (HB)		| spec_it1944es1| 2021	| Zankle Soft	| ZX Spectrum	| 					|
 | spec_italiansupercar|  	| Italian Supercar (128K)				| 		| 1990	| Codemasters	| ZX Spectrum	| 					|
 | itaten	|  	| Itazura Tenshi (Japan)				| 		| 1984	| Nichibutsu / A| Miscellaneous	| 					|
 | nes_ivanirostessuoffro|  	| Ivan 'Ironman' Stewart's Super Off Road (USA)	| 		| 1990	| Tradewest	| Miscellaneous	| 					|
@@ -6969,6 +6988,7 @@ This list contains all games supported by FinalBurn Neo.
 | ltorb1	|  	| Jonas Indiana and the Lost Temple of RA (20050717)	| 		| 2005	| blastar@gmx.ne| Neo Geo MVS	| 					|
 | nes_jongbou	|  	| Jongbou (Japan)					| 		| 1987	| KAC		| Miscellaneous	| 					|
 | jongpute	|   NW	| Jongputer						| 		| 1980	| Taito		| Route 16	| 					|
+| sotsugyok	|  	| Jor-eop Jeungmyeongseo (Korea)			| sotsugyo	| 1995	| Mitchell	| DECO IC16	| 					|
 | nes_jordavsbir|  	| Jordan vs Bird - One On One (USA)			| 		| 1989	| Milton Bradley| Miscellaneous	| 					|
 | jsk		| D NW	| Joryuu Syougi Kyoushitsu (Japan)			| 		| 1997	| Visco		| MSSV		| Unemulated CPU			|
 | md_joshua	|  	| Joshua & The Battle of Jericho (USA)			| 		| 1992	| Wisdom Tree	| Sega Megadrive| 					|
@@ -7163,6 +7183,7 @@ This list contains all games supported by FinalBurn Neo.
 | kamikcab	|  	| Kamikaze Cabbie					| 		| 1984	| Data East Corp| Miscellaneous	| 					|
 | kangarooa	|  	| Kangaroo (Atari)					| kangaroo	| 1982	| Sun Electronic| Miscellaneous	| 					|
 | kangaroob	|  	| Kangaroo (bootleg)					| kangaroo	| 1982	| bootleg	| Miscellaneous	| 					|
+| kangarool	|  	| Kangaroo (Loewen-Automaten)				| kangaroo	| 1982	| Sun Electronic| Miscellaneous	| 					|
 | kangaroo	|  	| Kangaroo						| 		| 1982	| Sun Electronic| Miscellaneous	| 					|
 | nes_kanshnagkannotogots|  	| Kanshakudama Nage Kantarou no Toukaidou Gojuusan Tsugi| 	| 1986	| Sunsoft	| Miscellaneous	| 					|
 | nes_karakkendenmuslo|  	| Karakuri Kengou Den Musashi Lord - Karakuribito Hashir| 		| 1991	| Yutaka	| Miscellaneous	| 					|
@@ -8435,7 +8456,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_mcdonaldj	|  	| McDonald's Treasure Land Adventure (Jpn)		| md_mcdonald	| 1993	| Sega		| Sega Megadrive| 					|
 | md_mcdonaldjp	|  	| McDonald's Treasure Land Adventure (Jpn, Prototype)	| md_mcdonald	| 1993	| Sega		| Sega Megadrive| 					|
 | md_mcdonaldu	|  	| McDonald's Treasure Land Adventure (USA)		| md_mcdonald	| 1993	| Sega		| Sega Megadrive| 					|
-| spec_meanstreak|  	| Mean Streak						| 		| 1987	| Mirrorsoft	| ZX Spectrum	| 					|
+| spec_meanstreak|  	| Mean Streak (128K)					| 		| 1987	| Mirrorsoft	| ZX Spectrum	| 					|
 | cv_mecha8	|  	| Mecha-8 (HB)						| 		| 2013	| Team Pixelboy	| ColecoVision	| SGM - Super Game Module		|
 | msx_mecha8	|  	| Mecha-8 (HB)						| 		| 2011	| Oscar Toledo G| MSX		| 					|
 | cv_mecha9	|  	| Mecha-9 (HB)						| 		| 2015	| Oscar Toledo G| ColecoVision	| SGM - Super Game Module		|
@@ -12363,6 +12384,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_sensiblep	|  	| Sensible Soccer (Prototype)				| md_sensible	| 1993	| Renegade	| Sega Megadrive| 					|
 | md_sensibie	|  	| Sensible Soccer - International Edition (Euro)	| 		| 1993	| Sony Imagesoft| Sega Megadrive| 					|
 | spec_thesentinel|  	| Sentinel, The						| 		| 1987	| Firebird Softw| ZX Spectrum	| 					|
+| bubsymphba	| D NW	| Seoul Symphony (Bubble Symphony bootleg with OKI6295)	| bublbob2	| 1994	| bootleg (SOFTV| Taito F3 Syste| 					|
 | spec_sergeantseymourrobotcop|  	| Sergeant Seymour Robotcop (128K)		| 		| 1992	| Codemasters	| ZX Spectrum	| 					|
 | sg1k_serizawa	|  	| Serizawa Hachidan no Tsumeshogi (Jpn)			| 		| 1983	| Sega		| Sega SG-1000	| 					|
 | md_sesame	|  	| Sesame Street Counting Cafe (USA)			| 		| 1994	| Electronic Art| Sega Megadrive| 					|
@@ -13038,7 +13060,7 @@ This list contains all games supported by FinalBurn Neo.
 | kokoroj2	|  	| Soreike Kokology Vol. 2 - Kokoro no Tanteikyoku	| 		| 1993	| Sega		| System 32	| 					|
 | ngp_hanadojo	|  	| Soreike!! Hanafuda Doujou (Jpn)			| 		| 1999	| Dyna		| NeoGeo Pocket | 					|
 | sos		|  	| SOS							| 		| 1980	| Namco		| Miscellaneous	| 					|
-| sotsugyo	|  	| Sotsugyo Shousho					| 		| 1995	| Mitchell (Atlu| DECO IC16	| 					|
+| sotsugyo	|  	| Sotsugyo Shousho (Japan)				| 		| 1995	| Mitchell (Atlu| DECO IC16	| 					|
 | soukobdx	|  	| Souko Ban Deluxe (Japan, SB1)				| boxyboy	| 1990	| Namco		| System 1	| 					|
 | gg_sokoban	|  	| Soukoban (Jpn)					| 		| 1990	| Riverhill Soft| Sega Game Gear| 					|
 | sg1k_sokoban	|  	| Soukoban (Jpn)					| 		| 1985	| Sega		| Sega SG-1000	| 					|

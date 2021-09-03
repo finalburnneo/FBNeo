@@ -88,9 +88,9 @@
  *************************************/
 
 static INT32 translucency = 0; // for starwars? -dink
-
 static UINT8 vector_engine;
 static UINT8 flipword;
+
 static UINT8 busy;
 static UINT32 colorram[32];
 
@@ -1091,9 +1091,15 @@ void avgdvg_reset()
 
 void avgdvg_scan(INT32 nAction, INT32 *)
 {
+	SCAN_VAR(flip_x);
+	SCAN_VAR(flip_y);
 	SCAN_VAR(avgdvg_halt_next);
 	SCAN_VAR(last_cyc);
 	SCAN_VAR(busy);
+	SCAN_VAR(colorram);
+	SCAN_VAR(has_clip);
+	SCAN_VAR(nvect);
+	ScanVar(vectbuf, sizeof(vgvector) * MAXVECT, "avgdvg_vectors");
 }
 
 

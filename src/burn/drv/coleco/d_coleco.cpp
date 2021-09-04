@@ -759,7 +759,8 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
         SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
-        AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 	}
 
 	if (pBurnDraw) {

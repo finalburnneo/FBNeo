@@ -1514,7 +1514,7 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
-	BurnSampleReset();
+	BurnSampleReset(); // buffered
 
 	if (carnival_sound) {
 		CarnivalSoundReset();
@@ -1633,7 +1633,7 @@ static void HeiankyoSoundWrite1(UINT16 port, UINT8 data)
 
 	if (Low & 0x80) {
 		BurnSamplePlay(5); // shovel
-		return; // shovel has priority
+		return; // shovel has priority, skip processing the rest of this port
 	}
 
 	if (High & 0x4 && !PLAYING(6)) // more appear (you're taking too long)
@@ -1650,7 +1650,7 @@ static void HeiankyoSoundWrite1(UINT16 port, UINT8 data)
 	if (Low & 0x20)
 		BurnSamplePlay(0); // aliens appear
 
-	if (Low || High) bprintf(0, _T("p1 low:  %x\thi:  %x\tframe:  %d\n"), Low, High, nCurrentFrame);
+	//if (Low || High) bprintf(0, _T("p1 low:  %x\thi:  %x\tframe:  %d\n"), Low, High, nCurrentFrame);
 }
 
 static void HeiankyoSoundWrite2(UINT16 port, UINT8 data)
@@ -1664,7 +1664,7 @@ static void HeiankyoSoundWrite2(UINT16 port, UINT8 data)
 
 	port2_state = data;
 
-	if (Low || High) bprintf(0, _T("p2 low:  %x\thi:  %x\tframe:  %d\n"), Low, High, nCurrentFrame);
+	//if (Low || High) bprintf(0, _T("p2 low:  %x\thi:  %x\tframe:  %d\n"), Low, High, nCurrentFrame);
 
 	if (out_hole > 0) {
 		// if aliens escape a hole, we need to re-trigger the "aliens moving" sample loop after a short time
@@ -1684,8 +1684,9 @@ static void HeiankyoSoundWrite2(UINT16 port, UINT8 data)
 		BurnSampleStop(3); // STOP aliens moving
 	}
 
-	if (Low & 0x20 && !PLAYING(4))
+	if (Low & 0x20 && !PLAYING(4)) {
 		BurnSamplePlay(4); // hero death
+	}
 
 	if (Low & 0x10 && !PLAYING(1)) { // note: also played when hero death.
 		BurnSamplePlay(1); // alien death
@@ -1905,6 +1906,7 @@ static INT32 DrvInit(INT32 romsize, INT32 rambase, INT32 has_z80ram, void (__fas
 	}
 
 	BurnSampleInit(0);
+	BurnSampleSetBuffered(ZetTotalCycles, 1933560);
 
 	GenericTilesInit();
 
@@ -2023,7 +2025,6 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 262;
 	INT32 nCyclesTotal[2] = { 1933560 / 60, 3579545 / 15 / 60 };
 	INT32 nCyclesDone[2] = { nExtraCycles[0], 0 };
-	INT32 nSoundBufferPos = 0;
 
 	ZetOpen(0);
 
@@ -2043,14 +2044,6 @@ static INT32 DrvFrame()
 		if (i == 224 && pBurnDraw) {
 			BurnDrvRedraw();
 		}
-
-		// BurnSample needs several updates per frame when using BurnSampleGetStatus()
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnSampleRender(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	if (coin_timer > 0) {
@@ -2067,12 +2060,7 @@ static INT32 DrvFrame()
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			BurnSampleRender(pSoundBuf, nSegmentLength);
-		}
-//		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
+	    BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 		if (carnival_sound)
 			AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}

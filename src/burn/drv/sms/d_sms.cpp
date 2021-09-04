@@ -29728,3 +29728,22 @@ struct BurnDriver BurnDrvgg_breakthru = {
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
+
+// Dracula's Castle (HB)
+
+static struct BurnRomInfo gg_dcastleRomDesc[] = {
+	{ "Dracula's Castle (2021)(Habit Soft).gg",	0x40000, 0x0ba12ac9, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_dcastle)
+STD_ROM_FN(gg_dcastle)
+
+struct BurnDriver BurnDrvgg_dcastle = {
+	"gg_dcastle", NULL, NULL, NULL, "2021",
+	"Dracula's Castle (HB)\0", NULL, "Habit Soft", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_ACTION, 0,
+	GGGetZipName, gg_dcastleRomInfo, gg_dcastleRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};

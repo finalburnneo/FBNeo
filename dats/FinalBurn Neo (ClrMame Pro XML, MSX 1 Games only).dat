@@ -376,7 +376,7 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="alienattack" cloneof="alienattackv3" romof="alienattackv3">
+	<game name="alienattack" cloneof="alienattackv35" romof="alienattackv35">
 		<description>Alien Attack (HB, v1.06) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Marcos Daniel</manufacturer>
@@ -387,11 +387,11 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="alienattackv3" romof="msx">
-		<description>Alien Attack (HB, v3.0) [Homebrew]</description>
+	<game name="alienattackv35" romof="msx">
+		<description>Alien Attack (HB, v3.5) [Homebrew]</description>
 		<year>2021</year>
 		<manufacturer>Marcos Daniel</manufacturer>
-		<rom name="Alien Attack v3.0 (2021)(Marcos Daniel).rom" size="262144" crc="8b5fcc0c"/>
+		<rom name="Alien Attack v3.5 (2021)(Marcos Daniel).rom" size="262144" crc="fbd3f05b"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -778,6 +778,17 @@
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Arno Dash (2021)(Under4Mhz).rom" size="32768" crc="c29d7e34"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="arya" romof="msx">
+		<description>Arya (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Andre Baptista</manufacturer>
+		<rom name="Arya (2021)(Andre Baptista).rom" size="16384" crc="8e7ffe18"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -3966,6 +3977,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="donpan" romof="msx">
+		<description>Donpan (Jpn)</description>
+		<year>1983</year>
+		<manufacturer>Colpax</manufacturer>
+		<rom name="Donpan (1983)(Colpax).rom" size="16384" crc="a4983dcc"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="doordoor" romof="msx">
 		<description>Doordoor (Jpn)</description>
 		<year>1985</year>
@@ -5961,6 +5983,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="heartst2" romof="msx">
+		<description>Heart Stealer 2 (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Timmy</manufacturer>
+		<rom name="Heart Stealer 2 (2021)(Timmy).rom" size="16384" crc="8ccde019"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="heatseek" romof="msx">
 		<description>Heat Seeker - Missil (Spanish)</description>
 		<year>1986</year>
@@ -7734,7 +7767,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="seikacho" romof="msx">
-		<description>Kung Fu Master. Seiken Achou (Jpn)</description>
+		<description>Kung Fu Master - Seiken Achou (Jpn)</description>
 		<year>1985</year>
 		<manufacturer>ASCII</manufacturer>
 		<rom name="kung fu acho (japan).rom" size="32768" crc="999dd794"/>
@@ -7745,7 +7778,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="seikachoa" cloneof="seikacho" romof="seikacho">
-		<description>Kung Fu Master. Seiken Achou (Jpn, Alt)</description>
+		<description>Kung Fu Master - Seiken Achou (Jpn, Alt)</description>
 		<year>1985</year>
 		<manufacturer>ASCII</manufacturer>
 		<rom name="kung fu acho (japan) (alt 1).rom" size="32768" crc="0da11df8"/>
@@ -7756,7 +7789,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="seikachok" cloneof="seikacho" romof="seikacho">
-		<description>Kung Fu Master. Seiken Achou (Kor)</description>
+		<description>Kung Fu Master - Seiken Achou (Kor)</description>
 		<year>198?</year>
 		<manufacturer>Clover</manufacturer>
 		<rom name="karateka.rom" size="32768" crc="6adeadf5"/>
@@ -8112,6 +8145,17 @@
 		<year>2019</year>
 		<manufacturer>Radastan</manufacturer>
 		<rom name="Mag the Magician (2019)(Radastan).rom" size="32768" crc="3d2ab5c1"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="magpinball" romof="msx">
+		<description>Magic Pinball (Spanish)</description>
+		<year>1987</year>
+		<manufacturer>OMK Software</manufacturer>
+		<rom name="Magic Pinball (1987)(OMK Software).rom" size="32768" crc="08b51472"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -8515,7 +8559,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mazemax" romof="msx">
-		<description>Maze Max (Euro)</description>
+		<description>Maze Max (French)</description>
 		<year>1985</year>
 		<manufacturer>Loriciels</manufacturer>
 		<rom name="Maze Max (1985)(Loriciels)(FR)[BLOAD'CAS-',R].cas" size="12693" crc="2d5ae9d9"/>
@@ -8948,6 +8992,17 @@
 		<year>2006</year>
 		<manufacturer>Nerlaska Studio</manufacturer>
 		<rom name="NLKMSX001ES_MonsterHunter.rom" size="131072" crc="b876a92f"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="monsteronrun" romof="msx">
+		<description>Monster On The Run (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Paolo Borzini</manufacturer>
+		<rom name="Monster On The Run v1.0 (2021)(Paolo Borzini).rom" size="32768" crc="31ca1a69"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -9804,6 +9859,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="nobackdown" romof="msx">
+		<description>No Back Down (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>SoCal</manufacturer>
+		<rom name="No Back Down v1.0 (2021)(Socal).rom" size="65536" crc="a78fdb26"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="nogals" romof="msx">
 		<description>Nogalious (HB) [Homebrew]</description>
 		<year>2019</year>
@@ -9936,6 +10002,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="openwide" romof="msx">
+		<description>Open Wide! (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Hakogame</manufacturer>
+		<rom name="Open Wide! (2021)(Hakogame).rom" size="131072" crc="286a11a6"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="opwolfos" romof="msx">
 		<description>Operation Wolf (Euro)</description>
 		<year>1988</year>
@@ -9996,6 +10073,17 @@
 		<year>1985</year>
 		<manufacturer>HAL Kenkyuujo</manufacturer>
 		<rom name="oyoide tango (japan).rom" size="8192" crc="01a24ca7"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pac01" romof="msx">
+		<description>PAC-01 (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Arcs</manufacturer>
+		<rom name="PAC-01 (2021)(Arcs).rom" size="32768" crc="c22e6f4f"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -10520,6 +10608,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="pippo" romof="msx">
+		<description>Pippo La Scopa Ficcanaso (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Gamecast</manufacturer>
+		<rom name="Pippo La Scopa Ficcanaso (2021)(Gamecast).rom" size="16384" crc="ee9b213d"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="pippols" romof="msx">
 		<description>Pippols (Jpn)</description>
 		<year>1985</year>
@@ -10844,6 +10943,17 @@
 		<year>2021</year>
 		<manufacturer>Gamecast</manufacturer>
 		<rom name="PuzzyBox(2021)(Gamecast).rom" size="65536" crc="454381e4"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pwnd" romof="msx">
+		<description>PWND (HB) [Homebrew]</description>
+		<year>2009</year>
+		<manufacturer>Metal Soft</manufacturer>
+		<rom name="PWND (2009)(Metal Soft).rom" size="16384" crc="51f201b3"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -11490,7 +11600,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="runner" romof="msx">
-		<description>Runner (Fra)</description>
+		<description>Runner (French)</description>
 		<year>1986</year>
 		<manufacturer>Loriciels</manufacturer>
 		<rom name="runner (1986)(loriciels)(fr)[run'cas-'].cas" size="38632" crc="80a0f4d2"/>
@@ -11744,7 +11854,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="senjokam" romof="msx">
-		<description>Senjou no Ookami (Jpn)</description>
+		<description>Senjou no Ookami (Jpn) [aka Commando]</description>
 		<year>1987</year>
 		<manufacturer>ASCII</manufacturer>
 		<rom name="lh231073" size="131072" crc="427b3f14"/>
@@ -11865,7 +11975,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sshadow" romof="msx">
-		<description>Silent Shadow (Euro?)</description>
+		<description>Silent Shadow (Euro)</description>
 		<year>1988</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="silent shadow (1988)(topo soft)[run'cas-'].cas" size="155826" crc="a995ca1b"/>

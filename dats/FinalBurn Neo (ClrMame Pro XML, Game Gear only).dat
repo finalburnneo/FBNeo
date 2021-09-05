@@ -1228,6 +1228,14 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="dcastle">
+		<description>Dracula's Castle (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Habit Soft</manufacturer>
+		<rom name="Dracula's Castle (2021)(Habit Soft).gg" size="262144" crc="0ba12ac9"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="dragon">
 		<description>Dragon - The Bruce Lee Story (Euro)</description>
 		<year>1994</year>

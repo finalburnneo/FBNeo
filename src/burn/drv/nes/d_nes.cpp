@@ -17676,6 +17676,23 @@ STD_ROM_FN(nes_smaruo)
 // Homebrew (hand-added)
 
 
+static struct BurnRomInfo nes_labbayeRomDesc[] = {
+	{ "L'Abbaye des Morts (2021)(Broke Studios).nes",          131088, 0xa032a1f6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_labbaye)
+STD_ROM_FN(nes_labbaye)
+
+struct BurnDriver BurnDrvnes_labbaye = {
+	"nes_labbaye", NULL, NULL, NULL, "2021",
+	"L'Abbaye des Morts (HB)\0", NULL, "Broke Studio", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	NESGetZipName, nes_labbayeRomInfo, nes_labbayeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_etdxRomDesc[] = {
 	{ "E.T. The Extra Terrestrial DX (2019)(pacnsacdave).nes",          524304, 0xac82d2b4, BRF_ESS | BRF_PRG },
 };

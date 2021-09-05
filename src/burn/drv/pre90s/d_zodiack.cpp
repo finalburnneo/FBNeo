@@ -548,12 +548,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (GetRoms()) return 1;
@@ -585,7 +580,7 @@ static INT32 DrvInit()
 	BurnWatchdogInit(DrvDoReset, 180);
 
 	AY8910Init(0, 1536000, 0);
-	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 3072000);
 
 	GenericTilesInit();
@@ -609,7 +604,7 @@ static INT32 DrvExit()
 	ZetExit();
 	AY8910Exit(0);
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 	percuss = 0;
 	moguchan = 0;
 
@@ -775,6 +770,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 	}
 
 	if (pBurnDraw) {

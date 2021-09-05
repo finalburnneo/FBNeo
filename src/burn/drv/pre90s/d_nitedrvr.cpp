@@ -33,6 +33,7 @@ static INT32 steering_buf;
 static UINT8 ac_line;
 static INT32 m_gear;
 static UINT8 m_track;
+static INT32 last;
 
 static INT32 vblank;
 
@@ -122,7 +123,6 @@ static INT32 nitedrvr_steering()
 static UINT8 nitedrvr_in0_r(UINT8 offset)
 {
 	{ // gear logic
-		static INT32 last = 0;
 		if ((last & (1<<0)) == 0 && DrvInputs[1] & (1<<0)) {
 			m_gear++;
 		}
@@ -323,12 +323,11 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	M6502Open(0);
 	M6502Reset();
+	BurnSampleReset();
+	BurnSamplePlay(0); // engine
 	M6502Close();
 
 	BurnWatchdogReset();
-
-	BurnSampleReset();
-	BurnSamplePlay(0); // engine
 
 	DrvPalette[1] = ~0; // white
 
@@ -342,6 +341,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	steering_val = 0;
 	last_steering_val = 0;
 	m_gear = 1;
+	last = 0;
 
 	sound_disable = 1;
 
@@ -844,12 +844,7 @@ static INT32 DrvInit()
 {
 	BurnSetRefreshRate(57.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvM6502ROM + 0x0000,  0, 1)) return 1;
@@ -879,6 +874,7 @@ static INT32 DrvInit()
 
 	BurnSampleInit(0);
 	BurnSampleSetAllRoutesAllSamples(1.00, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetBuffered(M6502TotalCycles, 1008000);
 
 	DrvDoReset(1);
 
@@ -893,7 +889,7 @@ static INT32 DrvExit()
 
 	BurnSampleExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -1014,6 +1010,8 @@ static INT32 DrvFrame()
 		DrvDoReset(1);
 	}
 
+	M6502NewFrame();
+
 	{
 		DrvInputs[0] = 0;
 		DrvInputs[1] = 0;
@@ -1024,36 +1022,26 @@ static INT32 DrvFrame()
 		}
 	}
 	INT32 nInterleave = 128; // 256/2
-	INT32 nCyclesTotal = 1008000 / 57;
-	INT32 nSoundBufferPos = 0;
+	INT32 nCyclesTotal[1] = { 1008000 / 57 };
+	INT32 nCyclesDone[1] = { 0 };
 
 	M6502Open(0);
 	vblank = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		M6502Run(nCyclesTotal / nInterleave);
+		CPU_RUN(0, M6502);
+
 		if (i == 240/2) {
 			vblank = 1;
 			M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
-		}
-
-		if (pBurnSoundOut && i&1) { // samplizer needs less update-latency for the speed changes.
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/2);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnSampleRender(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
 		}
 	}
 
 	M6502Close();
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			BurnSampleRender(pSoundBuf, nSegmentLength);
-		}
+		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 
 		if (sound_disable) {
 			BurnSoundClear();
@@ -1102,6 +1090,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(ac_line);
 		SCAN_VAR(m_gear);
 		SCAN_VAR(m_track);
+		SCAN_VAR(sound_disable);
+		SCAN_VAR(last);
 	}
 
 	return 0;

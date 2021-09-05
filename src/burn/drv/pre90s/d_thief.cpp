@@ -412,7 +412,7 @@ static void coprocessor_write(UINT8 offset, UINT8 data)
 
 static inline void tape_set_audio(INT32 track, INT32 bOn)
 {
-	BurnSampleSetAllRoutes(track, bOn ? 1.0 : 0.0, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetAllRoutes(track, bOn ? 0.65 : 0.0, BURN_SND_ROUTE_BOTH);
 }
 
 static inline void tape_set_motor(INT32 data)
@@ -634,13 +634,13 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	ZetOpen(0);
 	ZetReset();
+	BurnSampleReset();
 	ZetClose();
 
 	BurnWatchdogReset();
 
 	AY8910Reset(0);
 	AY8910Reset(1);
-	BurnSampleReset();
 
 	tms_reset = 1;
 	read_mask = 0;
@@ -763,8 +763,10 @@ static INT32 DrvInit(INT32 game)
 	AY8910Init(1, 2000000, 1);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 4000000);
 
 	BurnSampleInit(0);
+	BurnSampleSetBuffered(ZetTotalCycles, 4000000);
 	BurnSampleSetAllRoutesAllSamples(0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -860,6 +862,8 @@ static INT32 DrvFrame()
 		DrvDoReset(1);
 	}
 
+	ZetNewFrame();
+
 	{
 		DrvInputs[0] = 0xff;
 		DrvInputs[1] = 0xff;
@@ -872,20 +876,11 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 32;
 	INT32 nCyclesTotal[1] = { 4000000 / 60 };
 	INT32 nCyclesDone[1] =  { 0 };
-	INT32 nSoundBufferPos = 0;
 
-	BurnSoundClear();
 	ZetOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		CPU_RUN(0, Zet);
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnSampleRender(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 	if (DrvInputs[1] & 0x10)
 		ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
@@ -894,11 +889,7 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		if (nSegmentLength) {
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnSampleRender(pSoundBuf, nSegmentLength);
-		}
+		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 

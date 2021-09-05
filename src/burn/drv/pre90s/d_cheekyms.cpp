@@ -159,10 +159,9 @@ static INT32 DrvDoReset()
 
 	ZetOpen(0);
 	ZetReset();
+	BurnSampleReset();
 	ZetClose();
 	DACReset();
-
-	BurnSampleReset();
 
 	HiscoreReset();
 
@@ -243,12 +242,7 @@ static INT32 MemIndex()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvROM + 0x0000,  0, 1)) return 1;
@@ -288,6 +282,8 @@ static INT32 DrvInit()
 	BurnUpdateProgress(0.0, _T("Loading samples..."), 0);
 	bBurnSampleTrimSampleEnd = 1;
 	BurnSampleInit(0);
+	bHasSamples = BurnSampleGetStatus(0) != -1;
+	BurnSampleSetBuffered(ZetTotalCycles, 2500000);
 	BurnSampleSetAllRoutesAllSamples(0.40, BURN_SND_ROUTE_BOTH);
 
 	// mystery
@@ -305,8 +301,6 @@ static INT32 DrvInit()
 	// coin
 	BurnSampleSetRoute(6, BURN_SND_SAMPLE_ROUTE_1, 0.10, BURN_SND_ROUTE_BOTH);
 	BurnSampleSetRoute(6, BURN_SND_SAMPLE_ROUTE_2, 0.10, BURN_SND_ROUTE_BOTH);
-
-	bHasSamples = BurnSampleGetStatus(0) != -1;
 
 	if (!bHasSamples) { // Samples not found
 		BurnSampleSetAllRoutesAllSamples(0.00, BURN_SND_ROUTE_BOTH);
@@ -326,7 +320,7 @@ static INT32 DrvExit()
 	BurnSampleExit();
 	GenericTilesExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	flipped = scrolly = palettebnk = 0;
 
@@ -444,7 +438,7 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 10;
 	INT32 nCyclesTotal[1] = { 2500000 / 60 };
 	INT32 nCyclesDone[1] = { 0 };
-	INT32 nSoundBufferPos = 0;
+	//INT32 nSoundBufferPos = 0;
 
 	ZetNewFrame();
 	ZetOpen(0);
@@ -460,27 +454,15 @@ static INT32 DrvFrame()
 
 		if ((i == nInterleave-1) && irqmask)
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnSampleRender(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 	ZetClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
 	}
-	
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		if (nSegmentLength) {
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnSampleRender(pSoundBuf, nSegmentLength);
-		}
 
+	if (pBurnSoundOut) {
+		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 

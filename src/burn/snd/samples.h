@@ -45,6 +45,11 @@ void BurnSampleScan(INT32 nAction, INT32 *pnMin);
 void BurnSampleRender(INT16 *pDest, UINT32 pLen);
 void BurnSampleExit();
 
+// Buffered samples
+void BurnSampleSetBuffered(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ);
+void BurnSampleSync();
+
+
 extern INT32 bBurnSampleTrimSampleEnd; // set before BurnSampleInit();
 
 #define BURN_SND_SAMPLE_ROUTE_1			0

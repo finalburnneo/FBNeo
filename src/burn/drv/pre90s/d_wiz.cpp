@@ -1,10 +1,6 @@
 // FB Alpha Wiz driver module
 // Based on MAME driver by Zsolt Vasvari
 
-// Wiz Todo:
-// scion: static in audio is normal (no kidding), use scionc!
-//
-
 #include "tiles_generic.h"
 #include "bitswap.h"
 #include "z80_intf.h"
@@ -41,114 +37,114 @@ static UINT8 *char_bank_select;
 static UINT8 *screen_flip;
 static UINT8 *background_color;
 
+static INT32 lastboom = 0;
+
 static UINT8 DrvInputs[2];
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 
-static UINT8 bHasSamples = 0;
-
 static UINT8 Wizmode = 0;
 static UINT8 Scionmodeoffset = 0;
 
 static struct BurnInputInfo WizInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 6,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Wiz)
 
 static struct BurnInputInfo ScionInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 4,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 5,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 fire 2"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 6,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Scion)
 
 static struct BurnInputInfo StingerInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 4,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 5,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 fire 2"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 6,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Stinger)
 
 static struct BurnInputInfo KungfutInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 3"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 fire 2"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 6,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Kungfut)
@@ -454,10 +450,8 @@ static struct BurnDIPInfo WizDIPList[]=
 
 STDDIPINFO(Wiz)
 
-void __fastcall wiz_main_write(UINT16 address, UINT8 data)
+static void __fastcall wiz_main_write(UINT16 address, UINT8 data)
 {
-	static INT32 lastboom = 0;
-
 	switch (address)
 	{
 		case 0xc800:
@@ -533,7 +527,7 @@ void __fastcall wiz_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall wiz_main_read(UINT16 address)
+static UINT8 __fastcall wiz_main_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -577,7 +571,7 @@ UINT8 __fastcall wiz_main_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall wiz_sound_write(UINT16 address, UINT8 data)
+static void __fastcall wiz_sound_write(UINT16 address, UINT8 data)
 {
 	address &= 0x7fff;
 
@@ -605,7 +599,7 @@ void __fastcall wiz_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall wiz_sound_read(UINT16 address)
+static UINT8 __fastcall wiz_sound_read(UINT16 address)
 {
 	address &= 0x7fff;
 
@@ -636,6 +630,8 @@ static INT32 DrvDoReset()
 	AY8910Reset(2);
 
 	BurnSampleReset();
+
+	lastboom = 0;
 
 	return 0;
 }
@@ -830,12 +826,7 @@ static INT32 StingerLoadRoms()
 
 static INT32 DrvInit(int (*RomLoadCallback)())
 {
-	AllMem = NULL;
-	MemIndex();
-	UINT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (RomLoadCallback()) return 1;
@@ -872,10 +863,12 @@ static INT32 DrvInit(int (*RomLoadCallback)())
 	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.10, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(2, 0.10, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 3072000);
 
 	BurnSampleInit(1);
 	BurnSampleSetAllRoutesAllSamples(0.05, BURN_SND_ROUTE_BOTH);
-	bHasSamples = BurnSampleGetStatus(0) != -1;
+	BurnSampleGetStatus(0) != -1;
+	BurnSampleSetBuffered(ZetTotalCycles, 3072000);
 
 	GenericTilesInit();
 
@@ -895,11 +888,10 @@ static INT32 DrvExit()
 	AY8910Exit(2);
 	BurnSampleExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	Wizmode = 0;
 	Scionmodeoffset = 0;
-	bHasSamples = 0;
 
 	return 0;
 }
@@ -908,15 +900,15 @@ static void draw_background(INT16 bank, INT16 palbank, INT16 colortype)
 {
 	for (INT16 offs = 0x3ff; offs >= 0; offs--)
 	{
-		INT16 sx    = (offs & 0x1f);
+		INT16 sx = (offs & 0x1f);
 		UINT8 sy = (((offs / 32)<<3) - DrvSprRAM0[2 * sx + 0]) &0xff;
 		INT16 color;
 
-		if (colortype) 
+		if (colortype)
 		{
 			color = (DrvSprRAM0[2 * sx | 1] & 0x07) | (palbank << 3);
 		}
-		else 
+		else
 		{
 			color = (DrvSprRAM0[2 * sx + 1] & 0x04) | (DrvVidRAM0[offs] & 3) | (palbank << 3);
 		}
@@ -1008,9 +1000,7 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = *background_color;
-	} 
+	BurnTransferClear(*background_color);
 
 	draw_background(2 + ((char_bank_select[0] << 1) | char_bank_select[1]), palbank, 0);
 	draw_foreground(palbank, 0);
@@ -1032,9 +1022,7 @@ static INT32 StingerDraw()
 		DrvRecalc = 0;
 	}
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = *background_color;
-	}
+	BurnTransferClear(*background_color);
 
 	draw_background(2 + char_bank_select[0], palbank, 1);
 	draw_foreground(palbank, 1);
@@ -1056,9 +1044,7 @@ static INT32 KungfutDraw()
 		DrvRecalc = 0;
 	}
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = *background_color;
-	}
+	BurnTransferClear(*background_color);
 
 	draw_background(2 + char_bank_select[0], palbank, 0);
 	draw_foreground(palbank, 0);
@@ -1077,6 +1063,8 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	ZetNewFrame();
+
 	{
 		memset (DrvInputs, 0, 2);
 		for (INT16 i = 0; i < 8; i++) {
@@ -1088,7 +1076,6 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 16;
 	INT32 nCyclesTotal[2] = { 3072000 / 60, 3072000 / 60 };
 	INT32 nCyclesDone[2]  = { 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -1101,25 +1088,11 @@ static INT32 DrvFrame()
 		CPU_RUN(1, Zet);
 		if ((i % 4) == 0x03 && interrupt_enable[1]) ZetNmi();
 		ZetClose();
-
-		// BurnSample needs several updates per frame when using BurnSampleGetStatus()
-		// so leave alone for now..
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(pSoundBuf, nSegmentLength);
-			if (bHasSamples) BurnSampleRender(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Render(pSoundBuf, nSegmentLength);
-			if (bHasSamples) BurnSampleRender(pSoundBuf, nSegmentLength);
-		}
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -1150,6 +1123,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		AY8910Scan(nAction, pnMin);
 		BurnSampleScan(nAction, pnMin);
+
+		SCAN_VAR(lastboom);
 	}
 
 	return 0;

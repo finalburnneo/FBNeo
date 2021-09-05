@@ -48,41 +48,41 @@ static INT32 masao = 0;
 static INT32 monitor = 0; // monitor type (unused atm)
 
 static struct BurnInputInfo MarioInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 6,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 start"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Mario)
 
 static struct BurnInputInfo MariooInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 6,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 start"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Marioo)
@@ -365,7 +365,11 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	ZetReset(0);
+	ZetOpen(0);
+	ZetReset();
+	BurnSampleReset();
+	ZetClose();
+
 	ZetReset(1); // masao
 
 	I8039Open(0);
@@ -375,7 +379,6 @@ static INT32 DrvDoReset()
 
 	i8039_p[1] = 0xf0; // mario sound, start active low top bits
 
-	BurnSampleReset();
 	AY8910Reset(0);
 
 	HiscoreReset();
@@ -433,11 +436,6 @@ static UINT8 __fastcall mario_i8039_read_port(UINT32 port)
 	return 0;
 }
 
-static INT32 DrvSyncDAC()
-{
-	return (INT32)(float)(nBurnSoundLen * (I8039TotalCycles() / (730000.0000 / (nBurnFPS / 100.0000))));
-}
-
 static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
@@ -465,7 +463,7 @@ static INT32 MemIndex()
 	i8039_p         = Next; Next += 0x000004;
 	i8039_t         = Next; Next += 0x000004;
 
-	interrupt_enable	= Next; Next += 0x000001;
+	interrupt_enable= Next; Next += 0x000001;
 	gfxbank			= Next; Next += 0x000001;
 	palbank			= Next; Next += 0x000001;
 	flipscreen		= Next; Next += 0x000001;
@@ -541,12 +539,7 @@ STD_SAMPLE_FN(Mario)
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM  + 0x0000,  0, 1)) return 1;
@@ -594,11 +587,12 @@ static INT32 DrvInit()
 	I8039SetIOWriteHandler(mario_i8039_write_port);
 	I8039Close();
 
-	DACInit(0, 0, 1, DrvSyncDAC);
+	DACInit(0, 0, 1, I8039TotalCycles, 730000);
 	DACSetRoute(0, 0.65, BURN_SND_ROUTE_BOTH);
 
 	BurnSampleInit(0);
 	BurnSampleSetAllRoutesAllSamples(0.25, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetBuffered(ZetTotalCycles, 4000000);
 
 	{ // masao
 
@@ -634,7 +628,7 @@ static INT32 DrvExit()
 
 	I8039Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	masao = 0;
 
@@ -661,11 +655,7 @@ static void draw_layer()
 		INT32 code  = DrvVidRAM[offs] | (*gfxbank << 8);
 		INT32 color = ((DrvVidRAM[offs] & 0xe0) >> 4) | 0x10 | (*palbank << 5) | (monitor << 6);
 
-		if (flipscreen[0]) {
-			Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 2, 0, DrvGfxROM0);
-		} else {
-			Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 2, 0, DrvGfxROM0);
-		}
+		Draw8x8Tile(pTransDraw, code, sx, sy, flipscreen[0], flipscreen[0], color, 2, 0, DrvGfxROM0);
 	}
 }
 
@@ -698,19 +688,7 @@ static void draw_sprites()
 				sx -= 8;
 			}
 
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM1);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM1);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM1);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM1);
-				}
-			}
+			Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 3, 0, 0, DrvGfxROM1);
 		}
 	}
 }
@@ -749,35 +727,23 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 4000000 / 60, 730000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	ZetNewFrame();
 	I8039NewFrame();
 
 	ZetOpen(0);
 	I8039Open(0);
-	
+
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Zet);
 		if (i == 240 && *interrupt_enable) ZetNmi();
 
-		nCyclesDone[1] += I8039Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
-
-		if (pBurnSoundOut && i&1) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnSampleRender(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
+		CPU_RUN(1, I8039);
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			BurnSampleRender(pSoundBuf, nSegmentLength);
-		}
+		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 		BurnSoundDCFilter();
 	}
@@ -811,14 +777,13 @@ static INT32 MasaoFrame()
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0]/nInterleave);
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1) && *interrupt_enable) ZetNmi();
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1]/nInterleave);
+		CPU_RUN(1, Zet);
 		ZetClose();
 	}
 

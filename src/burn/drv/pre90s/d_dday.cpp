@@ -378,7 +378,7 @@ static INT32 DrvGfxDecode()
 	memcpy (tmp, DrvGfxROM3, 0x0800);
 
 	GfxDecode(0x0040, 1, 8, 8, Plane, XOffs, YOffs, 0x040, tmp, DrvGfxROM3);
-	
+
 	BurnFree(tmp);
 
 	return 0;
@@ -386,12 +386,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM  + 0x0000,  0, 1)) return 1;
@@ -434,8 +429,9 @@ static INT32 DrvInit()
 
 	AY8910Init(0, 1000000, 0);
 	AY8910Init(1, 1000000, 1);
-	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.10, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 2000000);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 32, 32);
@@ -444,9 +440,7 @@ static INT32 DrvInit()
 	GenericTilemapSetGfx(0, DrvGfxROM0, 3, 8, 8, 0x4000, 0x00, 0x1f);
 	GenericTilemapSetGfx(1, DrvGfxROM1, 2, 8, 8, 0x4000, 0x20, 0x07);
 	GenericTilemapSetGfx(2, DrvGfxROM2, 2, 8, 8, 0x4000, 0x40, 0x07);
-	GenericTilemapCategoryConfig(0, 2);
-//	GenericTilemapSetTransMask(0, 0, 0x00f0 ^ ~0);
-//	GenericTilemapSetTransMask(0, 1, 0xff0f ^ ~0);
+	GenericTilemapSetTransSplit(0, 0, 0x00f0, 0xff0f);
 	GenericTilemapSetTransparent(1, 0);
 	GenericTilemapSetTransparent(2, 0);
 
@@ -467,7 +461,7 @@ static INT32 DrvExit()
 
 	BurnGunExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -546,11 +540,9 @@ static INT32 DrvDraw()
 
 	BurnTransferClear();
 
-	GenericTilemapSetTransMask(0, 0, 0xff0f);
-	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER0); // split
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER1);
 	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);
-	GenericTilemapSetTransMask(0, 0, 0x00f0);
-	if (nBurnLayer & 4) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER1); // split
+	if (nBurnLayer & 4) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER0);
 	if (nBurnLayer & 8) GenericTilemapDraw(2, pTransDraw, 0);
 
 	if (nSpriteEnable & 1) sl_draw();
@@ -565,6 +557,8 @@ static INT32 DrvFrame()
 	if (DrvReset) {
 		DrvDoReset();
 	}
+
+	ZetNewFrame();
 
 	{
 		DrvInputs[0] = 0;

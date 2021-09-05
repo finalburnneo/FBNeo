@@ -183,6 +183,57 @@ static void make_raw(UINT8 *src, UINT32 len)
 	sample_ptr->position = 0;
 }
 
+// for stream-sync
+static INT32 samples_buffered = 0;
+static INT32 (*pCPUTotalCycles)() = NULL;
+static UINT32 nDACCPUMHZ = 0;
+static INT32 nPosition = 0;
+static INT16 *soundbuf = NULL;
+static INT32 IN_RESET = 0;
+
+// forward
+static void BurnSampleRender_INT(UINT32 pLen);
+
+
+// Streambuffer handling
+static INT32 SyncInternal()
+{
+    if (!samples_buffered) return 0;
+	return (INT32)(float)(nBurnSoundLen * (pCPUTotalCycles() / (nDACCPUMHZ / (nBurnFPS / 100.0000))));
+}
+
+static void UpdateStream(INT32 samples_len)
+{
+    if (!samples_buffered || !pBurnSoundOut) return;
+    if (samples_len > nBurnSoundLen) samples_len = nBurnSoundLen;
+
+	INT32 nSamplesNeeded = samples_len - nPosition;
+	if (nSamplesNeeded < 1) return;
+
+	//bprintf(0, _T("samples_sync: %d samples    frame %d\n"), nSamplesNeeded, nCurrentFrame);
+
+    BurnSampleRender_INT(nSamplesNeeded);
+    nPosition += nSamplesNeeded;
+}
+
+void BurnSampleSync()
+{
+	if (IN_RESET) return;
+	UpdateStream(SyncInternal());
+}
+
+void BurnSampleSetBuffered(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
+{
+    bprintf(0, _T("*** Using BUFFERED samples-mode.\n"));
+
+	nPosition = 0;
+
+    samples_buffered = 1;
+
+    pCPUTotalCycles = pCPUCyclesCB;
+	nDACCPUMHZ = nCpuMHZ;
+}
+
 void BurnSampleInitOne(INT32); // below...
 
 INT32 BurnSampleGetChannelSample(INT32 channel)
@@ -191,6 +242,8 @@ INT32 BurnSampleGetChannelSample(INT32 channel)
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleGetChannelSample called without init\n"));
 	if (channel >= MAX_CHANNEL) bprintf(PRINT_ERROR, _T("BurnSampleGetChannelSample called with invalid channel (%d), max is %d\n"), channel, MAX_CHANNEL);
 #endif
+
+	BurnSampleSync();
 
 	return sample_channels[channel];
 }
@@ -202,6 +255,8 @@ void BurnSamplePlay(INT32 sample)
 #endif
 
 	if (sample >= nTotalSamples) return;
+
+	BurnSampleSync();
 
 	sample_ptr = &samples[sample];
 
@@ -240,6 +295,8 @@ void BurnSamplePause(INT32 sample)
 
 	if (sample >= nTotalSamples) return;
 
+	BurnSampleSync();
+
 	sample_ptr = &samples[sample];
 	sample_ptr->playing = 0;
 }
@@ -253,6 +310,8 @@ void BurnSampleChannelPause(INT32 channel, bool pause)
 
 	if (sample_channels[channel] >= nTotalSamples) return;
 
+	BurnSampleSync();
+
 	sample_ptr = &samples[sample_channels[channel]];
 	sample_ptr->playing = pause ? 0 : 1;
 }
@@ -265,8 +324,20 @@ void BurnSampleResume(INT32 sample)
 
 	if (sample >= nTotalSamples) return;
 
+	BurnSampleSync();
+
 	sample_ptr = &samples[sample];
 	sample_ptr->playing = 1;
+}
+
+void BurnSampleStop_INT(INT32 sample) // internal use, without _SYNC
+{
+	if (sample >= nTotalSamples) return;
+
+	sample_ptr = &samples[sample];
+	sample_ptr->playing = 0;
+	sample_ptr->position = 0;
+	//sample_ptr->playback_rate = 100; // 100% // on load and reset, only!
 }
 
 void BurnSampleStop(INT32 sample)
@@ -276,6 +347,8 @@ void BurnSampleStop(INT32 sample)
 #endif
 
 	if (sample >= nTotalSamples) return;
+
+	BurnSampleSync();
 
 	sample_ptr = &samples[sample];
 	sample_ptr->playing = 0;
@@ -300,6 +373,8 @@ void BurnSampleSetLoop(INT32 sample, bool dothis)
 
 	if (sample >= nTotalSamples) return;
 
+	BurnSampleSync();
+
 	sample_ptr = &samples[sample];
 
 	sample_ptr->loop = (dothis ? 1 : 0);
@@ -310,6 +385,8 @@ INT32 BurnSampleGetStatus(INT32 sample)
 	// this is also used to see if samples initialized and/or the game has samples.
 
 	if (sample >= nTotalSamples) return SAMPLE_INVALID;
+
+	BurnSampleSync();
 
 	sample_ptr = &samples[sample];
 
@@ -336,6 +413,8 @@ INT32 BurnSampleGetPosition(INT32 sample)
 
 	if (sample >= nTotalSamples) return -1;
 
+	BurnSampleSync();
+
 	sample_ptr = &samples[sample];
 	return (sample_ptr->position / 0x10000);
 }
@@ -356,6 +435,8 @@ void BurnSampleSetPosition(INT32 sample, UINT32 position)
 #endif
 
 	if (sample >= nTotalSamples) return;
+
+	BurnSampleSync();
 
 	sample_ptr = &samples[sample];
 	sample_ptr->position = position * 0x10000;
@@ -379,6 +460,8 @@ void BurnSampleSetPlaybackRate(INT32 sample, INT32 rate)
 
 	if (sample >= nTotalSamples) return;
 
+	BurnSampleSync();
+
 	sample_ptr = &samples[sample];
 	sample_ptr->playback_rate = rate;
 }
@@ -391,6 +474,8 @@ void BurnSampleReset()
 
 	memset (sample_channels, 0, sizeof(sample_channels));
 
+	IN_RESET = 1;
+
 	for (INT32 i = 0; i < nTotalSamples; i++) {
 		BurnSampleStop(i);
 		BurnSampleSetPlaybackRate(i, 100);
@@ -399,6 +484,8 @@ void BurnSampleReset()
 			BurnSampleSetLoop(i, true); // this sets the loop flag, from the driver.
 		}
 	}
+
+	IN_RESET = 0;
 }
 
 INT32 __cdecl ZipLoadOneFile(char* arcName, const char* fileName, void** Dest, INT32* pnWrote);
@@ -455,6 +542,8 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 #endif
 	
 	if (!nEnableSamples) return;
+
+	soundbuf = (INT16*)BurnMalloc(0x1000 * 2 * 2); // mixing buffer
 
 	struct BurnSampleInfo si;
 	INT32 nSampleOffset = -1;
@@ -638,7 +727,7 @@ void BurnSampleSetRouteAllSamples(INT32 nIndex, double nVolume, INT32 nRouteDir)
 		sample_ptr->gain[nIndex] = round2dec(nVolume);
 		sample_ptr->gain_target[nIndex] = round2dec(nVolume);
 		sample_ptr->output_dir[nIndex] = nRouteDir;
-	}	
+	}
 }
 
 void BurnSampleExit()
@@ -655,8 +744,18 @@ void BurnSampleExit()
 			BurnFree (sample_ptr->data);
 	}
 
-	if (samples)
+	if (samples) {
 		BurnFree (samples);
+	}
+
+	BurnFree(soundbuf);
+
+	if (samples_buffered) {
+        samples_buffered = 0;
+        pCPUTotalCycles = NULL;
+        nDACCPUMHZ = 0;
+		nPosition = 0;
+    }
 
 	sample_ptr = NULL;
 	nTotalSamples = 0;
@@ -672,7 +771,12 @@ void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleRender called without init\n"));
 #endif
 
-	if (pBurnSoundOut == NULL) {
+	if (pBurnSoundOut == NULL || pDest == NULL) {
+		return;
+	}
+
+	if (samples_buffered && pLen != nBurnSoundLen) {
+		bprintf(0, _T("BurnSampleRender(): once per frame, please!\n"));
 		return;
 	}
 
@@ -680,6 +784,35 @@ void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 	if (bAddToStream == 0) {
 		memset (pDest, 0, pLen * 2 * sizeof(INT16)); // clear buffer
 	}
+
+	if (!soundbuf) return; // after addToStream check
+
+	if (samples_buffered) {
+		UpdateStream(pLen);
+	} else {
+		BurnSampleRender_INT(pLen);
+	}
+
+	INT16 *src = soundbuf;
+
+	for (INT32 i = 0; i < pLen; i++) {
+		pDest[0] = BURN_SND_CLIP(src[0] + pDest[0]);
+		pDest[1] = BURN_SND_CLIP(src[1] + pDest[1]);
+		pDest += 2;
+		src += 2;
+	}
+
+	nPosition = 0;
+}
+
+static void BurnSampleRender_INT(UINT32 pLen)
+{
+	if (pBurnSoundOut == NULL || soundbuf == NULL) {
+		return;
+	}
+
+	INT16 *pDest = soundbuf + (nPosition * 2); // "* 2", soundbuf is stereo
+	memset (pDest, 0, pLen * 2 * sizeof(INT16)); // clear buffer
 
 	for (INT32 i = 0; i < nTotalSamples; i++)
 	{
@@ -699,7 +832,7 @@ void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 			INT32 current_pos = (pos / 0x10000);
 			// if sample position is greater than length, stop playback
 			if ((length - current_pos) <= 0) {
-				BurnSampleStop(i);
+				BurnSampleStop_INT(i);
 				pos = 0;
 				continue;
 			}
@@ -707,9 +840,9 @@ void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 			// if samples remaining are less than playlen, set playlen to samples remaining
 			if (playlen > (length - current_pos)) playlen = length - current_pos;
 		}
-		
+
 		length *= 2; // (stereo) used to ensure position is within bounds
-				
+
 		for (INT32 j = 0; j < playlen; j++, dst+=2, pos+=playback_rate) {
 			INT32 nLeftSample = 0, nRightSample = 0;
 			UINT32 current_pos = (pos / 0x10000);
@@ -719,7 +852,7 @@ void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 			{
 				// if sample position is greater than length, stop playback
 				if ((sample_ptr->length - current_pos) <= 0) {
-					BurnSampleStop(i);
+					BurnSampleStop_INT(i);
 					pos = 0;
 					break;
 				}
@@ -739,8 +872,8 @@ void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 				nRightSample += (INT32)(dat[(position + 1) % length] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2]);
 			}
 
-			dst[0] = BURN_SND_CLIP(nLeftSample + dst[0]);
-			dst[1] = BURN_SND_CLIP(nRightSample + dst[1]);
+			dst[0] = BURN_SND_CLIP(dst[0] + nLeftSample);
+			dst[1] = BURN_SND_CLIP(dst[1] + nRightSample);
 
 			if (bNiceFadeVolume) {
 				if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] != sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1]) {

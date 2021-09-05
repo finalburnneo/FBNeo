@@ -471,12 +471,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit(INT32 type)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (type == 0)
 	{
@@ -621,7 +616,7 @@ static INT32 DrvExit()
 	AY8910Exit(2);
 	MSM5205Exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	itaten = 0;
 	dacholer = 0;
@@ -706,20 +701,7 @@ static void draw_sprites()
 			flipy = !flipy;
 		}
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 16, 0, 4, 0, 0x10, DrvGfxROM2);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy - 16, 0, 4, 0, 0x10, DrvGfxROM2);
-			}
-		} else {
-
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy - 16, 0, 4, 0, 0x10, DrvGfxROM2);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy - 16, 0, 4, 0, 0x10, DrvGfxROM2);
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, sx, sy - 16, flipx, flipy, 0, 4, 0, 0x10, DrvGfxROM2);
 	}
 }
 

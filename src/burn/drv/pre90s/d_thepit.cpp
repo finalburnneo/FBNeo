@@ -728,12 +728,7 @@ static INT32 LoadRoms()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (LoadRoms()) return 1;
@@ -806,7 +801,7 @@ static INT32 DrvExit()
 	ZetExit();
 	AY8910Exit(0);
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	sprite_bank = 0;
 	intrepid = 0;
@@ -1048,6 +1043,7 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		if (sound_enable) {
 			AY8910Render(pBurnSoundOut, nBurnSoundLen);
+			BurnSoundDCFilter();
 		} else {
 			BurnSoundClear();
 		}

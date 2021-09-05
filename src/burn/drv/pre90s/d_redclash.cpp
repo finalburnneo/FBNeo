@@ -42,8 +42,6 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
 
-static UINT32 bHasSamples = 0;
-
 // for samples..
 static INT32 asteroid_hit = 0;
 
@@ -463,14 +461,12 @@ static void SamplesInit()
 	BurnSampleInit(0);
 	BurnSampleSetAllRoutesAllSamples(0.10, BURN_SND_ROUTE_BOTH);
 
-	bHasSamples = BurnSampleGetStatus(0) != -1;
-
-	if (!bHasSamples) { // Samples not found
+	if (BurnSampleGetStatus(0) == -1) { // Samples not found
 		BurnSampleSetAllRoutesAllSamples(0.00, BURN_SND_ROUTE_BOTH);
 	} else {
 		bprintf(0, _T("Using SFX samples!\n"));
 	}
-
+	BurnSampleSetBuffered(ZetTotalCycles, 4000000); // SetBuffered() after GetStatus() to avoid warning
 }
 
 static INT32 ZerohourInit()
@@ -860,7 +856,6 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[1] = { 4000000 / 60 };
 	INT32 nCyclesDone[1] = { 0 };
-	INT32 nSoundBufferPos = 0;
 
 	ZetNewFrame();
 
@@ -871,22 +866,11 @@ static INT32 DrvFrame()
 		if (i == 224) vblank = 1;
 
 		CPU_RUN(0, Zet);
-
-		if (pBurnSoundOut && bHasSamples) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnSampleRender(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 	ZetClose();
 
-	if (pBurnSoundOut && bHasSamples) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		if (nSegmentLength) {
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnSampleRender(pSoundBuf, nSegmentLength);
-		}
+	if (pBurnSoundOut) {
+		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

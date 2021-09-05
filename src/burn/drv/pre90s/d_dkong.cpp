@@ -1428,10 +1428,11 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), void (*pPaletteUpdate)(), UINT
 	I8039Close();
 
 	DACInit(0, 0, 0, I8039TotalCycles, 6000000 / 15);
-	DACSetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(0, 0.70, BURN_SND_ROUTE_BOTH);
+	DACDCBlock(1);
 
 	BurnSampleInit(1);
-	BurnSampleSetAllRoutesAllSamples(0.25, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetAllRoutesAllSamples(0.20, BURN_SND_ROUTE_BOTH);
 
 	i8257Init();
 	i8257Config(ZetReadByte, ZetWriteByte, ZetIdle, dkong_dma_read_functions, dkong_dma_write_functions);
@@ -1700,6 +1701,7 @@ static INT32 s2650DkongInit(INT32 (*pRomLoadCallback)())
 
 	DACInit(0, 0, 0, I8039TotalCycles, 6000000 / 15);
 	DACSetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
+	DACDCBlock(1);
 
 	BurnSampleInit(1);
 	BurnSampleSetAllRoutesAllSamples(0.75, BURN_SND_ROUTE_BOTH);
@@ -1865,6 +1867,7 @@ static INT32 DrvFrame()
 
 	I8039NewFrame();
 	ZetNewFrame();
+
 	{
 		memset (DrvInputs, 0, 3);
 
@@ -1892,8 +1895,8 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
-		BurnSoundDCFilter();
 		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 	}
 
 	nExtraCycles[0] = ZetTotalCycles() - nCyclesTotal[0]; // ZetTotalCycles() because _SYNCINT and calling ZetIdle() by the dma engine.

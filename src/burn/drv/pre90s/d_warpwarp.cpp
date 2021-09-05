@@ -1145,11 +1145,12 @@ static INT32 DrvFrame()
 	DrvMakeInputs();
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal = 2048000 / 60;
+	INT32 nCyclesTotal[1] = { 2048000 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
 
 	ZetOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++) {
-		ZetRun(nCyclesTotal / nInterleave);
+		CPU_RUN(0, Zet);
 
 		if (i == nInterleave - 1 && ball_on)
 			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
@@ -1157,7 +1158,7 @@ static INT32 DrvFrame()
 		if (navaronemode && i == 0 && bombbeemode == 0) // weird timing.
 			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 
-		warpwarp_timer_tiktiktik(nCyclesTotal / nInterleave);
+		warpwarp_timer_tiktiktik(nCyclesTotal[1] / nInterleave);
 	}
 	ZetClose();
 

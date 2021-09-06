@@ -1753,6 +1753,7 @@ static void type2_sound_init()
 
 	DACInit(0, 0, 1, M6502TotalCycles, 1000000);
 	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+	DACDCBlock(1);
 
 	sp0250_init(3120000, NULL, M6502TotalCycles, 1000000);
 	sp0250_volume(1.00);
@@ -1775,16 +1776,12 @@ static void type1_sound_init()
 
 	DACInit(0, 0, 1, M6502TotalCycles, 3579545 / 4);
 	DACSetRoute(0, 0.35, BURN_SND_ROUTE_BOTH);
+	DACDCBlock(1);
 }
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{   // Load ROMS parse GFX
 		DummyRegion[0] = DummyRegion[1] = MAP_RAM; // start out as RAM. change to ROM if they load in region(s)
@@ -1874,7 +1871,7 @@ static INT32 DrvExit()
 		has_tball = 0;
 	}
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	game_type = 0;
 	type2_sound = 0;

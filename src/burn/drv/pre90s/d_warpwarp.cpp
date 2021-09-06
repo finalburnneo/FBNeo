@@ -673,7 +673,7 @@ static void DrvMakeInputs()
 		DrvInput[3] = 0x80;
 	}
 
-	if (use_paddle) {
+	if (use_paddle && !bBurnRunAheadFrame) {
 		if (DrvJoy4[0]) Paddle += 0x04;
 		if (DrvJoy4[1]) Paddle -= 0x04;
 		if (Paddle < 0x10) Paddle = 0x10;

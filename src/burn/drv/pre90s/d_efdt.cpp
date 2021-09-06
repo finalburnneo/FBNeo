@@ -212,7 +212,7 @@ static INT32 DrvDoReset()
 	M6800Reset();
 	M6800Close();
 
-	soundlatch = 0;   // AY8910Reset() fills them in - keep above!
+	soundlatch = 0;   // AY8910Reset() fills them in (via port writes) - keep above!
 	soundcontrol = 0;
 
 	AY8910Reset(0);
@@ -278,12 +278,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM	+ 0x00000,  0, 1)) return 1;
@@ -367,7 +362,7 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 	AY8910Exit(1);
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -392,7 +387,7 @@ static void DrvPaletteInit()
 }
 
 static void draw_sprites()
-{	
+{
 	for (INT32 i = 0; i < 32; i+=4)
 	{
 		INT32 sy = DrvVidRAM[0x840 + i];
@@ -492,7 +487,7 @@ static INT32 DrvFrame()
 	{
 		CPU_RUN(0, Zet);
 
-		if (i == 240) ZetNmi();
+		if (i == nInterleave-1) ZetNmi();
 
 		CPU_RUN(1, M6800);
 		if (i%m6800I == m6800I-1) {

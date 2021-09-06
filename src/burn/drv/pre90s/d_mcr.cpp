@@ -1092,12 +1092,7 @@ static INT32 DrvInit(INT32 cpu_board)
 
 	DrvLoadRoms(false);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	memset (DrvNVRAM, 0xff, 0x800);
 
@@ -1179,7 +1174,7 @@ static INT32 DrvExit()
 
     BurnTrackballExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	nScreenFlip = 0;
 	sprite_config = 0;
@@ -1551,6 +1546,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
         BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
         if (has_squak) {
             midsat_update(pBurnSoundOut, nBurnSoundLen);

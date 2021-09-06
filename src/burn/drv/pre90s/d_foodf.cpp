@@ -320,12 +320,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM + 0x000000,  0, 2)) return 1;
@@ -362,7 +357,7 @@ static INT32 DrvInit()
 
 	BurnWatchdogInit(DrvDoReset, 180);
 
-	PokeyInit(604800, 3, 1.00, 0);
+	PokeyInit(604800, 3, 0.65, 0);
 
 	PokeyPotCallback(0, 0, dip_read);
 	PokeyPotCallback(0, 1, dip_read);
@@ -392,7 +387,7 @@ static INT32 DrvExit()
 
 	PokeyExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -512,6 +507,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		pokey_update(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 	}
 
 	if (pBurnDraw) {

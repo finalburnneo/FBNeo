@@ -274,7 +274,7 @@ void snk6502_set_music_freq(INT32 freq)
 	}
 }
 
-void snk6502_sound_savestate()
+void snk6502_sound_savestate(INT32 nAction, INT32 *pnMin)
 {
 	for (INT32 i = 0; i < CHANNELS; i++)
 	{
@@ -295,6 +295,7 @@ void snk6502_sound_savestate()
 	SCAN_VAR(m_hd38880_speed);
 	SCAN_VAR(speechnum_playing);
 
+	BurnSampleScan(nAction, pnMin);
 }
 
 void snk6502_set_music_clock(double clock_time)

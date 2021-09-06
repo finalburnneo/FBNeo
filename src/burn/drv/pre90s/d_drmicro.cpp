@@ -242,19 +242,20 @@ static INT32 MemIndex()
 	DrvZ80ROM		= Next; Next += 0x10000;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x0200 * sizeof(UINT32);
-	DrvChar4GFX      = Next; Next += 0x10000;
+	DrvChar4GFX		= Next; Next += 0x10000;
 	DrvChar8GFX     = Next; Next += 0x10000;
-	DrvSprite4GFX    = Next; Next += 0x10000;
-	DrvSprite8GFX    = Next; Next += 0x10000;
+	DrvSprite4GFX	= Next; Next += 0x10000;
+	DrvSprite8GFX	= Next; Next += 0x10000;
 	DrvColorPROM    = Next; Next += 0x00400;
-	DrvSndROM       = Next; Next += 0x100000;
+	DrvSndROM		= Next; Next += 0x100000;
+
 	AllRam			= Next;
 
 	DrvZ80RAM		= Next; Next += 0x01000;
 	DrvZ80RAM1		= Next; Next += 0x01000;
 	DrvVidRAM		= Next; Next += 0x01000;
 
-	nmi_mask        = Next; Next += 0x00001;
+	nmi_mask		= Next; Next += 0x00001;
 
 	RamEnd			= Next;
 	MemEnd			= Next;
@@ -354,12 +355,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (GetRoms()) return 1;
@@ -407,7 +403,7 @@ static INT32 DrvExit()
 	SN76496Exit();
 	MSM5205Exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -445,19 +441,7 @@ static void draw_bg(INT32 layer)
 
 		if (sx > nScreenWidth || sy > nScreenHeight) continue;
 
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, bits, 0, palind, (layer == 0) ? DrvChar4GFX : DrvChar8GFX);
-			} else {
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, bits, 0, palind, (layer == 0) ? DrvChar4GFX : DrvChar8GFX);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, bits, 0, palind, (layer == 0) ? DrvChar4GFX : DrvChar8GFX);
-			} else {
-				Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, bits, 0, palind, (layer == 0) ? DrvChar4GFX : DrvChar8GFX);
-			}
-		}
+		Draw8x8MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, bits, 0, palind, (layer == 0) ? DrvChar4GFX : DrvChar8GFX);
 	}
 }
 
@@ -494,35 +478,12 @@ static void draw_sprites()
 			if (sy < -15) sy += 256;
 			if (sx < -15) sx += 256;
 
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, bits, 0, palind, (g == 0) ? DrvSprite8GFX : DrvSprite4GFX);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, bits, 0, palind, (g == 0) ? DrvSprite8GFX : DrvSprite4GFX);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, bits, 0, palind, (g == 0) ? DrvSprite8GFX : DrvSprite4GFX);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, bits, 0, palind, (g == 0) ? DrvSprite8GFX : DrvSprite4GFX);
-				}
-			}
+
+			Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, bits, 0, palind, (g == 0) ? DrvSprite8GFX : DrvSprite4GFX);
 
 			if (sx > 240) {
 				sx -= 256;
-				if (flipy) { // again! yay!
-					if (flipx) {
-						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, bits, 0, palind, (g == 0) ? DrvSprite8GFX : DrvSprite4GFX);
-					} else {
-						Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, bits, 0, palind, (g == 0) ? DrvSprite8GFX : DrvSprite4GFX);
-					}
-				} else {
-					if (flipx) {
-						Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, bits, 0, palind, (g == 0) ? DrvSprite8GFX : DrvSprite4GFX);
-					} else {
-						Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, bits, 0, palind, (g == 0) ? DrvSprite8GFX : DrvSprite4GFX);
-					}
-				}
+				Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, bits, 0, palind, (g == 0) ? DrvSprite8GFX : DrvSprite4GFX);
 			}
 		}
 	}
@@ -539,24 +500,11 @@ static INT32 DrvDraw()
 
 	if (nBurnLayer & 1) draw_bg(0);
 	if (nBurnLayer & 2) draw_bg(1);
-	if (nBurnLayer & 4) draw_sprites();
+	if (nSpriteEnable & 1) draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
-}
-
-static void DrvMakeInputs()
-{
-	// Reset Inputs (all active HIGH)
-	DrvInput[0] = 0;
-	DrvInput[1] = 0;
-
-	// Compile Digital Inputs
-	for (INT32 i = 0; i < 8; i++) {
-		DrvInput[0] ^= (DrvJoy1[i] & 1) << i;
-		DrvInput[1] ^= (DrvJoy2[i] & 1) << i;
-	}
 }
 
 static INT32 DrvFrame()
@@ -565,8 +513,17 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
-	DrvMakeInputs();
 	ZetNewFrame();
+
+	{
+		DrvInput[0] = 0;
+		DrvInput[1] = 0;
+
+		for (INT32 i = 0; i < 8; i++) {
+			DrvInput[0] ^= (DrvJoy1[i] & 1) << i;
+			DrvInput[1] ^= (DrvJoy2[i] & 1) << i;
+		}
+	}
 
     INT32 nInterleave = MSM5205CalcInterleave(0, 3072000);
     INT32 nCyclesTotal[1] = { 3072000 / 60 };

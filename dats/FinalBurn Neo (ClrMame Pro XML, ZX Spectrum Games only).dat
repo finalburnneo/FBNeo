@@ -222,7 +222,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="5in1tetris" romof="spec128">
-		<description>5 in 1 Tetris</description>
+		<description>5 in 1 Tetris (128K)</description>
 		<year>1995</year>
 		<manufacturer>Mortal Kombat</manufacturer>
 		<rom name="5 in 1 Tetris (1995)(Mortal Kombat).z80" size="28526" crc="996128b2"/>
@@ -444,7 +444,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="buratino" romof="spec128">
-		<description>Adventures of Buratino, The (128K)</description>
+		<description>Adventures of Buratino, The (Russian) (128K) [Choose '4' to set Kempston controller]</description>
 		<year>1993</year>
 		<manufacturer>Copper Feet</manufacturer>
 		<rom name="Adventures of Buratino, The (1993)(Copper Feet)(128k).z80" size="38636" crc="3a0cb189"/>
@@ -665,7 +665,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hlwpumpkin" romof="spec128">
-		<description>All Hallows Rise of Pumpkin (HB) [Homebrew]</description>
+		<description>All Hallows Rise of Pumpkin (128K) (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Rucksack Games</manufacturer>
 		<rom name="ALL Hallows Rise of Pumpkin (2018)(Rucksack Games).tap" size="46999" crc="76ecb3a0"/>
@@ -695,7 +695,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ammytris" romof="spec128">
-		<description>Ammytris</description>
+		<description>Ammytris (128K)</description>
 		<year>1995</year>
 		<manufacturer>Navigator</manufacturer>
 		<rom name="Ammytris (1995)(Navigator).tap" size="19901" crc="24de1080"/>
@@ -2053,13 +2053,22 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bubbler" romof="spec128">
-		<description>Bubbler</description>
+	<game name="bubmonkey" romof="spec128">
+		<description>Bubble Monkey Bros (128K) (HB) [Homebrew, Reconfigure dipswitches for 2 Players coop-mode]</description>
+		<year>2015</year>
+		<manufacturer>Gabriele Amore</manufacturer>
+		<rom name="Bubble Monkey Bros 128K (2015)(Gabriele Amore).tap" size="36566" crc="729dd4be"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bubbler" romof="spectrum">
+		<description>Bubbler (48K) [Press '1' for P1 options and '2' for P2 options]</description>
 		<year>1987</year>
 		<manufacturer>Ultimate Play The Game</manufacturer>
 		<rom name="Bubbler (1987)(Ultimate Play The Game).tap" size="41660" crc="8e3e4b5a"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2082,13 +2091,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="buggyranger" romof="spec128">
-		<description>Buggy Ranger</description>
+	<game name="buggyranger" romof="spectrum">
+		<description>Buggy Ranger (48K)</description>
 		<year>1990</year>
-		<manufacturer>Dinamic</manufacturer>
+		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Buggy Ranger (1990)(Dinamic).tap" size="50964" crc="c7f9d095"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2408,7 +2416,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chainreaction" romof="spec128">
-		<description>Chain Reaction</description>
+		<description>Chain Reaction (128K)</description>
 		<year>1987</year>
 		<manufacturer>Durell</manufacturer>
 		<rom name="Chain Reaction (1987)(Durell).tap" size="51862" crc="42c4cd17"/>
@@ -2537,15 +2545,6 @@
 		<rom name="Chicago 30's (1988)(US Gold)(128k).z80" size="34750" crc="16ef7dd5"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="chickinchase" romof="spectrum">
-		<description>Chickin Chase (Il Galletto)</description>
-		<year>1985</year>
-		<manufacturer>Firebird</manufacturer>
-		<rom name="Chickin Chase (1985)(Firebird).tap" size="50446" crc="5762f239"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2683,6 +2682,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="cobrarc" romof="spectrum">
+		<description>Cobra's Arc (Spanish) (48K)</description>
+		<year>1986</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Cobra's Arc ES (1986)(Dinamic).tap" size="49106" crc="ed2e3bb4"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="cocoatm" romof="spec128">
 		<description>Cocoa and the Time Machine (HB) [Homebrew]</description>
 		<year>2020</year>
@@ -2764,9 +2772,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="cotracer" romof="spec128">
-		<description>Comando Tracer</description>
+		<description>Comando Tracer (Spanish) (48K-128K)</description>
 		<year>1988</year>
-		<manufacturer>Dinamic</manufacturer>
+		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Comando Tracer (1989)(Dinamic).tap" size="41721" crc="d394ef8c"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -3289,6 +3297,16 @@
 		<year>1990</year>
 		<manufacturer>The Edge Software</manufacturer>
 		<rom name="Darius+ (1990)(The Edge Software).tap" size="219017" crc="e47f46f1"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="darkcastle" romof="spec128">
+		<description>Dark Castle (128K) (HB) [Homebrew]</description>
+		<year>2016</year>
+		<manufacturer>kas29</manufacturer>
+		<rom name="Dark Castle 128K (2016)(kas29).tap" size="24948" crc="828a865c"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -4670,7 +4688,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fistro" romof="spec128">
-		<description>FISTro Fighters (HB) [Homebrew]</description>
+		<description>FistRO Fighters (48K) (HB) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>Retrobytes</manufacturer>
 		<rom name="FISTro Fighters (2015)(Alexhino).tap" size="48506" crc="1a08f515"/>
@@ -4720,7 +4738,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="foggyquest" romof="spec128">
-		<description>Foggy's Quest (HB) [Homebrew]</description>
+		<description>Foggy's Quest (128K) (HB) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>Rucksack Games</manufacturer>
 		<rom name="Foggy's Quest128k (2017)(Rucksack Games).tap" size="43528" crc="0d624a1c"/>
@@ -6034,6 +6052,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="chickinchase" romof="spectrum">
+		<description>Il Galletto - Chickin Chase (Italian) (48K)</description>
+		<year>1985</year>
+		<manufacturer>Firebird</manufacturer>
+		<rom name="Chickin Chase (1985)(Firebird).tap" size="50446" crc="5762f239"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="impossaball" romof="spectrum">
 		<description>Impossaball (48K)</description>
 		<year>1987</year>
@@ -7063,9 +7090,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="lala" romof="spec128">
-		<description>Lala Prologue (HB) [Homebrew]</description>
+		<description>Lala Prologue (48K) (HB) [Homebrew]</description>
 		<year>2010</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Lala Prologue (2010)(Mojon Twins).tap" size="32855" crc="547b6601"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -7665,7 +7692,7 @@
 	<game name="megaphoenix" romof="spec128">
 		<description>Mega Phoenix (128K)</description>
 		<year>1991</year>
-		<manufacturer>Dinamic</manufacturer>
+		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Megaphoenix (1991)(Dinamic).tap" size="43229" crc="81937ff0"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -8475,7 +8502,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbreed" romof="spec128">
-		<description>Night Breed</description>
+		<description>Night Breed (128K)</description>
 		<year>1990</year>
 		<manufacturer>Ocean</manufacturer>
 		<rom name="Night Breed (1990)(Ocean).tap" size="188653" crc="5701dcaf"/>
@@ -8484,13 +8511,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="nightstalker" romof="spec128">
-		<description>Night Stalker ZX (HB) [Homebrew]</description>
+	<game name="nightstalker" romof="spectrum">
+		<description>Night Stalker ZX (48K) (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>AMCgames</manufacturer>
 		<rom name="Night Stalker ZX (2018)(AMCgames).tap" size="34047" crc="6c112118"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -8614,9 +8640,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjajar" romof="spec128">
-		<description>Ninjajar (HB, v1.1) [Homebrew]</description>
+		<description>Ninjajar (128K) (HB, v1.1) [Homebrew]</description>
 		<year>2014</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Ninjajar v1.1 (2014)(Mojon Twins).tap" size="122675" crc="617db06c"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -10393,7 +10419,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rubicon" romof="spec128">
-		<description>Rubicon (HB, v1.1) [Homebrew]</description>
+		<description>Rubicon (128K) (HB, v1.1) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Rucksack Games</manufacturer>
 		<rom name="Rubicon v1.1 (2018)(Rucksack Games).tap" size="48224" crc="99ec517e"/>
@@ -10772,6 +10798,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="score3020" romof="spectrum">
+		<description>Score 3020 (Spanish) (48K)</description>
+		<year>1989</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Score 3020 ES 48K (1989)(Topo Soft).z80" size="35177" crc="3f505d11"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="scrspirt" romof="spec128">
 		<description>Scramble Spirits (128K)</description>
 		<year>1990</year>
@@ -10917,9 +10952,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="sgthelmet" romof="spec128">
-		<description>Sgt. Helmet Zero (HB) [Homebrew]</description>
+		<description>Sgt. Helmet Zero (128K) (HB) [Homebrew, Select '0' to prevent graphic glitches]</description>
 		<year>2009</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Sgt. Helmet Zero (2009)(Mojon Twins).tap" size="62412" crc="d182aa2e"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -11935,9 +11970,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="subacquatic" romof="spec128">
-		<description>Subaquatic Reloaded (HB) [Homebrew]</description>
+		<description>Subaquatic Reloaded (128K) (HB) [Homebrew]</description>
 		<year>2010</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Subaquatic Reloaded (2009)(Mojon Twins).tap" size="55547" crc="45815dd3"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -12385,10 +12420,28 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="sagradosp1" romof="spectrum">
+		<description>Templos Sagrados, Los - Parte 1 (Spanish)</description>
+		<year>1991</year>
+		<manufacturer>Aventuras A.D.</manufacturer>
+		<rom name="Templos Sagrados, Los - Parte 1 (1991)(Aventuras AD).tap" size="45975" crc="caebb204"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sagradosp2" cloneof="sagradosp1" romof="sagradosp1">
+		<description>Templos Sagrados, Los - Parte 2 (Spanish) [PASSWORD: TUR KOS BON]</description>
+		<year>1991</year>
+		<manufacturer>Aventuras A.D.</manufacturer>
+		<rom name="Templos Sagrados, Los - Parte 2 (1991)(Aventuras AD).tap" size="45936" crc="52e03e35"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="tmacabre" romof="spec128">
 		<description>Tenebra Macabre (HB) [Homebrew]</description>
 		<year>2013</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Tenebra Macabre (2013)(Mojon Twins).tap" size="39490" crc="bfa58b2c"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -12999,13 +13052,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="turbogirl" romof="spec128">
-		<description>Turbo Girl</description>
+	<game name="turbogirl" romof="spectrum">
+		<description>Turbo Girl (48K) [Press SPACE to jump]</description>
 		<year>1988</year>
-		<manufacturer>Dinamic</manufacturer>
+		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Turbo Girl (1988)(Dinamic).tap" size="48800" crc="358aaac4"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -13020,7 +13072,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="turbothetortoise" romof="spec128">
-		<description>Turbo the Tortoise</description>
+		<description>Turbo the Tortoise (128K)</description>
 		<year>1992</year>
 		<manufacturer>Hi-Tec Software</manufacturer>
 		<rom name="Turbo the Tortoise (1992)(Hi-Tec Software).tap" size="74768" crc="55513db0"/>
@@ -13168,7 +13220,7 @@
 	<game name="uwol" romof="spec128">
 		<description>Uwol (HB) [Homebrew]</description>
 		<year>2009</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Uwol (2010)(Mojon Twins).tap" size="50254" crc="4fee82ec"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -13848,7 +13900,7 @@
 	<game name="zcalavera" romof="spec128">
 		<description>Zombie Calavera Prologue (HB) [Homebrew]</description>
 		<year>2010</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Zombie Calavera Prologue (2010)(Mojon Twins).tap" size="37966" crc="9eaf2b79"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>

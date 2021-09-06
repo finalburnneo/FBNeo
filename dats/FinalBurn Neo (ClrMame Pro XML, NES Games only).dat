@@ -7628,6 +7628,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="labbaye">
+		<description>L'Abbaye des Morts (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Broke Studio</manufacturer>
+		<rom name="L'Abbaye des Morts (2021)(Broke Studios).nes" size="131088" crc="a032a1f6"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="lagrangepointj" cloneof="lagrangepoint" romof="lagrangepoint">
 		<description>Lagrange Point (Japan)</description>
 		<year>1991</year>

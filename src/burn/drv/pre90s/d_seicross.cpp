@@ -456,12 +456,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit(INT32 select)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	game_select = select;
 
@@ -555,7 +550,7 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 	DACExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -598,37 +593,13 @@ static void draw_layer()
 		INT32 flipx = attr & 0x40;
 		INT32 flipy = attr & 0x80;
 
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 2, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 2, 0, DrvGfxROM0);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 2, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 2, 0, DrvGfxROM0);
-			}
-		}
+		Draw8x8Tile(pTransDraw, code, sx, sy, flipx, flipy, color, 2, 0, DrvGfxROM0);
 	}
 }
 
 static void draw_single_sprite(INT32 code, INT32 sx, INT32 sy, INT32 color, INT32 flipx, INT32 flipy)
 {
-	if (flipy) {
-		if (flipx) {
-			Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 16, color, 2, 0, 0, DrvGfxROM1);
-		} else {
-			Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy - 16, color, 2, 0, 0, DrvGfxROM1);
-		}
-	} else {
-		if (flipx) {
-			Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy - 16, color, 2, 0, 0, DrvGfxROM1);
-		} else {
-			Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy - 16, color, 2, 0, 0, DrvGfxROM1);
-		}
-	}
+	Draw16x16MaskTile(pTransDraw, code, sx, sy - 16, flipx, flipy, color, 2, 0, 0, DrvGfxROM1);
 }
 
 static void draw_sprites()
@@ -681,8 +652,7 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	watchdog++;
-	if (DrvReset || watchdog >= 180) {
+	if (DrvReset || ++watchdog >= 180) {
 		DrvDoReset((watchdog < 180) ? 1 : 0);
 	}
 
@@ -722,7 +692,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal = 3072000 / 60;
+	INT32 nCyclesTotal[2] = { 3072000 / 60, 3072000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	ZetOpen(0);
@@ -730,23 +700,24 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-        nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Zet);
 		if (i == 240 && irq_mask) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
 		if (mcu_halt) {
-			nCyclesDone[1] += NSC8105Idle(ZetTotalCycles() - NSC8105TotalCycles());
+			CPU_IDLE(1, NSC8105);
 		} else {
-			nCyclesDone[1] += NSC8105Run(ZetTotalCycles() - NSC8105TotalCycles());
+			CPU_RUN(1, NSC8105);
 		}
 	}
 
 	ZetClose();
+	NSC8105Close();
 
 	if (pBurnSoundOut) {
         AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 	}
-	NSC8105Close(); // after dacupdate
 
 	if (pBurnDraw) {
 		DrvDraw();

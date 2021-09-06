@@ -534,7 +534,7 @@ struct BurnDriver BurnDrvEnmadaio = {
 	"enmadaio", NULL, NULL, NULL, "1993",
 	"Enma Daio (Japan)\0", "Game unplayable.", "Toaplan / Taito", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TOAPLAN_68K_ONLY, GBF_MISC, 0,
+	BDF_GAME_NOT_WORKING, 2, HARDWARE_TOAPLAN_68K_ONLY, GBF_MISC, 0,
 	NULL, enmadaioRomInfo, enmadaioRomName, NULL, NULL, NULL, NULL, EnmadaioInputInfo, EnmadaioDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3

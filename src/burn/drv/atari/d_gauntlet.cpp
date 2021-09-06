@@ -43,9 +43,6 @@ static INT16 DrvScrollX;
 static INT16 DrvScrollY[262];
 static UINT8 DrvTileBank;
 
-static INT32 nCyclesDone[2], nCyclesTotal[2];
-static INT32 nCyclesSegment;
-
 static UINT8 speech_val;
 static UINT8 last_speech_write;
 
@@ -163,10 +160,10 @@ STDDIPINFO(Vindctr2)
 static inline void soundcpuSync()
 {
 	if (!DrvSoundCPUHalt) {
-		INT32 nCycles = (SekTotalCycles() / 4) - nCyclesDone[1];
-		if (nCycles > 0) nCyclesDone[1] += M6502Run(nCycles);
+		BurnTimerUpdate(SekTotalCycles() / 4);
 	} else {
-		nCyclesDone[1] = SekTotalCycles() / 4;
+		INT32 nCycles = (SekTotalCycles() / 4) - M6502TotalCycles();
+		if (nCycles > 0) M6502Idle(nCycles);
 	}
 }
 
@@ -190,7 +187,8 @@ static void __fastcall Gauntlet68KWriteWord(UINT32 a, UINT16 d)
 			DrvSoundResetVal = d;
 			if ((OldVal ^ DrvSoundResetVal) & 1) {
 				if (DrvSoundResetVal & 1) {
-    				M6502Open(0);
+					M6502Open(0);
+					soundcpuSync();
 					M6502Reset();
 					DrvSoundtoCPUReady = 0;
 					M6502Run(10); // why's this needed? who knows...
@@ -747,7 +745,7 @@ static INT32 CommonInit(INT32 game_select, INT32 slapstic_num)
 	SekClose();
 
 	BurnWatchdogInit(DrvDoReset, 180);
-	
+
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
 	M6502MapMemory(DrvM6502Ram, 		0x0000, 0x0fff, MAP_RAM);
@@ -756,9 +754,10 @@ static INT32 CommonInit(INT32 game_select, INT32 slapstic_num)
 	M6502SetWriteHandler(GauntletSoundWrite);
 	M6502Close();
 
-	BurnYM2151Init(14318180 / 4);
+	BurnYM2151InitBuffered(14318180 / 4, 1, NULL, 0);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.48, BURN_SND_ROUTE_RIGHT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.48, BURN_SND_ROUTE_LEFT);
+	BurnTimerAttachM6502(14318180 / 8);
 
 	PokeyInit(14000000/8, 2, 1.00, 1);
 
@@ -939,6 +938,7 @@ static INT32 DrvFrame()
 	}
 
 	SekNewFrame();
+	M6502NewFrame();
 
 	{
 		DrvInput[0] = 0xff;
@@ -965,50 +965,31 @@ static INT32 DrvFrame()
 
 	INT32 nMult = 2;
 	INT32 nInterleave = 262*nMult;
-	INT32 nSoundBufferPos = 0;
 
-	nCyclesTotal[0] = (14318180 / 2) / 60;
-	nCyclesTotal[1] = (14318180 / 8) / 60;
-	nCyclesDone[0] = nCyclesDone[1] = 0;
-	
+	INT32 nCyclesTotal[2] = { (14318180 / 2) / 60, (14318180 / 8) / 60 };
+	INT32 nCyclesDone[2] = { 0, 0 };
+
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
-		nCurrentCPU = 0;
 		SekOpen(0);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+		CPU_RUN(0, Sek);
 		if (i == 11*nMult) DrvVBlank = 0;
 		if (i == 250*nMult) DrvVBlank = 1;
 		if (i == 261*nMult) SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
 		SekClose();
-		
+
+		M6502Open(0);
 		if (!DrvSoundCPUHalt) {
-			M6502Open(0);
-			nCurrentCPU = 1;
-			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-			nCyclesDone[nCurrentCPU] += M6502Run(nCyclesSegment);
+			CPU_RUN_TIMER(1);
 
 			if ((i%nMult)==(nMult-1) && ((i/nMult) & 0x1f) == 0)
 			{
 				if ((i/nMult) & 0x20)
 					M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_ACK);
 			}
-			M6502Close();
 		} else {
-			nCurrentCPU = 1;
-			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-			nCyclesDone[nCurrentCPU] += nNext; // idle skip
+			CPU_IDLE_SYNCINT(1, M6502);
 		}
-		
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
+		M6502Close();
 
 		if ((i % nMult) == (nMult - 1)) {
 			UINT16 *AlphaRam = (UINT16*)DrvAlphaRam;
@@ -1017,12 +998,7 @@ static INT32 DrvFrame()
 	}
 	
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-		}
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		pokey_update(pBurnSoundOut, nBurnSoundLen);
 		tms5220_update(pBurnSoundOut, nBurnSoundLen);
 	}
@@ -1070,6 +1046,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvSoundtoCPUReady);
 		SCAN_VAR(DrvCPUtoSound);
 		SCAN_VAR(DrvSoundtoCPU);
+		SCAN_VAR(DrvScrollX);
+		SCAN_VAR(DrvScrollY);
+		SCAN_VAR(DrvTileBank);
 		SCAN_VAR(speech_val);
 		SCAN_VAR(last_speech_write);
 	}
@@ -1116,7 +1095,7 @@ struct BurnDriver BurnDrvGauntlet = {
 	"gauntlet", NULL, NULL, NULL, "1985",
 	"Gauntlet (rev 14)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, GauntletRomInfo, GauntletRomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -1159,7 +1138,7 @@ struct BurnDriver BurnDrvGauntlets = {
 	"gauntlets", "gauntlet", NULL, NULL, "1985",
 	"Gauntlet (Spanish, rev 15)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, GauntletsRomInfo, GauntletsRomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -1202,7 +1181,7 @@ struct BurnDriver BurnDrvGauntletj = {
 	"gauntletj", "gauntlet", NULL, NULL, "1985",
 	"Gauntlet (Japanese, rev 13)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, GauntletjRomInfo, GauntletjRomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -1245,7 +1224,7 @@ struct BurnDriver BurnDrvGauntletg = {
 	"gauntletg", "gauntlet", NULL, NULL, "1985",
 	"Gauntlet (German, rev 10)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, GauntletgRomInfo, GauntletgRomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -1288,7 +1267,7 @@ struct BurnDriver BurnDrvGauntletj12 = {
 	"gauntletj12", "gauntlet", NULL, NULL, "1985",
 	"Gauntlet (Japanese, rev 12)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntletj12RomInfo, Gauntletj12RomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -1331,7 +1310,7 @@ struct BurnDriver BurnDrvGauntletr9 = {
 	"gauntletr9", "gauntlet", NULL, NULL, "1985",
 	"Gauntlet (rev 9)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntletr9RomInfo, Gauntletr9RomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -1374,7 +1353,7 @@ struct BurnDriver BurnDrvGauntletgr8 = {
 	"gauntletgr8", "gauntlet", NULL, NULL, "1985",
 	"Gauntlet (German, rev 8)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntletgr8RomInfo, Gauntletgr8RomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -1417,7 +1396,7 @@ struct BurnDriver BurnDrvGauntletr7 = {
 	"gauntletr7", "gauntlet", NULL, NULL, "1985",
 	"Gauntlet (rev 7)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntletr7RomInfo, Gauntletr7RomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -1460,7 +1439,7 @@ struct BurnDriver BurnDrvGauntletgr6 = {
 	"gauntletgr6", "gauntlet", NULL, NULL, "1985",
 	"Gauntlet (German, rev 6)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntletgr6RomInfo, Gauntletgr6RomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -1503,7 +1482,7 @@ struct BurnDriver BurnDrvGauntletr5 = {
 	"gauntletr5", "gauntlet", NULL, NULL, "1985",
 	"Gauntlet (rev 5)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntletr5RomInfo, Gauntletr5RomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -1546,7 +1525,7 @@ struct BurnDriver BurnDrvGauntletr4 = {
 	"gauntletr4", "gauntlet", NULL, NULL, "1985",
 	"Gauntlet (rev 4)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntletr4RomInfo, Gauntletr4RomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -1589,7 +1568,7 @@ struct BurnDriver BurnDrvGauntletgr3 = {
 	"gauntletgr3", "gauntlet", NULL, NULL, "1985",
 	"Gauntlet (German, rev 3)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntletgr3RomInfo, Gauntletgr3RomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -1632,7 +1611,7 @@ struct BurnDriver BurnDrvGauntletr2 = {
 	"gauntletr2", "gauntlet", NULL, NULL, "1985",
 	"Gauntlet (rev 2)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntletr2RomInfo, Gauntletr2RomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -1675,7 +1654,7 @@ struct BurnDriver BurnDrvGauntletr1 = {
 	"gauntletr1", "gauntlet", NULL, NULL, "1985",
 	"Gauntlet (rev 1)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntletr1RomInfo, Gauntletr1RomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -1718,7 +1697,7 @@ struct BurnDriver BurnDrvGauntlet2p = {
 	"gauntlet2p", "gauntlet", NULL, NULL, "1985",
 	"Gauntlet (2 Players, rev 6)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntlet2pRomInfo, Gauntlet2pRomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	Gaunt2pInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -1761,7 +1740,7 @@ struct BurnDriver BurnDrvGauntlet2pj = {
 	"gauntlet2pj", "gauntlet", NULL, NULL, "1985",
 	"Gauntlet (2 Players, Japanese, rev 5)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntlet2pjRomInfo, Gauntlet2pjRomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	Gaunt2pInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -1804,7 +1783,7 @@ struct BurnDriver BurnDrvGauntlet2pg = {
 	"gauntlet2pg", "gauntlet", NULL, NULL, "1985",
 	"Gauntlet (2 Players, German, rev 4)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntlet2pgRomInfo, Gauntlet2pgRomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	Gaunt2pInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -1847,7 +1826,7 @@ struct BurnDriver BurnDrvGauntlet2pr3 = {
 	"gauntlet2pr3", "gauntlet", NULL, NULL, "1985",
 	"Gauntlet (2 Players, rev 3)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntlet2pr3RomInfo, Gauntlet2pr3RomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	Gaunt2pInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -1890,7 +1869,7 @@ struct BurnDriver BurnDrvGauntlet2pj2 = {
 	"gauntlet2pj2", "gauntlet", NULL, NULL, "1985",
 	"Gauntlet (2 Players, Japanese rev 2)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntlet2pj2RomInfo, Gauntlet2pj2RomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	Gaunt2pInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -1933,7 +1912,7 @@ struct BurnDriver BurnDrvGauntlet2pg1 = {
 	"gauntlet2pg1", "gauntlet", NULL, NULL, "1985",
 	"Gauntlet (2 Players, German, rev 1)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntlet2pg1RomInfo, Gauntlet2pg1RomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	Gaunt2pInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -1982,7 +1961,7 @@ struct BurnDriver BurnDrvGaunt2 = {
 	"gaunt2", NULL, NULL, NULL, "1986",
 	"Gauntlet II\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gaunt2RomInfo, Gaunt2RomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	Gaunt2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -2031,7 +2010,7 @@ struct BurnDriver BurnDrvGaunt2g = {
 	"gaunt2g", "gaunt2", NULL, NULL, "1986",
 	"Gauntlet II (German)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gaunt2gRomInfo, Gaunt2gRomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	Gaunt2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -2080,7 +2059,7 @@ struct BurnDriver BurnDrvGaunt22p = {
 	"gaunt22p", "gaunt2", NULL, NULL, "1986",
 	"Gauntlet II (2 Players, rev 2)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gaunt22pRomInfo, Gaunt22pRomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	Gaunt2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -2129,7 +2108,7 @@ struct BurnDriver BurnDrvGaunt22p1 = {
 	"gaunt22p1", "gaunt2", NULL, NULL, "1986",
 	"Gauntlet II (2 Players, rev 1)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gaunt22p1RomInfo, Gaunt22p1RomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	Gaunt2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -2178,7 +2157,7 @@ struct BurnDriver BurnDrvGaunt22pg = {
 	"gaunt22pg", "gaunt2", NULL, NULL, "1986",
 	"Gauntlet II (2 Players, German)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gaunt22pgRomInfo, Gaunt22pgRomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	Gaunt2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -2243,7 +2222,7 @@ struct BurnDriver BurnDrvVindctr2 = {
 	"vindctr2", NULL, NULL, NULL, "1988",
 	"Vindicators Part II (rev 3)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, vindctr2RomInfo, vindctr2RomName, NULL, NULL, NULL, NULL, Vindctr2InputInfo, Vindctr2DIPInfo,
 	Vindctr2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -2308,7 +2287,7 @@ struct BurnDriver BurnDrvVindctr2r2 = {
 	"vindctr2r2", "vindctr2", NULL, NULL, "1988",
 	"Vindicators Part II (rev 2)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, vindctr2r2RomInfo, vindctr2r2RomName, NULL, NULL, NULL, NULL, Vindctr2InputInfo, Vindctr2DIPInfo,
 	Vindctr2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3
@@ -2373,7 +2352,7 @@ struct BurnDriver BurnDrvVindctr2r1 = {
 	"vindctr2r1", "vindctr2", NULL, NULL, "1988",
 	"Vindicators Part II (rev 1)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, vindctr2r1RomInfo, vindctr2r1RomName, NULL, NULL, NULL, NULL, Vindctr2InputInfo, Vindctr2DIPInfo,
 	Vindctr2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	0x400, 336, 240, 4, 3

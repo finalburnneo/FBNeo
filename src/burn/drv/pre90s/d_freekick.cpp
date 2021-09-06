@@ -1156,12 +1156,8 @@ static INT32 LoadRoms()
 static INT32 DrvFreeKickInit()
 {
 	DrawSprite = freekick_draw_sprite;
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+
+	BurnAllocMemIndex();
 
 	LoadRoms();
 
@@ -1199,10 +1195,10 @@ static INT32 DrvFreeKickInit()
 	SN76489AInit(2, 12000000/4, 1);
 	SN76489AInit(3, 12000000/4, 1);
 
-	SN76496SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
-	SN76496SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
-	SN76496SetRoute(2, 1.00, BURN_SND_ROUTE_BOTH);
-	SN76496SetRoute(3, 1.00, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(0, 0.55, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(1, 0.55, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(2, 0.55, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(3, 0.55, BURN_SND_ROUTE_BOTH);
 	SN76496SetBuffered(ZetTotalCycles, (countrunbmode) ? 6000000 / 60 : 3072000 / 60);
 
 	GenericTilesInit();
@@ -1216,12 +1212,7 @@ static INT32 DrvInit()
 {
 	DrawSprite = gigas_draw_sprite;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	LoadRoms();
 
@@ -1276,10 +1267,10 @@ static INT32 DrvInit()
 	SN76489AInit(2, 12000000/4, 1);
 	SN76489AInit(3, 12000000/4, 1);
 
-	SN76496SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
-	SN76496SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
-	SN76496SetRoute(2, 1.00, BURN_SND_ROUTE_BOTH);
-	SN76496SetRoute(3, 1.00, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(0, 0.55, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(1, 0.55, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(2, 0.55, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(3, 0.55, BURN_SND_ROUTE_BOTH);
 	SN76496SetBuffered(ZetTotalCycles, (countrunbmode) ? 6000000 / 60 : 3072000 / 60);
 
 	GenericTilesInit();
@@ -1295,7 +1286,7 @@ static INT32 DrvExit()
 	ZetExit();
 	SN76496Exit();
 	ppi8255_exit();
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	countrunbmode = 0;
 	pbillrdmode = 0;
@@ -1352,6 +1343,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		SN76496Update(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 	}
 
 	if (pBurnDraw) {
@@ -1378,7 +1370,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
-
 		ZetScan(nAction);
 
 		SN76496Scan(nAction, pnMin);

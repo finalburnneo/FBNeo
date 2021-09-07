@@ -50,9 +50,12 @@ int main(int /*argc*/, char** /*argv*/)
   #endif
  #elif _MSC_VER >= 1910 && _MSC_VER < 1920
     printf("#define BUILD_COMP Visual C++ 2017\n");
- #else
+  #endif
+#elif _MSC_VER >= 1920 && _MSC_VER < 1928
+	printf("#define BUILD_COMP Visual C++ 2019\n");
+#else
 	printf("#define BUILD_COMP Visual C++ %i.%i\n", _MSC_VER / 100 - 6, _MSC_VER % 100 / 10);
- #endif
+#endif
 #else
 	printf("#define BUILD_COMP Unknown compiler\n");
 #endif

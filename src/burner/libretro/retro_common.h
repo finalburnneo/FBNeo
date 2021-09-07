@@ -136,12 +136,14 @@ struct cheat_core_option
 	std::vector<cheat_core_option_value> values;
 };
 
-enum neo_geo_modes
+enum neogeo_bios_categories
 {
-	NEO_GEO_MODE_MVS = 0,
-	NEO_GEO_MODE_AES = 1,
-	NEO_GEO_MODE_UNIBIOS = 2,
-	NEO_GEO_MODE_DIPSWITCH = 3
+	NEOGEO_MVS = 1<<0,
+	NEOGEO_AES = 1<<1,
+	NEOGEO_UNI = 1<<2,
+	NEOGEO_EUR = 1<<3,
+	NEOGEO_USA = 1<<4,
+	NEOGEO_JAP = 1<<5,
 };
 
 struct RomBiosInfo {
@@ -149,18 +151,12 @@ struct RomBiosInfo {
 	uint32_t crc;
 	uint8_t NeoSystem;
 	char* friendly_name;
-	uint8_t priority;
+	uint32_t categories;
+	uint32_t available;
 };
-
-extern struct RomBiosInfo mvs_bioses[];
-extern struct RomBiosInfo aes_bioses[];
-extern struct RomBiosInfo uni_bioses[];
 
 extern retro_log_printf_t log_cb;
 extern retro_environment_t environ_cb;
-extern RomBiosInfo *available_mvs_bios;
-extern RomBiosInfo *available_aes_bios;
-extern RomBiosInfo *available_uni_bios;
 extern std::vector<dipswitch_core_option> dipswitch_core_options;
 extern std::vector<cheat_core_option> cheat_core_options;
 extern struct GameInp *pgi_reset;
@@ -181,12 +177,12 @@ extern UINT32 nMemcardMode;
 extern UINT8 NeoSystem;
 extern INT32 g_audio_samplerate;
 extern UINT8 *diag_input;
-extern neo_geo_modes g_opt_neo_geo_mode;
 extern unsigned nGameType;
 extern char g_rom_dir[MAX_PATH];
 
 char* str_char_replace(char* destination, char c_find, char c_replace);
 void set_neo_system_bios();
+void set_neogeo_bios_availability(char *szName, uint32_t crc, bool ignoreCrc);
 void evaluate_neogeo_bios_mode(const char* drvname);
 void set_environment();
 void check_variables(void);

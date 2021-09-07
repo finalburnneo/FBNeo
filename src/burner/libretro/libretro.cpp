@@ -667,23 +667,6 @@ static int find_rom_by_crc(uint32_t crc, const ZipEntry *list, unsigned elems, c
 	return -1;
 }
 
-static RomBiosInfo* find_bios_info(char *szName, uint32_t crc, struct RomBiosInfo* bioses)
-{
-	for (int i = 0; bioses[i].filename != NULL; i++)
-	{
-		if (strcmp(bioses[i].filename, szName) == 0 || bioses[i].crc == crc)
-		{
-			return &bioses[i];
-		}
-	}
-
-#if 0
-	HandleMessage(RETRO_LOG_ERROR, "Bios not found: %s (crc: 0x%08x)\n", szName, crc);
-#endif
-
-	return NULL;
-}
-
 static void free_archive_list(ZipEntry *list, unsigned count)
 {
 	if (list)
@@ -874,35 +857,8 @@ static bool open_archive()
 				continue;
 			}
 
-			// Search for the best bios available by category
 			if (is_neogeo_game)
-			{
-				RomBiosInfo *bios;
-
-				// MVS BIOS
-				bios = find_bios_info(list[index].szName, list[index].nCrc, mvs_bioses);
-				if (bios)
-				{
-					if (!available_mvs_bios || (available_mvs_bios && bios->priority < available_mvs_bios->priority))
-						available_mvs_bios = bios;
-				}
-
-				// AES BIOS
-				bios = find_bios_info(list[index].szName, list[index].nCrc, aes_bioses);
-				if (bios)
-				{
-					if (!available_aes_bios || (available_aes_bios && bios->priority < available_aes_bios->priority))
-						available_aes_bios = bios;
-				}
-
-				// Universe BIOS
-				bios = find_bios_info(list[index].szName, list[index].nCrc, uni_bioses);
-				if (bios)
-				{
-					if (!available_uni_bios || (available_uni_bios && bios->priority < available_uni_bios->priority))
-						available_uni_bios = bios;
-				}
-			}
+				set_neogeo_bios_availability(list[index].szName, list[index].nCrc, (g_find_list_path[z].ignoreCrc && bPatchedRomsetsEnabled));
 
 			// Yay, we found it!
 			pRomFind[i].nZip = z;
@@ -919,18 +875,8 @@ static bool open_archive()
 		ZipClose();
 	}
 
-	bool is_neogeo_bios_available = false;
 	if (is_neogeo_game)
-	{
-		if (!available_mvs_bios && !available_aes_bios && !available_uni_bios)
-			HandleMessage(RETRO_LOG_WARN, "[FBNeo] NeoGeo BIOS missing ...\n");
-
 		set_neo_system_bios();
-
-		// if we have a least one type of bios, we will be able to skip the asia-s3.rom non optional bios
-		if (available_mvs_bios || available_aes_bios || available_uni_bios)
-			is_neogeo_bios_available = true;
-	}
 
 	// Going over every rom to see if they are properly loaded before we continue ...
 	for (unsigned i = 0; i < nRomCount; i++)
@@ -942,10 +888,6 @@ static bool open_archive()
 			BurnDrvGetRomInfo(&ri, i);
 			if(!(ri.nType & BRF_OPT))
 			{
-				// make the asia-s3.rom [0x91B64BE3] (mvs_bioses[0]) optional if we have another bios available
-				if (is_neogeo_game && ri.nCrc == mvs_bioses[0].crc && is_neogeo_bios_available)
-					continue;
-
 				BurnDrvGetRomName(&rom_name, i, 0);
 				HandleMessage(RETRO_LOG_ERROR, "[FBNeo] ROM at index %d with name %s and CRC 0x%08x is required ...\n", i, rom_name, ri.nCrc);
 				return false;

@@ -1,57 +1,42 @@
 #include "retro_common.h"
 #include "retro_input.h"
 
-struct RomBiosInfo mvs_bioses[] = {
-	{"sp-s3.sp1",         0x91b64be3, 0x00, "MVS Asia/Europe ver. 6 (1 slot)",  1 },
-	{"sp-s2.sp1",         0x9036d879, 0x01, "MVS Asia/Europe ver. 5 (1 slot)",  2 },
-	{"sp-s.sp1",          0xc7f2fa45, 0x02, "MVS Asia/Europe ver. 3 (4 slot)",  3 },
-	{"sp-u2.sp1",         0xe72943de, 0x03, "MVS USA ver. 5 (2 slot)"        ,  4 },
-	{"sp1-u2",            0x62f021f4, 0x04, "MVS USA ver. 5 (4 slot)"        ,  5 },
-	{"sp-e.sp1",          0x2723a5b5, 0x05, "MVS USA ver. 5 (6 slot)"        ,  6 },
-	{"sp1-u4.bin",        0x1179a30f, 0x06, "MVS USA (U4)"                   ,  7 }, 
-	{"sp1-u3.bin",        0x2025b7a2, 0x07, "MVS USA (U3)"                   ,  7 },
-	{"vs-bios.rom",       0xf0e8f27d, 0x08, "MVS Japan ver. 6 (? slot)"      ,  8 },
-	{"sp-j2.sp1",         0xacede59C, 0x09, "MVS Japan ver. 5 (? slot)"      ,  9 },
-	{"sp1.jipan.1024",    0x9fb0abe4, 0x0a, "MVS Japan ver. 3 (4 slot)"      , 10 },
-	{"sp-45.sp1",         0x03cc9f6a, 0x0b, "NEO-MVH MV1C (Asia)"            , 11 },
-	{"sp-j3.sp1",         0x486cb450, 0x0c, "NEO-MVH MV1C (Japan)"           , 12 },
-	{"japan-j3.bin",      0xdff6d41f, 0x0d, "MVS Japan (J3)"                 , 13 },
-	{"sp1-j3.bin",        0xfbc6d469, 0x0e, "MVS Japan (J3, alt)"            , 14 },
-	{"sp-1v1_3db8c.bin",  0x162f0ebe, 0x12, "Deck ver. 6 (Git Ver 1.3)"      , 15 },
+struct RomBiosInfo neogeo_bioses[] = {
+	{"sp-s3.sp1",         0x91b64be3, 0x00, "MVS Asia/Europe ver. 6 (1 slot)", NEOGEO_MVS | NEOGEO_EUR, 0 },
+	{"sp-s2.sp1",         0x9036d879, 0x01, "MVS Asia/Europe ver. 5 (1 slot)", NEOGEO_MVS | NEOGEO_EUR, 0 },
+	{"sp-s.sp1",          0xc7f2fa45, 0x02, "MVS Asia/Europe ver. 3 (4 slot)", NEOGEO_MVS | NEOGEO_EUR, 0 },
+	{"sp-45.sp1",         0x03cc9f6a, 0x0b, "NEO-MVH MV1C (Asia)"            , NEOGEO_MVS | NEOGEO_EUR, 0 },
+	{"sp-u2.sp1",         0xe72943de, 0x03, "MVS USA ver. 5 (2 slot)"        , NEOGEO_MVS | NEOGEO_USA, 0 },
+	{"sp1-u2",            0x62f021f4, 0x04, "MVS USA ver. 5 (4 slot)"        , NEOGEO_MVS | NEOGEO_USA, 0 },
+	{"sp-e.sp1",          0x2723a5b5, 0x05, "MVS USA ver. 5 (6 slot)"        , NEOGEO_MVS | NEOGEO_USA, 0 },
+	{"sp1-u4.bin",        0x1179a30f, 0x06, "MVS USA (U4)"                   , NEOGEO_MVS | NEOGEO_USA, 0 }, 
+	{"sp1-u3.bin",        0x2025b7a2, 0x07, "MVS USA (U3)"                   , NEOGEO_MVS | NEOGEO_USA, 0 },
+	{"vs-bios.rom",       0xf0e8f27d, 0x08, "MVS Japan ver. 6 (? slot)"      , NEOGEO_MVS | NEOGEO_JAP, 0 },
+	{"sp-j2.sp1",         0xacede59C, 0x09, "MVS Japan ver. 5 (? slot)"      , NEOGEO_MVS | NEOGEO_JAP, 0 },
+	{"sp1.jipan.1024",    0x9fb0abe4, 0x0a, "MVS Japan ver. 3 (4 slot)"      , NEOGEO_MVS | NEOGEO_JAP, 0 },
+	{"sp-j3.sp1",         0x486cb450, 0x0c, "NEO-MVH MV1C (Japan)"           , NEOGEO_MVS | NEOGEO_JAP, 0 },
+	{"japan-j3.bin",      0xdff6d41f, 0x0d, "MVS Japan (J3)"                 , NEOGEO_MVS | NEOGEO_JAP, 0 },
+	{"sp1-j3.bin",        0xfbc6d469, 0x0e, "MVS Japan (J3, alt)"            , NEOGEO_MVS | NEOGEO_JAP, 0 },
+	{"neo-epo.bin",       0xd27a71f1, 0x10, "AES Asia"                       , NEOGEO_AES | NEOGEO_EUR, 0 },
+	{"neo-po.bin",        0x16d0c132, 0x0f, "AES Japan"                      , NEOGEO_AES | NEOGEO_JAP, 0 },
+	{"uni-bios_4_0.rom",  0xa7aab458, 0x13, "Universe BIOS ver. 4.0"         , NEOGEO_UNI, 0 },
+	{"uni-bios_3_3.rom",  0x24858466, 0x14, "Universe BIOS ver. 3.3"         , NEOGEO_UNI, 0 },
+	{"uni-bios_3_2.rom",  0xa4e8b9b3, 0x15, "Universe BIOS ver. 3.2"         , NEOGEO_UNI, 0 },
+	{"uni-bios_3_1.rom",  0x0c58093f, 0x16, "Universe BIOS ver. 3.1"         , NEOGEO_UNI, 0 },
+	{"uni-bios_3_0.rom",  0xa97c89a9, 0x17, "Universe BIOS ver. 3.0"         , NEOGEO_UNI, 0 },
+	{"uni-bios_2_3.rom",  0x27664eb5, 0x18, "Universe BIOS ver. 2.3"         , NEOGEO_UNI, 0 },
+	{"uni-bios_2_3o.rom", 0x601720ae, 0x19, "Universe BIOS ver. 2.3 (alt)"   , NEOGEO_UNI, 0 },
+	{"uni-bios_2_2.rom",  0x2d50996a, 0x1a, "Universe BIOS ver. 2.2"         , NEOGEO_UNI, 0 },
+	{"uni-bios_2_1.rom",  0x8dabf76b, 0x1b, "Universe BIOS ver. 2.1"         , NEOGEO_UNI, 0 },
+	{"uni-bios_2_0.rom",  0x0c12c2ad, 0x1c, "Universe BIOS ver. 2.0"         , NEOGEO_UNI, 0 },
+	{"uni-bios_1_3.rom",  0xb24b44a0, 0x1d, "Universe BIOS ver. 1.3"         , NEOGEO_UNI, 0 },
+	{"uni-bios_1_2.rom",  0x4fa698e9, 0x1e, "Universe BIOS ver. 1.2"         , NEOGEO_UNI, 0 },
+	{"uni-bios_1_2o.rom", 0xe19d3ce9, 0x1f, "Universe BIOS ver. 1.2 (alt)"   , NEOGEO_UNI, 0 },
+	{"uni-bios_1_1.rom",  0x5dda0d84, 0x20, "Universe BIOS ver. 1.1"         , NEOGEO_UNI, 0 },
+	{"uni-bios_1_0.rom",  0x0ce453a0, 0x21, "Universe BIOS ver. 1.0"         , NEOGEO_UNI, 0 },
 	{NULL, 0, 0, NULL, 0 }
 };
 
-// Not following original order here, let's be more consistent with MVS order,
-// and most people prefer Asia (english language) anyway
-struct RomBiosInfo aes_bioses[] = {
-	{"neo-epo.bin",       0xd27a71f1, 0x10, "AES Asia"                       ,  1 },
-	{"neo-po.bin",        0x16d0c132, 0x0f, "AES Japan"                      ,  2 },
-	{"neodebug.bin",      0x698ebb7d, 0x11, "Development Kit"                ,  3 },
-	{NULL, 0, 0, NULL, 0 }
-};
-
-struct RomBiosInfo uni_bioses[] = {
-	{"uni-bios_4_0.rom",  0xa7aab458, 0x13, "Universe BIOS ver. 4.0"         ,  1 },
-	{"uni-bios_3_3.rom",  0x24858466, 0x14, "Universe BIOS ver. 3.3"         ,  2 },
-	{"uni-bios_3_2.rom",  0xa4e8b9b3, 0x15, "Universe BIOS ver. 3.2"         ,  3 },
-	{"uni-bios_3_1.rom",  0x0c58093f, 0x16, "Universe BIOS ver. 3.1"         ,  4 },
-	{"uni-bios_3_0.rom",  0xa97c89a9, 0x17, "Universe BIOS ver. 3.0"         ,  5 },
-	{"uni-bios_2_3.rom",  0x27664eb5, 0x18, "Universe BIOS ver. 2.3"         ,  6 },
-	{"uni-bios_2_3o.rom", 0x601720ae, 0x19, "Universe BIOS ver. 2.3 (alt)"   ,  7 },
-	{"uni-bios_2_2.rom",  0x2d50996a, 0x1a, "Universe BIOS ver. 2.2"         ,  8 },
-	{"uni-bios_2_1.rom",  0x8dabf76b, 0x1b, "Universe BIOS ver. 2.1"         ,  9 },
-	{"uni-bios_2_0.rom",  0x0c12c2ad, 0x1c, "Universe BIOS ver. 2.0"         , 10 },
-	{"uni-bios_1_3.rom",  0xb24b44a0, 0x1d, "Universe BIOS ver. 1.3"         , 11 },
-	{"uni-bios_1_2.rom",  0x4fa698e9, 0x1e, "Universe BIOS ver. 1.2"         , 12 },
-	{"uni-bios_1_2o.rom", 0xe19d3ce9, 0x1f, "Universe BIOS ver. 1.2 (alt)"   , 13 },
-	{"uni-bios_1_1.rom",  0x5dda0d84, 0x20, "Universe BIOS ver. 1.1"         , 14 },
-	{"uni-bios_1_0.rom",  0x0ce453a0, 0x21, "Universe BIOS ver. 1.0"         , 15 },
-	{NULL, 0, 0, NULL, 0 }
-};
-
-RomBiosInfo *available_mvs_bios = NULL;
-RomBiosInfo *available_aes_bios = NULL;
-RomBiosInfo *available_uni_bios = NULL;
 std::vector<dipswitch_core_option> dipswitch_core_options;
 struct GameInp *pgi_reset;
 struct GameInp *pgi_diag;
@@ -68,7 +53,7 @@ UINT32 nFrameskip = 1;
 INT32 g_audio_samplerate = 48000;
 UINT32 nMemcardMode = 0;
 UINT8 *diag_input;
-neo_geo_modes g_opt_neo_geo_mode = NEO_GEO_MODE_MVS;
+uint32_t g_opt_neo_geo_mode = 0;
 
 #ifdef USE_CYCLONE
 // 0 - c68k, 1 - m68k
@@ -349,10 +334,13 @@ static const struct retro_core_option_v2_definition var_fbneo_neogeo_mode = {
 	NULL,
 	NULL,
 	{
-		{ "DIPSWITCH", "Use bios specified in BIOS dipswitch below" },
-		{ "MVS", "Use MVS bios" },
-		{ "AES", "Use AES bios" },
-		{ "UNIBIOS", "Use UNIBIOS bios" },
+		{ "DIPSWITCH", "Use bios set in BIOS dipswitch" },
+		{ "MVS_EUR", "MVS Europe/Asia (English)" },
+		{ "MVS_USA", "MVS USA (English - Censored)" },
+		{ "MVS_JAP", "MVS Japan (Japanese)" },
+		{ "AES_EUR", "AES Europe/Asia (English)" },
+		{ "AES_JAP", "AES Japan (Japanese)" },
+		{ "UNIBIOS", "UNIBIOS" },
 		{ NULL, NULL },
 	},
 	"DIPSWITCH"
@@ -556,68 +544,50 @@ char* str_char_replace(char* destination, char c_find, char c_replace)
 	return destination;
 }
 
+void set_neogeo_bios_availability(char *szName, uint32_t crc, bool ignoreCrc)
+{
+	for (int i = 0; neogeo_bioses[i].filename != NULL; i++)
+	{
+		if ((strcmp(neogeo_bioses[i].filename, szName) == 0 && ignoreCrc) || neogeo_bioses[i].crc == crc)
+		{
+			neogeo_bioses[i].available = 1;
+			return;
+		}
+	}
+}
+
+static RomBiosInfo* find_neogeo_bios(uint32_t categories)
+{
+	for (int i = 0; neogeo_bioses[i].filename != NULL; i++)
+	{
+		if (neogeo_bioses[i].categories == categories && neogeo_bioses[i].available == 1)
+		{
+			return &neogeo_bioses[i];
+		}
+	}
+
+	return NULL;
+}
+
 void set_neo_system_bios()
 {
-	if (g_opt_neo_geo_mode == NEO_GEO_MODE_DIPSWITCH)
+	if (g_opt_neo_geo_mode == 0)
 	{
 		// Nothing to do in DIPSWITCH mode because the NeoSystem variable is changed by the DIP Switch core option
 		log_cb(RETRO_LOG_INFO, "DIPSWITCH Neo Geo Mode selected => NeoSystem: 0x%02x.\n", NeoSystem);
 	}
-	else if (g_opt_neo_geo_mode == NEO_GEO_MODE_MVS)
+	else
 	{
+		RomBiosInfo *available_neogeo_bios = find_neogeo_bios(g_opt_neo_geo_mode);
 		NeoSystem &= ~(UINT8)0x1f;
-		if (available_mvs_bios)
+		if (available_neogeo_bios)
 		{
-			NeoSystem |= available_mvs_bios->NeoSystem;
-			log_cb(RETRO_LOG_INFO, "MVS Neo Geo Mode selected => Set NeoSystem: 0x%02x (%s [0x%08x] (%s)).\n", NeoSystem, available_mvs_bios->filename, available_mvs_bios->crc, available_mvs_bios->friendly_name);
+			NeoSystem |= available_neogeo_bios->NeoSystem;
+			log_cb(RETRO_LOG_INFO, "Found this bios for requested mode => NeoSystem: 0x%02x (%s [0x%08x] (%s)).\n", NeoSystem, available_neogeo_bios->filename, available_neogeo_bios->crc, available_neogeo_bios->friendly_name);
 		}
 		else
 		{
-			// fallback to another bios type if we didn't find the bios selected by the user
-			available_mvs_bios = (available_aes_bios) ? available_aes_bios : available_uni_bios;
-			if (available_mvs_bios)
-			{
-				NeoSystem |= available_mvs_bios->NeoSystem;
-				log_cb(RETRO_LOG_WARN, "MVS Neo Geo Mode selected but MVS bios not available => fall back to another: 0x%02x (%s [0x%08x] (%s)).\n", NeoSystem, available_mvs_bios->filename, available_mvs_bios->crc, available_mvs_bios->friendly_name);
-			}
-		}
-	}
-	else if (g_opt_neo_geo_mode == NEO_GEO_MODE_AES)
-	{
-		NeoSystem &= ~(UINT8)0x1f;
-		if (available_aes_bios)
-		{
-			NeoSystem |= available_aes_bios->NeoSystem;
-			log_cb(RETRO_LOG_INFO, "AES Neo Geo Mode selected => Set NeoSystem: 0x%02x (%s [0x%08x] (%s)).\n", NeoSystem, available_aes_bios->filename, available_aes_bios->crc, available_aes_bios->friendly_name);
-		}
-		else
-		{
-			// fallback to another bios type if we didn't find the bios selected by the user
-			available_aes_bios = (available_mvs_bios) ? available_mvs_bios : available_uni_bios;
-			if (available_aes_bios)
-			{
-				NeoSystem |= available_aes_bios->NeoSystem;
-				log_cb(RETRO_LOG_WARN, "AES Neo Geo Mode selected but AES bios not available => fall back to another: 0x%02x (%s [0x%08x] (%s)).\n", NeoSystem, available_aes_bios->filename, available_aes_bios->crc, available_aes_bios->friendly_name);
-			}
-		}
-	}
-	else if (g_opt_neo_geo_mode == NEO_GEO_MODE_UNIBIOS)
-	{
-		NeoSystem &= ~(UINT8)0x1f;
-		if (available_uni_bios)
-		{
-			NeoSystem |= available_uni_bios->NeoSystem;
-			log_cb(RETRO_LOG_INFO, "UNIBIOS Neo Geo Mode selected => Set NeoSystem: 0x%02x (%s [0x%08x] (%s)).\n", NeoSystem, available_uni_bios->filename, available_uni_bios->crc, available_uni_bios->friendly_name);
-		}
-		else
-		{
-			// fallback to another bios type if we didn't find the bios selected by the user
-			available_uni_bios = (available_mvs_bios) ? available_mvs_bios : available_aes_bios;
-			if (available_uni_bios)
-			{
-				NeoSystem |= available_uni_bios->NeoSystem;
-				log_cb(RETRO_LOG_WARN, "UNIBIOS Neo Geo Mode selected but UNIBIOS not available => fall back to another: 0x%02x (%s [0x%08x] (%s)).\n", NeoSystem, available_uni_bios->filename, available_uni_bios->crc, available_uni_bios->friendly_name);
-			}
+			log_cb(RETRO_LOG_INFO, "No bios found for requested mode, falling back to DIPSWITCH => NeoSystem: 0x%02x.\n", NeoSystem);
 		}
 	}
 }
@@ -659,7 +629,7 @@ void evaluate_neogeo_bios_mode(const char* drvname)
 		allow_neogeo_mode = false;
 
 		// set the NeoGeo mode to DIPSWITCH to rely on the Default Bios Dipswitch
-		g_opt_neo_geo_mode = NEO_GEO_MODE_DIPSWITCH;
+		g_opt_neo_geo_mode = 0;
 	}
 }
 
@@ -1157,14 +1127,20 @@ void check_variables(void)
 			var.key = var_fbneo_neogeo_mode.key;
 			if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 			{
-				if (strcmp(var.value, "MVS") == 0)
-					g_opt_neo_geo_mode = NEO_GEO_MODE_MVS;
-				else if (strcmp(var.value, "AES") == 0)
-					g_opt_neo_geo_mode = NEO_GEO_MODE_AES;
+				if (strcmp(var.value, "MVS_EUR") == 0)
+					g_opt_neo_geo_mode = NEOGEO_MVS | NEOGEO_EUR;
+				else if (strcmp(var.value, "MVS_USA") == 0)
+					g_opt_neo_geo_mode = NEOGEO_MVS | NEOGEO_USA;
+				else if (strcmp(var.value, "MVS_JAP") == 0)
+					g_opt_neo_geo_mode = NEOGEO_MVS | NEOGEO_JAP;
+				else if (strcmp(var.value, "AES_EUR") == 0)
+					g_opt_neo_geo_mode = NEOGEO_AES | NEOGEO_EUR;
+				else if (strcmp(var.value, "AES_JAP") == 0)
+					g_opt_neo_geo_mode = NEOGEO_AES | NEOGEO_JAP;
 				else if (strcmp(var.value, "UNIBIOS") == 0)
-					g_opt_neo_geo_mode = NEO_GEO_MODE_UNIBIOS;
-				else if (strcmp(var.value, "DIPSWITCH") == 0)
-					g_opt_neo_geo_mode = NEO_GEO_MODE_DIPSWITCH;
+					g_opt_neo_geo_mode = NEOGEO_UNI;
+				else
+					g_opt_neo_geo_mode = 0;
 			}
 		}
 		var.key = var_fbneo_memcard_mode.key;

@@ -761,7 +761,8 @@ static INT32 CommonInit(INT32 game_select, INT32 slapstic_num)
 
 	PokeyInit(14000000/8, 2, 1.00, 1);
 
-	tms5220_init();
+	tms5220c_init();
+	tms5220_volume(0.75);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_COLS, bg_map_callback, 8, 8, 64, 64);

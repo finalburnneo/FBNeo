@@ -487,7 +487,7 @@ static INT32 SyncInternal()
 	return (INT32)(float)(nBurnSoundLen * (pCPUTotalCycles() / (nDACCPUMHZ / (nBurnFPS / 100.0000))));
 }
 
-static void tms5220_process(tms5220_state *tms, INT16 *buffer, UINT32 size);
+static void tms5220_process(tms5220_state *tms, INT16 *buffer, INT32 size);
 
 static void UpdateStream(INT32 samples_len)
 {
@@ -850,7 +850,7 @@ static INT32 tms5220_int_read(tms5220_state *tms)
 
 ***********************************************************************************************/
 
-static void tms5220_process(tms5220_state *tms, INT16 *buffer, UINT32 size)
+static void tms5220_process(tms5220_state *tms, INT16 *buffer, INT32 size)
 {
 	INT32 buf_count=0;
 	INT32 i, bitout, zpar;
@@ -1964,8 +1964,10 @@ void tms5220_update(INT16 *buffer, INT32 samples_len)
 		nLeftSample[2] += (INT32)(pBufL[(nFractionalPosition >> 16) - 1]);
 		nLeftSample[3] += (INT32)(pBufL[(nFractionalPosition >> 16) - 0]);
 
-		nTotalLeftSample  = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3]);
-		nTotalLeftSample  = BURN_SND_CLIP(nTotalLeftSample * tms5220_vol);
+		//nTotalLeftSample  = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3]);
+		// switched to linear interp. to preserve high-freqs (aliasing) :)
+		nTotalLeftSample = nLeftSample[0] + (((nLeftSample[1] - nLeftSample[0]) * ((nFractionalPosition >> 4) & 0x0fff)) >> 16);
+		nTotalLeftSample = BURN_SND_CLIP(nTotalLeftSample * tms5220_vol);
 
 		buffer[i + 0] = BURN_SND_CLIP(buffer[i + 0] + nTotalLeftSample);
 		buffer[i + 1] = BURN_SND_CLIP(buffer[i + 1] + nTotalLeftSample);

@@ -635,9 +635,9 @@ static struct BurnDIPInfo DariusuDIPList[]=
 	{0x14, 0x01, 0x30, 0x10, "5"                              },
 	{0x14, 0x01, 0x30, 0x00, "6"                              },
 
-	{0   , 0xfe, 0   , 2   , "Unknown"                 		  },
-	{0x14, 0x01, 0x40, 0x40, "Off"                            },
-	{0x14, 0x01, 0x40, 0x00, "On"                             },
+	{0   , 0xfe, 0   , 2   , "Continue Price"         		  },
+	{0x14, 0x01, 0x40, 0x40, "Discount"                       },
+	{0x14, 0x01, 0x40, 0x00, "Same as Start"                  },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"                 },
 	{0x14, 0x01, 0x80, 0x00, "No"                             },

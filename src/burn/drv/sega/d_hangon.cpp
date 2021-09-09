@@ -1259,7 +1259,7 @@ UINT16 __fastcall HangonReadWord(UINT32 a)
 		case 0xe00002:
 		case 0xe00004:
 		case 0xe00006: {
-			return ppi8255_r(0, (a - 0xe00000) >> 1);
+			return ppi8255_r(0, (a & 7) >> 1);
 		}
 	
 		case 0xe01000: {
@@ -1289,7 +1289,7 @@ UINT8 __fastcall HangonReadByte(UINT32 a)
 		case 0xe00003:
 		case 0xe00005:
 		case 0xe00007: {
-			return ppi8255_r(0, (a - 0xe00000) >> 1);
+			return ppi8255_r(0, (a & 7) >> 1);
 		}
 		
 		case 0xe01001: {
@@ -1308,7 +1308,7 @@ UINT8 __fastcall HangonReadByte(UINT32 a)
 		case 0xe03003:
 		case 0xe03005:
 		case 0xe03007: {
-			return ppi8255_r(1, (a - 0xe03000) >> 1);
+			return ppi8255_r(1, (a & 7) >> 1);
 		}
 		
 		case 0xe03021: {
@@ -1336,7 +1336,7 @@ void __fastcall HangonWriteByte(UINT32 a, UINT8 d)
 		case 0xe00003: 
 		case 0xe00005: 
 		case 0xe00007: {
-			ppi8255_w(0, (a - 0xe00000) >> 1, d & 0xff);
+			ppi8255_w(0, (a & 7) >> 1, d & 0xff);
 			return;
 		}
 		
@@ -1344,7 +1344,7 @@ void __fastcall HangonWriteByte(UINT32 a, UINT8 d)
 		case 0xe03003:
 		case 0xe03005:
 		case 0xe03007: {
-			ppi8255_w(1, (a - 0xe03000) >> 1, d & 0xff);
+			ppi8255_w(1, (a & 7) >> 1, d & 0xff);
 			return;
 		}
 		
@@ -1376,7 +1376,15 @@ void __fastcall HangonWriteWord(UINT32 a, UINT16 d)
 		case 0xe00002: 
 		case 0xe00004: 
 		case 0xe00006: {
-			ppi8255_w(0, (a - 0xe00000) >> 1, d & 0xff);
+			ppi8255_w(0, (a & 7) >> 1, d & 0xff);
+			return;
+		}
+
+		case 0xe03000:
+		case 0xe03002:
+		case 0xe03004:
+		case 0xe03006: {
+			ppi8255_w(1, (a & 7) >> 1, d & 0xff);
 			return;
 		}
 	}
@@ -1416,7 +1424,7 @@ static UINT8 __fastcall SharrierReadByte(UINT32 a)
 		case 0x140003:
 		case 0x140005:
 		case 0x140007: {
-			return ppi8255_r(0, (a - 0x140000) >> 1);
+			return ppi8255_r(0, (a & 7) >> 1);
 		}
 		
 		case 0x140011: {
@@ -1431,7 +1439,7 @@ static UINT8 __fastcall SharrierReadByte(UINT32 a)
 		case 0x140023:
 		case 0x140025:
 		case 0x140027: {
-			return ppi8255_r(1, (a - 0x140020) >> 1);
+			return ppi8255_r(1, (a & 7) >> 1);
 		}
 		
 		case 0x140031: {
@@ -1455,7 +1463,7 @@ static void __fastcall SharrierWriteByte(UINT32 a, UINT8 d)
 		case 0x140003: 
 		case 0x140005: 
 		case 0x140007: {
-			ppi8255_w(0, (a - 0x140000) >> 1, d & 0xff);
+			ppi8255_w(0, (a & 7) >> 1, d & 0xff);
 			return;
 		}
 		
@@ -1463,7 +1471,7 @@ static void __fastcall SharrierWriteByte(UINT32 a, UINT8 d)
 		case 0x140023:
 		case 0x140025:
 		case 0x140027: {
-			ppi8255_w(1, (a - 0x140020) >> 1, d & 0xff);
+			ppi8255_w(1, (a & 7) >> 1, d & 0xff);
 			return;
 		}
 		
@@ -1478,6 +1486,24 @@ static void __fastcall SharrierWriteWord(UINT32 a, UINT16 d)
 	if (a >= 0x100000 && a <= 0x107fff) {
 		System16ATileWordWrite(a - 0x100000, d);
 		return;
+	}
+
+	switch (a) {
+		case 0x140000:
+		case 0x140002:
+		case 0x140004:
+		case 0x140006: {
+			ppi8255_w(0, (a & 7) >> 1, d & 0xff);
+			return;
+		}
+		
+		case 0x140020:
+		case 0x140022:
+		case 0x140024:
+		case 0x140026: {
+			ppi8255_w(1, (a & 7) >> 1, d & 0xff);
+			return;
+		}
 	}
 }
 

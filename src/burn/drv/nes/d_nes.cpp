@@ -13110,6 +13110,25 @@ struct BurnDriver BurnDrvnes_toprider = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Willow (Hack, No Flash)
+// https://www.romhacking.net/hacks/4992/
+
+static struct BurnRomInfo nes_willownfhRomDesc[] = {
+	{ "Willow (Hack, No Flash).nes",          262160, 0x956ea1a6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_willownfh)
+STD_ROM_FN(nes_willownfh)
+
+struct BurnDriver BurnDrvnes_willownfh = {
+	"nes_willownfh", "nes_willow", NULL, NULL, "1989",
+	"Willow (Hack, No Flash)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RPG, 0,
+	NESGetZipName, nes_willownfhRomInfo, nes_willownfhRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 static struct BurnRomInfo nes_samuraispiritsRomDesc[] = {
 	{ "Samurai Spirits (Unl).nes",          786448, 0x9b7305f7, BRF_ESS | BRF_PRG },
 };

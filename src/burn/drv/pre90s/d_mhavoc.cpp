@@ -646,8 +646,7 @@ static INT32 MhavocInit()
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 	PokeyAllPotCallback(0, port0_read);
 
-	tms5220_init(); // mhavocrv
-	tms5220_set_frequency(555555);
+	tms5220_init(555555); // mhavocrv
 
 	avgdvg_init(USE_AVG_MHAVOC, DrvVectorRAM, 0x4000, M6502TotalCycles, 300, 260);
 
@@ -697,8 +696,7 @@ static INT32 AlphaoneInit()
 	PokeyInit(1250000, 2, 0.50, 0);
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 
-	tms5220_init(); // not in this set
-	tms5220_set_frequency(555555);
+	tms5220_init(555555); // not in this set
 
 	avgdvg_init(USE_AVG_MHAVOC, DrvVectorRAM, 0x4000, M6502TotalCycles, 580, 500);
 

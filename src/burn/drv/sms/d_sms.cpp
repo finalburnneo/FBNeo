@@ -29634,6 +29634,25 @@ struct BurnDriver BurnDrvsms_gemitas = {
 	256, 224, 4, 3
 };
 
+// Gotris (HB, v1.2p)
+
+static struct BurnRomInfo sms_gotrisfvRomDesc[] = {
+	{ "Gotris v1.2p (2021)(Tuxedo Games).sms",	262144, 0xcfe301ed, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_gotrisfv)
+STD_ROM_FN(sms_gotrisfv)
+
+struct BurnDriver BurnDrvsms_gotrisfv = {
+	"sms_gotrisfv", NULL, NULL, NULL, "2021",
+	"Gotris (HB, v1.2p)\0", NULL, "Tuxedo Games", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_gotrisfvRomInfo, sms_gotrisfvRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Gotris (HB, v0.8)
 
 static struct BurnRomInfo sms_gotrisRomDesc[] = {
@@ -29644,10 +29663,10 @@ STD_ROM_PICK(sms_gotris)
 STD_ROM_FN(sms_gotris)
 
 struct BurnDriver BurnDrvsms_gotris = {
-	"sms_gotris", NULL, NULL, NULL, "2018",
+	"sms_gotris", "sms_gotrisfv", NULL, NULL, "2018",
 	"Gotris (HB, v0.8)\0", NULL, "1985 Alternativo", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_gotrisRomInfo, sms_gotrisRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3

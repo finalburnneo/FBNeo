@@ -919,6 +919,7 @@ static INT32 BagmanCommonInit(INT32 game, INT32 memmap)
 
 	tms5110_init(640000);
 	tms5110_M0_callback(bagman_TMS5110_M0_cb);
+	tms5110_set_buffered(ZetTotalCycles, 3072000);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 32, 32);

@@ -14668,6 +14668,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="willownfh" cloneof="willow" romof="willow">
+		<description>Willow (Hack, No Flash) [Hack]</description>
+		<year>1989</year>
+		<manufacturer>Capcom</manufacturer>
+		<rom name="Willow (Hack, No Flash).nes" size="262160" crc="956ea1a6"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="willow">
 		<description>Willow (USA)</description>
 		<year>1989</year>

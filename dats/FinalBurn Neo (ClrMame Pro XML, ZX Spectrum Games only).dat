@@ -674,13 +674,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="alterego" romof="spec128">
-		<description>Alter Ego (HB) [Homebrew]</description>
+	<game name="alterego" romof="spectrum">
+		<description>Alter Ego (48K) (HB) [Homebrew]</description>
 		<year>2011</year>
 		<manufacturer>RetroSouls</manufacturer>
 		<rom name="Alter Ego (2011)(RetroSouls).tap" size="38926" crc="855c13dc"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2063,6 +2062,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bubmonkeybf" cloneof="bubmonkey" romof="bubmonkey">
+		<description>Bubble Monkey Bros (bug fixed) (HB) [Homebrew, Bug fixed version - without AY music]</description>
+		<year>2015</year>
+		<manufacturer>Gabriele Amore</manufacturer>
+		<rom name="Bubble Monkey Bros - bug fixed (2015)(Gabriele Amore).tap" size="32418" crc="bd320030"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bubbler" romof="spectrum">
 		<description>Bubbler (48K) [Press '1' for P1 options and '2' for P2 options]</description>
 		<year>1987</year>
@@ -2509,13 +2518,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cherilgod" romof="spec128">
-		<description>Cheril the Goddess (HB, v2) [Homebrew]</description>
+	<game name="cherilgod" romof="spectrum">
+		<description>Cheril the Goddess (48K) (HB, v2) [Homebrew]</description>
 		<year>2011</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Cheril The Goddess V2 (2011)(Mojon Twins).tap" size="43545" crc="94cc3db8"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -7070,7 +7078,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="labbaye" romof="spec128">
-		<description>L'Abbaye des Morts (HB) [Homebrew, Port of original game by Locomalito and Gryzor87]</description>
+		<description>L'Abbaye des Morts (128K) (HB) [Homebrew, Port of original game by Locomalito and Gryzor87]</description>
 		<year>2014</year>
 		<manufacturer>Darkhorace</manufacturer>
 		<rom name="L'Abbaye des Morts (2014)(Darkhorace).z80" size="58110" crc="dec96ae7"/>
@@ -7157,13 +7165,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="traxtor" romof="spec128">
-		<description>Legend of Traxtor (HB) [Homebrew]</description>
+	<game name="traxtor" romof="spectrum">
+		<description>Legend of Traxtor (48K) (HB) [Homebrew]</description>
 		<year>2014</year>
 		<manufacturer>usebox.net</manufacturer>
 		<rom name="Legend of Traxtor (2014)(usebox.net).tap" size="23986" crc="ef7dc08c"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -7712,7 +7719,7 @@
 	<game name="merlin_128" romof="spec128">
 		<description>Merlin (128K)</description>
 		<year>1987</year>
-		<manufacturer>Firebird</manufacturer>
+		<manufacturer>Firebird Software</manufacturer>
 		<rom name="Merlin (1987)(Firebird)(128k).z80" size="42340" crc="34df99db"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -7720,7 +7727,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="merlin" cloneof="merlin_128" romof="merlin_128">
-		<description>Merlin (Alternative)(48K)</description>
+		<description>Merlin (Alternative) (48K)</description>
 		<year>1987</year>
 		<manufacturer>Firebird Software</manufacturer>
 		<rom name="Merlin (1987)(Firebird).z80" size="38609" crc="1c2945a1"/>
@@ -7841,22 +7848,32 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="micrsocc" romof="spec128">
-		<description>Microprose Soccer (128K)</description>
+	<game name="micrsocc_48" cloneof="micrsoccint" romof="micrsoccint">
+		<description>MicroProse Soccer (48K)</description>
 		<year>1989</year>
-		<manufacturer>Microprose Software</manufacturer>
-		<rom name="Microprose Soccer (1989)(Microprose Software)[128K].z80" size="39961" crc="432ea0b4"/>
+		<manufacturer>MicroProse</manufacturer>
+		<rom name="MicroProse Soccer 48K (1989)(MicroProse).tap" size="36576" crc="68a260d1"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="micrsoccint" romof="spec128">
+		<description>MicroProse Soccer - International Challenge (128K)</description>
+		<year>1989</year>
+		<manufacturer>MicroProse</manufacturer>
+		<rom name="MicroProse Soccer - Int. Challenge 128K (1989)(MicroProse).tap" size="98198" crc="2d03b320"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="micrsocc_48" cloneof="micrsocc" romof="micrsocc">
-		<description>Microprose Soccer (48K)</description>
+	<game name="micrsocc6sd" cloneof="micrsoccint" romof="micrsoccint">
+		<description>MicroProse Soccer - Six-a-Side Challenge (128K)</description>
 		<year>1989</year>
-		<manufacturer>Microprose Software</manufacturer>
-		<rom name="Microprose Soccer (1989)(Microprose Software).z80" size="32472" crc="5125611a"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<manufacturer>MicroProse</manufacturer>
+		<rom name="MicroProse Soccer - 6aside Challenge 128K (1989)(MicroProse).tap" size="98198" crc="3c0a7349"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -8832,7 +8849,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ooze" romof="spec128">
-		<description>Ooze (HB) [Homebrew]</description>
+		<description>Ooze (128K) (HB) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>Bubblesoft</manufacturer>
 		<rom name="Ooze (2017)(Bubblesoft).tap" size="49790" crc="188d3e4e"/>
@@ -10117,7 +10134,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="restlessandre" romof="spec128">
-		<description>Restless Andre (HB) [Homebrew]</description>
+		<description>Restless Andre (128K) (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Jaime Grilo</manufacturer>
 		<rom name="Restless Andre (2019)(Jaime Grilo).tap" size="48113" crc="0db7023a"/>
@@ -10146,13 +10163,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="traxtor2" romof="spec128">
-		<description>Return of Traxtor (HB) [Homebrew]</description>
+	<game name="traxtor2" romof="spectrum">
+		<description>Return of Traxtor (48K) (HB) [Homebrew]</description>
 		<year>2015</year>
 		<manufacturer>usebox.net</manufacturer>
 		<rom name="Return of Traxtor (2015)(usebox.net).tap" size="27292" crc="6fac2cd6"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

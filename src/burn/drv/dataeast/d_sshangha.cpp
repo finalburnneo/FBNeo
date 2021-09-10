@@ -348,6 +348,8 @@ static INT32 DrvDoReset()
 
 	video_control = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -768,7 +770,7 @@ struct BurnDriver BurnDrvSshangha = {
 	"sshangha", NULL, NULL, NULL, "1992",
 	"Super Shanghai Dragon's Eye (World)\0", NULL, "Hot-B Co., Ltd.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PUZZLE, 0,
 	NULL, sshanghaRomInfo, sshanghaRomName, NULL, NULL, NULL, NULL, SshanghaInputInfo, SshanghaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
@@ -822,7 +824,7 @@ struct BurnDriver BurnDrvSshanghaj = {
 	"sshanghaj", "sshangha", NULL, NULL, "1992",
 	"Super Shanghai Dragon's Eye (Japan)\0", NULL, "Hot-B Co., Ltd.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PUZZLE, 0,
 	NULL, sshanghajRomInfo, sshanghajRomName, NULL, NULL, NULL, NULL, SshanghaInputInfo, SshanghaDIPInfo,
 	SshanghajInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
@@ -856,7 +858,7 @@ struct BurnDriver BurnDrvSshanghak = {
 	"sshanghak", "sshangha", NULL, NULL, "1992",
 	"Super Shanghai Dragon's Eye (Korea)\0", NULL, "Hot-B Co., Ltd. (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PUZZLE, 0,
 	NULL, sshanghakRomInfo, sshanghakRomName, NULL, NULL, NULL, NULL, SshanghaInputInfo, SshanghaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
@@ -890,7 +892,7 @@ struct BurnDriver BurnDrvSshanghab = {
 	"sshanghab", "sshangha", NULL, NULL, "1992",
 	"Super Shanghai Dragon's Eye (World, bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PUZZLE, 0,
 	NULL, sshanghabRomInfo, sshanghabRomName, NULL, NULL, NULL, NULL, SshanghaInputInfo, SshanghaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3

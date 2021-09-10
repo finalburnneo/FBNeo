@@ -433,8 +433,7 @@ static INT32 DrvInit()
 	PokeySetRoute(2, 0.30, BURN_SND_ROUTE_LEFT);
 	PokeySetRoute(3, 0.30, BURN_SND_ROUTE_RIGHT);
 
-	tms5220_init(M6502TotalCycles, 1512000);
-	tms5220_set_frequency(672000);
+	tms5220_init(672000, M6502TotalCycles, 1512000);
 
 	GenericTilesInit();
 
@@ -653,7 +652,7 @@ static INT32 DrvDraw()
 
 	return 0;
 }
-	
+
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -684,15 +683,15 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6502Open(0);
-		nCyclesDone[0] += M6502Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, M6502);
 		if ((i%64) == 63) M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		M6502Close();
 
 		M6502Open(1);
 		if (audio_in_reset == 0) {
-            nCyclesDone[1] += M6502Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+			CPU_RUN(1, M6502);
 		} else {
-            nCyclesDone[1] += M6502Idle(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+			CPU_IDLE(1, M6502);
 		}
 		if ((i%64) == 63) M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		M6502Close();

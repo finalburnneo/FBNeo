@@ -454,7 +454,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	BurnYM2151Reset();
 	tms5220_reset();
-	tms5220_set_frequency(14318180/2/11);
 
 	AtariSlapsticReset();
 	AtariEEPROMReset();
@@ -761,7 +760,7 @@ static INT32 CommonInit(INT32 game_select, INT32 slapstic_num)
 
 	PokeyInit(14000000/8, 2, 1.00, 1);
 
-	tms5220c_init();
+	tms5220c_init(14318180 / 2 / 11, M6502TotalCycles, 14318180 / 8);
 	tms5220_volume(0.75);
 
 	GenericTilesInit();

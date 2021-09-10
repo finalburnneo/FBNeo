@@ -18,6 +18,9 @@ void tms5110_exit();
 void tms5110_reset();
 void tms5110_scan(INT32 nAction, INT32 *pnMin);
 
+void tms5110_set_buffered(INT32 (*pCPUCyclesCB)(), INT32 nCpuMhz);
+void tms5110_volume(double vol);
+
 void tms5110_M0_callback(INT32 (*func)());
 INT32 tms5110_status_read();
 INT32 tms5110_ready_read();

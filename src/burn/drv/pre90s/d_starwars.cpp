@@ -957,8 +957,7 @@ static INT32 DrvInit(INT32 game_select)
 	PokeyInit(1500000, 4, 0.40, 0);
 	PokeySetTotalCyclesCB(M6809TotalCycles);
 
-	tms5220_init();
-	tms5220_set_frequency(640000);
+	tms5220_init(640000);
 	tms5220_volume(0.75);
 
 	swmathbox_init();

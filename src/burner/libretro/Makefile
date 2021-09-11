@@ -86,9 +86,12 @@ ifneq (,$(findstring unix,$(platform)))
 		HAVE_NEON = 1
 		USE_CYCLONE = 1
 	else ifneq (,$(findstring rpi3,$(platform)))
-		PLATFORM_DEFINES := -marm -mcpu=cortex-a53 -mfpu=neon-fp-armv8 -mfloat-abi=hard
-		HAVE_NEON = 1
-		USE_CYCLONE = 1
+		ifneq (,$(findstring rpi3_64,$(platform)))
+			PLATFORM_DEFINES := -march=armv8-a+crc+simd -mtune=cortex-a53
+		else
+			PLATFORM_DEFINES := -marm -mcpu=cortex-a53 -mfpu=neon-fp-armv8 -mfloat-abi=hard
+			HAVE_NEON = 1
+			USE_CYCLONE = 1
 	else ifneq (,$(findstring rpi4_64,$(platform)))
 		PLATFORM_DEFINES := -march=armv8-a+crc+simd -mtune=cortex-a72
 	endif

@@ -72,65 +72,25 @@ static void parse_frame(struct tms5110 *tms);
 
 #define DEBUG_5110	0
 
-void tms5110_process(void *chip, INT16 *buffer, INT32 size); //forward
-
 // for resampling
-#include "upsample.h"
-static Upsampler resamp;
-static INT32 nPosition;
-static INT16 *soundbuf = NULL;
-
-static double tms5110_vol;
-
-// for stream-sync
-static INT32 tms5110_buffered = 0;
-static INT32 (*pTotalCyclesCB)();
-static INT32 nCpuMHZ;
+#include "stream.h"
+static Stream stream;
 
 static struct tms5110 *our_chip = NULL;
 static INT32 tms5110_initted = 0;
 
-// Streambuffer handling
-static INT32 SyncInternal(INT32 cycles)
-{
-    if (!tms5110_buffered) return 0;
-	return (INT32)((double)cycles * ((double)pTotalCyclesCB() / ((double)nCpuMHZ / (nBurnFPS / 100.0000))));
-}
-
-static void UpdateStream(INT32 end)
-{
-    if (!pBurnSoundOut) return;
-	if (end == 0 && tms5110_buffered == 0) return;
-
-	INT32 framelen = resamp.samples_to_source(nBurnSoundLen);
-	INT32 position = (end) ? framelen : SyncInternal(framelen);
-
-	if (position > framelen) position = framelen;
-
-	INT32 samples = position - nPosition;
-
-	if (samples < 1) return;
-
-    //if (end) bprintf(0, _T("tms5110_sync: %d samples   pos %d  framelen %d   frame %d\n"), samples, nPosition, framelen, nCurrentFrame);
-
-	INT16 *mix = soundbuf + 1 + nPosition; // + 0 = resampler internal use!
-    tms5110_process(our_chip, mix, samples);
-
-	nPosition += samples;
-}
+void tms5110_process(INT16 **streams, INT32 size); //forward
 
 void tms5110_set_buffered(INT32 (*pCPUCyclesCB)(), INT32 nCpuMhz)
 {
     bprintf(0, _T("*** Using BUFFERED tms5110-mode.\n"));
-    tms5110_buffered = 1;
 
-    pTotalCyclesCB = pCPUCyclesCB;
-	nCpuMHZ = nCpuMhz;
+	stream.set_buffered(pCPUCyclesCB, nCpuMhz);
 }
 
 void tms5110_volume(double vol)
 {
-    tms5110_vol = vol;
+	stream.set_volume(vol);
 }
 
 static void *tms5110_create(void)
@@ -150,13 +110,12 @@ static void tms5110_destroy(void *chip)
 void tms5110_init(UINT32 freq)
 {
 	our_chip = (tms5110 *)tms5110_create();
-	soundbuf = (INT16*)malloc(0x2000);
 
-	tms5110_volume(1.00);
+	our_chip->our_freq = freq/80;
 
-	tms5110_set_frequency(freq);
-
-	resamp.init(our_chip->our_freq, nBurnSoundRate, 1);
+	// init stream/resampler
+	stream.init(our_chip->our_freq, nBurnSoundRate, 1, 1, tms5110_process);
+    stream.set_volume(1.00);
 
 	tms5110_initted = 1;
 }
@@ -169,13 +128,10 @@ void tms5110_exit()
 	}
 
 	tms5110_destroy(our_chip);
-	free(soundbuf);
 
 	tms5110_initted = 0;
 
-	tms5110_buffered = 0;
-    pTotalCyclesCB = NULL;
-    nCpuMHZ = 0;
+	stream.exit();
 }
 
 void tms5110_scan(INT32 nAction, INT32 *pnMin)
@@ -191,7 +147,7 @@ void tms5110_scan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_WRITE) {
-		resamp.set_rate(our_chip->our_freq);
+		stream.set_rate(our_chip->our_freq);
 	}
 }
 
@@ -343,7 +299,7 @@ static INT32 tms5110_status_read_internal(void *chip)
 
 INT32 tms5110_status_read()
 {
-	UpdateStream(0);
+	stream.update();
 	return tms5110_status_read_internal(our_chip);
 }
 
@@ -361,7 +317,7 @@ static INT32 tms5110_ready_read_internal(void *chip)
 
 INT32 tms5110_ready_read()
 {
-	UpdateStream(0);
+	stream.update();
 	return tms5110_ready_read_internal(our_chip);
 }
 
@@ -372,11 +328,13 @@ INT32 tms5110_ready_read()
 
 ***********************************************************************************************/
 
-void tms5110_process(void *chip, INT16 *buffer, INT32 size)
+void tms5110_process(INT16 **streams, INT32 size)
 {
-	struct tms5110 *tms = (tms5110 *)chip;
+	struct tms5110 *tms = our_chip;
     INT32 buf_count=0;
     INT32 i, interp_period;
+
+	INT16 *buffer = streams[0];
 
     /* if we're not speaking, fill with nothingness */
     if (!tms->speaking_now)
@@ -609,7 +567,7 @@ void tms5110_set_frequency(UINT32 freq)
 {
 	our_chip->our_freq = freq/80;
 
-	resamp.set_rate(our_chip->our_freq);
+	stream.set_rate(our_chip->our_freq);
 }
 
 void tms5110_update(INT16 *output, INT32 samples_len)
@@ -619,16 +577,7 @@ void tms5110_update(INT16 *output, INT32 samples_len)
 		return;
 	}
 
-	UpdateStream(1);
-
-	// - new resampler notes (upsample.h) -
-	// 1)
-	// soundbuf[0] is used to store the last sample of the previous frame
-	// so that the interpolation can be carried over. -dink sept.2021
-	// 2)
-	// if samples are carried over from the previous resample, they will also
-	// be placed in soundbuf[1+], with the count returned in nPosition
-	resamp.resample(soundbuf, output, samples_len, nPosition, tms5110_vol, BURN_SND_ROUTE_BOTH);
+	stream.render(output, samples_len);
 }
 
 
@@ -646,7 +595,7 @@ void tms5110_CTL_set_internal(void *chip, INT32 data)
 
 void tms5110_CTL_set(UINT8 data)
 {
-	UpdateStream(0);
+	stream.update();
 	tms5110_CTL_set_internal(our_chip, data);
 }
 
@@ -689,7 +638,7 @@ void tms5110_PDC_set_internal(void *chip, INT32 data)
 
 void tms5110_PDC_set(UINT8 data)
 {
-	UpdateStream(0);
+	stream.update();
 	tms5110_PDC_set_internal(our_chip, data);
 }
 

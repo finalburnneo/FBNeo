@@ -2,7 +2,7 @@
 // copyright-holders:Olivier Galibert
 #include "burnint.h"
 #include "digitalk.h"
-#include "downsample.h"
+#include "stream.h"
 #include <stddef.h>
 
 /*
@@ -263,10 +263,7 @@ static const INT32 pitch_vals[32] = {
 };
 
 // downsampler
-Downsampler resamp;
-static INT16 *m_mixer_buffer;
-static INT32 bAddStream;
-static double m_volume;
+Stream stream; // using upsampler for testing
 
 static const UINT8 *m_rom;
 static INT32 m_romsize;
@@ -305,35 +302,6 @@ static UINT8 m_dac_index; // 128 for done
 static INT16 m_dac[128];
 
 enum { CLEAR_LINE = 0, ASSERT_LINE };
-
-// stream sync
-static INT32 nPosition;
-static INT32 (*pTotalCyclesCB)();
-static INT32 nCpuMHZ;
-
-static INT32 SyncUPD(INT32 cycles)
-{
-	return (INT32)((double)cycles * ((double)pTotalCyclesCB() / ((double)nCpuMHZ / (nBurnFPS / 100.0000))));
-}
-
-static void digitalker_update_INT(INT32 samples); // forward
-
-static void UpdateStream(INT32 end)
-{
-	if (!pBurnSoundOut) return;
-	INT32 framelen = resamp.samples_to_source(nBurnSoundLen);
-	INT32 position = (end) ? framelen : SyncUPD(framelen);
-
-	if (position > framelen) position = framelen;
-
-	INT32 samples = position - nPosition;
-
-	if (samples < 1) return;
-
-	digitalker_update_INT(samples);
-//	bprintf(0, _T("digitalker update, samples/pos/framelen:  %d  %d  %d\n"), samples, nPosition+samples, framelen);
-	nPosition += samples;
-}
 
 static UINT8 read_rom(INT32 address)
 {
@@ -597,9 +565,9 @@ static void digitalker_step()
 //  sound_stream_update - handle a stream update
 //-------------------------------------------------
 
-static void digitalker_update_INT(INT32 samples)
+static void digitalker_update_INT(INT16 **streams, INT32 samples)
 {
-	INT16 *sout = m_mixer_buffer + nPosition;
+	INT16 *sout = streams[0];;
 
 	INT32 cpos = 0;
 	while(cpos != samples) {
@@ -644,16 +612,12 @@ void digitalker_update(INT16 *output, INT32 samples_len)
 		return;
 	}
 
-	UpdateStream(1);
-
-	resamp.resample(m_mixer_buffer, output, samples_len, m_volume, BURN_SND_ROUTE_BOTH);
-
-	nPosition = 0;
+	stream.render(output, samples_len);
 }
 
 void digitalker_cs_write(INT32 line)
 {
-	UpdateStream(0);
+	stream.update();
 
 	UINT8 cs = line == ASSERT_LINE ? 1 : 0;
 	if(cs == m_cs)
@@ -671,14 +635,14 @@ void digitalker_cs_write(INT32 line)
 
 void digitalker_cms_write(INT32 line)
 {
-	UpdateStream(0);
+	stream.update();
 
 	m_cms = line == ASSERT_LINE ? 1 : 0;
 }
 
 void digitalker_wr_write(INT32 line)
 {
-	UpdateStream(0);
+	stream.update();
 
 	UINT8 wr = line == ASSERT_LINE ? 1 : 0;
 	if(wr == m_wr)
@@ -694,14 +658,14 @@ void digitalker_wr_write(INT32 line)
 
 INT32 digitalker_intr_read()
 {
-	UpdateStream(0);
+	stream.update();
 
 	return m_intr ? ASSERT_LINE : CLEAR_LINE;
 }
 
 void digitalker_data_write(UINT8 data)
 {
-	UpdateStream(0);
+	stream.update();
 
 	m_data = data;
 }
@@ -744,15 +708,9 @@ void digitalker_init(UINT8 *rom, INT32 romsize, INT32 clock, INT32 (*pCPUCyclesC
 
 	digitalker_reset();
 
-	pTotalCyclesCB = pCPUCyclesCB;
-	nCpuMHZ = nCPUMhz;
-
-	bAddStream = AddToStream;
-	resamp.init(m_sample_rate, nBurnSoundRate, AddToStream);
-
-	m_mixer_buffer = (INT16*)BurnMalloc(2 * sizeof(INT16) * m_sample_rate);
-
-	m_volume = 1.00;
+	stream.init(m_sample_rate, nBurnSoundRate, 1, AddToStream, digitalker_update_INT);
+	stream.set_buffered(pCPUCyclesCB, nCPUMhz);
+	stream.set_volume(1.00);
 }
 
 void digitalker_reset()
@@ -766,14 +724,11 @@ void digitalker_reset()
 
 void digitalker_volume(double vol)
 {
-	m_volume = vol;
+	stream.set_volume(vol);
 }
 
 void digitalker_exit()
 {
-	if (m_mixer_buffer) {
-		BurnFree(m_mixer_buffer);
-		m_mixer_buffer = NULL;
-	}
+	stream.exit();
 }
 

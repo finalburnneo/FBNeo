@@ -350,7 +350,7 @@ struct Stream {
 
 		if (samples < 1) return;
 
-		if (end) bprintf(0, _T("stream_sync: %d samples   pos %d  framelen %d   frame %d\n"), samples, nPosition, framelen, nCurrentFrame);
+		//if (end) bprintf(0, _T("stream_sync: %d samples   pos %d  framelen %d   frame %d\n"), samples, nPosition, framelen, nCurrentFrame);
 
 		INT16 *mix[MAX_CHANNELS];
 

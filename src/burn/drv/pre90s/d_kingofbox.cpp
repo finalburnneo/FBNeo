@@ -867,7 +867,6 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
-		BurnSoundDCFilter(); // game leaves ay in a +0.5db state when idle
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 

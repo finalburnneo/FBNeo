@@ -608,7 +608,6 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
-		BurnSoundDCFilter(); // prevent dc offset caused by ay8910
 		SN76496Update(pBurnSoundOut, nBurnSoundLen);
 	}
 

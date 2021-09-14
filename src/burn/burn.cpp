@@ -3,7 +3,7 @@
 #include "version.h"
 #include "burnint.h"
 #include "timer.h"
-#include "burn_sound.h"
+//#include "burn_sound.h" // included in burnint.h
 #include "driverlist.h"
 
 #ifndef __LIBRETRO__
@@ -86,7 +86,8 @@ extern "C" INT32 BurnLibInit()
 	BurnLibExit();
 	nBurnDrvCount = sizeof(pDriver) / sizeof(pDriver[0]);	// count available drivers
 
-	cmc_4p_Precalc();
+	BurnSoundInit();
+
 	bBurnUseMMX = BurnCheckMMXSupport();
 
 	return 0;

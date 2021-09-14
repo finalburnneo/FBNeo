@@ -58,6 +58,12 @@ static INT32 AY8910AddSignal = 0;
 
 INT32 ay8910burgertime_mode = 0;
 
+// dc offset fixer
+static INT16 ay_lastin_r  = 0;
+static INT16 ay_lastout_r = 0;
+static INT16 ay_lastin_l  = 0;
+static INT16 ay_lastout_l = 0;
+
 // for stream-sync
 static INT32 ay8910_buffered = 0;
 static INT32 (*pCPUTotalCycles)() = NULL;
@@ -781,6 +787,12 @@ void AY8910Reset(INT32 chip)
 		_AYWriteReg(chip,i,0);	/* AYWriteReg() uses the timer system; we cannot */
 								/* call it at this time because the timer system */
 								/* has not been initialized. */
+
+	// reset dc blocker
+	ay_lastin_r  = 0;
+	ay_lastout_r = 0;
+	ay_lastin_l  = 0;
+	ay_lastout_l = 0;
 }
 
 void AY8910Exit(INT32 chip)
@@ -1066,6 +1078,20 @@ void AY8910Render(INT16* dest, INT32 length)
 
 		nLeftSample = BURN_SND_CLIP(nLeftSample);
 		nRightSample = BURN_SND_CLIP(nRightSample);
+
+		{
+			// get rid of dc offset
+			INT16 outr = nRightSample - ay_lastin_r + 0.997 * ay_lastout_r;
+			INT16 outl = nLeftSample - ay_lastin_l + 0.997 * ay_lastout_l;
+
+			ay_lastin_r = nRightSample;
+			ay_lastout_r = outr;
+			ay_lastin_l = nLeftSample;
+			ay_lastout_l = outl;
+
+			nLeftSample = outl;
+			nRightSample = outr;
+		}
 
 		if (AY8910AddSignal) {
 			dest[(n << 1) + 0] = BURN_SND_CLIP(dest[(n << 1) + 0] + nLeftSample);

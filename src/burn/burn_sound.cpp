@@ -1,5 +1,5 @@
 #include "burnint.h"
-#include "burn_sound.h"
+// #include "burn_sound.h" // included in burnint.h, above!
 #include "timer.h"
 
 INT16 Precalc[4096 * 4];
@@ -21,6 +21,11 @@ INT32 cmc_4p_Precalc()
 	}
 
 	return 0;
+}
+
+void BurnSoundInit()
+{
+	cmc_4p_Precalc();
 }
 
 static INT16 dac_lastin_r  = 0;
@@ -61,7 +66,7 @@ void BurnSoundTweakVolume(INT16 *sndout, INT32 len, double volume)
 	for (INT32 i = 0; i < (len * 2); i++) {
 		INT32 sample = sndout[i] * volume;
 		if (sample > 0x7fff) clip = 1;
-		if (sample < -0x7fff) clip = 1;
+		if (sample < -0x8000) clip = 1;
 		sndout[i] = BURN_SND_CLIP(sample);
 	}
 	if (clip) bprintf(0, _T("BurnSoundTweakVolume(): CLIPPING @ frame %x\n"), nCurrentFrame);
@@ -69,6 +74,7 @@ void BurnSoundTweakVolume(INT16 *sndout, INT32 len, double volume)
 
 void BurnSoundClear()
 {
-	if (pBurnSoundOut)
+	if (pBurnSoundOut) {
 		memset(pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
+	}
 }

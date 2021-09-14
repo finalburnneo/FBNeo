@@ -76,11 +76,6 @@ static INT32 m_banking_type;
 static INT16 *m_mixer_buffer_left;
 static INT16 *m_mixer_buffer_right;
 
-// for resampling
-static double nSampleSize;
-static INT32 nFractionalPosition;
-static INT32 nPosition;
-
 static INT32 m_baserate;
 static INT8 *m_pRom;
 static UINT8 m_REG[0x200];
@@ -89,47 +84,10 @@ static INT16 m_pcmtbl[8];        //2000.06.26 CAB
 
 static C140_VOICE m_voi[C140_MAX_VOICE];
 
-// stream sync
-static INT32 (*pTotalCyclesCB)();
-static INT32 nCpuMHZ;
-static INT32 uses_sync;
+#include "stream.h"
+static Stream stream;
 
-static INT32 SyncUPD(INT32 cycles)
-{
-	return (INT32)((double)cycles * ((double)pTotalCyclesCB() / ((double)nCpuMHZ / (nBurnFPS / 100.0000))));
-}
-
-static INT32 samples_to_source(INT32 samples) {
-	return (INT32)((double)((double)((double)nSampleSize * samples) / (1 << 16)) + 0.5);
-}
-
-void c140_update_INT(INT32 samples_len); //forward
-
-static void UpdateStream(INT32 end)
-{
-	if (!pBurnSoundOut) return;
-	if (end == 0 && uses_sync == 0) return;
-
-	INT32 framelen = samples_to_source(nBurnSoundLen);
-	INT32 position = (end) ? framelen : SyncUPD(framelen);
-
-	if (position > framelen) position = framelen;
-
-	INT32 samples = position - nPosition;
-
-	if (samples < 1) return;
-
-	c140_update_INT(samples);
-
-	nPosition += samples;
-}
-
-void c140_set_sync(INT32 (*pCPUCyclesCB)(), INT32 nCPUMhz)
-{
-	pTotalCyclesCB = pCPUCyclesCB;
-	nCpuMHZ = nCPUMhz;
-	uses_sync = 1;
-}
+void c140_update_INT(INT16 **streams, INT32 samples_len); //forward
 
 //**************************************************************************
 //  LIVE DEVICE
@@ -219,12 +177,15 @@ void c140_init(INT32 clock, INT32 devtype, UINT8 *c140_rom)
 	m_mixer_buffer_right = m_mixer_buffer_left + m_sample_rate;
 	memset(m_mixer_buffer_left, 0, 2 * sizeof(INT16) * m_sample_rate);
 
-	// for resampling
-	nSampleSize = (double)m_sample_rate * (1 << 16) / nBurnSoundRate;
-	nFractionalPosition = 0;
-	nPosition = 0;
+	// init stream/resampler
+	stream.init(m_sample_rate, nBurnSoundRate, 2, 1, c140_update_INT);
+    stream.set_volume(1.00);
 
-	uses_sync = 0;
+}
+
+void c140_set_sync(INT32 (*pCPUCyclesCB)(), INT32 nCPUMhz)
+{
+	stream.set_buffered(pCPUCyclesCB, nCPUMhz);
 }
 
 void c140_exit()
@@ -233,6 +194,7 @@ void c140_exit()
 		BurnFree(m_mixer_buffer_left);
 		m_mixer_buffer_left = m_mixer_buffer_right = NULL;
 	}
+	stream.exit();
 }
 
 void c140_reset()
@@ -250,18 +212,22 @@ void c140_scan(INT32 nAction, INT32 *)
 	SCAN_VAR(m_voi);
 
 	if (nAction & ACB_WRITE && ~nAction & ACB_RUNAHEAD) {
-		nFractionalPosition = 0;
-		nPosition = 0;
 		memset(m_mixer_buffer_left, 0, 2 * sizeof(INT16) * m_sample_rate);
 	}
 }
 
+static inline int limit(INT32 in)
+{
+	if(in>0x7fff)       return 0x7fff;
+	else if(in<-0x8000) return -0x8000;
+	return in;
+}
 
 //-------------------------------------------------
 //  sound_stream_update - handle a stream update
 //-------------------------------------------------
 
-void c140_update_INT(INT32 samples_len)
+void c140_update_INT(INT16 **streams, INT32 samples_len)
 {
 	INT32   rvol,lvol;
 	INT32   dt;
@@ -278,8 +244,8 @@ void c140_update_INT(INT32 samples_len)
 
 	INT32 nSamplesNeeded = samples_len;
 
-	lmix = m_mixer_buffer_left  + 5 + nPosition;
-	rmix = m_mixer_buffer_right + 5 + nPosition;
+	lmix = m_mixer_buffer_left;
+	rmix = m_mixer_buffer_right;
 
 	/* zap the contents of the mixer buffer */
 	memset(lmix, 0, nSamplesNeeded * sizeof(INT16));
@@ -309,8 +275,8 @@ void c140_update_INT(INT32 samples_len)
 			rvol=(vreg->volume_right*32)/C140_MAX_VOICE;
 
 			/* Set mixer outputs base pointers */
-			lmix = m_mixer_buffer_left  + 5 + nPosition;
-			rmix = m_mixer_buffer_right + 5 + nPosition;
+			lmix = m_mixer_buffer_left;
+			rmix = m_mixer_buffer_right;
 
 			/* Retrieve sample start/end and calculate size */
 			st=v->sample_start;
@@ -441,63 +407,39 @@ void c140_update_INT(INT32 samples_len)
 			v->dltdt=dltdt;
 		}
 	}
+
+	/* render to MAME's stream buffer */
+	lmix = m_mixer_buffer_left;
+	rmix = m_mixer_buffer_right;
+	{
+		INT16 *dest1 = streams[0];
+		INT16 *dest2 = streams[1];
+		for (INT32 i = 0; i < samples_len; i++)
+		{
+			INT32 val;
+
+			val = 8 * (*lmix++);
+			*dest1++ = limit(val);
+			val = 8 * (*rmix++);
+			*dest2++ = limit(val);
+		}
+	}
 }
 
-void c140_update(INT16 *outputs, INT32 samples_len)
+void c140_update(INT16 *output, INT32 samples_len)
 {
 	if (samples_len != nBurnSoundLen) {
 		bprintf(0, _T("c140_update(): once per frame, please!\n"));
 		return;
 	}
 
-	UpdateStream(1);
-
-	INT16 *pBufL = m_mixer_buffer_left  + 5;
-	INT16 *pBufR = m_mixer_buffer_right + 5;
-
-	for (INT32 i = (nFractionalPosition & 0xFFFF0000) >> 15; i < (samples_len << 1); i += 2, nFractionalPosition += nSampleSize) {
-		INT32 nLeftSample[4] = {0, 0, 0, 0};
-		INT32 nRightSample[4] = {0, 0, 0, 0};
-		INT32 nTotalLeftSample, nTotalRightSample;
-
-		nLeftSample[0] += (INT32)(pBufL[(nFractionalPosition >> 16) - 3]);
-		nLeftSample[1] += (INT32)(pBufL[(nFractionalPosition >> 16) - 2]);
-		nLeftSample[2] += (INT32)(pBufL[(nFractionalPosition >> 16) - 1]);
-		nLeftSample[3] += (INT32)(pBufL[(nFractionalPosition >> 16) - 0]);
-
-		nRightSample[0] += (INT32)(pBufR[(nFractionalPosition >> 16) - 3]);
-		nRightSample[1] += (INT32)(pBufR[(nFractionalPosition >> 16) - 2]);
-		nRightSample[2] += (INT32)(pBufR[(nFractionalPosition >> 16) - 1]);
-		nRightSample[3] += (INT32)(pBufR[(nFractionalPosition >> 16) - 0]);
-
-		nTotalLeftSample  = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0] * 8, nLeftSample[1] * 8, nLeftSample[2] * 8, nLeftSample[3] * 8);
-		nTotalRightSample = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nRightSample[0] * 8, nRightSample[1] * 8, nRightSample[2] * 8, nRightSample[3] * 8);
-
-		nTotalLeftSample  = BURN_SND_CLIP(nTotalLeftSample);
-		nTotalRightSample = BURN_SND_CLIP(nTotalRightSample);
-
-		outputs[i + 0] = BURN_SND_CLIP(outputs[i + 0] + nTotalLeftSample);
-		outputs[i + 1] = BURN_SND_CLIP(outputs[i + 1] + nTotalRightSample);
-	}
-
-	if (samples_len >= nBurnSoundLen) {
-		INT32 nExtraSamples = samples_to_source(nBurnSoundLen) - (nFractionalPosition >> 16);
-
-		for (INT32 i = -4; i < nExtraSamples; i++) {
-			pBufL[i] = pBufL[(nFractionalPosition >> 16) + i];
-			pBufR[i] = pBufR[(nFractionalPosition >> 16) + i];
-		}
-
-		nFractionalPosition &= 0xFFFF;
-
-		nPosition = nExtraSamples;
-	}
+	stream.render(output, samples_len);
 }
 
 
 UINT8 c140_read(UINT16 offset)
 {
-	UpdateStream(0);
+	stream.update();
 	offset &= 0x1ff;
 	if ((offset & 0xf) == 0x5 && offset < ((m_banking_type == C140_TYPE_ASIC219) ? 0x100 : 0x180)) {
 		C140_VOICE const &v = m_voi[offset >> 4];
@@ -509,7 +451,7 @@ UINT8 c140_read(UINT16 offset)
 
 void c140_write(UINT16 offset, UINT8 data)
 {
-	UpdateStream(0);
+	stream.update();
 	offset &= 0x1ff;
 
 	// mirror the bank registers on the 219, fixes bkrtmaq (and probably xday2 based on notes in the HLE)

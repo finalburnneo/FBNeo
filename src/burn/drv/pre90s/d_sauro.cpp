@@ -43,27 +43,27 @@ static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo TecfriInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 6,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Tecfri)
@@ -501,12 +501,7 @@ static void sauro_drq_cb(UINT8 data)
 
 static INT32 SauroInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
@@ -581,12 +576,7 @@ static INT32 SauroInit()
 
 static INT32 TrckydocInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
@@ -647,7 +637,7 @@ static INT32 DrvExit()
 	BurnYM3812Exit();
 	if (sp0256_inuse) sp0256_exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	sp0256_inuse = 0;
 
@@ -711,19 +701,7 @@ static void draw_sprites(INT32 ext_bit, INT32 color_bank, INT32 x_offset) // ext
 		if (sx < -15 || sx > nScreenWidth) continue;
 		if (sy < -15 || sy > nScreenHeight) continue;
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, 0, DrvGfxROM2);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, 0, DrvGfxROM2);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, 0, DrvGfxROM2);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, 0, DrvGfxROM2);
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, sx, sy - 16, flipx, flipy, color, 4, 0, 0, DrvGfxROM2);
 	}
 }
 
@@ -783,8 +761,7 @@ static INT32 TrckydocDraw()
 
 static INT32 SauroFrame()
 {
-	watchdog++;
-	if (watchdog >= 120) {
+	if (++watchdog >= 120) {
 		DrvDoReset(0);
 	}
 
@@ -806,7 +783,6 @@ static INT32 SauroFrame()
 		}
 	}
 
-	INT32 nCyclesSegment;
 	INT32 nInterleave = 128;
 	INT32 nCyclesTotal[2] = { 5000000 / 56, 4000000 / 56 };
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -814,20 +790,18 @@ static INT32 SauroFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesSegment = (nCyclesTotal[0] / nInterleave) * (i + 1);
-		nCyclesDone[0] += ZetRun(nCyclesSegment - nCyclesDone[0]);
+		CPU_RUN(0, Zet);
 		if (i == 120) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // vblank
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
-		nCyclesDone[1] += BurnTimerUpdateYM3812(nCyclesSegment);
+		BurnTimerUpdateYM3812((nCyclesTotal[1] / nInterleave) * (i + 1));
 		if ((i & 0xf) == 0xf) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // 8x per frame
 		ZetClose();
 	}
 
 	ZetOpen(1);
-	
+
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
@@ -836,7 +810,7 @@ static INT32 SauroFrame()
 	}
 
 	ZetClose();
-	
+
 	if (pBurnDraw) {
 		BurnDrvRedraw();
 	}
@@ -846,8 +820,7 @@ static INT32 SauroFrame()
 
 static INT32 TrckydocFrame()
 {
-	watchdog++;
-	if (watchdog >= 120) {
+	if (++watchdog >= 120) {
 		DrvDoReset(0);
 	}
 
@@ -866,28 +839,25 @@ static INT32 TrckydocFrame()
 		}
 	}
 
-	INT32 nCyclesSegment;
 	INT32 nInterleave = 128;
 	INT32 nCyclesTotal[1] = { 5000000 / 56 };
-	INT32 nCyclesDone[1] = { 0 };
 
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesSegment = (nCyclesTotal[0] / nInterleave) * (i + 1);
-		nCyclesDone[0] += BurnTimerUpdateYM3812(nCyclesSegment - nCyclesDone[0]);
+		BurnTimerUpdateYM3812((nCyclesTotal[0] / nInterleave) * (i + 1));
 		if (i == 120) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // vblank
 	}
-	
+
 	BurnTimerEndFrameYM3812(nCyclesTotal[0]);
 
-	if (pBurnSoundOut) {		
+	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();
-	
+
 	if (pBurnDraw) {
 		BurnDrvRedraw();
 	}

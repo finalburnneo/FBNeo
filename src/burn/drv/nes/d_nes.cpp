@@ -15418,10 +15418,10 @@ STD_ROM_PICK(nes_hokutonoken2c)
 STD_ROM_FN(nes_hokutonoken2c)
 
 struct BurnDriver BurnDrvnes_hokutonoken2c = {
-	"nes_hokutonoken2c", "nes_hokutonoken2", NULL, NULL, "1989 ?",
-	"Hokuto no Ken 2 (Japan) - Castellano v1.1\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_hokutonoken2c", "nes_hokutonoken2", NULL, NULL, "2018",
+	"Hokuto no Ken 2 (Japan) - Castellano v1.1\0", NULL, "Jonathan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE |  BDF_HACK, 1, HARDWARE_NES, GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_hokutonoken2cRomInfo, nes_hokutonoken2cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15473,10 +15473,10 @@ STD_ROM_PICK(nes_hokutonoken3)
 STD_ROM_FN(nes_hokutonoken3)
 
 struct BurnDriver BurnDrvnes_hokutonoken3 = {
-	"nes_hokutonoken3", NULL, NULL, NULL, "1989 ?",
-	"Hokuto no Ken 3 - Shin Seiki Souzou Seiken Restuden (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_hokutonoken3", NULL, NULL, NULL, "1989",
+	"Hokuto no Ken 3 - Shin Seiki Souzou Seiken Restuden (Japan)\0", NULL, "TOEI Animation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_hokutonoken3RomInfo, nes_hokutonoken3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15492,10 +15492,10 @@ STD_ROM_PICK(nes_hokutonoken3c)
 STD_ROM_FN(nes_hokutonoken3c)
 
 struct BurnDriver BurnDrvnes_hokutonoken3c = {
-	"nes_hokutonoken3c", "nes_hokutonoken3", NULL, NULL, "1989 ?",
-	"Hokuto no Ken 3 - Shin Seiki Souzou Seiken Restuden (Japan) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_hokutonoken3c", "nes_hokutonoken3", NULL, NULL, "20XX?",
+	"Hokuto no Ken 3 - Shin Seiki Souzou Seiken Restuden (Japan) - Castellano v1.0\0", NULL, "Unknown", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_hokutonoken3cRomInfo, nes_hokutonoken3cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15511,10 +15511,10 @@ STD_ROM_PICK(nes_immortalthec)
 STD_ROM_FN(nes_immortalthec)
 
 struct BurnDriver BurnDrvnes_immortalthec = {
-	"nes_immortalthec", "nes_immortalthe", NULL, NULL, "1989 ?",
-	"Immortal, The (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_immortalthec", "nes_immortalthe", NULL, NULL, "2004",
+	"Immortal, The (USA) - Castellano v1.0\0", NULL, "R. Merida", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG | GBF_RUNGUN, 0,
 	NESGetZipName, nes_immortalthecRomInfo, nes_immortalthecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15530,10 +15530,10 @@ STD_ROM_PICK(nes_junglebookthec)
 STD_ROM_FN(nes_junglebookthec)
 
 struct BurnDriver BurnDrvnes_junglebookthec = {
-	"nes_junglebookthec", "nes_junglebookthe", NULL, NULL, "1989 ?",
+	"nes_junglebookthec", "nes_junglebookthe", NULL, NULL, "20XX?",
 	"Jungle Book, The (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_junglebookthecRomInfo, nes_junglebookthecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15549,10 +15549,10 @@ STD_ROM_PICK(nes_justbreedc)
 STD_ROM_FN(nes_justbreedc)
 
 struct BurnDriver BurnDrvnes_justbreedc = {
-	"nes_justbreedc", "nes_justbreed", NULL, NULL, "1989 ?",
-	"Just Breed (Japan) - Castellano v2.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_justbreedc", "nes_justbreed", NULL, NULL, "20XX?",
+	"Just Breed (Japan) - Castellano v2.0\0", NULL, "Unknown", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG | GBF_STRATEGY, 0,
 	NESGetZipName, nes_justbreedcRomInfo, nes_justbreedcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17694,6 +17694,57 @@ STD_ROM_FN(nes_smaruo)
 
 // Homebrew (hand-added)
 
+
+static struct BurnRomInfo nes_advpanzerRomDesc[] = {
+	{ "Adventures of Panzer, The v1.3 (2021)(PixelCraft).nes",          524304, 0x5ef4684d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_advpanzer)
+STD_ROM_FN(nes_advpanzer)
+
+struct BurnDriver BurnDrvnes_advpanzer = {
+	"nes_advpanzer", NULL, NULL, NULL, "2021",
+	"Adventures of Panzer, The (HB, v1.3)\0", NULL, "PixelCraft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	NESGetZipName, nes_advpanzerRomInfo, nes_advpanzerRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_explodingfistpiRomDesc[] = {
+	{ "Exploding Fist (2018)(Piko Interactive).nes",          65552, 0x4017b398, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_explodingfistpi)
+STD_ROM_FN(nes_explodingfistpi)
+
+struct BurnDriver BurnDrvnes_explodingfistpi = {
+	"nes_explodingfistpi", "nes_explodingfist", NULL, NULL, "2018",
+	"Exploding Fist (HB)\0", NULL, "Piko Interactive", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 3, HARDWARE_NES, GBF_VSFIGHT, 0,
+	NESGetZipName, nes_explodingfistpiRomInfo, nes_explodingfistpiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_hauntedadvRomDesc[] = {
+	{ "Haunted House Adventure (2019)(M. Stave).nes",          524304, 0xd0c3acbc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hauntedadv)
+STD_ROM_FN(nes_hauntedadv)
+
+struct BurnDriver BurnDrvnes_hauntedadv = {
+	"nes_hauntedadv", NULL, NULL, NULL, "2019",
+	"Haunted House Adventure (HB)\0", NULL, "M. Stave", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_hauntedadvRomInfo, nes_hauntedadvRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_labbayeRomDesc[] = {
 	{ "L'Abbaye des Morts (2021)(Broke Studios).nes",          131088, 0xa032a1f6, BRF_ESS | BRF_PRG },
@@ -28079,10 +28130,10 @@ STD_ROM_PICK(nes_explodingfist)
 STD_ROM_FN(nes_explodingfist)
 
 struct BurnDriver BurnDrvnes_explodingfist = {
-	"nes_explodingfist", NULL, NULL, NULL, "0000",
+	"nes_explodingfist", NULL, NULL, NULL, "1990",
 	"Exploding Fist (USA, Prototype)\0", NULL, "Tradewest", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 3, HARDWARE_NES, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 3, HARDWARE_NES, GBF_VSFIGHT, 0,
 	NESGetZipName, nes_explodingfistRomInfo, nes_explodingfistRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
 	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

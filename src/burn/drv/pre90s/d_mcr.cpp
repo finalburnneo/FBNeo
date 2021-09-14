@@ -1546,7 +1546,6 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
-		BurnSoundDCFilter();
         BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
         if (has_squak) {
             midsat_update(pBurnSoundOut, nBurnSoundLen);

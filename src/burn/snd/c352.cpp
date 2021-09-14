@@ -18,7 +18,6 @@
 
 #include "burnint.h"
 #include "c352.h"
-#include "downsample.h"
 #include <stddef.h>
 
 enum
@@ -75,54 +74,12 @@ static UINT16 m_control; // control flags, purpose unknown.
 static INT8 *m_rom;
 static INT32 m_romsize;
 
-// downsampler
-Downsampler resampL;
-Downsampler resampR;
-static INT16 *m_mixer_buffer_left;
-static INT16 *m_mixer_buffer_right;
-
-static INT16 *m_mixer_buffer_left_resampled;
-static INT16 *m_mixer_buffer_right_resampled;
-
-static INT32 bAddStream;
-
-// stream sync
-static INT32 nPosition;
-static INT32 (*pTotalCyclesCB)();
-static INT32 nCpuMHZ;
-static INT32 uses_sync;
-
-static INT32 SyncUPD(INT32 cycles)
-{
-	return (INT32)((double)cycles * ((double)pTotalCyclesCB() / ((double)nCpuMHZ / (nBurnFPS / 100.0000))));
-}
-
-static void c352_update_INT(int samples); // forward
-
-static void UpdateStream(INT32 end)
-{
-	if (!pBurnSoundOut) return;
-	if (end == 0 && uses_sync == 0) return;
-
-	INT32 framelen = resampL.samples_to_source(nBurnSoundLen);
-	INT32 position = (end) ? framelen : SyncUPD(framelen);
-
-	if (position > framelen) position = framelen;
-
-	INT32 samples = position - nPosition;
-
-	if (samples < 1) return;
-
-	c352_update_INT(samples);
-
-	nPosition += samples;
-}
+#include "stream.h"
+static Stream stream;
 
 void c352_set_sync(INT32 (*pCPUCyclesCB)(), INT32 nCPUMhz)
 {
-	pTotalCyclesCB = pCPUCyclesCB;
-	nCpuMHZ = nCPUMhz;
-	uses_sync = 1;
+	stream.set_buffered(pCPUCyclesCB, nCPUMhz);
 }
 
 static INT8 read_byte(INT32 pos)
@@ -198,10 +155,10 @@ static void ramp_volume(c352_voice_t &v, int ch, UINT8 val)
 		v.curr_vol[ch] += (vol_delta > 0) ? -1 : 1;
 }
 
-static void c352_update_INT(int samples)
+static void c352_update_INT(INT16 **streams, INT32 samples)
 {
-	INT16 *buffer_fl = m_mixer_buffer_left + nPosition;
-	INT16 *buffer_fr = m_mixer_buffer_right + nPosition;
+	INT16 *buffer_fl = streams[0];
+	INT16 *buffer_fr = streams[1];
 	//INT16 *buffer_rl = outputs[2];
 	//INT16 *buffer_rr = outputs[3];
 
@@ -263,33 +220,12 @@ void c352_update(INT16 *output, INT32 samples_len)
 		return;
 	}
 
-	UpdateStream(1);
-
-	resampL.resample_mono(m_mixer_buffer_left, m_mixer_buffer_left_resampled, samples_len, 1.00);
-	resampR.resample_mono(m_mixer_buffer_right, m_mixer_buffer_right_resampled, samples_len, 1.00);
-
-	INT16 *lmix = m_mixer_buffer_left_resampled;
-	INT16 *rmix = m_mixer_buffer_right_resampled;
-
-	for (INT32 i = 0; i < samples_len; i++) {
-		if (bAddStream) {
-			output[0] = BURN_SND_CLIP(output[0] + lmix[0]);
-			output[1] = BURN_SND_CLIP(output[1] + rmix[0]);
-		} else {
-			output[0] = lmix[0];
-			output[1] = rmix[0];
-		}
-		output += 2;
-		lmix++;
-		rmix++;
-	}
-
-	nPosition = 0;
+	stream.render(output, samples_len);
 }
 
 UINT16 c352_read(unsigned long address)
 {
-	UpdateStream(0);
+	stream.update();
 
 	const int reg_map[8] =
 	{
@@ -315,7 +251,7 @@ UINT16 c352_read(unsigned long address)
 
 void c352_write(unsigned long address, unsigned short val)
 {
-	UpdateStream(0);
+	stream.update();
 
 	const int reg_map[8] =
 	{
@@ -372,20 +308,7 @@ void c352_init(INT32 clock, INT32 divider, UINT8 *c352_rom, INT32 c352_romsize, 
 	m_rom = (INT8*)c352_rom;
 	m_romsize = c352_romsize;
 
-	resampL.init(m_sample_rate, nBurnSoundRate, 0);
-	resampR.init(m_sample_rate, nBurnSoundRate, 0);
-
-	bAddStream = AddToStream;
-	uses_sync = 0;
-
-	// mixer buffers
-	m_mixer_buffer_left = (INT16*)BurnMalloc(2 * sizeof(INT16) * m_sample_rate);
-	m_mixer_buffer_right = m_mixer_buffer_left + m_sample_rate;
-	memset(m_mixer_buffer_left, 0, 2 * sizeof(INT16) * m_sample_rate);
-
-	m_mixer_buffer_left_resampled = (INT16*)BurnMalloc(2 * sizeof(INT16) * m_sample_rate);
-	m_mixer_buffer_right_resampled = m_mixer_buffer_left_resampled + m_sample_rate;
-	memset(m_mixer_buffer_left_resampled, 0, 2 * sizeof(INT16) * m_sample_rate);
+	stream.init(m_sample_rate, nBurnSoundRate, 2, AddToStream, c352_update_INT);
 
 	// generate mulaw table (Output similar to namco's VC emulator)
 	int j = 0;
@@ -409,14 +332,7 @@ void c352_init(INT32 clock, INT32 divider, UINT8 *c352_rom, INT32 c352_romsize, 
 
 void c352_exit()
 {
-	if (m_mixer_buffer_left) {
-		BurnFree(m_mixer_buffer_left);
-		m_mixer_buffer_left = m_mixer_buffer_right = NULL;
-	}
-	if (m_mixer_buffer_left_resampled) {
-		BurnFree(m_mixer_buffer_left_resampled);
-		m_mixer_buffer_left_resampled = m_mixer_buffer_right_resampled = NULL;
-	}
+	stream.exit();
 }
 
 void c352_scan(INT32 nAction, INT32 *)

@@ -254,7 +254,6 @@ in MCU code). Look for a 16-pin chip at U6 labeled "ECHO-3 SN".
 #include "burnint.h"
 #include "tms5220.h"
 
-#define DINK_DEBUG 0
 #undef PERFECT_INTERPOLATION_HACK
 
 #define FIFO_SIZE 16
@@ -465,53 +464,10 @@ struct tms5220_state
 //	INT32 clock;
 };
 
-#include "upsample.h"
-static Upsampler resamp;
+#include "stream.h"
+static Stream stream;
 
 static tms5220_state *our_chip = NULL;
-static INT16 *soundbuf;
-
-static double tms5220_vol;
-
-// for resampling
-static INT32 nPosition;
-
-// for stream-sync
-static INT32 tms5220_buffered = 0;
-static INT32 (*pTotalCyclesCB)();
-static INT32 nCpuMHZ;
-
-static void tms5220_process(tms5220_state *tms, INT16 *buffer, INT32 size); // forward
-
-// Streambuffer handling
-static INT32 SyncInternal(INT32 cycles)
-{
-    if (!tms5220_buffered) return 0;
-	return (INT32)((double)cycles * ((double)pTotalCyclesCB() / ((double)nCpuMHZ / (nBurnFPS / 100.0000))));
-}
-
-static void UpdateStream(INT32 end)
-{
-    if (!pBurnSoundOut) return;
-	if (end == 0 && tms5220_buffered == 0) return;
-
-	INT32 framelen = resamp.samples_to_source(nBurnSoundLen);
-	INT32 position = (end) ? framelen : SyncInternal(framelen);
-
-	if (position > framelen) position = framelen;
-
-	INT32 samples = position - nPosition;
-
-	if (samples < 1) return;
-
-    //if (end) bprintf(0, _T("tms5220_sync: %d samples   pos %d  framelen %d   frame %d\n"), samples, nPosition, framelen, nCurrentFrame);
-
-	INT16 *mix = soundbuf + 1 + nPosition; // + 0 = resampler internal use!
-    tms5220_process(our_chip, mix, samples);
-
-	nPosition += samples;
-}
-
 
 // Pull in the ROM tables
 #include "tms5220_tables.h"
@@ -854,11 +810,14 @@ static INT32 tms5220_int_read(tms5220_state *tms)
 
 ***********************************************************************************************/
 
-static void tms5220_process(tms5220_state *tms, INT16 *buffer, INT32 size)
+static void tms5220_process(INT16 **streams, INT32 size)
 {
+	tms5220_state *tms = our_chip;
 	INT32 buf_count=0;
 	INT32 i, bitout, zpar;
 	INT32 this_sample;
+
+	INT16 *buffer = streams[0];
 
 	/* the following gotos are probably safe to remove */
 	/* if we're empty and still not speaking, fill with nothingness */
@@ -1529,13 +1488,9 @@ static void tms5220_init_int(INT32 chipvariant, INT32 clock)
 	our_chip->true_timing = 0;
 	our_chip->rs_ws = 0x03; // rs and ws are assumed to be inactive on device startup
 
-    tms5220_volume(1.00);
-
-	resamp.init(our_chip->our_freq, nBurnSoundRate, 1);
-
-	soundbuf = (INT16*)BurnMalloc(0x2000);
-
-	nPosition = 0;
+	// init stream/resampler
+	stream.init(our_chip->our_freq, nBurnSoundRate, 1, 1, tms5220_process);
+    stream.set_volume(1.00);
 }
 
 void tms5200_init(INT32 clock)
@@ -1555,50 +1510,38 @@ void tms5220c_init(INT32 clock)
 
 void tms5200_init(INT32 clock, INT32 (*pCPUCyclesCB)(), INT32 nCpuMhz)
 {
-    bprintf(0, _T("*** Using BUFFERED tms5220-mode.\n"));
-    tms5220_buffered = 1;
-
     tms5200_init(clock);
 
-    pTotalCyclesCB = pCPUCyclesCB;
-	nCpuMHZ = nCpuMhz;
+    bprintf(0, _T("*** Using BUFFERED tms5200-mode.\n"));
+	stream.set_buffered(pCPUCyclesCB, nCpuMhz);
 }
 
 void tms5220_init(INT32 clock, INT32 (*pCPUCyclesCB)(), INT32 nCpuMhz)
 {
-    bprintf(0, _T("*** Using BUFFERED tms5220-mode.\n"));
-    tms5220_buffered = 1;
-
     tms5220_init(clock);
 
-    pTotalCyclesCB = pCPUCyclesCB;
-	nCpuMHZ = nCpuMhz;
+    bprintf(0, _T("*** Using BUFFERED tms5220-mode.\n"));
+	stream.set_buffered(pCPUCyclesCB, nCpuMhz);
 }
 
 void tms5220c_init(INT32 clock, INT32 (*pCPUCyclesCB)(), INT32 nCpuMhz)
 {
-    bprintf(0, _T("*** Using BUFFERED tms5220C-mode.\n"));
-    tms5220_buffered = 1;
-
     tms5220c_init(clock);
 
-    pTotalCyclesCB = pCPUCyclesCB;
-	nCpuMHZ = nCpuMhz;
+	bprintf(0, _T("*** Using BUFFERED tms5220C-mode.\n"));
+	stream.set_buffered(pCPUCyclesCB, nCpuMhz);
 }
 
 void tms5220_exit()
 {
-    BurnFree(our_chip);
-    BurnFree(soundbuf);
+	BurnFree(our_chip);
 
-    tms5220_buffered = 0;
-    pTotalCyclesCB = NULL;
-    nCpuMHZ = 0;
+	stream.exit();
 }
 
 void tms5220_volume(double vol)
 {
-    tms5220_vol = vol;
+    stream.set_volume(vol);
 }
 
 void tms5220_reset()
@@ -1653,7 +1596,7 @@ void tms5220_scan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_WRITE) {
-		resamp.set_rate(our_chip->our_freq);
+		stream.set_rate(our_chip->our_freq);
 	}
 }
 
@@ -1677,13 +1620,13 @@ static void io_ready_cb(INT32 param)
 			logerror("Serviced write: %02x\n", tms->write_latch);
 			//fprintf(stderr, "Processed write data: %02X\n", tms->write_latch);
 #endif
-			UpdateStream(0);
+			stream.update();
 			tms5220_data_write(tms, tms->write_latch);
 			break;
 		case 0x01:
 			/* Read */
 			/* bring up to date first */
-			UpdateStream(0);
+			stream.update();
 			tms->read_latch = tms5220_status_read(tms);
 			break;
 		case 0x03:
@@ -1830,7 +1773,7 @@ void tms5220_write(UINT8 data)
 	if (!tms->true_timing)
 	{
 		/* bring up to date first */
-		UpdateStream(0);
+		stream.update();
 		tms5220_data_write(tms, data);
 	}
 	else
@@ -1858,7 +1801,7 @@ UINT8 tms5220_status()
 	if (!tms->true_timing)
 	{
 		/* bring up to date first */
-		UpdateStream(0);
+		stream.update();
 		return tms5220_status_read(tms);
 	}
 	else
@@ -1886,7 +1829,7 @@ UINT8 tms5220_ready()
 {
 	tms5220_state *tms = our_chip;
 	/* bring up to date first */
-	UpdateStream(0);
+	stream.update();
 	return tms5220_ready_read(tms);
 }
 
@@ -1904,7 +1847,7 @@ double tms5220_time_to_ready()
 	double cycles;
 
 	/* bring up to date first */
-	UpdateStream(0);
+	stream.update();
 	cycles = tms5220_cycles_to_ready(tms);
 	return cycles * 80.0 / tms->our_freq;
 }
@@ -1921,7 +1864,7 @@ UINT8 tms5220_intq()
 {
 	tms5220_state *tms = our_chip;
 	/* bring up to date first */
-	UpdateStream(0);
+	stream.update();
 	return !tms5220_int_read(tms);
 }
 
@@ -1938,10 +1881,10 @@ void tms5220_set_frequency(UINT32 frequency)
 	tms5220_state *tms = our_chip;
 
 	if ((frequency/80) != tms->our_freq) {
-        UpdateStream(0);
+        stream.update();
 
 		tms->our_freq = frequency/80;
-		resamp.set_rate(tms->our_freq);
+		stream.set_rate(tms->our_freq);
     }
 }
 
@@ -1952,14 +1895,5 @@ void tms5220_update(INT16 *output, INT32 samples_len)
 		return;
 	}
 
-	UpdateStream(1);
-
-	// - new resampler notes (upsample.h) -
-	// 1)
-	// soundbuf[0] is used to store the last sample of the previous frame
-	// so that the interpolation can be carried over. -dink sept.2021
-	// 2)
-	// if samples are carried over from the previous resample, they will also
-	// be placed in soundbuf[1+], with the count returned in nPosition
-	resamp.resample(soundbuf, output, samples_len, nPosition, tms5220_vol, BURN_SND_ROUTE_BOTH);
+	stream.render(output, samples_len);
 }

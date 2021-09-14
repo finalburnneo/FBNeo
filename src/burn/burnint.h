@@ -175,9 +175,6 @@ void _BurnFree(void *ptr); // internal use only :)
 void BurnExitMemoryManager();
 
 // ---------------------------------------------------------------------------
-// Sound clipping macro
-#define BURN_SND_CLIP(A) ((A) < -0x8000 ? -0x8000 : (A) > 0x7fff ? 0x7fff : (A))
-
 // sound routes
 #define BURN_SND_ROUTE_LEFT			1
 #define BURN_SND_ROUTE_RIGHT		2

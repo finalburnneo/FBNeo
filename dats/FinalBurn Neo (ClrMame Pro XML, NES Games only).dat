@@ -404,6 +404,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="advpanzer">
+		<description>Adventures of Panzer, The (HB, v1.3) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>PixelCraft</manufacturer>
+		<rom name="Adventures of Panzer, The v1.3 (2021)(PixelCraft).nes" size="524304" crc="5ef4684d"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="advenradgra">
 		<description>Adventures of Rad Gravity, The (USA)</description>
 		<year>1990</year>
@@ -4340,9 +4348,17 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="explodingfistpi" cloneof="explodingfist" romof="explodingfist">
+		<description>Exploding Fist (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Piko Interactive</manufacturer>
+		<rom name="Exploding Fist (2018)(Piko Interactive).nes" size="65552" crc="4017b398"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="explodingfist">
-		<description>Exploding Fist (USA, Prototype)</description>
-		<year>0000</year>
+		<description>Exploding Fist (USA, Prototype) [Prototype]</description>
+		<year>1990</year>
 		<manufacturer>Tradewest</manufacturer>
 		<rom name="Exploding Fist (USA, Prototype).nes" size="65552" crc="c52ea831"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -6036,6 +6052,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="hauntedadv">
+		<description>Haunted House Adventure (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>M. Stave</manufacturer>
+		<rom name="Haunted House Adventure (2019)(M. Stave).nes" size="524304" crc="d0c3acbc"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="heavybarrel">
 		<description>Heavy Barrel (USA)</description>
 		<year>1990</year>
@@ -6261,9 +6285,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="hokutonoken2c" cloneof="hokutonoken2" romof="hokutonoken2">
-		<description>Hokuto no Ken 2 (Japan) - Castellano v1.1</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Hokuto no Ken 2 (Japan) - Castellano v1.1 [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Jonathan</manufacturer>
 		<rom name="hokuto no ken 2 (japan) - castellano v1.1.nes" size="131088" crc="3a3cd6df"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6277,17 +6301,17 @@
 		<driver status="good"/>
 	</game>
 	<game name="hokutonoken3c" cloneof="hokutonoken3" romof="hokutonoken3">
-		<description>Hokuto no Ken 3 - Shin Seiki Souzou Seiken Restuden (Japan) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Hokuto no Ken 3 - Shin Seiki Souzou Seiken Restuden (Japan) - Castellano v1.0 [Hack]</description>
+		<year>20XX?</year>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="hokuto no ken 3 - shin seiki souzou seiken restuden (japan) - castellano v1.0.nes" size="262160" crc="9e7cc5dc"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="hokutonoken3">
 		<description>Hokuto no Ken 3 - Shin Seiki Souzou Seiken Restuden (Japan)</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1989</year>
+		<manufacturer>TOEI Animation</manufacturer>
 		<rom name="hokuto no ken 3 - shin seiki souzou seiken restuden (japan).nes" size="262160" crc="12b32580"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6469,9 +6493,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="immortalthec" cloneof="immortalthe" romof="immortalthe">
-		<description>Immortal, The (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Immortal, The (USA) - Castellano v1.0 [Hack]</description>
+		<year>2004</year>
+		<manufacturer>R. Merida</manufacturer>
 		<rom name="immortal, the (usa) - castellano v1.0.nes" size="393232" crc="bf87b488"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6942,7 +6966,7 @@
 	</game>
 	<game name="junglebookthec" cloneof="junglebookthe" romof="junglebookthe">
 		<description>Jungle Book, The (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
+		<year>20XX?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="jungle book, the (usa) - castellano v1.0.nes" size="262160" crc="996a8677"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -6973,9 +6997,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="justbreedc" cloneof="justbreed" romof="justbreed">
-		<description>Just Breed (Japan) - Castellano v2.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Just Breed (Japan) - Castellano v2.0 [Hack]</description>
+		<year>20XX?</year>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="just breed (japan) - castellano v2.0.nes" size="786448" crc="e415a13f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>

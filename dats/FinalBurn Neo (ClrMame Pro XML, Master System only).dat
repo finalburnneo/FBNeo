@@ -1988,11 +1988,19 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gotris">
+	<game name="gotris" cloneof="gotrisfv" romof="gotrisfv">
 		<description>Gotris (HB, v0.8) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>1985 Alternativo</manufacturer>
 		<rom name="Gotris v0.8 (2019)(1985 Alternativo).sms" size="65536" crc="adb0efa6"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gotrisfv">
+		<description>Gotris (HB, v1.2p) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Tuxedo Games</manufacturer>
+		<rom name="Gotris v1.2p (2021)(Tuxedo Games).sms" size="262144" crc="cfe301ed"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

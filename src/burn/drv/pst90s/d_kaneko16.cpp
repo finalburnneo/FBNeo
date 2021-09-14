@@ -7319,17 +7319,19 @@ static INT32 GtmrFrame()
 
 	Kaneko16MakeInputs();
 
-	SekOpen(0);
 	SekNewFrame();
 
-	SekRun((16000000 / 60) / 4);
-	SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
-	SekRun((16000000 / 60) / 4);
-	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-	SekRun((16000000 / 60) / 4);
-	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
-	SekRun((16000000 / 60) / 4);
+	INT32 nInterleave = 256;
+	nCyclesTotal[0] = 16000000 / 60;
+	nCyclesDone[0] = 0;
 
+	SekOpen(0);
+	for (INT32 i = 0; i < nInterleave; i++) {
+		CPU_RUN(0, Sek);
+		if (i == 144) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 64)  SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 224) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+	}
 	SekClose();
 
 	if (pBurnSoundOut) {

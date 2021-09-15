@@ -426,27 +426,19 @@ static void bankswitch(INT32 data)
 static void sync_maincpu()
 {
 	UINT32 sound_cyc = M6809TotalCycles();
-	M6809Close();
-	M6809Open(0);
-	UINT32 main_cyc = M6809TotalCycles();
+	UINT32 main_cyc = M6809TotalCycles(0);
 	INT32 cyc = sound_cyc - main_cyc;
 	if (cyc > 0)
-		M6809Run(cyc);
-	M6809Close();
-	M6809Open(1);
+		M6809Run(0, cyc);
 }
 
 static void sync_soundcpu()
 {
 	UINT32 main_cyc = M6809TotalCycles();
-	M6809Close();
-	M6809Open(1);
-	UINT32 sound_cyc = M6809TotalCycles();
+	UINT32 sound_cyc = M6809TotalCycles(1);
 	INT32 cyc = main_cyc - sound_cyc;
 	if (cyc > 0)
-		M6809Run(cyc);
-	M6809Close();
-	M6809Open(0);
+		M6809Run(1, cyc);
 }
 
 static void starwars_main_write(UINT16 address, UINT8 data)
@@ -827,13 +819,8 @@ static INT32 DrvInit(INT32 game_select)
 {
 	BurnSetRefreshRate(40.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
-	
+	BurnAllocMemIndex();
+
 	if (game_select == 0) // starwars
 	{
 		if (BurnLoadRom(DrvVectorROM + 0x00000,  0, 1)) return 1;
@@ -1130,6 +1117,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(mbox_B);
 		SCAN_VAR(mbox_C);
 		SCAN_VAR(mbox_ACC);
+
+		SCAN_VAR(current_bank);
 
 		SCAN_VAR(irqcnt);
 		SCAN_VAR(irqflip);

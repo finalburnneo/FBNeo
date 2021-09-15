@@ -40,7 +40,10 @@ struct Stream {
 	INT32 nChannels;
 	bool bAddStream;
 
-	void init(INT32 rate_from, INT32 rate_to, INT32 channels, bool add_to_stream, void (*update_stream)(INT16 **a, INT32 b)) {
+	INT16 *in_buffer[MAX_CHANNELS]; // resampler in-buffers
+	INT32 out_buffer_size;
+
+	void init(INT32 rate_from, INT32 rate_to, INT32 channels, bool add_to_stream, void (*update_stream)(INT16 **, INT32 )) {
 		nFractionalPosition = 0;
 		bAddStream = add_to_stream;
 		nSampleRateFrom = rate_from;
@@ -66,6 +69,17 @@ struct Stream {
 		return (INT32)(((UINT64)nSampleSize * samples) / (1 << 16)) + 1;
 	}
 	void render(INT16 *out_buffer, INT32 samples) {
+		// make sure buffers are full for this frame
+		UpdateStream(1);
+
+		for (INT32 i = 0; i < nChannels; i++) {
+			// prepare the in-buffers
+			in_buffer[i] = soundbuf[i];
+			// make room for previous frame's "carry-over" sample (aka in_buffer[-1])
+			in_buffer[i]++;
+		}
+		out_buffer_size = samples_to_source(samples);
+
 		if (nSampleRateFrom == nSampleRateTo) {
 			// stream(s) running at same samplerate as host
 			samplesample(out_buffer, samples);
@@ -76,24 +90,32 @@ struct Stream {
 			// stream(s) less than the samplerate of host
 			upsample(out_buffer, samples);
 		}
+
+		// figure out if we have extra whole samples
+		nPosition = out_buffer_size - (nFractionalPosition >> 16);
+
+		// 1) take the last processed sample and store it into in_buffer[-1]
+		// so that interpolation can be carried out between frames.
+		// 2) store the extra whole samples at in_buffer[0+], returning the
+		// number of whole samples in nPosition (stream-buffer position)
+		for (INT32 ch = 0; ch < nChannels; ch++) {
+			for (INT32 i = -1; i < nPosition; i++) {
+				in_buffer[ch][i] = in_buffer[ch][i + (nFractionalPosition >> 16)];
+			}
+		}
+
+		// mask off the whole samples from our accumulator
+		nFractionalPosition &= 0xffff;
+
 	}
 	void samplesample(INT16 *out_buffer, INT32 samples) {
-		// make sure buffers are full for this frame
-		UpdateStream(1);
-
-		INT16 *in_buffer[MAX_CHANNELS];
-		for (INT32 i = 0; i < nChannels; i++) {
-			// prepare the in-buffers
-			in_buffer[i] = soundbuf[i];
-			// make room for previous frame's "carry-over" sample (aka in_buffer[-1])
-			in_buffer[i]++;
-		}
-		for (INT32 i = 0; i < samples; i++, out_buffer += 2) {
+		for (INT32 i = 0; i < samples; i++, out_buffer += 2, nFractionalPosition += nSampleSize) {
+			INT32 source_pos = (nFractionalPosition >> 16);
 			INT32 sample_l = 0;
 			INT32 sample_r = 0;
 
 			for (INT32 ch = 0; ch < nChannels; ch++) {
-				INT32 sample = in_buffer[ch][i];
+				INT32 sample = in_buffer[ch][source_pos];
 
 				if (ch & 1) sample_r += sample; else sample_l += sample;
 			}
@@ -117,21 +139,14 @@ struct Stream {
 		}
 	}
 	void downsample(INT16 *out_buffer, INT32 samples) {
-		#define DOWNSAMPLE_DEBUG 0
-		// make sure buffers are full for this frame
-		UpdateStream(1);
-
-		INT16 *in_buffer[MAX_CHANNELS];
-		for (INT32 i = 0; i < nChannels; i++) {
-			// prepare the in-buffers
-			in_buffer[i] = soundbuf[i];
-			// make room for previous frame's "carry-over" sample (aka in_buffer[-1])
-			in_buffer[i]++;
-		}
+#define DOWNSAMPLE_DEBUG 0
+#if DOWNSAMPLE_DEBUG
 		INT32 last_pos = 0;
-		for (INT32 i = 0; i < samples; i++) {
+		UINT32 last_sample = 0;
+#endif
+		for (INT32 i = 0; i < samples; i++, out_buffer += 2, nFractionalPosition += nSampleSize) {
 			INT32 sample[MAX_CHANNELS];
-			INT32 source_pos = nFractionalPosition >> 16; // nFractionalPosition = 16.16
+			INT32 source_pos = (nFractionalPosition >> 16) - 1; // "-1" - we start at previous frame's carry-over sample.
 			INT32 samples_sourced = 0; // 24.8: 0x100 whole sample, 0x0xx fractional
 			INT32 left = nSampleSize; // 16.16  whole_samples.partial_sample
 
@@ -139,10 +154,13 @@ struct Stream {
 			INT32 partial_sam_vol = ((1 << 16) - (nFractionalPosition & 0xffff));
 #if DOWNSAMPLE_DEBUG
 			if (counter) bprintf(0, _T("--start--\n%d  (partial: %x)\n"), source_pos, ((1 << 16) - (nFractionalPosition & 0xffff)));
+			if (i==0) bprintf(0, _T("FIRST sample: %x\n"), in_buffer[0][source_pos]);
+			last_pos = source_pos;
 #endif
 			for (INT32 ch = 0; ch < nChannels; ch++) {
-				sample[ch] = in_buffer[ch][source_pos++] * partial_sam_vol >> 8;
+				sample[ch] = in_buffer[ch][source_pos] * partial_sam_vol >> 8;
 			}
+			source_pos++;
 			samples_sourced += partial_sam_vol >> 8;
 			left -= partial_sam_vol;
 
@@ -150,28 +168,33 @@ struct Stream {
 			while (left >= (1 << 16)) {
 #if DOWNSAMPLE_DEBUG
 				if (counter) bprintf(0, _T("%d\n"),source_pos);
+				last_pos = source_pos;
 #endif
 				for (INT32 ch = 0; ch < nChannels; ch++) {
-					sample[ch] += in_buffer[ch][source_pos++] * (1 << 8);
+					sample[ch] += in_buffer[ch][source_pos] * (1 << 8);
 				}
+				source_pos++;
 				samples_sourced += (1 << 8);
 				left -= (1 << 16);
 			}
 
-			// deal with last partial sample
-			partial_sam_vol = (left & 0xffff) >> 8;
-			for (INT32 ch = 0; ch < nChannels; ch++) {
-				sample[ch] += in_buffer[ch][source_pos] * partial_sam_vol; // source_pos is not incremented here, partial sample carried over to next iter
-			}
-			samples_sourced += partial_sam_vol;
-			last_pos = source_pos;
+			if (source_pos < out_buffer_size) {
+				// deal with last partial sample
+				partial_sam_vol = (left & 0xffff) >> 8;
+				for (INT32 ch = 0; ch < nChannels; ch++) {
+					sample[ch] += in_buffer[ch][source_pos] * partial_sam_vol; // source_pos is not incremented here, partial sample carried over to next iter
+				}
+				samples_sourced += partial_sam_vol;
 #if DOWNSAMPLE_DEBUG
-			if (counter) {
-				if (partial_sam_vol) bprintf(0, _T("%d  (last partial: %X)\n"),source_pos, left & 0xffff);
-				else bprintf(0, _T("last partial not used.\n"));
-				bprintf(0, _T("left %x  partial_sam_vol %x  samples_sourced %x @end\n"), left, partial_sam_vol, samples_sourced);
-			}
+				last_pos = source_pos;
+				last_sample = in_buffer[0][source_pos];
+				if (counter) {
+					if (partial_sam_vol) bprintf(0, _T("%d  (last partial: %X)\n"),source_pos, left & 0xffff);
+					else bprintf(0, _T("last partial not used.\n"));
+					bprintf(0, _T("left %x  partial_sam_vol %x  samples_sourced %x @end\n"), left, partial_sam_vol, samples_sourced);
+				}
 #endif
+			}
 			// average
 			INT32 sample_l = 0;
 			INT32 sample_r = 0;
@@ -199,31 +222,15 @@ struct Stream {
 				out_buffer[0] = sample_l;
 				out_buffer[1] = sample_r;
 			}
-			out_buffer += 2;
-
-			nFractionalPosition += nSampleSize;
 		}
 
 #if DOWNSAMPLE_DEBUG
-		bprintf(0, _T("samples: %d   last_pos: %d   samps_frame %d\n"), samples, last_pos, samples_per_frame);
+		bprintf(0, _T("LAST sample: %x\n"), last_sample);
+		bprintf(0, _T("samples: %d   last_pos: %d  nFractionalwhole.samples:  %d\n"), samples, last_pos, nFractionalPosition >> 16);//, samples_per_frame);
 #endif
-		nFractionalPosition &= 0xffff;
-		nPosition = 0;
 	}
 
 	void upsample(INT16 *out_buffer, INT32 samples) {
-		// make sure buffers are full for this frame
-		UpdateStream(1);
-
-		INT16 *in_buffer[MAX_CHANNELS];
-		for (INT32 i = 0; i < nChannels; i++) {
-			// prepare the in-buffers
-			in_buffer[i] = soundbuf[i];
-			// make room for previous frame's "carry-over" sample (aka in_buffer[-1])
-			in_buffer[i]++;
-		}
-		INT32 out_buffer_size = samples_to_source(samples);
-
 		for (INT32 i = 0; i < samples; i++, out_buffer += 2, nFractionalPosition += nSampleSize) {
 			INT32 source_pos = nFractionalPosition >> 16; // nFractionalPosition = 16.16
 
@@ -254,22 +261,6 @@ struct Stream {
 				out_buffer[1] = sample_r;
 			}
 		}
-
-		// figure out if we have extra whole samples
-		nPosition = out_buffer_size - (nFractionalPosition >> 16);
-
-		// 1) take the last sample processed and store it into in_buffer[-1]
-		// so that interpolation can be carried out between frames.
-		// 2) store the extra whole samples at in_buffer[0+], returning the
-		// number of whole samples in &extra_samples.
-		for (INT32 ch = 0; ch < nChannels; ch++) {
-			for (INT32 i = -1; i < nPosition; i++) {
-				in_buffer[ch][i] = in_buffer[ch][i + (nFractionalPosition >> 16)];
-			}
-		}
-
-		// mask off the whole samples from our accumulator
-		nFractionalPosition &= 0xffff;
 	}
 
 	// -[ stream/streambuffer handling section ]-
@@ -301,7 +292,7 @@ struct Stream {
 		nCpuMHZ = nCpuMhz;
 	}
 
-	void stream_init(void (*update_stream)(INT16 **a, INT32 b)) {
+	void stream_init(void (*update_stream)(INT16 **, INT32 )) {
 		pUpdateStream = update_stream;
 
 		for (INT32 ch = 0; ch < nChannels; ch++) {

@@ -32,7 +32,6 @@ static UINT8 starx;
 static UINT8 stary;
 static UINT8 scrolly;
 static UINT8 bgcolor;
-static UINT8 coin_timer;
 static UINT8 flipscreen;
 static UINT8 characterbank;
 static UINT8 stardisable;
@@ -43,6 +42,8 @@ static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
 static UINT8 DrvInputs[5];
 static UINT8 DrvReset;
+
+static HoldCoin<1> hold_coin;
 
 static struct BurnInputInfo FormatzInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"	},
@@ -246,11 +247,12 @@ static INT32 DrvDoReset()
 	stary = 0;
 	scrolly = 0;
 	bgcolor = 0;
-	coin_timer = 0;
 	flipscreen = 0;
 	characterbank = 0;
 	stardisable = 0;
 	m_sx = m_sy = m_ox = m_oy = 0;
+
+	hold_coin.reset();
 
 	return 0;
 }
@@ -572,17 +574,7 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
 
-		INT32 coin_enable = 0;
-		if (coin_timer == 1) {
-			coin_enable = 1;
-			coin_timer = 0;
-		} else {
-			if ((DrvInputs[2] & 0x80) == 0) {
-				coin_timer = 1;
-				coin_enable = 1;
-			}
-		}
-		if (coin_enable) DrvInputs[2] &= ~0x80;
+		hold_coin.checklow(0, DrvInputs[2], 1 << 7, 3);
 	}
 
 	INT32 nInterleave = 10;
@@ -648,7 +640,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(stary);
 		SCAN_VAR(scrolly);
 		SCAN_VAR(bgcolor);
-		SCAN_VAR(coin_timer);
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(characterbank);
 		SCAN_VAR(stardisable);
@@ -656,6 +647,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(m_sy);
 		SCAN_VAR(m_ox);
 		SCAN_VAR(m_oy);
+
+		hold_coin.scan();
 	}
 
 	return 0;

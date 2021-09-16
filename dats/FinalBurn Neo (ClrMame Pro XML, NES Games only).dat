@@ -4357,7 +4357,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="explodingfist">
-		<description>Exploding Fist (USA, Prototype) [Prototype]</description>
+		<description>Exploding Fist (USA, Prototype)</description>
 		<year>1990</year>
 		<manufacturer>Tradewest</manufacturer>
 		<rom name="Exploding Fist (USA, Prototype).nes" size="65552" crc="c52ea831"/>

@@ -67,7 +67,7 @@ depobj	+= 	neocdlist.o \
 			aud_dsp.o aud_interface.o cd_interface.o inp_interface.o interface.o lowpass2.o  vid_interface.o \
 			vid_softfx.o vid_support.o \
 			\
-			2xpm.o 2xsai.o ddt3x.o epx.o hq2xs.o hq2xs_16.o xbr.o \
+			2xpm.o 2xsai.o ddt3x.o epx.o hq2xs.o hq2xs_16.o xbr.o xbr32.o \
 			\
 			inp_sdl2.o aud_sdl.o support_paths.o ips_manager.o scrn.o \
 			cd_sdl2.o config.o main.o run.o stringset.o bzip.o drv.o media.o sdl2_gui_ingame.o sdl2_gui_common.o \

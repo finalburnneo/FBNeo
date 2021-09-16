@@ -43,96 +43,95 @@ static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo FlowerInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Flower)
 
 static struct BurnDIPInfo FlowerDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0xf8, NULL				},
-	{0x13, 0xff, 0xff, 0x9d, NULL				},
+	DIP_OFFSET(0x12)
+	{0x00, 0xff, 0xff, 0xf8, NULL							},
+	{0x01, 0xff, 0xff, 0x9d, NULL							},
 
-	{0   , 0xfe, 0   ,    2, "Energy Decrease"		},
-	{0x12, 0x01, 0x08, 0x08, "Slow"				},
-	{0x12, 0x01, 0x08, 0x00, "Fast"				},
+	{0   , 0xfe, 0   ,    2, "Energy Decrease"				},
+	{0x00, 0x01, 0x08, 0x08, "Slow"							},
+	{0x00, 0x01, 0x08, 0x00, "Fast"							},
 
-	{0   , 0xfe, 0   ,    2, "Invulnerability (Cheat)"	},
-	{0x12, 0x01, 0x10, 0x10, "Off"				},
-	{0x12, 0x01, 0x10, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Invulnerability (Cheat)"		},
+	{0x00, 0x01, 0x10, 0x10, "Off"							},
+	{0x00, 0x01, 0x10, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    2, "Keep Weapons When Destroyed"	},
-	{0x12, 0x01, 0x20, 0x20, "No"				},
-	{0x12, 0x01, 0x20, 0x00, "Yes"				},
+	{0x00, 0x01, 0x20, 0x20, "No"							},
+	{0x00, 0x01, 0x20, 0x00, "Yes"							},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"			},
-	{0x12, 0x01, 0x40, 0x40, "Normal"			},
-	{0x12, 0x01, 0x40, 0x00, "Hard"				},
+	{0   , 0xfe, 0   ,    2, "Difficulty"					},
+	{0x00, 0x01, 0x40, 0x40, "Normal"						},
+	{0x00, 0x01, 0x40, 0x00, "Hard"							},
 
-	{0   , 0xfe, 0   ,    2, "Shot Range"			},
-	{0x12, 0x01, 0x80, 0x80, "Short"			},
-	{0x12, 0x01, 0x80, 0x00, "Long"				},
+	{0   , 0xfe, 0   ,    2, "Shot Range"					},
+	{0x00, 0x01, 0x80, 0x80, "Short"						},
+	{0x00, 0x01, 0x80, 0x00, "Long"							},
 
-	{0   , 0xfe, 0   ,    8, "Lives"			},
-	{0x13, 0x01, 0x07, 0x07, "1"				},
-	{0x13, 0x01, 0x07, 0x06, "2"				},
-	{0x13, 0x01, 0x07, 0x05, "3"				},
-	{0x13, 0x01, 0x07, 0x04, "4"				},
-	{0x13, 0x01, 0x07, 0x03, "5"				},
-	{0x13, 0x01, 0x07, 0x02, "6"				},
-	{0x13, 0x01, 0x07, 0x01, "7"				},
-	{0x13, 0x01, 0x07, 0x00, "Infinite (Cheat)"		},
+	{0   , 0xfe, 0   ,    8, "Lives"						},
+	{0x01, 0x01, 0x07, 0x07, "1"							},
+	{0x01, 0x01, 0x07, 0x06, "2"							},
+	{0x01, 0x01, 0x07, 0x05, "3"							},
+	{0x01, 0x01, 0x07, 0x04, "4"							},
+	{0x01, 0x01, 0x07, 0x03, "5"							},
+	{0x01, 0x01, 0x07, 0x02, "6"							},
+	{0x01, 0x01, 0x07, 0x01, "7"							},
+	{0x01, 0x01, 0x07, 0x00, "Infinite (Cheat)"				},
 
-	{0   , 0xfe, 0   ,    4, "Coinage"			},
-	{0x13, 0x01, 0x18, 0x00, "3 Coins 1 Credits"		},
-	{0x13, 0x01, 0x18, 0x08, "2 Coins 1 Credits"		},
-	{0x13, 0x01, 0x18, 0x18, "1 Coin  1 Credits"		},
-	{0x13, 0x01, 0x18, 0x10, "1 Coin  2 Credits"		},
+	{0   , 0xfe, 0   ,    4, "Coinage"						},
+	{0x01, 0x01, 0x18, 0x00, "3 Coins 1 Credits"			},
+	{0x01, 0x01, 0x18, 0x08, "2 Coins 1 Credits"			},
+	{0x01, 0x01, 0x18, 0x18, "1 Coin  1 Credits"			},
+	{0x01, 0x01, 0x18, 0x10, "1 Coin  2 Credits"			},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"			},
-	{0x13, 0x01, 0x20, 0x00, "Upright"			},
-	{0x13, 0x01, 0x20, 0x20, "Cocktail"			},
+	{0   , 0xfe, 0   ,    2, "Cabinet"						},
+	{0x01, 0x01, 0x20, 0x00, "Upright"						},
+	{0x01, 0x01, 0x20, 0x20, "Cocktail"						},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x13, 0x01, 0x40, 0x40, "Off"				},
-	{0x13, 0x01, 0x40, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"					},
+	{0x01, 0x01, 0x40, 0x40, "Off"							},
+	{0x01, 0x01, 0x40, 0x00, "On"							},
 
-	{0   , 0xfe, 0   ,    2, "Bonus Life"			},
-	{0x13, 0x01, 0x80, 0x80, "30k, then every 50k"		},
-	{0x13, 0x01, 0x80, 0x00, "50k, then every 80k"		},
+	{0   , 0xfe, 0   ,    2, "Bonus Life"					},
+	{0x01, 0x01, 0x80, 0x80, "30k, then every 50k"			},
+	{0x01, 0x01, 0x80, 0x00, "50k, then every 80k"			},
 };
 
 STDDIPINFO(Flower)
 
 static void __fastcall flower_main_write(UINT16 address, UINT8 data)
 {
-	INT32 active = ZetGetActive();
-
 	switch (address)
 	{
 		case 0xa000:
-			// coin_lockout_w (ignore)
+			// coin lockout (ignore)
 		return;
 
 		case 0xa001:
@@ -140,31 +139,15 @@ static void __fastcall flower_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xa002:
-			if (active == 1) {
-				ZetClose();
-				ZetOpen(0);
-			}
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
-			if (active == 1) {
-				ZetClose();
-				ZetOpen(1);
-			}
+			ZetSetIRQLine(0, 0, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0xa003:
-			if (active == 0) {
-				ZetClose();
-				ZetOpen(1);
-			}
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
-			if (active == 0) {
-				ZetClose();
-				ZetOpen(0);
-			}
+			ZetSetIRQLine(1, 0, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0xa004:
-			// coin_counter_w
+			// coin counter
 		return;
 
 		case 0xa005:
@@ -173,11 +156,7 @@ static void __fastcall flower_main_write(UINT16 address, UINT8 data)
 		case 0xa400:
 			soundlatch = data;
 			if (nmi_enable & 1) {
-				ZetClose();
-				ZetOpen(2);
-				ZetNmi();
-				ZetClose();
-				ZetOpen(active);
+				ZetNmi(2);
 			}
 		return;
 
@@ -265,17 +244,9 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
-
-	ZetOpen(1);
-	ZetReset();
-	ZetClose();
-
-	ZetOpen(2);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
+	ZetReset(1);
+	ZetReset(2);
 
 	flower_sound_reset();
 
@@ -355,12 +326,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x0000,  0, 1)) return 1;
@@ -435,7 +401,7 @@ static INT32 DrvInit()
 	GenericTilemapInit(3, TILEMAP_SCAN_COLS, txt_map_callback,  8,  8,  2, 32);
 	GenericTilemapSetGfx(0, DrvGfxROM0, 2,  8,  8, 0x10000, 0, 0x3f);
 	GenericTilemapSetGfx(1, DrvGfxROM2, 4, 16, 16, 0x10000, 0, 0x0f);
-	GenericTilemapSetTransparent(1, 0xf);
+	GenericTilemapSetTransparent(0, 0xf);
 	GenericTilemapSetTransparent(2, 0x3);
 	GenericTilemapSetTransparent(3, 0x3);
 
@@ -450,7 +416,7 @@ static INT32 DrvExit()
 
 	ZetExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	flower_sound_exit();
 
@@ -518,7 +484,7 @@ static void draw_sprites()
 				if (xblock) sxoffs+=xblocksizeinpixels;
 				if (yblock) syoffs+=yblocksizeinpixels;
 
-				RenderZoomedTile(pTransDraw, DrvGfxROM1, code+yoffs+xoffs, color*16, 0xf, sx+sxoffs, sy+syoffs, flipx, flipy, 16, 16, zoomx, zoomy);
+				RenderZoomedTile(pTransDraw, DrvGfxROM1, code+yoffs+xoffs, color*16, 0xf, sx+sxoffs+16, sy+syoffs, flipx, flipy, 16, 16, zoomx, zoomy);
 			}
 		}
 		source -= 8;
@@ -539,12 +505,18 @@ static INT32 DrvDraw()
 	GenericTilemapSetScrollY(2, 16);
 	GenericTilemapSetScrollY(3, 16);
 
-	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
-	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);
+	GenericTilemapSetScrollX(0, -16);
+	GenericTilemapSetScrollX(1, -16);
+	GenericTilemapSetScrollX(2, -16);
+
+	if (nBurnLayer & 1) GenericTilemapDraw(1, pTransDraw, 0);
+	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, 0);
 
 	if (nSpriteEnable & 1) draw_sprites();
 
+	GenericTilesSetClip(16, nScreenWidth, -1, -1);
 	if (nBurnLayer & 4) GenericTilemapDraw(2, pTransDraw, 0);
+	GenericTilesClearClip();
 
 	GenericTilesSetClip(nScreenWidth-16, nScreenWidth, -1, -1);
 	if (nBurnLayer & 8) GenericTilemapDraw(3, pTransDraw, 0);
@@ -575,9 +547,7 @@ static INT32 DrvFrame()
 		}
 
 		if (prev != (DrvInputs[2] & 1)) {
-			ZetOpen(0);
-			ZetNmi();
-			ZetClose();
+			ZetNmi(0);
 		}
 	}
 
@@ -588,17 +558,17 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Zet);
 		if (i == 90) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(1, Zet);
 		if (i == 90 || i == 40) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(2);
-		nCyclesDone[2] += ZetRun(nCyclesTotal[2] / nInterleave);
+		CPU_RUN(2, Zet);
 		if ((irq_counter % 67) == 0) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
@@ -692,7 +662,7 @@ struct BurnDriver BurnDrvFlower = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, flowerRomInfo, flowerRomName, NULL, NULL, NULL, NULL, FlowerInputInfo, FlowerDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	272, 224, 4, 3
+	288, 224, 4, 3
 };
 
 
@@ -741,5 +711,5 @@ struct BurnDriver BurnDrvFlowerj = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, flowerjRomInfo, flowerjRomName, NULL, NULL, NULL, NULL, FlowerInputInfo, FlowerDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	272, 224, 4, 3
+	288, 224, 4, 3
 };

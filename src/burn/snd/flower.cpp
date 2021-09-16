@@ -36,6 +36,11 @@ static INT16 *m_mixer_buffer;
 static UINT8 m_soundregs1[0x40];
 static UINT8 m_soundregs2[0x40];
 
+#include "stream.h"
+static Stream stream;
+
+static void flower_sound_update_INT(INT16 **streams, INT32 samples_len); // forward
+
 /* build a table to divide by the number of voices; gain is specified as gain*16 */
 static void make_mixer_table(INT32 voices, INT32 gain)
 {
@@ -70,12 +75,17 @@ void flower_sound_init(UINT8 *rom_sample, UINT8 *rom_volume)
 	m_volume_rom = rom_volume;
 
 	m_last_channel = m_channel_list + 8;
+
+	stream.init(samplerate, nBurnSoundRate, 1, 0, flower_sound_update_INT);
+    stream.set_volume(0.30);
 }
 
 void flower_sound_exit()
 {
 	BurnFree(m_mixer_buffer);
 	BurnFree(m_mixer_table);
+
+	stream.exit();
 }
 
 void flower_sound_scan()
@@ -143,6 +153,8 @@ R  76543210
 
 void flower_sound1_w(UINT16 offset, UINT8 data)
 {
+   // stream.update();
+
 	flower_sound_channel *voice = &m_channel_list[offset >> 3 & 7];
 	INT32 c = offset & 0xf8;
 	UINT8 *base1 = m_soundregs1;
@@ -156,6 +168,8 @@ void flower_sound1_w(UINT16 offset, UINT8 data)
 
 void flower_sound2_w(UINT16 offset, UINT8 data)
 {
+   // stream.update();
+
 	flower_sound_channel *voice = &m_channel_list[offset >> 3 & 7];
 	INT32 i, c = offset & 0xf8;
 	UINT8 *base1 = m_soundregs1;
@@ -194,15 +208,20 @@ static void update_effects()
 
 void flower_sound_update(INT16 *outputs, INT32 samples_len)
 {
+	if (samples_len != nBurnSoundLen) {
+		bprintf(0, _T("flower_sound_update(): once per frame, please!\n"));
+		return;
+	}
+
+	stream.render(outputs, samples_len);
+}
+
+void flower_sound_update_INT(INT16 **streams, INT32 samples_len)
+{
 	INT16 *mix;
 
-	// compute # of samples @ soundcore native (48khz) rate
-	INT32 samples = (((((samplerate*1000) / nBurnFPS) * samples_len) / nBurnSoundLen)) / 10;
-
-	if (samples > samplerate) samples = samplerate;
-
 	/* zap the contents of the mixer buffer */
-	memset(m_mixer_buffer, 0, samples * sizeof(INT16));
+	memset(m_mixer_buffer, 0, samples_len * sizeof(INT16));
 
 	update_effects(); // once per frame
 
@@ -236,7 +255,7 @@ void flower_sound_update(INT16 *outputs, INT32 samples_len)
 
 		mix = m_mixer_buffer;
 
-		for (INT32 i = 0; i < samples; i++)
+		for (INT32 i = 0; i < samples_len; i++)
 		{
 			// add sample
 			if (voice->oneshot)
@@ -261,16 +280,10 @@ void flower_sound_update(INT16 *outputs, INT32 samples_len)
 		}
 	}
 
-	// resample native (48khz) -> our rate
+	INT16 *mixer = streams[0];
+
 	for (INT32 j = 0; j < samples_len; j++)
 	{
-		INT32 k = (((((samplerate*1000) / nBurnFPS) * j) / nBurnSoundLen)) / 10;
-
-		INT32 lr = (INT32)(m_mixer_lookup[m_mixer_buffer[k]] * 0.50);
-
-		outputs[0] = BURN_SND_CLIP(lr);
-		outputs[1] = BURN_SND_CLIP(lr);
-		outputs += 2;
+		mixer[j] = m_mixer_lookup[m_mixer_buffer[j]];
 	}
-
 }

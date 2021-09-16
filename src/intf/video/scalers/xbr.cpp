@@ -1,6 +1,6 @@
 /*
    Hyllian's 2xBR v3.3b
-   
+
    Copyright (C) 2011, 2012 Hyllian/Jararaca - sergiogdb@gmail.com
 
    This program is free software; you can redistribute it and/or

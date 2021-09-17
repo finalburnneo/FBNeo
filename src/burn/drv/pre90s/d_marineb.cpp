@@ -870,10 +870,12 @@ static INT32 DrvInit()
 
 	AY8910Init(0, 1500000, 0);
 	AY8910Init(1, 1500000, 1);
-	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, (hardware == HOCCER) ? 0.10 : 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, (hardware == HOCCER) ? 0.10 : 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetPorts(0, NULL, NULL, w0, NULL);
 	AY8910SetPorts(1, NULL, NULL, w2, NULL);
+	AY8910SetBuffered(ZetTotalCycles, 3072000);
+
 	GenericTilesInit();
 	DrvDoReset();
 
@@ -1590,6 +1592,8 @@ static INT32 DrvFrame()
 	if (DrvReset) {
 		DrvDoReset();
 	}
+
+	ZetNewFrame();
 
 	memset(DrvInput, 0, (hardware != WANTED && hardware != BCRUZM12) ? 3 : 2);
 

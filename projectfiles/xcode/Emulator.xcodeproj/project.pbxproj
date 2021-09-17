@@ -1044,6 +1044,7 @@
 		FED7CBC325494A6C00193EED /* d_spectrum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207923561A6B0065200C /* d_spectrum.cpp */; };
 		FEDA8F89235D226F007A4D26 /* FBInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEDA8F87235D226E007A4D26 /* FBInput.mm */; };
 		FEDA9E2224C203960060BF0B /* poly.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDA9E2024C203950060BF0B /* poly.cpp */; };
+		FEDCA03826F4698F00E520F1 /* xbr32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDCA03726F468B700E520F1 /* xbr32.cpp */; };
 		FEDF04B225E377F300F3EDD9 /* d_segas32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDF04B125E377F300F3EDD9 /* d_segas32.cpp */; };
 		FEDF04B925E3786E00F3EDD9 /* multipcm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDF04B325E3786D00F3EDD9 /* multipcm.cpp */; };
 		FEDF04BA25E3786E00F3EDD9 /* burn_ymf271.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDF04B725E3786D00F3EDD9 /* burn_ymf271.cpp */; };
@@ -2668,6 +2669,8 @@
 		FEDA8F8E235EB752007A4D26 /* whatsnew.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = whatsnew.html; path = ../../whatsnew.html; sourceTree = "<group>"; };
 		FEDA9E2024C203950060BF0B /* poly.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = poly.cpp; sourceTree = "<group>"; };
 		FEDA9E2124C203950060BF0B /* poly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = poly.h; sourceTree = "<group>"; };
+		FEDCA03626F4685600E520F1 /* stream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stream.h; sourceTree = "<group>"; };
+		FEDCA03726F468B700E520F1 /* xbr32.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = xbr32.cpp; sourceTree = "<group>"; };
 		FEDF04B125E377F300F3EDD9 /* d_segas32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_segas32.cpp; sourceTree = "<group>"; };
 		FEDF04B325E3786D00F3EDD9 /* multipcm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = multipcm.cpp; sourceTree = "<group>"; };
 		FEDF04B425E3786D00F3EDD9 /* burn_ymf271.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = burn_ymf271.h; sourceTree = "<group>"; };
@@ -3547,6 +3550,7 @@
 				FE1B1E6A23561A660065200C /* superscale.asm */,
 				FE1B1E5F23561A660065200C /* xbr.cpp */,
 				FE1B1E5723561A660065200C /* xbr.h */,
+				FEDCA03726F468B700E520F1 /* xbr32.cpp */,
 			);
 			path = scalers;
 			sourceTree = "<group>";
@@ -4762,6 +4766,7 @@
 				FE1B224B23561A700065200C /* sp0250.h */,
 				FE1B225123561A700065200C /* sp0256.cpp */,
 				FE1B221623561A700065200C /* sp0256.h */,
+				FEDCA03626F4685600E520F1 /* stream.h */,
 				FEECE405247AC84E007724A2 /* t6w28.cpp */,
 				FEECE406247AC84E007724A2 /* t6w28.h */,
 				FE1B225723561A700065200C /* tms36xx.cpp */,
@@ -6099,6 +6104,7 @@
 				FE1B274D23561A780065200C /* d_drmicro.cpp in Sources */,
 				FE1B27E723561A790065200C /* dynhuff.cpp in Sources */,
 				FE1B25AE23561A760065200C /* k051733.cpp in Sources */,
+				FEDCA03826F4698F00E520F1 /* xbr32.cpp in Sources */,
 				FE1B272D23561A780065200C /* d_kangaroo.cpp in Sources */,
 				FE1B256B23561A760065200C /* d_angelkds.cpp in Sources */,
 				FE1B261D23561A770065200C /* toaplan1.cpp in Sources */,

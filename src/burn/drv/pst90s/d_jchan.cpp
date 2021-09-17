@@ -1,9 +1,14 @@
 // FB Alpha Jackie Chan driver module
 // Based on MAME driver by David Haywood
 
+// Note: a version of sknssprite device is included in this file. it's kept
+// separate because it causes bugs w/supernova*, yet fixes zooming issues with
+// jchan bg's.  go figure...
+// * sauro kani, watch for lines in non-zoomed images
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
-#include "sknsspr.h"
+//#include "sknsspr.h" - see note above..
 #include "kaneko_tmap.h"
 #include "ymz280b.h"
 
@@ -48,33 +53,33 @@ static UINT16 DrvInputs[4];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo JchanInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 10,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 10,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 8,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p1 fire 3"	},
 	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy4 + 8,	"p1 fire 4"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 11,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 11,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 9,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 13,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 14,	"p2 fire 3"	},
 	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy4 + 10,	"p2 fire 4"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 14,	"service"	},
-	{"Tilt",		BIT_DIGITAL,	DrvJoy3 + 13,	"tilt"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 14,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	DrvJoy3 + 13,	"tilt"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Jchan)
@@ -171,7 +176,7 @@ static void jchan_mcu_run()
 	}
 }
 
-void __fastcall jchan_main_write_word(UINT32 address, UINT16 data)
+static void __fastcall jchan_main_write_word(UINT32 address, UINT16 data)
 {
 	switch (address)
 	{
@@ -196,12 +201,12 @@ void __fastcall jchan_main_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall jchan_main_write_byte(UINT32 /*address*/, UINT8 /*data*/)
+static void __fastcall jchan_main_write_byte(UINT32 /*address*/, UINT8 /*data*/)
 {
 
 }
 
-UINT16 __fastcall jchan_main_read_word(UINT32 address)
+static UINT16 __fastcall jchan_main_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -212,7 +217,7 @@ UINT16 __fastcall jchan_main_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall jchan_main_read_byte(UINT32 address)
+static UINT8 __fastcall jchan_main_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -232,7 +237,7 @@ UINT8 __fastcall jchan_main_read_byte(UINT32 address)
 	return 0;
 }
 
-void __fastcall jchan_sub_write_word(UINT32 address, UINT16 data)
+static void __fastcall jchan_sub_write_word(UINT32 address, UINT16 data)
 {
 	switch (address)
 	{
@@ -250,7 +255,7 @@ void __fastcall jchan_sub_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall jchan_sub_write_byte(UINT32 address, UINT8 data)
+static void __fastcall jchan_sub_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -264,48 +269,40 @@ void __fastcall jchan_sub_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-UINT16 __fastcall jchan_sub_read_word(UINT32 /*address*/)
+static UINT16 __fastcall jchan_sub_read_word(UINT32 /*address*/)
 {
 	return 0;
 }
 
-UINT8 __fastcall jchan_sub_read_byte(UINT32 /*address*/)
+static UINT8 __fastcall jchan_sub_read_byte(UINT32 /*address*/)
 {
 	return 0;
 }
 
-void __fastcall jchan_main_command_write_word(UINT32 address, UINT16 data)
+static void __fastcall jchan_main_command_write_word(UINT32 address, UINT16 data)
 {
 	*((UINT16*)(DrvShareRAM + (address & 0x3ffe))) = BURN_ENDIAN_SWAP_INT16(data);
 
 	if (address == 0x403ffe) {
-		SekClose();
-		SekOpen(1);
-		SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-		SekClose();
-		SekOpen(0);
+		SekSetIRQLine(1, 4, CPU_IRQSTATUS_AUTO);
 	}
 }
 
-void __fastcall jchan_main_command_write_byte(UINT32 address, UINT8 data)
+static void __fastcall jchan_main_command_write_byte(UINT32 address, UINT8 data)
 {
 	DrvShareRAM[(address & 0x3fff) ^ 1] = data;
 }
 
-void __fastcall jchan_sub_command_write_word(UINT32 address, UINT16 data)
+static void __fastcall jchan_sub_command_write_word(UINT32 address, UINT16 data)
 {
 	*((UINT16*)(DrvShareRAM + (address & 0x3ffe))) = BURN_ENDIAN_SWAP_INT16(data);
 
 	if (address == 0x400000) { // not used?
-		SekClose();
-		SekOpen(0);
-		SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
-		SekClose();
-		SekOpen(1);
+		SekSetIRQLine(0, 3, CPU_IRQSTATUS_AUTO);
 	}
 }
 
-void __fastcall jchan_sub_command_write_byte(UINT32 address, UINT8 data)
+static void __fastcall jchan_sub_command_write_byte(UINT32 address, UINT8 data)
 {
 	DrvShareRAM[(address & 0x3fff) ^ 1] = data;
 }
@@ -325,14 +322,14 @@ static inline void palette_update(UINT16 offset)
 	DrvPalette[offset/2] = BurnHighCol(r, g, b, 0);
 }
 
-void __fastcall jchan_palette_write_word(UINT32 address, UINT16 data)
+static void __fastcall jchan_palette_write_word(UINT32 address, UINT16 data)
 {
 	*((UINT16*)(DrvPalRAM + (address & 0xfffe))) = BURN_ENDIAN_SWAP_INT16(data);
 
 	palette_update(address);
 }
 
-void __fastcall jchan_palette_write_byte(UINT32 address, UINT8 data)
+static void __fastcall jchan_palette_write_byte(UINT32 address, UINT8 data)
 {
 	DrvPalRAM[(address & 0xffff)^1] = data;
 
@@ -345,13 +342,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 		memset (AllRam, 0, RamEnd - AllRam);
 	}
 
-	SekOpen(0);
-	SekReset();
-	SekClose();
-
-	SekOpen(1);
-	SekReset();
-	SekClose();
+	SekReset(0);
+	SekReset(1);
 
 	YMZ280BReset();
 
@@ -470,12 +462,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM0 + 0x0000000,  0, 2)) return 1;
@@ -560,7 +547,6 @@ static INT32 DrvInit()
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
-	skns_init();
 	kaneko_view2_init(0, DrvVidRAM, DrvVidRegs, DrvGfxROM0, 0, DrvTransTab, 25, 0);
 
 	GenericTilesInit();
@@ -580,11 +566,505 @@ static INT32 DrvExit()
 	YMZ280BROM = NULL;
 
 	kaneko_view2_exit();
-	skns_exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
+}
+
+#define cliprect_min_y 0
+#define cliprect_max_y (nScreenHeight-1)
+#define cliprect_min_x 0
+#define cliprect_max_x (nScreenWidth - 1)
+
+#define SUPRNOVA_DECODE_BUFFER_SIZE	0x2000
+
+static INT32 sprite_kludge_x = 0, sprite_kludge_y = 0;
+static UINT8 decodebuffer[0x2000];
+
+static INT32 skns_rle_decode ( INT32 romoffset, INT32 size, UINT8*gfx_source, INT32 gfx_length )
+{
+	UINT8 *src = gfx_source;
+	INT32 srcsize = gfx_length;
+	UINT8 *dst = decodebuffer;
+	INT32 decodeoffset = 0;
+
+	while(size>0) {
+		UINT8 code = src[(romoffset++)%srcsize];
+		size -= (code & 0x7f) + 1;
+		if(code & 0x80) { /* (code & 0x7f) normal values will follow */
+			code &= 0x7f;
+			do {
+				dst[(decodeoffset++)%SUPRNOVA_DECODE_BUFFER_SIZE] = src[(romoffset++)%srcsize];
+				code--;
+			} while(code != 0xff);
+		} else {  /* repeat next value (code & 0x7f) times */
+			UINT8 val = src[(romoffset++)%srcsize];
+			do {
+				dst[(decodeoffset++)%SUPRNOVA_DECODE_BUFFER_SIZE] = val;
+				code--;
+			} while(code != 0xff);
+		}
+	}
+	return &src[romoffset%srcsize]-gfx_source;
+}
+
+/* Zooming blitter, zoom is by way of both source and destination offsets */
+/* We are working in .6 fixed point if you hadn't guessed */
+
+#define z_decls(step)				\
+	UINT32 zxs = 0x10000-(zx_m);			\
+	UINT32 zxd = 0x10000-(zx_s);		\
+	UINT32 zys = 0x10000-(zy_m);			\
+	UINT32 zyd = 0x10000-(zy_s);		\
+	INT32 xs, ys, xd, yd, old, old2;		\
+	INT32 step_spr = step;				\
+	INT32 bxs = 0, bys = 0;				\
+	INT32 clip_min_x = cliprect_min_x<<16;		\
+	INT32 clip_max_x = (cliprect_max_x+1)<<16;	\
+	INT32 clip_min_y = cliprect_min_y<<16;		\
+	INT32 clip_max_y = (cliprect_max_y+1)<<16;	\
+	sx <<= 16;					\
+	sy <<= 16;					\
+	x <<= 10;					\
+	y <<= 10;
+
+#define z_clamp_x_min()			\
+	if(x < clip_min_x) {					\
+		do {					\
+			bxs += zxs;				\
+			x += zxd;					\
+		} while(x < clip_min_x);				\
+	}
+
+#define z_clamp_x_max()			\
+	if(x > clip_max_x) {				\
+		do {					\
+			bxs += zxs;				\
+			x -= zxd;					\
+		} while(x > clip_max_x);				\
+	}
+
+#define z_clamp_y_min()			\
+	if(y < clip_min_y) {					\
+		do {					\
+			bys += zys;				\
+			y += zyd;					\
+		} while(y < clip_min_y);				\
+		src += (bys>>16)*step_spr;			\
+	}
+
+#define z_clamp_y_max()			\
+	if(y > clip_max_y) {				\
+		do {					\
+			bys += zys;				\
+			y -= zyd;					\
+		} while(y > clip_max_y);				\
+		src += (bys>>16)*step_spr;			\
+	}
+
+#define z_loop_x()			\
+	xs = bxs;					\
+	xd = x;					\
+	while(xs < sx && xd <= clip_max_x)
+
+#define z_loop_x_flip()			\
+	xs = bxs;					\
+	xd = x;					\
+	while(xs < sx && xd >= clip_min_x)
+
+#define z_loop_y()			\
+	ys = bys;					\
+	yd = y;					\
+	while(ys < sy && yd <= clip_max_y)
+
+#define z_loop_y_flip()			\
+	ys = bys;					\
+	yd = y;					\
+	while(ys < sy && yd >= clip_min_y)
+
+#define z_draw_pixel()				\
+	UINT8 val = src[xs >> 16];			\
+	if(val)					\
+		if ((yd>>16) < nScreenHeight && (xd>>16) < nScreenWidth)	\
+			bitmap[(yd>>16) * nScreenWidth + (xd>>16)] = val + colour;
+
+#define z_x_dst(op)			\
+	old = xd;					\
+	do {						\
+		xs += zxs;					\
+		xd op zxd;					\
+	} while(!((xd^old) & ~0xffff));
+
+#define z_y_dst(op)			\
+	old = yd;					\
+	old2 = ys;					\
+	do {						\
+		ys += zys;					\
+		yd op zyd;					\
+	} while(!((yd^old) & ~0xffff));			\
+	while((ys^old2) & ~0xffff) {			\
+		src += step_spr;				\
+		old2 += 0x10000;				\
+	}
+
+static void blit_nf_z(UINT16 *bitmap, const UINT8 *src, INT32 x, INT32 y, INT32 sx, INT32 sy, UINT16 zx_m, UINT16 zx_s, UINT16 zy_m, UINT16 zy_s, INT32 colour)
+{
+	z_decls(sx);
+	z_clamp_x_min();
+	z_clamp_y_min();
+	z_loop_y() {
+		z_loop_x() {
+			z_draw_pixel();
+			z_x_dst(+=);
+		}
+		z_y_dst(+=);
+	}
+}
+
+static void blit_fy_z(UINT16 *bitmap, const UINT8 *src, INT32 x, INT32 y, INT32 sx, INT32 sy, UINT16 zx_m, UINT16 zx_s, UINT16 zy_m, UINT16 zy_s, INT32 colour)
+{
+	z_decls(sx);
+	z_clamp_x_min();
+	z_clamp_y_max();
+	z_loop_y_flip() {
+		z_loop_x() {
+			z_draw_pixel();
+			z_x_dst(+=);
+		}
+		z_y_dst(-=);
+	}
+}
+
+static void blit_fx_z(UINT16 *bitmap, const UINT8 *src, INT32 x, INT32 y, INT32 sx, INT32 sy, UINT16 zx_m, UINT16 zx_s, UINT16 zy_m, UINT16 zy_s, INT32 colour)
+{
+	z_decls(sx);
+	z_clamp_x_max();
+	z_clamp_y_min();
+	z_loop_y() {
+		z_loop_x_flip() {
+			z_draw_pixel();
+			z_x_dst(-=);
+		}
+		z_y_dst(+=);
+	}
+}
+
+static void blit_fxy_z(UINT16 *bitmap, const UINT8 *src, INT32 x, INT32 y, INT32 sx, INT32 sy, UINT16 zx_m, UINT16 zx_s, UINT16 zy_m, UINT16 zy_s, INT32 colour)
+{
+	z_decls(sx);
+	z_clamp_x_max();
+	z_clamp_y_max();
+	z_loop_y_flip() {
+		z_loop_x_flip() {
+			z_draw_pixel();
+			z_x_dst(-=);
+		}
+		z_y_dst(-=);
+	}
+}
+
+static void (*const blit_z[4])(UINT16 *bitmap, const UINT8 *src, INT32 x, INT32 y, INT32 sx, INT32 sy, UINT16 zx_m, UINT16 zx_s, UINT16 zy_m, UINT16 zy_s, INT32 colour) = {
+	blit_nf_z,
+	blit_fy_z,
+	blit_fx_z,
+	blit_fxy_z,
+};
+
+// disable_priority is a hack to make jchan drawing a bit quicker (rather than moving the sprites around different bitmaps and adding colors
+static void jchanskns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT32 spriteram_size, UINT8* gfx_source, INT32 gfx_length, UINT32* sprite_regs, INT32 disable_priority)
+{
+	/*- SPR RAM Format -**
+
+      16 bytes per sprite
+
+	0x00  --ss --SS  z--- ----  jjjg g-ff  ppcc cccc
+
+      s = y size
+      S = x size
+      j = joint
+      g = group sprite is part of (if groups are enabled)
+      f = flip
+      p = priority
+      c = palette
+
+	0x04  ---- -aaa  aaaa aaaa  aaaa aaaa  aaaa aaaa
+
+      a = ROM address of sprite data
+
+	0x08  ZZZZ ZZ--  zzzz zz--  xxxx xxxx  xx-- ----
+
+      Z = horizontal zoom table
+      z = horizontal zoom subtable
+      x = x position
+
+	0x0C  ZZZZ ZZ--  zzzz zz--  yyyy yyyy  yy-- ----
+
+      Z = vertical zoom table
+      z = vertical zoom subtable
+      x = y position
+
+	**- End of Comments -*/
+
+	UINT32 *source = spriteram_source;
+	UINT32 *finish = source + spriteram_size/4;
+
+	INT16 group_x_offset[4];
+	INT32 group_y_offset[4];
+	INT32 group_enable;
+	INT32 group_number;
+	INT32 sprite_flip;
+	INT16 sprite_x_scroll;
+	INT16 sprite_y_scroll;
+	INT32 disabled = sprite_regs[0x04/4] & 0x08; // RWR1
+	INT32 xsize,ysize, size, pri=0, romoffset, colour=0, xflip,yflip, joint;
+	INT32 sx,sy;
+	INT32 endromoffs=0, gfxlen;
+	INT32 grow;
+	UINT16 zoomx_m, zoomx_s, zoomy_m, zoomy_s;
+	INT16 xpos=0,ypos=0;
+
+	if ((!disabled)){
+
+		group_enable    = (sprite_regs[0x00/4] & 0x0040) >> 6; // RWR0
+
+		/* Sengekis uses global flip */
+		sprite_flip = (sprite_regs[0x04/4] & 0x03); // RWR1
+
+		sprite_y_scroll = INT16((sprite_regs[0x08/4] & 0x7fff) << 1) >> 1; // RWR2
+		sprite_x_scroll = INT16((sprite_regs[0x10/4] & 0x7fff) << 1) >> 1; // RWR4
+
+		group_x_offset[0] = (sprite_regs[0x18/4] & 0xffff); // RWR6
+		group_y_offset[0] = (sprite_regs[0x1c/4] & 0xffff); // RWR7
+
+		group_x_offset[1] = (sprite_regs[0x20/4] & 0xffff); // RWR8
+		group_y_offset[1] = (sprite_regs[0x24/4] & 0xffff); // RWR9
+
+		group_x_offset[2] = (sprite_regs[0x28/4] & 0xffff); // RWR10
+		group_y_offset[2] = (sprite_regs[0x2c/4] & 0xffff); // RWR11
+
+		group_x_offset[3] = (sprite_regs[0x30/4] & 0xffff); // RWR12
+		group_y_offset[3] = (sprite_regs[0x34/4] & 0xffff); // RWR13
+
+		/* Seems that sprites are consistently off by a fixed no. of pixels in different games
+           (Patterns emerge through Manufacturer/Date/Orientation) */
+		sprite_x_scroll += sprite_kludge_x;
+		sprite_y_scroll += sprite_kludge_y;
+
+		gfxlen = gfx_length;
+		while( source<finish )
+		{
+			xflip = (source[0] & 0x00000200) >> 9;
+			yflip = (source[0] & 0x00000100) >> 8;
+
+			ysize = (source[0] & 0x30000000) >> 28;
+			xsize = (source[0] & 0x03000000) >> 24;
+			xsize ++;
+			ysize ++;
+
+			xsize *= 16;
+			ysize *= 16;
+
+			size = xsize * ysize;
+
+			joint = (source[0] & 0x0000e000) >> 13;
+
+			if (!(joint & 1))
+			{
+				xpos =  (source[2] & 0x0000ffff);
+				ypos =  (source[3] & 0x0000ffff);
+
+				xpos += sprite_x_scroll; // Global offset
+				ypos += sprite_y_scroll;
+
+				if (group_enable)
+				{
+					group_number = (source[0] & 0x00001800) >> 11;
+
+					/* the group positioning doesn't seem to be working as i'd expect,
+					if I apply the x position the cursor on galpani4 ends up moving
+					from the correct position to too far right, also the y offset
+					seems to cause the position to be off by one in galpans2 even if
+					it fixes the position in galpani4?
+
+					even if I take into account the global sprite scroll registers
+					it isn't right
+
+					global offset kludged using game specific offset -pjp */
+
+					xpos += group_x_offset[group_number];
+					ypos += group_y_offset[group_number];
+				}
+			}
+			else
+			{
+				xpos +=  (source[2] & 0x0000ffff);
+				ypos +=  (source[3] & 0x0000ffff);
+			}
+
+			/* Local sprite offset (for taking flip into account and drawing offset) */
+			sx = xpos;
+			sy = ypos;
+
+			/* Global Sprite Flip (sengekis) */
+			if (sprite_flip&2)
+			{
+				xflip ^= 1;
+				sx = (nScreenWidth << 6) - sx;
+			}
+			if (sprite_flip&1)
+			{
+				yflip ^= 1;
+				sy = (nScreenHeight << 6) - sy;
+			}
+
+			/* Palette linking */
+			if (!(joint & 2))
+			{
+				colour = (source[0] & 0x0000003f) >> 0;
+			}
+
+			/* Priority and Tile linking */
+			if (!(joint & 4))
+			{
+				romoffset = (source[1] & 0x07ffffff) >> 0;
+				pri = (source[0] & 0x000000c0) >> 6;
+			} else {
+				romoffset = endromoffs;
+			}
+
+			grow = (source[0]>>23) & 1;
+
+			if (!grow)
+			{
+				zoomx_m = (source[2] & 0xff000000) >> 16;
+				zoomx_s = (source[2] & 0x00ff0000) >> 8;
+				zoomy_m = (source[3] & 0xff000000) >> 16;
+				zoomy_s = (source[3] & 0x00ff0000) >> 8;
+			}
+			else
+			{
+				// sengekis uses this on sprites which are shrinking as they head towards the ground
+				// it's also used on the input test of Gals Panic S2
+				//
+				// it appears to offer a higher precision 'shrink' mode (although I'm not entirely
+				//  convinced this implementation is correct because we simply end up ignoring
+				//  part of the data)
+				zoomx_m = 0;
+				zoomx_s = (source[2] & 0xffff0000) >> 16;
+				zoomy_m = 0;
+				zoomy_s = (source[3] & 0xffff0000) >> 16;
+			}
+
+			romoffset &= gfxlen-1;
+
+			endromoffs = skns_rle_decode ( romoffset, size, gfx_source, gfx_length );
+
+			// in Cyvern
+
+			//  train in tunnel pri = 0x00
+			//  nothing?         = 0x01
+			//  players etc. pri = 0x02
+			//  pickups etc. pri = 0x03
+
+			{
+				INT32 NewColour = (colour<<8);
+				if (disable_priority) {
+					NewColour += disable_priority; // jchan hack
+				} else {
+					NewColour += (pri << 14);
+				}
+
+				if(zoomx_m || zoomx_s || zoomy_m || zoomy_s)
+				{
+					blit_z[ (xflip<<1) | yflip ](bitmap, decodebuffer, sx, sy, xsize, ysize, zoomx_m, zoomx_s, zoomy_m, zoomy_s, NewColour);
+				}
+				else
+				{
+					sx >>= 6;
+					sy >>= 6;
+					if (!xflip && !yflip) {
+						for (INT32 xx = 0; xx<xsize; xx++)
+						{
+							if ((sx+xx < (cliprect_max_x+1)) && (sx+xx >= cliprect_min_x))
+							{
+								for (INT32 yy = 0; yy<ysize; yy++)
+								{
+									if ((sy+yy < (cliprect_max_y+1)) && (sy+yy >= cliprect_min_y))
+									{
+										INT32 pix;
+										pix = decodebuffer[xsize*yy+xx];
+										if (pix)
+											bitmap[(sy+yy) * nScreenWidth + (sx+xx)] = pix+ NewColour; // change later
+									}
+								}
+							}
+						}
+					} else if (!xflip && yflip) {
+						sy -= ysize;
+
+						for (INT32 xx = 0; xx<xsize; xx++)
+						{
+							if ((sx+xx < (cliprect_max_x+1)) && (sx+xx >= cliprect_min_x))
+							{
+								for (INT32 yy = 0; yy<ysize; yy++)
+								{
+									if ((sy+(ysize-1-yy) < (cliprect_max_y+1)) && (sy+(ysize-1-yy) >= cliprect_min_y))
+									{
+										INT32 pix;
+										pix = decodebuffer[xsize*yy+xx];
+										if (pix)
+											bitmap[(sy+(ysize-1-yy)) * nScreenWidth + (sx+xx)] = pix+ NewColour; // change later
+									}
+								}
+							}
+						}
+					} else if (xflip && !yflip) {
+						sx -= xsize;
+
+						for (INT32 xx = 0; xx<xsize; xx++)
+						{
+							if ( (sx+(xsize-1-xx) < (cliprect_max_x+1)) && (sx+(xsize-1-xx) >= cliprect_min_x))
+							{
+								for (INT32 yy = 0; yy<ysize; yy++)
+								{
+									if ((sy+yy < (cliprect_max_y+1)) && (sy+yy >= cliprect_min_y))
+									{
+										INT32 pix;
+										pix = decodebuffer[xsize*yy+xx];
+										if (pix)
+											bitmap[(sy+yy) * nScreenWidth + (sx+(xsize-1-xx))] = pix+ NewColour; // change later
+									}
+								}
+							}
+						}
+					} else if (xflip && yflip) {
+						sx -= xsize;
+						sy -= ysize;
+
+						for (INT32 xx = 0; xx<xsize; xx++)
+						{
+							if ((sx+(xsize-1-xx) < (cliprect_max_x+1)) && (sx+(xsize-1-xx) >= cliprect_min_x))
+							{
+								for (INT32 yy = 0; yy<ysize; yy++)
+								{
+									if ((sy+(ysize-1-yy) < (cliprect_max_y+1)) && (sy+(ysize-1-yy) >= cliprect_min_y))
+									{
+										INT32 pix;
+										pix = decodebuffer[xsize*yy+xx];
+										if (pix)
+											bitmap[(sy+(ysize-1-yy)) * nScreenWidth + (sx+(xsize-1-xx))] = pix+ NewColour; // change later
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			source+=4;
+		}
+	}
 }
 
 static INT32 DrvDraw()
@@ -598,17 +1078,15 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x8000; // black
-	}
+	BurnTransferClear(0x8000); // black
 
 	for (INT32 i = 0; i < 8; i++) {
-		kaneko_view2_draw_layer(0, 0, i);
-		kaneko_view2_draw_layer(0, 1, i);
+		if (nSpriteEnable & (1<<i)) kaneko_view2_draw_layer(0, 0, i);
+		if (nSpriteEnable & (1<<i)) kaneko_view2_draw_layer(0, 1, i);
 	}
 
-	skns_draw_sprites(pTransDraw, (UINT32*)DrvSprRAM1, 0x4000, DrvGfxROM2, 0x1000000, (UINT32*)DrvSprReg1, 0x4000);
-	skns_draw_sprites(pTransDraw, (UINT32*)DrvSprRAM0, 0x4000, DrvGfxROM1, 0x2000000, (UINT32*)DrvSprReg0, 0x4000);
+	if (nBurnLayer & 1) jchanskns_draw_sprites(pTransDraw, (UINT32*)DrvSprRAM1, 0x4000, DrvGfxROM2, 0x1000000, (UINT32*)DrvSprReg1, 0x4000);
+	if (nBurnLayer & 2) jchanskns_draw_sprites(pTransDraw, (UINT32*)DrvSprRAM0, 0x4000, DrvGfxROM1, 0x2000000, (UINT32*)DrvSprReg0, 0x4000);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -645,17 +1123,14 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = nCyclesTotal[0] / nInterleave;
-
 		SekOpen(0);
-		nCyclesDone[0] += SekRun(nSegment);
+		CPU_RUN(0, Sek);
 		if (i ==  11) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		if (i == 240) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
-		nSegment = SekTotalCycles();
 		SekClose();
 
 		SekOpen(1);
-		nCyclesDone[1] += SekRun(nSegment - SekTotalCycles());
+		CPU_RUN(1, Sek);
 		if (enable_sub_irq) {
 			if (i ==  11) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 			if (i == 240) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
@@ -697,6 +1172,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		YMZ280BScan(nAction, pnMin);
 
 		SCAN_VAR(enable_sub_irq);
+		SCAN_VAR(watchdog);
 	}
 
 	if (nAction & ACB_NVRAM) {

@@ -4628,6 +4628,9 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_discoboy.cpp">
       <Filter>Burn\drv\pst90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\intf\video\scalers\xbr32.cpp">
+      <Filter>interfaces\video\scalers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">

@@ -711,6 +711,7 @@
     <ClCompile Include="..\..\src\dep\libs\lua\lzio.c" />
     <ClCompile Include="..\..\src\dep\libs\lua\print.c" />
     <ClCompile Include="..\..\src\intf\cd\win32\cd_img.cpp" />
+    <ClCompile Include="..\..\src\intf\video\scalers\xbr32.cpp" />
     <ClCompile Include="generated\m68kops.c" />
     <CustomBuild Include="..\..\src\burn\drv\capcom\ctv_make.cpp">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cl ..\..\src\burn\drv\capcom\%(Filename).cpp

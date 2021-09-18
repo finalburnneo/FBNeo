@@ -1,5 +1,5 @@
 // license:BSD-3-Clause
-// copyright-holders:Mirko Buffoni
+// copyright-holders:Dan Boris, Mirko Buffoni, Aaron Giles, Couriersud
 /***************************************************************************
 
     Intel MCS-48/UPI-41 Portable Emulator
@@ -106,8 +106,6 @@
 #define B_FLAG          0x10
 
 /* status bits (UPI-41) */
-#define STS_F1          0x08
-#define STS_F0          0x04
 #define STS_IBF         0x02
 #define STS_OBF         0x01
 
@@ -139,13 +137,14 @@ struct MCS48_t {
 
 	UINT8       a;                  /* 8-bit accumulator */
 	UINT8       psw;                /* 8-bit psw */
+	bool        f1;                 /* F1 flag (F0 is in PSW) */
 	UINT8       p1;                 /* 8-bit latched port 1 */
 	UINT8       p2;                 /* 8-bit latched port 2 */
 	UINT8       ea;                 /* 1-bit latched ea input */
 	UINT8       timer;              /* 8-bit timer */
 	UINT8       prescaler;          /* 5-bit timer prescaler */
 	UINT8       t1_history;         /* 8-bit history of the T1 input */
-	UINT8       sts;                /* 8-bit status register (UPI-41 only, except for F1) */
+	UINT8       sts;                /* 4-bit status register + OBF/IBF flags (UPI-41 only) */
 	UINT8       dbbi;               /* 8-bit input data buffer (UPI-41 only) */
 	UINT8       dbbo;               /* 8-bit output data buffer (UPI-41 only) */
 
@@ -561,7 +560,7 @@ static void pull_pc_psw()
 	mcs48->pc = ram_r(8 + 2*sp);
 	mcs48->pc |= ram_r(9 + 2*sp) << 8;
 	mcs48->psw = ((mcs48->pc >> 8) & 0xf0) | sp;
-	mcs48->pc &= 0xfff;
+	mcs48->pc &= (mcs48->irq_in_progress) ? 0x7ff : 0xfff;
 	update_regptr();
 }
 
@@ -576,7 +575,7 @@ static void pull_pc()
 	UINT8 sp = (mcs48->psw - 1) & 0x07;
 	mcs48->pc = ram_r(8 + 2*sp);
 	mcs48->pc |= ram_r(9 + 2*sp) << 8;
-	mcs48->pc &= 0xfff;
+	mcs48->pc &= (mcs48->irq_in_progress) ? 0x7ff : 0xfff;
 	mcs48->psw = (mcs48->psw & 0xf0) | sp;
 }
 
@@ -649,7 +648,7 @@ static void execute_jcc(bool result)
 {
 	UINT16 pch = mcs48->pc & 0xf00;
 	UINT8 offset = argument_fetch();
-	if (result != 0)
+	if (result)
 		mcs48->pc = pch | offset;
 }
 
@@ -773,13 +772,13 @@ OPHANDLER( call_7 )         { burn_cycles(2); execute_call(argument_fetch() | 0x
 
 OPHANDLER( clr_a )          { burn_cycles(1); mcs48->a = 0; }
 OPHANDLER( clr_c )          { burn_cycles(1); mcs48->psw &= ~C_FLAG; }
-OPHANDLER( clr_f0 )         { burn_cycles(1); mcs48->psw &= ~F_FLAG; mcs48->sts &= ~STS_F0; }
-OPHANDLER( clr_f1 )         { burn_cycles(1); mcs48->sts &= ~STS_F1; }
+OPHANDLER( clr_f0 )         { burn_cycles(1); mcs48->psw &= ~F_FLAG; }
+OPHANDLER( clr_f1 )         { burn_cycles(1); mcs48->f1 = false; }
 
 OPHANDLER( cpl_a )          { burn_cycles(1); mcs48->a ^= 0xff; }
 OPHANDLER( cpl_c )          { burn_cycles(1); mcs48->psw ^= C_FLAG; }
-OPHANDLER( cpl_f0 )         { burn_cycles(1); mcs48->psw ^= F_FLAG; mcs48->sts ^= STS_F0; }
-OPHANDLER( cpl_f1 )         { burn_cycles(1); mcs48->sts ^= STS_F1; }
+OPHANDLER( cpl_f0 )         { burn_cycles(1); mcs48->psw ^= F_FLAG; }
+OPHANDLER( cpl_f1 )         { burn_cycles(1); mcs48->f1 = !mcs48->f1; }
 
 OPHANDLER( da_a )
 {
@@ -878,7 +877,7 @@ OPHANDLER( jb_6 )           { burn_cycles(2); execute_jcc((mcs48->a & 0x40) != 0
 OPHANDLER( jb_7 )           { burn_cycles(2); execute_jcc((mcs48->a & 0x80) != 0); }
 OPHANDLER( jc )             { burn_cycles(2); execute_jcc((mcs48->psw & C_FLAG) != 0); }
 OPHANDLER( jf0 )            { burn_cycles(2); execute_jcc((mcs48->psw & F_FLAG) != 0); }
-OPHANDLER( jf1 )            { burn_cycles(2); execute_jcc((mcs48->sts & STS_F1) != 0); }
+OPHANDLER( jf1 )            { burn_cycles(2); execute_jcc(mcs48->f1); }
 OPHANDLER( jnc )            { burn_cycles(2); execute_jcc((mcs48->psw & C_FLAG) == 0); }
 OPHANDLER( jni )            { burn_cycles(2); mcs48->irq_polled = (mcs48->irq_state == 0); execute_jcc(mcs48->irq_state != 0); }
 OPHANDLER( jnibf )          { burn_cycles(2); mcs48->irq_polled = (mcs48->sts & STS_IBF) != 0; execute_jcc((mcs48->sts & STS_IBF) == 0); }
@@ -1000,10 +999,10 @@ OPHANDLER( ret )            { burn_cycles(2); pull_pc(); }
 OPHANDLER( retr )
 {
 	burn_cycles(2);
-	pull_pc_psw();
 
 	/* implicitly clear the IRQ in progress flip flop */
 	mcs48->irq_in_progress = false;
+	pull_pc_psw();
 }
 
 OPHANDLER( rl_a )           { burn_cycles(1); mcs48->a = (mcs48->a << 1) | (mcs48->a >> 7); }
@@ -1221,8 +1220,10 @@ void mcs48Reset()
 	mcs48->pc = 0;
 	mcs48->psw = mcs48->psw & (C_FLAG | A_FLAG);
 	update_regptr();
-	mcs48->a11 = 0x000;
+	mcs48->f1 = 0;
+	mcs48->a11 = 0;
 	mcs48->dbbo = 0xff;
+	mcs48->dbbi = 0xff;
 	bus_w(0xff);
 	mcs48->p1 = 0xff;
 	mcs48->p2 = 0xff;
@@ -1274,8 +1275,7 @@ static void check_irqs()
 		}
 
 		/* transfer to location 0x03 */
-		push_pc_psw();
-		mcs48->pc = 0x03;
+		execute_call(0x03);
 
 		/* indicate we took the external IRQ */
 		//standard_irq_callback(0);
@@ -1288,8 +1288,7 @@ static void check_irqs()
 		mcs48->irq_in_progress = true;
 
 		/* transfer to location 0x07 */
-		push_pc_psw();
-		mcs48->pc = 0x07;
+		execute_call(0x07);
 
 		/* timer overflow flip-flop is reset once taken */
 		mcs48->timer_overflow = false;
@@ -1304,47 +1303,46 @@ static void check_irqs()
 
 static void burn_cycles(int count)
 {
-	if (count == 0)
-		return;
-
-	bool timerover = false;
-
-	/* if the timer is enabled, accumulate prescaler cycles */
-	if (mcs48->timecount_enabled & TIMER_ENABLED)
+	if (mcs48->timecount_enabled)
 	{
-		UINT8 oldtimer = mcs48->timer;
-		mcs48->prescaler += count;
-		mcs48->timer += mcs48->prescaler >> 5;
-		mcs48->prescaler &= 0x1f;
-		timerover = (oldtimer != 0 && mcs48->timer == 0);
-	}
+		bool timerover = false;
 
-	/* if the counter is enabled, poll the T1 test input once for each cycle */
-	else if (mcs48->timecount_enabled & COUNTER_ENABLED)
-		for ( ; count > 0; count--, mcs48->icount--)
+		/* if the timer is enabled, accumulate prescaler cycles */
+		if (mcs48->timecount_enabled & TIMER_ENABLED)
 		{
-			mcs48->t1_history = (mcs48->t1_history << 1) | (test_r(1) & 1);
-			if ((mcs48->t1_history & 3) == 2)
-			{
-				if (++mcs48->timer == 0)
-					timerover = true;
-			}
+			UINT8 oldtimer = mcs48->timer;
+			mcs48->prescaler += count;
+			mcs48->timer += mcs48->prescaler >> 5;
+			mcs48->prescaler &= 0x1f;
+			timerover = (oldtimer != 0 && mcs48->timer == 0);
 		}
+
+		/* if the counter is enabled, poll the T1 test input once for each cycle */
+		else if (mcs48->timecount_enabled & COUNTER_ENABLED)
+			for ( ; count > 0; count--, mcs48->icount--)
+			{
+				mcs48->t1_history = (mcs48->t1_history << 1) | (test_r(1) & 1);
+				if ((mcs48->t1_history & 3) == 2)
+				{
+					if (++mcs48->timer == 0)
+						timerover = true;
+				}
+			}
+
+		/* if either source caused a timer overflow, set the flags and check IRQs */
+		if (timerover)
+		{
+			mcs48->timer_flag = true;
+
+			/* according to the docs, if an overflow occurs with interrupts disabled, the overflow is not stored */
+			if (mcs48->tirq_enabled)
+				mcs48->timer_overflow = true;
+		}
+	}
 
 	/* if timer counter was disabled, adjust icount here (otherwise count is 0) */
 	mcs48->icount -= count;
-
-	/* if either source caused a timer overflow, set the flags and check IRQs */
-	if (timerover)
-	{
-		mcs48->timer_flag = true;
-
-		/* according to the docs, if an overflow occurs with interrupts disabled, the overflow is not stored */
-		if (mcs48->tirq_enabled)
-			mcs48->timer_overflow = true;
-	}
 }
-
 
 /*-------------------------------------------------
     mcs48_execute - execute until we run out
@@ -1422,7 +1420,7 @@ UINT8 mcs48_master_r(INT32 offset)
 {
 	/* if just reading the status, return it */
 	if ((offset & 1) != 0)
-		return mcs48->sts;
+		return (mcs48->sts & 0xf3) | (mcs48->f1 ? 8 : 0) | ((mcs48->psw & F_FLAG) ? 4 : 0);
 
 	/* if the output buffer was full, it gets cleared now */
 	if (mcs48->sts & STS_OBF)
@@ -1446,6 +1444,7 @@ void mcs48_master_w(INT32 offset, UINT8 data)
 
 	/* data always goes to the input buffer */
 	mcs48->dbbi = data;
+	mcs48->dbbo = data; // hack needed for cflyball to fully boot -dink
 
 	/* set the appropriate flags */
 	if ((mcs48->sts & STS_IBF) == 0)
@@ -1456,10 +1455,7 @@ void mcs48_master_w(INT32 offset, UINT8 data)
 	}
 
 	/* set F1 accordingly */
-	if (a0 == 0)
-		mcs48->sts &= ~STS_F1;
-	else
-		mcs48->sts |= STS_F1;
+	mcs48->f1 = bool(a0);
 }
 
 void mcs48SetIRQLine(INT32 inputnum, INT32 state)

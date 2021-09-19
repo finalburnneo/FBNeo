@@ -29302,7 +29302,7 @@ STDROMPICKEXT(SpecAdvconta, SpecAdvconta, Spec128)
 STD_ROM_FN(SpecAdvconta)
 
 struct BurnDriver BurnSpecAdvconta = {
-	"spec_Advconta", NULL, "spec_spec128", NULL, "2021",
+	"spec_advconta", NULL, "spec_spec128", NULL, "2021",
 	"ADVENTURES Continue - Side A (128K) (HB)\0", NULL, "PC NONO Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
@@ -29321,7 +29321,7 @@ STDROMPICKEXT(SpecAdvcontb, SpecAdvcontb, Spec128)
 STD_ROM_FN(SpecAdvcontb)
 
 struct BurnDriver BurnSpecAdvcontb = {
-	"spec_Advcontb", "spec_Advconta", "spec_spec128", NULL, "2021",
+	"spec_advcontb", "spec_advconta", "spec_spec128", NULL, "2021",
 	"ADVENTURES Continue - Side B (128K) (HB)\0", NULL, "PC NONO Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,

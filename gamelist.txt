@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17479 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17497 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -280,8 +280,8 @@ This list contains all games supported by FinalBurn Neo.
 | cworld2j	|  	| Adventure Quiz Capcom World 2 (920611 Japan)		| 		| 1992	| Capcom	| CPS1		| 					|
 | cworld2ja	|  	| Adventure Quiz Capcom World 2 (Japan 920611, B-Board 9| cworld2j	| 1992	| Capcom	| CPS1		| 					|
 | cworld2jb	|  	| Adventure Quiz Capcom World 2 (Japan 920611, B-Board 9| cworld2j	| 1992	| Capcom	| CPS1		| 					|
-| spec_Advconta	|  	| ADVENTURES Continue - Side A (128K) (HB)		| 		| 2021	| PC NONO Games	| ZX Spectrum	| 					|
-| spec_Advcontb	|  	| ADVENTURES Continue - Side B (128K) (HB)		| spec_Advconta	| 2021	| PC NONO Games	| ZX Spectrum	| 					|
+| spec_advconta	|  	| ADVENTURES Continue - Side A (128K) (HB)		| 		| 2021	| PC NONO Games	| ZX Spectrum	| 					|
+| spec_advcontb	|  	| ADVENTURES Continue - Side B (128K) (HB)		| spec_advconta	| 2021	| PC NONO Games	| ZX Spectrum	| 					|
 | nes_adveninmagkin|  	| Adventures in the Magic Kingdom (USA)			| 		| 1990	| Capcom	| Miscellaneous	| 					|
 | nes_advenbaybil|  	| Adventures of Bayou Billy, The (USA)			| 		| 1989	| Konami	| Miscellaneous	| 					|
 | spec_buratino	|  	| Adventures of Buratino, The (Russian) (128K)		| 		| 1993	| Copper Feet	| ZX Spectrum	| Choose '4' to set Kempston controller	|
@@ -650,7 +650,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_antarctj	|  	| Antarctic Adventure (Jpn)				| msx_antarct	| 1984	| Konami	| MSX		| 					|
 | msx_antarctk	|  	| Antarctic Adventure (Kor)				| msx_antarct	| 19??	| Prosoft	| MSX		| 					|
 | cv_antarct	|  	| Antarctic Adventure					| 		| 1984	| Coleco	| ColecoVision	| 					|
-| spec_anteater	|  	| AntEater (HB)						| 		| 2021	| Defb		| ZX Spectrum	| 					|
+| spec_anteater	|  	| AntEater (48K) (HB)					| 		| 2021	| DEFB Studio	| ZX Spectrum	| 					|
 | anteater	|  	| Anteater						| 		| 1982	| Stern (Tago li| Galaxian	| 					|
 | nes_anticipation|  	| Anticipation (USA)					| 		| 1988	| Nintendo	| Miscellaneous	| 					|
 | msx_anty	|  	| Anty (Jpn)						| 		| 1984	| ASCII		| MSX		| 					|
@@ -1463,7 +1463,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_billwlsh	|  	| Bill Walsh College Football (Euro, USA)		| 		| 1993	| Electronic Art| Sega Megadrive| 					|
 | md_billwl95	|  	| Bill Walsh College Football 95 (USA)			| 		| 1994	| Electronic Art| Sega Megadrive| 					|
 | md_btomatog	|  	| Bill's Tomato Game (Unl, Prototype)			| 		| 2017	| Psygnosis	| Sega Megadrive| originally planned for 1994		|
-| spec_billythekid|  	| Billy the Kid						| 		| 1989	| Virgin Mastert| ZX Spectrum	| 					|
+| spec_billythekid|  	| Billy the Kid (48K)					| 		| 1989	| Virgin Mastert| ZX Spectrum	| Press Space and Enter to select option|
 | md_bimini	|  	| Bimini Run (USA)					| 		| 1990	| Nuvision Enter| Sega Megadrive| 					|
 | nes_binaryland|  	| Binary Land (Japan)					| 		| 1985	| Hudson Soft	| Miscellaneous	| 					|
 | msx_binarylnd	|  	| Binary Land						| 		| 1984	| Kuma Computers| MSX		| 					|
@@ -1509,7 +1509,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_sailorms	|  	| Bishoujo Senshi Sailor Moon S (Jpn)			| 		| 1995	| Bandai	| Sega Game Gear| 					|
 | gg_sailormse	|  	| Bishoujo Senshi Sailor Moon S (T-Eng, v1.1)		| gg_sailorms	| 2019	| Bandai - Suppe| Sega Game Gear| 					|
 | msx_bitlogic	|  	| BitLogic (HB)						| 		| 2015	| OxiAB Studio	| MSX		| 					|
-| spec_bnw	|  	| Black & White (HB, v1.1)				| 		| 2020	| Pat Morita Tea| ZX Spectrum	| 					|
+| spec_bnw	|  	| Black & White (128K) (HB, v1.1)			| 		| 2020	| Pat Morita Tea| ZX Spectrum	| Use Space and Enter to select options	|
 | nes_blackbas2j|  	| Black Bass 2, The (Japan)				| nes_blackbas2	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_blackbas2	|  	| Black Bass 2, The (USA)				| 		| 1989	| HOT・B	| Miscellaneous	| 					|
 | nes_blackbassthe|  	| Black Bass, The (Japan)				| 		| 1987	| HOT・B	| Miscellaneous	| 					|
@@ -1572,6 +1572,7 @@ This list contains all games supported by FinalBurn Neo.
 | blazstar	|  	| Blazing Star						| 		| 1998	| Yumekobo	| Neo Geo MVS	| 					|
 | spec_blazthund|  	| Blazing Thunder (48K)					| 		| 1990	| Hi-Tec Softwar| ZX Spectrum	| 					|
 | blzntrnd	|  	| Blazing Tornado					| 		| 1994	| Human Amusemen| Miscellaneous	| 					|
+| spec_blimpgeddon|  	| Blimpgeddon (48K) (HB, v1.03)				| 		| 2017-19| Narwhal	| ZX Spectrum	| 					|
 | spec_blinkys	|  	| Blinky's Scary School (48K)				| 		| 1990	| Zeppelin Games| ZX Spectrum	| 					|
 | spec_blizzardsrift|  	| Blizzard's Rift (HB)					| 		| 2007	| Jonathan Cauld| ZX Spectrum	| 					|
 | nes_blobman	|  	| Blob Man (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -1833,7 +1834,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_bsteam3	|  	| Boy Soccer Team III (Jpn, Pirate)			| md_tecmocup	| 199?	| <pirate>	| Sega Megadrive| 					|
 | bradley	|  	| Bradley Trainer					| 		| 1980	| Atari		| Miscellaneous	| GFX/Sound Issues			|
 | cv_brainstr	|  	| Brain Strainers					| 		| 1984	| Coleco	| ColecoVision	| 					|
-| spec_brainache|  	| Brainache						| 		| 1987	| Codemasters	| ZX Spectrum	| 					|
+| spec_brainache|  	| Brainache (48K)					| 		| 1987	| Codemasters	| ZX Spectrum	| 					|
 | brain		|  	| Brain							| 		| 1986	| Coreland / Seg| System 1	| 					|
 | spec_brainstorm|  	| Brainstorm (48K)					| 		| 1985	| Bubble Bus Sof| ZX Spectrum	| 					|
 | gg_dracula	|  	| Bram Stoker's Dracula (Euro)				| 		| 1994	| Sony Imagesoft| Sega Game Gear| 					|
@@ -2188,6 +2189,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_captavenu	|  	| Captain America and the Avengers (USA)		| md_captaven	| 1992	| Data East	| Sega Megadrive| 					|
 | nes_captaameandave|  	| Captain America and the Avengers (USA)		| 		| 1991	| Data East	| Miscellaneous	| 					|
 | md_captavenup	|  	| Captain America and the Avengers (USA, Prototype)	| md_captaven	| 1992	| Data East	| Sega Megadrive| 					|
+| spec_captamerica|  	| Captain America Defies the Doom Tube (48K)		| 		| 1988	| Go!		| ZX Spectrum	| 					|
 | msx_captchef	|  	| Captain Chef (Jpn)					| 		| 1984	| Nihon Columbia| MSX		| 					|
 | nes_captacom	|  	| Captain Comic - The Adventure (USA)			| 		| 1989	| Color Dreams	| Miscellaneous	| 					|
 | captcommjr1	|  	| Captain Commando (910928 Japan)			| captcomm	| 1991	| Capcom	| CPS1		| 					|
@@ -2261,7 +2263,7 @@ This list contains all games supported by FinalBurn Neo.
 | chf_casinop	|  	| Casino Poker						| 		| 1980	| Zircon	| Channel F	| 					|
 | msx_wrldopen	|  	| Casio Worldopen (Jpn)					| 		| 1985	| Casio		| MSX		| 					|
 | msx_wrldopenk	|  	| Casio Worldopen (Kor)					| msx_wrldopen	| 1986	| Boram Soft	| MSX		| 					|
-| spec_castaway	|  	| Castaway 48K (HB)					| 		| 2016	| usebox.net	| ZX Spectrum	| 					|
+| spec_castaway	|  	| Castaway (48K) (HB)					| 		| 2016	| usebox.net	| ZX Spectrum	| 					|
 | nes_castelian	|  	| Castelian (USA)					| 		| 1991	| Triffix	| Miscellaneous	| 					|
 | sms_castelo	|  	| Castelo Ra-Tim-Bum (Bra)				| 		| 1997	| Tec Toy	| Sega Master Sy| 					|
 | cv_castelo	|  	| Castelo						| 		| 1985	| Splice Vision	| ColecoVision	| 					|
@@ -3294,15 +3296,16 @@ This list contains all games supported by FinalBurn Neo.
 | spec_darkfusion|  	| Dark Fusion (128K)					| 		| 1988	| Gremlin Graphi| ZX Spectrum	| 					|
 | nes_darklord	|  	| Dark Lord (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | darkplnt	|  	| Dark Planet						| 		| 1982	| Stern		| Galaxian	| 					|
-| spec_darkredux|  	| Dark Redux, The (HB)					| 		| 2021	| Zosya Entertai| ZX Spectrum	| 					|
+| spec_darkredux|  	| Dark Redux, The (English) (48K) (HB)			| 		| 2021	| Zosya Entertai| ZX Spectrum	| Hold 'P' at the logo screen to skip th|
+| spec_darkreduxru|  	| Dark Redux, The (Russian) (48K) (HB)			| spec_darkredux| 2021	| Zosya Entertai| ZX Spectrum	| Hold 'P' at the logo screen to skip th|
 | darksealj	|  	| Dark Seal (Japan)					| darkseal	| 1990	| Data East Corp| DECO IC16	| 					|
 | darkseal1	|  	| Dark Seal (World revision 1)				| darkseal	| 1990	| Data East Corp| DECO IC16	| 					|
 | darkseal	|  	| Dark Seal (World revision 3)				| 		| 1990	| Data East Corp| DECO IC16	| 					|
 | darkseal2	|  	| Dark Seal 2 (Japan v2.1)				| wizdfire	| 1992	| Data East Corp| DECO IC16	| 					|
 | spec_darkstar	|  	| Dark Star						| 		| 1984	| Design Design	| ZX Spectrum	| 					|
 | darktowr	|  	| Dark Tower						| 		| 1992	| Game Room	| Miscellaneous	| 					|
-| spec_darktransit|  	| Dark Transit (HB)					| 		| 2021	| Goliat eXperie| ZX Spectrum	| 					|
-| spec_darklostpages|  	| Dark, The - Lost Pages (HB)				| 		| 2021	| Zosya Entertai| ZX Spectrum	| 					|
+| spec_darktransit|  	| Dark Transit (48K) (HB)				| 		| 2021	| Goliat eXperie| ZX Spectrum	| 					|
+| spec_darklostpages|  	| Dark, The - Lost Pages (128K) (HB)			| 		| 2021	| Zosya Entertai| ZX Spectrum	| 					|
 | spec_darkman	|  	| Darkman (128K)					| 		| 1991	| Ocean		| ZX Spectrum	| 					|
 | nes_darkmanc	|  	| Darkman (USA) - Castellano v1.0			| nes_darkman	| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_darkman	|  	| Darkman (USA)						| 		| 1991	| Ocean		| Miscellaneous	| 					|
@@ -3820,7 +3823,7 @@ This list contains all games supported by FinalBurn Neo.
 | dkongotr	|  	| Donkey Kong On the Run v1.02				| dkong		| 2020	| Paul Goes	| Miscellaneous	| 					|
 | dkpace	|  	| Donkey Kong Pace					| dkong		| 2016	| Hack (Sock Mas| Miscellaneous	| 					|
 | dkongran1	|  	| Donkey Kong Randomized Edition v1.01			| dkong		| 2020	| Paul Goes	| Miscellaneous	| 					|
-| spec_dkreload	|  	| Donkey Kong Reloaded (HB)				| 		| 2013	| Gabriele Amore| ZX Spectrum	| 					|
+| spec_dkreload	|  	| Donkey Kong Reloaded (48K) (HB)			| 		| 2013	| Gabriele Amore| ZX Spectrum	| 					|
 | dkrdemo	|  	| Donkey Kong Remix (Demo)				| dkong		| 2015	| Hack (Sockmast| Miscellaneous	| 					|
 | dkongrev	|  	| Donkey Kong Reverse (Hack)				| dkong		| 2019	| Hack (Paul Goe| Miscellaneous	| 					|
 | dkongss	|  	| Donkey Kong Skip Start v1.00				| dkong		| 2020	| Paul Goes	| Miscellaneous	| 					|
@@ -4107,7 +4110,7 @@ This list contains all games supported by FinalBurn Neo.
 | dsoccr94k	|  	| Dream Soccer '94 (Korea, M107 hardware)		| dsoccr94	| 1994	| Irem (Data Eas| Irem M107	| 					|
 | dsoccr94	|  	| Dream Soccer '94 (World, M107 hardware)		| 		| 1994	| Irem (Data Eas| Irem M107	| 					|
 | dreamwld	|  	| Dream World						| 		| 2000	| SemiCom	| Miscellaneous	| 					|
-| spec_drmwalker|  	| Dreamwalker - Alter Ego 2 (HB, v1.1)			| 		| 2014	| RetroSouls	| ZX Spectrum	| 					|
+| spec_drmwalker|  	| Dreamwalker - Alter Ego 2 (128K) (HB, v1.1)		| 		| 2014	| RetroSouls	| ZX Spectrum	| 					|
 | nes_dreamworldpogie|  	| Dreamworld Pogie (Prototype)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_driar	|  	| Driar (HB)						| 		| 2018	| Eriksson & Ado| Miscellaneous	| 					|
 | driblingbr	|  	| Dribbling (bootleg, Brazil)				| dribling	| 1983	| bootleg (Video| Miscellaneous	| No sound				|
@@ -4116,7 +4119,7 @@ This list contains all games supported by FinalBurn Neo.
 | drifto94	|  	| Drift Out '94 - The Hard Order (Japan)		| 		| 1994	| Visco		| SSV		| 					|
 | driftout	|  	| Drift Out (Europe)					| 		| 1991	| Visco (Europe)| Taito F2	| 					|
 | driftoutj	|  	| Drift Out (Japan)					| driftout	| 1991	| Visco (Japan)	| Taito F2	| 					|
-| spec_drift	|  	| Drift! (HB)						| 		| 2019	| Zosya Entertai| ZX Spectrum	| Designed esclusively for 128K system	|
+| spec_drift	|  	| Drift! (128K) (HB)					| 		| 2019	| Zosya Entertai| ZX Spectrum	| Designed esclusively for 128K system	|
 | spec_driller	|  	| Driller (48K)						| 		| 1987	| Incentive	| ZX Spectrum	| 					|
 | msx_drillertnk|  	| Driller Tanks (Jpn)					| 		| 1984	| Hudson Soft	| MSX		| 					|
 | nes_dringle	|  	| Dringle (Unl)						| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -4200,7 +4203,7 @@ This list contains all games supported by FinalBurn Neo.
 | ddtodj	|  	| Dungeons & Dragons - tower of doom (940412 Japan)	| ddtod		| 1994	| Capcom	| CPS2		| 					|
 | md_ddwares	|  	| Dungeons & Dragons - Warriors of the Eternal Sun (Euro| 		| 1992	| Sega		| Sega Megadrive| 					|
 | cv_datrolls	|  	| Dungeons and Trolls (HB)				| 		| 2014	| CollectorVisio| ColecoVision	| 					|
-| spec_gomilandia|  	| Dungeons of Gomilandia (HB)				| 		| 2020	| RetroWorks	| ZX Spectrum	| 					|
+| spec_gomilandia|  	| Dungeons of Gomilandia (128K) (HB)			| 		| 2020	| RetroWorks	| ZX Spectrum	| 					|
 | ddream95	|  	| Dunk Dream '95 (Japan 1.4, EAM)			| hoops96	| 1995	| Data East Corp| DECO MLC	| 					|
 | gg_dunkkids	|  	| Dunk Kids (Jpn)					| 		| 1994	| Sega		| Sega Game Gear| 					|
 | dunkshoto	|  	| Dunk Shot (FD1089 317-0022)				| dunkshot	| 1986	| Sega		| System 16B	| 					|
@@ -4419,7 +4422,7 @@ This list contains all games supported by FinalBurn Neo.
 | empcityu	|  	| Empire City: 1931 (US)				| empcity	| 1986	| Seibu Kaihatsu| Miscellaneous	| 					|
 | md_empsteel	|  	| Empire of Steel (Euro)				| 		| 1992	| Flying Edge	| Sega Megadrive| 					|
 | spec_starwars2|  	| Empire Strikes Back, The (48K)			| 		| 1988	| Domark	| ZX Spectrum	| 					|
-| spec_efmb	|  	| Endless Forms Most Beautiful (HB)			| 		| 2012	| Stonechat Prod| ZX Spectrum	| 					|
+| spec_efmb	|  	| Endless Forms Most Beautiful (48K) (HB)		| 		| 2012	| Stonechat Prod| ZX Spectrum	| 					|
 | spec_enduro	|  	| Enduro Racer (128K)					| 		| 1987	| Activision	| ZX Spectrum	| 					|
 | endurord	|  	| Enduro Racer (bootleg of Rev A, YM2151, FD1089B 317-00| enduror	| 1986	| bootleg	| Hang-On	| 					|
 | enduror1d	|  	| Enduro Racer (bootleg of YM2203, FD1089B 317-0013A set| enduror	| 1986	| bootleg	| Hang-On	| 					|
@@ -4484,6 +4487,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_espnspedp	|  	| ESPN Speedworld (USA, Prototype)			| md_espnsped	| 1994	| Sony Imagesoft| Sega Megadrive| 					|
 | md_espnnfl	|  	| ESPN Sunday Night NFL (USA)				| 		| 1994	| Sony Imagesoft| Sega Megadrive| 					|
 | md_espnnflp	|   NW	| ESPN Sunday Night NFL (USA, Prototype)		| md_espnnfl	| 1994	| Sony Imagesoft| Sega Megadrive| 					|
+| spec_estacaja	|  	| Esta en la Caja (Spanish) (48K) (HB)			| 		| 2009	| RELEVO	| ZX Spectrum	| 					|
 | md_eswat	|  	| ESWAT - City Under Siege (Euro, USA, Rev. A)		| 		| 1990	| Sega		| Sega Megadrive| 					|
 | md_eswats	|  	| ESWAT - City Under Siege (Hack, Spanish)		| md_eswat	| 2018	| Sega		| Sega Megadrive| 					|
 | md_eternalc	|  	| Eternal Champions (Euro)				| 		| 1994	| Sega		| Sega Megadrive| 					|
@@ -4754,7 +4758,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_fjhh	|  	| Farmer Jack in Harvest Havoc (HB)			| 		| 2006	| Bob Smith	| ZX Spectrum	| 					|
 | farmer	|  	| Farmers Rebellion					| ikki		| 1985	| Sun Electronic| Miscellaneous	| 					|
 | msx_fartypig	|  	| Farty Pig (HB)					| 		| 2020	| The Geps	| MSX		| Beta release				|
-| spec_fasebonus|  	| Fase Bonus The Game (HB)				| 		| 2017	| The Mojon Twin| ZX Spectrum	| 					|
+| spec_fasebonus|  	| Fase Bonus The Game (48K) (HB)			| 		| 2017	| The Mojon Twin| ZX Spectrum	| 					|
 | ngp_faselei	|  	| Faselei! (Euro)					| 		| 2000	| SNK		| NeoGeo Pocket | 					|
 | ngp_faseleij	|  	| Faselei! (Jpn)					| ngp_faselei	| 1999	| SNK		| NeoGeo Pocket | 					|
 | spec_ffdizzy	|  	| Fast Food Dizzy (128K)				| 		| 1989	| Codemasters	| ZX Spectrum	| 					|
@@ -4871,6 +4875,7 @@ This list contains all games supported by FinalBurn Neo.
 | fsoccerb	|   NW	| Fighting Soccer (Joystick hack bootleg)		| fsoccer	| 1988	| bootleg	| Miscellaneous	| 					|
 | fsoccerba	|   NW	| Fighting Soccer (Joystick hack bootleg, alt)		| fsoccer	| 1988	| bootleg	| Miscellaneous	| 					|
 | fsoccer	|   NW	| Fighting Soccer (version 4)				| 		| 1988	| SNK		| Miscellaneous	| 					|
+| nes_filthyktcn|  	| Filthy Kitchen (HB)					| 		| 2016	| Dustmop	| Miscellaneous	| 					|
 | pce_finlblst	|  	| Final Blaster						| 		| 1990	| Namcot	| PC Engine	| 					|
 | finalbj	|  	| Final Blow (Japan)					| finalb	| 1988	| Taito Corporat| Taito F2	| 					|
 | md_finalb	|  	| Final Blow (Jpn)					| md_jbdougko	| 1990	| Taito		| Sega Megadrive| 					|
@@ -5702,8 +5707,8 @@ This list contains all games supported by FinalBurn Neo.
 | sms_globald	|  	| Global Defense (Euro, USA)				| 		| 1987	| Sega		| Sega Master Sy| 					|
 | sms_globaldp	|  	| Global Defense (Euro, USA, Prototype)			| sms_globald	| 1987	| Sega		| Sega Master Sy| 					|
 | spec_glooptroop|  	| Gloop Troops (48K) (HB)				| 		| 2011	| Little Shop of| ZX Spectrum	| 					|
+| spec_gluf	|  	| GLUF (128K) (HB)					| 		| 2019	| RetroSouls	| ZX Spectrum	| 					|
 | md_gluf	|  	| GLUF (HB)						| 		| 2020	| RetroSouls	| Sega Megadrive| 					|
-| spec_gluf	|  	| GLUF (HB)						| 		| 2019	| RetroSouls	| ZX Spectrum	| 					|
 | nes_glukthuwar|  	| Gluk the Thunder Warrior (Spain) (Gluk Video) (Unl)	| 		| 1992	| Gluk Video	| Miscellaneous	| 					|
 | go2000	|  	| Go 2000						| 		| 2000	| SunA?		| Miscellaneous	| 					|
 | gogold	|  	| Go For The Gold (Japan)				| recordbr	| 1988	| Taito Corporat| Taito H System| 					|
@@ -5920,8 +5925,8 @@ This list contains all games supported by FinalBurn Neo.
 | grasspin	|  	| Grasspin						| 		| 1983	| [Zilec Electro| Miscellaneous	| 					|
 | gratiaa	|  	| Gratia - Second Earth (ver 1.0, 91022-10 version)	| gratia	| 1996	| Jaleco	| MegaSystem 32	| 					|
 | gratia	|  	| Gratia - Second Earth (ver 1.0, 92047-01 version)	| 		| 1996	| Jaleco	| MegaSystem 32	| 					|
+| spec_gravibots|  	| GraviBots (128K) (HB)					| 		| 2014	| RetroSouls	| ZX Spectrum	| Press Space and Enter to select option|
 | md_gravibots	|  	| GraviBots (HB)					| 		| 2021	| RetroSouls	| Sega Megadrive| 					|
-| spec_gravibots|  	| GraviBots (HB)					| 		| 2014	| RetroSouls	| ZX Spectrum	| 					|
 | gravitar1	|  	| Gravitar (version 1)					| gravitar	| 1982	| Atari		| Miscellaneous	| 					|
 | gravitar2	|  	| Gravitar (version 2)					| gravitar	| 1982	| Atari		| Miscellaneous	| 					|
 | gravitar	|  	| Gravitar (version 3)					| 		| 1982	| Atari		| Miscellaneous	| 					|
@@ -6841,6 +6846,9 @@ This list contains all games supported by FinalBurn Neo.
 | zaxxonb	|  	| Jackson						| zaxxon	| 1982	| bootleg	| Zaxxon	| 					|
 | msx_jagur	|  	| Jagur (Jpn)						| 		| 1987	| Hudson Soft	| MSX		| 					|
 | msx_jagura	|  	| Jagur (Jpn, Alt)					| msx_jagur	| 1987	| Hudson Soft	| MSX		| 					|
+| spec_jksquashcg|  	| Jahangir Khan's World Championship Squash - Club Game | 		| 1991	| Krisalis	| ZX Spectrum	| 					|
+| spec_jksquashtg|  	| Jahangir Khan's World Championship Squash - Tournament| spec_jksquashcg| 1991	| Krisalis	| ZX Spectrum	| 					|
+| spec_jailbreak|  	| Jail Break (48K)					| 		| 1987	| Konami	| ZX Spectrum	| 					|
 | jailbrekb	|  	| Jail Break (bootleg)					| jailbrek	| 1986	| bootleg	| GX507		| 					|
 | jailbrek	|  	| Jail Break						| 		| 1986	| Konami	| GX507		| 					|
 | nes_jajamgekj	|  	| Jajamaru Gekimaden - Maboroshi no Kinmajou (Japan)	| nes_jajamgek	| 1990	| Jaleco	| Miscellaneous	| 					|
@@ -6881,9 +6889,11 @@ This list contains all games supported by FinalBurn Neo.
 | gg_jangpun2	|  	| Jang Pung II (Kor, SMS Mode)				| 		| 1993	| Unknown	| Sega Game Gear| 					|
 | sms_janggun	|  	| Janggun-ui Adeul (Kor)				| 		| 1992	| Daou Infosys	| Sega Master Sy| 					|
 | nes_janggunuiadeul|  	| Janggun-ui Adeul (Korea) (Unl)			| 		| 1992	| Daou		| Miscellaneous	| 					|
+| spec_janosik	|  	| Janosik (128K) (HB)					| 		| 2013	| Rafal Miazga, | ZX Spectrum	| 					|
 | md_janout	|  	| Janou Touryuumon (Jpn)				| 		| 1993	| Sega		| Sega Megadrive| 					|
 | md_jantei	|  	| Jantei Monogatari (Jpn)				| 		| 1991	| Reno		| Sega Megadrive| 					|
 | md_draxos	|  	| Jashin Draxos (Jpn, Kor)				| md_riskyw	| 1993	| Electronic Art| Sega Megadrive| 					|
+| spec_jasper	|  	| Jasper! (48K)						| 		| 1984	| Micromega	| ZX Spectrum	| Use A, S, O and L to move the main cha|
 | msx_jawbrk2	|  	| Jaw Breaker 2 (HB)					| 		| 2014	| Magoo		| MSX		| 					|
 | msx_jaws	|  	| Jaws (Euro)						| 		| 1989	| A.M.H.	| MSX		| Use Space and Enter to select options	|
 | nes_jaws	|  	| Jaws (USA)						| 		| 1987	| LJN		| Miscellaneous	| 					|
@@ -7062,7 +7072,7 @@ This list contains all games supported by FinalBurn Neo.
 | jumpshotp	|  	| Jump Shot Engineering Sample				| jumpshot	| 1985	| Bally Midway	| Pac-man	| 					|
 | jumpshot	|  	| Jump Shot						| 		| 1985	| Bally Midway	| Pac-man	| 					|
 | nes_jumpjump	|  	| Jump-Jump (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| spec_jumpjupiter|  	| Jumpin' Jupiter (HB)					| 		| 2020	| Quantum Sheep	| ZX Spectrum	| 					|
+| spec_jumpjupiter|  	| Jumpin' Jupiter (48K) (HB)				| 		| 2020	| Quantum Sheep	| ZX Spectrum	| 					|
 | nes_jumpikid	|  	| Jumpin' Kid - Jack to Mame no Ki Monogatari (Japan)	| 		| 1990	| Asmik		| Miscellaneous	| 					|
 | msx_jumping	|  	| JumpinG (HB)						| 		| 2011	| DimensionZ	| MSX		| 					|
 | jumping	|  	| Jumping (set 1)					| rbisland	| 1989	| bootleg	| Taito Misc	| 					|
@@ -7336,6 +7346,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_kingballa	|  	| King & Balloon (Jpn, Alt)				| msx_kingball	| 1984	| Namcot	| MSX		| 					|
 | kingball	|  	| King & Balloon (US)					| 		| 1980	| Namco		| Galaxian	| 					|
 | sms_kingball	|  	| King and Balloon (Kor)				| 		| 19??	| Unknown	| Sega Master Sy| 					|
+| spec_kaquest	|  	| King Arthur's Quest (48K)				| 		| 1984	| Hill MacGibbon| ZX Spectrum	| Use numeric keys to play		|
 | nes_kingkon2j	|  	| King Kong 2 - Ikari no Megaton Punch (Japan)		| nes_kingkon2	| 1986	| Konami	| Miscellaneous	| 					|
 | nes_kingkon2	|  	| King Kong 2 - Ikari no Megaton Punch (T-eng)		| 		| 1986	| Konami	| Miscellaneous	| 					|
 | msx_kingleon	|  	| King Leonard (Spanish)				| 		| 1986	| Mind Games Esp| MSX		| 					|
@@ -7595,7 +7606,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_krazykreatures|  	| Krazy Kreatures (USA) (Unl)				| 		| 1990	| AVE		| Miscellaneous	| 					|
 | nes_krioncon	|  	| Krion Conquest, The (USA)				| 		| 1991	| Vic Tokai	| Miscellaneous	| 					|
 | md_kromasphere|  	| Kromasphere (HB)					| 		| 2019	| 2nd Dimension	| Sega Megadrive| Copyright 2017 CMC			|
-| spec_krpat	|  	| Krpat (HB)						| 		| 2020	| Bizard	| ZX Spectrum	| 					|
+| spec_krpat	|  	| Krpat (Czech) (48K) (HB)				| 		| 2020	| Bizard	| ZX Spectrum	| 					|
 | krull		|  	| Krull							| 		| 1983	| Gottlieb	| Miscellaneous	| 					|
 | sms_krustyfhc	|  	| Krusty's Fun House (Euro, Bra) - Castellano v1.0	| sms_krustyfh	| 2021	| Sega		| Sega Master Sy| 					|
 | sms_krustyfh	|  	| Krusty's Fun House (Euro, Bra)			| 		| 1992	| Flying Edge	| Sega Master Sy| 					|
@@ -7763,6 +7774,8 @@ This list contains all games supported by FinalBurn Neo.
 | kyustrkr	|  	| Last Striker / Kyuukyoku no Striker			| 		| 1989	| East Technolog| Taito X	| 					|
 | lastsurvd	|  	| Last Survivor (FD1094 317-0083 decrypted)		| lastsurv	| 1987	| Sega		| X-Board	| 					|
 | lastsurv	|  	| Last Survivor (FD1094 317-0083)			| 		| 1987	| Sega		| X-Board	| 					|
+| spec_lasttrain1|  	| Last Train to Tranz-Central - Part 1 (128K) (HB)	| 		| 2020	| Quantum Sheep	| ZX Spectrum	| 					|
+| spec_lasttrain2|  	| Last Train to Tranz-Central - Part 2 (128K) (HB)	| spec_lasttrain1| 2020	| Quantum Sheep	| ZX Spectrum	| 					|
 | spec_lastvampire|  	| Last Vampire, The					| 		| 1990	| Atlantis	| ZX Spectrum	| 					|
 | nes_lawestj	|  	| Law of the West (Japan)				| nes_laweste	| 1987	| Pony Canyon	| Miscellaneous	| 					|
 | nes_laweste	|  	| Law of the West (T-Eng)				| 		| 1987-2020| Pony Canyon - | Miscellaneous	| 					|
@@ -8001,7 +8014,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_lostraider101|  	| Lost Raider (HB, v1.01)				| 		| 2015	| Vingazole & Ic| Sega Master Sy| The game lacks sound			|
 | losttomb	|  	| Lost Tomb (Easy)					| 		| 1982	| Stern		| Galaxian	| 					|
 | losttombh	|  	| Lost Tomb (Hard)					| losttomb	| 1982	| Stern		| Galaxian	| 					|
-| spec_lostulum	|  	| Lost Treasures of Tulum, the (HB)			| 		| 2020	| RetroWorks	| ZX Spectrum	| 					|
+| spec_lostulum	|  	| Lost Treasures of Tulum, The (128K) (HB)		| 		| 2020	| RetroWorks	| ZX Spectrum	| 					|
 | lostwrldo	|  	| Lost Worlds (Japan Old ver.)				| forgottn	| 1988	| Capcom	| CPS1		| 					|
 | lostwrld	|  	| Lost Worlds (Japan)					| forgottn	| 1988	| Capcom	| CPS1		| 					|
 | nes_lotlot	|  	| Lot Lot (Japan)					| 		| 1985	| Tokuma Shoten	| Miscellaneous	| 					|
@@ -8152,7 +8165,7 @@ This list contains all games supported by FinalBurn Neo.
 | msword	|  	| Magic Sword - heroic fantasy (25.07.1990 other country| 		| 1990	| Capcom	| CPS1		| 					|
 | mswordu	|  	| Magic Sword - heroic fantasy (25.07.1990 USA)		| msword	| 1990	| Capcom	| CPS1		| 					|
 | msx_magtower	|  	| Magic Tower Adventure (HB)				| 		| 2017	| Timmy		| MSX		| 					|
-| spec_magicable|  	| MagicAble (HB)					| 		| 2020	| Packobilly	| ZX Spectrum	| Select keyboard as game inputs	|
+| spec_magicable|  	| MagicAble (48K) (HB)					| 		| 2020	| Packobilly	| ZX Spectrum	| Set keyboard to use controller	|
 | mcatadvj	|  	| Magical Cat Adventure (Japan)				| mcatadv	| 1993	| Wintechno	| LINDA		| 					|
 | mcatadv	|  	| Magical Cat Adventure					| 		| 1993	| Wintechno	| LINDA		| 					|
 | pce_magchase	|  	| Magical Chase						| 		| 1991	| Palsoft	| PC Engine	| 					|
@@ -8341,7 +8354,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_mariob	|  	| Mario Brothers (HB)					| cv_mario	| 1983-2009| Nintendo	| ColecoVision	| Published by CollectorVision		|
 | cv_mario	|  	| Mario Brothers Final Edition (Rev D) (HB)		| 		| 1983-2009| Nintendo	| ColecoVision	| Published by CollectorVision		|
 | md_mariolh	|  	| Mario Lemieux Hockey (Euro, USA)			| 		| 1991	| Sega		| Sega Megadrive| 					|
-| spec_maritrini|  	| Maritrini Freelance MonsterSlayer (HB)		| 		| 2011	| The Mojon Twin| ZX Spectrum	| 					|
+| spec_maritrini|  	| Maritrini Freelance MonsterSlayer (128K) (HB)		| 		| 2011	| The Mojon Twin| ZX Spectrum	| 					|
 | markham	|  	| Markham						| 		| 1983	| Sun Electronic| Miscellaneous	| 					|
 | md_markou	|  	| Marko (USA)						| md_marko	| 1994	| Domark	| Sega Megadrive| 					|
 | gg_marko	|  	| Marko's Magic Football (Euro)				| 		| 1993	| Domark	| Sega Game Gear| 					|
@@ -8869,7 +8882,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_miraisen	|  	| Mirai Senshi - Lios (T-Eng)				| 		| 1989	| Pack-In-Video	| Miscellaneous	| 					|
 | mirax		|  	| Mirax (set 1)						| 		| 1985	| Current Techno| Miscellaneous	| 					|
 | miraxa	|  	| Mirax (set 2)						| mirax		| 1985	| Current Techno| Miscellaneous	| 					|
-| spec_miremare	|  	| Mire Mare (HB, v1.09)					| 		| 2020	| Luca Bordoni	| ZX Spectrum	| 					|
+| spec_miremare	|  	| Mire Mare (48K) (HB, v1.09)				| 		| 2020	| Luca Bordoni	| ZX Spectrum	| 					|
 | spec_misifucga|  	| Misifu Remeow CGA (HB, v1.4.1)			| spec_misifucolor| 2021	| JSM Soft	| ZX Spectrum	| Alley Cat demake for ZX Spectrum	|
 | spec_misifucolor|  	| Misifu Remeow Color (HB, v1.4.1)			| 		| 2021	| JSM Soft	| ZX Spectrum	| Alley Cat demake for ZX Spectrum	|
 | md_misplaced	|  	| Misplaced (HB, English)				| 		| 2019	| RetroSouls	| Sega Megadrive| 					|
@@ -9176,8 +9189,8 @@ This list contains all games supported by FinalBurn Neo.
 | mouserc	|  	| Mouser (Cosmos)					| mouser	| 1983	| UPL (Cosmos li| Miscellaneous	| 					|
 | msx_mouser	|  	| Mouser (Jpn)						| 		| 1983	| Sony		| MSX		| 					|
 | mouser	|  	| Mouser						| 		| 1983	| UPL		| Miscellaneous	| 					|
+| spec_mousetrap|  	| Mousetrap (48K) (HB)					| 		| 2020	| Chris Maling	| ZX Spectrum	| 					|
 | cv_mtrapa	|  	| Mousetrap (Alt)					| cv_mtrap	| 1982	| Coleco	| ColecoVision	| 					|
-| spec_mousetrap|  	| Mousetrap (HB)					| 		| 2020	| Chris Maling	| ZX Spectrum	| 					|
 | cv_mtrap	|  	| Mousetrap						| 		| 1982	| Coleco	| ColecoVision	| 					|
 | sg1k_castlet	|  	| Mowang migong ~ The Castle (Tw)			| sg1k_castle	| 1986?	| DahJee	| Sega SG-1000	| 					|
 | spec_mrhair2	|  	| Mr Hair & The Fly (HB)				| 		| 2021	| BitmapSoft	| ZX Spectrum	| 					|
@@ -9294,8 +9307,8 @@ This list contains all games supported by FinalBurn Neo.
 | mchampdxa	|  	| Multi Champ Deluxe (ver. 1126, 26/11/1999)		| mchampdx	| 1999	| ESD		| Miscellaneous	| 					|
 | multi96	|  	| Multi Game '96 (Italy)				| twinadv	| 1996	| Barko Corp	| Kaneko Pandora| 					|
 | mltiwars	|  	| Multi Wars (bootleg of UniWar S)			| uniwars	| 1980	| bootleg (Gayto| Galaxian	| 					|
+| spec_multidude|  	| MultiDude (128K) (HB)					| 		| 2014	| RetroSouls	| ZX Spectrum	| 					|
 | nes_multidude	|  	| Multidude (HB)					| 		| 2014	| RetroSouls	| Miscellaneous	| 					|
-| spec_multidude|  	| MultiDude (HB)					| 		| 2014	| RetroSouls	| ZX Spectrum	| 					|
 | cv_multiverse	|  	| Multiverse (HB)					| 		| 2019	| Hikaru Games	| ColecoVision	| Published by Team Pixelboy		|
 | mnchmobl	|  	| Munch Mobile (US)					| joyfulr	| 1983	| SNK (Centuri l| Miscellaneous	| 					|
 | spec_mundialfutbol|  	| Mundial de Futbol (Spanish) (48K)			| 		| 1990	| Opera Soft	| ZX Spectrum	| 					|
@@ -9379,7 +9392,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_nakaf1gp	|  	| Nakajima Satoru Kanshuu F1 Grand Prix (Jpn)		| 		| 1991	| Varie		| Sega Megadrive| 					|
 | md_f1heromd	|  	| Nakajima Satoru Kanshuu F1 Hero MD (Jpn)		| 		| 1992	| Varie		| Sega Megadrive| 					|
 | md_nakaf1sl	|  	| Nakajima Satoru Kanshuu F1 Super License (Jpn)	| 		| 1992	| Varie		| Sega Megadrive| 					|
-| nes_nalleland	|  	| Nalle Land (HB, v040)					| 		| 2020	| Benjamin Larss| Miscellaneous	| 					|
+| nes_nalleland	|  	| Nalle Land (HB, v0.4.0)				| 		| 2020	| Benjamin Larss| Miscellaneous	| 					|
 | nam1975	|  	| NAM-1975 (NGM-001)(NGH-001)				| 		| 1990	| SNK		| Neo Geo MVS	| 					|
 | msx_namake	|  	| Namake's Bridgedrome (HB)				| 		| 2005	| Buresto Faiya	| MSX		| Uses joyport #2			|
 | namcoc69	|   NW	| Namco C69 (M37702) (Bios)				| 		| 1994	| Namco		| NA-1 / NA-2	| BIOS only				|
@@ -9927,7 +9940,7 @@ This list contains all games supported by FinalBurn Neo.
 | nostj		|  	| Nostradamus (Japan)					| nost		| 1993	| Face		| LINDA		| 					|
 | nostk		|  	| Nostradamus (Korea)					| nost		| 1993	| Face		| LINDA		| 					|
 | nost		|  	| Nostradamus						| 		| 1993	| Face		| LINDA		| 					|
-| spec_nosy	|  	| Nosy (HB)						| 		| 2020	| Javier Fopiani| ZX Spectrum	| 					|
+| spec_nosy	|  	| Nosy (48K) (HB)					| 		| 2020	| Javier Fopiani| ZX Spectrum	| 					|
 | nouryokup	|  	| Nouryoku Koujou Iinkai (prototype)			| nouryoku	| 1995	| Tecmo		| NMK16		| 					|
 | nouryoku	|  	| Nouryoku Koujou Iinkai				| 		| 1995	| Tecmo		| NMK16		| 					|
 | nova2001	|  	| Nova 2001 (Japan)					| 		| 1983	| UPL		| Miscellaneous	| 					|
@@ -9973,7 +9986,7 @@ This list contains all games supported by FinalBurn Neo.
 | sg1k_matchpg	|  	| Okamoto Ayako no Match Play Golf (Jpn, OMV)		| 		| 1984?	| Tsukuda Origin| Sega SG-1000	| 					|
 | sg1k_matchpga	|  	| Okamoto Ayako no Match Play Golf (Jpn, OMV, Alt)	| sg1k_matchpg	| 1984?	| Tsukuda Origin| Sega SG-1000	| 					|
 | sg1k_matchpgt	|  	| Okamoto Ayako no Match Play Golf (Tw)			| sg1k_matchpg	| 1984?	| Aaronix	| Sega SG-1000	| 					|
-| spec_oldtower	|  	| Old Tower (HB)					| 		| 2019	| RetroSouls	| ZX Spectrum	| 					|
+| spec_oldtower	|  	| Old Tower (128K) (HB)					| 		| 2019	| RetroSouls	| ZX Spectrum	| 					|
 | md_oldtowers	|  	| Old Towers (HB, V1.2)					| 		| 2019	| RetroSouls	| Sega Megadrive| 					|
 | msx_ole	|  	| Ole!							| 		| 1986	| Bug-Byte Softw| MSX		| 					|
 | olibochu	|  	| Oli-Boo-Chu						| 		| 1981	| Irem / GDI	| Miscellaneous	| 					|
@@ -10054,7 +10067,7 @@ This list contains all games supported by FinalBurn Neo.
 | ordyne	|  	| Ordyne (World)					| 		| 1988	| Namco		| System 2	| 					|
 | pce_ordyne	|  	| Ordyne						| 		| 1989	| Namcot	| PC Engine	| 					|
 | tg_ordyne	|  	| Ordyne						| 		| 1989	| NEC		| TurboGrafx 16	| 					|
-| spec_organicmatter|  	| Organic Matter (HB)					| 		| 2021	| Chentzilla	| ZX Spectrum	| 					|
+| spec_organicmatter|  	| Organic Matter (48K) (HB)				| 		| 2021	| Chentzilla	| ZX Spectrum	| 					|
 | sg1k_orguss	|  	| Orguss (Euro, Jpn)					| 		| 1984	| Sega		| Sega SG-1000	| 					|
 | orlegend105k	|  	| Oriental Legend (V105, Korea)				| orlegend	| 1997	| IGS		| PolyGameMaster| 					|
 | orlegend105t	|  	| Oriental Legend (V105, Taiwan)			| orlegend	| 1997	| IGS		| PolyGameMaster| 					|
@@ -10430,6 +10443,8 @@ This list contains all games supported by FinalBurn Neo.
 | msx_penguinwk	|  	| Penguin-kun Wars (Kor)				| msx_penguinw	| 19??	| Prosoft	| MSX		| 					|
 | pkunwar	|  	| Penguin-Kun Wars (US)					| 		| 1985	| UPL		| Miscellaneous	| 					|
 | penta		|  	| Penta							| pengo		| 1982	| Bootleg	| Pac-man	| 					|
+| spec_pentacornen|  	| Pentacorn Quest (English) (128K) (HB)			| 		| 2015	| NightWolf	| ZX Spectrum	| 					|
+| spec_pentacornes|  	| Pentacorn Quest (Spanish) (128K) (HB)			| spec_pentacornen| 2015	| NightWolf	| ZX Spectrum	| 					|
 | spec_pentagram|  	| Pentagram (48K)					| 		| 1986	| Ultimate	| ZX Spectrum	| 					|
 | msx_pentagram	|  	| Pentagram						| 		| 1986	| Ultimate Play | MSX		| 					|
 | md_ppengo	|  	| Pepenga Pengo (Jpn)					| 		| 1995	| Sega		| Sega Megadrive| 					|
@@ -11069,7 +11084,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_pulsoids	|  	| Pulsoid (128K)					| 		| 1988	| Mastertronic	| ZX Spectrum	| 					|
 | pulstar	|  	| Pulstar						| 		| 1995	| Aicom		| Neo Geo MVS	| 					|
 | nes_pulveration|  	| Pulveration (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| spec_pumpkinpoe|  	| Pumpkin Poe (HB)					| 		| 2020	| Ariel Endaraue| ZX Spectrum	| 					|
+| spec_pumpkinpoe|  	| Pumpkin Poe (128K) (HB)				| 		| 2020	| Ariel Endaraue| ZX Spectrum	| 					|
 | punchita	|  	| Punch-Out!! (Italian bootleg)				| punchout	| 1984	| bootleg	| Miscellaneous	| 					|
 | punchoutj	|  	| Punch-Out!! (Japan)					| punchout	| 1984	| Nintendo	| Miscellaneous	| 					|
 | punchouta	|  	| Punch-Out!! (Rev A)					| punchout	| 1984	| Nintendo	| Miscellaneous	| 					|
@@ -11531,12 +11546,12 @@ This list contains all games supported by FinalBurn Neo.
 | rambo3u	|  	| Rambo III (US)					| rambo3	| 1989	| Taito Europe C| Taito B System| 					|
 | md_rambo3a	|  	| Rambo III (World)					| md_rambo3	| 1989	| Sega		| Sega Megadrive| 					|
 | md_rambo3	|  	| Rambo III (World, v1.1)				| 		| 1989	| Sega		| Sega Megadrive| 					|
-| spec_ramirer1	|  	| Ramire the Vampire Rewamp Part-1 (HB)			| 		| 2016	| The Mojon Twin| ZX Spectrum	| 					|
-| spec_ramirer2	|  	| Ramire the Vampire Rewamp Part-2 (HB)			| spec_ramirer1	| 2016	| The Mojon Twin| ZX Spectrum	| 					|
-| spec_ramirer3	|  	| Ramire the Vampire Rewamp Part-3 (HB)			| spec_ramirer1	| 2016	| The Mojon Twin| ZX Spectrum	| 					|
-| spec_ramiror1	|  	| Ramiro el Vampiro Rewamp Parte 1 (HB)			| 		| 2016	| The Mojon Twin| ZX Spectrum	| 					|
-| spec_ramiror2	|  	| Ramiro el Vampiro Rewamp Parte 2 (HB)			| spec_ramiror1	| 2016	| The Mojon Twin| ZX Spectrum	| 					|
-| spec_ramiror3	|  	| Ramiro el Vampiro Rewamp Parte 3 (HB)			| spec_ramiror1	| 2016	| The Mojon Twin| ZX Spectrum	| 					|
+| spec_ramirer1	|  	| Ramire the Vampire Rewamp - Part 1 (48K) (HB)		| 		| 2016	| The Mojon Twin| ZX Spectrum	| 					|
+| spec_ramirer2	|  	| Ramire the Vampire Rewamp - Part 2 (48K) (HB)		| spec_ramirer1	| 2016	| The Mojon Twin| ZX Spectrum	| 					|
+| spec_ramirer3	|  	| Ramire the Vampire Rewamp - Part 3 (48K) (HB)		| spec_ramirer1	| 2016	| The Mojon Twin| ZX Spectrum	| 					|
+| spec_ramiror1	|  	| Ramiro el Vampiro Rewamp - Parte 1 (48K) (HB)		| 		| 2016	| The Mojon Twin| ZX Spectrum	| 					|
+| spec_ramiror2	|  	| Ramiro el Vampiro Rewamp - Parte 2 (48K) (HB)		| spec_ramiror1	| 2016	| The Mojon Twin| ZX Spectrum	| 					|
+| spec_ramiror3	|  	| Ramiro el Vampiro Rewamp - Parte 3 (48K) (HB)		| spec_ramiror1	| 2016	| The Mojon Twin| ZX Spectrum	| 					|
 | spec_rampage	|  	| Rampage (48K)						| 		| 1988	| Activision	| ZX Spectrum	| 					|
 | sms_rampage	|  	| Rampage (Euro, USA, Bra)				| 		| 1988	| Sega		| Sega Master Sy| 					|
 | rampage2	|  	| Rampage (Rev 2, 8/4/86)				| rampage	| 1986	| Bally Midway	| MCR3		| 					|
@@ -11616,11 +11631,12 @@ This list contains all games supported by FinalBurn Neo.
 | redhawks	|  	| Red Hawk (horizontal, Spain)				| stagger1	| 1997	| Afega (Hae Don| NMK16		| 					|
 | redhawkk	|  	| Red Hawk (Korea)					| stagger1	| 1997	| Afega Co.	| NMK16		| 					|
 | redhawk	|  	| Red Hawk (USA, Canada & South America)		| stagger1	| 1997	| Afega (New Vis| NMK16		| 					|
-| spec_redplanet|  	| Red Planet (HB)					| 		| 2015	| salvakantero	| ZX Spectrum	| 					|
-| spec_redraidside1|  	| Red Raid - The Beginning (HB, Side A)			| 		| 2020	| ZXBitles	| ZX Spectrum	| 					|
-| spec_redraidside2|  	| Red Raid - The Beginning (HB, Side B)			| spec_redraidside1| 2020	| ZXBitles	| ZX Spectrum	| 					|
-| spec_redraidsinking1|  	| Red Raid - The Sinking, Side A (HB)			| 		| 2020	| ZXBitles	| ZX Spectrum	| 					|
-| spec_redraidsinking2|  	| Red Raid - The Sinking, Side B (HB)			| spec_redraidsinking1| 2020	| ZXBitles	| ZX Spectrum	| 					|
+| spec_redplanet|  	| Red Planet (English) (48K) (HB)			| 		| 2015	| Salva Cantero	| ZX Spectrum	| 					|
+| spec_redplanetes|  	| Red Planet (Spanish) (48K) (HB)			| spec_redplanet| 2015	| Salva Cantero	| ZX Spectrum	| 					|
+| spec_redraidside1|  	| Red Raid - The Beginning - Side A (48K) (HB)		| 		| 2020	| ZX Bitles	| ZX Spectrum	| Set 'Sinclair 2' to use joystick	|
+| spec_redraidside2|  	| Red Raid - The Beginning - Side B (48K) (HB)		| spec_redraidside1| 2020	| ZX Bitles	| ZX Spectrum	| Set 'Sinclair 2' to use joystick	|
+| spec_redraidsinking1|  	| Red Raid - The Sinking - Side A (48K) (HB)		| 		| 2020	| ZX Bitles	| ZX Spectrum	| Set 'Sinclair 2' to use joystick	|
+| spec_redraidsinking2|  	| Red Raid - The Sinking - Side B (48K) (HB)		| spec_redraidsinking1| 2020	| ZX Bitles	| ZX Spectrum	| Set 'Sinclair 2' to use joystick	|
 | redrobin	|  	| Red Robin						| 		| 1986	| Elettronolo	| Miscellaneous	| 					|
 | md_redzone	|  	| Red Zone (Euro, USA)					| 		| 1994	| Time Warner In| Sega Megadrive| 					|
 | msx_redzone	|  	| Red Zone (Jpn)					| 		| 1985	| ASCII		| MSX		| 					|
@@ -12037,10 +12053,10 @@ This list contains all games supported by FinalBurn Neo.
 | spec_sasoperationthunderflash|  	| S.A.S. Operation Thunderflash			| 		| 1986	| Sparklers	| ZX Spectrum	| 					|
 | nes_scat	|  	| S.C.A.T. - Special Cybernetic Attack Team (USA)	| 		| 1991	| Natsume	| Miscellaneous	| 					|
 | spec_sdisdi	|  	| S.D.I. - Strategic Defence Initiative (48K)		| 		| 1988	| Activision	| ZX Spectrum	| 					|
+| spec_soloen	|  	| S.o.L.o. (English) (128K) (HB)			| 		| 2021	| Roolandoo	| ZX Spectrum	| 					|
 | msx_soloen	|  	| S.o.L.o. (English) (HB)				| 		| 2021	| Angel Colaso	| MSX		| 					|
-| spec_soloen	|  	| S.o.L.o. (English) (HB)				| 		| 2021	| Roolandoo	| ZX Spectrum	| 					|
+| spec_soloes	|  	| S.o.L.o. (Spanish) (128K) (HB)			| spec_soloen	| 2021	| Roolandoo	| ZX Spectrum	| 					|
 | msx_soloes	|  	| S.o.L.o. (Spanish) (HB)				| msx_soloen	| 2021	| Angel Colaso	| MSX		| 					|
-| spec_soloes	|  	| S.o.L.o. (Spanish) (HB)				| spec_soloen	| 2021	| Roolandoo	| ZX Spectrum	| 					|
 | sms_saposos	|  	| S.O.S Lagoa Poluida (Bra)				| sms_astrow	| 1995	| Tec Toy	| Sega Master Sy| 					|
 | spyu		|  	| S.P.Y. - Special Project Y (US ver. M)		| spy		| 1989	| Konami	| GX857		| 					|
 | spy		|  	| S.P.Y. - Special Project Y (World ver. N)		| 		| 1989	| Konami	| GX857		| 					|
@@ -12329,7 +12345,7 @@ This list contains all games supported by FinalBurn Neo.
 | sdi		|  	| SDI - Strategic Defense Initiative (Japan, newer, Syst| 		| 1987	| Sega		| System 16A	| 					|
 | sdia		|  	| SDI - Strategic Defense Initiative (Japan, old, System| sdi		| 1987	| Sega		| System 16A	| 					|
 | sdib		|  	| SDI - Strategic Defense Initiative (System 16B, FD1089| sdi		| 1987	| Sega		| System 16B	| 					|
-| spec_seadragon|  	| Sea Dragon (HB)					| 		| 2010	| Andrew Zhiglov| ZX Spectrum	| 					|
+| spec_seadragon|  	| Sea Dragon (48K-128K) (HB)				| 		| 2010	| Andrew Zhiglov| ZX Spectrum	| 					|
 | sfposeid	|  	| Sea Fighter Poseidon					| 		| 1984	| Taito Corporat| Taito SJ Syste| 					|
 | msx_seahuntr	|  	| Sea Hunter (Euro)					| 		| 1984	| DynaData?	| MSX		| 					|
 | msx_seaking	|  	| Sea King (Euro)					| 		| 1986	| Players Softwa| MSX		| 					|
@@ -12710,7 +12726,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_sirwoodg3|  	| Sirwood (Part 3 of 3) (128K)				| spec_sirwoodg1| 1990	| Opera Soft	| ZX Spectrum	| 					|
 | sms_sitio	|  	| Sitio do Picapau Amarelo (Bra)			| 		| 1997	| Tec Toy	| Sega Master Sy| 					|
 | spec_sitoponsgp|  	| Sito Pons 500cc Grand Prix (Spanish) (128K)		| 		| 1990	| Zigurat Softwa| ZX Spectrum	| 					|
-| spec_sixsixsixsix|  	| Sixsixsixsix (HB, Russian)				| 		| 2020	| Anhot Studio	| ZX Spectrum	| 					|
+| spec_sixsixsixsix|  	| Sixsixsixsix (Russian) (48K) (HB)			| 		| 2020	| Anhot Studio	| ZX Spectrum	| 					|
 | msx_skateair	|  	| Skate Air (HB)					| 		| 2006	| Yerami Soft	| MSX		| 					|
 | nes_skateboy	|  	| Skate Boy (Spain) (Gluk Video) (Unl)			| 		| 1992	| Gluk Video	| Miscellaneous	| 					|
 | nes_skateordie|  	| Skate or Die (USA)					| 		| 1988	| Ultra Games	| Miscellaneous	| 					|
@@ -14083,7 +14099,7 @@ This list contains all games supported by FinalBurn Neo.
 | supbtimea	|  	| Super Burger Time (World, set 2)			| supbtime	| 1990	| Data East Corp| DECO IC16	| 					|
 | sbbros	|  	| Super Buster Bros. (USA 901001)			| spang		| 1990	| Mitchell (Capc| Miscellaneous	| 					|
 | nes_superc	|  	| Super C (USA)						| 		| 1990	| Konami	| Miscellaneous	| 					|
-| spec_supercartransam|  	| Super Car Trans Am - American Turbo King		| 		| 1989	| Virgin Mastert| ZX Spectrum	| 					|
+| spec_supercartransam|  	| Super Car Trans Am - American Turbo King (128K)	| 		| 1989	| Virgin Mastert| ZX Spectrum	| 					|
 | spec_supercars|  	| Super Cars (128K)					| 		| 1990	| Gremlin Graphi| ZX Spectrum	| 					|
 | nes_supercars	|  	| Super Cars (USA)					| 		| 1991	| Electro Brain	| Miscellaneous	| 					|
 | sucasino	|  	| Super Casino						| 		| 1984	| Data Amusement| Jack the Giant| 					|
@@ -14531,7 +14547,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_swordsamurai|  	| Sword of the Samurai (48K)				| 		| 1992	| Zeppelin Games| ZX Spectrum	| 					|
 | md_vermil	|  	| Sword of Vermilion (Euro, USA)			| 		| 1990	| Sega		| Sega Megadrive| 					|
 | md_vermils	|  	| Sword of Vermilion (Hack, Spanish)			| md_vermil	| 2018	| Sega		| Sega Megadrive| 					|
-| spec_swordslayer|  	| Sword Slayer						| 		| 1988	| Players	| ZX Spectrum	| 					|
+| spec_swordslayer|  	| Sword Slayer (128K)					| 		| 1988	| Players	| ZX Spectrum	| 					|
 | nes_swordandser|  	| Swords and Serpents (USA)				| 		| 1990	| Acclaim	| Miscellaneous	| 					|
 | md_sydvaliss	|  	| Syd of Valis (Hack, Spanish)				| md_sydvalis	| 2017	| Renovation	| Sega Megadrive| 					|
 | md_sydvalis	|  	| Syd of Valis (USA)					| 		| 1992	| Renovation	| Sega Megadrive| 					|
@@ -14644,7 +14660,8 @@ This list contains all games supported by FinalBurn Neo.
 | taotaido	|  	| Tao Taido (set 1)					| 		| 1993	| Video System C| Miscellaneous	| 					|
 | taotaidoa	|  	| Tao Taido (set 2)					| taotaido	| 1993	| Video System C| Miscellaneous	| 					|
 | sg1k_wboyt	|  	| Taotailang (Tw)					| sg1k_wboy	| 1986?	| Unknown	| Sega SG-1000	| 					|
-| nes_tapewpuzdis|  	| Tapeworm Puzzle Disco (HB)(Demo 8)			| 		| 2020	| LowtekGames	| Miscellaneous	| 					|
+| nes_tapeworm	|  	| Tapeworm Disco Puzzle (HB)				| 		| 2021	| Lowtek Games	| Miscellaneous	| 					|
+| nes_tapewormd	|  	| Tapeworm Disco Puzzle (HB, Demo)			| nes_tapeworm	| 2020	| Lowtek Games	| Miscellaneous	| 					|
 | tapperg	|  	| Tapper (Budweiser, 1/27/84 - Alternate graphics)	| tapper	| 1983	| Bally Midway	| Miscellaneous	| 					|
 | tapper	|  	| Tapper (Budweiser, 1/27/84)				| 		| 1983	| Bally Midway	| Miscellaneous	| 					|
 | tappera	|  	| Tapper (Budweiser, 12/9/83)				| tapper	| 1983	| Bally Midway	| Miscellaneous	| 					|
@@ -14716,7 +14733,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_tc2000	|  	| TC 2000 (Arg)						| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | msx_tearnile	|  	| Tear of Nile (Jpn)					| 		| 1986	| Victor	| MSX		| 					|
 | spec_techted_48|  	| Technician Ted (48K)					| 		| 1984	| Hewson Consult| ZX Spectrum	| 					|
-| spec_technoalice|  	| Techno Alice (HB, Russian)(48k)			| 		| 2020	| ALKO		| ZX Spectrum	| 					|
+| spec_technoalice|  	| Techno Alice (Russian) (48K) (HB)			| 		| 2020	| ALKO		| ZX Spectrum	| 					|
 | md_technocl	|  	| Techno Clash (Euro, USA)				| 		| 1993	| Electronic Art| Sega Megadrive| 					|
 | md_tecnocopp1	|  	| Technocop (Prototype)					| md_tecnocop	| 1990	| Razorsoft	| Sega Megadrive| 					|
 | md_tecnocopp2	|  	| Technocop (Prototype, 19900912)			| md_tecnocop	| 1990	| Razorsoft	| Sega Megadrive| 					|
@@ -15360,7 +15377,7 @@ This list contains all games supported by FinalBurn Neo.
 | mainevt	|  	| The Main Event (4 Players ver. Y)			| 		| 1988	| Konami	| GX799		| 					|
 | gg_majors	|  	| The Majors Pro Baseball (USA)				| 		| 1992	| Sega		| Sega Game Gear| Game doesn't work			|
 | mastkin	|  	| The Masters of Kin					| 		| 1988	| Du Tech	| Miscellaneous	| Colors are wrong			|
-| nes_meating	|  	| The Meating - Cafeparty Demo (HB)			| 		| 2019	| Mega Cat Studi| Miscellaneous	| 					|
+| nes_meating	|  	| The Meating - Cafeparty (HB, Demo)			| 		| 2019	| Mega Cat Studi| Miscellaneous	| 					|
 | sms_xevious	|  	| The Micro Xevious (Kor)				| 		| 1990	| Zemina	| Sega Master Sy| 					|
 | md_miraclep	|  	| The Miracle Piano Teaching System (USA)		| 		| 1992	| Software Toolw| Sega Megadrive| 					|
 | sms_tnzs	|  	| The New Zealand Story (Euro)				| 		| 1992	| TecMagik	| Sega Master Sy| 					|
@@ -15859,8 +15876,8 @@ This list contains all games supported by FinalBurn Neo.
 | tkdensho	|  	| Toukidenshou - Angel Eyes (VER. 960614)		| 		| 1996	| Tecmo		| Miscellaneous	| 					|
 | nes_toukonclub|  	| Toukon Club (Japan)					| 		| 1992	| Jaleco	| Miscellaneous	| 					|
 | spec_tour91	|  	| Tour 91 (Spanish)					| 		| 1991	| Topo Soft	| ZX Spectrum	| 					|
+| spec_trmline	|  	| Tourmaline (128K) (HB)				| 		| 2016	| RetroSouls	| ZX Spectrum	| 					|
 | md_tourmaline	|  	| Tourmaline (HB)					| 		| 2021	| RetroSouls	| Sega Megadrive| 					|
-| spec_trmline	|  	| Tourmaline (HB)					| 		| 2016	| RetroSouls	| ZX Spectrum	| 					|
 | arkatour	|  	| Tournament Arkanoid (US)				| 		| 1987	| Taito America | Arkanoid	| 					|
 | cprogolfj	|  	| Tournament Pro Golf (DECO Cassette) (Japan)		| cprogolf	| 1981	| Data East Corp| Cassette Syste| 					|
 | cprogolf	|  	| Tournament Pro Golf (DECO Cassette) (US)		| 		| 1981	| Data East Corp| Cassette Syste| 					|
@@ -16101,7 +16118,7 @@ This list contains all games supported by FinalBurn Neo.
 | twinhawku	|  	| Twin Hawk (US)					| twinhawk	| 1989	| Taito America | Taito X	| 					|
 | twinhawk	|  	| Twin Hawk (World)					| 		| 1989	| Taito Corporat| Taito X	| 					|
 | twinqix	|  	| Twin Qix (Ver 1.0A 1995/01/17) (Prototype)		| 		| 1995	| Taito America | Taito F3 Syste| 					|
-| spec_twinturbov8|  	| Twin Turbo V8						| 		| 1989	| Codemasters	| ZX Spectrum	| 					|
+| spec_twinturbov8|  	| Twin Turbo V8 (128K)					| 		| 1989	| Codemasters	| ZX Spectrum	| 					|
 | twinbeeb	|  	| TwinBee (Bubble System)				| twinbee	| 1985	| Konami	| Miscellaneous	| 					|
 | fds_twinbee	|  	| TwinBee (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_twinbee	|  	| TwinBee (Japan)					| 		| 1986	| Konami	| Miscellaneous	| 					|
@@ -16480,9 +16497,9 @@ This list contains all games supported by FinalBurn Neo.
 | nes_nesvircle	|  	| Virus Cleaner (HB)					| 		| 2016	| Second Dimensi| Miscellaneous	| 					|
 | msx_viruslqp	|  	| Virus LQP-79 (HB, v1.2)				| 		| 2018	| Pentacour	| MSX		| 					|
 | setaroul	| D NW	| Visco Roulette					| 		| 198?	| Seta / Visco	| Seta		| 					|
-| spec_vixen1	|  	| Vixen - Part 1					| 		| 1988	| Martech Games	| ZX Spectrum	| 					|
-| spec_vixen2	|  	| Vixen - Part 2					| spec_vixen1	| 1988	| Martech Games	| ZX Spectrum	| 					|
-| spec_vixen3	|  	| Vixen - Part 3					| spec_vixen1	| 1988	| Martech Games	| ZX Spectrum	| 					|
+| spec_vixen1	|  	| Vixen - Part 1 (128K)					| 		| 1988	| Martech Games	| ZX Spectrum	| 					|
+| spec_vixen2	|  	| Vixen - Part 2 (128K)					| spec_vixen1	| 1988	| Martech Games	| ZX Spectrum	| 					|
+| spec_vixen3	|  	| Vixen - Part 3 (128K)					| spec_vixen1	| 1988	| Martech Games	| ZX Spectrum	| 					|
 | md_vixen357e	|  	| Vixen 357 (Hack, English)				| md_vixen357	| 2016	| NCS		| Sega Megadrive| 					|
 | md_vixen357s	|  	| Vixen 357 (Hack, Spanish)				| md_vixen357	| 2020	| Published	| Sega Megadrive| 					|
 | md_vixen357	|  	| Vixen 357 (Jpn)					| 		| 1992	| NCS		| Sega Megadrive| 					|
@@ -16524,8 +16541,8 @@ This list contains all games supported by FinalBurn Neo.
 | vulgusa	|  	| Vulgus (set 2)					| vulgus	| 1984	| Capcom	| Miscellaneous	| 					|
 | pce_wring	|  	| W-ring - The Double Rings				| 		| 1990	| Naxat		| PC Engine	| 					|
 | wacko		|  	| Wacko							| 		| 1982	| Bally Midway	| Miscellaneous	| 					|
-| spec_wackydarts|  	| Wacky Darts (128K)					| 		| 1991	| Codemasters	| ZX Spectrum	| 					|
-| spec_wackdarts_48|  	| Wacky Darts (48K)					| spec_wackydarts| 1991	| Codemasters	| ZX Spectrum	| 					|
+| spec_wackydarts|  	| Wacky Darts (128K)					| 		| 1991	| Codemasters	| ZX Spectrum	| In menu use keys 6 and 7 to move and E|
+| spec_wackdarts_48|  	| Wacky Darts (48K)					| spec_wackydarts| 1991	| Codemasters	| ZX Spectrum	| In menu use keys 6 and 7 to move and E|
 | spec_wackracestd|  	| Wacky Races (Standard)(128K)				| 		| 1992	| Hi-Tec Softwar| ZX Spectrum	| 					|
 | spec_wackrace	|  	| Wacky Races (Trainer)(128K)				| spec_wackracestd| 1992	| Hi-Tec Softwar| ZX Spectrum	| 					|
 | nes_wackyraces|  	| Wacky Races (USA)					| 		| 1992	| Atlus		| Miscellaneous	| 					|
@@ -16552,7 +16569,7 @@ This list contains all games supported by FinalBurn Neo.
 | wakuwak7	|  	| Waku Waku 7						| 		| 1996	| Sunsoft	| Neo Geo MVS	| 					|
 | ultracin	|  	| Waku Waku Ultraman Racing				| 		| 1996	| Sega		| System 16B	| Emulation not complete		|
 | fds_wakusatogai|  	| Wakusei Aton Gaiden (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| nes_wall	|  	| Wall (HB, Demo)					| 		| 1999	| Chris Covell	| Miscellaneous	| 					|
+| nes_wall	|  	| Wall (Demo) (HB, Tech-Demo)				| 		| 1999	| Chris Covell	| Miscellaneous	| 					|
 | wallc		|  	| Wall Crash (set 1)					| 		| 1984	| Midcoin	| Miscellaneous	| 					|
 | wallca	|  	| Wall Crash (set 2)					| wallc		| 1984	| Midcoin	| Miscellaneous	| 					|
 | nes_wallstreetkid|  	| Wall Street Kid (USA)					| 		| 1990	| Sofel		| Miscellaneous	| 					|
@@ -16564,6 +16581,7 @@ This list contains all games supported by FinalBurn Neo.
 | wwallyj	|  	| Wally wo Sagase! (rev B, Japan, FD1094 317-0197B)	| 		| 1992	| Sega		| System 18	| 					|
 | sms_wpayton	|  	| Walter Payton Football (USA)				| sms_ameripf	| 1989	| Sega		| Sega Master Sy| 					|
 | msx_wampcola	|  	| Wamp Cola (Spanish)					| 		| 1988	| Iber Soft	| MSX		| 					|
+| nes_wampus	|  	| Wampus (HB)						| 		| 2019	| John Vanderhoe| Miscellaneous	| 					|
 | spec_wanderers|  	| Wanderers Chained In The Dark (128K) (HB)		| 		| 2014	| SAM Style	| ZX Spectrum	| 					|
 | md_waniwani	|  	| Wani Wani World (Jpn)					| 		| 1992	| Kaneko	| Sega Megadrive| 					|
 | nes_wanpakuduck|  	| Wanpaku Duck Yume Bouken (T-Chi)			| nes_ducktales	| 2020	| Capcom	| Miscellaneous	| 					|
@@ -16671,8 +16689,8 @@ This list contains all games supported by FinalBurn Neo.
 | md_whiprushs	|  	| Whip Rush (Hack, Spanish)				| md_whiprush	| 2020	| Sega		| Sega Megadrive| 					|
 | md_whiprush	|  	| Whip Rush (USA)					| 		| 1990	| Renovation	| Sega Megadrive| 					|
 | md_whiprushj	|  	| Whip Rush - Wakusei Voltegas no Nazo (Jpn)		| md_whiprush	| 1990	| Sega		| Sega Megadrive| 					|
-| spec_whiteheat|  	| White Heat						| 		| 1987	| Codemasters	| ZX Spectrum	| 					|
-| spec_whitejaguar|  	| White Jaguar (HB)					| 		| 2020	| Romancha	| ZX Spectrum	| 					|
+| spec_whiteheat|  	| White Heat (48K)					| 		| 1987	| Codemasters	| ZX Spectrum	| 					|
+| spec_whitejaguar|  	| White Jaguar (128K) (HB)				| 		| 2020	| Romancha	| ZX Spectrum	| 					|
 | whizz		|  	| Whizz							| twinfalc	| 1989	| Philko	| Miscellaneous	| 					|
 | msx_whodares	|  	| Who Dares Wins II (Euro)				| 		| 1986	| Alligata Softw| MSX		| 					|
 | spec_whodareswinsii|  	| Who Dares Wins II					| 		| 1986	| Alligata	| ZX Spectrum	| 					|
@@ -16773,7 +16791,7 @@ This list contains all games supported by FinalBurn Neo.
 | wizzquiza	|   NW	| Wizz Quiz (version 4)					| wizzquiz	| 1985	| Zilec-Zenitone| Miscellaneous	| 					|
 | nes_wxniao	|  	| Wo Xiang Niao Niao (HB)				| 		| 2016	| Xin Xin	| Miscellaneous	| 					|
 | wolffang	|  	| Wolf Fang -Kuhga 2001- (Japan)			| rohga		| 1991	| Data East Corp| DECO IC16	| 					|
-| nes_wolfspirit|  	| Wolf Spirit (HB)					| 		| 2021	| Valdir Salguei| Miscellaneous	| Demo version				|
+| nes_wolfspirit|  	| Wolf Spirit (HB, Demo)				| 		| 2021	| Valdir Salguei| Miscellaneous	| 					|
 | gg_wolfchld	|  	| Wolfchild (Euro)					| 		| 1993	| Virgin Interac| Sega Game Gear| 					|
 | sms_wolfchld	|  	| Wolfchild (Euro, Bra)					| 		| 1993	| Virgin Interac| Sega Master Sy| 					|
 | md_wolfchlds	|  	| Wolfchild (Hack,Spanish)				| md_wolfchld	| 2018	| Published	| Sega Megadrive| 					|
@@ -17223,12 +17241,12 @@ This list contains all games supported by FinalBurn Neo.
 | msx_hades	|  	| Yami no Ryuuou - Hades no Monshou (Jpn)		| 		| 1986	| Casio		| MSX		| 					|
 | msx_hadesa	|  	| Yami no Ryuuou - Hades no Monshou (Jpn, Alt)		| msx_hades	| 1986	| Casio		| MSX		| 					|
 | md_yangji	|  	| Yang Jia Jiang - Yang Warrior Family (Chi)		| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
-| spec_yangaplus|  	| Yanga Plus (HB)					| 		| 2021	| Serdjuk	| ZX Spectrum	| 					|
+| spec_yangaplus|  	| Yanga Plus (128K) (HB)				| 		| 2021	| Serdjuk	| ZX Spectrum	| 					|
 | yankeedo	|  	| Yankee DO!						| mrdo		| 1982	| hack		| Miscellaneous	| 					|
 | spec_yarsrevenge|  	| Yars Revenge ZX (HB)					| 		| 2015	| Monument Micro| ZX Spectrum	| 					|
+| spec_yazzie	|  	| Yazzie (128K) (HB)					| 		| 2019	| RetroSouls	| ZX Spectrum	| 					|
 | md_yazzie	|  	| Yazzie (HB)						| 		| 2020	| RetroSouls	| Sega Megadrive| 					|
 | msx_yazzie	|  	| Yazzie (HB)						| msx_yazzier	| 2019	| RetroSouls	| MSX		| 					|
-| spec_yazzie	|  	| Yazzie (HB)						| 		| 2019	| RetroSouls	| ZX Spectrum	| 					|
 | msx_yazzier	|  	| Yazzie Remastered (HB)				| 		| 2020	| RetroSouls	| MSX		| 					|
 | yellowcbb	|  	| Yellow Cab (bootleg)					| kamikcab	| 1984	| bootleg	| Miscellaneous	| 					|
 | yellowcbj	|  	| Yellow Cab (Japan)					| kamikcab	| 1984	| Data East Corp| Miscellaneous	| 					|
@@ -17287,7 +17305,7 @@ This list contains all games supported by FinalBurn Neo.
 | youma		|  	| Youma Ninpou Chou (Japan)				| ninjemak	| 1986	| Nichibutsu	| Miscellaneous	| 					|
 | youma2	|  	| Youma Ninpou Chou (Japan, alt)			| ninjemak	| 1986	| Nichibutsu	| Miscellaneous	| 					|
 | nes_youngindjonchr|  	| Young Indiana Jones Chronicles, The (USA)		| 		| 1992	| Jaleco	| Miscellaneous	| 					|
-| spec_yoyogreatadventure|  	| Yoyo's Great Adventure (HB)			| 		| 2020	| Rafal Miazga	| ZX Spectrum	| 					|
+| spec_yoyogreatadventure|  	| Yoyo's Great Adventure (128K) (HB)		| 		| 2020	| Rafal Miazga	| ZX Spectrum	| 					|
 | nes_ysc	|  	| Ys (Japan) - Castellano v1.1				| nes_ys	| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_ysj	|  	| Ys (Japan)						| nes_ys	| 1988	| Victor	| Miscellaneous	| 					|
 | sms_ysj	|  	| Ys (Jpn)						| sms_ys	| 1988	| Sega		| Sega Master Sy| 					|

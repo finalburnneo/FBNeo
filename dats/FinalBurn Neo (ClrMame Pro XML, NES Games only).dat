@@ -4724,6 +4724,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="filthyktcn">
+		<description>Filthy Kitchen (HB) [Homebrew]</description>
+		<year>2016</year>
+		<manufacturer>Dustmop</manufacturer>
+		<rom name="Filthy Kitchen (2016)(Dustmop).nes" size="65552" crc="a22cdf8a"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="finalcombat">
 		<description>Final Combat (Asia) (NTSC) (Unl)</description>
 		<year>1989?</year>
@@ -9437,7 +9445,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nalleland">
-		<description>Nalle Land (HB, v040) [Homebrew]</description>
+		<description>Nalle Land (HB, v0.4.0) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Benjamin Larsson</manufacturer>
 		<rom name="Nalle Land (HB, v040).nes" size="49168" crc="c1a447b0"/>
@@ -13268,11 +13276,19 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="tapewpuzdis">
-		<description>Tapeworm Puzzle Disco (HB)(Demo 8) [Homebrew]</description>
+	<game name="tapeworm">
+		<description>Tapeworm Disco Puzzle (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Lowtek Games</manufacturer>
+		<rom name="Tapeworm Disco Puzzle (2021)(Lowtek Games).nes" size="524304" crc="80ddccdd"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="tapewormd" cloneof="tapeworm" romof="tapeworm">
+		<description>Tapeworm Disco Puzzle (HB, Demo) [Homebrew]</description>
 		<year>2020</year>
-		<manufacturer>LowtekGames</manufacturer>
-		<rom name="Tapeworm Puzzle Disco (HB)(Demo 8).nes" size="65552" crc="30e0689f"/>
+		<manufacturer>Lowtek Games</manufacturer>
+		<rom name="Tapeworm Disco Puzzle (HB)(Demo).nes" size="65552" crc="30e0689f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -13677,7 +13693,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="meating">
-		<description>The Meating - Cafeparty Demo (HB) [Homebrew]</description>
+		<description>The Meating - Cafeparty (HB, Demo) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="The Meating - Cafeparty Demo (HB).nes" size="262160" crc="e704ef0a"/>
@@ -14541,7 +14557,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wall">
-		<description>Wall (HB, Demo) [Homebrew]</description>
+		<description>Wall (Demo) (HB, Tech-Demo) [Homebrew]</description>
 		<year>1999</year>
 		<manufacturer>Chris Covell</manufacturer>
 		<rom name="wall (Demo).nes" size="24592" crc="5da28b4f"/>
@@ -14561,6 +14577,14 @@
 		<year>1990</year>
 		<manufacturer>AVE</manufacturer>
 		<rom name="Wally Bear &amp; the No Gang (Unl).nes" size="131088" crc="c562f258"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="wampus">
+		<description>Wampus (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>John Vanderhoef</manufacturer>
+		<rom name="Wampus (2019)(John Vanderhoef).nes" size="524304" crc="f67d26a2"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -14781,7 +14805,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wolfspirit">
-		<description>Wolf Spirit (HB) [Homebrew, Demo version]</description>
+		<description>Wolf Spirit (HB, Demo) [Homebrew]</description>
 		<year>2021</year>
 		<manufacturer>Valdir Salgueiro</manufacturer>
 		<rom name="Wolf Spirit (HB)(2021)(Valdir Salgueiro).nes" size="65552" crc="74574809"/>

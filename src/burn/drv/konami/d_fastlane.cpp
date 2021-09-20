@@ -161,7 +161,7 @@ static void bankswitch(INT32 data)
 	HD6309MapMemory(DrvHD6309ROM + 0x10000 + (((data >> 2) & 3) * 0x4000),	0x4000, 0x7fff, MAP_ROM);
 
 	k007232_set_bank(1, (data >> 4) & 1, 2 + ((data >> 4) & 1));
-}	
+}
 
 static void fastlane_write(UINT16 address, UINT8 data)
 {
@@ -241,7 +241,7 @@ static UINT8 fastlane_read(UINT16 address)
 
 static tilemap_callback( bg )
 {
-offs &= 0x7ff;
+	offs &= 0x7ff;
 	INT32 attr = DrvVidRAM0[offs];
 	UINT8 ctrl_3 = k007121_ctrl_read(0, 3);
 	UINT8 ctrl_4 = k007121_ctrl_read(0, 4);
@@ -373,12 +373,7 @@ static void DrvGfxExpand(UINT8 *src, INT32 len)
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvHD6309ROM + 0x08000,  0, 1)) return 1;
@@ -396,7 +391,7 @@ static INT32 DrvInit()
 		DrvColorTableInit();
 	}
 
-	HD6309Init(1);
+	HD6309Init(0);
 	HD6309Open(0);
 	HD6309MapMemory(DrvK007121RAM,			0x0000, 0x00ff, MAP_ROM);
 	HD6309MapMemory(DrvPalRAM,				0x1000, 0x1fff, MAP_RAM);
@@ -445,7 +440,7 @@ static INT32 DrvExit()
 
 	K007232Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -523,28 +518,29 @@ static INT32 DrvFrame()
 	HD6309NewFrame();
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal = 12000000 / 60;
+	INT32 nCyclesTotal[1] = { 12000000 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
 
 	HD6309Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		HD6309Run(nCyclesTotal / nInterleave);
+		CPU_RUN(0, HD6309);
 
-		if (i == 240 && (k007121_ctrl_read(0, 7) & 0x02))
-			HD6309SetIRQLine(0, CPU_IRQSTATUS_AUTO);
-	
+		if (i == (nInterleave -1) && (k007121_ctrl_read(0, 7) & 0x02))
+			HD6309SetIRQLine(0, CPU_IRQSTATUS_HOLD);
+
 		if ((i & 0x1f) == 0 && (k007121_ctrl_read(0, 7) & 0x01))
 			HD6309SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 	}
 
+	HD6309Close();
+
 	if (pBurnSoundOut) {
-		BurnSoundClear();
+		BurnSoundClear(); // k007232 by default "adds to stream"
 		K007232Update(0, pBurnSoundOut, nBurnSoundLen);
 		K007232Update(1, pBurnSoundOut, nBurnSoundLen);
 	}
-
-	HD6309Close();
 
 	if (pBurnDraw) {
 		DrvDraw();

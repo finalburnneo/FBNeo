@@ -495,12 +495,7 @@ static INT32 DrvInit()
 {
 	GenericTilesInit();
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvHD6309ROM + 0x20000,  0, 1)) return 1;
@@ -526,7 +521,7 @@ static INT32 DrvInit()
 		DrvColorTableInit();
 	}
 
-	HD6309Init(1);
+	HD6309Init(0);
 	HD6309Open(0);
 	HD6309MapMemory(DrvPalRAM,					0x0600, 0x06ff, MAP_RAM);
 	HD6309MapMemory(DrvHD6309RAM,				0x0800, 0x1fff, MAP_RAM);
@@ -585,7 +580,7 @@ static INT32 DrvExit()
 	UPD7759Exit();
 	BurnYM2203Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -740,18 +735,16 @@ static INT32 DrvFrame()
 			}
 		}
 
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[1]);
+	HD6309Close();
+	ZetClose();
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		UPD7759Render(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	HD6309Close();
-	ZetClose();
 
 	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 

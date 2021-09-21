@@ -17712,7 +17712,7 @@ struct BurnDriver BurnDrvnes_filthyktcn = {
 };
 
 static struct BurnRomInfo nes_tapewormRomDesc[] = {
-	{ "Tapeworm Disco Puzzle (2021)(Lowtek Games).nes",          524304, 0x80ddccdd, BRF_ESS | BRF_PRG },
+	{ "Tapeworm Disco Puzzle (2021)(Lowtek Games).nes",          524304, 0xb71d9fa1, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_tapeworm)

@@ -885,7 +885,7 @@ struct BurnDriver BurnDrvSotsugyok = {
 	"sotsugyok", "sotsugyo", NULL, NULL, "1995",
 	"Jor-eop Jeungmyeongseo (Korea)\0", NULL, "Mitchell", "DECO IC16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MINIGAMES, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MINIGAMES, 0,
 	NULL, sotsugyokRomInfo, sotsugyokRomName, NULL, NULL, NULL, NULL, FunkyjetInputInfo, SotsugyoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3

@@ -913,6 +913,11 @@ void nesapuWrite(INT32 chip, INT32 address, UINT8 value)
 
 /* EXTERNAL INTERFACE FUNCTIONS */
 
+void nesapuSetMode4017(UINT8 val)
+{
+	mode4017 = val;
+}
+
 void nesapuReset()
 {
 #if defined FBNEO_DEBUG
@@ -934,7 +939,7 @@ void nesapuReset()
 		info->APU.dpcm.bits_left = 8;
 		info->APU.noi.lfsr = 1;
 	    clocky = 0;
-		mode4017 = 0xc0;
+		mode4017 = 0xc0; // disabled @ startup
 		step4017 = 0;
 		frame_irq_flag = 0;
 	}

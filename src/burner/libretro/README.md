@@ -7,6 +7,7 @@ From the root of the repository, run
 make -j5 -C src/burner/libretro generate-files
 make -j5 -C src/burner/libretro
 ```
+Note : if you need additional parameters, they must be added to both commands.
 
 ## Roms
 

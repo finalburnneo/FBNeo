@@ -3219,8 +3219,11 @@ static INT32 LoffireInit()
 	
 	System16ProcessAnalogControlsDo = LoffireProcessAnalogControls;
 	INT32 rc = System16Init();
-	SegaPCMSetRoute(0, BURN_SND_SEGAPCM_ROUTE_1, 1.0, BURN_SND_ROUTE_BOTH);
-	SegaPCMSetRoute(0, BURN_SND_SEGAPCM_ROUTE_2, 1.0, BURN_SND_ROUTE_BOTH);
+
+	if (!rc) {
+		SegaPCMSetRoute(0, BURN_SND_SEGAPCM_ROUTE_1, 1.0, BURN_SND_ROUTE_BOTH);
+		SegaPCMSetRoute(0, BURN_SND_SEGAPCM_ROUTE_2, 1.0, BURN_SND_ROUTE_BOTH);
+	}
 
 	return rc;
 }

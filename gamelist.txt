@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17497 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17510 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -330,7 +330,9 @@ This list contains all games supported by FinalBurn Neo.
 | pce_aburner2	|  	| After Burner II					| 		| 1990	| NEC Avenue	| PC Engine	| 					|
 | aburner	|  	| After Burner						| aburner2	| 1987	| Sega		| X-Board	| 					|
 | spec_afterthewar1|  	| After the War - Part 1 (Spanish) (48K)		| 		| 1989	| Dinamic Softwa| ZX Spectrum	| 					|
+| msx_afterthewar1|  	| After the War - Part 1 (Spanish)			| 		| 1989	| Dinamic Softwa| MSX		| 					|
 | spec_afterthewar2|  	| After the War - Part 2 (Spanish) (48K)		| spec_afterthewar1| 1989	| Dinamic Softwa| ZX Spectrum	| Password: 94656981			|
+| msx_afterthewar2|  	| After the War - Part 2 (Spanish)			| msx_afterthewar1| 1989	| Dinamic Softwa| MSX		| Password: 11423			|
 | spec_afterburner|  	| Afterburner (128K)					| 		| 1989	| Activision	| ZX Spectrum	| 					|
 | spec_aburner	|  	| Afterburner (48K)					| spec_afterburner| 1988	| Activision	| ZX Spectrum	| 					|
 | spec_afteroids|  	| Afteroids (48K) (Spanish)				| 		| 1988	| Zigurat Softwa| ZX Spectrum	| 					|
@@ -796,6 +798,7 @@ This list contains all games supported by FinalBurn Neo.
 | sg1k_arnodash2|  	| Arno Dash 2 (HB, v1.03)				| 		| 2020	| Under4Mhz	| Sega SG-1000	| 					|
 | sms_arnodash2	|  	| Arno Dash 2 (HB, v1.03)				| 		| 2021	| Under4Mhz	| Sega Master Sy| 					|
 | md_arnoldp	|  	| Arnold Palmer Tournament Golf (Euro, USA)		| 		| 1989	| Sega		| Sega Megadrive| 					|
+| msx_arquimedes|  	| Arquimedes XXI (Spanish)				| 		| 1986	| Dinamic Softwa| MSX		| 					|
 | md_arrows	|  	| Arrow Flash (Hack, Spanish)				| md_arrow	| 2019	| Renovation	| Sega Megadrive| 					|
 | md_arrowp	|  	| Arrow Flash (USA, Prototype)				| md_arrow	| 1990	| Renovation	| Sega Megadrive| 					|
 | md_arrow	|  	| Arrow Flash (World)					| 		| 1990	| Sega		| Sega Megadrive| 					|
@@ -3250,6 +3253,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_dncfntsy	|  	| Dance Fantasy						| 		| 1984	| Fisher-Price	| ColecoVision	| 					|
 | fds_dandyj	|  	| Dandy - Zeuon no Fukkatsu (Japan)			| fds_dandy	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | fds_dandy	|  	| Dandy - Zeuon no Fukkatsu (T-Eng)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| msx_dgtrooper	|  	| Dangan Trooper (HB, v0.8)				| 		| 2021	| Kobinii	| MSX		| 					|
 | cv_dangrtower	|  	| Danger Tower (HB)					| 		| 2017	| Danger Team	| ColecoVision	| (SGM) - Published by Team Pixelboy	|
 | msx_dangertower|  	| Danger Tower (HB)					| 		| 2009	| Danger Team	| MSX		| 					|
 | dngrtrck	|  	| Danger Track (Rally X bootleg)			| rallyx	| 1980	| bootleg	| Miscellaneous	| 					|
@@ -4666,6 +4670,7 @@ This list contains all games supported by FinalBurn Neo.
 | falconz	|  	| Falcon (bootleg of Phoenix) (Z80 CPU)			| phoenix	| 1980	| bootleg	| Miscellaneous	| 					|
 | tg_falcon	|  	| Falcon						| 		| 1992	| TTI		| TurboGrafx 16	| 					|
 | cv_fallguy	|  	| Fall Guy (Prototype)					| 		| 1983	| Fox Video Game| ColecoVision	| 					|
+| msx_prometheus|  	| Fall Of Prometheus, The (HB)				| 		| 2021	| Mistery Labs	| MSX		| 					|
 | nes_fallingtiles|  	| Falling Tiles (HB, rev.B)				| 		| 2020	| Doug Fraker	| Miscellaneous	| 					|
 | fds_falsion	|  	| Falsion (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | fds_famicgrapri|  	| Famicom Grand Prix - F1 Race (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -5229,7 +5234,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_frostbyte|  	| Frost Byte						| 		| 1986	| Mikro-Gen	| ZX Spectrum	| 					|
 | spec_fruitmachinesim1|  	| Fruit Machine Simulator - Cash Bash			| 		| 1987	| Codemasters	| ZX Spectrum	| 					|
 | spec_fruitmachinesim2|  	| Fruit Machine Simulator 2 - Mega Trek (128K)		| 		| 1990	| Codemasters	| ZX Spectrum	| 					|
-| msx_fruitpanic|  	| Fruit Panic						| 		| 1984	| Pony Canyon	| MSX		| 					|
+| msx_fruitpanic|  	| Fruit Panic (Jpn)					| 		| 1984	| Pony Canyon	| MSX		| 					|
 | msx_fruitsrc	|  	| Fruit Search (Jpn)					| 		| 1983	| HAL Kenkyuujo	| MSX		| 					|
 | msx_fruitsrca	|  	| Fruit Search (Jpn, Alt)				| msx_fruitsrc	| 1983	| HAL Kenkyuujo	| MSX		| 					|
 | spec_fkngmili	|  	| Fucking Mili (English) (48K) (HB)			| 		| 2020	| EJVG		| ZX Spectrum	| 					|
@@ -6072,6 +6077,7 @@ This list contains all games supported by FinalBurn Neo.
 | gunsmokeg	|  	| Gun.Smoke (Germany, censored)				| gunsmoke	| 1986	| Capcom	| Miscellaneous	| 					|
 | fds_gunsmoke	|  	| Gun.Smoke (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | gunsmokej	|  	| Gun.Smoke (Japan, 851115)				| gunsmoke	| 1985	| Capcom	| Miscellaneous	| 					|
+| msx_gunsmoke	|  	| Gun.Smoke (Kor)					| 		| 1990	| Prosoft	| MSX		| 					|
 | sms_gunsmoke	|  	| Gun.Smoke (Kor)					| 		| 1990	| ProSoft	| Sega Master Sy| 					|
 | nes_gunsmokec	|  	| Gun.Smoke (T-Chi)					| nes_gunsmoke	| 2019-11-17| Capcom	| Miscellaneous	| 					|
 | gunsmokeua	|  	| Gun.Smoke (US, 851115, set 1)				| gunsmoke	| 1986	| Capcom (Romsta| Miscellaneous	| 					|
@@ -6080,7 +6086,6 @@ This list contains all games supported by FinalBurn Neo.
 | nes_gunsmoke	|  	| Gun.Smoke (USA)					| 		| 1988	| Capcom	| Miscellaneous	| 					|
 | gunsmokeb	|  	| Gun.Smoke (World, 851115) (bootleg)			| gunsmoke	| 1985	| bootleg	| Miscellaneous	| 					|
 | gunsmoke	|  	| Gun.Smoke (World, 851115)				| 		| 1985	| Capcom	| Miscellaneous	| 					|
-| msx_gunsmoke	|  	| Gun.Smoke						| 		| 1990	| Prosoft	| MSX		| 					|
 | gnbarich	|  	| Gunbarich						| 		| 2001	| Psikyo	| PS5V2		| 					|
 | gunbirdj	|  	| Gunbird (Japan)					| gunbird	| 1994	| Psikyo	| Psikyo 68EC020| 					|
 | gunbirdk	|  	| Gunbird (Korea)					| gunbird	| 1994	| Psikyo	| Psikyo 68EC020| 					|
@@ -6232,6 +6237,7 @@ This list contains all games supported by FinalBurn Neo.
 | harem		|  	| Harem							| 		| 1983	| I.G.R.	| Galaxian	| 					|
 | nes_harleglo	|  	| Harlem Globetrotters (USA)				| 		| 1991	| GameTek	| Miscellaneous	| 					|
 | nes_harrydwarf|  	| Harry Dwarf (HB)					| 		| 2019	| Byte-off	| Miscellaneous	| 					|
+| msx_hfox	|  	| Harry Fox MSX Special (Jpn)				| 		| 1986	| MicroCabin	| MSX		| 					|
 | md_hpotter	|  	| Harry Potter (Rus)					| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | md_hpotter2	|  	| Harry Potter and the Chamber of Secrets (Rus)		| md_mickmack	| 199?	| <unknown>	| Sega Megadrive| 					|
 | msx_showjumph	|  	| Harvey Smith's Showjumper (Euro, Hacked Protection)	| 		| 1985	| Software Proje| MSX		| 					|
@@ -6529,7 +6535,6 @@ This list contains all games supported by FinalBurn Neo.
 | sg1k_huojiche	|  	| Huojian Che (Tw)					| sg1k_roadfght	| 1986?	| Jumbo		| Sega SG-1000	| 					|
 | gg_hurrican	|  	| Hurricanes (Euro)					| 		| 1994	| U.S. Gold	| Sega Game Gear| 					|
 | md_hurrican	|  	| Hurricanes (Euro)					| 		| 1994	| U.S. Gold	| Sega Megadrive| 					|
-| msx_hfox	|  	| Hurry Fox MSX Special (Jpn)				| 		| 1986	| MicroCabin	| MSX		| 					|
 | sg1k_hustle	|  	| Hustle Chumy (Jpn)					| 		| 1984	| Compile	| Sega SG-1000	| 					|
 | msx_hustle	|  	| Hustle! Chumy (Jpn)					| 		| 1984	| General	| MSX		| 					|
 | msx_hustlea	|  	| Hustle! Chumy (Jpn, Alt)				| msx_hustle	| 1984	| General	| MSX		| 					|
@@ -9978,6 +9983,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_ohmummy	|  	| Oh Mummy (HB)						| 		| 2013	| 1985 Alternati| Sega Megadrive| 					|
 | msx_ohmummy	|  	| Oh Mummy!! (Euro)					| 		| 1988	| Longman Softwa| MSX		| 					|
 | ohmygod	|  	| Oh My God!						| 		| 1993	| Atlus		| Miscellaneous	| 					|
+| msx_ohshit	|  	| Oh Shit! (Euro)					| 		| 1986	| AackoSoft	| MSX		| 					|
 | cv_oilswella	|  	| Oil's Well (Alt)					| cv_oilswell	| 1984	| Sierra On-Line| ColecoVision	| 					|
 | msx_oilswell	|  	| Oil's Well (Jpn)					| 		| 1985	| Comptiq	| MSX		| 					|
 | msx_oilswella	|  	| Oil's Well (Jpn, Alt)					| msx_oilswell	| 1985	| Comptiq	| MSX		| 					|
@@ -12105,6 +12111,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_smzoom	|  	| Saimazoom (HB)					| 		| 2005	| Karoshi Corpor| MSX		| 					|
 | spec_stdragon	|  	| Saint Dragon (128K)					| 		| 1990	| Storm Software| ZX Spectrum	| 					|
 | stdragonb	|  	| Saint Dragon (bootleg)				| stdragon	| 1989	| Jaleco	| Mega System 1	| 					|
+| msx_stdragon	|  	| Saint Dragon (Euro)					| 		| 1990	| Dro Soft	| MSX		| 					|
 | stdragon	|  	| Saint Dragon (set 1)					| 		| 1989	| Jaleco	| Mega System 1	| 					|
 | stdragona	|  	| Saint Dragon (set 2)					| stdragon	| 1989	| Jaleco	| Mega System 1	| 					|
 | nes_saintsaitiamahuxi|  	| Saint Saiya - Tian Ma Huan Xiang (China)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -12281,6 +12288,7 @@ This list contains all games supported by FinalBurn Neo.
 | scotrsht	|  	| Scooter Shooter					| 		| 1985	| Konami	| Miscellaneous	| 					|
 | msx_scopeon	|  	| Scope On - Fight in Space (Jpn)			| 		| 1983	| ASCII Corp.	| MSX		| 					|
 | spec_score3020|  	| Score 3020 (Spanish) (48K)				| 		| 1989	| Topo Soft	| ZX Spectrum	| 					|
+| msx_score3020	|  	| Score 3020 (Spanish)					| 		| 2021	| SoCal		| MSX		| Set 'Teclado' to play - Q, P and Space|
 | scorpionmc	|  	| Scorpion (Moon Cresta hardware)			| scorpion	| 19??	| Dorneer	| Galaxian	| 					|
 | scorpion	|  	| Scorpion (set 1)					| 		| 1982	| Zaccaria	| Galaxian	| 					|
 | scorpiona	|  	| Scorpion (set 2)					| scorpion	| 1982	| Zaccaria	| Galaxian	| 					|
@@ -14860,7 +14868,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_tempojrp2	|  	| Tempo Jr. (Prototype, 19950206)			| gg_tempojr	| 1995	| Sega		| Sega Game Gear| 					|
 | gg_tempojrp1	|  	| Tempo Jr. (Prototype, 19950215)			| gg_tempojr	| 1995	| Sega		| Sega Game Gear| 					|
 | gg_tempojr	|  	| Tempo Jr. (World)					| 		| 1995	| Sega		| Sega Game Gear| 					|
-| msx_temptations|  	| Temptations						| 		| 1988	| Topo Soft	| MSX		| 					|
+| msx_temptations|  	| Temptations (Spanish)					| 		| 1988	| Topo Soft	| MSX		| 					|
 | dynwarjr	|  	| Tenchi wo Kurau (Japan Resale Ver.)			| dynwar	| 1989	| Capcom	| CPS1		| 					|
 | dynwarj	|  	| Tenchi wo Kurau (Japan)				| dynwar	| 1989	| Capcom	| CPS1		| 					|
 | nes_tenchiwokurau|  	| Tenchi wo Kurau (Japan)				| nes_destianemp| 1989	| Capcom	| Miscellaneous	| 					|
@@ -15885,7 +15893,11 @@ This list contains all games supported by FinalBurn Neo.
 | karatblzj	|  	| Toushin Blazers (Japan, Tecmo license)		| karatblz	| 1991	| Video System C| Video System	| 					|
 | spec_towdieen	|  	| Towdie (English)					| 		| 1994	| Ultrasoft	| ZX Spectrum	| 					|
 | nes_towerdru	|  	| Tower of Druaga, The (Japan)				| 		| 1985	| Namco		| Miscellaneous	| 					|
-| sms_tos	|  	| Tower of Sorrow (HB, rev3)				| 		| 2020	| Steiger	| Sega Master Sy| 					|
+| sms_toseasycb	|  	| Tower of Sorrow - Easy (HB, v1.5 Color Blind)		| sms_toseasy	| 2021	| Neofuturism	| Sega Master Sy| 					|
+| sms_toseasy	|  	| Tower of Sorrow - Easy (HB, v1.5)			| 		| 2021	| Neofuturism	| Sega Master Sy| 					|
+| sms_toshardcb	|  	| Tower of Sorrow - Hard (HB, v1.5 Color Blind)		| sms_toseasy	| 2021	| Neofuturism	| Sega Master Sy| 					|
+| sms_toshard	|  	| Tower of Sorrow - Hard (HB, v1.5)			| sms_toseasy	| 2021	| Neofuturism	| Sega Master Sy| 					|
+| sms_tos	|  	| Tower of Sorrow - SMS Power Ed. (HB, rev3)		| sms_toseasy	| 2020	| Neofuturism	| Sega Master Sy| 					|
 | nes_towerofturmoil|  	| Tower of Turmoil (HB, v1.03)				| 		| 2019	| CutterCross	| Miscellaneous	| 					|
 | md_toxiccs	|  	| Toxic Crusaders (Hack, Spanish)			| md_toxicc	| 2018	| Published	| Sega Megadrive| 					|
 | md_toxicc	|  	| Toxic Crusaders (USA)					| 		| 1992	| Sega		| Sega Megadrive| 					|
@@ -16670,6 +16682,7 @@ This list contains all games supported by FinalBurn Neo.
 | wexpressb2	|  	| Western Express (bootleg set 2)			| exprraid	| 1986	| bootleg	| Miscellaneous	| 					|
 | wexpressb3	|  	| Western Express (bootleg set 3)			| exprraid	| 1986	| bootleg	| Miscellaneous	| 					|
 | wexpress	|  	| Western Express (Japan, rev 4)			| exprraid	| 1986	| Data East Corp| Miscellaneous	| 					|
+| msx_westhouse	|  	| Western House (HB, v1.2)				| 		| 2021	| Brain Games	| MSX		| 					|
 | md_whacacri	|   NW	| Whac-a-Critter (USA)					| 		| 1993	| Realtec	| Sega Megadrive| 					|
 | nes_whatremains|  	| What Remains (HB)					| 		| 2019	| Iodine Dynamic| Miscellaneous	| 					|
 | spec_whb	|  	| WHB (HB)						| 		| 2009	| Bob Smith	| ZX Spectrum	| 					|

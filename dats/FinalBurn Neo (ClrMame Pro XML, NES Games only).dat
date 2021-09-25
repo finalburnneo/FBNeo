@@ -13280,7 +13280,7 @@
 		<description>Tapeworm Disco Puzzle (HB) [Homebrew]</description>
 		<year>2021</year>
 		<manufacturer>Lowtek Games</manufacturer>
-		<rom name="Tapeworm Disco Puzzle (2021)(Lowtek Games).nes" size="524304" crc="80ddccdd"/>
+		<rom name="Tapeworm Disco Puzzle (2021)(Lowtek Games).nes" size="524304" crc="b71d9fa1"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

@@ -4996,10 +4996,42 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tos">
-		<description>Tower of Sorrow (HB, rev3) [Homebrew]</description>
+	<game name="toseasycb" cloneof="toseasy" romof="toseasy">
+		<description>Tower of Sorrow - Easy (HB, v1.5 Color Blind) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Neofuturism</manufacturer>
+		<rom name="Tower of Sorrow - easy v1.5 cb (2021)(Neofuturism).sms" size="524288" crc="0b953948"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="toseasy">
+		<description>Tower of Sorrow - Easy (HB, v1.5) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Neofuturism</manufacturer>
+		<rom name="Tower of Sorrow - easy v1.5 (2021)(Neofuturism).sms" size="524288" crc="72d2089c"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="toshardcb" cloneof="toseasy" romof="toseasy">
+		<description>Tower of Sorrow - Hard (HB, v1.5 Color Blind) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Neofuturism</manufacturer>
+		<rom name="Tower of Sorrow - hard v1.5 cb (2021)(Neofuturism).sms" size="524288" crc="e178c8a9"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="toshard" cloneof="toseasy" romof="toseasy">
+		<description>Tower of Sorrow - Hard (HB, v1.5) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Neofuturism</manufacturer>
+		<rom name="Tower of Sorrow - hard v1.5 (2021)(Neofuturism).sms" size="524288" crc="93655c5f"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tos" cloneof="toseasy" romof="toseasy">
+		<description>Tower of Sorrow - SMS Power Ed. (HB, rev3) [Homebrew]</description>
 		<year>2020</year>
-		<manufacturer>Steiger</manufacturer>
+		<manufacturer>Neofuturism</manufacturer>
 		<rom name="Tower_of_Sorrow_REV3.sms" size="524288" crc="d0e103d9"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

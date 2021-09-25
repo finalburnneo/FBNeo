@@ -359,7 +359,7 @@ void HiscoreReset(INT32 bDisableInversionWriteback)
 			cpu_open(HiscoreMemRange[i].nCpu);
 			// in some games, system16b (aliensyn, everything else) rom is mapped (for cheats)
 			// on reset where the hiscore should be.  Writing here is bad.
-			if (bDisableInversion == 0) {
+			if (bDisableInversionWriteback == 0) {
 				cheat_subptr->write(HiscoreMemRange[i].Address, (UINT8)~HiscoreMemRange[i].StartValue);
 				if (HiscoreMemRange[i].NumBytes > 1) cheat_subptr->write(HiscoreMemRange[i].Address + HiscoreMemRange[i].NumBytes - 1, (UINT8)~HiscoreMemRange[i].EndValue);
 			}

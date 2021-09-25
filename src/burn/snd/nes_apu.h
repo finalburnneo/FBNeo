@@ -14,6 +14,7 @@ void nesapuScan(INT32 nAction, INT32 *pnMin);
 
 void nesapuWrite(INT32 chip,INT32 address, UINT8 value);
 UINT8 nesapuRead(INT32 chip,INT32 address, UINT8 open_bus = 0xff);
+void nesapuSetMode4017(UINT8 val);
 
 void nesapu_runclock(INT32 cycle);
 extern INT16 (*nes_ext_sound_cb)();

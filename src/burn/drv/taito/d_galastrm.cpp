@@ -14,7 +14,7 @@ static INT32 coin_word;
 static INT16 *tc0610_reg[2];
 static INT16 *tc0610_addr;
 
-static poly_manager *poly;
+static poly_manager *poly = NULL;
 
 struct poly_extra_data
 {

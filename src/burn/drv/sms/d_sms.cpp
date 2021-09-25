@@ -27907,7 +27907,7 @@ struct BurnDriver BurnDrvsms_moncrunch = {
 	256, 192, 4, 3
 };
 
-// Tower of Sorrow (HB, rev3)
+// Tower of Sorrow - SMS Power Ed. (HB, rev3)
 
 static struct BurnRomInfo sms_tosRomDesc[] = {
 	{ "Tower_of_Sorrow_REV3.sms",	524288, 0xd0e103d9, BRF_PRG | BRF_ESS },
@@ -27917,10 +27917,10 @@ STD_ROM_PICK(sms_tos)
 STD_ROM_FN(sms_tos)
 
 struct BurnDriver BurnDrvsms_tos = {
-	"sms_tos", NULL, NULL, NULL, "2020",
-	"Tower of Sorrow (HB, rev3)\0", NULL, "Steiger", "Sega Master System",
+	"sms_tos", "sms_toseasy", NULL, NULL, "2020",
+	"Tower of Sorrow - SMS Power Ed. (HB, rev3)\0", NULL, "Neofuturism", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_tosRomInfo, sms_tosRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -29763,6 +29763,82 @@ struct BurnDriver BurnDrvgg_dcastle = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_ACTION, 0,
 	GGGetZipName, gg_dcastleRomInfo, gg_dcastleRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Tower of Sorrow - Hard (HB, v1.5)
+
+static struct BurnRomInfo sms_toshardRomDesc[] = {
+	{ "Tower of Sorrow - hard v1.5 (2021)(Neofuturism).sms",	524288, 0x93655c5f, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_toshard)
+STD_ROM_FN(sms_toshard)
+
+struct BurnDriver BurnDrvsms_toshard = {
+	"sms_toshard", "sms_toseasy", NULL, NULL, "2021",
+	"Tower of Sorrow - Hard (HB, v1.5)\0", NULL, "Neofuturism", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_toshardRomInfo, sms_toshardRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Tower of Sorrow - Easy (HB, v1.5)
+
+static struct BurnRomInfo sms_toseasyRomDesc[] = {
+	{ "Tower of Sorrow - easy v1.5 (2021)(Neofuturism).sms",	524288, 0x72d2089c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_toseasy)
+STD_ROM_FN(sms_toseasy)
+
+struct BurnDriver BurnDrvsms_toseasy = {
+	"sms_toseasy", NULL, NULL, NULL, "2021",
+	"Tower of Sorrow - Easy (HB, v1.5)\0", NULL, "Neofuturism", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_toseasyRomInfo, sms_toseasyRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Tower of Sorrow - Hard (HB, v1.5 Color Blind)
+
+static struct BurnRomInfo sms_toshardcbRomDesc[] = {
+	{ "Tower of Sorrow - hard v1.5 cb (2021)(Neofuturism).sms",	524288, 0xe178c8a9, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_toshardcb)
+STD_ROM_FN(sms_toshardcb)
+
+struct BurnDriver BurnDrvsms_toshardcb = {
+	"sms_toshardcb", "sms_toseasy", NULL, NULL, "2021",
+	"Tower of Sorrow - Hard (HB, v1.5 Color Blind)\0", NULL, "Neofuturism", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_toshardcbRomInfo, sms_toshardcbRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Tower of Sorrow - Easy (HB, v1.5 Color Blind)
+
+static struct BurnRomInfo sms_toseasycbRomDesc[] = {
+	{ "Tower of Sorrow - easy v1.5 cb (2021)(Neofuturism).sms",	524288, 0x0b953948, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_toseasycb)
+STD_ROM_FN(sms_toseasycb)
+
+struct BurnDriver BurnDrvsms_toseasycb = {
+	"sms_toseasycb", "sms_toseasy", NULL, NULL, "2021",
+	"Tower of Sorrow - Easy (HB, v1.5 Color Blind)\0", NULL, "Neofuturism", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_toseasycbRomInfo, sms_toseasycbRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

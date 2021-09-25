@@ -1483,7 +1483,7 @@ static INT32 Tigerhb1Init()
 		pMCURead = tigerhb1_prot_read;
 	}
 
-	return 0;
+	return nRet;
 }
 
 struct BurnDriver BurnDrvTigerhb1 = {

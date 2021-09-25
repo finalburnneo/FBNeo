@@ -15997,6 +15997,7 @@ static INT32 Wonder3bInit()
 	CpsLayer3XOffs = 10;
 	
 	INT32 nRet = Cps1RasterInit();
+	if (nRet) return nRet;
 	
 	// the game doesn't write these anywhere - does the hardware have them stored somewhere?	
 	*((UINT16*)(CpsReg + 0x04)) = BURN_ENDIAN_SWAP_INT16(0x90c0); // scroll2 address
@@ -16129,6 +16130,7 @@ static INT32 CawingblInit()
 	CpsMemScanCallbackFunction = FcrashScanSound;
 	
 	nRet = DrvInit();
+	if (nRet) return nRet;
 	
 	SekOpen(0);
 	SekMapHandler(1, 0x882000, 0x882fff, MAP_READ | MAP_WRITE);
@@ -16165,6 +16167,7 @@ static INT32 Cawingb2Init()
 	CpsMemScanCallbackFunction = FcrashScanSound;
 	
 	nRet = DrvInit();
+	if (nRet) return nRet;
 	
 	SekOpen(0);
 	SekMapHandler(1, 0x882000, 0x882fff, MAP_READ | MAP_WRITE);
@@ -16254,6 +16257,7 @@ static INT32 DinopicInit()
 	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 		
 	nRet = TwelveMhzInit();
+	if (nRet) return nRet;
 	
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
@@ -16280,6 +16284,7 @@ static INT32 DinohInit()
 	Cps1QsHack = 1;
 	
 	nRet = TwelveMhzInit();
+	if (nRet) return nRet;
 
 	SekOpen(0);
 	SekMapHandler(1, 0xf18000, 0xf19fff, MAP_READ);
@@ -16301,6 +16306,7 @@ static INT32 Dinopic3Init()
 	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 	
 	nRet = TwelveMhzInit();
+	if (nRet) return nRet;
 	
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
@@ -16347,6 +16353,7 @@ static INT32 Dinopic5Init()
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesDinopic5;
 	
 	nRet = TwelveMhzInit();
+	if (nRet) return nRet;
 	
 	SekOpen(0);
 	SekMapHandler(1, 0xf18000, 0xf19fff, MAP_READ);
@@ -16382,6 +16389,7 @@ static INT32 DinotInit()
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160;
 	
 	nRet = TwelveMhzInit();
+	if (nRet) return nRet;
 
 	SekOpen(0);
 	SekMapHandler(1, 0xf18000, 0xf19fff, MAP_READ);
@@ -16403,6 +16411,7 @@ static INT32 DinotpicInit()
 	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 	
 	nRet = TwelveMhzInit();
+	if (nRet) return nRet;
 	
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
@@ -16446,6 +16455,7 @@ static INT32 Jurassic99Init()
 	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 	
 	nRet = TwelveMhzInit();
+	if (nRet) return nRet;
 	
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
@@ -16468,6 +16478,7 @@ static INT32 DinohuntInit()
 	CpsBootlegEEPROM = 1;
 	
 	nRet = TwelveMhzInit();
+	if (nRet) return nRet;
 	
 	SekOpen(0);
 	SekMapHandler(1, 0xf18000, 0xf19fff, MAP_READ);
@@ -16570,6 +16581,7 @@ static INT32 FfightblInit()
 	CpsMemScanCallbackFunction = FcrashScanSound;
 	
 	INT32 nRet = DrvInit();
+	if (nRet) return nRet;
 	
 	SekOpen(0);
 	SekMapHandler(1, 0x880000, 0x89ffff, MAP_READ | MAP_WRITE);
@@ -16608,6 +16620,7 @@ static INT32 FcrashInit()
 	CpsMemScanCallbackFunction = FcrashScanSound;
 	
 	INT32 nRet = DrvInit();
+	if (nRet) return nRet;
 	
 	SekOpen(0);
 	SekMapHandler(1, 0x880000, 0x89ffff, MAP_READ | MAP_WRITE);
@@ -16628,6 +16641,7 @@ static INT32 ForgottnNewerInit()
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesForgottn;
 	
 	nRet = DrvInit();
+	if (nRet) return nRet;
 	
 	CpsStar = CpsGfx + nCpsGfxLen - 0x2000;
 	
@@ -16643,6 +16657,7 @@ static INT32 ForgottnInit()
 	Forgottn = 1;
 	
 	nRet = DrvInit();
+	if (nRet) return nRet;
 	
 	CpsStar = CpsGfx + nCpsGfxLen - 0x2000;
 	
@@ -16659,6 +16674,7 @@ static INT32 ForgottnAltGfxInit()
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesForgottna;
 	
 	nRet = DrvInit();
+	if (nRet) return nRet;
 	
 	CpsStar = CpsGfx + nCpsGfxLen - 0x2000;
 	
@@ -16675,6 +16691,7 @@ static INT32 ForgottnAltGfxuInit()
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesForgottnu;
 	
 	nRet = DrvInit();
+	if (nRet) return nRet;
 	
 	CpsStar = CpsGfx + nCpsGfxLen - 0x2000;
 	
@@ -16733,6 +16750,7 @@ static INT32 GanbareInit()
 	CpsMemScanCallbackFunction = GanbareScanCallback;
 	
 	INT32 nRet = DrvInit();
+	if (nRet) return nRet;
 	
 	SekOpen(0);
 	SekMapHandler(1, 0xff0000, 0xffffff, MAP_RAM);
@@ -16913,6 +16931,7 @@ static INT32 DaimakaibInit()
 	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 	
 	INT32 nRet = DrvInit();
+	if (nRet) return nRet;
 	
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
@@ -17070,6 +17089,7 @@ static INT32 KnightsbInit()
 	CpsMemScanCallbackFunction = KnightsbScanCallback;
 	
 	INT32 nRet = DrvInit();
+	if (nRet) return nRet;
 	
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
@@ -17213,6 +17233,7 @@ static INT32 KodbInit()
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	nRet = Cps1RasterInit();
+	if (nRet) return nRet;
 	
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
@@ -17299,6 +17320,7 @@ static INT32 MtwinsbInit()
 	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 	
 	nRet = Cps1RasterInit();
+	if (nRet) return nRet;
 	
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
@@ -17554,6 +17576,7 @@ static INT32 PunipicInit()
 	CpsMemScanCallbackFunction = PunipicScanCallback;
 	
 	INT32 nRet = TwelveMhzInit();
+	if (nRet) return nRet;
 	
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
@@ -17590,6 +17613,7 @@ static INT32 Punipic2Init()
 	CpsMemScanCallbackFunction = PunipicScanCallback;
 	
 	INT32 nRet = TwelveMhzInit();
+	if (nRet) return nRet;
 	
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
@@ -17619,6 +17643,7 @@ static INT32 Punipic3Init()
 	CpsMemScanCallbackFunction = PunipicScanCallback;
 	
 	INT32 nRet = TwelveMhzInit();
+	if (nRet) return nRet;
 	
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
@@ -17889,6 +17914,7 @@ static INT32 Sf2bInit()
 	CpsMemScanCallbackFunction = Sf2mdtScanCallback;
 	
 	INT32 nRet = DrvInit();
+	if (nRet) return nRet;
 	
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
@@ -17969,6 +17995,7 @@ static INT32 Sf2dkot2Init()
 	INT32 nRet;
 
 	nRet = TwelveMhzInit();
+	if (nRet) return nRet;
 
 	SekOpen(0);
 	SekMapMemory(CpsRom + 0x000000, 0x280000, 0x2fffff, MAP_ROM);
@@ -18018,6 +18045,7 @@ static INT32 Sf2rbInit()
 	AmendProgRomCallback = Sf2rbCallback;
 	
 	INT32 nRet = TwelveMhzInit();
+	if (nRet) return nRet;
 
 	SekOpen(0);
 	SekMapHandler(1, 0x200000, 0x2fffff, MAP_READ);
@@ -18061,6 +18089,7 @@ UINT16 __fastcall Sf2rb2ProtReadWord(UINT32 a)
 static INT32 Sf2rb2Init()
 {
 	INT32 nRet = TwelveMhzInit();
+	if (nRet) return nRet;
 
 	SekOpen(0);
 	SekMapHandler(1, 0x200000, 0x2fffff, MAP_READ);
@@ -18364,7 +18393,8 @@ static INT32 Sf2mdtInit()
 	CpsMemScanCallbackFunction = Sf2mdtScanCallback;
 	
 	INT32 nRet = TwelveMhzInit();
-	
+	if (nRet) return nRet;
+
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
 	SekOpen(0);
@@ -18399,7 +18429,8 @@ static INT32 Sf2mdtaInit()
 	CpsMemScanCallbackFunction = Sf2mdtScanCallback;
 	
 	INT32 nRet = TwelveMhzInit();
-	
+	if (nRet) return nRet;
+
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
 	SekOpen(0);
@@ -18435,7 +18466,8 @@ static INT32 Sf2mdtbInit()
 	CpsMemScanCallbackFunction = Sf2mdtScanCallback;
 	
 	INT32 nRet = TwelveMhzInit();
-	
+	if (nRet) return nRet;
+
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
 	SekOpen(0);
@@ -18576,15 +18608,17 @@ static INT32 Sf2ceeab2Init()
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	INT32 nRet = TwelveMhzInit();
-	
-	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
-	
-	SekOpen(0);
-	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, MAP_RAM);
-	SekMapHandler(1, 0x980000, 0x980fff, MAP_WRITE);
-	SekSetWriteWordHandler(1, Sf2ceeablScrollWrite);
-	SekClose();
-	
+
+	if (!nRet) {
+		CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
+
+		SekOpen(0);
+		SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, MAP_RAM);
+		SekMapHandler(1, 0x980000, 0x980fff, MAP_WRITE);
+		SekSetWriteWordHandler(1, Sf2ceeablScrollWrite);
+		SekClose();
+	}
+
 	return nRet;
 }
 
@@ -18805,15 +18839,16 @@ static INT32 Sf2ceuablInit()
 	CpsDrawSpritesInReverse = 1;
 	
 	nRet = TwelveMhzInit();
-	
-	SekOpen(0);
-	SekMapHandler(1, 0x800000, 0x800200, MAP_RAM);
-	SekSetReadByteHandler(1, Sf2ceuablReadByte);
-	SekSetWriteByteHandler(1, Sf2ceuablWriteByte);
-	SekSetWriteWordHandler(1, Sf2ceuablWriteWord);
-	
-	SekClose();
-	
+
+	if (!nRet) {
+		SekOpen(0);
+		SekMapHandler(1, 0x800000, 0x800200, MAP_RAM);
+		SekSetReadByteHandler(1, Sf2ceuablReadByte);
+		SekSetWriteByteHandler(1, Sf2ceuablWriteByte);
+		SekSetWriteWordHandler(1, Sf2ceuablWriteWord);
+		SekClose();
+	}
+
 	return nRet;
 }
 
@@ -18893,13 +18928,15 @@ static INT32 Sf2ceuab7Init()
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2ceuab7;
 	
 	INT32 nRet = DrvInit();
-	
-	SekOpen(0);
-	SekMapHandler(1, 0x570000, 0x57ffff, MAP_READ | MAP_WRITE);
-	SekSetReadWordHandler(1, Sf2ceuab7ProtReadWord);
-	SekSetWriteWordHandler(1, Sf2ceuab7ProtWriteWord);
-	SekClose();
-	
+
+	if (!nRet) {
+		SekOpen(0);
+		SekMapHandler(1, 0x570000, 0x57ffff, MAP_READ | MAP_WRITE);
+		SekSetReadWordHandler(1, Sf2ceuab7ProtReadWord);
+		SekSetWriteWordHandler(1, Sf2ceuab7ProtWriteWord);
+		SekClose();
+	}
+
 	return nRet;
 }
 
@@ -18929,16 +18966,18 @@ static INT32 Sf2ceuab8Init()
 	
 	INT32 nRet = TwelveMhzInit();
 	
-	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x110000); // not sprite ram - but we'll use this for convenience
-	
-	SekOpen(0);
-	SekMapHandler(1, 0x800000, 0x807fff, MAP_WRITE);
-	SekSetWriteByteHandler(1, Sf2ceuab8WriteByte);
-	SekSetWriteWordHandler(1, Sf2ceuab8WriteWord);
-	SekMapMemory(CpsBootlegSpriteRam + 0x000000, 0xe00000, 0xefffff, MAP_RAM);	
-	SekMapMemory(CpsBootlegSpriteRam + 0x100000, 0xfe0000, 0xfeffff, MAP_RAM);	
-	SekClose();
-	
+	if (!nRet) {
+		CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x110000); // not sprite ram - but we'll use this for convenience
+
+		SekOpen(0);
+		SekMapHandler(1, 0x800000, 0x807fff, MAP_WRITE);
+		SekSetWriteByteHandler(1, Sf2ceuab8WriteByte);
+		SekSetWriteWordHandler(1, Sf2ceuab8WriteWord);
+		SekMapMemory(CpsBootlegSpriteRam + 0x000000, 0xe00000, 0xefffff, MAP_RAM);
+		SekMapMemory(CpsBootlegSpriteRam + 0x100000, 0xfe0000, 0xfeffff, MAP_RAM);
+		SekClose();
+	}
+
 	return nRet;
 }
 
@@ -18951,16 +18990,18 @@ static INT32 Sf2ceuab9Init()
 	
 	INT32 nRet = TwelveMhzInit();
 	
-	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x110000); // not sprite ram - but we'll use this for convenience
-	
-	SekOpen(0);
-	SekMapHandler(1, 0x800000, 0x807fff, MAP_WRITE);
-	SekSetWriteByteHandler(1, Sf2ceuab8WriteByte);
-	SekSetWriteWordHandler(1, Sf2ceuab8WriteWord);
-	SekMapMemory(CpsBootlegSpriteRam + 0x000000, 0xe00000, 0xefffff, MAP_RAM);	
-	SekMapMemory(CpsBootlegSpriteRam + 0x100000, 0xfe0000, 0xfeffff, MAP_RAM);	
-	SekClose();
-	
+	if (!nRet) {
+		CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x110000); // not sprite ram - but we'll use this for convenience
+
+		SekOpen(0);
+		SekMapHandler(1, 0x800000, 0x807fff, MAP_WRITE);
+		SekSetWriteByteHandler(1, Sf2ceuab8WriteByte);
+		SekSetWriteWordHandler(1, Sf2ceuab8WriteWord);
+		SekMapMemory(CpsBootlegSpriteRam + 0x000000, 0xe00000, 0xefffff, MAP_RAM);
+		SekMapMemory(CpsBootlegSpriteRam + 0x100000, 0xfe0000, 0xfeffff, MAP_RAM);
+		SekClose();
+	}
+
 	return nRet;
 }
 
@@ -19012,11 +19053,13 @@ static INT32 Sf2dongbInit()
 {
 	INT32 nRet = TwelveMhzInit();
 
-	SekOpen(0);
-	SekMapHandler(1, 0x180000, 0x1fffff, MAP_READ);
-	SekSetReadByteHandler(1, Sf2dongbProtReadByte);
-	SekSetReadWordHandler(1, Sf2dongbProtReadWord);
-	SekClose();
+	if (!nRet) {
+		SekOpen(0);
+		SekMapHandler(1, 0x180000, 0x1fffff, MAP_READ);
+		SekSetReadByteHandler(1, Sf2dongbProtReadByte);
+		SekSetReadWordHandler(1, Sf2dongbProtReadWord);
+		SekClose();
+	}
 
 	return nRet;
 }
@@ -19081,13 +19124,15 @@ static INT32 Sf2hfjbInit()
 	CpsDrawSpritesInReverse = 1;
 	
 	INT32 nRet = Sf2hfInit();
-	
-	SekOpen(0);
-	SekMapHandler(1, 0x800000, 0x807fff, MAP_WRITE);
-	SekSetWriteByteHandler(1, Sf2hfjbWriteByte);
-	SekSetWriteWordHandler(1, Sf2hfjbWriteWord);
-	SekClose();
-	
+
+	if (!nRet) {
+		SekOpen(0);
+		SekMapHandler(1, 0x800000, 0x807fff, MAP_WRITE);
+		SekSetWriteByteHandler(1, Sf2hfjbWriteByte);
+		SekSetWriteWordHandler(1, Sf2hfjbWriteWord);
+		SekClose();
+	}
+
 	return nRet;
 }
 
@@ -19199,28 +19244,30 @@ static INT32 SlampicInit()
 	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 	
 	nRet = TwelveMhzInit();
-	
-	for (INT32 i = 0x7fff; i >= 0; i--) {
-		CpsZRom[(i << 1) + 0] = CpsZRom[i];
-		CpsZRom[(i << 1) + 1] = 0xff;
+
+	if (!nRet) {
+		for (INT32 i = 0x7fff; i >= 0; i--) {
+			CpsZRom[(i << 1) + 0] = CpsZRom[i];
+			CpsZRom[(i << 1) + 1] = 0xff;
+		}
+
+		CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
+
+		SekOpen(0);
+		SekMapMemory(CpsZRom, 0xf00000, 0xf0ffff, MAP_ROM);
+		SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, MAP_RAM);
+		SekMapHandler(1, 0xf18000, 0xf19fff, MAP_READ);
+		SekSetReadByteHandler(1, SlampicF18Read);
+		SekMapHandler(2, 0xf1e000, 0xf1ffff, MAP_READ);
+		SekSetReadByteHandler(2, SlampicF18Read);
+		SekMapHandler(3, 0x980000, 0x980fff, MAP_WRITE);
+		SekSetWriteWordHandler(3, SlampicScrollWrite);
+		SekMapHandler(4, 0xff0000, 0xffffff, MAP_WRITE);
+		SekSetWriteByteHandler(4, SlampicFFWriteByte);
+		SekSetWriteWordHandler(4, SlampicFFWriteWord);
+		SekClose();
 	}
-	
-	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
-	
-	SekOpen(0);
-	SekMapMemory(CpsZRom, 0xf00000, 0xf0ffff, MAP_ROM);
-	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, MAP_RAM);
-	SekMapHandler(1, 0xf18000, 0xf19fff, MAP_READ);
-	SekSetReadByteHandler(1, SlampicF18Read);
-	SekMapHandler(2, 0xf1e000, 0xf1ffff, MAP_READ);
-	SekSetReadByteHandler(2, SlampicF18Read);
-	SekMapHandler(3, 0x980000, 0x980fff, MAP_WRITE);
-	SekSetWriteWordHandler(3, SlampicScrollWrite);
-	SekMapHandler(4, 0xff0000, 0xffffff, MAP_WRITE);
-	SekSetWriteByteHandler(4, SlampicFFWriteByte);
-	SekSetWriteWordHandler(4, SlampicFFWriteWord);
-	SekClose();
-	
+
 	return nRet;
 }
 
@@ -19229,11 +19276,13 @@ static INT32 StriderInit()
 	INT32 nRet = 0;
 	
 	nRet = DrvInit();
-	
-	CpsStar = CpsGfx + nCpsGfxLen - 0x2000;
-	
-	CpsLoadStars(CpsStar, 5);
-	
+
+	if (!nRet) {
+		CpsStar = CpsGfx + nCpsGfxLen - 0x2000;
+
+		CpsLoadStars(CpsStar, 5);
+	}
+
 	return nRet;
 }
 
@@ -19242,11 +19291,13 @@ static INT32 StriderjrInit()
 	INT32 nRet = 0;
 	
 	nRet = TwelveMhzInit();
-	
-	CpsStar = CpsGfx + nCpsGfxLen - 0x2000;
-	
-	CpsLoadStars(CpsStar, 2);
-	
+
+	if (!nRet) {
+		CpsStar = CpsGfx + nCpsGfxLen - 0x2000;
+
+		CpsLoadStars(CpsStar, 2);
+	}
+
 	return nRet;
 }
 
@@ -19255,11 +19306,13 @@ static INT32 StriderjInit()
 	INT32 nRet = 0;
 	
 	nRet = DrvInit();
-	
-	CpsStar = CpsGfx + nCpsGfxLen - 0x2000;
-	
-	CpsLoadStarsByte(CpsStar, 8);
-	
+
+	if (!nRet) {
+		CpsStar = CpsGfx + nCpsGfxLen - 0x2000;
+
+		CpsLoadStarsByte(CpsStar, 8);
+	}
+
 	return nRet;
 }
 
@@ -19336,6 +19389,7 @@ static INT32 VarthbInit()
 	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 	
 	nRet = TwelveMhzInit();
+	if (nRet) return nRet;
 	
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
@@ -19523,6 +19577,7 @@ static INT32 WofhInit()
 	AmendProgRomCallback = WofhPatch;
 	
 	nRet = TwelveMhzInit();
+	if (nRet) return nRet;
 	
 	SekOpen(0);
 	SekMapHandler(3, 0x880000, 0x89ffff, MAP_READ | MAP_WRITE);
@@ -19584,6 +19639,7 @@ static INT32 SgyxzInit()
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	nRet = TwelveMhzInit();
+	if (nRet) return nRet;
 	
 	SekOpen(0);
 	SekMapHandler(3, 0x880000, 0x89ffff, MAP_READ | MAP_WRITE);
@@ -19632,6 +19688,7 @@ static INT32 Wof3jsaInit()
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	INT32 nRet = TwelveMhzInit();
+	if (nRet) return nRet;
 	
 	SekOpen(0);
 	SekMapHandler(3, 0x880000, 0x89ffff, MAP_READ | MAP_WRITE);
@@ -19742,6 +19799,7 @@ static INT32 Wof3sjInit()
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	INT32 nRet = TwelveMhzInit();
+	if (nRet) return nRet;
 	
 	SekOpen(0);
 	SekMapHandler(3, 0x880000, 0x89ffff, MAP_READ | MAP_WRITE);
@@ -19768,6 +19826,7 @@ static INT32 WofsjInit()
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	INT32 nRet = TwelveMhzInit();
+	if (nRet) return nRet;
 	
 	SekOpen(0);
 	SekMapHandler(3, 0x880000, 0x89ffff, MAP_READ | MAP_WRITE);
@@ -19901,6 +19960,7 @@ static INT32 Wofr1blInit()
 	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 	
 	INT32 nRet = TwelveMhzInit();
+	if (nRet) return nRet;
 	
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
@@ -20008,6 +20068,7 @@ static INT32 WofablInit()
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	INT32 nRet = TwelveMhzInit();
+	if (nRet) return nRet;
 	
 	SekOpen(0);
 	SekMapHandler(3, 0x880000, 0x89ffff, MAP_READ | MAP_WRITE);

@@ -3903,11 +3903,13 @@ static INT32 kokushiInit()
 {
 	INT32 nRet = common_type1_init(4200, 0x200000, 2, kokushiMapCallback, NULL, 2/*udp*/);
 
-	SekOpen(0);
-	for (INT32 i = 0; i < 0x60000; i+=2) {
-		SekWriteWord(0x800000 + i, rand());
+	if (!nRet) {
+		SekOpen(0);
+		for (INT32 i = 0; i < 0x60000; i+=2) {
+			SekWriteWord(0x800000 + i, rand());
+		}
+		SekClose();
 	}
-	SekClose();
 
 	return nRet;
 }

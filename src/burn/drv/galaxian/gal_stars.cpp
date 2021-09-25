@@ -16,6 +16,7 @@ INT32 GalStarsScrollPos  = 0;
 INT32 GalStarsBlinkState = 0;
 INT32 GalBlinkTimerStartFrame = 0;
 static double GalBlinkEveryFrames = (0.693 * (100000 + 2.0 + 10000) * 0.00001) * (16000.0 / 132 / 2);
+INT32 GalStarsLastFrame = 0;
 
 void GalInitStars()
 {
@@ -24,6 +25,7 @@ void GalInitStars()
 	GalStarsEnable     = 0;
 	GalStarsScrollPos  = -1;
 	GalStarsBlinkState = 0;
+	GalStarsLastFrame  = 0;
 
 	nStars = 0;
 	Generator = 0;
@@ -72,10 +74,20 @@ static inline void GalPlotStar(INT32 x, INT32 y, INT32 Colour)
 	}
 }
 
+static void GalaxianScrollStars()
+{
+	INT32 CurrentFrame = GetCurrentFrame();
+
+	for (INT32 i = GalStarsLastFrame; i < CurrentFrame; i++) {
+		GalStarsScrollPos++;
+	}
+	GalStarsLastFrame = CurrentFrame;
+}
+
 void GalaxianRenderStarLayer()
 {
-	GalStarsScrollPos++;
-	
+	GalaxianScrollStars();
+
 	for (INT32 Offs = 0; Offs < 252; Offs++) {
 		INT32 x, y;
 		
@@ -93,7 +105,7 @@ void GalaxianRenderStarLayer()
 
 void JumpbugRenderStarLayer()
 {
-	GalStarsScrollPos++;
+	GalaxianScrollStars();
 
 	for (INT32 Offs = 0; Offs < 252; Offs++) {
 		INT32 x, y;
@@ -153,9 +165,9 @@ void ScrambleRenderStarLayer()
 void MarinerRenderStarLayer()
 {
 	UINT8 *Prom = GalProm + 0x120;
-	
-	GalStarsScrollPos++;
-	
+
+	GalaxianScrollStars();
+
 	for (INT32 Offs = 0; Offs < 252; Offs++) {
 		INT32 x, y;
 		

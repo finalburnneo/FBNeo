@@ -411,12 +411,7 @@ static void graphics_expand()
 
 static INT32 DrvInit(INT32 rom_layout)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvHD6309ROM + 0x00000,  0, 1)) return 1;
@@ -444,7 +439,7 @@ static INT32 DrvInit(INT32 rom_layout)
 		graphics_expand();
 	}
 
-	HD6309Init(1);
+	HD6309Init(0);
 	HD6309Open(0);
 	HD6309MapMemory(DrvHD6309RAM,			0x0000, 0x00ff, MAP_ROM); // write through handler
 	HD6309MapMemory(DrvHD6309RAM + 0x0100,	0x0100, 0x03ff, MAP_RAM);
@@ -468,9 +463,10 @@ static INT32 DrvInit(INT32 rom_layout)
 
 	BurnWatchdogInit(DrvDoReset, 180);
 
-	BurnYM2151Init(3579545);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachZet(3579545);
 
 	K007232Init(0, 3579545, DrvSndROM, 0x40000);
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
@@ -499,7 +495,7 @@ static INT32 DrvExit()
 	K007232Exit();
 	BurnYM2151Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -555,6 +551,8 @@ static INT32 DrvFrame()
 		DrvDoReset(1);
 	}
 
+	ZetNewFrame();
+
 	{
 		memset (DrvInputs, 0xff, 3 * sizeof(UINT8));
 
@@ -565,7 +563,6 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 3000000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
@@ -586,23 +583,12 @@ static INT32 DrvFrame()
 			}
 		}
 
-		CPU_RUN(1, Zet);
-
-		if (pBurnSoundOut && i&1) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
+		CPU_RUN_TIMER(1);
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		if (nSegmentLength) {
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-		}
-		K007232Update(0, pBurnSoundOut, nBurnSoundLen); // only update K007232 once per frame
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		K007232Update(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();

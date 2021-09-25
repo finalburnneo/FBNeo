@@ -1142,7 +1142,7 @@ void GalaxianLfoFreqWrite(UINT32 Offset, UINT8 d)
 	
 	GalLfoFreqFrameVar = (1000000000 / ((MAXFREQ - MINFREQ) * 639 * rx)) * 100;
 	
-	bprintf(PRINT_NORMAL, _T("Offset %x, rx %f, %f\n"), Offset, (MAXFREQ - MINFREQ) * 639 * rx, GalLfoFreqFrameVar);
+//	bprintf(PRINT_NORMAL, _T("Offset %x, rx %f, %f\n"), Offset, (MAXFREQ - MINFREQ) * 639 * rx, GalLfoFreqFrameVar);
 }
 
 void GalaxianSoundUpdateTimers()

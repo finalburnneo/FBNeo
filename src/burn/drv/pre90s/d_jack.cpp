@@ -1569,7 +1569,7 @@ static INT32 TreahuntInit()
 		treahunt_decode();
 	}
 
-	return 0;
+	return nRet;
 }
 
 struct BurnDriver BurnDrvTreahunt = {

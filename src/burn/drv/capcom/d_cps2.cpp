@@ -13268,16 +13268,18 @@ void __fastcall PhoenixSpriteWriteWord(UINT32 a, UINT16 d)
 static INT32 PhoenixInit()
 {
 	INT32 nRet = Cps2Init();
-	
-	SekOpen(0);
-	SekMapHandler(3, 0xff0000, 0xffffff, MAP_WRITE);
-	SekSetWriteByteHandler(3, PhoenixOutputWriteByte);
-	SekSetWriteWordHandler(3, PhoenixOutputWriteWord);
-	SekMapHandler(4, 0x700000, 0x701fff, MAP_WRITE);
-	SekSetWriteByteHandler(4, PhoenixSpriteWriteByte);
-	SekSetWriteWordHandler(4, PhoenixSpriteWriteWord);
-	SekClose();
-	
+
+	if (!nRet) {
+		SekOpen(0);
+		SekMapHandler(3, 0xff0000, 0xffffff, MAP_WRITE);
+		SekSetWriteByteHandler(3, PhoenixOutputWriteByte);
+		SekSetWriteWordHandler(3, PhoenixOutputWriteWord);
+		SekMapHandler(4, 0x700000, 0x701fff, MAP_WRITE);
+		SekSetWriteByteHandler(4, PhoenixSpriteWriteByte);
+		SekSetWriteWordHandler(4, PhoenixSpriteWriteWord);
+		SekClose();
+	}
+
 	return nRet;
 }
 

@@ -339,7 +339,7 @@ void HiscoreInit()
 	WriteCheck1 = 0;
 }
 
-void HiscoreReset()
+void HiscoreReset(INT32 bDisableInversionWriteback)
 {
 #if defined FBNEO_DEBUG
 	if (!Debug_HiscoreInitted) bprintf(PRINT_ERROR, _T("HiscoreReset called without init\n"));
@@ -355,12 +355,14 @@ void HiscoreReset()
 		HiscoreMemRange[i].ApplyNextFrame = 0;
 		HiscoreMemRange[i].Applied = APPLIED_STATE_NONE;
 		
-		/*if (HiscoreMemRange[i].Loaded)*/ {
+		if (HiscoreMemRange[i].Loaded) {
 			cpu_open(HiscoreMemRange[i].nCpu);
 			// in some games, system16b (aliensyn, everything else) rom is mapped (for cheats)
 			// on reset where the hiscore should be.  Writing here is bad.
-			//cheat_subptr->write(HiscoreMemRange[i].Address, (UINT8)~HiscoreMemRange[i].StartValue);
-			//if (HiscoreMemRange[i].NumBytes > 1) cheat_subptr->write(HiscoreMemRange[i].Address + HiscoreMemRange[i].NumBytes - 1, (UINT8)~HiscoreMemRange[i].EndValue);
+			if (bDisableInversionWriteback == 0) {
+				cheat_subptr->write(HiscoreMemRange[i].Address, (UINT8)~HiscoreMemRange[i].StartValue);
+				if (HiscoreMemRange[i].NumBytes > 1) cheat_subptr->write(HiscoreMemRange[i].Address + HiscoreMemRange[i].NumBytes - 1, (UINT8)~HiscoreMemRange[i].EndValue);
+			}
 			cheat_subptr->close();
 			
 #if 1 && defined FBNEO_DEBUG

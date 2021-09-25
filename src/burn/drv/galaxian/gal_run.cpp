@@ -198,6 +198,7 @@ static INT32 GalDoReset()
 	KingballSound = 0;
 	GalStarsEnable = 0;
 	GalStarsScrollPos = 0;
+	GalStarsLastFrame = 0;
 	GalBackgroundRed = 0;
 	GalBackgroundGreen = 0;
 	GalBackgroundBlue = 0;
@@ -2283,6 +2284,7 @@ INT32 GalScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(GalStarsEnable);
 		SCAN_VAR(GalStarsScrollPos);
 		SCAN_VAR(GalStarsBlinkState);
+		SCAN_VAR(GalStarsLastFrame);
 		SCAN_VAR(GalVBlank);
 	}
 	

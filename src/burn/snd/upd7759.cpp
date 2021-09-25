@@ -137,7 +137,7 @@ static INT32 SyncUPD(upd7759_chip *Chippy, INT32 cycles)
 	return (INT32)((double)cycles * ((double)(Chippy->pTotalCyclesCB()) / ((double)Chippy->nCpuMHZ / (nBurnFPS / 100.0000))));
 }
 
-static void UpdateStream(INT32 chip);
+static void UpdateStream(INT32 chip, INT32 end);
 
 static void UPD7759AdvanceState()
 {
@@ -339,7 +339,7 @@ static void UPD7759SlaveModeUpdate()
 	Chip = Chips[0]; // slave mode only available on Chip 0
 	UINT8 OldDrq = Chip->drq;
 
-	UpdateStream(Chip->ChipNum);
+	UpdateStream(Chip->ChipNum, 0);
 
 	UPD7759AdvanceState();
 
@@ -429,14 +429,14 @@ void UPD7759Update(INT32 chip, INT32 nLength)
 	Chip->pos = Pos;
 }
 
-static void UpdateStream(INT32 chip)
+static void UpdateStream(INT32 chip, INT32 end)
 {
 	if (!pBurnSoundOut) return;
 
 	Chip = Chips[chip];
 
 	INT32 framelen = Chip->resamp.samples_to_source(nBurnSoundLen);
-	INT32 position = SyncUPD(Chip, framelen);
+	INT32 position = (end) ? framelen : SyncUPD(Chip, framelen);
 
 	INT32 samples = position - Chip->sample_counts;
 
@@ -466,7 +466,7 @@ void UPD7759Render(INT32 chip, INT16 *pSoundBuf, INT32 samples)
 
 	Chip = Chips[chip];
 
-	if (Chip->pTotalCyclesCB) UpdateStream(chip); // fill 'er up!
+	if (Chip->pTotalCyclesCB) UpdateStream(chip, 1); // fill 'er up!
 
 	INT32 nFrameLength = Chip->resamp.samples_to_source(nBurnSoundLen);
 
@@ -654,7 +654,7 @@ void UPD7759ResetWrite(INT32 chip, UINT8 Data)
 
 	Chip = Chips[chip];
 
-	if (Chip->pTotalCyclesCB) UpdateStream(chip);
+	if (Chip->pTotalCyclesCB) UpdateStream(chip, 0);
 
 	UINT8 Oldreset = Chip->reset;
 	Chip->reset = (Data != 0);
@@ -676,7 +676,7 @@ void UPD7759StartWrite(INT32 chip, UINT8 Data)
 	UINT8 Oldstart = Chip->start;
 	Chip->start = (Data != 0);
 
-	if (Chip->pTotalCyclesCB) UpdateStream(chip);
+	if (Chip->pTotalCyclesCB) UpdateStream(chip, 0);
 
 	if (Chip->state == STATE_IDLE && !Oldstart && Chip->start && Chip->reset) {
 		Chip->state = STATE_START;

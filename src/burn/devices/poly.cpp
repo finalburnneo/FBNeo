@@ -361,6 +361,8 @@ poly_manager *poly_alloc(int max_polys, size_t extra_data_size, UINT8 flags)
 
 void poly_free(poly_manager *poly)
 {
+	if (poly == NULL) return;
+
 #if KEEP_STATISTICS
 {
 	int i, conflicts = 0, resolved = 0;

@@ -2496,7 +2496,7 @@ static struct BurnRomInfo AltbeastjRomDesc[] = {
 	{ "opr-11672.a11",  0x20000, 0xbbd7f460, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "opr-11673.a12",  0x20000, 0x400c4a36, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0077.c2",    0x01000, 0x00000000, BRF_NODUMP },
+	{ "317-0077.c2",    0x01000, 0xeef80d68, SYS16_ROM_I8751 | BRF_ESS | BRF_PRG },
 	
 	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
@@ -8055,28 +8055,6 @@ static INT32 AliensynInit()
 	return nRet;
 }
 
-static void Altbeastj_Sim8751()
-{
-	// System Inputs
-	*((UINT16*)(System16Ram + 0x30d0)) = BURN_ENDIAN_SWAP_INT16((UINT16)(System16Input[0] << 8));
-	
-	// Tile Banking
-	INT32 Bank = (System16Ram[0x3094 + 1] << 8) | System16Ram[0x3094 + 0];
-	Bank &= 0xff;
-	Bank = (Bank & 0x01) | ((Bank & 0xfe) << 1);
-	System16TileBanks[1] = Bank & 7;
-	
-	// Sound command
-	UINT16 temp = (System16Ram[0x30d4 + 1] << 8) | System16Ram[0x30d4 + 0];
-	if ((temp & 0xff00) != 0x0000) {
-		System16SoundLatch = temp >> 8;
-		ZetOpen(0);
-		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-		ZetClose();
-		*((UINT16*)(System16Ram + 0x30d4)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
-	}
-}
-
 static INT32 AltbeastInit()
 {
 	AltbeastMode = true;
@@ -8086,8 +8064,6 @@ static INT32 AltbeastInit()
 
 static INT32 AltbeastjInit()
 {
-	Simulate8751 = Altbeastj_Sim8751;
-	
 	// Start off with some sprite rom and let the load routine add on the rest
 	System16SpriteRomSize = 0x1a0000 - 0xe0000;
 

@@ -344,6 +344,7 @@ extern INT32 GalStarsEnable;
 extern INT32 GalStarsScrollPos;
 extern INT32 GalStarsBlinkState;
 extern INT32 GalBlinkTimerStartFrame;
+extern INT32 GalStarsLastFrame;
 
 void GalInitStars();
 void GalaxianRenderStarLayer();

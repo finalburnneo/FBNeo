@@ -395,7 +395,7 @@ static INT32 System16DoReset()
 	System16RowScroll = 0;
 	System16MCUData = 0;
 
-	HiscoreReset();
+	HiscoreReset(1 /*disable inversion pattern: see notes in hiscore.cpp's HiscoreReset()*/);
 
 	return 0;
 }

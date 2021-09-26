@@ -2844,7 +2844,7 @@ void retro_set_controller_port_device(unsigned port, unsigned device)
 {
 #if 1
 	// Retroarch is ignoring what i want, so let's force valid values
-	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM)
+	if (nBurnDrvActive != ~0U && (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM)
 	{
 		switch(port)
 		{

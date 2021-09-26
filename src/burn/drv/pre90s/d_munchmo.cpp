@@ -1,11 +1,6 @@
 // FB Alpha Joyful Road / Munch Mobile driver module
 // Based on MAME driver by Phil Stroffolino
 
-/*
-	To do (Remove as completed):
-		Video frequency is not correct, should be 57hz.
-*/
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"
@@ -48,92 +43,93 @@ static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
+	{"P1 Start",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
 	{"P1 Left Stick Up",	BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
 	{"P1 Left Stick Down",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
 	{"P1 Left Stick Left",	BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
 	{"P1 Left Stick Right",	BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
 	{"P1 Right Stick Left",	BIT_DIGITAL,	DrvJoy2 + 4,	"p1 left 2"	},
-	{"P1 Right Stick Right",BIT_DIGITAL,	DrvJoy2 + 5,	"p1 right 2"	},
+	{"P1 Right Stick Right",BIT_DIGITAL,	DrvJoy2 + 5,	"p1 right 2"},
 
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
+	{"P2 Start",			BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
 	{"P2 Left Stick Up",	BIT_DIGITAL,	DrvJoy3 + 0,	"p2 up"		},
 	{"P2 Left Stick Down",	BIT_DIGITAL,	DrvJoy3 + 1,	"p2 down"	},
 	{"P2 Left Stick Left",	BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
 	{"P2 Left Stick Right",	BIT_DIGITAL,	DrvJoy3 + 3,	"p2 right"	},
 	{"P2 Right Stick Left",	BIT_DIGITAL,	DrvJoy3 + 4,	"p2 left 2"	},
-	{"P2 Right Stick Right",BIT_DIGITAL,	DrvJoy3 + 5,	"p2 right 2"	},
+	{"P2 Right Stick Right",BIT_DIGITAL,	DrvJoy3 + 5,	"p2 right 2"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dips"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dips"		},
+	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",				BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",				BIT_DIPSWITCH,	DrvDips + 0,	"dips"		},
+	{"Dip B",				BIT_DIPSWITCH,	DrvDips + 1,	"dips"		},
 };
 
 STDINPUTINFO(Drv)
 
 static struct BurnDIPInfo DrvDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0x00, NULL				},
-	{0x12, 0xff, 0xff, 0x88, NULL				},
+	DIP_OFFSET(0x11)
+	{0x00, 0xff, 0xff, 0x00, NULL									},
+	{0x01, 0xff, 0xff, 0x88, NULL									},
 
 	{0   , 0xfe, 0   ,    2, "Continue after game over? (Cheat)"	},
-	{0x11, 0x01, 0x01, 0x00, "Off"				},
-	{0x11, 0x01, 0x01, 0x01, "On"				},
+	{0x00, 0x01, 0x01, 0x00, "Off"									},
+	{0x00, 0x01, 0x01, 0x01, "On"									},
 
-	{0   , 0xfe, 0   ,   12, "Coin A"			},
-	{0x11, 0x01, 0x1e, 0x14, "3 Coins 1 Credit"		},
-	{0x11, 0x01, 0x1e, 0x10, "2 Coins 1 Credit"		},
-	{0x11, 0x01, 0x1e, 0x16, "3 Coins 2 Credits"		},
-	{0x11, 0x01, 0x1e, 0x00, "1 Coin  1 Credit"		},
-	{0x11, 0x01, 0x1e, 0x12, "2 Coins 3 Credits"		},
-	{0x11, 0x01, 0x1e, 0x02, "1 Coin  2 Credits"		},
-	{0x11, 0x01, 0x1e, 0x04, "1 Coins 3 Credits"		},
-	{0x11, 0x01, 0x1e, 0x06, "1 Coin  4 Credits"		},
-	{0x11, 0x01, 0x1e, 0x08, "1 Coin  5 Credits"		},
-	{0x11, 0x01, 0x1e, 0x0a, "1 Coin  6 Credits"		},
-	{0x11, 0x01, 0x1e, 0x0c, "1 Coin  7 Credits"		},
-	{0x11, 0x01, 0x1e, 0x0e, "1 Coin  8 Credits"		},
+	{0   , 0xfe, 0   ,   12, "Coin A"								},
+	{0x00, 0x01, 0x1e, 0x14, "3 Coins 1 Credit"						},
+	{0x00, 0x01, 0x1e, 0x10, "2 Coins 1 Credit"						},
+	{0x00, 0x01, 0x1e, 0x16, "3 Coins 2 Credits"					},
+	{0x00, 0x01, 0x1e, 0x00, "1 Coin  1 Credit"						},
+	{0x00, 0x01, 0x1e, 0x12, "2 Coins 3 Credits"					},
+	{0x00, 0x01, 0x1e, 0x02, "1 Coin  2 Credits"					},
+	{0x00, 0x01, 0x1e, 0x04, "1 Coins 3 Credits"					},
+	{0x00, 0x01, 0x1e, 0x06, "1 Coin  4 Credits"					},
+	{0x00, 0x01, 0x1e, 0x08, "1 Coin  5 Credits"					},
+	{0x00, 0x01, 0x1e, 0x0a, "1 Coin  6 Credits"					},
+	{0x00, 0x01, 0x1e, 0x0c, "1 Coin  7 Credits"					},
+	{0x00, 0x01, 0x1e, 0x0e, "1 Coin  8 Credits"					},
 
-	{0   , 0xfe, 0   ,    8, "First Bonus"			},
-	{0x11, 0x01, 0xe0, 0x00, "10000"			},
-	{0x11, 0x01, 0xe0, 0x20, "20000"			},
-	{0x11, 0x01, 0xe0, 0x40, "30000"			},
-	{0x11, 0x01, 0xe0, 0x60, "40000"			},
-	{0x11, 0x01, 0xe0, 0x80, "50000"			},
-	{0x11, 0x01, 0xe0, 0xa0, "60000"			},
-	{0x11, 0x01, 0xe0, 0xc0, "70000"			},
-	{0x11, 0x01, 0xe0, 0xe0, "None"				},
+	{0   , 0xfe, 0   ,    8, "First Bonus"							},
+	{0x00, 0x01, 0xe0, 0x00, "10000"								},
+	{0x00, 0x01, 0xe0, 0x20, "20000"								},
+	{0x00, 0x01, 0xe0, 0x40, "30000"								},
+	{0x00, 0x01, 0xe0, 0x60, "40000"								},
+	{0x00, 0x01, 0xe0, 0x80, "50000"								},
+	{0x00, 0x01, 0xe0, 0xa0, "60000"								},
+	{0x00, 0x01, 0xe0, 0xc0, "70000"								},
+	{0x00, 0x01, 0xe0, 0xe0, "None"									},
 
-	{0   , 0xfe, 0   ,    4, "Second Bonus (First +)"	},
-	{0x12, 0x01, 0x03, 0x00, "30000"			},
-	{0x12, 0x01, 0x03, 0x01, "40000"			},
-	{0x12, 0x01, 0x03, 0x02, "100000"			},
-	{0x12, 0x01, 0x03, 0x03, "None"				},
+	{0   , 0xfe, 0   ,    4, "Second Bonus (First +)"				},
+	{0x01, 0x01, 0x03, 0x00, "30000"								},
+	{0x01, 0x01, 0x03, 0x01, "40000"								},
+	{0x01, 0x01, 0x03, 0x02, "100000"								},
+	{0x01, 0x01, 0x03, 0x03, "None"									},
 
-	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x12, 0x01, 0x0c, 0x00, "1"				},
-	{0x12, 0x01, 0x0c, 0x04, "2"				},
-	{0x12, 0x01, 0x0c, 0x08, "3"				},
-	{0x12, 0x01, 0x0c, 0x0c, "5"				},
+	{0   , 0xfe, 0   ,    4, "Lives"								},
+	{0x01, 0x01, 0x0c, 0x00, "1"									},
+	{0x01, 0x01, 0x0c, 0x04, "2"									},
+	{0x01, 0x01, 0x0c, 0x08, "3"									},
+	{0x01, 0x01, 0x0c, 0x0c, "5"									},
 
-	{0   , 0xfe, 0   ,    2, "Freeze"			},
-	{0x12, 0x01, 0x10, 0x00, "Off"				},
-	{0x12, 0x01, 0x10, 0x10, "On"				},
+	{0   , 0xfe, 0   ,    2, "Freeze"								},
+	{0x01, 0x01, 0x10, 0x00, "Off"									},
+	{0x01, 0x01, 0x10, 0x10, "On"									},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x12, 0x01, 0x20, 0x20, "Off"				},
-	{0x12, 0x01, 0x20, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"							},
+	{0x01, 0x01, 0x20, 0x20, "Off"									},
+	{0x01, 0x01, 0x20, 0x00, "On"									},
 
-	{0   , 0xfe, 0   ,    1, "Cabinet"			},
-	{0x12, 0x01, 0x40, 0x00, "Upright"			},
-//	{0x12, 0x01, 0x40, 0x40, "Cocktail"			}, // not supported
+	{0   , 0xfe, 0   ,    1, "Cabinet"								},
+	{0x01, 0x01, 0x40, 0x00, "Upright"								},
+//	{0x01, 0x01, 0x40, 0x40, "Cocktail"								}, // not supported
 
-	{0   , 0xfe, 0   ,    2, "Additional Bonus (Second)"	},
-	{0x12, 0x01, 0x80, 0x00, "No"				},
-	{0x12, 0x01, 0x80, 0x80, "Yes"				},
+	{0   , 0xfe, 0   ,    2, "Additional Bonus (Second)"			},
+	{0x01, 0x01, 0x80, 0x00, "No"									},
+	{0x01, 0x01, 0x80, 0x80, "Yes"									},
 };
 
 STDDIPINFO(Drv)
@@ -147,11 +143,7 @@ static void __fastcall mnchmobl_main_write(UINT16 address, UINT8 data)
 
 		case 0xbe00: {
 			soundlatch = data;
-			ZetClose();
-			ZetOpen(1);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(1, 0, CPU_IRQSTATUS_HOLD);
 		}
 		return;
 
@@ -204,7 +196,7 @@ static UINT8 __fastcall mnchmobl_main_read(UINT16 address)
 		case 0xbf03:
 			return DrvInputs[2];
 	}
-	bprintf(0, _T("u-mr %X.\n"), address);
+
 	return 0;
 }
 
@@ -239,7 +231,6 @@ static UINT8 __fastcall mnchmobl_sound_read(UINT16 address)
 	switch (address & ~0x1fff)
 	{
 		case 0x2000:
-			//ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return soundlatch;
 
 		case 0x8000:
@@ -258,13 +249,8 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
-
-	ZetOpen(1);
-	ZetReset();
-	ZetClose();
+	ZetReset(0);
+	ZetReset(1);
 
 	AY8910Reset(0);
 	AY8910Reset(1);
@@ -287,8 +273,8 @@ static INT32 MemIndex()
 	DrvZ80ROM1		= Next; Next += 0x002000;
 
 	DrvGfxROM0		= Next; Next += 0x004000;
-	DrvMapROM1		= Next; Next += 0x021000;
-	DrvGfxROM1		= Next; Next += 0x042000;
+	DrvMapROM1		= Next; Next += 0x001000;
+	DrvGfxROM1		= Next; Next += 0x004000;
 	DrvGfxROM2		= Next; Next += 0x040000;
 
 	DrvColPROM		= Next; Next += 0x000100;
@@ -305,7 +291,7 @@ static INT32 MemIndex()
 	DrvSprTRAM		= Next; Next += 0x000400;
 	DrvSprARAM		= Next; Next += 0x000400;
 
-	DrvVRegs		= Next; Next += 0x0000080;
+	DrvVRegs		= Next; Next += 0x000080;
 
 	DrvBGBitmap     = (UINT16*)Next; Next += (512 * 512) * sizeof(UINT16);
 
@@ -370,7 +356,7 @@ static INT32 DrvGfxDecode()
 
 	memcpy (tmp, DrvGfxROM1, 0x1000);
 
-	GfxDecode(0x0080, 4,  8,  8, Plane1, XOffs1, YOffs0, 0x080, tmp, DrvGfxROM1);
+	GfxDecode(0x0100, 4,  8,  8, Plane1, XOffs1, YOffs0, 0x080, tmp, DrvGfxROM1);
 
 	memcpy (tmp, DrvGfxROM2, 0x6000);
 
@@ -387,12 +373,9 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
+
+	BurnSetRefreshRate(57);
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
@@ -451,6 +434,7 @@ static INT32 DrvInit()
 	AY8910Init(1, 1875000, 1);
 	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.50, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 3750000);
 
 	GenericTilesInit();
 
@@ -466,7 +450,7 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 	AY8910Exit(1);
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -502,7 +486,7 @@ static void draw_background()
 		{
 			for (INT32 col = 0; col < 4; col++)
 			{
-				INT32 code = DrvMapROM1[col + code_offset * 4 + row * 0x400] & 0x7f;
+				INT32 code = DrvMapROM1[col + code_offset * 4 + row * 0x400] & 0xff;
 
 				Render8x8Tile_Clip(DrvBGBitmap, code, (sx + (col * 8)), sy + (row * 8), palette_bank + 0x04, 4, 0, DrvGfxROM1);
 			}
@@ -526,14 +510,12 @@ static void draw_background()
 
 static void draw_sprites()
 {
-	int scroll = DrvVRegs[6];
-	int flags = DrvVRegs[7];
-	int xadjust = - 128 - 16 - ((flags & 0x80) ? 1 : 0);
-	int bank = (flags & 0x40) ? 0x80 : 0;
-
-	int color_base = (palette_bank * 4) + 3;
-
-	int firstsprite = DrvVRegs[4] & 0x3f;
+	INT32 scroll = DrvVRegs[6];
+	INT32 flags = DrvVRegs[7];
+	INT32 xadjust = - 128 - 16 - ((flags & 0x80) ? 1 : 0);
+	INT32 bank = (flags & 0x40) ? 0x80 : 0;
+	INT32 color_base = (palette_bank * 4) + 3;
+	INT32 firstsprite = DrvVRegs[4] & 0x3f;
 
 	for (INT32 i = firstsprite; i < firstsprite + 0x40; i++)
 	{
@@ -565,7 +547,9 @@ static INT32 DrvDraw()
 		DrvPaletteInit();
 		DrvRecalc = 0;
 	}
+
 	BurnTransferClear();
+
 	if (nBurnLayer & 1) draw_background();
 	if (nBurnLayer & 2) draw_sprites();
 	if (nBurnLayer & 4) draw_status();
@@ -598,17 +582,16 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		INT32 nSegment = nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += ZetRun(nSegment);
-		if (i == 220) { // 220? weird? probably due to hz? any higher and car flickers
+		CPU_RUN(0, Zet);
+		if (i == nInterleave - 1) {
 			if (nmi_enable) ZetNmi();
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nSegment);
-		if (i == 220) {
+		CPU_RUN(1, Zet);
+		if (i == nInterleave - 1) {
 			ZetSetIRQLine(0x20, CPU_IRQSTATUS_ACK); // nmi
 		}
 		ZetClose();
@@ -657,8 +640,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Joyful Road (Japan)
 
 static struct BurnRomInfo joyfulrRomDesc[] = {
-	{ "m1j.10e",		0x2000, 0x1fe86e25, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 #0 Code
-	{ "m2j.10d",		0x2000, 0xb144b9a6, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "m1j.10e",	0x2000, 0x1fe86e25, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 #0 Code
+	{ "m2j.10d",	0x2000, 0xb144b9a6, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "mu.2j",		0x2000, 0x420adbd4, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 #1 Code
 
@@ -674,7 +657,7 @@ static struct BurnRomInfo joyfulrRomDesc[] = {
 	{ "f3j.5g",		0x2000, 0x772a7527, 6 | BRF_GRA },           //  9
 	{ "h", 			0x2000, 0x332584de, 6 | BRF_GRA },           // 10 - Monochrome Sprites
 
-	{ "a2001.clr", 		0x0100, 0x1b16b907, 7 | BRF_GRA },           // 11 - Color PROMs
+	{ "a2001.clr", 	0x0100, 0x1b16b907, 7 | BRF_GRA },           // 11 - Color PROMs
 };
 
 STD_ROM_PICK(joyfulr)
@@ -711,7 +694,7 @@ static struct BurnRomInfo mnchmoblRomDesc[] = {
 	{ "f3.5g",		0x2000, 0xec996706, 5 | BRF_GRA },           //  9
 	{ "h", 			0x2000, 0x332584de, 6 | BRF_GRA },           // 10 - Monochrome Sprites
 
-	{ "a2001.clr", 		0x0100, 0x1b16b907, 7 | BRF_GRA },           // 11 - Color PROMs
+	{ "a2001.clr", 	0x0100, 0x1b16b907, 7 | BRF_GRA },           // 11 - Color PROMs
 };
 
 STD_ROM_PICK(mnchmobl)

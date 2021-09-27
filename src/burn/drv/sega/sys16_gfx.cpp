@@ -3044,6 +3044,14 @@ void UpdateSystem18VDP()
 Palette Generation
 ====================================================*/
 
+static INT32 rgbclamp(INT32 in)
+{
+	if (in > 255) in = 255;
+	if (in < 0) in = 0;
+
+	return in;
+}
+
 void System16PaletteInit()
 {
 	static const INT32 resistances_normal[6] = { 3900, 2000, 1000, 1000/2, 1000/4, 0 };
@@ -3063,7 +3071,10 @@ void System16PaletteInit()
 		INT32 i1 = (value >> 1) & 1;
 		INT32 i0 = (value >> 0) & 1;
 		System16PaletteNormal[value] = combine_6_weights(weights_normal, i0, i1, i2, i3, i4, 0);
-		System16PaletteShadow[value] = combine_6_weights(weights_sh, i0, i1, i2, i3, i4, ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_OUTRUN) ? 4 : 0);
+
+		// Out Run hw gets slightly darker shadows, to match pcb
+		INT32 c = combine_6_weights(weights_sh, i0, i1, i2, i3, i4, ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_OUTRUN) ? -0.30 : 0);
+		System16PaletteShadow[value] = rgbclamp(c);
 		System16PaletteHilight[value] = combine_6_weights(weights_sh, i0, i1, i2, i3, i4, 1);
 	}
 }

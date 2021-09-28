@@ -505,6 +505,13 @@ static bool apply_dipswitches_from_variables()
 	return dip_changed;
 }
 
+static TCHAR* nl_remover(TCHAR* str)
+{
+	TCHAR* tmp = strdup(str);
+	tmp[strcspn(tmp, "\r\n")] = 0;
+	return tmp;
+}
+
 static int create_variables_from_cheats()
 {
 	// Load cheats so that we can turn them into core options, it needs to
@@ -530,7 +537,7 @@ static int create_variables_from_cheats()
 		{
 			cheat_core_options.push_back(cheat_core_option());
 			cheat_core_option *cheat_option = &cheat_core_options.back();
-			std::string option_name = pCurrentCheat->szCheatName;
+			std::string option_name = nl_remover(pCurrentCheat->szCheatName);
 			cheat_option->friendly_name = SSTR( "[Cheat] " << option_name.c_str() );
 			cheat_option->friendly_name_categorized = option_name.c_str();
 			std::replace( option_name.begin(), option_name.end(), ' ', '_');
@@ -544,8 +551,9 @@ static int create_variables_from_cheats()
 				cheat_value->nValue = i;
 				// prepending name with value, some cheats from official pack have 2 values matching default's name,
 				// and picking the wrong one prevents some games to boot
-				cheat_value->friendly_name = SSTR( i << " - " << pCurrentCheat->pOption[i]->szOptionName);
-				if (pCurrentCheat->nDefault == i) cheat_option->default_value = SSTR( i << " - " << pCurrentCheat->pOption[i]->szOptionName);
+				std::string option_value_name = nl_remover(pCurrentCheat->pOption[i]->szOptionName);
+				cheat_value->friendly_name = SSTR( i << " - " << option_value_name.c_str());
+				if (pCurrentCheat->nDefault == i) cheat_option->default_value = SSTR( i << " - " << option_value_name.c_str());
 			}
 		}
 		num++;

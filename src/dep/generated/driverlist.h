@@ -16766,10 +16766,41 @@ DRV		BurnDrvVblokbrk;
 DRV		BurnDrvVsgongf;
 DRV		BurnDrvRyourano;
 DRV		BurnDrvRyouran;
+DRV		BurnDrvnes_vsrbibbal;
+DRV		BurnDrvnes_vsbattlecity;
+DRV		BurnDrvnes_vscastlevania;
+DRV		BurnDrvnes_vsclucluland;
+DRV		BurnDrvnes_vsdrmario;
+DRV		BurnDrvnes_vsduckhunt;
 DRV		BurnDrvfds_vsexcitebike;
+DRV		BurnDrvnes_vsexcitebike;
+DRV		BurnDrvnes_vsfreedomforce;
+DRV		BurnDrvnes_vsfrombelow;
+DRV		BurnDrvnes_vsgoonies;
+DRV		BurnDrvnes_vsgradius;
+DRV		BurnDrvnes_vsgumshoe;
+DRV		BurnDrvnes_vshogansalley;
+DRV		BurnDrvnes_vsiceclimber;
 DRV		BurnDrvBnstars;
 DRV		BurnDrvBnstars1;
+DRV		BurnDrvnes_vsmachrider;
+DRV		BurnDrvnes_vsmightybombjack;
+DRV		BurnDrvnes_vsninjajkun;
+DRV		BurnDrvnes_vspinball;
+DRV		BurnDrvnes_vsplatoon;
+DRV		BurnDrvnes_vsraidbbay;
+DRV		BurnDrvnes_vsslalom;
+DRV		BurnDrvnes_vssoccer;
+DRV		BurnDrvnes_vsstarluster;
+DRV		BurnDrvnes_vssmgolfla;
+DRV		BurnDrvnes_vssmgolf;
 DRV		BurnDrvnes_vssmbhomedi;
+DRV		BurnDrvnes_vssmb;
+DRV		BurnDrvnes_vssuperskykid;
+DRV		BurnDrvnes_vssuperxevious;
+DRV		BurnDrvnes_vstetris;
+DRV		BurnDrvnes_vstkoboxing;
+DRV		BurnDrvnes_vstopgun;
 DRV		BurnDrvVulcan;
 DRV		BurnDrvVulcana;
 DRV		BurnDrvVulcanb;
@@ -34536,10 +34567,41 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvVsgongf,			// VS Gong Fight
 	&BurnDrvRyourano,			// VS Mahjong Otome Ryouran (revision 1)
 	&BurnDrvRyouran,			// VS Mahjong Otome Ryouran (revision 2)
+	&BurnDrvnes_vsrbibbal,		// VS. Atari RBI Baseball
+	&BurnDrvnes_vsbattlecity,	// VS. Battle City
+	&BurnDrvnes_vscastlevania,	// VS. Castlevania
+	&BurnDrvnes_vsclucluland,	// VS. Clu Clu Land
+	&BurnDrvnes_vsdrmario,		// VS. Dr. Mario
+	&BurnDrvnes_vsduckhunt,		// VS. Duck Hunt
 	&BurnDrvfds_vsexcitebike,	// Vs. Excitebike (Japan)
+	&BurnDrvnes_vsexcitebike,	// VS. Excitebike
+	&BurnDrvnes_vsfreedomforce,	// VS. Freedom Force
+	&BurnDrvnes_vsfrombelow,	// VS. From Below (HB, v0.10)
+	&BurnDrvnes_vsgoonies,		// VS. Goonies, The
+	&BurnDrvnes_vsgradius,		// VS. Gradius
+	&BurnDrvnes_vsgumshoe,		// VS. Gumshoe
+	&BurnDrvnes_vshogansalley,	// VS. Hogan's Alley
+	&BurnDrvnes_vsiceclimber,	// VS. Ice Climber
 	&BurnDrvBnstars,			// Vs. Janshi Brandnew Stars (Ver 1.1, MegaSystem32 Version)
 	&BurnDrvBnstars1,			// Vs. Janshi Brandnew Stars [Not currently emulated, NOT WORKING]
+	&BurnDrvnes_vsmachrider,	// VS. Mach Rider
+	&BurnDrvnes_vsmightybombjack,// VS. Mighty Bomb Jack
+	&BurnDrvnes_vsninjajkun,	// VS. Ninja Jajamaru-kun
+	&BurnDrvnes_vspinball,		// VS. Pinball
+	&BurnDrvnes_vsplatoon,		// VS. Platoon
+	&BurnDrvnes_vsraidbbay,		// VS. Raid on Bungling Bay
+	&BurnDrvnes_vsslalom,		// VS. Slalom
+	&BurnDrvnes_vssoccer,		// VS. Soccer
+	&BurnDrvnes_vsstarluster,	// VS. Star Luster
+	&BurnDrvnes_vssmgolfla,		// VS. Stroke & Match Golf Ladies
+	&BurnDrvnes_vssmgolf,		// VS. Stroke & Match Golf
 	&BurnDrvnes_vssmbhomedi,	// VS. Super Mario Bros. Home Edition (Hack)
+	&BurnDrvnes_vssmb,			// VS. Super Mario Bros
+	&BurnDrvnes_vssuperskykid,	// VS. Super Sky Kid
+	&BurnDrvnes_vssuperxevious,	// VS. Super Xevious - Gump no Nazo
+	&BurnDrvnes_vstetris,		// VS. Tetris
+	&BurnDrvnes_vstkoboxing,	// VS. TKO Boxing
+	&BurnDrvnes_vstopgun,		// VS. Top Gun
 	&BurnDrvVulcan,				// Vulcan Venture (New)
 	&BurnDrvVulcana,			// Vulcan Venture (Old)
 	&BurnDrvVulcanb,			// Vulcan Venture (Oldest)

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17527 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17558 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -16554,10 +16554,41 @@ This list contains all games supported by FinalBurn Neo.
 | vsgongf	|  	| VS Gong Fight						| 		| 1984	| Kaneko	| Miscellaneous	| 					|
 | ryourano	|  	| VS Mahjong Otome Ryouran (revision 1)			| ryouran	| 1998	| Electro Design| Super Kaneko N| 					|
 | ryouran	|  	| VS Mahjong Otome Ryouran (revision 2)			| 		| 1998	| Electro Design| Super Kaneko N| 					|
+| vsrbibbal	|  	| VS. Atari RBI Baseball				| 		| 1987	| Nintendo	| Miscellaneous	| 					|
+| vsbattlecity	|  	| VS. Battle City					| 		| 1985	| Namco		| Miscellaneous	| 					|
+| vscastlevania	|  	| VS. Castlevania					| 		| 1987	| Konami	| Miscellaneous	| 					|
+| vsclucluland	|  	| VS. Clu Clu Land					| 		| 1984	| Nintendo	| Miscellaneous	| 					|
+| vsdrmario	|  	| VS. Dr. Mario						| 		| 1990	| Nintendo	| Miscellaneous	| 					|
+| vsduckhunt	|  	| VS. Duck Hunt						| 		| 1984	| Nintendo	| Miscellaneous	| 					|
 | fds_vsexcitebike|  	| Vs. Excitebike (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| vsexcitebike	|  	| VS. Excitebike					| 		| 1985	| Nintendo	| Miscellaneous	| 					|
+| vsfreedomforce|  	| VS. Freedom Force					| 		| 1988	| Sunsoft	| Miscellaneous	| 					|
+| vsfrombelow	|  	| VS. From Below (HB, v0.10)				| 		| 2021	| Goose2k	| Miscellaneous	| 					|
+| vsgoonies	|  	| VS. Goonies, The					| 		| 1986	| Konami	| Miscellaneous	| 					|
+| vsgradius	|  	| VS. Gradius						| 		| 1986	| Konami	| Miscellaneous	| 					|
+| vsgumshoe	|  	| VS. Gumshoe						| 		| 1986	| Nintendo	| Miscellaneous	| 					|
+| vshogansalley	|  	| VS. Hogan's Alley					| 		| 1985	| Nintendo	| Miscellaneous	| 					|
+| vsiceclimber	|  	| VS. Ice Climber					| 		| 1985	| Nintendo	| Miscellaneous	| 					|
 | bnstars	|  	| Vs. Janshi Brandnew Stars (Ver 1.1, MegaSystem32 Versi| bnstars1	| 1997	| Jaleco	| MegaSystem 32	| 					|
 | bnstars1	|   NW	| Vs. Janshi Brandnew Stars				| 		| 1997	| Jaleco	| Miscellaneous	| Not currently emulated		|
+| vsmachrider	|  	| VS. Mach Rider					| 		| 1985	| Nintendo	| Miscellaneous	| 					|
+| vsmightybomjack|  	| VS. Mighty Bomb Jack					| 		| 1986	| Tecmo		| Miscellaneous	| 					|
+| vsninjajkun	|  	| VS. Ninja Jajamaru-kun				| 		| 1986	| Jaleco	| Miscellaneous	| 					|
+| vspinball	|  	| VS. Pinball						| 		| 1984	| Nintendo	| Miscellaneous	| 					|
+| vsplatoon	|  	| VS. Platoon						| 		| 1988	| Sunsoft	| Miscellaneous	| 					|
+| vsraidbbay	|  	| VS. Raid on Bungling Bay				| 		| 1985	| Broderbund	| Miscellaneous	| 					|
+| vsslalom	|  	| VS. Slalom						| 		| 1986	| Nintendo	| Miscellaneous	| 					|
+| vssoccer	|  	| VS. Soccer						| 		| 1985	| Nintendo	| Miscellaneous	| 					|
+| vsstarluster	|  	| VS. Star Luster					| 		| 1985	| Namco		| Miscellaneous	| 					|
+| vssmgolfla	|  	| VS. Stroke & Match Golf Ladies			| 		| 1984	| Nintendo	| Miscellaneous	| 					|
+| vssmgolf	|  	| VS. Stroke & Match Golf				| 		| 1984	| Nintendo	| Miscellaneous	| 					|
 | nes_vssmbhomedi|  	| VS. Super Mario Bros. Home Edition (Hack)		| nes_smb	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| vssmb		|  	| VS. Super Mario Bros					| 		| 1986	| Nintendo	| Miscellaneous	| 					|
+| vssuperskykid	|  	| VS. Super Sky Kid					| 		| 1986	| Namco		| Miscellaneous	| 					|
+| vssuperxevious|  	| VS. Super Xevious - Gump no Nazo			| 		| 1986	| Namco		| Miscellaneous	| 					|
+| vstetris	|  	| VS. Tetris						| 		| 1988	| Atari Games	| Miscellaneous	| 					|
+| vstkoboxing	|  	| VS. TKO Boxing					| 		| 1987	| Data East	| Miscellaneous	| 					|
+| vstopgun	|  	| VS. Top Gun						| 		| 1987	| Konami	| Miscellaneous	| 					|
 | vulcan	|  	| Vulcan Venture (New)					| 		| 1988	| Konami	| GX785		| 					|
 | vulcana	|  	| Vulcan Venture (Old)					| vulcan	| 1988	| Konami	| GX785		| 					|
 | vulcanb	|  	| Vulcan Venture (Oldest)				| vulcan	| 1988	| Konami	| GX785		| 					|

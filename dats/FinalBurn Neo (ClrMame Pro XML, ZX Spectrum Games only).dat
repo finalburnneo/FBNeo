@@ -509,7 +509,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="afteroids" romof="spectrum">
-		<description>Afteroids (48K) (Spanish)</description>
+		<description>Afteroids (Spanish) (48K)</description>
 		<year>1988</year>
 		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="Afteroids (1988)(Zigurat Software)(es).tap" size="49931" crc="53f59e66"/>
@@ -639,11 +639,30 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="aliengirldemo" romof="spectrum">
-		<description>Alien Girl (Demo) (48K) (HB) [Homebrew]</description>
+	<game name="aliengirl128" romof="spec128">
+		<description>Alien Girl (128K) (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Javier Fopiani</manufacturer>
-		<rom name="Alien Girl - 48k Demo (2020)(Javier Fopiani).tap" size="44475" crc="4e1c2f21"/>
+		<rom name="Alien Girl 128K (2020)(Javier Fopiani).tap" size="91068" crc="b99c427c"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="aliengirl48en" cloneof="aliengirl128" romof="aliengirl128">
+		<description>Alien Girl (English) (48K) (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Javier Fopiani</manufacturer>
+		<rom name="Alien Girl 48K EN (2020)(Javier Fopiani).tap" size="44475" crc="4e1c2f21"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="aliengirl48es" cloneof="aliengirl128" romof="aliengirl128">
+		<description>Alien Girl (Spanish) (48K) (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Javier Fopiani</manufacturer>
+		<rom name="Alien Girl 48K ES (2020)(Javier Fopiani).tap" size="44505" crc="1f883dba"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2702,13 +2721,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="circuitry" romof="spec128">
-		<description>Circuitry (HB, v1.1) [Homebrew]</description>
+	<game name="circuitry" romof="spectrum">
+		<description>Circuitry (48K) (HB, v1.1) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>Rucksack Games</manufacturer>
 		<rom name="Circuitry48k v1.1 (2017)(Rucksack Games).tap" size="31538" crc="c97061d1"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2808,18 +2826,17 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="coloco" romof="spec128">
-		<description>Coloco (HB) [Homebrew]</description>
+	<game name="coloco" romof="spectrum">
+		<description>Coloco (48K) (HB) [Homebrew]</description>
 		<year>2020</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Coloco (2020)(Mojon Twins).tap" size="46855" crc="dd07fa17"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="colonoszx" romof="spec128">
-		<description>Colonos ZX (HB) [Homebrew]</description>
+		<description>Colonos ZX (48K) (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Jose Manuel Gris</manufacturer>
 		<rom name="Colonos ZX (2020)(Jose Manuel Gris).tap" size="35144" crc="b5bac9fa"/>
@@ -2829,7 +2846,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="coloristic" romof="spec128">
-		<description>Coloristic (HB) [Homebrew]</description>
+		<description>Coloristic (128K) (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Martin Borik</manufacturer>
 		<rom name="Coloristic (2020)(Martin Borik).tap" size="16436" crc="1c824bfb"/>
@@ -2963,9 +2980,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="coronaenc" romof="spec128">
-		<description>Corona Encantada, La (HB) [Homebrew]</description>
+		<description>Corona Encantada, La (Spanish) (128K) (HB) [Homebrew]</description>
 		<year>2009</year>
-		<manufacturer>RELEVO</manufacturer>
+		<manufacturer>Karoshi Corp. - RELEVO</manufacturer>
 		<rom name="Corona Encantada, La (2009)(RELEVO).tap" size="47371" crc="e8b765aa"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -4269,7 +4286,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="duckstroma" romof="spec128">
-		<description>Duckstroma (HB, v1.02) [Homebrew]</description>
+		<description>Duckstroma (128K) (HB, v1.02) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>UltraNarwhal</manufacturer>
 		<rom name="Duckstroma v1.02 (2020)(UltraNarwhal).z80" size="41142" crc="f75a1350"/>
@@ -4636,7 +4653,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fjhm" romof="spec128">
-		<description>Farmer Jack and the Hedge Monkeys (HB) [Homebrew]</description>
+		<description>Farmer Jack and the Hedge Monkeys (128K) (HB) [Homebrew]</description>
 		<year>2008</year>
 		<manufacturer>Bob Smith</manufacturer>
 		<rom name="Farmer Jack and the Hedge Monkeys (2008)(Bob Smith).tap" size="48405" crc="de828b58"/>
@@ -4646,7 +4663,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fjhh" romof="spec128">
-		<description>Farmer Jack in Harvest Havoc (HB) [Homebrew]</description>
+		<description>Farmer Jack in Harvest Havoc (128K) (HB) [Homebrew]</description>
 		<year>2006</year>
 		<manufacturer>Bob Smith</manufacturer>
 		<rom name="Farmer Jack in Harvest Havoc (2006)(Bob Smith).tap" size="39223" crc="936f2345"/>
@@ -5268,7 +5285,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="generdigital" romof="spec128">
-		<description>Generacio Digital (HB) [Homebrew, Select keyboard to play - game inputs set on QAOP-SPACE]</description>
+		<description>Generacio Digital (128K) (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Catalunya Radio</manufacturer>
 		<rom name="Generacio Digital (2019)(Catalunya Radio).tap" size="39117" crc="76ec9f7d"/>
@@ -5420,7 +5437,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="godkiller" romof="spec128">
-		<description>Godkiller - New Timeline Edition (HB) [Homebrew]</description>
+		<description>Godkiller - New Timeline Edition (HB, v2) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>APSIS</manufacturer>
 		<rom name="Godkiller v2 (2019)(APSIS).tap" size="57216" crc="ba14a5b9"/>
@@ -5430,7 +5447,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="godkillerintro" cloneof="godkiller" romof="godkiller">
-		<description>Godkiller - New Timeline Edition INTRO (HB) [Homebrew]</description>
+		<description>Godkiller - New Timeline Edition - INTRO (HB, v2) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>APSIS</manufacturer>
 		<rom name="Godkiller intro v2 (2019)(APSIS).tap" size="35443" crc="a1957fa3"/>
@@ -5440,7 +5457,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="godkiller2" romof="spec128">
-		<description>Godkiller 2 Exile - New Timeline Edition (HB) [Homebrew]</description>
+		<description>Godkiller 2 Exile - New Timeline Edition (HB, v2) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>APSIS</manufacturer>
 		<rom name="Godkiller 2 Exile v2 (2020)(APSIS).tap" size="59462" crc="b5002734"/>
@@ -5450,7 +5467,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="godkiller2intro" cloneof="godkiller2" romof="godkiller2">
-		<description>Godkiller 2 Exile - New Timeline Edition INTRO (HB) [Homebrew]</description>
+		<description>Godkiller 2 Exile - New Timeline Edition - INTRO (HB, v2) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>APSIS</manufacturer>
 		<rom name="Godkiller 2 Exile intro v2 (2020)(APSIS).tap" size="42380" crc="0fde1ae6"/>
@@ -5677,7 +5694,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gunship" romof="spec128">
-		<description>Gunship</description>
+		<description>Gunship (128K)</description>
 		<year>1987</year>
 		<manufacturer>MicroProse Software</manufacturer>
 		<rom name="Gunship (1987)(MicroProse Software).tap" size="103370" crc="01e4ed88"/>
@@ -6047,7 +6064,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="humphrey" romof="spectrum">
-		<description>Humphrey (48K) (Spanish)</description>
+		<description>Humphrey (Spanish) (48K)</description>
 		<year>1988</year>
 		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="Humphrey (1988)(Zigurat Software)(es).tap" size="49931" crc="dd0455ba"/>
@@ -9081,7 +9098,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="operationgunship" romof="spec128">
-		<description>Operation Gunship</description>
+		<description>Operation Gunship (128K)</description>
 		<year>1989</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Operation Gunship (1989)(Codemasters).tap" size="52455" crc="ee1f687d"/>
@@ -11753,7 +11770,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="spacejourney" romof="spec128">
-		<description>Space Journey (HB) [Homebrew]</description>
+		<description>Space Journey (48K) (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Roman Cikryt</manufacturer>
 		<rom name="Space Journey (2020)(Roman Cikryt).tap" size="46896" crc="b55f0534"/>
@@ -13256,13 +13273,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="trashman" romof="spec128">
-		<description>Trashman</description>
+	<game name="trashman" romof="spectrum">
+		<description>Trashman (48K)</description>
 		<year>1984</year>
 		<manufacturer>New Generation</manufacturer>
 		<rom name="Trashman (1984)(New Generation).tap" size="33845" crc="79aac256"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

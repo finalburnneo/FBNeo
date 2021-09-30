@@ -728,6 +728,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="arcomage" romof="msx">
+		<description>Arcomage (HB) [Homebrew]</description>
+		<year>2015</year>
+		<manufacturer>bitVISION</manufacturer>
+		<rom name="Arcomage (2015)(Bitvision).rom" size="65536" crc="a72794ba"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="arkanoid" romof="msx">
 		<description>Arkanoid (Euro?)</description>
 		<year>1986</year>
@@ -1534,7 +1545,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bitlogic" romof="msx">
-		<description>BitLogic (HB) [Homebrew]</description>
+		<description>BitLogic a Cyberpunk Arcade Adventure (HB) [Homebrew]</description>
 		<year>2015</year>
 		<manufacturer>OxiAB Studio</manufacturer>
 		<rom name="BITLOGIC_v_100.ROM" size="49152" crc="fbcd1942"/>
@@ -3008,6 +3019,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="coldblood" romof="msx">
+		<description>Cold Blood (HB) [Homebrew]</description>
+		<year>2010</year>
+		<manufacturer>Paxanga Soft</manufacturer>
+		<rom name="Cold Blood (2010)(Paxanga Soft).rom" size="32768" crc="0d622a32"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="coliseum" romof="msx">
 		<description>Coliseum (Spanish)</description>
 		<year>1988</year>
@@ -3889,6 +3911,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="jinj2" romof="msx">
+		<description>Dinj 2 - Belmonte's Revenge (HB) [Homebrew]</description>
+		<year>2012</year>
+		<manufacturer>Retroworks</manufacturer>
+		<rom name="jinj2-v2.rom" size="32768" crc="d43cf107"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="dinosour" romof="msx">
 		<description>Dino Sourcers</description>
 		<year>1988</year>
@@ -4477,6 +4510,39 @@
 		<year>1986</year>
 		<manufacturer>Aacksoft</manufacturer>
 		<rom name="elidon (1986)(aackosoft)[run'cas-'].cas" size="31854" crc="b8b68e85"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="eruka" romof="msx">
+		<description>Eruka Fan Book (HB) [Homebrew]</description>
+		<year>2016</year>
+		<manufacturer>N.I</manufacturer>
+		<rom name="Eruka Fan Book (2016)(N.I).rom" size="49152" crc="d08d9358"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="estapantano" romof="msx">
+		<description>Esta en el Pantano (HB) [Homebrew]</description>
+		<year>2009</year>
+		<manufacturer>RELEVO</manufacturer>
+		<rom name="Esta en el Pantano (2009)(RELEVO).rom" size="32768" crc="3bb41093"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="estacaja" romof="msx">
+		<description>Esta en la Caja (HB, v1.1) [Homebrew]</description>
+		<year>2009</year>
+		<manufacturer>RELEVO</manufacturer>
+		<rom name="Esta en la Caja v1.1 (2009)(RELEVO).rom" size="32768" crc="1a9fda56"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -5564,11 +5630,33 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gommy" romof="msx">
-		<description>Gommy (HB) [Homebrew]</description>
+	<game name="gommydx" romof="msx">
+		<description>Gommy - Medieval Dedender (Deluxe Version) (HB) [Homebrew]</description>
+		<year>2013</year>
+		<manufacturer>Retroworks</manufacturer>
+		<rom name="Gommy - Medieval Defender DX version (2013)(Retroworks).rom" size="49152" crc="00cc2162"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gommyen" cloneof="gommydx" romof="gommydx">
+		<description>Gommy - Medieval Defender (English) (HB) [Homebrew]</description>
 		<year>2013</year>
 		<manufacturer>Retroworks/Dimension Z/Nenefranz</manufacturer>
-		<rom name="DMZ-004_Gommy MD_msx.rom" size="16384" crc="66b27261"/>
+		<rom name="Gommy - Medieval Defender EN (2013)(Retroworks).rom" size="16384" crc="66b27261"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gommyes" cloneof="gommydx" romof="gommydx">
+		<description>Gommy - Medieval Defender (Spanish) (HB) [Homebrew]</description>
+		<year>2013</year>
+		<manufacturer>Retroworks/Dimension Z/Nenefranz</manufacturer>
+		<rom name="Gommy - Medieval Defender ES (2013)(Retroworks).rom" size="16384" crc="cb628d7a"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -6935,17 +7023,6 @@
 		<year>2020</year>
 		<manufacturer>Maio Cavalcanti</manufacturer>
 		<rom name="Jewels (2020)(Maio Cavalcanti).rom" size="32768" crc="23519759"/>
-		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
-		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
-		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
-		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="jinj2" romof="msx">
-		<description>Jinj 2 - Belmonte's Revenge (HB) [Homebrew]</description>
-		<year>2010</year>
-		<manufacturer>Retroworks</manufacturer>
-		<rom name="jinj2-v2.rom" size="32768" crc="d43cf107"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -10013,6 +10090,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="oceano" romof="msx">
+		<description>Oceano (HB) [Homebrew]</description>
+		<year>2015</year>
+		<manufacturer>EgoTrip</manufacturer>
+		<rom name="Oceano (2015)(EgoTrip).rom" size="32768" crc="642d7de8"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ohmummy" romof="msx">
 		<description>Oh Mummy!! (Euro)</description>
 		<year>1988</year>
@@ -10536,6 +10624,17 @@
 		<year>1987</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Phantomas 2 (1987)(Dinamic Software)(ES)[RUN'CAS-'].cas" size="45359" crc="5b62821c"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="phantsaga" romof="msx">
+		<description>Phantomas Saga Infinity (HB) [Homebrew]</description>
+		<year>2006</year>
+		<manufacturer>Karoshi Corporation</manufacturer>
+		<rom name="Phantomas Saga Infinity (2006)(Karoshi Corp.).rom" size="32768" crc="ffb9f1df"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -13551,10 +13650,21 @@
 		<driver status="good"/>
 	</game>
 	<game name="teodoro" romof="msx">
-		<description>Teodoro No Sabe Volar (HB) [Homebrew]</description>
+		<description>Teodoro No Sabe Volar (English) (HB) [Homebrew]</description>
 		<year>2012</year>
 		<manufacturer>Retroworks</manufacturer>
 		<rom name="DMZ002 - Teodoro no sabe volar (English).rom" size="32768" crc="d2d53275"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="teodoroes" cloneof="teodoro" romof="teodoro">
+		<description>Teodoro No Sabe Volar (Spanish) (HB) [Homebrew]</description>
+		<year>2012</year>
+		<manufacturer>Retroworks</manufacturer>
+		<rom name="Teodoro no sabe volar ES (2012)(Retroworks).rom" size="32768" crc="ec05665c"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -14367,8 +14477,8 @@
 	</game>
 	<game name="transball" romof="msx">
 		<description>Transball (HB, v1.3.2) [Homebrew]</description>
-		<year>2005</year>
-		<manufacturer>Santiago Ontanon</manufacturer>
+		<year>2016</year>
+		<manufacturer>Brain Games</manufacturer>
 		<rom name="transball-en.rom" size="32768" crc="cbcf03c5"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -14799,6 +14909,17 @@
 		<year>1988</year>
 		<manufacturer>Iber Soft</manufacturer>
 		<rom name="wamp cola (1988)(iber soft)(es)[aka dracula][run'cas-'].cas" size="19787" crc="a6438fe8"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="warbeyond" romof="msx">
+		<description>War From Beyond (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Clube MSX</manufacturer>
+		<rom name="War From Beyond (2020)(Clube MSX).rom" size="32768" crc="1b9b2571"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -15536,6 +15657,39 @@
 		<year>19??</year>
 		<manufacturer>Prosoft</manufacturer>
 		<rom name="zoom 909 (1985)(sega)[cr prosoft].rom" size="32768" crc="34b186ad"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zorrico" romof="msx">
+		<description>Zorrico (English) (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Physical Dreams</manufacturer>
+		<rom name="Zorrico EN (2020)(Physical Dreams).rom" size="49152" crc="6c81d265"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zorricoit" cloneof="zorrico" romof="zorrico">
+		<description>Zorrico (Italian) (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Physical Dreams</manufacturer>
+		<rom name="Zorrico IT (2020)(Physical Dreams).rom" size="49152" crc="9671f6d8"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zorricoes" cloneof="zorrico" romof="zorrico">
+		<description>Zorrico (Spanish) (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Physical Dreams</manufacturer>
+		<rom name="Zorrico ES (2020)(Physical Dreams).rom" size="49152" crc="591e9ae4"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

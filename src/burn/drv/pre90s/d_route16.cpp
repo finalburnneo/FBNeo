@@ -816,23 +816,23 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Route 16 (Sun Electronics)
+// Route 16 (Sun Electronics, set 1)
 
 static struct BurnRomInfo route16RomDesc[] = {
-	{ "stvg54.a0",     	0x0800, 0xb8471cdc, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
-	{ "stvg55.a1",     	0x0800, 0x3ec52fe5, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "stvg56.a2",     	0x0800, 0xa8e92871, 1 | BRF_ESS | BRF_PRG }, //  2
-	{ "stvg57.a3",     	0x0800, 0xa0fc9fc5, 1 | BRF_ESS | BRF_PRG }, //  3
-	{ "stvg58.a4",     	0x0800, 0xcc95c02c, 1 | BRF_ESS | BRF_PRG }, //  4
-	{ "tvg59.a5",     	0x0800, 0xa39ef648, 1 | BRF_ESS | BRF_PRG }, //  5
+	{ "stvg54.a0",     	0x0800, 0xb8471cdc, 1 | BRF_ESS | BRF_PRG }, 	//  0 Z80 #0 Code
+	{ "stvg55.a1",     	0x0800, 0x3ec52fe5, 1 | BRF_ESS | BRF_PRG }, 	//  1
+	{ "stvg56.a2",     	0x0800, 0xa8e92871, 1 | BRF_ESS | BRF_PRG }, 	//  2
+	{ "stvg57.a3",     	0x0800, 0xa0fc9fc5, 1 | BRF_ESS | BRF_PRG },    //  3
+	{ "stvg58.a4",     	0x0800, 0xcc95c02c, 1 | BRF_ESS | BRF_PRG },    //  4
+	{ "tvg59.a5",     	0x0800, 0xa39ef648, 1 | BRF_ESS | BRF_PRG },    //  5
 
-	{ "stvg60.b0",     	0x0800, 0xfef605f3, 2 | BRF_ESS | BRF_PRG }, //  6 Z80 #1 Code
-	{ "stvg61.b1",     	0x0800, 0xd0d6c189, 2 | BRF_ESS | BRF_PRG }, //  7
-	{ "tsvg62.b2",     	0x0800, 0xdefc5797, 2 | BRF_ESS | BRF_PRG }, //  8
-	{ "stvg63.b3",     	0x0800, 0x88d94a66, 2 | BRF_ESS | BRF_PRG }, //  9
+	{ "stvg60.b0",     	0x0800, 0xfef605f3, 2 | BRF_ESS | BRF_PRG },    //  6 Z80 #1 Code
+	{ "stvg61.b1",     	0x0800, 0xd0d6c189, 2 | BRF_ESS | BRF_PRG },    //  7
+	{ "tsvg62.b2",     	0x0800, 0xdefc5797, 2 | BRF_ESS | BRF_PRG },    //  8
+	{ "stvg63.b3",     	0x0800, 0x88d94a66, 2 | BRF_ESS | BRF_PRG },    //  9
 
-	{ "mb7052.59",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 // 10 Graphics
-	{ "mb7052.61",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 // 11
+	{ "mb7052.59",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	    // 10 Graphics
+	{ "mb7052.61",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	    // 11
 	
 	{ "mb8841",			0x0800, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 12 mcu
 };
@@ -842,7 +842,7 @@ STD_ROM_FN(route16)
 
 struct BurnDriver BurnDrvroute16 = {
 	"route16", NULL, NULL, NULL, "1981",
-	"Route 16 (Sun Electronics)\0", NULL, "Sun Electronics", "Route 16",
+	"Route 16 (Sun Electronics, set 1)\0", NULL, "Sun Electronics", "Route 16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, route16RomInfo, route16RomName, NULL, NULL, NULL, NULL, Route16InputInfo, Route16DIPInfo,
@@ -854,20 +854,20 @@ struct BurnDriver BurnDrvroute16 = {
 // Route 16 (Centuri license, set 1)
 
 static struct BurnRomInfo route16aRomDesc[] = {
-	{ "tvg54.a0",     	0x0800, 0xaef9ffc1, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
-	{ "tvg55.a1",     	0x0800, 0x389bc077, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "tvg56.a2",     	0x0800, 0x1065a468, 1 | BRF_ESS | BRF_PRG }, //  2
-	{ "tvg57.a3",     	0x0800, 0x0b1987f3, 1 | BRF_ESS | BRF_PRG }, //  3
-	{ "tvg58.a4",     	0x0800, 0xf67d853a, 1 | BRF_ESS | BRF_PRG }, //  4
-	{ "tvg59.a5",     	0x0800, 0xd85cf758, 1 | BRF_ESS | BRF_PRG }, //  5
+	{ "tvg54.a0",     	0x0800, 0xaef9ffc1, 1 | BRF_ESS | BRF_PRG }, 	//  0 Z80 #0 Code
+	{ "tvg55.a1",     	0x0800, 0x389bc077, 1 | BRF_ESS | BRF_PRG }, 	//  1
+	{ "tvg56.a2",     	0x0800, 0x1065a468, 1 | BRF_ESS | BRF_PRG }, 	//  2
+	{ "tvg57.a3",     	0x0800, 0x0b1987f3, 1 | BRF_ESS | BRF_PRG }, 	//  3
+	{ "tvg58.a4",     	0x0800, 0xf67d853a, 1 | BRF_ESS | BRF_PRG }, 	//  4
+	{ "tvg59.a5",     	0x0800, 0xd85cf758, 1 | BRF_ESS | BRF_PRG }, 	//  5
 
-	{ "tvg60.b0",     	0x0800, 0x0f9588a7, 2 | BRF_ESS | BRF_PRG }, //  6 Z80 #1 Code
-	{ "tvg61.b1",     	0x0800, 0x2b326cf9, 2 | BRF_ESS | BRF_PRG }, //  7
-	{ "tvg62.b2",     	0x0800, 0x529cad13, 2 | BRF_ESS | BRF_PRG }, //  8
-	{ "tvg63.b3",     	0x0800, 0x3bd8b899, 2 | BRF_ESS | BRF_PRG }, //  9
+	{ "tvg60.b0",     	0x0800, 0x0f9588a7, 2 | BRF_ESS | BRF_PRG }, 	//  6 Z80 #1 Code
+	{ "tvg61.b1",     	0x0800, 0x2b326cf9, 2 | BRF_ESS | BRF_PRG }, 	//  7
+	{ "tvg62.b2",     	0x0800, 0x529cad13, 2 | BRF_ESS | BRF_PRG }, 	//  8
+	{ "tvg63.b3",     	0x0800, 0x3bd8b899, 2 | BRF_ESS | BRF_PRG }, 	//  9
 
-	{ "mb7052.59",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 // 10 Graphics
-	{ "mb7052.61",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 // 11
+	{ "mb7052.59",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 	// 10 Graphics
+	{ "mb7052.61",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 	// 11
 	
 	{ "mb8841",			0x0800, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 12 mcu
 };
@@ -914,20 +914,20 @@ struct BurnDriver BurnDrvroute16a = {
 // Route 16 (Centuri license, set 2)
 
 static struct BurnRomInfo route16bRomDesc[] = {
-	{ "vg-54",        	0x0800, 0x0c966319, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
-	{ "vg-55",        	0x0800, 0xa6a8c212, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "vg-56",        	0x0800, 0x5c74406a, 1 | BRF_ESS | BRF_PRG }, //  2
-	{ "vg-57",        	0x0800, 0x313e68ab, 1 | BRF_ESS | BRF_PRG }, //  3
-	{ "vg-58",       	0x0800, 0x40824e3c, 1 | BRF_ESS | BRF_PRG }, //  4
-	{ "vg-59",       	0x0800, 0x9313d2c2, 1 | BRF_ESS | BRF_PRG }, //  5
+	{ "vg-54",        	0x0800, 0x0c966319, 1 | BRF_ESS | BRF_PRG }, 	//  0 Z80 #0 Code
+	{ "vg-55",        	0x0800, 0xa6a8c212, 1 | BRF_ESS | BRF_PRG }, 	//  1
+	{ "vg-56",        	0x0800, 0x5c74406a, 1 | BRF_ESS | BRF_PRG }, 	//  2
+	{ "vg-57",        	0x0800, 0x313e68ab, 1 | BRF_ESS | BRF_PRG }, 	//  3
+	{ "vg-58",       	0x0800, 0x40824e3c, 1 | BRF_ESS | BRF_PRG }, 	//  4
+	{ "vg-59",       	0x0800, 0x9313d2c2, 1 | BRF_ESS | BRF_PRG }, 	//  5
 
-	{ "route16.b0",   	0x0800, 0x0f9588a7, 2 | BRF_ESS | BRF_PRG }, //  6 Z80 #1 Code
-	{ "vg-61",        	0x0800, 0xb216c88c, 2 | BRF_ESS | BRF_PRG }, //  7
-	{ "route16.b2",   	0x0800, 0x529cad13, 2 | BRF_ESS | BRF_PRG }, //  8
-	{ "route16.b3",   	0x0800, 0x3bd8b899, 2 | BRF_ESS | BRF_PRG }, //  9
+	{ "route16.b0",   	0x0800, 0x0f9588a7, 2 | BRF_ESS | BRF_PRG }, 	//  6 Z80 #1 Code
+	{ "vg-61",        	0x0800, 0xb216c88c, 2 | BRF_ESS | BRF_PRG }, 	//  7
+	{ "route16.b2",   	0x0800, 0x529cad13, 2 | BRF_ESS | BRF_PRG }, 	//  8
+	{ "route16.b3",   	0x0800, 0x3bd8b899, 2 | BRF_ESS | BRF_PRG }, 	//  9
 
-	{ "im5623.f10",   	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 // 10 Graphics
-	{ "im5623.f12",   	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 // 11
+	{ "im5623.f10",   	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 	// 10 Graphics
+	{ "im5623.f12",   	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 	// 11
 	
 	{ "mb8841",			0x0800, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 12 mcu
 };
@@ -974,20 +974,20 @@ struct BurnDriver BurnDrvroute16b = {
 // Route 16 (Centuri license, set 3, bootleg?)
 
 static struct BurnRomInfo route16cRomDesc[] = {
-	{ "route16.a0",  	0x0800, 0x8f9101bd, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
-	{ "route16.a1",   	0x0800, 0x389bc077, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "route16.a2",   	0x0800, 0x1065a468, 1 | BRF_ESS | BRF_PRG }, //  2
-	{ "route16.a3",   	0x0800, 0x0b1987f3, 1 | BRF_ESS | BRF_PRG }, //  3
-	{ "route16.a4",   	0x0800, 0xf67d853a, 1 | BRF_ESS | BRF_PRG }, //  4
-	{ "route16.a5",   	0x0800, 0xd85cf758, 1 | BRF_ESS | BRF_PRG }, //  5
+	{ "route16.a0",  	0x0800, 0x8f9101bd, 1 | BRF_ESS | BRF_PRG }, 	//  0 Z80 #0 Code
+	{ "route16.a1",   	0x0800, 0x389bc077, 1 | BRF_ESS | BRF_PRG }, 	//  1
+	{ "route16.a2",   	0x0800, 0x1065a468, 1 | BRF_ESS | BRF_PRG }, 	//  2
+	{ "route16.a3",   	0x0800, 0x0b1987f3, 1 | BRF_ESS | BRF_PRG }, 	//  3
+	{ "route16.a4",   	0x0800, 0xf67d853a, 1 | BRF_ESS | BRF_PRG }, 	//  4
+	{ "route16.a5",   	0x0800, 0xd85cf758, 1 | BRF_ESS | BRF_PRG }, 	//  5
 
-	{ "route16.b0",   	0x0800, 0x0f9588a7, 2 | BRF_ESS | BRF_PRG }, //  6 Z80 #1 Code
-	{ "route16.b1",   	0x0800, 0x2b326cf9, 2 | BRF_ESS | BRF_PRG }, //  7
-	{ "route16.b2",   	0x0800, 0x529cad13, 2 | BRF_ESS | BRF_PRG }, //  8
-	{ "route16.b3",   	0x0800, 0x3bd8b899, 2 | BRF_ESS | BRF_PRG }, //  9
+	{ "route16.b0",   	0x0800, 0x0f9588a7, 2 | BRF_ESS | BRF_PRG }, 	//  6 Z80 #1 Code
+	{ "route16.b1",   	0x0800, 0x2b326cf9, 2 | BRF_ESS | BRF_PRG }, 	//  7
+	{ "route16.b2",   	0x0800, 0x529cad13, 2 | BRF_ESS | BRF_PRG }, 	//  8
+	{ "route16.b3",   	0x0800, 0x3bd8b899, 2 | BRF_ESS | BRF_PRG }, 	//  9
 
-	{ "im5623.f10",   	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 // 10 Graphics
-	{ "im5623.f12",   	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 // 11
+	{ "im5623.f10",   	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 	// 10 Graphics
+	{ "im5623.f12",   	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 	// 11
 	
 	{ "mb8841",			0x0800, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 12 mcu
 };
@@ -1019,6 +1019,71 @@ struct BurnDriver BurnDrvroute16c = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, route16cRomInfo, route16cRomName, NULL, NULL, NULL, NULL, Route16InputInfo, Route16DIPInfo,
 	route16cInit, DrvExit, DrvFrame, Route16Draw, DrvScan, &DrvRecalc, 0x8,
+	256, 256, 3, 4
+};
+
+
+// Route 16 (Sun Electronics, set 2)
+
+// 2 sets found, one on TVX1 and one on TVX2 PCB. TVX1 has lots of wire hacks. Both PCBs have an identical TVX-S1 sub board with Fujitsu MB8841 + logic.
+// There were two different bytes between the two versions, both in ROM a2:
+// 0x1dd is 0x46 in the TVX1 dump and 0x47 in the TVX2 one. 0x764 is 0x04 in the TVX1 dump and 0x06 in the TVX2 one.
+// Those cause the game to malfunction and it doesn't seem to be additional protection. The a2 ROM below is the one dumped from the TVX2 PCB.
+
+static struct BurnRomInfo route16dRomDesc[] = {
+	{ "a0.7.bin",       0x0800, 0x025a4f63, 1 | BRF_ESS | BRF_PRG }, 	//  0 Z80 #0 Code
+	{ "a1.bin ",        0x0800, 0xab6117fa, 1 | BRF_ESS | BRF_PRG }, 	//  1
+	{ "a2.8.bin",       0x0800, 0x5174f9ac, 1 | BRF_ESS | BRF_PRG }, 	//  2
+	{ "a3.bin",        	0x0800, 0x3ba19f10, 1 | BRF_ESS | BRF_PRG }, 	//  3
+	{ "a4.bin",       	0x0800, 0x1da34bde, 1 | BRF_ESS | BRF_PRG }, 	//  4
+	{ "a5.bin",       	0x0800, 0x74438cf5, 1 | BRF_ESS | BRF_PRG }, 	//  5
+
+	{ "stvg60.b0",     	0x0800, 0xfef605f3, 2 | BRF_ESS | BRF_PRG }, 	//  6 Z80 #1 Code
+	{ "stvg61.b1",     	0x0800, 0xd0d6c189, 2 | BRF_ESS | BRF_PRG }, 	//  7
+	{ "tsvg62.b2",     	0x0800, 0xdefc5797, 2 | BRF_ESS | BRF_PRG }, 	//  8
+	{ "stvg63.b3",     	0x0800, 0x88d94a66, 2 | BRF_ESS | BRF_PRG }, 	//  9
+
+	{ "mb7052.59",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 	// 10 Graphics
+	{ "mb7052.61",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 	// 11
+	
+	{ "mb8841",			0x0800, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 12 mcu
+};
+
+STD_ROM_PICK(route16d)
+STD_ROM_FN(route16d)
+
+static INT32 route16dInit()
+{
+	INT32 nRet = DrvInit();
+
+	if (nRet == 0)
+	{
+		// Patch protection
+		DrvZ80ROM0[0x00e9] = 0x3a;
+
+		DrvZ80ROM0[0x0105] = 0x00; // jp nz,$4109 (nirvana) - NOP's in route16c
+		DrvZ80ROM0[0x0106] = 0x00;
+		DrvZ80ROM0[0x0107] = 0x00;
+
+		DrvZ80ROM0[0x0735] = 0x00; // jp nz,$4238 (nirvana)
+		DrvZ80ROM0[0x0736] = 0x00;
+		DrvZ80ROM0[0x0737] = 0x00;
+
+		DrvZ80ROM0[0x074b] = 0xc3;
+		DrvZ80ROM0[0x074c] = 0x5a;
+		DrvZ80ROM0[0x074d] = 0x07;
+	}
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvroute16d = {
+	"route16d", "route16", NULL, NULL, "1981",
+	"Route 16 (Sun Electronics, set 2)\0", NULL, "Sun Electronics", "Route 16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, route16dRomInfo, route16dRomName, NULL, NULL, NULL, NULL, Route16InputInfo, Route16DIPInfo,
+	route16dInit, DrvExit, DrvFrame, Route16Draw, DrvScan, &DrvRecalc, 0x8,
 	256, 256, 3, 4
 };
 

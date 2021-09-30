@@ -383,7 +383,6 @@ static struct BurnInputInfo FfightaeInputList[] =
 	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2"},
 	{"P2 Special"       , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3"},
 
-	{"P3 Coin"          , BIT_DIGITAL  , CpsInp177+6, "p3 coin"   },
 	{"P3 Start"         , BIT_DIGITAL  , CpsInp177+7, "p3 start"  },
 	{"P3 Up"            , BIT_DIGITAL  , CpsInp177+3, "p3 up"     },
 	{"P3 Down"          , BIT_DIGITAL  , CpsInp177+2, "p3 down"   },
@@ -391,6 +390,7 @@ static struct BurnInputInfo FfightaeInputList[] =
 	{"P3 Right"         , BIT_DIGITAL  , CpsInp177+0, "p3 right"  },
 	{"P3 Attack"        , BIT_DIGITAL  , CpsInp177+4, "p3 fire 1" },
 	{"P3 Jump"          , BIT_DIGITAL  , CpsInp177+5, "p3 fire 2" },
+	{"P3 Special"       , BIT_DIGITAL  , CpsInp177+6, "p3 fire 3" },
 
 	{"Reset"            , BIT_DIGITAL  , &CpsReset,   "reset"     },
 	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6, "diag"   },

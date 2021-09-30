@@ -4003,7 +4003,7 @@ static struct BurnRomInfo tankfrceRomDesc[] = {
 
 	{ "tf1_prg0.bin",	0x20000, 0x2ae4b9eb, 2 | BRF_PRG | BRF_ESS }, //  1 Main and Sub m6809 Code
 	{ "tf1_prg1.bin",	0x20000, 0x4a8bb251, 2 | BRF_PRG | BRF_ESS }, //  2
-	{ "tf1prg7.bin",	0x20000, 0x2ec28a87, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "tf6_prg7.bin",	0x20000, 0x2ec28a87, 2 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "cus64-64a1.mcu",	0x01000, 0xffb5c0bd, 3 | BRF_PRG | BRF_ESS }, //  4 Internal MCU Code
 

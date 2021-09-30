@@ -158,7 +158,7 @@ static INT32 CheckHiscoreAllowed()
 	return Allowed;
 }
 
-void HiscoreSearch(FILE *fp, const char *name)
+void HiscoreSearch_internal(FILE *fp, const char *name)
 {
 	char buffer[MAX_CONFIG_LINE_SIZE];
 	enum { FIND_NAME, FIND_DATA, FETCH_DATA } mode;
@@ -267,6 +267,62 @@ void HiscoreSearch(FILE *fp, const char *name)
 			}
 		}
 	}
+}
+
+// Sometimes we have different setnames than other emu's, the table below
+// will translate our set to their set to keep hiscore.dat happy
+struct game_replace_entry {
+	char fb_name[80];
+	char mame_name[80];
+};
+
+static game_replace_entry replace_table[] = {
+	{ "vsraidbbay",		"bnglngby"		},
+	{ "vsrbibbal",		"rbibb"			},
+	{ "vsbattlecity",	"btlecity"		},
+	{ "vscastlevania",	"cstlevna"		},
+	{ "vsclucluland",	"cluclu"		},
+	{ "vsdrmario",		"drmario"		},
+	{ "vsduckhunt",		"duckhunt"		},
+	{ "vsexcitebike",	"excitebk"		},
+	{ "vsfreedomforce",	"vsfdf"			},
+	{ "vsgoonies",		"goonies"		},
+	{ "vsgradius",		"vsgradus"		},
+	{ "vsgumshoe",		"vsgshoe"		},
+	{ "vshogansalley",	"hogalley"		},
+	{ "vsiceclimber",	"iceclimb"		},
+	{ "vsmachrider",	"nvs_machrider"	},
+	{ "vsmightybomjack","nvs_mightybj"	},
+	{ "vsninjajkun",	"jajamaru"		},
+	{ "vspinball",		"vspinbal"		},
+	{ "vsplatoon",		"nvs_platoon"	},
+	{ "vsslalom",		"vsslalom"		},
+	{ "vssoccer",		"vssoccer"		},
+	{ "vsstarluster",	"starlstr"		},
+	{ "vssmgolf",		"smgolf"		},
+	{ "vssmgolfla",		"ladygolf"		},
+	{ "vssmb",			"suprmrio"		},
+	{ "vssuperskykid",	"vsskykid"		},
+	{ "vssuperxevious",	"supxevs"		},
+	{ "vstetris",		"vstetris"		},
+	{ "vstkoboxing",	"tkoboxng"		},
+	{ "vstopgun",		"topgun"		},
+	{ "\0", 			"\0"			}
+};
+
+void HiscoreSearch(FILE *fp, const char *name)
+{
+	const char *game = name; // default to passed name
+
+	// Check the above table to see if we should use an alias
+	for (INT32 i = 0; replace_table[i].fb_name[0] != '\0'; i++) {
+		if (!strcmp(replace_table[i].fb_name, name)) {
+			game = replace_table[i].mame_name;
+			break;
+		}
+	}
+
+	HiscoreSearch_internal(fp, game);
 }
 
 void HiscoreInit()

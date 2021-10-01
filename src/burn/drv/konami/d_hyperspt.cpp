@@ -830,6 +830,14 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(last_sound_addr);
 	}
 
+	if (nAction & ACB_NVRAM) {
+		ba.Data		= DrvNVRAM;
+		ba.nLen		= 0x00800;
+		ba.nAddress	= 0;
+		ba.szName	= "NV RAM";
+		BurnAcb(&ba);
+	}
+
 	return 0;
 }
 

@@ -692,6 +692,7 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		seibu_sound_update(pBurnSoundOut, nBurnSoundLen);
 		seibu_sound_update_cabal(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 	}
 
 	ZetClose();

@@ -14012,7 +14012,7 @@ struct BurnDriver BurnDrvnes_vstetris = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, nes_vstetrisRomInfo, nes_vstetrisRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	NESReversedInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 

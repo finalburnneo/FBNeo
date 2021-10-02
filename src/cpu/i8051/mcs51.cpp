@@ -288,6 +288,10 @@ struct _mcs51_state_t
 
 	UINT8	forced_inputs[4];
 
+	// JB-related hacks
+	UINT8	last_op;
+	UINT8	last_bit;
+
 	/* DS5002FP */
 	struct {
 		UINT8	previous_ta;		/* Previous Timed Access value */
@@ -900,6 +904,8 @@ static INLINE UINT8 bit_address_r(UINT8 offset)
 	int	distance;	/* distance between bit addressable words */
 					/* 1 for normal bits, 8 for sfr bit addresses */
 
+	mcs51_state->last_bit = offset;
+
 	//User defined bit addresses 0x20-0x2f (values are 0x0-0x7f)
 	if (offset < 0x80) {
 		distance = 1;
@@ -1325,7 +1331,7 @@ static INLINE void serial_transmit(UINT8 data)
 		//9 bit uart
 		case 2:
 		case 3:
-			LOG(("Serial mode %d not supported in mcs51!\n", mode));
+			mcs51_state->uart.bits_to_send = 8+3;
 			break;
 	}
 }
@@ -1347,7 +1353,7 @@ static INLINE void serial_receive()
 			//9 bit uart
 			case 2:
 			case 3:
-				LOG(("Serial mode %d not supported in mcs51!\n", mode));
+				mcs51_state->uart.delay_cycles = 8+3;
 				break;
 		}
 	}
@@ -1386,9 +1392,10 @@ static void execute_op(UINT8 op)
 		mcs51_state->recalc_parity = 0;
 	}
 
+	mcs51_state->last_op = op;
+
 	switch( op )
 	{
-
 		case 0x00:	nop(op);							break;	//NOP
 		case 0x01:	ajmp(op);						break;	//AJMP code addr
 		case 0x02:	ljmp(op);						break;	//LJMP code addr
@@ -1806,11 +1813,9 @@ static void check_irqs()
 		return;
 	}
 
-#if 0
-	/* also break out of jb int0,<self> loops */
-	if (ROP(PC) == 0x20 && ROP_ARG(PC+1) == 0xb2 && ROP_ARG(PC+2) == 0xfd)
-		PC += 3;
-#endif
+	// Hack to work around polling latency issue with JB INT0/INT1
+	if (mcs51_state->last_op == 0x20 && ((int_vec == V_IE0 && mcs51_state->last_bit == 0xb2) || (int_vec == V_IE1 && mcs51_state->last_bit == 0xb3)))
+		PC = PPC + 3;
 
 	//Save current pc to stack, set pc to new interrupt vector
 	push_pc();
@@ -1937,7 +1942,6 @@ void mcs51_set_irq_line(int irqline, int state)
 
 		//External Interrupt 1
 		case MCS51_INT1_LINE:
-
 			//Line Asserted?
 			if (state != CLEAR_LINE) {
 				if (state == CPU_IRQSTATUS_HOLD) mcs51_state->irqHOLD = 1;
@@ -2029,7 +2033,7 @@ INT32 mcs51Run(int cycles) // divide cycles by 12! -dink
 	if ((mcs51_state->features & FEATURE_CMOS) && GET_PD)
 	{
 		mcs51_state->icount = 0;
-		return 0;
+		goto endit;
 	}
 
 	mcs51_state->icount -= mcs51_state->inst_cycles;
@@ -2043,7 +2047,7 @@ INT32 mcs51Run(int cycles) // divide cycles by 12! -dink
 			mcs51_state->icount--;
 			burn_cycles(1);
 		} while( mcs51_state->icount > 0 );
-		return 0;
+		goto endit;
 	}
 
 	do
@@ -2062,7 +2066,7 @@ INT32 mcs51Run(int cycles) // divide cycles by 12! -dink
 
 		/* if in powerdown, just return */
 		if ((mcs51_state->features & FEATURE_CMOS) && GET_PD)
-			return 0;
+			goto endit;
 
 		burn_cycles(mcs51_state->inst_cycles);
 
@@ -2072,10 +2076,11 @@ INT32 mcs51Run(int cycles) // divide cycles by 12! -dink
 
 		/* If the chip entered in idle mode, end the loop */
 		if ((mcs51_state->features & FEATURE_CMOS) && GET_IDL)
-			return 0;
+			goto endit;
 
 	} while( mcs51_state->icount > 0 && !mcs51_state->end_run );
 
+	endit:
 	cycles = cycles - mcs51_state->icount;
 	mcs51_state->cycle_start = mcs51_state->icount = 0;
 	mcs51_state->total_cycles += cycles;
@@ -2263,6 +2268,8 @@ void mcs51_reset (void)
 	/* Flag as NO IRQ in Progress */
 	mcs51_state->irq_active = 0;
 	mcs51_state->cur_irq_prio = -1;
+	mcs51_state->last_op = 0;
+	mcs51_state->last_bit = 0;
 
 	//Clear Ram (w/0xff)
 	memset(&mcs51_state->internal_ram,0xff,sizeof(mcs51_state->internal_ram));

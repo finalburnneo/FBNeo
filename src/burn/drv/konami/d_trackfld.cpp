@@ -553,7 +553,7 @@ static UINT8 trackfld_main_read(UINT16 address)
 		case 0x0000: // yieartf
 			return (vlm5030_bsy(0) ? 1 : 0);
 
-		case 0x1080: // flipscreen_w;
+		case 0x1080: // flipscreen
 			return 0;
 
 		case 0x1200:
@@ -842,9 +842,10 @@ static INT32 MemIndex()
 
 	DrvPalette		= (UINT32*)Next; Next += 0x0200 * sizeof(UINT32);
 
+	DrvNVRAM		= Next; Next += 0x000800;
+
 	AllRam			= Next;
 
-	DrvNVRAM		= Next; Next += 0x000800;
 	DrvM6800RAM		= Next; Next += 0x000100;
 	DrvSprRAM0		= Next; Next += 0x000400;
 	DrvSprRAM1		= Next; Next += 0x000400;
@@ -923,12 +924,7 @@ static INT32 DrvInit()
 {
 	game_select = 1;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvM6809ROM + 0x6000,  0, 1)) return 1;
@@ -996,12 +992,7 @@ static INT32 TrackfldnzInit()
 {
 	game_select = 1;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvM6809ROM + 0x6000,  0, 1)) return 1;
@@ -1064,12 +1055,7 @@ static INT32 YieartfInit()
 {
 	game_select = 2;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvM6809ROM + 0x8000,  0, 1)) return 1;
@@ -1129,12 +1115,7 @@ static INT32 ReaktorInit()
 {
 	game_select = 3;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0  + 0x0000,  0, 1)) return 1;
@@ -1213,12 +1194,7 @@ static INT32 WizzquizInit()
 {
 	game_select = 4;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvM6809ROM + 0x0000,  0, 1)) return 1;
@@ -1300,12 +1276,7 @@ static INT32 MastkinInit()
 	game_select = 1;
 	nowatchdog = 1;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvM6809ROM + 0x8000,  0, 1)) return 1;
@@ -1378,7 +1349,7 @@ static INT32 DrvExit()
 
 	nowatchdog = 0;
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -1433,37 +1404,13 @@ static void draw_layers()
 		sx -= DrvSprRAM1[0x40+(sy/8)+2] + ((DrvSprRAM0[0x40+(sy/8)+2] & 1) * 256);
 		if (sx < -7) sx += 512;
 
-		if (flipx) {
-			if (flipy) {
-				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0x100, DrvGfxROM1);
-			} else {
-				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0x100, DrvGfxROM1);
-			}
-		} else {
-			if (flipy) {
-				Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0x100, DrvGfxROM1);
-			} else {
-				Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0x100, DrvGfxROM1);
-			}
-		}
+		Draw8x8Tile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 0x100, DrvGfxROM1);
 	}
 }
 
 static void draw_single_sprite(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy)
 {
-	if (flipy) {
-		if (flipx) {
-			Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM0);
-		} else {
-			Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM0);
-		}
-	} else {
-		if (flipx) {
-			Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM0);
-		} else {
-			Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM0);
-		}
-	}
+	Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 0, 0, DrvGfxROM0);
 }
 
 static void draw_sprites()
@@ -1513,8 +1460,7 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	watchdog++;
-	if (watchdog >= 120 && !nowatchdog) {
+	if (++watchdog >= 120 && !nowatchdog) {
 		bprintf(0, _T("Watchdog tripped.\n"));
 		DrvDoReset(0);
 	}
@@ -1544,10 +1490,10 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
-		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		CPU_RUN(0, M6809);
+		CPU_RUN(1, Zet);
 
-		if (i == (nInterleave-1) && irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave-1) && irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 	}
 
 	if (pBurnSoundOut) {
@@ -1568,8 +1514,7 @@ static INT32 DrvFrame()
 
 static INT32 YieartfFrame()
 {
-	watchdog++;
-	if (watchdog >= 120) {
+	if (++watchdog >= 120) {
 		DrvDoReset(0);
 	}
 
@@ -1596,9 +1541,9 @@ static INT32 YieartfFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, M6809);
 
-		if ((i & 0xff) == 0xff && irq_mask) M6809SetIRQLine(0x00, CPU_IRQSTATUS_AUTO);
+		if ((i & 0xff) == 0xff && irq_mask) M6809SetIRQLine(0x00, CPU_IRQSTATUS_HOLD);
 		if ((i & 0x1f) == 0x1f && nmi_mask) M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 	}
 
@@ -1618,8 +1563,7 @@ static INT32 YieartfFrame()
 
 static INT32 ReaktorFrame()
 {
-	watchdog++;
-	if (watchdog >= 120) {
+	if (++watchdog >= 120) {
 		DrvDoReset(0);
 	}
 
@@ -1645,12 +1589,12 @@ static INT32 ReaktorFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
-		if (i == (nInterleave-1) && irq_mask) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		CPU_RUN(0, Zet);
+		if (i == (nInterleave-1) && irq_mask) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		CPU_RUN(1, Zet);
 		ZetClose();
 	}
 
@@ -1674,8 +1618,7 @@ static INT32 ReaktorFrame()
 
 static INT32 WizzquizFrame()
 {
-	watchdog++;
-	if (watchdog >= 120) {
+	if (++watchdog >= 120) {
 		DrvDoReset(0);
 	}
 
@@ -1704,11 +1647,11 @@ static INT32 WizzquizFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += M6800Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, M6800);
 
 		if (i == 239 && irq_mask) M6800SetIRQLine(M6800_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 
-		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		CPU_RUN(1, Zet);
 	}
 
 	if (pBurnSoundOut) {

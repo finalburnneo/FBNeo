@@ -2300,8 +2300,6 @@ STD_ROM_FN(Wb35d)
 Memory Handlers
 ====================================================*/
 
-void sys16_sync_mcu(); //forward (ext: sys16_run.cpp)
-
 void System16APPI0WritePortA(UINT8 data)
 {
 	System16SoundLatch = data & 0xff;

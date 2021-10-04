@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17558 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17566 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1349,7 +1349,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_beball	|  	| Be Ball						| 		| 1990	| Hudson	| PC Engine	| 					|
 | sms_benosqr	|  	| Be No Sqr (HB, Tech-Demo)				| 		| 2016	| psidum, sim, s| Sega Master Sy| 					|
 | spec_beabugsi	|  	| Beach Buggy Simulator (48K)				| 		| 1988	| Silverbird Sof| ZX Spectrum	| 					|
-| msx_beachead	|  	| Beach-Head (Euro)					| 		| 19??	| Access Softwar| MSX		| 					|
+| msx_beachead	|  	| Beach-Head (Euro)					| 		| 1985	| Access Softwar| MSX		| 					|
 | beaminv	| D	| Beam Invader						| 		| 1979	| Teknon Kogyo	| Miscellaneous	| No sound				|
 | msx_beamridr	|  	| Beam Rider (Jpn)					| 		| 1984	| Pony Canyon	| MSX		| 					|
 | cv_beamridr	|  	| Beamrider						| 		| 1983	| Activision	| ColecoVision	| 					|
@@ -4634,6 +4634,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_f22	|  	| F-22 Interceptor (Euro, USA, 199206)			| 		| 1991	| Electronic Art| Sega Megadrive| 					|
 | md_f22p	|  	| F-22 Interceptor (Euro, USA, Prototype)		| md_f22	| 1991	| Electronic Art| Sega Megadrive| 					|
 | md_f22j	|  	| F-22 Interceptor (Jpn)				| md_f22	| 1993	| Electronic Art| Sega Megadrive| 					|
+| nes_ftheta	|  	| F-Theta (HB)						| 		| 2021	| Little Sound S| Miscellaneous	| 					|
 | fx		|  	| F-X (bootleg of S.R.D. Mission)			| srdmissn	| 1986	| bootleg	| Miscellaneous	| 					|
 | fa		|  	| F/A (Japan)						| fghtatck	| 1992	| Namco		| NA-1 / NA-2	| 					|
 | md_f1		|  	| F1 (Euro)						| 		| 1993	| Tengen	| Sega Megadrive| 					|
@@ -5098,6 +5099,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_flora	|  	| Flora and the Ghost Mirror (HB)			| 		| 2013	| NewColeco	| ColecoVision	| 					|
 | flowerj	|  	| Flower (Japan)					| flower	| 1986	| Clarue (Sega /| Miscellaneous	| 					|
 | flower	|  	| Flower (US)						| 		| 1986	| Clarue (Komax | Miscellaneous	| 					|
+| nes_fluffy	|  	| Fluffy Space Escape (HB)				| 		| 2018	| Ludum Dare 40	| Miscellaneous	| 					|
 | md_flux	|  	| Flux (Euro)						| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | flyboyb	|  	| Fly-Boy (bootleg)					| flyboy	| 1982	| bootleg	| Miscellaneous	| 					|
 | flyboy	|  	| Fly-Boy						| 		| 1982	| Kaneko	| Miscellaneous	| 					|
@@ -6446,6 +6448,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_hokutonoken2|  	| Hokuto no Ken 2 (Japan)				| 		| 1987	| Toei Animation| Miscellaneous	| 					|
 | nes_hokutonoken3c|  	| Hokuto no Ken 3 - Shin Seiki Souzou Seiken Restuden (J| nes_hokutonoken3| 20XX?	| Unknown	| Miscellaneous	| 					|
 | nes_hokutonoken3|  	| Hokuto no Ken 3 - Shin Seiki Souzou Seiken Restuden (J| 		| 1989	| TOEI Animation| Miscellaneous	| 					|
+| nes_hokutonoken4|  	| Hokuto no Ken 4 - Shichisei Haken Den (Japan)		| 		| 1991	| TOEI Animation| Miscellaneous	| 					|
 | msx_holein1	|  	| Hole in One (Jpn)					| 		| 1984	| HAL Kenkyuujo	| MSX		| 					|
 | msx_holein1b	|  	| Hole in One (Jpn, Alt 2)				| msx_holein1	| 1984	| HAL Kenkyuujo	| MSX		| 					|
 | msx_holein1c	|  	| Hole in One (Jpn, Alt 3)				| msx_holein1	| 1984	| HAL Kenkyuujo	| MSX		| 					|
@@ -12549,6 +12552,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_sharkshark|  	| Shark! Shark! (HB)					| 		| 2014	| Mattel Electro| Miscellaneous	| Original title developed for Intellivi|
 | spec_shark	|  	| Shark							| 		| 1989	| Players Premie| ZX Spectrum	| 					|
 | nes_shatterhand|  	| Shatterhand (USA)					| 		| 1991	| Jaleco	| Miscellaneous	| 					|
+| nes_shera	|  	| Shera & the 40 Thieves (HB)				| 		| 2021	| CGT Games	| Miscellaneous	| 					|
 | md_shijie	|  	| Shi Jie Zhi Bang Zheng Ba Zhan - World Pro Baseball 94| 		| 1994	| C&E		| Sega Megadrive| 					|
 | md_labdeathgnk|  	| Shi no Meikyuu - Labyrinth of Death (Jpn, Game no Kand| md_fatallab	| 1991	| Sega		| Sega Megadrive| 					|
 | md_labdeath	|  	| Shi no Meikyuu - Labyrinth of Death (Jpn, SegaNet)	| md_fatallab	| 1991	| Sega		| Sega Megadrive| 					|
@@ -12635,6 +12639,7 @@ This list contains all games supported by FinalBurn Neo.
 | shootoutb	|  	| Shoot Out (Korean Bootleg)				| shootout	| 1985	| bootleg	| Miscellaneous	| 					|
 | shootout	|  	| Shoot Out (US)					| 		| 1985	| Data East USA	| Miscellaneous	| 					|
 | shootbul	| D NW	| Shoot the Bull					| 		| 1985	| Bally Midway	| Pac-man	| Analog inputs not hooked up		|
+| nes_shootufo	|  	| Shoot UFO (HB)					| 		| 2015	| Unknown	| Miscellaneous	| A GlobalHack of Duck Hunt		|
 | sms_shooting	|  	| Shooting Gallery (Euro, USA, Bra)			| 		| 1987	| Sega		| Sega Master Sy| Light Phaser game			|
 | nes_shootingrange|  	| Shooting Range (USA)					| 		| 1989	| Bandai	| Miscellaneous	| 					|
 | shtriderb	|   NW	| Shot Rider (bootleg)					| shtrider	| 1985	| bootleg	| Miscellaneous	| Graphics issues			|
@@ -12872,6 +12877,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_smurfa	|  	| Smurf Rescue in Gargamel's Castle (Alt)		| cv_smurf	| 1982	| Coleco	| ColecoVision	| 					|
 | cv_smurf	|  	| Smurf Rescue in Gargamel's Castle			| 		| 1982	| Coleco	| ColecoVision	| 					|
 | cv_smurfsav	|  	| Smurfs Save the Day (Prototype)			| 		| 1982	| Coleco	| ColecoVision	| 					|
+| nes_smurfs	|  	| Smurfs, The (Europe)					| 		| 1994	| Infogrames	| Miscellaneous	| 					|
 | msx_snailmaze	|  	| Snail Maze (HB)					| 		| 2004	| Karoshi Corpor| MSX		| 					|
 | cv_snake	|  	| Snake (HB)						| 		| 2021	| Under4Mhz	| ColecoVision	| 					|
 | msx_snake	|  	| Snake (HB)						| 		| 2021	| Under4Mhz	| MSX		| 					|
@@ -16723,11 +16729,12 @@ This list contains all games supported by FinalBurn Neo.
 | spec_westbank	|  	| West Bank (48K)					| 		| 1985	| Gremlin Graphi| ZX Spectrum	| 1-2-3 to shoot, O-P to move		|
 | weststry	| D NW	| West Story (bootleg of Blood Bros., set 1)		| bloodbro	| 1991	| bootleg (Datsu| Miscellaneous	| 					|
 | weststrya	| D NW	| West Story (bootleg of Blood Bros., set 2)		| bloodbro	| 1991	| bootleg (Datsu| Miscellaneous	| 					|
+| msx_westhouse	|  	| Westen House (English) (HB, v1.3.1)			| 		| 2021	| Brain Games	| MSX		| 					|
+| msx_westhouses|  	| Westen House (Spanish) (HB, v1.3.1)			| msx_westhouse	| 2021	| Brain Games	| MSX		| 					|
 | wexpressb1	|  	| Western Express (bootleg set 1)			| exprraid	| 1986	| bootleg	| Miscellaneous	| 					|
 | wexpressb2	|  	| Western Express (bootleg set 2)			| exprraid	| 1986	| bootleg	| Miscellaneous	| 					|
 | wexpressb3	|  	| Western Express (bootleg set 3)			| exprraid	| 1986	| bootleg	| Miscellaneous	| 					|
 | wexpress	|  	| Western Express (Japan, rev 4)			| exprraid	| 1986	| Data East Corp| Miscellaneous	| 					|
-| msx_westhouse	|  	| Western House (HB, v1.2)				| 		| 2021	| Brain Games	| MSX		| 					|
 | md_whacacri	|   NW	| Whac-a-Critter (USA)					| 		| 1993	| Realtec	| Sega Megadrive| 					|
 | nes_whatremains|  	| What Remains (HB)					| 		| 2019	| Iodine Dynamic| Miscellaneous	| 					|
 | spec_whb	|  	| WHB (HB)						| 		| 2009	| Bob Smith	| ZX Spectrum	| 					|
@@ -16799,8 +16806,9 @@ This list contains all games supported by FinalBurn Neo.
 | wschampa	|  	| Wing Shooting Championship V1.01			| wschamp	| 2001	| Sammy USA Corp| Newer Seta	| 					|
 | wschamp	|  	| Wing Shooting Championship V2.00			| 		| 2001	| Sammy USA Corp| Newer Seta	| 					|
 | cv_wingwar	|  	| Wing War						| 		| 1983	| Imagic	| ColecoVision	| 					|
+| msx_wingwarrdx|  	| Wing Warriors (2020 version) (HB)			| 		| 2020	| Kitmaker Enter| MSX		| 					|
 | gg_wingwarriors|  	| Wing Warriors (HB)					| 		| 2020	| Kitmaker	| Sega Game Gear| 					|
-| msx_wingwarr	|  	| Wing Warriors (HB)					| 		| 2016	| Kitmaker	| MSX		| 					|
+| msx_wingwarr	|  	| Wing Warriors (HB)					| msx_wingwarrdx| 2016	| Kitmaker Enter| MSX		| 					|
 | sms_wingwarriors|  	| Wing Warriors (HB)					| 		| 2020	| Kitmaker	| Sega Master Sy| 					|
 | md_wingswor	|  	| Wings of Wor (USA)					| md_gynoug	| 1991	| Dreamworks Gam| Sega Megadrive| 					|
 | cv_winktrap	|  	| Winky Trap (HB)					| 		| 2007	| Collectorvisio| ColecoVision	| 					|

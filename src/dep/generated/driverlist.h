@@ -4692,6 +4692,7 @@ DRV		BurnDrvmd_f22a;
 DRV		BurnDrvmd_f22;
 DRV		BurnDrvmd_f22p;
 DRV		BurnDrvmd_f22j;
+DRV		BurnDrvnes_ftheta;
 DRV		BurnDrvFx;
 DRV		BurnDrvFa;
 DRV		BurnDrvmd_f1;
@@ -5158,6 +5159,7 @@ DRV		BurnDrvnes_flipull;
 DRV		BurnDrvcv_flora;
 DRV		BurnDrvFlowerj;
 DRV		BurnDrvFlower;
+DRV		BurnDrvnes_fluffy;
 DRV		BurnDrvmd_flux;
 DRV		BurnDrvFlyboyb;
 DRV		BurnDrvFlyboy;
@@ -6522,6 +6524,7 @@ DRV		BurnDrvnes_hokutonoken2c;
 DRV		BurnDrvnes_hokutonoken2;
 DRV		BurnDrvnes_hokutonoken3c;
 DRV		BurnDrvnes_hokutonoken3;
+DRV		BurnDrvnes_hokutonoken4;
 DRV		BurnDrvMSX_holein1;
 DRV		BurnDrvMSX_holein1b;
 DRV		BurnDrvMSX_holein1c;
@@ -12709,6 +12712,7 @@ DRV		BurnDrvMSX_sharkh;
 DRV		BurnDrvnes_sharkshark;
 DRV		BurnSpecShark;
 DRV		BurnDrvnes_shatterhand;
+DRV		BurnDrvnes_shera;
 DRV		BurnDrvmd_shijie;
 DRV		BurnDrvmd_labdeathgnk;
 DRV		BurnDrvmd_labdeath;
@@ -12797,6 +12801,7 @@ DRV		BurnDrvShootout;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvshootbul;		// Analog inputs not hooked up [NOT WORKING]
 #endif
+DRV		BurnDrvnes_shootufo;
 DRV		BurnDrvsms_shooting;
 DRV		BurnDrvnes_shootingrange;
 DRV		BurnDrvShtriderb;
@@ -13038,6 +13043,7 @@ DRV		BurnDrvcv_smurfply;
 DRV		BurnDrvcv_smurfa;
 DRV		BurnDrvcv_smurf;
 DRV		BurnDrvcv_smurfsav;
+DRV		BurnDrvnes_smurfs;
 DRV		BurnDrvMSX_snailmaze;
 DRV		BurnDrvcv_snake;
 DRV		BurnDrvMSX_snake;
@@ -16941,11 +16947,12 @@ DRV		BurnSpecWestbank;
 DRV		BurnDrvWeststry;		// no comment [NOT WORKING]
 DRV		BurnDrvWeststrya;		// no comment [NOT WORKING]
 #endif
+DRV		BurnDrvMSX_westhouse;
+DRV		BurnDrvMSX_westhouses;
 DRV		BurnDrvWexpressb1;
 DRV		BurnDrvWexpressb2;
 DRV		BurnDrvWexpressb3;
 DRV		BurnDrvWexpress;
-DRV		BurnDrvMSX_westhouse;
 DRV		BurnDrvmd_whacacri;
 DRV		BurnDrvnes_whatremains;
 DRV		BurnSpecWhb;
@@ -17019,6 +17026,7 @@ DRV		BurnDrvWschampb;
 DRV		BurnDrvWschampa;
 DRV		BurnDrvWschamp;
 DRV		BurnDrvcv_wingwar;
+DRV		BurnDrvMSX_wingwarrdx;
 DRV		BurnDrvgg_wingwarriors;
 DRV		BurnDrvMSX_wingwarr;
 DRV		BurnDrvsms_wingwarriors;
@@ -22493,6 +22501,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_f22,				// F-22 Interceptor (Euro, USA, 199206)
 	&BurnDrvmd_f22p,			// F-22 Interceptor (Euro, USA, Prototype)
 	&BurnDrvmd_f22j,			// F-22 Interceptor (Jpn)
+	&BurnDrvnes_ftheta,			// F-Theta (HB)
 	&BurnDrvFx,					// F-X (bootleg of S.R.D. Mission)
 	&BurnDrvFa,					// F/A (Japan)
 	&BurnDrvmd_f1,				// F1 (Euro)
@@ -22959,6 +22968,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_flora,			// Flora and the Ghost Mirror (HB)
 	&BurnDrvFlowerj,			// Flower (Japan)
 	&BurnDrvFlower,				// Flower (US)
+	&BurnDrvnes_fluffy,			// Fluffy Space Escape (HB)
 	&BurnDrvmd_flux,			// Flux (Euro)
 	&BurnDrvFlyboyb,			// Fly-Boy (bootleg)
 	&BurnDrvFlyboy,				// Fly-Boy
@@ -24323,6 +24333,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_hokutonoken2,	// Hokuto no Ken 2 (Japan)
 	&BurnDrvnes_hokutonoken3c,	// Hokuto no Ken 3 - Shin Seiki Souzou Seiken Restuden (Japan) - Castellano v1.0
 	&BurnDrvnes_hokutonoken3,	// Hokuto no Ken 3 - Shin Seiki Souzou Seiken Restuden (Japan)
+	&BurnDrvnes_hokutonoken4,	// Hokuto no Ken 4 - Shichisei Haken Den (Japan)
 	&BurnDrvMSX_holein1,		// Hole in One (Jpn)
 	&BurnDrvMSX_holein1b,		// Hole in One (Jpn, Alt 2)
 	&BurnDrvMSX_holein1c,		// Hole in One (Jpn, Alt 3)
@@ -30510,6 +30521,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_sharkshark,		// Shark! Shark! (HB)
 	&BurnSpecShark,				// Shark
 	&BurnDrvnes_shatterhand,	// Shatterhand (USA)
+	&BurnDrvnes_shera,			// Shera & the 40 Thieves (HB)
 	&BurnDrvmd_shijie,			// Shi Jie Zhi Bang Zheng Ba Zhan - World Pro Baseball 94 (Chi)
 	&BurnDrvmd_labdeathgnk,		// Shi no Meikyuu - Labyrinth of Death (Jpn, Game no Kandume MegaCD Rip)
 	&BurnDrvmd_labdeath,		// Shi no Meikyuu - Labyrinth of Death (Jpn, SegaNet)
@@ -30598,6 +30610,7 @@ static struct BurnDriver* pDriver[] = {
 #if defined FBNEO_DEBUG
 	&BurnDrvshootbul,			// Shoot the Bull [Analog inputs not hooked up, NOT WORKING]
 #endif
+	&BurnDrvnes_shootufo,		// Shoot UFO (HB)
 	&BurnDrvsms_shooting,		// Shooting Gallery (Euro, USA, Bra)
 	&BurnDrvnes_shootingrange,	// Shooting Range (USA)
 	&BurnDrvShtriderb,			// Shot Rider (bootleg) [Graphics issues, NOT WORKING]
@@ -30839,6 +30852,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_smurfa,			// Smurf Rescue in Gargamel's Castle (Alt)
 	&BurnDrvcv_smurf,			// Smurf Rescue in Gargamel's Castle
 	&BurnDrvcv_smurfsav,		// Smurfs Save the Day (Prototype)
+	&BurnDrvnes_smurfs,			// Smurfs, The (Europe)
 	&BurnDrvMSX_snailmaze,		// Snail Maze (HB)
 	&BurnDrvcv_snake,			// Snake (HB)
 	&BurnDrvMSX_snake,			// Snake (HB)
@@ -34742,11 +34756,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvWeststry,			// West Story (bootleg of Blood Bros., set 1) [no comment, NOT WORKING]
 	&BurnDrvWeststrya,			// West Story (bootleg of Blood Bros., set 2) [no comment, NOT WORKING]
 #endif
+	&BurnDrvMSX_westhouse,		// Westen House (English) (HB, v1.3.1)
+	&BurnDrvMSX_westhouses,		// Westen House (Spanish) (HB, v1.3.1)
 	&BurnDrvWexpressb1,			// Western Express (bootleg set 1)
 	&BurnDrvWexpressb2,			// Western Express (bootleg set 2)
 	&BurnDrvWexpressb3,			// Western Express (bootleg set 3)
 	&BurnDrvWexpress,			// Western Express (Japan, rev 4)
-	&BurnDrvMSX_westhouse,		// Western House (HB, v1.2)
 	&BurnDrvmd_whacacri,		// Whac-a-Critter (USA) [no comment, NOT WORKING]
 	&BurnDrvnes_whatremains,	// What Remains (HB)
 	&BurnSpecWhb,				// WHB (HB)
@@ -34820,6 +34835,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvWschampa,			// Wing Shooting Championship V1.01
 	&BurnDrvWschamp,			// Wing Shooting Championship V2.00
 	&BurnDrvcv_wingwar,			// Wing War
+	&BurnDrvMSX_wingwarrdx,		// Wing Warriors (2020 version) (HB)
 	&BurnDrvgg_wingwarriors,	// Wing Warriors (HB)
 	&BurnDrvMSX_wingwarr,		// Wing Warriors (HB)
 	&BurnDrvsms_wingwarriors,	// Wing Warriors (HB)

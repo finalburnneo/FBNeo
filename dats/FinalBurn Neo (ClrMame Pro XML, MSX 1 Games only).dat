@@ -1403,8 +1403,8 @@
 	</game>
 	<game name="beachead" romof="msx">
 		<description>Beach-Head (Euro)</description>
-		<year>19??</year>
-		<manufacturer>Access Software?</manufacturer>
+		<year>1985</year>
+		<manufacturer>Access Software</manufacturer>
 		<rom name="beach-head (europe).rom" size="32768" crc="785fa4cc"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -15004,10 +15004,21 @@
 		<driver status="good"/>
 	</game>
 	<game name="westhouse" romof="msx">
-		<description>Western House (HB, v1.2) [Homebrew]</description>
+		<description>Westen House (English) (HB, v1.3.1) [Homebrew]</description>
 		<year>2021</year>
 		<manufacturer>Brain Games</manufacturer>
-		<rom name="Western House v1.2 (2021)(Brain Games).rom" size="49152" crc="2a74e34c"/>
+		<rom name="Westen House v1.3.1 EN (2021)(Brain Games).rom" size="49152" crc="cc2e7808"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="westhouses" cloneof="westhouse" romof="westhouse">
+		<description>Westen House (Spanish) (HB, v1.3.1) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Brain Games</manufacturer>
+		<rom name="Westen House v1.3.1 ES (2021)(Brain Games).rom" size="49152" crc="c3eef607"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -15058,10 +15069,21 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wingwarr" romof="msx">
+	<game name="wingwarrdx" romof="msx">
+		<description>Wing Warriors (2020 version) (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Kitmaker Entertainment</manufacturer>
+		<rom name="Wing Warriors (Kitmaker Entertainment Inc)(2020 Version).rom" size="131072" crc="258609d4"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="wingwarr" cloneof="wingwarrdx" romof="wingwarrdx">
 		<description>Wing Warriors (HB) [Homebrew]</description>
 		<year>2016</year>
-		<manufacturer>Kitmaker</manufacturer>
+		<manufacturer>Kitmaker Entertainment</manufacturer>
 		<rom name="WingWarriors.rom" size="49152" crc="207d0e62"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>

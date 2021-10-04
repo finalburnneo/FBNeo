@@ -4428,6 +4428,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="ftheta">
+		<description>F-Theta (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Little Sound Soft</manufacturer>
+		<rom name="F-Theta (2021)(Little Sound)_MirroringFix.nes" size="262160" crc="7bd2813c"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="f1circusj" cloneof="f1circus" romof="f1circus">
 		<description>F1 Circus (Japan)</description>
 		<year>1992</year>
@@ -5009,6 +5017,14 @@
 		<year>1989</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="Flipull - An Exciting Cube Game (Japan).nes" size="65552" crc="b0e199e3"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="fluffy">
+		<description>Fluffy Space Escape (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Ludum Dare 40</manufacturer>
+		<rom name="Fluffy Space Escape (2018)(Ludum Dare 40).nes" size="81936" crc="ddd06400"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -6321,6 +6337,14 @@
 		<year>1989</year>
 		<manufacturer>TOEI Animation</manufacturer>
 		<rom name="hokuto no ken 3 - shin seiki souzou seiken restuden (japan).nes" size="262160" crc="12b32580"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="hokutonoken4">
+		<description>Hokuto no Ken 4 - Shichisei Haken Den (Japan)</description>
+		<year>1991</year>
+		<manufacturer>TOEI Animation</manufacturer>
+		<rom name="Hokuto no Ken 4 - Shichisei Haken Den Jpn (1991)(Shouei System).nes" size="262160" crc="06e95541"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -11748,6 +11772,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="shera">
+		<description>Shera &amp; the 40 Thieves (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>CGT Games</manufacturer>
+		<rom name="Shera &amp; the 40 Thieves (2021)(CGT Games).nes" size="524304" crc="40da8715"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="shin4ninuchma">
 		<description>Shin 4 Nin Uchi Mahjong (Japan)</description>
 		<year>1991</year>
@@ -11777,6 +11809,14 @@
 		<year>1990</year>
 		<manufacturer>AGCI</manufacturer>
 		<rom name="Shockwave (USA).nes" size="65552" crc="96f37945"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="shootufo">
+		<description>Shoot UFO (HB) [Hack, Homebrew, A GlobalHack of Duck Hunt]</description>
+		<year>2015</year>
+		<manufacturer>Unknown</manufacturer>
+		<rom name="Shoot UFO (2015)(GlobHack).nes" size="40976" crc="b5c91a2a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -12026,6 +12066,14 @@
 		<manufacturer>Acclaim</manufacturer>
 		<rom name="Smash T.V. (USA).nes" size="262160" crc="447a45a0"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="smurfs">
+		<description>Smurfs, The (Europe)</description>
+		<year>1994</year>
+		<manufacturer>Infogrames</manufacturer>
+		<rom name="Smurfs, The PAL (1994)(Infogrames).nes" size="131088" crc="732b1a7a"/>
+		<video orientation="horizontal" width="256" height="232" aspectx="256" aspecty="232"/>
 		<driver status="good"/>
 	</game>
 	<game name="snakeratnrol">

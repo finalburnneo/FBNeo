@@ -907,6 +907,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0xde7e6767) ? IS_PAL : 0; // Asterix
 	NESMode |= (ROMCRC == 0xdc7a16e6) ? IS_PAL : 0; // Parasol Stars
 	NESMode |= (ROMCRC == 0xfac97247) ? IS_PAL : 0; // Rainbow Islands (Ocean)
+	NESMode |= (ROMCRC == 0x732b1a7a) ? IS_PAL : 0; // Smurfs, The
 
 	if (NESMode) {
 		bprintf(0, _T("Game-specific configuration:\n"));
@@ -18673,9 +18674,113 @@ STD_ROM_FN(nes_smaruo)
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+//Hokuto no Ken 4 - Shichisei Haken Den (Japan)
+static struct BurnRomInfo nes_hokutonoken4RomDesc[] = {
+	{ "Hokuto no Ken 4 - Shichisei Haken Den Jpn (1991)(Shouei System).nes",          262160, 0x06e95541, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hokutonoken4)
+STD_ROM_FN(nes_hokutonoken4)
+
+struct BurnDriver BurnDrvnes_hokutonoken4 = {
+	"nes_hokutonoken4", NULL, NULL, NULL, "1991",
+	"Hokuto no Ken 4 - Shichisei Haken Den (Japan)\0", NULL, "TOEI Animation", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
+	NESGetZipName, nes_hokutonoken4RomInfo, nes_hokutonoken4RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+//Smurfs, The (Europe)
+static struct BurnRomInfo nes_smurfsRomDesc[] = {
+	{ "Smurfs, The PAL (1994)(Infogrames).nes",          131088, 0x732b1a7a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smurfs)
+STD_ROM_FN(nes_smurfs)
+
+struct BurnDriver BurnDrvnes_smurfs = {
+	"nes_smurfs", NULL, NULL, NULL, "1994",
+	"Smurfs, The (Europe)\0", NULL, "Infogrames", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_smurfsRomInfo, nes_smurfsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
+};
+
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
+
+static struct BurnRomInfo nes_fluffyRomDesc[] = {
+	{ "Fluffy Space Escape (2018)(Ludum Dare 40).nes",          81936, 0xddd06400, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_fluffy)
+STD_ROM_FN(nes_fluffy)
+
+struct BurnDriver BurnDrvnes_fluffy = {
+	"nes_fluffy", NULL, NULL, NULL, "2018",
+	"Fluffy Space Escape (HB)\0", NULL, "Ludum Dare 40", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_fluffyRomInfo, nes_fluffyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_fthetaRomDesc[] = {
+	{ "F-Theta (2021)(Little Sound)_MirroringFix.nes",          262160, 0x7bd2813c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ftheta)
+STD_ROM_FN(nes_ftheta)
+
+struct BurnDriver BurnDrvnes_ftheta = {
+	"nes_ftheta", NULL, NULL, NULL, "2021",
+	"F-Theta (HB)\0", NULL, "Little Sound Soft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_RACING, 0,
+	NESGetZipName, nes_fthetaRomInfo, nes_fthetaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_sheraRomDesc[] = {
+	{ "Shera & the 40 Thieves (2021)(CGT Games).nes",          524304, 0x40da8715, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_shera)
+STD_ROM_FN(nes_shera)
+
+struct BurnDriver BurnDrvnes_shera = {
+	"nes_shera", NULL, NULL, NULL, "2021",
+	"Shera & the 40 Thieves (HB)\0", NULL, "CGT Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_sheraRomInfo, nes_sheraRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_shootufoRomDesc[] = {
+	{ "Shoot UFO (2015)(GlobHack).nes",          40976, 0xb5c91a2a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_shootufo)
+STD_ROM_FN(nes_shootufo)
+
+struct BurnDriver BurnDrvnes_shootufo = {
+	"nes_shootufo", NULL, NULL, NULL, "2015",
+	"Shoot UFO (HB)\0", "A GlobalHack of Duck Hunt", "Unknown", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_NES, GBF_SHOOT, 0,
+	NESGetZipName, nes_shootufoRomInfo, nes_shootufoRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
+	NESZapperInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_vsfrombelowRomDesc[] = {
 	{ "VS. From Below (HB, v0.10).nes",          40976, 0xd1616b88, BRF_ESS | BRF_PRG },

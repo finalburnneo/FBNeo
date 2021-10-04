@@ -919,10 +919,15 @@ struct m68kpstack {
 	INT32 nHostCPU;
 	INT32 nPushedCPU;
 };
-#define MAX_PSTACK 10
+#define MAX_PSTACK 20
 
 static m68kpstack pstack[MAX_PSTACK];
 static INT32 pstacknum = 0;
+
+INT32 SekCPUGetStackNum()
+{
+	return pstacknum;
+}
 
 void SekCPUPush(INT32 nCPU)
 {
@@ -1199,6 +1204,8 @@ INT32 SekInit(INT32 nCount, INT32 nCPUType)
 	nSekCyclesScanline = 0;
 
 	CpuCheatRegister(nCount, &SekConfig);
+
+	pstacknum = 0;
 
 	return 0;
 }

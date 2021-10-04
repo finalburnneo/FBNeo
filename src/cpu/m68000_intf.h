@@ -139,6 +139,7 @@ void SekBurnUntilInt();
 
 void SekCPUPush(INT32 nCPU);
 void SekCPUPop();
+INT32 SekCPUGetStackNum();
 
 #define SEK_IRQSTATUS_NONE  (0x0000)
 #define SEK_IRQSTATUS_VAUTO (0x4000)

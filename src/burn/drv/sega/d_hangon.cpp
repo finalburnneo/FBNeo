@@ -1131,7 +1131,7 @@ static struct BurnRomInfo SharrierRomDesc[] = {
 	
 	{ "epr-6844.ic123",   0x02000, 0xe3ec7bd6, SYS16_ROM_PROM | BRF_GRA },
 	
-	{ "315-5163a.ic32",   0x01000, 0x203dffeb, BRF_OPT },
+	{ "315-5163a.ic32",   0x01000, 0x203dffeb, SYS16_ROM_I8751 | BRF_PRG | BRF_ESS },
 };
 
 
@@ -1198,7 +1198,7 @@ static struct BurnRomInfo Sharrier1RomDesc[] = {
 	
 	{ "epr-6844.ic123",   0x02000, 0xe3ec7bd6, SYS16_ROM_PROM | BRF_GRA },
 	
-	{ "315-5163.ic32",    0x01000, 0x00000000, BRF_NODUMP },
+	{ "315-5163.ic32",    0x01000, 0x52b0c81a, SYS16_ROM_I8751 | BRF_PRG | BRF_ESS },
 };
 
 
@@ -1208,6 +1208,19 @@ STD_ROM_FN(Sharrier1)
 /*====================================================
 Memory Handlers
 ====================================================*/
+
+static INT32 dontrecurse = 0;
+
+// we must sync audiocpu before all ppi #0's reads/writes -dink
+static void sys16_sync_audiocpu()
+{
+	ZetCPUPush(0);
+	INT32 todo = ((double)SekTotalCycles(0) * 4000000 / System16ClockSpeed);
+	if (todo > 0) {
+		BurnTimerUpdate(todo);
+	}
+	ZetCPUPop();
+}
 
 void HangonPPI0WritePortA(UINT8 data)
 {
@@ -1227,13 +1240,9 @@ void HangonPPI0WritePortC(UINT8 data)
 {
 	System16ColScroll = ~data & 0x04;
 	System16RowScroll = ~data & 0x02;
-	
-	if (~data & 0x80) {
-		ZetOpen(0);
-		ZetNmi();
-		nSystem16CyclesDone[2] += ZetRun(100);
-		ZetClose();
-	}
+	System16SoundMute = ~data & 0x01;
+
+	ZetSetIRQLine(0, 0x20, (data & 0x80) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
 }
 
 UINT8 HangonPPI1ReadPortC()
@@ -1259,6 +1268,7 @@ UINT16 __fastcall HangonReadWord(UINT32 a)
 		case 0xe00002:
 		case 0xe00004:
 		case 0xe00006: {
+			sys16_sync_audiocpu();
 			return ppi8255_r(0, (a & 7) >> 1);
 		}
 	
@@ -1272,6 +1282,13 @@ UINT16 __fastcall HangonReadWord(UINT32 a)
 		
 		case 0xe0100c: {
 			return System16Dip[1];
+		}
+
+		case 0xe03000:
+		case 0xe03002:
+		case 0xe03004:
+		case 0xe03006: {
+			return ppi8255_r(1, (a & 7) >> 1);
 		}
 	}
 	
@@ -1289,6 +1306,7 @@ UINT8 __fastcall HangonReadByte(UINT32 a)
 		case 0xe00003:
 		case 0xe00005:
 		case 0xe00007: {
+			sys16_sync_audiocpu();
 			return ppi8255_r(0, (a & 7) >> 1);
 		}
 		
@@ -1336,6 +1354,7 @@ void __fastcall HangonWriteByte(UINT32 a, UINT8 d)
 		case 0xe00003: 
 		case 0xe00005: 
 		case 0xe00007: {
+			sys16_sync_audiocpu();
 			ppi8255_w(0, (a & 7) >> 1, d & 0xff);
 			return;
 		}
@@ -1376,6 +1395,7 @@ void __fastcall HangonWriteWord(UINT32 a, UINT16 d)
 		case 0xe00002: 
 		case 0xe00004: 
 		case 0xe00006: {
+			sys16_sync_audiocpu();
 			ppi8255_w(0, (a & 7) >> 1, d & 0xff);
 			return;
 		}
@@ -1396,7 +1416,20 @@ void __fastcall HangonWriteWord(UINT32 a, UINT16 d)
 
 static UINT16 __fastcall SharrierReadWord(UINT32 a)
 {
+	if (a >= 0x40000 && a <= 0x43fff) {
+		if (dontrecurse == 0) sys16_sync_mcu();
+		return *(UINT16*)(System16Ram + (a & 0x3fff));
+	}
+
 	switch (a) {
+		case 0x140000:
+		case 0x140002:
+		case 0x140004:
+		case 0x140006: {
+			sys16_sync_audiocpu();
+			return ppi8255_r(0, (a & 7) >> 1);
+		}
+
 		case 0x140010: {
 			return (UINT16)(0xff - System16Input[0]);
 		}
@@ -1412,6 +1445,13 @@ static UINT16 __fastcall SharrierReadWord(UINT32 a)
 		case 0x140016: {
 			return (UINT16)System16Dip[1];
 		}
+
+		case 0x140020:
+		case 0x140022:
+		case 0x140024:
+		case 0x140026: {
+			return ppi8255_r(1, (a & 7) >> 1);
+		}
 	}
 
 	return 0;
@@ -1419,11 +1459,17 @@ static UINT16 __fastcall SharrierReadWord(UINT32 a)
 
 static UINT8 __fastcall SharrierReadByte(UINT32 a)
 {
+	if (a >= 0x40000 && a <= 0x43fff) {
+		if (dontrecurse == 0) sys16_sync_mcu();
+		return System16Ram[(a & 0x3fff) ^ 1];
+	}
+
 	switch (a) {
 		case 0x140001:
 		case 0x140003:
 		case 0x140005:
 		case 0x140007: {
+			sys16_sync_audiocpu();
 			return ppi8255_r(0, (a & 7) >> 1);
 		}
 		
@@ -1453,6 +1499,19 @@ static UINT8 __fastcall SharrierReadByte(UINT32 a)
 
 static void __fastcall SharrierWriteByte(UINT32 a, UINT8 d)
 {
+	if (a >= 0x40000 && a <= 0x43fff) {
+		if (dontrecurse == 0) sys16_sync_mcu();
+#if 0
+		// 0x40385 issue mcu debug (for later)
+		INT32 z = a&0x3fff;
+		if ((z& ~1) == 0x384) {
+			bprintf(0, _T("[68k.b] frame: %d / cyc: %d  -  addr  %x   data %x\n"), nCurrentFrame, SekTotalCycles(), a, d);
+		}
+#endif
+		System16Ram[(a & 0x3fff) ^ 1] = d;
+		return;
+	}
+
 	if (a >= 0x100000 && a <= 0x107fff) {
 		System16ATileByteWrite((a - 0x100000) ^ 1, d);
 		return;
@@ -1463,6 +1522,7 @@ static void __fastcall SharrierWriteByte(UINT32 a, UINT8 d)
 		case 0x140003: 
 		case 0x140005: 
 		case 0x140007: {
+			sys16_sync_audiocpu();
 			ppi8255_w(0, (a & 7) >> 1, d & 0xff);
 			return;
 		}
@@ -1483,6 +1543,19 @@ static void __fastcall SharrierWriteByte(UINT32 a, UINT8 d)
 
 static void __fastcall SharrierWriteWord(UINT32 a, UINT16 d)
 {
+	if (a >= 0x40000 && a <= 0x43fff) {
+		if (dontrecurse == 0) sys16_sync_mcu();
+#if 0
+		// 0x40385 issue mcu debug (for later)
+		INT32 z = a&0x3fff;
+		if ((z& ~1) == 0x384) {
+			bprintf(0, _T("[68k.b] frame: %d / cyc: %d  -  addr  %x   data %x\n"), nCurrentFrame, SekTotalCycles(), a, d);
+		}
+#endif
+		*(UINT16*)(System16Ram + (a & 0x3fff)) = d;
+		return;
+	}
+
 	if (a >= 0x100000 && a <= 0x107fff) {
 		System16ATileWordWrite(a - 0x100000, d);
 		return;
@@ -1493,6 +1566,7 @@ static void __fastcall SharrierWriteWord(UINT32 a, UINT16 d)
 		case 0x140002:
 		case 0x140004:
 		case 0x140006: {
+			sys16_sync_audiocpu();
 			ppi8255_w(0, (a & 7) >> 1, d & 0xff);
 			return;
 		}
@@ -1592,13 +1666,70 @@ static UINT8 SharrierProcessAnalogControls(UINT16 value)
 	return 0;
 }
 
+UINT8 Hangon_I8751ReadPort(INT32 port)
+{
+	if (port >= 0x0000 && port <= 0xffff) {
+		SekCPUPush(0);
+		dontrecurse = 1; // 68k read handler syncs mcu, we don't want to do that here!
+		UINT8 b = SekReadByte((System16MCUData << 16) | (port ^ 1));
+		dontrecurse = 0;
+		SekCPUPop();
+
+		mcs51RunEnd(); // break out of mcu so 68k can catch up
+
+		return b;
+	}
+
+	return 0xff;
+}
+
+void Hangon_I8751WritePort(INT32 port, UINT8 data)
+{
+	if (port >= 0x0000 && port <= 0xffff) {
+		UINT32 addr = (System16MCUData << 16) | (port ^ 1);
+
+		if (addr == 0x40385) { // enabling writes here breaks inputs(!)
+			//bprintf(0, _T("[mcu] frame: %d / cyc: %d  -  port  %x   addr  %x   data %x\n"), nCurrentFrame, mcs51TotalCycles(), port, addr, data);
+			return;
+		}
+
+		SekCPUPush(0);
+		dontrecurse = 1;
+		SekWriteByte(addr, data);
+		dontrecurse = 0;
+		SekCPUPop();
+
+		mcs51RunEnd(); // break out of mcu so 68k can catch up
+
+		return;
+	}
+
+	switch (port) {
+		case MCS51_PORT_P1: {
+			System16MCUData = (BIT(data, 6) << 4) | ((data & 0x38) >> 3);
+			INT32 irq_line = ~data & 0x07;
+			if (irq_line) {
+				//bprintf(0, _T("mcu -> 68k irq line %d\tframe: %d\n"), irq_line, nCurrentFrame);
+				SekSetIRQLine(0, irq_line, CPU_IRQSTATUS_AUTO);
+			}
+			break;
+		}
+		default: {
+			//bprintf(0, _T("unmapped port   %x    %x\n"), port, data);
+		}
+	}
+}
+
+
 static void SharrierMap68K()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
 	SekMapMemory(System16Rom             , 0x000000, 0x03ffff, MAP_READ);
 	SekMapMemory(System16Code            , 0x000000, 0x03ffff, MAP_FETCH);
-	SekMapMemory(System16Ram             , 0x040000, 0x043fff, MAP_RAM);
+	// RAM (40000 - 43fff) is written/read through handlers
+	// because we need mega-tight sync w/mcu -dink
+	//SekMapMemory(System16Ram             , 0x040000, 0x043fff, MAP_RAM); // in handler
 	SekMapMemory(System16TileRam         , 0x100000, 0x107fff, MAP_READ);
 	SekMapMemory(System16TextRam         , 0x108000, 0x108fff, MAP_RAM);
 	SekMapMemory(System16PaletteRam      , 0x110000, 0x110fff, MAP_RAM);
@@ -1715,20 +1846,11 @@ static INT32 ShangonrbInit()
 	return nRet;
 }
 
-static void Sharrier_Sim8751()
-{
-	// disable timer-based protection
-	*((UINT16*)(System16Ram + 0x0090)) = 1;
-
-	// read I/O ports
-	*((UINT16*)(System16Ram + 0x0492)) = BURN_ENDIAN_SWAP_INT16((UINT16)((SharrierProcessAnalogControls(0) << 8) | SharrierProcessAnalogControls(1)));
-}
-
 static INT32 SharrierInit()
 {	
-	Simulate8751 = Sharrier_Sim8751;
-	
 	System16Map68KDo = SharrierMap68K;
+
+	System16ProcessAnalogControlsDo = SharrierProcessAnalogControls;
 	
 	System16ClockSpeed = 10000000;
 	

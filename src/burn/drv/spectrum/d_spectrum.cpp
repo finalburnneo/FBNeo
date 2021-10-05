@@ -29967,7 +29967,7 @@ STDROMPICKEXT(SpecLava16k, SpecLava16k, Spectrum)
 STD_ROM_FN(SpecLava16k)
 
 struct BurnDriver BurnSpecLava16k = {
-	"spec_Lava16k", NULL, "spec_spectrum", NULL, "2021",
+	"spec_lava16k", NULL, "spec_spectrum", NULL, "2021",
 	"Lava - Speed up version (16K) (HB)\0", NULL, "Zosya Entertainment", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_PUZZLE, 0,

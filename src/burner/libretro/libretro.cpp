@@ -1028,7 +1028,9 @@ void retro_deinit()
 void retro_reset()
 {
 	// Saving minimal savestate (handle some machine settings)
-	if (BurnStateSave(g_autofs_path, 0) == 0 && path_is_valid(g_autofs_path))
+	// note : This is only useful to avoid losing nvram when switching from mvs to aes/unibios and resetting,
+	//        it can actually be "harmful" in other games (trackfld)
+	if (is_neogeo_game && BurnStateSave(g_autofs_path, 0) == 0 && path_is_valid(g_autofs_path))
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] EEPROM succesfully saved to %s\n", g_autofs_path);
 
 	if (pgi_reset)
@@ -1048,7 +1050,8 @@ void retro_reset()
 	ForceFrameStep(1);
 
 	// Loading minimal savestate (handle some machine settings)
-	if (BurnStateLoad(g_autofs_path, 0, NULL) == 0) {
+	if (is_neogeo_game && BurnStateLoad(g_autofs_path, 0, NULL) == 0)
+	{
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] EEPROM succesfully loaded from %s\n", g_autofs_path);
 		// eeproms are loading nCurrentFrame, but we probably don't want this
 		nCurrentFrame = 0;

@@ -1,8 +1,8 @@
 // FB Alpha XX Mission driver module
 // Based on MAME driver by Uki
-// Todo:
-//   Figure out why the scrolling "hiccups" when something blows up running @
-//   3mhz.  Tried every variation of timing I could think of. grr! -dink feb. 3 2016
+
+// todo/weird: hiccup in sprite layer when bombing turrets, not sure what's
+// going on here.  fixed with a hack (1mhz oc) for now.
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -43,26 +43,26 @@ static UINT8 DrvReset;
 static UINT8 DrvInputs[2];
 
 static struct BurnInputInfo XxmissioInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 7,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Xxmissio)
@@ -168,6 +168,7 @@ static void __fastcall xxmission_main_write(UINT16 address, UINT8 data)
 					cpu_status &= ~0x08;
 					ZetSetVector(1, 0x10);
 					ZetSetIRQLine(1, 0, CPU_IRQSTATUS_HOLD);
+					ZetRunEnd(0); // allow sub to catch up
 				}
 				break;
 			}
@@ -224,6 +225,7 @@ static void __fastcall xxmission_sub_write(UINT16 address, UINT8 data)
 					cpu_status &= ~0x04;
 					ZetSetVector(0, 0x10);
 					ZetSetIRQLine(0, 0, CPU_IRQSTATUS_HOLD);
+					ZetRunEnd(1); // allow main to catch up
 				}
 				break;
 			}
@@ -326,8 +328,8 @@ static INT32 MemIndex()
 	DrvFgRAM		= Next; Next += 0x000800;
 	DrvSprRAM		= Next; Next += 0x001000;
 	DrvPalRAM		= Next; Next += 0x000300;
-	DrvShareRAM0		= Next; Next += 0x001000;
-	DrvShareRAM1		= Next; Next += 0x001000;
+	DrvShareRAM0	= Next; Next += 0x001000;
+	DrvShareRAM1	= Next; Next += 0x001000;
 
 	RamEnd			= Next;
 
@@ -361,12 +363,7 @@ static void DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
@@ -416,7 +413,7 @@ static INT32 DrvInit()
 	BurnYM2203Init(2,  1500000, NULL, 0);
 	BurnYM2203SetPorts(0, &DrvYM2203ReadPortA, &DrvYM2203ReadPortB, NULL, NULL);
 	BurnYM2203SetPorts(1, NULL, NULL, &DrvYM2203WritePortA, &DrvYM2203WritePortB);
-	BurnTimerAttachZet(3000000);
+	BurnTimerAttachZet(4000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE,   0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.15, BURN_SND_ROUTE_BOTH);
@@ -441,7 +438,7 @@ static INT32 DrvExit()
 
 	BurnYM2203Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -476,7 +473,7 @@ static void draw_fg_layer()
 		INT32 sy = ((offs / 0x20) * 8) - 32;
 
 		INT32 code  = DrvFgRAM[offs];
-		INT32 color = DrvFgRAM[0x400 + offs] & 0x07;	
+		INT32 color = DrvFgRAM[0x400 + offs] & 0x07;
 
 		RenderCustomTile_Mask_Clip(pTransDraw, 16, 8, code, sx, sy, color, 4, 0, 0x100, DrvGfxROM0);
 	}
@@ -484,19 +481,7 @@ static void draw_fg_layer()
 
 static inline void draw_single_sprite(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy)
 {
-	if (flipy) {
-		if (flipx) {
-			RenderCustomTile_Mask_FlipXY_Clip(pTransDraw, 32, 16, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
-		} else {
-			RenderCustomTile_Mask_FlipY_Clip(pTransDraw, 32, 16, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
-		}
-	} else {
-		if (flipx) {
-			RenderCustomTile_Mask_FlipX_Clip(pTransDraw, 32, 16, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
-		} else {
-			RenderCustomTile_Mask_Clip(pTransDraw, 32, 16, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
-		}
-	}
+	DrawCustomMaskTile(pTransDraw, 32, 16, code, sx, sy, flipx, flipy, color, 4, 0, 0, DrvGfxROM1);
 }
 
 static void draw_sprites()
@@ -564,40 +549,33 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = (nCyclesTotal[0] / nInterleave);
-
 		ZetOpen(0);
-		nSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
-		nCyclesDone[0] += ZetRun(nSegment);
+		CPU_RUN(0, Zet);
 
-		if (i == 235) { // not smoothe-scrolling in fs unless 235? -dink
+		if (i == 224) {
 			vblank = 1;
 			cpu_status &= ~0x20;
+			ZetSetVector(0xff);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+
+			if (pBurnDraw) {
+				DrvDraw();
+			}
 		}
 		ZetClose();
 
 		ZetOpen(1);
-		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
+		CPU_RUN_TIMER(1);
 		if (i == ((nInterleave / 2) - 2) || i == (nInterleave - 2)) { // 120hz
 			cpu_status &= ~0x10;
+			ZetSetVector(0xff);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 	}
 
-	ZetOpen(1);
-
-	BurnTimerEndFrame(nCyclesTotal[1]);
-
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-	}
-
-	ZetClose();
-
-	if (pBurnDraw) {
-		DrvDraw();
 	}
 
 	return 0;

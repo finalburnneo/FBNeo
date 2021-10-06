@@ -429,6 +429,20 @@ void ZetRunEnd()
 	Z80StopExecute();
 }
 
+void ZetRunEnd(INT32 nCPU)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetRunEnd called without init\n"));
+	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetRunEnd called when no CPU open\n"));
+#endif
+
+	ZetCPUPush(nCPU);
+
+	Z80StopExecute();
+
+	ZetCPUPop();
+}
+
 // This function will make an area callback ZetRead/ZetWrite
 INT32 ZetMemCallback(INT32 nStart, INT32 nEnd, INT32 nMode)
 {

@@ -126,11 +126,39 @@ void SN76496Update(INT32 Num, INT16* pSoundBuf, INT32 Length)
 	nPosition[Num] = 0;
 }
 
+static INT16 dac_lastin_r  = 0;
+static INT16 dac_lastout_r = 0;
+static INT16 dac_lastin_l  = 0;
+static INT16 dac_lastout_l = 0;
+
+static INT16 dc_blockR(INT16 sam)
+{
+    INT16 outr = sam - dac_lastin_r + 0.998 * dac_lastout_r;
+    dac_lastin_r = sam;
+    dac_lastout_r = outr;
+
+    return outr;
+}
+
+static INT16 dc_blockL(INT16 sam)
+{
+    INT16 outl = sam - dac_lastin_l + 0.998 * dac_lastout_l;
+    dac_lastin_l = sam;
+    dac_lastout_l = outl;
+
+    return outl;
+}
+
 void SN76496Update(INT16* pSoundBuf, INT32 Length)
 {
-    for (INT32 i = 0; i < NumChips; i++) {
+	for (INT32 i = 0; i < NumChips; i++) {
         SN76496Update(i, pSoundBuf, Length);
-    }
+	}
+
+	for (INT32 i = 0; i < Length*2; i += 2) {
+		pSoundBuf[i + 0] = dc_blockR(pSoundBuf[i + 0]);
+		pSoundBuf[i + 1] = dc_blockL(pSoundBuf[i + 1]);
+	}
 }
 
 void SN76496UpdateToBuffer(INT32 Num, INT16* pSoundBuf, INT32 Length)
@@ -408,6 +436,12 @@ void SN76496Reset()
 		R->RNG = R->FeedbackMask;
 		R->Output[3] = R->RNG & 1;
 	}
+
+	// dc blocking stuff
+	dac_lastin_r  = 0;
+	dac_lastout_r = 0;
+	dac_lastin_l  = 0;
+	dac_lastout_l = 0;
 }
 
 static void SN76496Init(struct SN76496 *R, INT32 Clock)
@@ -443,6 +477,12 @@ static void GenericStart(INT32 Num, INT32 Clock, INT32 FeedbackMask, INT32 Noise
 	Chips[Num]->bSignalAdd = SignalAdd;
 	Chips[Num]->nVolume = 1.00;
 	Chips[Num]->nOutputDir = BURN_SND_ROUTE_BOTH;
+
+	// dc blocking stuff
+	dac_lastin_r  = 0;
+	dac_lastout_r = 0;
+	dac_lastin_l  = 0;
+	dac_lastout_l = 0;
 }
 
 void SN76489Init(INT32 Num, INT32 Clock, INT32 SignalAdd)

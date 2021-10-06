@@ -71,7 +71,7 @@ static struct BurnInputInfo HypersptInputList[] = {
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p4 fire 2"	},
 	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy3 + 4,	"p4 fire 3"	},
 
-	{"Reset",		    BIT_DIGITAL,	&DrvReset,	"reset"		    },
+	{"Reset",		    BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",		    BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		    BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
@@ -97,7 +97,7 @@ static struct BurnInputInfo RoadfInputList[] = {
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 
-	{"Reset",		    BIT_DIGITAL,	&DrvReset,	"reset"		    },
+	{"Reset",		    BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",		    BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
 	{"Dip A",		    BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		    BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
@@ -478,12 +478,7 @@ static void Konami1Decode()
 
 static INT32 DrvInit(INT32 select)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	game_select = select;
 
@@ -659,7 +654,7 @@ static INT32 DrvExit()
 	SN76496Exit();
 	DACExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -747,8 +742,7 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	watchdog++;
-	if (watchdog >= 180) {
+	if (++watchdog >= 180) {
 		DrvDoReset(0);
 	}
 
@@ -776,8 +770,8 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
-		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		CPU_RUN(0, M6809);
+		CPU_RUN(1, Zet);
 
 		if (i == 255 && irq_enable) M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 	}
@@ -801,7 +795,7 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029698;
 	}

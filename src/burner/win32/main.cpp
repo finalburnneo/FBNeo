@@ -1132,10 +1132,6 @@ int ProcessCmdLine()
 		MenuEnableItems();
 	}
 
-	// audio pitch fix for Mortal Kombat games
-	MediaExit();
-	MediaInit();
-
 	return 0;
 }
 

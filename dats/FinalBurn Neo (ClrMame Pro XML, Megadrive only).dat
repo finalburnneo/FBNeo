@@ -102,7 +102,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="3ninjas" cloneof="3ninja" romof="3ninja">
-		<description>3 Ninjas Kick Back (Hack, Spanish)</description>
+		<description>3 Ninjas Kick Back (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
 		<manufacturer>Sony Imagesoft</manufacturer>
 		<rom name="3 Ninjas Kick Back (hack, spanish).bin" size="2097152" crc="9a0e98a9"/>
@@ -1758,7 +1758,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="beyoasisp" cloneof="thor" romof="thor">
-		<description>Beyond Oasis (USA, Prototype, 19941101)</description>
+		<description>Beyond Oasis (USA, Prototype, 19941101) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="beyond oasis (prototype - nov 01, 1994).bin" size="3145728" crc="fa59f847"/>
@@ -3742,7 +3742,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="crystlpts" cloneof="crystlpt" romof="crystlpt">
-		<description>Crystal's Pony Tale (Hack, Spanish)</description>
+		<description>Crystal's Pony Tale (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="crystal's pony tale (Hack, Spanish)" size="1048576" crc="3b9e41bf"/>
@@ -3758,7 +3758,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="crystlptp15" cloneof="crystlpt" romof="crystlpt">
-		<description>Crystal's Pony Tale (USA, Prototype, 19940511)</description>
+		<description>Crystal's Pony Tale (USA, Prototype, 19940511) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="crystal's pony tale (prototype - may 11, 1994).bin" size="1048576" crc="eac9d74b"/>
@@ -3766,7 +3766,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="crystlptp14" cloneof="crystlpt" romof="crystlpt">
-		<description>Crystal's Pony Tale (USA, Prototype, 19940519)</description>
+		<description>Crystal's Pony Tale (USA, Prototype, 19940519) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="crystal's pony tale (prototype - may 19, 1994).bin" size="1048576" crc="dc50b741"/>
@@ -3774,7 +3774,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="crystlptp13" cloneof="crystlpt" romof="crystlpt">
-		<description>Crystal's Pony Tale (USA, Prototype, 19940526)</description>
+		<description>Crystal's Pony Tale (USA, Prototype, 19940526) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="crystal's pony tale (prototype - may 26, 1994).bin" size="1048576" crc="a2eaba55"/>
@@ -3782,7 +3782,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="crystlptp12" cloneof="crystlpt" romof="crystlpt">
-		<description>Crystal's Pony Tale (USA, Prototype, 19940601)</description>
+		<description>Crystal's Pony Tale (USA, Prototype, 19940601) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="crystal's pony tale (prototype - jun 01, 1994).bin" size="1048576" crc="14c6347c"/>
@@ -3790,7 +3790,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="crystlptp11" cloneof="crystlpt" romof="crystlpt">
-		<description>Crystal's Pony Tale (USA, Prototype, 19940606)</description>
+		<description>Crystal's Pony Tale (USA, Prototype, 19940606) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="crystal's pony tale (prototype - jun 06, 1994).bin" size="1048576" crc="83e8cac9"/>
@@ -3798,7 +3798,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="crystlptp10" cloneof="crystlpt" romof="crystlpt">
-		<description>Crystal's Pony Tale (USA, Prototype, 19940610)</description>
+		<description>Crystal's Pony Tale (USA, Prototype, 19940610) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="crystal's pony tale (prototype - jun 10, 1994).bin" size="1048576" crc="9e1dd267"/>
@@ -3806,7 +3806,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="crystlptp09" cloneof="crystlpt" romof="crystlpt">
-		<description>Crystal's Pony Tale (USA, Prototype, 19940623)</description>
+		<description>Crystal's Pony Tale (USA, Prototype, 19940623) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="crystal's pony tale (prototype - jun 23, 1994).bin" size="1048576" crc="4ccc19af"/>
@@ -3814,7 +3814,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="crystlptp08" cloneof="crystlpt" romof="crystlpt">
-		<description>Crystal's Pony Tale (USA, Prototype, 19940628)</description>
+		<description>Crystal's Pony Tale (USA, Prototype, 19940628) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="crystal's pony tale (prototype - jun 28, 1994).bin" size="1048576" crc="03be7f66"/>
@@ -3822,7 +3822,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="crystlptp07" cloneof="crystlpt" romof="crystlpt">
-		<description>Crystal's Pony Tale (USA, Prototype, 19940630)</description>
+		<description>Crystal's Pony Tale (USA, Prototype, 19940630) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="crystal's pony tale (prototype - jun 30, 1994).bin" size="1048576" crc="dd8c73fb"/>
@@ -3830,7 +3830,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="crystlptp06" cloneof="crystlpt" romof="crystlpt">
-		<description>Crystal's Pony Tale (USA, Prototype, 19940701)</description>
+		<description>Crystal's Pony Tale (USA, Prototype, 19940701) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="crystal's pony tale (prototype - jul 01, 1994).bin" size="1048576" crc="16ac2e4f"/>
@@ -3838,7 +3838,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="crystlptp05" cloneof="crystlpt" romof="crystlpt">
-		<description>Crystal's Pony Tale (USA, Prototype, 19940702)</description>
+		<description>Crystal's Pony Tale (USA, Prototype, 19940702) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="crystal's pony tale (prototype - jul 02, 1994).bin" size="1048576" crc="24bc4354"/>
@@ -3846,7 +3846,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="crystlptp04" cloneof="crystlpt" romof="crystlpt">
-		<description>Crystal's Pony Tale (USA, Prototype, 19940703)</description>
+		<description>Crystal's Pony Tale (USA, Prototype, 19940703) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="crystal's pony tale (prototype - jul 03, 1994).bin" size="1048576" crc="6d67a87c"/>
@@ -3854,7 +3854,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="crystlptp02" cloneof="crystlpt" romof="crystlpt">
-		<description>Crystal's Pony Tale (USA, Prototype, 19940712)</description>
+		<description>Crystal's Pony Tale (USA, Prototype, 19940712) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="crystal's pony tale (prototype - jul 12, 1994).bin" size="1045844" crc="2bfc0a53"/>
@@ -3862,7 +3862,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="crystlptp03" cloneof="crystlpt" romof="crystlpt">
-		<description>Crystal's Pony Tale (USA, Prototype, 19940712-B)</description>
+		<description>Crystal's Pony Tale (USA, Prototype, 19940712-B) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="crystal's pony tale (prototype - jul 12, 1994 - b).bin" size="1048576" crc="3577dc72"/>
@@ -3870,7 +3870,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="crystlptp01" cloneof="crystlpt" romof="crystlpt">
-		<description>Crystal's Pony Tale (USA, Prototype, 19940713)</description>
+		<description>Crystal's Pony Tale (USA, Prototype, 19940713) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="crystal's pony tale (prototype - jul 13, 1994).bin" size="1048576" crc="c67b6dba"/>
@@ -3886,7 +3886,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cursep" cloneof="curse" romof="curse">
-		<description>Curse (Prototype, 19900626)</description>
+		<description>Curse (Prototype, 19900626) [Prototype]</description>
 		<year>1989</year>
 		<manufacturer>U.S. License INTV Corp. / Micronet</manufacturer>
 		<rom name="curse (prototype - jun 26, 1990).bin" size="524288" crc="dee8876d"/>
@@ -3926,7 +3926,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cutthrs" cloneof="cutthr" romof="cutthr">
-		<description>Cutthroat Island (Hack, Spanish)</description>
+		<description>Cutthroat Island (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
 		<manufacturer>Acclaim</manufacturer>
 		<rom name="cutthroat island (Hack, Spanish)" size="2097152" crc="ca275ae6"/>
@@ -3934,7 +3934,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cutthrp" cloneof="cutthr" romof="cutthr">
-		<description>CutThroat Island (Prototye)</description>
+		<description>CutThroat Island (Prototye) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Acclaim Entertainment</manufacturer>
 		<rom name="cipreview.bin" size="2097152" crc="7f4939f2"/>
@@ -6069,7 +6069,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fatallabs" cloneof="fatallab" romof="fatallab">
-		<description>Fatal Labyrinth (Hack, Spanish)</description>
+		<description>Fatal Labyrinth (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="fatal labyrinth (hack, spanish).bin" size="131072" crc="2b27dbd1"/>
@@ -11047,8 +11047,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="naruto" cloneof="3ninja" romof="3ninja">
-		<description>Naruto (Rus)</description>
-		<year>199?</year>
+		<description>Naruto (Hack, Russian) [Hack]</description>
+		<year>20??</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="naruto (unl).bin" size="4194304" crc="b29b3503"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
@@ -13755,7 +13755,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="radrexs" cloneof="radrex" romof="radrex">
-		<description>Radical Rex (Hack, Spanish)</description>
+		<description>Radical Rex (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
 		<manufacturer>Activision</manufacturer>
 		<rom name="radical rex (hack, spanish).bin" size="1048576" crc="3a33bd58"/>
@@ -16610,7 +16610,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="splatth3s" cloneof="splatth3" romof="splatth3">
-		<description>Splatterhouse 3 (Hack, Spanish)</description>
+		<description>Splatterhouse 3 (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
 		<manufacturer>Namco</manufacturer>
 		<rom name="splatterhouse 3 (hack, spanish).bin" size="2097152" crc="a89df7a7"/>
@@ -16622,6 +16622,14 @@
 		<year>1993</year>
 		<manufacturer>Namco</manufacturer>
 		<rom name="splatterhouse 3 (usa).bin" size="2097152" crc="00f05d07"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="splatth3be" cloneof="splatth3" romof="splatth3">
+		<description>Splatterhouse 3 Bloody Edition Hack (USA) [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Namco - CRT_rex</manufacturer>
+		<rom name="Splatterhouse 3 Bloody Edition v1.2 (U) (2021)(CRT_rex).bin" size="2097152" crc="5ce040e5"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -16638,6 +16646,14 @@
 		<year>1993</year>
 		<manufacturer>Namcot</manufacturer>
 		<rom name="splatterhouse part 3 (jpn, kor).bin" size="2097152" crc="31b83d22"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="splatth3jbe" cloneof="splatth3" romof="splatth3">
+		<description>Splatterhouse Part 3 Bloody Edition Hack (Jpn, Kor) [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Namcot - CRT_rex</manufacturer>
+		<rom name="Splatterhouse Part 3 Bloody Edition v1.2 (J) (2021)(CRT_rex).bin" size="2097152" crc="8e2a70e8"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -19834,7 +19850,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="thorg" cloneof="thor" romof="thor">
-		<description>The Story of Thor (Ger)</description>
+		<description>The Story of Thor (German)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="story of thor, the (germany).bin" size="3145728" crc="fa20d011"/>
@@ -19842,7 +19858,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="thorjp" cloneof="thor" romof="thor">
-		<description>The Story of Thor (Jpn, Prototype)</description>
+		<description>The Story of Thor (Jpn, Prototype) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="story of thor, the (jpn) (beta) (bad dump).bin" size="1769472" crc="bfc11649"/>
@@ -19858,7 +19874,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="thors" cloneof="thor" romof="thor">
-		<description>The Story of Thor (Spa)</description>
+		<description>The Story of Thor (Spanish)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="story of thor, the (spain).bin" size="3145728" crc="4631f941"/>
@@ -19866,7 +19882,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="thorp2" cloneof="thor" romof="thor">
-		<description>The Story of Thor (USA, Prototype, 19941004)</description>
+		<description>The Story of Thor (USA, Prototype, 19941004) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="story of thor, the (prototype - oct 04, 1994).bin" size="3145728" crc="9e486f91"/>
@@ -19874,7 +19890,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="thorp1" cloneof="thor" romof="thor">
-		<description>The Story of Thor (USA, Prototype, 19941017)</description>
+		<description>The Story of Thor (USA, Prototype, 19941017) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="story of thor, the (prototype - oct 17, 1994).bin" size="3145728" crc="aa43d34a"/>
@@ -19882,7 +19898,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="thorf" cloneof="thor" romof="thor">
-		<description>The Story of Thor - A Successor of The Light (Fra)</description>
+		<description>The Story of Thor - A Successor of The Light (French)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-17720.ic1" size="2097152" crc="5385f970"/>
@@ -20111,6 +20127,14 @@
 		<year>1992</year>
 		<manufacturer>Human</manufacturer>
 		<rom name="mpr-14675.bin" size="524288" crc="24408c73"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tpwresen" cloneof="tpwres" romof="tpwres">
+		<description>Thunder Pro Wrestling Story (Hack, English) [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Human</manufacturer>
+		<rom name="Thunder Pro Wrestling Story T-Eng (Japan).md" size="524288" crc="f1bf25f8"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -20851,7 +20875,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="twistedf" cloneof="crueball" romof="crueball">
-		<description>Twisted Flipper (USA, Prototype)</description>
+		<description>Twisted Flipper (USA, Prototype) [Prototype]</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="twisted flipper (usa) (beta).bin" size="524288" crc="6dd47554"/>
@@ -21195,7 +21219,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vecmanp1" cloneof="vecman" romof="vecman">
-		<description>Vectorman (Prototype)</description>
+		<description>Vectorman (Prototype) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="vectorman (beta).bin" size="2097152" crc="a315c8aa"/>
@@ -21203,7 +21227,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vecmanp3" cloneof="vecman" romof="vecman">
-		<description>Vectorman (Prototype, 19950724)</description>
+		<description>Vectorman (Prototype, 19950724) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="vectorman (prototype - jul 24, 1995).bin" size="2097152" crc="0145738b"/>
@@ -21211,7 +21235,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vecmanp2" cloneof="vecman" romof="vecman">
-		<description>Vectorman (Prototype, Alt)</description>
+		<description>Vectorman (Prototype, Alt) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="vectorman (beta) (alt).bin" size="2097152" crc="2084d3da"/>
@@ -21219,7 +21243,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vecman2s" cloneof="vecman2" romof="vecman2">
-		<description>Vectorman 2 (Hack, Spanish)</description>
+		<description>Vectorman 2 (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="vectorman 2 (hack, spanish).bin" size="3145728" crc="998989b2"/>
@@ -21227,7 +21251,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vecman2p1" cloneof="vecman2" romof="vecman2">
-		<description>Vectorman 2 (Prototype)</description>
+		<description>Vectorman 2 (Prototype) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="vectorman 2 (beta).bin" size="2097152" crc="ada2b0ef"/>
@@ -21235,7 +21259,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vecman2p6" cloneof="vecman2" romof="vecman2">
-		<description>Vectorman 2 (Prototype, 19960815)</description>
+		<description>Vectorman 2 (Prototype, 19960815) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="vectorman 2 (prototype - aug 15, 1996).bin" size="3145728" crc="998b087c"/>
@@ -21243,7 +21267,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vecman2p5" cloneof="vecman2" romof="vecman2">
-		<description>Vectorman 2 (Prototype, 19960816)</description>
+		<description>Vectorman 2 (Prototype, 19960816) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="vectorman 2 (prototype - aug 16, 1996).bin" size="3145728" crc="2986e5ce"/>
@@ -21251,7 +21275,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vecman2p4" cloneof="vecman2" romof="vecman2">
-		<description>Vectorman 2 (Prototype, 19960819)</description>
+		<description>Vectorman 2 (Prototype, 19960819) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="vectorman 2 (prototype - aug 19, 1996).bin" size="3145728" crc="49efab7e"/>
@@ -21259,7 +21283,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vecman2p3" cloneof="vecman2" romof="vecman2">
-		<description>Vectorman 2 (Prototype, 19960826)</description>
+		<description>Vectorman 2 (Prototype, 19960826) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="vectorman 2 (prototype - aug 26, 1996).bin" size="2788934" crc="eb8124c8"/>
@@ -21267,7 +21291,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vecman2p2" cloneof="vecman2" romof="vecman2">
-		<description>Vectorman 2 (Prototype, 19960827)</description>
+		<description>Vectorman 2 (Prototype, 19960827) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="vectorman 2 (prototype - aug 27, 1996).bin" size="3145728" crc="6333d89a"/>
@@ -21339,7 +21363,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vf2s" cloneof="vf2" romof="vf2">
-		<description>Virtua Fighter 2 - Genesis (Hack, Spanish)</description>
+		<description>Virtua Fighter 2 - Genesis (Hack, Spanish) [Hack]</description>
 		<year>2020</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="virtua fighter 2 - genesis (hack, spanish).bin" size="4194304" crc="78ab7230"/>
@@ -21355,7 +21379,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vf2p5" cloneof="vf2" romof="vf2">
-		<description>Virtua Fighter 2 - Genesis (Prototype, 19960819)</description>
+		<description>Virtua Fighter 2 - Genesis (Prototype, 19960819) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="virtua fighter 2 (prototype - aug 19, 1996).bin" size="4194304" crc="c5ee3974"/>
@@ -21363,7 +21387,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vf2p4" cloneof="vf2" romof="vf2">
-		<description>Virtua Fighter 2 - Genesis (Prototype, 19960830)</description>
+		<description>Virtua Fighter 2 - Genesis (Prototype, 19960830) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="virtua fighter 2 (prototype - aug 30, 1996).bin" size="4194304" crc="6a0f3a7b"/>
@@ -21371,7 +21395,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vf2p3" cloneof="vf2" romof="vf2">
-		<description>Virtua Fighter 2 - Genesis (Prototype, 19960913)</description>
+		<description>Virtua Fighter 2 - Genesis (Prototype, 19960913) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="virtua fighter 2 (prototype - sep 13, 1996).bin" size="4194304" crc="fa5bad91"/>
@@ -21379,7 +21403,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vf2p2" cloneof="vf2" romof="vf2">
-		<description>Virtua Fighter 2 - Genesis (Prototype, 19960920)</description>
+		<description>Virtua Fighter 2 - Genesis (Prototype, 19960920) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="virtua fighter 2 (prototype - sep 20, 1996).bin" size="4194304" crc="af516dad"/>
@@ -21387,7 +21411,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vf2p1" cloneof="vf2" romof="vf2">
-		<description>Virtua Fighter 2 - Genesis (Prototype, 19960927)</description>
+		<description>Virtua Fighter 2 - Genesis (Prototype, 19960927) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="virtua fighter 2 (prototype - sep 27, 1996).bin" size="4194304" crc="95ab6ab6"/>
@@ -21419,7 +21443,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vixen357e" cloneof="vixen357" romof="vixen357">
-		<description>Vixen 357 (Hack, English)</description>
+		<description>Vixen 357 (Hack, English) [Hack]</description>
 		<year>2016</year>
 		<manufacturer>NCS</manufacturer>
 		<rom name="vixen 357 (english translation).bin" size="1310720" crc="f8ce2e43"/>
@@ -21427,9 +21451,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="vixen357s" cloneof="vixen357" romof="vixen357">
-		<description>Vixen 357 (Hack, Spanish)</description>
+		<description>Vixen 357 (Hack, Spanish) [Hack]</description>
 		<year>2020</year>
-		<manufacturer>Published</manufacturer>
+		<manufacturer>NCS</manufacturer>
 		<rom name="vixen 357 (hack, spanish).bin" size="1310720" crc="b33b1568"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

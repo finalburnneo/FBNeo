@@ -3868,11 +3868,19 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="dragosla4">
+	<game name="dragosla4j" cloneof="dragosla4" romof="dragosla4">
 		<description>Dragon Slayer 4 - Drasle Family (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Namco</manufacturer>
 		<rom name="Dragon Slayer 4 - Drasle Family (Japan).nes" size="196624" crc="8870a286"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="dragosla4">
+		<description>Dragon Slayer 4 - Drasle Family (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Dragon Slayer 4 - Drasle Family (T-Eng).nes" size="196624" crc="a1493b76"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

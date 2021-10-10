@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17580 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17584 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -4053,7 +4053,8 @@ This list contains all games supported by FinalBurn Neo.
 | msx_dslayer	|  	| Dragon Slayer (Jpn)					| 		| 1985	| Square	| MSX		| 					|
 | md_dslayed	|  	| Dragon Slayer - Eiyuu Densetsu (Jpn)			| 		| 1994	| Sega		| Sega Megadrive| 					|
 | md_dslayed2	|  	| Dragon Slayer - Eiyuu Densetsu II (Jpn)		| 		| 1995	| Sega		| Sega Megadrive| 					|
-| nes_dragosla4	|  	| Dragon Slayer 4 - Drasle Family (Japan)		| 		| 1987	| Namco		| Miscellaneous	| 					|
+| nes_dragosla4j|  	| Dragon Slayer 4 - Drasle Family (Japan)		| nes_dragosla4	| 1987	| Namco		| Miscellaneous	| 					|
+| nes_dragosla4	|  	| Dragon Slayer 4 - Drasle Family (T-Eng)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | msx_dslayer4	|  	| Dragon Slayer IV - Drasle Family (Jpn)		| 		| 1987	| Nihon Falcom	| MSX		| 					|
 | spec_dragonspirit|  	| Dragon Spirit (128K)					| 		| 1989	| Domark	| ZX Spectrum	| 					|
 | dspirit2	|  	| Dragon Spirit (DS2)					| dspirit	| 1987	| Namco		| System 1	| 					|
@@ -9446,7 +9447,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_narcopol	|  	| Narco Police (128K)					| 		| 1991	| Rajsoft	| ZX Spectrum	| 					|
 | spec_narc	|  	| NARC							| 		| 1990	| Ocean		| ZX Spectrum	| 					|
 | md_narnia3	|  	| Narnia 3 (Rus)					| md_galahad	| 199?	| <unknown>	| Sega Megadrive| 					|
-| md_naruto	|  	| Naruto (Rus)						| md_3ninja	| 199?	| <unknown>	| Sega Megadrive| 					|
+| md_naruto	|  	| Naruto (Hack, Russian)				| md_3ninja	| 20??	| <unknown>	| Sega Megadrive| 					|
 | nastar	|  	| Nastar (World)					| 		| 1988	| Taito Corporat| Taito B System| 					|
 | nastarw	|  	| Nastar Warrior (US)					| nastar	| 1988	| Taito America | Taito B System| 					|
 | natodefa	|  	| NATO Defense (alternate mazes)			| natodef	| 1982	| Pacific Novelt| Miscellaneous	| 					|
@@ -13389,8 +13390,10 @@ This list contains all games supported by FinalBurn Neo.
 | md_splatth2u	|  	| Splatterhouse 2 (USA)					| md_splatth2	| 1992	| Namco		| Sega Megadrive| 					|
 | md_splatth3s	|  	| Splatterhouse 3 (Hack, Spanish)			| md_splatth3	| 2018	| Namco		| Sega Megadrive| 					|
 | md_splatth3	|  	| Splatterhouse 3 (USA)					| 		| 1993	| Namco		| Sega Megadrive| 					|
+| md_splatth3be	|  	| Splatterhouse 3 Bloody Edition Hack (USA)		| md_splatth3	| 2021	| Namco - CRT_re| Sega Megadrive| 					|
 | md_splatth2j	|  	| Splatterhouse Part 2 (Jpn)				| md_splatth2	| 1992	| Namcot	| Sega Megadrive| 					|
 | md_splatth3j	|  	| Splatterhouse Part 3 (Jpn, Kor)			| md_splatth3	| 1993	| Namcot	| Sega Megadrive| 					|
+| md_splatth3jbe|  	| Splatterhouse Part 3 Bloody Edition Hack (Jpn, Kor)	| md_splatth3	| 2021	| Namcot - CRT_r| Sega Megadrive| 					|
 | pce_splatth	|  	| Splatterhouse						| 		| 1990	| Namcot	| PC Engine	| 					|
 | tg_splatth	|  	| Splatterhouse						| 		| 1990	| NEC		| TurboGrafx 16	| 					|
 | spec_splattr	|  	| splATTR (HB)						| 		| 2008	| Bob Smith	| ZX Spectrum	| 					|
@@ -15540,13 +15543,13 @@ This list contains all games supported by FinalBurn Neo.
 | msx_spider	|  	| The Spider (Jpn)					| 		| 1984	| Hudson Soft	| MSX		| 					|
 | md_steelemps	|  	| The Steel Empire (Hack, Spanish)			| md_empsteel	| 2019	| Published	| Sega Megadrive| 					|
 | md_thor	|  	| The Story of Thor (Euro)				| 		| 1995	| Sega		| Sega Megadrive| 					|
-| md_thorg	|  	| The Story of Thor (Ger)				| md_thor	| 1995	| Sega		| Sega Megadrive| 					|
+| md_thorg	|  	| The Story of Thor (German)				| md_thor	| 1995	| Sega		| Sega Megadrive| 					|
 | md_thorjp	|  	| The Story of Thor (Jpn, Prototype)			| md_thor	| 1994	| Sega		| Sega Megadrive| 					|
 | md_thork	|  	| The Story of Thor (Kor)				| md_thor	| 1995	| Sega		| Sega Megadrive| 					|
-| md_thors	|  	| The Story of Thor (Spa)				| md_thor	| 1995	| Sega		| Sega Megadrive| 					|
+| md_thors	|  	| The Story of Thor (Spanish)				| md_thor	| 1995	| Sega		| Sega Megadrive| 					|
 | md_thorp2	|  	| The Story of Thor (USA, Prototype, 19941004)		| md_thor	| 1994	| Sega		| Sega Megadrive| 					|
 | md_thorp1	|  	| The Story of Thor (USA, Prototype, 19941017)		| md_thor	| 1994	| Sega		| Sega Megadrive| 					|
-| md_thorf	|  	| The Story of Thor - A Successor of The Light (Fra)	| md_thor	| 1995	| Sega		| Sega Megadrive| 					|
+| md_thorf	|  	| The Story of Thor - A Successor of The Light (French)	| md_thor	| 1995	| Sega		| Sega Megadrive| 					|
 | md_thorj	|  	| The Story of Thor - Hikari o Tsugumono (Jpn)		| md_thor	| 1995	| Sega		| Sega Megadrive| 					|
 | md_thorc	|  	| The Story of Thor - Hikari o Tsugumono (T-Chi)	| md_thor	| 2004	| YUZO		| Sega Megadrive| 					|
 | md_supshin	|  	| The Super Shinobi (Jpn)				| md_revshin	| 1989	| Sega		| Sega Megadrive| 					|
@@ -15655,6 +15658,7 @@ This list contains all games supported by FinalBurn Neo.
 | theroes	|  	| Thunder Heroes					| 		| 2001	| Primetec Inves| Cave		| 					|
 | thoop		|  	| Thunder Hoop (Ver. 1)					| 		| 1992	| Gaelco	| Miscellaneous	| 					|
 | md_tpwres	|  	| Thunder Pro Wrestling Retsuden (Jpn)			| 		| 1992	| Human		| Sega Megadrive| 					|
+| md_tpwresen	|  	| Thunder Pro Wrestling Story (Hack, English)		| md_tpwres	| 2021	| Human		| Sega Megadrive| 					|
 | nes_thunderwarrior|  	| Thunder Warrior (Asia) (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | thndzonej	|  	| Thunder Zone (Japan)					| thndzone	| 1991	| Data East Corp| DECO IC16	| 					|
 | thndzone4	|  	| Thunder Zone (World 4 Players)			| thndzone	| 1991	| Data East Corp| DECO IC16	| 					|
@@ -16546,7 +16550,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_vixen2	|  	| Vixen - Part 2 (128K)					| spec_vixen1	| 1988	| Martech Games	| ZX Spectrum	| 					|
 | spec_vixen3	|  	| Vixen - Part 3 (128K)					| spec_vixen1	| 1988	| Martech Games	| ZX Spectrum	| 					|
 | md_vixen357e	|  	| Vixen 357 (Hack, English)				| md_vixen357	| 2016	| NCS		| Sega Megadrive| 					|
-| md_vixen357s	|  	| Vixen 357 (Hack, Spanish)				| md_vixen357	| 2020	| Published	| Sega Megadrive| 					|
+| md_vixen357s	|  	| Vixen 357 (Hack, Spanish)				| md_vixen357	| 2020	| NCS		| Sega Megadrive| 					|
 | md_vixen357	|  	| Vixen 357 (Jpn)					| 		| 1992	| NCS		| Sega Megadrive| 					|
 | spec_viz	|  	| Viz - The Computer Game (128K)			| 		| 1991	| Virgin Games	| ZX Spectrum	| 					|
 | msx_voidrun	|  	| Void Runner (Euro)					| 		| 1987	| Mastertronic	| MSX		| 					|

@@ -4105,6 +4105,7 @@ DRV		BurnDrvnes_dragoscr;
 DRV		BurnDrvMSX_dslayer;
 DRV		BurnDrvmd_dslayed;
 DRV		BurnDrvmd_dslayed2;
+DRV		BurnDrvnes_dragosla4j;
 DRV		BurnDrvnes_dragosla4;
 DRV		BurnDrvMSX_dslayer4;
 DRV		BurnSpecDragonspirit;
@@ -13559,8 +13560,10 @@ DRV		BurnDrvmd_splatth2;
 DRV		BurnDrvmd_splatth2u;
 DRV		BurnDrvmd_splatth3s;
 DRV		BurnDrvmd_splatth3;
+DRV		BurnDrvmd_splatth3be;
 DRV		BurnDrvmd_splatth2j;
 DRV		BurnDrvmd_splatth3j;
+DRV		BurnDrvmd_splatth3jbe;
 DRV		BurnDrvpce_splatth;
 DRV		BurnDrvtg_splatth;
 DRV		BurnSpecSplattr;
@@ -15847,6 +15850,7 @@ DRV		BurnDrvThundfox;
 DRV		BurnDrvTheroes;
 DRV		BurnDrvThoop;
 DRV		BurnDrvmd_tpwres;
+DRV		BurnDrvmd_tpwresen;
 DRV		BurnDrvnes_thunderwarrior;
 DRV		BurnDrvThndzonej;
 DRV		BurnDrvThndzone4;
@@ -21928,7 +21932,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_dslayer,		// Dragon Slayer (Jpn)
 	&BurnDrvmd_dslayed,			// Dragon Slayer - Eiyuu Densetsu (Jpn)
 	&BurnDrvmd_dslayed2,		// Dragon Slayer - Eiyuu Densetsu II (Jpn)
-	&BurnDrvnes_dragosla4,		// Dragon Slayer 4 - Drasle Family (Japan)
+	&BurnDrvnes_dragosla4j,		// Dragon Slayer 4 - Drasle Family (Japan)
+	&BurnDrvnes_dragosla4,		// Dragon Slayer 4 - Drasle Family (T-Eng)
 	&BurnDrvMSX_dslayer4,		// Dragon Slayer IV - Drasle Family (Jpn)
 	&BurnSpecDragonspirit,		// Dragon Spirit (128K)
 	&BurnDrvDspirit2,			// Dragon Spirit (DS2)
@@ -27385,7 +27390,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecNarcopol,			// Narco Police (128K)
 	&BurnSpecNarc,				// NARC
 	&BurnDrvmd_narnia3,			// Narnia 3 (Rus)
-	&BurnDrvmd_naruto,			// Naruto (Rus)
+	&BurnDrvmd_naruto,			// Naruto (Hack, Russian)
 	&BurnDrvNastar,				// Nastar (World)
 	&BurnDrvNastarw,			// Nastar Warrior (US)
 	&BurnDrvNatodefa,			// NATO Defense (alternate mazes)
@@ -31382,8 +31387,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_splatth2u,		// Splatterhouse 2 (USA)
 	&BurnDrvmd_splatth3s,		// Splatterhouse 3 (Hack, Spanish)
 	&BurnDrvmd_splatth3,		// Splatterhouse 3 (USA)
+	&BurnDrvmd_splatth3be,		// Splatterhouse 3 Bloody Edition Hack (USA)
 	&BurnDrvmd_splatth2j,		// Splatterhouse Part 2 (Jpn)
 	&BurnDrvmd_splatth3j,		// Splatterhouse Part 3 (Jpn, Kor)
+	&BurnDrvmd_splatth3jbe,		// Splatterhouse Part 3 Bloody Edition Hack (Jpn, Kor)
 	&BurnDrvpce_splatth,		// Splatterhouse
 	&BurnDrvtg_splatth,			// Splatterhouse
 	&BurnSpecSplattr,			// splATTR (HB)
@@ -33555,13 +33562,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_spider,			// The Spider (Jpn)
 	&BurnDrvmd_steelemps,		// The Steel Empire (Hack, Spanish)
 	&BurnDrvmd_thor,			// The Story of Thor (Euro)
-	&BurnDrvmd_thorg,			// The Story of Thor (Ger)
+	&BurnDrvmd_thorg,			// The Story of Thor (German)
 	&BurnDrvmd_thorjp,			// The Story of Thor (Jpn, Prototype)
 	&BurnDrvmd_thork,			// The Story of Thor (Kor)
-	&BurnDrvmd_thors,			// The Story of Thor (Spa)
+	&BurnDrvmd_thors,			// The Story of Thor (Spanish)
 	&BurnDrvmd_thorp2,			// The Story of Thor (USA, Prototype, 19941004)
 	&BurnDrvmd_thorp1,			// The Story of Thor (USA, Prototype, 19941017)
-	&BurnDrvmd_thorf,			// The Story of Thor - A Successor of The Light (Fra)
+	&BurnDrvmd_thorf,			// The Story of Thor - A Successor of The Light (French)
 	&BurnDrvmd_thorj,			// The Story of Thor - Hikari o Tsugumono (Jpn)
 	&BurnDrvmd_thorc,			// The Story of Thor - Hikari o Tsugumono (T-Chi)
 	&BurnDrvmd_supshin,			// The Super Shinobi (Jpn)
@@ -33670,6 +33677,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTheroes,			// Thunder Heroes
 	&BurnDrvThoop,				// Thunder Hoop (Ver. 1)
 	&BurnDrvmd_tpwres,			// Thunder Pro Wrestling Retsuden (Jpn)
+	&BurnDrvmd_tpwresen,		// Thunder Pro Wrestling Story (Hack, English)
 	&BurnDrvnes_thunderwarrior,	// Thunder Warrior (Asia) (Unl)
 	&BurnDrvThndzonej,			// Thunder Zone (Japan)
 	&BurnDrvThndzone4,			// Thunder Zone (World 4 Players)

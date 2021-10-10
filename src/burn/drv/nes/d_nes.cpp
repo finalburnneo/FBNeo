@@ -28614,18 +28614,35 @@ struct BurnDriver BurnDrvnes_dragoscr = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_dragosla4RomDesc[] = {
+static struct BurnRomInfo nes_dragosla4jRomDesc[] = {
 	{ "Dragon Slayer 4 - Drasle Family (Japan).nes",          196624, 0x8870a286, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dragosla4j)
+STD_ROM_FN(nes_dragosla4j)
+
+struct BurnDriver BurnDrvnes_dragosla4j = {
+	"nes_dragosla4j", "nes_dragosla4", NULL, NULL, "1987",
+	"Dragon Slayer 4 - Drasle Family (Japan)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG, 0,
+	NESGetZipName, nes_dragosla4jRomInfo, nes_dragosla4jRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_dragosla4RomDesc[] = {
+	{ "Dragon Slayer 4 - Drasle Family (T-Eng).nes",          196624, 0xa1493b76, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_dragosla4)
 STD_ROM_FN(nes_dragosla4)
 
 struct BurnDriver BurnDrvnes_dragosla4 = {
-	"nes_dragosla4", NULL, NULL, NULL, "1987",
-	"Dragon Slayer 4 - Drasle Family (Japan)\0", NULL, "Namco", "Miscellaneous",
+	"nes_dragosla4", NULL, NULL, NULL, "1989?",
+	"Dragon Slayer 4 - Drasle Family (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_dragosla4RomInfo, nes_dragosla4RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

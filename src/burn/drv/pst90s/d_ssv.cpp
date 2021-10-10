@@ -4780,7 +4780,7 @@ struct BurnDriver BurnDrvStmblade = {
 	"stmblade", NULL, NULL, NULL, "1996",
 	"Storm Blade (US)\0", NULL, "Visco", "SSV",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA_SSV, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA_SSV, GBF_VERSHOOT, 0,
 	NULL, stmbladeRomInfo, stmbladeRomName, NULL, NULL, NULL, NULL, DrvInputInfo, StmbladeDIPInfo,
 	StmbladeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	240, 352, 3, 4
@@ -4816,7 +4816,7 @@ struct BurnDriver BurnDrvStmbladej = {
 	"stmbladej", "stmblade", NULL, NULL, "1996",
 	"Storm Blade (Japan)\0", NULL, "Visco", "SSV",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA_SSV, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA_SSV, GBF_VERSHOOT, 0,
 	NULL, stmbladejRomInfo, stmbladejRomName, NULL, NULL, NULL, NULL, DrvInputInfo, StmbladeDIPInfo,
 	StmbladeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	240, 352, 3, 4
@@ -4906,7 +4906,7 @@ struct BurnDriver BurnDrvMslider = {
 	"mslider", NULL, NULL, NULL, "1997",
 	"Monster Slider (Japan)\0", NULL, "Visco / Datt Japan", "SSV",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SETA_SSV, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA_SSV, GBF_PUZZLE, 0,
 	NULL, msliderRomInfo, msliderRomName, NULL, NULL, NULL, NULL, DrvInputInfo, MsliderDIPInfo,
 	MsliderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	352, 240, 4, 3
@@ -5519,7 +5519,7 @@ struct BurnDriver BurnDrvSxyreac2 = {
 	"sxyreac2", NULL, NULL, NULL, "1999",
 	"Pachinko Sexy Reaction 2 (Japan)\0", NULL, "Sammy", "SSV",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SETA_SSV, GBF_CASINO, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA_SSV, GBF_CASINO, 0,
 	NULL, sxyreac2RomInfo, sxyreac2RomName, NULL, NULL, NULL, NULL, SxyreactInputInfo, SxyreactDIPInfo,
 	Sxyreac2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	336, 240, 4, 3
@@ -5607,7 +5607,7 @@ struct BurnDriver BurnDrvEaglshot = {
 	"eaglshot", NULL, NULL, NULL, "1994",
 	"Eagle Shot Golf (US)\0", NULL, "Sammy", "SSV",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SETA_SSV, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA_SSV, GBF_SPORTSMISC, 0,
 	NULL, eaglshotRomInfo, eaglshotRomName, NULL, NULL, NULL, NULL, EaglshotInputInfo, EaglshotDIPInfo,
 	EaglshotInit, DrvExit, DrvFrame, DrvDraw, eaglshtScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -5638,7 +5638,7 @@ struct BurnDriver BurnDrvEaglshotj = {
 	"eaglshotj", "eaglshot", NULL, NULL, "1994",
 	"Eagle Shot Golf (Japan, bootleg?)\0", NULL, "Sammy", "SSV",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SETA_SSV, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA_SSV, GBF_SPORTSMISC, 0,
 	NULL, eaglshotjRomInfo, eaglshotjRomName, NULL, NULL, NULL, NULL, EaglshotInputInfo, EaglshotDIPInfo,
 	EaglshotInit, DrvExit, DrvFrame, DrvDraw, eaglshtScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3

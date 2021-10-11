@@ -17,6 +17,7 @@
 #include <file/file_path.h>
 
 #include <streams/file_stream.h>
+#include <string/stdstring.h>
 
 #define snprintf_nowarn(...) (snprintf(__VA_ARGS__) < 0 ? abort() : (void)0)
 #define PRINTF_BUFFER_SIZE 512
@@ -183,6 +184,13 @@ static INT32 __cdecl libretro_bprintf(INT32 nStatus, TCHAR* szFormat, ...)
 {
 	char buf[PRINTF_BUFFER_SIZE];
 	va_list vp;
+
+	// some format specifiers don't translate well into the retro logs, replace them
+	szFormat = string_replace_substring(szFormat, "%S", "%s");
+
+	// retro logs prefer ending with \n
+	if (szFormat[strlen(szFormat)-1] != '\n') strncat(szFormat, "\n", 1);
+
 	va_start(vp, szFormat);
 	int rc = vsnprintf(buf, PRINTF_BUFFER_SIZE, szFormat, vp);
 	va_end(vp);

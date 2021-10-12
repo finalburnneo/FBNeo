@@ -32,5 +32,5 @@ All the others will be broken due to bad C++ include paths.
 9) Make sure the build settings are set to "Release, x86".
 10) Attempt to compile the project by pressing F6 (or by selecting 'Build' from menu).
 11) Install Fightcade from https://www.fightcade.com/.
-12) Copy all the DLL's from the Fightcade FBNeo path (IE: 'emulator\fbneo') to the 'Release' directory where 'fcadefbneo.exe' was just compiled to.
+12) Copy all the DLL's from the Fightcade FBNeo path (IE: 'emulator\fbneo') to the 'build' directory where 'fcadefbneo.exe' was just compiled to.
 13) Try to run 'fcadefbneo.exe' that was compiled in the 'build' directory.

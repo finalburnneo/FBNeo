@@ -11,5 +11,9 @@ projectfiles/visualstudio-2015/fba_vs2015.VC.VC.opendb
 src/dep/generated
 build/fcadefbneod.exe
 build/fcadefbneod.ilk
+build
 *.db
 *.opendb
+UPDATE_GIT_IGNORE.BAT
+src/intf/video/win32/detector_buffers.h
+src/intf/video/win32/detector_loaders.h

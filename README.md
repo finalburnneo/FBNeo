@@ -1,14 +1,14 @@
 #Fightcade-fbneo
 ================
-
-Fightcade emulator built with FBNeo and GGPO.
-
-https://www.fightcade.com
+Fightcade emulator built with FBNeo and GGPO
+Public Release: https://www.fightcade.com
 
 # FinalBurn Neo
+================
 Official Forum: https://neo-source.com
 
 # How to Compile
+================
 NOTE: Only the Visual Studio 2015 project is able to be compiled.
 All the others will be broken due to bad C++ include paths.
 

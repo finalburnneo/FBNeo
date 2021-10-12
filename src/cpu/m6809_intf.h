@@ -17,15 +17,12 @@ struct M6809Ext {
 	pReadOpArgHandler ReadOpArg;
 	
 	INT32 nCyclesTotal;
-	INT32 nCyclesSegment;
-	INT32 nCyclesLeft;
 };
 
 extern INT32 nM6809Count;
 
-extern INT32 nM6809CyclesTotal;
-
 void M6809Reset();
+void M6809Reset(INT32 nCPU);
 void M6809NewFrame();
 INT32 M6809Init(INT32 cpu);
 void M6809Exit();
@@ -33,10 +30,14 @@ void M6809Open(INT32 num);
 void M6809Close();
 INT32 M6809GetActive();
 void M6809SetIRQLine(INT32 vector, INT32 status);
+void M6809SetIRQLine(INT32 nCPU, const INT32 line, const INT32 status);
 INT32 M6809Run(INT32 cycles);
+INT32 M6809Run(INT32 nCPU, INT32 nCycles);
 void M6809RunEnd();
 INT32 M6809TotalCycles();
+INT32 M6809TotalCycles(INT32 nCPU);
 INT32 M6809Idle(INT32 cycles);
+INT32 M6809Idle(INT32 nCPU, INT32 nCycles);
 INT32 M6809MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType);
 INT32 M6809UnmapMemory(UINT16 nStart, UINT16 nEnd, INT32 nType);
 void M6809SetReadHandler(UINT8 (*pHandler)(UINT16));
@@ -46,6 +47,9 @@ void M6809SetReadOpArgHandler(UINT8 (*pHandler)(UINT16));
 INT32 M6809Scan(INT32 nAction);
 UINT16 M6809GetPC();
 UINT16 M6809GetPrevPC();
+
+void M6809CPUPush(INT32 nCPU);
+void M6809CPUPop();
 
 UINT8 M6809ReadByte(UINT16 Address);
 void M6809WriteByte(UINT16 Address, UINT8 Data);

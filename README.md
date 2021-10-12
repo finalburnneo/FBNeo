@@ -28,5 +28,7 @@ All the others will be broken due to bad C++ include paths.
    You need to put NASM.EXE somewhere in your PATH.
    You can put it in your Windows directory (IE: C:\Windows), but I do not recommend this for a number of reasons.
    
-8) Attempt to compile the project by pressing F6 (or by selecting 'Build' from menu).
-9) Try to run 'fcadefbneo.exe' that was compiled in the 'build' directory.
+8) Make the files "detector_buffers.h" and "detector_loaders.h" (just empty files) and put them in "src\intf\video\win32".
+9) Make sure the build settings are set to "Release, x86".
+10) Attempt to compile the project by pressing F6 (or by selecting 'Build' from menu).
+11) Try to run 'fcadefbneo.exe' that was compiled in the 'build' directory.

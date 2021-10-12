@@ -1037,6 +1037,10 @@ int ProcessCmdLine()
 		MenuEnableItems();
 	}
 
+	// audio pitch fix for Mortal Kombat games when being launched via the command line
+	MediaExit(true); // exit the sound system (see 'media.cpp')
+	MediaInit(); // initialize the sound system (see 'media.cpp')
+
 	return 0;
 }
 

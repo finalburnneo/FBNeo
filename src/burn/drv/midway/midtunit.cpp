@@ -1,18 +1,14 @@
-// todo:
-//   NBAJAM & NBA JAM TE: resets in intro - CPU core?
-//   JDREDDP - sound
+// midway t unit
 
 #include "tiles_generic.h"
 #include "midtunit.h"
-#include "tms34010_intf.h"
+#include "tms34_intf.h"
 #include "m6809_intf.h"
 #include "burn_ym2151.h"
 #include "dcs2k.h"
 #include "msm6295.h"
 #include "dac.h"
 #include <stddef.h>
-
-#define LOG_UNMAPPED    0
 
 static UINT8 *AllMem;
 static UINT8 *RamEnd;
@@ -25,7 +21,6 @@ static UINT8 *DrvRAM;
 static UINT8 *DrvNVRAM;
 static UINT8 *DrvPalette;
 static UINT32 *DrvPaletteB;
-static UINT32 *DrvPaletteB2;
 static UINT8 *DrvVRAM;
 static UINT16 *DrvVRAM16;
 static UINT8 *DrvSoundProgROM;
@@ -39,6 +34,10 @@ UINT8 nTUnitJoy3[32];
 UINT8 nTUnitDSW[2];
 UINT8 nTUnitReset = 0;
 static UINT32 DrvInputs[4];
+
+//static ButtonToggle service;
+
+static INT32 nExtraCycles = 0;
 
 static bool bGfxRomLarge = false;
 static UINT32 nGfxBankOffset[2] = { 0x000000, 0x400000 };
@@ -68,6 +67,8 @@ UINT8 TUnitIsMK2 = 0;
 UINT8 TUnitIsNbajam = 0;
 UINT8 TUnitIsNbajamTe = 0;
 UINT8 TUnitIsJdreddp = 0;
+
+static INT32 vb_start = 0;
 
 static INT32 nSoundType = 0;
 
@@ -110,7 +111,6 @@ static INT32 MemIndex()
 	DrvSoundProgRAMProt = Next;		Next += 0x000100 * sizeof(UINT8);
 	DrvPalette	= Next;				Next += 0x20000 * sizeof(UINT8);
 	DrvPaletteB	= (UINT32*)Next;	Next += 0x8000 * sizeof(UINT32);
-	DrvPaletteB2	= (UINT32*)Next;	Next += 0x8000 * sizeof(UINT32);
 	DrvVRAM		= Next;				Next += TOBYTE(0x400000) * sizeof(UINT16);
 	DrvVRAM16	= (UINT16*)DrvVRAM;
 
@@ -195,11 +195,12 @@ static void MKsound_reset(INT32 local)
 static void MKsound_reset_write(INT32 val)
 {
 	if (val) {
+		//bprintf(0, _T("reset sound cpu @ frame %d\n"), nCurrentFrame);
 		MKsound_reset(1);
-		sound_inreset = 1;
-	} else {
-		sound_inreset = 0;
+	} else if (sound_inreset) {
+		//bprintf(0, _T("CLEAR reset sound cpu @ frame %d\n"), nCurrentFrame);
 	}
+	sound_inreset = val;
 }
 
 static void MKsound_main2soundwrite(INT32 data)
@@ -401,19 +402,21 @@ static INT32 LoadSoundBanksNbajam()
 	return 0;
 }
 
-static void TUnitToShift(UINT32 address, void *dst)
+static void TUnitToShift(UINT32 address, UINT16 *dst)
 {
 	memcpy(dst, &DrvVRAM16[(address >> 3)], 4096/2);
 }
 
-static void TUnitFromShift(UINT32 address, void *src)
+static void TUnitFromShift(UINT32 address, UINT16 *src)
 {
 	memcpy(&DrvVRAM16[(address >> 3)], src, 4096/2);
 }
 
 static void TUnitDoReset()
 {
+	TMS34010Open(0);
 	TMS34010Reset();
+	TMS34010Close();
 
 	switch (nSoundType)	{
 		case SOUND_ADPCM: {
@@ -444,6 +447,8 @@ static void TUnitDoReset()
 	JdreddpProtTable = NULL;
 
 	DrvFakeSound = 0;
+
+	nExtraCycles = 0;
 }
 
 static UINT16 TUnitVramRead(UINT32 address)
@@ -497,20 +502,46 @@ static void TUnitPalRecalc()
 
 static INT32 ScanlineRender(INT32 line, TMS34010Display *info)
 {
-	if (!pBurnDraw) 
+	if (!pBurnDraw)
 		return 0;
+
+	vb_start = info->vsblnk;
+
+#if 0
+	if (line == 0x15) {
+		bprintf(0, _T("ENAB %d\n"), info->enabled);
+		bprintf(0, _T("he %d\n"), info->heblnk);
+		bprintf(0, _T("hs %d\n"), info->hsblnk);
+		bprintf(0, _T("ve %d\n"), info->veblnk);
+		bprintf(0, _T("vs %d\n"), info->vsblnk);
+		bprintf(0, _T("vt %d\n"), info->vtotal);
+		bprintf(0, _T("ht %d\n"), info->htotal);
+	}
+#endif
 
 	line -= 0x14; // offset
 
-	if (line < 0 || line >= nScreenHeight)
+	INT32 nHeight = nScreenHeight;
+	if (nHeight > 254) nHeight = 254;
+
+	if (line < 0 || line >= nHeight)
 		return 0;
 
 	UINT16 *src = &DrvVRAM16[(info->rowaddr << 9) & 0x3FE00];
 	INT32 col = info->coladdr << 1;
 	UINT16 *dest = (UINT16*) pTransDraw + (line * nScreenWidth);
 
-	const INT32 heblnk = info->heblnk;
-	const INT32 hsblnk = info->hsblnk * 2; // T-Unit is 2 pixels per clock
+	INT32 heblnk = info->heblnk; // 100
+	INT32 hsblnk = info->hsblnk; // 500
+
+	if (!info->enabled) heblnk = hsblnk; // blank line!
+
+	if ((hsblnk - heblnk) < nScreenWidth) {
+		for (INT32 x = 0; x < nScreenWidth; x++) {
+			dest[x] = 0;
+		}
+	}
+
 	for (INT32 x = heblnk; x < hsblnk; x++) {
 		if ((x - heblnk) >= nScreenWidth) break;
 		dest[x - heblnk] = BURN_ENDIAN_SWAP_INT16(src[col++ & 0x1FF] & BURN_ENDIAN_SWAP_INT16(0x7FFF));
@@ -519,29 +550,30 @@ static INT32 ScanlineRender(INT32 line, TMS34010Display *info)
 	return 0;
 }
 
-#if LOG_UNMAPPED
 static UINT16 TUnitRead(UINT32 address)
 {
-	if (address == 0x01600040) return 0xff; // ???
-	if (address == 0x01d81070) return 0xff; // watchdog
+	if (address == 0x01600040) return 0xffff; // ???
+	if (address == 0x01d81070) return 0xffff; // watchdog
+	if (address == 0x01d81030) return 0xffff; // watchdog
 
-	if (address == 0x01b00000) return 0xff; // ?
-	if (address == 0x01c00060) return 0xff; // ?
-	if (address == 0x01f00000) return 0xff; // ?
+	if (address == 0x01b00000) return 0xffff; // ?
+	if (address == 0x01c00060) return 0xffff; // ?
+	if (address == 0x01f00000) return 0xffff; // ?
 
-	bprintf(PRINT_NORMAL, _T("Read %x\n"), address);
+	bprintf(PRINT_NORMAL, _T("Unmapped Read %x\n"), address);
 
-	return ~0;
+	return 0xffff;
 }
 
 static void TUnitWrite(UINT32 address, UINT16 value)
 {
 	if (address == 0x01d81070) return; // watchdog
 	if (address == 0x01c00060) return; // ?
+	if (address == 0x01a3d0d0) return; // prot RMW
+	if (address == 0x01a190e0) return; // prot RMW
 
-	bprintf(PRINT_NORMAL, _T("Write %x, %x\n"), address, value);
+	bprintf(PRINT_NORMAL, _T("Unmapped Write %x, %x\n"), address, value);
 }
-#endif
 
 static UINT16 TUnitInputRead(UINT32 address)
 {
@@ -551,13 +583,7 @@ static UINT16 TUnitInputRead(UINT32 address)
 		case 0x00: return ~DrvInputs[0];
 		case 0x01: return ~DrvInputs[1];
 		case 0x02: return ~DrvInputs[2];
-		case 0x03:
-			extern int kNetGame;
-			extern int kNetSpectator;
-			if (kNetGame || kNetSpectator) {
-				return 0xfc7d; // @FC forced dipswitches (no test mode, blood on, violence on)
-			}
-			return nTUnitDSW[0] | (nTUnitDSW[1] << 8);
+		case 0x03: return nTUnitDSW[0] | (nTUnitDSW[1] << 8);
 	}
 
 	return ~0;
@@ -619,11 +645,9 @@ static void TUnitSoundWrite(UINT32 address, UINT16 value)
 			}
 
 			case SOUND_DCS: {
-
-				Dcs2kResetWrite(~value & 0x100);
 				dcs_sound_sync();
+				Dcs2kResetWrite(~value & 0x100);
 				Dcs2kDataWrite(value & 0xff);
-				Dcs2kRun(20);
 
 				DrvFakeSound = 128;
 				break;
@@ -834,12 +858,12 @@ static UINT16 NbajamteProtRead(UINT32 address)
 
 static void NbajamteProtWrite(UINT32 address, UINT16 value)
 {
-	UINT32 offset = 0;
+	UINT32 offset = ~0;
 
 	if (address >= 0x1b15f40 && address <= 0x1b37f5f) offset = address - 0x1b15f40;
 	if (address >= 0x1b95f40 && address <= 0x1bb7f5f) offset = address - 0x1b95f40;
 
-	if (offset > 0) {
+	if (offset != ~0) {
 		offset = offset >> 4;
 		INT32 table_index = (offset >> 6) & 0x7f;
 		UINT32 protval = nbajamte_prot_values[table_index];
@@ -850,6 +874,8 @@ static void NbajamteProtWrite(UINT32 address, UINT16 value)
 		NbajamProtQueue[3] = ((protval >> 8) & 0xff) << 9;
 		NbajamProtQueue[4] = ((protval >> 0) & 0xff) << 9;
 		NbajamProtIndex = 0;
+	} else {
+		bprintf(0, _T("BAD PROT WRITE %x  %x\n"), address, value);
 	}
 }
 
@@ -996,19 +1022,20 @@ INT32 TUnitInit()
 	nRet = LoadGfxBanks();
 	if (nRet != 0) return 1;
 
-	TMS34010MapReset();
-	TMS34010Init();
+	midtunit_cpurate = 50000000/8; // midtunit_dma.h
+
+	TMS34010Init(0);
+	TMS34010Open(0);
+	TMS34010SetPixClock(4000000, 2);
+	TMS34010SetCpuCyclesPerFrame((INT32)(midtunit_cpurate/54.71));
 	TMS34010TimerSetCB(TUnitDmaCallback);
 
 	TMS34010SetScanlineRender(ScanlineRender);
 	TMS34010SetToShift(TUnitToShift);
 	TMS34010SetFromShift(TUnitFromShift);
 
-#if LOG_UNMAPPED
-	// this will be removed - but putting all unmapped memory through generic handlers to enable logging unmapped reads/writes
-	TMS34010SetHandlers(1, TUnitRead, TUnitWrite);
-	TMS34010MapHandler(1, 0x00000000, 0x1FFFFFFF, MAP_READ | MAP_WRITE);
-#endif
+	TMS34010SetHandlers(1, TUnitRead, TUnitWrite); // unmapped read/write handler
+	TMS34010MapHandler(1, 0x00000000, 0xBFFFFFFF, MAP_READ | MAP_WRITE);
 
 	TMS34010MapMemory(DrvBootROM, 0xFF800000, 0xFFFFFFFF, MAP_READ);
 	TMS34010MapMemory(DrvBootROM, 0x1F800000, 0x1FFFFFFF, MAP_READ); // mirror
@@ -1083,6 +1110,8 @@ INT32 TUnitInit()
 		TMS34010MapHandler(13, 0x1b00000, 0x1bfffff, MAP_READ | MAP_WRITE);
 	}
 
+	TMS34010Close();
+
 	if (TUnitIsMK || TUnitIsNbajam || TUnitIsNbajamTe || TUnitIsJdreddp) {
 		M6809Init(0);
 		M6809Open(0);
@@ -1104,6 +1133,7 @@ INT32 TUnitInit()
 
 		DACInit(0, 0, 1, M6809TotalCycles, 2000000);
 		DACSetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
+		DACDCBlock(1);
 
 		MSM6295Init(0, /*1000000 / MSM6295_PIN7_HIGH*/8000, 1);
 		MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
@@ -1127,12 +1157,7 @@ INT32 TUnitInit()
 
 		Dcs2kInit(DCS_2K, MHz(10));
 		Dcs2kMapSoundROM(DrvSoundROM, 0x1000000);
-		Dcs2kSetVolume(10.00);
-
-		Dcs2kBoot();
-
-		Dcs2kResetWrite(1);
-		Dcs2kResetWrite(0);
+		Dcs2kSetVolume(8.00);
 	}
 
 	GenericTilesInit();
@@ -1144,6 +1169,8 @@ INT32 TUnitInit()
 
 static void MakeInputs()
 {
+	//service.Toggle(nTUnitJoy2[4]);
+
 	DrvInputs[0] = 0;
 	DrvInputs[1] = 0;
 	DrvInputs[2] = 0;
@@ -1171,6 +1198,8 @@ INT32 TUnitExit()
 		Dcs2kExit();
 	}
 
+	TMS34010Exit();
+
 	GenericTilesExit();
 
 	TUnitIsMK = 0;
@@ -1194,7 +1223,7 @@ INT32 TUnitDraw()
 	}
 
 	// TMS34010 renders scanlines direct to pTransDraw
-	BurnTransferCopy(DrvPaletteB2);
+	BurnTransferCopy(DrvPaletteB);
 
 	return 0;
 }
@@ -1216,20 +1245,27 @@ INT32 TUnitFrame()
 
 	INT32 nInterleave = 288;
 	INT32 nCyclesTotal[2] = { (INT32)(50000000/8/54.71), (INT32)(2000000 / 54.71) };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 	INT32 nSoundBufferPos = 0;
-	
+	INT32 bDrawn = 0;
+
 	if (nSoundType == SOUND_DCS) {
 		nCyclesTotal[1] = (INT32)(10000000 / 54.71);
 		Dcs2kNewFrame();
 	}
 	
 	if (nSoundType == SOUND_ADPCM) M6809Open(0);
+	TMS34010Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		CPU_RUN(0, TMS34010);
 
 		TMS34010GenerateScanline(i);
+
+		if (i == vb_start && pBurnDraw) {
+			BurnDrvRedraw();
+			bDrawn = 1;
+		}
 
 		if (nSoundType == SOUND_DCS) {
 			HandleDCSIRQ(i);
@@ -1270,15 +1306,15 @@ INT32 TUnitFrame()
 			Dcs2kRender(pBurnSoundOut, nBurnSoundLen);
 		}
 	}
-	
-	if (nSoundType == SOUND_ADPCM) M6809Close();
 
-	if (pBurnDraw) {
+	nExtraCycles = TMS34010TotalCycles() - nCyclesTotal[0];
+
+	if (nSoundType == SOUND_ADPCM) M6809Close();
+	TMS34010Close();
+
+	if (pBurnDraw && bDrawn == 0) {
 		TUnitDraw();
 	}
-
-	// Buffering palette for 1 frame, fix mk2 palette glitch in intro fadeouts
-	memcpy(DrvPaletteB2, DrvPaletteB, 0x8000 * sizeof(UINT32));
 
 	return 0;
 }
@@ -1310,6 +1346,8 @@ INT32 TUnitScan(INT32 nAction, INT32 *pnMin)
 			Dcs2kScan(nAction, pnMin);
 		}
 
+		BurnRandomScan(nAction);
+
 		SCAN_VAR(nVideoBank);
 		SCAN_VAR(nTUnitCtrl);
 		SCAN_VAR(nGfxBankOffset);
@@ -1322,6 +1360,10 @@ INT32 TUnitScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(JdreddpProtIndex);
 		SCAN_VAR(JdreddpProtMax);
 		SCAN_VAR(JdreddpProtTable);
+
+		SCAN_VAR(nExtraCycles);
+
+		//service.Scan();
 	}
 
 	if (nAction & ACB_NVRAM) {

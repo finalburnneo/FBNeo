@@ -6708,57 +6708,26 @@ static struct BurnRomInfo Spf2tbRomDesc[] = {
 STD_ROM_PICK(Spf2tb)
 STD_ROM_FN(Spf2tb)
 
-
-// Super Puzzle Fighter II Turbo (Color Blind Hack) IPS 1
-// Author: TrashBoat
-// https://www.romhacking.net/hacks/6122/
-
 static struct BurnRomInfo Spf2tcbRomDesc[] = {
-	{ "pzfe.03",         0x080000, 0x2af51954, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "pzfcb.04",        0x080000, 0xd1aaf86c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pzfe.03",       0x080000, 0x2af51954, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pzf.04",        0x080000, 0x01bf5ff5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "pzf.14m",         0x100000, 0x2d4881cb, CPS2_GFX | BRF_GRA },
-	{ "pzf.16m",         0x100000, 0x4b0fd1be, CPS2_GFX | BRF_GRA },
-	{ "pzf.18m",         0x100000, 0xe43aac33, CPS2_GFX | BRF_GRA },
-	{ "pzf.20m",         0x100000, 0x7f536ff1, CPS2_GFX | BRF_GRA },
+	{ "pzf.14m",       0x100000, 0x2d4881cb, CPS2_GFX | BRF_GRA },
+	{ "pzf.16m",       0x100000, 0x4b0fd1be, CPS2_GFX | BRF_GRA },
+	{ "pzf.18m",       0x100000, 0xe43aac33, CPS2_GFX | BRF_GRA },
+	{ "pzf.20m",       0x100000, 0x7f536ff1, CPS2_GFX | BRF_GRA },
 
-	{ "pzf.01",          0x020000, 0x600fb2a3, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "pzf.02",          0x020000, 0x496076e0, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "pzf.01",        0x020000, 0x600fb2a3, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "pzf.02",        0x020000, 0x496076e0, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "pzf.11m",         0x200000, 0x78442743, CPS2_QSND | BRF_SND },
-	{ "pzf.12m",         0x200000, 0x399d2c7b, CPS2_QSND | BRF_SND },
+	{ "pzf.11m",       0x200000, 0x78442743, CPS2_QSND | BRF_SND },
+	{ "pzf.12m",       0x200000, 0x399d2c7b, CPS2_QSND | BRF_SND },
 
-	{ "spf2t.key",       0x000014, 0x4c4dc7e3, CPS2_ENCRYPTION_KEY },
+	{ "spf2t.key",     0x000014, 0x4c4dc7e3, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Spf2tcb)
 STD_ROM_FN(Spf2tcb)
-
-
-// Super Puzzle Fighter II X' Balanced Patch (Hack)
-// Author: KScl
-// https://github.com/KScl/puzzle-fighter-x-prime
-
-static struct BurnRomInfo Spf2xpriRomDesc[] = {
-	{ "pzfxp.03",          0x080000, 0xf205a7da, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "pzfxp.04",          0x080000, 0x4177aadd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-
-	{ "pzfxp.14m",         0x100000, 0x930b0ec7, CPS2_GFX | BRF_GRA },
-	{ "pzfxp.16m",         0x100000, 0x769377ad, CPS2_GFX | BRF_GRA },
-	{ "pzfxp.18m",         0x100000, 0x5a79233f, CPS2_GFX | BRF_GRA },
-	{ "pzfxp.20m",         0x100000, 0x42cfc9e2, CPS2_GFX | BRF_GRA },
-
-	{ "pzf.01",            0x020000, 0x600fb2a3, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "pzf.02",            0x020000, 0x496076e0, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-
-	{ "pzf.11m",           0x200000, 0x78442743, CPS2_QSND | BRF_SND },
-	{ "pzf.12m",           0x200000, 0x399d2c7b, CPS2_QSND | BRF_SND },
-
-	{ "spf2t.key",         0x000014, 0x4c4dc7e3, CPS2_ENCRYPTION_KEY },
-};
-
-STD_ROM_PICK(Spf2xpri)
-STD_ROM_FN(Spf2xpri)
 
 static struct BurnRomInfo Spf2xjRomDesc[] = {
 	{ "pzfj.03a",      0x080000, 0x2070554a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -10982,8 +10951,8 @@ struct BurnDriver BurnDrvCpsSpf2tb = {
 };
 
 struct BurnDriver BurnDrvCpsSpf2tcb = {
-	"spf2tcb", "spf2t", NULL, NULL, "2021",
-	"Super Puzzle Fighter II Turbo (Color Blind Hack)\0", NULL, "Hack", "CPS2",
+	"spf2tcb", "spf2t", NULL, NULL, "1996",
+	"Super Puzzle Fighter II Turbo (Color Blind Hack)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_PUZZLE, FBF_SF,
 	NULL, Spf2tcbRomInfo, Spf2tcbRomName, NULL, NULL, NULL, NULL, Spf2tInputInfo, NULL,
@@ -10991,15 +10960,6 @@ struct BurnDriver BurnDrvCpsSpf2tcb = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsSpf2xpri = {
-	"spf2xpri", "spf2t", NULL, NULL, "2021",
-	"Super Puzzle Fighter 2 X' Balance Patch (Hack)\0", NULL, "Hack", "CPS2",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS2, GBF_PUZZLE, FBF_SF,
-	NULL, Spf2xpriRomInfo, Spf2xpriRomName, NULL, NULL, NULL, NULL, Spf2tInputInfo, NULL,
-	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
 
 struct BurnDriver BurnDrvCpsSsf2 = {
 	"ssf2", NULL, NULL, NULL, "1993",

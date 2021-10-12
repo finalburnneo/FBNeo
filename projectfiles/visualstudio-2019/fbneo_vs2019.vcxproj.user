@@ -4,12 +4,12 @@
     <LocalDebuggerCommand>$(SolutionDir)\..\..\build\$(TargetName)$(TargetExt)</LocalDebuggerCommand>
     <LocalDebuggerWorkingDirectory>..\..\build</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>sfa3aism -w</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>quark:debugdetector,sfiii3nr1,6003,127.0.0.1,6004,0,0,2 -w</LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LocalDebuggerCommand>$(SolutionDir)\..\..\build\$(TargetName)$(TargetExt)</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>sf2mix -w</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>quark:debugdetector,sfiii3nr1,6003,127.0.0.1,6004,0,0,2 -w</LocalDebuggerCommandArguments>
     <LocalDebuggerWorkingDirectory>..\..\build</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
 </Project>

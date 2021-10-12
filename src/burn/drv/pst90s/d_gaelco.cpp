@@ -754,7 +754,7 @@ static UINT8 sound_read(UINT16 address)
 
 static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)M6809TotalCycles() * nSoundRate / 2216750;
+	return (INT64)nM6809CyclesTotal * nSoundRate / 2216750;
 }
 
 static INT32 DrvDoReset()

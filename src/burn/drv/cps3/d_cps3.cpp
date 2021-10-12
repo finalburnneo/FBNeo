@@ -104,6 +104,44 @@ static struct BurnInputInfo jojoInputList[] = {
 };
 
 STDINPUTINFO(jojo)
+	
+static struct BurnInputInfo jojobanrcInputList[] = {
+	{"P1 Coin",			BIT_DIGITAL,	Cps3But2 +  8,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	Cps3But2 + 12,	"p1 start"	},
+
+	{"P1 Up",			BIT_DIGITAL,	Cps3But1 +  0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	Cps3But1 +  1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	Cps3But1 +  2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	Cps3But1 +  3,	"p1 right"	},
+	{"P1 Weak Attack",	BIT_DIGITAL,	Cps3But1 +  4,	"p1 fire 1"	},
+	{"P1 Medium Attack",BIT_DIGITAL,	Cps3But1 +  5,	"p1 fire 2"	},
+	{"P1 Strong Attack",BIT_DIGITAL,	Cps3But1 +  6,	"p1 fire 3"	},
+	{"P1 Stand",		BIT_DIGITAL,	Cps3But3 +  3,	"p1 fire 4"	},
+	{"P1 Roman Cancel",	BIT_DIGITAL,	Cps3But3 +  2,	"p1 fire 5"	},
+	{"P1 Not in use 2",	BIT_DIGITAL,	Cps3But3 +  1,	"p1 fire 6"	},
+
+	{"P2 Coin",			BIT_DIGITAL,	Cps3But2 +  9,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	Cps3But2 + 13,	"p2 start"	},
+
+	{"P2 Up",			BIT_DIGITAL,	Cps3But1 +  8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	Cps3But1 +  9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	Cps3But1 + 10,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	Cps3But1 + 11,	"p2 right"	},
+	{"P2 Weak Attack",	BIT_DIGITAL,	Cps3But1 + 12,	"p2 fire 1"	},
+	{"P2 Medium Attack",BIT_DIGITAL,	Cps3But1 + 13,	"p2 fire 2"	},
+	{"P2 Strong Attack",BIT_DIGITAL,	Cps3But1 + 14,	"p2 fire 3"	},
+	{"P2 Stand",		BIT_DIGITAL,	Cps3But3 +  4,	"p2 fire 4"	},
+	{"P2 Roman Cancel",	BIT_DIGITAL,	Cps3But3 +  5,	"p2 fire 5"	},
+	{"P2 Not in use 2",	BIT_DIGITAL,	Cps3But2 + 10,	"p2 fire 6"	},
+
+	{"Reset",			BIT_DIGITAL,	&cps3_reset,	"reset"		},
+	{"Diagnostic",		BIT_DIGITAL,	Cps3But2 +  1,	"diag"		},
+	{"Service",			BIT_DIGITAL,	Cps3But2 +  0,	"service"	},
+	{"Region",			BIT_DIPSWITCH,	&cps3_dip,		"dip"		},
+	{"Fake Dip",		BIT_DIPSWITCH,	&cps3_fake_dip,	"dip"		},
+};
+
+STDINPUTINFO(jojobanrc)
 
 // ------------------------------------------------------------------------------------
 
@@ -1856,7 +1894,115 @@ struct BurnDriver BurnDrvJojobanrb = {
 	"JoJo's Bizarre Adventure: Heritage for the Future / JoJo no Kimyou na Bouken: Mirai e no Isan (Rainbow Edition v1.0.1 2021)\0", NULL, "hack", "CPS-3",
 	L"JoJo's Bizarre Adventure\0\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A: \u672A\u6765\u3078\u306E\u907A\u7523 (Rainbow Edition v1.0.1 2021)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS3 | HARDWARE_CAPCOM_CPS3_NO_CD, GBF_VSFIGHT, 0,
-	NULL, jojobanrbRomInfo, jojobanrbRomName, NULL, NULL, NULL, NULL, jojoInputInfo, jojobaneDIPInfo,
+	NULL, jojobanrbRomInfo, jojobanrbRomName, NULL, NULL, NULL, NULL, jojoInputInfo, jojobaDIPInfo,
+	jojobaInit, cps3Exit, cps3Frame, DrvCps3Draw, cps3Scan, &cps3_palette_change, 0x40000,
+	384, 224, 4, 3
+};
+
+// ---------------------------------------------------------------------------------------
+// JoJo's Bizarre Adventure: Heritage for the Future (Roman Cancel Edition)
+// ---------------------------------------------------------------------------------------
+
+static struct BurnRomInfo jojobanrcRomDesc[] = {
+	{ "jojoba_japan_nocd.29f400.u2",	0x080000, 0x4dab19f5, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	
+	{ "jojobanrc-simm1.0",			0x200000, 0xa7634cd4, BRF_ESS | BRF_PRG }, 
+	{ "jojobanrc-simm1.1",			0x200000, 0xa5c79012, BRF_ESS | BRF_PRG }, 
+	{ "jojobanrc-simm1.2",			0x200000, 0x296e6550, BRF_ESS | BRF_PRG }, 
+	{ "jojobanrc-simm1.3",			0x200000, 0x124229b2, BRF_ESS | BRF_PRG }, 
+	{ "jojoba-simm2.0",			0x200000, 0x305c4914, BRF_ESS | BRF_PRG },
+	{ "jojoba-simm2.1",			0x200000, 0x18af4f3b, BRF_ESS | BRF_PRG },
+	{ "jojoba-simm2.2",			0x200000, 0x397e5c9e, BRF_ESS | BRF_PRG },
+	{ "jojoba-simm2.3",			0x200000, 0xa9d0a7d7, BRF_ESS | BRF_PRG },
+	{ "jojoba-simm3.0",			0x200000, 0x4d16e111, BRF_GRA },
+	{ "jojoba-simm3.1",			0x200000, 0x9b3406d3, BRF_GRA },
+	{ "jojoba-simm3.2",			0x200000, 0xf2414997, BRF_GRA },
+	{ "jojoba-simm3.3",			0x200000, 0x954b9c7d, BRF_GRA },
+	{ "jojoba-simm3.4",			0x200000, 0x625adc1d, BRF_GRA },
+	{ "jojoba-simm3.5",			0x200000, 0x20a70bb4, BRF_GRA },
+	{ "jojoba-simm3.6",			0x200000, 0xa10ec5af, BRF_GRA },
+	{ "jojoba-simm3.7",			0x200000, 0x0bd0de7a, BRF_GRA },
+	{ "jojoba-simm4.0",			0x200000, 0x6ea14adc, BRF_GRA },
+	{ "jojoba-simm4.1",			0x200000, 0x8f4c42fb, BRF_GRA },
+	{ "jojoba-simm4.2",			0x200000, 0xef0586d1, BRF_GRA },
+	{ "jojoba-simm4.3",			0x200000, 0x93ccc470, BRF_GRA },
+	{ "jojoba-simm4.4",			0x200000, 0x3d9ec7d2, BRF_GRA },
+	{ "jojoba-simm4.5",			0x200000, 0x03e66850, BRF_GRA },
+	{ "jojoba-simm4.6",			0x200000, 0x01606ac3, BRF_GRA },
+	{ "jojoba-simm4.7",			0x200000, 0x36392b87, BRF_GRA },
+	{ "jojoba-simm5.0",			0x200000, 0x2ef8c60c, BRF_GRA },
+	{ "jojoba-simm5.1",			0x200000, 0xcf7d7ca6, BRF_GRA },
+	{ "jojoba-simm5.2",			0x200000, 0xb7815bfa, BRF_GRA },
+	{ "jojoba-simm5.3",			0x200000, 0x9bfec049, BRF_GRA },
+	{ "jojoba-simm5.4",			0x200000, 0xd167536b, BRF_GRA },
+	{ "jojoba-simm5.5",			0x200000, 0x55e7a042, BRF_GRA },
+	{ "jojoba-simm5.6",			0x200000, 0x4fb32906, BRF_GRA },
+	{ "jojoba-simm5.7",			0x200000, 0x8c8be520, BRF_GRA },
+};
+
+STD_ROM_PICK(jojobanrc)
+STD_ROM_FN(jojobanrc)
+
+struct BurnDriver BurnDrvJojobanrc = {
+	"jojobanrc", "jojoba", NULL, NULL, "2021",
+	"JoJo's Bizarre Adventure: Heritage for the Future / JoJo no Kimyou na Bouken: Mirai e no Isan (Roman Cancel Edition 2021)\0", NULL, "hack", "CPS-3",
+	L"JoJo's Bizarre Adventure\0\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A: \u672A\u6765\u3078\u306E\u907A\u7523 (Roman Cancel Edition 2021)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS3 | HARDWARE_CAPCOM_CPS3_NO_CD, GBF_VSFIGHT, 0,
+	NULL, jojobanrcRomInfo, jojobanrcRomName, NULL, NULL, NULL, NULL, jojobanrcInputInfo, jojobaDIPInfo,
+	jojobaInit, cps3Exit, cps3Frame, DrvCps3Draw, cps3Scan, &cps3_palette_change, 0x40000,
+	384, 224, 4, 3
+};
+
+// ---------------------------------------------------------------------------------------
+// JoJo's Bizarre Adventure: Heritage for the Future (Alessi/Child Mode)
+// ---------------------------------------------------------------------------------------
+
+static struct BurnRomInfo jojobanchRomDesc[] = {
+	{ "jojoba_japan_nocd.29f400.u2",	0x080000, 0x4dab19f5, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	
+	{ "jojobanch-simm1.0",			0x200000, 0xee9402f0, BRF_ESS | BRF_PRG }, 
+	{ "jojobanch-simm1.1",			0x200000, 0x13bd81c0, BRF_ESS | BRF_PRG }, 
+	{ "jojobanch-simm1.2",			0x200000, 0x3cc24b6a, BRF_ESS | BRF_PRG }, 
+	{ "jojobanch-simm1.3",			0x200000, 0x80087e70, BRF_ESS | BRF_PRG }, 
+	{ "jojoba-simm2.0",			0x200000, 0x305c4914, BRF_ESS | BRF_PRG },
+	{ "jojoba-simm2.1",			0x200000, 0x18af4f3b, BRF_ESS | BRF_PRG },
+	{ "jojoba-simm2.2",			0x200000, 0x397e5c9e, BRF_ESS | BRF_PRG },
+	{ "jojoba-simm2.3",			0x200000, 0xa9d0a7d7, BRF_ESS | BRF_PRG },
+	{ "jojoba-simm3.0",			0x200000, 0x4d16e111, BRF_GRA },
+	{ "jojoba-simm3.1",			0x200000, 0x9b3406d3, BRF_GRA },
+	{ "jojoba-simm3.2",			0x200000, 0xf2414997, BRF_GRA },
+	{ "jojoba-simm3.3",			0x200000, 0x954b9c7d, BRF_GRA },
+	{ "jojoba-simm3.4",			0x200000, 0x625adc1d, BRF_GRA },
+	{ "jojoba-simm3.5",			0x200000, 0x20a70bb4, BRF_GRA },
+	{ "jojoba-simm3.6",			0x200000, 0xa10ec5af, BRF_GRA },
+	{ "jojoba-simm3.7",			0x200000, 0x0bd0de7a, BRF_GRA },
+	{ "jojoba-simm4.0",			0x200000, 0x6ea14adc, BRF_GRA },
+	{ "jojoba-simm4.1",			0x200000, 0x8f4c42fb, BRF_GRA },
+	{ "jojoba-simm4.2",			0x200000, 0xef0586d1, BRF_GRA },
+	{ "jojoba-simm4.3",			0x200000, 0x93ccc470, BRF_GRA },
+	{ "jojoba-simm4.4",			0x200000, 0x3d9ec7d2, BRF_GRA },
+	{ "jojoba-simm4.5",			0x200000, 0x03e66850, BRF_GRA },
+	{ "jojoba-simm4.6",			0x200000, 0x01606ac3, BRF_GRA },
+	{ "jojoba-simm4.7",			0x200000, 0x36392b87, BRF_GRA },
+	{ "jojoba-simm5.0",			0x200000, 0x2ef8c60c, BRF_GRA },
+	{ "jojoba-simm5.1",			0x200000, 0xcf7d7ca6, BRF_GRA },
+	{ "jojoba-simm5.2",			0x200000, 0xb7815bfa, BRF_GRA },
+	{ "jojoba-simm5.3",			0x200000, 0x9bfec049, BRF_GRA },
+	{ "jojoba-simm5.4",			0x200000, 0xd167536b, BRF_GRA },
+	{ "jojoba-simm5.5",			0x200000, 0x55e7a042, BRF_GRA },
+	{ "jojoba-simm5.6",			0x200000, 0x4fb32906, BRF_GRA },
+	{ "jojoba-simm5.7",			0x200000, 0x8c8be520, BRF_GRA },
+};
+
+STD_ROM_PICK(jojobanch)
+STD_ROM_FN(jojobanch)
+
+struct BurnDriver BurnDrvJojobanch = {
+	"jojobanch", "jojoba", NULL, NULL, "2019",
+	"JoJo's Bizarre Adventure: Heritage for the Future / JoJo no Kimyou na Bouken: Mirai e no Isan (Alessi/Child Mode 2019)\0", NULL, "hack", "CPS-3",
+	L"JoJo's Bizarre Adventure\0\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A: \u672A\u6765\u3078\u306E\u907A\u7523 (Alessi/Child Mode 2019)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS3 | HARDWARE_CAPCOM_CPS3_NO_CD, GBF_VSFIGHT, 0,
+	NULL, jojobanchRomInfo, jojobanchRomName, NULL, NULL, NULL, NULL, jojoInputInfo, jojobaDIPInfo,
 	jojobaInit, cps3Exit, cps3Frame, DrvCps3Draw, cps3Scan, &cps3_palette_change, 0x40000,
 	384, 224, 4, 3
 };

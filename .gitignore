@@ -9,9 +9,7 @@ projectfiles/visualstudio-2015/m68kmake.obj
 projectfiles/visualstudio-2015/fba_vs2015.VC.db
 projectfiles/visualstudio-2015/fba_vs2015.VC.VC.opendb
 src/dep/generated
-build/
+build/fcadefbneod.exe
+build/fcadefbneod.ilk
 *.db
 *.opendb
-src/intf/video/win32/detector_buffers.h
-src/intf/video/win32/detector_loaders.h
-UPDATE_GIT_IGNORE.BAT

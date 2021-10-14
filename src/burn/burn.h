@@ -718,8 +718,9 @@ enum NetVersion
 	NET_VERSION_NEOGEO_INPUTS = 5,
 	NET_VERSION_RESET_INGAME = 6,
 	NET_VERSION_RESET_SF2HF = 7,
+	NET_VERSION_MIDWAY_FIXES = 8,
 	// Current version
-	NET_VERSION	= 7,
+	NET_VERSION	= 8,
 };
 
 #ifdef __cplusplus

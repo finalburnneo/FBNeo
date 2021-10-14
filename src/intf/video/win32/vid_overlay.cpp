@@ -97,7 +97,6 @@ static int game_player = 0;
 static bool show_spectators = false;
 static bool show_chat_input = false;
 static bool show_chat = false;
-static bool show_stats = false;
 static int info_time = 0;
 static int chat_time = 0;
 static int volume_time = 0;
@@ -197,7 +196,7 @@ void Detector::Load(const char *_name, const char *_area, unsigned int _ptr, uns
 	strcpy(area, _area);
 	memory_ptr = _ptr;
 	memory_value = _value;
-	memory_bits = (1 << _bits) - 1;
+	memory_bits = _bits;
 	memory_start = 0;
 	memory_current = 0;
 }
@@ -210,11 +209,11 @@ void Detector::Update(const BurnArea *ba, bool start_detected)
 			memory_current = 0;
 			switch (memory_bits) {
 				// 32 bits
-				case 0xffffffff:
+				case 32:
 					memory_current = ((unsigned int *)ba->Data)[memory_ptr>>2];
 					break;
 				// 16 bits
-				case 0xffff:
+				case 16:
 					memory_current = ((unsigned short *)ba->Data)[memory_ptr>>1];
 					break;
 				// 8 bits or less
@@ -251,11 +250,11 @@ void Detector::Update(const BurnArea *ba, bool start_detected)
 		memory_current = 0;
 		switch (memory_bits) {
 			// 32 bits
-			case 0xffffffff:
+			case 32:
 				memory_current = ReadValueAtHardwareAddress(memory_ptr, 4, 0);
 				break;
 			// 16 bits
-			case 0xffff:
+			case 16:
 				memory_current = ReadValueAtHardwareAddress(memory_ptr, 2, 0);
 				break;
 			// 8 bits or less
@@ -1097,7 +1096,7 @@ void VidOverlayRender(const RECT &dest, int gameWidth, int gameHeight, int scan_
 		// volume
 		volume.Render(frame_width - 0.0035f, 0.003f, 1.f, FNT_MED, FONT_ALIGN_RIGHT);
 	}
-	else if (show_stats) {
+	else if (bShowFPS) {
 		// stats (fps & ping)
 		stats.col = (frame_warning >= 100) ? 0xffff0000 : 0xffffffff;
 		stats.Render(frame_width - 0.0035f, 0.003f, 1.f, FNT_MED, FONT_ALIGN_RIGHT);
@@ -1346,7 +1345,7 @@ void VidOverlaySetStats(double fps, int ping, int delay)
 		swprintf(buf, 64, _T("%2.2ffps"), fps);
 	}
 	else {
-		swprintf(buf, 64, _T("%2.2ffps | %dms (%d-%d)"), fps, ping, delay, nVidRunahead);
+		swprintf(buf, 64, _T("%2.2ffps | %dms-d%d-ra%d"), fps, ping, delay, nVidRunahead);
 	}
 
 	stats.Set(buf);
@@ -1370,15 +1369,8 @@ void VidOverlaySetWarning(int warning)
 				frame_warning_sent = 60 * 15;
 				frame_warning_count++;
 			}
-			// force show stats
-			show_stats = true;
 		}
 	}
-}
-
-void VidOverlayShowStats(bool show)
-{
-	show_stats = show;
 }
 
 void VidOverlayShowVolume(int vol)
@@ -1473,19 +1465,45 @@ void VidOverlaySaveFile(const char *file, const wchar_t *text)
 
 void VidOverlaySaveFiles(bool save_info, bool save_scores, bool save_characters)
 {
+	struct SaveTxt {
+		wchar_t text[128] = {};
+		void Save(const char *file, wchar_t *str) {
+			if (wcscmp(str, text)) {
+				wcscpy(text, str);
+				VidOverlaySaveFile(file, str);
+			}
+		}
+	};
+
+	static SaveTxt saveVs;
+	static SaveTxt saveGame;
+	static SaveTxt saveType;
+	static SaveTxt saveP1name;
+	static SaveTxt saveP2name;
+	static SaveTxt saveP1rank;
+	static SaveTxt saveP2rank;
+	static SaveTxt saveP1country;
+	static SaveTxt saveP2country;
+	static SaveTxt saveP1score;
+	static SaveTxt saveP2score;
+	static SaveTxt saveP1character;
+	static SaveTxt saveP2character;
+
 	if (save_info) {
 		wchar_t vs[16] = _T("VS");
 		wchar_t *ranks[] = { _T("?"), _T("E"), _T("D"), _T("C"), _T("B"), _T("A"), _T("S") };
 		if (game_ranked > 1) {
 			swprintf(vs, 256, _T("FT%d"), game_ranked);
 		}
-		VidOverlaySaveFile("fightcade/vs.txt", vs);
-		VidOverlaySaveFile("fightcade/p1name.txt", player1.name.str);
-		VidOverlaySaveFile("fightcade/p2name.txt", player2.name.str);
-		VidOverlaySaveFile("fightcade/p1rank.txt", ranks[player1.rank]);
-		VidOverlaySaveFile("fightcade/p2rank.txt", ranks[player2.rank]);
-		VidOverlaySaveFile("fightcade/p1country.txt", player1.country.str);
-		VidOverlaySaveFile("fightcade/p2country.txt", player2.country.str);
+		saveVs.Save("fightcade/vs.txt", vs);
+		saveGame.Save("fightcade/game.txt", BurnDrvGetText(DRV_NAME));
+		saveType.Save("fightcade/gametype.txt", kNetSpectator ? _T("Spectator") : _T("Game"));
+		saveP1name.Save("fightcade/p1name.txt", player1.name.str);
+		saveP2name.Save("fightcade/p2name.txt", player2.name.str);
+		saveP1rank.Save("fightcade/p1rank.txt", ranks[player1.rank]);
+		saveP2rank.Save("fightcade/p2rank.txt", ranks[player2.rank]);
+		saveP1country.Save("fightcade/p1country.txt", player1.country.str);
+		saveP2country.Save("fightcade/p2country.txt", player2.country.str);
 
 		char buf[64];
 		sprintf(buf, "ui/flags/%s.png", TCHARToANSI(player1.country.str, NULL, NULL));
@@ -1496,15 +1514,15 @@ void VidOverlaySaveFiles(bool save_info, bool save_scores, bool save_characters)
 		CopyFileContents(buf, "fightcade/p2country.png");
 	}
 	if (save_scores) {
-		VidOverlaySaveFile("fightcade/p1score.txt", player1.score.str);
-		VidOverlaySaveFile("fightcade/p2score.txt", player2.score.str);
+		saveP1score.Save("fightcade/p1score.txt", player1.score.str);
+		saveP2score.Save("fightcade/p2score.txt", player2.score.str);
 	}
 	if (save_characters) {
 		if (wcslen(gameDetector.char1) > 0) {
-			VidOverlaySaveFile("fightcade/p1character.txt", gameDetector.char1);
+			saveP1character.Save("fightcade/p1character.txt", gameDetector.char1);
 		}
 		if (wcslen(gameDetector.char2) > 0) {
-			VidOverlaySaveFile("fightcade/p2character.txt", gameDetector.char2);
+			saveP2character.Save("fightcade/p2character.txt", gameDetector.char2);
 		}
 	}
 }

@@ -583,7 +583,14 @@ static UINT16 TUnitInputRead(UINT32 address)
 		case 0x00: return ~DrvInputs[0];
 		case 0x01: return ~DrvInputs[1];
 		case 0x02: return ~DrvInputs[2];
-		case 0x03: return nTUnitDSW[0] | (nTUnitDSW[1] << 8);
+		case 0x03:
+			extern int kNetGame;
+			extern int kNetSpectator;
+			if (kNetGame || kNetSpectator) {
+				return 0xfc7d; // @FC forced dipswitches (no test mode, blood on, violence on)
+			}
+			return nTUnitDSW[0] | (nTUnitDSW[1] << 8);
+			break;
 	}
 
 	return ~0;

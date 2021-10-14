@@ -663,7 +663,6 @@ static int nRanked = 0;
 static int nPlayer = 0;
 static int nScore1 = 0;
 static int nScore2 = 0;
-static int nShowStats = 0;
 static TCHAR szPlayer1[64] = { 0 };
 static TCHAR szPlayer2[64] = { 0 };
 static TCHAR szSpectatorCount[256] = { 0 };
@@ -1596,7 +1595,7 @@ int VidSDrawTV(RECT *rcDest)
 
 	}
 
-	if (nShowStats) {
+	if (bShowFPS) {
 		SetTextAlign(hDC, TA_TOP | TA_RIGHT);
 		static int test = 0;
 		MyTextOut(hDC, rcDest->right - rcDest->left - 2, 3, szPing, _tcslen(szPing), nChatShadowOffset, RGB(0xee, 0xee, 0xee));
@@ -2026,14 +2025,6 @@ INT32 VidSSetStats(double fps, INT32 ping, INT32 delay)
 	else {
 		swprintf(szPing, _T("%2.2ffps | %dms (%d-%d)"), fps, ping, delay, nVidRunahead);
 	}
-
-	bDrawTV = true;
-	return 0;
-}
-
-INT32 VidSShowStats(INT32 show)
-{
-	nShowStats = show;
 
 	bDrawTV = true;
 	return 0;

@@ -1447,7 +1447,8 @@ char *HardFXFilenames[] = {
 	"ui/shaders/crt_cgwg_fast.fx",
 	"ui/shaders/crt_easymode.fx",
 	"ui/shaders/crt_standard.fx",
-	"ui/shaders/crt_bicubic.fx"
+	"ui/shaders/crt_bicubic.fx",
+	"ui/shaders/crt_cga.fx"
 };
 
 #undef D3DFVF_LVERTEX2
@@ -1686,10 +1687,14 @@ static void dx9AltDrawOSD()
 
 static int dx9AltSetHardFX(int nHardFX)
 {
+	// cutre reload
+	//static bool reload = true; if (GetAsyncKeyState(VK_CONTROL)) { if (reload) { nDX9HardFX = 0; reload = false; } } else reload = true;
+	
 	if (nHardFX == nDX9HardFX)
 	{
 		return 0;
 	}
+	
 
 	nDX9HardFX = nHardFX;
 
@@ -1711,7 +1716,7 @@ static int dx9AltSetHardFX(int nHardFX)
 	{
 		// common parameters
 		pVidEffect->SetParamFloat2("texture_size", nTextureWidth, nTextureHeight);
-		pVidEffect->SetParamFloat2("video_size", nGameWidth + 0.5f, nGameHeight + 0.5f);
+		pVidEffect->SetParamFloat2("video_size", (nRotateGame ? nGameHeight : nGameWidth) + 0.5f, nRotateGame ? nGameWidth : nGameHeight + 0.5f);
 	}
 
 	return r;

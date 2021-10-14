@@ -234,6 +234,7 @@ extern int bRunFrame;
 extern int bRunPause;
 extern int bAltPause;
 extern int bAlwaysDrawFrames;
+extern int bShowFPS;
 extern int kNetVersion;
 extern int kNetGame;
 extern int kNetSpectator;

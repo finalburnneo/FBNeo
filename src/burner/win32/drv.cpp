@@ -180,14 +180,18 @@ int DrvInit(int nDrvNum, bool bRestore)
 		nVidFullscreen = 1;
 	}
 
-	// Init input and audio, save blitter init for later. (reduce # of mode changes, nice for emu front-ends)
-	bVidOkay = 1;
+	// Init the input and save the audio as well as the blitter init for later
+	// IE: reduce the number of mode changes which is nice for emulator front-ends
+	// this fixes the Mortal Kombat games from having the incorrect audio pitch when being launched via the command line
+	bVidOkay = 1; // don't init video yet
+	bAudOkay = 1; // don't init audio yet (but grab the soundcard params (nBurnSoundRate) so soundcores can init)
 	MediaInit();
 	bVidOkay = 0;
+	bAudOkay = 0;
 
 	// Define nMaxPlayers early; GameInpInit() needs it (normally defined in DoLibInit()).
 	nMaxPlayers = BurnDrvGetMaxPlayers();
-	GameInpInit();					// Init game input
+	GameInpInit(); // Init game input
 
 	if(ConfigGameLoad(true)) {
 		ConfigGameLoadHardwareDefaults();

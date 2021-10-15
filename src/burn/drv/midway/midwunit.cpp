@@ -26,6 +26,7 @@ UINT8 nWolfUnitJoy1[32];
 UINT8 nWolfUnitJoy2[32];
 UINT8 nWolfUnitJoy3[32];
 UINT8 nWolfUnitDSW[2];
+
 UINT8 nWolfReset = 0;
 static UINT32 DrvInputs[4];
 
@@ -113,7 +114,19 @@ static UINT16 WolfUnitIoRead(UINT32 address)
     switch (offset) {
 		case 0: return ~DrvInputs[0];
 		case 1: return ~DrvInputs[1];
-		case 2: return nWolfUnitDSW[0] | (nWolfUnitDSW[1] << 8);
+		
+		//case 2: return nWolfUnitDSW[0] | (nWolfUnitDSW[1] << 8);
+		case 2:
+		{
+			extern int kNetGame;
+			extern int kNetSpectator;
+
+			if (kNetGame || kNetSpectator) return 0xfc7d; // @FC forced dipswitches (no test mode, blood on, violence on)
+
+			return nWolfUnitDSW[0] | (nWolfUnitDSW[1] << 8);
+			break;
+		}
+
 		case 3: return ~DrvInputs[3];
 		case 4: {
 			sound_sync();

@@ -26,6 +26,7 @@ UINT8 nWolfUnitJoy1[32];
 UINT8 nWolfUnitJoy2[32];
 UINT8 nWolfUnitJoy3[32];
 UINT8 nWolfUnitDSW[2];
+
 UINT8 nWolfReset = 0;
 static UINT32 DrvInputs[4];
 
@@ -38,8 +39,11 @@ static UINT16 *nDMA;
 static UINT16 nWolfUnitCtrl = 0;
 static INT32 nIOShuffle[16];
 
-static INT32 wwfmania = 0;
+static INT32 is_wwfmania = 0;
 static INT32 is_umk3 = 0;
+static INT32 is_openice = 0;
+static INT32 is_nbaht = 0;
+static INT32 is_nbamht = 0;
 
 static INT32 nExtraCycles = 0;
 
@@ -113,7 +117,28 @@ static UINT16 WolfUnitIoRead(UINT32 address)
     switch (offset) {
 		case 0: return ~DrvInputs[0];
 		case 1: return ~DrvInputs[1];
-		case 2: return nWolfUnitDSW[0] | (nWolfUnitDSW[1] << 8);
+		
+		//case 2: return nWolfUnitDSW[0] | (nWolfUnitDSW[1] << 8);
+		case 2:
+		{
+			extern int kNetGame;
+			extern int kNetSpectator;
+
+			if (kNetGame || kNetSpectator)
+			{
+				// @FC forced dipswitches (NOTE: DIPB=SW2 & DIPA=SW1)
+				// some games such as "Open Ice" need different dipswitch settings compared to "Ultimate Mortal Kombat 3"
+				if (is_umk3) return 0xd47d; // no test mode, blood on and violence on (0xD4=SW2 & 0x7D=SW1)
+				else if(is_openice) return 0x8bbf; // no test mode and set to a 2-player cabinet (0x8B=SW2 & 0xBF=SW1)
+				else if (is_nbaht || is_nbamht) return 0x7f7d; // no test mode, CMOS coinage and set to a 2-player cabinet (0x7F=SW2 & 0x7D=SW1)
+				else if (is_wwfmania) return 0xfdff; // no test mode and no real-time clock (0xFD=SW2 & 0xFF=SW1)
+				else return 0xd47d; // everything else will be set to UMK3 standards (see the above 'is_umk3' comment for the switch references)
+			}
+
+			return nWolfUnitDSW[0] | (nWolfUnitDSW[1] << 8);
+			break;
+		}
+
 		case 3: return ~DrvInputs[3];
 		case 4: {
 			sound_sync();
@@ -126,7 +151,7 @@ static UINT16 WolfUnitIoRead(UINT32 address)
 
 void WolfUnitIoWrite(UINT32 address, UINT16 value)
 {
-	if (wwfmania && address <= 0x180000f) {
+	if (is_wwfmania && address <= 0x180000f) {
 		for (INT32 i = 0; i < 16; i++) nIOShuffle[i] = i % 8;
 
 		switch (value) {
@@ -454,8 +479,11 @@ INT32 WolfUnitInit()
 
     for (INT32 i = 0; i < 16; i++) nIOShuffle[i] = i % 8;
 
-	wwfmania = (strstr(BurnDrvGetTextA(DRV_NAME), "wwfmania") ? 1 : 0);
 	is_umk3 = (strstr(BurnDrvGetTextA(DRV_NAME), "umk3") ? 1 : 0);
+	is_wwfmania = (strstr(BurnDrvGetTextA(DRV_NAME), "wwfmania") ? 1 : 0);
+	is_openice = (strstr(BurnDrvGetTextA(DRV_NAME), "openice") ? 1 : 0);
+	is_nbaht = (strstr(BurnDrvGetTextA(DRV_NAME), "nbahangt") ? 1 : 0);
+	is_nbamht = (strstr(BurnDrvGetTextA(DRV_NAME), "nbamht") ? 1 : 0);
 
     Dcs2kInit(DCS_8K, MHz(10));
     Dcs2kMapSoundROM(DrvSoundROM, 0x1000000);
@@ -601,7 +629,7 @@ INT32 WolfUnitExit()
 
 	GenericTilesExit();
 
-	wwfmania = 0;
+	is_wwfmania = 0;
 	is_umk3 = 0;
 
     return 0;

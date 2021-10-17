@@ -716,6 +716,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="antenna">
+		<description>Antenna Antics (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>FG Software</manufacturer>
+		<rom name="Antenna Antics (2021)(FG Software).nes" size="65552" crc="0f5050e6"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="anticipation">
 		<description>Anticipation (USA)</description>
 		<year>1988</year>
@@ -741,8 +749,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="argosnosenshic" cloneof="rygar" romof="rygar">
-		<description>Argos no Senshi (T-Chi, v1.11)</description>
-		<year>2016-01-27</year>
+		<description>Argos no Senshi (T-Chi, v1.11) [Hack]</description>
+		<year>2016</year>
 		<manufacturer>Tecmo</manufacturer>
 		<rom name="Argos no Senshi (T-Chi, v1.11).nes" size="262160" crc="a1a22c10"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -2993,6 +3001,14 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Dao Shuai (Asia) (Unl).nes" size="65552" crc="00951874"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="dgimmick" cloneof="gimmick" romof="gimmick">
+		<description>Dark Gimmick (HB, v1.1) [Hack, Homebrew]</description>
+		<year>2014</year>
+		<manufacturer>Berion - Dizzy9</manufacturer>
+		<rom name="Dark Gimmick v1.1 (2014).nes" size="393232" crc="d7ddb1d6"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -5949,8 +5965,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gunsmokec" cloneof="gunsmoke" romof="gunsmoke">
-		<description>Gun.Smoke (T-Chi)</description>
-		<year>2019-11-17</year>
+		<description>Gun.Smoke (T-Chi) [Hack]</description>
+		<year>2019</year>
 		<manufacturer>Capcom</manufacturer>
 		<rom name="Gun.Smoke (T-Chi).nes" size="163856" crc="4e0b7a7d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -6117,8 +6133,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="heberekec" cloneof="ufouria" romof="ufouria">
-		<description>Hebereke (T-Chi, v1.2)</description>
-		<year>2019-07-23</year>
+		<description>Hebereke (T-Chi, v1.2) [Hack]</description>
+		<year>2019</year>
 		<manufacturer>Sunsoft</manufacturer>
 		<rom name="Hebereke (T-Chi, v1.2).nes" size="393232" crc="48e8bcee"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -9972,6 +9988,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="oozerdx">
+		<description>Ooze Redux (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Hippokittie Productions</manufacturer>
+		<rom name="Ooze Redux (2021)(Hippokittie Prod.).nes" size="524304" crc="047a83d5"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="operationwolf">
 		<description>Operation Wolf (USA)</description>
 		<year>1989</year>
@@ -11582,96 +11606,96 @@
 	</game>
 	<game name="sdbttloozumou">
 		<description>SD Battle Oozumou - Heisei Hero Basho (Japan)</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Banpresto</manufacturer>
 		<rom name="sd battle oozumou - heisei hero basho (japan).nes" size="262160" crc="cd1931de"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="sdgundgs2c" cloneof="sdgundgs2" romof="sdgundgs2">
-		<description>SD Gundam - Gachapon Senshi 2 - Capsule Senki (Japan) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>SD Gundam - Gachapon Senshi 2 - Capsule Senki (Japan) - Castellano v1.0 [Hack]</description>
+		<year>1989</year>
+		<manufacturer>Bandai Shinsei</manufacturer>
 		<rom name="sd gundam - gachapon senshi 2 - capsule senki (japan) - castellano v1.0.nes" size="262160" crc="86274ffd"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="sdgundgs2">
 		<description>SD Gundam - Gachapon Senshi 2 - Capsule Senki (Japan)</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1989</year>
+		<manufacturer>Bandai Shinsei</manufacturer>
 		<rom name="sd gundam - gachapon senshi 2 - capsule senki (japan).nes" size="262160" crc="88641b52"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="sdgundgs3">
 		<description>SD Gundam - Gachapon Senshi 3 - Eiyuu Senki (Japan)</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Yutaka</manufacturer>
 		<rom name="sd gundam - gachapon senshi 3 - eiyuu senki (japan).nes" size="262160" crc="3af5beff"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="sdgundgs4">
 		<description>SD Gundam - Gachapon Senshi 4 - New Type Story (Japan)</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1991</year>
+		<manufacturer>Yutaka</manufacturer>
 		<rom name="sd gundam - gachapon senshi 4 - new type story (japan).nes" size="524304" crc="078b916e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="sdgachapon5">
 		<description>SD Gundam - Gachapon Senshi 5 - Battle of Universal Century (Japan)</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1992</year>
+		<manufacturer>Yutaka</manufacturer>
 		<rom name="sd gundam - gachapon senshi 5 - battle of universal century (japan).nes" size="262160" crc="971d0527"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="sdgunkgm">
-		<description>SD Gundam Gaiden - Knight Gundam Monogatari (Japan) (V1.0) (T-Eng)</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>SD Gundam Gaiden - Knight Gundam Monogatari (Japan) (V1.0) (T-Eng) [Hack]</description>
+		<year>1990</year>
+		<manufacturer>Bandai</manufacturer>
 		<rom name="sd gundam gaiden - knight gundam monogatari (japan) (v1.0) (t-eng).nes" size="393232" crc="2c91773e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="sdgunkgmj" cloneof="sdgunkgm" romof="sdgunkgm">
 		<description>SD Gundam Gaiden - Knight Gundam Monogatari (Japan) (V1.1)</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Bandai</manufacturer>
 		<rom name="sd gundam gaiden - knight gundam monogatari (japan) (v1.1).nes" size="393232" crc="b6cafb31"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="sdgunkgm2">
 		<description>SD Gundam Gaiden - Knight Gundam Monogatari 2 - Hikari no Kishi (Japan)</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1991</year>
+		<manufacturer>Bandai</manufacturer>
 		<rom name="sd gundam gaiden - knight gundam monogatari 2 - hikari no kishi (japan).nes" size="524304" crc="0c1319dd"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="sdgunkgm3">
 		<description>SD Gundam Gaiden - Knight Gundam Monogatari 3 - Densetsu no Kishi Dan (Japan)</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1992</year>
+		<manufacturer>Bandai</manufacturer>
 		<rom name="sd gundam gaiden - knight gundam monogatari 3 - densetsu no kishi dan (japan).nes" size="524304" crc="f02a0aab"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="sdhstangc" cloneof="sdhstang" romof="sdhstang">
-		<description>SD Hero Soukessen - Taose! Aku no Gundan (Japan) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>SD Hero Soukessen - Taose! Aku no Gundan (Japan) - Castellano v1.0 [Hack]</description>
+		<year>1990</year>
+		<manufacturer>Banpresto</manufacturer>
 		<rom name="sd hero soukessen - taose! aku no gundan (japan) - castellano v1.0.nes" size="262160" crc="7c0a15a4"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="sdhstang">
 		<description>SD Hero Soukessen - Taose! Aku no Gundan (Japan)</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Banpresto</manufacturer>
 		<rom name="SD Hero Soukessen - Taose! Aku no Gundan (Japan).nes" size="262160" crc="f17fefdd"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11697,6 +11721,14 @@
 		<year>1988</year>
 		<manufacturer>FCI</manufacturer>
 		<rom name="Seicross (USA).nes" size="40976" crc="c0d823ed"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="seikima2">
+		<description>Seikima II - Akuma no Gyakushuu (Japan)</description>
+		<year>1986</year>
+		<manufacturer>CBS-Sony</manufacturer>
+		<rom name="Seikima II - Akuma no Gyakushuu (J)(1986)(CBS-Sony).nes" size="65552" crc="b546589d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -11877,8 +11909,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="silkwormc" cloneof="silkworm" romof="silkworm">
-		<description>Silk Worm (T-Chi, v1.1)</description>
-		<year>2020-01-07</year>
+		<description>Silk Worm (T-Chi, v1.1) [Hack]</description>
+		<year>2020</year>
 		<manufacturer>Sammy</manufacturer>
 		<rom name="Silk Worm (T-Chi, v1.1).nes" size="393232" crc="3d53c8ad"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -12774,7 +12806,7 @@
 	</game>
 	<game name="supercontrac" cloneof="superc" romof="superc">
 		<description>Super Contra (T-Chi)</description>
-		<year>2017-08-01</year>
+		<year>2017</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Super Contra (T-Chi).nes" size="393232" crc="048f7dd8"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>

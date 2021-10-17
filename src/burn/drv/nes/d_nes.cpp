@@ -1381,19 +1381,35 @@ static void mapper_map_chr(INT32 pagesz, INT32 slot, INT32 bank)
 	}
 }
 
+#define MAP_CHR_RAMROM_DEBUG 0
+
 static void mapper_map_chr_ramrom(INT32 pagesz, INT32 slot, INT32 bank, INT32 type)
 {
+	if (type > MEM_ROM) {
+		bprintf(0, _T("mapper_map_chr_ramrom(): invalid type field!!\n"));
+	}
+
+#if MAP_CHR_RAMROM_DEBUG
+	bprintf(0, _T("mapper_map_chr_ramrom(%x, %x, %x, %x)\n"), pagesz, slot, bank, type);
+#endif
+
 	for (INT32 i = 0; i < pagesz; i++) {
 		switch (type) {
 			case MEM_ROM:
 				CHRMap[pagesz * slot + i] = (pagesz * 1024 * bank + 1024 * i) % Cart.CHRRomSize;
 				CHRType[pagesz * slot + i] = MEM_ROM;
+#if MAP_CHR_RAMROM_DEBUG
+				bprintf(0, _T("ROM: CHRMap[%x] = %x\n"),pagesz * slot + i, (pagesz * 1024 * bank + 1024 * i) % Cart.CHRRomSize);
+#endif
 				break;
 
 			case MEM_RAM:
 			case MEM_RAM_RO:
 				CHRMap[pagesz * slot + i] = (pagesz * 1024 * bank + 1024 * i) % Cart.CHRRamSize;
-				CHRType[pagesz * slot + i] = MEM_RAM;
+				CHRType[pagesz * slot + i] = type;
+#if MAP_CHR_RAMROM_DEBUG
+				bprintf(0, _T("RAM: CHRMap[%x] = %x\n"),pagesz * slot + i, (pagesz * 1024 * bank + 1024 * i) % Cart.CHRRamSize);
+#endif
 				break;
 		}
 	}
@@ -6818,11 +6834,11 @@ static void mapper77_write(UINT16 address, UINT8 data)
 
 static void mapper77_map()
 {
-	mapper_map_prg(32, 0, mapper_regs[0] & 7);
+	mapper_map_prg(32, 0, mapper_regs[0] & 0x0f);
 	mapper_map_chr_ramrom( 2, 0, (mapper_regs[0] >> 4) & 0x0f, MEM_ROM);
-	mapper_map_chr_ramrom( 2, 1, 0, MEM_RAM);
-	mapper_map_chr_ramrom( 2, 2, 0, MEM_RAM);
-	mapper_map_chr_ramrom( 2, 3, 0, MEM_RAM);
+	mapper_map_chr_ramrom( 2, 1, 1, MEM_RAM);
+	mapper_map_chr_ramrom( 2, 2, 2, MEM_RAM);
+	mapper_map_chr_ramrom( 2, 3, 3, MEM_RAM);
 }
 
 // --[ mapper 78: Irem? (Holy Diver, Uchuusen: Cosmo Carrier)

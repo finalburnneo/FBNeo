@@ -2045,13 +2045,13 @@ struct BurnDriver BurnDrvCadashs = {
 static struct BurnRomInfo etoRomDesc[] = {
 	{ "eto-1.ic23",			0x20000, 0x44286597, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
 	{ "eto-0.ic8",			0x20000, 0x57b79370, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
-	{ "eto-2.ic30",			0x80000, 0x12f46fb5, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  2
+	{ "eto-2.ic30",			0x80000, 0x12f46fb5, BRF_PRG | BRF_ESS | TAITO_68KROM1 },			//  2
 
-	{ "eto-5.ic27",			0x10000, 0xb3689da0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  3 Z80 Code
+	{ "eto-5.ic27",			0x10000, 0xb3689da0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  3 Z80 Code
 
-	{ "eto-4.ic3",			0x80000, 0xa8768939, BRF_GRA | TAITO_CHARS },				//  4 Characters
+	{ "eto-4.ic3",			0x80000, 0xa8768939, BRF_GRA | TAITO_CHARS },						//  4 Characters
 
-	{ "eto-3.ic6",			0x80000, 0xdd247397, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
+	{ "eto-3.ic6",			0x80000, 0xdd247397, BRF_GRA | TAITO_SPRITESA },					//  5 Sprites
 };
 
 STD_ROM_PICK(eto)
@@ -2084,20 +2084,20 @@ struct BurnDriver BurnDrvEto = {
 static struct BurnRomInfo asukaRomDesc[] = {
 	{ "b68-13.ic23",		0x20000, 0x855efb3e, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
 	{ "b68-12.ic8",			0x20000, 0x271eeee9, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
-	{ "b68-03.ic30",		0x80000, 0xd3a59b10, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  2
+	{ "b68-03.ic30",		0x80000, 0xd3a59b10, BRF_PRG | BRF_ESS | TAITO_68KROM1 },			//  2
 
-	{ "b68-11.ic27",		0x10000, 0xc378b508, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  3 Z80 Code
+	{ "b68-11.ic27",		0x10000, 0xc378b508, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  3 Z80 Code
 
-	{ "b68-01.ic3",			0x80000, 0x89f32c94, BRF_GRA | TAITO_CHARS },				//  4 Characters
+	{ "b68-01.ic3",			0x80000, 0x89f32c94, BRF_GRA | TAITO_CHARS },						//  4 Characters
 
-	{ "b68-02.ic6",			0x80000, 0xf5018cd3, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
-	{ "b68-07.ic5",			0x10000, 0xc113acc8, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  6
-	{ "b68-06.ic4",			0x10000, 0xf517e64d, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  7
+	{ "b68-02.ic6",			0x80000, 0xf5018cd3, BRF_GRA | TAITO_SPRITESA },					//  5 Sprites
+	{ "b68-07.ic5",			0x10000, 0xc113acc8, BRF_GRA | TAITO_SPRITESA_BYTESWAP },			//  6
+	{ "b68-06.ic4",			0x10000, 0xf517e64d, BRF_GRA | TAITO_SPRITESA_BYTESWAP },			//  7
 
-	{ "b68-10.ic24",		0x10000, 0x387aaf40, BRF_SND | TAITO_MSM5205 },				//  8 MSM5205 Samples
+	{ "b68-10.ic24",		0x10000, 0x387aaf40, BRF_SND | TAITO_MSM5205 },						//  8 MSM5205 Samples
 	
-	{ "b68-04.ic32",		0x00144, 0x9be618d1, BRF_OPT },						//  8 plds
-	{ "b68-05.ic43",		0x00104, 0xd6524ccc, BRF_OPT },						//  9
+	{ "b68-04.ic32",		0x00144, 0x9be618d1, BRF_OPT },										//  9 plds
+	{ "b68-05.ic43",		0x00104, 0xd6524ccc, BRF_OPT },										// 10
 };
 
 STD_ROM_PICK(asuka)
@@ -2127,25 +2127,25 @@ struct BurnDriver BurnDrvAsuka = {
 };
 
 
-// Asuka & Asuka (Japan)
+// Asuka & Asuka (Japan, version 1)
 
 static struct BurnRomInfo asukajRomDesc[] = {
-	{ "b68-09.ic23",		0x20000, 0x1eaa1bbb, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
-	{ "b68-08.ic8",			0x20000, 0x8cc96e60, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
-	{ "b68-03.ic30",		0x80000, 0xd3a59b10, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  2
+	{ "b68-09-1.ic23",		0x20000, 0xd61be555, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "b68-08-1.ic8",		0x20000, 0xe916f17b, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "b68-03.ic30",		0x80000, 0xd3a59b10, BRF_PRG | BRF_ESS | TAITO_68KROM1 },			//  2
 
 	{ "b68-11.ic27",		0x10000, 0xc378b508, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  3 Z80 Code
 
-	{ "b68-01.ic3",			0x80000, 0x89f32c94, BRF_GRA | TAITO_CHARS },				//  4 Characters
+	{ "b68-01.ic3",			0x80000, 0x89f32c94, BRF_GRA | TAITO_CHARS },					//  4 Characters
 
-	{ "b68-02.ic6",			0x80000, 0xf5018cd3, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
+	{ "b68-02.ic6",			0x80000, 0xf5018cd3, BRF_GRA | TAITO_SPRITESA },				//  5 Sprites
 	{ "b68-07.ic5",			0x10000, 0xc113acc8, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  6
 	{ "b68-06.ic4",			0x10000, 0xf517e64d, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  7
 
-	{ "b68-10.ic24",		0x10000, 0x387aaf40, BRF_SND | TAITO_MSM5205 },				//  8 MSM5205 Samples
+	{ "b68-10.ic24",		0x10000, 0x387aaf40, BRF_SND | TAITO_MSM5205 },					//  8 MSM5205 Samples
 	
-	{ "b68-04.ic32",		0x00144, 0x9be618d1, BRF_OPT },						//  8 plds
-	{ "b68-05.ic43",		0x00104, 0xd6524ccc, BRF_OPT },	
+	{ "b68-04.ic32",		0x00144, 0x9be618d1, BRF_OPT },									//  9 plds
+	{ "b68-05.ic43",		0x00104, 0xd6524ccc, BRF_OPT },									// 10
 };
 
 STD_ROM_PICK(asukaj)
@@ -2153,10 +2153,45 @@ STD_ROM_FN(asukaj)
 
 struct BurnDriver BurnDrvAsukaj = {
 	"asukaj", "asuka", NULL, NULL, "1988",
-	"Asuka & Asuka (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Asuka & Asuka (Japan, version 1)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, asukajRomInfo, asukajRomName, NULL, NULL, NULL, NULL, AsukaInputInfo, AsukaDIPInfo,
+	AsukaInit, TaitoExit, EtoFrame, DrvDraw, DrvScan, NULL, 0x1000,
+	240, 320, 3, 4
+};
+
+
+// Asuka & Asuka (Japan)
+
+static struct BurnRomInfo asukajaRomDesc[] = {
+	{ "b68-09.ic23",		0x20000, 0x1eaa1bbb, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "b68-08.ic8",			0x20000, 0x8cc96e60, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "b68-03.ic30",		0x80000, 0xd3a59b10, BRF_PRG | BRF_ESS | TAITO_68KROM1 },			//  2
+
+	{ "b68-11.ic27",		0x10000, 0xc378b508, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  3 Z80 Code
+
+	{ "b68-01.ic3",			0x80000, 0x89f32c94, BRF_GRA | TAITO_CHARS },						//  4 Characters
+
+	{ "b68-02.ic6",			0x80000, 0xf5018cd3, BRF_GRA | TAITO_SPRITESA },					//  5 Sprites
+	{ "b68-07.ic5",			0x10000, 0xc113acc8, BRF_GRA | TAITO_SPRITESA_BYTESWAP },			//  6
+	{ "b68-06.ic4",			0x10000, 0xf517e64d, BRF_GRA | TAITO_SPRITESA_BYTESWAP },			//  7
+
+	{ "b68-10.ic24",		0x10000, 0x387aaf40, BRF_SND | TAITO_MSM5205 },						//  8 MSM5205 Samples
+	
+	{ "b68-04.ic32",		0x00144, 0x9be618d1, BRF_OPT },										//  9 plds
+	{ "b68-05.ic43",		0x00104, 0xd6524ccc, BRF_OPT },										// 10
+};
+
+STD_ROM_PICK(asukaja)
+STD_ROM_FN(asukaja)
+
+struct BurnDriver BurnDrvAsukaja = {
+	"asukaja", "asuka", NULL, NULL, "1988",
+	"Asuka & Asuka (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	NULL, asukajaRomInfo, asukajaRomName, NULL, NULL, NULL, NULL, AsukaInputInfo, AsukaDIPInfo,
 	AsukaInit, TaitoExit, EtoFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	240, 320, 3, 4
 };

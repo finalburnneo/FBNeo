@@ -53,9 +53,9 @@ static struct BurnDIPInfo Sg1000DIPList[]=
 {
 	{0x0e, 0xff, 0xff, 0x00, NULL					},
 
-	{0   , 0xfe, 0,       2, "Sprite Limit"	},
+	{0   , 0xfe, 0,       2, "Sprite Limit"			},
 	{0x0e, 0x01, 0x20, 0x00, "Enabled"				},
-	{0x0e, 0x01, 0x20, 0x20, "Disabled (hack)"				},
+	{0x0e, 0x01, 0x20, 0x20, "Disabled (hack)"		},
 };
 
 STDDIPINFO(Sg1000)
@@ -194,12 +194,7 @@ static INT32 DrvLoadRoms()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (DrvLoadRoms()) return 1;
 
@@ -248,6 +243,7 @@ static INT32 DrvInit()
 
 	SN76489AInit(0, 3579545, 0);
 	SN76496SetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+	SN76496SetBuffered(ZetTotalCycles, 3579545);
 
 	TMS9928AInit(TMS99x8A, 0x4000, 0, 0, vdp_interrupt);
 	TMS9928ASetSpriteslimit((DrvDips[0] & 0x20) ? 0 : 1);
@@ -264,8 +260,7 @@ static INT32 DrvExit()
 	ZetExit();
 	SN76496Exit();
 
-	BurnFree (AllMem);
-	AllMem = NULL;
+	BurnFreeMemIndex();
 
 	ramexp = 0;
 
@@ -279,6 +274,8 @@ static INT32 DrvFrame()
 	if (DrvReset) {
 		DrvDoReset();
 	}
+
+	ZetNewFrame();
 
 	{ // Compile Inputs
 		memset (DrvInputs, 0xff, 2);
@@ -300,7 +297,6 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[1] = { 3579545 / 60 };
 	INT32 nCyclesDone[1] = { 0 };
-	INT32 nSoundBufferPos = 0;
 
     ZetOpen(0);
 
@@ -312,28 +308,15 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Zet);
 
 		TMS9928AScanline(i);
-
-		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	ZetClose();
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-		}
+		SN76496Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

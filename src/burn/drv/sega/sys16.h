@@ -109,6 +109,7 @@ extern UINT32 System16UPD7759DataSize;
 extern UINT32 System16I8751RomNum;
 extern UINT32 System16MSM6295RomNum;
 
+extern INT32 System16SoundMute; // hangon hw
 extern UINT8 System16VideoControl;
 extern INT32 System16SoundLatch;
 extern bool System16BTileAlt;
@@ -181,6 +182,7 @@ INT32 XBoardFrame();
 INT32 XBoardFrameGPRider();
 INT32 YBoardFrame();
 INT32 System16Scan(INT32 nAction, INT32 *pnMin);
+void sys16_sync_mcu();
 
 // d_sys16a.cpp
 void System16APPI0WritePortA(UINT8 data);
@@ -211,6 +213,8 @@ UINT16 __fastcall HangonReadWord(UINT32 a);
 UINT8 __fastcall HangonReadByte(UINT32 a);
 void __fastcall HangonWriteWord(UINT32 a, UINT16 d);
 void __fastcall HangonWriteByte(UINT32 a, UINT8 d);
+UINT8 Hangon_I8751ReadPort(INT32 port);
+void Hangon_I8751WritePort(INT32 port, UINT8 data);
 
 // d_outrun.cpp
 void OutrunPPI0WritePortC(UINT8 data);

@@ -192,10 +192,12 @@ int DrvInit(int nDrvNum, bool bRestore)
 		NeoCDZRateChange();
 	}
 
-	{ // Init input and audio, save blitter init for later. (reduce # of mode changes, nice for emu front-ends)
-		bVidOkay = 1;
+	{ // Init input, save audio and blitter init for later. (reduce # of mode changes, nice for emu front-ends)
+		bVidOkay = 1; // don't init video yet
+		bAudOkay = 1; // don't init audio yet, but grab soundcard params (nBurnSoundRate) so soundcores can init.
 		MediaInit();
 		bVidOkay = 0;
+		bAudOkay = 0;
 	}
 
 	// Define nMaxPlayers early; GameInpInit() needs it (normally defined in DoLibInit()).

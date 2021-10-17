@@ -2034,6 +2034,12 @@ static UINT16 peekaboo_prot_read()
 	return protection_val;
 }
 
+static void peekaboo_msm6295_bank()
+{
+	MSM6295SetBank(0, DrvSndROM0 + 0x00000,			   0x00000, 0x1ffff);
+	MSM6295SetBank(0, DrvSndROM0 + oki_bank * 0x20000, 0x20000, 0x3ffff);
+}
+
 static void peekaboo_prot_write(INT32 data)
 {
 	protection_val = data;
@@ -2043,7 +2049,7 @@ static void peekaboo_prot_write(INT32 data)
 		INT32 bank = (protection_val + 1) & 0x07;
 		if (oki_bank != bank) {
 			oki_bank = bank;
-			memcpy (DrvSndROM0 + 0x20000, DrvSndROM1 + bank * 0x20000, 0x20000);
+			peekaboo_msm6295_bank();
 		}
 	}
 
@@ -2122,16 +2128,17 @@ static UINT8 __fastcall megasys_sound_read_byte(UINT32 address)
 			return soundlatch;
 
 		case 0x080000:
+			return 0xff;
 		case 0x080001:
+			return BurnYM2151Read();
 		case 0x080002:
+			return 0xff;
 		case 0x080003:
 			return BurnYM2151Read();
 
-		case 0x0a0000:
 		case 0x0a0001:
 			return (ignore_oki_status_hack) ? 0 : MSM6295Read(0);
 
-		case 0x0c0000:
 		case 0x0c0001:
 			return (ignore_oki_status_hack) ? 0 : MSM6295Read(1);
 	}
@@ -2151,11 +2158,9 @@ static UINT16 __fastcall megasys_sound_read_word(UINT32 address)
 			return BurnYM2151Read();
 
 		case 0x0a0000:
-		case 0x0a0001:
 			return (ignore_oki_status_hack) ? 0 : MSM6295Read(0);
 
 		case 0x0c0000:
-		case 0x0c0001:
 			return (ignore_oki_status_hack) ? 0 : MSM6295Read(1);
 	}
 
@@ -2183,16 +2188,12 @@ static void __fastcall megasys_sound_write_byte(UINT32 address, UINT8 data)
 			BurnYM2151WriteRegister(data);
 		return;
 
-		case 0x0a0000:
 		case 0x0a0001:
-		case 0x0a0002:
 		case 0x0a0003:
 			MSM6295Write(0, data);
 		return;
 
-		case 0x0c0000:
 		case 0x0c0001:
-		case 0x0c0002:
 		case 0x0c0003:
 			MSM6295Write(1, data);
 		return;
@@ -2218,16 +2219,16 @@ static void __fastcall megasys_sound_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x0a0000:
-		case 0x0a0001:
+//		case 0x0a0001:
 		case 0x0a0002:
-		case 0x0a0003:
+//		case 0x0a0003:
 			MSM6295Write(0, data);
 		return;
 
 		case 0x0c0000:
-		case 0x0c0001:
+//		case 0x0c0001:
 		case 0x0c0002:
-		case 0x0c0003:
+//		case 0x0c0003:
 			MSM6295Write(1, data);
 		return;
 	}
@@ -2344,7 +2345,6 @@ static INT32 MemIndex()
 	DrvTransTab[2]	= Next; Next += 0x100000 / (8 * 8);
 	DrvTransTab[3]	= Next; Next += 0x200000 / (16 * 16);
 
-	MSM6295ROM	= Next;
 	DrvSndROM0	= Next; Next += 0x100000;
 	DrvSndROM1	= Next; Next += 0x100000;
 
@@ -2708,12 +2708,8 @@ static INT32 DrvLoadRoms()
 static INT32 SystemInit(INT32 nSystem, void (*pRomLoadCallback)())
 {
 	BurnSetRefreshRate(56.19);
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+
+	BurnAllocMemIndex();
 
 	{
 		if (DrvLoadRoms()) return 1;
@@ -2908,10 +2904,12 @@ static INT32 SystemInit(INT32 nSystem, void (*pRomLoadCallback)())
 
 		MSM6295Init(0, ((system_select == 0xD) ? 2000000 : 4000000) / 132, 1);
 		MSM6295SetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
+		MSM6295SetBank(0, DrvSndROM0, 0x00000, 0x3ffff);
 
 		// not in system D
 		MSM6295Init(1, 4000000 / 132, 1);
 		MSM6295SetRoute(1, 0.30, BURN_SND_ROUTE_BOTH);
+		MSM6295SetBank(1, DrvSndROM1, 0x00000, 0x3ffff);
 	}
 
 	GenericTilesInit();
@@ -2949,9 +2947,7 @@ static INT32 DrvExit()
 	tshingen = 0;
 	stdragon = 0;
 
-	BurnFree (AllMem);
-
-	MSM6295ROM = NULL;
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -3334,6 +3330,13 @@ static INT32 System1AFrame()
 		CPU_RUN(0, Sek);
 		SekClose();
 
+		if (i == 240) {
+			if (pBurnDraw) {
+				DrvDraw();
+			}
+			DrvBufferSprites();
+		}
+
 		SekOpen(1);
 		CPU_RUN_TIMER(1);
 		SekClose();
@@ -3351,12 +3354,6 @@ static INT32 System1AFrame()
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
-
-	if (pBurnDraw) {
-		DrvDraw();
-	}
-
-	DrvBufferSprites();
 
 	return 0;
 }
@@ -3514,7 +3511,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_WRITE) {
 		if (system_select == 0xD) {
-			memcpy (DrvSndROM0 + 0x20000, DrvSndROM1 + oki_bank * 0x20000, 0x20000);
+			peekaboo_msm6295_bank();
 		}
 	}
 
@@ -3735,10 +3732,9 @@ static struct BurnRomInfo kickoffRomDesc[] = {
 	{ "kioff20.rom",	0x20000, 0x5c28bd2d, 7 | BRF_SND },           // 13 OKI #0 Samples
 	{ "kioff21.rom",	0x20000, 0x195940cf, 7 | BRF_SND },           // 14
 
-	{ "kioff20.rom",	0x20000, 0x5c28bd2d, 8 | BRF_SND },           // 15 OKI #1 Samples
-	{ "kioff21.rom",	0x20000, 0x195940cf, 8 | BRF_SND },           // 16
+	{ "kioff10.rom",	0x20000, 0xfd739fec, 8 | BRF_SND },           // 15 OKI #1 Samples
 
-	{ "kick.14m",		0x00200, 0x85b30ac4, 9 | BRF_GRA },           // 17 Priority PROM
+	{ "kick.14m",		0x00200, 0x85b30ac4, 9 | BRF_GRA },           // 16 Priority PROM
 };
 
 STD_ROM_PICK(kickoff)
@@ -5865,7 +5861,7 @@ static struct BurnRomInfo peekabooRomDesc[] = {
 
 	{ "1",								0x080000, 0x5a444ecf, 6 | BRF_GRA },           //  5 Sprites
 
-	{ "peeksamp.124",					0x100000, 0xe1206fa8, 8 | BRF_SND },           //  6 OKI #0 Samples
+	{ "peeksamp.124",					0x100000, 0xe1206fa8, 7 | BRF_SND },           //  6 OKI #0 Samples
 
 	{ "priority.69",					0x000200, 0xb40bff56, 9 | BRF_GRA },           //  7 Priority PROM
 };
@@ -5873,14 +5869,9 @@ static struct BurnRomInfo peekabooRomDesc[] = {
 STD_ROM_PICK(peekaboo)
 STD_ROM_FN(peekaboo)
 
-static void peekabooCallback()
-{
-	memcpy (DrvSndROM0, DrvSndROM1, 0x40000); // set initial banks
-}
-
 static INT32 peekabooInit()
 {
-	return SystemInit(0xD, peekabooCallback);
+	return SystemInit(0xD, NULL);
 }
 
 struct BurnDriver BurnDrvPeekaboo = {
@@ -5908,7 +5899,7 @@ static struct BurnRomInfo peekaboouRomDesc[] = {
 
 	{ "1",						0x080000, 0x5a444ecf, 6 | BRF_GRA },           //  5 Sprites
 
-	{ "peeksamp.124",			0x100000, 0xe1206fa8, 8 | BRF_SND },           //  6 OKI #0 Samples
+	{ "peeksamp.124",			0x100000, 0xe1206fa8, 7 | BRF_SND },           //  6 OKI #0 Samples
 
 	{ "priority.69",			0x000200, 0xb40bff56, 9 | BRF_GRA },           //  7 Priority PROM
 };

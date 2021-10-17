@@ -589,6 +589,7 @@ static INT32 DrvInit()
 
 	DACInit(0, 0, 1, I8039TotalCycles, 730000);
 	DACSetRoute(0, 0.65, BURN_SND_ROUTE_BOTH);
+	DACDCBlock(1);
 
 	BurnSampleInit(0);
 	BurnSampleSetAllRoutesAllSamples(0.25, BURN_SND_ROUTE_BOTH);

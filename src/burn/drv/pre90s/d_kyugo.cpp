@@ -740,8 +740,8 @@ static INT32 CommonInit(void (*romdecodecb)(), UINT16 sub_rom_offset, UINT16 sha
 	AY8910Init(0, 1536000, 0);
 	AY8910Init(1, 1536000, 0);
 	AY8910SetPorts(0, &AY8910_0_portA, &AY8910_0_portB, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 3072000);
 
 	GenericTilesInit();

@@ -2797,7 +2797,7 @@ STD_ROM_FN(kngtmare)
 
 struct BurnDriver BurnDrvKngtmare = {
 	"kngtmare", NULL, NULL, NULL, "1983",
-	"Knightmare (prototype)\0", NULL, "Gottlieb", "Miscellaneous",
+	"Knightmare (prototype)\0", "Game has NO sound", "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, kngtmareRomInfo, kngtmareRomName, NULL, NULL, NULL, NULL, KngtmareInputInfo, KngtmareDIPInfo,

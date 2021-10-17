@@ -706,7 +706,7 @@ static INT32 DrvInit() // millipede
 	M6502SetReadOpHandler(millipede_read);
 	M6502Close();
 
-	PokeyInit(1512000, 2, 1.00, 0);
+	PokeyInit(1512000, 2, 0.75, 0);
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 
 	init_penmask();

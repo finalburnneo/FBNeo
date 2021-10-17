@@ -1339,6 +1339,7 @@ static INT32 DrvFrame()
 		} else {
 			BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
 		}
+		BurnSoundDCFilter(); // dc offset in mechatt
 	}
 
 	ZetClose();

@@ -4499,7 +4499,7 @@ struct BurnDriver BurnDrvPheliosj = {
 
 
 
-// Marvel Land (US)
+// Marvel Land (US, prototype?)
 
 static struct BurnRomInfo marvlandRomDesc[] = {
 	{ "mv2_mpr0",		0x20000, 0xd8b14fee, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
@@ -4572,7 +4572,7 @@ static INT32 MarvlandInit()
 
 struct BurnDriver BurnDrvMarvland = {
 	"marvland", NULL, NULL, NULL, "1989",
-	"Marvel Land (US)\0", "Bad music - use the Japan version", "Namco", "System 2",
+	"Marvel Land (US, prototype?)\0", "Bad music - use the Japan version", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, marvlandRomInfo, marvlandRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,

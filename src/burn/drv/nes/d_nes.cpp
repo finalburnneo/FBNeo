@@ -6703,6 +6703,90 @@ static void mapper81_map()
     mapper_map_chr( 8, 0, mapper_regs[0] & 0x03);
 }
 
+// --[ mapper 82: Taito X1-017
+#define mapper82_prg(x)     (mapper_regs[0 + (x)]) // 0 - 2
+#define mapper82_chr(x)     (mapper_regs[3 + (x)]) // 3 - 8
+#define mapper82_mirror     (mapper_regs[0x1f - 0])
+#define mapper82_a12inv     (mapper_regs[0x1f - 1])
+#define mapper82_ram_en(x)  (mapper_regs[9 + (x)])
+
+static UINT8 mapper82_read(UINT16 address)
+{
+	if ( ((address >= 0x6000 && address <= 0x67ff) && mapper82_ram_en(0)) ||
+		 ((address >= 0x6800 && address <= 0x6fff) && mapper82_ram_en(1)) ||
+		 ((address >= 0x7000 && address <= 0x73ff) && mapper82_ram_en(2))
+	   )
+		return Cart.WorkRAM[(address & 0x1fff)];
+
+	return cpu_open_bus;
+}
+
+
+static void mapper82_write(UINT16 address, UINT8 data)
+{
+	cart_exp_write_abort = 1; // don't fall-through after callback!
+
+	if ( ((address >= 0x6000 && address <= 0x67ff) && mapper82_ram_en(0)) ||
+		 ((address >= 0x6800 && address <= 0x6fff) && mapper82_ram_en(1)) ||
+		 ((address >= 0x7000 && address <= 0x73ff) && mapper82_ram_en(2))
+	   )
+		Cart.WorkRAM[(address & 0x1fff)] = data;
+
+	switch (address) {
+		case 0x7ef0: mapper82_chr(0) = data; break;
+		case 0x7ef1: mapper82_chr(1) = data; break;
+		case 0x7ef2: mapper82_chr(2) = data; break;
+		case 0x7ef3: mapper82_chr(3) = data; break;
+		case 0x7ef4: mapper82_chr(4) = data; break;
+		case 0x7ef5: mapper82_chr(5) = data; break;
+		case 0x7ef6: mapper82_mirror = data & 1; mapper82_a12inv = data & 2; break;
+		case 0x7ef7: mapper82_ram_en(0) = (data == 0xca); break;
+		case 0x7ef8: mapper82_ram_en(1) = (data == 0x69); break;
+		case 0x7ef9: mapper82_ram_en(2) = (data == 0x84); break;
+		case 0x7efa: mapper82_prg(0) = data >> 2; break;
+		case 0x7efb: mapper82_prg(1) = data >> 2; break;
+		case 0x7efc: mapper82_prg(2) = data >> 2; break;
+		case 0x7efd: // unused irq latch
+		case 0x7efe: // unused irq control
+		case 0x7eff: // unused irq ack
+			break;
+	}
+
+	mapper_map();
+}
+
+static void mapper82_map()
+{
+	mapper_map_prg( 8, 0, mapper82_prg(0));
+	mapper_map_prg( 8, 1, mapper82_prg(1));
+	mapper_map_prg( 8, 2, mapper82_prg(2));
+	mapper_map_prg( 8, 3, -1);
+
+	if (mapper82_a12inv == 0) {
+		mapper_map_chr( 2, 0, (mapper82_chr(0) >> 1) & 0x7f);
+		mapper_map_chr( 2, 1, (mapper82_chr(1) >> 1) & 0x7f);
+		mapper_map_chr( 1, 4, mapper82_chr(2));
+		mapper_map_chr( 1, 5, mapper82_chr(3));
+		mapper_map_chr( 1, 6, mapper82_chr(4));
+		mapper_map_chr( 1, 7, mapper82_chr(5));
+	} else {
+		mapper_map_chr( 2, 2, (mapper82_chr(0) >> 1) & 0x7f);
+		mapper_map_chr( 2, 3, (mapper82_chr(1) >> 1) & 0x7f);
+		mapper_map_chr( 1, 0, mapper82_chr(2));
+		mapper_map_chr( 1, 1, mapper82_chr(3));
+		mapper_map_chr( 1, 2, mapper82_chr(4));
+		mapper_map_chr( 1, 3, mapper82_chr(5));
+	}
+
+	set_mirroring((mapper82_mirror) ? VERTICAL : HORIZONTAL);
+}
+#undef mapper82_prg
+#undef mapper82_chr
+#undef mapper82_mirror
+#undef mapper82_a12inv
+#undef mapper82_ram_en
+
+
 // --[ mapper 232: Camerica (Quattro Adventure, Arcade, Sports)
 static void mapper232_write(UINT16 address, UINT8 data)
 {
@@ -6723,6 +6807,22 @@ static void mapper232_map()
 	mapper_map_prg(16, 0, block | (mapper_regs[1] & 3));
 	mapper_map_prg(16, 1, block | 3);
 	mapper_map_chr( 8, 0, 0);
+}
+
+// --[ mapper 77: Irem? Napoleon Senki
+static void mapper77_write(UINT16 address, UINT8 data)
+{
+	mapper_regs[0] = data;
+	mapper_map();
+}
+
+static void mapper77_map()
+{
+	mapper_map_prg(32, 0, mapper_regs[0] & 7);
+	mapper_map_chr_ramrom( 2, 0, (mapper_regs[0] >> 4) & 0x0f, MEM_ROM);
+	mapper_map_chr_ramrom( 2, 1, 0, MEM_RAM);
+	mapper_map_chr_ramrom( 2, 2, 0, MEM_RAM);
+	mapper_map_chr_ramrom( 2, 3, 0, MEM_RAM);
 }
 
 // --[ mapper 78: Irem? (Holy Diver, Uchuusen: Cosmo Carrier)
@@ -8134,6 +8234,14 @@ static INT32 mapper_init(INT32 mappernum)
 			break;
 		}
 
+		case 77: { // Irem? Napoleon Senki
+			mapper_write = mapper77_write; // 8000 - ffff
+			mapper_map   = mapper77_map;
+		    mapper_map();
+			retval = 0;
+			break;
+		}
+
 		case 78: { // Jaleco JF16
 			mapper_write = mapper78_write; // 8000 - ffff
 			mapper_map   = mapper78_map;
@@ -8154,7 +8262,16 @@ static INT32 mapper_init(INT32 mappernum)
 			break;
 		}
 
-		case 81: {
+		case 82: { // Taito x1017
+			cart_exp_write = mapper82_write;
+			cart_exp_read  = mapper82_read;
+			mapper_map     = mapper82_map;
+			mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 81: { // NTDEC Super Gun (Caltron)
 			mapper_write = mapper81_write;
 			mapper_map   = mapper81_map;
 			mapper_map();

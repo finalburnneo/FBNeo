@@ -356,29 +356,28 @@ static void MegadriveCheckHardware()
 
 inline static void CalcCol(INT32 index, UINT16 nColour)
 {
-	INT32 r, g, b;
+	UINT8 color_ramp[0x10] = { 0, 29, 52, 70, 87, 101, 116, 130, 144, 158, 172, 187, 206, 228, 255 };
 
-	r = (nColour & 0x000f) << 4;	// Red
-	g = (nColour & 0x00f0) << 0; 	// Green
-	b = (nColour & 0x0f00) >> 4;	// Blue
-
-	r |= r >> 4;
-	g |= g >> 4;
-	b |= b >> 4;
+	INT32 r = (nColour & 0x000f) >> 0;	// Red
+	INT32 g = (nColour & 0x00f0) >> 4; 	// Green
+	INT32 b = (nColour & 0x0f00) >> 8;	// Blue
 
 	RamPal[index] = nColour;
 
 	// Normal Color
-	MegadriveCurPal[index + 0x00] = BurnHighCol(r, g, b, 0);
+	MegadriveCurPal[index + 0x00] = BurnHighCol(color_ramp[r], color_ramp[g], color_ramp[b], 0);
 
 	// Shadow Color
-	MegadriveCurPal[index + 0x40] = MegadriveCurPal[index + 0xc0] = BurnHighCol(r>>1, g>>1, b>>1, 0);
+	r >>= 1;
+	g >>= 1;
+	b >>= 1;
+	MegadriveCurPal[index + 0x40] = MegadriveCurPal[index + 0xc0] = BurnHighCol(color_ramp[r], color_ramp[g], color_ramp[b], 0);
 
 	// Highlight Color
-	r += 0x80; if (r > 0xFF) r = 0xFF;
-	g += 0x80; if (g > 0xFF) g = 0xFF;
-	b += 0x80; if (b > 0xFF) b = 0xFF;
-	MegadriveCurPal[index + 0x80] = BurnHighCol(r, g, b, 0);
+	r += 7; if (r > 0xf) r = 0xf;
+	g += 7; if (g > 0xf) g = 0xf;
+	b += 7; if (b > 0xf) b = 0xf;
+	MegadriveCurPal[index + 0x80] = BurnHighCol(color_ramp[r], color_ramp[g], color_ramp[b], 0);
 }
 
 static INT32 MemIndex()

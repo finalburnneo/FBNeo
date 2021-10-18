@@ -1,4 +1,4 @@
-// BurgerTime emu-layer for FB Alpha by dink & iq_132, based on the MAME driver by Zsolt Vasvari.
+// BurgerTime emu-layer for FB Alpha^H^H^H^H^HNeo by dink & iq_132, based on the MAME driver by Zsolt Vasvari.
 
 #include "tiles_generic.h"
 #include "m6502_intf.h"
@@ -11,7 +11,6 @@ static UINT8 *MemEnd;
 static UINT8 *AllRam;
 static UINT8 *RamEnd;
 static UINT8 *DrvMainROM;
-static UINT8 *DrvMainROMdec;
 static UINT8 *DrvSoundROM;
 static UINT8 *DrvColPROM;
 
@@ -78,35 +77,34 @@ static UINT8 mmonkeymode = 0;
 
 static UINT8 bnjskew = 0;
 
+// soundlatch nmi source
 enum
 {
-	AUDIO_ENABLE_NONE,
-	AUDIO_ENABLE_DIRECT,        /* via direct address in memory map */
-	AUDIO_ENABLE_AY8910         /* via ay-8910 port A */
+	AUDIO_ENABLE_NONE, AUDIO_ENABLE_DIRECT, AUDIO_ENABLE_AY8910
 };
 
 
 static struct BurnInputInfo BtimeInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 coin"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 coin"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Tilt",		BIT_DIGITAL,	DrvJoy3 + 2,	"tilt"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
+	{"Tilt",			BIT_DIGITAL,	DrvJoy3 + 2,	"tilt"},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Btime)
@@ -163,25 +161,25 @@ static struct BurnDIPInfo BtimeDIPList[]=
 STDDIPINFO(Btime)
 
 static struct BurnInputInfo MmonkeyInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 coin"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 coin"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Mmonkey)
@@ -236,26 +234,26 @@ static struct BurnDIPInfo MmonkeyDIPList[]=
 STDDIPINFO(Mmonkey)
 
 static struct BurnInputInfo BnjInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 coin"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 coin"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Tilt",		BIT_DIGITAL,	DrvJoy3 + 0,	"tilt"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
+	{"Tilt",			BIT_DIGITAL,	DrvJoy3 + 0,	"tilt"},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Bnj)
@@ -308,25 +306,25 @@ static struct BurnDIPInfo BnjDIPList[]=
 STDDIPINFO(Bnj)
 
 static struct BurnInputInfo DiscoInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 coin"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 coin"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Disco)
@@ -387,25 +385,25 @@ static struct BurnDIPInfo DiscoDIPList[]=
 STDDIPINFO(Disco)
 
 static struct BurnInputInfo LncInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 coin"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 coin"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Lnc)
@@ -456,29 +454,29 @@ static struct BurnDIPInfo LncDIPList[]=
 STDDIPINFO(Lnc)
 
 static struct BurnInputInfo ZoarInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 coin"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 fire 3"},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 coin"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 fire 3"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Zoar)
@@ -629,23 +627,22 @@ static void lncpaletteupdate()
 
 	for (INT32 i = 0; i < 0x20; i++)
 	{
-		INT32 bit0, bit1, bit2, r, g, b;
+		INT32 bit0, bit1, bit2;
 
-		/* red component */
 		bit0 = (color_prom[i] >> 7) & 0x01;
 		bit1 = (color_prom[i] >> 6) & 0x01;
 		bit2 = (color_prom[i] >> 5) & 0x01;
-		r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
-		/* green component */
+		INT32 r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
+
 		bit0 = (color_prom[i] >> 4) & 0x01;
 		bit1 = (color_prom[i] >> 3) & 0x01;
 		bit2 = (color_prom[i] >> 2) & 0x01;
-		g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
-		/* blue component */
+		INT32 g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
+
 		bit0 = 0;
 		bit1 = (color_prom[i] >> 1) & 0x01;
 		bit2 = (color_prom[i] >> 0) & 0x01;
-		b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
+		INT32 b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 
 		DrvPalette[i] = BurnHighCol(r, g, b, 0);
 	}
@@ -657,23 +654,22 @@ static void discopaletteupdate()
 
 	for (INT32 i = 0; i < 0x40; i++)
 	{
-		INT32 bit0, bit1, bit2, r, g, b;
+		INT32 bit0, bit1, bit2;
 
-		/* red component */
 		bit0 = (color_prom[i] >> 0) & 0x01;
 		bit1 = (color_prom[i] >> 1) & 0x01;
 		bit2 = (color_prom[i] >> 2) & 0x01;
-		r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
-		/* green component */
+		INT32 r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
+
 		bit0 = (color_prom[i] >> 3) & 0x01;
 		bit1 = (color_prom[i] >> 4) & 0x01;
 		bit2 = (color_prom[i] >> 5) & 0x01;
-		g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
-		/* blue component */
+		INT32 g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
+
 		bit0 = 0;
 		bit1 = (color_prom[i] >> 6) & 0x01;
 		bit2 = (color_prom[i] >> 7) & 0x01;
-		b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
+		INT32 b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 
 		DrvPalette[i] = BurnHighCol(r, g, b, 0);
 	}
@@ -707,9 +703,8 @@ static void btimepalettewrite(UINT16 offset, UINT8 data)
 	DrvPalette[offset] = BurnHighCol(r, g, b, 0);
 }
 
-static UINT8 btime_main_read(UINT16 addr)
+static UINT8 btime_main_read(UINT16 address)
 {
-	INT32 address = addr;
 	RB(0x0000, 0x07ff, DrvMainRAM);
 	RB(0x0c00, 0x0c1f, DrvPalRAM);
 	RB(0x1000, 0x13ff, DrvVidRAM);
@@ -749,9 +744,8 @@ static UINT8 btime_main_read(UINT16 addr)
 	return 0;
 }
 
-static UINT8 bnj_main_read(UINT16 addr)
+static UINT8 bnj_main_read(UINT16 address)
 {
-	INT32 address = addr;
 	RB(0x0000, 0x07ff, DrvMainRAM);
 	RB(0x5c00, 0x5c1f, DrvPalRAM);
 	RB(0x4000, 0x43ff, DrvVidRAM);
@@ -791,9 +785,8 @@ static UINT8 bnj_main_read(UINT16 addr)
 	return 0;
 }
 
-static UINT8 zoar_main_read(UINT16 addr)
+static UINT8 zoar_main_read(UINT16 address)
 {
-	INT32 address = addr;
 	RB(0x0000, 0x07ff, DrvMainRAM);
 	RB(0x8000, 0x83ff, DrvVidRAM);
 	RB(0x8400, 0x87ff, DrvColRAM);
@@ -832,9 +825,8 @@ static UINT8 zoar_main_read(UINT16 addr)
 	return 0;
 }
 
-static UINT8 disco_main_read(UINT16 addr)
+static UINT8 disco_main_read(UINT16 address)
 {
-	INT32 address = addr;
 	RB(0x0000, 0x07ff, DrvMainRAM);
 	RB(0x2000, 0x7fff, DrvCharRAM);
 	RB(0x8000, 0x83ff, DrvVidRAM);
@@ -868,26 +860,20 @@ static UINT8 disco_main_read(UINT16 addr)
 	return 0;
 }
 
-static UINT8 mmonkeyop_main_read(UINT16 address)
+static UINT8 mmonkey_main_read(UINT16 address)
 {
-	return DrvMainROMdec[address];
-}
-
-static UINT8 mmonkey_main_read(UINT16 addr)
-{
-	INT32 address = addr;
 	RB(0x0000, 0x3bff, DrvMainRAM);
 	RB(0x3c00, 0x3fff, DrvVidRAM);
 
 	if (address >= 0xb000 && address <= 0xbfff) {
 		if (lncmode) {
-			return DrvCharRAM[address - 0xb000];
+			return DrvCharRAM[address & 0xfff];
 		} else {
-			return mmonkey_protection_r(address - 0xb000);
+			return mmonkey_protection_r(address & 0xfff);
 		}
 	}
 
-	if (address >= 0xc000) {
+	if (address >= 0xc000) { // c000 - ffff  ROM read
 		return DrvMainROM[address];
 	}
 
@@ -918,12 +904,13 @@ static UINT8 mmonkey_main_read(UINT16 addr)
 
 static void mmonkey_main_write(UINT16 address, UINT8 data)
 {
-	DrvMainRAM[address] = data;
-	DrvMainROMdec[address] = data;
+	if (address >= 0x0000 && address <= 0x3bff) { // Main RAM
+		DrvMainRAM[address] = data;
+	}
 
 	if (address >= 0x3c00 && address <= 0x3fff) {
-		DrvVidRAM[address - 0x3c00] = data;
-		DrvColRAM[address - 0x3c00] = lnc_charbank;
+		DrvVidRAM[address & 0x3ff] = data;
+		DrvColRAM[address & 0x3ff] = lnc_charbank;
 		return;
 	}
 
@@ -936,9 +923,9 @@ static void mmonkey_main_write(UINT16 address, UINT8 data)
 
 	if (address >= 0xb000 && address <= 0xbfff) {
 		if (lncmode) {
-			DrvCharRAM[address - 0xb000] = data;
+			DrvCharRAM[address & 0xfff] = data;
 		} else {
-			mmonkey_protection_w(address - 0xb000, data);
+			mmonkey_protection_w(address & 0xfff, data);
 		}
 		return;
 	}
@@ -956,16 +943,15 @@ static void mmonkey_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-static void btime_main_write(UINT16 addr, UINT8 data)
+static void btime_main_write(UINT16 address, UINT8 data)
 {
-	INT32 address = addr;
 	WB(0x0000, 0x07ff, DrvMainRAM);
 	WB(0x1000, 0x13ff, DrvVidRAM);
 	WB(0x1400, 0x17ff, DrvColRAM);
 
 	if (address >= 0xc00 && address <= 0xc1f) {
-		DrvPalRAM[address - 0xc00] = data;
-		if (address <= 0xc0f) btimepalettewrite(address - 0xc00, ~data);
+		DrvPalRAM[address & 0x1f] = data;
+		if (address <= 0xc0f) btimepalettewrite(address & 0x1f, ~data);
 		return;
 	}
 
@@ -1035,12 +1021,15 @@ static void zoar_main_write(UINT16 addr, UINT8 data)
 			btime_palette = (data & 0x30) >> 3;
 		return;
 
-		case 0x9806:
-			soundlatch = data;
+		case 0x9806: {
+			// sync sound cpu
 			UINT32 main_tot = M6502TotalCycles(0);
 			INT32 cyc = (main_tot / 3) - M6502TotalCycles(1);
 			if (cyc > 0) M6502Run(1, cyc);
+
+			soundlatch = data;
 			M6502SetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
+		}
 		return;
 	}
 }
@@ -1076,8 +1065,8 @@ static void bnj_main_write(UINT16 addr, UINT8 data)
 	WB(0x5000, 0x51ff, DrvBGRAM);
 
 	if (address >= 0x5c00 && address <= 0x5c1f) {
-		DrvPalRAM[address - 0x5c00] = data;
-		if (address <= 0x5c0f) btimepalettewrite(address - 0x5c00, ~data);
+		DrvPalRAM[address & 0x1f] = data;
+		if (address <= 0x5c0f) btimepalettewrite(address & 0x1f, ~data);
 		return;
 	}
 
@@ -1155,8 +1144,8 @@ static UINT8 btime_sound_read(UINT16 addr)
 0x02: 5. 0x01: 0. CF: 0 CC: 0.
 */
 
-static UINT8 last01[3] = {0xff,0xff};
-static UINT8 last02[3] = {0xff,0xff};
+static UINT8 last01[2] = {0xff,0xff};
+static UINT8 last02[2] = {0xff,0xff};
 static UINT8 ignext = 0;
 
 static void checkhiss_add02(UINT8 data)
@@ -1278,7 +1267,6 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	DrvMainROM	= Next; Next += 0x010000;
-	DrvMainROMdec	= Next; Next += 0x010000; // for mmonkey's readop
 	DrvSoundROM	= Next; Next += 0x010000;
 
 	DrvGfxROM0	= Next; Next += 0x020000;
@@ -1286,7 +1274,7 @@ static INT32 MemIndex()
 	DrvGfxROM2	= Next; Next += 0x020000;
 	DrvGfxROM3	= Next; Next += 0x020000;
 	DrvBgMapROM = Next; Next += 0x020000;
-	DrvBGBitmap     = (UINT16*)Next; Next += (512 * 512) * sizeof(UINT16);
+	DrvBGBitmap = (UINT16*)Next; Next += (512 * 512) * sizeof(UINT16);
 	DrvColPROM  = Next; Next += 0x000200;
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0200 * sizeof(INT32);
@@ -1337,10 +1325,16 @@ static INT32 DrvDoReset()
 	audio_nmi_enable = 0;
 	audio_nmi_state = 0;
 
+	// mmonkey
 	protection_command = 0;
 	protection_status = 0;
 	protection_value = 0;
 	protection_ret = 0;
+
+	// btime anti-hiss stuff
+	last01[0] = last01[1] = 0xff;
+	last02[0] = last02[1] = 0xff;
+	ignext = 0;
 
 	zippysoundinit = ZIPPYSOUNDFRAMES;
 
@@ -1465,12 +1459,7 @@ static INT32 ZoarGfxDecode()
 
 static INT32 MmonkeyInit() // and lnc
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM + 0x0c000,  0, 1)) return 1;
@@ -1496,14 +1485,12 @@ static INT32 MmonkeyInit() // and lnc
 
 	}
 
-	memcpy(DrvMainROMdec, DrvMainROM, 0x10000);
-
 	M6502Init(0, TYPE_DECOC10707);
 	M6502Open(0);
 	M6502SetWriteHandler(mmonkey_main_write);
 	M6502SetReadHandler(mmonkey_main_read);
 	M6502SetReadOpArgHandler(mmonkey_main_read);
-	M6502SetReadOpHandler(mmonkeyop_main_read);
+	M6502SetReadOpHandler(mmonkey_main_read);
 	M6502Close();
 
 	M6502Init(1, TYPE_M6502);
@@ -1553,12 +1540,7 @@ static INT32 MmonkeyInit() // and lnc
 
 static INT32 DiscoInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM + 0x0a000,  0, 1)) return 1;
@@ -1632,12 +1614,7 @@ static INT32 DiscoInit()
 
 static INT32 BnjInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (brubbermode)
 	{
@@ -1732,12 +1709,7 @@ static INT32 BnjInit()
 
 static INT32 BtimeInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		INT32 base = (btime3mode) ? 0xb000 : 0xc000;
@@ -1834,12 +1806,7 @@ static INT32 BtimeInit()
 
 static INT32 ZoarInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM + 0x0d000,  0, 1)) return 1;
@@ -1900,7 +1867,6 @@ static INT32 ZoarInit()
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(M6502TotalCycles, 500000);
 
-	//audio_nmi_type = AUDIO_ENABLE_AY8910; // this doesn't work always.
 	audio_nmi_type =  AUDIO_ENABLE_DIRECT;
 	zoarmode = 1;
 
@@ -1939,7 +1905,7 @@ static INT32 DrvExit()
 
 	filter_rc_exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	if (btimemode) {
 		BurnFree(hpfiltbuffer);
@@ -2064,35 +2030,11 @@ static void draw_sprites(UINT8 color, UINT8 sprite_y_adjust, UINT8 sprite_y_adju
 
 		y = y - sprite_y_adjust;
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, x, y, color, 3, 0, 0, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, x, y, color, 3, 0, 0, DrvGfxROM1);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, x, y, color, 3, 0, 0, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, x, y, color, 3, 0, 0, DrvGfxROM1);
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, x, y, flipx, flipy, color, 3, 0, 0, DrvGfxROM1);
 
 		y = y + (flipscreen ? -256 : 256);
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, x, y, color, 3, 0, 0, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, x, y, color, 3, 0, 0, DrvGfxROM1);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, x, y, color, 3, 0, 0, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, x, y, color, 3, 0, 0, DrvGfxROM1);
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, x, y, flipx, flipy, color, 3, 0, 0, DrvGfxROM1);
 	}
 }
 
@@ -2189,13 +2131,11 @@ static INT32 BnjDraw()
 
 		GenericTilesClearClipRaw();
 
-		/* copy the background bitmap to the screen */
+		// The scrolling bitmap needs special treatment
 		INT32 scroll = (bnj_scroll1 & 0x02) * 128 + 511 - bnj_scroll2;
 		if (!flipscreen)
 			scroll = 767 - scroll;
 
-		//copyscrollbitmap(bitmap, *m_background_bitmap, 1, &scroll, 0, 0, cliprect);
-		// copy the BGBitmap to pTransDraw
 		for (INT32 sy = 0; sy < nScreenHeight; sy++) {
 
 			UINT16 *src = DrvBGBitmap + sy * 512;
@@ -2205,9 +2145,6 @@ static INT32 BnjDraw()
 				dst[sx] = src[(sx-scroll)&0x1ff];
 			}
 		}
-
-		/* copy the low priority characters followed by the sprites
-		 then the high priority characters */
 
 		if (nBurnLayer & 2) draw_chars(1, 0, 1);
 		if (nBurnLayer & 4) draw_sprites(0, 1, 0, DrvVidRAM, 0x20);
@@ -2404,14 +2341,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.nLen	  = RamEnd-AllRam;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
-
-		if (mmonkeymode) {
-			memset(&ba, 0, sizeof(ba));
-			ba.Data	  = DrvMainROMdec;
-			ba.nLen	  = 0x10000;
-			ba.szName = "decROMops";
-			BurnAcb(&ba);
-		}
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
@@ -2419,14 +2348,26 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		AY8910Scan(nAction, pnMin);
 
-		SCAN_VAR(vblank);
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(flipscreen);
-		SCAN_VAR(audio_nmi_type);
 		SCAN_VAR(audio_nmi_enable);
 		SCAN_VAR(audio_nmi_state);
 		SCAN_VAR(bnj_scroll1);
 		SCAN_VAR(bnj_scroll2);
+		SCAN_VAR(lnc_charbank);
+		SCAN_VAR(btime_palette);
+		SCAN_VAR(zippysoundinit);
+
+		// btime
+		SCAN_VAR(last01);
+		SCAN_VAR(last02);
+		SCAN_VAR(ignext);
+
+		// mmonkey
+		SCAN_VAR(protection_command);
+		SCAN_VAR(protection_status);
+		SCAN_VAR(protection_value);
+		SCAN_VAR(protection_ret);
 	}
 
 	return 0;

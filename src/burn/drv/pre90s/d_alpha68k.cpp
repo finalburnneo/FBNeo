@@ -747,7 +747,8 @@ static INT32 SstingryInit()
 	
 	DACInit(0, 0, 1, ZetTotalCycles, nDrvTotalZ80Cycles);
 	DACSetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
-	
+	DACDCBlock(1);
+
 	GenericTilesInit();
 	
 	DrvMicroControllerID = 0x00ff;
@@ -860,6 +861,7 @@ static INT32 KyrosInit()
 	
 	DACInit(0, 0, 1, ZetTotalCycles, nDrvTotalZ80Cycles);
 	DACSetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
+	DACDCBlock(1);
 	
 	GenericTilesInit();
 	
@@ -1070,19 +1072,20 @@ static INT32 DrvFrame()
 		}
 		if (i == 66) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
-		if (i == 44 || i == 88) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		CPU_RUN_TIMER(1);
+		if (i == 44 || i == 88) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		if (i & 1) ZetNmi();
-	}
-
-	BurnTimerEndFrame(nCyclesTotal[1]);
-	if (pBurnSoundOut) {
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	SekClose();
 	ZetClose();
+
+	if (pBurnSoundOut) {
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter(); // ay on ym2203 has nasty dc offset
+		DACUpdate(pBurnSoundOut, nBurnSoundLen);
+	}
+
 
 	return 0;
 }

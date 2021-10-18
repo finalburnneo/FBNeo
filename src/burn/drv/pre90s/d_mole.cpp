@@ -27,58 +27,59 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
-//  buttons are laid out as follows:
-//  7   8   9
-//  4   5   6
-//  1   2   3
-
 static struct BurnInputInfo MoleInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 7,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 start"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 3"	},
+
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 3"	},
+
 	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 4"	},
 	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 5"	},
 	{"P1 Button 6",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 6"	},
-	{"P1 Button 7",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 7"	},
-	{"P1 Button 8",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 8"	},
-	{"P1 Button 9",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 9"	},
+
+	{"P1 Button 7",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 7"	},
+	{"P1 Button 8",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 8"	},
+	{"P1 Button 9",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 9"	},
 
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 start"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 1"	},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 2"	},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 3"	},
-	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 fire 4"	},
-	{"P2 Button 5",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 fire 5"	},
-	{"P2 Button 6",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 fire 6"	},
-	{"P2 Button 7",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 fire 7"	},
-	{"P2 Button 8",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 fire 8"	},
-	{"P2 Button 9",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 9"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 fire 3"	},
+
+	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 fire 4"	},
+	{"P2 Button 5",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 5"	},
+	{"P2 Button 6",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 6"	},
+
+	{"P2 Button 7",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 7"	},
+	{"P2 Button 8",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 8"	},
+	{"P2 Button 9",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 9"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Mole)
 
 static struct BurnDIPInfo MoleDIPList[]=
 {
-	{0x16, 0xff, 0xff, 0x00, NULL			},
-	{0x17, 0xff, 0xff, 0x00, NULL			},
+	{0x16, 0xff, 0xff, 0x10, NULL				},
+	{0x17, 0xff, 0xff, 0x00, NULL				},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x16, 0x01, 0x10, 0x00, "Upright"		},
-	{0x16, 0x01, 0x10, 0x10, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"			},
+	{0x16, 0x01, 0x10, 0x00, "Upright"			},
+	{0x16, 0x01, 0x10, 0x10, "Cocktail"			},
 
 	{0   , 0xfe, 0   ,    2, "Round Points"		},
-	{0x17, 0x01, 0x01, 0x00, "Off"			},
-	{0x17, 0x01, 0x01, 0x01, "On"			},
+	{0x17, 0x01, 0x01, 0x00, "Off"				},
+	{0x17, 0x01, 0x01, 0x01, "On"				},
 
-	{0   , 0xfe, 0   ,    2, "Coinage"		},
-	{0x17, 0x01, 0x02, 0x00, "1 Coin  1 Credits"	},
-	{0x17, 0x01, 0x02, 0x02, "1 Coin  2 Credits"	},
+	{0   , 0xfe, 0   ,    2, "Coinage"			},
+	{0x17, 0x01, 0x02, 0x00, "1 Coin  1 Credits"},
+	{0x17, 0x01, 0x02, 0x02, "1 Coin  2 Credits"},
 };
 
 STDDIPINFO(Mole)
@@ -237,12 +238,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvM6502ROM + 0x0000,  0, 1)) return 1;
@@ -287,7 +283,7 @@ static INT32 DrvExit()
 	M6502Exit();
 	AY8910Exit(0);
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -306,7 +302,7 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	GenericTilemapSetFlip(TMAP_GLOBAL, flipscreen ? TMAP_FLIPXY : 0);
+	//GenericTilemapSetFlip(TMAP_GLOBAL, flipscreen ? TMAP_FLIPXY : 0);
 
 	GenericTilemapDraw(0, pTransDraw, 0);
 

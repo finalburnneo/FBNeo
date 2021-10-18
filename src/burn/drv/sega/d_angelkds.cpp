@@ -48,8 +48,8 @@ static UINT8 DrvReset;
 static UINT8 DrvInputs[3];
 
 static struct BurnInputInfo AngelkdsInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
+	{"P1 Coin",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Start",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
 	{"P1 Left Stick Up",	BIT_DIGITAL,	DrvJoy2 + 4,	"p3 up"		},
 	{"P1 Left Stick Down",	BIT_DIGITAL,	DrvJoy2 + 5,	"p3 down"	},
 	{"P1 Left Stick Left",	BIT_DIGITAL,	DrvJoy2 + 6,	"p3 left"	},
@@ -59,8 +59,8 @@ static struct BurnInputInfo AngelkdsInputList[] = {
 	{"P1 Right Stick Left",	BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
 	{"P1 Right Stick Right",BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
+	{"P2 Coin",				BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Start",			BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
 	{"P2 Left Stick Up",	BIT_DIGITAL,	DrvJoy3 + 4,	"p4 up"		},
 	{"P2 Left Stick Down",	BIT_DIGITAL,	DrvJoy3 + 5,	"p4 down"	},
 	{"P2 Left Stick Left",	BIT_DIGITAL,	DrvJoy3 + 6,	"p4 left"	},
@@ -70,39 +70,39 @@ static struct BurnInputInfo AngelkdsInputList[] = {
 	{"P2 Right Stick Left",	BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
 	{"P2 Right Stick Right",BIT_DIGITAL,	DrvJoy3 + 3,	"p2 right"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",				BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",				BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",				BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",				BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Angelkds)
 
 static struct BurnInputInfo SpcpostnInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Spcpostn)
@@ -248,11 +248,10 @@ static void bankswitch(INT32 data)
 {
 	DrvZ80Bank0 = (data & 0x0f);
 
-	ZetMapArea(0x8000, 0xbfff, 0, DrvZ80ROM0 + 0x10000 + DrvZ80Bank0 * 0x4000);
-	ZetMapArea(0x8000, 0xbfff, 0, DrvZ80ROM0 + 0x10000 + DrvZ80Bank0 * 0x4000);
+	ZetMapMemory(DrvZ80ROM0 + 0x10000 + DrvZ80Bank0 * 0x4000, 0x8000, 0xbfff, MAP_ROM);
 }
 
-void __fastcall angelkds_write(UINT16 address, UINT8 data)
+static void __fastcall angelkds_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -282,7 +281,7 @@ void __fastcall angelkds_write(UINT16 address, UINT8 data)
 	}
 }
 
-void __fastcall angelkds_out_port(UINT16 port, UINT8 data)
+static void __fastcall angelkds_out_port(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
@@ -304,7 +303,7 @@ void __fastcall angelkds_out_port(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall angelkds_in_port(UINT16 port)
+static UINT8 __fastcall angelkds_in_port(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -332,7 +331,7 @@ UINT8 __fastcall angelkds_in_port(UINT16 port)
 	return 0;
 }
 
-void __fastcall main_to_sound_out_port(UINT16 port, UINT8 data)
+static void __fastcall main_to_sound_out_port(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
@@ -355,7 +354,7 @@ void __fastcall main_to_sound_out_port(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall main_to_sound_in_port(UINT16 port)
+static UINT8 __fastcall main_to_sound_in_port(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -412,7 +411,7 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	DrvZ80ROM0	= Next; Next += 0x040000;
-	DrvZ80ROMDec	= Next; Next += 0x00c000;
+	DrvZ80ROMDec= Next; Next += 0x00c000;
 	DrvZ80ROM1	= Next; Next += 0x010000;
 
 	DrvGfxROM0	= Next; Next += 0x010000;
@@ -479,95 +478,6 @@ static INT32 DrvGfxDecode()
 	return 0;
 }
 
-//-----------------------------------------------------------------------------------------------------
-// space position
-/*
-static void sega_decode_2(UINT8 *rom, UINT8 *decrypted,
-		const UINT8 opcode_xor[64],const INT32 opcode_swap_select[64],
-		const UINT8 data_xor[64],const INT32 data_swap_select[64])
-{
-	static const UINT8 swaptable[24][4] =
-	{
-		{ 6,4,2,0 }, { 4,6,2,0 }, { 2,4,6,0 }, { 0,4,2,6 },
-		{ 6,2,4,0 }, { 6,0,2,4 }, { 6,4,0,2 }, { 2,6,4,0 },
-		{ 4,2,6,0 }, { 4,6,0,2 }, { 6,0,4,2 }, { 0,6,4,2 },
-		{ 4,0,6,2 }, { 0,4,6,2 }, { 6,2,0,4 }, { 2,6,0,4 },
-		{ 0,6,2,4 }, { 2,0,6,4 }, { 0,2,6,4 }, { 4,2,0,6 },
-		{ 2,4,0,6 }, { 4,0,2,6 }, { 2,0,4,6 }, { 0,2,4,6 },
-	};
-
-	for (INT32 A = 0x0000;A < 0x8000;A++)
-	{
-		const UINT8 *tbl;
-
-		INT32 src = rom[A];
-
-		// pick the translation table from bits 0, 3, 6, 9, 12 and 14 of the address
-		INT32 row = (A & 1) + (((A >> 3) & 1) << 1) + (((A >> 6) & 1) << 2)
-				+ (((A >> 9) & 1) << 3) + (((A >> 12) & 1) << 4) + (((A >> 14) & 1) << 5);
-
-		// decode opcodes
-		tbl = swaptable[opcode_swap_select[row]];
-		decrypted[A] = BITSWAP08(src,7,tbl[0],5,tbl[1],3,tbl[2],1,tbl[3]) ^ opcode_xor[row];
-
-		// decode data
-		tbl = swaptable[data_swap_select[row]];
-		rom[A] = BITSWAP08(src,7,tbl[0],5,tbl[1],3,tbl[2],1,tbl[3]) ^ data_xor[row];
-	}
-}
-
-static void sega_decode_317(UINT8 *src, UINT8 *dst, INT32 order, INT32 opcode_shift, INT32 data_shift)
-{
-	static const UINT8 xor1_317[1+64] =
-	{
-		0x54,
-		0x14,0x15,0x41,0x14,0x50,0x55,0x05,0x41,0x01,0x10,0x51,0x05,0x11,0x05,0x14,0x55,
-		0x41,0x05,0x04,0x41,0x14,0x10,0x45,0x50,0x00,0x45,0x00,0x00,0x00,0x45,0x00,0x00,
-		0x54,0x04,0x15,0x10,0x04,0x05,0x11,0x44,0x04,0x01,0x05,0x00,0x44,0x15,0x40,0x45,
-		0x10,0x15,0x51,0x50,0x00,0x15,0x51,0x44,0x15,0x04,0x44,0x44,0x50,0x10,0x04,0x04,
-	};
-
-	static const UINT8 xor2_317[2+64] =
-	{
-		0x04,
-		0x44,
-		0x15,0x51,0x41,0x10,0x15,0x54,0x04,0x51,0x05,0x55,0x05,0x54,0x45,0x04,0x10,0x01,
-		0x51,0x55,0x45,0x55,0x45,0x04,0x55,0x40,0x11,0x15,0x01,0x40,0x01,0x11,0x45,0x44,
-		0x40,0x05,0x15,0x15,0x01,0x50,0x00,0x44,0x04,0x50,0x51,0x45,0x50,0x54,0x41,0x40,
-		0x14,0x40,0x50,0x45,0x10,0x05,0x50,0x01,0x40,0x01,0x50,0x50,0x50,0x44,0x40,0x10,
-	};
-
-	static const INT32 swap1_317[1+64] =
-	{
-		 7,
-		 1,11,23,17,23, 0,15,19,
-		20,12,10, 0,18,18, 5,20,
-		13, 0,18,14, 5, 6,10,21,
-		 1,11, 9, 3,21, 4, 1,17,
-		 5, 7,16,13,19,23,20, 2,
-		10,23,23,15,10,12, 0,22,
-		14, 6,15,11,17,15,21, 0,
-		 6, 1, 1,18, 5,15,15,20,
-	};
-
-	static const INT32 swap2_317[2+64] =
-	{
-		 7,
-		12,
-		18, 8,21, 0,22,21,13,21,
-		20,13,20,14, 6, 3, 5,20,
-		 8,20, 4, 8,17,22, 0, 0,
-		 6,17,17, 9, 0,16,13,21,
-		 3, 2,18, 6,11, 3, 3,18,
-		18,19, 3, 0, 5, 0,11, 8,
-		 8, 1, 7, 2,10, 8,10, 2,
-		 1, 3,12,16, 0,17,10, 1,
-	};
-
-	if (order) sega_decode_2(src, dst, xor2_317+opcode_shift, swap2_317+opcode_shift, xor1_317+data_shift, swap1_317+data_shift);
-	else       sega_decode_2(src, dst, xor1_317+opcode_shift, swap1_317+opcode_shift, xor2_317+data_shift, swap2_317+data_shift);
-}*/
-
 // This is used in Sega System 1 (d_sys1.cpp)
 void sega_decode_317(UINT8 *pDest, UINT8 *pDestDec, INT32 order, INT32 opcode_shift, INT32 data_shift);
 
@@ -580,12 +490,7 @@ static void spcpostn_decode()
 
 static INT32 DrvInit(INT32 game)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (game == 1) // angelkds
@@ -650,26 +555,14 @@ static INT32 DrvInit(INT32 game)
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM0);
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROMDec, DrvZ80ROM0);
-	ZetMapArea(0xc000, 0xdfff, 0, DrvZ80RAM0);
-	ZetMapArea(0xc000, 0xdfff, 1, DrvZ80RAM0);
-	ZetMapArea(0xc000, 0xdfff, 2, DrvZ80RAM0);
-	ZetMapArea(0xe000, 0xe3ff, 0, DrvBgtRAM);
-	ZetMapArea(0xe000, 0xe3ff, 1, DrvBgtRAM);
-	ZetMapArea(0xe000, 0xe3ff, 2, DrvBgtRAM);
-	ZetMapArea(0xe400, 0xe7ff, 0, DrvBgbRAM);
-	ZetMapArea(0xe400, 0xe7ff, 1, DrvBgbRAM);
-	ZetMapArea(0xe400, 0xe7ff, 2, DrvBgbRAM);
-	ZetMapArea(0xe800, 0xebff, 0, DrvTxtRAM);
-	ZetMapArea(0xe800, 0xebff, 1, DrvTxtRAM);
-	ZetMapArea(0xe800, 0xebff, 2, DrvTxtRAM);
-	ZetMapArea(0xec00, 0xecff, 0, DrvSprRAM);
-	ZetMapArea(0xec00, 0xecff, 1, DrvSprRAM);
-	ZetMapArea(0xec00, 0xecff, 2, DrvSprRAM);
-	ZetMapArea(0xed00, 0xefff, 0, DrvPalRAM);
-	ZetMapArea(0xed00, 0xefff, 1, DrvPalRAM);
-	ZetMapArea(0xed00, 0xefff, 2, DrvPalRAM);
+	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80ROMDec,	0x0000, 0x7fff, MAP_FETCHOP);
+	ZetMapMemory(DrvZ80RAM0,	0xc000, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvBgtRAM,		0xe000, 0xe3ff, MAP_RAM);
+	ZetMapMemory(DrvBgbRAM,		0xe400, 0xe7ff, MAP_RAM);
+	ZetMapMemory(DrvTxtRAM,		0xe800, 0xebff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM,		0xec00, 0xecff, MAP_RAM);
+	ZetMapMemory(DrvPalRAM,		0xed00, 0xefff, MAP_RAM);
 	ZetSetWriteHandler(angelkds_write);
 	ZetSetOutHandler(angelkds_out_port);
 	ZetSetInHandler(angelkds_in_port);
@@ -677,25 +570,22 @@ static INT32 DrvInit(INT32 game)
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM1);
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM1);
-	ZetMapArea(0x8000, 0x87ff, 0, DrvZ80RAM1);
-	ZetMapArea(0x8000, 0x87ff, 1, DrvZ80RAM1);
-	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM1);
+	ZetMapMemory(DrvZ80ROM1, 0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM1, 0x8000, 0x87ff, MAP_RAM);
 	ZetSetOutHandler(main_to_sound_out_port);
 	ZetSetInHandler(main_to_sound_in_port);
 	ZetClose();
 
 	BurnYM2203Init(2, 4000000, &DrvFMIRQHandler, 0);
 	BurnTimerAttachZet(4000000);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.45, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.65, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.65, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.65, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_YM2203_ROUTE, 0.45, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_1, 0.65, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_2, 0.65, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.65, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.65, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.45, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.45, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.45, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(1, BURN_SND_YM2203_YM2203_ROUTE, 0.65, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_1, 0.45, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_2, 0.45, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.45, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -711,7 +601,7 @@ static INT32 DrvExit()
 
 	ZetExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -747,19 +637,7 @@ static void draw_sprites(UINT16 *dest, INT32 enable)
 
 		if (attr & enable)
 		{
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(dest, code, sx, sy - 8, color, 4, 15, 0, DrvGfxROM1);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(dest, code, sx, sy - 8, color, 4, 15, 0, DrvGfxROM1);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(dest, code, sx, sy - 8, color, 4, 15, 0, DrvGfxROM1);
-				} else {
-					Render16x16Tile_Mask_Clip(dest, code, sx, sy - 8, color, 4, 15, 0, DrvGfxROM1);
-				}
-			}
+			Draw16x16MaskTile(dest, code, sx, sy - 8, flipx, flipy, color, 4, 15, 0, DrvGfxROM1);
 		}
 	}
 }
@@ -842,34 +720,25 @@ static INT32 DrvFrame()
 		DrvInputs[0] = (DrvInputs[0] & 0x7f) | (DrvDips[2] & 0x80);
 	}
 
-	INT32 nSegment;
 	INT32 nInterleave = 10;
 	INT32 nCyclesTotal[2] = { 8000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nSegment = nCyclesTotal[0] / nInterleave;
-
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nSegment);
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		CPU_RUN(0, Zet);
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 		ZetClose();
 	}
-
-	ZetOpen(1);
-
-	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -908,7 +777,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(layer_ctrl);
 
 		SCAN_VAR(DrvZ80Bank0);
-		
+
 		if (nAction & ACB_WRITE) {
 			ZetOpen(0);
 			bankswitch(DrvZ80Bank0);

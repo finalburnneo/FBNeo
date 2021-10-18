@@ -1098,6 +1098,7 @@ static INT32 DrvInit(INT32 (*pLoadRoms)(), void (*p68KInit)(), INT32 zLen)
 	DACInit(1, 0, 1, DrvSyncDAC);
 	DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
 	DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
+	DACDCBlock(1);
 
 	GenericTilesInit();
 

@@ -135,6 +135,7 @@
 #include <stddef.h>
 #include "burnint.h"
 #include "s14001a.h"
+#include "stream.h"
 
 typedef struct
 {
@@ -158,6 +159,7 @@ typedef struct
 	UINT8 audioout; // filtered audio output
 	INT16 filtervals[8];
 	UINT8 VSU1000_amp; // amplitude setting on VSU-1000 board
+	UINT8 VSU1000_amp_dest; // amplitude setting on VSU-1000 board
 	INT32 clock; // for savestates, to restore the clock
 
 	UINT8 *SpeechRom; // array to hold rom contents, mame will not need this, will use a pointer
@@ -165,17 +167,7 @@ typedef struct
 
 static S14001AChip *our_chip = NULL;
 
-// for resampling
-static UINT32 nSampleSize;
-static INT32 nFractionalPosition;
-
-static INT32 samples_from; // (samples per frame)
-static INT16 *mixer_buffer;
-
-static INT32 (*pCPUTotalCycles)() = NULL;
-static UINT32  nDACCPUMHZ = 0;
-static INT32   nCurrentPosition;
-
+static Stream stream;
 
 //#define DEBUGSTATE
 
@@ -445,9 +437,10 @@ static void s14001a_clock(S14001AChip *chip) /* called once per clock */
 	}
 }
 
-static void s14001a_pcm_update(INT16 *buffer, INT32 length)
+static void s14001a_pcm_update(INT16 **streams, INT32 length)
 {
 	S14001AChip *chip = our_chip;
+	INT16 *buffer = streams[0];
 
 	for (INT32 i = 0; i < length; i++)
 	{
@@ -466,80 +459,35 @@ static void s14001a_pcm_update(INT16 *buffer, INT32 length)
 		}
 #endif
 		buffer[i] = ((((INT16)chip->audioout)-8)<<9)*chip->VSU1000_amp;
+
+		if (chip->VSU1000_amp_dest != chip->VSU1000_amp) { // ramp-it
+			if (chip->VSU1000_amp < chip->VSU1000_amp_dest) {
+				chip->VSU1000_amp++;
+			}
+			else if (chip->VSU1000_amp > chip->VSU1000_amp_dest) {
+				chip->VSU1000_amp--;
+			}
+		}
 	}
-}
-
-// Streambuffer handling
-static INT32 SyncInternal()
-{
-	return (INT32)(float)(samples_from * (pCPUTotalCycles() / (nDACCPUMHZ / (nBurnFPS / 100.0000))));
-}
-
-static void UpdateStream(INT32 length)
-{
-	if (!pBurnSoundOut) return;
-	length -= nCurrentPosition;
-	if (length <= 0) return;
-
-	INT16 *mix = mixer_buffer + 5 + nCurrentPosition;
-
-	memset(mix, 0, length * sizeof(INT16));
-
-	s14001a_pcm_update(mix, length);
-
-	nCurrentPosition += length;
 }
 
 void s14001a_render(INT16 *buffer, INT32 length)
 {
-	if (mixer_buffer == NULL || samples_from == 0) return;
-
 	if (length != nBurnSoundLen) {
 		bprintf(0, _T("s14001a_render(): once per frame, please!\n"));
 		return;
 	}
 
-	UpdateStream(samples_from);
-
-	INT16 *pBufL = mixer_buffer + 5;
-
-	for (INT32 i = (nFractionalPosition & 0xFFFF0000) >> 15; i < (length << 1); i += 2, nFractionalPosition += nSampleSize) {
-		INT32 nLeftSample[4] = {0, 0, 0, 0};
-		INT32 nTotalLeftSample; // it's mono!
-
-		nLeftSample[0] += (INT32)(pBufL[(nFractionalPosition >> 16) - 3]);
-		nLeftSample[1] += (INT32)(pBufL[(nFractionalPosition >> 16) - 2]);
-		nLeftSample[2] += (INT32)(pBufL[(nFractionalPosition >> 16) - 1]);
-		nLeftSample[3] += (INT32)(pBufL[(nFractionalPosition >> 16) - 0]);
-
-		nTotalLeftSample  = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3]);
-		nTotalLeftSample  = BURN_SND_CLIP(nTotalLeftSample * 0.75);
-
-		buffer[i + 0] = BURN_SND_CLIP(buffer[i + 0] + nTotalLeftSample);
-		buffer[i + 1] = BURN_SND_CLIP(buffer[i + 1] + nTotalLeftSample);
-	}
-	nCurrentPosition = 0;
-
-	if (length >= nBurnSoundLen) {
-		INT32 nExtraSamples = samples_from - (nFractionalPosition >> 16);
-
-		for (INT32 i = -4; i < nExtraSamples; i++) {
-			pBufL[i] = pBufL[(nFractionalPosition >> 16) + i];
-		}
-
-		nFractionalPosition &= 0xFFFF;
-
-		nCurrentPosition = nExtraSamples;
-	}
+	stream.render(buffer, length);
 }
 
 void s14001a_reset()
 {
+	memset(our_chip, 0, STRUCT_SIZE_HELPER(S14001AChip, filtervals));
+
 	our_chip->GlobalSilenceState = 1;
 	our_chip->OldDelta = 0x02;
 	our_chip->DACOutput = SILENCE;
-	our_chip->machineState = 0;
-	our_chip->resetState = 0;
 
 	for (INT32 i = 0; i < 8; i++)
 	{
@@ -557,21 +505,18 @@ void s14001a_init(UINT8 *rom, INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
 	s14001a_reset();
 	chip->SpeechRom = rom;
 
-	pCPUTotalCycles = pCPUCyclesCB;
-	nDACCPUMHZ = nCpuMHZ;
-
-	mixer_buffer = (INT16*)BurnMalloc(2 * sizeof(INT16) * 200000); // should be enough?
-
-	nCurrentPosition = 0;
-	nFractionalPosition = 0;
+	stream.init(nBurnSoundRate, nBurnSoundRate, 1, 1, s14001a_pcm_update);
+	stream.set_buffered(pCPUCyclesCB, nCpuMHZ);
+	stream.set_volume(0.35);
 
 	s14001a_set_clock(nBurnSoundRate);
 }
 
 void s14001a_exit()
 {
-	BurnFree(mixer_buffer);
 	BurnFree(our_chip);
+
+	stream.exit();
 }
 
 void s14001a_scan(INT32 nAction, INT32 *pnMin)
@@ -585,19 +530,19 @@ void s14001a_scan(INT32 nAction, INT32 *pnMin)
 
 INT32 s14001a_bsy_read()
 {
-	UpdateStream(SyncInternal());
+	stream.update();
 	return (our_chip->machineState != 0);
 }
 
 void s14001a_reg_write(INT32 data)
 {
-	UpdateStream(SyncInternal());
+	stream.update();
 	our_chip->WordInput = data;
 }
 
 void s14001a_rst_write(INT32 data)
 {
-	UpdateStream(SyncInternal());
+	stream.update();
 	our_chip->LatchedWord = our_chip->WordInput;
 	our_chip->resetState = (data==1);
 	our_chip->machineState = our_chip->resetState ? 1 : our_chip->machineState;
@@ -607,12 +552,15 @@ void s14001a_set_clock(INT32 clock)
 {
 	our_chip->clock = clock;
 
-	samples_from = (INT32)((double)((clock * 100) / nBurnFPS) + 0.5);
-	nSampleSize = (UINT32)clock * (1 << 16) / nBurnSoundRate;
+	stream.set_rate(clock);
 }
 
 void s14001a_set_volume(INT32 volume)
 {
-	our_chip->VSU1000_amp = volume;
+	our_chip->VSU1000_amp_dest = volume;
 }
 
+void s14001a_update_stream()
+{
+	stream.update();
+}

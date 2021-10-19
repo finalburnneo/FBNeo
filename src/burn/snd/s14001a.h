@@ -8,4 +8,5 @@ void s14001a_reg_write(INT32 data);
 void s14001a_rst_write(INT32 data);
 void s14001a_set_clock(INT32 clock);
 void s14001a_set_volume(INT32 volume);
+void s14001a_update_stream();
 

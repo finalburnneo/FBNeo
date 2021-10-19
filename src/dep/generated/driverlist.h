@@ -2678,6 +2678,7 @@ DRV		BurnDrvsg1k_circusc;
 DRV		BurnDrvpce_circusld;
 DRV		BurnDrvCischeat;
 DRV		BurnDrvmd_citadel;
+DRV		BurnDrvCityatta;
 DRV		BurnDrvCitybombj;
 DRV		BurnDrvCitybomb;
 DRV		BurnDrvMSX_citycon;
@@ -19924,7 +19925,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_cso,			// C_So! (Kor)
 	&BurnSpeccabal,				// Cabal (128K)
 	&BurnDrvCabala,				// Cabal (korea?, Joystick)
-	&BurnDrvCabalng,			// Cabal (Neo-Geo Unfinished Conversion)
+	&BurnDrvCabalng,			// Cabal (Neo-Geo Conversion, beta 2)
 	&BurnDrvCabalukj,			// Cabal (UK, Joystick)
 	&BurnDrvCabaluk,			// Cabal (UK, Trackball)
 	&BurnDrvCabalus,			// Cabal (US set 1, Trackball)
@@ -20517,6 +20518,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_circusld,		// Circus Lido
 	&BurnDrvCischeat,			// Cisco Heat
 	&BurnDrvmd_citadel,			// Citadel of Chaos, The (HB, rev2.0)
+	&BurnDrvCityatta,			// City Attack (Petaco S.A., bootleg of Pleiads)
 	&BurnDrvCitybombj,			// City Bomber (Japan)
 	&BurnDrvCitybomb,			// City Bomber (World)
 	&BurnDrvMSX_citycon,		// City Connection (Jpn)
@@ -26354,7 +26356,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_martianoids,	// Martianoids (Euro)
 	&BurnDrvMarvlandj,			// Marvel Land (Japan)
 	&BurnDrvmd_marvlandj,		// Marvel Land (Jpn)
-	&BurnDrvMarvland,			// Marvel Land (US)
+	&BurnDrvMarvland,			// Marvel Land (US, prototype?)
 	&BurnDrvmd_marvland,		// Marvel Land (USA)
 	&BurnDrvCpsMsha,			// Marvel Super Heroes (951024 Asia)
 	&BurnDrvCpsMshbr1,			// Marvel Super Heroes (951024 Brazil)

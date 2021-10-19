@@ -2306,10 +2306,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="cabalng" romof="neogeo">
-		<description>Cabal (Neo-Geo Unfinished Conversion) [Hack, Buggy, works in MVS mode only!]</description>
+		<description>Cabal (Neo-Geo Conversion, beta 2) [Hack, Buggy, works in MVS mode only!]</description>
 		<year>1988</year>
 		<manufacturer>TAD Corporation</manufacturer>
-		<rom name="cabal-p1.bin" size="1048576" crc="49232965"/>
+		<rom name="cabal-p1.bin" size="1048576" crc="bb193926"/>
 		<rom name="cabal-s1.bin" size="131072" crc="45f0bc5e"/>
 		<rom name="cabal-c1.bin" size="1048576" crc="9f5ea8bb"/>
 		<rom name="cabal-c2.bin" size="1048576" crc="edf277f2"/>

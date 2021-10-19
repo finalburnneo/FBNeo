@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17596 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17597 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2063,7 +2063,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_cso	|  	| C_So! (Kor)						| 		| 198?	| Joy Soft	| Sega Master Sy| 					|
 | spec_cabal	|  	| Cabal (128K)						| 		| 1988	| Ocean		| ZX Spectrum	| 					|
 | cabala	|  	| Cabal (korea?, Joystick)				| cabal		| 1988	| TAD Corporatio| Miscellaneous	| 					|
-| cabalng	|  	| Cabal (Neo-Geo Unfinished Conversion)			| 		| 1988	| TAD Corporatio| Neo Geo MVS	| Buggy, works in MVS mode only!	|
+| cabalng	|  	| Cabal (Neo-Geo Conversion, beta 2)			| 		| 1988	| TAD Corporatio| Neo Geo MVS	| Buggy, works in MVS mode only!	|
 | cabalukj	|  	| Cabal (UK, Joystick)					| cabal		| 1988	| TAD Corporatio| Miscellaneous	| 					|
 | cabaluk	|  	| Cabal (UK, Trackball)					| cabal		| 1988	| TAD Corporatio| Miscellaneous	| 					|
 | cabalus	|  	| Cabal (US set 1, Trackball)				| cabal		| 1988	| TAD Corporatio| Miscellaneous	| 					|
@@ -2646,6 +2646,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_circusld	|  	| Circus Lido						| 		| 1991	| Yuni Post	| PC Engine	| 					|
 | cischeat	|  	| Cisco Heat						| 		| 1990	| Jaleco	| Miscellaneous	| Imperfect graphics			|
 | md_citadel	|  	| Citadel of Chaos, The (HB, rev2.0)			| 		| 2021	| Studio Vetea	| Sega Megadrive| 					|
+| cityatta	|  	| City Attack (Petaco S.A., bootleg of Pleiads)		| pleiads	| 1981	| bootleg (Petac| Miscellaneous	| 					|
 | citybombj	|  	| City Bomber (Japan)					| citybomb	| 1987	| Konami	| GX787		| 					|
 | citybomb	|  	| City Bomber (World)					| 		| 1987	| Konami	| GX787		| 					|
 | msx_citycon	|  	| City Connection (Jpn)					| 		| 1986	| Nihon Dexter	| MSX		| 					|
@@ -7470,7 +7471,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_knightrs	|  	| Knight Rider Special					| 		| 1989	| Pack-In-Video	| PC Engine	| 					|
 | spec_knighttyme|  	| Knight Tyme (128K)					| 		| 1986	| Mastertronic	| ZX Spectrum	| Options menu = A, Z, Space		|
 | cv_kngtmare	|  	| Knightmare (HB)					| 		| 2015	| Konami	| ColecoVision	| SGM - Published by Team Pixelboy	|
-| kngtmare	|  	| Knightmare (prototype)				| 		| 1983	| Gottlieb	| Miscellaneous	| 					|
+| kngtmare	|  	| Knightmare (prototype)				| 		| 1983	| Gottlieb	| Miscellaneous	| Game has NO sound			|
 | msx_knightmr	|  	| Knightmare - Majou Densetsu (Jpn)			| 		| 1986	| Konami	| MSX		| 					|
 | msx_knightmrb	|  	| Knightmare - Majou Densetsu (Jpn, Alt 2)		| msx_knightmr	| 1986	| Konami	| MSX		| 					|
 | msx_knightmra	|  	| Knightmare - Majou Densetsu (Jpn, Alt)		| msx_knightmr	| 1986	| Konami	| MSX		| 					|
@@ -8413,7 +8414,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_martianoids|  	| Martianoids (Euro)					| 		| 1987	| Ultimate Play | MSX		| 					|
 | marvlandj	|  	| Marvel Land (Japan)					| marvland	| 1989	| Namco		| System 2	| 					|
 | md_marvlandj	|  	| Marvel Land (Jpn)					| md_talmit	| 1991	| Namcot	| Sega Megadrive| 					|
-| marvland	|  	| Marvel Land (US)					| 		| 1989	| Namco		| System 2	| Bad music - use the Japan version	|
+| marvland	|  	| Marvel Land (US, prototype?)				| 		| 1989	| Namco		| System 2	| Bad music - use the Japan version	|
 | md_marvland	|  	| Marvel Land (USA)					| md_talmit	| 1991	| Namcot	| Sega Megadrive| 					|
 | msha		|  	| Marvel Super Heroes (951024 Asia)			| msh		| 1995	| Capcom	| CPS2		| 					|
 | mshbr1	|  	| Marvel Super Heroes (951024 Brazil)			| msh		| 1995	| Capcom	| CPS2		| 					|
@@ -10741,8 +10742,8 @@ This list contains all games supported by FinalBurn Neo.
 | pleiadbl	|  	| Pleiads (bootleg set 1)				| pleiads	| 1981	| bootleg	| Miscellaneous	| 					|
 | pleiadsb2	|  	| Pleiads (bootleg set 2)				| pleiads	| 1981	| bootleg (ESG)	| Miscellaneous	| 					|
 | pleiadce	|  	| Pleiads (Centuri)					| pleiads	| 1981	| Tehkan (Centur| Miscellaneous	| 					|
-| pleiadsi	|  	| Pleiads (Irecsa)					| pleiads	| 1981	| bootleg? (Irec| Miscellaneous	| 					|
-| pleiadsn	|  	| Pleiads (Niemer S.A.)					| pleiads	| 1981	| Niemer S.A.	| Miscellaneous	| 					|
+| pleiadsi	|  	| Pleiads (Irecsa)					| pleiads	| 1981	| bootleg (Irecs| Miscellaneous	| 					|
+| pleiadsn	|  	| Pleiads (Niemer S.A.)					| pleiads	| 1981	| bootleg (Nieme| Miscellaneous	| 					|
 | pleiadss	|  	| Pleiads (Spanish bootleg)				| pleiads	| 1981	| bootleg	| Miscellaneous	| 					|
 | pleiads	|  	| Pleiads (Tehkan)					| 		| 1981	| Tehkan	| Miscellaneous	| 					|
 | nes_ploid	|  	| Ploid (HB)						| 		| 2020	| NAPE Games	| Miscellaneous	| 					|

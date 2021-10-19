@@ -330,6 +330,24 @@ void BurnPaddleGetDial(BurnDialINF &dial, INT32 num, INT32 isB)
 	}
 }
 
+INT32 BurnTrackballGetDirection(INT32 num, INT32 isB)
+{
+	if (num > MAX_GUNS - 1) return 0;
+
+	BurnDialINF dial;
+	BurnPaddleGetDial(dial, num, isB);
+
+	if (dial.Backward) return -1;
+	if (dial.Forward) return +1;
+
+	return 0;
+}
+
+INT32 BurnTrackballGetDirection(INT32 dev)
+{
+	return BurnTrackballGetDirection(dev >> 1, dev & 1);
+}
+
 UINT8 BurnTrackballRead(INT32 dev) // linear device #
 {
 	return BurnTrackballRead(dev >> 1, dev & 1);

@@ -242,6 +242,40 @@ static struct BurnDIPInfo PleiadceDIPList[]=
 
 STDDIPINFO(Pleiadce)
 
+static struct BurnDIPInfo CityattaDIPList[]=
+{
+	{0x0c, 0xff, 0xff, 0x60, NULL			},
+	{0x0e, 0xff, 0xff, 0x00, NULL			},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x0c, 0x01, 0x03, 0x00, "3"			},
+	{0x0c, 0x01, 0x03, 0x01, "4"			},
+	{0x0c, 0x01, 0x03, 0x02, "5"			},
+	{0x0c, 0x01, 0x03, 0x03, "6"			},
+
+	{0   , 0xfe, 0   ,    2, "Unknwon"		},
+	{0x0c, 0x01, 0x04, 0x00, "On"			},
+	{0x0c, 0x01, 0x04, 0x04, "Off"			},
+
+	{0   , 0xfe, 0   ,    2, "Bonus Life"	},
+	{0x0c, 0x01, 0x08, 0x00, "3K"			},
+	{0x0c, 0x01, 0x08, 0x04, "5K"			},
+	
+	{0   , 0xfe, 0   ,    2, "Coinage"		},
+	{0x0c, 0x01, 0x10, 0x10, "2 Coins 1 Credits"	},
+	{0x0c, 0x01, 0x10, 0x00, "1 Coin  1 Credits"	},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"	},
+	{0x0c, 0x01, 0x40, 0x00, "Off"			},
+	{0x0c, 0x01, 0x40, 0x40, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x0e, 0x01, 0x01, 0x00, "Upright"		},
+	{0x0e, 0x01, 0x01, 0x01, "Cocktail"		},
+};
+
+STDDIPINFO(Cityatta)
+
 static struct BurnDIPInfo CondorDIPList[]=
 {
 	{0x0d, 0xff, 0xff, 0x30, NULL			},
@@ -2203,7 +2237,7 @@ STD_ROM_FN(pleiadsi)
 
 struct BurnDriver BurnDrvPleiadsi = {
 	"pleiadsi", "pleiads", NULL, NULL, "1981",
-	"Pleiads (Irecsa)\0", NULL, "bootleg? (Irecsa)", "Miscellaneous",
+	"Pleiads (Irecsa)\0", NULL, "bootleg (Irecsa)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, pleiadsiRomInfo, pleiadsiRomName, NULL, NULL, NULL, NULL, PhoenixInputInfo, PleiadceDIPInfo,
@@ -2239,7 +2273,7 @@ STD_ROM_FN(pleiadsn)
 
 struct BurnDriver BurnDrvPleiadsn = {
 	"pleiadsn", "pleiads", NULL, NULL, "1981",
-	"Pleiads (Niemer S.A.)\0", NULL, "Niemer S.A.", "Miscellaneous",
+	"Pleiads (Niemer S.A.)\0", NULL, "bootleg (Niemer S.A.)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, pleiadsnRomInfo, pleiadsnRomName, NULL, NULL, NULL, NULL, PhoenixInputInfo, PleiadceDIPInfo,
@@ -2279,6 +2313,43 @@ struct BurnDriver BurnDrvPleiadss = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, pleiadssRomInfo, pleiadssRomName, NULL, NULL, NULL, NULL, PhoenixInputInfo, PleiadceDIPInfo,
+	PleiadsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	208, 256, 3, 4
+};
+
+// City Attack (Petaco S.A., bootleg of Pleiads)
+/* PCB silkscreened as "H-P6 NO.085318"
+   On screen game title shows just "Attack", but the cabinet, manual and legal registry name (number A/20/00241) is "City Attack" */
+   
+static struct BurnRomInfo cityattaRomDesc[] = {
+	{ "1-2716.bin",		0x0800, 0xc013515f, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
+	{ "2-2716.bin",		0x0800, 0xb254217c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3-2716.bin",		0x0800, 0x87e700bb, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4-2716.bin",		0x0800, 0xbcda59ae, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "5-2716.bin",		0x0800, 0x49c629bc, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "6-2716.bin",		0x0800, 0xf1a8a00d, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "7-2716.bin",		0x0800, 0xb5f07fbc, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "8-2716.bin",		0x0800, 0xb1b5a8a6, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "11-2716.bin",	0x0800, 0x6694a80f, 2 | BRF_GRA },           //  8 Background Tiles
+	{ "12-2716.bin",	0x0800, 0x5188fc29, 2 | BRF_GRA },           //  9
+
+	{ "10-2716.bin",	0x0800, 0x85866607, 3 | BRF_GRA },           // 10 Foreground Tiles
+	{ "9-2716.bin",		0x0800, 0xa841d511, 3 | BRF_GRA },           // 11
+
+	{ "ic41a-7611.bin",	0x0100, 0xe38eeb83, 4 | BRF_GRA },           // 12 Color Proms
+	{ "ic40a-7611.bin",	0x0100, 0x7a1bcb1e, 4 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(cityatta)
+STD_ROM_FN(cityatta)
+
+struct BurnDriver BurnDrvCityatta = {
+	"cityatta", "pleiads", NULL, NULL, "1981",
+	"City Attack (Petaco S.A., bootleg of Pleiads)\0", NULL, "bootleg (Petaco S.A.)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, cityattaRomInfo, cityattaRomName, NULL, NULL, NULL, NULL, PhoenixInputInfo, CityattaDIPInfo,
 	PleiadsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	208, 256, 3, 4
 };

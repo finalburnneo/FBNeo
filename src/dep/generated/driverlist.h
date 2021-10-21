@@ -21404,7 +21404,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_destianemp,		// Destiny of an Emperor (USA)
 	&BurnDrvMSX_destroyer,		// Destroyer (HB)
 	&BurnDrvMSX_destroyr,		// Destroyer (Spanish)
-	&BurnDrvnes_destroyer,		// Destroyer (Unl)
+	&BurnDrvnes_destroyer,		// Destroyer (Unlicensed)
 	&BurnDrvcv_destruct,		// Destructor
 	&BurnDrvcv_destructsce,		// Destructor S.C.E. (Hack, Standard Controller Edition)
 	&BurnDrvnes_destructorel,	// Destructor, El (Spain) (Gluk Video) (Unl)
@@ -31010,7 +31010,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_solomonskey,	// Solomon's Key (USA)
 	&BurnDrvnes_solstice,		// Solstice (Japan)
 	&BurnDrvnes_solst,			// Solstice - The Quest for the Staff of Demnos (USA)
-	&BurnDrvnes_somari,			// Somari (Unl)
+	&BurnDrvnes_somari,			// Somari (Unlicensed)
 	&BurnDrvmd_somarita,		// Somari The Adventurer (Hack V1.1)
 	&BurnDrvtg_somerass,		// Somer Assault
 	&BurnDrvSonofphx,			// Son of Phoenix (bootleg of Repulse)

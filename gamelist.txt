@@ -1603,7 +1603,7 @@ This list contains all games supported by FinalBurn Neo.
 | blockoutj	|  	| Block Out (Japan)					| blockout	| 1989	| Technos Japan | Miscellaneous	| 					|
 | blockout	|  	| Block Out (set 1)					| 		| 1989	| Technos Japan | Miscellaneous	| 					|
 | blockout2	|  	| Block Out (set 2)					| blockout	| 1989	| Technos Japan | Miscellaneous	| 					|
-| nes_blockout	|  	| Block Out (USA)					| 		| 1989?	| California Dre| Miscellaneous	| 					|
+| nes_blockout	|  	| Block Out (USA)					| 		| 1990	| California Dre| Miscellaneous	| 					|
 | msx_blpuzzle	|  	| Block Puzzle (HB, v1.2)				| 		| 2020	| David Heremans| MSX		| 					|
 | msx_blockrun	|  	| Blockade Runner (Jpn)					| 		| 1985	| Toshiba EMI	| MSX		| 					|
 | cv_blockrun	|  	| Blockade Runner					| 		| 1984	| Interphase	| ColecoVision	| 					|
@@ -3520,7 +3520,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_destianemp|  	| Destiny of an Emperor (USA)				| 		| 1990	| Capcom	| Miscellaneous	| 					|
 | msx_destroyer	|  	| Destroyer (HB)					| 		| 2014	| RetroWorks	| MSX		| 					|
 | msx_destroyr	|  	| Destroyer (Spanish)					| 		| 1986	| Mind Games Esp| MSX		| 					|
-| nes_destroyer	|  	| Destroyer (Unl)					| 		| 1992	| Mega Soft	| Miscellaneous	| 					|
+| nes_destroyer	|  	| Destroyer (Unlicensed)				| 		| 1992	| Mega Soft	| Miscellaneous	| 					|
 | cv_destruct	|  	| Destructor						| 		| 1984	| Coleco	| ColecoVision	| Select w/ Controller #2		|
 | cv_destructsce|  	| Destructor S.C.E. (Hack, Standard Controller Edition)	| cv_destruct	| 2010	| Coleco	| ColecoVision	| Published by Team Pixelboy		|
 | nes_destructorel|  	| Destructor, El (Spain) (Gluk Video) (Unl)		| 		| 1992	| Gluk Video	| Miscellaneous	| 					|
@@ -6094,7 +6094,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_gunnac	|  	| Gun Nac (USA)						| 		| 1991	| Nexoft	| Miscellaneous	| 					|
 | nes_gunsight	|  	| Gun Sight (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_gundecj	|  	| Gun-Dec (Japan)					| nes_vice	| 1989?	| Nintendo	| Miscellaneous	| 					|
-| nes_gundecc	|  	| Gun-Dec (T-Chi)					| nes_vice	| 2019-08-01| Sammy		| Miscellaneous	| 					|
+| nes_gundecc	|  	| Gun-Dec (T-Chi)					| nes_vice	| 2019	| Sammy		| Miscellaneous	| 					|
 | nes_gundec	|  	| Gun-Dec (T-Eng)					| nes_vice	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | gunsmokeg	|  	| Gun.Smoke (Germany, censored)				| gunsmoke	| 1986	| Capcom	| Miscellaneous	| 					|
 | fds_gunsmoke	|  	| Gun.Smoke (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -8321,15 +8321,15 @@ This list contains all games supported by FinalBurn Neo.
 | manhatan	|  	| Manhattan 24 Bunsyo (Japan)				| jailbrek	| 1986	| Konami	| GX507		| 					|
 | maniach	|  	| Mania Challenge (set 1)				| 		| 1986	| Technos Japan | Miscellaneous	| 					|
 | maniach2	|  	| Mania Challenge (set 2)				| maniach	| 1986	| Technos Japan | Miscellaneous	| 					|
-| nes_maniacmansione|  	| Maniac Mansion (Europe)				| nes_maniacmansion| 1988 ?| Jaleco	| Miscellaneous	| 					|
-| nes_maniacmansionf|  	| Maniac Mansion (France)				| nes_maniacmansion| 1988	| Jaleco	| Miscellaneous	| 					|
-| nes_maniacmansiong|  	| Maniac Mansion (Germany)				| nes_maniacmansion| 1988	| Jaleco	| Miscellaneous	| 					|
-| nes_maniacmansioni|  	| Maniac Mansion (Italy)				| nes_maniacmansion| 1988	| Jaleco	| Miscellaneous	| 					|
-| nes_maniacmansionj|  	| Maniac Mansion (Japan)				| nes_maniacmansion| 1988	| Jaleco	| Miscellaneous	| 					|
-| nes_maniacmansions|  	| Maniac Mansion (Spain)				| nes_maniacmansion| 1988	| Jaleco	| Miscellaneous	| 					|
-| nes_maniacmansionsw|  	| Maniac Mansion (Sweden)				| nes_maniacmansion| 1988	| Jaleco	| Miscellaneous	| 					|
-| nes_mancmansuproc|  	| Maniac Mansion (USA) (Prototype) - Castellano v1.0	| nes_maniacmansion| 1989 ?| Nintendo	| Miscellaneous	| 					|
-| nes_maniacmansionuproto|  	| Maniac Mansion (USA) (Prototype)		| nes_maniacmansion| 1988 ?| Jaleco	| Miscellaneous	| 					|
+| nes_maniacmansione|  	| Maniac Mansion (Europe)				| nes_maniacmansion| 1989	| Jaleco	| Miscellaneous	| 					|
+| nes_maniacmansionf|  	| Maniac Mansion (France)				| nes_maniacmansion| 1989	| Jaleco	| Miscellaneous	| 					|
+| nes_maniacmansiong|  	| Maniac Mansion (Germany)				| nes_maniacmansion| 1989	| Jaleco	| Miscellaneous	| 					|
+| nes_maniacmansioni|  	| Maniac Mansion (Italy)				| nes_maniacmansion| 1989	| Jaleco	| Miscellaneous	| 					|
+| nes_maniacmansionj|  	| Maniac Mansion (Japan)				| nes_maniacmansion| 1989	| Jaleco	| Miscellaneous	| 					|
+| nes_maniacmansions|  	| Maniac Mansion (Spain)				| nes_maniacmansion| 1989	| Jaleco	| Miscellaneous	| 					|
+| nes_maniacmansionsw|  	| Maniac Mansion (Sweden)				| nes_maniacmansion| 1989	| Jaleco	| Miscellaneous	| 					|
+| nes_mancmansuproc|  	| Maniac Mansion (USA) (Prototype) - Castellano v1.0	| nes_maniacmansion| 2018	| Wave		| Miscellaneous	| 					|
+| nes_maniacmansionuproto|  	| Maniac Mansion (USA) (Prototype)		| nes_maniacmansion| 1988	| Jaleco	| Miscellaneous	| 					|
 | nes_maniacmansion|  	| Maniac Mansion (USA)					| 		| 1988	| Jaleco	| Miscellaneous	| 					|
 | nes_maniacmanunc|  	| Maniac Mansion Uncensored (Hack)			| nes_maniacmansion| 2020	| Gzip		| Miscellaneous	| 					|
 | pce_maniacpw	|  	| Maniac Pro Wres - Asu e no Tatakai			| 		| 1990	| Hudson	| PC Engine	| 					|
@@ -13004,7 +13004,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_solomonskey|  	| Solomon's Key (USA)					| 		| 1987	| Tecmo		| Miscellaneous	| 					|
 | nes_solstice	|  	| Solstice (Japan)					| 		| 1990	| Epic / Sony Re| Miscellaneous	| 					|
 | nes_solst	|  	| Solstice - The Quest for the Staff of Demnos (USA)	| 		| 1990	| Sony (CSG) Ima| Miscellaneous	| 					|
-| nes_somari	|  	| Somari (Unl)						| 		| 1994	| Hummer Team	| Miscellaneous	| 					|
+| nes_somari	|  	| Somari (Unlicensed)					| 		| 1994	| Hummer Team	| Miscellaneous	| 					|
 | md_somarita	|  	| Somari The Adventurer (Hack V1.1)			| md_sonic	| 2015	| Darkon360, Lon| Sega Megadrive| 					|
 | tg_somerass	|  	| Somer Assault						| 		| 1992	| Atlus		| TurboGrafx 16	| 					|
 | sonofphx	|  	| Son of Phoenix (bootleg of Repulse)			| repulse	| 1985	| bootleg (Assoc| Miscellaneous	| 					|
@@ -14287,14 +14287,14 @@ This list contains all games supported by FinalBurn Neo.
 | nes_smb8es	|  	| Super Mario Bros 8 (Spanish) (Hack)			| nes_smb8en	| 2021	| Crying Onion	| Miscellaneous	| 					|
 | nes_smb8se	|  	| Super Mario Bros 8 Special Edition (Hack)		| nes_smb8en	| 2021	| Crying Onion	| Miscellaneous	| Don Doko Don 2 tribute edition	|
 | nes_smbdx	|  	| Super Mario Bros DX (HB, v3.4)			| nes_smb	| 2018	| Flamephanter	| Miscellaneous	| 					|
-| nes_smbc	|  	| Super Mario Bros. (World) - Castellano v1.0		| nes_smb	| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_smbc	|  	| Super Mario Bros. (World) - Castellano v1.0		| nes_smb	| 2018	| Wave		| Miscellaneous	| 					|
 | nes_smb	|  	| Super Mario Bros. (World)				| 		| 1985	| Nintendo	| Miscellaneous	| 					|
 | md_smbbc	|  	| Super Mario Bros. + Battle City (Rus)			| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
-| nes_smb2c	|  	| Super Mario Bros. 2 (USA) (Rev 1) - Castellano v1.0	| nes_smb2	| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_smb2c	|  	| Super Mario Bros. 2 (USA) (Rev 1) - Castellano v1.0	| nes_smb2	| 2017	| Wave		| Miscellaneous	| 					|
 | nes_smb2	|  	| Super Mario Bros. 2 (USA) (Rev A)			| 		| 1988	| Nintendo	| Miscellaneous	| 					|
 | nes_smb2j	|  	| Super Mario Bros. 2 J (Japan, MMC3 Conversion)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| nes_smb3c	|  	| Super Mario Bros. 3 (T-Chi)				| nes_smb3	| 2016-06-03| Nintendo	| Miscellaneous	| 					|
-| nes_smb3cast	|  	| Super Mario Bros. 3 (USA) (Rev 1) - Castellano v1.0	| nes_smb3	| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_smb3c	|  	| Super Mario Bros. 3 (T-Chi)				| nes_smb3	| 2016	| Nintendo	| Miscellaneous	| 					|
+| nes_smb3cast	|  	| Super Mario Bros. 3 (USA) (Rev 1) - Castellano v1.0	| nes_smb3	| 2018	| Wave		| Miscellaneous	| 					|
 | nes_smb3	|  	| Super Mario Bros. 3 (USA) (Rev A)			| 		| 1990	| Nintendo	| Miscellaneous	| 					|
 | nes_smb3defedi|  	| Super Mario Bros. 3 Definitive Edition (Hack)		| nes_smb3	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_smb3mi	|  	| Super Mario Bros. 3Mix (Hack)				| nes_smb3	| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -14852,7 +14852,7 @@ This list contains all games supported by FinalBurn Neo.
 | tmnt2pj	|  	| Teenage Mutant Ninja Turtles (Japan 2 Players, version| tmnt		| 1990	| Konami	| GX963		| 					|
 | tmntj		|  	| Teenage Mutant Ninja Turtles (Japan 4 Players, version| tmnt		| 1990	| Konami	| GX963		| 					|
 | tmnt2po	|  	| Teenage Mutant Ninja Turtles (Oceania 2 Players, versi| tmnt		| 1989	| Konami	| GX963		| 					|
-| nes_tmntc	|  	| Teenage Mutant Ninja Turtles (T-Chi, v1.0)		| nes_tmnt	| 2020-06-09| Konami	| Miscellaneous	| 					|
+| nes_tmntc	|  	| Teenage Mutant Ninja Turtles (T-Chi, v1.0)		| nes_tmnt	| 2020	| Konami	| Miscellaneous	| 					|
 | tmntuc	|  	| Teenage Mutant Ninja Turtles (US 4 Players, version H)| tmnt		| 1989	| Konami	| GX963		| 					|
 | tmntub	|  	| Teenage Mutant Ninja Turtles (US 4 Players, version J)| tmnt		| 1989	| Konami	| GX963		| 					|
 | tmntua	|  	| Teenage Mutant Ninja Turtles (US 4 Players, version N)| tmnt		| 1989	| Konami	| GX963		| 					|
@@ -15763,7 +15763,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_tintin	|  	| Tintin in Tibet (Euro)				| 		| 1996	| Infogrames	| Sega Game Gear| 					|
 | spec_tintmoon	|  	| Tintin on the Moon					| 		| 1989	| Infogrames	| ZX Spectrum	| 					|
 | md_ttoonbhtk	|   NW	| Tiny Toon Adventures (Kor)				| md_ttoonbht	| 1993	| Konami	| Sega Megadrive| 					|
-| nes_tinytooadvc|  	| Tiny Toon Adventures (USA) - Castellano v1.0		| nes_tinytooadv| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_tinytooadvc|  	| Tiny Toon Adventures (USA) - Castellano v1.0		| nes_tinytooadv| 2019	| Wave		| Miscellaneous	| 					|
 | nes_tinytooadv|  	| Tiny Toon Adventures (USA)				| 		| 1991	| Konami	| Miscellaneous	| 					|
 | md_ttacme	|  	| Tiny Toon Adventures - Acme All-Stars (Euro)		| 		| 1994	| Konami	| Sega Megadrive| 					|
 | md_ttacmes	|  	| Tiny Toon Adventures - Acme All-Stars (Hack, Spanish)	| md_ttacme	| 2019	| Konami	| Sega Megadrive| 					|
@@ -15774,7 +15774,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_tinytooadv2molaheyo|  	| Tiny Toon Adventures 2 - Montana Land he Youkoso (Japa| nes_tinytooadv2trinwa| 1992| Konami	| Miscellaneous	| 					|
 | nes_tinytooadv2trinwa|  	| Tiny Toon Adventures 2 - Trouble in Wackyland (USA)	| 		| 1993	| Konami	| Miscellaneous	| 					|
 | md_ttoon3	|  	| Tiny Toon Adventures 3 (Tw, Cracked)			| 		| 199?	| Gamtec?	| Sega Megadrive| 					|
-| nes_tinytooadv6c|  	| Tiny Toon Adventures 6 (Unl) - Castellano v1.0	| nes_tinytooadv6| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_tinytooadv6c|  	| Tiny Toon Adventures 6 (Unl) - Castellano v1.0	| nes_tinytooadv6| 2018	| Wave		| Miscellaneous	| 					|
 | nes_tinytooadv6|  	| Tiny Toon Adventures 6 (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | tiptop	|  	| Tip Top						| congo		| 1983	| Sega		| Zaxxon	| 					|
 | nes_titan	|  	| Titan (Japan)						| 		| 1990	| Sofel		| Miscellaneous	| 					|
@@ -15826,7 +15826,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_tokorsannomammosemo|  	| Tokoro-san no Mamoru mo Semeru mo (Japan)	| 		| 1987	| Epic / Sony Re| Miscellaneous	| 					|
 | jackalj	|  	| Tokushu Butai Jackal (Japan, 8-way Joystick)		| jackal	| 1986	| Konami	| Miscellaneous	| 					|
 | tndrcadej	|  	| Tokusyu Butai U.A.G. (Japan)				| tndrcade	| 1987	| Seta (Taito li| Seta		| 					|
-| nes_tomjerultgamcatandmc|  	| Tom & Jerry - The Ultimate Game of Cat and Mouse! (USA| nes_tomjerultgamcatandm| 1989 ?| Nintendo| Miscellaneous| 					|
+| nes_tomjerultgamcatandmc|  	| Tom & Jerry - The Ultimate Game of Cat and Mouse! (USA| nes_tomjerultgamcatandm| 2018| Wave	| Miscellaneous	| 					|
 | nes_tomjerultgamcatandm|  	| Tom & Jerry - The Ultimate Game of Cat and Mouse! (USA| 	| 1991	| Hi Tech Expres| Miscellaneous	| 					|
 | sms_tomjerry	|  	| Tom and Jerry (Prototype)				| sms_tomjermv	| 1992	| Sega		| Sega Master Sy| 					|
 | md_tomjerryim	|  	| Tom and Jerry - Frantic Antics (Hack, Improvement v2)	| md_tomjerry	| 2020	| Sega - Ti	| Sega Megadrive| 					|
@@ -15862,9 +15862,9 @@ This list contains all games supported by FinalBurn Neo.
 | md_topfight	|  	| Top Fighter 2000 MK VIII				| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_topf2k5	|  	| Top Fighter 2005					| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_topgear2	|  	| Top Gear 2 (USA)					| 		| 1994	| Vic Tokai	| Sega Megadrive| 					|
-| nes_topgunc	|  	| Top Gun (USA) (Rev 1) - Castellano v1.0		| nes_topgun	| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_topgunc	|  	| Top Gun (USA) (Rev 1) - Castellano v1.0		| nes_topgun	| 2019	| Wave		| Miscellaneous	| 					|
 | nes_topgun	|  	| Top Gun (USA) (Rev A)					| 		| 1987	| Konami	| Miscellaneous	| 					|
-| nes_topgunsecmisc|  	| Top Gun - The Second Mission (USA) - Castellano v1.0	| nes_topgunsecmis| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_topgunsecmisc|  	| Top Gun - The Second Mission (USA) - Castellano v1.0	| nes_topgunsecmis| 2019	| Wave		| Miscellaneous	| 					|
 | nes_topgunsecmis|  	| Top Gun - The Second Mission (USA)			| 		| 1990	| Konami	| Miscellaneous	| 					|
 | topgunbl	|  	| Top Gunner (bootleg, Rotary Joystick)			| jackal	| 1986	| bootleg	| Miscellaneous	| 					|
 | topgunr	|  	| Top Gunner (US, 8-way Joystick)			| jackal	| 1986	| Konami	| Miscellaneous	| 					|
@@ -15909,7 +15909,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_teclipse	|  	| Total Eclipse (48K)					| 		| 1988	| Incentive	| ZX Spectrum	| 					|
 | md_totlfoot	|  	| Total Football (Euro)					| 		| 1995	| Domark	| Sega Megadrive| 					|
 | spec_totrcall	|  	| Total Recall (128K)					| 		| 1991	| Ocean		| ZX Spectrum	| 					|
-| nes_totalrecallc|  	| Total Recall (USA) - Castellano v1.0			| nes_totalrecall| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_totalrecallc|  	| Total Recall (USA) - Castellano v1.0			| nes_totalrecall| 2019	| Wave		| Miscellaneous	| 					|
 | nes_totalrecall|  	| Total Recall (USA)					| 		| 1990	| Acclaim	| Miscellaneous	| 					|
 | nes_totallyrad|  	| Totally Rad (USA)					| 		| 1991	| Jaleco	| Miscellaneous	| 					|
 | sms_totowld3	|  	| Toto World 3 (Kor)					| 		| 1993	| Open Corp.	| Sega Master Sy| 					|
@@ -16284,7 +16284,7 @@ This list contains all games supported by FinalBurn Neo.
 | fds_ultra2	|  	| Ultraman 2 - Shutsugeki Katoku Tai (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | fds_ultraclu	|  	| Ultraman Club - Chikyuu Dakkan Sakusen (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | umanclub	|  	| Ultraman Club - Tatakae! Ultraman Kyoudai!!		| 		| 1992	| Banpresto / Ts| Seta		| 					|
-| nes_uncanxmenc|  	| Uncanny X-Men, The (USA) - Castellano v1.0		| nes_uncanxmen	| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_uncanxmenc|  	| Uncanny X-Men, The (USA) - Castellano v1.0		| nes_uncanxmen	| 2019	| Wave		| Miscellaneous	| 					|
 | nes_uncanxmen	|  	| Uncanny X-Men, The (USA)				| 		| 1989	| LJN		| Miscellaneous	| 					|
 | md_unchartd	|  	| Uncharted Waters (USA)				| 		| 1992	| Koei		| Sega Megadrive| 					|
 | nes_unchartedwaters|  	| Uncharted Waters (USA)				| 		| 1991	| Koei		| Miscellaneous	| 					|
@@ -16352,7 +16352,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_valis3j	|  	| Valis III (Jpn, Rev. A)				| md_valis3	| 1991	| Reno		| Sega Megadrive| 					|
 | md_valis3	|  	| Valis III (USA)					| 		| 1991	| Renovation	| Sega Megadrive| 					|
 | msx_valkyr	|  	| Valkyr (Euro)						| 		| 1985	| Gremlin Graphi| MSX		| 					|
-| nes_valkynobouc|  	| Valkyrie no Bouken - Toki no Kagi Densetsu (Japan) - C| nes_valkynobou| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_valkynobouc|  	| Valkyrie no Bouken - Toki no Kagi Densetsu (Japan) - C| nes_valkynobou| 2019	| Max1323	| Miscellaneous	| 					|
 | nes_valkynobouj|  	| Valkyrie no Bouken - Toki no Kagi Densetsu (Japan)	| nes_valkynobou| 1986	| Namco		| Miscellaneous	| 					|
 | nes_valkynobou|  	| Valkyrie no Bouken - Toki no Kagi Densetsu (T-eng)	| 		| 1986	| Namco		| Miscellaneous	| 					|
 | valkyrie	|  	| Valkyrie no Densetsu (Japan)				| 		| 1989	| Namco		| System 2	| 					|

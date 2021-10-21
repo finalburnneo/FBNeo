@@ -1646,7 +1646,7 @@
 	</game>
 	<game name="blockout">
 		<description>Block Out (USA)</description>
-		<year>1989?</year>
+		<year>1990</year>
 		<manufacturer>California Dreams / Technos</manufacturer>
 		<rom name="Block Out (USA).nes" size="131088" crc="deff01f6"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -3213,7 +3213,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="destroyer">
-		<description>Destroyer (Unl)</description>
+		<description>Destroyer (Unlicensed)</description>
 		<year>1992</year>
 		<manufacturer>Mega Soft</manufacturer>
 		<rom name="Destroyer (1992)(Mega Soft).nes" size="65552" crc="d9362123"/>
@@ -5949,8 +5949,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gundecc" cloneof="vice" romof="vice">
-		<description>Gun-Dec (T-Chi)</description>
-		<year>2019-08-01</year>
+		<description>Gun-Dec (T-Chi) [Hack]</description>
+		<year>2019</year>
 		<manufacturer>Sammy</manufacturer>
 		<rom name="Gun-Dec (T-Chi).nes" size="393232" crc="647eccfa"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -8478,7 +8478,7 @@
 	</game>
 	<game name="maniacmansione" cloneof="maniacmansion" romof="maniacmansion">
 		<description>Maniac Mansion (Europe)</description>
-		<year>1988 ?</year>
+		<year>1989</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="maniac mansion (europe).nes" size="262160" crc="90333aea"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -8486,7 +8486,7 @@
 	</game>
 	<game name="maniacmansionf" cloneof="maniacmansion" romof="maniacmansion">
 		<description>Maniac Mansion (France)</description>
-		<year>1988</year>
+		<year>1989</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="maniac mansion (france).nes" size="262160" crc="9118cd29"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -8494,7 +8494,7 @@
 	</game>
 	<game name="maniacmansiong" cloneof="maniacmansion" romof="maniacmansion">
 		<description>Maniac Mansion (Germany)</description>
-		<year>1988</year>
+		<year>1989</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="maniac mansion (germany).nes" size="262160" crc="05455e77"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -8502,7 +8502,7 @@
 	</game>
 	<game name="maniacmansioni" cloneof="maniacmansion" romof="maniacmansion">
 		<description>Maniac Mansion (Italy)</description>
-		<year>1988</year>
+		<year>1989</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="maniac mansion (italy).nes" size="262160" crc="b9fd5255"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -8510,7 +8510,7 @@
 	</game>
 	<game name="maniacmansionj" cloneof="maniacmansion" romof="maniacmansion">
 		<description>Maniac Mansion (Japan)</description>
-		<year>1988</year>
+		<year>1989</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="maniac mansion (japan).nes" size="262160" crc="101f9604"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -8518,7 +8518,7 @@
 	</game>
 	<game name="maniacmansions" cloneof="maniacmansion" romof="maniacmansion">
 		<description>Maniac Mansion (Spain)</description>
-		<year>1988</year>
+		<year>1989</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="maniac mansion (spain).nes" size="262160" crc="901d691d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -8526,23 +8526,23 @@
 	</game>
 	<game name="maniacmansionsw" cloneof="maniacmansion" romof="maniacmansion">
 		<description>Maniac Mansion (Sweden)</description>
-		<year>1988</year>
+		<year>1989</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="maniac mansion (sweden).nes" size="262160" crc="5a841cb2"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="mancmansuproc" cloneof="maniacmansion" romof="maniacmansion">
-		<description>Maniac Mansion (USA) (Prototype) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Maniac Mansion (USA) (Prototype) - Castellano v1.0 [Hack, Prototype]</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="maniac mansion (usa) (prototype) - castellano v1.0.nes" size="262160" crc="3be70f25"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="maniacmansionuproto" cloneof="maniacmansion" romof="maniacmansion">
-		<description>Maniac Mansion (USA) (Prototype)</description>
-		<year>1988 ?</year>
+		<description>Maniac Mansion (USA) (Prototype) [Prototype]</description>
+		<year>1988</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="maniac mansion (usa) (prototype).nes" size="262160" crc="bba3ef7e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -12213,7 +12213,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="somari">
-		<description>Somari (Unl)</description>
+		<description>Somari (Unlicensed)</description>
 		<year>1994</year>
 		<manufacturer>Hummer Team</manufacturer>
 		<rom name="Somari (Unl).nes" size="524304" crc="51589daf"/>
@@ -12229,7 +12229,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic" cloneof="somari" romof="somari">
-		<description>Sonic the Hedgehog (Hack)</description>
+		<description>Sonic the Hedgehog (Hack) [Hack]</description>
 		<year>2020</year>
 		<manufacturer>Terwilf</manufacturer>
 		<rom name="Sonic the Hedgehog (Hack).nes" size="786448" crc="b9ebd682"/>
@@ -12312,7 +12312,7 @@
 		<description>Spelunker II - Yuusha e no Chousen (T-eng)</description>
 		<year>1987</year>
 		<manufacturer>Irem</manufacturer>
-		<rom name="Spelunker II - Yuusha e no Chousen (T-eng).nes" size="261988" crc="fa8730cc"/>
+		<rom name="Spelunker II - Yuusha e no Chousen (T-eng).nes" size="262160" crc="72a28744"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -12877,9 +12877,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="smbc" cloneof="smb" romof="smb">
-		<description>Super Mario Bros. (World) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Super Mario Bros. (World) - Castellano v1.0 [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="super mario bros. (world) - castellano v1.0.nes" size="40976" crc="54de5344"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12893,9 +12893,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="smb2c" cloneof="smb2" romof="smb2">
-		<description>Super Mario Bros. 2 (USA) (Rev 1) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Super Mario Bros. 2 (USA) (Rev 1) - Castellano v1.0 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="super mario bros. 2 (usa) (rev 1) - castellano v1.0.nes" size="262160" crc="36114415"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12917,17 +12917,17 @@
 		<driver status="good"/>
 	</game>
 	<game name="smb3c" cloneof="smb3" romof="smb3">
-		<description>Super Mario Bros. 3 (T-Chi)</description>
-		<year>2016-06-03</year>
+		<description>Super Mario Bros. 3 (T-Chi) [Hack]</description>
+		<year>2016</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Super Mario Bros. 3 (T-Chi).nes" size="458768" crc="e39b725d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="smb3cast" cloneof="smb3" romof="smb3">
-		<description>Super Mario Bros. 3 (USA) (Rev 1) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Super Mario Bros. 3 (USA) (Rev 1) - Castellano v1.0 [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="super mario bros. 3 (usa) (rev 1) - castellano v1.0.nes" size="393232" crc="2e094f49"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13424,7 +13424,7 @@
 		<description>Tatakae!! Rahmen Man - Sakuretsu Choujin 102 Gei (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Shinsei</manufacturer>
-		<rom name="Tatakae!! Rahmen Man - Sakuretsu Choujin 102 Gei (Japan).nes" size="262160" crc="acc2b74a"/>
+		<rom name="Tatakae!! Rahmen Man - Sakuretsu Choujin 102 Gei (Japan).nes" size="262160" crc="ad9c24f5"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -13509,8 +13509,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tmntc" cloneof="tmnt" romof="tmnt">
-		<description>Teenage Mutant Ninja Turtles (T-Chi, v1.0)</description>
-		<year>2020-06-09</year>
+		<description>Teenage Mutant Ninja Turtles (T-Chi, v1.0) [Hack]</description>
+		<year>2020</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Teenage Mutant Ninja Turtles (T-Chi, v1.0).nes" size="393232" crc="43ae114f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -13925,9 +13925,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="tinytooadvc" cloneof="tinytooadv" romof="tinytooadv">
-		<description>Tiny Toon Adventures (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Tiny Toon Adventures (USA) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="tiny toon adventures (usa) - castellano v1.0.nes" size="262160" crc="bcd94fa2"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13957,9 +13957,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="tinytooadv6c" cloneof="tinytooadv6" romof="tinytooadv6">
-		<description>Tiny Toon Adventures 6 (Unl) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Tiny Toon Adventures 6 (Unl) - Castellano v1.0 [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="tiny toon adventures 6 (unl) - castellano v1.0.nes" size="524304" crc="93db8d83"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14029,9 +14029,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="tomjerultgamcatandmc" cloneof="tomjerultgamcatandm" romof="tomjerultgamcatandm">
-		<description>Tom &amp; Jerry - The Ultimate Game of Cat and Mouse! (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Tom &amp; Jerry - The Ultimate Game of Cat and Mouse! (USA) - Castellano v1.0 [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="tom &amp; jerry - the ultimate game of cat and mouse! (usa) - castellano v1.0.nes" size="262160" crc="9c6a9bcc"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14053,9 +14053,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="topgunc" cloneof="topgun" romof="topgun">
-		<description>Top Gun (USA) (Rev 1) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Top Gun (USA) (Rev 1) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="top gun (usa) (rev 1) - castellano v1.0.nes" size="131088" crc="879481af"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14069,9 +14069,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="topgunsecmisc" cloneof="topgunsecmis" romof="topgunsecmis">
-		<description>Top Gun - The Second Mission (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Top Gun - The Second Mission (USA) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="top gun - the second mission (usa) - castellano v1.0.nes" size="262160" crc="350f534b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14101,9 +14101,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="totalrecallc" cloneof="totalrecall" romof="totalrecall">
-		<description>Total Recall (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Total Recall (USA) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="Total Recall (USA) - Castellano v1.0.nes" size="131088" crc="93a02a67"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14405,9 +14405,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="uncanxmenc" cloneof="uncanxmen" romof="uncanxmen">
-		<description>Uncanny X-Men, The (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Uncanny X-Men, The (USA) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="uncanny x-men, the (usa) - castellano v1.0.nes" size="131088" crc="21a9db24"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14493,9 +14493,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="valkynobouc" cloneof="valkynobou" romof="valkynobou">
-		<description>Valkyrie no Bouken - Toki no Kagi Densetsu (Japan) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Valkyrie no Bouken - Toki no Kagi Densetsu (Japan) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Max1323</manufacturer>
 		<rom name="valkyrie no bouken - toki no kagi densetsu (japan) - castellano v1.0.nes" size="65552" crc="9e222fab"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>

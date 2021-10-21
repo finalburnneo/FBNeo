@@ -7633,9 +7633,12 @@ static INT32 mapper_init(INT32 mappernum)
 			break;
 		}
 
+		case 155: // 155 is mmc1 w/wram always mapped @ 6000-7fff
 		case 1: { // mmc1
-			cart_exp_write = mapper01_exp_write; // 6000 - 7fff
-			cart_exp_read = mapper01_exp_read;
+			if (mappernum != 155) {
+				cart_exp_write = mapper01_exp_write; // 6000 - 7fff
+				cart_exp_read = mapper01_exp_read;
+			}
 			mapper_write = mapper01_write;
 			mapper_map   = mapper01_map;
 			mapper_regs[0] = 0xc;
@@ -14221,7 +14224,7 @@ struct BurnDriver BurnDrvnes_toprider = {
 	"nes_toprider", NULL, NULL, NULL, "1988",
 	"Top Rider (Japan)\0", NULL, "Varie", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RACING, 0,
 	NESGetZipName, nes_topriderRomInfo, nes_topriderRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	topriderInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14327,7 +14330,7 @@ struct BurnDriver BurnDrvnes_ultimexorem = {
 	"nes_ultimexorem", "nes_ultimaexodus", NULL, NULL, "2020",
 	"Ultima - Exodus Remastered (USA)(Hack)\0", NULL, "Fox Cunning", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_ultimexoremRomInfo, nes_ultimexoremRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14344,7 +14347,7 @@ struct BurnDriver BurnDrvnes_supermarallstanes = {
 	"nes_supermarioallst", NULL, NULL, NULL, "2020",
 	"Super Mario All Stars NES (Hack)\0", NULL, "infidelity", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_supermarallstanesRomInfo, nes_supermarallstanesRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14361,7 +14364,7 @@ struct BurnDriver BurnDrvnes_smbchredi = {
 	"nes_smbchredi", "nes_smb", NULL, NULL, "2020",
 	"Super Mario Bros. Christmas Edition (Hack)\0", NULL, "U Retro", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_smbchrediRomInfo, nes_smbchrediRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14378,7 +14381,7 @@ struct BurnDriver BurnDrvnes_smbendssmbha1 = {
 	"nes_smbendssmbha1", "nes_smb", NULL, NULL, "2004",
 	"Super Mario Bros. Ende's SMB Hack 1 (Hack)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_smbendssmbha1RomInfo, nes_smbendssmbha1RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14395,7 +14398,7 @@ struct BurnDriver BurnDrvnes_maniacmanunc = {
 	"nes_maniacmanunc", "nes_maniacmansion", NULL, NULL, "2020",
 	"Maniac Mansion Uncensored (Hack)\0", NULL, "Gzip", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_maniacmanuncRomInfo, nes_maniacmanuncRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14409,10 +14412,10 @@ STD_ROM_PICK(nes_blockout)
 STD_ROM_FN(nes_blockout)
 
 struct BurnDriver BurnDrvnes_blockout = {
-	"nes_blockout", NULL, NULL, NULL, "1989?",
+	"nes_blockout", NULL, NULL, NULL, "1990",
 	"Block Out (USA)\0", NULL, "California Dreams / Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_blockoutRomInfo, nes_blockoutRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14444,9 +14447,9 @@ STD_ROM_FN(nes_destroyer)
 
 struct BurnDriver BurnDrvnes_destroyer = {
 	"nes_destroyer", NULL, NULL, NULL, "1992",
-	"Destroyer (Unl)\0", NULL, "Mega Soft", "Miscellaneous",
+	"Destroyer (Unlicensed)\0", NULL, "Mega Soft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
 	NESGetZipName, nes_destroyerRomInfo, nes_destroyerRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14461,9 +14464,9 @@ STD_ROM_FN(nes_somari)
 
 struct BurnDriver BurnDrvnes_somari = {
 	"nes_somari", NULL, NULL, NULL, "1994",
-	"Somari (Unl)\0", NULL, "Hummer Team", "Miscellaneous",
+	"Somari (Unlicensed)\0", NULL, "Hummer Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_somariRomInfo, nes_somariRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14482,7 +14485,7 @@ struct BurnDriver BurnDrvnes_sonic = {
 	"nes_sonic", "nes_somari", NULL, NULL, "2020",
 	"Sonic the Hedgehog (Hack)\0", NULL, "Terwilf", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_sonicRomInfo, nes_sonicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14902,10 +14905,10 @@ STD_ROM_PICK(nes_smb3c)
 STD_ROM_FN(nes_smb3c)
 
 struct BurnDriver BurnDrvnes_smb3c = {
-	"nes_smb3c", "nes_smb3", NULL, NULL, "2016-06-03",
+	"nes_smb3c", "nes_smb3", NULL, NULL, "2016",
 	"Super Mario Bros. 3 (T-Chi)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_smb3cRomInfo, nes_smb3cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15131,10 +15134,10 @@ STD_ROM_PICK(nes_gundecc)
 STD_ROM_FN(nes_gundecc)
 
 struct BurnDriver BurnDrvnes_gundecc = {
-	"nes_gundecc", "nes_vice", NULL, NULL, "2019-08-01",
+	"nes_gundecc", "nes_vice", NULL, NULL, "2019",
 	"Gun-Dec (T-Chi)\0", NULL, "Sammy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SHOOT | GBF_PLATFORM, 0,
 	NESGetZipName, nes_gundeccRomInfo, nes_gundeccRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15151,10 +15154,10 @@ STD_ROM_PICK(nes_tmntc)
 STD_ROM_FN(nes_tmntc)
 
 struct BurnDriver BurnDrvnes_tmntc = {
-	"nes_tmntc", "nes_tmnt", NULL, NULL, "2020-06-09",
+	"nes_tmntc", "nes_tmnt", NULL, NULL, "2020",
 	"Teenage Mutant Ninja Turtles (T-Chi, v1.0)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_tmntcRomInfo, nes_tmntcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17026,10 +17029,10 @@ STD_ROM_PICK(nes_maniacmansione)
 STD_ROM_FN(nes_maniacmansione)
 
 struct BurnDriver BurnDrvnes_maniacmansione = {
-	"nes_maniacmansione", "nes_maniacmansion", NULL, NULL, "1988 ?",
+	"nes_maniacmansione", "nes_maniacmansion", NULL, NULL, "1989",
 	"Maniac Mansion (Europe)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_maniacmansioneRomInfo, nes_maniacmansioneRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17044,10 +17047,10 @@ STD_ROM_PICK(nes_maniacmansionf)
 STD_ROM_FN(nes_maniacmansionf)
 
 struct BurnDriver BurnDrvnes_maniacmansionf = {
-	"nes_maniacmansionf", "nes_maniacmansion", NULL, NULL, "1988",
+	"nes_maniacmansionf", "nes_maniacmansion", NULL, NULL, "1989",
 	"Maniac Mansion (France)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_maniacmansionfRomInfo, nes_maniacmansionfRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17062,10 +17065,10 @@ STD_ROM_PICK(nes_maniacmansiong)
 STD_ROM_FN(nes_maniacmansiong)
 
 struct BurnDriver BurnDrvnes_maniacmansiong = {
-	"nes_maniacmansiong", "nes_maniacmansion", NULL, NULL, "1988",
+	"nes_maniacmansiong", "nes_maniacmansion", NULL, NULL, "1989",
 	"Maniac Mansion (Germany)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_maniacmansiongRomInfo, nes_maniacmansiongRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17080,10 +17083,10 @@ STD_ROM_PICK(nes_maniacmansioni)
 STD_ROM_FN(nes_maniacmansioni)
 
 struct BurnDriver BurnDrvnes_maniacmansioni = {
-	"nes_maniacmansioni", "nes_maniacmansion", NULL, NULL, "1988",
+	"nes_maniacmansioni", "nes_maniacmansion", NULL, NULL, "1989",
 	"Maniac Mansion (Italy)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_maniacmansioniRomInfo, nes_maniacmansioniRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17098,10 +17101,10 @@ STD_ROM_PICK(nes_maniacmansionj)
 STD_ROM_FN(nes_maniacmansionj)
 
 struct BurnDriver BurnDrvnes_maniacmansionj = {
-	"nes_maniacmansionj", "nes_maniacmansion", NULL, NULL, "1988",
+	"nes_maniacmansionj", "nes_maniacmansion", NULL, NULL, "1989",
 	"Maniac Mansion (Japan)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_maniacmansionjRomInfo, nes_maniacmansionjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17116,10 +17119,10 @@ STD_ROM_PICK(nes_maniacmansions)
 STD_ROM_FN(nes_maniacmansions)
 
 struct BurnDriver BurnDrvnes_maniacmansions = {
-	"nes_maniacmansions", "nes_maniacmansion", NULL, NULL, "1988",
+	"nes_maniacmansions", "nes_maniacmansion", NULL, NULL, "1989",
 	"Maniac Mansion (Spain)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_maniacmansionsRomInfo, nes_maniacmansionsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17134,10 +17137,10 @@ STD_ROM_PICK(nes_maniacmansionsw)
 STD_ROM_FN(nes_maniacmansionsw)
 
 struct BurnDriver BurnDrvnes_maniacmansionsw = {
-	"nes_maniacmansionsw", "nes_maniacmansion", NULL, NULL, "1988",
+	"nes_maniacmansionsw", "nes_maniacmansion", NULL, NULL, "1989",
 	"Maniac Mansion (Sweden)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_maniacmansionswRomInfo, nes_maniacmansionswRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17152,10 +17155,10 @@ STD_ROM_PICK(nes_maniacmansionuproto)
 STD_ROM_FN(nes_maniacmansionuproto)
 
 struct BurnDriver BurnDrvnes_maniacmansionuproto = {
-	"nes_maniacmansionuproto", "nes_maniacmansion", NULL, NULL, "1988 ?",
+	"nes_maniacmansionuproto", "nes_maniacmansion", NULL, NULL, "1988",
 	"Maniac Mansion (USA) (Prototype)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_maniacmansionuprotoRomInfo, nes_maniacmansionuprotoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17171,10 +17174,10 @@ STD_ROM_PICK(nes_mancmansuproc)
 STD_ROM_FN(nes_mancmansuproc)
 
 struct BurnDriver BurnDrvnes_mancmansuproc = {
-	"nes_mancmansuproc", "nes_maniacmansion", NULL, NULL, "1989 ?",
-	"Maniac Mansion (USA) (Prototype) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_mancmansuproc", "nes_maniacmansion", NULL, NULL, "2018",
+	"Maniac Mansion (USA) (Prototype) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_mancmansuprocRomInfo, nes_mancmansuprocRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17774,10 +17777,10 @@ STD_ROM_PICK(nes_smbc)
 STD_ROM_FN(nes_smbc)
 
 struct BurnDriver BurnDrvnes_smbc = {
-	"nes_smbc", "nes_smb", NULL, NULL, "1989 ?",
-	"Super Mario Bros. (World) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_smbc", "nes_smb", NULL, NULL, "2018",
+	"Super Mario Bros. (World) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_smbcRomInfo, nes_smbcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17793,10 +17796,10 @@ STD_ROM_PICK(nes_smb2c)
 STD_ROM_FN(nes_smb2c)
 
 struct BurnDriver BurnDrvnes_smb2c = {
-	"nes_smb2c", "nes_smb2", NULL, NULL, "1989 ?",
-	"Super Mario Bros. 2 (USA) (Rev 1) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_smb2c", "nes_smb2", NULL, NULL, "2017",
+	"Super Mario Bros. 2 (USA) (Rev 1) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_smb2cRomInfo, nes_smb2cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17812,10 +17815,10 @@ STD_ROM_PICK(nes_smb3cast)
 STD_ROM_FN(nes_smb3cast)
 
 struct BurnDriver BurnDrvnes_smb3cast = {
-	"nes_smb3cast", "nes_smb3", NULL, NULL, "1989 ?",
-	"Super Mario Bros. 3 (USA) (Rev 1) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_smb3cast", "nes_smb3", NULL, NULL, "2018",
+	"Super Mario Bros. 3 (USA) (Rev 1) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_smb3castRomInfo, nes_smb3castRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17983,10 +17986,10 @@ STD_ROM_PICK(nes_tinytooadvc)
 STD_ROM_FN(nes_tinytooadvc)
 
 struct BurnDriver BurnDrvnes_tinytooadvc = {
-	"nes_tinytooadvc", "nes_tinytooadv", NULL, NULL, "1989 ?",
-	"Tiny Toon Adventures (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_tinytooadvc", "nes_tinytooadv", NULL, NULL, "2019",
+	"Tiny Toon Adventures (USA) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_tinytooadvcRomInfo, nes_tinytooadvcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -18002,10 +18005,10 @@ STD_ROM_PICK(nes_tinytooadv6c)
 STD_ROM_FN(nes_tinytooadv6c)
 
 struct BurnDriver BurnDrvnes_tinytooadv6c = {
-	"nes_tinytooadv6c", "nes_tinytooadv6", NULL, NULL, "1989 ?",
-	"Tiny Toon Adventures 6 (Unl) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_tinytooadv6c", "nes_tinytooadv6", NULL, NULL, "2018",
+	"Tiny Toon Adventures 6 (Unl) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_tinytooadv6cRomInfo, nes_tinytooadv6cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -18021,10 +18024,10 @@ STD_ROM_PICK(nes_tomjerultgamcatandmc)
 STD_ROM_FN(nes_tomjerultgamcatandmc)
 
 struct BurnDriver BurnDrvnes_tomjerultgamcatandmc = {
-	"nes_tomjerultgamcatandmc", "nes_tomjerultgamcatandm", NULL, NULL, "1989 ?",
-	"Tom & Jerry - The Ultimate Game of Cat and Mouse! (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_tomjerultgamcatandmc", "nes_tomjerultgamcatandm", NULL, NULL, "2018",
+	"Tom & Jerry - The Ultimate Game of Cat and Mouse! (USA) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_tomjerultgamcatandmcRomInfo, nes_tomjerultgamcatandmcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -18040,10 +18043,10 @@ STD_ROM_PICK(nes_topgunsecmisc)
 STD_ROM_FN(nes_topgunsecmisc)
 
 struct BurnDriver BurnDrvnes_topgunsecmisc = {
-	"nes_topgunsecmisc", "nes_topgunsecmis", NULL, NULL, "1989 ?",
-	"Top Gun - The Second Mission (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_topgunsecmisc", "nes_topgunsecmis", NULL, NULL, "2019",
+	"Top Gun - The Second Mission (USA) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SIM | GBF_SHOOT, 0,
 	NESGetZipName, nes_topgunsecmiscRomInfo, nes_topgunsecmiscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -18059,10 +18062,10 @@ STD_ROM_PICK(nes_topgunc)
 STD_ROM_FN(nes_topgunc)
 
 struct BurnDriver BurnDrvnes_topgunc = {
-	"nes_topgunc", "nes_topgun", NULL, NULL, "1989 ?",
-	"Top Gun (USA) (Rev 1) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_topgunc", "nes_topgun", NULL, NULL, "2019",
+	"Top Gun (USA) (Rev 1) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SIM | GBF_SHOOT, 0,
 	NESGetZipName, nes_topguncRomInfo, nes_topguncRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -18078,10 +18081,10 @@ STD_ROM_PICK(nes_totalrecallc)
 STD_ROM_FN(nes_totalrecallc)
 
 struct BurnDriver BurnDrvnes_totalrecallc = {
-	"nes_totalrecallc", "nes_totalrecall", NULL, NULL, "1989 ?",
-	"Total Recall (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_totalrecallc", "nes_totalrecall", NULL, NULL, "2019",
+	"Total Recall (USA) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_totalrecallcRomInfo, nes_totalrecallcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -18097,10 +18100,10 @@ STD_ROM_PICK(nes_uncanxmenc)
 STD_ROM_FN(nes_uncanxmenc)
 
 struct BurnDriver BurnDrvnes_uncanxmenc = {
-	"nes_uncanxmenc", "nes_uncanxmen", NULL, NULL, "1989 ?",
-	"Uncanny X-Men, The (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_uncanxmenc", "nes_uncanxmen", NULL, NULL, "2019",
+	"Uncanny X-Men, The (USA) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_uncanxmencRomInfo, nes_uncanxmencRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -18116,10 +18119,10 @@ STD_ROM_PICK(nes_valkynobouc)
 STD_ROM_FN(nes_valkynobouc)
 
 struct BurnDriver BurnDrvnes_valkynobouc = {
-	"nes_valkynobouc", "nes_valkynobou", NULL, NULL, "1989 ?",
-	"Valkyrie no Bouken - Toki no Kagi Densetsu (Japan) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_valkynobouc", "nes_valkynobou", NULL, NULL, "2019",
+	"Valkyrie no Bouken - Toki no Kagi Densetsu (Japan) - Castellano v1.0\0", NULL, "Max1323", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_valkynoboucRomInfo, nes_valkynoboucRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -42451,7 +42454,7 @@ struct BurnDriver BurnDrvnes_speluiij = {
 };
 
 static struct BurnRomInfo nes_speluiiRomDesc[] = {
-	{ "Spelunker II - Yuusha e no Chousen (T-eng).nes",          261988, 0xfa8730cc, BRF_ESS | BRF_PRG },
+	{ "Spelunker II - Yuusha e no Chousen (T-eng).nes",          262160, 0x72a28744, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_speluii)
@@ -44185,7 +44188,7 @@ struct BurnDriver BurnDrvnes_tatakchorobseitr = {
 };
 
 static struct BurnRomInfo nes_tatakrahmanRomDesc[] = {
-	{ "Tatakae!! Rahmen Man - Sakuretsu Choujin 102 Gei (Japan).nes",          262160, 0xacc2b74a, BRF_ESS | BRF_PRG },
+	{ "Tatakae!! Rahmen Man - Sakuretsu Choujin 102 Gei (Japan).nes",          262160, 0xad9c24f5, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_tatakrahman)

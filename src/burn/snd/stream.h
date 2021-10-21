@@ -29,6 +29,14 @@
 //   stream.set_buffered([CPU]TotalCycles, CPUMhz);
 //   note: make sure [CPU]NewFrame(); is called at the top of each frame!
 
+// -- input samplerate change
+//   stream.set_rate(new_rate);
+//   doing this live (during a frame) causes the buffer to restart!
+//   * berzerk, (atari) games with tms5220/tms5110 write silence before
+//   rate changes, so this is not a problem.
+//   should we encounter something that needs to rate change several times
+//   per frame, while outputting non-silence then a little re-write is in-order..
+
 struct Stream {
 	// the re-sampler section
 	UINT32 nSampleSize;
@@ -57,6 +65,7 @@ struct Stream {
 		nSampleRateFrom = rate_from;
 		nSampleSize = (UINT64)nSampleRateFrom * (1 << 16) / ((nSampleRateTo == 0) ? 44100 : nSampleRateTo);
 		nSampleSize_Otherway = (UINT64)((nSampleRateTo == 0) ? 44100 : nSampleRateTo) * (1 << 16) / nSampleRateFrom;
+		nPosition = 0; // re-start the frame
 	}
 	void exit() {
 		nSampleSize = nFractionalPosition = 0;
@@ -274,6 +283,8 @@ struct Stream {
 	INT32 (*pTotalCyclesCB)();
 	INT32 nCpuMHZ;
 
+	INT32 debug;
+
 	void set_volume(double vol)
 	{
 		volume = vol;
@@ -303,6 +314,7 @@ struct Stream {
 
 		set_volume(1.00);
 		set_route(BURN_SND_ROUTE_BOTH);
+		set_debug(0);
 	}
 
 	void stream_exit() {
@@ -327,6 +339,11 @@ struct Stream {
 		UpdateStream(0);
 	}
 
+	void set_debug(INT32 level)
+	{
+		debug = level;
+	}
+
 	void UpdateStream(INT32 end)
 	{
 		if (!pBurnSoundOut) return;
@@ -341,7 +358,7 @@ struct Stream {
 
 		if (samples < 1) return;
 
-		//if (end) bprintf(0, _T("stream_sync: %d samples   pos %d  framelen %d   frame %d\n"), samples, nPosition, framelen, nCurrentFrame);
+		if ((debug == 2) || (debug == 1 && end)) bprintf(0, _T("stream_sync: %d samples   pos %d  framelen %d   frame %d\n"), samples, nPosition, framelen, nCurrentFrame);
 
 		INT16 *mix[MAX_CHANNELS];
 

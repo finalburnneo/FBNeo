@@ -42454,7 +42454,7 @@ struct BurnDriver BurnDrvnes_speluiij = {
 };
 
 static struct BurnRomInfo nes_speluiiRomDesc[] = {
-	{ "Spelunker II - Yuusha e no Chousen (T-eng).nes",          261988, 0xfa8730cc, BRF_ESS | BRF_PRG },
+	{ "Spelunker II - Yuusha e no Chousen (T-eng).nes",          262160, 0x72a28744, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_speluii)

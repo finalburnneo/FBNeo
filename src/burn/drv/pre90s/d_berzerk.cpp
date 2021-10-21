@@ -4,8 +4,9 @@
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "bitswap.h"
+#include "burn_gun.h"
 #include "s14001a.h"
-#include "downsample.h"
+#include "stream.h"
 
 static UINT8 *AllMem;
 static UINT8 *AllRam;
@@ -21,6 +22,8 @@ static UINT8 *DrvColRAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
+static INT32 nExtraCycles[1];
+
 static UINT8 magicram_control = 0xff;
 static UINT8 magicram_latch = 0xff;
 static UINT8 collision = 0;
@@ -29,7 +32,7 @@ static INT32 nmi_enable;
 static INT32 irq_enable;
 
 static UINT8 DrvJoy1[8];
-static UINT8 DrvJoy1f[8]; // fake inputs, for moonwarp left/right "dial"
+static UINT8 DrvJoy1f[8]; // fake inputs, for moonwarp left/right "dial" & shared button 4
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
 static UINT8 DrvJoy4[8];
@@ -37,8 +40,9 @@ static UINT8 DrvInputs[10];
 static UINT8 DrvDips[8];
 static UINT8 DrvReset;
 
-static INT32 vblank;
+static INT16 Analog[2];
 
+static INT32 vblank;
 static INT32 moonwarp_mode = 0;
 
 static struct BurnInputInfo BerzerkInputList[] = {
@@ -72,15 +76,27 @@ static struct BurnInputInfo BerzerkInputList[] = {
 
 STDINPUTINFO(Berzerk)
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo MoonwarpInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
 	{"P1 Left",			BIT_DIGITAL,	DrvJoy1f+ 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1f+ 1,	"p1 right"	},
+	A("P1 Spinner",		BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"),
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 3"	},
 	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 fire 4"	},
+
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 6,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1f+ 2,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy1f+ 3,	"p2 right"	},
+	A("P2 Spinner",		BIT_ANALOG_REL, &Analog[1],		"p2 x-axis"),
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 3"	},
+	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy1f + 4,	"p2 fire 4"	}, // shared w/ p1 button 4!
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy4 + 0,	"service"	},
@@ -92,6 +108,7 @@ static struct BurnInputInfo MoonwarpInputList[] = {
 	{"Dip E",			BIT_DIPSWITCH,	DrvDips + 5,	"dip"		},
 	{"Dip F",			BIT_DIPSWITCH,	DrvDips + 6,	"dip"		},
 };
+#undef A
 
 STDINPUTINFO(Moonwarp)
 
@@ -331,107 +348,108 @@ STDDIPINFO(Frenzy)
 
 static struct BurnDIPInfo MoonwarpDIPList[]=
 {
-	{0x0b, 0xff, 0xff, 0x00, NULL					},
-	{0x0c, 0xff, 0xff, 0x00, NULL					},
-	{0x0d, 0xff, 0xff, 0x00, NULL					},
-	{0x0e, 0xff, 0xff, 0x00, NULL					},
-	{0x0f, 0xff, 0xff, 0x00, NULL					},
+	DIP_OFFSET(0x15)
+	{0x00, 0xff, 0xff, 0x00, NULL					},
+	{0x01, 0xff, 0xff, 0x00, NULL					},
+	{0x02, 0xff, 0xff, 0x00, NULL					},
+	{0x03, 0xff, 0xff, 0x00, NULL					},
+	{0x04, 0xff, 0xff, 0x00, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Hardware Tests"		},
-	{0x0b, 0x01, 0x03, 0x00, "Off"					},
-	{0x0b, 0x01, 0x03, 0x01, "Color test"			},
-	{0x0b, 0x01, 0x03, 0x02, "Unknown"				},
-	{0x0b, 0x01, 0x03, 0x03, "Signature Analysis"	},
+	{0x00, 0x01, 0x03, 0x00, "Off"					},
+	{0x00, 0x01, 0x03, 0x01, "Color test"			},
+	{0x00, 0x01, 0x03, 0x02, "Unknown"				},
+	{0x00, 0x01, 0x03, 0x03, "Signature Analysis"	},
 
 	{0   , 0xfe, 0   ,    6, "Bonus Life"			},
-	{0x0b, 0x01, 0xf8, 0x00, "10000"				},
-	{0x0b, 0x01, 0xf8, 0x08, "15000"				},
-	{0x0b, 0x01, 0xf8, 0x10, "20000"				},
-	{0x0b, 0x01, 0xf8, 0x20, "30000"				},
-	{0x0b, 0x01, 0xf8, 0x40, "40000"				},
-	{0x0b, 0x01, 0xf8, 0x80, "50000"				},
+	{0x00, 0x01, 0xf8, 0x00, "10000"				},
+	{0x00, 0x01, 0xf8, 0x08, "15000"				},
+	{0x00, 0x01, 0xf8, 0x10, "20000"				},
+	{0x00, 0x01, 0xf8, 0x20, "30000"				},
+	{0x00, 0x01, 0xf8, 0x40, "40000"				},
+	{0x00, 0x01, 0xf8, 0x80, "50000"				},
 
 	{0   , 0xfe, 0   ,    2, "Input Test Mode"		},
-	{0x0c, 0x01, 0x01, 0x00, "Off"					},
-	{0x0c, 0x01, 0x01, 0x01, "On"					},
+	{0x01, 0x01, 0x01, 0x00, "Off"					},
+	{0x01, 0x01, 0x01, 0x01, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Crosshair Pattern"	},
-	{0x0c, 0x01, 0x02, 0x00, "Off"					},
-	{0x0c, 0x01, 0x02, 0x02, "On"					},
+	{0x01, 0x01, 0x02, 0x00, "Off"					},
+	{0x01, 0x01, 0x02, 0x02, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Spinner Orientation"	},
-	{0x0c, 0x01, 0x08, 0x08, "Reverse"				},
-	{0x0c, 0x01, 0x08, 0x00, "Standard"				},
+	{0x01, 0x01, 0x08, 0x08, "Reverse"				},
+	{0x01, 0x01, 0x08, 0x00, "Standard"				},
 
 	{0   , 0xfe, 0   ,    4, "Language"				},
-	{0x0c, 0x01, 0xc0, 0x00, "English"				},
-	{0x0c, 0x01, 0xc0, 0x40, "German"				},
-	{0x0c, 0x01, 0xc0, 0x80, "French"				},
-	{0x0c, 0x01, 0xc0, 0xc0, "Spanish"				},
+	{0x01, 0x01, 0xc0, 0x00, "English"				},
+	{0x01, 0x01, 0xc0, 0x40, "German"				},
+	{0x01, 0x01, 0xc0, 0x80, "French"				},
+	{0x01, 0x01, 0xc0, 0xc0, "Spanish"				},
 
 	{0   , 0xfe, 0   ,    16, "Coin 1"				},
-	{0x0d, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"	},
-	{0x0d, 0x01, 0x0f, 0x0d, "4 Coins 3 Credits"	},
-	{0x0d, 0x01, 0x0f, 0x00, "1 Coin  1 Credits"	},
-	{0x0d, 0x01, 0x0f, 0x0e, "4 Coins 5 Credits"	},
-	{0x0d, 0x01, 0x0f, 0x0a, "2 Coins 3 Credits"	},
-	{0x0d, 0x01, 0x0f, 0x0f, "4 Coins 7 Credits"	},
-	{0x0d, 0x01, 0x0f, 0x01, "1 Coin  2 Credits"	},
-	{0x0d, 0x01, 0x0f, 0x0b, "2 Coins 5 Credits"	},
-	{0x0d, 0x01, 0x0f, 0x02, "1 Coin  3 Credits"	},
-	{0x0d, 0x01, 0x0f, 0x0c, "2 Coins 7 Credits"	},
-	{0x0d, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"	},
-	{0x0d, 0x01, 0x0f, 0x04, "1 Coin  5 Credits"	},
-	{0x0d, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"	},
-	{0x0d, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"	},
-	{0x0d, 0x01, 0x0f, 0x07, "1 Coin/10 Credits"	},
-	{0x0d, 0x01, 0x0f, 0x08, "1 Coin/14 Credits"	},
+	{0x02, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"	},
+	{0x02, 0x01, 0x0f, 0x0d, "4 Coins 3 Credits"	},
+	{0x02, 0x01, 0x0f, 0x00, "1 Coin  1 Credits"	},
+	{0x02, 0x01, 0x0f, 0x0e, "4 Coins 5 Credits"	},
+	{0x02, 0x01, 0x0f, 0x0a, "2 Coins 3 Credits"	},
+	{0x02, 0x01, 0x0f, 0x0f, "4 Coins 7 Credits"	},
+	{0x02, 0x01, 0x0f, 0x01, "1 Coin  2 Credits"	},
+	{0x02, 0x01, 0x0f, 0x0b, "2 Coins 5 Credits"	},
+	{0x02, 0x01, 0x0f, 0x02, "1 Coin  3 Credits"	},
+	{0x02, 0x01, 0x0f, 0x0c, "2 Coins 7 Credits"	},
+	{0x02, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"	},
+	{0x02, 0x01, 0x0f, 0x04, "1 Coin  5 Credits"	},
+	{0x02, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"	},
+	{0x02, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"	},
+	{0x02, 0x01, 0x0f, 0x07, "1 Coin/10 Credits"	},
+	{0x02, 0x01, 0x0f, 0x08, "1 Coin/14 Credits"	},
 
 	{0   , 0xfe, 0   ,    16, "Coin 2"				},
-	{0x0e, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"	},
-	{0x0e, 0x01, 0x0f, 0x0d, "4 Coins 3 Credits"	},
-	{0x0e, 0x01, 0x0f, 0x00, "1 Coin  1 Credits"	},
-	{0x0e, 0x01, 0x0f, 0x0e, "4 Coins 5 Credits"	},
-	{0x0e, 0x01, 0x0f, 0x0a, "2 Coins 3 Credits"	},
-	{0x0e, 0x01, 0x0f, 0x0f, "4 Coins 7 Credits"	},
-	{0x0e, 0x01, 0x0f, 0x01, "1 Coin  2 Credits"	},
-	{0x0e, 0x01, 0x0f, 0x0b, "2 Coins 5 Credits"	},
-	{0x0e, 0x01, 0x0f, 0x02, "1 Coin  3 Credits"	},
-	{0x0e, 0x01, 0x0f, 0x0c, "2 Coins 7 Credits"	},
-	{0x0e, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"	},
-	{0x0e, 0x01, 0x0f, 0x04, "1 Coin  5 Credits"	},
-	{0x0e, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"	},
-	{0x0e, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"	},
-	{0x0e, 0x01, 0x0f, 0x07, "1 Coin/10 Credits"	},
-	{0x0e, 0x01, 0x0f, 0x08, "1 Coin/14 Credits"	},
+	{0x03, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"	},
+	{0x03, 0x01, 0x0f, 0x0d, "4 Coins 3 Credits"	},
+	{0x03, 0x01, 0x0f, 0x00, "1 Coin  1 Credits"	},
+	{0x03, 0x01, 0x0f, 0x0e, "4 Coins 5 Credits"	},
+	{0x03, 0x01, 0x0f, 0x0a, "2 Coins 3 Credits"	},
+	{0x03, 0x01, 0x0f, 0x0f, "4 Coins 7 Credits"	},
+	{0x03, 0x01, 0x0f, 0x01, "1 Coin  2 Credits"	},
+	{0x03, 0x01, 0x0f, 0x0b, "2 Coins 5 Credits"	},
+	{0x03, 0x01, 0x0f, 0x02, "1 Coin  3 Credits"	},
+	{0x03, 0x01, 0x0f, 0x0c, "2 Coins 7 Credits"	},
+	{0x03, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"	},
+	{0x03, 0x01, 0x0f, 0x04, "1 Coin  5 Credits"	},
+	{0x03, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"	},
+	{0x03, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"	},
+	{0x03, 0x01, 0x0f, 0x07, "1 Coin/10 Credits"	},
+	{0x03, 0x01, 0x0f, 0x08, "1 Coin/14 Credits"	},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"				},
-	{0x0e, 0x01, 0x80, 0x00, "Upright"				},
-	{0x0e, 0x01, 0x80, 0x80, "Cocktail"				},
+	{0x03, 0x01, 0x80, 0x00, "Upright"				},
+	{0x03, 0x01, 0x80, 0x80, "Cocktail"				},
 
 	{0   , 0xfe, 0   ,    16, "Coin 3"				},
-	{0x0f, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"	},
-	{0x0f, 0x01, 0x0f, 0x0d, "4 Coins 3 Credits"	},
-	{0x0f, 0x01, 0x0f, 0x00, "1 Coin  1 Credits"	},
-	{0x0f, 0x01, 0x0f, 0x0e, "4 Coins 5 Credits"	},
-	{0x0f, 0x01, 0x0f, 0x0a, "2 Coins 3 Credits"	},
-	{0x0f, 0x01, 0x0f, 0x0f, "4 Coins 7 Credits"	},
-	{0x0f, 0x01, 0x0f, 0x01, "1 Coin  2 Credits"	},
-	{0x0f, 0x01, 0x0f, 0x0b, "2 Coins 5 Credits"	},
-	{0x0f, 0x01, 0x0f, 0x02, "1 Coin  3 Credits"	},
-	{0x0f, 0x01, 0x0f, 0x0c, "2 Coins 7 Credits"	},
-	{0x0f, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"	},
-	{0x0f, 0x01, 0x0f, 0x04, "1 Coin  5 Credits"	},
-	{0x0f, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"	},
-	{0x0f, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"	},
-	{0x0f, 0x01, 0x0f, 0x07, "1 Coin/10 Credits"	},
-	{0x0f, 0x01, 0x0f, 0x08, "1 Coin/14 Credits"	},
+	{0x04, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"	},
+	{0x04, 0x01, 0x0f, 0x0d, "4 Coins 3 Credits"	},
+	{0x04, 0x01, 0x0f, 0x00, "1 Coin  1 Credits"	},
+	{0x04, 0x01, 0x0f, 0x0e, "4 Coins 5 Credits"	},
+	{0x04, 0x01, 0x0f, 0x0a, "2 Coins 3 Credits"	},
+	{0x04, 0x01, 0x0f, 0x0f, "4 Coins 7 Credits"	},
+	{0x04, 0x01, 0x0f, 0x01, "1 Coin  2 Credits"	},
+	{0x04, 0x01, 0x0f, 0x0b, "2 Coins 5 Credits"	},
+	{0x04, 0x01, 0x0f, 0x02, "1 Coin  3 Credits"	},
+	{0x04, 0x01, 0x0f, 0x0c, "2 Coins 7 Credits"	},
+	{0x04, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"	},
+	{0x04, 0x01, 0x0f, 0x04, "1 Coin  5 Credits"	},
+	{0x04, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"	},
+	{0x04, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"	},
+	{0x04, 0x01, 0x0f, 0x07, "1 Coin/10 Credits"	},
+	{0x04, 0x01, 0x0f, 0x08, "1 Coin/14 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x0f, 0x01, 0xc0, 0x00, "Very Easy"			},
-	{0x0f, 0x01, 0xc0, 0x40, "Easy"					},
-	{0x0f, 0x01, 0xc0, 0x80, "Normal"				},
-	{0x0f, 0x01, 0xc0, 0xc0, "Hard"					},
+	{0x04, 0x01, 0xc0, 0x00, "Very Easy"			},
+	{0x04, 0x01, 0xc0, 0x40, "Easy"					},
+	{0x04, 0x01, 0xc0, 0x80, "Normal"				},
+	{0x04, 0x01, 0xc0, 0xc0, "Hard"					},
 };
 
 STDDIPINFO(Moonwarp)
@@ -514,34 +532,33 @@ struct sh6840_timer_channel
 static struct sh6840_timer_channel sh6840_timer[3];
 static INT16 sh6840_volume[3];
 static UINT8 sh6840_MSB;
-static UINT8 sh6840_LFSR_oldxor = 0; /* should be saved in savestate */
-static UINT32 sh6840_LFSR_0;/* ditto */
-static UINT32 sh6840_LFSR_1;/* ditto */
-static UINT32 sh6840_LFSR_2;/* ditto */
-static UINT32 sh6840_LFSR_3;/* ditto */
+static UINT8 sh6840_LFSR_oldxor = 0;
+static UINT32 sh6840_LFSR_0;
+static UINT32 sh6840_LFSR_1;
+static UINT32 sh6840_LFSR_2;
+static UINT32 sh6840_LFSR_3;
 static UINT32 sh6840_clocks_per_sample;
 static UINT32 sh6840_clock_count;
 
 static UINT8 exidy_sfxctrl;
 
-static Downsampler resamp;
-static INT32 nPosition;
-static INT16 *mixer_buffer;
+static void exidy_update(INT16 **streams, INT32 length); // forward
+
+static Stream stream;
 
 static void exidy_sound_init()
 {
-	resamp.init(SH8253_CLOCK, nBurnSoundRate, 0);
-
-	mixer_buffer = (INT16*)BurnMalloc(2 * sizeof(INT16) * SH8253_CLOCK);
-
-	sh6840_clocks_per_sample = (int)((double)SH6840_CLOCK / (double)SH8253_CLOCK * (double)(1 << 24));
+	stream.init(SH8253_CLOCK, nBurnSoundRate, 1, 0, exidy_update);
+	stream.set_buffered(ZetTotalCycles, 2500000);
+	stream.set_volume(0.20);
+	sh6840_clocks_per_sample = (INT32)((double)SH6840_CLOCK / (double)SH8253_CLOCK * (double)(1 << 24));
 
 	s14001a_init(DrvSndROM, ZetTotalCycles, 2500000);
 }
 
 static void exidy_sound_exit()
 {
-	BurnFree(mixer_buffer);
+	stream.exit();
 
 	s14001a_exit();
 }
@@ -563,6 +580,7 @@ static void exidy_sync_stream(); // forward
 
 static void exidy_sound_reset()
 {
+	s14001a_reset();
 	berzerk_sound_write(4, 0x40);
 
 	/* 6840 */
@@ -580,7 +598,7 @@ static void exidy_sound_reset()
 	sh6840_LFSR_2 = 0xffffffff;
 	sh6840_LFSR_3 = 0xffffffff;
 
-	nPosition = 0;
+	nExtraCycles[0] = 0;
 }
 
 static void exidy_sound_write(UINT8 offset, UINT8 data)
@@ -738,8 +756,10 @@ static INT32 sh6840_update_noise(INT32 clocks)
  *
  *************************************/
 
-static void exidy_update(INT16 *buffer, INT32 length)
+static void exidy_update(INT16 **streams, INT32 length)
 {
+	INT16 *buffer = streams[0];
+
 	INT32 noisy = ((sh6840_timer[0].cr & sh6840_timer[1].cr & sh6840_timer[2].cr & 0x02) == 0);
 
 	/* loop over samples */
@@ -748,7 +768,7 @@ static void exidy_update(INT16 *buffer, INT32 length)
 		struct sh6840_timer_channel *t;
 		//struct sh8253_timer_channel *c;
 		INT32 clocks_this_sample;
-		INT16 sample = 0;
+		INT32 sample = 0;
 
 		/* determine how many 6840 clocks this sample */
 		sh6840_clock_count += sh6840_clocks_per_sample;
@@ -810,54 +830,23 @@ static void exidy_update(INT16 *buffer, INT32 length)
 		}
 
 		/* stash */
-		*buffer++ = sample;
+		*buffer++ = BURN_SND_CLIP(sample);
 	}
-}
-
-// Streambuffer handling
-static INT32 SyncInternal(INT32 cycles)
-{
-	return (INT32)(float)(cycles * (ZetTotalCycles() / (2500000 / (nBurnFPS / 100.0000))));
-}
-
-static void UpdateStream(INT32 end)
-{
-	if (!pBurnSoundOut) return;
-
-	INT32 framelen = resamp.samples_to_source(nBurnSoundLen);
-	INT32 position = (end) ? framelen : SyncInternal(framelen);
-
-	if (position > framelen) position = framelen;
-
-	INT32 samples = position - nPosition;
-
-	if (samples < 1) return;
-
-	INT16 *mix = mixer_buffer + nPosition;
-	memset(mix, 0, samples * sizeof(INT16));
-	exidy_update(mix, samples);
-	nPosition += samples;
 }
 
 static void exidy_sync_stream()
 {
-	UpdateStream(0);
+	stream.update();
 }
 
 void exidy_render(INT16 *buffer, INT32 length)
 {
-	if (mixer_buffer == NULL) return;
-
 	if (length != nBurnSoundLen) {
 		bprintf(0, _T("exidy_render(): once per frame, please!\n"));
 		return;
 	}
 
-	UpdateStream(1);
-
-	resamp.resample(mixer_buffer, buffer, length, 0.55, BURN_SND_ROUTE_BOTH);
-
-	nPosition = 0;
+	stream.render(buffer, length);
 }
 
 static void berzerk_sound_write(UINT8 offset, UINT8 data)
@@ -871,21 +860,19 @@ static void berzerk_sound_write(UINT8 offset, UINT8 data)
 			{
 				/* write data to the S14001 */
 				case 0:
-					/* only if not busy */
-					if (!s14001a_bsy_read())
-					{
-						s14001a_reg_write(data & 0x3f);
+					s14001a_data_write(data & 0x3f);
 
-						/* clock the chip -- via a 555 timer */
-						s14001a_rst_write(1);
-						s14001a_rst_write(0);
-					}
-
+					/* clock the chip -- via a 555 timer */
+					s14001a_start_write(1);
+					s14001a_start_write(0);
 					break;
 
 				case 1:
+					if (ZetGetActive() != -1)
+						s14001a_force_update();
+
 					/* volume */
-					s14001a_set_volume(((data & 0x38) >> 3) + 1);
+					s14001a_set_volume(((data >> 3 & 0xf) + 1) / 16.0);
 
 					/* clock control - the first LS161 divides the clock by 9 to 16, the 2nd by 8,
 					 giving a final clock from 19.5kHz to 34.7kHz */
@@ -966,12 +953,13 @@ static void __fastcall berzerk_write_port(UINT16 address, UINT8 data)
 
 static UINT8 __fastcall berzerk_read_port(UINT16 address)
 {
+	address &= 0xff;
 	if ((address & 0xe0) == 0x60) address &= ~0x18;
 
 	switch (address & 0xff)
 	{
 		case 0x44:
-			return (!s14001a_bsy_read()) ? 0x40 : 0x00;
+			return (s14001a_busy_read()) ? 0xc0 : 0x40;
 
 		case 0x48: // p1
 			return DrvInputs[0];
@@ -1028,7 +1016,6 @@ static INT32 DrvDoReset()
 
 	// sound
 	exidy_sound_reset();
-	s14001a_reset();
 
 	magicram_control = 0xff;
 	magicram_latch = 0xff;
@@ -1066,6 +1053,8 @@ static INT32 MemIndex()
 
 static INT32 DrvInit(INT32 berzerk)
 {
+	BurnSetRefreshRate(59.63);
+
 	BurnAllocMemIndex();
 
 	moonwarp_mode = !strcmp(BurnDrvGetTextA(DRV_NAME), "moonwarp");
@@ -1122,6 +1111,8 @@ static INT32 DrvInit(INT32 berzerk)
 	//	SOUND
 	exidy_sound_init();
 
+	BurnTrackballInit(1); // moonwarp
+
 	GenericTilesInit();
 
 	DrvDoReset();
@@ -1132,6 +1123,8 @@ static INT32 DrvInit(INT32 berzerk)
 static INT32 DrvExit()
 {
 	exidy_sound_exit();
+
+	BurnTrackballExit();
 
 	GenericTilesExit();
 	ZetExit();
@@ -1214,6 +1207,10 @@ static INT32 DrvFrame()
 		DrvInputs[7] = DrvDips[4]; // coin chute 2
 		DrvInputs[8] = DrvDips[5]; // coin chute 3
 
+		if (moonwarp_mode) {
+			DrvJoy3[3] |= DrvJoy1f[4]; // shared hyper-flip button! (#4)
+		}
+
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -1222,22 +1219,21 @@ static INT32 DrvFrame()
 		}
 
 		if (moonwarp_mode) {
-			static UINT8 p1_dir = 0;
-			static UINT8 p1_cntr = 0;
+			BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
+			BurnTrackballFrame(0, Analog[0], Analog[1], 0x00, 0x07);
+			BurnTrackballUDLR(0, DrvJoy1f[2], DrvJoy1f[3], DrvJoy1f[0], DrvJoy1f[1]);
+			BurnTrackballUpdate(0);
 
-			DrvInputs[0] &= ~0x1f; // cancel out dial bits (active high)
-			DrvInputs[1] &= ~0x1f; // p2 (coctail) dial bits, not hooked up in this driver
-
-			if (DrvJoy1f[0] || DrvJoy1f[1]) p1_cntr+=3;
-			if (DrvJoy1f[0]) p1_dir = 0;
-			if (DrvJoy1f[1]) p1_dir = 0x10;
-			DrvInputs[0] |= (p1_cntr & 0xf) | p1_dir;
+			DrvInputs[0] &= ~0x1f; // p1, mask out dial bits
+			DrvInputs[1] &= ~0x1f; // p2
+			DrvInputs[0] |= (BurnTrackballRead(0, 0) & 0xf) | ((BurnTrackballGetDirection(0, 0) > 0) ? 0x10 : 0x00);
+			DrvInputs[1] |= (BurnTrackballRead(0, 1) & 0xf) | ((BurnTrackballGetDirection(0, 1) > 0) ? 0x10 : 0x00);
 		}
 	}
 
 	INT32 nInterleave = 262;
-	INT32 nCyclesTotal[1] = { 2500000 / 60 };
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesTotal[1] = { (INT32)(2500000 / 59.63) };
+	INT32 nCyclesDone[1] = { nExtraCycles[0] };
 
 	ZetOpen(0);
 
@@ -1251,18 +1247,20 @@ static INT32 DrvFrame()
 			vblank = 1;
 		}
 
+		if (((i + 1) % 32) == 0 && nmi_enable) {
+			ZetNmi();
+		}
 		if (i == 128 || i == 256) {
 			if (irq_enable) {
 				ZetSetVector(0xfc);
 				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			}
 		}
-		else if ((i % 32) == 0 && nmi_enable) {
-			ZetNmi();
-		}
 
 		CPU_RUN(0, Zet);
 	}
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 
 	ZetClose();
 
@@ -1293,6 +1291,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 
 		exidy_sound_scan();
+
+		if (moonwarp_mode) {
+			BurnTrackballScan();
+		}
+
 		s14001a_scan(nAction, pnMin);
 
 		SCAN_VAR(magicram_control);
@@ -1300,6 +1303,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(collision);
 		SCAN_VAR(nmi_enable);
 		SCAN_VAR(irq_enable);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_NVRAM) {

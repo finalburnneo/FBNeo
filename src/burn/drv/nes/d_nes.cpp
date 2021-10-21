@@ -13688,7 +13688,7 @@ struct BurnDriver BurnDrvnes_vsraidbbay = {
 	"vsraidbbay", NULL, NULL, NULL, "1985",
 	"VS. Raid on Bungling Bay\0", NULL, "Broderbund", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, nes_vsraidbbayRomInfo, nes_vsraidbbayRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -13706,7 +13706,7 @@ struct BurnDriver BurnDrvnes_vsrbibbal = {
 	"vsrbibbal", NULL, NULL, NULL, "1987",
 	"VS. Atari RBI Baseball\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, nes_vsrbibbalRomInfo, nes_vsrbibbalRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESReversedInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -13723,7 +13723,7 @@ struct BurnDriver BurnDrvnes_vsbattlecity = {
 	"vsbattlecity", NULL, NULL, NULL, "1985",
 	"VS. Battle City\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_SHOOT, 0,
 	NULL, nes_vsbattlecityRomInfo, nes_vsbattlecityRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -13740,7 +13740,7 @@ struct BurnDriver BurnDrvnes_vscastlevania = {
 	"vscastlevania", NULL, NULL, NULL, "1987",
 	"VS. Castlevania\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, nes_vscastlevaniaRomInfo, nes_vscastlevaniaRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -13757,7 +13757,7 @@ struct BurnDriver BurnDrvnes_vsclucluland = {
 	"vsclucluland", NULL, NULL, NULL, "1984",
 	"VS. Clu Clu Land\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, nes_vscluclulandRomInfo, nes_vscluclulandRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -13774,7 +13774,7 @@ struct BurnDriver BurnDrvnes_vsdrmario = {
 	"vsdrmario", NULL, NULL, NULL, "1990",
 	"VS. Dr. Mario\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, nes_vsdrmarioRomInfo, nes_vsdrmarioRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESReversedInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -13791,7 +13791,7 @@ struct BurnDriver BurnDrvnes_vsduckhunt = {
 	"vsduckhunt", NULL, NULL, NULL, "1984",
 	"VS. Duck Hunt\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, nes_vsduckhuntRomInfo, nes_vsduckhuntRomName, NULL, NULL, NULL, NULL, NESVSZapperInputInfo, NESVSZapperDIPInfo,
 	NESZapperInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -13808,7 +13808,7 @@ struct BurnDriver BurnDrvnes_vsexcitebike = {
 	"vsexcitebike", NULL, NULL, NULL, "1985",
 	"VS. Excitebike\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, nes_vsexcitebikeRomInfo, nes_vsexcitebikeRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -13825,7 +13825,7 @@ struct BurnDriver BurnDrvnes_vsfreedomforce = {
 	"vsfreedomforce", NULL, NULL, NULL, "1988",
 	"VS. Freedom Force\0", NULL, "Sunsoft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, nes_vsfreedomforceRomInfo, nes_vsfreedomforceRomName, NULL, NULL, NULL, NULL, NESVSZapperInputInfo, NESVSZapperDIPInfo,
 	NESZapperInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -13842,7 +13842,7 @@ struct BurnDriver BurnDrvnes_vsgoonies = {
 	"vsgoonies", NULL, NULL, NULL, "1986",
 	"VS. Goonies, The\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, nes_vsgooniesRomInfo, nes_vsgooniesRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -13859,7 +13859,7 @@ struct BurnDriver BurnDrvnes_vsgradius = {
 	"vsgradius", NULL, NULL, NULL, "1986",
 	"VS. Gradius\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, nes_vsgradiusRomInfo, nes_vsgradiusRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -13876,7 +13876,7 @@ struct BurnDriver BurnDrvnes_vsgumshoe = {
 	"vsgumshoe", NULL, NULL, NULL, "1986",
 	"VS. Gumshoe\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, nes_vsgumshoeRomInfo, nes_vsgumshoeRomName, NULL, NULL, NULL, NULL, NESVSZapperInputInfo, NESVSZapperDIPInfo,
 	NESZapperInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -13893,7 +13893,7 @@ struct BurnDriver BurnDrvnes_vshogansalley = {
 	"vshogansalley", NULL, NULL, NULL, "1985",
 	"VS. Hogan's Alley\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, nes_vshogansalleyRomInfo, nes_vshogansalleyRomName, NULL, NULL, NULL, NULL, NESVSZapperInputInfo, NESVSZapperDIPInfo,
 	NESZapperInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -13910,7 +13910,7 @@ struct BurnDriver BurnDrvnes_vsiceclimber = {
 	"vsiceclimber", NULL, NULL, NULL, "1985",
 	"VS. Ice Climber\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, nes_vsiceclimberRomInfo, nes_vsiceclimberRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -13927,7 +13927,7 @@ struct BurnDriver BurnDrvnes_vsmachrider = {
 	"vsmachrider", NULL, NULL, NULL, "1985",
 	"VS. Mach Rider\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, nes_vsmachriderRomInfo, nes_vsmachriderRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -13944,7 +13944,7 @@ struct BurnDriver BurnDrvnes_vsmightybombjack = {
 	"vsmightybomjack", NULL, NULL, NULL, "1986",
 	"VS. Mighty Bomb Jack\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, nes_vsmightybombjackRomInfo, nes_vsmightybombjackRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -13961,7 +13961,7 @@ struct BurnDriver BurnDrvnes_vsninjajkun = {
 	"vsninjajkun", NULL, NULL, NULL, "1986",
 	"VS. Ninja Jajamaru-kun\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, nes_vsninjajkunRomInfo, nes_vsninjajkunRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESReversedInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -13978,7 +13978,7 @@ struct BurnDriver BurnDrvnes_vspinball = {
 	"vspinball", NULL, NULL, NULL, "1984",
 	"VS. Pinball\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
 	NULL, nes_vspinballRomInfo, nes_vspinballRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSBit0HighDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -13995,7 +13995,7 @@ struct BurnDriver BurnDrvnes_vsplatoon = {
 	"vsplatoon", NULL, NULL, NULL, "1988",
 	"VS. Platoon\0", NULL, "Sunsoft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_SCRFIGHT, 0,
 	NULL, nes_vsplatoonRomInfo, nes_vsplatoonRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14012,7 +14012,7 @@ struct BurnDriver BurnDrvnes_vsslalom = {
 	"vsslalom", NULL, NULL, NULL, "1986",
 	"VS. Slalom\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, nes_vsslalomRomInfo, nes_vsslalomRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14029,7 +14029,7 @@ struct BurnDriver BurnDrvnes_vssoccer = {
 	"vssoccer", NULL, NULL, NULL, "1985",
 	"VS. Soccer\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, nes_vssoccerRomInfo, nes_vssoccerRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESReversedInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14046,7 +14046,7 @@ struct BurnDriver BurnDrvnes_vsstarluster = {
 	"vsstarluster", NULL, NULL, NULL, "1985",
 	"VS. Star Luster\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_SIM | GBF_SHOOT, 0,
 	NULL, nes_vsstarlusterRomInfo, nes_vsstarlusterRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14063,7 +14063,7 @@ struct BurnDriver BurnDrvnes_vssmgolf = {
 	"vssmgolf", NULL, NULL, NULL, "1984",
 	"VS. Stroke & Match Golf\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, nes_vssmgolfRomInfo, nes_vssmgolfRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSBit0HighDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14080,7 +14080,7 @@ struct BurnDriver BurnDrvnes_vssmgolfla = {
 	"vssmgolfla", NULL, NULL, NULL, "1984",
 	"VS. Stroke & Match Golf Ladies\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, nes_vssmgolflaRomInfo, nes_vssmgolflaRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSBit0HighDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14097,7 +14097,7 @@ struct BurnDriver BurnDrvnes_vssmb = {
 	"vssmb", NULL, NULL, NULL, "1986",
 	"VS. Super Mario Bros\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, nes_vssmbRomInfo, nes_vssmbRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14114,7 +14114,7 @@ struct BurnDriver BurnDrvnes_vssuperskykid = {
 	"vssuperskykid", NULL, NULL, NULL, "1986",
 	"VS. Super Sky Kid\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, nes_vssuperskykidRomInfo, nes_vssuperskykidRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESReversedInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14131,7 +14131,7 @@ struct BurnDriver BurnDrvnes_vssuperxevious = {
 	"vssuperxevious", NULL, NULL, NULL, "1986",
 	"VS. Super Xevious - Gump no Nazo\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, nes_vssuperxeviousRomInfo, nes_vssuperxeviousRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14148,7 +14148,7 @@ struct BurnDriver BurnDrvnes_vstetris = {
 	"vstetris", NULL, NULL, NULL, "1988",
 	"VS. Tetris\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, nes_vstetrisRomInfo, nes_vstetrisRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESReversedInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14165,7 +14165,7 @@ struct BurnDriver BurnDrvnes_vstkoboxing = {
 	"vstkoboxing", NULL, NULL, NULL, "1987",
 	"VS. TKO Boxing\0", NULL, "Data East", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
 	NULL, nes_vstkoboxingRomInfo, nes_vstkoboxingRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14182,7 +14182,7 @@ struct BurnDriver BurnDrvnes_vstopgun = {
 	"vstopgun", NULL, NULL, NULL, "1987",
 	"VS. Top Gun\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_SIM | GBF_SHOOT, 0,
 	NULL, nes_vstopgunRomInfo, nes_vstopgunRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14927,7 +14927,7 @@ struct BurnDriver BurnDrvnes_akumajoudraculac = {
 	"nes_akumajoudraculac", "nes_castlevania", NULL, NULL, "1993",
 	"Akumajou Dracula (T-Chi)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_akumajoudraculacRomInfo, nes_akumajoudraculacRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15479,10 +15479,10 @@ STD_ROM_PICK(nes_addamfampugsschuc)
 STD_ROM_FN(nes_addamfampugsschuc)
 
 struct BurnDriver BurnDrvnes_addamfampugsschuc = {
-	"nes_addamfampugsschuc", "nes_addamfampugsschu", NULL, NULL, "1989 ?",
-	"Addams Family, The - Pugsley's Scavenger Hunt (USA) - Castellano v1.1\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_addamfampugsschuc", "nes_addamfampugsschu", NULL, NULL, "2020",
+	"Addams Family, The - Pugsley's Scavenger Hunt (USA) - Castellano v1.1\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_addamfampugsschucRomInfo, nes_addamfampugsschucRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15498,10 +15498,10 @@ STD_ROM_PICK(nes_addamfamc)
 STD_ROM_FN(nes_addamfamc)
 
 struct BurnDriver BurnDrvnes_addamfamc = {
-	"nes_addamfamc", "nes_addamfam", NULL, NULL, "1989 ?",
-	"Addams Family, The (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_addamfamc", "nes_addamfam", NULL, NULL, "2020",
+	"Addams Family, The (USA) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_addamfamcRomInfo, nes_addamfamcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15517,10 +15517,10 @@ STD_ROM_PICK(nes_adventureislandc)
 STD_ROM_FN(nes_adventureislandc)
 
 struct BurnDriver BurnDrvnes_adventureislandc = {
-	"nes_adventureislandc", "nes_adventureisland", NULL, NULL, "1989 ?",
-	"Adventure Island (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_adventureislandc", "nes_adventureisland", NULL, NULL, "2017",
+	"Adventure Island (USA) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_adventureislandcRomInfo, nes_adventureislandcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15536,10 +15536,10 @@ STD_ROM_PICK(nes_advenisliic)
 STD_ROM_FN(nes_advenisliic)
 
 struct BurnDriver BurnDrvnes_advenisliic = {
-	"nes_advenisliic", "nes_advenislii", NULL, NULL, "1989 ?",
-	"Adventure Island II (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_advenisliic", "nes_advenislii", NULL, NULL, "2017",
+	"Adventure Island II (USA) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_advenisliicRomInfo, nes_advenisliicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15555,10 +15555,10 @@ STD_ROM_PICK(nes_advenisl3c)
 STD_ROM_FN(nes_advenisl3c)
 
 struct BurnDriver BurnDrvnes_advenisl3c = {
-	"nes_advenisl3c", "nes_advenisl3", NULL, NULL, "1989 ?",
-	"Adventure Island 3 (USA) - Castellano v1.1\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_advenisl3c", "nes_advenisl3", NULL, NULL, "2017",
+	"Adventure Island 3 (USA) - Castellano v1.1\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_advenisl3cRomInfo, nes_advenisl3cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15574,10 +15574,10 @@ STD_ROM_PICK(nes_alien3c)
 STD_ROM_FN(nes_alien3c)
 
 struct BurnDriver BurnDrvnes_alien3c = {
-	"nes_alien3c", "nes_alien3", NULL, NULL, "1989 ?",
-	"Alien 3 (USA) - Castellano v1.1\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_alien3c", "nes_alien3", NULL, NULL, "2020",
+	"Alien 3 (USA) - Castellano v1.1\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_alien3cRomInfo, nes_alien3cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15595,7 +15595,7 @@ struct BurnDriver BurnDrvnes_advddds = {
 	"nes_advddds", NULL, NULL, NULL, "1990",
 	"Advanced Dungeons & Dragons - Dragon Strike (USA)\0", NULL, "Natsume", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_advdddsRomInfo, nes_advdddsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15611,10 +15611,10 @@ STD_ROM_PICK(nes_advdddsc)
 STD_ROM_FN(nes_advdddsc)
 
 struct BurnDriver BurnDrvnes_advdddsc = {
-	"nes_advdddsc", "nes_advddds", NULL, NULL, "1989 ?",
-	"Advanced Dungeons & Dragons - Dragon Strike (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_advdddsc", "nes_advddds", NULL, NULL, "2019",
+	"Advanced Dungeons & Dragons - Dragon Strike (USA) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_advdddscRomInfo, nes_advdddscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15854,10 +15854,10 @@ STD_ROM_PICK(nes_castlevaniac)
 STD_ROM_FN(nes_castlevaniac)
 
 struct BurnDriver BurnDrvnes_castlevaniac = {
-	"nes_castlevaniac", "nes_castlevania", NULL, NULL, "1989 ?",
-	"Castlevania (USA) - Castellano 1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_castlevaniac", "nes_castlevania", NULL, NULL, "2012",
+	"Castlevania (USA) - Castellano 1.0\0", NULL, "Julian L.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_castlevaniacRomInfo, nes_castlevaniacRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15873,10 +15873,10 @@ STD_ROM_PICK(nes_castliic)
 STD_ROM_FN(nes_castliic)
 
 struct BurnDriver BurnDrvnes_castliic = {
-	"nes_castliic", "nes_castlii", NULL, NULL, "1989 ?",
-	"Castlevania II - Simon's Quest (USA) - Castellano v2.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_castliic", "nes_castlii", NULL, NULL, "2013",
+	"Castlevania II - Simon's Quest (USA) - Castellano v2.0\0", NULL, "Julian L.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
 	NESGetZipName, nes_castliicRomInfo, nes_castliicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

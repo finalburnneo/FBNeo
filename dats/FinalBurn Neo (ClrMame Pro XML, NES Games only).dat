@@ -173,9 +173,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="addamfamc" cloneof="addamfam" romof="addamfam">
-		<description>Addams Family, The (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Addams Family, The (USA) - Castellano v1.0 [Hack]</description>
+		<year>2020</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="addams family, the (usa) - castellano v1.0.nes" size="262160" crc="6bd3e973"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -189,9 +189,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="addamfampugsschuc" cloneof="addamfampugsschu" romof="addamfampugsschu">
-		<description>Addams Family, The - Pugsley's Scavenger Hunt (USA) - Castellano v1.1</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Addams Family, The - Pugsley's Scavenger Hunt (USA) - Castellano v1.1 [Hack]</description>
+		<year>2020</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="addams family, the - pugsley's scavenger hunt (usa) - castellano v1.1.nes" size="262160" crc="54bbec54"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -205,9 +205,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="advdddsc" cloneof="advddds" romof="advddds">
-		<description>Advanced Dungeons &amp; Dragons - Dragon Strike (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Advanced Dungeons &amp; Dragons - Dragon Strike (USA) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="advanced dungeons &amp; dragons - dragon strike (usa) - castellano v1.0.nes" size="524304" crc="22cfb91d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -269,9 +269,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="adventureislandc" cloneof="adventureisland" romof="adventureisland">
-		<description>Adventure Island (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Adventure Island (USA) - Castellano v1.0 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="adventure island (usa) - castellano v1.0.nes" size="65552" crc="abf6745d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -285,9 +285,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="advenisl3c" cloneof="advenisl3" romof="advenisl3">
-		<description>Adventure Island 3 (USA) - Castellano v1.1</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Adventure Island 3 (USA) - Castellano v1.1 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="adventure island iii (usa) - castellano v1.1.nes" size="262160" crc="31c3056e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -309,9 +309,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="advenisliic" cloneof="advenislii" romof="advenislii">
-		<description>Adventure Island II (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Adventure Island II (USA) - Castellano v1.0 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="adventure island ii (usa) - castellano v1.0.nes" size="262160" crc="92f21250"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -541,7 +541,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="akumajoudraculac" cloneof="castlevania" romof="castlevania">
-		<description>Akumajou Dracula (T-Chi)</description>
+		<description>Akumajou Dracula (T-Chi) [Hack]</description>
 		<year>1993</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Akumajou Dracula (T-Chi).nes" size="131088" crc="dc749e67"/>
@@ -605,9 +605,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="alien3c" cloneof="alien3" romof="alien3">
-		<description>Alien 3 (USA) - Castellano v1.1</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Alien 3 (USA) - Castellano v1.1 [Hack]</description>
+		<year>2020</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="alien 3 (usa) - castellano v1.1.nes" size="262160" crc="d16b91b7"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2149,9 +2149,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="castlevaniac" cloneof="castlevania" romof="castlevania">
-		<description>Castlevania (USA) - Castellano 1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Castlevania (USA) - Castellano 1.0 [Hack]</description>
+		<year>2012</year>
+		<manufacturer>Julian L.</manufacturer>
 		<rom name="castlevania (usa) - castellano 1.0.nes" size="131088" crc="de2e6b55"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2173,9 +2173,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="castliic" cloneof="castlii" romof="castlii">
-		<description>Castlevania II - Simon's Quest (USA) - Castellano v2.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Castlevania II - Simon's Quest (USA) - Castellano v2.0 [Hack]</description>
+		<year>2013</year>
+		<manufacturer>Julian L.</manufacturer>
 		<rom name="castlevania ii - simon's quest (usa) - castellano v2.0.nes" size="262160" crc="38d393a9"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3884,19 +3884,11 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="dragosla4j" cloneof="dragosla4" romof="dragosla4">
+	<game name="dragosla4">
 		<description>Dragon Slayer 4 - Drasle Family (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Namco</manufacturer>
 		<rom name="Dragon Slayer 4 - Drasle Family (Japan).nes" size="196624" crc="8870a286"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="dragosla4">
-		<description>Dragon Slayer 4 - Drasle Family (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
-		<rom name="Dragon Slayer 4 - Drasle Family (T-Eng).nes" size="196624" crc="a1493b76"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

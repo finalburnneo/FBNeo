@@ -4110,7 +4110,6 @@ DRV		BurnDrvnes_dragoscr;
 DRV		BurnDrvMSX_dslayer;
 DRV		BurnDrvmd_dslayed;
 DRV		BurnDrvmd_dslayed2;
-DRV		BurnDrvnes_dragosla4j;
 DRV		BurnDrvnes_dragosla4;
 DRV		BurnDrvMSX_dslayer4;
 DRV		BurnSpecDragonspirit;
@@ -21950,8 +21949,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_dslayer,		// Dragon Slayer (Jpn)
 	&BurnDrvmd_dslayed,			// Dragon Slayer - Eiyuu Densetsu (Jpn)
 	&BurnDrvmd_dslayed2,		// Dragon Slayer - Eiyuu Densetsu II (Jpn)
-	&BurnDrvnes_dragosla4j,		// Dragon Slayer 4 - Drasle Family (Japan)
-	&BurnDrvnes_dragosla4,		// Dragon Slayer 4 - Drasle Family (T-Eng)
+	&BurnDrvnes_dragosla4,		// Dragon Slayer 4 - Drasle Family (Japan)
 	&BurnDrvMSX_dslayer4,		// Dragon Slayer IV - Drasle Family (Jpn)
 	&BurnSpecDragonspirit,		// Dragon Spirit (128K)
 	&BurnDrvDspirit2,			// Dragon Spirit (DS2)

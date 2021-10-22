@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17597 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17596 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -243,9 +243,9 @@ This list contains all games supported by FinalBurn Neo.
 | md_addfamv	|  	| Addams Family Values (Euro)				| 		| 1994	| Ocean		| Sega Megadrive| 					|
 | md_addfamvs	|  	| Addams Family Values (Hack, Spanish)			| md_addfamv	| 2020	| Ocean		| Sega Megadrive| 					|
 | spec_addfamth	|  	| Addams Family, The (128K)				| 		| 1991	| Ocean		| ZX Spectrum	| 					|
-| nes_addamfamc	|  	| Addams Family, The (USA) - Castellano v1.0		| nes_addamfam	| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_addamfamc	|  	| Addams Family, The (USA) - Castellano v1.0		| nes_addamfam	| 2020	| Wave		| Miscellaneous	| 					|
 | nes_addamfam	|  	| Addams Family, The (USA)				| 		| 1992	| Ocean		| Miscellaneous	| 					|
-| nes_addamfampugsschuc|  	| Addams Family, The - Pugsley's Scavenger Hunt (USA) - | nes_addamfampugsschu| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_addamfampugsschuc|  	| Addams Family, The - Pugsley's Scavenger Hunt (USA) - | nes_addamfampugsschu| 2020	| Wave		| Miscellaneous	| 					|
 | nes_addamfampugsschu|  	| Addams Family, The - Pugsley's Scavenger Hunt (USA)	| 		| 1993	| Ocean		| Miscellaneous	| 					|
 | msx_addictbl	|  	| Addictaball (Euro)					| 		| 1988	| Alligata Softw| MSX		| 					|
 | msx_adel	|  	| Adel (Spanish)					| 		| 1986	| Mind Games Esp| MSX		| 					|
@@ -253,7 +253,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_adichafo	|  	| Adidas Championship Football (128K)			| 		| 1990	| Ocean		| ZX Spectrum	| 					|
 | md_gleylancs	|  	| Advanced Busterhawk Gleylancer (Hack, Spanish)	| md_gleylanc	| 2017	| NCS		| Sega Megadrive| 					|
 | md_advdaisn	|  	| Advanced Daisenryaku - Deutsch Dengeki Sakusen (Jpn, R| 		| 1991	| Sega		| Sega Megadrive| 					|
-| nes_advdddsc	|  	| Advanced Dungeons & Dragons - Dragon Strike (USA) - Ca| nes_advddds	| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_advdddsc	|  	| Advanced Dungeons & Dragons - Dragon Strike (USA) - Ca| nes_advddds	| 2019	| Wave		| Miscellaneous	| 					|
 | nes_advddds	|  	| Advanced Dungeons & Dragons - Dragon Strike (USA)	| 		| 1990	| Natsume	| Miscellaneous	| 					|
 | nes_advdddfj	|  	| Advanced Dungeons & Dragons - Dragons of Flame (Japan)| nes_advdddf	| 1989 	| U.S Gold	| Miscellaneous	| 					|
 | nes_advdddf	|  	| Advanced Dungeons & Dragons - Dragons of Flame (T-eng)| 		| 1989 ?| Nintendo	| Miscellaneous	| 					|
@@ -265,12 +265,12 @@ This list contains all games supported by FinalBurn Neo.
 | sms_herolanc	|  	| Advanced Dungeons and Dragons - Heroes of the Lance (E| 		| 1991	| U.S. Gold	| Sega Master Sy| 					|
 | spec_advlawn2	|  	| Advanced Lawnmower Simulator II (128K)		| 		| 1990	| J. Aron Softwa| ZX Spectrum	| 					|
 | spec_advancedpinballsim|  	| Advanced Pinball Simulator (128K)		| 		| 1990	| Codemasters	| ZX Spectrum	| 					|
-| nes_adventureislandc|  	| Adventure Island (USA) - Castellano v1.0		| nes_adventureisland| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_adventureislandc|  	| Adventure Island (USA) - Castellano v1.0		| nes_adventureisland| 2017	| Wave		| Miscellaneous	| 					|
 | nes_adventureisland|  	| Adventure Island (USA)				| 		| 1988	| Hudson Soft	| Miscellaneous	| 					|
-| nes_advenisl3c|  	| Adventure Island 3 (USA) - Castellano v1.1		| nes_advenisl3	| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_advenisl3c|  	| Adventure Island 3 (USA) - Castellano v1.1		| nes_advenisl3	| 2017	| Wave		| Miscellaneous	| 					|
 | nes_advenisl3	|  	| Adventure Island 3 (USA)				| 		| 1992	| Hudson Soft	| Miscellaneous	| 					|
 | nes_advenisliiu|  	| Adventure Island II (USA) (Beta)			| nes_advenislii| 1991	| Hudson Soft	| Miscellaneous	| 					|
-| nes_advenisliic|  	| Adventure Island II (USA) - Castellano v1.0		| nes_advenislii| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_advenisliic|  	| Adventure Island II (USA) - Castellano v1.0		| nes_advenislii| 2017	| Wave		| Miscellaneous	| 					|
 | nes_advenislii|  	| Adventure Island II (USA)				| 		| 1991	| Hudson Soft	| Miscellaneous	| 					|
 | nes_advenislivc|  	| Adventure Island IV (Japan) - Castellano v1.0		| nes_advenisliv| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_advenislivj|  	| Adventure Island IV (Japan)				| nes_advenisliv| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -474,7 +474,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_alien3	|  	| Alien 3 (Euro, USA)					| 		| 1992	| Arena		| Sega Game Gear| 					|
 | md_alien3s	|  	| Alien 3 (Hack, Spanish)				| md_alien3	| 2020	| Arena		| Sega Megadrive| 					|
 | gg_alien3j	|  	| Alien 3 (Jpn)						| gg_alien3	| 1992	| Acclaim Entert| Sega Game Gear| 					|
-| nes_alien3c	|  	| Alien 3 (USA) - Castellano v1.1			| nes_alien3	| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_alien3c	|  	| Alien 3 (USA) - Castellano v1.1			| nes_alien3	| 2020	| Wave		| Miscellaneous	| 					|
 | nes_alien3	|  	| Alien 3 (USA)						| 		| 1993	| LJN		| Miscellaneous	| 					|
 | spec_alien8	|  	| Alien 8 (48K)						| 		| 1985	| Ultimate Play | ZX Spectrum	| 					|
 | msx_alien8	|  	| Alien 8 (Jpn)						| 		| 1987	| Jaleco	| MSX		| 					|
@@ -2293,7 +2293,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_castlills	|  	| Castle of Illusion Starring Mickey Mouse (USA, Display| sms_castlill	| 1990	| Sega		| Sega Master Sy| 					|
 | spec_castleofsorrow|  	| Castle Of Sorrow (HB)					| 		| 2018	| ZXMan48k	| ZX Spectrum	| 					|
 | spec_castlecapers|  	| CastleCapers (HB)					| 		| 2017	| Gabriele Amore| ZX Spectrum	| 					|
-| nes_castlevaniac|  	| Castlevania (USA) - Castellano 1.0			| nes_castlevania| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_castlevaniac|  	| Castlevania (USA) - Castellano 1.0			| nes_castlevania| 2012	| Julian L.	| Miscellaneous	| 					|
 | nes_castlevania|  	| Castlevania (USA)					| 		| 1987	| Konami	| Miscellaneous	| 					|
 | md_cvaniaec	|  	| Castlevania - Bloodlines (Hack, Enhanced Colors)	| md_cvania	| 2014	| Konami - Pyron| Sega Megadrive| 					|
 | md_cvanias	|  	| Castlevania - Bloodlines (Hack, Spanish)		| md_cvania	| 2017	| Konami	| Sega Megadrive| 					|
@@ -2303,7 +2303,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_cvania	|  	| Castlevania - The New Generation (Euro)		| 		| 1994	| Konami	| Sega Megadrive| 					|
 | md_cvaniap	|  	| Castlevania - The New Generation (Euro, Prototype)	| md_cvania	| 1994	| Konami	| Sega Megadrive| 					|
 | nes_castliih	|  	| Castlevania II - Simon's Quest (Hack, ReTrans+Map)	| nes_castlii	| 1988	| Konami	| Miscellaneous	| 					|
-| nes_castliic	|  	| Castlevania II - Simon's Quest (USA) - Castellano v2.0| nes_castlii	| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_castliic	|  	| Castlevania II - Simon's Quest (USA) - Castellano v2.0| nes_castlii	| 2013	| Julian L.	| Miscellaneous	| 					|
 | nes_castlii	|  	| Castlevania II - Simon's Quest (USA)			| 		| 1988	| Konami	| Miscellaneous	| 					|
 | nes_castliii	|  	| Castlevania III - Dracula's Curse (USA)		| 		| 1990	| Konami	| Miscellaneous	| 					|
 | nes_castlsim	|  	| Castlevania Simplified (Hack)				| nes_castlevania| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -4058,8 +4058,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_dslayer	|  	| Dragon Slayer (Jpn)					| 		| 1985	| Square	| MSX		| 					|
 | md_dslayed	|  	| Dragon Slayer - Eiyuu Densetsu (Jpn)			| 		| 1994	| Sega		| Sega Megadrive| 					|
 | md_dslayed2	|  	| Dragon Slayer - Eiyuu Densetsu II (Jpn)		| 		| 1995	| Sega		| Sega Megadrive| 					|
-| nes_dragosla4j|  	| Dragon Slayer 4 - Drasle Family (Japan)		| nes_dragosla4	| 1987	| Namco		| Miscellaneous	| 					|
-| nes_dragosla4	|  	| Dragon Slayer 4 - Drasle Family (T-Eng)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_dragosla4	|  	| Dragon Slayer 4 - Drasle Family (Japan)		| 		| 1987	| Namco		| Miscellaneous	| 					|
 | msx_dslayer4	|  	| Dragon Slayer IV - Drasle Family (Jpn)		| 		| 1987	| Nihon Falcom	| MSX		| 					|
 | spec_dragonspirit|  	| Dragon Spirit (128K)					| 		| 1989	| Domark	| ZX Spectrum	| 					|
 | dspirit2	|  	| Dragon Spirit (DS2)					| dspirit	| 1987	| Namco		| System 1	| 					|

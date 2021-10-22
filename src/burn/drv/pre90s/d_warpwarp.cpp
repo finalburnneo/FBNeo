@@ -1158,7 +1158,7 @@ static INT32 DrvFrame()
 		if (navaronemode && i == 0 && bombbeemode == 0) // weird timing.
 			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 
-		warpwarp_timer_tiktiktik(nCyclesTotal[1] / nInterleave);
+		warpwarp_timer_tiktiktik(nCyclesTotal[0] / nInterleave);
 	}
 	ZetClose();
 

@@ -46941,23 +46941,6 @@ struct BurnDriver BurnDrvnes_youkaidouchuuki = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_youkaikurabuRomDesc[] = {
-	{ "Youkai Kurabu (Japan).nes",          163856, 0xd2ad7f8e, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_youkaikurabu)
-STD_ROM_FN(nes_youkaikurabu)
-
-struct BurnDriver BurnDrvnes_youkaikurabu = {
-	"nes_youkaikurabu", NULL, NULL, NULL, "1987",
-	"Youkai Kurabu (Japan)\0", NULL, "Jaleco", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_youkaikurabuRomInfo, nes_youkaikurabuRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 static struct BurnRomInfo nes_youngindjonchrRomDesc[] = {
 	{ "Young Indiana Jones Chronicles, The (USA).nes",          262160, 0x1f55fde6, BRF_ESS | BRF_PRG },
 };

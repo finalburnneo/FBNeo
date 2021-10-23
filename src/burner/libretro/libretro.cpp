@@ -1648,8 +1648,15 @@ static bool retro_load_game_common()
 #endif
 
 		if (!open_archive()) {
+#ifdef INCLUDE_7Z_SUPPORT
 			SetUguiError("This romset is known but yours doesn't match this emulator and its version\nRead https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo");
+#else
+			SetUguiError("This romset is known but yours doesn't match this emulator and its version\nNote that 7z support is disabled for your platform\nRead https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo");
+#endif
 			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] This romset is known but yours doesn't match this emulator and its version\n");
+#ifndef INCLUDE_7Z_SUPPORT
+			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Note that 7z support is disabled for your platform\n");
+#endif
 			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Read https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo\n");
 			goto end;
 		}

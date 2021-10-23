@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17596 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17598 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -255,12 +255,12 @@ This list contains all games supported by FinalBurn Neo.
 | md_advdaisn	|  	| Advanced Daisenryaku - Deutsch Dengeki Sakusen (Jpn, R| 		| 1991	| Sega		| Sega Megadrive| 					|
 | nes_advdddsc	|  	| Advanced Dungeons & Dragons - Dragon Strike (USA) - Ca| nes_advddds	| 2019	| Wave		| Miscellaneous	| 					|
 | nes_advddds	|  	| Advanced Dungeons & Dragons - Dragon Strike (USA)	| 		| 1990	| Natsume	| Miscellaneous	| 					|
-| nes_advdddfj	|  	| Advanced Dungeons & Dragons - Dragons of Flame (Japan)| nes_advdddf	| 1989 	| U.S Gold	| Miscellaneous	| 					|
-| nes_advdddf	|  	| Advanced Dungeons & Dragons - Dragons of Flame (T-eng)| 		| 1989 ?| Nintendo	| Miscellaneous	| 					|
-| nes_advddhlc	|  	| Advanced Dungeons & Dragons - Heroes of the Lance (USA| nes_advddhl	| 1989 ?| Nintendo	| Miscellaneous	| 					|
-| nes_advddhl	|  	| Advanced Dungeons & Dragons - Heroes of the Lance (USA| 		| 1988	| U.S Gold	| Miscellaneous	| 					|
-| nes_advddhllfr|  	| Advanced Dungeons & Dragons - Hillsfar (USA)		| 		| 1992	| FCI		| Miscellaneous	| 					|
-| nes_advddpor	|  	| Advanced Dungeons & Dragons - Pool of Radiance (USA)	| 		| 1992	| FCI		| Miscellaneous	| 					|
+| nes_advdddfj	|  	| Advanced Dungeons & Dragons - Dragons of Flame (Japan)| nes_advdddf	| 1992	| Pony Canyon	| Miscellaneous	| 					|
+| nes_advdddf	|  	| Advanced Dungeons & Dragons - Dragons of Flame (T-Eng,| 		| 2003	| Pony Canyon - | Miscellaneous	| 					|
+| nes_advddhlc	|  	| Advanced Dungeons & Dragons - Heroes of the Lance (USA| nes_advddhl	| 2019	| Wave		| Miscellaneous	| 					|
+| nes_advddhl	|  	| Advanced Dungeons & Dragons - Heroes of the Lance (USA| 		| 1990	| FCI Inc.	| Miscellaneous	| 					|
+| nes_advddhllfr|  	| Advanced Dungeons & Dragons - Hillsfar (USA)		| 		| 1992	| FCI Inc.	| Miscellaneous	| 					|
+| nes_advddpor	|  	| Advanced Dungeons & Dragons - Pool of Radiance (USA)	| 		| 1992	| FCI Inc.	| Miscellaneous	| 					|
 | sms_herolancc	|  	| Advanced Dungeons and Dragons - Heroes of the Lance (E| sms_herolanc	| 2021	| Sega		| Sega Master Sy| 					|
 | sms_herolanc	|  	| Advanced Dungeons and Dragons - Heroes of the Lance (E| 		| 1991	| U.S. Gold	| Sega Master Sy| 					|
 | spec_advlawn2	|  	| Advanced Lawnmower Simulator II (128K)		| 		| 1990	| J. Aron Softwa| ZX Spectrum	| 					|
@@ -272,7 +272,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_advenisliiu|  	| Adventure Island II (USA) (Beta)			| nes_advenislii| 1991	| Hudson Soft	| Miscellaneous	| 					|
 | nes_advenisliic|  	| Adventure Island II (USA) - Castellano v1.0		| nes_advenislii| 2017	| Wave		| Miscellaneous	| 					|
 | nes_advenislii|  	| Adventure Island II (USA)				| 		| 1991	| Hudson Soft	| Miscellaneous	| 					|
-| nes_advenislivc|  	| Adventure Island IV (Japan) - Castellano v1.0		| nes_advenisliv| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_advenislivc|  	| Adventure Island IV (Japan) - Castellano v1.0		| nes_advenisliv| 2000?	| Nintendo	| Miscellaneous	| 					|
 | nes_advenislivj|  	| Adventure Island IV (Japan)				| nes_advenisliv| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_advenisliv|  	| Adventure Island IV (T-Eng)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | pce_advislnd	|  	| Adventure Island					| 		| 1991	| Hudson	| PC Engine	| 					|
@@ -1301,7 +1301,7 @@ This list contains all games supported by FinalBurn Neo.
 | atlantis	|  	| Battle of Atlantis (set 1)				| 		| 1981	| Comsoft	| Galaxian	| 					|
 | atlantis2	|  	| Battle of Atlantis (set 2)				| atlantis	| 1981	| Comsoft	| Galaxian	| 					|
 | cv_bofhoth	|  	| Battle of Hoth (HB)					| 		| 2013	| Team Pixelboy	| ColecoVision	| 					|
-| nes_battlolyc	|  	| Battle of Olympus, The (Europe) - Castellano v1.1	| nes_battloly	| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_battlolyc	|  	| Battle of Olympus, The (Europe) - Castellano v1.1	| nes_battloly	| 2018	| dmlan2000	| Miscellaneous	| 					|
 | nes_battloly	|  	| Battle of Olympus, The (USA)				| 		| 1989	| Broderbund	| Miscellaneous	| 					|
 | sms_battleor	|  	| Battle Out Run (Euro, Bra)				| 		| 1989	| Sega		| Sega Master Sy| 					|
 | sms_battleorfm|  	| Battle Out Run (FM Mod)				| sms_battleor	| 2018	| Sega - SMS Pow| Sega Master Sy| YM2413 FM sound chip supported	|
@@ -1324,7 +1324,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_battlems	|  	| Battlemaster (USA)					| 		| 1991	| Arena Entertai| Sega Megadrive| 					|
 | nes_battler	|  	| Battler (HB)						| 		| 2015	| Karu Gamo	| Miscellaneous	| 					|
 | gg_bship	|  	| Battleship (Euro, USA)				| 		| 1993	| Mindscape	| Sega Game Gear| 					|
-| nes_battleshipc|  	| Battleship (USA) - Castellano v1.0			| nes_battleship| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_battleshipc|  	| Battleship (USA) - Castellano v1.0			| nes_battleship| 2019	| Wave		| Miscellaneous	| 					|
 | nes_battleship|  	| Battleship (USA)					| 		| 1993	| Mindscape	| Miscellaneous	| 					|
 | msx_clapton2	|  	| Battleship Clapton II (Jpn)				| 		| 1984	| T&E Soft	| MSX		| 					|
 | msx_clapton2a	|  	| Battleship Clapton II (Jpn, Alt)			| msx_clapton2	| 1984	| T&E Soft	| MSX		| 					|
@@ -1577,6 +1577,7 @@ This list contains all games supported by FinalBurn Neo.
 | blazeon	|  	| Blaze On (World)					| 		| 1992	| A.I (Atlus lic| Kaneko16	| 					|
 | blazer	|  	| Blazer (Japan)					| 		| 1987	| Namco		| System 1	| 					|
 | tg_blazlazr	|  	| Blazing Lazers					| 		| 1989	| NEC		| TurboGrafx 16	| 					|
+| nes_blazrang	|  	| Blazing Rangers (HB)					| 		| 2021	| Karu Gamo	| Miscellaneous	| 					|
 | blazstarcm	|  	| Blazing Star (Stage Select Hack)			| blazstar	| 2020	| Clear Paper, N| Neo Geo MVS	| 					|
 | blazstar	|  	| Blazing Star						| 		| 1998	| Yumekobo	| Neo Geo MVS	| 					|
 | spec_blazthund|  	| Blazing Thunder (48K)					| 		| 1990	| Hi-Tec Softwar| ZX Spectrum	| 					|
@@ -2875,12 +2876,12 @@ This list contains all games supported by FinalBurn Neo.
 | contraj	|  	| Contra (Japan, set 1)					| contra	| 1987	| Konami	| GX633		| 					|
 | contraj1	|  	| Contra (Japan, set 2)					| contra	| 1987	| Konami	| GX633		| 					|
 | pce_contranes	|  	| Contra (NES Mod Version 3.0)				| 		| 1988	| Konami	| PC Engine	| 					|
-| nes_contrac	|  	| Contra (T-Chi)					| nes_contra	| 2017-07-29| Konami	| Miscellaneous	| 					|
+| nes_contrac	|  	| Contra (T-Chi)					| nes_contra	| 2017	| FlameCyclone	| Miscellaneous	| 					|
 | nes_contrat	|  	| Contra (T-Eng)					| nes_contra	| 1988	| Konami	| Miscellaneous	| 					|
 | contra	|  	| Contra (US / Asia, set 1)				| 		| 1987	| Konami	| GX633		| 					|
 | contra1	|  	| Contra (US / Asia, set 2)				| contra	| 1987	| Konami	| GX633		| 					|
 | contrae	|  	| Contra (US / Asia, set 3)				| contra	| 1987	| Konami	| GX633		| 					|
-| nes_contracast|  	| Contra (USA) - Castellano v1.0			| nes_contra	| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_contracast|  	| Contra (USA) - Castellano v1.0			| nes_contra	| 2019	| Wave		| Miscellaneous	| 					|
 | nes_contra	|  	| Contra (USA)						| 		| 1988	| Konami	| Miscellaneous	| 					|
 | md_contras	|  	| Contra - Hard Corps (Hack, Spanish)			| md_contra	| 2013	| Konami	| Sega Megadrive| 					|
 | md_contra	|  	| Contra - Hard Corps (USA, Kor)			| 		| 1994	| Konami	| Sega Megadrive| 					|
@@ -3118,7 +3119,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_crystlptp02|  	| Crystal's Pony Tale (USA, Prototype, 19940712)	| md_crystlpt	| 1994	| Sega		| Sega Megadrive| 					|
 | md_crystlptp03|  	| Crystal's Pony Tale (USA, Prototype, 19940712-B)	| md_crystlpt	| 1994	| Sega		| Sega Megadrive| 					|
 | md_crystlptp01|  	| Crystal's Pony Tale (USA, Prototype, 19940713)	| md_crystlpt	| 1994	| Sega		| Sega Megadrive| 					|
-| nes_crystalisc|  	| Crystalis (USA) - Castellano v1.0			| nes_crystalis	| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_crystalisc|  	| Crystalis (USA) - Castellano v1.0			| nes_crystalis	| 2014	| Teterilla	| Miscellaneous	| 					|
 | nes_crystalis	|  	| Crystalis (USA)					| 		| 1990	| SNK		| Miscellaneous	| 					|
 | cubybop	|  	| Cuby Bop (location test)				| 		| 199?	| Hot-B Co., Ltd| Taito L System| 					|
 | spec_cueboy	|  	| Cue Boy						| 		| 1992	| Codemasters	| ZX Spectrum	| 					|
@@ -13296,6 +13297,7 @@ This list contains all games supported by FinalBurn Neo.
 | sg1k_spacesla	|  	| Space Slalom (Jpn)					| 		| 1983	| Sega		| Sega SG-1000	| 					|
 | sstrangr2	|  	| Space Stranger 2					| sstrangr	| 1979	| Yachiyo Electr| Miscellaneous	| 					|
 | sstrangr	|  	| Space Stranger					| 		| 1978	| Yachiyo Electr| Miscellaneous	| 					|
+| spec_spacethunder|  	| Space Thunder (HB)					| 		| 2021	| Isaiasdiaz	| ZX Spectrum	| 					|
 | spctbird	|  	| Space Thunderbird					| mooncrst	| 1981?	| bootleg (Fortr| Galaxian	| 					|
 | spacetrkc	| D	| Space Trek (cocktail)					| spacetrk	| 1980	| Sega		| Vic Dual	| No sound				|
 | spacetrk	| D	| Space Trek (upright)					| 		| 1980	| Sega		| Vic Dual	| No sound				|
@@ -16650,7 +16652,7 @@ This list contains all games supported by FinalBurn Neo.
 | wwjgtin	|  	| Wai Wai Jockey Gate-In!				| 		| 1984	| Jaleco / Casio| Miscellaneous	| 					|
 | pce_waiwaimj	|  	| Wai Wai Mahjong - Yukaina Janyuu Tachi		| 		| 1989	| Video System	| PC Engine	| 					|
 | nes_waiwaiworldj|  	| Wai Wai World (Japan)					| nes_waiwaiworld| 1988	| Konami	| Miscellaneous	| 					|
-| nes_waiwaiworldc|  	| Wai Wai World (T-Chi)					| nes_waiwaiworld| 2012-09-04| Konami	| Miscellaneous	| 					|
+| nes_waiwaiworldc|  	| Wai Wai World (T-Chi)					| nes_waiwaiworld| 2012	| Nokoh		| Miscellaneous	| 					|
 | nes_waiwaiworld|  	| Wai Wai World (T-Eng)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_waiwaiwor2j|  	| Wai Wai World 2 - SOS!! Paseri Jou (Japan)		| nes_waiwaiwor2| 1991	| Konami	| Miscellaneous	| 					|
 | nes_waiwaiwor2|  	| Wai Wai World 2 - SOS!! Paseri Jou (T-Eng)		| 		| 1991	| Konami	| Miscellaneous	| 					|
@@ -16809,12 +16811,12 @@ This list contains all games supported by FinalBurn Neo.
 | wwestern1	|  	| Wild Western (set 2)					| wwestern	| 1982	| Taito Corporat| Taito SJ Syste| 					|
 | gg_wildsnake	|  	| WildSnake (Prototype / Unreleased)			| 		| 1994	| Spectrum HoloB| Sega Game Gear| 					|
 | md_arcadeghu	|  	| Williams Arcade's Greatest Hits (USA)			| md_arcadegh	| 1996	| Williams	| Sega Megadrive| 					|
-| nes_willownfh	|  	| Willow (Hack, No Flash)				| nes_willow	| 1989	| Capcom	| Miscellaneous	| 					|
 | willowj	|  	| Willow (Japan, Japanese)				| willow	| 1989	| Capcom	| CPS1		| 					|
 | willowuo	|  	| Willow (USA Old Ver.)					| willow	| 1989	| Capcom	| CPS1		| 					|
 | nes_willow	|  	| Willow (USA)						| 		| 1989	| Capcom	| Miscellaneous	| 					|
 | willowu	|  	| Willow (USA)						| willow	| 1989	| Capcom	| CPS1		| 					|
 | willow	|  	| Willow (World)					| 		| 1989	| Capcom	| CPS1		| 					|
+| nes_willownfh	|  	| Willow No Flash Hack (v1.1)				| nes_willow	| 2020	| Jigglysaint	| Miscellaneous	| 					|
 | spec_wwasp	|  	| Willy The Wasp (HB)					| 		| 2014	| The Death Squa| ZX Spectrum	| 					|
 | spec_wwasp2	|  	| Willy The Wasp 2 (HB)					| 		| 2014	| The Death Squa| ZX Spectrum	| 					|
 | wilytowr	|  	| Wily Tower						| 		| 1984	| Irem		| Irem M63	| 					|
@@ -16878,7 +16880,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_wizardwilly|  	| Wizard Willy (128K)					| 		| 1990	| Codemasters	| ZX Spectrum	| 					|
 | msx_wizlair	|  	| Wizard's Lair (Euro)					| 		| 1986	| Bubble Bus Sof| MSX		| 					|
 | nes_wizarwar	|  	| Wizards & Warriors (USA)				| 		| 1987	| Acclaim	| Miscellaneous	| 					|
-| nes_wizarwariiic|  	| Wizards & Warriors III - Kuros - Visions of Power (USA| nes_wizarwariii| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_wizarwariiic|  	| Wizards & Warriors III - Kuros - Visions of Power (USA| nes_wizarwariii| 2020	| Wave		| Miscellaneous	| 					|
 | nes_wizarwariii|  	| Wizards & Warriors III - Kuros - Visions of Power (USA| 		| 1992	| Acclaim	| Miscellaneous	| 					|
 | spec_wizball	|  	| Wizball (128K)					| 		| 1987	| Ocean		| ZX Spectrum	| 					|
 | wiz		|  	| Wiz							| 		| 1985	| Seibu Kaihatsu| Miscellaneous	| 					|
@@ -16893,7 +16895,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_wolfchld	|  	| Wolfchild (USA)					| 		| 1993	| JVC Musical In| Sega Megadrive| 					|
 | md_wolfstn3d	|  	| Wolfenstein 3D (HB, fv11 fix)				| 		| 2015	| gasega68k	| Sega Megadrive| 					|
 | nes_wolfling	|  	| Wolfling (HB, v1.4)					| 		| 2018	| Lazy Cow	| Miscellaneous	| 					|
-| nes_wolverinec|  	| Wolverine (USA) - Castellano v1.0			| nes_wolverine	| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_wolverinec|  	| Wolverine (USA) - Castellano v1.0			| nes_wolverine	| 2019	| Wave		| Miscellaneous	| 					|
 | nes_wolverine	|  	| Wolverine (USA)					| 		| 1991	| LJN		| Miscellaneous	| 					|
 | md_wolverin	|  	| Wolverine - Adamantium Rage (Euro, USA)		| 		| 1994	| Acclaim Entert| Sega Megadrive| 					|
 | md_wolverinredux|  	| Wolverine - Adamantium Redux (Hack)			| md_wolverin	| 2021	| BillyTime! Gam| Sega Megadrive| 					|

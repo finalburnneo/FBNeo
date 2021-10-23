@@ -222,32 +222,32 @@
 	</game>
 	<game name="advdddfj" cloneof="advdddf" romof="advdddf">
 		<description>Advanced Dungeons &amp; Dragons - Dragons of Flame (Japan)</description>
-		<year>1989 </year>
-		<manufacturer>U.S Gold</manufacturer>
+		<year>1992</year>
+		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="advanced dungeons &amp; dragons - dragons of flame (japan).nes" size="262160" crc="8ba5de24"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="advdddf">
-		<description>Advanced Dungeons &amp; Dragons - Dragons of Flame (T-eng)</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Advanced Dungeons &amp; Dragons - Dragons of Flame (T-Eng, v1.03) [Hack]</description>
+		<year>2003</year>
+		<manufacturer>Pony Canyon - DvD Translations</manufacturer>
 		<rom name="advanced dungeons &amp; dragons - dragons of flame (t-eng).nes" size="262160" crc="8196b978"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="advddhlc" cloneof="advddhl" romof="advddhl">
-		<description>Advanced Dungeons &amp; Dragons - Heroes of the Lance (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Advanced Dungeons &amp; Dragons - Heroes of the Lance (USA) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="advanced dungeons &amp; dragons - heroes of the lance (usa) - castellano v1.0.nes" size="262160" crc="365f9624"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="advddhl">
 		<description>Advanced Dungeons &amp; Dragons - Heroes of the Lance (USA)</description>
-		<year>1988</year>
-		<manufacturer>U.S Gold</manufacturer>
+		<year>1990</year>
+		<manufacturer>FCI Inc.</manufacturer>
 		<rom name="advanced dungeons &amp; dragons - heroes of the lance (usa).nes" size="262160" crc="e880d426"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -255,7 +255,7 @@
 	<game name="advddhllfr">
 		<description>Advanced Dungeons &amp; Dragons - Hillsfar (USA)</description>
 		<year>1992</year>
-		<manufacturer>FCI</manufacturer>
+		<manufacturer>FCI Inc.</manufacturer>
 		<rom name="advanced dungeons &amp; dragons - hillsfar (usa).nes" size="262160" crc="3849d0ee"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -263,7 +263,7 @@
 	<game name="advddpor">
 		<description>Advanced Dungeons &amp; Dragons - Pool of Radiance (USA)</description>
 		<year>1992</year>
-		<manufacturer>FCI</manufacturer>
+		<manufacturer>FCI Inc.</manufacturer>
 		<rom name="advanced dungeons &amp; dragons - pool of radiance (usa).nes" size="655376" crc="bbea8d23"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -325,8 +325,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="advenislivc" cloneof="advenisliv" romof="advenisliv">
-		<description>Adventure Island IV (Japan) - Castellano v1.0</description>
-		<year>1989 ?</year>
+		<description>Adventure Island IV (Japan) - Castellano v1.0 [Hack]</description>
+		<year>2000?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="adventure island iv (japan) - castellano v1.0.nes" size="393232" crc="9ba3eb86"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1317,9 +1317,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="battlolyc" cloneof="battloly" romof="battloly">
-		<description>Battle of Olympus, The (Europe) - Castellano v1.1</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Battle of Olympus, The (Europe) - Castellano v1.1 [Hack]</description>
+		<year>2018</year>
+		<manufacturer>dmlan2000</manufacturer>
 		<rom name="battle of olympus, the (europe) - castellano v1.1.nes" size="131088" crc="ab9d1a2e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1357,9 +1357,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="battleshipc" cloneof="battleship" romof="battleship">
-		<description>Battleship (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Battleship (USA) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="battleship (usa) - castellano v1.0.nes" size="65552" crc="cf1ee9d6"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1625,6 +1625,14 @@
 		<year>1988</year>
 		<manufacturer>Sunsoft</manufacturer>
 		<rom name="Blaster Master (USA).nes" size="262160" crc="52bcf64a"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="blazrang">
+		<description>Blazing Rangers (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Karu Gamo</manufacturer>
+		<rom name="Blazing Rangers (2021)(Karu Gamo).nes" size="40976" crc="f11f92b4"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -2653,9 +2661,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="contrac" cloneof="contra" romof="contra">
-		<description>Contra (T-Chi)</description>
-		<year>2017-07-29</year>
-		<manufacturer>Konami</manufacturer>
+		<description>Contra (T-Chi) [Hack]</description>
+		<year>2017</year>
+		<manufacturer>FlameCyclone</manufacturer>
 		<rom name="Contra (T-Chi).nes" size="393232" crc="2a39628d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2669,9 +2677,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="contracast" cloneof="contra" romof="contra">
-		<description>Contra (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Contra (USA) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="contra (usa) - castellano v1.0.nes" size="131088" crc="6a56fc08"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2893,9 +2901,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="crystalisc" cloneof="crystalis" romof="crystalis">
-		<description>Crystalis (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Crystalis (USA) - Castellano v1.0 [Hack]</description>
+		<year>2014</year>
+		<manufacturer>Teterilla</manufacturer>
 		<rom name="crystalis (usa) - castellano v1.0.nes" size="393232" crc="b23c737c"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14605,9 +14613,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="waiwaiworldc" cloneof="waiwaiworld" romof="waiwaiworld">
-		<description>Wai Wai World (T-Chi)</description>
-		<year>2012-09-04</year>
-		<manufacturer>Konami</manufacturer>
+		<description>Wai Wai World (T-Chi) [Hack]</description>
+		<year>2012</year>
+		<manufacturer>Nokoh</manufacturer>
 		<rom name="Wai Wai World (T-Chi).nes" size="524304" crc="ae26fdde"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14796,19 +14804,19 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="willownfh" cloneof="willow" romof="willow">
-		<description>Willow (Hack, No Flash) [Hack]</description>
-		<year>1989</year>
-		<manufacturer>Capcom</manufacturer>
-		<rom name="Willow (Hack, No Flash).nes" size="262160" crc="956ea1a6"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
 	<game name="willow">
 		<description>Willow (USA)</description>
 		<year>1989</year>
 		<manufacturer>Capcom</manufacturer>
 		<rom name="Willow (USA).nes" size="262160" crc="5f86a065"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="willownfh" cloneof="willow" romof="willow">
+		<description>Willow No Flash Hack (v1.1) [Hack]</description>
+		<year>2020</year>
+		<manufacturer>Jigglysaint</manufacturer>
+		<rom name="Willow (Hack, No Flash).nes" size="262160" crc="956ea1a6"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -14861,9 +14869,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="wizarwariiic" cloneof="wizarwariii" romof="wizarwariii">
-		<description>Wizards &amp; Warriors III - Kuros - Visions of Power (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Wizards &amp; Warriors III - Kuros - Visions of Power (USA) - Castellano v1.0 [Hack]</description>
+		<year>2020</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="wizards &amp; warriors iii - kuros - visions of power (usa) - castellano v1.0.nes" size="262160" crc="7135c442"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14901,9 +14909,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="wolverinec" cloneof="wolverine" romof="wolverine">
-		<description>Wolverine (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Wolverine (USA) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="wolverine (usa) - castellano v1.0.nes" size="262160" crc="db5ee5cb"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>

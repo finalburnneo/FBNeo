@@ -11940,6 +11940,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="spacethunder" romof="spec128">
+		<description>Space Thunder (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Isaiasdiaz</manufacturer>
+		<rom name="Space Thunder (2021)(Isaiasdiaz).tap" size="47073" crc="a11f0963"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="spellbound" romof="spec128">
 		<description>Spellbound</description>
 		<year>1985</year>

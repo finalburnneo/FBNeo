@@ -1595,6 +1595,7 @@ DRV		BurnDrvBlazeonj;
 DRV		BurnDrvBlazeon;
 DRV		BurnDrvBlazer;
 DRV		BurnDrvtg_blazlazr;
+DRV		BurnDrvnes_blazrang;
 DRV		BurnDrvblazstarcm;
 DRV		BurnDrvblazstar;
 DRV		BurnSpecBlazthund;
@@ -13464,6 +13465,7 @@ DRV		BurnDrvSpaceskr;
 DRV		BurnDrvsg1k_spacesla;
 DRV		BurnDrvSstrangr2;
 DRV		BurnDrvSstrangr;
+DRV		BurnSpecSpacethunder;
 DRV		BurnDrvSpctbird;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvSpacetrkc;		// No sound
@@ -17029,12 +17031,12 @@ DRV		BurnDrvWwestern;
 DRV		BurnDrvWwestern1;
 DRV		BurnDrvgg_wildsnake;
 DRV		BurnDrvmd_arcadeghu;
-DRV		BurnDrvnes_willownfh;
 DRV		BurnDrvCpsWillowj;
 DRV		BurnDrvCpsWillowuo;
 DRV		BurnDrvnes_willow;
 DRV		BurnDrvCpsWillowu;
 DRV		BurnDrvCpsWillow;
+DRV		BurnDrvnes_willownfh;
 DRV		BurnSpecWwasp;
 DRV		BurnSpecWwasp2;
 DRV		BurnDrvWilytowr;
@@ -18097,7 +18099,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_advdddsc,		// Advanced Dungeons & Dragons - Dragon Strike (USA) - Castellano v1.0
 	&BurnDrvnes_advddds,		// Advanced Dungeons & Dragons - Dragon Strike (USA)
 	&BurnDrvnes_advdddfj,		// Advanced Dungeons & Dragons - Dragons of Flame (Japan)
-	&BurnDrvnes_advdddf,		// Advanced Dungeons & Dragons - Dragons of Flame (T-eng)
+	&BurnDrvnes_advdddf,		// Advanced Dungeons & Dragons - Dragons of Flame (T-Eng, v1.03)
 	&BurnDrvnes_advddhlc,		// Advanced Dungeons & Dragons - Heroes of the Lance (USA) - Castellano v1.0
 	&BurnDrvnes_advddhl,		// Advanced Dungeons & Dragons - Heroes of the Lance (USA)
 	&BurnDrvnes_advddhllfr,		// Advanced Dungeons & Dragons - Hillsfar (USA)
@@ -19434,6 +19436,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBlazeon,			// Blaze On (World)
 	&BurnDrvBlazer,				// Blazer (Japan)
 	&BurnDrvtg_blazlazr,		// Blazing Lazers
+	&BurnDrvnes_blazrang,		// Blazing Rangers (HB)
 	&BurnDrvblazstarcm,			// Blazing Star (Stage Select Hack)
 	&BurnDrvblazstar,			// Blazing Star
 	&BurnSpecBlazthund,			// Blazing Thunder (48K)
@@ -31303,6 +31306,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_spacesla,		// Space Slalom (Jpn)
 	&BurnDrvSstrangr2,			// Space Stranger 2
 	&BurnDrvSstrangr,			// Space Stranger
+	&BurnSpecSpacethunder,		// Space Thunder (HB)
 	&BurnDrvSpctbird,			// Space Thunderbird
 #if defined FBNEO_DEBUG
 	&BurnDrvSpacetrkc,			// Space Trek (cocktail) [No sound]
@@ -34868,12 +34872,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvWwestern1,			// Wild Western (set 2)
 	&BurnDrvgg_wildsnake,		// WildSnake (Prototype / Unreleased)
 	&BurnDrvmd_arcadeghu,		// Williams Arcade's Greatest Hits (USA)
-	&BurnDrvnes_willownfh,		// Willow (Hack, No Flash)
 	&BurnDrvCpsWillowj,			// Willow (Japan, Japanese)
 	&BurnDrvCpsWillowuo,		// Willow (USA Old Ver.)
 	&BurnDrvnes_willow,			// Willow (USA)
 	&BurnDrvCpsWillowu,			// Willow (USA)
 	&BurnDrvCpsWillow,			// Willow (World)
+	&BurnDrvnes_willownfh,		// Willow No Flash Hack (v1.1)
 	&BurnSpecWwasp,				// Willy The Wasp (HB)
 	&BurnSpecWwasp2,			// Willy The Wasp 2 (HB)
 	&BurnDrvWilytowr,			// Wily Tower

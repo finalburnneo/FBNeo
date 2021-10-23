@@ -25035,6 +25035,26 @@ struct BurnDriver BurnSpecLostcaverneasy = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Space Thunder (HB)
+// https://isaiasdiaz.itch.io/space-thunder
+
+static struct BurnRomInfo SpecSpacethunderRomDesc[] = {
+	{ "Space Thunder (2021)(Isaiasdiaz).tap", 47073, 0xa11f0963, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSpacethunder, SpecSpacethunder, Spec128)
+STD_ROM_FN(SpecSpacethunder)
+
+struct BurnDriver BurnSpecSpacethunder = {
+	"spec_spacethunder", NULL, "spec_spec128", NULL, "2021",
+	"Space Thunder (HB)\0", NULL, "Isaiasdiaz", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
+	SpectrumGetZipName, SpecSpacethunderRomInfo, SpecSpacethunderRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Ninja Poison - Part 1 (HB)
 
 static struct BurnRomInfo SpecNinjapoison1RomDesc[] = {

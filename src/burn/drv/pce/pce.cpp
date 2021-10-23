@@ -390,7 +390,7 @@ static INT32 MemIndex(UINT32 cart_size, INT32 type)
 	PCEUserRAM	= Next; Next += (type == 2) ? 0x008000 : 0x002000; // pce/tg16 0x2000, sgx 0x8000
 
 	PCECartRAM	= Next; Next += 0x008000; // populous
-	PCECDBRAM = Next; Next += 0x00800; // Bram thingy
+	PCECDBRAM	= Next; Next += 0x00800; // Bram thingy
 	vce_data	= (UINT16*)Next; Next += 0x200 * sizeof(UINT16);
 
 	vdc_vidram[0]	= Next; Next += 0x010000;
@@ -398,7 +398,7 @@ static INT32 MemIndex(UINT32 cart_size, INT32 type)
 
 	RamEnd		= Next;
 
-	vdc_tmp_draw	= (UINT16*)Next; Next += 684 * 262 * sizeof(UINT16);
+	vdc_tmp_draw	= (UINT16*)Next; Next += 684 * 263 * sizeof(UINT16);
 
 	MemEnd		= Next;
 
@@ -595,7 +595,7 @@ INT32 PCEDraw()
 	}
 
 	{
-		UINT16 *src = vdc_tmp_draw + ((14+2) * 684) + 86;
+		UINT16 *src = vdc_tmp_draw + ((14+3) * 684) + 86;
 		UINT16 *dst = pTransDraw;
 
 		for (INT32 y = 0; y < nScreenHeight; y++) {
@@ -635,11 +635,9 @@ INT32 PCEFrame()
 
 	PCECompileInputs();
 
-	INT32 nInterleave = 262;
+	INT32 nInterleave = vce_linecount();
 	INT32 nCyclesTotal[1] = { (INT32)((INT64)7159090 * nBurnCPUSpeedAdjust / (0x0100 * 60)) };
 	INT32 nCyclesDone[1] = { 0 };
-
-	if (wondermomohack) nCyclesTotal[0] += 1000;
 
 	h6280Open(0);
 

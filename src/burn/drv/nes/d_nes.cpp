@@ -14241,10 +14241,10 @@ STD_ROM_PICK(nes_willownfh)
 STD_ROM_FN(nes_willownfh)
 
 struct BurnDriver BurnDrvnes_willownfh = {
-	"nes_willownfh", "nes_willow", NULL, NULL, "1989",
-	"Willow (Hack, No Flash)\0", NULL, "Capcom", "Miscellaneous",
+	"nes_willownfh", "nes_willow", NULL, NULL, "2020",
+	"Willow No Flash Hack (v1.1)\0", NULL, "Jigglysaint", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_willownfhRomInfo, nes_willownfhRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14943,10 +14943,10 @@ STD_ROM_PICK(nes_contrac)
 STD_ROM_FN(nes_contrac)
 
 struct BurnDriver BurnDrvnes_contrac = {
-	"nes_contrac", "nes_contra", NULL, NULL, "2017-07-29",
-	"Contra (T-Chi)\0", NULL, "Konami", "Miscellaneous",
+	"nes_contrac", "nes_contra", NULL, NULL, "2017",
+	"Contra (T-Chi)\0", NULL, "FlameCyclone", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN, 0,
 	NESGetZipName, nes_contracRomInfo, nes_contracRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14962,10 +14962,10 @@ STD_ROM_PICK(nes_waiwaiworldc)
 STD_ROM_FN(nes_waiwaiworldc)
 
 struct BurnDriver BurnDrvnes_waiwaiworldc = {
-	"nes_waiwaiworldc", "nes_waiwaiworld", NULL, NULL, "2012-09-04",
-	"Wai Wai World (T-Chi)\0", NULL, "Konami", "Miscellaneous",
+	"nes_waiwaiworldc", "nes_waiwaiworld", NULL, NULL, "2012",
+	"Wai Wai World (T-Chi)\0", NULL, "Nokoh", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_waiwaiworldcRomInfo, nes_waiwaiworldcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15630,10 +15630,10 @@ STD_ROM_PICK(nes_advdddf)
 STD_ROM_FN(nes_advdddf)
 
 struct BurnDriver BurnDrvnes_advdddf = {
-	"nes_advdddf", NULL, NULL, NULL, "1989 ?",
-	"Advanced Dungeons & Dragons - Dragons of Flame (T-eng)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_advdddf", NULL, NULL, NULL, "2003",
+	"Advanced Dungeons & Dragons - Dragons of Flame (T-Eng, v1.03)\0", NULL, "Pony Canyon - DvD Translations", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_advdddfRomInfo, nes_advdddfRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15648,10 +15648,10 @@ STD_ROM_PICK(nes_advdddfj)
 STD_ROM_FN(nes_advdddfj)
 
 struct BurnDriver BurnDrvnes_advdddfj = {
-	"nes_advdddfj", "nes_advdddf", NULL, NULL, "1989 ",
-	"Advanced Dungeons & Dragons - Dragons of Flame (Japan)\0", NULL, "U.S Gold", "Miscellaneous",
+	"nes_advdddfj", "nes_advdddf", NULL, NULL, "1992",
+	"Advanced Dungeons & Dragons - Dragons of Flame (Japan)\0", NULL, "Pony Canyon", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_advdddfjRomInfo, nes_advdddfjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15666,10 +15666,10 @@ STD_ROM_PICK(nes_advddhl)
 STD_ROM_FN(nes_advddhl)
 
 struct BurnDriver BurnDrvnes_advddhl = {
-	"nes_advddhl", NULL, NULL, NULL, "1988",
-	"Advanced Dungeons & Dragons - Heroes of the Lance (USA)\0", NULL, "U.S Gold", "Miscellaneous",
+	"nes_advddhl", NULL, NULL, NULL, "1990",
+	"Advanced Dungeons & Dragons - Heroes of the Lance (USA)\0", NULL, "FCI Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_advddhlRomInfo, nes_advddhlRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15685,10 +15685,10 @@ STD_ROM_PICK(nes_advddhlc)
 STD_ROM_FN(nes_advddhlc)
 
 struct BurnDriver BurnDrvnes_advddhlc = {
-	"nes_advddhlc", "nes_advddhl", NULL, NULL, "1989 ?",
-	"Advanced Dungeons & Dragons - Heroes of the Lance (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_advddhlc", "nes_advddhl", NULL, NULL, "2019",
+	"Advanced Dungeons & Dragons - Heroes of the Lance (USA) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_advddhlcRomInfo, nes_advddhlcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15704,9 +15704,9 @@ STD_ROM_FN(nes_advddhllfr)
 
 struct BurnDriver BurnDrvnes_advddhllfr = {
 	"nes_advddhllfr", NULL, NULL, NULL, "1992",
-	"Advanced Dungeons & Dragons - Hillsfar (USA)\0", NULL, "FCI", "Miscellaneous",
+	"Advanced Dungeons & Dragons - Hillsfar (USA)\0", NULL, "FCI Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_advddhllfrRomInfo, nes_advddhllfrRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15722,9 +15722,9 @@ STD_ROM_FN(nes_advddpor)
 
 struct BurnDriver BurnDrvnes_advddpor = {
 	"nes_advddpor", NULL, NULL, NULL, "1992",
-	"Advanced Dungeons & Dragons - Pool of Radiance (USA)\0", NULL, "FCI", "Miscellaneous",
+	"Advanced Dungeons & Dragons - Pool of Radiance (USA)\0", NULL, "FCI Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_advddporRomInfo, nes_advddporRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15740,10 +15740,10 @@ STD_ROM_PICK(nes_battlolyc)
 STD_ROM_FN(nes_battlolyc)
 
 struct BurnDriver BurnDrvnes_battlolyc = {
-	"nes_battlolyc", "nes_battloly", NULL, NULL, "1989 ?",
-	"Battle of Olympus, The (Europe) - Castellano v1.1\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_battlolyc", "nes_battloly", NULL, NULL, "2018",
+	"Battle of Olympus, The (Europe) - Castellano v1.1\0", NULL, "dmlan2000", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_battlolycRomInfo, nes_battlolycRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15759,10 +15759,10 @@ STD_ROM_PICK(nes_battleshipc)
 STD_ROM_FN(nes_battleshipc)
 
 struct BurnDriver BurnDrvnes_battleshipc = {
-	"nes_battleshipc", "nes_battleship", NULL, NULL, "1989 ?",
-	"Battleship (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_battleshipc", "nes_battleship", NULL, NULL, "2019",
+	"Battleship (USA) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_STRATEGY, 0,
 	NESGetZipName, nes_battleshipcRomInfo, nes_battleshipcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15968,10 +15968,10 @@ STD_ROM_PICK(nes_contracast)
 STD_ROM_FN(nes_contracast)
 
 struct BurnDriver BurnDrvnes_contracast = {
-	"nes_contracast", "nes_contra", NULL, NULL, "1989 ?",
-	"Contra (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_contracast", "nes_contra", NULL, NULL, "2019",
+	"Contra (USA) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN, 0,
 	NESGetZipName, nes_contracastRomInfo, nes_contracastRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15987,10 +15987,10 @@ STD_ROM_PICK(nes_crystalisc)
 STD_ROM_FN(nes_crystalisc)
 
 struct BurnDriver BurnDrvnes_crystalisc = {
-	"nes_crystalisc", "nes_crystalis", NULL, NULL, "1989 ?",
-	"Crystalis (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_crystalisc", "nes_crystalis", NULL, NULL, "2014",
+	"Crystalis (USA) - Castellano v1.0\0", NULL, "Teterilla", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_crystaliscRomInfo, nes_crystaliscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -18138,10 +18138,10 @@ STD_ROM_PICK(nes_wizarwariiic)
 STD_ROM_FN(nes_wizarwariiic)
 
 struct BurnDriver BurnDrvnes_wizarwariiic = {
-	"nes_wizarwariiic", "nes_wizarwariii", NULL, NULL, "1989 ?",
-	"Wizards & Warriors III - Kuros - Visions of Power (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_wizarwariiic", "nes_wizarwariii", NULL, NULL, "2020",
+	"Wizards & Warriors III - Kuros - Visions of Power (USA) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
 	NESGetZipName, nes_wizarwariiicRomInfo, nes_wizarwariiicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -18157,10 +18157,10 @@ STD_ROM_PICK(nes_wolverinec)
 STD_ROM_FN(nes_wolverinec)
 
 struct BurnDriver BurnDrvnes_wolverinec = {
-	"nes_wolverinec", "nes_wolverine", NULL, NULL, "1989 ?",
-	"Wolverine (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_wolverinec", "nes_wolverine", NULL, NULL, "2019",
+	"Wolverine (USA) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_wolverinecRomInfo, nes_wolverinecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -18252,10 +18252,10 @@ STD_ROM_PICK(nes_advenislivc)
 STD_ROM_FN(nes_advenislivc)
 
 struct BurnDriver BurnDrvnes_advenislivc = {
-	"nes_advenislivc", "nes_advenisliv", NULL, NULL, "1989 ?",
+	"nes_advenislivc", "nes_advenisliv", NULL, NULL, "2000?",
 	"Adventure Island IV (Japan) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_advenislivcRomInfo, nes_advenislivcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -18867,6 +18867,23 @@ struct BurnDriver BurnDrvnes_seikima2 = {
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
+
+static struct BurnRomInfo nes_blazrangRomDesc[] = {
+	{ "Blazing Rangers (2021)(Karu Gamo).nes",          40976, 0xf11f92b4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_blazrang)
+STD_ROM_FN(nes_blazrang)
+
+struct BurnDriver BurnDrvnes_blazrang = {
+	"nes_blazrang", NULL, NULL, NULL, "2021",
+	"Blazing Rangers (HB)\0", NULL, "Karu Gamo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_blazrangRomInfo, nes_blazrangRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_antennaRomDesc[] = {
 	{ "Antenna Antics (2021)(FG Software).nes",          65552, 0x0f5050e6, BRF_ESS | BRF_PRG },

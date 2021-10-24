@@ -157,6 +157,11 @@ void vpc_reset()
 
 //--------------------------------------------------------------------------------------------------------------------------------
 
+INT32 vce_linecount()
+{
+	return ((vce_control & 0x04) ? 263 : 262);
+}
+
 UINT8 vce_read(UINT8 offset)
 {
 #if defined FBNEO_DEBUG
@@ -363,6 +368,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 					/* note: flag is set only if irq is taken, Mizubaku Daibouken relies on this behaviour */
 					vdc_status[which] |= 0x02;
 					h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
+					//bprintf(0, _T("frame %d\tspr_ovf irq @ %d\n"), nCurrentFrame, vdc_curline[which]);
 				}
 				continue;  /* Should cause an interrupt */
 			}
@@ -405,9 +411,11 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 							/* Check for sprite #0 collision */
 							else if (drawn[pixel_x] == 2)
 							{
-								if(vdc_data[which][0x05] & 0x01)
+								if(vdc_data[which][0x05] & 0x01) {
+									vdc_status[which] |= 0x01;
+									//bprintf(0, _T("frame %d\tspr-col 0 irq @ %d\n"), nCurrentFrame, vdc_curline[which]);
 									h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
-								vdc_status[which] |= 0x01;
+								}
 							}
 						}
 					}
@@ -455,9 +463,11 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 							/* Check for sprite #0 collision */
 							else if ( drawn[pixel_x] == 2 )
 							{
-								if(vdc_data[which][0x05] & 0x01)
+								if(vdc_data[which][0x05] & 0x01) {
+									vdc_status[which] |= 0x01;
+									//bprintf(0, _T("frame %d\tspr-col 1 irq @ %d\n"), nCurrentFrame, vdc_curline[which]);
 									h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
-								vdc_status[which] |= 0x01;
+								}
 							}
 						}
 					}
@@ -481,6 +491,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 					{
 						/* note: flag is set only if irq is taken, Mizubaku Daibouken relies on this behaviour */
 						vdc_status[which] |= 0x02;
+						//bprintf(0, _T("frame %d\tspr-ovf 1 irq @ %d\n"), nCurrentFrame, vdc_curline[which]);
 						h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 					}
 				}
@@ -514,9 +525,11 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 								/* Check for sprite #0 collision */
 								else if ( drawn[pixel_x] == 2 )
 								{
-									if(vdc_data[which][0x05] & 0x01)
+									if(vdc_data[which][0x05] & 0x01) {
+										vdc_status[which] |= 0x01;
+										//bprintf(0, _T("frame %d\tspr-col 2 irq @ %d\n"), nCurrentFrame, vdc_curline[which]);
 										h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
-									vdc_status[which] |= 0x01;
+									}
 								}
 							}
 						}
@@ -588,6 +601,7 @@ static void vdc_advance_line(INT32 which)
 			if ( vdc_data[which][DCR] & DCR_DSC )
 			{
 				vdc_status[which] |= VDC_DS;	/* set satb done flag */
+				//bprintf(0, _T("-satb-countdown-"));
 				ret = 1;
 			}
 		}
@@ -618,33 +632,6 @@ static void vdc_advance_line(INT32 which)
 	{
 		vdc_current_segment[which] = STATE_VCR;
 		vdc_current_segment_line[which] = 0;
-
-		/* Generate VBlank interrupt, sprite DMA */
-		vdc_vblank_triggered[which] = 1;
-		if ( vdc_data[which][CR] & CR_VR )
-		{
-			vdc_status[which] |= VDC_VD;
-			ret = 1;
-		}
-
-		/* do VRAM > SATB DMA if the enable bit is set or the DVSSR reg. was written to */
-		if( ( vdc_data[which][DCR] & DCR_DSR ) || vdc_dvssr_write[which] )
-		{
-			INT32 i;
-
-			vdc_dvssr_write[which] = 0;
-
-			for( i = 0; i < 256; i++ )
-			{
-				vdc_sprite_ram[which][i] = ( vdc_vidram[which][ ( vdc_data[which][DVSSR] << 1 ) + i * 2 + 1 ] << 8 ) | vdc_vidram[which][ ( vdc_data[which][DVSSR] << 1 ) + i * 2 ];
-			}
-
-			/* generate interrupt if needed */
-			if ( vdc_data[which][DCR] & DCR_DSC )
-			{
-				vdc_satb_countdown[which] = 4;
-			}
-		}
 	}
 
 	if ( STATE_VCR == vdc_current_segment[which] )
@@ -657,15 +644,17 @@ static void vdc_advance_line(INT32 which)
 		}
 	}
 
+	int delay_vbl = 0;
 	/* generate interrupt on line compare if necessary */
 	if ( vdc_raster_count[which] == vdc_data[which][RCR] && vdc_data[which][CR] & CR_RC )
 	{
 		vdc_status[which] |= VDC_RR;
+		delay_vbl = 1;
 		ret = 1;
 	}
 
-	/* handle frame events */
-	if(vdc_curline[which] == 261 && ! vdc_vblank_triggered[which] )
+	/* handle vblank & satb dma */
+	if( !delay_vbl && (vdc_curline[which] >= (263-4) && vdc_curline[which] <= (263-1)) && ! vdc_vblank_triggered[which] )
 	{
 
 		vdc_vblank_triggered[which] = 1;
@@ -695,8 +684,10 @@ static void vdc_advance_line(INT32 which)
 		}
 	}
 
-	if (ret)
+	if (ret) {
+		//bprintf(0, _T("frame %d\tirq @ %d\n"), nCurrentFrame, vdc_curline[which]);
 		h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
+	}
 }
 
 static void pce_refresh_line(INT32 which, INT32 /*line*/, INT32 external_input, UINT8 *drawn, UINT16 *line_buffer)
@@ -807,7 +798,7 @@ void pce_interrupt()
 
 	INT32 which = 0; // only 1 on pce
 
-	if (vce_current_bitmap_line >= 14 && vce_current_bitmap_line < 256)
+	if (vce_current_bitmap_line >= 14 && vce_current_bitmap_line <= 256)
 	{
 		draw_overscan_line(vce_current_bitmap_line);
 
@@ -832,8 +823,8 @@ void pce_interrupt()
 	{
 		draw_black_line(vce_current_bitmap_line);
 	}
-
-	vce_current_bitmap_line = (vce_current_bitmap_line + 1) % VDC_LPF;
+	
+	vce_current_bitmap_line = (vce_current_bitmap_line + 1) % vce_linecount();
 	vdc_advance_line(0);
 }
 
@@ -843,7 +834,7 @@ void sgx_interrupt()
 	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("sgx_interrupt called without init\n"));
 #endif
 
-	if (vce_current_bitmap_line >= 14 && vce_current_bitmap_line < 256)
+	if (vce_current_bitmap_line >= 14 && vce_current_bitmap_line <= 256)
 	{
 		draw_sgx_overscan_line(vce_current_bitmap_line);
 
@@ -972,7 +963,7 @@ void sgx_interrupt()
 	}
 
 	/* bump current scanline */
-	vce_current_bitmap_line = ( vce_current_bitmap_line + 1 ) % VDC_LPF;
+	vce_current_bitmap_line = ( vce_current_bitmap_line + 1 ) % vce_linecount();
 	vdc_advance_line( 0 );
 	vdc_advance_line( 1 );
 }
@@ -988,10 +979,12 @@ static void vdc_do_dma(INT32 which)
 	INT32 dvc = (vdc_data[which][0x0f] >> 1) & 1;
 
 	do {
-		UINT8 l, h;
+		UINT8 l = 0, h = 0;
 
-		l = vdc_vidram[which][((src * 2) + 0) & 0xffff];
-		h = vdc_vidram[which][((src * 2) + 1) & 0xffff];
+		if ((src & 0x8000) == 0) {
+			l = vdc_vidram[which][((src * 2) + 0) & 0xffff];
+			h = vdc_vidram[which][((src * 2) + 1) & 0xffff];
+		}
 
 		if ((dst & 0x8000) == 0) {
 			vdc_vidram[which][(dst * 2) + 0] = l;
@@ -1008,14 +1001,15 @@ static void vdc_do_dma(INT32 which)
 
 	} while (len != 0xffff);
 
-	vdc_status[which] |= 0x10;
 	vdc_data[which][0x10] = src;
 	vdc_data[which][0x11] = dst;
 	vdc_data[which][0x12] = len;
 
 	if (dvc)
 	{
+		vdc_status[which] |= 0x10;
 		h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
+		//bprintf(0, _T("frame %d\tv-v DMA 0 irq @ %d\n"), nCurrentFrame, vdc_curline[which]);
 	}
 }
 

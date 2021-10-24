@@ -24,6 +24,7 @@ void vpc_write(UINT8 offset, UINT8 data);
 UINT8 vpc_read(UINT8 offset);
 
 // palette
+INT32 vce_linecount();
 void vce_reset();
 void vce_palette_init(UINT32 *Palette);
 void vce_write(UINT8 offset, UINT8 data);

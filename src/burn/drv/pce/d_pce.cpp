@@ -4142,7 +4142,7 @@ struct BurnDriverD BurnDrvpce_pcdenj = {
 	"pce_pcdenj", NULL, NULL, NULL, "1992",
 	"PC Denjin - Punkic Cyborgs\0", NULL, "Hudson", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	0, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_pcdenjRomInfo, pce_pcdenjRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -4162,7 +4162,7 @@ struct BurnDriverD BurnDrvpce_pcdenja = {
 	"pce_pcdenja", "pce_pcdenj", NULL, NULL, "1992",
 	"PC Denjin - Punkic Cyborgs (Alt)\0", NULL, "Hudson", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_pcdenjaRomInfo, pce_pcdenjaRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -6622,7 +6622,7 @@ struct BurnDriverD BurnDrvtg_airzonk = {
 	"tg_airzonk", NULL, NULL, NULL, "1992",
 	"Air Zonk\0", NULL, "Hudson Soft", "TurboGrafx 16",
 	NULL, NULL, NULL, NULL,
-	0, 5, HARDWARE_PCENGINE_TG16, GBF_MISC, 0,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_TG16, GBF_MISC, 0,
 	TgGetZipName, tg_airzonkRomInfo, tg_airzonkRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	TG16Init, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -7280,9 +7280,9 @@ STD_ROM_FN(tg_ghostman)
 
 struct BurnDriver BurnDrvtg_ghostman = {
 	"tg_ghostman", NULL, NULL, NULL, "1992",
-	"Ghost Manor\0", "game randomly locks up", "TTI", "TurboGrafx 16",
+	"Ghost Manor\0", NULL, "TTI", "TurboGrafx 16",
 	NULL, NULL, NULL, NULL,
-	0, 5, HARDWARE_PCENGINE_TG16, GBF_MISC, 0,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_TG16, GBF_MISC, 0,
 	TgGetZipName, tg_ghostmanRomInfo, tg_ghostmanRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	TG16Init, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3

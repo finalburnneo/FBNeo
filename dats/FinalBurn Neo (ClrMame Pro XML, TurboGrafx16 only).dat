@@ -277,12 +277,12 @@
 		<driver status="good"/>
 	</game>
 	<game name="ghostman">
-		<description>Ghost Manor [game randomly locks up]</description>
+		<description>Ghost Manor</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="ghost manor (usa).pce" size="524288" crc="2db4c1fd"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
-		<driver status="preliminary"/>
+		<driver status="good"/>
 	</game>
 	<game name="gunboat">
 		<description>Gunboat</description>

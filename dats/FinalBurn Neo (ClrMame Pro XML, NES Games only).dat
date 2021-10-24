@@ -15076,14 +15076,6 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="youkaikurabu">
-		<description>Youkai Kurabu (Japan)</description>
-		<year>1987</year>
-		<manufacturer>Jaleco</manufacturer>
-		<rom name="Youkai Kurabu (Japan).nes" size="163856" crc="d2ad7f8e"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
 	<game name="youngindjonchr">
 		<description>Young Indiana Jones Chronicles, The (USA)</description>
 		<year>1992</year>

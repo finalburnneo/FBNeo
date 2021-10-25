@@ -371,6 +371,7 @@ static int create_variables_from_dipswitches()
 
 			std::replace( option_name.begin(), option_name.end(), ' ', '_');
 			std::replace( option_name.begin(), option_name.end(), '=', '_');
+			std::replace( option_name.begin(), option_name.end(), ':', '_');
 
 			dip_option->option_name = SSTR( "fbneo-dipswitch-" << drvname << "-" << option_name.c_str() );
 

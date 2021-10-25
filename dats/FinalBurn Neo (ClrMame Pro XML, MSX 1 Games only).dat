@@ -178,7 +178,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="abusimbel" romof="msx">
-		<description>Abu Simbel Profanation</description>
+		<description>Abu Simbel Profanation (Spanish)</description>
 		<year>1986</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="abusimbel.rom" size="131072" crc="603a0c0d"/>
@@ -248,6 +248,17 @@
 		<year>1993</year>
 		<manufacturer>Open</manufacturer>
 		<rom name="Adventure_Kid (ASCII 16).rom" size="131072" crc="cd8b5dd6"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="aerial" romof="msx">
+		<description>Aerial (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Inufuto</manufacturer>
+		<rom name="Aerial (2021)(Inufuto).cas" size="10492" crc="3b8f765c"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -612,6 +623,17 @@
 		<year>1984</year>
 		<manufacturer>ASCII</manufacturer>
 		<rom name="angelo (japan) (alt 1).rom" size="16384" crc="3d8d0f4b"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="angleball" romof="msx">
+		<description>Angleball</description>
+		<year>1987</year>
+		<manufacturer>Mastertronic</manufacturer>
+		<rom name="Angleball (1987)(Mastertronic).rom" size="32768" crc="c0f4fd30"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -1523,7 +1545,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="binarylnd" romof="msx">
-		<description>Binary Land</description>
+		<description>Binary Land (Jpn)</description>
 		<year>1984</year>
 		<manufacturer>Kuma Computers</manufacturer>
 		<rom name="Binary Land (1984)(Kuma Computers)(GB).rom" size="16384" crc="fbacbc7a"/>
@@ -1747,6 +1769,17 @@
 		<year>2009</year>
 		<manufacturer>dvik &amp; joyrex</manufacturer>
 		<rom name="bold.rom" size="131072" crc="00d02aa4"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bombbattle" romof="msx">
+		<description>Bomber Battle (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Amaury Carvalho</manufacturer>
+		<rom name="Bomber Battle (2021)(Amaury Carvalho).rom" size="49152" crc="65ef2546"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -2528,6 +2561,17 @@
 		<year>2018</year>
 		<manufacturer>Cobinee</manufacturer>
 		<rom name="cat (2018)(cobinee).rom" size="32768" crc="4b20796b"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="catspots" romof="msx">
+		<description>CatsPots (HB, v1.2) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Amaury Carvalho</manufacturer>
+		<rom name="CatsPots v1.2 (2021)(Amaury Carvalho).rom" size="32768" crc="8d5a8ea0"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -4307,6 +4351,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="dustin" romof="msx">
+		<description>Dustin (Spanish)</description>
+		<year>1987</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Dustin ES (1987)(Dinamic Software)[RUN'CAS-'].cas" size="46819" crc="097250a5"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="dynabowl" romof="msx">
 		<description>Dynamite Bowl (Jpn)</description>
 		<year>1988</year>
@@ -5431,6 +5486,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="gameswintered" romof="msx">
+		<description>Games, The - Winter Edition (Euro)</description>
+		<year>1988</year>
+		<manufacturer>U.S. Gold - Epyx Inc.</manufacturer>
+		<rom name="Games, The - Winter Edition (1988)(US Gold)(Side A)[RUN'CAS-'].cas" size="98633" crc="2b3e9b87"/>
+		<rom name="Games, The - Winter Edition (1988)(US Gold)(Side B)[RUN'CAS-'].cas" size="62142" crc="0c271add"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="gangman" romof="msx">
 		<description>Gang Man (Euro)</description>
 		<year>1988</year>
@@ -6325,7 +6392,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hostages" romof="msx">
-		<description>Hostages (Spanish, Hacked by Martos)</description>
+		<description>Hostages (Spanish, Hacked by Martos) [Hack]</description>
 		<year>1990</year>
 		<manufacturer>Erbe Software</manufacturer>
 		<rom name="hostages (1990)(erbe)(es)(en)(m martos)[run'cas-'].cas" size="140106" crc="1a6e23df"/>
@@ -6726,6 +6793,17 @@
 		<year>2006</year>
 		<manufacturer>Matra</manufacturer>
 		<rom name="INK - Exxon Surfing (2006)(Matra).rom" size="49152" crc="35823fd5"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="inqsuq" romof="msx">
+		<description>Inq &amp; Suq vs Nightmare (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>GW's Workshop</manufacturer>
+		<rom name="Inq and Suq vs Nightmare (2018)(GW's Workshop).rom" size="32768" crc="25c6e10f"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -10961,7 +11039,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="poogaboo" romof="msx">
-		<description>Poogaboo (Spanish) [Swap Joyport in DIPswitch to use joystick]</description>
+		<description>Poogaboo (Spanish) [Use Cursor Keys and SPACE in the options menu]</description>
 		<year>1991</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="Poogaboo (1991)(Opera Soft)(ES)[BLOAD'CAS-',R].cas" size="66368" crc="ce7a6084"/>
@@ -11681,6 +11759,17 @@
 		<year>1985</year>
 		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="rock'n bolt (japan).rom" size="16384" crc="430e5789"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="rocky" romof="msx">
+		<description>Rocky (Spanish)</description>
+		<year>1985</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Rocky ES (1985)(Dinamic Software)[RUN'CAS-'].cas" size="49267" crc="5d29d860"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12912,6 +13001,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="stardust" romof="msx">
+		<description>Stardust (Spanish) [Use Q, A and SPACE to select options]</description>
+		<year>1987</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Stardust ES (1987)(Topo Soft)[RUN'CAS-'].cas" size="94031" crc="697da5c1"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="starquak" romof="msx">
 		<description>Starquake (Euro)</description>
 		<year>1986</year>
@@ -13000,8 +13100,19 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="stevedored" romof="msx">
-		<description>Stevedore Demo (HB) [Homebrew]</description>
+	<game name="stevedore" romof="msx">
+		<description>Stevedore (HB, v1.2) [Homebrew, Hold controller button 2 to restart level]</description>
+		<year>2021</year>
+		<manufacturer>Nestruo &amp; Wonder</manufacturer>
+		<rom name="Stevedore v1.2 (2021)(theNestruo &amp; Wonder).rom" size="49152" crc="859c04ad"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="stevedored" cloneof="stevedore" romof="stevedore">
+		<description>Stevedore Demo (HB) [Homebrew, Hold controller button 2 to restart level]</description>
 		<year>2020</year>
 		<manufacturer>Nestruo &amp; Wonder</manufacturer>
 		<rom name="Stevedore - demo (2020) (Nestruo &amp; Wonder).rom" size="32768" crc="4923fd7a"/>
@@ -15014,6 +15125,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="westhousep" cloneof="westhouse" romof="westhouse">
+		<description>Westen House (Portuguese) (HB, v1.3.1) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Brain Games</manufacturer>
+		<rom name="Westen House v1.3.1 PT (2021)(Brain Games).rom" size="49152" crc="45042115"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="westhouses" cloneof="westhouse" romof="westhouse">
 		<description>Westen House (Spanish) (HB, v1.3.1) [Homebrew]</description>
 		<year>2021</year>
@@ -15037,7 +15159,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="whodares" romof="msx">
-		<description>Who Dares Wins II (Euro)</description>
+		<description>Who Dares Wins II (Euro) [Press SPACE to skip loading screens]</description>
 		<year>1986</year>
 		<manufacturer>Alligata Software</manufacturer>
 		<rom name="Who Dares Wins II (1986)(Alligata Software)(GB).rom" size="131072" crc="1d10443f"/>
@@ -15665,8 +15787,8 @@
 	</game>
 	<game name="zoom909" romof="msx">
 		<description>Zoom 909 (Jpn)</description>
-		<year>1986</year>
-		<manufacturer>Pony Canyon</manufacturer>
+		<year>1985</year>
+		<manufacturer>Sega</manufacturer>
 		<rom name="zoom 909 (japan).rom" size="32768" crc="64283863"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -15676,7 +15798,7 @@
 	</game>
 	<game name="zoom909k" cloneof="zoom909" romof="zoom909">
 		<description>Zoom 909 (Kor)</description>
-		<year>19??</year>
+		<year>198?</year>
 		<manufacturer>Prosoft</manufacturer>
 		<rom name="zoom 909 (1985)(sega)[cr prosoft].rom" size="32768" crc="34b186ad"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>

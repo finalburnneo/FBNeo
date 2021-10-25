@@ -20,6 +20,14 @@
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="airzonk">
+		<description>Air Zonk</description>
+		<year>1992</year>
+		<manufacturer>Hudson Soft</manufacturer>
+		<rom name="air zonk (usa).pce" size="524288" crc="933d5bcc"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="acrush">
 		<description>Alien Crush</description>
 		<year>1989</year>
@@ -541,12 +549,12 @@
 		<driver status="good"/>
 	</game>
 	<game name="soldblad">
-		<description>Soldier Blade [Hangs at first boss]</description>
+		<description>Soldier Blade</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="soldier blade (usa).pce" size="524288" crc="4bb68b13"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
-		<driver status="preliminary"/>
+		<driver status="good"/>
 	</game>
 	<game name="somerass">
 		<description>Somer Assault</description>

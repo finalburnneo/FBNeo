@@ -172,6 +172,22 @@
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="benkei1" cloneof="benkei" romof="benkei">
+		<description>Benkei Gaiden (Alt)</description>
+		<year>1989</year>
+		<manufacturer>Sunsoft</manufacturer>
+		<rom name="benkei gaiden (japan) [a].pce" size="393216" crc="c9626a43"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="benkei">
+		<description>Benkei Gaiden</description>
+		<year>1989</year>
+		<manufacturer>Sunsoft</manufacturer>
+		<rom name="benkei gaiden (japan).pce" size="393216" crc="e1a73797"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bikkuri1" cloneof="bikkuri" romof="bikkuri">
 		<description>Bikkuriman World (Alt)</description>
 		<year>1987</year>
@@ -924,6 +940,14 @@
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="xserd">
+		<description>Hisou Kihei - Xserd</description>
+		<year>1990</year>
+		<manufacturer>Masiya</manufacturer>
+		<rom name="hisou kihei - xserd (japan).pce" size="393216" crc="1cab1ee6"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="hitice">
 		<description>Hit the Ice - VHL - The Official Video Hockey League</description>
 		<year>1991</year>
@@ -1508,6 +1532,14 @@
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="nikopun">
+		<description>Niko Niko, Pun</description>
+		<year>1991</year>
+		<manufacturer>NHK Enterprise</manufacturer>
+		<rom name="niko niko pun (japan).pce" size="524288" crc="82def9ee"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="nryukend">
 		<description>Ninja Ryukenden</description>
 		<year>1992</year>
@@ -1617,6 +1649,22 @@
 		<year>1992</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="parodius da! - shinwa kara owarai he (japan).pce" size="1048576" crc="647718f9"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pcdenja" cloneof="pcdenj" romof="pcdenj">
+		<description>PC Denjin - Punkic Cyborgs (Alt)</description>
+		<year>1992</year>
+		<manufacturer>Hudson</manufacturer>
+		<rom name="pc denjin - punkic cyborgs (japan) [a].pce" size="524288" crc="8fb4f228"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pcdenj">
+		<description>PC Denjin - Punkic Cyborgs</description>
+		<year>1992</year>
+		<manufacturer>Hudson</manufacturer>
+		<rom name="pc denjin - punkic cyborgs (japan).pce" size="524288" crc="740491c2"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1785,6 +1833,14 @@
 		<year>1992</year>
 		<manufacturer>Hudson</manufacturer>
 		<rom name="power sports (japan).pce" size="524288" crc="29eec024"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ptennis">
+		<description>Power Tennis</description>
+		<year>1993</year>
+		<manufacturer>Hudson</manufacturer>
+		<rom name="power tennis (japan).pce" size="524288" crc="8def5aa1"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2052,19 +2108,19 @@
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="soldblad">
-		<description>Soldier Blade [Hangs at first boss]</description>
-		<year>1992</year>
-		<manufacturer>Hudson</manufacturer>
-		<rom name="soldier blade (japan).pce" size="524288" crc="8420b12b"/>
-		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
-		<driver status="preliminary"/>
-	</game>
 	<game name="soldblas">
 		<description>Soldier Blade Special - Caravan Stage</description>
 		<year>19??</year>
 		<manufacturer>Hudson</manufacturer>
 		<rom name="soldier blade special - caravan stage (japan).pce" size="524288" crc="f39f38ed"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="soldblad">
+		<description>Soldier Blade</description>
+		<year>1992</year>
+		<manufacturer>Hudson</manufacturer>
+		<rom name="soldier blade (japan).pce" size="524288" crc="8420b12b"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

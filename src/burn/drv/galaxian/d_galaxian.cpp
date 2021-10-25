@@ -9907,7 +9907,7 @@ struct BurnDriver BurnDrvStreaknga = {
 
 struct BurnDriver BurnDrvPacmanbl = {
 	"pacmanbl", "puckman", NULL, NULL, "1981",
-	"Pac-Man (Galaxian hardware, set 1)\0", NULL, "bootleg", "Galaxian",
+	"Pac-Man (bootleg on Galaxian hardware, set 1)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, PacmanblRomInfo, PacmanblRomName, NULL, NULL, NULL, NULL, PacmanblInputInfo, PacmanblDIPInfo,
@@ -9917,7 +9917,7 @@ struct BurnDriver BurnDrvPacmanbl = {
 
 struct BurnDriver BurnDrvPacmanbla = {
 	"pacmanbla", "puckman", NULL, NULL, "1981",
-	"Pac-Man (Galaxian hardware, set 2)\0", NULL, "bootleg", "Galaxian",
+	"Pac-Man (bootleg on Galaxian hardware, set 2)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED  | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, PacmanblaRomInfo, PacmanblaRomName, NULL, NULL, NULL, NULL, PacmanblInputInfo, PacmanblDIPInfo,
@@ -10352,7 +10352,7 @@ static INT32 Ozon1Init()
 
 struct BurnDriver BurnDrvZigzagb = {
 	"zigzagb", NULL, NULL, NULL, "1982",
-	"Zig Zag (Galaxian hardware, set 1)\0", NULL, "LAX", "Galaxian",
+	"Zig Zag (bootleg Dig Dug conversion on Galaxian hardware, set 1)\0", NULL, "LAX", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, ZigzagbRomInfo, ZigzagbRomName, NULL, NULL, NULL, NULL, ZigzagInputInfo, ZigzagDIPInfo,
@@ -10362,7 +10362,7 @@ struct BurnDriver BurnDrvZigzagb = {
 
 struct BurnDriver BurnDrvZigzagb2 = {
 	"zigzagb2", "zigzagb", NULL, NULL, "1982",
-	"Zig Zag (Galaxian hardware, set 2)\0", NULL, "LAX", "Galaxian",
+	"Zig Zag (bootleg Dig Dug conversion on Galaxian hardware, set 2)\0", NULL, "LAX", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, Zigzagb2RomInfo, Zigzagb2RomName, NULL, NULL, NULL, NULL, ZigzagInputInfo, ZigzagDIPInfo,
@@ -11410,7 +11410,7 @@ static struct BurnRomInfo SpcdragRomDesc[] = {
 STD_ROM_PICK(Spcdrag)
 STD_ROM_FN(Spcdrag)
 
-static struct BurnRomInfo SpcdragaRomDesc[] = {
+static struct BurnRomInfo FloritasRomDesc[] = {
 	{ "1.7g",          0x00800, 0x38cc9839, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "2.7g",          0x00800, 0x29e00ae4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "3.7g",          0x00800, 0xa1939def, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -11428,8 +11428,29 @@ static struct BurnRomInfo SpcdragaRomDesc[] = {
 	{ "prom_6331.10f", 0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
 };
 
-STD_ROM_PICK(Spcdraga)
-STD_ROM_FN(Spcdraga)
+STD_ROM_PICK(Floritas)
+STD_ROM_FN(Floritas)
+
+static struct BurnRomInfo FloritasmRomDesc[] = {
+	{ "rom1-2716.bin", 0x00800, 0xf82b5b29, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "rom2-2716.bin", 0x00800, 0xee234f00, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "rom3-2716.bin", 0x00800, 0x4e384771, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "rom4-2716.bin", 0x00800, 0x27f7cda1, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "rom5-2716.bin", 0x00800, 0x32cd9adc, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "rom6-2716.bin", 0x00800, 0x811f2e0d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "rom7-2716.bin", 0x00800, 0x36a25d93, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "rom8-2716.bin", 0x00800, 0xbead5e83, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "1h-2716.bin",   0x00800, 0x528da705, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "0h-2716.bin",   0x00800, 0x5a4b17ea, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "1k-2716.bin",   0x00800, 0x4e79ff6b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "0k-2716.bin",   0x00800, 0xe0edccbd, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "61-82s123.bin", 0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Floritasm)
+STD_ROM_FN(Floritasm)
 
 static struct BurnRomInfo MooncregRomDesc[] = {
 	{ "eg1",           0x00800, 0xa67ca4af, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -12220,7 +12241,7 @@ struct BurnDriver BurnDrvStarfgmc = {
 
 struct BurnDriver BurnDrvSpcdrag = {
 	"spcdrag", "mooncrst", NULL, NULL, "1980",
-	"Space Dragon (Moon Cresta bootleg, set 1)\0", NULL, "bootleg", "Galaxian",
+	"Space Dragon (Moon Cresta bootleg)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, SpcdragRomInfo, SpcdragRomName, NULL, NULL, NULL, NULL, SmooncrsInputInfo, SmooncrsDIPInfo,
@@ -12228,13 +12249,23 @@ struct BurnDriver BurnDrvSpcdrag = {
 	NULL, 392, 224, 256, 3, 4
 };
 
-struct BurnDriver BurnDrvSpcdraga = {
-	"spcdraga", "mooncrst", NULL, NULL, "1980",
-	"Space Dragon (Moon Cresta bootleg, set 2)\0", NULL, "bootleg", "Galaxian",
+struct BurnDriver BurnDrvFloritas = {
+	"floritas", "mooncrst", NULL, NULL, "1980",
+	"Floritas (Moon Cresta bootleg)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
-	NULL, SpcdragaRomInfo, SpcdragaRomName, NULL, NULL, NULL, NULL, SmooncrsInputInfo, SmooncrsDIPInfo,
+	NULL, FloritasRomInfo, FloritasRomName, NULL, NULL, NULL, NULL, SmooncrsInputInfo, SmooncrsDIPInfo,
 	MooncrstInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvFloritasm = {
+	"floritasm", "mooncrst", NULL, NULL, "1980",
+	"Floritas (Multivideo Spanish Moon Cresta bootleg)\0", NULL, "bootleg (Multivideo)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, FloritasmRomInfo, FloritasmRomName, NULL, NULL, NULL, NULL, SmooncrsInputInfo, SmooncrsDIPInfo,
+	Mooncrs2Init, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 
@@ -12270,7 +12301,7 @@ struct BurnDriver BurnDrvStera = {
 
 struct BurnDriver BurnDrvMooncrgx = {
 	"mooncrgx", "mooncrst", NULL, NULL, "1980",
-	"Moon Cresta (Galaxian hardware)\0", NULL, "bootleg", "Galaxian",
+	"Moon Cresta (bootleg on Galaxian hardware)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, MooncrgxRomInfo, MooncrgxRomName, NULL, NULL, NULL, NULL, OmegabInputInfo, MooncrgxDIPInfo,
@@ -15965,7 +15996,7 @@ struct BurnDriver BurnDrvFrogf = {
 
 struct BurnDriver BurnDrvFrogg = {
 	"frogg", "frogger", NULL, NULL, "1981",
-	"Frog (Galaxian hardware)\0", NULL, "bootleg", "Galaxian",
+	"Frog (bootleg on Galaxian hardware)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_ACTION, 0,
 	NULL, FroggRomInfo, FroggRomName, NULL, NULL, NULL, NULL, FroggInputInfo, FroggDIPInfo,
@@ -18753,7 +18784,7 @@ struct BurnDriver BurnDrvAtlantis2 = {
 
 struct BurnDriver BurnDrvCkongs = {
 	"ckongs", "ckong", NULL, NULL, "1981",
-	"Crazy Kong (Scramble hardware)\0", NULL, "bootleg", "Galaxian",
+	"Crazy Kong (bootleg on Scramble hardware)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_PLATFORM, 0,
 	NULL, CkongsRomInfo, CkongsRomName, NULL, NULL, NULL, NULL, CkongsInputInfo, CkongsDIPInfo,

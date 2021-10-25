@@ -497,11 +497,11 @@ static struct BurnRomInfo pce_benkeiRomDesc[] = {
 STD_ROM_PICK(pce_benkei)
 STD_ROM_FN(pce_benkei)
 
-struct BurnDriverD BurnDrvpce_benkei = {
+struct BurnDriver BurnDrvpce_benkei = {
 	"pce_benkei", NULL, NULL, NULL, "1989",
 	"Benkei Gaiden\0", NULL, "Sunsoft", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	0, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_benkeiRomInfo, pce_benkeiRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -517,11 +517,11 @@ static struct BurnRomInfo pce_benkei1RomDesc[] = {
 STD_ROM_PICK(pce_benkei1)
 STD_ROM_FN(pce_benkei1)
 
-struct BurnDriverD BurnDrvpce_benkei1 = {
+struct BurnDriver BurnDrvpce_benkei1 = {
 	"pce_benkei1", "pce_benkei", NULL, NULL, "1989",
 	"Benkei Gaiden (Alt)\0", NULL, "Sunsoft", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_benkei1RomInfo, pce_benkei1RomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -2377,11 +2377,11 @@ static struct BurnRomInfo pce_xserdRomDesc[] = {
 STD_ROM_PICK(pce_xserd)
 STD_ROM_FN(pce_xserd)
 
-struct BurnDriverD BurnDrvpce_xserd = {
+struct BurnDriver BurnDrvpce_xserd = {
 	"pce_xserd", NULL, NULL, NULL, "1990",
 	"Hisou Kihei - Xserd\0", NULL, "Masiya", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	0, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_xserdRomInfo, pce_xserdRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -3837,11 +3837,11 @@ static struct BurnRomInfo pce_nikopunRomDesc[] = {
 STD_ROM_PICK(pce_nikopun)
 STD_ROM_FN(pce_nikopun)
 
-struct BurnDriverD BurnDrvpce_nikopun = {
+struct BurnDriver BurnDrvpce_nikopun = {
 	"pce_nikopun", NULL, NULL, NULL, "1991",
-	"Niko Niko, Pun\0", "Locks up in-game?", "NHK Enterprise", "PC Engine",
+	"Niko Niko, Pun\0", NULL, "NHK Enterprise", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	0, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_nikopunRomInfo, pce_nikopunRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -4597,11 +4597,11 @@ static struct BurnRomInfo pce_ptennisRomDesc[] = {
 STD_ROM_PICK(pce_ptennis)
 STD_ROM_FN(pce_ptennis)
 
-struct BurnDriverD BurnDrvpce_ptennis = {
+struct BurnDriver BurnDrvpce_ptennis = {
 	"pce_ptennis", NULL, NULL, NULL, "1993",
 	"Power Tennis\0", NULL, "Hudson", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	0, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_ptennisRomInfo, pce_ptennisRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -5219,9 +5219,9 @@ STD_ROM_FN(pce_soldblad)
 
 struct BurnDriver BurnDrvpce_soldblad = {
 	"pce_soldblad", NULL, NULL, NULL, "1992",
-	"Soldier Blade\0", "Hangs at first boss", "Hudson", "PC Engine",
+	"Soldier Blade\0", NULL, "Hudson", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	0, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_soldbladRomInfo, pce_soldbladRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -5723,26 +5723,6 @@ struct BurnDriver BurnDrvpce_tatsunok = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_tatsunokRomInfo, pce_tatsunokRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
-	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
-	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
-};
-
-
-// Tennokoe Bank
-
-static struct BurnRomInfo pce_tennokoeRomDesc[] = {
-	{ "tennokoe bank (japan).pce", 0x020000, 0x3b3808bd, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(pce_tennokoe)
-STD_ROM_FN(pce_tennokoe)
-
-struct BurnDriverD BurnDrvpce_tennokoe = {
-	"pce_tennokoe", NULL, NULL, NULL, "1991",
-	"Tennokoe Bank\0", NULL, "Hudson", "PC Engine",
-	NULL, NULL, NULL, NULL,
-	0, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_tennokoeRomInfo, pce_tennokoeRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -8018,9 +7998,9 @@ STD_ROM_FN(tg_soldblad)
 
 struct BurnDriver BurnDrvtg_soldblad = {
 	"tg_soldblad", NULL, NULL, NULL, "1992",
-	"Soldier Blade\0", "Hangs at first boss", "TTI", "TurboGrafx 16",
+	"Soldier Blade\0", NULL, "TTI", "TurboGrafx 16",
 	NULL, NULL, NULL, NULL,
-	0, 5, HARDWARE_PCENGINE_TG16, GBF_MISC, 0,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_TG16, GBF_MISC, 0,
 	TgGetZipName, tg_soldbladRomInfo, tg_soldbladRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	TG16Init, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3

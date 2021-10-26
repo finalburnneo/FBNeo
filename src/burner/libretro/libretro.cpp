@@ -189,7 +189,8 @@ static INT32 __cdecl libretro_bprintf(INT32 nStatus, TCHAR* szFormat, ...)
 	szFormat = string_replace_substring(szFormat, "%S", "%s");
 
 	// retro logs prefer ending with \n
-	if (szFormat[strlen(szFormat)-1] != '\n') strncat(szFormat, "\n", 1);
+	// 2021-10-26: disabled it's causing overflow in a few cases, find a better way to do this...
+	//if (szFormat[strlen(szFormat)-1] != '\n') strncat(szFormat, "\n", 1);
 
 	va_start(vp, szFormat);
 	int rc = vsnprintf(buf, PRINTF_BUFFER_SIZE, szFormat, vp);

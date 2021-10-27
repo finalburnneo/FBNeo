@@ -681,7 +681,7 @@
 		<year>1991</year>
 		<manufacturer>Ballistic</manufacturer>
 		<rom name="turrican (usa).pce" size="262144" crc="eb045edf"/>
-		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<video orientation="horizontal" width="512" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="tvbasket">

@@ -47,6 +47,7 @@ static UINT8 joystick_data_select;
 static UINT8 joystick_6b_select[5];
 
 static void (*interrupt)();
+static void (*hblank)();
 
 static UINT16 PCEInputs[5];
 UINT8 PCEReset;
@@ -56,6 +57,8 @@ UINT8 PCEJoy3[12];
 UINT8 PCEJoy4[12];
 UINT8 PCEJoy5[12];
 UINT8 PCEDips[3];
+
+static INT32 nExtraCycles;
 
 static UINT8 system_identify;
 static INT32 pce_sf2 = 0;
@@ -425,6 +428,8 @@ static INT32 PCEDoReset()
 
 	pce_sf2_bank = 0;
 
+	nExtraCycles = 0;
+
 	return 0;
 }
 
@@ -495,6 +500,7 @@ static INT32 CommonInit(int type)
 		h6280Close();
 
 		interrupt = pce_interrupt;
+		hblank = pce_hblank;
 
 		if (type == 0) {		// pce
 			system_identify = 0x40;
@@ -514,6 +520,8 @@ static INT32 CommonInit(int type)
 		h6280Close();
 
 		interrupt = sgx_interrupt;
+		hblank = sgx_hblank;
+
 		system_identify = 0x40;
 	}
 	
@@ -637,19 +645,23 @@ INT32 PCEFrame()
 
 	INT32 nInterleave = vce_linecount();
 	INT32 nCyclesTotal[1] = { (INT32)((INT64)7159090 * nBurnCPUSpeedAdjust / (0x0100 * 60)) };
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesDone[1] = { nExtraCycles };
 
 	h6280Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
-	{
-		CPU_RUN(0, h6280);
-		interrupt();
+	{                                 //         extern int counter;
+		nCyclesDone[0] += h6280Run(82);
+		hblank();
+		CPU_RUN_SYNCINT(0, h6280); // finish line cycles
+		interrupt();       // advance line in vdc
 	}
 
 	if (pBurnSoundOut) {
 		c6280_update(pBurnSoundOut, nBurnSoundLen);
 	}
+
+	nExtraCycles = h6280TotalCycles() - nCyclesTotal[0];
 
 	h6280Close();
 
@@ -690,6 +702,8 @@ INT32 PCEScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(joystick_6b_select[3]);
 		SCAN_VAR(joystick_6b_select[4]);
 		SCAN_VAR(bram_locked);
+
+		SCAN_VAR(nExtraCycles);
 
 		if (pce_sf2) {
 			SCAN_VAR(pce_sf2_bank);

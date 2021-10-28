@@ -14432,7 +14432,7 @@ struct BurnDriver BurnDrvnes_bookyman = {
 	"nes_bookyman", NULL, NULL, NULL, "1991",
 	"Bookyman (Unl)\0", NULL, "Mega Soft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_MAZE | GBF_ACTION, 0,
 	NESGetZipName, nes_bookymanRomInfo, nes_bookymanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14583,7 +14583,7 @@ struct BurnDriver BurnDrvnes_bbbabes = {
 	"nes_bbbabes", NULL, NULL, NULL, "1991",
 	"Bubble Bath Babes (USA) (Unl)\0", NULL, "Panesian", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_bbbabesRomInfo, nes_bbbabesRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14733,10 +14733,10 @@ STD_ROM_PICK(nes_avmahjongclubc)
 STD_ROM_FN(nes_avmahjongclubc)
 
 struct BurnDriver BurnDrvnes_avmahjongclubc = {
-	"nes_avmahjongclubc", NULL, NULL, NULL, "2018-08-17",
-	"AV Mahjong Club (T-Chi) (Unl)\0", NULL, "Hack International", "Miscellaneous",
+	"nes_avmahjongclubc", NULL, NULL, NULL, "2018",
+	"AV Mahjong Club (T-Chi) (Unl)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_MAHJONG | GBF_ADV, 0,
 	NESGetZipName, nes_avmahjongclubcRomInfo, nes_avmahjongclubcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14772,10 +14772,10 @@ STD_ROM_PICK(nes_darkwingduckc)
 STD_ROM_FN(nes_darkwingduckc)
 
 struct BurnDriver BurnDrvnes_darkwingduckc = {
-	"nes_darkwingduckc", "nes_darkwingduck", NULL, NULL, "2020-10-01",
-	"Darkwing Duck (T-Chi)\0", NULL, "Capcom", "Miscellaneous",
+	"nes_darkwingduckc", "nes_darkwingduck", NULL, NULL, "2020",
+	"Darkwing Duck (T-Chi)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_darkwingduckcRomInfo, nes_darkwingduckcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14868,9 +14868,9 @@ STD_ROM_FN(nes_deadfoxc)
 
 struct BurnDriver BurnDrvnes_deadfoxc = {
 	"nes_deadfoxc", "nes_codenam", NULL, NULL, "2010",
-	"Ningen Heiki - Dead Fox (T-Chi, v2.0)\0", NULL, "Capcom", "Miscellaneous",
+	"Ningen Heiki - Dead Fox (T-Chi, v2.0)\0", NULL, "Xing Kong", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_deadfoxcRomInfo, nes_deadfoxcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15001,9 +15001,9 @@ STD_ROM_FN(nes_madcityc)
 
 struct BurnDriver BurnDrvnes_madcityc = {
 	"nes_madcityc", "nes_advenbaybil", NULL, NULL, "2018",
-	"Mad City (T-Chi, v2)\0", NULL, "Konami", "Miscellaneous",
+	"Mad City (T-Chi, v2)\0", NULL, "Tan Xiao Feng Sheng", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_SHOOT, 0,
 	NESGetZipName, nes_madcitycRomInfo, nes_madcitycRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
 	NESZapperInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15076,10 +15076,10 @@ STD_ROM_PICK(nes_akumadenc)
 STD_ROM_FN(nes_akumadenc)
 
 struct BurnDriver BurnDrvnes_akumadenc = {
-	"nes_akumadenc", "nes_castliii", NULL, NULL, "2018-10-15",
-	"Akumajou Densetsu (T-Chi, v2.3)\0", NULL, "Konami", "Miscellaneous",
+	"nes_akumadenc", "nes_castliii", NULL, NULL, "2018",
+	"Akumajou Densetsu (T-Chi, v2.3)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_akumadencRomInfo, nes_akumadencRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15095,10 +15095,10 @@ STD_ROM_PICK(nes_batmavidgamc)
 STD_ROM_FN(nes_batmavidgamc)
 
 struct BurnDriver BurnDrvnes_batmavidgamc = {
-	"nes_batmavidgamc", "nes_batmavidgam", NULL, NULL, "2020-01-25",
-	"Batman - The Video Game (T-Chi)\0", NULL, "Sunsoft", "Miscellaneous",
+	"nes_batmavidgamc", "nes_batmavidgam", NULL, NULL, "2020",
+	"Batman - The Video Game (T-Chi)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_batmavidgamcRomInfo, nes_batmavidgamcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15328,10 +15328,10 @@ STD_ROM_PICK(nes_daikunogensan2c)
 STD_ROM_FN(nes_daikunogensan2c)
 
 struct BurnDriver BurnDrvnes_daikunogensan2c = {
-	"nes_daikunogensan2c", "nes_daikunogensan2", NULL, NULL, "2019-07-28",
-	"Daiku no Gen-san 2 - Akage no Dan no Gyakushuu (T-Chi)\0", NULL, "Irem", "Miscellaneous",
+	"nes_daikunogensan2c", "nes_daikunogensan2", NULL, NULL, "2019",
+	"Daiku no Gen-san 2 - Akage no Dan no Gyakushuu (T-Chi)\0", NULL, "Advance Team & DMG Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_daikunogensan2cRomInfo, nes_daikunogensan2cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15367,10 +15367,10 @@ STD_ROM_PICK(nes_ducktales2c)
 STD_ROM_FN(nes_ducktales2c)
 
 struct BurnDriver BurnDrvnes_ducktales2c = {
-	"nes_ducktales2c", "nes_ducktales2", NULL, NULL, "2019-06-01",
-	"DuckTales 2 (T-Chi, v1.1)\0", NULL, "Capcom", "Miscellaneous",
+	"nes_ducktales2c", "nes_ducktales2", NULL, NULL, "2019",
+	"DuckTales 2 (T-Chi, v1.1)\0", NULL, "DMG Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_ducktales2cRomInfo, nes_ducktales2cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15387,10 +15387,10 @@ STD_ROM_PICK(nes_daikunogensanc)
 STD_ROM_FN(nes_daikunogensanc)
 
 struct BurnDriver BurnDrvnes_daikunogensanc = {
-	"nes_daikunogensanc", "nes_daikunogensan", NULL, NULL, "2019-03-05",
-	"Daiku no Gen-san (T-Chi)\0", NULL, "Irem", "Miscellaneous",
+	"nes_daikunogensanc", "nes_daikunogensan", NULL, NULL, "2019",
+	"Daiku no Gen-san (T-Chi)\0", NULL, "MEZARANSU", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_daikunogensancRomInfo, nes_daikunogensancRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15461,9 +15461,9 @@ STD_ROM_FN(nes_wanpakuduck)
 
 struct BurnDriver BurnDrvnes_wanpakuduck = {
 	"nes_wanpakuduck", "nes_ducktales", NULL, NULL, "2020",
-	"Wanpaku Duck Yume Bouken (T-Chi)\0", NULL, "Capcom", "Miscellaneous",
+	"Wanpaku Duck Yume Bouken (T-Chi)\0", NULL, "Ju Jue Rong Hua", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_wanpakuduckRomInfo, nes_wanpakuduckRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15778,10 +15778,10 @@ STD_ROM_PICK(nes_bioniccommandoc)
 STD_ROM_FN(nes_bioniccommandoc)
 
 struct BurnDriver BurnDrvnes_bioniccommandoc = {
-	"nes_bioniccommandoc", "nes_bioniccommando", NULL, NULL, "1989 ?",
-	"Bionic Commando (Japan) - Castellano v1.03\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_bioniccommandoc", "nes_bioniccommando", NULL, NULL, "2013",
+	"Bionic Commando (Japan) - Castellano v1.03\0", NULL, "TheFireRed", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_bioniccommandocRomInfo, nes_bioniccommandocRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15797,10 +15797,10 @@ STD_ROM_PICK(nes_blastermasterc)
 STD_ROM_FN(nes_blastermasterc)
 
 struct BurnDriver BurnDrvnes_blastermasterc = {
-	"nes_blastermasterc", "nes_blastermaster", NULL, NULL, "1989 ?",
-	"Blaster Master (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_blastermasterc", "nes_blastermaster", NULL, NULL, "2018",
+	"Blaster Master (USA) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN, 0,
 	NESGetZipName, nes_blastermastercRomInfo, nes_blastermastercRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15816,10 +15816,10 @@ STD_ROM_PICK(nes_bramstosdrac)
 STD_ROM_FN(nes_bramstosdrac)
 
 struct BurnDriver BurnDrvnes_bramstosdrac = {
-	"nes_bramstosdrac", "nes_bramstosdra", NULL, NULL, "1989 ?",
-	"Bram Stoker's Dracula (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_bramstosdrac", "nes_bramstosdra", NULL, NULL, "2017",
+	"Bram Stoker's Dracula (USA) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_bramstosdracRomInfo, nes_bramstosdracRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15835,10 +15835,10 @@ STD_ROM_PICK(nes_captatsuvoliic)
 STD_ROM_FN(nes_captatsuvoliic)
 
 struct BurnDriver BurnDrvnes_captatsuvoliic = {
-	"nes_captatsuvoliic", "nes_captatsuvolii", NULL, NULL, "1989 ?",
-	"Captain Tsubasa Vol. II - Super Striker (Japan) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_captatsuvoliic", "nes_captatsuvolii", NULL, NULL, "2013",
+	"Captain Tsubasa Vol. II - Super Striker (Japan) - Castellano v1.0\0", NULL, "pepodmc", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SPORTSMISC | GBF_RPG, 0,
 	NESGetZipName, nes_captatsuvoliicRomInfo, nes_captatsuvoliicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15892,10 +15892,10 @@ STD_ROM_PICK(nes_akumadenjc)
 STD_ROM_FN(nes_akumadenjc)
 
 struct BurnDriver BurnDrvnes_akumadenjc = {
-	"nes_akumadenjc", "nes_castliii", NULL, NULL, "1989 ?",
-	"Akumajou Densetsu (Japan) - Castellano v1.1\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_akumadenjc", "nes_castliii", NULL, NULL, "2017",
+	"Akumajou Densetsu (Japan) - Castellano v1.1\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_akumadenjcRomInfo, nes_akumadenjcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15930,10 +15930,10 @@ STD_ROM_PICK(nes_chipndalresrac)
 STD_ROM_FN(nes_chipndalresrac)
 
 struct BurnDriver BurnDrvnes_chipndalresrac = {
-	"nes_chipndalresrac", "nes_chipndalresra", NULL, NULL, "1989 ?",
-	"Chip 'n Dale - Rescue Rangers (USA) - Castellano v0.9\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_chipndalresrac", "nes_chipndalresra", NULL, NULL, "20XX?",
+	"Chip 'n Dale - Rescue Rangers (USA) - Castellano v0.9\0", NULL, "Unknown", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_chipndalresracRomInfo, nes_chipndalresracRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15949,10 +15949,10 @@ STD_ROM_PICK(nes_chipndalresra2c)
 STD_ROM_FN(nes_chipndalresra2c)
 
 struct BurnDriver BurnDrvnes_chipndalresra2c = {
-	"nes_chipndalresra2c", "nes_chipndalresra2", NULL, NULL, "1989 ?",
-	"Chip 'n Dale - Rescue Rangers 2 (USA) - Castellano v0.99\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_chipndalresra2c", "nes_chipndalresra2", NULL, NULL, "2019",
+	"Chip 'n Dale - Rescue Rangers 2 (USA) - Castellano v0.99\0", NULL, "jackic", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_chipndalresra2cRomInfo, nes_chipndalresra2cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -16006,10 +16006,10 @@ STD_ROM_PICK(nes_darkmanc)
 STD_ROM_FN(nes_darkmanc)
 
 struct BurnDriver BurnDrvnes_darkmanc = {
-	"nes_darkmanc", "nes_darkman", NULL, NULL, "1989 ?",
-	"Darkman (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_darkmanc", "nes_darkman", NULL, NULL, "2017",
+	"Darkman (USA) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_darkmancRomInfo, nes_darkmancRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -16025,10 +16025,10 @@ STD_ROM_PICK(nes_diehardc)
 STD_ROM_FN(nes_diehardc)
 
 struct BurnDriver BurnDrvnes_diehardc = {
-	"nes_diehardc", "nes_diehard", NULL, NULL, "1989 ?",
-	"Die Hard (USA) - Castellano v1.1\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_diehardc", "nes_diehard", NULL, NULL, "2019",
+	"Die Hard (USA) - Castellano v1.1\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN, 0,
 	NESGetZipName, nes_diehardcRomInfo, nes_diehardcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -16044,10 +16044,10 @@ STD_ROM_PICK(nes_aladdinc)
 STD_ROM_FN(nes_aladdinc)
 
 struct BurnDriver BurnDrvnes_aladdinc = {
-	"nes_aladdinc", "nes_aladdin", NULL, NULL, "1989 ?",
-	"Disney's Aladdin (Europe) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_aladdinc", "nes_aladdin", NULL, NULL, "2018",
+	"Disney's Aladdin (Europe) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_aladdincRomInfo, nes_aladdincRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -16063,10 +16063,10 @@ STD_ROM_PICK(nes_doubledragonc)
 STD_ROM_FN(nes_doubledragonc)
 
 struct BurnDriver BurnDrvnes_doubledragonc = {
-	"nes_doubledragonc", "nes_doubledragon", NULL, NULL, "1989 ?",
-	"Double Dragon (USA) - Castellano v1.1\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_doubledragonc", "nes_doubledragon", NULL, NULL, "2021",
+	"Double Dragon (USA) - Castellano v1.1\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_doubledragoncRomInfo, nes_doubledragoncRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -16082,10 +16082,10 @@ STD_ROM_PICK(nes_doubldraiic)
 STD_ROM_FN(nes_doubldraiic)
 
 struct BurnDriver BurnDrvnes_doubldraiic = {
-	"nes_doubldraiic", "nes_doubldraii", NULL, NULL, "1989 ?",
-	"Double Dragon II - The Revenge (USA) (Rev A) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_doubldraiic", "nes_doubldraii", NULL, NULL, "2017",
+	"Double Dragon II - The Revenge (USA) (Rev A) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_doubldraiicRomInfo, nes_doubldraiicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -16101,10 +16101,10 @@ STD_ROM_PICK(nes_doubldraiiic)
 STD_ROM_FN(nes_doubldraiiic)
 
 struct BurnDriver BurnDrvnes_doubldraiiic = {
-	"nes_doubldraiiic", "nes_doubldraiii", NULL, NULL, "1989 ?",
-	"Double Dragon III - The Sacred Stones (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_doubldraiiic", "nes_doubldraiii", NULL, NULL, "2018",
+	"Double Dragon III - The Sacred Stones (USA) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_doubldraiiicRomInfo, nes_doubldraiiicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -16120,10 +16120,10 @@ STD_ROM_PICK(nes_dragobalzsupbu2c)
 STD_ROM_FN(nes_dragobalzsupbu2c)
 
 struct BurnDriver BurnDrvnes_dragobalzsupbu2c = {
-	"nes_dragobalzsupbu2c", "nes_dragobalzsupbu2", NULL, NULL, "1989 ?",
-	"Dragon Ball Z - Super Butouden 2 (Unl) - Castellano v1.1\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_dragobalzsupbu2c", "nes_dragobalzsupbu2", NULL, NULL, "2017",
+	"Dragon Ball Z - Super Butouden 2 (Unl) - Castellano v1.1\0", NULL, "Terwilf", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
 	NESGetZipName, nes_dragobalzsupbu2cRomInfo, nes_dragobalzsupbu2cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -16139,10 +16139,10 @@ STD_ROM_PICK(nes_dragobalziiirejinic)
 STD_ROM_FN(nes_dragobalziiirejinic)
 
 struct BurnDriver BurnDrvnes_dragobalziiirejinic = {
-	"nes_dragobalziiirejinic", "nes_dragobalziiirejini", NULL, NULL, "1989 ?",
-	"Dragon Ball Z III - Ressen Jinzou Ningen (Japan) - Castellano v1.0a\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_dragobalziiirejinic", "nes_dragobalziiirejini", NULL, NULL, "2016",
+	"Dragon Ball Z III - Ressen Jinzou Ningen (Japan) - Castellano v1.0a\0", NULL, "TransGen", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_STRATEGY | GBF_ADV, 0,
 	NESGetZipName, nes_dragobalziiirejinicRomInfo, nes_dragobalziiirejinicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -16158,10 +16158,10 @@ STD_ROM_PICK(nes_dragonbusterc)
 STD_ROM_FN(nes_dragonbusterc)
 
 struct BurnDriver BurnDrvnes_dragonbusterc = {
-	"nes_dragonbusterc", "nes_dragonbuster", NULL, NULL, "1989 ?",
-	"Dragon Buster (Japan) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_dragonbusterc", "nes_dragonbuster", NULL, NULL, "2019",
+	"Dragon Buster (Japan) - Castellano v1.0\0", NULL, "Max1323", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_dragonbustercRomInfo, nes_dragonbustercRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -16177,10 +16177,10 @@ STD_ROM_PICK(nes_dragonwarriorc)
 STD_ROM_FN(nes_dragonwarriorc)
 
 struct BurnDriver BurnDrvnes_dragonwarriorc = {
-	"nes_dragonwarriorc", "nes_dragonwarrior", NULL, NULL, "1989 ?",
-	"Dragon Warrior (USA) (Rev A) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_dragonwarriorc", "nes_dragonwarrior", NULL, NULL, "2019",
+	"Dragon Warrior (USA) (Rev A) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_dragonwarriorcRomInfo, nes_dragonwarriorcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -16196,10 +16196,10 @@ STD_ROM_PICK(nes_dragowariiic)
 STD_ROM_FN(nes_dragowariiic)
 
 struct BurnDriver BurnDrvnes_dragowariiic = {
-	"nes_dragowariiic", "nes_dragowariii", NULL, NULL, "1989 ?",
-	"Dragon Warrior III (USA) - Castellano v0.9\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_dragowariiic", "nes_dragowariii", NULL, NULL, "2017",
+	"Dragon Warrior III (USA) - Castellano v0.9\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_dragowariiicRomInfo, nes_dragowariiicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -16215,10 +16215,10 @@ STD_ROM_PICK(nes_dragowarivc)
 STD_ROM_FN(nes_dragowarivc)
 
 struct BurnDriver BurnDrvnes_dragowarivc = {
-	"nes_dragowarivc", "nes_dragowariv", NULL, NULL, "1989 ?",
-	"Dragon Warrior IV (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_dragowarivc", "nes_dragowariv", NULL, NULL, "2016",
+	"Dragon Warrior IV (USA) - Castellano v1.0\0", NULL, "Butz Klauser", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_dragowarivcRomInfo, nes_dragowarivcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -16234,16 +16234,16 @@ STD_ROM_PICK(nes_dragonslairc)
 STD_ROM_FN(nes_dragonslairc)
 
 struct BurnDriver BurnDrvnes_dragonslairc = {
-	"nes_dragonslairc", "nes_dragonslair", NULL, NULL, "1989 ?",
-	"Dragon's Lair (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_dragonslairc", "nes_dragonslair", NULL, NULL, "2019",
+	"Dragon's Lair (USA) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_dragonslaircRomInfo, nes_dragonslaircRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Duck Tales (USA) - Castellano v1.1
+// DuckTales (USA) - Castellano v1.1
 // https://www.romhacking.net/
 static struct BurnRomInfo nes_ducktalescRomDesc[] = {
 	{ "duck tales (usa) - castellano v1.1.nes",          131088, 0xfcb58532, BRF_ESS | BRF_PRG },
@@ -16253,16 +16253,16 @@ STD_ROM_PICK(nes_ducktalesc)
 STD_ROM_FN(nes_ducktalesc)
 
 struct BurnDriver BurnDrvnes_ducktalesc = {
-	"nes_ducktalesc", "nes_ducktales", NULL, NULL, "1989 ?",
-	"Duck Tales (USA) - Castellano v1.1\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_ducktalesc", "nes_ducktales", NULL, NULL, "2017",
+	"DuckTales (USA) - Castellano v1.1\0", NULL, "Darkchaosblast", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_ducktalescRomInfo, nes_ducktalescRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Duck Tales 2 (USA) - Castellano v1.1
+// DuckTales 2 (USA) - Castellano v1.1
 // https://www.romhacking.net/
 static struct BurnRomInfo nes_ducktales2castRomDesc[] = {
 	{ "duck tales 2 (usa) - castellano v1.1.nes",          131088, 0x908c28ff, BRF_ESS | BRF_PRG },
@@ -16272,10 +16272,10 @@ STD_ROM_PICK(nes_ducktales2cast)
 STD_ROM_FN(nes_ducktales2cast)
 
 struct BurnDriver BurnDrvnes_ducktales2cast = {
-	"nes_ducktales2cast", "nes_ducktales2", NULL, NULL, "1989 ?",
-	"Duck Tales 2 (USA) - Castellano v1.1\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_ducktales2cast", "nes_ducktales2", NULL, NULL, "2017",
+	"DuckTales 2 (USA) - Castellano v1.1\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_ducktales2castRomInfo, nes_ducktales2castRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -16291,10 +16291,10 @@ STD_ROM_PICK(nes_earthboundc)
 STD_ROM_FN(nes_earthboundc)
 
 struct BurnDriver BurnDrvnes_earthboundc = {
-	"nes_earthboundc", "nes_earthbound", NULL, NULL, "1989 ?",
-	"Earth Bound (USA) (Proto) - Castellano v2.2\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_earthboundc", "nes_earthbound", NULL, NULL, "2016",
+	"Earth Bound (USA) (Proto) - Castellano v2.2\0", NULL, "OAD", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_earthboundcRomInfo, nes_earthboundcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -16310,10 +16310,10 @@ STD_ROM_PICK(nes_elevatoractionc)
 STD_ROM_FN(nes_elevatoractionc)
 
 struct BurnDriver BurnDrvnes_elevatoractionc = {
-	"nes_elevatoractionc", "nes_elevatoraction", NULL, NULL, "1989 ?",
-	"Elevator Action (USA) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_elevatoractionc", "nes_elevatoraction", NULL, NULL, "2019",
+	"Elevator Action (USA) - Castellano v1.0\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_elevatoractioncRomInfo, nes_elevatoractioncRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

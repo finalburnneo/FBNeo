@@ -400,12 +400,7 @@ static void DrvFillTransMask()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
@@ -493,7 +488,7 @@ static INT32 DrvExit()
 
 	BurnYM2203Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -592,24 +587,12 @@ static void draw_sprites(INT32 start, INT32 end)
 		      code  = ((code & 0x380) << 1) | (code & 0x7f);
 		INT32 color = sprite_ram[offs + 2] & 0x07;
 		INT32 flipy = sprite_ram[offs + 2] & 0x08;
-		INT32 flipx = sprite_ram[offs + 2] & 0x10;
+		INT32 flipx = ~sprite_ram[offs + 2] & 0x10;
 		INT32 sx    = sprite_ram[offs + 3] - 8;
 
 		if (DrvTransTab[3][code]) continue;
 
-		if (flipy) {
-			if (!flipx) {
-				RenderCustomTile_Mask_FlipXY_Clip(pTransDraw, 8, 16, code, sx, sy, color, 4, 0, 0x80, DrvGfxROM3);
-			} else {
-				RenderCustomTile_Mask_FlipY_Clip(pTransDraw, 8, 16, code, sx, sy, color, 4, 0, 0x80, DrvGfxROM3);
-			}
-		} else {
-			if (!flipx) {
-				RenderCustomTile_Mask_FlipX_Clip(pTransDraw, 8, 16, code, sx, sy, color, 4, 0, 0x80, DrvGfxROM3);
-			} else {
-				RenderCustomTile_Mask_Clip(pTransDraw, 8, 16, code, sx, sy, color, 4, 0, 0x80, DrvGfxROM3);
-			}
-		}
+		DrawCustomMaskTile(pTransDraw, 8, 16, code, sx, sy, flipx, flipy, color, 4, 0, 0x80, DrvGfxROM3);
 	}
 }
 

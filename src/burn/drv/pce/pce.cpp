@@ -650,8 +650,16 @@ INT32 PCEFrame()
 	h6280Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
-	{                                 //         extern int counter;
-		nCyclesDone[0] += h6280Run(82);
+	{
+		nCyclesDone[0] += h6280Run(83); // this is not accurate, but gives best compatibility
+		// if thinking of changing this, make sure to check for these side effects:
+		// blodia, game select bounce
+		// dragon egg, hang booting
+		// air zonk, crash ingame when moving up
+		// side arms, playfield bounce ingame (note: bottom selection cut-off is normal - if you're seeing the whole thing, you've probably broken other games.)
+		// huzero, corruption above the "Sc 000000"
+		// cadash, bouncing playfield, corrupted HUD
+		// ghost house, crash while going down the slide / moving around a bit
 		hblank();
 		CPU_RUN_SYNCINT(0, h6280); // finish line cycles
 		interrupt();       // advance line in vdc

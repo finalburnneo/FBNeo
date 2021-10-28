@@ -10,6 +10,8 @@ static INT32 vce_clock;		// currently unused
 
 static INT32 vce_current_bitmap_line;
 
+static INT32 main_width; // 512 (most) 320 (daimakai)
+
 UINT8 *vdc_vidram[2];			// allocate externally!
 
 static UINT8	vdc_register[2];
@@ -206,7 +208,12 @@ void vce_write(UINT8 offset, UINT8 data)
 	{
 		case 0x00:
 			vce_control = data;
-			vce_clock = (data & 3); // ??
+			switch (data & 3) {
+				case 0: vce_clock = 0; break;
+				case 1: vce_clock = 1; break;
+				case 2:
+				case 3: vce_clock = 2; break;
+			}
 			//bprintf(0, _T("vce_clock:  %x\n"), vce_clock);
 			break;
 
@@ -396,7 +403,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 			if(cgx == 0)
 			{
 				INT32 x;
-				INT32 pixel_x = ( ( obj_x * 512 ) / vdc_width[which] );
+				INT32 pixel_x = ( ( obj_x * main_width ) / vdc_width[which] );
 
 				conv_obj(which, obj_i + (cgypos << 2), obj_l, hf, vf, buf);
 
@@ -415,7 +422,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 									if ( vdc_width[which] != 512 )
 									{
 										INT32 dp = 1;
-										while ( pixel_x + dp < ( ( ( obj_x + x + 1 ) * 512 ) / vdc_width[which] ) )
+										while ( pixel_x + dp < ( ( ( obj_x + x + 1 ) * main_width ) / vdc_width[which] ) )
 										{
 											drawn[pixel_x + dp] = i + 2;
 											line_buffer[pixel_x + dp] = color_base + vce_data[0x100 + (palette << 4) + buf[x]];
@@ -436,7 +443,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 					}
 					if ( vdc_width[which] != 512 )
 					{
-						pixel_x = ( ( obj_x + x + 1 ) * 512 ) / vdc_width[which];
+						pixel_x = ( ( obj_x + x + 1 ) * main_width ) / vdc_width[which];
 					}
 					else
 					{
@@ -447,7 +454,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 			else
 			{
 				INT32 x;
-				INT32 pixel_x = ( ( obj_x * 512 ) / vdc_width[which] );
+				INT32 pixel_x = ( ( obj_x * main_width ) / vdc_width[which] );
 
 				conv_obj(which, obj_i + (cgypos << 2) + (hf ? 2 : 0), obj_l, hf, vf, buf);
 
@@ -465,7 +472,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 									if ( vdc_width[which] != 512 )
 									{
 										INT32 dp = 1;
-										while ( pixel_x + dp < ( ( ( obj_x + x + 1 ) * 512 ) / vdc_width[which] ) )
+										while ( pixel_x + dp < ( ( ( obj_x + x + 1 ) * main_width ) / vdc_width[which] ) )
 										{
 											drawn[pixel_x + dp] = i + 2;
 											line_buffer[pixel_x + dp] = color_base + vce_data[0x100 + (palette << 4) + buf[x]];
@@ -486,7 +493,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 					}
 					if ( vdc_width[which] != 512 )
 					{
-						pixel_x = ( ( obj_x + x + 1 ) * 512 ) / vdc_width[which];
+						pixel_x = ( ( obj_x + x + 1 ) * main_width ) / vdc_width[which];
 					}
 					else
 					{
@@ -524,7 +531,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 										if ( vdc_width[which] != 512 )
 										{
 											INT32 dp = 1;
-											while ( pixel_x + dp < ( ( ( obj_x + x + 17 ) * 512 ) / vdc_width[which] ) )
+											while ( pixel_x + dp < ( ( ( obj_x + x + 17 ) * main_width ) / vdc_width[which] ) )
 											{
 												drawn[pixel_x + dp] = i + 2;
 												line_buffer[pixel_x + dp] = color_base + vce_data[0x100 + (palette << 4) + buf[x]];
@@ -545,7 +552,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 						}
 						if ( vdc_width[which] != 512 )
 						{
-							pixel_x = ( ( obj_x + x + 17 ) * 512 ) / vdc_width[which];
+							pixel_x = ( ( obj_x + x + 17 ) * main_width ) / vdc_width[which];
 						}
 						else
 						{
@@ -591,7 +598,7 @@ static void draw_black_line(INT32 line)
 {
 	UINT16 *line_buffer = vdc_tmp_draw + line * 684;
 
-	for(INT32 i=0; i< 684; i++)
+	for(INT32 i=0; i < 684; i++)
 		line_buffer[i] = 0x400; // black
 }
 
@@ -803,7 +810,7 @@ static void pce_refresh_line(INT32 which, INT32 /*line*/, INT32 external_input, 
 					pixel++;
 					if ( vdc_width[which] != 512 )
 					{
-						while ( pixel < ( ( ( phys_x + 1 ) * 512 ) / vdc_width[which] ) )
+						while ( pixel < ( ( ( phys_x + 1 ) * main_width ) / vdc_width[which] ) )
 						{
 							drawn[ pixel ] = c ? 1 : 0;
 							if ( c || ! external_input )
@@ -1079,6 +1086,7 @@ void vdc_write(INT32 which, UINT8 offset, UINT8 data)
 
 				case HDR: {
 					vdc_width[which] = ((data & 0x003F) + 1) << 3;
+					bprintf(0, _T("vdc width  %d\n"), vdc_width[which]);
 				}
 				break;
 
@@ -1252,6 +1260,8 @@ void vdc_reset()
 		vdc_inc[chip] = 1;
 		vdc_raster_count[chip] = 0x4000;
 	}
+
+	main_width = nScreenWidth;
 }
 
 void vdc_get_dimensions(INT32 which, INT32 *x, INT32 *y)

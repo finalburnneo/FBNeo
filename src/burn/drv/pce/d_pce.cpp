@@ -204,7 +204,7 @@ struct BurnDriver BurnDrvpce_aburner2 = {
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_aburner2RomInfo, pce_aburner2RomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
-	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+	&PCEPaletteRecalc, 0x400, 512, 232, 4, 3
 };
 
 
@@ -8603,7 +8603,7 @@ struct BurnDriver BurnDrvsgx_daimakai = {
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_SGX, GBF_RUNGUN, 0,
 	SgxGetZipName, sgx_daimakaiRomInfo, sgx_daimakaiRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	SGXInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
-	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+	&PCEPaletteRecalc, 0x400, 320, 240, 4, 3
 };
 
 // Dai Makaimura (Alt)

@@ -8622,7 +8622,7 @@ struct BurnDriver BurnDrvsgx_daimakai1 = {
 	BDF_GAME_WORKING | BDF_CLONE, 5, HARDWARE_PCENGINE_SGX, GBF_RUNGUN, 0,
 	SgxGetZipName, sgx_daimakai1RomInfo, sgx_daimakai1RomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	SGXInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
-	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+	&PCEPaletteRecalc, 0x400, 320, 240, 4, 3
 };
 
 // Dai Makaimura (Chris Covell's Debug Menu Hack)
@@ -8641,7 +8641,7 @@ struct BurnDriver BurnDrvsgx_daimakaid = {
 	BDF_GAME_WORKING | BDF_CLONE, 5, HARDWARE_PCENGINE_SGX, GBF_RUNGUN, 0,
 	SgxGetZipName, sgx_daimakaidRomInfo, sgx_daimakaidRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	SGXInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
-	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+	&PCEPaletteRecalc, 0x400, 320, 240, 4, 3
 };
 
 // Madou Ou Granzort

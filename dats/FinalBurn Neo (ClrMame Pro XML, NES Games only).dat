@@ -542,8 +542,8 @@
 	</game>
 	<game name="akumajoudraculac" cloneof="castlevania" romof="castlevania">
 		<description>Akumajou Dracula (T-Chi) [Hack]</description>
-		<year>1993</year>
-		<manufacturer>Konami</manufacturer>
+		<year>199?</year>
+		<manufacturer>Fo Yi Team</manufacturer>
 		<rom name="Akumajou Dracula (T-Chi).nes" size="131088" crc="dc749e67"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -751,7 +751,7 @@
 	<game name="argosnosenshic" cloneof="rygar" romof="rygar">
 		<description>Argos no Senshi (T-Chi, v1.11) [Hack]</description>
 		<year>2016</year>
-		<manufacturer>Tecmo</manufacturer>
+		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Argos no Senshi (T-Chi, v1.11).nes" size="262160" crc="a1a22c10"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1831,7 +1831,7 @@
 	<game name="bowsette2" cloneof="smb2" romof="smb2">
 		<description>Bowsette 2 (Hack, Red version) [Hack]</description>
 		<year>2019</year>
-		<manufacturer>hack</manufacturer>
+		<manufacturer>Zynk Oxhyde</manufacturer>
 		<rom name="Bowsette 2 (Hack).nes" size="262160" crc="94390680"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2717,9 +2717,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="contraforcec" cloneof="contraforce" romof="contraforce">
-		<description>Contra Force (2nd option, T-Chi)</description>
+		<description>Contra Force (2nd option, T-Chi) [Hack]</description>
 		<year>2018</year>
-		<manufacturer>Konami</manufacturer>
+		<manufacturer>Tan Xiao Feng Sheng</manufacturer>
 		<rom name="Contra Force (T-Chi).nes" size="524304" crc="cf2a15fb"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4596,19 +4596,19 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="famista93e" cloneof="famista93" romof="famista93">
+		<description>Famista '93 (Hack - T-Eng) [Hack]</description>
+		<year>20XX?</year>
+		<manufacturer>Unknown</manufacturer>
+		<rom name="famista '93 (t-eng).nes" size="262160" crc="d9301c12"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="famista93">
 		<description>Famista '93 (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Namco</manufacturer>
 		<rom name="Famista '93 (Japan).nes" size="262160" crc="38511037"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="famista93e" cloneof="famista93" romof="famista93">
-		<description>Famista '93 (T-Eng) [Hack]</description>
-		<year>1993</year>
-		<manufacturer>Namco</manufacturer>
-		<rom name="famista '93 (t-eng).nes" size="262160" crc="d9301c12"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -4669,9 +4669,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="faxanaduc" cloneof="faxanadu" romof="faxanadu">
-		<description>Faxanadu (USA) (Rev A) - Castellano v0.7</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Faxanadu (USA) (Rev A) - Castellano v0.7 [Hack]</description>
+		<year>2016</year>
+		<manufacturer>Dirak</manufacturer>
 		<rom name="faxanadu (usa) (rev a) - castellano v0.7.nes" size="262160" crc="181b0549"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4773,9 +4773,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="finalfantasyc" cloneof="finalfantasy" romof="finalfantasy">
-		<description>Final Fantasy (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Final Fantasy (USA) - Castellano v1.0 [Hack]</description>
+		<year>2002</year>
+		<manufacturer>Cunaaao</manufacturer>
 		<rom name="final fantasy (usa) - castellano v1.0.nes" size="262160" crc="83a1074c"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4805,9 +4805,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="finalfantasyiic" cloneof="finalfantasyii" romof="finalfantasyii">
-		<description>Final Fantasy II (Japan) (Headered) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Final Fantasy II (Japan) (Headered) - Castellano v1.0 [Hack]</description>
+		<year>20XX?</year>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="final fantasy ii (japan) (headered) - castellano v1.0.nes" size="262160" crc="3fba77eb"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4821,9 +4821,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="finalfaniiic" cloneof="finalfaniii" romof="finalfaniii">
-		<description>Final Fantasy III (Japan) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Final Fantasy III (Japan) - Castellano v1.0 [Hack]</description>
+		<year>2015</year>
+		<manufacturer>Maeson</manufacturer>
 		<rom name="final fantasy iii (japan) - castellano v1.0.nes" size="1048592" crc="b328a638"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5125,9 +5125,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="fridaythe13thc" cloneof="fridaythe13th" romof="fridaythe13th">
-		<description>Friday the 13th (USA) - Castellano v1.1</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Friday the 13th (USA) - Castellano v1.1 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>JONNYVILLA2088</manufacturer>
 		<rom name="friday the 13th (usa) - castellano v1.1.nes" size="65552" crc="abecfd68"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5269,9 +5269,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="ganbaregoemon2c" cloneof="ganbaregoemon2" romof="ganbaregoemon2">
-		<description>Ganbare Goemon 2 (Japan) - Castellano v0.99</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Ganbare Goemon 2 (Japan) - Castellano v0.99 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>jackic</manufacturer>
 		<rom name="ganbare goemon 2 (japan) - castellano v0.99.nes" size="262160" crc="eca0d0e1"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5325,9 +5325,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="ganbagoec" cloneof="ganbagoe" romof="ganbagoe">
-		<description>Ganbare Goemon! - Karakuri Douchuu (Japan) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Ganbare Goemon! - Karakuri Douchuu (Japan) - Castellano v1.0 [Hack]</description>
+		<year>2018</year>
+		<manufacturer>jackic</manufacturer>
 		<rom name="ganbare goemon! - karakuri douchuu (japan) - castellano v1.0.nes" size="262160" crc="bf99d7e4"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5661,9 +5661,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="golgo13c" cloneof="golgo13" romof="golgo13">
-		<description>Golgo 13 - Top Secret Episode (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Golgo 13 - Top Secret Episode (USA) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="golgo 13 - top secret episode (usa) - castellano v1.0.nes" size="262160" crc="47cd6b0f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5677,9 +5677,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="gooniesc" cloneof="goonies" romof="goonies">
-		<description>Goonies (Japan) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Goonies (Japan) - Castellano v1.0 [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Darkchaosblast</manufacturer>
 		<rom name="goonies (japan) - castellano v1.0.nes" size="49168" crc="b74b6dc4"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5693,9 +5693,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="gooniesiithec" cloneof="gooniesiithe" romof="gooniesiithe">
-		<description>Goonies II, The (USA) - Castellano v1.1</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Goonies II, The (USA) - Castellano v1.1 [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Darkchaosblast</manufacturer>
 		<rom name="goonies ii, the (usa) - castellano v1.1.nes" size="131088" crc="6bc02b52"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5757,9 +5757,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="grandmasterjc" cloneof="grandmaster" romof="grandmaster">
-		<description>Grand Master (Japan) - Castellano [Hack]</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Grand Master (Japan) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Max1323</manufacturer>
 		<rom name="grand master (japan) - castellano.nes" size="393232" crc="3ad512ce"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5773,9 +5773,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="grandmasterc" cloneof="grandmaster" romof="grandmaster">
-		<description>Grand Master (T-Chi, v1.1)</description>
-		<year>2021-01-01</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Grand Master (T-Chi, v1.1) [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Grand Master (T-Chi, v1.1).nes" size="1048592" crc="505d11c0"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5869,9 +5869,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="guardicgaidenc" cloneof="guardleg" romof="guardleg">
-		<description>Guardic Gaiden (T-Chi, v1.1)</description>
-		<year>2017-07-07</year>
-		<manufacturer>Irem</manufacturer>
+		<description>Guardic Gaiden (T-Chi, v1.1) [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Guardic Gaiden (T-Chi, v1.1).nes" size="262160" crc="77df8d83"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5909,9 +5909,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="gunnacc" cloneof="gunnac" romof="gunnac">
-		<description>Gun Nac (T-Chi)</description>
-		<year>2013-10-31</year>
-		<manufacturer>Tonkin House</manufacturer>
+		<description>Gun Nac (T-Chi) [Hack]</description>
+		<year>2013</year>
+		<manufacturer>Jiu Ban &amp; KASURA J.</manufacturer>
 		<rom name="Gun Nac (T-Chi).nes" size="393232" crc="3c63f85a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5951,7 +5951,7 @@
 	<game name="gundecc" cloneof="vice" romof="vice">
 		<description>Gun-Dec (T-Chi) [Hack]</description>
 		<year>2019</year>
-		<manufacturer>Sammy</manufacturer>
+		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Gun-Dec (T-Chi).nes" size="393232" crc="647eccfa"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5967,7 +5967,7 @@
 	<game name="gunsmokec" cloneof="gunsmoke" romof="gunsmoke">
 		<description>Gun.Smoke (T-Chi) [Hack]</description>
 		<year>2019</year>
-		<manufacturer>Capcom</manufacturer>
+		<manufacturer>MEZARANSU &amp; gonerFC</manufacturer>
 		<rom name="Gun.Smoke (T-Chi).nes" size="163856" crc="4e0b7a7d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6135,7 +6135,7 @@
 	<game name="heberekec" cloneof="ufouria" romof="ufouria">
 		<description>Hebereke (T-Chi, v1.2) [Hack]</description>
 		<year>2019</year>
-		<manufacturer>Sunsoft</manufacturer>
+		<manufacturer>Lei Jing Ling</manufacturer>
 		<rom name="Hebereke (T-Chi, v1.2).nes" size="393232" crc="48e8bcee"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6461,18 +6461,26 @@
 		<driver status="good"/>
 	</game>
 	<game name="hydlidec" cloneof="hydlide" romof="hydlide">
-		<description>Hydlide (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Hydlide (USA) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="hydlide (usa) - castellano v1.0.nes" size="40976" crc="9b4f06c0"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="hydlide">
 		<description>Hydlide (USA)</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1989</year>
+		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="hydlide (usa).nes" size="40976" crc="8962aebf"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="hydlidej" cloneof="hydlide" romof="hydlide">
+		<description>Hydlide Special (Japan)</description>
+		<year>1986</year>
+		<manufacturer>T&amp;E Soft</manufacturer>
+		<rom name="Hydlide Special (J) (1986)(T&amp;E Soft).nes" size="40976" crc="6207ba15"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -6694,8 +6702,8 @@
 	</game>
 	<game name="jackalc" cloneof="jackal" romof="jackal">
 		<description>Jackal (T-Chi, v1.1)</description>
-		<year>2020-02-12</year>
-		<manufacturer>Konami</manufacturer>
+		<year>2020</year>
+		<manufacturer>Lei Jing Ling</manufacturer>
 		<rom name="Jackal (T-Chi, v1.1).nes" size="262160" crc="0eca3358"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6853,9 +6861,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="jigokgokmarc" cloneof="kabuki" romof="kabuki">
-		<description>Jigoku Gokuraku Maru (T-Chi)</description>
-		<year>2019-11-08</year>
-		<manufacturer>Pack-In-Video</manufacturer>
+		<description>Jigoku Gokuraku Maru (T-Chi) [Hack]</description>
+		<year>2019</year>
+		<manufacturer>MEZARANSU &amp; Jin Di</manufacturer>
 		<rom name="Jigoku Gokuraku Maru (T-Chi).nes" size="393232" crc="375bf357"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7013,17 +7021,17 @@
 		<driver status="good"/>
 	</game>
 	<game name="junglebooktheb" cloneof="junglebookthe" romof="junglebookthe">
-		<description>Jungle Book, The (Brightness fix)</description>
-		<year>2020-08-09</year>
+		<description>Jungle Book, The (Brightness fix) [Hack]</description>
+		<year>2020</year>
 		<manufacturer>Ilya Indigo</manufacturer>
 		<rom name="jungle book, the (2020)(brightness fix).nes" size="262160" crc="1c9a2869"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="junglebookthec" cloneof="junglebookthe" romof="junglebookthe">
-		<description>Jungle Book, The (USA) - Castellano v1.0</description>
-		<year>20XX?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Jungle Book, The (USA) - Castellano v1.0 [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="jungle book, the (usa) - castellano v1.0.nes" size="262160" crc="996a8677"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7157,9 +7165,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="kagec" cloneof="shadonin" romof="shadonin">
-		<description>Kage (T-Chi, v2.0)</description>
+		<description>Kage (T-Chi, v2.0) [Hack]</description>
 		<year>2010</year>
-		<manufacturer>NATSUME</manufacturer>
+		<manufacturer>Xing Kong</manufacturer>
 		<rom name="Kage (T-Chi, v2.0).nes" size="270352" crc="a481e2bd"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7277,9 +7285,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="karatekidthec" cloneof="karatekidthe" romof="karatekidthe">
-		<description>Karate Kid, The (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Karate Kid, The (USA) - Castellano v1.0 [Hack]</description>
+		<year>2020</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="karate kid, the (usa) - castellano v1.0.nes" size="65552" crc="99cc2044"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7293,9 +7301,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="karatekac" cloneof="karateka" romof="karateka">
-		<description>Karateka (Japan) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Karateka (Japan) - Castellano v1.0 [Hack]</description>
+		<year>2020</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="karateka (japan) - castellano v1.0.nes" size="24592" crc="3839edb9"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7645,9 +7653,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="krustsfunhouc" cloneof="krustsfunhou" romof="krustsfunhou">
-		<description>Krusty's Fun House (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Krusty's Fun House (USA) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="krusty's fun house (usa) - castellano v1.0.nes" size="393232" crc="b09308d4"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7845,9 +7853,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="legacwizc" cloneof="legacwiz" romof="legacwiz">
-		<description>Legacy of the Wizard (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Legacy of the Wizard (USA) - Castellano v1.0 [Hack]</description>
+		<year>2020</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="legacy of the wizard (usa) - castellano v1.0.nes" size="196624" crc="e87e3d09"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7886,33 +7894,33 @@
 	</game>
 	<game name="triforcegc" cloneof="triforceg" romof="triforceg">
 		<description>Legend of Zelda - Triforce of the Gods (China)</description>
-		<year>1989?</year>
+		<year>2004</year>
 		<manufacturer>Waixing</manufacturer>
 		<rom name="Legend of Zelda - Triforce of the Gods (China).nes" size="2097168" crc="3a1b4502"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="triforceg">
-		<description>Legend of Zelda - Triforce of the Gods (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Waixing</manufacturer>
+		<description>Legend of Zelda - Triforce of the Gods (T-Eng) [Hack]</description>
+		<year>2018</year>
+		<manufacturer>pacnsacdave</manufacturer>
 		<rom name="Legend of Zelda - Triforce of the Gods (T-Eng).nes" size="2097168" crc="0be2d8fd"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="legenzeldx" cloneof="legenzel" romof="legenzel">
-		<description>Legend of Zelda DX, The (HB) [Hack, Homebrew]</description>
+		<description>Legend of Zelda DX, The (HB, Graphics Hack) [Hack, Homebrew]</description>
 		<year>2014</year>
 		<manufacturer>pacnsacdave</manufacturer>
 		<rom name="legend of zelda dx (2014)(pacnsacdave).nes" size="131088" crc="0698579d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="legenzelc" cloneof="legenzel" romof="legenzel">
-		<description>Legend of Zelda, The (Europe) - Castellano v1.2</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
-		<rom name="legend of zelda, the (europe) - castellano v1.2.nes" size="131088" crc="9818ccd9"/>
+	<game name="legenzeli" cloneof="legenzel" romof="legenzel">
+		<description>Legend of Zelda, The (Europe) - Italian v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Stich991</manufacturer>
+		<rom name="Legend of Zelda, The (it) (2019)(Stich991).nes" size="131088" crc="e0811f91"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -8005,9 +8013,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="lionkingthec" cloneof="lionkingthe" romof="lionkingthe">
-		<description>Lion King, The (Europe) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Lion King, The (Europe) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="lion king, the (europe) - castellano v1.0.nes" size="262160" crc="562245ae"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8069,9 +8077,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="littlesamsonh" cloneof="littlesamson" romof="littlesamson">
-		<description>Little Samson (Restoration &amp; Sound Hack)</description>
-		<year>1992</year>
-		<manufacturer>Taito</manufacturer>
+		<description>Little Samson (Restoration &amp; Sound Hack) [Hack]</description>
+		<year>2020</year>
+		<manufacturer>SCD - Nesrocks</manufacturer>
 		<rom name="Little Samson (Hack).nes" size="393232" crc="2178190e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8165,9 +8173,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="lupinsanc" cloneof="lupinsan" romof="lupinsan">
-		<description>Lupin Sansei - Pandora no Isan (Japan) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Lupin Sansei - Pandora no Isan (Japan) - Castellano v1.0 [Hack]</description>
+		<year>2018</year>
+		<manufacturer>jackic</manufacturer>
 		<rom name="lupin sansei - pandora no isan (japan) - castellano v1.0.nes" size="196624" crc="0bb24755"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8261,9 +8269,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="mafatconc" cloneof="mafatcon" romof="mafatcon">
-		<description>Mafat Conspiracy - Golgo 13 (USA) - Castellano v1.1</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Mafat Conspiracy - Golgo 13 (USA) - Castellano v1.1 [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="mafat conspiracy - golgo 13 (usa) - castellano v1.1.nes" size="262160" crc="b527ad27"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8349,9 +8357,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="magicschc" cloneof="magicsch" romof="magicsch">
-		<description>Magic of Scheherazade, The (USA) - Castellano v0.99</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Magic of Scheherazade, The (USA) - Castellano v0.99 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>jackic</manufacturer>
 		<rom name="magic of scheherazade, the (usa) - castellano v0.99.nes" size="262160" crc="9d080895"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8453,9 +8461,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="majoudeniic" cloneof="majoudenii" romof="majoudenii">
-		<description>Majou Densetsu II - Daimashikyou Galious (T-Chi, v2.2)</description>
-		<year>2018-06-10</year>
-		<manufacturer>Konami</manufacturer>
+		<description>Majou Densetsu II - Daimashikyou Galious (T-Chi, v2.2) [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Majou Densetsu II - Daimashikyou Galious (T-Chi, v2.2).nes" size="262160" crc="a032170a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8581,9 +8589,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="mappykidsc" cloneof="mappykids" romof="mappykids">
-		<description>Mappy Kids (T-Chi, v1.1)</description>
-		<year>2019-10-25</year>
-		<manufacturer>Namco</manufacturer>
+		<description>Mappy Kids (T-Chi, v1.1) [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Lei Jing Ling</manufacturer>
 		<rom name="Mappy Kids (T-Chi, v1.1).nes" size="524304" crc="159bc653"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8749,49 +8757,49 @@
 		<driver status="good"/>
 	</game>
 	<game name="megamanc" cloneof="megaman" romof="megaman">
-		<description>Megaman (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Megaman (USA) - Castellano v1.0 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="megaman (usa) - castellano v1.0.nes" size="131088" crc="53db1d74"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="megaman2c" cloneof="megaman2" romof="megaman2">
-		<description>Megaman II (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Megaman II (USA) - Castellano v1.0 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="megaman ii (usa) - castellano v1.0.nes" size="262160" crc="35babd12"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="megaman3c" cloneof="megaman3" romof="megaman3">
-		<description>Megaman III (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Megaman III (USA) - Castellano v1.0 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="megaman iii (usa) - castellano v1.0.nes" size="393232" crc="7e1471b2"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="megaman4c" cloneof="megaman4" romof="megaman4">
-		<description>Megaman IV (USA) (Rev A) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Megaman IV (USA) (Rev A) - Castellano v1.0 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="megaman iv (usa) (rev a) - castellano v1.0.nes" size="524304" crc="d4141bb2"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="megaman5c" cloneof="megaman5" romof="megaman5">
-		<description>Megaman V (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Megaman V (USA) - Castellano v1.0 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="megaman v (usa) - castellano v1.0.nes" size="524304" crc="c46d7cd6"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="megaman6c" cloneof="megaman6" romof="megaman6">
-		<description>Megaman VI (USA) - Castellano v1.1</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Megaman VI (USA) - Castellano v1.1 [Hack]</description>
+		<year>2016</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="megaman vi (usa) - castellano v1.1.nes" size="524304" crc="1b902805"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8837,9 +8845,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="metalgearc" cloneof="metalgear" romof="metalgear">
-		<description>Metal Gear (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Metal Gear (USA) - Castellano v1.0 [Hack]</description>
+		<year>2020</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="metal gear (usa) - castellano v1.0.nes" size="131088" crc="babc19e2"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8909,9 +8917,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="metroidc" cloneof="metroid" romof="metroid">
-		<description>Metroid (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Metroid (USA) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="metroid (usa) - castellano v1.0.nes" size="131088" crc="12767f2e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9045,9 +9053,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="mightfinfigc" cloneof="mightfinfig" romof="mightfinfig">
-		<description>Mighty Final Fight (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Mighty Final Fight (USA) - Castellano v1.0 [Hack]</description>
+		<year>2016</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="mighty final fight (usa) - castellano v1.0.nes" size="262160" crc="79b72603"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9197,9 +9205,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="mitsumegatooruc" cloneof="mitsumegatooru" romof="mitsumegatooru">
-		<description>Mitsume ga Tooru (T-Chi)</description>
-		<year>2010-10-10</year>
-		<manufacturer>tomy</manufacturer>
+		<description>Mitsume ga Tooru (T-Chi) [Hack]</description>
+		<year>2010</year>
+		<manufacturer>Xing Kong</manufacturer>
 		<rom name="Mitsume ga Tooru (T-Chi).nes" size="278544" crc="296c2307"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9581,9 +9589,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="nekkestrbascastc" cloneof="nekkestrbas" romof="nekkestrbas">
-		<description>Nekketsu! Street Basket - Ganbare Dunk Heroes (Japan) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Nekketsu! Street Basket - Ganbare Dunk Heroes (Japan) - Castellano v1.0 [Hack]</description>
+		<year>2020</year>
+		<manufacturer>Max1323</manufacturer>
 		<rom name="nekketsu! street basket - ganbare dunk heroes (japan) - castellano v1.0.nes" size="262160" crc="3a2487c3"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9733,9 +9741,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjagaidenc" cloneof="ninjagaiden" romof="ninjagaiden">
-		<description>Ninja Gaiden (USA) - Castellano v1.01 + Addendum</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Ninja Gaiden (USA) - Castellano v1.01 + Addendum [Hack]</description>
+		<year>2016</year>
+		<manufacturer>Terwilf</manufacturer>
 		<rom name="ninja gaiden (usa) - castellano v1.01.nes" size="262160" crc="7da08225"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9749,9 +9757,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjagaiiic" cloneof="ninjagaiii" romof="ninjagaiii">
-		<description>Ninja Gaiden II - The Dark Sword of Chaos (USA) - Castellano v1.0 + Addendum</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Ninja Gaiden II - The Dark Sword of Chaos (USA) - Castellano v1.0 + Addendum [Hack]</description>
+		<year>2016</year>
+		<manufacturer>Terwilf</manufacturer>
 		<rom name="ninja gaiden ii - the dark sword of chaos (usa) - castellano v1.0.nes" size="262160" crc="5742d6c0"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9765,9 +9773,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjagaiiiic" cloneof="ninjagaiiii" romof="ninjagaiiii">
-		<description>Ninja Gaiden III - The Ancient Ship of Doom (USA) - Castellano v1.0 + Addendum</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Ninja Gaiden III - The Ancient Ship of Doom (USA) - Castellano v1.0 + Addendum [Hack]</description>
+		<year>2016</year>
+		<manufacturer>Terwilf</manufacturer>
 		<rom name="ninja gaiden iii - the ancient ship of doom (usa) - castellano v1.0.nes" size="262160" crc="dfb2692b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9837,9 +9845,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjaryudenc" cloneof="ninjagaiden" romof="ninjagaiden">
-		<description>Ninja Ryuuken Den (T-Chi)</description>
-		<year>2017-06-13</year>
-		<manufacturer>Tecmo</manufacturer>
+		<description>Ninja Ryuuken Den (T-Chi) [Hack]</description>
+		<year>2017</year>
+		<manufacturer>FlameCyclone</manufacturer>
 		<rom name="Ninja Ryuuken Den (T-Chi).nes" size="524304" crc="7724d3d0"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9853,9 +9861,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjaryudeniic" cloneof="ninjagaiii" romof="ninjagaiii">
-		<description>Ninja Ryuuken Den II - Ankoku no Jashin Ken (T-Chi)</description>
+		<description>Ninja Ryuuken Den II - Ankoku no Jashin Ken (T-Chi) [Hack]</description>
 		<year>200?</year>
-		<manufacturer>Tecmo</manufacturer>
+		<manufacturer>TPU</manufacturer>
 		<rom name="Ninja Ryuuken Den II - Ankoku no Jashin Ken (T-Chi).nes" size="335888" crc="f7d5d63b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9869,9 +9877,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjaryudeniiic" cloneof="ninjagaiiii" romof="ninjagaiiii">
-		<description>Ninja Ryuuken Den III - Yomi no Hakobune (T-Chi)</description>
+		<description>Ninja Ryuuken Den III - Yomi no Hakobune (T-Chi) [Hack]</description>
 		<year>2002</year>
-		<manufacturer>Tecmo</manufacturer>
+		<manufacturer>TPU</manufacturer>
 		<rom name="Ninja Ryuuken Den III - Yomi no Hakobune (T-Chi).nes" size="344080" crc="ba865119"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9941,9 +9949,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="northsouthc" cloneof="northsouth" romof="northsouth">
-		<description>North &amp; South (USA) - Castellano v2.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>North &amp; South (USA) - Castellano v2.0 [Hack]</description>
+		<year>2013</year>
+		<manufacturer>Julian L.</manufacturer>
 		<rom name="north &amp; south (usa) - castellano v2.0.nes" size="262160" crc="98907558"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10037,9 +10045,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="powc" cloneof="pow" romof="pow">
-		<description>P.O.W. - Prisoners of War (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>P.O.W. - Prisoners of War (USA) - Castellano v1.0 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="p.o.w. - prisoners of war (usa) - castellano v1.0.nes" size="262160" crc="c24c8bcb"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10205,9 +10213,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="parodiusdac" cloneof="parodiusda" romof="parodiusda">
-		<description>Parodius Da! (Japan) - Castellano v1.1</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Parodius Da! (Japan) - Castellano v1.1 [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="parodius da! (japan) - castellano v1.1.nes" size="393232" crc="746bb8a8"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10573,9 +10581,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="princeofpersiac" cloneof="princeofpersia" romof="princeofpersia">
-		<description>Prince of Persia (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Prince of Persia (USA) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="prince of persia (usa) - castellano v1.0.nes" size="131088" crc="3f11d7a3"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10621,9 +10629,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="probotectorc" cloneof="contra" romof="contra">
-		<description>Probotector (Europe) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Probotector (Europe) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="probotector (europe) - castellano v1.0.nes" size="131088" crc="9e9a6477"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10637,9 +10645,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="probotectorretc" cloneof="superc" romof="superc">
-		<description>Probotector II - Return of the Evil Forces (Europe) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Probotector II - Return of the Evil Forces (Europe) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="probotector ii - return of the evil forces (europe) - castellano v1.0.nes" size="262160" crc="f8d46d0b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10693,9 +10701,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="puyopuyoc" cloneof="puyopuyo" romof="puyopuyo">
-		<description>Puyo Puyo (Japan) - Castellano v1.1</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Puyo Puyo (Japan) - Castellano v1.1 [Hack]</description>
+		<year>2020</year>
+		<manufacturer>Max1323</manufacturer>
 		<rom name="puyo puyo (japan) - castellano v1.1.nes" size="131088" crc="f55b69bd"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11005,9 +11013,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="ramboc" cloneof="rambo" romof="rambo">
-		<description>Rambo (USA) (Rev 1) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Rambo (USA) (Rev 1) - Castellano v1.0 [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="rambo (usa) (rev 1) - castellano v1.0.nes" size="131088" crc="f28cc969"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11053,9 +11061,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="renegadec" cloneof="renegade" romof="renegade">
-		<description>Renegade (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Renegade (USA) - Castellano v1.0 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>JonnyVilla2088</manufacturer>
 		<rom name="renegade (usa) - castellano v1.0.nes" size="131088" crc="acac361a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11069,9 +11077,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="rescuec" cloneof="rescue" romof="rescue">
-		<description>Rescue - The Embassy Mission (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Rescue - The Embassy Mission (USA) - Castellano v1.0 [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="rescue - the embassy mission (usa) - castellano v1.0.nes" size="262160" crc="ab441e08"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11157,9 +11165,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="robocopc" cloneof="robocop" romof="robocop">
-		<description>RoboCop (USA) - Castellano v0.91</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>RoboCop (USA) - Castellano v0.91 [Hack]</description>
+		<year>2016</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="robocop (usa) - castellano v0.91.nes" size="262160" crc="0f97e1e8"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11173,9 +11181,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="robocop2c" cloneof="robocop2" romof="robocop2">
-		<description>RoboCop 2 (USA) (Rev 1) - Castellano v0.93</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>RoboCop 2 (USA) (Rev 1) - Castellano v0.93 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="robocop 2 (usa) (rev 1) - castellano v0.93.nes" size="262160" crc="4b3e87d9"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11197,9 +11205,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="robocop3c" cloneof="robocop3" romof="robocop3">
-		<description>Robocop 3 (USA) - Castellano v0.9</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Robocop 3 (USA) - Castellano v0.9 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="robocop 3 (usa) - castellano v0.9.nes" size="262160" crc="eda2dcb2"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11309,9 +11317,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="rockm4mi" cloneof="megaman4" romof="megaman4">
-		<description>Rockman 4 - Minus Infinity (Hack)</description>
-		<year>2015</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Rockman 4 - Minus Infinity (Hack) [Hack]</description>
+		<year>2016</year>
+		<manufacturer>Puresabe</manufacturer>
 		<rom name="Rockman 4 - Minus Infinity (Hack).nes" size="1048592" crc="e9887ba6"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11421,9 +11429,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="rushnattackc" cloneof="rushnattack" romof="rushnattack">
-		<description>Rush'n Attack (USA) - Castellano v1.1</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Rush'n Attack (USA) - Castellano v1.1 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="rush'n attack (usa) - castellano v1.1.nes" size="131088" crc="b6bdb5e5"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11469,9 +11477,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="saintseiyaodc" cloneof="saintseiougden" romof="saintseiougden">
-		<description>Saint Seiya - Ougon Densetsu (T-Chi, v2.0)</description>
-		<year>2018-08-11</year>
-		<manufacturer>Bandai</manufacturer>
+		<description>Saint Seiya - Ougon Densetsu (T-Chi, v2.0) [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Saint Seiya - Ougon Densetsu (T-Chi, v2.0).nes" size="1310736" crc="f7df4b56"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11485,9 +11493,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="saintseiougdenc" cloneof="saintseiougden" romof="saintseiougden">
-		<description>Saint Seiya - Ougon Densetsu - Castellano v1.0.nes</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Saint Seiya - Ougon Densetsu - Castellano v1.0.nes [Hack]</description>
+		<year>2004</year>
+		<manufacturer>Juan</manufacturer>
 		<rom name="saint seiya - ougon densetsu - castellano v1.0.nes.nes" size="262160" crc="2abdcc86"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11501,9 +11509,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="saintseiyaodkhc" cloneof="saintseiougdenkahen" romof="saintseiougdenkahen">
-		<description>Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi)</description>
-		<year>2017-01-26</year>
-		<manufacturer>Shinsei</manufacturer>
+		<description>Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi) [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi).nes" size="524304" crc="b1651b70"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11525,9 +11533,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="saiyuukiworldc" cloneof="saiyuukiworld" romof="saiyuukiworld">
-		<description>Saiyuuki World (T-Chi, v1.04)</description>
-		<year>2016-02-07</year>
-		<manufacturer>Jaleco</manufacturer>
+		<description>Saiyuuki World (T-Chi, v1.04) [Hack]</description>
+		<year>2016</year>
+		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Saiyuuki World (T-Chi, v1.04).nes" size="262160" crc="6e66cf6f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11541,8 +11549,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="saiyuwor2c" cloneof="whompem" romof="whompem">
-		<description>Saiyuuki World 2 - Tenjoukai no Majin (T-Chi)</description>
-		<year>2019-10-26</year>
+		<description>Saiyuuki World 2 - Tenjoukai no Majin (T-Chi) [Hack]</description>
+		<year>2019</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="Saiyuuki World 2 - Tenjoukai no Majin (T-Chi).nes" size="262160" crc="784fc411"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -11557,9 +11565,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="salamanderc" cloneof="salamander" romof="salamander">
-		<description>Salamander (T-Chi, v1.2)</description>
-		<year>2020-04-30</year>
-		<manufacturer>Konami</manufacturer>
+		<description>Salamander (T-Chi, v1.2) [Hack]</description>
+		<year>2020</year>
+		<manufacturer>Lei Jing Ling</manufacturer>
 		<rom name="Salamander (T-Chi, v1.2).nes" size="393232" crc="fbe84b97"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11911,7 +11919,7 @@
 	<game name="silkwormc" cloneof="silkworm" romof="silkworm">
 		<description>Silk Worm (T-Chi, v1.1) [Hack]</description>
 		<year>2020</year>
-		<manufacturer>Sammy</manufacturer>
+		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Silk Worm (T-Chi, v1.1).nes" size="393232" crc="3d53c8ad"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12093,9 +12101,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="smashtvc" cloneof="smashtv" romof="smashtv">
-		<description>Smash T.V. (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Smash T.V. (USA) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="smash t.v. (usa) - castellano v1.0.nes" size="262160" crc="658cbecc"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12125,9 +12133,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="snakesrevengec" cloneof="snakesrevenge" romof="snakesrevenge">
-		<description>Snake's Revenge (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Snake's Revenge (USA) - Castellano v1.0 [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="snake's revenge (usa) - castellano v1.0.nes" size="262160" crc="3d4a2507"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12149,9 +12157,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="snowbrothersc" cloneof="snowbrothers" romof="snowbrothers">
-		<description>Snow Brothers (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Snow Brothers (USA) - Castellano v1.0 [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="snow brothers (usa) - castellano v1.0.nes" size="262160" crc="29c40f70"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12365,9 +12373,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="spyvsspyc" cloneof="spyvsspy" romof="spyvsspy">
-		<description>Spy Vs Spy (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Spy Vs Spy (USA) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="spy vs spy (usa) - castellano v1.0.nes" size="40976" crc="0c4a3d91"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12501,9 +12509,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="starwarsjc" cloneof="starwars" romof="starwars">
-		<description>Star Wars (Japan) (Namco) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Star Wars (Japan) (Namco) - Castellano v1.0 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="star wars (japan) (namco) - castellano v1.0.nes" size="262160" crc="eef6974a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12525,9 +12533,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="starwarsc" cloneof="starwars" romof="starwars">
-		<description>Star Wars (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Star Wars (USA) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="star wars (usa) - castellano v1.0.nes" size="262160" crc="0e6e000c"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12629,9 +12637,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="streefig201c" cloneof="streefig201" romof="streefig201">
-		<description>Street Fighter 2010 - The Final Fight (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Street Fighter 2010 - The Final Fight (USA) - Castellano v1.0 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="street fighter 2010 - the final fight (usa) - castellano v1.0.nes" size="262160" crc="0c963bf7"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12645,9 +12653,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="streefigiic" cloneof="streefigii" romof="streefigii">
-		<description>Street Fighter II - The World Warrior (Unl) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Street Fighter II - The World Warrior (Unl) - Castellano v1.0 [Hack]</description>
+		<year>2010?</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="street fighter ii - the world warrior (unl) - castellano v1.0.nes" size="262160" crc="03861489"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12797,17 +12805,17 @@
 		<driver status="good"/>
 	</game>
 	<game name="superchii" cloneof="littlninbro" romof="littlninbro">
-		<description>Super Chinese II - Dragon Kid (T-Chi, v1.4)</description>
-		<year>2019-01-01</year>
-		<manufacturer>Culture Brain</manufacturer>
+		<description>Super Chinese II - Dragon Kid (T-Chi, v1.4) [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Super Chinese II - Dragon Kid (T-Chi, v1.4).nes" size="524304" crc="a9e92ef3"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="supercontrac" cloneof="superc" romof="superc">
-		<description>Super Contra (T-Chi)</description>
+		<description>Super Contra (T-Chi) [Hack]</description>
 		<year>2017</year>
-		<manufacturer>Konami</manufacturer>
+		<manufacturer>FlameCyclone</manufacturer>
 		<rom name="Super Contra (T-Chi).nes" size="393232" crc="048f7dd8"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12919,7 +12927,7 @@
 	<game name="smb3c" cloneof="smb3" romof="smb3">
 		<description>Super Mario Bros. 3 (T-Chi) [Hack]</description>
 		<year>2016</year>
-		<manufacturer>Nintendo</manufacturer>
+		<manufacturer>NOKOH</manufacturer>
 		<rom name="Super Mario Bros. 3 (T-Chi).nes" size="458768" crc="e39b725d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13013,9 +13021,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="smbunldlx" cloneof="smb" romof="smb">
-		<description>Super Mario Unlimited Deluxe (Hack)</description>
+		<description>Super Mario Unlimited Deluxe (Hack) [Hack]</description>
 		<year>2020</year>
-		<manufacturer>Nintendo</manufacturer>
+		<manufacturer>Frantik</manufacturer>
 		<rom name="Super Mario Unlimited Deluxe (Hack).nes" size="196624" crc="716c9eb4"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13085,8 +13093,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="srp" cloneof="smb" romof="smb">
-		<description>Super Royal Pals (Hack)</description>
-		<year>2020-08-06</year>
+		<description>Super Royal Pals (Hack) [Hack]</description>
+		<year>2020</year>
 		<manufacturer>QUXNLADY</manufacturer>
 		<rom name="super royal pals (2020)(QUXNLADY).nes" size="40976" crc="62797e6e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -13213,9 +13221,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="swordmasterc" cloneof="swordmaster" romof="swordmaster">
-		<description>Sword Master (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Sword Master (USA) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="sword master (usa) - castellano v1.0.nes" size="262160" crc="0f7fcbaf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13381,9 +13389,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="targetrenegadec" cloneof="targetrenegade" romof="targetrenegade">
-		<description>Target - Renegade (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Target Renegade (USA) - Castellano v1.0 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="target - renegade (usa) - castellano v1.0.nes" size="262160" crc="6754acae"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13511,15 +13519,15 @@
 	<game name="tmntc" cloneof="tmnt" romof="tmnt">
 		<description>Teenage Mutant Ninja Turtles (T-Chi, v1.0) [Hack]</description>
 		<year>2020</year>
-		<manufacturer>Konami</manufacturer>
+		<manufacturer>MEZARANSU</manufacturer>
 		<rom name="Teenage Mutant Ninja Turtles (T-Chi, v1.0).nes" size="393232" crc="43ae114f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="tmntcast" cloneof="tmnt" romof="tmnt">
-		<description>Teenage Mutant Ninja Turtles (USA) - Castellano v0.9</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Teenage Mutant Ninja Turtles (USA) - Castellano v0.9 [Hack]</description>
+		<year>2016</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="teenage mutant ninja turtles (usa) - castellano v0.9.nes" size="262160" crc="30cd0997"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13533,9 +13541,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="tmnttoufigc" cloneof="tmnttoufig" romof="tmnttoufig">
-		<description>Teenage Mutant Ninja Turtles - Tournament Fighters (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Teenage Mutant Ninja Turtles - Tournament Fighters (USA) - Castellano v1.0 [Hack]</description>
+		<year>2020</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="teenage mutant ninja turtles - tournament fighters (usa) - castellano v1.0.nes" size="262160" crc="32eac8c5"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13549,9 +13557,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="tmntiiarcgamc" cloneof="tmntiiarcgam" romof="tmntiiarcgam">
-		<description>Teenage Mutant Ninja Turtles II - The Arcade Game (USA) - Castellano v0.9</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Teenage Mutant Ninja Turtles II - The Arcade Game (USA) - Castellano v0.9 [Hack]</description>
+		<year>2016</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="teenage mutant ninja turtles ii - the arcade game (usa) - castellano v0.9.nes" size="524304" crc="b83bcec8"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13573,9 +13581,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="tmntiiic" cloneof="tmntiii" romof="tmntiii">
-		<description>Teenage Mutant Ninja Turtles III - The Manhattan Project (USA) - Castellano v0.91</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Teenage Mutant Ninja Turtles III - The Manhattan Project (USA) - Castellano v0.91 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="teenage mutant ninja turtles iii - the manhattan project (usa) - castellano v0.91.nes" size="524304" crc="3e9ddb5c"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13669,9 +13677,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="termi2c" cloneof="termi2" romof="termi2">
-		<description>Terminator 2 - Judgment Day (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Terminator 2 - Judgment Day (USA) - Castellano v1.0 [Hack]</description>
+		<year>2016</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="terminator 2 - judgment day (usa) - castellano v1.0.nes" size="262160" crc="43d08e31"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13797,9 +13805,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="thexderc" cloneof="thexder" romof="thexder">
-		<description>Thexder (Japan) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Thexder (Japan) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="Thexder (japan) - castellano v1.0.nes" size="40976" crc="52ac30c1"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14615,7 +14623,7 @@
 	<game name="waiwaiworldc" cloneof="waiwaiworld" romof="waiwaiworld">
 		<description>Wai Wai World (T-Chi) [Hack]</description>
 		<year>2012</year>
-		<manufacturer>Nokoh</manufacturer>
+		<manufacturer>NOKOH</manufacturer>
 		<rom name="Wai Wai World (T-Chi).nes" size="524304" crc="ae26fdde"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -15029,9 +15037,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="yiearkungfuc" cloneof="yiearkungfu" romof="yiearkungfu">
-		<description>Yie Ar Kung-Fu (Japan) (V1.4) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Yie Ar Kung-Fu (Japan) (V1.4) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="yie ar kung-fu (japan) (v1.4) - castellano v1.0.nes" size="24592" crc="032019a7"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -15093,9 +15101,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="ysc" cloneof="ys" romof="ys">
-		<description>Ys (Japan) - Castellano v1.1</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Ys (Japan) - Castellano v1.1 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Takkun57</manufacturer>
 		<rom name="ys (japan) - castellano v1.1.nes" size="262160" crc="024dd1cf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -15117,8 +15125,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ysiic" cloneof="ysii" romof="ysii">
-		<description>Ys II - Ancient Ys Vanished - The Final Chapter (Japan) - Castellano v1.0</description>
-		<year>1989 ?</year>
+		<description>Ys II - Ancient Ys Vanished - The Final Chapter (Japan) - Castellano v1.0 [Hack]</description>
+		<year>2010?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="ys ii - ancient ys vanished - the final chapter (japan) - castellano v1.0.nes" size="393232" crc="20770bf0"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -15205,9 +15213,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="zeldaiic" cloneof="zeldaii" romof="zeldaii">
-		<description>Zelda II - The Adventure of Link (Europe) (Rev 2) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Zelda II - The Adventure of Link (Europe) (Rev 2) - Castellano v1.0 [Hack]</description>
+		<year>2016</year>
+		<manufacturer>jackic</manufacturer>
 		<rom name="zelda ii - the adventure of link (europe) (rev 2) - castellano v1.0.nes" size="262160" crc="d31d09ae"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>

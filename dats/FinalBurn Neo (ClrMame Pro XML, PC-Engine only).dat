@@ -49,7 +49,7 @@
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
 		<rom name="after burner ii (japan).pce" size="524288" crc="ca72a828"/>
-		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<video orientation="horizontal" width="512" height="232" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="acrush">

@@ -57,7 +57,7 @@
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
 		<rom name="daimakai mura (japan).pce" size="1048576" crc="b486a8ed"/>
-		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<video orientation="horizontal" width="320" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="granzort">

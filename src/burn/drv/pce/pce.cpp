@@ -12,22 +12,9 @@
 Notes:
 
 	There is no CD emulation at all.
-	As this driver is based on MESS emulation, compatibility *should* be the same.
 
-	Known emulation issues - also present in MESS unless noted.
 	SOUND PROBLEMS
 		Bouken Danshaku Don - The Lost Sunheart (not present in mess)
-
-	GRAPHICS PROBLEMS
-		Cadash - graphics shaking
-
-	OTHER PROBLEMS
-		Niko Niko Pun - hangs in-game
-		Benkei Gaiden - hangs after sunsoft logo
-		Power Tennis - frozen
-		Tennokoe Bank - ??
-		Air Zonk / PC Denjin - Punkic Cyborgs - hangs in-game
-		Hisou Kihei - Xserd: black screen
 */
 
 static UINT8 *AllMem;
@@ -603,7 +590,7 @@ INT32 PCEDraw()
 	}
 
 	{
-		UINT16 *src = vdc_tmp_draw + ((14+3) * 684) + 86;
+		UINT16 *src = vdc_tmp_draw + 86;
 		UINT16 *dst = pTransDraw;
 
 		for (INT32 y = 0; y < nScreenHeight; y++) {
@@ -651,18 +638,18 @@ INT32 PCEFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += h6280Run(83); // this is not accurate, but gives best compatibility
+		nCyclesDone[0] += h6280Run(1128/3); // 1128 m-cycles brings us to hblank. "/ 3" m-cycles -> cpu cycles
+		hblank();
 		// if thinking of changing this, make sure to check for these side effects:
 		// blodia, game select bounce
 		// dragon egg, hang booting
 		// air zonk, crash ingame when moving up
-		// side arms, playfield bounce ingame (note: bottom selection cut-off is normal - if you're seeing the whole thing, you've probably broken other games.)
+		// side arms, playfield bounce ingame (note: bottom selection cut-off is normal - if you're seeing the whole thing, you've most certainly broken other games.)
 		// huzero, corruption above the "Sc 000000"
 		// cadash, bouncing playfield, corrupted HUD
-		// ghost house, crash while going down the slide / moving around a bit
-		hblank();
+		// ghost manor, crash while going down the slide / moving around a bit
 		CPU_RUN_SYNCINT(0, h6280); // finish line cycles
-		interrupt();       // advance line in vdc
+		interrupt();       // advance line in vdc & vbl @ last line
 	}
 
 	if (pBurnSoundOut) {

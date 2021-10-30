@@ -1,6 +1,7 @@
 // Based on MESS driver by Charles MacDonald
 
 #include "tiles_generic.h"
+#include "pce.h"
 #include "h6280_intf.h"
 
 UINT16 *vce_data;			// allocate externally!
@@ -398,7 +399,8 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 					vdc_status[which] |= 0x02;
 					h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 				}
-				continue;  /* Should cause an interrupt */
+				if (~PCEDips[2] & 0x10) // check sprite limit enforcement
+					continue;
 			}
 
 			cgypos = (obj_l >> 4);
@@ -517,8 +519,10 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 						vdc_status[which] |= 0x02;
 						h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 					}
+					if (~PCEDips[2] & 0x10) // check sprite limit enforcement
+						continue;
 				}
-				else
+				
 				{
 					conv_obj(which, obj_i + (cgypos << 2) + (hf ? 0 : 2), obj_l, hf, vf, buf);
 					for(x = 0; x < 16; x++)

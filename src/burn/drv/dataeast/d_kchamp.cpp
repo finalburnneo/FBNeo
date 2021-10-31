@@ -1028,7 +1028,7 @@ static struct BurnRomInfo kchamptecRomDesc[] = {
 	{ "8.bin",		0x2000, 0x18cd5a0c, 1 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "1.bin",		0x2000, 0x999ed2c7, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 Code #1
-	{ "2.bin",		0x2000, 0x03fae67e, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "2.bin",		0x2000, 0x33171e07, 2 | BRF_PRG | BRF_ESS }, //  7
 	{ "3.bin",		0x2000, 0xd5501588, 2 | BRF_PRG | BRF_ESS }, //  8
 	{ "4.bin",		0x2000, 0x47f66aac, 2 | BRF_PRG | BRF_ESS }, //  9
 	{ "5.bin",		0x2000, 0x5928e749, 2 | BRF_PRG | BRF_ESS }, // 10

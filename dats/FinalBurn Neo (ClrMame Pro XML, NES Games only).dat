@@ -501,9 +501,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="akumadenjc" cloneof="castliii" romof="castliii">
-		<description>Akumajou Densetsu (Japan) - Castellano v1.1</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Akumajou Densetsu (Japan) - Castellano v1.1 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="akumajou densetsu (japan) - castellano v1.1.nes" size="393232" crc="33ead706"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -517,9 +517,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="akumadenc" cloneof="castliii" romof="castliii">
-		<description>Akumajou Densetsu (T-Chi, v2.3)</description>
-		<year>2018-10-15</year>
-		<manufacturer>Konami</manufacturer>
+		<description>Akumajou Densetsu (T-Chi, v2.3) [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Akumajou Densetsu (T-Chi, v2.3).nes" size="524304" crc="b810b79c"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -949,9 +949,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="avmahjongclubc">
-		<description>AV Mahjong Club (T-Chi) (Unl)</description>
-		<year>2018-08-17</year>
-		<manufacturer>Hack International</manufacturer>
+		<description>AV Mahjong Club (T-Chi) (Unl) [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="AV Mahjong Club (T-Chi) (Unl).nes" size="262160" crc="663870dd"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1237,9 +1237,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="batmavidgamc" cloneof="batmavidgam" romof="batmavidgam">
-		<description>Batman - The Video Game (T-Chi)</description>
-		<year>2020-01-25</year>
-		<manufacturer>Sunsoft</manufacturer>
+		<description>Batman - The Video Game (T-Chi) [Hack]</description>
+		<year>2020</year>
+		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Batman - The Video Game (T-Chi).nes" size="393232" crc="4b2de665"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1525,9 +1525,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="bioniccommandoc" cloneof="bioniccommando" romof="bioniccommando">
-		<description>Bionic Commando (Japan) - Castellano v1.03</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Bionic Commando (Japan) - Castellano v1.03 [Hack]</description>
+		<year>2013</year>
+		<manufacturer>TheFireRed</manufacturer>
 		<rom name="bionic commando (japan) - castellano v1.03.nes" size="262160" crc="ec5f3e79"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1613,9 +1613,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="blastermasterc" cloneof="blastermaster" romof="blastermaster">
-		<description>Blaster Master (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Blaster Master (USA) - Castellano v1.0 [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="blaster master (usa) - castellano v1.0.nes" size="262160" crc="b63123db"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1837,9 +1837,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="bramstosdrac" cloneof="bramstosdra" romof="bramstosdra">
-		<description>Bram Stoker's Dracula (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Bram Stoker's Dracula (USA) - Castellano v1.0 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="bram stoker's dracula (usa) - castellano v1.0.nes" size="262160" crc="d6eb5f83"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2077,9 +2077,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="captatsuvoliic" cloneof="captatsuvolii" romof="captatsuvolii">
-		<description>Captain Tsubasa Vol. II - Super Striker (Japan) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Captain Tsubasa Vol. II - Super Striker (Japan) - Castellano v1.0 [Hack]</description>
+		<year>2013</year>
+		<manufacturer>pepodmc</manufacturer>
 		<rom name="captain tsubasa vol. ii - super striker (japan) - castellano v1.0.nes" size="393233" crc="49c692c5"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2381,9 +2381,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="chipndalresrac" cloneof="chipndalresra" romof="chipndalresra">
-		<description>Chip 'n Dale - Rescue Rangers (USA) - Castellano v0.9</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Chip 'n Dale - Rescue Rangers (USA) - Castellano v0.9 [Hack]</description>
+		<year>20XX?</year>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="chip 'n dale - rescue rangers (usa) - castellano v0.9.nes" size="262160" crc="7c6aed46"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2397,9 +2397,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="chipndalresra2c" cloneof="chipndalresra2" romof="chipndalresra2">
-		<description>Chip 'n Dale - Rescue Rangers 2 (USA) - Castellano v0.99</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Chip 'n Dale - Rescue Rangers 2 (USA) - Castellano v0.99 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>jackic</manufacturer>
 		<rom name="chip 'n dale - rescue rangers 2 (usa) - castellano v0.99.nes" size="262160" crc="aa6e37e6"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2973,9 +2973,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="daikunogensanc" cloneof="daikunogensan" romof="daikunogensan">
-		<description>Daiku no Gen-san (T-Chi)</description>
-		<year>2019-03-05</year>
-		<manufacturer>Irem</manufacturer>
+		<description>Daiku no Gen-san (T-Chi) [Hack]</description>
+		<year>2019</year>
+		<manufacturer>MEZARANSU</manufacturer>
 		<rom name="Daiku no Gen-san (T-Chi).nes" size="393232" crc="f0543c45"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2989,9 +2989,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="daikunogensan2c" cloneof="daikunogensan2" romof="daikunogensan2">
-		<description>Daiku no Gen-san 2 - Akage no Dan no Gyakushuu (T-Chi)</description>
-		<year>2019-07-28</year>
-		<manufacturer>Irem</manufacturer>
+		<description>Daiku no Gen-san 2 - Akage no Dan no Gyakushuu (T-Chi) [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Advance Team &amp; DMG Team</manufacturer>
 		<rom name="Daiku no Gen-san 2 - Akage no Dan no Gyakushuu (T-Chi).nes" size="524304" crc="66c08cd8"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3029,9 +3029,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="darkmanc" cloneof="darkman" romof="darkman">
-		<description>Darkman (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Darkman (USA) - Castellano v1.0 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="darkman (usa) - castellano v1.0.nes" size="262160" crc="e2cb1c36"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3045,9 +3045,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="darkwingduckc" cloneof="darkwingduck" romof="darkwingduck">
-		<description>Darkwing Duck (T-Chi)</description>
-		<year>2020-10-01</year>
-		<manufacturer>Capcom</manufacturer>
+		<description>Darkwing Duck (T-Chi) [Hack]</description>
+		<year>2020</year>
+		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Darkwing Duck (T-Chi).nes" size="393232" crc="585f3500"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3269,9 +3269,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="diehardc" cloneof="diehard" romof="diehard">
-		<description>Die Hard (USA) - Castellano v1.1</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Die Hard (USA) - Castellano v1.1 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="die hard (usa) - castellano v1.1.nes" size="262160" crc="602b9a29"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3357,9 +3357,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="aladdinc" cloneof="aladdin" romof="aladdin">
-		<description>Disney's Aladdin (Europe) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Disney's Aladdin (Europe) - Castellano v1.0 [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="disney's aladdin (europe) - castellano v1.0.nes" size="262160" crc="b857fcf2"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3525,9 +3525,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="doubledragonc" cloneof="doubledragon" romof="doubledragon">
-		<description>Double Dragon (USA) - Castellano v1.1</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Double Dragon (USA) - Castellano v1.1 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="double dragon (usa) - castellano v1.1.nes" size="262160" crc="f5e19c32"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3541,9 +3541,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="doubldraiic" cloneof="doubldraii" romof="doubldraii">
-		<description>Double Dragon II - The Revenge (USA) (Rev A) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Double Dragon II - The Revenge (USA) (Rev A) - Castellano v1.0 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="double dragon ii - the revenge (usa) (rev a) - castellano v1.0.nes" size="262160" crc="67a0d781"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3557,9 +3557,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="doubldraiiic" cloneof="doubldraiii" romof="doubldraiii">
-		<description>Double Dragon III - The Sacred Stones (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Double Dragon III - The Sacred Stones (USA) - Castellano v1.0 [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="double dragon iii - the sacred stones (usa) - castellano v1.0.nes" size="262160" crc="aa40b251"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3741,9 +3741,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragobalzsupbu2c" cloneof="dragobalzsupbu2" romof="dragobalzsupbu2">
-		<description>Dragon Ball Z - Super Butouden 2 (Unl) - Castellano v1.1</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Dragon Ball Z - Super Butouden 2 (Unl) - Castellano v1.1 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Terwilf</manufacturer>
 		<rom name="dragon ball z - super butouden 2 (unl) - castellano v1.1.nes" size="393232" crc="8e8ebd23"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3790,8 +3790,8 @@
 	</game>
 	<game name="dragobalziiirejinic" cloneof="dragobalziiirejini" romof="dragobalziiirejini">
 		<description>Dragon Ball Z III - Ressen Jinzou Ningen (Japan) - Castellano v1.0a [Hack]</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2016</year>
+		<manufacturer>TransGen</manufacturer>
 		<rom name="dragon ball z iii - ressen jinzou ningen (japan) - castellano v1.0a.nes" size="524304" crc="ff1d3cf3"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3813,9 +3813,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragonbusterc" cloneof="dragonbuster" romof="dragonbuster">
-		<description>Dragon Buster (Japan) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Dragon Buster (Japan) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Max1323</manufacturer>
 		<rom name="dragon buster (japan) - castellano v1.0.nes" size="163856" crc="e718a85d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3917,9 +3917,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragonwarriorc" cloneof="dragonwarrior" romof="dragonwarrior">
-		<description>Dragon Warrior (USA) (Rev A) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Dragon Warrior (USA) (Rev A) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="dragon warrior (usa) (rev a) - castellano v1.0.nes" size="81936" crc="7442bd9f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3941,9 +3941,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragowariiic" cloneof="dragowariii" romof="dragowariii">
-		<description>Dragon Warrior III (USA) - Castellano v0.9</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Dragon Warrior III (USA) - Castellano v0.9 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="dragon warrior iii (usa) - castellano v0.9.nes" size="524304" crc="c3d2f589"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3957,9 +3957,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragowarivc" cloneof="dragowariv" romof="dragowariv">
-		<description>Dragon Warrior IV (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Dragon Warrior IV (USA) - Castellano v1.0 [Hack]</description>
+		<year>2016</year>
+		<manufacturer>Butz Klauser</manufacturer>
 		<rom name="dragon warrior iv (usa) - castellano v1.0.nes" size="524304" crc="f5577473"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3973,9 +3973,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragonslairc" cloneof="dragonslair" romof="dragonslair">
-		<description>Dragon's Lair (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Dragon's Lair (USA) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="dragon's lair (usa) - castellano v1.0.nes" size="131088" crc="db3d2678"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4053,18 +4053,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ducktalesc" cloneof="ducktales" romof="ducktales">
-		<description>Duck Tales (USA) - Castellano v1.1</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>DuckTales (USA) - Castellano v1.1 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Darkchaosblast</manufacturer>
 		<rom name="duck tales (usa) - castellano v1.1.nes" size="131088" crc="fcb58532"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="ducktales2cast" cloneof="ducktales2" romof="ducktales2">
-		<description>Duck Tales 2 (USA) - Castellano v1.1</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
-		<rom name="duck tales 2 (usa) - castellano v1.1.nes" size="131088" crc="908c28ff"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -4077,10 +4069,18 @@
 		<driver status="good"/>
 	</game>
 	<game name="ducktales2c" cloneof="ducktales2" romof="ducktales2">
-		<description>DuckTales 2 (T-Chi, v1.1)</description>
-		<year>2019-06-01</year>
-		<manufacturer>Capcom</manufacturer>
+		<description>DuckTales 2 (T-Chi, v1.1) [Hack]</description>
+		<year>2019</year>
+		<manufacturer>DMG Team</manufacturer>
 		<rom name="DuckTales 2 (T-Chi, v1.1).nes" size="262160" crc="794dbb67"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="ducktales2cast" cloneof="ducktales2" romof="ducktales2">
+		<description>DuckTales 2 (USA) - Castellano v1.1 [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="duck tales 2 (usa) - castellano v1.1.nes" size="131088" crc="908c28ff"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -4165,9 +4165,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="earthboundc" cloneof="earthbound" romof="earthbound">
-		<description>Earth Bound (USA) (Proto) - Castellano v2.2</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Earth Bound (USA) (Proto) - Castellano v2.2 [Hack]</description>
+		<year>2016</year>
+		<manufacturer>OAD</manufacturer>
 		<rom name="earth bound (usa) (proto) - castellano v2.2.nes" size="524304" crc="d80e3217"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4221,9 +4221,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="elevatoractionc" cloneof="elevatoraction" romof="elevatoraction">
-		<description>Elevator Action (USA) - Castellano v1.0</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Elevator Action (USA) - Castellano v1.0 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="elevator action (usa) - castellano v1.0.nes" size="40976" crc="cb844314"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8245,9 +8245,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="madcityc" cloneof="advenbaybil" romof="advenbaybil">
-		<description>Mad City (T-Chi, v2)</description>
+		<description>Mad City (T-Chi, v2) [Hack]</description>
 		<year>2018</year>
-		<manufacturer>Konami</manufacturer>
+		<manufacturer>Tan Xiao Feng Sheng</manufacturer>
 		<rom name="Mad City (T-Chi, v2).nes" size="393232" crc="3b2ad28b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9717,9 +9717,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="deadfoxc" cloneof="codenam" romof="codenam">
-		<description>Ningen Heiki - Dead Fox (T-Chi, v2.0)</description>
+		<description>Ningen Heiki - Dead Fox (T-Chi, v2.0) [Hack]</description>
 		<year>2010</year>
-		<manufacturer>Capcom</manufacturer>
+		<manufacturer>Xing Kong</manufacturer>
 		<rom name="Ningen Heiki - Dead Fox (T-Chi, v2.0).nes" size="303120" crc="3cf5df56"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14685,9 +14685,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="wanpakuduck" cloneof="ducktales" romof="ducktales">
-		<description>Wanpaku Duck Yume Bouken (T-Chi)</description>
+		<description>Wanpaku Duck Yume Bouken (T-Chi) [Hack]</description>
 		<year>2020</year>
-		<manufacturer>Capcom</manufacturer>
+		<manufacturer>Ju Jue Rong Hua</manufacturer>
 		<rom name="Wanpaku Duck Yume Bouken (T-Chi).nes" size="196624" crc="9fe55e12"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>

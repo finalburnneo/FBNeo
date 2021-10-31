@@ -11446,7 +11446,7 @@ static struct BurnRomInfo FloritasmRomDesc[] = {
 	{ "1k-2716.bin",   0x00800, 0x4e79ff6b, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "0k-2716.bin",   0x00800, 0xe0edccbd, BRF_GRA | GAL_ROM_TILES_SHARED },
 	
-	{ "61-82s123.bin", 0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+	{ "6l-82s123.bin", 0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
 };
 
 STD_ROM_PICK(Floritasm)

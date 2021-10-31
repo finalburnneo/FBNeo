@@ -5435,11 +5435,11 @@ static struct BurnRomInfo painterRomDesc[] = {
 	{ "pain5.5e",             0x1000, 0xbd819afc, 2 | BRF_GRA },		    //  4 Graphics
 	{ "pain6.5f",    		  0x1000, 0x014e5ed3, 2 | BRF_GRA },		    //  5
 	
-	{ "82s123.7f",            0x0020, 0x2fc650bd, 3 | BRF_GRA },		    // 	6 Color Proms
-	{ "2s140.4a",     		  0x0100, 0x63efb927, 3 | BRF_GRA },			//  7
+	{ "mb7051.7f",            0x0020, 0xff344446, 3 | BRF_GRA },		    // 	6 Color Proms
+	{ "n82s129n.4a",     	  0x0100, 0x63efb927, 3 | BRF_GRA },			//  7
 
-	{ "82s126.1m",    		  0x0100, 0xa9cc86bf, 4 | BRF_SND },		    //  8 Sound Prom
-	{ "82s126.3m",    		  0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (unused)
+	{ "mb7052.1m",    		  0x0100, 0xa9cc86bf, 4 | BRF_SND },		    //  8 Sound Prom
+	{ "mb7052.3m",    		  0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (unused)
 };
 
 STD_ROM_PICK(painter)

@@ -1038,10 +1038,10 @@ static struct BurnRomInfo route16dRomDesc[] = {
 	{ "a4.bin",       	0x0800, 0x1da34bde, 1 | BRF_ESS | BRF_PRG }, 	//  4
 	{ "a5.bin",       	0x0800, 0x74438cf5, 1 | BRF_ESS | BRF_PRG }, 	//  5
 
-	{ "stvg60.b0",     	0x0800, 0xfef605f3, 2 | BRF_ESS | BRF_PRG }, 	//  6 Z80 #1 Code
-	{ "stvg61.b1",     	0x0800, 0xd0d6c189, 2 | BRF_ESS | BRF_PRG }, 	//  7
-	{ "tsvg62.b2",     	0x0800, 0xdefc5797, 2 | BRF_ESS | BRF_PRG }, 	//  8
-	{ "stvg63.b3",     	0x0800, 0x88d94a66, 2 | BRF_ESS | BRF_PRG }, 	//  9
+	{ "b0.bin",     	0x0800, 0xfef605f3, 2 | BRF_ESS | BRF_PRG }, 	//  6 Z80 #1 Code
+	{ "b1.bin",     	0x0800, 0x49f265fc, 2 | BRF_ESS | BRF_PRG }, 	//  7
+	{ "b2.bin",     	0x0800, 0xdefc5797, 2 | BRF_ESS | BRF_PRG }, 	//  8
+	{ "b3.bin",     	0x0800, 0x88d94a66, 2 | BRF_ESS | BRF_PRG }, 	//  9
 
 	{ "mb7052.59",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 	// 10 Graphics
 	{ "mb7052.61",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 	// 11

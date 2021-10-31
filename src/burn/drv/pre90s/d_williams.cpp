@@ -2956,7 +2956,7 @@ static struct BurnRomInfo bubblesrRomDesc[] = {
 	{ "bubblesr.8b",		0x1000, 0x598b9bd6, 1 | BRF_PRG | BRF_ESS }, // 10
 	{ "bubbles.9b",			0x1000, 0xb48559fb, 1 | BRF_PRG | BRF_ESS }, // 11
 
-	{ "bubbles.snd",		0x1000, 0x689ce2aa, 2 | BRF_PRG | BRF_ESS }, // 12 M6800 Code
+	{ "video_sound_rom_5_std_771.ic12",		0x1000, 0x689ce2aa, 2 | BRF_PRG | BRF_ESS }, // 12 M6800 Code
 
 	{ "decoder_rom_4.3g",	0x0200, 0xe6631c23, 0 | BRF_OPT },           // 13 Address Decoder
 	{ "decoder_rom_6.3c",	0x0200, 0x83faf25e, 0 | BRF_OPT },           // 14
@@ -2988,11 +2988,11 @@ static struct BurnRomInfo bubblespRomDesc[] = {
 	{ "bub_prot.4b",		0x1000, 0x4e264f01, 1 | BRF_PRG | BRF_ESS }, //  6
 	{ "bub_prot.5b",		0x1000, 0x121b0be6, 1 | BRF_PRG | BRF_ESS }, //  7
 	{ "bub_prot.6b",		0x1000, 0x80e90b25, 1 | BRF_PRG | BRF_ESS }, //  8
-	{ "bubbles.7b",			0x1000, 0xe0a26ec0, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "bub_prot.7b",		0x1000, 0xe0a26ec0, 1 | BRF_PRG | BRF_ESS }, //  9
 	{ "bub_prot.8b",		0x1000, 0x96fb19c8, 1 | BRF_PRG | BRF_ESS }, // 10
 	{ "bub_prot.9b",		0x1000, 0xbe7e1028, 1 | BRF_PRG | BRF_ESS }, // 11
 
-	{ "bubbles.snd",		0x1000, 0x689ce2aa, 2 | BRF_PRG | BRF_ESS }, // 12 M6800 Code
+	{ "video_sound_rom_5_std_771.ic12",		0x1000, 0x689ce2aa, 2 | BRF_PRG | BRF_ESS }, // 12 M6800 Code
 
 	{ "decoder_rom_4.3g",	0x0200, 0xe6631c23, 0 | BRF_OPT },           // 13 Address Decoder
 	{ "decoder_rom_6.3c",	0x0200, 0x83faf25e, 0 | BRF_OPT },           // 14
@@ -3436,7 +3436,48 @@ struct BurnDriver BurnDrvBlaster = {
 };
 
 
+// Blaster (location test)
 
+static struct BurnRomInfo blasteroRomDesc[] = {
+	{ "16.ic39",			0x1000, 0x2db032d2, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "13.ic27",			0x2000, 0xc99213c7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "11.ic25",			0x2000, 0xbc2d7eda, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "12.ic26",			0x2000, 0x8a215017, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "17.ic41",			0x1000, 0xb308f0e5, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "15.ic38",			0x4000, 0x1ad146a4, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "8.ic20",				0x4000, 0xf110bbb0, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "9.ic22",				0x4000, 0x5c5b0f8a, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "10.ic24",			0x4000, 0xd47eb67f, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "6.ic13",				0x4000, 0x47fc007e, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "5.ic11",				0x4000, 0x15c1b94d, 1 | BRF_PRG | BRF_ESS }, // 10
+	{ "14.ic35",			0x4000, 0xaea6b846, 1 | BRF_PRG | BRF_ESS }, // 11
+	{ "7.ic15",				0x4000, 0xa1c4db77, 1 | BRF_PRG | BRF_ESS }, // 12
+	{ "1.ic1",				0x4000, 0x8d0ea9e7, 1 | BRF_PRG | BRF_ESS }, // 13
+	{ "2.ic3",				0x4000, 0x03c4012c, 1 | BRF_PRG | BRF_ESS }, // 14
+	{ "4.ic7",				0x4000, 0x39d2a32c, 1 | BRF_PRG | BRF_ESS }, // 15
+	{ "3.ic6",				0x4000, 0x054c9f1c, 1 | BRF_PRG | BRF_ESS }, // 16
+
+	{ "18.sb13",			0x1000, 0xc33a3145, 2 | BRF_PRG | BRF_ESS }, // 17 M6800 #0 Code
+
+	{ "18.sb10",			0x1000, 0xc33a3145, 3 | BRF_PRG | BRF_ESS }, // 18 M6800 #1 Code
+
+	{ "4.u42",				0x0200, 0xe6631c23, 0 | BRF_OPT },           // 19 proms
+	{ "6.u23",				0x0200, 0x83faf25e, 0 | BRF_OPT },           // 20
+	{ "blaster.col",		0x0800, 0xbac50bc4, 4 | BRF_GRA },           // 21
+};
+
+STD_ROM_PICK(blastero)
+STD_ROM_FN(blastero)
+
+struct BurnDriver BurnDrvBlastero = {
+	"blastero", "blaster", NULL, NULL, "1983",
+	"Blaster (location test)\0", NULL, "Williams / Vid Kidz", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, blasteroRomInfo, blasteroRomName, NULL, NULL, NULL, NULL, BlasterInputInfo, NULL,
+	BlasterInit, DrvExit, DrvFrame, BlasterDraw, DrvScan, &DrvRecalc, 0x110,
+	292, 240, 4, 3
+};
 
 
 #if 0

@@ -22,6 +22,9 @@ void vdc_init();
 void vdc_exit();
 
 void vdc_check_hblank_raster_irq(INT32 which);
+//INT32 vdc_vdw_start(INT32 which);
+//INT32 vdc_vdw_length(INT32 which);
+
 
 // priority
 void vpc_reset();

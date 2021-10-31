@@ -4071,7 +4071,7 @@ struct BurnDriver BurnDrvQzshowby = {
 // Purportedly a location test version, but has the same version number and build date as the released Japanese set below
 
 static struct BurnRomInfo bublbustRomDesc[] = {
-	{ "p.bobble_prg_h_usa_6-15_c681.ic18",		0x040000, 0xba83e398, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "p.bobble_prg_h_kyotsu_6-15_c681.ic18",	0x040000, 0xba83e398, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
 	{ "p.bobble_prg_l_usa_6-15_e9e1.ic2",		0x040000, 0xa12cb3f2, TAITO_68KROM1_BYTESWAP }, //  1
 
 	{ "prg_snd.ic27",							0x020000, 0x2f288fe0, TAITO_Z80ROM1 },			//  2 Z80 Code
@@ -4081,7 +4081,7 @@ static struct BurnRomInfo bublbustRomDesc[] = {
 	{ "p.bobble_chr-0l_6-14_86d5.ic7_ch_0_0l",	0x040000, 0x80f1aab0, TAITO_CHARS_BYTESWAP },	//  5
 	{ "p.bobble_chr-0h_6-14_d180.ic8_ch_0_0h",	0x040000, 0xd773cac8, TAITO_CHARS_BYTESWAP },	//  6
 
-	{ "ach0-kaigai.ic15_ach_0",					0x080000, 0xf203ae52, TAITO_YM2610A },			//  7 YM2610 A Samples
+	{ "cr40-kaigai-7bec.ic15_ach_0",			0x080000, 0xf203ae52, TAITO_YM2610A },			//  7 YM2610 A Samples
 };
 
 STD_ROM_PICK(bublbust)

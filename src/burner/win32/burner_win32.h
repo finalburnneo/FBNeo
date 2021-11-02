@@ -231,6 +231,8 @@ void NeoCDZRateChangeback();
 
 // burn_shift
 extern INT32 BurnShiftEnabled;
+// burn_gun
+extern bool bBurnGunDrawReticles;
 
 // run.cpp
 extern int bRunPause;

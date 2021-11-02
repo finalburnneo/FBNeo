@@ -2,7 +2,7 @@
 #include "burner.h"
 
 // Player Default Controls
-INT32 nPlayerDefaultControls[5] = {0, 1, 2, 3, 4};
+INT32 nPlayerDefaultControls[8] = {0, 1, 2, 3, 8, 8, 8, 8};
 TCHAR szPlayerDefaultIni[5][MAX_PATH] = { _T(""), _T(""), _T(""), _T(""), _T("") };
 
 // Mapping of PC inputs to game inputs

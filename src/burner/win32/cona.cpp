@@ -264,6 +264,7 @@ int ConfigAppLoad()
 		VAR(EnableHiscores);
 		VAR(bBurnUseBlend);
 		VAR(BurnShiftEnabled);
+		VAR(bBurnGunDrawReticles);
 		VAR(bSkipStartupCheck);
 
 #ifdef INCLUDE_AVI_RECORDING
@@ -687,6 +688,9 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// If non-zero, enable gear shifter display support.\n"));
 	VAR(BurnShiftEnabled);
+
+	_ftprintf(h, _T("\n// If non-zero, enable lightgun reticle display support.\n"));
+	VAR(bBurnGunDrawReticles);
 
 	_ftprintf(h, _T("\n// If non-zero, DISABLE start-up rom scan (if needed).\n"));
 	VAR(bSkipStartupCheck);

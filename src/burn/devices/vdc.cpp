@@ -4,6 +4,8 @@
 #include "pce.h"
 #include "h6280_intf.h"
 
+#define DINK_DEBUG 0 // debug timing / etc
+
 UINT16 *vce_data;			// allocate externally!
 static UINT16 vce_address;
 static UINT16 vce_control;
@@ -27,8 +29,8 @@ static UINT8	vdc_status[2];
 static UINT16	vdc_sprite_ram[2][0x100];
 
 static INT32	vdc_vblank_triggered[2];
-static UINT16	vdc_current_segment[2];
-static UINT16	vdc_current_segment_line[2];
+static INT32	vdc_current_segment[2];
+static INT32	vdc_current_segment_line[2];
 static INT32	vdc_raster_count[2];
 static INT32	vdc_satb_countdown[2];
 
@@ -170,7 +172,6 @@ static void waitstate()
 	if (ws_counter >= 1) {
 		ws_counter -= 1;
 		// just a guess?
-		// blodia (game selection screen bounce)
 		// wonder momo titlescreen offset
 		//h6280EatCycles(4);
 	}
@@ -308,6 +309,7 @@ void vce_reset()
 #define DCR_DVC		 0x02	/* VRAM > VRAM EOT interrupt enable */
 #define DCR_DSC		 0x01	/* VRAM > SATB EOT interrupt enable */
 
+//  		          0     1    2     3     4   5    6    7    8    9    a    b    c    d    e    f    10    11    12     13
 enum vdc_regs {MAWR = 0, MARR, VxR, reg3, reg4, CR, RCR, BXR, BYR, MWR, HSR, HDR, VPR, VDW, VCR, DCR, SOUR, DESR, LENR, DVSSR };
 
 
@@ -398,6 +400,9 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 					/* note: flag is set only if irq is taken, Mizubaku Daibouken relies on this behaviour */
 					vdc_status[which] |= 0x02;
 					h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
+#if DINK_DEBUG
+					bprintf(0, _T("SPR-Overflow  line %d\n"), vce_current_line);
+#endif
 				}
 				if (~PCEDips[2] & 0x10) // check sprite limit enforcement
 					continue;
@@ -441,8 +446,12 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 							/* Check for sprite #0 collision */
 							else if (drawn[pixel_x] == 2)
 							{
-								if(vdc_data[which][0x05] & 0x01)
+								if(vdc_data[which][0x05] & 0x01) {
 									h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
+#if DINK_DEBUG
+									bprintf(0, _T("SPR-Collision0  line %d\n"), vce_current_line);
+#endif
+								}
 								vdc_status[which] |= 0x01;
 							}
 						}
@@ -491,8 +500,12 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 							/* Check for sprite #0 collision */
 							else if ( drawn[pixel_x] == 2 )
 							{
-								if(vdc_data[which][0x05] & 0x01)
+								if(vdc_data[which][0x05] & 0x01) {
 									h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
+#if DINK_DEBUG
+									bprintf(0, _T("SPR-Collision1  line %d\n"), vce_current_line);
+#endif
+								}
 								vdc_status[which] |= 0x01;
 							}
 						}
@@ -518,6 +531,9 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 						/* note: flag is set only if irq is taken, Mizubaku Daibouken relies on this behaviour */
 						vdc_status[which] |= 0x02;
 						h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
+#if DINK_DEBUG
+						bprintf(0, _T("SPR-Overflow  line %d\n"), vce_current_line);
+#endif
 					}
 					if (~PCEDips[2] & 0x10) // check sprite limit enforcement
 						continue;
@@ -552,8 +568,12 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 								/* Check for sprite #0 collision */
 								else if ( drawn[pixel_x] == 2 )
 								{
-									if(vdc_data[which][0x05] & 0x01)
+									if(vdc_data[which][0x05] & 0x01) {
 										h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
+#if DINK_DEBUG
+										bprintf(0, _T("SPR-Collision2  line %d\n"), vce_current_line);
+#endif
+									}
 									vdc_status[which] |= 0x01;
 								}
 							}
@@ -576,29 +596,25 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 
 static void clear_line(INT32 line)
 {
-	INT32 i;
-
 	/* Are we in greyscale mode or in color mode? */
 	INT32 color_base = vce_control & 0x80 ? 512 : 0;
 
 	/* our line buffer */
 	UINT16 *line_buffer = vdc_tmp_draw + line * 684;
 
-	for ( i = 0; i < 684; i++ )
+	for (INT32 i = 0; i < 684; i++)
 		line_buffer[i] = color_base + vce_data[0x100];
 }
 
 static void clear_line_sgx(INT32 line)
 {
-	INT32 i;
-
 	/* Are we in greyscale mode or in color mode? */
 	INT32 color_base = vce_control & 0x80 ? 512 : 0;
 
 	/* our line buffer */
 	UINT16 *line_buffer = vdc_tmp_draw + line * 684;
 
-	for ( i = 0; i < VDC_WPF; i++ )
+	for (INT32 i = 0; i < VDC_WPF; i++)
 		line_buffer[i] = color_base + vce_data[0];
 }
 
@@ -607,7 +623,9 @@ void vdc_check_hblank_raster_irq(INT32 which)
 	/* generate interrupt on line compare if necessary */
 	if ( vdc_raster_count[which] == (vdc_data[which][RCR] & 0x3ff) && vdc_data[which][CR] & CR_RC )
 	{
-		//bprintf(0, _T("raster @ %d\n"),vdc_raster_count[which]);
+#if DINK_DEBUG
+		bprintf(0, _T("raster @ %d\tscanline %d\n"),vdc_raster_count[which], vce_current_line);
+#endif
 		vdc_status[which] |= VDC_RR;
 		h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 	}
@@ -616,11 +634,16 @@ void vdc_check_hblank_raster_irq(INT32 which)
 
 static void do_vblank(INT32 which)
 {
+	if (vdc_vblank_triggered[which] == 1) return; // once per frame
+
 	/* Generate VBlank interrupt */
 	vdc_vblank_triggered[which] = 1;
 
 	if ( vdc_data[which][CR] & CR_VR )
 	{
+#if DINK_DEBUG
+		bprintf(0, _T("vbl @ scanline %d\n"), vce_current_line);
+#endif
 		h6280Run(30/3); // 30 m-cycles past start of line
 		vdc_status[which] |= VDC_VD;
 		h6280Run(2); // give cpu a chance to recognize status
@@ -648,6 +671,9 @@ static void do_vblank(INT32 which)
 
 static void vdc_advance_line(INT32 which)
 {
+	if (which == 0) // increment master scanline
+		vce_current_line = (vce_current_line + 1) % vce_linecount();
+
 	vdc_current_segment_line[which] += 1;
 	vdc_raster_count[which] += 1;
 
@@ -669,23 +695,38 @@ static void vdc_advance_line(INT32 which)
 		vdc_current_segment[which] = STATE_VSW;
 		vdc_current_segment_line[which] = 0;
 		vdc_vblank_triggered[which] = 0;
-		//bprintf(0, _T("vdw starts @ %d\n"), ((vdc_data[which][VPR]&0xff) & 0x1F)  + (vdc_data[which][VPR] >> 8));
-		//bprintf(0, _T("vsw @ %d\tvds @ %d\n"), ((vdc_data[which][VPR]&0xff) & 0x1F), (vdc_data[which][VPR] >> 8));
-		//bprintf(0, _T("vdw length is %d\n"), ( vdc_data[which][VDW] & 0x01FF ));
+		if (vce_current_line != 0) {
+			bprintf(0, _T("vdc_advance_line(): vce_current_line == %d - desynch.\n"), vce_current_line);
+		}
+#if DINK_DEBUG
+		bprintf(0, _T("vsw @ %d\tvds @ %d\n"), ((vdc_data[which][VPR]&0xff) & 0x1F), (vdc_data[which][VPR] >> 8));
+		bprintf(0, _T("vdw length is %d\n"), ( vdc_data[which][VDW] & 0x01FF ));
+#endif
 	}
 
-	if ( STATE_VSW == vdc_current_segment[which] && vdc_current_segment_line[which] == ( (vdc_data[which][VPR]&0xff) & 0x1F ) )
+	if ( STATE_VSW == vdc_current_segment[which] && vdc_current_segment_line[which] == (vdc_data[which][VPR] & 0x1f) + 1 )
 	{
 		vdc_current_segment[which] = STATE_VDS;
 		vdc_current_segment_line[which] = 0;
 	}
 
-	if ( STATE_VDS == vdc_current_segment[which] && vdc_current_segment_line[which] == (vdc_data[which][VPR] >> 8) )
+	if ( STATE_VDS == vdc_current_segment[which] && vdc_current_segment_line[which] == (vdc_data[which][VPR] >> 8) + 2 )
 	{
 		vdc_current_segment[which] = STATE_VDW;
 		vdc_current_segment_line[which] = 0;
 		vdc_raster_count[which] = 0x40;
 		//bprintf(0, _T("VDW_start(vdw:%x,bmp:%x)"), vdc_data[which][VDW] & 0x01FF,vce_current_line);
+	}
+
+	if ( STATE_VDW == vdc_current_segment[which] && vdc_current_segment_line[which] == (vdc_data[which][VDW] & 0x01ff) + 1 )
+	{
+		vdc_current_segment[which] = STATE_VCR;
+		vdc_current_segment_line[which] = 0;
+
+		do_vblank(which);
+#if DINK_DEBUG
+		bprintf(0, _T("end vdw vblank, line %d, vdc_vblank_triggered[which] == %x\n"),vce_current_line, vdc_vblank_triggered[which]);
+#endif
 	}
 
 	if ( STATE_VCR == vdc_current_segment[which] && vdc_current_segment_line[which] > (vdc_data[which][VCR]&0xff) ) {
@@ -697,7 +738,10 @@ static void vdc_advance_line(INT32 which)
 
 	if ( vce_current_line == vce_linecount() - 1 && !vdc_vblank_triggered[which] )
 	{
-		// it's possible that a game set a screwy vertical linecount which makes
+#if DINK_DEBUG
+		bprintf(0, _T("forced vblank :: line %d, vdc_vblank_triggered[which] == %x\n"),vce_current_line, vdc_vblank_triggered[which]);
+#endif
+		// it's possible that a game set a large vertical linecount which makes
 		// getting past the VDW state impossible (final blaster, intro).  We still need
 		// to generate vblank, though.  -dink
 
@@ -715,6 +759,12 @@ static void pce_refresh_line(INT32 which, INT32 /*line*/, INT32 external_input, 
 
 	/* is virtual map 32 or 64 characters tall ? (256 or 512 pixels) */
 	INT32 v_line = (scroll_y) & (vdc_data[which][MWR] & 0x0040 ? 0x1FF : 0x0FF);
+
+#if DINK_DEBUG
+	if (vdc_current_segment_line[which] > 235) {
+		bprintf(0, _T("pce line:  %d\tBYR %x\tscrolly  %d\tv_line  %d\n"),vdc_current_segment_line[which],vdc_data[which][BYR], vdc_yscroll[which], v_line);
+	}
+#endif
 
 	/* row within character */
 	INT32 v_row = (v_line & 7);
@@ -805,48 +855,29 @@ static void pce_refresh_line(INT32 which, INT32 /*line*/, INT32 external_input, 
 	}
 }
 
-static INT32 vdc_vdw_start(INT32 which)
-{
-	return ((vdc_data[which][VPR]&0xff) & 0x1f) + (vdc_data[which][VPR] >> 8);
-}
-
-static INT32 vdc_vdw_length(INT32 which)
-{
-	return (vdc_data[which][VDW] & 0x01ff) + 1;
-}
-
 void pce_hblank()
 {
 	vdc_check_hblank_raster_irq(0);
 
 	INT32 which = 0; // only 1 on pce
 
-	if (vce_current_line >= vdc_vdw_start(0) && vce_current_line <= vdc_vdw_start(0) + vdc_vdw_length(0))
+	if (vdc_current_segment[which] == STATE_VDW && vdc_current_segment_line[0] < 262 )
 	{
-#if 0
-		if (vdc_current_segment[which] != STATE_VDW) {
-			bprintf(0, _T("line %d not vdw.\n"),vce_current_line);
-			bprintf(0, _T("segment: %x\tsegment_line %d\n"), vdc_current_segment[which], vdc_current_segment_line[which]);
-		}
-#endif
-		if (vdc_current_segment[which] == STATE_VDW && vdc_current_segment_line[0] < 262 )
+		UINT8 drawn[684];
+		UINT16 *line_buffer = vdc_tmp_draw + (vdc_current_segment_line[which] * 684) + 86;
+		clear_line(vdc_current_segment_line[which]);
+
+		memset (drawn, 0, 684);
+
+		vdc_yscroll[which] = (vdc_current_segment_line[which] == 0) ? vdc_data[which][BYR] : (vdc_yscroll[which] + 1);
+
+		if (nBurnLayer & 1)
+			pce_refresh_line(0, vdc_current_segment_line[which], 0, drawn, line_buffer);
+
+		if (vdc_data[which][CR] & CR_SB)
 		{
-			UINT8 drawn[684];
-			UINT16 *line_buffer = vdc_tmp_draw + (vdc_current_segment_line[which] * 684) + 86;
-			clear_line(vdc_current_segment_line[which]);
-
-			memset (drawn, 0, 684);
-
-			vdc_yscroll[which] = (vdc_current_segment_line[which] == 0) ? vdc_data[which][BYR] : (vdc_yscroll[which] + 1);
-
-			if (nBurnLayer & 1)
-				pce_refresh_line(0, vdc_current_segment_line[which], 0, drawn, line_buffer);
-
-			if (vdc_data[which][CR] & CR_SB)
-			{
-				if (nSpriteEnable & 1)
-					pce_refresh_sprites(0, vdc_current_segment_line[which], drawn, line_buffer);
-			}
+			if (nSpriteEnable & 1)
+				pce_refresh_sprites(0, vdc_current_segment_line[which], drawn, line_buffer);
 		}
 	}
 }
@@ -856,59 +887,51 @@ void sgx_hblank()
 	vdc_check_hblank_raster_irq(0);
 	vdc_check_hblank_raster_irq(1);
 
-	if (vce_current_line >= vdc_vdw_start(0) && vce_current_line <= vdc_vdw_start(0) + vdc_vdw_length(0))
+	if ( vdc_current_segment[0] == STATE_VDW && vdc_current_segment_line[0] < 262 )
 	{
-#if 0
-		if (vdc_current_segment[0] != STATE_VDW) {
-			bprintf(0, _T("line %d not vdw.\n"),vce_current_line);
-			bprintf(0, _T("segment: %x\tsegment_line %d\n"), vdc_current_segment[0], vdc_current_segment_line[0]);
-		}
-#endif
-		if ( vdc_current_segment[0] == STATE_VDW && vdc_current_segment_line[0] < 262 )
+		UINT8 drawn[2][512*2];
+		UINT16 *line_buffer;
+		UINT16 temp_buffer[2][512*2];
+		INT32 i;
+
+		clear_line_sgx(vdc_current_segment_line[0]); // clear line
+
+		memset( drawn, 0, sizeof(drawn) );
+		memset( temp_buffer, 0, sizeof(temp_buffer) );
+
+		vdc_yscroll[0] = ( vdc_current_segment_line[0] == 0 ) ? vdc_data[0][BYR] : ( vdc_yscroll[0] + 1 );
+		vdc_yscroll[1] = ( vdc_current_segment_line[1] == 0 ) ? vdc_data[1][BYR] : ( vdc_yscroll[1] + 1 );
+
+		if (nBurnLayer & 1)
+			pce_refresh_line( 0, vdc_current_segment_line[0], 0, drawn[0], temp_buffer[0]);
+
+		if(vdc_data[0][CR] & CR_SB)
 		{
-			UINT8 drawn[2][512*2];
-			UINT16 *line_buffer;
-			UINT16 temp_buffer[2][512*2];
-			INT32 i;
+			if (nSpriteEnable & 1)
+				pce_refresh_sprites(0, vdc_current_segment_line[0], drawn[0], temp_buffer[0]);
+		}
 
-			clear_line_sgx(vdc_current_segment_line[0]); // clear line
+		if (nBurnLayer & 2)
+			pce_refresh_line( 1, vdc_current_segment_line[1], 1, drawn[1], temp_buffer[1]);
 
-			memset( drawn, 0, sizeof(drawn) );
-			memset( temp_buffer, 0, sizeof(temp_buffer) );
+		if ( vdc_data[1][CR] & CR_SB )
+		{
+			if (nSpriteEnable & 2)
+				pce_refresh_sprites(1, vdc_current_segment_line[1], drawn[1], temp_buffer[1]);
+		}
 
-			vdc_yscroll[0] = ( vdc_current_segment_line[0] == 0 ) ? vdc_data[0][BYR] : ( vdc_yscroll[0] + 1 );
-			vdc_yscroll[1] = ( vdc_current_segment_line[1] == 0 ) ? vdc_data[1][BYR] : ( vdc_yscroll[1] + 1 );
+		line_buffer = vdc_tmp_draw + (vdc_current_segment_line[0] * 684) + 86;
 
-			if (nBurnLayer & 1)
-				pce_refresh_line( 0, vdc_current_segment_line[0], 0, drawn[0], temp_buffer[0]);
+		for( i = 0; i < 512; i++ )
+		{
+			INT32 cur_prio = vpc_prio_map[i];
 
-			if(vdc_data[0][CR] & CR_SB)
+			if ( vpc_vdc0_enabled[cur_prio] )
 			{
-				if (nSpriteEnable & 1)
-					pce_refresh_sprites(0, vdc_current_segment_line[0], drawn[0], temp_buffer[0]);
-			}
-
-			if (nBurnLayer & 2)
-				pce_refresh_line( 1, vdc_current_segment_line[1], 1, drawn[1], temp_buffer[1]);
-
-			if ( vdc_data[1][CR] & CR_SB )
-			{
-				if (nSpriteEnable & 2)
-					pce_refresh_sprites(1, vdc_current_segment_line[1], drawn[1], temp_buffer[1]);
-			}
-
-			line_buffer = vdc_tmp_draw + (vdc_current_segment_line[0] * 684) + 86;
-
-			for( i = 0; i < 512; i++ )
-			{
-				INT32 cur_prio = vpc_prio_map[i];
-
-				if ( vpc_vdc0_enabled[cur_prio] )
+				if ( vpc_vdc1_enabled[cur_prio] )
 				{
-					if ( vpc_vdc1_enabled[cur_prio] )
+					switch( vpc_prio[cur_prio] )
 					{
-						switch( vpc_prio[cur_prio] )
-						{
 						case 0:	/* BG1 SP1 BG0 SP0 */
 							if ( drawn[0][i] )
 							{
@@ -967,24 +990,23 @@ void sgx_hblank()
 								line_buffer[i] = temp_buffer[1][i];
 							}
 							break;
-						}
-					}
-					else
-					{
-						if ( drawn[0][i] )
-						{
-							line_buffer[i] = temp_buffer[0][i];
-						}
 					}
 				}
 				else
 				{
-					if ( vpc_vdc1_enabled[cur_prio] )
+					if ( drawn[0][i] )
 					{
-						if ( drawn[1][i] )
-						{
-							line_buffer[i] = temp_buffer[1][i];
-						}
+						line_buffer[i] = temp_buffer[0][i];
+					}
+				}
+			}
+			else
+			{
+				if ( vpc_vdc1_enabled[cur_prio] )
+				{
+					if ( drawn[1][i] )
+					{
+						line_buffer[i] = temp_buffer[1][i];
 					}
 				}
 			}
@@ -998,7 +1020,6 @@ void pce_interrupt()
 	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("pce_interrupt called without init\n"));
 #endif
 
-	vce_current_line = (vce_current_line + 1) % vce_linecount();
 	vdc_advance_line(0);
 }
 
@@ -1008,7 +1029,6 @@ void sgx_interrupt()
 	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("sgx_interrupt called without init\n"));
 #endif
 
-	vce_current_line = ( vce_current_line + 1 ) % vce_linecount();
 	vdc_advance_line( 0 );
 	vdc_advance_line( 1 );
 }
@@ -1080,6 +1100,7 @@ void vdc_write(INT32 which, UINT8 offset, UINT8 data)
 
 				case BYR: {
 					vdc_yscroll[which]=vdc_data[which][BYR];
+					//bprintf(0, _T("vdc BYR  %x  @  line  %d\n"), vdc_yscroll[which], vce_current_line);
 				}
 				break;
 
@@ -1157,6 +1178,8 @@ void vdc_write(INT32 which, UINT8 offset, UINT8 data)
 		}
 		break;
 	}
+#if 0
+	// save for later debugging -dink
 	if (vdc_register[which] == RCR && (offset&3)==3) {
 		//bprintf(0, _T("RCR  %d\n"), vdc_data[which][vdc_register[which]]);
 	}
@@ -1167,6 +1190,7 @@ void vdc_write(INT32 which, UINT8 offset, UINT8 data)
 	if (vdc_register[which] == VDW) {// && (offset&3)==3) {
 		//bprintf(0, _T("------VDW  %x\n"), vdc_data[which][vdc_register[which]]);
 	}
+#endif
 }
 
 UINT8 vdc_read(INT32 which, UINT8 offset)
@@ -1308,9 +1332,11 @@ INT32 vdc_scan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(vdc_dvssr_write);
 		SCAN_VAR(vdc_status);
 		SCAN_VAR(vdc_sprite_ram);
+
 		SCAN_VAR(vdc_vblank_triggered);
 		SCAN_VAR(vdc_current_segment);
 		SCAN_VAR(vdc_current_segment_line);
+
 		SCAN_VAR(vdc_raster_count);
 		SCAN_VAR(vdc_satb_countdown);
 

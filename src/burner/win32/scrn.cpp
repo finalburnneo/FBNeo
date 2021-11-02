@@ -2070,6 +2070,10 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			BurnShiftEnabled = !BurnShiftEnabled;
 			break;
 
+		case MENU_LIGHTGUNRETICLES:
+			bBurnGunDrawReticles = !bBurnGunDrawReticles;
+			break;
+
 #ifdef INCLUDE_AVI_RECORDING
 		case MENU_AVI1X:
 			nAvi3x = 1;

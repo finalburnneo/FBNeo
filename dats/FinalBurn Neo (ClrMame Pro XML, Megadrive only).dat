@@ -3685,6 +3685,14 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="crazycars">
+		<description>Crazy Cars (HB) [Homebrew, raw conversion of Amstrad CPC version]</description>
+		<year>2013</year>
+		<manufacturer>F.L</manufacturer>
+		<rom name="Crazy Cars (2013)(F.L).bin" size="101994" crc="52367ce9"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="xfires" cloneof="xfire" romof="xfire">
 		<description>Cross Fire (Hack, Spanish)</description>
 		<year>2019</year>
@@ -7791,7 +7799,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="indyrus" cloneof="rickdang" romof="rickdang">
-		<description>Indiana Jones - Koridory Vremeni (Rus)</description>
+		<description>Indiana Jones - Koridory Vremeni (Hack, Rus) [Hack]</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="indiana jones - corridors of time (unl).bin" size="4194304" crc="54f82c76"/>
@@ -9711,7 +9719,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="masterms" cloneof="masterm" romof="masterm">
-		<description>Master of Monsters (Hack, Spanish)</description>
+		<description>Master of Monsters (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
 		<manufacturer>Renovation</manufacturer>
 		<rom name="master of monsters (hack, spanish).bin" size="524288" crc="fc206e6b"/>
@@ -14468,7 +14476,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rolos" cloneof="rolo" romof="rolo">
-		<description>Rolo to the Rescue (Hack, Spanish)</description>
+		<description>Rolo to the Rescue (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="rolo to the rescue (hack, spanish).bin" size="524288" crc="0c4584a4"/>
@@ -14932,7 +14940,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="opensea" cloneof="rolo" romof="rolo">
-		<description>Sezon Ohoty (Rus)</description>
+		<description>Sezon Ohoty (Hack, Rus) [Hack]</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="open season (unl).bin" size="1048576" crc="06eb2472"/>
@@ -14940,7 +14948,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="opensea3" cloneof="rolo" romof="rolo">
-		<description>Sezon Ohoty 3 (Rus)</description>
+		<description>Sezon Ohoty 3 (Hack, Rus) [Hack]</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="hunting season 3 (unl).bin" size="593184" crc="b433878c"/>
@@ -15420,7 +15428,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shrek" cloneof="yogibear" romof="yogibear">
-		<description>Shrek (Rus)</description>
+		<description>Shrek (Hack, Rus) [Hack]</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="shrek (unl).bin" size="1048576" crc="561e84b9"/>
@@ -15428,7 +15436,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shrek2" cloneof="ottifant" romof="ottifant">
-		<description>Shrek 2 (Rus)</description>
+		<description>Shrek 2 (Hack, Rus) [Hack]</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="shrek 2 (unl).bin" size="1048576" crc="0ccd3651"/>
@@ -19634,7 +19642,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ottifantg" cloneof="ottifant" romof="ottifant">
-		<description>The Ottifants (Ger, Prototype)</description>
+		<description>The Ottifants (Ger, Prototype) [Prototype]</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ottifants, the (germany) (beta).bin" size="1048576" crc="c6e3dd23"/>
@@ -20611,7 +20619,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="transf3" cloneof="mazinwar" romof="mazinwar">
-		<description>Transformers 3 (Rus)</description>
+		<description>Transformers 3 (Hack, Rus) [Hack]</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="transformers 3 (unl).bin" size="1117472" crc="8632246d"/>

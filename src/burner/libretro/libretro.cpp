@@ -552,6 +552,7 @@ static int create_variables_from_cheats()
 			cheat_option->friendly_name_categorized = option_name.c_str();
 			std::replace( option_name.begin(), option_name.end(), ' ', '_');
 			std::replace( option_name.begin(), option_name.end(), '=', '_');
+			std::replace( option_name.begin(), option_name.end(), ':', '_');
 			cheat_option->option_name = SSTR( "fbneo-cheat-" << num << "-" << drvname << "-" << option_name.c_str() );
 			cheat_option->num = num;
 			cheat_option->values.reserve(count);

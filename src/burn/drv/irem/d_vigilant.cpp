@@ -918,10 +918,11 @@ static void DrvSetVector(INT32 Status)
 	}
 	
 	if (DrvIrqVector == 0xff) {
-		// close irq?
+		ZetSetVector(DrvIrqVector);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	} else {
 		ZetSetVector(DrvIrqVector);
-		ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 	}
 }
 

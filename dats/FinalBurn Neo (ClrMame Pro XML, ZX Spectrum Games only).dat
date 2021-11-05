@@ -841,7 +841,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aquaplane" romof="spectrum">
-		<description>Aqua Plane (48K) [Press Enter at loading screen to begin]</description>
+		<description>Aqua Plane (48K) [Press ENTER to skip 'loading screen']</description>
 		<year>1983</year>
 		<manufacturer>Quicksilva</manufacturer>
 		<rom name="Aqua Plane (1983)(Quicksilva).tap" size="13553" crc="3ef11315"/>
@@ -3551,13 +3551,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dayinthelife" romof="spec128">
-		<description>Day in the Life, A</description>
+	<game name="dayinthelife" romof="spectrum">
+		<description>Day in the Life, A (48K)</description>
 		<year>1985</year>
 		<manufacturer>Micromega</manufacturer>
 		<rom name="Day in the Life, A (1985)(Micromega).tap" size="50099" crc="80e1e221"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5362,7 +5361,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gauntlet" romof="spec128">
-		<description>Gauntlet [Cursor Keys = 5, 6, 7, 8]</description>
+		<description>Gauntlet (128K) [In menu use Cursor Keys 5-6-7-8 + SPACE]</description>
 		<year>1986</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Gauntlet (1987)(U.S. Gold)(48K-128K).tap" size="150888" crc="173177cc"/>
@@ -5372,7 +5371,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gauntlet2" romof="spec128">
-		<description>Gauntlet II [Cursor Keys = 5, 6, 7, 8]</description>
+		<description>Gauntlet II (128K) [In menu use Cursor Keys 5-6-7-8 + SPACE]</description>
 		<year>1987</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Gauntlet II (1987)(U.S. Gold).tap" size="135163" crc="400e869d"/>
@@ -6281,23 +6280,21 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hyperactive" romof="spec128">
-		<description>Hyper Active</description>
+	<game name="hyperactive" romof="spectrum">
+		<description>Hyper Active (48K)</description>
 		<year>1988</year>
 		<manufacturer>Sinclair User</manufacturer>
 		<rom name="Hyper Active (1988)(Sinclair User).tap" size="25305" crc="b7aa30e8"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hypersports" romof="spec128">
-		<description>Hyper Sports</description>
+	<game name="hypersports" romof="spectrum">
+		<description>Hyper Sports (48K)</description>
 		<year>1985</year>
 		<manufacturer>Imagine</manufacturer>
 		<rom name="Hyper Sports (1985)(Imagine).tap" size="48751" crc="e3a072a5"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -7547,13 +7544,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="lemmings" romof="spec128">
-		<description>Lemmings</description>
+	<game name="lemmings" romof="spectrum">
+		<description>Lemmings (48K)</description>
 		<year>1991</year>
 		<manufacturer>Psygnosis</manufacturer>
 		<rom name="Lemmings (1991)(Psygnosis).tap" size="544963" crc="3a5fa27a"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -7711,7 +7707,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lostcavern" romof="spec128">
-		<description>Lost Cavern (HB) [Homebrew]</description>
+		<description>Lost Cavern (128K) (HB) [Homebrew]</description>
 		<year>2021</year>
 		<manufacturer>Isaiasdiaz</manufacturer>
 		<rom name="Lost Cavern (2021)(Isaiasdiaz).tap" size="46610" crc="987ec991"/>
@@ -7721,7 +7717,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lostcaverneasy" cloneof="lostcavern" romof="lostcavern">
-		<description>Lost Cavern - Easy (HB) [Homebrew]</description>
+		<description>Lost Cavern - Easy (128K) (HB) [Homebrew]</description>
 		<year>2021</year>
 		<manufacturer>Isaiasdiaz</manufacturer>
 		<rom name="Lost Cavern - Easy (2021)(Isaiasdiaz).tap" size="46585" crc="37e3379b"/>
@@ -7769,13 +7765,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="lumascii" romof="spec128">
-		<description>LumASCII (HB) [Homebrew]</description>
+	<game name="lumascii" romof="spectrum">
+		<description>LumASCII (48K) (HB) [Homebrew]</description>
 		<year>2012</year>
 		<manufacturer>Bob's Stuff</manufacturer>
 		<rom name="LumASCII (2012)(Bob's Stuff).tap" size="47917" crc="f29c2da7"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -7798,7 +7793,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mabusen" romof="spec128">
-		<description>Mabus Mania (English) (HB) [Homebrew, English-language version]</description>
+		<description>Mabus Mania (English) (128K) (HB) [Homebrew, English-language version]</description>
 		<year>2021</year>
 		<manufacturer>Hicks</manufacturer>
 		<rom name="Mabus Mania EN (2021)(Hicks).tap" size="44176" crc="94ae9080"/>
@@ -7808,7 +7803,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mabuses" cloneof="mabusen" romof="mabusen">
-		<description>Mabus Mania (Spanish) (HB) [Homebrew, Spanish-language version]</description>
+		<description>Mabus Mania (Spanish) (128K) (HB) [Homebrew, Spanish-language version]</description>
 		<year>2021</year>
 		<manufacturer>Hicks</manufacturer>
 		<rom name="Mabus Mania ES (2021)(Hicks).tap" size="44200" crc="3d70ab7b"/>
@@ -8179,7 +8174,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="metamorphosis" romof="spec128">
-		<description>Metamorphosis (HB) [Homebrew]</description>
+		<description>Metamorphosis (128K) (HB) [Homebrew]</description>
 		<year>2021</year>
 		<manufacturer>ITNL-team</manufacturer>
 		<rom name="Metamorphosis (2021)(ITNL-team).tap" size="49194" crc="d22fb315"/>
@@ -9033,7 +9028,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjapoison1" romof="spec128">
-		<description>Ninja Poison - Part 1 (HB) [Homebrew]</description>
+		<description>Ninja Poison - Part 1 (128K) (HB) [Homebrew]</description>
 		<year>2021</year>
 		<manufacturer>TokuSoft</manufacturer>
 		<rom name="Ninja Poison - Part 1 (2021)(TokuSoft).tap" size="45684" crc="2cd6d37d"/>
@@ -9043,7 +9038,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjapoison2" cloneof="ninjapoison1" romof="ninjapoison1">
-		<description>Ninja Poison - Part 2 (HB) [Homebrew]</description>
+		<description>Ninja Poison - Part 2 (128K) (HB) [Homebrew]</description>
 		<year>2021</year>
 		<manufacturer>TokuSoft</manufacturer>
 		<rom name="Ninja Poison - Part 2 (2021)(TokuSoft).tap" size="48076" crc="e4cce9b9"/>
@@ -9341,7 +9336,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="p47thunderbolt" romof="spec128">
-		<description>P-47 Thunderbolt</description>
+		<description>P-47 Thunderbolt (128K)</description>
 		<year>1990</year>
 		<manufacturer>Firebird</manufacturer>
 		<rom name="P-47 Thunderbolt (1990)(Firebird).z80" size="72894" crc="9efaf7fc"/>
@@ -10949,7 +10944,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rodman" romof="spec128">
-		<description>Rodman v1.2 (HB) [Homebrew]</description>
+		<description>Rodman v1.2 (128K) (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>The Future Was 8bit</manufacturer>
 		<rom name="Rodman v1.2 (2018)(TFW8b).tap" size="21795" crc="c7ba4663"/>
@@ -11055,7 +11050,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rygar2020" cloneof="rygar" romof="rygar">
-		<description>Rygar Colour Enhancement Mod (Hack) [Hack]</description>
+		<description>Rygar Colour Enhancement Mod (128K) (Hack) [Hack]</description>
 		<year>2019-20</year>
 		<manufacturer>Rafal Miazga</manufacturer>
 		<rom name="Rygar 2020 (2020)(Ralf).tap" size="35648" crc="c0af87aa"/>
@@ -11588,13 +11583,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="shuttlebug" romof="spec128">
+	<game name="shuttlebug" romof="spectrum">
 		<description>Shuttlebug (48K) (HB) [Homebrew]</description>
 		<year>2012</year>
 		<manufacturer> Stonechat</manufacturer>
 		<rom name="Shuttlebug 48K (2012)( Stonechat).tap" size="32148" crc="e7f63317"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -12639,23 +12633,21 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="summergames2" romof="spec128">
-		<description>Summer Games II</description>
-		<year>1988</year>
-		<manufacturer>U.S. Gold</manufacturer>
-		<rom name="Summer Games II (1988)(U.S. Gold).tap" size="189121" crc="dbe0691e"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="summergames" romof="spec128">
-		<description>Summer Games</description>
+	<game name="summergames" romof="spectrum">
+		<description>Summer Games (48K)</description>
 		<year>1988</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Summer Games (1988)(U.S. Gold).tap" size="103495" crc="a03cb5cb"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="summergames2" romof="spectrum">
+		<description>Summer Games II (48K)</description>
+		<year>1988</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Summer Games II (1988)(U.S. Gold).tap" size="189121" crc="dbe0691e"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -13242,13 +13234,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="thebiz" romof="spec128">
-		<description>The Biz</description>
+	<game name="thebiz" romof="spectrum">
+		<description>The Biz (48K)</description>
 		<year>1984</year>
 		<manufacturer>Virgin Games</manufacturer>
 		<rom name="The Biz (1984)(Virgin Games).tap" size="47268" crc="6773d204"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -13972,6 +13963,26 @@
 		<year>1989</year>
 		<manufacturer>Domark</manufacturer>
 		<rom name="Vindicators (1989)(Domark).tap" size="65476" crc="c4b6502e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="virgilsen" romof="spec128">
+		<description>Virgil's Purgatory ZX (English) (128K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Amaweks</manufacturer>
+		<rom name="Virgil's Purgatory ZX 128K EN (2021)(Amaweks).tap" size="45165" crc="acf1905a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="virgilspt" cloneof="virgilsen" romof="virgilsen">
+		<description>Virgil's Purgatory ZX (Portuguese) (128K) (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Amaweks</manufacturer>
+		<rom name="Virgil's Purgatory ZX 128K PT (2021)(Amaweks).tap" size="45165" crc="0d5942d0"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

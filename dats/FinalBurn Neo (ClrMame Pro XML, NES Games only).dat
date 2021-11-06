@@ -2942,9 +2942,17 @@
 	</game>
 	<game name="dai2jisuprotajc" cloneof="dai2jisuprota" romof="dai2jisuprota">
 		<description>Dai-2-ji Super Robot Taisen (Japan) - Castellano v1.0 [Hack]</description>
-		<year>201?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2021</year>
+		<manufacturer>Max1323</manufacturer>
 		<rom name="Dai-2-ji Super Robot Taisen (Japan) - Castellano v1.0.nes" size="524304" crc="5b7ab480"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="dai2jisuprotaji" cloneof="dai2jisuprota" romof="dai2jisuprota">
+		<description>Dai-2-ji Super Robot Taisen (Japan) - Italian v0.98 [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wolfgare</manufacturer>
+		<rom name="Super Robot Taisen (it) v0.98i (2019)(Wolfgare).nes" size="524304" crc="dfd59e4e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -5276,11 +5284,19 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="ganbaregoemon2">
+	<game name="ganbaregoemon2j" cloneof="ganbaregoemon2" romof="ganbaregoemon2">
 		<description>Ganbare Goemon 2 (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Ganbare Goemon 2 (Japan).nes" size="262160" crc="3424d0dc"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="ganbaregoemon2">
+		<description>Ganbare Goemon 2 (T-Eng)</description>
+		<year>1989</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Ganbare Goemon 2 (T-Eng).nes" size="262160" crc="b2fe26c7"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -6409,6 +6425,14 @@
 		<year>1992</year>
 		<manufacturer>Sony (CSG) Imagesoft</manufacturer>
 		<rom name="Hook (USA).nes" size="262160" crc="b5902c20"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="hoppinmad">
+		<description>Hoppin' Mad (Prototype) [Prototype]</description>
+		<year>1989</year>
+		<manufacturer>Nowhere Productions</manufacturer>
+		<rom name="Hoppin' Mad (Proto) (1989)(Nowhere Prod.).nes" size="40976" crc="ac45ada9"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -9953,6 +9977,14 @@
 		<year>2013</year>
 		<manufacturer>Julian L.</manufacturer>
 		<rom name="north &amp; south (usa) - castellano v2.0.nes" size="262160" crc="98907558"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="northsouthi" cloneof="northsouth" romof="northsouth">
+		<description>North &amp; South (USA) - Italian v2.0 [Hack]</description>
+		<year>2014</year>
+		<manufacturer>Julian L.</manufacturer>
+		<rom name="North &amp; South (it) v2.0 (2014)(Julian L.).nes" size="262160" crc="155fa336"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -14460,6 +14492,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="upsadown">
+		<description>Upsad Down (HB, v0.6) [Homebrew, NesDev Competition build]</description>
+		<year>2020</year>
+		<manufacturer>Fadest</manufacturer>
+		<rom name="Upsad Down v0.6 (2021)(Fadest).nes" size="40976" crc="f90302bc"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="urbanchampion">
 		<description>Urban Champion (World)</description>
 		<year>1984</year>
@@ -14521,6 +14561,14 @@
 		<year>1986</year>
 		<manufacturer>Namco</manufacturer>
 		<rom name="Valkyrie no Bouken - Toki no Kagi Densetsu (T-eng).nes" size="65552" crc="e901fdd7"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="vanguard">
+		<description>Vanguard (Unl)</description>
+		<year>200?</year>
+		<manufacturer>Power Joy</manufacturer>
+		<rom name="Vanguard (20XX)(Power Joy).nes" size="163856" crc="b6c0c49e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -14709,7 +14757,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wowheels">
-		<description>War on Wheels (USA) (Proto)</description>
+		<description>War on Wheels (USA) (Prototype) [Prototype]</description>
 		<year>1991-2006</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="War on Wheels (Proto)(2006)(Jaleco).nes" size="393232" crc="c957dcb0"/>

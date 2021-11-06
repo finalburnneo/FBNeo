@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17653 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17659 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3237,7 +3237,8 @@ This list contains all games supported by FinalBurn Neo.
 | dairesya	|  	| Dai Ressya Goutou (Japan)				| ironhors	| 1986	| Konami (Kawaku| GX560		| 					|
 | pce_daisenpu	|  	| Dai Senpu						| 		| 1990	| NEC Avenue	| PC Engine	| 					|
 | msx_dskeiba	|  	| Dai Shougai Keiba (Jpn)				| 		| 1984	| Casio		| MSX		| 					|
-| nes_dai2jisuprotajc|  	| Dai-2-ji Super Robot Taisen (Japan) - Castellano v1.0	| nes_dai2jisuprota| 201?	| Nintendo	| Miscellaneous	| 					|
+| nes_dai2jisuprotajc|  	| Dai-2-ji Super Robot Taisen (Japan) - Castellano v1.0	| nes_dai2jisuprota| 2021	| Max1323	| Miscellaneous	| 					|
+| nes_dai2jisuprotaji|  	| Dai-2-ji Super Robot Taisen (Japan) - Italian v0.98	| nes_dai2jisuprota| 2019	| Wolfgare	| Miscellaneous	| 					|
 | nes_dai2jisuprotaj|  	| Dai-2-ji Super Robot Taisen (Japan)			| nes_dai2jisuprota| 1991	| Banpresto	| Miscellaneous	| 					|
 | nes_dai2jisuprota|  	| Dai-2-ji Super Robot Taisen (T-eng)			| 		| 1991	| Banpresto	| Miscellaneous	| 					|
 | pce_donaturl	|  	| Daichi Kun Crisis - Do Natural			| 		| 1989	| Salio		| PC Engine	| 					|
@@ -5491,7 +5492,8 @@ This list contains all games supported by FinalBurn Neo.
 | msx_gameswintered|  	| Games, The - Winter Edition (Euro)			| 		| 1988	| U.S. Gold - Ep| MSX		| 					|
 | ginkun	|  	| Ganbare Ginkun					| 		| 1995	| Tecmo		| Miscellaneous	| 					|
 | nes_ganbaregoemon2c|  	| Ganbare Goemon 2 (Japan) - Castellano v0.99		| nes_ganbaregoemon2| 2021	| jackic	| Miscellaneous	| 					|
-| nes_ganbaregoemon2|  	| Ganbare Goemon 2 (Japan)				| 		| 1989	| Konami	| Miscellaneous	| 					|
+| nes_ganbaregoemon2j|  	| Ganbare Goemon 2 (Japan)				| nes_ganbaregoemon2| 1989	| Konami	| Miscellaneous	| 					|
+| nes_ganbaregoemon2|  	| Ganbare Goemon 2 (T-Eng)				| 		| 1989	| Konami	| Miscellaneous	| 					|
 | nes_ganbagoegaic|  	| Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Japan) - C| nes_ganbagoegai| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_ganbagoegaij|  	| Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Japan)	| nes_ganbagoegai| 1990	| Konami	| Miscellaneous	| 					|
 | nes_ganbagoegai|  	| Ganbare Goemon Gaiden - Kieta Ougon Kiseru (T-eng)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -6531,6 +6533,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_hopnfrog	|  	| Hop'n'Frog (128K) (HB)				| 		| 2015	| Gabriele Amore| ZX Spectrum	| 					|
 | msx_hopper	|  	| Hopper (Euro)						| 		| 1986	| Eaglesoft	| MSX		| 					|
 | hopprobo	|  	| Hopper Robo						| 		| 1983	| Sega		| Miscellaneous	| 					|
+| nes_hoppinmad	|  	| Hoppin' Mad (Prototype)				| 		| 1989	| Nowhere Produc| Miscellaneous	| 					|
 | spec_hoppingmad|  	| Hopping Mad (128K)					| 		| 1988	| Elite Systems	| ZX Spectrum	| 					|
 | hopmappy	|  	| Hopping Mappy						| 		| 1986	| Namco		| System 86	| 					|
 | spec_horacerobots|  	| Horace and the Robots (128K) (HB)			| 		| 2017	| Steve Snake	| ZX Spectrum	| 					|
@@ -9996,6 +9999,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_normy	|  	| Normy's Beach Babe-O-Rama (Euro, USA)			| 		| 1994	| Electronic Art| Sega Megadrive| 					|
 | spec_northnsouth|  	| North & South (128K)					| 		| 1991	| Infogrames	| ZX Spectrum	| O, P and Space for startup setting	|
 | nes_northsouthc|  	| North & South (USA) - Castellano v2.0			| nes_northsouth| 2013	| Julian L.	| Miscellaneous	| 					|
+| nes_northsouthi|  	| North & South (USA) - Italian v2.0			| nes_northsouth| 2014	| Julian L.	| Miscellaneous	| 					|
 | nes_northsouth|  	| North & South (USA)					| 		| 1990	| Kemco		| Miscellaneous	| 					|
 | spec_northstar|  	| North Star						| 		| 1988	| Gremlin Graphi| ZX Spectrum	| 					|
 | nostj		|  	| Nostradamus (Japan)					| nost		| 1993	| Face		| LINDA		| 					|
@@ -16368,6 +16372,7 @@ This list contains all games supported by FinalBurn Neo.
 | upndown	|  	| Up'n Down (315-5030)					| 		| 1983	| Sega		| System 1	| 					|
 | upndownu	|  	| Up'n Down (not encrypted)				| upndown	| 1983	| Sega		| System 1	| 					|
 | cv_upndown	|  	| Up'n Down						| 		| 1984	| Sega		| ColecoVision	| 					|
+| nes_upsadown	|  	| Upsad Down (HB, v0.6)					| 		| 2020	| Fadest	| Miscellaneous	| NesDev Competition build		|
 | nes_urbanchampion|  	| Urban Champion (World)				| 		| 1984	| Nintendo	| Miscellaneous	| 					|
 | gg_ustrike	|  	| Urban Strike (Euro, USA)				| 		| 1995	| Black Pearl	| Sega Game Gear| 					|
 | md_ustrike	|  	| Urban Strike (Euro, USA)				| 		| 1994	| Electronic Art| Sega Megadrive| 					|
@@ -16450,6 +16455,7 @@ This list contains all games supported by FinalBurn Neo.
 | vanguardg	|  	| Vanguard (Germany)					| vanguard	| 1981	| SNK		| Miscellaneous	| 					|
 | vanguardj	|  	| Vanguard (Japan)					| vanguard	| 1981	| SNK		| Miscellaneous	| 					|
 | vanguard	|  	| Vanguard (SNK)					| 		| 1981	| SNK		| Miscellaneous	| 					|
+| nes_vanguard	|  	| Vanguard (Unl)					| 		| 200?	| Power Joy	| Miscellaneous	| 					|
 | vangrd2	|  	| Vanguard II						| 		| 1984	| SNK		| Miscellaneous	| 					|
 | md_vaportrec	|  	| Vapor Trail (Enhanced Colors)				| md_vaportr	| 2015	| Renovation - P| Sega Megadrive| 					|
 | md_vaportrs	|  	| Vapor Trail (Hack, Spanish)				| md_vaportr	| 2019	| Published	| Sega Megadrive| 					|
@@ -16747,7 +16753,7 @@ This list contains all games supported by FinalBurn Neo.
 | warofbugg	| D NW	| War of the Bugs or Monsterous Manouvers in a Mushroom | warofbug	| 1981	| Armenia	| Galaxian	| 					|
 | warofbugu	|  	| War of the Bugs or Monsterous Manouvers in a Mushroom | warofbug	| 1981	| Armenia	| Galaxian	| 					|
 | warofbug	|  	| War of the Bugs or Monsterous Manouvers in a Mushroom | 		| 1981	| Armenia	| Galaxian	| 					|
-| nes_wowheels	|  	| War on Wheels (USA) (Proto)				| 		| 1991-2006| Jaleco	| Miscellaneous	| 					|
+| nes_wowheels	|  	| War on Wheels (USA) (Prototype)			| 		| 1991-2006| Jaleco	| Miscellaneous	| 					|
 | cv_warroom	|  	| War Room						| 		| 1983	| Probe 2000	| ColecoVision	| 					|
 | warzardr1	|  	| War-Zard / Red Earth (Japan 961023)			| redearth	| 1996	| Capcom	| CPS-3		| 					|
 | warzard	|  	| War-Zard / Red Earth (Japan 961121)			| redearth	| 1996	| Capcom	| CPS-3		| 					|

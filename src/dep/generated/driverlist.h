@@ -3272,6 +3272,7 @@ DRV		BurnDrvDairesya;
 DRV		BurnDrvpce_daisenpu;
 DRV		BurnDrvMSX_dskeiba;
 DRV		BurnDrvnes_dai2jisuprotajc;
+DRV		BurnDrvnes_dai2jisuprotaji;
 DRV		BurnDrvnes_dai2jisuprotaj;
 DRV		BurnDrvnes_dai2jisuprota;
 DRV		BurnDrvpce_donaturl;
@@ -5553,6 +5554,7 @@ DRV		BurnDrvUsgames;
 DRV		BurnDrvMSX_gameswintered;
 DRV		BurnDrvGinkun;
 DRV		BurnDrvnes_ganbaregoemon2c;
+DRV		BurnDrvnes_ganbaregoemon2j;
 DRV		BurnDrvnes_ganbaregoemon2;
 DRV		BurnDrvnes_ganbagoegaic;
 DRV		BurnDrvnes_ganbagoegaij;
@@ -6601,6 +6603,7 @@ DRV		BurnDrvHoops95;
 DRV		BurnSpecHopnfrog;
 DRV		BurnDrvMSX_hopper;
 DRV		BurnDrvhopprobo;
+DRV		BurnDrvnes_hoppinmad;
 DRV		BurnSpechoppingmad;
 DRV		BurnDrvHopmappy;
 DRV		BurnSpecHoracerobots;
@@ -10108,6 +10111,7 @@ DRV		BurnSpecNonamed;
 DRV		BurnDrvmd_normy;
 DRV		BurnSpecnorthnsouth;
 DRV		BurnDrvnes_northsouthc;
+DRV		BurnDrvnes_northsouthi;
 DRV		BurnDrvnes_northsouth;
 DRV		BurnSpecnorthstar;
 DRV		BurnDrvNostj;
@@ -16560,6 +16564,7 @@ DRV		BurnSpecuntouchb;
 DRV		BurnDrvUpndown;
 DRV		BurnDrvUpndownu;
 DRV		BurnDrvcv_upndown;
+DRV		BurnDrvnes_upsadown;
 DRV		BurnDrvnes_urbanchampion;
 DRV		BurnDrvgg_ustrike;
 DRV		BurnDrvmd_ustrike;
@@ -16642,6 +16647,7 @@ DRV		BurnDrvVanguardc;
 DRV		BurnDrvVanguardg;
 DRV		BurnDrvVanguardj;
 DRV		BurnDrvVanguard;
+DRV		BurnDrvnes_vanguard;
 DRV		BurnDrvVangrd2;
 DRV		BurnDrvmd_vaportrec;
 DRV		BurnDrvmd_vaportrs;
@@ -21154,6 +21160,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_daisenpu,		// Dai Senpu
 	&BurnDrvMSX_dskeiba,		// Dai Shougai Keiba (Jpn)
 	&BurnDrvnes_dai2jisuprotajc,// Dai-2-ji Super Robot Taisen (Japan) - Castellano v1.0
+	&BurnDrvnes_dai2jisuprotaji,// Dai-2-ji Super Robot Taisen (Japan) - Italian v0.98
 	&BurnDrvnes_dai2jisuprotaj,	// Dai-2-ji Super Robot Taisen (Japan)
 	&BurnDrvnes_dai2jisuprota,	// Dai-2-ji Super Robot Taisen (T-eng)
 	&BurnDrvpce_donaturl,		// Daichi Kun Crisis - Do Natural
@@ -23435,7 +23442,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_gameswintered,	// Games, The - Winter Edition (Euro)
 	&BurnDrvGinkun,				// Ganbare Ginkun
 	&BurnDrvnes_ganbaregoemon2c,// Ganbare Goemon 2 (Japan) - Castellano v0.99
-	&BurnDrvnes_ganbaregoemon2,	// Ganbare Goemon 2 (Japan)
+	&BurnDrvnes_ganbaregoemon2j,// Ganbare Goemon 2 (Japan)
+	&BurnDrvnes_ganbaregoemon2,	// Ganbare Goemon 2 (T-Eng)
 	&BurnDrvnes_ganbagoegaic,	// Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Japan) - Castellano v0.99
 	&BurnDrvnes_ganbagoegaij,	// Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Japan)
 	&BurnDrvnes_ganbagoegai,	// Ganbare Goemon Gaiden - Kieta Ougon Kiseru (T-eng)
@@ -24483,6 +24491,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecHopnfrog,			// Hop'n'Frog (128K) (HB)
 	&BurnDrvMSX_hopper,			// Hopper (Euro)
 	&BurnDrvhopprobo,			// Hopper Robo
+	&BurnDrvnes_hoppinmad,		// Hoppin' Mad (Prototype)
 	&BurnSpechoppingmad,		// Hopping Mad (128K)
 	&BurnDrvHopmappy,			// Hopping Mappy
 	&BurnSpecHoracerobots,		// Horace and the Robots (128K) (HB)
@@ -27990,6 +27999,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_normy,			// Normy's Beach Babe-O-Rama (Euro, USA)
 	&BurnSpecnorthnsouth,		// North & South (128K)
 	&BurnDrvnes_northsouthc,	// North & South (USA) - Castellano v2.0
+	&BurnDrvnes_northsouthi,	// North & South (USA) - Italian v2.0
 	&BurnDrvnes_northsouth,		// North & South (USA)
 	&BurnSpecnorthstar,			// North Star
 	&BurnDrvNostj,				// Nostradamus (Japan)
@@ -34442,6 +34452,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvUpndown,			// Up'n Down (315-5030)
 	&BurnDrvUpndownu,			// Up'n Down (not encrypted)
 	&BurnDrvcv_upndown,			// Up'n Down
+	&BurnDrvnes_upsadown,		// Upsad Down (HB, v0.6)
 	&BurnDrvnes_urbanchampion,	// Urban Champion (World)
 	&BurnDrvgg_ustrike,			// Urban Strike (Euro, USA)
 	&BurnDrvmd_ustrike,			// Urban Strike (Euro, USA)
@@ -34524,6 +34535,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvVanguardg,			// Vanguard (Germany)
 	&BurnDrvVanguardj,			// Vanguard (Japan)
 	&BurnDrvVanguard,			// Vanguard (SNK)
+	&BurnDrvnes_vanguard,		// Vanguard (Unl)
 	&BurnDrvVangrd2,			// Vanguard II
 	&BurnDrvmd_vaportrec,		// Vapor Trail (Enhanced Colors)
 	&BurnDrvmd_vaportrs,		// Vapor Trail (Hack, Spanish)
@@ -34829,7 +34841,7 @@ static struct BurnDriver* pDriver[] = {
 #endif
 	&BurnDrvWarofbugu,			// War of the Bugs or Monsterous Manouvers in a Mushroom Maze (US)
 	&BurnDrvWarofbug,			// War of the Bugs or Monsterous Manouvers in a Mushroom Maze
-	&BurnDrvnes_wowheels,		// War on Wheels (USA) (Proto)
+	&BurnDrvnes_wowheels,		// War on Wheels (USA) (Prototype)
 	&BurnDrvcv_warroom,			// War Room
 	&BurnDrvWarzardr1,			// War-Zard / Red Earth (Japan 961023)
 	&BurnDrvWarzard,			// War-Zard / Red Earth (Japan 961121)

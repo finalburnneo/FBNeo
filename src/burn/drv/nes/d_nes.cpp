@@ -31172,8 +31172,25 @@ struct BurnDriver BurnDrvnes_gameparty = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_ganbaregoemon2RomDesc[] = {
+static struct BurnRomInfo nes_ganbaregoemon2jRomDesc[] = {
 	{ "Ganbare Goemon 2 (Japan).nes",          262160, 0x3424d0dc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ganbaregoemon2j)
+STD_ROM_FN(nes_ganbaregoemon2j)
+
+struct BurnDriver BurnDrvnes_ganbaregoemon2j = {
+	"nes_ganbaregoemon2j", "nes_ganbaregoemon2", NULL, NULL, "1989",
+	"Ganbare Goemon 2 (Japan)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ACTION | GBF_RPG, 0,
+	NESGetZipName, nes_ganbaregoemon2jRomInfo, nes_ganbaregoemon2jRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_ganbaregoemon2RomDesc[] = {
+	{ "Ganbare Goemon 2 (T-Eng).nes",          262160, 0xb2fe26c7, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_ganbaregoemon2)
@@ -31181,9 +31198,9 @@ STD_ROM_FN(nes_ganbaregoemon2)
 
 struct BurnDriver BurnDrvnes_ganbaregoemon2 = {
 	"nes_ganbaregoemon2", NULL, NULL, NULL, "1989",
-	"Ganbare Goemon 2 (Japan)\0", NULL, "Konami", "Miscellaneous",
+	"Ganbare Goemon 2 (T-Eng)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ACTION | GBF_RPG, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_ganbaregoemon2RomInfo, nes_ganbaregoemon2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

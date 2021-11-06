@@ -17296,6 +17296,25 @@ struct BurnDriver BurnDrvnes_northsouthc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// North & South (USA) - Italian v2.0
+// https://www.romhacking.net/
+static struct BurnRomInfo nes_northsouthiRomDesc[] = {
+	{ "North & South (it) v2.0 (2014)(Julian L.).nes",          262160, 0x155fa336, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_northsouthi)
+STD_ROM_FN(nes_northsouthi)
+
+struct BurnDriver BurnDrvnes_northsouthi = {
+	"nes_northsouthi", "nes_northsouth", NULL, NULL, "2014",
+	"North & South (USA) - Italian v2.0\0", NULL, "Julian L.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_ACTION | GBF_STRATEGY, 0,
+	NESGetZipName, nes_northsouthiRomInfo, nes_northsouthiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Parodius Da! (Japan) - Castellano v1.1
 // https://www.romhacking.net/
 static struct BurnRomInfo nes_parodiusdacRomDesc[] = {
@@ -18653,11 +18672,30 @@ STD_ROM_PICK(nes_dai2jisuprotajc)
 STD_ROM_FN(nes_dai2jisuprotajc)
 
 struct BurnDriver BurnDrvnes_dai2jisuprotajc = {
-	"nes_dai2jisuprotajc", "nes_dai2jisuprota", NULL, NULL, "201?",
-	"Dai-2-ji Super Robot Taisen (Japan) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_dai2jisuprotajc", "nes_dai2jisuprota", NULL, NULL, "2021",
+	"Dai-2-ji Super Robot Taisen (Japan) - Castellano v1.0\0", NULL, "Max1323", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_STRATEGY, 0,
 	NESGetZipName, nes_dai2jisuprotajcRomInfo, nes_dai2jisuprotajcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Dai-2-ji Super Robot Taisen (Japan) - Italian v0.98
+// https://www.romhacking.net/
+static struct BurnRomInfo nes_dai2jisuprotajiRomDesc[] = {
+	{ "Super Robot Taisen (it) v0.98i (2019)(Wolfgare).nes",          524304, 0xdfd59e4e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dai2jisuprotaji)
+STD_ROM_FN(nes_dai2jisuprotaji)
+
+struct BurnDriver BurnDrvnes_dai2jisuprotaji = {
+	"nes_dai2jisuprotaji", "nes_dai2jisuprota", NULL, NULL, "2019",
+	"Dai-2-ji Super Robot Taisen (Japan) - Italian v0.98\0", NULL, "Wolfgare", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_STRATEGY, 0,
+	NESGetZipName, nes_dai2jisuprotajiRomInfo, nes_dai2jisuprotajiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -18802,9 +18840,9 @@ STD_ROM_FN(nes_wowheels)
 
 	struct BurnDriver BurnDrvnes_wowheels = {
 	"nes_wowheels", NULL, NULL, NULL, "1991-2006",
-	"War on Wheels (USA) (Proto)\0", NULL, "Jaleco", "Miscellaneous",
+	"War on Wheels (USA) (Prototype)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_NES, GBF_SPORTSMISC, 0,
 	NESGetZipName, nes_wowheelsRomInfo, nes_wowheelsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -18882,9 +18920,62 @@ struct BurnDriver BurnDrvnes_seikima2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+//Hoppin' Mad (Prototype) (1989) (Nowhere Prod.)
+static struct BurnRomInfo nes_hoppinmadRomDesc[] = {
+	{ "Hoppin' Mad (Proto) (1989)(Nowhere Prod.).nes",          40976, 0xac45ada9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hoppinmad)
+STD_ROM_FN(nes_hoppinmad)
+
+struct BurnDriver BurnDrvnes_hoppinmad = {
+	"nes_hoppinmad", NULL, NULL, NULL, "1989",
+	"Hoppin' Mad (Prototype)\0", NULL, "Nowhere Productions", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_hoppinmadRomInfo, nes_hoppinmadRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+//Vanguard (20XX)(Power Joy)
+static struct BurnRomInfo nes_vanguardRomDesc[] = {
+	{ "Vanguard (20XX)(Power Joy).nes",          163856, 0xb6c0c49e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_vanguard)
+STD_ROM_FN(nes_vanguard)
+
+struct BurnDriver BurnDrvnes_vanguard = {
+	"nes_vanguard", NULL, NULL, NULL, "200?",
+	"Vanguard (Unl)\0", NULL, "Power Joy", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RUNGUN, 0,
+	NESGetZipName, nes_vanguardRomInfo, nes_vanguardRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
+
+static struct BurnRomInfo nes_upsadownRomDesc[] = {
+	{ "Upsad Down v0.6 (2021)(Fadest).nes",          40976, 0xf90302bc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_upsadown)
+STD_ROM_FN(nes_upsadown)
+
+struct BurnDriver BurnDrvnes_upsadown = {
+	"nes_upsadown", NULL, NULL, NULL, "2020",
+	"Upsad Down (HB, v0.6)\0", "NesDev Competition build", "Fadest", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_upsadownRomInfo, nes_upsadownRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_blazrangRomDesc[] = {
 	{ "Blazing Rangers (2021)(Karu Gamo).nes",          40976, 0xf11f92b4, BRF_ESS | BRF_PRG },
@@ -31081,8 +31172,25 @@ struct BurnDriver BurnDrvnes_gameparty = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_ganbaregoemon2RomDesc[] = {
+static struct BurnRomInfo nes_ganbaregoemon2jRomDesc[] = {
 	{ "Ganbare Goemon 2 (Japan).nes",          262160, 0x3424d0dc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ganbaregoemon2j)
+STD_ROM_FN(nes_ganbaregoemon2j)
+
+struct BurnDriver BurnDrvnes_ganbaregoemon2j = {
+	"nes_ganbaregoemon2j", "nes_ganbaregoemon2", NULL, NULL, "1989",
+	"Ganbare Goemon 2 (Japan)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ACTION | GBF_RPG, 0,
+	NESGetZipName, nes_ganbaregoemon2jRomInfo, nes_ganbaregoemon2jRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_ganbaregoemon2RomDesc[] = {
+	{ "Ganbare Goemon 2 (T-Eng).nes",          262160, 0xb2fe26c7, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_ganbaregoemon2)
@@ -31090,9 +31198,9 @@ STD_ROM_FN(nes_ganbaregoemon2)
 
 struct BurnDriver BurnDrvnes_ganbaregoemon2 = {
 	"nes_ganbaregoemon2", NULL, NULL, NULL, "1989",
-	"Ganbare Goemon 2 (Japan)\0", NULL, "Konami", "Miscellaneous",
+	"Ganbare Goemon 2 (T-Eng)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ACTION | GBF_RPG, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_ganbaregoemon2RomInfo, nes_ganbaregoemon2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

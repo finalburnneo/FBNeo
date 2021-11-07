@@ -206,7 +206,6 @@ static INT32 DrawStar(INT32 nLayer)
 {
 	INT32 nStar, nStarXPos, nStarYPos, nStarColour;
 	UINT8* pStar = CpsStar + (nLayer << 12);
-	UINT16 *StarPal = (UINT16*)(CpsSavePal) + 0x800 + (nLayer << 9);
 
 	for (nStar = 0; nStar < 0x1000; nStar++) {
 		nStarColour = pStar[nStar];
@@ -216,13 +215,7 @@ static INT32 DrawStar(INT32 nLayer)
 			nStarYPos = ((nStar & 0xFF) - *((INT16*)(CpsSaveReg[0] + 0x1A + (nLayer << 2))) - 16) & 0xFF;
 
 			if (nStarXPos < 384 && nStarYPos < 224) {
-				UINT16 StarCtrl = BURN_ENDIAN_SWAP_INT16(StarPal[nStarColour]);
-
-				if (StarCtrl & 0x40) {
-					nStarColour = ((nStarColour & 0xE0) >> 1) + (((GetCurrentFrame() >> 4) % 15) & 0x0F);
-				} else {
-					nStarColour = ((nStarColour & 0xE0) >> 1) + ((GetCurrentFrame() >> 4) & 0x0F);
-				}
+				nStarColour = ((nStarColour & 0xE0) >> 1) + ((GetCurrentFrame() >> 4) % ((nStarColour & 0x80) ? 0xe : 0xf));
 				PutPix(pBurnDraw + (nBurnPitch * nStarYPos) + (nBurnBpp * nStarXPos), CpsPal[0x0800 + (nLayer << 9) + nStarColour]);
 			}
 		}

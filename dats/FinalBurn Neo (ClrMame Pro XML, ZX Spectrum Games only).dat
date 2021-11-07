@@ -8689,38 +8689,35 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="motopera1" romof="spec128">
-		<description>Mot (Part 1 of 3) (128K)</description>
+	<game name="motopera1" romof="spectrum">
+		<description>Mot - Part 1 (Spanish) (48K)</description>
 		<year>1989</year>
 		<manufacturer>Opera Soft</manufacturer>
-		<rom name="Mot (1989)(Opera Soft)(Part 1 of 3)(128k).z80" size="40386" crc="b7787839"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Mot (1989)(Opera Soft)(Sp)(48k)[Part 1 of 3].tap" size="49084" crc="66889cb5"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="motopera2" cloneof="motopera1" romof="motopera1">
-		<description>Mot (Part 2 of 3) (128K)</description>
+		<description>Mot - Part 2 (Spanish) (48K)</description>
 		<year>1989</year>
 		<manufacturer>Opera Soft</manufacturer>
-		<rom name="Mot (1989)(Opera Soft)(Part 2 of 3)(128k).z80" size="39460" crc="d1c50f2c"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Mot (1989)(Opera Soft)(Sp)(48k)[Part 2 of 3].tap" size="49084" crc="9b20327d"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="motopera3" cloneof="motopera1" romof="motopera1">
-		<description>Mot (Part 3 of 3) (128K)</description>
+		<description>Mot - Part 3 (Spanish) (48K)</description>
 		<year>1989</year>
 		<manufacturer>Opera Soft</manufacturer>
-		<rom name="Mot (1989)(Opera Soft)(Part 3 of 3)(128k).z80" size="38487" crc="dcf09507"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Mot (1989)(Opera Soft)(Sp)(48k)[Part 3 of 3].tap" size="49084" crc="0b659f33"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="motocrosssim" romof="spec128">
-		<description>Moto Cross Simulator</description>
+		<description>Moto Cross Simulator (128K)</description>
 		<year>1989</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Moto Cross Simulator (1989)(Codemasters).tap" size="51225" crc="7abd5f87"/>
@@ -8730,7 +8727,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mountainbikesim" romof="spec128">
-		<description>Mountain Bike Simulator</description>
+		<description>Mountain Bike Simulator (128K)</description>
 		<year>1991</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Mountain Bike Simulator (1991)(Codemasters).tap" size="53006" crc="d2738989"/>
@@ -8837,7 +8834,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="murraymousesupercop" romof="spectrum">
-		<description>Murray Mouse Super Cop</description>
+		<description>Murray Mouse Super Cop (48K)</description>
 		<year>1992</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Murray Mouse Super Cop (1992)(Codemasters).tap" size="32045" crc="67637ddf"/>
@@ -8973,13 +8970,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="necrisdome" romof="spec128">
-		<description>Necris Dome</description>
+	<game name="necrisdome" romof="spectrum">
+		<description>Necris Dome (48K)</description>
 		<year>1987</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Necris Dome (1987)(Codemasters).tap" size="48602" crc="731d02fb"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -9140,7 +9136,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjagardensim" romof="spec128">
-		<description>Ninja Gardening-Simulator (HB) [Homebrew]</description>
+		<description>Ninja Gardening-Simulator (128K) (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Andrew Bunker</manufacturer>
 		<rom name="Ninja Gardening-Simulator (2019)(Andrew Bunker).tap" size="45008" crc="80d96a46"/>
@@ -9266,13 +9262,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="northstar" romof="spec128">
-		<description>North Star</description>
+	<game name="northstar" romof="spectrum">
+		<description>North Star (48K)</description>
 		<year>1988</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="North Star (1988)(Gremlin Graphics).tap" size="49369" crc="61d487db"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -9295,7 +9290,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="octuktty" romof="spec128">
-		<description>OctuKitty (HB) [Homebrew]</description>
+		<description>OctuKitty (128K) (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>UltraNarwhal</manufacturer>
 		<rom name="OctuKitty (128K) (2018)(UltraNarwhal).tap" size="43800" crc="28b574a6"/>
@@ -9637,13 +9632,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="paradisecafe" romof="spec128">
-		<description>Paradise Cafe</description>
+	<game name="paradisecafe" romof="spectrum">
+		<description>Paradise Cafe (Portuguese) (48K) [Adult game]</description>
 		<year>1985</year>
 		<manufacturer>Damatta</manufacturer>
-		<rom name="Paradise Cafe (1985)(Damatta).tap" size="30777" crc="e6f5c3ea"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Paradise Cafe PT (1985)(Damatta)[adult].z80" size="36975" crc="d0016cf2"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -9714,13 +9708,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="patrickpaddle" romof="spec128">
-		<description>Patrick Paddle (HB) [Homebrew]</description>
+	<game name="patrickpaddle" romof="spectrum">
+		<description>Patrick Paddle (48K) (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>PROSM Software</manufacturer>
 		<rom name="Patrick Paddle (2020)(PROSM Software).tap" size="13883" crc="952f6855"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -9782,7 +9775,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pericodelgado" romof="spectrum">
-		<description>Perico Delgado Maillot Amarillo (Spanish)</description>
+		<description>Perico Delgado Maillot Amarillo (Spanish) (48K)</description>
 		<year>1989</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="Perico Delgado Maillot Amarillo (1989)(Topo Soft)(es).tap" size="149887" crc="284b616d"/>
@@ -10412,10 +10405,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="raceagainsttime" romof="spectrum">
-		<description>Race Against Time, The</description>
+		<description>Race Against Time, The (48K)</description>
 		<year>1988</year>
 		<manufacturer>Codemasters</manufacturer>
-		<rom name="Race Against Time, The (1988)(Codemasters).z80" size="44167" crc="fe86ca68"/>
+		<rom name="Race Against Time, The (1988)(Codemasters).tap" size="48905" crc="eec9a042"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11932,21 +11925,11 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="slapfigh" romof="spec128">
-		<description>Slap Fight (128K)</description>
-		<year>1987</year>
-		<manufacturer>Imagine Software</manufacturer>
-		<rom name="Slap Fight (1987)(Imagine Software)[128K].z80" size="41102" crc="4b9c236b"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="slapfigh_48" cloneof="slapfigh" romof="slapfigh">
+	<game name="slapfigh" romof="spectrum">
 		<description>Slap Fight (48K)</description>
 		<year>1987</year>
 		<manufacturer>Imagine Software</manufacturer>
-		<rom name="Slap Fight (1987)(Imagine Software).z80" size="40394" crc="fc50dded"/>
+		<rom name="Slap Fight (1987)(Imagine).tap" size="47183" crc="da714b33"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -12176,7 +12159,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sovietpart1" romof="spec128">
-		<description>Soviet (Part 1 of 2)</description>
+		<description>Soviet (Part 1 of 2) (128K) [Set '1 keyboard' to use controller]</description>
 		<year>1990</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="Soviet (1990)(Opera Soft)(Part 1 of 2).tap" size="89792" crc="407510c3"/>
@@ -12186,7 +12169,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sovietpart2" cloneof="sovietpart1" romof="sovietpart1">
-		<description>Soviet (Part 2 of 2)</description>
+		<description>Soviet (Part 2 of 2) (128K) [Set '1 keyboard' to use controller]</description>
 		<year>1990</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="Soviet (1990)(Opera Soft)(Part 2 of 2).tap" size="100036" crc="7db72ee5"/>
@@ -13586,12 +13569,13 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="timescan" romof="spectrum">
-		<description>Time Scanner (48K)</description>
+	<game name="timescan" romof="spec128">
+		<description>Time Scanner (128K) [Flippers: W and O - Tilt: - Q, P and SPACE]</description>
 		<year>1989</year>
 		<manufacturer>Activision</manufacturer>
-		<rom name="Time Scanner (1989)(Activision).z80" size="42090" crc="06983d6e"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="Time Scanner 128K (1989)(Activision).tap" size="113308" crc="3698495a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -13605,23 +13589,21 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="titanictopo1" romof="spec128">
-		<description>Titanic (Topo Soft) (Part 1 of 2) (128K)</description>
+	<game name="titanictopo1" romof="spectrum">
+		<description>Titanic - Part 1 (Spanish) (48K)</description>
 		<year>1988</year>
 		<manufacturer>Topo Soft</manufacturer>
-		<rom name="Titanic (1988)(Topo Soft)(Part 1 of 2)(128k).z80" size="38257" crc="c91e3859"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Titanic - part 1 ES (1988)(Topo Soft).tap" size="50546" crc="797a006e"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="titanictopo2" cloneof="titanictopo1" romof="titanictopo1">
-		<description>Titanic (Topo Soft) (Part 2 of 2) (128K)</description>
+		<description>Titanic - Part 2 (Spanish) (48K) [Password: SUSIE]</description>
 		<year>1988</year>
 		<manufacturer>Topo Soft</manufacturer>
-		<rom name="Titanic (1988)(Topo Soft)(Part 2 of 2)(128k).z80" size="40854" crc="138225dd"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Titanic - part 2 ES (1988)(Topo Soft).tap" size="46204" crc="547d088f"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -13682,7 +13664,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tour91" romof="spec128">
-		<description>Tour 91 (Spanish)</description>
+		<description>Tour 91 (Spanish) (128K)</description>
 		<year>1991</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="Tour 91 (1991)(Topo Soft)(es).tap" size="159603" crc="a27369fc"/>
@@ -13795,7 +13777,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="trinidad" romof="spec128">
-		<description>Trinidad (HB) [Homebrew]</description>
+		<description>Trinidad (128K) (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Polybius</manufacturer>
 		<rom name="Trinidad (2020)(Polybius).tap" size="43020" crc="4879e658"/>

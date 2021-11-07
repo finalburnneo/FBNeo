@@ -19308,7 +19308,7 @@ static INT32 StriderInit()
 {
 	INT32 nRet = 0;
 	
-	nRet = DrvInit();
+	nRet = Cps1RasterInit();
 
 	if (!nRet) {
 		CpsStar = CpsGfx + nCpsGfxLen - 0x2000;
@@ -19329,6 +19329,8 @@ static INT32 StriderjrInit()
 		CpsStar = CpsGfx + nCpsGfxLen - 0x2000;
 
 		CpsLoadStars(CpsStar, 2);
+
+		Cps1DrawAtVblank = 1;
 	}
 
 	return nRet;
@@ -19338,7 +19340,7 @@ static INT32 StriderjInit()
 {
 	INT32 nRet = 0;
 	
-	nRet = DrvInit();
+	nRet = Cps1RasterInit();
 
 	if (!nRet) {
 		CpsStar = CpsGfx + nCpsGfxLen - 0x2000;

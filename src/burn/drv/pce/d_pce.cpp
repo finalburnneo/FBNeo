@@ -729,7 +729,7 @@ STD_ROM_FN(pce_lostsunh)
 
 struct BurnDriver BurnDrvpce_lostsunh = {
 	"pce_lostsunh", NULL, NULL, NULL, "1992",
-	"Bouken Danshaku Don - The Lost Sunheart\0", "Bad sound", "IMax", "PC Engine",
+	"Bouken Danshaku Don - The Lost Sunheart\0", NULL, "IMax", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_lostsunhRomInfo, pce_lostsunhRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,

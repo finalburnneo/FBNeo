@@ -12,9 +12,6 @@
 Notes:
 
 	There is no CD emulation at all.
-
-	SOUND PROBLEMS
-		Bouken Danshaku Don - The Lost Sunheart (not present in mess)
 */
 
 static UINT8 *AllMem;
@@ -521,7 +518,7 @@ static INT32 CommonInit(int type)
 	vdc_init();
 	vce_palette_init(DrvPalette);
 
-	c6280_init(3579545, 0);
+	c6280_init(3579545, 0, (strcmp(BurnDrvGetTextA(DRV_NAME), "pce_lostsunh") == 0) ? 1 : 0);
 	c6280_set_renderer(PCEDips[2] & 0x80);
 	c6280_set_route(BURN_SND_C6280_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	c6280_set_route(BURN_SND_C6280_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);

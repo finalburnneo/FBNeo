@@ -99,6 +99,8 @@ static INT32 AddToStream;
 static INT32 renderer;
 static c6280_t chip[1];
 
+static INT32 lostsunh_hack;
+
 static void c6280_stream_update(INT16 **streams, INT32 samples); // forward
 static void c6280_stream_update_OLD(INT16 **streams, INT32 samples); // forward
 
@@ -139,7 +141,7 @@ void c6280_set_renderer(INT32 new_version)
 	}
 }
 
-void c6280_init(INT32 clk, INT32 bAdd)
+void c6280_init(INT32 clk, INT32 bAdd, INT32 lostsunh_hf_hack)
 {
 	DebugSnd_C6280Initted = 1;
 
@@ -160,6 +162,15 @@ void c6280_init(INT32 clk, INT32 bAdd)
 	{
 		step = ((clk / (96000 * 1.0000)) * 4096) / (i+1);
 		p->wave_freq_tab[(1 + i) & 0xFFF] = (UINT32)step;
+	}
+
+	lostsunh_hack = lostsunh_hf_hack;
+
+	if (lostsunh_hf_hack) {
+		bprintf(0, _T("C6280 pce_lostsunh soundhack/fix enabled.\n"));
+		// bouken danshaku don - the lost sunheart (japan)
+		// incorrectly disables channels using frequency of 1
+		// this hack prevents the game from making a high-pitched whine
 	}
 
 	/* Make noise frequency table */
@@ -280,6 +291,8 @@ static void c6280_stream_update_OLD(INT16 **streams, INT32 samples)
 			else
 			{
 				/* Waveform mode */
+				if (lostsunh_hack && p->channel[ch].frequency == 1)
+					continue;
 				UINT32 step = p->wave_freq_tab[p->channel[ch].frequency];
 				for(i = 0; i < samples; i++)
 				{
@@ -400,6 +413,8 @@ static void c6280_stream_update(INT16 **streams, INT32 samples)
 				else
 				{
 					/* Waveform mode */
+					if (lostsunh_hack && chan->frequency == 1)
+						continue;
 					const UINT32 step = chan->frequency ? chan->frequency : 0x1000;
 					for (int i = 0; i < samples; i += 1)
 					{

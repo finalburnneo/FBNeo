@@ -43,7 +43,7 @@ struct Stream {
 	UINT32 nSampleSize_Otherway;
 	UINT32 nSampleRateFrom;
 	UINT32 nSampleRateTo;
-	INT32 nFractionalPosition; // 16.16 whole.partial samples
+	INT64 nFractionalPosition; // 48.16 [whole.partial samples]
 	#define MAX_CHANNELS  8
 	INT32 nChannels;
 	bool bAddStream;
@@ -152,9 +152,10 @@ struct Stream {
 #if DOWNSAMPLE_DEBUG
 		INT32 last_pos = 0;
 		UINT32 last_sample = 0;
+		extern int counter;
 #endif
 		for (INT32 i = 0; i < samples; i++, out_buffer += 2, nFractionalPosition += nSampleSize) {
-			INT32 sample[MAX_CHANNELS];
+			INT64 sample[MAX_CHANNELS];
 			INT32 source_pos = (nFractionalPosition >> 16) - 1; // "-1" - we start at previous frame's carry-over sample.
 			INT32 samples_sourced = 0; // 24.8: 0x100 whole sample, 0x0xx fractional
 			INT32 left = nSampleSize; // 16.16  whole_samples.partial_sample

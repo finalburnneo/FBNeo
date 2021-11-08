@@ -45,6 +45,8 @@ UINT8 PCEJoy4[12];
 UINT8 PCEJoy5[12];
 UINT8 PCEDips[3];
 
+static UINT8 last_dip;
+
 static INT32 nExtraCycles;
 
 static UINT8 system_identify;
@@ -173,7 +175,7 @@ static void pce_write(UINT32 address, UINT8 data)
 		return;
 
 		case 0x1fe800:
-			c6280_write(address, data);
+			c6280_write(address & 0xf, data);
 		return;
 
 		case 0x1fec00:
@@ -415,6 +417,8 @@ static INT32 PCEDoReset()
 
 	pce_sf2_bank = 0;
 
+	last_dip = PCEDips[2];
+
 	nExtraCycles = 0;
 
 	return 0;
@@ -518,6 +522,7 @@ static INT32 CommonInit(int type)
 	vce_palette_init(DrvPalette);
 
 	c6280_init(3579545, 0);
+	c6280_set_renderer(PCEDips[2] & 0x80);
 	c6280_set_route(BURN_SND_C6280_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	c6280_set_route(BURN_SND_C6280_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
@@ -618,6 +623,12 @@ static void PCECompileInputs()
 		PCEInputs[3] ^= (PCEJoy4[i] & 1) << i;
 		PCEInputs[4] ^= (PCEJoy5[i] & 1) << i;
 	}
+
+	if ((last_dip ^ PCEDips[2]) == 0x80) {
+		bprintf(0, _T("Sound core switched to: %s\n"), (PCEDips[2] & 0x80) ? _T("HQ") : _T("LQ"));
+		c6280_set_renderer(PCEDips[2] & 0x80);
+	}
+	last_dip = PCEDips[2];
 }
 
 INT32 PCEFrame()
@@ -691,11 +702,7 @@ INT32 PCEScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(joystick_port_select);
 		SCAN_VAR(joystick_data_select);
-		SCAN_VAR(joystick_6b_select[0]);
-		SCAN_VAR(joystick_6b_select[1]);
-		SCAN_VAR(joystick_6b_select[2]);
-		SCAN_VAR(joystick_6b_select[3]);
-		SCAN_VAR(joystick_6b_select[4]);
+		SCAN_VAR(joystick_6b_select);
 		SCAN_VAR(bram_locked);
 
 		SCAN_VAR(nExtraCycles);

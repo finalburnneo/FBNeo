@@ -1,5 +1,6 @@
 
-void c6280_init(double clk, INT32 bAdd);
+void c6280_init(INT32 clk, INT32 bAdd);
+void c6280_set_renderer(INT32 new_version);
 void c6280_set_route(INT32 nIndex, double nVolume, INT32 nRouteDir);
 void c6280_exit();
 

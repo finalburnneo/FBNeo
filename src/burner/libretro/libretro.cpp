@@ -74,6 +74,7 @@ INT32 nAudSegLen = 0;
 
 static UINT8* pVidImage = NULL;
 static bool bVidImageNeedRealloc = false;
+static bool bRotationDone = false;
 static int16_t *pAudBuffer = NULL;
 
 // Frameskipping v2 Support
@@ -936,7 +937,7 @@ static void SetRotation()
 			rotation = (nVerticalMode == 1 ? 3 : (nVerticalMode == 2 ? 1 : 0));;
 			break;
 	}
-	environ_cb(RETRO_ENVIRONMENT_SET_ROTATION, &rotation);
+	bRotationDone = environ_cb(RETRO_ENVIRONMENT_SET_ROTATION, &rotation);
 }
 
 #ifdef AUTOGEN_DATS
@@ -1211,6 +1212,14 @@ void retro_get_system_av_info(struct retro_system_av_info *info)
 	{
 		game_aspect_x = 4;
 		game_aspect_y = 3;
+	}
+
+	// if game is vertical and rotation couldn't occur, "fix" the rotated aspect ratio
+	if ((BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) && !bRotationDone)
+	{
+		int temp = game_aspect_x;
+		game_aspect_x = game_aspect_y;
+		game_aspect_y = temp;
 	}
 
 	INT32 oldMax = nGameMaximumGeometry;

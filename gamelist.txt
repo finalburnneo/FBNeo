@@ -1819,7 +1819,7 @@ This list contains all games supported by FinalBurn Neo.
 | botanicf	|  	| Botanic (French)					| botanic	| 1984	| Itisa (Valadon| Miscellaneous	| 					|
 | bottom9n	|  	| Bottom of the Ninth (ver. N)				| bottom9	| 1989	| Konami	| GX891		| 					|
 | bottom9	|  	| Bottom of the Ninth (ver. T)				| 		| 1989	| Konami	| GX891		| 					|
-| pce_lostsunh	|  	| Bouken Danshaku Don - The Lost Sunheart		| 		| 1992	| IMax		| PC Engine	| Bad sound				|
+| pce_lostsunh	|  	| Bouken Danshaku Don - The Lost Sunheart		| 		| 1992	| IMax		| PC Engine	| 					|
 | msx_dota	|  	| Bouken Roman - Dota (Jpn)				| 		| 1986	| System Soft	| MSX		| 					|
 | msx_dotaa	|  	| Bouken Roman - Dota (Jpn, Alt)			| msx_dota	| 1986	| System Soft	| MSX		| 					|
 | spec_bouldash	|  	| Boulder Dash (48K)					| 		| 1984	| Front Runner	| ZX Spectrum	| 					|

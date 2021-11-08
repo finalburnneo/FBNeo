@@ -261,7 +261,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lostsunh">
-		<description>Bouken Danshaku Don - The Lost Sunheart [Bad sound]</description>
+		<description>Bouken Danshaku Don - The Lost Sunheart</description>
 		<year>1992</year>
 		<manufacturer>IMax</manufacturer>
 		<rom name="bouken danshaku don - the lost sunheart (japan).pce" size="524288" crc="8f4d9f94"/>

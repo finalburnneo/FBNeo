@@ -241,7 +241,7 @@ void narc_sound_init(UINT8 *rom0, UINT8 *rom1)
 	M6809SetReadHandler(narc_sound1_read);
 	M6809Close();
 
-	BurnYM2151Init(3579545, 1);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
 	BurnYM2151SetIrqHandler(&YM2151IrqHandler);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.10, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.10, BURN_SND_ROUTE_RIGHT);
@@ -275,7 +275,7 @@ INT32 narc_sound_in_reset()
 
 void narc_sound_update(INT16 *stream, INT32 length)
 {
-	//BurnYM2151Render(stream, length); <--- in frame of driver!
+	BurnYM2151Render(stream, length);
 	hc55516_update(stream, length);
 	DACUpdate(stream, length);
 }

@@ -1125,7 +1125,7 @@ INT32 TUnitInit()
 		M6809SetWriteHandler(MKSoundWrite);
 		M6809Close();
 
-		BurnYM2151Init(3579545, 1);
+		BurnYM2151InitBuffered(3579545, 1, NULL, 0);
 		BurnTimerAttachM6809(2000000);
 		BurnYM2151SetIrqHandler(&MKYM2151IrqHandler);
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
@@ -1246,26 +1246,21 @@ INT32 TUnitFrame()
 	INT32 nInterleave = 288;
 	INT32 nCyclesTotal[2] = { (INT32)(50000000/8/54.71), (INT32)(2000000 / 54.71) };
 	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
-	INT32 nSoundBufferPos = 0;
-	INT32 bDrawn = 0;
 
 	if (nSoundType == SOUND_DCS) {
 		nCyclesTotal[1] = (INT32)(10000000 / 54.71);
 		Dcs2kNewFrame();
 	}
-	
+
 	if (nSoundType == SOUND_ADPCM) M6809Open(0);
 	TMS34010Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
+		INT32 our_line = (i + 274) % 289; // start at vblank
+
 		CPU_RUN(0, TMS34010);
 
-		TMS34010GenerateScanline(i);
-
-		if (i == vb_start && pBurnDraw) {
-			BurnDrvRedraw();
-			bDrawn = 1;
-		}
+		TMS34010GenerateScanline(our_line);
 
 		if (nSoundType == SOUND_DCS) {
 			HandleDCSIRQ(i);
@@ -1275,29 +1270,13 @@ INT32 TUnitFrame()
 		}
 
 		if (nSoundType == SOUND_ADPCM && !sound_inreset) {
-			BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
-			if (i == nInterleave - 1) BurnTimerEndFrame(nCyclesTotal[1]);
-		}
-
-		if (pBurnSoundOut) {
-			if (nSoundType == SOUND_ADPCM && i&1) {
-				INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
-				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-				BurnYM2151Render(pSoundBuf, nSegmentLength);
-				nSoundBufferPos += nSegmentLength;
-			}
+			CPU_RUN_TIMER(1);
 		}
 	}
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
 		if (nSoundType == SOUND_ADPCM) {
-			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-			if (nSegmentLength) {
-				BurnYM2151Render(pSoundBuf, nSegmentLength);
-			}
+			BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 			DACUpdate(pBurnSoundOut, nBurnSoundLen);
 			MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 		}
@@ -1312,7 +1291,7 @@ INT32 TUnitFrame()
 	if (nSoundType == SOUND_ADPCM) M6809Close();
 	TMS34010Close();
 
-	if (pBurnDraw && bDrawn == 0) {
+	if (pBurnDraw) {
 		TUnitDraw();
 	}
 

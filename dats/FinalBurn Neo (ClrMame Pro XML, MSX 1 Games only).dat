@@ -431,6 +431,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="aliensynd" romof="msx">
+		<description>Alien Syndrome (Euro)</description>
+		<year>1989</year>
+		<manufacturer>Xortrapa Soft</manufacturer>
+		<rom name="Alien Syndrome (1989)(Xortrapa Soft)[RUN'CAS-'].cas" size="83706" crc="47f41b38"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="alienseu" romof="msx">
 		<description>Aliens (Euro) [Press Enter to move through the doors]</description>
 		<year>1987</year>
@@ -542,7 +553,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="alteredbeast" romof="msx">
-		<description>Altered Beast (Euro) [Choose 'B' Cursor from menu]</description>
+		<description>Altered Beast (Euro) [Set 'B' Cursor to use controller]</description>
 		<year>1988</year>
 		<manufacturer>Activision / Amusement Factory</manufacturer>
 		<rom name="alteredbeast.rom" size="262144" crc="bb5cd0f1"/>
@@ -1203,7 +1214,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ballblzr" romof="msx">
-		<description>Ballblazer (Jpn) [Keyboard control only]</description>
+		<description>Ballblazer (Jpn) [P1 keys: Q-A-Z-X  P2 keys: P-L-N-M]</description>
 		<year>1988</year>
 		<manufacturer>Lucasfilm Games - Pony Canyon</manufacturer>
 		<rom name="Ballblazer (1988)(Pony Canyon)(JP).rom" size="131072" crc="bd307546"/>
@@ -1511,6 +1522,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bee" romof="msx">
+		<description>Bee (HB) [Homebrew]</description>
+		<year>2016</year>
+		<manufacturer>N.I</manufacturer>
+		<rom name="Bee (2016)(N.I).rom" size="32768" crc="226f2e46"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="beez" romof="msx">
 		<description>BeeZ (HB) [Homebrew]</description>
 		<year>2006</year>
@@ -1677,7 +1699,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="blowup" romof="msx">
-		<description>Blow Up</description>
+		<description>Blow Up (Euro)</description>
 		<year>1988</year>
 		<manufacturer>Eurosoft</manufacturer>
 		<rom name="Blow Up (1988)(Eurosoft)(NL).rom" size="131072" crc="72ec1918"/>
@@ -2550,6 +2572,28 @@
 		<year>1986</year>
 		<manufacturer>ASCII</manufacturer>
 		<rom name="castle excellent (japan) (alt 1).rom" size="32768" crc="3794a648"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="castle" romof="msx">
+		<description>Castle, The (Jpn)</description>
+		<year>1985</year>
+		<manufacturer>ASCII</manufacturer>
+		<rom name="castle, the (japan).rom" size="32768" crc="2149c32d"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="castlek" cloneof="castle" romof="castle">
+		<description>Castle, The (Kor)</description>
+		<year>1987</year>
+		<manufacturer>Static Soft</manufacturer>
+		<rom name="castle, the (1986)(ascii)[cr static soft].rom" size="32768" crc="48eccfaf"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -3515,7 +3559,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="currojimenez" romof="msx">
-		<description>Curro Jimenez</description>
+		<description>Curro Jimenez (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="Curro Jimenez (1989)(Zigurat Software)(ES)[RUN'CAS-'].cas" size="67095" crc="8357fc9c"/>
@@ -3537,7 +3581,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cyberun" romof="msx">
-		<description>Cyberun</description>
+		<description>Cyberun (Euro) [Use keys 1 and 2 to set P1 and P2 controller options]</description>
 		<year>1985</year>
 		<manufacturer>Ultimate Play The Game</manufacturer>
 		<rom name="Cyberun (1985)(Ultimate Play The Game)(GB).rom" size="131072" crc="12c23b87"/>
@@ -3745,6 +3789,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="daqidar" romof="msx">
+		<description>DAQ Lord of Idar (HB) [Homebrew]</description>
+		<year>2010</year>
+		<manufacturer>Darkstone</manufacturer>
+		<rom name="DAQ Lord of Idar (2010)(Darkstone).rom" size="32768" crc="39cd51da"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="dawnpatr" romof="msx">
 		<description>Dawn Patrol (Jpn)</description>
 		<year>1986</year>
@@ -3856,11 +3911,22 @@
 		<driver status="good"/>
 	</game>
 	<game name="desperado" romof="msx">
-		<description>Desperado (Spanish)</description>
+		<description>Desperado (Spanish) [At title &amp; options screen turn the Tape to Side B]</description>
 		<year>1987</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="desperado (1987)(topo soft)(es)(side a)[run'cas-'].cas" size="42554" crc="fe84991c"/>
 		<rom name="desperado (1987)(topo soft)(es)(side b)[run'cas-'].cas" size="120735" crc="9237dded"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="desperado2" romof="msx">
+		<description>Desperado 2 (Spanish) [Password Fase 2: CLAVE]</description>
+		<year>1991</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Desperado 2 (1991)(Topo Soft)(es)[RUN'CAS-'].cas" size="101298" crc="b8508c89"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -4571,6 +4637,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="entombed" romof="msx">
+		<description>Entombed (HB, v1.1) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Amaury Carvalho</manufacturer>
+		<rom name="Entombed v1.1 (2021)(Amaury Carvalho).rom" size="32768" crc="0dd59289"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="eruka" romof="msx">
 		<description>Eruka Fan Book (HB) [Homebrew]</description>
 		<year>2016</year>
@@ -4851,6 +4928,17 @@
 		<year>2021</year>
 		<manufacturer>Mistery Labs</manufacturer>
 		<rom name="Fall Of Prometheus (2021)(Mistery Labs).rom" size="49152" crc="2434c7ea"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="fankypun" romof="msx">
+		<description>Fanky Punky (Spanish)</description>
+		<year>1987</year>
+		<manufacturer>P.J. Software</manufacturer>
+		<rom name="Fanky Punky (1987)(P.J. Software)(es)[RUN'CAS-'].cas" size="30927" crc="add7aac3"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -9395,6 +9483,50 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="motintro" romof="msx">
+		<description>Mot - Intro (Spanish)</description>
+		<year>1989</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Mot (1989)(Opera Soft)(es)(Intro)[BLOAD'CAS-',R].cas" size="58176" crc="dd9a100c"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="motpart1" cloneof="motintro" romof="motintro">
+		<description>Mot - Part 1 (Spanish)</description>
+		<year>1989</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Mot (1989)(Opera Soft)(es)(Part 1)[BLOAD'CAS-',R].cas" size="58176" crc="0844bfeb"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="motpart2" cloneof="motintro" romof="motintro">
+		<description>Mot - Part 2 (Spanish)</description>
+		<year>1989</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Mot (1989)(Opera Soft)(es)(Part 2)[BLOAD'CAS-',R].cas" size="58176" crc="28afbecb"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="motpart3" cloneof="motintro" romof="motintro">
+		<description>Mot - Part 3 (Spanish)</description>
+		<year>1989</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Mot (1989)(Opera Soft)(es)(Part 3)[BLOAD'CAS-',R].cas" size="58176" crc="c753dbfe"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mouser" romof="msx">
 		<description>Mouser (Jpn)</description>
 		<year>1983</year>
@@ -9893,6 +10025,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="neuras" romof="msx">
+		<description>Neuras (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>mxb03523</manufacturer>
+		<rom name="Neuras (2021)(mxb03523).rom" size="8760" crc="27b5df15"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="nightcity" romof="msx">
 		<description>Night City (HB) [Homebrew]</description>
 		<year>2006</year>
@@ -10113,6 +10256,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="norseman" romof="msx">
+		<description>Norseman (HB)</description>
+		<year>1984</year>
+		<manufacturer>Electric Software</manufacturer>
+		<rom name="Norseman (1984)(Electric Software).rom" size="32768" crc="a24441b8"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="nuclearbowls" romof="msx">
 		<description>Nuclear Bowls (Spanish)</description>
 		<year>1986</year>
@@ -10147,7 +10301,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="oberon69" romof="msx">
-		<description>Oberon 69</description>
+		<description>Oberon 69 (Spanish)</description>
 		<year>1990</year>
 		<manufacturer>G.LL. Software</manufacturer>
 		<rom name="Oberon 69 (1990)(G.LL. Software)(ES)[RUN'CAS-'][CTRL][Martos].cas" size="73343" crc="cb97a4e8"/>
@@ -10224,7 +10378,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ole" romof="msx">
-		<description>Ole!</description>
+		<description>Ole! (Spanish)</description>
 		<year>1986</year>
 		<manufacturer>Bug-Byte Software</manufacturer>
 		<rom name="Ole! (1986)(Bug-Byte Software)(GB)[BLOAD'CAS-',R].cas" size="33151" crc="273bb568"/>
@@ -11900,7 +12054,7 @@
 	<game name="sabotaje" romof="msx">
 		<description>Sabotaje (Spanish)</description>
 		<year>1987</year>
-		<manufacturer>Genesis Soft</manufacturer>
+		<manufacturer>P.J. Soft. - Genesis Soft</manufacturer>
 		<rom name="Sabotaje (1988)(P.J. Software)(es)[RUN'CAS-'].cas" size="35367" crc="38af0372"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -13947,28 +14101,6 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="castle" romof="msx">
-		<description>The Castle (Jpn)</description>
-		<year>1985</year>
-		<manufacturer>ASCII</manufacturer>
-		<rom name="castle, the (japan).rom" size="32768" crc="2149c32d"/>
-		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
-		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
-		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
-		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="castlek" cloneof="castle" romof="castle">
-		<description>The Castle (Kor)</description>
-		<year>1987</year>
-		<manufacturer>Static Soft</manufacturer>
-		<rom name="castle, the (1986)(ascii)[cr static soft].rom" size="32768" crc="48eccfaf"/>
-		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
-		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
-		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
-		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="thecure" romof="msx">
 		<description>The Cure (HB) [Homebrew]</description>
 		<year>2005</year>
@@ -14289,7 +14421,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tbirds1a" romof="msx">
-		<description>Thunderbirds Tape 1 Side A (Euro)</description>
+		<description>Thunderbirds - Mission 1: Mine Menace (Euro) [Press SPACE to change character]</description>
 		<year>1989</year>
 		<manufacturer>Grandslam Entertainments</manufacturer>
 		<rom name="thunderbirds (1989)(grandslam entertainments)(gb)(tape 1 of 2 side a)[bload'cas-',r][martos].cas" size="72561" crc="04456b16"/>
@@ -14300,7 +14432,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tbirdst1b" cloneof="tbirds1a" romof="tbirds1a">
-		<description>Thunderbirds Tape 1 Side B (Euro)</description>
+		<description>Thunderbirds - Mission 2: Sub Crash (Euro) [Password: RECOVERY]</description>
 		<year>1989</year>
 		<manufacturer>Grandslam Entertainments</manufacturer>
 		<rom name="thunderbirds (1989)(grandslam entertainments)(gb)(tape 1 of 2 side b)[bload'cas-',r][martos].cas" size="72561" crc="c4b0130c"/>
@@ -14311,7 +14443,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tbirdst2a" cloneof="tbirds1a" romof="tbirds1a">
-		<description>Thunderbirds Tape 2 Side A (Euro)</description>
+		<description>Thunderbirds - Mission 3: Bank Job (Euro) [Password: ALOYSIUS]</description>
 		<year>1989</year>
 		<manufacturer>Grandslam Entertainments</manufacturer>
 		<rom name="thunderbirds (1989)(grandslam entertainments)(gb)(tape 2 of 2 side a)[bload'cas-',r][martos].cas" size="72561" crc="c986703f"/>
@@ -14322,7 +14454,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tbirdst2b" cloneof="tbirds1a" romof="tbirds1a">
-		<description>Thunderbirds Tape 2 Side B (Euro)</description>
+		<description>Thunderbirds - Mission 4: Evil Hood (Euro) [Password: ANDERSON]</description>
 		<year>1989</year>
 		<manufacturer>Grandslam Entertainments</manufacturer>
 		<rom name="thunderbirds (1989)(grandslam entertainments)(gb)(tape 2 of 2 side b)[bload'cas-',r][martos].cas" size="72561" crc="1bcb9d6f"/>
@@ -14654,7 +14786,7 @@
 	</game>
 	<game name="turboat" romof="msx">
 		<description>Turboat (Jpn)</description>
-		<year>1984</year>
+		<year>1983</year>
 		<manufacturer>ASCII</manufacturer>
 		<rom name="turboat (japan).rom" size="16384" crc="c7abc409"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>

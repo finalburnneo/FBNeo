@@ -210,7 +210,7 @@ void williams_cvsd_init(UINT8 *prgrom, INT32 prot_start, INT32 prot_end, INT32 s
 	pia_init();
 	pia_config(0, PIA_STANDARD_ORDERING, &pia_intf);
 
-	BurnYM2151Init(3579545, 1);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
 	BurnYM2151SetIrqHandler(&YM2151IrqHandler);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.10, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.10, BURN_SND_ROUTE_RIGHT);
@@ -246,7 +246,7 @@ INT32 williams_cvsd_in_reset()
 
 void williams_cvsd_update(INT16 *stream, INT32 length)
 {
-	//BurnYM2151Render(stream, length); -- in frame!
+	BurnYM2151Render(stream, length);
 	hc55516_update(stream, length);
 	DACUpdate(stream, length);
 }

@@ -24559,8 +24559,8 @@ STDROMPICKEXT(MSX_tbirds2b, MSX_tbirds2b, msx_msx)
 STD_ROM_FN(MSX_tbirds2b)
 
 struct BurnDriver BurnDrvMSX_tbirds2b = {
-	"msx_tbirdst2b", "msx_tbirds1a", "msx_msx", "Password: ANDERSON", "1989",
-	"Thunderbirds - Mission 4: Evil Hood (Euro)\0", NULL, "Grandslam Entertainments", "MSX",
+	"msx_tbirdst2b", "msx_tbirds1a", "msx_msx", NULL, "1989",
+	"Thunderbirds - Mission 4: Evil Hood (Euro)\0", "Password: ANDERSON", "Grandslam Entertainments", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ADV, 0,
 	MSXGetZipName, MSX_tbirds2bRomInfo, MSX_tbirds2bRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,

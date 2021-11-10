@@ -176,13 +176,13 @@ int KailleraGetInput()
 			}
 
 			for (i = 0; i < nCommonInputs; i++, j++) {
-#if 0
-				// Allow other players to use common inputs
-				BurnDrvGetInputInfo(&bii, i + nCommonOffset);
-				if (nControls[j >> 3] & (1 << (j & 7))) {
-					*bii.pVal |= 0x01;
+				if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM) {
+					// Allow other players to use common inputs: Only ZX Spectrum
+					BurnDrvGetInputInfo(&bii, i + nCommonOffset);
+					if (nControls[j >> 3] & (1 << (j & 7))) {
+						*bii.pVal |= 0x01;
+					}
 				}
-#endif
 			}
 
 			// Convert j to byte count

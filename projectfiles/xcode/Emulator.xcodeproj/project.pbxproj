@@ -1023,6 +1023,7 @@
 		FE96B129269BFB0800DC6A88 /* FBInputMap.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96B128269BFB0800DC6A88 /* FBInputMap.m */; };
 		FE96B12C269C183300DC6A88 /* NSString+Etc.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96B12B269C183300DC6A88 /* NSString+Etc.m */; };
 		FE96B12E269C1B4900DC6A88 /* d_exerion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE96B12D269C1B4900DC6A88 /* d_exerion.cpp */; };
+		FE9968F8273C3FC700090835 /* d_pcktgal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE9968F7273C3FC700090835 /* d_pcktgal.cpp */; };
 		FEA1AB8823B5D49700D6082A /* d_spdodgeb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AB8723B5D49700D6082A /* d_spdodgeb.cpp */; };
 		FEA35F6F246A6E04008938BC /* d_pasha2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA35F6D246A6E03008938BC /* d_pasha2.cpp */; };
 		FEA35F70246A6E04008938BC /* d_shangha3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA35F6E246A6E03008938BC /* d_shangha3.cpp */; };
@@ -2631,6 +2632,7 @@
 		FE96B12A269C183300DC6A88 /* NSString+Etc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Etc.h"; sourceTree = "<group>"; };
 		FE96B12B269C183300DC6A88 /* NSString+Etc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Etc.m"; sourceTree = "<group>"; };
 		FE96B12D269C1B4900DC6A88 /* d_exerion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_exerion.cpp; sourceTree = "<group>"; };
+		FE9968F7273C3FC700090835 /* d_pcktgal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_pcktgal.cpp; sourceTree = "<group>"; };
 		FE9A990D235F82C900507894 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		FEA1AB8723B5D49700D6082A /* d_spdodgeb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_spdodgeb.cpp; sourceTree = "<group>"; };
 		FEA35F6D246A6E03008938BC /* d_pasha2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_pasha2.cpp; sourceTree = "<group>"; };
@@ -4000,6 +4002,7 @@
 				FE1B1FC823561A690065200C /* d_lemmings.cpp */,
 				FE1B1FBF23561A690065200C /* d_liberate.cpp */,
 				FE1B1FD123561A6A0065200C /* d_metlclsh.cpp */,
+				FE9968F7273C3FC700090835 /* d_pcktgal.cpp */,
 				FE1B1FC223561A690065200C /* d_pktgaldx.cpp */,
 				FE1B1FC523561A690065200C /* d_progolf.cpp */,
 				FE1B1FCD23561A6A0065200C /* d_rohga.cpp */,
@@ -6172,6 +6175,7 @@
 				FEFB2E7925A9A0A0005D9281 /* tms34010.cpp in Sources */,
 				FE68567C25FCB99800AF5DD4 /* d_namcona1.cpp in Sources */,
 				FE2E61282401030D00B7A8D2 /* i5000.cpp in Sources */,
+				FE9968F8273C3FC700090835 /* d_pcktgal.cpp in Sources */,
 				FE1B244023561A750065200C /* 7zStream.c in Sources */,
 				FE1B256C23561A760065200C /* sys16_gfx.cpp in Sources */,
 				FE1B25D423561A760065200C /* d_simpsons.cpp in Sources */,

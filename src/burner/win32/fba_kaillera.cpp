@@ -4,7 +4,7 @@ const int MAXPLAYER = 4;
 static int nPlayerInputs[MAXPLAYER], nCommonInputs, nDIPInputs;
 static int nPlayerOffset[MAXPLAYER], nCommonOffset, nDIPOffset;
 
-const int INPUTSIZE = 8 * (4 + 8);
+const int INPUTSIZE = 8 * (4 + 8 + 0x40); // + 0x40 ZX Spectrum keyboard
 static unsigned char nControls[INPUTSIZE];
 
 // Inputs are assumed to be in the following order:
@@ -55,7 +55,7 @@ int KailleraInitInput()
 	nDIPOffset = i;
 	nDIPInputs = nGameInpCount - nDIPOffset;
 
-#if 0 && defined FBNEO_DEBUG
+#if 1 && defined FBNEO_DEBUG
 	dprintf(_T("  * Kaillera inputs configured as follows --\n"));
 	for (int j = 0; j < MAXPLAYER; j++) {
 		dprintf(_T("    p%d offset %d, inputs %d.\n"), j + 1, nPlayerOffset[j], nPlayerInputs[j]);
@@ -117,7 +117,6 @@ int KailleraGetInput()
 	k = j + 1;
 
 	// Send the control block to the Kaillera DLL & retrieve all controls
-	//if (kailleraModifyPlayValues(nControls, k) == -1) {
 	if (Kaillera_Modify_Play_Values(nControls, k) == -1) {
 		kNetGame = 0;
 		return 1;

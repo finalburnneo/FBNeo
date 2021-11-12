@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17686 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17687 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -7747,6 +7747,7 @@ This list contains all games supported by FinalBurn Neo.
 | kyros		|  	| Kyros							| 		| 1987	| Alpha Denshi C| Alpha 68k	| 					|
 | dadandrn	|  	| Kyukyoku Sentai Dadandarn (ver JAA)			| mmaulers	| 1993	| Konami	| GX170		| 					|
 | ktiger	|  	| Kyukyoku Tiger (Japan)				| twincobr	| 1987	| Toaplan / Tait| Miscellaneous	| 					|
+| ktiger2p	|  	| Kyukyoku Tiger (Japan, 2 Players)			| twincobr	| 2021	| M2 Co., Ltd.	| Miscellaneous	| 					|
 | ktiger2	|  	| Kyukyoku Tiger II (Ver 2.1J 1995/11/30)		| tcobra2	| 1995	| Taito Corporat| Taito F3 Syste| 					|
 | kyukaidk	|  	| Kyuukai Douchuuki (Japan, new version (Rev B))	| 		| 1990	| Namco		| System 2	| 					|
 | kyukaidko	|  	| Kyuukai Douchuuki (Japan, old version)		| kyukaidk	| 1990	| Namco		| System 2	| 					|

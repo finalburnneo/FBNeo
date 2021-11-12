@@ -7837,6 +7837,7 @@ DRV		BurnDrvKyrosj;
 DRV		BurnDrvKyros;
 DRV		BurnDrvDadandrn;
 DRV		BurnDrvKtiger;
+DRV		BurnDrvktiger2p;
 DRV		BurnDrvKtiger2;
 DRV		BurnDrvKyukaidk;
 DRV		BurnDrvKyukaidko;
@@ -25752,6 +25753,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKyros,				// Kyros
 	&BurnDrvDadandrn,			// Kyukyoku Sentai Dadandarn (ver JAA)
 	&BurnDrvKtiger,				// Kyukyoku Tiger (Japan)
+	&BurnDrvktiger2p,			// Kyukyoku Tiger (Japan, 2 Players)
 	&BurnDrvKtiger2,			// Kyukyoku Tiger II (Ver 2.1J 1995/11/30)
 	&BurnDrvKyukaidk,			// Kyuukai Douchuuki (Japan, new version (Rev B))
 	&BurnDrvKyukaidko,			// Kyuukai Douchuuki (Japan, old version)

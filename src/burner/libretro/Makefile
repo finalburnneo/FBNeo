@@ -419,7 +419,9 @@ else ifneq (,$(filter $(platform), ngc wii wiiu))
 # Emscripten
 else ifeq ($(platform), emscripten)
 	TARGET := $(TARGET_NAME)_libretro_$(platform).bc
-	ENDIANNESS_DEFINES := -DLSB_FIRST -DNO_UNALIGNED_MEM
+	ENDIANNESS_DEFINES := -DLSB_FIRST
+	EXTERNAL_ZLIB = 1
+	STATIC_LINKING = 1
 
 # Windows MSVC 2017 all architectures
 else ifneq (,$(findstring windows_msvc2017,$(platform)))

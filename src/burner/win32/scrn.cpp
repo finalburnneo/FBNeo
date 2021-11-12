@@ -216,7 +216,6 @@ static int WINAPI gameCallback(char* game, int player, int numplayers)
 	}
 
 	if (!bFound) {
-//		kailleraEndGame();
 		Kaillera_End_Game();
 		return 1;
 	}
@@ -227,9 +226,12 @@ static int WINAPI gameCallback(char* game, int player, int numplayers)
 	bCheatsAllowed = false;								// Disable cheats during netplay
 	AudSoundStop();										// Stop while we load roms
 	DrvInit(nBurnDrvActive, false);						// Init the game driver
-	ScrnInit();
+
+	// w/Kaillera: DrvInit() can't post it's restart message because we're not in the message loop yet.
+	// so we must MediaExit() / MediaInit() here.  -dink
+	MediaExit();
+	MediaInit();
 	AudSoundPlay();										// Restart sound
-	VidInit();
 	SetFocus(hScrnWnd);
 
 //	dprintf(_T(" ** OSD startnet text sent.\n"));
@@ -246,7 +248,6 @@ static int WINAPI gameCallback(char* game, int player, int numplayers)
 	DrvExit();
 	if (kNetGame) {
 		kNetGame = 0;
-//		kailleraEndGame();
 		Kaillera_End_Game();
 	}
 	DeActivateChat();
@@ -299,10 +300,8 @@ static void DoNetGame()
 	ki.moreInfosCallback = NULL;
 
 	Kaillera_Set_Infos(&ki);
-	//kailleraSetInfos(&ki);
 
 	Kaillera_Select_Server_Dialog(NULL);
-	//kailleraSelectServerDialog(NULL);
 
 	if (gameList) {
 		free(gameList);
@@ -1168,7 +1167,6 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				DrvExit();
   				if (kNetGame) {
 					kNetGame = 0;
-//					kailleraEndGame();
 					Kaillera_End_Game();
 					DeActivateChat();
 					PostQuitMessage(0);
@@ -1192,7 +1190,6 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 #endif
 			if (kNetGame) {
 				kNetGame = 0;
-//				kailleraEndGame();
 				Kaillera_End_Game();
 				DeActivateChat();
 			}

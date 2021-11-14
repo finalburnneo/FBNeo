@@ -248,7 +248,7 @@
 	<game name="addfamvs" cloneof="addfamv" romof="addfamv">
 		<description>Addams Family Values (Hack, Spanish) [Hack]</description>
 		<year>2020</year>
-		<manufacturer>Ocean</manufacturer>
+		<manufacturer>jackic</manufacturer>
 		<rom name="addams family values (hack, spanish).bin" size="2101280" crc="07cf6ffd"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -294,7 +294,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aerop" cloneof="aero" romof="aero">
-		<description>Aero the Acro-Bat (Euro, Prototype)</description>
+		<description>Aero the Acro-Bat (Euro, Prototype) [Prototype]</description>
 		<year>1993</year>
 		<manufacturer>Sunsoft</manufacturer>
 		<rom name="aero the acro-bat (beta).bin" size="1048576" crc="dcd14b10"/>
@@ -304,7 +304,7 @@
 	<game name="aeros" cloneof="aero" romof="aero">
 		<description>Aero The Acro-Bat (Hack, Spanish) [Hack]</description>
 		<year>2020</year>
-		<manufacturer>SunSoft</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="aero the acro-bat (hack, spanish).bin" size="1048576" crc="fcaf58d3"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -328,7 +328,7 @@
 	<game name="aero2s" cloneof="aero2" romof="aero2">
 		<description>Aero The Acro-Bat 2 (Hack, Spanish) [Hack]</description>
 		<year>2020</year>
-		<manufacturer>SunSoft</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="aero the acro-bat 2 (hack, spanish).bin" size="2097152" crc="096c0978"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -368,7 +368,7 @@
 	<game name="aburner2s" cloneof="aburner2" romof="aburner2">
 		<description>After Burner II (Hack, Spanish) [Hack]</description>
 		<year>2020</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="after burner II (hack, spanish).bin" size="524288" crc="2e08b330"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -390,9 +390,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="airdivers" cloneof="airdiver" romof="airdiver">
-		<description>Air Diver (Hack, Spanish)</description>
+		<description>Air Diver (Hack, Spanish) [Hack]</description>
 		<year>2020</year>
-		<manufacturer>Seismic</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="air diver (hack, spanish).bin" size="524288" crc="3ce6094a"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -430,8 +430,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="akirap">
-		<description>Akira (Prototype)</description>
-		<year>1993</year>
+		<description>Akira (Prototype) [Prototype]</description>
+		<year>1995</year>
 		<manufacturer>Black Pearl Software</manufacturer>
 		<rom name="akira (prototype).bin" size="2097152" crc="6d32d468"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
@@ -478,9 +478,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="alexkidds" cloneof="alexkidd" romof="alexkidd">
-		<description>Alex Kidd In The Enchanted Castle (Hack, Spanish)</description>
-		<year>2020</year>
-		<manufacturer>Sega</manufacturer>
+		<description>Alex Kidd In The Enchanted Castle (Hack, Spanish) [Hack]</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="alex kidd in the enchanted castle (hack, spanish).bin" size="262144" crc="d2f3a29e"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -519,16 +519,16 @@
 	</game>
 	<game name="aliensoli" cloneof="aliensol" romof="aliensol">
 		<description>Alien Soldier (Hack, Italian) [Hack]</description>
-		<year>2002</year>
-		<manufacturer>Sega</manufacturer>
+		<year>200?</year>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="alien soldier (italian translation).bin" size="2097152" crc="e5e614a5"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="aliensols" cloneof="aliensol" romof="aliensol">
 		<description>Alien Soldier (Hack, Spanish) [Hack]</description>
-		<year>2020</year>
-		<manufacturer>Treasure</manufacturer>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="alien soldier (hack, spanish).bin" size="2097152" crc="ab991070"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -543,8 +543,8 @@
 	</game>
 	<game name="astorms" cloneof="astorm" romof="astorm">
 		<description>Alien Storm (Hack, Spanish) [Hack]</description>
-		<year>2020</year>
-		<manufacturer>Sega</manufacturer>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="Alien Storm (hack, spanish).bin" size="524288" crc="f79748ce"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -582,9 +582,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="alisiads" cloneof="alisiad" romof="alisiad">
-		<description>Alisia Dragoon (Hack, Spanish)</description>
+		<description>Alisia Dragoon (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="alisia dragoon (hack, spanish).bin" size="1048576" crc="13fc10e1"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -614,9 +614,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="altbeasts" cloneof="altbeast" romof="altbeast">
-		<description>Altered Beast (Hack, Spanish)</description>
+		<description>Altered Beast (Hack, Spanish) [Hack]</description>
 		<year>2017</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="altered beast (hack, spanish).bin" size="524288" crc="e4ea5e40"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2013,6 +2013,14 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bobcse">
+		<description>Bomb on Basic City Special Edition (HB) [Homebrew, Included a demo of Papi Commando Tennis]</description>
+		<year>2018</year>
+		<manufacturer>Studio Vetea</manufacturer>
+		<rom name="Bomb on Basic City SE (2018)(Studio Vetea).bin" size="3231410" crc="076232fd"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bomber">
 		<description>Bomber</description>
 		<year>2005</year>
@@ -2414,7 +2422,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cadashac" cloneof="cadash" romof="cadash">
-		<description>Cadash (Hack, Arcade Colors)</description>
+		<description>Cadash (Hack, Arcade Colors) [Hack]</description>
 		<year>2018</year>
 		<manufacturer>Taito - Tor Landeel</manufacturer>
 		<rom name="cadash (arcade colors).md" size="524288" crc="84480043"/>
@@ -2422,9 +2430,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="cadashs" cloneof="cadash" romof="cadash">
-		<description>Cadash (Hack, Spanish)</description>
+		<description>Cadash (Hack, Spanish) [Hack]</description>
 		<year>2020</year>
-		<manufacturer>Taito</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="cadash (hack, spanish).bin" size="524288" crc="1bcfdc31"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2470,9 +2478,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="cal50s" cloneof="cal50" romof="cal50">
-		<description>Cal.50 - Caliber Fifty  (Hack, Spanish)</description>
+		<description>Cal.50 - Caliber Fifty  (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
-		<manufacturer>Mentrix Software</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="caliber .50 (hack, spanish).bin" size="1048576" crc="a6ebf46f"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2502,9 +2510,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="cfodders" cloneof="cfodder" romof="cfodder">
-		<description>Cannon Fodder (Hack, Spanish)</description>
+		<description>Cannon Fodder (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
-		<manufacturer>Virgin Interactive</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="cannon fodder (hack, spanish).bin" size="1572864" crc="14344b29"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4558,9 +4566,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="dinolands" cloneof="dinoland" romof="dinoland">
-		<description>Dino Land (Hack, Spanish)</description>
+		<description>Dino Land (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
-		<manufacturer>Renovation</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="dino land (hack, spanish).bin" size="524288" crc="26f380d8"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4584,7 +4592,7 @@
 	<game name="aladdins" cloneof="aladdin" romof="aladdin">
 		<description>Disney's Aladdin (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="aladdin (hack, spanish).bin" size="2097152" crc="a6cf0b89"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -8719,9 +8727,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="kidchams" cloneof="kidcham" romof="kidcham">
-		<description>Kid Chameleon (Hack, Spanish)</description>
+		<description>Kid Chameleon (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="kid chameleon (hack, spanish).bin" size="1048576" crc="4871962f"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -8903,7 +8911,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kfpanda2" cloneof="brutal" romof="brutal">
-		<description>Kung Fu Panda 2 (Rus)</description>
+		<description>Kung Fu Panda 2 (Rus) [Hack]</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="kung fu panda 2 (unl).bin" size="4194304" crc="a08c3b25"/>
@@ -9455,7 +9463,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="madagsc3" cloneof="dinotale" romof="dinotale">
-		<description>Madagascar 3 (Rus)</description>
+		<description>Madagascar 3 (Rus) [Hack]</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="madagascar 3 (unl).bin" size="1048576" crc="0bd6d0a5"/>
@@ -9663,7 +9671,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="markop" cloneof="marko" romof="marko">
-		<description>Marko's Magic Football (Euro, Prototype)</description>
+		<description>Marko's Magic Football (Euro, Prototype) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Domark</manufacturer>
 		<rom name="marko's magic football (euro) (beta).bin" size="2097152" crc="0273e564"/>
@@ -11482,7 +11490,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbashowp" cloneof="nbashow" romof="nbashow">
-		<description>NBA Showdown '94 (USA, Prototype, Hacked)</description>
+		<description>NBA Showdown '94 (USA, Prototype, Hacked) [Hack, Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="nba showdown '94 (usa) (beta).bin" size="2097152" crc="6643a308"/>
@@ -13003,15 +13011,15 @@
 		<driver status="good"/>
 	</game>
 	<game name="pinks" cloneof="pink" romof="pink">
-		<description>Pink Goes to Hollywood (Hack, Spanish)</description>
+		<description>Pink Goes to Hollywood (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
-		<manufacturer>TecMagik</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="pink goes to hollywood (hack, spanish).bin" size="1048576" crc="de7a08dd"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="pinkp" cloneof="pink" romof="pink">
-		<description>Pink Goes to Hollywood (USA, Prototype)</description>
+		<description>Pink Goes to Hollywood (USA, Prototype) [Prototype]</description>
 		<year>1993</year>
 		<manufacturer>TecMagik</manufacturer>
 		<rom name="pink goes to hollywood (usa) (beta).bin" size="1048576" crc="56087cff"/>
@@ -14387,6 +14395,14 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="rpunknown">
+		<description>Rocket Panda - Into the Unknown (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>SpacePants Games</manufacturer>
+		<rom name="Rocket Panda - Into the Unknown (2021)(SpacePantsGames).bin" size="781305" crc="2eaff372"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="rockman" cloneof="megaman" romof="megaman">
 		<description>Rockman Mega World (Jpn)</description>
 		<year>1994</year>
@@ -14428,9 +14444,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="rthun2s" cloneof="rthun2" romof="rthun2">
-		<description>Rolling Thunder 2 (Hack, Spanish)</description>
+		<description>Rolling Thunder 2 (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
-		<manufacturer>Namco</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="rolling thunder 2 (hack, spanish).bin" size="1048576" crc="43588ef3"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -14452,9 +14468,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="rthun3s" cloneof="rthun3" romof="rthun3">
-		<description>Rolling Thunder 3 (Hack, Spanish)</description>
+		<description>Rolling Thunder 3 (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
-		<manufacturer>Namco</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="rolling thunder 3 (hack, spanish).bin" size="1572864" crc="0ad48d02"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -14478,7 +14494,7 @@
 	<game name="rolos" cloneof="rolo" romof="rolo">
 		<description>Rolo to the Rescue (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
-		<manufacturer>Electronic Arts</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="rolo to the rescue (hack, spanish).bin" size="524288" crc="0c4584a4"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -14566,7 +14582,7 @@
 	<game name="manovers" cloneof="manover" romof="manover">
 		<description>S.S. Lucifer - Man Overboard! (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
-		<manufacturer>Codemasters</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="s.s. lucifer - man overboard! (hack, spanish).bin" size="1048576" crc="17edbbfe"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -14574,7 +14590,7 @@
 	<game name="sagaias" cloneof="sagaia" romof="sagaia">
 		<description>Sagaia (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
-		<manufacturer>Taito</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="sagaia (hack, spanish).bin" size="1048576" crc="29e1fb66"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -16706,7 +16722,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="spykids4" cloneof="dinotale" romof="dinotale">
-		<description>Spy Kids 4 - All The Time In The World (Rus)</description>
+		<description>Spy Kids 4 - All The Time In The World (Rus) [Hack]</description>
 		<year>199?</year>
 		<manufacturer>&lt;unlicensed&gt;</manufacturer>
 		<rom name="spy kids 4.bin" size="2097152" crc="9a045ea3"/>
@@ -18802,7 +18818,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="addfamp1" cloneof="addfam" romof="addfam">
-		<description>The Addams Family (USA, Prototype)</description>
+		<description>The Addams Family (USA, Prototype) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Flying Edge</manufacturer>
 		<rom name="addams family, the (usa) (beta).bin" size="1048576" crc="2803a5ca"/>
@@ -21103,6 +21119,14 @@
 		<year>1994</year>
 		<manufacturer>Accolade</manufacturer>
 		<rom name="unnecessary roughness 95 (usa).bin" size="2097152" crc="9920e7b7"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="uspknight">
+		<description>Unstoppable Knight (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Rafagars</manufacturer>
+		<rom name="Unstoppable Knight (2021)(Rafagars).bin" size="262144" crc="25f7d7a2"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

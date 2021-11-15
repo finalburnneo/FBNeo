@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17700 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17703 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -5021,6 +5021,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_firenice	|  	| Fire 'n Ice (USA)					| 		| 1993	| Tecmo		| Miscellaneous	| 					|
 | sms_fireforg	|  	| Fire and Forget II (Euro)				| 		| 1990	| Titus Arcade	| Sega Master Sy| 					|
 | sms_fireice	|  	| Fire and Ice (Bra)					| 		| 1993	| Tec Toy	| Sega Master Sy| 					|
+| nes_firerescue|  	| Fire and Rescue (HB, v1.1)				| 		| 2021	| Skyboy Games	| Miscellaneous	| 					|
 | fball		|  	| Fire Ball (FM Work)					| 		| 1992	| FM Work	| Miscellaneous	| Black Bar on the left side is normal.	|
 | fds_firebam	|  	| Fire Bam (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | firebarr	|  	| Fire Barrel (Japan)					| airass	| 1993	| Irem		| Irem M107	| 					|
@@ -5520,7 +5521,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_ganbaregoemon2c|  	| Ganbare Goemon 2 (Japan) - Castellano v0.99		| nes_ganbaregoemon2| 2021	| jackic	| Miscellaneous	| 					|
 | nes_ganbaregoemon2j|  	| Ganbare Goemon 2 (Japan)				| nes_ganbaregoemon2| 1989	| Konami	| Miscellaneous	| 					|
 | nes_ganbaregoemon2|  	| Ganbare Goemon 2 (T-Eng)				| 		| 1989	| Konami	| Miscellaneous	| 					|
-| nes_ganbagoegaic|  	| Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Japan) - C| nes_ganbagoegai| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_ganbagoegaic|  	| Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Japan) - C| nes_ganbagoegai| 2021	| jackic	| Miscellaneous	| 					|
 | nes_ganbagoegaij|  	| Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Japan)	| nes_ganbagoegai| 1990	| Konami	| Miscellaneous	| 					|
 | nes_ganbagoegai|  	| Ganbare Goemon Gaiden - Kieta Ougon Kiseru (T-eng)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_ganbagoegai2c| D	| Ganbare Goemon Gaiden 2 - Tenka no Zaihou (Japan) - Ca| nes_ganbagoegai2| 2020	| jackic	| Miscellaneous	| 					|
@@ -9691,7 +9692,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_neksoccr	|  	| Nekketsu Koukou Dodgeball Bu - Soccer PC Hen		| 		| 1992	| Naxat		| PC Engine	| 					|
 | nes_nekkestrbascastc|  	| Nekketsu! Street Basket - Ganbare Dunk Heroes (Japan) | nes_nekkestrbas| 2020	| Max1323	| Miscellaneous	| 					|
 | nes_nekkestrbas|  	| Nekketsu! Street Basket - Ganbare Dunk Heroes (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| nes_nekkestrbasc|  	| Nekketsu! Street Basket - Ganbare Dunk Heroes (T-Chi, | nes_nekkestrbas| 2020-10-05| Nintendo	| Miscellaneous	| 					|
+| nes_nekkestrbasc|  	| Nekketsu! Street Basket - Ganbare Dunk Heroes (T-Chi, | nes_nekkestrbas| 2020	| Han Hua Ni Mei| Miscellaneous	| 					|
 | sms_nekkyu	|  	| Nekkyuu Koushien (Jpn)				| 		| 1988	| Sega		| Sega Master Sy| 					|
 | spec_neloquqoen|  	| Nelo & Quqo and the Last Butifarreisson (English) (128| 		| 2010	| RetroWorks	| ZX Spectrum	| 					|
 | spec_neloquqoes|  	| Nelo & Quqo and the Last Butifarreisson (Spanish) (128| spec_neloquqoen| 2010	| RetroWorks	| ZX Spectrum	| 					|
@@ -12444,13 +12445,13 @@ This list contains all games supported by FinalBurn Neo.
 | scudhamm	|  	| Scud Hammer						| 		| 1994	| Jaleco	| Miscellaneous	| 					|
 | nes_sdbttloozumou|  	| SD Battle Oozumou - Heisei Hero Basho (Japan)		| 		| 1990	| Banpresto	| Miscellaneous	| 					|
 | sdfight	|  	| SD Fighters (Korea)					| 		| 1996	| SemiCom	| Miscellaneous	| 					|
-| nes_sdgundgs2c|  	| SD Gundam - Gachapon Senshi 2 - Capsule Senki (Japan) | nes_sdgundgs2	| 1989	| Bandai Shinsei| Miscellaneous	| 					|
+| nes_sdgundgs2c|  	| SD Gundam - Gachapon Senshi 2 - Capsule Senki (Japan) | nes_sdgundgs2	| 2020	| Max1323	| Miscellaneous	| 					|
 | nes_sdgundgs2	|  	| SD Gundam - Gachapon Senshi 2 - Capsule Senki (Japan)	| 		| 1989	| Bandai Shinsei| Miscellaneous	| 					|
 | nes_sdgundgs3	|  	| SD Gundam - Gachapon Senshi 3 - Eiyuu Senki (Japan)	| 		| 1990	| Yutaka	| Miscellaneous	| 					|
 | nes_sdgundgs4	|  	| SD Gundam - Gachapon Senshi 4 - New Type Story (Japan)| 		| 1991	| Yutaka	| Miscellaneous	| 					|
 | nes_sdgachapon5|  	| SD Gundam - Gachapon Senshi 5 - Battle of Universal Ce| 		| 1992	| Yutaka	| Miscellaneous	| 					|
 | gg_sdgundam	|  	| SD Gundam - Winner's History (Jpn)			| 		| 1995	| Bandai	| Sega Game Gear| 					|
-| nes_sdgunkgm	|  	| SD Gundam Gaiden - Knight Gundam Monogatari (Japan) (V| 		| 1990	| Bandai	| Miscellaneous	| 					|
+| nes_sdgunkgm	|  	| SD Gundam Gaiden - Knight Gundam Monogatari (Japan) (V| 		| 2020	| Bandai	| Miscellaneous	| 					|
 | nes_sdgunkgmj	|  	| SD Gundam Gaiden - Knight Gundam Monogatari (Japan) (V| nes_sdgunkgm	| 1990	| Bandai	| Miscellaneous	| 					|
 | nes_sdgunkgm2	|  	| SD Gundam Gaiden - Knight Gundam Monogatari 2 - Hikari| 		| 1991	| Bandai	| Miscellaneous	| 					|
 | nes_sdgunkgm3	|  	| SD Gundam Gaiden - Knight Gundam Monogatari 3 - Denset| 		| 1992	| Bandai	| Miscellaneous	| 					|
@@ -12460,9 +12461,9 @@ This list contains all games supported by FinalBurn Neo.
 | grainbowk	|  	| SD Gundam Sangokushi Rainbow Tairiku Senki (Korea)	| grainbow	| 1993	| Banpresto	| Miscellaneous	| 					|
 | fds_sdgunworgacsescwac|  	| SD Gundam World - Gachapon Senshi - Scramble Wars (Jap| fds_sdgunworgacsescwa| 1989?| Nintendo	| Miscellaneous	| 					|
 | fds_sdgunworgacsescwa|  	| SD Gundam World - Gachapon Senshi - Scramble Wars (Jap| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| nes_sdhstangc	|  	| SD Hero Soukessen - Taose! Aku no Gundan (Japan) - Cas| nes_sdhstang	| 1990	| Banpresto	| Miscellaneous	| 					|
+| nes_sdhstangc	|  	| SD Hero Soukessen - Taose! Aku no Gundan (Japan) - Cas| nes_sdhstang	| 2020	| Max1323	| Miscellaneous	| 					|
 | nes_sdhstang	|  	| SD Hero Soukessen - Taose! Aku no Gundan (Japan)	| 		| 1990	| Banpresto	| Miscellaneous	| 					|
-| nes_sdkblade	| D	| SD Keiji - Blader (Japan) [T-Eng]			| 		| 1991	| Taito		| Miscellaneous	| 					|
+| nes_sdkblade	| D	| SD Keiji - Blader (Japan) [T-Eng]			| 		| 2021	| Taito		| Miscellaneous	| 					|
 | nes_sdkbladej	| D	| SD Keiji - Blader (Japan)				| nes_sdkblade	| 1991	| Taito		| Miscellaneous	| 					|
 | md_sdvalis	|  	| SD Valis (Jpn)					| md_sydvalis	| 1992	| Laser Soft	| Sega Megadrive| 					|
 | sms_sdi	|  	| SDI (Jpn)						| sms_globald	| 1987	| Sega		| Sega Master Sy| 					|
@@ -15173,6 +15174,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_redcliffa	|  	| The Battle of Red Cliffs - Romance of the Three Kingdo| md_redcliff	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_redcliff	|  	| The Battle of Red Cliffs - Romance of the Three Kingdo| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | battroad	|  	| The Battle-Road					| 		| 1984	| Irem		| Irem M62	| 					|
+| nes_beatlesadv|  	| The Beatles Adventures in Pepperland (GlobalHack)	| nes_smb2	| 2021	| NesDraug	| Miscellaneous	| 					|
 | cv_bbears	|  	| The Berenstain Bears (Prototype)			| 		| 1984	| Coleco	| ColecoVision	| 					|
 | md_berenss	|  	| The Berenstain Bears' Camping Adventure (Hack, Spanish| md_berens	| 2019	| Sega		| Sega Megadrive| 					|
 | md_berensp20	|  	| The Berenstain Bears' Camping Adventure (Prototype, 19| md_berens	| 1994	| Sega		| Sega Megadrive| 					|
@@ -17574,6 +17576,7 @@ This list contains all games supported by FinalBurn Neo.
 | zektor	|  	| Zektor (revision B)					| 		| 1982	| Sega		| G80 Vector	| 					|
 | nes_zeldaiic	|  	| Zelda II - The Adventure of Link (Europe) (Rev 2) - Ca| nes_zeldaii	| 2016	| jackic	| Miscellaneous	| 					|
 | nes_zeldaii	|  	| Zelda II - The Adventure of Link (USA)		| 		| 1988	| Nintendo	| Miscellaneous	| 					|
+| nes_zeldaiiac	|  	| Zelda II Amida's Curse (GlobalHack, v1.6)		| nes_zeldaii	| 2021	| Ok Impala!	| Miscellaneous	| 					|
 | nes_zeldakong	|  	| Zelda Kong (HB, Global Hack)				| nes_donkeykong| 2021	| Zero Meaning	| Miscellaneous	| 					|
 | fds_zeldanodenj|  	| Zelda no Densetsu - The Hyrule Fantasy (Japan)	| fds_zeldanoden| 1989?	| Nintendo	| Miscellaneous	| 					|
 | fds_zeldanoden|  	| Zelda no Densetsu - The Hyrule Fantasy (T-Eng)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|

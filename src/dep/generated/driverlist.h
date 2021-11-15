@@ -5077,6 +5077,7 @@ DRV		BurnDrvFinehour;
 DRV		BurnDrvnes_firenice;
 DRV		BurnDrvsms_fireforg;
 DRV		BurnDrvsms_fireice;
+DRV		BurnDrvnes_firerescue;
 DRV		BurnDrvFball;
 DRV		BurnDrvfds_firebam;
 DRV		BurnDrvFirebarr;
@@ -15349,6 +15350,7 @@ DRV		BurnDrvAstyanaxa;
 DRV		BurnDrvmd_redcliffa;
 DRV		BurnDrvmd_redcliff;
 DRV		BurnDrvBattroad;
+DRV		BurnDrvnes_beatlesadv;
 DRV		BurnDrvcv_bbears;
 DRV		BurnDrvmd_berenss;
 DRV		BurnDrvmd_berensp20;
@@ -17794,6 +17796,7 @@ DRV		BurnDrvzedblade;
 DRV		BurnDrvZektor;
 DRV		BurnDrvnes_zeldaiic;
 DRV		BurnDrvnes_zeldaii;
+DRV		BurnDrvnes_zeldaiiac;
 DRV		BurnDrvnes_zeldakong;
 DRV		BurnDrvfds_zeldanodenj;
 DRV		BurnDrvfds_zeldanoden;
@@ -23006,6 +23009,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_firenice,		// Fire 'n Ice (USA)
 	&BurnDrvsms_fireforg,		// Fire and Forget II (Euro)
 	&BurnDrvsms_fireice,		// Fire and Ice (Bra)
+	&BurnDrvnes_firerescue,		// Fire and Rescue (HB, v1.1)
 	&BurnDrvFball,				// Fire Ball (FM Work)
 	&BurnDrvfds_firebam,		// Fire Bam (Japan)
 	&BurnDrvFirebarr,			// Fire Barrel (Japan)
@@ -33278,6 +33282,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_redcliffa,		// The Battle of Red Cliffs - Romance of the Three Kingdoms (Hacked out Protection?)
 	&BurnDrvmd_redcliff,		// The Battle of Red Cliffs - Romance of the Three Kingdoms
 	&BurnDrvBattroad,			// The Battle-Road
+	&BurnDrvnes_beatlesadv,		// The Beatles Adventures in Pepperland (GlobalHack)
 	&BurnDrvcv_bbears,			// The Berenstain Bears (Prototype)
 	&BurnDrvmd_berenss,			// The Berenstain Bears' Camping Adventure (Hack, Spanish)
 	&BurnDrvmd_berensp20,		// The Berenstain Bears' Camping Adventure (Prototype, 19940323)
@@ -35723,6 +35728,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvZektor,				// Zektor (revision B)
 	&BurnDrvnes_zeldaiic,		// Zelda II - The Adventure of Link (Europe) (Rev 2) - Castellano v1.0
 	&BurnDrvnes_zeldaii,		// Zelda II - The Adventure of Link (USA)
+	&BurnDrvnes_zeldaiiac,		// Zelda II Amida's Curse (GlobalHack, v1.6)
 	&BurnDrvnes_zeldakong,		// Zelda Kong (HB, Global Hack)
 	&BurnDrvfds_zeldanodenj,	// Zelda no Densetsu - The Hyrule Fantasy (Japan)
 	&BurnDrvfds_zeldanoden,		// Zelda no Densetsu - The Hyrule Fantasy (T-Eng)

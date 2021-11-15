@@ -1,5 +1,6 @@
 // Run module
 #include "burner.h"
+#include "scrn.h"
 
 int bRunPause = 0;
 int bAltPause = 0;
@@ -558,6 +559,30 @@ int RunMessageLoop()
 							case VK_MENU: {
 								continue;
 							}
+							// Open (L)ua Dialog
+							case 'L': {
+								InitLua();
+								break;
+							}
+							case 'T': {
+								PostMessage(LuaConsoleHWnd, WM_CLOSE, 0, 0);
+								break;
+							}
+							case 'E': {
+								PostMessage(LuaConsoleHWnd, WM_COMMAND, IDC_BUTTON_LUARUN, 0);
+								break;
+							}
+			                // (P)ause Lua Scripting (This is the stop button)
+							case 'P': {
+								PostMessage(LuaConsoleHWnd, WM_COMMAND, IDC_BUTTON_LUASTOP, 0);
+								break;
+							}
+							// (B)rowse Lua Scripts
+							case 'B': {
+								PostMessage(LuaConsoleHWnd, WM_COMMAND, IDC_BUTTON_LUABROWSE, 0);
+								break;
+							}
+							break;
 							case '1':
 							case '2':
 							case '3':

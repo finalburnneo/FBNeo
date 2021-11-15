@@ -25,28 +25,6 @@ UINT8 macroSystemFrame = 0;
 UINT8 macroSystemSaveState = 0;
 UINT8 macroSystemLoadState = 0;
 UINT8 macroSystemUNDOState = 0;
-UINT8 macroSystemLuaHotkey1 = 0;
-UINT8 macroSystemLuaHotkey2 = 0;
-UINT8 macroSystemLuaHotkey3 = 0;
-UINT8 macroSystemLuaHotkey4 = 0;
-UINT8 macroSystemLuaHotkey5 = 0;
-UINT8 macroSystemLuaHotkey6 = 0;
-UINT8 macroSystemLuaHotkey7 = 0;
-UINT8 macroSystemLuaHotkey8 = 0;
-UINT8 macroSystemLuaHotkey9 = 0;
-
-std::vector<UINT8*> lua_hotkeys = {
- &macroSystemLuaHotkey1,
- &macroSystemLuaHotkey2,
- &macroSystemLuaHotkey3,
- &macroSystemLuaHotkey4,
- &macroSystemLuaHotkey5,
- &macroSystemLuaHotkey6,
- &macroSystemLuaHotkey7,
- &macroSystemLuaHotkey8,
- &macroSystemLuaHotkey9
-};
-
 
 #define HW_NEOGEO ( ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOCD) )
 #define HW_NES ( ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_FDS) )
@@ -361,20 +339,6 @@ static void GameInpInitMacros()
 			pgi->Macro.nVal[0] = 1;
 			nMacroCount++;
 			pgi++;
-
-			for (int hotkey_num = 0; hotkey_num < lua_hotkeys.size(); hotkey_num++) {
-				char hotkey_name[20];
-				sprintf(hotkey_name, "Lua Hotkey %d", (hotkey_num + 1));
-				pgi->nInput = GIT_MACRO_AUTO;
-				pgi->nType = BIT_DIGITAL;
-				pgi->Macro.nMode = 0;
-				pgi->Macro.nSysMacro = 1;
-				sprintf(pgi->Macro.szName, hotkey_name);
-				pgi->Macro.pVal[0] = lua_hotkeys[hotkey_num];
-				pgi->Macro.nVal[0] = 1;
-				nMacroCount++;
-				pgi++;
-			}
 	}
 
 	// Remove two keys for volume adjustment of cps2

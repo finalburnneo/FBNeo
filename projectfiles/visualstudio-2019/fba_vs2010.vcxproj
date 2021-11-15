@@ -33,6 +33,7 @@
     <ClInclude Include="..\..\src\burner\win32\d3dkmt_sync.h" />
     <ClInclude Include="..\..\src\burner\win32\resource.h" />
     <ClInclude Include="..\..\src\burner\win32\resource_string.h" />
+    <ClInclude Include="..\..\src\burner\win32\scrn.h" />
     <ClInclude Include="..\..\src\burn\bitswap.h" />
     <ClInclude Include="..\..\src\burn\burn.h" />
     <ClInclude Include="..\..\src\burn\burnint.h" />

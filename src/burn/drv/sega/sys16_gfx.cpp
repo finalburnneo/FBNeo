@@ -3655,7 +3655,7 @@ INT32 System16BRender()
 			UINT16* pPixel = pSys18SpriteBMP + (y * 320);
 			UINT8*    pPri = pPrioDraw  + (y * nScreenWidth);
 			UINT16*  pDest = pTransDraw + (y * 320);
-			UINT16 *PalRAM = (UINT16*)System16PaletteRam;
+			//UINT16 *PalRAM = (UINT16*)System16PaletteRam;
 
 			UINT16 pix = pPixel[x];
 			INT32 pri = (pix >> 10) & 3;
@@ -3664,7 +3664,8 @@ INT32 System16BRender()
 				if ((1<<pri) > pPri[x]) {
 
 					if ((pix & 0x3f0) == 0x3f0) {
-						pDest[x] += (PalRAM[pPixel[x]] & 0x8000) ? (System16PaletteEntries * 2) : System16PaletteEntries;
+						//pDest[x] += (PalRAM[pPixel[x]] & 0x8000) ? (System16PaletteEntries * 2) : System16PaletteEntries;
+						pDest[x] += System16PaletteEntries; // system16b doesn't have highlight? hmm... saving above for justincase
 					} else {
 						pDest[x] = ((pix & 0x3ff) | System16SpritePalOffset);
 					}

@@ -1,5 +1,7 @@
 // Based on MAME driver by Chris Moore, Nicola Salmoria
 
+// .. FBH!
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "m6800_intf.h"
@@ -15,7 +17,7 @@ static UINT8 DrvDip[2]        = {0, 0};
 static UINT8 DrvInput[3]      = {0x00, 0x00, 0x00};
 static UINT8 DrvReset         = 0;
 
-static UINT8 *Mem                 = NULL;
+static UINT8 *AllMem              = NULL;
 static UINT8 *MemEnd              = NULL;
 static UINT8 *RamStart            = NULL;
 static UINT8 *RamEnd              = NULL;
@@ -33,23 +35,21 @@ static UINT8 *DrvSpriteRam        = NULL;
 static UINT8 *DrvPaletteRam       = NULL;
 static UINT8 *DrvTiles            = NULL;
 static UINT8 *DrvTempRom          = NULL;
-static UINT32 *DrvPalette          = NULL;
+static UINT32 *DrvPalette         = NULL;
 
 static UINT8 DrvRomBank;
-static UINT8 DrvSlaveCPUActive;
-static UINT8 DrvSoundCPUActive;
 static UINT8 DrvMCUActive;
 static UINT8 DrvVideoEnable;
 static UINT8 DrvFlipScreen;
 static INT32 IC43A;
 static INT32 IC43B;
-static INT32 DrvSoundStatus;
 static INT32 DrvSoundNmiEnable;
 static INT32 DrvSoundNmiPending;
-static INT32 DrvSoundLatch;
 
-static INT32 nCyclesDone[4], nCyclesTotal[4];
-static INT32 nCyclesSegment;
+static UINT8 DrvSoundStatus;
+static UINT8 DrvSoundStatusPending;
+static UINT8 DrvSoundLatch;
+static UINT8 DrvSoundLatchPending;
 
 typedef INT32 (*BublboblCallbackFunc)();
 static BublboblCallbackFunc BublboblCallbackFunction;
@@ -67,16 +67,15 @@ static UINT8 port1_out, port2_out, port3_out, port4_out;
 
 static struct BurnInputInfo BublboblInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort1 + 6, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort0 + 3, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort2 + 6, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort1 + 6, "p1 start"  },
 	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort1 + 0, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL  , DrvInputPort1 + 1, "p1 right"  },
 	{"P1 Fire 1"         , BIT_DIGITAL  , DrvInputPort1 + 5, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort1 + 4, "p1 fire 2" },
-	
+
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 3, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , DrvInputPort2 + 6, "p2 start"  },
 	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort2 + 0, "p2 left"   },
 	{"P2 Right"          , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 right"  },
 	{"P2 Fire 1"         , BIT_DIGITAL  , DrvInputPort2 + 5, "p2 fire 1" },
@@ -93,16 +92,15 @@ STDINPUTINFO(Bublbobl)
 
 static struct BurnInputInfo BoblboblInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort0 + 2, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort1 + 6, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 start"  },
 	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL  , DrvInputPort0 + 1, "p1 right"  },
 	{"P1 Fire 1"         , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 fire 2" },
-	
+
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 2, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , DrvInputPort1 + 6, "p2 start"  },
 	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort1 + 0, "p2 left"   },
 	{"P2 Right"          , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 right"  },
 	{"P2 Fire 1"         , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 fire 1" },
@@ -120,26 +118,18 @@ STDINPUTINFO(Boblbobl)
 static inline void BublboblMakeInputs()
 {
 	DrvInput[0] = 0xf3;
-	if (DrvInputPort0[0]) DrvInput[0] ^= 0x01;
-	if (DrvInputPort0[1]) DrvInput[0] ^= 0x02;
-	if (DrvInputPort0[2]) DrvInput[0] ^= 0x04;
-	if (DrvInputPort0[3]) DrvInput[0] ^= 0x08;
-	if (DrvInputPort0[4]) DrvInput[0] ^= 0x10;
-	if (DrvInputPort0[5]) DrvInput[0] ^= 0x20;
-	if (DrvInputPort0[6]) DrvInput[0] ^= 0x40;
-	if (DrvInputPort0[7]) DrvInput[0] ^= 0x80;
+	DrvInput[1] = 0xff;
+	DrvInput[2] = 0xff;
+	for (INT32 i = 0; i < 8; i++) {
+		DrvInput[0] ^= (DrvInputPort0[i] & 1) << i;
+		DrvInput[1] ^= (DrvInputPort1[i] & 1) << i;
+		DrvInput[2] ^= (DrvInputPort2[i] & 1) << i;
+	}
 
 	if (bublbobl2) {
 		DrvInput[0] ^= 0x8c;
 		// Swap coins
 		DrvInput[0] = (DrvInput[0] & 0xf3) | ((DrvInput[0] & 0x04) << 1) | ((DrvInput[0] & 0x08) >> 1);
-	}
-
-	DrvInput[1] = 0xff;
-	DrvInput[2] = 0xff;
-	for (INT32 i = 0; i < 8; i++) {
-		DrvInput[1] -= (DrvInputPort1[i] & 1) << i;
-		DrvInput[2] -= (DrvInputPort2[i] & 1) << i;
 	}
 }
 
@@ -396,89 +386,89 @@ static struct BurnDIPInfo DlandDIPList[]=
 STDDIPINFO(Dland)
 
 static struct BurnInputInfo TokioInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvInputPort0 + 2,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvInputPort0 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvInputPort1 + 6,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvInputPort1 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvInputPort1 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvInputPort1 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvInputPort1 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvInputPort1 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvInputPort1 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvInputPort1 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvInputPort1 + 5,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvInputPort1 + 4,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvInputPort0 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvInputPort0 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvInputPort2 + 6,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvInputPort2 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvInputPort2 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvInputPort2 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvInputPort2 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvInputPort2 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvInputPort2 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvInputPort2 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvInputPort2 + 5,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvInputPort2 + 4,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvInputPort0 + 1,	"service"	},
-	{"Tilt",		BIT_DIGITAL,	DrvInputPort0 + 0,	"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,		"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,		"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,			"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvInputPort0 + 1,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	DrvInputPort0 + 0,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDip + 0,			"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDip + 1,			"dip"		},
 };
 
 STDINPUTINFO(Tokio)
 
 static struct BurnDIPInfo TokioDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0xfe, NULL			},
-	{0x14, 0xff, 0xff, 0x7e, NULL			},
+	{0x13, 0xff, 0xff, 0xfe, NULL					},
+	{0x14, 0xff, 0xff, 0x7e, NULL					},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x13, 0x01, 0x01, 0x00, "Upright"		},
-	{0x13, 0x01, 0x01, 0x01, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x13, 0x01, 0x01, 0x00, "Upright"				},
+	{0x13, 0x01, 0x01, 0x01, "Cocktail"				},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x13, 0x01, 0x02, 0x02, "Off"			},
-	{0x13, 0x01, 0x02, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x13, 0x01, 0x02, 0x02, "Off"					},
+	{0x13, 0x01, 0x02, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x13, 0x01, 0x04, 0x04, "Off"			},
-	{0x13, 0x01, 0x04, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x13, 0x01, 0x04, 0x04, "Off"					},
+	{0x13, 0x01, 0x04, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x13, 0x01, 0x08, 0x00, "Off"			},
-	{0x13, 0x01, 0x08, 0x08, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x13, 0x01, 0x08, 0x00, "Off"					},
+	{0x13, 0x01, 0x08, 0x08, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"		},
+	{0   , 0xfe, 0   ,    4, "Coin A"				},
 	{0x13, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
 	{0x13, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
 	{0x13, 0x01, 0x30, 0x00, "2 Coins 3 Credits"	},
 	{0x13, 0x01, 0x30, 0x20, "1 Coin  2 Credits"	},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"		},
+	{0   , 0xfe, 0   ,    4, "Coin B"				},
 	{0x13, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
 	{0x13, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"	},
 	{0x13, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"	},
 	{0x13, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"	},
 
-	{0   , 0xfe, 0   ,    2, "Enemies"		},
-	{0x14, 0x01, 0x01, 0x01, "Few (Easy)"		},
-	{0x14, 0x01, 0x01, 0x00, "Many (Hard)"		},
+	{0   , 0xfe, 0   ,    2, "Enemies"				},
+	{0x14, 0x01, 0x01, 0x01, "Few (Easy)"			},
+	{0x14, 0x01, 0x01, 0x00, "Many (Hard)"			},
 
-	{0   , 0xfe, 0   ,    2, "Enemy Shots"		},
-	{0x14, 0x01, 0x02, 0x02, "Few (Easy)"		},
-	{0x14, 0x01, 0x02, 0x00, "Many (Hard)"		},
+	{0   , 0xfe, 0   ,    2, "Enemy Shots"			},
+	{0x14, 0x01, 0x02, 0x02, "Few (Easy)"			},
+	{0x14, 0x01, 0x02, 0x00, "Many (Hard)"			},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x14, 0x01, 0x0c, 0x0c, "100K 400K"		},
-	{0x14, 0x01, 0x0c, 0x08, "200K 400K"		},
-	{0x14, 0x01, 0x0c, 0x04, "300K 400K"		},
-	{0x14, 0x01, 0x0c, 0x00, "400K 400K"		},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0x14, 0x01, 0x0c, 0x0c, "100K 400K"			},
+	{0x14, 0x01, 0x0c, 0x08, "200K 400K"			},
+	{0x14, 0x01, 0x0c, 0x04, "300K 400K"			},
+	{0x14, 0x01, 0x0c, 0x00, "400K 400K"			},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x14, 0x01, 0x30, 0x30, "3"			},
-	{0x14, 0x01, 0x30, 0x20, "4"			},
-	{0x14, 0x01, 0x30, 0x10, "5"			},
-	{0x14, 0x01, 0x30, 0x00, "99 (Cheat)"		},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x14, 0x01, 0x30, 0x30, "3"					},
+	{0x14, 0x01, 0x30, 0x20, "4"					},
+	{0x14, 0x01, 0x30, 0x10, "5"					},
+	{0x14, 0x01, 0x30, 0x00, "99 (Cheat)"			},
 
-	{0   , 0xfe, 0   ,    0, "Language"		},
-	{0x14, 0x01, 0x80, 0x00, "English"		},
-	{0x14, 0x01, 0x80, 0x80, "Japanese"		},
+	{0   , 0xfe, 0   ,    0, "Language"				},
+	{0x14, 0x01, 0x80, 0x00, "English"				},
+	{0x14, 0x01, 0x80, 0x80, "Japanese"				},
 };
 
 STDDIPINFO(Tokio)
@@ -1279,11 +1269,11 @@ STD_ROM_PICK(tokiou)
 STD_ROM_FN(tokiou)
 
 static struct BurnRomInfo tokiobRomDesc[] = {
-	{ "2.ic4",		0x8000, 0xf583b1ef, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
+	{ "2.ic4",			0x8000, 0xf583b1ef, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
 	{ "a71-03.ic5",		0x8000, 0x69dacf44, BRF_ESS | BRF_PRG }, //  1
 	{ "a71-04.ic6",		0x8000, 0xa0a4ce0e, BRF_ESS | BRF_PRG }, //  2
 	{ "a71-05.ic7",		0x8000, 0x6da0b945, BRF_ESS | BRF_PRG }, //  3
-	{ "6.ic8",		0x8000, 0x1490e95b, BRF_ESS | BRF_PRG }, //  4
+	{ "6.ic8",			0x8000, 0x1490e95b, BRF_ESS | BRF_PRG }, //  4
 
 	{ "a71-01.ic1",		0x8000, 0x0867c707, BRF_ESS | BRF_PRG }, //  5 Z80 #2 Program 
 
@@ -1315,7 +1305,7 @@ STD_ROM_FN(tokiob)
 
 static INT32 MemIndex()
 {
-	UINT8 *Next; Next = Mem;
+	UINT8 *Next; Next = AllMem;
 
 	DrvZ80Rom1             = Next; Next += 0x30000;
 	DrvZ80Rom2             = Next; Next += 0x08000;
@@ -1348,12 +1338,20 @@ static INT32 MemIndex()
 
 static INT32 DrvDoReset()
 {
-	for (INT32 i = 0; i < 3; i++) {
-		ZetOpen(i);
-		ZetReset();
-		ZetClose();
-	}
-	
+	ZetOpen(0);
+	ZetReset();
+	BurnYM3526Reset();
+	ZetClose();
+
+	ZetOpen(1);
+	ZetReset();
+	ZetClose();
+
+	ZetOpen(2);
+	ZetReset();
+	BurnYM2203Reset();
+	ZetClose();
+
 	if (DrvMCUInUse == 1) {
 		M6801Open(0);
 		M6801Reset();
@@ -1361,22 +1359,19 @@ static INT32 DrvDoReset()
 	} else if (DrvMCUInUse == 2) {
 		m67805_taito_reset();
 	}
-	
-	BurnYM3526Reset();
-	BurnYM2203Reset();
-		
+
 	DrvRomBank = 0;
-	DrvSlaveCPUActive = 0;
-	DrvSoundCPUActive = 0;
 	DrvMCUActive = 0;
 	DrvVideoEnable = 0;
 	DrvFlipScreen = 0;
 	IC43A = 0;
 	IC43B = 0;
 	DrvSoundStatus = 0;
+	DrvSoundStatusPending = 0;
 	DrvSoundNmiEnable = 0;
 	DrvSoundNmiPending = 0;
 	DrvSoundLatch = 0;
+	DrvSoundLatchPending = 0;
 	mcu_latch = 0;
 	mcu_address = 0;
 
@@ -1387,18 +1382,18 @@ static INT32 DrvDoReset()
 
 static INT32 TokioDoReset()
 {
-	for (INT32 i = 0; i < 3; i++) {
-		ZetOpen(i);
-		ZetReset();
-		ZetClose();
-	}
-	
+	ZetReset(0);
+	ZetReset(1);
+
+	ZetOpen(2);
+	ZetReset();
+	BurnYM2203Reset();
+	ZetClose();
+
 	if (DrvMCUInUse == 2) {
 		m67805_taito_reset();
 	}
 
-	BurnYM2203Reset();
-		
 	DrvRomBank = 0;
 	DrvVideoEnable = 1;
 	DrvFlipScreen = 0;
@@ -1412,10 +1407,40 @@ static INT32 TokioDoReset()
 	return 0;
 }
 
-UINT8 __fastcall BublboblRead1(UINT16 a)
+static void bank_switch()
+{
+	ZetMapMemory(DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000), 0x8000, 0xbfff, MAP_ROM);
+}
+
+static void sync_sound()
+{
+	INT32 cyc = ZetTotalCycles(0) / 2;
+	//INT32 old = ZetTotalCycles(2);
+	ZetCPUPush(2);
+	BurnTimerUpdate(cyc);
+	ZetCPUPop();
+	//bprintf(0, _T("sync sound: %d \n"), ZetTotalCycles(2) - old);
+}
+
+static void soundlatch(UINT8 data)
+{
+	sync_sound();
+	DrvSoundLatch = data;
+	DrvSoundLatchPending = 1;
+	DrvSoundNmiPending = 1;
+	if (DrvSoundNmiEnable) {
+		DrvSoundNmiPending = 0;
+		ZetNmi(2);
+	}
+}
+
+static UINT8 __fastcall main_read(UINT16 a)
 {
 	switch (a) {
 		case 0xfa00: {
+			// never gets read?
+			sync_sound();
+			DrvSoundStatusPending = 0;
 			return DrvSoundStatus;
 		}
 		
@@ -1427,22 +1452,16 @@ UINT8 __fastcall BublboblRead1(UINT16 a)
 	return 0;
 }
 
-void __fastcall BublboblWrite1(UINT16 a, UINT8 d)
+static void __fastcall main_write(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xfa00: {
-			DrvSoundLatch = d;
-			DrvSoundNmiPending = 1;
+			soundlatch(d);
 			return;
 		}
-		
+
 		case 0xfa03: {
-			if (d) {
-				ZetReset(2);
-				DrvSoundCPUActive = 0;
-			} else {
-				DrvSoundCPUActive = 1;
-			}
+			//ZetSetRESETLine(2, (d) ? 1 : 0); // breaks sound
 			return;
 		}
 		
@@ -1452,16 +1471,10 @@ void __fastcall BublboblWrite1(UINT16 a, UINT8 d)
 		}
 		case 0xfb40: {
 			DrvRomBank = (d ^ 0x04) & 0x07;
-			ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
-			ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
-			
-			if (!(d & 0x10)) {
-				ZetReset(1);
-				DrvSlaveCPUActive = 0;
-			} else {
-				DrvSlaveCPUActive = 1;
-			}
-			
+			bank_switch();
+
+			ZetSetRESETLine(1, ~d & 0x10);
+
 			if (!(d & 0x20)) {
 				if (DrvMCUInUse == 2) {
 					 m67805_taito_reset();
@@ -1474,7 +1487,7 @@ void __fastcall BublboblWrite1(UINT16 a, UINT8 d)
 			} else {
 				DrvMCUActive = 1;
 			}
-			
+
 			DrvVideoEnable = d & 0x40;
 			DrvFlipScreen = d & 0x80;
 			return;
@@ -1486,7 +1499,7 @@ void __fastcall BublboblWrite1(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall BoblboblRead1(UINT16 a)
+static UINT8 __fastcall BoblboblRead1(UINT16 a)
 {
 	switch (a) {
 		case 0xfe00: {
@@ -1533,22 +1546,16 @@ UINT8 __fastcall BoblboblRead1(UINT16 a)
 	return 0;
 }
 
-void __fastcall BoblboblWrite1(UINT16 a, UINT8 d)
+static void __fastcall BoblboblWrite1(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xfa00: {
-			DrvSoundLatch = d;
-			DrvSoundNmiPending = 1;
+			soundlatch(d);
 			return;
 		}
 		
 		case 0xfa03: {
-			if (d) {
-				ZetReset(2);
-				DrvSoundCPUActive = 0;
-			} else {
-				DrvSoundCPUActive = 1;
-			}
+			// soundcpu reset
 			return;
 		}
 		
@@ -1559,16 +1566,10 @@ void __fastcall BoblboblWrite1(UINT16 a, UINT8 d)
 		
 		case 0xfb40: {
 			DrvRomBank = (d ^ 0x04) & 0x07;
-			ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
-			ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
-			
-			if (!(d & 0x10)) {
-				ZetReset(1);
-				DrvSlaveCPUActive = 0;
-			} else {
-				DrvSlaveCPUActive = 1;
-			}
-			
+			bank_switch();
+
+			ZetSetRESETLine(1, ~d & 0x10);
+
 			DrvVideoEnable = d & 0x40;
 			DrvFlipScreen = d & 0x80;
 			return;
@@ -1579,9 +1580,8 @@ void __fastcall BoblboblWrite1(UINT16 a, UINT8 d)
 		case 0xfe02:
 		case 0xfe03: {
 			INT32 Res = 0;
-			INT32 Offset = a - 0xfe00;
-			
-			switch (Offset) {
+
+			switch (a & 0x03) {
 				case 0x00: {
 					if (~IC43A & 8) Res ^= 1;
 					if (~IC43A & 1) Res ^= 2;
@@ -1627,10 +1627,9 @@ void __fastcall BoblboblWrite1(UINT16 a, UINT8 d)
 		case 0xfe81:
 		case 0xfe82:
 		case 0xfe83: {
-			INT32 Offset = a - 0xfe80;
 			static const INT32 XorVal[4] = { 4, 1, 8, 2 };
-			
-			IC43B = (d >> 4) ^ XorVal[Offset];
+
+			IC43B = (d >> 4) ^ XorVal[a & 3];
 			return;
 		}
 		
@@ -1646,34 +1645,26 @@ void __fastcall BoblboblWrite1(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall DrvSoundRead3(UINT16 a)
+static UINT8 __fastcall sound_read(UINT16 a)
 {
 	switch (a) {
-		case 0x9000: {
-			return BurnYM2203Read(0, 0);
-		}
-		
-		case 0x9001: {
-			return BurnYM2203Read(0, 1);
-		}
-		
-		case 0xa000: {
+		case 0x9000:
+		case 0x9001:
+			return BurnYM2203Read(0, a & 1);
+
+		case 0xa000:
 			return BurnYM3526Read(0);
-		}
-		
-		case 0xb000: {
+
+		case 0xb000:
+			DrvSoundLatchPending = 0;
 			return DrvSoundLatch;
-		}
-		
-		case 0xb001: {
-			// nop
+
+		case 0xb001:
+			return 0xfc | (DrvSoundLatchPending << 1) | (DrvSoundStatusPending << 0);
+
+		case 0xe000:
 			return 0;
-		}
-		
-		case 0xe000: {
-			return 0;
-		}
-		
+
 		default: {
 			bprintf(PRINT_NORMAL, _T("Z80 #3 Read => %04X\n"), a);
 		}
@@ -1682,55 +1673,40 @@ UINT8 __fastcall DrvSoundRead3(UINT16 a)
 	return 0;
 }
 
-void __fastcall DrvSoundWrite3(UINT16 a, UINT8 d)
+static void __fastcall sound_write(UINT16 a, UINT8 d)
 {
 	switch (a) {
-		case 0x9000: {
-			BurnYM2203Write(0, 0, d);
+		case 0x9000:
+		case 0x9001:
+			BurnYM2203Write(0, a & 1, d);
 			return;
-		}
-		
-		case 0x9001: {
-			BurnYM2203Write(0, 1, d);
+
+		case 0xa000:
+		case 0xa001:
+			BurnYM3526Write(a & 1, d);
 			return;
-		}
-		
-		case 0xa000: {
-			BurnYM3526Write(0, d);
-			return;
-		}
-		
-		case 0xa001: {
-			BurnYM3526Write(1, d);
-			return;
-		}
-		
-		case 0xb000: {
+
+		case 0xb000:
 			DrvSoundStatus = d;
+			DrvSoundStatusPending = 1;
 			return;
-		}
-		
-		case 0xb001: {
+
+		case 0xb001:
 			DrvSoundNmiEnable = 1;
-			if (DrvSoundNmiPending) {
-				ZetNmi();
-				DrvSoundNmiPending = 0;
-			}
+			ZetRunEnd(); // run pending nmi in frame()!
 			return;
-		}
-		
-		case 0xb002: {
+
+		case 0xb002:
 			DrvSoundNmiEnable = 0;
 			return;
-		}
-		
+
 		default: {
 			bprintf(PRINT_NORMAL, _T("Z80 #3 Write => %04X, %02X\n"), a, d);
 		}
 	}
 }
 
-UINT8 BublboblMcuReadByte(UINT16 Address)
+static UINT8 BublboblMcuReadByte(UINT16 Address)
 {
 	if (Address >= 0x0040 && Address <= 0x00ff) {
 		return DrvMcuRam[Address - 0x0040];
@@ -1776,7 +1752,7 @@ UINT8 BublboblMcuReadByte(UINT16 Address)
 	return 0;
 }
 
-void BublboblMcuWriteByte(UINT16 Address, UINT8 Data)
+static void BublboblMcuWriteByte(UINT16 Address, UINT8 Data)
 {
 	if (Address >= 0x0040 && Address <= 0x00ff) {
 		DrvMcuRam[Address - 0x0040] = Data;
@@ -1818,7 +1794,7 @@ void BublboblMcuWriteByte(UINT16 Address, UINT8 Data)
 					if (nAddress == 0x0001) port3_in = DrvDip[1];
 					if (nAddress == 0x0002) port3_in = DrvInput[1];
 					if (nAddress == 0x0003) port3_in = DrvInput[2];
-					
+ 					
 					if (nAddress >= 0x0c00 && nAddress <= 0x0fff) port3_in = DrvZ80Ram1[nAddress - 0x0c00];
 				} else {
 					if (nAddress >= 0x0c00 && nAddress <= 0x0fff) DrvZ80Ram1[nAddress - 0x0c00] = port3_out;
@@ -1853,7 +1829,7 @@ void BublboblMcuWriteByte(UINT16 Address, UINT8 Data)
 	bprintf(PRINT_NORMAL, _T("M6801 Write Byte -> %04X, %02X\n"), Address, Data);
 }
 
-void bublbobl_68705_portB_out(UINT8 *bytevalue)
+static void bublbobl_68705_portB_out(UINT8 *bytevalue)
 {
 	INT32 data = *bytevalue;//lazy
 
@@ -1898,6 +1874,7 @@ void bublbobl_68705_portB_out(UINT8 *bytevalue)
 	if ((ddrB & 0x20) && (~data & 0x20) && (portB_out & 0x20))
 	{
 		/* hack to get random EXTEND letters (who is supposed to do this? 68705? PAL?) */
+		// probably buggy bootleg? -dink
 		DrvZ80Ram1[0x7c] = BurnRandom() % 6;
 
 		ZetSetVector(0, DrvZ80Ram1[0]);
@@ -1917,7 +1894,7 @@ static m68705_interface bub68705_m68705_interface = {
 	NULL, NULL, bublbobl_68705_portC_in
 };
 
-void tokio_68705_portA_out(UINT8 *data)
+static void tokio_68705_portA_out(UINT8 *data)
 {
 	from_mcu = *data;
 	mcu_sent = 1;
@@ -1939,14 +1916,13 @@ static m68705_interface tokio_m68705_interface = {
 	NULL, NULL, tokio_68705_portC_in
 };
 
-void __fastcall TokioWrite1(UINT16 a, UINT8 d)
+static void __fastcall TokioWrite1(UINT16 a, UINT8 d)
 {
 	switch (a)
 	{
 		case 0xfa80: {
 			DrvRomBank = d & 0x07;
-			ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
-			ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
+			bank_switch();
 			return;
 		}
 
@@ -1961,8 +1937,7 @@ void __fastcall TokioWrite1(UINT16 a, UINT8 d)
 		}
 
 		case 0xfc00: {
-			DrvSoundLatch = d;
-			DrvSoundNmiPending = 1;
+			soundlatch(d);
 			return;
 		}
 		
@@ -1970,14 +1945,14 @@ void __fastcall TokioWrite1(UINT16 a, UINT8 d)
 			if (DrvMCUInUse == 2) {
 				from_main = d;
 				main_sent = 1;
-				m68705SetIrqLine(0, 1 /*ASSERT_LINE*/);
+				m68705SetIrqLine(0, CPU_IRQSTATUS_ACK);
 			}
 			return;
 		}
 	}
 }
 
-UINT8 __fastcall TokioRead1(UINT16 a)
+static UINT8 __fastcall TokioRead1(UINT16 a)
 {
 	switch (a)
 	{
@@ -2022,56 +1997,40 @@ UINT8 __fastcall TokioRead1(UINT16 a)
 	return 0;
 }
 
-void __fastcall TokioSoundWrite3(UINT16 a, UINT8 d)
+static void __fastcall TokioSoundWrite3(UINT16 a, UINT8 d)
 {
 	switch (a)
 	{
-		case 0x9000: {
+		case 0x9000:
 			DrvSoundStatus = d;
 			return;
-		}
 
-		case 0xa000: {
+		case 0xa000:
 			DrvSoundNmiEnable = 0;
 			return;
-		}
 
-		case 0xa800: {
+		case 0xa800:
 			DrvSoundNmiEnable = 1;
-			if (DrvSoundNmiPending) {
-				ZetNmi();
-				DrvSoundNmiPending = 0;
-			}
+			ZetRunEnd();
 			return;
-		}
 
-		case 0xb000: {
-			BurnYM2203Write(0, 0, d);
+		case 0xb000:
+		case 0xb001:
+			BurnYM2203Write(0, a & 1, d);
 			return;
-		}
-		
-		case 0xb001: {
-			BurnYM2203Write(0, 1, d);
-			return;
-		}
 	}
 }
 
-UINT8 __fastcall TokioSoundRead3(UINT16 a)
+static UINT8 __fastcall TokioSoundRead3(UINT16 a)
 {
 	switch (a)
 	{
-		case 0x9000: {
+		case 0x9000:
 			return DrvSoundLatch;
-		}
 
-		case 0xb000: {
-			return BurnYM2203Read(0, 0);
-		}
-		
-		case 0xb001: {
-			return BurnYM2203Read(0, 1);
-		}
+		case 0xb000:
+		case 0xb001:
+			return BurnYM2203Read(0, a & 1);
 	}
 
 	return 0;
@@ -2089,62 +2048,39 @@ static INT32 TileYOffsets[8]     = { 0, 16, 32, 48, 64, 80, 96, 112 };
 
 static INT32 MachineInit()
 {
-	INT32 nLen;
-	
-	// Allocate and Blank all required memory
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	// Setup the Z80 emulation
 	ZetInit(0);
 	ZetOpen(0);
-	ZetSetReadHandler(BublboblRead1);
-	ZetSetWriteHandler(BublboblWrite1);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80Rom1             );
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Rom1             );
-	ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000   );
-	ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000   );
-	ZetMapArea(0xc000, 0xdcff, 0, DrvVideoRam            );
-	ZetMapArea(0xc000, 0xdcff, 1, DrvVideoRam            );
-	ZetMapArea(0xc000, 0xdcff, 2, DrvVideoRam            );
-	ZetMapArea(0xdd00, 0xdfff, 0, DrvSpriteRam           );
-	ZetMapArea(0xdd00, 0xdfff, 1, DrvSpriteRam           );
-	ZetMapArea(0xdd00, 0xdfff, 2, DrvSpriteRam           );
-	ZetMapArea(0xe000, 0xf7ff, 0, DrvSharedRam           );
-	ZetMapArea(0xe000, 0xf7ff, 1, DrvSharedRam           );
-	ZetMapArea(0xe000, 0xf7ff, 2, DrvSharedRam           );
-	ZetMapArea(0xf800, 0xf9ff, 0, DrvPaletteRam          );
-	ZetMapArea(0xf800, 0xf9ff, 1, DrvPaletteRam          );
-	ZetMapArea(0xf800, 0xf9ff, 2, DrvPaletteRam          );
-	ZetMapArea(0xfc00, 0xffff, 0, DrvZ80Ram1             );
-	ZetMapArea(0xfc00, 0xffff, 1, DrvZ80Ram1             );
-	ZetMapArea(0xfc00, 0xffff, 2, DrvZ80Ram1             );	
+	ZetSetReadHandler(main_read);
+	ZetSetWriteHandler(main_write);
+	ZetMapMemory(DrvZ80Rom1,	0x0000, 0x7fff, MAP_ROM);
+
+	DrvRomBank = 0;
+	bank_switch(); // ROM @ 8000 - bfff
+
+	ZetMapMemory(DrvVideoRam,	0xc000, 0xdcff, MAP_RAM);
+	ZetMapMemory(DrvSpriteRam,	0xdd00, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvSharedRam,	0xe000, 0xf7ff, MAP_RAM);
+	ZetMapMemory(DrvPaletteRam,	0xf800, 0xf9ff, MAP_RAM);
+	ZetMapMemory(DrvZ80Ram1,	0xfc00, 0xffff, MAP_RAM);
 	ZetClose();
-	
+
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80Rom2             );
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Rom2             );
-	ZetMapArea(0xe000, 0xf7ff, 0, DrvSharedRam           );
-	ZetMapArea(0xe000, 0xf7ff, 1, DrvSharedRam           );
-	ZetMapArea(0xe000, 0xf7ff, 2, DrvSharedRam           );
+	ZetMapMemory(DrvZ80Rom2,	0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvSharedRam,	0xe000, 0xf7ff, MAP_RAM);
 	ZetClose();
 
 	ZetInit(2);
 	ZetOpen(2);
-	ZetSetReadHandler(DrvSoundRead3);
-	ZetSetWriteHandler(DrvSoundWrite3);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80Rom3             );
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Rom3             );
-	ZetMapArea(0x8000, 0x8fff, 0, DrvZ80Ram3             );
-	ZetMapArea(0x8000, 0x8fff, 1, DrvZ80Ram3             );
-	ZetMapArea(0x8000, 0x8fff, 2, DrvZ80Ram3             );	
+	ZetSetReadHandler(sound_read);
+	ZetSetWriteHandler(sound_write);
+	ZetMapMemory(DrvZ80Rom3,	0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80Ram3,	0x8000, 0x8fff, MAP_RAM);
 	ZetClose();
-	
+
 	if (DrvMCUInUse == 1) {
 		M6801Init(0);
 		M6801Open(0);
@@ -2156,19 +2092,19 @@ static INT32 MachineInit()
 
 		m67805_taito_init(DrvMcuRom, DrvMcuRam, &bub68705_m68705_interface);
 	}
-	
+
 	BurnYM2203Init(1, 3000000, &DrvYM2203IRQHandler, 0);
 	BurnTimerAttachZet(3000000);
 	BurnYM2203SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
-	
+
 	BurnYM3526Init(3000000, NULL, 1);
 	BurnTimerAttachYM3526(&ZetConfig, 6000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
-	
+
 	if (BublboblCallbackFunction()) return 1;
 
 	GenericTilesInit();
-	
+
 	// Reset the driver
 	DrvDoReset();
 
@@ -2503,18 +2439,12 @@ static INT32 DlandInit()
 
 static INT32 BublboblpInit()
 {
-	INT32 nLen, nRet;
+	INT32 nRet;
 	
 	DrvMCUInUse = 0;
 	
-	// Allocate and Blank all required memory
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
-	
+	BurnAllocMemIndex();
+
 	DrvTempRom = (UINT8 *)BurnMalloc(0x80000);
 
 	// Load Z80 #1 Program Roms
@@ -2612,22 +2542,16 @@ static INT32 BublboblpInit()
 
 static INT32 TokioInit()
 {
-	INT32 nLen, nRet;
+	INT32 nRet;
 	
 	if (tokiob) {
 		DrvMCUInUse = 0;
 	} else {
 		DrvMCUInUse = 2;
 	}
-	
-	// Allocate and Blank all required memory
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
-	
+
+	BurnAllocMemIndex();
+
 	{
 		DrvTempRom = (UINT8 *)BurnMalloc(0x80000);
 
@@ -2740,7 +2664,7 @@ static INT32 TokioInit()
 static INT32 TokiobInit()
 {
 	tokiob = 1;
-	
+
 	return TokioInit();
 }
 
@@ -2748,17 +2672,15 @@ static INT32 DrvExit()
 {
 	ZetExit();
 	BurnYM2203Exit();
-		
+
 	if (DrvMCUInUse == 1) M6801Exit();
 	if (DrvMCUInUse == 2) m6805Exit();
 	
 	GenericTilesExit();
 	
-	BurnFree(Mem);
+	BurnFreeMemIndex();
 	
 	DrvRomBank = 0;
-	DrvSlaveCPUActive = 0;
-	DrvSoundCPUActive = 0;
 	DrvMCUActive = 0;
 	DrvVideoEnable = 0;
 	DrvFlipScreen = 0;
@@ -2864,36 +2786,8 @@ static void DrvVideoUpdate()
 				}
 
 				yPos = y - 16;
-				
-				if (x > 8 && x < (nScreenWidth - 8) && yPos > 8 && yPos < (nScreenHeight - 8)) {
-					if (xFlip) {
-						if (yFlip) {
-							Render8x8Tile_Mask_FlipXY(pTransDraw, Code, x, yPos, Colour, 4, 15, 0, DrvTiles);
-						} else {
-							Render8x8Tile_Mask_FlipX(pTransDraw, Code, x, yPos, Colour, 4, 15, 0, DrvTiles);
-						}
-					} else {
-						if (yFlip) {
-							Render8x8Tile_Mask_FlipY(pTransDraw, Code, x, yPos, Colour, 4, 15, 0, DrvTiles);
-						} else {
-							Render8x8Tile_Mask(pTransDraw, Code, x, yPos, Colour, 4, 15, 0, DrvTiles);
-						}
-					}
-				} else {
-					if (xFlip) {
-						if (yFlip) {
-							Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, Code, x, yPos, Colour, 4, 15, 0, DrvTiles);
-						} else {
-							Render8x8Tile_Mask_FlipX_Clip(pTransDraw, Code, x, yPos, Colour, 4, 15, 0, DrvTiles);
-						}
-					} else {
-						if (yFlip) {
-							Render8x8Tile_Mask_FlipY_Clip(pTransDraw, Code, x, yPos, Colour, 4, 15, 0, DrvTiles);
-						} else {
-							Render8x8Tile_Mask_Clip(pTransDraw, Code, x, yPos, Colour, 4, 15, 0, DrvTiles);
-						}
-					}
-				}	
+
+				Draw8x8MaskTile(pTransDraw, Code, x, yPos, xFlip, yFlip, Colour, 4, 15, 0, DrvTiles);
 			}
 		}
 
@@ -2916,97 +2810,54 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = 100;
-
 	if (DrvReset) DrvDoReset();
+
+	ZetNewFrame();
 
 	BublboblMakeInputs();
 
-	nCyclesTotal[0] = 6000000 / 60;
-	nCyclesTotal[1] = 6000000 / 60;
-	nCyclesTotal[2] = 3000000 / 60;
-	nCyclesTotal[3] = (DrvMCUInUse == 2) ? (4000000 / 60) : (1000000 / 60);
-	nCyclesDone[0] = nCyclesDone[1] = nCyclesDone[2] = nCyclesDone[3] = 0;
-	
-	ZetNewFrame();
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[4] = { INT32(6000000 / 59.185608), INT32(6000000 / 59.185608), INT32(3000000 / 59.185608), (DrvMCUInUse == 2) ? (INT32(4000000 / 59.185608)) : (INT32(1000000 / 59.185608)) };
+	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
-		// Run Z80 #1
-		nCurrentCPU = 0;
-		ZetOpen(nCurrentCPU);
-		BurnTimerUpdateYM3526(i * (nCyclesTotal[nCurrentCPU] / nInterleave));
-		if (i == 94 && !DrvMCUInUse) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-		ZetClose();
-
-		// Run Z80 #2
-		if (DrvSlaveCPUActive) {
-			nCurrentCPU = 1;
-			ZetOpen(nCurrentCPU);
-			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-			nCyclesSegment = ZetRun(nCyclesSegment);
-			nCyclesDone[nCurrentCPU] += nCyclesSegment;
-			if (i == 94) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			ZetClose();
-		}
-
-		// Run Z80 #3
-		if (DrvSoundCPUActive) {
-			nCurrentCPU = 2;
-			ZetOpen(nCurrentCPU);
-			BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
-			if (DrvSoundNmiPending) {
-				if (DrvSoundNmiEnable) {
-					ZetNmi();
-					DrvSoundNmiPending = 0;
-				}
-			}
-			ZetClose();
-		}
-
-		if (DrvMCUInUse) {
-			if (DrvMCUActive) {
-				nCurrentCPU = 3;
-				nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-				nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-				if (DrvMCUInUse == 2) {
-					nCyclesSegment = m6805Run(nCyclesSegment);
-					if (i == 49) m68705SetIrqLine(0, 1 /*ASSERT_LINE*/); // weird, but coinage issues when ack'd at 94
-					if (i == 95) m68705SetIrqLine(0, 0 /*CLEAR_LINE*/);
-				} else {
-					M6801Open(0);
-					nCyclesSegment = M6801Run(nCyclesSegment);
-					if (i == 94) M6801SetIRQLine(0, CPU_IRQSTATUS_ACK);
-					if (i == 95) M6801SetIRQLine(0, CPU_IRQSTATUS_NONE);
-					M6801Close();
-				}
-
-				nCyclesDone[nCurrentCPU] += nCyclesSegment;
-			}
-		}
-	}
-
-	ZetOpen(0);
-	BurnTimerEndFrameYM3526(nCyclesTotal[0]);
-	ZetClose();
-	
-	if (DrvSoundCPUActive) {
-		ZetOpen(2);
-		BurnTimerEndFrame(nCyclesTotal[2]);
-		ZetClose();
-	}
-	
-	if (pBurnSoundOut) {
-		ZetOpen(2);
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
 		ZetOpen(0);
-		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
+		CPU_RUN_TIMER_YM3526(0);
+		if (i == 224 && !DrvMCUInUse) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
+
+		ZetOpen(1);
+		CPU_RUN(1, Zet);
+		if (i == 224) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		ZetClose();
+
+		ZetOpen(2);
+		CPU_RUN_TIMER(2);
+		if (DrvSoundNmiPending && DrvSoundNmiEnable) {
+			ZetNmi();
+			DrvSoundNmiPending = 0;
+		}
+		ZetClose();
+
+		if (DrvMCUInUse && DrvMCUActive) {
+			if (DrvMCUInUse == 2) {
+				CPU_RUN(3, m6805);
+				if (i == 125) m68705SetIrqLine(0, 1); // fidgety bootleg mcu..
+				if (i == 224) m68705SetIrqLine(0, 0);
+			} else {
+				M6801Open(0);
+				CPU_RUN(3, M6801);
+				if (i == 224) M6801SetIRQLine(0, CPU_IRQSTATUS_HOLD);
+				M6801Close();
+			}
+		}
 	}
-	
+
+	if (pBurnSoundOut) {
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
+	}
+
 	if (pBurnDraw) DrvDraw();
 
 	return 0;
@@ -3014,76 +2865,44 @@ static INT32 DrvFrame()
 
 static INT32 TokioFrame()
 {
-	INT32 nInterleave = 100;
-
 	if (DrvReset) TokioDoReset();
+
+	ZetNewFrame();
 
 	BublboblMakeInputs();
 
-	nCyclesTotal[0] = 6000000 / 60;
-	nCyclesTotal[1] = 6000000 / 60;
-	nCyclesTotal[2] = 3000000 / 60;
-	nCyclesTotal[3] = (DrvMCUInUse == 2) ? (4000000 / 60) : 0;
-	nCyclesDone[0] = nCyclesDone[1] = nCyclesDone[2] = nCyclesDone[3] = 0;
-	
-	ZetNewFrame();
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[4] = { 6000000 / 60, 6000000 / 60, 3000000 / 60, 4000000 / 60 };
+	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
-		// Run Z80 #1
-		nCurrentCPU = 0;
-		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == 90) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-		if (i == 91) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+		ZetOpen(0);
+		CPU_RUN(0, Zet);
+		if (i == 224) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
-		// Run Z80 #2
-		nCurrentCPU = 1;
-		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == 90) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-		if (i == 91) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+		ZetOpen(1);
+		CPU_RUN(1, Zet);
+		if (i == 224) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
-	
-		// Run Z80 #3
-		nCurrentCPU = 2;
-		ZetOpen(nCurrentCPU);
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
-		if (DrvSoundNmiPending) {
-			if (DrvSoundNmiEnable) {
-				ZetNmi();
-				DrvSoundNmiPending = 0;
-			}
+
+		ZetOpen(2);
+		CPU_RUN_TIMER(2);
+		if (DrvSoundNmiPending && DrvSoundNmiEnable) {
+			ZetNmi();
+			DrvSoundNmiPending = 0;
 		}
 		ZetClose();
-		
+
 		if (DrvMCUInUse) {
-			nCurrentCPU = 3;
-			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-			nCyclesSegment = m6805Run(nCyclesSegment);
-			nCyclesDone[nCurrentCPU] += nCyclesSegment;
+			CPU_RUN(3, m6805);
 		}
 	}
-
-	ZetOpen(2);
-	BurnTimerEndFrame(nCyclesTotal[2]);
-	ZetClose();
 
 	if (pBurnSoundOut) {
-		ZetOpen(2);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
 	}
-	
+
 	if (pBurnDraw) DrvDraw();
 
 	return 0;
@@ -3117,8 +2936,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		}
 
 		SCAN_VAR(DrvRomBank);
-		SCAN_VAR(DrvSlaveCPUActive);
-		SCAN_VAR(DrvSoundCPUActive);
 		SCAN_VAR(DrvMCUActive);
 		SCAN_VAR(DrvVideoEnable);
 		SCAN_VAR(DrvFlipScreen);
@@ -3148,8 +2965,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	
 	if (nAction & ACB_WRITE) {
 		ZetOpen(0);
-		ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
-		ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
+		bank_switch();
 		ZetClose();
 	}
 

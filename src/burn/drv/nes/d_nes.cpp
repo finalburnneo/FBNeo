@@ -14277,7 +14277,7 @@ struct BurnDriver BurnDrvnes_avpregirfig = {
 	"nes_avpregirfig", NULL, NULL, NULL, "1994",
 	"AV Pretty Girl Fight (Unl)\0", NULL, "Someri Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
 	NESGetZipName, nes_avpregirfigRomInfo, nes_avpregirfigRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -18308,10 +18308,10 @@ STD_ROM_PICK(nes_ganbagoegaic)
 STD_ROM_FN(nes_ganbagoegaic)
 
 struct BurnDriver BurnDrvnes_ganbagoegaic = {
-	"nes_ganbagoegaic", "nes_ganbagoegai", NULL, NULL, "1989 ?",
-	"Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Japan) - Castellano v0.99\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_ganbagoegaic", "nes_ganbagoegai", NULL, NULL, "2021",
+	"Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Japan) - Castellano v0.99\0", NULL, "jackic", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_ganbagoegaicRomInfo, nes_ganbagoegaicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -18362,8 +18362,8 @@ STD_ROM_PICK(nes_sdgundgs2c)
 STD_ROM_FN(nes_sdgundgs2c)
 
 struct BurnDriver BurnDrvnes_sdgundgs2c = {
-	"nes_sdgundgs2c", "nes_sdgundgs2", NULL, NULL, "1989",
-	"SD Gundam - Gachapon Senshi 2 - Capsule Senki (Japan) - Castellano v1.0\0", NULL, "Bandai Shinsei", "Miscellaneous",
+	"nes_sdgundgs2c", "nes_sdgundgs2", NULL, NULL, "2020",
+	"SD Gundam - Gachapon Senshi 2 - Capsule Senki (Japan) - Castellano v1.0\0", NULL, "Max1323", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_STRATEGY, 0,
 	NESGetZipName, nes_sdgundgs2cRomInfo, nes_sdgundgs2cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -18434,7 +18434,7 @@ STD_ROM_PICK(nes_sdgunkgm)
 STD_ROM_FN(nes_sdgunkgm)
 
 struct BurnDriver BurnDrvnes_sdgunkgm = {
-	"nes_sdgunkgm", NULL, NULL, NULL, "1990",
+	"nes_sdgunkgm", NULL, NULL, NULL, "2020",
 	"SD Gundam Gaiden - Knight Gundam Monogatari (Japan) (V1.0) (T-Eng)\0", NULL, "Bandai", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
@@ -18525,8 +18525,8 @@ STD_ROM_PICK(nes_sdhstangc)
 STD_ROM_FN(nes_sdhstangc)
 
 struct BurnDriver BurnDrvnes_sdhstangc = {
-	"nes_sdhstangc", "nes_sdhstang", NULL, NULL, "1990",
-	"SD Hero Soukessen - Taose! Aku no Gundan (Japan) - Castellano v1.0\0", NULL, "Banpresto", "Miscellaneous",
+	"nes_sdhstangc", "nes_sdhstang", NULL, NULL, "2020",
+	"SD Hero Soukessen - Taose! Aku no Gundan (Japan) - Castellano v1.0\0", NULL, "Max1323", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_sdhstangcRomInfo, nes_sdhstangcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -18543,7 +18543,7 @@ STD_ROM_PICK(nes_sdkblade)
 STD_ROM_FN(nes_sdkblade)
 
 struct BurnDriverD BurnDrvnes_sdkblade = {
-	"nes_sdkblade", NULL, NULL, NULL, "1991",
+	"nes_sdkblade", NULL, NULL, NULL, "2021",
 	"SD Keiji - Blader (Japan) [T-Eng]\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
@@ -18729,10 +18729,10 @@ STD_ROM_PICK(nes_nekkestrbasc)
 STD_ROM_FN(nes_nekkestrbasc)
 
 struct BurnDriver BurnDrvnes_nekkestrbasc = {
-	"nes_nekkestrbasc", "nes_nekkestrbas", NULL, NULL, "2020-10-05",
-	"Nekketsu! Street Basket - Ganbare Dunk Heroes (T-Chi, v2)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_nekkestrbasc", "nes_nekkestrbas", NULL, NULL, "2020",
+	"Nekketsu! Street Basket - Ganbare Dunk Heroes (T-Chi, v2)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
 	NESGetZipName, nes_nekkestrbascRomInfo, nes_nekkestrbascRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -18959,6 +18959,57 @@ struct BurnDriver BurnDrvnes_vanguard = {
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
+
+static struct BurnRomInfo nes_beatlesadvRomDesc[] = {
+	{ "The Beatles Adventures in Pepperland GlobHack (2021)(NesDraug).nes",          524304, 0xfa5e3fa2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_beatlesadv)
+STD_ROM_FN(nes_beatlesadv)
+
+struct BurnDriver BurnDrvnes_beatlesadv = {
+	"nes_beatlesadv", "nes_smb2", NULL, NULL, "2021",
+	"The Beatles Adventures in Pepperland (GlobalHack)\0", NULL, "NesDraug", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_beatlesadvRomInfo, nes_beatlesadvRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_firerescueRomDesc[] = {
+	{ "Fire and Rescue v1.1 (2021)(Skyboy Games).nes",          40976, 0x3a233cd9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_firerescue)
+STD_ROM_FN(nes_firerescue)
+
+struct BurnDriver BurnDrvnes_firerescue = {
+	"nes_firerescue", NULL, NULL, NULL, "2021",
+	"Fire and Rescue (HB, v1.1)\0", NULL, "Skyboy Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_firerescueRomInfo, nes_firerescueRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_zeldaiiacRomDesc[] = {
+	{ "Zelda II Amida's Curse GlobHack v1.6 (2021)(Ok Impala!).nes",          262160, 0x3250c35d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_zeldaiiac)
+STD_ROM_FN(nes_zeldaiiac)
+
+struct BurnDriver BurnDrvnes_zeldaiiac = {
+	"nes_zeldaiiac", "nes_zeldaii", NULL, NULL, "2021",
+	"Zelda II Amida's Curse (GlobalHack, v1.6)\0", NULL, "Ok Impala!", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	NESGetZipName, nes_zeldaiiacRomInfo, nes_zeldaiiacRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_upsadownRomDesc[] = {
 	{ "Upsad Down v0.6 (2021)(Fadest).nes",          40976, 0xf90302bc, BRF_ESS | BRF_PRG },

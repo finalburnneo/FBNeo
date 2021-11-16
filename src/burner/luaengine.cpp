@@ -137,6 +137,10 @@ static const char* luaCallIDStrings [] =
 	"CALL_HOTKEY_3",
 	"CALL_HOTKEY_4",
 	"CALL_HOTKEY_5",
+	"CALL_HOTKEY_6",
+	"CALL_HOTKEY_7",
+	"CALL_HOTKEY_8",
+	"CALL_HOTKEY_9",
 };
 
 static char* rawToCString(lua_State* L, int idx=0);
@@ -3196,9 +3200,9 @@ use_console:
 static int input_registerhotkey(lua_State *L)
 {
 	int hotkeyNumber = luaL_checkinteger(L,1);
-	if(hotkeyNumber < 1 || hotkeyNumber > 5)
+	if (hotkeyNumber < 1 || hotkeyNumber > 9)
 	{
-		luaL_error(L, "input.registerhotkey(n,func) requires 1 <= n <= 5, but got n = %d.", hotkeyNumber);
+		luaL_error(L, "input.registerhotkey(n,func) requires 1 <= n <= 9, but got n = %d.", hotkeyNumber);
 		return 0;
 	}
 	else

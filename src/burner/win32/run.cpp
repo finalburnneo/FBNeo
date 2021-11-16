@@ -1,5 +1,7 @@
 // Run module
 #include "burner.h"
+#include <string>
+#include "scrn.h"
 
 int bRunPause = 0;
 int bAltPause = 0;
@@ -29,6 +31,33 @@ static int nFastSpeed = 6;
 // For System Macros (below)
 static int prevPause = 0, prevFFWD = 0, prevFrame = 0, prevSState = 0, prevLState = 0, prevUState = 0;
 UINT32 prevPause_debounce = 0;
+
+struct lua_hotkey_handler {
+	int prev_value;
+	UINT8 * macroSystemLuaHotkey_ref;
+	UINT8 macroSystemLuaHotkey_val;
+	std::string hotkey_name;
+
+	lua_hotkey_handler(
+		UINT8 * _macroSystemLuaHotkey_ref,
+		UINT8 _macroSystemLuaHotkey_val,
+		int _prev_value = 0,
+		std::string hotkey_name = "lua_hotkey"
+	) : macroSystemLuaHotkey_ref(_macroSystemLuaHotkey_ref) {}
+
+};
+
+std::vector<lua_hotkey_handler> hotkey_debounces = {
+ { &macroSystemLuaHotkey1, macroSystemLuaHotkey1, 0 },
+ { &macroSystemLuaHotkey2, macroSystemLuaHotkey2, 0 },
+ { &macroSystemLuaHotkey3, macroSystemLuaHotkey3, 0 },
+ { &macroSystemLuaHotkey4, macroSystemLuaHotkey4, 0 },
+ { &macroSystemLuaHotkey5, macroSystemLuaHotkey5, 0 },
+ { &macroSystemLuaHotkey6, macroSystemLuaHotkey6, 0 },
+ { &macroSystemLuaHotkey7, macroSystemLuaHotkey7, 0 },
+ { &macroSystemLuaHotkey8, macroSystemLuaHotkey8, 0 },
+ { &macroSystemLuaHotkey9, macroSystemLuaHotkey9, 0 },
+};
 
 void EmulatorAppDoFast(bool dofast) {
 	bAppDoFast = dofast;
@@ -64,6 +93,19 @@ static void CheckSystemMacros() // These are the Pause / FFWD macros added to th
 		} else {
 			prevFrame = 0;
 		}
+		for (int hotkey_num = 0; hotkey_num <= hotkey_debounces.size() - 1; hotkey_num++) {
+			// Use the reference to the hotkey variable in order to update our stored value
+			// Because the hotkeys are hard coded into variables this allows us to iterate on them
+			hotkey_debounces[hotkey_num].macroSystemLuaHotkey_val = *hotkey_debounces[hotkey_num].macroSystemLuaHotkey_ref;
+			if (
+				hotkey_debounces[hotkey_num].macroSystemLuaHotkey_val &&
+				hotkey_debounces[hotkey_num].macroSystemLuaHotkey_val != hotkey_debounces[hotkey_num].prev_value
+			) {
+				CallRegisteredLuaFunctions((LuaCallID)(LUACALL_HOTKEY_1 + hotkey_num));
+			}
+			hotkey_debounces[hotkey_num].prev_value = hotkey_debounces[hotkey_num].macroSystemLuaHotkey_val;
+		}
+
 	}
 	// Load State
 	if (macroSystemLoadState && macroSystemLoadState != prevLState) {
@@ -558,13 +600,31 @@ int RunMessageLoop()
 							case VK_MENU: {
 								continue;
 							}
-							case '1':
-							case '2':
-							case '3':
-							case '4':
-							case '5':
-								CallRegisteredLuaFunctions((LuaCallID)(LUACALL_HOTKEY_1 + Msg.wParam - '1'));
+
+							// Open (L)ua Dialog
+							case 'L': {
+								InitLua();
 								break;
+							}
+							case 'T': {
+								PostMessage(LuaConsoleHWnd, WM_CLOSE, 0, 0);
+								break;
+							}
+							case 'E': {
+								PostMessage(LuaConsoleHWnd, WM_COMMAND, IDC_BUTTON_LUARUN, 0);
+								break;
+							}
+			                // (P)ause Lua Scripting (This is the stop button)
+							case 'P': {
+								PostMessage(LuaConsoleHWnd, WM_COMMAND, IDC_BUTTON_LUASTOP, 0);
+								break;
+							}
+							// (B)rowse Lua Scripts
+							case 'B': {
+								PostMessage(LuaConsoleHWnd, WM_COMMAND, IDC_BUTTON_LUABROWSE, 0);
+								break;
+							}
+							break;
 						}
 					} else {
 

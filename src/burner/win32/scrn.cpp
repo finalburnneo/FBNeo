@@ -951,6 +951,17 @@ void scrnSSUndo() // called from the menu (shift+F8) and CheckSystemMacros() in 
 	}
 }
 
+void InitLua() {
+	if (UseDialogs()) {
+		if (!LuaConsoleHWnd) {
+			InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
+			LuaConsoleHWnd = CreateDialog(hAppInst, MAKEINTRESOURCE(IDD_LUA), NULL, (DLGPROC)DlgLuaScriptDialog);
+		}
+		else
+			SetForegroundWindow(LuaConsoleHWnd);
+	}
+}
+
 static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 {
 	//if(id >= ID_MDI_START_CHILD) {

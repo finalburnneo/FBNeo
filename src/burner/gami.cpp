@@ -35,16 +35,17 @@ UINT8 macroSystemLuaHotkey7 = 0;
 UINT8 macroSystemLuaHotkey8 = 0;
 UINT8 macroSystemLuaHotkey9 = 0;
 
-std::vector<UINT8*> lua_hotkeys = {
- &macroSystemLuaHotkey1,
- &macroSystemLuaHotkey2,
- &macroSystemLuaHotkey3,
- &macroSystemLuaHotkey4,
- &macroSystemLuaHotkey5,
- &macroSystemLuaHotkey6,
- &macroSystemLuaHotkey7,
- &macroSystemLuaHotkey8,
- &macroSystemLuaHotkey9
+UINT8 *lua_hotkeys[] = {
+	&macroSystemLuaHotkey1,
+	&macroSystemLuaHotkey2,
+	&macroSystemLuaHotkey3,
+	&macroSystemLuaHotkey4,
+	&macroSystemLuaHotkey5,
+	&macroSystemLuaHotkey6,
+	&macroSystemLuaHotkey7,
+	&macroSystemLuaHotkey8,
+	&macroSystemLuaHotkey9,
+	NULL
 };
 
 
@@ -362,7 +363,7 @@ static void GameInpInitMacros()
 			nMacroCount++;
 			pgi++;
 
-			for (int hotkey_num = 0; hotkey_num < lua_hotkeys.size(); hotkey_num++) {
+			for (int hotkey_num = 0; lua_hotkeys[hotkey_num] != NULL; hotkey_num++) {
 				char hotkey_name[40];
 				sprintf(hotkey_name, "Lua Hotkey %d", (hotkey_num + 1));
 				pgi->nInput = GIT_MACRO_AUTO;

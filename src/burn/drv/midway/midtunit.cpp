@@ -519,10 +519,9 @@ static INT32 ScanlineRender(INT32 line, TMS34010Display *info)
 	}
 #endif
 
-	line -= 0x14; // offset
+	line -= 0x16; // offset
 
 	INT32 nHeight = nScreenHeight;
-	if (nHeight > 254) nHeight = 254;
 
 	if (line < 0 || line >= nHeight)
 		return 0;
@@ -1243,7 +1242,7 @@ INT32 TUnitFrame()
 
 	if (nSoundType == SOUND_ADPCM) M6809NewFrame();
 
-	INT32 nInterleave = 288;
+	INT32 nInterleave = 289;
 	INT32 nCyclesTotal[2] = { (INT32)(50000000/8/54.71), (INT32)(2000000 / 54.71) };
 	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 

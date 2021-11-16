@@ -363,7 +363,7 @@ static void GameInpInitMacros()
 			pgi++;
 
 			for (int hotkey_num = 0; hotkey_num < lua_hotkeys.size(); hotkey_num++) {
-				char hotkey_name[20];
+				char hotkey_name[40];
 				sprintf(hotkey_name, "Lua Hotkey %d", (hotkey_num + 1));
 				pgi->nInput = GIT_MACRO_AUTO;
 				pgi->nType = BIT_DIGITAL;

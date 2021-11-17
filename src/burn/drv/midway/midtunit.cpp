@@ -72,6 +72,8 @@ static INT32 vb_start = 0;
 
 static INT32 nSoundType = 0;
 
+static INT32 nLineOffset = 0;
+
 enum {
 	SOUND_ADPCM = 0,
 	SOUND_DCS
@@ -519,7 +521,7 @@ static INT32 ScanlineRender(INT32 line, TMS34010Display *info)
 	}
 #endif
 
-	line -= 0x16; // offset
+	line -= nLineOffset;
 
 	INT32 nHeight = nScreenHeight;
 
@@ -1158,6 +1160,10 @@ INT32 TUnitInit()
 		Dcs2kMapSoundROM(DrvSoundROM, 0x1000000);
 		Dcs2kSetVolume(8.00);
 	}
+
+	// offset to remove garbage at top/bottom and help reducing height to 252px
+	// note that mk2 is more versatile but 0x16 is still arguably better for vertical centering
+	nLineOffset = (TUnitIsMK2 || TUnitIsMK ? 0x16 : 0x15);
 
 	GenericTilesInit();
 

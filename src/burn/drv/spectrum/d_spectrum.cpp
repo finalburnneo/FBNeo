@@ -11591,7 +11591,7 @@ struct BurnDriver BurnSpechostages = {
 	"spec_hostages", NULL, "spec_spec128", NULL, "1990",
 	"Hostages (128K)\0", NULL, "Infogrames", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC | GBF_SHOOT, 0,
 	SpectrumGetZipName, SpechostagesRomInfo, SpechostagesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -16252,26 +16252,26 @@ struct BurnDriver BurnSpecMig29sovfighter = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Mission Jupiter
+// Mission Jupiter (48K)
 
 static struct BurnRomInfo SpecMissionjupiterRomDesc[] = {
 	{ "Mission Jupiter (1987)(Codemasters).tap", 45152, 0xf136a5b9, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecMissionjupiter, SpecMissionjupiter, Spec128)
+STDROMPICKEXT(SpecMissionjupiter, SpecMissionjupiter, Spectrum)
 STD_ROM_FN(SpecMissionjupiter)
 
 struct BurnDriver BurnSpecMissionjupiter = {
-	"spec_missionjupiter", NULL, "spec_spec128", NULL, "1987",
-	"Mission Jupiter\0", NULL, "Codemasters", "ZX Spectrum",
+	"spec_missionjupiter", NULL, "spec_spectrum", NULL, "1987",
+	"Mission Jupiter (48K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecMissionjupiterRomInfo, SpecMissionjupiterRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Monte Carlo Casino
+// Monte Carlo Casino (128K)
 
 static struct BurnRomInfo SpecMontecarlocasinoRomDesc[] = {
 	{ "Monte Carlo Casino (1989)(Codemasters).tap", 41821, 0x8d459dc5, BRF_ESS | BRF_PRG },
@@ -16282,9 +16282,9 @@ STD_ROM_FN(SpecMontecarlocasino)
 
 struct BurnDriver BurnSpecMontecarlocasino = {
 	"spec_montecarlocasino", NULL, "spec_spec128", NULL, "1989",
-	"Monte Carlo Casino\0", NULL, "Codemasters", "ZX Spectrum",
+	"Monte Carlo Casino (128K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_CASINO, 0,
 	SpectrumGetZipName, SpecMontecarlocasinoRomInfo, SpecMontecarlocasinoRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -23944,7 +23944,7 @@ STD_ROM_FN(SpecBatboy)
 
 struct BurnDriver BurnSpecBatboy = {
 	"spec_batboy", NULL, "spec_spec128", NULL, "2020",
-	"Bat Boy (128K) (HB)\0", NULL, "Antonio Perez", "ZX Spectrum",
+	"Bat Boy (128K) (HB)\0", NULL, "Pat Morita Team", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecBatboyRomInfo, SpecBatboyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -31132,5 +31132,24 @@ struct BurnDriver BurnSpecRescmarte = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecRescmarteRomInfo, SpecRescmarteRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPMDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Shovel Adventure ZX (128K) (HB, v1.2)
+
+static struct BurnRomInfo SpecShoveladvRomDesc[] = {
+	{ "Shovel Adventure ZX 1.2 (2021)(Pat Morita Team).tap", 62841, 0x75d4a6ee, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecShoveladv, SpecShoveladv, Spec128)
+STD_ROM_FN(SpecShoveladv)
+
+struct BurnDriver BurnSpecShoveladv = {
+	"spec_Shoveladv", NULL, "spec_spec128", NULL, "2021",
+	"Shovel Adventure ZX (128K) (HB, v1.2)\0", NULL, "Pat Morita Team", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MAZE | GBF_ACTION, 0,
+	SpectrumGetZipName, SpecShoveladvRomInfo, SpecShoveladvRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

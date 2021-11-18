@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-17699 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+17700 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1231,7 +1231,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_bassmc	|  	| BASS Masters Classic (USA)				| 		| 1995	| Black Pearl	| Sega Megadrive| 					|
 | md_bassmpro	|  	| BASS Masters Classic - Pro Edition (USA)		| 		| 1996	| THQ		| Sega Megadrive| 					|
 | nes_bassedefadv|  	| Basse Def Adventures (HB)				| 		| 2019	| Broke Studio	| Miscellaneous	| 					|
-| spec_batboy	|  	| Bat Boy (128K) (HB)					| 		| 2020	| Antonio Perez	| ZX Spectrum	| 					|
+| spec_batboy	|  	| Bat Boy (128K) (HB)					| 		| 2020	| Pat Morita Tea| ZX Spectrum	| 					|
 | nes_batlizard	|  	| Bat Lizard Bonanza (HB)				| 		| 2020	| John Vanderhoe| Miscellaneous	| 					|
 | spec_batman	|  	| Batman (128K)						| 		| 1986	| Ocean		| ZX Spectrum	| 					|
 | spec_batman_48|  	| Batman (48K)						| spec_batman	| 1986	| Ocean		| ZX Spectrum	| 					|
@@ -9032,7 +9032,7 @@ This list contains all games supported by FinalBurn Neo.
 | misncrfta	|  	| Mission Craft (version 2.4)				| misncrft	| 2000	| Sun		| Miscellaneous	| 					|
 | misncrft	|  	| Mission Craft (version 2.7)				| 		| 2000	| Sun		| Miscellaneous	| 					|
 | nes_missiimp	|  	| Mission Impossible (USA)				| 		| 1990	| Ultra Games	| Miscellaneous	| 					|
-| spec_missionjupiter|  	| Mission Jupiter					| 		| 1987	| Codemasters	| ZX Spectrum	| 					|
+| spec_missionjupiter|  	| Mission Jupiter (48K)					| 		| 1987	| Codemasters	| ZX Spectrum	| 					|
 | cmissnx	|  	| Mission-X (DECO Cassette) (US)			| 		| 1982	| Data East Corp| Cassette Syste| 					|
 | nes_missisatjikj|  	| Mississippi Satsujin Jiken (Japan)			| nes_missisatjik| 1986	| Jaleco	| Miscellaneous	| 					|
 | nes_missisatjik|  	| Mississippi Satsujin Jiken (T-Eng)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -9133,7 +9133,7 @@ This list contains all games supported by FinalBurn Neo.
 | mstworld	|  	| Monsters World (bootleg of Super Pang)		| 		| 1994	| bootleg (TCH)	| Miscellaneous	| 					|
 | md_monstinc	|  	| Monsters, Inc. (Rus)					| md_decapatt	| 199?	| <unknown>	| Sega Megadrive| 					|
 | msx_montanajohn|  	| Montana John and the Templar's Treasure (HB)		| 		| 2008	| Infinite	| MSX		| 					|
-| spec_montecarlocasino|  	| Monte Carlo Casino					| 		| 1989	| Codemasters	| ZX Spectrum	| 					|
+| spec_montecarlocasino|  	| Monte Carlo Casino (128K)				| 		| 1989	| Codemasters	| ZX Spectrum	| 					|
 | sms_montezum	|  	| Montezuma's Revenge Featuring Panama Joe (USA)	| 		| 1989	| Parker Brother| Sega Master Sy| 					|
 | sms_montezump	|  	| Montezuma's Revenge Featuring Panama Joe (USA, Prototy| sms_montezum	| 1989	| Parker Brother| Sega Master Sy| 					|
 | cv_montezum	|  	| Montezuma's Revenge					| 		| 1984	| Parker Brother| ColecoVision	| 					|
@@ -12785,6 +12785,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_shogun	|  	| Shougun (Jpn)						| 		| 1987	| Nihon Dexter	| MSX		| 					|
 | msx_shoutmat	|  	| Shout Match (Jpn)					| 		| 1987	| Victor	| MSX		| 					|
 | md_shoveit	|  	| Shove It! ...The Warehouse Game (USA)			| 		| 1990	| Dreamworks	| Sega Megadrive| 					|
+| spec_Shoveladv|  	| Shovel Adventure ZX (128K) (HB, v1.2)			| 		| 2021	| Pat Morita Tea| ZX Spectrum	| 					|
 | md_sdmilhao	|  	| Show do Milhao (Bra)					| 		| 2001	| Tec Toy	| Sega Megadrive| 					|
 | sms_sdmilhao	|  	| Show do Milhao (Bra, Prototype)			| 		| 2003	| Tec Toy	| Sega Master Sy| 					|
 | md_sdmilha2	|  	| Show do Milhao Volume 2 (Bra)				| 		| 2002	| Tec Toy	| Sega Megadrive| 					|

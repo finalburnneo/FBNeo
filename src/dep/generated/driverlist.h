@@ -12935,6 +12935,7 @@ DRV		BurnDrvpce_shogism;
 DRV		BurnDrvMSX_shogun;
 DRV		BurnDrvMSX_shoutmat;
 DRV		BurnDrvmd_shoveit;
+DRV		BurnSpecShoveladv;
 DRV		BurnDrvmd_sdmilhao;
 DRV		BurnDrvsms_sdmilhao;
 DRV		BurnDrvmd_sdmilha2;
@@ -27058,7 +27059,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMisncrfta,			// Mission Craft (version 2.4)
 	&BurnDrvMisncrft,			// Mission Craft (version 2.7)
 	&BurnDrvnes_missiimp,		// Mission Impossible (USA)
-	&BurnSpecMissionjupiter,	// Mission Jupiter
+	&BurnSpecMissionjupiter,	// Mission Jupiter (48K)
 	&BurnDrvCmissnx,			// Mission-X (DECO Cassette) (US)
 	&BurnDrvnes_missisatjikj,	// Mississippi Satsujin Jiken (Japan)
 	&BurnDrvnes_missisatjik,	// Mississippi Satsujin Jiken (T-Eng)
@@ -27161,7 +27162,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMstworld,			// Monsters World (bootleg of Super Pang)
 	&BurnDrvmd_monstinc,		// Monsters, Inc. (Rus)
 	&BurnDrvMSX_montanajohn,	// Montana John and the Templar's Treasure (HB)
-	&BurnSpecMontecarlocasino,	// Monte Carlo Casino
+	&BurnSpecMontecarlocasino,	// Monte Carlo Casino (128K)
 	&BurnDrvsms_montezum,		// Montezuma's Revenge Featuring Panama Joe (USA)
 	&BurnDrvsms_montezump,		// Montezuma's Revenge Featuring Panama Joe (USA, Prototype)
 	&BurnDrvcv_montezum,		// Montezuma's Revenge
@@ -30863,6 +30864,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_shogun,			// Shougun (Jpn)
 	&BurnDrvMSX_shoutmat,		// Shout Match (Jpn)
 	&BurnDrvmd_shoveit,			// Shove It! ...The Warehouse Game (USA)
+	&BurnSpecShoveladv,			// Shovel Adventure ZX (128K) (HB, v1.2)
 	&BurnDrvmd_sdmilhao,		// Show do Milhao (Bra)
 	&BurnDrvsms_sdmilhao,		// Show do Milhao (Bra, Prototype)
 	&BurnDrvmd_sdmilha2,		// Show do Milhao Volume 2 (Bra)

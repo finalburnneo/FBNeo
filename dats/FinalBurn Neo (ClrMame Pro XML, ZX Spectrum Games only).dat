@@ -1445,7 +1445,7 @@
 	<game name="batboy" romof="spec128">
 		<description>Bat Boy (128K) (HB) [Homebrew]</description>
 		<year>2020</year>
-		<manufacturer>Antonio Perez</manufacturer>
+		<manufacturer>Pat Morita Team</manufacturer>
 		<rom name="Bat Boy (2020)(Antonio Perez).tap" size="55621" crc="354abdb7"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -8549,13 +8549,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="missionjupiter" romof="spec128">
-		<description>Mission Jupiter</description>
+	<game name="missionjupiter" romof="spectrum">
+		<description>Mission Jupiter (48K)</description>
 		<year>1987</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Mission Jupiter (1987)(Codemasters).tap" size="45152" crc="f136a5b9"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -8590,7 +8589,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="montecarlocasino" romof="spec128">
-		<description>Monte Carlo Casino</description>
+		<description>Monte Carlo Casino (128K)</description>
 		<year>1989</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Monte Carlo Casino (1989)(Codemasters).tap" size="41821" crc="8d459dc5"/>
@@ -11755,6 +11754,16 @@
 		<year>1989</year>
 		<manufacturer>Mastertronic Plus</manufacturer>
 		<rom name="Shinobi (1989)(Mastertronic Plus).tap" size="231589" crc="195feaad"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="Shoveladv" romof="spec128">
+		<description>Shovel Adventure ZX (128K) (HB, v1.2) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Pat Morita Team</manufacturer>
+		<rom name="Shovel Adventure ZX 1.2 (2021)(Pat Morita Team).tap" size="62841" crc="75d4a6ee"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

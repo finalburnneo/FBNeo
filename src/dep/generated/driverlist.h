@@ -287,6 +287,21 @@ DRV		BurnDrvCpsCworld2jb;
 DRV		BurnSpecAdvconta;
 DRV		BurnSpecAdvcontb;
 DRV		BurnDrvnes_adveninmagkin;
+DRV		BurnDrvmd_advbatr;
+DRV		BurnDrvmd_advbatrs;
+DRV		BurnDrvmd_advbatrp12;
+DRV		BurnDrvmd_advbatrp11;
+DRV		BurnDrvmd_advbatrp10;
+DRV		BurnDrvmd_advbatrp09;
+DRV		BurnDrvmd_advbatrp08;
+DRV		BurnDrvmd_advbatrp07;
+DRV		BurnDrvmd_advbatrp06;
+DRV		BurnDrvmd_advbatrp05;
+DRV		BurnDrvmd_advbatrp04;
+DRV		BurnDrvmd_advbatrp03;
+DRV		BurnDrvmd_advbatrp02;
+DRV		BurnDrvmd_advbatrp01;
+DRV		BurnDrvmd_advbatru;
 DRV		BurnDrvnes_advenbaybil;
 DRV		BurnSpecburatino;
 DRV		BurnDrvnes_advendinrik;
@@ -706,6 +721,7 @@ DRV		BurnDrvArabianm;
 DRV		BurnDrvarabian;
 DRV		BurnDrvAracnis;
 DRV		BurnDrvMSX_aramo;
+DRV		BurnDrvmd_arapuca;
 DRV		BurnDrvArbalest;
 DRV		BurnSpecarcofyesod;
 DRV		BurnDrvmd_arcadecl;
@@ -3444,6 +3460,8 @@ DRV		BurnDrvfds_deadzone;
 DRV		BurnDrvmd_deadlymvs;
 DRV		BurnDrvmd_deadlymv;
 DRV		BurnDrvnes_deadlytowers;
+DRV		BurnDrvmd_deathrets;
+DRV		BurnDrvmd_deathret;
 DRV		BurnDrvDeathbrd;
 DRV		BurnDrvmd_deathcal;
 DRV		BurnDrvmd_deathdls;
@@ -4417,6 +4435,7 @@ DRV		BurnDrvMSX_earthatk;
 DRV		BurnDrvnes_earthboundc;
 DRV		BurnDrvnes_earthboundzeroc;
 DRV		BurnDrvnes_earthboundzero;
+DRV		BurnDrvmd_earthdef;
 DRV		BurnDrvnes_earthbound;
 DRV		BurnDrvsms_ejim;
 DRV		BurnDrvgg_ejim;
@@ -4770,6 +4789,7 @@ DRV		BurnDrvcv_facemakr;
 DRV		BurnSpecFactdaze;
 DRV		BurnDrvMSX_factory;
 DRV		BurnDrvgg_factoryp;
+DRV		BurnDrvmd_faerytal;
 DRV		BurnDrvCHF_Channelf;
 DRV		BurnSpecFairlight128;
 DRV		BurnSpecFairlight48;
@@ -5192,7 +5212,11 @@ DRV		BurnDrvnes_flighint;
 DRV		BurnDrvMSX_fsim;
 DRV		BurnDrvmd_flink;
 DRV		BurnSpecFlintstones;
+DRV		BurnDrvmd_flint;
 DRV		BurnDrvMSX_flintstones;
+DRV		BurnDrvmd_flints;
+DRV		BurnDrvmd_flintj;
+DRV		BurnDrvmd_flintu;
 DRV		BurnDrvnes_flintresdinhopj;
 DRV		BurnDrvnes_flintresdinhop;
 DRV		BurnDrvnes_flintsuratdinpe;
@@ -12520,6 +12544,7 @@ DRV		BurnDrvSaurorr;
 DRV		BurnDrvSauro;
 DRV		BurnDrvSauroa;
 DRV		BurnDrvMSX_saurus;
+DRV		BurnSpecsavagei;
 DRV		BurnSpecsavage1;
 DRV		BurnSpecsavage2;
 DRV		BurnSpecsavage3;
@@ -12568,7 +12593,6 @@ DRV		BurnDrvScramrf;
 DRV		BurnDrvScrambles;
 DRV		BurnDrvMSX_scramegg;
 DRV		BurnSpecscrspirt;
-DRV		BurnSpecscrspirt_48;
 DRV		BurnDrvsms_sspirits;
 DRV		BurnDrvSspiritj;
 DRV		BurnDrvSspirits;
@@ -12957,8 +12981,8 @@ DRV		BurnDrvSilentdj;
 DRV		BurnDrvSilentdu;
 DRV		BurnDrvSilentd;
 DRV		BurnDrvnes_silentservice;
-DRV		BurnDrvMSX_sshadow;
 DRV		BurnSpecsilentshadow;
+DRV		BurnDrvMSX_sshadow;
 DRV		BurnDrvSilkwormb;
 DRV		BurnDrvSilkwormb2;
 DRV		BurnDrvSilkwrmj;
@@ -13002,10 +13026,11 @@ DRV		BurnSpecsirababol2;
 DRV		BurnSpecSirababol2es;
 DRV		BurnSpecsirababoldx;
 DRV		BurnDrvnes_sirababolr;
-DRV		BurnSpecsirfred_128;
+DRV		BurnSpecsirfred;
 DRV		BurnDrvMSX_sirfred;
 DRV		BurnDrvcv_lancelot;
 DRV		BurnDrvSirio2;
+DRV		BurnSpecsirwoodintro;
 DRV		BurnSpecsirwoodg1;
 DRV		BurnSpecsirwoodg2;
 DRV		BurnSpecsirwoodg3;
@@ -15314,21 +15339,6 @@ DRV		BurnDrvmd_addfam;
 DRV		BurnDrvmd_addfams;
 DRV		BurnDrvmd_addfamp1;
 DRV		BurnDrvgg_addfam;
-DRV		BurnDrvmd_advbatr;
-DRV		BurnDrvmd_advbatrs;
-DRV		BurnDrvmd_advbatrp12;
-DRV		BurnDrvmd_advbatrp11;
-DRV		BurnDrvmd_advbatrp10;
-DRV		BurnDrvmd_advbatrp09;
-DRV		BurnDrvmd_advbatrp08;
-DRV		BurnDrvmd_advbatrp07;
-DRV		BurnDrvmd_advbatrp06;
-DRV		BurnDrvmd_advbatrp05;
-DRV		BurnDrvmd_advbatrp04;
-DRV		BurnDrvmd_advbatrp03;
-DRV		BurnDrvmd_advbatrp02;
-DRV		BurnDrvmd_advbatrp01;
-DRV		BurnDrvmd_advbatru;
 DRV		BurnDrvgg_advbatmr;
 DRV		BurnDrvmd_mightmax;
 DRV		BurnDrvmd_mightmaxu;
@@ -15431,8 +15441,6 @@ DRV		BurnDrvsms_cybersp;
 DRV		BurnDrvcv_dambust;
 DRV		BurnSpecThedark;
 DRV		BurnDrvDealer;
-DRV		BurnDrvmd_deathrets;
-DRV		BurnDrvmd_deathret;
 DRV		BurnDrvThedeep;
 DRV		BurnDrvMSX_dcrystal;
 DRV		BurnDrvsms_dinodool;
@@ -15440,7 +15448,6 @@ DRV		BurnDrvmd_disneycl;
 DRV		BurnDrvDbldynj;
 DRV		BurnDrvDbldynu;
 DRV		BurnDrvcv_hazzard;
-DRV		BurnDrvmd_earthdef;
 DRV		BurnSpecEggsterminator;
 DRV		BurnDrvElecyoyo;
 DRV		BurnDrvElecyoyo2;
@@ -15452,7 +15459,6 @@ DRV		BurnDrvgg_excdizzy;
 DRV		BurnDrvsms_excdizzy;
 DRV		BurnDrvgg_excdizzyp;
 DRV		BurnDrvTeot;
-DRV		BurnDrvmd_faerytal;
 DRV		BurnDrvFlstoryj;
 DRV		BurnDrvMSX_flstory;
 DRV		BurnDrvMSX_flstorya;
@@ -15461,11 +15467,7 @@ DRV		BurnDrvDaraku;
 DRV		BurnDrvFroundl;
 DRV		BurnDrvFround;
 DRV		BurnDrvsms_flash;
-DRV		BurnDrvmd_flint;
 DRV		BurnDrvsms_flint;
-DRV		BurnDrvmd_flints;
-DRV		BurnDrvmd_flintj;
-DRV		BurnDrvmd_flintu;
 DRV		BurnDrvGametngk;
 DRV		BurnDrvmd_wintchal1;
 DRV		BurnDrvgg_shinobi;
@@ -18213,6 +18215,21 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecAdvconta,			// ADVENTURES Continue - Side A (128K) (HB)
 	&BurnSpecAdvcontb,			// ADVENTURES Continue - Side B (128K) (HB)
 	&BurnDrvnes_adveninmagkin,	// Adventures in the Magic Kingdom (USA)
+	&BurnDrvmd_advbatr,			// Adventures of Batman & Robin, The (Euro)
+	&BurnDrvmd_advbatrs,		// Adventures of Batman & Robin, The (Hack, Spanish)
+	&BurnDrvmd_advbatrp12,		// Adventures of Batman & Robin, The (Prototype, 19950406)
+	&BurnDrvmd_advbatrp11,		// Adventures of Batman & Robin, The (Prototype, 19950410)
+	&BurnDrvmd_advbatrp10,		// Adventures of Batman & Robin, The (Prototype, 19950411)
+	&BurnDrvmd_advbatrp09,		// Adventures of Batman & Robin, The (Prototype, 19950418)
+	&BurnDrvmd_advbatrp08,		// Adventures of Batman & Robin, The (Prototype, 19950419)
+	&BurnDrvmd_advbatrp07,		// Adventures of Batman & Robin, The (Prototype, 19950421)
+	&BurnDrvmd_advbatrp06,		// Adventures of Batman & Robin, The (Prototype, 19950422)
+	&BurnDrvmd_advbatrp05,		// Adventures of Batman & Robin, The (Prototype, 19950424)
+	&BurnDrvmd_advbatrp04,		// Adventures of Batman & Robin, The (Prototype, 19950426)
+	&BurnDrvmd_advbatrp03,		// Adventures of Batman & Robin, The (Prototype, 19950427)
+	&BurnDrvmd_advbatrp02,		// Adventures of Batman & Robin, The (Prototype, 19950428)
+	&BurnDrvmd_advbatrp01,		// Adventures of Batman & Robin, The (Prototype, 19950501)
+	&BurnDrvmd_advbatru,		// Adventures of Batman & Robin, The (USA)
 	&BurnDrvnes_advenbaybil,	// Adventures of Bayou Billy, The (USA)
 	&BurnSpecburatino,			// Adventures of Buratino, The (Russian) (128K)
 	&BurnDrvnes_advendinrik,	// Adventures of Dino Riki (USA)
@@ -18632,6 +18649,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvarabian,			// Arabian
 	&BurnDrvAracnis,			// Aracnis (bootleg of Scorpion on Moon Cresta hardware)
 	&BurnDrvMSX_aramo,			// Aramo (Jpn)
+	&BurnDrvmd_arapuca,			// Arapuca (HB)
 	&BurnDrvArbalest,			// Arbalester
 	&BurnSpecarcofyesod,		// Arc of Yesod, The (128K)
 	&BurnDrvmd_arcadecl,		// Arcade Classics (Euro, USA)
@@ -21370,6 +21388,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_deadlymvs,		// Deadly Moves (Hack, Spanish)
 	&BurnDrvmd_deadlymv,		// Deadly Moves (USA)
 	&BurnDrvnes_deadlytowers,	// Deadly Towers (USA)
+	&BurnDrvmd_deathrets,		// Death and Return of Superman, The (Hack, Spanish)
+	&BurnDrvmd_deathret,		// Death and Return of Superman, The (USA)
 	&BurnDrvDeathbrd,			// Death Brade (Japan ver JM-3)
 	&BurnDrvmd_deathcal,		// Death Caliber (Rus)
 	&BurnDrvmd_deathdls,		// Death Duel (Hack, Spanish)
@@ -22343,6 +22363,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_earthboundc,	// Earth Bound (USA) (Proto) - Castellano v2.2
 	&BurnDrvnes_earthboundzeroc,// Earth Bound Zero (USA) - Castellano v0.99
 	&BurnDrvnes_earthboundzero,	// Earth Bound Zero (USA)
+	&BurnDrvmd_earthdef,		// Earth Defense, The (USA)
 	&BurnDrvnes_earthbound,		// Earthbound (USA) (Prototype)
 	&BurnDrvsms_ejim,			// Earthworm Jim (Bra)
 	&BurnDrvgg_ejim,			// Earthworm Jim (Euro)
@@ -22696,6 +22717,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecFactdaze,			// Factory Daze (128K) (HB)
 	&BurnDrvMSX_factory,		// Factory Infection (HB)
 	&BurnDrvgg_factoryp,		// Factory Panic (Euro, Bra)
+	&BurnDrvmd_faerytal,		// Faery Tale Adventure, The (Euro, USA)
 	&BurnDrvCHF_Channelf,		// Fairchild Channel F (Bios) [BIOS only, NOT WORKING]
 	&BurnSpecFairlight128,		// Fairlight - A Prelude (128K)
 	&BurnSpecFairlight48,		// Fairlight - A Prelude (48K)
@@ -23118,7 +23140,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_fsim,			// Flight Simulator - Gyorai Kougeki (Jpn)
 	&BurnDrvmd_flink,			// Flink (Euro)
 	&BurnSpecFlintstones,		// Flintstones, the (128K)
+	&BurnDrvmd_flint,			// Flintstones, The (Euro)
 	&BurnDrvMSX_flintstones,	// Flintstones, The (Euro)
+	&BurnDrvmd_flints,			// Flintstones, The (Hack, Spanish)
+	&BurnDrvmd_flintj,			// Flintstones, The (Jpn)
+	&BurnDrvmd_flintu,			// Flintstones, The (USA)
 	&BurnDrvnes_flintresdinhopj,// Flintstones, The - The Rescue of Dino & Hoppy (Japan)
 	&BurnDrvnes_flintresdinhop,	// Flintstones, The - The Rescue of Dino & Hoppy (USA)
 	&BurnDrvnes_flintsuratdinpe,// Flintstones, The - The Surprise at Dinosaur Peak! (USA)
@@ -30446,9 +30472,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSauro,				// Sauro (set 1)
 	&BurnDrvSauroa,				// Sauro (set 2)
 	&BurnDrvMSX_saurus,			// Saurusland (Jpn)
-	&BurnSpecsavage1,			// Savage (Part 1 of 3) (48K)
-	&BurnSpecsavage2,			// Savage (Part 2 of 3) (48K)
-	&BurnSpecsavage3,			// Savage (Part 3 of 3) (48K)
+	&BurnSpecsavagei,			// Savage - Intro (48K)
+	&BurnSpecsavage1,			// Savage - Part 1 (48K)
+	&BurnSpecsavage2,			// Savage - Part 2 (48K)
+	&BurnSpecsavage3,			// Savage - Part 3 (48K)
 	&BurnDrvSavgbees,			// Savage Bees
 	&BurnDrvSavagereb,			// Savage Reign / Fu'un Mokushiroku - kakutou sousei (Boss Hack)
 	&BurnDrvSavagere,			// Savage Reign / Fu'un Mokushiroku - kakutou sousei
@@ -30494,7 +30521,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvScrambles,			// Scramble (Stern)
 	&BurnDrvMSX_scramegg,		// Scramble Eggs (Jpn)
 	&BurnSpecscrspirt,			// Scramble Spirits (128K)
-	&BurnSpecscrspirt_48,		// Scramble Spirits (48K)
 	&BurnDrvsms_sspirits,		// Scramble Spirits (Euro, Bra)
 	&BurnDrvSspiritj,			// Scramble Spirits (Japan, Floppy DS3-5000-02-REV-A Based)
 	&BurnDrvSspirits,			// Scramble Spirits (World, Floppy Based)
@@ -30883,8 +30909,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSilentdu,			// Silent Dragon (US)
 	&BurnDrvSilentd,			// Silent Dragon (World)
 	&BurnDrvnes_silentservice,	// Silent Service (USA)
+	&BurnSpecsilentshadow,		// Silent Shadow (48K)
 	&BurnDrvMSX_sshadow,		// Silent Shadow (Euro)
-	&BurnSpecsilentshadow,		// Silent Shadow
 	&BurnDrvSilkwormb,			// Silk Worm (bootleg, set 1)
 	&BurnDrvSilkwormb2,			// Silk Worm (bootleg, set 2)
 	&BurnDrvSilkwrmj,			// Silk Worm (Japan)
@@ -30928,13 +30954,14 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecSirababol2es,		// Sir Ababol 2 (Spanish) (128K) (HB)
 	&BurnSpecsirababoldx,		// Sir Ababol DX (48K) (HB)
 	&BurnDrvnes_sirababolr,		// Sir Ababol Remastered Edition (HB)
-	&BurnSpecsirfred_128,		// Sir Fred (128K)
+	&BurnSpecsirfred,			// Sir Fred (48K)
 	&BurnDrvMSX_sirfred,		// Sir Fred (Spanish)
 	&BurnDrvcv_lancelot,		// Sir Lancelot
 	&BurnDrvSirio2,				// Sirio II (Calfesa S.L. Spanish Moon Cresta bootleg)
-	&BurnSpecsirwoodg1,			// Sirwood (Part 1 of 3) (128K)
-	&BurnSpecsirwoodg2,			// Sirwood (Part 2 of 3) (128K)
-	&BurnSpecsirwoodg3,			// Sirwood (Part 3 of 3) (128K)
+	&BurnSpecsirwoodintro,		// Sirwood - Intro (128K)
+	&BurnSpecsirwoodg1,			// Sirwood - Part 1 (128K)
+	&BurnSpecsirwoodg2,			// Sirwood - Part 2 (128K)
+	&BurnSpecsirwoodg3,			// Sirwood - Part 3 (128K)
 	&BurnDrvsms_sitio,			// Sitio do Picapau Amarelo (Bra)
 	&BurnSpecsitoponsgp,		// Sito Pons 500cc Grand Prix (Spanish) (128K)
 	&BurnSpecSixsixsixsix,		// Sixsixsixsix (Russian) (48K) (HB)
@@ -33240,21 +33267,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_addfams,			// The Addams Family (Hack, Spanish)
 	&BurnDrvmd_addfamp1,		// The Addams Family (USA, Prototype)
 	&BurnDrvgg_addfam,			// The Addams Family (World)
-	&BurnDrvmd_advbatr,			// The Adventures of Batman & Robin (Euro)
-	&BurnDrvmd_advbatrs,		// The Adventures of Batman & Robin (Hack, Spanish)
-	&BurnDrvmd_advbatrp12,		// The Adventures of Batman & Robin (Prototype, 19950406)
-	&BurnDrvmd_advbatrp11,		// The Adventures of Batman & Robin (Prototype, 19950410)
-	&BurnDrvmd_advbatrp10,		// The Adventures of Batman & Robin (Prototype, 19950411)
-	&BurnDrvmd_advbatrp09,		// The Adventures of Batman & Robin (Prototype, 19950418)
-	&BurnDrvmd_advbatrp08,		// The Adventures of Batman & Robin (Prototype, 19950419)
-	&BurnDrvmd_advbatrp07,		// The Adventures of Batman & Robin (Prototype, 19950421)
-	&BurnDrvmd_advbatrp06,		// The Adventures of Batman & Robin (Prototype, 19950422)
-	&BurnDrvmd_advbatrp05,		// The Adventures of Batman & Robin (Prototype, 19950424)
-	&BurnDrvmd_advbatrp04,		// The Adventures of Batman & Robin (Prototype, 19950426)
-	&BurnDrvmd_advbatrp03,		// The Adventures of Batman & Robin (Prototype, 19950427)
-	&BurnDrvmd_advbatrp02,		// The Adventures of Batman & Robin (Prototype, 19950428)
-	&BurnDrvmd_advbatrp01,		// The Adventures of Batman & Robin (Prototype, 19950501)
-	&BurnDrvmd_advbatru,		// The Adventures of Batman & Robin (USA)
 	&BurnDrvgg_advbatmr,		// The Adventures of Batman and Robin (Euro, USA)
 	&BurnDrvmd_mightmax,		// The Adventures of Mighty Max (Euro)
 	&BurnDrvmd_mightmaxu,		// The Adventures of Mighty Max (USA)
@@ -33357,8 +33369,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_dambust,			// The Dam Busters
 	&BurnSpecThedark,			// The Dark (48K) (HB)
 	&BurnDrvDealer,				// The Dealer
-	&BurnDrvmd_deathrets,		// The Death and Return of Superman (Hack, Spanish)
-	&BurnDrvmd_deathret,		// The Death and Return of Superman (USA)
 	&BurnDrvThedeep,			// The Deep (Japan)
 	&BurnDrvMSX_dcrystal,		// The Demon Crystal (Jpn)
 	&BurnDrvsms_dinodool,		// The Dinosaur Dooley (Kor)
@@ -33366,7 +33376,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDbldynj,			// The Double Dynamites (Japan, 13NOV89)
 	&BurnDrvDbldynu,			// The Double Dynamites (US, 13NOV89)
 	&BurnDrvcv_hazzard,			// The Dukes of Hazzard
-	&BurnDrvmd_earthdef,		// The Earth Defense (USA)
 	&BurnSpecEggsterminator,	// The Eggsterminator (128K) (HB)
 	&BurnDrvElecyoyo,			// The Electric Yo-Yo (set 1)
 	&BurnDrvElecyoyo2,			// The Electric Yo-Yo (set 2)
@@ -33378,7 +33387,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_excdizzy,		// The Excellent Dizzy Collection (Euro, USA, Prototype)
 	&BurnDrvgg_excdizzyp,		// The Excellent Dizzy Collection (Prototype, SMS Mode)
 	&BurnDrvTeot,				// The Eye of Typhoon (Alpha Version)
-	&BurnDrvmd_faerytal,		// The Faery Tale Adventure (Euro, USA)
 	&BurnDrvFlstoryj,			// The FairyLand Story (Japan)
 	&BurnDrvMSX_flstory,		// The Fairyland Story (Jpn)
 	&BurnDrvMSX_flstorya,		// The Fairyland Story (Jpn, Alt)
@@ -33387,11 +33395,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvFroundl,			// The Final Round (ver. L)
 	&BurnDrvFround,				// The Final Round (ver. M)
 	&BurnDrvsms_flash,			// The Flash (Euro, Bra)
-	&BurnDrvmd_flint,			// The Flintstones (Euro)
 	&BurnDrvsms_flint,			// The Flintstones (Euro, Bra)
-	&BurnDrvmd_flints,			// The Flintstones (Hack, Spanish)
-	&BurnDrvmd_flintj,			// The Flintstones (Jpn)
-	&BurnDrvmd_flintu,			// The Flintstones (USA)
 	&BurnDrvGametngk,			// The Game Paradise - Master of Shooting! / Game Tengoku - The Game Paradise (ver 1.0)
 	&BurnDrvmd_wintchal1,		// The Games: Winter Challenge (Euro, USA)
 	&BurnDrvgg_shinobi,			// The GG Shinobi (Euro, USA)

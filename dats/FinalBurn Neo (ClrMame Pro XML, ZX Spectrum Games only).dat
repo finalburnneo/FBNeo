@@ -11475,17 +11475,26 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="savage1" romof="spectrum">
-		<description>Savage (Part 1 of 3) (48K)</description>
+	<game name="savagei" romof="spectrum">
+		<description>Savage - Intro (48K)</description>
 		<year>1988</year>
 		<manufacturer>Firebird Software</manufacturer>
-		<rom name="Savage, The (1988)(Firebird)[Part 1 of 3].z80" size="37404" crc="f8071892"/>
+		<rom name="Savage, The (1988)(Firebird)[intro].z80" size="31023" crc="e606ebf0"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="savage2" cloneof="savage1" romof="savage1">
-		<description>Savage (Part 2 of 3) (48K)</description>
+	<game name="savage1" cloneof="savagei" romof="savagei">
+		<description>Savage - Part 1 (48K)</description>
+		<year>1988</year>
+		<manufacturer>Firebird Software</manufacturer>
+		<rom name="Savage, The (1988)(Firebird)[Part 1 of 3].z80" size="37764" crc="3db88855"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="savage2" cloneof="savagei" romof="savagei">
+		<description>Savage - Part 2 (48K) [Level code: SABATTA]</description>
 		<year>1988</year>
 		<manufacturer>Firebird Software</manufacturer>
 		<rom name="Savage, The (1988)(Firebird)[Part 2 of 3].z80" size="39456" crc="4f8ddec1"/>
@@ -11493,8 +11502,8 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="savage3" cloneof="savage1" romof="savage1">
-		<description>Savage (Part 3 of 3) (48K)</description>
+	<game name="savage3" cloneof="savagei" romof="savagei">
+		<description>Savage - Part 3 (48K) [Level code: FERGUS]</description>
 		<year>1988</year>
 		<manufacturer>Firebird Software</manufacturer>
 		<rom name="Savage, The (1988)(Firebird)[Part 3 of 3].z80" size="33909" crc="e994f627"/>
@@ -11549,21 +11558,12 @@
 		<driver status="good"/>
 	</game>
 	<game name="scrspirt" romof="spec128">
-		<description>Scramble Spirits (128K)</description>
+		<description>Scramble Spirits (128K) [NB: in Kempston controller the x-asis is reversed]</description>
 		<year>1990</year>
 		<manufacturer>Grandslam Entertainments</manufacturer>
-		<rom name="Scramble Spirits (1990)(Grandslam Entertainments)[128K].z80" size="82697" crc="f293694e"/>
+		<rom name="Scramble Spirits 128K (1990)(Grandslam).tap" size="105793" crc="05c9e40e"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="scrspirt_48" cloneof="scrspirt" romof="scrspirt">
-		<description>Scramble Spirits (48K)</description>
-		<year>1990</year>
-		<manufacturer>Grandslam Entertainments</manufacturer>
-		<rom name="Scramble Spirits (1990)(Grandslam Entertainments).z80" size="37575" crc="f292ffc7"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -11734,7 +11734,7 @@
 		<description>Shadow Warriors (128K)</description>
 		<year>1990</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Shadow Warriors (1990)(Ocean)[128K].z80" size="115811" crc="8a034e94"/>
+		<rom name="Shadow Warriors (1990)(Ocean).tap" size="130491" crc="a9adbe6d"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -11753,8 +11753,8 @@
 	<game name="shinobi" romof="spec128">
 		<description>Shinobi (128K)</description>
 		<year>1989</year>
-		<manufacturer>Virgin Games</manufacturer>
-		<rom name="Shinobi (1989)(Virgin Games)[128K].z80" size="55472" crc="3ca7a9e7"/>
+		<manufacturer>Mastertronic Plus</manufacturer>
+		<rom name="Shinobi (1989)(Mastertronic Plus).tap" size="231589" crc="195feaad"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -11778,13 +11778,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="silentshadow" romof="spec128">
-		<description>Silent Shadow</description>
+	<game name="silentshadow" romof="spectrum">
+		<description>Silent Shadow (48K) [Set '1. KEYS' to use controller]</description>
 		<year>1988</year>
 		<manufacturer>Topo Soft</manufacturer>
-		<rom name="Silent Shadow (1988)(Topo Soft).tap" size="146162" crc="a6fb7413"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Silent Shadow (1988)(Topo Soft).tap" size="138528" crc="76e0c5b8"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -11792,7 +11791,7 @@
 		<description>Silkworm (128K)</description>
 		<year>1989</year>
 		<manufacturer>Virgin Games</manufacturer>
-		<rom name="Silkworm (1989)(Virgin Games)[128K].z80" size="95449" crc="eb973e1c"/>
+		<rom name="Silkworm 128K (1989)(Mastertronic Plus).tap" size="44612" crc="1980dccc"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -11802,7 +11801,7 @@
 		<description>Sim City (48K)</description>
 		<year>1989</year>
 		<manufacturer>Infogrames</manufacturer>
-		<rom name="Sim City (1989)(Infogrames).z80" size="26352" crc="83ec2144"/>
+		<rom name="Sim City (1989)(Infogrames).z80" size="34657" crc="d7281b2e"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11883,41 +11882,50 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sirfred_128" romof="spec128">
-		<description>Sir Fred (128K)</description>
+	<game name="sirfred" romof="spectrum">
+		<description>Sir Fred (48K)</description>
 		<year>1986</year>
 		<manufacturer>Mikro-Gen</manufacturer>
-		<rom name="Sir Fred (1986)(Mikro-Gen)(128k).z80" size="43189" crc="b57f2c22"/>
+		<rom name="Sir Fred (1986)(Mikro-Gen).tap" size="49152" crc="4a4f8a17"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sirwoodintro" romof="spec128">
+		<description>Sirwood - Intro (128K)</description>
+		<year>1990</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Sirwood - Intro (1990)(Opera Soft).tap" size="38955" crc="4a37ad11"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sirwoodg1" romof="spec128">
-		<description>Sirwood (Part 1 of 3) (128K)</description>
+	<game name="sirwoodg1" cloneof="sirwoodintro" romof="sirwoodintro">
+		<description>Sirwood - Part 1 (128K) [G: quit current game - M: pause on/off]</description>
 		<year>1990</year>
 		<manufacturer>Opera Soft</manufacturer>
-		<rom name="Sirwood (1990)(Opera Soft)(Part 1 of 3)(128k).z80" size="39314" crc="afd2f222"/>
+		<rom name="Sirwood - Level 1 (1990)(Opera Soft).tap" size="46340" crc="d75b2f05"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sirwoodg2" cloneof="sirwoodg1" romof="sirwoodg1">
-		<description>Sirwood (Part 2 of 3) (128K)</description>
+	<game name="sirwoodg2" cloneof="sirwoodintro" romof="sirwoodintro">
+		<description>Sirwood - Part 2 (128K) [G: quit current game - M: pause on/off]</description>
 		<year>1990</year>
 		<manufacturer>Opera Soft</manufacturer>
-		<rom name="Sirwood (1990)(Opera Soft)(Part 2 of 3)(128k).z80" size="39092" crc="21ead039"/>
+		<rom name="Sirwood - Level 2 (1990)(Opera Soft).tap" size="47993" crc="8e0f2b4d"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sirwoodg3" cloneof="sirwoodg1" romof="sirwoodg1">
-		<description>Sirwood (Part 3 of 3) (128K)</description>
+	<game name="sirwoodg3" cloneof="sirwoodintro" romof="sirwoodintro">
+		<description>Sirwood - Part 3 (128K) [G: quit current game - M: pause on/off]</description>
 		<year>1990</year>
 		<manufacturer>Opera Soft</manufacturer>
-		<rom name="Sirwood (1990)(Opera Soft)(Part 3 of 3)(128k).z80" size="39175" crc="65a3d717"/>
+		<rom name="Sirwood - Level 3 (1990)(Opera Soft).tap" size="45506" crc="b58dc313"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

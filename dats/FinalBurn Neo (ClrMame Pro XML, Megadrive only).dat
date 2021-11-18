@@ -269,6 +269,126 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="advbatr">
+		<description>Adventures of Batman &amp; Robin, The (Euro)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="mpr-18019.ic1" size="2097152" crc="355e8c39"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="advbatrs" cloneof="advbatr" romof="advbatr">
+		<description>Adventures of Batman &amp; Robin, The (Hack, Spanish) [Hack]</description>
+		<year>2014</year>
+		<manufacturer>pepodmc</manufacturer>
+		<rom name="the adventures of batman &amp; robin (hack, spanish).bin" size="2097152" crc="903f8ca7"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="advbatrp12" cloneof="advbatr" romof="advbatr">
+		<description>Adventures of Batman &amp; Robin, The (Prototype, 19950406) [Prototype]</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="adventures of batman &amp; robin, the (prototype - apr 06, 1995).bin" size="2097152" crc="f05cf389"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="advbatrp11" cloneof="advbatr" romof="advbatr">
+		<description>Adventures of Batman &amp; Robin, The (Prototype, 19950410) [Prototype]</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="adventures of batman &amp; robin, the (prototype - apr 10, 1995).bin" size="2097152" crc="d4f3a070"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="advbatrp10" cloneof="advbatr" romof="advbatr">
+		<description>Adventures of Batman &amp; Robin, The (Prototype, 19950411) [Prototype]</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="adventures of batman &amp; robin, the (prototype - apr 11, 1995).bin" size="2097152" crc="b5b5a290"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="advbatrp09" cloneof="advbatr" romof="advbatr">
+		<description>Adventures of Batman &amp; Robin, The (Prototype, 19950418) [Prototype]</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="adventures of batman &amp; robin, the (prototype - apr 18, 1995).bin" size="2097152" crc="6874142b"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="advbatrp08" cloneof="advbatr" romof="advbatr">
+		<description>Adventures of Batman &amp; Robin, The (Prototype, 19950419) [Prototype]</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="adventures of batman &amp; robin, the (prototype - apr 19, 1995).bin" size="2097152" crc="7002da56"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="advbatrp07" cloneof="advbatr" romof="advbatr">
+		<description>Adventures of Batman &amp; Robin, The (Prototype, 19950421) [Prototype]</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="adventures of batman &amp; robin, the (prototype - apr 21, 1995).bin" size="2097152" crc="61f02f13"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="advbatrp06" cloneof="advbatr" romof="advbatr">
+		<description>Adventures of Batman &amp; Robin, The (Prototype, 19950422) [Prototype]</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="adventures of batman &amp; robin, the (prototype - apr 22, 1995).bin" size="2097152" crc="eb8236b2"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="advbatrp05" cloneof="advbatr" romof="advbatr">
+		<description>Adventures of Batman &amp; Robin, The (Prototype, 19950424) [Prototype]</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="adventures of batman &amp; robin, the (prototype - apr 24, 1995).bin" size="2097152" crc="253947f8"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="advbatrp04" cloneof="advbatr" romof="advbatr">
+		<description>Adventures of Batman &amp; Robin, The (Prototype, 19950426) [Prototype]</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="adventures of batman &amp; robin, the (prototype - apr 26, 1995).bin" size="2097152" crc="bc79f7ee"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="advbatrp03" cloneof="advbatr" romof="advbatr">
+		<description>Adventures of Batman &amp; Robin, The (Prototype, 19950427) [Prototype]</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="adventures of batman &amp; robin, the (prototype - apr 27, 1995).bin" size="2097152" crc="fdac8190"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="advbatrp02" cloneof="advbatr" romof="advbatr">
+		<description>Adventures of Batman &amp; Robin, The (Prototype, 19950428) [Prototype]</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="adventures of batman &amp; robin, the (prototype - apr 28, 1995).bin" size="2097152" crc="27a1524b"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="advbatrp01" cloneof="advbatr" romof="advbatr">
+		<description>Adventures of Batman &amp; Robin, The (Prototype, 19950501) [Prototype]</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="adventures of batman &amp; robin, the (prototype - may 01, 1995).bin" size="2097152" crc="589aa203"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="advbatru" cloneof="advbatr" romof="advbatr">
+		<description>Adventures of Batman &amp; Robin, The (USA) [Prototype]</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="adventures of batman &amp; robin, the (usa).bin" size="2097152" crc="0caaa4ac"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="adveboy">
 		<description>Adventurous Boy - Mao Xian Xiao Zi (Chi)</description>
 		<year>1998</year>
@@ -714,6 +834,14 @@
 		<year>1995</year>
 		<manufacturer>C&amp;E</manufacturer>
 		<rom name="aq renkan awa (chi) (unl).bin" size="1048576" crc="2c6cbd77"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="arapuca">
+		<description>Arapuca (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Manganga Team</manufacturer>
+		<rom name="Arapuca (2020)(Manganga Team).bin" size="917504" crc="b28a64ac"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1454,9 +1582,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="batmans" cloneof="batman" romof="batman">
-		<description>Batman (Hack, Spanish)</description>
-		<year>2017</year>
-		<manufacturer>SunSoft</manufacturer>
+		<description>Batman (Hack, Spanish) [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="batman (hack, spanish).bin" size="524288" crc="ebf4ca7f"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1494,9 +1622,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="batmanrns" cloneof="batmanrn" romof="batmanrn">
-		<description>Batman Returns (Hack, Spanish)</description>
+		<description>Batman Returns (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="batman returns (hack, spanish).bin" size="1048576" crc="543701ef"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1510,17 +1638,17 @@
 		<driver status="good"/>
 	</game>
 	<game name="battlyuie" cloneof="battlyui" romof="battlyui">
-		<description>Battle Golfer Yui (Hack, English)</description>
+		<description>Battle Golfer Yui (Hack, English) [Hack]</description>
 		<year>2017</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>filler</manufacturer>
 		<rom name="battle golfer yui (english translation).md" size="1048576" crc="2d7e868c"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="battlyuis" cloneof="battlyui" romof="battlyui">
-		<description>Battle Golfer Yui (Hack, Spanish)</description>
+		<description>Battle Golfer Yui (Hack, Spanish) [Hack]</description>
 		<year>2020</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Luceid</manufacturer>
 		<rom name="battle golfer yui (hack, spanish).bin" size="1048576" crc="1ed9c6d0"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4245,6 +4373,22 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="deathrets" cloneof="deathret" romof="deathret">
+		<description>Death and Return of Superman, The (Hack, Spanish) [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="the death and return of superman (hack, spanish).bin" size="2097152" crc="82b94fc6"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="deathret">
+		<description>Death and Return of Superman, The (USA)</description>
+		<year>1995</year>
+		<manufacturer>Sunsoft</manufacturer>
+		<rom name="death and return of superman, the (usa).bin" size="2097152" crc="982242d3"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="deathcal">
 		<description>Death Caliber (Rus)</description>
 		<year>199?</year>
@@ -5301,6 +5445,14 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="earthdef">
+		<description>Earth Defense, The (USA)</description>
+		<year>1995</year>
+		<manufacturer>Realtec</manufacturer>
+		<rom name="earth defense (usa) (unl).bin" size="524288" crc="3519c422"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ejim">
 		<description>Earthworm Jim (Euro)</description>
 		<year>1994</year>
@@ -5996,6 +6148,14 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="faerytal">
+		<description>Faery Tale Adventure, The (Euro, USA)</description>
+		<year>1991</year>
+		<manufacturer>Electronic Arts</manufacturer>
+		<rom name="faery tale adventure, the (euro, usa).bin" size="524288" crc="963f4969"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="famfeud">
 		<description>Family Feud (USA)</description>
 		<year>1993</year>
@@ -6465,6 +6625,38 @@
 		<year>1994</year>
 		<manufacturer>Sony Imagesoft</manufacturer>
 		<rom name="flink (euro).bin" size="1048576" crc="bef9a4f4"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="flint">
+		<description>Flintstones, The (Euro)</description>
+		<year>1993</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="flintstones, the (euro).bin" size="524288" crc="21845d61"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="flints" cloneof="flint" romof="flint">
+		<description>Flintstones, The (Hack, Spanish) [Hack]</description>
+		<year>2014</year>
+		<manufacturer>pepodmc</manufacturer>
+		<rom name="the flintstones (hack, spanish).bin" size="524288" crc="2539bd5b"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="flintj" cloneof="flint" romof="flint">
+		<description>Flintstones, The (Jpn)</description>
+		<year>1993</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="flintstone (jpn).bin" size="524288" crc="920a3031"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="flintu" cloneof="flint" romof="flint">
+		<description>Flintstones, The (USA)</description>
+		<year>1993</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="flintstones, the (usa).bin" size="524288" crc="7c982c59"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -18825,126 +19017,6 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="advbatr">
-		<description>The Adventures of Batman &amp; Robin (Euro)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="mpr-18019.ic1" size="2097152" crc="355e8c39"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="advbatrs" cloneof="advbatr" romof="advbatr">
-		<description>The Adventures of Batman &amp; Robin (Hack, Spanish)</description>
-		<year>2014</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="the adventures of batman &amp; robin (hack, spanish).bin" size="2097152" crc="903f8ca7"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="advbatrp12" cloneof="advbatr" romof="advbatr">
-		<description>The Adventures of Batman &amp; Robin (Prototype, 19950406)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="adventures of batman &amp; robin, the (prototype - apr 06, 1995).bin" size="2097152" crc="f05cf389"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="advbatrp11" cloneof="advbatr" romof="advbatr">
-		<description>The Adventures of Batman &amp; Robin (Prototype, 19950410)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="adventures of batman &amp; robin, the (prototype - apr 10, 1995).bin" size="2097152" crc="d4f3a070"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="advbatrp10" cloneof="advbatr" romof="advbatr">
-		<description>The Adventures of Batman &amp; Robin (Prototype, 19950411)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="adventures of batman &amp; robin, the (prototype - apr 11, 1995).bin" size="2097152" crc="b5b5a290"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="advbatrp09" cloneof="advbatr" romof="advbatr">
-		<description>The Adventures of Batman &amp; Robin (Prototype, 19950418)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="adventures of batman &amp; robin, the (prototype - apr 18, 1995).bin" size="2097152" crc="6874142b"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="advbatrp08" cloneof="advbatr" romof="advbatr">
-		<description>The Adventures of Batman &amp; Robin (Prototype, 19950419)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="adventures of batman &amp; robin, the (prototype - apr 19, 1995).bin" size="2097152" crc="7002da56"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="advbatrp07" cloneof="advbatr" romof="advbatr">
-		<description>The Adventures of Batman &amp; Robin (Prototype, 19950421)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="adventures of batman &amp; robin, the (prototype - apr 21, 1995).bin" size="2097152" crc="61f02f13"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="advbatrp06" cloneof="advbatr" romof="advbatr">
-		<description>The Adventures of Batman &amp; Robin (Prototype, 19950422)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="adventures of batman &amp; robin, the (prototype - apr 22, 1995).bin" size="2097152" crc="eb8236b2"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="advbatrp05" cloneof="advbatr" romof="advbatr">
-		<description>The Adventures of Batman &amp; Robin (Prototype, 19950424)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="adventures of batman &amp; robin, the (prototype - apr 24, 1995).bin" size="2097152" crc="253947f8"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="advbatrp04" cloneof="advbatr" romof="advbatr">
-		<description>The Adventures of Batman &amp; Robin (Prototype, 19950426)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="adventures of batman &amp; robin, the (prototype - apr 26, 1995).bin" size="2097152" crc="bc79f7ee"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="advbatrp03" cloneof="advbatr" romof="advbatr">
-		<description>The Adventures of Batman &amp; Robin (Prototype, 19950427)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="adventures of batman &amp; robin, the (prototype - apr 27, 1995).bin" size="2097152" crc="fdac8190"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="advbatrp02" cloneof="advbatr" romof="advbatr">
-		<description>The Adventures of Batman &amp; Robin (Prototype, 19950428)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="adventures of batman &amp; robin, the (prototype - apr 28, 1995).bin" size="2097152" crc="27a1524b"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="advbatrp01" cloneof="advbatr" romof="advbatr">
-		<description>The Adventures of Batman &amp; Robin (Prototype, 19950501)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="adventures of batman &amp; robin, the (prototype - may 01, 1995).bin" size="2097152" crc="589aa203"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="advbatru" cloneof="advbatr" romof="advbatr">
-		<description>The Adventures of Batman &amp; Robin (USA)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="adventures of batman &amp; robin, the (usa).bin" size="2097152" crc="0caaa4ac"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="mightmax">
 		<description>The Adventures of Mighty Max (Euro)</description>
 		<year>1994</year>
@@ -19201,75 +19273,11 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="deathrets" cloneof="deathret" romof="deathret">
-		<description>The Death and Return of Superman (Hack, Spanish)</description>
-		<year>2018</year>
-		<manufacturer>SunSoft</manufacturer>
-		<rom name="the death and return of superman (hack, spanish).bin" size="2097152" crc="82b94fc6"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="deathret">
-		<description>The Death and Return of Superman (USA)</description>
-		<year>1995</year>
-		<manufacturer>Sunsoft</manufacturer>
-		<rom name="death and return of superman, the (usa).bin" size="2097152" crc="982242d3"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="disneycl">
 		<description>The Disney Collection - Mickey and Donald (Euro)</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="disney collection, the (euro).bin" size="1048576" crc="adfde883"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="earthdef">
-		<description>The Earth Defense (USA)</description>
-		<year>1995</year>
-		<manufacturer>Realtec</manufacturer>
-		<rom name="earth defense (usa) (unl).bin" size="524288" crc="3519c422"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="faerytal">
-		<description>The Faery Tale Adventure (Euro, USA)</description>
-		<year>1991</year>
-		<manufacturer>Electronic Arts</manufacturer>
-		<rom name="faery tale adventure, the (euro, usa).bin" size="524288" crc="963f4969"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="flint">
-		<description>The Flintstones (Euro)</description>
-		<year>1993</year>
-		<manufacturer>Taito</manufacturer>
-		<rom name="flintstones, the (euro).bin" size="524288" crc="21845d61"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="flints" cloneof="flint" romof="flint">
-		<description>The Flintstones (Hack, Spanish)</description>
-		<year>2014</year>
-		<manufacturer>Taito</manufacturer>
-		<rom name="the flintstones (hack, spanish).bin" size="524288" crc="2539bd5b"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="flintj" cloneof="flint" romof="flint">
-		<description>The Flintstones (Jpn)</description>
-		<year>1993</year>
-		<manufacturer>Taito</manufacturer>
-		<rom name="flintstone (jpn).bin" size="524288" crc="920a3031"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="flintu" cloneof="flint" romof="flint">
-		<description>The Flintstones (USA)</description>
-		<year>1993</year>
-		<manufacturer>Taito</manufacturer>
-		<rom name="flintstones, the (usa).bin" size="524288" crc="7c982c59"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

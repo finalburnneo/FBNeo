@@ -420,6 +420,7 @@ else ifneq (,$(filter $(platform), ngc wii wiiu))
 else ifeq ($(platform), emscripten)
 	TARGET := $(TARGET_NAME)_libretro_$(platform).bc
 	ENDIANNESS_DEFINES := -DLSB_FIRST
+	INCLUDE_7Z_SUPPORT = 0
 	EXTERNAL_ZLIB = 1
 	STATIC_LINKING = 1
 

@@ -3917,11 +3917,33 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		line_cycles = v60TotalCycles();
+
+		if (i == 0) { // start in vblank (was line 240) for 1frame less input lag
+			if (use_spritedelay) {
+				memcpy(DrvScrollRAMDelayed, DrvScrollRAM, 0x80);
+				memcpy(DrvSprRAMDelayed, DrvSprRAM, 0x40000);
+			}
+			vblank = 1;
+			requested_int |= 1 << 3;
+			update_irq_state();
+		}
+
+		if (i == 22) { // adjusted end-of-vblank
+			vblank = 0;
+			no_rasters = 1;
+		}
+
 		CPU_RUN(0, v60);
 
+		if (i == 120+22 && pastelis) {
+			requested_int |= 1 << 2;
+			update_irq_state();
+			draw_next_line = 1;
+		}
+
 		if (draw_next_line != -1) {
-			no_rasters = 0;
-			DrvDrawScanline(i - 1);
+			no_rasters = 0; // we're doing a raster update
+			DrvDrawScanline(i - 23);
 			draw_next_line = -1;
 		}
 
@@ -3938,23 +3960,8 @@ static INT32 DrvFrame()
 			requested_int |= 1 << 6;
 			update_irq_state();
 		}
-
-		if (i == 120 && pastelis) {
-			requested_int |= 1 << 2;
-			update_irq_state();
-		}
-
-		if (i == 240) {
-			DrvDrawEnd();
-			if (use_spritedelay) {
-				memcpy(DrvScrollRAMDelayed, DrvScrollRAM, 0x80);
-				memcpy(DrvSprRAMDelayed, DrvSprRAM, 0x40000);
-			}
-			vblank = 1;
-			requested_int |= 1 << 3;
-			update_irq_state();
-		}
 	}
+	DrvDrawEnd();
 
 	v60Close();
 

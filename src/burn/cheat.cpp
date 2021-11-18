@@ -164,7 +164,7 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 
 			if (deactivate) { // disable cheat option
 				if (pCurrentCheat->nType != 1) {
-					nOption = 1; // Set to the first option as there is no addressinfo associated with default (disabled) cheat entry. -dink
+					nOption = pCurrentCheat->nCurrent; // Set to the first option as there is no addressinfo associated with default (disabled) cheat entry. -dink
 
 					// Deactivate old option (if any)
 					pAddressInfo = pCurrentCheat->pOption[nOption]->AddressInfo;

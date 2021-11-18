@@ -358,9 +358,9 @@ inline static void CalcCol(INT32 index, UINT16 nColour)
 {
 	UINT8 color_ramp[0x10] = { 0, 29, 52, 70, 87, 101, 116, 130, 144, 158, 172, 187, 206, 228, 255 };
 
-	INT32 r = (nColour & 0x000f) >> 0;	// Red
-	INT32 g = (nColour & 0x00f0) >> 4; 	// Green
-	INT32 b = (nColour & 0x0f00) >> 8;	// Blue
+	INT32 r = (nColour & 0x000e) >> 0;	// Red
+	INT32 g = (nColour & 0x00e0) >> 4; 	// Green
+	INT32 b = (nColour & 0x0e00) >> 8;	// Blue
 
 	RamPal[index] = nColour;
 
@@ -374,9 +374,9 @@ inline static void CalcCol(INT32 index, UINT16 nColour)
 	MegadriveCurPal[index + 0x40] = MegadriveCurPal[index + 0xc0] = BurnHighCol(color_ramp[r], color_ramp[g], color_ramp[b], 0);
 
 	// Highlight Color
-	r += 7; if (r > 0xf) r = 0xf;
-	g += 7; if (g > 0xf) g = 0xf;
-	b += 7; if (b > 0xf) b = 0xf;
+	r += 7;
+	g += 7;
+	b += 7;
 	MegadriveCurPal[index + 0x80] = BurnHighCol(color_ramp[r], color_ramp[g], color_ramp[b], 0);
 }
 
@@ -2451,6 +2451,22 @@ static void SetupCustomCartridgeMappers()
 		SekMapHandler(7, 0xa130f0, 0xa130ff, MAP_WRITE);
 		SekSetWriteByteHandler(7, Ssf2BankWriteByte);
 		SekClose();
+	}
+
+	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SKINGKONG) {
+		OriginalRom = (UINT8*)BurnMalloc(MAX_CARTRIDGE_SIZE);
+		memcpy(OriginalRom, RomMain, MAX_CARTRIDGE_SIZE);
+		memcpy(RomMain + 0x200000, OriginalRom, 0x200000);
+		RomSize = 0x400000;
+		BurnFree(OriginalRom);
+	}
+
+	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SDK99) {
+		OriginalRom = (UINT8*)BurnMalloc(MAX_CARTRIDGE_SIZE);
+		memcpy(OriginalRom, RomMain, MAX_CARTRIDGE_SIZE);
+		memcpy(RomMain + 0x300000, OriginalRom, 0x100000);
+		RomSize = 0x400000;
+		BurnFree(OriginalRom);
 	}
 
 	if (((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_LIONK3) ||

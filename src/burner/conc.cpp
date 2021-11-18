@@ -451,6 +451,7 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 	return 0;
 }
 
+#define IS_MIDWAY ((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_MIDWAY) == HARDWARE_PREFIX_MIDWAY)
 
 //TODO: make cross platform
 static INT32 ConfigParseMAMEFile()
@@ -465,7 +466,17 @@ static INT32 ConfigParseMAMEFile()
 			pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nRelAddressBits = (flags & 0x3000000) >> 24; \
 		} \
 		pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nAddress = (pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].bRelAddress) ? nAddress : nAddress + i;	\
-		pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nValue = (nValue >> ((k*8)-(i*8))) & 0xff;	\
+		if (IS_MIDWAY && k > 0) { /* multi-byte needs swapping on tms34010 (cheat data is BE cpu is LE *guess*) -dink */ \
+			INT32 swap = 0; \
+			switch (k) { \
+				case 1: swap = 1; break; \
+				case 2: \
+				case 3: swap = 3; break; \
+			}\
+			pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nValue = (nValue >> ((k*8)-((i^swap)*8))) & 0xff;	\
+		} else {\
+			pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nValue = (nValue >> ((k*8)-(i*8))) & 0xff;	\
+		} \
 		pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nMultiByte = i;	\
 		nCurrentAddress++;	\
 	}	\
@@ -578,6 +589,10 @@ static INT32 ConfigParseMAMEFile()
 		// & 0x4000 = don't add to list
 		// & 0x0800 = BCD
 		if (flags & 0x00004800) continue;			// skip various cheats (unhandled methods at this time)
+
+		if ((flags & 0xff000000) == 0x39000000 && IS_MIDWAY) {
+			nAddress |= 0xff800000 >> 3; // 0x39 = address is relative to system's ROM block, only midway uses this kinda cheats
+		}
 
 		if ( flags & 0x00008000 || (flags & 0x00010000 && !menu)) { // Linked cheat "(2/2) etc.."
 			if (nCurrentAddress < CHEAT_MAX_ADDRESS) {

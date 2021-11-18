@@ -371,8 +371,7 @@ void TMS34010WriteWord(UINT32 address, UINT16 value)
 
 void TMS34010WriteCheat(UINT32 address, UINT8 value) // for cheat-engine
 {
-	if ((address & 0xff000000) == 0)
-		address <<= 3; // cheat.dat format is not in bit-address. *kludge*
+	address <<= 3; // cheat.dat format is not in bit-address. *kludge*
 
     UINT8 *pr = g_mmap->map[PAGE_WADD + PFN(address)];
     if ((uintptr_t)pr >= MAXHANDLER) {

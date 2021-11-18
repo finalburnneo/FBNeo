@@ -269,6 +269,7 @@ int BurnerLoadDriver(TCHAR *szDriverName);
 int StartFromReset(TCHAR *szDriverName);
 void PausedRedraw(void);
 INT32 is_netgame_or_recording();
+void InitLua();
 
 // menu.cpp
 #define UM_DISPLAYPOPUP (WM_USER + 0x0100)

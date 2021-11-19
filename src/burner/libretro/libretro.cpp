@@ -1207,19 +1207,21 @@ void retro_get_system_av_info(struct retro_system_av_info *info)
 	int game_aspect_x, game_aspect_y;
 	bVidImageNeedRealloc = true;
 	if (nBurnDrvActive != ~0U)
+	{
 		BurnDrvGetAspect(&game_aspect_x, &game_aspect_y);
+
+		// if game is vertical and rotation couldn't occur, "fix" the rotated aspect ratio
+		if ((BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) && !bRotationDone)
+		{
+			int temp = game_aspect_x;
+			game_aspect_x = game_aspect_y;
+			game_aspect_y = temp;
+		}
+	}
 	else
 	{
 		game_aspect_x = 4;
 		game_aspect_y = 3;
-	}
-
-	// if game is vertical and rotation couldn't occur, "fix" the rotated aspect ratio
-	if ((BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) && !bRotationDone)
-	{
-		int temp = game_aspect_x;
-		game_aspect_x = game_aspect_y;
-		game_aspect_y = temp;
 	}
 
 	INT32 oldMax = nGameMaximumGeometry;

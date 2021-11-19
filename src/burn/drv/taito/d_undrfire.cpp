@@ -20,6 +20,8 @@ static UINT8 DrvRecalc;
 
 static UINT8 *TaitoSpriteRamBuffered2;
 static UINT8 *TaitoSpriteRamBuffered3;
+static UINT8 *Contrast_LUT;
+static UINT8 *Brightness_LUT;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo UndrfireInputList[] = {
@@ -270,6 +272,34 @@ static UINT8 __fastcall undrfire_main_read_byte(UINT32 address)
 	return 0;
 }
 
+static void calc_brightness_lut(INT32 brightness)
+{
+	for (INT32 col = 0; col < 0x100; col++) {
+		INT32 mcol = col * brightness / 100;
+
+		if (mcol < 0) mcol = 0;
+		if (mcol > 255) mcol = 255;
+
+		Brightness_LUT[col] = mcol;
+	}
+}
+
+static void calc_contrast_lut(double contrast)
+{
+	double c = (100.0 + contrast) / 100.0;
+	c *= c;
+
+	for (INT32 col = 0; col < 0x100; col++) {
+		double color = ((double)col / 255.0) - 0.5;
+		color = ((color * c) + 0.5) * 255.0;
+
+		if (color < 0) color = 0;
+		if (color > 255) color = 255;
+
+		Contrast_LUT[col] = color;
+	}
+}
+
 static INT32 DrvDoReset(INT32 clear_mem)
 {
 	if (clear_mem) {
@@ -322,6 +352,9 @@ static INT32 MemIndex()
 	TaitoPalette		= (UINT32*)Next; Next += 0x4000 * sizeof(UINT32);
 
 	TaitoF2SpriteList	= (TaitoF2SpriteEntry*)Next; Next += 0x4000 * sizeof(TaitoF2SpriteEntry);
+
+	Contrast_LUT        = Next; Next += 0x100;
+	Brightness_LUT      = Next; Next += 0x100;
 
 	TaitoRamStart		= Next;
 
@@ -409,12 +442,24 @@ static void DrvGfxReorder(INT32 size)
 
 static INT32 CommonInit(INT32 game_select)
 {
+	has_subcpu = (game_select == 0) ? 0 : 1;
+
 	TaitoMem = NULL;
 	MemIndex();
 	INT32 nLen = TaitoMemEnd - (UINT8 *)0;
 	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
+
+	{ // color wash-out fix
+		UINT8 game_cfg[2][2] = {	// [game][contrast,brightness]
+			{ 0x1a, 0x57 },			// undrfire
+			{ 0x26, 0x45 }			// cbombers
+		};
+
+		calc_contrast_lut(game_cfg[has_subcpu][0]);
+		calc_brightness_lut(game_cfg[has_subcpu][1]);
+	}
 
 	if (game_select == 0) // under fire
 	{
@@ -611,8 +656,6 @@ static INT32 CommonInit(INT32 game_select)
 	TaitoF3SoundInit(1); // 68k #1 initialized here
 	TaitoF3SoundIRQConfig(1);
 
-	has_subcpu = (game_select == 0) ? 0 : 1;
-
 	SekInit(2, 0x68000);
 	SekOpen(2);
 	SekMapMemory(Taito68KRom3,			0x000000, 0x03ffff, MAP_ROM);
@@ -661,9 +704,15 @@ static void DrvPaletteUpdate()
 		UINT32 color = pal[i];
 		color = (color << 16) | (color >> 16);
 
-		INT32 r = color >> 16;
-		INT32 g = color >> 8;
-		INT32 b = color;
+		INT32 r = (color >> 16) & 0xff;
+		INT32 g = (color >> 8) & 0xff;
+		INT32 b = (color) & 0xff;
+
+		{
+			r = Contrast_LUT[Brightness_LUT[r]];
+			g = Contrast_LUT[Brightness_LUT[g]];
+			b = Contrast_LUT[Brightness_LUT[b]];
+		}
 
 		TaitoPalette[i] = BurnHighCol(r,g,b,0);
 	}

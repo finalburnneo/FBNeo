@@ -869,15 +869,15 @@ BEGIN
 		MENUITEM "Start Neo Geo CDZ...\tCtrl+Shift+F6",	MENU_START_NEOGEO_CD
 		MENUITEM SEPARATOR
         MENUITEM "Exit game\tCtrl+F4",					MENU_QUIT, GRAYED
-        MENUITEM "Pause game\tPause",					MENU_PAUSE, GRAYED        
+        MENUITEM "Pause game\tPause",					MENU_PAUSE, GRAYED
 		MENUITEM SEPARATOR
         MENUITEM "Adjust CPU speed...",					MENU_SETCPUCLOCK, GRAYED
         MENUITEM "Reset CPU speed to 100%",				MENU_RESETCPUCLOCK, GRAYED
         MENUITEM SEPARATOR
 		POPUP "Lua Scripting..."
         BEGIN
-            MENUITEM "&New Lua Script Window...",                   ID_LUA_OPEN
-            MENUITEM "&Close All Script Windows",                   ID_LUA_CLOSE_ALL, GRAYED
+            MENUITEM "&New Lua Script Window...",		ID_LUA_OPEN, GRAYED
+            MENUITEM "&Close Script Window",			ID_LUA_CLOSE_ALL, GRAYED
         END
         MENUITEM SEPARATOR
         POPUP "Memory Card..."

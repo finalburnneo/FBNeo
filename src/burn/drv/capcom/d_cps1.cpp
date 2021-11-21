@@ -20909,7 +20909,7 @@ struct BurnDriver BurnDrvCpsForgottnue = {
 
 struct BurnDriver BurnDrvCpsForgottnj = {
 	"forgottnj", "forgottn", NULL, NULL, "1988",
-	"Forgotten Worlds (Japan)\0", NULL, "Capcom", "CPS1",
+	"Forgotten Worlds (Japan) (English prototype)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_HORSHOOT, 0,
 	NULL, ForgottnjRomInfo, ForgottnjRomName, NULL, NULL, NULL, NULL, ForgottnInputInfo, ForgottnjDIPInfo,

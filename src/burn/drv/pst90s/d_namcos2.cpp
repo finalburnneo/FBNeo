@@ -4277,7 +4277,7 @@ struct BurnDriver BurnDrvCosmogng = {
 };
 
 
-// Mirai Ninja (Japan)
+// Mirai Ninja (Japan, set 1)
 
 static struct BurnRomInfo mirninjaRomDesc[] = {
 	{ "mn_mpr0e.bin",	0x10000, 0xfa75f977, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
@@ -4340,10 +4340,70 @@ static INT32 MirninjaInit()
 
 struct BurnDriver BurnDrvMirninja = {
 	"mirninja", NULL, NULL, NULL, "1988",
-	"Mirai Ninja (Japan)\0", NULL, "Namco", "System 2",
+	"Mirai Ninja (Japan, set 1)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, mirninjaRomInfo, mirninjaRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
+	MirninjaInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
+	288, 224, 4, 3
+};
+
+
+// Mirai Ninja (Japan, set 2)
+
+static struct BurnRomInfo mirninjaaRomDesc[] = {
+	{ "mn1_mpr0",		0x10000, 0x6d061fd6, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
+	{ "mn1_mpr1",		0x10000, 0x2ece6323, 0x01 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "mn1_spr0.bin",	0x10000, 0x3f1a17be, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
+	{ "mn1_spr1.bin",	0x10000, 0x2bc66f60, 0x02 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "mn_snd0.bin",	0x20000, 0x6aa1ae84, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+
+#if !defined ROM_VERIFY
+	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
+	{ "sys2c65b.bin",	0x08000, 0xe9f2922a, 0x04 | BRF_PRG | BRF_ESS }, //  6
+
+	{ "mn_obj0.bin",	0x20000, 0x6bd1e290, 0x05 | BRF_GRA },           //  7 Sprites
+	{ "mn_obj1.bin",	0x20000, 0x5e8503be, 0x05 | BRF_GRA },           //  8
+	{ "mn_obj2.bin",	0x20000, 0xa96d9b45, 0x05 | BRF_GRA },           //  9
+	{ "mn_obj3.bin",	0x20000, 0x0086ef8b, 0x05 | BRF_GRA },           // 10
+	{ "mn_obj4.bin",	0x20000, 0xb3f48755, 0x05 | BRF_GRA },           // 11
+	{ "mn_obj5.bin",	0x20000, 0xc21e995b, 0x05 | BRF_GRA },           // 12
+	{ "mn_obj6.bin",	0x20000, 0xa052c582, 0x05 | BRF_GRA },           // 13
+	{ "mn_obj7.bin",	0x20000, 0x1854c6f5, 0x05 | BRF_GRA },           // 14
+
+	{ "mn_chr0.bin",	0x20000, 0x4f66df26, 0x06 | BRF_GRA },           // 15 Layer Tiles
+	{ "mn_chr1.bin",	0x20000, 0xf5de5ea7, 0x06 | BRF_GRA },           // 16
+	{ "mn_chr2.bin",	0x20000, 0x9ff61924, 0x06 | BRF_GRA },           // 17
+	{ "mn_chr3.bin",	0x20000, 0xba208bf5, 0x06 | BRF_GRA },           // 18
+	{ "mn_chr4.bin",	0x20000, 0x0ef00aff, 0x06 | BRF_GRA },           // 19
+	{ "mn_chr5.bin",	0x20000, 0x4cd9d377, 0x06 | BRF_GRA },           // 20
+	{ "mn_chr6.bin",	0x20000, 0x114aca76, 0x06 | BRF_GRA },           // 21
+	{ "mn_chr7.bin",	0x20000, 0x2d5705d3, 0x06 | BRF_GRA },           // 22
+
+	{ "mn_roz0.bin",	0x20000, 0x677a4f25, 0x07 | BRF_GRA },           // 23 Roz Layer Tiles
+	{ "mn_roz1.bin",	0x20000, 0xf00ae572, 0x07 | BRF_GRA },           // 24
+
+	{ "mn_sha.bin",		0x20000, 0xc28af90f, 0x08 | BRF_GRA },           // 25 Layer Tiles Mask Data
+
+	{ "mn1_dat0.13s",	0x20000, 0x104bcca8, 0x09 | BRF_PRG | BRF_ESS }, // 26 Shared 68K Data
+	{ "mn1_dat1.13p",	0x20000, 0xd2a918fb, 0x09 | BRF_PRG | BRF_ESS }, // 27
+
+	{ "mn_voi1.bin",	0x80000, 0x2ca3573c, 0x0a | BRF_SND },           // 28 C140 Samples
+	{ "mn_voi2.bin",	0x80000, 0x466c3b47, 0x0a | BRF_SND },           // 29
+};
+
+STD_ROM_PICK(mirninjaa)
+STD_ROM_FN(mirninjaa)
+
+struct BurnDriver BurnDrvMirninjaa = {
+	"mirninjaa", "mirninja", NULL, NULL, "1988",
+	"Mirai Ninja (Japan, set 2)\0", NULL, "Namco", "System 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	NULL, mirninjaaRomInfo, mirninjaaRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
 	MirninjaInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
 };

@@ -325,7 +325,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aliensynp" cloneof="aliensyn" romof="aliensyn">
-		<description>Alien Syndrome (Prototype)</description>
+		<description>Alien Syndrome (Prototype) [Prototype]</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="alien syndrome (proto).bin" size="262144" crc="c148868c"/>
@@ -525,7 +525,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aztecadv">
-		<description>Aztec Adventure - The Golden Road to Paradise (Euro, USA) ~ Nazca '88 - The Golden Road to Paradise (Jpn)</description>
+		<description>Aztec Adventure - The Golden Road to Paradise (Euro, USA)</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-11121.ic1" size="131072" crc="ff614eb3"/>
@@ -677,7 +677,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bladeag1" cloneof="bladeag" romof="bladeag">
-		<description>Blade Eagle (USA, Prototype)</description>
+		<description>Blade Eagle (USA, Prototype) [Prototype]</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="blade eagle (world) (beta).bin" size="262144" crc="58d5fc48"/>
@@ -925,7 +925,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chopliftj" cloneof="choplift" romof="choplift">
-		<description>Choplifter (Jpn, Prototype)</description>
+		<description>Choplifter (Jpn, Prototype) [Prototype]</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="choplifter (japan) (proto).bin" size="131072" crc="16ec3575"/>
@@ -933,7 +933,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chopliftp" cloneof="choplift" romof="choplift">
-		<description>Choplifter (USA, Prototype)</description>
+		<description>Choplifter (USA, Prototype) [Prototype]</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="choplifter [proto].bin" size="131072" crc="fd981232"/>
@@ -949,7 +949,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="borgmanp" cloneof="cyborgh" romof="cyborgh">
-		<description>Chouon Senshi Borgman (Jpn, Prototype)</description>
+		<description>Chouon Senshi Borgman (Jpn, Prototype) [Prototype]</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chouon senshi borgman [proto] (jp).bin" size="131072" crc="86f49ae9"/>
@@ -1013,7 +1013,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="columnsp" cloneof="columns" romof="columns">
-		<description>Columns (Prototype)</description>
+		<description>Columns (Prototype) [Prototype]</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="columns [proto].bin" size="131072" crc="3fb40043"/>
@@ -1132,6 +1132,14 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="deadangp" cloneof="deadang" romof="deadang">
+		<description>Dead Angle (Prototype) [Prototype]</description>
+		<year>1989</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="Dead Angle [Proto].sms" size="262144" crc="f9271c3d"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="deepduckc" cloneof="deepduck" romof="deepduck">
 		<description>Deep Duck Trouble Starring Donald Duck (Euro, Bra) - Castellano v1.0 [Hack]</description>
 		<year>2021</year>
@@ -1173,7 +1181,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dinobash">
-		<description>Dinobasher Starring Bignose the Caveman (Euro, Prototype)</description>
+		<description>Dinobasher Starring Bignose the Caveman (Euro, Prototype) [Prototype]</description>
 		<year>1993</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="dinobasher starring bignose the caveman (europe) (proto).bin" size="262144" crc="ea5c3a6f"/>
@@ -1199,7 +1207,7 @@
 	<game name="arielc" cloneof="ariel" romof="ariel">
 		<description>Disney's Ariel The Little Mermaid (Bra) - Castellano v1.0 [Hack]</description>
 		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="disney's ariel the little mermaid (bra) - castellano v1.0.sms" size="262144" crc="7930398d"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1277,7 +1285,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="doublhwkp" cloneof="doublhwk" romof="doublhwk">
-		<description>Double Hawk (Euro, Prototype)</description>
+		<description>Double Hawk (Euro, Prototype) [Prototype]</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="double hawk (europe) (beta).bin" size="262144" crc="f76d5cee"/>
@@ -1313,6 +1321,14 @@
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="dr. robotnik's mean bean machine (europe).bin" size="262144" crc="6c696221"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="draconic">
+		<description>Draconic Throne (HB) [Homebrew]</description>
+		<year>2017-2021</year>
+		<manufacturer>GW's Workshop</manufacturer>
+		<rom name="Draconic Throne (2021)(GW's Workshop).sms" size="49152" crc="e31ecd44"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1420,19 +1436,19 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ecco2">
-		<description>Ecco - The Tides of Time (Bra)</description>
-		<year>1996</year>
-		<manufacturer>Tec Toy</manufacturer>
-		<rom name="ecco - the tides of time (brazil).bin" size="524288" crc="7c28703a"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="ecco">
 		<description>Ecco the Dolphin (Euro, Bra)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ecco the dolphin (europe).bin" size="524288" crc="6687fab9"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ecco2">
+		<description>Ecco the Dolphin II - The Tides of Time (Bra)</description>
+		<year>1996</year>
+		<manufacturer>Tec Toy</manufacturer>
+		<rom name="ecco - the tides of time (brazil).bin" size="524288" crc="7c28703a"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1565,7 +1581,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fantzone1" cloneof="fantzone" romof="fantzone">
-		<description>Fantasy Zone (World, v1, Prototype)</description>
+		<description>Fantasy Zone (World, v1, Prototype) [Prototype]</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="fantasy zone (world) (v1.1) (beta).bin" size="131072" crc="f46264fe"/>
@@ -1717,7 +1733,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ggroundp" cloneof="gground" romof="gground">
-		<description>Gain Ground (Euro, Prototype)</description>
+		<description>Gain Ground (Euro, Prototype) [Prototype]</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="gain ground [proto].bin" size="262144" crc="d40d03c7"/>
@@ -1877,7 +1893,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ghosthcp" cloneof="ghosth" romof="ghosth">
-		<description>Ghost House (Sega Card, Prototype)</description>
+		<description>Ghost House (Sega Card, Prototype) [Prototype]</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ghost house (usa, europe) (beta).bin" size="32768" crc="c3e7c1ed"/>
@@ -1917,7 +1933,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="globaldp" cloneof="globald" romof="globald">
-		<description>Global Defense (Euro, USA, Prototype)</description>
+		<description>Global Defense (Euro, USA, Prototype) [Prototype]</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="global defense (usa, europe) (beta).bin" size="131072" crc="91a0fc4e"/>
@@ -1965,7 +1981,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="golfamanp" cloneof="golfaman" romof="golfaman">
-		<description>Golfamania (Prototype)</description>
+		<description>Golfamania (Prototype) [Prototype]</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="golfamania (europe) (beta).bin" size="262144" crc="5dabfdc3"/>
@@ -2093,7 +2109,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="greatglfp" cloneof="greatglf" romof="greatglf">
-		<description>Great Golf (Prototype)</description>
+		<description>Great Golf (Prototype) [Prototype]</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="great golf (world) (beta).bin" size="131072" crc="4847bc91"/>
@@ -2221,7 +2237,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hangonshp" cloneof="hangonsh" romof="hangonsh">
-		<description>Hang-On and Safari Hunt (USA, Prototype) [Safari Hunt is a Light Phaser game]</description>
+		<description>Hang-On and Safari Hunt (USA, Prototype) [Prototype, Safari Hunt is a Light Phaser game]</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="hang-on and safari hunt [proto].bin" size="131072" crc="a120b77f"/>
@@ -2244,10 +2260,18 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="highsce" cloneof="highsc" romof="highsc">
+		<description>High School! Kimengumi (Jpn) (T-Eng) [Hack]</description>
+		<year>2005</year>
+		<manufacturer>Sega - SMS Power!</manufacturer>
+		<rom name="high school! kimengumi (t-eng1.00).sms" size="131072" crc="8a296a3e"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="highscc" cloneof="highsc" romof="highsc">
 		<description>High School! Kimengumi (Jpn) - Castellano v1.0 [Hack]</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="high school! kimengumi (jpn) - castellano v1.0.sms" size="131072" crc="f12a3bb5"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2257,14 +2281,6 @@
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="high school! kimengumi (japan).bin" size="131072" crc="9eb1aa4f"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="highsce" cloneof="highsc" romof="highsc">
-		<description>High School! Kimengumi (T-Eng) [Hack]</description>
-		<year>2005</year>
-		<manufacturer>Sega - SMS Power!</manufacturer>
-		<rom name="high school! kimengumi (t-eng1.00).sms" size="131072" crc="8a296a3e"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2301,7 +2317,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hook">
-		<description>Hook (Euro, Prototype)</description>
+		<description>Hook (Euro, Prototype) [Prototype]</description>
 		<year>19??</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="hook (europe) (proto).bin" size="262144" crc="9ced34a7"/>
@@ -2341,7 +2357,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="impmissp" cloneof="impmiss" romof="impmiss">
-		<description>Impossible Mission (Euro, Prototype)</description>
+		<description>Impossible Mission (Euro, Prototype) [Prototype]</description>
 		<year>1990</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="impossible mission (europe) (beta).bin" size="131072" crc="71c4ca8f"/>
@@ -2365,7 +2381,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="indycrusp" cloneof="indycrus" romof="indycrus">
-		<description>Indiana Jones and the Last Crusade (Euro, Prototype)</description>
+		<description>Indiana Jones and the Last Crusade (Euro, Prototype) [Prototype]</description>
 		<year>1990</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="indiana jones and the last crusade (europe) (beta).bin" size="262144" crc="acec894d"/>
@@ -2381,7 +2397,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jbdougkop" cloneof="georgeko" romof="georgeko">
-		<description>James 'Buster' Douglas Knockout Boxing (USA, Prototype)</description>
+		<description>James 'Buster' Douglas Knockout Boxing (USA, Prototype) [Prototype]</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="james buster douglas knockout boxing [proto].bin" size="262144" crc="cfb4bd7b"/>
@@ -2477,7 +2493,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kingqstp" cloneof="kingqst" romof="kingqst">
-		<description>King's Quest - Quest for the Crown (USA, Prototype)</description>
+		<description>King's Quest - Quest for the Crown (USA, Prototype) [Prototype]</description>
 		<year>1989</year>
 		<manufacturer>Parker Brothers</manufacturer>
 		<rom name="king's quest - quest for the crown (usa) (beta).bin" size="131072" crc="b7fe0a9d"/>
@@ -2605,7 +2621,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lemmingsp" cloneof="lemmings" romof="lemmings">
-		<description>Lemmings (Euro, Prototype)</description>
+		<description>Lemmings (Euro, Prototype) [Prototype]</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="lemmings (europe) (beta).bin" size="262144" crc="2c61ed88"/>
@@ -2613,7 +2629,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lemming2">
-		<description>Lemmings 2 - The Tribes (Euro, Prototype)</description>
+		<description>Lemmings 2 - The Tribes (Euro, Prototype) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Psygnosis</manufacturer>
 		<rom name="lemmings 2 - the tribes [proto].bin" size="524288" crc="cf5aecca"/>
@@ -2685,7 +2701,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mjsengokp" cloneof="mjsengok" romof="mjsengok">
-		<description>Mahjong Sengoku Jidai (Jpn, Prototype)</description>
+		<description>Mahjong Sengoku Jidai (Jpn, Prototype) [Prototype]</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mahjong sengoku jidai (japan) (beta).bin" size="131072" crc="996b2a07"/>
@@ -2717,7 +2733,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="maougolvp" cloneof="golvell" romof="golvell">
-		<description>Maou Golvellius (Jpn, Prototype)</description>
+		<description>Maou Golvellius (Jpn, Prototype) [Prototype]</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="maou golvellius [proto] (jp).bin" size="262144" crc="21a21352"/>
@@ -2813,7 +2829,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mwalkp" cloneof="mwalk" romof="mwalk">
-		<description>Michael Jackson's Moonwalker (USA, Prototype)</description>
+		<description>Michael Jackson's Moonwalker (USA, Prototype) [Prototype]</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="michael jackson's moonwalker (usa, europe) (beta).bin" size="262144" crc="54123936"/>
@@ -2869,7 +2885,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="miraclep" cloneof="miracle" romof="miracle">
-		<description>Miracle Warriors - Seal of the Dark Lord (Prototype)</description>
+		<description>Miracle Warriors - Seal of the Dark Lord (Prototype) [Prototype]</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="miracle warriors - seal of the dark lord (usa, europe) (beta).bin" size="262144" crc="301a59aa"/>
@@ -2917,7 +2933,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="monopolyp" cloneof="monopoly" romof="monopoly">
-		<description>Monopoly (USA, Prototype)</description>
+		<description>Monopoly (USA, Prototype) [Prototype]</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="monopoly [proto].bin" size="131072" crc="7e9d87fc"/>
@@ -2941,7 +2957,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="montezump" cloneof="montezum" romof="montezum">
-		<description>Montezuma's Revenge Featuring Panama Joe (USA, Prototype)</description>
+		<description>Montezuma's Revenge Featuring Panama Joe (USA, Prototype) [Prototype]</description>
 		<year>1989</year>
 		<manufacturer>Parker Brothers</manufacturer>
 		<rom name="montezuma's revenge - featuring panama joe [proto].bin" size="131072" crc="575d0fcf"/>
@@ -3013,7 +3029,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbajam">
-		<description>NBA Jam (Euro, Prototype)</description>
+		<description>NBA Jam (Euro, Prototype) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Acclaim</manufacturer>
 		<rom name="nba jam [proto].bin" size="524288" crc="332a847d"/>
@@ -3069,7 +3085,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ngaidenp" cloneof="ngaiden" romof="ngaiden">
-		<description>Ninja Gaiden (Euro, Prototype)</description>
+		<description>Ninja Gaiden (Euro, Prototype) [Prototype]</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ninja gaiden (europe) (beta).bin" size="262144" crc="761e9396"/>
@@ -3173,7 +3189,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="patriley">
-		<description>Pat Riley Basketball (USA, Prototype)</description>
+		<description>Pat Riley Basketball (USA, Prototype) [Prototype]</description>
 		<year>19??</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="pat riley basketball (usa) (proto).bin" size="262144" crc="9aefe664"/>
@@ -3381,7 +3397,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="psychicwen" cloneof="psychicw" romof="psychicw">
-		<description>Psychic World (Enhanced Hack v1.2)</description>
+		<description>Psychic World (Enhanced Hack, v1.2) [Hack]</description>
 		<year>2020</year>
 		<manufacturer>BcnAbel76</manufacturer>
 		<rom name="psychic world (enhanced v1.2).bin" size="262144" crc="f0ec4500"/>
@@ -3413,7 +3429,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="puttputtp" cloneof="puttputt" romof="puttputt">
-		<description>Putt and Putter (Euro, Prototype)</description>
+		<description>Putt and Putter (Euro, Prototype) [Prototype]</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="putt and putter (europe) (beta).bin" size="131072" crc="8167ccc4"/>
@@ -3425,6 +3441,14 @@
 		<year>1990</year>
 		<manufacturer>Zemina</manufacturer>
 		<rom name="puznic (kr).sms" size="32768" crc="76e8265f"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pyramidwex">
+		<description>Pyramid Warp Enhanced (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Bitcaffe, Nenefranz, theNestruo</manufacturer>
+		<rom name="Pyramid Warp Enhanced (2021)(Bitcaffe, Nenefranz, theNestruo).sms" size="49152" crc="e51d3ee9"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3445,7 +3469,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rtypep" cloneof="rtype" romof="rtype">
-		<description>R-Type (Prototype)</description>
+		<description>R-Type (Prototype) [Prototype]</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="r-type (proto).bin" size="524288" crc="0d0840d5"/>
@@ -3469,7 +3493,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rcgpp" cloneof="rcgp" romof="rcgp">
-		<description>R.C. Grand Prix (Prototype)</description>
+		<description>R.C. Grand Prix (Prototype) [Prototype]</description>
 		<year>1989</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="r.c. grand prix [proto].bin" size="262144" crc="767f11b8"/>
@@ -3709,7 +3733,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="segagfx">
-		<description>Sega Graphic Board (Jpn, Prototype v2.0)</description>
+		<description>Sega Graphic Board (Jpn, Prototype v2.0) [Prototype]</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="graphic board v2.0.bin" size="32768" crc="276aa542"/>
@@ -3781,7 +3805,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shanghaip" cloneof="shanghai" romof="shanghai">
-		<description>Shanghai (Prototype)</description>
+		<description>Shanghai (Prototype) [Prototype]</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="shanghai (usa, europe) (beta).bin" size="131072" crc="d5d25156"/>
@@ -3813,7 +3837,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sdmilhao">
-		<description>Show do Milhao (Bra, Prototype)</description>
+		<description>Show do Milhao (Bra, Prototype) [Prototype]</description>
 		<year>2003</year>
 		<manufacturer>Tec Toy</manufacturer>
 		<rom name="milhao.bin" size="131072" crc="58423688"/>
@@ -3853,7 +3877,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="slapshotp" cloneof="slapshot" romof="slapshot">
-		<description>Slap Shoot (Prototype)</description>
+		<description>Slap Shoot (Prototype) [Prototype]</description>
 		<year>1989</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="slap shot (proto).bin" size="262144" crc="fbb0a92a"/>
@@ -3925,7 +3949,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicfm102" cloneof="sonic" romof="sonic">
-		<description>Sonic The Hedgehog (FM Mod, v1.02) [YM2413 FM sound chip supported]</description>
+		<description>Sonic The Hedgehog (FM Mod, v1.02) [Hack, YM2413 FM sound chip supported]</description>
 		<year>2014</year>
 		<manufacturer>Sega - Valleybell</manufacturer>
 		<rom name="Sonic1SMS_FM_v102.sms" size="262144" crc="7c077b38"/>
@@ -3957,7 +3981,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonici131fm" cloneof="sonic" romof="sonic">
-		<description>Sonic The Hedgehog Improvement (v1.31) + FM Mod (v1.02) [YM2413 FM sound chip supported]</description>
+		<description>Sonic The Hedgehog Improvement (v1.31) + FM Mod (v1.02) [Hack, YM2413 FM sound chip supported]</description>
 		<year>2020</year>
 		<manufacturer>Penta Penguin - Valleybell</manufacturer>
 		<rom name="Sonic_The_Hedgehog_Enhanced1.31_FM1.02.sms" size="262144" crc="850b9554"/>
@@ -3973,11 +3997,19 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicedu">
-		<description>Sonic's Edusoft (Prototype)</description>
+		<description>Sonic's Edusoft (Prototype) [Prototype]</description>
 		<year>19??</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic's edusoft (unknown) (proto).bin" size="262144" crc="d9096263"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="soultrials">
+		<description>Soul Trials (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Arkia</manufacturer>
+		<rom name="Soul Trials (2021)(Arkia).sms" size="32768" crc="c992d9de"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="spacegun">
@@ -4029,7 +4061,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="scip" cloneof="sci" romof="sci">
-		<description>Special Criminal Investigation (Euro, Prototype)</description>
+		<description>Special Criminal Investigation (Euro, Prototype) [Prototype]</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="special criminal investigation (europe) (beta).bin" size="262144" crc="1b7d2a20"/>
@@ -4277,7 +4309,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sumgamesp" cloneof="sumgames" romof="sumgames">
-		<description>Summer Games (Euro, Prototype)</description>
+		<description>Summer Games (Euro, Prototype) [Prototype]</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="summer games (europe) (beta).bin" size="131072" crc="80eb1fff"/>
@@ -4357,7 +4389,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="supgolf" cloneof="golfaman" romof="golfaman">
-		<description>Super Golf (Prototype)</description>
+		<description>Super Golf (Prototype) [Prototype]</description>
 		<year>1989</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="super golf [proto].bin" size="262144" crc="7f7b568d"/>
@@ -4381,7 +4413,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="smgpp2" cloneof="smgp" romof="smgp">
-		<description>Super Monaco GP (Euro, Older Prototype)</description>
+		<description>Super Monaco GP (Euro, Older Prototype) [Prototype]</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="super monaco gp (proto).bin" size="262144" crc="a1d6d963"/>
@@ -4389,7 +4421,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="smgpp1" cloneof="smgp" romof="smgp">
-		<description>Super Monaco GP (Euro, Prototype)</description>
+		<description>Super Monaco GP (Euro, Prototype) [Prototype]</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="super monaco gp [proto 1].bin" size="262144" crc="dd7adbcc"/>
@@ -4501,7 +4533,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmaniap" cloneof="tazmania" romof="tazmania">
-		<description>Taz-Mania (Euro, Prototype)</description>
+		<description>Taz-Mania (Euro, Prototype) [Prototype]</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="taz-mania (europe) (beta).bin" size="262144" crc="1b312e04"/>
@@ -4509,7 +4541,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tecmow92">
-		<description>Tecmo World Cup '92 (Euro, Prototype)</description>
+		<description>Tecmo World Cup '92 (Euro, Prototype) [Prototype]</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tecmo world cup '92 (europe) (beta).bin" size="262144" crc="96e75f48"/>
@@ -4797,7 +4829,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="luckydimp" cloneof="luckydim" romof="luckydim">
-		<description>The Lucky Dime Caper Starring Donald Duck (Euro, Prototype)</description>
+		<description>The Lucky Dime Caper Starring Donald Duck (Euro, Prototype) [Prototype]</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="lucky dime caper starring donald duck, the (europe) (beta).bin" size="262144" crc="7f6d0df6"/>
@@ -4901,7 +4933,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="smurfs2p" cloneof="smurfs2" romof="smurfs2">
-		<description>The Smurfs 2 (Euro, Prototype)</description>
+		<description>The Smurfs 2 (Euro, Prototype) [Prototype]</description>
 		<year>1996</year>
 		<manufacturer>Infogrames</manufacturer>
 		<rom name="schtroumpfs autour du monde, les (europe) (en,fr,de,es) (beta).bin" size="262144" crc="7982ae67"/>
@@ -4933,7 +4965,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="3dragon">
-		<description>The Three Dragon Story (Kor)</description>
+		<description>Three Dragon Story, The (Kor)</description>
 		<year>19??</year>
 		<manufacturer>Zemina</manufacturer>
 		<rom name="three dragon story, the (k).bin" size="32768" crc="8640e7e8"/>
@@ -4956,6 +4988,14 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="tbladejp" cloneof="tblade" romof="tblade">
+		<description>Thunder Blade (Jpn, Prototype) [Prototype]</description>
+		<year>1988</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="thunder blade (japan)(proto).sms" size="262144" crc="bab9533b"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="timesold">
 		<description>Time Soldiers (Euro, USA, Bra)</description>
 		<year>1989</year>
@@ -4965,7 +5005,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tomjerry" cloneof="tomjermv" romof="tomjermv">
-		<description>Tom and Jerry (Prototype)</description>
+		<description>Tom and Jerry (Prototype) [Prototype]</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tom and jerry (europe) (beta).bin" size="262144" crc="0c2fc2de"/>
@@ -5053,7 +5093,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="transbotp" cloneof="transbot" romof="transbot">
-		<description>TransBot (USA, Prototype)</description>
+		<description>TransBot (USA, Prototype) [Prototype]</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="transbot [proto].bin" size="32768" crc="58b99750"/>
@@ -5101,7 +5141,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ultima4p" cloneof="ultima4" romof="ultima4">
-		<description>Ultima IV - Quest of the Avatar (Euro, Prototype)</description>
+		<description>Ultima IV - Quest of the Avatar (Euro, Prototype) [Prototype]</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ultima iv - quest of the avatar (europe) (beta).bin" size="524288" crc="de9f8517"/>
@@ -5117,7 +5157,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vampire" cloneof="mastdark" romof="mastdark">
-		<description>Vampire (Euro, Prototype)</description>
+		<description>Vampire (Euro, Prototype) [Prototype]</description>
 		<year>19??</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="vampire (europe) (beta).bin" size="262144" crc="20f40cae"/>
@@ -5278,8 +5318,8 @@
 	</game>
 	<game name="wboy3c" cloneof="wboy3" romof="wboy3">
 		<description>Wonder Boy III - The Dragon's Trap (Euro, USA, Kor) - Castellano v1,0 [Hack]</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="wonder boy iii - the dragon's trap (euro, usa, kor) - castellano v1,0.sms" size="262144" crc="fed045bf"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5317,7 +5357,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wboymlndp" cloneof="wboymlnd" romof="wboymlnd">
-		<description>Wonder Boy in Monster Land (Prototype)</description>
+		<description>Wonder Boy in Monster Land (Prototype) [Prototype]</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="wonder boy in monster land [proto].bin" size="262144" crc="8312c429"/>
@@ -5326,8 +5366,8 @@
 	</game>
 	<game name="wboymwldc" cloneof="wboymwld" romof="wboymwld">
 		<description>Wonder Boy in Monster World (Euro, Kor) - Castellano v1,0 [Hack]</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
+		<year>2018</year>
+		<manufacturer>jackic</manufacturer>
 		<rom name="Wonder Boy in Monster World (Euro, Kor) - Castellano v1,0.sms" size="524288" crc="db47ff25"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5341,7 +5381,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wboymwldp" cloneof="wboymwld" romof="wboymwld">
-		<description>Wonder Boy in Monster World (Euro, Prototype)</description>
+		<description>Wonder Boy in Monster World (Euro, Prototype) [Prototype]</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="wonder boy in monster world (europe) (beta).bin" size="524288" crc="81bff9bb"/>
@@ -5405,7 +5445,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wldgamesp" cloneof="wldgames" romof="wldgames">
-		<description>World Games (Euro, Prototype)</description>
+		<description>World Games (Euro, Prototype) [Prototype]</description>
 		<year>1989</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="world games (europe) (beta).bin" size="131072" crc="914d3fc4"/>
@@ -5429,7 +5469,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="worldgpp" cloneof="worldgp" romof="worldgp">
-		<description>World Grand Prix (USA, Prototype)</description>
+		<description>World Grand Prix (USA, Prototype) [Prototype]</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="world grand prix [proto].bin" size="131072" crc="b5a9f824"/>
@@ -5525,7 +5565,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zaxxon3dp" cloneof="zaxxon3d" romof="zaxxon3d">
-		<description>Zaxxon 3-D (World, Prototype)</description>
+		<description>Zaxxon 3-D (World, Prototype) [Prototype]</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="zaxxon 3-d (world) (beta).bin" size="262144" crc="bba74147"/>

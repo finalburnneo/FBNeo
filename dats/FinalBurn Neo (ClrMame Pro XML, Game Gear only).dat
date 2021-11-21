@@ -1340,14 +1340,6 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ecco2">
-		<description>Ecco II - The Tides of Time (Euro, USA)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="ecco ii - the tides of time (usa, europe).bin" size="524288" crc="e2f3b203"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="ecco">
 		<description>Ecco the Dolphin (Euro, USA)</description>
 		<year>1994</year>
@@ -1364,8 +1356,16 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ecco2">
+		<description>Ecco the Dolphin II - The Tides of Time (Euro, USA)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="ecco ii - the tides of time (usa, europe).bin" size="524288" crc="e2f3b203"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ecco2j" cloneof="ecco2" romof="ecco2">
-		<description>Ecco the Dolphin II (Jpn)</description>
+		<description>Ecco the Dolphin II - The Tides of Time (Jpn)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ecco the dolphin ii (japan).bin" size="524288" crc="ba9cef4f"/>
@@ -4812,6 +4812,14 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="sor2p" cloneof="sor2" romof="sor2">
+		<description>Streets of Rage II (Prototype) [Prototype]</description>
+		<year>1993</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="Streets of Rage II (Proto).gg" size="524288" crc="6c395a69"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sor2">
 		<description>Streets of Rage II (World) ~ Bare Knuckle II - Shitou e no Chingonka (Jpn)</description>
 		<year>1993</year>
@@ -5957,7 +5965,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wboydtrpp" cloneof="wboydtrp" romof="wboydtrp">
-		<description>Wonder Boy III - The Dragon's Trap (Euro, Prototype)</description>
+		<description>Wonder Boy III - The Dragon's Trap (Euro, Prototype) [Prototype]</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="wonder boy iii - the dragon's trap (europe) (beta).bin" size="262144" crc="db1b5b44"/>

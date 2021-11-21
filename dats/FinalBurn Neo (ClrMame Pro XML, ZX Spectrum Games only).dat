@@ -5433,6 +5433,24 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="gameover21" romof="spectrum">
+		<description>Game Over II - Part 1 (aka Phantis) (48K)</description>
+		<year>1988</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Game Over 2 Part 1 (1988)(Dinamic)[aka Phantis].tap" size="48141" crc="8420b778"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gameover22" cloneof="gameover21" romof="gameover21">
+		<description>Game Over II - Part 2 (aka Phantis) (48K)</description>
+		<year>1988</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Game Over 2 Part 2 (1988)(Dinamic)[aka Phantis].tap" size="48155" crc="223202b2"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="gamessummered" romof="spec128">
 		<description>Games - Summer Edition, The (128K)</description>
 		<year>1989</year>
@@ -6323,15 +6341,6 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="howbast_48" cloneof="howbast" romof="howbast">
-		<description>How to be a Complete Bastard (48K)</description>
-		<year>1987</year>
-		<manufacturer>Virgin Games</manufacturer>
-		<rom name="How to be a Complete Bastard (1987)(Virgin Games).z80" size="41855" crc="559834ba"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="hudshawk" romof="spec128">
 		<description>Hudson Hawk (128K)</description>
 		<year>1991</year>
@@ -6701,21 +6710,12 @@
 		<driver status="good"/>
 	</game>
 	<game name="inteagn" romof="spec128">
-		<description>Into the Eagle's Nest (128K)</description>
+		<description>Into the Eagle's Nest (48K-128K)</description>
 		<year>1987</year>
 		<manufacturer>Pandora</manufacturer>
-		<rom name="Into the Eagle's Nest (1987)(Pandora)(128k).z80" size="38863" crc="bc1ea176"/>
+		<rom name="Into the Eagle's Nest (1987)(Pandora).tap" size="40894" crc="289b4c8e"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="inteagn_48" cloneof="inteagn" romof="inteagn">
-		<description>Into the Eagle's Nest (48K)</description>
-		<year>1987</year>
-		<manufacturer>Pandora</manufacturer>
-		<rom name="Into the Eagle's Nest (1987)(Pandora).z80" size="30261" crc="cdba827b"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -8088,7 +8088,7 @@
 		<description>Manchester United Europe (128K)</description>
 		<year>1991</year>
 		<manufacturer>Krisalis Software</manufacturer>
-		<rom name="Manchester United Europe (1991)(Krisalis Software)(M5)[128K].z80" size="64294" crc="b4146de0"/>
+		<rom name="Manchester United Europe (1991)(Krisalis).tap" size="79751" crc="c8b8d2aa"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -8665,15 +8665,6 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="moontorc" romof="spectrum">
-		<description>Moon Torc (48K)</description>
-		<year>1991</year>
-		<manufacturer>Atlantis Software</manufacturer>
-		<rom name="Moon Torc (1991)(Atlantis Software).z80" size="41296" crc="8c9406a0"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="moonsweeper" romof="spectrum">
 		<description>Moonsweeper (48K)</description>
 		<year>1983</year>
@@ -8683,30 +8674,22 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="moonwalk" romof="spectrum">
-		<description>Moonwalker (Part 1 of 3) (48K)</description>
-		<year>1989</year>
-		<manufacturer>U.S. Gold</manufacturer>
-		<rom name="Moonwalker (1989)(U.S. Gold)[level 1 of 3].z80" size="39060" crc="20d806f4"/>
+	<game name="moontorc" romof="spectrum">
+		<description>MoonTorc (48K)</description>
+		<year>1991</year>
+		<manufacturer>Atlantis Software</manufacturer>
+		<rom name="Moontorc (1991)(Atlantis).tap" size="58279" crc="0fe238a1"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="moonwalk2" cloneof="moonwalk" romof="moonwalk">
-		<description>Moonwalker (Part 2 of 3) (48K)</description>
+	<game name="moonwalk" romof="spec128">
+		<description>Moonwalker - The Computer Game (128K)</description>
 		<year>1989</year>
 		<manufacturer>U.S. Gold</manufacturer>
-		<rom name="Moonwalker (1989)(U.S. Gold)[level 2 of 3].z80" size="35521" crc="d7158141"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="moonwalk3" cloneof="moonwalk" romof="moonwalk">
-		<description>Moonwalker (Part 3 of 3) (48K)</description>
-		<year>1989</year>
-		<manufacturer>U.S. Gold</manufacturer>
-		<rom name="Moonwalker (1989)(U.S. Gold)[level 3 of 3].z80" size="40191" crc="a3a6d994"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="Moonwalker - The Computer Game (1989)(U.S. Gold).tap" size="170496" crc="0c84679e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -8893,12 +8876,13 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mundialfutbol" romof="spectrum">
-		<description>Mundial de Futbol (Spanish) (48K)</description>
+	<game name="mundialfutbol" romof="spec128">
+		<description>Mundial de Futbol (Spanish) (128K)</description>
 		<year>1990</year>
 		<manufacturer>Opera Soft</manufacturer>
-		<rom name="Mundial de Futbol (1990)(Opera Soft)(es).z80" size="37130" crc="493c7bf9"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="Mundial de Futbol ES (1990)(Opera Soft).tap" size="98168" crc="e41fa6c3"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -9000,41 +8984,39 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="navymoves1" romof="spec128">
-		<description>Navy Moves (Part 1 of 2) (128K)</description>
+	<game name="navymoves1" romof="spectrum">
+		<description>Navy Moves - Part 1 (Spanish) (48K) [Set '3-Sinclair' to use controller]</description>
 		<year>1988</year>
 		<manufacturer>Dinamic Software</manufacturer>
-		<rom name="Navy Moves (1988)(Dinamic Software)(Part 1 of 2)(128k).z80" size="43731" crc="7761958a"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Navy Moves ES - Part 1 (1988)(Dinamic).tap" size="47056" crc="b5090163"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="navymoves2" cloneof="navymoves1" romof="navymoves1">
-		<description>Navy Moves (Part 2 of 2) (128K)</description>
+		<description>Navy Moves - Part 2 (Spanish) (48K) [Password: 63723]</description>
 		<year>1988</year>
 		<manufacturer>Dinamic Software</manufacturer>
-		<rom name="Navy Moves (1988)(Dinamic Software)(Part 2 of 2)(128k).z80" size="43851" crc="0739a125"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Navy Moves ES - Part 2 (1988)(Dinamic).tap" size="46510" crc="c89abc9d"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="nvyseals" romof="spec128">
-		<description>Navy SEALs (Part 1 of 2) (128K)</description>
+		<description>Navy SEALs - Part 1 (128K)</description>
 		<year>1991</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Navy SEALs (1991)(Ocean)(Part 1 of 2)[128K].z80" size="101877" crc="40156d33"/>
+		<rom name="Navy SEALs 128K (1991)(Ocean)(Part1).tap" size="136806" crc="01b1a341"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="nvyseals2" cloneof="nvyseals" romof="nvyseals">
-		<description>Navy SEALs (Part 2 of 2) (128K)</description>
+		<description>Navy SEALs - Part 2 (128K)</description>
 		<year>1991</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Navy SEALs (1991)(Ocean)(Part 2 of 2)[128K].z80" size="98826" crc="78ab2c33"/>
+		<rom name="Navy SEALs 128K (1991)(Ocean)(Part2).tap" size="136805" crc="6b7f3a21"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -9660,7 +9642,7 @@
 		<description>Pang (128K)</description>
 		<year>1990</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Pang (1990)(Ocean)[128K][incomplete].z80" size="74032" crc="c7016b68"/>
+		<rom name="Pang 128K (1990)(Ocean).tap" size="100344" crc="06ce4e01"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -9670,18 +9652,9 @@
 		<description>Panic Dizzy (128K)</description>
 		<year>1991</year>
 		<manufacturer>Codemasters</manufacturer>
-		<rom name="Panic Dizzy (1991)(Codemasters)[128K].z80" size="46647" crc="4b087391"/>
+		<rom name="Panic Dizzy (1991)(Codemasters).tap" size="48017" crc="dbc18295"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="pandizzy_48" cloneof="pandizzy" romof="pandizzy">
-		<description>Panic Dizzy (48K)</description>
-		<year>1991</year>
-		<manufacturer>Codemasters</manufacturer>
-		<rom name="Panic Dizzy (1991)(Codemasters).z80" size="38133" crc="ce5c5125"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -9689,7 +9662,7 @@
 		<description>Paperboy (48K)</description>
 		<year>1986</year>
 		<manufacturer>Elite Systems</manufacturer>
-		<rom name="Paperboy (1986)(Elite Systems).z80" size="41146" crc="a1465284"/>
+		<rom name="Paperboy (1986)(Elite Systems).tap" size="51430" crc="ac1c032c"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9761,21 +9734,12 @@
 		<driver status="good"/>
 	</game>
 	<game name="passshot" romof="spec128">
-		<description>Passing Shot (128K)</description>
+		<description>Passing Shot (128K) [Press '1' to music and '2' to sound effects]</description>
 		<year>1989</year>
 		<manufacturer>Image Works</manufacturer>
-		<rom name="Passing Shot (1989)(Image Works)[128K].z80" size="39084" crc="f34e8359"/>
+		<rom name="Passing Shot (1989)(Image Works).tap" size="40394" crc="574083d5"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="passshot_48" cloneof="passshot" romof="passshot">
-		<description>Passing Shot (48K)</description>
-		<year>1989</year>
-		<manufacturer>Image Works</manufacturer>
-		<rom name="Passing Shot (1989)(Image Works).z80" size="31503" crc="183331fc"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -9902,23 +9866,21 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gameover21" romof="spec128">
-		<description>Phantis (Game Over II) (Part 1 of 2) (128K)</description>
+	<game name="phantis1" romof="spectrum">
+		<description>Phantis - Part 1 (Spanish) (48K)</description>
 		<year>1987</year>
 		<manufacturer>Dinamic Software</manufacturer>
-		<rom name="Game Over II (1987)(Dinamic Software)(Part 1 of 2)(128k).z80" size="38664" crc="f4a22ad9"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Phantis - Part 1 ES (1987)(Dinamic).tap" size="48529" crc="ca456c10"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gameover22" cloneof="gameover21" romof="gameover21">
-		<description>Phantis (Game Over II) (Part 2 of 2) (128K)</description>
+	<game name="phantis2" cloneof="phantis1" romof="phantis1">
+		<description>Phantis - Part 2 (Spanish) (48K) [Password: 18757]</description>
 		<year>1987</year>
 		<manufacturer>Dinamic Software</manufacturer>
-		<rom name="Game Over II (1987)(Dinamic Software)(Part 2 of 2)(128k).z80" size="43670" crc="4c2a4520"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Phantis - Part 2 ES (1987)(Dinamic).tap" size="48529" crc="b9045126"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -9950,10 +9912,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="phoenix" romof="spectrum">
-		<description>Phoenix (48K)</description>
+		<description>Phoenix - Text Adventure (48K)</description>
 		<year>1991</year>
 		<manufacturer>Zenobi Software</manufacturer>
-		<rom name="Phoenix (1991)(Zenobi Software).z80" size="37587" crc="b2218446"/>
+		<rom name="Phoenix (1991)(Zenobi).tap" size="37722" crc="8cf4e0e2"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9996,13 +9958,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pixymicrod2_128" romof="spec128">
-		<description>Pixy the Microdot 2 (128k)</description>
+	<game name="pixymicrod2" romof="spectrum">
+		<description>Pixy the Microdot 2 (48K)</description>
 		<year>1992</year>
 		<manufacturer>Your Sinclair</manufacturer>
-		<rom name="Pixy the Microdot 2 (1992)(Your Sinclair)(128k).z80" size="36339" crc="1d3c4ccf"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Pixy the Microdot 2 (1992)(Your Sinclair).z80" size="40323" crc="9de92490"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

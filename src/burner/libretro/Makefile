@@ -57,19 +57,6 @@ endif
 MAIN_FBNEO_DIR	:= ../..
 VERSION_SCRIPT	:= $(MAIN_FBNEO_DIR)/burner/libretro/link.T
 
-INLINE_LIMIT=-finline-limit=1200 -fcheck-new
-
-# GCC < 4.9 and clang does not support -fno-tree-loop-vectorize
-ifeq ($(shell expr `gcc -dumpversion | cut -f1` \< 4.9), 1)
-	INLINE_LIMIT=
-endif
-ifneq (, $(findstring clang,$(CC)))
-	INLINE_LIMIT=
-endif
-ifneq (, $(findstring clang,$(CXX)))
-	INLINE_LIMIT=
-endif
-
 # TARGET
 TARGET_NAME := fbneo
 
@@ -528,9 +515,6 @@ else
 	SPLIT_UP_LINK = 1
 endif
 
-CC_SYSTEM = gcc
-CXX_SYSTEM = g++
-
 include Makefile.common
 
 FBNEO_CXXOBJ := $(SOURCES_CXX:.cpp=.o)
@@ -561,18 +545,22 @@ ifeq ($(FASTMATH), 1)
 		# 2019-06-26 : 
 		# we got some evidence that -ffast-math is actually not safe for fbneo
 		# adding -frounding-math to fix arithmetic in neogeo_run.cpp, it might fix other stuff
+		# clang might need a minimum version for -frounding-math support
 		CFLAGS += -ffast-math -frounding-math
 		CXXFLAGS += -ffast-math -frounding-math
 	endif
 endif
 
 ifeq ($(USE_EXPERIMENTAL_FLAGS), 1)
-	EXPERIMENTAL_FLAGS = -flto=4 -fwhole-program -fuse-linker-plugin \
+	EXPERIMENTAL_FLAGS = -fwhole-program -fuse-linker-plugin \
 		-fdata-sections -ffunction-sections -Wl,--gc-sections \
 		-fno-stack-protector -fno-ident \
 		-falign-functions=1 -falign-jumps=1 -falign-loops=1 \
 		-fno-unwind-tables -fno-asynchronous-unwind-tables -fno-unroll-loops \
 		-fmerge-all-constants -fno-math-errno
+	ifeq ($(shell $(CC) -v 2>&1 | grep -c "gcc version"), 1)
+		EXPERIMENTAL_FLAGS += -flto=4
+	endif
 	CFLAGS += $(EXPERIMENTAL_FLAGS)
 	CXXFLAGS += $(EXPERIMENTAL_FLAGS)
 endif
@@ -611,10 +599,10 @@ CXXFLAGS += $(fpic) $(FBNEO_DEFINES)
 LDFLAGS += $(fpic)
 
 ifeq (,$(findstring msvc,$(platform)))
-	CFLAGS += -ffloat-store -fforce-addr $(INLINE_LIMIT)  \
+	CFLAGS += -fforce-addr  \
 		-Wall -Wno-long-long -Wno-sign-compare -Wno-uninitialized -Wno-unused \
 		-Wno-sequence-point -Wno-strict-aliasing
-	CXXFLAGS += -ffloat-store -fforce-addr $(INLINE_LIMIT) \
+	CXXFLAGS += -fforce-addr \
 		-Wall -W -Wshadow -Wno-long-long -Wno-write-strings \
 		-Wunknown-pragmas -Wundef -Wno-conversion -Wno-missing-braces -Wno-multichar \
 		-Wuninitialized -Wpointer-arith -Wno-inline -Wno-unused-value \
@@ -622,7 +610,17 @@ ifeq (,$(findstring msvc,$(platform)))
 
 	ifeq (,$(filter $(platform), ps3 sncps3))
 		CFLAGS += -Wno-write-strings -Wno-pedantic
-		CXXFLAGS += -Wno-write-strings -pedantic -Wno-address -Wno-unused-but-set-variable -Wno-narrowing -Wno-pedantic
+		CXXFLAGS += -Wno-write-strings -pedantic -Wno-address -Wno-narrowing -Wno-pedantic
+	endif
+endif
+
+# gcc specific flags
+ifeq ($(shell $(CC) -v 2>&1 | grep -c "gcc version"), 1)
+	CFLAGS += -ffloat-store -Wno-unused-but-set-variable
+	CXXFLAGS += -ffloat-store -Wno-unused-but-set-variable
+	ifeq ($(shell expr `$(CC) -dumpversion | cut -f1 -d.` \>= 5), 1)
+		CFLAGS += -finline-limit=1200 -fcheck-new
+		CXXFLAGS += -finline-limit=1200 -fcheck-new
 	endif
 endif
 
@@ -677,14 +675,14 @@ generate-files:
 	@echo "Generate $(FBNEO_GENERATED_DIR)/toa_gp9001_func_table.h"
 	@echo ""
 	$(PERL) $(FBNEO_SCRIPTS_DIR)/toa_gp9001_func.pl -o $(FBNEO_GENERATED_DIR)/toa_gp9001_func.h
-	$(CXX_SYSTEM) $(GENERATE_OPTS) -o $(PGM_SPRITE_CREATE_EXE) $(FBNEO_BURN_DRIVERS_DIR)/pgm/pgm_sprite_create.cpp
+	$(CXX) $(GENERATE_OPTS) -o $(PGM_SPRITE_CREATE_EXE) $(FBNEO_BURN_DRIVERS_DIR)/pgm/pgm_sprite_create.cpp
 	@echo ""
 	@echo "Generating $(FBNEO_GENERATED_DIR)/pgm_sprite.h..."
 	@echo ""
 	$(EXE_PREFIX)$(PGM_SPRITE_CREATE_EXE) > $(FBNEO_GENERATED_DIR)/pgm_sprite.h
-	$(CC_SYSTEM) $(GENERATE_OPTS) -o $(M68KMAKE_EXE) $(FBNEO_CPU_DIR)/m68k/m68kmake.c
+	$(CC) $(GENERATE_OPTS) -o $(M68KMAKE_EXE) $(FBNEO_CPU_DIR)/m68k/m68kmake.c
 	$(EXE_PREFIX)$(M68KMAKE_EXE) $(FBNEO_CPU_DIR)/m68k/ $(FBNEO_CPU_DIR)/m68k/m68k_in.c
-	$(CXX_SYSTEM) $(GENERATE_OPTS) -o $(CTVMAKE_EXE) $(FBNEO_BURN_DRIVERS_DIR)/capcom/ctv_make.cpp
+	$(CXX) $(GENERATE_OPTS) -o $(CTVMAKE_EXE) $(FBNEO_BURN_DRIVERS_DIR)/capcom/ctv_make.cpp
 	@echo ""
 	@echo "Generating $(FBNEO_GENERATED_DIR)/ctv.h..."
 	@echo ""

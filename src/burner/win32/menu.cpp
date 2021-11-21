@@ -1313,6 +1313,13 @@ void MenuEnableItems()
 		EnableMenuItem(hMenu, MENU_MEMCARD_INSERT,		MF_GRAYED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_MEMCARD_EJECT,		MF_GRAYED | MF_BYCOMMAND);
 
+		EnableMenuItem(hMenu, ID_LUA_OPEN,				MF_ENABLED | MF_BYCOMMAND);
+		if (LuaConsoleHWnd) {
+			EnableMenuItem(hMenu, ID_LUA_CLOSE_ALL,		MF_ENABLED | MF_BYCOMMAND);
+		} else {
+			EnableMenuItem(hMenu, ID_LUA_CLOSE_ALL,		MF_GRAYED | MF_BYCOMMAND);
+		}
+
 		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO) {
 			EnableMenuItem(hMenu, MENU_INTERPOLATE_1,				MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_INTERPOLATE_3,				MF_GRAYED | MF_BYCOMMAND);
@@ -1422,6 +1429,8 @@ void MenuEnableItems()
 		bAltPause = 0;
 
 		EnableMenuItem(hMenu, MENU_LOAD,				MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, ID_LUA_OPEN,				MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, ID_LUA_CLOSE_ALL,			MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_MEMCARD_CREATE,		MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_MEMCARD_SELECT,		MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_MEMCARD_INSERT,		MF_GRAYED  | MF_BYCOMMAND);

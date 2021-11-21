@@ -594,7 +594,7 @@ int RunMessageLoop()
 
 							// Open (L)ua Dialog
 							case 'L': {
-								InitLua();
+								ScrnInitLua();
 								break;
 							}
 							case 'T': {

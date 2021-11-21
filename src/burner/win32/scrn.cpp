@@ -951,14 +951,24 @@ void scrnSSUndo() // called from the menu (shift+F8) and CheckSystemMacros() in 
 	}
 }
 
-void InitLua() {
+void ScrnInitLua() {
 	if (UseDialogs()) {
 		if (!LuaConsoleHWnd) {
 			InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
 			LuaConsoleHWnd = CreateDialog(hAppInst, MAKEINTRESOURCE(IDD_LUA), NULL, (DLGPROC)DlgLuaScriptDialog);
 		}
 		else
+		{
 			SetForegroundWindow(LuaConsoleHWnd);
+		}
+	}
+}
+
+void ScrnExitLua() {
+	if (LuaConsoleHWnd) {
+		PostMessage(LuaConsoleHWnd, WM_CLOSE, 0, 0);
+
+		LuaConsoleHWnd = NULL;
 	}
 }
 
@@ -1135,19 +1145,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			break;
 
 		case ID_LUA_OPEN:
-			if (UseDialogs()) {
-				if (!LuaConsoleHWnd) {
-					InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
-					LuaConsoleHWnd = FBACreateDialog(hAppInst, MAKEINTRESOURCE(IDD_LUA), hScrnWnd, (DLGPROC)DlgLuaScriptDialog);
-				}
-				else
-					SetForegroundWindow(LuaConsoleHWnd);
-			}
+			ScrnInitLua();
+			MenuEnableItems();
 			break;
 		case ID_LUA_CLOSE_ALL:
-			if (LuaConsoleHWnd) {
-				PostMessage(LuaConsoleHWnd, WM_CLOSE, 0, 0);
-			}
+			ScrnExitLua();
+			MenuEnableItems();
 			break;
 
 #ifdef INCLUDE_AVI_RECORDING
@@ -3507,6 +3510,7 @@ int ScrnInit()
 	RECT rect;
 	int nWindowStyles, nWindowExStyles;
 
+	ScrnExitLua();
 	ScrnExit();
 
 	if (ScrnRegister() != 0) {

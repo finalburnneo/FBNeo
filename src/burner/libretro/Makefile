@@ -515,6 +515,11 @@ else
 	SPLIT_UP_LINK = 1
 endif
 
+# some platforms (3ds, maybe others) are unable to find "main" entry symbol if you build with their sdk
+# so let's use standard compiler for header generation since this is cross-built anyway
+CC_SYSTEM = gcc
+CXX_SYSTEM = g++
+
 include Makefile.common
 
 FBNEO_CXXOBJ := $(SOURCES_CXX:.cpp=.o)
@@ -675,14 +680,14 @@ generate-files:
 	@echo "Generate $(FBNEO_GENERATED_DIR)/toa_gp9001_func_table.h"
 	@echo ""
 	$(PERL) $(FBNEO_SCRIPTS_DIR)/toa_gp9001_func.pl -o $(FBNEO_GENERATED_DIR)/toa_gp9001_func.h
-	$(CXX) $(GENERATE_OPTS) -o $(PGM_SPRITE_CREATE_EXE) $(FBNEO_BURN_DRIVERS_DIR)/pgm/pgm_sprite_create.cpp
+	$(CXX_SYSTEM) $(GENERATE_OPTS) -o $(PGM_SPRITE_CREATE_EXE) $(FBNEO_BURN_DRIVERS_DIR)/pgm/pgm_sprite_create.cpp
 	@echo ""
 	@echo "Generating $(FBNEO_GENERATED_DIR)/pgm_sprite.h..."
 	@echo ""
 	$(EXE_PREFIX)$(PGM_SPRITE_CREATE_EXE) > $(FBNEO_GENERATED_DIR)/pgm_sprite.h
-	$(CC) $(GENERATE_OPTS) -o $(M68KMAKE_EXE) $(FBNEO_CPU_DIR)/m68k/m68kmake.c
+	$(CC_SYSTEM) $(GENERATE_OPTS) -o $(M68KMAKE_EXE) $(FBNEO_CPU_DIR)/m68k/m68kmake.c
 	$(EXE_PREFIX)$(M68KMAKE_EXE) $(FBNEO_CPU_DIR)/m68k/ $(FBNEO_CPU_DIR)/m68k/m68k_in.c
-	$(CXX) $(GENERATE_OPTS) -o $(CTVMAKE_EXE) $(FBNEO_BURN_DRIVERS_DIR)/capcom/ctv_make.cpp
+	$(CXX_SYSTEM) $(GENERATE_OPTS) -o $(CTVMAKE_EXE) $(FBNEO_BURN_DRIVERS_DIR)/capcom/ctv_make.cpp
 	@echo ""
 	@echo "Generating $(FBNEO_GENERATED_DIR)/ctv.h..."
 	@echo ""

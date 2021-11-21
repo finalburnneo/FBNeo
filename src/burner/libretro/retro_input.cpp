@@ -1274,12 +1274,16 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 
 	// Lucky & Wild
 	// Dirt Fox
-	// Final Lap
+	// Final Lap 1/2/3
 	// Four Trax
 	// Suzuka 8 Hours 2
 	// Suzuka 8 Hours
 	if ((parentrom && strcmp(parentrom, "finallap") == 0) ||
 		(drvname && strcmp(drvname, "finallap") == 0) ||
+		(parentrom && strcmp(parentrom, "finalap2") == 0) ||
+		(drvname && strcmp(drvname, "finalap2") == 0) ||
+		(parentrom && strcmp(parentrom, "finalap3") == 0) ||
+		(drvname && strcmp(drvname, "finalap3") == 0) ||
 		(parentrom && strcmp(parentrom, "fourtrax") == 0) ||
 		(drvname && strcmp(drvname, "fourtrax") == 0) ||
 		(parentrom && strcmp(parentrom, "suzuk8h2") == 0) ||

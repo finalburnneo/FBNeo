@@ -904,6 +904,28 @@ static struct BurnRomInfo Threein1semiRomDesc[] = {
 STD_ROM_PICK(Threein1semi)
 STD_ROM_FN(Threein1semi)
 
+static struct BurnRomInfo Threein1semiaRomDesc[] = {
+	{ "u52.bin",       0x40000, 0x388334a8, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "u74.bin",       0x40000, 0x555ae716, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+
+	{ "u75.bin",       0x80000, 0x9d705249, BRF_GRA },			 //  2	Sprites
+	{ "u76.bin",       0x80000, 0xb65f5d79, BRF_GRA },			 //  3	Sprites
+	{ "u77.bin",       0x80000, 0xb9728be9, BRF_GRA },			 //  4	Sprites
+	{ "u78.bin",       0x20000, 0xaefad49e, BRF_GRA },			 //  5	Sprites
+
+	{ "u35.bin",       0x10000, 0xe40481da, BRF_SND },			 //  6	Z80 Program Code
+
+	{ "u14.bin",       0x40000, 0xc83c11be, BRF_SND },			 //  7	Samples
+
+	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
+
+	{ "protdata.bin",  0x00200, 0x85deba7c, BRF_ESS | BRF_PRG }, //  Data from shared RAM
+};
+
+
+STD_ROM_PICK(Threein1semia)
+STD_ROM_FN(Threein1semia)
+
 static struct BurnRomInfo TwinkleRomDesc[] = {
 	{ "uh12.bin",      0x20000, 0xa99626fe, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
 	{ "ui12.bin",      0x20000, 0x5af73684, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
@@ -2344,7 +2366,7 @@ static INT32 MoremoreInit()
 	HyperpacNumTiles = 16384;
 
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "moremore") || !strcmp(BurnDrvGetTextA(DRV_NAME), "moremorp")) Moremore = 1;
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "3in1semi")) Threein1semi = 1;
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "3in1semi") || !strcmp(BurnDrvGetTextA(DRV_NAME), "3in1semia")) Threein1semi = 1;
 
 	// Allocate and Blank all required memory
 	Mem = NULL;
@@ -4165,10 +4187,20 @@ struct BurnDriver BurnDrvMoremorp = {
 
 struct BurnDriver BurnDrvThreein1semi = {
 	"3in1semi", NULL, NULL, NULL, "1997",
-	"XESS - The New Revolution (SemiCom 3-in-1)\0", NULL, "SemiCom", "Kaneko Pandora based",
+	"New HyperMan (3-in-1 with Cookie & Bibi & HyperMan) (set 1)\0", NULL, "SemiCom / XESS", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, Threein1semiRomInfo, Threein1semiRomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, MoremoreDIPInfo,
+	MoremoreInit, HyperpacExit, HyperpacFrame, HyperpacRender, HyperpacScan,
+	NULL, 0x200, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvThreein1semia = {
+	"3in1semia", "3in1semi", NULL, NULL, "1997",
+	"New HyperMan (3-in-1 with Cookie & Bibi & HyperMan) (set 2)\0", NULL, "SemiCom / XESS", "Kaneko Pandora based",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
+	NULL, Threein1semiaRomInfo, Threein1semiaRomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, MoremoreDIPInfo,
 	MoremoreInit, HyperpacExit, HyperpacFrame, HyperpacRender, HyperpacScan,
 	NULL, 0x200, 256, 224, 4, 3
 };

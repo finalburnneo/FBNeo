@@ -40,7 +40,7 @@ static UINT8 *DrvPalRAM;
 static UINT8 *DrvDspRAM;
 static UINT8 *DrvNVRAM;
 static UINT8 *DrvScrollRAM;
-static UINT8 *DrvScrollRAMDelayed;
+static UINT8 *DrvScrollRAMDelayed; // just a pointer!
 static UINT8 *DrvVectors;
 
 // GDFS
@@ -81,9 +81,6 @@ static INT32 interrupt_ultrax = 0;
 static INT32 watchdog_disable = 0;
 static INT32 is_gdfs = 0;
 
-static INT32 use_spritedelay = 0; // game needs 1 frame of sprite delay
-static INT32 no_rasters = 0; // true if raster updates aren't (yet) active this frame
-
 static INT32 dsp_enable = 0;
 
 static INT32 nDrvSndROMLen[4];
@@ -110,6 +107,17 @@ static INT32 use_hblank = 0;
 static INT32 pastelis = 0;
 static INT32 sxyreact_kludge = 0;
 static INT16 SxyGun = 0;
+
+// Theory of sprite buffering for this machine  -dink nov. 22, 2021
+// spriteram is delayed 1 frame, buffered once per frame
+// scroll register updates are buffered in a list, for each line they are
+// updated on.  This list is then acted upon on the next frame.
+struct scroll_rec {
+	INT32 line;
+	UINT8 regs[0x80];
+};
+
+static scroll_rec scroll_buf[2][512];
 
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
@@ -2214,6 +2222,7 @@ static void common_main_write_byte(UINT32 address, UINT8 data)
 			if (dsp_enable) snesdsp_write(true, data);
 		return;
 	}
+//	bprintf(0, _T("Wb  %x  %x\n"), address, data);
 }
 
 static void common_main_write_word(UINT32 address, UINT16 data)
@@ -2277,6 +2286,7 @@ static void common_main_write_word(UINT32 address, UINT16 data)
 			if (dsp_enable) snesdsp_write(true, data);
 		return;
 	}
+//	bprintf(0, _T("WW  %x  %x\n"), address, data);
 }
 
 static UINT16 common_main_read_word(UINT32 address)
@@ -2354,7 +2364,7 @@ static UINT16 common_main_read_word(UINT32 address)
 			return BurnRandom();
 	}
 
-	bprintf (0, _T("RW Unmapped: %5.5x\n"), address);
+//	bprintf (0, _T("RW Unmapped: %5.5x\n"), address);
 
 	return 0;
 }
@@ -2977,6 +2987,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	HiscoreReset();
 
+	memset(scroll_buf, 0, sizeof(scroll_buf));
+
 	return 0;
 }
 
@@ -3030,7 +3042,6 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	DrvScrollRAMDelayed	= Next; Next += 0x000080;
 	DrvSprRAMDelayed	= Next; Next += 0x040000;
 
 	MemEnd			= Next;
@@ -3255,7 +3266,6 @@ static INT32 DrvExit()
 	interrupt_ultrax = 0;
 	watchdog_disable = 0;
 	is_gdfs = 0;
-	use_spritedelay = 0;
 	dsp_enable = 0;
 	sxyreact_kludge = 0;
 	pastelis = 0;
@@ -3542,9 +3552,8 @@ static void draw_layer(INT32 nr)
 static void draw_sprites()
 {
 	/* Sprites list */
-	// spritedelay will turn off during raster effects, and back on when rasters end
-	UINT16 *ssv_scroll = (use_spritedelay && no_rasters) ? (UINT16*)DrvScrollRAMDelayed : (UINT16*)DrvScrollRAM;
-	UINT16 *spriteram16 = (use_spritedelay && no_rasters) ? (UINT16*)DrvSprRAMDelayed : (UINT16*)DrvSprRAM;
+	UINT16 *ssv_scroll =  (UINT16*)DrvScrollRAMDelayed;
+	UINT16 *spriteram16 = (UINT16*)DrvSprRAMDelayed;
 	UINT16 *s1  	=   spriteram16;
 	UINT16 *end1    =   spriteram16 + 0x02000/2;
 	UINT16 *end2    =   spriteram16 + 0x40000/2;
@@ -3909,7 +3918,6 @@ static INT32 DrvFrame()
 	v60Open(0);
 
 	vblank = 0;
-	no_rasters = 1;
 
 	line_cycles_total = nCyclesTotal[0] / nInterleave;
 	DrvDrawBegin();
@@ -3919,10 +3927,9 @@ static INT32 DrvFrame()
 		line_cycles = v60TotalCycles();
 
 		if (i == 0) { // start in vblank (was line 240) for 1frame less input lag
-			if (use_spritedelay) {
-				memcpy(DrvScrollRAMDelayed, DrvScrollRAM, 0x80);
-				memcpy(DrvSprRAMDelayed, DrvSprRAM, 0x40000);
-			}
+			memcpy(DrvSprRAMDelayed, DrvSprRAM, 0x40000);
+			DrvScrollRAMDelayed = DrvScrollRAM;
+
 			vblank = 1;
 			requested_int |= 1 << 3;
 			update_irq_state();
@@ -3930,7 +3937,6 @@ static INT32 DrvFrame()
 
 		if (i == 22) { // adjusted end-of-vblank
 			vblank = 0;
-			no_rasters = 1;
 		}
 
 		CPU_RUN(0, v60);
@@ -3941,10 +3947,19 @@ static INT32 DrvFrame()
 			draw_next_line = 1;
 		}
 
-		if (draw_next_line != -1) {
-			no_rasters = 0; // we're doing a raster update
-			DrvDrawScanline(i - 23);
+		if (draw_next_line != -1) {	// buffer scroll regs for next frame
+			memcpy(scroll_buf[nCurrentFrame & 1][i].regs, DrvScrollRAM, 0x80);
+			scroll_buf[nCurrentFrame & 1][i].line = i;
+			//bprintf(0, _T("(future) raster %d\n"), i);
 			draw_next_line = -1;
+		} else {
+			scroll_buf[nCurrentFrame & 1][i].line = -1;
+		}
+
+		if (scroll_buf[~nCurrentFrame & 1][i].line == i) { // last frame was buffered here!
+			//bprintf(0, _T("(current) raster %d\n"), i);
+			DrvScrollRAMDelayed = &scroll_buf[~nCurrentFrame & 1][i].regs[0];
+			DrvDrawScanline(i - 23);
 		}
 
 		if (dsp_enable) {
@@ -4777,7 +4792,6 @@ static void StmbladeV60Map()
 static INT32 StmbladeInit()
 {
 	watchdog_disable = 1;
-	use_spritedelay = 1; // game needs 1 frame of sprite delay
 
 	return DrvCommonInit(StmbladeV60Map, NULL, 0, 0, -1, -1, -1, 1.80);
 }

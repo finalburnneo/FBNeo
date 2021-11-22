@@ -27867,18 +27867,18 @@ struct BurnDriver BurnDrvsms_novdmvdp = {
 	256, 192, 4, 3
 };
 
-// Voyage - A Sorceress Vacation (HB, v1.03)
+// Voyage - A Sorceress Vacation (HB, v1.05)
 
 static struct BurnRomInfo sms_voyageRomDesc[] = {
-	{ "Voyage - A Sorceress Vacation v1.03.sms",	524288, 0x7aff90b0, BRF_PRG | BRF_ESS },
+	{ "Voyage - A Sorceress Vacation v1.03.sms",	524288, 0x76a1d277, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_voyage)
 STD_ROM_FN(sms_voyage)
 
 struct BurnDriver BurnDrvsms_voyage = {
-	"sms_voyage", NULL, NULL, NULL, "2020",
-	"Voyage - A Sorceress Vacation (HB, v1.03)\0", NULL, "SNAGS", "Sega Master System",
+	"sms_voyage", NULL, NULL, NULL, "2021",
+	"Voyage - A Sorceress Vacation (HB, v1.05)\0", NULL, "SNAGS", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_voyageRomInfo, sms_voyageRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

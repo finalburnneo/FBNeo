@@ -5189,10 +5189,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="voyage">
-		<description>Voyage - A Sorceress Vacation (HB, v1.03) [Homebrew]</description>
-		<year>2020</year>
+		<description>Voyage - A Sorceress Vacation (HB, v1.05) [Homebrew]</description>
+		<year>2021</year>
 		<manufacturer>SNAGS</manufacturer>
-		<rom name="Voyage - A Sorceress Vacation v1.03.sms" size="524288" crc="7aff90b0"/>
+		<rom name="Voyage - A Sorceress Vacation v1.03.sms" size="524288" crc="76a1d277"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

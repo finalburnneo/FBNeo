@@ -18960,6 +18960,57 @@ struct BurnDriver BurnDrvnes_vanguard = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_espiteneRomDesc[] = {
+	{ "Espitene (2018)(The Mojon Twins).nes",          65552, 0x1f80c94e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_espitene)
+STD_ROM_FN(nes_espitene)
+
+struct BurnDriver BurnDrvnes_espitene = {
+	"nes_espitene", NULL, NULL, NULL, "2018",
+	"Espitene (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_espiteneRomInfo, nes_espiteneRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_ghoulgrindRomDesc[] = {
+	{ "Ghoul Grind Night of the Necromancer (2021)(WoogWorx).nes",          524304, 0x3557252e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ghoulgrind)
+STD_ROM_FN(nes_ghoulgrind)
+
+struct BurnDriver BurnDrvnes_ghoulgrind = {
+	"nes_ghoulgrind", NULL, NULL, NULL, "2021",
+	"Ghoul Grind Night of the Necromancer (HB)\0", NULL, "WoogWorx", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_ghoulgrindRomInfo, nes_ghoulgrindRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_wartwormRomDesc[] = {
+	{ "Wart Worm Wingding (2020)(John Vanderhoef).nes",          524304, 0x8b9d8827, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_wartworm)
+STD_ROM_FN(nes_wartworm)
+
+struct BurnDriver BurnDrvnes_wartworm = {
+	"nes_wartworm", NULL, NULL, NULL, "2020",
+	"Wart Worm Wingding (HB)\0", NULL, "John Vanderhoef", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION | GBF_PLATFORM, 0,
+	NESGetZipName, nes_wartwormRomInfo, nes_wartwormRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_beatlesadvRomDesc[] = {
 	{ "The Beatles Adventures in Pepperland GlobHack (2021)(NesDraug).nes",          524304, 0xfa5e3fa2, BRF_ESS | BRF_PRG },
 };
@@ -20567,7 +20618,7 @@ STD_ROM_FN(nes_journeyal)
 
 struct BurnDriver BurnDrvnes_journeyal = {
 	"nes_journeyal", NULL, NULL, NULL, "2019",
-	"Journey to the Center of the Alien (HB)\0", NULL, "Mojon Twins", "Miscellaneous",
+	"Journey to the Center of the Alien (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_journeyalRomInfo, nes_journeyalRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -20686,7 +20737,7 @@ STD_ROM_FN(nes_yunr5)
 
 struct BurnDriver BurnDrvnes_yunr5 = {
 	"nes_yunr5", NULL, NULL, NULL, "2018",
-	"Yun R5 (HB)\0", NULL, "Mojon Twins", "Miscellaneous",
+	"Yun R5 (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_yunr5RomInfo, nes_yunr5RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -20737,7 +20788,7 @@ STD_ROM_FN(nes_cadaverion)
 
 struct BurnDriver BurnDrvnes_cadaverion = {
 	"nes_cadaverion", NULL, NULL, NULL, "2018",
-	"Cadaverion (HB)\0", NULL, "Mojon Twins", "Miscellaneous",
+	"Cadaverion (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE | GBF_ADV, 0,
 	NESGetZipName, nes_cadaverionRomInfo, nes_cadaverionRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -20771,7 +20822,7 @@ STD_ROM_FN(nes_cherilpc)
 
 struct BurnDriver BurnDrvnes_cherilpc = {
 	"nes_cherilpc", NULL, NULL, NULL, "2018",
-	"Cheril Perils Classic (HB)\0", NULL, "Mojon Twins", "Miscellaneous",
+	"Cheril Perils Classic (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_cherilpcRomInfo, nes_cherilpcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -20822,7 +20873,7 @@ STD_ROM_FN(nes_sirababolr)
 
 struct BurnDriver BurnDrvnes_sirababolr = {
 	"nes_sirababolr", "nes_sirababol", NULL, NULL, "2016",
-	"Sir Ababol Remastered Edition (HB)\0", NULL, "Mojon Twins", "Miscellaneous",
+	"Sir Ababol Remastered Edition (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_sirababolrRomInfo, nes_sirababolrRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -21709,7 +21760,7 @@ STD_ROM_FN(nes_espitundherpim)
 
 struct BurnDriver BurnDrvnes_espitundherpim = {
 	"nes_espitundherpim", NULL, NULL, NULL, "2019",
-	"Espitenen und herr pimponen (HB)\0", NULL, "Mojon Twins", "Miscellaneous",
+	"Espitenen und herr pimponen (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_espitundherpimRomInfo, nes_espitundherpimRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -21760,9 +21811,9 @@ STD_ROM_FN(nes_lalathemagical)
 
 struct BurnDriver BurnDrvnes_lalathemagical = {
 	"nes_lalathemagical", NULL, NULL, NULL, "2016",
-	"Lala the Magical (HB)\0", NULL, "Mojon Twins", "Miscellaneous",
+	"Lala the Magical (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_lalathemagicalRomInfo, nes_lalathemagicalRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -21794,9 +21845,9 @@ STD_ROM_FN(nes_miedow)
 
 struct BurnDriver BurnDrvnes_miedow = {
 	"nes_miedow", NULL, NULL, NULL, "2018",
-	"Miedow (HB)\0", NULL, "Mojon Twins", "Miscellaneous",
+	"Miedow (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_MAZE | GBF_ACTION, 0,
 	NESGetZipName, nes_miedowRomInfo, nes_miedowRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -21811,9 +21862,9 @@ STD_ROM_FN(nes_mojontwiboo)
 
 struct BurnDriver BurnDrvnes_mojontwiboo = {
 	"nes_mojontwiboo", NULL, NULL, NULL, "2018",
-	"Bootee (HB)\0", NULL, "Mojon Twins", "Miscellaneous",
+	"Bootee (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_mojontwibooRomInfo, nes_mojontwibooRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -21828,9 +21879,9 @@ STD_ROM_FN(nes_mojontwichegod)
 
 struct BurnDriver BurnDrvnes_mojontwichegod = {
 	"nes_mojontwichegod", NULL, NULL, NULL, "2017",
-	"Cheril The Goddess (HB)\0", NULL, "Mojon Twins", "Miscellaneous",
+	"Cheril The Goddess (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_mojontwichegodRomInfo, nes_mojontwichegodRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -21845,9 +21896,9 @@ STD_ROM_FN(nes_mojontwichewri)
 
 struct BurnDriver BurnDrvnes_mojontwichewri = {
 	"nes_mojontwichewri", NULL, NULL, NULL, "2018",
-	"Cheril The Writer (HB)\0", NULL, "Mojon Twins", "Miscellaneous",
+	"Cheril The Writer (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_mojontwichewriRomInfo, nes_mojontwichewriRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -21896,9 +21947,9 @@ STD_ROM_FN(nes_sirababol)
 
 struct BurnDriver BurnDrvnes_sirababol = {
 	"nes_sirababol", NULL, NULL, NULL, "2013",
-	"Sir Ababol (HB)\0", NULL, "Mojon Twins", "Miscellaneous",
+	"Sir Ababol (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_sirababolRomInfo, nes_sirababolRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -21964,9 +22015,9 @@ STD_ROM_FN(nes_zombiecalavera)
 
 struct BurnDriver BurnDrvnes_zombiecalavera = {
 	"nes_zombiecalavera", NULL, NULL, NULL, "2016",
-	"Zombie Calavera (HB)\0", NULL, "Mojon Twins", "Miscellaneous",
+	"Zombie Calavera (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_zombiecalaveraRomInfo, nes_zombiecalaveraRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -22678,7 +22729,7 @@ STD_ROM_FN(nes_mojontwimul)
 
 struct BurnDriver BurnDrvnes_mojontwimul = {
 	"nes_mojontwimul", NULL, NULL, NULL, "2016",
-	"Mojon Twins Multicart (HB)\0", NULL, "Mojon Twins", "Miscellaneous",
+	"Mojon Twins Multicart (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_mojontwimulRomInfo, nes_mojontwimulRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -22712,7 +22763,7 @@ STD_ROM_FN(nes_superuwol)
 
 struct BurnDriver BurnDrvnes_superuwol = {
 	"nes_superuwol", NULL, NULL, NULL, "2015",
-	"Super UWOL (HB)\0", NULL, "Mojon Twins", "Miscellaneous",
+	"Super UWOL (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_superuwolRomInfo, nes_superuwolRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -22729,9 +22780,9 @@ STD_ROM_FN(nes_jetpaco)
 
 struct BurnDriver BurnDrvnes_jetpaco = {
 	"nes_jetpaco", NULL, NULL, NULL, "2015",
-	"Jet-Paco (HB)\0", NULL, "Mojon Twins", "Miscellaneous",
+	"Jet-Paco (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_jetpacoRomInfo, nes_jetpacoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

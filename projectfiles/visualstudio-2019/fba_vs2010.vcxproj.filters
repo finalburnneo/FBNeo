@@ -1177,6 +1177,9 @@
     <ClInclude Include="..\..\src\dep\libs\lua\lzio.h">
       <Filter>libs\lua</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\burner\win32\scrn.h">
+      <Filter>burner\win32</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -4630,6 +4633,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\intf\video\scalers\xbr32.cpp">
       <Filter>interfaces\video\scalers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\dataeast\d_pcktgal.cpp">
+      <Filter>Burn\drv\dataeast</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

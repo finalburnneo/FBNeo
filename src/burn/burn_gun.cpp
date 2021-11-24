@@ -9,7 +9,8 @@
 INT32 nBurnGunNumPlayers = 0;
 bool bBurnGunHide[MAX_GUNS] = { 0, };
 bool bBurnGunAutoHide = 1;
-static bool bBurnGunDrawTargets = true;
+static bool bBurnGunDrawTargets = true; // game-configured
+bool bBurnGunDrawReticles = true; // UI-configured
 
 static INT32 Using_Trackball = 0;
 
@@ -330,6 +331,24 @@ void BurnPaddleGetDial(BurnDialINF &dial, INT32 num, INT32 isB)
 	}
 }
 
+INT32 BurnTrackballGetDirection(INT32 num, INT32 isB)
+{
+	if (num > MAX_GUNS - 1) return 0;
+
+	BurnDialINF dial;
+	BurnPaddleGetDial(dial, num, isB);
+
+	if (dial.Backward) return -1;
+	if (dial.Forward) return +1;
+
+	return 0;
+}
+
+INT32 BurnTrackballGetDirection(INT32 dev)
+{
+	return BurnTrackballGetDirection(dev >> 1, dev & 1);
+}
+
 UINT8 BurnTrackballRead(INT32 dev) // linear device #
 {
 	return BurnTrackballRead(dev >> 1, dev & 1);
@@ -587,8 +606,9 @@ void BurnGunDrawTarget(INT32 num, INT32 x, INT32 y)
 	if (num >= nBurnGunNumPlayers) bprintf(PRINT_ERROR, _T("BurnGunDrawTarget called with invalid player %x\n"), num);
 #endif
 
-	if (bBurnGunDrawTargets == false) return;
-	
+	if (bBurnGunDrawTargets == false) return; // game-configured setting
+	if (bBurnGunDrawReticles == false) return; // UI-configured setting
+
 	if (num > MAX_GUNS - 1) return;
 
 	if (bBurnGunHide[num] || (bBurnGunAutoHide && !GunTargetShouldDraw(num))) return;

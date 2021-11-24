@@ -155,7 +155,7 @@ void williams_adpcm_init(UINT8 *prgrom, UINT8 *samples, INT32 prot_start, INT32 
 	M6809SetReadHandler(adpcm_read);
 	M6809Close();
 
-	BurnYM2151Init(3579545, 1);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
 	BurnYM2151SetIrqHandler(&YM2151IrqHandler);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.10, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.10, BURN_SND_ROUTE_RIGHT);
@@ -186,7 +186,7 @@ INT32 williams_adpcm_sound_in_reset()
 
 void williams_adpcm_update(INT16 *output, INT32 length)
 {
-	//BurnYM2151Render(output, length);  -- in frame (see d_yunit.cpp)
+	BurnYM2151Render(output, length);
 	MSM6295Render(0, output, length);
 	DACUpdate(output, length);
 }

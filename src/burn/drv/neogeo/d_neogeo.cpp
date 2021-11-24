@@ -18020,6 +18020,44 @@ struct BurnDriver BurnDrvkof98cps = {
 	0x1000,	304, 224, 4, 3
 };
 
+// The King of Fighters '98 (Ratio hack)
+
+static struct BurnRomInfo kof98ratioRomDesc[] = {
+	{ "242-ratio.p1", 0x100000, 0x9171669d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "242-p2.sp2",   0x400000, 0x980aba4c, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "242-s1.s1",    0x020000, 0x7f7b4805, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "242-c1.c1",    0x800000, 0xe564ecd6, 3 | BRF_GRA },           //  3 Sprite data
+	{ "242-c2.c2",    0x800000, 0xbd959b60, 3 | BRF_GRA },           //  4
+	{ "242-c3.c3",    0x800000, 0x22127b4f, 3 | BRF_GRA },           //  5
+	{ "242-c4.c4",    0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  6
+	{ "242-c5.c5",    0x800000, 0x9d10bed3, 3 | BRF_GRA },           //  7
+	{ "242-c6.c6",    0x800000, 0xda07b6a2, 3 | BRF_GRA },           //  8
+	{ "242-c7.c7",    0x800000, 0xf6d7a38a, 3 | BRF_GRA },           //  9
+	{ "242-c8.c8",    0x800000, 0xc823e045, 3 | BRF_GRA },           // 10
+
+	{ "242-mg1.m1",   0x040000, 0x4e7a6b1b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "242-v1.v1",    0x400000, 0xb9ea8051, 5 | BRF_SND },           // 12 Sound data
+	{ "242-v2.v2",    0x400000, 0xcc11106e, 5 | BRF_SND },           // 13
+	{ "242-v3.v3",    0x400000, 0x044ea4e1, 5 | BRF_SND },           // 14
+	{ "242-v4.v4",    0x400000, 0x7985ea30, 5 | BRF_SND },           // 15
+};
+
+STDROMPICKEXT(kof98ratio, kof98ratio, neogeo)
+STD_ROM_FN(kof98ratio)
+
+struct BurnDriver BurnDrvKof98ratio = {
+	"kof98ratio", "kof98", "neogeo", NULL, "2021",
+	"The King of Fighters '98 (Ratio hack)\0", NULL, "bankbank", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof98ratioRomInfo, kof98ratioRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
 // The King of Fighters '99 Anniversary Edition
 // hack by Yashional
 // Last update to ver. 20200407
@@ -20772,11 +20810,10 @@ struct BurnDriver BurnDrvTeot = {
 	0x1000, 304, 224, 4, 3
 };
 
-
-// Cabal (Neo-Geo Unfinished Conversion)
+// Cabal (Neo-Geo Conversion, beta 2)
 
 static struct BurnRomInfo cabalngRomDesc[] = {
-	{ "cabal-p1.bin",   0x100000, 0x49232965, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+	{ "cabal-p1.bin",   0x100000, 0xbb193926, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
 
 	{ "cabal-s1.bin",	0x020000, 0x45f0bc5e, 2 | BRF_GRA },           	//  1 Text layer tiles
 
@@ -20794,7 +20831,7 @@ STD_ROM_FN(cabalng)
 
 struct BurnDriver BurnDrvCabalng = {
 	"cabalng", NULL, "neogeo", NULL, "1988",
-	"Cabal (Neo-Geo Unfinished Conversion)\0", "Buggy, works in MVS mode only!", "TAD Corporation", "Neo Geo MVS",
+	"Cabal (Neo-Geo Conversion, beta 2)\0", "Buggy, works in MVS mode only!", "TAD Corporation", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
 	NULL, cabalngRomInfo, cabalngRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

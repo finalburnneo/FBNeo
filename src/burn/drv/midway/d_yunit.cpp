@@ -111,6 +111,7 @@ static INT32 is_yawdim = 0;
 static INT32 has_ym2151 = 0;
 
 static INT32 vb_start = 0;
+static INT32 v_total = 0;
 
 static struct BurnInputInfo NarcInputList[] = {
 	{"P1 Coin",					BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
@@ -1293,6 +1294,8 @@ static INT32 scanline_callback(INT32 scanline, TMS34010Display *params)
 	INT32 coladdr = params->coladdr << 1;
 
 	vb_start = params->vsblnk;
+	v_total = (params->vtotal) ? params->vtotal + 1 : nScreenHeight + 33; // sometimes it's set to 0 on first frame
+
 #if 0
 	if (scanline == 127) {
 		bprintf(0, _T("ENAB %d\n"), params->enabled);
@@ -1364,6 +1367,9 @@ static INT32 DrvDoReset()
 	DrvJoy2[4] = 0; // this needs to be cleared for games that use toggle.
 
 	nExtraCycles = 0;
+
+	v_total = nScreenHeight + 33;
+	vb_start = (nScreenHeight == 400) ? 427 : 274;
 
 	return 0;
 }
@@ -1806,30 +1812,25 @@ static INT32 DrvFrame()
 	INT32 nInterleave = (palette_mask == 0x1fff) ? 433 : 289; // narc : others
 	INT32 nCyclesTotal[3] = { (INT32)((master_clock / 8) * 100) / nBurnFPS, (2000060 * 100) / nBurnFPS, (2000060 * 100) / nBurnFPS };
 	INT32 nCyclesDone[3] = { nExtraCycles, 0, 0 };
-	INT32 nSoundBufferPos = 0;
-	INT32 bDrawn = 0;
 
 	TMS34010Open(0);
 	if (pBurnSoundOut) BurnSoundClear();
+
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
+		INT32 our_line = (i + vb_start) % v_total; // start at vblank (some games(narc) have different vbl)
+
 		M6809Open(0); // main (TMS340) accesses this via sound*
 
 		CPU_RUN(0, TMS34010);
-		TMS34010GenerateScanline(i);
+		TMS34010GenerateScanline(our_line);
 
 		if (sound_in_reset()) {
 			CPU_IDLE(1, M6809);
 		} else {
-			BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
-			if (i == nInterleave - 1) BurnTimerEndFrame(nCyclesTotal[1]);
+			CPU_RUN_TIMER(1);
 		}
 		M6809Close();
-
-		if (i == vb_start && pBurnDraw) {
-			BurnDrvRedraw();
-			bDrawn = 1;
-		}
 
 		if (palette_mask != 0x1fff) continue; // only narc!
 
@@ -1840,34 +1841,18 @@ static INT32 DrvFrame()
 			CPU_RUN(2, M6809);
 		}
 		M6809Close();
-
-		if (has_ym2151 && pBurnSoundOut && (i&3) == 3) {
-			M6809Open(0);
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-			M6809Close();
-		}
     }
 
 	nExtraCycles = TMS34010TotalCycles() - nCyclesTotal[0];
 
 	TMS34010Close();
 
-	if (pBurnDraw && bDrawn == 0) {
+	if (pBurnDraw) {
 		BurnDrvRedraw();
 	}
 
 	if (pBurnSoundOut) {
 		M6809Open(0);
-		if (has_ym2151) {
-			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			if (nSegmentLength) {
-				BurnYM2151Render(pSoundBuf, nSegmentLength);
-			}
-		}
 		if (sound_update) sound_update(pBurnSoundOut, nBurnSoundLen);
 		M6809Close();
     }

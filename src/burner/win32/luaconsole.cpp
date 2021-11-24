@@ -257,8 +257,7 @@ INT_PTR CALLBACK DlgLuaScriptDialog(HWND hDlg, UINT msg, WPARAM wParam, LPARAM l
 				AudBlankSound();
 				GetCurrentDirectory(1024, temp);
 				OPENFILENAME  luaofn;
-				TCHAR szFileName[MAX_PATH];
-				szFileName[0] = '\0';
+				TCHAR szFileName[MAX_PATH] = _T("\0");
 				ZeroMemory( (LPVOID)&luaofn, sizeof(OPENFILENAME) );
 				luaofn.lStructSize = sizeof(OPENFILENAME);
 				luaofn.hwndOwner = hDlg;

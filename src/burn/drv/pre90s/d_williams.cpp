@@ -13,11 +13,16 @@
 //  Splat
 //  Alien Area - no sound (there is none)
 //  Sinistar
+//  Playball!
 //  Blaster
 //  Speed Ball
+//  Lottofun
 
-// todo / tofix:
-//  Lottofun - memory protect sw. error
+// Not added yet:
+//  mysticm, mysticmp
+//  tshoot
+//  inferno
+//  joust2, joust2r1
 
 #include "tiles_generic.h"
 #include "m6809_intf.h"
@@ -87,12 +92,16 @@ static INT16 DrvAnalogPort3 = 0;
 static INT32 TrackX[2] = { 0, 0 };
 static INT32 TrackY[2] = { 0, 0 };
 
+static ButtonToggle MemoryProtect; // lottofun
+
 static INT32 defender_control_hack = 0;
 static INT32 defender = 0;
 static INT32 mayday = 0;
 static INT32 splat = 0;
 static INT32 blaster = 0;
+static INT32 playball = 0;
 static INT32 spdball = 0;
+static INT32 lottofun = 0;
 
 static INT32 uses_hc55516 = 0;
 static INT32 uses_colprom = 0;
@@ -260,6 +269,24 @@ static struct BurnInputInfo BubblesInputList[] = {
 };
 
 STDINPUTINFO(Bubbles)
+
+static struct BurnInputInfo PlayballInputList[] = {
+	{"P1 Coin",					BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
+	{"P1 Start",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
+	{"P1 Left",					BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Right",				BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
+
+	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 2,	"p2 coin"	},
+	{"P2 Start",				BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
+
+	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
+	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"diag"		},
+	{"High Score Reset",		BIT_DIGITAL,	DrvJoy3 + 3,	"service3"	},
+	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 6,	"tilt"		},
+};
+
+STDINPUTINFO(Playball)
 
 static struct BurnInputInfo SplatInputList[] = {
 	{"P1 Coin",					BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
@@ -435,7 +462,7 @@ static struct BurnInputInfo LottofunInputList[] = {
 	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 2,	"p2 coin"	},
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
+	{"Memory Protect",			BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
 	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"diag"		},
 	{"High Score Reset",		BIT_DIGITAL,	DrvJoy3 + 3,	"service3"	},
 	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 6,	"tilt"		},
@@ -998,7 +1025,7 @@ static void pia1_out_b(UINT16 , UINT8 data)
 	if (!blaster) { // defender, williams HW
 		M6800Open(0);
 		sync_sound(0);
-		data |= 0xc0;
+		if (!playball) data |= 0xc0;
 		pia_set_input_b(2, data);
 		pia_set_input_cb1(2, (data == 0xff) ? 0 : 1);
 		M6800Close();
@@ -1415,6 +1442,8 @@ static INT32 DrvExit()
 	defender_control_hack = 0;
 	defender = 0;
 	spdball = 0;
+	playball = 0;
+	lottofun = 0;
 
 	uses_hc55516 = 0;
 	uses_colprom = 0;
@@ -1599,6 +1628,11 @@ static INT32 DrvFrame()
 		DrvInputs[2] = DrvDips[2];
 
 		memset (DrvInputs + 3, 0, 7-3);
+
+		if (lottofun) {
+			DrvInputs[2] |= 1; // Memory Protect ON by default (for clean boot)
+			MemoryProtect.Toggle(DrvJoy3[0]);
+		}
 
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
@@ -1831,9 +1865,9 @@ static INT32 DefenceInit()
 
 struct BurnDriver BurnDrvDefender = {
 	"defender", NULL, NULL, NULL, "1980",
-	"Defender (Red label)\0", NULL, "Williams", "Miscellaneous",
+	"Defender (Red label)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, defenderRomInfo, defenderRomName, NULL, NULL, NULL, NULL, DefenderInputInfo, NULL,
 	DefenderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
@@ -2956,7 +2990,7 @@ static struct BurnRomInfo bubblesrRomDesc[] = {
 	{ "bubblesr.8b",		0x1000, 0x598b9bd6, 1 | BRF_PRG | BRF_ESS }, // 10
 	{ "bubbles.9b",			0x1000, 0xb48559fb, 1 | BRF_PRG | BRF_ESS }, // 11
 
-	{ "bubbles.snd",		0x1000, 0x689ce2aa, 2 | BRF_PRG | BRF_ESS }, // 12 M6800 Code
+	{ "video_sound_rom_5_std_771.ic12",		0x1000, 0x689ce2aa, 2 | BRF_PRG | BRF_ESS }, // 12 M6800 Code
 
 	{ "decoder_rom_4.3g",	0x0200, 0xe6631c23, 0 | BRF_OPT },           // 13 Address Decoder
 	{ "decoder_rom_6.3c",	0x0200, 0x83faf25e, 0 | BRF_OPT },           // 14
@@ -2988,11 +3022,11 @@ static struct BurnRomInfo bubblespRomDesc[] = {
 	{ "bub_prot.4b",		0x1000, 0x4e264f01, 1 | BRF_PRG | BRF_ESS }, //  6
 	{ "bub_prot.5b",		0x1000, 0x121b0be6, 1 | BRF_PRG | BRF_ESS }, //  7
 	{ "bub_prot.6b",		0x1000, 0x80e90b25, 1 | BRF_PRG | BRF_ESS }, //  8
-	{ "bubbles.7b",			0x1000, 0xe0a26ec0, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "bub_prot.7b",		0x1000, 0xe0a26ec0, 1 | BRF_PRG | BRF_ESS }, //  9
 	{ "bub_prot.8b",		0x1000, 0x96fb19c8, 1 | BRF_PRG | BRF_ESS }, // 10
 	{ "bub_prot.9b",		0x1000, 0xbe7e1028, 1 | BRF_PRG | BRF_ESS }, // 11
 
-	{ "bubbles.snd",		0x1000, 0x689ce2aa, 2 | BRF_PRG | BRF_ESS }, // 12 M6800 Code
+	{ "video_sound_rom_5_std_771.ic12",		0x1000, 0x689ce2aa, 2 | BRF_PRG | BRF_ESS }, // 12 M6800 Code
 
 	{ "decoder_rom_4.3g",	0x0200, 0xe6631c23, 0 | BRF_OPT },           // 13 Address Decoder
 	{ "decoder_rom_6.3c",	0x0200, 0x83faf25e, 0 | BRF_OPT },           // 14
@@ -3339,6 +3373,67 @@ struct BurnDriver BurnDrvSinistarp = {
 };
 
 
+// PlayBall! (prototype)
+
+static struct BurnRomInfo playballRomDesc[] = {
+	{ "playball.10",	0x1000, 0x18787b52, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "playball.11",	0x1000, 0x1dd5c8f2, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "playball.12",	0x1000, 0xa700597b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "playball.01",	0x1000, 0x7ba8fd71, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "playball.02",	0x1000, 0x2387c3d4, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "playball.03",	0x1000, 0xd34cc5fd, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "playball.04",	0x1000, 0xf68c3a8e, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "playball.05",	0x1000, 0xa3f20810, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "playball.06",	0x1000, 0xf213e48e, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "playball.07",	0x1000, 0x9b5574e9, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "playball.08",	0x1000, 0xb2d2074a, 1 | BRF_PRG | BRF_ESS }, // 10
+	{ "playball.09",	0x1000, 0xc4566d0f, 1 | BRF_PRG | BRF_ESS }, // 11
+
+	{ "speech.ic4",		0x1000, 0x7e4fc798, 2 | BRF_PRG | BRF_ESS }, // 12 soundcpu
+	{ "speech.ic5",		0x1000, 0xddfe860c, 2 | BRF_PRG | BRF_ESS }, // 13
+	{ "speech.ic6",		0x1000, 0x8bfebf87, 2 | BRF_PRG | BRF_ESS }, // 14
+	{ "speech.ic7",		0x1000, 0xdb351db6, 2 | BRF_PRG | BRF_ESS }, // 15
+	{ "playball.snd",	0x1000, 0xf3076f9f, 2 | BRF_PRG | BRF_ESS }, // 16
+};
+
+STD_ROM_PICK(playball)
+STD_ROM_FN(playball)
+
+static INT32 PlayballInit()
+{
+	playball = 1;
+
+	INT32 nRet = DrvInit(1, 5, 6, 1, 0xc000);
+
+	if (nRet == 0)
+	{
+		hc55516_init(M6800TotalCycles, 894886);
+		uses_hc55516 = 1;
+
+		pStartDraw = DrvDrawBegin;
+		pDrawScanline = DrvDrawLine;
+
+		pia_init();
+		pia_config(0, 0, &pia_0);
+		pia_config(1, 0, &pia_1);
+		pia_config(2, 0, &pia_2_sinistar);
+		pia_config(3, 0, &pia_3);
+	}
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvPlayball = {
+	"playball", NULL, NULL, NULL, "1983",
+	"PlayBall! (prototype)\0", NULL, "Williams", "6809 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	NULL, playballRomInfo, playballRomName, NULL, NULL, NULL, NULL, PlayballInputInfo, NULL,
+	PlayballInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	240, 292, 3, 4
+};
+
+
 // Lotto Fun
 
 static struct BurnRomInfo lottofunRomDesc[] = {
@@ -3363,17 +3458,24 @@ STD_ROM_FN(lottofun)
 
 static INT32 LottofunInit()
 {
-	return DrvInit(1, 0, 6, 1, 0xc000);
+	lottofun = 1;
+
+	INT32 rc = DrvInit(1, 0, 6, 1, 0xc000);
+	if (!rc) {
+		pStartDraw = DrvDrawBegin;
+		pDrawScanline = DrvDrawLine;
+	}
+	return rc;
 }
 
 struct BurnDriver BurnDrvLottofun = {
 	"lottofun", NULL, NULL, NULL, "1987",
 	"Lotto Fun\0", NULL, "H.A.R. Management", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, lottofunRomInfo, lottofunRomName, NULL, NULL, NULL, NULL, LottofunInputInfo, NULL,
 	LottofunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
-	292, 240, 4, 3
+	286, 240, 4, 3
 };
 
 
@@ -3427,7 +3529,7 @@ static INT32 BlasterInit()
 
 struct BurnDriver BurnDrvBlaster = {
 	"blaster", NULL, NULL, NULL, "1983",
-	"Blaster\0", NULL, "Williams / Vid Kidz", "Miscellaneous",
+	"Blaster\0", NULL, "Williams / Vid Kidz", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, blasterRomInfo, blasterRomName, NULL, NULL, NULL, NULL, BlasterInputInfo, NULL,
@@ -3436,25 +3538,46 @@ struct BurnDriver BurnDrvBlaster = {
 };
 
 
+// Blaster (location test)
 
+static struct BurnRomInfo blasteroRomDesc[] = {
+	{ "16.ic39",			0x1000, 0x2db032d2, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "13.ic27",			0x2000, 0xc99213c7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "11.ic25",			0x2000, 0xbc2d7eda, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "12.ic26",			0x2000, 0x8a215017, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "17.ic41",			0x1000, 0xb308f0e5, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "15.ic38",			0x4000, 0x1ad146a4, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "8.ic20",				0x4000, 0xf110bbb0, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "9.ic22",				0x4000, 0x5c5b0f8a, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "10.ic24",			0x4000, 0xd47eb67f, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "6.ic13",				0x4000, 0x47fc007e, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "5.ic11",				0x4000, 0x15c1b94d, 1 | BRF_PRG | BRF_ESS }, // 10
+	{ "14.ic35",			0x4000, 0xaea6b846, 1 | BRF_PRG | BRF_ESS }, // 11
+	{ "7.ic15",				0x4000, 0xa1c4db77, 1 | BRF_PRG | BRF_ESS }, // 12
+	{ "1.ic1",				0x4000, 0x8d0ea9e7, 1 | BRF_PRG | BRF_ESS }, // 13
+	{ "2.ic3",				0x4000, 0x03c4012c, 1 | BRF_PRG | BRF_ESS }, // 14
+	{ "4.ic7",				0x4000, 0x39d2a32c, 1 | BRF_PRG | BRF_ESS }, // 15
+	{ "3.ic6",				0x4000, 0x054c9f1c, 1 | BRF_PRG | BRF_ESS }, // 16
 
+	{ "18.sb13",			0x1000, 0xc33a3145, 2 | BRF_PRG | BRF_ESS }, // 17 M6800 #0 Code
 
-#if 0
+	{ "18.sb10",			0x1000, 0xc33a3145, 3 | BRF_PRG | BRF_ESS }, // 18 M6800 #1 Code
 
-GAME( 1983, playball,   0,        playball,       playball, williams_state, init_playball, ROT270, "Williams", "PlayBall! (prototype)", MACHINE_SUPPORTS_SAVE )
+	{ "4.u42",				0x0200, 0xe6631c23, 0 | BRF_OPT },           // 19 proms
+	{ "6.u23",				0x0200, 0x83faf25e, 0 | BRF_OPT },           // 20
+	{ "blaster.col",		0x0800, 0xbac50bc4, 4 | BRF_GRA },           // 21
+};
 
-GAME( 1983, blaster,    0,        blaster,        blaster,  blaster_state,  init_blaster,  ROT0,   "Williams / Vid Kidz", "Blaster", MACHINE_SUPPORTS_SAVE )
-GAME( 1983, blastero,   blaster,  blaster,        blaster,  blaster_state,  init_blaster,  ROT0,   "Williams / Vid Kidz", "Blaster (location test)", MACHINE_SUPPORTS_SAVE )
-GAME( 1983, blasterkit, blaster,  blastkit,       blastkit, blaster_state,  init_blaster,  ROT0,   "Williams / Vid Kidz", "Blaster (conversion kit)", MACHINE_SUPPORTS_SAVE ) // mono sound
+STD_ROM_PICK(blastero)
+STD_ROM_FN(blastero)
 
-GAME( 1983, mysticm,    0,        mysticm,        mysticm, williams2_state, init_mysticm,  ROT0,   "Williams", "Mystic Marathon", MACHINE_WRONG_COLORS | MACHINE_SUPPORTS_SAVE)
-GAME( 1983, mysticmp,   mysticm,  mysticm,        mysticm, williams2_state, init_mysticm,  ROT0,   "Williams", "Mystic Marathon (prototype)", MACHINE_WRONG_COLORS | MACHINE_SUPPORTS_SAVE ) // newest roms are 'proto 6' ?
+struct BurnDriver BurnDrvBlastero = {
+	"blastero", "blaster", NULL, NULL, "1983",
+	"Blaster (location test)\0", NULL, "Williams / Vid Kidz", "6809 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, blasteroRomInfo, blasteroRomName, NULL, NULL, NULL, NULL, BlasterInputInfo, NULL,
+	BlasterInit, DrvExit, DrvFrame, BlasterDraw, DrvScan, &DrvRecalc, 0x110,
+	292, 240, 4, 3
+};
 
-GAME( 1984, tshoot,     0,        tshoot,         tshoot,  tshoot_state,    init_tshoot,   ROT0,   "Williams", "Turkey Shoot (prototype)", MACHINE_SUPPORTS_SAVE )
-
-GAME( 1984, inferno,    0,        inferno,        inferno, williams2_state, init_inferno,  ROT0,   "Williams", "Inferno (Williams)", MACHINE_SUPPORTS_SAVE )
-
-GAME( 1986, joust2,     0,        joust2,         joust2,  joust2_state,    init_joust2,   ROT270, "Williams", "Joust 2 - Survival of the Fittest (revision 2)", MACHINE_SUPPORTS_SAVE )
-GAME( 1986, joust2r1,   joust2,   joust2,         joust2,  joust2_state,    init_joust2,   ROT270, "Williams", "Joust 2 - Survival of the Fittest (revision 1)", MACHINE_SUPPORTS_SAVE )
-
-#endif

@@ -638,8 +638,8 @@ reverse:
 				}
 
 				/* apply volumes and add */
-				*lbuffer++ += (val1 * lvol) >> 11;
-				*rbuffer++ += (val1 * rvol) >> 11;
+				*lbuffer++ += (val1 * lvol) >> 12;
+				*rbuffer++ += (val1 * rvol) >> 12;
 
 				/* check for loop end */
 				check_for_end_forward(voice, accum);
@@ -676,8 +676,8 @@ reverse:
 				}
 
 				/* apply volumes and add */
-				*lbuffer++ += (val1 * lvol) >> 11;
-				*rbuffer++ += (val1 * rvol) >> 11;
+				*lbuffer++ += (val1 * lvol) >> 12;
+				*rbuffer++ += (val1 * rvol) >> 12;
 
 				/* check for loop end */
 				check_for_end_reverse(voice, accum);
@@ -750,8 +750,8 @@ reverse:
 				}
 
 				/* apply volumes and add */
-				*lbuffer++ += (val1 * lvol) >> 11;
-				*rbuffer++ += (val1 * rvol) >> 11;
+				*lbuffer++ += (val1 * lvol) >> 12;
+				*rbuffer++ += (val1 * rvol) >> 12;
 
 				/* check for loop end */
 				check_for_end_forward(voice, accum);
@@ -785,8 +785,8 @@ reverse:
 				}
 
 				/* apply volumes and add */
-				*lbuffer++ += (val1 * lvol) >> 11;
-				*rbuffer++ += (val1 * rvol) >> 11;
+				*lbuffer++ += (val1 * lvol) >> 12;
+				*rbuffer++ += (val1 * rvol) >> 12;
 
 				/* check for loop end */
 				check_for_end_reverse(voice, accum);

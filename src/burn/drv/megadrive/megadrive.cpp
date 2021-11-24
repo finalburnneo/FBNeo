@@ -133,8 +133,8 @@ struct PicoMisc {
 
 	UINT16 JCartIOData[2];
 
-	UINT8 L3AltPDat;
-	UINT8 L3AltPCmd;
+	UINT16 L3Reg[3];
+	UINT16 L3Bank;
 
 	UINT16 SquirrelkingExtra;
 
@@ -356,29 +356,28 @@ static void MegadriveCheckHardware()
 
 inline static void CalcCol(INT32 index, UINT16 nColour)
 {
-	INT32 r, g, b;
+	UINT8 color_ramp[0x10] = { 0, 29, 52, 70, 87, 101, 116, 130, 144, 158, 172, 187, 206, 228, 255 };
 
-	r = (nColour & 0x000f) << 4;	// Red
-	g = (nColour & 0x00f0) << 0; 	// Green
-	b = (nColour & 0x0f00) >> 4;	// Blue
-
-	r |= r >> 4;
-	g |= g >> 4;
-	b |= b >> 4;
+	INT32 r = (nColour & 0x000e) >> 0;	// Red
+	INT32 g = (nColour & 0x00e0) >> 4; 	// Green
+	INT32 b = (nColour & 0x0e00) >> 8;	// Blue
 
 	RamPal[index] = nColour;
 
 	// Normal Color
-	MegadriveCurPal[index + 0x00] = BurnHighCol(r, g, b, 0);
+	MegadriveCurPal[index + 0x00] = BurnHighCol(color_ramp[r], color_ramp[g], color_ramp[b], 0);
 
 	// Shadow Color
-	MegadriveCurPal[index + 0x40] = MegadriveCurPal[index + 0xc0] = BurnHighCol(r>>1, g>>1, b>>1, 0);
+	r >>= 1;
+	g >>= 1;
+	b >>= 1;
+	MegadriveCurPal[index + 0x40] = MegadriveCurPal[index + 0xc0] = BurnHighCol(color_ramp[r], color_ramp[g], color_ramp[b], 0);
 
 	// Highlight Color
-	r += 0x80; if (r > 0xFF) r = 0xFF;
-	g += 0x80; if (g > 0xFF) g = 0xFF;
-	b += 0x80; if (b > 0xFF) b = 0xFF;
-	MegadriveCurPal[index + 0x80] = BurnHighCol(r, g, b, 0);
+	r += 7;
+	g += 7;
+	b += 7;
+	MegadriveCurPal[index + 0x80] = BurnHighCol(color_ramp[r], color_ramp[g], color_ramp[b], 0);
 }
 
 static INT32 MemIndex()
@@ -1825,91 +1824,61 @@ static void __fastcall Ssf2BankWriteByte(UINT32 sekAddress, UINT8 byteValue)
 	}
 }
 
-static UINT8 __fastcall LK3AltProtReadByte(UINT32 sekAddress)
+static UINT16 __fastcall LK3ReadWord(UINT32 address)
 {
-	INT32 Offset = (sekAddress - 0x600000) >> 1;
-	Offset &= 0x07;
+	if (address < 0x100000) { // banked rom access (15 - 1 because indexing UINT16 array instead of byte)
+		UINT16 *Rom = (UINT16*)RomMain;
+		return Rom[((address >> 1) | (RamMisc->L3Bank << (15 - 1))) & (RomSize - 1)];
+	}
+	if (address < 0x400000) { // normal rom access
+		UINT16 *Rom = (UINT16*)RomMain;
+		return Rom[(address >> 1) & (RomSize - 1)];
+	}
 
-	UINT8 retData = 0;
+	if (address >= 0x600000 && address <= 0x6fffff) {
+		INT32 offset = (address >> 1) & 7;
+		if (offset < 3) {
+			return RamMisc->L3Reg[offset];
+		}
+		return 0;
+	}
 
-	switch (Offset) {
-		case 0x02: {
-			switch (RamMisc->L3AltPCmd) {
-				case 1:
-					retData = RamMisc->L3AltPDat >> 1;
-					break;
+	//bprintf(PRINT_NORMAL, _T("LK3Prot Read Word %x\n"), address);
 
-				case 2:
-					retData = RamMisc->L3AltPDat >> 4;
-					retData |= (RamMisc->L3AltPDat & 0x0f) << 4;
-					break;
+	return 0xffff;
+}
 
-				default:
-					retData =  (BIT(RamMisc->L3AltPDat, 7) << 0);
-					retData |= (BIT(RamMisc->L3AltPDat, 6) << 1);
-					retData |= (BIT(RamMisc->L3AltPDat, 5) << 2);
-					retData |= (BIT(RamMisc->L3AltPDat, 4) << 3);
-					retData |= (BIT(RamMisc->L3AltPDat, 3) << 4);
-					retData |= (BIT(RamMisc->L3AltPDat, 2) << 5);
-					retData |= (BIT(RamMisc->L3AltPDat, 1) << 6);
-					retData |= (BIT(RamMisc->L3AltPDat, 0) << 7);
-					break;
-			}
-			break;
+static UINT8 __fastcall LK3ReadByte(UINT32 address)
+{
+	return LK3ReadWord(address) >> ((~address & 1) << 3);
+}
+
+static void __fastcall LK3WriteByte(UINT32 address, UINT8 data)
+{
+	INT32 offset = (address >> 1) & 7;
+	if (address >= 0x600000 && address <= 0x6fffff) {
+		if (offset < 2) {
+			RamMisc->L3Reg[offset] = data;
+		}
+
+		switch (RamMisc->L3Reg[1] & 3) {
+			case 0: RamMisc->L3Reg[2] = RamMisc->L3Reg[0] << 1; break;
+			case 1: RamMisc->L3Reg[2] = RamMisc->L3Reg[0] >> 1; break;
+			case 2: RamMisc->L3Reg[2] = (RamMisc->L3Reg[0] >> 4) | ((RamMisc->L3Reg[0] & 0x0f) << 4); break;
+			case 3:
+			default:RamMisc->L3Reg[2] = BITSWAP08(RamMisc->L3Reg[0], 0, 1, 2, 3, 4, 5, 6, 7); break;
 		}
 	}
-
-//	bprintf(PRINT_NORMAL, _T("LK3AltProt Read Byte %x\n"), sekAddress);
-
-	return retData;
-}
-
-static UINT16 __fastcall LK3AltProtReadWord(UINT32 sekAddress)
-{
-	bprintf(PRINT_NORMAL, _T("LK3AltProt Read Word %x\n"), sekAddress);
-
-	return 0;
-}
-
-static void __fastcall LK3AltProtWriteByte(UINT32 sekAddress, UINT8 byteValue)
-{
-	INT32 Offset = (sekAddress - 0x600000) >> 1;
-	Offset &= 0x07;
-
-	switch (Offset) {
-		case 0x00:
-			RamMisc->L3AltPDat = byteValue;
-			return;
-
-		case 0x01:
-			RamMisc->L3AltPCmd = byteValue;
-			return;
+	if (address >= 0x700000) {
+		RamMisc->L3Bank = data & 0x3f;
 	}
 
-//	bprintf(PRINT_NORMAL, _T("LK3AltProt write byte  %02x to location %08x\n"), byteValue, sekAddress);
+//	bprintf(PRINT_NORMAL, _T("LK3 Prot write byte  %02x to location %08x\n"), data, address);
 }
 
-static void __fastcall LK3AltProtWriteWord(UINT32 sekAddress, UINT16 wordValue)
+static void __fastcall LK3WriteWord(UINT32 address, UINT16 data)
 {
-	bprintf(PRINT_NORMAL, _T("LK3AltProt write word value %04x to location %08x\n"), wordValue, sekAddress);
-}
-
-static void __fastcall LK3AltBankWriteByte(UINT32 sekAddress, UINT8 byteValue)
-{
-	INT32 Offset = (sekAddress - 0x700000) >> 1;
-	Offset &= 0x07;
-
-	if (Offset == 0) {
-		memcpy(RomMain, OriginalRom + ((byteValue & 0xff) * 0x8000), 0x8000);
-		return;
-	}
-
-	bprintf(PRINT_NORMAL, _T("LK3AltBank write byte  %02x to location %08x\n"), byteValue, sekAddress);
-}
-
-static void __fastcall LK3AltBankWriteWord(UINT32 sekAddress, UINT16 wordValue)
-{
-	bprintf(PRINT_NORMAL, _T("LK3AltBank write word value %04x to location %08x\n"), wordValue, sekAddress);
+	SEK_DEF_WRITE_WORD(7, address, data);
 }
 
 static UINT8 __fastcall RedclifProtReadByte(UINT32 /*sekAddress*/)
@@ -2484,50 +2453,43 @@ static void SetupCustomCartridgeMappers()
 		SekClose();
 	}
 
-	if (((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_LIONK3) ||
-	    ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SKINGKONG) ||
-	    ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_POKEMON2) ||
-	    ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_MULAN)) {
-		RamMisc->L3AltPDat = 0;
-		RamMisc->L3AltPCmd = 0;
-
-		OriginalRom = (UINT8*)BurnMalloc(0x200000);
-		memcpy(OriginalRom, RomMain, 0x200000);
-
-		memcpy(RomMain + 0x000000, OriginalRom + 0x000000, 0x200000);
-		memcpy(RomMain + 0x200000, OriginalRom + 0x000000, 0x200000);
-
-		SekOpen(0);
-		SekMapHandler(7, 0x600000, 0x6fffff, MAP_READ | MAP_WRITE);
-		SekSetReadByteHandler(7, LK3AltProtReadByte);
-		SekSetReadWordHandler(7, LK3AltProtReadWord);
-		SekSetWriteByteHandler(7, LK3AltProtWriteByte);
-		SekSetWriteWordHandler(7, LK3AltProtWriteWord);
-		SekMapHandler(8, 0x700000, 0x7fffff, MAP_WRITE);
-		SekSetWriteByteHandler(8, LK3AltBankWriteByte);
-		SekSetWriteWordHandler(8, LK3AltBankWriteWord);
-		SekClose();
+	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SKINGKONG) {
+		OriginalRom = (UINT8*)BurnMalloc(MAX_CARTRIDGE_SIZE);
+		memcpy(OriginalRom, RomMain, MAX_CARTRIDGE_SIZE);
+		memcpy(RomMain + 0x200000, OriginalRom, 0x200000);
+		RomSize = 0x400000;
+		BurnFree(OriginalRom);
 	}
 
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SDK99) {
-		RamMisc->L3AltPDat = 0;
-		RamMisc->L3AltPCmd = 0;
+		OriginalRom = (UINT8*)BurnMalloc(MAX_CARTRIDGE_SIZE);
+		memcpy(OriginalRom, RomMain, MAX_CARTRIDGE_SIZE);
+		memcpy(RomMain + 0x300000, OriginalRom, 0x100000);
+		RomSize = 0x400000;
+		BurnFree(OriginalRom);
+	}
 
-		OriginalRom = (UINT8*)BurnMalloc(0x300000);
-		memcpy(OriginalRom, RomMain, 0x300000);
+	if (((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_LIONK3) ||
+	    ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SKINGKONG) ||
+		((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_POKEMON2) ||
+		((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SDK99) ||
+	    ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_MULAN)) {
 
-		memcpy(RomMain + 0x000000, OriginalRom + 0x000000, 0x300000);
-		memcpy(RomMain + 0x300000, OriginalRom + 0x000000, 0x100000);
+		bprintf(0, _T("Lion King 3-style protection/mapper\n"));
+		RamMisc->L3Reg[0] = RamMisc->L3Reg[1] = RamMisc->L3Reg[2] = 0;
+		RamMisc->L3Bank = 0;
 
 		SekOpen(0);
-		SekMapHandler(7, 0x600000, 0x6fffff, MAP_READ | MAP_WRITE);
-		SekSetReadByteHandler(7, LK3AltProtReadByte);
-		SekSetReadWordHandler(7, LK3AltProtReadWord);
-		SekSetWriteByteHandler(7, LK3AltProtWriteByte);
-		SekSetWriteWordHandler(7, LK3AltProtWriteWord);
-		SekMapHandler(8, 0x700000, 0x7fffff, MAP_WRITE);
-		SekSetWriteByteHandler(8, LK3AltBankWriteByte);
-		SekSetWriteWordHandler(8, LK3AltBankWriteWord);
+		SekMapHandler(7, 0x000000, 0x9fffff, MAP_READ | MAP_WRITE | MAP_FETCH);
+		SekSetReadByteHandler(7, LK3ReadByte);
+		SekSetReadWordHandler(7, LK3ReadWord);
+		SekSetWriteByteHandler(7, LK3WriteByte);
+		SekSetWriteWordHandler(7, LK3WriteWord);
+		SekMapHandler(8, 0xd00000, 0xdfffff, MAP_READ | MAP_WRITE | MAP_FETCH);
+		SekSetReadByteHandler(8, LK3ReadByte);
+		SekSetReadWordHandler(8, LK3ReadWord);
+		SekSetWriteByteHandler(8, LK3WriteByte);
+		SekSetWriteWordHandler(8, LK3WriteWord);
 		SekClose();
 	}
 

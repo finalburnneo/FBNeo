@@ -12,22 +12,6 @@
 Notes:
 
 	There is no CD emulation at all.
-	As this driver is based on MESS emulation, compatibility *should* be the same.
-
-	Known emulation issues - also present in MESS unless noted.
-	SOUND PROBLEMS
-		Bouken Danshaku Don - The Lost Sunheart (not present in mess)
-
-	GRAPHICS PROBLEMS
-		Cadash - graphics shaking
-
-	OTHER PROBLEMS
-		Niko Niko Pun - hangs in-game
-		Benkei Gaiden - hangs after sunsoft logo
-		Power Tennis - frozen
-		Tennokoe Bank - ??
-		Air Zonk / PC Denjin - Punkic Cyborgs - hangs in-game
-		Hisou Kihei - Xserd: black screen
 */
 
 static UINT8 *AllMem;
@@ -47,6 +31,7 @@ static UINT8 joystick_data_select;
 static UINT8 joystick_6b_select[5];
 
 static void (*interrupt)();
+static void (*hblank)();
 
 static UINT16 PCEInputs[5];
 UINT8 PCEReset;
@@ -56,6 +41,10 @@ UINT8 PCEJoy3[12];
 UINT8 PCEJoy4[12];
 UINT8 PCEJoy5[12];
 UINT8 PCEDips[3];
+
+static UINT8 last_dip;
+
+static INT32 nExtraCycles;
 
 static UINT8 system_identify;
 static INT32 pce_sf2 = 0;
@@ -183,7 +172,7 @@ static void pce_write(UINT32 address, UINT8 data)
 		return;
 
 		case 0x1fe800:
-			c6280_write(address, data);
+			c6280_write(address & 0xf, data);
 		return;
 
 		case 0x1fec00:
@@ -390,7 +379,7 @@ static INT32 MemIndex(UINT32 cart_size, INT32 type)
 	PCEUserRAM	= Next; Next += (type == 2) ? 0x008000 : 0x002000; // pce/tg16 0x2000, sgx 0x8000
 
 	PCECartRAM	= Next; Next += 0x008000; // populous
-	PCECDBRAM = Next; Next += 0x00800; // Bram thingy
+	PCECDBRAM	= Next; Next += 0x00800; // Bram thingy
 	vce_data	= (UINT16*)Next; Next += 0x200 * sizeof(UINT16);
 
 	vdc_vidram[0]	= Next; Next += 0x010000;
@@ -398,7 +387,7 @@ static INT32 MemIndex(UINT32 cart_size, INT32 type)
 
 	RamEnd		= Next;
 
-	vdc_tmp_draw	= (UINT16*)Next; Next += 684 * 262 * sizeof(UINT16);
+	vdc_tmp_draw	= (UINT16*)Next; Next += 684 * 263 * sizeof(UINT16);
 
 	MemEnd		= Next;
 
@@ -424,6 +413,10 @@ static INT32 PCEDoReset()
 	joystick_data_select = 0;
 
 	pce_sf2_bank = 0;
+
+	last_dip = PCEDips[2];
+
+	nExtraCycles = 0;
 
 	return 0;
 }
@@ -495,6 +488,7 @@ static INT32 CommonInit(int type)
 		h6280Close();
 
 		interrupt = pce_interrupt;
+		hblank = pce_hblank;
 
 		if (type == 0) {		// pce
 			system_identify = 0x40;
@@ -514,6 +508,8 @@ static INT32 CommonInit(int type)
 		h6280Close();
 
 		interrupt = sgx_interrupt;
+		hblank = sgx_hblank;
+
 		system_identify = 0x40;
 	}
 	
@@ -522,7 +518,8 @@ static INT32 CommonInit(int type)
 	vdc_init();
 	vce_palette_init(DrvPalette);
 
-	c6280_init(3579545, 0);
+	c6280_init(3579545, 0, (strcmp(BurnDrvGetTextA(DRV_NAME), "pce_lostsunh") == 0) ? 1 : 0);
+	c6280_set_renderer(PCEDips[2] & 0x80);
 	c6280_set_route(BURN_SND_C6280_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	c6280_set_route(BURN_SND_C6280_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
@@ -595,7 +592,7 @@ INT32 PCEDraw()
 	}
 
 	{
-		UINT16 *src = vdc_tmp_draw + ((14+2) * 684) + 86;
+		UINT16 *src = vdc_tmp_draw + 86;
 		UINT16 *dst = pTransDraw;
 
 		for (INT32 y = 0; y < nScreenHeight; y++) {
@@ -623,6 +620,12 @@ static void PCECompileInputs()
 		PCEInputs[3] ^= (PCEJoy4[i] & 1) << i;
 		PCEInputs[4] ^= (PCEJoy5[i] & 1) << i;
 	}
+
+	if ((last_dip ^ PCEDips[2]) == 0x80) {
+		bprintf(0, _T("Sound core switched to: %s\n"), (PCEDips[2] & 0x80) ? _T("HQ") : _T("LQ"));
+		c6280_set_renderer(PCEDips[2] & 0x80);
+	}
+	last_dip = PCEDips[2];
 }
 
 INT32 PCEFrame()
@@ -635,23 +638,33 @@ INT32 PCEFrame()
 
 	PCECompileInputs();
 
-	INT32 nInterleave = 262;
+	INT32 nInterleave = vce_linecount();
 	INT32 nCyclesTotal[1] = { (INT32)((INT64)7159090 * nBurnCPUSpeedAdjust / (0x0100 * 60)) };
-	INT32 nCyclesDone[1] = { 0 };
-
-	if (wondermomohack) nCyclesTotal[0] += 1000;
+	INT32 nCyclesDone[1] = { nExtraCycles };
 
 	h6280Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		CPU_RUN(0, h6280);
-		interrupt();
+		nCyclesDone[0] += h6280Run(1128/3); // 1128 m-cycles brings us to hblank. "/ 3" m-cycles -> cpu cycles
+		hblank();
+		// if thinking of changing this, make sure to check for these side effects:
+		// blodia, game select bounce
+		// dragon egg, hang booting
+		// air zonk, crash ingame when moving up
+		// side arms, playfield bounce ingame (note: bottom selection cut-off is normal - if you're seeing the whole thing, you've most certainly broken other games.)
+		// huzero, corruption above the "Sc 000000"
+		// cadash, bouncing playfield, corrupted HUD
+		// ghost manor, crash while going down the slide / moving around a bit
+		CPU_RUN_SYNCINT(0, h6280); // finish line cycles
+		interrupt();       // advance line in vdc & vbl @ last line
 	}
 
 	if (pBurnSoundOut) {
 		c6280_update(pBurnSoundOut, nBurnSoundLen);
 	}
+
+	nExtraCycles = h6280TotalCycles() - nCyclesTotal[0];
 
 	h6280Close();
 
@@ -686,12 +699,10 @@ INT32 PCEScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(joystick_port_select);
 		SCAN_VAR(joystick_data_select);
-		SCAN_VAR(joystick_6b_select[0]);
-		SCAN_VAR(joystick_6b_select[1]);
-		SCAN_VAR(joystick_6b_select[2]);
-		SCAN_VAR(joystick_6b_select[3]);
-		SCAN_VAR(joystick_6b_select[4]);
+		SCAN_VAR(joystick_6b_select);
 		SCAN_VAR(bram_locked);
+
+		SCAN_VAR(nExtraCycles);
 
 		if (pce_sf2) {
 			SCAN_VAR(pce_sf2_bank);

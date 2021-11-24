@@ -231,6 +231,8 @@ void NeoCDZRateChangeback();
 
 // burn_shift
 extern INT32 BurnShiftEnabled;
+// burn_gun
+extern bool bBurnGunDrawReticles;
 
 // run.cpp
 extern int bRunPause;
@@ -267,6 +269,8 @@ int BurnerLoadDriver(TCHAR *szDriverName);
 int StartFromReset(TCHAR *szDriverName);
 void PausedRedraw(void);
 INT32 is_netgame_or_recording();
+void ScrnInitLua();
+void ScrnExitLua();
 
 // menu.cpp
 #define UM_DISPLAYPOPUP (WM_USER + 0x0100)

@@ -136,7 +136,7 @@ void GetHistoryDatHardwareToken(char *to_string);
 extern INT32 nAutoFireRate;
 
 // Player Default Controls
-extern INT32 nPlayerDefaultControls[5];
+extern INT32 nPlayerDefaultControls[8];
 extern TCHAR szPlayerDefaultIni[5][MAX_PATH];
 
 // mappable System Macros for the Input Dialogue
@@ -146,6 +146,15 @@ extern UINT8 macroSystemFrame;
 extern UINT8 macroSystemSaveState;
 extern UINT8 macroSystemLoadState;
 extern UINT8 macroSystemUNDOState;
+extern UINT8 macroSystemLuaHotkey1;
+extern UINT8 macroSystemLuaHotkey2;
+extern UINT8 macroSystemLuaHotkey3;
+extern UINT8 macroSystemLuaHotkey4;
+extern UINT8 macroSystemLuaHotkey5;
+extern UINT8 macroSystemLuaHotkey6;
+extern UINT8 macroSystemLuaHotkey7;
+extern UINT8 macroSystemLuaHotkey8;
+extern UINT8 macroSystemLuaHotkey9;
 
 // scrn.cpp
 extern void scrnSSUndo();

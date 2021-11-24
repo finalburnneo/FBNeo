@@ -1558,6 +1558,58 @@ struct BurnDriver BurnDrvKtiger = {
 };
 
 
+// Kyukyoku Tiger (Japan, 2 Players)
+
+static struct BurnRomInfo ktiger2pRomDesc[] = {
+	{ "b30_01.7j",		0x10000, 0x07f64d13, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "b30_03.7h",		0x10000, 0x41be6978, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b30_02_2p.8j",	0x08000, 0x321e2be6, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "b30_04_2p.8h",	0x08000, 0xc3f960ff, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "b30_05.4f",		0x08000, 0x1a8f1e10, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 code
+
+	{ "d70015u_gxc-03_mcu_74002", 0x00c00, 0x265b6f32, 3 | BRF_PRG | BRF_ESS }, //  5 TMS32010 code
+
+	{ "b30_08.8c",		0x04000, 0x0a254133, 4 | BRF_GRA },           //  6 Text characters
+	{ "b30_07.10b",		0x04000, 0xe9e2d4b1, 4 | BRF_GRA },           //  7
+	{ "b30_06.8b",		0x04000, 0xa599d845, 4 | BRF_GRA },           //  8
+
+	{ "b30_16.20b",		0x10000, 0x15b3991d, 5 | BRF_GRA },           //  9 Background tiles
+	{ "b30_15.18b",		0x10000, 0xd9e2e55d, 5 | BRF_GRA },           // 10
+	{ "b30_13.18c",		0x10000, 0x13daeac8, 5 | BRF_GRA },           // 11
+	{ "b30_14.20c",		0x10000, 0x8cc79357, 5 | BRF_GRA },           // 12
+
+	{ "b30_12.16c",		0x08000, 0xb5d48389, 6 | BRF_GRA },           // 13 Foreground tiles
+	{ "b30_11.14c",		0x08000, 0x97f20fdc, 6 | BRF_GRA },           // 14
+	{ "b30_10.12c",		0x08000, 0x170c01db, 6 | BRF_GRA },           // 15
+	{ "b30_09.10c",		0x08000, 0x44f5accd, 6 | BRF_GRA },           // 16
+
+	{ "b30_20.12d",		0x10000, 0xcb4092b8, 7 | BRF_GRA },           // 17 Sprites
+	{ "b30_19.14d",		0x10000, 0x9cb8675e, 7 | BRF_GRA },           // 18
+	{ "b30_18.15d",		0x10000, 0x806fb374, 7 | BRF_GRA },           // 19
+	{ "b30_17.16d",		0x10000, 0x4264bff8, 7 | BRF_GRA },           // 20
+
+	{ "82s129.d3",		0x00100, 0x24e7d62f, 0 | BRF_OPT },           // 21 Proms (not used)
+	{ "82s129.d4",		0x00100, 0xa50cef09, 0 | BRF_OPT },           // 22
+	{ "82s123.d2",		0x00020, 0xf72482db, 0 | BRF_OPT },           // 23
+	{ "82s123.e18",		0x00020, 0xbc88cced, 0 | BRF_OPT },           // 24
+	{ "82s123.b24",		0x00020, 0x4fb5df2a, 0 | BRF_OPT },           // 25
+};
+
+STD_ROM_PICK(ktiger2p)
+STD_ROM_FN(ktiger2p)
+
+struct BurnDriver BurnDrvktiger2p = {
+	"ktiger2p", "twincobr", NULL, NULL, "2021",
+	"Kyukyoku Tiger (Japan, 2 Players)\0", NULL, "M2 Co., Ltd.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
+	NULL, ktiger2pRomInfo, ktiger2pRomName, NULL, NULL, NULL, NULL, TwincobrInputInfo, TwincobruDIPInfo,
+	ktigerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
+	240, 320, 3, 4
+};
+
+
 // Flying Shark (World)
 
 static struct BurnRomInfo fsharkRomDesc[] = {

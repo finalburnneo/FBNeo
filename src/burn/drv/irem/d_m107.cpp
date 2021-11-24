@@ -545,6 +545,8 @@ static INT32 DrvDoReset()
 	raster_irq_position = -1;
 	sound_cpu_reset = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1166,7 +1168,7 @@ struct BurnDriver BurnDrvAirass = {
 	"airass", NULL, NULL, NULL, "1993",
 	"Air Assault (World)\0", NULL, "Irem", "Irem M107",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_VERSHOOT, 0,
 	NULL, airassRomInfo, airassRomName, NULL, NULL, NULL, NULL, FirebarrInputInfo, FirebarrDIPInfo,
 	airassInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
 	240, 320, 3, 4
@@ -1250,7 +1252,7 @@ struct BurnDriver BurnDrvFirebarr = {
 	"firebarr", "airass", NULL, NULL, "1993",
 	"Fire Barrel (Japan)\0", NULL, "Irem", "Irem M107",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_VERSHOOT, 0,
 	NULL, firebarrRomInfo, firebarrRomName, NULL, NULL, NULL, NULL, FirebarrInputInfo, FirebarrDIPInfo,
 	firebarrInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
 	240, 320, 3, 4
@@ -1321,7 +1323,7 @@ struct BurnDriver BurnDrvDsoccr94 = {
 	"dsoccr94", NULL, NULL, NULL, "1994",
 	"Dream Soccer '94 (World, M107 hardware)\0", NULL, "Irem (Data East Corporation license)", "Irem M107",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_IREM_MISC, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_MISC, GBF_SPORTSFOOTBALL, 0,
 	NULL, dsoccr94RomInfo, dsoccr94RomName, NULL, NULL, NULL, NULL, Dsoccr94InputInfo, Dsoccr94DIPInfo,
 	dsoccr94Init, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
 	320, 240, 4, 3
@@ -1360,7 +1362,7 @@ struct BurnDriver BurnDrvDsoccr94k = {
 	"dsoccr94k", "dsoccr94", NULL, NULL, "1994",
 	"Dream Soccer '94 (Korea, M107 hardware)\0", NULL, "Irem (Data East Corporation license)", "Irem M107",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IREM_MISC, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_MISC, GBF_SPORTSFOOTBALL, 0,
 	NULL, dsoccr94kRomInfo, dsoccr94kRomName, NULL, NULL, NULL, NULL, Dsoccr94InputInfo, Dsoccr94DIPInfo,
 	dsoccr94Init, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
 	320, 240, 4, 3

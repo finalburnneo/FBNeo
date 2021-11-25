@@ -559,8 +559,6 @@ static UINT8 __fastcall SpecZ80PortRead(UINT16 address)
 
 static void __fastcall SpecZ80PortWrite(UINT16 address, UINT8 data)
 {
-	address &= 0xff;
-
 	if (~address & 0x0001) {
 		BuzzerAdd((data & 0x10) >> 4);
 
@@ -575,7 +573,7 @@ static void __fastcall SpecZ80PortWrite(UINT16 address, UINT8 data)
 		}
 	}
 
-	if (address == 0xfd) return; // Ignore (Jetpac writes here due to a bug in the game code, and it's the reason it won't work on 128k)
+	if ((address & 0xff) == 0xfd) return; // Ignore (Jetpac writes here due to a bug in the game code, and it's the reason it won't work on 128k)
 
 	bprintf(0, _T("pw %x %x\n"), address, data);
 }
@@ -1317,7 +1315,7 @@ static void mix_dcblock(INT16 *inbuf, INT16 *outbuf, INT32 sample_nums)
 		out *= 2.5;
 
 		// add to stream (+include ay if Spec128)
-		if (SpecMode & SPEC_128K) {
+		if (SpecMode & SPEC_AY8910) {
 			outbuf[sample * 2 + 0] = BURN_SND_CLIP(outbuf[sample * 2 + 0] + out);
 			outbuf[sample * 2 + 1] = BURN_SND_CLIP(outbuf[sample * 2 + 1] + out);
 		} else {

@@ -147,7 +147,6 @@ static bool bVidRecalcPalette;
 												// Translation to native Bpp for games flagged with BDF_16BIT_ONLY
 static UINT8* pVidTransImage = NULL;
 static UINT32* pVidTransPalette = NULL;
-static INT32 bSkipNextFrame = 0;
 
 TCHAR szPlaceHolder[MAX_PATH] = _T("");
 
@@ -228,6 +227,8 @@ INT32 VidInit()
 
 				pVidTransPalette = (UINT32*)malloc(32768 * sizeof(UINT32));
 				pVidTransImage = (UINT8*)malloc(nVidImageWidth * nVidImageHeight * sizeof(INT16));
+
+				//bprintf(0, _T("allocate pVidTransImage %d x %d\n"), nVidImageWidth, nVidImageHeight);
 
 				BurnHighCol = HighCol15;
 
@@ -334,6 +335,8 @@ INT32 VidExit()
 
 static void VidDoTransTopVidImage()
 {
+		if (!pVidImage) return;
+
 		UINT16* pSrc = (UINT16*)pVidTransImage;
 		UINT8* pDest = pVidImage;
 
@@ -382,12 +385,6 @@ static INT32 VidDoFrame(bool bRedraw)
 
 		nRet = pVidOut[nVidActive]->Frame(bRedraw);
 
-		if (bSkipNextFrame) {
-			// if ReInitialise(); is called from the machine's reset function, it will crash below.  This prevents that from happening. (Megadrive)
-			bSkipNextFrame = 0;
-			return 0;
-		}
-
 		pBurnDraw = NULL;
 		nBurnPitch = 0;
 	} else {
@@ -428,11 +425,20 @@ INT32 VidFrameCallback(bool bRedraw)        // Called from blitter  (VidFrame() 
 
 INT32 VidReInitialise()
 {
+	// On Windows at least, calling ReInitialise() posts a semaphore to re-init
+	// the blitter at the end of the frame.  Then it calls this function.
+
 	if (pVidTransImage) {
+		// this will be later allocated to the correct size after the blitter re-initializes.
+
+		// Note; does this make any sense?  nVidImageWidth, nVidImageHeight is set in the blitter init.
+		// If the game's resolution changes, this will just free/malloc the old resolution.
+
 		free(pVidTransImage);
 		pVidTransImage = (UINT8*)malloc(nVidImageWidth * nVidImageHeight * sizeof(INT16));
 	}
-	bSkipNextFrame = 1;
+
+	pVidImage = NULL; // Invalidate pVidImage* until blitter is reinitted. (pBurnDraw points to it on active video-frames)
 
 	return 0;
 }

@@ -31,10 +31,6 @@ static float vector_intens      = 1.0;
 static INT32 vector_antialias   = 1;
 static INT32 vector_beam        = 0x0001f65e; // 16.16 beam width
 
-#ifndef __LIBRETRO__
-static UINT8 *pBurnDrawBAD      = NULL;
-#endif
-
 #define CLAMP8(x) do { if (x > 0xff) x = 0xff; if (x < 0) x = 0; } while (0)
 
 static UINT8 gammaLUT[256];
@@ -81,10 +77,6 @@ void vector_set_scale(INT32 x, INT32 y)
 
 void vector_rescale(INT32 x, INT32 y)
 {
-#ifndef __LIBRETRO__
-	pBurnDrawBAD = pBurnDraw; // note invalidated pBurnDraw (see draw_vector() notes)
-#endif
-
 	if(BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
 		BurnDrvSetVisibleSize(y, x);
 	else
@@ -273,14 +265,6 @@ static void lineSimple(INT32 x0, INT32 y0, INT32 x1, INT32 y1, INT32 color, INT3
 
 void draw_vector(UINT32 *palette)
 {
-#ifndef __LIBRETRO__
-	if (pBurnDrawBAD == pBurnDraw) {
-		// Reinitialise() could take 1-2 frames to complete, during that time
-		// we can't draw since pBurnDraw is invalid.
-		bprintf(0, _T("draw_vector(): ignored this draw (waiting for re-init)!\n"));
-		return;
-	} else pBurnDrawBAD = NULL;
-#endif
 	struct vector_line *ptr = &vector_table[0];
 
 	INT32 prev_x = 0, prev_y = 0;

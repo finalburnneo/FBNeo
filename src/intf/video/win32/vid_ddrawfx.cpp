@@ -440,6 +440,10 @@ static int Frame(bool bRedraw)								// bRedraw = 0
 
 	VidFrameCallback(bRedraw);						// Run emulation for 1 frame / render image
 
+	if (pVidImage == NULL) {                        // If a mode change was requested by game, pVidImage has been invalidated - time to leave.
+		return 0;
+	}
+
 	MemToSurf();									// Copy the memory buffer to the directdraw buffer for later blitting
 
 	return 0;

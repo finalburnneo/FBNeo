@@ -1324,6 +1324,10 @@ static int dx9Frame(bool bRedraw)					// bRedraw = 0
 
 	VidFrameCallback(bRedraw);						// Run emulation for 1 frame / render image
 
+	if (pVidImage == NULL) {                        // If a mode change was requested by game, pVidImage has been invalidated - time to leave.
+		return 0;
+	}
+
 #ifdef ENABLE_PROFILING
 //	ProfileProfileEnd(0);
 	ProfileProfileStart(1);
@@ -2195,6 +2199,10 @@ static int dx9AltFrame(bool bRedraw)	// bRedraw = 0
 	}
 
 	VidFrameCallback(bRedraw);		 // Run emulation for 1 frame / render image
+
+	if (pVidImage == NULL) {         // If a mode change was requested by game, pVidImage has been invalidated - time to leave.
+		return 0;
+	}
 
 	dx9AltRender();
 

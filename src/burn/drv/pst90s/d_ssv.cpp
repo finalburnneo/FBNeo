@@ -15,10 +15,35 @@
 
 /*
 	srmp7 - no music/sfx
-	gundam - verify layer should be OVER sprites and not behind
 	analog inputs not hooked up at all
-	clipping is not hooked up (broken) - marked with "iq_132" test with twin eagle
 */
+
+struct rectangle
+{
+	INT32 min_x;
+	INT32 max_x;
+	INT32 min_y;
+	INT32 max_y;
+
+	rectangle(INT32 minx = 0, INT32 maxx = 0, INT32 miny = 0, INT32 maxy = 0) {
+		set(minx, maxx, miny, maxy);
+	}
+
+	void set(INT32 minx, INT32 maxx, INT32 miny, INT32 maxy) {
+		min_x = minx; max_x = maxx;
+		min_y = miny; max_y = maxy;
+	}
+
+	rectangle operator &= (const rectangle &other) {
+		if (min_x < other.min_x) min_x = other.min_x;
+		if (min_y < other.min_y) min_y = other.min_y;
+		if (max_x > other.max_x) max_x = other.max_x;
+		if (max_y > other.max_y) max_y = other.max_y;
+		if (min_y > max_y) min_y = max_y;
+		if (min_x > max_x) min_x = max_x;
+		return *this;
+	}
+};
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -73,10 +98,7 @@ static INT32 vblank;
 static INT32 shadow_pen_shift;
 static INT32 shadow_pen_mask;
 static INT32 tile_code[16];
-static INT32 Gclip_min_x;
-static INT32 Gclip_max_x;
-static INT32 Gclip_min_y;
-static INT32 Gclip_max_y;
+static rectangle Gclip;
 static INT32 interrupt_ultrax = 0;
 static INT32 watchdog_disable = 0;
 static INT32 is_gdfs = 0;
@@ -111,7 +133,7 @@ static INT16 SxyGun = 0;
 // Theory of sprite buffering for this machine  -dink nov. 22, 2021
 // spriteram is delayed 1 frame, buffered once per frame
 // scroll register updates are buffered in a list, for each line they are
-// updated on.  This list is then acted upon on the next frame.
+// updated on.  This list is then "replayed" on the next frame.
 struct scroll_rec {
 	INT32 line;
 	UINT8 regs[0x80];
@@ -2988,6 +3010,7 @@ static INT32 DrvDoReset(INT32 full_reset)
 	HiscoreReset();
 
 	memset(scroll_buf, 0, sizeof(scroll_buf));
+	DrvScrollRAMDelayed = DrvScrollRAM;
 
 	return 0;
 }
@@ -3192,10 +3215,13 @@ static INT32 DrvGetRoms(bool bLoad)
 		// get gfx 2 rom length and make sure it can be
 		// masked properly
 		nDrvGfxROM2Len = GfxLoad2 - DrvGfxROM2;
-		for (INT32 i = 1; i < 0x8000000; i<<=1) {
-			if (nDrvGfxROM2Len <= (1 << i)) {
-				nDrvGfxROM2Len = 1 << i;
-				break;
+
+		if (nDrvGfxROM2Len) {
+			for (INT32 i = 1; i < 0x8000000; i<<=1) {
+				if (nDrvGfxROM2Len <= (1 << i)) {
+					nDrvGfxROM2Len = 1 << i;
+					break;
+				}
 			}
 		}
 
@@ -3288,32 +3314,6 @@ static void DrvPaletteInit()
 	}
 }
 
-struct rectangle
-{
-	INT32 min_x;
-	INT32 max_x;
-	INT32 min_y;
-	INT32 max_y;
-};
-
-static void set_rect(rectangle *rect, INT32 minx, INT32 maxx, INT32 miny, INT32 maxy)
-{
-	rect->min_x = minx;
-	rect->max_x = maxx;
-	rect->min_y = miny;
-	rect->max_y = maxy;
-}
-
-static void clip_rect(rectangle *rect, const rectangle *cliprect)
-{
-	if (rect->min_x < cliprect->min_x) rect->min_x = cliprect->min_x;
-	if (rect->min_y < cliprect->min_y) rect->min_y = cliprect->min_y;
-	if (rect->max_x > cliprect->max_x) rect->max_x = cliprect->max_x;
-	if (rect->max_y > cliprect->max_y) rect->max_y = cliprect->max_y;
-	if (rect->min_y >= rect->max_y) rect->min_y = rect->max_y;
-	if (rect->min_x >= rect->max_x) rect->min_x = rect->max_x;
-}
-
 static void drawgfx(INT32 gfx, UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32 x0, INT32 y0, INT32 shadow)
 {
 	const UINT8 *addr, *source;
@@ -3335,16 +3335,16 @@ static void drawgfx(INT32 gfx, UINT32 code, UINT32 color, INT32 flipx, INT32 fli
 #define SSV_DRAWGFX(SETPIXELCOLOR)                                              \
 	for ( sy = y0; sy != y1; sy += dy )                                         \
 	{                                                                           \
-		if ( sy >= Gclip_min_y && sy <= Gclip_max_y )                 \
+		if ( sy >= Gclip.min_y && sy <= Gclip.max_y )                 \
 		{                                                                       \
 			source  =   addr;                                                   \
 			dest    =   pTransDraw + (sy * nScreenWidth);                          \
-												\
+																		\
 			for ( sx = x0; sx != x1; sx += dx )                                 \
 			{                                                                   \
 				pen = (*source++) & penmask;                                     \
 												\
-				if ( pen && sx >= Gclip_min_x && sx <= Gclip_max_x )  \
+				if ( pen && sx >= Gclip.min_x && sx <= Gclip.max_x )  \
 					SETPIXELCOLOR                                            \
 			}                                                                   \
 		}                                                                       \
@@ -3478,24 +3478,22 @@ void draw_row_64pixhigh(INT32 in_sy, INT32 scrollreg)
 
 	/* Set up a clipping region for the tilemap slice .. */
 	rectangle outclip;
-	set_rect(&outclip, 0, 0x20 * 0x10, in_sy, in_sy + 0x8 * 0x8);
-	rectangle cliprect;
-	set_rect(&cliprect, Gclip_min_x, Gclip_max_x, Gclip_min_y, Gclip_max_y);
+	outclip.set(0, 0x20 * 0x10, in_sy, in_sy + 0x8 * 0x8);
 
 	/* .. and clip it against the visible screen */
 
-	if (outclip.min_x > cliprect.max_x)    return;
-	if (outclip.min_y > cliprect.max_y)    return;
+	if (outclip.min_x > Gclip.max_x)    return;
+	if (outclip.min_y > Gclip.max_y)    return;
 
-	if (outclip.max_x < cliprect.min_x)    return;
-	if (outclip.max_y < cliprect.min_y)    return;
+	if (outclip.max_x < Gclip.min_x)    return;
+	if (outclip.max_y < Gclip.min_y)    return;
 
-	clip_rect(&outclip, &cliprect);
+	outclip &= Gclip;
 
 	for (INT32 line = outclip.min_y; line <= outclip.max_y; line++)
 	{
 		rectangle clip;
-		set_rect(&clip, outclip.min_x, outclip.max_x, line, line);
+		clip.set(outclip.min_x, outclip.max_x, line, line);
 
 		/* Get the scroll data */
 		INT32 tilemap_scrollx = BURN_ENDIAN_SWAP_INT16(ssv_scroll[scrollreg * 4 + 0]);    // x scroll
@@ -3798,10 +3796,7 @@ static INT32 DrvDrawScanline(INT32 drawto)
 {
 	if (drawto > nScreenHeight) drawto = nScreenHeight;
 	if (!pBurnDraw || drawto < 1 || drawto == lastline) return 0;
-	Gclip_min_x = 0;
-	Gclip_max_x = nScreenWidth - 1;
-	Gclip_min_y = lastline;
-	Gclip_max_y = drawto - 1;
+	Gclip.set(0, nScreenWidth - 1, lastline, drawto - 1);
 	lastline = drawto;
 
 	//bprintf(0, _T("%04d: draw scanline %d\n"), nCurrentFrame, drawto-1);
@@ -3821,21 +3816,15 @@ static INT32 DrvDrawScanline(INT32 drawto)
 
 		shadow_pen_mask = (1 << shadow_pen_shift) - 1;
 
-#if 0
-		// used by twineag2 and ultrax
-		Gclip_min_x = ((nScreenWidth / 2) + BURN_ENDIAN_SWAP_INT16(scroll[0x62/2])) * 2 - BURN_ENDIAN_SWAP_INT16(scroll[0x64/2]) * 2 + 2;
-		Gclip_max_x = ((nScreenWidth / 2) + BURN_ENDIAN_SWAP_INT16(scroll[0x62/2])) * 2 - BURN_ENDIAN_SWAP_INT16(scroll[0x62/2]) * 2 + 1;
-		Gclip_min_y = (nScreenHeight + BURN_ENDIAN_SWAP_INT16(scroll[0x6a/2])) - BURN_ENDIAN_SWAP_INT16(scroll[0x6c/2]) + 1;
-		Gclip_max_y = (nScreenHeight + BURN_ENDIAN_SWAP_INT16(scroll[0x6a/2])) - BURN_ENDIAN_SWAP_INT16(scroll[0x6a/2]);
+		// used by twineag2 and ultrax (game-set global clipping)
+		rectangle clippy;
+		clippy.min_x = ((Gclip.max_x / 2) + BURN_ENDIAN_SWAP_INT16(scroll[0x62/2])) * 2 - BURN_ENDIAN_SWAP_INT16(scroll[0x64/2]) * 2 + 2;
+		clippy.max_x = ((Gclip.max_x / 2) + BURN_ENDIAN_SWAP_INT16(scroll[0x62/2])) * 2 - BURN_ENDIAN_SWAP_INT16(scroll[0x62/2]) * 2 + 1;
+		clippy.min_y = (Gclip.max_y + BURN_ENDIAN_SWAP_INT16(scroll[0x6a/2])) - BURN_ENDIAN_SWAP_INT16(scroll[0x6c/2]) + 1;
+		clippy.max_y = (Gclip.max_y + BURN_ENDIAN_SWAP_INT16(scroll[0x6a/2])) - BURN_ENDIAN_SWAP_INT16(scroll[0x6a/2]);
 
-		if (Gclip_min_x < 0) Gclip_min_x = 0;
-		if (Gclip_min_y < 0) Gclip_min_y = 0;
-		if (Gclip_max_x >= nScreenWidth)  Gclip_max_x = nScreenWidth - 1;
-		if (Gclip_max_y >= nScreenHeight) Gclip_max_y = nScreenHeight - 1;
+		Gclip &= clippy;
 
-		if (Gclip_min_x > Gclip_max_x) Gclip_min_x = Gclip_max_x;
-		if (Gclip_min_y > Gclip_max_y) Gclip_min_y = Gclip_max_y;
-#endif
 		draw_layer(0);
 		draw_sprites();
 	}

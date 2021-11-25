@@ -1578,7 +1578,6 @@ DRV		BurnDrvBlkpnthr;
 DRV		BurnSpecBlacksea;
 DRV		BurnSpecblackstar;
 DRV		BurnSpecblktiger;
-DRV		BurnSpecblktiger_48;
 DRV		BurnDrvBlktigerb1;
 DRV		BurnDrvblktigerb2;
 DRV		BurnDrvBlktigera;
@@ -2859,8 +2858,8 @@ DRV		BurnDrvmd_combat;
 DRV		BurnDrvmd_combatca;
 DRV		BurnDrvmd_combatcas;
 DRV		BurnDrvcombh;
-DRV		BurnSpeccschool;
-DRV		BurnSpeccschool_48;
+DRV		BurnSpeccschool128;
+DRV		BurnSpeccschool48;
 DRV		BurnDrvCombatsc;
 DRV		BurnDrvToto;
 DRV		BurnDrvpacmanpe;
@@ -4612,6 +4611,7 @@ DRV		BurnDrvEspgalbl;
 DRV		BurnDrvEspgal;
 DRV		BurnDrvEspial;
 DRV		BurnDrvEspialu;
+DRV		BurnDrvnes_espitene;
 DRV		BurnDrvnes_espitundherpim;
 DRV		BurnDrvmd_espnbb;
 DRV		BurnDrvmd_espnhn;
@@ -5830,6 +5830,7 @@ DRV		BurnDrvnes_ghostsngoblins;
 DRV		BurnDrvGngc;
 DRV		BurnDrvGng;
 DRV		BurnDrvGnga;
+DRV		BurnDrvnes_ghoulgrind;
 DRV		BurnDrvnes_ghoulschool;
 DRV		BurnSpecgng;
 DRV		BurnDrvmd_ghouls1;
@@ -6854,11 +6855,11 @@ DRV		BurnSpecImpossaball;
 DRV		BurnSpecImpossabubble;
 DRV		BurnSpecimpossamole;
 DRV		BurnDrvtg_impossam;
+DRV		BurnSpecImpmission;
 DRV		BurnDrvsms_impmiss;
 DRV		BurnDrvsms_impmissp;
-DRV		BurnDrvnes_imposmisii;
 DRV		BurnSpecImpmission2;
-DRV		BurnSpecImpmission;
+DRV		BurnDrvnes_imposmisii;
 DRV		BurnDrvInthuntu;
 DRV		BurnDrvInthunt;
 DRV		BurnDrvgg_wakevamp;
@@ -14339,8 +14340,7 @@ DRV		BurnDrvSubhunt;			// No sound
 DRV		BurnDrvsms_subrescue;
 DRV		BurnDrvMSX_subacuatic;
 DRV		BurnSpecsubacquatic;
-DRV		BurnSpecsubbueto;
-DRV		BurnSpecsubbueto_48;
+DRV		BurnSpecsubbuteo;
 DRV		BurnDrvMSX_subcmdr;
 DRV		BurnDrvSub;
 DRV		BurnDrvsms_submarin;
@@ -14908,7 +14908,6 @@ DRV		BurnDrvMSX_swinga;
 DRV		BurnDrvmd_switchblad;
 DRV		BurnSpecswitchblade;
 DRV		BurnSpecswiv;
-DRV		BurnSpecswivblk1;
 DRV		BurnDrvcv_sword;
 DRV		BurnDrvnes_swordmasterc;
 DRV		BurnDrvnes_swordmasterh;
@@ -15150,7 +15149,6 @@ DRV		BurnDrvTeddybb;
 DRV		BurnDrvTeddybbo;
 DRV		BurnDrvTeddybbobl;
 DRV		BurnSpectmht;
-DRV		BurnSpectmht_48;
 DRV		BurnDrvnes_tmht;
 DRV		BurnDrvTmht2pa;
 DRV		BurnDrvTmht2p;
@@ -17056,6 +17054,7 @@ DRV		BurnDrvMSX_warroid;
 DRV		BurnDrvMSX_warroida;
 DRV		BurnDrvmd_warsongs;
 DRV		BurnDrvmd_warsong;
+DRV		BurnDrvnes_wartworm;
 DRV		BurnDrvWatrball;
 DRV		BurnDrvMSX_waterdrv;
 DRV		BurnDrvmd_wmargin;
@@ -18066,7 +18065,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_2020bbj,			// 2020 Toshi Super Baseball (Jpn)
 	&BurnSpec2088,				// 2088 (48K)
 	&BurnDrvpce_21emon,			// 21 Emon - Mezase Hotel ou!!
-	&BurnSpec21erotic,			// 21 Erotic (48K)
+	&BurnSpec21erotic,			// 21 Erotic (Czech) (48K)
 	&BurnSpec2112ad,			// 2112 AD (48K)
 	&BurnDrv3Countb,			// 3 Count Bout / Fire Suplex (NGM-043)(NGH-043)
 	&BurnDrv3Countba,			// 3 Count Bout / Fire Suplex (NGM-043)
@@ -19531,7 +19530,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecBlacksea,			// Black Sea - Treasure Hunters (128K) (HB)
 	&BurnSpecblackstar,			// Black Star (48K) (HB)
 	&BurnSpecblktiger,			// Black Tiger (128K)
-	&BurnSpecblktiger_48,		// Black Tiger (48K)
 	&BurnDrvBlktigerb1,			// Black Tiger (bootleg set 1)
 	&BurnDrvblktigerb2,			// Black Tiger (bootleg set 2)
 	&BurnDrvBlktigera,			// Black Tiger (older)
@@ -20812,8 +20810,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_combatca,		// Combat Cars (Euro, USA)
 	&BurnDrvmd_combatcas,		// Combat Cars (Hack, Spanish)
 	&BurnDrvcombh,				// Combat Hawk
-	&BurnSpeccschool,			// Combat School (128K)
-	&BurnSpeccschool_48,		// Combat School (48K)
+	&BurnSpeccschool128,		// Combat School (128K)
+	&BurnSpeccschool48,			// Combat School (48K)
 	&BurnDrvCombatsc,			// Combat School (joystick)
 	&BurnDrvToto,				// Come Back Toto
 	&BurnDrvpacmanpe,			// Come Come (Petaco SA bootleg of Puck Man)
@@ -22565,6 +22563,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvEspgal,				// Espgaluda (Japan, 2003/10/15 Master Ver)
 	&BurnDrvEspial,				// Espial (Europe)
 	&BurnDrvEspialu,			// Espial (US?)
+	&BurnDrvnes_espitene,		// Espitene (HB)
 	&BurnDrvnes_espitundherpim,	// Espitenen und herr pimponen (HB)
 	&BurnDrvmd_espnbb,			// ESPN Baseball Tonight (USA)
 	&BurnDrvmd_espnhn,			// ESPN National Hockey Night (USA)
@@ -23783,6 +23782,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGngc,				// Ghosts'n Goblins (World Revision C)
 	&BurnDrvGng,				// Ghosts'n Goblins (World? set 1)
 	&BurnDrvGnga,				// Ghosts'n Goblins (World? set 2)
+	&BurnDrvnes_ghoulgrind,		// Ghoul Grind Night of the Necromancer (HB)
 	&BurnDrvnes_ghoulschool,	// Ghoul School (USA)
 	&BurnSpecgng,				// Ghouls 'n' Ghosts (128K)
 	&BurnDrvmd_ghouls1,			// Ghouls'n Ghosts (Euro, USA)
@@ -24807,11 +24807,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecImpossabubble,		// Impossabubble (HB)
 	&BurnSpecimpossamole,		// Impossamole (128K)
 	&BurnDrvtg_impossam,		// Impossamole
+	&BurnSpecImpmission,		// Impossible Mission (48K)
 	&BurnDrvsms_impmiss,		// Impossible Mission (Euro, Bra)
 	&BurnDrvsms_impmissp,		// Impossible Mission (Euro, Prototype)
+	&BurnSpecImpmission2,		// Impossible Mission II (48K)
 	&BurnDrvnes_imposmisii,		// Impossible Mission II (USA)
-	&BurnSpecImpmission2,		// Impossible Mission II
-	&BurnSpecImpmission,		// Impossible Mission
 	&BurnDrvInthuntu,			// In The Hunt (US)
 	&BurnDrvInthunt,			// In The Hunt (World)
 	&BurnDrvgg_wakevamp,		// In the Wake of Vampire (Jpn)
@@ -30340,7 +30340,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecsabotur2_48,		// Saboteur II - Avenging Angel (Trainer) (48K)
 	&BurnSpecsabot_48,			// Saboteur! (48K)
 	&BurnSpecSabrewulf,			// Sabre Wulf (48K)
-	&BurnSpecAntiriad,			// Sacred Armour of Antiriad, The
+	&BurnSpecAntiriad,			// Sacred Armour of Antiriad, The (48K)
 	&BurnDrvpce_sadaki7,		// Sadakichi 7 Series - Hideyoshi no Ougon
 	&BurnDrvSadari,				// Sadari
 #if defined FBNEO_DEBUG
@@ -32292,8 +32292,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_subrescue,		// Sub Rescue (HB, v0.3)
 	&BurnDrvMSX_subacuatic,		// Subacuatic (HB)
 	&BurnSpecsubacquatic,		// Subaquatic Reloaded (128K) (HB)
-	&BurnSpecsubbueto,			// Subbuteo - The Computer Game (128K)
-	&BurnSpecsubbueto_48,		// Subbuteo - The Computer Game (48K)
+	&BurnSpecsubbuteo,			// Subbuteo - The Computer Game (128K)
 	&BurnDrvMSX_subcmdr,		// Subcommander (HB, v1.02)
 	&BurnDrvSub,				// Submarine (Sigma)
 	&BurnDrvsms_submarin,		// Submarine Attack (Euro)
@@ -32861,7 +32860,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_switchblad,		// Switch Blade MD (HB)
 	&BurnSpecswitchblade,		// Switchblade (128K)
 	&BurnSpecswiv,				// SWIV (128K)
-	&BurnSpecswivblk1,			// SWIV (Block1) (128K)
 	&BurnDrvcv_sword,			// Sword and Sorcerer (Prototype)
 	&BurnDrvnes_swordmasterc,	// Sword Master (USA) - Castellano v1.0
 	&BurnDrvnes_swordmasterh,	// Sword Master (USA)(Hack Sample Fix)
@@ -33102,15 +33100,14 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTeddybb,			// TeddyBoy Blues (315-5115, New Ver.)
 	&BurnDrvTeddybbo,			// TeddyBoy Blues (315-5115, Old Ver.)
 	&BurnDrvTeddybbobl,			// TeddyBoy Blues (bootleg)
-	&BurnSpectmht,				// Teenage Mutant Hero Turtles (128K)
-	&BurnSpectmht_48,			// Teenage Mutant Hero Turtles (48K)
+	&BurnSpectmht,				// Teenage Mutant Hero Turtles (48K)
 	&BurnDrvnes_tmht,			// Teenage Mutant Hero Turtles (Europe)
 	&BurnDrvTmht2pa,			// Teenage Mutant Hero Turtles (UK 2 Players, version ?)
 	&BurnDrvTmht2p,				// Teenage Mutant Hero Turtles (UK 2 Players, version U)
 	&BurnDrvTmhtb,				// Teenage Mutant Hero Turtles (UK 4 Players, version ?)
 	&BurnDrvTmht,				// Teenage Mutant Hero Turtles (UK 4 Players, version F)
 	&BurnDrvTmhta,				// Teenage Mutant Hero Turtles (UK 4 Players, version S)
-	&BurnSpectmhtarc,			// Teenage Mutant Hero Turtles - The Coin-Op (48K)
+	&BurnSpectmhtarc,			// Teenage Mutant Hero Turtles - The Coin-Op (128K)
 	&BurnDrvmd_tmhthh,			// Teenage Mutant Hero Turtles - The Hyperstone Heist (Euro)
 	&BurnDrvmd_tmhttf,			// Teenage Mutant Hero Turtles - Tournament Fighters (Euro)
 	&BurnDrvTmht22pe,			// Teenage Mutant Hero Turtles - Turtles in Time (2 Players ver. EBA)
@@ -35009,6 +35006,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_warroida,		// Warroid (Jpn, Alt)
 	&BurnDrvmd_warsongs,		// Warsong (Hack, Spanish)
 	&BurnDrvmd_warsong,			// Warsong (USA)
+	&BurnDrvnes_wartworm,		// Wart Worm Wingding (HB)
 	&BurnDrvWatrball,			// Water Balls
 	&BurnDrvMSX_waterdrv,		// Water Driver (Jpn)
 	&BurnDrvmd_wmargin,			// Water Margin - A Tale of Clouds and Wind (HB, USA)

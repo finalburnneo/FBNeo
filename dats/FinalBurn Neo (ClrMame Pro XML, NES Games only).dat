@@ -1815,7 +1815,7 @@
 	<game name="mojontwiboo">
 		<description>Bootee (HB) [Homebrew]</description>
 		<year>2018</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Mojon Twins - Bootee (HB).nes" size="40976" crc="c71f42bc"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1975,7 +1975,7 @@
 	<game name="cadaverion">
 		<description>Cadaverion (HB) [Homebrew]</description>
 		<year>2018</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Cadaverion (2018)(Mojon Twins).nes" size="40976" crc="6a45c96a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2311,7 +2311,7 @@
 	<game name="cherilpc">
 		<description>Cheril Perils Classic (HB) [Homebrew]</description>
 		<year>2018</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Cheril Perils Classic (2018)(Mojon Twins).nes" size="40976" crc="8132afd5"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2319,7 +2319,7 @@
 	<game name="mojontwichegod">
 		<description>Cheril The Goddess (HB) [Homebrew]</description>
 		<year>2017</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Mojon Twins - Cheril The Goddess (HB).nes" size="65552" crc="e7c81856"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2327,7 +2327,7 @@
 	<game name="mojontwichewri">
 		<description>Cheril The Writer (HB) [Homebrew]</description>
 		<year>2018</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Mojon Twins - Cheril The Writer (HB).nes" size="131088" crc="2405a68f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4316,10 +4316,18 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="espitene">
+		<description>Espitene (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="Espitene (2018)(The Mojon Twins).nes" size="65552" crc="1f80c94e"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="espitundherpim">
 		<description>Espitenen und herr pimponen (HB) [Homebrew]</description>
 		<year>2019</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Espitenen und herr pimponen (HB).nes" size="65552" crc="ea5fa8a8"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5577,6 +5585,14 @@
 		<year>1986</year>
 		<manufacturer>Capcom</manufacturer>
 		<rom name="Ghosts'n Goblins (USA).nes" size="131088" crc="983dd1de"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="ghoulgrind">
+		<description>Ghoul Grind Night of the Necromancer (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>WoogWorx</manufacturer>
+		<rom name="Ghoul Grind Night of the Necromancer (2021)(WoogWorx).nes" size="524304" crc="3557252e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -6863,7 +6879,7 @@
 	<game name="jetpaco">
 		<description>Jet-Paco (HB) [Homebrew]</description>
 		<year>2015</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Jet-Paco (HB).nes" size="40976" crc="b5f18574"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6983,7 +6999,7 @@
 	<game name="journeyal">
 		<description>Journey to the Center of the Alien (HB) [Homebrew]</description>
 		<year>2019</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="journey to the center of the alien (2019)(mojon twins).nes" size="73744" crc="d4b8eaa5"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7775,7 +7791,7 @@
 	<game name="lalathemagical">
 		<description>Lala the Magical (HB) [Homebrew]</description>
 		<year>2016</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Lala the Magical (HB).nes" size="81936" crc="496c2e59"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9063,7 +9079,7 @@
 	<game name="miedow">
 		<description>Miedow (HB) [Homebrew]</description>
 		<year>2018</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Miedow (HB).nes" size="65552" crc="6389b721"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9279,7 +9295,7 @@
 	<game name="mojontwimul">
 		<description>Mojon Twins Multicart (HB) [Homebrew]</description>
 		<year>2016</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Mojon Twins Multicart (HB).nes" size="393232" crc="eec1e108"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12047,7 +12063,7 @@
 	<game name="sirababol">
 		<description>Sir Ababol (HB) [Homebrew]</description>
 		<year>2013</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Sir Ababol (HB).nes" size="40976" crc="5e7e4c60"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12055,7 +12071,7 @@
 	<game name="sirababolr" cloneof="sirababol" romof="sirababol">
 		<description>Sir Ababol Remastered Edition (HB) [Homebrew]</description>
 		<year>2016</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Sir Ababol Remastered Edition (2016)(Mojon Twins).nes" size="40976" crc="36d8ca2b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13207,7 +13223,7 @@
 	<game name="superuwol">
 		<description>Super UWOL (HB) [Homebrew]</description>
 		<year>2015</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Super UWOL (HB).nes" size="40976" crc="9fbb9e1d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14796,6 +14812,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="wartworm">
+		<description>Wart Worm Wingding (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>John Vanderhoef</manufacturer>
+		<rom name="Wart Worm Wingding (2020)(John Vanderhoef).nes" size="524304" crc="8b9d8827"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="waynesworld">
 		<description>Wayne's World (USA)</description>
 		<year>1993</year>
@@ -15247,7 +15271,7 @@
 	<game name="yunr5">
 		<description>Yun R5 (HB) [Homebrew]</description>
 		<year>2018</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="yun r5 (2018)(mojon twins).nes" size="65552" crc="04940713"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -15335,7 +15359,7 @@
 	<game name="zombiecalavera">
 		<description>Zombie Calavera (HB) [Homebrew]</description>
 		<year>2016</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Zombie Calavera (HB).nes" size="40976" crc="23ec3047"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>

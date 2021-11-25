@@ -127,7 +127,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="21erotic" romof="spectrum">
-		<description>21 Erotic (48K)</description>
+		<description>21 Erotic (Czech) (48K) [Adult game]</description>
 		<year>1995</year>
 		<manufacturer>JardaSoft</manufacturer>
 		<rom name="21 Erotic (1995)(JardaSoft).tap" size="10336" crc="80cb68c0"/>
@@ -1652,7 +1652,7 @@
 		<description>Bionic Commando (48K)</description>
 		<year>1988</year>
 		<manufacturer>Go!</manufacturer>
-		<rom name="Bionic Commando (1988)(Go!).z80" size="39846" crc="69a1c19d"/>
+		<rom name="Bionic Commandos (1988)(Go!).tap" size="97616" crc="9093dd3d"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1729,18 +1729,9 @@
 		<description>Black Tiger (128K)</description>
 		<year>1989</year>
 		<manufacturer>U.S. Gold</manufacturer>
-		<rom name="Black Tiger (1989)(U.S. Gold)[128K].z80" size="41377" crc="c9b3da9b"/>
+		<rom name="Black Tiger (1989)(U.S. Gold).tap" size="122820" crc="12912cc8"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="blktiger_48" cloneof="blktiger" romof="blktiger">
-		<description>Black Tiger (48K)</description>
-		<year>1989</year>
-		<manufacturer>U.S. Gold</manufacturer>
-		<rom name="Black Tiger (1989)(U.S. Gold).z80" size="34468" crc="22b42c5d"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3025,21 +3016,21 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cschool" romof="spec128">
+	<game name="cschool128" romof="spec128">
 		<description>Combat School (128K)</description>
 		<year>1987</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Combat School (1987)(Ocean)[128K].z80" size="105937" crc="e66e39b5"/>
+		<rom name="Combat School 128K (1987)(Ocean).tap" size="118171" crc="a45d89c2"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cschool_48" cloneof="cschool" romof="cschool">
+	<game name="cschool48" cloneof="cschool128" romof="cschool128">
 		<description>Combat School (48K)</description>
 		<year>1987</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Combat School (1987)(Ocean).z80" size="42953" crc="5b7421a6"/>
+		<rom name="Combat School 48K (1987)(Ocean).tap" size="109676" crc="14c7b9ea"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3048,7 +3039,7 @@
 		<description>Commando (Elite Systems) (48K)</description>
 		<year>1985</year>
 		<manufacturer>Elite Systems</manufacturer>
-		<rom name="Commando (1985)(Elite Systems).z80" size="41180" crc="6cabf85d"/>
+		<rom name="Commando (1985)(Elite Systems).tap" size="48833" crc="90a44ff9"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3085,7 +3076,7 @@
 		<description>Confuzion (48K) [Press R to invert commands]</description>
 		<year>1985</year>
 		<manufacturer>Incentive</manufacturer>
-		<rom name="Confuzion 48K (1985)(Incentive).z80" size="42017" crc="e400ce83"/>
+		<rom name="Confuzion (1985)(Incentive).tap" size="49343" crc="9d0f6c6c"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4220,7 +4211,7 @@
 		<description>Donkey Kong (48K)</description>
 		<year>1986</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Donkey Kong (1986)(Ocean).z80" size="39025" crc="4840171d"/>
+		<rom name="Donkey Kong (1986)(Ocean).tap" size="57131" crc="f54f6058"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4471,7 +4462,7 @@
 		<description>Druid (48K) [Press '2' to set Kempston Joystick]</description>
 		<year>1986</year>
 		<manufacturer>Firebird Software</manufacturer>
-		<rom name="Druid (1986)(Firebird).z80" size="39142" crc="caec88d5"/>
+		<rom name="Druid (1986)(Firebird).tap" size="45791" crc="19fb94a7"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4480,7 +4471,7 @@
 		<description>Druid II - Enlightenment (48K) [Press 'J' to set Kempston Joystick]</description>
 		<year>1987</year>
 		<manufacturer>Firebird Software</manufacturer>
-		<rom name="Druid II - Enlightenment (1987)(Firebird).z80" size="41484" crc="4822960f"/>
+		<rom name="Druid II - Enlightenment (1987)(Firebird).tap" size="58884" crc="8a5474aa"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4838,7 +4829,7 @@
 		<description>Factory Daze (128K) (HB) [Homebrew]</description>
 		<year>2009</year>
 		<manufacturer>Bob Smith</manufacturer>
-		<rom name="Factory Daze (2009)(Bob Smith).z80" size="50298" crc="fa6e3240"/>
+		<rom name="Factory Daze 128K (2009)(Bob Smith).tap" size="59071" crc="73225faf"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -6662,22 +6653,22 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="impmission" romof="spectrum">
+		<description>Impossible Mission (48K)</description>
+		<year>1985</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Impossible Mission (1985)(U.S. Gold).tap" size="54480" crc="f3cddbf9"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="impmission2" romof="spec128">
-		<description>Impossible Mission II</description>
+		<description>Impossible Mission II (48K)</description>
 		<year>1988</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Impossible Mission II (1988)(U.S. Gold).z80" size="44256" crc="ea95490a"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="impmission" romof="spectrum">
-		<description>Impossible Mission</description>
-		<year>1985</year>
-		<manufacturer>U.S. Gold</manufacturer>
-		<rom name="Impossible Mission (1985)(U.S. Gold).tap" size="54480" crc="f3cddbf9"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -11474,7 +11465,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="antiriad" romof="spectrum">
-		<description>Sacred Armour of Antiriad, The</description>
+		<description>Sacred Armour of Antiriad, The (48K)</description>
 		<year>1986</year>
 		<manufacturer>Palace</manufacturer>
 		<rom name="Sacred Armour of Antiriad, The (1986)(Palace).z80" size="41012" crc="1abe0529"/>
@@ -12900,22 +12891,13 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="subbueto" romof="spec128">
+	<game name="subbuteo" romof="spec128">
 		<description>Subbuteo - The Computer Game (128K)</description>
 		<year>1990</year>
 		<manufacturer>Electronic Zoo</manufacturer>
-		<rom name="Subbuteo - The Computer Game (1990)(Electronic Zoo)[128K].z80" size="60190" crc="37c72d4c"/>
+		<rom name="Subbuteo - The Computer Game 128K (1990)(Electronic Zoo).tap" size="76987" crc="9a6211f8"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="subbueto_48" cloneof="subbueto" romof="subbueto">
-		<description>Subbuteo - The Computer Game (48K)</description>
-		<year>1990</year>
-		<manufacturer>Electronic Zoo</manufacturer>
-		<rom name="Subbuteo - The Computer Game (1990)(Electronic Zoo).z80" size="33758" crc="31346a92"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -13214,16 +13196,6 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="swivblk1" cloneof="swiv" romof="swiv">
-		<description>SWIV (Block1) (128K)</description>
-		<year>1991</year>
-		<manufacturer>Storm Software</manufacturer>
-		<rom name="SWIV (1991)(Storm Software)(Block1)(128k).z80" size="104051" crc="92a3c4e7"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="swordofilana" romof="spec128">
 		<description>Sword Of Ilana (128K) (HB) [Homebrew]</description>
 		<year>2017</year>
@@ -13338,31 +13310,22 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tmht" romof="spec128">
-		<description>Teenage Mutant Hero Turtles (128K)</description>
-		<year>1990</year>
-		<manufacturer>Image Works</manufacturer>
-		<rom name="Teenage Mutant Hero Turtles (1990)(Image Works)[128K].z80" size="49334" crc="66d86001"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="tmht_48" cloneof="tmht" romof="tmht">
+	<game name="tmht" romof="spectrum">
 		<description>Teenage Mutant Hero Turtles (48K)</description>
 		<year>1990</year>
 		<manufacturer>Image Works</manufacturer>
-		<rom name="Teenage Mutant Hero Turtles (1990)(Image Works).z80" size="46364" crc="fa454654"/>
+		<rom name="Teenage Mutant Hero Turtles (1990)(Image Works).tap" size="43029" crc="d96767fb"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tmhtarc" romof="spectrum">
-		<description>Teenage Mutant Hero Turtles - The Coin-Op (48K)</description>
+	<game name="tmhtarc" romof="spec128">
+		<description>Teenage Mutant Hero Turtles - The Coin-Op (128K)</description>
 		<year>1991</year>
 		<manufacturer>Image Works</manufacturer>
-		<rom name="Teenage Mutant Hero Turtles - The Coin-Op (1991)(Image Works).z80" size="41331" crc="2adc23b7"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="Teenage Mutant Hero Turtles - The Coin-Op (1991)(Image Works).tap" size="155263" crc="a1ea1547"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

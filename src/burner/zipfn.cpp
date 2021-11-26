@@ -16,7 +16,7 @@ static unzFile Zip = NULL;
 static INT32 nCurrFile = 0; // The current file we are pointing to
 
 #ifdef INCLUDE_7Z_SUPPORT
-static _7z_file2* _7ZipFile = NULL;
+static _7z_file* _7ZipFile = NULL;
 #endif
 
 INT32 ZipOpen(char* szZip)

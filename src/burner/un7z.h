@@ -69,13 +69,13 @@ typedef struct
 	UINT64			_7z_length;
 	FILE *			_7z_osdfile;					/* OSD file handle */
 
-} CSzFile;
+} CSzFile2;
 
 
 typedef struct
 {
 	ISeqInStream vt;
-	CSzFile file;
+	CSzFile2 file;
 } CFileSeqInStream;
 
 void FileSeqInStream_CreateVTable(CFileSeqInStream *p);
@@ -84,16 +84,16 @@ void FileSeqInStream_CreateVTable(CFileSeqInStream *p);
 typedef struct
 {
 	ISeekInStream vt;
-	CSzFile file;
-} CFileInStream;
+	CSzFile2 file;
+} CFileInStream2;
 
-void FileInStream_CreateVTable(CFileInStream *p);
+void FileInStream_CreateVTable(CFileInStream2 *p);
 
 
 typedef struct
 {
 	ISeqOutStream vt;
-	CSzFile file;
+	CSzFile2 file;
 } CFileOutStream;
 
 void FileOutStream_CreateVTable(CFileOutStream *p);
@@ -127,8 +127,8 @@ typedef enum __7z_error _7z_error;
 ***************************************************************************/
 
 /* describes an open _7Z file */
-typedef struct __7z_file _7z_file;
-struct __7z_file
+typedef struct __7z_file2 _7z_file2;
+struct __7z_file2
 {
 	const char *	filename;				/* copy of _7Z filename (for caching) */
 
@@ -136,7 +136,7 @@ struct __7z_file
 	UINT64 uncompressed_length;				/* current file uncompressed length */
 	UINT64 crc;								/* current file crc */
 
-	CFileInStream archiveStream;
+	CFileInStream2 archiveStream;
 	CLookToRead2 lookStream;
 	CSzArEx db;
 	SRes res;
@@ -160,10 +160,10 @@ struct __7z_file
 /* ----- _7Z file access ----- */
 
 /* open a _7Z file and parse its central directory */
-_7z_error _7z_file_open(const char *filename, _7z_file **_7z);
+_7z_error _7z_file_open(const char *filename, _7z_file2 **_7z);
 
 /* close a _7Z file (may actually be left open due to caching) */
-void _7z_file_close(_7z_file *_7z);
+void _7z_file_close(_7z_file2 *_7z);
 
 /* clear out all open _7Z files from the cache */
 void _7z_file_cache_clear(void);
@@ -172,10 +172,10 @@ void _7z_file_cache_clear(void);
 /* ----- contained file access ----- */
 
 /* find a file index by crc, filename or both */
-int _7z_search_crc_match(_7z_file *new_7z, UINT32 crc, const char *search_filename, int search_filename_length, bool matchcrc, bool matchname);
+int _7z_search_crc_match(_7z_file2 *new_7z, UINT32 crc, const char *search_filename, int search_filename_length, bool matchcrc, bool matchname);
 
 /* decompress the most recently found file in the _7Z */
-_7z_error _7z_file_decompress(_7z_file *new_7z, void *buffer, UINT32 length, UINT32 *Processed);
+_7z_error _7z_file_decompress(_7z_file2 *new_7z, void *buffer, UINT32 length, UINT32 *Processed);
 
 
 #endif	/* __UN_7Z_H__ */

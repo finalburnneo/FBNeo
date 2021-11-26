@@ -219,7 +219,6 @@ DRV		BurnDrvnes_actio53vol1stbu;
 DRV		BurnDrvnes_actio53vol2doac;
 DRV		BurnDrvnes_actio53vol3retw;
 DRV		BurnSpecafighter;
-DRV		BurnSpecafighter_48;
 DRV		BurnDrvsms_actionfg1;
 DRV		BurnDrvsms_actionfg;
 DRV		BurnDrvAFighterc;
@@ -824,7 +823,8 @@ DRV		BurnDrvCpsArmwara;
 DRV		BurnDrvCpsArmwarb;
 DRV		BurnDrvCpsArmwar;
 DRV		BurnDrvCpsArmwaru;
-DRV		BurnSpecarmymvs;
+DRV		BurnSpecarmymvs128;
+DRV		BurnSpecarmymvs48;
 DRV		BurnDrvMSX_armymove;
 DRV		BurnDrvMSX_arnodash;
 DRV		BurnDrvsg1k_arnodash;
@@ -996,7 +996,6 @@ DRV		BurnDrvnes_attackiltom;
 DRV		BurnDrvMSX_Attacked;
 DRV		BurnSpecatvsim;
 DRV		BurnSpecaufwiemo;
-DRV		BurnSpecaufwiemo_48;
 DRV		BurnDrvMSX_awmonty;
 DRV		BurnDrvAurailjd;
 DRV		BurnDrvAurailj;
@@ -1953,7 +1952,6 @@ DRV		BurnDrvmd_bubblesqs;
 DRV		BurnDrvmd_bubblesqu;
 DRV		BurnDrvnes_bbbabes;
 DRV		BurnSpecbublbobl;
-DRV		BurnSpecbublbobl_48;
 DRV		BurnDrvBub68705;
 DRV		BurnDrvBub68705a;
 DRV		BurnDrvsms_bublbobl;
@@ -2235,9 +2233,9 @@ DRV		BurnDrvCpsCsclubjy;
 DRV		BurnDrvCpsCsclub;
 DRV		BurnDrvCworld;
 DRV		BurnDrvnes_capcosgolmedch92;
+DRV		BurnDrvMSX_ctrueno;
 DRV		BurnSpeccaptrueno1;
 DRV		BurnSpeccaptrueno2;
-DRV		BurnDrvMSX_ctrueno;
 DRV		BurnDrvCapitol;
 DRV		BurnDrvmd_capoeira;
 DRV		BurnDrvmd_havoc;
@@ -2500,8 +2498,8 @@ DRV		BurnDrvnes_chase;
 DRV		BurnDrvCbombersp;
 DRV		BurnDrvCbombersj;
 DRV		BurnDrvCbombers;
-DRV		BurnSpecchasehq;
-DRV		BurnSpecchasehq_48;
+DRV		BurnSpecchasehq128;
+DRV		BurnSpecchasehq48;
 DRV		BurnDrvMSX_chasehq;
 DRV		BurnDrvChasehqju;
 DRV		BurnDrvChasehqj;
@@ -18171,7 +18169,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_actio53vol2doac,// Action 53 vol 2 Double Action (HB)
 	&BurnDrvnes_actio53vol3retw,// Action 53 vol 3 Revenge of the Twins (HB)
 	&BurnSpecafighter,			// Action Fighter (128K)
-	&BurnSpecafighter_48,		// Action Fighter (48K)
 	&BurnDrvsms_actionfg1,		// Action Fighter (Euro, Jpn, v1)
 	&BurnDrvsms_actionfg,		// Action Fighter (Euro, USA, Bra, v2)
 	&BurnDrvAFighterc,			// Action Fighter (FD1089B 317-unknown)
@@ -18776,7 +18773,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsArmwarb,			// Armored Warriors (941024 Brazil)
 	&BurnDrvCpsArmwar,			// Armored Warriors (941024 Europe)
 	&BurnDrvCpsArmwaru,			// Armored Warriors (941024 USA)
-	&BurnSpecarmymvs,			// Army Moves (128K)
+	&BurnSpecarmymvs128,		// Army Moves (128K)
+	&BurnSpecarmymvs48,			// Army Moves (48K)
 	&BurnDrvMSX_armymove,		// Army Moves (Euro)
 	&BurnDrvMSX_arnodash,		// Arno Dash (HB)
 	&BurnDrvsg1k_arnodash,		// Arno Dash (HB)
@@ -18894,7 +18892,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAtaqandr,			// Ataque Androide - Moon Cresta (FAR S.A. Spanish bootleg)
 	&BurnDrvAsideral,			// Ataque Sideral (Spanish bootleg of UniWar S)
 	&BurnSpecAtf128k,			// ATF - Advanced Tactical Fighter (128K)
-	&BurnSpecathena,			// Athena (128K)
+	&BurnSpecathena,			// Athena (48K)
 	&BurnDrvAthenab,			// Athena (bootleg)
 	&BurnDrvnes_athena,			// Athena (USA)
 	&BurnDrvAtehate,			// Athena no Hatena ?
@@ -18948,7 +18946,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_Attacked,		// Attacked
 	&BurnSpecatvsim,			// ATV Simulator - All Terrain Vehicle (48K)
 	&BurnSpecaufwiemo,			// Auf Wiedersehen Monty (128K)
-	&BurnSpecaufwiemo_48,		// Auf Wiedersehen Monty (48K)
 	&BurnDrvMSX_awmonty,		// Auf Wiedersehen Monty (v1.7 special s/l rom)
 	&BurnDrvAurailjd,			// Aurail (set 1, Japan, FD1089A 317-0167 decrypted)
 	&BurnDrvAurailj,			// Aurail (set 1, Japan, FD1089A 317-0167)
@@ -19905,7 +19902,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_bubblesqu,		// Bubble and Squeak (USA)
 	&BurnDrvnes_bbbabes,		// Bubble Bath Babes (USA) (Unl)
 	&BurnSpecbublbobl,			// Bubble Bobble (128K)
-	&BurnSpecbublbobl_48,		// Bubble Bobble (48K)
 	&BurnDrvBub68705,			// Bubble Bobble (boolteg with 68705, set 1)
 	&BurnDrvBub68705a,			// Bubble Bobble (boolteg with 68705, set 2)
 	&BurnDrvsms_bublbobl,		// Bubble Bobble (Euro, Bra)
@@ -20171,7 +20167,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCanvas,				// Canvas Croquis
 	&BurnDrvCanyonp,			// Canyon Bomber (prototype)
 	&BurnDrvCanyon,				// Canyon Bomber
-	&BurnSpeccanywarr,			// Canyon Warrior (48K)
+	&BurnSpeccanywarr,			// Canyon Warrior (128K)
 	&BurnDrvcv_caosbgns,		// Caos Begins (HB)
 	&BurnDrvMSX_caos,			// Caos Begins (HB)
 	&BurnDrvCapbowl,			// Capcom Bowling (set 1)
@@ -20187,9 +20183,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsCsclub,			// Capcom Sports Club (971017 Euro)
 	&BurnDrvCworld,				// Capcom World (Japan)
 	&BurnDrvnes_capcosgolmedch92,// Capcom's Gold Medal Challenge '92 (USA)
-	&BurnSpeccaptrueno1,		// Capitan Trueno (Spanish) (Part 1 of 2) (128K)
-	&BurnSpeccaptrueno2,		// Capitan Trueno (Spanish) (Part 2 of 2) (128K)
 	&BurnDrvMSX_ctrueno,		// Capitan Trueno, el (Spanish)
+	&BurnSpeccaptrueno1,		// Capitan Trueno, El - Part 1 (Spanish) (48K)
+	&BurnSpeccaptrueno2,		// Capitan Trueno, El - Part 2 (Spanish) (48K)
 	&BurnDrvCapitol,			// Capitol
 	&BurnDrvmd_capoeira,		// Capoeira Boy (HB)
 	&BurnDrvmd_havoc,			// Capt'n Havoc (Euro)
@@ -20257,7 +20253,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_carrace,		// Car-Race (Jpn)
 	&BurnDrvMSX_carraceb,		// Car-Race (Jpn, Alt 2)
 	&BurnDrvMSX_carracea,		// Car-Race (Jpn, Alt)
-	&BurnSpeccarlossainz,		// Carlos Sainz (128K)
+	&BurnSpeccarlossainz,		// Carlos Sainz (Spanish) (128K)
 	&BurnDrvMSX_csainz,			// Carlos Sainz - Campeonato del Mundo (Spanish)
 	&BurnDrvCarnivalc,			// Carnival (cocktail)
 #if defined FBNEO_DEBUG
@@ -20452,8 +20448,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCbombersp,			// Chase Bombers (Japan Prototype)
 	&BurnDrvCbombersj,			// Chase Bombers (Japan)
 	&BurnDrvCbombers,			// Chase Bombers (World)
-	&BurnSpecchasehq,			// Chase H.Q. (128K)
-	&BurnSpecchasehq_48,		// Chase H.Q. (48K)
+	&BurnSpecchasehq128,		// Chase H.Q. (128K)
+	&BurnSpecchasehq48,			// Chase H.Q. (48K)
 	&BurnDrvMSX_chasehq,		// Chase H.Q. (Euro)
 	&BurnDrvChasehqju,			// Chase H.Q. (Japan UP)
 	&BurnDrvChasehqj,			// Chase H.Q. (Japan)
@@ -31205,8 +31201,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSokonuke,			// Sokonuke Taisen Game (Japan)
 	&BurnDrvSoldividk,			// Sol Divide - The Sword Of Darkness (Korea)
 	&BurnDrvSoldivid,			// Sol Divide - The Sword Of Darkness
-	&BurnSpecsolnegro1,			// Sol Negro (Spanish) (Part 1 of 2) (128K)
-	&BurnSpecsolnegro2,			// Sol Negro (Spanish) (Part 2 of 2) (128K)
+	&BurnSpecsolnegro1,			// Sol Negro - Special Edition - Part 1 (Spanish) (48K)
+	&BurnSpecsolnegro2,			// Sol Negro - Special Edition - Part 2 (Spanish) (48K)
 	&BurnDrvmd_soldeacep,		// Sol-Deace (Prototype, 19920203)
 	&BurnDrvmd_soldeace,		// Sol-Deace (USA)
 	&BurnDrvSolarfox,			// Solar Fox (upright)

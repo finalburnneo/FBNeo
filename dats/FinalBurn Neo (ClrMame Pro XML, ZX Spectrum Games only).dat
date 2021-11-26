@@ -344,15 +344,6 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="afighter_48" cloneof="afighter" romof="afighter">
-		<description>Action Fighter (48K)</description>
-		<year>1989</year>
-		<manufacturer>Firebird Software</manufacturer>
-		<rom name="Action Fighter (1989)(Firebird Software).z80" size="37764" crc="d61df17c"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="actionforce" romof="spectrum">
 		<description>Action Force (48K)</description>
 		<year>1987</year>
@@ -363,7 +354,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="actionforce2" romof="spec128">
-		<description>Action Force II (128K) [On black screen press SPACE to begin]</description>
+		<description>Action Force II (128K) [On black screen press SPACE to start]</description>
 		<year>1988</year>
 		<manufacturer>Virgin Games</manufacturer>
 		<rom name="Action Force II (1988)(Virgin Games).tap" size="46813" crc="3d4139b7"/>
@@ -424,17 +415,17 @@
 		<description>Addams Family, The (128K)</description>
 		<year>1991</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Addams Family, The (1991)(Ocean)(128k).z80" size="122606" crc="f4d1671a"/>
+		<rom name="Addams Family, The 128K (1991)(Ocean).tap" size="131557" crc="10ca8414"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="adichafo" romof="spec128">
-		<description>Adidas Championship Football (128K)</description>
+		<description>Adidas Championship Football (128K) [Set '2. Sinclair' to use controller]</description>
 		<year>1990</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Adidas Championship Football (1990)(Ocean)[128K].z80" size="95081" crc="89364845"/>
+		<rom name="Adidas Championship Football 128K (1990)(Ocean).tap" size="106547" crc="2b13ba5a"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -962,18 +953,27 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="armymvs" romof="spec128">
-		<description>Army Moves (128K)</description>
-		<year>1986</year>
-		<manufacturer>Imagine Software</manufacturer>
-		<rom name="Army Moves (1986)(Imagine Software)(128k).z80" size="63797" crc="c5552b91"/>
+	<game name="armymvs128" romof="spec128">
+		<description>Army Moves (128K) [Password Part 2: 27351]</description>
+		<year>1986-87</year>
+		<manufacturer>Imagine &amp; Dinamic Software</manufacturer>
+		<rom name="Army Moves 128K (1987)(Imagine).tap" size="68998" crc="dd386d25"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="armymvs48" cloneof="armymvs128" romof="armymvs128">
+		<description>Army Moves (48K) [Password Part 2: 27351]</description>
+		<year>1986-87</year>
+		<manufacturer>Imagine &amp; Dinamic Software</manufacturer>
+		<rom name="Army Moves 48K (1987)(Imagine).tap" size="77664" crc="7f80f524"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="aspargpmas" romof="spec128">
-		<description>Aspar GP Master (Spanish) (128K) [Leave 'keys' setting to use controller]</description>
+		<description>Aspar GP Master (Spanish) (128K) [Set '3. keys' to use controller]</description>
 		<year>1988</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Aspar GP Master (1988)(Dinamic Software)(es)(128k).z80" size="38691" crc="03627882"/>
@@ -1059,13 +1059,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="athena" romof="spec128">
-		<description>Athena (128K)</description>
+	<game name="athena" romof="spectrum">
+		<description>Athena (48K)</description>
 		<year>1987</year>
 		<manufacturer>Imagine Software</manufacturer>
-		<rom name="Athena (1987)(Imagine Software).z80" size="108395" crc="f0547094"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Athena (1987)(Imagine).tap" size="102859" crc="b457ae80"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1137,18 +1136,9 @@
 		<description>Auf Wiedersehen Monty (128K)</description>
 		<year>1987</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
-		<rom name="Auf Wiedersehen Monty (1987)(Gremlin Graphics)(128k).z80" size="69375" crc="49580b2d"/>
+		<rom name="Auf Wiedersehen Monty 128K (1987)(Gremlin Graphics).tap" size="70498" crc="52564ec0"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="aufwiemo_48" cloneof="aufwiemo" romof="aufwiemo">
-		<description>Auf Wiedersehen Monty (48K)</description>
-		<year>1987</year>
-		<manufacturer>Gremlin Graphics</manufacturer>
-		<rom name="Auf Wiedersehen Monty (1987)(Gremlin Graphics)[a4].z80" size="49182" crc="1851b7fa"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1184,7 +1174,7 @@
 		<description>Avenger (128K)</description>
 		<year>1986</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
-		<rom name="Avenger 128K (1986)(Gremlin Graphics).z80" size="45683" crc="8ac4d620"/>
+		<rom name="Avenger 128K (1986)(Gremlin Graphics).tap" size="54471" crc="9d484c92"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -2204,20 +2194,11 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bublbobl_48" cloneof="bublbobl" romof="bublbobl">
-		<description>Bubble Bobble (48K)</description>
-		<year>1987</year>
-		<manufacturer>Firebird Software</manufacturer>
-		<rom name="Bubble Bobble (1987)(Firebird Software).z80" size="40505" crc="77c240b3"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="bubothad" romof="spec128">
 		<description>Bubble Bobble - The Adventure (128K)</description>
 		<year>1993</year>
 		<manufacturer>AP's Adventures</manufacturer>
-		<rom name="Bubble Bobble - The Adventure (1993)(AP's Adventures)[128K].z80" size="54151" crc="cfa03eec"/>
+		<rom name="Bubble Bobble - The Adventure 128K (1993)(AP's Adventures).tap" size="73681" crc="856eb771"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -2357,7 +2338,7 @@
 		<description>Cabal (128K)</description>
 		<year>1988</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Cabal (1988)(Ocean)[128K].z80" size="95614" crc="6174d654"/>
+		<rom name="Cabal 128K (1989)(Ocean).tap" size="111703" crc="798f3c55"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -2394,37 +2375,36 @@
 		<description>Camelot Warriors (48K)</description>
 		<year>1986</year>
 		<manufacturer>Dinamic Software</manufacturer>
-		<rom name="Camelot Warriors 48K (1986)(Dinamic).z80" size="36763" crc="e2c4a072"/>
+		<rom name="Camelot Warriors (1986)(Dinamic).tap" size="41677" crc="27fdde63"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="canywarr" romof="spectrum">
-		<description>Canyon Warrior (48K)</description>
+	<game name="canywarr" romof="spec128">
+		<description>Canyon Warrior (128K)</description>
 		<year>1989</year>
 		<manufacturer>Mastertronic Plus</manufacturer>
-		<rom name="Canyon Warrior (1989)(Mastertronic Plus).z80" size="34314" crc="086df73a"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="Canyon Warrior (1989)(Mastertronic Plus).tap" size="52451" crc="5574dd40"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="captrueno1" romof="spec128">
-		<description>Capitan Trueno (Spanish) (Part 1 of 2) (128K)</description>
+	<game name="captrueno1" romof="spectrum">
+		<description>Capitan Trueno, El - Part 1 (Spanish) (48K)</description>
 		<year>1989</year>
 		<manufacturer>Dinamic Software</manufacturer>
-		<rom name="Capitan Trueno (1989)(Dinamic Software)(es)(Part 1 of 2)(128k).z80" size="40499" crc="5cb7a3b1"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Capitan Trueno, El - Part 1 ES (1989)(Dinamic).tap" size="48603" crc="8e123899"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="captrueno2" cloneof="captrueno1" romof="captrueno1">
-		<description>Capitan Trueno (Spanish) (Part 2 of 2) (128K)</description>
+		<description>Capitan Trueno, El - Part 2 (Spanish) (48K) [Password: 270653]</description>
 		<year>1989</year>
 		<manufacturer>Dinamic Software</manufacturer>
-		<rom name="Capitan Trueno (1989)(Dinamic Software)(es)(Part 2 of 2)(128k).z80" size="38646" crc="0b381b12"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Capitan Trueno, El - Part 2 ES (1989)(Dinamic).tap" size="46209" crc="61b80ea8"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2487,7 +2467,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="carlossainz" romof="spec128">
-		<description>Carlos Sainz (128K)</description>
+		<description>Carlos Sainz (Spanish) (128K)</description>
 		<year>1990</year>
 		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="Carlos Sainz (1990)(Zigurat Software)(128k).z80" size="41541" crc="608dabf2"/>
@@ -2693,21 +2673,21 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chasehq" romof="spec128">
+	<game name="chasehq128" romof="spec128">
 		<description>Chase H.Q. (128K)</description>
 		<year>1989</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Chase H.Q. (1989)(Ocean)[128K].z80" size="114767" crc="bb5ae933"/>
+		<rom name="Chase H.Q. (1989)(Ocean).tap" size="118340" crc="236a9884"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chasehq_48" cloneof="chasehq" romof="chasehq">
+	<game name="chasehq48" cloneof="chasehq128" romof="chasehq128">
 		<description>Chase H.Q. (48K)</description>
 		<year>1989</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Chase H.Q. (1989)(Ocean).z80" size="42743" crc="5e684c1f"/>
+		<rom name="Chase H.Q. (1989)(Ocean).tap" merge="Chase H.Q. (1989)(Ocean).tap" size="118340" crc="236a9884"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2716,7 +2696,7 @@
 		<description>Chase H.Q. II - Special Criminal Investigations (128K)</description>
 		<year>1990</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Chase H.Q. II - Special Criminal Investigations (1990)(Ocean)[128K].z80" size="102453" crc="83ac9fea"/>
+		<rom name="Chase H.Q. II - Special Criminal Investigations 128K (1990)(Ocean).tap" size="122661" crc="fd47cf79"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -3884,7 +3864,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="discodan" romof="spectrum">
-		<description>Disco Dan (48K) </description>
+		<description>Disco Dan (48K)  [Set '1. Cursor Joystick' to use controller]</description>
 		<year>1984</year>
 		<manufacturer>Gem Software</manufacturer>
 		<rom name="Disco Dan (1984)(Gem Software).tap" size="19931" crc="8ba92db3"/>
@@ -10369,8 +10349,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="psychohopper" romof="spectrum">
-		<description>Psycho Hopper (48K) [Select keyboard to play]</description>
-		<year>1989</year>
+		<description>Psycho Hopper (48K) [Set '3 Sinclair' to use controller]</description>
+		<year>1989-90</year>
 		<manufacturer>Mastertronic Plus</manufacturer>
 		<rom name="Psycho Hopper (1990)(Mastertronic Plus).tap" size="50178" crc="beda1169"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
@@ -12186,23 +12166,21 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="solnegro1" romof="spec128">
-		<description>Sol Negro (Spanish) (Part 1 of 2) (128K)</description>
+	<game name="solnegro1" romof="spectrum">
+		<description>Sol Negro - Special Edition - Part 1 (Spanish) (48K)</description>
 		<year>1989</year>
 		<manufacturer>Opera Soft</manufacturer>
-		<rom name="Sol Negro (1989)(Opera Soft)(es)(Part 1 of 2)(128k).z80" size="39768" crc="7061e8bc"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Sol Negro - Special Edition - Part 1 (1989)(Opera Soft).z80" size="42525" crc="27b7e34f"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="solnegro2" cloneof="solnegro1" romof="solnegro1">
-		<description>Sol Negro (Spanish) (Part 2 of 2) (128K)</description>
+		<description>Sol Negro - Special Edition - Part 2 (Spanish) (48K)</description>
 		<year>1989</year>
 		<manufacturer>Opera Soft</manufacturer>
-		<rom name="Sol Negro (1989)(Opera Soft)(es)(Part 2 of 2)(128k).z80" size="37998" crc="539534b1"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Sol Negro - Special Edition - Part 2 (1989)(Opera Soft).z80" size="37075" crc="af912284"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -12598,7 +12576,7 @@
 		<description>Star Farce (48K)</description>
 		<year>1988</year>
 		<manufacturer>Mastertronic</manufacturer>
-		<rom name="Star Farce (1988)(Mastertronic).z80" size="43144" crc="91817feb"/>
+		<rom name="Star Farce (1988)(Mastertronic).tap" size="44969" crc="b7915492"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -12634,7 +12612,7 @@
 	<game name="starwars" romof="spectrum">
 		<description>Star Wars (48K)</description>
 		<year>1987</year>
-		<manufacturer>Domark Ltd (UK)</manufacturer>
+		<manufacturer>Domark</manufacturer>
 		<rom name="Star Wars.tap" size="41763" crc="14f2595f"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -12663,7 +12641,7 @@
 		<description>Starquake (48K)</description>
 		<year>1985</year>
 		<manufacturer>Bubblebus Software</manufacturer>
-		<rom name="Starquake (1985)(Bubblebus Software).z80" size="41999" crc="0aba61a3"/>
+		<rom name="Starquake (1985)(Bubble Bus).tap" size="56203" crc="16e3e1b2"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

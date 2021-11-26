@@ -904,18 +904,18 @@ void ES5506Update(INT16 *outputs, INT32 samples_len)
 		INT32 nRightSample[4] = {0, 0, 0, 0};
 		INT32 nTotalLeftSample, nTotalRightSample;
 
-		nLeftSample[0] += (INT32)(pBufL[(nFractionalPosition >> 16) - 3]);
-		nLeftSample[1] += (INT32)(pBufL[(nFractionalPosition >> 16) - 2]);
-		nLeftSample[2] += (INT32)(pBufL[(nFractionalPosition >> 16) - 1]);
-		nLeftSample[3] += (INT32)(pBufL[(nFractionalPosition >> 16) - 0]);
+		nLeftSample[0] += BURN_SND_CLIP((INT32)(pBufL[(nFractionalPosition >> 16) - 3]) >> 4);
+		nLeftSample[1] += BURN_SND_CLIP((INT32)(pBufL[(nFractionalPosition >> 16) - 2]) >> 4);
+		nLeftSample[2] += BURN_SND_CLIP((INT32)(pBufL[(nFractionalPosition >> 16) - 1]) >> 4);
+		nLeftSample[3] += BURN_SND_CLIP((INT32)(pBufL[(nFractionalPosition >> 16) - 0]) >> 4);
 
-		nRightSample[0] += (INT32)(pBufR[(nFractionalPosition >> 16) - 3]);
-		nRightSample[1] += (INT32)(pBufR[(nFractionalPosition >> 16) - 2]);
-		nRightSample[2] += (INT32)(pBufR[(nFractionalPosition >> 16) - 1]);
-		nRightSample[3] += (INT32)(pBufR[(nFractionalPosition >> 16) - 0]);
+		nRightSample[0] += BURN_SND_CLIP((INT32)(pBufR[(nFractionalPosition >> 16) - 3]) >> 4);
+		nRightSample[1] += BURN_SND_CLIP((INT32)(pBufR[(nFractionalPosition >> 16) - 2]) >> 4);
+		nRightSample[2] += BURN_SND_CLIP((INT32)(pBufR[(nFractionalPosition >> 16) - 1]) >> 4);
+		nRightSample[3] += BURN_SND_CLIP((INT32)(pBufR[(nFractionalPosition >> 16) - 0]) >> 4);
 
-		nTotalLeftSample  = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0] >> 4, nLeftSample[1] >> 4, nLeftSample[2] >> 4, nLeftSample[3] >> 4);
-		nTotalRightSample = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nRightSample[0] >> 4, nRightSample[1] >> 4, nRightSample[2] >> 4, nRightSample[3] >> 4);
+		nTotalLeftSample  = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3]);
+		nTotalRightSample = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nRightSample[0], nRightSample[1], nRightSample[2], nRightSample[3]);
 
 		outputs[i + 0] = BURN_SND_CLIP(nTotalLeftSample * chip->volume[0]);
 		outputs[i + 1] = BURN_SND_CLIP(nTotalRightSample * chip->volume[1]);

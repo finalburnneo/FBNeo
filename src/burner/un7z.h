@@ -53,6 +53,10 @@
 
 #include "driver.h"
 
+#ifdef __LIBRETRO__
+ #include <streams/file_stream_transforms.h>
+#endif
+
 #define ARRAY_LENGTH(x)		(sizeof(x) / sizeof(x[0]))
 
 #include "7z.h"

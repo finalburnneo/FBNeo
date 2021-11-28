@@ -14949,10 +14949,18 @@
 		<driver status="good"/>
 	</game>
 	<game name="witchnwiz">
-		<description>Witch n' Wiz (HB) [Homebrew, NESDev 2020-21 Edition]</description>
+		<description>Witch n' Wiz (HB) [Homebrew]</description>
 		<year>2021</year>
 		<manufacturer>Matt Hughson</manufacturer>
-		<rom name="Witch n' Wiz (HB)(2021)(Matt Hughson).nes" size="65552" crc="bddd6cba"/>
+		<rom name="Witch n' Wiz (2021)(mhughson).nes" size="262160" crc="4ac76d3f"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="witchnwiznd" cloneof="witchnwiz" romof="witchnwiz">
+		<description>Witch n' Wiz (HB, NESDev Ed.) [Homebrew]</description>
+		<year>2020-21</year>
+		<manufacturer>Matt Hughson</manufacturer>
+		<rom name="Witch n' Wiz (2020-21)(NESDev Ed.).nes" size="65552" crc="bddd6cba"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

@@ -5952,7 +5952,7 @@ static struct BurnRomInfo inyourfaRomDesc[] = {
 	{ "07.27c1001",		0x020000, 0xdc254c7c, 8 | BRF_SND },           // 21 OKI #1 Samples
 	{ "08.27c1001",		0x020000, 0xcadd4731, 8 | BRF_SND },           // 22
 
-	{ "prom.14m",    	0x000200, 0x1341ba02, 9 | BRF_GRA },           // 23 Priority PROM
+	{ "prom.14m",    	0x000200, 0x21390e3a, 9 | BRF_GRA },           // 23 Priority PROM
 };
 
 STD_ROM_PICK(inyourfa)

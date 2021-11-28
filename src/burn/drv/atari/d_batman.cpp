@@ -9,6 +9,7 @@
 #include "atarimo.h"
 #include "atarivad.h"
 #include "atarijsa.h"
+#include "msm6295.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -392,12 +393,7 @@ static INT32 DrvInit()
 		NULL				/* callback routine for special entries */
 	};
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		INT32 k = 0;
@@ -449,6 +445,7 @@ static INT32 DrvInit()
 	GenericTilemapSetGfx(3, DrvGfxROM0, 2, 8, 8, 0x080000, 0x000, 0x0f);
 
 	AtariVADInit(0, 1, 0, scanline_timer, palette_write);
+	AtariVADSetXOffsets(2, 6, 1);
 	AtariVADSetPartialCB(draw_scanline);
 	AtariMoInit(0, &modesc);
 
@@ -484,6 +481,8 @@ static INT32 DrvInit()
 	BurnWatchdogInit(DrvDoReset, 180);
 
 	AtariJSAInit(DrvM6502ROM, &update_interrupts, DrvSndROM, NULL);
+	MSM6295SetRoute(0, 0.85, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 0.85, BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset(1);
 
@@ -500,7 +499,7 @@ static INT32 DrvExit()
 	AtariMoExit();
 	AtariEEPROMExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }

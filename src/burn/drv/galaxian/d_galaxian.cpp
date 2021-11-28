@@ -9335,7 +9335,7 @@ static INT32 PiscesInit()
 }
 
 struct BurnDriver BurnDrvPisces = {
-	"pisces", NULL, NULL, NULL, "19??",
+	"pisces", NULL, NULL, NULL, "1982",
 	"Pisces\0", NULL, "Subelectro", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
@@ -9345,7 +9345,7 @@ struct BurnDriver BurnDrvPisces = {
 };
 
 struct BurnDriver BurnDrvPiscesb = {
-	"piscesb", "pisces", NULL, NULL, "19??",
+	"piscesb", "pisces", NULL, NULL, "1982",
 	"Pisces (bootleg)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
@@ -9355,7 +9355,7 @@ struct BurnDriver BurnDrvPiscesb = {
 };
 
 struct BurnDriver BurnDrvOmni = {
-	"omni", "pisces", NULL, NULL, "19??",
+	"omni", "pisces", NULL, NULL, "1982",
 	"Omni\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,

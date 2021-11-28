@@ -20423,7 +20423,7 @@ struct BurnDriver BurnDrvnes_spacegulls = {
 };
 
 static struct BurnRomInfo nes_witchnwizRomDesc[] = {
-	{ "Witch n' Wiz (HB)(2021)(Matt Hughson).nes",          65552, 0xbddd6cba, BRF_ESS | BRF_PRG },
+	{ "Witch n' Wiz (2021)(mhughson).nes",          262160, 0x4ac76d3f, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_witchnwiz)
@@ -20431,10 +20431,27 @@ STD_ROM_FN(nes_witchnwiz)
 
 struct BurnDriver BurnDrvnes_witchnwiz = {
 	"nes_witchnwiz", NULL, NULL, NULL, "2021",
-	"Witch n' Wiz (HB)\0", "NESDev 2020-21 Edition", "Matt Hughson", "Miscellaneous",
+	"Witch n' Wiz (HB)\0", NULL, "Matt Hughson", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE | GBF_ADV, 0,
 	NESGetZipName, nes_witchnwizRomInfo, nes_witchnwizRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_witchnwizndRomDesc[] = {
+	{ "Witch n' Wiz (2020-21)(NESDev Ed.).nes",          65552, 0xbddd6cba, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_witchnwiznd)
+STD_ROM_FN(nes_witchnwiznd)
+
+struct BurnDriver BurnDrvnes_witchnwiznd = {
+	"nes_witchnwiznd", "nes_witchnwiz", NULL, NULL, "2020-21",
+	"Witch n' Wiz (HB, NESDev Ed.)\0", NULL, "Matt Hughson", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_witchnwizndRomInfo, nes_witchnwizndRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

@@ -6842,7 +6842,7 @@ struct BurnDriver BurnDrvSsridersjac = {
 	"Sunset Riders (4 Players ver. JAC)\0", NULL, "Konami", "GX064",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_KONAMI_68K_Z80, GBF_RUNGUN, 0,
-	NULL, SsridersjacRomInfo, SsridersjacRomName, NULL, NULL, NULL, NULL, SsridersInputInfo, NULL,
+	NULL, SsridersjacRomInfo, SsridersjacRomName, NULL, NULL, NULL, NULL, Ssriders4pInputInfo, NULL,
 	SsridersInit, BlswhstlExit, SsridersFrame, BlswhstlDraw, SsridersScan,
 	NULL, 0x810, 288, 224, 4, 3
 };
@@ -6852,7 +6852,7 @@ struct BurnDriver BurnDrvSsridersjad = {
 	"Sunset Riders (4 Players ver. JAD)\0", NULL, "Konami", "GX064",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_KONAMI_68K_Z80, GBF_RUNGUN, 0,
-	NULL, SsridersjadRomInfo, SsridersjadRomName, NULL, NULL, NULL, NULL, SsridersInputInfo, NULL,
+	NULL, SsridersjadRomInfo, SsridersjadRomName, NULL, NULL, NULL, NULL, Ssriders4pInputInfo, NULL,
 	SsridersInit, BlswhstlExit, SsridersFrame, BlswhstlDraw, SsridersScan,
 	NULL, 0x810, 288, 224, 4, 3
 };

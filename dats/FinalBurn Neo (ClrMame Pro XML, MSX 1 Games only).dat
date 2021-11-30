@@ -563,6 +563,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="amadeuscb" romof="msx">
+		<description>Amadeus Classical Beats (HB)</description>
+		<year>2021</year>
+		<manufacturer>Amaury Carvalho</manufacturer>
+		<rom name="Amadeus Classical Beats (2021)(Amaury Carvalho).rom" size="49152" crc="3b33c8c1"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="amtrucka" romof="msx">
 		<description>American Truck (Jpn)</description>
 		<year>1985</year>
@@ -827,12 +838,22 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="armymove" romof="msx">
-		<description>Army Moves (Euro)</description>
+	<game name="armymoves1" romof="msx">
+		<description>Army Moves - Part 1 (Euro)</description>
 		<year>1987</year>
-		<manufacturer>Dinamic Software</manufacturer>
-		<rom name="army moves (1987)(dinamic software)(gb)(side a)[run'cas-'].cas" size="49698" crc="d33316dd"/>
-		<rom name="army moves (1987)(dinamic software)(gb)(side b)[run'cas-'].cas" size="49698" crc="8e5fd272"/>
+		<manufacturer>Imagine &amp; Dinamic Software</manufacturer>
+		<rom name="Army Moves - Part 1 (1987)(Imagine Software)[RUN'CAS-'].cas" size="49698" crc="d33316dd"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="armymoves2" cloneof="armymoves1" romof="armymoves1">
+		<description>Army Moves - Part 2 (Euro) [Password: 37215]</description>
+		<year>1987</year>
+		<manufacturer>Imagine &amp; Dinamic Software</manufacturer>
+		<rom name="Army Moves - Part 2 (1987)(Imagine Software)[RUN'CAS-'].cas" size="49698" crc="8e5fd272"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -895,7 +916,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="amc" romof="msx">
-		<description>Astro Marine Corps (Spanish) [Uses joyport #2. Press 'M' for Grenade]</description>
+		<description>Astro Marine Corps (Spanish) [Press 'M' for Grenades]</description>
 		<year>1989</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="astro marine corps (1989)(dinamic software)(es).rom" size="131072" crc="60f99d30"/>
@@ -950,7 +971,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="athlandp" cloneof="athland" romof="athland">
-		<description>Athletic Land (Jpn, Prototype)</description>
+		<description>Athletic Land (Jpn, Prototype) [Prototype]</description>
 		<year>1984</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="athletic land (japan) (beta).rom" size="16384" crc="e4a428b5"/>
@@ -1391,7 +1412,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="battlechopper" romof="msx">
-		<description>Battle Chopper</description>
+		<description>Battle Chopper (Euro)</description>
 		<year>1985</year>
 		<manufacturer>Methodic Solutions</manufacturer>
 		<rom name="Battle Chopper (1985)(Methodic Solutions)(NL)[RUN'CAS-'].cas" size="68336" crc="957a030e"/>
@@ -1428,6 +1449,17 @@
 		<year>1984</year>
 		<manufacturer>T&amp;E Soft</manufacturer>
 		<rom name="battleship clapton ii (japan) (alt 1).rom" size="16384" crc="2de725a3"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="battlot" romof="msx">
+		<description>Battlot (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Inufuto</manufacturer>
+		<rom name="Battlot (2021)(Inufuto).rom" size="9662" crc="4f14d982"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -2436,7 +2468,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ctrueno" romof="msx">
-		<description>Capitan Trueno, el (Spanish)</description>
+		<description>Capitan Trueno, El (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Capitan Trueno (1989)(Dinamic Software)(ES).rom" size="131072" crc="b1b434be"/>
@@ -2644,6 +2676,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="cavit" romof="msx">
+		<description>Cavit (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Inufuto</manufacturer>
+		<rom name="Cavit (2021)(Inufuto).rom" size="9791" crc="32ad4281"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="chackn" romof="msx">
 		<description>Chack'n Pop (Jpn)</description>
 		<year>1984</year>
@@ -2833,7 +2876,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chickfighter" romof="msx">
-		<description>Chick Fighter. Hiyoko Fighter</description>
+		<description>Chick Fighter. Hiyoko Fighter (Jpn)</description>
 		<year>1983</year>
 		<manufacturer>Honeybee Soft</manufacturer>
 		<rom name="Chick Fighter. Hiyoko Fighter (1983)(Honeybee Soft)(JP).rom" size="65536" crc="d8e1aadb"/>
@@ -3009,7 +3052,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chuckie" romof="msx">
-		<description>Chuckie Egg (Euro, AandF Software)</description>
+		<description>Chuckie Egg (Euro)</description>
 		<year>1984</year>
 		<manufacturer>AandF Software</manufacturer>
 		<rom name="chuckie egg (1984)(aandf software)[bload'cas-',r].cas" size="14932" crc="3c44f316"/>
@@ -3130,10 +3173,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="colony" romof="msx">
-		<description>Colony (Euro)</description>
+		<description>Colony</description>
 		<year>1987</year>
-		<manufacturer>Bulldog</manufacturer>
-		<rom name="colony (1987)(bulldog)(gb)[run'cas-'].cas" size="31778" crc="f6d82b88"/>
+		<manufacturer>Mastertronic</manufacturer>
+		<rom name="Colony (1987)(Mastertronic).rom" size="32768" crc="e7631c8e"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -4033,9 +4076,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="dinosour" romof="msx">
-		<description>Dino Sourcers</description>
+		<description>Dino Sourcers (Jpn)</description>
 		<year>1988</year>
-		<manufacturer>JALECO</manufacturer>
+		<manufacturer>Jaleco</manufacturer>
 		<rom name="Dino Sourcers.rom" size="16384" crc="83d44b03"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -4066,7 +4109,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dizzyballoon" romof="msx">
-		<description>Dizzy Balloon</description>
+		<description>Dizzy Balloon (Jpn)</description>
 		<year>1985</year>
 		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="Dizzy Balloon (1985)(Pony Canyon)(JP)[RUN'CAS-'].cas" size="25806" crc="a7c4b780"/>
@@ -5001,7 +5044,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="feud" romof="msx">
-		<description>Feud</description>
+		<description>Feud (Euro)</description>
 		<year>1987</year>
 		<manufacturer>Bulldog</manufacturer>
 		<rom name="feud.rom" size="131072" crc="da665159"/>
@@ -5319,12 +5362,33 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="fredhard" romof="msx">
-		<description>Freddy Hardest (Spanish)</description>
+	<game name="fredhard1" romof="msx">
+		<description>Freddy Hardest - Part 1 (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Dinamic Software</manufacturer>
-		<rom name="freddy hardest (1987)(dinamic software)(es)(side a)[run'cas-'].cas" size="53007" crc="9e24261a"/>
-		<rom name="freddy hardest (1987)(dinamic software)(es)(side b)[run'cas-'].cas" size="52687" crc="e4dee6a9"/>
+		<rom name="Freddy Hardest - Part 1 ES (1987)(Dinamic Software)[RUN'CAS-'].cas" size="53007" crc="9e24261a"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="fredhard2" cloneof="fredhard1" romof="fredhard1">
+		<description>Freddy Hardest - Part 2 (Spanish) [Password: 897653]</description>
+		<year>1987</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Freddy Hardest - Part 2 ES (1987)(Dinamic Software)[RUN'CAS-'].cas" size="52687" crc="e4dee6a9"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="fredhardsm" romof="msx">
+		<description>Freddy Hardest in South Manhattan (Spanish)</description>
+		<year>1989</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Freddy Hardest in South Manhattan ES (1989)(Dinamic Software)[RUN'CAS-'].cas" size="56241" crc="9237863f"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -5452,6 +5516,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="futknight" romof="msx">
+		<description>Future Knight (Euro)</description>
+		<year>1986</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
+		<rom name="Future Knight (1986)(Gremlin Graphics Software)[BLOAD'CAS-',R].cas" size="61682" crc="5e5de060"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="gmonkey" romof="msx">
 		<description>G-Monkey (HB) [Homebrew, No single player mode]</description>
 		<year>2008</year>
@@ -5552,7 +5627,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gameover" romof="msx">
-		<description>Game Over (Spanish)</description>
+		<description>Game Over (Spanish) [Password Part 2: 65535]</description>
 		<year>1988</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Game Over (1988)(Dinamic Software)(ES).rom" size="131072" crc="dfbbdf10"/>
@@ -5562,12 +5637,22 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gameovr2" romof="msx">
-		<description>Game Over II (Euro)</description>
+	<game name="gameover21" romof="msx">
+		<description>Game Over II - Part 1 (Euro)</description>
 		<year>1988</year>
 		<manufacturer>Dinamic Software</manufacturer>
-		<rom name="game over ii (1988)(dinamic software)(es)(side a)[re-release of phantis][run'cas-'].cas" size="50115" crc="12de1170"/>
-		<rom name="game over ii (1988)(dinamic software)(es)(side b)[re-release of phantis][run'cas-'].cas" size="49149" crc="994cd2a2"/>
+		<rom name="Game Over II - Part 1 (1988)(Dinamic Software)[RUN'CAS-'].cas" size="50115" crc="12de1170"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gameover22" cloneof="gameover21" romof="gameover21">
+		<description>Game Over II - Part 2 (Euro) [Password: 18757]</description>
+		<year>1988</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Game Over II - Part 2 (1988)(Dinamic Software)[RUN'CAS-'].cas" size="49149" crc="994cd2a2"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -5841,7 +5926,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gonzzalezz" romof="msx">
-		<description>Gonzzalezz </description>
+		<description>Gonzzalezz (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="gonzzalezz.rom" size="262144" crc="8765d1fd"/>
@@ -6282,7 +6367,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="headheels" romof="msx">
-		<description>Head over Heels</description>
+		<description>Head over Heels (Euro)</description>
 		<year>1987</year>
 		<manufacturer>Ocean Software</manufacturer>
 		<rom name="Head over Heels (1987)(Ocean Software)(GB).rom" size="131072" crc="48b88fbc"/>
@@ -6814,6 +6899,17 @@
 		<year>1986</year>
 		<manufacturer>Casio</manufacturer>
 		<rom name="iga ninpouten 2 - small ninja 2 (japan).rom" size="32768" crc="4aa97644"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="impetus" romof="msx">
+		<description>Impetus (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Inufuto</manufacturer>
+		<rom name="Impetus (2021)(Inufuto).rom" size="16352" crc="6f7e32ca"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -8802,7 +8898,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mask3" romof="msx">
-		<description>Mask III - Venom Strikes Back (Euro)</description>
+		<description>Mask III - Venom Strikes Back (Euro) [Use keys from 1 to 4 for change equipment]</description>
 		<year>1988</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="mask iii - venom strikes back (1988)(gremlin graphics software)(gb)[bload'cas-',r].cas" size="69362" crc="c6774b56"/>
@@ -8846,7 +8942,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mayhem" romof="msx">
-		<description>Mayhem [Uses joyport #2]</description>
+		<description>Mayhem</description>
 		<year>1985</year>
 		<manufacturer>Mr. Micro</manufacturer>
 		<rom name="Mayhem (1985)(Mr. Micro)(GB)[cr Magicracks].rom" size="16384" crc="b0b90a4d"/>
@@ -9066,7 +9162,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="milkrace" romof="msx">
-		<description>Milk Race (Euro) [Press '0' to start]</description>
+		<description>Milk Race (Euro) [Press '0' to start, don't press '1' or '2': the game freezes]</description>
 		<year>1987</year>
 		<manufacturer>Mastertronic</manufacturer>
 		<rom name="milk race (1987)(mastertronic)(gb)[run'cas-'].cas" size="46608" crc="74ce546e"/>
@@ -9813,12 +9909,22 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mutanzone" romof="msx">
-		<description>Mutan Zone (Spanish)</description>
+	<game name="mutanzone1" romof="msx">
+		<description>Mutan Zone - Part 1 (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Opera Soft</manufacturer>
-		<rom name="Mutan Zone (1989)(Opera Soft)(ES)(Side A)[BLOAD'CAS-',R].cas" size="56127" crc="448bb17b"/>
-		<rom name="Mutan Zone (1989)(Opera Soft)(ES)(Side B)[BLOAD'CAS-',R].cas" size="56127" crc="0bdd3045"/>
+		<rom name="Mutan Zone - Part 1 ES (1989)(Opera Soft)[BLOAD'CAS-',R].cas" size="56127" crc="448bb17b"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mutanzone2" cloneof="mutanzone1" romof="mutanzone1">
+		<description>Mutan Zone - Part 2 (Spanish)</description>
+		<year>1989</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Mutan Zone - Part 2 ES (1989)(Opera Soft)[BLOAD'CAS-',R].cas" size="56127" crc="0bdd3045"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -9827,9 +9933,9 @@
 	</game>
 	<game name="mumonty" romof="msx">
 		<description>Mutant Monty</description>
-		<year>1984</year>
-		<manufacturer>artic</manufacturer>
-		<rom name="mumonty.rom" size="131072" crc="308b71ae"/>
+		<year>1985</year>
+		<manufacturer>Artic Computing</manufacturer>
+		<rom name="Mutant Monty (1985)(Artic Computing).rom" size="32768" crc="3ed1324e"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -9871,7 +9977,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="namake" romof="msx">
-		<description>Namake's Bridgedrome (HB) [Homebrew, Uses joyport #2]</description>
+		<description>Namake's Bridgedrome (HB) [Homebrew]</description>
 		<year>2005</year>
 		<manufacturer>Buresto Faiya</manufacturer>
 		<rom name="Namake's Bridgedrome (2005)(Buresto Faiya).rom" size="16384" crc="92aee975"/>
@@ -9892,12 +9998,22 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="navymove" romof="msx">
-		<description>Navy Moves (Euro) [Select Keyboard mode and use Joystick]</description>
+	<game name="navymoves1" romof="msx">
+		<description>Navy Moves - Part 1 (Euro) [Set '1-Keyboard' and config inputs to use controller]</description>
 		<year>1988</year>
 		<manufacturer>Dinamic Software</manufacturer>
-		<rom name="Navy Moves (1988)(Dinamic Software)(ES)(Side A)[RUN'CAS-'].cas" size="50831" crc="d420952c"/>
-		<rom name="Navy Moves (1988)(Dinamic Software)(ES)(Side B)[RUN'CAS-'].cas" size="46325" crc="045a7642"/>
+		<rom name="Navy Moves - Part 1 (1988)(Dinamic Software)[RUN'CAS-'].cas" size="50839" crc="5a62354d"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="navymoves2" cloneof="navymoves1" romof="navymoves1">
+		<description>Navy Moves - Part 2 (Euro) [Password: 53817]</description>
+		<year>1988</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Navy Moves - Part 2 (1988)(Dinamic Software)[RUN'CAS-'].cas" size="46325" crc="04390c1e"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -9960,7 +10076,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gradius2p" cloneof="gradius2" romof="gradius2">
-		<description>Nemesis 2 (Euro) ~ Gradius 2 (Jpn) (Prototype)</description>
+		<description>Nemesis 2 (Euro) ~ Gradius 2 (Jpn) (Prototype) [Prototype]</description>
 		<year>1987</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="nemesis 2 (japan, europe) (beta).rom" size="131072" crc="dfa8c827"/>
@@ -10028,7 +10144,7 @@
 	<game name="neuras" romof="msx">
 		<description>Neuras (HB) [Homebrew]</description>
 		<year>2021</year>
-		<manufacturer>mxb03523</manufacturer>
+		<manufacturer>Inufuto</manufacturer>
 		<rom name="Neuras (2021)(mxb03523).rom" size="8760" crc="27b5df15"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -10059,7 +10175,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nightflight" romof="msx">
-		<description>Night Flight</description>
+		<description>Night Flight (Jpn)</description>
 		<year>1982</year>
 		<manufacturer>Nippon Columbia - Colpax - Universal</manufacturer>
 		<rom name="Night Flight (1982)(Nippon Columbia - Colpax - Universal)[BLOAD'CAS-',R].cas" size="8591" crc="650188bd"/>
@@ -10697,7 +10813,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="payload" romof="msx">
-		<description>Payload (Jpn)</description>
+		<description>Payload (Jpn) [Map 'Function Keys' to play]</description>
 		<year>1985</year>
 		<manufacturer>Sony</manufacturer>
 		<rom name="Payload (1985)(Sony)(JP).rom" size="32768" crc="165eae6d"/>
@@ -10809,7 +10925,7 @@
 	<game name="perezthemouse" romof="msx">
 		<description>Perez the Mouse (HB, V1.1) [Homebrew]</description>
 		<year>2011</year>
-		<manufacturer>Nestruo &amp; Wonder</manufacturer>
+		<manufacturer>theNestruo &amp; Wonder</manufacturer>
 		<rom name="Perez the Mouse 1.1 (2011) (theNestruo Wonder).cas" size="22915" crc="cc8d9d62"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -10829,7 +10945,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="perspective" romof="msx">
-		<description>Perspective (v1.1)</description>
+		<description>Perspective (Jpn, v1.1)</description>
 		<year>1987</year>
 		<manufacturer>T.Yoshida</manufacturer>
 		<rom name="perspective.rom" size="262144" crc="2c4eead6"/>
@@ -10839,7 +10955,7 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="phantis" cloneof="gameovr2" romof="gameovr2">
+	<game name="phantis" cloneof="zyxx" romof="zyxx">
 		<description>Phantis (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Dinamic Software</manufacturer>
@@ -11371,7 +11487,7 @@
 	<game name="pyramidwex" romof="msx">
 		<description>Pyramid Warp Enhanced (HB) [Homebrew, Remastered version]</description>
 		<year>2021</year>
-		<manufacturer>Bitcaffe, Nenefranz, Nestruo</manufacturer>
+		<manufacturer>Bitcaffe, Nenefranz, theNestruo</manufacturer>
 		<rom name="Pyramid Warp Enhanced (2021)(Bitcaffe-Nenefranz-theNestruo).rom" size="32768" crc="a7cdfff9"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -12229,6 +12345,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="scrspirit" romof="msx">
+		<description>Scramble Spirits (Euro)</description>
+		<year>1990</year>
+		<manufacturer>Grandslam Entertainments</manufacturer>
+		<rom name="Scramble Spirits (1990)(Grandslam Entertainments)(Side A)[BLOAD'CAS-',R].cas" size="72473" crc="a8671046"/>
+		<rom name="Scramble Spirits (1990)(Grandslam Entertainments)(Side B)[BLOAD'CAS-',R].cas" size="48434" crc="93295403"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="seahuntr" romof="msx">
 		<description>Sea Hunter (Euro)</description>
 		<year>1984</year>
@@ -12674,6 +12802,28 @@
 		<year>1988</year>
 		<manufacturer>Dempa</manufacturer>
 		<rom name="sofia (japan).rom" size="65536" crc="14811951"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="solnegro1" romof="msx">
+		<description>Sol Negro - Part 1 (Spanish)</description>
+		<year>1989</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Sol Negro - Part 1 ES (1989)(Opera Soft)[BLOAD'CAS-',R].cas" size="52032" crc="e01e709d"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="solnegro2" cloneof="solnegro1" romof="solnegro1">
+		<description>Sol Negro - Part 2 (Spanish) [Password: 2414520]</description>
+		<year>1989</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Sol Negro - Part 2 ES (1989)(Opera Soft)[BLOAD'CAS-',R].cas" size="84560" crc="31b4198c"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -13257,7 +13407,7 @@
 	<game name="stevedore" romof="msx">
 		<description>Stevedore (HB, v1.2) [Homebrew, Hold controller button 2 to restart level]</description>
 		<year>2021</year>
-		<manufacturer>Nestruo &amp; Wonder</manufacturer>
+		<manufacturer>theNestruo &amp; Wonder</manufacturer>
 		<rom name="Stevedore v1.2 (2021)(theNestruo &amp; Wonder).rom" size="49152" crc="859c04ad"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -13268,7 +13418,7 @@
 	<game name="stevedored" cloneof="stevedore" romof="stevedore">
 		<description>Stevedore Demo (HB) [Homebrew, Hold controller button 2 to restart level]</description>
 		<year>2020</year>
-		<manufacturer>Nestruo &amp; Wonder</manufacturer>
+		<manufacturer>theNestruo &amp; Wonder</manufacturer>
 		<rom name="Stevedore - demo (2020) (Nestruo &amp; Wonder).rom" size="32768" crc="4923fd7a"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -15656,7 +15806,7 @@
 	<game name="youkaiyarmd" cloneof="youkaiya" romof="youkaiya">
 		<description>Youkai Yashiki - Ghost House Remastered (HB) [Hack, Homebrew]</description>
 		<year>2021</year>
-		<manufacturer>Yazioh &amp; Nestruo</manufacturer>
+		<manufacturer>Yazioh &amp; theNestruo</manufacturer>
 		<rom name="Youkai Yashiki - Ghost House Remastered (2021)(Yazioh &amp; Nestruo).rom" size="32768" crc="2239eaf2"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>

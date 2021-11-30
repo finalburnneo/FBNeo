@@ -474,7 +474,7 @@ static INT32 DrvInit()
 	for (INT32 i = 0; i < 0x20000; i+=0x1000) {
 		AtariEEPROMInstallMap(1, 0x120000 + i, 0x120fff + i);
 	}
-	AtariEEPROMLoad(Drv68KROM); // temp memory
+	AtariEEPROMLoad(Drv68KRAM); // temp memory
 
 	SekClose();
 
@@ -597,8 +597,9 @@ static void DrvDrawBegin()
 		DrvRecalc = 0;
 	}
 
-	if (pBurnDraw)
+	if (pBurnDraw) {
 		BurnTransferClear();
+	}
 
 	lastline = 0;
 }
@@ -659,11 +660,7 @@ static INT32 DrvFrame()
 
 		if (i == 0) AtariVADEOFUpdate(DrvEOFData);
 
-		if (atarivad_scanline_timer_enabled) {
-			if (atarivad_scanline_timer == atarivad_scanline) {
-				scanline_timer(CPU_IRQSTATUS_ACK);
-			}
-		}
+		AtariVADTimerUpdate();
 
 		CPU_RUN(0, Sek);
 

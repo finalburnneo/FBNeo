@@ -1,6 +1,11 @@
 // FB Alpha Gaelco hardware driver module
 // Based on MAME driver by Manuel Abadia with various bits by Nicola Salmoria and Andreas Naive
 
+// thanks to research by Haze & peterferrie, thoop stg. 4 crash is fixed!
+// first Haze came up with a ram patch, next day peterferrie did some deeper
+// debugging and found all's needed is refresh rate of 57.3 - 57.7.  congrats guys!
+// (I chose the midean value of 57.5 until someone scopes a board for the real value) -dink
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "m6809_intf.h"
@@ -28,6 +33,8 @@ static UINT8 *soundlatch;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
+
+static INT32 nExtraCycles[1];
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
@@ -535,10 +542,10 @@ STDDIPINFO(Lastkm)
 
 static void oki_bankswitch(INT32 data)
 {
-	if (nOkiBank != (data & 0x0f)) {
-		nOkiBank = data & 0x0f;
-		memcpy (DrvSndROM + 0x30000, DrvSndROM + 0x40000 + (data & 0x0f) * 0x10000, 0x10000);
-	}
+	nOkiBank = data & 0x0f;
+
+	MSM6295SetBank(0, DrvSndROM, 0x00000, 0x2ffff);
+	MSM6295SetBank(0, DrvSndROM + ((data & 0x0f) * 0x10000), 0x30000, 0x3ffff);
 }
 
 static void palette_write(INT32 offset)
@@ -741,11 +748,6 @@ static UINT8 sound_read(UINT16 address)
 	return 0;
 }
 
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)M6809TotalCycles() * nSoundRate / 2216750;
-}
-
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -761,10 +763,9 @@ static INT32 DrvDoReset()
 
 	MSM6295Reset(0);
 
-	memcpy (DrvSndROM, DrvSndROM + 0x040000, 0x030000);
-
-	nOkiBank = -1;
 	oki_bankswitch(3);
+
+	nExtraCycles[0] = 0;
 
 	return 0;
 }
@@ -779,7 +780,6 @@ static INT32 MemIndex()
 	DrvGfxROM0	= Next; Next += 0x400000;
 	DrvGfxROM1	= Next; Next += 0x400000;
 
-	MSM6295ROM	= Next;
 	DrvSndROM	= Next; Next += 0x140000;
 
 	AllRam		= Next;
@@ -852,12 +852,9 @@ static tilemap_callback( screen1 )
 
 static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 encrypted_ram, INT32 sound_cpu)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
+
+	BurnSetRefreshRate(57.5); // Thoop wants this
 
 	if (pRomLoadCallback) {
 		if (pRomLoadCallback()) return 1;
@@ -894,12 +891,12 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 encrypted_ram, INT32 sou
 		M6809SetWriteHandler(sound_write);
 		M6809Close();
 
-		BurnYM3812Init(1, 3580000, NULL, &DrvSynchroniseStream, 0);
+		BurnYM3812Init(1, 4000000, NULL, 0);
 		BurnTimerAttachYM3812(&M6809Config, 2216750);
 		BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	}
 
-	MSM6295Init(0, 1056000 / 132, has_sound_cpu ? 1 : 0);
+	MSM6295Init(0, 1000000 / MSM6295_PIN7_HIGH, has_sound_cpu ? 1 : 0);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	gaelco_encryption_param1 = encrypted_ram;
@@ -934,7 +931,7 @@ static INT32 ThoopRomLoad()
 
 	DrvGfxReorder();
 
-	if (BurnLoadRom(DrvSndROM  + 0x040000,  6, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM  + 0x000000,  6, 1)) return 1;
 
 	return 0;
 }
@@ -953,8 +950,8 @@ static INT32 SquashRomLoad()
 	if (BurnLoadRom(DrvGfxROM0 + 0x300000,  5, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM0 + 0x380000,  5, 1)) return 1;
 
-	if (BurnLoadRom(DrvSndROM  + 0x040000,  6, 1)) return 1;
-	if (BurnLoadRom(DrvSndROM  + 0x0c0000,  6, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM  + 0x000000,  6, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM  + 0x080000,  6, 1)) return 1;
 
 	return 0;
 }
@@ -975,8 +972,8 @@ static INT32 BiomtoyRomLoad()
 
 	DrvGfxReorder();
 
-	if (BurnLoadRom(DrvSndROM  + 0x040000, 10, 1)) return 1;
-	if (BurnLoadRom(DrvSndROM  + 0x0c0000, 11, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM  + 0x000000, 10, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM  + 0x080000, 11, 1)) return 1;
 
 	return 0;
 }
@@ -1019,12 +1016,11 @@ static INT32 DrvExit()
 
 	BurnYM3812Exit();
 	MSM6295Exit(0);
-	MSM6295ROM = NULL;
 
 	SekExit();
 	M6809Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -1100,7 +1096,6 @@ static INT32 DrvDraw()
 	GenericTilemapSetTransparent(0, 0);
 	GenericTilemapSetTransparent(1, 0);
 
-#if 1
 	GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(3) | 0);
 	GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(3) | 0);
 
@@ -1112,7 +1107,6 @@ static INT32 DrvDraw()
 
 	GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(0) | 4);
 	GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(0) | 4);
-#endif
 
 	draw_sprites();
 
@@ -1185,13 +1179,27 @@ static INT32 DrvFrame()
 		}
 	}
 
+	INT32 nInterleave = 512;
+	INT32 nCyclesTotal[1] =  { (INT32)(12000000 / 57.5) };
+	INT32 nCyclesDone[1] = { nExtraCycles[0] };
+
 	SekOpen(0);
-	SekRun(12000000 / 60);
-	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
+
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		if (i == 256) {
+			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
+		}
+
+		CPU_RUN(0, Sek);
+	}
+
 	SekClose();
 
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnSoundOut) {
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -1220,21 +1228,33 @@ static INT32 BigkarnkFrame()
 		DrvInputs[2] = (DrvInputs[2] & ~0x02) | (DrvDips[2] & 0x02);
 	}
 
+	INT32 nInterleave = 512;
+	INT32 nCyclesTotal[2] =  { (INT32)(10000000 / 57.5), (INT32)(2216750 / 57.5) };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], 0 };
+
 	SekOpen(0);
 	M6809Open(0);
 
-	SekRun(10000000 / 60);
-	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		if (i == 256) {
+			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
+		}
 
-	if (pBurnSoundOut) {
-		BurnTimerEndFrameYM3812(2216750 / 60);
-		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		BurnSoundDCFilter(); // big karnak distortion w/lp filter
+		CPU_RUN(0, Sek);
+		CPU_RUN_TIMER_YM3812(1);
 	}
 
 	SekClose();
 	M6809Close();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+
+	if (pBurnSoundOut) {
+		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter(); // big karnak distortion w/lp filter
+	}
 
 	if (pBurnDraw) {
 		BigkarnkDraw();
@@ -1267,13 +1287,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		MSM6295Scan(nAction, pnMin);
 
 		SCAN_VAR(nOkiBank);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {
-		INT32 bank = nOkiBank;
-		nOkiBank = -1;
-		oki_bankswitch(bank);
-		DrvRecalc = 1;
+		oki_bankswitch(nOkiBank);
 	}
 
 	return 0;

@@ -19046,7 +19046,7 @@ struct BurnDriver BurnDrvnes_firerescue = {
 };
 
 static struct BurnRomInfo nes_zeldaiiacRomDesc[] = {
-	{ "Zelda II Amida's Curse GlobHack v1.6 (2021)(Ok Impala!).nes",          262160, 0x3250c35d, BRF_ESS | BRF_PRG },
+	{ "Zelda II Amida's Curse GlobHack v1.7 (2021)(Ok Impala!).nes",          262160, 0xa6ccfea4, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_zeldaiiac)
@@ -19054,7 +19054,7 @@ STD_ROM_FN(nes_zeldaiiac)
 
 struct BurnDriver BurnDrvnes_zeldaiiac = {
 	"nes_zeldaiiac", "nes_zeldaii", NULL, NULL, "2021",
-	"Zelda II Amida's Curse (GlobalHack, v1.6)\0", NULL, "Ok Impala!", "Miscellaneous",
+	"Zelda II Amida's Curse (GlobalHack, v1.7)\0", NULL, "Ok Impala!", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
 	NESGetZipName, nes_zeldaiiacRomInfo, nes_zeldaiiacRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

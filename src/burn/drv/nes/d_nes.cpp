@@ -18960,6 +18960,23 @@ struct BurnDriver BurnDrvnes_vanguard = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_dungdoomRomDesc[] = {
+	{ "Dungeons & Doomknights (2021)(Artix Ent.).nes",          524304, 0x456fa82a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dungdoom)
+STD_ROM_FN(nes_dungdoom)
+
+struct BurnDriver BurnDrvnes_dungdoom = {
+	"nes_dungdoom", NULL, NULL, NULL, "2021",
+	"Dungeons & Doomknights (HB)\0", NULL, "Artix Entertainment", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_dungdoomRomInfo, nes_dungdoomRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_espiteneRomDesc[] = {
 	{ "Espitene (2018)(The Mojon Twins).nes",          65552, 0x1f80c94e, BRF_ESS | BRF_PRG },
 };

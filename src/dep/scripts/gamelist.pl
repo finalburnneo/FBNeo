@@ -9,6 +9,9 @@ my @Filelist;
 my %Drivers;
 my @Driverlist;
 
+# initial values based on column labels length
+my @MaxLength = (6,4,9,7,7,8,4,6);
+
 # Process command line arguments
 for ( my $i = 0; $i < scalar @ARGV; $i++ ) {{
 
@@ -181,6 +184,15 @@ foreach my $filename ( @Filelist ) {
 			if ( $struct =~ /BDF_PROTOTYPE/ || $struct =~ /BDF_BOOTLEG/ || $Drivers{$name}[3] ne "" ) {
 				$Drivers{$name}[10] = "$Drivers{$name}[10]" . "]";
 			}
+
+			# Store max length
+			if (length($Drivers{$name}[1]) > $MaxLength[1]) { $MaxLength[1] = length($Drivers{$name}[1]); }
+			if (length($Drivers{$name}[2]) > $MaxLength[2]) { $MaxLength[2] = length($Drivers{$name}[2]); }
+			if (length($Drivers{$name}[3]) > $MaxLength[3]) { $MaxLength[3] = length($Drivers{$name}[3]); }
+			if (length($Drivers{$name}[4]) > $MaxLength[4]) { $MaxLength[4] = length($Drivers{$name}[4]); }
+			if (length($Drivers{$name}[5]) > $MaxLength[5]) { $MaxLength[5] = length($Drivers{$name}[5]); }
+			if (length($Drivers{$name}[6]) > $MaxLength[6]) { $MaxLength[6] = length($Drivers{$name}[6]); }
+			if (length($Drivers{$name}[7]) > $MaxLength[7]) { $MaxLength[7] = length($Drivers{$name}[7]); }
 		}
 	}
 	close( INFILE );
@@ -321,42 +333,74 @@ if ( $Listfile ) {
 	print OUTFILE "D = included in debug build only; ";
 	print OUTFILE "NW = not working\x0d\x0a\x0d\x0a";
 
-	print OUTFILE "  name\t\t  status  full name\t\t\t\t\t\t  parent\t  year\t  company\t  hardware\t  remarks\x0d\x0a";
-	print OUTFILE "+-------";
-	print OUTFILE "--------";
-	print OUTFILE "+-------";
-	print OUTFILE "+-------";
-	print OUTFILE "--------";
-	print OUTFILE "--------";
-	print OUTFILE "--------";
-	print OUTFILE "--------";
-	print OUTFILE "--------";
-	print OUTFILE "--------";
-	print OUTFILE "+-------";
-	print OUTFILE "--------";
-	print OUTFILE "+-------";
-	print OUTFILE "+-------";
-	print OUTFILE "--------";
-	print OUTFILE "+-------";
-	print OUTFILE "--------";
-	print OUTFILE "+-------";
-	print OUTFILE "--------";
-	print OUTFILE "--------";
-	print OUTFILE "--------";
-	print OUTFILE "--------+\x0d\x0a";
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[1]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[0]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[2]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[7]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[6]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[4]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[5]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[3]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+\x0d\x0a";
+
+	print OUTFILE "| name";
+	for (my $i = 0; $i <= $MaxLength[1]-4; $i++) { print OUTFILE " "; }
+	print OUTFILE "| status";
+	for (my $i = 0; $i <= $MaxLength[0]-6; $i++) { print OUTFILE " "; }
+	print OUTFILE "| full name";
+	for (my $i = 0; $i <= $MaxLength[2]-9; $i++) { print OUTFILE " "; }
+	print OUTFILE "| parent";
+	for (my $i = 0; $i <= $MaxLength[7]-6; $i++) { print OUTFILE " "; }
+	print OUTFILE "| year";
+	for (my $i = 0; $i <= $MaxLength[6]-4; $i++) { print OUTFILE " "; }
+	print OUTFILE "| company";
+	for (my $i = 0; $i <= $MaxLength[4]-7; $i++) { print OUTFILE " "; }
+	print OUTFILE "| hardware";
+	for (my $i = 0; $i <= $MaxLength[5]-8; $i++) { print OUTFILE " "; }
+	print OUTFILE "| remarks";
+	for (my $i = 0; $i <= $MaxLength[3]-7; $i++) { print OUTFILE " "; }
+	print OUTFILE "|\x0d\x0a";
+
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[1]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[0]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[2]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[7]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[6]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[4]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[5]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[3]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+\x0d\x0a";
 
 	my $Text;
 
 	foreach my $name ( @Driverlist ) {
+		my $NeededSpaces;
 
 		print OUTFILE "| $Drivers{$name}[1]";
-		my $column = int( (2 + length( $Drivers{$name}[1] )) / 8 );
-		while ( $column < 2 ) {
-			print OUTFILE "\t";
-			$column++;
+		$NeededSpaces = int( $MaxLength[1] - length($Drivers{$name}[1]) );
+		while ( $NeededSpaces >= 0 ) {
+			print OUTFILE " ";
+			$NeededSpaces--;
 		}
 
 		print OUTFILE "| ";
+		$NeededSpaces = int( $MaxLength[0] - 1 );
 		if ( $Drivers{$name}[0] ) {
 			print OUTFILE "$Drivers{$name}[0]";
 		} else {
@@ -364,79 +408,75 @@ if ( $Listfile ) {
 		}
 		if ( $Drivers{$name}[8] ) {
 			print OUTFILE " NW";
+			$NeededSpaces -= 3;
 		}
-		print OUTFILE "\t";
-		$column++;
+		while ( $NeededSpaces >= 0 ) {
+			print OUTFILE " ";
+			$NeededSpaces--;
+		}
 
-		$Text = substr( $Drivers{$name}[2], 0, 54);
-		print OUTFILE "| $Text";
-		$column += int( (2 + length( $Text )) / 8 );
-		while ( $column < 10 ) {
-			print OUTFILE "\t";
-			$column++;
+		print OUTFILE "| $Drivers{$name}[2]";
+		$NeededSpaces = int( $MaxLength[2] - length($Drivers{$name}[2]) );
+		while ( $NeededSpaces >= 0 ) {
+			print OUTFILE " ";
+			$NeededSpaces--;
 		}
 
 		print OUTFILE "| $Drivers{$name}[7]";
-		$column += int( (2 + length( $Drivers{$name}[7] )) / 8 );
-		while ( $column < 12 ) {
-			print OUTFILE "\t";
-			$column++;
+		$NeededSpaces = int( $MaxLength[7] - length($Drivers{$name}[7]) );
+		while ( $NeededSpaces >= 0 ) {
+			print OUTFILE " ";
+			$NeededSpaces--;
 		}
+
 		print OUTFILE "| $Drivers{$name}[6]";
-		$column += int( (2 + length( $Drivers{$name}[6] )) / 8 );
-		while ( $column < 13 ) {
-			print OUTFILE "\t";
-			$column++;
+		$NeededSpaces = int( $MaxLength[6] - length($Drivers{$name}[6]) );
+		while ( $NeededSpaces >= 0 ) {
+			print OUTFILE " ";
+			$NeededSpaces--;
 		}
 
-		$Text = substr( $Drivers{$name}[4], 0, 14);
-		print OUTFILE "| $Text";
-		$column += int( (2 + length( $Text )) / 8 );
-		while ( $column < 15 ) {
-			print OUTFILE "\t";
-			$column++;
+		print OUTFILE "| $Drivers{$name}[4]";
+		$NeededSpaces = int( $MaxLength[4] - length($Drivers{$name}[4]) );
+		while ( $NeededSpaces >= 0 ) {
+			print OUTFILE " ";
+			$NeededSpaces--;
 		}
 
-		$Text = substr( $Drivers{$name}[5], 0, 14);
-		print OUTFILE "| $Text";
-		$column += int( (2 + length( $Text )) / 8 );
-		while ( $column < 17 ) {
-			print OUTFILE "\t";
-			$column++;
+		print OUTFILE "| $Drivers{$name}[5]";
+		$NeededSpaces = int( $MaxLength[5] - length($Drivers{$name}[5]) );
+		while ( $NeededSpaces >= 0 ) {
+			print OUTFILE " ";
+			$NeededSpaces--;
 		}
 
-		$Text = substr( $Drivers{$name}[3], 0, 38);
-		print OUTFILE "| $Text";
-		$column += int( ( 2 + length( $Text )) / 8 );
-		while ( $column < 22 ) {
-			print OUTFILE "\t";
-			$column++;
+		print OUTFILE "| $Drivers{$name}[3]";
+		$NeededSpaces = int( $MaxLength[3] - length($Drivers{$name}[3]) );
+		while ( $NeededSpaces >= 0 ) {
+			print OUTFILE " ";
+			$NeededSpaces--;
 		}
+
 		print OUTFILE "|\x0d\x0a";
 	}
 
-	print OUTFILE "+-------";
-	print OUTFILE "--------";
-	print OUTFILE "+-------";
-	print OUTFILE "+-------";
-	print OUTFILE "--------";
-	print OUTFILE "--------";
-	print OUTFILE "--------";
-	print OUTFILE "--------";
-	print OUTFILE "--------";
-	print OUTFILE "--------";
-	print OUTFILE "+-------";
-	print OUTFILE "--------";
-	print OUTFILE "+-------";
-	print OUTFILE "+-------";
-	print OUTFILE "--------";
-	print OUTFILE "+-------";
-	print OUTFILE "--------";
-	print OUTFILE "+-------";
-	print OUTFILE "--------";
-	print OUTFILE "--------";
-	print OUTFILE "--------";
-	print OUTFILE "--------+\x0d\x0a";
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[1]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[0]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[2]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[7]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[6]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[4]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[5]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+";
+	for (my $i = 0; $i < $MaxLength[3]+2; $i++) { print OUTFILE "-"; }
+	print OUTFILE "+\x0d\x0a";
 
 	close( OUTFILE );
 }

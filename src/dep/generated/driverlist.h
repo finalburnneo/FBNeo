@@ -14276,6 +14276,7 @@ DRV		BurnDrvmd_sor2s;
 DRV		BurnDrvmd_sor2usw;
 DRV		BurnDrvmd_sor2u;
 DRV		BurnDrvmd_sor2bk3b;
+DRV		BurnDrvmd_sor2fnr;
 DRV		BurnDrvmd_sor2sfv1;
 DRV		BurnDrvmd_sor2sfv2;
 DRV		BurnDrvmd_sor2sfv3;
@@ -19184,13 +19185,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_barbie,			// Barbie Super Model (Prototype)
 	&BurnDrvmd_barbiesm,		// Barbie Super Model (USA)
 	&BurnDrvmd_barbvac,			// Barbie Vacation Adventure (USA, Prototype)
-	&BurnDrvmd_sor3bk3p,		// Bare Knuckle 3 Project (World) (Hack, 2019)
+	&BurnDrvmd_sor3bk3p,		// Bare Knuckle 3 Project (World) (Hack)
 	&BurnDrvmd_bk2p,			// Bare Knuckle II (Jpn, Prototype)
 	&BurnDrvmd_bk3e,			// Bare Knuckle III (Hack, English)
 	&BurnDrvmd_bk3s,			// Bare Knuckle III (Hack, Spanish) (Uncensored) (All Unlocked)
 	&BurnDrvmd_bk3,				// Bare Knuckle III (Jpn)
 	&BurnDrvmd_bk3p,			// Bare Knuckle III (Jpn, Prototype)
-	&BurnDrvmd_bk3pro,			// Bare Knuckle III Project (Japan) (Hack, 0.3)
+	&BurnDrvmd_bk3pro,			// Bare Knuckle III Project (Japan) (Hack, v0.3)
 	&BurnDrvnes_bmetal2,		// Bare Metal 2.0 (HB)
 	&BurnDrvpce_baribari,		// Bari Bari Densetsu
 	&BurnDrvnes_barkebilstrish,	// Barker Bill's Trick Shooting (USA)
@@ -32253,13 +32254,14 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_sor,				// Streets of Rage (World) ~ Bare Knuckle (Jpn)
 	&BurnDrvmd_sor2i,			// Streets of Rage 2 (Hack, Italian)
 	&BurnDrvmd_sor2s,			// Streets of Rage 2 (Hack, Spanish)
-	&BurnDrvmd_sor2usw,			// Streets of Rage 2 (USA) Syndicate Wars 2016 (Hack, April 30, 2016)
+	&BurnDrvmd_sor2usw,			// Streets of Rage 2 (USA) Syndicate Wars 2016 (Hack)
 	&BurnDrvmd_sor2u,			// Streets of Rage 2 (USA)
-	&BurnDrvmd_sor2bk3b,		// Streets of Rage 2 - Bare Knuckle 3 Boss Edition (V1.1) (Hack)
-	&BurnDrvmd_sor2sfv1,		// Streets of Rage 2 - Street Fighter Version 1 (Dhalsim/Ryu/Guile/Ken, Hack)
-	&BurnDrvmd_sor2sfv2,		// Streets of Rage 2 - Street Fighter Version 2 (Cammy/DeeJay/ChunLi/FeiLong, Hack)
-	&BurnDrvmd_sor2sfv3,		// Streets of Rage 2 - Street Fighter Version 3 (Blanka/Honda/Zangief/T.Hawk, Hack)
-	&BurnDrvmd_sor2sfv4,		// Streets of Rage 2 - Street Fighter Version 4 (Balrog/Bison/Sagat/Vega, Hack)
+	&BurnDrvmd_sor2bk3b,		// Streets of Rage 2 - Bare Knuckle 3 Boss Edition (Hack, v1.1)
+	&BurnDrvmd_sor2fnr,			// Streets of Rage 2 - Fight'n Rage (Hack)
+	&BurnDrvmd_sor2sfv1,		// Streets of Rage 2 - Street Fighter Version 1 (Hack)
+	&BurnDrvmd_sor2sfv2,		// Streets of Rage 2 - Street Fighter Version 2 (Hack)
+	&BurnDrvmd_sor2sfv3,		// Streets of Rage 2 - Street Fighter Version 3 (Hack)
+	&BurnDrvmd_sor2sfv4,		// Streets of Rage 2 - Street Fighter Version 4 (Hack)
 	&BurnDrvmd_sor2tmnt,		// Streets of Rage 2 - Teenage Mutant Ninja Turtles (Hack)
 	&BurnDrvmd_sor2upw,			// Streets of Rage 2 Puyo Wars (Hack)
 	&BurnDrvmd_sor3,			// Streets of Rage 3 (Euro)
@@ -32281,8 +32283,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_sor3up02,		// Streets of Rage 3 (Prototype, 19940412)
 	&BurnDrvmd_sor3up01,		// Streets of Rage 3 (Prototype, 19940413)
 	&BurnDrvmd_sor3u,			// Streets of Rage 3 (USA)
-	&BurnDrvmd_sor3ex,			// Streets of Rage 3 - Extreme Edition (V0.42) (Hack)
-	&BurnDrvmd_sor3pro,			// Streets of Rage 3 Project (USA) (Hack, 0.3)
+	&BurnDrvmd_sor3ex,			// Streets of Rage 3 - Extreme Edition (Hack, v0.42)
+	&BurnDrvmd_sor3pro,			// Streets of Rage 3 Project (USA) (Hack, v0.3)
 	&BurnDrvmd_sor2,			// Streets of Rage II (Euro) ~ Bare Knuckle II - Shitou e no Chingonka (Jpn)
 	&BurnDrvsms_sor2,			// Streets of Rage II (Euro, Bra)
 	&BurnDrvgg_sor2p,			// Streets of Rage II (Prototype)
@@ -32353,7 +32355,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_subterr,			// SubTerrania (Euro)
 	&BurnDrvmd_subterrs,		// SubTerrania (Hack, Spanish)
 	&BurnDrvmd_subterrj,		// SubTerrania (Jpn)
-	&BurnDrvmd_subterrp3,		// SubTerrania (Jpn, Prototype, 19940202)
+	&BurnDrvmd_subterrp3,		// SubTerrania (Jpn, Prototype)
 	&BurnDrvmd_subterrp1,		// SubTerrania (Prototype)
 	&BurnDrvmd_subterrp2,		// SubTerrania (Prototype, Earlier)
 	&BurnDrvmd_subterru,		// SubTerrania (USA)
@@ -35824,7 +35826,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvZektor,				// Zektor (revision B)
 	&BurnDrvnes_zeldaiic,		// Zelda II - The Adventure of Link (Europe) (Rev 2) - Castellano v1.0
 	&BurnDrvnes_zeldaii,		// Zelda II - The Adventure of Link (USA)
-	&BurnDrvnes_zeldaiiac,		// Zelda II Amida's Curse (GlobalHack, v1.6)
+	&BurnDrvnes_zeldaiiac,		// Zelda II Amida's Curse (GlobalHack, v1.7)
 	&BurnDrvnes_zeldakong,		// Zelda Kong (HB, Global Hack)
 	&BurnDrvfds_zeldanodenj,	// Zelda no Densetsu - The Hyrule Fantasy (Japan)
 	&BurnDrvfds_zeldanoden,		// Zelda no Densetsu - The Hyrule Fantasy (T-Eng)

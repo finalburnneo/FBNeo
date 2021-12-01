@@ -15325,10 +15325,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="zeldaiiac" cloneof="zeldaii" romof="zeldaii">
-		<description>Zelda II Amida's Curse (GlobalHack, v1.6) [Hack, Homebrew]</description>
+		<description>Zelda II Amida's Curse (GlobalHack, v1.7) [Hack, Homebrew]</description>
 		<year>2021</year>
 		<manufacturer>Ok Impala!</manufacturer>
-		<rom name="Zelda II Amida's Curse GlobHack v1.6 (2021)(Ok Impala!).nes" size="262160" crc="3250c35d"/>
+		<rom name="Zelda II Amida's Curse GlobHack v1.7 (2021)(Ok Impala!).nes" size="262160" crc="a6ccfea4"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

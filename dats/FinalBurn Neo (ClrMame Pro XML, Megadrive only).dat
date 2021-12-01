@@ -1454,15 +1454,15 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor3bk3p" cloneof="sor3" romof="sor3">
-		<description>Bare Knuckle 3 Project (World) (Hack, 2019)</description>
-		<year>1994</year>
-		<manufacturer>2019 Gsaurus</manufacturer>
+		<description>Bare Knuckle 3 Project (World) (Hack) [Hack]</description>
+		<year>2019</year>
+		<manufacturer>Gsaurus</manufacturer>
 		<rom name="The Bare Knuckle 3 Project.bin" size="3882698" crc="aa7e7937"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="bk2p" cloneof="sor2" romof="sor2">
-		<description>Bare Knuckle II (Jpn, Prototype)</description>
+		<description>Bare Knuckle II (Jpn, Prototype) [Prototype]</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="bare knuckle ii (jpn) (beta).bin" size="1245184" crc="0cf2acbe"/>
@@ -1478,7 +1478,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bk3s" cloneof="sor3" romof="sor3">
-		<description>Bare Knuckle III (Hack, Spanish) (Uncensored) (All Unlocked)</description>
+		<description>Bare Knuckle III (Hack, Spanish) (Uncensored) (All Unlocked) [Hack]</description>
 		<year>2012</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Bare Knuckle III (Hack, Spanish) (Uncensored) (All Unlocked).bin" size="3146096" crc="d848ee12"/>
@@ -1494,7 +1494,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bk3p" cloneof="sor3" romof="sor3">
-		<description>Bare Knuckle III (Jpn, Prototype)</description>
+		<description>Bare Knuckle III (Jpn, Prototype) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="bare knuckle iii (jpn) (beta).bin" size="3145728" crc="e7ff99db"/>
@@ -1502,9 +1502,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="bk3pro" cloneof="sor3" romof="sor3">
-		<description>Bare Knuckle III Project (Japan) (Hack, 0.3)</description>
-		<year>1994</year>
-		<manufacturer>2018 Gsaurus</manufacturer>
+		<description>Bare Knuckle III Project (Japan) (Hack, v0.3) [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Gsaurus</manufacturer>
 		<rom name="The Bare Knuckle III Project.bin" size="3151044" crc="5aa71c8b"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17298,7 +17298,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sracerp" cloneof="sracer" romof="sracer">
-		<description>Street Racer (Prototype, 19950321)</description>
+		<description>Street Racer (Prototype, 19950321) [Prototype]</description>
 		<year>1995</year>
 		<manufacturer>Ubi Soft</manufacturer>
 		<rom name="street racer (prototype - mar 21, 1995).bin" size="1048576" crc="a439a96e"/>
@@ -17306,9 +17306,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="ssmarts" cloneof="ssmart" romof="ssmart">
-		<description>Street Smart (Hack, Spanish)</description>
+		<description>Street Smart (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
-		<manufacturer>Treco</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="street smart (hack, spanish).bin" size="524288" crc="e678d57e"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17338,15 +17338,15 @@
 		<driver status="good"/>
 	</game>
 	<game name="sors" cloneof="sor" romof="sor">
-		<description>Streets of Rage (Hack, Spanish)</description>
+		<description>Streets of Rage (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="streets of rage (hack, spanish).bin" size="524288" crc="3e8baf7e"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="sor2i" cloneof="sor2" romof="sor2">
-		<description>Streets of Rage 2 (Hack, Italian)</description>
+		<description>Streets of Rage 2 (Hack, Italian) [Hack]</description>
 		<year>2003</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="streets of rage 2 (italian translation).bin" size="2097152" crc="7c034b79"/>
@@ -17354,17 +17354,17 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor2s" cloneof="sor2" romof="sor2">
-		<description>Streets of Rage 2 (Hack, Spanish)</description>
+		<description>Streets of Rage 2 (Hack, Spanish) [Hack]</description>
 		<year>2017</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="streets of rage 2 (hack, spanish).bin" size="2097152" crc="05deb02e"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="sor2usw" cloneof="sor2" romof="sor2">
-		<description>Streets of Rage 2 (USA) Syndicate Wars 2016 (Hack, April 30, 2016)</description>
-		<year>1992</year>
-		<manufacturer>2016 Gsaurus</manufacturer>
+		<description>Streets of Rage 2 (USA) Syndicate Wars 2016 (Hack) [Hack]</description>
+		<year>2016</year>
+		<manufacturer>Gsaurus</manufacturer>
 		<rom name="sor2 sw.bin" size="3257806" crc="b49b4a9b"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17378,47 +17378,55 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor2bk3b" cloneof="sor2" romof="sor2">
-		<description>Streets of Rage 2 - Bare Knuckle 3 Boss Edition (V1.1) (Hack)</description>
+		<description>Streets of Rage 2 - Bare Knuckle 3 Boss Edition (Hack, v1.1) [Hack]</description>
 		<year>2017</year>
 		<manufacturer>Kratus</manufacturer>
 		<rom name="SoR2_BK3Boss_Hack.bin" size="3500098" crc="5c152787"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="sor2fnr" cloneof="sor2" romof="sor2">
+		<description>Streets of Rage 2 - Fight'n Rage (Hack) [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Savok</manufacturer>
+		<rom name="Streets of Rage 2 - Fight'n Rage Hack (2021)(savok).md" size="3623338" crc="ade1923d"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sor2sfv1" cloneof="sor2" romof="sor2">
-		<description>Streets of Rage 2 - Street Fighter Version 1 (Dhalsim/Ryu/Guile/Ken, Hack) [Hack]</description>
+		<description>Streets of Rage 2 - Street Fighter Version 1 (Hack) [Hack]</description>
 		<year>2017</year>
-		<manufacturer>2017 Kratus</manufacturer>
+		<manufacturer>Kratus</manufacturer>
 		<rom name="SoR2_StreetFighter_v1.bin" size="3395462" crc="e03f0c6b"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="sor2sfv2" cloneof="sor2" romof="sor2">
-		<description>Streets of Rage 2 - Street Fighter Version 2 (Cammy/DeeJay/ChunLi/FeiLong, Hack) [Hack]</description>
+		<description>Streets of Rage 2 - Street Fighter Version 2 (Hack) [Hack]</description>
 		<year>2017</year>
-		<manufacturer>2017 Kratus</manufacturer>
+		<manufacturer>Kratus</manufacturer>
 		<rom name="SoR2_StreetFighter_v2.bin" size="3560088" crc="828786e2"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="sor2sfv3" cloneof="sor2" romof="sor2">
-		<description>Streets of Rage 2 - Street Fighter Version 3 (Blanka/Honda/Zangief/T.Hawk, Hack) [Hack]</description>
+		<description>Streets of Rage 2 - Street Fighter Version 3 (Hack) [Hack]</description>
 		<year>2017</year>
-		<manufacturer>2017 Kratus</manufacturer>
+		<manufacturer>Kratus</manufacturer>
 		<rom name="SoR2_StreetFighter_v3.bin" size="3532794" crc="d2ecf98f"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="sor2sfv4" cloneof="sor2" romof="sor2">
-		<description>Streets of Rage 2 - Street Fighter Version 4 (Balrog/Bison/Sagat/Vega, Hack) [Hack]</description>
+		<description>Streets of Rage 2 - Street Fighter Version 4 (Hack) [Hack]</description>
 		<year>2017</year>
-		<manufacturer>2017 Kratus</manufacturer>
+		<manufacturer>Kratus</manufacturer>
 		<rom name="SoR2_StreetFighter_v4.bin" size="3757608" crc="59aa116d"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="sor2tmnt" cloneof="sor2" romof="sor2">
-		<description>Streets of Rage 2 - Teenage Mutant Ninja Turtles (Hack)</description>
+		<description>Streets of Rage 2 - Teenage Mutant Ninja Turtles (Hack) [Hack]</description>
 		<year>2017</year>
 		<manufacturer>Hack By Carzj, Fix By M3tro</manufacturer>
 		<rom name="SoR2_TMNT_Hack.bin" size="2903472" crc="50e3c7c3"/>
@@ -17426,7 +17434,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor2upw" cloneof="sor2" romof="sor2">
-		<description>Streets of Rage 2 Puyo Wars (Hack)</description>
+		<description>Streets of Rage 2 Puyo Wars (Hack) [Hack]</description>
 		<year>2014</year>
 		<manufacturer>Candra Software</manufacturer>
 		<rom name="sor2u_pw.md" size="3990600" crc="f618ec40"/>
@@ -17442,7 +17450,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor3p5" cloneof="sor3" romof="sor3">
-		<description>Streets of Rage 3 (Euro, Prototype, 19940412)</description>
+		<description>Streets of Rage 3 (Euro, Prototype, 19940412) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="streets of rage 3 (euro) (prototype - apr 12, 1994).bin" size="3145728" crc="a17ce5ab"/>
@@ -17450,7 +17458,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor3p4" cloneof="sor3" romof="sor3">
-		<description>Streets of Rage 3 (Euro, Prototype, 19940413)</description>
+		<description>Streets of Rage 3 (Euro, Prototype, 19940413) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="streets of rage 3 (euro) (prototype - apr 13, 1994).bin" size="3145728" crc="164e42ae"/>
@@ -17458,7 +17466,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor3p3" cloneof="sor3" romof="sor3">
-		<description>Streets of Rage 3 (Euro, Prototype, 19940415)</description>
+		<description>Streets of Rage 3 (Euro, Prototype, 19940415) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="streets of rage 3 (euro) (prototype - apr 15, 1994).bin" size="3145728" crc="c64f1e6b"/>
@@ -17466,7 +17474,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor3p2" cloneof="sor3" romof="sor3">
-		<description>Streets of Rage 3 (Euro, Prototype, 19940420)</description>
+		<description>Streets of Rage 3 (Euro, Prototype, 19940420) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="streets of rage 3 (euro) (prototype - apr 20, 1994).bin" size="3145728" crc="6ae4bd8e"/>
@@ -17474,7 +17482,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor3p1" cloneof="sor3" romof="sor3">
-		<description>Streets of Rage 3 (Euro, Prototype, 19940425)</description>
+		<description>Streets of Rage 3 (Euro, Prototype, 19940425) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="streets of rage 3 (euro) (prototype - apr 25, 1994).bin" size="3145728" crc="7033878a"/>
@@ -17482,9 +17490,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor3s" cloneof="sor3" romof="sor3">
-		<description>Streets of Rage 3 (Hack, Spanish)</description>
+		<description>Streets of Rage 3 (Hack, Spanish) [Hack]</description>
 		<year>2020</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="streets of rage 3 (hack, spanish).bin" size="3145728" crc="f52d84e0"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17498,7 +17506,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor3up10" cloneof="sor3" romof="sor3">
-		<description>Streets of Rage 3 (Prototype, 19940308)</description>
+		<description>Streets of Rage 3 (Prototype, 19940308) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="streets of rage 3 (prototype - mar 08, 1994).bin" size="3145728" crc="ea50b551"/>
@@ -17506,7 +17514,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor3up09" cloneof="sor3" romof="sor3">
-		<description>Streets of Rage 3 (Prototype, 19940317)</description>
+		<description>Streets of Rage 3 (Prototype, 19940317) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="streets of rage 3 (prototype - mar 17, 1994).bin" size="3145728" crc="39ad962b"/>
@@ -17514,7 +17522,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor3up08" cloneof="sor3" romof="sor3">
-		<description>Streets of Rage 3 (Prototype, 19940318)</description>
+		<description>Streets of Rage 3 (Prototype, 19940318) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="streets of rage 3 (prototype - mar 18, 1994).bin" size="3145728" crc="60142484"/>
@@ -17522,7 +17530,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor3up07" cloneof="sor3" romof="sor3">
-		<description>Streets of Rage 3 (Prototype, 19940328)</description>
+		<description>Streets of Rage 3 (Prototype, 19940328) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="streets of rage 3 (prototype - mar 28, 1994).bin" size="3145728" crc="8757f797"/>
@@ -17530,7 +17538,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor3up06" cloneof="sor3" romof="sor3">
-		<description>Streets of Rage 3 (Prototype, 19940401)</description>
+		<description>Streets of Rage 3 (Prototype, 19940401) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="streets of rage 3 (prototype - apr 01, 1994).bin" size="3145728" crc="797e75b7"/>
@@ -17538,7 +17546,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor3up05" cloneof="sor3" romof="sor3">
-		<description>Streets of Rage 3 (Prototype, 19940404)</description>
+		<description>Streets of Rage 3 (Prototype, 19940404) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="streets of rage 3 (prototype - apr 04, 1994).bin" size="3145728" crc="6b968f13"/>
@@ -17546,7 +17554,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor3up04" cloneof="sor3" romof="sor3">
-		<description>Streets of Rage 3 (Prototype, 19940408)</description>
+		<description>Streets of Rage 3 (Prototype, 19940408) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="streets of rage 3 (prototype - apr 08, 1994).bin" size="3145728" crc="d4ba76c2"/>
@@ -17554,7 +17562,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor3up03" cloneof="sor3" romof="sor3">
-		<description>Streets of Rage 3 (Prototype, 19940411)</description>
+		<description>Streets of Rage 3 (Prototype, 19940411) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="streets of rage 3 (prototype - apr 11, 1994).bin" size="3145728" crc="fa5e5a82"/>
@@ -17562,7 +17570,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor3up02" cloneof="sor3" romof="sor3">
-		<description>Streets of Rage 3 (Prototype, 19940412)</description>
+		<description>Streets of Rage 3 (Prototype, 19940412) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="streets of rage 3 (prototype - apr 12, 1994).bin" size="3145728" crc="3f52cb72"/>
@@ -17570,7 +17578,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor3up01" cloneof="sor3" romof="sor3">
-		<description>Streets of Rage 3 (Prototype, 19940413)</description>
+		<description>Streets of Rage 3 (Prototype, 19940413) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="streets of rage 3 (prototype - apr 13, 1994).bin" size="3145728" crc="6b675807"/>
@@ -17586,7 +17594,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor3ex" cloneof="sor3" romof="sor3">
-		<description>Streets of Rage 3 - Extreme Edition (V0.42) (Hack)</description>
+		<description>Streets of Rage 3 - Extreme Edition (Hack, v0.42) [Hack]</description>
 		<year>2012</year>
 		<manufacturer>Gsaurus</manufacturer>
 		<rom name="SoR3_Extreme_v042_Hack.bin" size="3145728" crc="d2135a13"/>
@@ -17594,9 +17602,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor3pro" cloneof="sor3" romof="sor3">
-		<description>Streets of Rage 3 Project (USA) (Hack, 0.3)</description>
-		<year>1994</year>
-		<manufacturer>2018 Gsaurus</manufacturer>
+		<description>Streets of Rage 3 Project (USA) (Hack, v0.3) [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Gsaurus</manufacturer>
 		<rom name="The Streets of Rage 3 Project.bin" size="3150276" crc="06b93815"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17618,9 +17626,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="striders" cloneof="strider" romof="strider">
-		<description>Strider (Hack, Spanish)</description>
+		<description>Strider (Hack, Spanish) [Hack]</description>
 		<year>2017</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="strider (hack, spanish).bin" size="1048576" crc="ebabd8a3"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17642,9 +17650,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="strider2s" cloneof="strider2" romof="strider2">
-		<description>Strider Returns - Journey from Darkness (Hack, Spanish)</description>
+		<description>Strider Returns - Journey from Darkness (Hack, Spanish) [Hack]</description>
 		<year>2017</year>
-		<manufacturer>U.S. Gold</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="strider returns - journey from darkness (hack, spanish).bin" size="1048576" crc="6844745a"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17666,7 +17674,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="strikerp" cloneof="striker" romof="striker">
-		<description>Striker (Euro, Prototype)</description>
+		<description>Striker (Euro, Prototype) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="striker (euro) (beta).bin" size="2097152" crc="c10b270e"/>
@@ -17684,47 +17692,47 @@
 	<game name="subterr">
 		<description>SubTerrania (Euro)</description>
 		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Zyrinx</manufacturer>
 		<rom name="mpr-16627.bin" size="2097152" crc="e8ced28d"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="subterrs" cloneof="subterr" romof="subterr">
-		<description>SubTerrania (Hack, Spanish)</description>
+		<description>SubTerrania (Hack, Spanish) [Hack]</description>
 		<year>2020</year>
-		<manufacturer>Scavenger</manufacturer>
+		<manufacturer>m0sca</manufacturer>
 		<rom name="subterrania (hack, spanish).bin" size="2097152" crc="5bfd7998"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="subterrj" cloneof="subterr" romof="subterr">
 		<description>SubTerrania (Jpn)</description>
-		<year>1994?</year>
-		<manufacturer>Sega</manufacturer>
+		<year>1994</year>
+		<manufacturer>Zyrinx</manufacturer>
 		<rom name="subterrania (jpn).bin" size="2097152" crc="7638ea91"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="subterrp3" cloneof="subterr" romof="subterr">
-		<description>SubTerrania (Jpn, Prototype, 19940202)</description>
+		<description>SubTerrania (Jpn, Prototype) [Prototype]</description>
 		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Zyrinx</manufacturer>
 		<rom name="subterrania (prototype - feb 02, 1994).bin" size="2097152" crc="b368e394"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="subterrp1" cloneof="subterr" romof="subterr">
-		<description>SubTerrania (Prototype)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
+		<description>SubTerrania (Prototype) [Prototype]</description>
+		<year>1993</year>
+		<manufacturer>Zyrinx</manufacturer>
 		<rom name="subterrania (beta).bin" size="2097152" crc="3a1022d1"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="subterrp2" cloneof="subterr" romof="subterr">
-		<description>SubTerrania (Prototype, Earlier)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
+		<description>SubTerrania (Prototype, Earlier) [Prototype]</description>
+		<year>1993</year>
+		<manufacturer>Zyrinx</manufacturer>
 		<rom name="subterrania (beta) (earlier).bin" size="1310720" crc="9c13d25c"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17732,7 +17740,7 @@
 	<game name="subterru" cloneof="subterr" romof="subterr">
 		<description>SubTerrania (USA)</description>
 		<year>1993</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Zyrinx</manufacturer>
 		<rom name="subterrania (usa).bin" size="2097152" crc="dc3c6c45"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17762,9 +17770,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="ssriderss" cloneof="ssriders" romof="ssriders">
-		<description>Sunset Riders (Hack, Spanish)</description>
+		<description>Sunset Riders (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
-		<manufacturer>Konami</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="sunset riders (hack, spanish).bin" size="524288" crc="63909c3d"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

@@ -1560,6 +1560,18 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 		}
 	}
 
+	// Xybots
+	if ((parentrom && strcmp(parentrom, "xybots") == 0) ||
+		(drvname && strcmp(drvname, "xybots") == 0)
+	) {
+		if (strcmp("Twist Left", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L, description);
+		}
+		if (strcmp("Twist Right", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
+		}
+	}
+
 	// Metal Hawk
 	if ((parentrom && strcmp(parentrom, "metlhawk") == 0) ||
 		(drvname && strcmp(drvname, "metlhawk") == 0)

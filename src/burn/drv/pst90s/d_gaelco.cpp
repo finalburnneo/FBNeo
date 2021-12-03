@@ -4,7 +4,6 @@
 // thanks to research by Haze & peterferrie, thoop stg. 4 crash is fixed!
 // first Haze came up with a ram patch, next day peterferrie did some deeper
 // debugging and found all's needed is refresh rate of 57.3 - 57.7.  congrats guys!
-// (I chose the midean value of 57.5 until someone scopes a board for the real value) -dink
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -854,7 +853,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 encrypted_ram, INT32 sou
 {
 	BurnAllocMemIndex();
 
-	BurnSetRefreshRate(57.5); // Thoop wants this
+	BurnSetRefreshRate(57.42); // Thoop wants this
 
 	if (pRomLoadCallback) {
 		if (pRomLoadCallback()) return 1;
@@ -1180,7 +1179,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 512;
-	INT32 nCyclesTotal[1] =  { (INT32)(12000000 / 57.5) };
+	INT32 nCyclesTotal[1] =  { (INT32)(12000000 / 57.42) };
 	INT32 nCyclesDone[1] = { nExtraCycles[0] };
 
 	SekOpen(0);
@@ -1203,7 +1202,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnDraw) {
-		DrvDraw();
+		BurnDrvRedraw();
 	}
 
 	return 0;
@@ -1229,7 +1228,7 @@ static INT32 BigkarnkFrame()
 	}
 
 	INT32 nInterleave = 512;
-	INT32 nCyclesTotal[2] =  { (INT32)(10000000 / 57.5), (INT32)(2216750 / 57.5) };
+	INT32 nCyclesTotal[2] =  { (INT32)(10000000 / 57.42), (INT32)(2216750 / 57.42) };
 	INT32 nCyclesDone[2] = { nExtraCycles[0], 0 };
 
 	SekOpen(0);
@@ -1595,7 +1594,7 @@ struct BurnDriver BurnDrvThoop = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, thoopRomInfo, thoopRomName, NULL, NULL, NULL, NULL, DrvInputInfo, ThoopDIPInfo,
-	ThoopInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	ThoopInit, DrvExit, DrvFrame, BigkarnkDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
 

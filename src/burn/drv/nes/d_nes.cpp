@@ -30186,8 +30186,25 @@ struct BurnDriver BurnDrvnes_fantaadvdiz = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_fantasyzoneRomDesc[] = {
+static struct BurnRomInfo nes_fantasyzonejRomDesc[] = {
 	{ "Fantasy Zone (Japan).nes",          131088, 0xdd119b43, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_fantasyzonej)
+STD_ROM_FN(nes_fantasyzonej)
+
+struct BurnDriver BurnDrvnes_fantasyzonej = {
+	"nes_fantasyzonej", "nes_fantasyzone", NULL, NULL, "1987",
+	"Fantasy Zone (Japan)\0", NULL, "Sunsoft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
+	NESGetZipName, nes_fantasyzonejRomInfo, nes_fantasyzonejRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_fantasyzoneRomDesc[] = {
+	{ "Fantasy Zone (Tengen) (USA).nes",          131088, 0x9c546b0b, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_fantasyzone)
@@ -30195,9 +30212,9 @@ STD_ROM_FN(nes_fantasyzone)
 
 struct BurnDriver BurnDrvnes_fantasyzone = {
 	"nes_fantasyzone", NULL, NULL, NULL, "1987",
-	"Fantasy Zone (Japan)\0", NULL, "Sunsoft", "Miscellaneous",
+	"Fantasy Zone (Tengen) (USA)\0", NULL, "Sunsoft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_fantasyzoneRomInfo, nes_fantasyzoneRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

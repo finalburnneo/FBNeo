@@ -1234,6 +1234,29 @@ static INT32 OutfxiesInit()
 	return b2_common_init();
 }
 
+static INT32 OutfxiesjaInit()
+{
+	cuskey_callback = outfxies_cuskey_callback;
+	c355_tile_callback = machbrkr_sprite_bank_callback;
+	c123_tile_callback = machbrkr_tile_bank_callback;
+	roz_tile_callback = machbrkr_roz_tile_callback;
+
+	INT32 rc = b2_common_init();
+	if (!rc) { // shuffle soundrom (c352)
+		UINT8 *tmp = (UINT8*)BurnMalloc(0x1000000);
+		memcpy(tmp, DrvSndROM, 0x400000);
+
+		memcpy(DrvSndROM + 0x000000, tmp + 0x000000, 0x200000);
+		memcpy(DrvSndROM + 0x400000, tmp + 0x000000, 0x200000);
+		memcpy(DrvSndROM + 0x800000, tmp + 0x200000, 0x200000);
+		memcpy(DrvSndROM + 0xc00000, tmp + 0x200000, 0x200000);
+
+		BurnFree(tmp);
+	}
+
+	return rc;
+}
+
 static INT32 MachbrkrInit()
 {
 	cuskey_callback = NULL;
@@ -2583,6 +2606,56 @@ struct BurnDriver BurnDrvOutfxiesj = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, outfxiesjRomInfo, outfxiesjRomName, NULL, NULL, NULL, NULL, Namconb1InputInfo, Namconb1DIPInfo,
 	OutfxiesInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	288, 224, 4, 3
+};
+
+
+// The Outfoxies (Japan, OU1, alternate GFX ROMs)
+// this set uses different "c355spr", "c169roz" and "c123tmap" region ROMs. The rest of the ROMs is identical. It was found on 2 different PCB sets.
+
+static struct BurnRomInfo outfxiesjaRomDesc[] = {
+	{ "ou1_mprl.11c",	0x080000, 0xd3b9e530, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "ou1_mpru.11d",	0x080000, 0xd98308fb, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "ou1spr0.5b",		0x080000, 0x60cee566, 3 | BRF_PRG | BRF_ESS }, //  2 c75data
+
+	{ "ou1voi0.6n",		0x200000, 0x2d8fb271, 1 | BRF_SND },           //  3 c352
+
+	{ "ou1shas.12s",	0x200000, 0x9bcb0397, 3 | BRF_GRA },           //  4 c123tmap:mask
+
+	{ "ou1shar.18s",	0x200000, 0xfbb48194, 6 | BRF_GRA },           //  5 c169roz:mask
+
+	{ "ou1obj0l.4c",	0x200000, 0xecf135e4, 1 | BRF_GRA },           //  6 c355spr
+	{ "ou1obj0u.8c",	0x200000, 0x229fe774, 1 | BRF_GRA },           //  7
+	{ "ou1obj1l.4b",	0x200000, 0x0b9d060e, 1 | BRF_GRA },           //  8
+	{ "ou1obj1u.8b",	0x200000, 0x34a0feca, 1 | BRF_GRA },           //  9
+	{ "ou1obj2l.4a",	0x200000, 0x128119c4, 1 | BRF_GRA },           // 10
+	{ "ou1obj2u.8a",	0x200000, 0xce74c385, 1 | BRF_GRA },           // 11
+	{ "ou1obj3l.6c",	0x200000, 0x39d9aa54, 1 | BRF_GRA },           // 12
+	{ "ou1obj3u.9c",	0x200000, 0x022f4a73, 1 | BRF_GRA },           // 13
+	{ "ou1obj4l.6b",	0x200000, 0xb26fbb92, 1 | BRF_GRA },           // 14
+	{ "ou1obj4u.9b",	0x200000, 0xad99607d, 1 | BRF_GRA },           // 15
+
+	{ "ou1-rot0.3d",	0x200000, 0x30511ffb, 5 | BRF_GRA },           // 16 c169roz
+	{ "ou1-rot1.3c",	0x200000, 0xf4b61c22, 5 | BRF_GRA },           // 17
+	{ "ou1-rot2.3b",	0x200000, 0xd48b29d8, 5 | BRF_GRA },           // 18
+
+	{ "ou1-scr0.1d",	0x200000, 0x692b63f8, 2 | BRF_GRA },           // 19 c123tmap
+
+	{ "ou1dat0.20a",	0x080000, 0x1a49aead, 4 | BRF_PRG | BRF_ESS }, // 20 data
+	{ "ou1dat1.20b",	0x080000, 0x63bb119d, 4 | BRF_PRG | BRF_ESS }, // 21
+};
+
+STDROMPICKEXT(outfxiesja, outfxiesja, namcoc75)
+STD_ROM_FN(outfxiesja)
+
+struct BurnDriver BurnDrvOutfxiesja = {
+	"outfxiesja", "outfxies", "namcoc75", NULL, "1994",
+	"The Outfoxies (Japan, OU1, alternate GFX ROMs)\0", NULL, "Namco", "NB-1 / NB-2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
+	NULL, outfxiesjaRomInfo, outfxiesjaRomName, NULL, NULL, NULL, NULL, Namconb1InputInfo, Namconb1DIPInfo,
+	OutfxiesjaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
 

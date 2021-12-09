@@ -18960,6 +18960,74 @@ struct BurnDriver BurnDrvnes_vanguard = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_angunaRomDesc[] = {
+	{ "Anguna - Scourge of the Goblin King (2021)(The 6502 Collective).nes",          524304, 0x1119efff, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_anguna)
+STD_ROM_FN(nes_anguna)
+
+struct BurnDriver BurnDrvnes_anguna = {
+	"nes_anguna", NULL, NULL, NULL, "2021",
+	"Anguna - Scourge of the Goblin King (HB)\0", NULL, "The 6502 Collective", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_angunaRomInfo, nes_angunaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_aoRomDesc[] = {
+	{ "AO (2016)(2nd Dimension).nes",          24592, 0xbc0a5f02, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ao)
+STD_ROM_FN(nes_ao)
+
+struct BurnDriver BurnDrvnes_ao = {
+	"nes_ao", NULL, NULL, NULL, "2016",
+	"AO (HB)\0", NULL, "2nd Dimension", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_aoRomInfo, nes_aoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_plumchalRomDesc[] = {
+	{ "Plummet Challenge Game (2021)(Fista Productions).nes",          524304, 0x7ec3675e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_plumchal)
+STD_ROM_FN(nes_plumchal)
+
+struct BurnDriver BurnDrvnes_plumchal = {
+	"nes_plumchal", NULL, NULL, NULL, "2021",
+	"Plummet Challenge Game (HB)\0", NULL, "Fista Productions", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_plumchalRomInfo, nes_plumchalRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_wampusdxRomDesc[] = {
+	{ "Wampus DX (2020)(John Vanderhoef).nes",          524304, 0x690f19e0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_wampusdx)
+STD_ROM_FN(nes_wampusdx)
+
+struct BurnDriver BurnDrvnes_wampusdx = {
+	"nes_wampusdx", NULL, NULL, NULL, "2020",
+	"Wampus DX (HB)\0", NULL, "John Vanderhoef", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ADV, 0,
+	NESGetZipName, nes_wampusdxRomInfo, nes_wampusdxRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_dungdoomRomDesc[] = {
 	{ "Dungeons & Doomknights (2021)(Artix Ent.).nes",          524304, 0x456fa82a, BRF_ESS | BRF_PRG },
 };
@@ -19291,10 +19359,10 @@ STD_ROM_PICK(nes_wampus)
 STD_ROM_FN(nes_wampus)
 
 struct BurnDriver BurnDrvnes_wampus = {
-	"nes_wampus", NULL, NULL, NULL, "2019",
+	"nes_wampus", "nes_wampusdx", NULL, NULL, "2019",
 	"Wampus (HB)\0", NULL, "John Vanderhoef", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_wampusRomInfo, nes_wampusRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

@@ -893,10 +893,15 @@ static INT32 DrvFrame()
 			DrvInputs[3] = 0x04 + 0x08 + 0x10; // ""
 		}
 
-		if (DrvFakeInput[0]) { DrvJoy2[3] = (DrvJoy2[2] ? 0 : 1); DrvJoy2[1] = (DrvJoy2[0] ? 0 : 1); }
-		if (DrvFakeInput[1]) { DrvJoy2[2] = (DrvJoy2[3] ? 0 : 1); DrvJoy2[0] = (DrvJoy2[1] ? 0 : 1); }
-		if (DrvFakeInput[2]) { DrvJoy2[2] = (DrvJoy2[3] ? 0 : 1); DrvJoy2[1] = (DrvJoy2[0] ? 0 : 1); }
-		if (DrvFakeInput[3]) { DrvJoy2[3] = (DrvJoy2[2] ? 0 : 1); DrvJoy2[0] = (DrvJoy2[1] ? 0 : 1); }
+		// hack to map 8-ways to the 8 different combinations
+		if      (DrvFakeInput[0] && DrvFakeInput[2]) { DrvJoy2[0] = 0; DrvJoy2[1] = 1; }
+		else if (DrvFakeInput[0] && DrvFakeInput[3]) { DrvJoy2[3] = 1; DrvJoy2[2] = 0; }
+		else if (DrvFakeInput[1] && DrvFakeInput[2]) { DrvJoy2[0] = 1; DrvJoy2[1] = 0; }
+		else if (DrvFakeInput[1] && DrvFakeInput[3]) { DrvJoy2[3] = 0; DrvJoy2[2] = 1; }
+		else if (DrvFakeInput[0]) { DrvJoy2[3] = 1; DrvJoy2[1] = 1; }
+		else if (DrvFakeInput[1]) { DrvJoy2[2] = 1; DrvJoy2[0] = 1; }
+		else if (DrvFakeInput[2]) { DrvJoy2[2] = 1; DrvJoy2[1] = 1; }
+		else if (DrvFakeInput[3]) { DrvJoy2[3] = 1; DrvJoy2[0] = 1; }
 
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;

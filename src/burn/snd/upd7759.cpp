@@ -38,6 +38,7 @@ struct upd7759_chip
 	UINT32		pos;						/* current output sample position */
 	UINT32		step;						/* step value per output sample */
 	double      clock_period;
+	INT32       start_delay;
 
 	/* I/O lines */
 	UINT8		fifo_in;					/* last data written to the sound chip */
@@ -166,7 +167,7 @@ static void UPD7759AdvanceState()
              * Depending on the state the chip was in just before the /MD was set to 0 (reset, standby
              * or just-finished-playing-previous-sample) this number can range from 35 up to ~24000).
              * It also varies slightly from test to test, but not much - a few cycles at most.) */
-			Chip->clocks_left = 70;	/* 35 - breaks cotton */
+			Chip->clocks_left = 70 + Chip->start_delay;	/* 35 - breaks cotton */
 			Chip->state = STATE_FIRST_REQ;
 			break;
 
@@ -584,6 +585,13 @@ void UPD7759Init(INT32 chip, INT32 clock, UINT8* pSoundData)
 	nNumChips = chip;
 	
 	UPD7759Reset();
+}
+
+void UPD7759SetStartDelay(INT32 chip, INT32 nDelay)
+{
+	Chip = Chips[chip];
+
+	Chip->start_delay = nDelay;
 }
 
 void UPD7759SetFilter(INT32 chip, INT32 nCutOff)

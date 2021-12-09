@@ -27832,27 +27832,45 @@ struct BurnDriver BurnDrvMSX_m36e = {
 	272, 228, 4, 3
 };
 
-// Phantis (Spa)
+// Phantis - Part 1 (Spanish)
 
-static struct BurnRomInfo MSX_phantisRomDesc[] = {
-	{ "Phantis (1987)(Dinamic Software)(es)(Side A)[RUN'CAS-'].cas",	47979, 0x82073596, BRF_PRG | BRF_ESS },
-	{ "Phantis (1987)(Dinamic Software)(es)(Side B)[RUN'CAS-'].cas",	46693, 0xb21699eb, BRF_PRG | BRF_ESS },
+static struct BurnRomInfo MSX_phantis1RomDesc[] = {
+	{ "Phantis - Part 1 (1987)(Dinamic Software)(es)[RUN'CAS-'].cas",	47979, 0x82073596, BRF_PRG | BRF_ESS },
 };
 
-STDROMPICKEXT(MSX_phantis, MSX_phantis, msx_msx)
-STD_ROM_FN(MSX_phantis)
+STDROMPICKEXT(MSX_phantis1, MSX_phantis1, msx_msx)
+STD_ROM_FN(MSX_phantis1)
 
-struct BurnDriver BurnDrvMSX_phantis = {
-	"msx_phantis", "msx_gameovr2", "msx_msx", NULL, "1987",
-	"Phantis (Spanish)\0", NULL, "Dinamic Software", "MSX",
+struct BurnDriver BurnDrvMSX_phantis1 = {
+	"msx_phantis1", NULL, "msx_msx", NULL, "1987",
+	"Phantis - Part 1 (Spanish)\0", NULL, "Dinamic Software", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_HORSHOOT, 0,
-	MSXGetZipName, MSX_phantisRomInfo, MSX_phantisRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	MSXGetZipName, MSX_phantis1RomInfo, MSX_phantis1RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
-// Phantomas 2 (Spa)
+// Phantis - Part 2 (Spanish)
+
+static struct BurnRomInfo MSX_phantis2RomDesc[] = {
+	{ "Phantis - Part 2 (1987)(Dinamic Software)(es)[RUN'CAS-'].cas",	46693, 0xb21699eb, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_phantis2, MSX_phantis2, msx_msx)
+STD_ROM_FN(MSX_phantis2)
+
+struct BurnDriver BurnDrvMSX_phantis2 = {
+	"msx_phantis2", "msx_phantis1", "msx_msx", NULL, "1987",
+	"Phantis - Part 2 (Spanish)\0", "Password: 18757", "Dinamic Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_phantis2RomInfo, MSX_phantis2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Phantomas 2 (Spanish)
 
 static struct BurnRomInfo MSX_phantom2RomDesc[] = {
 	{ "Phantomas 2 (1987)(Dinamic Software)(ES)[RUN'CAS-'].cas",	45359, 0x5b62821c, BRF_PRG | BRF_ESS },

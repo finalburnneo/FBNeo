@@ -253,6 +253,30 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="addfam">
+		<description>Addams Family, The (Euro, USA)</description>
+		<year>1994</year>
+		<manufacturer>Flying Edge</manufacturer>
+		<rom name="mpr-16147.ic1" size="1048576" crc="71f58614"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="addfams" cloneof="addfam" romof="addfam">
+		<description>Addams Family, The (Hack, Spanish) [Hack]</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="the addams family (hack, spanish).bin" size="1048576" crc="3b1aa679"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="addfamp1" cloneof="addfam" romof="addfam">
+		<description>Addams Family, The (USA, Prototype) [Prototype]</description>
+		<year>1994</year>
+		<manufacturer>Flying Edge</manufacturer>
+		<rom name="addams family, the (usa) (beta).bin" size="1048576" crc="2803a5ca"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="gleylancs" cloneof="gleylanc" romof="gleylanc">
 		<description>Advanced Busterhawk Gleylancer (Hack, Spanish)</description>
 		<year>2017</year>
@@ -386,6 +410,30 @@
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="adventures of batman &amp; robin, the (usa).bin" size="2097152" crc="0caaa4ac"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mightmax">
+		<description>Adventures of Mighty Max, The (Euro)</description>
+		<year>1994</year>
+		<manufacturer>Ocean</manufacturer>
+		<rom name="mpr-17434.ic1" size="1048576" crc="24f1a3bb"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mightmaxu" cloneof="mightmax" romof="mightmax">
+		<description>Adventures of Mighty Max, The (USA)</description>
+		<year>1994</year>
+		<manufacturer>Ocean</manufacturer>
+		<rom name="adventures of mighty max, the (usa).bin" size="1048576" crc="55f13a00"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="rockybw">
+		<description>Adventures of Rocky and Bullwinkle and Friends, The (USA)</description>
+		<year>1993</year>
+		<manufacturer>Absolute Entertainment</manufacturer>
+		<rom name="adventures of rocky and bullwinkle and friends, the (usa).bin" size="1048576" crc="ef02d57b"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -942,7 +990,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aofec" cloneof="aof" romof="aof">
-		<description>Art of Fighting (Hack, Enhanced Colors)</description>
+		<description>Art of Fighting (Hack, Enhanced Colors) [Hack]</description>
 		<year>2015</year>
 		<manufacturer>Sega - Pyron</manufacturer>
 		<rom name="art of fighting (enhanced colors).md" size="2097152" crc="f28b2502"/>
@@ -2197,6 +2245,14 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bmarrowdm">
+		<description>Bone Marrow Rebirth (HB, Demo v2) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>PSCD Games</manufacturer>
+		<rom name="Bone Marrow Rebirth Demo v2 (2021)(PSCD Games).bin" size="1966080" crc="6428449c"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bonkers">
 		<description>Bonkers (Euro, USA)</description>
 		<year>1994</year>
@@ -2678,7 +2734,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="captavenec" cloneof="captaven" romof="captaven">
-		<description>Captain America and the Avengers (Hack, Enhnanced Colors)</description>
+		<description>Captain America and the Avengers (Hack, Enhanced Colors) [Hack]</description>
 		<year>2015</year>
 		<manufacturer>Data East - Pyron</manufacturer>
 		<rom name="captain america and the avengers (enhanced colors).md" size="1048576" crc="23109899"/>
@@ -4134,7 +4190,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="daffyp" cloneof="daffy" romof="daffy">
-		<description>Daffy Duck in Hollywood (Euro, Prototype)</description>
+		<description>Daffy Duck in Hollywood (Euro, Prototype) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="daffy duck in hollywood (euro) (beta).bin" size="2097152" crc="0eaa4740"/>
@@ -4150,17 +4206,17 @@
 		<driver status="good"/>
 	</game>
 	<game name="dahnagb" cloneof="dahnam" romof="dahnam">
-		<description>Dahna - Goddess' Birth (Hack, English)</description>
-		<year>1991</year>
-		<manufacturer>IGS</manufacturer>
+		<description>Dahna - Goddess' Birth (Hack, English) [Hack]</description>
+		<year>2016</year>
+		<manufacturer>cccmar</manufacturer>
 		<rom name="Dahna - Goddess' Birth (E).bin" size="1048576" crc="d04d2df7"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="dahnams" cloneof="dahnam" romof="dahnam">
-		<description>Dahna Megami Tanjou (Hack, Spanish)</description>
+		<description>Dahna Megami Tanjou (Hack, Spanish) [Hack]</description>
 		<year>2017</year>
-		<manufacturer>IGS</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="dahna megami tanjou (hack, spanish).bin" size="1048576" crc="50aef45d"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4230,9 +4286,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="darkcasts" cloneof="darkcast" romof="darkcast">
-		<description>Dark Castle (Hack, Spanish)</description>
+		<description>Dark Castle (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
-		<manufacturer>Electronic Arts</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="dark castle (hack, spanish).bin" size="524288" crc="ccb09cc4"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4246,7 +4302,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="darwinp" cloneof="darwin" romof="darwin">
-		<description>Darwin 4081 (Prototype, 19900221)</description>
+		<description>Darwin 4081 (Prototype, 19900221) [Prototype]</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="darwin 4081 (prototype - feb 21, 1990).bin" size="524288" crc="db68d1ac"/>
@@ -4254,7 +4310,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dashdesp1" cloneof="dashdes" romof="dashdes">
-		<description>Dashin' Desperadoes (Euro, Prototype)</description>
+		<description>Dashin' Desperadoes (Euro, Prototype) [Prototype]</description>
 		<year>1993</year>
 		<manufacturer>Data East</manufacturer>
 		<rom name="dashin' desperadoes (beta 2).bin" size="1048576" crc="98d224a5"/>
@@ -4270,7 +4326,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dashdesp2" cloneof="dashdes" romof="dashdes">
-		<description>Dashin' Desperadoes (USA, Prototype)</description>
+		<description>Dashin' Desperadoes (USA, Prototype) [Prototype]</description>
 		<year>1993</year>
 		<manufacturer>Data East</manufacturer>
 		<rom name="dashin' desperadoes (beta).bin" size="1048576" crc="adaffc3f"/>
@@ -4302,7 +4358,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="daviscp2a" cloneof="daviscp2" romof="daviscp2">
-		<description>Davis Cup II (USA, Prototype)</description>
+		<description>Davis Cup II (USA, Prototype) [Prototype]</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="davis cup ii (usa) (prototype).bin" size="2097152" crc="76f2bed8"/>
@@ -4326,7 +4382,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="daviscp2">
-		<description>Davis Cup World Tour Tennis 2 (Prototype 1)</description>
+		<description>Davis Cup World Tour Tennis 2 (Prototype 1) [Prototype]</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="davis cup world tour tennis 2 (beta 1).bin" size="2097152" crc="6f4183c0"/>
@@ -4334,9 +4390,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="dazexmass" cloneof="dazexmas" romof="dazexmas">
-		<description>Daze Before Christmas (Hack, Spanish)</description>
+		<description>Daze Before Christmas (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
-		<manufacturer>SunSoft</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="daze before christmas (hack, spanish).bin" size="2097152" crc="4b061cf5"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4350,7 +4406,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dazexmasp" cloneof="dazexmas" romof="dazexmas">
-		<description>Daze Before Christmas (Oceania, Prototype)</description>
+		<description>Daze Before Christmas (Oceania, Prototype) [Prototype]</description>
 		<year>1994</year>
 		<manufacturer>Sunsoft</manufacturer>
 		<rom name="daze before christmas (aus) (beta).bin" size="2097152" crc="317c9491"/>
@@ -4358,9 +4414,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="deadlymvs" cloneof="deadlymv" romof="deadlymv">
-		<description>Deadly Moves (Hack, Spanish)</description>
+		<description>Deadly Moves (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
-		<manufacturer>Kaneko</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="deadly moves (hack, spanish).bin" size="1048576" crc="bdc2eaf1"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -6221,7 +6277,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fatfury2ec" cloneof="fatfury2" romof="fatfury2">
-		<description>Fatal Fury 2 (Hack, Enhanced Colors v4.0)</description>
+		<description>Fatal Fury 2 (Hack, Enhanced Colors v4.0) [Hack]</description>
 		<year>2015</year>
 		<manufacturer>Takara - Pyron</manufacturer>
 		<rom name="fatal fury 2 (enhanced colors v4.0).md" size="3145728" crc="eb433a36"/>
@@ -7767,7 +7823,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hercules" cloneof="dahnam" romof="dahnam">
-		<description>Hercules</description>
+		<description>Hercules [Hack]</description>
 		<year>199?</year>
 		<manufacturer>&lt;unlicensed&gt;</manufacturer>
 		<rom name="hercules (unl).bin" size="1048576" crc="ff75d9d0"/>
@@ -10395,6 +10451,14 @@
 		<year>2014</year>
 		<manufacturer>Darkon</manufacturer>
 		<rom name="Metal Sonic Hyperdrive (V4.2) (Hack By Darkon).bin" size="1048576" crc="195219e0"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="meteorain">
+		<description>MeteoRain (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Dr. Ludus</manufacturer>
+		<rom name="MeteoRain (2019)(Dr. Ludus).bin" size="262144" crc="ffb5154e"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -14836,7 +14900,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="samshoec" cloneof="samsho" romof="samsho">
-		<description>Samurai Shodown (Hack, Enhanced Colors v2.0)</description>
+		<description>Samurai Shodown (Hack, Enhanced Colors v2.0) [Hack]</description>
 		<year>2015</year>
 		<manufacturer>Takara - Pyron</manufacturer>
 		<rom name="samurai shodown (enhanced colors)(v2.0).md" size="3145728" crc="12cf057a"/>
@@ -15212,7 +15276,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="beastec" cloneof="beast" romof="beast">
-		<description>Shadow of the Beast (Hack, Enhanced Colors)</description>
+		<description>Shadow of the Beast (Hack, Enhanced Colors) [Hack]</description>
 		<year>2014</year>
 		<manufacturer>Victor Interactive Software - Pyron</manufacturer>
 		<rom name="shadow of the beast (enhanced colors).md" size="1048576" crc="7eaa73de"/>
@@ -17922,10 +17986,18 @@
 		<driver status="good"/>
 	</game>
 	<game name="shangone" cloneof="shangon" romof="shangon">
-		<description>Super Hang-On Enhanced (Hack)</description>
+		<description>Super Hang-On Enhanced (Hack) [Hack]</description>
 		<year>2018</year>
 		<manufacturer>Sega - Pyron</manufacturer>
 		<rom name="super hang-on enhanced.bin" size="524288" crc="ff381fed"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="shduty">
+		<description>Super Heavy Duty (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Playnautic</manufacturer>
+		<rom name="Super Heavy Duty (2020)(Playnautic).md" size="4194304" crc="81f8e890"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -18306,9 +18378,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="supermans" cloneof="superman" romof="superman">
-		<description>Superman (Hack, Spanish)</description>
+		<description>Superman (Hack, Spanish) [Hack]</description>
 		<year>2018</year>
-		<manufacturer>SunSoft</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="superman (hack, spanish).bin" size="1048576" crc="5d538528"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -18322,7 +18394,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="supermanp" cloneof="superman" romof="superman">
-		<description>Superman (USA, Prototype)</description>
+		<description>Superman (USA, Prototype) [Prototype]</description>
 		<year>1992</year>
 		<manufacturer>Sunsoft</manufacturer>
 		<rom name="superman (usa) (beta).bin" size="1048576" crc="5cd0e1d4"/>
@@ -18378,9 +18450,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="swordsods" cloneof="swordsod" romof="swordsod">
-		<description>Sword of Sodan (Hack, Spanish)</description>
+		<description>Sword of Sodan (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
-		<manufacturer>Electronic Arts</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="sword of sodan (hack, spanish).bin" size="524288" crc="5e504f77"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -18819,7 +18891,7 @@
 	</game>
 	<game name="teddyboy">
 		<description>Teddy Boy Blues (Jpn, SegaNet)</description>
-		<year>1991</year>
+		<year>1985-1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="teddy boy blues (jpn) (sn).bin" size="262144" crc="733d2eb3"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
@@ -18850,7 +18922,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tmnthhec" cloneof="tmhthh" romof="tmhthh">
-		<description>Teenage Mutant Ninja Turtles - The Hyperstone Heist (Hack, Enhanced Colors v2.0)</description>
+		<description>Teenage Mutant Ninja Turtles - The Hyperstone Heist (Hack, Enhanced Colors v2.0) [Hack]</description>
 		<year>2015</year>
 		<manufacturer>Konami - Pyron</manufacturer>
 		<rom name="teenage mutant ninja turtles - the hyperstone heist (enhanced colors v2.0).md" size="1048576" crc="3dd042f9"/>
@@ -18858,9 +18930,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="tmnthhs" cloneof="tmhthh" romof="tmhthh">
-		<description>Teenage Mutant Ninja Turtles - The Hyperstone Heist (Hack, Spanish)</description>
+		<description>Teenage Mutant Ninja Turtles - The Hyperstone Heist (Hack, Spanish) [Hack]</description>
 		<year>2017</year>
-		<manufacturer>Konami</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="teenage mutant ninja turtles - the hyperstone heist (hack, spanish).bin" size="1048576" crc="157d773d"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -18874,7 +18946,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tmnttficb" cloneof="tmhttf" romof="tmhttf">
-		<description>Teenage Mutant Ninja Turtles - Tournament Fighters (Hack, Improvement)</description>
+		<description>Teenage Mutant Ninja Turtles - Tournament Fighters (Hack, Improvement) [Hack]</description>
 		<year>2014</year>
 		<manufacturer>Color By fusaru, Boss by Nemesis_c</manufacturer>
 		<rom name="TMNT Tournament Fighters (Hack).bin" size="2128916" crc="8dc38dc4"/>
@@ -18882,9 +18954,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="tmnttfs" cloneof="tmhttf" romof="tmhttf">
-		<description>Teenage Mutant Ninja Turtles - Tournament Fighters (Hack, Spanish)</description>
+		<description>Teenage Mutant Ninja Turtles - Tournament Fighters (Hack, Spanish) [Hack]</description>
 		<year>2017</year>
-		<manufacturer>Konami</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="teenage mutant ninja turtles - tournament fighters (hack, spanish).bin" size="2097152" crc="7c91ba38"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -18978,9 +19050,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="tetriss" cloneof="tetris" romof="tetris">
-		<description>Tetris (Hack, Spanish)</description>
+		<description>Tetris (Hack, Spanish) [Hack]</description>
 		<year>2019</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="tetris (hack, spanish).bin" size="262144" crc="6fe8f5c1"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -19000,54 +19072,6 @@
 		<rom name="tetris.bin" size="524288" crc="eb024ab2"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="preliminary"/>
-	</game>
-	<game name="addfam">
-		<description>The Addams Family (Euro, USA)</description>
-		<year>1994</year>
-		<manufacturer>Flying Edge</manufacturer>
-		<rom name="mpr-16147.ic1" size="1048576" crc="71f58614"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="addfams" cloneof="addfam" romof="addfam">
-		<description>The Addams Family (Hack, Spanish) [Hack]</description>
-		<year>2018</year>
-		<manufacturer>Flying Edge</manufacturer>
-		<rom name="the addams family (hack, spanish).bin" size="1048576" crc="3b1aa679"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="addfamp1" cloneof="addfam" romof="addfam">
-		<description>The Addams Family (USA, Prototype) [Prototype]</description>
-		<year>1994</year>
-		<manufacturer>Flying Edge</manufacturer>
-		<rom name="addams family, the (usa) (beta).bin" size="1048576" crc="2803a5ca"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="mightmax">
-		<description>The Adventures of Mighty Max (Euro)</description>
-		<year>1994</year>
-		<manufacturer>Ocean</manufacturer>
-		<rom name="mpr-17434.ic1" size="1048576" crc="24f1a3bb"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="mightmaxu" cloneof="mightmax" romof="mightmax">
-		<description>The Adventures of Mighty Max (USA)</description>
-		<year>1994</year>
-		<manufacturer>Ocean</manufacturer>
-		<rom name="adventures of mighty max, the (usa).bin" size="1048576" crc="55f13a00"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="rockybw">
-		<description>The Adventures of Rocky and Bullwinkle and Friends (USA)</description>
-		<year>1993</year>
-		<manufacturer>Absolute Entertainment</manufacturer>
-		<rom name="adventures of rocky and bullwinkle and friends, the (usa).bin" size="1048576" crc="ef02d57b"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
 	</game>
 	<game name="aquagame">
 		<description>The Aquatic Games Starring James Pond and the Aquabats (Euro, USA)</description>
@@ -20787,7 +20811,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="toutrunch" cloneof="toutrun" romof="toutrun">
-		<description>Turbo OutRun (Hack, Color Improvement)</description>
+		<description>Turbo OutRun (Hack, Color Improvement) [Hack]</description>
 		<year>2020</year>
 		<manufacturer>Sega - Dolsilwa</manufacturer>
 		<rom name="turbo outrun (color hack).md" size="524288" crc="8884c73a"/>
@@ -21235,7 +21259,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vaportrec" cloneof="vaportr" romof="vaportr">
-		<description>Vapor Trail (Enhanced Colors)</description>
+		<description>Vapor Trail (Hack, Enhanced Colors) [Hack]</description>
 		<year>2015</year>
 		<manufacturer>Renovation - Pyron</manufacturer>
 		<rom name="vapor trail (enhanced colors)(v2.0).md" size="1048576" crc="8ed751a7"/>
@@ -21995,7 +22019,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wboy3ac" cloneof="wboy3" romof="wboy3">
-		<description>Wonder Boy III - Monster Lair (Hack, Arcade Colors)</description>
+		<description>Wonder Boy III - Monster Lair (Hack, Arcade Colors) [Hack]</description>
 		<year>2020</year>
 		<manufacturer>Sega -fabio</manufacturer>
 		<rom name="wonder boy iii - monster lair (arcade colors).md" size="524288" crc="60b87e9c"/>
@@ -23115,7 +23139,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xenon2ac" cloneof="xenon2" romof="xenon2">
-		<description>Xenon 2 - Megablast (Hack, Amiga Colors)</description>
+		<description>Xenon 2 - Megablast (Hack, Amiga Colors) [Hack]</description>
 		<year>2016</year>
 		<manufacturer>Virgin Games - fusaru</manufacturer>
 		<rom name="xenon 2 megablast (amiga colors).md" size="524288" crc="39f41e6c"/>

@@ -10955,12 +10955,22 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="phantis" cloneof="zyxx" romof="zyxx">
-		<description>Phantis (Spanish)</description>
+	<game name="phantis1" romof="msx">
+		<description>Phantis - Part 1 (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Dinamic Software</manufacturer>
-		<rom name="Phantis (1987)(Dinamic Software)(es)(Side A)[RUN'CAS-'].cas" size="47979" crc="82073596"/>
-		<rom name="Phantis (1987)(Dinamic Software)(es)(Side B)[RUN'CAS-'].cas" size="46693" crc="b21699eb"/>
+		<rom name="Phantis - Part 1 (1987)(Dinamic Software)(es)[RUN'CAS-'].cas" size="47979" crc="82073596"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="phantis2" cloneof="phantis1" romof="phantis1">
+		<description>Phantis - Part 2 (Spanish) [Password: 18757]</description>
+		<year>1987</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Phantis - Part 2 (1987)(Dinamic Software)(es)[RUN'CAS-'].cas" size="46693" crc="b21699eb"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

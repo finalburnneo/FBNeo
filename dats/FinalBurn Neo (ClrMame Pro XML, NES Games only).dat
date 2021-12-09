@@ -708,6 +708,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="anguna">
+		<description>Anguna - Scourge of the Goblin King (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>The 6502 Collective</manufacturer>
+		<rom name="Anguna - Scourge of the Goblin King (2021)(The 6502 Collective).nes" size="524304" crc="1119efff"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="antaradv">
 		<description>Antarctic Adventure (Japan)</description>
 		<year>1985</year>
@@ -729,6 +737,14 @@
 		<year>1988</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Anticipation (USA).nes" size="65552" crc="31d239d6"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="ao">
+		<description>AO (HB) [Homebrew]</description>
+		<year>2016</year>
+		<manufacturer>2nd Dimension</manufacturer>
+		<rom name="AO (2016)(2nd Dimension).nes" size="24592" crc="bc0a5f02"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -4116,6 +4132,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="dungdoom">
+		<description>Dungeons &amp; Doomknights (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Artix Entertainment</manufacturer>
+		<rom name="Dungeons &amp; Doomknights (2021)(Artix Ent.).nes" size="524304" crc="456fa82a"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="dushlan">
 		<description>Dushlan (HB) [Homebrew]</description>
 		<year>2016</year>
@@ -4644,11 +4668,19 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="fantasyzone">
+	<game name="fantasyzonej" cloneof="fantasyzone" romof="fantasyzone">
 		<description>Fantasy Zone (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Sunsoft</manufacturer>
 		<rom name="Fantasy Zone (Japan).nes" size="131088" crc="dd119b43"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="fantasyzone">
+		<description>Fantasy Zone (Tengen) (USA)</description>
+		<year>1987</year>
+		<manufacturer>Sunsoft</manufacturer>
+		<rom name="Fantasy Zone (Tengen) (USA).nes" size="131088" crc="9c546b0b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -10468,6 +10500,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="plumchal">
+		<description>Plummet Challenge Game (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Fista Productions</manufacturer>
+		<rom name="Plummet Challenge Game (2021)(Fista Productions).nes" size="524304" crc="7ec3675e"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="popoteam">
 		<description>Po Po Team (Taiwan)</description>
 		<year>1989?</year>
@@ -14756,11 +14796,19 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="wampus">
+	<game name="wampus" cloneof="wampusdx" romof="wampusdx">
 		<description>Wampus (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>John Vanderhoef</manufacturer>
 		<rom name="Wampus (2019)(John Vanderhoef).nes" size="524304" crc="f67d26a2"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="wampusdx">
+		<description>Wampus DX (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>John Vanderhoef</manufacturer>
+		<rom name="Wampus DX (2020)(John Vanderhoef).nes" size="524304" crc="690f19e0"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

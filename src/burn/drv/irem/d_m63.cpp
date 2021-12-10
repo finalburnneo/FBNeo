@@ -39,6 +39,7 @@ static UINT8 m63_sound_p1;
 static UINT8 m63_sound_p2;
 static UINT8 sound_irq = 0;
 static INT32 sample_pos = 0;
+static INT32 sample_end = 0;
 static INT32 sample_sel = -1;
 
 static UINT8 DrvJoy1[8];
@@ -52,83 +53,83 @@ static INT32 char_color_offset;
 static INT32 sound_interrupt_count;
 
 static struct BurnInputInfo WilytowrInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 6,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 6,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Wilytowr)
 
 static struct BurnInputInfo FghtbsktInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Fghtbskt)
 
 static struct BurnDIPInfo WilytowrDIPList[]=
 {
-	{0x10, 0xff, 0xff, 0x01, NULL				},
-	{0x11, 0xff, 0xff, 0x02, NULL				},
+	{0x10, 0xff, 0xff, 0x01, NULL						},
+	{0x11, 0xff, 0xff, 0x02, NULL						},
 
-	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x10, 0x01, 0x03, 0x00, "2"				},
-	{0x10, 0x01, 0x03, 0x01, "3"				},
-	{0x10, 0x01, 0x03, 0x02, "4"				},
-	{0x10, 0x01, 0x03, 0x03, "5"				},
+	{0   , 0xfe, 0   ,    4, "Lives"					},
+	{0x10, 0x01, 0x03, 0x00, "2"						},
+	{0x10, 0x01, 0x03, 0x01, "3"						},
+	{0x10, 0x01, 0x03, 0x02, "4"						},
+	{0x10, 0x01, 0x03, 0x03, "5"						},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Points Rate"		},
-	{0x10, 0x01, 0x0c, 0x00, "Normal"			},
-	{0x10, 0x01, 0x0c, 0x04, "x1.2"				},
-	{0x10, 0x01, 0x0c, 0x08, "x1.4"				},
-	{0x10, 0x01, 0x0c, 0x0c, "x1.6"				},
+	{0x10, 0x01, 0x0c, 0x00, "Normal"					},
+	{0x10, 0x01, 0x0c, 0x04, "x1.2"						},
+	{0x10, 0x01, 0x0c, 0x08, "x1.4"						},
+	{0x10, 0x01, 0x0c, 0x0c, "x1.6"						},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"			},
+	{0   , 0xfe, 0   ,    4, "Coin A"					},
 	{0x10, 0x01, 0x30, 0x20, "3 Coins 1 Credits"		},
 	{0x10, 0x01, 0x30, 0x10, "2 Coins 1 Credits"		},
 	{0x10, 0x01, 0x30, 0x00, "1 Coin  1 Credits"		},
-	{0x10, 0x01, 0x30, 0x30, "Free Play"			},
+	{0x10, 0x01, 0x30, 0x30, "Free Play"				},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"			},
+	{0   , 0xfe, 0   ,    4, "Coin B"					},
 	{0x10, 0x01, 0xc0, 0x00, "1 Coin  2 Credits"		},
 	{0x10, 0x01, 0xc0, 0x40, "1 Coin  3 Credits"		},
 	{0x10, 0x01, 0xc0, 0x80, "1 Coin  5 Credits"		},
 	{0x10, 0x01, 0xc0, 0xc0, "1 Coin  6 Credits"		},
 
-	{0   , 0xfe, 0   ,    16, "Coinage"			},
+	{0   , 0xfe, 0   ,    16, "Coinage"					},
 	{0x10, 0x01, 0xf0, 0x60, "7 Coins 1 Credits"		},
 	{0x10, 0x01, 0xf0, 0x50, "6 Coins 1 Credits"		},
 	{0x10, 0x01, 0xf0, 0x40, "5 Coins 1 Credits"		},
@@ -144,62 +145,62 @@ static struct BurnDIPInfo WilytowrDIPList[]=
 	{0x10, 0x01, 0xf0, 0xd0, "1 Coin  7 Credits"		},
 	{0x10, 0x01, 0xf0, 0xe0, "1 Coin  8 Credits"		},
 	{0x10, 0x01, 0xf0, 0x70, "1 Coin  9 Credits"		},
-	{0x10, 0x01, 0xf0, 0xf0, "Free Play"			},
+	{0x10, 0x01, 0xf0, 0xf0, "Free Play"				},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
-	{0x11, 0x01, 0x01, 0x00, "Off"				},
-	{0x11, 0x01, 0x01, 0x01, "On"				},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"				},
+	{0x11, 0x01, 0x01, 0x00, "Off"						},
+	{0x11, 0x01, 0x01, 0x01, "On"						},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"			},
-	{0x11, 0x01, 0x02, 0x02, "Upright"			},
-	{0x11, 0x01, 0x02, 0x00, "Cocktail"			},
+	{0   , 0xfe, 0   ,    2, "Cabinet"					},
+	{0x11, 0x01, 0x02, 0x02, "Upright"					},
+	{0x11, 0x01, 0x02, 0x00, "Cocktail"					},
 	
-	{0   , 0xfe, 0   ,    2, "Coin Mode"			},
-	{0x11, 0x01, 0x04, 0x00, "Mode 1"			},
-	{0x11, 0x01, 0x04, 0x04, "Mode 2"			},
+	{0   , 0xfe, 0   ,    2, "Coin Mode"				},
+	{0x11, 0x01, 0x04, 0x00, "Mode 1"					},
+	{0x11, 0x01, 0x04, 0x04, "Mode 2"					},
 
-	{0   , 0xfe, 0   ,    0, "Stop Mode (Cheat)"		},
-	{0x11, 0x01, 0x10, 0x00, "Off"				},
-	{0x11, 0x01, 0x10, 0x10, "On"				},
+	{0   , 0xfe, 0   ,    2, "Stop Mode (Cheat)"		},
+	{0x11, 0x01, 0x10, 0x00, "Off"						},
+	{0x11, 0x01, 0x10, 0x10, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Invulnerability (Cheat)"	},
-	{0x11, 0x01, 0x40, 0x00, "Off"				},
-	{0x11, 0x01, 0x40, 0x40, "On"				},
+	{0x11, 0x01, 0x40, 0x00, "Off"						},
+	{0x11, 0x01, 0x40, 0x40, "On"						},
 
-	{0   , 0xfe, 0   ,    0, "Service Mode"			},
-	{0x11, 0x01, 0x80, 0x00, "Off"				},
-	{0x11, 0x01, 0x80, 0x80, "On"				},
+	{0   , 0xfe, 0   ,    2, "Service Mode"				},
+	{0x11, 0x01, 0x80, 0x00, "Off"						},
+	{0x11, 0x01, 0x80, 0x80, "On"						},
 };
 
 STDDIPINFO(Wilytowr)
 
 static struct BurnDIPInfo FghtbsktDIPList[]=
 {
-	{0x0f, 0xff, 0xff, 0xc4, NULL				},
+	{0x0f, 0xff, 0xff, 0xc4, NULL						},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"			},
+	{0   , 0xfe, 0   ,    4, "Coin A"					},
 	{0x0f, 0x01, 0x03, 0x03, "3 Coins 1 Credits"		},
 	{0x0f, 0x01, 0x03, 0x01, "2 Coins 1 Credits"		},
 	{0x0f, 0x01, 0x03, 0x00, "1 Coin  1 Credits"		},
 	{0x0f, 0x01, 0x03, 0x02, "1 Coin  2 Credits"		},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"			},
+	{0   , 0xfe, 0   ,    4, "Coin B"					},
 	{0x0f, 0x01, 0x0c, 0x04, "1 Coin  1 Credits"		},
 	{0x0f, 0x01, 0x0c, 0x00, "1 Coin  2 Credits"		},
 	{0x0f, 0x01, 0x0c, 0x08, "1 Coin  4 Credits"		},
 	{0x0f, 0x01, 0x0c, 0x0c, "99 Credits / Sound Test"	},
 
-	{0   , 0xfe, 0   ,    2, "Time Count Down"		},
-	{0x0f, 0x01, 0x20, 0x00, "Slow"				},
-	{0x0f, 0x01, 0x20, 0x20, "Too Fast"			},
+	{0   , 0xfe, 0   ,    2, "Time Count Down"			},
+	{0x0f, 0x01, 0x20, 0x00, "Slow"						},
+	{0x0f, 0x01, 0x20, 0x20, "Too Fast"					},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"			},
-	{0x0f, 0x01, 0x40, 0x40, "Upright"			},
-	{0x0f, 0x01, 0x40, 0x00, "Cocktail"			},
+	{0   , 0xfe, 0   ,    2, "Cabinet"					},
+	{0x0f, 0x01, 0x40, 0x40, "Upright"					},
+	{0x0f, 0x01, 0x40, 0x00, "Cocktail"					},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x0f, 0x01, 0x80, 0x00, "Off"				},
-	{0x0f, 0x01, 0x80, 0x80, "On"				},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"				},
+	{0x0f, 0x01, 0x80, 0x00, "Off"						},
+	{0x0f, 0x01, 0x80, 0x80, "On"						},
 };
 
 STDDIPINFO(Fghtbskt)
@@ -248,7 +249,7 @@ static UINT8 __fastcall m63_main_read(UINT16 address)
 		case 0xf800:
 		case 0xf001: // fghtbskt
 			return DrvInputs[0];
-	
+
 		case 0xf801:
 		case 0xf002: // fghtbskt
 			return DrvInputs[1];
@@ -288,6 +289,7 @@ static void __fastcall fghtbskt_main_write(UINT16 address, UINT8 data)
 		case 0xf807:
 			if (data & 0x01) {
 				sample_sel = ((data & 0xf0) << 8);
+				sample_end = sample_sel + 0x2000;
 				sample_pos = 0;
 			}
 		return;
@@ -423,29 +425,14 @@ static void m63_main_map()
 {
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0xbfff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0xbfff, 2, DrvZ80ROM);
-	ZetMapArea(0xd000, 0xdfff, 0, DrvZ80RAM0);
-	ZetMapArea(0xd000, 0xdfff, 1, DrvZ80RAM0);
-	ZetMapArea(0xd000, 0xdfff, 2, DrvZ80RAM0);
-	ZetMapArea(0xe000, 0xe1ff, 0, DrvZ80RAM1);
-	ZetMapArea(0xe000, 0xe1ff, 1, DrvZ80RAM1);
-	ZetMapArea(0xe000, 0xe1ff, 2, DrvZ80RAM1);
-	ZetMapArea(0xe200, 0xe2ff, 0, DrvSprRAM);
-	ZetMapArea(0xe200, 0xe2ff, 1, DrvSprRAM);
-	ZetMapArea(0xe200, 0xe2ff, 2, DrvSprRAM);
-	ZetMapArea(0xe300, 0xe3ff, 0, DrvScrRAM);
-	ZetMapArea(0xe300, 0xe3ff, 1, DrvScrRAM);
-	ZetMapArea(0xe300, 0xe3ff, 2, DrvScrRAM);
-	ZetMapArea(0xe400, 0xe7ff, 0, DrvVidRAM1);
-	ZetMapArea(0xe400, 0xe7ff, 1, DrvVidRAM1);
-	ZetMapArea(0xe400, 0xe7ff, 2, DrvVidRAM1);
-	ZetMapArea(0xe800, 0xebff, 0, DrvVidRAM0);
-	ZetMapArea(0xe800, 0xebff, 1, DrvVidRAM0);
-	ZetMapArea(0xe800, 0xebff, 2, DrvVidRAM0);
-	ZetMapArea(0xec00, 0xefff, 0, DrvColRAM);
-	ZetMapArea(0xec00, 0xefff, 1, DrvColRAM);
-	ZetMapArea(0xec00, 0xefff, 2, DrvColRAM);
+	ZetMapMemory(DrvZ80ROM,		0x0000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM0,	0xd000, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvZ80RAM1,	0xe000, 0xe1ff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM,		0xe200, 0xe2ff, MAP_RAM);
+	ZetMapMemory(DrvScrRAM,		0xe300, 0xe3ff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM1,	0xe400, 0xe7ff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM0,	0xe800, 0xebff, MAP_RAM);
+	ZetMapMemory(DrvColRAM,		0xec00, 0xefff, MAP_RAM);
 	ZetSetWriteHandler(m63_main_write);
 	ZetSetReadHandler(m63_main_read);
 	ZetClose();
@@ -455,29 +442,14 @@ static void fghtbskt_main_map()
 {
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0xbfff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0xbfff, 2, DrvZ80ROM);
-	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80RAM0);
-	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80RAM0);
-	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80RAM0);
-	ZetMapArea(0xd000, 0xd1ff, 0, DrvZ80RAM1);
-	ZetMapArea(0xd000, 0xd1ff, 1, DrvZ80RAM1);
-	ZetMapArea(0xd000, 0xd1ff, 2, DrvZ80RAM1);
-	ZetMapArea(0xd200, 0xd2ff, 0, DrvSprRAM);
-	ZetMapArea(0xd200, 0xd2ff, 1, DrvSprRAM);
-	ZetMapArea(0xd200, 0xd2ff, 2, DrvSprRAM);
-	ZetMapArea(0xd300, 0xd3ff, 0, DrvScrRAM);
-	ZetMapArea(0xd300, 0xd3ff, 1, DrvScrRAM);
-	ZetMapArea(0xd300, 0xd3ff, 2, DrvScrRAM);
-	ZetMapArea(0xd400, 0xd7ff, 0, DrvVidRAM1);
-	ZetMapArea(0xd400, 0xd7ff, 1, DrvVidRAM1);
-	ZetMapArea(0xd400, 0xd7ff, 2, DrvVidRAM1);
-	ZetMapArea(0xd800, 0xdbff, 0, DrvVidRAM0);
-	ZetMapArea(0xd800, 0xdbff, 1, DrvVidRAM0);
-	ZetMapArea(0xd800, 0xdbff, 2, DrvVidRAM0);
-	ZetMapArea(0xdc00, 0xdfff, 0, DrvColRAM);
-	ZetMapArea(0xdc00, 0xdfff, 1, DrvColRAM);
-	ZetMapArea(0xdc00, 0xdfff, 2, DrvColRAM);
+	ZetMapMemory(DrvZ80ROM,		0x0000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM0,	0xc000, 0xc7ff, MAP_RAM);
+	ZetMapMemory(DrvZ80RAM1,	0xd000, 0xd1ff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM,		0xd200, 0xd2ff, MAP_RAM);
+	ZetMapMemory(DrvScrRAM,		0xd300, 0xd3ff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM1,	0xd400, 0xd7ff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM0,	0xd800, 0xdbff, MAP_RAM);
+	ZetMapMemory(DrvColRAM,		0xdc00, 0xdfff, MAP_RAM);
 	ZetSetWriteHandler(fghtbskt_main_write);
 	ZetSetReadHandler(m63_main_read);
 	ZetClose();
@@ -502,6 +474,7 @@ static INT32 DrvDoReset()
 	m63_sound_p2 = 0;
 	sound_irq = 0;
 	sample_pos = 0;
+	sample_end = 0;
 	sample_sel = -1;
 
 	DrvRecalc = 1;
@@ -583,12 +556,7 @@ static INT32 MemIndex()
 
 static INT32 DrvInit(void (*pMapMainCPU)(), INT32 (*pRomLoadCallback)(), INT32 syoffset, INT32 charcoloroff, INT32 sndirqcount)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (pRomLoadCallback()) return 1;
 
@@ -608,7 +576,7 @@ static INT32 DrvInit(void (*pMapMainCPU)(), INT32 (*pRomLoadCallback)(), INT32 s
 	AY8910Init(0, 1500000, 0);
 	AY8910Init(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 1.00, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.50, BURN_SND_ROUTE_BOTH);
     AY8910SetBuffered(I8039TotalCycles, 3000000);
 
 	sy_offset = syoffset;
@@ -632,7 +600,7 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 	AY8910Exit(1);
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -724,9 +692,9 @@ static INT32 atomboyInit()
 static INT32 fghtbsktInit()
 {
 	INT32 nRet = DrvInit(fghtbskt_main_map, fghtbsktLoadRoms, 240, 0x010, 60/2);
-	
-	AY8910SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
-	
+
+	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
+
 	return nRet;
 }
 
@@ -770,19 +738,7 @@ static void draw_fg_layer()
 
 static void draw_sprite_tile(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy)
 {
-	if (flipy) {
-		if (flipx) {
-			Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM2);
-		} else {
-			Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM2);
-		}
-	} else {
-		if (flipx) {
-			Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM2);
-		} else {
-			Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM2);
-		}
-	}
+	Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 3, 0, 0, DrvGfxROM2);
 }
 
 static void draw_sprites()
@@ -801,7 +757,7 @@ static void draw_sprites()
 		if (*flipscreen)
 		{
 			sx = 240 - sx;
-			sy = sy_offset - sy;
+			sy = (sy_offset - 32) - sy;
 			flipx = !flipx;
 			flipy = !flipy;
 		}
@@ -821,9 +777,12 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	draw_bg_layer();
-	draw_sprites();
-	draw_fg_layer();
+	BurnTransferClear();
+	if (nBurnLayer & 1) draw_bg_layer();
+	if (nSpriteEnable & 1) draw_sprites();
+	if (nBurnLayer & 2) draw_fg_layer();
+
+	BurnTransferFlip(*flipscreen, *flipscreen);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -837,15 +796,15 @@ static void sample_render(short *pSoundBuf, INT32 nLength)
 	double Addr = sample_pos + sample_sel;
 	double Step = (double)8000 / nBurnSoundRate;
 
-	for (INT32 i = 0; i < nLength && Addr < 0xa000; i += 2, Addr += Step) {
-		short Sample = (short)((DrvSampleROM[(int)Addr]^0x80) << 8);
+	for (INT32 i = 0; i < nLength && Addr < 0xa000 && sample_pos < sample_end; i ++, Addr += Step) {
+		INT16 Sample = (INT16)((DrvSampleROM[(int)Addr] * 0x3f));
 
-		pSoundBuf[i    ] += Sample;
-		pSoundBuf[i + 1] += Sample;
+		pSoundBuf[i * 2 + 0] += Sample;
+		pSoundBuf[i * 2 + 1] += Sample;
 	}
 
 	sample_pos = (int)Addr;
-	if (Addr >= 0xa000) sample_sel = -1;
+	if (Addr >= 0xa000 || sample_pos >= sample_end) sample_sel = -1;
 }
 
 static INT32 DrvFrame()
@@ -867,7 +826,7 @@ static INT32 DrvFrame()
 
 	INT32 nCyclesTotal[2] = { 3000000 / 60, 3000000 / 60 };
 	INT32 nCyclesDone[2]  = { 0, 0 };
-	INT32 nInterleave = 100;
+	INT32 nInterleave = 256;
 
 	ZetOpen(0);
 	I8039Open(0);
@@ -876,6 +835,8 @@ static INT32 DrvFrame()
 	{
 		CPU_RUN(0, Zet);
 		CPU_RUN(1, I8039);
+
+		if (i == 240 && *interrupt_enable) ZetNmi();
 	}
 
 	if (sound_interrupt_count == 30) { // some games, every other frame
@@ -884,12 +845,10 @@ static INT32 DrvFrame()
 		sound_irq = 1;
 	}
 
-	if (*interrupt_enable) ZetNmi();
-
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
-		BurnSoundDCFilter();
 		sample_render(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundDCFilter();
 	}
 
 	I8039Close();
@@ -927,6 +886,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(m63_sound_p2);
 		SCAN_VAR(sound_irq);
 		SCAN_VAR(sample_pos);
+		SCAN_VAR(sample_end);
 		SCAN_VAR(sample_sel);
 	}
 
@@ -978,7 +938,7 @@ struct BurnDriver BurnDrvWilytowr = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_IREM_M63, GBF_PLATFORM, 0,
 	NULL, wilytowrRomInfo, wilytowrRomName, NULL, NULL, NULL, NULL, WilytowrInputInfo, WilytowrDIPInfo,
 	wilytowrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x104,
-	256, 224, 4, 3
+	256, 224, 3, 4
 };
 
 
@@ -1026,7 +986,7 @@ struct BurnDriver BurnDrvAtomboy = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_IREM_M63, GBF_PLATFORM, 0,
 	NULL, atomboyRomInfo, atomboyRomName, NULL, NULL, NULL, NULL, WilytowrInputInfo, WilytowrDIPInfo,
 	atomboyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x104,
-	256, 224, 4, 3
+	256, 224, 3, 4
 };
 
 
@@ -1074,7 +1034,7 @@ struct BurnDriver BurnDrvAtomboya = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_IREM_M63, GBF_PLATFORM, 0,
 	NULL, atomboyaRomInfo, atomboyaRomName, NULL, NULL, NULL, NULL, WilytowrInputInfo, WilytowrDIPInfo,
 	atomboyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x104,
-	256, 224, 4, 3
+	256, 224, 3, 4
 };
 
 

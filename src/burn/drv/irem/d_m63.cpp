@@ -938,7 +938,7 @@ struct BurnDriver BurnDrvWilytowr = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_IREM_M63, GBF_PLATFORM, 0,
 	NULL, wilytowrRomInfo, wilytowrRomName, NULL, NULL, NULL, NULL, WilytowrInputInfo, WilytowrDIPInfo,
 	wilytowrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x104,
-	256, 224, 3, 4
+	256, 224, 4, 3
 };
 
 
@@ -986,7 +986,7 @@ struct BurnDriver BurnDrvAtomboy = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_IREM_M63, GBF_PLATFORM, 0,
 	NULL, atomboyRomInfo, atomboyRomName, NULL, NULL, NULL, NULL, WilytowrInputInfo, WilytowrDIPInfo,
 	atomboyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x104,
-	256, 224, 3, 4
+	256, 224, 4, 3
 };
 
 
@@ -1034,7 +1034,7 @@ struct BurnDriver BurnDrvAtomboya = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_IREM_M63, GBF_PLATFORM, 0,
 	NULL, atomboyaRomInfo, atomboyaRomName, NULL, NULL, NULL, NULL, WilytowrInputInfo, WilytowrDIPInfo,
 	atomboyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x104,
-	256, 224, 3, 4
+	256, 224, 4, 3
 };
 
 

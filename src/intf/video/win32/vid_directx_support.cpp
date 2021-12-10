@@ -469,7 +469,7 @@ int VidSScaleImage(RECT* pRect, int nGameWidth, int nGameHeight, bool bVertScanl
 	nScrnAspectY = nVidScrnAspectY;
 
 	if (bDrvOkay) {
-		if ((BurnDrvGetFlags() & (BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED)) && (nVidRotationAdjust & 1)) {
+		if ((BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) && (nVidRotationAdjust & 1)) {
 			BurnDrvGetAspect(&nGameAspectY, &nGameAspectX);
 		} else {
 			BurnDrvGetAspect(&nGameAspectX, &nGameAspectY);

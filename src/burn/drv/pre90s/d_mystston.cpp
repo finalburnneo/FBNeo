@@ -104,6 +104,46 @@ static struct BurnDIPInfo DrvDIPList[]=
 
 STDDIPINFO(Drv)
 
+static struct BurnDIPInfo DrvaDIPList[]=
+{
+	{0x11, 0xff, 0xff, 0xfb, NULL			},
+	{0x12, 0xff, 0xff, 0x1f, NULL			},
+
+	{0   , 0xfe, 0   , 2   , "Lives"		},
+	{0x11, 0x01, 0x01, 0x01, "2"			},
+	{0x11, 0x01, 0x01, 0x00, "3"			},
+
+	{0   , 0xfe, 0   , 2   , "Difficulty"	},
+	{0x11, 0x01, 0x02, 0x02, "Easy"			},
+	{0x11, 0x01, 0x02, 0x00, "Hard"			},
+
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"	},
+	{0x11, 0x01, 0x04, 0x04, "Off"			},
+	{0x11, 0x01, 0x04, 0x00, "On"			},
+
+	{0   , 0xfe, 0   , 4   , "Coin A"		},
+	{0x12, 0x01, 0x03, 0x00, "2C 1C"		},
+	{0x12, 0x01, 0x03, 0x03, "1C 1C"		},
+	{0x12, 0x01, 0x03, 0x02, "1C 2C"		},
+	{0x12, 0x01, 0x03, 0x01, "1C 3C"		},
+
+	{0   , 0xfe, 0   , 4   , "Coin B"		},
+	{0x12, 0x01, 0x0c, 0x00, "2C 1C"		},
+	{0x12, 0x01, 0x0c, 0x0c, "1C 1C"		},
+	{0x12, 0x01, 0x0c, 0x08, "1C 2C"		},
+	{0x12, 0x01, 0x0c, 0x04, "1C 3C"		},
+
+	{0   , 0xfe, 0   , 2   , "Flip Screen"	},
+	{0x12, 0x01, 0x20, 0x00, "Off"			},
+	{0x12, 0x01, 0x20, 0x20, "On"			},
+
+	{0   , 0xfe, 0   , 2   , "Cabinet"		},
+	{0x12, 0x01, 0x40, 0x00, "Upright"		},
+	{0x12, 0x01, 0x40, 0x40, "Cocktail"		},
+};
+
+STDDIPINFO(Drva)
+
 static void mystston_soundcontrol(UINT8 data)
 {
 	if (((ay8910_select & 0x20) == 0x20) && ((data & 0x20) == 0x00))
@@ -612,28 +652,28 @@ struct BurnDriver BurnDrvmystston = {
 // Mysterious Stones - Dr. Kick in Adventure
 
 static struct BurnRomInfo myststnoRomDesc[] = {
-	{ "ms0",          0x2000, 0x6dacc05f, 1 | BRF_PRG | BRF_ESS }, //  0 M6205 Code
-	{ "ms1",          0x2000, 0xa3546df7, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "ms2",          0x2000, 0x43bc6182, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "ms3",          0x2000, 0x9322222b, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "ms4",          0x2000, 0x47cefe9b, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "ms5",          0x2000, 0xb37ae12b, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "bb00.ic102",   0x2000, 0x6dacc05f, 1 | BRF_PRG | BRF_ESS }, //  0 M6205 Code
+	{ "bw01.ic90",    0x2000, 0xa3546df7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bw02.ic76",    0x2000, 0x43bc6182, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "bw03.ic75",    0x2000, 0x9322222b, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "bw04.ic62",    0x2000, 0x47cefe9b, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "bw05.ic61",    0x2000, 0xb37ae12b, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "ms6",          0x2000, 0x85c83806, 2 | BRF_GRA }, 	       //  6 Character + Sprite Tiles
-	{ "ms9",          0x2000, 0xb146c6ab, 2 | BRF_GRA },  	       //  7
-	{ "ms7",          0x2000, 0xd025f84d, 2 | BRF_GRA },  	       //  8
-	{ "ms10",         0x2000, 0xd85015b5, 2 | BRF_GRA },  	       //  9
-	{ "ms8",          0x2000, 0x53765d89, 2 | BRF_GRA },  	       // 10
-	{ "ms11",         0x2000, 0x919ee527, 2 | BRF_GRA },  	       // 11
+	{ "bw06.ic105",   0x2000, 0x85c83806, 2 | BRF_GRA }, 	       //  6 Character + Sprite Tiles
+	{ "bw09.ic93",    0x2000, 0xb146c6ab, 2 | BRF_GRA },  	       //  7
+	{ "bw07.ic107",   0x2000, 0xd025f84d, 2 | BRF_GRA },  	       //  8
+	{ "bw10.ic95",    0x2000, 0xd85015b5, 2 | BRF_GRA },  	       //  9
+	{ "bw08.ic109",   0x2000, 0x53765d89, 2 | BRF_GRA },  	       // 10
+	{ "bw11.ic97",    0x2000, 0x919ee527, 2 | BRF_GRA },  	       // 11
 
-	{ "ms12",         0x2000, 0x72d8331d, 3 | BRF_GRA },  	       // 12 Background Tiles
-	{ "ms13",         0x2000, 0x845a1f9b, 3 | BRF_GRA },  	       // 13
-	{ "ms14",         0x2000, 0x822874b0, 3 | BRF_GRA },  	       // 14 
-	{ "ms15",         0x2000, 0x4594e53c, 3 | BRF_GRA },  	       // 15 
-	{ "ms16",         0x2000, 0x2f470b0f, 3 | BRF_GRA },  	       // 16
-	{ "ms17",         0x2000, 0x38966d1b, 3 | BRF_GRA },  	       // 17
+	{ "bw12.ic15",    0x2000, 0x72d8331d, 3 | BRF_GRA },  	       // 12 Background Tiles
+	{ "bw13.ic20",    0x2000, 0x845a1f9b, 3 | BRF_GRA },  	       // 13
+	{ "bw14.ic24",    0x2000, 0x822874b0, 3 | BRF_GRA },  	       // 14 
+	{ "bw15.ic29",    0x2000, 0x4594e53c, 3 | BRF_GRA },  	       // 15 
+	{ "bw16.ic34",    0x2000, 0x2f470b0f, 3 | BRF_GRA },  	       // 16
+	{ "bw17.ic38",    0x2000, 0x38966d1b, 3 | BRF_GRA },  	       // 17
 
-	{ "ic61",         0x0020, 0xe802d6cf, 4 | BRF_GRA },  	       // 18 Color Prom
+	{ "hlo.ic61",     0x0020, 0xe802d6cf, 4 | BRF_GRA },  	       // 18 Color Prom
 };
 
 STD_ROM_PICK(myststno)
@@ -688,7 +728,7 @@ struct BurnDriver BurnDrvmyststni = {
 	"Mysterious Stones - Dr. Kick in Adventure (Itisa PCB)\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
-	NULL, myststniRomInfo, myststniRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, myststniRomInfo, myststniRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	240, 256, 3, 4
 };

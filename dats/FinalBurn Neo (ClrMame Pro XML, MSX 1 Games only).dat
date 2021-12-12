@@ -10966,7 +10966,7 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="phantis2" romof="msx">
+	<game name="phantis2" cloneof="phantis1" romof="phantis1">
 		<description>Phantis - Part 2 (Spanish) [Password: 18757]</description>
 		<year>1987</year>
 		<manufacturer>Dinamic Software</manufacturer>

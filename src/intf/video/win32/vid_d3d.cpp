@@ -315,7 +315,7 @@ static int Update3DScreen()
 			double dXAngle, dYAngle;
 
 			if (bDrvOkay) {
-				if ((BurnDrvGetFlags() & (BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED)) && nVidRotationAdjust) {
+				if ((BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) && nVidRotationAdjust) {
 					BurnDrvGetAspect(&nGameAspectY, &nGameAspectX);
 				} else {
 					BurnDrvGetAspect(&nGameAspectX, &nGameAspectY);

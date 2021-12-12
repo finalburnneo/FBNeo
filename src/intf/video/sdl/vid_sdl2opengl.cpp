@@ -182,7 +182,7 @@ static int VidSScaleImage(RECT* pRect)
 
 	if (bDrvOkay)
 	{
-		if ((BurnDrvGetFlags() & (BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED)))
+		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
 		{
 			BurnDrvGetAspect(&nGameAspectY, &nGameAspectX);
 		}

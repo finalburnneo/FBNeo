@@ -94,7 +94,7 @@ static int Init()
 	{
 		// Get the game screen size
 		BurnDrvGetVisibleSize(&nVidImageWidth, &nVidImageHeight);
-		if ((BurnDrvGetFlags() & (BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED)))
+		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
 		{
 			BurnDrvGetAspect(&GameAspectY, &GameAspectX);
 		}

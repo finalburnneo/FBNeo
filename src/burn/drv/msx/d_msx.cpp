@@ -27861,10 +27861,10 @@ STDROMPICKEXT(MSX_phantis2, MSX_phantis2, msx_msx)
 STD_ROM_FN(MSX_phantis2)
 
 struct BurnDriver BurnDrvMSX_phantis2 = {
-	"msx_phantis2", NULL, "msx_msx", NULL, "1987",
+	"msx_phantis2", "msx_phantis1", "msx_msx", NULL, "1987",
 	"Phantis - Part 2 (Spanish)\0", "Password: 18757", "Dinamic Software", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_phantis2RomInfo, MSX_phantis2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3

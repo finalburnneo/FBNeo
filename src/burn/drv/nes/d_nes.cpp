@@ -18978,7 +18978,7 @@ struct BurnDriver BurnDrvnes_anguna = {
 };
 
 static struct BurnRomInfo nes_aoRomDesc[] = {
-	{ "AO (2016)(2nd Dimension).nes",          24592, 0xbc0a5f02, BRF_ESS | BRF_PRG },
+	{ "AO (2016)(2nd Dimension).nes",          24592, 0xae018214, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_ao)

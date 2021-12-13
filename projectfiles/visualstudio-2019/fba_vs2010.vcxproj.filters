@@ -4637,9 +4637,6 @@
     <ClCompile Include="..\..\src\burn\drv\dataeast\d_pcktgal.cpp">
       <Filter>Burn\drv\dataeast</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\sega\d_segac2.cpp">
-      <Filter>Burn\drv\sega</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">

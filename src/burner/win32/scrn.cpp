@@ -2238,6 +2238,21 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			break;
 		}
 
+		case MENU_AUDIO_VOLUME_0:
+		case MENU_AUDIO_VOLUME_10:
+		case MENU_AUDIO_VOLUME_20:
+		case MENU_AUDIO_VOLUME_30:
+		case MENU_AUDIO_VOLUME_40:
+		case MENU_AUDIO_VOLUME_50:
+		case MENU_AUDIO_VOLUME_60:
+		case MENU_AUDIO_VOLUME_70:
+		case MENU_AUDIO_VOLUME_80:
+		case MENU_AUDIO_VOLUME_90:
+		case MENU_AUDIO_VOLUME_100:
+			nAudVolume = (id - MENU_AUDIO_VOLUME_0) * 1000;
+			AudSoundSetVolume();
+			break;
+
 		case MENU_INPUT_AUTOFIRE_RATE_1: nAutoFireRate = 22; break;
 		case MENU_INPUT_AUTOFIRE_RATE_2: nAutoFireRate = 12; break;
 		case MENU_INPUT_AUTOFIRE_RATE_3: nAutoFireRate =  8; break;

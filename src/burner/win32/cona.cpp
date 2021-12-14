@@ -163,6 +163,7 @@ int ConfigAppLoad()
 
 		// Sound
 		VAR(nAudSelect);
+		VAR(nAudVolume);
 		VAR(nAudSegCount);
 		VAR(nInterpolation);
 		VAR(nFMInterpolation);
@@ -508,6 +509,8 @@ int ConfigAppSave()
 	_ftprintf(h, _T("// --- Sound ------------------------------------------------------------------\n"));
 	_ftprintf(h, _T("\n// The selected audio plugin\n"));
 	VAR(nAudSelect);
+	_ftprintf(h, _T("\n// Audio Volume\n"));
+	VAR(nAudVolume);
 	_ftprintf(h, _T("\n// Number of frames in sound buffer (= sound lag)\n"));
 	VAR(nAudSegCount);
 	_ftprintf(h, _T("\n// The order of PCM/ADPCM interpolation\n"));

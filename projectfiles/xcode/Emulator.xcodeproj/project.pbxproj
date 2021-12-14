@@ -1091,6 +1091,7 @@
 		FEF4EE8423635521004E0DCE /* Emulator.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEF4EE8223635521004E0DCE /* Emulator.xib */; };
 		FEF4EE8723635CA0004E0DCE /* NSWindowController+Core.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF4EE8523635CA0004E0DCE /* NSWindowController+Core.m */; };
 		FEF4EE892363720B004E0DCE /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEF4EE882363720B004E0DCE /* Defaults.plist */; };
+		FEF54EED276871B5009EA719 /* d_segac2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEF54EEC276871B5009EA719 /* d_segac2.cpp */; };
 		FEFB2E7925A9A0A0005D9281 /* tms34010.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEFB2E7625A9A083005D9281 /* tms34010.cpp */; settings = {COMPILER_FLAGS = "-Wno-shift-count-overflow"; }; };
 		FEFB2E7D25A9A245005D9281 /* tms34_intf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEFB2E7A25A9A128005D9281 /* tms34_intf.cpp */; };
 		FEFE604923C7805A00535CE2 /* d_exprraid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEFE604823C7805A00535CE2 /* d_exprraid.cpp */; };
@@ -2754,6 +2755,7 @@
 		FEF4EE8523635CA0004E0DCE /* NSWindowController+Core.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSWindowController+Core.m"; sourceTree = "<group>"; };
 		FEF4EE8623635CA0004E0DCE /* NSWindowController+Core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSWindowController+Core.h"; sourceTree = "<group>"; };
 		FEF4EE882363720B004E0DCE /* Defaults.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Defaults.plist; sourceTree = "<group>"; };
+		FEF54EEC276871B5009EA719 /* d_segac2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_segac2.cpp; sourceTree = "<group>"; };
 		FEFB2E7225A9A083005D9281 /* 34010gfx.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = 34010gfx.c; sourceTree = "<group>"; };
 		FEFB2E7325A9A083005D9281 /* 34010fld.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = 34010fld.c; sourceTree = "<group>"; };
 		FEFB2E7425A9A083005D9281 /* 34010ops.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = 34010ops.c; sourceTree = "<group>"; };
@@ -3928,6 +3930,7 @@
 				FE1B1F8923561A690065200C /* d_dotrikun.cpp */,
 				FE1B1F9723561A690065200C /* d_hangon.cpp */,
 				FE1B1F9B23561A690065200C /* d_outrun.cpp */,
+				FEF54EEC276871B5009EA719 /* d_segac2.cpp */,
 				FE1B1F9123561A690065200C /* d_segae.cpp */,
 				FE1B1F9323561A690065200C /* d_segag80v.cpp */,
 				FEDF04B125E377F300F3EDD9 /* d_segas32.cpp */,
@@ -5484,6 +5487,7 @@
 				FE1B27CA23561A790065200C /* nmk112.cpp in Sources */,
 				FE1B27B123561A790065200C /* load.cpp in Sources */,
 				FE1B27D023561A790065200C /* atarivad.cpp in Sources */,
+				FEF54EED276871B5009EA719 /* d_segac2.cpp in Sources */,
 				FE1B23BE23561A750065200C /* i8039.cpp in Sources */,
 				FE1B25F223561A760065200C /* d_kinst.cpp in Sources */,
 				FE1B277523561A790065200C /* x1010.cpp in Sources */,

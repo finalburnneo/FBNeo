@@ -18,6 +18,7 @@ static IDirectSoundBuffer* pdsbLoop = NULL;	// (Secondary) Loop buffer
 static int cbLoopLen = 0;					// Loop length (in bytes) calculated
 
 int (*DSoundGetNextSound)(int);				// Callback used to request more sound
+static int DxSoundSetVolume(); // forward
 
 static HANDLE hDSoundEvent = NULL;
 static HANDLE hAbortEvent = NULL;
@@ -344,7 +345,7 @@ error:
 static int DxSoundPlay()
 {
 	DxBlankSound();
-	pdsbLoop->SetVolume(nDSoundVol);
+	DxSoundSetVolume();
 
 	// Play the looping buffer
 	if (FAILED(pdsbLoop->Play(0, 0, DSBPLAY_LOOPING))) {

@@ -15,6 +15,7 @@ static IUnknown* pXAPO = NULL;
 static bool effectEnable = false;
 
 int (*XAudio2GetNextSound)(int);
+static int XAudio2SetVolume(); // forward
 
 BYTE* pAudioBuffers = NULL;
 int currentBuffer = 0;
@@ -321,7 +322,7 @@ static int XAudio2Play()
 	}
 
 	XAudio2BlankSound();
-	pSourceVoice->SetVolume(nXAudio2Vol);
+	XAudio2SetVolume();
 
 	if (FAILED(pSourceVoice->Start(0))) {
 		return 1;

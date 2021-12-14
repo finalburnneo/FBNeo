@@ -564,6 +564,7 @@ int RunMessageLoop()
 									_stprintf(buffer, FBALoadStringEx(hAppInst, IDS_SOUND_VOLUMESET, true), nAudVolume / 100);
 									VidSNewShortMsg(buffer);
 								}
+								MenuUpdate();
 								break;
 							}
 							case VK_OEM_MINUS: {
@@ -586,6 +587,7 @@ int RunMessageLoop()
 									_stprintf(buffer, FBALoadStringEx(hAppInst, IDS_SOUND_VOLUMESET, true), nAudVolume / 100);
 									VidSNewShortMsg(buffer);
 								}
+								MenuUpdate();
 								break;
 							}
 							case VK_MENU: {

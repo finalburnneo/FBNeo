@@ -13974,7 +13974,7 @@
 		<rom name="272-c7d.bin" size="8388608" crc="dce0119f"/>
 		<rom name="272-c8d.bin" size="8388608" crc="3bf256c5"/>
 		<rom name="272-m1d.bin" size="524288" crc="203d744e"/>
-		<rom name="272-v1d.bin" size="8388608" crc="3bf61586"/>
+		<rom name="272-v1d.bin" size="8388608" crc="28d57d10"/>
 		<rom name="272-v2d.bin" size="8388608" crc="95fe7646"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>

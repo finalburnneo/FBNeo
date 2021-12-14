@@ -698,6 +698,7 @@ DRV		BurnSpecAntyjones;
 DRV		BurnDrvMSX_anty;
 DRV		BurnDrvMSX_antya;
 DRV		BurnDrvnes_ao;
+DRV		BurnDrvnes_aod;
 DRV		BurnDrvpce_aoiblink;
 DRV		BurnDrvmd_genchohi;
 DRV		BurnDrvmd_genchohic;
@@ -3860,8 +3861,9 @@ DRV		BurnDrvDdpdojp;
 DRV		BurnDrvDdp3b;
 DRV		BurnDrvDdp3a;
 DRV		BurnDrvDdpdojblkbl;
-DRV		BurnDrvDdp3blka;
+DRV		BurnDrvDdp3blkb;
 DRV		BurnDrvDdp3blk;
+DRV		BurnDrvDdp3blka;
 DRV		BurnDrvDdp3;
 DRV		BurnDrvDogfight;
 DRV		BurnDrvMSX_dogfight;
@@ -18756,6 +18758,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_anty,			// Anty (Jpn)
 	&BurnDrvMSX_antya,			// Anty (Jpn, Alt)
 	&BurnDrvnes_ao,				// AO (HB)
+	&BurnDrvnes_aod,			// AO (HB, Digital Edition)
 	&BurnDrvpce_aoiblink,		// Aoi Blink
 	&BurnDrvmd_genchohi,		// Aoki Ookami to Shiroki Mejika - Genchou Hishi (Jpn)
 	&BurnDrvmd_genchohic,		// Aoki Ookami to Shiroki Mejika - Genchou Hishi (T-Chi)
@@ -21918,8 +21921,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDdp3b,				// DoDonPachi Dai-Ou-Jou (V100, Japan, 2002.04.05.Master Ver)
 	&BurnDrvDdp3a,				// DoDonPachi Dai-Ou-Jou (V101, Japan, 2002.04.05.Master Ver)
 	&BurnDrvDdpdojblkbl,		// DoDonPachi Dai-Ou-Jou Black Label (2002.10.07 Black Ver., bootleg Knights of Valour Super Heroes conversion)
-	&BurnDrvDdp3blka,			// DoDonPachi Dai-Ou-Jou Black Label (Japan, 2002.10.07 Black Ver)
-	&BurnDrvDdp3blk,			// DoDonPachi Dai-Ou-Jou Black Label (Japan, 2002.10.07.Black Ver)
+	&BurnDrvDdp3blkb,			// DoDonPachi Dai-Ou-Jou Black Label (Japan, 2002.10.07 Black Ver)
+	&BurnDrvDdp3blk,			// DoDonPachi Dai-Ou-Jou Black Label (Japan, 2002.10.07.Black Ver, newer)
+	&BurnDrvDdp3blka,			// DoDonPachi Dai-Ou-Jou Black Label (Japan, 2002.10.07.Black Ver, older)
 	&BurnDrvDdp3,				// DoDonPachi III (World, 2002.05.15 Master Ver)
 	&BurnDrvDogfight,			// Dog Fight (Thunderbolt)
 	&BurnDrvMSX_dogfight,		// Dog Fighter (Euro)

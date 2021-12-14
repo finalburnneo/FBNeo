@@ -748,6 +748,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="aod" cloneof="ao" romof="ao">
+		<description>AO (HB, Digital Edition) [Homebrew]</description>
+		<year>2016</year>
+		<manufacturer>2nd Dimension</manufacturer>
+		<rom name="AO (2016)(2nd Dimension, Digital).nes" size="24592" crc="ae018214"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="archriv">
 		<description>Arch Rivals - A Basketbrawl! (USA)</description>
 		<year>1990</year>

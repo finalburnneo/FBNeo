@@ -53694,3 +53694,40 @@ struct BurnDriver BurnDrvmd_sor2fnr = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+/*
+// Masking Test
+static struct BurnRomInfo md_spritemaskRomDesc[] = {
+	{ "SpriteMaskingTestRom.bin", 262144, 0x6986aa96, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_spritemask)
+STD_ROM_FN(md_spritemask)
+
+struct BurnDriverD BurnDrvmd_spritemask = {
+	"md_spritemask", NULL, NULL, NULL, "2019",
+	"MD Sprite Mask Test (HB)\0", NULL, "?", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_spritemaskRomInfo, md_spritemaskRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};*/
+
+// Cannon Fire Chaos - Triple Threat (HB)
+static struct BurnRomInfo md_cannonfireRomDesc[] = {
+	{ "Cannon Fire Chaos - Triple Threat.bin", 1572864, 0xe6d6b7e1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_cannonfire)
+STD_ROM_FN(md_cannonfire)
+
+struct BurnDriver BurnDrvmd_cannonfire = {
+	"md_cannonfire", NULL, NULL, NULL, "2018",
+	"Cannon Fire Chaos - Triple Threat (HB)\0", NULL, "Good Deal Games", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
+	MegadriveGetZipName, md_cannonfireRomInfo, md_cannonfireRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

@@ -2231,6 +2231,7 @@ DRV		BurnDrvCannball;
 DRV		BurnDrvCannballv;
 DRV		BurnDrvCandance;
 DRV		BurnDrvMSX_cannonfgt;
+DRV		BurnDrvmd_cannonfire;
 DRV		BurnDrvmd_cfodder;
 DRV		BurnDrvmd_cfodders;
 DRV		BurnDrvMSX_cannont;
@@ -20291,6 +20292,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCannballv,			// Cannon Ball (Yun Sung, vertical)
 	&BurnDrvCandance,			// Cannon Dancer (Japan)
 	&BurnDrvMSX_cannonfgt,		// Cannon Fighter (Jpn)
+	&BurnDrvmd_cannonfire,		// Cannon Fire Chaos - Triple Threat (HB)
 	&BurnDrvmd_cfodder,			// Cannon Fodder (Euro)
 	&BurnDrvmd_cfodders,		// Cannon Fodder (Hack, Spanish)
 	&BurnDrvMSX_cannont,		// Cannon Turbo (Jpn)

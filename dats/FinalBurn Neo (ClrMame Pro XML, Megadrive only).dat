@@ -2685,6 +2685,14 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="cannonfire">
+		<description>Cannon Fire Chaos - Triple Threat (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Good Deal Games</manufacturer>
+		<rom name="Cannon Fire Chaos - Triple Threat.bin" size="1572864" crc="e6d6b7e1"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="cfodder">
 		<description>Cannon Fodder (Euro)</description>
 		<year>1994</year>

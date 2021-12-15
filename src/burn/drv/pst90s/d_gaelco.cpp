@@ -46,6 +46,7 @@ static INT32 nOkiBank;
 
 static INT32 gaelco_encryption_param1;
 static INT32 has_sound_cpu = 0;
+static INT32 sprite_highpri_color;
 
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
@@ -900,6 +901,8 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 encrypted_ram, INT32 sou
 
 	gaelco_encryption_param1 = encrypted_ram;
 
+	sprite_highpri_color = 0x38; // default
+
 	GenericTilesInit();
 
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, screen0_map_callback, 16, 16, 32, 32);
@@ -991,7 +994,11 @@ static INT32 ThoopInit()
 
 static INT32 SquashInit()
 {
-	return DrvInit(SquashRomLoad,	0x0f, 0);
+	INT32 rc = DrvInit(SquashRomLoad,	0x0f, 0);
+	if (!rc) {
+		sprite_highpri_color = 0x3c;
+	}
+	return rc;
 }
 
 static INT32 BiomtoyInit()
@@ -1041,7 +1048,7 @@ static void draw_sprites()
 		INT32 yflip = attr & 0x40;
 		INT32 spr_size, pri_mask;
 
-		if (color >= 0x38) priority = 4;
+		if (color >= sprite_highpri_color) priority = 4;
 
 		switch (priority)
 		{

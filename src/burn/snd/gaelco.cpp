@@ -1,7 +1,9 @@
+// license:BSD-3-Clause
+// copyright-holders:Manuel Abadia, David Haywood
 /***************************************************************************
                     Gaelco Sound Hardware
 
-                By Manuel Abadia <manu@teleline.es>
+                By Manuel Abadia <emumanu+mame@gmail.com>
 
 CG-1V/GAE1 (Gaelco custom GFX & Sound chip):
     The CG-1V/GAE1 can handle up to 7 stereo channels.
@@ -272,31 +274,53 @@ void gaelcosnd_w(INT32 offset, UINT16 data)
 
 	m_sndregs[offset] = data;
 
-	switch(offset & 0x07){
-		case 0x03:
-			/* trigger sound */
-			if ((m_sndregs[offset - 1] != 0) && (data != 0)){
-				if (!channel->active){
-					channel->active = 1;
-					channel->chunkNum = 0;
-					channel->loop = 0;
-					//bprintf(0, _T("(GAE1) Playing sample channel: %02d, type: %02x, bank: %02x, end: %08x, Length: %04x\n"), offset >> 3, (m_sndregs[offset - 2] >> 4) & 0x0f, m_sndregs[offset - 2] & 0x03, m_sndregs[offset - 1] << 8, data);
-				}
-			} else {
-				channel->active = 0;
+	switch (offset & 0x07)
+	{
+	case 0x03:
+		// if sample end position isn't 0, and length isn't 0
+		if ((m_sndregs[offset - 1] != 0) && (data != 0))
+		{
+			//LOG_SOUND(("(GAE1) Playing or Queuing 1st chunk in channel: %02d, type: %02x, bank: %02x, end: %08x, Length: %04x\n", offset >> 3, (m_sndregs[offset - 2] >> 4) & 0x0f, m_sndregs[offset - 2] & 0x03, m_sndregs[offset - 1] << 8, data));
+
+			channel->loop = 1;
+
+			if (!channel->active)
+			{
+				channel->chunkNum = 0;
 			}
 
-			break;
+			channel->active = 1;
+		}
+		else
+		{
+			//channel->loop = 0;
+			channel->active = 0;
+		}
 
-		case 0x07: /* enable/disable looping */
-			if ((m_sndregs[offset - 1] != 0) && (data != 0)){
-				//bprintf(0, _T("(GAE1) Looping in channel: %02d, type: %02x, bank: %02x, end: %08x, Length: %04x\n"), offset >> 3, (m_sndregs[offset - 2] >> 4) & 0x0f, m_sndregs[offset - 2] & 0x03, m_sndregs[offset - 1] << 8, data);
-				channel->loop = 1;
-			} else {
-				channel->loop = 0;
+		break;
+
+	case 0x07:
+		// if sample end position isn't 0, and length isn't 0
+		if ((m_sndregs[offset - 1] != 0) && (data != 0))
+		{
+			//LOG_SOUND(("(GAE1) Playing or Queuing 2nd chunk in channel: %02d, type: %02x, bank: %02x, end: %08x, Length: %04x\n", offset >> 3, (m_sndregs[offset - 2] >> 4) & 0x0f, m_sndregs[offset - 2] & 0x03, m_sndregs[offset - 1] << 8, data));
+
+			channel->loop = 1;
+
+			if (!channel->active)
+			{
+				channel->chunkNum = 1;
 			}
 
-			break;
+			channel->active = 1;
+		}
+		else
+		{
+			channel->loop = 0;
+			// channel->active = 0;
+		}
+
+		break;
 	}
 }
 

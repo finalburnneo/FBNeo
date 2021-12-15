@@ -297,6 +297,7 @@ struct _mcs51_state_t
 		UINT8	previous_ta;		/* Previous Timed Access value */
 		UINT8	ta_window;			/* Limed Access window */
 		UINT8	range;				/* Memory Range */
+		INT32   rnr_delay;          /* delay before new random number available */
 		ds5002fp_config config;	/* Bootstrap Configuration */
 	} ds5002fp;
 
@@ -2071,8 +2072,12 @@ INT32 mcs51Run(int cycles) // divide cycles by 12! -dink
 		burn_cycles(mcs51_state->inst_cycles);
 
 		/* decrement the timed access window */
-		if (mcs51_state->features & FEATURE_DS5002FP)
+		if (mcs51_state->features & FEATURE_DS5002FP) {
 			mcs51_state->ds5002fp.ta_window = (mcs51_state->ds5002fp.ta_window ? (mcs51_state->ds5002fp.ta_window - 1) : 0x00);
+
+			if (mcs51_state->ds5002fp.rnr_delay > 0)
+				mcs51_state->ds5002fp.rnr_delay-=mcs51_state->inst_cycles;
+		}
 
 		/* If the chip entered in idle mode, end the loop */
 		if ((mcs51_state->features & FEATURE_CMOS) && GET_IDL)
@@ -2123,6 +2128,10 @@ void mcs51_scan(INT32 nAction)
 			ba.nLen	  = STRUCT_SIZE_HELPER(struct _mcs51_state_t, ds5002fp);
 			ba.szName = "i8051 Regs";
 			BurnAcb(&ba);
+
+			if (mcs51_state_store[i].features & FEATURE_DS5002FP) {
+				BurnRandomScan(nAction); // ds5002fp
+			}
 		}
 	}
 }
@@ -2341,6 +2350,7 @@ void mcs51_reset (void)
 		mcs51_state->ds5002fp.previous_ta = 0;
 		mcs51_state->ds5002fp.ta_window = 0;
 		mcs51_state->ds5002fp.range = (GET_RG1 << 1) | GET_RG0;
+		mcs51_state->ds5002fp.rnr_delay = 160;
 	}
 
 }
@@ -2410,6 +2420,17 @@ static void ds5002fp_sfr_write(INT32 offset, UINT8 data)
 	//mcs51_state->data->write_byte((INT32) offset | 0x100, data);
 }
 
+static UINT8 ds5002fp_handle_rnr()
+{
+	if (mcs51_state->ds5002fp.rnr_delay <= 0)
+	{
+		mcs51_state->ds5002fp.rnr_delay = 160; // delay before another random number can be read
+		return BurnRandom();
+	}
+	else
+		return 0x00;
+}
+
 static UINT8 ds5002fp_sfr_read(INT32 offset)
 {
 	switch (offset)
@@ -2419,8 +2440,10 @@ static UINT8 ds5002fp_sfr_read(INT32 offset)
 		case ADDR_CRCH: 	DS5_LOGR(CRCH, data);		break;
 		case ADDR_MCON: 	DS5_LOGR(MCON, data);		break;
 		case ADDR_TA:		DS5_LOGR(TA, data);			break;
-		case ADDR_RNR:		DS5_LOGR(RNR, data);		break;
-		case ADDR_RPCTL:	DS5_LOGR(RPCTL, data);		return 0x80; break; // 7/17/17 fix touchgo
+		case ADDR_RNR:		DS5_LOGR(RNR, data);
+			return ds5002fp_handle_rnr();
+		case ADDR_RPCTL:	DS5_LOGR(RPCTL, data);
+			return (mcs51_state->ds5002fp.rnr_delay <= 0) ? 0x80 : 0x00;
 		case ADDR_RPS:		DS5_LOGR(RPS, data);		break;
 		case ADDR_PCON:
 			SET_PFW(0);		/* reset PFW flag */

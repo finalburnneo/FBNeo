@@ -308,6 +308,7 @@ static void __fastcall raidenAltWriteByte(UINT32 vezAddress, UINT8 byteValue)
 		case 0x0d060: // raidenb
 		case 0x0d061:
 		case 0x0d062:
+		case 0x0d063:
 		case 0x0d064:
 		case 0x0d065:
 		case 0x0d066:

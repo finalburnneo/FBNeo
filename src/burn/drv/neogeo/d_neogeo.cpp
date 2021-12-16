@@ -14202,6 +14202,37 @@ struct BurnDriverD BurnDrvsbp = {
 	0x1000,	304, 224, 4, 3
 };
 
+
+// Xeno Crisis
+
+static struct BurnRomInfo xenocrisisRomDesc[] = {
+	{ "BB01-p1.p1",   	0x0100000, 0x637605a6, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+	{ "BB01-p2.p2",   	0x0100000, 0x84838145, 1 | BRF_ESS | BRF_PRG }, 	//  1
+
+	{ "BB01-s1.s1",		0x0020000, 0x7537ea79, 2 | BRF_GRA },           	//  2 Text layer tiles
+
+	{ "BB01-c1.c1",		0x0200000, 0xae51ef89, 3 | BRF_GRA },           	//  3 Sprite data
+	{ "BB01-c2.c2",		0x0200000, 0xa8610100, 3 | BRF_GRA },           	//  4
+
+	{ "BB01-m1.m1",		0x0010000, 0x28c13ed9, 4 | BRF_ESS | BRF_PRG }, 	//  5 Z80 code
+
+	{ "BB01-v1.v1",		0x1000000, 0x60d57867, 5 | BRF_SND },           	//  6 Sound data
+};
+
+STDROMPICKEXT(xenocrisis, xenocrisis, neogeo)
+STD_ROM_FN(xenocrisis)
+
+struct BurnDriver BurnDrvxenocrisis = {
+	"xenocrisis", NULL, "neogeo", NULL, "2019",
+	"Xeno Crisis\0", NULL, "Bitmap Bureau", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SHOOT, 0,
+	NULL, xenocrisisRomInfo, xenocrisisRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+
 // -----------------------------------------------------------------------------
 // Games not in MAME
 

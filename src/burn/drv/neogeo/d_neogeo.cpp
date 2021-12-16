@@ -20810,10 +20810,11 @@ struct BurnDriver BurnDrvTeot = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Cabal (Neo-Geo Conversion, beta 2)
+
+// Cabal (Neo-Geo Conversion)
 
 static struct BurnRomInfo cabalngRomDesc[] = {
-	{ "cabal-p1.bin",   0x100000, 0xbb193926, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+	{ "cabal-p1.bin",   0x100000, 0x4da4adf2, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
 
 	{ "cabal-s1.bin",	0x020000, 0x45f0bc5e, 2 | BRF_GRA },           	//  1 Text layer tiles
 
@@ -20831,7 +20832,7 @@ STD_ROM_FN(cabalng)
 
 struct BurnDriver BurnDrvCabalng = {
 	"cabalng", NULL, "neogeo", NULL, "1988",
-	"Cabal (Neo-Geo Conversion, beta 2)\0", "Buggy, works in MVS mode only!", "TAD Corporation", "Neo Geo MVS",
+	"Cabal (Neo-Geo Conversion)\0", NULL, "TAD Corporation", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
 	NULL, cabalngRomInfo, cabalngRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

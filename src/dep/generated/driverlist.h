@@ -17732,6 +17732,7 @@ DRV		BurnSpecxecutor;
 DRV		BurnSpecXecutorremix;
 DRV		BurnSpecXeno;
 DRV		BurnDrvmd_xenocrisis;
+DRV		BurnDrvxenocrisis;
 DRV		BurnSpecXeno2;
 DRV		BurnSpecxenon;
 DRV		BurnDrvMSX_xenon;
@@ -20199,7 +20200,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_cso,			// C_So! (Kor)
 	&BurnSpeccabal,				// Cabal (128K)
 	&BurnDrvCabala,				// Cabal (korea?, Joystick)
-	&BurnDrvCabalng,			// Cabal (Neo-Geo Conversion, beta 2)
+	&BurnDrvCabalng,			// Cabal (Neo-Geo Conversion)
 	&BurnDrvCabalukj,			// Cabal (UK, Joystick)
 	&BurnDrvCabaluk,			// Cabal (UK, Trackball)
 	&BurnDrvCabalus,			// Cabal (US set 1, Trackball)
@@ -35793,6 +35794,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecXecutorremix,		// Xecutor - Remix (128K)
 	&BurnSpecXeno,				// Xeno (48K)
 	&BurnDrvmd_xenocrisis,		// Xeno Crisis (HB, World)
+	&BurnDrvxenocrisis,			// Xeno Crisis
 	&BurnSpecXeno2,				// Xeno II (16K)
 	&BurnSpecxenon,				// Xenon (128K)
 	&BurnDrvMSX_xenon,			// Xenon (Spanish)

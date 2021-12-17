@@ -350,13 +350,15 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		char szGameNameBuffer[255];
 		char szManufacturer[255];
 		char szManufacturerBuffer[255];
+		char szGameDecoration[255];
 
 		memset(szGameName, 0, 255);
 		memset(szGameNameBuffer, 0, 255);
 		memset(szManufacturer, 0, 255);
 		memset(szManufacturerBuffer, 0, 255);
+		memset(szGameDecoration, 0, 255);
 
-		strcpy(szGameName, DecorateGameName(nBurnDrvActive));
+		strcpy(szGameName, BurnDrvGetTextA(DRV_FULLNAME));
 		ReplaceAmpersand(szGameNameBuffer, szGameName);
 		memset(szGameName, 0, 255);
 		strcpy(szGameName, szGameNameBuffer);
@@ -378,6 +380,11 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		memset(szManufacturerBuffer, 0, 255);
 		ReplaceGreaterThan(szManufacturerBuffer, szManufacturer);
 
+		strcpy(szGameDecoration, GameDecoration(nBurnDrvActive));
+
+		if (strlen(szGameDecoration) > 0) {
+			fprintf(fDat, "\t\t<comment>%s</comment>\n", szGameDecoration);
+		}
 		fprintf(fDat, "\t\t<description>%s</description>\n", szGameNameBuffer);
 		fprintf(fDat, "\t\t<year>%s</year>\n", BurnDrvGetTextA(DRV_DATE));
 		fprintf(fDat, "\t\t<manufacturer>%s</manufacturer>\n", szManufacturerBuffer);
@@ -660,7 +667,13 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		remove_driver_leader(HARDWARE_CHANNELF, 4, 0)
 
 		fprintf(fDat, "\t<game isbios=\"yes\" name=\"%s\">\n", sgName);
-		fprintf(fDat, "\t\t<description>%s</description>\n", DecorateGameName(nBurnDrvActive));
+		char szGameDecoration[255];
+		memset(szGameDecoration, 0, 255);
+		strcpy(szGameDecoration, GameDecoration(nBurnDrvActive));
+		if (strlen(szGameDecoration) > 0) {
+			fprintf(fDat, "\t\t<comment>%s</comment>\n", szGameDecoration);
+		}
+		fprintf(fDat, "\t\t<description>%s</description>\n", BurnDrvGetTextA(DRV_FULLNAME));
 		fprintf(fDat, "\t\t<year>%s</year>\n", BurnDrvGetTextA(DRV_DATE));
 		fprintf(fDat, "\t\t<manufacturer>%s</manufacturer>\n", BurnDrvGetTextA(DRV_MANUFACTURER));
 

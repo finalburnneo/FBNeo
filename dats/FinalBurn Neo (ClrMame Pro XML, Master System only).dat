@@ -2247,6 +2247,15 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="grimez80">
+		<comment>Homebrew</comment>
+		<description>Grime Z80 (HB)</description>
+		<year>2018</year>
+		<manufacturer>Chibi Akumas</manufacturer>
+		<rom name="Grime Z80 (Chibi Akumas)(2018).sms" size="32768" crc="6664c3d5"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="gunsmoke">
 		<description>Gun.Smoke (Kor)</description>
 		<year>1990</year>

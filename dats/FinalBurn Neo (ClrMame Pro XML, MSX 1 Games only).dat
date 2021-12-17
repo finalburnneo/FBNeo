@@ -306,7 +306,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="afteroids" romof="msx">
-		<comment>Press S to skip intro screen</comment>
+		<comment>Press 'S' to skip intro screen</comment>
 		<description>Afteroids (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Zigurat Software</manufacturer>
@@ -644,6 +644,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="anexoes" cloneof="anexoen" romof="anexoen">
+		<comment>Homebrew</comment>
+		<description>Anexo 1, El Algoritmo (Spanish) (HB)</description>
+		<year>2018</year>
+		<manufacturer>Jose Soto Gandara</manufacturer>
+		<rom name="Anexo 1, El Algoritmo (2018)(Jose Soto Gandara).rom" size="32768" crc="3e4862c0"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="angelo" romof="msx">
 		<description>Angelo (Jpn)</description>
 		<year>1984</year>
@@ -683,6 +695,18 @@
 		<year>1987</year>
 		<manufacturer>Enix</manufacturer>
 		<rom name="Animal Land (1987)(Enix).rom" size="131072" crc="aee2363d"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="anexoen" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Annex 1, The Algorithm (English) (HB)</description>
+		<year>2018</year>
+		<manufacturer>Jose Soto Gandara</manufacturer>
+		<rom name="Annex 1, The Algorithm (2018)(Jose Soto Gandara).rom" size="32768" crc="ebaa5e5e"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -2223,8 +2247,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bubbler" romof="msx">
-		<comment>Press 1 or 2 to select Keyboard-Joystick</comment>
-		<description>Bubbler</description>
+		<comment>Press '1' for P1 and '2' for P2 controller options</comment>
+		<description>Bubbler (Euro)</description>
 		<year>1987</year>
 		<manufacturer>Ultimate Play The Game</manufacturer>
 		<rom name="Bubbler (1987)(Ultimate Play The Game)(GB).rom" size="131072" crc="0150e22e"/>
@@ -2251,6 +2275,17 @@
 		<year>2018</year>
 		<manufacturer>GW's Workshop</manufacturer>
 		<rom name="buddhagillie110.rom" size="32768" crc="906e2ce6"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bugyrang" romof="msx">
+		<description>Buggy Ranger (Spanish)</description>
+		<year>1990</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Buggy Ranger ES (1990)(Dinamic Software)[RUN'CAS-'].cas" size="50998" crc="492e4377"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -2307,6 +2342,18 @@
 		<year>1986</year>
 		<manufacturer>Dempa</manufacturer>
 		<rom name="burgertime (japan).rom" size="32768" crc="e4a7c230"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="burnusv2" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Burn Us (HB, v2)</description>
+		<year>2018</year>
+		<manufacturer>CARAMBALAN Studios</manufacturer>
+		<rom name="Burn Us v2.0 (2018)(CARAMBALAN Studios).rom" size="32768" crc="b3d06d43"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -3681,7 +3728,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cyberun" romof="msx">
-		<comment>Use keys 1 and 2 to set P1 and P2 controller options</comment>
+		<comment>Press '1' for P1 and '2' for P2 controller options</comment>
 		<description>Cyberun (Euro)</description>
 		<year>1985</year>
 		<manufacturer>Ultimate Play The Game</manufacturer>
@@ -4336,6 +4383,29 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ddragon1" romof="msx">
+		<description>Double Dragon (Spanish)</description>
+		<year>1988</year>
+		<manufacturer>Dro Soft</manufacturer>
+		<rom name="Double Dragon ES (1988)(Dro Soft)(Side A)[RUN'CAS-'].cas" size="161560" crc="835cc478"/>
+		<rom name="Double Dragon ES (1988)(Dro Soft)(Side B)[RUN'CAS-'].cas" size="22266" crc="80e60993"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ddragon2" romof="msx">
+		<description>Double Dragon II - The Revenge (Spanish)</description>
+		<year>1990</year>
+		<manufacturer>Dro Soft</manufacturer>
+		<rom name="Double Dragon II - The Revenge ES (1990)(Dro Soft)[RUN'CAS-'].cas" size="207102" crc="9efcedac"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="drpill" romof="msx">
 		<comment>Homebrew</comment>
 		<description>Dr. Pill (HB)</description>
@@ -4453,6 +4523,17 @@
 		<year>1987</year>
 		<manufacturer>Victor</manufacturer>
 		<rom name="drainer (japan).rom" size="32768" crc="db803e8a"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="drakkar" romof="msx">
+		<description>Drakkar (Spanish)</description>
+		<year>1989</year>
+		<manufacturer>Diabolic Software</manufacturer>
+		<rom name="Drakkar ES (1989)(Diabolic Software)[RUN'CAS-'].cas" size="81353" crc="e37e27a0"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -5527,6 +5608,18 @@
 		<year>1983</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="frogger (japan) (alt 1).rom" size="16384" crc="71edc580"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="frogadvs" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Frogger's Adventures (HB)</description>
+		<year>2021</year>
+		<manufacturer>Orazio Cacciola</manufacturer>
+		<rom name="Frogger's Adventures (2021)(Orazio Cacciola).rom" size="524288" crc="7bf8d358"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7263,22 +7356,22 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="nipper2" romof="msx">
-		<description>Jack the Nipper II - In Coconut Capers</description>
-		<year>1987</year>
+	<game name="nipper" romof="msx">
+		<description>Jack the Nipper (Euro)</description>
+		<year>1986</year>
 		<manufacturer>Gremlin Graphics Software</manufacturer>
-		<rom name="Jack the Nipper II - In Coconut Capers (1987)(Gremlin Graphics Software)(GB).rom" size="131072" crc="6b0fd271"/>
+		<rom name="Jack the Nipper (1986)(Gremlin Graphics Software)(GB).rom" size="131072" crc="666725ec"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="nipper" romof="msx">
-		<description>Jack the Nipper</description>
-		<year>1986</year>
+	<game name="nipper2" romof="msx">
+		<description>Jack the Nipper II - In Coconut Capers (Euro)</description>
+		<year>1987</year>
 		<manufacturer>Gremlin Graphics Software</manufacturer>
-		<rom name="Jack the Nipper (1986)(Gremlin Graphics Software)(GB).rom" size="131072" crc="666725ec"/>
+		<rom name="Jack the Nipper II - In Coconut Capers (1987)(Gremlin Graphics Software)(GB).rom" size="131072" crc="6b0fd271"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7342,10 +7435,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="jaws" romof="msx">
-		<comment>Use Space and Enter to select options</comment>
+		<comment>Use SPACE to choose options and ENTER to start</comment>
 		<description>Jaws (Euro)</description>
 		<year>1989</year>
-		<manufacturer>A.M.H.</manufacturer>
+		<manufacturer>Screen 7</manufacturer>
 		<rom name="jaws (1989)(screen 7)[run'cas-'].cas" size="49114" crc="908478e6"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -7365,7 +7458,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jetfight" romof="msx">
-		<description>Jet Fighter (Euro, Eurosoft)</description>
+		<description>Jet Fighter (Euro)</description>
 		<year>1988</year>
 		<manufacturer>Eurosoft</manufacturer>
 		<rom name="jet fighter (1988)(eurosoft)(nl)[run'cas-'].cas" size="35936" crc="0a788a57"/>
@@ -7425,6 +7518,18 @@
 		<year>1989</year>
 		<manufacturer>Players Software</manufacturer>
 		<rom name="joe blade (1989)(players software)(gb)[bload'cas-',r].cas" size="26791" crc="c958dd10"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="jumpzs" romof="msx">
+		<comment>Press any key to choose and ENTER to select options</comment>
+		<description>Jump (Euro)</description>
+		<year>1992</year>
+		<manufacturer>Zigurat Software</manufacturer>
+		<rom name="Jump (1992)(Zigurat Software)[RUN'CAS-'].cas" size="51413" crc="daf17d49"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -8431,11 +8536,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="lazyjones" romof="msx">
-		<comment>Crashes... check later</comment>
-		<description>Lazy Jones</description>
+		<description>Lazy Jones (Euro)</description>
 		<year>1985</year>
 		<manufacturer>Terminal Software</manufacturer>
-		<rom name="Lazy Jones (1985)(Terminal Software)(GB).rom" size="65536" crc="a94670f3"/>
+		<rom name="Lazy Jones (1985)(Terminal Software)[RUN'CAS-'].cas" size="32936" crc="1ef2cc6d"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -8465,7 +8569,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lifefastln" romof="msx">
-		<description>Life in the Fast Lane</description>
+		<description>Life in the Fast Lane (Euro)</description>
 		<year>1987</year>
 		<manufacturer>Methodic Solutions</manufacturer>
 		<rom name="Life in the Fast Lane (1987)(Methodic Solutions)(NL).rom" size="131072" crc="37a8713d"/>
@@ -8648,7 +8752,7 @@
 	</game>
 	<game name="mdroid" romof="msx">
 		<description>M-Droid (Euro)</description>
-		<year>198?</year>
+		<year>1986</year>
 		<manufacturer>Blue Ribbon Software</manufacturer>
 		<rom name="m-droid (19xx)(blue ribbon software)[run'cas-'].cas" size="39574" crc="03869d9e"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
@@ -10557,11 +10661,36 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="nonamed" romof="msx">
+		<description>Nonamed (Spanish)</description>
+		<year>1986</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Nonamed ES (1986)(Dinamic Software)[RUN'CAS-'].cas" size="45733" crc="6c6f5ca5"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="norseman" romof="msx">
 		<description>Norseman (HB)</description>
 		<year>1984</year>
 		<manufacturer>Electric Software</manufacturer>
 		<rom name="Norseman (1984)(Electric Software).rom" size="32768" crc="a24441b8"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="northnsouth" romof="msx">
+		<description>North &amp; South (Euro, M3)</description>
+		<year>1991</year>
+		<manufacturer>Infogrames</manufacturer>
+		<rom name="North &amp; South (1991)(Infogrames)(M3)(Side A)[RUN'CAS-'].cas" size="64369" crc="d0656cd6"/>
+		<rom name="North &amp; South (1991)(Infogrames)(M3)(Side B)[RUN'CAS-'].cas" size="60950" crc="2534b765"/>
+		<rom name="North &amp; South (1991)(Infogrames)(M3)(Side C)[RUN'CAS-'].cas" size="22602" crc="0bdee2bd"/>
+		<rom name="North &amp; South (1991)(Infogrames)(M3)(Side D)[RUN'CAS-'].cas" size="40506" crc="2629b89c"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -13350,7 +13479,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="spooksl" romof="msx">
-		<description>Spooks &amp; Ladders</description>
+		<description>Spooks &amp; Ladders (Euro)</description>
 		<year>1985</year>
 		<manufacturer>Kuma Computers</manufacturer>
 		<rom name="Spooks &amp; Ladders (1985)(Kuma Computers)(GB).rom" size="65536" crc="71df64a8"/>
@@ -13418,7 +13547,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="staravng" romof="msx">
-		<description>Star Avenger</description>
+		<description>Star Avenger (Euro)</description>
 		<year>1984</year>
 		<manufacturer>Kuma Computers</manufacturer>
 		<rom name="Star Avenger (1984)(Kuma Computers)(GB).rom" size="65536" crc="d7c545cc"/>

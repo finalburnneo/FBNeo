@@ -351,6 +351,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		char szManufacturer[255];
 		char szManufacturerBuffer[255];
 		char szGameDecoration[255];
+		char szGameDecorationBuffer[255];
 
 		memset(szGameName, 0, 255);
 		memset(szGameNameBuffer, 0, 255);
@@ -381,6 +382,15 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		ReplaceGreaterThan(szManufacturerBuffer, szManufacturer);
 
 		strcpy(szGameDecoration, GameDecoration(nBurnDrvActive));
+		ReplaceAmpersand(szGameDecorationBuffer, szGameDecoration);
+		memset(szGameDecoration, 0, 255);
+		strcpy(szGameDecoration, szGameDecorationBuffer);
+		memset(szGameDecorationBuffer, 0, 255);
+		ReplaceLessThan(szGameDecorationBuffer, szGameDecoration);
+		memset(szGameDecoration, 0, 255);
+		strcpy(szGameDecoration, szGameDecorationBuffer);
+		memset(szGameDecorationBuffer, 0, 255);
+		ReplaceGreaterThan(szGameDecorationBuffer, szGameDecoration);
 
 		if (strlen(szGameDecoration) > 0) {
 			fprintf(fDat, "\t\t<comment>%s</comment>\n", szGameDecoration);

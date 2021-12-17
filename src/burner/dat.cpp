@@ -358,6 +358,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		memset(szManufacturer, 0, 255);
 		memset(szManufacturerBuffer, 0, 255);
 		memset(szGameDecoration, 0, 255);
+		memset(szGameDecorationBuffer, 0, 255);
 
 		strcpy(szGameName, BurnDrvGetTextA(DRV_FULLNAME));
 		ReplaceAmpersand(szGameNameBuffer, szGameName);

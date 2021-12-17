@@ -236,8 +236,10 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 									bprintf(0, _T("Apply cheat @ 0x%X -> 0x%X. (Undo 0x%X)\n"), pAddressInfo->nAddress, pAddressInfo->nValue, pAddressInfo->nOriginalValue);
 								}
 							}
-						if (pCurrentCheat->bWaitForModification)
+						if (pCurrentCheat->bWaitForModification == 1)
 							bprintf(0, _T(" - Triggered by: Waiting for modification!\n"));
+						if (pCurrentCheat->bWaitForModification == 2)
+							bprintf(0, _T(" - Triggered by: Waiting for Match memory with extended!\n"));
 
 						if (pCurrentCheat->nType != 0) { // not cheat.dat
 							if (pAddressInfo->nCPU != nOpenCPU) {
@@ -334,11 +336,20 @@ INT32 CheatApply()
 #endif
 				} else {
 					// update the cheat
-					if (pCurrentCheat->bWaitForModification && !pAddressInfo->bRelAddress) {
+					if (pCurrentCheat->bWaitForModification == 1 && pCurrentCheat->bModified == 0) {
 						UINT32 nValNow = cheat_subptr->read(pAddressInfo->nAddress);
 						if (nValNow != pAddressInfo->nOriginalValue) {
-							bprintf(0, _T(" - Address modified! old = %X new = %X\n"),pAddressInfo->nOriginalValue, nValNow);
-							cheat_subptr->write(pAddressInfo->nAddress, pAddressInfo->nValue);
+							bprintf(0, _T(" - Address modified! previous = %X now = %X\n"),pAddressInfo->nOriginalValue, nValNow);
+							// the write happens next iteration of CheatApply();
+							pCurrentCheat->bModified = 1;
+							pAddressInfo->nOriginalValue = pAddressInfo->nValue;
+						}
+					} else
+					if (pCurrentCheat->bWaitForModification == 2 && pCurrentCheat->bModified == 0) {
+						UINT32 nValNow = cheat_subptr->read(pAddressInfo->nAddress);
+						if (nValNow == pAddressInfo->nExtended) {
+							bprintf(0, _T(" - Address Matched! previous = %X now = %X\n"),pAddressInfo->nOriginalValue, nValNow);
+							// the write happens next iteration of CheatApply();
 							pCurrentCheat->bModified = 1;
 							pAddressInfo->nOriginalValue = pAddressInfo->nValue;
 						}
@@ -355,11 +366,12 @@ INT32 CheatApply()
 									addr |= cheat_subptr->read(pAddressInfo->nAddress + i) << (i * 8);
 								}
 							}
-							//bprintf(0, _T("cw %x -> %x\n"), addr + pAddressInfo->nMultiByte + pAddressInfo->nRelAddressOffset, pAddressInfo->nValue);
+							//bprintf(0, _T("relative cheat write %x -> %x\n"), addr + pAddressInfo->nMultiByte + pAddressInfo->nRelAddressOffset, pAddressInfo->nValue);
 							cheat_subptr->write(addr + pAddressInfo->nMultiByte + pAddressInfo->nRelAddressOffset, pAddressInfo->nValue);
 						} else {
 							// Normal cheat write
 							cheat_subptr->write(pAddressInfo->nAddress, pAddressInfo->nValue);
+							//bprintf(0, _T("normal cheat write %x -> %x\n"), pAddressInfo->nAddress, pAddressInfo->nValue);
 						}
 						pCurrentCheat->bModified = 1;
 					}

@@ -466,6 +466,7 @@ static INT32 ConfigParseMAMEFile()
 			pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nRelAddressBits = (flags & 0x3000000) >> 24; \
 		} \
 		pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nAddress = (pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].bRelAddress) ? nAddress : nAddress + i;	\
+		pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nExtended = nAttrib; \
 		if (IS_MIDWAY && k > 0) { /* multi-byte needs swapping on tms34010 (cheat data is BE cpu is LE *guess*) -dink */ \
 			INT32 swap = 0; \
 			switch (k) { \
@@ -647,6 +648,9 @@ static INT32 ConfigParseMAMEFile()
 				if (flags & 0x2) {
 					pCurrentCheat->bWaitForModification = 1; // wait for modification before changing
 				}
+				if (flags & 0x80000) {
+					pCurrentCheat->bWaitForModification = 2; // check address against extended field before changing
+				}
 				if (flags & 0x800000) {
 					pCurrentCheat->bRestoreOnDisable = 1; // restore previous value on disable
 				}
@@ -692,6 +696,9 @@ static INT32 ConfigParseMAMEFile()
 			}
 			if (flags & 0x2) {
 				pCurrentCheat->bWaitForModification = 1; // wait for modification before changing
+			}
+			if (flags & 0x80000) {
+				pCurrentCheat->bWaitForModification = 2; // check address against extended field before changing
 			}
 			if (flags & 0x800000) {
 				pCurrentCheat->bRestoreOnDisable = 1; // restore previous value on disable

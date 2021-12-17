@@ -29954,3 +29954,22 @@ struct BurnDriver BurnDrvsms_soultrials = {
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 224, 4, 3
 };
+
+// Grime Z80 (HB)
+
+static struct BurnRomInfo sms_grimez80RomDesc[] = {
+	{ "Grime Z80 (Chibi Akumas)(2018).sms",	32768, 0x6664c3d5, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_grimez80)
+STD_ROM_FN(sms_grimez80)
+
+struct BurnDriver BurnDrvsms_grimez80 = {
+	"sms_grimez80", NULL, NULL, NULL, "2018",
+	"Grime Z80 (HB)\0", NULL, "Chibi Akumas", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SHOOT | GBF_ACTION, 0,
+	SMSGetZipName, sms_grimez80RomInfo, sms_grimez80RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 224, 4, 3
+};

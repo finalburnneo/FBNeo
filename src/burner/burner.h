@@ -194,6 +194,7 @@ extern INT32 bHardwareGammaOnly;
 extern double nGamma;
 
 INT32 SetBurnHighCol(INT32 nDepth);
+char* GameDecoration(UINT32 nBurnDrv);
 char* DecorateGameName(UINT32 nBurnDrv);
 TCHAR* DecorateGenreInfo();
 void ComputeGammaLUT();

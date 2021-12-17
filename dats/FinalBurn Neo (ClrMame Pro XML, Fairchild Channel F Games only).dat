@@ -13,6 +13,7 @@
 		<clrmamepro forcenodump="ignore"/>
 	</header>
 	<game name="alieninv" romof="channelf">
+		<comment>BIOS only</comment>
 		<description>Alien Invasion</description>
 		<year>1981</year>
 		<manufacturer>Zircon</manufacturer>
@@ -24,6 +25,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="backgamm" romof="channelf">
+		<comment>BIOS only</comment>
 		<description>Backgammon / Acey-Deucey</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -35,6 +37,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="baseball" romof="channelf">
+		<comment>BIOS only</comment>
 		<description>Baseball</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -46,6 +49,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bowling" romof="channelf">
+		<comment>BIOS only</comment>
 		<description>Bowling</description>
 		<year>1978</year>
 		<manufacturer>Fairchil</manufacturer>
@@ -57,6 +61,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="casinop" romof="channelf">
+		<comment>BIOS only</comment>
 		<description>Casino Poker</description>
 		<year>1980</year>
 		<manufacturer>Zircon</manufacturer>
@@ -68,7 +73,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="multicrt" romof="channelf">
-		<comment>Homebrew</comment>
+		<comment>Homebrewy</comment>
 		<description>Channel F Multi-Cart (Final)</description>
 		<year>2004</year>
 		<manufacturer>homebrew</manufacturer>
@@ -80,7 +85,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="multicrto" cloneof="multicrt" romof="multicrt">
-		<comment>Homebrew</comment>
+		<comment>Homebrewy</comment>
 		<description>Channel F Multi-Cart (Older)</description>
 		<year>2004</year>
 		<manufacturer>homebrew</manufacturer>
@@ -92,6 +97,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="checkers" romof="channelf">
+		<comment>Homebrewy</comment>
 		<description>Checkers</description>
 		<year>1978</year>
 		<manufacturer>Zircon</manufacturer>
@@ -103,6 +109,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="clrorgan" romof="channelf">
+		<comment>Homebrewy</comment>
 		<description>Color Organ (Prototype)</description>
 		<year>19??</year>
 		<manufacturer>Zircon</manufacturer>
@@ -114,6 +121,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="democrt1" romof="channelf">
+		<comment>Homebrewy</comment>
 		<description>Democart 1</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -125,6 +133,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="democrt2" romof="channelf">
+		<comment>Homebrewy</comment>
 		<description>Democart 2</description>
 		<year>197?</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -136,6 +145,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dsrtfox" romof="channelf">
+		<comment>Homebrewy</comment>
 		<description>Desert Fox / Shooting Gallery</description>
 		<year>1976</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -147,6 +157,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dodgeit" romof="channelf">
+		<comment>Homebrewy</comment>
 		<description>Dodge It</description>
 		<year>1978</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -158,6 +169,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragrace" romof="channelf">
+		<comment>Homebrewy</comment>
 		<description>Drag Race</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -169,6 +181,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="drawpkr" cloneof="casinop" romof="casinop">
+		<comment>Homebrewy</comment>
 		<description>Draw Poker (Prototype)</description>
 		<year>1980</year>
 		<manufacturer>Zircon</manufacturer>
@@ -180,6 +193,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="football" cloneof="pfootbll" romof="pfootbll">
+		<comment>Homebrewy</comment>
 		<description>Football (Prototype)</description>
 		<year>1981</year>
 		<manufacturer>Zircon</manufacturer>
@@ -191,6 +205,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="galacticp" cloneof="galactic" romof="galactic">
+		<comment>Homebrewy</comment>
 		<description>Galactic Space Wars (Prototype)</description>
 		<year>1980</year>
 		<manufacturer>Zircon</manufacturer>
@@ -202,6 +217,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="galactic" romof="channelf">
+		<comment>Homebrewy</comment>
 		<description>Galactic Space Wars / Lunar Lander</description>
 		<year>1980</year>
 		<manufacturer>Zircon</manufacturer>
@@ -213,6 +229,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hangman" romof="channelf">
+		<comment>Homebrewy</comment>
 		<description>Hangman</description>
 		<year>1978</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -236,7 +253,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lightsout" romof="channelf">
-		<comment>Homebrew</comment>
+		<comment>HomebrewF built-in games</comment>
 		<description>Lights Out (HB)</description>
 		<year>2004</year>
 		<manufacturer>Sean Riddle</manufacturer>
@@ -248,6 +265,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="magicnum" romof="channelf">
+		<comment>HomebrewF built-in games</comment>
 		<description>Magic Numbers / Mind Reader / Nim</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -259,6 +277,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mthquiz1" romof="channelf">
+		<comment>HomebrewF built-in games</comment>
 		<description>Math Quiz 1</description>
 		<year>1976</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -270,6 +289,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mthquiz2" romof="channelf">
+		<comment>HomebrewF built-in games</comment>
 		<description>Math Quiz 2</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -281,6 +301,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mazea" cloneof="maze" romof="maze">
+		<comment>HomebrewF built-in games</comment>
 		<description>Maze / Jailbreak / Blind-man's-bluff / Trailblazer (Alt)</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -292,6 +313,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="maze" romof="channelf">
+		<comment>HomebrewF built-in games</comment>
 		<description>Maze / Jailbreak / Blind-man's-bluff / Trailblazer</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -303,6 +325,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="memory" romof="channelf">
+		<comment>HomebrewF built-in games</comment>
 		<description>Memory Match 1 &amp; 2</description>
 		<year>1978</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -314,6 +337,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="muehle" cloneof="tctactoe" romof="tctactoe">
+		<comment>HomebrewF built-in games</comment>
 		<description>Muehle / Tontauben-Schiessen / Kreatives Malspiel / Videoscope (Ger)</description>
 		<year>1978</year>
 		<manufacturer>SABA</manufacturer>
@@ -325,6 +349,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ordtvlng" cloneof="hangman" romof="hangman">
+		<comment>HomebrewF built-in games</comment>
 		<description>Ordtavling (Swe)</description>
 		<year>1978</year>
 		<manufacturer>Luxor</manufacturer>
@@ -336,7 +361,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pacman" romof="channelf">
-		<comment>Homebrew</comment>
+		<comment>HomebrewF built-in games</comment>
 		<description>Pac-Man (HB)</description>
 		<year>2004</year>
 		<manufacturer>Blackbird - e5frog</manufacturer>
@@ -348,7 +373,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pacmanv2" cloneof="pacman" romof="pacman">
-		<comment>Homebrew</comment>
+		<comment>HomebrewF built-in games</comment>
 		<description>Pac-Man (HB, v2)</description>
 		<year>2004</year>
 		<manufacturer>Blackbird - e5frog</manufacturer>
@@ -360,6 +385,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pinballa" cloneof="pinball" romof="pinball">
+		<comment>HomebrewF built-in games</comment>
 		<description>Pinball Challenge (Alt)</description>
 		<year>1978</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -371,6 +397,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pinball" romof="channelf">
+		<comment>HomebrewF built-in games</comment>
 		<description>Pinball Challenge</description>
 		<year>1978</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -382,6 +409,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pfootbll" romof="channelf">
+		<comment>HomebrewF built-in games</comment>
 		<description>Pro Football</description>
 		<year>1981</year>
 		<manufacturer>Zircon</manufacturer>
@@ -393,6 +421,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ratmal" cloneof="hangman" romof="hangman">
+		<comment>HomebrewF built-in games</comment>
 		<description>Rat' Mal (Ger)</description>
 		<year>197?</year>
 		<manufacturer>SABA</manufacturer>
@@ -404,6 +433,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="robotwarp" cloneof="robotwar" romof="robotwar">
+		<comment>HomebrewF built-in games</comment>
 		<description>Robot War (Prototype)</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -415,6 +445,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="robotwar" romof="channelf">
+		<comment>HomebrewF built-in games</comment>
 		<description>Robot War / Torpedo Alley</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -426,6 +457,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="schach" romof="channelf">
+		<comment>HomebrewF built-in games</comment>
 		<description>Schach (Ger)</description>
 		<year>197?</year>
 		<manufacturer>SABA</manufacturer>
@@ -437,6 +469,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="slotmchn" romof="channelf">
+		<comment>HomebrewF built-in games</comment>
 		<description>Slot Machine</description>
 		<year>1980</year>
 		<manufacturer>Zircon</manufacturer>
@@ -448,6 +481,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonrsrch" romof="channelf">
+		<comment>HomebrewF built-in games</comment>
 		<description>Sonar Search</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -459,6 +493,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="spacewar" romof="channelf">
+		<comment>HomebrewF built-in games</comment>
 		<description>Space War</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -470,6 +505,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="spitfirep" cloneof="spitfire" romof="spitfire">
+		<comment>HomebrewF built-in games</comment>
 		<description>Spitfire (Prototype)</description>
 		<year>1976</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -481,6 +517,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="spitfire" romof="channelf">
+		<comment>HomebrewF built-in games</comment>
 		<description>Spitfire</description>
 		<year>1976</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -492,7 +529,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tetris" romof="channelf">
-		<comment>Homebrew</comment>
+		<comment>HomebrewF built-in games</comment>
 		<description>Tetris (HB)</description>
 		<year>2004</year>
 		<manufacturer>Peter Trauner</manufacturer>
@@ -504,6 +541,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tctactoe" romof="channelf">
+		<comment>HomebrewF built-in games</comment>
 		<description>Tic-Tac-Toe / Shooting Gallery / Doodle / Quadra-Doodle</description>
 		<year>1976</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -515,6 +553,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vblckjck" romof="channelf">
+		<comment>HomebrewF built-in games</comment>
 		<description>Video Blackjack</description>
 		<year>1976</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -526,6 +565,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="whizball" romof="channelf">
+		<comment>HomebrewF built-in games</comment>
 		<description>Video Whizball</description>
 		<year>1978</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -537,6 +577,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="werbetxt" romof="channelf">
+		<comment>HomebrewF built-in games</comment>
 		<description>Werbetextcassette</description>
 		<year>198?</year>
 		<manufacturer>Electronic-Partner</manufacturer>

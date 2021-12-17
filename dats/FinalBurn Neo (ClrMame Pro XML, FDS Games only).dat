@@ -13,6 +13,7 @@
 		<clrmamepro forcenodump="ignore"/>
 	</header>
 	<game name="19neunzehnj" cloneof="19neunzehn" romof="19neunzehn">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>19 - Neunzehn (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -22,6 +23,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="19neunzehn" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>19 - Neunzehn (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -31,6 +33,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="adiannotsue" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Adian no Tsue (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -40,6 +43,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aisenshinicol" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Ai Senshi Nicol (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -49,6 +53,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="akitsunofusnoka" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Aki to Tsukasa no Fushigi no Kabe (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -58,6 +63,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="akumajoudraculaj" cloneof="akumajoudracula" romof="akumajoudracula">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Akumajou Dracula (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -67,6 +73,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="akumajoudracula" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Akumajou Dracula (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -76,6 +83,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="akuusenrai" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Akuu Senki Raijin (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -85,6 +93,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aliensfix" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Aliens - Alien 2 (Fix Hack)</description>
 		<year>2017-12-30</year>
 		<manufacturer>lancuster</manufacturer>
@@ -94,6 +103,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="allnignipsupmabr" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>All Night Nippon Super Mario Brothers (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -103,6 +113,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="appletowmon" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Apple Town Monogatari - Little Computer People (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -112,6 +123,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="armananokisekij" cloneof="armananokiseki" romof="armananokiseki">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Armana no Kiseki (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -121,6 +133,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="armananokiseki" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Armana no Kiseki (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -130,6 +143,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bakutpatkun" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Bakutoushi Patton-kun (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -139,6 +153,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bigchadogspi" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Big Challenge! Dogfight Spirit (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -148,6 +163,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bigchagogobo" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Big Challenge! Go! Go! Bowling (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -157,6 +173,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bigchagunfig" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Big Challenge! Gun Fighter (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -166,6 +183,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bigchajuusen" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Big Challenge! Juudou Senshuken (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -175,6 +193,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="biomirbokupa" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Bio Miracle Bokutte Upa (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -184,6 +203,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bomberman" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Bomber Man (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -193,6 +213,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bubblebobble" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Bubble Bobble (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -202,6 +223,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="burgertime" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>BurgerTime (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -211,6 +233,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chitetaiord" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Chitei Tairiku Ordola (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -220,6 +243,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="clucluland" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Clu Clu Land (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -229,6 +253,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="coconaworld" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Cocona World (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -238,6 +263,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dandyj" cloneof="dandy" romof="dandy">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Dandy - Zeuon no Fukkatsu (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -247,6 +273,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dandy" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Dandy - Zeuon no Fukkatsu (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -256,6 +283,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="deadzonej" cloneof="deadzone" romof="deadzone">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Dead Zone (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -265,6 +293,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="deadzone" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Dead Zone (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -274,6 +303,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="digdug" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Dig Dug (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -283,6 +313,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="digdugii" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Dig Dug II (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -292,6 +323,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dirtypaij" cloneof="dirtypai" romof="dirtypai">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Dirty Pair - Project Eden (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -301,6 +333,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dirtypai" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Dirty Pair - Project Eden (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -310,6 +343,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dokidokipanic" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Doki Doki Panic (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -319,6 +353,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="donkeykong" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Donkey Kong (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -328,6 +363,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="donkeykongjr" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Donkey Kong Jr. (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -337,6 +373,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="drcha" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Dr. Chaos - Jigoku no Tobira (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -346,6 +383,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dracuii" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Dracula II - Noroi no Fuuin (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -355,6 +393,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="druid" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Druid - Kyoufu no Tobira (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -364,6 +403,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="eggerland" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Egger Land (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -373,6 +413,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="eggerlansouenota" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Egger Land - Souzouhe no Tabidachi (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -382,6 +423,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="electrician1" cloneof="electrician" romof="electrician">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Electrician (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -391,6 +433,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="electrician" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Electrician (T-eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -400,6 +443,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="esperdreamj" cloneof="esperdream" romof="esperdream">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Esper Dream (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -409,6 +453,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="esperdream" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Esper Dream (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -418,6 +463,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="excitsoc" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Exciting Soccer - Konami Cup (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -427,6 +473,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fairypin" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Fairy Pinball - Yousei Tachi no Pinball (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -436,6 +483,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="falsion" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Falsion (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -445,6 +493,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="famicgrapri" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Famicom Grand Prix - F1 Race (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -454,6 +503,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="famicgrapriii" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Famicom Grand Prix II - 3D Hot Rally (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -463,6 +513,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="famimdisvol1" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Famimaga Disk Vol. 1 - Hong Kong (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -472,6 +523,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="famimdisvol2" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Famimaga Disk Vol. 2 - Panic Space (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -481,6 +533,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="famimdisvol3" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Famimaga Disk Vol. 3 - All 1 (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -490,6 +543,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="famimdisvol4" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Famimaga Disk Vol. 4 - Clox (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -499,6 +553,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="famimdisvol5" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Famimaga Disk Vol. 5 - Puyo Puyo (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -508,6 +563,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="famimdisvol6" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Famimaga Disk Vol. 6 - Janken Disk Jou (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -517,6 +573,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fdsirqtest" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>FDS IRQ Test (Sour, v7)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -526,6 +583,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="finalcom" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Final Command - Akai Yousai (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -535,6 +593,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="firebam" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Fire Bam (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -544,6 +603,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="firerock" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Fire Rock (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -553,6 +613,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fuuunshoken" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Fuuun Shourin Ken (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -562,6 +623,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="galaga" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Galaga (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -571,6 +633,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="galaxian" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Galaxian (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -580,6 +643,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gallforj" cloneof="gallfor" romof="gallfor">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Gall Force - Eternal Story (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -589,6 +653,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gallfor" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Gall Force - Eternal Story (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -598,6 +663,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gingaden" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Ginga Denshou - Galaxy Odyssey (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -607,6 +673,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="golf" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Golf (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -616,6 +683,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="golfjapcou" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Golf - Japan Course (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -625,6 +693,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="golfuscourse" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Golf - US Course (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -634,6 +703,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="goonies" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Goonies (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -643,6 +713,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="greenberet" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Green Beret (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -652,6 +723,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gunsmoke" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Gun.Smoke (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -661,6 +733,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gyruss1" cloneof="gyruss" romof="gyruss">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Gyruss (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -670,6 +743,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gyruss" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Gyruss (T-eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -679,6 +753,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="halleywars" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Halley Wars (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -688,6 +763,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="haokunnofusnata" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Hao-kun no Fushigi na Tabi (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -697,6 +773,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hikarshi" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Hikari Shinwa - Palutena no Kagami (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -706,6 +783,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="icehockey" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Ice Hockey (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -715,6 +793,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ishidouj" cloneof="ishidou" romof="ishidou">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Ishidou (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -724,6 +803,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ishidou" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Ishidou (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -733,6 +813,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jikaishometmag" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Jikai Shounen Met Mag (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -742,6 +823,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kaettmarbro" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Kaettekita Mario Brothers (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -751,6 +833,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kalinnotsurugij" cloneof="kalinnotsurugi" romof="kalinnotsurugi">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Kalin no Tsurugi (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -760,6 +843,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kalinnotsurugi" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Kalin no Tsurugi (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -769,6 +853,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kamenridbla" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Kamen Rider Black - Taiketsu Shadow Moon (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -778,6 +863,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kickandrun" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Kick and Run (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -787,6 +873,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kickcha" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Kick Challenger - Air Foot (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -796,6 +883,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kietaprincess" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Kieta Princess (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -805,6 +893,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kikikai" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Kiki Kaikai - Dotou Hen (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -814,6 +903,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kinni" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Kinnikuman - Kinnikusei Oui Soudatsusen (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -823,6 +913,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="knighlor" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Knight Lore - Majou no Ookami Otoko (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -832,6 +923,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="knightmovej" cloneof="knightmove" romof="knightmove">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Knight Move (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -841,6 +933,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="knightmove" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Knight Move (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -850,6 +943,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="konamictennis" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Konamic Tennis (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -859,6 +953,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="konekmon" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Koneko Monogatari - The Adventures of Chatran (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -868,6 +963,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="linknobouc" cloneof="linknobou" romof="linknobou">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Link no Bouken - The Legend of Zelda 2 (Japan) (Rev 1) - Castellano v1.0</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -877,6 +973,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="linknobouj" cloneof="linknobou" romof="linknobou">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Link no Bouken - The Legend of Zelda 2 (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -886,6 +983,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="linknobou" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Link no Bouken - The Legend of Zelda 2 (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -895,6 +993,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lutter" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Lutter (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -904,6 +1003,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="maerchenveil" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Maerchen Veil (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -913,6 +1013,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="magmapro" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Magma Project - Hacker (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -922,6 +1023,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="matounohou" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Matou no Houkai - The Hero of Babel (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -931,6 +1033,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="meikyjiidabj" cloneof="meikyjiidab" romof="meikyjiidab">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Meikyuu Jiin Dababa (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -940,6 +1043,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="meikyjiidab" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Meikyuu Jiin Dababa (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -949,6 +1053,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="metroidj" cloneof="metroid" romof="metroid">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Metroid (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -958,6 +1063,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="metroid" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Metroid (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -967,6 +1073,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="michaengdai" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Michael English Daibouken (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -976,6 +1083,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="moerotwi" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Moero TwinBee - Cinnamon Hakase wo Sukue! (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -985,6 +1093,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="montyonrunj" cloneof="montyonrun" romof="montyonrun">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Monty on the Run - Monty no Doki Doki Dai Dassou (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -994,6 +1103,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="montyonrun" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Monty on the Run - Monty no Doki Doki Dai Dassou (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1003,6 +1113,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="moonballmagic" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Moonball Magic (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1012,6 +1123,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mystemurcas" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Mysterious Murasame Castle (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1021,6 +1133,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nazonokab" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Nazo no Kabe - Block Kuzushi (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1030,6 +1143,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nazonomur" cloneof="mystemurcas" romof="mystemurcas">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Nazo no Murasamejou (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1039,6 +1153,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="otocky" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Otocky (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1048,6 +1163,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="patla" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Patlabor - The Mobile Police - Dai 2 Shoutai Shutsudou Seyo! (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1057,6 +1173,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="progolsarkagnoto" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Pro Golfer Saru - Kage no Tournament (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1066,6 +1183,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="puttputtgolf" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Putt Putt Golf (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1075,6 +1193,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="puzzleboysj" cloneof="puzzleboys" romof="puzzleboys">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Puzzle Boys (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1084,6 +1203,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="puzzleboys" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Puzzle Boys (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1093,6 +1213,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="radicbomjirkun" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Radical Bomber!! Jirai-kun (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1102,6 +1223,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="reflectworld" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Reflect World (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1111,6 +1233,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="relics" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Relics - Ankoku Yousai (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1120,6 +1243,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="replicart" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Replicart (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1129,6 +1253,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rogerrabbit" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Roger Rabbit (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1138,6 +1263,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sdgunworgacsescwac" cloneof="sdgunworgacsescwa" romof="sdgunworgacsescwa">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>SD Gundam World - Gachapon Senshi - Scramble Wars (Japan) [b] - Castellano v1.0</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1147,6 +1273,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sdgunworgacsescwa" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>SD Gundam World - Gachapon Senshi - Scramble Wars (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1156,6 +1283,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sectionz" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Section-Z (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1165,6 +1293,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="seikepsyj" cloneof="seikepsy" romof="seikepsy">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Seiken Psychocalibur - Majuu no Mori Densetsu (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1174,6 +1303,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="seikepsy" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Seiken Psychocalibur - Majuu no Mori Densetsu (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1183,6 +1313,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sexyinvaders" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Sexy Invaders (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1192,6 +1323,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="silvij" cloneof="silvi" romof="silvi">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Silviana - Ai Ippai no Little Angel (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1201,6 +1333,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="silvi" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Silviana - Ai Ippai no Little Angel (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1210,6 +1343,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="smashpingpong" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Smash Ping Pong (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1219,6 +1353,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="solomonnokagi" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Solomon no Kagi (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1228,6 +1363,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="superboyallan" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Super Boy Allan (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1237,6 +1373,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="superlodrun" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Super Lode Runner (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1246,6 +1383,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="superlodrunii" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Super Lode Runner II (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1255,6 +1393,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="supermarbroc" cloneof="supermarbro" romof="supermarbro">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Super Mario Brothers (Japan) - Castellano v1.0</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1264,6 +1403,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="supermarbro" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Super Mario Brothers (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1273,6 +1413,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="supermarbro2" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Super Mario Brothers 2 (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1282,6 +1423,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tamafri" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Tama &amp; Friends - 3 Choume Daibouken (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1291,6 +1433,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tennis" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Tennis (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1300,6 +1443,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tobiddai" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Tobidase Daisakusen (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1309,6 +1453,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="topplezip" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Topple Zip (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1318,6 +1463,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="trans" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Transformers - The Headmasters (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1327,6 +1473,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="twinbee" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>TwinBee (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1336,6 +1483,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ultra" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Ultraman - Kaijuu Teikoku no Gyakushuu (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1345,6 +1493,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ultra2" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Ultraman 2 - Shutsugeki Katoku Tai (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1354,6 +1503,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ultraclu" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Ultraman Club - Chikyuu Dakkan Sakusen (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1363,6 +1513,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="volleyball" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Volleyball (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1372,6 +1523,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vsexcitebike" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Vs. Excitebike (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1381,6 +1533,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wakusatogai" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Wakusei Aton Gaiden (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1390,6 +1543,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wardnernomori" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Wardner no Mori (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1399,6 +1553,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wintergames" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Winter Games (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1408,6 +1563,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wreckingcrew" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Wrecking Crew (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1417,6 +1573,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="youkaiyashikij" cloneof="youkaiyashiki" romof="youkaiyashiki">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Youkai Yashiki (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1426,6 +1583,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="youkaiyashiki" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Youkai Yashiki (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1435,6 +1593,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="yuumaze" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Yuu Maze (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1444,6 +1603,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zanac" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Zanac (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1453,6 +1613,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zeldanodenj" cloneof="zeldanoden" romof="zeldanoden">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Zelda no Densetsu - The Hyrule Fantasy (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1462,6 +1623,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zeldanoden" romof="fdsbios">
+		<comment>Homebrewmebrewev Competition buildbute edition1982tional controller</comment>
 		<description>Zelda no Densetsu - The Hyrule Fantasy (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>

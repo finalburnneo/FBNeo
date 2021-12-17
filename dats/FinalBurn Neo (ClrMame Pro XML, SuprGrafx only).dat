@@ -13,7 +13,6 @@
 		<clrmamepro forcenodump="ignore"/>
 	</header>
 	<game name="1941">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>1941 - Counter Attack</description>
 		<year>1991</year>
 		<manufacturer>Hudson</manufacturer>
@@ -22,7 +21,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="aldynes">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Aldynes</description>
 		<year>1991</year>
 		<manufacturer>Hudson</manufacturer>
@@ -31,7 +29,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="battlace">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Battle Ace</description>
 		<year>1989</year>
 		<manufacturer>Hudson</manufacturer>
@@ -40,7 +37,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="daimakai1" cloneof="daimakai" romof="daimakai">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Dai Makaimura (Alt)</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -49,7 +45,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="daimakaid" cloneof="daimakai" romof="daimakai">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Dai Makaimura (Chris Covell's Debug Menu Hack)</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -58,7 +53,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="daimakai">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Dai Makaimura</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -67,7 +61,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="granzort">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Madou Ou Granzort</description>
 		<year>1990</year>
 		<manufacturer>Hudson</manufacturer>
@@ -76,7 +69,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="rtypeuh">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>R-Type - Chris Covell's Unfinished SGX Hack</description>
 		<year>2019</year>
 		<manufacturer>NEC</manufacturer>
@@ -85,7 +77,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="rta2">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>RTA2 - Homebrew conversion of RTA2</description>
 		<year>2016</year>
 		<manufacturer>REVIVAL GAMES</manufacturer>

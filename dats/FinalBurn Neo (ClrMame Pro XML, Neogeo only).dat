@@ -13,7 +13,6 @@
 		<clrmamepro forcenodump="ignore"/>
 	</header>
 	<game name="2020bb" romof="neogeo">
-		<comment>BIOS only</comment>
 		<description>2020 Super Baseball (set 1)</description>
 		<year>1991</year>
 		<manufacturer>SNK / Pallas</manufacturer>
@@ -68,7 +67,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="2020bba" cloneof="2020bb" romof="2020bb">
-		<comment>BIOS only</comment>
 		<description>2020 Super Baseball (set 2)</description>
 		<year>1991</year>
 		<manufacturer>SNK / Pallas</manufacturer>
@@ -123,7 +121,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="2020bbh" cloneof="2020bb" romof="2020bb">
-		<comment>BIOS only</comment>
 		<description>2020 Super Baseball (set 3)</description>
 		<year>1991</year>
 		<manufacturer>SNK / Pallas</manufacturer>
@@ -178,7 +175,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="3countb" romof="neogeo">
-		<comment>BIOS only</comment>
 		<description>3 Count Bout / Fire Suplex (NGM-043)(NGH-043)</description>
 		<year>1993</year>
 		<manufacturer>SNK</manufacturer>
@@ -233,7 +229,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="3countba" cloneof="3countb" romof="3countb">
-		<comment>BIOS only</comment>
 		<description>3 Count Bout / Fire Suplex (NGM-043)</description>
 		<year>1993</year>
 		<manufacturer>SNK</manufacturer>
@@ -341,7 +336,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicwi2" romof="neogeo">
-		<comment>Demo, 4 player  input test cartridge</comment>
 		<description>Aero Fighters 2 / Sonic Wings 2</description>
 		<year>1994</year>
 		<manufacturer>Video System Co.</manufacturer>
@@ -396,7 +390,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicwi3" romof="neogeo">
-		<comment>Demo, 4 player  input test cartridge</comment>
 		<description>Aero Fighters 3 / Sonic Wings 3</description>
 		<year>1995</year>
 		<manufacturer>Video System Co.</manufacturer>
@@ -451,7 +444,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="aodk" romof="neogeo">
-		<comment>Demo, 4 player  input test cartridge</comment>
 		<description>Aggressors of Dark Kombat / Tsuukai GANGAN Koushinkyoku (ADM-008)(ADH-008)</description>
 		<year>1994</year>
 		<manufacturer>ADK / SNK</manufacturer>
@@ -510,7 +502,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="alpham2" romof="neogeo">
-		<comment>Demo, 4 player  input test cartridge</comment>
 		<description>Alpha Mission II / ASO II - Last Guardian (NGM-007)(NGH-007)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
@@ -566,7 +557,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="alpham2p" cloneof="alpham2" romof="alpham2">
-		<comment>Prototypelayer  input test cartridge</comment>
+		<comment>Prototype</comment>
 		<description>Alpha Mission II / ASO II - Last Guardian (prototype)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
@@ -628,7 +619,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="androdun" romof="neogeo">
-		<comment>Prototypelayer  input test cartridge</comment>
 		<description>Andro Dunos (NGM-049)(NGH-049)</description>
 		<year>1992</year>
 		<manufacturer>Visco</manufacturer>
@@ -681,7 +671,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="aof" romof="neogeo">
-		<comment>Prototypelayer  input test cartridge</comment>
 		<description>Art of Fighting / Ryuuko no Ken (NGM-044)(NGH-044)</description>
 		<year>1992</year>
 		<manufacturer>SNK</manufacturer>
@@ -736,7 +725,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aof2bh" cloneof="aof2" romof="aof2">
-		<comment>Hackotypelayer  input test cartridge</comment>
+		<comment>Hack</comment>
 		<description>Art of Fighting 2 / Ryuuko no Ken 2 (Enable hidden characters V2)</description>
 		<year>1994</year>
 		<manufacturer>Yumeji</manufacturer>
@@ -796,7 +785,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="aof2a" cloneof="aof2" romof="aof2">
-		<comment>Hackotypelayer  input test cartridge</comment>
 		<description>Art of Fighting 2 / Ryuuko no Ken 2 (NGH-056)</description>
 		<year>1994</year>
 		<manufacturer>SNK</manufacturer>
@@ -857,7 +845,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="aof2" romof="neogeo">
-		<comment>Hackotypelayer  input test cartridge</comment>
 		<description>Art of Fighting 2 / Ryuuko no Ken 2 (NGM-056)</description>
 		<year>1994</year>
 		<manufacturer>SNK</manufacturer>
@@ -917,7 +904,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="aof3k" cloneof="aof3" romof="aof3">
-		<comment>Hackotypelayer  input test cartridge</comment>
 		<description>Art of Fighting 3 - The Path of the Warrior (Korean release)</description>
 		<year>1996</year>
 		<manufacturer>SNK</manufacturer>
@@ -978,7 +964,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aof3bh" cloneof="aof3" romof="aof3">
-		<comment>Hackotypelayer  input test cartridge</comment>
+		<comment>Hack</comment>
 		<description>Art of Fighting 3 - The Path of the Warrior / Art of Fighting - Ryuuko no Ken Gaiden (Enable Hidden Characters V2)</description>
 		<year>1996</year>
 		<manufacturer>Yumeji</manufacturer>
@@ -1039,7 +1025,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="aof3" romof="neogeo">
-		<comment>Hackotypelayer  input test cartridge</comment>
 		<description>Art of Fighting 3 - The Path of the Warrior / Art of Fighting - Ryuuko no Ken Gaiden</description>
 		<year>1996</year>
 		<manufacturer>SNK</manufacturer>
@@ -1100,7 +1085,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="badapple" romof="neogeo">
-		<comment>Demootypelayer  input test cartridge</comment>
+		<comment>Demo</comment>
 		<description>Bad Apple Demo</description>
 		<year>2017</year>
 		<manufacturer>Hpman</manufacturer>
@@ -1152,7 +1137,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bakatono" romof="neogeo">
-		<comment>Demootypelayer  input test cartridge</comment>
 		<description>Bakatonosama Mahjong Manyuuki (MOM-002)(MOH-002)</description>
 		<year>1991</year>
 		<manufacturer>Monolith Corp.</manufacturer>
@@ -1207,7 +1191,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="b2b" romof="neogeo">
-		<comment>Prototypelayer  input test cartridge</comment>
+		<comment>Prototype</comment>
 		<description>Bang Bang Busters (2010 NCI release)</description>
 		<year>2000</year>
 		<manufacturer>Visco</manufacturer>
@@ -1259,7 +1243,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bangbedp" cloneof="bangbead" romof="bangbead">
-		<comment>Prototypelayer  input test cartridge</comment>
+		<comment>Prototype</comment>
 		<description>Bang Bead (Prototype?)</description>
 		<year>2000</year>
 		<manufacturer>Visco</manufacturer>
@@ -1315,7 +1299,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bangbead" romof="neogeo">
-		<comment>Prototypelayer  input test cartridge</comment>
 		<description>Bang Bead</description>
 		<year>2000</year>
 		<manufacturer>Visco</manufacturer>
@@ -1367,7 +1350,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bstars2" romof="neogeo">
-		<comment>Prototypelayer  input test cartridge</comment>
 		<description>Baseball Stars 2</description>
 		<year>1992</year>
 		<manufacturer>SNK</manufacturer>
@@ -1423,7 +1405,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bstarsh" cloneof="bstars" romof="bstars">
-		<comment>Prototypelayer  input test cartridge</comment>
 		<description>Baseball Stars Professional (NGH-002)</description>
 		<year>1990</year>
 		<manufacturer>SNK</manufacturer>
@@ -1483,7 +1464,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bstars" romof="neogeo">
-		<comment>Prototypelayer  input test cartridge</comment>
 		<description>Baseball Stars Professional (NGM-002)</description>
 		<year>1990</year>
 		<manufacturer>SNK</manufacturer>
@@ -1543,7 +1523,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="flipshot" romof="neogeo">
-		<comment>Prototypelayer  input test cartridge</comment>
 		<description>Battle Flip Shot</description>
 		<year>1998</year>
 		<manufacturer>Visco</manufacturer>
@@ -1595,7 +1574,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="blazstarcm" cloneof="blazstar" romof="blazstar">
-		<comment>Hackotypelayer  input test cartridge</comment>
+		<comment>Hack</comment>
 		<description>Blazing Star (Stage Select Hack)</description>
 		<year>2020</year>
 		<manufacturer>Clear Paper, NeoCverA, JustinG</manufacturer>
@@ -1655,7 +1634,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="blazstar" romof="neogeo">
-		<comment>Hackotypelayer  input test cartridge</comment>
 		<description>Blazing Star</description>
 		<year>1998</year>
 		<manufacturer>Yumekobo</manufacturer>
@@ -1715,7 +1693,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bjourneyh" cloneof="bjourney" romof="bjourney">
-		<comment>Hackotypelayer  input test cartridge</comment>
 		<description>Blue's Journey / Raguy (ALH-001)</description>
 		<year>1990</year>
 		<manufacturer>Alpha Denshi Co.</manufacturer>
@@ -1770,7 +1747,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bjourney" romof="neogeo">
-		<comment>Hackotypelayer  input test cartridge</comment>
 		<description>Blue's Journey / Raguy (ALM-001)(ALH-001)</description>
 		<year>1990</year>
 		<manufacturer>Alpha Denshi Co.</manufacturer>
@@ -1825,7 +1801,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="breakrevbh" cloneof="breakrev" romof="breakrev">
-		<comment>Hackotypelayer  input test cartridge</comment>
+		<comment>Hack</comment>
 		<description>Breakers Revenge (Boss Hack)</description>
 		<year>1998</year>
 		<manufacturer>hack</manufacturer>
@@ -1882,7 +1858,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="brkrevext" cloneof="breakrev" romof="breakrev">
-		<comment>Hackotypelayer  input test cartridge</comment>
+		<comment>Hack</comment>
 		<description>Breakers Revenge - Extra Mode (Hack)</description>
 		<year>2018</year>
 		<manufacturer>Visco</manufacturer>
@@ -1939,7 +1915,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="breakrev" romof="neogeo">
-		<comment>Hackotypelayer  input test cartridge</comment>
 		<description>Breakers Revenge</description>
 		<year>1998</year>
 		<manufacturer>Visco</manufacturer>
@@ -1996,7 +1971,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="breakers" romof="neogeo">
-		<comment>Hackotypelayer  input test cartridge</comment>
 		<description>Breakers</description>
 		<year>1996</year>
 		<manufacturer>Visco</manufacturer>
@@ -2051,7 +2025,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="burningfh" cloneof="burningf" romof="burningf">
-		<comment>Hackotypelayer  input test cartridge</comment>
 		<description>Burning Fight (NGH-018)(US)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
@@ -2106,7 +2079,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="burningf" romof="neogeo">
-		<comment>Hackotypelayer  input test cartridge</comment>
 		<description>Burning Fight (NGM-018)(NGH-018)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
@@ -2161,7 +2133,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="burningfpa" cloneof="burningf" romof="burningf">
-		<comment>Prototypelayer  input test cartridge</comment>
+		<comment>Prototype</comment>
 		<description>Burning Fight (prototype, near final, ver 23.3, 910326)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
@@ -2223,7 +2195,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="burningfpb" cloneof="burningf" romof="burningf">
-		<comment>Prototypelayer  input test cartridge</comment>
+		<comment>Prototype</comment>
 		<description>Burning Fight (prototype, newer, V07)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
@@ -2286,7 +2258,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="burningfp" cloneof="burningf" romof="burningf">
-		<comment>Prototypelayer  input test cartridge</comment>
+		<comment>Prototype</comment>
 		<description>Burning Fight (prototype, older)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
@@ -2347,7 +2319,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cabalng" romof="neogeo">
-		<comment>Hackotypelayer  input test cartridge</comment>
+		<comment>Hack</comment>
 		<description>Cabal (Neo-Geo Conversion)</description>
 		<year>1988</year>
 		<manufacturer>TAD Corporation</manufacturer>
@@ -2400,7 +2372,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ctomaday" romof="neogeo">
-		<comment>Hackotypelayer  input test cartridge</comment>
 		<description>Captain Tomaday</description>
 		<year>1999</year>
 		<manufacturer>Visco</manufacturer>
@@ -2453,7 +2424,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="neodemo" romof="neogeo">
-		<comment>Demootypelayer  input test cartridge</comment>
+		<comment>Demo</comment>
 		<description>Chaos Demo (Neo Geo)</description>
 		<year>2002</year>
 		<manufacturer>Chaos</manufacturer>
@@ -2505,7 +2476,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="marukodq" romof="neogeo">
-		<comment>Demootypelayer  input test cartridge</comment>
 		<description>Chibi Marukochan Deluxe Quiz</description>
 		<year>1995</year>
 		<manufacturer>Takara</manufacturer>
@@ -2618,7 +2588,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ironclad" romof="neogeo">
-		<comment>Prototype must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Prototype</comment>
 		<description>Choutetsu Brikin'ger - Iron clad (Prototype)</description>
 		<year>1996</year>
 		<manufacturer>Saurus</manufacturer>
@@ -2672,7 +2642,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ironclado" cloneof="ironclad" romof="ironclad">
-		<comment>Prototype must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Prototype</comment>
 		<description>Choutetsu Brikin'ger - Iron clad (Prototype, older)</description>
 		<year>1996</year>
 		<manufacturer>Saurus</manufacturer>
@@ -2726,7 +2696,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cnbe" romof="neogeo">
-		<comment>Homebrewe must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Homebrew</comment>
 		<description>Codename - Blut Engel (2006-01-19)</description>
 		<year>2006</year>
 		<manufacturer>blastar@gmx.net</manufacturer>
@@ -2778,7 +2748,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="columnsn" romof="neogeo">
-		<comment>Homebrewe must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Homebrew</comment>
 		<description>Columns (Neo Geo)</description>
 		<year>????</year>
 		<manufacturer>homebrew</manufacturer>
@@ -2830,7 +2800,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="crsword" romof="neogeo">
-		<comment>Homebrewe must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Crossed Swords (ALM-002)(ALH-002)</description>
 		<year>1991</year>
 		<manufacturer>Alpha Denshi Co.</manufacturer>
@@ -2884,7 +2853,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="crswd2bl" romof="neogeo">
-		<comment>Homebrewe must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Crossed Swords 2 (bootleg CD to cartridge conversion)</description>
 		<year>1991</year>
 		<manufacturer>bootleg (Razoola)</manufacturer>
@@ -2936,7 +2904,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cphd" romof="neogeo">
-		<comment>Homebrewe must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Homebrew</comment>
 		<description>Crouching Poney Hidden Dragon (DEMO)</description>
 		<year>2013</year>
 		<manufacturer>Le Cortex</manufacturer>
@@ -2992,7 +2960,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cthd2003" cloneof="kof2001" romof="kof2001">
-		<comment>Bootleg, Hack of "The King of Fighters 2001" region to Japan AES</comment>
+		<comment>Bootleg, Hack of "The King of Fighters 2001"</comment>
 		<description>Crouching Tiger Hidden Dragon 2003 (set 1)</description>
 		<year>2003</year>
 		<manufacturer>Phenixsoft</manufacturer>
@@ -3054,7 +3022,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cthd2k3a" cloneof="kof2001" romof="kof2001">
-		<comment>Bootleg, Hack of "The King of Fighters 2001" region to Japan AES</comment>
+		<comment>Bootleg</comment>
 		<description>Crouching Tiger Hidden Dragon 2003 (set 2)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
@@ -3116,7 +3084,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ct2k3sp" cloneof="kof2001" romof="kof2001">
-		<comment>Bootleg, Hack of "The King of Fighters 2001" region to Japan AES</comment>
+		<comment>Bootleg</comment>
 		<description>Crouching Tiger Hidden Dragon 2003 Super Plus</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
@@ -3178,7 +3146,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ct2k3sa" cloneof="kof2001" romof="kof2001">
-		<comment>Bootleg, Hack of "The King of Fighters 2001" region to Japan AES</comment>
+		<comment>Bootleg</comment>
 		<description>Crouching Tiger Hidden Dragon 2003 Super Plus alternate</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
@@ -3240,7 +3208,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="cyberlip" romof="neogeo">
-		<comment>Bootleg, Hack of "The King of Fighters 2001" region to Japan AES</comment>
 		<description>Cyber-Lip (NGM-010)</description>
 		<year>1990</year>
 		<manufacturer>SNK</manufacturer>
@@ -3416,7 +3383,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="diggerma" romof="neogeo">
-		<comment>Homebrewu must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Homebrew</comment>
 		<description>Digger Man</description>
 		<year>2000</year>
 		<manufacturer>Kyle Hodgetts</manufacturer>
@@ -3468,7 +3435,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="doubledrbh" cloneof="doubledr" romof="doubledr">
-		<comment>Hackbrewu must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Double Dragon (Boss hack)</description>
 		<year>1995</year>
 		<manufacturer>hack</manufacturer>
@@ -3527,7 +3494,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="doubledr" romof="neogeo">
-		<comment>Hackbrewu must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Double Dragon (Neo-Geo)</description>
 		<year>1995</year>
 		<manufacturer>Technos</manufacturer>
@@ -3586,7 +3552,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="doubledrsp" cloneof="doubledr" romof="doubledr">
-		<comment>Hackbrewu must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Double Dragon (Special 2017, hack)</description>
 		<year>2017</year>
 		<manufacturer>hack</manufacturer>
@@ -3647,7 +3613,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragonsh" romof="neogeo">
-		<comment>Hackbrewu must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Dragon's Heaven (development board)</description>
 		<year>1996</year>
 		<manufacturer>Face</manufacturer>
@@ -3758,7 +3723,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="eightman" romof="neogeo">
-		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Eight Man (NGM-025)(NGH-025)</description>
 		<year>1991</year>
 		<manufacturer>SNK / Pallas</manufacturer>
@@ -3813,7 +3777,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kabukiklb" cloneof="kabukikl" romof="kabukikl">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Far East of Eden - Kabuki Klash / Tengai Makyou - Shin Den (Add hidden characters)</description>
 		<year>1995</year>
 		<manufacturer>Ydmis / Creamymami[EGCG]</manufacturer>
@@ -3870,7 +3834,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kabukikl" romof="neogeo">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Far East of Eden - Kabuki Klash / Tengai Makyou - Shin Den</description>
 		<year>1995</year>
 		<manufacturer>Hudson</manufacturer>
@@ -3927,7 +3890,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fatfury1bh" cloneof="fatfury1" romof="fatfury1">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Fatal Fury - King of Fighters / Garou Densetsu - shukumei no tatakai (Boss Hack by Yumeji)</description>
 		<year>1992</year>
 		<manufacturer>SNK</manufacturer>
@@ -3983,7 +3946,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="fatfury1" romof="neogeo">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Fatal Fury - King of Fighters / Garou Densetsu - shukumei no tatakai (NGM-033)(NGH-033)</description>
 		<year>1992</year>
 		<manufacturer>SNK</manufacturer>
@@ -4039,7 +4001,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="fatfury2" romof="neogeo">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Fatal Fury 2 / Garou Densetsu 2 - arata-naru tatakai (NGM-047)(NGH-047)</description>
 		<year>1992</year>
 		<manufacturer>SNK</manufacturer>
@@ -4094,7 +4055,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="fatfury2a" cloneof="fatfury2" romof="fatfury2">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Fatal Fury 2 / Garou Densetsu 2 - arata-naru tatakai (NGM-047)</description>
 		<year>1992</year>
 		<manufacturer>SNK</manufacturer>
@@ -4150,7 +4110,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fatfury3bh" cloneof="fatfury3" romof="fatfury3">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 - haruka-naru tatakai (Ancient Battles Resurgence 2015-03-13)</description>
 		<year>1995</year>
 		<manufacturer>Yumeji</manufacturer>
@@ -4209,7 +4169,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="fatfury3a" cloneof="fatfury3" romof="fatfury3">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 - haruka-naru tatakai (NGM-069)(NGH-069) (alternate set)</description>
 		<year>1995</year>
 		<manufacturer>SNK</manufacturer>
@@ -4268,7 +4227,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="fatfury3" romof="neogeo">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 - haruka-naru tatakai (NGM-069)(NGH-069)</description>
 		<year>1995</year>
 		<manufacturer>SNK</manufacturer>
@@ -4327,7 +4285,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fatfurspbs" cloneof="fatfursp" romof="fatfursp">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Fatal Fury Special / Garou Densetsu Special (Optional Hidden Character Third Edition)</description>
 		<year>1993</year>
 		<manufacturer>Yumeji</manufacturer>
@@ -4386,7 +4344,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="fatfursp" romof="neogeo">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Fatal Fury Special / Garou Densetsu Special (set 1)(NGM-058)(NGH-058)</description>
 		<year>1993</year>
 		<manufacturer>SNK</manufacturer>
@@ -4445,7 +4402,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="fatfurspa" cloneof="fatfursp" romof="fatfursp">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Fatal Fury Special / Garou Densetsu Special (set 2)(NGM-058)(NGH-058)</description>
 		<year>1993</year>
 		<manufacturer>SNK</manufacturer>
@@ -4505,7 +4461,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="fightfev" romof="neogeo">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Fight Fever (set 1)</description>
 		<year>1994</year>
 		<manufacturer>Viccom</manufacturer>
@@ -4560,7 +4515,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="fightfeva" cloneof="fightfev" romof="fightfev">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Fight Fever (set 2)</description>
 		<year>1994</year>
 		<manufacturer>Viccom</manufacturer>
@@ -4616,7 +4570,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="fswords" cloneof="samsho3" romof="samsho3">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Fighters Swords (Korean release of Samurai Shodown III)</description>
 		<year>1995</year>
 		<manufacturer>SNK</manufacturer>
@@ -4676,7 +4629,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="fbfrenzy" romof="neogeo">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Football Frenzy (NGM-034)(NGH-034)</description>
 		<year>1992</year>
 		<manufacturer>SNK</manufacturer>
@@ -4731,7 +4683,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ngfrog" romof="neogeo">
-		<comment>Homebrewu must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Homebrew</comment>
 		<description>Frog Feast (Neo Geo)</description>
 		<year>2006</year>
 		<manufacturer>Rastersoft</manufacturer>
@@ -4786,7 +4738,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="neogalag" romof="neogeo">
-		<comment>Homebrewu must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Homebrew</comment>
 		<description>Galaga Demo (set 1)</description>
 		<year>2013</year>
 		<manufacturer>Cristiano Bei/www.iocerom.com</manufacturer>
@@ -4838,7 +4790,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="neogalaga" cloneof="neogalag" romof="neogalag">
-		<comment>Homebrewu must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Homebrew</comment>
 		<description>Galaga Demo (set 2)</description>
 		<year>2013</year>
 		<manufacturer>Cristiano Bei/www.iocerom.com</manufacturer>
@@ -4890,7 +4842,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="galaxyfg" romof="neogeo">
-		<comment>Homebrewu must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Galaxy Fight - Universal Warriors</description>
 		<year>1995</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -4950,7 +4901,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ganryu" romof="neogeo">
-		<comment>Homebrewu must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Ganryu / Musashi Ganryuki</description>
 		<year>1999</year>
 		<manufacturer>Visco</manufacturer>
@@ -5001,7 +4951,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="garoubl" cloneof="garou" romof="garou">
-		<comment>Bootlegwu must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Bootleg</comment>
 		<description>Garou - Mark of the Wolves (bootleg)</description>
 		<year>1999</year>
 		<manufacturer>bootleg</manufacturer>
@@ -5059,7 +5009,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="garoub" cloneof="garou" romof="garou">
-		<comment>Hacklegwu must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Garou - Mark of the Wolves (Enable hidden characters)</description>
 		<year>1999</year>
 		<manufacturer>Ydmis</manufacturer>
@@ -5123,7 +5073,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="garouha" cloneof="garou" romof="garou">
-		<comment>Hacklegwu must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Garou - Mark of the Wolves (NGH-2530)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -5187,7 +5136,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="garouh" cloneof="garou" romof="garou">
-		<comment>Hacklegwu must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Garou - Mark of the Wolves (NGM-2530) (NGH-2530)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -5249,7 +5197,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="garou" romof="neogeo">
-		<comment>Hacklegwu must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Garou - Mark of the Wolves (NGM-2530)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -5313,7 +5260,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="garoup" cloneof="garou" romof="garou">
-		<comment>Prototype must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Prototype</comment>
 		<description>Garou - Mark of the Wolves (prototype)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -5432,7 +5379,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="gpilotsh" cloneof="gpilots" romof="gpilots">
-		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Ghost Pilots (NGH-020)(US)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
@@ -5489,7 +5435,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="gpilots" romof="neogeo">
-		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Ghost Pilots (NGM-020)(NGH-020)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
@@ -5546,7 +5491,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gpilotsp" cloneof="gpilots" romof="gpilots">
-		<comment>Prototype must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Prototype</comment>
 		<description>Ghost Pilots (prototype)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
@@ -5608,7 +5553,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ghostlop" romof="neogeo">
-		<comment>Prototype must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Prototype</comment>
 		<description>Ghostlop (prototype)</description>
 		<year>1996</year>
 		<manufacturer>Data East Corporation</manufacturer>
@@ -5660,7 +5605,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="goalx3" romof="neogeo">
-		<comment>Prototype must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Goal! Goal! Goal!</description>
 		<year>1995</year>
 		<manufacturer>Visco</manufacturer>
@@ -5714,7 +5658,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="gururin" romof="neogeo">
-		<comment>Prototype must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Gururin</description>
 		<year>1994</year>
 		<manufacturer>Face</manufacturer>
@@ -5766,7 +5709,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="froman2b" romof="neogeo">
-		<comment>Hackotype must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Idol Mahjong - final romance 2 (Neo CD Conversion)</description>
 		<year>1995</year>
 		<manufacturer>hack</manufacturer>
@@ -5818,7 +5761,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="jockeygp" romof="neogeo">
-		<comment>Hackotype must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Jockey Grand Prix (set 1)</description>
 		<year>2001</year>
 		<manufacturer>Sun Amusement / BrezzaSoft</manufacturer>
@@ -5869,7 +5811,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="jockeygpa" cloneof="jockeygp" romof="jockeygp">
-		<comment>Hackotype must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Jockey Grand Prix (set 2)</description>
 		<year>2001</year>
 		<manufacturer>Sun Amusement / BrezzaSoft</manufacturer>
@@ -5920,7 +5861,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ltorb1" romof="neogeo">
-		<comment>Homebrewe must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Homebrew</comment>
 		<description>Jonas Indiana and the Lost Temple of RA (20050717)</description>
 		<year>2005</year>
 		<manufacturer>blastar@gmx.net</manufacturer>
@@ -5972,7 +5913,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="janshin" romof="neogeo">
-		<comment>Homebrewe must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Jyanshin Densetsu - Quest of Jongmaster</description>
 		<year>1994</year>
 		<manufacturer>Aicom</manufacturer>
@@ -6024,7 +5964,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="karnovr" romof="neogeo">
-		<comment>Homebrewe must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Karnov's Revenge / Fighter's History Dynamite</description>
 		<year>1994</year>
 		<manufacturer>Data East Corporation</manufacturer>
@@ -6080,7 +6019,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kog" cloneof="kof97" romof="kof97">
-		<comment>Bootlegwe must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Bootleg</comment>
 		<description>King of Gladiator (The King of Fighters '97 bootleg)</description>
 		<year>1997</year>
 		<manufacturer>bootleg</manufacturer>
@@ -6139,7 +6078,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kogplus" cloneof="kof97" romof="kof97">
-		<comment>Bootlegwe must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Bootleg</comment>
 		<description>King of Gladiator Plus (The King of Fighters '97 bootleg)</description>
 		<year>1997</year>
 		<manufacturer>bootleg</manufacturer>
@@ -6198,7 +6137,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kotm" romof="neogeo">
-		<comment>Bootlegwe must use the Universe BIOS and set region to Japan AES</comment>
 		<description>King of the Monsters (set 1)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
@@ -6254,7 +6192,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kotmh" cloneof="kotm" romof="kotm">
-		<comment>Bootlegwe must use the Universe BIOS and set region to Japan AES</comment>
 		<description>King of the Monsters (set 2)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
@@ -6310,7 +6247,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kotm2" romof="neogeo">
-		<comment>Bootlegwe must use the Universe BIOS and set region to Japan AES</comment>
 		<description>King of the Monsters 2 - The Next Thing (NGM-039)(NGH-039)</description>
 		<year>1992</year>
 		<manufacturer>SNK</manufacturer>
@@ -6366,7 +6302,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kotm2a" cloneof="kotm2" romof="kotm2">
-		<comment>Bootlegwe must use the Universe BIOS and set region to Japan AES</comment>
 		<description>King of the Monsters 2 - The Next Thing (older)</description>
 		<year>1992</year>
 		<manufacturer>SNK</manufacturer>
@@ -6422,7 +6357,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kotm2p" cloneof="kotm2" romof="kotm2">
-		<comment>Prototype must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Prototype</comment>
 		<description>King of the Monsters 2 - The Next Thing (prototype)</description>
 		<year>1992</year>
 		<manufacturer>SNK</manufacturer>
@@ -6486,7 +6421,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kizuna" romof="neogeo">
-		<comment>Prototype must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Kizuna Encounter - Super Tag Battle / Fu'un Super Tag Battle</description>
 		<year>1996</year>
 		<manufacturer>SNK</manufacturer>
@@ -6547,7 +6481,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lans2004" cloneof="shocktr2" romof="shocktr2">
-		<comment>Bootlegpe must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Bootleg</comment>
 		<description>Lansquenet 2004 (Shock Troopers - 2nd Squad bootleg)</description>
 		<year>1998</year>
 		<manufacturer>bootleg</manufacturer>
@@ -6607,7 +6541,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lasthope" romof="neogeo">
-		<comment>Bootlegpe must use the Universe BIOS and set region to Japan AES</comment>
+		<comment>Bootleg</comment>
 		<description>Last Hope (bootleg AES to MVS conversion, no coin support)</description>
 		<year>2005</year>
 		<manufacturer>bootleg</manufacturer>
@@ -6663,7 +6597,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lhcdb" romof="neogeo">
-		<comment>Hack, Imperfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Hack, Imperfect graphics</comment>
 		<description>Last Hope CD Beta (Neo CD conversion)</description>
 		<year>2007</year>
 		<manufacturer>NG:Dev.Team</manufacturer>
@@ -6719,7 +6653,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lresortp" cloneof="lresort" romof="lresort">
-		<comment>Prototypeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Prototype</comment>
 		<description>Last Resort (prototype)</description>
 		<year>1992</year>
 		<manufacturer>SNK</manufacturer>
@@ -6781,7 +6715,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="lresort" romof="neogeo">
-		<comment>Prototypeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Last Resort</description>
 		<year>1992</year>
 		<manufacturer>SNK</manufacturer>
@@ -6836,7 +6769,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="lbowling" romof="neogeo">
-		<comment>Prototypeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>League Bowling (NGM-019)(NGH-019)</description>
 		<year>1990</year>
 		<manufacturer>SNK</manufacturer>
@@ -6891,7 +6823,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="legendos" romof="neogeo">
-		<comment>Prototypeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Legend of Success Joe / Ashitano Joe Densetsu</description>
 		<year>1991</year>
 		<manufacturer>SNK / WAVE</manufacturer>
@@ -6945,7 +6876,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="magdrop3bh" cloneof="magdrop3" romof="magdrop3">
-		<comment>Hackotypeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Magical Drop III (Secret Character Hack)</description>
 		<year>1997</year>
 		<manufacturer>hack</manufacturer>
@@ -7000,7 +6931,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="magdrop3" romof="neogeo">
-		<comment>Hackotypeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Magical Drop III</description>
 		<year>1997</year>
 		<manufacturer>Data East Corporation</manufacturer>
@@ -7055,7 +6985,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="magdrop2" romof="neogeo">
-		<comment>Hackotypeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Magical Drop II</description>
 		<year>1996</year>
 		<manufacturer>Data East Corporation</manufacturer>
@@ -7107,7 +7036,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="maglordh" cloneof="maglord" romof="maglord">
-		<comment>Hackotypeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Magician Lord (NGH-005)</description>
 		<year>1990</year>
 		<manufacturer>Alpha Denshi Co.</manufacturer>
@@ -7165,7 +7093,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="maglord" romof="neogeo">
-		<comment>Hackotypeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Magician Lord (NGM-005)</description>
 		<year>1990</year>
 		<manufacturer>Alpha Denshi Co.</manufacturer>
@@ -7223,7 +7150,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mahretsu" romof="neogeo">
-		<comment>Hackotypeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Mahjong Kyo Retsuden (NGM-004)(NGH-004)</description>
 		<year>1990</year>
 		<manufacturer>SNK</manufacturer>
@@ -7281,7 +7207,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="matrimbl" cloneof="matrim" romof="matrim">
-		<comment>Bootlegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Bootleg</comment>
 		<description>Matrimelee / Shin Gouketsuji Ichizoku Toukon (bootleg)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
@@ -7342,7 +7268,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="matrimbh" cloneof="matrim" romof="matrim">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Matrimelee / Shin Gouketsuji Ichizoku Toukon (Enable Hidden Characters V2)</description>
 		<year>2002</year>
 		<manufacturer>Creamymami[EGCG]</manufacturer>
@@ -7401,7 +7327,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="matrim" romof="neogeo">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Matrimelee / Shin Gouketsuji Ichizoku Toukon (NGM-2660) (NGH-2660)</description>
 		<year>2002</year>
 		<manufacturer>Noise Factory / Atlus</manufacturer>
@@ -7460,7 +7385,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslugdg" cloneof="mslug" romof="mslug">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Metal Slug (Multifunction Hack, 20180430)</description>
 		<year>2018</year>
 		<manufacturer>hack</manufacturer>
@@ -7515,7 +7440,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug" romof="neogeo">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Metal Slug - Super Vehicle-001</description>
 		<year>1996</year>
 		<manufacturer>Nazca</manufacturer>
@@ -7570,7 +7494,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug2fm" cloneof="mslug2" romof="mslug2">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Metal Slug 2 - Super Vehicle-001/II (CZXINc FC2 Ver.2 20210415, hack)</description>
 		<year>2021</year>
 		<manufacturer>hack</manufacturer>
@@ -7626,7 +7550,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug2dg" cloneof="mslug2" romof="mslug2">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Metal Slug 2 - Super Vehicle-001/II (Multifunction Hack, 20170509)</description>
 		<year>2017</year>
 		<manufacturer>hack</manufacturer>
@@ -7682,7 +7606,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug2" romof="neogeo">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Metal Slug 2 - Super Vehicle-001/II (NGM-2410) (NGH-2410)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
@@ -7738,7 +7661,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug2t" cloneof="mslug2" romof="mslug2">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Metal Slug 2 Turbo (NGM-9410)</description>
 		<year>2015</year>
 		<manufacturer>Hack</manufacturer>
@@ -7794,7 +7717,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug3g" cloneof="mslug3" romof="mslug3">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Metal Slug 3 (Multifunction Hack, 20190119)</description>
 		<year>2019</year>
 		<manufacturer>hack</manufacturer>
@@ -7856,7 +7779,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug3v" cloneof="mslug3" romof="mslug3">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Metal Slug 3 (NGH-2560) (Enhanced Violence Version, hack by EEZEZY)</description>
 		<year>2012</year>
 		<manufacturer>hack</manufacturer>
@@ -7917,7 +7840,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug3h" cloneof="mslug3" romof="mslug3">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Metal Slug 3 (NGH-2560)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -7978,7 +7900,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug3" romof="neogeo">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Metal Slug 3 (NGM-2560)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -8040,7 +7961,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug3a" cloneof="mslug3" romof="mslug3">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Metal Slug 3 (NGM-2560, earlier)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -8102,7 +8022,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug4a" cloneof="mslug4" romof="mslug4">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Metal Slug 4 (20th Anniversary)</description>
 		<year>2017</year>
 		<manufacturer>hack</manufacturer>
@@ -8160,7 +8080,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug4lw" cloneof="mslug4" romof="mslug4">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Metal Slug 4 (Last Bullet Remix Hack)</description>
 		<year>2017</year>
 		<manufacturer>hack</manufacturer>
@@ -8220,7 +8140,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug4dg" cloneof="mslug4" romof="mslug4">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Metal Slug 4 (Multifunction Hack, 20171225)</description>
 		<year>2017</year>
 		<manufacturer>hack</manufacturer>
@@ -8280,7 +8200,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug4h" cloneof="mslug4" romof="mslug4">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Metal Slug 4 (NGH-2630)</description>
 		<year>2002</year>
 		<manufacturer>Mega / Noise Factory / Playmore</manufacturer>
@@ -8337,7 +8256,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug4" romof="neogeo">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Metal Slug 4 (NGM-2630)</description>
 		<year>2002</year>
 		<manufacturer>Mega / Noise Factory / Playmore</manufacturer>
@@ -8394,7 +8312,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ms4plus" cloneof="mslug4" romof="mslug4">
-		<comment>Bootlegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Bootleg</comment>
 		<description>Metal Slug 4 Plus (bootleg)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
@@ -8452,7 +8370,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug5b" cloneof="mslug5" romof="mslug5">
-		<comment>Bootlegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Bootleg</comment>
 		<description>Metal Slug 5 (bootleg, set 1)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
@@ -8514,7 +8432,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug5b2" cloneof="mslug5" romof="mslug5">
-		<comment>Bootlegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Bootleg</comment>
 		<description>Metal Slug 5 (bootleg, set 2)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
@@ -8572,7 +8490,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug5g" cloneof="mslug5" romof="mslug5">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Metal Slug 5 (Multifunction Hack, 20170523)</description>
 		<year>2017</year>
 		<manufacturer>hack</manufacturer>
@@ -8633,7 +8551,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug5wd" cloneof="mslug5" romof="mslug5">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Metal Slug 5 (New Campaign)</description>
 		<year>2016</year>
 		<manufacturer>hack</manufacturer>
@@ -8695,7 +8613,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug5w" cloneof="mslug5" romof="mslug5">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Metal Slug 5 (New Campaign, 2016-03-10)</description>
 		<year>2016</year>
 		<manufacturer>hack, C.B</manufacturer>
@@ -8756,7 +8674,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug5h" cloneof="mslug5" romof="mslug5">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Metal Slug 5 (NGH-2680)</description>
 		<year>2003</year>
 		<manufacturer>SNK Playmore</manufacturer>
@@ -8815,7 +8732,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug5" romof="neogeo">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Metal Slug 5 (NGM-2680)</description>
 		<year>2003</year>
 		<manufacturer>SNK Playmore</manufacturer>
@@ -8874,7 +8790,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ms5plus" cloneof="mslug5" romof="mslug5">
-		<comment>Bootlegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Bootleg</comment>
 		<description>Metal Slug 5 Plus (bootleg)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
@@ -8935,7 +8851,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug3b6" cloneof="mslug3" romof="mslug3">
-		<comment>Bootlegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Bootleg</comment>
 		<description>Metal Slug 6 (Metal Slug 3 bootleg)</description>
 		<year>2000</year>
 		<manufacturer>bootleg</manufacturer>
@@ -8997,7 +8913,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslugxsrf" cloneof="mslugx" romof="mslugx">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Metal Slug X - Super Vehicle-001 (AzStar Soda Remix FC2 Version, hack)</description>
 		<year>2020</year>
 		<manufacturer>SNK</manufacturer>
@@ -9056,7 +8972,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslugx" romof="neogeo">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Metal Slug X - Super Vehicle-001 (NGM-2500)(NGH-2500)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -9115,7 +9030,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="minasan" romof="neogeo">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Minasanno Okagesamadesu! Daisugorokutaikai (MOM-001)(MOH-001)</description>
 		<year>1990</year>
 		<manufacturer>Monolith Corp.</manufacturer>
@@ -9170,7 +9084,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="miexchng" romof="neogeo">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Money Puzzle Exchanger / Money Idol Exchanger</description>
 		<year>1997</year>
 		<manufacturer>Face</manufacturer>
@@ -9224,7 +9137,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mutnat" romof="neogeo">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Mutation Nation (NGM-014)(NGH-014)</description>
 		<year>1992</year>
 		<manufacturer>SNK</manufacturer>
@@ -9279,7 +9191,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="nam1975" romof="neogeo">
-		<comment>Hacklegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>NAM-1975 (NGM-001)(NGH-001)</description>
 		<year>1990</year>
 		<manufacturer>SNK</manufacturer>
@@ -9338,7 +9249,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="neo2500" romof="neogeo">
-		<comment>Demolegpeerfect graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Demo</comment>
 		<description>Neo 2500 Demo</description>
 		<year>2004</year>
 		<manufacturer>blastar@gmx.net</manufacturer>
@@ -9390,7 +9301,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nblktiger" romof="neogeo">
-		<comment>Demo, Homebrewt graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Demo, Homebrew</comment>
 		<description>Neo Black Tiger Demo</description>
 		<year>2020</year>
 		<manufacturer>OzzyOuzo</manufacturer>
@@ -9450,7 +9361,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neobombe" romof="neogeo">
-		<comment>Demo, Homebrewt graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Neo Bomberman</description>
 		<year>1997</year>
 		<manufacturer>Hudson</manufacturer>
@@ -9505,7 +9415,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="neocstlv" romof="neogeo">
-		<comment>Homebrewmebrewt graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Homebrew</comment>
 		<description>Neo CastleVania Demo</description>
 		<year>2004</year>
 		<manufacturer>Barf/BarfHappy</manufacturer>
@@ -9557,7 +9467,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neodrift" romof="neogeo">
-		<comment>Homebrewmebrewt graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Neo Drift Out - New Technology</description>
 		<year>1996</year>
 		<manufacturer>Visco</manufacturer>
@@ -9610,7 +9519,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neomrdo" romof="neogeo">
-		<comment>Homebrewmebrewt graphicsniverse BIOS and set region to Japan AES</comment>
 		<description>Neo Mr. Do!</description>
 		<year>1996</year>
 		<manufacturer>Visco</manufacturer>
@@ -9662,7 +9570,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="neonopon" romof="neogeo">
-		<comment>Homebrewmebrewt graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Homebrew</comment>
 		<description>Neo No Panepon (beta)</description>
 		<year>????</year>
 		<manufacturer>blastar@gmx.net</manufacturer>
@@ -9714,7 +9622,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="neoponga" cloneof="neopong" romof="neopong">
-		<comment>Homebrewmebrewt graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Homebrew</comment>
 		<description>Neo Pong (ver 1.0)</description>
 		<year>2002</year>
 		<manufacturer>Neo Dev Corporation</manufacturer>
@@ -9766,7 +9674,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="neopong" romof="neogeo">
-		<comment>Homebrewmebrewt graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Homebrew</comment>
 		<description>Neo Pong (ver 1.1)</description>
 		<year>2002</year>
 		<manufacturer>Neo Dev Corporation</manufacturer>
@@ -9818,7 +9726,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nsmb" romof="neogeo">
-		<comment>Demo, Homebrewt graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Demo, Homebrew</comment>
 		<description>Neo Super Mario Bros Demo 0.01!</description>
 		<year>2020</year>
 		<manufacturer>OzzyOuzo</manufacturer>
@@ -9878,7 +9786,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="syscheck" romof="neogeo">
-		<comment>Demo, Homebrewt graphicsniverse BIOS and set region to Japan AES</comment>
+		<comment>Demo</comment>
 		<description>Neo System Check (ver 1.0b)</description>
 		<year>????</year>
 		<manufacturer>blastar@gmx.net</manufacturer>
@@ -9930,7 +9838,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="neothndr" romof="neogeo">
-		<comment>Homebrew, sebastianmihai.comrse BIOS and set region to Japan AES</comment>
+		<comment>Homebrew, sebastianmihai.com</comment>
 		<description>Neo Thunder</description>
 		<year>2012</year>
 		<manufacturer>Sebastian Mihai</manufacturer>
@@ -9982,7 +9890,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="turfmast" romof="neogeo">
-		<comment>Homebrew, sebastianmihai.comrse BIOS and set region to Japan AES</comment>
 		<description>Neo Turf Masters / Big Tournament Golf</description>
 		<year>1996</year>
 		<manufacturer>Nazca</manufacturer>
@@ -10037,7 +9944,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neocup98" romof="neogeo">
-		<comment>Homebrew, sebastianmihai.comrse BIOS and set region to Japan AES</comment>
 		<description>Neo-Geo Cup '98 - The Road to the Victory</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
@@ -10090,7 +9996,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="neotet" romof="neogeo">
-		<comment>Homebrew, sebastianmihai.comrse BIOS and set region to Japan AES</comment>
+		<comment>Homebrew</comment>
 		<description>NeoGeo 2-Player Tetris</description>
 		<year>2013</year>
 		<manufacturer>Crim/Stephen</manufacturer>
@@ -10142,7 +10048,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="neo3ddmo" romof="neogeo">
-		<comment>Homebrew, sebastianmihai.comrse BIOS and set region to Japan AES</comment>
+		<comment>Homebrew</comment>
 		<description>NeoGeo 3D! Demo</description>
 		<year>2012</year>
 		<manufacturer>Oxygene</manufacturer>
@@ -10194,7 +10100,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="neotris" romof="neogeo">
-		<comment>Homebrew, sebastianmihai.comrse BIOS and set region to Japan AES</comment>
+		<comment>Homebrew</comment>
 		<description>NeoTRIS (Free Beta 2 Ver. 202009)</description>
 		<year>2020</year>
 		<manufacturer>Chipsonsteroids</manufacturer>
@@ -10253,7 +10159,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ngem2k" romof="neogeo">
-		<comment>Homebrew, sebastianmihai.comrse BIOS and set region to Japan AES</comment>
+		<comment>Homebrew</comment>
 		<description>NGEM2K (beta 2006-01-18)</description>
 		<year>2006</year>
 		<manufacturer>homebrew</manufacturer>
@@ -10305,7 +10211,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ngftdemo" romof="neogeo">
-		<comment>Homebrew, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
+		<comment>Homebrew, redarmor.net</comment>
 		<description>NGF Transparency Demo</description>
 		<year>2012</year>
 		<manufacturer>CeL</manufacturer>
@@ -10357,7 +10263,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nitdbl" cloneof="nitd" romof="nitd">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
+		<comment>Bootleg</comment>
 		<description>Nightmare in the Dark (bootleg)</description>
 		<year>2001</year>
 		<manufacturer>bootleg</manufacturer>
@@ -10412,7 +10318,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="nitd" romof="neogeo">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Nightmare in the Dark</description>
 		<year>2000</year>
 		<manufacturer>Eleven / Gavaking</manufacturer>
@@ -10463,7 +10368,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ncombath" cloneof="ncombat" romof="ncombat">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Ninja Combat (NGH-009)</description>
 		<year>1990</year>
 		<manufacturer>Alpha Denshi Co.</manufacturer>
@@ -10522,7 +10426,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ncombat" romof="neogeo">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Ninja Combat (NGM-009)</description>
 		<year>1990</year>
 		<manufacturer>Alpha Denshi Co.</manufacturer>
@@ -10581,7 +10484,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ncommand" romof="neogeo">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Ninja Commando</description>
 		<year>1992</year>
 		<manufacturer>Alpha Denshi Co.</manufacturer>
@@ -10636,7 +10538,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjamasha" cloneof="ninjamas" romof="ninjamas">
-		<comment>Hacklegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Ninja Master's - haoh-ninpo-cho (Plus)</description>
 		<year>1996</year>
 		<manufacturer>007325</manufacturer>
@@ -10696,7 +10598,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjamas" romof="neogeo">
-		<comment>Hacklegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Ninja Master's - haoh-ninpo-cho</description>
 		<year>1996</year>
 		<manufacturer>ADK / SNK</manufacturer>
@@ -10756,7 +10657,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="overtop" romof="neogeo">
-		<comment>Hacklegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Over Top</description>
 		<year>1996</year>
 		<manufacturer>ADK</manufacturer>
@@ -10812,7 +10712,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsho4k" cloneof="samsho4" romof="samsho4">
-		<comment>Hacklegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Pae Wang Jeon Seol / Legend of a Warrior (Korean censored Samurai Shodown IV)</description>
 		<year>1996</year>
 		<manufacturer>SNK</manufacturer>
@@ -10873,7 +10772,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="panicbom" romof="neogeo">
-		<comment>Hacklegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Panic Bomber</description>
 		<year>1994</year>
 		<manufacturer>Eighting / Hudson</manufacturer>
@@ -10926,7 +10824,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pgoal" romof="neogeo">
-		<comment>Hacklegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Pleasure Goal / Futsal - 5 on 5 Mini Soccer (NGM-219)</description>
 		<year>1996</year>
 		<manufacturer>Saurus</manufacturer>
@@ -10980,7 +10877,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pnyaaa" cloneof="pnyaa" romof="pnyaa">
-		<comment>Hacklegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Pochi and Nyaa (Ver 2.00)</description>
 		<year>2003</year>
 		<manufacturer>Aiky / Taito</manufacturer>
@@ -11031,7 +10927,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pnyaa" romof="neogeo">
-		<comment>Hacklegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Pochi and Nyaa (Ver 2.02)</description>
 		<year>2003</year>
 		<manufacturer>Aiky / Taito</manufacturer>
@@ -11082,7 +10977,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="poknight" romof="neogeo">
-		<comment>Homebrew, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
+		<comment>Homebrew</comment>
 		<description>Poker Night</description>
 		<year>????</year>
 		<manufacturer>Jeff Kurtz</manufacturer>
@@ -11134,7 +11029,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="popbounc" romof="neogeo">
-		<comment>Homebrew, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Pop 'n Bounce / Gapporin</description>
 		<year>1997</year>
 		<manufacturer>Video System Co.</manufacturer>
@@ -11186,7 +11080,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pspikes2" romof="neogeo">
-		<comment>Homebrew, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Power Spikes II (NGM-068)</description>
 		<year>1994</year>
 		<manufacturer>Video System Co.</manufacturer>
@@ -11244,7 +11137,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="preisle2" romof="neogeo">
-		<comment>Homebrew, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Prehistoric Isle 2</description>
 		<year>1999</year>
 		<manufacturer>Yumekobo</manufacturer>
@@ -11301,7 +11193,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="neoprimo" romof="neogeo">
-		<comment>Homebrew, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
+		<comment>Homebrew</comment>
 		<description>Primo Demo</description>
 		<year>2013</year>
 		<manufacturer>iocerom.com</manufacturer>
@@ -11353,7 +11245,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="proneon" romof="neogeo">
-		<comment>Demobrew, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
+		<comment>Demo</comment>
 		<description>Project Neon (Caravan Edition, prealpha 0.4.19)</description>
 		<year>2019</year>
 		<manufacturer>FULLSET</manufacturer>
@@ -11405,7 +11297,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pulstar" romof="neogeo">
-		<comment>Demobrew, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Pulstar</description>
 		<year>1995</year>
 		<manufacturer>Aicom</manufacturer>
@@ -11465,7 +11356,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pbobblenb" cloneof="pbobblen" romof="pbobblen">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
+		<comment>Bootleg</comment>
 		<description>Puzzle Bobble / Bust-A-Move (Neo-Geo) (bootleg)</description>
 		<year>1994</year>
 		<manufacturer>Taito</manufacturer>
@@ -11518,7 +11409,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pbobblen" romof="neogeo">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Puzzle Bobble / Bust-A-Move (Neo-Geo) (NGM-083)</description>
 		<year>1994</year>
 		<manufacturer>Taito</manufacturer>
@@ -11577,7 +11467,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pbobbl2n" romof="neogeo">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Puzzle Bobble 2 / Bust-A-Move Again (Neo-Geo)</description>
 		<year>1999</year>
 		<manufacturer>Taito (SNK license)</manufacturer>
@@ -11632,7 +11521,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="puzzldpr" cloneof="puzzledp" romof="puzzledp">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Puzzle De Pon! R!</description>
 		<year>1997</year>
 		<manufacturer>Visco</manufacturer>
@@ -11684,7 +11572,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="puzzledp" romof="neogeo">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Puzzle De Pon!</description>
 		<year>1995</year>
 		<manufacturer>Visco</manufacturer>
@@ -11736,7 +11623,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="joyjoy" romof="neogeo">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Puzzled / Joy Joy Kid (NGM-021)(NGH-021)</description>
 		<year>1990</year>
 		<manufacturer>SNK</manufacturer>
@@ -11789,7 +11675,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="quizdaisk" cloneof="quizdais" romof="quizdais">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Quiz Daisousa Sen - The Last Count Down (Korean release)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
@@ -11841,7 +11726,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="quizdais" romof="neogeo">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Quiz Daisousa Sen - The Last Count Down (NGM-023)(NGH-023)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
@@ -11893,7 +11777,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="quizkofk" cloneof="quizkof" romof="quizkof">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Quiz King of Fighters (Korean release)</description>
 		<year>1995</year>
 		<manufacturer>Saurus</manufacturer>
@@ -11949,7 +11832,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="quizkof" romof="neogeo">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Quiz King of Fighters (SAM-080)(SAH-080)</description>
 		<year>1995</year>
 		<manufacturer>Saurus</manufacturer>
@@ -12005,7 +11887,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="quizdai2" romof="neogeo">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Quiz Meitantei Neo &amp; Geo - Quiz Daisousa Sen part 2 (NGM-042)(NGH-042)</description>
 		<year>1992</year>
 		<manufacturer>SNK</manufacturer>
@@ -12060,7 +11941,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="rotdh" cloneof="rotd" romof="rotd">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Rage of the Dragons (NGH-2640)</description>
 		<year>2002</year>
 		<manufacturer>Evoga / Playmore</manufacturer>
@@ -12119,7 +11999,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="rotd" romof="neogeo">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Rage of the Dragons (NGM-264?)</description>
 		<year>2002</year>
 		<manufacturer>Evoga / Playmore</manufacturer>
@@ -12177,7 +12056,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ragnagrd" romof="neogeo">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Ragnagard / Shin-Oh-Ken</description>
 		<year>1996</year>
 		<manufacturer>Saurus</manufacturer>
@@ -12236,7 +12114,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="rbff1a" cloneof="rbff1" romof="rbff1">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Real Bout Fatal Fury / Real Bout Garou Densetsu (bug fix revision)</description>
 		<year>1995</year>
 		<manufacturer>SNK</manufacturer>
@@ -12298,7 +12175,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="rbff1k" cloneof="rbff1" romof="rbff1">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Real Bout Fatal Fury / Real Bout Garou Densetsu (Korean release)</description>
 		<year>1995</year>
 		<manufacturer>SNK</manufacturer>
@@ -12359,7 +12235,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="rbff1ka" cloneof="rbff1" romof="rbff1">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Real Bout Fatal Fury / Real Bout Garou Densetsu (Korean release, bug fix revision)</description>
 		<year>1995</year>
 		<manufacturer>SNK</manufacturer>
@@ -12421,7 +12296,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="rbff1" romof="neogeo">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Real Bout Fatal Fury / Real Bout Garou Densetsu (NGM-095)(NGH-095)</description>
 		<year>1995</year>
 		<manufacturer>SNK</manufacturer>
@@ -12482,7 +12356,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="rbff2k" cloneof="rbff2" romof="rbff2">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Real Bout Fatal Fury 2 - The Newcomers (Korean release)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
@@ -12542,7 +12415,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="rbff2h" cloneof="rbff2" romof="rbff2">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (NGH-2400)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
@@ -12602,7 +12474,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="rbff2" romof="neogeo">
-		<comment>Bootlegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
 		<description>Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (NGM-2400)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
@@ -12662,7 +12533,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rbff2bh" cloneof="rbff2" romof="rbff2">
-		<comment>Hacklegw, redarmor.netai.comrse BIOS and set region to Japan AES</comment>
+		<comment>Hack</comment>
 		<description>Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (Secret Character Hack)</description>
 		<year>1998</year>
 		<manufacturer>hack</manufacturer>
@@ -12783,7 +12654,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="rbffspeck" cloneof="rbffspec" romof="rbffspec">
-		<comment>Hack, Select Geese Howard with portrait, press 'B+C' to select EX characters</comment>
 		<description>Real Bout Fatal Fury Special / Real Bout Garou Densetsu Special (Korean release)</description>
 		<year>1996</year>
 		<manufacturer>SNK</manufacturer>
@@ -12844,7 +12714,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="rbffspec" romof="neogeo">
-		<comment>Hack, Select Geese Howard with portrait, press 'B+C' to select EX characters</comment>
 		<description>Real Bout Fatal Fury Special / Real Bout Garou Densetsu Special</description>
 		<year>1996</year>
 		<manufacturer>SNK</manufacturer>
@@ -12905,7 +12774,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ridhero" romof="neogeo">
-		<comment>Hack, Select Geese Howard with portrait, press 'B+C' to select EX characters</comment>
 		<description>Riding Hero (NGM-006)(NGH-006)</description>
 		<year>1990</year>
 		<manufacturer>SNK</manufacturer>
@@ -12965,7 +12833,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ridheroh" cloneof="ridhero" romof="ridhero">
-		<comment>Hack, Select Geese Howard with portrait, press 'B+C' to select EX characters</comment>
 		<description>Riding Hero (set 2)</description>
 		<year>1990</year>
 		<manufacturer>SNK</manufacturer>
@@ -13025,7 +12892,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="roboarmy" romof="neogeo">
-		<comment>Hack, Select Geese Howard with portrait, press 'B+C' to select EX characters</comment>
 		<description>Robo Army (set 1)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
@@ -13080,7 +12946,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="roboarma" cloneof="roboarmy" romof="roboarmy">
-		<comment>Hack, Select Geese Howard with portrait, press 'B+C' to select EX characters</comment>
 		<description>Robo Army (set 2)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
@@ -13135,7 +13000,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="robocopi" romof="neogeo">
-		<comment>Demo, You must use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Robocop (Intro demo)</description>
 		<year>2009</year>
 		<manufacturer>Sergi</manufacturer>
@@ -13193,7 +13058,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="samshoh" cloneof="samsho" romof="samsho">
-		<comment>Demo, You must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Samurai Shodown / Samurai Spirits (NGH-045)</description>
 		<year>1993</year>
 		<manufacturer>SNK</manufacturer>
@@ -13251,7 +13115,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsho" romof="neogeo">
-		<comment>Demo, You must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Samurai Shodown / Samurai Spirits (NGM-045)</description>
 		<year>1993</year>
 		<manufacturer>SNK</manufacturer>
@@ -13309,7 +13172,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="samshoa" cloneof="samsho" romof="samsho">
-		<comment>Demo, You must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Samurai Shodown / Samurai Spirits (NGM-045, alternate board)</description>
 		<year>1993</year>
 		<manufacturer>SNK</manufacturer>
@@ -13368,7 +13230,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsho2" romof="neogeo">
-		<comment>Demo, You must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (NGM-063)(NGH-063)</description>
 		<year>1994</year>
 		<manufacturer>SNK</manufacturer>
@@ -13429,7 +13290,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsho2sp" cloneof="samsho2" romof="samsho2">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Special 2017, hack)</description>
 		<year>2017</year>
 		<manufacturer>hack</manufacturer>
@@ -13492,7 +13353,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsho3h" cloneof="samsho3" romof="samsho3">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Samurai Shodown III / Samurai Spirits - Zankurou Musouken (NGH-087)</description>
 		<year>1995</year>
 		<manufacturer>SNK</manufacturer>
@@ -13552,7 +13412,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsho3" romof="neogeo">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Samurai Shodown III / Samurai Spirits - Zankurou Musouken (NGM-087)</description>
 		<year>1995</year>
 		<manufacturer>SNK</manufacturer>
@@ -13615,7 +13474,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsho4" romof="neogeo">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Samurai Shodown IV - Amakusa's Revenge / Samurai Spirits - Amakusa Kourin (NGM-222)(NGH-222)</description>
 		<year>1996</year>
 		<manufacturer>SNK</manufacturer>
@@ -13676,7 +13534,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsho4sp" cloneof="samsho4" romof="samsho4">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>Samurai Shodown IV - Amakusa's Revenge / Samurai Spirits - Amakusa Kourin (Special 2017, hack)</description>
 		<year>1996</year>
 		<manufacturer>hack</manufacturer>
@@ -13737,7 +13595,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsho5b" cloneof="samsho5" romof="samsho5">
-		<comment>Bootlegou must use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>Samurai Shodown V / Samurai Spirits Zero (bootleg)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
@@ -13795,7 +13653,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsho5x" cloneof="samsho5" romof="samsho5">
-		<comment>Hacklegou must use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>Samurai Shodown V / Samurai Spirits Zero (hack of XBOX version)</description>
 		<year>2003</year>
 		<manufacturer>hack</manufacturer>
@@ -13854,7 +13712,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsho5h" cloneof="samsho5" romof="samsho5">
-		<comment>Hacklegou must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Samurai Shodown V / Samurai Spirits Zero (NGH-2700)</description>
 		<year>2003</year>
 		<manufacturer>Yuki Enterprise / SNK Playmore</manufacturer>
@@ -13913,7 +13770,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsho5" romof="neogeo">
-		<comment>Hacklegou must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Samurai Shodown V / Samurai Spirits Zero (NGM-2700, set 1)</description>
 		<year>2003</year>
 		<manufacturer>Yuki Enterprise / SNK Playmore</manufacturer>
@@ -13972,7 +13828,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsho5a" cloneof="samsho5" romof="samsho5">
-		<comment>Hacklegou must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Samurai Shodown V / Samurai Spirits Zero (NGM-2700, set 2)</description>
 		<year>2003</year>
 		<manufacturer>Yuki Enterprise / SNK Playmore</manufacturer>
@@ -14031,7 +13886,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsh5pf" cloneof="samsh5sp" romof="samsh5sp">
-		<comment>Hacklegou must use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>Samurai Shodown V Perfect / Samurai Spirits Zero Perfect (bootleg, hack)</description>
 		<year>2020</year>
 		<manufacturer>bootleg</manufacturer>
@@ -14090,7 +13945,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsh5spho" cloneof="samsh5sp" romof="samsh5sp">
-		<comment>Hacklegou must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Samurai Shodown V Special / Samurai Spirits Zero Special (NGH-2720) (1st release, censored)</description>
 		<year>2004</year>
 		<manufacturer>Yuki Enterprise / SNK Playmore</manufacturer>
@@ -14149,7 +14003,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsh5sph" cloneof="samsh5sp" romof="samsh5sp">
-		<comment>Hacklegou must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Samurai Shodown V Special / Samurai Spirits Zero Special (NGH-2720) (2nd release, less censored)</description>
 		<year>2004</year>
 		<manufacturer>Yuki Enterprise / SNK Playmore</manufacturer>
@@ -14208,7 +14061,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsh5fe" cloneof="samsh5sp" romof="samsh5sp">
-		<comment>Hacklegou must use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>Samurai Shodown V Special / Samurai Spirits Zero Special (NGM-272) (NGH-272) (Final Edition, location test version)</description>
 		<year>2004</year>
 		<manufacturer>Yuki Enterprise / SNK Playmore</manufacturer>
@@ -14268,7 +14121,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsh5sp" romof="neogeo">
-		<comment>Hacklegou must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Samurai Shodown V Special / Samurai Spirits Zero Special (NGM-2720)</description>
 		<year>2004</year>
 		<manufacturer>Yuki Enterprise / SNK Playmore</manufacturer>
@@ -14327,7 +14179,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsho2k" cloneof="samsho2" romof="samsho2">
-		<comment>Hacklegou must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Saulabi Spirits / Jin Saulabi Tu Hon (Korean release of Samurai Shodown II)</description>
 		<year>1994</year>
 		<manufacturer>SNK</manufacturer>
@@ -14390,7 +14241,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsho2ka" cloneof="samsho2" romof="samsho2">
-		<comment>Hacklegou must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Saulabi Spirits / Jin Saulabi Tu Hon (Korean release of Samurai Shodown II, set 2)</description>
 		<year>1994</year>
 		<manufacturer>SNK</manufacturer>
@@ -14451,7 +14301,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="savagereb" cloneof="savagere" romof="savagere">
-		<comment>Hacklegou must use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>Savage Reign / Fu'un Mokushiroku - kakutou sousei (Boss Hack)</description>
 		<year>1995</year>
 		<manufacturer>Yumeji, Dodowang[EGCG]</manufacturer>
@@ -14511,7 +14361,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="savagere" romof="neogeo">
-		<comment>Hacklegou must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Savage Reign / Fu'un Mokushiroku - kakutou sousei</description>
 		<year>1995</year>
 		<manufacturer>SNK</manufacturer>
@@ -14571,7 +14420,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sengokuh" cloneof="sengoku" romof="sengoku">
-		<comment>Hacklegou must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Sengoku / Sengoku Denshou (NGH-017)(US)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
@@ -14627,7 +14475,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sengoku" romof="neogeo">
-		<comment>Hacklegou must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Sengoku / Sengoku Denshou (NGM-017)(NGH-017)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
@@ -14683,7 +14530,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sengoku2" romof="neogeo">
-		<comment>Hacklegou must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Sengoku 2 / Sengoku Denshou 2</description>
 		<year>1993</year>
 		<manufacturer>SNK</manufacturer>
@@ -14738,7 +14584,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sengoku3s" cloneof="sengoku3" romof="sengoku3">
-		<comment>Hacklegou must use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>Sengoku 3 / Sengoku Densho 2001 (Evolution 1.0, FCHT hack)</description>
 		<year>2001</year>
 		<manufacturer>hack</manufacturer>
@@ -14795,7 +14641,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sengoku3fs" cloneof="sengoku3" romof="sengoku3">
-		<comment>Hacklegou must use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>Sengoku 3 / Sengoku Densho 2001 (Feng Shen Edition, Hack)</description>
 		<year>2020-04-10</year>
 		<manufacturer>Hack</manufacturer>
@@ -14852,7 +14698,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sengoku3" romof="neogeo">
-		<comment>Hacklegou must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Sengoku 3 / Sengoku Densho 2001 (set 1)</description>
 		<year>2001</year>
 		<manufacturer>SNK / Noise Factory</manufacturer>
@@ -14908,7 +14753,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sengoku3a" cloneof="sengoku3" romof="sengoku3">
-		<comment>Hacklegou must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Sengoku 3 / Sengoku Densho 2001 (Set 2)</description>
 		<year>2001</year>
 		<manufacturer>SNK / Noise Factory</manufacturer>
@@ -14964,7 +14808,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="beast" romof="neogeo">
-		<comment>Demolegou must use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Demo</comment>
 		<description>Shadow of the Beast (Neo Geo demo)</description>
 		<year>????</year>
 		<manufacturer>Jeff Kurtz</manufacturer>
@@ -15016,7 +14860,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="shocktro" romof="neogeo">
-		<comment>Demolegou must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Shock Troopers (set 1)</description>
 		<year>1997</year>
 		<manufacturer>Saurus</manufacturer>
@@ -15076,7 +14919,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="shocktroa" cloneof="shocktro" romof="shocktro">
-		<comment>Demolegou must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Shock Troopers (set 2)</description>
 		<year>1997</year>
 		<manufacturer>Saurus</manufacturer>
@@ -15136,7 +14978,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="shocktr2" romof="neogeo">
-		<comment>Demolegou must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Shock Troopers - 2nd Squad</description>
 		<year>1998</year>
 		<manufacturer>Saurus</manufacturer>
@@ -15195,7 +15036,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="svcboot" cloneof="svc" romof="svc">
-		<comment>Bootlegou must use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>SNK vs. Capcom - SVC Chaos (bootleg)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
@@ -15256,7 +15097,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="svc" romof="neogeo">
-		<comment>Bootlegou must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>SNK vs. Capcom - SVC Chaos (NGM-2690)(NGH-2690)</description>
 		<year>2003</year>
 		<manufacturer>SNK Playmore</manufacturer>
@@ -15315,7 +15155,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="svcplus" cloneof="svc" romof="svc">
-		<comment>Bootlegou must use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>SNK vs. Capcom - SVC Chaos Plus (bootleg set 1)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
@@ -15378,7 +15218,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="svcplusa" cloneof="svc" romof="svc">
-		<comment>Bootlegou must use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>SNK vs. Capcom - SVC Chaos Plus (bootleg set 2)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
@@ -15440,7 +15280,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="svcsplus" cloneof="svc" romof="svc">
-		<comment>Bootlegou must use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>SNK vs. Capcom - SVC Chaos Super Plus (bootleg)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
@@ -15502,7 +15342,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="socbrawlh" cloneof="socbrawl" romof="socbrawl">
-		<comment>Bootlegou must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Soccer Brawl (NGH-031)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
@@ -15557,7 +15396,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="socbrawl" romof="neogeo">
-		<comment>Bootlegou must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Soccer Brawl (NGM-031)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
@@ -15612,7 +15450,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="spidermi" romof="neogeo">
-		<comment>Demo, You must use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Spiderman (Intro demo)</description>
 		<year>2009</year>
 		<manufacturer>Sergi</manufacturer>
@@ -15669,7 +15507,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="spinmast" romof="neogeo">
-		<comment>Demo, You must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Spin Master / Miracle Adventure</description>
 		<year>1993</year>
 		<manufacturer>Data East Corporation</manufacturer>
@@ -15728,7 +15565,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="stakwin" romof="neogeo">
-		<comment>Demo, You must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Stakes Winner / Stakes Winner - GI kinzen seiha e no michi</description>
 		<year>1995</year>
 		<manufacturer>Saurus</manufacturer>
@@ -15782,7 +15618,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="stakwin2" romof="neogeo">
-		<comment>Demo, You must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Stakes Winner 2</description>
 		<year>1996</year>
 		<manufacturer>Saurus</manufacturer>
@@ -15837,7 +15672,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="strhoop" romof="neogeo">
-		<comment>Demo, You must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Street Hoop / Street Slam / Dunk Dream (DEM-004) (DEH-004)</description>
 		<year>1994</year>
 		<manufacturer>Data East Corporation</manufacturer>
@@ -15892,7 +15726,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="s1945p" romof="neogeo">
-		<comment>Demo, You must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Strikers 1945 Plus</description>
 		<year>1999</year>
 		<manufacturer>Psikyo</manufacturer>
@@ -15953,7 +15786,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sdodgebh" cloneof="sdodgeb" romof="sdodgeb">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>Super Dodge Ball / Kunio no Nekketsu Toukyuu Densetsu (Secret Character Hack)</description>
 		<year>1996</year>
 		<manufacturer>hack</manufacturer>
@@ -16007,7 +15840,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sdodgeb" romof="neogeo">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Super Dodge Ball / Kunio no Nekketsu Toukyuu Densetsu</description>
 		<year>1996</year>
 		<manufacturer>Technos</manufacturer>
@@ -16061,7 +15893,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ssideki" romof="neogeo">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Super Sidekicks / Tokuten Ou</description>
 		<year>1992</year>
 		<manufacturer>SNK</manufacturer>
@@ -16113,7 +15944,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ssideki2" romof="neogeo">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Super Sidekicks 2 - The World Championship / Tokuten Ou 2 - real fight football (NGM-061)(NGH-061)</description>
 		<year>1994</year>
 		<manufacturer>SNK</manufacturer>
@@ -16168,7 +15998,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ssideki3" romof="neogeo">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Super Sidekicks 3 - The Next Glory / Tokuten Ou 3 - eikou e no michi</description>
 		<year>1995</year>
 		<manufacturer>SNK</manufacturer>
@@ -16226,7 +16055,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="moshougi" romof="neogeo">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Syougi No Tatsujin - Master of Shougi</description>
 		<year>1995</year>
 		<manufacturer>ADK / SNK</manufacturer>
@@ -16278,7 +16106,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="twsoc96" romof="neogeo">
-		<comment>Hack, You must use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>Tecmo World Soccer '96</description>
 		<year>1996</year>
 		<manufacturer>Tecmo</manufacturer>
@@ -16333,7 +16160,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tmnti" romof="neogeo">
-		<comment>Demo, You must use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Teenage Mutant Ninja Turtles (Intro demo)</description>
 		<year>2009</year>
 		<manufacturer>Sergi</manufacturer>
@@ -16391,7 +16218,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tmntia" cloneof="tmnti" romof="tmnti">
-		<comment>Demo, You must use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
 		<description>Teenage Mutant Ninja Turtles (Intro demo, alt)</description>
 		<year>2009</year>
 		<manufacturer>Sergi</manufacturer>
@@ -16449,7 +16276,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="teot" romof="neogeo">
-		<comment>Demo, Homebrew use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Demo, Homebrew</comment>
 		<description>The Eye of Typhoon (Alpha Version)</description>
 		<year>2021</year>
 		<manufacturer>OzzyOuzo</manufacturer>
@@ -16503,7 +16330,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="irrmaze" romof="neogeo">
-		<comment>Demo, Homebrew use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>The Irritating Maze / Ultra Denryu Iraira Bou</description>
 		<year>1997</year>
 		<manufacturer>SNK / Saurus</manufacturer>
@@ -16521,7 +16347,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof94rz" cloneof="kof94" romof="kof94">
-		<comment>Hack, Homebrew use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '94 (Hack Boss Remixed)</description>
 		<year>1994</year>
 		<manufacturer>ZKW</manufacturer>
@@ -16581,7 +16407,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof94" romof="neogeo">
-		<comment>Hack, Homebrew use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters '94 (NGM-055)(NGH-055)</description>
 		<year>1994</year>
 		<manufacturer>SNK</manufacturer>
@@ -16641,7 +16466,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof95b" cloneof="kof95" romof="kof95">
-		<comment>Hack, Homebrew use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '95 (Enable Hidden Characters V.[?])</description>
 		<year>1995</year>
 		<manufacturer>Ydmis &amp; Creamymami[EGCG]</manufacturer>
@@ -16701,7 +16526,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof95h" cloneof="kof95" romof="kof95">
-		<comment>Hack, Homebrew use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters '95 (NGH-084)</description>
 		<year>1995</year>
 		<manufacturer>SNK</manufacturer>
@@ -16761,7 +16585,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof95a" cloneof="kof95" romof="kof95">
-		<comment>Hack, Homebrew use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters '95 (NGH-084, alternate board)</description>
 		<year>1995</year>
 		<manufacturer>SNK</manufacturer>
@@ -16824,7 +16647,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof95" romof="neogeo">
-		<comment>Hack, Homebrew use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters '95 (NGM-084)</description>
 		<year>1995</year>
 		<manufacturer>SNK</manufacturer>
@@ -16884,7 +16706,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof95sp" cloneof="kof95" romof="kof95">
-		<comment>Hack, Homebrew use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '95 (Special 2017, hack)</description>
 		<year>2017</year>
 		<manufacturer>hack</manufacturer>
@@ -16946,7 +16768,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof96ae" cloneof="kof96" romof="kof96">
-		<comment>Hack, Homebrew use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '96 (Anniversary Edition, EGHT hack)</description>
 		<year>2007</year>
 		<manufacturer>hack</manufacturer>
@@ -17011,7 +16833,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof96ep" cloneof="kof96" romof="kof96">
-		<comment>Bootlegomebrew use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>The King of Fighters '96 (bootleg / hack)</description>
 		<year>1996</year>
 		<manufacturer>bootleg</manufacturer>
@@ -17073,7 +16895,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof96cn" cloneof="kof96" romof="kof96">
-		<comment>Hacklegomebrew use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '96 (Chinese Edition ver 1.0, hack)</description>
 		<year>200?</year>
 		<manufacturer>hack</manufacturer>
@@ -17137,7 +16959,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof96h" cloneof="kof96" romof="kof96">
-		<comment>Hacklegomebrew use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters '96 (NGH-214)</description>
 		<year>1996</year>
 		<manufacturer>SNK</manufacturer>
@@ -17198,7 +17019,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof96" romof="neogeo">
-		<comment>Hacklegomebrew use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters '96 (NGM-214)</description>
 		<year>1996</year>
 		<manufacturer>SNK</manufacturer>
@@ -17259,7 +17079,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof96a" cloneof="kof96" romof="kof96">
-		<comment>Hacklegomebrew use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters '96 (NGM-214, alternate board)</description>
 		<year>1996</year>
 		<manufacturer>SNK</manufacturer>
@@ -17323,7 +17142,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof96ae20" cloneof="kof96" romof="kof96">
-		<comment>Hacklegomebrew use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '96 (The Anniversary Edition 2.0, Build 2.3.0320)</description>
 		<year>2019</year>
 		<manufacturer>hack</manufacturer>
@@ -17382,7 +17201,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97cn" cloneof="kof97" romof="kof97">
-		<comment>Hacklegomebrew use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '97 (10th Anniversary Chinese Edition, EGHT hack)</description>
 		<year>2007</year>
 		<manufacturer>hack</manufacturer>
@@ -17441,7 +17260,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97ps" cloneof="kof97" romof="kof97">
-		<comment>Hacklegomebrew use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '97 (Imitation Playstation final improved version 2016-10-29)</description>
 		<year>1997</year>
 		<manufacturer>Eddids</manufacturer>
@@ -17500,7 +17319,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97inv" cloneof="kof97" romof="kof97">
-		<comment>Hacklegomebrew use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '97 (Invincible Plus)</description>
 		<year>2019</year>
 		<manufacturer>Hack</manufacturer>
@@ -17562,7 +17381,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97k" cloneof="kof97" romof="kof97">
-		<comment>Hacklegomebrew use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters '97 (Korean release)</description>
 		<year>1997</year>
 		<manufacturer>SNK</manufacturer>
@@ -17621,7 +17439,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97h" cloneof="kof97" romof="kof97">
-		<comment>Hacklegomebrew use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters '97 (NGH-2320)</description>
 		<year>1997</year>
 		<manufacturer>SNK</manufacturer>
@@ -17680,7 +17497,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97" romof="neogeo">
-		<comment>Hacklegomebrew use the Universe BIOS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters '97 (NGM-2320)</description>
 		<year>1997</year>
 		<manufacturer>SNK</manufacturer>
@@ -17739,7 +17555,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97t2020" cloneof="kof97" romof="kof97">
-		<comment>Hacklegomebrew use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '97 (Optimised Edition 2020)</description>
 		<year>2020</year>
 		<manufacturer>Hack</manufacturer>
@@ -17798,7 +17614,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97t" cloneof="kof97" romof="kof97">
-		<comment>Hacklegomebrew use the Universe BIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '97 (Optimized Edition)</description>
 		<year>2014</year>
 		<manufacturer>Hack</manufacturer>
@@ -17857,7 +17673,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97pm" cloneof="kof97" romof="kof97">
-		<comment>Hack, need AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Hack, need AES for practice mode</comment>
 		<description>The King of Fighters '97 (Practice Mode)</description>
 		<year>1997</year>
 		<manufacturer>hack</manufacturer>
@@ -17916,7 +17732,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97ae" cloneof="kof97" romof="kof97">
-		<comment>Hack, need AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '97 - Anniversary Edition (Build 2.1.0212)</description>
 		<year>2018</year>
 		<manufacturer>EGHT</manufacturer>
@@ -17978,7 +17794,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97aef" cloneof="kof97" romof="kof97">
-		<comment>Hack, need AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '97 - Anniversary Edition (Fork Build 2.1.1811)</description>
 		<year>2020-08-10</year>
 		<manufacturer>Hack</manufacturer>
@@ -18040,7 +17856,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97cbt" cloneof="kof97" romof="kof97">
-		<comment>Hack, need AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '97 - Combo Training (Hack, Ver. 2018)</description>
 		<year>2019</year>
 		<manufacturer>hack</manufacturer>
@@ -18099,7 +17915,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97xt" cloneof="kof97" romof="kof97">
-		<comment>Hack, need AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '97 - Final Battle (hack)</description>
 		<year>2007</year>
 		<manufacturer>hack</manufacturer>
@@ -18158,7 +17974,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97rc" cloneof="kof97" romof="kof97">
-		<comment>Hack, need AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '97 - Random Combo (Hack, Ver. 2010)</description>
 		<year>2019</year>
 		<manufacturer>hack</manufacturer>
@@ -18217,7 +18033,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97oro" cloneof="kof97" romof="kof97">
-		<comment>Bootlegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>The King of Fighters '97 oroshi plus 2003</description>
 		<year>1997</year>
 		<manufacturer>bootleg</manufacturer>
@@ -18277,7 +18093,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97pls" cloneof="kof97" romof="kof97">
-		<comment>Bootlegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>The King of Fighters '97 Plus (bootleg)</description>
 		<year>1997</year>
 		<manufacturer>bootleg</manufacturer>
@@ -18336,7 +18152,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97pla" cloneof="kof97" romof="kof97">
-		<comment>Bootlegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>The King of Fighters '97 Plus 2003 (bootleg / hack)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
@@ -18395,7 +18211,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98ae2016" cloneof="kof98" romof="kof98">
-		<comment>Hacklegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '98 (Anniversary Edition build 1.2.0827)</description>
 		<year>2016</year>
 		<manufacturer>hack</manufacturer>
@@ -18462,7 +18278,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98ae" cloneof="kof98" romof="kof98">
-		<comment>Hacklegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '98 (Anniversary Edition, EGHT hack)</description>
 		<year>2007</year>
 		<manufacturer>hack</manufacturer>
@@ -18529,7 +18345,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98cps" cloneof="kof98" romof="kof98">
-		<comment>Hacklegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '98 (Combo Plus)</description>
 		<year>2020</year>
 		<manufacturer>Hack</manufacturer>
@@ -18598,7 +18414,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98cb" cloneof="kof98" romof="kof98">
-		<comment>Hacklegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '98 (Combo, hack)</description>
 		<year>2018</year>
 		<manufacturer>hack</manufacturer>
@@ -18660,7 +18476,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98pfe" cloneof="kof98" romof="kof98">
-		<comment>Hacklegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '98 (Plus Final Edition 2017-07-23)</description>
 		<year>2019-09-10</year>
 		<manufacturer>GSC2007</manufacturer>
@@ -18723,7 +18539,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98ratio" cloneof="kof98" romof="kof98">
-		<comment>Hacklegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '98 (Ratio hack)</description>
 		<year>2021</year>
 		<manufacturer>bankbank</manufacturer>
@@ -18785,7 +18601,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98ult" cloneof="kof98" romof="kof98">
-		<comment>Hacklegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '98 (Ultimate Match)</description>
 		<year>2020</year>
 		<manufacturer>hack</manufacturer>
@@ -18852,7 +18668,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98k" cloneof="kof98" romof="kof98">
-		<comment>Hacklegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (Korean board, set 1)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
@@ -18914,7 +18729,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98ka" cloneof="kof98" romof="kof98">
-		<comment>Hacklegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (Korean board, set 2)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
@@ -18976,7 +18790,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98h" cloneof="kof98" romof="kof98">
-		<comment>Hacklegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGH-2420)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
@@ -19038,7 +18851,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98" romof="neogeo">
-		<comment>Hacklegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGM-2420)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
@@ -19100,7 +18912,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98a" cloneof="kof98" romof="kof98">
-		<comment>Hacklegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGM-2420, alternate board)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
@@ -19163,7 +18974,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98eck20" cloneof="kof98" romof="kof98">
-		<comment>Hacklegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '98 Easy Combo King (YZKOF Version, Hack)</description>
 		<year>2020-04-09</year>
 		<manufacturer>hack</manufacturer>
@@ -19225,7 +19036,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98eckvs" cloneof="kof98" romof="kof98">
-		<comment>Hacklegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '98 Easy Combo King 2014 (Versus Version, Hack)</description>
 		<year>2019-02-17</year>
 		<manufacturer>hack</manufacturer>
@@ -19287,7 +19098,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98mix" cloneof="kof98" romof="kof98">
-		<comment>Hacklegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '98 Mix (2015-12-29)</description>
 		<year>2015</year>
 		<manufacturer>hack</manufacturer>
@@ -19351,7 +19162,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof99e" cloneof="kof99" romof="kof99">
-		<comment>Hacklegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters '99 - Millennium Battle (earlier)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -19415,7 +19225,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof99k" cloneof="kof99" romof="kof99">
-		<comment>Hacklegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters '99 - Millennium Battle (Korean release)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -19477,7 +19286,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof99ka" cloneof="kof99" romof="kof99">
-		<comment>Hacklegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters '99 - Millennium Battle (Korean release, non-encrypted program)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -19538,7 +19346,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof99h" cloneof="kof99" romof="kof99">
-		<comment>Hacklegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters '99 - Millennium Battle (NGH-2510)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -19600,7 +19407,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof99" romof="neogeo">
-		<comment>Hacklegeed AES for practice modeBIOS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters '99 - Millennium Battle (NGM-2510)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -19662,7 +19468,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof99p" cloneof="kof99" romof="kof99">
-		<comment>Prototyped AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Prototype</comment>
 		<description>The King of Fighters '99 - Millennium Battle (prototype)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -19724,7 +19530,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof99ae" cloneof="kof99" romof="kof99">
-		<comment>Hackotyped AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '99 Anniversary Edition (hack)</description>
 		<year>2020-04-07</year>
 		<manufacturer>Yashional</manufacturer>
@@ -19791,7 +19597,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof99eur" cloneof="kof99" romof="kof99">
-		<comment>Hackotyped AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '99 Evolution Ultra Remix (Hack By Yashional)</description>
 		<year>201?</year>
 		<manufacturer>hack</manufacturer>
@@ -19853,7 +19659,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof99rp2f" cloneof="kof99" romof="kof99">
-		<comment>Hackotyped AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '99 Remix Pro V2.0 Final (Hack By FCHT)</description>
 		<year>2006</year>
 		<manufacturer>hack</manufacturer>
@@ -19915,7 +19721,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof99sr" cloneof="kof99" romof="kof99">
-		<comment>Hackotyped AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '99 Summer Revolution (Hack By FCHT)</description>
 		<year>200?</year>
 		<manufacturer>hack</manufacturer>
@@ -19977,7 +19783,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof10th" cloneof="kof2002" romof="kof2002">
-		<comment>Bootlegped AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>The King of Fighters 10th Anniversary (bootleg)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
@@ -20043,7 +19849,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof10thd" cloneof="kof2002" romof="kof2002">
-		<comment>Hacklegped AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters 10th Anniversary (The King of Fighters 2002 bootleg / Fully Decrypted)</description>
 		<year>200?</year>
 		<manufacturer>hack</manufacturer>
@@ -20110,7 +19916,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k5uni" cloneof="kof2002" romof="kof2002">
-		<comment>Bootlegped AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>The King of Fighters 10th Anniversary 2005 Unique (bootleg)</description>
 		<year>2004</year>
 		<manufacturer>bootleg</manufacturer>
@@ -20178,7 +19984,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof10thuo" cloneof="kof2002" romof="kof2002">
-		<comment>Hacklegped AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters 10th Anniversary 2019 (Optimized version 2019, hack)</description>
 		<year>2020-11-11</year>
 		<manufacturer>Hack</manufacturer>
@@ -20237,7 +20043,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf10thep" cloneof="kof2002" romof="kof2002">
-		<comment>Bootlegped AES for practice modeBIOS and set region to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>The King of Fighters 10th Anniversary Extra Plus (bootleg)</description>
 		<year>2005</year>
 		<manufacturer>bootleg</manufacturer>
@@ -20306,7 +20112,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2000" romof="neogeo">
-		<comment>Bootlegped AES for practice modeBIOS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters 2000 (NGM-2570) (NGH-2570)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -20368,7 +20173,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2000n" cloneof="kof2000" romof="kof2000">
-		<comment>Bootlegped AES for practice modeBIOS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters 2000 (not encrypted)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -20429,7 +20233,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2000otc" cloneof="kof2000" romof="kof2000">
-		<comment>Hack, ZERO only enabled in AES modeS and set region to Japan AESX characters</comment>
+		<comment>Hack, ZERO only enabled in AES mode</comment>
 		<description>The King of Fighters 2000 (OTC, hack)</description>
 		<year>2020-06-15</year>
 		<manufacturer>hack</manufacturer>
@@ -20491,7 +20295,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2000ps2" cloneof="kof2000" romof="kof2000">
-		<comment>Hack, hack only enable in AES modeeS and set region to Japan AESX characters</comment>
+		<comment>Hack, hack only enable in AES mode</comment>
 		<description>The King of Fighters 2000 (Playstation 2 ver. , EGHT hack)</description>
 		<year>2000</year>
 		<manufacturer>hack</manufacturer>
@@ -20552,7 +20356,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2000sp" cloneof="kof2000" romof="kof2000">
-		<comment>Hack, hack only enable in AES modeeS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters 2000 - Special Edition (Final Version, Hack)</description>
 		<year>2021</year>
 		<manufacturer>Hack</manufacturer>
@@ -20613,7 +20417,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2001h" cloneof="kof2001" romof="kof2001">
-		<comment>Hack, hack only enable in AES modeeS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters 2001 (NGH-2621)</description>
 		<year>2001</year>
 		<manufacturer>SNK / Eolith</manufacturer>
@@ -20674,7 +20477,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2001" romof="neogeo">
-		<comment>Hack, hack only enable in AES modeeS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters 2001 (NGM-262?)</description>
 		<year>2001</year>
 		<manufacturer>SNK / Eolith</manufacturer>
@@ -20735,7 +20537,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k1pkz" cloneof="kof2001" romof="kof2001">
-		<comment>Hack, hack only enable in AES modeeS and set region to Japan AESX characters</comment>
+		<comment>Hack, hack only enable in AES mode</comment>
 		<description>The King of Fighters 2001 (PS2 Krizalid Edition)</description>
 		<year>2019-12-12</year>
 		<manufacturer>Hack</manufacturer>
@@ -20799,7 +20601,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k1pls" cloneof="kof2001" romof="kof2001">
-		<comment>Bootlegack only enable in AES modeeS and set region to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>The King of Fighters 2001 Plus (set 1, bootleg / hack)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
@@ -20861,7 +20663,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k1pa" cloneof="kof2001" romof="kof2001">
-		<comment>Bootlegack only enable in AES modeeS and set region to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>The King of Fighters 2001 Plus (set 2, bootleg / hack)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
@@ -20923,7 +20725,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2002b" cloneof="kof2002" romof="kof2002">
-		<comment>Bootlegack only enable in AES modeeS and set region to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>The King of Fighters 2002 (bootleg)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
@@ -20983,7 +20785,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2002" romof="neogeo">
-		<comment>Bootlegack only enable in AES modeeS and set region to Japan AESX characters</comment>
 		<description>The King of Fighters 2002 (NGM-2650)(NGH-2650)</description>
 		<year>2002</year>
 		<manufacturer>Eolith / Playmore</manufacturer>
@@ -21042,7 +20843,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2k2omg" cloneof="kof2002" romof="kof2002">
-		<comment>Hacklegack only enable in AES modeeS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters 2002 (Omega v.0?)</description>
 		<year>2002</year>
 		<manufacturer>hack</manufacturer>
@@ -21104,7 +20905,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2k2omg8" cloneof="kof2002" romof="kof2002">
-		<comment>Hacklegack only enable in AES modeeS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters 2002 (Omega v0.8)</description>
 		<year>2010</year>
 		<manufacturer>hack</manufacturer>
@@ -21164,7 +20965,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2k2omg9b" cloneof="kof2002" romof="kof2002">
-		<comment>Hacklegack only enable in AES modeeS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters 2002 (Omega v0.9 beta)</description>
 		<year>2011</year>
 		<manufacturer>hack</manufacturer>
@@ -21226,7 +21027,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2k2omg9" cloneof="kof2002" romof="kof2002">
-		<comment>Hacklegack only enable in AES modeeS and set region to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters 2002 (Omega v0.9)</description>
 		<year>2012</year>
 		<manufacturer>hack</manufacturer>
@@ -21288,7 +21089,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k2ps2re1" cloneof="kof2002" romof="kof2002">
-		<comment>Hack, hack only enable in AES mode, imperfect sound to Japan AESX characters</comment>
+		<comment>Hack, hack only enable in AES mode, imperfect sound</comment>
 		<description>The King of Fighters 2002 (PlayStation 2 v1.0 Public Beta)</description>
 		<year>2018-12-17</year>
 		<manufacturer>Hack</manufacturer>
@@ -21361,7 +21162,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k2ps2" cloneof="kof2002" romof="kof2002">
-		<comment>Hack, hack only enable in AES mode, imperfect sound to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters 2002 (PlayStation 2 ver 0.4, EGHT hack)</description>
 		<year>2007</year>
 		<manufacturer>hack</manufacturer>
@@ -21423,7 +21224,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k2ps2b" cloneof="kof2002" romof="kof2002">
-		<comment>Hack, hack only enabled in AES mode imperfect sound to Japan AESX characters</comment>
+		<comment>Hack, hack only enabled in AES mode</comment>
 		<description>The King of Fighters 2002 (PlayStation 2, Hack)</description>
 		<year>2018</year>
 		<manufacturer>Hack</manufacturer>
@@ -21487,7 +21288,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2k2plus" cloneof="kof2002" romof="kof2002">
-		<comment>Hack, hack only enabled in AES mode imperfect sound to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters 2002 (Plus 2017, Hack)</description>
 		<year>2020-10-22</year>
 		<manufacturer>Hack</manufacturer>
@@ -21548,7 +21349,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k23rd" cloneof="kof2002" romof="kof2002">
-		<comment>Hack, hack only enabled in AES mode imperfect sound to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters 2002 - 3rd Strike of Orochi (Hack by EGCG/EGHT)</description>
 		<year>2020-06-14</year>
 		<manufacturer>hack</manufacturer>
@@ -21610,7 +21411,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k2mp" cloneof="kof2002" romof="kof2002">
-		<comment>Bootlegack only enabled in AES mode imperfect sound to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>The King of Fighters 2002 Magic Plus (bootleg)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
@@ -21670,7 +21471,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k2mp2" cloneof="kof2002" romof="kof2002">
-		<comment>Bootlegack only enabled in AES mode imperfect sound to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>The King of Fighters 2002 Magic Plus II (bootleg)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
@@ -21730,7 +21531,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k2pls" cloneof="kof2002" romof="kof2002">
-		<comment>Bootlegack only enabled in AES mode imperfect sound to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>The King of Fighters 2002 Plus (bootleg set 1)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
@@ -21790,7 +21591,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k2pla" cloneof="kof2002" romof="kof2002">
-		<comment>Bootlegack only enabled in AES mode imperfect sound to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>The King of Fighters 2002 Plus (bootleg set 2)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
@@ -21850,7 +21651,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k2plb" cloneof="kof2002" romof="kof2002">
-		<comment>Bootlegack only enabled in AES mode imperfect sound to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>The King of Fighters 2002 Plus (bootleg set 3)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
@@ -21910,7 +21711,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k2ru35" cloneof="kof2002" romof="kof2002">
-		<comment>Hacklegack only enabled in AES mode imperfect sound to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters 2002 Remix Ultra 3.5 (Hack By FCHT)</description>
 		<year>2006</year>
 		<manufacturer>hack</manufacturer>
@@ -21970,7 +21771,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k2plc" cloneof="kof2002" romof="kof2002">
-		<comment>Bootlegack only enabled in AES mode imperfect sound to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>The King of Fighters 2002 Super (bootleg)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
@@ -22030,7 +21831,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k3bl" cloneof="kof2003" romof="kof2003">
-		<comment>Bootlegack only enabled in AES mode imperfect sound to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>The King of Fighters 2003 (bootleg set 1)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
@@ -22090,7 +21891,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k3bla" cloneof="kof2003" romof="kof2003">
-		<comment>Bootlegack only enabled in AES mode imperfect sound to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>The King of Fighters 2003 (bootleg set 2)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
@@ -22151,7 +21952,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2003h" cloneof="kof2003" romof="kof2003">
-		<comment>Bootlegack only enabled in AES mode imperfect sound to Japan AESX characters</comment>
 		<description>The King of Fighters 2003 (NGH-2710)</description>
 		<year>2003</year>
 		<manufacturer>SNK Playmore</manufacturer>
@@ -22211,7 +22011,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2003" romof="neogeo">
-		<comment>Bootlegack only enabled in AES mode imperfect sound to Japan AESX characters</comment>
 		<description>The King of Fighters 2003 (NGM-2710)</description>
 		<year>2003</year>
 		<manufacturer>SNK Playmore</manufacturer>
@@ -22271,7 +22070,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k3ps2" cloneof="kof2003" romof="kof2003">
-		<comment>Hack, Use AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
+		<comment>Hack, Use AES (Console) mode!</comment>
 		<description>The King of Fighters 2003 PlayStation 2 (Hack By EGCG)</description>
 		<year>2006</year>
 		<manufacturer>hack</manufacturer>
@@ -22330,7 +22129,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k3pl" cloneof="kof2003" romof="kof2003">
-		<comment>Bootlegse AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>The King of Fighters 2004 Plus / Hero (bootleg)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
@@ -22391,7 +22190,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k3upl" cloneof="kof2003" romof="kof2003">
-		<comment>Bootlegse AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>The King of Fighters 2004 Ultra Plus (bootleg)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
@@ -22450,7 +22249,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2k4se" cloneof="kof2002" romof="kof2002">
-		<comment>Bootlegse AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>The King of Fighters Special Edition 2004 (bootleg)</description>
 		<year>2004</year>
 		<manufacturer>bootleg</manufacturer>
@@ -22511,7 +22310,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k4pls" cloneof="kof2002" romof="kof2002">
-		<comment>Bootlegse AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>The King of Fighters Special Edition 2004 Plus (bootleg)</description>
 		<year>2004</year>
 		<manufacturer>bootleg</manufacturer>
@@ -22571,7 +22370,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="lastbladh" cloneof="lastblad" romof="lastblad">
-		<comment>Bootlegse AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>The Last Blade / Bakumatsu Roman - Gekka no Kenshi (NGH-2340)</description>
 		<year>1997</year>
 		<manufacturer>SNK</manufacturer>
@@ -22631,7 +22429,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="lastblad" romof="neogeo">
-		<comment>Bootlegse AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>The Last Blade / Bakumatsu Roman - Gekka no Kenshi (NGM-2340)</description>
 		<year>1997</year>
 		<manufacturer>SNK</manufacturer>
@@ -22691,7 +22488,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="lastblada" cloneof="lastblad" romof="lastblad">
-		<comment>Bootlegse AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>The Last Blade / Bakumatsu Roman - Gekka no Kenshi (NGM-2340, alternate board)</description>
 		<year>1997</year>
 		<manufacturer>SNK</manufacturer>
@@ -22753,7 +22549,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lastbladsp" cloneof="lastblad" romof="lastblad">
-		<comment>Hacklegse AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Special 2017, hack)</description>
 		<year>2017</year>
 		<manufacturer>hack</manufacturer>
@@ -22814,7 +22610,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lb2b" cloneof="lastbld2" romof="lastbld2">
-		<comment>Hacklegse AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (Enable Hidden Characters V4)</description>
 		<year>1998</year>
 		<manufacturer>Dodowang[EGCG]</manufacturer>
@@ -22874,7 +22670,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lastbld2eh" cloneof="lastbld2" romof="lastbld2">
-		<comment>Hacklegse AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (Enhanced Hack)</description>
 		<year>1998</year>
 		<manufacturer>hack</manufacturer>
@@ -22934,7 +22730,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="lastbld2" romof="neogeo">
-		<comment>Hacklegse AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (NGM-2430)(NGH-2430)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
@@ -22994,7 +22789,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lastbld2te" cloneof="lastbld2" romof="lastbld2">
-		<comment>Hacklegse AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (Team Edition Hack)</description>
 		<year>1998</year>
 		<manufacturer>hack</manufacturer>
@@ -23054,7 +22849,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="lastsold" cloneof="lastblad" romof="lastblad">
-		<comment>Hacklegse AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>The Last Soldier (Korean release of The Last Blade)</description>
 		<year>1997</year>
 		<manufacturer>SNK</manufacturer>
@@ -23114,7 +22908,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="superspy" romof="neogeo">
-		<comment>Hacklegse AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>The Super Spy (NGM-011)(NGH-011)</description>
 		<year>1990</year>
 		<manufacturer>SNK</manufacturer>
@@ -23171,7 +22964,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ssideki4" romof="neogeo">
-		<comment>Hacklegse AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>The Ultimate 11 - The SNK Football Championship / Tokuten Ou - Honoo no Libero</description>
 		<year>1996</year>
 		<manufacturer>SNK</manufacturer>
@@ -23228,7 +23020,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="trally" romof="neogeo">
-		<comment>Hacklegse AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>Thrash Rally (ALM-003)(ALH-003)</description>
 		<year>1991</year>
 		<manufacturer>Alpha Denshi Co.</manufacturer>
@@ -23285,7 +23076,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="timesupd" romof="neogeo">
-		<comment>Homebrewe AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
+		<comment>Homebrew</comment>
 		<description>Time's Up Demo</description>
 		<year>2012</year>
 		<manufacturer>NGF Dev. Inc.</manufacturer>
@@ -23338,7 +23129,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="tophuntrh" cloneof="tophuntr" romof="tophuntr">
-		<comment>Homebrewe AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>Top Hunter - Roddy &amp; Cathy (NGH-046)</description>
 		<year>1994</year>
 		<manufacturer>SNK</manufacturer>
@@ -23400,7 +23190,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="tophuntr" romof="neogeo">
-		<comment>Homebrewe AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>Top Hunter - Roddy &amp; Cathy (NGM-046)</description>
 		<year>1994</year>
 		<manufacturer>SNK</manufacturer>
@@ -23462,7 +23251,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="tpgolf" romof="neogeo">
-		<comment>Homebrewe AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>Top Player's Golf (NGM-003)(NGH-003)</description>
 		<year>1990</year>
 		<manufacturer>SNK</manufacturer>
@@ -23525,7 +23313,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="totc" romof="neogeo">
-		<comment>Homebrewe AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>Treasure of the Caribbean</description>
 		<year>2011</year>
 		<manufacturer>FACE Corporation / N.C.I - Le Cortex</manufacturer>
@@ -23579,7 +23366,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="twinspri" romof="neogeo">
-		<comment>Homebrewe AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>Twinkle Star Sprites</description>
 		<year>1996</year>
 		<manufacturer>ADK</manufacturer>
@@ -23634,7 +23420,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="vliner53" cloneof="vliner" romof="vliner">
-		<comment>Homebrewe AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>V-Liner (v0.53)</description>
 		<year>2001</year>
 		<manufacturer>Dyna / BreezaSoft</manufacturer>
@@ -23685,7 +23470,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="vliner54" cloneof="vliner" romof="vliner">
-		<comment>Homebrewe AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>V-Liner (v0.54)</description>
 		<year>2001</year>
 		<manufacturer>Dyna / BreezaSoft</manufacturer>
@@ -23736,7 +23520,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="vliner6e" cloneof="vliner" romof="vliner">
-		<comment>Homebrewe AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>V-Liner (v0.6e)</description>
 		<year>2001</year>
 		<manufacturer>Dyna / BreezaSoft</manufacturer>
@@ -23787,7 +23570,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="vliner" romof="neogeo">
-		<comment>Homebrewe AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>V-Liner (v0.7a)</description>
 		<year>2001</year>
 		<manufacturer>Dyna / BreezaSoft</manufacturer>
@@ -23838,7 +23620,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="vliner7e" cloneof="vliner" romof="vliner">
-		<comment>Homebrewe AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>V-Liner (v0.7e)</description>
 		<year>2001</year>
 		<manufacturer>Dyna / BreezaSoft</manufacturer>
@@ -23889,7 +23670,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="viewpoinp" cloneof="viewpoin" romof="viewpoin">
-		<comment>Prototype AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
+		<comment>Prototype</comment>
 		<description>Viewpoint (prototype)</description>
 		<year>1992</year>
 		<manufacturer>SNK</manufacturer>
@@ -23951,7 +23732,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="viewpoin" romof="neogeo">
-		<comment>Prototype AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>Viewpoint</description>
 		<year>1992</year>
 		<manufacturer>Sammy / Aicom</manufacturer>
@@ -24004,7 +23784,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="gowcaizr" romof="neogeo">
-		<comment>Prototype AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>Voltage Fighter - Gowcaizer / Choujin Gakuen Gowcaizer</description>
 		<year>1995</year>
 		<manufacturer>Technos</manufacturer>
@@ -24064,7 +23843,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wakuwak7bh" cloneof="wakuwak7" romof="wakuwak7">
-		<comment>Hackotype AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>Waku Waku 7 (Boss Hack)</description>
 		<year>1996</year>
 		<manufacturer>hack</manufacturer>
@@ -24122,7 +23901,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="wakuwak7" romof="neogeo">
-		<comment>Hackotype AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>Waku Waku 7</description>
 		<year>1996</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -24180,7 +23958,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="wjammers" romof="neogeo">
-		<comment>Hackotype AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>Windjammers / Flying Power Disc</description>
 		<year>1994</year>
 		<manufacturer>Data East Corporation</manufacturer>
@@ -24237,7 +24014,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="wh1h" cloneof="wh1" romof="wh1">
-		<comment>Hackotype AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>World Heroes (ALH-005)</description>
 		<year>1992</year>
 		<manufacturer>Alpha Denshi Co.</manufacturer>
@@ -24293,7 +24069,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="wh1" romof="neogeo">
-		<comment>Hackotype AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>World Heroes (ALM-005)</description>
 		<year>1992</year>
 		<manufacturer>Alpha Denshi Co.</manufacturer>
@@ -24349,7 +24124,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="wh1ha" cloneof="wh1" romof="wh1">
-		<comment>Hackotype AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>World Heroes (set 3)</description>
 		<year>1992</year>
 		<manufacturer>Alpha Denshi Co.</manufacturer>
@@ -24405,7 +24179,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="wh2h" cloneof="wh2" romof="wh2">
-		<comment>Hackotype AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>World Heroes 2 (ALH-006)</description>
 		<year>1993</year>
 		<manufacturer>ADK</manufacturer>
@@ -24462,7 +24235,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="wh2" romof="neogeo">
-		<comment>Hackotype AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>World Heroes 2 (ALM-006)(ALH-006)</description>
 		<year>1993</year>
 		<manufacturer>ADK</manufacturer>
@@ -24519,7 +24291,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="wh2j" romof="neogeo">
-		<comment>Hackotype AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>World Heroes 2 Jet (ADM-007)(ADH-007)</description>
 		<year>1994</year>
 		<manufacturer>ADK / SNK</manufacturer>
@@ -24578,7 +24349,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="wh2ja" cloneof="wh2j" romof="wh2j">
-		<comment>Hackotype AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>World Heroes 2 Jet (ADM-007)</description>
 		<year>1994</year>
 		<manufacturer>ADK / SNK</manufacturer>
@@ -24633,7 +24403,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="whp" romof="neogeo">
-		<comment>Hackotype AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>World Heroes Perfect</description>
 		<year>1995</year>
 		<manufacturer>ADK / SNK</manufacturer>
@@ -24693,7 +24462,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="neoww2" romof="neogeo">
-		<comment>Homebrewe AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
+		<comment>Homebrew</comment>
 		<description>WW2 Demo - Arcade Development Project</description>
 		<year>2012</year>
 		<manufacturer>Charles DOTY/RasterSoft (USA)</manufacturer>
@@ -24745,7 +24514,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="xenocrisis" romof="neogeo">
-		<comment>Homebrewe AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>Xeno Crisis</description>
 		<year>2019</year>
 		<manufacturer>Bitmap Bureau</manufacturer>
@@ -24798,7 +24566,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="zedblade" romof="neogeo">
-		<comment>Homebrewe AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>Zed Blade / Operation Ragnarok</description>
 		<year>1994</year>
 		<manufacturer>NMK</manufacturer>
@@ -24854,7 +24621,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zintrckb" romof="neogeo">
-		<comment>Bootlegwe AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
+		<comment>Bootleg</comment>
 		<description>Zintrick / Oshidashi Zentrix (hack / bootleg)</description>
 		<year>1996</year>
 		<manufacturer>hack / bootleg</manufacturer>
@@ -24906,7 +24673,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zintrkcd" cloneof="zintrckb" romof="zintrckb">
-		<comment>Hacklegwe AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
+		<comment>Hack</comment>
 		<description>Zintrick / Oshidashi Zentrix (Neo CD conversion)</description>
 		<year>1996</year>
 		<manufacturer>hack</manufacturer>
@@ -24958,7 +24725,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="zupapa" romof="neogeo">
-		<comment>Hacklegwe AES (Console) mode!S mode imperfect sound to Japan AESX characters</comment>
 		<description>Zupapa!</description>
 		<year>2001</year>
 		<manufacturer>SNK</manufacturer>

@@ -13,7 +13,6 @@
 		<clrmamepro forcenodump="ignore"/>
 	</header>
 	<game name="aeroblst">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Aero Blasters</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -22,7 +21,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="airzonk">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Air Zonk</description>
 		<year>1992</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -31,7 +29,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="acrush">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Alien Crush</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -40,7 +37,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ballistx">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Ballistix</description>
 		<year>1992</year>
 		<manufacturer>NEC</manufacturer>
@@ -49,7 +45,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="batlroyl">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Battle Royale</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -58,7 +53,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="blazlazr">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Blazing Lazers</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -67,7 +61,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="blodwolf">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Bloody Wolf</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -76,7 +69,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bombmn93">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Bomberman '93</description>
 		<year>1990</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -85,7 +77,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bombman">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Bomberman</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
@@ -94,7 +85,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonk3">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Bonk III - Bonk's Big Adventure</description>
 		<year>1993</year>
 		<manufacturer>TTI</manufacturer>
@@ -103,7 +93,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonk">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Bonk's Adventure</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -112,7 +101,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonk2">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Bonk's Revenge</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
@@ -121,7 +109,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="boxyboy">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Boxyboy</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -130,7 +117,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bravoman">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Bravoman</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -139,7 +125,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cadash">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
+		<comment>Bad graphics</comment>
 		<description>Cadash</description>
 		<year>1991</year>
 		<manufacturer>Working Designs</manufacturer>
@@ -148,7 +134,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="forevbox">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
+		<comment>Bad sound</comment>
 		<description>Champions Forever Boxing</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
@@ -157,7 +143,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="chewman">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Chew Man Fu</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -166,7 +151,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="chinawar">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>China Warrior</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -175,7 +159,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="cratermz">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Cratermaze</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -184,7 +167,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="cybrcore">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Cyber Core</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -193,7 +175,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="darkwing">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Darkwing Duck</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -202,7 +183,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="daviscup">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Davis Cup Tennis</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
@@ -211,7 +191,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="deadmoon">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Dead Moon</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -220,7 +199,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="deepblue">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Deep Blue</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -229,7 +207,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="devlcrsh">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Devil's Crush - Naxat Pinball</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -238,7 +215,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ddungw">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Double Dungeons - W</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -247,7 +223,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="dspirit">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Dragon Spirit</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -256,7 +231,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragcrse">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Dragon's Curse</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -265,7 +239,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="dropoff">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Drop.Off</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -274,7 +247,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="dungexpl">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Dungeon Explorer</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -283,7 +255,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="falcon">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Falcon</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -292,7 +263,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="fantzone">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Fantasy Zone</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -301,7 +271,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="finallap">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Final Lap Twin</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -310,7 +279,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="galaga90">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Galaga '90</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -319,7 +287,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ghostman">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Ghost Manor</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -328,7 +295,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="gunboat">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Gunboat</description>
 		<year>1992</year>
 		<manufacturer>NEC</manufacturer>
@@ -337,7 +303,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="hitice">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Hit the Ice - VHL - The Official Video Hockey League</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -346,7 +311,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="impossam">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Impossamole</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
@@ -355,7 +319,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="jjnjeff">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>J.J. &amp; Jeff</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -364,7 +327,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="nicklaus">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Jack Nicklaus' Turbo Golf</description>
 		<year>1990</year>
 		<manufacturer>Accolade</manufacturer>
@@ -373,7 +335,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="jchan">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Jackie Chan's Action Kung Fu</description>
 		<year>1992</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -382,7 +343,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="keithcor">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Keith Courage in Alpha Zones</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -391,7 +351,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kingcasn">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>King of Casino</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -400,7 +359,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="klax">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Klax</description>
 		<year>1990</year>
 		<manufacturer>Tengen</manufacturer>
@@ -409,7 +367,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="loht">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Legend of Hero Tonma</description>
 		<year>1991</year>
 		<manufacturer>TTI</manufacturer>
@@ -418,7 +375,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="magchase">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Magical Chase</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
@@ -427,7 +383,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="miltrymd">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Military Madness</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -436,7 +391,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="motoroad">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Moto Roader</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -445,7 +399,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neutopi2">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Neutopia II</description>
 		<year>1992</year>
 		<manufacturer>NEC</manufacturer>
@@ -454,7 +407,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neutopia">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Neutopia</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -463,7 +415,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="advislnd">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>New Adventure Island</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -472,7 +423,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="nightcr">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Night Creatures</description>
 		<year>1992</year>
 		<manufacturer>NEC</manufacturer>
@@ -481,7 +431,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="nspirit">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Ninja Spirit</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -490,7 +439,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="griffon">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Order of the Griffon</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -499,7 +447,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ordyne">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Ordyne</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -508,7 +455,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pacland">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Pac-Land</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -517,7 +463,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="panzakb">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Panza Kick Boxing</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -526,7 +471,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="parasol">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Parasol Stars - The Story of Bubble Bobble III</description>
 		<year>1991</year>
 		<manufacturer>Working Designs</manufacturer>
@@ -535,7 +479,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pgolf">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Power Golf</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -544,7 +487,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="psychos">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Psychosis</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -553,7 +495,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="rtype">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>R-Type</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -562,7 +503,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="raiden">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Raiden</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -571,7 +511,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="samuraig">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Samurai-Ghost</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -580,7 +519,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="shockman">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Shockman</description>
 		<year>1992</year>
 		<manufacturer>NEC</manufacturer>
@@ -589,7 +527,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sidearms">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Sidearms - Hyper Dyne</description>
 		<year>1989</year>
 		<manufacturer>Radiance Software</manufacturer>
@@ -598,7 +535,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="silentd">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Silent Debuggers</description>
 		<year>1991</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -607,7 +543,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sinistrn">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Sinistron</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
@@ -616,7 +551,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="soldblad">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Soldier Blade</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -625,7 +559,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="somerass">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Somer Assault</description>
 		<year>1992</year>
 		<manufacturer>Atlus</manufacturer>
@@ -634,7 +567,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="wbeach">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Sonic Spike - World Championship Beach Volleyball</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -643,7 +575,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sharrier">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Space Harrier</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -652,7 +583,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="splatth">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Splatterhouse</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -661,7 +591,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sssoldr">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Super Star Soldier</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -670,7 +599,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="svolley">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Super Volleyball</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -679,7 +607,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="chasehq">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Taito Chase H.Q.</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -688,7 +615,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="taknhoop">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Takin' It to the Hoop</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -697,7 +623,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="talespin">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>TaleSpin</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
@@ -706,7 +631,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="legaxe2">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>The Legendary Axe II</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -715,7 +639,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="legaxe">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>The Legendary Axe</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -724,7 +647,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="tigerrod">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Tiger Road</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -733,7 +655,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="timcrus">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Time Cruise</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -742,7 +663,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="timeball">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Timeball</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -751,7 +671,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="tricky">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Tricky Kick</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -760,7 +679,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="turrican">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Turrican</description>
 		<year>1991</year>
 		<manufacturer>Ballistic</manufacturer>
@@ -769,7 +687,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="tvbasket">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>TV Sports Basketball</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
@@ -778,7 +695,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="tvfootbl">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>TV Sports Football</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -787,7 +703,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="tvhockey">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>TV Sports Hockey</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
@@ -796,7 +711,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="veigues">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Veigues - Tactical Gladiator</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -805,7 +719,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="victoryr">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Victory Run</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -814,7 +727,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="vigilant">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Vigilante</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -823,7 +735,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="wcbasebl">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>World Class Baseball</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -832,7 +743,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="wctennis">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>World Court Tennis</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -841,7 +751,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="wscomp">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>World Sports Competition</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -850,7 +759,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="yobro">
-		<comment>Bad soundicslti-Languageited Edition (Prototype)e</comment>
 		<description>Yo, Bro</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>

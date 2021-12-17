@@ -13,7 +13,6 @@
 		<clrmamepro forcenodump="ignore"/>
 	</header>
 	<game name="bakumats" cloneof="lastblad" romof="lastblad">
-		<comment>BIOS only</comment>
 		<description>Bakumatsu Rouman Tokubetsu Hen - Gekka no Kenshi - Tsuki ni Saku Hana, Chiri Yuku Hana (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -24,7 +23,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bigbang" cloneof="wrestmad" romof="wrestmad">
-		<comment>BIOS only</comment>
 		<description>Big Bang Pro Wrestling (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -35,7 +33,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bikkuri" romof="ngp">
-		<comment>BIOS only</comment>
 		<description>Bikkuriman 2000 - Viva! Pocket Festiva! (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>Sega Toys</manufacturer>
@@ -46,7 +43,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="biomotor" romof="ngp">
-		<comment>BIOS only</comment>
 		<description>BioMotor Unitron (Euro, USA)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -57,7 +53,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="biomotorj" cloneof="biomotor" romof="biomotor">
-		<comment>BIOS only</comment>
 		<description>BioMotor Unitron (Jpn)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -68,7 +63,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bamp" cloneof="pbobble" romof="pbobble">
-		<comment>BIOS only</comment>
 		<description>Bust-A-Move Pocket (Prototype)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -79,7 +73,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bam" cloneof="pbobble" romof="pbobble">
-		<comment>BIOS only</comment>
 		<description>Bust-A-Move Pocket (USA)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -90,7 +83,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="coolboar" romof="ngp">
-		<comment>BIOS only</comment>
 		<description>Cool Boarders Pocket (Euro, Jpn)</description>
 		<year>2000</year>
 		<manufacturer>UEP Systems</manufacturer>
@@ -101,7 +93,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="coolcool" romof="ngp">
-		<comment>BIOS only</comment>
 		<description>Cool Cool Jam (Euro, USA, Sample)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -112,7 +103,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="coolcoolj" cloneof="coolcool" romof="coolcool">
-		<comment>BIOS only</comment>
 		<description>Cool Cool Jam (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -123,7 +113,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="crushrol" romof="ngp">
-		<comment>BIOS only</comment>
 		<description>Crush Roller (World)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -134,7 +123,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="darkarms" romof="ngp">
-		<comment>BIOS only</comment>
 		<description>Dark Arms - Beast Buster 1999 (Euro, USA) ~ Beast Buster - Yami no Seitai Heiki (Jpn)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -145,7 +133,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="darkarmsp" cloneof="darkarms" romof="darkarms">
-		<comment>BIOS only</comment>
 		<description>Dark Arms - Beast Buster 1999 (Prototype)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -156,7 +143,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="deltawrp" romof="ngp">
-		<comment>BIOS only</comment>
 		<description>Delta Warp (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -167,7 +153,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ogrebatl" romof="ngp">
-		<comment>BIOS only</comment>
 		<description>Densetsu no Ogre Battle Gaiden - Zenobia no Ouji (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -178,7 +163,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="dendego2" romof="ngp">
-		<comment>BIOS only</comment>
 		<description>Densha de Go! 2 on Neo Geo Pocket (Jpn)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -189,7 +173,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="dendego2p" cloneof="dendego2" romof="dendego2">
-		<comment>BIOS only</comment>
 		<description>Densha de Go! 2 on Neo Geo Pocket (Jpn, Prototype)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -200,7 +183,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="divealrmj" cloneof="divealrm" romof="divealrm">
-		<comment>BIOS only</comment>
 		<description>Dive Alert - Barn Hen (Jpn)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -211,7 +193,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="divealrmjp" cloneof="divealrm" romof="divealrm">
-		<comment>BIOS only</comment>
 		<description>Dive Alert - Barn Hen (Jpn, Prototype)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -222,7 +203,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="divealrb" romof="ngp">
-		<comment>BIOS only</comment>
 		<description>Dive Alert - Becky's Version (Euro, USA)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -233,7 +213,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="divealrm" romof="ngp">
-		<comment>BIOS only</comment>
 		<description>Dive Alert - Matt's Version (Euro, USA)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -244,7 +223,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="divealrbj" cloneof="divealrb" romof="divealrb">
-		<comment>BIOS only</comment>
 		<description>Dive Alert - Rebecca Hen (Jpn)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -255,7 +233,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="dokodemo" romof="ngp">
-		<comment>BIOS only</comment>
 		<description>Dokodemo Mahjong (Jpn)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -266,7 +243,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="dynaslug" romof="ngp">
-		<comment>BIOS only</comment>
 		<description>Dynamite Slugger (Euro, Jpn)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -277,7 +253,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="evolutn" romof="ngp">
-		<comment>BIOS only</comment>
 		<description>Evolution - Eternal Dungeons (Euro)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -288,7 +263,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="cotton" romof="ngp">
-		<comment>BIOS only</comment>
 		<description>Fantastic Night Dreams Cotton (Euro)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -299,7 +273,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="cottonj" cloneof="cotton" romof="cotton">
-		<comment>BIOS only</comment>
 		<description>Fantastic Night Dreams Cotton (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>Success</manufacturer>
@@ -310,7 +283,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="faselei" romof="ngp">
-		<comment>BIOS only</comment>
 		<description>Faselei! (Euro)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -321,7 +293,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="faseleij" cloneof="faselei" romof="faselei">
-		<comment>BIOS only</comment>
 		<description>Faselei! (Jpn)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -332,7 +303,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ganbaren" romof="ngp">
-		<comment>BIOS only</comment>
 		<description>Ganbare Neo Poke-kun (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -343,7 +313,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gearsoffate" romof="ngp">
-		<comment>Homebrewy</comment>
+		<comment>Homebrew</comment>
 		<description>Gears of Fate (HB)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -354,7 +324,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="infinity" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Infinity Cure (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>KID</manufacturer>
@@ -365,7 +334,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kikousei" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Kikou Seiki Unitron - Sono Tsuide. Hikari Umareru Chi Yori. (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -376,7 +344,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof_mlon" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>King of Fighters R-1 &amp; Melon-chan no Seichou Nikki (Jpn, Prototype)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
@@ -387,7 +354,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="koikoi" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Koi Koi Mahjong (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -398,7 +364,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="magdropjd" cloneof="magdrop" romof="magdrop">
-		<comment>Homebrewy</comment>
 		<description>Magical Drop Pocket (Demo)</description>
 		<year>1999</year>
 		<manufacturer>Data East</manufacturer>
@@ -409,7 +374,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="magdrop" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Magical Drop Pocket (Euro, USA)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -420,7 +384,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="magdropj" cloneof="magdrop" romof="magdrop">
-		<comment>Homebrewy</comment>
 		<description>Magical Drop Pocket (Jpn)</description>
 		<year>1999</year>
 		<manufacturer>Data East</manufacturer>
@@ -431,7 +394,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="melonchn" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Melon-chan no Seichou Nikki (Jpn)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
@@ -442,7 +404,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="memories" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Memories Off - Pure (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>KID</manufacturer>
@@ -453,7 +414,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug1st" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Metal Slug - 1st Mission (World)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -464,7 +424,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug2ndd" cloneof="mslug2nd" romof="mslug2nd">
-		<comment>Homebrewy</comment>
 		<description>Metal Slug - 2nd Mission (Demo)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -475,7 +434,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug2nd" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Metal Slug - 2nd Mission (World)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -486,7 +444,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mezase" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Mezase! Kanji Ou (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -497,7 +454,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mizuki" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Mizuki Shigeru no Youkai Shashinkan (Jpn)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -508,7 +464,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neoderby" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Neo Derby Champ Daiyosou (Jpn)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -519,7 +474,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="nigeronpe" cloneof="nigeronp" romof="nigeronp">
-		<comment>Homebrewy</comment>
 		<description>Nige-ron-pa (Hack, English)</description>
 		<year>2018</year>
 		<manufacturer>SNK</manufacturer>
@@ -530,7 +484,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="nigeronp" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Nige-ron-pa (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -541,7 +494,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="oekakip" cloneof="picturep" romof="picturep">
-		<comment>Homebrewy</comment>
 		<description>Oekaki Puzzle (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>Success</manufacturer>
@@ -552,7 +504,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pacman" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pac-Man (World)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -563,7 +514,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pslotazt" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pachi-Slot Aruze Oukoku Pocket - Azteca (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>Aruze</manufacturer>
@@ -574,7 +524,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pslotdk2" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pachi-Slot Aruze Oukoku Pocket - Dekahel 2 (Jpn)</description>
 		<year>2001</year>
 		<manufacturer>Aruze</manufacturer>
@@ -585,7 +534,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pslotds2" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pachi-Slot Aruze Oukoku Pocket - Delsol 2 (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>Aruze</manufacturer>
@@ -596,7 +544,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pslotecp" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pachi-Slot Aruze Oukoku Pocket - e-Cup (Jpn)</description>
 		<year>2001</year>
 		<manufacturer>Aruze</manufacturer>
@@ -607,7 +554,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pslothana" cloneof="pslothan" romof="pslothan">
-		<comment>Homebrewy</comment>
 		<description>Pachi-Slot Aruze Oukoku Pocket - Hanabi (Jpn, v3)</description>
 		<year>1999</year>
 		<manufacturer>Aruze</manufacturer>
@@ -618,7 +564,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pslothan" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pachi-Slot Aruze Oukoku Pocket - Hanabi (Jpn, v5)</description>
 		<year>1999</year>
 		<manufacturer>Aruze</manufacturer>
@@ -629,7 +574,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pslotooh" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pachi-Slot Aruze Oukoku Pocket - Oohanabi (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>Aruze</manufacturer>
@@ -640,7 +584,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pslotpc2" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pachi-Slot Aruze Oukoku Pocket - Porcano 2 (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>Aruze</manufacturer>
@@ -651,7 +594,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pslotwrd" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pachi-Slot Aruze Oukoku Pocket - Ward of Lights (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>Aruze</manufacturer>
@@ -662,7 +604,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pachinko" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pachinko Hisshou Guide - Pocket Parlor (Jpn)</description>
 		<year>1999</year>
 		<manufacturer>Japan Vistec</manufacturer>
@@ -673,7 +614,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="prtymail" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Party Mail (Jpn)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -684,7 +624,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="prtymailp" cloneof="prtymail" romof="prtymail">
-		<comment>Homebrewy</comment>
 		<description>Party Mail (Prototype)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -695,7 +634,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="picturep" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Picture Puzzle (Euro, USA)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -706,7 +644,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neo21" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pocket Casino Series - Neo 21 (Euro, USA)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -717,7 +654,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neobacca" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pocket Casino Series - Neo Baccarat (Euro)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -728,7 +664,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neobaccap" cloneof="neobacca" romof="neobacca">
-		<comment>Homebrewy</comment>
 		<description>Pocket Casino Series - Neo Baccarat (Prototype)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -739,7 +674,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neocher" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pocket Casino Series - Neo Cherry Master (Euro, Jpn)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
@@ -750,7 +684,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neocherc" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pocket Casino Series - Neo Cherry Master Color (World)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -761,7 +694,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neochercp" cloneof="neocherc" romof="neocherc">
-		<comment>Homebrewy</comment>
 		<description>Pocket Casino Series - Neo Cherry Master Color (World, Prototype)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -772,7 +704,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neodraga" cloneof="neodrag" romof="neodrag">
-		<comment>Homebrewy</comment>
 		<description>Pocket Casino Series - Neo Dragon's Wild (World, v11)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -783,7 +714,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neodrag" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pocket Casino Series - Neo Dragon's Wild (World, v13)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -794,7 +724,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neomystr" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pocket Casino Series - Neo Mystery Bonus (World)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -805,7 +734,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="fatfury" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pocket Fighting Series - Garou Densetsu First Contact ~ Fatal Fury F-Contact (World)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -816,7 +744,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="fatfuryd" cloneof="fatfury" romof="fatfury">
-		<comment>Homebrewy</comment>
 		<description>Pocket Fighting Series - Garou Densetsu First Contact ~ Fatal Fury F-Contact (World, Demo)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -827,7 +754,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kofr1" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pocket Fighting Series - King of Fighters R-1 (Euro, Jpn)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
@@ -838,7 +764,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kofr2" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pocket Fighting Series - King of Fighters R-2 (World)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -849,7 +774,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kofr2d2" cloneof="kofr2" romof="kofr2">
-		<comment>Homebrewy</comment>
 		<description>Pocket Fighting Series - King of Fighters R-2 (World, Demo Version 2)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -860,7 +784,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kofr2d" cloneof="kofr2" romof="kofr2">
-		<comment>Homebrewy</comment>
 		<description>Pocket Fighting Series - King of Fighters R-2 (World, Demo)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -871,7 +794,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsho2" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pocket Fighting Series - Samurai Shodown! 2 (World)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -882,7 +804,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsho" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pocket Fighting Series - Samurai Spirit! (Jpn) ~ Samurai Shodown! (Euro)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
@@ -893,7 +814,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="poktlove" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pocket Love if (Jpn)</description>
 		<year>1999</year>
 		<manufacturer>KID</manufacturer>
@@ -904,7 +824,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pockrev" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pocket Reversi (Euro)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -915,7 +834,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pockrevj" cloneof="pockrev" romof="pockrev">
-		<comment>Homebrewy</comment>
 		<description>Pocket Reversi (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>Success</manufacturer>
@@ -926,7 +844,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bstarsc" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pocket Sport Series - Baseball Stars Color (World)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -937,7 +854,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neoturfm" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pocket Sport Series - Big Tournament Golf ~ Neo Turf Masters (World)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -948,7 +864,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neocuppl" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pocket Sport Series - Neo Geo Cup '98 Plus (World)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -959,7 +874,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neoproyk" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pocket Sport Series - Neo Poke Pro Yakyuu (Jpn)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -970,7 +884,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ptennisc" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pocket Sport Series - Pocket Tennis Color (World)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -981,7 +894,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bstars" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pocket Sports Series - Baseball Stars (Euro, Jpn)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
@@ -992,7 +904,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neocup98" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pocket Sports Series - Neo Geo Cup '98 (Euro, Jpn)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
@@ -1003,7 +914,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ptennis" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Pocket Sports Series - Pocket Tennis (Euro, Jpn)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
@@ -1014,7 +924,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="puyopopa" cloneof="puyopop" romof="puyopop">
-		<comment>Homebrewy</comment>
 		<description>Puyo Pop (World, v5) ~ Puyo Pyuo Tsuu (Jpn, v5)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -1025,7 +934,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="puyopop" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Puyo Pop (World, v6) ~ Puyo Pyuo Tsuu (Jpn, v6)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -1036,7 +944,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pbobbleb" cloneof="pbobble" romof="pbobble">
-		<comment>Homebrewy</comment>
 		<description>Puzzle Bobble Mini (Euro, Jpn, v09 Prototype?)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -1047,7 +954,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pbobblea" cloneof="pbobble" romof="pbobble">
-		<comment>Homebrewy</comment>
 		<description>Puzzle Bobble Mini (Euro, Jpn, v09)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -1058,7 +964,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pbobble" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Puzzle Bobble Mini (Euro, Jpn, v10)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -1069,7 +974,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="puzzlink" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Puzzle Link (Euro)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -1080,7 +984,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="puzzlnk2" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Puzzle Link 2 (Euro, USA)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -1091,7 +994,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="tsunapn" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Renketsu Puzzle Tsunagete Pon! (Jpn)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
@@ -1102,7 +1004,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="tsunapnc" cloneof="puzzlink" romof="puzzlink">
-		<comment>Homebrewy</comment>
 		<description>Renketsu Puzzle Tsunagete Pon! Color (Jpn)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -1113,7 +1014,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="rockmanb" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Rockman - Battle &amp; Fighters (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>Capcom</manufacturer>
@@ -1124,7 +1024,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="rockmanbd" cloneof="rockmanb" romof="rockmanb">
-		<comment>Homebrewy</comment>
 		<description>Rockman - Battle &amp; Fighters (Jpn, Demo)</description>
 		<year>2000</year>
 		<manufacturer>Capcom</manufacturer>
@@ -1135,7 +1034,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="shanghaipj" cloneof="shanghai" romof="shanghai">
-		<comment>Homebrewy</comment>
 		<description>Shanghai Mini (Jpn, Prototype)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -1146,7 +1044,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="shanghaipu" cloneof="shanghai" romof="shanghai">
-		<comment>Homebrewy</comment>
 		<description>Shanghai Mini (USA, Prototype)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -1157,7 +1054,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="shanghai" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Shanghai Mini (World)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -1168,7 +1064,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="evolutnj" cloneof="evolutn" romof="evolutn">
-		<comment>Homebrewy</comment>
 		<description>Shinki Sekai Evolution - Hateshinai Dungeon (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -1179,7 +1074,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="shougi" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Shougi no Tatsujin (Jpn)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
@@ -1190,7 +1084,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="shougic" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Shougi no Tatsujin Color (Jpn)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -1201,7 +1094,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="snkgals" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>SNK Gals' Fighters (Euro, USA)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -1212,7 +1104,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="snkgalsj" cloneof="snkgals" romof="snkgals">
-		<comment>Homebrewy</comment>
 		<description>SNK Gals' Fighters (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -1223,7 +1114,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="svccard2e" cloneof="svccard2" romof="svccard2">
-		<comment>Homebrewy</comment>
 		<description>SNK vs. Capcom - Card Fighters 2 - Expand Edition (Hack, English)</description>
 		<year>2017</year>
 		<manufacturer>SNK</manufacturer>
@@ -1234,7 +1124,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="svccard2" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>SNK vs. Capcom - Card Fighters 2 - Expand Edition (Jpn)</description>
 		<year>2001</year>
 		<manufacturer>SNK</manufacturer>
@@ -1245,7 +1134,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="svccardc" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>SNK vs. Capcom - Card Fighters' Clash - Capcom Cardfighter's Version (Euro, USA)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -1256,7 +1144,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="svccards" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>SNK vs. Capcom - Card Fighters' Clash - SNK Cardfighter's Version (Euro, USA)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -1267,7 +1154,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="svccardp" cloneof="svccards" romof="svccards">
-		<comment>Homebrewy</comment>
 		<description>SNK vs. Capcom - Gekitotsu Card Fighters (Jpn, Demo)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -1278,7 +1164,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="svccardcj" cloneof="svccardc" romof="svccardc">
-		<comment>Homebrewy</comment>
 		<description>SNK vs. Capcom - Gekitotsu Card Fighters - Capcom Supporters Version (Jpn)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -1289,7 +1174,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="svccardsja" cloneof="svccards" romof="svccards">
-		<comment>Homebrewy</comment>
 		<description>SNK vs. Capcom - Gekitotsu Card Fighters - SNK Supporters Version (Jpn, v6)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -1300,7 +1184,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="svccardsj" cloneof="svccards" romof="svccards">
-		<comment>Homebrewy</comment>
 		<description>SNK vs. Capcom - Gekitotsu Card Fighters - SNK Supporters Version (Jpn, v7)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -1311,7 +1194,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="svc" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>SNK vs. Capcom - The Match of the Millennium (World) ~ Choujou Kessen Saikyou Fighters - SNK vs Capcom (Jpn)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -1322,7 +1204,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Sonic the Hedgehog - Pocket Adventure (World)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -1333,7 +1214,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicp2" cloneof="sonic" romof="sonic">
-		<comment>Homebrewy</comment>
 		<description>Sonic the Hedgehog - Pocket Adventure (World, Oct 22 1999 Prototype)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -1344,7 +1224,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicp" cloneof="sonic" romof="sonic">
-		<comment>Homebrewy</comment>
 		<description>Sonic the Hedgehog - Pocket Adventure (World, Prototype)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -1355,7 +1234,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="hanadojo" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Soreike!! Hanafuda Doujou (Jpn)</description>
 		<year>1999</year>
 		<manufacturer>Dyna</manufacturer>
@@ -1366,7 +1244,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="srmp" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Super Real Mahjong - Premium Collection (Jpn)</description>
 		<year>2001</year>
 		<manufacturer>SNK</manufacturer>
@@ -1377,7 +1254,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kofpara" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>The King of Fighters - Battle de Paradise (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -1388,7 +1264,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="lastblad" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>The Last Blade - Beyond the Destiny (Euro)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -1399,7 +1274,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="tsunapn2" cloneof="puzzlnk2" romof="puzzlnk2">
-		<comment>Homebrewy</comment>
 		<description>Tsunagete Pon! 2 (Jpn)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
@@ -1410,7 +1284,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="wrestmad" romof="ngp">
-		<comment>Homebrewy</comment>
 		<description>Wrestling Madness (Euro, USA, Prototype)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>

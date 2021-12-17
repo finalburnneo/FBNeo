@@ -13,7 +13,6 @@
 		<clrmamepro forcenodump="ignore"/>
 	</header>
 	<game name="1943kai">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>1943 Kai</description>
 		<year>1991</year>
 		<manufacturer>Naxat</manufacturer>
@@ -22,7 +21,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="21emon">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>21 Emon - Mezase Hotel ou!!</description>
 		<year>1994</year>
 		<manufacturer>NEC Home Electronics</manufacturer>
@@ -31,7 +29,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="advislnd">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Adventure Island</description>
 		<year>1991</year>
 		<manufacturer>Hudson</manufacturer>
@@ -40,7 +37,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="aeroblst">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Aero Blasters</description>
 		<year>1990</year>
 		<manufacturer>Hudson</manufacturer>
@@ -49,7 +45,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="aburner2">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>After Burner II</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -58,7 +53,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="acrush">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Alien Crush</description>
 		<year>1988</year>
 		<manufacturer>Naxat</manufacturer>
@@ -67,7 +61,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ankoku">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Ankoku Densetsu</description>
 		<year>1990</year>
 		<manufacturer>Victor Interactive Software</manufacturer>
@@ -76,7 +69,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="aoiblink">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Aoi Blink</description>
 		<year>1990</year>
 		<manufacturer>Hudson</manufacturer>
@@ -85,7 +77,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="appgateb">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Appare! Gateball</description>
 		<year>1988</year>
 		<manufacturer>Hudson</manufacturer>
@@ -94,7 +85,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="armedf">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Armed Formation F</description>
 		<year>1990</year>
 		<manufacturer>Pack-In-Video</manufacturer>
@@ -103,7 +93,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="arttool">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Artist Tool</description>
 		<year>1990</year>
 		<manufacturer>NEC Home Electronics</manufacturer>
@@ -112,7 +101,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="atlantean">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Atlantean</description>
 		<year>2014</year>
 		<manufacturer>Aetherbyte</manufacturer>
@@ -121,7 +109,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="atomrobo">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Atomic Robo-kid Special</description>
 		<year>1990</year>
 		<manufacturer>UPL</manufacturer>
@@ -130,7 +117,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="avpoker">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>AV Poker</description>
 		<year>1992</year>
 		<manufacturer>Games Express</manufacturer>
@@ -139,7 +125,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ballistx">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Ballistix</description>
 		<year>1991</year>
 		<manufacturer>Coconuts Japan</manufacturer>
@@ -148,7 +133,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="baribari">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Bari Bari Densetsu</description>
 		<year>1989</year>
 		<manufacturer>Taito</manufacturer>
@@ -157,7 +141,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="barunba">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Barunba</description>
 		<year>1990</year>
 		<manufacturer>Namcot</manufacturer>
@@ -166,7 +149,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="batman">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Batman</description>
 		<year>1990</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -175,7 +157,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="batloder">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Battle Lode Runner</description>
 		<year>1993</year>
 		<manufacturer>Hudson</manufacturer>
@@ -184,7 +165,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="beball">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Be Ball</description>
 		<year>1990</year>
 		<manufacturer>Hudson</manufacturer>
@@ -193,7 +173,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="benkei1" cloneof="benkei" romof="benkei">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Benkei Gaiden (Alt)</description>
 		<year>1989</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -202,7 +181,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="benkei">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Benkei Gaiden</description>
 		<year>1989</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -211,7 +189,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bikkuri1" cloneof="bikkuri" romof="bikkuri">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Bikkuriman World (Alt)</description>
 		<year>1987</year>
 		<manufacturer>Hudson</manufacturer>
@@ -220,7 +197,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bikkuri">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Bikkuriman World</description>
 		<year>1987</year>
 		<manufacturer>Hudson</manufacturer>
@@ -229,7 +205,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="blodia">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Blodia</description>
 		<year>1990</year>
 		<manufacturer>Hudson</manufacturer>
@@ -238,7 +213,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bodycon2">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Body Conquest II</description>
 		<year>1993</year>
 		<manufacturer>Games Express</manufacturer>
@@ -247,7 +221,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bombmn93s" cloneof="bombmn93" romof="bombmn93">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Bomberman '93 (Special Version)</description>
 		<year>1992</year>
 		<manufacturer>Hudson</manufacturer>
@@ -256,7 +229,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bombmn93">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Bomberman '93</description>
 		<year>1992</year>
 		<manufacturer>Hudson</manufacturer>
@@ -265,7 +237,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bombmn94">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Bomberman '94</description>
 		<year>1993</year>
 		<manufacturer>Hudson</manufacturer>
@@ -274,7 +245,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bombmnub">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Bomberman - Users Battle</description>
 		<year>19??</year>
 		<manufacturer>Hudson</manufacturer>
@@ -283,7 +253,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bombman">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Bomberman</description>
 		<year>1990</year>
 		<manufacturer>Hudson</manufacturer>
@@ -292,7 +261,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="lostsunh">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Bouken Danshaku Don - The Lost Sunheart</description>
 		<year>1992</year>
 		<manufacturer>IMax</manufacturer>
@@ -301,7 +269,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="breakin">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Break In</description>
 		<year>1989</year>
 		<manufacturer>Naxat</manufacturer>
@@ -310,7 +277,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bubblegm">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Bubblegum Crash! - Knight Sabers 2034</description>
 		<year>1991</year>
 		<manufacturer>Naxat</manufacturer>
@@ -319,7 +285,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bullfght">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Bull Fight - Ring no Haja</description>
 		<year>1989</year>
 		<manufacturer>Cream</manufacturer>
@@ -328,7 +293,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="burnangl">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Burning Angels</description>
 		<year>1990</year>
 		<manufacturer>Naxat</manufacturer>
@@ -337,7 +301,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="cyberx">
-		<comment>Homebrew, Multi-Languageited Edition (Prototype)e</comment>
 		<description>Busou Keiji - Cyber Cross</description>
 		<year>1989</year>
 		<manufacturer>Face</manufacturer>
@@ -346,7 +309,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cadash">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
+		<comment>Bad graphics</comment>
 		<description>Cadash</description>
 		<year>1991</year>
 		<manufacturer>Taito</manufacturer>
@@ -355,7 +318,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="champwrs">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Champion Wrestler</description>
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
@@ -364,7 +326,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="chibim">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Chibi Maruko Chan - Quiz de Piihyara</description>
 		<year>1992</year>
 		<manufacturer>Namcot</manufacturer>
@@ -373,7 +334,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="chikuden1" cloneof="chikuden" romof="chikuden">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Chikudenya Toubei - Kubikiri Yakata Yori (Alt)</description>
 		<year>1990</year>
 		<manufacturer>Naxat</manufacturer>
@@ -382,7 +342,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="chikuden">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Chikudenya Toubei - Kubikiri Yakata Yori</description>
 		<year>1990</year>
 		<manufacturer>Naxat</manufacturer>
@@ -391,7 +350,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="bravoman">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Chouzetsu Rinjin - Bravoman</description>
 		<year>1990</year>
 		<manufacturer>Namcot</manufacturer>
@@ -400,7 +358,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="circusld">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Circus Lido</description>
 		<year>1991</year>
 		<manufacturer>Yuni Post</manufacturer>
@@ -409,7 +366,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="cityhunte" cloneof="cityhunt" romof="cityhunt">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>City Hunter (Hack, English)</description>
 		<year>2019</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -418,7 +374,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="cityhunt">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>City Hunter</description>
 		<year>1990</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -427,7 +382,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="columns">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Columns</description>
 		<year>1991</year>
 		<manufacturer>Nihon Telenet</manufacturer>
@@ -436,7 +390,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="contranes">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Contra (NES Mod Version 3.0)</description>
 		<year>1988</year>
 		<manufacturer>Konami</manufacturer>
@@ -445,7 +398,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="coryoon1" cloneof="coryoon" romof="coryoon">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Coryoon - Child of Dragon (Alt)</description>
 		<year>1991</year>
 		<manufacturer>Naxat</manufacturer>
@@ -454,7 +406,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="coryoon">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Coryoon - Child of Dragon</description>
 		<year>1991</year>
 		<manufacturer>Naxat</manufacturer>
@@ -463,7 +414,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="xwiber">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Cross Wiber - Cyber Combat Police</description>
 		<year>1990</year>
 		<manufacturer>Face</manufacturer>
@@ -472,7 +422,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="cybrcore">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Cyber Core</description>
 		<year>1990</year>
 		<manufacturer>IGS</manufacturer>
@@ -481,7 +430,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="cyberdod">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Cyber Dodge</description>
 		<year>1992</year>
 		<manufacturer>Tonkin House</manufacturer>
@@ -490,7 +438,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="cyknight">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Cyber Knight</description>
 		<year>1990</year>
 		<manufacturer>Tonkin House</manufacturer>
@@ -499,7 +446,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="daisenpu">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Dai Senpu</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -508,7 +454,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="donaturl">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Daichi Kun Crisis - Do Natural</description>
 		<year>1989</year>
 		<manufacturer>Salio</manufacturer>
@@ -517,7 +462,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="dariusa">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Darius Alpha</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -526,7 +470,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="dariusp">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Darius Plus</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -535,7 +478,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="deadmoon">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Dead Moon - Tsuki Sekai no Akumu</description>
 		<year>1990</year>
 		<manufacturer>B.S.S.</manufacturer>
@@ -544,7 +486,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="deepblue">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Deep Blue - Kaitei Shinwa</description>
 		<year>1989</year>
 		<manufacturer>Pack-In-Video</manufacturer>
@@ -553,7 +494,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="twinbee">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Detana!! Twinbee</description>
 		<year>1992</year>
 		<manufacturer>Konami</manufacturer>
@@ -562,7 +502,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="devlcrsh">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Devil Crash - Naxat Pinball</description>
 		<year>1990</year>
 		<manufacturer>Naxat</manufacturer>
@@ -571,7 +510,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="diehard">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Die Hard</description>
 		<year>1990</year>
 		<manufacturer>Pack-In-Video</manufacturer>
@@ -580,7 +518,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="digichmp">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Digital Champ</description>
 		<year>1989</year>
 		<manufacturer>Naxat</manufacturer>
@@ -589,7 +526,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="dondoko">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Don Doko Don!</description>
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
@@ -598,7 +534,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="dorams">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Doraemon - Meikyuu Dai Sakusen</description>
 		<year>1989</year>
 		<manufacturer>Hudson</manufacturer>
@@ -607,7 +542,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="dorandn">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Doraemon - Nobita no Dorabian Night</description>
 		<year>1991</year>
 		<manufacturer>Hudson</manufacturer>
@@ -616,7 +550,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ddungw">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Double Dungeons - W</description>
 		<year>1989</year>
 		<manufacturer>NCS</manufacturer>
@@ -625,7 +558,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="download1" cloneof="download" romof="download">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Download (Alt)</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -634,7 +566,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="download">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Download</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -643,7 +574,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragnegg">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Dragon Egg!</description>
 		<year>1991</year>
 		<manufacturer>Masiya</manufacturer>
@@ -652,7 +582,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="dsaber1" cloneof="dsaber" romof="dsaber">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Dragon Saber - After Story of Dragon Spirit (Alt)</description>
 		<year>1991</year>
 		<manufacturer>Namcot</manufacturer>
@@ -661,7 +590,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="dsaber">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Dragon Saber - After Story of Dragon Spirit</description>
 		<year>1991</year>
 		<manufacturer>Namcot</manufacturer>
@@ -670,7 +598,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="dspirit">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Dragon Spirit</description>
 		<year>1988</year>
 		<manufacturer>Namcot</manufacturer>
@@ -679,7 +606,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="droprock1" cloneof="droprock" romof="droprock">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Drop Rock Hora Hora (Alt)</description>
 		<year>1990</year>
 		<manufacturer>Data East</manufacturer>
@@ -688,7 +614,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="droprock">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Drop Rock Hora Hora</description>
 		<year>1990</year>
 		<manufacturer>Data East</manufacturer>
@@ -697,7 +622,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="dungexpl">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Dungeon Explorer</description>
 		<year>1989</year>
 		<manufacturer>Hudson</manufacturer>
@@ -706,7 +630,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="energy">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Energy</description>
 		<year>1989</year>
 		<manufacturer>NCS</manufacturer>
@@ -715,7 +638,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="f1dream">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>F-1 Dream</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -724,7 +646,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="f1pilot">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>F-1 Pilot - You're King of Kings</description>
 		<year>1989</year>
 		<manufacturer>Pack-In-Video</manufacturer>
@@ -733,7 +654,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="f1circ91">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>F1 Circus '91 - World Championship</description>
 		<year>1991</year>
 		<manufacturer>Nihon Bussan</manufacturer>
@@ -742,7 +662,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="f1circ92">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>F1 Circus '92 - The Speed of Sound</description>
 		<year>1992</year>
 		<manufacturer>Nihon Bussan</manufacturer>
@@ -751,7 +670,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="f1circus1" cloneof="f1circus" romof="f1circus">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>F1 Circus (Alt)</description>
 		<year>1990</year>
 		<manufacturer>Nihon Bussan</manufacturer>
@@ -760,7 +678,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="f1circus">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>F1 Circus</description>
 		<year>1990</year>
 		<manufacturer>Nihon Bussan</manufacturer>
@@ -769,7 +686,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="f1tb">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>F1 Triple Battle</description>
 		<year>1989</year>
 		<manufacturer>Human</manufacturer>
@@ -778,7 +694,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="fantzone">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Fantasy Zone</description>
 		<year>1988</year>
 		<manufacturer>NEC</manufacturer>
@@ -787,7 +702,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="fightrun">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Fighting Run</description>
 		<year>1991</year>
 		<manufacturer>Nihon Bussan</manufacturer>
@@ -796,7 +710,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="finlblst">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Final Blaster</description>
 		<year>1990</year>
 		<manufacturer>Namcot</manufacturer>
@@ -805,7 +718,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="finallap">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Final Lap Twin</description>
 		<year>1989</year>
 		<manufacturer>Namcot</manufacturer>
@@ -814,7 +726,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="finalmt">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Final Match Tennis</description>
 		<year>1991</year>
 		<manufacturer>Human</manufacturer>
@@ -823,7 +734,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="finalsols" cloneof="finalsol" romof="finalsol">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Final Soldier (Special Version)</description>
 		<year>19??</year>
 		<manufacturer>Hudson</manufacturer>
@@ -832,7 +742,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="finalsol">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Final Soldier</description>
 		<year>1991</year>
 		<manufacturer>Hudson</manufacturer>
@@ -841,7 +750,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="fireprow">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Fire Pro Wrestling - Combination Tag</description>
 		<year>1989</year>
 		<manufacturer>Human</manufacturer>
@@ -850,7 +758,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="fireprw2">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Fire Pro Wrestling 2 - 2nd Bout</description>
 		<year>1991</year>
 		<manufacturer>Human</manufacturer>
@@ -859,7 +766,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="fireprw3">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Fire Pro Wrestling 3 - Legend Bout</description>
 		<year>1992</year>
 		<manufacturer>Human</manufacturer>
@@ -868,7 +774,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="fsoccr90">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Formation Soccer - Human Cup '90</description>
 		<year>1990</year>
 		<manufacturer>Human</manufacturer>
@@ -877,7 +782,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="fsoccer">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Formation Soccer - On J. League</description>
 		<year>1994</year>
 		<manufacturer>Human</manufacturer>
@@ -886,7 +790,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="alice">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Fushigi no Yume no Alice</description>
 		<year>1990</year>
 		<manufacturer>Face</manufacturer>
@@ -895,7 +798,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="gaiflame">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Gai Flame</description>
 		<year>1990</year>
 		<manufacturer>NCS</manufacturer>
@@ -904,7 +806,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="gaiamons">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Gaia no Monshou</description>
 		<year>1988</year>
 		<manufacturer>NCS</manufacturer>
@@ -913,7 +814,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="galaga88">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Galaga '88</description>
 		<year>1988</year>
 		<manufacturer>Namcot</manufacturer>
@@ -922,7 +822,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ganbgolf">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Ganbare! Golf Boys</description>
 		<year>1989</year>
 		<manufacturer>NCS</manufacturer>
@@ -931,7 +830,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="gekisboy">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Gekisha Boy</description>
 		<year>1992</year>
 		<manufacturer>Irem</manufacturer>
@@ -940,7 +838,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="genjitsu">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Genji Tsuushin Agedama</description>
 		<year>1991</year>
 		<manufacturer>NEC Home Electronics</manufacturer>
@@ -949,7 +846,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="genpemak">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Genpei Toumaden ni no Maki</description>
 		<year>1992</year>
 		<manufacturer>Namcot</manufacturer>
@@ -958,7 +854,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="genpei">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Genpei Toumaden</description>
 		<year>1990</year>
 		<manufacturer>Namcot</manufacturer>
@@ -967,7 +862,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="chukatai">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Gokuraku! Chuka Taisen</description>
 		<year>1992</year>
 		<manufacturer>Taito</manufacturer>
@@ -976,7 +870,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="gomola">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Gomola Speed</description>
 		<year>1990</year>
 		<manufacturer>UPL</manufacturer>
@@ -985,7 +878,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="gradius">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Gradius</description>
 		<year>1991</year>
 		<manufacturer>Konami</manufacturer>
@@ -994,7 +886,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="gunhedht">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>GunHed - Hudson GunHed Taikai</description>
 		<year>1989</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1003,7 +894,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="gunhed">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>GunHed</description>
 		<year>1989</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1012,7 +902,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="hanataka">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Hana Taaka Daka!?</description>
 		<year>1991</year>
 		<manufacturer>Taito</manufacturer>
@@ -1021,7 +910,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="haniisky">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Hanii in the Sky</description>
 		<year>1989</year>
 		<manufacturer>Face</manufacturer>
@@ -1030,7 +918,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="haniirod">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Hanii on the Road</description>
 		<year>1990</year>
 		<manufacturer>Face</manufacturer>
@@ -1039,7 +926,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="hatris">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Hatris</description>
 		<year>1991</year>
 		<manufacturer>Tengen</manufacturer>
@@ -1048,7 +934,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="hvyunit">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Heavy Unit</description>
 		<year>1989</year>
 		<manufacturer>Taito</manufacturer>
@@ -1057,7 +942,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="xserd">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Hisou Kihei - Xserd</description>
 		<year>1990</year>
 		<manufacturer>Masiya</manufacturer>
@@ -1066,7 +950,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="hitice">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Hit the Ice - VHL - The Official Video Hockey League</description>
 		<year>1991</year>
 		<manufacturer>Taito</manufacturer>
@@ -1075,7 +958,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ddanpei">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Honoo no Toukyuuji - Dodge Danpei</description>
 		<year>1992</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1084,7 +966,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="huzero">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>HuZERO</description>
 		<year>2014</year>
 		<manufacturer>Chris Covell</manufacturer>
@@ -1093,7 +974,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="idolhana">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Idol Hanafuda Fan Club</description>
 		<year>1991</year>
 		<manufacturer>Game Express</manufacturer>
@@ -1102,7 +982,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="imagefgt">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Image Fight</description>
 		<year>1990</year>
 		<manufacturer>Irem</manufacturer>
@@ -1111,7 +990,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="jleag11">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>J. League Greatest Eleven</description>
 		<year>1993</year>
 		<manufacturer>Nihon Bussan</manufacturer>
@@ -1120,7 +998,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="nicklaus">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Jack Nicklaus' Greatest 18 Holes of Major Championship Golf</description>
 		<year>1989</year>
 		<manufacturer>Victor Interactive Software</manufacturer>
@@ -1129,7 +1006,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="jchan">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Jackie Chan</description>
 		<year>1991</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1138,7 +1014,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="jigomegu">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Jigoku Meguri</description>
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
@@ -1147,7 +1022,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="jinmu1" cloneof="jinmu" romof="jinmu">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Jinmu Denshou (Alt)</description>
 		<year>1989</year>
 		<manufacturer>Big Club</manufacturer>
@@ -1156,7 +1030,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="jinmu">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Jinmu Denshou</description>
 		<year>1989</year>
 		<manufacturer>Big Club</manufacturer>
@@ -1165,7 +1038,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="juuouki1" cloneof="juuouki" romof="juuouki">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Juuouki (Alt)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -1174,7 +1046,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="juuouki">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Juuouki</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -1183,7 +1054,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="shubibi2">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Kaizou Choujin Shubibinman 2 - Aratanaru Teki</description>
 		<year>1991</year>
 		<manufacturer>Masiya</manufacturer>
@@ -1192,7 +1062,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="shubibi">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Kaizou Choujin Shubibinman</description>
 		<year>1989</year>
 		<manufacturer>NCS</manufacturer>
@@ -1201,7 +1070,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="katochan">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Kato Chan &amp; Ken Chan</description>
 		<year>1987</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1210,7 +1078,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kattobi">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Kattobi! Takuhai Kun</description>
 		<year>1990</year>
 		<manufacturer>Tonkin House</manufacturer>
@@ -1219,7 +1086,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kickball">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Kickball</description>
 		<year>1990</year>
 		<manufacturer>Masiya</manufacturer>
@@ -1228,7 +1094,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kikikai">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Kiki KaiKai</description>
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
@@ -1237,7 +1102,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kingcasn">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>King of Casino</description>
 		<year>1990</year>
 		<manufacturer>Victor Interactive Software</manufacturer>
@@ -1246,7 +1110,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="klax">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Klax</description>
 		<year>1990</year>
 		<manufacturer>Tengen</manufacturer>
@@ -1255,7 +1118,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="knightrs">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Knight Rider Special</description>
 		<year>1989</year>
 		<manufacturer>Pack-In-Video</manufacturer>
@@ -1264,7 +1126,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="proyak89">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Kore Ga Pro Yakyuu '89</description>
 		<year>1989</year>
 		<manufacturer>Intec</manufacturer>
@@ -1273,7 +1134,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="proyak90">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Kore Ga Pro Yakyuu '90</description>
 		<year>1990</year>
 		<manufacturer>Intec</manufacturer>
@@ -1282,7 +1142,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kyukyomj">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Kyuukyoku Mahjong - Idol Graphics</description>
 		<year>1992</year>
 		<manufacturer>Game Express</manufacturer>
@@ -1291,7 +1150,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kyukyom2">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Kyuukyoku Mahjong II</description>
 		<year>1993</year>
 		<manufacturer>Game Express</manufacturer>
@@ -1300,7 +1158,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ktiger">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Kyuukyoku Tiger</description>
 		<year>1989</year>
 		<manufacturer>Taito</manufacturer>
@@ -1309,7 +1166,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ladyswrd1" cloneof="ladyswrd" romof="ladyswrd">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Lady Sword (Alt)</description>
 		<year>19??</year>
 		<manufacturer>Game Express</manufacturer>
@@ -1318,7 +1174,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ladyswrd">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Lady Sword</description>
 		<year>19??</year>
 		<manufacturer>Game Express</manufacturer>
@@ -1327,7 +1182,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="loht">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Legend of Hero Tonma</description>
 		<year>1991</year>
 		<manufacturer>Irem</manufacturer>
@@ -1336,7 +1190,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ldrun">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Lode Runner - Lost Labyrinth</description>
 		<year>1990</year>
 		<manufacturer>Pack-In-Video</manufacturer>
@@ -1345,7 +1198,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="magchase">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Magical Chase</description>
 		<year>1991</year>
 		<manufacturer>Palsoft</manufacturer>
@@ -1354,7 +1206,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mjgakuen">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Mahjong Gakuen - Touma Soushirou Toujou</description>
 		<year>1990</year>
 		<manufacturer>Face</manufacturer>
@@ -1363,7 +1214,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mjgakmld1" cloneof="mjgakmld" romof="mjgakmld">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Mahjong Gakuen Mild - Touma Soushirou Toujou (Alt)</description>
 		<year>1990</year>
 		<manufacturer>Face</manufacturer>
@@ -1372,7 +1222,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mjgakmld">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Mahjong Gakuen Mild - Touma Soushirou Toujou</description>
 		<year>1990</year>
 		<manufacturer>Face</manufacturer>
@@ -1381,7 +1230,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mjgokusp">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Mahjong Gokuu Special</description>
 		<year>1990</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -1390,7 +1238,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mjkaiser">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Mahjong Haou Den - Kaiser's Quest</description>
 		<year>1992</year>
 		<manufacturer>UPL</manufacturer>
@@ -1399,7 +1246,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mjwars">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Mahjong Shikyaku Retsuden - Mahjong Wars</description>
 		<year>1990</year>
 		<manufacturer>Nihon Bussan</manufacturer>
@@ -1408,7 +1254,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mikkokue" cloneof="mikkoku" romof="mikkoku">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Maison Ikkoku (Hack, English)</description>
 		<year>2008</year>
 		<manufacturer>Micro Cabin</manufacturer>
@@ -1417,7 +1262,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mikkoku">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Maison Ikkoku</description>
 		<year>1989</year>
 		<manufacturer>Micro Cabin</manufacturer>
@@ -1426,7 +1270,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="wataru">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Majin Eiyuu Den Wataru</description>
 		<year>1988</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1435,7 +1278,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="makaihak">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Makai Hakken Den Shada</description>
 		<year>1989</year>
 		<manufacturer>Data East</manufacturer>
@@ -1444,7 +1286,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="makaipri">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Makai Prince Dorabocchan</description>
 		<year>1990</year>
 		<manufacturer>Naxat</manufacturer>
@@ -1453,7 +1294,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="makyoden">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Makyou Densetsu</description>
 		<year>1988</year>
 		<manufacturer>Victor Interactive Software</manufacturer>
@@ -1462,7 +1302,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="maniacpw">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Maniac Pro Wres - Asu e no Tatakai</description>
 		<year>1990</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1471,7 +1310,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="marchen">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Marchen Maze</description>
 		<year>1990</year>
 		<manufacturer>Namcot</manufacturer>
@@ -1480,7 +1318,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mesopot">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Mesopotamia</description>
 		<year>1991</year>
 		<manufacturer>Atlus</manufacturer>
@@ -1489,7 +1326,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="metlstok">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Metal Stoker</description>
 		<year>1991</year>
 		<manufacturer>Face</manufacturer>
@@ -1498,7 +1334,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mizubaku">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Mizubaku Dai Bouken</description>
 		<year>1992</year>
 		<manufacturer>Namcot</manufacturer>
@@ -1507,7 +1342,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="momogdn">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Momotarou Densetsu Gaiden Dai 1 Shuu</description>
 		<year>1992</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1516,7 +1350,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="momo2">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Momotarou Densetsu II</description>
 		<year>1990</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1525,7 +1358,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="momotrbo">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Momotarou Densetsu Turbo</description>
 		<year>1990</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1534,7 +1366,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="momoktsg">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Momotarou Katsugeki</description>
 		<year>1990</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1543,7 +1374,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mnstprow">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Monster Pro Wres</description>
 		<year>1991</year>
 		<manufacturer>ASK</manufacturer>
@@ -1552,7 +1382,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="moritash">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Morita Shougi PC</description>
 		<year>1991</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -1561,7 +1390,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="motorod2a" cloneof="motorod2" romof="motorod2">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Moto Roader II (Alt)</description>
 		<year>1991</year>
 		<manufacturer>Masiya</manufacturer>
@@ -1570,7 +1398,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="motorod2">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Moto Roader II</description>
 		<year>1991</year>
 		<manufacturer>Masiya</manufacturer>
@@ -1579,7 +1406,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="motoroad">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Moto Roader</description>
 		<year>1989</year>
 		<manufacturer>NCS</manufacturer>
@@ -1588,7 +1414,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mrheli1" cloneof="mrheli" romof="mrheli">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Mr. Heli no Daibouken (Alt)</description>
 		<year>1989</year>
 		<manufacturer>Irem</manufacturer>
@@ -1597,7 +1422,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="mrheli">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Mr. Heli no Daibouken</description>
 		<year>1989</year>
 		<manufacturer>Irem</manufacturer>
@@ -1606,7 +1430,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="nantet">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Nantettatte Engine</description>
 		<year>2017</year>
 		<manufacturer>Atherbyte</manufacturer>
@@ -1615,7 +1438,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="blodwolf">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Narazumono Sentai Butai - Bloody Wolf</description>
 		<year>1989</year>
 		<manufacturer>Data East</manufacturer>
@@ -1624,7 +1446,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="naxopen">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Naxat Open</description>
 		<year>1989</year>
 		<manufacturer>Naxat</manufacturer>
@@ -1633,7 +1454,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="naxstad">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Naxat Stadium</description>
 		<year>1990</year>
 		<manufacturer>Naxat</manufacturer>
@@ -1642,7 +1462,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="nazomasq">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Nazo no Masquerade</description>
 		<year>1990</year>
 		<manufacturer>Masiya</manufacturer>
@@ -1651,7 +1470,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="necromcr">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Necromancer</description>
 		<year>1988</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1660,7 +1478,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="necros">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Necros no Yousai</description>
 		<year>1990</year>
 		<manufacturer>ASK</manufacturer>
@@ -1669,7 +1486,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="nectaris">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Nectaris</description>
 		<year>1990</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1678,7 +1494,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="nekdodge">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Nekketsu Koukou Dodgeball Bu - PC Bangai Hen</description>
 		<year>1990</year>
 		<manufacturer>Naxat</manufacturer>
@@ -1687,7 +1502,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neksoccr">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Nekketsu Koukou Dodgeball Bu - Soccer PC Hen</description>
 		<year>1992</year>
 		<manufacturer>Naxat</manufacturer>
@@ -1696,7 +1510,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neutopi2">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Neutopia II</description>
 		<year>1991</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1705,7 +1518,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="neutopia">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Neutopia</description>
 		<year>1989</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1714,7 +1526,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhktaidr">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>NHK Taiga Drama - Taiheiki</description>
 		<year>1992</year>
 		<manufacturer>NHK Enterprise</manufacturer>
@@ -1723,7 +1534,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="nikopun">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Niko Niko, Pun</description>
 		<year>1991</year>
 		<manufacturer>NHK Enterprise</manufacturer>
@@ -1732,7 +1542,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="nryukend">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Ninja Ryukenden</description>
 		<year>1992</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1741,7 +1550,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="oboccha">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Obocchama-kun</description>
 		<year>1991</year>
 		<manufacturer>Namcot</manufacturer>
@@ -1750,7 +1558,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="offthewall">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Off the Wall (Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Tengen/Atari</manufacturer>
@@ -1759,7 +1566,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="opwolf">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Operation Wolf</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -1768,7 +1574,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ordyne">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Ordyne</description>
 		<year>1989</year>
 		<manufacturer>Namcot</manufacturer>
@@ -1777,7 +1582,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="outlive">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Out Live</description>
 		<year>1989</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -1786,7 +1590,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="outrun">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Out Run</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -1795,7 +1598,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="override">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Override</description>
 		<year>1991</year>
 		<manufacturer>Data East</manufacturer>
@@ -1804,7 +1606,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="p47">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>P-47 - The Freedom Fighter</description>
 		<year>1989</year>
 		<manufacturer>Aicom</manufacturer>
@@ -1813,7 +1614,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pacland">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Pac-land</description>
 		<year>1989</year>
 		<manufacturer>Namcot</manufacturer>
@@ -1822,7 +1622,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pachikun">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Pachio Kun - Juuban Shoubu</description>
 		<year>1992</year>
 		<manufacturer>Coconuts Japan</manufacturer>
@@ -1831,7 +1630,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="paranoia">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Paranoia</description>
 		<year>1990</year>
 		<manufacturer>Naxat</manufacturer>
@@ -1840,7 +1638,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="parasol">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Parasol Stars - The Story of Bubble Bobble III</description>
 		<year>1991</year>
 		<manufacturer>Taito</manufacturer>
@@ -1849,7 +1646,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="parodius">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Parodius da! - Shinwa Kara Owarai He</description>
 		<year>1992</year>
 		<manufacturer>Konami</manufacturer>
@@ -1858,7 +1654,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pcdenja" cloneof="pcdenj" romof="pcdenj">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>PC Denjin - Punkic Cyborgs (Alt)</description>
 		<year>1992</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1867,7 +1662,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pcdenj">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>PC Denjin - Punkic Cyborgs</description>
 		<year>1992</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1876,7 +1670,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pcgenja" cloneof="pcgenj" romof="pcgenj">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>PC Genjin - Pithecanthropus Computerurus (Alt)</description>
 		<year>1989</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1885,7 +1678,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pcgenj">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>PC Genjin - Pithecanthropus Computerurus</description>
 		<year>1989</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1894,7 +1686,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pcgenj2">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>PC Genjin 2 - Pithecanthropus Computerurus</description>
 		<year>1991</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1903,7 +1694,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pcgenj3t">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>PC Genjin 3 - Pithecanthropus Computerurus (Taikenban)</description>
 		<year>1993</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1912,7 +1702,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pcgenj3">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>PC Genjin 3 - Pithecanthropus Computerurus</description>
 		<year>1993</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1921,7 +1710,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pcpachi">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>PC Pachi-slot</description>
 		<year>1992</year>
 		<manufacturer>Game Express</manufacturer>
@@ -1930,7 +1718,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="populous1" cloneof="populous" romof="populous">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Populous (Alt)</description>
 		<year>1991</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1939,7 +1726,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="populous">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Populous</description>
 		<year>1991</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1948,7 +1734,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pdrift1" cloneof="pdrift" romof="pdrift">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Power Drift (Alt)</description>
 		<year>1990</year>
 		<manufacturer>Asmik</manufacturer>
@@ -1957,7 +1742,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pdrift">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Power Drift</description>
 		<year>1990</year>
 		<manufacturer>Asmik</manufacturer>
@@ -1966,7 +1750,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="power11">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Power Eleven</description>
 		<year>1991</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1975,7 +1758,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="powergat">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Power Gate</description>
 		<year>1991</year>
 		<manufacturer>Pack-In-Video</manufacturer>
@@ -1984,7 +1766,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pgolf">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Power Golf</description>
 		<year>1989</year>
 		<manufacturer>Hudson</manufacturer>
@@ -1993,7 +1774,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pleag93">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Power League '93</description>
 		<year>1993</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2002,7 +1782,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pleagas">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Power League (All Star Version)</description>
 		<year>19??</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2011,7 +1790,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pleag3">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Power League III</description>
 		<year>1990</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2020,7 +1798,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pleag2">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Power League II</description>
 		<year>1989</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2029,7 +1806,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pleag4">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Power League IV</description>
 		<year>1991</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2038,7 +1814,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pleag5">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Power League V</description>
 		<year>1992</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2047,7 +1822,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="pleague">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Power League</description>
 		<year>1988</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2056,7 +1830,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="psports">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Power Sports</description>
 		<year>1992</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2065,7 +1838,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ptennis">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Power Tennis</description>
 		<year>1993</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2074,7 +1846,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ptennwc">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Pro Tennis World Court</description>
 		<year>1988</year>
 		<manufacturer>Namcot</manufacturer>
@@ -2083,7 +1854,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="proyak91">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Pro Yakyuu World Stadium '91</description>
 		<year>1991</year>
 		<manufacturer>Namcot</manufacturer>
@@ -2092,7 +1862,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="proyak">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Pro Yakyuu World Stadium</description>
 		<year>1988</year>
 		<manufacturer>Namcot</manufacturer>
@@ -2101,7 +1870,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="psychas">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Psycho Chaser</description>
 		<year>1990</year>
 		<manufacturer>Naxat</manufacturer>
@@ -2110,7 +1878,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="puzzlboy">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Puzzle Boy</description>
 		<year>1991</year>
 		<manufacturer>Nihon Telenet</manufacturer>
@@ -2119,7 +1886,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="puzznic">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Puzznic</description>
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
@@ -2128,7 +1894,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="quizts">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Quiz Toukou Shashin</description>
 		<year>19??</year>
 		<manufacturer>Game Express</manufacturer>
@@ -2137,7 +1902,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="rtypep1">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>R-Type Part-1</description>
 		<year>1988</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2146,7 +1910,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="rtypep2v11" cloneof="rtypep2" romof="rtypep2">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>R-Type Part-2 (v1.1)</description>
 		<year>1988</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2155,7 +1918,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="rtypep2">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>R-Type Part-2</description>
 		<year>1988</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2164,7 +1926,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="rabiolep">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Rabio Lepus Special</description>
 		<year>1990</year>
 		<manufacturer>Video System</manufacturer>
@@ -2173,7 +1934,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="racindam">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Racing Damashii</description>
 		<year>1991</year>
 		<manufacturer>Irem</manufacturer>
@@ -2182,7 +1942,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="raiden">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Raiden</description>
 		<year>1991</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2191,7 +1950,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="rastan2">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Rastan Saga II</description>
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
@@ -2200,7 +1958,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="reflectron">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Reflectron</description>
 		<year>2013</year>
 		<manufacturer>Aetherbyte</manufacturer>
@@ -2209,7 +1966,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="rockon">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Rock-on</description>
 		<year>1989</year>
 		<manufacturer>Big Club</manufacturer>
@@ -2218,7 +1974,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ryukyu">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Ryuukyuu</description>
 		<year>1990</year>
 		<manufacturer>Face</manufacturer>
@@ -2227,7 +1982,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sadaki7">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Sadakichi 7 Series - Hideyoshi no Ougon</description>
 		<year>1988</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2236,7 +1990,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="saigonin">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Saigo no Nindou - Ninja Spirit</description>
 		<year>1990</year>
 		<manufacturer>Irem</manufacturer>
@@ -2245,7 +1998,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="salamand">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Salamander</description>
 		<year>1991</year>
 		<manufacturer>Konami</manufacturer>
@@ -2254,7 +2006,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="santatlantean">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Santatlantean</description>
 		<year>2014</year>
 		<manufacturer>Aetherbyte</manufacturer>
@@ -2263,7 +2014,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sekigaha">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Sekigahara</description>
 		<year>1990</year>
 		<manufacturer>Tonkin House</manufacturer>
@@ -2272,7 +2022,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sengokmj">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Sengoku Mahjong</description>
 		<year>1988</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2281,7 +2030,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="shanghai">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Shanghai</description>
 		<year>1987</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2290,7 +2038,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="shinobi">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Shinobi</description>
 		<year>1989</year>
 		<manufacturer>Asmik</manufacturer>
@@ -2299,7 +2046,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="shiryo">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Shiryou Sensen</description>
 		<year>1989</year>
 		<manufacturer>Victor Interactive Software</manufacturer>
@@ -2308,7 +2054,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="shogisi">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Shougi Shodan Icchokusen</description>
 		<year>1990</year>
 		<manufacturer>Home Data</manufacturer>
@@ -2317,7 +2062,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="shogism">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Shougi Shoshinsha Muyou</description>
 		<year>1991</year>
 		<manufacturer>Home Data</manufacturer>
@@ -2326,7 +2070,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sidearms">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Sidearms - Hyper Dyne</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -2335,7 +2078,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="silentd">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Silent Debuggers</description>
 		<year>1991</year>
 		<manufacturer>Data East</manufacturer>
@@ -2344,7 +2086,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sindibad">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Sindibad Chitei no Dai Makyuu</description>
 		<year>1990</year>
 		<manufacturer>IGS</manufacturer>
@@ -2353,7 +2094,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="skweek">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Skweek</description>
 		<year>1991</year>
 		<manufacturer>Victor Interactive Software</manufacturer>
@@ -2362,7 +2102,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sokoban">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Sokoban World</description>
 		<year>1990</year>
 		<manufacturer>Media Rings Corporation</manufacturer>
@@ -2371,7 +2110,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="soldblas">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Soldier Blade Special - Caravan Stage</description>
 		<year>19??</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2380,7 +2118,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="soldblad">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Soldier Blade</description>
 		<year>1992</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2389,7 +2126,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonson2">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Son Son II</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -2398,7 +2134,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sharrier">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Space Harrier</description>
 		<year>1988</year>
 		<manufacturer>NEC</manufacturer>
@@ -2407,7 +2142,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="spaceinv">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Space Invaders - Fukkatsu no Hi</description>
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
@@ -2416,7 +2150,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sci">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Special Criminal Investigation</description>
 		<year>1991</year>
 		<manufacturer>Taito</manufacturer>
@@ -2425,7 +2158,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="spinpair">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Spin Pair</description>
 		<year>1990</year>
 		<manufacturer>Media Rings Corporation</manufacturer>
@@ -2434,7 +2166,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="spirwave">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Spiral Wave</description>
 		<year>1991</year>
 		<manufacturer>Media Rings Corporation</manufacturer>
@@ -2443,7 +2174,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="splatth">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Splatterhouse</description>
 		<year>1990</year>
 		<manufacturer>Namcot</manufacturer>
@@ -2452,7 +2182,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="stratego">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Stratego</description>
 		<year>1992</year>
 		<manufacturer>Victor Interactive Software</manufacturer>
@@ -2461,7 +2190,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sf2ce">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Street Fighter II' - Champion Edition</description>
 		<year>1993</year>
 		<manufacturer>NEC Home Electronics</manufacturer>
@@ -2470,7 +2198,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="stripf2">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Strip Fighter II</description>
 		<year>19??</year>
 		<manufacturer>Game Express</manufacturer>
@@ -2479,7 +2206,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="smcrush">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Super Metal Crusher</description>
 		<year>1991</year>
 		<manufacturer>Pack-In-Video</manufacturer>
@@ -2488,7 +2214,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="smomo2">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Super Momotarou Dentetsu II</description>
 		<year>1991</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2497,7 +2222,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="smomo">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Super Momotarou Dentetsu</description>
 		<year>1989</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2506,7 +2230,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sssoldr">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Super Star Soldier</description>
 		<year>1990</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2515,7 +2238,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="svolley">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Super Volleyball</description>
 		<year>1990</year>
 		<manufacturer>Video System</manufacturer>
@@ -2524,7 +2246,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="susano">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Susanoo Densetsu</description>
 		<year>1989</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2533,7 +2254,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="chasehq">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Taito Chase H.Q.</description>
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
@@ -2542,7 +2262,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="takameib">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Takahashi Meijin no Shin Boukenjima</description>
 		<year>1992</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2551,7 +2270,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="shingen1" cloneof="shingen" romof="shingen">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Takeda Shingen (Alt)</description>
 		<year>1989</year>
 		<manufacturer>Aicom</manufacturer>
@@ -2560,7 +2278,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="shingen">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Takeda Shingen</description>
 		<year>1989</year>
 		<manufacturer>Aicom</manufacturer>
@@ -2569,7 +2286,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="tatsunok">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Tatsu No Ko Fighter</description>
 		<year>1989</year>
 		<manufacturer>Tonkin House</manufacturer>
@@ -2578,7 +2294,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="tatsujinp" cloneof="tatsujin" romof="tatsujin">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Tatsujin (Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Taito</manufacturer>
@@ -2587,7 +2302,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="tatsujin">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Tatsujin</description>
 		<year>1992</year>
 		<manufacturer>Taito</manufacturer>
@@ -2596,7 +2310,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="sdragon">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Tenseiryuu - Saint Dragon</description>
 		<year>1990</year>
 		<manufacturer>Irem</manufacturer>
@@ -2605,7 +2318,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="terracr2">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Terra Cresta II - Mandoraa no Gyakushuu</description>
 		<year>1992</year>
 		<manufacturer>Nihon Bussan</manufacturer>
@@ -2614,7 +2326,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="kungfu">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>The Kung Fu</description>
 		<year>1987</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2623,7 +2334,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="tnzs">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>The New Zealand Story</description>
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
@@ -2632,7 +2342,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjawar">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>The Ninja Warriors</description>
 		<year>1989</year>
 		<manufacturer>Taito</manufacturer>
@@ -2641,7 +2350,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="druaga">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>The Tower of Druaga</description>
 		<year>1992</year>
 		<manufacturer>Namcot</manufacturer>
@@ -2650,7 +2358,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="tblade">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Thunder Blade</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -2659,7 +2366,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="timcrus2">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Time Cruise II</description>
 		<year>1991</year>
 		<manufacturer>Face</manufacturer>
@@ -2668,7 +2374,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="titan">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Titan</description>
 		<year>1991</year>
 		<manufacturer>Naxat</manufacturer>
@@ -2677,7 +2382,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="toiletk">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Toilet Kids</description>
 		<year>1992</year>
 		<manufacturer>Media Rings Corporation</manufacturer>
@@ -2686,7 +2390,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="tongueman">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Tongueman's Logic</description>
 		<year>2007</year>
 		<manufacturer>Chris Covell</manufacturer>
@@ -2695,7 +2398,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="toramich">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Tora e no Michi</description>
 		<year>1990</year>
 		<manufacturer>Victor Entertainment</manufacturer>
@@ -2704,7 +2406,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="etercity">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Toshi Tensou Keikaku - Eternal City</description>
 		<year>1991</year>
 		<manufacturer>Naxat</manufacturer>
@@ -2713,7 +2414,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="toyshopb">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Toy Shop Boys</description>
 		<year>1990</year>
 		<manufacturer>Victor</manufacturer>
@@ -2722,7 +2422,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="tricky">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Tricky</description>
 		<year>1991</year>
 		<manufacturer>IGS</manufacturer>
@@ -2731,7 +2430,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="tsuppari">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Tsuppari Oozumou - Heisei Ban</description>
 		<year>1993</year>
 		<manufacturer>Naxat</manufacturer>
@@ -2740,7 +2438,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="baibai">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Tsuru Teruhito no Jissen Kabushiki Bai Bai Game</description>
 		<year>1989</year>
 		<manufacturer>Intec</manufacturer>
@@ -2749,7 +2446,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="tvbasket">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>TV Sports Basketball</description>
 		<year>1993</year>
 		<manufacturer>Victor Interactive Software</manufacturer>
@@ -2758,7 +2454,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="tvfootbl">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>TV Sports Football</description>
 		<year>1991</year>
 		<manufacturer>Victor Interactive Software</manufacturer>
@@ -2767,7 +2462,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="tvhockey">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>TV Sports Hockey</description>
 		<year>1993</year>
 		<manufacturer>Victor Interactive Software</manufacturer>
@@ -2776,7 +2470,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="usaprobs">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>USA Pro Basketball</description>
 		<year>1989</year>
 		<manufacturer>Aicom</manufacturer>
@@ -2785,7 +2478,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="valkyrie">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Valkyrie no Densetsu</description>
 		<year>1990</year>
 		<manufacturer>Namcot</manufacturer>
@@ -2794,7 +2486,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="veigues">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Veigues - Tactical Gladiator</description>
 		<year>1990</year>
 		<manufacturer>Victor Entertainment</manufacturer>
@@ -2803,7 +2494,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="victoryr">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Victory Run</description>
 		<year>1987</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2812,7 +2502,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="vigilant">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Vigilante</description>
 		<year>1989</year>
 		<manufacturer>Irem</manufacturer>
@@ -2821,7 +2510,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="violents">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Violent Soldier</description>
 		<year>1990</year>
 		<manufacturer>IGS</manufacturer>
@@ -2830,7 +2518,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="volfied">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Volfied</description>
 		<year>1989</year>
 		<manufacturer>Taito</manufacturer>
@@ -2839,7 +2526,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="wring">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>W-ring - The Double Rings</description>
 		<year>1990</year>
 		<manufacturer>Naxat</manufacturer>
@@ -2848,7 +2534,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="waiwaimj">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Wai Wai Mahjong - Yukaina Janyuu Tachi</description>
 		<year>1989</year>
 		<manufacturer>Video System</manufacturer>
@@ -2857,7 +2542,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="wallaby">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Wallaby!! - Usagi no Kuni no Kangaroo Race</description>
 		<year>1990</year>
 		<manufacturer>Masiya</manufacturer>
@@ -2866,7 +2550,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="winshot">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Winning Shot</description>
 		<year>1989</year>
 		<manufacturer>Data East</manufacturer>
@@ -2875,7 +2558,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="wonderm">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Wonder Momo</description>
 		<year>1989</year>
 		<manufacturer>Namcot</manufacturer>
@@ -2884,7 +2566,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="wbeach">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>World Beach Volley</description>
 		<year>1990</year>
 		<manufacturer>IGS</manufacturer>
@@ -2893,7 +2574,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="wcircuit">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>World Circuit</description>
 		<year>1991</year>
 		<manufacturer>Namcot</manufacturer>
@@ -2902,7 +2582,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="wjockey">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>World Jockey</description>
 		<year>1991</year>
 		<manufacturer>Namcot</manufacturer>
@@ -2911,7 +2590,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="xevious">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Xevious - Fardraut Densetsu</description>
 		<year>1990</year>
 		<manufacturer>Namcot</manufacturer>
@@ -2920,7 +2598,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="youkaid">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Youkai Douchuuki</description>
 		<year>1988</year>
 		<manufacturer>Namcot</manufacturer>
@@ -2929,7 +2606,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="yuyu">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Yuu Yuu Jinsei - Victory Life</description>
 		<year>1988</year>
 		<manufacturer>Hudson</manufacturer>
@@ -2938,7 +2614,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="zero4c">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Zero 4 Champ (v1.5)</description>
 		<year>1991</year>
 		<manufacturer>Media Rings Corporation</manufacturer>
@@ -2947,7 +2622,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="zero4ca" cloneof="zero4c" romof="zero4c">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Zero 4 Champ</description>
 		<year>1991</year>
 		<manufacturer>Media Rings Corporation</manufacturer>
@@ -2956,7 +2630,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="zipang">
-		<comment>Bad graphicslti-Languageited Edition (Prototype)e</comment>
 		<description>Zipang</description>
 		<year>1990</year>
 		<manufacturer>Pack-In-Video</manufacturer>

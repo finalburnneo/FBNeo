@@ -9,6 +9,7 @@ struct CheatAddressInfo {
 	INT32 nAddress;
 	INT32 nMultiByte;
 	UINT32 nValue;
+	UINT32 nExtended;
 	UINT32 nOriginalValue;
 
 	INT32 bRelAddress;                          // Relative address (pointer offset) cheat, see :rdft2: or :dreamwld: in cheat.dat

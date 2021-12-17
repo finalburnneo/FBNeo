@@ -8759,7 +8759,7 @@ struct BurnDriver BurnDrvCatacomb = {
 
 struct BurnDriver BurnDrvOmegab = {
 	"omegab", "theend", NULL, NULL, "19??",
-	"Omega\0", NULL, "bootleg?", "Galaxian",
+	"Omega (bootleg?)\0", NULL, "bootleg?", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, OmegabRomInfo, OmegabRomName, NULL, NULL, NULL, NULL, OmegabInputInfo, OmegabDIPInfo,

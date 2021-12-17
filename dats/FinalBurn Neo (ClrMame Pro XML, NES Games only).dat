@@ -77,7 +77,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="8bitpics">
-		<description>8-bit Illustrations (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>8-bit Illustrations (HB)</description>
 		<year>2015</year>
 		<manufacturer>RiKi</manufacturer>
 		<rom name="8bit Illustrations (2015)(RIKI).nes" size="524304" crc="19ca739b"/>
@@ -85,7 +86,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="8bitmusic">
-		<description>8-bit Music Power (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>8-bit Music Power (HB)</description>
 		<year>2017</year>
 		<manufacturer>RiKi</manufacturer>
 		<rom name="8bit Music Power (2017)(RIKI).nes" size="786448" crc="351426ab"/>
@@ -93,7 +95,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="8bitmusice" cloneof="8bitmusic" romof="8bitmusic">
-		<description>8-bit Music Power ENCORE (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>8-bit Music Power ENCORE (HB)</description>
 		<year>2017</year>
 		<manufacturer>RiKi</manufacturer>
 		<rom name="8bit Music Power ENCORE (2017)(RIKI).nes" size="524304" crc="8b381de2"/>
@@ -101,7 +104,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="8bitrhylan">
-		<description>8-Bit Rhythm Land (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>8-Bit Rhythm Land (HB)</description>
 		<year>2018</year>
 		<manufacturer>Columbus Circle</manufacturer>
 		<rom name="8-Bit Rhythm Land (HB).nes" size="786448" crc="48859a73"/>
@@ -117,7 +121,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="atrain">
-		<description>A Ressha de Ikou (T-Eng) [Hack]</description>
+		<comment>Hack</comment>
+		<description>A Ressha de Ikou (T-Eng)</description>
 		<year>201?</year>
 		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="a ressha de ikou (t-eng).nes" size="147472" crc="fd7bc532"/>
@@ -141,7 +146,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="actio53vol1stbu">
-		<description>Action 53 vol 1 Streemerz Bundle (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Action 53 vol 1 Streemerz Bundle (HB)</description>
 		<year>20XX?</year>
 		<manufacturer>Nintendo?</manufacturer>
 		<rom name="Action 53 vol 1 Streemerz Bundle (HB).nes" size="524304" crc="54fc4fae"/>
@@ -149,7 +155,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="actio53vol2doac">
-		<description>Action 53 vol 2 Double Action (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Action 53 vol 2 Double Action (HB)</description>
 		<year>20XX?</year>
 		<manufacturer>Nintendo?</manufacturer>
 		<rom name="Action 53 vol 2 Double Action (HB).nes" size="524304" crc="4e9c9174"/>
@@ -157,7 +164,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="actio53vol3retw">
-		<description>Action 53 vol 3 Revenge of the Twins (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Action 53 vol 3 Revenge of the Twins (HB)</description>
 		<year>20XX?</year>
 		<manufacturer>Nintendo?</manufacturer>
 		<rom name="Action 53 vol 3 Revenge of the Twins (HB).nes" size="1048592" crc="0dc9110b"/>
@@ -173,7 +181,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="addamfamc" cloneof="addamfam" romof="addamfam">
-		<description>Addams Family, The (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Addams Family, The (USA) - Castellano v1.0</description>
 		<year>2020</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="addams family, the (usa) - castellano v1.0.nes" size="262160" crc="6bd3e973"/>
@@ -189,7 +198,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="addamfampugsschuc" cloneof="addamfampugsschu" romof="addamfampugsschu">
-		<description>Addams Family, The - Pugsley's Scavenger Hunt (USA) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Addams Family, The - Pugsley's Scavenger Hunt (USA) - Castellano v1.1</description>
 		<year>2020</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="addams family, the - pugsley's scavenger hunt (usa) - castellano v1.1.nes" size="262160" crc="54bbec54"/>
@@ -205,7 +215,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="advdddsc" cloneof="advddds" romof="advddds">
-		<description>Advanced Dungeons &amp; Dragons - Dragon Strike (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Advanced Dungeons &amp; Dragons - Dragon Strike (USA) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="advanced dungeons &amp; dragons - dragon strike (usa) - castellano v1.0.nes" size="524304" crc="22cfb91d"/>
@@ -229,7 +240,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="advdddf">
-		<description>Advanced Dungeons &amp; Dragons - Dragons of Flame (T-Eng, v1.03) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Advanced Dungeons &amp; Dragons - Dragons of Flame (T-Eng, v1.03)</description>
 		<year>2003</year>
 		<manufacturer>Pony Canyon - DvD Translations</manufacturer>
 		<rom name="advanced dungeons &amp; dragons - dragons of flame (t-eng).nes" size="262160" crc="8196b978"/>
@@ -237,7 +249,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="advddhlc" cloneof="advddhl" romof="advddhl">
-		<description>Advanced Dungeons &amp; Dragons - Heroes of the Lance (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Advanced Dungeons &amp; Dragons - Heroes of the Lance (USA) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="advanced dungeons &amp; dragons - heroes of the lance (usa) - castellano v1.0.nes" size="262160" crc="365f9624"/>
@@ -269,7 +282,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="adventureislandc" cloneof="adventureisland" romof="adventureisland">
-		<description>Adventure Island (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Adventure Island (USA) - Castellano v1.0</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="adventure island (usa) - castellano v1.0.nes" size="65552" crc="abf6745d"/>
@@ -285,7 +299,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="advenisl3c" cloneof="advenisl3" romof="advenisl3">
-		<description>Adventure Island 3 (USA) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Adventure Island 3 (USA) - Castellano v1.1</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="adventure island iii (usa) - castellano v1.1.nes" size="262160" crc="31c3056e"/>
@@ -309,7 +324,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="advenisliic" cloneof="advenislii" romof="advenislii">
-		<description>Adventure Island II (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Adventure Island II (USA) - Castellano v1.0</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="adventure island ii (usa) - castellano v1.0.nes" size="262160" crc="92f21250"/>
@@ -325,7 +341,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="advenislivc" cloneof="advenisliv" romof="advenisliv">
-		<description>Adventure Island IV (Japan) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Adventure Island IV (Japan) - Castellano v1.0</description>
 		<year>2000?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="adventure island iv (japan) - castellano v1.0.nes" size="393232" crc="9ba3eb86"/>
@@ -405,7 +422,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="advpanzer">
-		<description>Adventures of Panzer, The (HB, v1.3) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Adventures of Panzer, The (HB, v1.3)</description>
 		<year>2021</year>
 		<manufacturer>PixelCraft</manufacturer>
 		<rom name="Adventures of Panzer, The v1.3 (2021)(PixelCraft).nes" size="524304" crc="5ef4684d"/>
@@ -501,7 +519,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="akumadenjc" cloneof="castliii" romof="castliii">
-		<description>Akumajou Densetsu (Japan) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Akumajou Densetsu (Japan) - Castellano v1.1</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="akumajou densetsu (japan) - castellano v1.1.nes" size="393232" crc="33ead706"/>
@@ -517,7 +536,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="akumadenc" cloneof="castliii" romof="castliii">
-		<description>Akumajou Densetsu (T-Chi, v2.3) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Akumajou Densetsu (T-Chi, v2.3)</description>
 		<year>2018</year>
 		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Akumajou Densetsu (T-Chi, v2.3).nes" size="524304" crc="b810b79c"/>
@@ -541,7 +561,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="akumajoudraculac" cloneof="castlevania" romof="castlevania">
-		<description>Akumajou Dracula (T-Chi) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Akumajou Dracula (T-Chi)</description>
 		<year>199?</year>
 		<manufacturer>Fo Yi Team</manufacturer>
 		<rom name="Akumajou Dracula (T-Chi).nes" size="131088" crc="dc749e67"/>
@@ -589,7 +610,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="alfonsarcadv">
-		<description>Alfonzo's Arctic Adventure (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Alfonzo's Arctic Adventure (HB)</description>
 		<year>2018</year>
 		<manufacturer>Spoony Bard Productions</manufacturer>
 		<rom name="Alfonzo's Arctic Adventure (HB).nes" size="262160" crc="cd2ada76"/>
@@ -605,7 +627,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="alien3c" cloneof="alien3" romof="alien3">
-		<description>Alien 3 (USA) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Alien 3 (USA) - Castellano v1.1</description>
 		<year>2020</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="alien 3 (usa) - castellano v1.1.nes" size="262160" crc="d16b91b7"/>
@@ -629,7 +652,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="almosthero">
-		<description>Almost Hero (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Almost Hero (HB)</description>
 		<year>2016</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Almost Hero (HB).nes" size="262160" crc="2419f370"/>
@@ -645,7 +669,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="alterego">
-		<description>Alter Ego (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Alter Ego (HB)</description>
 		<year>2011</year>
 		<manufacturer>Shiru</manufacturer>
 		<rom name="Alter Ego (HB).nes" size="40976" crc="5f322f79"/>
@@ -653,7 +678,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="altercation">
-		<description>Altercation (HB, v0.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Altercation (HB, v0.1)</description>
 		<year>2021</year>
 		<manufacturer>Scottlowe</manufacturer>
 		<rom name="Altercation v0.1 (2021)(Scottlowe).nes" size="40976" crc="27288df5"/>
@@ -669,7 +695,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="amazorundiej" cloneof="amazorundie" romof="amazorundie">
-		<description>Amazons Running Diet (HB, Japan) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Amazons Running Diet (HB, Japan)</description>
 		<year>2017</year>
 		<manufacturer>Ancient</manufacturer>
 		<rom name="Amazons Running Diet (Japan).nes" size="524304" crc="1eced454"/>
@@ -677,7 +704,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="amazorundie">
-		<description>Amazons Running Diet (HB, USA) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Amazons Running Diet (HB, USA)</description>
 		<year>2017</year>
 		<manufacturer>Ancient</manufacturer>
 		<rom name="Amazons Running Diet (USA).nes" size="524304" crc="4db6acdd"/>
@@ -709,7 +737,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="anguna">
-		<description>Anguna - Scourge of the Goblin King (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Anguna - Scourge of the Goblin King (HB)</description>
 		<year>2021</year>
 		<manufacturer>The 6502 Collective</manufacturer>
 		<rom name="Anguna - Scourge of the Goblin King (2021)(The 6502 Collective).nes" size="524304" crc="1119efff"/>
@@ -725,7 +754,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="antenna">
-		<description>Antenna Antics (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Antenna Antics (HB)</description>
 		<year>2021</year>
 		<manufacturer>FG Software</manufacturer>
 		<rom name="Antenna Antics (2021)(FG Software).nes" size="65552" crc="0f5050e6"/>
@@ -741,7 +771,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ao">
-		<description>AO (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>AO (HB)</description>
 		<year>2016</year>
 		<manufacturer>2nd Dimension</manufacturer>
 		<rom name="AO (2016)(2nd Dimension).nes" size="24592" crc="bc0a5f02"/>
@@ -749,7 +780,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="aod" cloneof="ao" romof="ao">
-		<description>AO (HB, Digital Edition) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>AO (HB, Digital Edition)</description>
 		<year>2016</year>
 		<manufacturer>2nd Dimension</manufacturer>
 		<rom name="AO (2016)(2nd Dimension, Digital).nes" size="24592" crc="ae018214"/>
@@ -773,7 +805,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="argosnosenshic" cloneof="rygar" romof="rygar">
-		<description>Argos no Senshi (T-Chi, v1.11) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Argos no Senshi (T-Chi, v1.11)</description>
 		<year>2016</year>
 		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Argos no Senshi (T-Chi, v1.11).nes" size="262160" crc="a1a22c10"/>
@@ -789,7 +822,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="arkaderush">
-		<description>Arkade Rush (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Arkade Rush (HB)</description>
 		<year>2021</year>
 		<manufacturer>Nathan Tolbert</manufacturer>
 		<rom name="Arkade Rush (HB)(2021)(Nathan Tolbert).nes" size="32784" crc="d40c212e"/>
@@ -861,7 +895,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="aspectstarn">
-		<description>Aspect Star N (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Aspect Star N (HB)</description>
 		<year>2019</year>
 		<manufacturer>Nicole Express</manufacturer>
 		<rom name="Aspect Star N (2019)(Nicole Express).nes" size="24592" crc="14b70f98"/>
@@ -869,7 +904,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="assimilate">
-		<description>Assimilate (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Assimilate (HB)</description>
 		<year>2012</year>
 		<manufacturer>Nessylum</manufacturer>
 		<rom name="Assimilate (HB).nes" size="262160" crc="a2d504a8"/>
@@ -901,7 +937,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="astronm">
-		<description>Astro Ninja Man (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Astro Ninja Man (HB)</description>
 		<year>2020</year>
 		<manufacturer>RiKi</manufacturer>
 		<rom name="Astro Ninja Man (2020)(RiKi).nes" size="786448" crc="f709e1e0"/>
@@ -973,7 +1010,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="avmahjongclubc">
-		<description>AV Mahjong Club (T-Chi) (Unl) [Hack]</description>
+		<comment>Hack</comment>
+		<description>AV Mahjong Club (T-Chi) (Unl)</description>
 		<year>2018</year>
 		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="AV Mahjong Club (T-Chi) (Unl).nes" size="262160" crc="663870dd"/>
@@ -1029,7 +1067,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="badapple">
-		<description>Bad Apple (HB, Tech-Demo) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Bad Apple (HB, Tech-Demo)</description>
 		<year>2015</year>
 		<manufacturer>Little Limit</manufacturer>
 		<rom name="bad_apple (2015 v2.5)(Little Limit).nes" size="786448" crc="f96a5a8b"/>
@@ -1141,7 +1180,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bmetal2">
-		<description>Bare Metal 2.0 (HB) [Homebrew, NesDev Competition build]</description>
+		<comment>Homebrew, NesDev Competition build</comment>
+		<description>Bare Metal 2.0 (HB)</description>
 		<year>2021</year>
 		<manufacturer>ScarduaDev</manufacturer>
 		<rom name="bare metal 2.0(2021)(scarduadev).nes" size="49168" crc="e37e0c59"/>
@@ -1229,7 +1269,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bassedefadv">
-		<description>Basse Def Adventures (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Basse Def Adventures (HB)</description>
 		<year>2019</year>
 		<manufacturer>Broke Studio</manufacturer>
 		<rom name="Basse Def Adventures (HB).nes" size="524304" crc="bb87065d"/>
@@ -1237,7 +1278,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="batlizard">
-		<description>Bat Lizard Bonanza (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Bat Lizard Bonanza (HB)</description>
 		<year>2020</year>
 		<manufacturer>John Vanderhoef</manufacturer>
 		<rom name="Bat Lizard Bonanza (2020)(John Vanderhoef).nes" size="524304" crc="4418f0f3"/>
@@ -1261,7 +1303,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="batmavidgamc" cloneof="batmavidgam" romof="batmavidgam">
-		<description>Batman - The Video Game (T-Chi) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Batman - The Video Game (T-Chi)</description>
 		<year>2020</year>
 		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Batman - The Video Game (T-Chi).nes" size="393232" crc="4b2de665"/>
@@ -1293,7 +1336,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="batterychad">
-		<description>Battery Chad - Shock the World (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Battery Chad - Shock the World (HB)</description>
 		<year>2019</year>
 		<manufacturer>Formula Fanboy</manufacturer>
 		<rom name="Battery Chad - Shock the World (2019)(Formula Fanboy).nes" size="524304" crc="030c4355"/>
@@ -1325,7 +1369,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="battlkid">
-		<description>Battle Kid - Fortress of Peril (HB, Japan) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Battle Kid - Fortress of Peril (HB, Japan)</description>
 		<year>2010</year>
 		<manufacturer>Sivak</manufacturer>
 		<rom name="Battle Kid - Fortress of Peril (Japan).nes" size="524304" crc="c7f3a581"/>
@@ -1333,7 +1378,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="battlkid2">
-		<description>Battle Kid 2 - Mountain of Torment (HB, USA) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Battle Kid 2 - Mountain of Torment (HB, USA)</description>
 		<year>2012</year>
 		<manufacturer>Sivak</manufacturer>
 		<rom name="Battle Kid 2 - Mountain of Torment (USA).nes" size="524304" crc="4916dc6d"/>
@@ -1341,7 +1387,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="battlolyc" cloneof="battloly" romof="battloly">
-		<description>Battle of Olympus, The (Europe) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Battle of Olympus, The (Europe) - Castellano v1.1</description>
 		<year>2018</year>
 		<manufacturer>dmlan2000</manufacturer>
 		<rom name="battle of olympus, the (europe) - castellano v1.1.nes" size="131088" crc="ab9d1a2e"/>
@@ -1373,7 +1420,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="battler">
-		<description>Battler (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Battler (HB)</description>
 		<year>2015</year>
 		<manufacturer>Karu Gamo</manufacturer>
 		<rom name="Battler (2015)(Karu Gamo).nes" size="40976" crc="38f65b2d"/>
@@ -1381,7 +1429,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="battleshipc" cloneof="battleship" romof="battleship">
-		<description>Battleship (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Battleship (USA) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="battleship (usa) - castellano v1.0.nes" size="65552" crc="cf1ee9d6"/>
@@ -1429,7 +1478,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="beerslinger">
-		<description>BeerSlinger (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>BeerSlinger (HB)</description>
 		<year>2018</year>
 		<manufacturer>Second Dimension</manufacturer>
 		<rom name="BeerSlinger (HB).nes" size="40976" crc="ae0ebf22"/>
@@ -1445,7 +1495,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="berserk">
-		<description>Berserk (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Berserk (HB)</description>
 		<year>2019</year>
 		<manufacturer>Parisoft</manufacturer>
 		<rom name="Berzerk (2019)(Parisoft).nes" size="65552" crc="25a46b45"/>
@@ -1549,7 +1600,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bioniccommandoc" cloneof="bioniccommando" romof="bioniccommando">
-		<description>Bionic Commando (Japan) - Castellano v1.03 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Bionic Commando (Japan) - Castellano v1.03</description>
 		<year>2013</year>
 		<manufacturer>TheFireRed</manufacturer>
 		<rom name="bionic commando (japan) - castellano v1.03.nes" size="262160" crc="ec5f3e79"/>
@@ -1605,7 +1657,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="blackboxcha">
-		<description>Black Box Challenge (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Black Box Challenge (HB)</description>
 		<year>2017</year>
 		<manufacturer>Sly Dog Studios</manufacturer>
 		<rom name="Black Box Challenge (HB).nes" size="524304" crc="6b30c83b"/>
@@ -1613,7 +1666,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="blackhol">
-		<description>Black Hole - Czarna Dziura (HB, v0.20) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Black Hole - Czarna Dziura (HB, v0.20)</description>
 		<year>2021</year>
 		<manufacturer>Siudym</manufacturer>
 		<rom name="Black Hole - Czarna Dziura (HB, v0.20)(SIUDYM).nes" size="131088" crc="8fd3a9a7"/>
@@ -1621,7 +1675,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bladebuster">
-		<description>Blade Buster (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Blade Buster (HB)</description>
 		<year>2011</year>
 		<manufacturer>HLC! Project (tm)</manufacturer>
 		<rom name="Blade Buster (HB).nes" size="393232" crc="3aba6565"/>
@@ -1637,7 +1692,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="blastermasterc" cloneof="blastermaster" romof="blastermaster">
-		<description>Blaster Master (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Blaster Master (USA) - Castellano v1.0</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="blaster master (usa) - castellano v1.0.nes" size="262160" crc="b63123db"/>
@@ -1653,7 +1709,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="blazrang">
-		<description>Blazing Rangers (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Blazing Rangers (HB)</description>
 		<year>2021</year>
 		<manufacturer>Karu Gamo</manufacturer>
 		<rom name="Blazing Rangers (2021)(Karu Gamo).nes" size="40976" crc="f11f92b4"/>
@@ -1669,7 +1726,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="blobquest">
-		<description>Blob Quest (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Blob Quest (HB)</description>
 		<year>2021</year>
 		<manufacturer>Tom Livak</manufacturer>
 		<rom name="Blob Quest (HB)(2021)(Tom Livak).nes" size="32784" crc="e3ac2b6d"/>
@@ -1685,7 +1743,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="blockage">
-		<description>Blockage (HB, v0.3.2) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Blockage (HB, v0.3.2)</description>
 		<year>2019</year>
 		<manufacturer>Scott Lowe</manufacturer>
 		<rom name="Blockage (HB, v0.3.2).nes" size="40976" crc="1c5f7bcf"/>
@@ -1701,7 +1760,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bloodfall">
-		<description>Bloodfall (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Bloodfall (HB)</description>
 		<year>2019</year>
 		<manufacturer>Dr. Ludos</manufacturer>
 		<rom name="Bloodfall (HB).nes" size="40976" crc="3c5548ef"/>
@@ -1725,7 +1785,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="blowemout">
-		<description>Blow'Em Out! (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Blow'Em Out! (HB)</description>
 		<year>2018</year>
 		<manufacturer>Second Dimension</manufacturer>
 		<rom name="Blow'Em Out! (HB).nes" size="40976" crc="dc1468fc"/>
@@ -1757,7 +1818,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bobl">
-		<description>BoBL (HB, v1.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>BoBL (HB, v1.1)</description>
 		<year>2020</year>
 		<manufacturer>Morphcat Games</manufacturer>
 		<rom name="bobl (HB).nes" size="65552" crc="831956ea"/>
@@ -1773,7 +1835,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bombsweeper">
-		<description>Bomb Sweeper (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Bomb Sweeper (HB)</description>
 		<year>2002</year>
 		<manufacturer>SNOWBRO</manufacturer>
 		<rom name="Bomb Sweeper (HB).nes" size="24592" crc="e667858d"/>
@@ -1789,7 +1852,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bomberboxart">
-		<description>Bomberman - BoxArt (HB, v1.02) [Hack, Homebrew]</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Bomberman - BoxArt (HB, v1.02)</description>
 		<year>2017</year>
 		<manufacturer>Corpse Grinder</manufacturer>
 		<rom name="Bomberman - BoxArt v1.02 (2017)(Corpse Grinder).nes" size="32784" crc="cb68a7fc"/>
@@ -1837,7 +1901,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mojontwiboo">
-		<description>Bootee (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Bootee (HB)</description>
 		<year>2018</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Mojon Twins - Bootee (HB).nes" size="40976" crc="c71f42bc"/>
@@ -1853,7 +1918,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bowsette2" cloneof="smb2" romof="smb2">
-		<description>Bowsette 2 (Hack, Red version) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Bowsette 2 (Hack, Red version)</description>
 		<year>2019</year>
 		<manufacturer>Zynk Oxhyde</manufacturer>
 		<rom name="Bowsette 2 (Hack).nes" size="262160" crc="94390680"/>
@@ -1861,7 +1927,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bramstosdrac" cloneof="bramstosdra" romof="bramstosdra">
-		<description>Bram Stoker's Dracula (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Bram Stoker's Dracula (USA) - Castellano v1.0</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="bram stoker's dracula (usa) - castellano v1.0.nes" size="262160" crc="d6eb5f83"/>
@@ -1901,7 +1968,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bubblebobbledx" cloneof="bubblebobble" romof="bubblebobble">
-		<description>Bubble Bobble Deluxe (Hack, HB) [Hack, Homebrew]</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Bubble Bobble Deluxe (Hack, HB)</description>
 		<year>2018</year>
 		<manufacturer>Polar Hacker</manufacturer>
 		<rom name="Bubble Bobble Deluxe (2021)(Polar Hacker).nes" size="163856" crc="198125ce"/>
@@ -1997,7 +2065,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cadaverion">
-		<description>Cadaverion (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Cadaverion (HB)</description>
 		<year>2018</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Cadaverion (2018)(Mojon Twins).nes" size="40976" crc="6a45c96a"/>
@@ -2101,7 +2170,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="captatsuvoliic" cloneof="captatsuvolii" romof="captatsuvolii">
-		<description>Captain Tsubasa Vol. II - Super Striker (Japan) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Captain Tsubasa Vol. II - Super Striker (Japan) - Castellano v1.0</description>
 		<year>2013</year>
 		<manufacturer>pepodmc</manufacturer>
 		<rom name="captain tsubasa vol. ii - super striker (japan) - castellano v1.0.nes" size="393233" crc="49c692c5"/>
@@ -2125,7 +2195,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="carpetshark">
-		<description>Carpet Shark (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Carpet Shark (HB)</description>
 		<year>2021</year>
 		<manufacturer>Fista Productions</manufacturer>
 		<rom name="Carpet Shark (2021)(Fista Productions).nes" size="524304" crc="8ab5f2e0"/>
@@ -2181,7 +2252,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="castlevaniac" cloneof="castlevania" romof="castlevania">
-		<description>Castlevania (USA) - Castellano 1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Castlevania (USA) - Castellano 1.0</description>
 		<year>2012</year>
 		<manufacturer>Julian L.</manufacturer>
 		<rom name="castlevania (usa) - castellano 1.0.nes" size="131088" crc="de2e6b55"/>
@@ -2205,7 +2277,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="castliic" cloneof="castlii" romof="castlii">
-		<description>Castlevania II - Simon's Quest (USA) - Castellano v2.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Castlevania II - Simon's Quest (USA) - Castellano v2.0</description>
 		<year>2013</year>
 		<manufacturer>Julian L.</manufacturer>
 		<rom name="castlevania ii - simon's quest (usa) - castellano v2.0.nes" size="262160" crc="38d393a9"/>
@@ -2253,7 +2326,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cave">
-		<description>Cave (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Cave (HB)</description>
 		<year>2017</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="cave (2017)(mojon twins).nes" size="49168" crc="b86ce86b"/>
@@ -2317,7 +2391,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="chase">
-		<description>Chase (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Chase (HB)</description>
 		<year>2012</year>
 		<manufacturer>Shiru</manufacturer>
 		<rom name="Chase (2012)(shiru).nes" size="24592" crc="b887529d"/>
@@ -2325,7 +2400,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cheman">
-		<description>Che-Man (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Che-Man (HB)</description>
 		<year>2018</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Che-Man (HB).nes" size="40976" crc="9677c8a1"/>
@@ -2333,7 +2409,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cherilpc">
-		<description>Cheril Perils Classic (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Cheril Perils Classic (HB)</description>
 		<year>2018</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Cheril Perils Classic (2018)(Mojon Twins).nes" size="40976" crc="8132afd5"/>
@@ -2341,7 +2418,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mojontwichegod">
-		<description>Cheril The Goddess (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Cheril The Goddess (HB)</description>
 		<year>2017</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Mojon Twins - Cheril The Goddess (HB).nes" size="65552" crc="e7c81856"/>
@@ -2349,7 +2427,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mojontwichewri">
-		<description>Cheril The Writer (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Cheril The Writer (HB)</description>
 		<year>2018</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Mojon Twins - Cheril The Writer (HB).nes" size="131088" crc="2405a68f"/>
@@ -2405,7 +2484,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="chipndalresrac" cloneof="chipndalresra" romof="chipndalresra">
-		<description>Chip 'n Dale - Rescue Rangers (USA) - Castellano v0.9 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Chip 'n Dale - Rescue Rangers (USA) - Castellano v0.9</description>
 		<year>20XX?</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="chip 'n dale - rescue rangers (usa) - castellano v0.9.nes" size="262160" crc="7c6aed46"/>
@@ -2421,7 +2501,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="chipndalresra2c" cloneof="chipndalresra2" romof="chipndalresra2">
-		<description>Chip 'n Dale - Rescue Rangers 2 (USA) - Castellano v0.99 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Chip 'n Dale - Rescue Rangers 2 (USA) - Castellano v0.99</description>
 		<year>2019</year>
 		<manufacturer>jackic</manufacturer>
 		<rom name="chip 'n dale - rescue rangers 2 (usa) - castellano v0.99.nes" size="262160" crc="aa6e37e6"/>
@@ -2493,7 +2574,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="chknight">
-		<description>Chrono Knight (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Chrono Knight (HB)</description>
 		<year>2020</year>
 		<manufacturer>Artix Games</manufacturer>
 		<rom name="Chrono Knight (2020)(Artix Games).nes" size="524304" crc="88a47918"/>
@@ -2509,7 +2591,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="chumleeadv">
-		<description>Chumlee's Adventure - the quest for Pinky (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Chumlee's Adventure - the quest for Pinky (HB)</description>
 		<year>2020</year>
 		<manufacturer>Khan Games</manufacturer>
 		<rom name="Chumlee Adventure (2020)(Khan Games).nes" size="131088" crc="0f81f876"/>
@@ -2549,7 +2632,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="citytrouble">
-		<description>City Trouble (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>City Trouble (HB)</description>
 		<year>2016</year>
 		<manufacturer>Den Kat Games</manufacturer>
 		<rom name="City Trouble (HB).nes" size="40976" crc="2481be7e"/>
@@ -2581,7 +2665,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cmc80sdemo">
-		<description>CMC 80's Demo (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>CMC 80's Demo (HB)</description>
 		<year>2000</year>
 		<manufacturer>Chris Covell</manufacturer>
 		<rom name="CMC 80's Demo (HB).nes" size="49168" crc="0135b0e8"/>
@@ -2685,7 +2770,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="contrac" cloneof="contra" romof="contra">
-		<description>Contra (T-Chi) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Contra (T-Chi)</description>
 		<year>2017</year>
 		<manufacturer>FlameCyclone</manufacturer>
 		<rom name="Contra (T-Chi).nes" size="393232" crc="2a39628d"/>
@@ -2701,7 +2787,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="contracast" cloneof="contra" romof="contra">
-		<description>Contra (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Contra (USA) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="contra (usa) - castellano v1.0.nes" size="131088" crc="6a56fc08"/>
@@ -2741,7 +2828,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="contraforcec" cloneof="contraforce" romof="contraforce">
-		<description>Contra Force (2nd option, T-Chi) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Contra Force (2nd option, T-Chi)</description>
 		<year>2018</year>
 		<manufacturer>Tan Xiao Feng Sheng</manufacturer>
 		<rom name="Contra Force (T-Chi).nes" size="524304" crc="cf2a15fb"/>
@@ -2821,7 +2909,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cowligam2ndadv">
-		<description>Cowlitz Gamers 2nd Adventure (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Cowlitz Gamers 2nd Adventure (HB)</description>
 		<year>2017</year>
 		<manufacturer>Cowlitz</manufacturer>
 		<rom name="Cowlitz Gamers 2nd Adventure (HB).nes" size="131088" crc="0db2dd59"/>
@@ -2829,7 +2918,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cowligamadv">
-		<description>Cowlitz Gamers Adventure (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Cowlitz Gamers Adventure (HB)</description>
 		<year>2016</year>
 		<manufacturer>Cowlitz</manufacturer>
 		<rom name="Cowlitz Gamers Adventure (HB).nes" size="32784" crc="0ae2354b"/>
@@ -2837,7 +2927,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cowligamlostadv">
-		<description>Cowlitz Gamers Lost Adventure (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Cowlitz Gamers Lost Adventure (HB)</description>
 		<year>2020</year>
 		<manufacturer>Cowlitz</manufacturer>
 		<rom name="Cowlitz Gamers Lost Adventure (2020)(Cowlitz).nes" size="65552" crc="6ded904f"/>
@@ -2845,7 +2936,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="crapjob">
-		<description>Crap Job (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Crap Job (HB)</description>
 		<year>2021</year>
 		<manufacturer>Oniric Factor</manufacturer>
 		<rom name="Crap Job (2021)(Oniric Factor).nes" size="524304" crc="cfa265ab"/>
@@ -2877,7 +2969,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="creepybrawlers">
-		<description>Creepy Brawlers (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Creepy Brawlers (HB)</description>
 		<year>2017</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Creepy Brawlers (HB).nes" size="524304" crc="c8f05be4"/>
@@ -2917,7 +3010,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="crypto">
-		<description>Crypto (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Crypto (HB)</description>
 		<year>2016</year>
 		<manufacturer>EEMU</manufacturer>
 		<rom name="Crypto (HB).nes" size="49168" crc="45aaa381"/>
@@ -2925,7 +3019,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="crystalisc" cloneof="crystalis" romof="crystalis">
-		<description>Crystalis (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Crystalis (USA) - Castellano v1.0</description>
 		<year>2014</year>
 		<manufacturer>Teterilla</manufacturer>
 		<rom name="crystalis (usa) - castellano v1.0.nes" size="393232" crc="b23c737c"/>
@@ -2965,7 +3060,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dai2jisuprotajc" cloneof="dai2jisuprota" romof="dai2jisuprota">
-		<description>Dai-2-ji Super Robot Taisen (Japan) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Dai-2-ji Super Robot Taisen (Japan) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Max1323</manufacturer>
 		<rom name="Dai-2-ji Super Robot Taisen (Japan) - Castellano v1.0.nes" size="524304" crc="5b7ab480"/>
@@ -2973,7 +3069,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dai2jisuprotaji" cloneof="dai2jisuprota" romof="dai2jisuprota">
-		<description>Dai-2-ji Super Robot Taisen (Japan) - Italian v0.98 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Dai-2-ji Super Robot Taisen (Japan) - Italian v0.98</description>
 		<year>2019</year>
 		<manufacturer>Wolfgare</manufacturer>
 		<rom name="Super Robot Taisen (it) v0.98i (2019)(Wolfgare).nes" size="524304" crc="dfd59e4e"/>
@@ -3005,7 +3102,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="daikunogensanc" cloneof="daikunogensan" romof="daikunogensan">
-		<description>Daiku no Gen-san (T-Chi) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Daiku no Gen-san (T-Chi)</description>
 		<year>2019</year>
 		<manufacturer>MEZARANSU</manufacturer>
 		<rom name="Daiku no Gen-san (T-Chi).nes" size="393232" crc="f0543c45"/>
@@ -3021,7 +3119,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="daikunogensan2c" cloneof="daikunogensan2" romof="daikunogensan2">
-		<description>Daiku no Gen-san 2 - Akage no Dan no Gyakushuu (T-Chi) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Daiku no Gen-san 2 - Akage no Dan no Gyakushuu (T-Chi)</description>
 		<year>2019</year>
 		<manufacturer>Advance Team &amp; DMG Team</manufacturer>
 		<rom name="Daiku no Gen-san 2 - Akage no Dan no Gyakushuu (T-Chi).nes" size="524304" crc="66c08cd8"/>
@@ -3045,7 +3144,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dgimmick" cloneof="gimmick" romof="gimmick">
-		<description>Dark Gimmick (HB, v1.1) [Hack, Homebrew]</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Dark Gimmick (HB, v1.1)</description>
 		<year>2014</year>
 		<manufacturer>Berion - Dizzy9</manufacturer>
 		<rom name="Dark Gimmick v1.1 (2014).nes" size="393232" crc="d7ddb1d6"/>
@@ -3061,7 +3161,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="darkmanc" cloneof="darkman" romof="darkman">
-		<description>Darkman (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Darkman (USA) - Castellano v1.0</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="darkman (usa) - castellano v1.0.nes" size="262160" crc="e2cb1c36"/>
@@ -3077,7 +3178,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="darkwingduckc" cloneof="darkwingduck" romof="darkwingduck">
-		<description>Darkwing Duck (T-Chi) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Darkwing Duck (T-Chi)</description>
 		<year>2020</year>
 		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Darkwing Duck (T-Chi).nes" size="393232" crc="585f3500"/>
@@ -3213,7 +3315,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="demondistrict">
-		<description>Demon District (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Demon District (HB)</description>
 		<year>2019</year>
 		<manufacturer>Klonoa</manufacturer>
 		<rom name="Demon District (HB).nes" size="319504" crc="33e22dcb"/>
@@ -3301,7 +3404,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="diehardc" cloneof="diehard" romof="diehard">
-		<description>Die Hard (USA) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Die Hard (USA) - Castellano v1.1</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="die hard (usa) - castellano v1.1.nes" size="262160" crc="602b9a29"/>
@@ -3389,7 +3493,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="aladdinc" cloneof="aladdin" romof="aladdin">
-		<description>Disney's Aladdin (Europe) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Disney's Aladdin (Europe) - Castellano v1.0</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="disney's aladdin (europe) - castellano v1.0.nes" size="262160" crc="b857fcf2"/>
@@ -3501,7 +3606,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="doodleworld">
-		<description>Doodle World (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Doodle World (HB)</description>
 		<year>2020</year>
 		<manufacturer>Nate Peters</manufacturer>
 		<rom name="Doodle World (2020)(Nate Peters).nes" size="524304" crc="6c71a681"/>
@@ -3557,7 +3663,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="doubledragonc" cloneof="doubledragon" romof="doubledragon">
-		<description>Double Dragon (USA) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Double Dragon (USA) - Castellano v1.1</description>
 		<year>2021</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="double dragon (usa) - castellano v1.1.nes" size="262160" crc="f5e19c32"/>
@@ -3573,7 +3680,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="doubldraiic" cloneof="doubldraii" romof="doubldraii">
-		<description>Double Dragon II - The Revenge (USA) (Rev A) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Double Dragon II - The Revenge (USA) (Rev A) - Castellano v1.0</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="double dragon ii - the revenge (usa) (rev a) - castellano v1.0.nes" size="262160" crc="67a0d781"/>
@@ -3589,7 +3697,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="doubldraiiic" cloneof="doubldraiii" romof="doubldraiii">
-		<description>Double Dragon III - The Sacred Stones (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Double Dragon III - The Sacred Stones (USA) - Castellano v1.0</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="double dragon iii - the sacred stones (usa) - castellano v1.0.nes" size="262160" crc="aa40b251"/>
@@ -3773,7 +3882,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragobalzsupbu2c" cloneof="dragobalzsupbu2" romof="dragobalzsupbu2">
-		<description>Dragon Ball Z - Super Butouden 2 (Unl) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Dragon Ball Z - Super Butouden 2 (Unl) - Castellano v1.1</description>
 		<year>2017</year>
 		<manufacturer>Terwilf</manufacturer>
 		<rom name="dragon ball z - super butouden 2 (unl) - castellano v1.1.nes" size="393232" crc="8e8ebd23"/>
@@ -3821,7 +3931,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragobalziiirejinic" cloneof="dragobalziiirejini" romof="dragobalziiirejini">
-		<description>Dragon Ball Z III - Ressen Jinzou Ningen (Japan) - Castellano v1.0a [Hack]</description>
+		<comment>Hack</comment>
+		<description>Dragon Ball Z III - Ressen Jinzou Ningen (Japan) - Castellano v1.0a</description>
 		<year>2016</year>
 		<manufacturer>TransGen</manufacturer>
 		<rom name="dragon ball z iii - ressen jinzou ningen (japan) - castellano v1.0a.nes" size="524304" crc="ff1d3cf3"/>
@@ -3845,7 +3956,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragonbusterc" cloneof="dragonbuster" romof="dragonbuster">
-		<description>Dragon Buster (Japan) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Dragon Buster (Japan) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Max1323</manufacturer>
 		<rom name="dragon buster (japan) - castellano v1.0.nes" size="163856" crc="e718a85d"/>
@@ -3949,7 +4061,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragonwarriorc" cloneof="dragonwarrior" romof="dragonwarrior">
-		<description>Dragon Warrior (USA) (Rev A) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Dragon Warrior (USA) (Rev A) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="dragon warrior (usa) (rev a) - castellano v1.0.nes" size="81936" crc="7442bd9f"/>
@@ -3973,7 +4086,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragowariiic" cloneof="dragowariii" romof="dragowariii">
-		<description>Dragon Warrior III (USA) - Castellano v0.9 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Dragon Warrior III (USA) - Castellano v0.9</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="dragon warrior iii (usa) - castellano v0.9.nes" size="524304" crc="c3d2f589"/>
@@ -3989,7 +4103,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragowarivc" cloneof="dragowariv" romof="dragowariv">
-		<description>Dragon Warrior IV (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Dragon Warrior IV (USA) - Castellano v1.0</description>
 		<year>2016</year>
 		<manufacturer>Butz Klauser</manufacturer>
 		<rom name="dragon warrior iv (usa) - castellano v1.0.nes" size="524304" crc="f5577473"/>
@@ -4005,7 +4120,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragonslairc" cloneof="dragonslair" romof="dragonslair">
-		<description>Dragon's Lair (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Dragon's Lair (USA) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="dragon's lair (usa) - castellano v1.0.nes" size="131088" crc="db3d2678"/>
@@ -4021,7 +4137,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="draiocht">
-		<description>Draiocht (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Draiocht (HB)</description>
 		<year>2019</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Draiocht (HB).nes" size="40976" crc="3e7aa82d"/>
@@ -4037,7 +4154,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="driar">
-		<description>Driar (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Driar (HB)</description>
 		<year>2018</year>
 		<manufacturer>Eriksson &amp; Adolfsson</manufacturer>
 		<rom name="Driar (2012)(Eriksson &amp; Adolfsson).nes" size="131088" crc="2c31ce23"/>
@@ -4085,7 +4203,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ducktalesc" cloneof="ducktales" romof="ducktales">
-		<description>DuckTales (USA) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>DuckTales (USA) - Castellano v1.1</description>
 		<year>2017</year>
 		<manufacturer>Darkchaosblast</manufacturer>
 		<rom name="duck tales (usa) - castellano v1.1.nes" size="131088" crc="fcb58532"/>
@@ -4101,7 +4220,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ducktales2c" cloneof="ducktales2" romof="ducktales2">
-		<description>DuckTales 2 (T-Chi, v1.1) [Hack]</description>
+		<comment>Hack</comment>
+		<description>DuckTales 2 (T-Chi, v1.1)</description>
 		<year>2019</year>
 		<manufacturer>DMG Team</manufacturer>
 		<rom name="DuckTales 2 (T-Chi, v1.1).nes" size="262160" crc="794dbb67"/>
@@ -4109,7 +4229,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ducktales2cast" cloneof="ducktales2" romof="ducktales2">
-		<description>DuckTales 2 (USA) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>DuckTales 2 (USA) - Castellano v1.1</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="duck tales 2 (usa) - castellano v1.1.nes" size="131088" crc="908c28ff"/>
@@ -4141,7 +4262,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dungdoom">
-		<description>Dungeons &amp; Doomknights (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Dungeons &amp; Doomknights (HB)</description>
 		<year>2021</year>
 		<manufacturer>Artix Entertainment</manufacturer>
 		<rom name="Dungeons &amp; Doomknights (2021)(Artix Ent.).nes" size="524304" crc="456fa82a"/>
@@ -4149,7 +4271,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dushlan">
-		<description>Dushlan (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Dushlan (HB)</description>
 		<year>2016</year>
 		<manufacturer>Peter McQuillan</manufacturer>
 		<rom name="Dushlan (2016)(Peter McQuillan).nes" size="40976" crc="07614f71"/>
@@ -4189,7 +4312,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="et">
-		<description>E.T. - The Extra Terrestrial (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>E.T. - The Extra Terrestrial (HB)</description>
 		<year>2014</year>
 		<manufacturer>Khan Games</manufacturer>
 		<rom name="E.T. (2014)(Khan Games).nes" size="131088" crc="c1878830"/>
@@ -4197,7 +4321,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="etdx" cloneof="et" romof="et">
-		<description>E.T. - The Extra Terrestrial DX (HB) [Hack, Homebrew]</description>
+		<comment>Hack, Homebrew</comment>
+		<description>E.T. - The Extra Terrestrial DX (HB)</description>
 		<year>2019</year>
 		<manufacturer>Khan Games -pacnsacdave</manufacturer>
 		<rom name="E.T. The Extra Terrestrial DX (2019)(pacnsacdave).nes" size="524304" crc="ac82d2b4"/>
@@ -4205,7 +4330,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="earthboundc" cloneof="earthbound" romof="earthbound">
-		<description>Earth Bound (USA) (Proto) - Castellano v2.2 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Earth Bound (USA) (Proto) - Castellano v2.2</description>
 		<year>2016</year>
 		<manufacturer>OAD</manufacturer>
 		<rom name="earth bound (usa) (proto) - castellano v2.2.nes" size="524304" crc="d80e3217"/>
@@ -4213,7 +4339,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="earthboundzeroc" cloneof="earthbound" romof="earthbound">
-		<description>Earth Bound Zero (USA) - Castellano v0.99 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Earth Bound Zero (USA) - Castellano v0.99</description>
 		<year>201?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="earth bound zero (usa) - castellano v0.99.nes" size="524304" crc="2e24c315"/>
@@ -4221,7 +4348,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="earthboundzero" cloneof="earthbound" romof="earthbound">
-		<description>Earth Bound Zero (USA) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Earth Bound Zero (USA)</description>
 		<year>201?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="earth bound zero (usa).nes" size="524304" crc="6a5e39e2"/>
@@ -4237,7 +4365,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="eeeaaaooo">
-		<description>EEEAAAOOO (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>EEEAAAOOO (HB)</description>
 		<year>2020</year>
 		<manufacturer>N.K</manufacturer>
 		<rom name="EEEAAAOOO (HB).nes" size="589840" crc="ea1cb7b6"/>
@@ -4261,7 +4390,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="elevatoractionc" cloneof="elevatoraction" romof="elevatoraction">
-		<description>Elevator Action (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Elevator Action (USA) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="elevator action (usa) - castellano v1.0.nes" size="40976" crc="cb844314"/>
@@ -4317,7 +4447,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="eskimbobdeledi">
-		<description>Eskimo Bob Deluxe Edition (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Eskimo Bob Deluxe Edition (HB)</description>
 		<year>2019</year>
 		<manufacturer>Spoony Bard Productions</manufacturer>
 		<rom name="Eskimo Bob Deluxe Edition (HB).nes" size="65552" crc="a3b7848f"/>
@@ -4349,7 +4480,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="espitene">
-		<description>Espitene (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Espitene (HB)</description>
 		<year>2018</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Espitene (2018)(The Mojon Twins).nes" size="65552" crc="1f80c94e"/>
@@ -4357,7 +4489,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="espitundherpim">
-		<description>Espitenen und herr pimponen (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Espitenen und herr pimponen (HB)</description>
 		<year>2019</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Espitenen und herr pimponen (HB).nes" size="65552" crc="ea5fa8a8"/>
@@ -4365,7 +4498,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="evildead">
-		<description>Evil Dead - Ash lives! (Hack) [Hack, Homebrew]</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Evil Dead - Ash lives! (Hack)</description>
 		<year>2020</year>
 		<manufacturer>Crying Onion</manufacturer>
 		<rom name="Evil Dead Ash lives! (2020)(Crying Onion).nes" size="262160" crc="2ce2ead0"/>
@@ -4413,7 +4547,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="expedition">
-		<description>Expedition (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Expedition (HB)</description>
 		<year>2017</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Expedition (HB).nes" size="393232" crc="1b83916d"/>
@@ -4421,7 +4556,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="explodingfistpi" cloneof="explodingfist" romof="explodingfist">
-		<description>Exploding Fist (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Exploding Fist (HB)</description>
 		<year>2018</year>
 		<manufacturer>Piko Interactive</manufacturer>
 		<rom name="Exploding Fist (2018)(Piko Interactive).nes" size="65552" crc="4017b398"/>
@@ -4437,7 +4573,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="eyra">
-		<description>Eyra - The Crow Maiden (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Eyra - The Crow Maiden (HB)</description>
 		<year>2020</year>
 		<manufacturer>2nd Dimension</manufacturer>
 		<rom name="Eyra the Crow Maiden (2020)(2nd Dimension).nes" size="40976" crc="1415153d"/>
@@ -4501,7 +4638,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ftheta">
-		<description>F-Theta (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>F-Theta (HB)</description>
 		<year>2021</year>
 		<manufacturer>Little Sound Soft</manufacturer>
 		<rom name="F-Theta (2021)(Little Sound)_MirroringFix.nes" size="262160" crc="7bd2813c"/>
@@ -4525,7 +4663,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="fallingtiles">
-		<description>Falling Tiles (HB, rev.B) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Falling Tiles (HB, rev.B)</description>
 		<year>2020</year>
 		<manufacturer>Doug Fraker</manufacturer>
 		<rom name="Falling Tiles (HB, rev.B).nes" size="40976" crc="5b8fcd00"/>
@@ -4597,7 +4736,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="familypicross">
-		<description>Family Picross! (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Family Picross! (HB)</description>
 		<year>2018</year>
 		<manufacturer>FG Software</manufacturer>
 		<rom name="Family Picross! (HB).nes" size="40976" crc="bd459402"/>
@@ -4645,7 +4785,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="famista93e" cloneof="famista93" romof="famista93">
-		<description>Famista '93 (Hack - T-Eng) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Famista '93 (Hack - T-Eng)</description>
 		<year>20XX?</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="famista '93 (t-eng).nes" size="262160" crc="d9301c12"/>
@@ -4725,7 +4866,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="faxanaduc" cloneof="faxanadu" romof="faxanadu">
-		<description>Faxanadu (USA) (Rev A) - Castellano v0.7 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Faxanadu (USA) (Rev A) - Castellano v0.7</description>
 		<year>2016</year>
 		<manufacturer>Dirak</manufacturer>
 		<rom name="faxanadu (usa) (rev a) - castellano v0.7.nes" size="262160" crc="181b0549"/>
@@ -4813,7 +4955,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="filthyktcn">
-		<description>Filthy Kitchen (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Filthy Kitchen (HB)</description>
 		<year>2016</year>
 		<manufacturer>Dustmop</manufacturer>
 		<rom name="Filthy Kitchen (2016)(Dustmop).nes" size="65552" crc="a22cdf8a"/>
@@ -4829,7 +4972,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="finalfantasyc" cloneof="finalfantasy" romof="finalfantasy">
-		<description>Final Fantasy (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Final Fantasy (USA) - Castellano v1.0</description>
 		<year>2002</year>
 		<manufacturer>Cunaaao</manufacturer>
 		<rom name="final fantasy (usa) - castellano v1.0.nes" size="262160" crc="83a1074c"/>
@@ -4861,7 +5005,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="finalfantasyiic" cloneof="finalfantasyii" romof="finalfantasyii">
-		<description>Final Fantasy II (Japan) (Headered) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Final Fantasy II (Japan) (Headered) - Castellano v1.0</description>
 		<year>20XX?</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="final fantasy ii (japan) (headered) - castellano v1.0.nes" size="262160" crc="3fba77eb"/>
@@ -4877,7 +5022,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="finalfaniiic" cloneof="finalfaniii" romof="finalfaniii">
-		<description>Final Fantasy III (Japan) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Final Fantasy III (Japan) - Castellano v1.0</description>
 		<year>2015</year>
 		<manufacturer>Maeson</manufacturer>
 		<rom name="final fantasy iii (japan) - castellano v1.0.nes" size="1048592" crc="b328a638"/>
@@ -4949,7 +5095,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="firerescue">
-		<description>Fire and Rescue (HB, v1.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Fire and Rescue (HB, v1.1)</description>
 		<year>2021</year>
 		<manufacturer>Skyboy Games</manufacturer>
 		<rom name="Fire and Rescue v1.1 (2021)(Skyboy Games).nes" size="40976" crc="3a233cd9"/>
@@ -5045,7 +5192,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="flappybird">
-		<description>Flappy Bird (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Flappy Bird (HB)</description>
 		<year>2014</year>
 		<manufacturer>Nioreh</manufacturer>
 		<rom name="Flappy Bird (HB).nes" size="24592" crc="3653c07d"/>
@@ -5053,7 +5201,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="flea">
-		<description>FLEA! (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>FLEA! (HB)</description>
 		<year>2020</year>
 		<manufacturer>Lowtek</manufacturer>
 		<rom name="flea! (HB).nes" size="524304" crc="d208c6da"/>
@@ -5061,7 +5210,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="fleademo" cloneof="flea" romof="flea">
-		<description>FLEA! demo (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>FLEA! demo (HB)</description>
 		<year>2019</year>
 		<manufacturer>Lowtek</manufacturer>
 		<rom name="flea! demo (HB).nes" size="524304" crc="6d18f7c4"/>
@@ -5109,7 +5259,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="fluffy">
-		<description>Fluffy Space Escape (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Fluffy Space Escape (HB)</description>
 		<year>2018</year>
 		<manufacturer>Ludum Dare 40</manufacturer>
 		<rom name="Fluffy Space Escape (2018)(Ludum Dare 40).nes" size="81936" crc="ddd06400"/>
@@ -5181,7 +5332,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="frenzy">
-		<description>Frenzy A7800 (HB) [Homebrew, The Atari 7800 Frenzy on NES (conversion)]</description>
+		<comment>Homebrew, The Atari 7800 Frenzy on NES (conversion)</comment>
+		<description>Frenzy A7800 (HB)</description>
 		<year>2016</year>
 		<manufacturer>Bob Decrescenzo</manufacturer>
 		<rom name="Frenzy A7800 (2016)(Bob Decrescenzo).nes" size="40976" crc="82b0f8f4"/>
@@ -5189,7 +5341,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="fridaythe13thc" cloneof="fridaythe13th" romof="fridaythe13th">
-		<description>Friday the 13th (USA) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Friday the 13th (USA) - Castellano v1.1</description>
 		<year>2017</year>
 		<manufacturer>JONNYVILLA2088</manufacturer>
 		<rom name="friday the 13th (usa) - castellano v1.1.nes" size="65552" crc="abecfd68"/>
@@ -5205,7 +5358,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="frog">
-		<description>Frog (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Frog (HB)</description>
 		<year>2020</year>
 		<manufacturer>Boston Breams</manufacturer>
 		<rom name="Frog (2020)(Boston Breams).nes" size="393232" crc="06d96b55"/>
@@ -5213,7 +5367,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="frombelow">
-		<description>From Below (HB, v1.0) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>From Below (HB, v1.0)</description>
 		<year>2020</year>
 		<manufacturer>Goose2k</manufacturer>
 		<rom name="From Below (HB, v1.0).nes" size="40976" crc="8ce49adb"/>
@@ -5317,7 +5472,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="galf">
-		<description>Galf (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Galf (HB)</description>
 		<year>2018</year>
 		<manufacturer>Limited Run Games</manufacturer>
 		<rom name="Galf (2018)(Limited Run Games).nes" size="262160" crc="52340070"/>
@@ -5333,7 +5489,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ganbaregoemon2c" cloneof="ganbaregoemon2" romof="ganbaregoemon2">
-		<description>Ganbare Goemon 2 (Japan) - Castellano v0.99 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Ganbare Goemon 2 (Japan) - Castellano v0.99</description>
 		<year>2021</year>
 		<manufacturer>jackic</manufacturer>
 		<rom name="ganbare goemon 2 (japan) - castellano v0.99.nes" size="262160" crc="eca0d0e1"/>
@@ -5357,7 +5514,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ganbagoegaic" cloneof="ganbagoegai" romof="ganbagoegai">
-		<description>Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Japan) - Castellano v0.99 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Japan) - Castellano v0.99</description>
 		<year>2021</year>
 		<manufacturer>jackic</manufacturer>
 		<rom name="ganbare goemon gaiden - kieta ougon kiseru (japan) - castellano v0.99.nes" size="524304" crc="90ac0bda"/>
@@ -5397,7 +5555,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ganbagoec" cloneof="ganbagoe" romof="ganbagoe">
-		<description>Ganbare Goemon! - Karakuri Douchuu (Japan) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Ganbare Goemon! - Karakuri Douchuu (Japan) - Castellano v1.0</description>
 		<year>2018</year>
 		<manufacturer>jackic</manufacturer>
 		<rom name="ganbare goemon! - karakuri douchuu (japan) - castellano v1.0.nes" size="262160" crc="bf99d7e4"/>
@@ -5565,7 +5724,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="getemgary">
-		<description>Get'Em Gary (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Get'Em Gary (HB)</description>
 		<year>2016</year>
 		<manufacturer>Second Dimension</manufacturer>
 		<rom name="Get'Em Gary (HB).nes" size="40976" crc="b559ce3e"/>
@@ -5605,7 +5765,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ghostbrm">
-		<description>Ghostbusters Remastered (HB, v1.1) [Hack, Homebrew]</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Ghostbusters Remastered (HB, v1.1)</description>
 		<year>2019</year>
 		<manufacturer>NesRocks</manufacturer>
 		<rom name="Ghostbusters Remastered v1.1 (2019)(Nesrocks).nes" size="98320" crc="29c2e0d0"/>
@@ -5629,7 +5790,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ghoulgrind">
-		<description>Ghoul Grind Night of the Necromancer (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Ghoul Grind Night of the Necromancer (HB)</description>
 		<year>2021</year>
 		<manufacturer>WoogWorx</manufacturer>
 		<rom name="Ghoul Grind Night of the Necromancer (2021)(WoogWorx).nes" size="524304" crc="3557252e"/>
@@ -5709,7 +5871,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gggg">
-		<description>Gold Guardian Gun Girl (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Gold Guardian Gun Girl (HB)</description>
 		<year>2020</year>
 		<manufacturer>Good Tune</manufacturer>
 		<rom name="Gold Guardian Gun Girl (2020)(Good Tune).nes" size="40976" crc="a0e59e67"/>
@@ -5741,7 +5904,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="golgo13c" cloneof="golgo13" romof="golgo13">
-		<description>Golgo 13 - Top Secret Episode (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Golgo 13 - Top Secret Episode (USA) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="golgo 13 - top secret episode (usa) - castellano v1.0.nes" size="262160" crc="47cd6b0f"/>
@@ -5757,7 +5921,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gooniesc" cloneof="goonies" romof="goonies">
-		<description>Goonies (Japan) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Goonies (Japan) - Castellano v1.0</description>
 		<year>2018</year>
 		<manufacturer>Darkchaosblast</manufacturer>
 		<rom name="goonies (japan) - castellano v1.0.nes" size="49168" crc="b74b6dc4"/>
@@ -5773,7 +5938,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gooniesiithec" cloneof="gooniesiithe" romof="gooniesiithe">
-		<description>Goonies II, The (USA) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Goonies II, The (USA) - Castellano v1.1</description>
 		<year>2018</year>
 		<manufacturer>Darkchaosblast</manufacturer>
 		<rom name="goonies ii, the (usa) - castellano v1.1.nes" size="131088" crc="6bc02b52"/>
@@ -5837,7 +6003,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="grandmasterjc" cloneof="grandmaster" romof="grandmaster">
-		<description>Grand Master (Japan) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Grand Master (Japan) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Max1323</manufacturer>
 		<rom name="grand master (japan) - castellano.nes" size="393232" crc="3ad512ce"/>
@@ -5853,7 +6020,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="grandmasterc" cloneof="grandmaster" romof="grandmaster">
-		<description>Grand Master (T-Chi, v1.1) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Grand Master (T-Chi, v1.1)</description>
 		<year>2021</year>
 		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Grand Master (T-Chi, v1.1).nes" size="1048592" crc="505d11c0"/>
@@ -5909,7 +6077,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gruni">
-		<description>Gruniozerca (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Gruniozerca (HB)</description>
 		<year>2017</year>
 		<manufacturer>Lukasz Kur</manufacturer>
 		<rom name="Gruniozerca (2017)(Lukasz Kur).nes" size="40976" crc="2ea66761"/>
@@ -5917,7 +6086,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gruni2">
-		<description>Gruniozerca 2 - The Great Cavy Rescue! (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Gruniozerca 2 - The Great Cavy Rescue! (HB)</description>
 		<year>2019</year>
 		<manufacturer>Lukasz Kur &amp; M-Tee</manufacturer>
 		<rom name="Gruniozerca 2 - The Great Cavy Rescue! (HB).nes" size="65552" crc="911a2917"/>
@@ -5925,7 +6095,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gruni3">
-		<description>Gruniozerca 3 - The Great Cavy Clean-Up! (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Gruniozerca 3 - The Great Cavy Clean-Up! (HB)</description>
 		<year>2019</year>
 		<manufacturer>Lukasz Kur &amp; M-Tee</manufacturer>
 		<rom name="Gruniozerca 3 - The Great Cavy Clean-Up! (HB).nes" size="65552" crc="a92f5930"/>
@@ -5949,7 +6120,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="guardicgaidenc" cloneof="guardleg" romof="guardleg">
-		<description>Guardic Gaiden (T-Chi, v1.1) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Guardic Gaiden (T-Chi, v1.1)</description>
 		<year>2017</year>
 		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Guardic Gaiden (T-Chi, v1.1).nes" size="262160" crc="77df8d83"/>
@@ -5989,7 +6161,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gunnacc" cloneof="gunnac" romof="gunnac">
-		<description>Gun Nac (T-Chi) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Gun Nac (T-Chi)</description>
 		<year>2013</year>
 		<manufacturer>Jiu Ban &amp; KASURA J.</manufacturer>
 		<rom name="Gun Nac (T-Chi).nes" size="393232" crc="3c63f85a"/>
@@ -6029,7 +6202,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gundecc" cloneof="vice" romof="vice">
-		<description>Gun-Dec (T-Chi) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Gun-Dec (T-Chi)</description>
 		<year>2019</year>
 		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Gun-Dec (T-Chi).nes" size="393232" crc="647eccfa"/>
@@ -6045,7 +6219,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gunsmokec" cloneof="gunsmoke" romof="gunsmoke">
-		<description>Gun.Smoke (T-Chi) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Gun.Smoke (T-Chi)</description>
 		<year>2019</year>
 		<manufacturer>MEZARANSU &amp; gonerFC</manufacturer>
 		<rom name="Gun.Smoke (T-Chi).nes" size="163856" crc="4e0b7a7d"/>
@@ -6085,7 +6260,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gyromitese" cloneof="gyromite" romof="gyromite">
-		<description>Gyromite Special Edition (Hack) [Hack, This hack allows to play the game on a traditional controller]</description>
+		<comment>Hack, This hack allows to play the game on a traditional controller</comment>
+		<description>Gyromite Special Edition (Hack)</description>
 		<year>2014</year>
 		<manufacturer>the Jabu</manufacturer>
 		<rom name="Gyromite Special Edition (2014)(the jabu).nes" size="40976" crc="1495d355"/>
@@ -6101,7 +6277,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="hackmatch">
-		<description>Hack Match (HB) [Homebrew, Original game by Juice (1990)]</description>
+		<comment>Homebrew, Original game by Juice (1990)</comment>
+		<description>Hack Match (HB)</description>
 		<year>2021</year>
 		<manufacturer>Zachtronics</manufacturer>
 		<rom name="Hack Match (2021)(Zachtronics).nes" size="40976" crc="94554d49"/>
@@ -6109,7 +6286,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="halloween86">
-		<description>Halloween'86 (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Halloween'86 (HB)</description>
 		<year>2016</year>
 		<manufacturer>Retrotainment Games</manufacturer>
 		<rom name="Halloween'86 (HB).nes" size="524304" crc="454252a4"/>
@@ -6117,7 +6295,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="halloween86a" cloneof="halloween86" romof="halloween86">
-		<description>Halloween'86 (HB, alt) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Halloween'86 (HB, alt)</description>
 		<year>2016</year>
 		<manufacturer>Retrotainment Games</manufacturer>
 		<rom name="Halloween'86 (HB, alt).nes" size="524304" crc="d008091a"/>
@@ -6141,7 +6320,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="haradiuszero">
-		<description>Haradius Zero (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Haradius Zero (HB)</description>
 		<year>2019</year>
 		<manufacturer>Impact Soft</manufacturer>
 		<rom name="Haradius Zero (HB).nes" size="786448" crc="d2f19ba1"/>
@@ -6157,7 +6337,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="harrydwarf">
-		<description>Harry Dwarf (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Harry Dwarf (HB)</description>
 		<year>2019</year>
 		<manufacturer>Byte-off</manufacturer>
 		<rom name="Harry Dwarf (2019)(Byte-off).nes" size="524304" crc="f51e13d4"/>
@@ -6173,7 +6354,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="halloween85">
-		<description>Haunted Halloween'85 (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Haunted Halloween'85 (HB)</description>
 		<year>2015</year>
 		<manufacturer>Retrotainment Games</manufacturer>
 		<rom name="Halloween'85 (HB).nes" size="524304" crc="4bcf7ae5"/>
@@ -6181,7 +6363,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="hauntedadv">
-		<description>Haunted House Adventure (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Haunted House Adventure (HB)</description>
 		<year>2019</year>
 		<manufacturer>M. Stave</manufacturer>
 		<rom name="Haunted House Adventure (2019)(M. Stave).nes" size="524304" crc="d0c3acbc"/>
@@ -6213,7 +6396,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="heberekec" cloneof="ufouria" romof="ufouria">
-		<description>Hebereke (T-Chi, v1.2) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Hebereke (T-Chi, v1.2)</description>
 		<year>2019</year>
 		<manufacturer>Lei Jing Ling</manufacturer>
 		<rom name="Hebereke (T-Chi, v1.2).nes" size="393232" crc="48e8bcee"/>
@@ -6413,7 +6597,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="hokutonoken2c" cloneof="hokutonoken2" romof="hokutonoken2">
-		<description>Hokuto no Ken 2 (Japan) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Hokuto no Ken 2 (Japan) - Castellano v1.1</description>
 		<year>2018</year>
 		<manufacturer>Jonathan</manufacturer>
 		<rom name="hokuto no ken 2 (japan) - castellano v1.1.nes" size="131088" crc="3a3cd6df"/>
@@ -6429,7 +6614,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="hokutonoken3c" cloneof="hokutonoken3" romof="hokutonoken3">
-		<description>Hokuto no Ken 3 - Shin Seiki Souzou Seiken Restuden (Japan) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Hokuto no Ken 3 - Shin Seiki Souzou Seiken Restuden (Japan) - Castellano v1.0</description>
 		<year>20XX?</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="hokuto no ken 3 - shin seiki souzou seiken restuden (japan) - castellano v1.0.nes" size="262160" crc="9e7cc5dc"/>
@@ -6493,7 +6679,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="hoppinmad">
-		<description>Hoppin' Mad (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Hoppin' Mad (Prototype)</description>
 		<year>1989</year>
 		<manufacturer>Nowhere Productions</manufacturer>
 		<rom name="Hoppin' Mad (Proto) (1989)(Nowhere Prod.).nes" size="40976" crc="ac45ada9"/>
@@ -6549,7 +6736,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="hydlidec" cloneof="hydlide" romof="hydlide">
-		<description>Hydlide (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Hydlide (USA) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="hydlide (usa) - castellano v1.0.nes" size="40976" crc="9b4f06c0"/>
@@ -6645,7 +6833,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="immortalthec" cloneof="immortalthe" romof="immortalthe">
-		<description>Immortal, The (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Immortal, The (USA) - Castellano v1.0</description>
 		<year>2004</year>
 		<manufacturer>R. Merida</manufacturer>
 		<rom name="immortal, the (usa) - castellano v1.0.nes" size="393232" crc="bf87b488"/>
@@ -6701,7 +6890,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="indivisible">
-		<description>Indivisible (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Indivisible (HB)</description>
 		<year>201x</year>
 		<manufacturer>Lab Zero Games</manufacturer>
 		<rom name="Indivisible (HB).nes" size="262160" crc="9f304e88"/>
@@ -6869,7 +7059,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="jamg">
-		<description>JAMG - The Lost Coins (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>JAMG - The Lost Coins (HB)</description>
 		<year>2018</year>
 		<manufacturer>OCDreproductions</manufacturer>
 		<rom name="JAMG - The Lost Coins (HB).nes" size="262160" crc="7a8877aa"/>
@@ -6893,7 +7084,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="jaysilent">
-		<description>Jay and Silent Bob Mall Brawl (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Jay and Silent Bob Mall Brawl (HB)</description>
 		<year>2020</year>
 		<manufacturer>Interabang Entertainment</manufacturer>
 		<rom name="Jay and Silent Bob Mall Brawl.nes" size="393232" crc="f167590d"/>
@@ -6917,7 +7109,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="jetpaco">
-		<description>Jet-Paco (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Jet-Paco (HB)</description>
 		<year>2015</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Jet-Paco (HB).nes" size="40976" crc="b5f18574"/>
@@ -6949,7 +7142,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="jigokgokmarc" cloneof="kabuki" romof="kabuki">
-		<description>Jigoku Gokuraku Maru (T-Chi) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Jigoku Gokuraku Maru (T-Chi)</description>
 		<year>2019</year>
 		<manufacturer>MEZARANSU &amp; Jin Di</manufacturer>
 		<rom name="Jigoku Gokuraku Maru (T-Chi).nes" size="393232" crc="375bf357"/>
@@ -6965,7 +7159,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="jimpower">
-		<description>Jim Power - The Lost Dimension (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Jim Power - The Lost Dimension (HB)</description>
 		<year>2020</year>
 		<manufacturer>Piko Interactive</manufacturer>
 		<rom name="Jim Power - The Lost Dimension (2020)(Piko).nes" size="524304" crc="3f088114"/>
@@ -7037,7 +7232,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="journeyal">
-		<description>Journey to the Center of the Alien (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Journey to the Center of the Alien (HB)</description>
 		<year>2019</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="journey to the center of the alien (2019)(mojon twins).nes" size="73744" crc="d4b8eaa5"/>
@@ -7109,7 +7305,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="junglebooktheb" cloneof="junglebookthe" romof="junglebookthe">
-		<description>Jungle Book, The (Brightness fix) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Jungle Book, The (Brightness fix)</description>
 		<year>2020</year>
 		<manufacturer>Ilya Indigo</manufacturer>
 		<rom name="jungle book, the (2020)(brightness fix).nes" size="262160" crc="1c9a2869"/>
@@ -7117,7 +7314,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="junglebookthec" cloneof="junglebookthe" romof="junglebookthe">
-		<description>Jungle Book, The (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Jungle Book, The (USA) - Castellano v1.0</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="jungle book, the (usa) - castellano v1.0.nes" size="262160" crc="996a8677"/>
@@ -7149,7 +7347,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="justbreedc" cloneof="justbreed" romof="justbreed">
-		<description>Just Breed (Japan) - Castellano v2.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Just Breed (Japan) - Castellano v2.0</description>
 		<year>20XX?</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="just breed (japan) - castellano v2.0.nes" size="786448" crc="e415a13f"/>
@@ -7173,7 +7372,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="justice">
-		<description>Justice (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Justice (HB)</description>
 		<year>2020</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="Justice (2020)(Unknown).nes" size="196624" crc="5a8b8f13"/>
@@ -7181,7 +7381,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="justiceduel">
-		<description>Justice Duel (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Justice Duel (HB)</description>
 		<year>2019</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Justice Duel (HB).nes" size="196624" crc="ada8853b"/>
@@ -7253,7 +7454,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kagec" cloneof="shadonin" romof="shadonin">
-		<description>Kage (T-Chi, v2.0) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Kage (T-Chi, v2.0)</description>
 		<year>2010</year>
 		<manufacturer>Xing Kong</manufacturer>
 		<rom name="Kage (T-Chi, v2.0).nes" size="270352" crc="a481e2bd"/>
@@ -7373,7 +7575,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="karatekidthec" cloneof="karatekidthe" romof="karatekidthe">
-		<description>Karate Kid, The (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Karate Kid, The (USA) - Castellano v1.0</description>
 		<year>2020</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="karate kid, the (usa) - castellano v1.0.nes" size="65552" crc="99cc2044"/>
@@ -7389,7 +7592,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="karatekac" cloneof="karateka" romof="karateka">
-		<description>Karateka (Japan) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Karateka (Japan) - Castellano v1.0</description>
 		<year>2020</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="karateka (japan) - castellano v1.0.nes" size="24592" crc="3839edb9"/>
@@ -7613,7 +7817,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kirakirstanigac">
-		<description>Kira Kira Star Night AC (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Kira Kira Star Night AC (HB)</description>
 		<year>2017</year>
 		<manufacturer>RIKI</manufacturer>
 		<rom name="Kira Kira Star Night AC (HB).nes" size="524304" crc="9e650f69"/>
@@ -7621,7 +7826,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kirakirstanigdx">
-		<description>Kira Kira Star Night DX (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Kira Kira Star Night DX (HB)</description>
 		<year>2016</year>
 		<manufacturer>RIKI</manufacturer>
 		<rom name="Kira Kira Star Night DX (HB).nes" size="524304" crc="66a30110"/>
@@ -7629,7 +7835,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kirakirstaniggo">
-		<description>Kira Kira Star Night GOLD (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Kira Kira Star Night GOLD (HB)</description>
 		<year>2016</year>
 		<manufacturer>RIKI</manufacturer>
 		<rom name="Kira Kira Star Night GOLD (HB).nes" size="524304" crc="d2526d60"/>
@@ -7717,7 +7924,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kosatak">
-		<description>Kosmity Atakujo (HB, v10.07.2020) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Kosmity Atakujo (HB, v10.07.2020)</description>
 		<year>2020</year>
 		<manufacturer>sdm2</manufacturer>
 		<rom name="Kosmity Atakujo (HB, v10.07.2020).nes" size="131088" crc="0570865c"/>
@@ -7741,7 +7949,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="krustsfunhouc" cloneof="krustsfunhou" romof="krustsfunhou">
-		<description>Krusty's Fun House (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Krusty's Fun House (USA) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="krusty's fun house (usa) - castellano v1.0.nes" size="393232" crc="b09308d4"/>
@@ -7805,7 +8014,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="labbaye">
-		<description>L'Abbaye des Morts (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>L'Abbaye des Morts (HB)</description>
 		<year>2021</year>
 		<manufacturer>Broke Studio</manufacturer>
 		<rom name="L'Abbaye des Morts (2021)(Broke Studios).nes" size="131088" crc="a032a1f6"/>
@@ -7829,7 +8039,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lalathemagical">
-		<description>Lala the Magical (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Lala the Magical (HB)</description>
 		<year>2016</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Lala the Magical (HB).nes" size="81936" crc="496c2e59"/>
@@ -7837,7 +8048,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="larry">
-		<description>Larry (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Larry (HB)</description>
 		<year>2014</year>
 		<manufacturer>Khan Games</manufacturer>
 		<rom name="Larry (HB).nes" size="524304" crc="96f31fb9"/>
@@ -7845,7 +8057,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="larrya" cloneof="larry" romof="larry">
-		<description>Larry (HB, alt) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Larry (HB, alt)</description>
 		<year>2014</year>
 		<manufacturer>Khan Games</manufacturer>
 		<rom name="Larry (HB, alt).nes" size="524304" crc="2c8d188e"/>
@@ -7901,7 +8114,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="laweste">
-		<description>Law of the West (T-Eng) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Law of the West (T-Eng)</description>
 		<year>1987-2020</year>
 		<manufacturer>Pony Canyon - GAFF Translations</manufacturer>
 		<rom name="Law of the West T-Eng (2020)(GAFF Translations).nes" size="262160" crc="34437445"/>
@@ -7909,7 +8123,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lawnmower">
-		<description>Lawn Mower (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Lawn Mower (HB)</description>
 		<year>2011</year>
 		<manufacturer>Shiru</manufacturer>
 		<rom name="Lawn Mower (HB).nes" size="24592" crc="2e03cb7f"/>
@@ -7941,7 +8156,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="legacwizc" cloneof="legacwiz" romof="legacwiz">
-		<description>Legacy of the Wizard (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Legacy of the Wizard (USA) - Castellano v1.0</description>
 		<year>2020</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="legacy of the wizard (usa) - castellano v1.0.nes" size="196624" crc="e87e3d09"/>
@@ -7989,7 +8205,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="triforceg">
-		<description>Legend of Zelda - Triforce of the Gods (T-Eng) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Legend of Zelda - Triforce of the Gods (T-Eng)</description>
 		<year>2018</year>
 		<manufacturer>pacnsacdave</manufacturer>
 		<rom name="Legend of Zelda - Triforce of the Gods (T-Eng).nes" size="2097168" crc="0be2d8fd"/>
@@ -7997,7 +8214,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="legenzeldx" cloneof="legenzel" romof="legenzel">
-		<description>Legend of Zelda DX, The (HB, Graphics Hack) [Hack, Homebrew]</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Legend of Zelda DX, The (HB, Graphics Hack)</description>
 		<year>2014</year>
 		<manufacturer>pacnsacdave</manufacturer>
 		<rom name="legend of zelda dx (2014)(pacnsacdave).nes" size="131088" crc="0698579d"/>
@@ -8005,7 +8223,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="legenzeli" cloneof="legenzel" romof="legenzel">
-		<description>Legend of Zelda, The (Europe) - Italian v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Legend of Zelda, The (Europe) - Italian v1.0</description>
 		<year>2019</year>
 		<manufacturer>Stich991</manufacturer>
 		<rom name="Legend of Zelda, The (it) (2019)(Stich991).nes" size="131088" crc="e0811f91"/>
@@ -8029,7 +8248,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="legendsofowlia">
-		<description>Legends of Owlia (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Legends of Owlia (HB)</description>
 		<year>2014</year>
 		<manufacturer>Gradual Games</manufacturer>
 		<rom name="Legends of Owlia (HB).nes" size="524304" crc="26858010"/>
@@ -8037,7 +8257,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="leglutliv">
-		<description>Leggite Luta Livre (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Leggite Luta Livre (HB)</description>
 		<year>2021</year>
 		<manufacturer>John Vanderhoef</manufacturer>
 		<rom name="Leggite Luta Livre (2021)(John Vanderhoef).nes" size="524304" crc="bcbc972c"/>
@@ -8101,7 +8322,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lionkingthec" cloneof="lionkingthe" romof="lionkingthe">
-		<description>Lion King, The (Europe) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Lion King, The (Europe) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="lion king, the (europe) - castellano v1.0.nes" size="262160" crc="562245ae"/>
@@ -8117,7 +8339,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="littlelanc">
-		<description>Little Lancelot (HB) [Homebrew, Developed by Ocean]</description>
+		<comment>Homebrew, Developed by Ocean</comment>
+		<description>Little Lancelot (HB)</description>
 		<year>2019</year>
 		<manufacturer>Piko Interactive</manufacturer>
 		<rom name="Little Lancelot (2019)(Piko Int).nes" size="262160" crc="65e1bc64"/>
@@ -8125,7 +8348,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="littlemedusa">
-		<description>Little Medusa (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Little Medusa (HB)</description>
 		<year>2018</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Little Medusa (HB).nes" size="524304" crc="126b5927"/>
@@ -8165,7 +8389,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="littlesamsonh" cloneof="littlesamson" romof="littlesamson">
-		<description>Little Samson (Restoration &amp; Sound Hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Little Samson (Restoration &amp; Sound Hack)</description>
 		<year>2020</year>
 		<manufacturer>SCD - Nesrocks</manufacturer>
 		<rom name="Little Samson (Hack).nes" size="393232" crc="2178190e"/>
@@ -8181,7 +8406,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lizard">
-		<description>Lizard (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Lizard (HB)</description>
 		<year>2018</year>
 		<manufacturer>Brad Smith</manufacturer>
 		<rom name="Lizard (HB).nes" size="524304" crc="27a5348f"/>
@@ -8197,7 +8423,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="logjammers">
-		<description>Log Jammers (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Log Jammers (HB)</description>
 		<year>2017</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Log Jammers (HB).nes" size="393232" crc="451dd988"/>
@@ -8237,7 +8464,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="luckypenguin">
-		<description>Lucky Penguin (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Lucky Penguin (HB)</description>
 		<year>2019</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Lucky Penguin (2019)(Mega Cat Studios).nes" size="65552" crc="2a4c310b"/>
@@ -8245,7 +8473,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lunarlimit">
-		<description>Lunar Limit (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Lunar Limit (HB)</description>
 		<year>2017</year>
 		<manufacturer>pubby</manufacturer>
 		<rom name="Lunar Limit (HB).nes" size="40976" crc="eb26681e"/>
@@ -8261,7 +8490,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lupinsanc" cloneof="lupinsan" romof="lupinsan">
-		<description>Lupin Sansei - Pandora no Isan (Japan) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Lupin Sansei - Pandora no Isan (Japan) - Castellano v1.0</description>
 		<year>2018</year>
 		<manufacturer>jackic</manufacturer>
 		<rom name="lupin sansei - pandora no isan (japan) - castellano v1.0.nes" size="196624" crc="0bb24755"/>
@@ -8317,7 +8547,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="machinecave">
-		<description>Machine Cave (HB, v1.9) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Machine Cave (HB, v1.9)</description>
 		<year>2018</year>
 		<manufacturer>Simo Sievanen</manufacturer>
 		<rom name="Machine Cave (HB, v1.9).nes" size="40976" crc="2d904baf"/>
@@ -8333,7 +8564,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="madcityc" cloneof="advenbaybil" romof="advenbaybil">
-		<description>Mad City (T-Chi, v2) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Mad City (T-Chi, v2)</description>
 		<year>2018</year>
 		<manufacturer>Tan Xiao Feng Sheng</manufacturer>
 		<rom name="Mad City (T-Chi, v2).nes" size="393232" crc="3b2ad28b"/>
@@ -8357,7 +8589,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mafatconc" cloneof="mafatcon" romof="mafatcon">
-		<description>Mafat Conspiracy - Golgo 13 (USA) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Mafat Conspiracy - Golgo 13 (USA) - Castellano v1.1</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="mafat conspiracy - golgo 13 (usa) - castellano v1.1.nes" size="262160" crc="b527ad27"/>
@@ -8445,7 +8678,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="magicschc" cloneof="magicsch" romof="magicsch">
-		<description>Magic of Scheherazade, The (USA) - Castellano v0.99 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Magic of Scheherazade, The (USA) - Castellano v0.99</description>
 		<year>2019</year>
 		<manufacturer>jackic</manufacturer>
 		<rom name="magic of scheherazade, the (usa) - castellano v0.99.nes" size="262160" crc="9d080895"/>
@@ -8501,7 +8735,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="magnilocase">
-		<description>Magnilo Case, The (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Magnilo Case, The (HB)</description>
 		<year>2021</year>
 		<manufacturer>Dalyen Retrogames</manufacturer>
 		<rom name="The Magnilo Case (2021)(Dalyen Retrogames).nes" size="524304" crc="6ff47dba"/>
@@ -8549,7 +8784,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="majoudeniic" cloneof="majoudenii" romof="majoudenii">
-		<description>Majou Densetsu II - Daimashikyou Galious (T-Chi, v2.2) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Majou Densetsu II - Daimashikyou Galious (T-Chi, v2.2)</description>
 		<year>2018</year>
 		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Majou Densetsu II - Daimashikyou Galious (T-Chi, v2.2).nes" size="262160" crc="a032170a"/>
@@ -8629,7 +8865,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mancmansuproc" cloneof="maniacmansion" romof="maniacmansion">
-		<description>Maniac Mansion (USA) (Prototype) - Castellano v1.0 [Hack, Prototype]</description>
+		<comment>Hack, Prototype</comment>
+		<description>Maniac Mansion (USA) (Prototype) - Castellano v1.0</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="maniac mansion (usa) (prototype) - castellano v1.0.nes" size="262160" crc="3be70f25"/>
@@ -8637,7 +8874,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="maniacmansionuproto" cloneof="maniacmansion" romof="maniacmansion">
-		<description>Maniac Mansion (USA) (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Maniac Mansion (USA) (Prototype)</description>
 		<year>1988</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="maniac mansion (usa) (prototype).nes" size="262160" crc="bba3ef7e"/>
@@ -8677,7 +8915,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mappykidsc" cloneof="mappykids" romof="mappykids">
-		<description>Mappy Kids (T-Chi, v1.1) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Mappy Kids (T-Chi, v1.1)</description>
 		<year>2019</year>
 		<manufacturer>Lei Jing Ling</manufacturer>
 		<rom name="Mappy Kids (T-Chi, v1.1).nes" size="524304" crc="159bc653"/>
@@ -8845,7 +9084,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="megamanc" cloneof="megaman" romof="megaman">
-		<description>Megaman (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Megaman (USA) - Castellano v1.0</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="megaman (usa) - castellano v1.0.nes" size="131088" crc="53db1d74"/>
@@ -8853,7 +9093,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="megaman2c" cloneof="megaman2" romof="megaman2">
-		<description>Megaman II (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Megaman II (USA) - Castellano v1.0</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="megaman ii (usa) - castellano v1.0.nes" size="262160" crc="35babd12"/>
@@ -8861,7 +9102,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="megaman3c" cloneof="megaman3" romof="megaman3">
-		<description>Megaman III (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Megaman III (USA) - Castellano v1.0</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="megaman iii (usa) - castellano v1.0.nes" size="393232" crc="7e1471b2"/>
@@ -8869,7 +9111,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="megaman4c" cloneof="megaman4" romof="megaman4">
-		<description>Megaman IV (USA) (Rev A) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Megaman IV (USA) (Rev A) - Castellano v1.0</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="megaman iv (usa) (rev a) - castellano v1.0.nes" size="524304" crc="d4141bb2"/>
@@ -8877,7 +9120,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="megaman5c" cloneof="megaman5" romof="megaman5">
-		<description>Megaman V (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Megaman V (USA) - Castellano v1.0</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="megaman v (usa) - castellano v1.0.nes" size="524304" crc="c46d7cd6"/>
@@ -8885,7 +9129,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="megaman6c" cloneof="megaman6" romof="megaman6">
-		<description>Megaman VI (USA) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Megaman VI (USA) - Castellano v1.1</description>
 		<year>2016</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="megaman vi (usa) - castellano v1.1.nes" size="524304" crc="1b902805"/>
@@ -8933,7 +9178,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="metalgearc" cloneof="metalgear" romof="metalgear">
-		<description>Metal Gear (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Metal Gear (USA) - Castellano v1.0</description>
 		<year>2020</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="metal gear (usa) - castellano v1.0.nes" size="131088" crc="babc19e2"/>
@@ -9005,7 +9251,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="metroidc" cloneof="metroid" romof="metroid">
-		<description>Metroid (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Metroid (USA) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="metroid (usa) - castellano v1.0.nes" size="131088" crc="12767f2e"/>
@@ -9093,7 +9340,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mkrotfs">
-		<description>Micro Knight - Revenge of the Four Skulls (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Micro Knight - Revenge of the Four Skulls (HB)</description>
 		<year>2017</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="Micro Knight RotFS (2017)(Unknown).nes" size="131088" crc="bc44af32"/>
@@ -9109,7 +9357,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="micromages">
-		<description>Micro Mages (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Micro Mages (HB)</description>
 		<year>2019</year>
 		<manufacturer>Morphcat Games</manufacturer>
 		<rom name="Micro Mages.nes" size="40976" crc="b0b6b5e4"/>
@@ -9117,7 +9366,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="miedow">
-		<description>Miedow (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Miedow (HB)</description>
 		<year>2018</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Miedow (HB).nes" size="65552" crc="6389b721"/>
@@ -9141,7 +9391,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mightfinfigc" cloneof="mightfinfig" romof="mightfinfig">
-		<description>Mighty Final Fight (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Mighty Final Fight (USA) - Castellano v1.0</description>
 		<year>2016</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="mighty final fight (usa) - castellano v1.0.nes" size="262160" crc="79b72603"/>
@@ -9181,7 +9432,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mnmayhem">
-		<description>Mine Mayhem (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Mine Mayhem (HB)</description>
 		<year>2021</year>
 		<manufacturer>Vectrex28</manufacturer>
 		<rom name="Mine Mayhem (2021)(Vectrex28).nes" size="65552" crc="c6b47cca"/>
@@ -9205,7 +9457,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="minibrix">
-		<description>Mini Brix Battle (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Mini Brix Battle (HB)</description>
 		<year>2016</year>
 		<manufacturer>Aleff Correa</manufacturer>
 		<rom name="Mini Brix Battle (2016)(Aleff Correa).nes" size="40976" crc="07781bee"/>
@@ -9293,7 +9546,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mitsumegatooruc" cloneof="mitsumegatooru" romof="mitsumegatooru">
-		<description>Mitsume ga Tooru (T-Chi) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Mitsume ga Tooru (T-Chi)</description>
 		<year>2010</year>
 		<manufacturer>Xing Kong</manufacturer>
 		<rom name="Mitsume ga Tooru (T-Chi).nes" size="278544" crc="296c2307"/>
@@ -9333,7 +9587,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mojontwimul">
-		<description>Mojon Twins Multicart (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Mojon Twins Multicart (HB)</description>
 		<year>2016</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Mojon Twins Multicart (HB).nes" size="393232" crc="eec1e108"/>
@@ -9509,7 +9764,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mrsplash">
-		<description>Mr. Splash (HB) [Homebrew, No one player mode]</description>
+		<comment>Homebrew, No one player mode</comment>
+		<description>Mr. Splash (HB)</description>
 		<year>2008</year>
 		<manufacturer>Project F</manufacturer>
 		<rom name="Mr. Splash (HB).nes" size="750052" crc="8b86978b"/>
@@ -9533,7 +9789,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="multidude">
-		<description>Multidude (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Multidude (HB)</description>
 		<year>2014</year>
 		<manufacturer>RetroSouls</manufacturer>
 		<rom name="multidude (2014)(retrosouls).nes" size="40976" crc="154af940"/>
@@ -9573,7 +9830,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mystewordiz">
-		<description>Mystery World Dizzy (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Mystery World Dizzy (HB)</description>
 		<year>2017</year>
 		<manufacturer>Oliver Twins</manufacturer>
 		<rom name="Mystery World Dizzy (HB).nes" size="262160" crc="03124bf3"/>
@@ -9581,7 +9839,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mysticorigins">
-		<description>Mystic Origins (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Mystic Origins (HB)</description>
 		<year>2019</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Mystic Origins (HB).nes" size="524304" crc="249c666e"/>
@@ -9589,7 +9848,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nalleland">
-		<description>Nalle Land (HB, v0.4.0) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Nalle Land (HB, v0.4.0)</description>
 		<year>2020</year>
 		<manufacturer>Benjamin Larsson</manufacturer>
 		<rom name="Nalle Land (HB, v040).nes" size="49168" crc="c1a447b0"/>
@@ -9645,7 +9905,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nebsanddebs">
-		<description>Nebs and Debs (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Nebs and Debs (HB)</description>
 		<year>2018</year>
 		<manufacturer>Dullahan</manufacturer>
 		<rom name="Nebs and Debs (HB).nes" size="40976" crc="570383a9"/>
@@ -9677,7 +9938,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nekkestrbascastc" cloneof="nekkestrbas" romof="nekkestrbas">
-		<description>Nekketsu! Street Basket - Ganbare Dunk Heroes (Japan) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Nekketsu! Street Basket - Ganbare Dunk Heroes (Japan) - Castellano v1.0</description>
 		<year>2020</year>
 		<manufacturer>Max1323</manufacturer>
 		<rom name="nekketsu! street basket - ganbare dunk heroes (japan) - castellano v1.0.nes" size="262160" crc="3a2487c3"/>
@@ -9693,7 +9955,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nekkestrbasc" cloneof="nekkestrbas" romof="nekkestrbas">
-		<description>Nekketsu! Street Basket - Ganbare Dunk Heroes (T-Chi, v2) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Nekketsu! Street Basket - Ganbare Dunk Heroes (T-Chi, v2)</description>
 		<year>2020</year>
 		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="nekketsu! street basket - ganbare dunk heroes (T-Chi, v2).nes" size="524304" crc="8f359b4f"/>
@@ -9701,7 +9964,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="neoheiali">
-		<description>NEO Heiankyo Alien (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>NEO Heiankyo Alien (HB)</description>
 		<year>2017</year>
 		<manufacturer>Hyperware Co.</manufacturer>
 		<rom name="NEO Heiankyo Alien (HB).nes" size="655376" crc="f9450fc9"/>
@@ -9717,7 +9981,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nescape">
-		<description>NEScape (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>NEScape (HB)</description>
 		<year>2019</year>
 		<manufacturer>Khan Games</manufacturer>
 		<rom name="NEScape (HB).nes" size="524304" crc="60b6ad99"/>
@@ -9725,7 +9990,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nesertgolf">
-		<description>NESert Golfing (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>NESert Golfing (HB)</description>
 		<year>2019</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="NESert Golfing (2019)(Unknown).nes" size="32784" crc="cb43ec95"/>
@@ -9733,7 +9999,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nesertgolfte" cloneof="nesertgolf" romof="nesertgolf">
-		<description>NESert Golfing - Tournament Edition (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>NESert Golfing - Tournament Edition (HB)</description>
 		<year>2019</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="NESert Golfing - Tournament Edition (2019)(Unknown).nes" size="32784" crc="db28a4e8"/>
@@ -9741,7 +10008,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nessyrobot">
-		<description>Nessy the NES Robot (HB, v1.25) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Nessy the NES Robot (HB, v1.25)</description>
 		<year>2021</year>
 		<manufacturer>Daniel T. Gaming</manufacturer>
 		<rom name="Nessy The NES Robot mmc30 (2021)(Daniel T. Gaming).nes" size="524304" crc="eac62d7d"/>
@@ -9797,7 +10065,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nimnom">
-		<description>Nim &amp; Nom (HB, v1.2) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Nim &amp; Nom (HB, v1.2)</description>
 		<year>2018</year>
 		<manufacturer>Metakrill</manufacturer>
 		<rom name="nim and nom (2018)(metakrill) v1.2.nes" size="40976" crc="e0096736"/>
@@ -9805,7 +10074,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="deadfoxc" cloneof="codenam" romof="codenam">
-		<description>Ningen Heiki - Dead Fox (T-Chi, v2.0) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Ningen Heiki - Dead Fox (T-Chi, v2.0)</description>
 		<year>2010</year>
 		<manufacturer>Xing Kong</manufacturer>
 		<rom name="Ningen Heiki - Dead Fox (T-Chi, v2.0).nes" size="303120" crc="3cf5df56"/>
@@ -9829,7 +10099,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjagaidenc" cloneof="ninjagaiden" romof="ninjagaiden">
-		<description>Ninja Gaiden (USA) - Castellano v1.01 + Addendum [Hack]</description>
+		<comment>Hack</comment>
+		<description>Ninja Gaiden (USA) - Castellano v1.01 + Addendum</description>
 		<year>2016</year>
 		<manufacturer>Terwilf</manufacturer>
 		<rom name="ninja gaiden (usa) - castellano v1.01.nes" size="262160" crc="7da08225"/>
@@ -9845,7 +10116,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjagaiiic" cloneof="ninjagaiii" romof="ninjagaiii">
-		<description>Ninja Gaiden II - The Dark Sword of Chaos (USA) - Castellano v1.0 + Addendum [Hack]</description>
+		<comment>Hack</comment>
+		<description>Ninja Gaiden II - The Dark Sword of Chaos (USA) - Castellano v1.0 + Addendum</description>
 		<year>2016</year>
 		<manufacturer>Terwilf</manufacturer>
 		<rom name="ninja gaiden ii - the dark sword of chaos (usa) - castellano v1.0.nes" size="262160" crc="5742d6c0"/>
@@ -9861,7 +10133,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjagaiiiic" cloneof="ninjagaiiii" romof="ninjagaiiii">
-		<description>Ninja Gaiden III - The Ancient Ship of Doom (USA) - Castellano v1.0 + Addendum [Hack]</description>
+		<comment>Hack</comment>
+		<description>Ninja Gaiden III - The Ancient Ship of Doom (USA) - Castellano v1.0 + Addendum</description>
 		<year>2016</year>
 		<manufacturer>Terwilf</manufacturer>
 		<rom name="ninja gaiden iii - the ancient ship of doom (usa) - castellano v1.0.nes" size="262160" crc="dfb2692b"/>
@@ -9917,7 +10190,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninja4s">
-		<description>Ninja of the 4 Seasons (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Ninja of the 4 Seasons (HB)</description>
 		<year>2021</year>
 		<manufacturer>Kool Doob</manufacturer>
 		<rom name="Ninja of the 4 Seasons (2021)(Kool Doob).nes" size="524304" crc="3943cf5f"/>
@@ -9933,7 +10207,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjaryudenc" cloneof="ninjagaiden" romof="ninjagaiden">
-		<description>Ninja Ryuuken Den (T-Chi) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Ninja Ryuuken Den (T-Chi)</description>
 		<year>2017</year>
 		<manufacturer>FlameCyclone</manufacturer>
 		<rom name="Ninja Ryuuken Den (T-Chi).nes" size="524304" crc="7724d3d0"/>
@@ -9949,7 +10224,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjaryudeniic" cloneof="ninjagaiii" romof="ninjagaiii">
-		<description>Ninja Ryuuken Den II - Ankoku no Jashin Ken (T-Chi) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Ninja Ryuuken Den II - Ankoku no Jashin Ken (T-Chi)</description>
 		<year>200?</year>
 		<manufacturer>TPU</manufacturer>
 		<rom name="Ninja Ryuuken Den II - Ankoku no Jashin Ken (T-Chi).nes" size="335888" crc="f7d5d63b"/>
@@ -9965,7 +10241,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjaryudeniiic" cloneof="ninjagaiiii" romof="ninjagaiiii">
-		<description>Ninja Ryuuken Den III - Yomi no Hakobune (T-Chi) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Ninja Ryuuken Den III - Yomi no Hakobune (T-Chi)</description>
 		<year>2002</year>
 		<manufacturer>TPU</manufacturer>
 		<rom name="Ninja Ryuuken Den III - Yomi no Hakobune (T-Chi).nes" size="344080" crc="ba865119"/>
@@ -10013,7 +10290,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nixrelic">
-		<description>Nix: the Paradox Relic (HB, v1.9) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Nix: the Paradox Relic (HB, v1.9)</description>
 		<year>2020</year>
 		<manufacturer>Dustin Huddleston</manufacturer>
 		<rom name="Nix Paradox Relic v1.9(2020)(Dustin Huddleston).nes" size="524304" crc="c85e7bcd"/>
@@ -10029,7 +10307,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nomolos">
-		<description>Nomolos (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Nomolos (HB)</description>
 		<year>2014</year>
 		<manufacturer>Gradual Games</manufacturer>
 		<rom name="Nomolos (HB).nes" size="524304" crc="917154ac"/>
@@ -10037,7 +10316,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="northsouthc" cloneof="northsouth" romof="northsouth">
-		<description>North &amp; South (USA) - Castellano v2.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>North &amp; South (USA) - Castellano v2.0</description>
 		<year>2013</year>
 		<manufacturer>Julian L.</manufacturer>
 		<rom name="north &amp; south (usa) - castellano v2.0.nes" size="262160" crc="98907558"/>
@@ -10045,7 +10325,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="northsouthi" cloneof="northsouth" romof="northsouth">
-		<description>North &amp; South (USA) - Italian v2.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>North &amp; South (USA) - Italian v2.0</description>
 		<year>2014</year>
 		<manufacturer>Julian L.</manufacturer>
 		<rom name="North &amp; South (it) v2.0 (2014)(Julian L.).nes" size="262160" crc="155fa336"/>
@@ -10061,7 +10342,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="novasqu">
-		<description>Nova the Squirrel (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Nova the Squirrel (HB)</description>
 		<year>2018</year>
 		<manufacturer>NovaSquirrel</manufacturer>
 		<rom name="Nova the Squirrel (HB).nes" size="262160" crc="0b752bee"/>
@@ -10093,7 +10375,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="oozerdx">
-		<description>Ooze Redux (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Ooze Redux (HB)</description>
 		<year>2021</year>
 		<manufacturer>Hippokittie Productions</manufacturer>
 		<rom name="Ooze Redux (2021)(Hippokittie Prod.).nes" size="524304" crc="047a83d5"/>
@@ -10141,7 +10424,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="powc" cloneof="pow" romof="pow">
-		<description>P.O.W. - Prisoners of War (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>P.O.W. - Prisoners of War (USA) - Castellano v1.0</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="p.o.w. - prisoners of war (usa) - castellano v1.0.nes" size="262160" crc="c24c8bcb"/>
@@ -10181,7 +10465,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pacmanx">
-		<description>Pac-Man Xtreme (Hack) [Hack, Homebrew]</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Pac-Man Xtreme (Hack)</description>
 		<year>2016</year>
 		<manufacturer>KaBooM!</manufacturer>
 		<rom name="Pac-Man Xtreme (2016)(KaBooM!).nes" size="40976" crc="ee653ac8"/>
@@ -10221,7 +10506,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="panicdizzy">
-		<description>Panic Dizzy (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Panic Dizzy (HB)</description>
 		<year>2019</year>
 		<manufacturer>Oliver Twins</manufacturer>
 		<rom name="Panic Dizzy (HB).nes" size="65552" crc="c5b23abd"/>
@@ -10309,7 +10595,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="parodiusdac" cloneof="parodiusda" romof="parodiusda">
-		<description>Parodius Da! (Japan) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Parodius Da! (Japan) - Castellano v1.1</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="parodius da! (japan) - castellano v1.1.nes" size="393232" crc="746bb8a8"/>
@@ -10373,7 +10660,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="perfectpair">
-		<description>Perfect Pair (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Perfect Pair (HB)</description>
 		<year>2016</year>
 		<manufacturer>Second Dimension</manufacturer>
 		<rom name="Perfect Pair (HB).nes" size="40976" crc="efef8b35"/>
@@ -10501,7 +10789,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ploid">
-		<description>Ploid (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Ploid (HB)</description>
 		<year>2020</year>
 		<manufacturer>NAPE Games</manufacturer>
 		<rom name="Ploid (2020)(NAPE Games).nes" size="524304" crc="c7567823"/>
@@ -10509,7 +10798,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="plumchal">
-		<description>Plummet Challenge Game (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Plummet Challenge Game (HB)</description>
 		<year>2021</year>
 		<manufacturer>Fista Productions</manufacturer>
 		<rom name="Plummet Challenge Game (2021)(Fista Productions).nes" size="524304" crc="7ec3675e"/>
@@ -10533,7 +10823,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pogocats">
-		<description>Pogo Cats (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Pogo Cats (HB)</description>
 		<year>2012</year>
 		<manufacturer>YGGI</manufacturer>
 		<rom name="Pogo Cats (HB).nes" size="24592" crc="57fc5391"/>
@@ -10565,7 +10856,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="porunchan">
-		<description>Porun-chan No Onigiri Daisuki (HB, v1.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Porun-chan No Onigiri Daisuki (HB, v1.1)</description>
 		<year>2019</year>
 		<manufacturer>Mook-TV</manufacturer>
 		<rom name="Porun-chan no onigiri daisuki (v1.1-2019)(mook-tv).nes" size="262160" crc="e15026cd"/>
@@ -10685,7 +10977,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="princeofpersiac" cloneof="princeofpersia" romof="princeofpersia">
-		<description>Prince of Persia (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Prince of Persia (USA) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="prince of persia (usa) - castellano v1.0.nes" size="131088" crc="3f11d7a3"/>
@@ -10733,7 +11026,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="probotectorc" cloneof="contra" romof="contra">
-		<description>Probotector (Europe) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Probotector (Europe) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="probotector (europe) - castellano v1.0.nes" size="131088" crc="9e9a6477"/>
@@ -10749,7 +11043,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="probotectorretc" cloneof="superc" romof="superc">
-		<description>Probotector II - Return of the Evil Forces (Europe) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Probotector II - Return of the Evil Forces (Europe) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="probotector ii - return of the evil forces (europe) - castellano v1.0.nes" size="262160" crc="f8d46d0b"/>
@@ -10757,7 +11052,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="projectblue">
-		<description>Project Blue (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Project Blue (HB)</description>
 		<year>2019</year>
 		<manufacturer>toggle switch</manufacturer>
 		<rom name="Project Blue (HB).nes" size="524304" crc="43b9e57e"/>
@@ -10789,7 +11085,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="purplecapeman">
-		<description>Purple Cape Man (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Purple Cape Man (HB)</description>
 		<year>2015</year>
 		<manufacturer>Vigilante Ninja</manufacturer>
 		<rom name="Purple Cape Man (HB).nes" size="24592" crc="d8a7825b"/>
@@ -10805,7 +11102,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="puyopuyoc" cloneof="puyopuyo" romof="puyopuyo">
-		<description>Puyo Puyo (Japan) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Puyo Puyo (Japan) - Castellano v1.1</description>
 		<year>2020</year>
 		<manufacturer>Max1323</manufacturer>
 		<rom name="puyo puyo (japan) - castellano v1.1.nes" size="131088" crc="f55b69bd"/>
@@ -10861,7 +11159,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pyramidsra">
-		<description>Pyramids of Ra (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Pyramids of Ra (HB)</description>
 		<year>2019</year>
 		<manufacturer>Piko Interactive</manufacturer>
 		<rom name="Pyramids of Ra (2019)(Piko Int.).nes" size="393232" crc="0bcee664"/>
@@ -10933,7 +11232,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="questforge">
-		<description>Quest Forge (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Quest Forge (HB)</description>
 		<year>2016</year>
 		<manufacturer>Ludosity</manufacturer>
 		<rom name="Quest Forge (HB).nes" size="40976" crc="e81cba21"/>
@@ -11117,7 +11417,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ramboc" cloneof="rambo" romof="rambo">
-		<description>Rambo (USA) (Rev 1) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Rambo (USA) (Rev 1) - Castellano v1.0</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="rambo (usa) (rev 1) - castellano v1.0.nes" size="131088" crc="f28cc969"/>
@@ -11165,7 +11466,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="renegadec" cloneof="renegade" romof="renegade">
-		<description>Renegade (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Renegade (USA) - Castellano v1.0</description>
 		<year>2017</year>
 		<manufacturer>JonnyVilla2088</manufacturer>
 		<rom name="renegade (usa) - castellano v1.0.nes" size="131088" crc="acac361a"/>
@@ -11181,7 +11483,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="rescuec" cloneof="rescue" romof="rescue">
-		<description>Rescue - The Embassy Mission (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Rescue - The Embassy Mission (USA) - Castellano v1.0</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="rescue - the embassy mission (usa) - castellano v1.0.nes" size="262160" crc="ab441e08"/>
@@ -11269,7 +11572,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="robocopc" cloneof="robocop" romof="robocop">
-		<description>RoboCop (USA) - Castellano v0.91 [Hack]</description>
+		<comment>Hack</comment>
+		<description>RoboCop (USA) - Castellano v0.91</description>
 		<year>2016</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="robocop (usa) - castellano v0.91.nes" size="262160" crc="0f97e1e8"/>
@@ -11285,7 +11589,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="robocop2c" cloneof="robocop2" romof="robocop2">
-		<description>RoboCop 2 (USA) (Rev 1) - Castellano v0.93 [Hack]</description>
+		<comment>Hack</comment>
+		<description>RoboCop 2 (USA) (Rev 1) - Castellano v0.93</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="robocop 2 (usa) (rev 1) - castellano v0.93.nes" size="262160" crc="4b3e87d9"/>
@@ -11309,7 +11614,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="robocop3c" cloneof="robocop3" romof="robocop3">
-		<description>Robocop 3 (USA) - Castellano v0.9 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Robocop 3 (USA) - Castellano v0.9</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="robocop 3 (usa) - castellano v0.9.nes" size="262160" crc="eda2dcb2"/>
@@ -11421,7 +11727,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="rockm4mi" cloneof="megaman4" romof="megaman4">
-		<description>Rockman 4 - Minus Infinity (Hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Rockman 4 - Minus Infinity (Hack)</description>
 		<year>2016</year>
 		<manufacturer>Puresabe</manufacturer>
 		<rom name="Rockman 4 - Minus Infinity (Hack).nes" size="1048592" crc="e9887ba6"/>
@@ -11437,7 +11744,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="rockm5mp" cloneof="megaman5" romof="megaman5">
-		<description>Rockman 5 - Metropolis (Hack, HB) [Hack, Homebrew]</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Rockman 5 - Metropolis (Hack, HB)</description>
 		<year>2021</year>
 		<manufacturer>Stalkermaestro</manufacturer>
 		<rom name="Rockman 5 - Metropolis (2021)(Stalkermaestro).nes" size="524304" crc="0911f8bf"/>
@@ -11493,7 +11801,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="rollie">
-		<description>Rollie (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Rollie (HB)</description>
 		<year>2019</year>
 		<manufacturer>Optovania</manufacturer>
 		<rom name="Rollie (HB).nes" size="40976" crc="8165c356"/>
@@ -11533,7 +11842,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="rushnattackc" cloneof="rushnattack" romof="rushnattack">
-		<description>Rush'n Attack (USA) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Rush'n Attack (USA) - Castellano v1.1</description>
 		<year>2021</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="rush'n attack (usa) - castellano v1.1.nes" size="131088" crc="b6bdb5e5"/>
@@ -11581,7 +11891,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="saintseiyaodc" cloneof="saintseiougden" romof="saintseiougden">
-		<description>Saint Seiya - Ougon Densetsu (T-Chi, v2.0) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Saint Seiya - Ougon Densetsu (T-Chi, v2.0)</description>
 		<year>2018</year>
 		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Saint Seiya - Ougon Densetsu (T-Chi, v2.0).nes" size="1310736" crc="f7df4b56"/>
@@ -11597,7 +11908,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="saintseiougdenc" cloneof="saintseiougden" romof="saintseiougden">
-		<description>Saint Seiya - Ougon Densetsu - Castellano v1.0.nes [Hack]</description>
+		<comment>Hack</comment>
+		<description>Saint Seiya - Ougon Densetsu - Castellano v1.0.nes</description>
 		<year>2004</year>
 		<manufacturer>Juan</manufacturer>
 		<rom name="saint seiya - ougon densetsu - castellano v1.0.nes.nes" size="262160" crc="2abdcc86"/>
@@ -11613,7 +11925,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="saintseiyaodkhc" cloneof="saintseiougdenkahen" romof="saintseiougdenkahen">
-		<description>Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi)</description>
 		<year>2017</year>
 		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi).nes" size="524304" crc="b1651b70"/>
@@ -11637,7 +11950,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="saiyuukiworldc" cloneof="saiyuukiworld" romof="saiyuukiworld">
-		<description>Saiyuuki World (T-Chi, v1.04) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Saiyuuki World (T-Chi, v1.04)</description>
 		<year>2016</year>
 		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Saiyuuki World (T-Chi, v1.04).nes" size="262160" crc="6e66cf6f"/>
@@ -11653,7 +11967,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="saiyuwor2c" cloneof="whompem" romof="whompem">
-		<description>Saiyuuki World 2 - Tenjoukai no Majin (T-Chi) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Saiyuuki World 2 - Tenjoukai no Majin (T-Chi)</description>
 		<year>2019</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="Saiyuuki World 2 - Tenjoukai no Majin (T-Chi).nes" size="262160" crc="784fc411"/>
@@ -11669,7 +11984,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="salamanderc" cloneof="salamander" romof="salamander">
-		<description>Salamander (T-Chi, v1.2) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Salamander (T-Chi, v1.2)</description>
 		<year>2020</year>
 		<manufacturer>Lei Jing Ling</manufacturer>
 		<rom name="Salamander (T-Chi, v1.2).nes" size="393232" crc="fbe84b97"/>
@@ -11701,7 +12017,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="saturnsmash">
-		<description>Saturn Smash (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Saturn Smash (HB)</description>
 		<year>2019</year>
 		<manufacturer>FG Software</manufacturer>
 		<rom name="Saturn Smash (HB).nes" size="65552" crc="abc36edb"/>
@@ -11709,7 +12026,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="scramble">
-		<description>Scramble (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Scramble (HB)</description>
 		<year>2017</year>
 		<manufacturer>Khan Games</manufacturer>
 		<rom name="Scramble (HB).nes" size="131088" crc="ca6130a6"/>
@@ -11725,7 +12043,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sdgundgs2c" cloneof="sdgundgs2" romof="sdgundgs2">
-		<description>SD Gundam - Gachapon Senshi 2 - Capsule Senki (Japan) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>SD Gundam - Gachapon Senshi 2 - Capsule Senki (Japan) - Castellano v1.0</description>
 		<year>2020</year>
 		<manufacturer>Max1323</manufacturer>
 		<rom name="sd gundam - gachapon senshi 2 - capsule senki (japan) - castellano v1.0.nes" size="262160" crc="86274ffd"/>
@@ -11765,7 +12084,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sdgunkgm">
-		<description>SD Gundam Gaiden - Knight Gundam Monogatari (Japan) (V1.0) (T-Eng) [Hack]</description>
+		<comment>Hack</comment>
+		<description>SD Gundam Gaiden - Knight Gundam Monogatari (Japan) (V1.0) (T-Eng)</description>
 		<year>2020</year>
 		<manufacturer>Bandai</manufacturer>
 		<rom name="sd gundam gaiden - knight gundam monogatari (japan) (v1.0) (t-eng).nes" size="393232" crc="2c91773e"/>
@@ -11797,7 +12117,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sdhstangc" cloneof="sdhstang" romof="sdhstang">
-		<description>SD Hero Soukessen - Taose! Aku no Gundan (Japan) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>SD Hero Soukessen - Taose! Aku no Gundan (Japan) - Castellano v1.0</description>
 		<year>2020</year>
 		<manufacturer>Max1323</manufacturer>
 		<rom name="sd hero soukessen - taose! aku no gundan (japan) - castellano v1.0.nes" size="262160" crc="7c0a15a4"/>
@@ -11861,7 +12182,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sgthel">
-		<description>Sgt. Helmet - Training Day (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Sgt. Helmet - Training Day (HB)</description>
 		<year>2013</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Sgt. Helmet - Training Day (HB).nes" size="40976" crc="44c6ca4d"/>
@@ -11909,7 +12231,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sharkshark">
-		<description>Shark! Shark! (HB) [Original title developed for Intellivision in 1982]</description>
+		<comment>Original title developed for Intellivision in 1982</comment>
+		<description>Shark! Shark! (HB)</description>
 		<year>2014</year>
 		<manufacturer>Mattel Electronics</manufacturer>
 		<rom name="Shark! Shark! (HB).nes" size="24592" crc="5f33e5b4"/>
@@ -11925,7 +12248,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="shera">
-		<description>Shera &amp; the 40 Thieves (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Shera &amp; the 40 Thieves (HB)</description>
 		<year>2021</year>
 		<manufacturer>CGT Games</manufacturer>
 		<rom name="Shera &amp; the 40 Thieves (2021)(CGT Games).nes" size="524304" crc="40da8715"/>
@@ -11965,7 +12289,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="shootufo">
-		<description>Shoot UFO (HB) [Hack, Homebrew, A GlobalHack of Duck Hunt]</description>
+		<comment>Hack, Homebrew, A GlobalHack of Duck Hunt</comment>
+		<description>Shoot UFO (HB)</description>
 		<year>2015</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="Shoot UFO (2015)(GlobHack).nes" size="40976" crc="b5c91a2a"/>
@@ -12021,7 +12346,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="silkwormc" cloneof="silkworm" romof="silkworm">
-		<description>Silk Worm (T-Chi, v1.1) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Silk Worm (T-Chi, v1.1)</description>
 		<year>2020</year>
 		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Silk Worm (T-Chi, v1.1).nes" size="393232" crc="3d53c8ad"/>
@@ -12101,7 +12427,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sinkingfeeling">
-		<description>Sinking Feeling (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Sinking Feeling (HB)</description>
 		<year>2017</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Sinking Feeling (HB).nes" size="49168" crc="b2f79ee2"/>
@@ -12109,7 +12436,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sirababol">
-		<description>Sir Ababol (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Sir Ababol (HB)</description>
 		<year>2013</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Sir Ababol (HB).nes" size="40976" crc="5e7e4c60"/>
@@ -12117,7 +12445,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sirababolr" cloneof="sirababol" romof="sirababol">
-		<description>Sir Ababol Remastered Edition (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Sir Ababol Remastered Edition (HB)</description>
 		<year>2016</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Sir Ababol Remastered Edition (2016)(Mojon Twins).nes" size="40976" crc="36d8ca2b"/>
@@ -12197,7 +12526,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="slowmole">
-		<description>Slow Mole (HB, v1.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Slow Mole (HB, v1.1)</description>
 		<year>2021</year>
 		<manufacturer>Erik Rosenlund</manufacturer>
 		<rom name="Slow Mole v1.1 (2021)(Erik Rosenlund).nes" size="524304" crc="eadc4e8b"/>
@@ -12205,7 +12535,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="smashtvc" cloneof="smashtv" romof="smashtv">
-		<description>Smash T.V. (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Smash T.V. (USA) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="smash t.v. (usa) - castellano v1.0.nes" size="262160" crc="658cbecc"/>
@@ -12237,7 +12568,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="snakesrevengec" cloneof="snakesrevenge" romof="snakesrevenge">
-		<description>Snake's Revenge (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Snake's Revenge (USA) - Castellano v1.0</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="snake's revenge (usa) - castellano v1.0.nes" size="262160" crc="3d4a2507"/>
@@ -12261,7 +12593,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="snowbrothersc" cloneof="snowbrothers" romof="snowbrothers">
-		<description>Snow Brothers (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Snow Brothers (USA) - Castellano v1.0</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="snow brothers (usa) - castellano v1.0.nes" size="262160" crc="29c40f70"/>
@@ -12341,7 +12674,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic" cloneof="somari" romof="somari">
-		<description>Sonic the Hedgehog (Hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Sonic the Hedgehog (Hack)</description>
 		<year>2020</year>
 		<manufacturer>Terwilf</manufacturer>
 		<rom name="Sonic the Hedgehog (Hack).nes" size="786448" crc="b9ebd682"/>
@@ -12373,7 +12707,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="spacegulls">
-		<description>Spacegulls (HB, v1.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Spacegulls (HB, v1.1)</description>
 		<year>2021</year>
 		<manufacturer>Morphcat Games</manufacturer>
 		<rom name="Spacegulls (HB)(2021)(Morphcat Games).nes" size="65552" crc="539f87d4"/>
@@ -12437,7 +12772,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="spiritimpel">
-		<description>Spirit Impel (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Spirit Impel (HB)</description>
 		<year>2020</year>
 		<manufacturer>Passe Gaming</manufacturer>
 		<rom name="Spirit Impel (2020)(Passe Gaming).nes" size="524304" crc="146f8f6c"/>
@@ -12453,7 +12789,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="splitsecond">
-		<description>Split Second (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Split Second (HB)</description>
 		<year>2019</year>
 		<manufacturer>Skadiet</manufacturer>
 		<rom name="Split Second (2019)(Skadiet).nes" size="24592" crc="a26a6c89"/>
@@ -12477,7 +12814,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="spyvsspyc" cloneof="spyvsspy" romof="spyvsspy">
-		<description>Spy Vs Spy (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Spy Vs Spy (USA) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="spy vs spy (usa) - castellano v1.0.nes" size="40976" crc="0c4a3d91"/>
@@ -12533,7 +12871,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="starevil">
-		<description>Star Evil (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Star Evil (HB)</description>
 		<year>2018</year>
 		<manufacturer>PDRoms</manufacturer>
 		<rom name="Star Evil (HB).nes" size="40976" crc="fbd4ce1c"/>
@@ -12597,7 +12936,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="starversus">
-		<description>Star Versus (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Star Versus (HB)</description>
 		<year>2015</year>
 		<manufacturer>Dustmop</manufacturer>
 		<rom name="Star Versus (2015)(Dustmop).nes" size="196624" crc="33e83fa5"/>
@@ -12613,7 +12953,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="starwarsjc" cloneof="starwars" romof="starwars">
-		<description>Star Wars (Japan) (Namco) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Star Wars (Japan) (Namco) - Castellano v1.0</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="star wars (japan) (namco) - castellano v1.0.nes" size="262160" crc="eef6974a"/>
@@ -12637,7 +12978,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="starwarsc" cloneof="starwars" romof="starwars">
-		<description>Star Wars (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Star Wars (USA) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="star wars (usa) - castellano v1.0.nes" size="262160" crc="0e6e000c"/>
@@ -12717,7 +13059,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="steinsgate">
-		<description>Steins Gate (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Steins Gate (HB)</description>
 		<year>2018</year>
 		<manufacturer>Chiyomaru</manufacturer>
 		<rom name="Steins Gate (HB).nes" size="786448" crc="547c4f1d"/>
@@ -12741,7 +13084,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="streefig201c" cloneof="streefig201" romof="streefig201">
-		<description>Street Fighter 2010 - The Final Fight (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Street Fighter 2010 - The Final Fight (USA) - Castellano v1.0</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="street fighter 2010 - the final fight (usa) - castellano v1.0.nes" size="262160" crc="0c963bf7"/>
@@ -12757,7 +13101,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="streefigiic" cloneof="streefigii" romof="streefigii">
-		<description>Street Fighter II - The World Warrior (Unl) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Street Fighter II - The World Warrior (Unl) - Castellano v1.0</description>
 		<year>2010?</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="street fighter ii - the world warrior (unl) - castellano v1.0.nes" size="262160" crc="03861489"/>
@@ -12885,7 +13230,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="superbatpun">
-		<description>Super Bat Puncher (HB, Demo) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Super Bat Puncher (HB, Demo)</description>
 		<year>2011</year>
 		<manufacturer>Morphcat Games</manufacturer>
 		<rom name="Super Bat Puncher (Demo).nes" size="131088" crc="d04302fa"/>
@@ -12909,7 +13255,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="superchii" cloneof="littlninbro" romof="littlninbro">
-		<description>Super Chinese II - Dragon Kid (T-Chi, v1.4) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Super Chinese II - Dragon Kid (T-Chi, v1.4)</description>
 		<year>2019</year>
 		<manufacturer>Han Hua Ni Mei Team</manufacturer>
 		<rom name="Super Chinese II - Dragon Kid (T-Chi, v1.4).nes" size="524304" crc="a9e92ef3"/>
@@ -12917,7 +13264,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="supercontrac" cloneof="superc" romof="superc">
-		<description>Super Contra (T-Chi) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Super Contra (T-Chi)</description>
 		<year>2017</year>
 		<manufacturer>FlameCyclone</manufacturer>
 		<rom name="Super Contra (T-Chi).nes" size="393232" crc="048f7dd8"/>
@@ -12941,7 +13289,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="superhomwar">
-		<description>Super Homebrew War (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Super Homebrew War (HB)</description>
 		<year>2019</year>
 		<manufacturer>gauauu</manufacturer>
 		<rom name="Super Homebrew War (HB).nes" size="65552" crc="16b8d50a"/>
@@ -12957,7 +13306,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="smb8en">
-		<description>Super Mario Bros 8 (English) (Hack) [Hack, Homebrew]</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Super Mario Bros 8 (English) (Hack)</description>
 		<year>2021</year>
 		<manufacturer>Crying Onion</manufacturer>
 		<rom name="Super Mario Bros 8 hack eng (2021)(Crying Onion).nes" size="393232" crc="1f5d9f05"/>
@@ -12965,7 +13315,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="smb8es" cloneof="smb8en" romof="smb8en">
-		<description>Super Mario Bros 8 (Spanish) (Hack) [Hack, Homebrew]</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Super Mario Bros 8 (Spanish) (Hack)</description>
 		<year>2021</year>
 		<manufacturer>Crying Onion</manufacturer>
 		<rom name="Super Mario Bros 8 hack spa (2021)(Crying Onion).nes" size="393232" crc="ef9c0a4f"/>
@@ -12973,7 +13324,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="smb8se" cloneof="smb8en" romof="smb8en">
-		<description>Super Mario Bros 8 Special Edition (Hack) [Hack, Homebrew, Don Doko Don 2 tribute edition]</description>
+		<comment>Hack, Homebrew, Don Doko Don 2 tribute edition</comment>
+		<description>Super Mario Bros 8 Special Edition (Hack)</description>
 		<year>2021</year>
 		<manufacturer>Crying Onion</manufacturer>
 		<rom name="Super Mario Bros 8 SE hack (2021)(Crying Onion).nes" size="393232" crc="aa5822c0"/>
@@ -12981,7 +13333,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="smbdx" cloneof="smb" romof="smb">
-		<description>Super Mario Bros DX (HB, v3.4) [Hack, Homebrew]</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Super Mario Bros DX (HB, v3.4)</description>
 		<year>2018</year>
 		<manufacturer>Flamephanter</manufacturer>
 		<rom name="super mario bros dx (2018)(flamephanter) v3.4.nes" size="40978" crc="004768e4"/>
@@ -12989,7 +13342,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="smbc" cloneof="smb" romof="smb">
-		<description>Super Mario Bros. (World) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Super Mario Bros. (World) - Castellano v1.0</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="super mario bros. (world) - castellano v1.0.nes" size="40976" crc="54de5344"/>
@@ -13005,7 +13359,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="smb2c" cloneof="smb2" romof="smb2">
-		<description>Super Mario Bros. 2 (USA) (Rev 1) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Super Mario Bros. 2 (USA) (Rev 1) - Castellano v1.0</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="super mario bros. 2 (usa) (rev 1) - castellano v1.0.nes" size="262160" crc="36114415"/>
@@ -13029,7 +13384,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="smb3c" cloneof="smb3" romof="smb3">
-		<description>Super Mario Bros. 3 (T-Chi) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Super Mario Bros. 3 (T-Chi)</description>
 		<year>2016</year>
 		<manufacturer>NOKOH</manufacturer>
 		<rom name="Super Mario Bros. 3 (T-Chi).nes" size="458768" crc="e39b725d"/>
@@ -13037,7 +13393,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="smb3cast" cloneof="smb3" romof="smb3">
-		<description>Super Mario Bros. 3 (USA) (Rev 1) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Super Mario Bros. 3 (USA) (Rev 1) - Castellano v1.0</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="super mario bros. 3 (usa) (rev 1) - castellano v1.0.nes" size="393232" crc="2e094f49"/>
@@ -13117,7 +13474,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="smunlimdx">
-		<description>Super Mario Unlimited Deluxe (GlobalHack, v2.4) [Hack, Homebrew]</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Super Mario Unlimited Deluxe (GlobalHack, v2.4)</description>
 		<year>2021</year>
 		<manufacturer>Frantik</manufacturer>
 		<rom name="Super Mario Unlimited Deluxe v2.4 (2021)(Frantik).nes" size="196624" crc="e4198a92"/>
@@ -13125,7 +13483,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="smbunldlx" cloneof="smb" romof="smb">
-		<description>Super Mario Unlimited Deluxe (Hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Super Mario Unlimited Deluxe (Hack)</description>
 		<year>2020</year>
 		<manufacturer>Frantik</manufacturer>
 		<rom name="Super Mario Unlimited Deluxe (Hack).nes" size="196624" crc="716c9eb4"/>
@@ -13149,7 +13508,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="superpainter">
-		<description>Super Painter (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Super Painter (HB)</description>
 		<year>2015</year>
 		<manufacturer>Retro Souls</manufacturer>
 		<rom name="Super Painter (HB).nes" size="40976" crc="5d483272"/>
@@ -13189,7 +13549,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="superpit30t">
-		<description>Super Pitfall 30th Anniversary Ed.(HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Super Pitfall 30th Anniversary Ed.(HB)</description>
 		<year>2016</year>
 		<manufacturer>NESRocks</manufacturer>
 		<rom name="Super Pitfall 30th (HB).nes" size="131088" crc="e55ba70d"/>
@@ -13197,7 +13558,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="srp" cloneof="smb" romof="smb">
-		<description>Super Royal Pals (Hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Super Royal Pals (Hack)</description>
 		<year>2020</year>
 		<manufacturer>QUXNLADY</manufacturer>
 		<rom name="super royal pals (2020)(QUXNLADY).nes" size="40976" crc="62797e6e"/>
@@ -13253,7 +13615,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="supertiltbro">
-		<description>Super Tilt Bro (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Super Tilt Bro (HB)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Super Tilt Bro (HB).nes" size="524304" crc="58829008"/>
@@ -13269,7 +13632,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="superuwol">
-		<description>Super UWOL (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Super UWOL (HB)</description>
 		<year>2015</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Super UWOL (HB).nes" size="40976" crc="9fbb9e1d"/>
@@ -13325,7 +13689,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="swordmasterc" cloneof="swordmaster" romof="swordmaster">
-		<description>Sword Master (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Sword Master (USA) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="sword master (usa) - castellano v1.0.nes" size="262160" crc="0f7fcbaf"/>
@@ -13477,7 +13842,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tapeworm">
-		<description>Tapeworm Disco Puzzle (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Tapeworm Disco Puzzle (HB)</description>
 		<year>2021</year>
 		<manufacturer>Lowtek Games</manufacturer>
 		<rom name="Tapeworm Disco Puzzle (2021)(Lowtek Games).nes" size="524304" crc="b71d9fa1"/>
@@ -13485,7 +13851,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tapewormd" cloneof="tapeworm" romof="tapeworm">
-		<description>Tapeworm Disco Puzzle (HB, Demo) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Tapeworm Disco Puzzle (HB, Demo)</description>
 		<year>2020</year>
 		<manufacturer>Lowtek Games</manufacturer>
 		<rom name="Tapeworm Disco Puzzle (HB)(Demo).nes" size="65552" crc="30e0689f"/>
@@ -13493,7 +13860,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="targetrenegadec" cloneof="targetrenegade" romof="targetrenegade">
-		<description>Target Renegade (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Target Renegade (USA) - Castellano v1.0</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="target - renegade (usa) - castellano v1.0.nes" size="262160" crc="6754acae"/>
@@ -13621,7 +13989,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tmntc" cloneof="tmnt" romof="tmnt">
-		<description>Teenage Mutant Ninja Turtles (T-Chi, v1.0) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Teenage Mutant Ninja Turtles (T-Chi, v1.0)</description>
 		<year>2020</year>
 		<manufacturer>MEZARANSU</manufacturer>
 		<rom name="Teenage Mutant Ninja Turtles (T-Chi, v1.0).nes" size="393232" crc="43ae114f"/>
@@ -13629,7 +13998,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tmntcast" cloneof="tmnt" romof="tmnt">
-		<description>Teenage Mutant Ninja Turtles (USA) - Castellano v0.9 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Teenage Mutant Ninja Turtles (USA) - Castellano v0.9</description>
 		<year>2016</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="teenage mutant ninja turtles (usa) - castellano v0.9.nes" size="262160" crc="30cd0997"/>
@@ -13645,7 +14015,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tmnttoufigc" cloneof="tmnttoufig" romof="tmnttoufig">
-		<description>Teenage Mutant Ninja Turtles - Tournament Fighters (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Teenage Mutant Ninja Turtles - Tournament Fighters (USA) - Castellano v1.0</description>
 		<year>2020</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="teenage mutant ninja turtles - tournament fighters (usa) - castellano v1.0.nes" size="262160" crc="32eac8c5"/>
@@ -13661,7 +14032,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tmntiiarcgamc" cloneof="tmntiiarcgam" romof="tmntiiarcgam">
-		<description>Teenage Mutant Ninja Turtles II - The Arcade Game (USA) - Castellano v0.9 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Teenage Mutant Ninja Turtles II - The Arcade Game (USA) - Castellano v0.9</description>
 		<year>2016</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="teenage mutant ninja turtles ii - the arcade game (usa) - castellano v0.9.nes" size="524304" crc="b83bcec8"/>
@@ -13685,7 +14057,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tmntiiic" cloneof="tmntiii" romof="tmntiii">
-		<description>Teenage Mutant Ninja Turtles III - The Manhattan Project (USA) - Castellano v0.91 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Teenage Mutant Ninja Turtles III - The Manhattan Project (USA) - Castellano v0.91</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="teenage mutant ninja turtles iii - the manhattan project (usa) - castellano v0.91.nes" size="524304" crc="3e9ddb5c"/>
@@ -13781,7 +14154,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="termi2c" cloneof="termi2" romof="termi2">
-		<description>Terminator 2 - Judgment Day (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Terminator 2 - Judgment Day (USA) - Castellano v1.0</description>
 		<year>2016</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="terminator 2 - judgment day (usa) - castellano v1.0.nes" size="262160" crc="43d08e31"/>
@@ -13813,7 +14187,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="teslavsedison">
-		<description>Tesla vs Edison (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Tesla vs Edison (HB)</description>
 		<year>2018</year>
 		<manufacturer>Radnek</manufacturer>
 		<rom name="Tesla vs Edison (2018)(Radtek).nes" size="40976" crc="7d646297"/>
@@ -13877,7 +14252,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="beatlesadv" cloneof="smb2" romof="smb2">
-		<description>The Beatles Adventures in Pepperland (GlobalHack) [Hack, Homebrew]</description>
+		<comment>Hack, Homebrew</comment>
+		<description>The Beatles Adventures in Pepperland (GlobalHack)</description>
 		<year>2021</year>
 		<manufacturer>NesDraug</manufacturer>
 		<rom name="The Beatles Adventures in Pepperland GlobHack (2021)(NesDraug).nes" size="524304" crc="fa5e3fa2"/>
@@ -13893,7 +14269,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="madwiz">
-		<description>The Mad Wizard - A Candelabra Chronicle (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>The Mad Wizard - A Candelabra Chronicle (HB)</description>
 		<year>2014</year>
 		<manufacturer>Robert L. Bryant</manufacturer>
 		<rom name="The Mad Wizard - A Candelabra Chronicle (HB).nes" size="131088" crc="7750dac6"/>
@@ -13901,7 +14278,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="meating">
-		<description>The Meating - Cafeparty (HB, Demo) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>The Meating - Cafeparty (HB, Demo)</description>
 		<year>2019</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="The Meating - Cafeparty Demo (HB).nes" size="262160" crc="e704ef0a"/>
@@ -13909,7 +14287,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="riseamo">
-		<description>The Rise of Amondus (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>The Rise of Amondus (HB)</description>
 		<year>2015</year>
 		<manufacturer>Robert L. Bryant</manufacturer>
 		<rom name="The Rise of Amondus (HB).nes" size="131088" crc="b15ac0fe"/>
@@ -13917,7 +14296,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="thexderc" cloneof="thexder" romof="thexder">
-		<description>Thexder (Japan) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Thexder (Japan) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="Thexder (japan) - castellano v1.0.nes" size="40976" crc="52ac30c1"/>
@@ -14045,7 +14425,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tinytooadvc" cloneof="tinytooadv" romof="tinytooadv">
-		<description>Tiny Toon Adventures (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Tiny Toon Adventures (USA) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="tiny toon adventures (usa) - castellano v1.0.nes" size="262160" crc="bcd94fa2"/>
@@ -14077,7 +14458,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tinytooadv6c" cloneof="tinytooadv6" romof="tinytooadv6">
-		<description>Tiny Toon Adventures 6 (Unl) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Tiny Toon Adventures 6 (Unl) - Castellano v1.0</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="tiny toon adventures 6 (unl) - castellano v1.0.nes" size="524304" crc="93db8d83"/>
@@ -14149,7 +14531,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tomjerultgamcatandmc" cloneof="tomjerultgamcatandm" romof="tomjerultgamcatandm">
-		<description>Tom &amp; Jerry - The Ultimate Game of Cat and Mouse! (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Tom &amp; Jerry - The Ultimate Game of Cat and Mouse! (USA) - Castellano v1.0</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="tom &amp; jerry - the ultimate game of cat and mouse! (usa) - castellano v1.0.nes" size="262160" crc="9c6a9bcc"/>
@@ -14173,7 +14556,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="topgunc" cloneof="topgun" romof="topgun">
-		<description>Top Gun (USA) (Rev 1) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Top Gun (USA) (Rev 1) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="top gun (usa) (rev 1) - castellano v1.0.nes" size="131088" crc="879481af"/>
@@ -14189,7 +14573,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="topgunsecmisc" cloneof="topgunsecmis" romof="topgunsecmis">
-		<description>Top Gun - The Second Mission (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Top Gun - The Second Mission (USA) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="top gun - the second mission (usa) - castellano v1.0.nes" size="262160" crc="350f534b"/>
@@ -14221,7 +14606,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="totalrecallc" cloneof="totalrecall" romof="totalrecall">
-		<description>Total Recall (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Total Recall (USA) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="Total Recall (USA) - Castellano v1.0.nes" size="131088" crc="93a02a67"/>
@@ -14253,7 +14639,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="touhourououmu">
-		<description>Touhou Rououmu - Perfect Cherry Blossom (HB, v0.71) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Touhou Rououmu - Perfect Cherry Blossom (HB, v0.71)</description>
 		<year>2019</year>
 		<manufacturer>takahirox</manufacturer>
 		<rom name="TouhouRououmu (HB).nes" size="524304" crc="0f240b9c"/>
@@ -14277,7 +14664,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="towerofturmoil">
-		<description>Tower of Turmoil (HB, v1.03) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Tower of Turmoil (HB, v1.03)</description>
 		<year>2019</year>
 		<manufacturer>CutterCross</manufacturer>
 		<rom name="Tower of Turmoil (HB, v1.03).nes" size="524304" crc="89cbd840"/>
@@ -14333,7 +14721,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="trophy">
-		<description>Trophy (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Trophy (HB)</description>
 		<year>2020</year>
 		<manufacturer>the 6502 collective</manufacturer>
 		<rom name="Trophy (2020)(the 6502 collective).nes" size="786448" crc="94c16bfc"/>
@@ -14373,7 +14762,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="twindragons">
-		<description>Twin Dragons (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Twin Dragons (HB)</description>
 		<year>2018</year>
 		<manufacturer>Broke Studio</manufacturer>
 		<rom name="Twin Dragons (HB).nes" size="524304" crc="0d29351e"/>
@@ -14381,7 +14771,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="twindracomedi" cloneof="twindragons" romof="twindragons">
-		<description>Twin Dragons Compo Edition (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Twin Dragons Compo Edition (HB)</description>
 		<year>2016</year>
 		<manufacturer>Broke Studio</manufacturer>
 		<rom name="Twin Dragons Compo Edition (HB).nes" size="65552" crc="311cb660"/>
@@ -14477,7 +14868,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ultimfrocha">
-		<description>Ultimate Frogger Champion (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Ultimate Frogger Champion (HB)</description>
 		<year>2019</year>
 		<manufacturer>Khan Games</manufacturer>
 		<rom name="Ultimate Frogger Champion (HB).nes" size="49168" crc="ab862073"/>
@@ -14525,7 +14917,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="uncanxmenc" cloneof="uncanxmen" romof="uncanxmen">
-		<description>Uncanny X-Men, The (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Uncanny X-Men, The (USA) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="uncanny x-men, the (usa) - castellano v1.0.nes" size="131088" crc="21a9db24"/>
@@ -14549,7 +14942,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="underadv">
-		<description>Underground Adventure (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Underground Adventure (HB)</description>
 		<year>2019</year>
 		<manufacturer>Dale Coop</manufacturer>
 		<rom name="Underground Adventure (2019)(Dale Coop).nes" size="524304" crc="eaf67029"/>
@@ -14573,7 +14967,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="upsadown">
-		<description>Upsad Down (HB, v0.6) [Homebrew, NesDev Competition build]</description>
+		<comment>Homebrew, NesDev Competition build</comment>
+		<description>Upsad Down (HB, v0.6)</description>
 		<year>2020</year>
 		<manufacturer>Fadest</manufacturer>
 		<rom name="Upsad Down v0.6 (2021)(Fadest).nes" size="40976" crc="f90302bc"/>
@@ -14621,7 +15016,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="valkynobouc" cloneof="valkynobou" romof="valkynobou">
-		<description>Valkyrie no Bouken - Toki no Kagi Densetsu (Japan) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Valkyrie no Bouken - Toki no Kagi Densetsu (Japan) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Max1323</manufacturer>
 		<rom name="valkyrie no bouken - toki no kagi densetsu (japan) - castellano v1.0.nes" size="65552" crc="9e222fab"/>
@@ -14653,7 +15049,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="veggieinvaders">
-		<description>Veggie Invaders (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Veggie Invaders (HB)</description>
 		<year>2019</year>
 		<manufacturer>dustmop</manufacturer>
 		<rom name="Veggie Invaders (HB).nes" size="65552" crc="6276c0a0"/>
@@ -14677,7 +15074,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nesvircle">
-		<description>Virus Cleaner (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Virus Cleaner (HB)</description>
 		<year>2016</year>
 		<manufacturer>Second Dimension</manufacturer>
 		<rom name="NES Virus Cleaner (HB).nes" size="40976" crc="5f17cb98"/>
@@ -14749,7 +15147,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="waiwaiworldc" cloneof="waiwaiworld" romof="waiwaiworld">
-		<description>Wai Wai World (T-Chi) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Wai Wai World (T-Chi)</description>
 		<year>2012</year>
 		<manufacturer>NOKOH</manufacturer>
 		<rom name="Wai Wai World (T-Chi).nes" size="524304" crc="ae26fdde"/>
@@ -14781,7 +15180,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wall">
-		<description>Wall (Demo) (HB, Tech-Demo) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Wall (Demo) (HB, Tech-Demo)</description>
 		<year>1999</year>
 		<manufacturer>Chris Covell</manufacturer>
 		<rom name="wall (Demo).nes" size="24592" crc="5da28b4f"/>
@@ -14805,7 +15205,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wampus" cloneof="wampusdx" romof="wampusdx">
-		<description>Wampus (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Wampus (HB)</description>
 		<year>2019</year>
 		<manufacturer>John Vanderhoef</manufacturer>
 		<rom name="Wampus (2019)(John Vanderhoef).nes" size="524304" crc="f67d26a2"/>
@@ -14813,7 +15214,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wampusdx">
-		<description>Wampus DX (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Wampus DX (HB)</description>
 		<year>2020</year>
 		<manufacturer>John Vanderhoef</manufacturer>
 		<rom name="Wampus DX (2020)(John Vanderhoef).nes" size="524304" crc="690f19e0"/>
@@ -14821,7 +15223,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wanpakuduck" cloneof="ducktales" romof="ducktales">
-		<description>Wanpaku Duck Yume Bouken (T-Chi) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Wanpaku Duck Yume Bouken (T-Chi)</description>
 		<year>2020</year>
 		<manufacturer>Ju Jue Rong Hua</manufacturer>
 		<rom name="Wanpaku Duck Yume Bouken (T-Chi).nes" size="196624" crc="9fe55e12"/>
@@ -14845,7 +15248,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wowheels">
-		<description>War on Wheels (USA) (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>War on Wheels (USA) (Prototype)</description>
 		<year>1991-2006</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="War on Wheels (Proto)(2006)(Jaleco).nes" size="393232" crc="c957dcb0"/>
@@ -14869,7 +15273,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wartworm">
-		<description>Wart Worm Wingding (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Wart Worm Wingding (HB)</description>
 		<year>2020</year>
 		<manufacturer>John Vanderhoef</manufacturer>
 		<rom name="Wart Worm Wingding (2020)(John Vanderhoef).nes" size="524304" crc="8b9d8827"/>
@@ -14901,7 +15306,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="whatremains">
-		<description>What Remains (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>What Remains (HB)</description>
 		<year>2019</year>
 		<manufacturer>Iodine Dynamics</manufacturer>
 		<rom name="What Remains (HB).nes" size="524304" crc="2f2d03e5"/>
@@ -14965,7 +15371,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="willownfh" cloneof="willow" romof="willow">
-		<description>Willow No Flash Hack (v1.1) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Willow No Flash Hack (v1.1)</description>
 		<year>2020</year>
 		<manufacturer>Jigglysaint</manufacturer>
 		<rom name="Willow (Hack, No Flash).nes" size="262160" crc="956ea1a6"/>
@@ -15005,7 +15412,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="witchnwiz">
-		<description>Witch n' Wiz (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Witch n' Wiz (HB)</description>
 		<year>2021</year>
 		<manufacturer>Matt Hughson</manufacturer>
 		<rom name="Witch n' Wiz (2021)(mhughson).nes" size="262160" crc="4ac76d3f"/>
@@ -15013,7 +15421,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="witchnwiznd" cloneof="witchnwiz" romof="witchnwiz">
-		<description>Witch n' Wiz (HB, NESDev Ed.) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Witch n' Wiz (HB, NESDev Ed.)</description>
 		<year>2020-21</year>
 		<manufacturer>Matt Hughson</manufacturer>
 		<rom name="Witch n' Wiz (2020-21)(NESDev Ed.).nes" size="65552" crc="bddd6cba"/>
@@ -15029,7 +15438,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wizarwariiic" cloneof="wizarwariii" romof="wizarwariii">
-		<description>Wizards &amp; Warriors III - Kuros - Visions of Power (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Wizards &amp; Warriors III - Kuros - Visions of Power (USA) - Castellano v1.0</description>
 		<year>2020</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="wizards &amp; warriors iii - kuros - visions of power (usa) - castellano v1.0.nes" size="262160" crc="7135c442"/>
@@ -15045,7 +15455,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wxniao">
-		<description>Wo Xiang Niao Niao (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Wo Xiang Niao Niao (HB)</description>
 		<year>2016</year>
 		<manufacturer>Xin Xin</manufacturer>
 		<rom name="Wo Xiang Niao Niao (2016)(Xin Xin).nes" size="40976" crc="7063779c"/>
@@ -15053,7 +15464,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wolfspirit">
-		<description>Wolf Spirit (HB, Demo) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Wolf Spirit (HB, Demo)</description>
 		<year>2021</year>
 		<manufacturer>Valdir Salgueiro</manufacturer>
 		<rom name="Wolf Spirit (HB)(2021)(Valdir Salgueiro).nes" size="65552" crc="74574809"/>
@@ -15061,7 +15473,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wolfling">
-		<description>Wolfling (HB, v1.4) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Wolfling (HB, v1.4)</description>
 		<year>2018</year>
 		<manufacturer>Lazy Cow</manufacturer>
 		<rom name="Wolfling (HB, v1.4).nes" size="65552" crc="f22ae9b8"/>
@@ -15069,7 +15482,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wolverinec" cloneof="wolverine" romof="wolverine">
-		<description>Wolverine (USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Wolverine (USA) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="wolverine (usa) - castellano v1.0.nes" size="262160" crc="db5ee5cb"/>
@@ -15085,7 +15499,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wonderlanddizzy">
-		<description>Wonderland Dizzy (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Wonderland Dizzy (HB)</description>
 		<year>2015</year>
 		<manufacturer>Oliver Twins</manufacturer>
 		<rom name="Wonderland Dizzy (HB).nes" size="262160" crc="62c97c6c"/>
@@ -15189,7 +15604,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="yiearkungfuc" cloneof="yiearkungfu" romof="yiearkungfu">
-		<description>Yie Ar Kung-Fu (Japan) (V1.4) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Yie Ar Kung-Fu (Japan) (V1.4) - Castellano v1.0</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="yie ar kung-fu (japan) (v1.4) - castellano v1.0.nes" size="24592" crc="032019a7"/>
@@ -15253,7 +15669,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ysc" cloneof="ys" romof="ys">
-		<description>Ys (Japan) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Ys (Japan) - Castellano v1.1</description>
 		<year>2017</year>
 		<manufacturer>Takkun57</manufacturer>
 		<rom name="ys (japan) - castellano v1.1.nes" size="262160" crc="024dd1cf"/>
@@ -15277,7 +15694,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ysiic" cloneof="ysii" romof="ysii">
-		<description>Ys II - Ancient Ys Vanished - The Final Chapter (Japan) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Ys II - Ancient Ys Vanished - The Final Chapter (Japan) - Castellano v1.0</description>
 		<year>2010?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="ys ii - ancient ys vanished - the final chapter (japan) - castellano v1.0.nes" size="393232" crc="20770bf0"/>
@@ -15333,7 +15751,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="yunr5">
-		<description>Yun R5 (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Yun R5 (HB)</description>
 		<year>2018</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="yun r5 (2018)(mojon twins).nes" size="65552" crc="04940713"/>
@@ -15357,7 +15776,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zdey">
-		<description>Zdey the Game (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Zdey the Game (HB)</description>
 		<year>2020</year>
 		<manufacturer>Art'Cade</manufacturer>
 		<rom name="Zdey the Game (2020)(Art'Cade).nes" size="524304" crc="fd4036e1"/>
@@ -15365,7 +15785,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zeldaiic" cloneof="zeldaii" romof="zeldaii">
-		<description>Zelda II - The Adventure of Link (Europe) (Rev 2) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Zelda II - The Adventure of Link (Europe) (Rev 2) - Castellano v1.0</description>
 		<year>2016</year>
 		<manufacturer>jackic</manufacturer>
 		<rom name="zelda ii - the adventure of link (europe) (rev 2) - castellano v1.0.nes" size="262160" crc="d31d09ae"/>
@@ -15381,7 +15802,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zeldaiiac" cloneof="zeldaii" romof="zeldaii">
-		<description>Zelda II Amida's Curse (GlobalHack, v1.7) [Hack, Homebrew]</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Zelda II Amida's Curse (GlobalHack, v1.7)</description>
 		<year>2021</year>
 		<manufacturer>Ok Impala!</manufacturer>
 		<rom name="Zelda II Amida's Curse GlobHack v1.7 (2021)(Ok Impala!).nes" size="262160" crc="a6ccfea4"/>
@@ -15389,7 +15811,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zeldakong" cloneof="donkeykong" romof="donkeykong">
-		<description>Zelda Kong (HB, Global Hack) [Hack, Homebrew]</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Zelda Kong (HB, Global Hack)</description>
 		<year>2021</year>
 		<manufacturer>Zero Meaning</manufacturer>
 		<rom name="Zelda Kong (2021)(Zero Meaning).nes" size="24592" crc="4c801a11"/>
@@ -15421,7 +15844,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zombiecalavera">
-		<description>Zombie Calavera (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Zombie Calavera (HB)</description>
 		<year>2016</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Zombie Calavera (HB).nes" size="40976" crc="23ec3047"/>
@@ -15445,7 +15869,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zoomisec">
-		<description>Zooming Secretary (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Zooming Secretary (HB)</description>
 		<year>2011</year>
 		<manufacturer>Pinwizz &amp; Shiru</manufacturer>
 		<rom name="Zooming Secretary (HB).nes" size="40976" crc="947972d0"/>

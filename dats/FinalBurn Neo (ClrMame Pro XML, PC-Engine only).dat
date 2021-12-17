@@ -309,7 +309,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cadash">
-		<description>Cadash [Bad graphics]</description>
+		<comment>Bad graphics</comment>
+		<description>Cadash</description>
 		<year>1991</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="cadash (japan).pce" size="393216" crc="8dc0d85f"/>

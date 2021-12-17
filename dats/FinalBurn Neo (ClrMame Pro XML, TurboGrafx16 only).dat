@@ -125,7 +125,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cadash">
-		<description>Cadash [Bad graphics]</description>
+		<comment>Bad graphics</comment>
+		<description>Cadash</description>
 		<year>1991</year>
 		<manufacturer>Working Designs</manufacturer>
 		<rom name="cadash (usa).pce" size="524288" crc="bb0b3aef"/>
@@ -133,7 +134,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="forevbox">
-		<description>Champions Forever Boxing [Bad sound]</description>
+		<comment>Bad sound</comment>
+		<description>Champions Forever Boxing</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="champions forever boxing (usa).pce" size="524288" crc="15ee889a"/>

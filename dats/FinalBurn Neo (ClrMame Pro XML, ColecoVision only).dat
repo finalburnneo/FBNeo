@@ -13,7 +13,8 @@
 		<clrmamepro forcenodump="ignore"/>
 	</header>
 	<game name="2010p1" cloneof="2010" romof="2010">
-		<description>2010: The Graphic Action Game (Prototype v44) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>2010: The Graphic Action Game (Prototype v44)</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="act2010-rv44-chip1.bin" size="8192" crc="d9dc972f"/>
@@ -28,7 +29,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="2010p" cloneof="2010" romof="2010">
-		<description>2010: The Graphic Action Game (Prototype v54) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>2010: The Graphic Action Game (Prototype v54)</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="act2010-54-chip1-11-9-cd7e.bin" size="8192" crc="d8a55441"/>
@@ -58,7 +60,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="421" romof="coleco">
-		<description>421 (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>421 (HB)</description>
 		<year>2002</year>
 		<manufacturer>Mathieu Proulx</manufacturer>
 		<rom name="421 (2002) (Mathieu Proulx).col" size="25600" crc="b6254fc5"/>
@@ -70,7 +73,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ae" romof="coleco">
-		<description>A.E.:Anti-Environment Encounter (HB) [Homebrew, Published by CollectorVision Games]</description>
+		<comment>Homebrew, Published by CollectorVision Games</comment>
+		<description>A.E.:Anti-Environment Encounter (HB)</description>
 		<year>1984-2012</year>
 		<manufacturer>Broderbund Software</manufacturer>
 		<rom name="AE (2012)(Team Pixelboy).rom" size="32768" crc="85f2c3ff"/>
@@ -162,7 +166,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="armagedn" romof="coleco">
-		<description>Armageddon (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Armageddon (HB)</description>
 		<year>2011</year>
 		<manufacturer>CollectorVision Games</manufacturer>
 		<rom name="Armageddon (CollectorVision)(2011).rom" size="32768" crc="55147097"/>
@@ -187,7 +192,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="astrododge" romof="coleco">
-		<description>Astro Dodge (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Astro Dodge (HB)</description>
 		<year>2012</year>
 		<manufacturer>Revival Studios</manufacturer>
 		<rom name="Astrododge (2012) (Revival Studios).rom" size="32768" crc="1a29dfd1"/>
@@ -199,7 +205,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="astroinv" romof="coleco">
-		<description>Astro Invader (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Astro Invader (HB)</description>
 		<year>1980-2005</year>
 		<manufacturer>Scott Huggins / Stern</manufacturer>
 		<rom name="Astro Invader (2005) (Scott Huggins).rom" size="32768" crc="70ccc945"/>
@@ -211,7 +218,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bankpanic" romof="coleco">
-		<description>Bank Panic (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Bank Panic (HB)</description>
 		<year>2011</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Bank Panic (2011)(Team Pixelboy).rom" size="32768" crc="223e7ddc"/>
@@ -223,7 +231,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bankbuild" romof="coleco">
-		<description>Bankruptcy Builder (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Bankruptcy Builder (HB)</description>
 		<year>2013</year>
 		<manufacturer>Good Deal Games</manufacturer>
 		<rom name="Bankruptcy Builder (2013)(Good Deal Games).rom" size="32768" crc="b153c849"/>
@@ -235,7 +244,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bofhoth" romof="coleco">
-		<description>Battle of Hoth (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Battle of Hoth (HB)</description>
 		<year>2013</year>
 		<manufacturer>Team Pixelboy</manufacturer>
 		<rom name="Battle of Hoth (2013)(Team Pixelboy).rom" size="32768" crc="b2ef6386"/>
@@ -301,7 +311,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bejeweled" romof="coleco">
-		<description>Bejeweled (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Bejeweled (HB)</description>
 		<year>2002</year>
 		<manufacturer>Daniel Bienvenu</manufacturer>
 		<rom name="Bejeweled (2002) (Daniel Bienvenu).col" size="25728" crc="39c5a7e9"/>
@@ -326,7 +337,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bombjack" romof="coleco">
-		<description>Bomb Jack (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Bomb Jack (HB)</description>
 		<year>2015</year>
 		<manufacturer>CollectorVision Games</manufacturer>
 		<rom name="Bomb Jack (CollectorVision)(2015).rom" size="32768" crc="765d1f78"/>
@@ -338,7 +350,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bomblast" romof="coleco">
-		<description>Bomb'n Blast (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Bomb'n Blast (HB)</description>
 		<year>2011</year>
 		<manufacturer>CollectorVision Games</manufacturer>
 		<rom name="Bomb'n Blast (CollectorVision)(2011).rom" size="32768" crc="b06d9de7"/>
@@ -350,7 +363,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="boomingboy" romof="coleco">
-		<description>Booming Boy (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
+		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
+		<description>Booming Boy (HB)</description>
 		<year>2019</year>
 		<manufacturer>Armando Perez Abad and Nene Franz</manufacturer>
 		<rom name="booming_boy_cv_sgm.rom" size="32768" crc="924a7d57"/>
@@ -375,7 +389,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="boxxle" romof="coleco">
-		<description>Boxxle (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Boxxle (HB)</description>
 		<year>2015</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="boxxle_colecovision.rom" size="65536" crc="62dacf07"/>
@@ -400,7 +415,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="breakout" romof="coleco">
-		<description>Breakout (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Breakout (HB)</description>
 		<year>1999</year>
 		<manufacturer>Daniel Bienvenu</manufacturer>
 		<rom name="Breakout (1999) (Daniel Bienvenu).col" size="13696" crc="b05fb3ec"/>
@@ -412,7 +428,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="buckrogsgm" romof="coleco">
-		<description>Buck Rogers Super Game (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
+		<comment>Homebrew, (SGM) - Published by Team Pixelboy</comment>
+		<description>Buck Rogers Super Game (HB)</description>
 		<year>1983-2013</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="buck_rogers_super_game_colecovision_sgm" size="262144" crc="c4f1a85a"/>
@@ -452,7 +469,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="btimem" cloneof="btime" romof="btime">
-		<description>Burgertime (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Burgertime (Prototype)</description>
 		<year>1983</year>
 		<manufacturer>Mattel</manufacturer>
 		<rom name="btimem.1" size="8192" crc="4e943aeb"/>
@@ -478,7 +496,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="brubber" romof="coleco">
-		<description>Burn Rubber (HB) [Homebrew, Published by CollectorVision]</description>
+		<comment>Homebrew, Published by CollectorVision</comment>
+		<description>Burn Rubber (HB)</description>
 		<year>2010</year>
 		<manufacturer>Dvik and Joyrex</manufacturer>
 		<rom name="burn-rubber.rom" size="32768" crc="b278ebde"/>
@@ -490,7 +509,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cso" romof="coleco">
-		<description>C-So! (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>C-So! (HB)</description>
 		<year>2018</year>
 		<manufacturer>Pony - Sega</manufacturer>
 		<rom name="C-So (2018)(Team Pixelboy).rom" size="32768" crc="d182812a"/>
@@ -517,7 +537,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cabbagep1" cloneof="cabbage" romof="cabbage">
-		<description>Cabbage Patch Kids: Adventure in the Park (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Cabbage Patch Kids: Adventure in the Park (Prototype)</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="cabbagep1.1" size="8192" crc="e7214974"/>
@@ -530,7 +551,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cabbagep2" cloneof="cabbage" romof="cabbage">
-		<description>Cabbage Patch Kids: Adventure in the Park (Prototype, Alt) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Cabbage Patch Kids: Adventure in the Park (Prototype, Alt)</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="cabbage-patch-chip1-6-30.bin" size="8192" crc="2b793712"/>
@@ -569,7 +591,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="canamini" romof="coleco">
-		<description>Canadian Minigames (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Canadian Minigames (HB)</description>
 		<year>2008</year>
 		<manufacturer>Wick-Foster-Bienvenu</manufacturer>
 		<rom name="Canadian Minigames (2008) (Wick-Foster-Bienvenu).col" size="32768" crc="99f3cbc9"/>
@@ -581,7 +604,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="caosbgns" romof="coleco">
-		<description>Caos Begins (HB) [Homebrew, SGM - Super Game Module]</description>
+		<comment>Homebrew, SGM - Super Game Module</comment>
+		<description>Caos Begins (HB)</description>
 		<year>2015</year>
 		<manufacturer>Team Pixelboy</manufacturer>
 		<rom name="caos begins (2015)(team pixelboy)(sgm).rom" size="32768" crc="53672097"/>
@@ -618,7 +642,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="catsos" romof="coleco">
-		<description>Caterpillar S.O.S. (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Caterpillar S.O.S. (HB)</description>
 		<year>2011</year>
 		<manufacturer>CollectorVision Games</manufacturer>
 		<rom name="Cat SOS Game (2011)(CollectorVision).rom" size="32768" crc="10e6e6de"/>
@@ -630,7 +655,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="caverns" romof="coleco">
-		<description>Caverns of Titan (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
+		<comment>Homebrew, (SGM) - Published by Team Pixelboy</comment>
+		<description>Caverns of Titan (HB)</description>
 		<year>2017</year>
 		<manufacturer>Jltursan</manufacturer>
 		<rom name="caverns-of-titan-2017-sgm.rom" size="32768" crc="4928b5f5"/>
@@ -668,7 +694,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="chprowres" romof="coleco">
-		<description>Champion Pro Wrestling (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Champion Pro Wrestling (HB)</description>
 		<year>1985-2020</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="champion_pro_wrestling_cv_sgm.rom" size="32768" crc="045c54d6"/>
@@ -680,7 +707,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="chesschal" romof="coleco">
-		<description>Chess Challenge (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Chess Challenge (HB)</description>
 		<year>2011</year>
 		<manufacturer>CollectorVision</manufacturer>
 		<rom name="Chess Challenger (2011)(CollectorVision).col" size="32768" crc="998c1bbd"/>
@@ -692,7 +720,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cotn" romof="coleco">
-		<description>Children of the Night (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
+		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
+		<description>Children of the Night (HB)</description>
 		<year>2017</year>
 		<manufacturer>Hikaru Games</manufacturer>
 		<rom name="Children of the Night (2017) (Team Pixelboy).rom" size="131072" crc="55b36d53"/>
@@ -730,7 +759,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ccharlie" romof="coleco">
-		<description>Circus Charlie (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Circus Charlie (HB)</description>
 		<year>2011</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Circus Charlie (2011)(Team Pixelboy).rom" size="32768" crc="be3ef785"/>
@@ -742,7 +772,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="coldblood" romof="coleco">
-		<description>Cold Blood (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
+		<comment>Homebrew, (SGM) - Published by Team Pixelboy</comment>
+		<description>Cold Blood (HB)</description>
 		<year>2017</year>
 		<manufacturer>Paxanga</manufacturer>
 		<rom name="cold_blood_colecovision_sgm.rom" size="32768" crc="960f7086"/>
@@ -844,7 +875,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dangrtower" romof="coleco">
-		<description>Danger Tower (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
+		<comment>Homebrew, (SGM) - Published by Team Pixelboy</comment>
+		<description>Danger Tower (HB)</description>
 		<year>2017</year>
 		<manufacturer>Danger Team</manufacturer>
 		<rom name="danger_tower_sgm.rom" size="32768" crc="0246bdb1"/>
@@ -869,7 +901,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="deepdngadv" romof="coleco">
-		<description>Deep Dungeon Adventure (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
+		<comment>Homebrew, (SGM) - Published by Team Pixelboy</comment>
+		<description>Deep Dungeon Adventure (HB)</description>
 		<year>2017</year>
 		<manufacturer>Trilobyte</manufacturer>
 		<rom name="deep_dungeon_adventure_sgm.rom" size="131072" crc="77900970"/>
@@ -895,7 +928,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="deflektor" romof="coleco">
-		<description>Deflektor Kollection (HB) [Homebrew, Published by Atariage]</description>
+		<comment>Homebrew, Published by Atariage</comment>
+		<description>Deflektor Kollection (HB)</description>
 		<year>2005</year>
 		<manufacturer>Daniel Bienvenu</manufacturer>
 		<rom name="Deflektor Kollection (2005) (Daniel Bienvenu).col" size="31872" crc="1b3a8639"/>
@@ -907,7 +941,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="destruct" romof="coleco">
-		<description>Destructor [Select w/ Controller #2]</description>
+		<comment>Select w/ Controller #2</comment>
+		<description>Destructor</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="destruct.1" size="8192" crc="7026e237"/>
@@ -922,7 +957,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="destructsce" cloneof="destruct" romof="destruct">
-		<description>Destructor S.C.E. (Hack, Standard Controller Edition) [Hack, Homebrew, Published by Team Pixelboy]</description>
+		<comment>Hack, Homebrew, Published by Team Pixelboy</comment>
+		<description>Destructor S.C.E. (Hack, Standard Controller Edition)</description>
 		<year>2010</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="Destructor SCE (2010) (Team Pixelboy).col" size="32768" crc="2a9fcbfa"/>
@@ -934,7 +970,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ddash" romof="coleco">
-		<description>Diamond Dash (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Diamond Dash (HB)</description>
 		<year>2011</year>
 		<manufacturer>NewColeco</manufacturer>
 		<rom name="Diamond Dash (2011)(NewColeco).rom" size="3858" crc="e386b1b7"/>
@@ -946,7 +983,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ddash2" romof="coleco">
-		<description>Diamond Dash 2 (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Diamond Dash 2 (HB)</description>
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Diamond Dash 2 (2021)(Under4Mhz).rom" size="32768" crc="5576dec3"/>
@@ -958,7 +996,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="digdug" romof="coleco">
-		<description>Dig Dug (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Dig Dug (Prototype)</description>
 		<year>1984</year>
 		<manufacturer>Atarisoft</manufacturer>
 		<rom name="digdug.1" size="8192" crc="e13a6484"/>
@@ -972,7 +1011,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="digger" romof="coleco">
-		<description>Digger (HB) [Homebrew, Published by CollectorVision]</description>
+		<comment>Homebrew, Published by CollectorVision</comment>
+		<description>Digger (HB)</description>
 		<year>2015</year>
 		<manufacturer>Windmill Software</manufacturer>
 		<rom name="digger_cv.rom" size="24576" crc="77088cab"/>
@@ -998,7 +1038,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dkongsgm" romof="coleco">
-		<description>Donkey Kong (SGM) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
+		<comment>Homebrew, (SGM) - Published by Team Pixelboy</comment>
+		<description>Donkey Kong (SGM)</description>
 		<year>2020</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Donkey_Kong_SGM.rom" size="131072" crc="b3e62471"/>
@@ -1010,7 +1051,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dkongjrsgm" romof="coleco">
-		<description>Donkey Kong Jr. (SGM) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
+		<comment>Homebrew, (SGM) - Published by Team Pixelboy</comment>
+		<description>Donkey Kong Jr. (SGM)</description>
 		<year>2020</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Donkey_Kong_Jr_SGM.rom" size="131072" crc="644124f6"/>
@@ -1061,7 +1103,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dlair" cloneof="dlairsgm" romof="dlairsgm">
-		<description>Dragon's Lair (Prototype, 0416) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Dragon's Lair (Prototype, 0416)</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="dragon80-chip1-4-16-ec4a.bin" size="8192" crc="950950d0"/>
@@ -1075,7 +1118,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dlairsgm" romof="coleco">
-		<description>Dragon's Lair SGM [(SGM) - Published by Team Pixelboy]</description>
+		<comment>(SGM) - Published by Team Pixelboy</comment>
+		<description>Dragon's Lair SGM</description>
 		<year>2012</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="dragons_lair_colecovision_sgm.rom" size="262144" crc="12ceee08"/>
@@ -1100,7 +1144,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="datrolls" romof="coleco">
-		<description>Dungeons and Trolls (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Dungeons and Trolls (HB)</description>
 		<year>2014</year>
 		<manufacturer>CollectorVision</manufacturer>
 		<rom name="Dungeons and Trolls (2014)(CollectorVision).col" size="30187" crc="a227fdaa"/>
@@ -1112,7 +1157,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="easterbunny" romof="coleco">
-		<description>Easter Bunny (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Easter Bunny (HB)</description>
 		<year>2007</year>
 		<manufacturer>Daniel Bienvenu</manufacturer>
 		<rom name="Easter Bunny (2007)(Daniel Bienvenu).rom" size="5888" crc="5c494be5"/>
@@ -1124,7 +1170,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mindmstr" romof="coleco">
-		<description>Escape from the Mindmaster (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Escape from the Mindmaster (Prototype)</description>
 		<year>1983</year>
 		<manufacturer>Epyx</manufacturer>
 		<rom name="mindmstr .1" size="8192" crc="b8280950"/>
@@ -1163,7 +1210,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="fallguy" romof="coleco">
-		<description>Fall Guy (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Fall Guy (Prototype)</description>
 		<year>1983</year>
 		<manufacturer>Fox Video Games</manufacturer>
 		<rom name="fallguy.1" size="8192" crc="f77d3ffd"/>
@@ -1189,7 +1237,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="finaltst" romof="coleco">
-		<description>Final Test Cartridge (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Final Test Cartridge (Prototype)</description>
 		<year>1982</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="colecovision final test (1982) (coleco).rom" size="8192" crc="3ae4b58c"/>
@@ -1201,7 +1250,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="fireman" romof="coleco">
-		<description>Fireman (HB) [Homebrew, Published by CollectorVision]</description>
+		<comment>Homebrew, Published by CollectorVision</comment>
+		<description>Fireman (HB)</description>
 		<year>1984-2009</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="Fireman (Coleco)(1984).rom" size="32768" crc="64ec761e"/>
@@ -1213,7 +1263,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="flapbrd" romof="coleco">
-		<description>Flapee Byrd (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Flapee Byrd (HB)</description>
 		<year>2014</year>
 		<manufacturer>CollectorVision</manufacturer>
 		<rom name="Flapee Byrd (2014)(CollectorVision).col" size="32756" crc="5ac80811"/>
@@ -1225,7 +1276,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="flicky" romof="coleco">
-		<description>Flicky (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Flicky (HB)</description>
 		<year>1984-2018</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Flicky (2018) (Team Pixelboy).col" size="32768" crc="89875c52"/>
@@ -1250,7 +1302,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="flora" romof="coleco">
-		<description>Flora and the Ghost Mirror (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Flora and the Ghost Mirror (HB)</description>
 		<year>2013</year>
 		<manufacturer>NewColeco</manufacturer>
 		<rom name="Flora and the Ghost Mirror (2013) (NewColeco).rom" size="32768" crc="fd69012b"/>
@@ -1290,7 +1343,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="frantic" romof="coleco">
-		<description>Frantic (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Frantic (HB)</description>
 		<year>2008</year>
 		<manufacturer>Scott Huggins</manufacturer>
 		<rom name="Frantic (2008)(Scott Huggins).col" size="32640" crc="f43b0b28"/>
@@ -1357,7 +1411,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="frogfeast" romof="coleco">
-		<description>Frog Feast (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Frog Feast (HB)</description>
 		<year>2007</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="Frog Feast (2007) (Unknown).col" size="21760" crc="cb941eb4"/>
@@ -1409,7 +1464,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="frntlnsce" cloneof="frontlin" romof="frontlin">
-		<description>Front Line S.C.E. (Hack, Standard Controller Edition) [Hack, Homebrew, Published by Team Pixelboy]</description>
+		<comment>Hack, Homebrew, Published by Team Pixelboy</comment>
+		<description>Front Line S.C.E. (Hack, Standard Controller Edition)</description>
 		<year>2015</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="Front Line S.C.E. (2015) (Team Pixelboy).col" size="32768" crc="832586bf"/>
@@ -1435,7 +1491,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="frostbite" romof="coleco">
-		<description>Frost Bite (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Frost Bite (HB)</description>
 		<year>2016</year>
 		<manufacturer>Activision</manufacturer>
 		<rom name="frostbite_colecovision.rom" size="32768" crc="b3212318"/>
@@ -1477,7 +1534,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gpvic20" romof="coleco">
-		<description>GamePack Vic-20 (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>GamePack Vic-20 (HB)</description>
 		<year>2003</year>
 		<manufacturer>Daniel Bienvenu</manufacturer>
 		<rom name="GamePack Vic-20 (2003)(Daniel Bienvenu).rom" size="8192" crc="5b4ad168"/>
@@ -1502,7 +1560,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gauntlet" romof="coleco">
-		<description>Gauntlet (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
+		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
+		<description>Gauntlet (HB)</description>
 		<year>1985-2019</year>
 		<manufacturer>Atari Games Ltd.</manufacturer>
 		<rom name="gauntlet_cv_sgm.rom" size="262144" crc="652d533e"/>
@@ -1514,7 +1573,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gblaster" romof="coleco">
-		<description>Ghost Blaster (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Ghost Blaster (HB)</description>
 		<year>2006</year>
 		<manufacturer>Daniel Bienvenu</manufacturer>
 		<rom name="Ghostblaster (2006)(Daniel Bienvenu).rom" size="32768" crc="7e93e6f3"/>
@@ -1526,7 +1586,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ghostrap" romof="coleco">
-		<description>Ghost Trap (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Ghost Trap (HB)</description>
 		<year>2009</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="Ghost Trap (2009)(Coleco).col" size="12288" crc="26269393"/>
@@ -1538,7 +1599,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ghostbst" romof="coleco">
-		<description>Ghostbusters (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Ghostbusters (HB)</description>
 		<year>2018</year>
 		<manufacturer>Activision</manufacturer>
 		<rom name="Ghostbusters (2018)(Team Pixelboy).rom" size="65536" crc="fc935cdd"/>
@@ -1550,7 +1612,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ggarden" romof="coleco">
-		<description>Girl's Garden (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Girl's Garden (HB)</description>
 		<year>2010</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Girl's Garden (2010)(Team Pixelboy).rom" size="32768" crc="305b74c0"/>
@@ -1562,7 +1625,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="golgo13" romof="coleco">
-		<description>Golgo 13 (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Golgo 13 (HB)</description>
 		<year>2011</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Golgo 13 (2011)(Team Pixelboy).rom" size="32768" crc="8acf1bcf"/>
@@ -1574,7 +1638,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="goonies" romof="coleco">
-		<description>Goonies (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
+		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
+		<description>Goonies (HB)</description>
 		<year>2012</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Goonies_SGM (2012)(Team Pixelboy).rom" size="131072" crc="01581fa8"/>
@@ -1599,7 +1664,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gulkave" romof="coleco">
-		<description>Gulkave (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Gulkave (HB)</description>
 		<year>2012</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Gulkave (2012)(Team Pixelboy).rom" size="32768" crc="81413ff6"/>
@@ -1650,7 +1716,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="helifire" romof="coleco">
-		<description>HeliFire (HB) [Homebrew, Published by CollectorVision]</description>
+		<comment>Homebrew, Published by CollectorVision</comment>
+		<description>HeliFire (HB)</description>
 		<year>1980-2013</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="HeliFire (CollectorVision)(2013).rom" size="32768" crc="29d8c5f4"/>
@@ -1662,7 +1729,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="heroesar" romof="coleco">
-		<description>Heroes Arena (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
+		<comment>Homebrew, (SGM) - Published by Team Pixelboy</comment>
+		<description>Heroes Arena (HB)</description>
 		<year>2017</year>
 		<manufacturer>Imanok</manufacturer>
 		<rom name="heroes-arena-2017-sgm.rom" size="32768" crc="87a49761"/>
@@ -1674,7 +1742,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="hrally" romof="coleco">
-		<description>Hyper Rally (HB, Prototype) [Homebrew, Prototype, Tap accel. button for shift]</description>
+		<comment>Homebrew, Prototype, Tap accel. button for shift</comment>
+		<description>Hyper Rally (HB, Prototype)</description>
 		<year>2011</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Hyper Rally (2011)(Team Pixelboy).rom" size="32768" crc="f8b08810"/>
@@ -1699,7 +1768,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="insanepick" romof="coleco">
-		<description>Insane Pickin' Sticks (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Insane Pickin' Sticks (HB)</description>
 		<year>2010</year>
 		<manufacturer>Daniel Bienvenu</manufacturer>
 		<rom name="Insane Pickin' Sticks VIII (2010) (Daniel Bienvenu).col" size="30864" crc="5a6c2d2f"/>
@@ -1724,7 +1794,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="jetpac" romof="coleco">
-		<description>J.E.T.P.A.C. (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
+		<comment>Homebrew, (SGM) - Published by Team Pixelboy</comment>
+		<description>J.E.T.P.A.C. (HB)</description>
 		<year>2017</year>
 		<manufacturer>Imanok</manufacturer>
 		<rom name="jetpac_sgm.rom" size="32768" crc="ae7614c3"/>
@@ -1749,7 +1820,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="jeepcrep" romof="coleco">
-		<description>Jeepers Creepers (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Jeepers Creepers (HB)</description>
 		<year>2007</year>
 		<manufacturer>Daniel Bienvenu</manufacturer>
 		<rom name="jeepers-creepers-2012.rom" size="32768" crc="69e3c673"/>
@@ -1761,7 +1833,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="joustsgm" romof="coleco">
-		<description>Joust (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
+		<comment>Homebrew, (SGM) - Published by Team Pixelboy</comment>
+		<description>Joust (HB)</description>
 		<year>2014</year>
 		<manufacturer>Atarisoft</manufacturer>
 		<rom name="Joust (2014) (Team Pixelboy).rom" size="32768" crc="62f325b3"/>
@@ -1773,7 +1846,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="joust" romof="coleco">
-		<description>Joust (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Joust (Prototype)</description>
 		<year>1983</year>
 		<manufacturer>Atarisoft</manufacturer>
 		<rom name="joust.1" size="8192" crc="99402515"/>
@@ -1840,7 +1914,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="junkwall" romof="coleco">
-		<description>Junkwall (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Junkwall (HB)</description>
 		<year>2016</year>
 		<manufacturer>Silicon Sex</manufacturer>
 		<rom name="Junkwall (Silicon Sex)(2016).rom" size="32768" crc="28257c4a"/>
@@ -1852,7 +1927,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kaboom" romof="coleco">
-		<description>Kaboom! (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Kaboom! (HB)</description>
 		<year>2017</year>
 		<manufacturer>Activision</manufacturer>
 		<rom name="kaboom_colecovision.rom" size="16384" crc="24a2b61b"/>
@@ -1877,7 +1953,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kevtris" romof="coleco">
-		<description>Kevtris (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Kevtris (HB)</description>
 		<year>1996</year>
 		<manufacturer>Kevin Horton</manufacturer>
 		<rom name="Kevtris (1996) (Kevin Horton).col" size="16384" crc="819a06e5"/>
@@ -1902,7 +1979,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kingball" romof="coleco">
-		<description>King &amp; Balloon (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
+		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
+		<description>King &amp; Balloon (HB)</description>
 		<year>2018</year>
 		<manufacturer>Namco</manufacturer>
 		<rom name="King and balloon_SGM (2018)(Team Pixelboy).rom" size="32768" crc="9ce3b912"/>
@@ -1914,7 +1992,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kvalley" romof="coleco">
-		<description>King's Valley (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
+		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
+		<description>King's Valley (HB)</description>
 		<year>2018</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Kings Valley_SGM (2018)(Team Pixelboy).rom" size="32768" crc="0a2ac883"/>
@@ -1926,7 +2005,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kingvalley" romof="coleco">
-		<description>King's Valley (SGM) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
+		<comment>Homebrew, (SGM) - Published by Team Pixelboy</comment>
+		<description>King's Valley (SGM)</description>
 		<year>2012</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="kingvalley_sgm.rom" size="32768" crc="0a2ac883"/>
@@ -1938,7 +2018,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ksolitaire" romof="coleco">
-		<description>Klondike Solitaire (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Klondike Solitaire (HB)</description>
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Klondike Solitaire (2021)(Under4Mhz).rom" size="32768" crc="278c5021"/>
@@ -1950,7 +2031,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kngtlore" romof="coleco">
-		<description>Knight Lore (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
+		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
+		<description>Knight Lore (HB)</description>
 		<year>2018</year>
 		<manufacturer>Ultimate</manufacturer>
 		<rom name="Knight Lore_SGM (2018)(Team Pixelboy).rom" size="32768" crc="1523bfbf"/>
@@ -1962,7 +2044,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kngtmare" romof="coleco">
-		<description>Knightmare (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
+		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
+		<description>Knightmare (HB)</description>
 		<year>2015</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Knightmare_SGM (fix)(2015)(Team Pixelboy).rom" size="131072" crc="01cacd0d"/>
@@ -1974,7 +2057,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kobashi" romof="coleco">
-		<description>Kobashi (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Kobashi (HB)</description>
 		<year>2010</year>
 		<manufacturer>CollectorVision Games</manufacturer>
 		<rom name="Kobashi (CollectorVision)(2010).rom" size="32768" crc="9fc4d7c7"/>
@@ -1986,7 +2070,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pingpong" romof="coleco">
-		<description>Konami's Ping-Pong (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Konami's Ping-Pong (HB)</description>
 		<year>2011</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Konami's Ping-Pong (2011) (Team Pixelboy).col" size="32768" crc="344cb482"/>
@@ -1998,7 +2083,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="krtetris" romof="coleco">
-		<description>Kralizec Tetris (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Kralizec Tetris (HB)</description>
 		<year>2017</year>
 		<manufacturer>Kralizec</manufacturer>
 		<rom name="Kralizec Tetris (2017)(Team Pixelboy).rom" size="32768" crc="e8a91349"/>
@@ -2010,7 +2096,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kungfumstr" romof="coleco">
-		<description>Kung-Fu Master (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Kung-Fu Master (HB)</description>
 		<year>2016</year>
 		<manufacturer>CollectorVision Games</manufacturer>
 		<rom name="kungfumstr_sgm.rom" size="131072" crc="441693fd"/>
@@ -2061,7 +2148,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="loderunner" romof="coleco">
-		<description>Lode Runner (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Lode Runner (HB)</description>
 		<year>2009</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="Lode Runner (2002)(Steve Begin).rom" size="32768" crc="a2128f74"/>
@@ -2099,7 +2187,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mash" romof="coleco">
-		<description>M*A*S*H (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>M*A*S*H (Prototype)</description>
 		<year>1983</year>
 		<manufacturer>Fox Video Games</manufacturer>
 		<rom name="mash.1" size="8192" crc="1bdfdaa5"/>
@@ -2112,7 +2201,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="magtree" romof="coleco">
-		<description>Magical Tree (HB) [Homebrew, Published by Opcode Games]</description>
+		<comment>Homebrew, Published by Opcode Games</comment>
+		<description>Magical Tree (HB)</description>
 		<year>2006</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Magical Tree (2006) (Opcode Games).col" size="32768" crc="f4314bb1"/>
@@ -2124,7 +2214,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="msolitaire" romof="coleco">
-		<description>Mahjong Solitaire (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Mahjong Solitaire (HB)</description>
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Mahjong Solitaire (2021)(Under4Mhz).rom" size="32768" crc="6ed6a2e1"/>
@@ -2136,7 +2227,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="majikazo" romof="coleco">
-		<description>Majikazo (HB) [Homebrew, SGM - Super Game Module]</description>
+		<comment>Homebrew, SGM - Super Game Module</comment>
+		<description>Majikazo (HB)</description>
 		<year>2015-16</year>
 		<manufacturer>Team Pixelboy - Lemonize</manufacturer>
 		<rom name="Majikazo (2016)(Team Pixelboy).rom" size="32768" crc="2a1438c0"/>
@@ -2148,7 +2240,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mappy" romof="coleco">
-		<description>Mappy (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
+		<comment>Homebrew, (SGM) - Published by Team Pixelboy</comment>
+		<description>Mappy (HB)</description>
 		<year>2015</year>
 		<manufacturer>Namco</manufacturer>
 		<rom name="Mappy (2015) (Team Pixelboy) (SGM).rom" size="32768" crc="00d30431"/>
@@ -2160,7 +2253,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mariob" cloneof="mario" romof="mario">
-		<description>Mario Brothers (HB) [Homebrew, Published by CollectorVision]</description>
+		<comment>Homebrew, Published by CollectorVision</comment>
+		<description>Mario Brothers (HB)</description>
 		<year>1983-2009</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Mario Brothers (2009) (CollectorVision).rom" size="65536" crc="11777b27"/>
@@ -2172,7 +2266,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mario" romof="coleco">
-		<description>Mario Brothers Final Edition (Rev D) (HB) [Homebrew, Published by CollectorVision]</description>
+		<comment>Homebrew, Published by CollectorVision</comment>
+		<description>Mario Brothers Final Edition (Rev D) (HB)</description>
 		<year>1983-2009</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Mario Brothers Final Edition (2009) (Rev D) (CollectorVision).rom" size="131072" crc="2e09af0a"/>
@@ -2184,7 +2279,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mazemaniac" romof="coleco">
-		<description>Maze Maniac (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Maze Maniac (HB)</description>
 		<year>2006</year>
 		<manufacturer>Charles-Mathieu Boyer</manufacturer>
 		<rom name="Maze Maniac (2006) (Charles-Mathieu Boyer).col" size="32640" crc="44bfaf23"/>
@@ -2196,7 +2292,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mazezam" romof="coleco">
-		<description>MazezaM (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>MazezaM (HB)</description>
 		<year>2004</year>
 		<manufacturer>Ventzislav Tzvetkov</manufacturer>
 		<rom name="MazezaM (2004)(Ventzislav Tzvetkov).rom" size="16384" crc="150006fc"/>
@@ -2208,7 +2305,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mazezamch" romof="coleco">
-		<description>MazezaM Challenge (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>MazezaM Challenge (HB)</description>
 		<year>2016</year>
 		<manufacturer>CollectorVision Games</manufacturer>
 		<rom name="MazezaM Challenge (2016)(Collectorvision).bin" size="32768" crc="8eded0e2"/>
@@ -2220,7 +2318,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mecha8" romof="coleco">
-		<description>Mecha-8 (HB) [Homebrew, SGM - Super Game Module]</description>
+		<comment>Homebrew, SGM - Super Game Module</comment>
+		<description>Mecha-8 (HB)</description>
 		<year>2013</year>
 		<manufacturer>Team Pixelboy</manufacturer>
 		<rom name="mecha_8.rom" size="131072" crc="53da40bc"/>
@@ -2232,7 +2331,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mecha9" romof="coleco">
-		<description>Mecha-9 (HB) [Homebrew, SGM - Super Game Module]</description>
+		<comment>Homebrew, SGM - Super Game Module</comment>
+		<description>Mecha-9 (HB)</description>
 		<year>2015</year>
 		<manufacturer>Oscar Toledo G.</manufacturer>
 		<rom name="mecha9_colecovision_sgm.rom" size="262144" crc="b405591a"/>
@@ -2257,7 +2357,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mmtxvol1" romof="coleco">
-		<description>Memotech MTX Series Vol 1 (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Memotech MTX Series Vol 1 (HB)</description>
 		<year>2013</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="Memotech_MTX_Series_-_vol_1_PD_2013.col" size="31448" crc="f8b5bb4f"/>
@@ -2269,7 +2370,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mmtxvol2" romof="coleco">
-		<description>Memotech MTX Series Vol 2 (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Memotech MTX Series Vol 2 (HB)</description>
 		<year>2013</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="Memotech_MTX_Series_-_vol_2_PD_2013.col" size="27839" crc="06ff3853"/>
@@ -2322,7 +2424,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="moduleman" romof="coleco">
-		<description>Module Man (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Module Man (HB)</description>
 		<year>2013</year>
 		<manufacturer>Team Pixelboy</manufacturer>
 		<rom name="module-man-2013.rom" size="32768" crc="eb6be8ec"/>
@@ -2362,7 +2465,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mpatrolp" cloneof="mpatrol" romof="mpatrol">
-		<description>Moon Patrol (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Moon Patrol (Prototype)</description>
 		<year>1984</year>
 		<manufacturer>Atarisoft</manufacturer>
 		<rom name="Moon Patrol (1984) (Atarisoft) (Prototype).rom" size="32768" crc="fbe12de7"/>
@@ -2412,7 +2516,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mopirang" romof="coleco">
-		<description>Mopiranger (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Mopiranger (HB)</description>
 		<year>2012</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Mopiranger (2012) (Team Pixelboy).col" size="32768" crc="a60be082"/>
@@ -2502,7 +2607,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mrchin" romof="coleco">
-		<description>Mr. Chin (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Mr. Chin (HB)</description>
 		<year>2008</year>
 		<manufacturer>Collectorvision Games</manufacturer>
 		<rom name="Mr. Chin (2008) (Collectorvision Games).col" size="32768" crc="9ab11795"/>
@@ -2555,7 +2661,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="msspacefury" romof="coleco">
-		<description>Ms. Space Fury (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Ms. Space Fury (HB)</description>
 		<year>2001</year>
 		<manufacturer>Daniel Bienvenu</manufacturer>
 		<rom name="Ms Space Fury (Daniel Bienvenu)(2001).rom" size="32768" crc="d055a446"/>
@@ -2567,7 +2674,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="multiverse" romof="coleco">
-		<description>Multiverse (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Multiverse (HB)</description>
 		<year>2019</year>
 		<manufacturer>Hikaru Games</manufacturer>
 		<rom name="multiverse_cv.rom" size="32768" crc="d45475ac"/>
@@ -2593,7 +2701,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nibbli" romof="coleco">
-		<description>Nibbli: Son of Nibbler (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Nibbli: Son of Nibbler (HB)</description>
 		<year>2014</year>
 		<manufacturer>CollectorVision Games</manufacturer>
 		<rom name="Nibbli (CollectorVision)(2014).rom" size="32768" crc="41555f66"/>
@@ -2605,7 +2714,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nim" romof="coleco">
-		<description>Nim (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Nim (HB)</description>
 		<year>2000</year>
 		<manufacturer>Daniel Bienvenu</manufacturer>
 		<rom name="Nim (2000) (Daniel Bienvenu).rom" size="6912" crc="9c059a51"/>
@@ -2617,7 +2727,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjaprincess" romof="coleco">
-		<description>Ninja Princess (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Ninja Princess (HB)</description>
 		<year>2011</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Ninja Princess (2011) (Team PixelBoy).rom" size="32768" crc="5fb0ed62"/>
@@ -2708,7 +2819,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="opwolf" romof="coleco">
-		<description>Operation Wolf (HB) [Homebrew, SGM - Super Game Module]</description>
+		<comment>Homebrew, SGM - Super Game Module</comment>
+		<description>Operation Wolf (HB)</description>
 		<year>2016</year>
 		<manufacturer>Team Pixelboy - Lemonize</manufacturer>
 		<rom name="Operation Wolf (2016)(Team Pixelboy).rom" size="32768" crc="c177bfd4"/>
@@ -2720,7 +2832,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="orbit" romof="coleco">
-		<description>Orbit (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Orbit (Prototype)</description>
 		<year>1983</year>
 		<manufacturer>Parker Brothers</manufacturer>
 		<rom name="orbit.bin" size="8192" crc="2cc6f4aa"/>
@@ -2732,7 +2845,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ozmawars" romof="coleco">
-		<description>Ozma Wars (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Ozma Wars (HB)</description>
 		<year>2011</year>
 		<manufacturer>Collectorvision Games</manufacturer>
 		<rom name="ozmawars.rom" size="21625" crc="4aafdc07"/>
@@ -2744,7 +2858,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pacmancol" romof="coleco">
-		<description>Pac Man Collection [Homebrew, Published by Opcode]</description>
+		<comment>Homebrew, Published by Opcode</comment>
+		<description>Pac Man Collection</description>
 		<year>2008</year>
 		<manufacturer>Namco</manufacturer>
 		<rom name="pac-man-collection-2008.rom" size="131072" crc="f3ccacb3"/>
@@ -2756,7 +2871,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pacman" romof="coleco">
-		<description>Pac-Man (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Pac-Man (Prototype)</description>
 		<year>1983</year>
 		<manufacturer>Atarisoft</manufacturer>
 		<rom name="pacman.1" size="8192" crc="c0b0689d"/>
@@ -2769,7 +2885,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pacar" romof="coleco">
-		<description>Pacar (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Pacar (HB)</description>
 		<year>2017</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Pacar (2017) (Team Pixelboy).col" size="32768" crc="a82c9593"/>
@@ -2781,7 +2898,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="peekaboo" romof="coleco">
-		<description>Peek-A-Boo (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Peek-A-Boo (HB)</description>
 		<year>2008</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="peekaboo_cv.rom" size="32768" crc="32c52187"/>
@@ -2806,7 +2924,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pillars" romof="coleco">
-		<description>Pillars (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Pillars (HB)</description>
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Pillars (2021)(Under4Mhz).rom" size="32768" crc="5a49b249"/>
@@ -2818,7 +2937,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pitfall2a" romof="coleco">
-		<description>Pitfall II Arcade (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Pitfall II Arcade (HB)</description>
 		<year>2010</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Pitfall II Arcade (2010)(Team Pixelboy).rom" size="32768" crc="519bfe40"/>
@@ -2856,7 +2976,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pitman" romof="coleco">
-		<description>Pitman (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Pitman (HB)</description>
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Pitman (2021)(Under4Mhz).rom" size="32768" crc="50998610"/>
@@ -2894,7 +3015,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pooyan" romof="coleco">
-		<description>Pooyan (HB) [Homebrew, Published by CollectorVision]</description>
+		<comment>Homebrew, Published by CollectorVision</comment>
+		<description>Pooyan (HB)</description>
 		<year>2010</year>
 		<manufacturer>Dwik &amp; JoyRex</manufacturer>
 		<rom name="Pooyan (Dwik &amp; JoyRex)(2009).rom" size="32768" crc="0e25ebd7"/>
@@ -2932,7 +3054,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="porkys" romof="coleco">
-		<description>Porky's (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Porky's (Prototype)</description>
 		<year>1983</year>
 		<manufacturer>Fox Video Games</manufacturer>
 		<rom name="porkys.1" size="8192" crc="f5aa5a81"/>
@@ -2945,7 +3068,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="power" romof="coleco">
-		<description>Power Lords: Quest for Volcan (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Power Lords: Quest for Volcan (Prototype)</description>
 		<year>1984</year>
 		<manufacturer>Probe 2000</manufacturer>
 		<rom name="power.1" size="8192" crc="1137001f"/>
@@ -2960,7 +3084,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pquest" romof="coleco">
-		<description>Princess Quest (HB) [Homebrew, SGM - Super Game Module]</description>
+		<comment>Homebrew, SGM - Super Game Module</comment>
+		<description>Princess Quest (HB)</description>
 		<year>2012</year>
 		<manufacturer>Team Pixelboy</manufacturer>
 		<rom name="princess_quest_colecovision.rom" size="262144" crc="a59eaa2b"/>
@@ -2972,7 +3097,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="purpdino" romof="coleco">
-		<description>Purple Dinosaur Massacre (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Purple Dinosaur Massacre (HB)</description>
 		<year>1996</year>
 		<manufacturer>John Dondzilla</manufacturer>
 		<rom name="Purple Dinosaur Massacre (1996) (John Dondzilla).col" size="9494" crc="137d6c4c"/>
@@ -2984,7 +3110,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="puzzli" romof="coleco">
-		<description>Puzzli (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Puzzli (HB)</description>
 		<year>2011</year>
 		<manufacturer>CollectorVision Games</manufacturer>
 		<rom name="Puzzli (CollectorVision)(2011).rom" size="32768" crc="4236e57e"/>
@@ -2996,7 +3123,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pyrawbc2" romof="coleco">
-		<description>Pyramid Warp &amp; Battleship Clapton 2 (HB) [Homebrew, Published by Collectorvision Games]</description>
+		<comment>Homebrew, Published by Collectorvision Games</comment>
+		<description>Pyramid Warp &amp; Battleship Clapton 2 (HB)</description>
 		<year>2009</year>
 		<manufacturer>T&amp;E Soft</manufacturer>
 		<rom name="Pyramid Warp &amp; Battle Ship Clapton II (2009) (Collectorvision Games).col" size="32768" crc="f7052b06"/>
@@ -3045,7 +3173,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="qbiqs" romof="coleco">
-		<description>qbIqS (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
+		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
+		<description>qbIqS (HB)</description>
 		<year>2010</year>
 		<manufacturer>Z80ST Software</manufacturer>
 		<rom name="qbiqs_cv_sgm.rom" size="131072" crc="ee530ad2"/>
@@ -3083,7 +3212,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="questgc" romof="coleco">
-		<description>Quest for the Golden Chalice (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Quest for the Golden Chalice (HB)</description>
 		<year>2012</year>
 		<manufacturer>Team Pixelboy</manufacturer>
 		<rom name="quest_golden_chalice_colecovision.rom" size="32768" crc="6da37da8"/>
@@ -3095,7 +3225,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="rallyx" romof="coleco">
-		<description>Rally-X (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
+		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
+		<description>Rally-X (HB)</description>
 		<year>2016</year>
 		<manufacturer>Namco</manufacturer>
 		<rom name="Rally-X (2016)(Team Pixelboy).rom" size="32768" crc="fb5dd80d"/>
@@ -3107,7 +3238,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="rtheflag" romof="coleco">
-		<description>Remember the Flag (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Remember the Flag (HB)</description>
 		<year>2016-17</year>
 		<manufacturer>Team Pixelboy</manufacturer>
 		<rom name="Remember The Flag (2017)(Team Pixelboy).rom" size="32768" crc="7e090dfb"/>
@@ -3119,7 +3251,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="reversdd" romof="coleco">
-		<description>Reversi and Diamond Dash (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Reversi and Diamond Dash (HB)</description>
 		<year>2004</year>
 		<manufacturer>Daniel Bienvenu</manufacturer>
 		<rom name="Reversi and Diamond Dash (2004) (Daniel Bienvenu).col" size="29184" crc="2331b6f6"/>
@@ -3131,7 +3264,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ripcord" romof="coleco">
-		<description>Rip Cord (HB) [Homebrew, Published by CollectorVision]</description>
+		<comment>Homebrew, Published by CollectorVision</comment>
+		<description>Rip Cord (HB)</description>
 		<year>1979-2017</year>
 		<manufacturer>Exidy</manufacturer>
 		<rom name="Rip Cord (CollectorVision)(2017).rom" size="32768" crc="60312b4e"/>
@@ -3156,7 +3290,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="roadfght" romof="coleco">
-		<description>Road Fighter (HB) [Homebrew, Published by Opcode Games]</description>
+		<comment>Homebrew, Published by Opcode Games</comment>
+		<description>Road Fighter (HB)</description>
 		<year>2007</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Road Fighter (2007) (Opcode Games).col" size="32768" crc="570b9935"/>
@@ -3168,7 +3303,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="robeeblr" romof="coleco">
-		<description>Robee Blaster (HB) [Homebrew, Published by CollectorVision]</description>
+		<comment>Homebrew, Published by CollectorVision</comment>
+		<description>Robee Blaster (HB)</description>
 		<year>2017</year>
 		<manufacturer>Alekmaul</manufacturer>
 		<rom name="Robee Blaster (2017)(Alekmaul).col" size="32767" crc="9e15db3f"/>
@@ -3273,7 +3409,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="saguaro" romof="coleco">
-		<description>Saguaro City (HB) [Homebrew, Published by CollectorVision]</description>
+		<comment>Homebrew, Published by CollectorVision</comment>
+		<description>Saguaro City (HB)</description>
 		<year>1981-2019</year>
 		<manufacturer>Exidy</manufacturer>
 		<rom name="Saguaro City (CollectorVision)(2019).rom" size="32768" crc="c6cead71"/>
@@ -3311,7 +3448,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sftscj" romof="coleco">
-		<description>Search For The Stolen Crown Jewels (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Search For The Stolen Crown Jewels (HB)</description>
 		<year>2006</year>
 		<manufacturer>Good Deal Games</manufacturer>
 		<rom name="Search For The Stolen Crown Jewels (2006) (Good Deal Games).col" size="28849" crc="ad1ba6ed"/>
@@ -3323,7 +3461,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sftscj2" romof="coleco">
-		<description>Search For The Stolen Crown Jewels 2 (HB) [Demo, Homebrew]</description>
+		<comment>Demo, Homebrew</comment>
+		<description>Search For The Stolen Crown Jewels 2 (HB)</description>
 		<year>2007</year>
 		<manufacturer>Good Deal Games</manufacturer>
 		<rom name="Search For The Stolen Crown Jewels 2 (2007) (Good Deal Games).col" size="29256" crc="eaf7d6dc"/>
@@ -3335,7 +3474,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sftscj3" romof="coleco">
-		<description>Search For The Stolen Crown Jewels 3 (HB) [Demo, Homebrew]</description>
+		<comment>Demo, Homebrew</comment>
+		<description>Search For The Stolen Crown Jewels 3 (HB)</description>
 		<year>2013</year>
 		<manufacturer>Good Deal Games</manufacturer>
 		<rom name="Search For The Stolen Crown Jewels 3 (2013) (Good Deal Games).col" size="31303" crc="23988ef9"/>
@@ -3347,7 +3487,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="moai" romof="coleco">
-		<description>Secret of Moai (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
+		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
+		<description>Secret of Moai (HB)</description>
 		<year>1986-2017</year>
 		<manufacturer>Casio</manufacturer>
 		<rom name="Secret of Moai (2017) (Team Pixelboy).rom" size="131072" crc="b753a8ca"/>
@@ -3387,7 +3528,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="shmup" romof="coleco">
-		<description>Shmup! (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
+		<comment>Homebrew, (SGM) - Published by Team Pixelboy</comment>
+		<description>Shmup! (HB)</description>
 		<year>2017</year>
 		<manufacturer>Imanok</manufacturer>
 		<rom name="shmup-2017-sgm.rom" size="32768" crc="10e8dd09"/>
@@ -3399,7 +3541,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="shouganai" romof="coleco">
-		<description>Shouganai (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
+		<comment>Homebrew, (SGM) - Published by Team Pixelboy</comment>
+		<description>Shouganai (HB)</description>
 		<year>2017</year>
 		<manufacturer>Paxanga</manufacturer>
 		<rom name="shouganai-2017-sgm.rom" size="32768" crc="89c2b16f"/>
@@ -3411,7 +3554,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sidetrak" romof="coleco">
-		<description>Side Trak (HB) [Homebrew, Published by CollectorVision]</description>
+		<comment>Homebrew, Published by CollectorVision</comment>
+		<description>Side Trak (HB)</description>
 		<year>1979-2011</year>
 		<manufacturer>Exidy</manufacturer>
 		<rom name="Side Trak (CollectorVision)(2012).rom" size="32768" crc="2e4c28e2"/>
@@ -3423,7 +3567,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sirababol" romof="coleco">
-		<description>Sir Ababol (HB, v1.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Sir Ababol (HB, v1.1)</description>
 		<year>2020</year>
 		<manufacturer>Alekmaul</manufacturer>
 		<rom name="sir_ababol_v11.rom" size="32767" crc="690e8dd5"/>
@@ -3461,7 +3606,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="skyjag" romof="coleco">
-		<description>Sky Jaguar (HB) [Homebrew, Published by Opcode Games]</description>
+		<comment>Homebrew, Published by Opcode Games</comment>
+		<description>Sky Jaguar (HB)</description>
 		<year>2004</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Sky Jaguar (2004) (Opcode Games).col" size="32768" crc="54d54968"/>
@@ -3473,7 +3619,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="danslither" cloneof="slither" romof="slither">
-		<description>Slither (Hack, Joystick Version) [Hack, Homebrew]</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Slither (Hack, Joystick Version)</description>
 		<year>2010</year>
 		<manufacturer>Daniel Bienvenu</manufacturer>
 		<rom name="danslither.rom" size="16426" crc="92624cff"/>
@@ -3525,7 +3672,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="smurfply" romof="coleco">
-		<description>Smurf Play and Learn (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Smurf Play and Learn (Prototype)</description>
 		<year>1982</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="smurfply.1" size="8192" crc="1397a474"/>
@@ -3564,7 +3712,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="smurfsav" romof="coleco">
-		<description>Smurfs Save the Day (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Smurfs Save the Day (Prototype)</description>
 		<year>1982</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="Smurfs Save the Day (Prototype).col" size="16384" crc="9a3b8587"/>
@@ -3576,7 +3725,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="snake" romof="coleco">
-		<description>Snake (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Snake (HB)</description>
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Snake (2021)(Under4Mhz).rom" size="14114" crc="edd4c690"/>
@@ -3588,7 +3738,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="soknight" romof="coleco">
-		<description>So You Want To Be A Knight (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>So You Want To Be A Knight (HB)</description>
 		<year>2015</year>
 		<manufacturer>CollectorVision Games</manufacturer>
 		<rom name="So You Want To Be A Knight (CollectorVision)(2015).rom" size="32768" crc="72f34a55"/>
@@ -3613,7 +3764,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="spaceinvcol" romof="coleco">
-		<description>Space Invaders Collection (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Space Invaders Collection (HB)</description>
 		<year>2003</year>
 		<manufacturer>Opcode Games</manufacturer>
 		<rom name="Space Invaders Collection (2003) (Opcode Games).rom" size="32768" crc="3098bd4b"/>
@@ -3625,7 +3777,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="spaceinvasion" romof="coleco">
-		<description>Space Invasion (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Space Invasion (HB)</description>
 		<year>1998</year>
 		<manufacturer>John Dondzilla</manufacturer>
 		<rom name="Space Invasion (1998) (John Dondzilla).col" size="16384" crc="af9b178c"/>
@@ -3650,7 +3803,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="spectar" romof="coleco">
-		<description>Spectar (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Spectar (HB)</description>
 		<year>2005</year>
 		<manufacturer>AtariAge</manufacturer>
 		<rom name="Spectar (AtariAge)(2002).rom" size="32768" crc="a3aaae47"/>
@@ -3675,7 +3829,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="spelunker" romof="coleco">
-		<description>Spelunker (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Spelunker (HB)</description>
 		<year>2015</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Spelunker (2015)(Team Pixelboy).rom" size="131072" crc="75f84889"/>
@@ -3687,7 +3842,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="spunkysc" romof="coleco">
-		<description>Spunky's Super Car! (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Spunky's Super Car! (HB)</description>
 		<year>2014</year>
 		<manufacturer>Collectorvision Games</manufacturer>
 		<rom name="Spunky's Super Car! (2014) (Collectorvision Games).col" size="32697" crc="deed811e"/>
@@ -3699,7 +3855,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="spyhuntp1" cloneof="spyhunt" romof="spyhunt">
-		<description>Spy Hunter (Prototype, v13) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Spy Hunter (Prototype, v13)</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="spy13-chip1.bin" size="8192" crc="01d34c94"/>
@@ -3714,7 +3871,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="spyhuntp" cloneof="spyhunt" romof="spyhunt">
-		<description>Spy Hunter (Prototype, v22) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Spy Hunter (Prototype, v22)</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="spyr22-aaad-11-12-chip1.bin" size="8192" crc="f8fd0e1c"/>
@@ -3744,7 +3902,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="squares" romof="coleco">
-		<description>Squares! (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Squares! (HB)</description>
 		<year>2007</year>
 		<manufacturer>Harvey deKleine</manufacturer>
 		<rom name="Squares! (2007)(Harvey deKleine).col" size="16384" crc="37198a63"/>
@@ -3769,7 +3928,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="starforce" romof="coleco">
-		<description>Star Force (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Star Force (HB)</description>
 		<year>2011</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Star Force (2011) (Team Pixelboy).rom" size="32768" crc="cbc58796"/>
@@ -3781,7 +3941,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="starfortress" romof="coleco">
-		<description>Star Fortress (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Star Fortress (HB)</description>
 		<year>1997</year>
 		<manufacturer>John Dondzila</manufacturer>
 		<rom name="star-fortress.rom" size="16384" crc="f7f18e6f"/>
@@ -3793,7 +3954,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="starsoldier" romof="coleco">
-		<description>Star Soldier (HB) [Homebrew, SGM - Super Game Module]</description>
+		<comment>Homebrew, SGM - Super Game Module</comment>
+		<description>Star Soldier (HB)</description>
 		<year>2015</year>
 		<manufacturer>CollectorVision</manufacturer>
 		<rom name="Star Soldier SGM (2016)(CollectorVision).rom" size="131072" crc="3e7d0520"/>
@@ -3832,7 +3994,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="starshipdf" romof="coleco">
-		<description>Starship Defence Force (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Starship Defence Force (HB)</description>
 		<year>2014</year>
 		<manufacturer>CollectorVision Games</manufacturer>
 		<rom name="Starship Defence Force (CollectorVision)(2015).rom" size="32768" crc="160dda58"/>
@@ -3844,7 +4007,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="steam" romof="coleco">
-		<description>Steamroller (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Steamroller (Prototype)</description>
 		<year>1984</year>
 		<manufacturer>Activision</manufacturer>
 		<rom name="steam.1" size="8192" crc="dd4f0a05"/>
@@ -3857,7 +4021,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="stonew" romof="coleco">
-		<description>Stone of Wisdom, The (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
+		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
+		<description>Stone of Wisdom, The (HB)</description>
 		<year>1986-2015</year>
 		<manufacturer>Casio</manufacturer>
 		<rom name="Stone of Wisdom (2015) (Team Pixelboy).rom" size="131072" crc="ba2e3fea"/>
@@ -3869,7 +4034,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="straycat" romof="coleco">
-		<description>Stray Cat (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
+		<comment>Homebrew, (SGM) - Published by Team Pixelboy</comment>
+		<description>Stray Cat (HB)</description>
 		<year>2017</year>
 		<manufacturer>Imanok</manufacturer>
 		<rom name="stray-cat-2017-sgm.rom" size="32768" crc="f55f499e"/>
@@ -3894,7 +4060,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="strippoker" romof="coleco">
-		<description>Strip Poker (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Strip Poker (HB)</description>
 		<year>2014</year>
 		<manufacturer>NewColeco</manufacturer>
 		<rom name="Strip Poker (2014)(NewColeco).rom" size="32768" crc="d80b6cff"/>
@@ -3906,7 +4073,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="subrocsgm" romof="coleco">
-		<description>Subroc (SGM) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
+		<comment>Homebrew, (SGM) - Published by Team Pixelboy</comment>
+		<description>Subroc (SGM)</description>
 		<year>2014</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="subroc_super_game_sgm.rom" size="131072" crc="eac71b43"/>
@@ -3932,7 +4100,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sudoku" romof="coleco">
-		<description>Sudoku (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Sudoku (HB)</description>
 		<year>2016</year>
 		<manufacturer>Team Pixelboy</manufacturer>
 		<rom name="Sudoku (2017)(Team Pixelboy).rom" size="32768" crc="85237b85"/>
@@ -4066,7 +4235,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="superdk" romof="coleco">
-		<description>Super DK! (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Super DK! (Prototype)</description>
 		<year>1982</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="superdk.1" size="8192" crc="36253de5"/>
@@ -4081,7 +4251,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="suprdkjr" romof="coleco">
-		<description>Super DK! Junior (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Super DK! Junior (Prototype)</description>
 		<year>1983</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="suprdkjr.1" size="8192" crc="85ecf7e3"/>
@@ -4096,7 +4267,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="superpac" romof="coleco">
-		<description>Super Pac-Man (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
+		<comment>Homebrew, (SGM) - Published by Team Pixelboy</comment>
+		<description>Super Pac-Man (HB)</description>
 		<year>2016</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="Super Pac-Man (2016) (Team Pixelboy) (SGM).rom" size="32768" crc="260cdf98"/>
@@ -4120,7 +4292,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="suprspac" romof="coleco">
-		<description>Super Space Acer (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Super Space Acer (HB)</description>
 		<year>2011</year>
 		<manufacturer>Mike Brent</manufacturer>
 		<rom name="Super Space Acer (2011)(Mike Brent).rom" size="131072" crc="ae209065"/>
@@ -4132,7 +4305,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="suprtank" romof="coleco">
-		<description>Super Tank (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Super Tank (HB)</description>
 		<year>1986-2011</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Super Tank (PixelBoy)(2011).rom" size="32768" crc="e9b7ff6c"/>
@@ -4144,7 +4318,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sword" romof="coleco">
-		<description>Sword and Sorcerer (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Sword and Sorcerer (Prototype)</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="sword-chip1-a176.bin" size="8192" crc="a1548994"/>
@@ -4157,7 +4332,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tankchal" romof="coleco">
-		<description>Tank Challenge (HB) [Homebrew, No one player mode]</description>
+		<comment>Homebrew, No one player mode</comment>
+		<description>Tank Challenge (HB)</description>
 		<year>2016</year>
 		<manufacturer>CollectorVision</manufacturer>
 		<rom name="Tank Challenge (2016)(Todd Spangler).col" size="32538" crc="f8eb77d8"/>
@@ -4169,7 +4345,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tankmission" romof="coleco">
-		<description>Tank Mission (HB) [Homebrew, Use option 1 - Normal]</description>
+		<comment>Homebrew, Use option 1 - Normal</comment>
+		<description>Tank Mission (HB)</description>
 		<year>2016-17</year>
 		<manufacturer>CollectorVision Games</manufacturer>
 		<rom name="Tank Mission (CollectorVision)(2017).rom" size="262144" crc="d0f37969"/>
@@ -4223,7 +4400,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="telebunny" romof="coleco">
-		<description>Telebunny (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Telebunny (HB)</description>
 		<year>2014</year>
 		<manufacturer>CollectorVision Games</manufacturer>
 		<rom name="Telebunny (collectorVision)(2014).rom" size="32768" crc="26e2a8ec"/>
@@ -4248,7 +4426,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="terrattak" romof="coleco">
-		<description>Terra Attack (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Terra Attack (HB)</description>
 		<year>2007</year>
 		<manufacturer>Scott Huggins</manufacturer>
 		<rom name="Terra Attack (2007)(Scott Huggins).col" size="32768" crc="44d527e1"/>
@@ -4260,7 +4439,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bbears" romof="coleco">
-		<description>The Berenstain Bears (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>The Berenstain Bears (Prototype)</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="bbears.bin" size="8192" crc="18864abc"/>
@@ -4272,7 +4452,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="blackonyx" romof="coleco">
-		<description>The Black Onyx (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>The Black Onyx (HB)</description>
 		<year>2013</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Black Onyx, the (2013)(Team Pixelboy).rom" size="65536" crc="dddd1396"/>
@@ -4326,7 +4507,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="yolk" romof="coleco">
-		<description>The Yolks on You (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>The Yolks on You (Prototype)</description>
 		<year>1983</year>
 		<manufacturer>Fox Video Games</manufacturer>
 		<rom name="yolk.1" size="8192" crc="f7220275"/>
@@ -4339,7 +4521,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="thexder" romof="coleco">
-		<description>Thexder (SGM) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
+		<comment>Homebrew, (SGM) - Published by Team Pixelboy</comment>
+		<description>Thexder (SGM)</description>
 		<year>2012</year>
 		<manufacturer>Game Arts</manufacturer>
 		<rom name="thexder_sgm.rom" size="131072" crc="09e3fdda"/>
@@ -4405,7 +4588,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="trackfld" romof="coleco">
-		<description>Track &amp; Field (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Track &amp; Field (HB)</description>
 		<year>2010</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Track and Field (2010)(Team Pixelboy).rom" size="32768" crc="96dd114a"/>
@@ -4417,7 +4601,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="trafcjam" romof="coleco">
-		<description>Traffic Jam (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
+		<comment>Homebrew, (SGM) - Published by Team Pixelboy</comment>
+		<description>Traffic Jam (HB)</description>
 		<year>2016</year>
 		<manufacturer>Imanok</manufacturer>
 		<rom name="traffic-jam-2017-sgm.rom" size="32768" crc="aad0f224"/>
@@ -4483,7 +4668,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="twinbee" romof="coleco">
-		<description>Twin Bee (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
+		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
+		<description>Twin Bee (HB)</description>
 		<year>2014</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Twin Bee_SGM (2014)(Team Pixelboy).rom" size="131072" crc="e7e07a70"/>
@@ -4495,7 +4681,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="txupinazo" romof="coleco">
-		<description>Txupinazo! (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
+		<comment>Homebrew, (SGM) - Published by Team Pixelboy</comment>
+		<description>Txupinazo! (HB)</description>
 		<year>2017</year>
 		<manufacturer>Imanok</manufacturer>
 		<rom name="Txupinazo_sgm.rom" size="32768" crc="28bdf665"/>
@@ -4520,7 +4707,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="uridium" romof="coleco">
-		<description>Uridium (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
+		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
+		<description>Uridium (HB)</description>
 		<year>2019</year>
 		<manufacturer>Trilobyte</manufacturer>
 		<rom name="uridium_cv_sgm.rom" size="131072" crc="bc8320a0"/>
@@ -4559,7 +4747,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="hustler" romof="coleco">
-		<description>Video Hustler (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Video Hustler (Prototype)</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="video.bin" size="8192" crc="a9177b20"/>
@@ -4571,7 +4760,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="hustler1" cloneof="hustler" romof="hustler">
-		<description>Video Hustler (Prototype, 19840727) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Video Hustler (Prototype, 19840727)</description>
 		<year>1984</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="hustler-7-27-84-8c61.bin" size="8192" crc="841d168f"/>
@@ -4583,7 +4773,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="war" romof="coleco">
-		<description>War (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>War (HB)</description>
 		<year>2014</year>
 		<manufacturer>Gerry Brophy</manufacturer>
 		<rom name="War (2014) (Gerry Brophy).col" size="31933" crc="7f06e25c"/>
@@ -4595,7 +4786,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wargamesp" cloneof="wargames" romof="wargames">
-		<description>War Games (Prototype, 0417) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>War Games (Prototype, 0417)</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="wargams17-chip1-4-17-c44a.bin" size="8192" crc="da4bb2f5"/>
@@ -4638,7 +4830,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="watervil" romof="coleco">
-		<description>Waterville Rescue (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Waterville Rescue (HB)</description>
 		<year>2009</year>
 		<manufacturer>Mike Brent</manufacturer>
 		<rom name="Waterville Rescue (2009) (Mike Brent).col" size="32768" crc="d642fb9e"/>
@@ -4650,7 +4843,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="explodingfoot" romof="coleco">
-		<description>Way of the Exploding Foot (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Way of the Exploding Foot (HB)</description>
 		<year>2011</year>
 		<manufacturer>CollectorVision Games</manufacturer>
 		<rom name="Way of the Exploding Foot (CollectorVision)(2011).rom" size="32768" crc="28e07beb"/>
@@ -4675,7 +4869,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="winktrap" romof="coleco">
-		<description>Winky Trap (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Winky Trap (HB)</description>
 		<year>2007</year>
 		<manufacturer>Collectorvision Games</manufacturer>
 		<rom name="Winky Trap (2007) (Collectorvision Games).col" size="16384" crc="eaa5f606"/>
@@ -4700,7 +4895,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wow" romof="coleco">
-		<description>Wizard of Wor (HB) [Homebrew, SGM - Super Game Module]</description>
+		<comment>Homebrew, SGM - Super Game Module</comment>
+		<description>Wizard of Wor (HB)</description>
 		<year>2017</year>
 		<manufacturer>Team Pixelboy</manufacturer>
 		<rom name="Wizard of Wor (2017) (Team Pixelboy).rom" size="524288" crc="d9207f30"/>
@@ -4712,7 +4908,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wonderboy" romof="coleco">
-		<description>Wonder Boy (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Wonder Boy (HB)</description>
 		<year>2012</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Wonder Boy (2012) (Team PixelBoy).rom" size="32768" crc="43505be0"/>
@@ -4737,7 +4934,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="yiear" romof="coleco">
-		<description>Yie-Ar Kung Fu (HB) [Homebrew, Published by Opcode Games]</description>
+		<comment>Homebrew, Published by Opcode Games</comment>
+		<description>Yie-Ar Kung Fu (HB)</description>
 		<year>2005</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Yie-Ar Kung Fu (2005) (Opcode Games).col" size="32768" crc="471240bb"/>
@@ -4749,7 +4947,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zaxxonsgm" romof="coleco">
-		<description>Zaxxon Super Game [(SGM) - Published by Team Pixelboy]</description>
+		<comment>(SGM) - Published by Team Pixelboy</comment>
+		<description>Zaxxon Super Game</description>
 		<year>2012</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="zaxxon_super_game_colecovision_sgm.rom" size="131072" crc="a5a90f63"/>
@@ -4788,7 +4987,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zippyrac" romof="coleco">
-		<description>Zippy Race (HB) [Homebrew, Published by Collectorvision Games]</description>
+		<comment>Homebrew, Published by Collectorvision Games</comment>
+		<description>Zippy Race (HB)</description>
 		<year>2009</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Zippy Race (2009) (Opcode Games).col" size="32768" crc="44e6948c"/>
@@ -4800,7 +5000,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zombieinc" romof="coleco">
-		<description>Zombie Incident (HB) [Homebrew, SGM - Super Game Module]</description>
+		<comment>Homebrew, SGM - Super Game Module</comment>
+		<description>Zombie Incident (HB)</description>
 		<year>2018</year>
 		<manufacturer>Team Pixelboy - NeneFranz</manufacturer>
 		<rom name="Zombie Incident (2018)(Team Pixelboy).rom" size="131072" crc="8027dad7"/>
@@ -4812,7 +5013,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zombnear" romof="coleco">
-		<description>Zombie Near (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Zombie Near (HB)</description>
 		<year>2012</year>
 		<manufacturer>CollectorVision</manufacturer>
 		<rom name="Zombie Near (2012)(CollectorVision).col" size="32768" crc="c36c017e"/>
@@ -4824,7 +5026,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zombnearb" cloneof="zombnear" romof="zombnear">
-		<description>Zombie Near (older) (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Zombie Near (older) (HB)</description>
 		<year>2011</year>
 		<manufacturer>CollectorVision</manufacturer>
 		<rom name="Zombie Near (2011)(CollectorVision).col" size="131072" crc="c89d281d"/>
@@ -4836,7 +5039,8 @@
 		<driver status="good"/>
 	</game>
 	<game isbios="yes" name="coleco">
-		<description>ColecoVision System BIOS [BIOS only]</description>
+		<comment>BIOS only</comment>
+		<description>ColecoVision System BIOS</description>
 		<year>1982</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="coleco.rom" size="8192" crc="3aa93ef3"/>

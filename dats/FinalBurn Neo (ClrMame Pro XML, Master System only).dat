@@ -37,7 +37,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="acreflux">
-		<description>Acid Reflux (HB, v1.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Acid Reflux (HB, v1.1)</description>
 		<year>2016</year>
 		<manufacturer>furrtek &amp; robotwo</manufacturer>
 		<rom name="Acid Reflux v1.1 (2016)(furrtek &amp; robotwo).sms" size="32768" crc="9d9919df"/>
@@ -61,7 +62,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="herolancc" cloneof="herolanc" romof="herolanc">
-		<description>Advanced Dungeons and Dragons - Heroes of the Lance (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Advanced Dungeons and Dragons - Heroes of the Lance (Euro, Bra) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="advanced dungeons and dragons - heroes of the lance (euro, bra) - castellano v1.0.sms" size="524288" crc="7b33f65d"/>
@@ -133,7 +135,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="alexhitwc" cloneof="alexhitw" romof="alexhitw">
-		<description>Alex Kidd - High-Tech World (Euro, USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Alex Kidd - High-Tech World (Euro, USA) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="alex kidd - high-tech world (usa, europe, brazil) - castellano v1.0.sms" size="131072" crc="aeb143f2"/>
@@ -149,7 +152,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="alexlostc" cloneof="alexlost" romof="alexlost">
-		<description>Alex Kidd - The Lost Stars (World) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Alex Kidd - The Lost Stars (World) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="alex kidd - the lost stars (world) - castellano v1.0.sms" size="262144" crc="d3fa9af0"/>
@@ -165,7 +169,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="alexkidd3" cloneof="alexkidd3f" romof="alexkidd3f">
-		<description>Alex Kidd 3 - Curse in Miracle World (HB, Hack Demo-4) [Hack, Homebrew]</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Alex Kidd 3 - Curse in Miracle World (HB, Hack Demo-4)</description>
 		<year>2016</year>
 		<manufacturer>Yeti</manufacturer>
 		<rom name="alex kidd 3 - curse in miracle world (2016)(yeti-demo4).sms" size="1048576" crc="35b498a4"/>
@@ -173,7 +178,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="alexkidd3f">
-		<description>Alex Kidd 3 - Curse in Miracle World (HB, Hack v3.0) [Hack, Homebrew]</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Alex Kidd 3 - Curse in Miracle World (HB, Hack v3.0)</description>
 		<year>2021</year>
 		<manufacturer>Yeti</manufacturer>
 		<rom name="alex kidd 3 - curse in miracle world v3.0 (2021)(yeti).sms" size="524288" crc="2096b9f1"/>
@@ -181,7 +187,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="alexbmxc" cloneof="alexbmx" romof="alexbmx">
-		<description>Alex Kidd BMX Trial (Jpn) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Alex Kidd BMX Trial (Jpn) - Castellano v1.1</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="alex kidd bmx trial (jpn) - castellano v1.1.sms" size="131072" crc="2a5449d4"/>
@@ -213,7 +220,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="alexkiddc" cloneof="alexkidd" romof="alexkidd">
-		<description>Alex Kidd in Miracle World (Euro, USA, v1) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Alex Kidd in Miracle World (Euro, USA, v1) - Castellano v1.1</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="alex kidd in miracle world (euro, usa, v1) - castellano v1.1.sms" size="131072" crc="a34e0c37"/>
@@ -229,7 +237,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="alexkidd2">
-		<description>Alex Kidd in Miracle World 2 (HB, Hack) [Hack, Homebrew]</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Alex Kidd in Miracle World 2 (HB, Hack)</description>
 		<year>2016</year>
 		<manufacturer>Ian Wall</manufacturer>
 		<rom name="Alex Kidd in Miracle World 2.sms" size="524288" crc="7de172ff"/>
@@ -237,7 +246,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="alexkiddrr" cloneof="alexkidd" romof="alexkidd">
-		<description>Alex Kidd in Radaxian Rumble (ver. 1.5) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Alex Kidd in Radaxian Rumble (ver. 1.5)</description>
 		<year>2015</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Alex Kidd in Radaxian Rumble 1.5.sms" size="524288" crc="02760e17"/>
@@ -245,7 +255,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="alexshinc" cloneof="alexshin" romof="alexshin">
-		<description>Alex Kidd in Shinobi World (Euro, USA, Bra) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Alex Kidd in Shinobi World (Euro, USA, Bra) - Castellano v1.1</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="alex kidd in shinobi world (euro, usa, bra) - castellano v1.1.sms" size="262144" crc="738f1504"/>
@@ -285,7 +296,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="alien3c" cloneof="alien3" romof="alien3">
-		<description>Alien 3 (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Alien 3 (Euro, Bra) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Alien 3 (Euro, Bra) - Castellano v1.0.sms" size="262144" crc="97a9a75d"/>
@@ -325,7 +337,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="aliensynp" cloneof="aliensyn" romof="aliensyn">
-		<description>Alien Syndrome (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Alien Syndrome (Prototype)</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="alien syndrome (proto).bin" size="262144" crc="c148868c"/>
@@ -397,7 +410,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="arnodash">
-		<description>Arno Dash (HB, v1.03) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Arno Dash (HB, v1.03)</description>
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Arno Dash v1.03 (2021)(Under4Mhz).sms" size="32768" crc="3dcdb2e0"/>
@@ -405,7 +419,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="arnodash2">
-		<description>Arno Dash 2 (HB, v1.03) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Arno Dash 2 (HB, v1.03)</description>
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Arno Dash 2 v1.03 (2021)(Under4Mhz).sms" size="32768" crc="9091d61a"/>
@@ -437,7 +452,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="assaultc">
-		<description>Assault City (Euro, Bra, Light Phaser version) [Light Phaser game]</description>
+		<comment>Light Phaser game</comment>
+		<description>Assault City (Euro, Bra, Light Phaser version)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="assault city (europe) (light phaser).bin" size="262144" crc="861b6e79"/>
@@ -493,7 +509,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="astforce">
-		<description>Astro Force (HB, v1.03) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Astro Force (HB, v1.03)</description>
 		<year>2017</year>
 		<manufacturer>MikGames</manufacturer>
 		<rom name="astroforce_v103.sms" size="262144" crc="1bad75c5"/>
@@ -533,7 +550,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="backtof2c" cloneof="backtof2" romof="backtof2">
-		<description>Back to the Future Part II (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Back to the Future Part II (Euro, Bra) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="back to the future part ii (euro, bra) - castellano v1.0.sms" size="262144" crc="4146138d"/>
@@ -549,7 +567,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="backtof3c" cloneof="backtof3" romof="backtof3">
-		<description>Back to the Future Part III (Euro) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Back to the Future Part III (Euro) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="back to the future part iii (euro) - castellano v1.0.sms" size="262144" crc="423517c4"/>
@@ -565,7 +584,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="badapple">
-		<description>Bad Apple (HB, Tech-Demo) [Demo, Homebrew]</description>
+		<comment>Demo, Homebrew</comment>
+		<description>Bad Apple (HB, Tech-Demo)</description>
 		<year>2017</year>
 		<manufacturer>SMS Power!</manufacturer>
 		<rom name="bad apple v100.sms" size="4194304" crc="38434560"/>
@@ -573,7 +593,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bakubakuc" cloneof="bakubaku" romof="bakubaku">
-		<description>Baku Baku Animal (Bra) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Baku Baku Animal (Bra) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="baku baku animal (bra) - castellano v1.0.sms" size="262144" crc="131e4852"/>
@@ -589,7 +610,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="balbalok">
-		<description>Baluba Balok (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Baluba Balok (HB)</description>
 		<year>2017</year>
 		<manufacturer>MikGames</manufacturer>
 		<rom name="baluba_balok.sms" size="32768" crc="4f8e512c"/>
@@ -613,7 +635,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="baraburu10">
-		<description>Bara Buruu (HB, v1.0) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Bara Buruu (HB, v1.0)</description>
 		<year>2016</year>
 		<manufacturer>Kagesan</manufacturer>
 		<rom name="BaraBuruu-SMS-1.00.sms" size="131072" crc="43e39aa4"/>
@@ -645,7 +668,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="battleorfm" cloneof="battleor" romof="battleor">
-		<description>Battle Out Run (FM Mod) [Hack, YM2413 FM sound chip supported]</description>
+		<comment>Hack, YM2413 FM sound chip supported</comment>
+		<description>Battle Out Run (FM Mod)</description>
 		<year>2018</year>
 		<manufacturer>Sega - SMS Power!</manufacturer>
 		<rom name="battle out run (fm mod).sms" size="262144" crc="7c849999"/>
@@ -661,7 +685,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="benosqr">
-		<description>Be No Sqr (HB, Tech-Demo) [Demo, Homebrew]</description>
+		<comment>Demo, Homebrew</comment>
+		<description>Be No Sqr (HB, Tech-Demo)</description>
 		<year>2016</year>
 		<manufacturer>psidum, sim, slimeball</manufacturer>
 		<rom name="Be No Sqr 1.01.sms" size="524288" crc="ee701be6"/>
@@ -677,7 +702,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bladeag1" cloneof="bladeag" romof="bladeag">
-		<description>Blade Eagle (USA, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Blade Eagle (USA, Prototype)</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="blade eagle (world) (beta).bin" size="262144" crc="58d5fc48"/>
@@ -709,7 +735,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bnzabrosc" cloneof="bnzabros" romof="bnzabros">
-		<description>Bonanza Bros. (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Bonanza Bros. (Euro, Bra) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="bonanza bros. (euro, bra) - castellano v1.0.sms" size="262656" crc="a4999f47"/>
@@ -733,7 +760,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="brucelee10">
-		<description>Bruce Lee (HB, v1.0) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Bruce Lee (HB, v1.0)</description>
 		<year>2015</year>
 		<manufacturer>Kagesan</manufacturer>
 		<rom name="BruceLee-SMS-1.00.sms" size="131072" crc="37e27a38"/>
@@ -805,7 +833,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="candykid">
-		<description>CandyKid (HB, v3.0) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>CandyKid (HB, v3.0)</description>
 		<year>2020</year>
 		<manufacturer>SteveProXNA</manufacturer>
 		<rom name="CandyKid v3.0 (2020)(SteveProXNA).sms" size="262144" crc="890bb775"/>
@@ -829,7 +858,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="casinoc" cloneof="casino" romof="casino">
-		<description>Casino Games (Euro, USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Casino Games (Euro, USA) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="casino games (euro, usa) - castellano v1.0.sms" size="262144" crc="bfe4457c"/>
@@ -853,7 +883,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="castlillc" cloneof="castlill" romof="castlill">
-		<description>Castle of Illusion Starring Mickey Mouse (Euro, Bra) - Castellano v1.1 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Castle of Illusion Starring Mickey Mouse (Euro, Bra) - Castellano v1.1</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="castle of illusion starring mickey mouse (euro, bra) - castellano v1.1.sms" size="262144" crc="a0941272"/>
@@ -925,7 +956,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="chopliftj" cloneof="choplift" romof="choplift">
-		<description>Choplifter (Jpn, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Choplifter (Jpn, Prototype)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="choplifter (japan) (proto).bin" size="131072" crc="16ec3575"/>
@@ -933,7 +965,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="chopliftp" cloneof="choplift" romof="choplift">
-		<description>Choplifter (USA, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Choplifter (USA, Prototype)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="choplifter [proto].bin" size="131072" crc="fd981232"/>
@@ -949,7 +982,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="borgmanp" cloneof="cyborgh" romof="cyborgh">
-		<description>Chouon Senshi Borgman (Jpn, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Chouon Senshi Borgman (Jpn, Prototype)</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chouon senshi borgman [proto] (jp).bin" size="131072" crc="86f49ae9"/>
@@ -997,7 +1031,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="columnsc" cloneof="columns" romof="columns">
-		<description>Columns (Euro, USA, Bra, Kor) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Columns (Euro, USA, Bra, Kor) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="columns (euro, usa, bra, kor) - castellano v1.0.sms" size="131072" crc="11deb730"/>
@@ -1013,7 +1048,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="columnsp" cloneof="columns" romof="columns">
-		<description>Columns (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Columns (Prototype)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="columns [proto].bin" size="131072" crc="3fb40043"/>
@@ -1109,7 +1145,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="darc10">
-		<description>DARC (HB, v1.0) [Homebrew, Turn ON 'FM Emulation' in Dips for music/sfx!]</description>
+		<comment>Homebrew, Turn ON 'FM Emulation' in Dips for music/sfx!</comment>
+		<description>DARC (HB, v1.0)</description>
 		<year>2015</year>
 		<manufacturer>Zipper</manufacturer>
 		<rom name="DARC.sms" size="524288" crc="61b3c657"/>
@@ -1117,7 +1154,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="datastorm10">
-		<description>Data Storm (HB, v1.0) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Data Storm (HB, v1.0)</description>
 		<year>2016</year>
 		<manufacturer>haroldoop</manufacturer>
 		<rom name="datastorm.sms" size="32768" crc="37b775d6"/>
@@ -1133,7 +1171,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="deadangp" cloneof="deadang" romof="deadang">
-		<description>Dead Angle (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Dead Angle (Prototype)</description>
 		<year>1989</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Dead Angle [Proto].sms" size="262144" crc="f9271c3d"/>
@@ -1141,7 +1180,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="deepduckc" cloneof="deepduck" romof="deepduck">
-		<description>Deep Duck Trouble Starring Donald Duck (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Deep Duck Trouble Starring Donald Duck (Euro, Bra) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="deep duck trouble starring donald duck (euro, bra) - castellano v1.0.sms" size="524288" crc="35c391e1"/>
@@ -1181,7 +1221,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dinobash">
-		<description>Dinobasher Starring Bignose the Caveman (Euro, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Dinobasher Starring Bignose the Caveman (Euro, Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="dinobasher starring bignose the caveman (europe) (proto).bin" size="262144" crc="ea5c3a6f"/>
@@ -1189,7 +1230,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="aladdinc" cloneof="aladdin" romof="aladdin">
-		<description>Disney's Aladdin (Euro, Bra, Kor) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Disney's Aladdin (Euro, Bra, Kor) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="disney's aladdin (euro, bra, kor) - castellano v1.0.sms" size="524288" crc="fcdc7ccf"/>
@@ -1205,7 +1247,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="arielc" cloneof="ariel" romof="ariel">
-		<description>Disney's Ariel The Little Mermaid (Bra) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Disney's Ariel The Little Mermaid (Bra) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="disney's ariel the little mermaid (bra) - castellano v1.0.sms" size="262144" crc="7930398d"/>
@@ -1229,7 +1272,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lionkingc" cloneof="lionking" romof="lionking">
-		<description>Disney's The Lion King (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Disney's The Lion King (Euro, Bra) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="disney's the lion king (euro, bra) - castellano v1.0.sms" size="524288" crc="05174983"/>
@@ -1285,7 +1329,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="doublhwkp" cloneof="doublhwk" romof="doublhwk">
-		<description>Double Hawk (Euro, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Double Hawk (Euro, Prototype)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="double hawk (europe) (beta).bin" size="262144" crc="f76d5cee"/>
@@ -1293,7 +1338,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="doublhwkfm" cloneof="doublhwk" romof="doublhwk">
-		<description>Double Hawk (FM Mod) [YM2413 FM sound chip supported]</description>
+		<comment>YM2413 FM sound chip supported</comment>
+		<description>Double Hawk (FM Mod)</description>
 		<year>1990</year>
 		<manufacturer>Sega - fatnick</manufacturer>
 		<rom name="double hawk fm.bin" size="262144" crc="fe7f9f17"/>
@@ -1325,7 +1371,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="draconic">
-		<description>Draconic Throne (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Draconic Throne (HB)</description>
 		<year>2017-2021</year>
 		<manufacturer>GW's Workshop</manufacturer>
 		<rom name="Draconic Throne (2021)(GW's Workshop).sms" size="49152" crc="e31ecd44"/>
@@ -1341,7 +1388,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dcrystalc" cloneof="dcrystal" romof="dcrystal">
-		<description>Dragon Crystal (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Dragon Crystal (Euro, Bra) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="dragon crystal (euro, bra) - castellano v1.0.sms" size="131072" crc="4c77d21f"/>
@@ -1357,7 +1405,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dnukem">
-		<description>Duke Nukem (HB, Hack v0.93) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Duke Nukem (HB, Hack v0.93)</description>
 		<year>2017</year>
 		<manufacturer>revo-tibone-calindro</manufacturer>
 		<rom name="duke nukem (2017)(revo-tibone-calindro).sms" size="524288" crc="a16dba3b"/>
@@ -1381,7 +1430,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dduxfm" cloneof="ddux" romof="ddux">
-		<description>Dynamite Dux (FM Mod) [Hack, YM2413 FM sound chip supported]</description>
+		<comment>Hack, YM2413 FM sound chip supported</comment>
+		<description>Dynamite Dux (FM Mod)</description>
 		<year>2018</year>
 		<manufacturer>Sega - fatnick</manufacturer>
 		<rom name="dynamite dux (fm-mod).sms" size="262144" crc="26dfc995"/>
@@ -1581,7 +1631,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="fantzone1" cloneof="fantzone" romof="fantzone">
-		<description>Fantasy Zone (World, v1, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Fantasy Zone (World, v1, Prototype)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="fantasy zone (world) (v1.1) (beta).bin" size="131072" crc="f46264fe"/>
@@ -1677,7 +1728,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="fpigarus">
-		<description>Flight of Pigarus (HB, v1.0) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Flight of Pigarus (HB, v1.0)</description>
 		<year>2018</year>
 		<manufacturer>Kagesan</manufacturer>
 		<rom name="FlightOfPigarus-SMS-1.00.sms" size="262144" crc="838574d1"/>
@@ -1733,7 +1785,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ggroundp" cloneof="gground" romof="gground">
-		<description>Gain Ground (Euro, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Gain Ground (Euro, Prototype)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="gain ground [proto].bin" size="262144" crc="d40d03c7"/>
@@ -1741,7 +1794,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gboogers">
-		<description>Galactic Boogers (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Galactic Boogers (HB)</description>
 		<year>2020</year>
 		<manufacturer>YETI</manufacturer>
 		<rom name="Galactic Boogers.sms" size="1048576" crc="b5dac318"/>
@@ -1797,7 +1851,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gangster">
-		<description>Gangster Town (Euro, USA, Bra) [Light Phaser game]</description>
+		<comment>Light Phaser game</comment>
+		<description>Gangster Town (Euro, USA, Bra)</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-11049.ic1" size="131072" crc="5fc74d2a"/>
@@ -1805,7 +1860,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gaudream">
-		<description>Gaudream (HB, v0.04) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Gaudream (HB, v0.04)</description>
 		<year>2015</year>
 		<manufacturer>1985 Alternativo</manufacturer>
 		<rom name="Gaudream v0.04 (2015)(1985 Alternativo).sms" size="131072" crc="ff2e1ea4"/>
@@ -1821,7 +1877,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="punpun">
-		<description>Geki Oko PunPun Maru ((HB, v20151031b) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Geki Oko PunPun Maru ((HB, v20151031b)</description>
 		<year>2013</year>
 		<manufacturer>Future Driver</manufacturer>
 		<rom name="punpun_20151031b.sms" size="262144" crc="b35ebcdf"/>
@@ -1829,7 +1886,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gemitas">
-		<description>Gemitas (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Gemitas (HB)</description>
 		<year>2018</year>
 		<manufacturer>Cyttorak</manufacturer>
 		<rom name="Gemitas (2018)(Cyttorak).sms" size="65536" crc="d0f12c3e"/>
@@ -1893,7 +1951,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ghosthcp" cloneof="ghosth" romof="ghosth">
-		<description>Ghost House (Sega Card, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Ghost House (Sega Card, Prototype)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ghost house (usa, europe) (beta).bin" size="32768" crc="c3e7c1ed"/>
@@ -1933,7 +1992,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="globaldp" cloneof="globald" romof="globald">
-		<description>Global Defense (Euro, USA, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Global Defense (Euro, USA, Prototype)</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="global defense (usa, europe) (beta).bin" size="131072" crc="91a0fc4e"/>
@@ -1957,7 +2017,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gaxewarrc" cloneof="gaxewarr" romof="gaxewarr">
-		<description>Golden Axe Warrior (Euro, USA, Bra) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Golden Axe Warrior (Euro, USA, Bra) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="golden axe warrior (euro, usa, bra) - castellano v1.0.sms" size="262144" crc="d5c88c4d"/>
@@ -1981,7 +2042,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="golfamanp" cloneof="golfaman" romof="golfaman">
-		<description>Golfamania (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Golfamania (Prototype)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="golfamania (europe) (beta).bin" size="262144" crc="5dabfdc3"/>
@@ -1989,7 +2051,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="golvellc" cloneof="golvell" romof="golvell">
-		<description>Golvellius (Euro, USA) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Golvellius (Euro, USA) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="golvellius (euro, usa) - castellano v1.0.sms" size="262144" crc="15fae765"/>
@@ -2005,7 +2068,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gotris" cloneof="gotrisfv" romof="gotrisfv">
-		<description>Gotris (HB, v0.8) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Gotris (HB, v0.8)</description>
 		<year>2018</year>
 		<manufacturer>1985 Alternativo</manufacturer>
 		<rom name="Gotris v0.8 (2019)(1985 Alternativo).sms" size="65536" crc="adb0efa6"/>
@@ -2013,7 +2077,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gotrisfv">
-		<description>Gotris (HB, v1.2p) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Gotris (HB, v1.2p)</description>
 		<year>2021</year>
 		<manufacturer>Tuxedo Games</manufacturer>
 		<rom name="Gotris v1.2p (2021)(Tuxedo Games).sms" size="262144" crc="cfe301ed"/>
@@ -2029,7 +2094,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gravbeam">
-		<description>Gravity Beam: Master Gaiden (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Gravity Beam: Master Gaiden (HB)</description>
 		<year>2013</year>
 		<manufacturer>Neko-MrD</manufacturer>
 		<rom name="Gravity Beam Master Gaiden (2013)(Neko-MrD).sms" size="32768" crc="829fd975"/>
@@ -2109,7 +2175,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="greatglfp" cloneof="greatglf" romof="greatglf">
-		<description>Great Golf (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Great Golf (Prototype)</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="great golf (world) (beta).bin" size="131072" crc="4847bc91"/>
@@ -2229,7 +2296,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="hangonsh">
-		<description>Hang-On and Safari Hunt (USA) [Safari Hunt is a Light Phaser game]</description>
+		<comment>Safari Hunt is a Light Phaser game</comment>
+		<description>Hang-On and Safari Hunt (USA)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-10137 w02.ic1" size="131072" crc="e167a561"/>
@@ -2237,7 +2305,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="hangonshp" cloneof="hangonsh" romof="hangonsh">
-		<description>Hang-On and Safari Hunt (USA, Prototype) [Prototype, Safari Hunt is a Light Phaser game]</description>
+		<comment>Prototype, Safari Hunt is a Light Phaser game</comment>
+		<description>Hang-On and Safari Hunt (USA, Prototype)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="hang-on and safari hunt [proto].bin" size="131072" crc="a120b77f"/>
@@ -2253,7 +2322,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="had">
-		<description>Heroes Against Demons (HB, v1.03) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Heroes Against Demons (HB, v1.03)</description>
 		<year>2020</year>
 		<manufacturer>Ichigo</manufacturer>
 		<rom name="HeroesAgainstDemons_1.03.sms" size="131072" crc="35f47e0a"/>
@@ -2261,7 +2331,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="highsce" cloneof="highsc" romof="highsc">
-		<description>High School! Kimengumi (Jpn) (T-Eng) [Hack]</description>
+		<comment>Hack</comment>
+		<description>High School! Kimengumi (Jpn) (T-Eng)</description>
 		<year>2005</year>
 		<manufacturer>Sega - SMS Power!</manufacturer>
 		<rom name="high school! kimengumi (t-eng1.00).sms" size="131072" crc="8a296a3e"/>
@@ -2269,7 +2340,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="highscc" cloneof="highsc" romof="highsc">
-		<description>High School! Kimengumi (Jpn) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>High School! Kimengumi (Jpn) - Castellano v1.0</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="high school! kimengumi (jpn) - castellano v1.0.sms" size="131072" crc="f12a3bb5"/>
@@ -2317,7 +2389,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="hook">
-		<description>Hook (Euro, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Hook (Euro, Prototype)</description>
 		<year>19??</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="hook (europe) (proto).bin" size="262144" crc="9ced34a7"/>
@@ -2341,7 +2414,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="iceforce">
-		<description>Ice Force (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Ice Force (HB)</description>
 		<year>2021</year>
 		<manufacturer>Alex1975Br</manufacturer>
 		<rom name="Ice Force (2021)(Alex1975Br).sms" size="65536" crc="da5f2e58"/>
@@ -2357,7 +2431,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="impmissp" cloneof="impmiss" romof="impmiss">
-		<description>Impossible Mission (Euro, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Impossible Mission (Euro, Prototype)</description>
 		<year>1990</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="impossible mission (europe) (beta).bin" size="131072" crc="71c4ca8f"/>
@@ -2365,7 +2440,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="indycrusc" cloneof="indycrus" romof="indycrus">
-		<description>Indiana Jones and the Last Crusade (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Indiana Jones and the Last Crusade (Euro, Bra) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="indiana jones and the last crusade (euro, bra) - castellano v1.0.sms" size="262144" crc="e09b0b0e"/>
@@ -2381,7 +2457,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="indycrusp" cloneof="indycrus" romof="indycrus">
-		<description>Indiana Jones and the Last Crusade (Euro, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Indiana Jones and the Last Crusade (Euro, Prototype)</description>
 		<year>1990</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="indiana jones and the last crusade (europe) (beta).bin" size="262144" crc="acec894d"/>
@@ -2397,7 +2474,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="jbdougkop" cloneof="georgeko" romof="georgeko">
-		<description>James 'Buster' Douglas Knockout Boxing (USA, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>James 'Buster' Douglas Knockout Boxing (USA, Prototype)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="james buster douglas knockout boxing [proto].bin" size="262144" crc="cfb4bd7b"/>
@@ -2493,7 +2571,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kingqstp" cloneof="kingqst" romof="kingqst">
-		<description>King's Quest - Quest for the Crown (USA, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>King's Quest - Quest for the Crown (USA, Prototype)</description>
 		<year>1989</year>
 		<manufacturer>Parker Brothers</manufacturer>
 		<rom name="king's quest - quest for the crown (usa) (beta).bin" size="131072" crc="b7fe0a9d"/>
@@ -2509,7 +2588,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ksolitaire">
-		<description>Klondike Solitaire (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Klondike Solitaire (HB)</description>
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Klondike Solitaire (2021)(Under4Mhz).sms" size="49152" crc="a4011448"/>
@@ -2525,7 +2605,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="krustyfhc" cloneof="krustyfh" romof="krustyfh">
-		<description>Krusty's Fun House (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Krusty's Fun House (Euro, Bra) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="krusty's fun house (euro, bra) - castellano v1.0.sms" size="262144" crc="c7565a76"/>
@@ -2557,7 +2638,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kunkun">
-		<description>KunKun &amp; KokoKun (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>KunKun &amp; KokoKun (HB)</description>
 		<year>2006</year>
 		<manufacturer>Bock</manufacturer>
 		<rom name="KunKun &amp; KokoKun (2006)(Bock).sms" size="32768" crc="7e15a103"/>
@@ -2565,7 +2647,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kunkun2">
-		<description>KunKun &amp; KokoKun 2 (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>KunKun &amp; KokoKun 2 (HB)</description>
 		<year>2011</year>
 		<manufacturer>Bock</manufacturer>
 		<rom name="KunKun &amp; KokoKun 2 (2011)(Bock).sms" size="65536" crc="5173b648"/>
@@ -2573,7 +2656,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lambo">
-		<description>Lambo (HB, Demo) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Lambo (HB, Demo)</description>
 		<year>2015</year>
 		<manufacturer>Genesis Project</manufacturer>
 		<rom name="GenesisProject-Lambo.sms" size="262144" crc="92fe2775"/>
@@ -2589,7 +2673,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lghost">
-		<description>Laser Ghost (Euro) [Light Phaser game]</description>
+		<comment>Light Phaser game</comment>
+		<description>Laser Ghost (Euro)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="laser ghost (europe).bin" size="262144" crc="0ca95637"/>
@@ -2597,7 +2682,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="legndillc" cloneof="legndill" romof="legndill">
-		<description>Legend of Illusion Starring Mickey Mouse (Bra) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Legend of Illusion Starring Mickey Mouse (Bra) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="legend of illusion starring mickey mouse (bra)- castellano v1.0.sms" size="524288" crc="611f2597"/>
@@ -2621,7 +2707,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lemmingsp" cloneof="lemmings" romof="lemmings">
-		<description>Lemmings (Euro, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Lemmings (Euro, Prototype)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="lemmings (europe) (beta).bin" size="262144" crc="2c61ed88"/>
@@ -2629,7 +2716,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lemming2">
-		<description>Lemmings 2 - The Tribes (Euro, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Lemmings 2 - The Tribes (Euro, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Psygnosis</manufacturer>
 		<rom name="lemmings 2 - the tribes [proto].bin" size="524288" crc="cf5aecca"/>
@@ -2677,7 +2765,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lostraider101">
-		<description>Lost Raider (HB, v1.01) [Homebrew, The game lacks sound]</description>
+		<comment>Homebrew, The game lacks sound</comment>
+		<description>Lost Raider (HB, v1.01)</description>
 		<year>2015</year>
 		<manufacturer>Vingazole &amp; Ichigobankai</manufacturer>
 		<rom name="LostRaider-SMS-1.01.sms" size="131072" crc="2553b745"/>
@@ -2685,7 +2774,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="luckypeng">
-		<description>Lucky Penguin (HB, v1.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Lucky Penguin (HB, v1.1)</description>
 		<year>2020</year>
 		<manufacturer>Denine</manufacturer>
 		<rom name="LuckyPenguin-SMS-1.1.sms" size="49152" crc="69699887"/>
@@ -2701,7 +2791,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mjsengokp" cloneof="mjsengok" romof="mjsengok">
-		<description>Mahjong Sengoku Jidai (Jpn, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Mahjong Sengoku Jidai (Jpn, Prototype)</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mahjong sengoku jidai (japan) (beta).bin" size="131072" crc="996b2a07"/>
@@ -2709,7 +2800,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="msolitaire">
-		<description>Mahjong Solitaire (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Mahjong Solitaire (HB)</description>
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Mahjong Solitaire (2021)(Under4Mhz).sms" size="32768" crc="bed37331"/>
@@ -2733,7 +2825,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="maougolvp" cloneof="golvell" romof="golvell">
-		<description>Maou Golvellius (Jpn, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Maou Golvellius (Jpn, Prototype)</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="maou golvellius [proto] (jp).bin" size="262144" crc="21a21352"/>
@@ -2749,7 +2842,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="marksmanu" cloneof="marksman" romof="marksman">
-		<description>Marksman Shooting and Trap Shooting (USA) [Light Phaser games]</description>
+		<comment>Light Phaser games</comment>
+		<description>Marksman Shooting and Trap Shooting (USA)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="marksman shooting and trap shooting (usa).bin" size="131072" crc="e8ea842c"/>
@@ -2757,7 +2851,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="marksman">
-		<description>Marksman Shooting and Trap Shooting and Safari Hunt (Euro, Bra) [Light Phaser games]</description>
+		<comment>Light Phaser games</comment>
+		<description>Marksman Shooting and Trap Shooting and Safari Hunt (Euro, Bra)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-10157f.ic2" size="131072" crc="e8215c2e"/>
@@ -2765,7 +2860,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mastdarkc" cloneof="mastdark" romof="mastdark">
-		<description>Master of Darkness (Euro, Bra) - Castellano v1.2 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Master of Darkness (Euro, Bra) - Castellano v1.2</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="master of darkness (euro, bra) - castellano v1.2.sms" size="262144" crc="bda42f09"/>
@@ -2829,7 +2925,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mwalkp" cloneof="mwalk" romof="mwalk">
-		<description>Michael Jackson's Moonwalker (USA, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Michael Jackson's Moonwalker (USA, Prototype)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="michael jackson's moonwalker (usa, europe) (beta).bin" size="262144" crc="54123936"/>
@@ -2861,7 +2958,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="minimsx">
-		<description>MiniMSX (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>MiniMSX (HB)</description>
 		<year>2021</year>
 		<manufacturer>MIKGAMES</manufacturer>
 		<rom name="MiniMSX (2021)(MikGames).sms" size="131072" crc="eb6c0944"/>
@@ -2869,7 +2967,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="miraclec" cloneof="miracle" romof="miracle">
-		<description>Miracle Warriors - Seal of the Dark Lord (Euro, USA, Bra) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Miracle Warriors - Seal of the Dark Lord (Euro, USA, Bra) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="miracle warriors - seal of the dark lord (euro, usa, bra) - castellano v1.0.sms" size="262144" crc="7e3f6a4c"/>
@@ -2885,7 +2984,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="miraclep" cloneof="miracle" romof="miracle">
-		<description>Miracle Warriors - Seal of the Dark Lord (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Miracle Warriors - Seal of the Dark Lord (Prototype)</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="miracle warriors - seal of the dark lord (usa, europe) (beta).bin" size="262144" crc="301a59aa"/>
@@ -2893,7 +2993,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="missil3d">
-		<description>Missile Defense 3-D (Euro, USA, Bra) [Light Phaser game]</description>
+		<comment>Light Phaser game</comment>
+		<description>Missile Defense 3-D (Euro, USA, Bra)</description>
 		<year>19??</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-10844 w29.ic1" size="131072" crc="fbe5cfbb"/>
@@ -2901,7 +3002,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="moggym100">
-		<description>Moggy Master (HB, v1.00) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Moggy Master (HB, v1.00)</description>
 		<year>2015</year>
 		<manufacturer>Mojon Twins</manufacturer>
 		<rom name="mojon-twins--moggy-master.sms" size="65536" crc="039539df"/>
@@ -2933,7 +3035,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="monopolyp" cloneof="monopoly" romof="monopoly">
-		<description>Monopoly (USA, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Monopoly (USA, Prototype)</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="monopoly [proto].bin" size="131072" crc="7e9d87fc"/>
@@ -2941,7 +3044,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="moncrunch">
-		<description>Monster Crunch (HB, v1.00) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Monster Crunch (HB, v1.00)</description>
 		<year>2020</year>
 		<manufacturer>Ichigo</manufacturer>
 		<rom name="MonsterCrunch-SMS-1.00.sms" size="32768" crc="7eacf20c"/>
@@ -2957,7 +3061,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="montezump" cloneof="montezum" romof="montezum">
-		<description>Montezuma's Revenge Featuring Panama Joe (USA, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Montezuma's Revenge Featuring Panama Joe (USA, Prototype)</description>
 		<year>1989</year>
 		<manufacturer>Parker Brothers</manufacturer>
 		<rom name="montezuma's revenge - featuring panama joe [proto].bin" size="131072" crc="575d0fcf"/>
@@ -3021,7 +3126,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nanowars">
-		<description>NanoWars 8k (HB, v0.7) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>NanoWars 8k (HB, v0.7)</description>
 		<year>2006</year>
 		<manufacturer>haroldoop</manufacturer>
 		<rom name="NanoWars8k v0.7 (2006)(haroldoop).sms" size="32768" crc="a06d065c"/>
@@ -3029,7 +3135,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbajam">
-		<description>NBA Jam (Euro, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>NBA Jam (Euro, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Acclaim</manufacturer>
 		<rom name="nba jam [proto].bin" size="524288" crc="332a847d"/>
@@ -3069,7 +3176,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="novdmvdp">
-		<description>New Order vs Depeche Mode vs Daft Punk - (HB, Demo) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>New Order vs Depeche Mode vs Daft Punk - (HB, Demo)</description>
 		<year>2019</year>
 		<manufacturer>Maxim</manufacturer>
 		<rom name="novdmvdp.sms" size="4176507" crc="d0eabe60"/>
@@ -3085,7 +3193,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ngaidenp" cloneof="ngaiden" romof="ngaiden">
-		<description>Ninja Gaiden (Euro, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Ninja Gaiden (Euro, Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ninja gaiden (europe) (beta).bin" size="262144" crc="761e9396"/>
@@ -3117,7 +3226,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="opwolf">
-		<description>Operation Wolf (Euro, Bra) [Light Phaser game]</description>
+		<comment>Light Phaser game</comment>
+		<description>Operation Wolf (Euro, Bra)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="operation wolf (europe).bin" size="262144" crc="205caae8"/>
@@ -3173,7 +3283,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="papicom">
-		<description>Papi Commando in CPP Land (HB, Hack v1.01) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Papi Commando in CPP Land (HB, Hack v1.01)</description>
 		<year>2019</year>
 		<manufacturer>Vetea</manufacturer>
 		<rom name="papi commando in cpp land v1.01 (2019)(studio vetea).sms" size="1048576" crc="bd531375"/>
@@ -3189,7 +3300,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="patriley">
-		<description>Pat Riley Basketball (USA, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Pat Riley Basketball (USA, Prototype)</description>
 		<year>19??</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="pat riley basketball (usa) (proto).bin" size="262144" crc="9aefe664"/>
@@ -3197,7 +3309,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pegged">
-		<description>Pegged (HB, v1.02) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Pegged (HB, v1.02)</description>
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Pegged v1.02 (2021)(Under4Mhz).sms" size="32768" crc="ac08cf7e"/>
@@ -3269,7 +3382,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pstarje" cloneof="pstar" romof="pstar">
-		<description>Phantasy Star (Jpn, T-Eng v2.00) [Hack, YM2413 FM sound chip supported]</description>
+		<comment>Hack, YM2413 FM sound chip supported</comment>
+		<description>Phantasy Star (Jpn, T-Eng v2.00)</description>
 		<year>2020</year>
 		<manufacturer>Sega - SMS Power!</manufacturer>
 		<rom name="phantasy star (j) [t-eng2.00].sms" size="524288" crc="a04cf71a"/>
@@ -3301,7 +3415,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pitman">
-		<description>Pitman (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Pitman (HB)</description>
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Pitman (2021)(Under4Mhz).sms" size="32768" crc="cd45ad76"/>
@@ -3365,7 +3480,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ppersiac" cloneof="ppersia" romof="ppersia">
-		<description>Prince of Persia (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Prince of Persia (Euro, Bra) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="prince of persia (euro, bra) - castellano v1.0.sms" size="262144" crc="85e5065b"/>
@@ -3397,7 +3513,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="psychicwen" cloneof="psychicw" romof="psychicw">
-		<description>Psychic World (Enhanced Hack, v1.2) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Psychic World (Enhanced Hack, v1.2)</description>
 		<year>2020</year>
 		<manufacturer>BcnAbel76</manufacturer>
 		<rom name="psychic world (enhanced v1.2).bin" size="262144" crc="f0ec4500"/>
@@ -3429,7 +3546,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="puttputtp" cloneof="puttputt" romof="puttputt">
-		<description>Putt and Putter (Euro, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Putt and Putter (Euro, Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="putt and putter (europe) (beta).bin" size="131072" crc="8167ccc4"/>
@@ -3445,7 +3563,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pyramidwex">
-		<description>Pyramid Warp Enhanced (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Pyramid Warp Enhanced (HB)</description>
 		<year>2021</year>
 		<manufacturer>Bitcaffe, Nenefranz, theNestruo</manufacturer>
 		<rom name="Pyramid Warp Enhanced (2021)(Bitcaffe, Nenefranz, theNestruo).sms" size="49152" crc="e51d3ee9"/>
@@ -3469,7 +3588,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="rtypep" cloneof="rtype" romof="rtype">
-		<description>R-Type (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>R-Type (Prototype)</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="r-type (proto).bin" size="524288" crc="0d0840d5"/>
@@ -3493,7 +3613,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="rcgpp" cloneof="rcgp" romof="rcgp">
-		<description>R.C. Grand Prix (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>R.C. Grand Prix (Prototype)</description>
 		<year>1989</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="r.c. grand prix [proto].bin" size="262144" crc="767f11b8"/>
@@ -3517,7 +3638,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="rbislando" cloneof="rbisland" romof="rbisland">
-		<description>Rainbow Islands - The Story of Bubble Bobble 2 (Over the Rainbow + Color Hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Rainbow Islands - The Story of Bubble Bobble 2 (Over the Rainbow + Color Hack)</description>
 		<year>2021</year>
 		<manufacturer>Tom, BcnAbel76</manufacturer>
 		<rom name="rainbow islands - the story of bubble bobble 2 (over the rainbow + color hack).bin" size="262144" crc="7e43bed5"/>
@@ -3533,7 +3655,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="rambo3">
-		<description>Rambo III (Euro, USA, Bra) [Light Phaser game]</description>
+		<comment>Light Phaser game</comment>
+		<description>Rambo III (Euro, USA, Bra)</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-12036f.ic1" size="262144" crc="da5a7013"/>
@@ -3541,7 +3664,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="rambo3fm" cloneof="rambo3" romof="rambo3">
-		<description>Rambo III (FM Mod) [Hack, Light Phaser game - YM2413 FM support]</description>
+		<comment>Hack, Light Phaser game - YM2413 FM support</comment>
+		<description>Rambo III (FM Mod)</description>
 		<year>2018</year>
 		<manufacturer>Sega - fatnick</manufacturer>
 		<rom name="rambo iii (fm-mod).sms" size="262144" crc="c2073674"/>
@@ -3589,7 +3713,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="rescuems">
-		<description>Rescue Mission (Euro, USA, Bra) [Light Phaser game]</description>
+		<comment>Light Phaser game</comment>
+		<description>Rescue Mission (Euro, USA, Bra)</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-11400.ic1" size="131072" crc="79ac8e7f"/>
@@ -3733,7 +3858,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="segagfx">
-		<description>Sega Graphic Board (Jpn, Prototype v2.0) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Sega Graphic Board (Jpn, Prototype v2.0)</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="graphic board v2.0.bin" size="32768" crc="276aa542"/>
@@ -3781,7 +3907,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="beastc" cloneof="beast" romof="beast">
-		<description>Shadow of the Beast (Euro, Bra) - Castellano v1.12a [Hack]</description>
+		<comment>Hack</comment>
+		<description>Shadow of the Beast (Euro, Bra) - Castellano v1.12a</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="shadow of the beast (euro, bra) - castellano v1.12a.sms" size="262144" crc="3e255ddb"/>
@@ -3805,7 +3932,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="shanghaip" cloneof="shanghai" romof="shanghai">
-		<description>Shanghai (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Shanghai (Prototype)</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="shanghai (usa, europe) (beta).bin" size="131072" crc="d5d25156"/>
@@ -3829,7 +3957,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="shooting">
-		<description>Shooting Gallery (Euro, USA, Bra) [Light Phaser game]</description>
+		<comment>Light Phaser game</comment>
+		<description>Shooting Gallery (Euro, USA, Bra)</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-10515.ic1" size="131072" crc="4b051022"/>
@@ -3837,7 +3966,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sdmilhao">
-		<description>Show do Milhao (Bra, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Show do Milhao (Bra, Prototype)</description>
 		<year>2003</year>
 		<manufacturer>Tec Toy</manufacturer>
 		<rom name="milhao.bin" size="131072" crc="58423688"/>
@@ -3845,7 +3975,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="silvervalley">
-		<description>Silver Valley (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Silver Valley (HB)</description>
 		<year>2018</year>
 		<manufacturer>MIKGAMES / Enrique Ruiz</manufacturer>
 		<rom name="silvervalley-final.sms" size="262144" crc="2774b5cc"/>
@@ -3861,7 +3992,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="skbn">
-		<description>SKBN (HB, v1.3) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>SKBN (HB, v1.3)</description>
 		<year>2021</year>
 		<manufacturer>Raphael Assenat</manufacturer>
 		<rom name="SKBN v1.3 (2021)(raphnet).sms" size="131072" crc="1d811c2a"/>
@@ -3877,7 +4009,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="slapshotp" cloneof="slapshot" romof="slapshot">
-		<description>Slap Shoot (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Slap Shoot (Prototype)</description>
 		<year>1989</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="slap shot (proto).bin" size="262144" crc="fbb0a92a"/>
@@ -3917,7 +4050,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="snake">
-		<description>Snake (HB, v1.04) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Snake (HB, v1.04)</description>
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Snake v1.04 (2021)(Under4Mhz).sms" size="32768" crc="995f8fd2"/>
@@ -3949,7 +4083,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicfm102" cloneof="sonic" romof="sonic">
-		<description>Sonic The Hedgehog (FM Mod, v1.02) [Hack, YM2413 FM sound chip supported]</description>
+		<comment>Hack, YM2413 FM sound chip supported</comment>
+		<description>Sonic The Hedgehog (FM Mod, v1.02)</description>
 		<year>2014</year>
 		<manufacturer>Sega - Valleybell</manufacturer>
 		<rom name="Sonic1SMS_FM_v102.sms" size="262144" crc="7c077b38"/>
@@ -3981,7 +4116,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonici131fm" cloneof="sonic" romof="sonic">
-		<description>Sonic The Hedgehog Improvement (v1.31) + FM Mod (v1.02) [Hack, YM2413 FM sound chip supported]</description>
+		<comment>Hack, YM2413 FM sound chip supported</comment>
+		<description>Sonic The Hedgehog Improvement (v1.31) + FM Mod (v1.02)</description>
 		<year>2020</year>
 		<manufacturer>Penta Penguin - Valleybell</manufacturer>
 		<rom name="Sonic_The_Hedgehog_Enhanced1.31_FM1.02.sms" size="262144" crc="850b9554"/>
@@ -3997,7 +4133,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicedu">
-		<description>Sonic's Edusoft (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Sonic's Edusoft (Prototype)</description>
 		<year>19??</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic's edusoft (unknown) (proto).bin" size="262144" crc="d9096263"/>
@@ -4005,7 +4142,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="soultrials">
-		<description>Soul Trials (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Soul Trials (HB)</description>
 		<year>2021</year>
 		<manufacturer>Arkia</manufacturer>
 		<rom name="Soul Trials (2021)(Arkia).sms" size="32768" crc="c992d9de"/>
@@ -4013,7 +4151,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="spacegun">
-		<description>Space Gun (Euro) [Light Phaser game]</description>
+		<comment>Light Phaser game</comment>
+		<description>Space Gun (Euro)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-15063.ic1" size="524288" crc="a908cff5"/>
@@ -4061,7 +4200,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="scip" cloneof="sci" romof="sci">
-		<description>Special Criminal Investigation (Euro, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Special Criminal Investigation (Euro, Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="special criminal investigation (europe) (beta).bin" size="262144" crc="1b7d2a20"/>
@@ -4093,7 +4233,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="spellcstc" cloneof="spellcst" romof="spellcst">
-		<description>SpellCaster (Euro, USA, Bra) - Castellano v0,99 [Hack]</description>
+		<comment>Hack</comment>
+		<description>SpellCaster (Euro, USA, Bra) - Castellano v0,99</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="spellcaster (euro, usa, bra) - castellano v0,99.sms" size="524288" crc="32b31c6e"/>
@@ -4141,7 +4282,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="spyvsspycast" cloneof="spyvsspy" romof="spyvsspy">
-		<description>Spy vs Spy (Euro, USA, Bra) - Castellano v1,0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Spy vs Spy (Euro, USA, Bra) - Castellano v1,0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="spy vs. spy (euro, usa, bra) - castellano v1,0.sms" size="32768" crc="acc2eea4"/>
@@ -4269,7 +4411,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="subrescue">
-		<description>Sub Rescue (HB, v0.3) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Sub Rescue (HB, v0.3)</description>
 		<year>2021</year>
 		<manufacturer>haroldoop</manufacturer>
 		<rom name="Sub Rescue v0.3 (2021)(haroldoop).sms" size="32768" crc="06a41efd"/>
@@ -4309,7 +4452,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sumgamesp" cloneof="sumgames" romof="sumgames">
-		<description>Summer Games (Euro, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Summer Games (Euro, Prototype)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="summer games (europe) (beta).bin" size="131072" crc="80eb1fff"/>
@@ -4317,7 +4461,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sumgamesfm" cloneof="sumgames" romof="sumgames">
-		<description>Summer Games (FM Mod) [Hack, YM2413 FM sound chip supported]</description>
+		<comment>Hack, YM2413 FM sound chip supported</comment>
+		<description>Summer Games (FM Mod)</description>
 		<year>2018</year>
 		<manufacturer>Sega - fatnick</manufacturer>
 		<rom name="summer games (fm-mod).sms" size="131072" crc="bbae488d"/>
@@ -4389,7 +4534,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="supgolf" cloneof="golfaman" romof="golfaman">
-		<description>Super Golf (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Super Golf (Prototype)</description>
 		<year>1989</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="super golf [proto].bin" size="262144" crc="7f7b568d"/>
@@ -4413,7 +4559,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="smgpp2" cloneof="smgp" romof="smgp">
-		<description>Super Monaco GP (Euro, Older Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Super Monaco GP (Euro, Older Prototype)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="super monaco gp (proto).bin" size="262144" crc="a1d6d963"/>
@@ -4421,7 +4568,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="smgpp1" cloneof="smgp" romof="smgp">
-		<description>Super Monaco GP (Euro, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Super Monaco GP (Euro, Prototype)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="super monaco gp [proto 1].bin" size="262144" crc="dd7adbcc"/>
@@ -4493,7 +4641,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sydhunt">
-		<description>Sydney Hunter and the Sacred Tribe (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Sydney Hunter and the Sacred Tribe (HB)</description>
 		<year>2017</year>
 		<manufacturer>Oscar Toledo G.</manufacturer>
 		<rom name="Sydney Hunter.sms" size="131072" crc="e3060500"/>
@@ -4533,7 +4682,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmaniap" cloneof="tazmania" romof="tazmania">
-		<description>Taz-Mania (Euro, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Taz-Mania (Euro, Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="taz-mania (europe) (beta).bin" size="262144" crc="1b312e04"/>
@@ -4541,7 +4691,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tecmow92">
-		<description>Tecmo World Cup '92 (Euro, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Tecmo World Cup '92 (Euro, Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tecmo world cup '92 (europe) (beta).bin" size="262144" crc="96e75f48"/>
@@ -4613,7 +4764,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="term2c" cloneof="term2" romof="term2">
-		<description>Terminator 2 - Judgment Day (Euro) - Castellano v1,0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Terminator 2 - Judgment Day (Euro) - Castellano v1,0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="terminator 2 - judgment day (euro) - castellano v1,0.sms" size="262144" crc="87a3290f"/>
@@ -4637,7 +4789,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="addfamc" cloneof="addfam" romof="addfam">
-		<description>The Addams Family (Euro) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>The Addams Family (Euro) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="addams family, the (europe) - castellano v1.0.sms" size="262144" crc="dc3ed8dd"/>
@@ -4757,7 +4910,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="excdizzy">
-		<description>The Excellent Dizzy Collection (Euro, USA, Prototype) [unfinished proto, play 'gg_excdizzy' instead!]</description>
+		<comment>unfinished proto, play 'gg_excdizzy' instead!</comment>
+		<description>The Excellent Dizzy Collection (Euro, USA, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="excellent dizzy collection, the (usa, europe) (en,fr,de,es,it) (proto).bin" size="262144" crc="8813514b"/>
@@ -4805,7 +4959,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="junglec" cloneof="jungle" romof="jungle">
-		<description>The Jungle Book (Euro, Bra) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The Jungle Book (Euro, Bra)</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="the jungle book (euro, bra).sms" size="262144" crc="dfa31d13"/>
@@ -4813,7 +4968,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="luckydimc" cloneof="luckydim" romof="luckydim">
-		<description>The Lucky Dime Caper Starring Donald Duck (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>The Lucky Dime Caper Starring Donald Duck (Euro, Bra) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="the lucky dime caper starring donald duck (euro, bra) - castellano v1.0.sms" size="262144" crc="d285aefa"/>
@@ -4829,7 +4985,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="luckydimp" cloneof="luckydim" romof="luckydim">
-		<description>The Lucky Dime Caper Starring Donald Duck (Euro, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>The Lucky Dime Caper Starring Donald Duck (Euro, Prototype)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="lucky dime caper starring donald duck, the (europe) (beta).bin" size="262144" crc="7f6d0df6"/>
@@ -4885,7 +5042,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bartvssmc" cloneof="bartvssm" romof="bartvssm">
-		<description>The Simpsons - Bart vs. The Space Mutants (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>The Simpsons - Bart vs. The Space Mutants (Euro, Bra) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="the simpsons - bart vs. the space mutants (euro, bra) - castellano v1.0.sms" size="262144" crc="886e96d9"/>
@@ -4901,7 +5059,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bartvswc" cloneof="bartvsw" romof="bartvsw">
-		<description>The Simpsons - Bart vs. The World (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>The Simpsons - Bart vs. The World (Euro, Bra) - Castellano v1.0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="the simpsons - bart vs. the world (euro, bra) - castellano v1.0.sms" size="262144" crc="2d0b87cf"/>
@@ -4933,7 +5092,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="smurfs2p" cloneof="smurfs2" romof="smurfs2">
-		<description>The Smurfs 2 (Euro, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>The Smurfs 2 (Euro, Prototype)</description>
 		<year>1996</year>
 		<manufacturer>Infogrames</manufacturer>
 		<rom name="schtroumpfs autour du monde, les (europe) (en,fr,de,es) (beta).bin" size="262144" crc="7982ae67"/>
@@ -4949,7 +5109,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="termntrc" cloneof="termntr" romof="termntr">
-		<description>The Terminator (Euro) - Castellano v1,0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>The Terminator (Euro) - Castellano v1,0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="the terminator (euro) - castellano v1,0.sms" size="262144" crc="cea55b21"/>
@@ -4989,7 +5150,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tbladejp" cloneof="tblade" romof="tblade">
-		<description>Thunder Blade (Jpn, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Thunder Blade (Jpn, Prototype)</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="thunder blade (japan)(proto).sms" size="262144" crc="bab9533b"/>
@@ -5005,7 +5167,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tomjerry" cloneof="tomjermv" romof="tomjermv">
-		<description>Tom and Jerry (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Tom and Jerry (Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tom and jerry (europe) (beta).bin" size="262144" crc="0c2fc2de"/>
@@ -5013,7 +5176,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tomjermvc" cloneof="tomjermv" romof="tomjermv">
-		<description>Tom and Jerry - The Movie (Euro, Bra) - Castellano v1,0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Tom and Jerry - The Movie (Euro, Bra) - Castellano v1,0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tom and jerry - the movie (euro, bra) - castellano v1,0.sms" size="262144" crc="8f549d4a"/>
@@ -5037,7 +5201,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="toseasycb" cloneof="toseasy" romof="toseasy">
-		<description>Tower of Sorrow - Easy (HB, v1.5 Color Blind) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Tower of Sorrow - Easy (HB, v1.5 Color Blind)</description>
 		<year>2021</year>
 		<manufacturer>Neofuturism</manufacturer>
 		<rom name="Tower of Sorrow - easy v1.5 cb (2021)(Neofuturism).sms" size="524288" crc="0b953948"/>
@@ -5045,7 +5210,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="toseasy">
-		<description>Tower of Sorrow - Easy (HB, v1.5) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Tower of Sorrow - Easy (HB, v1.5)</description>
 		<year>2021</year>
 		<manufacturer>Neofuturism</manufacturer>
 		<rom name="Tower of Sorrow - easy v1.5 (2021)(Neofuturism).sms" size="524288" crc="72d2089c"/>
@@ -5053,7 +5219,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="toshardcb" cloneof="toseasy" romof="toseasy">
-		<description>Tower of Sorrow - Hard (HB, v1.5 Color Blind) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Tower of Sorrow - Hard (HB, v1.5 Color Blind)</description>
 		<year>2021</year>
 		<manufacturer>Neofuturism</manufacturer>
 		<rom name="Tower of Sorrow - hard v1.5 cb (2021)(Neofuturism).sms" size="524288" crc="e178c8a9"/>
@@ -5061,7 +5228,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="toshard" cloneof="toseasy" romof="toseasy">
-		<description>Tower of Sorrow - Hard (HB, v1.5) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Tower of Sorrow - Hard (HB, v1.5)</description>
 		<year>2021</year>
 		<manufacturer>Neofuturism</manufacturer>
 		<rom name="Tower of Sorrow - hard v1.5 (2021)(Neofuturism).sms" size="524288" crc="93655c5f"/>
@@ -5069,7 +5237,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tos" cloneof="toseasy" romof="toseasy">
-		<description>Tower of Sorrow - SMS Power Ed. (HB, rev3) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Tower of Sorrow - SMS Power Ed. (HB, rev3)</description>
 		<year>2020</year>
 		<manufacturer>Neofuturism</manufacturer>
 		<rom name="Tower_of_Sorrow_REV3.sms" size="524288" crc="d0e103d9"/>
@@ -5093,7 +5262,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="transbotp" cloneof="transbot" romof="transbot">
-		<description>TransBot (USA, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>TransBot (USA, Prototype)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="transbot [proto].bin" size="32768" crc="58b99750"/>
@@ -5141,7 +5311,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ultima4p" cloneof="ultima4" romof="ultima4">
-		<description>Ultima IV - Quest of the Avatar (Euro, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Ultima IV - Quest of the Avatar (Euro, Prototype)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ultima iv - quest of the avatar (europe) (beta).bin" size="524288" crc="de9f8517"/>
@@ -5157,7 +5328,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="vampire" cloneof="mastdark" romof="mastdark">
-		<description>Vampire (Euro, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Vampire (Euro, Prototype)</description>
 		<year>19??</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="vampire (europe) (beta).bin" size="262144" crc="20f40cae"/>
@@ -5165,7 +5337,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="vexed">
-		<description>Vexed (HB, v1.03) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Vexed (HB, v1.03)</description>
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Vexed v1.03 (2021)(Under4Mhz).sms" size="32768" crc="bd34d592"/>
@@ -5189,7 +5362,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="voyage">
-		<description>Voyage - A Sorceress Vacation (HB, v1.05) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Voyage - A Sorceress Vacation (HB, v1.05)</description>
 		<year>2021</year>
 		<manufacturer>SNAGS</manufacturer>
 		<rom name="Voyage - A Sorceress Vacation v1.03.sms" size="524288" crc="76a1d277"/>
@@ -5197,7 +5371,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="WaimanuSMS">
-		<description>Waimanu: Scary Monsters Saga (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Waimanu: Scary Monsters Saga (HB)</description>
 		<year>2015</year>
 		<manufacturer>Disjointed Studio</manufacturer>
 		<rom name="WaimanuSMS.sms" size="131072" crc="195c3f78"/>
@@ -5213,7 +5388,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wanted">
-		<description>Wanted (Euro, USA, Bra) [Light Phaser game]</description>
+		<comment>Light Phaser game</comment>
+		<description>Wanted (Euro, USA, Bra)</description>
 		<year>1989</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-12533f.ic1" size="131072" crc="5359762d"/>
@@ -5221,7 +5397,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wekainvaders10">
-		<description>Weka Invaders (HB, v1.0) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Weka Invaders (HB, v1.0)</description>
 		<year>2017</year>
 		<manufacturer>Disjointed Studio</manufacturer>
 		<rom name="WekaInvaders.sms" size="294912" crc="54b2fcf8"/>
@@ -5261,7 +5438,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wingwarriors">
-		<description>Wing Warriors (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Wing Warriors (HB)</description>
 		<year>2020</year>
 		<manufacturer>Kitmaker</manufacturer>
 		<rom name="Wing Warriors (2020)(Kitmaker Ent.).sms" size="131072" crc="8c384703"/>
@@ -5301,7 +5479,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wboyc" cloneof="wboy" romof="wboy">
-		<description>Wonder Boy (Euro, USA, Bra, v1) - Castellano v1,0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Wonder Boy (Euro, USA, Bra, v1) - Castellano v1,0</description>
 		<year>2021</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="wonder boy (euro, usa, bra, v1) - castellano v1,0.sms" size="131072" crc="ce62c859"/>
@@ -5317,7 +5496,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wboy3c" cloneof="wboy3" romof="wboy3">
-		<description>Wonder Boy III - The Dragon's Trap (Euro, USA, Kor) - Castellano v1,0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Wonder Boy III - The Dragon's Trap (Euro, USA, Kor) - Castellano v1,0</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="wonder boy iii - the dragon's trap (euro, usa, kor) - castellano v1,0.sms" size="262144" crc="fed045bf"/>
@@ -5333,7 +5513,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wboy3fm" cloneof="wboy3" romof="wboy3">
-		<description>Wonder Boy III - The Dragon's Trap (FM Mod) [Hack, YM2413 FM sound chip supported]</description>
+		<comment>Hack, YM2413 FM sound chip supported</comment>
+		<description>Wonder Boy III - The Dragon's Trap (FM Mod)</description>
 		<year>1999</year>
 		<manufacturer>Sega - Bock</manufacturer>
 		<rom name="wonder boy iii - the dragon's trap (fm mod).sms" size="262144" crc="9442cfff"/>
@@ -5357,7 +5538,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wboymlndp" cloneof="wboymlnd" romof="wboymlnd">
-		<description>Wonder Boy in Monster Land (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Wonder Boy in Monster Land (Prototype)</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="wonder boy in monster land [proto].bin" size="262144" crc="8312c429"/>
@@ -5365,7 +5547,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wboymwldc" cloneof="wboymwld" romof="wboymwld">
-		<description>Wonder Boy in Monster World (Euro, Kor) - Castellano v1,0 [Hack]</description>
+		<comment>Hack</comment>
+		<description>Wonder Boy in Monster World (Euro, Kor) - Castellano v1,0</description>
 		<year>2018</year>
 		<manufacturer>jackic</manufacturer>
 		<rom name="Wonder Boy in Monster World (Euro, Kor) - Castellano v1,0.sms" size="524288" crc="db47ff25"/>
@@ -5381,7 +5564,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wboymwldp" cloneof="wboymwld" romof="wboymwld">
-		<description>Wonder Boy in Monster World (Euro, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Wonder Boy in Monster World (Euro, Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="wonder boy in monster world (europe) (beta).bin" size="524288" crc="81bff9bb"/>
@@ -5445,7 +5629,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wldgamesp" cloneof="wldgames" romof="wldgames">
-		<description>World Games (Euro, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>World Games (Euro, Prototype)</description>
 		<year>1989</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="world games (europe) (beta).bin" size="131072" crc="914d3fc4"/>
@@ -5469,7 +5654,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="worldgpp" cloneof="worldgp" romof="worldgp">
-		<description>World Grand Prix (USA, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>World Grand Prix (USA, Prototype)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="world grand prix [proto].bin" size="131072" crc="b5a9f824"/>
@@ -5549,7 +5735,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ysfm" cloneof="ys" romof="ys">
-		<description>Ys - The Vanished Omens (FM Mod, v1.2) [Hack, YM2413 FM sound chip supported]</description>
+		<comment>Hack, YM2413 FM sound chip supported</comment>
+		<description>Ys - The Vanished Omens (FM Mod, v1.2)</description>
 		<year>2009</year>
 		<manufacturer>Sega - SSTranslations</manufacturer>
 		<rom name="ys - the vanished omens (fm patch).sms" size="262144" crc="7ed5dca2"/>
@@ -5565,7 +5752,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zaxxon3dp" cloneof="zaxxon3d" romof="zaxxon3d">
-		<description>Zaxxon 3-D (World, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Zaxxon 3-D (World, Prototype)</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="zaxxon 3-d (world) (beta).bin" size="262144" crc="bba74147"/>
@@ -5573,7 +5761,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zeloliv">
-		<description>Ze Legende of Oliv (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Ze Legende of Oliv (HB)</description>
 		<year>2019</year>
 		<manufacturer>OscarB</manufacturer>
 		<rom name="Ze Legende of Oliv (2019)(OscarB).sms" size="1048576" crc="388b8eee"/>

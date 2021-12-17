@@ -284,7 +284,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="4play" romof="neogeo">
-		<description>4 player input test [Demo, 4 player  input test cartridge]</description>
+		<comment>Demo, 4 player  input test cartridge</comment>
+		<description>4 player input test</description>
 		<year>???</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="4play_p1.rom" size="1048576" crc="3c3d741b"/>
@@ -556,7 +557,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="alpham2p" cloneof="alpham2" romof="alpham2">
-		<description>Alpha Mission II / ASO II - Last Guardian (prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Alpha Mission II / ASO II - Last Guardian (prototype)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="007_p1_faac.p1" size="524288" crc="c763e52a"/>
@@ -723,7 +725,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="aof2bh" cloneof="aof2" romof="aof2">
-		<description>Art of Fighting 2 / Ryuuko no Ken 2 (Enable hidden characters V2) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Art of Fighting 2 / Ryuuko no Ken 2 (Enable hidden characters V2)</description>
 		<year>1994</year>
 		<manufacturer>Yumeji</manufacturer>
 		<rom name="056-p1bh.p1" size="1048576" crc="3af1e484"/>
@@ -961,7 +964,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="aof3bh" cloneof="aof3" romof="aof3">
-		<description>Art of Fighting 3 - The Path of the Warrior / Art of Fighting - Ryuuko no Ken Gaiden (Enable Hidden Characters V2) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Art of Fighting 3 - The Path of the Warrior / Art of Fighting - Ryuuko no Ken Gaiden (Enable Hidden Characters V2)</description>
 		<year>1996</year>
 		<manufacturer>Yumeji</manufacturer>
 		<rom name="096-p1bh.p1" size="1048576" crc="70969ff1"/>
@@ -1081,7 +1085,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="badapple" romof="neogeo">
-		<description>Bad Apple Demo [Demo]</description>
+		<comment>Demo</comment>
+		<description>Bad Apple Demo</description>
 		<year>2017</year>
 		<manufacturer>Hpman</manufacturer>
 		<rom name="bada-p1.bin" size="4194304" crc="f68ade5a"/>
@@ -1186,7 +1191,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="b2b" romof="neogeo">
-		<description>Bang Bang Busters (2010 NCI release) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Bang Bang Busters (2010 NCI release)</description>
 		<year>2000</year>
 		<manufacturer>Visco</manufacturer>
 		<rom name="071.p1" size="524288" crc="7687197d"/>
@@ -1237,7 +1243,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bangbedp" cloneof="bangbead" romof="bangbead">
-		<description>Bang Bead (Prototype?) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Bang Bead (Prototype?)</description>
 		<year>2000</year>
 		<manufacturer>Visco</manufacturer>
 		<rom name="259-p1.bin" size="2097152" crc="88a37f8b"/>
@@ -1567,7 +1574,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="blazstarcm" cloneof="blazstar" romof="blazstar">
-		<description>Blazing Star (Stage Select Hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Blazing Star (Stage Select Hack)</description>
 		<year>2020</year>
 		<manufacturer>Clear Paper, NeoCverA, JustinG</manufacturer>
 		<rom name="239-p1_cm.p1" size="1048576" crc="077ba687"/>
@@ -1793,7 +1801,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="breakrevbh" cloneof="breakrev" romof="breakrev">
-		<description>Breakers Revenge (Boss Hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Breakers Revenge (Boss Hack)</description>
 		<year>1998</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="245-p1bh.p1" size="2097152" crc="52c978b5"/>
@@ -1849,7 +1858,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="brkrevext" cloneof="breakrev" romof="breakrev">
-		<description>Breakers Revenge - Extra Mode (Hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Breakers Revenge - Extra Mode (Hack)</description>
 		<year>2018</year>
 		<manufacturer>Visco</manufacturer>
 		<rom name="245-p1ext.p1" size="2097152" crc="603b47a4"/>
@@ -2123,7 +2133,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="burningfpa" cloneof="burningf" romof="burningf">
-		<description>Burning Fight (prototype, near final, ver 23.3, 910326) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Burning Fight (prototype, near final, ver 23.3, 910326)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="018_p1_1f28.podd" size="524288" crc="f7d15752"/>
@@ -2184,7 +2195,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="burningfpb" cloneof="burningf" romof="burningf">
-		<description>Burning Fight (prototype, newer, V07) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Burning Fight (prototype, newer, V07)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="p1.bin" size="524288" crc="f05ce157"/>
@@ -2246,7 +2258,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="burningfp" cloneof="burningf" romof="burningf">
-		<description>Burning Fight (prototype, older) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Burning Fight (prototype, older)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="018_p1_9397.p1" size="524288" crc="5b4032e7"/>
@@ -2306,7 +2319,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cabalng" romof="neogeo">
-		<description>Cabal (Neo-Geo Conversion) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Cabal (Neo-Geo Conversion)</description>
 		<year>1988</year>
 		<manufacturer>TAD Corporation</manufacturer>
 		<rom name="cabal-p1.bin" size="1048576" crc="4da4adf2"/>
@@ -2410,7 +2424,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="neodemo" romof="neogeo">
-		<description>Chaos Demo (Neo Geo) [Demo]</description>
+		<comment>Demo</comment>
+		<description>Chaos Demo (Neo Geo)</description>
 		<year>2002</year>
 		<manufacturer>Chaos</manufacturer>
 		<rom name="demo-p1.bin" size="524288" crc="fbfce2a4"/>
@@ -2515,7 +2530,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cndi" romof="neogeo">
-		<description>Chip n Dale (Intro demo) [Demo, You must use the Universe BIOS and set region to Japan AES]</description>
+		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
+		<description>Chip n Dale (Intro demo)</description>
 		<year>2009</year>
 		<manufacturer>Sergi</manufacturer>
 		<rom name="cnd-p1.bin" size="8388608" crc="2df9a41d"/>
@@ -2572,7 +2588,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ironclad" romof="neogeo">
-		<description>Choutetsu Brikin'ger - Iron clad (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Choutetsu Brikin'ger - Iron clad (Prototype)</description>
 		<year>1996</year>
 		<manufacturer>Saurus</manufacturer>
 		<rom name="proto_220-p1.p1" size="2097152" crc="62a942c6"/>
@@ -2625,7 +2642,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ironclado" cloneof="ironclad" romof="ironclad">
-		<description>Choutetsu Brikin'ger - Iron clad (Prototype, older) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Choutetsu Brikin'ger - Iron clad (Prototype, older)</description>
 		<year>1996</year>
 		<manufacturer>Saurus</manufacturer>
 		<rom name="proto_220-p1o.p1" size="2097152" crc="ce37e3a0"/>
@@ -2678,7 +2696,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cnbe" romof="neogeo">
-		<description>Codename - Blut Engel (2006-01-19) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Codename - Blut Engel (2006-01-19)</description>
 		<year>2006</year>
 		<manufacturer>blastar@gmx.net</manufacturer>
 		<rom name="cnbe-p1.bin" size="524288" crc="7ece4186"/>
@@ -2729,7 +2748,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="columnsn" romof="neogeo">
-		<description>Columns (Neo Geo) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Columns (Neo Geo)</description>
 		<year>????</year>
 		<manufacturer>homebrew</manufacturer>
 		<rom name="2000-p1.bin" size="524288" crc="c6c9888d"/>
@@ -2884,7 +2904,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cphd" romof="neogeo">
-		<description>Crouching Poney Hidden Dragon (DEMO) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Crouching Poney Hidden Dragon (DEMO)</description>
 		<year>2013</year>
 		<manufacturer>Le Cortex</manufacturer>
 		<rom name="cphd.p1" size="1048576" crc="de032a95"/>
@@ -2939,7 +2960,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cthd2003" cloneof="kof2001" romof="kof2001">
-		<description>Crouching Tiger Hidden Dragon 2003 (set 1) [Bootleg, Hack of "The King of Fighters 2001"]</description>
+		<comment>Bootleg, Hack of "The King of Fighters 2001"</comment>
+		<description>Crouching Tiger Hidden Dragon 2003 (set 1)</description>
 		<year>2003</year>
 		<manufacturer>Phenixsoft</manufacturer>
 		<rom name="5003-p1.bin" size="1048576" crc="bb7602c1"/>
@@ -3000,7 +3022,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cthd2k3a" cloneof="kof2001" romof="kof2001">
-		<description>Crouching Tiger Hidden Dragon 2003 (set 2) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>Crouching Tiger Hidden Dragon 2003 (set 2)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="5003-p1a.bin" size="1048576" crc="1185fe39"/>
@@ -3061,7 +3084,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ct2k3sp" cloneof="kof2001" romof="kof2001">
-		<description>Crouching Tiger Hidden Dragon 2003 Super Plus [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>Crouching Tiger Hidden Dragon 2003 Super Plus</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="5003-p1sp.bin" size="1048576" crc="ab5c4de0"/>
@@ -3122,7 +3146,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ct2k3sa" cloneof="kof2001" romof="kof2001">
-		<description>Crouching Tiger Hidden Dragon 2003 Super Plus alternate [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>Crouching Tiger Hidden Dragon 2003 Super Plus alternate</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="5003-p1sa.bin" size="1048576" crc="013a509d"/>
@@ -3242,7 +3267,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dwi" romof="neogeo">
-		<description>DarkWing Duck (Intro demo) [Demo, You must use the Universe BIOS and set region to Japan AES]</description>
+		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
+		<description>DarkWing Duck (Intro demo)</description>
 		<year>2009</year>
 		<manufacturer>Sergi</manufacturer>
 		<rom name="dwi-p1.bin" size="8388608" crc="8e3f2ea8"/>
@@ -3299,7 +3325,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dwia" cloneof="dwi" romof="dwi">
-		<description>DarkWing Duck (Intro demo, alt) [Demo, You must use the Universe BIOS and set region to Japan AES]</description>
+		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
+		<description>DarkWing Duck (Intro demo, alt)</description>
 		<year>2009</year>
 		<manufacturer>Sergi</manufacturer>
 		<rom name="dwi-p1.bin" merge="dwi-p1.bin" size="8388608" crc="8e3f2ea8"/>
@@ -3356,7 +3383,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="diggerma" romof="neogeo">
-		<description>Digger Man [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Digger Man</description>
 		<year>2000</year>
 		<manufacturer>Kyle Hodgetts</manufacturer>
 		<rom name="dig-p1.bin" size="524288" crc="eda433d7"/>
@@ -3407,7 +3435,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="doubledrbh" cloneof="doubledr" romof="doubledr">
-		<description>Double Dragon (Boss hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Double Dragon (Boss hack)</description>
 		<year>1995</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="082-p1bh.p1" size="2097152" crc="92826c06"/>
@@ -3523,7 +3552,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="doubledrsp" cloneof="doubledr" romof="doubledr">
-		<description>Double Dragon (Special 2017, hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Double Dragon (Special 2017, hack)</description>
 		<year>2017</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="082-p1sp.p1" size="1048576" crc="8ea8ee3d"/>
@@ -3635,7 +3665,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ducki" romof="neogeo">
-		<description>Duck Tales (Intro demo) [Demo, You must use the Universe BIOS and set region to Japan AES]</description>
+		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
+		<description>Duck Tales (Intro demo)</description>
 		<year>2009</year>
 		<manufacturer>Sergi</manufacturer>
 		<rom name="duck-p1.bin" size="8388608" crc="f975711c"/>
@@ -3746,7 +3777,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kabukiklb" cloneof="kabukikl" romof="kabukikl">
-		<description>Far East of Eden - Kabuki Klash / Tengai Makyou - Shin Den (Add hidden characters) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Far East of Eden - Kabuki Klash / Tengai Makyou - Shin Den (Add hidden characters)</description>
 		<year>1995</year>
 		<manufacturer>Ydmis / Creamymami[EGCG]</manufacturer>
 		<rom name="092-p1b.p1" size="2097152" crc="9e814a43"/>
@@ -3858,7 +3890,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="fatfury1bh" cloneof="fatfury1" romof="fatfury1">
-		<description>Fatal Fury - King of Fighters / Garou Densetsu - shukumei no tatakai (Boss Hack by Yumeji) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Fatal Fury - King of Fighters / Garou Densetsu - shukumei no tatakai (Boss Hack by Yumeji)</description>
 		<year>1992</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="033-p1bh.p1" size="524288" crc="fc051e1d"/>
@@ -4077,7 +4110,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="fatfury3bh" cloneof="fatfury3" romof="fatfury3">
-		<description>Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 - haruka-naru tatakai (Ancient Battles Resurgence 2015-03-13) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 - haruka-naru tatakai (Ancient Battles Resurgence 2015-03-13)</description>
 		<year>1995</year>
 		<manufacturer>Yumeji</manufacturer>
 		<rom name="069-p1bh.p1" size="1048576" crc="b8362f59"/>
@@ -4251,7 +4285,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="fatfurspbs" cloneof="fatfursp" romof="fatfursp">
-		<description>Fatal Fury Special / Garou Densetsu Special (Optional Hidden Character Third Edition) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Fatal Fury Special / Garou Densetsu Special (Optional Hidden Character Third Edition)</description>
 		<year>1993</year>
 		<manufacturer>Yumeji</manufacturer>
 		<rom name="058-p1bs.p1" size="1048576" crc="8cd18f7f"/>
@@ -4648,7 +4683,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ngfrog" romof="neogeo">
-		<description>Frog Feast (Neo Geo) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Frog Feast (Neo Geo)</description>
 		<year>2006</year>
 		<manufacturer>Rastersoft</manufacturer>
 		<rom name="frg-p1.bin" size="524288" crc="c26848da"/>
@@ -4702,7 +4738,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="neogalag" romof="neogeo">
-		<description>Galaga Demo (set 1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Galaga Demo (set 1)</description>
 		<year>2013</year>
 		<manufacturer>Cristiano Bei/www.iocerom.com</manufacturer>
 		<rom name="gal_p1.rom" size="1048576" crc="7226db5c"/>
@@ -4753,7 +4790,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="neogalaga" cloneof="neogalag" romof="neogalag">
-		<description>Galaga Demo (set 2) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Galaga Demo (set 2)</description>
 		<year>2013</year>
 		<manufacturer>Cristiano Bei/www.iocerom.com</manufacturer>
 		<rom name="gal_p1a.rom" size="1048576" crc="01dc85fd"/>
@@ -4913,7 +4951,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="garoubl" cloneof="garou" romof="garou">
-		<description>Garou - Mark of the Wolves (bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>Garou - Mark of the Wolves (bootleg)</description>
 		<year>1999</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="garou-p1.bin" size="1048576" crc="fd446d59"/>
@@ -4970,7 +5009,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="garoub" cloneof="garou" romof="garou">
-		<description>Garou - Mark of the Wolves (Enable hidden characters) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Garou - Mark of the Wolves (Enable hidden characters)</description>
 		<year>1999</year>
 		<manufacturer>Ydmis</manufacturer>
 		<rom name="kf.neo-sma" merge="kf.neo-sma" size="262144" crc="98bc93dc"/>
@@ -5220,7 +5260,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="garoup" cloneof="garou" romof="garou">
-		<description>Garou - Mark of the Wolves (prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Garou - Mark of the Wolves (prototype)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="proto_253-p1.p1" size="1048576" crc="c72f0c16"/>
@@ -5281,7 +5322,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ghostbi" romof="neogeo">
-		<description>Ghost Busters (Intro demo) [Demo, You must use the Universe BIOS and set region to Japan AES]</description>
+		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
+		<description>Ghost Busters (Intro demo)</description>
 		<year>2009</year>
 		<manufacturer>Sergi</manufacturer>
 		<rom name="ghostb-p1.bin" size="1048576" crc="af69ef5f"/>
@@ -5449,7 +5491,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gpilotsp" cloneof="gpilots" romof="gpilots">
-		<description>Ghost Pilots (prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Ghost Pilots (prototype)</description>
 		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="p1" size="524288" crc="c42125b4"/>
@@ -5510,7 +5553,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ghostlop" romof="neogeo">
-		<description>Ghostlop (prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Ghostlop (prototype)</description>
 		<year>1996</year>
 		<manufacturer>Data East Corporation</manufacturer>
 		<rom name="proto_228-p1.p1" size="1048576" crc="6033172e"/>
@@ -5665,7 +5709,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="froman2b" romof="neogeo">
-		<description>Idol Mahjong - final romance 2 (Neo CD Conversion) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Idol Mahjong - final romance 2 (Neo CD Conversion)</description>
 		<year>1995</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="098.p1" size="524288" crc="09675541"/>
@@ -5816,7 +5861,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ltorb1" romof="neogeo">
-		<description>Jonas Indiana and the Lost Temple of RA (20050717) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Jonas Indiana and the Lost Temple of RA (20050717)</description>
 		<year>2005</year>
 		<manufacturer>blastar@gmx.net</manufacturer>
 		<rom name="nnp-p1.rom" size="262144" crc="353f6b05"/>
@@ -5973,7 +6019,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kog" cloneof="kof97" romof="kof97">
-		<description>King of Gladiator (The King of Fighters '97 bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>King of Gladiator (The King of Fighters '97 bootleg)</description>
 		<year>1997</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="5232-p1.bin" size="2097152" crc="d2413ec6"/>
@@ -6031,7 +6078,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kogplus" cloneof="kof97" romof="kof97">
-		<description>King of Gladiator Plus (The King of Fighters '97 bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>King of Gladiator Plus (The King of Fighters '97 bootleg)</description>
 		<year>1997</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="5232-p1p.bin" size="2097152" crc="0338f453"/>
@@ -6309,7 +6357,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kotm2p" cloneof="kotm2" romof="kotm2">
-		<description>King of the Monsters 2 - The Next Thing (prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>King of the Monsters 2 - The Next Thing (prototype)</description>
 		<year>1992</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="proto_039-p1.p1" size="524288" crc="3c1d17e7"/>
@@ -6432,7 +6481,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lans2004" cloneof="shocktr2" romof="shocktr2">
-		<description>Lansquenet 2004 (Shock Troopers - 2nd Squad bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>Lansquenet 2004 (Shock Troopers - 2nd Squad bootleg)</description>
 		<year>1998</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="lnsq-p1.bin" size="2097152" crc="b40a879a"/>
@@ -6491,7 +6541,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lasthope" romof="neogeo">
-		<description>Last Hope (bootleg AES to MVS conversion, no coin support) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>Last Hope (bootleg AES to MVS conversion, no coin support)</description>
 		<year>2005</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="ngdt-300-p1.bin" size="1048576" crc="3776a88f"/>
@@ -6546,7 +6597,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lhcdb" romof="neogeo">
-		<description>Last Hope CD Beta (Neo CD conversion) [Hack, Imperfect graphics]</description>
+		<comment>Hack, Imperfect graphics</comment>
+		<description>Last Hope CD Beta (Neo CD conversion)</description>
 		<year>2007</year>
 		<manufacturer>NG:Dev.Team</manufacturer>
 		<rom name="300-p1ch.bin" size="1048576" crc="0f7405d7"/>
@@ -6601,7 +6653,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lresortp" cloneof="lresort" romof="lresort">
-		<description>Last Resort (prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Last Resort (prototype)</description>
 		<year>1992</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="024_p1_5937.podd" size="524288" crc="8e6008ee"/>
@@ -6823,7 +6876,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="magdrop3bh" cloneof="magdrop3" romof="magdrop3">
-		<description>Magical Drop III (Secret Character Hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Magical Drop III (Secret Character Hack)</description>
 		<year>1997</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="233-p1bh.p1" size="1048576" crc="80bfe2a9"/>
@@ -7153,7 +7207,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="matrimbl" cloneof="matrim" romof="matrim">
-		<description>Matrimelee / Shin Gouketsuji Ichizoku Toukon (bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>Matrimelee / Shin Gouketsuji Ichizoku Toukon (bootleg)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="266-p1.p1" merge="266-p1.p1" size="1048576" crc="5d4c2dc7"/>
@@ -7213,7 +7268,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="matrimbh" cloneof="matrim" romof="matrim">
-		<description>Matrimelee / Shin Gouketsuji Ichizoku Toukon (Enable Hidden Characters V2) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Matrimelee / Shin Gouketsuji Ichizoku Toukon (Enable Hidden Characters V2)</description>
 		<year>2002</year>
 		<manufacturer>Creamymami[EGCG]</manufacturer>
 		<rom name="266-p1bh.p1" size="1048576" crc="5f7b6942"/>
@@ -7329,7 +7385,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslugdg" cloneof="mslug" romof="mslug">
-		<description>Metal Slug (Multifunction Hack, 20180430) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Metal Slug (Multifunction Hack, 20180430)</description>
 		<year>2018</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="201-p1.bin" size="2097152" crc="0a739521"/>
@@ -7437,7 +7494,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug2fm" cloneof="mslug2" romof="mslug2">
-		<description>Metal Slug 2 - Super Vehicle-001/II (CZXINc FC2 Ver.2 20210415, hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Metal Slug 2 - Super Vehicle-001/II (CZXINc FC2 Ver.2 20210415, hack)</description>
 		<year>2021</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="241-p1fm.bin" size="1048576" crc="487173f6"/>
@@ -7492,7 +7550,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug2dg" cloneof="mslug2" romof="mslug2">
-		<description>Metal Slug 2 - Super Vehicle-001/II (Multifunction Hack, 20170509) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Metal Slug 2 - Super Vehicle-001/II (Multifunction Hack, 20170509)</description>
 		<year>2017</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="241-p1.bin" size="1048576" crc="00c455e7"/>
@@ -7602,7 +7661,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug2t" cloneof="mslug2" romof="mslug2">
-		<description>Metal Slug 2 Turbo (NGM-9410) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Metal Slug 2 Turbo (NGM-9410)</description>
 		<year>2015</year>
 		<manufacturer>Hack</manufacturer>
 		<rom name="941-p1.p1" size="1048576" crc="df5d6fbc"/>
@@ -7657,7 +7717,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug3g" cloneof="mslug3" romof="mslug3">
-		<description>Metal Slug 3 (Multifunction Hack, 20190119) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Metal Slug 3 (Multifunction Hack, 20190119)</description>
 		<year>2019</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="256-ph1.bin" size="1048576" crc="b23bd9b7"/>
@@ -7718,7 +7779,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug3v" cloneof="mslug3" romof="mslug3">
-		<description>Metal Slug 3 (NGH-2560) (Enhanced Violence Version, hack by EEZEZY) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Metal Slug 3 (NGH-2560) (Enhanced Violence Version, hack by EEZEZY)</description>
 		<year>2012</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="256-pg1.p1" size="1048576" crc="47f9aeea"/>
@@ -7960,7 +8022,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug4a" cloneof="mslug4" romof="mslug4">
-		<description>Metal Slug 4 (20th Anniversary) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Metal Slug 4 (20th Anniversary)</description>
 		<year>2017</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="263-p1.bin" size="1048576" crc="61cdef09"/>
@@ -8017,7 +8080,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug4lw" cloneof="mslug4" romof="mslug4">
-		<description>Metal Slug 4 (Last Bullet Remix Hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Metal Slug 4 (Last Bullet Remix Hack)</description>
 		<year>2017</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="263-p1lw.bin" size="1048576" crc="ad713169"/>
@@ -8076,7 +8140,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug4dg" cloneof="mslug4" romof="mslug4">
-		<description>Metal Slug 4 (Multifunction Hack, 20171225) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Metal Slug 4 (Multifunction Hack, 20171225)</description>
 		<year>2017</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="263-p1.bin" size="1048576" crc="36dfa877"/>
@@ -8247,7 +8312,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ms4plus" cloneof="mslug4" romof="mslug4">
-		<description>Metal Slug 4 Plus (bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>Metal Slug 4 Plus (bootleg)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="ms4-p1p.bin" size="1048576" crc="806a6e04"/>
@@ -8304,7 +8370,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug5b" cloneof="mslug5" romof="mslug5">
-		<description>Metal Slug 5 (bootleg, set 1) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>Metal Slug 5 (bootleg, set 1)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="ms5b-p1.bin" size="1048576" crc="1376f43c"/>
@@ -8365,7 +8432,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug5b2" cloneof="mslug5" romof="mslug5">
-		<description>Metal Slug 5 (bootleg, set 2) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>Metal Slug 5 (bootleg, set 2)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="ms5-p1b.bin" size="5242880" crc="d05853ea"/>
@@ -8422,7 +8490,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug5g" cloneof="mslug5" romof="mslug5">
-		<description>Metal Slug 5 (Multifunction Hack, 20170523) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Metal Slug 5 (Multifunction Hack, 20170523)</description>
 		<year>2017</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="268-p1d.bin" size="6291456" crc="3be747ab"/>
@@ -8482,7 +8551,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug5wd" cloneof="mslug5" romof="mslug5">
-		<description>Metal Slug 5 (New Campaign) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Metal Slug 5 (New Campaign)</description>
 		<year>2016</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="254-pw1.bin" size="1048576" crc="b0c126da"/>
@@ -8543,7 +8613,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug5w" cloneof="mslug5" romof="mslug5">
-		<description>Metal Slug 5 (New Campaign, 2016-03-10) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Metal Slug 5 (New Campaign, 2016-03-10)</description>
 		<year>2016</year>
 		<manufacturer>hack, C.B</manufacturer>
 		<rom name="268w.p1" size="1048576" crc="b0c126da"/>
@@ -8719,7 +8790,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ms5plus" cloneof="mslug5" romof="mslug5">
-		<description>Metal Slug 5 Plus (bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>Metal Slug 5 Plus (bootleg)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="ms5-p1p.bin" size="1048576" crc="106b276f"/>
@@ -8779,7 +8851,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug3b6" cloneof="mslug3" romof="mslug3">
-		<description>Metal Slug 6 (Metal Slug 3 bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>Metal Slug 6 (Metal Slug 3 bootleg)</description>
 		<year>2000</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="299-p1.bin" size="2097152" crc="5f2fe228"/>
@@ -8840,7 +8913,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslugxsrf" cloneof="mslugx" romof="mslugx">
-		<description>Metal Slug X - Super Vehicle-001 (AzStar Soda Remix FC2 Version, hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Metal Slug X - Super Vehicle-001 (AzStar Soda Remix FC2 Version, hack)</description>
 		<year>2020</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="250-p1srf.bin" size="1048576" crc="aed327fe"/>
@@ -9175,7 +9249,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="neo2500" romof="neogeo">
-		<description>Neo 2500 Demo [Demo]</description>
+		<comment>Demo</comment>
+		<description>Neo 2500 Demo</description>
 		<year>2004</year>
 		<manufacturer>blastar@gmx.net</manufacturer>
 		<rom name="2500-p1.bin" size="524288" crc="2321c0d8"/>
@@ -9226,7 +9301,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nblktiger" romof="neogeo">
-		<description>Neo Black Tiger Demo [Demo, Homebrew]</description>
+		<comment>Demo, Homebrew</comment>
+		<description>Neo Black Tiger Demo</description>
 		<year>2020</year>
 		<manufacturer>OzzyOuzo</manufacturer>
 		<rom name="nblktiegr-p1.bin" size="1048576" crc="18f34200"/>
@@ -9339,7 +9415,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="neocstlv" romof="neogeo">
-		<description>Neo CastleVania Demo [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Neo CastleVania Demo</description>
 		<year>2004</year>
 		<manufacturer>Barf/BarfHappy</manufacturer>
 		<rom name="cstlv_p1.rom" size="524288" crc="8d6cd9f2"/>
@@ -9493,7 +9570,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="neonopon" romof="neogeo">
-		<description>Neo No Panepon (beta) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Neo No Panepon (beta)</description>
 		<year>????</year>
 		<manufacturer>blastar@gmx.net</manufacturer>
 		<rom name="nnp-p1.rom" size="524288" crc="8a792271"/>
@@ -9544,7 +9622,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="neoponga" cloneof="neopong" romof="neopong">
-		<description>Neo Pong (ver 1.0) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Neo Pong (ver 1.0)</description>
 		<year>2002</year>
 		<manufacturer>Neo Dev Corporation</manufacturer>
 		<rom name="np10_p1.rom" size="131072" crc="31b724d7"/>
@@ -9595,7 +9674,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="neopong" romof="neogeo">
-		<description>Neo Pong (ver 1.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Neo Pong (ver 1.1)</description>
 		<year>2002</year>
 		<manufacturer>Neo Dev Corporation</manufacturer>
 		<rom name="pong_p1.rom" size="131072" crc="9f35e29d"/>
@@ -9646,7 +9726,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nsmb" romof="neogeo">
-		<description>Neo Super Mario Bros Demo 0.01! [Demo, Homebrew]</description>
+		<comment>Demo, Homebrew</comment>
+		<description>Neo Super Mario Bros Demo 0.01!</description>
 		<year>2020</year>
 		<manufacturer>OzzyOuzo</manufacturer>
 		<rom name="nsmb-p1.bin" size="1048576" crc="9e0fded1"/>
@@ -9705,7 +9786,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="syscheck" romof="neogeo">
-		<description>Neo System Check (ver 1.0b) [Demo]</description>
+		<comment>Demo</comment>
+		<description>Neo System Check (ver 1.0b)</description>
 		<year>????</year>
 		<manufacturer>blastar@gmx.net</manufacturer>
 		<rom name="sys-p1.rom" size="524288" crc="a4adbe1e"/>
@@ -9756,7 +9838,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="neothndr" romof="neogeo">
-		<description>Neo Thunder [Homebrew, sebastianmihai.com]</description>
+		<comment>Homebrew, sebastianmihai.com</comment>
+		<description>Neo Thunder</description>
 		<year>2012</year>
 		<manufacturer>Sebastian Mihai</manufacturer>
 		<rom name="thund_p1.rom" size="1048576" crc="f7050757"/>
@@ -9913,7 +9996,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="neotet" romof="neogeo">
-		<description>NeoGeo 2-Player Tetris [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>NeoGeo 2-Player Tetris</description>
 		<year>2013</year>
 		<manufacturer>Crim/Stephen</manufacturer>
 		<rom name="tet_p1.rom" size="524288" crc="3465569a"/>
@@ -9964,7 +10048,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="neo3ddmo" romof="neogeo">
-		<description>NeoGeo 3D! Demo [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>NeoGeo 3D! Demo</description>
 		<year>2012</year>
 		<manufacturer>Oxygene</manufacturer>
 		<rom name="neo3d_p1.rom" size="524288" crc="791f6042"/>
@@ -10015,7 +10100,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="neotris" romof="neogeo">
-		<description>NeoTRIS (Free Beta 2 Ver. 202009) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>NeoTRIS (Free Beta 2 Ver. 202009)</description>
 		<year>2020</year>
 		<manufacturer>Chipsonsteroids</manufacturer>
 		<rom name="neotris-p1.bin" size="524288" crc="4cd619cf"/>
@@ -10073,7 +10159,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ngem2k" romof="neogeo">
-		<description>NGEM2K (beta 2006-01-18) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>NGEM2K (beta 2006-01-18)</description>
 		<year>2006</year>
 		<manufacturer>homebrew</manufacturer>
 		<rom name="ngem-p1.bin" size="524288" crc="f2c42fe3"/>
@@ -10124,7 +10211,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ngftdemo" romof="neogeo">
-		<description>NGF Transparency Demo [Homebrew, redarmor.net]</description>
+		<comment>Homebrew, redarmor.net</comment>
+		<description>NGF Transparency Demo</description>
 		<year>2012</year>
 		<manufacturer>CeL</manufacturer>
 		<rom name="ngftd_p1.rom" size="524288" crc="84d87190"/>
@@ -10175,7 +10263,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nitdbl" cloneof="nitd" romof="nitd">
-		<description>Nightmare in the Dark (bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>Nightmare in the Dark (bootleg)</description>
 		<year>2001</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="nitd-p1.bin" size="524288" crc="1a05bd1b"/>
@@ -10449,7 +10538,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjamasha" cloneof="ninjamas" romof="ninjamas">
-		<description>Ninja Master's - haoh-ninpo-cho (Plus) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Ninja Master's - haoh-ninpo-cho (Plus)</description>
 		<year>1996</year>
 		<manufacturer>007325</manufacturer>
 		<rom name="217-p1ha.p1" size="1048576" crc="45332f39"/>
@@ -10887,7 +10977,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="poknight" romof="neogeo">
-		<description>Poker Night [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Poker Night</description>
 		<year>????</year>
 		<manufacturer>Jeff Kurtz</manufacturer>
 		<rom name="2003-p1.bin" size="524288" crc="750421ee"/>
@@ -11102,7 +11193,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="neoprimo" romof="neogeo">
-		<description>Primo Demo [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Primo Demo</description>
 		<year>2013</year>
 		<manufacturer>iocerom.com</manufacturer>
 		<rom name="pri_p1.rom" size="1048576" crc="a315fb81"/>
@@ -11153,7 +11245,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="proneon" romof="neogeo">
-		<description>Project Neon (Caravan Edition, prealpha 0.4.19) [Demo]</description>
+		<comment>Demo</comment>
+		<description>Project Neon (Caravan Edition, prealpha 0.4.19)</description>
 		<year>2019</year>
 		<manufacturer>FULLSET</manufacturer>
 		<rom name="neon-p1.bin" size="524288" crc="f45cac3a"/>
@@ -11263,7 +11356,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pbobblenb" cloneof="pbobblen" romof="pbobblen">
-		<description>Puzzle Bobble / Bust-A-Move (Neo-Geo) (bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>Puzzle Bobble / Bust-A-Move (Neo-Geo) (bootleg)</description>
 		<year>1994</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="u7" size="524288" crc="ac1e9ef3"/>
@@ -12439,7 +12533,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="rbff2bh" cloneof="rbff2" romof="rbff2">
-		<description>Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (Secret Character Hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (Secret Character Hack)</description>
 		<year>1998</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="240-p1fc.p1" size="1048576" crc="d01854fa"/>
@@ -12498,7 +12593,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="rbffspbh" cloneof="rbffspec" romof="rbffspec">
-		<description>Real Bout Fatal Fury Special / Real Bout Garou Densetsu Special (Boss Hack) [Hack, Select Geese Howard with portrait, press 'B+C' to select EX characters]</description>
+		<comment>Hack, Select Geese Howard with portrait, press 'B+C' to select EX characters</comment>
+		<description>Real Bout Fatal Fury Special / Real Bout Garou Densetsu Special (Boss Hack)</description>
 		<year>1996</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="223-p1bs.p1" size="1048576" crc="abf2a6e7"/>
@@ -12904,7 +13000,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="robocopi" romof="neogeo">
-		<description>Robocop (Intro demo) [Demo, You must use the Universe BIOS and set region to Japan AES]</description>
+		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
+		<description>Robocop (Intro demo)</description>
 		<year>2009</year>
 		<manufacturer>Sergi</manufacturer>
 		<rom name="robo-p1.bin" size="8388608" crc="adcb4fe0"/>
@@ -13193,7 +13290,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsho2sp" cloneof="samsho2" romof="samsho2">
-		<description>Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Special 2017, hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Special 2017, hack)</description>
 		<year>2017</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="063sp5.p1" size="1048576" crc="ed466b3d"/>
@@ -13436,7 +13534,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsho4sp" cloneof="samsho4" romof="samsho4">
-		<description>Samurai Shodown IV - Amakusa's Revenge / Samurai Spirits - Amakusa Kourin (Special 2017, hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Samurai Shodown IV - Amakusa's Revenge / Samurai Spirits - Amakusa Kourin (Special 2017, hack)</description>
 		<year>1996</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="222-p1sp.p1" size="1048576" crc="6e98579a"/>
@@ -13496,7 +13595,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsho5b" cloneof="samsho5" romof="samsho5">
-		<description>Samurai Shodown V / Samurai Spirits Zero (bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>Samurai Shodown V / Samurai Spirits Zero (bootleg)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="ssv-p2.bin" size="4194304" crc="5023067f"/>
@@ -13553,7 +13653,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsho5x" cloneof="samsho5" romof="samsho5">
-		<description>Samurai Shodown V / Samurai Spirits Zero (hack of XBOX version) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Samurai Shodown V / Samurai Spirits Zero (hack of XBOX version)</description>
 		<year>2003</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="ssvx_p1.rom" size="8388608" crc="16983af9"/>
@@ -13785,7 +13886,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsh5pf" cloneof="samsh5sp" romof="samsh5sp">
-		<description>Samurai Shodown V Perfect / Samurai Spirits Zero Perfect (bootleg, hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Samurai Shodown V Perfect / Samurai Spirits Zero Perfect (bootleg, hack)</description>
 		<year>2020</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="273-p1.bin" size="8388608" crc="e3d18d3a"/>
@@ -13959,7 +14061,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsh5fe" cloneof="samsh5sp" romof="samsh5sp">
-		<description>Samurai Shodown V Special / Samurai Spirits Zero Special (NGM-272) (NGH-272) (Final Edition, location test version) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Samurai Shodown V Special / Samurai Spirits Zero Special (NGM-272) (NGH-272) (Final Edition, location test version)</description>
 		<year>2004</year>
 		<manufacturer>Yuki Enterprise / SNK Playmore</manufacturer>
 		<rom name="272-p1.bin" size="4194304" crc="9e72cc83"/>
@@ -14198,7 +14301,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="savagereb" cloneof="savagere" romof="savagere">
-		<description>Savage Reign / Fu'un Mokushiroku - kakutou sousei (Boss Hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Savage Reign / Fu'un Mokushiroku - kakutou sousei (Boss Hack)</description>
 		<year>1995</year>
 		<manufacturer>Yumeji, Dodowang[EGCG]</manufacturer>
 		<rom name="059-p1b.p1" size="2097152" crc="3a7fbff0"/>
@@ -14480,7 +14584,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sengoku3s" cloneof="sengoku3" romof="sengoku3">
-		<description>Sengoku 3 / Sengoku Densho 2001 (Evolution 1.0, FCHT hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Sengoku 3 / Sengoku Densho 2001 (Evolution 1.0, FCHT hack)</description>
 		<year>2001</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="261-p1s.bin" size="2097152" crc="5a1b5e85"/>
@@ -14536,7 +14641,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sengoku3fs" cloneof="sengoku3" romof="sengoku3">
-		<description>Sengoku 3 / Sengoku Densho 2001 (Feng Shen Edition, Hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Sengoku 3 / Sengoku Densho 2001 (Feng Shen Edition, Hack)</description>
 		<year>2020-04-10</year>
 		<manufacturer>Hack</manufacturer>
 		<rom name="261-p1fs.bin" size="2097152" crc="76b2a57a"/>
@@ -14702,7 +14808,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="beast" romof="neogeo">
-		<description>Shadow of the Beast (Neo Geo demo) [Demo]</description>
+		<comment>Demo</comment>
+		<description>Shadow of the Beast (Neo Geo demo)</description>
 		<year>????</year>
 		<manufacturer>Jeff Kurtz</manufacturer>
 		<rom name="2002-p1.bin" size="524288" crc="1f9e62a4"/>
@@ -14929,7 +15036,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="svcboot" cloneof="svc" romof="svc">
-		<description>SNK vs. Capcom - SVC Chaos (bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>SNK vs. Capcom - SVC Chaos (bootleg)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="svc-p1.bin" size="8388608" crc="0348f162"/>
@@ -15047,7 +15155,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="svcplus" cloneof="svc" romof="svc">
-		<description>SNK vs. Capcom - SVC Chaos Plus (bootleg set 1) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>SNK vs. Capcom - SVC Chaos Plus (bootleg set 1)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="svc-p2p.bin" size="2097152" crc="50c0e2b7"/>
@@ -15109,7 +15218,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="svcplusa" cloneof="svc" romof="svc">
-		<description>SNK vs. Capcom - SVC Chaos Plus (bootleg set 2) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>SNK vs. Capcom - SVC Chaos Plus (bootleg set 2)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="svc-p2pl.bin" size="4194304" crc="7231ace2"/>
@@ -15170,7 +15280,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="svcsplus" cloneof="svc" romof="svc">
-		<description>SNK vs. Capcom - SVC Chaos Super Plus (bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>SNK vs. Capcom - SVC Chaos Super Plus (bootleg)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="svc-p1sp.bin" size="4194304" crc="2601902f"/>
@@ -15339,7 +15450,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="spidermi" romof="neogeo">
-		<description>Spiderman (Intro demo) [Demo, You must use the Universe BIOS and set region to Japan AES]</description>
+		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
+		<description>Spiderman (Intro demo)</description>
 		<year>2009</year>
 		<manufacturer>Sergi</manufacturer>
 		<rom name="sman-p1.bin" size="1048576" crc="66b5cfe8"/>
@@ -15674,7 +15786,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sdodgebh" cloneof="sdodgeb" romof="sdodgeb">
-		<description>Super Dodge Ball / Kunio no Nekketsu Toukyuu Densetsu (Secret Character Hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Super Dodge Ball / Kunio no Nekketsu Toukyuu Densetsu (Secret Character Hack)</description>
 		<year>1996</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="208-p1bh.p1" size="2097152" crc="e6e58566"/>
@@ -16047,7 +16160,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tmnti" romof="neogeo">
-		<description>Teenage Mutant Ninja Turtles (Intro demo) [Demo, You must use the Universe BIOS and set region to Japan AES]</description>
+		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
+		<description>Teenage Mutant Ninja Turtles (Intro demo)</description>
 		<year>2009</year>
 		<manufacturer>Sergi</manufacturer>
 		<rom name="tmnt-p1.bin" size="8388608" crc="2d5066ff"/>
@@ -16104,7 +16218,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tmntia" cloneof="tmnti" romof="tmnti">
-		<description>Teenage Mutant Ninja Turtles (Intro demo, alt) [Demo, You must use the Universe BIOS and set region to Japan AES]</description>
+		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
+		<description>Teenage Mutant Ninja Turtles (Intro demo, alt)</description>
 		<year>2009</year>
 		<manufacturer>Sergi</manufacturer>
 		<rom name="tmnt-p1a.bin" size="8388608" crc="ed4f5fec"/>
@@ -16161,7 +16276,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="teot" romof="neogeo">
-		<description>The Eye of Typhoon (Alpha Version) [Demo, Homebrew]</description>
+		<comment>Demo, Homebrew</comment>
+		<description>The Eye of Typhoon (Alpha Version)</description>
 		<year>2021</year>
 		<manufacturer>OzzyOuzo</manufacturer>
 		<rom name="teot-p1.bin" size="1048576" crc="9038ff78"/>
@@ -16231,7 +16347,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof94rz" cloneof="kof94" romof="kof94">
-		<description>The King of Fighters '94 (Hack Boss Remixed) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '94 (Hack Boss Remixed)</description>
 		<year>1994</year>
 		<manufacturer>ZKW</manufacturer>
 		<rom name="055-p1rz.p1" size="2097152" crc="38410fdf"/>
@@ -16349,7 +16466,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof95b" cloneof="kof95" romof="kof95">
-		<description>The King of Fighters '95 (Enable Hidden Characters V.[?]) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '95 (Enable Hidden Characters V.[?])</description>
 		<year>1995</year>
 		<manufacturer>Ydmis &amp; Creamymami[EGCG]</manufacturer>
 		<rom name="084-p1b.p1" size="2097152" crc="64d9aa39"/>
@@ -16588,7 +16706,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof95sp" cloneof="kof95" romof="kof95">
-		<description>The King of Fighters '95 (Special 2017, hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '95 (Special 2017, hack)</description>
 		<year>2017</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="084-p1sp.p1" size="1048576" crc="b3c26333"/>
@@ -16649,7 +16768,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof96ae" cloneof="kof96" romof="kof96">
-		<description>The King of Fighters '96 (Anniversary Edition, EGHT hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '96 (Anniversary Edition, EGHT hack)</description>
 		<year>2007</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="214ae-p1.bin" size="1048576" crc="47660e7c"/>
@@ -16713,7 +16833,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof96ep" cloneof="kof96" romof="kof96">
-		<description>The King of Fighters '96 (bootleg / hack) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>The King of Fighters '96 (bootleg / hack)</description>
 		<year>1996</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="214-p1.bin" size="1048576" crc="52755d74"/>
@@ -16774,7 +16895,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof96cn" cloneof="kof96" romof="kof96">
-		<description>The King of Fighters '96 (Chinese Edition ver 1.0, hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '96 (Chinese Edition ver 1.0, hack)</description>
 		<year>200?</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="214cn-p1.bin" size="1048576" crc="a8c25f0a"/>
@@ -17020,7 +17142,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof96ae20" cloneof="kof96" romof="kof96">
-		<description>The King of Fighters '96 (The Anniversary Edition 2.0, Build 2.3.0320) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '96 (The Anniversary Edition 2.0, Build 2.3.0320)</description>
 		<year>2019</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="214ae-p1.p1" size="1048576" crc="c718ea76"/>
@@ -17078,7 +17201,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97cn" cloneof="kof97" romof="kof97">
-		<description>The King of Fighters '97 (10th Anniversary Chinese Edition, EGHT hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '97 (10th Anniversary Chinese Edition, EGHT hack)</description>
 		<year>2007</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="232cn-p1.bin" size="1048576" crc="082933c8"/>
@@ -17136,7 +17260,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97ps" cloneof="kof97" romof="kof97">
-		<description>The King of Fighters '97 (Imitation Playstation final improved version 2016-10-29) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '97 (Imitation Playstation final improved version 2016-10-29)</description>
 		<year>1997</year>
 		<manufacturer>Eddids</manufacturer>
 		<rom name="232-p1ps.p1" size="1048576" crc="fc25feec"/>
@@ -17194,7 +17319,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97inv" cloneof="kof97" romof="kof97">
-		<description>The King of Fighters '97 (Invincible Plus) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '97 (Invincible Plus)</description>
 		<year>2019</year>
 		<manufacturer>Hack</manufacturer>
 		<rom name="232inv-p1.p1" size="1048576" crc="149e80cb"/>
@@ -17429,7 +17555,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97t2020" cloneof="kof97" romof="kof97">
-		<description>The King of Fighters '97 (Optimised Edition 2020) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '97 (Optimised Edition 2020)</description>
 		<year>2020</year>
 		<manufacturer>Hack</manufacturer>
 		<rom name="232t2020-p1.p1" size="1048576" crc="53d9851d"/>
@@ -17487,7 +17614,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97t" cloneof="kof97" romof="kof97">
-		<description>The King of Fighters '97 (Optimized Edition) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '97 (Optimized Edition)</description>
 		<year>2014</year>
 		<manufacturer>Hack</manufacturer>
 		<rom name="232t.p1" size="1048576" crc="45834e9b"/>
@@ -17545,7 +17673,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97pm" cloneof="kof97" romof="kof97">
-		<description>The King of Fighters '97 (Practice Mode) [Hack, need AES for practice mode]</description>
+		<comment>Hack, need AES for practice mode</comment>
+		<description>The King of Fighters '97 (Practice Mode)</description>
 		<year>1997</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="232pm-p1.p1" size="1048576" crc="34ccabae"/>
@@ -17603,7 +17732,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97ae" cloneof="kof97" romof="kof97">
-		<description>The King of Fighters '97 - Anniversary Edition (Build 2.1.0212) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '97 - Anniversary Edition (Build 2.1.0212)</description>
 		<year>2018</year>
 		<manufacturer>EGHT</manufacturer>
 		<rom name="232ae-p1.p1" size="1048576" crc="cecc4f64"/>
@@ -17664,7 +17794,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97aef" cloneof="kof97" romof="kof97">
-		<description>The King of Fighters '97 - Anniversary Edition (Fork Build 2.1.1811) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '97 - Anniversary Edition (Fork Build 2.1.1811)</description>
 		<year>2020-08-10</year>
 		<manufacturer>Hack</manufacturer>
 		<rom name="232aef-p1.p1" size="1048576" crc="e453b221"/>
@@ -17725,7 +17856,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97cbt" cloneof="kof97" romof="kof97">
-		<description>The King of Fighters '97 - Combo Training (Hack, Ver. 2018) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '97 - Combo Training (Hack, Ver. 2018)</description>
 		<year>2019</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="97cbt-p1.bin" size="1048576" crc="323e4263"/>
@@ -17783,7 +17915,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97xt" cloneof="kof97" romof="kof97">
-		<description>The King of Fighters '97 - Final Battle (hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '97 - Final Battle (hack)</description>
 		<year>2007</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="232xt-p1.bin" size="1048576" crc="2e4f4e3b"/>
@@ -17841,7 +17974,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97rc" cloneof="kof97" romof="kof97">
-		<description>The King of Fighters '97 - Random Combo (Hack, Ver. 2010) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '97 - Random Combo (Hack, Ver. 2010)</description>
 		<year>2019</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="232-rc.p1" size="1048576" crc="1d476235"/>
@@ -17899,7 +18033,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97oro" cloneof="kof97" romof="kof97">
-		<description>The King of Fighters '97 oroshi plus 2003 [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>The King of Fighters '97 oroshi plus 2003</description>
 		<year>1997</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="orochi-p1.bin" size="1048576" crc="6dcb2946"/>
@@ -17958,7 +18093,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97pls" cloneof="kof97" romof="kof97">
-		<description>The King of Fighters '97 Plus (bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>The King of Fighters '97 Plus (bootleg)</description>
 		<year>1997</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="kf97-p1p.bin" size="1048576" crc="c01fda46"/>
@@ -18016,7 +18152,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97pla" cloneof="kof97" romof="kof97">
-		<description>The King of Fighters '97 Plus 2003 (bootleg / hack) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>The King of Fighters '97 Plus 2003 (bootleg / hack)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="kf97-p1a.bin" size="1048576" crc="035911c5"/>
@@ -18074,7 +18211,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98ae2016" cloneof="kof98" romof="kof98">
-		<description>The King of Fighters '98 (Anniversary Edition build 1.2.0827) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '98 (Anniversary Edition build 1.2.0827)</description>
 		<year>2016</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="242ae-p1.p1" size="1048576" crc="d69ecaa9"/>
@@ -18140,7 +18278,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98ae" cloneof="kof98" romof="kof98">
-		<description>The King of Fighters '98 (Anniversary Edition, EGHT hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '98 (Anniversary Edition, EGHT hack)</description>
 		<year>2007</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="242-p1ae.bin" size="1048576" crc="23a80b3e"/>
@@ -18206,7 +18345,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98cps" cloneof="kof98" romof="kof98">
-		<description>The King of Fighters '98 (Combo Plus) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '98 (Combo Plus)</description>
 		<year>2020</year>
 		<manufacturer>Hack</manufacturer>
 		<rom name="kof98cps-p1.bin" size="1048576" crc="003d1128"/>
@@ -18274,7 +18414,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98cb" cloneof="kof98" romof="kof98">
-		<description>The King of Fighters '98 (Combo, hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '98 (Combo, hack)</description>
 		<year>2018</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="242cb-p1.p1" size="1048576" crc="2565e431"/>
@@ -18335,7 +18476,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98pfe" cloneof="kof98" romof="kof98">
-		<description>The King of Fighters '98 (Plus Final Edition 2017-07-23) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '98 (Plus Final Edition 2017-07-23)</description>
 		<year>2019-09-10</year>
 		<manufacturer>GSC2007</manufacturer>
 		<rom name="242pfe.p1" size="1048576" crc="23876d95"/>
@@ -18397,7 +18539,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98ratio" cloneof="kof98" romof="kof98">
-		<description>The King of Fighters '98 (Ratio hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '98 (Ratio hack)</description>
 		<year>2021</year>
 		<manufacturer>bankbank</manufacturer>
 		<rom name="242-ratio.p1" size="1048576" crc="9171669d"/>
@@ -18458,7 +18601,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98ult" cloneof="kof98" romof="kof98">
-		<description>The King of Fighters '98 (Ultimate Match) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '98 (Ultimate Match)</description>
 		<year>2020</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="242ult.p1" size="1048576" crc="9c450313"/>
@@ -18830,7 +18974,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98eck20" cloneof="kof98" romof="kof98">
-		<description>The King of Fighters '98 Easy Combo King (YZKOF Version, Hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '98 Easy Combo King (YZKOF Version, Hack)</description>
 		<year>2020-04-09</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="98eck20-p1.bin" size="1048576" crc="0ced4a93"/>
@@ -18891,7 +19036,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98eckvs" cloneof="kof98" romof="kof98">
-		<description>The King of Fighters '98 Easy Combo King 2014 (Versus Version, Hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '98 Easy Combo King 2014 (Versus Version, Hack)</description>
 		<year>2019-02-17</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="98eckvs-p1.bin" size="1048576" crc="b3afd80f"/>
@@ -18952,7 +19098,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98mix" cloneof="kof98" romof="kof98">
-		<description>The King of Fighters '98 Mix (2015-12-29) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '98 Mix (2015-12-29)</description>
 		<year>2015</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="242mix.p1" size="1048576" crc="8f3da74e"/>
@@ -19321,7 +19468,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof99p" cloneof="kof99" romof="kof99">
-		<description>The King of Fighters '99 - Millennium Battle (prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>The King of Fighters '99 - Millennium Battle (prototype)</description>
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="proto_251-p1.p1" size="1048576" crc="f37929c4"/>
@@ -19382,7 +19530,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof99ae" cloneof="kof99" romof="kof99">
-		<description>The King of Fighters '99 Anniversary Edition (hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '99 Anniversary Edition (hack)</description>
 		<year>2020-04-07</year>
 		<manufacturer>Yashional</manufacturer>
 		<rom name="kof99ae_p1.bin" size="1048576" crc="4c63e81c"/>
@@ -19448,7 +19597,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof99eur" cloneof="kof99" romof="kof99">
-		<description>The King of Fighters '99 Evolution Ultra Remix (Hack By Yashional) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '99 Evolution Ultra Remix (Hack By Yashional)</description>
 		<year>201?</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="kf99eur.p1" size="1048576" crc="66fa20fd"/>
@@ -19509,7 +19659,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof99rp2f" cloneof="kof99" romof="kof99">
-		<description>The King of Fighters '99 Remix Pro V2.0 Final (Hack By FCHT) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '99 Remix Pro V2.0 Final (Hack By FCHT)</description>
 		<year>2006</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="kf99rp2f-p1.rom" size="1048576" crc="1c5fd0ad"/>
@@ -19570,7 +19721,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof99sr" cloneof="kof99" romof="kof99">
-		<description>The King of Fighters '99 Summer Revolution (Hack By FCHT) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters '99 Summer Revolution (Hack By FCHT)</description>
 		<year>200?</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="kf99sr-p1.bin" size="1048576" crc="b96da0bf"/>
@@ -19631,7 +19783,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof10th" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 10th Anniversary (bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>The King of Fighters 10th Anniversary (bootleg)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="kf10-p1.bin" size="8388608" crc="b1fd0c43"/>
@@ -19696,7 +19849,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof10thd" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 10th Anniversary (The King of Fighters 2002 bootleg / Fully Decrypted) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters 10th Anniversary (The King of Fighters 2002 bootleg / Fully Decrypted)</description>
 		<year>200?</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="363d.p1" size="8388608" crc="30c82f4c"/>
@@ -19762,7 +19916,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k5uni" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 10th Anniversary 2005 Unique (bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>The King of Fighters 10th Anniversary 2005 Unique (bootleg)</description>
 		<year>2004</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="5006-p2a.bin" size="4194304" crc="ced883a2"/>
@@ -19829,7 +19984,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof10thuo" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 10th Anniversary 2019 (Optimized version 2019, hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters 10th Anniversary 2019 (Optimized version 2019, hack)</description>
 		<year>2020-11-11</year>
 		<manufacturer>Hack</manufacturer>
 		<rom name="kf10udo-p1.p1" size="8388608" crc="5c261d57"/>
@@ -19887,7 +20043,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf10thep" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 10th Anniversary Extra Plus (bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>The King of Fighters 10th Anniversary Extra Plus (bootleg)</description>
 		<year>2005</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="5008-p1.bin" size="2097152" crc="bf5469ba"/>
@@ -20076,7 +20233,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2000otc" cloneof="kof2000" romof="kof2000">
-		<description>The King of Fighters 2000 (OTC, hack) [Hack, ZERO only enabled in AES mode]</description>
+		<comment>Hack, ZERO only enabled in AES mode</comment>
+		<description>The King of Fighters 2000 (OTC, hack)</description>
 		<year>2020-06-15</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="kof2000otc-p1.bin" size="1048576" crc="11dbf4dc"/>
@@ -20137,7 +20295,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2000ps2" cloneof="kof2000" romof="kof2000">
-		<description>The King of Fighters 2000 (Playstation 2 ver. , EGHT hack) [Hack, hack only enable in AES mode]</description>
+		<comment>Hack, hack only enable in AES mode</comment>
+		<description>The King of Fighters 2000 (Playstation 2 ver. , EGHT hack)</description>
 		<year>2000</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="257ps2-p1.bin" size="1048576" crc="56941018"/>
@@ -20197,7 +20356,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2000sp" cloneof="kof2000" romof="kof2000">
-		<description>The King of Fighters 2000 - Special Edition (Final Version, Hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters 2000 - Special Edition (Final Version, Hack)</description>
 		<year>2021</year>
 		<manufacturer>Hack</manufacturer>
 		<rom name="257sp-pg1.p1" size="1048576" crc="dccee7c7"/>
@@ -20377,7 +20537,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k1pkz" cloneof="kof2001" romof="kof2001">
-		<description>The King of Fighters 2001 (PS2 Krizalid Edition) [Hack, hack only enable in AES mode]</description>
+		<comment>Hack, hack only enable in AES mode</comment>
+		<description>The King of Fighters 2001 (PS2 Krizalid Edition)</description>
 		<year>2019-12-12</year>
 		<manufacturer>Hack</manufacturer>
 		<rom name="kf2k1ps2-p1.bin" size="1048576" crc="c484272e"/>
@@ -20440,7 +20601,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k1pls" cloneof="kof2001" romof="kof2001">
-		<description>The King of Fighters 2001 Plus (set 1, bootleg / hack) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>The King of Fighters 2001 Plus (set 1, bootleg / hack)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="2k1-p1p.bin" size="1048576" crc="758529a7"/>
@@ -20501,7 +20663,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k1pa" cloneof="kof2001" romof="kof2001">
-		<description>The King of Fighters 2001 Plus (set 2, bootleg / hack) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>The King of Fighters 2001 Plus (set 2, bootleg / hack)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="2k1-p1a.bin" size="1048576" crc="f8a71b6f"/>
@@ -20562,7 +20725,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2002b" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 2002 (bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>The King of Fighters 2002 (bootleg)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="265-p1.p1" merge="265-p1.p1" size="1048576" crc="9ede7323"/>
@@ -20679,7 +20843,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2k2omg" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 2002 (Omega v.0?) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters 2002 (Omega v.0?)</description>
 		<year>2002</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="265omg.p1" size="3921089" crc="62174834"/>
@@ -20740,7 +20905,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2k2omg8" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 2002 (Omega v0.8) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters 2002 (Omega v0.8)</description>
 		<year>2010</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="265omg8.p1" size="1048576" crc="53086581"/>
@@ -20799,7 +20965,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2k2omg9b" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 2002 (Omega v0.9 beta) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters 2002 (Omega v0.9 beta)</description>
 		<year>2011</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="265-p1.p1" merge="265-p1.p1" size="1048576" crc="9ede7323"/>
@@ -20860,7 +21027,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2k2omg9" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 2002 (Omega v0.9) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters 2002 (Omega v0.9)</description>
 		<year>2012</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="265-p1.p1" merge="265-p1.p1" size="1048576" crc="9ede7323"/>
@@ -20921,7 +21089,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k2ps2re1" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 2002 (PlayStation 2 v1.0 Public Beta) [Hack, hack only enable in AES mode, imperfect sound]</description>
+		<comment>Hack, hack only enable in AES mode, imperfect sound</comment>
+		<description>The King of Fighters 2002 (PlayStation 2 v1.0 Public Beta)</description>
 		<year>2018-12-17</year>
 		<manufacturer>Hack</manufacturer>
 		<rom name="K2k2ps2re-p1.p1" size="1048576" crc="77a0044c"/>
@@ -20993,7 +21162,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k2ps2" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 2002 (PlayStation 2 ver 0.4, EGHT hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters 2002 (PlayStation 2 ver 0.4, EGHT hack)</description>
 		<year>2007</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="265ps2-p1.bin" size="1048576" crc="336c4ca8"/>
@@ -21054,7 +21224,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k2ps2b" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 2002 (PlayStation 2, Hack) [Hack, hack only enabled in AES mode]</description>
+		<comment>Hack, hack only enabled in AES mode</comment>
+		<description>The King of Fighters 2002 (PlayStation 2, Hack)</description>
 		<year>2018</year>
 		<manufacturer>Hack</manufacturer>
 		<rom name="265-p1ps2.p1" size="1048576" crc="9da95b36"/>
@@ -21117,7 +21288,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2k2plus" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 2002 (Plus 2017, Hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters 2002 (Plus 2017, Hack)</description>
 		<year>2020-10-22</year>
 		<manufacturer>Hack</manufacturer>
 		<rom name="265-p1pls.p1" size="1048576" crc="059da6f9"/>
@@ -21177,7 +21349,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k23rd" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 2002 - 3rd Strike of Orochi (Hack by EGCG/EGHT) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters 2002 - 3rd Strike of Orochi (Hack by EGCG/EGHT)</description>
 		<year>2020-06-14</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="kf2k23rd-p1.rom" size="1048576" crc="de02918d"/>
@@ -21238,7 +21411,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k2mp" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 2002 Magic Plus (bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>The King of Fighters 2002 Magic Plus (bootleg)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="kf02m-p1.bin" size="4194304" crc="ff7c6ec0"/>
@@ -21297,7 +21471,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k2mp2" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 2002 Magic Plus II (bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>The King of Fighters 2002 Magic Plus II (bootleg)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="k2k2m2p1.bin" size="2097152" crc="1016806c"/>
@@ -21356,7 +21531,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k2pls" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 2002 Plus (bootleg set 1) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>The King of Fighters 2002 Plus (bootleg set 1)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="2k2-p1p.bin" size="1048576" crc="3ab03781"/>
@@ -21415,7 +21591,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k2pla" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 2002 Plus (bootleg set 2) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>The King of Fighters 2002 Plus (bootleg set 2)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="2k2-p1pa.bin" size="1048576" crc="6a3a02f3"/>
@@ -21474,7 +21651,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k2plb" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 2002 Plus (bootleg set 3) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>The King of Fighters 2002 Plus (bootleg set 3)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="2k2-p1p.bin" size="1048576" crc="3ab03781"/>
@@ -21533,7 +21711,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k2ru35" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 2002 Remix Ultra 3.5 (Hack By FCHT) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The King of Fighters 2002 Remix Ultra 3.5 (Hack By FCHT)</description>
 		<year>2006</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="kf2k2ru35-p1.bin" size="1048576" crc="8da72d5c"/>
@@ -21592,7 +21771,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k2plc" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 2002 Super (bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>The King of Fighters 2002 Super (bootleg)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="2k2-p1pc.bin" size="1048576" crc="ebedae17"/>
@@ -21651,7 +21831,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k3bl" cloneof="kof2003" romof="kof2003">
-		<description>The King of Fighters 2003 (bootleg set 1) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>The King of Fighters 2003 (bootleg set 1)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="2k3-p1.bin" size="4194304" crc="92ed6ee3"/>
@@ -21710,7 +21891,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k3bla" cloneof="kof2003" romof="kof2003">
-		<description>The King of Fighters 2003 (bootleg set 2) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>The King of Fighters 2003 (bootleg set 2)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="2k3-p1bl.bin" size="1048576" crc="4ea414dd"/>
@@ -21888,7 +22070,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k3ps2" cloneof="kof2003" romof="kof2003">
-		<description>The King of Fighters 2003 PlayStation 2 (Hack By EGCG) [Hack, Use AES (Console) mode!]</description>
+		<comment>Hack, Use AES (Console) mode!</comment>
+		<description>The King of Fighters 2003 PlayStation 2 (Hack By EGCG)</description>
 		<year>2006</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="kf2k3ps2-p1.bin" size="8388608" crc="8e66056d"/>
@@ -21946,7 +22129,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k3pl" cloneof="kof2003" romof="kof2003">
-		<description>The King of Fighters 2004 Plus / Hero (bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>The King of Fighters 2004 Plus / Hero (bootleg)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="2k3-p1pl.bin" size="1048576" crc="07b84112"/>
@@ -22006,7 +22190,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k3upl" cloneof="kof2003" romof="kof2003">
-		<description>The King of Fighters 2004 Ultra Plus (bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>The King of Fighters 2004 Ultra Plus (bootleg)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="2k3-p1up.bin" size="8388608" crc="87294c01"/>
@@ -22064,7 +22249,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2k4se" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters Special Edition 2004 (bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>The King of Fighters Special Edition 2004 (bootleg)</description>
 		<year>2004</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="k2k4s-p1.bin" size="4194304" crc="e6c50566"/>
@@ -22124,7 +22310,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k4pls" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters Special Edition 2004 Plus (bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>The King of Fighters Special Edition 2004 Plus (bootleg)</description>
 		<year>2004</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="k2k4s-p1p.bin" size="2097152" crc="ed97c684"/>
@@ -22362,7 +22549,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lastbladsp" cloneof="lastblad" romof="lastblad">
-		<description>The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Special 2017, hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Special 2017, hack)</description>
 		<year>2017</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="234sp2.p1" size="1048576" crc="f8adc621"/>
@@ -22422,7 +22610,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lb2b" cloneof="lastbld2" romof="lastbld2">
-		<description>The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (Enable Hidden Characters V4) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (Enable Hidden Characters V4)</description>
 		<year>1998</year>
 		<manufacturer>Dodowang[EGCG]</manufacturer>
 		<rom name="243-pg1b.p1" size="1048576" crc="6e512568"/>
@@ -22481,7 +22670,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lastbld2eh" cloneof="lastbld2" romof="lastbld2">
-		<description>The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (Enhanced Hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (Enhanced Hack)</description>
 		<year>1998</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="243-p1eh.p1" size="1048576" crc="6c8867d2"/>
@@ -22599,7 +22789,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lastbld2te" cloneof="lastbld2" romof="lastbld2">
-		<description>The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (Team Edition Hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (Team Edition Hack)</description>
 		<year>1998</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="243te-pg1.p1" size="1048576" crc="8f9a24bf"/>
@@ -22885,7 +23076,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="timesupd" romof="neogeo">
-		<description>Time's Up Demo [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Time's Up Demo</description>
 		<year>2012</year>
 		<manufacturer>NGF Dev. Inc.</manufacturer>
 		<rom name="tup_p1.rom" size="2097152" crc="be86adb1"/>
@@ -23478,7 +23670,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="viewpoinp" cloneof="viewpoin" romof="viewpoin">
-		<description>Viewpoint (prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Viewpoint (prototype)</description>
 		<year>1992</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="p1" size="524288" crc="0adb5eee"/>
@@ -23650,7 +23843,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wakuwak7bh" cloneof="wakuwak7" romof="wakuwak7">
-		<description>Waku Waku 7 (Boss Hack) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Waku Waku 7 (Boss Hack)</description>
 		<year>1996</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="225-p1bh.p1" size="1048576" crc="0b7a3776"/>
@@ -24268,7 +24462,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="neoww2" romof="neogeo">
-		<description>WW2 Demo - Arcade Development Project [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>WW2 Demo - Arcade Development Project</description>
 		<year>2012</year>
 		<manufacturer>Charles DOTY/RasterSoft (USA)</manufacturer>
 		<rom name="ww2_p1.rom" size="524288" crc="d53762ff"/>
@@ -24426,7 +24621,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zintrckb" romof="neogeo">
-		<description>Zintrick / Oshidashi Zentrix (hack / bootleg) [Bootleg]</description>
+		<comment>Bootleg</comment>
+		<description>Zintrick / Oshidashi Zentrix (hack / bootleg)</description>
 		<year>1996</year>
 		<manufacturer>hack / bootleg</manufacturer>
 		<rom name="zin-p1.bin" size="1048576" crc="06c8fca7"/>
@@ -24477,7 +24673,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zintrkcd" cloneof="zintrckb" romof="zintrckb">
-		<description>Zintrick / Oshidashi Zentrix (Neo CD conversion) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Zintrick / Oshidashi Zentrix (Neo CD conversion)</description>
 		<year>1996</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="211-p1.bin" size="1048576" crc="9a0bfe0a"/>
@@ -24578,7 +24775,8 @@
 		<driver status="good"/>
 	</game>
 	<game isbios="yes" name="neogeo">
-		<description>Neo Geo [BIOS only]</description>
+		<comment>BIOS only</comment>
+		<description>Neo Geo</description>
 		<year>1990</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="sp-s3.sp1" size="131072" crc="91b64be3"/>

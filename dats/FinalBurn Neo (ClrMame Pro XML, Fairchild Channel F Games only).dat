@@ -68,7 +68,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="multicrt" romof="channelf">
-		<description>Channel F Multi-Cart (Final) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Channel F Multi-Cart (Final)</description>
 		<year>2004</year>
 		<manufacturer>homebrew</manufacturer>
 		<rom name="multigame rom.bin" size="262144" crc="a1ecbd58"/>
@@ -79,7 +80,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="multicrto" cloneof="multicrt" romof="multicrt">
-		<description>Channel F Multi-Cart (Older) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Channel F Multi-Cart (Older)</description>
 		<year>2004</year>
 		<manufacturer>homebrew</manufacturer>
 		<rom name="multigame older.bin" size="262144" crc="ad4ebe3f"/>
@@ -222,7 +224,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="builtin" romof="channelf">
-		<description>Hockey + Tennis [Channel F built-in games]</description>
+		<comment>Channel F built-in games</comment>
+		<description>Hockey + Tennis</description>
 		<year>1976</year>
 		<manufacturer>Fairchild</manufacturer>
 		<rom name="Hockey + Tennis (1976)(Fairchild).bin" size="2048" crc="abdd6d62"/>
@@ -233,7 +236,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lightsout" romof="channelf">
-		<description>Lights Out (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Lights Out (HB)</description>
 		<year>2004</year>
 		<manufacturer>Sean Riddle</manufacturer>
 		<rom name="Lights Out (2004)(Riddle, Sean).bin" size="2048" crc="666c0b4a"/>
@@ -332,7 +336,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pacman" romof="channelf">
-		<description>Pac-Man (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Pac-Man (HB)</description>
 		<year>2004</year>
 		<manufacturer>Blackbird - e5frog</manufacturer>
 		<rom name="Pac-Man (2004)(Blackbird - e5frog).bin" size="4096" crc="172f5770"/>
@@ -343,7 +348,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pacmanv2" cloneof="pacman" romof="pacman">
-		<description>Pac-Man (HB, v2) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Pac-Man (HB, v2)</description>
 		<year>2004</year>
 		<manufacturer>Blackbird - e5frog</manufacturer>
 		<rom name="Pac-Man v2 (2004)(Blackbird - e5frog).bin" size="8192" crc="a22dbf73"/>
@@ -486,7 +492,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tetris" romof="channelf">
-		<description>Tetris (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Tetris (HB)</description>
 		<year>2004</year>
 		<manufacturer>Peter Trauner</manufacturer>
 		<rom name="Tetris (2004)(Trauner, Peter).bin" size="3583" crc="2b900e96"/>
@@ -541,7 +548,8 @@
 		<driver status="good"/>
 	</game>
 	<game isbios="yes" name="channelf">
-		<description>Fairchild Channel F (Bios) [BIOS only]</description>
+		<comment>BIOS only</comment>
+		<description>Fairchild Channel F (Bios)</description>
 		<year>1976</year>
 		<manufacturer>Fairchild</manufacturer>
 		<rom name="sl31254.rom" size="1024" crc="9c047ba3"/>

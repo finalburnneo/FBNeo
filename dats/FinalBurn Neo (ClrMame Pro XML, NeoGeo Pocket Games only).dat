@@ -313,7 +313,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gearsoffate" romof="ngp">
-		<description>Gears of Fate (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Gears of Fate (HB)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="Gears of Fate (2009)(Thor).ngp" size="1917732" crc="3c75807e"/>
@@ -1293,7 +1294,8 @@
 		<driver status="good"/>
 	</game>
 	<game isbios="yes" name="ngp">
-		<description>NeoGeo Pocket (Bios) [BIOS only]</description>
+		<comment>BIOS only</comment>
+		<description>NeoGeo Pocket (Bios)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="SNK Neo-Geo Pocket BIOS (1998)(SNK)(en-ja).bin" size="65536" crc="6232df8d"/>

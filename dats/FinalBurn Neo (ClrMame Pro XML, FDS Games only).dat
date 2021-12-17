@@ -1471,7 +1471,8 @@
 		<driver status="good"/>
 	</game>
 	<game isbios="yes" name="fdsbios">
-		<description>FDS System BIOS [BIOS only]</description>
+		<comment>BIOS only</comment>
+		<description>FDS System BIOS</description>
 		<year>198x</year>
 		<manufacturer>NES</manufacturer>
 		<rom name="fdsbios.nes" size="8192" crc="5e607dcf"/>

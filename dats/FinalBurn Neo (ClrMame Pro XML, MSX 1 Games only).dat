@@ -101,7 +101,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="50metres" romof="msx">
-		<description>50 Metres (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>50 Metres (HB)</description>
 		<year>2018</year>
 		<manufacturer>Cobinee</manufacturer>
 		<rom name="runner.rom" size="753664" crc="ea7efb90"/>
@@ -112,7 +113,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="m36e" cloneof="m36" romof="m36">
-		<description>A Life Planet - M36 - Mother Brain has been aliving (English) [English translation + new font]</description>
+		<comment>English translation + new font</comment>
+		<description>A Life Planet - M36 - Mother Brain has been aliving (English)</description>
 		<year>1987-2017</year>
 		<manufacturer>Pixel - Hubz</manufacturer>
 		<rom name="A Life M36 Planet engT (1987)(Pixel).rom" size="131072" crc="015da0a4"/>
@@ -156,7 +158,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="a1spirit" cloneof="f1spirit" romof="f1spirit">
-		<description>A1 Spirit - The Way to Formula-1 (Jpn) [Set BIOS to Japanese mode.]</description>
+		<comment>Set BIOS to Japanese mode.</comment>
+		<description>A1 Spirit - The Way to Formula-1 (Jpn)</description>
 		<year>1987</year>
 		<manufacturer>Panasoft</manufacturer>
 		<rom name="a1 spirit - the way to formula-1 (japan).rom" size="131072" crc="2608c959"/>
@@ -189,7 +192,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="acegun" romof="msx">
-		<description>Ace Gun (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Ace Gun (HB)</description>
 		<year>2020</year>
 		<manufacturer>Cobinee</manufacturer>
 		<rom name="ace gun (2020)(cobinee).rom" size="32768" crc="d9bbb093"/>
@@ -255,7 +259,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="aerial" romof="msx">
-		<description>Aerial (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Aerial (HB)</description>
 		<year>2021</year>
 		<manufacturer>Inufuto</manufacturer>
 		<rom name="Aerial (2021)(Inufuto).cas" size="10492" crc="3b8f765c"/>
@@ -289,7 +294,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="afterthewar2" cloneof="afterthewar1" romof="afterthewar1">
-		<description>After the War - Part 2 (Spanish) [Password: 11423]</description>
+		<comment>Password: 11423</comment>
+		<description>After the War - Part 2 (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="After the War ES (1989)(Dinamic Software)(Side B)[RUN'CAS-'].cas" size="48111" crc="2e254e97"/>
@@ -300,7 +306,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="afteroids" romof="msx">
-		<description>Afteroids (Spanish) [Press S to skip intro screen]</description>
+		<comment>Press S to skip intro screen</comment>
+		<description>Afteroids (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="Afteroids (1988)(Zigurat Software)(ES).rom" size="131072" crc="8a599dad"/>
@@ -399,7 +406,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="alien8h" cloneof="alien8" romof="alien8">
-		<description>Alien 8 (Jpn, Hacked?) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Alien 8 (Jpn, Hacked?)</description>
 		<year>1987</year>
 		<manufacturer>A.C.G.</manufacturer>
 		<rom name="alien 8 (japan) (alt 1).rom" size="32768" crc="3b4ed316"/>
@@ -410,7 +418,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="alienattack" cloneof="alienattackv35" romof="alienattackv35">
-		<description>Alien Attack (HB, v1.06) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Alien Attack (HB, v1.06)</description>
 		<year>2020</year>
 		<manufacturer>Marcos Daniel</manufacturer>
 		<rom name="Alien Attack v1.06 (2021)(Marcos Daniel).rom" size="262144" crc="fdf8501c"/>
@@ -421,7 +430,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="alienattackv35" romof="msx">
-		<description>Alien Attack (HB, v3.5) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Alien Attack (HB, v3.5)</description>
 		<year>2021</year>
 		<manufacturer>Marcos Daniel</manufacturer>
 		<rom name="Alien Attack v3.5 (2021)(Marcos Daniel).rom" size="262144" crc="fbd3f05b"/>
@@ -443,7 +453,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="alienseu" romof="msx">
-		<description>Aliens (Euro) [Press Enter to move through the doors]</description>
+		<comment>Press Enter to move through the doors</comment>
+		<description>Aliens (Euro)</description>
 		<year>1987</year>
 		<manufacturer>Mr. Micro - Electric Dreams</manufacturer>
 		<rom name="Aliens (1987)(Electric Dreams)[BLOAD'CAS-',R].cas" size="54825" crc="0f28dc37"/>
@@ -542,7 +553,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="alterego" romof="msx">
-		<description>Alter Ego (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Alter Ego (HB)</description>
 		<year>2011</year>
 		<manufacturer>The New Image</manufacturer>
 		<rom name="alterego.rom" size="49152" crc="41b51564"/>
@@ -553,7 +565,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="alteredbeast" romof="msx">
-		<description>Altered Beast (Euro) [Set 'B' Cursor to use controller]</description>
+		<comment>Set 'B' Cursor to use controller</comment>
+		<description>Altered Beast (Euro)</description>
 		<year>1988</year>
 		<manufacturer>Activision / Amusement Factory</manufacturer>
 		<rom name="alteredbeast.rom" size="262144" crc="bb5cd0f1"/>
@@ -608,7 +621,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="amurisus" romof="msx">
-		<description>Amurisus (HB, Tech-demo) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Amurisus (HB, Tech-demo)</description>
 		<year>2013</year>
 		<manufacturer>Lieves!Tuore</manufacturer>
 		<rom name="amurisus.rom" size="65536" crc="acf0cab8"/>
@@ -619,7 +633,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="anchors" romof="msx">
-		<description>Anchors Aweigh (HB, v1.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Anchors Aweigh (HB, v1.1)</description>
 		<year>2020</year>
 		<manufacturer>Manuel Martinez</manufacturer>
 		<rom name="anchors aweigh v1.1 (2020)(manuel martinez).rom" size="172032" crc="88aa7b0f"/>
@@ -663,7 +678,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="animland" romof="msx">
-		<description>Animal Land Satsujin Jiken (Jpn) [Japanese-language only]</description>
+		<comment>Japanese-language only</comment>
+		<description>Animal Land Satsujin Jiken (Jpn)</description>
 		<year>1987</year>
 		<manufacturer>Enix</manufacturer>
 		<rom name="Animal Land (1987)(Enix).rom" size="131072" crc="aee2363d"/>
@@ -773,7 +789,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="arcomage" romof="msx">
-		<description>Arcomage (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Arcomage (HB)</description>
 		<year>2015</year>
 		<manufacturer>bitVISION</manufacturer>
 		<rom name="Arcomage (2015)(Bitvision).rom" size="65536" crc="a72794ba"/>
@@ -850,7 +867,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="armymoves2" cloneof="armymoves1" romof="armymoves1">
-		<description>Army Moves - Part 2 (Euro) [Password: 37215]</description>
+		<comment>Password: 37215</comment>
+		<description>Army Moves - Part 2 (Euro)</description>
 		<year>1987</year>
 		<manufacturer>Imagine &amp; Dinamic Software</manufacturer>
 		<rom name="Army Moves - Part 2 (1987)(Imagine Software)[RUN'CAS-'].cas" size="49698" crc="8e5fd272"/>
@@ -861,7 +879,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="arnodash" romof="msx">
-		<description>Arno Dash (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Arno Dash (HB)</description>
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Arno Dash (2021)(Under4Mhz).rom" size="32768" crc="c29d7e34"/>
@@ -883,7 +902,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="arya" romof="msx">
-		<description>Arya (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Arya (HB)</description>
 		<year>2021</year>
 		<manufacturer>Andre Baptista</manufacturer>
 		<rom name="Arya (2021)(Andre Baptista).rom" size="16384" crc="8e7ffe18"/>
@@ -916,7 +936,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="amc" romof="msx">
-		<description>Astro Marine Corps (Spanish) [Press 'M' for Grenades]</description>
+		<comment>Press 'M' for Grenades</comment>
+		<description>Astro Marine Corps (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="astro marine corps (1989)(dinamic software)(es).rom" size="131072" crc="60f99d30"/>
@@ -971,7 +992,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="athlandp" cloneof="athland" romof="athland">
-		<description>Athletic Land (Jpn, Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Athletic Land (Jpn, Prototype)</description>
 		<year>1984</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="athletic land (japan) (beta).rom" size="16384" crc="e4a428b5"/>
@@ -982,7 +1004,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="atsarias" romof="msx">
-		<description>Atsarias (HB, Tech-demo) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Atsarias (HB, Tech-demo)</description>
 		<year>2013</year>
 		<manufacturer>Lieves!Tuore</manufacturer>
 		<rom name="atsarias.rom" size="65536" crc="e7e245de"/>
@@ -1059,7 +1082,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="a8bitjam" romof="msx">
-		<description>Azzurro 8bit Jam (HB, v1.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Azzurro 8bit Jam (HB, v1.1)</description>
 		<year>2011</year>
 		<manufacturer>RELEVO</manufacturer>
 		<rom name="Azzurro 8bit Jam v1.1 (2011)(Relevo).rom" size="32768" crc="5b58c730"/>
@@ -1169,7 +1193,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gantan" romof="msx">
-		<description>Back to the Gantan - Year of the Rat (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Back to the Gantan - Year of the Rat (HB)</description>
 		<year>2020</year>
 		<manufacturer>Nao</manufacturer>
 		<rom name="Back to the Gantan (2020)(Nao).rom" size="524288" crc="171d176b"/>
@@ -1180,7 +1205,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bagman" romof="msx">
-		<description>Bag Man (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Bag Man (HB)</description>
 		<year>2007</year>
 		<manufacturer>AG Software</manufacturer>
 		<rom name="Bag Man (2007)(AG Software).rom" size="16384" crc="c3a33d26"/>
@@ -1191,7 +1217,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bakerman" romof="msx">
-		<description>Bakerman (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Bakerman (HB)</description>
 		<year>2008</year>
 		<manufacturer>AG Software</manufacturer>
 		<rom name="Bakerman (2008)(AG Software).rom" size="16384" crc="8528b797"/>
@@ -1235,7 +1262,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ballblzr" romof="msx">
-		<description>Ballblazer (Jpn) [P1 keys: Q-A-Z-X  P2 keys: P-L-N-M]</description>
+		<comment>P1 keys: Q-A-Z-X  P2 keys: P-L-N-M</comment>
+		<description>Ballblazer (Jpn)</description>
 		<year>1988</year>
 		<manufacturer>Lucasfilm Games - Pony Canyon</manufacturer>
 		<rom name="Ballblazer (1988)(Pony Canyon)(JP).rom" size="131072" crc="bd307546"/>
@@ -1456,7 +1484,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="battlot" romof="msx">
-		<description>Battlot (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Battlot (HB)</description>
 		<year>2021</year>
 		<manufacturer>Inufuto</manufacturer>
 		<rom name="Battlot (2021)(Inufuto).rom" size="9662" crc="4f14d982"/>
@@ -1555,7 +1584,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bee" romof="msx">
-		<description>Bee (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Bee (HB)</description>
 		<year>2016</year>
 		<manufacturer>N.I</manufacturer>
 		<rom name="Bee (2016)(N.I).rom" size="32768" crc="226f2e46"/>
@@ -1566,7 +1596,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="beez" romof="msx">
-		<description>BeeZ (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>BeeZ (HB)</description>
 		<year>2006</year>
 		<manufacturer>Darkstone</manufacturer>
 		<rom name="BeeZ (2006)(Darkstone).rom" size="32768" crc="c51814db"/>
@@ -1588,7 +1619,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="betiled" romof="msx">
-		<description>Betiled! (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Betiled! (HB)</description>
 		<year>2007</year>
 		<manufacturer>CEZ GS</manufacturer>
 		<rom name="BeTiled!.rom" size="49152" crc="4f89a784"/>
@@ -1610,7 +1642,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="birdchairs" romof="msx">
-		<description>Bird &amp; Chairs (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Bird &amp; Chairs (HB)</description>
 		<year>2017</year>
 		<manufacturer>N.I</manufacturer>
 		<rom name="bird-ch.rom" size="32768" crc="0236deea"/>
@@ -1621,7 +1654,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bitlogic" romof="msx">
-		<description>BitLogic a Cyberpunk Arcade Adventure (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>BitLogic a Cyberpunk Arcade Adventure (HB)</description>
 		<year>2015</year>
 		<manufacturer>OxiAB Studio</manufacturer>
 		<rom name="BITLOGIC_v_100.ROM" size="49152" crc="fbcd1942"/>
@@ -1643,7 +1677,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="blaggerenh" romof="msx">
-		<description>Blagger Enhanced (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Blagger Enhanced (HB)</description>
 		<year>2013</year>
 		<manufacturer>MicroCabin / JLTURSAN</manufacturer>
 		<rom name="blaggere.rom" size="16384" crc="bdbdf44a"/>
@@ -1687,7 +1722,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="blpuzzle" romof="msx">
-		<description>Block Puzzle (HB, v1.2) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Block Puzzle (HB, v1.2)</description>
 		<year>2020</year>
 		<manufacturer>David Heremans</manufacturer>
 		<rom name="blockpuzzle v1.2 (2020)(david heremans).rom" size="32768" crc="0798e2b0"/>
@@ -1709,7 +1745,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bbuster" romof="msx">
-		<description>Blockbuster (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Blockbuster (HB)</description>
 		<year>2021</year>
 		<manufacturer>Robosoft</manufacturer>
 		<rom name="Blockbuster (2021)(Robosoft).rom" size="32768" crc="a7a2aeae"/>
@@ -1819,7 +1856,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bold" romof="msx">
-		<description>Bold (HB, Tech-demo) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Bold (HB, Tech-demo)</description>
 		<year>2009</year>
 		<manufacturer>dvik &amp; joyrex</manufacturer>
 		<rom name="bold.rom" size="131072" crc="00d02aa4"/>
@@ -1830,7 +1868,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bombbattle" romof="msx">
-		<description>Bomber Battle (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Bomber Battle (HB)</description>
 		<year>2021</year>
 		<manufacturer>Amaury Carvalho</manufacturer>
 		<rom name="Bomber Battle (2021)(Amaury Carvalho).rom" size="49152" crc="65ef2546"/>
@@ -1984,7 +2023,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="borfese" cloneof="borfes" romof="borfes">
-		<description>Borfes and the Five Demons (English) [English translation by hap]</description>
+		<comment>English translation by hap</comment>
+		<description>Borfes and the Five Demons (English)</description>
 		<year>1987-2008</year>
 		<manufacturer>XtalSoft</manufacturer>
 		<rom name="Borfesu (English) (1987)(XtalSoft).rom" size="131072" crc="f2f2f0c8"/>
@@ -2127,7 +2167,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="britishbob" romof="msx">
-		<description>British Bob (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>British Bob (HB)</description>
 		<year>2009</year>
 		<manufacturer>RELEVO</manufacturer>
 		<rom name="rlv903_british_bob.rom" size="16384" crc="8ab004f9"/>
@@ -2182,7 +2223,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bubbler" romof="msx">
-		<description>Bubbler [Press 1 or 2 to select Keyboard-Joystick]</description>
+		<comment>Press 1 or 2 to select Keyboard-Joystick</comment>
+		<description>Bubbler</description>
 		<year>1987</year>
 		<manufacturer>Ultimate Play The Game</manufacturer>
 		<rom name="Bubbler (1987)(Ultimate Play The Game)(GB).rom" size="131072" crc="0150e22e"/>
@@ -2204,7 +2246,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bdg110" romof="msx">
-		<description>Buddhagillie (HB, v1.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Buddhagillie (HB, v1.1)</description>
 		<year>2018</year>
 		<manufacturer>GW's Workshop</manufacturer>
 		<rom name="buddhagillie110.rom" size="32768" crc="906e2ce6"/>
@@ -2226,7 +2269,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="bumprace" romof="msx">
-		<description>Bumper Ship Racing (HB, v1.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Bumper Ship Racing (HB, v1.1)</description>
 		<year>2018</year>
 		<manufacturer>Uninteresting</manufacturer>
 		<rom name="Bumper Ship Racing v1.1 (2018)(Uninteresting).rom" size="32768" crc="b47b371b"/>
@@ -2457,7 +2501,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="caos" romof="msx">
-		<description>Caos Begins (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Caos Begins (HB)</description>
 		<year>2007</year>
 		<manufacturer>Hikaru Games</manufacturer>
 		<rom name="caos.rom" size="32768" crc="44421f97"/>
@@ -2633,7 +2678,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cat" romof="msx">
-		<description>Cat (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Cat (HB)</description>
 		<year>2018</year>
 		<manufacturer>Cobinee</manufacturer>
 		<rom name="cat (2018)(cobinee).rom" size="32768" crc="4b20796b"/>
@@ -2644,7 +2690,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="catspots" romof="msx">
-		<description>CatsPots (HB, v1.2) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>CatsPots (HB, v1.2)</description>
 		<year>2021</year>
 		<manufacturer>Amaury Carvalho</manufacturer>
 		<rom name="CatsPots v1.2 (2021)(Amaury Carvalho).rom" size="32768" crc="8d5a8ea0"/>
@@ -2655,7 +2702,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="caverndeath" romof="msx">
-		<description>Cavern of Death (Spanish) [Select 1-Teclado to play]</description>
+		<comment>Select 1-Teclado to play</comment>
+		<description>Cavern of Death (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Dro Soft</manufacturer>
 		<rom name="Cavern of Death (1987)(Dro Soft)(ES)[RUN'CAS-'].cas" size="15799" crc="085982e4"/>
@@ -2666,7 +2714,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="caverns" romof="msx">
-		<description>Caverns of Titan (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Caverns of Titan (HB)</description>
 		<year>2005</year>
 		<manufacturer>JLTURSAN</manufacturer>
 		<rom name="caverns.rom" size="16384" crc="9e02db6c"/>
@@ -2677,7 +2726,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cavit" romof="msx">
-		<description>Cavit (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Cavit (HB)</description>
 		<year>2021</year>
 		<manufacturer>Inufuto</manufacturer>
 		<rom name="Cavit (2021)(Inufuto).rom" size="9791" crc="32ad4281"/>
@@ -2710,7 +2760,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="chthyrea" romof="msx">
-		<description>Chambers of Thyrea (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Chambers of Thyrea (HB)</description>
 		<year>2019-20</year>
 		<manufacturer>Spacesugar</manufacturer>
 		<rom name="chambers of thyrea (2020)(spacesugar).rom" size="32768" crc="2da2f419"/>
@@ -2832,7 +2883,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cheatwives" romof="msx">
-		<description>Cheating Wives (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Cheating Wives (HB)</description>
 		<year>2005</year>
 		<manufacturer>CrappySoft</manufacturer>
 		<rom name="Cheating Wives (2005)(Crappysoft).rom" size="16384" crc="a22344a0"/>
@@ -3140,7 +3192,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cocoamsx" romof="msx">
-		<description>Cocoa and the Time Machine (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Cocoa and the Time Machine (HB)</description>
 		<year>2020</year>
 		<manufacturer>Minilop</manufacturer>
 		<rom name="cocoa and the time machine (2020)(minilop).rom" size="753664" crc="22d55a91"/>
@@ -3151,7 +3204,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="coldblood" romof="msx">
-		<description>Cold Blood (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Cold Blood (HB)</description>
 		<year>2010</year>
 		<manufacturer>Paxanga Soft</manufacturer>
 		<rom name="Cold Blood (2010)(Paxanga Soft).rom" size="32768" crc="0d622a32"/>
@@ -3459,7 +3513,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cow" romof="msx">
-		<description>Cow Abductors (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Cow Abductors (HB)</description>
 		<year>2009</year>
 		<manufacturer>Paxanga Soft</manufacturer>
 		<rom name="cow.rom" size="16384" crc="790623de"/>
@@ -3481,7 +3536,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="crazy" romof="msx">
-		<description>Crazy Buggy (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Crazy Buggy (HB)</description>
 		<year>2005</year>
 		<manufacturer>Crappysoft</manufacturer>
 		<rom name="crazy.rom" size="16384" crc="fea00d3b"/>
@@ -3591,7 +3647,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cuncuna" romof="msx">
-		<description>Cuncuna (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Cuncuna (HB)</description>
 		<year>2020</year>
 		<manufacturer>Christian Cordova</manufacturer>
 		<rom name="cuncuna (2020)(christian cordova).rom" size="16384" crc="de336286"/>
@@ -3624,7 +3681,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cyberun" romof="msx">
-		<description>Cyberun (Euro) [Use keys 1 and 2 to set P1 and P2 controller options]</description>
+		<comment>Use keys 1 and 2 to set P1 and P2 controller options</comment>
+		<description>Cyberun (Euro)</description>
 		<year>1985</year>
 		<manufacturer>Ultimate Play The Game</manufacturer>
 		<rom name="Cyberun (1985)(Ultimate Play The Game)(GB).rom" size="131072" crc="12c23b87"/>
@@ -3712,7 +3770,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="daedalian" romof="msx">
-		<description>Daedalian Opus (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Daedalian Opus (HB)</description>
 		<year>2006</year>
 		<manufacturer>Karoshi Corporation</manufacturer>
 		<rom name="daedalian opus (2006)(karoshi corp)(2006).rom" size="32768" crc="d7edf15d"/>
@@ -3778,7 +3837,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dgtrooper" romof="msx">
-		<description>Dangan Trooper (HB, v0.8) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Dangan Trooper (HB, v0.8)</description>
 		<year>2021</year>
 		<manufacturer>Kobinii</manufacturer>
 		<rom name="Dangan Trooper v0.8 (2021)(Kobinii).rom" size="32768" crc="2c72ba11"/>
@@ -3789,7 +3849,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dangertower" romof="msx">
-		<description>Danger Tower (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Danger Tower (HB)</description>
 		<year>2009</year>
 		<manufacturer>Danger Team</manufacturer>
 		<rom name="dangertower.rom" size="32768" crc="02c3af4a"/>
@@ -3833,7 +3894,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="daqidar" romof="msx">
-		<description>DAQ Lord of Idar (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>DAQ Lord of Idar (HB)</description>
 		<year>2010</year>
 		<manufacturer>Darkstone</manufacturer>
 		<rom name="DAQ Lord of Idar (2010)(Darkstone).rom" size="32768" crc="39cd51da"/>
@@ -3877,7 +3939,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dcraider" romof="msx">
-		<description>Deep Core Raider (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Deep Core Raider (HB)</description>
 		<year>2020</year>
 		<manufacturer>Paul Jenkinson</manufacturer>
 		<rom name="Deep Core Raider (2020)(Paul Jenkinson).rom" size="32768" crc="1306a8b3"/>
@@ -3899,7 +3962,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="deepdun" romof="msx">
-		<description>Deep Dungeon Adventure (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Deep Dungeon Adventure (HB)</description>
 		<year>2013</year>
 		<manufacturer>Trilobyte</manufacturer>
 		<rom name="deepdung.rom" size="49152" crc="96bd10ee"/>
@@ -3954,7 +4018,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="desperado" romof="msx">
-		<description>Desperado (Spanish) [At title &amp; options screen turn the Tape to Side B]</description>
+		<comment>At title & options screen turn the Tape to Side B</comment>
+		<description>Desperado (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="desperado (1987)(topo soft)(es)(side a)[run'cas-'].cas" size="42554" crc="fe84991c"/>
@@ -3966,7 +4031,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="desperado2" romof="msx">
-		<description>Desperado 2 (Spanish) [Password Fase 2: CLAVE]</description>
+		<comment>Password Fase 2: CLAVE</comment>
+		<description>Desperado 2 (Spanish)</description>
 		<year>1991</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="Desperado 2 (1991)(Topo Soft)(es)[RUN'CAS-'].cas" size="101298" crc="b8508c89"/>
@@ -3977,7 +4043,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="destroyer" romof="msx">
-		<description>Destroyer (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Destroyer (HB)</description>
 		<year>2014</year>
 		<manufacturer>RetroWorks</manufacturer>
 		<rom name="Destroyer (2014)(RetroWorks).rom" size="16384" crc="1e4f0071"/>
@@ -3999,7 +4066,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dwtoomsxen" romof="msx">
-		<description>Devwill Too MSX (English) (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Devwill Too MSX (English) (HB)</description>
 		<year>2021</year>
 		<manufacturer>Amaweks</manufacturer>
 		<rom name="Devwill Too MSX EN (2021)(Amaweks).rom" size="49152" crc="6b264498"/>
@@ -4010,7 +4078,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dwtoomsxpt" cloneof="dwtoomsxen" romof="dwtoomsxen">
-		<description>Devwill Too MSX (Portuguese) (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Devwill Too MSX (Portuguese) (HB)</description>
 		<year>2021</year>
 		<manufacturer>Amaweks</manufacturer>
 		<rom name="Devwill Too MSX PT (2021)(Amaweks).rom" size="49152" crc="dabb15f4"/>
@@ -4065,7 +4134,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="jinj2" romof="msx">
-		<description>Dinj 2 - Belmonte's Revenge (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Dinj 2 - Belmonte's Revenge (HB)</description>
 		<year>2012</year>
 		<manufacturer>Retroworks</manufacturer>
 		<rom name="jinj2-v2.rom" size="32768" crc="d43cf107"/>
@@ -4120,7 +4190,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dothesame" romof="msx">
-		<description>Do the Same (HB, v1.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Do the Same (HB, v1.1)</description>
 		<year>2021</year>
 		<manufacturer>EM - JMeric</manufacturer>
 		<rom name="Do The Same v1.1 (2021)(EM, JMeric).rom" size="32768" crc="220709e4"/>
@@ -4131,7 +4202,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dgnraven" romof="msx">
-		<description>Dodgin Raven (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Dodgin Raven (HB)</description>
 		<year>2009</year>
 		<manufacturer>Karoshi Corporation</manufacturer>
 		<rom name="dodgin raven (2009)(karoshi corp)(50hz).rom" size="24576" crc="8b5170df"/>
@@ -4186,7 +4258,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="donquijote2" cloneof="donquijote1" romof="donquijote1">
-		<description>Don Quijote - Parte II (Spanish) [Password: EL BALSAMO DE FIERABRAS]</description>
+		<comment>Password: EL BALSAMO DE FIERABRAS</comment>
+		<description>Don Quijote - Parte II (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Don Quijote (1987)(Dinamic Software)(es)(Side B)[RUN'CAS-'].cas" size="51442" crc="833d4f52"/>
@@ -4241,7 +4314,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dotattack" romof="msx">
-		<description>Dot Attack (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Dot Attack (HB)</description>
 		<year>2020</year>
 		<manufacturer>N.C.P.</manufacturer>
 		<rom name="dot attack v2 (2020)(ncp).rom" size="32768" crc="0dd83b99"/>
@@ -4263,7 +4337,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="drpill" romof="msx">
-		<description>Dr. Pill (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Dr. Pill (HB)</description>
 		<year>2009</year>
 		<manufacturer>Infinite</manufacturer>
 		<rom name="dr pill (2009)(infinite).rom" size="131072" crc="27ff4efd"/>
@@ -4274,7 +4349,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="draconic" romof="msx">
-		<description>Draconic Throne (HB, v1.1.2) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Draconic Throne (HB, v1.1.2)</description>
 		<year>2017</year>
 		<manufacturer>GW's Workshop</manufacturer>
 		<rom name="draconic throne v112.rom" size="32768" crc="1109499f"/>
@@ -4395,7 +4471,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="drinkit" romof="msx">
-		<description>Drink It (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Drink It (HB)</description>
 		<year>2006</year>
 		<manufacturer>CrappySoft</manufacturer>
 		<rom name="drink it (2006)(crappysoft).rom" size="16384" crc="51163fcb"/>
@@ -4417,7 +4494,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="duckstroma" romof="msx">
-		<description>Duckstroma (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Duckstroma (HB)</description>
 		<year>2020</year>
 		<manufacturer>UltraNarwhal</manufacturer>
 		<rom name="duckstroma (2020)(ultranarwhal).rom" size="32768" crc="80e31215"/>
@@ -4494,7 +4572,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="dyngogo" romof="msx">
-		<description>Dynamite Go! Go! (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Dynamite Go! Go! (HB)</description>
 		<year>2021</year>
 		<manufacturer>Rutubo Gameworks</manufacturer>
 		<rom name="Dynamite Go! Go! (2021) (Rutubo Gameworks).rom" size="32768" crc="75f41d87"/>
@@ -4560,7 +4639,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="earthatk" romof="msx">
-		<description>Earth Attack (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Earth Attack (HB)</description>
 		<year>2021</year>
 		<manufacturer>The Geps</manufacturer>
 		<rom name="Earth Attack (2021)(TheGeps).rom" size="32768" crc="c9596ccb"/>
@@ -4571,7 +4651,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="eatblue" romof="msx">
-		<description>Eat Blue! (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Eat Blue! (HB)</description>
 		<year>2004</year>
 		<manufacturer>Paxanga Soft</manufacturer>
 		<rom name="Eat Blue! 2004 v2 (2004)(Paxanga Soft).rom" size="8192" crc="1ac005a0"/>
@@ -4615,7 +4696,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="eggerlnd2" romof="msx">
-		<description>Eggerland Mystery 2- Meikyushinwa (Jpn) [Mapper SCC version]</description>
+		<comment>Mapper SCC version</comment>
+		<description>Eggerland Mystery 2- Meikyushinwa (Jpn)</description>
 		<year>1986</year>
 		<manufacturer>HAL Laboratory</manufacturer>
 		<rom name="Eggerland Mystery 2- Meikyushinwa (1986)(HAL Laboratory).rom" size="147456" crc="6d3b8c46"/>
@@ -4681,7 +4763,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="entombed" romof="msx">
-		<description>Entombed (HB, v1.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Entombed (HB, v1.1)</description>
 		<year>2021</year>
 		<manufacturer>Amaury Carvalho</manufacturer>
 		<rom name="Entombed v1.1 (2021)(Amaury Carvalho).rom" size="32768" crc="0dd59289"/>
@@ -4692,7 +4775,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="eruka" romof="msx">
-		<description>Eruka Fan Book (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Eruka Fan Book (HB)</description>
 		<year>2016</year>
 		<manufacturer>N.I</manufacturer>
 		<rom name="Eruka Fan Book (2016)(N.I).rom" size="49152" crc="d08d9358"/>
@@ -4703,7 +4787,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="estapantano" romof="msx">
-		<description>Esta en el Pantano (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Esta en el Pantano (HB)</description>
 		<year>2009</year>
 		<manufacturer>RELEVO</manufacturer>
 		<rom name="Esta en el Pantano (2009)(RELEVO).rom" size="32768" crc="3bb41093"/>
@@ -4714,7 +4799,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="estacaja" romof="msx">
-		<description>Esta en la Caja (HB, v1.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Esta en la Caja (HB, v1.1)</description>
 		<year>2009</year>
 		<manufacturer>RELEVO</manufacturer>
 		<rom name="Esta en la Caja v1.1 (2009)(RELEVO).rom" size="32768" crc="1a9fda56"/>
@@ -4945,7 +5031,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="factory" romof="msx">
-		<description>Factory Infection (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Factory Infection (HB)</description>
 		<year>2004</year>
 		<manufacturer>Karoshi Corporation</manufacturer>
 		<rom name="factory.rom" size="8192" crc="43f31061"/>
@@ -4967,7 +5054,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="prometheus" romof="msx">
-		<description>Fall Of Prometheus, The (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Fall Of Prometheus, The (HB)</description>
 		<year>2021</year>
 		<manufacturer>Mistery Labs</manufacturer>
 		<rom name="Fall Of Prometheus (2021)(Mistery Labs).rom" size="49152" crc="2434c7ea"/>
@@ -4989,7 +5077,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="fantfootball" romof="msx">
-		<description>Fantastic Football (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Fantastic Football (HB)</description>
 		<year>2021</year>
 		<manufacturer>Zoran Majcenic, Daniel Simon</manufacturer>
 		<rom name="Fantastic Football (2021)(Zoran Majcenic).rom" size="49152" crc="51e1fe56"/>
@@ -5022,7 +5111,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="fartypig" romof="msx">
-		<description>Farty Pig (HB) [Homebrew, Beta release]</description>
+		<comment>Homebrew, Beta release</comment>
+		<description>Farty Pig (HB)</description>
 		<year>2020</year>
 		<manufacturer>The Geps</manufacturer>
 		<rom name="Farty Pig - Beta (2020)(TheGeps).rom" size="16384" crc="5ddd1e48"/>
@@ -5308,7 +5398,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="flyguy" romof="msx">
-		<description>FlyGuy (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>FlyGuy (HB)</description>
 		<year>2021</year>
 		<manufacturer>Robosoft</manufacturer>
 		<rom name="FlyGuy (2021)(Robosoft).rom" size="32768" crc="955fc82b"/>
@@ -5319,7 +5410,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="foggy" romof="msx">
-		<description>Foggy Quest (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Foggy Quest (HB)</description>
 		<year>2017</year>
 		<manufacturer>John Blythe</manufacturer>
 		<rom name="foggy quest (2017)(john blythe).rom" size="32768" crc="7e65c394"/>
@@ -5374,7 +5466,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="fredhard2" cloneof="fredhard1" romof="fredhard1">
-		<description>Freddy Hardest - Part 2 (Spanish) [Password: 897653]</description>
+		<comment>Password: 897653</comment>
+		<description>Freddy Hardest - Part 2 (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Freddy Hardest - Part 2 ES (1987)(Dinamic Software)[RUN'CAS-'].cas" size="52687" crc="e4dee6a9"/>
@@ -5396,7 +5489,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="freefight" romof="msx">
-		<description>Freedom Fighter (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Freedom Fighter (HB)</description>
 		<year>2020</year>
 		<manufacturer>The Geps</manufacturer>
 		<rom name="freedom fighter (2020)(geppo).rom" size="131072" crc="15e0b97e"/>
@@ -5528,7 +5622,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gmonkey" romof="msx">
-		<description>G-Monkey (HB) [Homebrew, No single player mode]</description>
+		<comment>Homebrew, No single player mode</comment>
+		<description>G-Monkey (HB)</description>
 		<year>2008</year>
 		<manufacturer>Karoshi Corporation</manufacturer>
 		<rom name="G-Monkey (2008)(Karoshi Corporation).rom" size="8192" crc="7854cfc4"/>
@@ -5627,7 +5722,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gameover" romof="msx">
-		<description>Game Over (Spanish) [Password Part 2: 65535]</description>
+		<comment>Password Part 2: 65535</comment>
+		<description>Game Over (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Game Over (1988)(Dinamic Software)(ES).rom" size="131072" crc="dfbbdf10"/>
@@ -5649,7 +5745,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gameover22" cloneof="gameover21" romof="gameover21">
-		<description>Game Over II - Part 2 (Euro) [Password: 18757]</description>
+		<comment>Password: 18757</comment>
+		<description>Game Over II - Part 2 (Euro)</description>
 		<year>1988</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Game Over II - Part 2 (1988)(Dinamic Software)[RUN'CAS-'].cas" size="49149" crc="994cd2a2"/>
@@ -5706,7 +5803,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="genesis" romof="msx">
-		<description>Genesis: dawn of a new day (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Genesis: dawn of a new day (HB)</description>
 		<year>2012</year>
 		<manufacturer>Retroworks</manufacturer>
 		<rom name="genesis.rom" size="131072" crc="391e6f9a"/>
@@ -5750,7 +5848,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gng" romof="msx">
-		<description>Ghosts'n Goblins (HB, v1.1) [Homebrew, No music, music only available on MSX2 system]</description>
+		<comment>Homebrew, No music, music only available on MSX2 system</comment>
+		<description>Ghosts'n Goblins (HB, v1.1)</description>
 		<year>2008</year>
 		<manufacturer>Amusement Factory</manufacturer>
 		<rom name="gng (2008)(amusement factory).rom" size="753664" crc="50fb9db4"/>
@@ -5871,7 +5970,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gommydx" romof="msx">
-		<description>Gommy - Medieval Dedender (Deluxe Version) (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Gommy - Medieval Dedender (Deluxe Version) (HB)</description>
 		<year>2013</year>
 		<manufacturer>Retroworks</manufacturer>
 		<rom name="Gommy - Medieval Defender DX version (2013)(Retroworks).rom" size="49152" crc="00cc2162"/>
@@ -5882,7 +5982,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gommyen" cloneof="gommydx" romof="gommydx">
-		<description>Gommy - Medieval Defender (English) (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Gommy - Medieval Defender (English) (HB)</description>
 		<year>2013</year>
 		<manufacturer>Retroworks/Dimension Z/Nenefranz</manufacturer>
 		<rom name="Gommy - Medieval Defender EN (2013)(Retroworks).rom" size="16384" crc="66b27261"/>
@@ -5893,7 +5994,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gommyes" cloneof="gommydx" romof="gommydx">
-		<description>Gommy - Medieval Defender (Spanish) (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Gommy - Medieval Defender (Spanish) (HB)</description>
 		<year>2013</year>
 		<manufacturer>Retroworks/Dimension Z/Nenefranz</manufacturer>
 		<rom name="Gommy - Medieval Defender ES (2013)(Retroworks).rom" size="16384" crc="cb628d7a"/>
@@ -5948,7 +6050,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ggeftsdp" romof="msx">
-		<description>Gorgeous Gemma in Escape from the Space Disposal Planet (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Gorgeous Gemma in Escape from the Space Disposal Planet (HB)</description>
 		<year>2013</year>
 		<manufacturer>Impulse9</manufacturer>
 		<rom name="ggeftsdp.rom" size="32768" crc="818ccade"/>
@@ -5970,7 +6073,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gravitica" romof="msx">
-		<description>Gravitica (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Gravitica (HB)</description>
 		<year>2018</year>
 		<manufacturer>Yusuke Miyauchi</manufacturer>
 		<rom name="Gravitica (2018)(Yusuke Miyauchi).rom" size="32768" crc="3bc64731"/>
@@ -6036,7 +6140,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gridwars" romof="msx">
-		<description>Grid Wars (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Grid Wars (HB)</description>
 		<year>2006</year>
 		<manufacturer>Emma Six</manufacturer>
 		<rom name="GRIDWARS.ROM" size="32768" crc="03b56d90"/>
@@ -6047,7 +6152,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="griel" romof="msx">
-		<description>Griel's Quest for the Sangraal (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Griel's Quest for the Sangraal (HB)</description>
 		<year>2005</year>
 		<manufacturer>Karoshi Corporation</manufacturer>
 		<rom name="griel.rom" size="32768" crc="6cebb29b"/>
@@ -6058,7 +6164,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="grielex" cloneof="griel" romof="griel">
-		<description>Griel's Quest for the Sangraal (HB, Extended Version) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Griel's Quest for the Sangraal (HB, Extended Version)</description>
 		<year>2005</year>
 		<manufacturer>Karoshi Corporation</manufacturer>
 		<rom name="grielex.rom" size="32768" crc="c9427fe2"/>
@@ -6135,7 +6242,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gunfrghta" cloneof="gunfrght" romof="gunfrght">
-		<description>Gun Fright (Jpn, Hacked?) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Gun Fright (Jpn, Hacked?)</description>
 		<year>1986</year>
 		<manufacturer>A.C.G.</manufacturer>
 		<rom name="gunfright (1986)(ultimate play the game).rom" size="32768" crc="31fe5c5b"/>
@@ -6157,7 +6265,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gurulogic" romof="msx">
-		<description>Guru Logic (HB, v2) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Guru Logic (HB, v2)</description>
 		<year>2003</year>
 		<manufacturer>Karoshi Corporation</manufacturer>
 		<rom name="guru logic (2003)(karoshi corp)[v2].rom" size="32768" crc="e18e58e9"/>
@@ -6223,7 +6332,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="hero" romof="msx">
-		<description>H.E.R.O. (Jpn) [Press a Num Key to select difficulty level and start game]</description>
+		<comment>Press a Num Key to select difficulty level and start game</comment>
+		<description>H.E.R.O. (Jpn)</description>
 		<year>1984</year>
 		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="h.e.r.o. (japan).rom" size="16384" crc="97ab0d70"/>
@@ -6245,7 +6355,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="hammboy" romof="msx">
-		<description>Hammer Boy (Spanish) [Keyboard controls only]</description>
+		<comment>Keyboard controls only</comment>
+		<description>Hammer Boy (Spanish)</description>
 		<year>1991</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="hammer boy (1991)(dinamic software)(es)(side a)[run'cas-'].cas" size="55954" crc="907a6931"/>
@@ -6290,7 +6401,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="hansadv" romof="msx">
-		<description>Hans' Adventure (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Hans' Adventure (HB)</description>
 		<year>2010</year>
 		<manufacturer>The Pets Mode</manufacturer>
 		<rom name="hans' adventure (2010)(the pets mode).rom" size="49152" crc="c7452eca"/>
@@ -6301,7 +6413,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="happyfret" romof="msx">
-		<description>Happy Fret (Jpn) [Uses joyport #2]</description>
+		<comment>Uses joyport #2</comment>
+		<description>Happy Fret (Jpn)</description>
 		<year>1985</year>
 		<manufacturer>Micro Cabin</manufacturer>
 		<rom name="Happy Fret (1985)(Micro Cabin)(JP).rom" size="32768" crc="be2f3236"/>
@@ -6312,7 +6425,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="harapeko" romof="msx">
-		<description>Harapeko Pakkun (Jpn) [Press 0 to restart level]</description>
+		<comment>Press 0 to restart level</comment>
+		<description>Harapeko Pakkun (Jpn)</description>
 		<year>1984</year>
 		<manufacturer>ASCII</manufacturer>
 		<rom name="harapeko pakkun (japan).rom" size="8192" crc="145bb27b"/>
@@ -6378,7 +6492,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="heartst2" romof="msx">
-		<description>Heart Stealer 2 (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Heart Stealer 2 (HB)</description>
 		<year>2021</year>
 		<manufacturer>Timmy</manufacturer>
 		<rom name="Heart Stealer 2 (2021)(Timmy).rom" size="16384" crc="8ccde019"/>
@@ -6433,7 +6548,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="heroesarena" romof="msx">
-		<description>Heroes Arena (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Heroes Arena (HB)</description>
 		<year>2010</year>
 		<manufacturer>IMANOK</manufacturer>
 		<rom name="h-arena.rom" size="32768" crc="3c6c9c72"/>
@@ -6565,7 +6681,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="hostages" romof="msx">
-		<description>Hostages (Spanish, Hacked by Martos) [Hack]</description>
+		<comment>Hack</comment>
+		<description>Hostages (Spanish, Hacked by Martos)</description>
 		<year>1990</year>
 		<manufacturer>Erbe Software</manufacturer>
 		<rom name="hostages (1990)(erbe)(es)(en)(m martos)[run'cas-'].cas" size="140106" crc="1a6e23df"/>
@@ -6906,7 +7023,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="impetus" romof="msx">
-		<description>Impetus (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Impetus (HB)</description>
 		<year>2021</year>
 		<manufacturer>Inufuto</manufacturer>
 		<rom name="Impetus (2021)(Inufuto).rom" size="16352" crc="6f7e32ca"/>
@@ -6973,7 +7091,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ink" romof="msx">
-		<description>INK - Exxon Surfing (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>INK - Exxon Surfing (HB)</description>
 		<year>2006</year>
 		<manufacturer>Matra</manufacturer>
 		<rom name="INK - Exxon Surfing (2006)(Matra).rom" size="49152" crc="35823fd5"/>
@@ -6984,7 +7103,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="inqsuq" romof="msx">
-		<description>Inq &amp; Suq vs Nightmare (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Inq &amp; Suq vs Nightmare (HB)</description>
 		<year>2018</year>
 		<manufacturer>GW's Workshop</manufacturer>
 		<rom name="Inq and Suq vs Nightmare (2018)(GW's Workshop).rom" size="32768" crc="25c6e10f"/>
@@ -7017,7 +7137,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="invasion" romof="msx">
-		<description>Invasion of the big pixels (HB, Tech-demo) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Invasion of the big pixels (HB, Tech-demo)</description>
 		<year>2008</year>
 		<manufacturer>noice</manufacturer>
 		<rom name="invasion.rom" size="131072" crc="261c87aa"/>
@@ -7028,7 +7149,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="invazm" romof="msx">
-		<description>Invasion of the Zombie Monsters (HB, RLV904) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Invasion of the Zombie Monsters (HB, RLV904)</description>
 		<year>2010</year>
 		<manufacturer>RELEVO</manufacturer>
 		<rom name="RLV904_Invasion_of_the_Zombie_Monsters.rom" size="32768" crc="a232351f"/>
@@ -7039,7 +7161,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="isitar7" romof="msx">
-		<description>Isitar 7 (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Isitar 7 (HB)</description>
 		<year>2019</year>
 		<manufacturer>N.I</manufacturer>
 		<rom name="isitar 7 (2019)(n.i).rom" size="32768" crc="d7795487"/>
@@ -7050,7 +7173,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="isopong" romof="msx">
-		<description>Isometric Pong (HB) [Homebrew, No single player mode]</description>
+		<comment>Homebrew, No single player mode</comment>
+		<description>Isometric Pong (HB)</description>
 		<year>2020</year>
 		<manufacturer>Fabento D.C.</manufacturer>
 		<rom name="Isometric Pong (2020)(Fabento).rom" size="32768" crc="419eaaa0"/>
@@ -7094,7 +7218,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="jetpac" romof="msx">
-		<description>J.E.T.P.A.C. (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>J.E.T.P.A.C. (HB)</description>
 		<year>2009</year>
 		<manufacturer>Imanok</manufacturer>
 		<rom name="jetpac.rom" size="32768" crc="38ad7112"/>
@@ -7127,7 +7252,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="jaasta" romof="msx">
-		<description>Jaasta (HB, v1.2) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Jaasta (HB, v1.2)</description>
 		<year>2020</year>
 		<manufacturer>Uninteresting</manufacturer>
 		<rom name="jaasta (2020)(uninteresting).rom" size="32768" crc="bfd87e37"/>
@@ -7204,7 +7330,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="jawbrk2" romof="msx">
-		<description>Jaw Breaker 2 (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Jaw Breaker 2 (HB)</description>
 		<year>2014</year>
 		<manufacturer>Magoo</manufacturer>
 		<rom name="Jawbreaker 2 (2014)(Magoo).rom" size="16384" crc="4137905f"/>
@@ -7215,7 +7342,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="jaws" romof="msx">
-		<description>Jaws (Euro) [Use Space and Enter to select options]</description>
+		<comment>Use Space and Enter to select options</comment>
+		<description>Jaws (Euro)</description>
 		<year>1989</year>
 		<manufacturer>A.M.H.</manufacturer>
 		<rom name="jaws (1989)(screen 7)[run'cas-'].cas" size="49114" crc="908478e6"/>
@@ -7281,7 +7409,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="jewels" romof="msx">
-		<description>Jewels (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Jewels (HB)</description>
 		<year>2020</year>
 		<manufacturer>Maio Cavalcanti</manufacturer>
 		<rom name="Jewels (2020)(Maio Cavalcanti).rom" size="32768" crc="23519759"/>
@@ -7336,7 +7465,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="jumping" romof="msx">
-		<description>JumpinG (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>JumpinG (HB)</description>
 		<year>2011</year>
 		<manufacturer>DimensionZ</manufacturer>
 		<rom name="DMZ001-JpinG_English.rom" size="32768" crc="7f492f09"/>
@@ -7468,7 +7598,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="killmice" romof="msx">
-		<description>Kill Mice (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Kill Mice (HB)</description>
 		<year>2011</year>
 		<manufacturer>Gamecast Entertainment</manufacturer>
 		<rom name="killmice.rom" size="65536" crc="783afacb"/>
@@ -7655,7 +7786,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ksolitaire" romof="msx">
-		<description>Klondike Solitaire (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Klondike Solitaire (HB)</description>
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Klondike Solitaire (2021)(Under4Mhz).rom" size="32768" crc="dcd00173"/>
@@ -7776,7 +7908,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kobashi" romof="msx">
-		<description>Kobashi (HB) [Homebrew, Uses joyport #2]</description>
+		<comment>Homebrew, Uses joyport #2</comment>
+		<description>Kobashi (HB)</description>
 		<year>2004</year>
 		<manufacturer>Desire in Envy</manufacturer>
 		<rom name="Kobashi (2004)(Desire in Envy)(NL).rom" size="8192" crc="d137c518"/>
@@ -8084,7 +8217,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kongrevp2" cloneof="kongrevp1" romof="kongrevp1">
-		<description>Kong's Revenge - Part 2 (Spanish) [Password: CHIRIPA - use num-keys from 1 to 7 to set password]</description>
+		<comment>Password: CHIRIPA - use num-keys from 1 to 7 to set password</comment>
+		<description>Kong's Revenge - Part 2 (Spanish)</description>
 		<year>1991</year>
 		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="Kong's Revenge (1991)(Zigurat Software)(es)(Side B)[RUN'CAS-'].cas" size="52413" crc="c059cdfc"/>
@@ -8106,7 +8240,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ktetrisv2" romof="msx">
-		<description>Kralizec Tetris v2 (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Kralizec Tetris v2 (HB)</description>
 		<year>2005</year>
 		<manufacturer>Kralizec</manufacturer>
 		<rom name="kralizec tetris v2 (2005)(kralizec).rom" size="32768" crc="9235ea8d"/>
@@ -8227,7 +8362,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="labbaye" romof="msx">
-		<description>L'Abbaye des Morts (HB, v1.2) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>L'Abbaye des Morts (HB, v1.2)</description>
 		<year>2020</year>
 		<manufacturer>Retro Deluxe</manufacturer>
 		<rom name="abbaye des morts v1.2 (2020)(retrodeluxe).rom" size="262144" crc="c5aef269"/>
@@ -8249,7 +8385,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lacorona" romof="msx">
-		<description>La Corona Encantada (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>La Corona Encantada (HB)</description>
 		<year>2009</year>
 		<manufacturer>Karoshi Corporation</manufacturer>
 		<rom name="RLV901_La_Corona_Encantada.rom" size="49152" crc="71e4252e"/>
@@ -8260,7 +8397,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="reliquia" romof="msx">
-		<description>La Reliquia (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>La Reliquia (HB)</description>
 		<year>2020</year>
 		<manufacturer>Roolandoo</manufacturer>
 		<rom name="la reliquia (2020)(roolando).rom" size="32768" crc="8a251dba"/>
@@ -8293,7 +8431,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lazyjones" romof="msx">
-		<description>Lazy Jones [Crashes... check later]</description>
+		<comment>Crashes... check later</comment>
+		<description>Lazy Jones</description>
 		<year>1985</year>
 		<manufacturer>Terminal Software</manufacturer>
 		<rom name="Lazy Jones (1985)(Terminal Software)(GB).rom" size="65536" crc="a94670f3"/>
@@ -8337,7 +8476,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="linez" romof="msx">
-		<description>Linez (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Linez (HB)</description>
 		<year>2018</year>
 		<manufacturer>Wim DeWijngaert</manufacturer>
 		<rom name="linez (final version).rom" size="32768" crc="9df79847"/>
@@ -8348,7 +8488,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="litterbox" romof="msx">
-		<description>Litter Box (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Litter Box (HB)</description>
 		<year>2020</year>
 		<manufacturer>Ray2Day</manufacturer>
 		<rom name="Litter Box (2020)(Ray2Day).rom" size="16384" crc="4a5304b4"/>
@@ -8381,7 +8522,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lizwilly" romof="msx">
-		<description>Lizard Willy (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Lizard Willy (HB)</description>
 		<year>2016</year>
 		<manufacturer>Sfranck72</manufacturer>
 		<rom name="lizard willy (2016)(sfranck72).rom" size="32768" crc="ddff4bcc"/>
@@ -8425,7 +8567,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="logicrmd" romof="msx">
-		<description>Logic Remastered (HB, v1.2) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Logic Remastered (HB, v1.2)</description>
 		<year>2021</year>
 		<manufacturer>Platty Soft</manufacturer>
 		<rom name="Logic Remastered v1.2 (48KB Version) (2021)(Platty Soft).rom" size="49152" crc="856b7dbb"/>
@@ -8458,7 +8601,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="jardineszwz" romof="msx">
-		<description>Los Jardines de Zee Wang Zu (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Los Jardines de Zee Wang Zu (HB)</description>
 		<year>2006</year>
 		<manufacturer>Jos'b</manufacturer>
 		<rom name="Los Jardines de Zee Wang Zu (2006)(Jos'b).rom" size="16384" crc="b88a7fde"/>
@@ -8480,7 +8624,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lotusf3" romof="msx">
-		<description>Lotus F3 (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Lotus F3 (HB)</description>
 		<year>2007</year>
 		<manufacturer>dvik &amp; joyrex</manufacturer>
 		<rom name="lotusf3.rom" size="131072" crc="565022a4"/>
@@ -8513,7 +8658,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mtanks" romof="msx">
-		<description>M-Tanks (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>M-Tanks (HB)</description>
 		<year>2011</year>
 		<manufacturer>Assembler Games</manufacturer>
 		<rom name="mtanks.rom" size="131072" crc="c0efa4ff"/>
@@ -8535,7 +8681,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="magmag" romof="msx">
-		<description>Mag the Magician (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Mag the Magician (HB)</description>
 		<year>2019</year>
 		<manufacturer>Radastan</manufacturer>
 		<rom name="Mag the Magician (2019)(Radastan).rom" size="32768" crc="3d2ab5c1"/>
@@ -8557,7 +8704,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="magtower" romof="msx">
-		<description>Magic Tower Adventure (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Magic Tower Adventure (HB)</description>
 		<year>2017</year>
 		<manufacturer>Timmy</manufacturer>
 		<rom name="Magic Tower Adventure (2017)[Timmy] [BLOAD'CAS-',R].cas" size="33685" crc="c2d82fca"/>
@@ -8601,7 +8749,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="magical" romof="msx">
-		<description>Magical Stones (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Magical Stones (HB)</description>
 		<year>2005</year>
 		<manufacturer>Dioniso (Alfonso D.C.)</manufacturer>
 		<rom name="ms16k.rom" size="16384" crc="0ec3f7a3"/>
@@ -8667,7 +8816,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="msolitaire" romof="msx">
-		<description>Mahjong Solitaire (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Mahjong Solitaire (HB)</description>
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Mahjong Solitaire (2021)(Under4Mhz).rom" size="32768" crc="059b8cb9"/>
@@ -8678,7 +8828,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="majikazo" romof="msx">
-		<description>Majikazo (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Majikazo (HB)</description>
 		<year>2006</year>
 		<manufacturer>Lemonize</manufacturer>
 		<rom name="majikazo (2006)(lemonize).rom" size="49152" crc="39b8f033"/>
@@ -8689,7 +8840,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="makethemfall" romof="msx">
-		<description>Make Them Fall (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Make Them Fall (HB)</description>
 		<year>2021</year>
 		<manufacturer>Robosoft</manufacturer>
 		<rom name="Make Them Fall (2021)(Robosoft).rom" size="32768" crc="3ba17b67"/>
@@ -8700,7 +8852,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="makethemjump" romof="msx">
-		<description>Make Them Jump (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Make Them Jump (HB)</description>
 		<year>2021</year>
 		<manufacturer>Robosoft</manufacturer>
 		<rom name="Make Them Jump (2021)(Robosoft).rom" size="32768" crc="ff17cd96"/>
@@ -8711,7 +8864,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="malaika12" romof="msx">
-		<description>Malaika (HB, v1.2) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Malaika (HB, v1.2)</description>
 		<year>2013</year>
 		<manufacturer>RELEVO</manufacturer>
 		<rom name="RLV914_MALAIKA.rom" size="16384" crc="37c13320"/>
@@ -8722,7 +8876,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="malaikapq13" romof="msx">
-		<description>Malaika Prehistoric Quest (HB, v1.3) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Malaika Prehistoric Quest (HB, v1.3)</description>
 		<year>2006</year>
 		<manufacturer>Karoshi Corporation</manufacturer>
 		<rom name="rk711r3.rom" size="32768" crc="3ddf42ac"/>
@@ -8843,7 +8998,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="marsland" romof="msx">
-		<description>Mars Lander (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Mars Lander (HB)</description>
 		<year>2006</year>
 		<manufacturer>CrappySoft</manufacturer>
 		<rom name="mars lander (2006)(crappysoft).rom" size="16384" crc="ec316a71"/>
@@ -8898,7 +9054,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mask3" romof="msx">
-		<description>Mask III - Venom Strikes Back (Euro) [Use keys from 1 to 4 for change equipment]</description>
+		<comment>Use keys from 1 to 4 for change equipment</comment>
+		<description>Mask III - Venom Strikes Back (Euro)</description>
 		<year>1988</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="mask iii - venom strikes back (1988)(gremlin graphics software)(gb)[bload'cas-',r].cas" size="69362" crc="c6774b56"/>
@@ -8964,7 +9121,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mecha8" romof="msx">
-		<description>Mecha-8 (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Mecha-8 (HB)</description>
 		<year>2011</year>
 		<manufacturer>Oscar Toledo G.</manufacturer>
 		<rom name="mecha8.rom" size="32768" crc="c60e346e"/>
@@ -9041,7 +9199,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="melodyparty" romof="msx">
-		<description>Melody Party (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Melody Party (HB)</description>
 		<year>2020</year>
 		<manufacturer>Moai King</manufacturer>
 		<rom name="Melody Party (2020)(Moai King).rom" size="32768" crc="edae10f6"/>
@@ -9052,7 +9211,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="menace" romof="msx">
-		<description>Menace (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Menace (HB)</description>
 		<year>2009</year>
 		<manufacturer>The New Image</manufacturer>
 		<rom name="menace.rom" size="32768" crc="500d37ec"/>
@@ -9063,7 +9223,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mtriton" cloneof="mtritonc" romof="mtritonc">
-		<description>Menace from Triton, the (HB, v1.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Menace from Triton, the (HB, v1.1)</description>
 		<year>2020</year>
 		<manufacturer>Brain Games</manufacturer>
 		<rom name="menace from triton v1.1 (2020)(brain games).rom" size="49152" crc="f7a83771"/>
@@ -9074,7 +9235,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mtritonc" romof="msx">
-		<description>Menace from Triton, the (HB, v1.2) [Homebrew, cartridge version]</description>
+		<comment>Homebrew, cartridge version</comment>
+		<description>Menace from Triton, the (HB, v1.2)</description>
 		<year>2021</year>
 		<manufacturer>Brain Games</manufacturer>
 		<rom name="menace from triton v1.2 (2021)(brain games).rom" size="49152" crc="f7a83771"/>
@@ -9162,7 +9324,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="milkrace" romof="msx">
-		<description>Milk Race (Euro) [Press '0' to start, don't press '1' or '2': the game freezes]</description>
+		<comment>Press '0' to start, don't press '1' or '2': the game freezes</comment>
+		<description>Milk Race (Euro)</description>
 		<year>1987</year>
 		<manufacturer>Mastertronic</manufacturer>
 		<rom name="milk race (1987)(mastertronic)(gb)[run'cas-'].cas" size="46608" crc="74ce546e"/>
@@ -9173,7 +9336,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="minimagos" romof="msx">
-		<description>MiniMagos (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>MiniMagos (HB)</description>
 		<year>2017</year>
 		<manufacturer>Fran Games</manufacturer>
 		<rom name="MiniMagos (2017)(Fran Games).rom" size="24576" crc="d8a841ed"/>
@@ -9382,7 +9546,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="monsterhunter" romof="msx">
-		<description>Monster Hunter (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Monster Hunter (HB)</description>
 		<year>2006</year>
 		<manufacturer>Nerlaska Studio</manufacturer>
 		<rom name="NLKMSX001ES_MonsterHunter.rom" size="131072" crc="b876a92f"/>
@@ -9393,7 +9558,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="monsteronrun" romof="msx">
-		<description>Monster On The Run (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Monster On The Run (HB)</description>
 		<year>2021</year>
 		<manufacturer>Paolo Borzini</manufacturer>
 		<rom name="Monster On The Run v1.0 (2021)(Paolo Borzini).rom" size="32768" crc="31ca1a69"/>
@@ -9415,7 +9581,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="montanajohn" romof="msx">
-		<description>Montana John and the Templar's Treasure (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Montana John and the Templar's Treasure (HB)</description>
 		<year>2008</year>
 		<manufacturer>Infinite</manufacturer>
 		<rom name="MJTT.ROM" size="131072" crc="7b5e126f"/>
@@ -9657,7 +9824,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mrcrack" romof="msx">
-		<description>Mr. Cracksman (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Mr. Cracksman (HB)</description>
 		<year>2013</year>
 		<manufacturer>RELEVO</manufacturer>
 		<rom name="RLV917_MR_CRACKSMAN.rom" size="8192" crc="e8ded848"/>
@@ -9723,7 +9891,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mrmole" romof="msx">
-		<description>Mr. Mole (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Mr. Mole (HB)</description>
 		<year>2007</year>
 		<manufacturer>Nerlaska Studio</manufacturer>
 		<rom name="NLKMSX003EN_MrMole_KONAMI5.rom" size="131072" crc="aa6f2968"/>
@@ -9877,7 +10046,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="unleashed" romof="msx">
-		<description>MSX Unleashed (HB, Tech-demo) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>MSX Unleashed (HB, Tech-demo)</description>
 		<year>2006</year>
 		<manufacturer>dvik &amp; joyrex</manufacturer>
 		<rom name="unleashed.rom" size="262144" crc="10f86aa9"/>
@@ -9943,7 +10113,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mutdeep" romof="msx">
-		<description>Mutants From The Deep (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Mutants From The Deep (HB)</description>
 		<year>2021</year>
 		<manufacturer>Retroworks</manufacturer>
 		<rom name="Mutants From The Deep (2021)(Retroworks).rom" size="65536" crc="8183bae1"/>
@@ -9977,7 +10148,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="namake" romof="msx">
-		<description>Namake's Bridgedrome (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Namake's Bridgedrome (HB)</description>
 		<year>2005</year>
 		<manufacturer>Buresto Faiya</manufacturer>
 		<rom name="Namake's Bridgedrome (2005)(Buresto Faiya).rom" size="16384" crc="92aee975"/>
@@ -9999,7 +10171,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="navymoves1" romof="msx">
-		<description>Navy Moves - Part 1 (Euro) [Set '1-Keyboard' and config inputs to use controller]</description>
+		<comment>Set '1-Keyboard' and config inputs to use controller</comment>
+		<description>Navy Moves - Part 1 (Euro)</description>
 		<year>1988</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Navy Moves - Part 1 (1988)(Dinamic Software)[RUN'CAS-'].cas" size="50839" crc="5a62354d"/>
@@ -10010,7 +10183,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="navymoves2" cloneof="navymoves1" romof="navymoves1">
-		<description>Navy Moves - Part 2 (Euro) [Password: 53817]</description>
+		<comment>Password: 53817</comment>
+		<description>Navy Moves - Part 2 (Euro)</description>
 		<year>1988</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Navy Moves - Part 2 (1988)(Dinamic Software)[RUN'CAS-'].cas" size="46325" crc="04390c1e"/>
@@ -10021,7 +10195,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nayade" romof="msx">
-		<description>Nayade Resistance (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Nayade Resistance (HB)</description>
 		<year>2013</year>
 		<manufacturer>Pentacour</manufacturer>
 		<rom name="nayade.rom" size="32768" crc="3587844a"/>
@@ -10076,7 +10251,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gradius2p" cloneof="gradius2" romof="gradius2">
-		<description>Nemesis 2 (Euro) ~ Gradius 2 (Jpn) (Prototype) [Prototype]</description>
+		<comment>Prototype</comment>
+		<description>Nemesis 2 (Euro) ~ Gradius 2 (Jpn) (Prototype)</description>
 		<year>1987</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="nemesis 2 (japan, europe) (beta).rom" size="131072" crc="dfa8c827"/>
@@ -10142,7 +10318,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="neuras" romof="msx">
-		<description>Neuras (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Neuras (HB)</description>
 		<year>2021</year>
 		<manufacturer>Inufuto</manufacturer>
 		<rom name="Neuras (2021)(mxb03523).rom" size="8760" crc="27b5df15"/>
@@ -10153,7 +10330,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nightcity" romof="msx">
-		<description>Night City (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Night City (HB)</description>
 		<year>2006</year>
 		<manufacturer>German Gomez Herrera</manufacturer>
 		<rom name="EN-NIGHT.ROM" size="65536" crc="7990a7f8"/>
@@ -10164,7 +10342,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nightdriver" romof="msx">
-		<description>Night Driver (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Night Driver (HB)</description>
 		<year>2007</year>
 		<manufacturer>Karoshi Corporation</manufacturer>
 		<rom name="Night Driver (2007)(Karoshi Corporation).rom" size="8192" crc="28610b8a"/>
@@ -10186,7 +10365,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nightknight" romof="msx">
-		<description>Night Knight (HB, v1.0.3) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Night Knight (HB, v1.0.3)</description>
 		<year>2019</year>
 		<manufacturer>Juan J. Martinez/usebox.net</manufacturer>
 		<rom name="nightk.rom" size="32768" crc="3a7965de"/>
@@ -10263,7 +10443,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjasav" romof="msx">
-		<description>Ninja Savior (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Ninja Savior (HB)</description>
 		<year>2015</year>
 		<manufacturer>RELEVO</manufacturer>
 		<rom name="RLV921_Ninja_Savior.rom" size="16384" crc="c059ffba"/>
@@ -10329,7 +10510,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nobackdown" romof="msx">
-		<description>No Back Down (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>No Back Down (HB)</description>
 		<year>2021</year>
 		<manufacturer>SoCal</manufacturer>
 		<rom name="No Back Down v1.0 (2021)(Socal).rom" size="65536" crc="a78fdb26"/>
@@ -10340,7 +10522,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nogals" romof="msx">
-		<description>Nogalious (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Nogalious (HB)</description>
 		<year>2019</year>
 		<manufacturer>LuegoLu3go</manufacturer>
 		<rom name="Nogalious (2019)(LUEGOLU3GO Studio).rom" size="524288" crc="7321d4f4"/>
@@ -10351,7 +10534,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nogalsdemo" cloneof="nogals" romof="nogals">
-		<description>Nogalious Demo (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Nogalious Demo (HB)</description>
 		<year>2018</year>
 		<manufacturer>LuegoLu3go</manufacturer>
 		<rom name="nogalious demo (2018)(luegolu3go).rom" size="524288" crc="8728e3e9"/>
@@ -10362,7 +10546,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nohzdyve" romof="msx">
-		<description>Nohzdyve (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Nohzdyve (HB)</description>
 		<year>2019</year>
 		<manufacturer>Giovanni Nunes</manufacturer>
 		<rom name="Nohzdyve (2019)(Giovanni Nunes).rom" size="8192" crc="4e6fb8ea"/>
@@ -10439,7 +10624,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="oceano" romof="msx">
-		<description>Oceano (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Oceano (HB)</description>
 		<year>2015</year>
 		<manufacturer>EgoTrip</manufacturer>
 		<rom name="Oceano (2015)(EgoTrip).rom" size="32768" crc="642d7de8"/>
@@ -10505,7 +10691,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="openwide" romof="msx">
-		<description>Open Wide! (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Open Wide! (HB)</description>
 		<year>2021</year>
 		<manufacturer>Hakogame</manufacturer>
 		<rom name="Open Wide! (2021)(Hakogame).rom" size="131072" crc="286a11a6"/>
@@ -10527,7 +10714,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="opwolf" romof="msx">
-		<description>Operation Wolf (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Operation Wolf (HB)</description>
 		<year>2009</year>
 		<manufacturer>TOYBOX</manufacturer>
 		<rom name="OWMSX1.ROM" size="32768" crc="e9492c87"/>
@@ -10582,7 +10770,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pac01" romof="msx">
-		<description>PAC-01 (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>PAC-01 (HB)</description>
 		<year>2021</year>
 		<manufacturer>Arcs</manufacturer>
 		<rom name="PAC-01 (2021)(Arcs).rom" size="32768" crc="c22e6f4f"/>
@@ -10681,7 +10870,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pacific" romof="msx">
-		<description>Pacific (HB, v1.2.4) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Pacific (HB, v1.2.4)</description>
 		<year>2020</year>
 		<manufacturer>Andre Baptista</manufacturer>
 		<rom name="Pacific v1.2.4 (2020)(Andre Baptista).rom" size="16384" crc="0811de0a"/>
@@ -10692,7 +10882,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pacobomb" romof="msx">
-		<description>Paco el Bombas REDUX (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Paco el Bombas REDUX (HB)</description>
 		<year>2021</year>
 		<manufacturer>Physical Dreams</manufacturer>
 		<rom name="Paco el Bombas REDUX (2021)(Physical Dreams).rom" size="32768" crc="5c34c76e"/>
@@ -10714,7 +10905,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pairlogic" romof="msx">
-		<description>Pair Logic (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Pair Logic (HB)</description>
 		<year>2005</year>
 		<manufacturer>AG Software</manufacturer>
 		<rom name="Pair Logic (2005)(AG Software).rom" size="8192" crc="e03cb45d"/>
@@ -10758,7 +10950,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pjoe" romof="msx">
-		<description>Parachuteless Joe (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Parachuteless Joe (HB)</description>
 		<year>2005</year>
 		<manufacturer>Paxanga Soft</manufacturer>
 		<rom name="pjoe.rom" size="32768" crc="bff072fe"/>
@@ -10813,7 +11006,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="payload" romof="msx">
-		<description>Payload (Jpn) [Map 'Function Keys' to play]</description>
+		<comment>Map 'Function Keys' to play</comment>
+		<description>Payload (Jpn)</description>
 		<year>1985</year>
 		<manufacturer>Sony</manufacturer>
 		<rom name="Payload (1985)(Sony)(JP).rom" size="32768" crc="165eae6d"/>
@@ -10857,7 +11051,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="penguincafe" romof="msx">
-		<description>Penguin Cafe (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Penguin Cafe (HB)</description>
 		<year>2006</year>
 		<manufacturer>MSX Cafe</manufacturer>
 		<rom name="penguincafe.rom" size="32768" crc="ba41efb1"/>
@@ -10868,7 +11063,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pengmind" romof="msx">
-		<description>Penguin Mind (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Penguin Mind (HB)</description>
 		<year>2007</year>
 		<manufacturer>MSX Cafe</manufacturer>
 		<rom name="PENGMIND.ROM" size="65536" crc="d2de6ec4"/>
@@ -10879,7 +11075,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pengrace" romof="msx">
-		<description>Penguin Race (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Penguin Race (HB)</description>
 		<year>2003</year>
 		<manufacturer>Dioniso</manufacturer>
 		<rom name="Penguin Race (2003)(Dioniso).rom" size="16384" crc="ac456cfa"/>
@@ -10923,7 +11120,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="perezthemouse" romof="msx">
-		<description>Perez the Mouse (HB, V1.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Perez the Mouse (HB, V1.1)</description>
 		<year>2011</year>
 		<manufacturer>theNestruo &amp; Wonder</manufacturer>
 		<rom name="Perez the Mouse 1.1 (2011) (theNestruo Wonder).cas" size="22915" crc="cc8d9d62"/>
@@ -10934,7 +11132,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="perfectfit" romof="msx">
-		<description>Perfect Fit (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Perfect Fit (HB)</description>
 		<year>2008</year>
 		<manufacturer>Paxanga Soft</manufacturer>
 		<rom name="Perfect Fit (2008)(Paxanga Soft).rom" size="32768" crc="91f8b81f"/>
@@ -10967,7 +11166,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="phantis2" cloneof="phantis1" romof="phantis1">
-		<description>Phantis - Part 2 (Spanish) [Password: 18757]</description>
+		<comment>Password: 18757</comment>
+		<description>Phantis - Part 2 (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Phantis - Part 2 (1987)(Dinamic Software)(es)[RUN'CAS-'].cas" size="46693" crc="b21699eb"/>
@@ -10989,7 +11189,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="phantsaga" romof="msx">
-		<description>Phantomas Saga Infinity (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Phantomas Saga Infinity (HB)</description>
 		<year>2006</year>
 		<manufacturer>Karoshi Corporation</manufacturer>
 		<rom name="Phantomas Saga Infinity (2006)(Karoshi Corp.).rom" size="32768" crc="ffb9f1df"/>
@@ -11011,7 +11212,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pickinx" romof="msx">
-		<description>PickinX (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>PickinX (HB)</description>
 		<year>2021</year>
 		<manufacturer>Amaury Carvalho</manufacturer>
 		<rom name="PickinX (2021)(Amaury Carvalho).rom" size="32768" crc="ecc050e8"/>
@@ -11044,7 +11246,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="picpuzzle2" romof="msx">
-		<description>Picture Puzzle 2nd version (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Picture Puzzle 2nd version (HB)</description>
 		<year>2004</year>
 		<manufacturer>Karoshi Corporation</manufacturer>
 		<rom name="Picture Puzzle 2nd version (2004)(Karoshi Corporation).rom" size="8192" crc="01b3239f"/>
@@ -11132,7 +11335,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pippo" romof="msx">
-		<description>Pippo La Scopa Ficcanaso (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Pippo La Scopa Ficcanaso (HB)</description>
 		<year>2021</year>
 		<manufacturer>Gamecast</manufacturer>
 		<rom name="Pippo La Scopa Ficcanaso (2021)(Gamecast).rom" size="16384" crc="ee9b213d"/>
@@ -11253,7 +11457,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pitman" romof="msx">
-		<description>Pitman (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Pitman (HB)</description>
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Pitman (2021)(Under4Mhz).rom" size="32768" crc="c896e810"/>
@@ -11319,7 +11524,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="poogaboo" romof="msx">
-		<description>Poogaboo (Spanish) [Use Cursor Keys and SPACE in the options menu]</description>
+		<comment>Use Cursor Keys and SPACE in the options menu</comment>
+		<description>Poogaboo (Spanish)</description>
 		<year>1991</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="Poogaboo (1991)(Opera Soft)(ES)[BLOAD'CAS-',R].cas" size="66368" crc="ce7a6084"/>
@@ -11374,7 +11580,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="prettykngdm" romof="msx">
-		<description>Pretty Kingdom (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Pretty Kingdom (HB)</description>
 		<year>2014</year>
 		<manufacturer>Nerlaska Studio</manufacturer>
 		<rom name="NLKMSX006EN_PRETTYKINGDOM.rom" size="32768" crc="cb2d148c"/>
@@ -11385,7 +11592,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="princessquest" romof="msx">
-		<description>Princess Quest (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Princess Quest (HB)</description>
 		<year>2012</year>
 		<manufacturer>Oscar Toledo G.</manufacturer>
 		<rom name="princess_quest_msx.rom" size="65536" crc="aa31ac36"/>
@@ -11462,7 +11670,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="puzzybox" romof="msx">
-		<description>PuzzyBox (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>PuzzyBox (HB)</description>
 		<year>2021</year>
 		<manufacturer>Gamecast</manufacturer>
 		<rom name="PuzzyBox(2021)(Gamecast).rom" size="65536" crc="454381e4"/>
@@ -11473,7 +11682,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pwnd" romof="msx">
-		<description>PWND (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>PWND (HB)</description>
 		<year>2009</year>
 		<manufacturer>Metal Soft</manufacturer>
 		<rom name="PWND (2009)(Metal Soft).rom" size="16384" crc="51f201b3"/>
@@ -11495,7 +11705,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pyramidwex" romof="msx">
-		<description>Pyramid Warp Enhanced (HB) [Homebrew, Remastered version]</description>
+		<comment>Homebrew, Remastered version</comment>
+		<description>Pyramid Warp Enhanced (HB)</description>
 		<year>2021</year>
 		<manufacturer>Bitcaffe, Nenefranz, theNestruo</manufacturer>
 		<rom name="Pyramid Warp Enhanced (2021)(Bitcaffe-Nenefranz-theNestruo).rom" size="32768" crc="a7cdfff9"/>
@@ -11506,7 +11717,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pyroman" romof="msx">
-		<description>Pyro-Man (Euro) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Pyro-Man (Euro)</description>
 		<year>1987</year>
 		<manufacturer>Nice Ideas</manufacturer>
 		<rom name="Pyro-Man (1987)(Nice Ideas).rom" size="32768" crc="baff4ae8"/>
@@ -11539,7 +11751,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="qbiqs" romof="msx">
-		<description>QBIQS (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>QBIQS (HB)</description>
 		<year>2010</year>
 		<manufacturer>Z80st-Software</manufacturer>
 		<rom name="qbiqs (2010)(z80st-software).rom" size="49152" crc="c1b8c64f"/>
@@ -11550,7 +11763,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="quartet" cloneof="quartetx" romof="quartetx">
-		<description>Quartet (HB, v1.2) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Quartet (HB, v1.2)</description>
 		<year>2019</year>
 		<manufacturer>Ilkke and bitsofbas</manufacturer>
 		<rom name="quartet v12.rom" size="32768" crc="eeb24910"/>
@@ -11561,7 +11775,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="quartetx" romof="msx">
-		<description>Quartet (HB, v1.3) [Homebrew, Extra options and 2P co-op mode]</description>
+		<comment>Homebrew, Extra options and 2P co-op mode</comment>
+		<description>Quartet (HB, v1.3)</description>
 		<year>2019</year>
 		<manufacturer>Ilkke and bitsofbas</manufacturer>
 		<rom name="Quartet v1.3 (2019)(Ilkke and bitsofbas).rom" size="49152" crc="266b023d"/>
@@ -11649,7 +11864,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="racecity" romof="msx">
-		<description>Race City (Spanish) [Small sound glitches]</description>
+		<comment>Small sound glitches</comment>
+		<description>Race City (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Genesis Soft - Iber Soft</manufacturer>
 		<rom name="Race City (1988)(Iber Soft)(ES)[RUN'CAS-'].cas" size="48514" crc="aa100ad2"/>
@@ -11781,7 +11997,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="raven" romof="msx">
-		<description>Raven (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Raven (HB)</description>
 		<year>2021</year>
 		<manufacturer>Micha Mulder</manufacturer>
 		<rom name="Raven (2021)(Micha Mulder).rom" size="16384" crc="456435f0"/>
@@ -11825,7 +12042,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="reflexion" romof="msx">
-		<description>Reflexion (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Reflexion (HB)</description>
 		<year>2021</year>
 		<manufacturer>Jipe</manufacturer>
 		<rom name="Reflexion (2021)(Jipe).rom" size="131072" crc="5ff1099a"/>
@@ -11869,7 +12087,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="retaliot" romof="msx">
-		<description>Retaliot (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Retaliot (HB)</description>
 		<year>2009</year>
 		<manufacturer>Video Hazard</manufacturer>
 		<rom name="Retaliot (2009)(video Hazard).rom" size="131072" crc="e63a6c39"/>
@@ -11913,7 +12132,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="riyadh" romof="msx">
-		<description>Riyadh (HB, Tech-demo) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Riyadh (HB, Tech-demo)</description>
 		<year>2001</year>
 		<manufacturer>Bandwagon</manufacturer>
 		<rom name="riyadh.rom" size="262144" crc="3e207332"/>
@@ -12035,7 +12255,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="rockbolt" romof="msx">
-		<description>Rock'n Bolt (Jpn) [Set Function Keys to play]</description>
+		<comment>Set Function Keys to play</comment>
+		<description>Rock'n Bolt (Jpn)</description>
 		<year>1985</year>
 		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="rock'n bolt (japan).rom" size="16384" crc="430e5789"/>
@@ -12145,7 +12366,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="rnff" romof="msx">
-		<description>Running Naked in a Field of Flowers (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Running Naked in a Field of Flowers (HB)</description>
 		<year>2006</year>
 		<manufacturer>Infinite</manufacturer>
 		<rom name="Running Naked in a Field of Flowers (2006)(Infinite).rom" size="32768" crc="16fb200f"/>
@@ -12156,7 +12378,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="soloen" romof="msx">
-		<description>S.o.L.o. (English) (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>S.o.L.o. (English) (HB)</description>
 		<year>2021</year>
 		<manufacturer>Angel Colaso</manufacturer>
 		<rom name="S.o.L.o. EN (2021)(Angel Colaso).rom" size="49152" crc="b06abc90"/>
@@ -12167,7 +12390,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="soloes" cloneof="soloen" romof="soloen">
-		<description>S.o.L.o. (Spanish) (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>S.o.L.o. (Spanish) (HB)</description>
 		<year>2021</year>
 		<manufacturer>Angel Colaso</manufacturer>
 		<rom name="S.o.L.o. ES (2021)(Angel Colaso).rom" size="49152" crc="3b426a04"/>
@@ -12189,7 +12413,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="smzoom" romof="msx">
-		<description>Saimazoom (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Saimazoom (HB)</description>
 		<year>2005</year>
 		<manufacturer>Karoshi Corporation</manufacturer>
 		<rom name="rk708en.rom" size="32768" crc="e76bc18e"/>
@@ -12334,7 +12559,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="score3020" romof="msx">
-		<description>Score 3020 (Spanish) [Set 'Teclado' to play - Q, P and Space]</description>
+		<comment>Set 'Teclado' to play - Q, P and Space</comment>
+		<description>Score 3020 (Spanish)</description>
 		<year>2021</year>
 		<manufacturer>SoCal</manufacturer>
 		<rom name="Score 3020 ES (1988)(Topo Soft).rom" size="131072" crc="484e06c1"/>
@@ -12401,7 +12627,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sekaikei" romof="msx">
-		<description>Sekaikei Girl (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Sekaikei Girl (HB)</description>
 		<year>2020</year>
 		<manufacturer>Tensei Kobo</manufacturer>
 		<rom name="Sekaikei Girl (2020)(Tensei Kobo).rom" size="753664" crc="e9ea045a"/>
@@ -12412,7 +12639,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="seleniak" romof="msx">
-		<description>Seleniak (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Seleniak (HB)</description>
 		<year>2005</year>
 		<manufacturer>Guzuta Raster Leisure</manufacturer>
 		<rom name="seleniak.rom" size="8192" crc="6e8bb5fa"/>
@@ -12423,7 +12651,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="senjokam" romof="msx">
-		<description>Senjou no Ookami (Jpn) [aka Commando]</description>
+		<comment>aka Commando</comment>
+		<description>Senjou no Ookami (Jpn)</description>
 		<year>1987</year>
 		<manufacturer>ASCII</manufacturer>
 		<rom name="lh231073" size="131072" crc="427b3f14"/>
@@ -12456,7 +12685,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sensha" romof="msx">
-		<description>Sensha (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Sensha (HB)</description>
 		<year>2021</year>
 		<manufacturer>Ochixim</manufacturer>
 		<rom name="Sensha (2021)(Ochixn).rom" size="32768" crc="ea84771c"/>
@@ -12489,7 +12719,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="shmup11" romof="msx">
-		<description>Shmup! (HB, v1.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Shmup! (HB, v1.1)</description>
 		<year>2013</year>
 		<manufacturer>IMANOK</manufacturer>
 		<rom name="shmup!.rom" size="16384" crc="99cca8a4"/>
@@ -12511,7 +12742,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="shouganai11" romof="msx">
-		<description>Shouganai (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Shouganai (HB)</description>
 		<year>2013</year>
 		<manufacturer>Paxanga Soft</manufacturer>
 		<rom name="shoganai.rom" size="16384" crc="d27ea890"/>
@@ -12566,7 +12798,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sinkking" romof="msx">
-		<description>Sink King (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Sink King (HB)</description>
 		<year>2005</year>
 		<manufacturer>Guzuta Raster Leisure</manufacturer>
 		<rom name="sinkking.rom" size="8192" crc="dcd241fa"/>
@@ -12577,7 +12810,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sirfred" romof="msx">
-		<description>Sir Fred (Spanish) [Select '2 cursores' to use joystick]</description>
+		<comment>Select '2 cursores' to use joystick</comment>
+		<description>Sir Fred (Spanish)</description>
 		<year>1986</year>
 		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="Sir Fred (1986)(Zigurat Software)(es)[RUN'CAS-'].cas" size="79735" crc="a92514cf"/>
@@ -12588,7 +12822,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="skateair" romof="msx">
-		<description>Skate Air (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Skate Air (HB)</description>
 		<year>2006</year>
 		<manufacturer>Yerami Soft</manufacturer>
 		<rom name="SKATE_AIR_en.rom" size="131072" crc="6398a569"/>
@@ -12698,7 +12933,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="skyfox" romof="msx">
-		<description>SkyFox - Paina (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>SkyFox - Paina (HB)</description>
 		<year>1989</year>
 		<manufacturer>Pasi Kettunen</manufacturer>
 		<rom name="SkyFox - Paina (Pasi Kettunen) (1989).rom" size="8192" crc="efb971a4"/>
@@ -12753,7 +12989,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="snailmaze" romof="msx">
-		<description>Snail Maze (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Snail Maze (HB)</description>
 		<year>2004</year>
 		<manufacturer>Karoshi Corporation</manufacturer>
 		<rom name="Snail Maze (2004)(Karoshi Corporation).rom" size="8192" crc="bac0bfee"/>
@@ -12764,7 +13001,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="snake" romof="msx">
-		<description>Snake (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Snake (HB)</description>
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Snake (2021)(Under4Mhz).rom" size="14287" crc="cea10bd9"/>
@@ -12786,7 +13024,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="snowboard" romof="msx">
-		<description>Snowboarding (HB, v1.01) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Snowboarding (HB, v1.01)</description>
 		<year>2020</year>
 		<manufacturer>RELEVO</manufacturer>
 		<rom name="snowboarding v1.01 (2020)(revelo).rom" size="49152" crc="8efaf6b4"/>
@@ -12830,7 +13069,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="solnegro2" cloneof="solnegro1" romof="solnegro1">
-		<description>Sol Negro - Part 2 (Spanish) [Password: 2414520]</description>
+		<comment>Password: 2414520</comment>
+		<description>Sol Negro - Part 2 (Spanish)</description>
 		<year>1989</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="Sol Negro - Part 2 ES (1989)(Opera Soft)[BLOAD'CAS-',R].cas" size="84560" crc="31b4198c"/>
@@ -12874,7 +13114,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sokobanpe" romof="msx">
-		<description>Soukoban Pocket Edition (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Soukoban Pocket Edition (HB)</description>
 		<year>2004</year>
 		<manufacturer>Karoshi Corporation</manufacturer>
 		<rom name="soukoban pocket edition (2004)(karoshi corp).rom" size="8192" crc="d523be9f"/>
@@ -12897,7 +13138,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sp8inv" romof="msx">
-		<description>Sp8 Invaders (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Sp8 Invaders (HB)</description>
 		<year>2009</year>
 		<manufacturer>Dioniso</manufacturer>
 		<rom name="Sp8 Invaders (2009)(Dioniso).rom" size="8192" crc="a327b2de"/>
@@ -12986,7 +13228,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="spacemouse" romof="msx">
-		<description>Space Mouse (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Space Mouse (HB)</description>
 		<year>201x</year>
 		<manufacturer>H. Kobo</manufacturer>
 		<rom name="Space Mouse (H. Kobo, 201x).rom" size="131072" crc="b55702f7"/>
@@ -13129,7 +13372,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="squardan" romof="msx">
-		<description>Square Dancer (Jpn) [Use keys 'Z', '/' and Enter]</description>
+		<comment>Use keys 'Z', '/' and Enter</comment>
+		<description>Square Dancer (Jpn)</description>
 		<year>1984</year>
 		<manufacturer>Toshiba EMI</manufacturer>
 		<rom name="square dancer (japan).rom" size="16384" crc="dd5cf5c8"/>
@@ -13140,7 +13384,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="squareball" romof="msx">
-		<description>SquareBall (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>SquareBall (HB)</description>
 		<year>2021</year>
 		<manufacturer>Ray2Day</manufacturer>
 		<rom name="SquareBall (2021)(Ray2Day).rom" size="16384" crc="13e56d77"/>
@@ -13316,7 +13561,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="stardust" romof="msx">
-		<description>Stardust (Spanish) [Use Q, A and SPACE to select options]</description>
+		<comment>Use Q, A and SPACE to select options</comment>
+		<description>Stardust (Spanish)</description>
 		<year>1987</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="Stardust ES (1987)(Topo Soft)[RUN'CAS-'].cas" size="94031" crc="697da5c1"/>
@@ -13360,7 +13606,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="step" romof="msx">
-		<description>Step (HB, v1.2) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Step (HB, v1.2)</description>
 		<year>2021</year>
 		<manufacturer>Uninteresting</manufacturer>
 		<rom name="Step v1.2 (2021)(Uninteresting).rom" size="131072" crc="03379ef8"/>
@@ -13415,7 +13662,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="stevedore" romof="msx">
-		<description>Stevedore (HB, v1.2) [Homebrew, Hold controller button 2 to restart level]</description>
+		<comment>Homebrew, Hold controller button 2 to restart level</comment>
+		<description>Stevedore (HB, v1.2)</description>
 		<year>2021</year>
 		<manufacturer>theNestruo &amp; Wonder</manufacturer>
 		<rom name="Stevedore v1.2 (2021)(theNestruo &amp; Wonder).rom" size="49152" crc="859c04ad"/>
@@ -13426,7 +13674,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="stevedored" cloneof="stevedore" romof="stevedore">
-		<description>Stevedore Demo (HB) [Homebrew, Hold controller button 2 to restart level]</description>
+		<comment>Homebrew, Hold controller button 2 to restart level</comment>
+		<description>Stevedore Demo (HB)</description>
 		<year>2020</year>
 		<manufacturer>theNestruo &amp; Wonder</manufacturer>
 		<rom name="Stevedore - demo (2020) (Nestruo &amp; Wonder).rom" size="32768" crc="4923fd7a"/>
@@ -13481,7 +13730,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="stratos2" romof="msx">
-		<description>StratoS (HB, v2) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>StratoS (HB, v2)</description>
 		<year>2005</year>
 		<manufacturer>CEZ GS</manufacturer>
 		<rom name="stratos2.rom" size="16384" crc="e3093554"/>
@@ -13492,7 +13742,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="straycat" romof="msx">
-		<description>Stray Cat (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Stray Cat (HB)</description>
 		<year>2009</year>
 		<manufacturer>IMANOK</manufacturer>
 		<rom name="straycat.rom" size="32768" crc="d747e596"/>
@@ -13514,7 +13765,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="stupmart" romof="msx">
-		<description>Stupid Martians (HB, v1.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Stupid Martians (HB, v1.1)</description>
 		<year>2020</year>
 		<manufacturer>Visualedu</manufacturer>
 		<rom name="stupid martians v1.1 (2020)(visualedu).rom" size="65536" crc="31e3f039"/>
@@ -13525,7 +13777,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="subacuatic" romof="msx">
-		<description>Subacuatic (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Subacuatic (HB)</description>
 		<year>2012</year>
 		<manufacturer>RELEVO / The Mojon Twins</manufacturer>
 		<rom name="Subacuatic_(2012)_(rlv911).rom" size="32768" crc="91884cc0"/>
@@ -13536,7 +13789,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="subcmdr" romof="msx">
-		<description>Subcommander (HB, v1.02) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Subcommander (HB, v1.02)</description>
 		<year>2020</year>
 		<manufacturer>Zoran Majcenic</manufacturer>
 		<rom name="subcommander102.rom" size="32768" crc="aaf14b08"/>
@@ -13877,7 +14131,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tvirus" romof="msx">
-		<description>T-Virus (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>T-Virus (HB)</description>
 		<year>2004</year>
 		<manufacturer>Dioniso (Alfonso D.C.)</manufacturer>
 		<rom name="tvirus.rom" size="8192" crc="72b26927"/>
@@ -13932,7 +14187,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="top" romof="msx">
-		<description>Tales of Popolon (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Tales of Popolon (HB)</description>
 		<year>2017</year>
 		<manufacturer>Brain Games</manufacturer>
 		<rom name="tales of popolon.rom" size="32768" crc="d9b6c432"/>
@@ -14075,7 +14331,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="teodoro" romof="msx">
-		<description>Teodoro No Sabe Volar (English) (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Teodoro No Sabe Volar (English) (HB)</description>
 		<year>2012</year>
 		<manufacturer>Retroworks</manufacturer>
 		<rom name="DMZ002 - Teodoro no sabe volar (English).rom" size="32768" crc="d2d53275"/>
@@ -14086,7 +14343,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="teodoroes" cloneof="teodoro" romof="teodoro">
-		<description>Teodoro No Sabe Volar (Spanish) (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Teodoro No Sabe Volar (Spanish) (HB)</description>
 		<year>2012</year>
 		<manufacturer>Retroworks</manufacturer>
 		<rom name="Teodoro no sabe volar ES (2012)(Retroworks).rom" size="32768" crc="ec05665c"/>
@@ -14229,7 +14487,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="blckonyxen" cloneof="blckonyx" romof="blckonyx">
-		<description>The Black Onyx (English, v1.2) [Hack]</description>
+		<comment>Hack</comment>
+		<description>The Black Onyx (English, v1.2)</description>
 		<year>1985-2011</year>
 		<manufacturer>ASCII - Polaris</manufacturer>
 		<rom name="Black Onyx, The T-Eng v1.2 (2011)(Polaris).rom" size="32768" crc="b97baccc"/>
@@ -14262,7 +14521,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="thecure" romof="msx">
-		<description>The Cure (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>The Cure (HB)</description>
 		<year>2005</year>
 		<manufacturer>XL2S Entertainment</manufacturer>
 		<rom name="thecure.rom" size="49152" crc="7f855276"/>
@@ -14416,7 +14676,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="relic" cloneof="reliquia" romof="reliquia">
-		<description>The Relic (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>The Relic (HB)</description>
 		<year>2020</year>
 		<manufacturer>Roolandoo</manufacturer>
 		<rom name="the relic (2020)(roolandoo).rom" size="32768" crc="4ff53c97"/>
@@ -14581,7 +14842,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tbirds1a" romof="msx">
-		<description>Thunderbirds - Mission 1: Mine Menace (Euro) [Press SPACE to change character]</description>
+		<comment>Press SPACE to change character</comment>
+		<description>Thunderbirds - Mission 1: Mine Menace (Euro)</description>
 		<year>1989</year>
 		<manufacturer>Grandslam Entertainments</manufacturer>
 		<rom name="thunderbirds (1989)(grandslam entertainments)(gb)(tape 1 of 2 side a)[bload'cas-',r][martos].cas" size="72561" crc="04456b16"/>
@@ -14592,7 +14854,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tbirdst1b" cloneof="tbirds1a" romof="tbirds1a">
-		<description>Thunderbirds - Mission 2: Sub Crash (Euro) [Password: RECOVERY]</description>
+		<comment>Password: RECOVERY</comment>
+		<description>Thunderbirds - Mission 2: Sub Crash (Euro)</description>
 		<year>1989</year>
 		<manufacturer>Grandslam Entertainments</manufacturer>
 		<rom name="thunderbirds (1989)(grandslam entertainments)(gb)(tape 1 of 2 side b)[bload'cas-',r][martos].cas" size="72561" crc="c4b0130c"/>
@@ -14603,7 +14866,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tbirdst2a" cloneof="tbirds1a" romof="tbirds1a">
-		<description>Thunderbirds - Mission 3: Bank Job (Euro) [Password: ALOYSIUS]</description>
+		<comment>Password: ALOYSIUS</comment>
+		<description>Thunderbirds - Mission 3: Bank Job (Euro)</description>
 		<year>1989</year>
 		<manufacturer>Grandslam Entertainments</manufacturer>
 		<rom name="thunderbirds (1989)(grandslam entertainments)(gb)(tape 2 of 2 side a)[bload'cas-',r][martos].cas" size="72561" crc="c986703f"/>
@@ -14614,7 +14878,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tbirdst2b" cloneof="tbirds1a" romof="tbirds1a">
-		<description>Thunderbirds - Mission 4: Evil Hood (Euro) [Password: ANDERSON]</description>
+		<comment>Password: ANDERSON</comment>
+		<description>Thunderbirds - Mission 4: Evil Hood (Euro)</description>
 		<year>1989</year>
 		<manufacturer>Grandslam Entertainments</manufacturer>
 		<rom name="thunderbirds (1989)(grandslam entertainments)(gb)(tape 2 of 2 side b)[bload'cas-',r][martos].cas" size="72561" crc="1bcb9d6f"/>
@@ -14713,7 +14978,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tinasadv" romof="msx">
-		<description>Tina's Adventure Island (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Tina's Adventure Island (HB)</description>
 		<year>2017</year>
 		<manufacturer>Imanok</manufacturer>
 		<rom name="tina's adventure island (2017)(imanok).rom" size="65536" crc="41676177"/>
@@ -14736,7 +15002,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="togk" romof="msx">
-		<description>Tomb of Genghis Khan (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Tomb of Genghis Khan (HB)</description>
 		<year>2008</year>
 		<manufacturer>impulse9</manufacturer>
 		<rom name="togk.rom" size="32768" crc="903d4e51"/>
@@ -14758,7 +15025,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="toolblocks" romof="msx">
-		<description>Tool Blocks (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Tool Blocks (HB)</description>
 		<year>2021</year>
 		<manufacturer>Ray2Day</manufacturer>
 		<rom name="Tool Blocks (2021)(Ray2Day).rom" size="16384" crc="43c6a114"/>
@@ -14791,7 +15059,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tortillaen" romof="msx">
-		<description>Tortilla Sunrise (English) (HB, v1.1) [Homebrew, Redefine controls before starting to play]</description>
+		<comment>Homebrew, Redefine controls before starting to play</comment>
+		<description>Tortilla Sunrise (English) (HB, v1.1)</description>
 		<year>2021</year>
 		<manufacturer>Tortilla Yonkers</manufacturer>
 		<rom name="Tortilla Sunrise v1.1 EN (2021)(Tortilla Yonkers).rom" size="32768" crc="d7ebfcfd"/>
@@ -14802,7 +15071,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tortillaes" cloneof="tortillaen" romof="tortillaen">
-		<description>Tortilla Sunrise (Spanish) (HB, v1.1) [Homebrew, Redefine controls before starting to play]</description>
+		<comment>Homebrew, Redefine controls before starting to play</comment>
+		<description>Tortilla Sunrise (Spanish) (HB, v1.1)</description>
 		<year>2021</year>
 		<manufacturer>Tortilla Yonkers</manufacturer>
 		<rom name="Tortilla Sunrise v1.1 ES (2021)(Tortilla Yonkers).rom" size="32768" crc="d983aec4"/>
@@ -14857,7 +15127,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="trafcjam" romof="msx">
-		<description>Traffic Jam (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Traffic Jam (HB)</description>
 		<year>2006</year>
 		<manufacturer>Imanok</manufacturer>
 		<rom name="traffic jam (2006)(imanok).rom" size="32768" crc="0c7929be"/>
@@ -14879,7 +15150,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="transball" romof="msx">
-		<description>Transball (HB, v1.3.2) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Transball (HB, v1.3.2)</description>
 		<year>2016</year>
 		<manufacturer>Brain Games</manufacturer>
 		<rom name="transball-en.rom" size="32768" crc="cbcf03c5"/>
@@ -15044,7 +15316,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="twinlight" romof="msx">
-		<description>Twinlight (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Twinlight (HB)</description>
 		<year>2019</year>
 		<manufacturer>RetroSouls</manufacturer>
 		<rom name="twinlight.rom" size="32768" crc="3b76ceef"/>
@@ -15055,7 +15328,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="txupi" romof="msx">
-		<description>Txupinazo! (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Txupinazo! (HB)</description>
 		<year>2007</year>
 		<manufacturer>IMANOK</manufacturer>
 		<rom name="txupi.rom" size="32768" crc="e1b66d80"/>
@@ -15077,7 +15351,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ugamma" romof="msx">
-		<description>Uchusen Gamma (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Uchusen Gamma (HB)</description>
 		<year>2019</year>
 		<manufacturer>usebox.net</manufacturer>
 		<rom name="uchusen gamma.rom" size="49152" crc="06a85e42"/>
@@ -15121,7 +15396,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="univunk" romof="msx">
-		<description>Universe Unknown (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Universe Unknown (HB)</description>
 		<year>2005</year>
 		<manufacturer>Infinite</manufacturer>
 		<rom name="UniverseUnknown.rom" size="49152" crc="a017f389"/>
@@ -15132,7 +15408,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="uridium" romof="msx">
-		<description>Uridium (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Uridium (HB)</description>
 		<year>2014</year>
 		<manufacturer>Trilobyte</manufacturer>
 		<rom name="URDIUM48.rom" size="49152" crc="c62d92da"/>
@@ -15176,7 +15453,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="venganza" romof="msx">
-		<description>Venganza - La Sierva de la Muerte (Spanish) (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Venganza - La Sierva de la Muerte (Spanish) (HB)</description>
 		<year>2019</year>
 		<manufacturer>Salgue79</manufacturer>
 		<rom name="Venganza - La Sierva de la Muerte (2019)(Salgue79).rom" size="2097152" crc="bea65bd5"/>
@@ -15187,7 +15465,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="vesikauhu" romof="msx">
-		<description>Vesikauhu (HB, Tech-demo) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Vesikauhu (HB, Tech-demo)</description>
 		<year>2000</year>
 		<manufacturer>Bandwagon</manufacturer>
 		<rom name="Vesikauhu.rom" size="262144" crc="7392b7c7"/>
@@ -15209,7 +15488,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="vexed" romof="msx">
-		<description>Vexed (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Vexed (HB)</description>
 		<year>2020</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Vexed (2020)(Under4Mhz).rom" size="32768" crc="1ae7d805"/>
@@ -15264,7 +15544,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="viruslqp" romof="msx">
-		<description>Virus LQP-79 (HB, v1.2) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Virus LQP-79 (HB, v1.2)</description>
 		<year>2018</year>
 		<manufacturer>Pentacour</manufacturer>
 		<rom name="virus lqp-79 (2018)(pentacour)(v1.2).rom" size="49152" crc="6514414e"/>
@@ -15319,7 +15600,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="warbeyond" romof="msx">
-		<description>War From Beyond (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>War From Beyond (HB)</description>
 		<year>2020</year>
 		<manufacturer>Clube MSX</manufacturer>
 		<rom name="War From Beyond (2020)(Clube MSX).rom" size="32768" crc="1b9b2571"/>
@@ -15407,7 +15689,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="westhouse" romof="msx">
-		<description>Westen House (English) (HB, v1.3.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Westen House (English) (HB, v1.3.1)</description>
 		<year>2021</year>
 		<manufacturer>Brain Games</manufacturer>
 		<rom name="Westen House v1.3.1 EN (2021)(Brain Games).rom" size="49152" crc="cc2e7808"/>
@@ -15418,7 +15701,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="westhousep" cloneof="westhouse" romof="westhouse">
-		<description>Westen House (Portuguese) (HB, v1.3.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Westen House (Portuguese) (HB, v1.3.1)</description>
 		<year>2021</year>
 		<manufacturer>Brain Games</manufacturer>
 		<rom name="Westen House v1.3.1 PT (2021)(Brain Games).rom" size="49152" crc="45042115"/>
@@ -15429,7 +15713,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="westhouses" cloneof="westhouse" romof="westhouse">
-		<description>Westen House (Spanish) (HB, v1.3.1) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Westen House (Spanish) (HB, v1.3.1)</description>
 		<year>2021</year>
 		<manufacturer>Brain Games</manufacturer>
 		<rom name="Westen House v1.3.1 ES (2021)(Brain Games).rom" size="49152" crc="c3eef607"/>
@@ -15440,7 +15725,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="whereisit" romof="msx">
-		<description>Where Is it - The Quest For the 10th Island (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Where Is it - The Quest For the 10th Island (HB)</description>
 		<year>2021</year>
 		<manufacturer>Eric Mendel</manufacturer>
 		<rom name="Where Is it - The Quest For the 10th Island (2021)(Eric Mendel).rom" size="32768" crc="e1abcfb8"/>
@@ -15451,7 +15737,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="whodares" romof="msx">
-		<description>Who Dares Wins II (Euro) [Press SPACE to skip loading screens]</description>
+		<comment>Press SPACE to skip loading screens</comment>
+		<description>Who Dares Wins II (Euro)</description>
 		<year>1986</year>
 		<manufacturer>Alligata Software</manufacturer>
 		<rom name="Who Dares Wins II (1986)(Alligata Software)(GB).rom" size="131072" crc="1d10443f"/>
@@ -15484,7 +15771,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wingwarrdx" romof="msx">
-		<description>Wing Warriors (2020 version) (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Wing Warriors (2020 version) (HB)</description>
 		<year>2020</year>
 		<manufacturer>Kitmaker Entertainment</manufacturer>
 		<rom name="Wing Warriors (Kitmaker Entertainment Inc)(2020 Version).rom" size="131072" crc="258609d4"/>
@@ -15495,7 +15783,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wingwarr" cloneof="wingwarrdx" romof="wingwarrdx">
-		<description>Wing Warriors (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Wing Warriors (HB)</description>
 		<year>2016</year>
 		<manufacturer>Kitmaker Entertainment</manufacturer>
 		<rom name="WingWarriors.rom" size="49152" crc="207d0e62"/>
@@ -15517,7 +15806,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="witches" romof="msx">
-		<description>Witches (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Witches (HB)</description>
 		<year>2019</year>
 		<manufacturer>Cobinee</manufacturer>
 		<rom name="witches (2019)(cobinee).rom" size="32768" crc="69e924d3"/>
@@ -15594,7 +15884,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="xor2021" romof="msx">
-		<description>XOR 2021 (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>XOR 2021 (HB)</description>
 		<year>2021</year>
 		<manufacturer>Timmy</manufacturer>
 		<rom name="XOR 2021 (2021)(Timmy).rom" size="32768" crc="8f90e4e0"/>
@@ -15605,7 +15896,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="xracing" romof="msx">
-		<description>Xracing (HB, v1.0.4) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Xracing (HB, v1.0.4)</description>
 		<year>2019</year>
 		<manufacturer>Brain Games</manufacturer>
 		<rom name="xracing v104.rom" size="49152" crc="164feacb"/>
@@ -15616,7 +15908,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="xspelunk" romof="msx">
-		<description>XSpelunker (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>XSpelunker (HB)</description>
 		<year>2017</year>
 		<manufacturer>Brain Games</manufacturer>
 		<rom name="xspelunk-en.rom" size="32768" crc="0a7c288c"/>
@@ -15693,7 +15986,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="yazzie" cloneof="yazzier" romof="yazzier">
-		<description>Yazzie (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Yazzie (HB)</description>
 		<year>2019</year>
 		<manufacturer>RetroSouls</manufacturer>
 		<rom name="yazzie.rom" size="32768" crc="d659d039"/>
@@ -15704,7 +15998,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="yazzier" romof="msx">
-		<description>Yazzie Remastered (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Yazzie Remastered (HB)</description>
 		<year>2020</year>
 		<manufacturer>RetroSouls</manufacturer>
 		<rom name="yazzie remastered.rom" size="32768" crc="dd488abc"/>
@@ -15814,7 +16109,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="youkaiyarmd" cloneof="youkaiya" romof="youkaiya">
-		<description>Youkai Yashiki - Ghost House Remastered (HB) [Hack, Homebrew]</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Youkai Yashiki - Ghost House Remastered (HB)</description>
 		<year>2021</year>
 		<manufacturer>Yazioh &amp; theNestruo</manufacturer>
 		<rom name="Youkai Yashiki - Ghost House Remastered (2021)(Yazioh &amp; Nestruo).rom" size="32768" crc="2239eaf2"/>
@@ -15847,7 +16143,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zmazingo" romof="msx">
-		<description>Z - Mazin Go (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Z - Mazin Go (HB)</description>
 		<year>2018</year>
 		<manufacturer>Cobinee</manufacturer>
 		<rom name="z - mazin go (2018)(cobinee).rom" size="32768" crc="c4c64d02"/>
@@ -15858,7 +16155,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zambeze" romof="msx">
-		<description>Zambeze (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Zambeze (HB)</description>
 		<year>2006</year>
 		<manufacturer>Degora</manufacturer>
 		<rom name="zambezefacil.rom" size="32768" crc="91d07554"/>
@@ -15968,7 +16266,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zerocis" romof="msx">
-		<description>ZERO and the Castle of Infinite Sadness (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>ZERO and the Castle of Infinite Sadness (HB)</description>
 		<year>2014-16</year>
 		<manufacturer>Dioniso</manufacturer>
 		<rom name="ZERO and the Castle of Infinite Sadness (2014-16)(Dioniso).rom" size="49152" crc="7b6f90ef"/>
@@ -16034,7 +16333,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zcalavera" romof="msx">
-		<description>Zombie Calavera Prologue (HB) [Homebrew, Original game by Mojon Twins]</description>
+		<comment>Homebrew, Original game by Mojon Twins</comment>
+		<description>Zombie Calavera Prologue (HB)</description>
 		<year>2021</year>
 		<manufacturer>Nanochess</manufacturer>
 		<rom name="zombie calavera (2021)(nanochess).rom" size="32768" crc="254e500c"/>
@@ -16045,7 +16345,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zombieinc" romof="msx">
-		<description>Zombie Incident (HB, v1.3) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Zombie Incident (HB, v1.3)</description>
 		<year>2012</year>
 		<manufacturer>Nenefranz</manufacturer>
 		<rom name="ZombieIncident.rom" size="49152" crc="0d5c497a"/>
@@ -16056,7 +16357,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zombienear11" romof="msx">
-		<description>Zombie Near (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Zombie Near (HB)</description>
 		<year>2011</year>
 		<manufacturer>Oscar Toledo G.</manufacturer>
 		<rom name="Zombie Near.rom" size="131072" crc="edea8c56"/>
@@ -16100,7 +16402,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zorrico" romof="msx">
-		<description>Zorrico (English) (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Zorrico (English) (HB)</description>
 		<year>2020</year>
 		<manufacturer>Physical Dreams</manufacturer>
 		<rom name="Zorrico EN (2020)(Physical Dreams).rom" size="49152" crc="6c81d265"/>
@@ -16111,7 +16414,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zorricoit" cloneof="zorrico" romof="zorrico">
-		<description>Zorrico (Italian) (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Zorrico (Italian) (HB)</description>
 		<year>2020</year>
 		<manufacturer>Physical Dreams</manufacturer>
 		<rom name="Zorrico IT (2020)(Physical Dreams).rom" size="49152" crc="9671f6d8"/>
@@ -16122,7 +16426,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zorricoes" cloneof="zorrico" romof="zorrico">
-		<description>Zorrico (Spanish) (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Zorrico (Spanish) (HB)</description>
 		<year>2020</year>
 		<manufacturer>Physical Dreams</manufacturer>
 		<rom name="Zorrico ES (2020)(Physical Dreams).rom" size="49152" crc="591e9ae4"/>
@@ -16133,7 +16438,8 @@
 		<driver status="good"/>
 	</game>
 	<game isbios="yes" name="msx">
-		<description>MSX1 System BIOS [BIOS only]</description>
+		<comment>BIOS only</comment>
+		<description>MSX1 System BIOS</description>
 		<year>1982</year>
 		<manufacturer>MSX</manufacturer>
 		<rom name="msx.rom" size="32768" crc="a317e6b4"/>

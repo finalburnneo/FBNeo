@@ -37,7 +37,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="arnodash">
-		<description>Arno Dash (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Arno Dash (HB)</description>
 		<year>2020</year>
 		<manufacturer>Under4MHz</manufacturer>
 		<rom name="arno dash (2020)(under4mhz).sg" size="32768" crc="ea921f7c"/>
@@ -45,7 +46,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="arnodash2">
-		<description>Arno Dash 2 (HB, v1.03) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Arno Dash 2 (HB, v1.03)</description>
 		<year>2020</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Arno Dash 2 v1.03 (2020)(Under4Mhz).sg" size="32768" crc="e0478a53"/>
@@ -325,7 +327,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cherilp">
-		<description>Cheril Perils Classic SG-1000 (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Cheril Perils Classic SG-1000 (HB)</description>
 		<year>2018</year>
 		<manufacturer>Mojon Twins</manufacturer>
 		<rom name="cheril-perils-classic-ntsc.sg" size="49152" crc="60d5c65d"/>
@@ -773,7 +776,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="jetpaco">
-		<description>Jet Paco and Jet Puri SG-1000 (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Jet Paco and Jet Puri SG-1000 (HB)</description>
 		<year>2018</year>
 		<manufacturer>Mojon Twins</manufacturer>
 		<rom name="jet-paco-and-jet-puri-ntsc.sg" size="49152" crc="d31c6b3b"/>
@@ -813,7 +817,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ksolitaire">
-		<description>Klondike Solitaire (HB, v1.04) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Klondike Solitaire (HB, v1.04)</description>
 		<year>2020</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Klondike Solitaire v1.04 (2020)(Under4Mhz).sg" size="32768" crc="5f9f8b15"/>
@@ -853,7 +858,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mkidwiz">
-		<description>Magical Kid Wiz (Tw) [Stuck at boot logo?]</description>
+		<comment>Stuck at boot logo?</comment>
+		<description>Magical Kid Wiz (Tw)</description>
 		<year>198?</year>
 		<manufacturer>Aaronix</manufacturer>
 		<rom name="magical kid wiz (tw).bin" size="49152" crc="ffc4ee3f"/>
@@ -893,7 +899,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="msolitaire">
-		<description>Mahjong Solitaire (HB, v1.07) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Mahjong Solitaire (HB, v1.07)</description>
 		<year>2020</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Mahjong Solitaire v1.07 (2020)(Under4Mhz).sg" size="32768" crc="1b14b1c2"/>
@@ -1093,7 +1100,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="palikat">
-		<description>Palikat (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Palikat (HB)</description>
 		<year>2020</year>
 		<manufacturer>helmha</manufacturer>
 		<rom name="PALIKAT_NTSC_SG1000.sg" size="32768" crc="ec169914"/>
@@ -1101,7 +1109,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pegged">
-		<description>Pegged (HB, v1.02) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Pegged (HB, v1.02)</description>
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Pegged v1.02 (2021)(Under4Mhz).sg" size="32768" crc="21e891f0"/>
@@ -1133,7 +1142,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="pitman">
-		<description>Pitman (HB, v1.03) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Pitman (HB, v1.03)</description>
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Pitman v1.03 (2021)(Under4Mhz).sg" size="32768" crc="e325f022"/>
@@ -1365,7 +1375,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="snake">
-		<description>Snake (HB, v1.04) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Snake (HB, v1.04)</description>
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Snake v1.04 (2021)(Under4Mhz).sg" size="32768" crc="b9ab9d0c"/>
@@ -1525,7 +1536,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="superuwol">
-		<description>Super UWOL! SG-1000 (HB) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Super UWOL! SG-1000 (HB)</description>
 		<year>2016</year>
 		<manufacturer>Mojon Twins</manufacturer>
 		<rom name="mojon-twins--super-uwol.sg" size="49152" crc="aa8ea6eb"/>
@@ -1573,7 +1585,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="vexed">
-		<description>Vexed (HB, v1.03) [Homebrew]</description>
+		<comment>Homebrew</comment>
+		<description>Vexed (HB, v1.03)</description>
 		<year>2020</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Vexed v1.03 (2020)(Under4Mhz).sg" size="32768" crc="6159a842"/>

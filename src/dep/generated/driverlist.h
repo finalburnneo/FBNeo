@@ -9707,9 +9707,7 @@ DRV		BurnDrvsg1k_nsub;
 DRV		BurnDrvsg1k_nsuba;
 DRV		BurnDrvsg1k_nsubb;
 DRV		BurnDrvsg1k_nsubt;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvNsub;			// no comment
-#endif
+DRV		BurnDrvNsub;
 DRV		BurnDrvNycaptor;
 DRV		BurnDrvmd_nakaf1gp;
 DRV		BurnDrvmd_f1heromd;
@@ -27781,9 +27779,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_nsuba,			// N-Sub (Jpn)
 	&BurnDrvsg1k_nsubb,			// N-Sub (Jpn, Alt)
 	&BurnDrvsg1k_nsubt,			// N-Sub (Tw)
-#if defined FBNEO_DEBUG
-	&BurnDrvNsub,				// N-Sub (upright) [no comment]
-#endif
+	&BurnDrvNsub,				// N-Sub (upright)
 	&BurnDrvNycaptor,			// N.Y. Captor
 	&BurnDrvmd_nakaf1gp,		// Nakajima Satoru Kanshuu F1 Grand Prix (Jpn)
 	&BurnDrvmd_f1heromd,		// Nakajima Satoru Kanshuu F1 Hero MD (Jpn)

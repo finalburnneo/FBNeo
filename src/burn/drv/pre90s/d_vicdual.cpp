@@ -4137,7 +4137,7 @@ static INT32 NsubInit()
 	return rc;
 }
 
-struct BurnDriverD BurnDrvNsub = {
+struct BurnDriver BurnDrvNsub = {
 	"nsub", NULL, NULL, "nsub", "1980",
 	"N-Sub (upright)\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,

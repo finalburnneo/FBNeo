@@ -1611,13 +1611,22 @@ static void update_video_regs(INT32 offset)
 
 		case 0x300:
 		{
-			screen_flag = data;
-
 			if (system_select == 0) { // system Z
 				ZetSetRESETLine(data & 0x10);
+
+				if ((screen_flag & 0x10) == 0 && data & 0x10) {
+					BurnYM2203Reset();
+				}
 			} else {
 				SekSetRESETLine(1, data & 0x10);
+
+				if ((screen_flag & 0x10) == 0 && data & 0x10) {
+					MSM6295Reset();
+					BurnYM2151Reset();
+				}
 			}
+
+			screen_flag = data;
 		}
 		return;
 			
@@ -4870,6 +4879,8 @@ STD_ROM_FN(soldam)
 static INT32 soldamInit()
 {
 	INT32 nRet = SystemInit(0xA, phantasm_rom_decode);
+
+	scroll_factor_8x8[1] = 4;
 
 	if (nRet == 0) {
 		SekOpen(0);

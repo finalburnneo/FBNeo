@@ -1979,6 +1979,8 @@ static INT32 DrvDoReset()
 
 	nExtraCycles[0] = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -3757,7 +3759,7 @@ struct BurnDriver BurnDrvBloxeedc = {
 	"bloxeedc", "bloxeed", NULL, NULL, "1989",
 	"Bloxeed (World, C System)\0", NULL, "Sega / Elorg", "C",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
 	NULL, bloxeedcRomInfo, bloxeedcRomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, BloxeedcDIPInfo,
 	NoProtectionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -3785,7 +3787,7 @@ struct BurnDriver BurnDrvBloxeedu = {
 	"bloxeedu", "bloxeed", NULL, NULL, "1989",
 	"Bloxeed (US, C System, Rev A)\0", NULL, "Sega / Elorg", "C",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
 	NULL, bloxeeduRomInfo, bloxeeduRomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, BloxeeduDIPInfo,
 	NoProtectionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -3835,7 +3837,7 @@ struct BurnDriver BurnDrvColumns = {
 	"columns", NULL, NULL, NULL, "1990",
 	"Columns (World)\0", NULL, "Sega", "C",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
 	NULL, columnsRomInfo, columnsRomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, ColumnsDIPInfo,
 	ColumnsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -3856,7 +3858,7 @@ struct BurnDriver BurnDrvColumnsu = {
 	"columnsu", "columns", NULL, NULL, "1990",
 	"Columns (US, cocktail, Rev A)\0", NULL, "Sega", "C",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
 	NULL, columnsuRomInfo, columnsuRomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, ColumnsDIPInfo,
 	ColumnsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -3877,7 +3879,7 @@ struct BurnDriver BurnDrvColumnsj = {
 	"columnsj", "columns", NULL, NULL, "1990",
 	"Columns (Japan)\0", NULL, "Sega", "C",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
 	NULL, columnsjRomInfo, columnsjRomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, ColumnsDIPInfo,
 	ColumnsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -3927,7 +3929,7 @@ struct BurnDriver BurnDrvColumns2 = {
 	"columns2", NULL, NULL, NULL, "1990",
 	"Columns II: The Voyage Through Time (World)\0", NULL, "Sega", "C",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
 	NULL, columns2RomInfo, columns2RomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, Columns2DIPInfo,
 	Columns2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -3948,7 +3950,7 @@ struct BurnDriver BurnDrvColumn2j = {
 	"column2j", "columns2", NULL, NULL, "1990",
 	"Columns II: The Voyage Through Time (Japan)\0", NULL, "Sega", "C",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
 	NULL, column2jRomInfo, column2jRomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, Columns2DIPInfo,
 	Columns2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -4002,7 +4004,7 @@ struct BurnDriver BurnDrvTfrceac = {
 	"tfrceac", NULL, NULL, NULL, "1990",
 	"Thunder Force AC\0", NULL, "Technosoft / Sega", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MISC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_SEGA_MISC, GBF_HORSHOOT, 0,
 	NULL, tfrceacRomInfo, tfrceacRomName, NULL, NULL, NULL, NULL, SegaC2_3ButtonInputInfo, TfrceacDIPInfo,
 	TfrceacInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -4027,7 +4029,7 @@ struct BurnDriver BurnDrvTfrceacj = {
 	"tfrceacj", "tfrceac", NULL, NULL, "1990",
 	"Thunder Force AC (Japan)\0", NULL, "Technosoft / Sega", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MISC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_SEGA_MISC, GBF_HORSHOOT, 0,
 	NULL, tfrceacjRomInfo, tfrceacjRomName, NULL, NULL, NULL, NULL, SegaC2_3ButtonInputInfo, TfrceacDIPInfo,
 	TfrceacInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -4058,7 +4060,7 @@ struct BurnDriver BurnDrvTfrceacjpb = {
 	"tfrceacjpb", "tfrceac", NULL, NULL, "1990",
 	"Thunder Force AC (Japan, prototype, bootleg)\0", NULL, "Technosoft / Sega", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_BOOTLEG, 1, HARDWARE_SEGA_MISC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 1, HARDWARE_SEGA_MISC, GBF_HORSHOOT, 0,
 	NULL, tfrceacjpbRomInfo, tfrceacjpbRomName, NULL, NULL, NULL, NULL, SegaC2_3ButtonInputInfo, TfrceacDIPInfo,
 	TfrceacjpbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -4090,7 +4092,7 @@ struct BurnDriver BurnDrvTfrceacb = {
 	"tfrceacb", "tfrceac", NULL, NULL, "1990",
 	"Thunder Force AC (bootleg)\0", NULL, "bootleg", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 1, HARDWARE_SEGA_MISC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 1, HARDWARE_SEGA_MISC, GBF_HORSHOOT, 0,
 	NULL, tfrceacbRomInfo, tfrceacbRomName, NULL, NULL, NULL, NULL, SegaC2_3ButtonInputInfo, TfrceacDIPInfo,
 	TfrceacbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -4142,7 +4144,7 @@ struct BurnDriver BurnDrvBorench = {
 	"borench", NULL, NULL, NULL, "1990",
 	"Borench (set 1)\0", NULL, "Sega", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
 	NULL, borenchRomInfo, borenchRomName, NULL, NULL, NULL, NULL, SegaC2_2ButtonInputInfo, BorenchDIPInfo,
 	BorenchInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -4165,7 +4167,7 @@ struct BurnDriver BurnDrvBorencha = {
 	"borencha", "borench", NULL, NULL, "1990",
 	"Borench (set 2)\0", NULL, "Sega", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
 	NULL, borenchaRomInfo, borenchaRomName, NULL, NULL, NULL, NULL, SegaC2_2ButtonInputInfo, BorenchDIPInfo,
 	BorenchInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -4188,7 +4190,7 @@ struct BurnDriver BurnDrvBorenchj = {
 	"borenchj", "borench", NULL, NULL, "1990",
 	"Borench (Japan)\0", NULL, "Sega", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
 	NULL, borenchjRomInfo, borenchjRomName, NULL, NULL, NULL, NULL, SegaC2_2ButtonInputInfo, BorenchDIPInfo,
 	BorenchInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -4251,7 +4253,7 @@ struct BurnDriver BurnDrvRibbit = {
 	"ribbit", NULL, NULL, NULL, "1991",
 	"Ribbit!\0", NULL, "Sega", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_ACTION, 0,
 	NULL, ribbitRomInfo, ribbitRomName, NULL, NULL, NULL, NULL, RibbitInputInfo, RibbitDIPInfo,
 	RibbitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -4276,7 +4278,7 @@ struct BurnDriver BurnDrvRibbitj = {
 	"ribbitj", "ribbit", NULL, NULL, "1991",
 	"Ribbit! (Japan)\0", NULL, "Sega", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_ACTION, 0,
 	NULL, ribbitjRomInfo, ribbitjRomName, NULL, NULL, NULL, NULL, RibbitInputInfo, RibbitjDIPInfo,
 	RibbitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -4455,7 +4457,7 @@ struct BurnDriver BurnDrvPuyo = {
 	"puyo", NULL, NULL, NULL, "1992",
 	"Puyo Puyo (World)\0", NULL, "Compile / Sega", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
 	NULL, puyoRomInfo, puyoRomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, PuyoDIPInfo,
 	PuyoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -4485,7 +4487,7 @@ struct BurnDriver BurnDrvPuyoj = {
 	"puyoj", "puyo", NULL, NULL, "1992",
 	"Puyo Puyo (Japan, Rev B)\0", NULL, "Compile / Sega", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
 	NULL, puyojRomInfo, puyojRomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, PuyoDIPInfo,
 	PuyoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -4515,7 +4517,7 @@ struct BurnDriver BurnDrvPuyoja = {
 	"puyoja", "puyo", NULL, NULL, "1992",
 	"Puyo Puyo (Japan, Rev A)\0", NULL, "Compile / Sega", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
 	NULL, puyojaRomInfo, puyojaRomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, PuyoDIPInfo,
 	PuyoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -4540,7 +4542,7 @@ struct BurnDriver BurnDrvPuyobl = {
 	"puyobl", "puyo", NULL, NULL, "1992",
 	"Puyo Puyo (World, bootleg)\0", NULL, "bootleg", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
 	NULL, puyoblRomInfo, puyoblRomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, PuyoDIPInfo,
 	PuyoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -4594,7 +4596,7 @@ struct BurnDriver BurnDrvTantr = {
 	"tantr", NULL, NULL, NULL, "1992",
 	"Puzzle & Action: Tant-R (Japan)\0", NULL, "Sega", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
 	NULL, tantrRomInfo, tantrRomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, IchirDIPInfo,
 	TantrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -4648,7 +4650,7 @@ struct BurnDriver BurnDrvTantrkor = {
 	"tantrkor", "tantr", NULL, NULL, "1993",
 	"Puzzle & Action: Tant-R (Korea)\0", NULL, "Sega", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
 	NULL, tantrkorRomInfo, tantrkorRomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, IchirDIPInfo,
 	TantrkorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -4674,7 +4676,7 @@ struct BurnDriver BurnDrvTantrbl = {
 	"tantrbl", "tantr", NULL, NULL, "1992",
 	"Puzzle & Action: Tant-R (Japan) (bootleg set 1)\0", NULL, "bootleg", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
 	NULL, tantrblRomInfo, tantrblRomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, IchirDIPInfo,
 	NoProtectionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -4697,7 +4699,7 @@ struct BurnDriver BurnDrvTantrbl2 = {
 	"tantrbl2", "tantr", NULL, NULL, "1994",
 	"Puzzle & Action: Tant-R (Japan) (bootleg set 2)\0", NULL, "bootleg", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
 	NULL, tantrbl2RomInfo, tantrbl2RomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, IchirDIPInfo,
 	TantrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -4720,7 +4722,7 @@ struct BurnDriver BurnDrvTantrbl3 = {
 	"tantrbl3", "tantr", NULL, NULL, "1994",
 	"Puzzle & Action: Tant-R (Japan) (bootleg set 3)\0", NULL, "bootleg", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
 	NULL, tantrbl3RomInfo, tantrbl3RomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, IchirDIPInfo,
 	TantrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -4746,7 +4748,7 @@ struct BurnDriver BurnDrvTantrbl4 = {
 	"tantrbl4", "tantr", NULL, NULL, "1992",
 	"Puzzle & Action: Tant-R (Japan) (bootleg set 4)\0", NULL, "bootleg", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
 	NULL, tantrbl4RomInfo, tantrbl4RomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, IchirDIPInfo,
 	NoProtectionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -4908,7 +4910,7 @@ struct BurnDriver BurnDrvStkclmns = {
 	"stkclmns", NULL, NULL, NULL, "1994",
 	"Stack Columns (World)\0", NULL, "Sega", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
 	NULL, stkclmnsRomInfo, stkclmnsRomName, NULL, NULL, NULL, NULL, SegaC2_2ButtonInputInfo, StkclmnsDIPInfo,
 	StkclmnsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -4962,7 +4964,7 @@ struct BurnDriver BurnDrvStkclmnsj = {
 	"stkclmnsj", "stkclmns", NULL, NULL, "1994",
 	"Stack Columns (Japan)\0", NULL, "Sega", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
 	NULL, stkclmnsjRomInfo, stkclmnsjRomName, NULL, NULL, NULL, NULL, SegaC2_2ButtonInputInfo, StkclmnsDIPInfo,
 	StkclmnsjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -5016,7 +5018,7 @@ struct BurnDriver BurnDrvIchir = {
 	"ichir", NULL, NULL, NULL, "1994",
 	"Puzzle & Action: Ichidant-R (World)\0", NULL, "Sega", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
 	NULL, ichirRomInfo, ichirRomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, IchirDIPInfo,
 	IchirInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -5070,7 +5072,7 @@ struct BurnDriver BurnDrvIchirk = {
 	"ichirk", "ichir", NULL, NULL, "1994",
 	"Puzzle & Action: Ichidant-R (Korea)\0", NULL, "Sega", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
 	NULL, ichirkRomInfo, ichirkRomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, IchirDIPInfo,
 	IchirkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -5124,7 +5126,7 @@ struct BurnDriver BurnDrvIchirj = {
 	"ichirj", "ichir", NULL, NULL, "1994",
 	"Puzzle & Action: Ichidant-R (Japan)\0", NULL, "Sega", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
 	NULL, ichirjRomInfo, ichirjRomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, IchirDIPInfo,
 	IchirjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -5147,7 +5149,7 @@ struct BurnDriver BurnDrvIchirjbl = {
 	"ichirjbl", "ichir", NULL, NULL, "1994",
 	"Puzzle & Action: Ichidant-R (Japan) (bootleg)\0", NULL, "bootleg", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
 	NULL, ichirjblRomInfo, ichirjblRomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, IchirDIPInfo,
 	IchirInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -5199,7 +5201,7 @@ struct BurnDriver BurnDrvPuyopuy2 = {
 	"puyopuy2", NULL, NULL, NULL, "1994",
 	"Puyo Puyo 2 (Japan)\0", NULL, "Compile (Sega license)", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_PUZZLE, 0,
 	NULL, puyopuy2RomInfo, puyopuy2RomName, NULL, NULL, NULL, NULL, SegaC2_2ButtonInputInfo, Puyopuy2DIPInfo,
 	Puyopuy2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3
@@ -5253,7 +5255,7 @@ struct BurnDriver BurnDrvZunkyou = {
 	"zunkyou", NULL, NULL, NULL, "1994",
 	"Zunzunkyou no Yabou (Japan)\0", NULL, "Sega", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
 	NULL, zunkyouRomInfo, zunkyouRomName, NULL, NULL, NULL, NULL, SegaC2_2ButtonInputInfo, ZunkyouDIPInfo,
 	ZunkyouInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3

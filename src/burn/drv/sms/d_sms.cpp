@@ -28940,7 +28940,7 @@ STD_ROM_FN(sms_junglec)
 
 struct BurnDriver BurnDrvsms_junglec = {
 	"sms_junglec", "sms_jungle", NULL, NULL, "2021",
-	"The Jungle Book (Euro, Bra)\0", NULL, "Sega", "Sega Master System",
+	"The Jungle Book (Euro, Bra) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_junglecRomInfo, sms_junglecRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

@@ -5,10 +5,10 @@
     finished:
 		carnival (w/sound)
 		heiankyo alien (w/sound)
+		nsub (w/sound)
 
 	to do:
-	  	bugtest
-		sound?
+	  	all the others
 */
 
 #include "tiles_generic.h"
@@ -53,6 +53,7 @@ static UINT8 DrvReset;
 static INT32 nExtraCycles[1];
 
 static INT32 carnival_sound = 0;
+static INT32 is_nsub = 0;
 
 static struct BurnInputInfo Invho2InputList[] = {
 	{"Game Select",		BIT_DIGITAL,	DrvJoy5 + 4,	"p1 fire 2"	},
@@ -1337,6 +1338,7 @@ static UINT8 __fastcall spacetrk_read_port(UINT16 port)
 static void CarnivalSoundWrite1(UINT8 data);
 static void CarnivalSoundWrite2(UINT8 data);
 static void CarnivalSoundReset();
+static void NsubSoundWrite(UINT8 data);
 
 static void __fastcall carnival_write_port(UINT16 port, UINT8 data)
 {
@@ -1494,8 +1496,8 @@ static UINT8 __fastcall headonn_read_port(UINT16 port)
 static void __fastcall nsub_write_port(UINT16 port, UINT8 data)
 {
 	if (port & 0x01) coin_status = 1;
-//	if (port & 0x02) // audio?
-	if (port & 0x04) palette_bank = data & 3;
+	if (port & 0x02) NsubSoundWrite(data);
+	if (port & 0x04) palette_bank = data & 0xf;
 }
 
 static UINT8 __fastcall nsub_read_port(UINT16 port)
@@ -1525,7 +1527,7 @@ static INT32 DrvDoReset()
 	palette_bank = 0;
 	samurai_protection = 0;
 
-	port1_state = 0x00;
+	port1_state = (is_nsub) ? 0xff : 0x00;
 	port2_state = 0x00;
 	sample_latch = 0;
 
@@ -1544,7 +1546,7 @@ static INT32 MemIndex()
 
 	DrvColPROM		= Next; Next += 0x000040;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x0008 * sizeof(UINT32);
+	DrvPalette		= (UINT32*)Next; Next += (0x0008 + 0x100) * sizeof(UINT32); // + 0x100 - nsub
 
 	AllRam			= Next;
 
@@ -1620,6 +1622,7 @@ static INT32 DrvLoadRoms()
 
 // Heiankyo Alien sound logic. -dink sept. 2021
 #define PLAYING(x) (BurnSampleGetStatus(x) == SAMPLE_PLAYING)
+#define PLAY(sam, loop) { BurnSamplePlay(sam); BurnSampleSetLoop(sam, loop); }
 
 static INT32 out_hole = 0;
 
@@ -1691,6 +1694,90 @@ static void HeiankyoSoundWrite2(UINT16 port, UINT8 data)
 	if (Low & 0x10 && !PLAYING(1)) { // note: also played when hero death.
 		BurnSamplePlay(1); // alien death
 		BurnSampleStop(2); // stop "alien in hole"
+	}
+}
+
+// nsub sound board
+#define NSUB_WARNING          0x01
+#define NSUB_SONAR            0x02
+#define NSUB_LAUNCH           0x04
+#define NSUB_EXPL_L           0x08
+#define NSUB_EXPL_S           0x10
+#define NSUB_BONUS            0x20
+#define NSUB_CODE             0x40
+#define NSUB_BOAT             0x80
+
+static void NsubSoundWrite(UINT8 data)
+{
+	UINT8 Low  = (port1_state ^ data) & ~data;
+	UINT8 High = (port1_state ^ data) & data;
+
+	port1_state = data;
+
+	if (Low & NSUB_WARNING) {
+		PLAY(5, true);
+		BurnSampleStop(6);
+	} else if (High & NSUB_WARNING) {
+		PLAY(6, false);
+		BurnSampleStop(5);
+	}
+
+	if (Low & NSUB_SONAR) {
+		PLAY(2, true);
+	} else if (High & NSUB_SONAR) {
+		BurnSampleStop(2);
+	}
+
+	if (Low & NSUB_LAUNCH) {
+		PLAY(3, true);
+		BurnSampleStop(4);
+	} else if (High & NSUB_LAUNCH) {
+		PLAY(4, false);
+		BurnSampleStop(3);
+	}
+
+	if (Low & NSUB_EXPL_L) {
+		PLAY(0, true);
+		BurnSampleStop(1);
+	} else if (High & NSUB_EXPL_L) {
+		PLAY(1, false);
+		BurnSampleStop(0);
+	}
+
+	if (Low & NSUB_EXPL_S) {
+		PLAY(7, true);
+		BurnSampleStop(8);
+
+		// fade-in clicky sample
+		BurnSampleSetAllRoutes(7, 0.00, BURN_SND_ROUTE_BOTH);
+		BurnSampleSetAllRoutesFade(7, 0.50, BURN_SND_ROUTE_BOTH);
+	} else if (High & NSUB_EXPL_S) {
+		PLAY(8, false);
+		BurnSampleStop(7);
+
+		// fade-in clicky sample
+		BurnSampleSetAllRoutes(8, 0.00, BURN_SND_ROUTE_BOTH);
+		BurnSampleSetAllRoutesFade(8, 0.50, BURN_SND_ROUTE_BOTH);
+	}
+
+	if (Low & NSUB_BONUS) {
+		PLAY(9, true);
+		BurnSampleStop(10);
+	} else if (High & NSUB_BONUS) {
+		PLAY(10, false);
+		BurnSampleStop(9);
+	}
+
+	if (Low & NSUB_CODE) {
+		PLAY(11, true);
+	} else if (High & NSUB_CODE) {
+		BurnSampleStop(11);
+	}
+
+	if (Low & NSUB_BOAT) {
+		PLAY(12, true);
+	} else if (High & NSUB_BOAT) {
+		BurnSampleStop(12);
 	}
 }
 
@@ -1927,6 +2014,8 @@ static INT32 DrvExit()
 
 	BurnFreeMemIndex();
 
+	is_nsub = 0;
+
 	return 0;
 }
 
@@ -1934,6 +2023,32 @@ static void DrvCreatePalette()
 {
 	for (INT32 i = 0; i < 8; i++) {
 		DrvPalette[i] = BurnHighCol((i & 4) ? 0xff : 0, (i & 1) ? 0xff : 0, (i & 2) ? 0xff : 0, 0);
+	}
+}
+
+static void nsub_gradient(UINT8 x, UINT8 y, UINT8 &bg)
+{
+	const UINT8 grad[] = {
+		0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x43,0x43,0x43,0x44,0x44,0x44,0x45,0x45,0x45,0x46,0x46,0x46,0x47,
+		0x47,0x47,0x48,0x48,0x48,0x49,0x49,0x49,0x4a,0x4a,0x4a,0x4b,0x4b,0x4b,0x4c,0x4c,0x4c,0x4d,0x4d,0x4d,0x4e,0x4e,0x4e,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,
+		0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x12,0x12,0x12,0x12,0x12,0x12,0x12,0x12,0x13,0x13,0x13,0x13,0x13,0x13,0x14,0x14,0x14,0x14,0x14,
+		0x15,0x15,0x15,0x15,0x16,0x16,0x16,0x17,0x17,0x17,0x18,0x18,0x19,0x19,0x1a,0x1b,0x1c,0x1d,0x1e,0x1e,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff
+	};
+
+	if (~palette_bank & 0x04) return;
+
+	// make pal
+	for (INT32 i = 0; i < 0x10; i++) {
+		DrvPalette[i + 0x10] = BurnHighCol(0, (i * 0x08) + 0x80, 0xff, 0);
+		DrvPalette[i + 0x20] = BurnHighCol(0, 0, i * 0x11, 0);
+	}
+
+	x = (x + 5) >> 1;
+	if (palette_bank & 0x8) x = 0x80 - x;
+
+	switch (grad[x] & 0xf0) {
+		case 0x10: bg = 0x10 | (grad[x] & 0x0f); break;
+		case 0x40: bg = 0x20 | (grad[x] & 0x0f); break;
 	}
 }
 
@@ -1946,7 +2061,7 @@ static void draw_layer()
 	UINT8 video_data = 0;
 	UINT8 back_pen = 0;
 	UINT8 fore_pen = 0;
-	UINT8 *prom = DrvColPROM + (palette_bank * 8) + (is_bw ? 0x20 : 0);
+	UINT8 *prom = DrvColPROM + ((palette_bank & 0x03) * 8) + (is_bw ? 0x20 : 0);
 
 	while (1)
 	{
@@ -1962,6 +2077,8 @@ static void draw_layer()
 			back_pen = prom[offs] & 0xf;
 			fore_pen = prom[offs] >> 4;
 		}
+
+		if (is_nsub) nsub_gradient(x, y, back_pen);
 
 		pTransDraw[(y * nScreenWidth) + x] = (video_data & 0x80) ? fore_pen : back_pen;
 
@@ -3983,19 +4100,19 @@ STD_ROM_PICK(nsub)
 STD_ROM_FN(nsub)
 
 static struct BurnSampleInfo nsubSampleDesc[] = {
-	{ "SND_BOAT", SAMPLE_NOLOOP },
+	{ "SND_EXPL_L0", SAMPLE_NOLOOP },
+	{ "SND_EXPL_L1", SAMPLE_NOLOOP },
+	{ "SND_SONAR", SAMPLE_NOLOOP },
+	{ "SND_LAUNCH0", SAMPLE_NOLOOP },
+	{ "SND_LAUNCH1", SAMPLE_NOLOOP },
+	{ "SND_WARNING0", SAMPLE_NOLOOP },
+	{ "SND_WARNING1", SAMPLE_NOLOOP },
+	{ "SND_EXPL_S0", SAMPLE_NOLOOP },
+	{ "SND_EXPL_S1", SAMPLE_NOLOOP },
 	{ "SND_BONUS0", SAMPLE_NOLOOP },
 	{ "SND_BONUS1", SAMPLE_NOLOOP },
 	{ "SND_CODE", SAMPLE_NOLOOP },
-	{ "SND_EXPL_L0", SAMPLE_NOLOOP },
-	{ "SND_EXPL_L1", SAMPLE_NOLOOP },
-	{ "SND_EXPL_S0", SAMPLE_NOLOOP },
-	{ "SND_EXPL_S1", SAMPLE_NOLOOP },
-	{ "SND_LAUNCH0", SAMPLE_NOLOOP },
-	{ "SND_LAUNCH1", SAMPLE_NOLOOP },
-	{ "SND_SONAR", SAMPLE_NOLOOP },
-	{ "SND_WARNING0", SAMPLE_NOLOOP },
-	{ "SND_WARNING1", SAMPLE_NOLOOP },
+	{ "SND_BOAT", SAMPLE_NOLOOP },
 	{ "", 0 }
 };
 
@@ -4011,7 +4128,13 @@ static void nsub_callback()
 
 static INT32 NsubInit()
 {
-	return DrvInit(0x4000, 0xc000, 0, nsub_write_port, nsub_read_port, NULL, nsub_callback);
+	is_nsub = 1;
+	INT32 rc = DrvInit(0x4000, 0xc000, 0, nsub_write_port, nsub_read_port, NULL, nsub_callback);
+
+	if (!rc) {
+		BurnSampleSetAllRoutesAllSamples(0.50, BURN_SND_ROUTE_BOTH);
+	}
+	return rc;
 }
 
 struct BurnDriverD BurnDrvNsub = {
@@ -4020,6 +4143,6 @@ struct BurnDriverD BurnDrvNsub = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, nsubRomInfo, nsubRomName, NULL, NULL, nsubSampleInfo, nsubSampleName, NsubInputInfo, NULL,
-	NsubInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
+	NsubInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };

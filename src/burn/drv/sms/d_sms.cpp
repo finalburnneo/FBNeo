@@ -28929,10 +28929,10 @@ struct BurnDriver BurnDrvsms_indycrusc = {
 	256, 192, 4, 3
 };
 
-// The Jungle Book (Euro, Bra)
+// The Jungle Book (Euro, Bra) - Castellano v1.0
 // https://www.romhacking.net/
 static struct BurnRomInfo sms_junglecRomDesc[] = {
-	{ "the jungle book (euro, bra).sms",          262144, 0xdfa31d13, BRF_ESS | BRF_PRG },
+	{ "the jungle book (euro, bra)- Castellano v1.0.sms",          262144, 0xdfa31d13, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(sms_junglec)

@@ -191,13 +191,19 @@ INT32 InputSetCooperativeLevel(const bool bExclusive, const bool bForeground)
 	return pInputInOut[nInputSelect]->SetCooperativeLevel(bExclusive, bForeground);
 }
 
-static bool bLastAF[1000];
+static INT32 AF[1000];
 INT32 nAutoFireRate = 12;
 
 static inline INT32 AutofirePick(INT32 offset) {
-	// offset is the button position in the list, so autofire picks don't always
-	// land on the same frame when multiple buttons are set to autofire.
-	return (((nCurrentFrame + offset) % nAutoFireRate) > nAutoFireRate-4);
+	// offset is the button position in the list
+
+	INT32 onTime = nAutoFireRate - ((nAutoFireRate < 4) ? nAutoFireRate : 4);
+
+	return ((nCurrentFrame - AF[offset] + onTime) % nAutoFireRate) > onTime;
+}
+
+static inline void AutofireOff(INT32 offset) {
+	AF[offset] = nCurrentFrame;
 }
 
 // This will process all PC-side inputs and optionally update the emulated game side.
@@ -393,15 +399,15 @@ INT32 InputMake(bool bCopy)
 				if (pgi->Macro.pVal[0]) {
 					*(pgi->Macro.pVal[0]) = pgi->Macro.nVal[0];
 					if (pgi->Macro.nSysMacro == 15) { //Auto-Fire mode!
-						if (AutofirePick(i) || bLastAF[i] == 0)
+						if (AutofirePick(i)) {
 							for (INT32 j = 0; j < 4; j++) {
 								if (pgi->Macro.pVal[j]) {
 									*(pgi->Macro.pVal[j]) = pgi->Macro.nVal[j];
 								}
 							}
+						}
 						else
 							*(pgi->Macro.pVal[0]) = 0;
-						bLastAF[i] = 1;
 					}
 				}
 			}
@@ -411,7 +417,7 @@ INT32 InputMake(bool bCopy)
 				}
 				else {
 					if (pgi->Macro.nSysMacro == 15)
-						bLastAF[i] = 0;
+						AutofireOff(i);
 				}
 			}
 		}

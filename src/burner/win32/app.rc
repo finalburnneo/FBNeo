@@ -1084,6 +1084,7 @@ BEGIN
     	    MENUITEM "Fast",						MENU_INPUT_AUTOFIRE_RATE_3
     	    MENUITEM "Faster",						MENU_INPUT_AUTOFIRE_RATE_4
     	    MENUITEM "Very Fast",					MENU_INPUT_AUTOFIRE_RATE_5
+    	    MENUITEM "Very Faster",					MENU_INPUT_AUTOFIRE_RATE_6
     	END
     	MENUITEM SEPARATOR
         MENUITEM "Map game inputs...\tF5",				MENU_INPUT, GRAYED

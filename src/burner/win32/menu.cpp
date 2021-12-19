@@ -1057,12 +1057,13 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_SAVEGAMEINPUT, bSaveInputs ? MF_CHECKED : MF_UNCHECKED);
 
 	// Auto-Fire
+	if (nAutoFireRate == 3)  var = MENU_INPUT_AUTOFIRE_RATE_6;
 	if (nAutoFireRate == 4)  var = MENU_INPUT_AUTOFIRE_RATE_5;
 	if (nAutoFireRate == 6)  var = MENU_INPUT_AUTOFIRE_RATE_4;
 	if (nAutoFireRate == 8)  var = MENU_INPUT_AUTOFIRE_RATE_3;
 	if (nAutoFireRate == 12) var = MENU_INPUT_AUTOFIRE_RATE_2;
 	if (nAutoFireRate == 22) var = MENU_INPUT_AUTOFIRE_RATE_1;
-	CheckMenuRadioItem(hMenu, MENU_INPUT_AUTOFIRE_RATE_1, MENU_INPUT_AUTOFIRE_RATE_5, var, MF_BYCOMMAND);
+	CheckMenuRadioItem(hMenu, MENU_INPUT_AUTOFIRE_RATE_1, MENU_INPUT_AUTOFIRE_RATE_6, var, MF_BYCOMMAND);
 
 	var = MENU_AUDIO_VOLUME_0 + (nAudVolume / 1000);
 	CheckMenuRadioItem(hMenu, MENU_AUDIO_VOLUME_0, MENU_AUDIO_VOLUME_100, var, MF_BYCOMMAND);

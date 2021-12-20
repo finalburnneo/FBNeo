@@ -191,19 +191,20 @@ INT32 InputSetCooperativeLevel(const bool bExclusive, const bool bForeground)
 	return pInputInOut[nInputSelect]->SetCooperativeLevel(bExclusive, bForeground);
 }
 
-static INT32 AF[1000];
+// Auto-Fire!  git 'r dun!!
+static INT32 AF[1000] = { 0, };
 INT32 nAutoFireRate = 12;
 
-static inline INT32 AutofirePick(INT32 offset) {
-	// offset is the button position in the list
-
+static inline INT32 AutofirePick(INT32 buttonOffset)
+{
 	INT32 onTime = nAutoFireRate - ((nAutoFireRate < 4) ? nAutoFireRate : 4);
 
-	return ((nCurrentFrame - AF[offset] + onTime) % nAutoFireRate) > onTime;
+	return ((nCurrentFrame - AF[buttonOffset] + onTime) % nAutoFireRate) > onTime;
 }
 
-static inline void AutofireOff(INT32 offset) {
-	AF[offset] = nCurrentFrame;
+static inline void AutofireOff(INT32 buttonOffset)
+{
+	AF[buttonOffset] = nCurrentFrame;
 }
 
 // This will process all PC-side inputs and optionally update the emulated game side.

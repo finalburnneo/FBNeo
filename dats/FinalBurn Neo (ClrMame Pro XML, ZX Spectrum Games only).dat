@@ -192,6 +192,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="3dtanx" romof="spectrum">
+		<description>3D-Tanx (16K)</description>
+		<year>1982</year>
+		<manufacturer>DK'Tronics</manufacturer>
+		<rom name="3D-Tanx 16K (1982)(DK'Tronics).tap" size="16185" crc="bae4a458"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="3dtetris" romof="spectrum">
 		<description>3D-Tetris (48K)</description>
 		<year>1989</year>
@@ -970,7 +979,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="arkanoid2" romof="spec128">
-		<comment>Z, M and ENTER to play</comment>
+		<comment>Z: left - M: right - ENTER: fire and start</comment>
 		<description>Arkanoid II - Revenge of Doh (128K)</description>
 		<year>1988</year>
 		<manufacturer>Imagine Software</manufacturer>
@@ -981,7 +990,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="arkanoid2_48" cloneof="arkanoid2" romof="arkanoid2">
-		<comment>Z, M and ENTER to play</comment>
+		<comment>Z: left - M: right - ENTER: fire and start</comment>
 		<description>Arkanoid II - Revenge of Doh (48K)</description>
 		<year>1988</year>
 		<manufacturer>Imagine Software</manufacturer>
@@ -1405,7 +1414,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ballbreak128" romof="spec128">
-		<comment>A, Z and Space to select options</comment>
+		<comment>A, Z and SPACE to select options</comment>
 		<description>Ballbreaker (128K)</description>
 		<year>1988</year>
 		<manufacturer>CRL Group</manufacturer>
@@ -1416,7 +1425,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ballbreak48" cloneof="ballbreak128" romof="ballbreak128">
-		<comment>A, Z and Space to select options</comment>
+		<comment>A, Z and SPACE to select options</comment>
 		<description>Ballbreaker (48K)</description>
 		<year>1988</year>
 		<manufacturer>CRL Group</manufacturer>
@@ -1436,7 +1445,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bangmash" romof="spec128">
-		<comment>Z, X, L and Enter to move main character</comment>
+		<comment>Z, X, L and ENTER to move main character</comment>
 		<description>Bangers and Mash (128K)</description>
 		<year>1990</year>
 		<manufacturer>Alternative</manufacturer>
@@ -1567,6 +1576,16 @@
 		<year>1989</year>
 		<manufacturer>Micro House</manufacturer>
 		<rom name="Batman - The Puaj Edition (1989)(Micro House).z80" size="34550" crc="1ec85d88"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="battlecity" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Battle City (48K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Menyiques Soft</manufacturer>
+		<rom name="Battle City 48K (2021)(menyiques).tap" size="36024" crc="f3b29343"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2027,6 +2046,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bomber" romof="spectrum">
+		<description>Bomber (16K)</description>
+		<year>1983</year>
+		<manufacturer>Spectrum Computing</manufacturer>
+		<rom name="Bomber 16K (1983)(Spectrum Computing).tap" size="4346" crc="76e3760f"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bonanzabros" romof="spec128">
 		<description>Bonanza Bros. (128K)</description>
 		<year>1992</year>
@@ -2386,8 +2414,18 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="budokan" romof="spectrum">
+		<comment>Select 'Teclado' to use controller</comment>
+		<description>Budokan - The Martial Spirit (48K)</description>
+		<year>1991</year>
+		<manufacturer>Dro Soft</manufacturer>
+		<rom name="Budokan - The Martial Spirit 48K (1991)(Dro Soft).tap" size="110405" crc="7672dc9d"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="buggyboy" romof="spec128">
-		<comment>P, L and Space to select options</comment>
+		<comment>P, L and SPACE to select options</comment>
 		<description>Buggy Boy (128K)</description>
 		<year>1988</year>
 		<manufacturer>Elite Systems</manufacturer>
@@ -2764,7 +2802,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="centibug" romof="spectrum">
-		<comment>Press K to select Kempston Joystick</comment>
+		<comment>Press 'K' to select Kempston Joystick</comment>
 		<description>Centi-Bug - aka Centipede (16K)</description>
 		<year>1983</year>
 		<manufacturer>DK'Tronics</manufacturer>
@@ -2861,7 +2899,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cheqflag" romof="spectrum">
-		<comment>A-F to steer, 0 to accelerate, I to brake and M-N to shift gears</comment>
+		<comment>'A-F' to steer, '0' to accelerate, 'I' to brake and 'M-N' to shift gears</comment>
 		<description>Chequered Flag (48K)</description>
 		<year>1982</year>
 		<manufacturer>Sinclair Research</manufacturer>
@@ -3540,40 +3578,40 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cythfima" romof="spec128">
+	<game name="cybernoid128" romof="spec128">
 		<description>Cybernoid - The Fighting Machine (128K)</description>
 		<year>1988</year>
 		<manufacturer>Hewson Consultants</manufacturer>
-		<rom name="Cybernoid (1988)(Hewson Consultants)(128k).z80" size="43712" crc="4e00cf3d"/>
+		<rom name="Cybernoid - The Fighting Machine (1988)(Hewson Consultants).tap" size="46731" crc="965806fc"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cythfima_48" cloneof="cythfima" romof="cythfima">
+	<game name="cybernoid48" cloneof="cybernoid128" romof="cybernoid128">
 		<description>Cybernoid - The Fighting Machine (48K)</description>
 		<year>1988</year>
 		<manufacturer>Hewson Consultants</manufacturer>
-		<rom name="Cybernoid (1988)(Hewson Consultants).z80" size="42235" crc="539a8179"/>
+		<rom name="Cybernoid - The Fighting Machine (1988)(Hewson Consultants).tap" merge="Cybernoid - The Fighting Machine (1988)(Hewson Consultants).tap" size="46731" crc="965806fc"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cybrnd2" romof="spec128">
+	<game name="cybernoidii128" romof="spec128">
 		<description>Cybernoid II - The Revenge (128K)</description>
 		<year>1988</year>
 		<manufacturer>Hewson Consultants</manufacturer>
-		<rom name="Cybernoid II (1988)(Hewson Consultants)(128k).z80" size="47925" crc="773b8e31"/>
+		<rom name="Cybernoid II - The Revenge 128K (1988)(Hewson Consultants).tap" size="48033" crc="5d933be6"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cybrnd2_48" cloneof="cybrnd2" romof="cybrnd2">
+	<game name="cybernoidii48" cloneof="cybernoidii128" romof="cybernoidii128">
 		<description>Cybernoid II - The Revenge (48K)</description>
 		<year>1988</year>
 		<manufacturer>Hewson Consultants</manufacturer>
-		<rom name="Cybernoid II (1988)(Hewson Consultants).z80" size="42619" crc="b7018e24"/>
+		<rom name="Cybernoid II - The Revenge 48K (1988)(Hewson Consultants).tap" size="48032" crc="a66dd375"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3637,30 +3675,21 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dtsprtst" romof="spec128">
-		<description>Daley Thompson's Supertest (128K)</description>
+	<game name="dtsupertest128" romof="spec128">
+		<description>Daley Thompson's Super-Test (128K)</description>
 		<year>1985</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Daley Thompson's Supertest (1985)(Ocean)[128K].z80" size="102586" crc="c6bbb38c"/>
+		<rom name="Daley Thompson's Super-Test 128K (1985)(Ocean).tap" size="128381" crc="e8ab5d26"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dtsprtst_48" cloneof="dtsprtst" romof="dtsprtst">
-		<description>Daley Thompson's Supertest - Day 1 (48K)</description>
+	<game name="dtsupertest48" cloneof="dtsupertest128" romof="dtsupertest128">
+		<description>Daley Thompson's Super-Test (48K)</description>
 		<year>1985</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Daley Thompson's Supertest - Day 1 (1985)(Ocean).z80" size="38920" crc="e68ca3de"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="dtsprtst2_48" cloneof="dtsprtst" romof="dtsprtst">
-		<description>Daley Thompson's Supertest - Day 2 (48K)</description>
-		<year>1985</year>
-		<manufacturer>Ocean</manufacturer>
-		<rom name="Daley Thompson's Supertest - Day 2 (1985)(Ocean).z80" size="41520" crc="ba051953"/>
+		<rom name="Daley Thompson's Super-Test 48K (1985)(Ocean).tap" size="49345" crc="3c3d0d1e"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5301,6 +5330,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="fightbomb" romof="spectrum">
+		<description>Fighter Bomber (48K)</description>
+		<year>1990</year>
+		<manufacturer>Activision</manufacturer>
+		<rom name="Fighter Bomber 48K (1990)(Activision).tap" size="163083" crc="a32a5d92"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="finalfight" romof="spec128">
 		<comment>Press 'A' to use controller</comment>
 		<description>Final Fight (128K)</description>
@@ -6677,6 +6715,27 @@
 		<rom name="Heroes Rescue (2016)(Defecto Digital Studios).tap" size="35792" crc="70ccdcda"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hsteel128" romof="spec128">
+		<comment>Use SPACE and ENTER to choose and set options</comment>
+		<description>High Steel (128K)</description>
+		<year>1989</year>
+		<manufacturer>Screen 7</manufacturer>
+		<rom name="High Steel 128K (1989)(Screen 7).tap" size="46853" crc="0461a6b8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hsteel48" cloneof="hsteel128" romof="hsteel128">
+		<comment>Use SPACE and ENTER to choose and set options</comment>
+		<description>High Steel (48K)</description>
+		<year>1989</year>
+		<manufacturer>Screen 7</manufacturer>
+		<rom name="High Steel 48K (1989)(Screen 7).tap" size="46598" crc="7afa1809"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -8993,6 +9052,16 @@
 		<rom name="Mean Streak (1987)(Mirrorsoft).tap" size="66912" crc="eaa7cbc4"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mwcentip" romof="spectrum">
+		<comment>Homebrew, Set '3 Keyboard' to use controller</comment>
+		<description>Mechwars Centipede (48K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>ZX Bitles</manufacturer>
+		<rom name="Mechwars Centipede 48K (2021)(ZX Bitles).tap" size="47448" crc="1bca4c7d"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -11509,6 +11578,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ratos" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Ratos! (48K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>MemSoftware</manufacturer>
+		<rom name="Ratos! 48K (2020)(MemSoftware).tap" size="33662" crc="08d7327a"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="reckrufus" romof="spec128">
 		<description>Reckless Rufus (128K)</description>
 		<year>1992</year>
@@ -13308,6 +13387,17 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="spracing" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Space Racing (128K) (HB, v1.1)</description>
+		<year>2021</year>
+		<manufacturer>Voxel Tower</manufacturer>
+		<rom name="Space Racing v1.1 128K (2021)(Voxel Tower).tap" size="88616" crc="5fb59dad"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="spacethunder" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Space Thunder (128K) (HB)</description>
@@ -14110,6 +14200,61 @@
 		<manufacturer>Tynesoft</manufacturer>
 		<rom name="Superman - The Man of Steel (1989)(Tynesoft).tap" size="300217" crc="578fc970"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="swarmm1" cloneof="swarmtr" romof="swarmtr">
+		<comment>Homebrew, Use keys 1 and 2 to select weapon, 'I' to MAT-ZX Menu (if available)</comment>
+		<description>Swarm is Coming, The - Mission 1 (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Swarm is Coming, The - Mission 1 128K (2021)(Minilop).tap" size="45725" crc="e0b98f2b"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="swarmm2" cloneof="swarmtr" romof="swarmtr">
+		<comment>Homebrew, Use keys 1 and 2 to select weapon, 'I' to MAT-ZX Menu (if available)</comment>
+		<description>Swarm is Coming, The - Mission 2 (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Swarm is Coming, The - Mission 2 128K (2021)(Minilop).tap" size="45768" crc="22d7278a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="swarmm3" cloneof="swarmtr" romof="swarmtr">
+		<comment>Homebrew, Use keys 1 and 2 to select weapon, 'I' to MAT-ZX Menu (if available)</comment>
+		<description>Swarm is Coming, The - Mission 3 (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Swarm is Coming, The - Mission 3 128K (2021)(Minilop).tap" size="43623" crc="c4be938d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="swarmm4" cloneof="swarmtr" romof="swarmtr">
+		<comment>Homebrew, Use keys 1 and 2 to select weapon, 'I' to MAT-ZX Menu (if available)</comment>
+		<description>Swarm is Coming, The - Mission 4 (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Swarm is Coming, The - Mission 4 128K (2021)(Minilop).tap" size="44572" crc="d6e6c041"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="swarmtr" romof="spec128">
+		<comment>Homebrew, Use keys 1 and 2 to select weapon, 'I' to MAT-ZX Menu (if available)</comment>
+		<description>Swarm is Coming, The - Training (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Swarm is Coming, The - Training 128K (2021)(Minilop).tap" size="39136" crc="38bafd6a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

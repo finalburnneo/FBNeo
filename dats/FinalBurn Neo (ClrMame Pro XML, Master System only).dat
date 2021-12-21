@@ -4959,20 +4959,20 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="junglec" cloneof="jungle" romof="jungle">
+		<comment>Hack</comment>
+		<description>The Jungle Book (Euro, Bra) - Castellano v1.0</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="the jungle book (euro, bra)- Castellano v1.0.sms" size="262144" crc="dfa31d13"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="jungle">
 		<description>The Jungle Book (Euro, Bra)</description>
 		<year>1994</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="mpr-16057.ic1" size="262144" crc="695a9a15"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="junglec" cloneof="jungle" romof="jungle">
-		<comment>Hack</comment>
-		<description>The Jungle Book (Euro, Bra)</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="the jungle book (euro, bra).sms" size="262144" crc="dfa31d13"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

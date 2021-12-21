@@ -24514,7 +24514,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xenocrisis" romof="neogeo">
-		<description>Xeno Crisis</description>
+		<description>Xeno Crisis (NGM-BB01) (NGH-BB01)</description>
 		<year>2019</year>
 		<manufacturer>Bitmap Bureau</manufacturer>
 		<rom name="BB01-p1.p1" size="1048576" crc="637605a6"/>

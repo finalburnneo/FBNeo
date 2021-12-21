@@ -32,7 +32,9 @@ static UINT8 nTaitoInputConfig[5] = { 0, 0, 0, 0, 0 };
 
 static UINT8 TaitoServicePort[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
+static UINT8 LightgunDIP[1] = { 0 }; // positional (lightgun) for rambo3
 static INT32 has_trackball = 0; // rambo3/rambo3u
+static INT32 frame_counter; // for rambo3 lightgun hack
 
 static INT32 spritelag_disable = 0;
 
@@ -427,6 +429,7 @@ static struct BurnInputInfo Rambo3InputList[] = {
 	{"Tilt",			BIT_DIGITAL,	TC0220IOCInputPort1 + 0,	"tilt"		},
 	{"Dip A",			BIT_DIPSWITCH,	TC0220IOCDip + 0,			"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	TC0220IOCDip + 1,			"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	LightgunDIP + 0,			"dip"		},
 };
 
 STDINPUTINFO(Rambo3)
@@ -1424,6 +1427,7 @@ static struct BurnDIPInfo Rambo3DIPList[]=
 {
 	{0x17, 0xff, 0xff, 0xff, NULL			},
 	{0x18, 0xff, 0xff, 0xff, NULL			},
+	{0x19, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
 	{0x17, 0x01, 0x02, 0x02, "Off"			},
@@ -1455,13 +1459,18 @@ static struct BurnDIPInfo Rambo3DIPList[]=
 	{0x18, 0x01, 0x03, 0x01, "Hard"			},
 	{0x18, 0x01, 0x03, 0x00, "Hardest"		},
 
+	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
+	{0x18, 0x01, 0x10, 0x00, "Off"			},
+	{0x18, 0x01, 0x10, 0x10, "On"			},
+
 	{0   , 0xfe, 0   ,    2, "Control"		},
 	{0x18, 0x01, 0x08, 0x08, "8 way Joystick"	},
 	{0x18, 0x01, 0x08, 0x00, "Trackball"		},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
-	{0x18, 0x01, 0x10, 0x00, "Off"			},
-	{0x18, 0x01, 0x10, 0x10, "On"			},
+	{0   , 0xfe, 0   ,    2, "Lightgun Mode for Trackball (Hack)" },
+	{0x19, 0x01, 0x01, 0x01, "On"				},
+	{0x19, 0x01, 0x01, 0x00, "Off"				},
+
 };
 
 STDDIPINFO(Rambo3)
@@ -1626,6 +1635,26 @@ static inline void DrvClearOppositesCommon(UINT8* nJoystickInputs)
 	}
 }
 
+static UINT16 Rambo3LGScaleX(UINT16 x)
+{
+	return scalerange(x, 0, 0xff, 0x7b80, 0x8480);
+}
+
+static UINT16 Rambo3LGScaleX2(UINT16 x)
+{
+	return scalerange(x, 0, 0xff, 0x0010, 0x0130);
+}
+
+static UINT16 Rambo3LGScaleY(UINT16 y)
+{
+	return scalerange(y, 0, 0xff, 0x0100, 0x0640);
+}
+
+static UINT16 Rambo3LGScaleY2(UINT16 y)
+{
+	return scalerange(y, 0, 0xff, 0x0038, 0x00d7);
+}
+
 static void DrvMakeInputs()
 {
 	memset (TC0220IOCInput, 0xff, sizeof(TC0220IOCInput));
@@ -1683,14 +1712,40 @@ static void DrvMakeInputs()
 
 	// for rambo3's trackball
 	if (has_trackball) {
+		if (LightgunDIP[0] & 1 && frame_counter == -1) {
+			// use Lightgun hack for Rambo3
+			BurnGunMakeInputs(0, TaitoAnalogPort0, TaitoAnalogPort1);
+			BurnGunMakeInputs(1, TaitoAnalogPort2, TaitoAnalogPort3);
+			UINT16 p1_x = Rambo3LGScaleX(BurnGunReturnX(0));
+			UINT16 p1_y = Rambo3LGScaleY(0xff - BurnGunReturnY(0));
+
+			UINT16 p2_x = Rambo3LGScaleX(BurnGunReturnX(1));
+			UINT16 p2_y = Rambo3LGScaleY(0xff - BurnGunReturnY(1));
+
+			SekOpen(0);
+			SekWriteWord(0x800044, p1_x); // P1 reticule sprite X-position
+			SekWriteWord(0x8000c4, p1_x); // P1 player sprite X-position
+			SekWriteWord(0x8000c6, p1_y); // P1 player+reticule sprite Y-position
+
+			SekWriteWord(0x800084, p2_x); // P2 reticule sprite X-position
+			SekWriteWord(0x800104, p2_x); // P2 player sprite X-position
+			SekWriteWord(0x800106, p2_y); // P2 player+reticule sprite Y-position
+			SekClose();
+
+		}
+
 		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_REVERSED);
-		BurnTrackballFrame(0, TaitoAnalogPort0, TaitoAnalogPort1, 0x03, 0x0f);
+		BurnTrackballFrame(0, TaitoAnalogPort0, TaitoAnalogPort1, 0x01, 0x3f);
 		BurnTrackballUpdate(0);
 
 		BurnTrackballConfig(1, AXIS_NORMAL, AXIS_REVERSED);
-		BurnTrackballFrame(1, TaitoAnalogPort2, TaitoAnalogPort3, 0x03, 0x0f);
+		BurnTrackballFrame(1, TaitoAnalogPort2, TaitoAnalogPort3, 0x01, 0x3f);
 		BurnTrackballUpdate(1);
 	}
+
+	// The Lightgun hack must stay disabled until the game boots up
+	if (frame_counter != -1) frame_counter++;
+	if (frame_counter > 200) frame_counter = -1;
 }
 
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
@@ -1738,6 +1793,8 @@ static INT32 DrvDoReset(INT32 reset_ram)
 
 	HiscoreReset();
 
+	frame_counter = 0;
+
 	return 0;
 }
 
@@ -1748,7 +1805,7 @@ static INT32 MemIndex()
 	Taito68KRom1			= Next; Next += ((Taito68KRom1Size - 1) | 0x7ffff) + 1;
 	TaitoZ80Rom1			= Next; Next += TaitoZ80Rom1Size;
 
-	TaitoChars			= Next; Next += (TaitoCharRomSize * 8) / 4;
+	TaitoChars				= Next; Next += (TaitoCharRomSize * 8) / 4;
 	TaitoSpritesA			= Next; Next += (TaitoCharRomSize * 8) / 4;
 
 	TaitoMSM6295Rom			= Next; Next += TaitoMSM6295RomSize;
@@ -1756,7 +1813,7 @@ static INT32 MemIndex()
 	TaitoYM2610BRom			= Next; Next += TaitoYM2610BRomSize;
 
 	if (!(TaitoMSM6295RomSize | TaitoYM2610ARomSize | TaitoYM2610ARomSize)) {
-						Next += 0x040000; // games without samples...
+							Next += 0x040000; // games without samples...
 	}
 
 	TaitoRamStart			= Next;
@@ -1766,16 +1823,16 @@ static INT32 MemIndex()
 	TaitoSpriteRam			= Next; Next += 0x002000;
 
 	// hit the ice
-	DrvPxlRAM			= Next; Next += 0x080000;
+	DrvPxlRAM				= Next; Next += 0x080000;
 	DrvPxlScroll			= (UINT16*)Next; Next += 2 * sizeof(UINT16);
 
 	TaitoZ80Ram1			= Next; Next += 0x002000;
 
-	TaitoRamEnd			= Next;
+	TaitoRamEnd				= Next;
 
 	TaitoPalette			= (UINT32*)Next; Next += 0x1000 * sizeof(UINT32);
 
-	TaitoMemEnd			= Next;
+	TaitoMemEnd				= Next;
 
 	return 0;
 }
@@ -1943,6 +2000,7 @@ static INT32 DrvExit()
 
 	if (has_trackball) {
 		BurnTrackballExit();
+		BurnGunExit();
 		has_trackball = 0;
 	}
 
@@ -2021,6 +2079,7 @@ static INT32 DrvDraw()
 	if (nBurnLayer & 4) TC0180VCUDrawCharLayer(color_config[2]);
 
 	BurnTransferCopy(TaitoPalette);
+	BurnGunDrawTargets();
 
 	return 0;
 }
@@ -2123,6 +2182,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(TaitoZ80Bank);
 		SCAN_VAR(TaitoWatchdog);
 		if (has_trackball) BurnTrackballScan();
+		SCAN_VAR(frame_counter);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -2269,7 +2329,7 @@ static UINT8 __fastcall tetrist_read_byte(UINT32 a)
 			return TC0140SYTCommRead();
 
 		case 0x600010: {
-			return BurnTrackballReadWord(0, 1) & 0xff;
+		    return BurnTrackballReadWord(0, 1) & 0xff;
 		}
 
 		case 0x600014: {
@@ -3239,7 +3299,7 @@ struct BurnDriver BurnDrvNastarw = {
 };
 
 
-// Rambo III (Europe set 1)
+// Rambo III (Europe)
 
 static struct BurnRomInfo rambo3RomDesc[] = {
 	{ "ramb3-11.bin",		0x020000, 0x1cc42247, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
@@ -3263,8 +3323,11 @@ STD_ROM_FN(rambo3)
 static INT32 Rambo3Init()
 {
 	nTaitoInputConfig[1] = 0x30;
+
 	has_trackball = 1;
-	BurnTrackballInit(2);
+	BurnTrackballInit(2); // game supports trackball
+
+	BurnGunInit(2, false); // for lightgun hack
 
 	return CommonInit(TetristInitCallback, 0, 2, 0, 1, 6);
 }

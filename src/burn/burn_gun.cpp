@@ -74,7 +74,7 @@ static UINT8 GunTargetShouldDraw(INT32 player)
 
 INT32 BurnGunIsActive()
 {
-	return (Debug_BurnGunInitted && Using_Trackball == 0);
+	return Debug_BurnGunInitted;
 }
 
 void BurnGunSetCoords(INT32 player, INT32 x, INT32 y)

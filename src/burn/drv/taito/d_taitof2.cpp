@@ -9747,20 +9747,20 @@ static void TaitoF2UpdateSpritesActiveArea()
 	for (Off = 0; Off < 0x4000; Off += 16) {
 		INT32 Offs = Off + TaitoF2SpritesActiveArea;
 
-		if (SpriteRamBuffered[(Offs + 6) / 2] & 0x8000) {
-			TaitoF2SpritesDisabled = SpriteRamBuffered[(Offs + 10) / 2] & 0x1000;
+		if (BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 6) / 2]) & 0x8000) {
+			TaitoF2SpritesDisabled = BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 10) / 2]) & 0x1000;
 			if (Footchmp) {
-				TaitoF2SpritesActiveArea = 0x8000 * (SpriteRamBuffered[(Offs + 6) / 2] & 0x0001);
+				TaitoF2SpritesActiveArea = 0x8000 * (BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 6) / 2]) & 0x0001);
 			} else {
-				TaitoF2SpritesActiveArea = 0x8000 * (SpriteRamBuffered[(Offs + 10) / 2] & 0x0001);
+				TaitoF2SpritesActiveArea = 0x8000 * (BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 10) / 2]) & 0x0001);
 			}
 		}
 
-		if ((SpriteRamBuffered[(Offs + 4) / 2] & 0xf000) == 0xa000) {
-			TaitoF2SpritesMasterScrollX = SpriteRamBuffered[(Offs + 4) / 2] & 0xfff;
+		if ((BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 4) / 2]) & 0xf000) == 0xa000) {
+			TaitoF2SpritesMasterScrollX = BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 4) / 2]) & 0xfff;
 			if (TaitoF2SpritesMasterScrollX >= 0x800) TaitoF2SpritesMasterScrollX -= 0x1000;
 
-			TaitoF2SpritesMasterScrollY = SpriteRamBuffered[(Offs + 6) / 2] & 0xfff;
+			TaitoF2SpritesMasterScrollY = BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 6) / 2]) & 0xfff;
 			if (TaitoF2SpritesMasterScrollY >= 0x800) TaitoF2SpritesMasterScrollY -= 0x1000;
 		}
 	}
@@ -10017,7 +10017,7 @@ void TaitoF2MakeSpriteList()
 	for (Off = 0; Off < 0x4000; Off += 16) {
 		INT32 Offs = Off + Area;
 
-		if (SpriteRamBuffered[(Offs + 6) / 2] & 0x8000) {
+		if (BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 6) / 2]) & 0x8000) {
 			Disabled = BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 10) / 2]) & 0x1000;
 			TaitoF2SpritesFlipScreen = BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 10) / 2]) & 0x2000;
 
@@ -10120,7 +10120,7 @@ void TaitoF2MakeSpriteList()
 				zy = yLatch + ((yNum + 1) * (0x100 - yZoom) + 12) / 16 - y;
 			}
 		} else {
-			ZoomWord = SpriteRamBuffered[(Offs + 2) / 2];
+			ZoomWord = BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 2) / 2]);
 			yZoom = (ZoomWord >> 8) & 0xff;
 			xZoom = (ZoomWord) & 0xff;
 			zx = (0x100 - xZoom) / 16;

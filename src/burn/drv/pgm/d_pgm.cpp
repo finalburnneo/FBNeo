@@ -103,22 +103,6 @@ static struct BurnDIPInfo jammaDIPList[] = {
 	{0,		0xFE, 0,	2,    "Test mode"						},
 	{0x2D,	0x01, 0x01,	0x00, "Off"								},
 	{0x2D,	0x01, 0x01,	0x01, "On"								},
-
-	{0,		0xFE, 0,	2,    "Music"							},
-	{0x2D,	0x01, 0x02,	0x02, "Off"								},
-	{0x2D,	0x01, 0x02,	0x00, "On"								},
-
-	{0,		0xFE, 0,	2,    "Voice"							},
-	{0x2D,	0x01, 0x04,	0x04, "Off"								},
-	{0x2D,	0x01, 0x04,	0x00, "On"								},
-
-	{0,		0xFE, 0,	2,    "Free play"						},
-	{0x2D,	0x01, 0x08,	0x00, "Off"								},
-	{0x2D,	0x01, 0x08,	0x08, "On"								},
-
-	{0,		0xFE, 0,	2,    "Stop mode"						},
-	{0x2D,	0x01, 0x10,	0x00, "Off"								},
-	{0x2D,	0x01, 0x10,	0x10, "On"								},
 };
 
 STDDIPINFO(jamma)
@@ -5825,7 +5809,7 @@ static struct BurnRomInfo ketRomDesc[] = {
 
 	{ "ket_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
 	
-	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0 | BRF_OPT },			//  7 NV RAM
+	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0xA | BRF_PRG },			//  7 NV RAM
 };
 
 STDROMPICKEXT(ket, ket, ketsuiBios) // custom bios
@@ -5867,7 +5851,7 @@ static struct BurnRomInfo ket1RomDesc[] = {
 
 	{ "ket_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
 	
-	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0 | BRF_OPT },			//  7 NV RAM
+	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0xA | BRF_PRG },			//  7 NV RAM
 };
 
 STDROMPICKEXT(ket1, ket1, ketsuiBios) // custom bios
@@ -5900,7 +5884,7 @@ static struct BurnRomInfo ketaRomDesc[] = {
 
 	{ "ket_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
 	
-	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0 | BRF_OPT },			//  7 NV RAM
+	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0xA | BRF_PRG },			//  7 NV RAM
 };
 
 STDROMPICKEXT(keta, keta, ketsuiBios) // custom bios
@@ -5933,7 +5917,7 @@ static struct BurnRomInfo ketbRomDesc[] = {
 
 	{ "ket_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
 	
-	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0 | BRF_OPT },			//  7 NV RAM
+	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0xA | BRF_PRG },			//  7 NV RAM
 };
 
 STDROMPICKEXT(ketb, ketb, ketsuiBios) // custom bios
@@ -5966,7 +5950,7 @@ static struct BurnRomInfo ketarrRomDesc[] = {
 
 	{ "ket_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom 
 	
-	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0 | BRF_OPT },			//  7 NV RAM
+	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0xA | BRF_PRG },			//  7 NV RAM
 };
 
 STDROMPICKEXT(ketarr, ketarr, ketsuiBios) // custom bios
@@ -5999,7 +5983,7 @@ static struct BurnRomInfo ketarr10RomDesc[] = {
 
 	{ "ket_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
 	
-	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0 | BRF_OPT },			//  7 NV RAM
+	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0xA | BRF_PRG },			//  7 NV RAM
 };
 
 STDROMPICKEXT(ketarr10, ketarr10, ketsuiBios) // custom bios
@@ -6032,7 +6016,7 @@ static struct BurnRomInfo ketarr15RomDesc[] = {
 
 	{ "ket_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
 	
-	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0 | BRF_OPT },			//  7 NV RAM
+	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0xA | BRF_PRG },			//  7 NV RAM
 };
 
 STDROMPICKEXT(ketarr15, ketarr15, ketsuiBios) // custom bios
@@ -6065,7 +6049,7 @@ static struct BurnRomInfo ketarr151RomDesc[] = {
 
 	{ "ket_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
 	
-	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0 | BRF_OPT },			//  7 NV RAM
+	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0xA | BRF_PRG },			//  7 NV RAM
 };
 
 STDROMPICKEXT(ketarr151, ketarr151, ketsuiBios) // custom bios
@@ -6098,7 +6082,7 @@ static struct BurnRomInfo ketarrs15RomDesc[] = {
 
 	{ "ket_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
 	
-	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0 | BRF_OPT },			//  7 NV RAM
+	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0xA | BRF_PRG },			//  7 NV RAM
 };
 
 STDROMPICKEXT(ketarrs15, ketarrs15, ketsuiBios) // custom bios
@@ -6131,7 +6115,7 @@ static struct BurnRomInfo ketarrs151RomDesc[] = {
 
 	{ "ket_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
 	
-	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0 | BRF_OPT },			//  7 NV RAM
+	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0xA | BRF_PRG },			//  7 NV RAM
 };
 
 STDROMPICKEXT(ketarrs151, ketarrs151, ketsuiBios) // custom bios
@@ -6164,7 +6148,7 @@ static struct BurnRomInfo ketarrfRomDesc[] = {
 
 	{ "ket_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
 	
-	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0 | BRF_OPT },			//  7 NV RAM
+	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0xA | BRF_PRG },			//  7 NV RAM
 };
 
 STDROMPICKEXT(ketarrf, ketarrf, ketsuiBios) // custom bios

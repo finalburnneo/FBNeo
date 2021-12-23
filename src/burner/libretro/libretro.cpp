@@ -50,8 +50,8 @@ int kNetGame = 0;
 INT32 nReplayStatus = 0;
 INT32 nIpsMaxFileLen = 0;
 unsigned nGameType = 0;
-static INT32 nGameWidth = 640;
-static INT32 nGameHeight = 480;
+static INT32 nGameWidth = 800;
+static INT32 nGameHeight = 600;
 static INT32 nGameMaximumGeometry;
 static INT32 nNextGeometryCall = RETRO_ENVIRONMENT_SET_GEOMETRY;
 
@@ -1662,16 +1662,21 @@ static bool retro_load_game_common()
 #endif
 
 		if (!open_archive()) {
+
+			const char* s1 = "This romset is known but yours, its parent, or its bios aren't matching this version of FBNeo.\n";
+			const char* s2 = "To fix this, read https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo.\n";
 #ifdef INCLUDE_7Z_SUPPORT
-			SetUguiError("This romset is known but yours doesn't match this emulator and its version\nRead https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo");
+			const char* s3 = "\n";
 #else
-			SetUguiError("This romset is known but yours doesn't match this emulator and its version\nNote that 7z support is disabled for your platform\nRead https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo");
+			const char* s3 = "Note that 7z support is disabled for your platform.\n\n";
 #endif
-			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] This romset is known but yours doesn't match this emulator and its version\n");
-#ifndef INCLUDE_7Z_SUPPORT
-			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Note that 7z support is disabled for your platform\n");
-#endif
-			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Read https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo\n");
+			const char* s4 = "THIS IS NOT A BUG SO PLEASE DON'T WASTE EVERYONE'S TIME BY REPORTING THIS !\n";
+			const char* s5 = "YES, YOU NEED ANOTHER ROMSET, EVEN IF YOUR CURRENT ONE WORKED SOMETIME IN THE PAST !\n";
+
+			static char uguiText[1024];
+			sprintf(uguiText, "%s%s%s%s%s", s1, s2, s3, s4, s5);
+			SetUguiError(uguiText);
+
 			goto end;
 		}
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] No missing files, proceeding\n");

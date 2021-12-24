@@ -2333,6 +2333,8 @@ static INT32 DrvDoReset()
 
 	nExtraCycles[0] = nExtraCycles[1] = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -3577,7 +3579,7 @@ struct BurnDriver BurnDrvP47 = {
 	"p47", NULL, NULL, NULL, "1988",
 	"P-47 - The Phantom Fighter (World)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, p47RomInfo, p47RomName, NULL, NULL, NULL, NULL, CommonInputInfo, P47DIPInfo,
 	p47Init, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -3654,7 +3656,7 @@ struct BurnDriver BurnDrvP47j = {
 	"p47j", "p47", NULL, NULL, "1988",
 	"P-47 - The Freedom Fighter (Japan)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, p47jRomInfo, p47jRomName, NULL, NULL, NULL, NULL, CommonInputInfo, P47DIPInfo,
 	p47Init, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -3710,7 +3712,7 @@ struct BurnDriver BurnDrvP47je = {
 	"p47je", "p47", NULL, NULL, "1988",
 	"P-47 - The Freedom Fighter (Japan, Export)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, p47jeRomInfo, p47jeRomName, NULL, NULL, NULL, NULL, CommonInputInfo, P47DIPInfo,
 	p47jeInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -3818,7 +3820,7 @@ struct BurnDriver BurnDrvTshingen = {
 	"tshingen", NULL, NULL, NULL, "1988",
 	"Shingen Samurai-Fighter (Japan, English)\0", "Game crashes in level 2, play tshingena instead!", "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_NOT_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, tshingenRomInfo, tshingenRomName, NULL, NULL, NULL, NULL, Common3ButtonInputInfo, TshingenDIPInfo,
 	tshingenInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -3866,7 +3868,7 @@ struct BurnDriver BurnDrvTshingena = {
 	"tshingena", "tshingen", NULL, NULL, "1988",
 	"Takeda Shingen (Japan, Japanese)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, tshingenaRomInfo, tshingenaRomName, NULL, NULL, NULL, NULL, Common3ButtonInputInfo, TshingenDIPInfo,
 	tshingenInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -3931,7 +3933,7 @@ struct BurnDriver BurnDrvKazan = {
 	"kazan", NULL, NULL, NULL, "1988",
 	"Ninja Kazan (World)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, kazanRomInfo, kazanRomName, NULL, NULL, NULL, NULL, CommonInputInfo, KazanDIPInfo,
 	kazanInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -3973,7 +3975,7 @@ struct BurnDriver BurnDrvIganinju = {
 	"iganinju", "kazan", NULL, NULL, "1988",
 	"Iga Ninjyutsuden (Japan)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, iganinjuRomInfo, iganinjuRomName, NULL, NULL, NULL, NULL, CommonInputInfo, KazanDIPInfo,
 	kazanInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -4037,7 +4039,7 @@ struct BurnDriver BurnDrvAstyanax = {
 	"astyanax", NULL, NULL, NULL, "1989",
 	"The Astyanax (EPROM version)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, astyanaxRomInfo, astyanaxRomName, NULL, NULL, NULL, NULL, Common3ButtonInputInfo, AstyanaxDIPInfo,
 	astyanaxInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -4079,7 +4081,7 @@ struct BurnDriver BurnDrvAstyanaxa = {
 	"astyanaxa", "astyanax", NULL, NULL, "1989",
 	"The Astyanax (mask ROM version)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, astyanaxaRomInfo, astyanaxaRomName, NULL, NULL, NULL, NULL, Common3ButtonInputInfo, AstyanaxDIPInfo,
 	astyanaxInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -4132,7 +4134,7 @@ struct BurnDriver BurnDrvLordofk = {
 	"lordofk", "astyanax", NULL, NULL, "1989",
 	"The Lord of King (Japan)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, lordofkRomInfo, lordofkRomName, NULL, NULL, NULL, NULL, Common3ButtonInputInfo, AstyanaxDIPInfo,
 	astyanaxInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -4193,7 +4195,7 @@ struct BurnDriver BurnDrvHachoo = {
 	"hachoo", NULL, NULL, NULL, "1989",
 	"Hachoo!\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, hachooRomInfo, hachooRomName, NULL, NULL, NULL, NULL, CommonInputInfo, HachooDIPInfo,
 	hachooInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -4328,7 +4330,7 @@ struct BurnDriver BurnDrvPlusalph = {
 	"plusalph", NULL, NULL, NULL, "1989",
 	"Plus Alpha\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, plusalphRomInfo, plusalphRomName, NULL, NULL, NULL, NULL, CommonInputInfo, PlusalphDIPInfo,
 	plusalphInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 256, 3, 4
@@ -4391,7 +4393,7 @@ struct BurnDriver BurnDrvStdragon = {
 	"stdragon", NULL, NULL, NULL, "1989",
 	"Saint Dragon (set 1)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, stdragonRomInfo, stdragonRomName, NULL, NULL, NULL, NULL, CommonInputInfo, StdragonDIPInfo,
 	stdragonInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -4468,7 +4470,7 @@ struct BurnDriver BurnDrvStdragona = {
 	"stdragona", "stdragon", NULL, NULL, "1989",
 	"Saint Dragon (set 2)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, stdragonaRomInfo, stdragonaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, StdragonDIPInfo,
 	stdragonaInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -4554,7 +4556,7 @@ struct BurnDriver BurnDrvStdragonb = {
 	"stdragonb", "stdragon", NULL, NULL, "1989",
 	"Saint Dragon (bootleg)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, stdragonbRomInfo, stdragonbRomName, NULL, NULL, NULL, NULL, CommonInputInfo, StdragonDIPInfo,
 	stdragonbInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -4622,7 +4624,7 @@ struct BurnDriver BurnDrvRodland = {
 	"rodland", NULL, NULL, NULL, "1990",
 	"Rod-Land (World, set 1)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, rodlandRomInfo, rodlandRomName, NULL, NULL, NULL, NULL, CommonInputInfo, RodlandDIPInfo,
 	rodlandInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -4675,7 +4677,7 @@ struct BurnDriver BurnDrvRodlanda = {
 	"rodlanda", "rodland", NULL, NULL, "1990",
 	"Rod-Land (World, set 2)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, rodlandaRomInfo, rodlandaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, RodlandDIPInfo,
 	rodlandaInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -4727,7 +4729,7 @@ struct BurnDriver BurnDrvRodlandj = {
 	"rodlandj", "rodland", NULL, NULL, "1990",
 	"Rod-Land (Japan)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, rodlandjRomInfo, rodlandjRomName, NULL, NULL, NULL, NULL, CommonInputInfo, RodlandDIPInfo,
 	rodlandjInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -4780,7 +4782,7 @@ struct BurnDriver BurnDrvRodlandjb = {
 	"rodlandjb", "rodland", NULL, NULL, "1990",
 	"Rod-Land (Japan bootleg)\0", NULL, "bootleg", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, rodlandjbRomInfo, rodlandjbRomName, NULL, NULL, NULL, NULL, CommonInputInfo, RodlandDIPInfo,
 	rodlandjbInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -4895,7 +4897,7 @@ struct BurnDriver BurnDrvSoldam = {
 	"soldam", NULL, NULL, NULL, "1992",
 	"Soldam\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, soldamRomInfo, soldamRomName, NULL, NULL, NULL, NULL, CommonInputInfo, SoldamDIPInfo,
 	soldamInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -4950,7 +4952,7 @@ struct BurnDriver BurnDrvSoldamj = {
 	"soldamj", "soldam", NULL, NULL, "1992",
 	"Soldam (Japan)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, soldamjRomInfo, soldamjRomName, NULL, NULL, NULL, NULL, CommonInputInfo, SoldamDIPInfo,
 	soldamjInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -5009,7 +5011,7 @@ struct BurnDriver BurnDrvAvspirit = {
 	"avspirit", NULL, NULL, NULL, "1991",
 	"Avenging Spirit\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, avspiritRomInfo, avspiritRomName, NULL, NULL, NULL, NULL, CommonInputInfo, AvspiritDIPInfo,
 	avspiritInit, DrvExit, System1BFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -5054,7 +5056,7 @@ struct BurnDriver BurnDrvPhantasm = {
 	"phantasm", "avspirit", NULL, NULL, "1990",
 	"Phantasm (Japan)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, phantasmRomInfo, phantasmRomName, NULL, NULL, NULL, NULL, CommonInputInfo, PhantasmDIPInfo,
 	phantasmInit, DrvExit, System1BFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -5183,7 +5185,7 @@ struct BurnDriver BurnDrvMonkelf = {
 	"monkelf", "avspirit", NULL, NULL, "1990",
 	"Monky Elf (Korean bootleg of Avenging Spirit)\0", "imperfect graphics", "bootleg", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, monkelfRomInfo, monkelfRomName, NULL, NULL, NULL, NULL, CommonInputInfo, AvspiritDIPInfo,
 	monkelfInit, DrvExit, System1BFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -5235,7 +5237,7 @@ struct BurnDriver BurnDrvEdf = {
 	"edf", NULL, NULL, NULL, "1991",
 	"E.D.F. : Earth Defense Force (set 1)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, edfRomInfo, edfRomName, NULL, NULL, NULL, NULL, CommonInputInfo, EdfDIPInfo,
 	edfInit, DrvExit, System1BFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -5275,7 +5277,7 @@ struct BurnDriver BurnDrvEdfa = {
 	"edfa", "edf", NULL, NULL, "1991",
 	"E.D.F. : Earth Defense Force (set 2)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, edfaRomInfo, edfaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, EdfDIPInfo,
 	edfInit, DrvExit, System1BFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -5315,7 +5317,7 @@ struct BurnDriver BurnDrvEdfu = {
 	"edfu", "edf", NULL, NULL, "1991",
 	"E.D.F. : Earth Defense Force (North America)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, edfuRomInfo, edfuRomName, NULL, NULL, NULL, NULL, CommonInputInfo, EdfDIPInfo,
 	edfInit, DrvExit, System1BFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -5428,7 +5430,7 @@ struct BurnDriver BurnDrvEdfbl = {
 	"edfbl", "edf", NULL, NULL, "1991",
 	"E.D.F. : Earth Defense Force (bootleg)\0", "no sound", "bootleg", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, edfblRomInfo, edfblRomName, NULL, NULL, NULL, NULL, CommonInputInfo, EdfDIPInfo,
 	edfblInit, DrvExit, System1BFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -5538,7 +5540,7 @@ struct BurnDriver BurnDrvStreet64 = {
 	"64street", NULL, NULL, NULL, "1991",
 	"64th. Street - A Detective Story (World)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, Street64RomInfo, Street64RomName, NULL, NULL, NULL, NULL, CommonInputInfo, Street64DIPInfo,
 	street64Init, DrvExit, System1CFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -5579,7 +5581,7 @@ struct BurnDriver BurnDrvStreet64j = {
 	"64streetj", "64street", NULL, NULL, "1991",
 	"64th. Street - A Detective Story (Japan, set 1)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, Street64jRomInfo, Street64jRomName, NULL, NULL, NULL, NULL, CommonInputInfo, Street64DIPInfo,
 	street64Init, DrvExit, System1CFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -5671,7 +5673,7 @@ struct BurnDriver BurnDrvBigstrik = {
 	"bigstrik", NULL, NULL, NULL, "1992",
 	"Big Striker\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, bigstrikRomInfo, bigstrikRomName, NULL, NULL, NULL, NULL, Common3ButtonInputInfo, BigstrikDIPInfo,
 	bigstrikInit, DrvExit, System1CFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -5730,7 +5732,7 @@ struct BurnDriver BurnDrvChimerab = {
 	"chimerab", NULL, NULL, NULL, "1993",
 	"Chimera Beast (prototype)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, chimerabRomInfo, chimerabRomName, NULL, NULL, NULL, NULL, CommonInputInfo, ChimerabDIPInfo,
 	chimerabInit, DrvExit, System1CFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -5782,7 +5784,7 @@ struct BurnDriver BurnDrvCybattlr = {
 	"cybattlr", NULL, NULL, NULL, "1993",
 	"Cybattler\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, cybattlrRomInfo, cybattlrRomName, NULL, NULL, NULL, NULL, CommonInputInfo, CybattlrDIPInfo,
 	cybattlrInit, DrvExit, System1CFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 256, 3, 4
@@ -5819,7 +5821,7 @@ struct BurnDriver BurnDrvLomakai = {
 	"lomakai", NULL, NULL, NULL, "1988",
 	"Legend of Makai (World)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, lomakaiRomInfo, lomakaiRomName, NULL, NULL, NULL, NULL, CommonInputInfo, LomakaiDIPInfo,
 	lomakaiInit, DrvExit, System1ZFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 224, 4, 3
@@ -5851,7 +5853,7 @@ struct BurnDriver BurnDrvMakaiden = {
 	"makaiden", "lomakai", NULL, NULL, "1988",
 	"Makai Densetsu (Japan)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, makaidenRomInfo, makaidenRomName, NULL, NULL, NULL, NULL, CommonInputInfo, LomakaiDIPInfo,
 	lomakaiInit, DrvExit, System1ZFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 224, 4, 3
@@ -5889,7 +5891,7 @@ struct BurnDriver BurnDrvPeekaboo = {
 	"peekaboo", NULL, NULL, NULL, "1993",
 	"Peek-a-Boo! (Japan, ver. 1.1)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, peekabooRomInfo, peekabooRomName, NULL, NULL, NULL, NULL, PeekabooInputInfo, PeekabooDIPInfo,
 	peekabooInit, DrvExit, System1DFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -5922,7 +5924,7 @@ struct BurnDriver BurnDrvPeekaboou = {
 	"peekaboou", "peekaboo", NULL, NULL, "1993",
 	"Peek-a-Boo! (North America, ver 1.0)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, peekaboouRomInfo, peekaboouRomName, NULL, NULL, NULL, NULL, PeekabooInputInfo, PeekabooDIPInfo,
 	peekabooInit, DrvExit, System1DFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3

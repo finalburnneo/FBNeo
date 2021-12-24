@@ -1663,15 +1663,35 @@ static bool retro_load_game_common()
 
 		if (!open_archive()) {
 
-			const char* s1 = "This romset is known but yours, its parent, or its bios aren't matching this version of FBNeo.\n";
-			const char* s2 = "To fix this, read https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo.\n";
+			const char* s1 = "This game is known but one of your romsets is missing files for THIS VERSION of FBNeo.\n";
+			static char s2[256];
+			const char* rom_name = "";
+			const char* sp1 = "";
+			const char* parent_name = "";
+			const char* sp2 = "";
+			const char* bios_name = "";
+			if (BurnDrvGetTextA(DRV_NAME))
+			{
+				rom_name = BurnDrvGetTextA(DRV_NAME);
+			}
+			if (BurnDrvGetTextA(DRV_PARENT))
+			{
+				sp1 = " ";
+				parent_name = BurnDrvGetTextA(DRV_PARENT);
+			}
+			if (BurnDrvGetTextA(DRV_BOARDROM))
+			{
+				sp2 = " ";
+				bios_name = BurnDrvGetTextA(DRV_BOARDROM);
+			}
+			sprintf(s2, "Verify the following romsets : %s%s%s%s%s\n", rom_name, sp1, parent_name, sp2, bios_name);
+			const char* s3 = "To fix this, read https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo.\n";
 #ifdef INCLUDE_7Z_SUPPORT
-			const char* s3 = "\n";
+			const char* s4 = "\n";
 #else
-			const char* s3 = "Note that 7z support is disabled for your platform.\n\n";
+			const char* s4 = "Note that 7z support is disabled for your platform.\n\n";
 #endif
-			const char* s4 = "THIS IS NOT A BUG SO PLEASE DON'T WASTE EVERYONE'S TIME BY REPORTING THIS !\n";
-			const char* s5 = "YES, YOU NEED ANOTHER ROMSET, EVEN IF YOUR CURRENT ONE WORKED SOMETIME IN THE PAST !\n";
+			const char* s5 = "THIS IS NOT A BUG SO PLEASE DON'T WASTE EVERYONE'S TIME BY REPORTING THIS !\n";
 
 			static char uguiText[1024];
 			sprintf(uguiText, "%s%s%s%s%s", s1, s2, s3, s4, s5);

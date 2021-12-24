@@ -13389,10 +13389,10 @@
 	</game>
 	<game name="spracing" romof="spec128">
 		<comment>Homebrew</comment>
-		<description>Space Racing (128K) (HB, v1.1)</description>
+		<description>Space Racing (128K) (HB, v1.2)</description>
 		<year>2021</year>
 		<manufacturer>Voxel Tower</manufacturer>
-		<rom name="Space Racing v1.1 128K (2021)(Voxel Tower).tap" size="88616" crc="5fb59dad"/>
+		<rom name="Space Racing v1.2 128K (2021)(Voxel Tower).tap" size="88616" crc="64e0ef40"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

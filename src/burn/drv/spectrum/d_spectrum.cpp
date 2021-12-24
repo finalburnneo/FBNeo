@@ -32121,10 +32121,10 @@ struct BurnDriver BurnSpecRatos = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Space Racing (128K) (HB, v1.1)
+// Space Racing (128K) (HB, v1.2)
 
 static struct BurnRomInfo SpecSpracingRomDesc[] = {
-	{ "Space Racing v1.1 128K (2021)(Voxel Tower).tap", 88616, 0x5fb59dad, BRF_ESS | BRF_PRG },
+	{ "Space Racing v1.2 128K (2021)(Voxel Tower).tap", 88616, 0x64e0ef40, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSpracing, SpecSpracing, Spec128)
@@ -32132,7 +32132,7 @@ STD_ROM_FN(SpecSpracing)
 
 struct BurnDriver BurnSpecSpracing = {
 	"spec_spracing", NULL, "spec_spec128", NULL, "2021",
-	"Space Racing (128K) (HB, v1.1)\0", NULL, "Voxel Tower", "ZX Spectrum",
+	"Space Racing (128K) (HB, v1.2)\0", NULL, "Voxel Tower", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_RACING, 0,
 	SpectrumGetZipName, SpecSpracingRomInfo, SpecSpracingRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,

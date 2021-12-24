@@ -2,6 +2,13 @@
 #include "burner.h"
 #include "vid_softfx.h"
 
+// dink change-log, dec. 2021
+//
+// Hook-up nStatus (pause, play, record, netplay icons)
+// OSDMsg text match other blitters (from VidSNewShortMsg())
+// Experimental blitter - fix "off-by-nMenuSize" scale, which made stuff blurry
+// Experimental blitter - fix BDF_16BIT_ONLY games (megadrive, cave/toaplan, cps3)
+
 //#ifdef _MSC_VER
 //#pragma comment(lib, "d3d9")
 //#pragma comment(lib, "d3dx9")
@@ -73,7 +80,10 @@ static D3DXHANDLE hTechnique = NULL;
 static IDirect3DTexture9* pEffectTexture = NULL;
 
 static ID3DXFont* pFont = NULL;							// OSD font
-static D3DCOLOR osdColor = D3DCOLOR_ARGB(0xFF, 0xFF, 0xFF, 0xFF);
+static ID3DXFont* pStatusFont = NULL;					// Status font
+static D3DCOLOR osdColor = D3DCOLOR_ARGB(0xFF, 0xFF, 0xFF, 0x7F);
+static D3DCOLOR statusColor = D3DCOLOR_ARGB(0xFF, 0xFF, 0x3F, 0x3F);
+static void vid_ReleaseFonts(); // forward
 
 static double dPrevCubicB, dPrevCubicC;
 
@@ -278,7 +288,8 @@ static int dx9Exit()
 
 	VidSFreeVidImage();
 
-	RELEASE(pFont);
+	vid_ReleaseFonts();
+
 	RELEASE(pD3DDevice);
 	RELEASE(pD3D);
 
@@ -302,11 +313,7 @@ static int dx9SurfaceInit()
 	nGameImageWidth = nVidImageWidth;
 	nGameImageHeight = nVidImageHeight;
 
-	if (bDrvOkay && (BurnDrvGetFlags() & BDF_16BIT_ONLY)) {
-		nVidImageDepth = 15;
-	} else {
-		nVidImageDepth = nVidScrnDepth;
-	}
+	nVidImageDepth = nVidScrnDepth;
 
 	switch (nVidImageDepth) {
 		case 32:
@@ -768,28 +775,65 @@ HANDLE_ERROR:
 	return 1;
 }
 
-// ==> osd for dx9 video output (ugly), added by regret
-static int dx9CreateFont()
+static void vid_ReleaseFonts()
+{
+	RELEASE(pFont);
+	RELEASE(pStatusFont);
+}
+
+static void vid_OnLostFonts()
 {
 	if (pFont) {
-		return 0;
+		pFont->OnLostDevice();
 	}
 
-	HRESULT hr = _D3DXCreateFont(pD3DDevice, d3dpp.BackBufferHeight / 18,
-		0, FW_DEMIBOLD, 1, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
-		DEFAULT_PITCH || FF_DONTCARE,
-		_T("Arial"), &pFont);
+	if (pStatusFont) {
+		pStatusFont->OnLostDevice();
+	}
+}
 
-	if (FAILED(hr)) {
-		return 1;
+static void vid_OnResetFonts()
+{
+	if (pFont) {
+		pFont->OnResetDevice();
+	}
+
+	if (pStatusFont) {
+		pStatusFont->OnResetDevice();
+	}
+}
+
+static int vid_CreateFonts()
+{
+	if (!pFont) {
+		HRESULT hr = _D3DXCreateFont(pD3DDevice, d3dpp.BackBufferHeight / 60,
+									 0, FW_DEMIBOLD, 1, FALSE,
+									 DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
+									 DEFAULT_PITCH || FF_DONTCARE,
+									 _T("Arial"), &pFont);
+
+		if (FAILED(hr)) {
+			return 1;
+		}
+	}
+
+	if (!pStatusFont) {
+		HRESULT hr = _D3DXCreateFont(pD3DDevice, d3dpp.BackBufferHeight / 22,
+									 0, FW_DEMIBOLD, 1, FALSE,
+									 DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
+									 DEFAULT_PITCH || FF_DONTCARE,
+									 _T("Webdings"), &pStatusFont);
+
+		if (FAILED(hr)) {
+			return 1;
+		}
 	}
 	return 0;
 }
 
-static void dx9DrawText()
+static void vid_DisplayFonts()
 {
-	if (nVidSDisplayStatus == 0 || nOSDTimer == 0) {
+	if (nVidSDisplayStatus == 0) {
 		return;
 	}
 
@@ -798,22 +842,56 @@ static void dx9DrawText()
 		VidSKillOSDMsg();
 	}
 
-	RECT osdRect;
-	if (nVidFullscreen) {
-		osdRect.left = Dest.left;
-		osdRect.top = Dest.top;
-		osdRect.right = Dest.right - 1;
-		osdRect.bottom = Dest.bottom - 1;
-	} else {
-		osdRect.left = 0;
-		osdRect.top = 0;
-		osdRect.right = Dest.right - Dest.left - 1;
-		osdRect.bottom = Dest.bottom - Dest.top - 1;
+	int nStatus = VidSGetnStatus();
+
+	// OSD from VidSNewShortMsg()
+	{
+		RECT dest = { 0, Dest.top + 4, Dest.right - 8, Dest.top + 36 };
+
+		if (!nVidFullscreen) { dest.top -= nMenuHeight; }
+
+		if (nStatus) {
+			for (int x = 0; x < 4; x++) {
+				if (nStatus & (1 << x)) {
+					dest.right -= 48;
+				}
+			}
+
+			dest.top += 10;
+			dest.bottom += 10;
+		}
+
+		if (nOSDTimer != 0)
+			pFont->DrawText(NULL, OSDMsg, -1, &dest, DT_RIGHT | DT_TOP | DT_NOCLIP, osdColor);
+
 	}
 
-	pFont->DrawText(NULL, OSDMsg, -1, &osdRect, DT_RIGHT | DT_TOP, osdColor);
+	// Status font
+	if (nStatus) {
+		// RECT = left, top, right, bottom
+		RECT dest = { 0, Dest.top, Dest.right - 4, Dest.top + 48};
+
+		if (!nVidFullscreen) { dest.top -= nMenuHeight; }
+
+		for (int x = 0; x < 4; x++) {
+			if (nStatus & (1 << x)) {
+				dest.left -= 48;
+			}
+		}
+//		dest.left = dest.right - (src.right - src.left);
+
+		if (VidSGetnZoom() & 2) {
+			dest.top <<= 1;
+			dest.bottom <<= 1;
+		}
+
+		if (VidSGetnZoom() & 1) {
+			dest.left <<= 1;
+			dest.right <<= 1;
+		}
+		pStatusFont->DrawText(NULL, VidSGetStatus(), -1, &dest, DT_RIGHT | DT_TOP | DT_NOCLIP, statusColor);
+	}
 }
-// <== osd for dx9 video output (ugly)
 
 static int dx9Init()
 {
@@ -864,6 +942,10 @@ static int dx9Init()
 		}
 	}
 
+	// check selected atapter
+	D3DDISPLAYMODE dm;
+	pD3D->GetAdapterDisplayMode(nD3DAdapter, &dm);
+
 	memset(&d3dpp, 0, sizeof(d3dpp));
 	if (nVidFullscreen) {
 		VidSDisplayScoreInfo ScoreInfo;
@@ -884,6 +966,10 @@ static int dx9Init()
 		d3dpp.FullScreen_RefreshRateInHz	= D3DPRESENT_RATE_DEFAULT;
 		d3dpp.PresentationInterval			= D3DPRESENT_INTERVAL_DEFAULT;
 	} else {
+		d3dpp.BackBufferWidth				= dm.Width;
+		d3dpp.BackBufferHeight				= dm.Height;
+		//d3dpp.SwapEffect					= D3DSWAPEFFECT_DISCARD;
+		d3dpp.BackBufferCount				= 1;
 		d3dpp.BackBufferFormat				= D3DFMT_UNKNOWN;
 		d3dpp.SwapEffect					= D3DSWAPEFFECT_COPY;
 		d3dpp.hDeviceWindow					= hVidWnd;
@@ -992,7 +1078,7 @@ static int dx9Init()
 	}
 
 	// Create osd font
-	dx9CreateFont();
+	vid_CreateFonts();
 
 #ifdef PRINT_DEBUG_INFO
 	{
@@ -1016,9 +1102,7 @@ static int dx9Reset()
 	dprintf(_T("*** Resestting Direct3D device.\n"));
 #endif
 
-	if (pFont) {
-		pFont->OnLostDevice();
-	}
+	vid_OnLostFonts();
 
 	dx9ReleaseResources();
 
@@ -1026,9 +1110,7 @@ static int dx9Reset()
 		return 1;
 	}
 
-	if (pFont) {
-		pFont->OnResetDevice();
-	}
+	vid_OnResetFonts();
 
 	dx9SurfaceInit();
 	dx9EffectInit();
@@ -1060,7 +1142,7 @@ static int dx9MemToSurf()
 	GetClientRect(hVidWnd, &Dest);
 
 	if (nVidFullscreen == 0) {
-		Dest.top += nMenuHeight;
+		Dest.top += nMenuHeight; // if don't do this, scanlines get blurry
 	}
 
 	if (bVidArcaderes && nVidFullscreen) {
@@ -1274,7 +1356,7 @@ static int dx9MemToSurf()
 		pEffect->EndPass();
 
 		// draw osd text
-		dx9DrawText();
+		vid_DisplayFonts();
 
 		pD3DDevice->EndScene();
 	}
@@ -1567,7 +1649,8 @@ static int dx9AltExit()
 
 	VidSFreeVidImage();
 
-	RELEASE(pFont)
+	vid_ReleaseFonts();
+
 	RELEASE(pD3DDevice)
 	RELEASE(pD3D)
 
@@ -1747,52 +1830,6 @@ static int dx9AltSetVertex(unsigned int px, unsigned int py, unsigned int pw, un
 
 	return 0;
 }
-
-// ==> osd for dx9 video output (ugly), added by regret
-static int dx9AltCreateFont()
-{
-	if (pFont) {
-		return 0;
-	}
-
-	HRESULT hr = _D3DXCreateFont(pD3DDevice, d3dpp.BackBufferHeight / 40, 0, FW_NORMAL, 1, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH || FF_DONTCARE, _T("Arial"), &pFont);
-
-	if (FAILED(hr)) {
-		return 1;
-	}
-
-	return 0;
-}
-
-static void dx9AltDrawText()
-{
-	if (!nOSDTimer) {
-		return;
-	}
-
-	if (nFramesEmulated > nOSDTimer) {
-		VidSKillShortMsg();
-		VidSKillOSDMsg();
-	}
-
-	RECT osdRect;
-	if (nVidFullscreen) {
-		osdRect.left = Dest.left;
-		osdRect.top = Dest.top;
-		osdRect.right = Dest.right - 1;
-		osdRect.bottom = Dest.bottom - 1;
-	} else {
-		osdRect.left = 0;
-		osdRect.top = 0;
-		osdRect.right = Dest.right - Dest.left - 1;
-		osdRect.bottom = Dest.bottom - Dest.top - 1;
-	}
-
-	if (nOSDTimer) {
-		pFont->DrawText(NULL, OSDMsg, -1, &osdRect, DT_RIGHT | DT_TOP, osdColor);
-	}
-}
-// <== osd for dx9 video output (ugly)
 
 static int dx9AltInit()
 {
@@ -1974,16 +2011,14 @@ static int dx9AltInit()
 	}
 
 	// Create osd font
-	dx9AltCreateFont();
+	vid_CreateFonts();
 
 	return 0;
 }
 
 static int dx9AltReset()
 {
-	if (pFont) {
-		pFont->OnLostDevice();
-	}
+	vid_OnLostFonts();
 
 	dx9AltReleaseTexture();
 
@@ -1991,9 +2026,7 @@ static int dx9AltReset()
 		return 1;
 	}
 
-	if (pFont) {
-		pFont->OnResetDevice();
-	}
+	vid_OnResetFonts();
 
 	if (bVidMotionBlur) {
 		pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
@@ -2048,9 +2081,13 @@ static void VidSCpyImg16(unsigned char* dst, unsigned int dstPitch, unsigned cha
 }
 
 // Copy BlitFXsMem to pddsBlitFX
-static int dx9AltRender()
+static int dx9AltRender()  // MemToSurf
 {
 	GetClientRect(hVidWnd, &Dest);
+
+	if (nVidFullscreen == 0) {
+		Dest.top += nMenuHeight;
+	}
 
 	if (bVidArcaderes && nVidFullscreen) {
 		Dest.left = (Dest.right + Dest.left) / 2;
@@ -2171,7 +2208,7 @@ static int dx9AltRender()
 	}
 
 	// draw osd text
-	dx9AltDrawText();
+	vid_DisplayFonts();
 
 	pD3DDevice->EndScene();
 

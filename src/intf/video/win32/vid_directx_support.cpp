@@ -1252,6 +1252,57 @@ static void VidSDisplayShortMsg(IDirectDrawSurface7* pSurf, RECT* pRect)
 	}
 }
 
+int VidSGetnZoom()
+{
+	return nZoom;
+}
+
+UINT8 VidSGetnStatus()
+{
+	INT32 nStat = 0;
+
+	if (bRunPause) {
+		nStat |= 1;
+	}
+	if (kNetGame) {
+		nStat |= 2;
+	}
+	if (nReplayStatus == 1) {
+		nStat |= 4;
+	}
+	if (nReplayStatus == 2) {
+		nStat |= 8;
+	}
+
+	return nStat;
+}
+
+TCHAR *VidSGetStatus()
+{
+	static TCHAR szStatus[8] = _T("");
+
+	nStatus = 0;
+
+	if (nVidSDisplayStatus == 0) {
+		szStatus[0] = 0x00;
+		return &szStatus[0];
+	}
+
+	nStatus = VidSGetnStatus();
+
+	// Make the status string
+	memset(szStatus, 0, sizeof(szStatus));
+	for (int i = 0, j = 0; i < 4; i++) {
+		if (nStatus & (1 << i)) {
+			szStatus[j] = nStatusSymbols[i];
+			szStatus[j + 1] = 0x00;
+			j++;
+		}
+	}
+
+	return &szStatus[0];
+}
+
 static void VidSDisplayStatus(IDirectDrawSurface7* pSurf, RECT* pRect)
 {
 	nStatus = 0;
@@ -1260,18 +1311,7 @@ static void VidSDisplayStatus(IDirectDrawSurface7* pSurf, RECT* pRect)
 		return;
 	}
 
-	if (bRunPause) {
-		nStatus |= 1;
-	}
-	if (kNetGame) {
-		nStatus |= 2;
-	}
-	if (nReplayStatus == 1) {
-		nStatus |= 4;
-	}
-	if (nReplayStatus == 2) {
-		nStatus |= 8;
-	}
+	nStatus = VidSGetnStatus();
 
 	if (nStatus != nPrevStatus) {
 		nPrevStatus = nStatus;
@@ -1279,19 +1319,10 @@ static void VidSDisplayStatus(IDirectDrawSurface7* pSurf, RECT* pRect)
 			// Print the message
 			HDC hDC;
 			HFONT hFont;
-			TCHAR szStatus[8];
+			TCHAR *szStatus = VidSGetStatus();
 
 			// Clear the surface first
 			VidSClearSurface(pStatusSurf, nKeyColour, NULL);
-
-			// Make the status string
-			memset(szStatus, 0, sizeof(szStatus));
-			for (int i = 0, j = 0; i < 4; i++) {
-				if (nStatus & (1 << i)) {
-					szStatus[j] = nStatusSymbols[i];
-					j++;
-				}
-			}
 
 			pStatusSurf->GetDC(&hDC);
 			SetBkMode(hDC, TRANSPARENT);

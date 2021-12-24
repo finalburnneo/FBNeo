@@ -18960,6 +18960,125 @@ struct BurnDriver BurnDrvnes_vanguard = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_armedbatRomDesc[] = {
+	{ "Armed for Battle (2014)(1010 Howe).nes",          131088, 0xa7deed94, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_armedbat)
+STD_ROM_FN(nes_armedbat)
+
+struct BurnDriver BurnDrvnes_armedbat = {
+	"nes_armedbat", NULL, NULL, NULL, "2014",
+	"Armed for Battle (HB)\0", NULL, "1010 Howe", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_STRATEGY, 0,
+	NESGetZipName, nes_armedbatRomInfo, nes_armedbatRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_boblv2RomDesc[] = {
+	{ "BoBL v1.2 (2021)(Morphcat Games).nes",          131088, 0x7a2efc9d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_boblv2)
+STD_ROM_FN(nes_boblv2)
+
+struct BurnDriver BurnDrvnes_boblv2 = {
+	"nes_boblv2", NULL, NULL, NULL, "2021",
+	"BoBL (HB, v1.2)\0", NULL, "Morphcat Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_boblv2RomInfo, nes_boblv2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_legwnsdxRomDesc[] = {
+	{ "Legend of Weed N' Stiff DX, The (2021)(CalGames).nes",          524304, 0xf2e59dc7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_legwnsdx)
+STD_ROM_FN(nes_legwnsdx)
+
+struct BurnDriver BurnDrvnes_legwnsdx = {
+	"nes_legwnsdx", NULL, NULL, NULL, "2021",
+	"Legend of Weed N' Stiff DX, The (HB)\0", NULL, "CalGames", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_legwnsdxRomInfo, nes_legwnsdxRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_legwnsRomDesc[] = {
+	{ "Legend of Weed N' Stiff, The (2020)(CalGames).nes",          524304, 0x3e8c0fe5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_legwns)
+STD_ROM_FN(nes_legwns)
+
+struct BurnDriver BurnDrvnes_legwns = {
+	"nes_legwns", "nes_legwnsdx", NULL, NULL, "2020",
+	"Legend of Weed N' Stiff, The (HB)\0", NULL, "CalGames", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_legwnsRomInfo, nes_legwnsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_mariokartRomDesc[] = {
+	{ "Mario Kart GlobHack (2017)(pacnsacdave).nes",          65552, 0xca29d3f0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mariokart)
+STD_ROM_FN(nes_mariokart)
+
+struct BurnDriver BurnDrvnes_mariokart = {
+	"nes_mariokart", "nes_rcproam", NULL, NULL, "2017",
+	"Mario Kart (HB, GlobalHack)\0", NULL, "pacnsacdave", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_NES, GBF_RACING, 0,
+	NESGetZipName, nes_mariokartRomInfo, nes_mariokartRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_reknum1RomDesc[] = {
+	{ "Reknum - The Awakening (2019).nes",          524304, 0xe2e0ea31, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_reknum1)
+STD_ROM_FN(nes_reknum1)
+
+struct BurnDriver BurnDrvnes_reknum1 = {
+	"nes_reknum1", NULL, NULL, NULL, "2019",
+	"Reknum - The Awakening (HB)\0", "No Sound", "NAPE Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_reknum1RomInfo, nes_reknum1RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_reknum2RomDesc[] = {
+	{ "Reknum - Souls Adventure (2021).nes",          524304, 0xccdc9c66, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_reknum2)
+STD_ROM_FN(nes_reknum2)
+
+struct BurnDriver BurnDrvnes_reknum2 = {
+	"nes_reknum2", NULL, NULL, NULL, "2021",
+	"Reknum - Souls Adventure (HB)\0", NULL, "NAPE Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_reknum2RomInfo, nes_reknum2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_angunaRomDesc[] = {
 	{ "Anguna - Scourge of the Goblin King (2021)(The 6502 Collective).nes",          524304, 0x1119efff, BRF_ESS | BRF_PRG },
 };
@@ -21605,10 +21724,10 @@ STD_ROM_PICK(nes_bobl)
 STD_ROM_FN(nes_bobl)
 
 struct BurnDriver BurnDrvnes_bobl = {
-	"nes_bobl", NULL, NULL, NULL, "2020",
+	"nes_bobl", "nes_boblv2", NULL, NULL, "2020",
 	"BoBL (HB, v1.1)\0", NULL, "Morphcat Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_boblRomInfo, nes_boblRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

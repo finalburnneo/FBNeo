@@ -5,7 +5,7 @@
 // dink change-log, dec. 2021
 //
 // Hook-up nStatus (pause, play, record, netplay icons)
-// OSDMsg text match other blitters (from VidSNewShortMsg())
+// OSD (ShortMsg) text match other blitters (from VidSNewShortMsg())
 // Experimental blitter - fix "off-by-nMenuSize" scale, which made stuff blurry
 // Experimental blitter - fix BDF_16BIT_ONLY games (megadrive, cave/toaplan, cps3)
 
@@ -81,9 +81,24 @@ static IDirect3DTexture9* pEffectTexture = NULL;
 
 static ID3DXFont* pFont = NULL;							// OSD font
 static ID3DXFont* pStatusFont = NULL;					// Status font
-static D3DCOLOR osdColor = D3DCOLOR_ARGB(0xFF, 0xFF, 0xFF, 0x7F);
-static D3DCOLOR statusColor = D3DCOLOR_ARGB(0xFF, 0xFF, 0x3F, 0x3F);
+static ID3DXFont* pTinyFont = NULL;						// TinyMsg
+static ID3DXFont* pJoystickFont = NULL;					// JoystickMsg
+
 static void vid_ReleaseFonts(); // forward
+
+// from vid_directx_support.cpp
+struct sMsgStruct {
+	TCHAR pMsgText[3][64];
+	COLORREF nColour;
+	DWORD nRGB;
+	int nPriority;
+	unsigned int nTimer;
+};
+
+extern sMsgStruct VidSShortMsg;
+extern sMsgStruct VidSTinyMsg;
+extern sMsgStruct VidSJoystickMsg;
+// end from vid_directx_support.cpp
 
 static double dPrevCubicB, dPrevCubicC;
 
@@ -779,6 +794,13 @@ static void vid_ReleaseFonts()
 {
 	RELEASE(pFont);
 	RELEASE(pStatusFont);
+	RELEASE(pTinyFont);
+	RELEASE(pJoystickFont);
+
+	pFont = NULL;
+	pStatusFont = NULL;
+	pTinyFont = NULL;
+	pJoystickFont = NULL;
 }
 
 static void vid_OnLostFonts()
@@ -790,6 +812,14 @@ static void vid_OnLostFonts()
 	if (pStatusFont) {
 		pStatusFont->OnLostDevice();
 	}
+
+	if (pTinyFont) {
+		pTinyFont->OnLostDevice();
+	}
+
+	if (pJoystickFont) {
+		pJoystickFont->OnLostDevice();
+	}
 }
 
 static void vid_OnResetFonts()
@@ -800,6 +830,14 @@ static void vid_OnResetFonts()
 
 	if (pStatusFont) {
 		pStatusFont->OnResetDevice();
+	}
+
+	if (pTinyFont) {
+		pTinyFont->OnResetDevice();
+	}
+
+	if (pJoystickFont) {
+		pJoystickFont->OnResetDevice();
 	}
 }
 
@@ -828,6 +866,32 @@ static int vid_CreateFonts()
 			return 1;
 		}
 	}
+
+	if (!pTinyFont) {
+		HRESULT hr = _D3DXCreateFont(pD3DDevice, d3dpp.BackBufferHeight / 60,
+									 0, FW_DEMIBOLD, 1, FALSE,
+									 DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
+									 DEFAULT_PITCH || FF_DONTCARE,
+									 _T("Arial"), &pTinyFont);
+
+		if (FAILED(hr)) {
+			return 1;
+		}
+	}
+
+	if (!pJoystickFont) {
+		extern int counter;
+		HRESULT hr = _D3DXCreateFont(pD3DDevice, d3dpp.BackBufferHeight / (60+counter),
+									 0, FW_DEMIBOLD, 1, FALSE,
+									 DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
+									 DEFAULT_PITCH || FF_SWISS,
+									 _T("MS Sans Serif"), &pJoystickFont);
+
+		if (FAILED(hr)) {
+			return 1;
+		}
+	}
+
 	return 0;
 }
 
@@ -837,20 +901,17 @@ static void vid_DisplayFonts()
 		return;
 	}
 
-	if (nFramesEmulated > nOSDTimer) {
-		VidSKillShortMsg();
-		VidSKillOSDMsg();
-	}
+	VidSDisplayCheckTimers();
 
 	int nStatus = VidSGetnStatus();
 
 	// OSD from VidSNewShortMsg()
-	{
+	if (VidSShortMsg.nTimer) {
 		RECT dest = { 0, Dest.top + 4, Dest.right - 8, Dest.top + 36 };
 
 		if (!nVidFullscreen) { dest.top -= nMenuHeight; }
 
-		if (nStatus) {
+		if (nStatus) { // Make room for status symbols, if we need to
 			for (int x = 0; x < 4; x++) {
 				if (nStatus & (1 << x)) {
 					dest.right -= 48;
@@ -861,9 +922,53 @@ static void vid_DisplayFonts()
 			dest.bottom += 10;
 		}
 
-		if (nOSDTimer != 0)
-			pFont->DrawText(NULL, OSDMsg, -1, &dest, DT_RIGHT | DT_TOP | DT_NOCLIP, osdColor);
+		pFont->DrawText(NULL, VidSShortMsg.pMsgText[0], -1, &dest, DT_RIGHT | DT_TOP | DT_NOCLIP, VidSShortMsg.nRGB);
+	}
 
+	if (VidSTinyMsg.nTimer) {
+		RECT dest = { Dest.right - 320, Dest.bottom - 24, Dest.right - 8, Dest.bottom - 4 };
+
+		if (!nVidFullscreen) { dest.top -= nMenuHeight; }
+
+		if (dest.left < Dest.left) {
+			dest.left = Dest.left;
+		}
+
+		if (VidSGetnZoom() & 2) {
+			dest.top <<= 1;
+			dest.bottom <<= 1;
+		}
+
+		if (VidSGetnZoom() & 1) {
+			dest.left <<= 1;
+			dest.right <<= 1;
+		}
+
+		pTinyFont->DrawText(NULL, VidSTinyMsg.pMsgText[0], -1, &dest, DT_RIGHT | DT_TOP | DT_NOCLIP, VidSTinyMsg.nRGB);
+	}
+
+	if (VidSJoystickMsg.nTimer) {
+		for (int i = 0; i < 3; i++) {
+			RECT dest = { Dest.left, (Dest.bottom - 60) + i * 8, Dest.left + 300, Dest.bottom };
+
+			if (!nVidFullscreen) { dest.top -= nMenuHeight; }
+
+			if (dest.left < Dest.left) {
+				dest.left = Dest.left;
+			}
+
+			if (VidSGetnZoom() & 2) {
+				dest.top <<= 1;
+				dest.bottom <<= 1;
+			}
+
+			if (VidSGetnZoom() & 1) {
+				dest.left <<= 1;
+				dest.right <<= 1;
+			}
+
+			pJoystickFont->DrawText(NULL, VidSJoystickMsg.pMsgText[i], -1, &dest, DT_LEFT | DT_TOP | DT_NOCLIP, VidSJoystickMsg.nRGB);
+		}
 	}
 
 	// Status font
@@ -878,7 +983,6 @@ static void vid_DisplayFonts()
 				dest.left -= 48;
 			}
 		}
-//		dest.left = dest.right - (src.right - src.left);
 
 		if (VidSGetnZoom() & 2) {
 			dest.top <<= 1;
@@ -889,7 +993,7 @@ static void vid_DisplayFonts()
 			dest.left <<= 1;
 			dest.right <<= 1;
 		}
-		pStatusFont->DrawText(NULL, VidSGetStatus(), -1, &dest, DT_RIGHT | DT_TOP | DT_NOCLIP, statusColor);
+		pStatusFont->DrawText(NULL, VidSGetStatus(), -1, &dest, DT_RIGHT | DT_TOP | DT_NOCLIP, D3DCOLOR_ARGB(0xFF, 0xFF, 0x3F, 0x3F));
 	}
 }
 
@@ -1657,7 +1761,6 @@ static int dx9AltExit()
 	nRotateGame = 0;
 
 	VidSKillShortMsg();
-	VidSKillOSDMsg();
 
 	return 0;
 }

@@ -48,3 +48,4 @@ UINT8 VidSGetnStatus();
 TCHAR *VidSGetStatus();
 int VidSGetnZoom();
 
+void VidSDisplayCheckTimers();

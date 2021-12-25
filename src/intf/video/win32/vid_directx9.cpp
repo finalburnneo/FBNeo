@@ -880,8 +880,7 @@ static int vid_CreateFonts()
 	}
 
 	if (!pJoystickFont) {
-		extern int counter;
-		HRESULT hr = _D3DXCreateFont(pD3DDevice, d3dpp.BackBufferHeight / (60+counter),
+		HRESULT hr = _D3DXCreateFont(pD3DDevice, d3dpp.BackBufferHeight / 60,
 									 0, FW_DEMIBOLD, 1, FALSE,
 									 DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
 									 DEFAULT_PITCH || FF_SWISS,

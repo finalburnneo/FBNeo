@@ -906,9 +906,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="genchohic" cloneof="genghis2" romof="genghis2">
+		<comment>Hack</comment>
 		<description>Aoki Ookami to Shiroki Mejika - Genchou Hishi (T-Chi)</description>
-		<year>1993</year>
-		<manufacturer>Koei</manufacturer>
+		<year>199?</year>
+		<manufacturer>SKOB</manufacturer>
 		<rom name="aoki ookami to shiroki meshika - genchou hishi (T-Chi).bin" size="1310720" crc="7c161c48"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1840,9 +1841,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="btoadsdds" cloneof="btoadsdd" romof="btoadsdd">
+		<comment>Hack</comment>
 		<description>Battletoads &amp; Double Dragon (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Tradewest</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="battletoads &amp; double dragon (hack, spanish).bin" size="1048576" crc="5fb95d53"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1856,9 +1858,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="btoadss" cloneof="btoads" romof="btoads">
+		<comment>Hack</comment>
 		<description>Battletoads (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Tradewest</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="battletoads (hack, spanish).bin" size="524288" crc="be072fdd"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3319,10 +3322,10 @@
 	</game>
 	<game name="citadel">
 		<comment>Homebrew</comment>
-		<description>Citadel of Chaos, The (HB, rev2.0)</description>
+		<description>Citadel of Chaos, The (HB, rev2.1)</description>
 		<year>2021</year>
 		<manufacturer>Studio Vetea</manufacturer>
-		<rom name="Citadel of Chaos (2021)(Studio Vetea).bin" size="3807254" crc="48bf71e9"/>
+		<rom name="Citadel of Chaos, The v2.1 (2021)(Studio Vetea).bin" size="3807254" crc="bfe255e3"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5123,9 +5126,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="mauimalls" cloneof="mauimall" romof="mauimall">
+		<comment>Hack</comment>
 		<description>Donald In Maui Mallard (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="donald in maui mallard (hack, spanish).bin" size="3145728" crc="1ba0bc17"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5180,17 +5184,19 @@
 		<driver status="good"/>
 	</game>
 	<game name="ddragonec" cloneof="ddragon" romof="ddragon">
+		<comment>Hack</comment>
 		<description>Double Dragon (Hack, Enhanced Colors)</description>
 		<year>2015</year>
-		<manufacturer>Ballistic - Pyron</manufacturer>
+		<manufacturer>Pyron</manufacturer>
 		<rom name="double dragon (hack - enhanced colors).md" size="524288" crc="db8416cb"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="ddragons" cloneof="ddragon" romof="ddragon">
+		<comment>Hack</comment>
 		<description>Double Dragon (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Ballistic</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="double dragon (hack, spanish).bin" size="524288" crc="5b42c057"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5204,14 +5210,16 @@
 		<driver status="good"/>
 	</game>
 	<game name="ddragon3s" cloneof="ddragon3" romof="ddragon3">
+		<comment>Hack</comment>
 		<description>Double Dragon 3 - The Arcade Game (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Flying Edge</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="double dragon 3 - the arcade game (hack, spanish).bin" size="1048576" crc="4e8e616d"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="ddragon2s" cloneof="ddragon2" romof="ddragon2">
+		<comment>Hack</comment>
 		<description>Double Dragon II - The Revenge (Hack, Spanish)</description>
 		<year>2018</year>
 		<manufacturer>PalSoft</manufacturer>
@@ -5228,9 +5236,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ddragon5s" cloneof="ddragon5" romof="ddragon5">
+		<comment>Hack</comment>
 		<description>Double Dragon V - The Shadow Falls (Hack, Spanish)</description>
 		<year>2017</year>
-		<manufacturer>Tradewest</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="double dragon v - the shadow falls (hack, spanish).bin" size="3145728" crc="42c385ab"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7361,7 +7370,7 @@
 		<comment>Hack</comment>
 		<description>Ghostbusters (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="ghostbusters (hack, spanish).bin" size="524288" crc="4ed2c651"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7528,7 +7537,7 @@
 		<comment>Hack</comment>
 		<description>Golden Axe II (Hack, Enhanced Colors)</description>
 		<year>2014</year>
-		<manufacturer>Sega - Pyron</manufacturer>
+		<manufacturer>Pyron</manufacturer>
 		<rom name="golden axe ii (enhanced colors).md" size="524288" crc="696caae2"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10492,9 +10501,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="megaswivci" cloneof="megaswiv" romof="megaswiv">
+		<comment>Hack</comment>
 		<description>Mega SWIV (Hack, Color Improvement v1.05)</description>
 		<year>2016</year>
-		<manufacturer>Time Warner Interactive - fusaru</manufacturer>
+		<manufacturer>Fusaru</manufacturer>
 		<rom name="mega swiv (euro - color improvement v1.05).md" size="1048576" crc="e8d76ad1"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11199,17 +11209,19 @@
 		<driver status="good"/>
 	</game>
 	<game name="mworld4eng" cloneof="mworld4" romof="mworld4">
+		<comment>Hack</comment>
 		<description>Monster World IV (Hack, English v2.2)</description>
 		<year>2008</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Di Somma Michele</manufacturer>
 		<rom name="Monster World IV (J) [!] [T-Eng].bin" size="2097152" crc="c94a35bf"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mworld4s" cloneof="mworld4" romof="mworld4">
+		<comment>Hack</comment>
 		<description>Monster World IV (Hack, Spanish)</description>
 		<year>2020</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>jackic</manufacturer>
 		<rom name="monster world iv (hack, spanish).bin" size="2097152" crc="7dbbfa4a"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11223,9 +11235,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="mworld4c" cloneof="mworld4" romof="mworld4">
+		<comment>Hack</comment>
 		<description>Monster World IV (T-Chi, v2)</description>
-		<year>2019-06-21</year>
-		<manufacturer>Sega</manufacturer>
+		<year>2019</year>
+		<manufacturer>Wolfteam &amp; HA MU</manufacturer>
 		<rom name="Monster World IV (T-Chi, v2).bin" size="2097152" crc="08d46b12"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11239,9 +11252,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="mworld4f" cloneof="mworld4" romof="mworld4">
+		<comment>Hack</comment>
 		<description>Monster World IV - WB 6 (Hack, French)</description>
-		<year>1989?</year>
-		<manufacturer>Sega</manufacturer>
+		<year>20??</year>
+		<manufacturer>Terminus</manufacturer>
 		<rom name="Monster World IV - WB 6 (Hack, French).bin" size="2097152" crc="1cd6c514"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11255,9 +11269,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="mks" cloneof="mk" romof="mk">
+		<comment>Hack</comment>
 		<description>Mortal Kombat (Hack, Spanish)</description>
 		<year>2013</year>
-		<manufacturer>Acclaim</manufacturer>
+		<manufacturer>pepodmc</manufacturer>
 		<rom name="mortal kombat (hack, spanish).bin" size="2097152" crc="75046fcf"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11304,26 +11319,38 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mkae" cloneof="mk" romof="mk">
+		<comment>Hack</comment>
+		<description>Mortal Kombat Arcade Edition (Hack)</description>
+		<year>2021</year>
+		<manufacturer>Linkuei</manufacturer>
+		<rom name="Mortal Kombat Arcade Edition (Hack)(2021).bin" size="4194304" crc="aa8fb151"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mk2wuec" cloneof="mk2" romof="mk2">
-		<description>Mortal Kombat II (World) Unlimited (Hack, v1.0) (Hack, Enhanced Colors)</description>
-		<year>2013</year>
-		<manufacturer>2011 Smoke</manufacturer>
+		<comment>Hack</comment>
+		<description>Mortal Kombat II (World) Unlimited (Hack, Enhanced Colors)</description>
+		<year>2015</year>
+		<manufacturer>Smoke</manufacturer>
 		<rom name="Mortal Kombat II (World) Unlimited (Hack, v1.0) (Hack, Enhanced Colors).bin" size="4136840" crc="1867b4d9"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mk2wus" cloneof="mk2" romof="mk2">
-		<description>Mortal Kombat II (World) Unlimited (Hack, v1.0) (Hack, Spanish)</description>
+		<comment>Hack</comment>
+		<description>Mortal Kombat II (World) Unlimited (Hack, Spanish)</description>
 		<year>2013</year>
-		<manufacturer>2011 Smoke</manufacturer>
+		<manufacturer>Smoke, pepodmc</manufacturer>
 		<rom name="Mortal Kombat II (World) Unlimited (Hack, v1.0) (hack, spanish).bin" size="4136840" crc="40b29dd4"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mk2wu" cloneof="mk2" romof="mk2">
+		<comment>Hack</comment>
 		<description>Mortal Kombat II (World) Unlimited (Hack, v1.0)</description>
-		<year>1994</year>
-		<manufacturer>2011 Smoke</manufacturer>
+		<year>2011</year>
+		<manufacturer>Smoke</manufacturer>
 		<rom name="Mortal Kombat II Unlimited (V1.0) (Hack By Smoke).bin" size="4136840" crc="53206165"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11339,7 +11366,7 @@
 	<game name="mkr" cloneof="umk3t" romof="umk3t">
 		<description>Mortal Kombat Revelations (Hack, Version 1.0)</description>
 		<year>2012</year>
-		<manufacturer>SMOKE</manufacturer>
+		<manufacturer>Smoke</manufacturer>
 		<rom name="Mortal Kombat Revelations (Hack Ver. 1.0 By Smoke).bin" size="9992816" crc="318b81f2"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11353,14 +11380,16 @@
 		<driver status="good"/>
 	</game>
 	<game name="mrnutzs" cloneof="mrnutz" romof="mrnutz">
+		<comment>Hack</comment>
 		<description>Mr. Nutz (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Ocean</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="mr. nutz (hack, spanish).bin" size="1048576" crc="f032c867"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mrnutz2">
+		<comment>Prototype</comment>
 		<description>Mr. Nutz - Hoppin' Mad (Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Ocean</manufacturer>
@@ -21408,7 +21437,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="umk3h" cloneof="umk3" romof="umk3">
-		<description>Ultimate Mortal Kombat 3 Arcade (Hack, V0.71)</description>
+		<description>Ultimate Mortal Kombat 3 Arcade (Hack, v0.71)</description>
 		<year>2012?</year>
 		<manufacturer>Nemesis_c</manufacturer>
 		<rom name="Ultimate Mortal Kombat 3 Hack Ver. 0.71 (By Nemesis_c).bin" size="6366778" crc="b069ab33"/>
@@ -21416,7 +21445,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="umk3mh" cloneof="umk3" romof="umk3">
-		<description>Ultimate Mortal Kombat 3 Mini V13 (Hack)</description>
+		<description>Ultimate Mortal Kombat 3 Mini (Hack, v13)</description>
 		<year>2011</year>
 		<manufacturer>Nemesis_c, r57shell</manufacturer>
 		<rom name="Ultimate Mortal Kombat 3 Mini-V13.bin" size="4194304" crc="4f2a5b98"/>
@@ -21424,7 +21453,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="umk3t">
-		<description>Ultimate Mortal Kombat Trilogy Hack rev.5149</description>
+		<description>Ultimate Mortal Kombat Trilogy (Hack, rev.5149)</description>
 		<year>2017</year>
 		<manufacturer>KABAL_MK</manufacturer>
 		<rom name="UMKT_5149.bin" size="10485760" crc="1d9d2eba"/>

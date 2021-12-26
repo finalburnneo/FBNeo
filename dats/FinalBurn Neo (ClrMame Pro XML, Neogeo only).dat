@@ -1085,8 +1085,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="badapple" romof="neogeo">
-		<comment>Demo</comment>
-		<description>Bad Apple Demo</description>
+		<comment>Demo, Homebrew</comment>
+		<description>Bad Apple (Tech-Demo)</description>
 		<year>2017</year>
 		<manufacturer>Hpman</manufacturer>
 		<rom name="bada-p1.bin" size="4194304" crc="f68ade5a"/>
@@ -2319,7 +2319,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cabalng" romof="neogeo">
-		<comment>Hack</comment>
+		<comment>Homebrew</comment>
 		<description>Cabal (Neo-Geo Conversion)</description>
 		<year>1988</year>
 		<manufacturer>TAD Corporation</manufacturer>
@@ -2531,7 +2531,7 @@
 	</game>
 	<game name="cndi" romof="neogeo">
 		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
-		<description>Chip n Dale (Intro demo)</description>
+		<description>Chip n Dale (FMV Demo)</description>
 		<year>2009</year>
 		<manufacturer>Sergi</manufacturer>
 		<rom name="cnd-p1.bin" size="8388608" crc="2df9a41d"/>
@@ -3268,7 +3268,7 @@
 	</game>
 	<game name="dwi" romof="neogeo">
 		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
-		<description>DarkWing Duck (Intro demo)</description>
+		<description>DarkWing Duck (FMV Demo)</description>
 		<year>2009</year>
 		<manufacturer>Sergi</manufacturer>
 		<rom name="dwi-p1.bin" size="8388608" crc="8e3f2ea8"/>
@@ -3326,7 +3326,7 @@
 	</game>
 	<game name="dwia" cloneof="dwi" romof="dwi">
 		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
-		<description>DarkWing Duck (Intro demo, alt)</description>
+		<description>DarkWing Duck (FMV Demo, alt)</description>
 		<year>2009</year>
 		<manufacturer>Sergi</manufacturer>
 		<rom name="dwi-p1.bin" merge="dwi-p1.bin" size="8388608" crc="8e3f2ea8"/>
@@ -3666,7 +3666,7 @@
 	</game>
 	<game name="ducki" romof="neogeo">
 		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
-		<description>Duck Tales (Intro demo)</description>
+		<description>Duck Tales (FMV Demo)</description>
 		<year>2009</year>
 		<manufacturer>Sergi</manufacturer>
 		<rom name="duck-p1.bin" size="8388608" crc="f975711c"/>
@@ -4738,7 +4738,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="neogalag" romof="neogeo">
-		<comment>Homebrew</comment>
+		<comment>Demo, Homebrew</comment>
 		<description>Galaga Demo (set 1)</description>
 		<year>2013</year>
 		<manufacturer>Cristiano Bei/www.iocerom.com</manufacturer>
@@ -4790,7 +4790,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="neogalaga" cloneof="neogalag" romof="neogalag">
-		<comment>Homebrew</comment>
+		<comment>Demo, Homebrew</comment>
 		<description>Galaga Demo (set 2)</description>
 		<year>2013</year>
 		<manufacturer>Cristiano Bei/www.iocerom.com</manufacturer>
@@ -5323,7 +5323,7 @@
 	</game>
 	<game name="ghostbi" romof="neogeo">
 		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
-		<description>Ghost Busters (Intro demo)</description>
+		<description>Ghost Busters (FMV Demo)</description>
 		<year>2009</year>
 		<manufacturer>Sergi</manufacturer>
 		<rom name="ghostb-p1.bin" size="1048576" crc="af69ef5f"/>
@@ -9301,8 +9301,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nblktiger" romof="neogeo">
-		<comment>Demo, Homebrew</comment>
-		<description>Neo Black Tiger Demo</description>
+		<comment>Homebrew</comment>
+		<description>Neo Black Tiger (Demo)</description>
 		<year>2020</year>
 		<manufacturer>OzzyOuzo</manufacturer>
 		<rom name="nblktiegr-p1.bin" size="1048576" crc="18f34200"/>
@@ -9415,7 +9415,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="neocstlv" romof="neogeo">
-		<comment>Homebrew</comment>
+		<comment>Demo, Homebrew</comment>
 		<description>Neo CastleVania Demo</description>
 		<year>2004</year>
 		<manufacturer>Barf/BarfHappy</manufacturer>
@@ -9726,8 +9726,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nsmb" romof="neogeo">
-		<comment>Demo, Homebrew</comment>
-		<description>Neo Super Mario Bros Demo 0.01!</description>
+		<comment>Homebrew</comment>
+		<description>Neo Super Mario Bros (Demo, v0.01)</description>
 		<year>2020</year>
 		<manufacturer>OzzyOuzo</manufacturer>
 		<rom name="nsmb-p1.bin" size="1048576" crc="9e0fded1"/>
@@ -9838,7 +9838,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="neothndr" romof="neogeo">
-		<comment>Homebrew, sebastianmihai.com</comment>
+		<comment>Homebrew, No Sound</comment>
 		<description>Neo Thunder</description>
 		<year>2012</year>
 		<manufacturer>Sebastian Mihai</manufacturer>
@@ -10048,7 +10048,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="neo3ddmo" romof="neogeo">
-		<comment>Homebrew</comment>
+		<comment>Demo, Homebrew</comment>
 		<description>NeoGeo 3D! Demo</description>
 		<year>2012</year>
 		<manufacturer>Oxygene</manufacturer>
@@ -10101,7 +10101,7 @@
 	</game>
 	<game name="neotris" romof="neogeo">
 		<comment>Homebrew</comment>
-		<description>NeoTRIS (Free Beta 2 Ver. 202009)</description>
+		<description>NeoTRIS (Free Beta 2, Ver. 202009)</description>
 		<year>2020</year>
 		<manufacturer>Chipsonsteroids</manufacturer>
 		<rom name="neotris-p1.bin" size="524288" crc="4cd619cf"/>
@@ -10211,7 +10211,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ngftdemo" romof="neogeo">
-		<comment>Homebrew, redarmor.net</comment>
+		<comment>Demo, Homebrew, redarmor.net</comment>
 		<description>NGF Transparency Demo</description>
 		<year>2012</year>
 		<manufacturer>CeL</manufacturer>
@@ -10979,7 +10979,7 @@
 	<game name="poknight" romof="neogeo">
 		<comment>Homebrew</comment>
 		<description>Poker Night</description>
-		<year>????</year>
+		<year>199?</year>
 		<manufacturer>Jeff Kurtz</manufacturer>
 		<rom name="2003-p1.bin" size="524288" crc="750421ee"/>
 		<rom name="2003-s1.bin" size="131072" crc="a26d2f09"/>
@@ -11193,7 +11193,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="neoprimo" romof="neogeo">
-		<comment>Homebrew</comment>
+		<comment>Demo, Homebrew</comment>
 		<description>Primo Demo</description>
 		<year>2013</year>
 		<manufacturer>iocerom.com</manufacturer>
@@ -11245,8 +11245,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="proneon" romof="neogeo">
-		<comment>Demo</comment>
-		<description>Project Neon (Caravan Edition, prealpha 0.4.19)</description>
+		<comment>Homebrew</comment>
+		<description>Project Neon (Caravan Edition, prealpha v0.4.19)</description>
 		<year>2019</year>
 		<manufacturer>FULLSET</manufacturer>
 		<rom name="neon-p1.bin" size="524288" crc="f45cac3a"/>
@@ -13001,7 +13001,7 @@
 	</game>
 	<game name="robocopi" romof="neogeo">
 		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
-		<description>Robocop (Intro demo)</description>
+		<description>Robocop (FMV Demo)</description>
 		<year>2009</year>
 		<manufacturer>Sergi</manufacturer>
 		<rom name="robo-p1.bin" size="8388608" crc="adcb4fe0"/>
@@ -15451,7 +15451,7 @@
 	</game>
 	<game name="spidermi" romof="neogeo">
 		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
-		<description>Spiderman (Intro demo)</description>
+		<description>Spiderman (FMV Demo)</description>
 		<year>2009</year>
 		<manufacturer>Sergi</manufacturer>
 		<rom name="sman-p1.bin" size="1048576" crc="66b5cfe8"/>
@@ -16161,7 +16161,7 @@
 	</game>
 	<game name="tmnti" romof="neogeo">
 		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
-		<description>Teenage Mutant Ninja Turtles (Intro demo)</description>
+		<description>Teenage Mutant Ninja Turtles (FMV Demo)</description>
 		<year>2009</year>
 		<manufacturer>Sergi</manufacturer>
 		<rom name="tmnt-p1.bin" size="8388608" crc="2d5066ff"/>
@@ -16219,7 +16219,7 @@
 	</game>
 	<game name="tmntia" cloneof="tmnti" romof="tmnti">
 		<comment>Demo, You must use the Universe BIOS and set region to Japan AES</comment>
-		<description>Teenage Mutant Ninja Turtles (Intro demo, alt)</description>
+		<description>Teenage Mutant Ninja Turtles (FMV Demo, alt)</description>
 		<year>2009</year>
 		<manufacturer>Sergi</manufacturer>
 		<rom name="tmnt-p1a.bin" size="8388608" crc="ed4f5fec"/>
@@ -16276,7 +16276,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="teot" romof="neogeo">
-		<comment>Demo, Homebrew</comment>
+		<comment>Homebrew</comment>
 		<description>The Eye of Typhoon (Alpha Version)</description>
 		<year>2021</year>
 		<manufacturer>OzzyOuzo</manufacturer>
@@ -23077,7 +23077,7 @@
 	</game>
 	<game name="timesupd" romof="neogeo">
 		<comment>Homebrew</comment>
-		<description>Time's Up Demo</description>
+		<description>Time's Up (Demo)</description>
 		<year>2012</year>
 		<manufacturer>NGF Dev. Inc.</manufacturer>
 		<rom name="tup_p1.rom" size="2097152" crc="be86adb1"/>
@@ -24462,8 +24462,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="neoww2" romof="neogeo">
-		<comment>Homebrew</comment>
-		<description>WW2 Demo - Arcade Development Project</description>
+		<comment>Demo, Homebrew</comment>
+		<description>WW2 (Demo) - Arcade Development Project</description>
 		<year>2012</year>
 		<manufacturer>Charles DOTY/RasterSoft (USA)</manufacturer>
 		<rom name="ww2_p1.rom" size="524288" crc="d53762ff"/>

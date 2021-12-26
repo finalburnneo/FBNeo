@@ -886,6 +886,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="armedbat">
+		<comment>Homebrew</comment>
+		<description>Armed for Battle (HB)</description>
+		<year>2014</year>
+		<manufacturer>1010 Howe</manufacturer>
+		<rom name="Armed for Battle (2014)(1010 Howe).nes" size="131088" crc="a7deed94"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="asmikkunland">
 		<description>Asmik-kun Land (Japan)</description>
 		<year>1989?</year>
@@ -1817,12 +1826,21 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="bobl">
+	<game name="bobl" cloneof="boblv2" romof="boblv2">
 		<comment>Homebrew</comment>
 		<description>BoBL (HB, v1.1)</description>
 		<year>2020</year>
 		<manufacturer>Morphcat Games</manufacturer>
 		<rom name="bobl (HB).nes" size="65552" crc="831956ea"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="boblv2">
+		<comment>Homebrew</comment>
+		<description>BoBL (HB, v1.2)</description>
+		<year>2021</year>
+		<manufacturer>Morphcat Games</manufacturer>
+		<rom name="BoBL v1.2 (2021)(Morphcat Games).nes" size="131088" crc="7a2efc9d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -8196,6 +8214,33 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="legwnsdx" cloneof="legwnssdx" romof="legwnssdx">
+		<comment>Homebrew</comment>
+		<description>Legend of Weed N' Stiff DX, The (HB)</description>
+		<year>2020</year>
+		<manufacturer>CalGames</manufacturer>
+		<rom name="Legend of Weed N' Stiff DX, The (2021)(CalGames).nes" size="524304" crc="f2e59dc7"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="legwnssdx">
+		<comment>Homebrew</comment>
+		<description>Legend of Weed N' Stiff SDX, The (HB)</description>
+		<year>2021</year>
+		<manufacturer>CalGames</manufacturer>
+		<rom name="Legend of Weed N' Stiff SDX, The (2021)(CalGames).nes" size="524304" crc="e59b7fa0"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="legwns" cloneof="legwnssdx" romof="legwnssdx">
+		<comment>Homebrew</comment>
+		<description>Legend of Weed N' Stiff, The (HB)</description>
+		<year>2020</year>
+		<manufacturer>CalGames</manufacturer>
+		<rom name="Legend of Weed N' Stiff, The (2020)(CalGames).nes" size="524304" crc="3e8c0fe5"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="triforcegc" cloneof="triforceg" romof="triforceg">
 		<description>Legend of Zelda - Triforce of the Gods (China)</description>
 		<year>2004</year>
@@ -8952,6 +8997,15 @@
 		<year>1983</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Mario Bros. (World).nes" size="24592" crc="a6de1b55"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="mariokart" cloneof="rcproam" romof="rcproam">
+		<comment>Hack, Homebrew</comment>
+		<description>Mario Kart (HB, GlobalHack)</description>
+		<year>2017</year>
+		<manufacturer>pacnsacdave</manufacturer>
+		<rom name="Mario Kart GlobHack (2017)(pacnsacdave).nes" size="65552" crc="ca29d3f0"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -11454,6 +11508,24 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Red Arremer II (Japan).nes" size="262160" crc="7998c426"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="reknum2">
+		<comment>Homebrew</comment>
+		<description>Reknum - Souls Adventure (HB)</description>
+		<year>2021</year>
+		<manufacturer>NAPE Games</manufacturer>
+		<rom name="Reknum - Souls Adventure (2021).nes" size="524304" crc="ccdc9c66"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="reknum1">
+		<comment>Homebrew, No Sound</comment>
+		<description>Reknum - The Awakening (HB)</description>
+		<year>2019</year>
+		<manufacturer>NAPE Games</manufacturer>
+		<rom name="Reknum - The Awakening (2019).nes" size="524304" crc="e2e0ea31"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

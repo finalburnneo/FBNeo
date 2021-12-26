@@ -254,7 +254,3 @@ extern bool bEditActive;
 extern bool bEditTextChanged;
 extern TCHAR EditText[MAX_CHAT_SIZE + 1];
 
-// osd text display for dx9
-extern TCHAR OSDMsg[MAX_PATH];
-extern UINT32 nOSDTimer;
-void VidSKillOSDMsg();

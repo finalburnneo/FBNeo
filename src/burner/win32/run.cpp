@@ -723,7 +723,6 @@ int RunMessageLoop()
 										DisplayFPSInit();
 									} else {
 										VidSKillShortMsg();
-										VidSKillOSDMsg();
 									}
 								}
 								break;

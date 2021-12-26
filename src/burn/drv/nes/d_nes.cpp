@@ -18994,6 +18994,23 @@ struct BurnDriver BurnDrvnes_boblv2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_legwnssdxRomDesc[] = {
+	{ "Legend of Weed N' Stiff SDX, The (2021)(CalGames).nes",          524304, 0xe59b7fa0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_legwnssdx)
+STD_ROM_FN(nes_legwnssdx)
+
+struct BurnDriver BurnDrvnes_legwnssdx = {
+	"nes_legwnssdx", NULL, NULL, NULL, "2021",
+	"Legend of Weed N' Stiff SDX, The (HB)\0", NULL, "CalGames", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_legwnssdxRomInfo, nes_legwnssdxRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_legwnsdxRomDesc[] = {
 	{ "Legend of Weed N' Stiff DX, The (2021)(CalGames).nes",          524304, 0xf2e59dc7, BRF_ESS | BRF_PRG },
 };
@@ -19002,10 +19019,10 @@ STD_ROM_PICK(nes_legwnsdx)
 STD_ROM_FN(nes_legwnsdx)
 
 struct BurnDriver BurnDrvnes_legwnsdx = {
-	"nes_legwnsdx", NULL, NULL, NULL, "2021",
+	"nes_legwnsdx", "nes_legwnssdx", NULL, NULL, "2020",
 	"Legend of Weed N' Stiff DX, The (HB)\0", NULL, "CalGames", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_legwnsdxRomInfo, nes_legwnsdxRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -19019,7 +19036,7 @@ STD_ROM_PICK(nes_legwns)
 STD_ROM_FN(nes_legwns)
 
 struct BurnDriver BurnDrvnes_legwns = {
-	"nes_legwns", "nes_legwnsdx", NULL, NULL, "2020",
+	"nes_legwns", "nes_legwnssdx", NULL, NULL, "2020",
 	"Legend of Weed N' Stiff, The (HB)\0", NULL, "CalGames", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,

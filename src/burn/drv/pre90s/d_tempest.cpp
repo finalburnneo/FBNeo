@@ -152,9 +152,10 @@ static struct BurnDIPInfo TempestDIPList[]=
 	{0x04, 0x01, 0x10, 0x10, "Off"  		        },
 	{0x04, 0x01, 0x10, 0x00, "On"   	            },
 
-	{0   , 0xfe, 0   ,    2, "Hires Mode"			},
-	{0x05, 0x01, 0x01, 0x00, "No"  		        	},
-	{0x05, 0x01, 0x01, 0x01, "Yes"   	            },
+	{0   , 0xfe, 0   ,    3, "Hires Mode"			},
+	{0x05, 0x01, 0x03, 0x00, "No"  		        	},
+	{0x05, 0x01, 0x03, 0x01, "Yes (1024)"			},
+	{0x05, 0x01, 0x03, 0x02, "Yes (1080)"			},
 };
 
 STDDIPINFO(Tempest)
@@ -259,23 +260,16 @@ static void tempest_write(UINT16 address, UINT8 data)
 
 static INT32 res_check()
 {
-	if (DrvDips[5] & 1) {
-		INT32 Width, Height;
-		BurnDrvGetVisibleSize(&Width, &Height);
-
-		if (Height != 1080) {
-			vector_rescale((1080*480/640), 1080);
-			return 1;
-		}
-	} else {
-		INT32 Width, Height;
-		BurnDrvGetVisibleSize(&Width, &Height);
-
-		if (Height != 640) {
-			vector_rescale(480, 640);
-			return 1;
-		}
+	const INT32 reso_list[3] = { 640, 1024, 1080 };
+	INT32 Width, Height;
+	INT32 Selected = reso_list[DrvDips[5] & 3];
+	BurnDrvGetVisibleSize(&Width, &Height);
+//	bprintf(0, _T("now:  %d   Selected (dip):  %d\n"), Height, Selected);
+	if (Height != Selected) {
+		vector_rescale((Selected * 480 / 640), Selected);
+		return 1;
 	}
+
 	return 0;
 }
 

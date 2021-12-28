@@ -161,7 +161,7 @@ extern std::vector<dipswitch_core_option> dipswitch_core_options;
 extern std::vector<cheat_core_option> cheat_core_options;
 extern struct GameInp *pgi_reset;
 extern struct GameInp *pgi_diag;
-extern bool is_neogeo_game;
+extern bool bIsNeogeoCartGame;
 extern bool allow_neogeo_mode;
 extern bool core_aspect_par;
 extern bool bAllowDepth32;

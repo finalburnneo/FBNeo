@@ -40,7 +40,7 @@ struct RomBiosInfo neogeo_bioses[] = {
 std::vector<dipswitch_core_option> dipswitch_core_options;
 struct GameInp *pgi_reset;
 struct GameInp *pgi_diag;
-bool is_neogeo_game = false;
+bool bIsNeogeoCartGame = false;
 bool allow_neogeo_mode = true;
 bool neogeo_use_specific_default_bios = false;
 bool bAllowDepth32 = false;
@@ -594,7 +594,7 @@ void set_neo_system_bios()
 
 void evaluate_neogeo_bios_mode(const char* drvname)
 {
-	if (!is_neogeo_game)
+	if (!bIsNeogeoCartGame)
 		return;
 
 	bool is_bios_dipswitch_found = false;
@@ -666,7 +666,7 @@ void set_environment()
 		vars_systems.push_back(&var_fbneo_diagnostic_input);
 	}
 
-	if (is_neogeo_game)
+	if (bIsNeogeoCartGame)
 	{
 		// Add the Neo Geo core options
 		if (allow_neogeo_mode)
@@ -733,7 +733,7 @@ void set_environment()
 		option_defs_us[idx_var].desc_categorized = dipswitch_core_options[dip_idx].friendly_name_categorized.c_str();
 		option_defs_us[idx_var].default_value    = dipswitch_core_options[dip_idx].default_bdi.szText;
 		// Instead of filtering out the dips, make the description a warning if it's a neogeo game using a different default bios
-		if (neogeo_use_specific_default_bios && is_neogeo_game && dipswitch_core_options[dip_idx].friendly_name.compare("[Dipswitch] BIOS") == 0)
+		if (neogeo_use_specific_default_bios && bIsNeogeoCartGame && dipswitch_core_options[dip_idx].friendly_name.compare("[Dipswitch] BIOS") == 0)
 			option_defs_us[idx_var].info         = "THIS NEOGEO GAME USES A DIFFERENT DEFAULT BIOS, CHANGE IT AT YOUR OWN RISK";
 		else
 			option_defs_us[idx_var].info         = "Dipswitch setting, setting is specific to the running romset";
@@ -1120,7 +1120,7 @@ void check_variables(void)
 		}
 	}
 
-	if (is_neogeo_game)
+	if (bIsNeogeoCartGame)
 	{
 		if (allow_neogeo_mode)
 		{

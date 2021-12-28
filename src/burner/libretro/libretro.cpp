@@ -877,7 +877,7 @@ static bool open_archive()
 				continue;
 			}
 
-			if (is_neogeo_game)
+			if (bIsNeogeoCartGame)
 				set_neogeo_bios_availability(list[index].szName, list[index].nCrc, (g_find_list_path[z].ignoreCrc && bPatchedRomsetsEnabled));
 
 			// Yay, we found it!
@@ -895,7 +895,7 @@ static bool open_archive()
 		ZipClose();
 	}
 
-	if (is_neogeo_game)
+	if (bIsNeogeoCartGame)
 		set_neo_system_bios();
 
 	// Going over every rom to see if they are properly loaded before we continue ...
@@ -1042,7 +1042,7 @@ void retro_reset()
 	// Saving minimal savestate (handle some machine settings)
 	// note : This is only useful to avoid losing nvram when switching from mvs to aes/unibios and resetting,
 	//        it can actually be "harmful" in other games (trackfld)
-	if (is_neogeo_game && BurnStateSave(g_autofs_path, 0) == 0 && path_is_valid(g_autofs_path))
+	if (bIsNeogeoCartGame && BurnStateSave(g_autofs_path, 0) == 0 && path_is_valid(g_autofs_path))
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] EEPROM succesfully saved to %s\n", g_autofs_path);
 
 	if (pgi_reset)
@@ -1056,13 +1056,13 @@ void retro_reset()
 	apply_cheats_from_variables();
 
 	// restore the NeoSystem because it was changed during the gameplay
-	if (is_neogeo_game)
+	if (bIsNeogeoCartGame)
 		set_neo_system_bios();
 
 	ForceFrameStep(1);
 
 	// Loading minimal savestate (handle some machine settings)
-	if (is_neogeo_game && BurnStateLoad(g_autofs_path, 0, NULL) == 0)
+	if (bIsNeogeoCartGame && BurnStateLoad(g_autofs_path, 0, NULL) == 0)
 	{
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] EEPROM succesfully loaded from %s\n", g_autofs_path);
 		// eeproms are loading nCurrentFrame, but we probably don't want this
@@ -1627,7 +1627,7 @@ static bool retro_load_game_common()
 			goto end;
 		}
 
-		is_neogeo_game = ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO);
+		bIsNeogeoCartGame = ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO);
 
 		// Define nMaxPlayers early;
 		nMaxPlayers = BurnDrvGetMaxPlayers();
@@ -1719,7 +1719,7 @@ static bool retro_load_game_common()
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Applied dipswitches from core options\n");
 
 		// Override the NeoGeo bios DIP Switch by the main one (for the moment)
-		if (is_neogeo_game)
+		if (bIsNeogeoCartGame)
 			set_neo_system_bios();
 
 		// Initialize game driver
@@ -1734,7 +1734,7 @@ static bool retro_load_game_common()
 		}
 
 		// MemCard has to be inserted after emulation is started
-		if (is_neogeo_game && nMemcardMode != 0)
+		if (bIsNeogeoCartGame && nMemcardMode != 0)
 		{
 			// Initialize MemCard path
 			snprintf_nowarn (szMemoryCardFile, sizeof(szMemoryCardFile), "%s%cfbneo%c%s.memcard", g_save_dir, PATH_DEFAULT_SLASH_C(), PATH_DEFAULT_SLASH_C(), (nMemcardMode == 2 ? g_driver_name : "shared"));
@@ -1945,7 +1945,7 @@ void retro_unload_game(void)
 {
 	if (nBurnDrvActive != ~0U)
 	{
-		if (is_neogeo_game && nMemcardMode != 0) {
+		if (bIsNeogeoCartGame && nMemcardMode != 0) {
 			// Force newer format if the file doesn't exist yet
 			if(!filestream_exists(szMemoryCardFile))
 				bMemCardFC1Format = true;

@@ -147,7 +147,7 @@ static void AnalyzeGameLayout()
 				nKickInputs[nPlayer][2] = i;
 			}
 
-			if (is_neogeo_game) {
+			if (bIsNeogeoCartGame || (nGameType == RETRO_GAME_TYPE_NEOCD)) {
 				if (_stricmp(" Button A", bii.szName + 2) == 0) {
 					nNeogeoButtons[nPlayer][0] = i;
 				}
@@ -197,7 +197,7 @@ static void AnalyzeGameLayout()
 			pgi++;
 		}
 		// supposedly, those are the 4 most useful neogeo macros
-		if (is_neogeo_game) {
+		if (bIsNeogeoCartGame || (nGameType == RETRO_GAME_TYPE_NEOCD)) {
 			pgi->nInput = GIT_MACRO_AUTO;
 			pgi->nType = BIT_DIGITAL;
 			pgi->Macro.nMode = 0;
@@ -1710,7 +1710,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 		if (strncmp("Buttons 3x Kick", description, 15) == 0)
 			GameInpDigital2RetroInpKey(pgi, nPlayer, (nDeviceType[nPlayer] == RETROPAD_MODERN ? RETRO_DEVICE_ID_JOYPAD_L2 : RETRO_DEVICE_ID_JOYPAD_R2), description, RETRO_DEVICE_JOYPAD, GIT_MACRO_AUTO);
 	}
-	if (is_neogeo_game) {
+	if (bIsNeogeoCartGame || (nGameType == RETRO_GAME_TYPE_NEOCD)) {
 		if (strncmp("Buttons ABC", description, 11) == 0)
 			GameInpDigital2RetroInpKey(pgi, nPlayer, (nDeviceType[nPlayer] == RETROPAD_MODERN ? RETRO_DEVICE_ID_JOYPAD_L2 : RETRO_DEVICE_ID_JOYPAD_R2), description, RETRO_DEVICE_JOYPAD, GIT_MACRO_AUTO);
 		if (strncmp("Buttons BCD", description, 11) == 0)
@@ -1909,7 +1909,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 	// Don't map neogeo select button anywhere
 	// See https://neo-source.com/index.php?topic=3490.0
 	// 2019-07-03 : actually, map it to L3, it allows access to a menu in last blade training mode
-	if (strncmp("select", szb, 6) == 0 && is_neogeo_game)
+	if (strncmp("select", szb, 6) == 0 && bIsNeogeoCartGame)
 		GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L3, description);
 
 	return 0;
@@ -1943,7 +1943,7 @@ static INT32 GameInpStandardOne(struct GameInp* pgi, INT32 nPlayer, char* szb, c
 		char *szf = szb + 5;
 		INT32 nButton = strtol(szf, NULL, 0);
 		// "Modern" neogeo stick and gamepad are actually like this, see pictures of arcade stick pro and neogeo mini gamepad
-		if (is_neogeo_game && nDeviceType[nPlayer] == RETROPAD_MODERN) {
+		if ((bIsNeogeoCartGame || (nGameType == RETRO_GAME_TYPE_NEOCD)) && nDeviceType[nPlayer] == RETROPAD_MODERN) {
 			switch (nButton) {
 				case 1:
 					GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_Y, description);

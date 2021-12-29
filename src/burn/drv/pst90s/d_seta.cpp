@@ -9074,15 +9074,21 @@ struct BurnDriver BurnDrvKamenrid = {
 // Mad Shark
 
 static struct BurnRomInfo madsharkRomDesc[] = {
-	{ "fq001002.201",	0x080000, 0x4286a811, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "fq001001.200",	0x080000, 0x38bfa0ad, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "fq001002.201",	0x080000, 0x4286a811, 0x01 | BRF_PRG | BRF_ESS }, 		//  0 68k Code
+	{ "fq001001.200",	0x080000, 0x38bfa0ad, 0x01 | BRF_PRG | BRF_ESS }, 		//  1
 
-	{ "fq001004.202",	0x200000, 0xe56a1b5e, 0x03 | BRF_GRA },           //  2 Sprites
+	{ "fq001004.202",	0x200000, 0xe56a1b5e, 0x03 | BRF_GRA },           		//  2 Sprites
 
-	{ "fq001006.152",	0x200000, 0x3bc5e8e4, 0x04 | BRF_GRA },           //  3 user1
-	{ "fq001005.205",	0x100000, 0x5f6c6d4a, 0x1c | BRF_GRA },           //  4
+	{ "fq001006.152",	0x200000, 0x3bc5e8e4, 0x04 | BRF_GRA },           		//  3 user1
+	{ "fq001005.205",	0x100000, 0x5f6c6d4a, 0x1c | BRF_GRA },           		//  4
 
-	{ "fq001007.26",	0x100000, 0xe4b33c13, 0x06 | BRF_SND },           //  5 x1-010 Samples
+	{ "fq001007.26",	0x100000, 0xe4b33c13, 0x06 | BRF_SND },           		//  5 x1-010 Samples
+	
+	{ "fq-008.u50",		0x000104, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP },	// 	7 plds
+	{ "fq-009.u51",		0x000104, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP },	// 	8
+	{ "fq-010.u52",		0x000104, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP },	// 	9
+	{ "fq-011.u53",		0x000104, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP },	// 10
+	{ "fq-012.u54",		0x000104, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP },	// 11
 };
 
 STD_ROM_PICK(madshark)

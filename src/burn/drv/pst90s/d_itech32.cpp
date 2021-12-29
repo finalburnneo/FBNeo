@@ -68,6 +68,7 @@ static UINT8 DrvInputs[6];
 
 static INT32 is_shufshot = 0;
 static INT32 is_pubball = 0;
+static INT32 is_shoottv = 0;
 
 static INT32 is_16bit = 0;
 
@@ -236,6 +237,28 @@ static struct BurnInputInfo SftmInputList[] = {
 STDINPUTINFO(Sftm)
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
+
+static struct BurnInputInfo ShoottvInputList[] = {
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 start"	},
+	A("P1 Gun X", 		BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	A("P1 Gun Y", 		BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 fire 1"	},
+
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 start"	},
+	A("P2 Gun X", 		BIT_ANALOG_REL, &DrvAnalogPort2,"p2 x-axis"),
+	A("P2 Gun Y", 		BIT_ANALOG_REL, &DrvAnalogPort3,"p2 y-axis"),
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 fire 1"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy5 + 1,	"service"	},
+	{"Service Mode",	BIT_DIGITAL,	DrvSvc0 + 0,	"diag"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+};
+
+STDINPUTINFO(Shoottv)
+
 static struct BurnInputInfo PubballInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 start"	},
@@ -272,7 +295,6 @@ static struct BurnInputInfo PubballInputList[] = {
 };
 
 STDINPUTINFO(Pubball)
-
 
 static struct BurnInputInfo PairsInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
@@ -462,6 +484,30 @@ static struct BurnDIPInfo SftmDIPList[]=
 };
 
 STDDIPINFO(Sftm)
+
+static struct BurnDIPInfo ShoottvDIPList[]=
+{
+	DIP_OFFSET(0x0d)
+	{0x00, 0xff, 0xff, 0x00, NULL					},
+
+	{0   , 0xfe, 0   ,    2, "Video Sync"			},
+	{0x00, 0x01, 0x10, 0x00, "-"					},
+	{0x00, 0x01, 0x10, 0x10, "+"					},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x00, 0x01, 0x20, 0x00, "Off"					},
+	{0x00, 0x01, 0x20, 0x20, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"				},
+	{0x00, 0x01, 0x40, 0x40, "Off"					},
+	{0x00, 0x01, 0x40, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x00, 0x01, 0x80, 0x00, "Off"					},
+	{0x00, 0x01, 0x80, 0x80, "On"					},
+};
+
+STDDIPINFO(Shoottv)
 
 static struct BurnDIPInfo PubballDIPList[]=
 {
@@ -859,6 +905,9 @@ static void itech32_update_interrupts(INT32 vint, INT32 xint, INT32 qint)
 {
 	INT32 level = 0;
 
+	if (is_shoottv)
+		vint = -1;
+
 	if (vint != -1) vint_state = vint;
 	if (xint != -1) xint_state = xint;
 	if (qint != -1) qint_state = qint;
@@ -1075,7 +1124,8 @@ static inline void enable_clipping()
 
 static void draw_raw(UINT16 *base, UINT16 color)
 {
-	UINT8 *src = &grom_base[(grom_bank | ((VIDEO_TRANSFER_ADDRHI & 0xff) << 16) | VIDEO_TRANSFER_ADDRLO) % grom_size];
+	UINT8* src = &grom_base[0];// UINT8 *src = &grom_base[(grom_bank | ((VIDEO_TRANSFER_ADDRHI & 0xff) << 16) | VIDEO_TRANSFER_ADDRLO) % grom_size];
+	const UINT32 grom_start = grom_bank | ((VIDEO_TRANSFER_ADDRHI & 0xff) << 16) | VIDEO_TRANSFER_ADDRLO;
 	INT32 transparent_pen = (VIDEO_TRANSFER_FLAGS & XFERFLAG_TRANSPARENT) ? 0xff : -1;
 	INT32 width = VIDEO_TRANSFER_WIDTH << 8;
 	INT32 height = ADJUSTED_HEIGHT(VIDEO_TRANSFER_HEIGHT) << 8;
@@ -1104,7 +1154,7 @@ static void draw_raw(UINT16 *base, UINT16 color)
 	/* loop over Y in src pixels */
 	for (y = 0; y < height; y += ysrcstep, sy += ydststep)
 	{
-		UINT8 *rowsrc = &src[(y >> 8) * (width >> 8)];
+		const UINT32 row_base = (y >> 8) * (width >> 8);
 
 		/* simpler case: VIDEO_YSTEP_PER_X is zero */
 		if (VIDEO_YSTEP_PER_X == 0)
@@ -1127,7 +1177,7 @@ static void draw_raw(UINT16 *base, UINT16 color)
 					/* render middle pixels */
 					for ( ; x < width && sx < scaled_clip_rect.nMaxx; x += xsrcstep, sx += xdststep)
 					{
-						INT32 pixel = rowsrc[x >> 8];
+						INT32 pixel = src[(grom_start + row_base + (x >> 8)) % grom_size];
 						if (pixel != transparent_pen)
 							base[(dstoffs + (sx >> 8)) & vram_mask] = pixel | color;
 					}
@@ -1143,7 +1193,7 @@ static void draw_raw(UINT16 *base, UINT16 color)
 					/* render middle pixels */
 					for ( ; x < width && sx >= scaled_clip_rect.nMinx; x += xsrcstep, sx += xdststep)
 					{
-						INT32 pixel = rowsrc[x >> 8];
+						INT32 pixel = src[(grom_start + row_base + (x >> 8)) % grom_size];
 						if (pixel != transparent_pen)
 							base[(dstoffs + (sx >> 8)) & vram_mask] = pixel | color;
 					}
@@ -1163,7 +1213,7 @@ static void draw_raw(UINT16 *base, UINT16 color)
 				if (ty >= scaled_clip_rect.nMiny && ty < scaled_clip_rect.nMaxy &&
 					sx >= scaled_clip_rect.nMinx && sx < scaled_clip_rect.nMaxx)
 				{
-					INT32 pixel = rowsrc[x >> 8];
+					INT32 pixel = src[(grom_start + row_base + (x >> 8)) % grom_size];
 					if (pixel != transparent_pen)
 						base[compute_safe_address(sx >> 8, ty >> 8)] = pixel | color;
 				}
@@ -2438,6 +2488,11 @@ static UINT32 track_read_4bit_both()
 	return track_read_4bit(0) | (track_read_4bit(1) << 8);
 }
 
+static UINT16 DrvGunReturnX(INT32 gun)
+{
+	return scalerange(BurnGunReturnX(gun), 0x00, 0xff, 0x1c, 0x19b);
+}
+
 static UINT32 __fastcall common32_main_read_long(UINT32 address)
 {
 	if ((address & 0xffff00) == 0x500000) {
@@ -2446,6 +2501,27 @@ static UINT32 __fastcall common32_main_read_long(UINT32 address)
 
     if ((address & 0xfff800) == 0x681000) { // timekeeper (in bytehandler)
         SEK_DEF_READ_LONG(0, address);
+	}
+
+	if (is_shoottv) {
+		switch (address)
+		{
+			case 0x183000: SekSetIRQLine(6, CPU_IRQSTATUS_NONE); return 0;
+			case 0x183800: SekSetIRQLine(5, CPU_IRQSTATUS_NONE); return 0;
+
+			case 0x190000: return (DrvGunReturnX(0) & 0x00ff) << 16;
+			case 0x190800: return (DrvGunReturnX(0) & 0xff00) << 8;
+			case 0x191000: return (BurnGunReturnY(0) & 0x00ff) << 16;
+			case 0x191800: return 0;
+
+			case 0x192000: return (DrvGunReturnX(1) & 0x00ff) << 16;
+			case 0x192800: return (DrvGunReturnX(1) & 0xff00) << 8;
+			case 0x193000: return (BurnGunReturnY(1) & 0x00ff) << 16;
+			case 0x193800: return 0;
+			case 0x200000: return 0xffffffff;
+
+			case 0x680000: return 0x2000;
+		}
 	}
 
 	// wcbowl trackball
@@ -2491,6 +2567,7 @@ static UINT32 __fastcall common32_main_read_long(UINT32 address)
 			return DrvInputs[2];
 
 		case 0x200000:
+			if (is_shoottv) return 0xffffffff;
 			return DrvInputs[3];
 
 		case 0x280000: {
@@ -2503,11 +2580,14 @@ static UINT32 __fastcall common32_main_read_long(UINT32 address)
 
 		case 0x680000: {
 			bprintf (0, _T("Prot RL\n"));
+			if (is_shoottv) return 0x2000;
 			UINT32 *ram = (UINT32*)Drv68KRAM;
 			UINT8 ret = ram[prot_address / 4] >> ((~prot_address & 3) * 8);
 			return ret << 8;
 		}
 	}
+
+	//bprintf(0, _T("rl %x\n"), address);
 
 	return 0;
 }
@@ -2585,12 +2665,16 @@ static UINT16 __fastcall common32_main_read_word(UINT32 address)
 		}
 
 		case 0x680000:
+			if (is_shoottv) return 0x0000;
 		case 0x680002: {
+			if (is_shoottv) return 0x2000;
 			UINT32 *ram = (UINT32*)Drv68KRAM;
 			UINT8 ret = ram[prot_address / 4] >> ((~prot_address & 3) * 8);
 			return ret << 8;
 		}
 	}
+
+	//bprintf(0, _T("rw %x\n"), address);
 
 	return 0;
 }
@@ -2686,14 +2770,22 @@ static UINT8 __fastcall common32_main_read_byte(UINT32 address)
 		}
 
 		case 0x680000:
+			if (is_shoottv) return 0x00;
 		case 0x680001:
+			if (is_shoottv) return 0x00;
 		case 0x680002: {
+			if (is_shoottv) return 0x20;
 			UINT32 *ram = (UINT32*)Drv68KRAM;
 			UINT32 ret = (ram[prot_address/4] << 16) | (ram[prot_address/4] >> 16);
 		//	bprintf (0, _T("Prot RB %8.8x\n"), (ret >> ((~prot_address & 3) * 8))&0xff);
 			return ret >> ((~prot_address & 3) * 8);
 		}
 	}
+
+	if (is_shoottv && address >= 0x183000 && address <= 0x200003) {
+		return (common32_main_read_long(address & ~3) >> ((~address & 3) * 8)) & 0xff;
+	}
+
 	//bprintf (0, _T("MRB: %5.5x\n"), address);
 
 	return 0;
@@ -2924,7 +3016,7 @@ static INT32 DrvGetRoms(bool bLoad)
 			if (bLoad) {
 				if (BurnLoadRom(pSndLoad[bank] + 1, i, 2)) return 1;
 			}
-			if (is_pubball) {
+			if (is_pubball || is_shoottv) {
 				pSndLoad[bank] += 0x200000; // non-pow2 snd rom sizes need padding
 			} else {
 				if (nSndROMLen[1] || is_shufshot) {
@@ -2973,12 +3065,7 @@ static INT32 TimekillInit()
 {
 	DrvGetRoms(false);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (DrvGetRoms(true)) return 1;
 
@@ -3017,12 +3104,7 @@ static INT32 Common16BitInit()
 {
 	DrvGetRoms(false);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (DrvGetRoms(true)) return 1;
 
@@ -3063,12 +3145,7 @@ static INT32 Common32BitInit(UINT32 prot_addr, INT32 plane_num, INT32 color_bank
 {
 	DrvGetRoms(false);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (DrvGetRoms(true)) return 1;
 
@@ -3092,8 +3169,13 @@ static INT32 Common32BitInit(UINT32 prot_addr, INT32 plane_num, INT32 color_bank
 
 	TimeKeeperInit(TIMEKEEPER_M48T02, NULL);
 	BurnWatchdogInit(DrvDoReset, 180);
-	BurnTrackballInit(2);
-	BurnTrackballSetVelocityCurve(1); // logarithmic curve
+
+	if (is_shoottv) {
+		BurnGunInit(2, true);
+	} else {
+		BurnTrackballInit(2);
+		BurnTrackballSetVelocityCurve(1); // logarithmic curve
+	}
 
 	CommonSoundInit();
 
@@ -3117,15 +3199,21 @@ static INT32 DrvExit()
 	M6809Exit();
 	ES5506Exit();
 	TimeKeeperExit();
-	BurnTrackballExit();
 
-	BurnFree(AllMem);
+	if (is_shoottv) {
+		BurnGunExit();
+	} else {
+		BurnTrackballExit();
+	}
+
+	BurnFreeMemIndex();
 	BurnFree (videoram16);
 
 	Trackball_Type = -1;
 
 	is_shufshot = 0;
 	is_pubball = 0;
+	is_shoottv = 0;
 	is_16bit = 0;
 
 	return 0;
@@ -3189,6 +3277,7 @@ static INT32 DrvDraw32()
 	itech32copy();
 
 	BurnTransferCopy(DrvPalette);
+	BurnGunDrawTargets();
 
 	return 0;
 }
@@ -3228,6 +3317,11 @@ static INT32 DrvFrame()
 			BurnTrackballFrame(1, DrvAnalogPort2, DrvAnalogPort3, 0x01, 0x20);
         }
 
+		if (is_shoottv) {
+			BurnGunMakeInputs(0, DrvAnalogPort0, DrvAnalogPort1);
+			BurnGunMakeInputs(1, DrvAnalogPort2, DrvAnalogPort3);
+		}
+
         DrvDips[0] = (DrvDips[0] & ~1) | (~DrvSvc0[0] & 1); // F2 (svc mode)
 	}
 
@@ -3246,6 +3340,15 @@ static INT32 DrvFrame()
 
 		if (i == scanline_timer) {
 			scanline_interrupt();
+		}
+
+		if (is_shoottv) {
+			if ((i & 0x1f) == 0x00) {
+				SekSetIRQLine(5, CPU_IRQSTATUS_ACK);
+			}
+			if ((i & 0x1f) == 0x10) {
+				SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
+			}
 		}
 
 		CPU_RUN(0, Sek);
@@ -3333,6 +3436,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		ES5506Scan(nAction, pnMin);
 		BurnTrackballScan();
+		if (is_shoottv) BurnGunScan();
 
 		SCAN_VAR(vint_state);
 		SCAN_VAR(xint_state);
@@ -3366,7 +3470,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (is_16bit) {
 			ScanVar(Drv68KRAM, 0x10000, "NV RAM");
 		} else {
-			ScanVar(DrvNVRAM,  (is_pubball) ? 0x20000 : 0x04000, "NV RAM");
+			ScanVar(DrvNVRAM,  (is_pubball || is_shoottv) ? 0x20000 : 0x04000, "NV RAM");
 		}
 	}
 
@@ -5102,6 +5206,50 @@ struct BurnDriver BurnDrvSftmj112 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, sftmj112RomInfo, sftmj112RomName, NULL, NULL, NULL, NULL, SftmInputInfo, SftmDIPInfo,
 	SftmInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
+	384, 256, 4, 3
+};
+
+
+// Must Shoot TV (prototype)
+
+static struct BurnRomInfo shoottvRomDesc[] = {
+	{ "gun_0.bin",		0x00c5f9, 0x1086b219, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "gun_1.bin",		0x00c5f9, 0xa0f0e5ea, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "gun_2.bin",		0x00c5f9, 0x1b84cf05, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "gun_3.bin",		0x00c5f9, 0x43ed58aa, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "gun.bim",		0x020000, 0x7439569a, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+
+	{ "grom00_0.bin",	0x080000, 0x9a06d497, 3 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "grom00_1.bin",	0x080000, 0x018ff629, 3 | BRF_GRA },           //  6
+	{ "grom00_2.bin",	0x080000, 0xf47ea010, 3 | BRF_GRA },           //  7
+	{ "grom00_3.bin",	0x080000, 0x3c12be47, 3 | BRF_GRA },           //  8
+	{ "grom01_0.bin",	0x04fdd5, 0xebf70a20, 3 | BRF_GRA },           //  9
+	{ "grom01_1.bin",	0x04fdd5, 0xa78fedd1, 3 | BRF_GRA },           // 10
+	{ "grom01_2.bin",	0x04fdd5, 0x3578d74d, 3 | BRF_GRA },           // 11
+	{ "grom01_3.bin",	0x04fdd5, 0x394be494, 3 | BRF_GRA },           // 12
+
+	{ "guns0.bin",		0x07fb51, 0x35e9ba70, 4 | BRF_SND },           // 13 Ensoniq Bank 0
+	{ "guns1.bin",		0x03dccd, 0xec1c3ab3, 4 | BRF_SND },           // 14
+};
+
+STD_ROM_PICK(shoottv)
+STD_ROM_FN(shoottv)
+
+static INT32 ShoottvInit()
+{
+	is_shoottv = 1;
+
+	return Common32BitInit(0x0000, 2, 0);
+}
+
+struct BurnDriver BurnDrvShoottv = {
+	"shoottv", NULL, NULL, NULL, "199?",
+	"Must Shoot TV (prototype)\0", NULL, "Incredible Technologies", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, shoottvRomInfo, shoottvRomName, NULL, NULL, NULL, NULL, ShoottvInputInfo, ShoottvDIPInfo,
+	ShoottvInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
 };
 

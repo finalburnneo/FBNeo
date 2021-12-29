@@ -2914,14 +2914,14 @@ static INT32 DrvFrame()
 				M6801Close();
 			}
 		}
+
+		if (i == 224 && pBurnDraw) DrvDraw();
 	}
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	if (pBurnDraw) DrvDraw();
 
 	return 0;
 }
@@ -2960,13 +2960,13 @@ static INT32 TokioFrame()
 		if (DrvMCUInUse) {
 			CPU_RUN(3, m6805);
 		}
+
+		if (i == 224 && pBurnDraw) DrvDraw();
 	}
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	if (pBurnDraw) DrvDraw();
 
 	return 0;
 }

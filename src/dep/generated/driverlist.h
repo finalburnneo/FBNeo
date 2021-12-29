@@ -9661,6 +9661,7 @@ DRV		BurnDrvmd_mushaj;
 DRV		BurnDrvsg1k_musicj;
 DRV		BurnDrvMusicbal;
 DRV		BurnDrvcv_musicbox;
+DRV		BurnDrvShoottv;
 DRV		BurnDrvMustachei;
 DRV		BurnDrvMustache;
 DRV		BurnDrvalibabab;
@@ -27759,6 +27760,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_musicj,		// Music (Jpn)
 	&BurnDrvMusicbal,			// Music Ball
 	&BurnDrvcv_musicbox,		// Music Box (Demo)
+	&BurnDrvShoottv,			// Must Shoot TV (prototype)
 	&BurnDrvMustachei,			// Mustache Boy (Italy)
 	&BurnDrvMustache,			// Mustache Boy (Japan)
 	&BurnDrvalibabab,			// Mustafa and 40 Thieves (bootleg)

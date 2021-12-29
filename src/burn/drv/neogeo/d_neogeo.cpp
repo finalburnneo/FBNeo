@@ -20861,11 +20861,39 @@ STDROMPICKEXT(cabalng, cabalng, neogeo)
 STD_ROM_FN(cabalng)
 
 struct BurnDriver BurnDrvCabalng = {
-	"cabalng", NULL, "neogeo", NULL, "1988",
+	"cabalng", NULL, "neogeo", NULL, "1988-2021",
 	"Cabal (Neo-Geo Conversion)\0", NULL, "TAD Corporation", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SHOOT, 0,
 	NULL, cabalngRomInfo, cabalngRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Looptris (v.2021-12-26)
+
+static struct BurnRomInfo looptrisRomDesc[] = {
+	{ "looptris.p1",	0x080000, 0x8fcb5104, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+
+	{ "looptris.s1",	0x020000, 0x70e70448, 2 | BRF_GRA },           	//  1 Text layer tiles
+
+	{ "looptris.c1",	0x080000, 0xb9413f13, 3 | BRF_GRA },           	//  2 Sprite data
+	{ "looptris.c2",	0x080000, 0x9409dbe8, 3 | BRF_GRA },           	//  3
+
+	{ "looptris.m1",	0x020000, 0x70e70448, 4 | BRF_ESS | BRF_PRG }, 	//  4 Z80 code
+
+	{ "looptris.v1",	0x080000, 0xdfa63cd2, 5 | BRF_SND },           	//  5 Sound data
+};
+
+STDROMPICKEXT(looptris, looptris, neogeo)
+STD_ROM_FN(looptris)
+
+struct BurnDriver BurnDrvLooptris = {
+	"looptris", NULL, "neogeo", NULL, "2021",
+	"Looptris (v.2021-12-26)\0", NULL, "Blastar", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PUZZLE, 0,
+	NULL, looptrisRomInfo, looptrisRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };

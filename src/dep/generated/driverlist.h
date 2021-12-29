@@ -6251,8 +6251,8 @@ DRV		BurnDrvGrowl;
 DRV		BurnDrvnes_gruni;
 DRV		BurnDrvnes_gruni2;
 DRV		BurnDrvnes_gruni3;
-DRV		BurnSpecgryzor;
-DRV		BurnSpecgryzor_48;
+DRV		BurnSpecgryzor128;
+DRV		BurnSpecgryzor48;
 DRV		BurnDrvGryzor;
 DRV		BurnDrvGryzor1;
 DRV		BurnDrvGrdian;
@@ -8287,6 +8287,7 @@ DRV		BurnDrvnes_lonerangerthe;
 DRV		BurnDrvmd_long;
 DRV		BurnDrvLooper;
 DRV		BurnDrvcv_looping;
+DRV		BurnDrvLooptris;
 DRV		BurnDrvnes_loopz;
 DRV		BurnDrvmd_lordmone;
 DRV		BurnDrvmd_lordmon;
@@ -16251,6 +16252,7 @@ DRV		BurnDrvmd_toki1;
 DRV		BurnDrvmd_toki;
 DRV		BurnDrvTokisens;
 DRV		BurnDrvTokisensa;
+DRV		BurnSpecTokimal;
 DRV		BurnDrvTokiob;
 DRV		BurnDrvTokio;
 DRV		BurnDrvTokioo;
@@ -18074,6 +18076,7 @@ DRV		BurnDrvZoom909;
 DRV		BurnDrvmd_zoom;
 DRV		BurnDrvmd_zoomsecr;
 DRV		BurnDrvnes_zoomisec;
+DRV		BurnSpecZoomsecr;
 DRV		BurnDrvmd_zoop;
 DRV		BurnDrvgg_zoop;
 DRV		BurnDrvmd_zoopu;
@@ -24350,8 +24353,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_gruni,			// Gruniozerca (HB)
 	&BurnDrvnes_gruni2,			// Gruniozerca 2 - The Great Cavy Rescue! (HB)
 	&BurnDrvnes_gruni3,			// Gruniozerca 3 - The Great Cavy Clean-Up! (HB)
-	&BurnSpecgryzor,			// Gryzor (128K)
-	&BurnSpecgryzor_48,			// Gryzor (48K)
+	&BurnSpecgryzor128,			// Gryzor (128K)
+	&BurnSpecgryzor48,			// Gryzor (48K)
 	&BurnDrvGryzor,				// Gryzor (Set 1)
 	&BurnDrvGryzor1,			// Gryzor (Set 2)
 	&BurnDrvGrdian,				// Guardian (US)
@@ -24515,8 +24518,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_halloween86a,	// Halloween'86 (HB, alt)
 	&BurnDrvChamburger,			// Hamburger (DECO Cassette) (Japan)
 	&BurnDrvHamaway,			// Hammer Away (prototype)
-	&BurnSpechammerboy1,		// Hammer Boy (Part 1 of 2) (128K)
-	&BurnSpechammerboy2,		// Hammer Boy (Part 2 of 2) (128K)
+	&BurnSpechammerboy1,		// Hammer Boy (Part 1) (128K)
+	&BurnSpechammerboy2,		// Hammer Boy (Part 2) (128K)
 	&BurnDrvMSX_hammboy,		// Hammer Boy (Spanish)
 	&BurnSpecHammerfist,		// Hammerfist (48K)
 	&BurnDrvnes_hammerinharry,	// Hammerin' Harry (Europe)
@@ -26386,6 +26389,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_long,			// Long (Chi) [no comment, NOT WORKING]
 	&BurnDrvLooper,				// Looper
 	&BurnDrvcv_looping,			// Looping
+	&BurnDrvLooptris,			// Looptris (v.2021-12-26)
 	&BurnDrvnes_loopz,			// Loopz (USA)
 	&BurnDrvmd_lordmone,		// Lord Monarch - Legendary Battle Royale (Hack, English)
 	&BurnDrvmd_lordmon,			// Lord Monarch - Tokoton Sentou Densetsu (Jpn)
@@ -34350,6 +34354,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_toki,			// Toki - Going Ape Spit ~ JuJu Densetsu (World, Rev. A)
 	&BurnDrvTokisens,			// Toki no Senshi - Chrono Soldier (MC-8123, 317-0040)
 	&BurnDrvTokisensa,			// Toki no Senshi - Chrono Soldier (prototype)
+	&BurnSpecTokimal,			// Tokimal (128K) (HB)
 	&BurnDrvTokiob,				// Tokio / Scramble Formation (bootleg)
 	&BurnDrvTokio,				// Tokio / Scramble Formation (newer)
 	&BurnDrvTokioo,				// Tokio / Scramble Formation (older)
@@ -36173,6 +36178,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_zoom,			// Zoom! (World)
 	&BurnDrvmd_zoomsecr,		// Zooming Secretary (HB)
 	&BurnDrvnes_zoomisec,		// Zooming Secretary (HB)
+	&BurnSpecZoomsecr,			// Zoominmg Secretary (128K) (HB)
 	&BurnDrvmd_zoop,			// Zoop (Euro)
 	&BurnDrvgg_zoop,			// Zoop (USA)
 	&BurnDrvmd_zoopu,			// Zoop (USA)

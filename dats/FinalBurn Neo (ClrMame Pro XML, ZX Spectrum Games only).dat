@@ -310,7 +310,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="abadcrim" romof="spec128">
-		<comment>A, K, L and Space to control the main character</comment>
+		<comment>To use main character: A, K, L and SPACE</comment>
 		<description>Abadia del Crimen, La (Spanish) (128K)</description>
 		<year>1988</year>
 		<manufacturer>Opera Soft</manufacturer>
@@ -6433,21 +6433,23 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gryzor" romof="spec128">
+	<game name="gryzor128" romof="spec128">
+		<comment>SPACE: jump - SPACE+down: climb down</comment>
 		<description>Gryzor (128K)</description>
 		<year>1987</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Gryzor (1987)(Ocean)[128K].z80" size="105341" crc="1c8c9d01"/>
+		<rom name="Gryzor 128K (1987)(Ocean).tap" size="115219" crc="941d84c9"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gryzor_48" cloneof="gryzor" romof="gryzor">
+	<game name="gryzor48" cloneof="gryzor128" romof="gryzor128">
+		<comment>SPACE: jump - SPACE+down: climb down</comment>
 		<description>Gryzor (48K)</description>
 		<year>1987</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Gryzor (1987)(Ocean).z80" size="36792" crc="8024e81b"/>
+		<rom name="Gryzor 48K (1987)(Ocean).tap" size="49774" crc="1b11c206"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -6504,7 +6506,7 @@
 		<description>H.A.T.E. - Hostile All Terrain Encounter (48K)</description>
 		<year>1989</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
-		<rom name="H.A.T.E. - Hostile All Terrain Encounter (1989)(Vortex Software).z80" size="41334" crc="21ff36ab"/>
+		<rom name="H.A.T.E. - Hostile All Terrain Encounter (1989)(Vortex Software).tap" size="42128" crc="0fcfc02e"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -6540,7 +6542,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hammerboy1" romof="spec128">
-		<description>Hammer Boy (Part 1 of 2) (128K)</description>
+		<description>Hammer Boy (Part 1) (128K)</description>
 		<year>1991</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Hammer Boy (1991)(Dinamic Software)(Part 1 of 2)(128k).z80" size="42035" crc="52955ad2"/>
@@ -6550,7 +6552,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hammerboy2" cloneof="hammerboy1" romof="hammerboy1">
-		<description>Hammer Boy (Part 2 of 2) (128K)</description>
+		<description>Hammer Boy (Part 2) (128K)</description>
 		<year>1991</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Hammer Boy (1991)(Dinamic Software)(Part 2 of 2)(128k).z80" size="44288" crc="6240dded"/>
@@ -14831,6 +14833,17 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="tokimal" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Tokimal (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Pat Morita Team</manufacturer>
+		<rom name="Tokimal 128K (2021)(Pat Morita Team).tap" size="104649" crc="40373e06"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="tomcat" romof="spectrum">
 		<description>Tomcat (48K)</description>
 		<year>1989</year>
@@ -15993,6 +16006,17 @@
 		<year>1991</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="Zona 0 (1991)(Topo Soft)(es).tap" size="76676" crc="df7e9568"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zoomsecr" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Zoominmg Secretary (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>PC NONO Games</manufacturer>
+		<rom name="Zooming Secretary (2021)(PC NONO Games).tap" size="47173" crc="d612501b"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

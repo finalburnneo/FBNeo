@@ -41,8 +41,8 @@
 	</game>
 	<game name="aisenshinicol" romof="fdsbios">
 		<description>Ai Senshi Nicol (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Konami</manufacturer>
 		<rom name="Ai Senshi Nicol (Japan).fds" size="131000" crc="21a1ad6e"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -50,8 +50,8 @@
 	</game>
 	<game name="akitsunofusnoka" romof="fdsbios">
 		<description>Aki to Tsukasa no Fushigi no Kabe (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Super Pig</manufacturer>
 		<rom name="Aki to Tsukasa no Fushigi no Kabe (Japan).fds" size="131016" crc="d7b4a01e"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -59,17 +59,18 @@
 	</game>
 	<game name="akumajoudraculaj" cloneof="akumajoudracula" romof="akumajoudracula">
 		<description>Akumajou Dracula (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1986</year>
+		<manufacturer>Konami</manufacturer>
 		<rom name="Akumajou Dracula (Japan).fds" size="131016" crc="ffed3158"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="akumajoudracula" romof="fdsbios">
+		<comment>Hack</comment>
 		<description>Akumajou Dracula (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1986-2020</year>
+		<manufacturer>DvD Translations</manufacturer>
 		<rom name="Akumajou Dracula (T-Eng).fds" size="131016" crc="f72f22af"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -77,25 +78,36 @@
 	</game>
 	<game name="akuusenrai" romof="fdsbios">
 		<description>Akuu Senki Raijin (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Square</manufacturer>
 		<rom name="Akuu Senki Raijin (Japan).fds" size="131016" crc="5117e64d"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="aliensfix" romof="fdsbios">
+		<comment>Hack</comment>
 		<description>Aliens - Alien 2 (Fix Hack)</description>
-		<year>2017-12-30</year>
+		<year>1987-2017</year>
 		<manufacturer>lancuster</manufacturer>
 		<rom name="Aliens - Alien 2 (Prototype)(Fix Hack).fds" size="131016" crc="0d487b19"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="aliens" cloneof="aliensfix" romof="aliensfix">
+		<comment>Prototype</comment>
+		<description>Aliens - Alien 2 (Japan) (Prototype)</description>
+		<year>1987</year>
+		<manufacturer>Square</manufacturer>
+		<rom name="Aliens - Alien 2 (J) (Prototype).fds" size="131000" crc="2b779ee3"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="allnignipsupmabr" romof="fdsbios">
 		<description>All Night Nippon Super Mario Brothers (Japan)</description>
-		<year>1989?</year>
+		<year>1986</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="All Night Nippon Super Mario Brothers (Japan).fds" size="65500" crc="43e7fe95"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
@@ -104,8 +116,8 @@
 	</game>
 	<game name="appletowmon" romof="fdsbios">
 		<description>Apple Town Monogatari - Little Computer People (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Square</manufacturer>
 		<rom name="Apple Town Monogatari - Little Computer People (Japan).fds" size="131016" crc="bf89dd4a"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -113,17 +125,18 @@
 	</game>
 	<game name="armananokisekij" cloneof="armananokiseki" romof="armananokiseki">
 		<description>Armana no Kiseki (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Konami</manufacturer>
 		<rom name="Armana no Kiseki (Japan).fds" size="131016" crc="0bad64a5"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="armananokiseki" romof="fdsbios">
+		<comment>Hack</comment>
 		<description>Armana no Kiseki (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987-2012</year>
+		<manufacturer>DvD Translations</manufacturer>
 		<rom name="Armana no Kiseki (T-Eng).fds" size="131000" crc="8b61e398"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -131,8 +144,8 @@
 	</game>
 	<game name="bakutpatkun" romof="fdsbios">
 		<description>Bakutoushi Patton-kun (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Soft Pro</manufacturer>
 		<rom name="Bakutoushi Patton-kun (Japan).fds" size="131016" crc="bdb5104d"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -140,8 +153,8 @@
 	</game>
 	<game name="bigchadogspi" romof="fdsbios">
 		<description>Big Challenge! Dogfight Spirit (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Jaleco</manufacturer>
 		<rom name="Big Challenge! Dogfight Spirit (Japan).fds" size="131016" crc="fcdb9fc9"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -149,8 +162,8 @@
 	</game>
 	<game name="bigchagogobo" romof="fdsbios">
 		<description>Big Challenge! Go! Go! Bowling (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1989</year>
+		<manufacturer>Jaleco</manufacturer>
 		<rom name="Big Challenge! Go! Go! Bowling (Japan).fds" size="131016" crc="11519f4a"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -158,8 +171,8 @@
 	</game>
 	<game name="bigchagunfig" romof="fdsbios">
 		<description>Big Challenge! Gun Fighter (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1989</year>
+		<manufacturer>Jaleco</manufacturer>
 		<rom name="Big Challenge! Gun Fighter (Japan).fds" size="131016" crc="691cb0c1"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -167,8 +180,8 @@
 	</game>
 	<game name="bigchajuusen" romof="fdsbios">
 		<description>Big Challenge! Juudou Senshuken (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Jaleco</manufacturer>
 		<rom name="Big Challenge! Juudou Senshuken (Japan).fds" size="131016" crc="a65712a7"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -176,8 +189,8 @@
 	</game>
 	<game name="biomirbokupa" romof="fdsbios">
 		<description>Bio Miracle Bokutte Upa (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Konami</manufacturer>
 		<rom name="Bio Miracle Bokutte Upa (Japan).fds" size="131016" crc="75e44b0d"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -185,8 +198,8 @@
 	</game>
 	<game name="bomberman" romof="fdsbios">
 		<description>Bomber Man (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="Bomber Man (Japan).fds" size="65516" crc="4f7bee06"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -194,8 +207,8 @@
 	</game>
 	<game name="bubblebobble" romof="fdsbios">
 		<description>Bubble Bobble (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Taito</manufacturer>
 		<rom name="Bubble Bobble (Japan).fds" size="131000" crc="8c8d153e"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -203,8 +216,8 @@
 	</game>
 	<game name="burgertime" romof="fdsbios">
 		<description>BurgerTime (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Data East</manufacturer>
 		<rom name="BurgerTime (Japan).fds" size="65516" crc="44e41aba"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -212,8 +225,8 @@
 	</game>
 	<game name="chitetaiord" romof="fdsbios">
 		<description>Chitei Tairiku Ordola (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Sunsoft</manufacturer>
 		<rom name="Chitei Tairiku Ordola (Japan).fds" size="131000" crc="aacd4f64"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -221,7 +234,7 @@
 	</game>
 	<game name="clucluland" romof="fdsbios">
 		<description>Clu Clu Land (Japan)</description>
-		<year>1989?</year>
+		<year>1988</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Clu Clu Land (Japan).fds" size="65516" crc="72d0bde6"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
@@ -230,8 +243,8 @@
 	</game>
 	<game name="coconaworld" romof="fdsbios">
 		<description>Cocona World (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Sofel</manufacturer>
 		<rom name="Cocona World (Japan).fds" size="131016" crc="0b429e6c"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -239,35 +252,37 @@
 	</game>
 	<game name="dandyj" cloneof="dandy" romof="dandy">
 		<description>Dandy - Zeuon no Fukkatsu (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="Dandy - Zeuon no Fukkatsu (Japan).fds" size="131016" crc="a2bfcbcc"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="dandy" romof="fdsbios">
+		<comment>Hack</comment>
 		<description>Dandy - Zeuon no Fukkatsu (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
-		<rom name="Dandy - Zeuon no Fukkatsu (T-Eng).fds" size="131000" crc="ee9bdc93"/>
+		<year>1988-2021</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
+		<rom name="Dandy - Zeuon no Fukkatsu (T-Eng).fds" size="131383" crc="29a1613f"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="deadzonej" cloneof="deadzone" romof="deadzone">
 		<description>Dead Zone (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1986</year>
+		<manufacturer>Sunsoft</manufacturer>
 		<rom name="Dead Zone (Japan).fds" size="131000" crc="de673254"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="deadzone" romof="fdsbios">
+		<comment>Hack</comment>
 		<description>Dead Zone (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1986-2019</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Dead Zone (T-Eng).fds" size="131000" crc="1bf2409a"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -275,8 +290,8 @@
 	</game>
 	<game name="digdug" romof="fdsbios">
 		<description>Dig Dug (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Namco</manufacturer>
 		<rom name="Dig Dug (Japan).fds" size="65516" crc="eb126143"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -284,8 +299,8 @@
 	</game>
 	<game name="digdugii" romof="fdsbios">
 		<description>Dig Dug II (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Namco</manufacturer>
 		<rom name="Dig Dug II (Japan).fds" size="65516" crc="1b2b1342"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -293,17 +308,18 @@
 	</game>
 	<game name="dirtypaij" cloneof="dirtypai" romof="dirtypai">
 		<description>Dirty Pair - Project Eden (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Bandai</manufacturer>
 		<rom name="Dirty Pair - Project Eden (Japan).fds" size="131016" crc="0bba3177"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="dirtypai" romof="fdsbios">
+		<comment>Hack</comment>
 		<description>Dirty Pair - Project Eden (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987-2021</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Dirty Pair - Project Eden (T-Eng).fds" size="131000" crc="5707b40a"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -311,8 +327,8 @@
 	</game>
 	<game name="dokidokipanic" romof="fdsbios">
 		<description>Doki Doki Panic (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Nintendo - Fuji TV</manufacturer>
 		<rom name="Doki Doki Panic (Japan).fds" size="131016" crc="b36dfcd2"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -320,7 +336,7 @@
 	</game>
 	<game name="donkeykong" romof="fdsbios">
 		<description>Donkey Kong (Japan)</description>
-		<year>1989?</year>
+		<year>1988</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Donkey Kong (Japan).fds" size="65516" crc="6c0740e9"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
@@ -329,7 +345,7 @@
 	</game>
 	<game name="donkeykongjr" romof="fdsbios">
 		<description>Donkey Kong Jr. (Japan)</description>
-		<year>1989?</year>
+		<year>1988</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Donkey Kong Jr. (Japan).fds" size="65516" crc="3046966a"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>

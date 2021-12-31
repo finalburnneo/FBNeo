@@ -575,6 +575,7 @@ DRV		BurnDrvAliens2;
 DRV		BurnDrvAliens3;
 DRV		BurnDrvAliens4;
 DRV		BurnDrvfds_aliensfix;
+DRV		BurnDrvfds_aliens;
 DRV		BurnDrvMSX_aliens;
 DRV		BurnDrvMSX_aliensb;
 DRV		BurnDrvMSX_aliensa;
@@ -18677,6 +18678,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAliens3,			// Aliens (World set 3)
 	&BurnDrvAliens4,			// Aliens (World set 4)
 	&BurnDrvfds_aliensfix,		// Aliens - Alien 2 (Fix Hack)
+	&BurnDrvfds_aliens,			// Aliens - Alien 2 (Japan) (Prototype)
 	&BurnDrvMSX_aliens,			// Aliens - Alien 2 (Jpn)
 	&BurnDrvMSX_aliensb,		// Aliens - Alien 2 (Jpn, Alt 2)
 	&BurnDrvMSX_aliensa,		// Aliens - Alien 2 (Jpn, Alt)

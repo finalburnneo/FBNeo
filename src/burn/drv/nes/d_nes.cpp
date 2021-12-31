@@ -640,6 +640,9 @@ struct cartridge {
 	UINT8	*CHRRam;
 	INT32	 CHRRamSize;
 
+	UINT8   *ExtData;
+	INT32    ExtDataSize;
+
 	INT32	 Mapper;
 	INT32	 Mirroring;
 	INT32	 Trainer;
@@ -781,6 +784,15 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	if (nes20) {
 		// NES2.0 header specifies CHR-Ram size (Nalle Land, Haunted Halloween '86, VS. Topgun, VS. Castlevania)
 		Cart.CHRRamSize = 64 << (ROMData[0xb] & 0xf);
+
+		// Detect Extended Data (Super Russian Roulette..)
+		INT32 total_nes_rom = 0x10 + (Cart.Trainer ? 0x200 : 0) + Cart.PRGRomSize + Cart.CHRRomSize;
+		Cart.ExtDataSize = (ROMSize > total_nes_rom) ? (ROMSize - total_nes_rom) : 0;
+
+		if (Cart.ExtDataSize) {
+			bprintf(0, _T("%x bytes Extended Data detected\n"), Cart.ExtDataSize);
+			Cart.ExtData = ROMData + total_nes_rom;
+		}
 	}
 
 	if (Cart.Mapper == 30 || Cart.Mapper == 111) { // UNROM-512, GTROM(Cheapocabra) defaults to 32k chr-ram
@@ -5246,6 +5258,96 @@ static void mapper17_map()
 #undef mapper17_irqenable
 #undef mapper17_mirror
 
+// ---[ mapper 413 Super Russian Roulette
+#define mapper413_reg(x)		(mapper_regs[(x)]) // 0 - 3
+#define mapper413_irq_latch		(mapper_regs[4])
+#define mapper413_irq_count		(mapper_regs[5])
+#define mapper413_irq_enable	(mapper_regs[6])
+#define mapper413_ext_control   (mapper_regs[7])
+
+static UINT32 *mapper413_ext_addr = (UINT32*)&mapper_regs16[0];
+
+static UINT8 mapper413_read_pcm()
+{
+	UINT8 data = Cart.ExtData[mapper413_ext_addr[0] & (Cart.ExtDataSize - 1)];
+	if (mapper413_ext_control & 0x02) mapper413_ext_addr[0]++;
+	return data;
+}
+
+static UINT8 mapper413_prg_read(UINT16 address)
+{
+	if ((address & 0xf000) == 0xc000) {
+		return mapper413_read_pcm();
+	}
+
+	return mapper_prg_read_int(address);
+}
+
+static void mapper413_prg_write(UINT16 address, UINT8 data)
+{
+	switch (address & 0xf000) {
+		case 0x8000: mapper413_irq_latch = data; break;
+		case 0x9000: mapper413_irq_count = 0; break;
+		case 0xa000: mapper413_irq_enable = 0; M6502SetIRQLine(0, CPU_IRQSTATUS_NONE); break;
+		case 0xb000: mapper413_irq_enable = 1; break;
+		case 0xc000: mapper413_ext_addr[0] = (mapper413_ext_addr[0] << 1) | (data >> 7); break;
+		case 0xd000: mapper413_ext_control = data; break;
+		case 0xe000:
+		case 0xf000: mapper413_reg((data >> 6)) = data & 0x3f; break;
+	}
+
+	mapper_map();
+}
+
+static UINT8 mapper413_psg_read(UINT16 address)
+{
+	if ((address & 0xf800) == 0x4800) {
+		return mapper413_read_pcm();
+	}
+	if (address >= 0x5000) {
+		return Cart.PRGRom[0x1000 | (address & 0x1fff)];
+	}
+
+	return cpu_open_bus;
+}
+static UINT8 mapper413_exp_read(UINT16 address)
+{
+	return Cart.PRGRom[PRGExpMap + (address & 0x1fff)];
+}
+
+static void mapper413_map()
+{
+	mapper_map_exp_prg(mapper413_reg(0)); // 6000 - 7fff
+	mapper_map_prg( 8, 0, mapper413_reg(1));
+	mapper_map_prg( 8, 1, mapper413_reg(2));
+	mapper_map_prg( 8, 2, 3);
+	mapper_map_prg( 8, 3, 4);
+
+	mapper_map_chr( 4, 0, mapper413_reg(3));
+	mapper_map_chr( 4, 1, 0x3d);
+}
+
+static void mapper413_scanline()
+{
+	if (mapper413_irq_count == 0) {
+		mapper413_irq_count = mapper413_irq_latch;
+	} else {
+		mapper413_irq_count--;
+	}
+
+	if (mapper413_irq_enable && mapper413_irq_count == 0) {
+		if (mmc5_mask[0] & 0x18) { // aka if (RENDERING)
+			mapper_irq(0);
+		}
+	}
+}
+
+#undef mapper413_reg
+#undef mapper413_irq_latch
+#undef mapper413_irq_count
+#undef mapper413_irq_enable
+#undef mapper413_ext_control
+
 // --[ mapper 28: Action53 Home-brew multicart
 #define mapper28_mirror		(mapper_regs[0x1f - 0])
 #define mapper28_mirrorbit  (mapper_regs[0x1f - 1])
@@ -7621,6 +7723,19 @@ static INT32 mapper_init(INT32 mappernum)
 			BurnLEDInit(1, LED_POSITION_BOTTOM_RIGHT, LED_SIZE_4x4, LED_COLOR_GREEN, 80);
 
 			mapperFDS_reset();
+			mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 413: { // Super Russian Roulette (BATLAB-SRR-X PCB)
+			psg_area_read   = mapper413_psg_read;  // 4000 - 5fff
+			cart_exp_read   = mapper413_exp_read;  // 6000 - 7fff
+			mapper_prg_read = mapper413_prg_read;  // 8000 - ffff
+			mapper_write    = mapper413_prg_write; // 8000 - ffff
+			mapper_scanline = mapper413_scanline;
+			mapper_map      = mapper413_map;
+
 			mapper_map();
 			retval = 0;
 			break;
@@ -18977,6 +19092,23 @@ struct BurnDriver BurnDrvnes_vanguard = {
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
+
+static struct BurnRomInfo nes_superrusrouRomDesc[] = {
+	{ "Super Russian Roulette (HB).nes",          8912912, 0xdde4cf55, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_superrusrou)
+STD_ROM_FN(nes_superrusrou)
+
+struct BurnDriver BurnDrvnes_superrusrou = {
+	"nes_srroulette", NULL, NULL, NULL, "2017",
+	"Super Russian Roulette (HB)\0", NULL, "Andrew Reitano", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_superrusrouRomInfo, nes_superrusrouRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
+	NESZapperInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_armedbatRomDesc[] = {
 	{ "Armed for Battle (2014)(1010 Howe).nes",          131088, 0xa7deed94, BRF_ESS | BRF_PRG },

@@ -418,7 +418,7 @@
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Boxxle (HB)</description>
 		<year>2015</year>
-		<manufacturer>Coleco</manufacturer>
+		<manufacturer>Thinking Rabbit</manufacturer>
 		<rom name="boxxle_colecovision.rom" size="65536" crc="62dacf07"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -1039,7 +1039,7 @@
 	<game name="digger" romof="coleco">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>Digger (HB)</description>
-		<year>1983-2015</year>
+		<year>2015</year>
 		<manufacturer>Windmill Software</manufacturer>
 		<rom name="digger_cv.rom" size="24576" crc="77088cab"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
@@ -2041,6 +2041,19 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="knightmore" romof="coleco">
+		<comment>Homebrew</comment>
+		<description>Knight'n More (HB)</description>
+		<year>2016</year>
+		<manufacturer>Cote Gamers</manufacturer>
+		<rom name="Knight'n More (2016)(Cote Gamers).rom" size="32768" crc="c6c33170"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="kngtmare" romof="coleco">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Knightmare (SGM) (HB)</description>
@@ -2450,7 +2463,7 @@
 	<game name="monkey" romof="coleco">
 		<description>Monkey Academy</description>
 		<year>1984</year>
-		<manufacturer>Coleco</manufacturer>
+		<manufacturer>Coleco - Konami</manufacturer>
 		<rom name="monkey.1" size="8192" crc="fcd8e18b"/>
 		<rom name="monkey.2" size="8192" crc="c1effcb3"/>
 		<rom name="monkey.3" size="8192" crc="5594b4c4"/>
@@ -3095,10 +3108,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="pquest" romof="coleco">
-		<comment>Homebrew, SGM - Super Game Module</comment>
+		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Princess Quest (HB)</description>
 		<year>2012</year>
-		<manufacturer>Team Pixelboy</manufacturer>
+		<manufacturer>Oscar Toledo G.</manufacturer>
 		<rom name="princess_quest_colecovision.rom" size="262144" crc="a59eaa2b"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -4984,6 +4997,19 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="zaxxon2" romof="coleco">
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Zaxxon II (HB)</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="Zaxxon II (2021)(Team Pixelboy).rom" size="32768" crc="762e9a2b"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="zaxxonsgm" romof="coleco">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Zaxxon Super Game (SGM) (HB)</description>
@@ -5069,6 +5095,19 @@
 		<year>2012</year>
 		<manufacturer>Oscar Toledo G.</manufacturer>
 		<rom name="Zombie Near (2012)(CollectorVision).col" size="32768" crc="c36c017e"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zoom909" romof="coleco">
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Zoom 909 (HB)</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="Zoom 909 (2021)(Team Pixelboy).rom" size="32768" crc="7dc7a049"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>

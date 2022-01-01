@@ -2687,8 +2687,9 @@ DRV		BurnDrvMSX_zaidera;
 DRV		BurnDrvmd_dinolandj;
 DRV		BurnDrvBerabohmb;
 DRV		BurnDrvBerabohm;
-DRV		BurnDrvLegionj;
 DRV		BurnDrvLegionjb;
+DRV		BurnDrvLegionj;
+DRV		BurnDrvLegionj2;
 DRV		BurnDrvnes_choujyou;
 DRV		BurnDrvMSX_macross;
 DRV		BurnDrvMSX_macrossa;
@@ -7725,6 +7726,7 @@ DRV		BurnDrvfds_knightmove;
 DRV		BurnDrvnes_knightrider;
 DRV		BurnDrvpce_knightrs;
 DRV		BurnSpecknighttyme;
+DRV		BurnDrvcv_knightmore;
 DRV		BurnDrvKngtmare;
 DRV		BurnDrvcv_kngtmare;
 DRV		BurnDrvMSX_knightmr;
@@ -14856,6 +14858,7 @@ DRV		BurnSpecSuperrobinhood;
 DRV		BurnDrvmd_srobowrs;
 DRV		BurnDrvnes_srp;
 DRV		BurnDrvnes_superrugby;
+DRV		BurnDrvnes_superrusrou;
 DRV		BurnSpecSuperscramblesim;
 DRV		BurnSpecSuperseymoursavestheplanet;
 DRV		BurnDrvSshanghaj;
@@ -17957,6 +17960,7 @@ DRV		BurnDrvZaxxon3;
 DRV		BurnDrvsg1k_zaxxont;
 DRV		BurnDrvsms_zaxxon3d;
 DRV		BurnDrvsms_zaxxon3dp;
+DRV		BurnDrvcv_zaxxon2;
 DRV		BurnDrvcv_zaxxonsgm;
 DRV		BurnDrvcv_zaxxon;
 DRV		BurnDrvnes_zdey;
@@ -18070,6 +18074,7 @@ DRV		BurnDrvgg_zoolu;
 DRV		BurnDrvmd_zoolu;
 DRV		BurnDrvsms_zool;
 DRV		BurnDrvgg_zoolj;
+DRV		BurnDrvcv_zoom909;
 DRV		BurnDrvMSX_zoom909;
 DRV		BurnDrvsg1k_zoom909;
 DRV		BurnDrvMSX_zoom909k;
@@ -20790,8 +20795,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_dinolandj,		// Chou Touryuu Retsuden - Dino Land (Jpn)
 	&BurnDrvBerabohmb,			// Chou Zetsurinjin Berabowman (Japan, Rev B)
 	&BurnDrvBerabohm,			// Chou Zetsurinjin Berabowman (Japan, Rev C)
-	&BurnDrvLegionj,			// Chouji Meikyuu Legion (Japan ver 1.05)
 	&BurnDrvLegionjb,			// Chouji Meikyuu Legion (Japan ver 1.05, bootleg)
+	&BurnDrvLegionj,			// Chouji Meikyuu Legion (Japan ver 1.05, set 1)
+	&BurnDrvLegionj2,			// Chouji Meikyuu Legion (Japan ver 1.05, set 2)
 	&BurnDrvnes_choujyou,		// Choujikuu Yousai - Macross (Japan)
 	&BurnDrvMSX_macross,		// Choujikuu Yousai Macross (Jpn)
 	&BurnDrvMSX_macrossa,		// Choujikuu Yousai Macross (Jpn, Alt)
@@ -24315,7 +24321,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_ghwj,			// Greatest Heavyweights (Jpn)
 	&BurnDrvmd_ghwu,			// Greatest Heavyweights (USA)
 	&BurnSpecgberet_48,			// Green Beret (48K)
-	&BurnDrvGberetb,			// Green Beret (bootleg)
+	&BurnDrvGberetb,			// Green Beret (bootleg) [needs correct PROM decoding, NOT WORKING]
 	&BurnDrvMSX_gberet,			// Green Beret (Euro)
 	&BurnDrvMSX_gbereta,		// Green Beret (Euro, Alt)
 	&BurnDrvfds_greenberet,		// Green Beret (Japan)
@@ -25828,6 +25834,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_knightrider,	// Knight Rider (USA)
 	&BurnDrvpce_knightrs,		// Knight Rider Special
 	&BurnSpecknighttyme,		// Knight Tyme (128K)
+	&BurnDrvcv_knightmore,		// Knight'n More (HB)
 	&BurnDrvKngtmare,			// Knightmare (prototype)
 	&BurnDrvcv_kngtmare,		// Knightmare (SGM) (HB)
 	&BurnDrvMSX_knightmr,		// Knightmare - Majou Densetsu (Jpn)
@@ -32959,6 +32966,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_srobowrs,		// Super Robot Wars (Rus)
 	&BurnDrvnes_srp,			// Super Royal Pals (Hack)
 	&BurnDrvnes_superrugby,		// Super Rugby (Japan)
+	&BurnDrvnes_superrusrou,	// Super Russian Roulette (HB)
 	&BurnSpecSuperscramblesim,	// Super Scramble Simulator (128K)
 	&BurnSpecSuperseymoursavestheplanet,// Super Seymour Saves the Planet (128K)
 	&BurnDrvSshanghaj,			// Super Shanghai Dragon's Eye (Japan)
@@ -36060,6 +36068,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_zaxxont,		// Zaxxon (Tw)
 	&BurnDrvsms_zaxxon3d,		// Zaxxon 3-D (World)
 	&BurnDrvsms_zaxxon3dp,		// Zaxxon 3-D (World, Prototype)
+	&BurnDrvcv_zaxxon2,			// Zaxxon II (HB)
 	&BurnDrvcv_zaxxonsgm,		// Zaxxon Super Game (SGM) (HB)
 	&BurnDrvcv_zaxxon,			// Zaxxon
 	&BurnDrvnes_zdey,			// Zdey the Game (HB)
@@ -36173,6 +36182,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_zoolu,			// Zool (USA)
 	&BurnDrvsms_zool,			// Zool - Ninja of the 'Nth' Dimension (Euro)
 	&BurnDrvgg_zoolj,			// Zool no Yume Bouken (Jpn)
+	&BurnDrvcv_zoom909,			// Zoom 909 (HB)
 	&BurnDrvMSX_zoom909,		// Zoom 909 (Jpn)
 	&BurnDrvsg1k_zoom909,		// Zoom 909 (Jpn)
 	&BurnDrvMSX_zoom909k,		// Zoom 909 (Kor)

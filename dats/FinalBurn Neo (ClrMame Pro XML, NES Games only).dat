@@ -13646,6 +13646,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="srroulette">
+		<description>Super Russian Roulette (HB)</description>
+		<year>2017</year>
+		<manufacturer>Andrew Reitano</manufacturer>
+		<rom name="Super Russian Roulette (HB).nes" size="8912912" crc="dde4cf55"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="supershi">
 		<description>Super Shinobi, The (Unl)</description>
 		<year>1989?</year>

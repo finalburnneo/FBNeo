@@ -9769,6 +9769,7 @@ static UINT8 nes_read_zapper()
 		if (yy < real_sl-8 || yy > real_sl) continue;
 
 		for (INT32 xx = in_x - 2; xx < in_x + 2; xx++) {
+			if (xx < 0) continue;
 			if (yy == real_sl && xx >= pixel) break;
 			if (GetAvgBrightness(xx, yy) > 0x88) { // makes time travel possible
 				return 0x00;

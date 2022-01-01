@@ -1853,7 +1853,8 @@ struct BurnDriver BurnDrvLegion = {
 };
 
 
-// Chouji Meikyuu Legion (Japan ver 1.05)
+// Chouji Meikyuu Legion (Japan ver 1.05, set 1)
+// this has the ROM checksum test circumvented like the bootlegs? Or maybe just a bug that was later fixed?
 
 static struct BurnRomInfo legionjRomDesc[] = {
 	{ "legion.e5",	0x10000, 0x49e8e1b7, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code1
@@ -1883,10 +1884,50 @@ STD_ROM_FN(legionj)
 
 struct BurnDriver BurnDrvLegionj = {
 	"legionj", "legion", NULL, NULL, "1987",
-	"Chouji Meikyuu Legion (Japan ver 1.05)\0", NULL, "Nichibutsu", "Miscellaneous",
+	"Chouji Meikyuu Legion (Japan ver 1.05, set 1)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, legionjRomInfo, legionjRomName, NULL, NULL, NULL, NULL, ArmedfInputInfo, LegionDIPInfo,
+	LegionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	224, 288, 3, 4
+};
+
+
+// Chouji Meikyuu Legion (Japan ver 1.05, set 2)
+// this has the ROM checksum test working
+
+static struct BurnRomInfo legionj2RomDesc[] = {
+	{ "legion.e5",	0x10000, 0xd7efe310, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code1
+	{ "legion.e1",	0x10000, 0xb890da35, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "legion.1d",	0x10000, 0xc2e45e1e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "legion.1b",	0x10000, 0xc306660a, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "legion.1h",	0x04000, 0x2ca4f7f0, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 code
+
+	{ "legion.1g",	0x08000, 0xc50b0125, 3 | BRF_GRA },           //  5 Characters
+
+	{ "legion.1e",	0x10000, 0xa9d70faf, 4 | BRF_GRA },           //  6 Foreground Tiles
+	{ "legion.1f",	0x08000, 0xf018313b, 4 | BRF_GRA },           //  7
+
+	{ "legion.1l",	0x10000, 0x29b8adaa, 5 | BRF_GRA },           //  8 Background Tiles
+
+	{ "legion.1k",	0x10000, 0xff5a0db9, 6 | BRF_GRA },           //  9 Sprites
+	{ "legion.1j",	0x10000, 0xbae220c8, 6 | BRF_GRA },           // 10
+
+	{ "lg7.bin",	0x04000, 0x533e2b58, 7 | BRF_GRA },           // 11 MCU data
+
+	{ "legion.1i",	0x08000, 0x79f4a827, 2 | BRF_OPT },           // 12 Unknown
+};
+
+STD_ROM_PICK(legionj2)
+STD_ROM_FN(legionj2)
+
+struct BurnDriver BurnDrvLegionj2 = {
+	"legionj2", "legion", NULL, NULL, "1987",
+	"Chouji Meikyuu Legion (Japan ver 1.05, set 2)\0", NULL, "Nichibutsu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, legionj2RomInfo, legionj2RomName, NULL, NULL, NULL, NULL, ArmedfInputInfo, LegionDIPInfo,
 	LegionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 288, 3, 4
 };

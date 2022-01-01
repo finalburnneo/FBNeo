@@ -876,79 +876,10 @@ struct BurnDriver BurnDrvcv_Coleco = {
 	272, 228, 4, 3
 };
 
-// Homebrew games
-
-static struct BurnRomInfo cv_diggerRomDesc[] = {
-	{ "digger_cv.rom",	0x06000, 0x77088cab, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(cv_digger, cv_digger, cv_coleco)
-STD_ROM_FN(cv_digger)
-
-struct BurnDriver BurnDrvcv_digger = {
-	"cv_digger", NULL, "cv_coleco", NULL, "1983-2015",
-	"Digger (HB)\0", "Published by CollectorVision Games", "Windmill Software", "ColecoVision",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
-	CVGetZipName, cv_diggerRomInfo, cv_diggerRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	272, 228, 4, 3
-};
-
-static struct BurnRomInfo cv_questgcRomDesc[] = {
-	{ "quest_golden_chalice_colecovision.rom",	0x08000, 0x6da37da8, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(cv_questgc, cv_questgc, cv_coleco)
-STD_ROM_FN(cv_questgc)
-
-struct BurnDriver BurnDrvcv_questgc = {
-	"cv_questgc", NULL, "cv_coleco", NULL, "2012",
-	"Quest for the Golden Chalice (HB)\0", NULL, "Team Pixelboy", "ColecoVision",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_MAZE | GBF_RPG, 0,
-	CVGetZipName, cv_questgcRomInfo, cv_questgcRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	272, 228, 4, 3
-};
-
-static struct BurnRomInfo cv_princessquestRomDesc[] = {
-	{ "princess_quest_colecovision.rom",	0x40000, 0xa59eaa2b, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(cv_princessquest, cv_princessquest, cv_coleco)
-STD_ROM_FN(cv_princessquest)
-
-struct BurnDriver BurnDrvcv_princessquest = {
-	"cv_pquest", NULL, "cv_coleco", NULL, "2012",
-	"Princess Quest (HB)\0", "SGM - Super Game Module", "Team Pixelboy", "ColecoVision",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_RUNGUN | GBF_PLATFORM, 0,
-	CVGetZipName, cv_princessquestRomInfo, cv_princessquestRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
-	DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	272, 228, 4, 3
-};
-
-static struct BurnRomInfo cv_danslitherRomDesc[] = {
-	{ "danslither.rom",	0x0402a, 0x92624cff, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(cv_danslither, cv_danslither, cv_coleco)
-STD_ROM_FN(cv_danslither)
-
-struct BurnDriver BurnDrvcv_danslither = {
-	"cv_danslither", "cv_slither", "cv_coleco", NULL, "2010",
-	"Slither (Hack, Joystick Version)\0", NULL, "Daniel Bienvenu", "ColecoVision",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_SHOOT, 0,
-	CVGetZipName, cv_danslitherRomInfo, cv_danslitherRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	272, 228, 4, 3
-};
-
 // End of driver, the following driver info. has been synthesized from hash/coleco.xml of MESS
 // Note: when re-converting coleco.xml, make sure to change "&amp;" to "and"!
 // Note2: don't forget to add notice to choplifter: "Corrupted sprites. Use (Alt) version!"
+
 // Castelo
 
 static struct BurnRomInfo cv_casteloRomDesc[] = {
@@ -1839,7 +1770,7 @@ struct BurnDriver BurnDrvcv_gustbust = {
 	"cv_gustbust", NULL, "cv_coleco", NULL, "1983",
 	"Gust Buster\0", NULL, "Sunrise Software", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_COLECO, GBF_ACTION, 0,
 	CVGetZipName, cv_gustbustRomInfo, cv_gustbustRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -1860,7 +1791,7 @@ struct BurnDriver BurnDrvcv_gyruss = {
 	"cv_gyruss", NULL, "cv_coleco", NULL, "1984",
 	"Gyruss\0", NULL, "Parker Brothers", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_COLECO, GBF_SHOOT, 0,
 	CVGetZipName, cv_gyrussRomInfo, cv_gyrussRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -1881,7 +1812,7 @@ struct BurnDriver BurnDrvcv_hero = {
 	"cv_hero", NULL, "cv_coleco", NULL, "1984",
 	"H.E.R.O.\0", NULL, "Activision", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_COLECO, GBF_ACTION, 0,
 	CVGetZipName, cv_heroRomInfo, cv_heroRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -1902,7 +1833,7 @@ struct BurnDriver BurnDrvcv_illusion = {
 	"cv_illusion", NULL, "cv_coleco", NULL, "1984",
 	"Illusions\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_ACTION, 0,
 	CVGetZipName, cv_illusionRomInfo, cv_illusionRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -1923,7 +1854,7 @@ struct BurnDriver BurnDrvcv_jbond = {
 	"cv_jbond", NULL, "cv_coleco", NULL, "1984",
 	"James Bond 007\0", NULL, "Parker Brothers", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_HORSHOOT, 0,
 	CVGetZipName, cv_jbondRomInfo, cv_jbondRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -1944,7 +1875,7 @@ struct BurnDriver BurnDrvcv_jmpmanjr = {
 	"cv_jmpmanjr", NULL, "cv_coleco", NULL, "1984",
 	"Jumpman Junior\0", NULL, "Epyx", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_COLECO, GBF_ACTION, 0,
 	CVGetZipName, cv_jmpmanjrRomInfo, cv_jmpmanjrRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -1965,7 +1896,7 @@ struct BurnDriver BurnDrvcv_jmpmanjra = {
 	"cv_jmpmanjra", "cv_jmpmanjr", "cv_coleco", NULL, "1984",
 	"Jumpman Junior (Alt)\0", NULL, "Epyx", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_COLECO, GBF_ACTION, 0,
 	CVGetZipName, cv_jmpmanjraRomInfo, cv_jmpmanjraRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -2238,7 +2169,7 @@ struct BurnDriver BurnDrvcv_mking = {
 	"cv_mking", NULL, "cv_coleco", NULL, "1984",
 	"Mountain King\0", NULL, "Sunrise Software", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_COLECO, GBF_ACTION, 0,
 	CVGetZipName, cv_mkingRomInfo, cv_mkingRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -2259,7 +2190,7 @@ struct BurnDriver BurnDrvcv_mkinga = {
 	"cv_mkinga", "cv_mking", "cv_coleco", NULL, "1984",
 	"Mountain King (Alt)\0", NULL, "Sunrise Software", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_COLECO, GBF_ACTION, 0,
 	CVGetZipName, cv_mkingaRomInfo, cv_mkingaRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -2448,7 +2379,7 @@ struct BurnDriver BurnDrvcv_onlyrock = {
 	"cv_onlyrock", NULL, "cv_coleco", NULL, "1984",
 	"It's Only Rock 'n' Roll\0", NULL, "K-Tel", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_onlyrockRomInfo, cv_onlyrockRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -2469,7 +2400,7 @@ struct BurnDriver BurnDrvcv_panic = {
 	"cv_panic", NULL, "cv_coleco", NULL, "1983",
 	"Space Panic\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_ACTION, 0,
 	CVGetZipName, cv_panicRomInfo, cv_panicRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -2490,7 +2421,7 @@ struct BurnDriver BurnDrvcv_pepper2 = {
 	"cv_pepper2", NULL, "cv_coleco", NULL, "1983",
 	"Pepper II\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MAZE | GBF_ACTION, 0,
 	CVGetZipName, cv_pepper2RomInfo, cv_pepper2RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -2826,7 +2757,7 @@ struct BurnDriver BurnDrvcv_sammylf = {
 	"cv_sammylf", NULL, "cv_coleco", NULL, "1983",
 	"Sammy Lightfoot\0", NULL, "Sierra On-Line", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_PLATFORM, 0,
 	CVGetZipName, cv_sammylfRomInfo, cv_sammylfRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -2847,7 +2778,7 @@ struct BurnDriver BurnDrvcv_sammylfa = {
 	"cv_sammylfa", "cv_sammylf", "cv_coleco", NULL, "1983",
 	"Sammy Lightfoot (Alt)\0", NULL, "Sierra On-Line", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_PLATFORM, 0,
 	CVGetZipName, cv_sammylfaRomInfo, cv_sammylfaRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -5074,9 +5005,9 @@ STD_ROM_FN(cv_monkey)
 
 struct BurnDriver BurnDrvcv_monkey = {
 	"cv_monkey", NULL, "cv_coleco", NULL, "1984",
-	"Monkey Academy\0", NULL, "Coleco", "ColecoVision",
+	"Monkey Academy\0", NULL, "Coleco - Konami", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_ACTION | GBF_QUIZ, 0,
 	CVGetZipName, cv_monkeyRomInfo, cv_monkeyRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -5099,7 +5030,7 @@ struct BurnDriver BurnDrvcv_smurfpnt = {
 	"cv_smurfpnt", NULL, "cv_coleco", NULL, "1983",
 	"Smurf Paint 'n' Play Workshop\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_smurfpntRomInfo, cv_smurfpntRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -5122,7 +5053,7 @@ struct BurnDriver BurnDrvcv_sabaseb = {
 	"cv_sabaseb", NULL, "cv_coleco", NULL, "1983",
 	"Super Action Baseball\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_SPORTSMISC, 0,
 	CVGetZipName, cv_sabasebRomInfo, cv_sabasebRomName, NULL, NULL, NULL, NULL, SACInputInfo, SACDIPInfo,
 	DrvInitSAC, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -5145,7 +5076,7 @@ struct BurnDriver BurnDrvcv_suprdkjr = {
 	"cv_suprdkjr", NULL, "cv_coleco", NULL, "1983",
 	"Super DK! Junior (Prototype)\0", NULL, "Nintendo", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_COLECO, GBF_ACTION, 0,
 	CVGetZipName, cv_suprdkjrRomInfo, cv_suprdkjrRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -5168,7 +5099,7 @@ struct BurnDriver BurnDrvcv_tunnels = {
 	"cv_tunnels", NULL, "cv_coleco", NULL, "1983",
 	"Tunnels and Trolls (Demo)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_tunnelsRomInfo, cv_tunnelsRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -5191,7 +5122,7 @@ struct BurnDriver BurnDrvcv_warroom = {
 	"cv_warroom", NULL, "cv_coleco", NULL, "1983",
 	"War Room\0", NULL, "Probe 2000", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_COLECO, GBF_SHOOT, 0,
 	CVGetZipName, cv_warroomRomInfo, cv_warroomRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -5212,7 +5143,7 @@ struct BurnDriver BurnDrvcv_wordfeud = {
 	"cv_wordfeud", NULL, "cv_coleco", NULL, "1984",
 	"Word Feud\0", NULL, "K-Tel", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_PUZZLE, 0,
 	CVGetZipName, cv_wordfeudRomInfo, cv_wordfeudRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -5235,7 +5166,7 @@ struct BurnDriver BurnDrvcv_ttennis = {
 	"cv_ttennis", NULL, "cv_coleco", NULL, "1984",
 	"Tournament Tennis\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_SPORTSMISC, 0,
 	CVGetZipName, cv_ttennisRomInfo, cv_ttennisRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -5255,7 +5186,7 @@ struct BurnDriver BurnDrvcv_smurfsav = {
 	"cv_smurfsav", NULL, "cv_coleco", NULL, "1982",
 	"Smurfs Save the Day (Prototype)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_smurfsavRomInfo, cv_smurfsavRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -5295,6 +5226,76 @@ struct BurnDriver BurnDrvcv_sgmtest = {
 	BDF_GAME_WORKING, 1, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_sgmtestRomInfo, cv_sgmtestRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Homebrew games
+
+static struct BurnRomInfo cv_diggerRomDesc[] = {
+	{ "digger_cv.rom",	0x06000, 0x77088cab, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_digger, cv_digger, cv_coleco)
+STD_ROM_FN(cv_digger)
+
+struct BurnDriver BurnDrvcv_digger = {
+	"cv_digger", NULL, "cv_coleco", NULL, "2015",
+	"Digger (HB)\0", "Published by CollectorVision Games", "Windmill Software", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+	CVGetZipName, cv_diggerRomInfo, cv_diggerRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+static struct BurnRomInfo cv_questgcRomDesc[] = {
+	{ "quest_golden_chalice_colecovision.rom",	0x08000, 0x6da37da8, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_questgc, cv_questgc, cv_coleco)
+STD_ROM_FN(cv_questgc)
+
+struct BurnDriver BurnDrvcv_questgc = {
+	"cv_questgc", NULL, "cv_coleco", NULL, "2012",
+	"Quest for the Golden Chalice (HB)\0", NULL, "Team Pixelboy", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION | GBF_ADV, 0,
+	CVGetZipName, cv_questgcRomInfo, cv_questgcRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+static struct BurnRomInfo cv_princessquestRomDesc[] = {
+	{ "princess_quest_colecovision.rom",	0x40000, 0xa59eaa2b, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_princessquest, cv_princessquest, cv_coleco)
+STD_ROM_FN(cv_princessquest)
+
+struct BurnDriver BurnDrvcv_princessquest = {
+	"cv_pquest", NULL, "cv_coleco", NULL, "2012",
+	"Princess Quest (HB)\0", "SGM - Published by Team Pixelboy", "Oscar Toledo G.", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PLATFORM, 0,
+	CVGetZipName, cv_princessquestRomInfo, cv_princessquestRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+static struct BurnRomInfo cv_danslitherRomDesc[] = {
+	{ "danslither.rom",	0x0402a, 0x92624cff, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_danslither, cv_danslither, cv_coleco)
+STD_ROM_FN(cv_danslither)
+
+struct BurnDriver BurnDrvcv_danslither = {
+	"cv_danslither", "cv_slither", "cv_coleco", NULL, "2010",
+	"Slither (Hack, Joystick Version)\0", NULL, "Daniel Bienvenu", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_SHOOT, 0,
+	CVGetZipName, cv_danslitherRomInfo, cv_danslitherRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
 
@@ -5459,7 +5460,7 @@ STD_ROM_FN(cv_boxxle)
 
 struct BurnDriver BurnDrvcv_boxxle = {
 	"cv_boxxle", NULL, "cv_coleco", NULL, "2015",
-	"Boxxle (HB)\0", "Published by Team Pixelboy", "Coleco", "ColecoVision",
+	"Boxxle (HB)\0", "Published by Team Pixelboy", "Thinking Rabbit", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PUZZLE, 0,
 	CVGetZipName, cv_boxxleRomInfo, cv_boxxleRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
@@ -8609,6 +8610,63 @@ struct BurnDriver BurnDrvcv_vexed = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PUZZLE, 0,
 	CVGetZipName, cv_vexedRomInfo, cv_vexedRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Knight'n More (HB)
+
+static struct BurnRomInfo cv_knightmoreRomDesc[] = {
+	{ "Knight'n More (2016)(Cote Gamers).rom",	32768, 0xc6c33170, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_knightmore, cv_knightmore, cv_coleco)
+STD_ROM_FN(cv_knightmore)
+
+struct BurnDriver BurnDrvcv_knightmore = {
+	"cv_knightmore", NULL, "cv_coleco", NULL, "2016",
+	"Knight'n More (HB)\0", NULL, "Cote Gamers", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_RUNGUN | GBF_PLATFORM, 0,
+	CVGetZipName, cv_knightmoreRomInfo, cv_knightmoreRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Zaxxon II (HB)
+
+static struct BurnRomInfo cv_zaxxon2RomDesc[] = {
+	{ "Zaxxon II (2021)(Team Pixelboy).rom",	32768, 0x762e9a2b, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_zaxxon2, cv_zaxxon2, cv_coleco)
+STD_ROM_FN(cv_zaxxon2)
+
+struct BurnDriver BurnDrvcv_zaxxon2 = {
+	"cv_zaxxon2", NULL, "cv_coleco", NULL, "2021",
+	"Zaxxon II (HB)\0", "Published by Team Pixelboy", "Sega", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_SHOOT, 0,
+	CVGetZipName, cv_zaxxon2RomInfo, cv_zaxxon2RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Zoom 909 (HB)
+
+static struct BurnRomInfo cv_zoom909RomDesc[] = {
+	{ "Zoom 909 (2021)(Team Pixelboy).rom",	32768, 0x7dc7a049, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_zoom909, cv_zoom909, cv_coleco)
+STD_ROM_FN(cv_zoom909)
+
+struct BurnDriver BurnDrvcv_zoom909 = {
+	"cv_zoom909", NULL, "cv_coleco", NULL, "2021",
+	"Zoom 909 (HB)\0", "Published by Team Pixelboy", "Sega", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_SHOOT, 0,
+	CVGetZipName, cv_zoom909RomInfo, cv_zoom909RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };

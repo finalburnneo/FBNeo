@@ -781,7 +781,6 @@ int RunMessageLoop()
 		MediaExit();
 		if (bRestartVideo) {
 			MediaInit();
-			PausedRedraw();
 		}
 	} while (bRestartVideo);
 

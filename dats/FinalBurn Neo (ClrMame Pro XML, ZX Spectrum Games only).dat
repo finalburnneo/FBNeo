@@ -80,15 +80,6 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="180_48" cloneof="180" romof="180">
-		<description>180 (48K)</description>
-		<year>1986</year>
-		<manufacturer>MAD (Mastertronic Added Dimension)</manufacturer>
-		<rom name="180 (1986)(Mastertronic Added Dimension).z80" size="36246" crc="8cba8fcd"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="1942" romof="spectrum">
 		<description>1942 (48K)</description>
 		<year>1986</year>
@@ -848,6 +839,17 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="angels" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Angels (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Zosya Entertainment</manufacturer>
+		<rom name="Angels 128K (2021)(Zosya Ent.).tap" size="85647" crc="535ade9c"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="angrybirdsvs" romof="spectrum">
 		<comment>Homebrew</comment>
 		<description>Angry Birds - Opposition (48K) (HB)</description>
@@ -1029,14 +1031,13 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="aspargpmas" romof="spec128">
-		<comment>Set '3. keys' to use controller</comment>
-		<description>Aspar GP Master (Spanish) (128K)</description>
+	<game name="aspargpmas" romof="spectrum">
+		<comment>Set '3. Teclado' to use controller</comment>
+		<description>Aspar GP Master (Spanish) (48K)</description>
 		<year>1988</year>
 		<manufacturer>Dinamic Software</manufacturer>
-		<rom name="Aspar GP Master (1988)(Dinamic Software)(es)(128k).z80" size="38691" crc="03627882"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Aspar GP Master ES (1988)(Dinamic).tap" size="43743" crc="2a967d97"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1623,7 +1624,7 @@
 		<description>Beach Buggy Simulator (48K)</description>
 		<year>1988</year>
 		<manufacturer>Silverbird Software</manufacturer>
-		<rom name="Beach Buggy Simulator (1988)(Silverbird Software).z80" size="38622" crc="900b90e9"/>
+		<rom name="Beach Buggy Simulator 48K (1988)(Silverbird).tap" size="48064" crc="4f4f62f2"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1674,18 +1675,9 @@
 		<description>Beyond the Ice Palace (128K)</description>
 		<year>1988</year>
 		<manufacturer>Elite Systems</manufacturer>
-		<rom name="Beyond the Ice Palace (1988)(Elite Systems)(128k).z80" size="48137" crc="3bb06772"/>
+		<rom name="Beyond the Ice Palace (1988)(Elite Systems).tap" size="46226" crc="565cc58c"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="beyicepa_48" cloneof="beyicepa" romof="beyicepa">
-		<description>Beyond the Ice Palace (48K)</description>
-		<year>1988</year>
-		<manufacturer>Elite Systems</manufacturer>
-		<rom name="Beyond the Ice Palace (1988)(Elite Systems).z80" size="40452" crc="f039a5d9"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2425,11 +2417,11 @@
 		<driver status="good"/>
 	</game>
 	<game name="buggyboy" romof="spec128">
-		<comment>P, L and SPACE to select options</comment>
+		<comment>Use 'P', 'L' and SPACE to set options</comment>
 		<description>Buggy Boy (128K)</description>
 		<year>1988</year>
 		<manufacturer>Elite Systems</manufacturer>
-		<rom name="Buggy Boy 128K (1988)(Elite Systems).z80" size="59830" crc="0497d4f4"/>
+		<rom name="Buggy Boy 128K (1988)(Elite Systems).tap" size="53512" crc="9f71d593"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -2645,6 +2637,16 @@
 		<year>1990</year>
 		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="Carlos Sainz (1990)(Zigurat Software)(128k).z80" size="41541" crc="608dabf2"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="carriercmd" romof="spec128">
+		<description>Carrier Command (128K)</description>
+		<year>1989</year>
+		<manufacturer>Rainbird</manufacturer>
+		<rom name="Carrier Command 128K (1989)(Rainbird).tap" size="122111" crc="041d3f43"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -3616,6 +3618,28 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="cyclus1" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Cyclus - Part 1 (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Miguetelo</manufacturer>
+		<rom name="Cyclus Part 1 (2021)(Miguetelo).tap" size="44736" crc="36b8fe17"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cyclus2" cloneof="cyclus1" romof="cyclus1">
+		<comment>Homebrew</comment>
+		<description>Cyclus - Part 2 (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Miguetelo</manufacturer>
+		<rom name="Cyclus Part 2 (2021)(Miguetelo).tap" size="44231" crc="e6437901"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="cygnusalpha" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Cygnus - Alpha (128K) (HB)</description>
@@ -4532,7 +4556,7 @@
 		<description>Double Dragon III - The Rosetta Stone (128K)</description>
 		<year>1991</year>
 		<manufacturer>Storm Software</manufacturer>
-		<rom name="Double Dragon III - The Rosetta Stone (1991)(Storm Software)[128K].z80" size="79466" crc="63257333"/>
+		<rom name="Double Dragon III - The Rosetta Stone 128K (1991)(Storm).tap" size="312619" crc="09d741f5"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -4571,11 +4595,11 @@
 		<driver status="good"/>
 	</game>
 	<game name="draconus" romof="spectrum">
-		<comment>Press Enter for game menu</comment>
+		<comment>Press ENTER for game menu</comment>
 		<description>Draconus (48K)</description>
 		<year>1988</year>
 		<manufacturer>Zeppelin Games</manufacturer>
-		<rom name="Draconus (1988)(Zeppelin Games).z80" size="38737" crc="4364bff8"/>
+		<rom name="Draconus 48K (1988)(Zeppelin Games).tap" size="39793" crc="6aeb0e66"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4589,23 +4613,22 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dninjastd" romof="spec128">
+	<game name="dninja128" romof="spec128">
 		<description>Dragon Ninja (128K)</description>
 		<year>1988</year>
 		<manufacturer>Imagine Software</manufacturer>
-		<rom name="Dragon Ninja (1988)(Imagine Software)(Standard)(128k).z80" size="94848" crc="a28f7436"/>
+		<rom name="Dragon Ninja 128K (1988)(Imagine).tap" size="118559" crc="636223a9"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dninja" cloneof="dninjastd" romof="dninjastd">
-		<description>Dragon Ninja (Trainer) (128K)</description>
+	<game name="dninja48" cloneof="dninja128" romof="dninja128">
+		<description>Dragon Ninja (48K)</description>
 		<year>1988</year>
 		<manufacturer>Imagine Software</manufacturer>
-		<rom name="Dragon Ninja (1988)(Imagine Software)[128K].z80" size="100095" crc="f7171c64"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Dragon Ninja 48K (1988)(Imagine).tap" size="95634" crc="5ba91604"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4684,7 +4707,7 @@
 		<description>Driller (48K)</description>
 		<year>1987</year>
 		<manufacturer>Incentive</manufacturer>
-		<rom name="Driller (1987)(Incentive).z80" size="42733" crc="87115b09"/>
+		<rom name="Driller (1987)(Incentive).tap" size="55483" crc="0387f1c0"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5368,6 +5391,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="fireforget" romof="spec128">
+		<description>Fire and Forget (128K)</description>
+		<year>1988</year>
+		<manufacturer>Titus</manufacturer>
+		<rom name="Fire and Forget (1988)(Titus).tap" size="46724" crc="7685ab3a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="firefly" romof="spec128">
 		<description>Firefly (128K)</description>
 		<year>1988</year>
@@ -6026,6 +6059,17 @@
 		<manufacturer>Firebird</manufacturer>
 		<rom name="Gerry the Germ Goes Body Poppin (1985)(Firebird).tap" size="49339" crc="4bf4b0b0"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="getmars" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Get Out Of Mars (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Noentiendo</manufacturer>
+		<rom name="Get Out Of Mars (2021)(Noentiendo).tap" size="69762" crc="d1275e4e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -8830,6 +8874,27 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="magjim128" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Magenta Jim (128K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>Gaz Marshall</manufacturer>
+		<rom name="Magenta Jim 128K (2020)(Gaz Marshall).tap" size="23797" crc="1fee648d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="magjim48" cloneof="magjim128" romof="magjim128">
+		<comment>Homebrew</comment>
+		<description>Magenta Jim (48K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>Gaz Marshall</manufacturer>
+		<rom name="Magenta Jim 48K (2020)(Gaz Marshall).tap" size="27972" crc="08215496"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mcarpet" romof="spectrum">
 		<description>Magic Carpet (16K)</description>
 		<year>1985</year>
@@ -11199,6 +11264,16 @@
 		<rom name="Project Vaelius 128K (2021)(Toku Soft).tap" size="43218" crc="4eae4683"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="psichess" romof="spectrum">
+		<comment>S+2/S+3: 2D/3D view - M+1: start game - J+2: use controller</comment>
+		<description>Psi Chess (48K)</description>
+		<year>1986</year>
+		<manufacturer>The Edge</manufacturer>
+		<rom name="Psi Chess (1986)(The Edge).tap" size="49152" crc="deca5027"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -14399,6 +14474,25 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="techcop128" romof="spec128">
+		<description>Techno-Cop (128K)</description>
+		<year>1988</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
+		<rom name="Techno-Cop 128K (1988)(Gremlin Graphics).tap" size="69984" crc="323627a4"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="techcop48" cloneof="techcop128" romof="techcop128">
+		<description>Techno-Cop (48K)</description>
+		<year>1988</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
+		<rom name="Techno-Cop 48K (1988)(Gremlin Graphics).tap" size="49374" crc="10fca563"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="tmht" romof="spectrum">
 		<description>Teenage Mutant Hero Turtles (48K)</description>
 		<year>1990</year>
@@ -14830,6 +14924,17 @@
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="Titanic - part 2 ES (1988)(Topo Soft).tap" size="46204" crc="547d088f"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tjcc" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>TJ Cavern Capers (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Gaz Marshall</manufacturer>
+		<rom name="TJ Cavern Capers (2021)(Gaz Marshall).tap" size="27355" crc="03b6b2bb"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -16013,10 +16118,10 @@
 	</game>
 	<game name="zoomsecr" romof="spec128">
 		<comment>Homebrew</comment>
-		<description>Zoominmg Secretary (128K) (HB)</description>
+		<description>Zooming Secretary (128K) (HB)</description>
 		<year>2021</year>
 		<manufacturer>PC NONO Games</manufacturer>
-		<rom name="Zooming Secretary (2021)(PC NONO Games).tap" size="47173" crc="d612501b"/>
+		<rom name="Zooming Secretary (2021)(PC NONO Games).z80" size="50763" crc="21027efa"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

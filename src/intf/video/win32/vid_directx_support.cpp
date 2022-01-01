@@ -582,11 +582,12 @@ int VidSScaleImage(RECT* pRect, int nGameWidth, int nGameHeight, bool bVertScanl
 // Text display routines
 
 struct sMsgStruct {
-	TCHAR pMsgText[3][64];
+	TCHAR pMsgText[8][64];
 	COLORREF nColour;
-	int nRGB;
+	DWORD nRGB;
 	int nPriority;
 	unsigned int nTimer;
+	int players_active; // for drawing mini joypad image
 };
 
 sMsgStruct VidSShortMsg = { _T(""), 0, 0, 0, 0 };
@@ -707,6 +708,7 @@ static void VidSExitTinyMsg()
 
 static void VidSExitJoystickMsg()
 {
+	memset(&VidSJoystickMsg, 0, sizeof(VidSJoystickMsg));
 	VidSJoystickMsg.nTimer = 0;
 
 	if (JoystickMsgFont) {
@@ -840,7 +842,7 @@ static int VidSInitJoystickMsg(int /*nFlags*/)
 	VidSExitJoystickMsg();
 
 	//JoystickMsgFont = CreateFont(12, 0, 0, 0, FW_DEMIBOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Courier New"));
-	JoystickMsgFont = CreateFont(8, 0, 0, 0, FW_THIN, 0, 0, 0, OUT_OUTLINE_PRECIS, 0, 0, NONANTIALIASED_QUALITY, FF_SWISS, _T("Courier New"));
+	JoystickMsgFont = CreateFont(12, 0, 0, 0, FW_THIN, 0, 0, 0, OUT_OUTLINE_PRECIS, 0, 0, ANTIALIASED_QUALITY, FIXED_PITCH || MONO_FONT, _T("Courier New"));
 	VidSJoystickMsg.nTimer = 0;
 
 	// create surface to display the text
@@ -1716,16 +1718,24 @@ int VidSNewTinyMsg(const TCHAR* pText, int nRGB, int nDuration, int nPriority)	/
 int VidSNewJoystickMsg(const TCHAR* pText, int nRGB, int nDuration, int nLineNo)	// int nRGB = 0, int nDuration = 0, int nLineNo = 0
 {
 	if (!pText) { // NULL passed, clear surface
+		memset(&VidSJoystickMsg.pMsgText, 0, sizeof(VidSJoystickMsg.pMsgText));
 		VidSClearSurface(pJoystickMsgSurf, nKeyColour, NULL);
 		return 0;
+	}
+
+	VidSJoystickMsg.players_active = nLineNo & 0x30;
+
+	// dx9 draws shadow on 4,5,6 and on-buttons on 0,1,2
+	if (pJoystickMsgSurf) { // basic - enh. blitters only!
+		nLineNo &= 3; // draw all on 0,1,2
 	}
 
 	int nSize = _tcslen(pText);
 	if (nSize > 63) {
 		nSize = 63;
 	}
-	_tcsncpy(VidSJoystickMsg.pMsgText[nLineNo & 3], pText, nSize);
-	VidSJoystickMsg.pMsgText[nLineNo & 3][nSize] = 0;
+	_tcsncpy(VidSJoystickMsg.pMsgText[nLineNo & 7], pText, nSize);
+	VidSJoystickMsg.pMsgText[nLineNo & 7][nSize] = 0;
 
 	if (nRGB) {
 		// Convert RGB value to COLORREF

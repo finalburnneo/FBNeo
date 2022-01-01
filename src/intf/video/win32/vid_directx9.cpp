@@ -4,10 +4,16 @@
 
 // dink change-log, dec. 2021
 //
+// BUGS
+// ??
+//
 // Hook-up nStatus (pause, play, record, netplay icons)
 // OSD (ShortMsg) text match other blitters (from VidSNewShortMsg())
 // Experimental blitter - fix "off-by-nMenuSize" scale, which made stuff blurry
 // Experimental blitter - fix BDF_16BIT_ONLY games (megadrive, cave/toaplan, cps3)
+//
+//
+
 
 //#ifdef _MSC_VER
 //#pragma comment(lib, "d3d9")
@@ -81,18 +87,20 @@ static IDirect3DTexture9* pEffectTexture = NULL;
 
 static ID3DXFont* pFont = NULL;							// OSD font
 static ID3DXFont* pStatusFont = NULL;					// Status font
+static ID3DXFont* pStatusFontSmall = NULL;				// Status font (small)
 static ID3DXFont* pTinyFont = NULL;						// TinyMsg
 static ID3DXFont* pJoystickFont = NULL;					// JoystickMsg
 
-static void vid_ReleaseFonts(); // forward
+static void vid_FontExit(); // forward
 
 // from vid_directx_support.cpp
 struct sMsgStruct {
-	TCHAR pMsgText[3][64];
+	TCHAR pMsgText[8][64];
 	COLORREF nColour;
 	DWORD nRGB;
 	int nPriority;
 	unsigned int nTimer;
+	int players_active; // for drawing mini joypad image
 };
 
 extern sMsgStruct VidSShortMsg;
@@ -303,7 +311,7 @@ static int dx9Exit()
 
 	VidSFreeVidImage();
 
-	vid_ReleaseFonts();
+	vid_FontExit();
 
 	RELEASE(pD3DDevice);
 	RELEASE(pD3D);
@@ -790,20 +798,28 @@ HANDLE_ERROR:
 	return 1;
 }
 
-static void vid_ReleaseFonts()
+static void vid_FontExit()
 {
 	RELEASE(pFont);
 	RELEASE(pStatusFont);
+	RELEASE(pStatusFontSmall);
 	RELEASE(pTinyFont);
 	RELEASE(pJoystickFont);
 
 	pFont = NULL;
 	pStatusFont = NULL;
+	pStatusFontSmall = NULL;
 	pTinyFont = NULL;
 	pJoystickFont = NULL;
+
+	VidSExitOSD();
+
+	VidSShortMsg.nTimer = 0;
+	VidSTinyMsg.nTimer = 0;
+	VidSJoystickMsg.nTimer = 0;
 }
 
-static void vid_OnLostFonts()
+static void vid_FontsOnLost()
 {
 	if (pFont) {
 		pFont->OnLostDevice();
@@ -811,6 +827,10 @@ static void vid_OnLostFonts()
 
 	if (pStatusFont) {
 		pStatusFont->OnLostDevice();
+	}
+
+	if (pStatusFontSmall) {
+		pStatusFontSmall->OnLostDevice();
 	}
 
 	if (pTinyFont) {
@@ -822,7 +842,7 @@ static void vid_OnLostFonts()
 	}
 }
 
-static void vid_OnResetFonts()
+static void vid_FontsOnReset()
 {
 	if (pFont) {
 		pFont->OnResetDevice();
@@ -830,6 +850,10 @@ static void vid_OnResetFonts()
 
 	if (pStatusFont) {
 		pStatusFont->OnResetDevice();
+	}
+
+	if (pStatusFontSmall) {
+		pStatusFontSmall->OnResetDevice();
 	}
 
 	if (pTinyFont) {
@@ -841,10 +865,51 @@ static void vid_OnResetFonts()
 	}
 }
 
-static int vid_CreateFonts()
+static void Boxxy(int x, int y, int width, int height, D3DCOLOR color)
+{
+	struct vertex {
+		float x, y, z, ht;
+		DWORD Color;
+	};
+
+	vertex pVertex[4] = {
+		{ (float)x, (float)y + height, 0.0f, 1.0f, color },
+		{ (float)x, (float)y, 0.0f, 1.0f, color },
+		{ (float)x + width, (float)y + height, 0.0f, 1.0f, color },
+		{ (float)x + width, (float)y, 0.0f, 1.0f, color }
+	};
+
+	pD3DDevice->SetFVF(D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
+	pD3DDevice->SetTexture(0, nullptr);
+	pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	pD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	pD3DDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+	pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	pD3DDevice->SetRenderState(D3DRS_STENCILENABLE, FALSE);
+	pD3DDevice->SetRenderState(D3DRS_ZENABLE, D3DZB_FALSE);
+	pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, pVertex, sizeof(vertex));
+}
+
+static void Box(int x, int y, int width, int height, D3DCOLOR color, int thickness)
+{
+	Boxxy(x, y, width, thickness, color);
+	Boxxy(x, y, thickness, height, color);
+	Boxxy(x + width - thickness, y, thickness, height, color);
+	Boxxy(x, y + height - thickness, width, thickness, color);
+}
+
+static void JoyBox(int x, int y, int width, int height, D3DCOLOR color, D3DCOLOR outlinecolor, int thickness)
+{
+	Boxxy(x, y, width, height, color);
+	Box(x, y, width, height, outlinecolor, thickness);
+}
+
+static int vid_FontInit()
 {
 	if (!pFont) {
-		HRESULT hr = _D3DXCreateFont(pD3DDevice, d3dpp.BackBufferHeight / 60,
+		HRESULT hr = _D3DXCreateFont(pD3DDevice, 18,
 									 0, FW_DEMIBOLD, 1, FALSE,
 									 DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
 									 DEFAULT_PITCH || FF_DONTCARE,
@@ -856,7 +921,7 @@ static int vid_CreateFonts()
 	}
 
 	if (!pStatusFont) {
-		HRESULT hr = _D3DXCreateFont(pD3DDevice, d3dpp.BackBufferHeight / 22,
+		HRESULT hr = _D3DXCreateFont(pD3DDevice, 49,
 									 0, FW_DEMIBOLD, 1, FALSE,
 									 DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
 									 DEFAULT_PITCH || FF_DONTCARE,
@@ -867,8 +932,20 @@ static int vid_CreateFonts()
 		}
 	}
 
+	if (!pStatusFontSmall) {
+		HRESULT hr = _D3DXCreateFont(pD3DDevice, 49 / 2,
+									 0, FW_DEMIBOLD, 1, FALSE,
+									 DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
+									 DEFAULT_PITCH || FF_DONTCARE,
+									 _T("Webdings"), &pStatusFontSmall);
+
+		if (FAILED(hr)) {
+			return 1;
+		}
+	}
+
 	if (!pTinyFont) {
-		HRESULT hr = _D3DXCreateFont(pD3DDevice, d3dpp.BackBufferHeight / 60,
+		HRESULT hr = _D3DXCreateFont(pD3DDevice, 18,
 									 0, FW_DEMIBOLD, 1, FALSE,
 									 DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
 									 DEFAULT_PITCH || FF_DONTCARE,
@@ -880,11 +957,11 @@ static int vid_CreateFonts()
 	}
 
 	if (!pJoystickFont) {
-		HRESULT hr = _D3DXCreateFont(pD3DDevice, d3dpp.BackBufferHeight / 60,
+		HRESULT hr = _D3DXCreateFont(pD3DDevice, 19,
 									 0, FW_DEMIBOLD, 1, FALSE,
 									 DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
-									 DEFAULT_PITCH || FF_SWISS,
-									 _T("MS Sans Serif"), &pJoystickFont);
+									 FIXED_PITCH || MONO_FONT,
+									 _T("Lucida Console"), &pJoystickFont);
 
 		if (FAILED(hr)) {
 			return 1;
@@ -894,26 +971,61 @@ static int vid_CreateFonts()
 	return 0;
 }
 
-static void vid_DisplayFonts()
+static void textout(ID3DXFont *font, TCHAR *str, RECT dst, DWORD shadow, DWORD flags, DWORD color)
+{
+	if (shadow) {
+		DWORD black = 0xff000000;; // 0 opacity, black
+		RECT modi_dest = dst;
+		modi_dest.left -= 1;
+		modi_dest.right -= 1;
+		font->DrawText(NULL, str, -1, &modi_dest, flags, black);
+
+		modi_dest = dst;
+		modi_dest.left += 1;
+		modi_dest.right += 1;
+		font->DrawText(NULL, str, -1, &modi_dest, flags, black);
+
+		modi_dest = dst;
+		modi_dest.top -= 1;
+		modi_dest.bottom -= 1;
+		font->DrawText(NULL, str, -1, &modi_dest, flags, black);
+
+		modi_dest = dst;
+		modi_dest.top += 1;
+		modi_dest.bottom += 1;
+		font->DrawText(NULL, str, -1, &modi_dest, flags, black);
+
+	}
+	font->DrawText(NULL, str, -1, &dst, flags, color);
+}
+
+static void vid_FontDraw(RECT frec)
 {
 	if (nVidSDisplayStatus == 0) {
 		return;
+	}
+
+	if (!nVidFullscreen) {
+		// font rectangle is relative to game image(texture), even if window
+		// is stretched and black bars are on side of the screen.
+		frec.top = 0;
+		frec.left = 0;
+		frec.right = Dest.right - Dest.left; // width
+		frec.bottom = Dest.bottom - Dest.top; // height
 	}
 
 	VidSDisplayCheckTimers();
 
 	int nStatus = VidSGetnStatus();
 
-	// OSD from VidSNewShortMsg()
+	// OSD Status Message (FPS, state load/save, avi recording started, general short messages)
 	if (VidSShortMsg.nTimer) {
-		RECT dest = { 0, Dest.top + 4, Dest.right - 8, Dest.top + 36 };
-
-		if (!nVidFullscreen) { dest.top -= nMenuHeight; }
+		RECT dest = { 0, frec.top + 4, frec.right - 8, frec.top + 36 };
 
 		if (nStatus) { // Make room for status symbols, if we need to
 			for (int x = 0; x < 4; x++) {
 				if (nStatus & (1 << x)) {
-					dest.right -= 48;
+					dest.right -= (nReplayStatus == 1) ? (48 / 2) : 48;
 				}
 			}
 
@@ -921,78 +1033,43 @@ static void vid_DisplayFonts()
 			dest.bottom += 10;
 		}
 
-		pFont->DrawText(NULL, VidSShortMsg.pMsgText[0], -1, &dest, DT_RIGHT | DT_TOP | DT_NOCLIP, VidSShortMsg.nRGB);
+		textout(pFont, VidSShortMsg.pMsgText[0], dest, 1, DT_RIGHT | DT_TOP | DT_NOCLIP, VidSShortMsg.nRGB);
 	}
 
+	// OSD for Recording/Playback frame/framecount & Watch address cheat
 	if (VidSTinyMsg.nTimer) {
-		RECT dest = { Dest.right - 320, Dest.bottom - 24, Dest.right - 8, Dest.bottom - 4 };
+		RECT dest = { frec.right - 320, frec.bottom - 24, frec.right - 8, frec.bottom - 4 };
 
-		if (!nVidFullscreen) { dest.top -= nMenuHeight; }
-
-		if (dest.left < Dest.left) {
-			dest.left = Dest.left;
-		}
-
-		if (VidSGetnZoom() & 2) {
-			dest.top <<= 1;
-			dest.bottom <<= 1;
-		}
-
-		if (VidSGetnZoom() & 1) {
-			dest.left <<= 1;
-			dest.right <<= 1;
-		}
-
-		pTinyFont->DrawText(NULL, VidSTinyMsg.pMsgText[0], -1, &dest, DT_RIGHT | DT_TOP | DT_NOCLIP, VidSTinyMsg.nRGB);
+		textout(pTinyFont, VidSTinyMsg.pMsgText[0], dest, 1, DT_RIGHT | DT_TOP | DT_NOCLIP, VidSTinyMsg.nRGB);
 	}
 
+	// OSD Joypad for playing back recordings
 	if (VidSJoystickMsg.nTimer) {
+		int y = (frec.bottom - 64) - frec.top;
+
+		if (VidSJoystickMsg.players_active & 0x10) JoyBox(frec.left + 10 + 000, y, 88, 40, 0x6f0822cf, 0xaf000000, 1);
+		if (VidSJoystickMsg.players_active & 0x20) JoyBox(frec.left + 10 + 120, y, 88, 40, 0x6f0822cf, 0xaf000000, 1);
+
 		for (int i = 0; i < 3; i++) {
-			RECT dest = { Dest.left, (Dest.bottom - 60) + i * 8, Dest.left + 300, Dest.bottom };
+			RECT dest = { frec.left, (frec.bottom - 60) + i * 8, frec.left + 300, frec.bottom };
 
-			if (!nVidFullscreen) { dest.top -= nMenuHeight; }
-
-			if (dest.left < Dest.left) {
-				dest.left = Dest.left;
-			}
-
-			if (VidSGetnZoom() & 2) {
-				dest.top <<= 1;
-				dest.bottom <<= 1;
-			}
-
-			if (VidSGetnZoom() & 1) {
-				dest.left <<= 1;
-				dest.right <<= 1;
-			}
-
-			pJoystickFont->DrawText(NULL, VidSJoystickMsg.pMsgText[i], -1, &dest, DT_LEFT | DT_TOP | DT_NOCLIP, VidSJoystickMsg.nRGB);
+			textout(pJoystickFont, VidSJoystickMsg.pMsgText[i | 4], dest, 1, DT_LEFT | DT_TOP | DT_NOCLIP, (0x9f << 24) | 0x404040); // shadow'd off-buttons
+			textout(pJoystickFont, VidSJoystickMsg.pMsgText[i | 0], dest, 1, DT_LEFT | DT_TOP | DT_NOCLIP, (0xff << 24) | (VidSJoystickMsg.nRGB & 0xffffff) ); // on buttons
 		}
 	}
 
-	// Status font
+	// Status Icon: Paused, Recording, Playback, Netgame
 	if (nStatus) {
 		// RECT = left, top, right, bottom
-		RECT dest = { 0, Dest.top, Dest.right - 4, Dest.top + 48};
-
-		if (!nVidFullscreen) { dest.top -= nMenuHeight; }
+		RECT dest = { 0, 0, (frec.right - 4) & ~1, frec.top + 48};
 
 		for (int x = 0; x < 4; x++) {
 			if (nStatus & (1 << x)) {
-				dest.left -= 48;
+				dest.left -= (nReplayStatus == 1) ? (48 / 2) : 48; // smaller font when recording
 			}
 		}
 
-		if (VidSGetnZoom() & 2) {
-			dest.top <<= 1;
-			dest.bottom <<= 1;
-		}
-
-		if (VidSGetnZoom() & 1) {
-			dest.left <<= 1;
-			dest.right <<= 1;
-		}
-		pStatusFont->DrawText(NULL, VidSGetStatus(), -1, &dest, DT_RIGHT | DT_TOP | DT_NOCLIP, D3DCOLOR_ARGB(0xFF, 0xFF, 0x3F, 0x3F));
+		textout((nReplayStatus == 1) ? pStatusFontSmall : pStatusFont, VidSGetStatus(), dest, 0, DT_RIGHT | DT_TOP | DT_NOCLIP, D3DCOLOR_ARGB(0xFF, 0xFF, 0x3F, 0x3F));
 	}
 }
 
@@ -1181,7 +1258,7 @@ static int dx9Init()
 	}
 
 	// Create osd font
-	vid_CreateFonts();
+	vid_FontInit();
 
 #ifdef PRINT_DEBUG_INFO
 	{
@@ -1205,7 +1282,7 @@ static int dx9Reset()
 	dprintf(_T("*** Resestting Direct3D device.\n"));
 #endif
 
-	vid_OnLostFonts();
+	vid_FontsOnLost();
 
 	dx9ReleaseResources();
 
@@ -1213,7 +1290,7 @@ static int dx9Reset()
 		return 1;
 	}
 
-	vid_OnResetFonts();
+	vid_FontsOnReset();
 
 	dx9SurfaceInit();
 	dx9EffectInit();
@@ -1321,7 +1398,6 @@ static int dx9MemToSurf()
 			dprintf(_T("  * Error: Couldn't copy image.\n"));
 #endif
 		}
-
 		pDest->Release();
 	}
 
@@ -1459,7 +1535,7 @@ static int dx9MemToSurf()
 		pEffect->EndPass();
 
 		// draw osd text
-		vid_DisplayFonts();
+		vid_FontDraw(Dest);
 
 		pD3DDevice->EndScene();
 	}
@@ -1752,7 +1828,7 @@ static int dx9AltExit()
 
 	VidSFreeVidImage();
 
-	vid_ReleaseFonts();
+	vid_FontExit();
 
 	RELEASE(pD3DDevice)
 	RELEASE(pD3D)
@@ -2113,14 +2189,14 @@ static int dx9AltInit()
 	}
 
 	// Create osd font
-	vid_CreateFonts();
+	vid_FontInit();
 
 	return 0;
 }
 
 static int dx9AltReset()
 {
-	vid_OnLostFonts();
+	vid_FontsOnLost();
 
 	dx9AltReleaseTexture();
 
@@ -2128,7 +2204,7 @@ static int dx9AltReset()
 		return 1;
 	}
 
-	vid_OnResetFonts();
+	vid_FontsOnReset();
 
 	if (bVidMotionBlur) {
 		pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
@@ -2310,7 +2386,7 @@ static int dx9AltRender()  // MemToSurf
 	}
 
 	// draw osd text
-	vid_DisplayFonts();
+	vid_FontDraw(Dest);
 
 	pD3DDevice->EndScene();
 

@@ -110,7 +110,7 @@ static void CheckRedraw()
 
 static void PrintInputsReset()
 {
-	nPrintInputsActive[0] = nPrintInputsActive[1] = -(60 * 5);
+	nPrintInputsActive[0] = nPrintInputsActive[1] = -(60 * 5 * 2);
 }
 
 static inline void PrintInputsSetActive(UINT8 plyrnum)
@@ -202,36 +202,39 @@ static void PrintInputs()
 	}
 
 	VidSNewJoystickMsg(NULL); // Clear surface.
+
 	// Draw shadows
-	if (GetCurrentFrame() < nPrintInputsActive[0] + (60*5)) {
-		swprintf(lines[0], L"  ^   %c%c  ", OFFBUTTONS[0][0], OFFBUTTONS[0][1]);
-		swprintf(lines[1], L" < >  %c%c  ", OFFBUTTONS[0][2], OFFBUTTONS[0][3]);
-		swprintf(lines[2], L"  v   %c%c  ", OFFBUTTONS[0][4], OFFBUTTONS[0][5]);
-		VidSNewJoystickMsg(lines[0], 0x404040, 20, 0);
-		VidSNewJoystickMsg(lines[1], 0x404040, 20, 1);
-		VidSNewJoystickMsg(lines[2], 0x404040, 20, 2);
+	int got_shadow = 0;
+	for (INT32 player = 0; player < 2; player++) {
+		if (GetCurrentFrame() < nPrintInputsActive[player] + (60*5)) {  // time out np2active after 300 frames or so...
+			INT32 nLen = (player == 1) ? _tcslen(lines[0]) : 0;
+			swprintf(lines[0] + nLen, L"  ^  %c%c%c  ", OFFBUTTONS[player][0], OFFBUTTONS[player][1], OFFBUTTONS[player][2]);
+			swprintf(lines[1] + nLen, L" < >      ");
+			swprintf(lines[2] + nLen, L"  v  %c%c%c  ", OFFBUTTONS[player][3], OFFBUTTONS[player][4], OFFBUTTONS[player][5]);
+			got_shadow |= 1 << (4 + player);
+		}
 	}
 
-	if (GetCurrentFrame() < nPrintInputsActive[1] + (60*5)) {  // time out np2active after 200 frames or so...
-		swprintf(lines[0], L"            ^   %c%c  ", OFFBUTTONS[1][0], OFFBUTTONS[1][1]);
-		swprintf(lines[1], L"           < >  %c%c  ", OFFBUTTONS[1][2], OFFBUTTONS[1][3]);
-		swprintf(lines[2], L"            v   %c%c  ", OFFBUTTONS[1][4], OFFBUTTONS[1][5]);
-		VidSNewJoystickMsg(lines[0], 0x404040, 20, 0);
-		VidSNewJoystickMsg(lines[1], 0x404040, 20, 1);
-		VidSNewJoystickMsg(lines[2], 0x404040, 20, 2);
+	if (got_shadow) {
+		VidSNewJoystickMsg(lines[0], 0x404040, 20, 0 | 4 | got_shadow); // got_shadow encodes player# active
+		VidSNewJoystickMsg(lines[1], 0x404040, 20, 1 | 4 | got_shadow);
+		VidSNewJoystickMsg(lines[2], 0x404040, 20, 2 | 4 | got_shadow);
 	}
 
 	// Draw active buttons
 	INT32 nLen = 0;
-	for (INT32 i = 0; i < 2; i++) {
-		if (i == 1) nLen = _tcslen(lines[0]); // Create the textual mini-joystick icons
-		swprintf(lines[0] + nLen, L"  %c   %c%c  ", UDLR[i][0] ? '^' : ' ', BUTTONS[i][0], BUTTONS[i][1]);
-		swprintf(lines[1] + nLen, L" %c %c  %c%c  ", UDLR[i][2] ? '<' : ' ', UDLR[i][3] ? '>' : ' ', BUTTONS[i][2], BUTTONS[i][3]);
-		swprintf(lines[2] + nLen, L"  %c  %c%c  ", UDLR[i][1] ? 'v' : ' ', BUTTONS[i][4], BUTTONS[i][5]);
+	for (INT32 player = 0; player < 2; player++) {
+		if (player == 1) nLen = _tcslen(lines[0]); // Create the textual mini-joystick icons
+		swprintf(lines[0] + nLen, L"  %c  %c%c%c  ", UDLR[player][0] ? '^' : ' ', BUTTONS[player][0], BUTTONS[player][1], BUTTONS[player][2]);
+		swprintf(lines[1] + nLen, L" %c %c      ", UDLR[player][2] ? '<' : ' ', UDLR[player][3] ? '>' : ' ');
+		swprintf(lines[2] + nLen, L"  %c  %c%c%c  ", UDLR[player][1] ? 'v' : ' ', BUTTONS[player][3], BUTTONS[player][4], BUTTONS[player][5]);
 	}
-	VidSNewJoystickMsg(lines[0], 0xffffff, 20, 0); // Draw them
-	VidSNewJoystickMsg(lines[1], 0xffffff, 20, 1);
-	VidSNewJoystickMsg(lines[2], 0xffffff, 20, 2);
+
+	if (got_shadow) {
+		VidSNewJoystickMsg(lines[0], 0xffffff, 20, 0 | got_shadow); // Draw them
+		VidSNewJoystickMsg(lines[1], 0xffffff, 20, 1 | got_shadow);
+		VidSNewJoystickMsg(lines[2], 0xffffff, 20, 2 | got_shadow);
+	}
 }
 
 INT32 ReplayInput()
@@ -683,6 +686,8 @@ static void CloseReplay()
 
 void StopReplay()
 {
+	PrintInputsReset();
+
 	if (nReplayStatus) {
 		if (nReplayStatus == 1) {
 

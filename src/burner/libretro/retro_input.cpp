@@ -393,7 +393,7 @@ static inline void CinpDirectCoord(int port, int axis)
 	INT32 width, height;
 	BurnDrvGetVisibleSize(&width, &height);
 	pointerValues[port][axis] = (INT32)((axis == 0 ? width : height) * (double(val)/double(0x10000)));
-	BurnGunSetCoords(port, pointerValues[port][0], pointerValues[port][1]);
+	BurnGunSetCoords(((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES ? 0 : port), pointerValues[port][0], pointerValues[port][1]);
 }
 
 static inline int CinpMouseAxis(int port, int axis)
@@ -2527,6 +2527,10 @@ void SetControllerInfo()
 			{ "Pointer", RETRO_DEVICE_POINTER },
 			{ "Lightgun", RETRO_DEVICE_LIGHTGUN }
 		};
+
+		// kludge for nes (some 1p game want to use p2 controls)
+		if (nMaxPlayers < 2 && (nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_NES)
+			nMaxPlayers = 2;
 
 		// Prepare enough controllers for everything
 		nMaxControllers = nMaxPlayers + nMahjongKeyboards;

@@ -880,7 +880,7 @@ static void Boxxy(int x, int y, int width, int height, D3DCOLOR color)
 	};
 
 	pD3DDevice->SetFVF(D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
-	pD3DDevice->SetTexture(0, nullptr);
+	pD3DDevice->SetTexture(0, NULL);
 	pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);

@@ -1032,7 +1032,7 @@ struct BurnDriver BurnDrvroute16c = {
 
 static struct BurnRomInfo route16dRomDesc[] = {
 	{ "a0.7.bin",       0x0800, 0x025a4f63, 1 | BRF_ESS | BRF_PRG }, 	//  0 Z80 #0 Code
-	{ "a1.bin ",        0x0800, 0xab6117fa, 1 | BRF_ESS | BRF_PRG }, 	//  1
+	{ "a1.bin",         0x0800, 0xab6117fa, 1 | BRF_ESS | BRF_PRG }, 	//  1
 	{ "a2.8.bin",       0x0800, 0x5174f9ac, 1 | BRF_ESS | BRF_PRG }, 	//  2
 	{ "a3.bin",        	0x0800, 0x3ba19f10, 1 | BRF_ESS | BRF_PRG }, 	//  3
 	{ "a4.bin",       	0x0800, 0x1da34bde, 1 | BRF_ESS | BRF_PRG }, 	//  4

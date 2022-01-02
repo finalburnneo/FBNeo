@@ -35,6 +35,7 @@ static INT16 ZapperX;
 static INT16 ZapperY;
 static UINT8 ZapperFire;
 static UINT8 ZapperReload;
+static UINT8 ZapperReloadTimer;
 
 // FDS-Buttons
 static UINT8 FDSEject;
@@ -885,6 +886,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x585f3500) ? ALT_MMC3 : 0; // Darkwing Duck (T-Chi)
 	NESMode |= (ROMCRC == 0x38f65b2d) ? BAD_HOMEBREW : 0; // Battler (HB)
 	NESMode |= (ROMCRC == 0xc9f3f439) ? ALT_TIMING : 0; // vs. freedom force
+	NESMode |= (ROMCRC == 0x53eb8950) ? ALT_TIMING : 0; // freedom force
 	NESMode |= (ROMCRC == 0x560142bc) ? ALT_TIMING2 : 0; // don doko don 2
 	NESMode |= (ROMCRC == 0x70eac605) ? ALT_TIMING : 0; // deblock
 	NESMode |= (ROMCRC == 0x3616c7dd) ? ALT_TIMING : 0; // days of thunder
@@ -2150,17 +2152,17 @@ static void mapperFDS_write(UINT16 address, UINT8 data)
 #define mapper01_lastwrite  (mapper_regs[0x1f - 2])
 #define mapper01_exbits		(mapper_regs[0x1f - 3])
 #define mapper01_prg2x		(mapper_regs[0x1f - 4])
+static INT32 *mapper01_last_cyc = (INT32*)&mapper_regs16[0];
 
 static void mapper01_write(UINT16 address, UINT8 data)
 {
-	static INT32 last_write = 0; // check only happens @ boot w/bill & ted, no need to s.state this. -dink
 	if (address & 0x8000) {
-		if (mega_cyc_counter - last_write < 2) {
+		if (mega_cyc_counter - mapper01_last_cyc[0] < 2) {
 			// https://wiki.nesdev.com/w/index.php/MMC1
 			// Bill & Ted's Excellent Adventure resets the MMC1 by doing INC
 			// on a ROM location containing $FF; the MMC1 sees the $FF
 			// written back and ignores the $00 written on the next cycle.
-			last_write = mega_cyc_counter;
+			mapper01_last_cyc[0] = mega_cyc_counter;
 			return;
 		}
         if (data & 0x80) { // bit 7, mapper reset
@@ -2174,6 +2176,7 @@ static void mapper01_write(UINT16 address, UINT8 data)
 			if (mapper01_bitcount == 5) {
 				UINT8 reg = (address >> 13) & 0x3;
 				mapper_regs[reg] = mapper01_serialbyte;
+				//bprintf(0, _T("mmc1_reg[%x]  =  %x\n"), reg, mapper01_serialbyte);
 				switch (reg) {
 					case 1: mapper01_lastwrite = 0; break;
 					case 2: mapper01_lastwrite = 1; break;
@@ -2183,7 +2186,7 @@ static void mapper01_write(UINT16 address, UINT8 data)
                 if (mapper_map) mapper_map();
 			}
 		}
-		last_write = mega_cyc_counter;
+		mapper01_last_cyc[0] = mega_cyc_counter;
     }
 }
 
@@ -9756,28 +9759,39 @@ static void ppu_init(INT32 is_pal)
 	ppu_reset();
 }
 
+enum {
+	ZAP_SENSE		= 0x00,
+	ZAP_NONSENSE	= 0x08,
+	ZAP_TRIGGER		= 0x10
+};
+
 static UINT8 nes_read_zapper()
 {
 	if (RENDERING == 0 || scanline < 8 || scanline > 240)
-		return 0x08;
+		return ZAP_NONSENSE;
 
 	INT32 in_y = ((BurnGunReturnY(0) * 224) / 255);
 	INT32 in_x = BurnGunReturnX(0);
 	INT32 real_sl = scanline - 8;
 
+	// offscreen check
+	if (in_y == 0 || in_y == 224 || in_x == 0 || in_x == 255) {
+		return ZAP_NONSENSE;
+	}
+
 	for (INT32 yy = in_y - 2; yy < in_y + 2; yy++) {
-		if (yy < real_sl-8 || yy > real_sl) continue;
+		if (yy < real_sl-8 || yy > real_sl || yy < 0 || yy > 224) continue;
 
 		for (INT32 xx = in_x - 2; xx < in_x + 2; xx++) {
-			if (xx < 0) continue;
-			if (yy == real_sl && xx >= pixel) break;
-			if (GetAvgBrightness(xx, yy) > 0x88) { // makes time travel possible
-				return 0x00;
+			if (xx < 0 || xx > 255) continue;
+			if (yy == real_sl && xx >= pixel) break; // <- timing is everything, here.
+			if (GetAvgBrightness(xx, yy) > 0x88) { // + flux capacitor makes time travel possible
+				return ZAP_SENSE;
 			}
 		}
 	}
 
-	return 0x08;
+	return ZAP_NONSENSE;
 }
 
 static UINT8 nes_read_joy(INT32 port)
@@ -9787,9 +9801,13 @@ static UINT8 nes_read_joy(INT32 port)
 	if ((NESMode & USE_ZAPPER) && port == 1) {
 		// NES Zapper on second port (0x4017)
 		ret = nes_read_zapper(); // light sensor
-		ret |= (ZapperFire) ? 0x10 : 0x00; // trigger
+		ret |= (ZapperFire) ? ZAP_TRIGGER : 0x00; // trigger
+
 		if (ZapperReload) {
-			ret = 0x18;
+			ZapperReloadTimer = 10;
+			ret = ZAP_TRIGGER | ZAP_NONSENSE;
+		} else if (ZapperReloadTimer) {
+			ret = ZAP_NONSENSE;
 		}
 
 	} else {
@@ -10155,6 +10173,7 @@ static INT32 DrvDoReset()
 
 	JoyShifter[0] = JoyShifter[1] = 0xffffffff;
 	JoyStrobe = 0;
+	ZapperReloadTimer = 0;
 
 	cyc_counter = 0;
 	mega_cyc_counter = 0;
@@ -10562,6 +10581,10 @@ static INT32 NESFrame()
 
 		if (NESMode & (USE_ZAPPER | VS_ZAPPER)) {
 			BurnGunMakeInputs(0, ZapperX, ZapperY);
+
+			if (ZapperReloadTimer) {
+				ZapperReloadTimer--;
+			}
 		}
 
 		if (NESMode & IS_FDS) {
@@ -10674,6 +10697,7 @@ static INT32 NESScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(cyc_counter);
 		SCAN_VAR(JoyShifter);
 		SCAN_VAR(JoyStrobe);
+		SCAN_VAR(ZapperReloadTimer);
 
 		ScanVar(NES_CPU_RAM, 0x800, "CPU Ram");
 		ScanVar(Cart.WorkRAM, Cart.WorkRAMSize, "Work Ram");

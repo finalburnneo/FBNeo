@@ -32314,7 +32314,7 @@ struct BurnDriver BurnSpecZoomsecr = {
 // Angels (128K) (HB)
 
 static struct BurnRomInfo SpecAngelsRomDesc[] = {
-	{ "Angels 128K (2021)(Zosya Ent.).tap", 85647, 0x535ade9c, BRF_ESS | BRF_PRG },
+	{ "Angels 128K (2021)(Zosya Ent.).tap", 85647, 0x6e928666, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecAngels, SpecAngels, Spec128)

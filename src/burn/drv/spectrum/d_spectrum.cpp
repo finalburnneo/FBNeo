@@ -32352,7 +32352,7 @@ struct BurnDriver BurnSpecCyclus1 = {
 // Cyclus - Part 2 (128K) (HB)
 
 static struct BurnRomInfo SpecCyclus2RomDesc[] = {
-	{ "Cyclus Part 2 (2021)(Miguetelo).tap", 44231, 0xe6437901, BRF_ESS | BRF_PRG },
+	{ "Cyclus Part 2 (2021)(Miguetelo).tap", 44007, 0x534ecbe7, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCyclus2, SpecCyclus2, Spec128)
@@ -32371,7 +32371,7 @@ struct BurnDriver BurnSpecCyclus2 = {
 // Get Out Of Mars (128K) (HB)
 
 static struct BurnRomInfo SpecGetmarsRomDesc[] = {
-	{ "Get Out Of Mars (2021)(Noentiendo).tap", 69762, 0xd1275e4e, BRF_ESS | BRF_PRG },
+	{ "Get Out Of Mars (2021)(Noentiendo).tap", 69762, 0xc699ac83, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecGetmars, SpecGetmars, Spec128)
@@ -32428,7 +32428,7 @@ struct BurnDriver BurnSpecMagjim48 = {
 // TJ Cavern Capers (128K) (HB)
 
 static struct BurnRomInfo SpecTjccRomDesc[] = {
-	{ "TJ Cavern Capers (2021)(Gaz Marshall).tap", 27355, 0x03b6b2bb, BRF_ESS | BRF_PRG },
+	{ "TJ Cavern Capers (2021)(Gaz Marshall).tap", 27335, 0x7c3e2ab9, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecTjcc, SpecTjcc, Spec128)

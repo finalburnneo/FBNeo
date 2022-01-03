@@ -621,8 +621,8 @@ endif
 
 # gcc specific flags
 ifeq ($(shell $(CC) -v 2>&1 | grep -c "gcc version"), 1)
-	CFLAGS += -ffloat-store -Wno-unused-but-set-variable
-	CXXFLAGS += -ffloat-store -Wno-unused-but-set-variable
+	CFLAGS += -ffloat-store
+	CXXFLAGS += -ffloat-store
 	ifeq ($(shell expr `$(CC) -dumpversion | cut -f1 -d.` \>= 5), 1)
 		CFLAGS += -finline-limit=1200 -fcheck-new
 		CXXFLAGS += -finline-limit=1200 -fcheck-new

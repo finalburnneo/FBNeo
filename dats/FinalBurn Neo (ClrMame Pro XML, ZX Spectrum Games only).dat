@@ -8863,17 +8863,6 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="magentajim" romof="spec128">
-		<comment>Homebrew</comment>
-		<description>Magenta Jim (128K) (HB)</description>
-		<year>2020</year>
-		<manufacturer>Gaz Marshall</manufacturer>
-		<rom name="Magenta Jim (2020)(Gaz Marshall).tap" size="23797" crc="1fee648d"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="magjim128" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Magenta Jim (128K) (HB)</description>
@@ -16158,7 +16147,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="spec128k">
-		<description>ZX Spectrum 128</description>
+		<description>ZX Spectrum 128k</description>
 		<year>1984</year>
 		<manufacturer>Sinclair Research Limited</manufacturer>
 		<rom name="zx128_0.rom" size="16384" crc="e76799d2"/>
@@ -16167,7 +16156,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="spec48k">
-		<description>ZX Spectrum</description>
+		<description>ZX Spectrum 48k</description>
 		<year>1984</year>
 		<manufacturer>Sinclair Research Limited</manufacturer>
 		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
@@ -16194,7 +16183,7 @@
 	</game>
 	<game isbios="yes" name="spec128">
 		<comment>BIOS Only</comment>
-		<description>ZX Spectrum 128</description>
+		<description>ZX Spectrum 128 BIOS</description>
 		<year>1984</year>
 		<manufacturer>Sinclair Research Limited</manufacturer>
 		<rom name="zx128_0.rom" size="16384" crc="e76799d2"/>
@@ -16202,7 +16191,7 @@
 	</game>
 	<game isbios="yes" name="spectrum">
 		<comment>BIOS Only</comment>
-		<description>ZX Spectrum</description>
+		<description>ZX Spectrum BIOS</description>
 		<year>1984</year>
 		<manufacturer>Sinclair Research Limited</manufacturer>
 		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>

@@ -8443,7 +8443,6 @@ DRV		BurnSpecMagmag;
 DRV		BurnDrvMSX_magmag;
 DRV		BurnSpecMrage128;
 DRV		BurnSpecMrage48;
-DRV		BurnSpecMagentajim;
 DRV		BurnSpecMagjim128;
 DRV		BurnSpecMagjim48;
 DRV		BurnDrvnes_magicblock;
@@ -18110,8 +18109,8 @@ DRV		BurnDrvZupapa;
 DRV		BurnSpecZxdestroyer;
 DRV		BurnSpecSpec128BIOS;
 DRV		BurnSpecSpec128;
-DRV		BurnSpecSpectrumBIOS;
 DRV		BurnSpecSpectrum;
+DRV		BurnSpecSpectrumBIOS;
 DRV		BurnSpeczybex;
 DRV		BurnSpeczynaps;
 DRV		BurnDrvZzyzzyxx;
@@ -26562,7 +26561,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_magmag,			// Mag the Magician (HB)
 	&BurnSpecMrage128,			// Mage Rage (128K) (HB)
 	&BurnSpecMrage48,			// Mage Rage (48K) (HB)
-	&BurnSpecMagentajim,		// Magenta Jim (128K) (HB)
 	&BurnSpecMagjim128,			// Magenta Jim (128K) (HB)
 	&BurnSpecMagjim48,			// Magenta Jim (48K) (HB)
 	&BurnDrvnes_magicblock,		// Magic Block (Mega Soft)
@@ -36227,10 +36225,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvZunkyou,			// Zunzunkyou no Yabou (Japan)
 	&BurnDrvZupapa,				// Zupapa!
 	&BurnSpecZxdestroyer,		// ZX Destroyer (Spanish) (48K) (HB)
-	&BurnSpecSpec128BIOS,		// ZX Spectrum 128 [BIOS Only, NOT WORKING]
-	&BurnSpecSpec128,			// ZX Spectrum 128
-	&BurnSpecSpectrumBIOS,		// ZX Spectrum [BIOS Only, NOT WORKING]
-	&BurnSpecSpectrum,			// ZX Spectrum
+	&BurnSpecSpec128BIOS,		// ZX Spectrum 128 BIOS [BIOS Only, NOT WORKING]
+	&BurnSpecSpec128,			// ZX Spectrum 128k
+	&BurnSpecSpectrum,			// ZX Spectrum 48k
+	&BurnSpecSpectrumBIOS,		// ZX Spectrum BIOS [BIOS Only, NOT WORKING]
 	&BurnSpeczybex,				// Zybex (48K)
 	&BurnSpeczynaps,			// Zynaps (48K)
 	&BurnDrvZzyzzyxx,			// Zzyzzyxx (set 1)

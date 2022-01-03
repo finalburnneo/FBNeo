@@ -17238,6 +17238,7 @@ DRV		BurnDrvWeclemanb;
 DRV		BurnDrvWecleman;
 DRV		BurnDrvMSX_wbells;
 DRV		BurnDrvMSX_wbellsa;
+DRV		BurnDrvnes_weedstiff2;
 DRV		BurnDrvsms_wekainvaders;
 DRV		BurnDrvWelltrisj;
 DRV		BurnDrvWelltris;
@@ -35356,6 +35357,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvWecleman,			// WEC Le Mans 24 (v2.01)
 	&BurnDrvMSX_wbells,			// Wedding Bells (Jpn)
 	&BurnDrvMSX_wbellsa,		// Wedding Bells (Jpn, Alt)
+	&BurnDrvnes_weedstiff2,		// Weed N' Stiff 2 Bobsons Revenge (HB)
 	&BurnDrvsms_wekainvaders,	// Weka Invaders (HB, v1.0)
 	&BurnDrvWelltrisj,			// Welltris - Alexey Pajitnov's (Japan, 2 players)
 	&BurnDrvWelltris,			// Welltris - Alexey Pajitnov's (World?, 2 players)

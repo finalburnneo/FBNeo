@@ -14,17 +14,18 @@
 	</header>
 	<game name="19neunzehnj" cloneof="19neunzehn" romof="19neunzehn">
 		<description>19 - Neunzehn (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Soft Pro</manufacturer>
 		<rom name="19 - Neunzehn (Japan).fds" size="131016" crc="e6e06610"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="19neunzehn" romof="fdsbios">
+		<comment>Hack</comment>
 		<description>19 - Neunzehn (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988-2015</year>
+		<manufacturer>MrRichard999</manufacturer>
 		<rom name="19 - Neunzehn (T-Eng).fds" size="131000" crc="da11432a"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -32,8 +33,8 @@
 	</game>
 	<game name="adiannotsue" romof="fdsbios">
 		<description>Adian no Tsue (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1986</year>
+		<manufacturer>Sunsoft</manufacturer>
 		<rom name="Adian no Tsue (Japan).fds" size="131000" crc="dcc7a8d6"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -354,8 +355,8 @@
 	</game>
 	<game name="drcha" romof="fdsbios">
 		<description>Dr. Chaos - Jigoku no Tobira (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="Dr. Chaos - Jigoku no Tobira (Japan).fds" size="131000" crc="7954bd8f"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -363,8 +364,8 @@
 	</game>
 	<game name="dracuii" romof="fdsbios">
 		<description>Dracula II - Noroi no Fuuin (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Konami</manufacturer>
 		<rom name="Dracula II - Noroi no Fuuin (Japan).fds" size="131016" crc="2d1ec77c"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -372,8 +373,8 @@
 	</game>
 	<game name="druid" romof="fdsbios">
 		<description>Druid - Kyoufu no Tobira (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Jaleco</manufacturer>
 		<rom name="Druid - Kyoufu no Tobira (Japan).fds" size="131016" crc="b5d4e955"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -381,8 +382,8 @@
 	</game>
 	<game name="eggerland" romof="fdsbios">
 		<description>Egger Land (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>HAL Laboratory</manufacturer>
 		<rom name="Egger Land (Japan).fds" size="131016" crc="84f75912"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -390,8 +391,8 @@
 	</game>
 	<game name="eggerlansouenota" romof="fdsbios">
 		<description>Egger Land - Souzouhe no Tabidachi (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>HAL Laboratory</manufacturer>
 		<rom name="Egger Land - Souzouhe no Tabidachi (Japan).fds" size="131016" crc="2441b3b9"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -399,17 +400,18 @@
 	</game>
 	<game name="electrician1" cloneof="electrician" romof="electrician">
 		<description>Electrician (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1986</year>
+		<manufacturer>Kemco</manufacturer>
 		<rom name="Electrician (Japan).fds" size="131016" crc="9c37e289"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="electrician" romof="fdsbios">
+		<comment>Hack</comment>
 		<description>Electrician (T-eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1986-2001</year>
+		<manufacturer>King Mike</manufacturer>
 		<rom name="Electrician (T-eng).fds" size="131016" crc="4aa51f48"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -417,17 +419,18 @@
 	</game>
 	<game name="esperdreamj" cloneof="esperdream" romof="esperdream">
 		<description>Esper Dream (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Konami</manufacturer>
 		<rom name="Esper Dream (Japan).fds" size="131000" crc="1d40f83f"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="esperdream" romof="fdsbios">
+		<comment>Hack</comment>
 		<description>Esper Dream (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987-2003</year>
+		<manufacturer>Mute</manufacturer>
 		<rom name="Esper Dream (T-Eng).fds" size="131000" crc="51d8c9f1"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -435,8 +438,8 @@
 	</game>
 	<game name="excitsoc" romof="fdsbios">
 		<description>Exciting Soccer - Konami Cup (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Konami</manufacturer>
 		<rom name="Exciting Soccer - Konami Cup (Japan).fds" size="131016" crc="43ccd4ba"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -444,8 +447,8 @@
 	</game>
 	<game name="fairypin" romof="fdsbios">
 		<description>Fairy Pinball - Yousei Tachi no Pinball (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Hacker International</manufacturer>
 		<rom name="Fairy Pinball - Yousei Tachi no Pinball (Japan).fds" size="131016" crc="1ce10f77"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -453,8 +456,8 @@
 	</game>
 	<game name="falsion" romof="fdsbios">
 		<description>Falsion (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Konami</manufacturer>
 		<rom name="Falsion (Japan).fds" size="131016" crc="398bc9dc"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -462,7 +465,7 @@
 	</game>
 	<game name="famicgrapri" romof="fdsbios">
 		<description>Famicom Grand Prix - F1 Race (Japan)</description>
-		<year>1989?</year>
+		<year>1987</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Famicom Grand Prix - F1 Race (Japan).fds" size="131016" crc="7040bf35"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
@@ -471,7 +474,7 @@
 	</game>
 	<game name="famicgrapriii" romof="fdsbios">
 		<description>Famicom Grand Prix II - 3D Hot Rally (Japan)</description>
-		<year>1989?</year>
+		<year>1988</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Famicom Grand Prix II - 3D Hot Rally (Japan).fds" size="131016" crc="012267d8"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
@@ -480,8 +483,8 @@
 	</game>
 	<game name="famimdisvol1" romof="fdsbios">
 		<description>Famimaga Disk Vol. 1 - Hong Kong (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Tokuma Shoten</manufacturer>
 		<rom name="Famimaga Disk Vol. 1 - Hong Kong (Japan).fds" size="65516" crc="c6f69987"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -489,8 +492,8 @@
 	</game>
 	<game name="famimdisvol2" romof="fdsbios">
 		<description>Famimaga Disk Vol. 2 - Panic Space (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Tokuma Shoten</manufacturer>
 		<rom name="Famimaga Disk Vol. 2 - Panic Space (Japan).fds" size="131016" crc="1274645d"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -498,8 +501,8 @@
 	</game>
 	<game name="famimdisvol3" romof="fdsbios">
 		<description>Famimaga Disk Vol. 3 - All 1 (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1991</year>
+		<manufacturer>Tokuma Shoten</manufacturer>
 		<rom name="Famimaga Disk Vol. 3 - All 1 (Japan).fds" size="65516" crc="936c8017"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -507,8 +510,8 @@
 	</game>
 	<game name="famimdisvol4" romof="fdsbios">
 		<description>Famimaga Disk Vol. 4 - Clox (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1991</year>
+		<manufacturer>Tokuma Shoten</manufacturer>
 		<rom name="Famimaga Disk Vol. 4 - Clox (Japan).fds" size="65516" crc="e46ffd9b"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -516,8 +519,8 @@
 	</game>
 	<game name="famimdisvol5" romof="fdsbios">
 		<description>Famimaga Disk Vol. 5 - Puyo Puyo (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1991</year>
+		<manufacturer>Tokuma Shoten</manufacturer>
 		<rom name="Famimaga Disk Vol. 5 - Puyo Puyo (Japan).fds" size="131016" crc="e84c7927"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -525,8 +528,8 @@
 	</game>
 	<game name="famimdisvol6" romof="fdsbios">
 		<description>Famimaga Disk Vol. 6 - Janken Disk Jou (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1992</year>
+		<manufacturer>Tokuma Shoten</manufacturer>
 		<rom name="Famimaga Disk Vol. 6 - Janken Disk Jou (Japan).fds" size="131016" crc="251ddeaa"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -543,8 +546,8 @@
 	</game>
 	<game name="finalcom" romof="fdsbios">
 		<description>Final Command - Akai Yousai (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Konami</manufacturer>
 		<rom name="Final Command - Akai Yousai (Japan).fds" size="131016" crc="b89d5131"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -552,8 +555,8 @@
 	</game>
 	<game name="firebam" romof="fdsbios">
 		<description>Fire Bam (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>HAL Laboratory</manufacturer>
 		<rom name="Fire Bam (Japan).fds" size="131016" crc="9e5c5ede"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -561,8 +564,8 @@
 	</game>
 	<game name="firerock" romof="fdsbios">
 		<description>Fire Rock (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>System Sacom</manufacturer>
 		<rom name="Fire Rock (Japan).fds" size="131016" crc="e44c7313"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -570,8 +573,8 @@
 	</game>
 	<game name="fuuunshoken" romof="fdsbios">
 		<description>Fuuun Shourin Ken (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Jaleco</manufacturer>
 		<rom name="Fuuun Shourin Ken (Japan).fds" size="131016" crc="b5b75934"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -579,8 +582,8 @@
 	</game>
 	<game name="galaga" romof="fdsbios">
 		<description>Galaga (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Namco</manufacturer>
 		<rom name="Galaga (Japan).fds" size="65516" crc="a9ba7801"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -588,8 +591,8 @@
 	</game>
 	<game name="galaxian" romof="fdsbios">
 		<description>Galaxian (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Namco</manufacturer>
 		<rom name="Galaxian (Japan).fds" size="65516" crc="429169f5"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>

@@ -4284,7 +4284,7 @@
 		<description>Dungeons &amp; Doomknights (HB)</description>
 		<year>2021</year>
 		<manufacturer>Artix Entertainment</manufacturer>
-		<rom name="Dungeons &amp; Doomknights (2021)(Artix Ent.).nes" size="524304" crc="456fa82a"/>
+		<rom name="Dungeons &amp; Doomknights (2021)(Artix Ent.).nes" size="524304" crc="d4e96569"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -15374,6 +15374,15 @@
 		<year>1990</year>
 		<manufacturer>FCI</manufacturer>
 		<rom name="WCW World Championship Wrestling (USA).nes" size="262160" crc="7434dc82"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="weedstiff2">
+		<comment>Homebrew</comment>
+		<description>Weed N' Stiff 2 Bobsons Revenge (HB)</description>
+		<year>2021</year>
+		<manufacturer>CalGames</manufacturer>
+		<rom name="Weed N' Stiff 2 Bobsons Revenge (2021)(CalGames).nes" size="524304" crc="8fd50f91"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

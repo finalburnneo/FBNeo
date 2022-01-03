@@ -28,11 +28,8 @@ typedef union {
 
 // Libogc doesn't have intrinsics or ASM macros defined for this
 //#if defined(HW_RVL) || defined(GEKKO)
-//#define __sthbrx(base,index,value)      \
-//        __asm__ volatile ("sthbrx       %0,%1,%2" : : "r"(value), "b%"(index), "r"(base) : "memory")
-//
-//#define __stwbrx(base,index,value)      \
-//        __asm__ volatile ("stwbrx       %0,%1,%2" : : "r"(value), "b%"(index), "r"(base) : "memory")
+//#define __sthbrx(base,index,value) __asm__ volatile ("sthbrx       %0,%1,%2" : : "r"(value), "b%"(index), "r"(base) : "memory")
+//#define __stwbrx(base,index,value) __asm__ volatile ("stwbrx       %0,%1,%2" : : "r"(value), "b%"(index), "r"(base) : "memory")
 //#endif
 
 // Xbox 360

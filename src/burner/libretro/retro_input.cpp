@@ -389,10 +389,19 @@ static inline int CinpJoyAxis(int port, int axis)
 
 static inline void CinpDirectCoord(int port, int axis)
 {
-	UINT16 val = (0x7FFF + input_cb_wrapper(port, nDeviceType[port], 0, sAxiBinds[port][axis].id));
-	INT32 width, height;
-	BurnDrvGetVisibleSize(&width, &height);
-	pointerValues[port][axis] = (INT32)((axis == 0 ? width : height) * (double(val)/double(0x10000)));
+	INT32 val = (0x7FFF + input_cb_wrapper(port, nDeviceType[port], 0, sAxiBinds[port][axis].id));
+	if (val == -1)
+	{
+		// we are offscreen and should force coords at 0,0
+		pointerValues[port][0] = 0;
+		pointerValues[port][1] = 0;
+	}
+	else
+	{
+		INT32 width, height;
+		BurnDrvGetVisibleSize(&width, &height);
+		pointerValues[port][axis] = (INT32)((axis == 0 ? width : height) * (double(val)/double(0x10000)));
+	}
 	BurnGunSetCoords(((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES ? 0 : port), pointerValues[port][0], pointerValues[port][1]);
 }
 

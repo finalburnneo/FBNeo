@@ -1542,7 +1542,7 @@ STD_ROM_FN(Spec128)
 
 struct BurnDriver BurnSpecSpectrumBIOS = {
 	"spec_spectrum", NULL, NULL, NULL, "1984",
-	"ZX Spectrum\0", "BIOS Only", "Sinclair Research Limited", "ZX Spectrum",
+	"ZX Spectrum BIOS\0", "BIOS Only", "Sinclair Research Limited", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_BOARDROM, 0, HARDWARE_SPECTRUM, GBF_BIOS, 0,
 	SpectrumGetZipName, SpectrumRomInfo, SpectrumRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1552,7 +1552,7 @@ struct BurnDriver BurnSpecSpectrumBIOS = {
 
 struct BurnDriver BurnSpecSpectrum = {
 	"spec_spec48k", NULL, NULL, NULL, "1984",
-	"ZX Spectrum\0", NULL, "Sinclair Research Limited", "ZX Spectrum",
+	"ZX Spectrum 48k\0", NULL, "Sinclair Research Limited", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpectrumRomInfo, SpectrumRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1562,7 +1562,7 @@ struct BurnDriver BurnSpecSpectrum = {
 
 struct BurnDriver BurnSpecSpec128BIOS = {
 	"spec_spec128", NULL, NULL, NULL, "1984",
-	"ZX Spectrum 128\0", "BIOS Only", "Sinclair Research Limited", "ZX Spectrum",
+	"ZX Spectrum 128 BIOS\0", "BIOS Only", "Sinclair Research Limited", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_BOARDROM, 0, HARDWARE_SPECTRUM, GBF_BIOS, 0,
 	SpectrumGetZipName, Spec128RomInfo, Spec128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1572,7 +1572,7 @@ struct BurnDriver BurnSpecSpec128BIOS = {
 
 struct BurnDriver BurnSpecSpec128 = {
 	"spec_spec128k", NULL, NULL, NULL, "1984",
-	"ZX Spectrum 128\0", NULL, "Sinclair Research Limited", "ZX Spectrum",
+	"ZX Spectrum 128k\0", NULL, "Sinclair Research Limited", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, Spec128RomInfo, Spec128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -24840,25 +24840,6 @@ struct BurnDriver BurnSpecJillysfarm1 = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_PUZZLE, 0,
 	SpectrumGetZipName, SpecJillysfarm1RomInfo, SpecJillysfarm1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 288, 224, 4, 3
-};
-
-// Magenta Jim (128K) (HB)
-
-static struct BurnRomInfo SpecMagentajimRomDesc[] = {
-	{ "Magenta Jim (2020)(Gaz Marshall).tap", 23797, 0x1fee648d, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(SpecMagentajim, SpecMagentajim, Spec128)
-STD_ROM_FN(SpecMagentajim)
-
-struct BurnDriver BurnSpecMagentajim = {
-	"spec_magentajim", NULL, "spec_spec128", NULL, "2020",
-	"Magenta Jim (128K) (HB)\0", NULL, "Gaz Marshall", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MAZE | GBF_ACTION, 0,
-	SpectrumGetZipName, SpecMagentajimRomInfo, SpecMagentajimRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

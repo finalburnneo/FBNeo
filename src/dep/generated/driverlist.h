@@ -8621,8 +8621,8 @@ DRV		BurnDrvnes_maniacmanunc;
 DRV		BurnDrvpce_maniacpw;
 DRV		BurnDrvManiacsqa;
 DRV		BurnDrvManiacsq;
-DRV		BurnDrvManiacsp;
 DRV		BurnDrvManiacsqu;
+DRV		BurnDrvManiacsp;
 DRV		BurnSpecmminer;
 DRV		BurnDrvMSX_manicminer;
 DRV		BurnSpecmminersp;
@@ -19630,7 +19630,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfds_bigchagogobo,	// Big Challenge! Go! Go! Bowling (Japan)
 	&BurnDrvfds_bigchagunfig,	// Big Challenge! Gun Fighter (Japan)
 	&BurnDrvfds_bigchajuusen,	// Big Challenge! Juudou Senshuken (Japan)
-	&BurnDrvBigkarnk,			// Big Karnak
+	&BurnDrvBigkarnk,			// Big Karnak (ver. 1.0, checksum 1e38c94)
 	&BurnDrvnes_bignosfreout,	// Big Nose Freaks Out (USA)
 	&BurnDrvnes_bignoscav,		// Big Nose the Caveman (USA)
 	&BurnSpecBignoseamericanadv,// Big Nose's American Adventure (48K)
@@ -19668,10 +19668,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_biomirbokupa,	// Bio Miracle Bokutte Upa (Japan)
 	&BurnDrvnes_biosendan,		// Bio Senshi Dan - Increaser Tono Tatakai (Japan)
 	&BurnDrvBioship,			// Bio-ship Paladin
-	&BurnDrvBiomtoyc,			// Biomechanical Toy (Ver. 1.0.1870)
-	&BurnDrvBiomtoyb,			// Biomechanical Toy (Ver. 1.0.1878)
-	&BurnDrvBiomtoya,			// Biomechanical Toy (Ver. 1.0.1884)
-	&BurnDrvBiomtoy,			// Biomechanical Toy (Ver. 1.0.1885)
+	&BurnDrvBiomtoyc,			// Biomechanical Toy (ver. 1.0.1870, checksum ba682195)
+	&BurnDrvBiomtoyb,			// Biomechanical Toy (ver. 1.0.1878, checksum d84b28ff)
+	&BurnDrvBiomtoya,			// Biomechanical Toy (ver. 1.0.1884, checksum 3f316c70)
+	&BurnDrvBiomtoy,			// Biomechanical Toy (ver. 1.0.1885, checksum 69f5e032)
 	&BurnDrvngpc_biomotor,		// BioMotor Unitron (Euro, USA)
 	&BurnDrvngpc_biomotorj,		// BioMotor Unitron (Jpn)
 	&BurnSpecbionicc,			// Bionic Commando (128K)
@@ -19684,7 +19684,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_bionicom,		// Bionic Commando - Return of Hitler (Hack)
 	&BurnDrvbioniccbl,			// Bionic Commandos (bootleg, set 1)
 	&BurnDrvbioniccbl2,			// Bionic Commandos (bootleg, set 2)
-	&BurnDrvBioplayc,			// Bioplaything Cop (Ver. 1.0.1823, prototype)
+	&BurnDrvBioplayc,			// Bioplaything Cop (ver. 1.0.1823, checksum cd960fc9, prototype)
 	&BurnDrvMSX_birdchairs,		// Bird & Chairs (HB)
 	&BurnDrvnes_birdweek,		// Bird Week (Japan)
 	&BurnDrvBirdtrya,			// Birdie Try (Japan revision 2)
@@ -20807,7 +20807,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBerabohm,			// Chou Zetsurinjin Berabowman (Japan, Rev C)
 	&BurnDrvLegionjb,			// Chouji Meikyuu Legion (Japan ver 1.05, bootleg)
 	&BurnDrvLegionj,			// Chouji Meikyuu Legion (Japan ver 1.05, set 1)
-	&BurnDrvLegionj2,			// Chouji Meikyuu Legion (Japan ver 1.05, set 2)
+	&BurnDrvLegionj2,			// Chouji Meikyuu Legion (Japan ver 1.05, set 2) [fail ROM checksum test, NOT WORKING]
 	&BurnDrvnes_choujyou,		// Choujikuu Yousai - Macross (Japan)
 	&BurnDrvMSX_macross,		// Choujikuu Yousai Macross (Jpn)
 	&BurnDrvMSX_macrossa,		// Choujikuu Yousai Macross (Jpn, Alt)
@@ -26173,7 +26173,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvLastfortk,			// Last Fortress - Toride (Korea)
 	&BurnDrvlasthope,			// Last Hope (bootleg AES to MVS conversion, no coin support)
 	&BurnDrvlhcdb,				// Last Hope CD Beta (Neo CD conversion)
-	&BurnDrvLastkm,				// Last KM (Ver 1.0.0275)
+	&BurnDrvLastkm,				// Last KM (ver 1.0.0275, checksum 13bff751, prototype)
 	&BurnDrvLastmsnj,			// Last Mission (Japan)
 	&BurnDrvMSX_lastmission,	// Last Mission (Spanish)
 	&BurnDrvLastmsnu5,			// Last Mission (US revision 5)
@@ -26739,8 +26739,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_maniacpw,		// Maniac Pro Wres - Asu e no Tatakai
 	&BurnDrvManiacsqa,			// Maniac Square (protected, Version 1.0, Checksum CF2D)
 	&BurnDrvManiacsq,			// Maniac Square (protected, Version 1.0, Checksum DEEE)
-	&BurnDrvManiacsp,			// Maniac Square (prototype)
 	&BurnDrvManiacsqu,			// Maniac Square (unprotected, Version 1.0, Checksum BB73)
+	&BurnDrvManiacsp,			// Maniac Square (ver 1.0, checksum b602, prototype)
 	&BurnSpecmminer,			// Manic Miner (Bug-Byte Software) (48K)
 	&BurnDrvMSX_manicminer,		// Manic Miner (Euro)
 	&BurnSpecmminersp,			// Manic Miner (Software Projects) (48K)
@@ -32039,7 +32039,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecSquares,			// Squares (128K) (HB)
 	&BurnDrvcv_squares,			// Squares! (HB)
 	&BurnDrvSquaitsa,			// Squash (Itisa)
-	&BurnDrvSquash,				// Squash (Ver. 1.0)
+	&BurnDrvSquash,				// Squash (ver. 1.0, checksum 015aef61)
 	&BurnDrvnes_squashed,		// Squashed (USA) (Proto)
 	&BurnDrvmd_squirrel,		// Squirrel King (Chi)
 	&BurnDrvcv_squishem,		// Squish 'em Sam!
@@ -34233,7 +34233,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_tfox,			// Thunder Fox (USA)
 	&BurnDrvThundfox,			// Thunder Fox (World)
 	&BurnDrvTheroes,			// Thunder Heroes
-	&BurnDrvThoop,				// Thunder Hoop (Ver. 1)
+	&BurnDrvThoop,				// Thunder Hoop (ver. 1, checksum 02a09f7d)
 	&BurnDrvmd_tpwres,			// Thunder Pro Wrestling Retsuden (Jpn)
 	&BurnDrvmd_tpwresen,		// Thunder Pro Wrestling Story (Hack, English)
 	&BurnDrvnes_thunderwarrior,	// Thunder Warrior (Asia) (Unl)

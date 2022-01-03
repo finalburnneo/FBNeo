@@ -844,7 +844,7 @@
 		<description>Angels (128K) (HB)</description>
 		<year>2021</year>
 		<manufacturer>Zosya Entertainment</manufacturer>
-		<rom name="Angels 128K (2021)(Zosya Ent.).tap" size="85647" crc="535ade9c"/>
+		<rom name="Angels 128K (2021)(Zosya Ent.).tap" size="85647" crc="6e928666"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

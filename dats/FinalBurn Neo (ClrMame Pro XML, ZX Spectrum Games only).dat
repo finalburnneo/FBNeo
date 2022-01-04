@@ -3634,7 +3634,7 @@
 		<description>Cyclus - Part 2 (128K) (HB)</description>
 		<year>2021</year>
 		<manufacturer>Miguetelo</manufacturer>
-		<rom name="Cyclus Part 2 (2021)(Miguetelo).tap" size="44231" crc="e6437901"/>
+		<rom name="Cyclus Part 2 (2021)(Miguetelo).tap" size="44007" crc="534ecbe7"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -6067,7 +6067,7 @@
 		<description>Get Out Of Mars (128K) (HB)</description>
 		<year>2021</year>
 		<manufacturer>Noentiendo</manufacturer>
-		<rom name="Get Out Of Mars (2021)(Noentiendo).tap" size="69762" crc="d1275e4e"/>
+		<rom name="Get Out Of Mars (2021)(Noentiendo).tap" size="69762" crc="c699ac83"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -14921,7 +14921,7 @@
 		<description>TJ Cavern Capers (128K) (HB)</description>
 		<year>2021</year>
 		<manufacturer>Gaz Marshall</manufacturer>
-		<rom name="TJ Cavern Capers (2021)(Gaz Marshall).tap" size="27355" crc="03b6b2bb"/>
+		<rom name="TJ Cavern Capers (2021)(Gaz Marshall).tap" size="27335" crc="7c3e2ab9"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

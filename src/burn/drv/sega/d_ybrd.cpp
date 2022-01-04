@@ -432,11 +432,11 @@ static struct BurnDIPInfo RchaseDIPList[]=
 	{0x0e, 0x01, 0x03, 0x02, "2 Coins 1 Credit"                   },
 	{0x0e, 0x01, 0x03, 0x03, "1 Coins 1 Credit"                   },
 	
-	{0   , 0xfe, 0   , 2   , "Coin #1 mulitplier"                 },
+	{0   , 0xfe, 0   , 2   , "Coin #1 multiplier"                 },
 	{0x0e, 0x01, 0x04, 0x04, "x1"                                 },
 	{0x0e, 0x01, 0x04, 0x00, "x2"                                 },
 	
-	{0   , 0xfe, 0   , 4   , "Coin #2 mulitplier"                 },
+	{0   , 0xfe, 0   , 4   , "Coin #2 multiplier"                 },
 	{0x0e, 0x01, 0x18, 0x18, "x1"                                 },
 	{0x0e, 0x01, 0x18, 0x10, "x4"                                 },
 	{0x0e, 0x01, 0x18, 0x08, "x5"                                 },

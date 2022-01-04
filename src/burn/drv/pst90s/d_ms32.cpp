@@ -1552,6 +1552,8 @@ static INT32 CommonInit(UINT32 bg_addrxor, UINT32 bg_dataxor, UINT32 tx_addrxor,
 
 	input_is_mahjong = (BurnDrvGetGenreFlags() == GBF_MAHJONG) ? 1 : 0;
 
+	memset(DrvNVRAM, 0xff, 0x8000);
+
 	DrvDoReset();
 
 	return 0;

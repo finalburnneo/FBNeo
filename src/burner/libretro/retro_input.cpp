@@ -389,10 +389,11 @@ static inline int CinpJoyAxis(int port, int axis)
 
 static inline void CinpDirectCoord(int port, int axis)
 {
-	INT32 val = (0x7FFF + input_cb_wrapper(port, nDeviceType[port], 0, sAxiBinds[port][axis].id));
-	if (val == -1)
+	INT32 is_offscreen = (nDeviceType[port] == RETRO_DEVICE_LIGHTGUN ? input_cb_wrapper(port, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_IS_OFFSCREEN) : 0);
+	INT32 val = input_cb_wrapper(port, nDeviceType[port], 0, sAxiBinds[port][axis].id) + 0x7fff;
+	if (val == -1 || is_offscreen == 1)
 	{
-		// we are offscreen and should force coords at 0,0
+		// we are offscreen and should force coords at (0,0)
 		pointerValues[port][0] = 0;
 		pointerValues[port][1] = 0;
 	}

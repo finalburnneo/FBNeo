@@ -3072,7 +3072,7 @@ STDROMPICKEXT(MSX_antarctk, MSX_antarctk, msx_msx)
 STD_ROM_FN(MSX_antarctk)
 
 struct BurnDriver BurnDrvMSX_antarctk = {
-	"msx_antarctk", "msx_antarct", "msx_msx", NULL, "19??",
+	"msx_antarctk", "msx_antarct", "msx_msx", NULL, "1984",
 	"Antarctic Adventure (Kor)\0", NULL, "Prosoft", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ACTION, 0,
@@ -3572,7 +3572,7 @@ STDROMPICKEXT(MSX_banana, MSX_banana, msx_msx)
 STD_ROM_FN(MSX_banana)
 
 struct BurnDriver BurnDrvMSX_banana = {
-	"msx_banana", NULL, "msx_msx", NULL, "19??",
+	"msx_banana", NULL, "msx_msx", NULL, "198?",
 	"Banana (Jpn)\0", NULL, "Studio GEN", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
@@ -3595,7 +3595,7 @@ struct BurnDriver BurnDrvMSX_bankp = {
 	"msx_bankp", NULL, "msx_msx", NULL, "1986",
 	"Bank Panic (Jpn)\0", NULL, "Pony Canyon", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_bankpRomInfo, MSX_bankpRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -3615,7 +3615,7 @@ struct BurnDriver BurnDrvMSX_bankpa = {
 	"msx_bankpa", "msx_bankp", "msx_msx", NULL, "1986",
 	"Bank Panic (Jpn, Alt)\0", NULL, "Pony Canyon", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_bankpaRomInfo, MSX_bankpaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -3632,10 +3632,10 @@ STDROMPICKEXT(MSX_bankpk, MSX_bankpk, msx_msx)
 STD_ROM_FN(MSX_bankpk)
 
 struct BurnDriver BurnDrvMSX_bankpk = {
-	"msx_bankpk", "msx_bankp", "msx_msx", NULL, "19??",
+	"msx_bankpk", "msx_bankp", "msx_msx", NULL, "198?",
 	"Bank Panic (Kor)\0", NULL, "Prosoft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_bankpkRomInfo, MSX_bankpkRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -3961,7 +3961,7 @@ struct BurnDriver BurnDrvMSX_blckonyx = {
 	272, 228, 4, 3
 };
 
-// The Black Onyx (English, v1.2)
+// The Black Onyx (T-Eng, v1.2)
 
 static struct BurnRomInfo MSX_blckonyxenRomDesc[] = {
 	{ "Black Onyx, The T-Eng v1.2 (2011)(Polaris).rom",	0x08000, 0xb97baccc, BRF_PRG | BRF_ESS },
@@ -3972,7 +3972,7 @@ STD_ROM_FN(MSX_blckonyxen)
 
 struct BurnDriver BurnDrvMSX_blckonyxen = {
 	"msx_blckonyxen", "msx_blckonyx", "msx_msx", NULL, "1985-2011",
-	"The Black Onyx (English, v1.2)\0", NULL, "ASCII - Polaris", "MSX",
+	"The Black Onyx (T-Eng, v1.2)\0", NULL, "Polaris", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_MSX, GBF_RPG, 0,
 	MSXGetZipName, MSX_blckonyxenRomInfo, MSX_blckonyxenRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
@@ -4630,7 +4630,7 @@ STD_ROM_FN(MSX_bullmigt)
 
 struct BurnDriver BurnDrvMSX_bullmigt = {
 	"msx_bullmigt", NULL, "msx_msx", NULL, "1986",
-	"Bull to Mighty Kiki Ippatsu (Jpn)\0", NULL, "HAL Kenkyuujo", "MSX",
+	"Buru to Marty Kikiippatsu - Inspecteur Z (Jpn)\0", NULL, "HAL Laboratory", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_bullmigtRomInfo, MSX_bullmigtRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -6092,7 +6092,7 @@ struct BurnDriver BurnDrvMSX_crazybul = {
 	"msx_crazybul", NULL, "msx_msx", NULL, "1983",
 	"Crazy Bullet (Jpn)\0", NULL, "ASCII", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_BASIC, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_BASIC, GBF_ACTION, 0,
 	MSXGetZipName, MSX_crazybulRomInfo, MSX_crazybulRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -6112,7 +6112,7 @@ struct BurnDriver BurnDrvMSX_crazycar = {
 	"msx_crazycar", NULL, "msx_msx", NULL, "1988",
 	"Crazy Cars (Euro)\0", NULL, "Titus", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_RACING, 0,
 	MSXGetZipName, MSX_crazycarRomInfo, MSX_crazycarRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -6130,9 +6130,9 @@ STD_ROM_FN(MSX_crazytrn)
 
 struct BurnDriver BurnDrvMSX_crazytrn = {
 	"msx_crazytrn", NULL, "msx_msx", NULL, "1983",
-	"Crazy Train (Jpn)\0", NULL, "Sony", "MSX",
+	"Crazy Train (Jpn)\0", NULL, "Sony - Konami", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_crazytrnRomInfo, MSX_crazytrnRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -6150,9 +6150,9 @@ STD_ROM_FN(MSX_crazytrna)
 
 struct BurnDriver BurnDrvMSX_crazytrna = {
 	"msx_crazytrna", "msx_crazytrn", "msx_msx", NULL, "1983",
-	"Crazy Train (Jpn, Alt)\0", NULL, "Sony", "MSX",
+	"Crazy Train (Jpn, Alt)\0", NULL, "Sony - Konami", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_crazytrnaRomInfo, MSX_crazytrnaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -6172,7 +6172,7 @@ struct BurnDriver BurnDrvMSX_crossblm = {
 	"msx_crossblm", NULL, "msx_msx", NULL, "1986",
 	"Cross Blaim (Jpn)\0", NULL, "dB-Soft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_CROSS_BLAIM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_CROSS_BLAIM, GBF_RUNGUN, 0,
 	MSXGetZipName, MSX_crossblmRomInfo, MSX_crossblmRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -6192,7 +6192,7 @@ struct BurnDriver BurnDrvMSX_crusader = {
 	"msx_crusader", NULL, "msx_msx", NULL, "1985",
 	"Crusader (Jpn)\0", NULL, "Pony Canyon", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_crusaderRomInfo, MSX_crusaderRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -6212,7 +6212,7 @@ struct BurnDriver BurnDrvMSX_crusadera = {
 	"msx_crusadera", "msx_crusader", "msx_msx", NULL, "1985",
 	"Crusader (Jpn, Alt)\0", NULL, "Pony Canyon", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_crusaderaRomInfo, MSX_crusaderaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -6232,7 +6232,7 @@ struct BurnDriver BurnDrvMSX_crusaderb = {
 	"msx_crusaderb", "msx_crusader", "msx_msx", NULL, "1985",
 	"Crusader (Jpn, Alt 2)\0", NULL, "Pony Canyon", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_crusaderbRomInfo, MSX_crusaderbRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -6249,10 +6249,10 @@ STDROMPICKEXT(MSX_crusaderk, MSX_crusaderk, msx_msx)
 STD_ROM_FN(MSX_crusaderk)
 
 struct BurnDriver BurnDrvMSX_crusaderk = {
-	"msx_crusaderk", "msx_crusader", "msx_msx", NULL, "198?",
+	"msx_crusaderk", "msx_crusader", "msx_msx", NULL, "1987",
 	"Crusader (Kor)\0", NULL, "Clover", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_crusaderkRomInfo, MSX_crusaderkRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -6369,7 +6369,7 @@ STDROMPICKEXT(MSX_ddayk, MSX_ddayk, msx_msx)
 STD_ROM_FN(MSX_ddayk)
 
 struct BurnDriver BurnDrvMSX_ddayk = {
-	"msx_ddayk", "msx_dday", "msx_msx", NULL, "198?",
+	"msx_ddayk", "msx_dday", "msx_msx", NULL, "1988",
 	"D-Day (Kor)\0", NULL, "San Ho", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_VERSHOOT, 0,
@@ -7209,7 +7209,7 @@ STDROMPICKEXT(MSX_exerionk, MSX_exerionk, msx_msx)
 STD_ROM_FN(MSX_exerionk)
 
 struct BurnDriver BurnDrvMSX_exerionk = {
-	"msx_exerionk", "msx_exerion", "msx_msx", NULL, "198?",
+	"msx_exerionk", "msx_exerion", "msx_msx", NULL, "1984",
 	"Exerion (Kor)\0", NULL, "Zemina", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_SHOOT, 0,
@@ -7409,7 +7409,7 @@ STDROMPICKEXT(MSX_f1spiritk, MSX_f1spiritk, msx_msx)
 STD_ROM_FN(MSX_f1spiritk)
 
 struct BurnDriver BurnDrvMSX_f1spiritk = {
-	"msx_f1spiritk", "msx_f1spirit", "msx_msx", NULL, "19??",
+	"msx_f1spiritk", "msx_f1spirit", "msx_msx", NULL, "1987",
 	"F-1 Spirit - The Way to Formula-1 (Kor)\0", NULL, "Zemina", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI_SCC, GBF_RACING, 0,
@@ -7499,7 +7499,7 @@ struct BurnDriver BurnDrvMSX_fairy = {
 };
 
 
-// The Fairyland Story (Jpn)
+// Fairyland Story, The (Jpn)
 
 static struct BurnRomInfo MSX_flstoryRomDesc[] = {
 	{ "fairy land story, the (japan).rom",	0x20000, 0x26e34f05, BRF_PRG | BRF_ESS },
@@ -7510,16 +7510,16 @@ STD_ROM_FN(MSX_flstory)
 
 struct BurnDriver BurnDrvMSX_flstory = {
 	"msx_flstory", NULL, "msx_msx", NULL, "1987",
-	"The Fairyland Story (Jpn)\0", NULL, "Hot-B", "MSX",
+	"Fairyland Story, The (Jpn)\0", NULL, "Hot-B", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII8, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII8, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_flstoryRomInfo, MSX_flstoryRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
 
-// The Fairyland Story (Jpn, Alt)
+// Fairyland Story, The (Jpn, Alt)
 
 static struct BurnRomInfo MSX_flstoryaRomDesc[] = {
 	{ "fairy land story, the (japan) (alt 1).rom",	0x20000, 0xc032376b, BRF_PRG | BRF_ESS },
@@ -7530,9 +7530,9 @@ STD_ROM_FN(MSX_flstorya)
 
 struct BurnDriver BurnDrvMSX_flstorya = {
 	"msx_flstorya", "msx_flstory", "msx_msx", NULL, "1987",
-	"The Fairyland Story (Jpn, Alt)\0", NULL, "Hot-B", "MSX",
+	"Fairyland Story, The (Jpn, Alt)\0", NULL, "Hot-B", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII8, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII8, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_flstoryaRomInfo, MSX_flstoryaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -7649,7 +7649,7 @@ STDROMPICKEXT(MSX_fzonek, MSX_fzonek, msx_msx)
 STD_ROM_FN(MSX_fzonek)
 
 struct BurnDriver BurnDrvMSX_fzonek = {
-	"msx_fzonek", "msx_fzone", "msx_msx", NULL, "19??",
+	"msx_fzonek", "msx_fzone", "msx_msx", NULL, "198?",
 	"Final Zone (Kor)\0", NULL, "Zemina", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI, GBF_RUNGUN, 0,
@@ -8458,7 +8458,7 @@ struct BurnDriver BurnDrvMSX_gomokunaa = {
 };
 
 
-// The Goonies (Jpn)
+// Goonies, The (Jpn)
 
 static struct BurnRomInfo MSX_gooniesRomDesc[] = {
 	{ "goonies, the (japan).rom",	0x08000, 0xdb327847, BRF_PRG | BRF_ESS },
@@ -8469,7 +8469,7 @@ STD_ROM_FN(MSX_goonies)
 
 struct BurnDriver BurnDrvMSX_goonies = {
 	"msx_goonies", NULL, "msx_msx", NULL, "1986",
-	"The Goonies (Jpn)\0", NULL, "Konami", "MSX",
+	"Goonies, The (Jpn)\0", NULL, "Konami", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PLATFORM | GBF_ADV, 0,
 	MSXGetZipName, MSX_gooniesRomInfo, MSX_gooniesRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -8478,7 +8478,7 @@ struct BurnDriver BurnDrvMSX_goonies = {
 };
 
 
-// The Goonies (Jpn, Alt)
+// Goonies, The (Jpn, Alt)
 
 static struct BurnRomInfo MSX_gooniesaRomDesc[] = {
 	{ "goonies, the (japan) (alt 1).rom",	0x08000, 0xc6445f82, BRF_PRG | BRF_ESS },
@@ -8489,7 +8489,7 @@ STD_ROM_FN(MSX_gooniesa)
 
 struct BurnDriver BurnDrvMSX_gooniesa = {
 	"msx_gooniesa", "msx_goonies", "msx_msx", NULL, "1986",
-	"The Goonies (Jpn, Alt)\0", NULL, "Konami", "MSX",
+	"Goonies, The (Jpn, Alt)\0", NULL, "Konami", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_PLATFORM | GBF_ADV, 0,
 	MSXGetZipName, MSX_gooniesaRomInfo, MSX_gooniesaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -8498,7 +8498,7 @@ struct BurnDriver BurnDrvMSX_gooniesa = {
 };
 
 
-// The Goonies (Jpn, Alt 2)
+// Goonies, The (Jpn, Alt 2)
 
 static struct BurnRomInfo MSX_gooniesbRomDesc[] = {
 	{ "goonies, the (japan) (alt 2).rom",	0x08000, 0x38f04741, BRF_PRG | BRF_ESS },
@@ -8509,7 +8509,7 @@ STD_ROM_FN(MSX_gooniesb)
 
 struct BurnDriver BurnDrvMSX_gooniesb = {
 	"msx_gooniesb", "msx_goonies", "msx_msx", NULL, "1986",
-	"The Goonies (Jpn, Alt 2)\0", NULL, "Konami", "MSX",
+	"Goonies, The (Jpn, Alt 2)\0", NULL, "Konami", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_PLATFORM | GBF_ADV, 0,
 	MSXGetZipName, MSX_gooniesbRomInfo, MSX_gooniesbRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -8729,7 +8729,7 @@ STD_ROM_FN(MSX_gulkavek)
 
 struct BurnDriver BurnDrvMSX_gulkavek = {
 	"msx_gulkavek", "msx_gulkave", "msx_msx", NULL, "198?",
-	"Gulkave (Kor)\0", NULL, "ProSoft", "MSX",
+	"Gulkave (Kor)\0", NULL, "Prosoft", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_HORSHOOT, 0,
 	MSXGetZipName, MSX_gulkavekRomInfo, MSX_gulkavekRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -8929,7 +8929,7 @@ STD_ROM_FN(MSX_harapeko)
 
 struct BurnDriver BurnDrvMSX_harapeko = {
 	"msx_harapeko", NULL, "msx_msx", NULL, "1984",
-	"Harapeko Pakkun (Jpn)\0", "Press 0 to restart level", "ASCII", "MSX",
+	"Harapeko Pakkun (Jpn)\0", "Press '0' to restart level", "ASCII", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_harapekoRomInfo, MSX_harapekoRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJapanJoyCursorDIPInfo,
@@ -9488,7 +9488,7 @@ STDROMPICKEXT(MSX_hypersp2k, MSX_hypersp2k, msx_msx)
 STD_ROM_FN(MSX_hypersp2k)
 
 struct BurnDriver BurnDrvMSX_hypersp2k = {
-	"msx_hypersp2k", "msx_hypersp2", "msx_msx", NULL, "198?",
+	"msx_hypersp2k", "msx_hypersp2", "msx_msx", NULL, "1986",
 	"Hyper Sports 2 (Kor)\0", NULL, "Topia", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_SPORTSMISC, 0,
@@ -10231,8 +10231,8 @@ struct BurnDriver BurnDrvMSX_kinnikum = {
 	"msx_kinnikum", NULL, "msx_msx", NULL, "1985",
 	"Kinnikuman - Colosseum Deathmatch (Jpn)\0", NULL, "Bandai", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_kinnikumRomInfo, MSX_kinnikumRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_VSFIGHT, 0,
+	MSXGetZipName, MSX_kinnikumRomInfo, MSX_kinnikumRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJapanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -10251,8 +10251,8 @@ struct BurnDriver BurnDrvMSX_kinnikuma = {
 	"msx_kinnikuma", "msx_kinnikum", "msx_msx", NULL, "1985",
 	"Kinnikuman - Colosseum Deathmatch (Jpn, Alt)\0", NULL, "Bandai", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_kinnikumaRomInfo, MSX_kinnikumaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_VSFIGHT, 0,
+	MSXGetZipName, MSX_kinnikumaRomInfo, MSX_kinnikumaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJapanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -10271,8 +10271,8 @@ struct BurnDriver BurnDrvMSX_kinnikumk = {
 	"msx_kinnikumk", "msx_kinnikum", "msx_msx", NULL, "198?",
 	"Kinnikuman - Colosseum Deathmatch (Kor)\0", NULL, "San Ho", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_kinnikumkRomInfo, MSX_kinnikumkRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_VSFIGHT, 0,
+	MSXGetZipName, MSX_kinnikumkRomInfo, MSX_kinnikumkRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJapanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -10751,7 +10751,7 @@ struct BurnDriver BurnDrvMSX_mjdojo = {
 	"msx_mjdojo", NULL, "msx_msx", NULL, "1984",
 	"Mahjong Dojo (Jpn)\0", NULL, "Konami", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_MAHJONG, 0,
 	MSXGetZipName, MSX_mjdojoRomInfo, MSX_mjdojoRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -10771,7 +10771,7 @@ struct BurnDriver BurnDrvMSX_pingpong = {
 	"msx_pingpong", NULL, "msx_msx", NULL, "1985",
 	"Konami's Ping-Pong (Jpn)\0", NULL, "Konami", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_SPORTSMISC, 0,
 	MSXGetZipName, MSX_pingpongRomInfo, MSX_pingpongRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -10791,7 +10791,7 @@ struct BurnDriver BurnDrvMSX_pingponga = {
 	"msx_pingponga", "msx_pingpong", "msx_msx", NULL, "1985",
 	"Konami's Ping-Pong (Jpn, Alt)\0", NULL, "Konami", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_SPORTSMISC, 0,
 	MSXGetZipName, MSX_pingpongaRomInfo, MSX_pingpongaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -10811,7 +10811,7 @@ struct BurnDriver BurnDrvMSX_pingpongb = {
 	"msx_pingpongb", "msx_pingpong", "msx_msx", NULL, "1985",
 	"Konami's Ping-Pong (Jpn, Alt 2)\0", NULL, "Konami", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_SPORTSMISC, 0,
 	MSXGetZipName, MSX_pingpongbRomInfo, MSX_pingpongbRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -10831,7 +10831,7 @@ struct BurnDriver BurnDrvMSX_pingpongc = {
 	"msx_pingpongc", "msx_pingpong", "msx_msx", NULL, "1985",
 	"Konami's Ping-Pong (Jpn, Alt 3)\0", NULL, "Konami", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_SPORTSMISC, 0,
 	MSXGetZipName, MSX_pingpongcRomInfo, MSX_pingpongcRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -10851,7 +10851,7 @@ struct BurnDriver BurnDrvMSX_pingpongk = {
 	"msx_pingpongk", "msx_pingpong", "msx_msx", NULL, "198?",
 	"Konami's Ping-Pong (Kor)\0", NULL, "Zemina", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_SPORTSMISC, 0,
 	MSXGetZipName, MSX_pingpongkRomInfo, MSX_pingpongkRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -10988,7 +10988,7 @@ STDROMPICKEXT(MSX_kontennk, MSX_kontennk, msx_msx)
 STD_ROM_FN(MSX_kontennk)
 
 struct BurnDriver BurnDrvMSX_kontennk = {
-	"msx_kontennk", "msx_kontenn", "msx_msx", NULL, "19??",
+	"msx_kontennk", "msx_kontenn", "msx_msx", NULL, "198?",
 	"Konami's Tennis (Kor)\0", NULL, "Prosoft", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_SPORTSMISC, 0,
@@ -11011,7 +11011,7 @@ struct BurnDriver BurnDrvMSX_koneko = {
 	"msx_koneko", NULL, "msx_msx", NULL, "1986",
 	"Koneko no Daibouken - Chibi-chan ga Iku (Jpn)\0", NULL, "Casio", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_konekoRomInfo, MSX_konekoRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -11331,7 +11331,7 @@ struct BurnDriver BurnDrvMSX_mgunjoe = {
 	"msx_mgunjoe", NULL, "msx_msx", NULL, "1984",
 	"Machinegun Joe vs The Mafia (Jpn)\0", NULL, "Hudson Soft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_MAZE | GBF_SHOOT, 0,
 	MSXGetZipName, MSX_mgunjoeRomInfo, MSX_mgunjoeRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -11351,7 +11351,7 @@ struct BurnDriver BurnDrvMSX_macross = {
 	"msx_macross", NULL, "msx_msx", NULL, "1985",
 	"Choujikuu Yousai Macross (Jpn)\0", NULL, "Bothtec", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_HORSHOOT, 0,
 	MSXGetZipName, MSX_macrossRomInfo, MSX_macrossRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -11371,7 +11371,7 @@ struct BurnDriver BurnDrvMSX_macrossa = {
 	"msx_macrossa", "msx_macross", "msx_msx", NULL, "1985",
 	"Choujikuu Yousai Macross (Jpn, Alt)\0", NULL, "Bothtec", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_HORSHOOT, 0,
 	MSXGetZipName, MSX_macrossaRomInfo, MSX_macrossaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -11531,7 +11531,7 @@ struct BurnDriver BurnDrvMSX_manes = {
 	"msx_manes", NULL, "msx_msx", NULL, "1984",
 	"Manes (Jpn)\0", NULL, "ASCII", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_manesRomInfo, MSX_manesRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -11551,7 +11551,7 @@ struct BurnDriver BurnDrvMSX_manesa = {
 	"msx_manesa", "msx_manes", "msx_msx", NULL, "1984",
 	"Manes (Jpn, Alt)\0", NULL, "ASCII", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_manesaRomInfo, MSX_manesaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -11571,7 +11571,7 @@ struct BurnDriver BurnDrvMSX_manesb = {
 	"msx_manesb", "msx_manes", "msx_msx", NULL, "1984",
 	"Manes (Jpn, Alt 2)\0", NULL, "ASCII", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_manesbRomInfo, MSX_manesbRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -11591,7 +11591,7 @@ struct BurnDriver BurnDrvMSX_mappy = {
 	"msx_mappy", NULL, "msx_msx", NULL, "1984",
 	"Mappy (Jpn)\0", NULL, "Namcot", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_mappyRomInfo, MSX_mappyRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -11611,7 +11611,7 @@ struct BurnDriver BurnDrvMSX_mappya = {
 	"msx_mappya", "msx_mappy", "msx_msx", NULL, "1984",
 	"Mappy (Jpn, Alt)\0", NULL, "Namcot", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_mappyaRomInfo, MSX_mappyaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -11631,7 +11631,7 @@ struct BurnDriver BurnDrvMSX_mappyb = {
 	"msx_mappyb", "msx_mappy", "msx_msx", NULL, "1984",
 	"Mappy (Jpn, Alt 2)\0", NULL, "Namcot", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_mappybRomInfo, MSX_mappybRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -11651,12 +11651,11 @@ struct BurnDriver BurnDrvMSX_marinbat = {
 	"msx_marinbat", NULL, "msx_msx", NULL, "1983",
 	"Marine Battle (Jpn)\0", NULL, "ASCII", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_BASIC, GBF_MISC, 0,
-	MSXGetZipName, MSX_marinbatRomInfo, MSX_marinbatRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_BASIC, GBF_ACTION, 0,
+	MSXGetZipName, MSX_marinbatRomInfo, MSX_marinbatRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
-
 
 // Mashou no Yakata - Gabalin (Jpn)
 
@@ -11669,14 +11668,13 @@ STD_ROM_FN(MSX_gabalin)
 
 struct BurnDriver BurnDrvMSX_gabalin = {
 	"msx_gabalin", NULL, "msx_msx", NULL, "1987",
-	"Mashou no Yakata - Goblin (Jpn)\0", NULL, "Pony Canyon", "MSX",
+	"Mashou no Yakata - Gabalin (Jpn)\0", NULL, "Pony Canyon", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION | GBF_ADV, 0,
 	MSXGetZipName, MSX_gabalinRomInfo, MSX_gabalinRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
-
 
 // Mashou no Yakata - Gabalin (Jpn, Alt)
 
@@ -11691,12 +11689,30 @@ struct BurnDriver BurnDrvMSX_gabalina = {
 	"msx_gabalina", "msx_gabalin", "msx_msx", NULL, "1987",
 	"Mashou no Yakata - Gabalin (Jpn, Alt)\0", NULL, "Pony Canyon", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ACTION | GBF_ADV, 0,
 	MSXGetZipName, MSX_gabalinaRomInfo, MSX_gabalinaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
+// Mashou no Yakata - Gabalin (T-Eng)
+
+static struct BurnRomInfo MSX_gabalinenRomDesc[] = {
+	{ " Mashou no Yakata Gabalin T-Eng (2008)(Pony Canyon - hap and Zan).rom",	0x10000, 0xcb766c4a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_gabalinen, MSX_gabalinen, msx_msx)
+STD_ROM_FN(MSX_gabalinen)
+
+struct BurnDriver BurnDrvMSX_gabalinen = {
+	"msx_gabalinen", "msx_gabalin", "msx_msx", NULL, "1987-2008",
+	"Evil Mansion - Goblin (T-Eng)\0", NULL, "hap & Zan", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_MSX, GBF_ACTION | GBF_ADV, 0,
+	MSXGetZipName, MSX_gabalinenRomInfo, MSX_gabalinenRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
 
 // Megalopolis SOS (Jpn)
 
@@ -11716,7 +11732,6 @@ struct BurnDriver BurnDrvMSX_megalsos = {
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
-
 
 // Megalopolis SOS (Jpn, Alt)
 
@@ -12991,7 +13006,7 @@ struct BurnDriver BurnDrvMSX_ninja2 = {
 	"msx_ninja2", "msx_iganinp2", "msx_msx", NULL, "198?",
 	"Ninja II (Kor)\0", NULL, "Zemina", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_ninja2RomInfo, MSX_ninja2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -13011,7 +13026,7 @@ struct BurnDriver BurnDrvMSX_ninjajaj = {
 	"msx_ninjajaj", NULL, "msx_msx", NULL, "1986",
 	"Ninja Jajamaru-kun (Jpn)\0", NULL, "Jaleco", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_ninjajajRomInfo, MSX_ninjajajRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -13028,10 +13043,10 @@ STDROMPICKEXT(MSX_ninjajajk, MSX_ninjajajk, msx_msx)
 STD_ROM_FN(MSX_ninjajajk)
 
 struct BurnDriver BurnDrvMSX_ninjajajk = {
-	"msx_ninjajajk", "msx_ninjajaj", "msx_msx", NULL, "19??",
+	"msx_ninjajajk", "msx_ninjajaj", "msx_msx", NULL, "1986",
 	"Ninja Jajamaru-kun (Kor)\0", NULL, "Prosoft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_ninjajajkRomInfo, MSX_ninjajajkRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -13598,7 +13613,7 @@ struct BurnDriver BurnDrvMSX_pegasus = {
 };
 
 
-// Penguin Adventure (Euro) ~ Yume Tairiku Adventure (Jpn)
+// Penguin Adventure (Euro) - Yume Tairiku Adventure (Jpn)
 
 static struct BurnRomInfo MSX_pengadvRomDesc[] = {
 	{ "penguin adventure (japan, europe).rom",	0x20000, 0x0f6418d3, BRF_PRG | BRF_ESS },
@@ -13609,9 +13624,9 @@ STD_ROM_FN(MSX_pengadv)
 
 struct BurnDriver BurnDrvMSX_pengadv = {
 	"msx_pengadv", NULL, "msx_msx", NULL, "1986",
-	"Penguin Adventure (Euro) ~ Yume Tairiku Adventure (Jpn)\0", NULL, "Konami", "MSX",
+	"Penguin Adventure (Euro) - Yume Tairiku Adventure (Jpn)\0", NULL, "Konami", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI, GBF_ACTION, 0,
 	MSXGetZipName, MSX_pengadvRomInfo, MSX_pengadvRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -13629,9 +13644,9 @@ STD_ROM_FN(MSX_pengadvk1)
 
 struct BurnDriver BurnDrvMSX_pengadvk1 = {
 	"msx_pengadvk1", "msx_pengadv", "msx_msx", NULL, "1987",
-	"Yume Tairiku Adventure (Kor, Zemina)\0", NULL, "Zemina", "MSX",
+	"Penguin Adventure - Yume Tairiku Adventure (Kor, Zemina)\0", NULL, "Zemina", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI, GBF_ACTION, 0,
 	MSXGetZipName, MSX_pengadvk1RomInfo, MSX_pengadvk1RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -13649,9 +13664,9 @@ STD_ROM_FN(MSX_pengadvk2)
 
 struct BurnDriver BurnDrvMSX_pengadvk2 = {
 	"msx_pengadvk2", "msx_pengadv", "msx_msx", NULL, "1988",
-	"Yume Tairiku Adventure (Kor, Screen Software)\0", NULL, "Screen Software", "MSX",
+	"Penguin Adventure - Yume Tairiku Adventure (Kor, Screen)\0", NULL, "Screen Software", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI, GBF_ACTION, 0,
 	MSXGetZipName, MSX_pengadvk2RomInfo, MSX_pengadvk2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -13671,7 +13686,7 @@ struct BurnDriver BurnDrvMSX_penguinw = {
 	"msx_penguinw", NULL, "msx_msx", NULL, "1985",
 	"Penguin-kun Wars (Jpn)\0", NULL, "ASCII", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_penguinwRomInfo, MSX_penguinwRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -13688,10 +13703,10 @@ STDROMPICKEXT(MSX_penguinwk, MSX_penguinwk, msx_msx)
 STD_ROM_FN(MSX_penguinwk)
 
 struct BurnDriver BurnDrvMSX_penguinwk = {
-	"msx_penguinwk", "msx_penguinw", "msx_msx", NULL, "19??",
+	"msx_penguinwk", "msx_penguinw", "msx_msx", NULL, "198?",
 	"Penguin-kun Wars (Kor)\0", NULL, "Prosoft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_penguinwkRomInfo, MSX_penguinwkRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -14051,14 +14066,14 @@ struct BurnDriver BurnDrvMSX_playball = {
 	"msx_playball", NULL, "msx_msx", NULL, "1986",
 	"Play Ball (Jpn)\0", NULL, "Sony", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_SPORTSMISC, 0,
 	MSXGetZipName, MSX_playballRomInfo, MSX_playballRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
 
-// The Police Story (Jpn)
+// Jackie Chan in The Police Story (Jpn)
 
 static struct BurnRomInfo MSX_policestRomDesc[] = {
 	{ "police story, the (japan).rom",	0x08000, 0x7867d044, BRF_PRG | BRF_ESS },
@@ -14069,16 +14084,16 @@ STD_ROM_FN(MSX_policest)
 
 struct BurnDriver BurnDrvMSX_policest = {
 	"msx_policest", NULL, "msx_msx", NULL, "1986",
-	"The Police Story (Jpn)\0", NULL, "Pony Canyon", "MSX",
+	"Jackie Chan in The Police Story (Jpn)\0", NULL, "Pony Canyon", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_policestRomInfo, MSX_policestRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
 
-// The Police Story (Jpn, Alt)
+// Jackie Chan in The Police Story (Jpn, Alt)
 
 static struct BurnRomInfo MSX_policestaRomDesc[] = {
 	{ "police story, the (japan) (alt 1).rom",	0x08000, 0xe4554b51, BRF_PRG | BRF_ESS },
@@ -14089,9 +14104,9 @@ STD_ROM_FN(MSX_policesta)
 
 struct BurnDriver BurnDrvMSX_policesta = {
 	"msx_policesta", "msx_policest", "msx_msx", NULL, "1986",
-	"The Police Story (Jpn, Alt)\0", NULL, "Pony Canyon", "MSX",
+	"Jackie Chan in The Police Story (Jpn, Alt)\0", NULL, "Pony Canyon", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_policestaRomInfo, MSX_policestaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -14111,7 +14126,7 @@ struct BurnDriver BurnDrvMSX_pooyan = {
 	"msx_pooyan", NULL, "msx_msx", NULL, "1985",
 	"Pooyan (Jpn)\0", NULL, "Hudson Soft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_pooyanRomInfo, MSX_pooyanRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -14131,7 +14146,7 @@ struct BurnDriver BurnDrvMSX_poppaq = {
 	"msx_poppaq", NULL, "msx_msx", NULL, "1984",
 	"Poppaq the Fish (Jpn)\0", NULL, "ASCII", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_poppaqRomInfo, MSX_poppaqRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -14151,14 +14166,14 @@ struct BurnDriver BurnDrvMSX_poppaqk = {
 	"msx_poppaqk", "msx_poppaq", "msx_msx", NULL, "1986",
 	"Poppaq the Fish (Kor)\0", NULL, "Boram Soft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_poppaqkRomInfo, MSX_poppaqkRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
 
-// The Price of Magik (Euro)
+// Price of Magik, The (Euro)
 
 static struct BurnRomInfo MSX_pricemagRomDesc[] = {
 	{ "price of magik, the (europe).rom",	0x10000, 0xb43e7881, BRF_PRG | BRF_ESS },
@@ -14169,9 +14184,9 @@ STD_ROM_FN(MSX_pricemag)
 
 struct BurnDriver BurnDrvMSX_pricemag = {
 	"msx_pricemag", NULL, "msx_msx", NULL, "1986",
-	"The Price of Magik (Euro)\0", NULL, "Level 9 Computing", "MSX",
+	"Price of Magik, The (Euro)\0", NULL, "Level 9 Computing", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_ADV, 0,
 	MSXGetZipName, MSX_pricemagRomInfo, MSX_pricemagRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -14191,14 +14206,14 @@ struct BurnDriver BurnDrvMSX_profbb = {
 	"msx_profbb", NULL, "msx_msx", NULL, "1986",
 	"Professional Baseball (Jpn)\0", NULL, "Technopolis Soft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_profbbRomInfo, MSX_profbbRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_SPORTSMISC, 0,
+	MSXGetZipName, MSX_profbbRomInfo, MSX_profbbRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJapanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
 
-// The Protector (Jpn)
+// Jackie Chan in The Protector (Jpn)
 
 static struct BurnRomInfo MSX_protectrRomDesc[] = {
 	{ "protector, the (japan).rom",	0x04000, 0x5747e69d, BRF_PRG | BRF_ESS },
@@ -14209,16 +14224,16 @@ STD_ROM_FN(MSX_protectr)
 
 struct BurnDriver BurnDrvMSX_protectr = {
 	"msx_protectr", NULL, "msx_msx", NULL, "1985",
-	"The Protector (Jpn)\0", NULL, "Pony Canyon", "MSX",
+	"Jackie Chan in The Protector (Jpn)\0", NULL, "Pony Canyon", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_protectrRomInfo, MSX_protectrRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
 
-// Puznic
+// Puznic (Kor)
 
 static struct BurnRomInfo MSX_puznicRomDesc[] = {
 	{ "puznic.rom",	0x08000, 0xac28fa71, BRF_PRG | BRF_ESS },
@@ -14229,9 +14244,9 @@ STD_ROM_FN(MSX_puznic)
 
 struct BurnDriver BurnDrvMSX_puznic = {
 	"msx_puznic", NULL, "msx_msx", NULL, "1990",
-	"Puznic\0", NULL, "Zemina", "MSX",
+	"Puznic (Kor)\0", NULL, "Zemina", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_puznicRomInfo, MSX_puznicRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -14251,7 +14266,7 @@ struct BurnDriver BurnDrvMSX_puzpanic = {
 	"msx_puzpanic", NULL, "msx_msx", NULL, "1986",
 	"Puzzle Panic (Jpn)\0", NULL, "System Soft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_puzpanicRomInfo, MSX_puzpanicRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -14271,7 +14286,7 @@ struct BurnDriver BurnDrvMSX_pyramidw = {
 	"msx_pyramidw", NULL, "msx_msx", NULL, "1983",
 	"Pyramid Warp (Jpn)\0", NULL, "T&E Soft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_MAZE | GBF_ACTION, 0,
 	MSXGetZipName, MSX_pyramidwRomInfo, MSX_pyramidwRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -14291,7 +14306,7 @@ struct BurnDriver BurnDrvMSX_qbert = {
 	"msx_qbert", NULL, "msx_msx", NULL, "1986",
 	"Q*bert (Jpn)\0", NULL, "Konami", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_qbertRomInfo, MSX_qbertRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -14311,7 +14326,7 @@ struct BurnDriver BurnDrvMSX_qberta = {
 	"msx_qberta", "msx_qbert", "msx_msx", NULL, "1986",
 	"Q*bert (Jpn, Alt)\0", NULL, "Konami", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_qbertaRomInfo, MSX_qbertaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -15128,7 +15143,7 @@ STDROMPICKEXT(MSX_seikachok, MSX_seikachok, msx_msx)
 STD_ROM_FN(MSX_seikachok)
 
 struct BurnDriver BurnDrvMSX_seikachok = {
-	"msx_seikachok", "msx_seikacho", "msx_msx", NULL, "198?",
+	"msx_seikachok", "msx_seikacho", "msx_msx", NULL, "1987",
 	"Kung Fu Master - Seiken Achou (Kor)\0", NULL, "Clover", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_SCRFIGHT, 0,
@@ -15278,7 +15293,7 @@ struct BurnDriver BurnDrvMSX_skicommk1 = {
 };
 
 
-// Ski Command (Kor, ProSoft)
+// Ski Command (Kor, Prosoft)
 
 static struct BurnRomInfo MSX_skicommk2RomDesc[] = {
 	{ "skicommb.rom",	0x08000, 0xa0276799, BRF_PRG | BRF_ESS },
@@ -15289,7 +15304,7 @@ STD_ROM_FN(MSX_skicommk2)
 
 struct BurnDriver BurnDrvMSX_skicommk2 = {
 	"msx_skicommk2", "msx_skicomm", "msx_msx", NULL, "198?",
-	"Ski Command (Kor, ProSoft)\0", NULL, "ProSoft", "MSX",
+	"Ski Command (Kor, Prosoft)\0", NULL, "Prosoft", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_SHOOT, 0,
 	MSXGetZipName, MSX_skicommk2RomInfo, MSX_skicommk2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -16358,7 +16373,7 @@ struct BurnDriver BurnDrvMSX_suppachi = {
 };
 
 
-// Super Penguin
+// Super Penguin (Kor)
 
 static struct BurnRomInfo MSX_spenguinRomDesc[] = {
 	{ "sieco_superpenguin_(sieco).rom",	0x08000, 0x0555a6e9, BRF_PRG | BRF_ESS },
@@ -16369,9 +16384,9 @@ STD_ROM_FN(MSX_spenguin)
 
 struct BurnDriver BurnDrvMSX_spenguin = {
 	"msx_spenguin", NULL, "msx_msx", NULL, "198?",
-	"Super Penguin\0", NULL, "Sieco", "MSX",
+	"Super Penguin (Kor)\0", NULL, "Sieco", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_spenguinRomInfo, MSX_spenguinRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -16671,7 +16686,7 @@ struct BurnDriver BurnDrvMSX_takeru = {
 	"msx_takeru", NULL, "msx_msx", NULL, "1987",
 	"Takeru Densetsu (Jpn)\0", NULL, "Brother Kougyou", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_takeruRomInfo, MSX_takeruRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -17058,7 +17073,7 @@ struct BurnDriver BurnDrvMSX_thexderb = {
 };
 
 
-// The Three Dragon Story (Kor)
+// Three Dragon Story, The (Kor)
 
 static struct BurnRomInfo MSX_3dragonRomDesc[] = {
 	{ "thrdrsto.rom",	0x08000, 0xf052e5fb, BRF_PRG | BRF_ESS },
@@ -17069,9 +17084,9 @@ STD_ROM_FN(MSX_3dragon)
 
 struct BurnDriver BurnDrvMSX_3dragon = {
 	"msx_3dragon", NULL, "msx_msx", NULL, "1989",
-	"The Three Dragon Story (Kor)\0", NULL, "Zemina", "MSX",
+	"Three Dragon Story, The (Kor)\0", NULL, "Zemina", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_VERSHOOT, 0,
 	MSXGetZipName, MSX_3dragonRomInfo, MSX_3dragonRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -17278,7 +17293,7 @@ struct BurnDriver BurnDrvMSX_topzip = {
 };
 
 
-// The Tower of Druaga (Jpn)
+// Tower of Druaga, The (Jpn)
 
 static struct BurnRomInfo MSX_druagaRomDesc[] = {
 	{ "tower of druaga, the (japan).rom",	0x08000, 0x47bef309, BRF_PRG | BRF_ESS },
@@ -17289,7 +17304,7 @@ STD_ROM_FN(MSX_druaga)
 
 struct BurnDriver BurnDrvMSX_druaga = {
 	"msx_druaga", NULL, "msx_msx", NULL, "1986",
-	"The Tower of Druaga (Jpn)\0", NULL, "Namcot", "MSX",
+	"Tower of Druaga, The (Jpn)\0", NULL, "Namcot", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_MAZE | GBF_ACTION, 0,
 	MSXGetZipName, MSX_druagaRomInfo, MSX_druagaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -18850,7 +18865,7 @@ STD_ROM_FN(MSX_shmup)
 
 struct BurnDriver BurnDrvMSX_shmup = {
 	"msx_shmup11", NULL, "msx_msx", NULL, "2013",
-	"Shmup! (HB, v1.1)\0", NULL, "IMANOK", "MSX",
+	"Shmup! (HB, v1.1)\0", NULL, "Imanok", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_MSX, GBF_VERSHOOT, 0,
 	MSXGetZipName, MSX_shmupRomInfo, MSX_shmupRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -18926,7 +18941,7 @@ STD_ROM_FN(MSX_heroesarena)
 
 struct BurnDriver BurnDrvMSX_heroesarena = {
 	"msx_heroesarena", NULL, "msx_msx", NULL, "2010",
-	"Heroes Arena (HB)\0", NULL, "IMANOK", "MSX",
+	"Heroes Arena (HB)\0", NULL, "Imanok", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_MSX, GBF_BALLPADDLE, 0,
 	MSXGetZipName, MSX_heroesarenaRomInfo, MSX_heroesarenaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -18983,7 +18998,7 @@ STD_ROM_FN(MSX_straycat)
 
 struct BurnDriver BurnDrvMSX_straycat = {
 	"msx_straycat", NULL, "msx_msx", NULL, "2009",
-	"Stray Cat (HB)\0", NULL, "IMANOK", "MSX",
+	"Stray Cat (HB)\0", NULL, "Imanok", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_straycatRomInfo, MSX_straycatRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -19097,9 +19112,9 @@ STD_ROM_FN(MSX_txupi)
 
 struct BurnDriver BurnDrvMSX_txupi = {
 	"msx_txupi", NULL, "msx_msx", NULL, "2007",
-	"Txupinazo! (HB)\0", NULL, "IMANOK", "MSX",
+	"Txupinazo! (HB)\0", NULL, "Imanok", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_txupiRomInfo, MSX_txupiRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -19118,7 +19133,7 @@ struct BurnDriver BurnDrvMSX_pengmind = {
 	"msx_pengmind", NULL, "msx_msx", NULL, "2007",
 	"Penguin Mind (HB)\0", NULL, "MSX Cafe", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_pengmindRomInfo, MSX_pengmindRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursorDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -19613,7 +19628,7 @@ struct BurnDriver BurnDrvMSX_smzoom = {
 	"msx_smzoom", NULL, "msx_msx", NULL, "2005",
 	"Saimazoom (HB)\0", NULL, "Karoshi Corporation", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_smzoomRomInfo, MSX_smzoomRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -20087,7 +20102,7 @@ STD_ROM_FN(MSX_kobashi)
 
 struct BurnDriver BurnDrvMSX_kobashi = {
 	"msx_kobashi", NULL, "msx_msx", NULL, "2004",
-	"Kobashi (HB)\0", "Uses joyport #2", "Desire in Envy", "MSX",
+	"Kobashi (HB)\0", NULL, "Desire in Envy", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_kobashiRomInfo, MSX_kobashiRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
@@ -20144,7 +20159,7 @@ STD_ROM_FN(MSX_happyfret)
 
 struct BurnDriver BurnDrvMSX_happyfret = {
 	"msx_happyfret", NULL, "msx_msx", NULL, "1985",
-	"Happy Fret (Jpn)\0", "Uses joyport #2", "Micro Cabin", "MSX",
+	"Happy Fret (Jpn)\0", NULL, "Micro Cabin", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_happyfretRomInfo, MSX_happyfretRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
@@ -21516,8 +21531,8 @@ struct BurnDriver BurnDrvMSX_smackwac = {
 	"msx_smackwac", NULL, "msx_msx", NULL, "1986",
 	"Smack Wacker (Euro)\0", NULL, "Eaglesoft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_smackwacRomInfo, MSX_smackwacRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_smackwacRomInfo, MSX_smackwacRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -21535,13 +21550,13 @@ struct BurnDriver BurnDrvMSX_skydiver = {
 	"msx_skydiver", NULL, "msx_msx", NULL, "1984",
 	"Sky Diver (Jpn)\0", NULL, "Hudson Soft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_skydiverRomInfo, MSX_skydiverRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
-// Skull Exilon (Spa)
+// Skull Exilon (Spanish)
 
 static struct BurnRomInfo MSX_skulexilRomDesc[] = {
 	{ "skull exilon (1988)(iber soft)(es)[aka safari x][run'cas-'].cas",	0x077e7, 0xec4e2be2, BRF_PRG | BRF_ESS },
@@ -21750,7 +21765,7 @@ struct BurnDriver BurnDrvMSX_rescatl = {
 	272, 228, 4, 3
 };
 
-// Rath-Tha (Spa)
+// Rath-Tha (Spanish)
 
 static struct BurnRomInfo MSX_raththaRomDesc[] = {
 	{ "rath-tha (1989)(positive)(es)[run'cas-'].cas",	0x0e2ef, 0xd804222d, BRF_PRG | BRF_ESS },
@@ -21769,7 +21784,7 @@ struct BurnDriver BurnDrvMSX_raththa = {
 	272, 228, 4, 3
 };
 
-// R.A.M. (Spa)
+// R.A.M. (Spanish)
 
 static struct BurnRomInfo MSX_ramRomDesc[] = {
 	{ "r.a.m. (1990)(topo soft)(es)[run'cas-'].cas",	0x10158, 0x497462cc, BRF_PRG | BRF_ESS },
@@ -21801,7 +21816,7 @@ struct BurnDriver BurnDrvMSX_psyched = {
 	"msx_psyched", NULL, "msx_msx", NULL, "1984",
 	"Psychedelia (Euro)\0", NULL, "Aackosoft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_DEMO, 1, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_psychedRomInfo, MSX_psychedRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -21820,7 +21835,7 @@ struct BurnDriver BurnDrvMSX_polstar = {
 	"msx_polstar", NULL, "msx_msx", NULL, "1984",
 	"Polar Star (Jpn)\0", NULL, "Micro Cabin", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_SHOOT, 0,
 	MSXGetZipName, MSX_polstarRomInfo, MSX_polstarRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasCloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -21839,7 +21854,7 @@ struct BurnDriver BurnDrvMSX_pharaoh = {
 	"msx_pharaoh", NULL, "msx_msx", NULL, "1988",
 	"Pharaoh's Revenge (Euro)\0", NULL, "Eurosoft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_MAZE, 0,
 	MSXGetZipName, MSX_pharaohRomInfo, MSX_pharaohRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -21859,7 +21874,7 @@ struct BurnDriver BurnDrvMSX_pacmania = {
 	"msx_pacmania", NULL, "msx_msx", NULL, "1988",
 	"Pac-Mania (Euro)\0", NULL, "Grandslam Entertainments", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_MAZE | GBF_ACTION, 0,
 	MSXGetZipName, MSX_pacmaniaRomInfo, MSX_pacmaniaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -21876,15 +21891,15 @@ STD_ROM_FN(MSX_outroyd)
 
 struct BurnDriver BurnDrvMSX_outroyd = {
 	"msx_outroyd", NULL, "msx_msx", NULL, "1985",
-	"Outroyd (Jpn)\0", NULL, "Magical Zoo", "MSX",
+	"Outroyd (Jpn)\0", "Set 'KEYBD' to use controller", "Magical Zoo", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_outroydRomInfo, MSX_outroydRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION | GBF_ADV, 0,
+	MSXGetZipName, MSX_outroydRomInfo, MSX_outroydRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
 	CasCloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
-// Obliterator (Spa)
+// Obliterator (Spanish)
 
 static struct BurnRomInfo MSX_obliterRomDesc[] = {
 	{ "obliterator (1989)(dro soft)(es)[run'cas-'].cas",	0x0e297, 0xe9653411, BRF_PRG | BRF_ESS },
@@ -22152,7 +22167,7 @@ struct BurnDriver BurnDrvMSX_lic2kill = {
 	272, 228, 4, 3
 };
 
-// Whopper Chase (Spa)
+// Whopper Chase (Spanish)
 
 static struct BurnRomInfo MSX_whopperRomDesc[] = {
 	{ "whopper chase (1987)(erbe software)(es)[run'cas-'][martos].cas",	0x08f43, 0x7c28051b, BRF_PRG | BRF_ESS },
@@ -22184,13 +22199,13 @@ struct BurnDriver BurnDrvMSX_klax = {
 	"msx_klax", NULL, "msx_msx", NULL, "1990",
 	"Klax (Euro)\0", NULL, "Domark", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_klaxRomInfo, MSX_klaxRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
-// King Leonard (Spa)
+// King Leonard (Spanish)
 
 static struct BurnRomInfo MSX_kingleonRomDesc[] = {
 	{ "king leonard (1986)(mind games espana)(es)[bload'cas-',r].cas",	0x09a87, 0x0f752c47, BRF_PRG | BRF_ESS },
@@ -22201,7 +22216,7 @@ STD_ROM_FN(MSX_kingleon)
 
 struct BurnDriver BurnDrvMSX_kingleon = {
 	"msx_kingleon", NULL, "msx_msx", NULL, "1986",
-	"King Leonard (Spanish)\0", NULL, "Mind Games Espa??a", "MSX",
+	"King Leonard (Spanish)\0", NULL, "Mind Games Espana", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_kingleonRomInfo, MSX_kingleonRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -23543,7 +23558,7 @@ struct BurnDriver BurnDrvMSX_barb = {
 };
 
 
-// Barbarian II - The Dungeon of Drax (Spa)
+// Barbarian II - The Dungeon of Drax (Euro)
 
 static struct BurnRomInfo MSX_barb2RomDesc[] = {
 	{ "barbarian ii - the dungeon of drax (1988)(erbe software)(es)[run'cas-'].cas",	0x1e162, 0xd557cf7a, BRF_PRG | BRF_ESS },
@@ -23554,7 +23569,7 @@ STD_ROM_FN(MSX_barb2)
 
 struct BurnDriver BurnDrvMSX_barb2 = {
 	"msx_barb2", NULL, "msx_msx", NULL, "1988",
-	"Barbarian II - The Dungeon of Drax (Spanish)\0", NULL, "Erbe Software", "MSX",
+	"Barbarian II - The Dungeon of Drax (Euro)\0", NULL, "Palace Software", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_SCRFIGHT, 0,
 	MSXGetZipName, MSX_barb2RomInfo, MSX_barb2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXKeyClickDIPInfo,
@@ -23706,7 +23721,7 @@ STD_ROM_FN(MSX_inspecteurz)
 
 struct BurnDriver BurnDrvMSX_inspecteurz = {
 	"msx_inspecteurz", "msx_bullmigt", "msx_msx", NULL, "1986",
-	"Buru to Marty Kikiippatsu - Inspecteur Z\0", NULL, "HAL Laboratory", "MSX",
+	"Buru to Marty Kikiippatsu - Inspecteur Z (English)\0", NULL, "HAL Laboratory", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_inspecteurzRomInfo, MSX_inspecteurzRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -25398,7 +25413,7 @@ struct BurnDriver BurnDrvMSX_zmazingo = {
 	"msx_zmazingo", NULL, "msx_msx", NULL, "2018",
 	"Z - Mazin Go (HB)\0", NULL, "Cobinee", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_zmazingoRomInfo, MSX_zmazingoRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -26991,10 +27006,10 @@ STDROMPICKEXT(MSX_melodyparty, MSX_melodyparty, msx_msx)
 STD_ROM_FN(MSX_melodyparty)
 
 struct BurnDriver BurnDrvMSX_melodyparty = {
-	"msx_melodyparty", NULL, "msx_msx", NULL, "2020",
+	"msx_melodyparty", "msx_melodypartyex", "msx_msx", NULL, "2020",
 	"Melody Party (HB)\0", NULL, "Moai King", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_melodypartyRomInfo, MSX_melodypartyRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -27590,7 +27605,7 @@ struct BurnDriver BurnDrvMSX_animland = {
 	272, 228, 4, 3
 };
 
-// Borfes and the Five Demons (English)
+// Borfes and the Five Demons (T-Eng)
 
 static struct BurnRomInfo MSX_borfeseRomDesc[] = {
 	{ "Borfesu (English) (1987)(XtalSoft).rom",	131072, 0xf2f2f0c8, BRF_PRG | BRF_ESS },
@@ -27601,15 +27616,15 @@ STD_ROM_FN(MSX_borfese)
 
 struct BurnDriver BurnDrvMSX_borfese = {
 	"msx_borfese", "msx_borfes", "msx_msx", NULL, "1987-2008",
-	"Borfes and the Five Demons (English)\0", "English translation by hap", "XtalSoft", "MSX",
+	"Borfes and the Five Demons (T-Eng)\0", NULL, "hap", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_RPG, 0,
 	MSXGetZipName, MSX_borfeseRomInfo, MSX_borfeseRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
-// Comando Tracer (Spa)
+// Comando Tracer (Spanish)
 
 static struct BurnRomInfo MSX_cotracerRomDesc[] = {
 	{ "Comando Tracer (1989)(Dinamic).rom",	131072, 0xc876b802, BRF_PRG | BRF_ESS },
@@ -27647,7 +27662,7 @@ struct BurnDriver BurnDrvMSX_masters = {
 	272, 228, 4, 3
 };
 
-// Mole (English)
+// Mole (T-Eng)
 
 static struct BurnRomInfo MSX_moleeRomDesc[] = {
 	{ "Mole (English) (1983).rom",	16384, 0x5ffea0ad, BRF_PRG | BRF_ESS },
@@ -27658,9 +27673,9 @@ STD_ROM_FN(MSX_molee)
 
 struct BurnDriver BurnDrvMSX_molee = {
 	"msx_molee", "msx_mole", "msx_msx", NULL, "1983-2016",
-	"Mole (English)\0", NULL, "ASCII Corp. - gdx", "MSX",
+	"Mole (T-Eng)\0", NULL, "GDX", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_moleeRomInfo, MSX_moleeRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -30807,5 +30822,179 @@ struct BurnDriver BurnDrvMSX_northnsouth = {
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_STRATEGY | GBF_ACTION, 0,
 	MSXGetZipName, MSX_northnsouthRomInfo, MSX_northnsouthRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXEuropeDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// 3D Knockout (Euro)
+
+static struct BurnRomInfo MSX_3dknockoutRomDesc[] = {
+	{ "3D Knockout (1985)(Alligata).rom",	32768, 0xed706601, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_3dknockout, MSX_3dknockout, msx_msx)
+STD_ROM_FN(MSX_3dknockout)
+
+struct BurnDriver BurnDrvMSX_3dknockout = {
+	"msx_3dknockout", NULL, "msx_msx", NULL, "1985",
+	"3D Knockout (Euro)\0", NULL, "Alligata", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_VSFIGHT, 0,
+	MSXGetZipName, MSX_3dknockoutRomInfo, MSX_3dknockoutRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Budokan (Euro)
+
+static struct BurnRomInfo MSX_budokanRomDesc[] = {
+	{ "Budokan (1991)(Dro Soft)(Side A)[RUN'CAS-'].cas",	14473, 0xec823423, BRF_PRG | BRF_ESS },
+	{ "Budokan (1991)(Dro Soft)(Side B)[RUN'CAS-'].cas",	71595, 0x56f5adf2, BRF_PRG | BRF_ESS },
+	{ "Budokan (1991)(Dro Soft)(Side C)[RUN'CAS-'].cas",	14473, 0x9b67a98f, BRF_PRG | BRF_ESS },
+	{ "Budokan (1991)(Dro Soft)(Side D)[RUN'CAS-'].cas",	79738, 0x7f30c4f3, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_budokan, MSX_budokan, msx_msx)
+STD_ROM_FN(MSX_budokan)
+
+struct BurnDriver BurnDrvMSX_budokan = {
+	"msx_budokan", NULL, "msx_msx", NULL, "1991",
+	"Budokan (Euro)\0", NULL, "Dro Soft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_VSFIGHT, 0,
+	MSXGetZipName, MSX_budokanRomInfo, MSX_budokanRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXEuropeDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Humphrey (Spanish)
+
+static struct BurnRomInfo MSX_humphreyRomDesc[] = {
+	{ "Humphrey ES (1988)(Zigurat Software)[RUN'CAS-'].cas",	75584, 0xb66c14fd, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_humphrey, MSX_humphrey, msx_msx)
+STD_ROM_FN(MSX_humphrey)
+
+struct BurnDriver BurnDrvMSX_humphrey = {
+	"msx_humphrey", NULL, "msx_msx", NULL, "1988",
+	"Humphrey (Spanish)\0", NULL, "Zigurat Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_humphreyRomInfo, MSX_humphreyRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Lift (HB)
+
+static struct BurnRomInfo MSX_liftRomDesc[] = {
+	{ "Lift (2021)(Inufuto).rom",	8192, 0x1f12d963, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_lift, MSX_lift, msx_msx)
+STD_ROM_FN(MSX_lift)
+
+struct BurnDriver BurnDrvMSX_lift = {
+	"msx_lift", NULL, "msx_msx", NULL, "2021",
+	"Lift (HB)\0", NULL, "Inufuto", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_liftRomInfo, MSX_liftRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Mazy (HB)
+
+static struct BurnRomInfo MSX_mazyRomDesc[] = {
+	{ "Mazy (Inufuto)(2021).rom",	8192, 0x7bd27e36, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_mazy, MSX_mazy, msx_msx)
+STD_ROM_FN(MSX_mazy)
+
+struct BurnDriver BurnDrvMSX_mazy = {
+	"msx_mazy", NULL, "msx_msx", NULL, "2021",
+	"Mazy (HB)\0", NULL, "Inufuto", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MAZE | GBF_ACTION, 0,
+	MSXGetZipName, MSX_mazyRomInfo, MSX_mazyRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Melody Party Ex (HB)
+
+static struct BurnRomInfo MSX_melodypartyexRomDesc[] = {
+	{ "Melody Party Ex (2021)(Clube MSX).rom",	49152, 0x74cc7f06, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_melodypartyex, MSX_melodypartyex, msx_msx)
+STD_ROM_FN(MSX_melodypartyex)
+
+struct BurnDriver BurnDrvMSX_melodypartyex = {
+	"msx_melodypartyex", NULL, "msx_msx", NULL, "2021",
+	"Melody Party Ex (HB)\0", NULL, "Clube MSX", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_melodypartyexRomInfo, MSX_melodypartyexRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Playhouse Strippoker (Euro)
+
+static struct BurnRomInfo MSX_strippokerRomDesc[] = {
+	{ "Playhouse Strippoker (1988)(Eurosoft)[RUN'CAS-'].cas",	58576, 0xaafab5e7, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_strippoker, MSX_strippoker, msx_msx)
+STD_ROM_FN(MSX_strippoker)
+
+struct BurnDriver BurnDrvMSX_strippoker = {
+	"msx_strippoker", NULL, "msx_msx", NULL, "1988",
+	"Playhouse Strippoker (Euro)\0", NULL, "Eurosoft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_CASINO, 0,
+	MSXGetZipName, MSX_strippokerRomInfo, MSX_strippokerRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Ruptus (HB)
+
+static struct BurnRomInfo MSX_ruptusRomDesc[] = {
+	{ "Ruptus (2021)(Inufuto).rom",	16384, 0x59ece025, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_ruptus, MSX_ruptus, msx_msx)
+STD_ROM_FN(MSX_ruptus)
+
+struct BurnDriver BurnDrvMSX_ruptus = {
+	"msx_ruptus", NULL, "msx_msx", NULL, "2021",
+	"Ruptus (HB)\0", NULL, "Inufuto", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_SHOOT, 0,
+	MSXGetZipName, MSX_ruptusRomInfo, MSX_ruptusRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Jackie Chan in Spartan X (Jpn)
+
+static struct BurnRomInfo MSX_spartanxRomDesc[] = {
+	{ "Spartan X (1985)(Pony Canyon)[CLOAD + RUN].cas",	28854, 0x2e10e73d, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_spartanx, MSX_spartanx, msx_msx)
+STD_ROM_FN(MSX_spartanx)
+
+struct BurnDriver BurnDrvMSX_spartanx = {
+	"msx_spartanx", NULL, "msx_msx", NULL, "1985",
+	"Jackie Chan in Spartan X (Jpn)\0", NULL, "Pony Canyon", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_spartanxRomInfo, MSX_spartanxRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasCloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

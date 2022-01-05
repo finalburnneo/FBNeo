@@ -978,6 +978,7 @@ DRV		BurnDrvacitya;
 DRV		BurnDrvnes_atlantisnonazoj;
 DRV		BurnDrvnes_atlantisnonazo;
 DRV		BurnSpecAtlantiszx;
+DRV		BurnDrvAtombjt;
 DRV		BurnSpecAtomant;
 DRV		BurnDrvAtomboya;
 DRV		BurnDrvAtomboy;
@@ -6749,6 +6750,7 @@ DRV		BurnDrvHotchase;
 DRV		BurnDrvHotchasea;
 DRV		BurnDrvHotmemry11;
 DRV		BurnDrvHotmemry;
+DRV		BurnDrvHotminda;
 DRV		BurnDrvHotmind;
 DRV		BurnDrvHotpinbl;
 DRV		BurnDrvHotrodja;
@@ -8472,6 +8474,7 @@ DRV		BurnDrvnes_magicsch;
 DRV		BurnDrvMSX_magpinball;
 DRV		BurnDrvmd_magicpockets;
 DRV		BurnDrvMagipur;
+DRV		BurnDrvMagicstk;
 DRV		BurnDrvCpsMswordj;
 DRV		BurnDrvCpsMswordr1;
 DRV		BurnDrvCpsMsword;
@@ -11240,6 +11243,7 @@ DRV		BurnDrvPoundforj;
 DRV		BurnDrvPoundforu;
 DRV		BurnDrvPoundfor;
 DRV		BurnDrvmd_powerath;
+DRV		BurnDrvPowerbal;
 DRV		BurnDrvnes_powerblade;
 DRV		BurnDrvnes_powerblade2;
 DRV		BurnDrvnes_powerblazerj;
@@ -17672,6 +17676,7 @@ DRV		BurnDrvsms_wwfsteel;
 DRV		BurnDrvmd_wwfag;
 DRV		BurnDrvmd_wwfagp;
 DRV		BurnDrvgg_wwfsteel;
+DRV		BurnDrvWwfmanac;
 DRV		BurnDrvWwfmaniap;
 DRV		BurnDrvWwfmaniac;
 DRV		BurnDrvWwfmaniab;
@@ -19096,6 +19101,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_atlantisnonazoj,// Atlantis no Nazo (Japan)
 	&BurnDrvnes_atlantisnonazo,	// Atlantis no Nazo (T-Eng)
 	&BurnSpecAtlantiszx,		// Atlantis ZX (48K) (HB)
+	&BurnDrvAtombjt,			// Atom (bootleg of Bombjack Twin)
 	&BurnSpecAtomant,			// Atom Ant (128K)
 	&BurnDrvAtomboya,			// Atomic Boy (revision A)
 	&BurnDrvAtomboy,			// Atomic Boy (revision B)
@@ -24867,6 +24873,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvHotchasea,			// Hot Chase (set 2)
 	&BurnDrvHotmemry11,			// Hot Memory (V1.1, Germany, 11/30/94)
 	&BurnDrvHotmemry,			// Hot Memory (V1.2, Germany, 12/28/94)
+	&BurnDrvHotminda,			// Hot Mind (adjustable prize)
 	&BurnDrvHotmind,			// Hot Mind (Hard Times hardware)
 	&BurnDrvHotpinbl,			// Hot Pinball
 	&BurnDrvHotrodja,			// Hot Rod (Japan, 4 Players, Floppy Based, Rev B)
@@ -26590,6 +26597,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_magpinball,		// Magic Pinball (Spanish)
 	&BurnDrvmd_magicpockets,	// Magic Pockets (HB)
 	&BurnDrvMagipur,			// Magic Purple
+	&BurnDrvMagicstk,			// Magic Sticks
 	&BurnDrvCpsMswordj,			// Magic Sword (23.06.1990 Japan)
 	&BurnDrvCpsMswordr1,		// Magic Sword - heroic fantasy (23.06.1990 other country)
 	&BurnDrvCpsMsword,			// Magic Sword - heroic fantasy (25.07.1990 other country)
@@ -29358,6 +29366,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPoundforu,			// Pound for Pound (US)
 	&BurnDrvPoundfor,			// Pound for Pound (World)
 	&BurnDrvmd_powerath,		// Power Athlete (Jpn, Kor)
+	&BurnDrvPowerbal,			// Power Balls
 	&BurnDrvnes_powerblade,		// Power Blade (USA)
 	&BurnDrvnes_powerblade2,	// Power Blade 2 (USA)
 	&BurnDrvnes_powerblazerj,	// Power Blazer (Japan)
@@ -35790,6 +35799,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_wwfag,			// WWF WrestleMania - The Arcade Game (Euro, USA)
 	&BurnDrvmd_wwfagp,			// WWF WrestleMania - The Arcade Game (USA, Prototype)
 	&BurnDrvgg_wwfsteel,		// WWF Wrestlemania Steel Cage Challenge (Euro, SMS Mode)
+	&BurnDrvWwfmanac,			// WWF: Wrestlemania (Acid Clown Edition 2020.12.02 SP2)
 	&BurnDrvWwfmaniap,			// WWF: Wrestlemania (proto 2.01 06/07/95)
 	&BurnDrvWwfmaniac,			// WWF: Wrestlemania (rev 1.1 07/11/95)
 	&BurnDrvWwfmaniab,			// WWF: Wrestlemania (rev 1.20 08/02/95)

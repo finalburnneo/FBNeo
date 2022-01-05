@@ -20880,7 +20880,7 @@ static struct BurnRomInfo looptrisRomDesc[] = {
 	{ "looptris.c1",	0x080000, 0xb9413f13, 3 | BRF_GRA },           	//  2 Sprite data
 	{ "looptris.c2",	0x080000, 0x9409dbe8, 3 | BRF_GRA },           	//  3
 
-	{ "looptris.m1",	0x020000, 0x70e70448, 4 | BRF_ESS | BRF_PRG }, 	//  4 Z80 code
+	{ "looptris.m1",	0x020000, 0xe7105df8, 4 | BRF_ESS | BRF_PRG }, 	//  4 Z80 code
 
 	{ "looptris.v1",	0x080000, 0xdfa63cd2, 5 | BRF_SND },           	//  5 Sound data
 };

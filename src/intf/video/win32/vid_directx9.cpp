@@ -123,6 +123,7 @@ static RECT Dest;
 static unsigned int nD3DAdapter;
 
 // ----------------------------------------------------------------------------
+
 #ifdef PRINT_DEBUG_INFO
 static TCHAR* TextureFormatString(D3DFORMAT nFormat)
 {
@@ -1084,7 +1085,7 @@ static int dx9Init()
 #endif
 
 #ifdef PRINT_DEBUG_INFO
-	dprintf(_T("*** Initialising Direct3D 9 blitter.\n"));
+	dprintf(_T("*** Initialising DirectX9 Experimental blitter.\n"));
 #endif
 
 	hVidWnd = hScrnWnd;								// Use Screen window for video
@@ -1912,9 +1913,17 @@ static int dx9AltTextureInit()
 	nTextureWidth = GetTextureSize(nGameImageWidth * nPreScaleZoom);
 	nTextureHeight = GetTextureSize(nGameImageHeight * nPreScaleZoom);
 
+#ifdef PRINT_DEBUG_INFO
+	dprintf(_T("  * Allocated a %i x %i (%s) surface.\n"), nVidImageWidth, nVidImageHeight, TextureFormatString(textureFormat));
+#endif
+
 	if (dx9AltResize(nTextureWidth, nTextureHeight)) {
 		return 1;
 	}
+
+#ifdef PRINT_DEBUG_INFO
+	dprintf(_T("  * Allocated a %i x %i (%s) image texture.\n"), nTextureWidth, nTextureHeight, TextureFormatString(textureFormat));
+#endif
 
 	return 0;
 }
@@ -2017,8 +2026,15 @@ static int dx9AltInit()
 
 	hVidWnd = hScrnWnd;
 
+#ifdef PRINT_DEBUG_INFO
+	dprintf(_T("*** Initialising DirectX9 Alt. blitter.\n"));
+#endif
+
 	// Get pointer to Direct3D
 	if ((pD3D = _Direct3DCreate9(D3D_SDK_VERSION)) == NULL) {
+#ifdef PRINT_DEBUG_INFO
+		dprintf(_T("  * Error: Couldn't initialise Direct3D.\n"));
+#endif
 		dx9AltExit();
 		return 1;
 	}
@@ -2058,6 +2074,9 @@ static int dx9AltInit()
 
 		if (dx9AltSelectFullscreenMode(&ScoreInfo)) {
 			dx9AltExit();
+#ifdef PRINT_DEBUG_INFO
+			dprintf(_T("  * Error: Couldn't determine display mode.\n"));
+#endif
 			return 1;
 		}
 
@@ -2093,6 +2112,11 @@ static int dx9AltInit()
 	}
 
 	if (FAILED(pD3D->CreateDevice(nD3DAdapter, D3DDEVTYPE_HAL, hVidWnd, dwBehaviorFlags, &d3dpp, &pD3DDevice))) {
+
+#ifdef PRINT_DEBUG_INFO
+		dprintf(_T("  * Error: Couldn't create Direct3D device.\n"));
+#endif
+
 		if (nVidFullscreen) {
 			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_FULL_PROBLEM), d3dpp.BackBufferWidth, d3dpp.BackBufferHeight, d3dpp.BackBufferFormat, d3dpp.FullScreen_RefreshRateInHz);
 			if (bVidArcaderes && (d3dpp.BackBufferWidth != 320 && d3dpp.BackBufferHeight != 240)) {
@@ -2190,6 +2214,20 @@ static int dx9AltInit()
 
 	// Create osd font
 	vid_FontInit();
+
+#ifdef PRINT_DEBUG_INFO
+	{
+		dprintf(_T("  * Initialisation complete: %.2lfMB texture memory free (total).\n"), (double)pD3DDevice->GetAvailableTextureMem() / (1024 * 1024));
+		dprintf(_T("    Displaying and rendering in %i-bit mode, emulation running in %i-bit mode.\n"), nVidScrnDepth, nVidImageDepth);
+		if (nVidFullscreen) {
+			dprintf(_T("    Running in fullscreen mode (%i x %i), "), nVidScrnWidth, nVidScrnHeight);
+			dprintf(_T("using a %s buffer.\n"), bVidTripleBuffer ? _T("triple") : _T("double"));
+		} else {
+			dprintf(_T("    Running in windowed mode.\n"));
+		}
+	}
+#endif
+
 
 	return 0;
 }

@@ -802,7 +802,6 @@ void set_environment()
 		option_defs_us
 	};
 
-	bool libretro_supports_option_categories = false;
 	unsigned version = 0;
 
 	if (!environ_cb(RETRO_ENVIRONMENT_GET_CORE_OPTIONS_VERSION, &version))
@@ -810,7 +809,7 @@ void set_environment()
 
 	if (version >= 2)
 	{
-		libretro_supports_option_categories = environ_cb(RETRO_ENVIRONMENT_SET_CORE_OPTIONS_V2, &options_us);
+		environ_cb(RETRO_ENVIRONMENT_SET_CORE_OPTIONS_V2, &options_us);
 	}
 	else
 	{

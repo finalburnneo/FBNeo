@@ -338,7 +338,6 @@ static int create_variables_from_dipswitches()
 	dipswitch_core_options.clear();
 
 	BurnDIPInfo bdi;
-	struct GameInp *pgi;
 
 	const char * drvname = BurnDrvGetTextA(DRV_NAME);
 
@@ -452,8 +451,6 @@ static int create_variables_from_dipswitches()
 				dipswitch_core_options.pop_back();
 				continue;
 			}
-
-			pgi = GameInp + bdi.nInput + nDIPOffset;
 
 			j++;
 		}

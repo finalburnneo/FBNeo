@@ -6884,7 +6884,7 @@
 		<rom name="looptris.s1" size="131072" crc="70e70448"/>
 		<rom name="looptris.c1" size="524288" crc="b9413f13"/>
 		<rom name="looptris.c2" size="524288" crc="9409dbe8"/>
-		<rom name="looptris.m1" size="131072" crc="70e70448"/>
+		<rom name="looptris.m1" size="131072" crc="e7105df8"/>
 		<rom name="looptris.v1" size="524288" crc="dfa63cd2"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>

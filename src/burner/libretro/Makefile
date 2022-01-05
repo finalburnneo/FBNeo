@@ -269,7 +269,6 @@ else ifeq ($(platform), ctr)
 	STATIC_LINKING = 1
 	USE_CYCLONE = 1
 	LIGHT = 1
-	USE_EXPERIMENTAL_FLAGS = 1
 
 # Xbox 360
 else ifeq ($(platform), xenon)

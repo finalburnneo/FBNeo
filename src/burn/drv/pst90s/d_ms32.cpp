@@ -1281,6 +1281,8 @@ static INT32 DrvDoReset()
 	UINT32 *sprite_ctrl = (UINT32*)DrvSprCtrl;
 	sprite_ctrl[0x10/4] = BURN_ENDIAN_SWAP_INT32(0x8000);
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -2024,7 +2026,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(analog_starttimer);
 	}
 
-	if (nAction & ACB_NVRAM) {
+	if (nAction & ACB_NVRAM && !is_p47acesa) {
 		memset(&ba, 0, sizeof(ba));
 		ba.Data		= DrvNVRAM;
 		ba.nLen		= 0x008000;
@@ -2077,7 +2079,7 @@ struct BurnDriver BurnDrvTetrisp = {
 	"tetrisp", NULL, NULL, NULL, "1995",
 	"Tetris Plus (ver 1.0)\0", NULL, "Jaleco / BPS", "MegaSystem 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, tetrispRomInfo, tetrispRomName, NULL, NULL, NULL, NULL, MS32InputInfo, TetrispDIPInfo,
 	ss92046_01_init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 224, 4, 3
@@ -2125,7 +2127,7 @@ struct BurnDriver BurnDrvP47aces = {
 	"p47aces", NULL, NULL, NULL, "1995",
 	"P-47 Aces (ver 1.1)\0", NULL, "Jaleco", "MegaSystem 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, p47acesRomInfo, p47acesRomName, NULL, NULL, NULL, NULL, MS32InputInfo, P47acesDIPInfo,
 	ss92048_01_init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 224, 4, 3
@@ -2180,7 +2182,7 @@ struct BurnDriver BurnDrvP47acesa = {
 	"p47acesa", "p47aces", NULL, NULL, "1995",
 	"P-47 Aces (ver 1.0)\0", NULL, "Jaleco", "MegaSystem 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, p47acesaRomInfo, p47acesaRomName, NULL, NULL, NULL, NULL, MS32InputInfo, P47acesDIPInfo,
 	p47acesaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 224, 4, 3
@@ -2228,7 +2230,7 @@ struct BurnDriver BurnDrvBbbxing = {
 	"bbbxing", NULL, NULL, NULL, "1994",
 	"Best Bout Boxing (ver 1.3)\0", NULL, "Jaleco", "MegaSystem 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, bbbxingRomInfo, bbbxingRomName, NULL, NULL, NULL, NULL, MS32InputInfo, BbbxingDIPInfo,
 	ss92046_01_init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 224, 4, 3
@@ -2275,7 +2277,7 @@ struct BurnDriver BurnDrvDesertwr = {
 	"desertwr", NULL, NULL, NULL, "1995",
 	"Desert War / Wangan Sensou (ver 1.0)\0", NULL, "Jaleco", "MegaSystem 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, desertwrRomInfo, desertwrRomName, NULL, NULL, NULL, NULL, MS32InputInfo, DesertwrDIPInfo,
 	ss91022_10_init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	224, 320, 3, 4
@@ -2322,7 +2324,7 @@ struct BurnDriver BurnDrvGametngk = {
 	"gametngk", NULL, NULL, NULL, "1995",
 	"The Game Paradise - Master of Shooting! / Game Tengoku - The Game Paradise (ver 1.0)\0", NULL, "Jaleco", "MegaSystem 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, gametngkRomInfo, gametngkRomName, NULL, NULL, NULL, NULL, MS32InputInfo, GametngkDIPInfo,
 	ss91022_10_init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	224, 320, 3, 4
@@ -2366,7 +2368,7 @@ struct BurnDriver BurnDrvGratia = {
 	"gratia", NULL, NULL, NULL, "1996",
 	"Gratia - Second Earth (ver 1.0, 92047-01 version)\0", NULL, "Jaleco", "MegaSystem 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, gratiaRomInfo, gratiaRomName, NULL, NULL, NULL, NULL, MS32InputInfo, GratiaDIPInfo,
 	ss92047_01_init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 224, 4, 3
@@ -2410,7 +2412,7 @@ struct BurnDriver BurnDrvGratiaa = {
 	"gratiaa", "gratia", NULL, NULL, "1996",
 	"Gratia - Second Earth (ver 1.0, 91022-10 version)\0", NULL, "Jaleco", "MegaSystem 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, gratiaaRomInfo, gratiaaRomName, NULL, NULL, NULL, NULL, MS32InputInfo, GratiaDIPInfo,
 	ss91022_10_init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 224, 4, 3

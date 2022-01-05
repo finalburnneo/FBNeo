@@ -70,6 +70,7 @@ static INT32 analog_clock;
 static INT32 analog_starttimer;
 
 static INT32 is_wpksocv2 = 0;
+static INT32 is_p47acesa = 0; // game fails to boot when nvram is saved?
 
 static struct BurnInputInfo MS32InputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 16,	"p1 coin"	},
@@ -1251,6 +1252,8 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
+	if (is_p47acesa) memset(DrvNVRAM, 0xff, 0x8000);
+
 	v60Open(0);
 	v60_irq_vector = 0;
 	v60Reset();
@@ -1551,8 +1554,6 @@ static INT32 CommonInit(UINT32 bg_addrxor, UINT32 bg_dataxor, UINT32 tx_addrxor,
 	BurnBitmapAllocate(3, 256, 256, false);
 
 	input_is_mahjong = (BurnDrvGetGenreFlags() == GBF_MAHJONG) ? 1 : 0;
-
-	memset(DrvNVRAM, 0xff, 0x8000);
 
 	DrvDoReset();
 
@@ -2168,13 +2169,20 @@ static struct BurnRomInfo p47acesaRomDesc[] = {
 STD_ROM_PICK(p47acesa)
 STD_ROM_FN(p47acesa)
 
+static INT32 p47acesaInit()
+{
+	is_p47acesa = 1;
+
+	return ss92048_01_init();
+}
+
 struct BurnDriver BurnDrvP47acesa = {
 	"p47acesa", "p47aces", NULL, NULL, "1995",
 	"P-47 Aces (ver 1.0)\0", NULL, "Jaleco", "MegaSystem 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, p47acesaRomInfo, p47acesaRomName, NULL, NULL, NULL, NULL, MS32InputInfo, P47acesDIPInfo,
-	ss92048_01_init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	p47acesaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 224, 4, 3
 };
 

@@ -1937,3 +1937,48 @@ struct BurnDriver BurnDrvWwfmaniap = {
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
 };
+
+// WWF: Wrestlemania (Acid Clown Edition)
+
+static struct BurnRomInfo wwfmanacRomDesc[] = {
+	{ "wwf.54",		0x080000, 0xFFD1ABC6, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "wwf.63",		0x080000, 0x41260903, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "wwf.2",		0x100000, 0xa9acb250, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
+	{ "wwf.3",		0x100000, 0x9442b6c9, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "wwf.4",		0x100000, 0xcee78fac, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "wwf.5",		0x100000, 0x5b31fd40, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "wwf.133",	0x100000, 0x5e1b1e3d, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
+	{ "wwf.132",	0x100000, 0x5943b3b2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
+	{ "wwf.131",	0x100000, 0x0815db22, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
+	{ "wwf.130",	0x100000, 0x9ee9a145, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
+
+	{ "wwf.129",	0x100000, 0xc644c2f4, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10
+	{ "wwf.128",	0x100000, 0xfcda4e9a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
+	{ "wwf.127",	0x100000, 0x45be7428, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
+	{ "wwf.126",	0x100000, 0xeaa276a8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
+
+	{ "wwf.125",	0x100000, 0xa19ebeed, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14
+	{ "wwf.124",	0x100000, 0xdc7d3dbb, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
+	{ "wwf.123",	0x100000, 0xe0ade56f, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
+	{ "wwf.122",	0x100000, 0x2800c78d, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
+
+	{ "wwf.121",	0x100000, 0xa28ffcba, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
+	{ "wwf.120",	0x100000, 0x3a05d371, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
+	{ "wwf.119",	0x100000, 0x97ffa659, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
+	{ "wwf.118",	0x100000, 0x46668e97, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
+};
+
+STD_ROM_PICK(wwfmanac)
+STD_ROM_FN(wwfmanac)
+
+struct BurnDriver BurnDrvWwfmanac = {
+	"wwfmanac", "wwfmania", NULL, NULL, "1995",
+	"WWF: Wrestlemania (Acid Clown Edition 2020.12.02 SP2)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	NULL, wwfmanacRomInfo, wwfmanacRomName, NULL, NULL, NULL, NULL, WwfmaniaInputInfo, WwfmaniaDIPInfo,
+	WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
+	400, 256, 4, 3
+};

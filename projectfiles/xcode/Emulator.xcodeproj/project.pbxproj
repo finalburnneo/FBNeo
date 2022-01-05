@@ -1042,6 +1042,7 @@
 		FEC5D3D9235C160600ABA9FB /* FBScreenView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */; };
 		FEC8DDD9269B78110012F22B /* FBJoyCaptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC8DDD8269B78110012F22B /* FBJoyCaptureView.m */; };
 		FED03ADE23FAF8E900E99A10 /* mdeeprom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FED03ADD23FAF8E900E99A10 /* mdeeprom.cpp */; };
+		FED3DAF7278557C400AA7A86 /* d_powerbal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FED3DAF6278557C400AA7A86 /* d_powerbal.cpp */; };
 		FED7CBC325494A6C00193EED /* d_spectrum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207923561A6B0065200C /* d_spectrum.cpp */; };
 		FEDA8F89235D226F007A4D26 /* FBInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEDA8F87235D226E007A4D26 /* FBInput.mm */; };
 		FEDA9E2224C203960060BF0B /* poly.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDA9E2024C203950060BF0B /* poly.cpp */; };
@@ -2666,6 +2667,7 @@
 		FEC8DDD8269B78110012F22B /* FBJoyCaptureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBJoyCaptureView.m; sourceTree = "<group>"; };
 		FED03ADC23FAF8E900E99A10 /* mdeeprom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mdeeprom.h; sourceTree = "<group>"; };
 		FED03ADD23FAF8E900E99A10 /* mdeeprom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mdeeprom.cpp; sourceTree = "<group>"; };
+		FED3DAF6278557C400AA7A86 /* d_powerbal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_powerbal.cpp; sourceTree = "<group>"; };
 		FEDA8F87235D226E007A4D26 /* FBInput.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBInput.mm; sourceTree = "<group>"; };
 		FEDA8F88235D226E007A4D26 /* FBInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBInput.h; sourceTree = "<group>"; };
 		FEDA8F8C235EB561007A4D26 /* README-macOS.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = "README-macOS.md"; path = "../../README-macOS.md"; sourceTree = "<group>"; };
@@ -3878,6 +3880,7 @@
 				FE1B1F6A23561A680065200C /* d_pirates.cpp */,
 				FE1B1F5223561A680065200C /* d_pkscram.cpp */,
 				FE1B1F2C23561A680065200C /* d_playmark.cpp */,
+				FED3DAF6278557C400AA7A86 /* d_powerbal.cpp */,
 				FE1B1F3423561A680065200C /* d_powerins.cpp */,
 				FE1B1F7023561A680065200C /* d_ppmast93.cpp */,
 				FE1B1F6623561A680065200C /* d_pushman.cpp */,
@@ -6299,6 +6302,7 @@
 				FE1B24E423561A760065200C /* d_skullxbo.cpp in Sources */,
 				FE1B25A623561A760065200C /* d_gyruss.cpp in Sources */,
 				FE1B260123561A760065200C /* d_neogeo.cpp in Sources */,
+				FED3DAF7278557C400AA7A86 /* d_powerbal.cpp in Sources */,
 				FE1B26F823561A780065200C /* d_mmagic.cpp in Sources */,
 				FE911186264D90A800CCB0FF /* digitalk.cpp in Sources */,
 				FE1B269823561A770065200C /* d_galaga.cpp in Sources */,

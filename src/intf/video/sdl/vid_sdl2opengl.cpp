@@ -377,8 +377,8 @@ static int GetSettings(InterfaceInfo* pInfo)
 {
 	TCHAR szString[MAX_PATH] = _T("");
 
-	_sntprintf(szString, MAX_PATH, _T("Prescaling using %s (%i� zoom)"), VidSoftFXGetEffect(nUseBlitter), nSize);
-	IntInfoAddStringModule(pInfo, szString);
+	//_sntprintf(szString, MAX_PATH, _T("Prescaling using %s (%i� zoom)"), VidSoftFXGetEffect(nUseBlitter), nSize);
+	//IntInfoAddStringModule(pInfo, szString);
 
 	if (nRotateGame)
 	{

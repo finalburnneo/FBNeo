@@ -1964,6 +1964,10 @@ void retro_unload_game(void)
 		free(pAudBuffer);
 		pAudBuffer = NULL;
 	}
+	if (pRomFind) {
+		free(pRomFind);
+		pRomFind = NULL;
+	}
 	InputExit();
 	CheevosExit();
 }

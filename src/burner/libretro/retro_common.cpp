@@ -942,6 +942,12 @@ void set_environment()
 error:
 		/* Clean up */
 
+		if (option_defs_us)
+		{
+			free(option_defs_us);
+			option_defs_us = NULL;
+		}
+
 		if (option_v1_defs_us)
 		{
 			free(option_v1_defs_us);

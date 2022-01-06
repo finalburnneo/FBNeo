@@ -16329,17 +16329,19 @@
 	</game>
 	<game name="teot" romof="neogeo">
 		<comment>Homebrew</comment>
-		<description>The Eye of Typhoon (Alpha Version)</description>
+		<description>The Eye of Typhoon (Beta Version)</description>
 		<year>2021</year>
 		<manufacturer>OzzyOuzo</manufacturer>
-		<rom name="teot-p1.bin" size="1048576" crc="9038ff78"/>
-		<rom name="teot-p2.bin" size="8388608" crc="fe363160"/>
-		<rom name="teot-s1.bin" size="131072" crc="a545b593"/>
-		<rom name="teot-c1.bin" size="16777216" crc="28872e1f"/>
-		<rom name="teot-c2.bin" size="16777216" crc="fe31d1fc"/>
-		<rom name="teot-m1.bin" size="65536" crc="31b05f06"/>
-		<rom name="teot-v1.bin" size="8388608" crc="299d84cf"/>
-		<rom name="teot-v2.bin" size="8388608" crc="aced6c72"/>
+		<rom name="teot-p1.bin" size="1048576" crc="603fac98"/>
+		<rom name="teot-p2.bin" size="8388608" crc="5f557ad5"/>
+		<rom name="teot-s1.bin" size="131072" crc="aba8f74c"/>
+		<rom name="teot-c1.bin" size="16777216" crc="7919ea09"/>
+		<rom name="teot-c2.bin" size="16777216" crc="62aa59a8"/>
+		<rom name="teot-c3.bin" size="16777216" crc="7919ea09"/>
+		<rom name="teot-c4.bin" size="16777216" crc="62aa59a8"/>
+		<rom name="teot-m1.bin" size="65536" crc="dc29f33b"/>
+		<rom name="teot-v1.bin" size="8388608" crc="91b3deed"/>
+		<rom name="teot-v2.bin" size="8388608" crc="985e6f6b"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>

@@ -33786,7 +33786,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_excdizzy,		// The Excellent Dizzy Collection (Euro, SMS Mode)
 	&BurnDrvsms_excdizzy,		// The Excellent Dizzy Collection (Euro, USA, Prototype)
 	&BurnDrvgg_excdizzyp,		// The Excellent Dizzy Collection (Prototype, SMS Mode)
-	&BurnDrvTeot,				// The Eye of Typhoon (Alpha Version)
+	&BurnDrvTeot,				// The Eye of Typhoon (Beta Version)
 	&BurnDrvFlstoryj,			// The FairyLand Story (Japan)
 	&BurnDrvFlstory,			// The FairyLand Story
 	&BurnDrvDaraku,				// The Fallen Angels (World) / Daraku Tenshi - The Fallen Angels (Japan)

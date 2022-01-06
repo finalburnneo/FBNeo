@@ -194,6 +194,7 @@ extern INT32 nVidFeedbackIntensity;
 extern INT32 nVidFeedbackOverSaturation;
 extern INT32 bVidCorrectAspect;
 extern INT32 bVidArcaderes;
+extern INT32 nVidDX9HardFX;
 
 extern INT32 bVidArcaderesHor;
 extern INT32 bVidArcaderesVer;

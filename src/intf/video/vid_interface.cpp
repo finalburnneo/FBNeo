@@ -116,6 +116,7 @@ double dVidCubicC = 0.5;						//
 INT32 bVidDX9Bilinear = 1;							// 1 = enable bi-linear filtering (D3D9 Alt blitter)
 INT32 bVidHardwareVertex = 0;			// 1 = use hardware vertex processing
 INT32 bVidMotionBlur = 0;				// 1 = motion blur
+INT32 nVidDX9HardFX = 0; 						// index of HardFX effect (0 = None)
 
 wchar_t HorScreen[32] = L"";
 wchar_t VerScreen[32] = L"";

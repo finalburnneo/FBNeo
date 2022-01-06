@@ -1,6 +1,7 @@
 // DirectX9 Enhanced video output
 #include "burner.h"
 #include "vid_softfx.h"
+#include "vid_effect.h"
 
 // dink change-log, dec. 2021
 //
@@ -84,6 +85,8 @@ static ID3DXTextureShader* pEffectShader = NULL;
 static D3DXHANDLE hTechnique = NULL;
 //static D3DXHANDLE hScanIntensity = NULL;
 static IDirect3DTexture9* pEffectTexture = NULL;
+static VidEffect* pVidEffect = NULL;
+static int nDX9HardFX = -1;
 
 static ID3DXFont* pFont = NULL;							// OSD font
 static ID3DXFont* pStatusFont = NULL;					// Status font
@@ -1780,6 +1783,16 @@ struct transp_vertex {
 	float u, v;
 };
 
+char *HardFXFilenames[] = {
+	"support/shaders/crt_aperture.fx",
+	"support/shaders/crt_caligari.fx",
+	"support/shaders/crt_cgwg_fast.fx",
+	"support/shaders/crt_easymode.fx",
+	"support/shaders/crt_standard.fx",
+	"support/shaders/crt_bicubic.fx",
+	"support/shaders/crt_cga.fx"
+};
+
 #undef D3DFVF_LVERTEX2
 #define D3DFVF_LVERTEX2 (D3DFVF_XYZRHW | D3DFVF_TEX1)
 
@@ -1830,6 +1843,12 @@ static int dx9AltExit()
 	VidSFreeVidImage();
 
 	vid_FontExit();
+
+	if (pVidEffect) {
+		delete pVidEffect;
+		pVidEffect = NULL;
+	}
+	RELEASE(pEffect)
 
 	RELEASE(pD3DDevice)
 	RELEASE(pD3D)
@@ -2018,6 +2037,44 @@ static int dx9AltSetVertex(unsigned int px, unsigned int py, unsigned int pw, un
 	return 0;
 }
 
+static int dx9AltSetHardFX(int nHardFX)
+{
+	// cutre reload
+	//static bool reload = true; if (GetAsyncKeyState(VK_CONTROL)) { if (reload) { nDX9HardFX = 0; reload = false; } } else reload = true;
+	
+	if (nHardFX == nDX9HardFX)
+	{
+		return 0;
+	}
+	
+
+	nDX9HardFX = nHardFX;
+
+	if (pVidEffect) {
+		delete pVidEffect;
+		pVidEffect = NULL;
+	}
+	
+	if (nDX9HardFX == 0)
+	{
+		return 0;
+	}
+
+	// HardFX
+	pVidEffect = new VidEffect(pD3DDevice);
+	int r = pVidEffect->Load(HardFXFilenames[nHardFX - 1]);
+
+	if (r == 0)
+	{
+		bprintf(0, _T("HardFX ""%S"" loaded OK!\n"), HardFXFilenames[nHardFX - 1]);
+		// common parameters
+		pVidEffect->SetParamFloat2("texture_size", nTextureWidth, nTextureHeight);
+		pVidEffect->SetParamFloat2("video_size", (nRotateGame ? nGameHeight : nGameWidth) + 0.5f, nRotateGame ? nGameWidth : nGameHeight + 0.5f);
+	}
+
+	return r;
+}
+
 static int dx9AltInit()
 {
 	if (hScrnWnd == NULL) {
@@ -2063,7 +2120,7 @@ static int dx9AltInit()
 		}
 	}
 
-	// check selected atapter
+	// check selected adapter
 	D3DDISPLAYMODE dm;
 	pD3D->GetAdapterDisplayMode(nD3DAdapter, &dm);
 
@@ -2137,6 +2194,7 @@ static int dx9AltInit()
 	nGameWidth = nVidImageWidth;
 	nGameHeight = nVidImageHeight;
 	nRotateGame = 0;
+	nDX9HardFX = -1;
 
 	if (bDrvOkay) {
 		// Get the game screen size
@@ -2343,6 +2401,9 @@ static int dx9AltRender()  // MemToSurf
 				dx9AltSetVertex(0, 0, nWidth, nHeight, nTextureWidth, nTextureHeight, 0, 0, nImageWidth, nImageHeight);
 			}
 
+			if (pVidEffect && pVidEffect->IsValid())
+				pVidEffect->SetParamFloat2("output_size", nImageWidth, nImageHeight);
+
 			D3DVIEWPORT9 vp;
 
 			// Set the size of the image on the PC screen
@@ -2372,27 +2433,28 @@ static int dx9AltRender()  // MemToSurf
 		// Copy the game image onto a texture for rendering
 		D3DLOCKED_RECT d3dlr;
 		pTexture->LockRect(0, &d3dlr, 0, 0);
+		if (d3dlr.pBits) {
+			int pitch = d3dlr.Pitch;
+			unsigned char* pd = (unsigned char*)d3dlr.pBits;
 
-		int pitch = d3dlr.Pitch;
-		unsigned char* pd = (unsigned char*)d3dlr.pBits;
+			if (nPreScaleEffect) {
+				VidFilterApplyEffect(pd, pitch);
+			} else {
+				unsigned char* ps = pVidImage + nVidImageLeft * nVidImageBPP;
+				int s = nVidImageWidth * nVidImageBPP;
 
-		if (nPreScaleEffect) {
-			VidFilterApplyEffect(pd, pitch);
-		} else {
-			unsigned char* ps = pVidImage + nVidImageLeft * nVidImageBPP;
-			int s = nVidImageWidth * nVidImageBPP;
-
-			switch (nVidImageDepth) {
-				case 32:
-					VidSCpyImg32(pd, pitch, ps, s, nVidImageWidth, nVidImageHeight);
-					break;
-				case 16:
-					VidSCpyImg16(pd, pitch, ps, s, nVidImageWidth, nVidImageHeight);
-					break;
+				switch (nVidImageDepth) {
+					case 32:
+						VidSCpyImg32(pd, pitch, ps, s, nVidImageWidth, nVidImageHeight);
+						break;
+					case 16:
+						VidSCpyImg16(pd, pitch, ps, s, nVidImageWidth, nVidImageHeight);
+						break;
+				}
 			}
-		}
 
-		pTexture->UnlockRect(0);
+			pTexture->UnlockRect(0);
+		}
 	}
 
 	pD3DDevice->UpdateTexture(pTexture, emuTexture[mbCurrentTexture]);
@@ -2420,13 +2482,21 @@ static int dx9AltRender()  // MemToSurf
 		// draw the current frame to the screen
 		pD3DDevice->SetTexture( 0, emuTexture[mbCurrentTexture] );
 		pD3DDevice->SetFVF(D3DFVF_LVERTEX2);
-		pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, vertex, sizeof(d3dvertex));
+		if (pVidEffect && pVidEffect->IsValid()) {
+			pVidEffect->Begin();
+			pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, vertex, sizeof(d3dvertex));
+			pVidEffect->End();
+		} else {
+			pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, vertex, sizeof(d3dvertex));
+		}
 	}
 
 	// draw osd text
 	vid_FontDraw(Dest);
 
 	pD3DDevice->EndScene();
+
+	dx9AltSetHardFX(nVidDX9HardFX);
 
 	return 0;
 }

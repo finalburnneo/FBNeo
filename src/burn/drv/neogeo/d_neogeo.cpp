@@ -20805,26 +20805,24 @@ struct BurnDriver BurnDrvNblktiger = {
 	0x1000, 304, 224, 4, 3
 };
 
-// The Eye of Typhoon (Alpha Version)
+// The Eye of Typhoon (Beta Version)
 // https://ozzyouzo.itch.io/teot
 
 static struct BurnRomInfo teotRomDesc[] = {
-	{ "teot-p1.bin",    0x0100000, 0x9038ff78, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "teot-p2.bin",    0x0800000, 0xfe363160, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
+	{ "teot-p1.bin",    0x0100000, 0x603fac98, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "teot-p2.bin",    0x0800000, 0x5f557ad5, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
 
-	{ "teot-s1.bin",    0x0020000, 0xa545b593, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "teot-s1.bin",    0x0020000, 0xaba8f74c, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "teot-c1.bin",    0x1000000, 0x28872e1f, 3 | BRF_GRA },           //  3 Sprite data
-	{ "teot-c2.bin",    0x1000000, 0xfe31d1fc, 3 | BRF_GRA },           //  4
-#if 0
-	{ "teot-c3.bin",    0x1000000, 0x28872e1f, 3 | BRF_GRA },           //  Duplicate Sprite data files
-	{ "teot-c4.bin",    0x1000000, 0xfe31d1fc, 3 | BRF_GRA },
-#endif
+	{ "teot-c1.bin",    0x1000000, 0x7919ea09, 3 | BRF_GRA },           //  3 Sprite data
+	{ "teot-c2.bin",    0x1000000, 0x62aa59a8, 3 | BRF_GRA },           //  4
+	{ "teot-c3.bin",    0x1000000, 0x7919ea09, 3 | BRF_GRA },           //  5
+	{ "teot-c4.bin",    0x1000000, 0x62aa59a8, 3 | BRF_GRA },           //  6
 
-	{ "teot-m1.bin",    0x0010000, 0x31b05f06, 4 | BRF_ESS | BRF_PRG }, //  5 Z80 code
+	{ "teot-m1.bin",    0x0010000, 0xdc29f33b, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
 
-	{ "teot-v1.bin",    0x0800000, 0x299d84cf, 5 | BRF_SND },           //  6 Sound data
-	{ "teot-v2.bin",    0x0800000, 0xaced6c72, 5 | BRF_SND },           //  7
+	{ "teot-v1.bin",    0x0800000, 0x91b3deed, 5 | BRF_SND },           //  8 Sound data
+	{ "teot-v2.bin",    0x0800000, 0x985e6f6b, 5 | BRF_SND },           //  9
 };
 
 STDROMPICKEXT(teot, teot, neogeo)
@@ -20832,14 +20830,13 @@ STD_ROM_FN(teot)
 
 struct BurnDriver BurnDrvTeot = {
 	"teot", NULL, "neogeo", NULL, "2021",
-	"The Eye of Typhoon (Alpha Version)\0", NULL, "OzzyOuzo", "Neo Geo MVS",
+	"The Eye of Typhoon (Beta Version)\0", NULL, "OzzyOuzo", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
 	NULL, teotRomInfo, teotRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
-
 
 // Cabal (Neo-Geo Conversion)
 

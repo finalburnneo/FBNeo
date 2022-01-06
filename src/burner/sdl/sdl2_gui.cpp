@@ -1101,159 +1101,184 @@ int gui_process()
 	{
 		starting_stick = SDL_GetTicks();
 
-		//TODO: probably move this down inside the while (SDL_pollevent) bit...
-		SDL_GameControllerUpdate();
-		if (SDL_GameControllerGetAxis(gGameController, SDL_CONTROLLER_AXIS_LEFTY)<= -JOYSTICK_DEAD_ZONE)
-		{
-			startGame--;
-		}
-		else if (SDL_GameControllerGetAxis(gGameController, SDL_CONTROLLER_AXIS_LEFTY)>=JOYSTICK_DEAD_ZONE)
-		{
-			startGame++;
-		}
-		if (SDL_GameControllerGetButton(gGameController, SDL_CONTROLLER_BUTTON_A))
-		{
-			previousSelected = 0;
-			nBurnDrvActive = gametoplay;
-			if (gameAv[nBurnDrvActive])
-			{
-				return gametoplay;
-			}
-		}
-		if (SDL_GameControllerGetButton(gGameController, SDL_CONTROLLER_BUTTON_Y))
-		{
-			RefreshRomList(true);
-		}
-		if (SDL_GameControllerGetButton(gGameController, SDL_CONTROLLER_BUTTON_LEFTSHOULDER))
-		{
-			findPrevLetter();
-		}
-		if (SDL_GameControllerGetButton(gGameController, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER))
-		{
-			findNextLetter();
-		}
 		while (SDL_PollEvent(&e))
 		{
-			if (e.type == SDL_QUIT)
+			switch (e.type)
 			{
-				quit = true;
-			}
-			if (e.type == SDL_MOUSEWHEEL)
-			{
-				if (e.wheel.y > 0) // scroll up
-				{
-					startGame--;
-				}
-				else if (e.wheel.y < 0) // scroll down
-				{
-					startGame++;
-				}
-			}
-			if (e.type == SDL_MOUSEBUTTONDOWN)
-			{
-				switch (e.button.button)
-				{
-				case SDL_BUTTON_LEFT:
-					previousSelected = 0;
-					nBurnDrvActive = gametoplay;
-					if (gameAv[nBurnDrvActive])
+				case SDL_CONTROLLERAXISMOTION:
+					switch (e.caxis.axis)
+					{				
+						case SDL_CONTROLLER_AXIS_LEFTY:
+							if (e.caxis.value <= -JOYSTICK_DEAD_ZONE)
+								startGame--;
+							else if (e.caxis.value >= JOYSTICK_DEAD_ZONE)	
+								startGame++;
+							break;
+						case SDL_CONTROLLER_AXIS_LEFTX:
+							if (e.caxis.value <= -JOYSTICK_DEAD_ZONE)
+								startGame -= 10;
+							else if (e.caxis.value >= JOYSTICK_DEAD_ZONE)	
+								startGame += 10;
+							break;
+					}
+					break;					
+				case SDL_CONTROLLERBUTTONDOWN:
+				case SDL_CONTROLLERBUTTONUP:
+					switch (e.cbutton.button)
 					{
-						return gametoplay;
+						case SDL_CONTROLLER_BUTTON_DPAD_UP:
+							startGame--;
+							break;
+						case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
+							startGame++;
+							break;
+						case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
+							startGame -= 10;
+							break;
+						case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+							startGame += 10;
+							break;
+						case SDL_CONTROLLER_BUTTON_A:
+						case SDL_CONTROLLER_BUTTON_START:
+							previousSelected = -1;
+							nBurnDrvActive = gametoplay;
+							if (gameAv[nBurnDrvActive])
+							{
+								return gametoplay;
+							}
+							break;						
+						case SDL_CONTROLLER_BUTTON_LEFTSHOULDER:
+							findPrevLetter();
+							break;
+						case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
+							findNextLetter();
+							break;
+						case SDL_CONTROLLER_BUTTON_LEFTSTICK:
+							startGame = -gamesperscreen_halfway;
+							break;
+						case SDL_CONTROLLER_BUTTON_RIGHTSTICK:
+							startGame = filterGamesCount;
+							break;
 					}
 					break;
-
-				case SDL_BUTTON_RIGHT:
-					quit = 1;
+				case SDL_QUIT:
+					quit = true;
+					break;	
+				case SDL_MOUSEWHEEL:
+					if (e.wheel.y > 0) // scroll up
+					{
+						startGame--;
+					}
+					else if (e.wheel.y < 0) // scroll down
+					{
+						startGame++;
+					}
 					break;
-				}
-			}
-			if (e.type == SDL_KEYDOWN)
-			{
-				switch (e.key.keysym.sym)
+				case SDL_MOUSEBUTTONDOWN:
 				{
-				case SDLK_UP:
-					startGame--;
-					break;
-
-				case SDLK_DOWN:
-					startGame++;
-					break;
-
-				case SDLK_HOME:
-					startGame = -gamesperscreen_halfway;
-					break;
-
-				case SDLK_END:
-					startGame = filterGamesCount;
-					break;
-
-				case SDLK_PAGEUP:
-					startGame -= gamesperscreen_halfway;
-					break;
-
-				case SDLK_PAGEDOWN:
-					startGame += gamesperscreen_halfway;
-					break;
-
-				case SDLK_LEFT:
-					startGame -= 10;
-					break;
-
-				case SDLK_RIGHT:
-					startGame += 10;
-					break;
-
-				case SDLK_w:
-					findNextLetter();
-					break;
-				case SDLK_q:
-					findPrevLetter();
-					break;
-				case SDLK_KP_ENTER:
-				case SDLK_RETURN:
-					if (e.key.keysym.mod & KMOD_ALT)
+					switch (e.button.button)
 					{
-						SetFullscreen(!GetFullscreen());
+						case SDL_BUTTON_LEFT:
+							previousSelected = 0;
+							nBurnDrvActive = gametoplay;
+							if (gameAv[nBurnDrvActive])
+							{
+								return gametoplay;
+							}
+							break;
+						case SDL_BUTTON_RIGHT:
+							quit = 1;
+							break;
 					}
-					else
+				}
+				break;
+				case SDL_KEYDOWN:
+				{
+					switch (e.key.keysym.sym)
 					{
-						nBurnDrvActive = gametoplay;
-						previousSelected = 0;
-						if (gameAv[nBurnDrvActive])
-						{
-							return gametoplay;
-						}
-					}
-					break;
-				case SDLK_F1:
-					RefreshRomList(true);
-					break;
-				case SDLK_F2:
-					bShowAvailableOnly = !bShowAvailableOnly;
-					DoFilterGames();
-					break;
-				case SDLK_F3:
-					SwapSystemToCheck();
-					break;
-				case SDLK_F4:
-					bShowClones = !bShowClones;
-					DoFilterGames();
-					break;
-				case SDLK_F5:
-					reset_filters();
-				    SystemToCheck();
-					DoFilterGames();
-					break;
-				case SDLK_F12:
-					quit = 1;
-					break;
+						case SDLK_UP:
+							startGame--;
+							break;
 
-				default:
-					break;
+						case SDLK_DOWN:
+							startGame++;
+							break;
+
+						case SDLK_HOME:
+							startGame = -gamesperscreen_halfway;
+							break;
+
+						case SDLK_END:
+							startGame = filterGamesCount;
+							break;
+
+						case SDLK_PAGEUP:
+							startGame -= gamesperscreen_halfway;
+							break;
+
+						case SDLK_PAGEDOWN:
+							startGame += gamesperscreen_halfway;
+							break;
+
+						case SDLK_LEFT:
+							startGame -= 10;
+							break;
+
+						case SDLK_RIGHT:
+							startGame += 10;
+							break;
+
+						case SDLK_w:
+							findNextLetter();
+							break;
+						case SDLK_q:
+							findPrevLetter();
+							break;
+						case SDLK_KP_ENTER:
+						case SDLK_RETURN:
+							if (e.key.keysym.mod & KMOD_ALT)
+							{
+								SetFullscreen(!GetFullscreen());
+							}
+							else
+							{
+								nBurnDrvActive = gametoplay;
+								previousSelected = 0;
+								if (gameAv[nBurnDrvActive])
+								{
+									return gametoplay;
+								}
+							}
+							break;
+						case SDLK_F1:
+							RefreshRomList(true);
+							break;
+						case SDLK_F2:
+							bShowAvailableOnly = !bShowAvailableOnly;
+							DoFilterGames();
+							break;
+						case SDLK_F3:
+							SwapSystemToCheck();
+							break;
+						case SDLK_F4:
+							bShowClones = !bShowClones;
+							DoFilterGames();
+							break;
+						case SDLK_F5:
+							reset_filters();
+							SystemToCheck();
+							DoFilterGames();
+							break;
+						case SDLK_F12:
+							quit = 1;
+							break;
+
+						default:
+							break;
+					}
 				}
 				break;
 			}
-
 		}
 
 		// TODO: Need to put more clamping logic here....

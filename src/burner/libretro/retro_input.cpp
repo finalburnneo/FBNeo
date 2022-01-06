@@ -2506,7 +2506,7 @@ void SetControllerInfo()
 {
 	int nHardwareCode = BurnDrvGetHardwareCode();
 
-	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM) {
+	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM || (nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_MSX) {
 		// Let's have some custom spectrum device handling, so that we can use the keyboard remapping
 		static const struct retro_controller_description joystick_description[] = {
 			{ "Joystick", RETRO_DEVICE_JOYPAD }
@@ -2700,7 +2700,7 @@ static void BurnerHandlerKeyCallback()
 
 	// Send inputs
 	while (keyMatrix[i][0] != '\0') {
-		if(input_cb_wrapper(0, RETRO_DEVICE_KEYBOARD, 0, keyMatrix[i][1]) == 1)
+		if(input_cb_wrapper(2, RETRO_DEVICE_KEYBOARD, 0, keyMatrix[i][1]) == 1)
 			cBurnerKeyCallback(keyMatrix[i][0], KeyType, 1);
 		else
 			cBurnerKeyCallback(keyMatrix[i][0], KeyType, 0);
@@ -2887,9 +2887,9 @@ void retro_set_input_state(retro_input_state_t cb) { input_cb = cb; }
 void retro_set_input_poll(retro_input_poll_t cb) { poll_cb = cb; }
 void retro_set_controller_port_device(unsigned port, unsigned device)
 {
-#if 1
 	// Retroarch is ignoring what i want, so let's force valid values
-	if (nBurnDrvActive != ~0U && (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM)
+	int nHardwareCode = BurnDrvGetHardwareCode();
+	if (nBurnDrvActive != ~0U && ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM || (nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_MSX))
 	{
 		switch(port)
 		{
@@ -2923,7 +2923,6 @@ void retro_set_controller_port_device(unsigned port, unsigned device)
 			HandleMessage(RETRO_LOG_INFO, "[FBNeo] Unknown device type for port %d, forcing \"Classic\" instead\n", port);
 		}
 	}
-#endif
 
 	if (port < nMaxControllers && nDeviceType[port] != device)
 	{

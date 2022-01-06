@@ -157,6 +157,7 @@ int ConfigAppLoad()
 
 		// DirectX Graphics 9 Alt blitter
 		VAR(bVidDX9Bilinear);
+		VAR(nVidDX9HardFX);
 		VAR(bVidHardwareVertex);
 		VAR(bVidMotionBlur);
 		VAR(bVidForce16bitDx9Alt);
@@ -498,6 +499,8 @@ int ConfigAppSave()
 	_ftprintf(h, _T("// --- DirectX Graphics 9 Alt blitter module settings -------------------------\n"));
 	_ftprintf(h, _T("\n// If non-zero, use bi-linear filtering to display the image\n"));
 	VAR(bVidDX9Bilinear);
+	_ftprintf(h, _T("\n// Active HardFX shader effect\n"));
+	VAR(nVidDX9HardFX);
 	_ftprintf(h, _T("\n// If non-zero, use hardware vertex to display the image\n"));
 	VAR(bVidHardwareVertex);
 	_ftprintf(h, _T("\n// If non-zero, use motion blur to display the image\n"));

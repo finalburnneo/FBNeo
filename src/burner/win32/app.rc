@@ -786,9 +786,11 @@ BEGIN
     LTEXT           "",IDC_REPLAYRESET,76,80,190,8
     LTEXT           "",IDC_REPLAYTIME,76,89,190,8
     CONTROL         "Open Read-Only",IDC_READONLY,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,35,25,69,10
+                    WS_TABSTOP,14,25,69,10
     CONTROL         "Show Joystick Movement",IDC_SHOWMOVEMENT,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,120,25,100,10
+                    WS_TABSTOP,97,25,99,10
+    CONTROL         "Start Paused",IDC_STARTPAUSED,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,207,25,57,10
 END
 
 IDD_RECORDINP DIALOGEX 0, 0, 276, 98

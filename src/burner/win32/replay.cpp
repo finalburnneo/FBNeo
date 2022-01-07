@@ -15,6 +15,7 @@ wchar_t wszStartupGame[MAX_PATH];
 wchar_t wszAuthorInfo[MAX_METADATA-64];
 
 INT32 nReplayStatus = 0; // 1 record, 2 replay, 0 nothing
+bool bReplayStartPaused = false;
 bool bReplayReadOnly = false;
 bool bReplayShowMovement = false;
 bool bReplayDontClose = false;
@@ -237,6 +238,13 @@ static void PrintInputs()
 	}
 }
 
+static void DisplayPlayingFrame()
+{
+	wchar_t framestring[32];
+	swprintf(framestring, L"%d / %d", GetCurrentFrame() - nStartFrame,nTotalFrames);
+	VidSNewTinyMsg(framestring);
+}
+
 INT32 ReplayInput()
 {
 	UINT8 n;
@@ -276,9 +284,7 @@ INT32 ReplayInput()
 	}
 
 	if (bReplayFrameCounterDisplay) {
-		wchar_t framestring[32];
-		swprintf(framestring, L"%d / %d", GetCurrentFrame() - nStartFrame,nTotalFrames);
-		VidSNewTinyMsg(framestring);
+		DisplayPlayingFrame();
 	}
 
 	if (bReplayShowMovement) {
@@ -599,6 +605,11 @@ INT32 StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 	}
 
 	nReplayStatus = 2;							// Set replay status
+
+	SetPauseMode(bReplayStartPaused);           // Start Paused?
+
+	DisplayPlayingFrame();
+
 	CheckRedraw();
 
 	MenuEnableItems();
@@ -857,6 +868,9 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 		EnableWindow(GetDlgItem(hDlg, IDC_SHOWMOVEMENT), FALSE);
 		SendDlgItemMessage(hDlg, IDC_SHOWMOVEMENT, BM_SETCHECK, BST_UNCHECKED, 0);
 
+		EnableWindow(GetDlgItem(hDlg, IDC_STARTPAUSED), FALSE);
+		SendDlgItemMessage(hDlg, IDC_STARTPAUSED, BM_SETCHECK, BST_UNCHECKED, 0);
+
 		EnableWindow(GetDlgItem(hDlg, IDOK), FALSE);
 
 		if(bClear) {
@@ -917,6 +931,9 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 
 		EnableWindow(GetDlgItem(hDlg, IDC_SHOWMOVEMENT), TRUE);
 		SendDlgItemMessage(hDlg, IDC_SHOWMOVEMENT, BM_SETCHECK, (bReplayShowMovement) ? BST_CHECKED : BST_UNCHECKED, 0);
+
+		EnableWindow(GetDlgItem(hDlg, IDC_STARTPAUSED), TRUE);
+		SendDlgItemMessage(hDlg, IDC_STARTPAUSED, BM_SETCHECK, (bReplayStartPaused) ? BST_CHECKED : BST_UNCHECKED, 0);
 	}
 
 	memset(ReadHeader, 0, 4);
@@ -1165,6 +1182,12 @@ static BOOL CALLBACK ReplayDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 								bReplayShowMovement = false;
 								if (BST_CHECKED == SendDlgItemMessage(hDlg, IDC_SHOWMOVEMENT, BM_GETCHECK, 0, 0)) {
 									bReplayShowMovement = true;
+								}
+
+								// get start paused status
+								bReplayStartPaused = false;
+								if (BST_CHECKED == SendDlgItemMessage(hDlg, IDC_STARTPAUSED, BM_GETCHECK, 0, 0)) {
+									bReplayStartPaused = true;
 								}
 
 								EndDialog(hDlg, 1);					// only allow OK if a valid selection was made

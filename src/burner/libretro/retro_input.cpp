@@ -2888,26 +2888,29 @@ void retro_set_input_poll(retro_input_poll_t cb) { poll_cb = cb; }
 void retro_set_controller_port_device(unsigned port, unsigned device)
 {
 	// Retroarch is ignoring what i want, so let's force valid values
-	int nHardwareCode = BurnDrvGetHardwareCode();
-	if (nBurnDrvActive != ~0U && ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM || (nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_MSX))
+	if (nBurnDrvActive != ~0U)
 	{
-		switch(port)
+		int nHardwareCode = BurnDrvGetHardwareCode();
+		if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM || (nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_MSX)
 		{
-			case 0:
-			case 1:
-				if(device != RETRO_DEVICE_JOYPAD)
-				{
-					device = RETRO_DEVICE_JOYPAD;
-					HandleMessage(RETRO_LOG_INFO, "[FBNeo] Unknown device type for port %d, forcing \"Joystick\" instead\n", port);
-				}
-				break;
-			case 2:
-				if(device != RETRO_DEVICE_KEYBOARD)
-				{
-					device = RETRO_DEVICE_KEYBOARD;
-					HandleMessage(RETRO_LOG_INFO, "[FBNeo] Unknown device type for port %d, forcing \"Keyboard\" instead\n", port);
-				}
-				break;
+			switch(port)
+			{
+				case 0:
+				case 1:
+					if(device != RETRO_DEVICE_JOYPAD)
+					{
+						device = RETRO_DEVICE_JOYPAD;
+						HandleMessage(RETRO_LOG_INFO, "[FBNeo] Unknown device type for port %d, forcing \"Joystick\" instead\n", port);
+					}
+					break;
+				case 2:
+					if(device != RETRO_DEVICE_KEYBOARD)
+					{
+						device = RETRO_DEVICE_KEYBOARD;
+						HandleMessage(RETRO_LOG_INFO, "[FBNeo] Unknown device type for port %d, forcing \"Keyboard\" instead\n", port);
+					}
+					break;
+			}
 		}
 	}
 	else

@@ -253,7 +253,9 @@ void DoGame(int gameToRun)
 
 void bye(void)
 {
+#ifdef FBNEO_DEBUG
 	printf("Doing exit cleanup\n");
+#endif
 
 	DrvExit();
 	MediaExit();
@@ -374,7 +376,7 @@ int main(int argc, char* argv[])
 
 	SDL_setenv("SDL_AUDIODRIVER", "directsound", true);        // fix audio for windows
 #endif
-	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_JOYSTICK | SDL_INIT_AUDIO) < 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER | SDL_INIT_AUDIO) < 0)
 	{
 		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
 		return 0;
@@ -434,9 +436,7 @@ int main(int argc, char* argv[])
 
 			switch (selectedOk)
 			{
-			case -1:
-				BurnLibExit();
-				SDL_Quit();
+			case -1:			
 				quit = 1;
 				return 0;
 

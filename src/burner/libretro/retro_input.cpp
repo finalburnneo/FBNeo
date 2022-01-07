@@ -2480,9 +2480,10 @@ void SetDefaultDeviceTypes()
 {
 	int nHardwareCode = BurnDrvGetHardwareCode();
 
-	for (int i = 0; i < MAX_PLAYERS; i++) {
+	for (int i = 0; i < MAX_PLAYERS; i++)
+	{
 		// Retroarch is ignoring what i want, so let's force valid values
-		if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM)
+		if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM || (nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_MSX)
 		{
 			switch(i)
 			{

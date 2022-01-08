@@ -476,6 +476,8 @@ static INT32 NeoLoad68KBIOS(INT32 nNewBIOS)
 	return 0;
 }
 
+#if 0
+// removeme
 static INT32 FindType(const char* pName)
 {
 	INT32 i = 0;
@@ -486,6 +488,7 @@ static INT32 FindType(const char* pName)
 
 	return i + 1;
 }
+#endif
 
 static INT32 FindROMs(UINT32 nType, INT32* pOffset, INT32* pNum)
 {
@@ -653,7 +656,7 @@ static INT32 LoadRoms()
 			bprintf(0, _T("ADPCM-B Size:\t%x\n"), nYM2610ADPCMBSize[nNeoActiveSlot]);
 
 #if 0
-			// REMOVE ME IF ALL IS OK -dink jan 8, 2022
+			// REMOVEME IF ALL IS OK -dink jan 8, 2022
 			nYM2610ADPCMASize[nNeoActiveSlot] = nYM2610ADPCMBSize[nNeoActiveSlot] = 0;
 			char* pName;
 			BurnDrvGetRomInfo(&ri, pInfo->nADPCMOffset);
@@ -683,9 +686,11 @@ static INT32 LoadRoms()
 		}
 	}
 
+	// pbobblenb starts loading roms at @ 0x200000 (0x180000 bytes @ 0x200000)
+	if (!strcmp("pbobblenb", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x380000;
 
 #if 0
-	// REMOVE ME.
+	// REMOVEME.
 	if (!strcmp("kof2k4se", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] += 0x800000;
 	if (!strcmp("cphd", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x4000000;
 	if (!strcmp("kf2k4pls", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] += 0x800000;
@@ -809,7 +814,7 @@ static INT32 LoadRoms()
 	NeoDecodeSprites(NeoSpriteROM[nNeoActiveSlot], nSpriteSize[nNeoActiveSlot]);
 
 	if (pInfo->nADPCMANum) {
-		char* pName;
+		//char* pName;
 		struct BurnRomInfo ri;
 		UINT8* pADPCMData;
 
@@ -821,17 +826,21 @@ static INT32 LoadRoms()
 		ri.nType = 0;
 		ri.nLen = 0;
 		BurnDrvGetRomInfo(&ri, pInfo->nADPCMOffset);
-		BurnDrvGetRomName(&pName, pInfo->nADPCMOffset, 0);
+		//BurnDrvGetRomName(&pName, pInfo->nADPCMOffset, 0);
 
 		pADPCMData = YM2610ADPCMAROM[nNeoActiveSlot];
 
+#if 0
 		if (strcmp(BurnDrvGetTextA(DRV_NAME), "sbp") != 0) { // not for sbp!
 			// pbobblen needs this (V ROMs are v3 & v4), note aof/wh1/wh1h/kotm2 (V ROMs are v2 & v4)
 			if (pInfo->nADPCMANum == 2 && pName[FindType(pName) + 1] == '3') {
 				pADPCMData += ri.nLen * 2;
 			}
 		}
+#endif
+
 		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "pbobblenb")) {
+			// pbobblenb starts loading @ 0x200000
 			pADPCMData = YM2610ADPCMAROM[nNeoActiveSlot] + 0x200000;
  		}
 

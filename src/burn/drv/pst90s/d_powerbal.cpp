@@ -338,7 +338,7 @@ static void oki_bankswitch(INT32 data)
 {
 	soundbank = data & 3;
 	MSM6295SetBank(0, DrvSndROM, 0x00000, 0x1ffff);
-	MSM6295SetBank(0, DrvSndROM + (data * 0x20000), 0x20000, 0x3ffff);
+	MSM6295SetBank(0, DrvSndROM + (soundbank * 0x20000), 0x20000, 0x3ffff);
 }
 
 static void __fastcall magicstk_main_write_word(UINT32 address, UINT16 data)
@@ -412,7 +412,7 @@ static void __fastcall magicstk_main_write_byte(UINT32 address, UINT8 data)
 		}
 		return;
 
-		case 0xc201c:
+		case 0xc201d:
 			oki_bankswitch(data);
 		return;
 
@@ -452,10 +452,9 @@ static UINT16 __fastcall magicstk_main_read_word(UINT32 address)
 		case 0xc2018:
 			return DrvDips[1];
 
-		case 0xc201f:
+		case 0xc201e:
 			return MSM6295Read(0);
 	}
-
 	return 0;
 }
 
@@ -487,7 +486,6 @@ static INT32 DrvDoReset()
 	if (use_vblank_eeprom) EEPROMReset();
 
 	tilebank = 0;
-	soundbank = 0;
 
 	return 0;
 }
@@ -754,17 +752,16 @@ static INT32 DrvFrame()
 		}
 	}
 
-	vblank = 0;
-
 	SekOpen(0);
-	SekRun(((12000000 / 60) * 240)/256);
-	vblank = 1;
+	vblank = 1;  // start in vblank
 	SekSetIRQLine(irq_line, CPU_IRQSTATUS_AUTO);
 	SekRun(((12000000 / 60) * 16)/256);
-	SekClose();
+	vblank = 0;
+	SekRun(((12000000 / 60) * 240)/256);
+	SekClose();  // end at vblank
 
 	if (pBurnSoundOut) {
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -839,7 +836,7 @@ struct BurnDriver BurnDrvPowerbal = {
 	"powerbal", NULL, NULL, NULL, "1994",
 	"Power Balls\0", NULL, "Playmark", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC | GBF_BREAKOUT, 0,
 	NULL, powerbalRomInfo, powerbalRomName, NULL, NULL, NULL, NULL, PowerbalInputInfo, PowerbalDIPInfo,
 	PowerbalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	320, 240, 4, 3

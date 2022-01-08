@@ -37,7 +37,7 @@ static UINT8 *coin_lockout;
 static UINT8 *palette_bank;
 
 static INT32 watchdog;
-static INT32 pl_lastbank = 0;
+static INT32 pl_lastbank;
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvDips[3];
@@ -345,6 +345,7 @@ static INT32 DrvDoReset(INT32 full_reset)
 	}
 
 	M6809Open(0);
+	bankswitch(0);
 	M6809Reset();
 	M6809Close();
 
@@ -360,6 +361,7 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	watchdog = 0;
 	mcu_reset = 0;
+	pl_lastbank = 0;
 
 	return 0;
 }
@@ -813,6 +815,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(watchdog);
 		SCAN_VAR(mcu_reset);
+		SCAN_VAR(pl_lastbank);
 
 		if (nAction & ACB_WRITE) {
 			M6809Open(0);

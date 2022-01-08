@@ -637,7 +637,24 @@ static INT32 LoadRoms()
 		}
 
 		nYM2610ADPCMASize[nNeoActiveSlot] = nYM2610ADPCMBSize[nNeoActiveSlot] = 0;
-		if (pInfo->nADPCMOffset >= 0)	{
+		if (pInfo->nADPCMOffset >= 0) {
+			// Add up the ADPCM-A & ADPCM-B roms
+			for (INT32 i = 0; i < pInfo->nADPCMANum; i++) {
+				BurnDrvGetRomInfo(&ri, pInfo->nADPCMOffset + i);
+				nYM2610ADPCMASize[nNeoActiveSlot] += ri.nLen;
+			}
+
+			for (INT32 i = 0; i < pInfo->nADPCMBNum; i++) {
+				BurnDrvGetRomInfo(&ri, pInfo->nADPCMOffset + pInfo->nADPCMANum + i);
+				nYM2610ADPCMBSize[nNeoActiveSlot] += ri.nLen;
+			}
+
+			bprintf(0, _T("ADPCM-A Size:\t%x\n"), nYM2610ADPCMASize[nNeoActiveSlot]);
+			bprintf(0, _T("ADPCM-B Size:\t%x\n"), nYM2610ADPCMBSize[nNeoActiveSlot]);
+
+#if 0
+			// REMOVE ME IF ALL IS OK -dink jan 8, 2022
+			nYM2610ADPCMASize[nNeoActiveSlot] = nYM2610ADPCMBSize[nNeoActiveSlot] = 0;
 			char* pName;
 			BurnDrvGetRomInfo(&ri, pInfo->nADPCMOffset);
 			BurnDrvGetRomName(&pName, pInfo->nADPCMOffset, 0);
@@ -660,9 +677,15 @@ static INT32 LoadRoms()
 				BurnDrvGetRomInfo(&ri, pInfo->nADPCMOffset + pInfo->nADPCMANum + pInfo->nADPCMBNum - 1);
 				nYM2610ADPCMBSize[nNeoActiveSlot] += ri.nLen;
 			}
+			bprintf(0, _T("Stupid Code ADPCM-A Size:\t%x\n"), nYM2610ADPCMASize[nNeoActiveSlot]);
+			bprintf(0, _T("Stupid Code ADPCM-B Size:\t%x\n"), nYM2610ADPCMBSize[nNeoActiveSlot]);
+#endif
 		}
 	}
 
+
+#if 0
+	// REMOVE ME.
 	if (!strcmp("kof2k4se", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] += 0x800000;
 	if (!strcmp("cphd", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x4000000;
 	if (!strcmp("kf2k4pls", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] += 0x800000;
@@ -689,6 +712,9 @@ static INT32 LoadRoms()
 	if (!strcmp("mslug5nd", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x1000000;
 	if (!strcmp("hypernoid", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x1000000;
 
+	bprintf(0, _T("Fixed ADPCM-A Size:\t%x\n"), nYM2610ADPCMASize[nNeoActiveSlot]);
+	bprintf(0, _T("Fixed ADPCM-B Size:\t%x\n"), nYM2610ADPCMBSize[nNeoActiveSlot]);
+#endif
 //	bprintf(PRINT_NORMAL, _T("%x\n"), nYM2610ADPCMASize[nNeoActiveSlot]);
 
 	// The kof2k3 PCB has 96MB of graphics ROM, however the last 16MB are unused, and the protection/decryption hardware does not see them

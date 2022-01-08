@@ -32,6 +32,8 @@ static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 static UINT8 DrvInputs[8];
 
+static HoldCoin<2> hold_coin;
+
 static INT32 flipscreen;
 static INT32 xscroll;
 static INT32 yscroll;
@@ -767,6 +769,8 @@ static INT32 DrvDoReset()
 	AY8910Reset(0);
 	AY8910Reset(1);
 
+	hold_coin.reset();
+
 	HiscoreReset();
 
 	flipscreen = 0;
@@ -870,12 +874,7 @@ static void DrvGfxDescramble(UINT8 *gfx)
 
 static INT32 PkunwarInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM + 0x0000, 0, 1)) return 1;
@@ -926,12 +925,7 @@ static INT32 PkunwarInit()
 
 static INT32 NovaInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM + 0x0000, 0, 1)) return 1;
@@ -993,12 +987,7 @@ static INT32 NinjakunDoReset()
 
 static INT32 NinjakunInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM + 0x0000,  0, 1)) return 1;
@@ -1069,12 +1058,7 @@ static INT32 NinjakunInit()
 
 static INT32 Raiders5Init()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM + 0x0000,  0, 1)) return 1;
@@ -1139,7 +1123,7 @@ static INT32 DrvExit()
 
 	GenericTilesExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -1280,34 +1264,9 @@ static void pkunwar_draw_sprites(INT32 color_base)
 
 		sy -= 32; // all games y offset by 32 pixels
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, color_base, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, color_base, DrvGfxROM1);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, color_base, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, color_base, DrvGfxROM1);
-			}
-		}
-
+		Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 0, color_base, DrvGfxROM1);
 		// wrap around
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx - 256, sy, color, 4, 0, color_base, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx - 256, sy, color, 4, 0, color_base, DrvGfxROM1);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx - 256, sy, color, 4, 0, color_base, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx - 256, sy, color, 4, 0, color_base, DrvGfxROM1);
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, sx - 256, sy, flipx, flipy, color, 4, 0, color_base, DrvGfxROM1);
 	}
 }
 
@@ -1335,19 +1294,7 @@ static void nova_draw_sprites(INT32 color_base)
 
 		sy -= 32; // all games y offset by 32 pixels
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, color_base, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, color_base, DrvGfxROM1);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, color_base, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, color_base, DrvGfxROM1);
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 0, color_base, DrvGfxROM1);
 	}
 }
 
@@ -1452,9 +1399,6 @@ static INT32 NinjakunDraw()
 	return 0;
 }
 
-static INT32 DrvCoinHold = 0;
-static INT32 DrvCoinHoldframecnt = 0;
-
 static INT32 NovaFrame()
 {
 	if (DrvReset) {
@@ -1471,21 +1415,7 @@ static INT32 NovaFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
 
-		// Nova 2001 - if the coin pulse is too long or too short, the game will reset.
-		// It will also reset if coined up like 5 in a row really fast, but that isn't handled in the code below.
-		if (DrvJoy3[0]) {
-			DrvCoinHold = 4; // hold coin input for 3 frames - first one is ignored
-			DrvCoinHoldframecnt = 0;
-		}
-
-		if (DrvCoinHold) {
-			DrvCoinHold--;
-			DrvInputs[2] = 0xFF; // clear coin input
-			if (DrvCoinHoldframecnt)
-				DrvInputs[2] = 0xFF ^ 1;
-		}
-		DrvCoinHoldframecnt++;
-		//bprintf(0, _T("%X,"), (DrvInputs[2] == 0xff) ? 0 : DrvInputs[2]);
+		hold_coin.checklow(0, DrvInputs[2], 1 << 0, 4);
 	}
 
 	vblank = 0;
@@ -1662,7 +1592,7 @@ static INT32 NinjakunFrame()
 }
 
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -1681,9 +1611,12 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		AY8910Scan(nAction, pnMin);
 
+		hold_coin.scan();
+
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(yscroll);
 		SCAN_VAR(xscroll);
+		SCAN_VAR(watchdog);
 		SCAN_VAR(ninjakun_ioctrl);
 	}
 

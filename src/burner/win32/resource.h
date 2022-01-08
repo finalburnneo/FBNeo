@@ -222,6 +222,7 @@
 #define IDC_REPLAYRESET                 20262
 #define IDC_REPLAYTIME                  20263
 #define IDC_SHOWMOVEMENT                20264
+#define IDC_STARTPAUSED                 20265
 
 #define IDC_STATIC_SYS                  	20300
 #define IDC_STATIC_OPT                  	20301

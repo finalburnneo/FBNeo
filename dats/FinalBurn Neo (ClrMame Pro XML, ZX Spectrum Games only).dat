@@ -6704,22 +6704,13 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hercules128k" romof="spec128">
+	<game name="Hercslayer" romof="spec128">
 		<description>Hercules - Slayer of the Damned (128K)</description>
 		<year>1988</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
-		<rom name="Hercules - Slayer of the Damned 128K (1988)(Gremlin Graphics).z80" size="97391" crc="58b28530"/>
+		<rom name="Hercules - Slayer of the Damned (1988)(Gremlin Graphics).tap" size="52958" crc="c6ca45e6"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="hercules48k" cloneof="hercules128k" romof="hercules128k">
-		<description>Hercules - Slayer of the Damned (48K)</description>
-		<year>1988</year>
-		<manufacturer>Gremlin Graphics</manufacturer>
-		<rom name="Hercules - Slayer of the Damned 48K (1988)(Gremlin Graphics).z80" size="42577" crc="234e953e"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -8155,7 +8146,7 @@
 		<description>Klax (128K)</description>
 		<year>1990</year>
 		<manufacturer>Domark</manufacturer>
-		<rom name="Klax 128K (1990)(Domark).z80" size="89781" crc="d1f93544"/>
+		<rom name="Klax 128K (1990)(Domark).tap" size="138496" crc="591ded31"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -9295,13 +9286,13 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mickeymouse" romof="spec128">
-		<description>Mickey Mouse - The Computer Game (128K)</description>
+	<game name="mickeymouse" romof="spectrum">
+		<comment>SPACE: change weapon</comment>
+		<description>Mickey Mouse - The Computer Game (48K)</description>
 		<year>1988</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
-		<rom name="Mickey Mouse - The Computer Game 128K (1988)(Gremlin Graphics).z80" size="44794" crc="2dce1ffe"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Mickey Mouse - The Computer Game 48K (1988)(Gremlin Graphics).z80" size="43296" crc="aa993b54"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -10523,23 +10514,13 @@
 		<driver status="good"/>
 	</game>
 	<game name="pacland" romof="spec128">
-		<comment>Enter to add coins, 1 or 2 to play</comment>
+		<comment>ENTER to add coins, 1 or 2 to play</comment>
 		<description>Pac-Land (128K)</description>
 		<year>1989</year>
 		<manufacturer>Grandslam Entertainments</manufacturer>
 		<rom name="Pac-Land (1989)(Grandslam Entertainments)[128K].z80" size="47575" crc="78fe5d59"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="pacland_48" cloneof="pacland" romof="pacland">
-		<comment>Enter to add coins, 1 or 2 to play</comment>
-		<description>Pac-Land (48K)</description>
-		<year>1989</year>
-		<manufacturer>Grandslam Entertainments</manufacturer>
-		<rom name="Pac-Land (1989)(Grandslam Entertainments).z80" size="37902" crc="67075079"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -10570,15 +10551,6 @@
 		<rom name="Pac-Mania (1988)(Grandslam Entertainments)[128K].z80" size="43027" crc="938c60ff"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="pacmania_48" cloneof="pacmania" romof="pacmania">
-		<description>Pac-Mania (48K)</description>
-		<year>1988</year>
-		<manufacturer>Grandslam Entertainments</manufacturer>
-		<rom name="Pac-Mania (1988)(Grandslam Entertainments).z80" size="31923" crc="b7706dc6"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -11840,7 +11812,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rescategolfo1" romof="spec128">
-		<description>Rescate en el Golfo (Part 1 of 2)</description>
+		<description>Rescate en el Golfo - Part 1 (128K)</description>
 		<year>1990</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="Rescate en el Golfo (1990)(Opera Soft)(Part 1 of 2).z80" size="34779" crc="d7add860"/>
@@ -11850,7 +11822,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rescategolfo2" cloneof="rescategolfo1" romof="rescategolfo1">
-		<description>Rescate en el Golfo (Part 2 of 2)</description>
+		<description>Rescate en el Golfo - Part 2 (128K)</description>
 		<year>1990</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="Rescate en el Golfo (1990)(Opera Soft)(Part 2 of 2).z80" size="37620" crc="370d2085"/>
@@ -11984,7 +11956,7 @@
 		<description>Road Blasters (128K)</description>
 		<year>1988</year>
 		<manufacturer>U.S. Gold</manufacturer>
-		<rom name="Road Blasters 128K (1988)(U.S. Gold).z80" size="99688" crc="64455e8a"/>
+		<rom name="Road Blasters 128K (1988)(U.S. Gold).tap" size="125428" crc="44e22515"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -11999,21 +11971,21 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="roadwile128k" romof="spec128">
+	<game name="roadwile128" romof="spec128">
 		<description>Road Runner and Wile E. Coyote (128K)</description>
 		<year>1991</year>
 		<manufacturer>Hi-Tec Software</manufacturer>
-		<rom name="Road Runner and Wile E. Coyote 128K (1991)(Hi-Tec).tap" size="50312" crc="766bd6a4"/>
+		<rom name="Road Runner and Wile E. Coyote (1991)(Hi-Tec).tap" size="50312" crc="766bd6a4"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="roadwile" cloneof="roadwile128k" romof="roadwile128k">
+	<game name="roadwile48" cloneof="roadwile128" romof="roadwile128">
 		<description>Road Runner and Wile E. Coyote (48K)</description>
 		<year>1991</year>
 		<manufacturer>Hi-Tec Software</manufacturer>
-		<rom name="Road Runner and Wile E. Coyote 48K (1991)(Hi-Tec).z80" size="32844" crc="68c9c307"/>
+		<rom name="Road Runner and Wile E. Coyote (1991)(Hi-Tec).tap" merge="Road Runner and Wile E. Coyote (1991)(Hi-Tec).tap" size="50312" crc="766bd6a4"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -12258,27 +12230,18 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ruffreddy128k" romof="spec128">
+	<game name="ruffreddy" romof="spec128">
 		<description>Ruff and Reddy in the Space Adventure (128K)</description>
 		<year>1990</year>
 		<manufacturer>Hi-Tec Software</manufacturer>
-		<rom name="Ruff and Reddy in the Space Adventure 128K (1990)(Hi-Tec).z80" size="43378" crc="61f72f6d"/>
+		<rom name="Ruff and Reddy in the Space Adventure (1990)(Hi-Tec).tap" size="54708" crc="ffe8fec1"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ruffreddy" cloneof="ruffreddy128k" romof="ruffreddy128k">
-		<description>Ruff and Reddy in the Space Adventure (48K)</description>
-		<year>1990</year>
-		<manufacturer>Hi-Tec Software</manufacturer>
-		<rom name="Ruff and Reddy in the Space Adventure 48K (1990)(Hi-Tec).z80" size="35879" crc="bb620287"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="rungaunt" romof="spec128">
-		<comment>Control Keys = Q, W, P, L, Space</comment>
+		<comment>During the game press 'H' (Pause) then '2' to set controller</comment>
 		<description>Run the Gauntlet (128K)</description>
 		<year>1989</year>
 		<manufacturer>Ocean</manufacturer>
@@ -12299,33 +12262,22 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="rygar" romof="spec128">
-		<description>Rygar (128K)</description>
-		<year>1987</year>
-		<manufacturer>U.S. Gold</manufacturer>
-		<rom name="Rygar (1987)(U.S. Gold)[128K].z80" size="30412" crc="260afb11"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="rygar_48" cloneof="rygar" romof="rygar">
-		<description>Rygar (48K)</description>
-		<year>1987</year>
-		<manufacturer>U.S. Gold</manufacturer>
-		<rom name="Rygar (1987)(U.S. Gold).z80" size="28990" crc="aaef2c33"/>
+	<game name="rygar2020" cloneof="rygar" romof="rygar">
+		<comment>Hack</comment>
+		<description>Rygar - Colour Enhancement Mod (48K) (Hack)</description>
+		<year>2019-20</year>
+		<manufacturer>Rafal Miazga</manufacturer>
+		<rom name="Rygar 2020 (2020)(Ralf).tap" size="35648" crc="c0af87aa"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="rygar2020" cloneof="rygar" romof="rygar">
-		<comment>Hack</comment>
-		<description>Rygar Colour Enhancement Mod (128K) (Hack)</description>
-		<year>2019-20</year>
-		<manufacturer>Rafal Miazga</manufacturer>
-		<rom name="Rygar 2020 (2020)(Ralf).tap" size="35648" crc="c0af87aa"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+	<game name="rygar" romof="spectrum">
+		<description>Rygar - Legendary Warrior (48K)</description>
+		<year>1987</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Rygar - Legendary Warrior (1987)(U.S. Gold).tap" size="44813" crc="c64bbc03"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -12522,15 +12474,6 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="samwarrior" cloneof="samwarrior128k" romof="samwarrior128k">
-		<description>Samurai Warrior - Usagi Yojimbo (48K)</description>
-		<year>1988</year>
-		<manufacturer>Firebird Software</manufacturer>
-		<rom name="Samurai Warrior - Usagi Yojimbo (1988)(Firebird).z80" size="44210" crc="0b36f4a1"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="sanxion128" romof="spec128">
 		<description>Sanxion - The Spectrum Remix (128K)</description>
 		<year>1989</year>
@@ -12550,23 +12493,22 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="satan" romof="spec128">
-		<description>Satan (Part 1 of 2) (128K)</description>
-		<year>1989</year>
+	<game name="satan" romof="spectrum">
+		<description>Satan - Part 1 (48K)</description>
+		<year>1990</year>
 		<manufacturer>Dinamic Software</manufacturer>
-		<rom name="Satan (1989)(Dinamic Software)(Part 1 of 2)(128k).z80" size="35210" crc="d0116da2"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Satan Part 1 (1990)(Dinamic).tap" size="48395" crc="2098b208"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="satan2" cloneof="satan" romof="satan">
-		<description>Satan (Part 2 of 2) (128K)</description>
-		<year>1989</year>
+		<comment>Password: 01020304</comment>
+		<description>Satan - Part 2 (48K)</description>
+		<year>1990</year>
 		<manufacturer>Dinamic Software</manufacturer>
-		<rom name="Satan (1989)(Dinamic Software)(Part 2 of 2)(128k).z80" size="36685" crc="d8e20890"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Satan Part 2 (1990)(Dinamic).tap" size="47945" crc="b6586a99"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -12650,10 +12592,11 @@
 		<driver status="good"/>
 	</game>
 	<game name="scoobydoo" romof="spectrum">
+		<comment>Press 'J' to controller menu</comment>
 		<description>Scooby Doo in the Castle Mystery (48K)</description>
 		<year>1986</year>
 		<manufacturer>Elite Systems</manufacturer>
-		<rom name="Scooby Doo in the Castle Mystery 48K (1986)(Elite Systems).z80" size="32957" crc="031b9d4c"/>
+		<rom name="Scooby Doo in the Castle Mystery 48K (1986)(Elite Systems).tap" size="46057" crc="f1436e40"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -14976,10 +14919,11 @@
 		<driver status="good"/>
 	</game>
 	<game name="teclipse" romof="spectrum">
+		<comment>P and L: look up and down - S: step size - SPACE: draw/replace gunsight</comment>
 		<description>Total Eclipse (48K)</description>
 		<year>1988</year>
 		<manufacturer>Incentive</manufacturer>
-		<rom name="Total Eclipse (1988)(Incentive).z80" size="40490" crc="d863549f"/>
+		<rom name="Total Eclipse 48K (1988)(Incentive).tap" size="50769" crc="1e312308"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

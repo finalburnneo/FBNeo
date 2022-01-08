@@ -6602,8 +6602,7 @@ DRV		BurnDrvnes_hellokitnooha;
 DRV		BurnDrvnes_hellokitwor;
 DRV		BurnSpecHerberttb;
 DRV		BurnDrvHerbiedk;
-DRV		BurnSpecHercules128k;
-DRV		BurnSpecHercules48k;
+DRV		BurnSpecHercslayer;
 DRV		BurnDrvMSX_hercules;
 DRV		BurnDrvmd_herculs2;
 DRV		BurnDrvmd_hercules;
@@ -6870,6 +6869,7 @@ DRV		BurnDrvCpsHsf2j;
 DRV		BurnDrvCpsHsf2;
 DRV		BurnDrvMSX_hyperviper;
 DRV		BurnSpecHyperkill;
+DRV		BurnDrvHypernoid;
 DRV		BurnDrvHyperspc;
 DRV		BurnSpecHypsys1;
 DRV		BurnSpecHypsys2;
@@ -10566,7 +10566,6 @@ DRV		BurnDrvmd_pacattak;
 DRV		BurnDrvpacgal;
 DRV		BurnDrvgg_pacintim;
 DRV		BurnSpecpacland;
-DRV		BurnSpecpacland_48;
 DRV		BurnDrvPaclandm2;
 DRV		BurnDrvMSX_pacland;
 DRV		BurnDrvPaclandj;
@@ -10608,7 +10607,6 @@ DRV		BurnDrvpacplus;
 DRV		BurnDrvnes_pacmanx;
 DRV		BurnDrvPacmaniao;
 DRV		BurnSpecpacmania;
-DRV		BurnSpecpacmania_48;
 DRV		BurnDrvMSX_pacmania;
 DRV		BurnDrvsms_pacmania;
 DRV		BurnDrvmd_pacmania;
@@ -12251,7 +12249,7 @@ DRV		BurnDrvmd_rrash2;
 DRV		BurnDrvmd_rrash2s;
 DRV		BurnDrvmd_rrash2j;
 DRV		BurnDrvnes_roadrunner;
-DRV		BurnSpecRoadwile128k;
+DRV		BurnSpecRoadwile128;
 DRV		BurnSpecRoadwile;
 DRV		BurnSpecRoadtrip2;
 DRV		BurnSpecRoadtrip;
@@ -12473,7 +12471,6 @@ DRV		BurnDrvgg_royalstne;
 DRV		BurnDrvgg_royalstn;
 DRV		BurnDrvsgx_rta2;
 DRV		BurnSpecrubicon;
-DRV		BurnSpecRuffreddy128k;
 DRV		BurnSpecRuffreddy;
 DRV		BurnDrvRugrats;
 DRV		BurnDrvmd_rugbywc;
@@ -12492,14 +12489,13 @@ DRV		BurnDrvRushcrsh;
 DRV		BurnDrvRushatck;
 DRV		BurnDrvnes_rushnattackc;
 DRV		BurnDrvnes_rushnattack;
-DRV		BurnSpecrygar;
-DRV		BurnSpecrygar_48;
 DRV		BurnDrvRygar;
 DRV		BurnDrvRygar2;
 DRV		BurnDrvRygar3;
 DRV		BurnDrvRygarb;
 DRV		BurnDrvnes_rygar;
 DRV		BurnSpecRygar2020;
+DRV		BurnSpecrygar;
 DRV		BurnDrvRyujina;
 DRV		BurnDrvRyujin;
 DRV		BurnDrvRyukyua;
@@ -12639,7 +12635,6 @@ DRV		BurnDrvmd_samspir;
 DRV		BurnDrvnes_samuraispirits;
 DRV		Burnmd_Samsho2;
 DRV		BurnSpecSamwarrior128k;
-DRV		BurnSpecSamwarrior;
 DRV		BurnDrvtg_samuraig;
 DRV		Burnmd_Sanguoyan;
 DRV		BurnDrvmd_sanguo;
@@ -24735,8 +24730,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_hellokitwor,	// Hello Kitty World (Japan)
 	&BurnSpecHerberttb,			// Herbert the Turbot (128K) (HB)
 	&BurnDrvHerbiedk,			// Herbie at the Olympics (DK conversion)
-	&BurnSpecHercules128k,		// Hercules - Slayer of the Damned (128K)
-	&BurnSpecHercules48k,		// Hercules - Slayer of the Damned (48K)
+	&BurnSpecHercslayer,		// Hercules - Slayer of the Damned (128K)
 	&BurnDrvMSX_hercules,		// Hercules - Slayer of the Damned (Euro)
 	&BurnDrvmd_herculs2,		// Hercules 2
 	&BurnDrvmd_hercules,		// Hercules
@@ -25003,6 +24997,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsHsf2,			// Hyper Street Fighter II: The Anniversary Edition (040202 USA)
 	&BurnDrvMSX_hyperviper,		// Hyper Viper
 	&BurnSpecHyperkill,			// Hyperkill (128K) (HB)
+	&BurnDrvHypernoid,			// Hypernoid (Ver. 20211128)
 	&BurnDrvHyperspc,			// Hyperspace (bootleg of Asteroids)
 	&BurnSpecHypsys1,			// Hypsys - Part 1 (48K)
 	&BurnSpecHypsys2,			// Hypsys - Part 2 (48K)
@@ -27225,7 +27220,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_mmaniau,			// Mickey Mania - The Timeless Adventures of Mickey Mouse (USA)
 	&BurnDrvmd_mmaniaup,		// Mickey Mania - The Timeless Adventures of Mickey Mouse (USA, Prototype)
 	&BurnDrvnes_mickeymania7,	// Mickey Mania 7 (Unl)
-	&BurnSpecMickeymouse,		// Mickey Mouse - The Computer Game (128K)
+	&BurnSpecMickeymouse,		// Mickey Mouse - The Computer Game (48K)
 	&BurnDrvgg_legndillj,		// Mickey Mouse Densetsu no Oukoku - Legend of Illusion (Jpn)
 	&BurnDrvnes_mickemouiiij,	// Mickey Mouse III - Yume Fuusen (Japan)
 	&BurnDrvnes_mickemouiii,	// Mickey Mouse III - Yume Fuusen (T-Eng)
@@ -28699,7 +28694,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpacgal,				// Pac-Gal
 	&BurnDrvgg_pacintim,		// Pac-In-Time (Prototype)
 	&BurnSpecpacland,			// Pac-Land (128K)
-	&BurnSpecpacland_48,		// Pac-Land (48K)
 	&BurnDrvPaclandm2,			// Pac-Land (Bally-Midway)
 	&BurnDrvMSX_pacland,		// Pac-Land (Euro)
 	&BurnDrvPaclandj,			// Pac-Land (Japan new)
@@ -28741,7 +28735,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_pacmanx,		// Pac-Man Xtreme (Hack)
 	&BurnDrvPacmaniao,			// Pac-Mania (111187 sound program)
 	&BurnSpecpacmania,			// Pac-Mania (128K)
-	&BurnSpecpacmania_48,		// Pac-Mania (48K)
 	&BurnDrvMSX_pacmania,		// Pac-Mania (Euro)
 	&BurnDrvsms_pacmania,		// Pac-Mania (Euro)
 	&BurnDrvmd_pacmania,		// Pac-Mania (Euro, USA)
@@ -30255,8 +30248,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfds_replicart,		// Replicart (Japan)
 	&BurnDrvRepulse,			// Repulse
 	&BurnDrvMSX_rescatl,		// Rescate Atlantida (Spanish)
-	&BurnSpecrescategolfo1,		// Rescate en el Golfo (Part 1 of 2)
-	&BurnSpecrescategolfo2,		// Rescate en el Golfo (Part 2 of 2)
+	&BurnSpecrescategolfo1,		// Rescate en el Golfo - Part 1 (128K)
+	&BurnSpecrescategolfo2,		// Rescate en el Golfo - Part 2 (128K)
 	&BurnSpecRescmarte,			// Rescate En Marte (48K) (HB)
 	&BurnDrvnes_rescuec,		// Rescue - The Embassy Mission (USA) - Castellano v1.0
 	&BurnDrvnes_rescue,			// Rescue - The Embassy Mission (USA)
@@ -30384,7 +30377,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_rrash2s,			// Road Rash II (Hack, Spanish)
 	&BurnDrvmd_rrash2j,			// Road Rash II (Jpn)
 	&BurnDrvnes_roadrunner,		// Road Runner (USA) (Unl)
-	&BurnSpecRoadwile128k,		// Road Runner and Wile E. Coyote (128K)
+	&BurnSpecRoadwile128,		// Road Runner and Wile E. Coyote (128K)
 	&BurnSpecRoadwile,			// Road Runner and Wile E. Coyote (48K)
 	&BurnSpecRoadtrip2,			// Road Trippin' (128K) (HB, v2)
 	&BurnSpecRoadtrip,			// Road Trippin' (48K) (HB)
@@ -30606,8 +30599,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_royalstn,		// Royal Stone - Hirakareshi Toki no Tobira (Jpn)
 	&BurnDrvsgx_rta2,			// RTA2 - Homebrew conversion of RTA2
 	&BurnSpecrubicon,			// Rubicon (128K) (HB, v1.1)
-	&BurnSpecRuffreddy128k,		// Ruff and Reddy in the Space Adventure (128K)
-	&BurnSpecRuffreddy,			// Ruff and Reddy in the Space Adventure (48K)
+	&BurnSpecRuffreddy,			// Ruff and Reddy in the Space Adventure (128K)
 	&BurnDrvRugrats,			// Rug Rats
 	&BurnDrvmd_rugbywc,			// Rugby World Cup 1995 (Euro, USA)
 	&BurnDrvRumba,				// Rumba Lumber
@@ -30625,14 +30617,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRushatck,			// Rush'n Attack (US)
 	&BurnDrvnes_rushnattackc,	// Rush'n Attack (USA) - Castellano v1.1
 	&BurnDrvnes_rushnattack,	// Rush'n Attack (USA)
-	&BurnSpecrygar,				// Rygar (128K)
-	&BurnSpecrygar_48,			// Rygar (48K)
 	&BurnDrvRygar,				// Rygar (US set 1)
 	&BurnDrvRygar2,				// Rygar (US set 2)
 	&BurnDrvRygar3,				// Rygar (US set 3 Old Version)
 	&BurnDrvRygarb,				// Rygar (US, bootleg)
 	&BurnDrvnes_rygar,			// Rygar (USA) (Rev A)
-	&BurnSpecRygar2020,			// Rygar Colour Enhancement Mod (128K) (Hack)
+	&BurnSpecRygar2020,			// Rygar - Colour Enhancement Mod (48K) (Hack)
+	&BurnSpecrygar,				// Rygar - Legendary Warrior (48K)
 	&BurnDrvRyujina,			// Ryu Jin (Japan, ET910000A PCB)
 	&BurnDrvRyujin,				// Ryu Jin (Japan, ET910000B PCB)
 	&BurnDrvRyukyua,			// RyuKyu (Japan) (FD1094 317-5023)
@@ -30772,7 +30763,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_samuraispirits,	// Samurai Spirits (Unl)
 	&Burnmd_Samsho2,			// Samurai Spirits II
 	&BurnSpecSamwarrior128k,	// Samurai Warrior - Usagi Yojimbo (128K)
-	&BurnSpecSamwarrior,		// Samurai Warrior - Usagi Yojimbo (48K)
 	&BurnDrvtg_samuraig,		// Samurai-Ghost
 	&Burnmd_Sanguoyan,			// San Guo Yan Yi - Huo Shao Chi Bi
 	&BurnDrvmd_sanguo,			// San Guo Zhi Lie Zhuan - Luan Shi Qun Ying (Chi)
@@ -30823,8 +30813,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_sasaa,			// Sasa (Jpn, Alt)
 	&BurnDrvSasuke,				// Sasuke vs. Commander
 	&BurnDrvMSX_satan,			// Satan (Euro)
-	&BurnSpecsatan,				// Satan (Part 1 of 2) (128K)
-	&BurnSpecsatan2,			// Satan (Part 2 of 2) (128K)
+	&BurnSpecsatan,				// Satan - Part 1 (48K)
+	&BurnSpecsatan2,			// Satan - Part 2 (48K)
 	&BurnDrvSatansatind,		// Satan of Saturn (Inder S.A., bootleg)
 	&BurnDrvSatansat,			// Satan of Saturn (set 1)
 	&BurnDrvSatansata,			// Satan of Saturn (set 2)

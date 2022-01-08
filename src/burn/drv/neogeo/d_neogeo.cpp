@@ -20829,10 +20829,10 @@ STDROMPICKEXT(teot, teot, neogeo)
 STD_ROM_FN(teot)
 
 struct BurnDriver BurnDrvTeot = {
-	"teot", NULL, "neogeo", NULL, "2021",
+	"teot", NULL, "neogeo", NULL, "2022",
 	"The Eye of Typhoon (Beta Version)\0", NULL, "OzzyOuzo", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
 	NULL, teotRomInfo, teotRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3

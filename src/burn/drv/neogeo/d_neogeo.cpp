@@ -20894,3 +20894,34 @@ struct BurnDriver BurnDrvLooptris = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
+
+// Hypernoid (Ver. 20211128)
+
+static struct BurnRomInfo hypernoidRomDesc[] = {
+	{ "hypernoid-p1.p1",	0x100000, 0xe024fa76, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+
+	{ "hypernoid-s1.s1",	0x020000, 0xbb82ab71, 2 | BRF_GRA },           	//  1 Text layer tiles
+
+	{ "hypernoid-c1.c1",	0x200000, 0x41d6140a, 3 | BRF_GRA },           	//  2 Sprite data
+	{ "hypernoid-c2.c2",	0x200000, 0x36f35df2, 3 | BRF_GRA },           	//  3
+
+	{ "hypernoid-m1.m1",	0x080000, 0x6c8eaacc, 4 | BRF_ESS | BRF_PRG }, 	//  4 Z80 code
+
+	{ "hypernoid-v.v1",		0x400000, 0xdafa1bdd, 5 | BRF_SND },           	//  5 Sound data
+	{ "hypernoid-v.v2",		0x400000, 0x85ad8283, 5 | BRF_SND },           	//  6
+	{ "hypernoid-v.v3",		0x400000, 0x86c27f0c, 5 | BRF_SND },           	//  7
+	{ "hypernoid-v.v4",		0x400000, 0xa3982244, 5 | BRF_SND },           	//  8
+};
+
+STDROMPICKEXT(hypernoid, hypernoid, neogeo)
+STD_ROM_FN(hypernoid)
+
+struct BurnDriver BurnDrvHypernoid = {
+	"hypernoid", NULL, "neogeo", NULL, "2021",
+	"Hypernoid (Ver. 20211128)\0", NULL, "NeoHomeBrew", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_BREAKOUT, 0,
+	NULL, hypernoidRomInfo, hypernoidRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};

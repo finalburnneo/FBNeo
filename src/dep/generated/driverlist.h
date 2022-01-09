@@ -3956,6 +3956,7 @@ DRV		BurnDrvDkong3j;
 DRV		BurnDrvDkong3;
 DRV		BurnDrvnes_donkeykong3;
 DRV		BurnDrvDkongbp;
+DRV		BurnDrvDkongbp1;
 DRV		BurnDrvDkongchm1;
 DRV		BurnDrvDkchrmx;
 DRV		BurnDrvnes_donkekoncou4;
@@ -22088,6 +22089,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDkong3,				// Donkey Kong 3 (US)
 	&BurnDrvnes_donkeykong3,	// Donkey Kong 3 (USA)
 	&BurnDrvDkongbp,			// Donkey Kong Barrelpalooza v1.06
+	&BurnDrvDkongbp1,			// Donkey Kong Barrelpalooza v1.07
 	&BurnDrvDkongchm1,			// Donkey Kong Championship Edition v1.01
 	&BurnDrvDkchrmx,			// Donkey Kong Christmas Remix (Hack)
 	&BurnDrvnes_donkekoncou4,	// Donkey Kong Country 4 (Unl)

@@ -600,17 +600,18 @@
 	</game>
 	<game name="gallforj" cloneof="gallfor" romof="gallfor">
 		<description>Gall Force - Eternal Story (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1986</year>
+		<manufacturer>HAL Laboratory</manufacturer>
 		<rom name="Gall Force - Eternal Story (Japan).fds" size="131016" crc="51ef74fb"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="gallfor" romof="fdsbios">
+		<comment>Hack</comment>
 		<description>Gall Force - Eternal Story (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1986-2008</year>
+		<manufacturer>Gil Galad</manufacturer>
 		<rom name="Gall Force - Eternal Story (T-Eng).fds" size="131000" crc="d66e007f"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -618,8 +619,8 @@
 	</game>
 	<game name="gingaden" romof="fdsbios">
 		<description>Ginga Denshou - Galaxy Odyssey (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1986</year>
+		<manufacturer>Imagineer</manufacturer>
 		<rom name="Ginga Denshou - Galaxy Odyssey (Japan).fds" size="131016" crc="d38240da"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -627,7 +628,7 @@
 	</game>
 	<game name="golf" romof="fdsbios">
 		<description>Golf (Japan)</description>
-		<year>1989?</year>
+		<year>1985</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Golf (Japan).fds" size="65516" crc="4667eafa"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
@@ -636,7 +637,7 @@
 	</game>
 	<game name="golfjapcou" romof="fdsbios">
 		<description>Golf - Japan Course (Japan)</description>
-		<year>1989?</year>
+		<year>1987</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Golf - Japan Course (Japan).fds" size="131016" crc="dbacfaaa"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
@@ -645,7 +646,7 @@
 	</game>
 	<game name="golfuscourse" romof="fdsbios">
 		<description>Golf - US Course (Japan)</description>
-		<year>1989?</year>
+		<year>1987</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Golf - US Course (Japan).fds" size="131016" crc="0ef5dae4"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
@@ -653,9 +654,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="goonies" romof="fdsbios">
-		<description>Goonies (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Goonies, The (Japan)</description>
+		<year>1988</year>
+		<manufacturer>Konami</manufacturer>
 		<rom name="Goonies (Japan).fds" size="65516" crc="81b760a2"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -663,8 +664,8 @@
 	</game>
 	<game name="greenberet" romof="fdsbios">
 		<description>Green Beret (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Konami</manufacturer>
 		<rom name="Green Beret (Japan).fds" size="131016" crc="e7f0577b"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -672,8 +673,8 @@
 	</game>
 	<game name="gunsmoke" romof="fdsbios">
 		<description>Gun.Smoke (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Capcom</manufacturer>
 		<rom name="Gun.Smoke (Japan).fds" size="131016" crc="be761b95"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -681,17 +682,18 @@
 	</game>
 	<game name="gyruss1" cloneof="gyruss" romof="gyruss">
 		<description>Gyruss (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Konami</manufacturer>
 		<rom name="Gyruss (Japan).fds" size="131016" crc="4552202c"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="gyruss" romof="fdsbios">
+		<comment>Hack</comment>
 		<description>Gyruss (T-eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988-2021</year>
+		<manufacturer>Stardust Crusader</manufacturer>
 		<rom name="Gyruss (T-eng).fds" size="131000" crc="f17f2728"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -699,8 +701,8 @@
 	</game>
 	<game name="halleywars" romof="fdsbios">
 		<description>Halley Wars (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1989</year>
+		<manufacturer>Taito</manufacturer>
 		<rom name="Halley Wars (Japan).fds" size="131016" crc="583b11ca"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -708,8 +710,8 @@
 	</game>
 	<game name="haokunnofusnata" romof="fdsbios">
 		<description>Hao-kun no Fushigi na Tabi (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Square</manufacturer>
 		<rom name="Hao-kun no Fushigi na Tabi (Japan).fds" size="131016" crc="085f5f88"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -717,7 +719,7 @@
 	</game>
 	<game name="hikarshi" romof="fdsbios">
 		<description>Hikari Shinwa - Palutena no Kagami (Japan)</description>
-		<year>1989?</year>
+		<year>1986</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Hikari Shinwa - Palutena no Kagami (Japan).fds" size="131000" crc="32516fcf"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
@@ -726,7 +728,7 @@
 	</game>
 	<game name="icehockey" romof="fdsbios">
 		<description>Ice Hockey (Japan)</description>
-		<year>1989?</year>
+		<year>1988</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Ice Hockey (Japan).fds" size="65516" crc="7bb390de"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
@@ -735,7 +737,7 @@
 	</game>
 	<game name="ishidouj" cloneof="ishidou" romof="ishidou">
 		<description>Ishidou (Japan)</description>
-		<year>1989?</year>
+		<year>1990</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Ishidou (Japan).fds" size="131000" crc="0c54a19e"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
@@ -743,9 +745,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ishidou" romof="fdsbios">
+		<comment>Hack</comment>
 		<description>Ishidou (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990-2011</year>
+		<manufacturer>Django</manufacturer>
 		<rom name="Ishidou (T-Eng).fds" size="131000" crc="ebfcf648"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -753,8 +756,8 @@
 	</game>
 	<game name="jikaishometmag" romof="fdsbios">
 		<description>Jikai Shounen Met Mag (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Square - Thinking Rabbit</manufacturer>
 		<rom name="Jikai Shounen Met Mag (Japan).fds" size="131016" crc="c8ce0200"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>

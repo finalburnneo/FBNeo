@@ -3268,6 +3268,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="deadtomb">
+		<comment>Homebrew</comment>
+		<description>Dead Tomb (HB)</description>
+		<year>2020</year>
+		<manufacturer>CollectorVision Games</manufacturer>
+		<rom name="Dead Tomb (2020)(CollectorVision).nes" size="262160" crc="0ab3480b"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="deadlytowers">
 		<description>Deadly Towers (USA)</description>
 		<year>1987</year>
@@ -4453,6 +4462,15 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Empire City - 1931 (Japan).nes" size="131088" crc="bd736ec8"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="enigmacore">
+		<comment>Homebrew</comment>
+		<description>Enigmacore (HB)</description>
+		<year>2015</year>
+		<manufacturer>J. Kane &amp; K. Hanley</manufacturer>
+		<rom name="Enigmacore (2015)(J. Kane &amp; K. Hanley).nes" size="40976" crc="cf680195"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

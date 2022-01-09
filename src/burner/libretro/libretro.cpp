@@ -76,6 +76,7 @@ static UINT8* pVidImage = NULL;
 static bool bVidImageNeedRealloc = false;
 static bool bRotationDone = false;
 static int16_t *pAudBuffer = NULL;
+static char text_missing_files[2048] = "";
 
 // Frameskipping v2 Support
 #define FRAMESKIP_MAX 30
@@ -896,6 +897,7 @@ static bool open_archive()
 		set_neo_system_bios();
 
 	// Going over every rom to see if they are properly loaded before we continue ...
+	bool ret = true;
 	for (unsigned i = 0; i < nRomCount; i++)
 	{
 		if (pRomFind[i].nState != STAT_OK)
@@ -905,15 +907,18 @@ static bool open_archive()
 			BurnDrvGetRomInfo(&ri, i);
 			if(!(ri.nType & BRF_OPT))
 			{
+				static char prev[1024];
+				strcpy(prev, text_missing_files);
+				sprintf(text_missing_files, "%s\nROM with name %s and CRC 0x%08x is missing", prev, rom_name, ri.nCrc);
 				BurnDrvGetRomName(&rom_name, i, 0);
-				HandleMessage(RETRO_LOG_ERROR, "[FBNeo] ROM at index %d with name %s and CRC 0x%08x is required ...\n", i, rom_name, ri.nCrc);
-				return false;
+				log_cb(RETRO_LOG_ERROR, "[FBNeo] ROM at index %d with name %s and CRC 0x%08x is required\n", i, rom_name, ri.nCrc);
+				ret = false;
 			}
 		}
 	}
 
 	BurnExtLoadRom = archive_load_rom;
-	return true;
+	return ret;
 }
 
 static void SetRotation()
@@ -1690,8 +1695,8 @@ static bool retro_load_game_common()
 #endif
 			const char* s5 = "THIS IS NOT A BUG SO PLEASE DON'T WASTE EVERYONE'S TIME BY REPORTING THIS !\n";
 
-			static char uguiText[1024];
-			sprintf(uguiText, "%s%s%s%s%s", s1, s2, s3, s4, s5);
+			static char uguiText[4096];
+			sprintf(uguiText, "%s%s%s\n\n%s%s%s", s1, s2, text_missing_files, s3, s4, s5);
 			SetUguiError(uguiText);
 
 			goto end;

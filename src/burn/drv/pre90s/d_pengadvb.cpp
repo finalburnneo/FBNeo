@@ -24,6 +24,8 @@ static UINT8 DrvNMI;
 static UINT8 msxmode = 0;
 static UINT8 mem_map = 0;
 static UINT8 mem_banks[4];
+static UINT8 msx_input_mask = 0;
+static UINT8 lastnmi = 0;
 
 static struct BurnInputInfo PengadvbInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
@@ -34,7 +36,7 @@ static struct BurnInputInfo PengadvbInputList[] = {
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"	},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 };
 
 STDINPUTINFO(Pengadvb)
@@ -199,8 +201,6 @@ static void sg1000_ppi8255_portA_write(UINT8 data)
 	mem_map_banks();
 }
 
-static UINT8 msx_input_mask = 0;
-
 static UINT8 ay8910portAread(UINT32 /*offset*/)
 {
 	return DrvInputs[0];
@@ -226,6 +226,7 @@ static INT32 DrvDoReset()
 	TMS9928AReset();
 	mem_map = 0;
 	mem_banks[0] = mem_banks[1] = mem_banks[2] = mem_banks[3] = 0;
+	lastnmi = 0;
 	mem_map_banks();
 	ZetClose();
 
@@ -260,7 +261,7 @@ static void __fastcall msx_write(UINT16 address, UINT8 data)
 
 		if ( slot_select == 3 )
 		{
-			main_mem[address - 0xc000] = data;
+			main_mem[address & 0x3fff] = data;
 		}
 	}
 	else
@@ -305,12 +306,7 @@ static void pengadvb_decrypt(UINT8 *mem, INT32 memsize)
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(maincpu, 0, 1)) return 1;
@@ -360,8 +356,7 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 	ppi8255_exit();
 
-	BurnFree (AllMem);
-	AllMem = NULL;
+	BurnFreeMemIndex();
 
 	msxmode = 0;
 
@@ -370,8 +365,6 @@ static INT32 DrvExit()
 
 static INT32 DrvFrame()
 {
-	static UINT8 lastnmi = 0;
-
 	if (DrvReset) {
 		DrvDoReset();
 	}
@@ -439,6 +432,18 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 		AY8910Scan(nAction, pnMin);
 		TMS9928AScan(nAction, pnMin);
+		ppi8255_scan();
+
+		SCAN_VAR(mem_map);
+		SCAN_VAR(mem_banks);
+		SCAN_VAR(msx_input_mask);
+		SCAN_VAR(lastnmi);
+	}
+
+	if (nAction & ACB_WRITE) {
+		ZetOpen(0);
+		mem_map_banks();
+		ZetClose();
 	}
 
 	return 0;
@@ -448,11 +453,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Penguin Adventure (bootleg of MSX version)
 
 static struct BurnRomInfo pengadvbRomDesc[] = {
-	{ "rom.u5",	0x8000, 0xd21950d2, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "rom.u5",		0x8000, 0xd21950d2, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
 
-	{ "rom.u7",	0x8000, 0xd4b4a4a4, 2 | BRF_GRA },           //  1 game
-	{ "rom.u8",	0x8000, 0xeada2232, 2 | BRF_GRA },           //  2
-	{ "rom.u9",	0x8000, 0x6478c561, 2 | BRF_GRA },           //  3
+	{ "rom.u7",		0x8000, 0xd4b4a4a4, 2 | BRF_GRA },           //  1 game
+	{ "rom.u8",		0x8000, 0xeada2232, 2 | BRF_GRA },           //  2
+	{ "rom.u9",		0x8000, 0x6478c561, 2 | BRF_GRA },           //  3
 	{ "rom.u10",	0x8000, 0x5c48360f, 2 | BRF_GRA },           //  4
 };
 

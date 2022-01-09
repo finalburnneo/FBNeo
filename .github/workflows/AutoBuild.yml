@@ -38,3 +38,10 @@ jobs:
     - name: Build FBNeo
       run: |
         make -j$(nproc) RELEASEBUILD=1 SKIPDEPEND=1 ${{matrix.platform.makeopts}}
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: fbneo-artifact
+        path: |
+          fbneo
+          fbneo.exe

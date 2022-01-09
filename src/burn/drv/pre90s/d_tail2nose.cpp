@@ -467,6 +467,87 @@ static INT32 DrvInit()
 	return 0;
 }
 
+static INT32 DrvaInit()
+{
+	BurnAllocMemIndex();
+
+	{
+		if (BurnLoadRom(Drv68KROM + 0x000001,	 0, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM + 0x000000,	 1, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM + 0x020001,	 2, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM + 0x020000,	 3, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM + 0x040000,	 4, 1)) return 1;
+		if (BurnLoadRom(Drv68KROM + 0x0c0001,	 5, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM + 0x0c0000,	 6, 2)) return 1;
+
+		if (BurnLoadRom(DrvZ80ROM + 0x000000,	 7, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x010000,	 8, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM0 + 0x00000,	 9, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x80000,	10, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0xc0000,	11, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM1 + 0x00000,	12, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x00001,	13, 2)) return 1;
+
+		if (BurnLoadRom(DrvSndROM,		14, 1)) return 1;
+
+		if (BurnLoadRom(DrvISndROM,		0x80, 1)) return 1;
+
+		for (INT32 i = 0; i < 0x80000; i+=4) {
+			BurnByteswap(DrvGfxROM1 + i + 1, 2);
+		}
+
+		DrvGfxExpand(DrvGfxROM0, 0x100000);
+		DrvGfxExpand(DrvGfxROM1, 0x080000);
+	}
+
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(Drv68KROM,			0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(Drv68KROM + 0x040000,	0x200000, 0x27ffff, MAP_ROM);
+	SekMapMemory(Drv68KROM + 0x0c0000,	0x2c0000, 0x2dffff, MAP_ROM);
+	SekMapMemory(DrvZoomRAM,		0x400000, 0x41ffff, MAP_ROM);
+	SekMapMemory(Drv68KRAM,			0xff8000, 0xffbfff, MAP_RAM);
+	SekMapMemory(DrvSprRAM,			0xffc000, 0xffcfff, MAP_RAM);
+	SekMapMemory(DrvVidRAM,			0xffd000, 0xffdfff, MAP_RAM);
+	SekMapMemory(DrvPalRAM,			0xffe000, 0xffefff, MAP_ROM);
+	SekSetWriteWordHandler(0,		tail2nose_main_write_word);
+	SekSetWriteByteHandler(0,		tail2nose_main_write_byte);
+	SekSetReadWordHandler(0,		tail2nose_main_read_word);
+	SekSetReadByteHandler(0,		tail2nose_main_read_byte);
+	SekClose();
+
+	ZetInit(0);
+	ZetOpen(0);
+	ZetMapArea(0x0000, 0x77ff, 0, DrvZ80ROM);
+	ZetMapArea(0x0000, 0x77ff, 2, DrvZ80ROM);
+	ZetMapArea(0x7800, 0x7fff, 0, DrvZ80RAM);
+	ZetMapArea(0x7800, 0x7fff, 1, DrvZ80RAM);
+	ZetMapArea(0x7800, 0x7fff, 2, DrvZ80RAM);
+	ZetSetOutHandler(tail2nose_sound_out);
+	ZetSetInHandler(tail2nose_sound_in);
+
+	INT32 nSndROMLen = 0x20000;
+	BurnYM2608Init(8000000, DrvSndROM, &nSndROMLen, DrvISndROM, &tail2noseFMIRQHandler, 0);
+	AY8910SetPorts(0, NULL, NULL, NULL, bankswitch); // Really YM2608
+	BurnTimerAttachZet(5000000);
+	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_1, 0.25, BURN_SND_ROUTE_BOTH);
+	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2608SetRoute(BURN_SND_YM2608_AY8910_ROUTE,   1.00, BURN_SND_ROUTE_BOTH);
+
+	ZetClose();
+
+	K051316Init(0, DrvZoomRAM, DrvZoomRAMExp, 0x3ff, tail2nos_zoom_callback, 4, 0);
+	K051316SetOffset(0, -89, -24+2);
+
+	GenericTilesInit();
+
+	DrvDoReset();
+
+	return 0;
+}
+
 static INT32 DrvExit()
 {
 	GenericTilesExit();
@@ -658,27 +739,27 @@ static struct BurnRomInfo Ym2608RomDesc[] = {
 };
 
 
-// Tail to Nose - Great Championship
+// Tail to Nose - Great Championship / Super Formula
 
 static struct BurnRomInfo tail2nosRomDesc[] = {
-	{ "v4",		0x10000, 0x1d4240c2, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "v7",		0x10000, 0x0fb70066, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "v3",		0x10000, 0xe2e0abad, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "v6",		0x10000, 0x069817a7, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "a23",	0x80000, 0xd851cf04, 1 | BRF_PRG | BRF_ESS }, //  4 
-	{ "v5",		0x10000, 0xa9fe15a1, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "v8",		0x10000, 0x4fb6a43e, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "s2-h.ic129",		0x10000, 0x567a55a4, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "s2-l.ic130",		0x10000, 0xc630f875, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "v3.ic141",		0x10000, 0xe2e0abad, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "v6.ic142",		0x10000, 0x069817a7, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "a23.ic96",		0x80000, 0xd851cf04, 1 | BRF_PRG | BRF_ESS }, //  4 
+	{ "v5.ic125",		0x10000, 0xa9fe15a1, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "v8.ic120",		0x10000, 0x4fb6a43e, 1 | BRF_PRG | BRF_ESS }, //  6
 
-	{ "v2",		0x08000, 0x920d8920, 2 | BRF_PRG | BRF_ESS }, //  7 Z80 Code
-	{ "v1",		0x10000, 0xbf35c1a4, 2 | BRF_PRG | BRF_ESS }, //  8
+	{ "v2.ic125",		0x08000, 0x920d8920, 2 | BRF_PRG | BRF_ESS }, //  7 Z80 Code
+	{ "v1.ic137",		0x10000, 0xbf35c1a4, 2 | BRF_PRG | BRF_ESS }, //  8
 
-	{ "a24",	0x80000, 0xb1e9de43, 3 | BRF_GRA },           //  9 Foreground Tiles
-	{ "o1s",	0x40000, 0xe27a8eb4, 3 | BRF_GRA },           // 10
+	{ "a24.ic34",		0x80000, 0xb1e9de43, 3 | BRF_GRA },           //  9 Foreground Tiles
+	{ "o1s.ic18",		0x40000, 0xe27a8eb4, 3 | BRF_GRA },           // 10
 
-	{ "oj1",	0x40000, 0x39c36b35, 4 | BRF_GRA },           // 11 Sprites
-	{ "oj2",	0x40000, 0x77ccaea2, 4 | BRF_GRA },           // 12
+	{ "oj1.ic93",		0x40000, 0x39c36b35, 4 | BRF_GRA },           // 11 Sprites
+	{ "oj2.ic79",		0x40000, 0x77ccaea2, 4 | BRF_GRA },           // 12
 
-	{ "osb",	0x20000, 0xd49ab2f5, 5 | BRF_GRA },           // 13 Samples
+	{ "osb.ic127",		0x20000, 0xd49ab2f5, 5 | BRF_GRA },           // 13 Samples
 };
 
 STDROMPICKEXT(tail2nos, tail2nos, Ym2608)
@@ -686,7 +767,7 @@ STD_ROM_FN(tail2nos)
 
 struct BurnDriver BurnDrvTail2nos = {
 	"tail2nos", NULL, "ym2608", NULL, "1989",
-	"Tail to Nose - Great Championship\0", NULL, "V-System Co.", "Miscellaneous",
+	"Tail to Nose - Great Championship / Super Formula\0", NULL, "V-System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, tail2nosRomInfo, tail2nosRomName, NULL, NULL, NULL, NULL, Tail2nosInputInfo, Tail2nosDIPInfo,
@@ -695,27 +776,64 @@ struct BurnDriver BurnDrvTail2nos = {
 };
 
 
-// Super Formula (Japan)
+// Tail to Nose - Great Championship
+
+static struct BurnRomInfo tail2nosaRomDesc[] = {
+	{ "v4.ic129",		0x10000, 0x1d4240c2, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "v7.ic130",		0x10000, 0x0fb70066, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "v3.ic141",		0x10000, 0xe2e0abad, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "v6.ic142",		0x10000, 0x069817a7, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "a23.ic96",		0x80000, 0xd851cf04, 1 | BRF_PRG | BRF_ESS }, //  4 
+	{ "v5.ic119",		0x10000, 0xa9fe15a1, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "v8.ic120",		0x10000, 0x4fb6a43e, 1 | BRF_PRG | BRF_ESS }, //  6
+
+	{ "v2.ic125",		0x08000, 0x920d8920, 2 | BRF_PRG | BRF_ESS }, //  7 Z80 Code
+	{ "v1.ic137",		0x10000, 0xbf35c1a4, 2 | BRF_PRG | BRF_ESS }, //  8
+
+	{ "a24.ic34",		0x80000, 0xb1e9de43, 3 | BRF_GRA },           //  9 Foreground Tiles
+	{ "o1s.ic18",		0x40000, 0xe27a8eb4, 3 | BRF_GRA },           // 10
+
+	{ "oj1.ic93",		0x40000, 0x39c36b35, 4 | BRF_GRA },           // 11 Sprites
+	{ "oj2.ic79",		0x40000, 0x77ccaea2, 4 | BRF_GRA },           // 12
+
+	{ "osb.ic127",		0x20000, 0xd49ab2f5, 5 | BRF_GRA },           // 13 Samples
+};
+
+STDROMPICKEXT(tail2nosa, tail2nosa, Ym2608)
+STD_ROM_FN(tail2nosa)
+
+struct BurnDriver BurnDrvTail2nosa = {
+	"tail2nosa", "tail2nos", "ym2608", NULL, "1989",
+	"Tail to Nose - Great Championship\0", NULL, "V-System Co.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	NULL, tail2nosaRomInfo, tail2nosaRomName, NULL, NULL, NULL, NULL, Tail2nosInputInfo, Tail2nosDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	240, 320, 3, 4
+};
+
+
+// Super Formula (Japan, set 1)
 
 static struct BurnRomInfo sformulaRomDesc[] = {
-	{ "ic129.4",	0x10000, 0x672bf690, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "ic130.7",	0x10000, 0x73f0c91c, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "v3",		0x10000, 0xe2e0abad, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "v6",		0x10000, 0x069817a7, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "a23",	0x80000, 0xd851cf04, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "v5",		0x10000, 0xa9fe15a1, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "v8",		0x10000, 0x4fb6a43e, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "4.ic129",		0x10000, 0x672bf690, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "7.ic130",		0x10000, 0x73f0c91c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "v3.ic141",		0x10000, 0xe2e0abad, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "v6.ic142",		0x10000, 0x069817a7, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "a23.ic96",		0x80000, 0xd851cf04, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "v5.ic119",		0x10000, 0xa9fe15a1, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "v8.ic120",		0x10000, 0x4fb6a43e, 1 | BRF_PRG | BRF_ESS }, //  6
 
-	{ "v2",		0x08000, 0x920d8920, 2 | BRF_PRG | BRF_ESS }, //  7 Z80 Code
-	{ "v1",		0x10000, 0xbf35c1a4, 2 | BRF_PRG | BRF_ESS }, //  8
+	{ "v2.ic125",		0x08000, 0x920d8920, 2 | BRF_PRG | BRF_ESS }, //  7 Z80 Code
+	{ "v1.ic137",		0x10000, 0xbf35c1a4, 2 | BRF_PRG | BRF_ESS }, //  8
 
-	{ "a24",	0x80000, 0xb1e9de43, 3 | BRF_GRA },           //  9 Foreground Tiles
-	{ "o1s",	0x40000, 0xe27a8eb4, 3 | BRF_GRA },           // 10
+	{ "a24.ic34",		0x80000, 0xb1e9de43, 3 | BRF_GRA },           //  9 Foreground Tiles
+	{ "o1s.ic18",		0x40000, 0xe27a8eb4, 3 | BRF_GRA },           // 10
 
-	{ "oj1",	0x40000, 0x39c36b35, 4 | BRF_GRA },           // 11 Sprites
-	{ "oj2",	0x40000, 0x77ccaea2, 4 | BRF_GRA },           // 12
+	{ "oj1.ic93",		0x40000, 0x39c36b35, 4 | BRF_GRA },           // 11 Sprites
+	{ "oj2.ic79",		0x40000, 0x77ccaea2, 4 | BRF_GRA },           // 12
 
-	{ "osb",	0x20000, 0xd49ab2f5, 5 | BRF_GRA },           // 13 Samples
+	{ "osb.ic127",		0x20000, 0xd49ab2f5, 5 | BRF_GRA },           // 13 Samples
 };
 
 STDROMPICKEXT(sformula, sformula, Ym2608)
@@ -723,10 +841,48 @@ STD_ROM_FN(sformula)
 
 struct BurnDriver BurnDrvSformula = {
 	"sformula", "tail2nos", "ym2608", NULL, "1989",
-	"Super Formula (Japan)\0", NULL, "V-System Co.", "Miscellaneous",
+	"Super Formula (Japan, set 1)\0", NULL, "V-System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, sformulaRomInfo, sformulaRomName, NULL, NULL, NULL, NULL, Tail2nosInputInfo, Tail2nosDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	240, 320, 3, 4
+};
+
+
+// Super Formula (Japan, set 2)
+
+static struct BurnRomInfo sformulaaRomDesc[] = {
+	{ "04.ic29",		0x10000, 0xf40e9c3c, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "07.ic30",		0x10000, 0xd1cf6dca, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "v3.ic141",		0x10000, 0xe2e0abad, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "v6.ic142",		0x10000, 0x069817a7, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "a23.ic96",		0x80000, 0xd851cf04, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "v5.ic119",		0x10000, 0xa9fe15a1, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "v8.ic120",		0x10000, 0x4fb6a43e, 1 | BRF_PRG | BRF_ESS }, //  6
+
+	{ "v2.ic125",		0x08000, 0x920d8920, 2 | BRF_PRG | BRF_ESS }, //  7 Z80 Code
+	{ "v1.ic137",		0x10000, 0xbf35c1a4, 2 | BRF_PRG | BRF_ESS }, //  8
+
+	{ "a24.ic34",		0x80000, 0xb1e9de43, 3 | BRF_GRA },           //  9 Foreground Tiles
+	{ "o1s.ic18",		0x40000, 0xe27a8eb4, 3 | BRF_GRA },           // 10
+	{ "9.ic3",			0x08000, 0xc76edc0a, 3 | BRF_GRA },           // 11
+
+	{ "oj1.ic93",		0x40000, 0x39c36b35, 4 | BRF_GRA },           // 12 Sprites
+	{ "oj2.ic79",		0x40000, 0x77ccaea2, 4 | BRF_GRA },           // 13
+
+	{ "osb.ic127",		0x20000, 0xd49ab2f5, 5 | BRF_GRA },           // 14 Samples
+};
+
+STDROMPICKEXT(sformulaa, sformulaa, Ym2608)
+STD_ROM_FN(sformulaa)
+
+struct BurnDriver BurnDrvSformulaa = {
+	"sformulaa", "tail2nos", "ym2608", NULL, "1989",
+	"Super Formula (Japan, set 2)\0", NULL, "V-System Co.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	NULL, sformulaaRomInfo, sformulaaRomName, NULL, NULL, NULL, NULL, Tail2nosInputInfo, Tail2nosDIPInfo,
+	DrvaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };

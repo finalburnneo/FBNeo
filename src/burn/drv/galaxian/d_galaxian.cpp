@@ -10395,8 +10395,8 @@ static struct BurnRomInfo GmgalaxRomDesc[] = {
 	{ "pcb2gfx2.bin",  0x01000, 0x51bf58ee, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "pcb2gfx4.bin",  0x01000, 0x908fd0dc, BRF_GRA | GAL_ROM_TILES_SHARED },
 	
-	{ "gmgalax2.clr",  0x00020, 0x499f4440, BRF_GRA | GAL_ROM_PROM },
-	{ "l06_prom.bin",  0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+	{ "ghostmuncher_mb7051_top.6l", 0x00020, 0x499f4440, BRF_GRA | GAL_ROM_PROM },
+	{ "galaxian_mb7051_bottom.6l",  0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
 };
 
 STD_ROM_PICK(Gmgalax)

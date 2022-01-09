@@ -2340,6 +2340,7 @@ DRV		BurnSpecCarwars;
 DRV		BurnDrvMSX_carrace;
 DRV		BurnDrvMSX_carraceb;
 DRV		BurnDrvMSX_carracea;
+DRV		BurnSpecCargaprof;
 DRV		BurnSpeccarlossainz;
 DRV		BurnDrvMSX_csainz;
 DRV		BurnDrvCarnivalc;
@@ -3173,6 +3174,12 @@ DRV		BurnDrvnes_crisisforcej;
 DRV		BurnDrvnes_crisisforce;
 DRV		BurnDrvcrockman;
 DRV		BurnDrvcrockmnf;
+DRV		BurnSpecCronopiosen;
+DRV		BurnSpecCronopiosfr;
+DRV		BurnSpecCronopiosde;
+DRV		BurnSpecCronopiosit;
+DRV		BurnSpecCronopiospt;
+DRV		BurnSpecCronopioses;
 DRV		BurnDrvCroquisg;
 DRV		BurnDrvCroquis;
 DRV		BurnDrvCrossbld;
@@ -6818,6 +6825,7 @@ DRV		BurnDrvMSX_hydlide3;
 DRV		BurnDrvMSX_hydlide2;
 DRV		BurnDrvMSX_hydlide2a;
 DRV		BurnDrvnes_hydlidej;
+DRV		BurnSpecHydra;
 DRV		BurnDrvHydrap;
 DRV		BurnDrvHydra;
 DRV		BurnSpechydrofool;
@@ -6889,6 +6897,7 @@ DRV		BurnDrvsms_iceforce;
 DRV		BurnDrvfds_icehockey;
 DRV		BurnDrvnes_icehockey;
 DRV		BurnDrvnes_iceicehoccha;
+DRV		BurnSpecIcetemple;
 DRV		BurnDrvMSX_iceworld;
 DRV		BurnDrvMSX_icebreak;
 DRV		BurnDrvpce_idolhana;
@@ -6948,6 +6957,7 @@ DRV		BurnDrvnes_imposmisii;
 DRV		BurnDrvInthuntu;
 DRV		BurnDrvInthunt;
 DRV		BurnDrvgg_wakevamp;
+DRV		BurnSpecWallseryx;
 DRV		BurnDrvInyourfa;
 DRV		BurnDrvMSX_inca;
 DRV		BurnDrvnes_increcradum;
@@ -6999,12 +7009,13 @@ DRV		BurnDrvmd_instchp4;
 DRV		BurnDrvmd_instchp3;
 DRV		BurnDrvmd_instchp2;
 DRV		BurnDrvmd_instch;
+DRV		BurnSpecIntensity;
 DRV		BurnSpecInt3dtennis;
 DRV		BurnDrvnes_intercri;
 DRV		BurnDrvIntcup94;
+DRV		BurnDrvMSX_ik;
 DRV		BurnSpecIntkarates1;
 DRV		BurnSpecIntkarates2;
-DRV		BurnDrvMSX_ik;
 DRV		BurnDrvmd_ikplusdx;
 DRV		BurnSpecintkarateplus;
 DRV		BurnSpecIntninjarab;
@@ -8617,6 +8628,7 @@ DRV		BurnDrvpce_makyoden;
 DRV		BurnDrvMakyosen;
 DRV		BurnDrvMSX_malaika;
 DRV		BurnDrvMSX_malaikapq13;
+DRV		BurnSpecMaligore;
 DRV		BurnDrvmd_mamono;
 DRV		BurnSpecmanutdeu;
 DRV		BurnDrvMSX_manes;
@@ -12122,6 +12134,7 @@ DRV		BurnDrvmd_renthero;
 DRV		BurnDrvsg1k_ninjaprit;
 DRV		BurnDrvfds_replicart;
 DRV		BurnDrvRepulse;
+DRV		BurnSpecRescatlan;
 DRV		BurnDrvMSX_rescatl;
 DRV		BurnSpecrescategolfo1;
 DRV		BurnSpecrescategolfo2;
@@ -13768,6 +13781,7 @@ DRV		BurnDrvnes_spartanx2;
 DRV		BurnDrvSpatter;
 DRV		BurnDrvspeakresb;
 DRV		BurnDrvspeakres;
+DRV		BurnSpecSpeccybros;
 DRV		BurnDrvsms_sci;
 DRV		BurnDrvsms_scip;
 DRV		BurnDrvScij;
@@ -16377,6 +16391,7 @@ DRV		BurnDrvpce_etercity;
 DRV		BurnDrvTotcarnp;
 DRV		BurnDrvTotcarn;
 DRV		BurnSpecTeclipse;
+DRV		BurnSpecTeclipse2;
 DRV		BurnDrvmd_totlfoot;
 DRV		BurnSpectotrcall;
 DRV		BurnDrvnes_totalrecallc;
@@ -18335,7 +18350,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAceattac,			// Ace Attacker (FD1094 317-0059)
 	&BurnDrvAceattaca,			// Ace Attacker (Japan, System 16A, FD1094 317-0060)
 	&BurnDrvMSX_acegun,			// Ace Gun (HB)
-	&BurnSpecaceofaces,			// Ace of Aces (128K)
+	&BurnSpecaceofaces,			// Ace of Aces (48K)
 	&BurnDrvsms_aceoface,		// Ace of Aces (Euro)
 	&BurnDrvsms_acreflux,		// Acid Reflux (HB, v1.1)
 	&BurnDrvAcrobatm,			// Acrobat Mission
@@ -20473,6 +20488,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_carrace,		// Car-Race (Jpn)
 	&BurnDrvMSX_carraceb,		// Car-Race (Jpn, Alt 2)
 	&BurnDrvMSX_carracea,		// Car-Race (Jpn, Alt)
+	&BurnSpecCargaprof,			// Carga de Profundidade (48K) (HB)
 	&BurnSpeccarlossainz,		// Carlos Sainz (Spanish) (128K)
 	&BurnDrvMSX_csainz,			// Carlos Sainz - Campeonato del Mundo (Spanish)
 	&BurnDrvCarnivalc,			// Carnival (cocktail)
@@ -21306,6 +21322,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_crisisforce,	// Crisis Force (T-Eng)
 	&BurnDrvcrockman,			// Crock-Man (bootleg, Rene-Pierre)
 	&BurnDrvcrockmnf,			// Crock-Man (Marti Colls bootleg of Rene Pierre Crock-Man)
+	&BurnSpecCronopiosen,		// Cronopios Y Famas (English) (128K) (HB)
+	&BurnSpecCronopiosfr,		// Cronopios Y Famas (French) (128K) (HB)
+	&BurnSpecCronopiosde,		// Cronopios Y Famas (German) (128K) (HB)
+	&BurnSpecCronopiosit,		// Cronopios Y Famas (Italian) (128K) (HB)
+	&BurnSpecCronopiospt,		// Cronopios Y Famas (Portuguese) (128K) (HB)
+	&BurnSpecCronopioses,		// Cronopios Y Famas (Spanish) (128K) (HB)
 	&BurnDrvCroquisg,			// Croquis (Germany)
 	&BurnDrvCroquis,			// Croquis (Korea)
 	&BurnDrvCrossbld,			// Cross Blades! (Japan)
@@ -24951,6 +24973,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_hydlide2,		// Hydlide II - Shine of Darkness (Jpn)
 	&BurnDrvMSX_hydlide2a,		// Hydlide II - Shine of Darkness (Jpn, Alt)
 	&BurnDrvnes_hydlidej,		// Hydlide Special (Japan)
+	&BurnSpecHydra,				// Hydra (128K)
 	&BurnDrvHydrap,				// Hydra (prototype 5/14/90)
 	&BurnDrvHydra,				// Hydra
 	&BurnSpechydrofool,			// Hydrofool (128K)
@@ -25022,6 +25045,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfds_icehockey,		// Ice Hockey (Japan)
 	&BurnDrvnes_icehockey,		// Ice Hockey (USA)
 	&BurnDrvnes_iceicehoccha,	// Ice Ice! Hockey Challenge (T-Eng)
+	&BurnSpecIcetemple,			// Ice Temple, The (48K)
 	&BurnDrvMSX_iceworld,		// Ice World (Jpn)
 	&BurnDrvMSX_icebreak,		// Ice-Breaker (Spanish)
 	&BurnDrvpce_idolhana,		// Idol Hanafuda Fan Club
@@ -25081,6 +25105,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvInthuntu,			// In The Hunt (US)
 	&BurnDrvInthunt,			// In The Hunt (World)
 	&BurnDrvgg_wakevamp,		// In the Wake of Vampire (Jpn)
+	&BurnSpecWallseryx,			// In the Walls of Eryx (128K) (HB)
 	&BurnDrvInyourfa,			// In Your Face (North America, prototype)
 	&BurnDrvMSX_inca,			// Inca (Euro)
 	&BurnDrvnes_increcradum,	// Incredible Crash Dummies, The (USA)
@@ -25132,12 +25157,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_instchp3,		// Instruments of Chaos Starring Young Indiana Jones (Prototype, 19941228-A)
 	&BurnDrvmd_instchp2,		// Instruments of Chaos Starring Young Indiana Jones (Prototype, 19941229)
 	&BurnDrvmd_instch,			// Instruments of Chaos Starring Young Indiana Jones (USA)
+	&BurnSpecIntensity,			// Intensity (48K)
 	&BurnSpecInt3dtennis,		// International 3D Tennis (128K)
 	&BurnDrvnes_intercri,		// International Cricket (Australia)
 	&BurnDrvIntcup94,			// International Cup '94 (Ver 2.2O 1994/05/26)
-	&BurnSpecIntkarates1,		// International Karate (48K) - Side 1
-	&BurnSpecIntkarates2,		// International Karate (48K) - Side 2
 	&BurnDrvMSX_ik,				// International Karate (Euro)
+	&BurnSpecIntkarates1,		// International Karate - Stage 1 (48K)
+	&BurnSpecIntkarates2,		// International Karate - Stage 2 (48K)
 	&BurnDrvmd_ikplusdx,		// International Karate plus Deluxe (HB)
 	&BurnSpecintkarateplus,		// International Karate+ (128K)
 	&BurnSpecIntninjarab,		// International Ninja Rabbits (128K)
@@ -26750,6 +26776,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMakyosen,			// Makyou Senshi (Japan)
 	&BurnDrvMSX_malaika,		// Malaika (HB, v1.2)
 	&BurnDrvMSX_malaikapq13,	// Malaika Prehistoric Quest (HB, v1.3)
+	&BurnSpecMaligore,			// Malignant Gore, The (128K) (HB)
 	&BurnDrvmd_mamono,			// Mamono Hunter Youko - Dai 7 no Keishou (Jpn)
 	&BurnSpecmanutdeu,			// Manchester United Europe (128K)
 	&BurnDrvMSX_manes,			// Manes (Jpn)
@@ -30255,6 +30282,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_ninjaprit,		// Renzhe Gongzhu (Tw)
 	&BurnDrvfds_replicart,		// Replicart (Japan)
 	&BurnDrvRepulse,			// Repulse
+	&BurnSpecRescatlan,			// Rescate Atlantida (Spanish) (128K)
 	&BurnDrvMSX_rescatl,		// Rescate Atlantida (Spanish)
 	&BurnSpecrescategolfo1,		// Rescate en el Golfo - Part 1 (128K)
 	&BurnSpecrescategolfo2,		// Rescate en el Golfo - Part 2 (128K)
@@ -31901,6 +31929,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSpatter,			// Spatter (315-5xxx)
 	&BurnDrvspeakresb,			// Speak & Rescue (bootleg)
 	&BurnDrvspeakres,			// Speak & Rescue
+	&BurnSpecSpeccybros,		// Speccy Bros (48K) (HB)
 	&BurnDrvsms_sci,			// Special Criminal Investigation (Euro)
 	&BurnDrvsms_scip,			// Special Criminal Investigation (Euro, Prototype)
 	&BurnDrvScij,				// Special Criminal Investigation (Japan)
@@ -34510,6 +34539,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTotcarnp,			// Total Carnage (prototype, proto v 1.0 01/25/92)
 	&BurnDrvTotcarn,			// Total Carnage (rev LA1 03/10/92)
 	&BurnSpecTeclipse,			// Total Eclipse (48K)
+	&BurnSpecTeclipse2,			// Total Eclipse 2 - The Sphinx Jinx (48K)
 	&BurnDrvmd_totlfoot,		// Total Football (Euro)
 	&BurnSpectotrcall,			// Total Recall (128K)
 	&BurnDrvnes_totalrecallc,	// Total Recall (USA) - Castellano v1.0

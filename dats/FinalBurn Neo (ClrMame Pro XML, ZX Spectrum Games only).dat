@@ -255,7 +255,7 @@
 		<description>720 Degrees (48K)</description>
 		<year>1986</year>
 		<manufacturer>U.S. Gold</manufacturer>
-		<rom name="720 Degrees (1986)(U.S. Gold).z80" size="38598" crc="25a4c45f"/>
+		<rom name="720 Degrees (1987)(U.S. Gold).tap" size="50644" crc="842e1279"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -329,13 +329,13 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="aceofaces" romof="spec128">
-		<description>Ace of Aces (128K)</description>
+	<game name="aceofaces" romof="spectrum">
+		<comment>Keys from 1 to 4 to change view - 'M' to display map</comment>
+		<description>Ace of Aces (48K)</description>
 		<year>1986</year>
 		<manufacturer>U.S. Gold</manufacturer>
-		<rom name="Ace of Aces 128K (1986)(U.S. Gold).z80" size="58746" crc="2bfbb756"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Ace of Aces (1986)(U.S. Gold).tap" size="89410" crc="d8b0115b"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2632,6 +2632,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="cargaprof" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Carga de Profundidade (48K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Filipe Veiga</manufacturer>
+		<rom name="Carga de Profundidade 48K (2021)(Filipe Veiga).tap" size="17157" crc="e4e8dbff"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="carlossainz" romof="spec128">
 		<description>Carlos Sainz (Spanish) (128K)</description>
 		<year>1990</year>
@@ -3527,6 +3537,72 @@
 		<year>2010</year>
 		<manufacturer>Little Shop of Pixels</manufacturer>
 		<rom name="Crimbo 128K (2010)(Little Shop of Pixels).tap" size="44707" crc="8b519cdf"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cronopiosen" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Cronopios Y Famas (English) (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Cronopios Y Famas EN (2021)(Zankle Soft).tap" size="42169" crc="c64db30e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cronopiosfr" cloneof="cronopiosen" romof="cronopiosen">
+		<comment>Homebrew</comment>
+		<description>Cronopios Y Famas (French) (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Cronopios Y Famas FR (2021)(Zankle Soft).tap" size="42169" crc="61fb2ea9"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cronopiosde" cloneof="cronopiosen" romof="cronopiosen">
+		<comment>Homebrew</comment>
+		<description>Cronopios Y Famas (German) (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Cronopios Y Famas DE (2021)(Zankle Soft).tap" size="42169" crc="91be72a8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cronopiosit" cloneof="cronopiosen" romof="cronopiosen">
+		<comment>Homebrew</comment>
+		<description>Cronopios Y Famas (Italian) (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Cronopios Y Famas IT (2021)(Zankle Soft).tap" size="42169" crc="a28f595b"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cronopiospt" cloneof="cronopiosen" romof="cronopiosen">
+		<comment>Homebrew</comment>
+		<description>Cronopios Y Famas (Portuguese) (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Cronopios Y Famas PT (2021)(Zankle Soft).tap" size="42169" crc="11902f8d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cronopioses" cloneof="cronopiosen" romof="cronopiosen">
+		<comment>Homebrew</comment>
+		<description>Cronopios Y Famas (Spanish) (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Cronopios Y Famas ES (2021)(Zankle Soft).tap" size="42169" crc="306e3003"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -7009,6 +7085,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="hydra" romof="spec128">
+		<description>Hydra (128K)</description>
+		<year>1991</year>
+		<manufacturer>Domark</manufacturer>
+		<rom name="Hydra 128K (1991)(Domark).tap" size="133588" crc="78856d99"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="hydrofool" romof="spec128">
 		<description>Hydrofool (128K)</description>
 		<year>1987</year>
@@ -7093,6 +7179,15 @@
 		<rom name="Ice Breaker (1990)(Topo Soft)(es).tap" size="75733" crc="62ce5b80"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="icetemple" romof="spectrum">
+		<description>Ice Temple, The (48K)</description>
+		<year>1986</year>
+		<manufacturer>Bubble Bus</manufacturer>
+		<rom name="Ice Temple, The 48K (1986)(Bubble Bus).tap" size="45017" crc="269dc9de"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -7207,6 +7302,17 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="wallseryx" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>In the Walls of Eryx (128K) (HB)</description>
+		<year>2016</year>
+		<manufacturer>Monster's Legs Productions</manufacturer>
+		<rom name="In the Walls of Eryx (2016)(Monster's Legs Productions).tap" size="39585" crc="e201c77c"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="incshrf" romof="spectrum">
 		<description>Incredible Shrinking Fireman, The (48K)</description>
 		<year>1986</year>
@@ -7284,10 +7390,20 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="intensity" romof="spectrum">
+		<comment>Press 1: one player option - Press 2: two player option</comment>
+		<description>Intensity (48K)</description>
+		<year>1988</year>
+		<manufacturer>Firebird Software</manufacturer>
+		<rom name="Intensity 48K (1988)(Firebird).tap" size="45643" crc="77a12914"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="int3dtennis" romof="spec128">
 		<description>International 3D Tennis (128K)</description>
 		<year>1990</year>
-		<manufacturer>Palace</manufacturer>
+		<manufacturer>Palace Software</manufacturer>
 		<rom name="International 3D Tennis (1990)(Palace).tap" size="85714" crc="6d60e471"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -7295,19 +7411,19 @@
 		<driver status="good"/>
 	</game>
 	<game name="intkarates1" romof="spectrum">
-		<description>International Karate (48K) - Side 1</description>
+		<description>International Karate - Stage 1 (48K)</description>
 		<year>1985</year>
 		<manufacturer>System 3</manufacturer>
-		<rom name="International Karate 48K - Side 1 (1985)(System 3).z80" size="34724" crc="344134a1"/>
+		<rom name="International Karate stage 1 (1985)(System 3).tap" size="41266" crc="efa7860d"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="intkarates2" cloneof="intkarates1" romof="intkarates1">
-		<description>International Karate (48K) - Side 2</description>
+		<description>International Karate - Stage 2 (48K)</description>
 		<year>1985</year>
 		<manufacturer>System 3</manufacturer>
-		<rom name="International Karate 48K - Side 2 (1985)(System 3).z80" size="34746" crc="28eac074"/>
+		<rom name="International Karate stage 2 (1985)(System 3).tap" size="47713" crc="89bfad75"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -8913,6 +9029,17 @@
 		<manufacturer>RetroWorks</manufacturer>
 		<rom name="Majikazo (2012)(RetroWorks).tap" size="41678" crc="c121cf7a"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="maligore" romof="spec128">
+		<comment>Homebrew, Press 'R' to restart level</comment>
+		<description>Malignant Gore, The (128K) (HB)</description>
+		<year>2019</year>
+		<manufacturer>Sanctum Gamers</manufacturer>
+		<rom name="Malignant Gore, The (2019)(Sanctum Gamers).tap" size="41830" crc="e4db2507"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -11811,6 +11938,17 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="rescatlan" romof="spec128">
+		<comment>Press SPACE to choose and ENTER to select options</comment>
+		<description>Rescate Atlantida (Spanish) (128K)</description>
+		<year>1989</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Rescate Atlantida ES 128K (1989)(Dinamic).z80" size="109724" crc="c437d0e7"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="rescategolfo1" romof="spec128">
 		<description>Rescate en el Golfo - Part 1 (128K)</description>
 		<year>1990</year>
@@ -12409,7 +12547,7 @@
 	<game name="antiriad" romof="spectrum">
 		<description>Sacred Armour of Antiriad, The (48K)</description>
 		<year>1986</year>
-		<manufacturer>Palace</manufacturer>
+		<manufacturer>Palace Software</manufacturer>
 		<rom name="Sacred Armour of Antiriad, The (1986)(Palace).z80" size="41012" crc="1abe0529"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -13415,6 +13553,16 @@
 		<rom name="Space Thunder (2021)(Isaiasdiaz).tap" size="47073" crc="a11f0963"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="speccybros" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Speccy Bros (48K) (HB)</description>
+		<year>2012</year>
+		<manufacturer>Climacus</manufacturer>
+		<rom name="Speccy Bros 48K (2012)(Climacus).tap" size="34325" crc="5dd530b2"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -14924,6 +15072,16 @@
 		<year>1988</year>
 		<manufacturer>Incentive</manufacturer>
 		<rom name="Total Eclipse 48K (1988)(Incentive).tap" size="50769" crc="1e312308"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="teclipse2" romof="spectrum">
+		<comment>P and L: look up and down - S: step size - SPACE: draw/replace gunsight</comment>
+		<description>Total Eclipse 2 - The Sphinx Jinx (48K)</description>
+		<year>1991</year>
+		<manufacturer>Incentive</manufacturer>
+		<rom name="Total Eclipse 2 - The Sphinx Jinx 48K (1991)(Incentive).tap" size="45514" crc="0c02705e"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

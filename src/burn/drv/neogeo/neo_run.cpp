@@ -476,20 +476,6 @@ static INT32 NeoLoad68KBIOS(INT32 nNewBIOS)
 	return 0;
 }
 
-#if 0
-// removeme
-static INT32 FindType(const char* pName)
-{
-	INT32 i = 0;
-
-	while (pName[i] && pName[i] != '-' && pName[i] != '_') {
-		i++;
-	}
-
-	return i + 1;
-}
-#endif
-
 static INT32 FindROMs(UINT32 nType, INT32* pOffset, INT32* pNum)
 {
 	INT32 nOffset = -1;
@@ -654,72 +640,12 @@ static INT32 LoadRoms()
 
 			bprintf(0, _T("ADPCM-A Size:\t%x\n"), nYM2610ADPCMASize[nNeoActiveSlot]);
 			bprintf(0, _T("ADPCM-B Size:\t%x\n"), nYM2610ADPCMBSize[nNeoActiveSlot]);
-
-#if 0
-			// REMOVEME IF ALL IS OK -dink jan 8, 2022
-			nYM2610ADPCMASize[nNeoActiveSlot] = nYM2610ADPCMBSize[nNeoActiveSlot] = 0;
-			char* pName;
-			BurnDrvGetRomInfo(&ri, pInfo->nADPCMOffset);
-			BurnDrvGetRomName(&pName, pInfo->nADPCMOffset, 0);
-			nYM2610ADPCMASize[nNeoActiveSlot] = ri.nLen;
-
-			if (pInfo->nADPCMANum > 1) {
-				BurnDrvGetRomInfo(&ri, pInfo->nADPCMOffset + pInfo->nADPCMANum - 1);
-				BurnDrvGetRomName(&pName, pInfo->nADPCMOffset + pInfo->nADPCMANum - 1, 0);
-				if (pInfo->nADPCMBNum == 0) {
-					nYM2610ADPCMASize[nNeoActiveSlot] *= pName[FindType(pName) + 1] - '1';
-				} else {
-					nYM2610ADPCMASize[nNeoActiveSlot] *= pName[FindType(pName) + 2] - '1';
-				}
-				nYM2610ADPCMASize[nNeoActiveSlot] += ri.nLen;
-			}
-
-			if (pInfo->nADPCMBNum) {
-				BurnDrvGetRomInfo(&ri, pInfo->nADPCMOffset + pInfo->nADPCMANum);
-				nYM2610ADPCMBSize[nNeoActiveSlot] = ri.nLen * (pInfo->nADPCMBNum - 1);
-				BurnDrvGetRomInfo(&ri, pInfo->nADPCMOffset + pInfo->nADPCMANum + pInfo->nADPCMBNum - 1);
-				nYM2610ADPCMBSize[nNeoActiveSlot] += ri.nLen;
-			}
-			bprintf(0, _T("Stupid Code ADPCM-A Size:\t%x\n"), nYM2610ADPCMASize[nNeoActiveSlot]);
-			bprintf(0, _T("Stupid Code ADPCM-B Size:\t%x\n"), nYM2610ADPCMBSize[nNeoActiveSlot]);
-#endif
 		}
+
+		// pbobblenb starts loading roms at @ 0x200000 (0x180000 bytes @ 0x200000)
+		if (!strcmp("pbobblenb", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x380000;
 	}
 
-	// pbobblenb starts loading roms at @ 0x200000 (0x180000 bytes @ 0x200000)
-	if (!strcmp("pbobblenb", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x380000;
-
-#if 0
-	// REMOVEME.
-	if (!strcmp("kof2k4se", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] += 0x800000;
-	if (!strcmp("cphd", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x4000000;
-	if (!strcmp("kf2k4pls", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] += 0x800000;
-	if (!strcmp("svcboot", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] += 0x400000;
-	if (!strcmp("svcplus", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] += 0x400000;
-	if (!strcmp("svcplusa", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] += 0x400000;
-	if (!strcmp("svcsplus", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] += 0x400000;
-	if (!strcmp("pbobblenb", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x380000;
-	if (!strcmp("alpham2p", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x200000;
-	if (!strcmp("burningfp", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x180000;
-	if (!strcmp("burningfpa", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x200000;
-	if (!strcmp("burningfpb", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x200000;
-	if (!strcmp("gpilotsp", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x180000;
-	if (!strcmp("lresortp", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x200000;
-	if (!strcmp("kotm2p", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x300000;
-	if (!strcmp("viewpoinp", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x400000;
-	if (!strcmp("sbp", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x800000;
-	if (!strcmp("lasthope", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x600000;
-	if (!strcmp("mslug5w", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x10002f0;
-	if (!strcmp("kof2k2omg", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x1000000;
-	if (!strcmp("kof2k2omg9b", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x1000000;
-	if (!strcmp("kof2k2omg9", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x1000000;
-	if (!strcmp("kof98pfe", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x1000000;
-	if (!strcmp("mslug5nd", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x1000000;
-	if (!strcmp("hypernoid", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x1000000;
-
-	bprintf(0, _T("Fixed ADPCM-A Size:\t%x\n"), nYM2610ADPCMASize[nNeoActiveSlot]);
-	bprintf(0, _T("Fixed ADPCM-B Size:\t%x\n"), nYM2610ADPCMBSize[nNeoActiveSlot]);
-#endif
 //	bprintf(PRINT_NORMAL, _T("%x\n"), nYM2610ADPCMASize[nNeoActiveSlot]);
 
 	// The kof2k3 PCB has 96MB of graphics ROM, however the last 16MB are unused, and the protection/decryption hardware does not see them
@@ -814,7 +740,6 @@ static INT32 LoadRoms()
 	NeoDecodeSprites(NeoSpriteROM[nNeoActiveSlot], nSpriteSize[nNeoActiveSlot]);
 
 	if (pInfo->nADPCMANum) {
-		//char* pName;
 		struct BurnRomInfo ri;
 		UINT8* pADPCMData;
 
@@ -826,18 +751,8 @@ static INT32 LoadRoms()
 		ri.nType = 0;
 		ri.nLen = 0;
 		BurnDrvGetRomInfo(&ri, pInfo->nADPCMOffset);
-		//BurnDrvGetRomName(&pName, pInfo->nADPCMOffset, 0);
 
 		pADPCMData = YM2610ADPCMAROM[nNeoActiveSlot];
-
-#if 0
-		if (strcmp(BurnDrvGetTextA(DRV_NAME), "sbp") != 0) { // not for sbp!
-			// pbobblen needs this (V ROMs are v3 & v4), note aof/wh1/wh1h/kotm2 (V ROMs are v2 & v4)
-			if (pInfo->nADPCMANum == 2 && pName[FindType(pName) + 1] == '3') {
-				pADPCMData += ri.nLen * 2;
-			}
-		}
-#endif
 
 		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "pbobblenb")) {
 			// pbobblenb starts loading @ 0x200000

@@ -39,9 +39,23 @@ jobs:
       run: |
         make -j$(nproc) RELEASEBUILD=1 SKIPDEPEND=1 ${{matrix.platform.makeopts}}
 
-    - uses: actions/upload-artifact@v2
+    - name: Upload Windows x32 artifact
+      if: matrix.platform.name == 'Windows x32'
+      uses: actions/upload-artifact@v2
       with:
-        name: fbneo-artifact
-        path: |
-          fbneo
-          fbneo.exe
+        name: fbn-windows-x32-artifact
+        path: fbneo.exe
+
+    - name: Upload Linux SDL 2 artifact
+      if: matrix.platform.name == 'Linux SDL 2'
+      uses: actions/upload-artifact@v2
+      with:
+        name: fbn-linux-sdl2-artifact
+        path: fbneo
+
+    - name: Upload Linux SDL 1.2 artifact
+      if: matrix.platform.name == 'Linux SDL 1.2'
+      uses: actions/upload-artifact@v2
+      with:
+        name: fbn-linux-sd12-artifact
+        path: fbneo

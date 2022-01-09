@@ -5,7 +5,6 @@
 #include "z80_intf.h"
 #include "dac.h"
 #include "burn_ym3526.h"
-#include "flt_rc.h"
 #include "nb1414m4_8bit.h"
 
 static UINT8 *AllMem;
@@ -29,8 +28,6 @@ static UINT8 *DrvSprBuf;
 static UINT32 *DrvPalette;
 static UINT8  DrvRecalc;
 
-static INT16 *hpfiltbuffer;
-
 static UINT8 sprite_priority;
 static UINT16 scrollx;
 static UINT16 scrolly;
@@ -50,61 +47,61 @@ static UINT8 DrvReset;
 static INT32 game_mode;
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 4,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvInputs + 3,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvInputs + 4,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvJoy3 + 5,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 4,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvInputs + 3,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvInputs + 4,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvJoy3 + 5,	"dip"		},
 };
 
 STDINPUTINFO(Drv)
 
 static struct BurnInputInfo ninjemakInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 4,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvInputs + 3,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvInputs + 4,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 4,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvInputs + 3,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvInputs + 4,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDip + 0,		"dip"		},
 };
 
 STDINPUTINFO(ninjemak)
@@ -542,11 +539,6 @@ static UINT8 __fastcall galivan_sound_read_port(UINT16 port)
 	return 0;
 }
 
-static INT32 DrvSyncDAC()
-{
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (4000000.000 / (nBurnFPS / 100.000))));
-}
-
 inline static INT32 DrvYM3526SynchroniseStream(INT32 nSoundRate)
 {
 	return (INT64)ZetTotalCycles() * nSoundRate / 4000000;
@@ -566,6 +558,7 @@ static INT32 DrvDoReset()
 	ZetClose();
 
 	BurnYM3526Reset();
+	DACReset();
 
 	sprite_priority = 0;
 	scrollx = 0;
@@ -659,12 +652,7 @@ static void DrvNibbleExpand(UINT8 *rom, INT32 len)
 
 static INT32 DrvInit(INT32 game)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	BurnSetRefreshRate(59.94);
 
@@ -758,21 +746,16 @@ static INT32 DrvInit(INT32 game)
 	ZetSetInHandler(galivan_sound_read_port);
 	ZetClose();
 
-	// dac0 -> dac1 -> dc-offset removal (hp filter) -> ym3526 -> OUT
-
+	// dac0 -> dac1 -> dc-offset removal -> ym3526 -> OUT
 	BurnYM3526Init(4000000, NULL, &DrvYM3526SynchroniseStream, 1);
 	BurnTimerAttachYM3526(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.85, BURN_SND_ROUTE_BOTH);
 
-	DACInit(0, 0, 0, DrvSyncDAC);
-	DACInit(1, 0, 0, DrvSyncDAC);
+	DACInit(0, 0, 0, ZetTotalCycles, 4000000);
+	DACInit(1, 0, 0, ZetTotalCycles, 4000000);
 	DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
 	DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
-
-	// #0 takes dac #0,1 and highpasses it a little to get rid of the dc offset.
-	filter_rc_init(0, FLT_RC_HIGHPASS, 3846, 0, 0, CAP_N(0x310), 0);
-	filter_rc_set_src_stereo(0);
-	hpfiltbuffer = (INT16*)BurnMalloc(nBurnSoundLen*8); // for #0
+	DACDCBlock(1);
 
 	GenericTilesInit();
 
@@ -789,12 +772,8 @@ static INT32 DrvExit()
 
 	BurnYM3526Exit();
 	DACExit();
-	filter_rc_exit();
 
-	BurnFree(AllMem);
-
-	BurnFree(hpfiltbuffer);
-	hpfiltbuffer = NULL;
+	BurnFreeMemIndex();
 
 	nb1414_blit_data8b = NULL;
 
@@ -896,19 +875,7 @@ static void draw_sprites(INT32 mode)
 			flipy = !flipy;
 		}
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 16, color+(0x200/0x10), 4, 0xf, 0, DrvGfxROM2);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy - 16, color+(0x200/0x10), 4, 0xf, 0, DrvGfxROM2);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy - 16, color+(0x200/0x10), 4, 0xf, 0, DrvGfxROM2);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy - 16, color+(0x200/0x10), 4, 0xf, 0, DrvGfxROM2);
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, sx, sy - 16, flipx, flipy, color+(0x200/0x10), 4, 0xf, 0, DrvGfxROM2);
 	}
 }
 
@@ -960,33 +927,19 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		INT32 nSegment = nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += ZetRun(nSegment);
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		nSegment = nCyclesTotal[1] / nInterleave;
-		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[1] / nInterleave));
-
+		CPU_RUN_TIMER_YM3526(1);
 		ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 	}
 
-	ZetOpen(1);
-	BurnTimerEndFrameYM3526(nCyclesTotal[1]);
-	ZetClose();
-
 	if (pBurnSoundOut) {
-		ZetOpen(1);
-
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
-		filter_rc_update(0, pBurnSoundOut, hpfiltbuffer, nBurnSoundLen);
-		memmove(pBurnSoundOut, hpfiltbuffer, nBurnSoundLen*4);
-
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
-
-		ZetClose();
 	}
 
 	if (pBurnDraw) {

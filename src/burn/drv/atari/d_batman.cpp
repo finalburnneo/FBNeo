@@ -9,6 +9,7 @@
 #include "atarimo.h"
 #include "atarivad.h"
 #include "atarijsa.h"
+#include "msm6295.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -392,12 +393,7 @@ static INT32 DrvInit()
 		NULL				/* callback routine for special entries */
 	};
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		INT32 k = 0;
@@ -449,6 +445,7 @@ static INT32 DrvInit()
 	GenericTilemapSetGfx(3, DrvGfxROM0, 2, 8, 8, 0x080000, 0x000, 0x0f);
 
 	AtariVADInit(0, 1, 0, scanline_timer, palette_write);
+	AtariVADSetXOffsets(2, 6, 1);
 	AtariVADSetPartialCB(draw_scanline);
 	AtariMoInit(0, &modesc);
 
@@ -477,13 +474,15 @@ static INT32 DrvInit()
 	for (INT32 i = 0; i < 0x20000; i+=0x1000) {
 		AtariEEPROMInstallMap(1, 0x120000 + i, 0x120fff + i);
 	}
-	AtariEEPROMLoad(Drv68KROM); // temp memory
+	AtariEEPROMLoad(Drv68KRAM); // temp memory
 
 	SekClose();
 
 	BurnWatchdogInit(DrvDoReset, 180);
 
 	AtariJSAInit(DrvM6502ROM, &update_interrupts, DrvSndROM, NULL);
+	MSM6295SetRoute(0, 0.85, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 0.85, BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset(1);
 
@@ -500,7 +499,7 @@ static INT32 DrvExit()
 	AtariMoExit();
 	AtariEEPROMExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -598,8 +597,9 @@ static void DrvDrawBegin()
 		DrvRecalc = 0;
 	}
 
-	if (pBurnDraw)
+	if (pBurnDraw) {
 		BurnTransferClear();
+	}
 
 	lastline = 0;
 }
@@ -660,11 +660,7 @@ static INT32 DrvFrame()
 
 		if (i == 0) AtariVADEOFUpdate(DrvEOFData);
 
-		if (atarivad_scanline_timer_enabled) {
-			if (atarivad_scanline_timer == atarivad_scanline) {
-				scanline_timer(CPU_IRQSTATUS_ACK);
-			}
-		}
+		AtariVADTimerUpdate();
 
 		CPU_RUN(0, Sek);
 

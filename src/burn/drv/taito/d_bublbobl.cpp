@@ -253,6 +253,69 @@ static struct BurnDIPInfo BoblboblDIPList[]=
 
 STDDIPINFO(Boblbobl)
 
+static struct BurnDIPInfo BoblcaveDIPList[]=
+{
+	// Default Values
+	{0x0f, 0xff, 0xff, 0xfe, NULL                     },
+	{0x10, 0xff, 0xff, 0xff, NULL                     },
+	
+	// Dip 1
+	{0   , 0xfe, 0   , 4   , "Mode"                   },
+	{0x0f, 0x01, 0x05, 0x04, "Game, English"          },
+	{0x0f, 0x01, 0x05, 0x05, "Game, Japanese"         },
+	{0x0f, 0x01, 0x05, 0x01, "Test (Grid and Inputs)" },
+	{0x0f, 0x01, 0x05, 0x00, "Test (RAM and Sound)"   },
+	
+	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
+	{0x0f, 0x01, 0x02, 0x02, "Off"                    },
+	{0x0f, 0x01, 0x02, 0x00, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
+	{0x0f, 0x01, 0x08, 0x00, "Off"                    },
+	{0x0f, 0x01, 0x08, 0x08, "On"                     },
+	
+	{0   , 0xfe, 0   , 4   , "Coin A"                 },
+	{0x0f, 0x01, 0x30, 0x10, "2 Coins 1 Play"         },
+	{0x0f, 0x01, 0x30, 0x30, "1 Coin  1 Play"         },
+	{0x0f, 0x01, 0x30, 0x00, "2 Coins 3 Plays"        },
+	{0x0f, 0x01, 0x30, 0x20, "1 Coin  2 Plays"        },
+	
+	{0   , 0xfe, 0   , 4   , "Coin B"                 },
+	{0x0f, 0x01, 0xc0, 0x40, "2 Coins 1 Play"         },
+	{0x0f, 0x01, 0xc0, 0xc0, "1 Coin  1 Play"         },
+	{0x0f, 0x01, 0xc0, 0x00, "2 Coins 3 Plays"        },
+	{0x0f, 0x01, 0xc0, 0x80, "1 Coin  2 Plays"        },
+	
+	// Dip 2
+	{0   , 0xfe, 0   , 4   , "Difficulty"             },
+	{0x10, 0x01, 0x03, 0x02, "Easy"                   },
+	{0x10, 0x01, 0x03, 0x03, "Normal"                 },
+	{0x10, 0x01, 0x03, 0x01, "Hard"                   },
+	{0x10, 0x01, 0x03, 0x00, "Very Hard"              },
+	
+	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
+	{0x10, 0x01, 0x0c, 0x08, "20k  80k 300k"          },
+	{0x10, 0x01, 0x0c, 0x0c, "30k 100k 400k"          },
+	{0x10, 0x01, 0x0c, 0x04, "40k 200k 500k"          },
+	{0x10, 0x01, 0x0c, 0x00, "50k 250k 500k"          },
+	
+	{0   , 0xfe, 0   , 4   , "Lives"                  },
+	{0x10, 0x01, 0x30, 0x10, "1"                      },
+	{0x10, 0x01, 0x30, 0x00, "2"                      },
+	{0x10, 0x01, 0x30, 0x30, "3"                      },
+	{0x10, 0x01, 0x30, 0x20, "5"                      },
+	
+	{0   , 0xfe, 0   , 4   , "Unknown"                },
+	{0x10, 0x01, 0x40, 0x40, "Off"                    },
+	{0x10, 0x01, 0x40, 0x00, "On"                     },
+
+	{0   , 0xfe, 0   , 4   , "ROM Type"               },
+	{0x10, 0x01, 0x80, 0x80, "IC52=512kb, IC53=none"  },
+	{0x10, 0x01, 0x80, 0x00, "IC52=256kb, IC53=256kb" },
+};
+
+STDDIPINFO(Boblcave)
+
 static struct BurnDIPInfo SboblbobDIPList[]=
 {
 	// Default Values
@@ -2851,14 +2914,14 @@ static INT32 DrvFrame()
 				M6801Close();
 			}
 		}
+
+		if (i == 224 && pBurnDraw) DrvDraw();
 	}
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	if (pBurnDraw) DrvDraw();
 
 	return 0;
 }
@@ -2897,13 +2960,13 @@ static INT32 TokioFrame()
 		if (DrvMCUInUse) {
 			CPU_RUN(3, m6805);
 		}
+
+		if (i == 224 && pBurnDraw) DrvDraw();
 	}
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	if (pBurnDraw) DrvDraw();
 
 	return 0;
 }
@@ -3047,7 +3110,7 @@ struct BurnDriver BurnDrvBublboblb = {
 	"Bubble Bobble (for Bobble Bobble PCB)\0", NULL, "bootleg (Aladar)", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, BublboblbRomInfo, BublboblbRomName, NULL, NULL, NULL, NULL, BoblboblInputInfo, BoblboblDIPInfo,
+	NULL, BublboblbRomInfo, BublboblbRomName, NULL, NULL, NULL, NULL, BoblboblInputInfo, BoblcaveDIPInfo,
 	BoblboblInit, BublboblExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x100, 256, 224, 4, 3
 };
@@ -3167,7 +3230,7 @@ struct BurnDriver BurnDrvBoblcave = {
 	"Bubble Bobble: Lost Cave V1.2 (for Bobble Bobble PCB)\0", NULL, "hack (Bisboch and Aladar)", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, BoblcaveRomInfo, BoblcaveRomName, NULL, NULL, NULL, NULL, BoblboblInputInfo, BoblboblDIPInfo,
+	NULL, BoblcaveRomInfo, BoblcaveRomName, NULL, NULL, NULL, NULL, BoblboblInputInfo, BoblcaveDIPInfo,
 	BoblboblInit, BublboblExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x100, 256, 224, 4, 3
 };

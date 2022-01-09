@@ -315,7 +315,7 @@ static int Update3DScreen()
 			double dXAngle, dYAngle;
 
 			if (bDrvOkay) {
-				if ((BurnDrvGetFlags() & (BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED)) && nVidRotationAdjust) {
+				if ((BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) && nVidRotationAdjust) {
 					BurnDrvGetAspect(&nGameAspectY, &nGameAspectX);
 				} else {
 					BurnDrvGetAspect(&nGameAspectX, &nGameAspectY);
@@ -2257,6 +2257,10 @@ static int vidFrame(bool bRedraw)			// bRedraw = 0
 #endif
 
 	VidFrameCallback(bRedraw);				// Run emulation for 1 frame / render image
+
+	if (pVidImage == NULL) {                // If a mode change was requested by game, pVidImage has been invalidated - time to leave.
+		return 0; 							// ret 0, because we really ran a frame here.
+	}
 
 #ifdef ENABLE_PROFILING
 	ProfileProfileEnd(0);

@@ -4459,14 +4459,12 @@ static INT32 PicoLine(INT32 /*scan*/)
 	return 0;
 }
 
-#ifndef __LIBRETRO__
-static UINT8 *pBurnDrawBAD      = NULL;
-#endif
-
 static INT32 screen_width = 0;
 
 static INT32 res_check()
 {
+	if (pBurnDraw == NULL) return 1; // Don't try to change modes if display not active.
+
 	if ((RamVReg->reg[12] & (4|2)) == (4|2)) { // interlace mode 2
 		INT32 Height;
 		BurnDrvGetVisibleSize(&screen_width, &Height);
@@ -4475,9 +4473,6 @@ static INT32 res_check()
 			bprintf(0, _T("switching to 320 x (224*2) mode\n"));
 			BurnDrvSetVisibleSize(320, (224*2));
 			Reinitialise();
-#ifndef __LIBRETRO__
-			pBurnDrawBAD = pBurnDraw; // note: invalidated pBurnDraw
-#endif
 			return 1;
 		}
 	}
@@ -4490,9 +4485,6 @@ static INT32 res_check()
 			bprintf(0, _T("switching to 256 x 224 mode\n"));
 			BurnDrvSetVisibleSize(256, 224);
 			Reinitialise();
-#ifndef __LIBRETRO__
-			pBurnDrawBAD = pBurnDraw; // note: invalidated pBurnDraw
-#endif
 			return 1;
 		}
 	} else {
@@ -4503,9 +4495,6 @@ static INT32 res_check()
 			bprintf(0, _T("switching to 320 x 224 mode\n"));
 			BurnDrvSetVisibleSize(320, 224);
 			Reinitialise();
-#ifndef __LIBRETRO__
-			pBurnDrawBAD = pBurnDraw; // note: invalidated pBurnDraw
-#endif
 			return 1;
 		}
 	}
@@ -4514,14 +4503,6 @@ static INT32 res_check()
 
 INT32 MegadriveDraw()
 {
-#ifndef __LIBRETRO__
-	if (pBurnDrawBAD == pBurnDraw) {
-		// Reinitialise() could take 1-2 frames to complete, during that time
-		// we can't draw since pBurnDraw is invalid.
-		bprintf(0, _T("MegadriveDraw(): ignored this draw (waiting for re-init)!\n"));
-		return 0;
-	} else pBurnDrawBAD = NULL;
-#endif
 	if (bMegadriveRecalcPalette) {
 	    for (INT32 i=0; i< 0x40; i++)
 			CalcCol(i, BURN_ENDIAN_SWAP_INT16(RamPal[i]));

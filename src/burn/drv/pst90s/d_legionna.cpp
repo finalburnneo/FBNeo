@@ -577,9 +577,17 @@ static inline void legionna_common_write_word(UINT32 address, UINT16 data)
 	switch (address)
 	{
 		case 0x100470: // tile bank?
-			background_bank = (data >> 2) & 0x1000;
-			foreground_bank = (data >> 1) & 0x1000;
-			midground_bank  = (data >> 3) & 0x1000;
+			if (!denjinmk_hack) {
+				// heatedbrl, etc
+				background_bank = (data >> 2) & 0x1000;
+				midground_bank  = (data >> 3) & 0x1000;
+				foreground_bank = (data >> 1) & 0x1000;
+			} else {
+				// denjinmk
+				background_bank = (data >> 1) & 0x1000;
+				midground_bank  = (data >> 2) & 0x1000;
+				foreground_bank = (data >> 3) & 0x1000;
+			}
 		break;
 
 		case 0x100680:	// irq ack?
@@ -599,7 +607,7 @@ static inline void legionna_common_write_byte(UINT32 address, UINT8 data)
 	{
 		case 0x100470:
 		case 0x100471:
-	//		bprintf (0, _T("WB: tile bank: %5.5x, %2.2x\n"), address, data);
+			//bprintf (0, _T("WB: tile bank: %5.5x, %2.2x\n"), address, data);
 		break;
 
 		case 0x100680:	// irq ack?
@@ -1614,7 +1622,6 @@ static INT32 DenjinmkDraw()
 	if ((layer_disable & 0x0002) == 0 && (nBurnLayer & 2)) GenericTilemapDraw(1, pTransDraw, 1);
 	if ((layer_disable & 0x0004) == 0 && (nBurnLayer & 4)) GenericTilemapDraw(2, pTransDraw, 2);
 	if ((layer_disable & 0x0008) == 0 && (nBurnLayer & 8)) GenericTilemapDraw(3, pTransDraw, 4);
-
 	if ((layer_disable & 0x0010) == 0 && (nSpriteEnable & 1)) draw_sprites(0x5000-0x800, pri_masks, 1, 0, 0);
 
 	BurnTransferCopy(DrvPalette);

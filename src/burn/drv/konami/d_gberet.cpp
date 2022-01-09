@@ -639,6 +639,8 @@ static INT32 DrvInit(INT32 game_select)
 		if (BurnLoadRom(DrvColPROM + 0x00000,  k++, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM + 0x00020,  k++, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM + 0x00120,  k++, 1)) return 1;
+		if (BurnLoadRom(DrvColPROM + 0x00220,  k++, 1)) return 1;
+		if (BurnLoadRom(DrvColPROM + 0x00320,  k++, 1)) return 1;
 
 		BootGfxDecode();
 	}
@@ -1021,11 +1023,13 @@ static struct BurnRomInfo gberetbRomDesc[] = {
 	{ "5-ic10.2d",			0x4000, 0x6a7b3881, 3 | BRF_GRA },           //  5
 	{ "4-ic11.2e",			0x4000, 0x3fb186c9, 3 | BRF_GRA },           //  6
 
-	{ "577h09",				0x0020, 0xc15e7c80, 4 | BRF_GRA },           //  7 Color Data
-	{ "577h11.6f",			0x0100, 0x2a1a992b, 4 | BRF_GRA },           //  8
-	{ "577h10.5f",			0x0100, 0xe9de1e53, 4 | BRF_GRA },           //  9
+	{ "82s123-ic100.13b",	0x0020, 0x1bef8c7b, 4 | BRF_GRA },           //  7 Color Data
+	{ "82s129-ic26.4g",		0x0100, 0x2d3ad74b, 4 | BRF_GRA },           //  8
+	{ "82s129-ic34.5g",		0x0100, 0xa895c3e5, 4 | BRF_GRA },           //  9
+	{ "82s129-ic75.9j",		0x0100, 0x85e757b6, 4 | BRF_GRA },           // 10
+	{ "82s129-ic90.12a",	0x0100, 0xdffe6b15, 4 | BRF_GRA },           // 11
 
-	{ "pal16r6_ic35.5h",	0x0104, 0xbd76fb53, 0 | BRF_OPT },           // 10 PLDs
+	{ "pal16r6_ic35.5h",	0x0104, 0xbd76fb53, 0 | BRF_OPT },           // 12 PLDs
 };
 
 STD_ROM_PICK(gberetb)
@@ -1038,9 +1042,9 @@ static INT32 GberetbInit()
 
 struct BurnDriver BurnDrvGberetb = {
 	"gberetb", "gberet", NULL, NULL, "1985",
-	"Green Beret (bootleg)\0", NULL, "bootleg", "GX577",
+	"Green Beret (bootleg)\0", "needs correct PROM decoding", "bootleg", "GX577",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, gberetbRomInfo, gberetbRomName, NULL, NULL, NULL, NULL, GberetbInputInfo, GberetbDIPInfo,
 	GberetbInit, DrvExit, DrvFrame, BootDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 224, 4, 3

@@ -475,14 +475,15 @@ INT32 AtariMoScan(INT32 nAction, INT32 *pnMin)
 		for (INT32 i = 0; i < 2; i++)
 		{
 			atarimo_data *mo = &atarimo[i];
-
 			if (mo->tilewidth)
 			{
 				ScanVar(mo->spriteram, sizeof(atarimo_entry) * mo->spriteramsize, "AtariMO RAM");
 				SCAN_VAR(mo->bank);
 				SCAN_VAR(mo->xscroll);
 				SCAN_VAR(mo->yscroll);
-
+				SCAN_VAR(mo->last_link);
+				SCAN_VAR(mo->last_xpos);
+				SCAN_VAR(mo->next_xpos);
 			}
 		}
 	}

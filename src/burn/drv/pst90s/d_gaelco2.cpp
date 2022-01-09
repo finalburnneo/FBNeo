@@ -1362,6 +1362,32 @@ static INT32 DrvExit()
 	return 0;
 }
 
+static INT32 get_rowscrollmode_yscroll(INT32 first_screen)
+{
+	UINT16 base = first_screen ? 0x2000 / 2 : 0x2400 / 2;
+
+	UINT8 checkoffsets[32] = {
+		0x02, 0x0e, 0x0a, 0x1b, 0x15, 0x13, 0x04, 0x19,
+		0x0c, 0x1f, 0x08, 0x1d, 0x11, 0x06, 0x17, 0x10,
+		0x01, 0x0d, 0x16, 0x09, 0x1a, 0x05, 0x1e, 0x00,
+		0x12, 0x0b, 0x14, 0x03, 0x1c, 0x18, 0x07, 0x0f };
+
+	UINT16 *ram = (UINT16*)DrvSprRAM;
+
+	INT32 usescroll = 0;
+	for (INT32 i = 31; i >= 0; i--)
+	{
+		INT32 checkoffset = (0x80 / 2) + ((checkoffsets[i] * 3) + 1);
+
+		if (ram[(base)+checkoffset] & 0x1000)
+		{
+			usescroll = 31 - i;
+		}
+	}
+
+	return usescroll;
+}
+
 static void draw_layer(INT32 layer)
 {
 	INT32 offset = ((DrvVidRegs[layer] >> 9) & 0x07) * 0x1000;
@@ -1407,8 +1433,9 @@ static void draw_layer(INT32 layer)
 	}
 	else
 	{
-		if (game_select == 4)
-			scrolly += 32; // for touch n go alignment
+		if (game_select == 4) { // touch & go
+			scrolly += get_rowscrollmode_yscroll(layer ^ 1);
+		}
 
 		for (INT32 sy = 0; sy < nScreenHeight; sy++)
 		{

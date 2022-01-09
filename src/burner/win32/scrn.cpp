@@ -2238,11 +2238,27 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			break;
 		}
 
-		case MENU_INPUT_AUTOFIRE_RATE_1: nAutoFireRate = 22; break;
+		case MENU_AUDIO_VOLUME_0:
+		case MENU_AUDIO_VOLUME_10:
+		case MENU_AUDIO_VOLUME_20:
+		case MENU_AUDIO_VOLUME_30:
+		case MENU_AUDIO_VOLUME_40:
+		case MENU_AUDIO_VOLUME_50:
+		case MENU_AUDIO_VOLUME_60:
+		case MENU_AUDIO_VOLUME_70:
+		case MENU_AUDIO_VOLUME_80:
+		case MENU_AUDIO_VOLUME_90:
+		case MENU_AUDIO_VOLUME_100:
+			nAudVolume = (id - MENU_AUDIO_VOLUME_0) * 1000;
+			AudSoundSetVolume();
+			break;
+
+		case MENU_INPUT_AUTOFIRE_RATE_1: nAutoFireRate = 24; break;
 		case MENU_INPUT_AUTOFIRE_RATE_2: nAutoFireRate = 12; break;
 		case MENU_INPUT_AUTOFIRE_RATE_3: nAutoFireRate =  8; break;
 		case MENU_INPUT_AUTOFIRE_RATE_4: nAutoFireRate =  6; break;
 		case MENU_INPUT_AUTOFIRE_RATE_5: nAutoFireRate =  4; break;
+		case MENU_INPUT_AUTOFIRE_RATE_6: nAutoFireRate =  2; break;
 
 		case MENU_PRIORITY_REALTIME: // bad idea, this will freeze the entire system.
 			break;
@@ -3101,6 +3117,17 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				case MENU_DX9_ALT_MOTIONBLUR:
 					bVidMotionBlur = !bVidMotionBlur;
 					POST_INITIALISE_MESSAGE;
+					break;
+
+				case MENU_DX9_ALT_HARD_FX_NONE:
+				case MENU_DX9_ALT_HARD_FX_CRT_APERTURE:
+				case MENU_DX9_ALT_HARD_FX_CRT_CALIGARI:
+				case MENU_DX9_ALT_HARD_FX_CRT_CGWG_FAST:
+				case MENU_DX9_ALT_HARD_FX_CRT_EASY_MODE:
+				case MENU_DX9_ALT_HARD_FX_CRT_STANDARD:
+				case MENU_DX9_ALT_HARD_FX_CRT_BICUBIC:
+				case MENU_DX9_ALT_HARD_FX_CRT_CGA:
+					nVidDX9HardFX = id - MENU_DX9_ALT_HARD_FX_NONE;
 					break;
 
 				case MENU_DX9_ALT_FORCE_16BIT:

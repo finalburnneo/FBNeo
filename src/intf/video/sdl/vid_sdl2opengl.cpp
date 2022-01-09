@@ -32,10 +32,15 @@ static char Windowtitle[512];
 
 static int BlitFXExit()
 {
-	SDL_DestroyWindow(sdlWindow);
-	SDL_GL_DeleteContext(glContext);
 	free(texture);
 	free(gamescreen);
+
+	SDL_DestroyWindow(sdlWindow);
+	sdlWindow = NULL;
+	
+	SDL_GL_DeleteContext(glContext);
+	glContext = NULL;
+	
 	nRotateGame = 0;
 
 	return 0;
@@ -78,8 +83,10 @@ static int BlitFXInit()
 
 	nMemLen = nVidImageWidth * nVidImageHeight * nVidImageBPP;
 
+#ifdef FBNEO_DEBUG
 	printf("nVidImageWidth=%d nVidImageHeight=%d nVidImagePitch=%d\n", nVidImageWidth, nVidImageHeight, nVidImagePitch);
 	printf("nTextureWidth=%d nTextureHeight=%d TexturePitch=%d\n", nTextureWidth, nTextureHeight, nTextureWidth * nVidImageBPP);
+#endif
 
 	texture = (unsigned char*)malloc(nTextureWidth * nTextureHeight * nVidImageBPP);
 
@@ -115,8 +122,9 @@ static int Exit()
 
 void init_gl()
 {
+#ifdef FBNEO_DEBUG
 	printf("opengl config\n");
-
+#endif
 	if ((BurnDrvGetFlags() & BDF_16BIT_ONLY) || (nVidImageBPP != 3))
 	{
 		texture_type = GL_UNSIGNED_SHORT_5_6_5;
@@ -135,15 +143,15 @@ void init_gl()
 	glDepthMask(GL_FALSE);
 	glDisable(GL_CULL_FACE);
 	glEnable(GL_TEXTURE_2D);
-	if (strcmp(videofiltering, "1") == 0) 
-	{
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	}
-	else
+	if (strcmp(videofiltering, "0") == 0) 
 	{
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	}
+	else
+	{
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	}
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, nTextureWidth, nTextureHeight, 0, GL_RGB, texture_type, texture);
 
@@ -163,8 +171,10 @@ void init_gl()
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
+	
+#ifdef FBNEO_DEBUG
 	printf("opengl config done . . . \n");
+#endif
 }
 
 static int VidSScaleImage(RECT* pRect)
@@ -182,7 +192,7 @@ static int VidSScaleImage(RECT* pRect)
 
 	if (bDrvOkay)
 	{
-		if ((BurnDrvGetFlags() & (BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED)))
+		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
 		{
 			BurnDrvGetAspect(&nGameAspectY, &nGameAspectX);
 		}
@@ -247,13 +257,17 @@ static int Init()
 
 		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
 		{
+#ifdef FBNEO_DEBUG
 			printf("Vertical\n");
+#endif
 			nRotateGame = 1;
 		}
 
 		if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED)
 		{
+#ifdef FBNEO_DEBUG
 			printf("Flipped\n");
+#endif
 			bFlipped = true;
 		}
 	}
@@ -277,10 +291,14 @@ static int Init()
 	test_rect.right = nGamesWidth;
 	test_rect.top = 0;
 	test_rect.bottom = nGamesHeight;
-
+	
+#ifdef FBNEO_DEBUG
 	printf("correctx before %d, %d\n", test_rect.right, test_rect.bottom);
+#endif
 	VidSScaleImage(&test_rect);
+#ifdef FBNEO_DEBUG
 	printf("correctx after %d, %d\n", test_rect.right, test_rect.bottom);
+#endif
 
 	Uint32 screenFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
 
@@ -293,7 +311,16 @@ static int Init()
 	
 	sdlWindow = SDL_CreateWindow(Windowtitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, test_rect.right * nSize,
 		test_rect.bottom * nSize, screenFlags);
+	if (sdlWindow == NULL) {
+		printf("OPENGL failed : %s\n", SDL_GetError());
+		return -1;		
+	}
 	glContext = SDL_GL_CreateContext(sdlWindow);
+	if (glContext == NULL) {
+		printf("OPENGL failed : %s\n", SDL_GetError());
+		return -1;		
+	}
+	
 	// Initialize the buffer surfaces
 	BlitFXInit();
 
@@ -377,8 +404,8 @@ static int GetSettings(InterfaceInfo* pInfo)
 {
 	TCHAR szString[MAX_PATH] = _T("");
 
-	_sntprintf(szString, MAX_PATH, _T("Prescaling using %s (%i� zoom)"), VidSoftFXGetEffect(nUseBlitter), nSize);
-	IntInfoAddStringModule(pInfo, szString);
+	//_sntprintf(szString, MAX_PATH, _T("Prescaling using %s (%i� zoom)"), VidSoftFXGetEffect(nUseBlitter), nSize);
+	//IntInfoAddStringModule(pInfo, szString);
 
 	if (nRotateGame)
 	{

@@ -8759,7 +8759,7 @@ struct BurnDriver BurnDrvCatacomb = {
 
 struct BurnDriver BurnDrvOmegab = {
 	"omegab", "theend", NULL, NULL, "19??",
-	"Omega\0", NULL, "bootleg?", "Galaxian",
+	"Omega (bootleg?)\0", NULL, "bootleg?", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, OmegabRomInfo, OmegabRomName, NULL, NULL, NULL, NULL, OmegabInputInfo, OmegabDIPInfo,
@@ -9335,7 +9335,7 @@ static INT32 PiscesInit()
 }
 
 struct BurnDriver BurnDrvPisces = {
-	"pisces", NULL, NULL, NULL, "19??",
+	"pisces", NULL, NULL, NULL, "1982",
 	"Pisces\0", NULL, "Subelectro", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
@@ -9345,7 +9345,7 @@ struct BurnDriver BurnDrvPisces = {
 };
 
 struct BurnDriver BurnDrvPiscesb = {
-	"piscesb", "pisces", NULL, NULL, "19??",
+	"piscesb", "pisces", NULL, NULL, "1982",
 	"Pisces (bootleg)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
@@ -9355,7 +9355,7 @@ struct BurnDriver BurnDrvPiscesb = {
 };
 
 struct BurnDriver BurnDrvOmni = {
-	"omni", "pisces", NULL, NULL, "19??",
+	"omni", "pisces", NULL, NULL, "1982",
 	"Omni\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
@@ -10395,8 +10395,8 @@ static struct BurnRomInfo GmgalaxRomDesc[] = {
 	{ "pcb2gfx2.bin",  0x01000, 0x51bf58ee, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "pcb2gfx4.bin",  0x01000, 0x908fd0dc, BRF_GRA | GAL_ROM_TILES_SHARED },
 	
-	{ "gmgalax2.clr",  0x00020, 0x499f4440, BRF_GRA | GAL_ROM_PROM },
-	{ "l06_prom.bin",  0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+	{ "ghostmuncher_mb7051_top.6l", 0x00020, 0x499f4440, BRF_GRA | GAL_ROM_PROM },
+	{ "galaxian_mb7051_bottom.6l",  0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
 };
 
 STD_ROM_PICK(Gmgalax)

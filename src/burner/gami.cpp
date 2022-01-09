@@ -362,20 +362,6 @@ static void GameInpInitMacros()
 			pgi->Macro.nVal[0] = 1;
 			nMacroCount++;
 			pgi++;
-
-			for (int hotkey_num = 0; lua_hotkeys[hotkey_num] != NULL; hotkey_num++) {
-				char hotkey_name[40];
-				sprintf(hotkey_name, "Lua Hotkey %d", (hotkey_num + 1));
-				pgi->nInput = GIT_MACRO_AUTO;
-				pgi->nType = BIT_DIGITAL;
-				pgi->Macro.nMode = 0;
-				pgi->Macro.nSysMacro = 1;
-				sprintf(pgi->Macro.szName, hotkey_name);
-				pgi->Macro.pVal[0] = lua_hotkeys[hotkey_num];
-				pgi->Macro.nVal[0] = 1;
-				nMacroCount++;
-				pgi++;
-			}
 	}
 
 	// Remove two keys for volume adjustment of cps2
@@ -1006,6 +992,21 @@ static void GameInpInitMacros()
 				pgi++;
 			}
 		}
+	}
+
+	// LUA Hotkeys
+	for (int hotkey_num = 0; lua_hotkeys[hotkey_num] != NULL; hotkey_num++) {
+		char hotkey_name[40];
+		sprintf(hotkey_name, "Lua Hotkey %d", (hotkey_num + 1));
+		pgi->nInput = GIT_MACRO_AUTO;
+		pgi->nType = BIT_DIGITAL;
+		pgi->Macro.nMode = 0;
+		pgi->Macro.nSysMacro = 1;
+		sprintf(pgi->Macro.szName, hotkey_name);
+		pgi->Macro.pVal[0] = lua_hotkeys[hotkey_num];
+		pgi->Macro.nVal[0] = 1;
+		nMacroCount++;
+		pgi++;
 	}
 
 	if ((nPunchx3[0] == 7) && (nKickx3[0] == 7)) {

@@ -44,3 +44,8 @@ int VidSInitOSD(int nFlags);
 int VidSRestoreOSD();
 void VidSDisplayOSD(IDirectDrawSurface7* pSurf, RECT* pRect, int nFlags);
 
+UINT8 VidSGetnStatus();
+TCHAR *VidSGetStatus();
+int VidSGetnZoom();
+
+void VidSDisplayCheckTimers();

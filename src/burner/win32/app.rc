@@ -786,9 +786,11 @@ BEGIN
     LTEXT           "",IDC_REPLAYRESET,76,80,190,8
     LTEXT           "",IDC_REPLAYTIME,76,89,190,8
     CONTROL         "Open Read-Only",IDC_READONLY,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,35,25,69,10
+                    WS_TABSTOP,14,25,69,10
     CONTROL         "Show Joystick Movement",IDC_SHOWMOVEMENT,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,120,25,100,10
+                    WS_TABSTOP,97,25,99,10
+    CONTROL         "Start Paused",IDC_STARTPAUSED,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,207,25,57,10
 END
 
 IDD_RECORDINP DIALOGEX 0, 0, 276, 98
@@ -1042,6 +1044,20 @@ BEGIN
     	    MENUITEM "XAudio2",						MENU_AUD_PLUGIN_2
     	END
     	MENUITEM "Plugin &options",					MENU_AUDIO_OPTIONS, GRAYED
+		POPUP "&Audio Volume"
+		BEGIN
+			MENUITEM "100% (max)",					MENU_AUDIO_VOLUME_100
+			MENUITEM "90%",							MENU_AUDIO_VOLUME_90
+			MENUITEM "80%",							MENU_AUDIO_VOLUME_80
+			MENUITEM "70%",							MENU_AUDIO_VOLUME_70
+			MENUITEM "60%",							MENU_AUDIO_VOLUME_60
+			MENUITEM "50%",							MENU_AUDIO_VOLUME_50
+			MENUITEM "40%",							MENU_AUDIO_VOLUME_40
+			MENUITEM "30%",							MENU_AUDIO_VOLUME_30
+			MENUITEM "20%",							MENU_AUDIO_VOLUME_20
+			MENUITEM "10%",							MENU_AUDIO_VOLUME_10
+			MENUITEM "0% (mute)",					MENU_AUDIO_VOLUME_0
+		END
     	MENUITEM SEPARATOR
         MENUITEM "2-point 1st order sample interpolation",		MENU_INTERPOLATE_1
         MENUITEM "4-point 3rd order sample interpolation",		MENU_INTERPOLATE_3
@@ -1070,6 +1086,7 @@ BEGIN
     	    MENUITEM "Fast",						MENU_INPUT_AUTOFIRE_RATE_3
     	    MENUITEM "Faster",						MENU_INPUT_AUTOFIRE_RATE_4
     	    MENUITEM "Very Fast",					MENU_INPUT_AUTOFIRE_RATE_5
+    	    MENUITEM "Very Faster",					MENU_INPUT_AUTOFIRE_RATE_6
     	END
     	MENUITEM SEPARATOR
         MENUITEM "Map game inputs...\tF5",				MENU_INPUT, GRAYED
@@ -1426,6 +1443,17 @@ BEGIN
 		MENUITEM "Point filtering",                             MENU_DX9_ALT_POINT
 		MENUITEM "Linear filtering",                            MENU_DX9_ALT_LINEAR
 		MENUITEM SEPARATOR
+        POPUP "HardFX algorithm"
+        BEGIN
+            MENUITEM "None",                    				MENU_DX9_ALT_HARD_FX_NONE
+            MENUITEM "CRT Aperture",            				MENU_DX9_ALT_HARD_FX_CRT_APERTURE
+            MENUITEM "CRT Caligari",            				MENU_DX9_ALT_HARD_FX_CRT_CALIGARI
+            MENUITEM "CRT CGWG Fast",           				MENU_DX9_ALT_HARD_FX_CRT_CGWG_FAST
+            MENUITEM "CRT Easy Mode",           				MENU_DX9_ALT_HARD_FX_CRT_EASY_MODE
+			MENUITEM "CRT Standard",            				MENU_DX9_ALT_HARD_FX_CRT_STANDARD
+			MENUITEM "CRT Bicubic",								MENU_DX9_ALT_HARD_FX_CRT_BICUBIC
+			MENUITEM "CRT CGA",									MENU_DX9_ALT_HARD_FX_CRT_CGA
+        END        
 		POPUP "SoftFX algorithm"
 		BEGIN
 			MENUITEM "Double pixels (3D hardware)",				MENU_DX9_ALT_SOFT_STRETCH

@@ -194,6 +194,7 @@ extern INT32 nVidFeedbackIntensity;
 extern INT32 nVidFeedbackOverSaturation;
 extern INT32 bVidCorrectAspect;
 extern INT32 bVidArcaderes;
+extern INT32 nVidDX9HardFX;
 
 extern INT32 bVidArcaderesHor;
 extern INT32 bVidArcaderesVer;
@@ -254,7 +255,3 @@ extern bool bEditActive;
 extern bool bEditTextChanged;
 extern TCHAR EditText[MAX_CHAT_SIZE + 1];
 
-// osd text display for dx9
-extern TCHAR OSDMsg[MAX_PATH];
-extern UINT32 nOSDTimer;
-void VidSKillOSDMsg();

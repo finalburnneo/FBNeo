@@ -55,10 +55,17 @@ extern INT32 bBurnSampleTrimSampleEnd; // set before BurnSampleInit();
 #define BURN_SND_SAMPLE_ROUTE_1			0
 #define BURN_SND_SAMPLE_ROUTE_2			1
 
-#define BurnSampleSetAllRoutes(i, v, d)						\
+#define BurnSampleSetAllRoutes(i, v, d)	{   				\
 	BurnSampleSetRoute(i, BURN_SND_SAMPLE_ROUTE_1, v, d);	\
-	BurnSampleSetRoute(i, BURN_SND_SAMPLE_ROUTE_2, v, d);
+	BurnSampleSetRoute(i, BURN_SND_SAMPLE_ROUTE_2, v, d);   \
+}
 
-#define BurnSampleSetAllRoutesAllSamples(v, d)						\
+#define BurnSampleSetAllRoutesFade(i, v, d)	{   				\
+	BurnSampleSetRouteFade(i, BURN_SND_SAMPLE_ROUTE_1, v, d);	\
+	BurnSampleSetRouteFade(i, BURN_SND_SAMPLE_ROUTE_2, v, d);   \
+}
+
+#define BurnSampleSetAllRoutesAllSamples(v, d) {					\
 	BurnSampleSetRouteAllSamples(BURN_SND_SAMPLE_ROUTE_1, v, d);	\
-	BurnSampleSetRouteAllSamples(BURN_SND_SAMPLE_ROUTE_2, v, d);
+	BurnSampleSetRouteAllSamples(BURN_SND_SAMPLE_ROUTE_2, v, d);    \
+}

@@ -28929,10 +28929,10 @@ struct BurnDriver BurnDrvsms_indycrusc = {
 	256, 192, 4, 3
 };
 
-// The Jungle Book (Euro, Bra)
+// The Jungle Book (Euro, Bra) - Castellano v1.0
 // https://www.romhacking.net/
 static struct BurnRomInfo sms_junglecRomDesc[] = {
-	{ "the jungle book (euro, bra).sms",          262144, 0xdfa31d13, BRF_ESS | BRF_PRG },
+	{ "the jungle book (euro, bra)- Castellano v1.0.sms",          262144, 0xdfa31d13, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(sms_junglec)
@@ -28940,7 +28940,7 @@ STD_ROM_FN(sms_junglec)
 
 struct BurnDriver BurnDrvsms_junglec = {
 	"sms_junglec", "sms_jungle", NULL, NULL, "2021",
-	"The Jungle Book (Euro, Bra)\0", NULL, "Sega", "Sega Master System",
+	"The Jungle Book (Euro, Bra) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_junglecRomInfo, sms_junglecRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -29951,6 +29951,25 @@ struct BurnDriver BurnDrvsms_soultrials = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MAZE | GBF_ACTION, 0,
 	SMSGetZipName, sms_soultrialsRomInfo, sms_soultrialsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 224, 4, 3
+};
+
+// Grime Z80 (HB)
+
+static struct BurnRomInfo sms_grimez80RomDesc[] = {
+	{ "Grime Z80 (Chibi Akumas)(2018).sms",	32768, 0x6664c3d5, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_grimez80)
+STD_ROM_FN(sms_grimez80)
+
+struct BurnDriver BurnDrvsms_grimez80 = {
+	"sms_grimez80", NULL, NULL, NULL, "2018",
+	"Grime Z80 (HB)\0", NULL, "Chibi Akumas", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SHOOT | GBF_ACTION, 0,
+	SMSGetZipName, sms_grimez80RomInfo, sms_grimez80RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 224, 4, 3
 };

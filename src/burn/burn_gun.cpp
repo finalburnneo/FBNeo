@@ -20,6 +20,9 @@ static INT32 nBurnGunMaxY = 0;
 INT32 BurnGunX[MAX_GUNS];
 INT32 BurnGunY[MAX_GUNS];
 
+INT32 BurnPaddleX[MAX_GUNS];
+INT32 BurnPaddleY[MAX_GUNS];
+
 struct GunWrap { INT32 xmin; INT32 xmax; INT32 ymin; INT32 ymax; };
 static GunWrap BurnGunWrapInf[MAX_GUNS]; // Paddle/Dial use
 
@@ -71,7 +74,7 @@ static UINT8 GunTargetShouldDraw(INT32 player)
 
 INT32 BurnGunIsActive()
 {
-	return (Debug_BurnGunInitted && Using_Trackball == 0);
+	return Debug_BurnGunInitted;
 }
 
 void BurnGunSetCoords(INT32 player, INT32 x, INT32 y)
@@ -126,7 +129,7 @@ void BurnPaddleReturn(BurnDialINF &dial, INT32 num, INT32 isB)
 
 	if (num > MAX_GUNS - 1) return;
 
-	INT32 Paddle = ((isB) ? BurnGunY[num] : BurnGunX[num]) >> 7;
+	INT32 Paddle = ((isB) ? BurnPaddleY[num] : BurnPaddleX[num]) >> 7;
 	INT32 device = (num * 2) + isB;
 
 	if (Paddle < PaddleLast[device]) {
@@ -222,6 +225,12 @@ static INT32 attenuate_velocity(INT32 dev)
 
 void BurnTrackballUpdate(INT32 dev)
 {
+	BurnTrackballUpdatePortA(dev);
+	BurnTrackballUpdatePortB(dev);
+}
+
+void BurnTrackballUpdatePortA(INT32 dev)
+{
 	// PortA (usually X-Axis)
 	if (DrvJoyT[(dev*4) + 0]) { // Backward
 		if (TrackRev[(dev*2) + 0])
@@ -243,6 +252,17 @@ void BurnTrackballUpdate(INT32 dev)
 	if (TrackStop[(dev*2) + 0] != -1 && TrackA[dev] > TrackStop[(dev*2) + 0])
 		TrackA[dev] = TrackStop[(dev*2) + 0];
 
+	if (bLogarithmicCurve) {
+		if (DIAL_VEL[(dev*2) + 0]) {
+			DIAL_VEL[(dev*2) + 0]--;
+		} else {
+			DIAL_INC[(dev*2) + 0] = 0;
+		}
+	}
+}
+
+void BurnTrackballUpdatePortB(INT32 dev)
+{
 	// PortB (usually Y-Axis)
 	if (DrvJoyT[(dev*4) + 2]) { // Backward
 		if (TrackRev[(dev*2) + 1])
@@ -265,12 +285,6 @@ void BurnTrackballUpdate(INT32 dev)
 		TrackB[dev] = TrackStop[(dev*2) + 1];
 
 	if (bLogarithmicCurve) {
-		if (DIAL_VEL[(dev*2) + 0]) {
-			DIAL_VEL[(dev*2) + 0]--;
-		} else {
-			DIAL_INC[(dev*2) + 0] = 0;
-		}
-
 		if (DIAL_VEL[(dev*2) + 1]) {
 			DIAL_VEL[(dev*2) + 1]--;
 		} else {
@@ -438,29 +452,29 @@ void BurnPaddleMakeInputs(INT32 num, BurnDialINF &dial, INT16 x, INT16 y)
 	if (y == 1 || y == -1) y = 0;
 	if (x == 1 || x == -1) x = 0; // prevent walking crosshair
 
-	BurnGunX[num] += x;
-	BurnGunY[num] += y;
+	BurnPaddleX[num] += x;
+	BurnPaddleY[num] += y;
 
 	// Wrapping (for dial/paddle use)
 	if (BurnGunWrapInf[num].xmin != -1)
-		if (BurnGunX[num] < BurnGunWrapInf[num].xmin * 0x100) {
-			BurnGunX[num] = BurnGunWrapInf[num].xmax * 0x100;
+		if (BurnPaddleX[num] < BurnGunWrapInf[num].xmin * 0x100) {
+			BurnPaddleX[num] = BurnGunWrapInf[num].xmax * 0x100;
 			BurnPaddleReturn(dial, num, 0); // rebase PaddleLast* on wrap
 		}
 	if (BurnGunWrapInf[num].xmax != -1)
-		if (BurnGunX[num] > BurnGunWrapInf[num].xmax * 0x100) {
-			BurnGunX[num] = BurnGunWrapInf[num].xmin * 0x100;
+		if (BurnPaddleX[num] > BurnGunWrapInf[num].xmax * 0x100) {
+			BurnPaddleX[num] = BurnGunWrapInf[num].xmin * 0x100;
 			BurnPaddleReturn(dial, num, 0); // rebase PaddleLast* on wrap
 		}
 
 	if (BurnGunWrapInf[num].ymin != -1)
-		if (BurnGunY[num] < BurnGunWrapInf[num].ymin * 0x100) {
-			BurnGunY[num] = BurnGunWrapInf[num].ymax * 0x100;
+		if (BurnPaddleY[num] < BurnGunWrapInf[num].ymin * 0x100) {
+			BurnPaddleY[num] = BurnGunWrapInf[num].ymax * 0x100;
 			BurnPaddleReturn(dial, num, 1); // rebase PaddleLast* on wrap
 		}
 	if (BurnGunWrapInf[num].ymax != -1)
-		if (BurnGunY[num] > BurnGunWrapInf[num].ymax * 0x100) {
-			BurnGunY[num] = BurnGunWrapInf[num].ymin * 0x100;
+		if (BurnPaddleY[num] > BurnGunWrapInf[num].ymax * 0x100) {
+			BurnPaddleY[num] = BurnGunWrapInf[num].ymin * 0x100;
 			BurnPaddleReturn(dial, num, 1); // rebase PaddleLast* on wrap
 		}
 }
@@ -578,10 +592,9 @@ void BurnGunScan()
 	if (!Debug_BurnGunInitted) bprintf(PRINT_ERROR, _T("BurnGunScan called without init\n"));
 #endif
 
-	SCAN_VAR(BurnGunX);
-	SCAN_VAR(BurnGunY);
-
 	if (Using_Trackball) {
+		SCAN_VAR(BurnPaddleX);
+		SCAN_VAR(BurnPaddleY);
 		SCAN_VAR(TrackA);
 		SCAN_VAR(TrackB);
 
@@ -593,6 +606,8 @@ void BurnGunScan()
 		SCAN_VAR(DrvJoyT);
 	} else {
 		// guns only!
+		SCAN_VAR(BurnGunX);
+		SCAN_VAR(BurnGunY);
 		SCAN_VAR(GunTargetTimer);
 		SCAN_VAR(GunTargetLastX);
 		SCAN_VAR(GunTargetLastY);

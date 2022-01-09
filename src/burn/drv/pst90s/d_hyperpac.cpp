@@ -2556,6 +2556,8 @@ static INT32 Fourin1bootInit()
 
 	nRet = HyperpacMachineInit(); if (nRet) return 1;
 
+	MSM6295SetRoute(0, 0.35, BURN_SND_ROUTE_BOTH);
+
 	return 0;
 }
 

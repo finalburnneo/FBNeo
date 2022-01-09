@@ -1550,34 +1550,34 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // P.O.W. - Prisoners of War (US version 1)
 
 static struct BurnRomInfo powRomDesc[] = {
-	{ "dg1ver1.j14", 0x20000, 0x8e71a8af, 1 | BRF_PRG }, //  0 68k Code
-	{ "dg2ver1.l14", 0x20000, 0x4287affc, 1 | BRF_PRG }, //  1
+	{ "dg1ver1.j14", 	0x20000, 0x8e71a8af, 1 | BRF_PRG }, //  0 68k Code
+	{ "dg2ver1.l14", 	0x20000, 0x4287affc, 1 | BRF_PRG }, //  1
 
-	{ "dg8.e25",     0x10000, 0xd1d61da3, 2 | BRF_PRG }, //  2 Z80 Code
+	{ "dg8.e25",     	0x10000, 0xd1d61da3, 2 | BRF_PRG }, //  2 Z80 Code
 
-	{ "dg9.l25",     0x08000, 0xdf864a08, 3 | BRF_GRA }, //  3 Characters
-	{ "dg10.m25",    0x08000, 0x9e470d53, 3 | BRF_GRA }, //  4
+	{ "dg9.l25",     	0x08000, 0xdf864a08, 3 | BRF_GRA }, //  3 Characters
+	{ "dg10.m25",    	0x08000, 0x9e470d53, 3 | BRF_GRA }, //  4
 
-	{ "snk880.11a",  0x20000, 0xe70fd906, 4 | BRF_GRA }, //  5 Sprites
-	{ "snk880.12a",  0x20000, 0x628b1aed, 4 | BRF_GRA }, //  6
-	{ "snk880.13a",  0x20000, 0x19dc8868, 4 | BRF_GRA }, //  7
-	{ "snk880.14a",  0x20000, 0x47cd498b, 4 | BRF_GRA }, //  8
-	{ "snk880.15a",  0x20000, 0x7a90e957, 4 | BRF_GRA }, //  9
-	{ "snk880.16a",  0x20000, 0xe40a6c13, 4 | BRF_GRA }, // 10
-	{ "snk880.17a",  0x20000, 0xc7931cc2, 4 | BRF_GRA }, // 11
-	{ "snk880.18a",  0x20000, 0xeed72232, 4 | BRF_GRA }, // 12
-	{ "snk880.19a",  0x20000, 0x1775b8dd, 4 | BRF_GRA }, // 13
-	{ "snk880.20a",  0x20000, 0xf8e752ec, 4 | BRF_GRA }, // 14
-	{ "snk880.21a",  0x20000, 0x27e9fffe, 4 | BRF_GRA }, // 15
-	{ "snk880.22a",  0x20000, 0xaa9c00d8, 4 | BRF_GRA }, // 16
-	{ "snk880.23a",  0x20000, 0xadb6ad68, 4 | BRF_GRA }, // 17
-	{ "snk880.24a",  0x20000, 0xdd41865a, 4 | BRF_GRA }, // 18
-	{ "snk880.25a",  0x20000, 0x055759ad, 4 | BRF_GRA }, // 19
-	{ "snk880.26a",  0x20000, 0x9bc261c5, 4 | BRF_GRA }, // 20
+	{ "snk88011a.1a",  	0x20000, 0xe70fd906, 4 | BRF_GRA }, //  5 Sprites
+	{ "snk88012a.1b",  	0x20000, 0x628b1aed, 4 | BRF_GRA }, //  6
+	{ "snk88013a.1c",  	0x20000, 0x19dc8868, 4 | BRF_GRA }, //  7
+	{ "snk88014a.1d",  	0x20000, 0x47cd498b, 4 | BRF_GRA }, //  8
+	{ "snk88015a.2a",  	0x20000, 0x7a90e957, 4 | BRF_GRA }, //  9
+	{ "snk88016a.2b",  	0x20000, 0xe40a6c13, 4 | BRF_GRA }, // 10
+	{ "snk88017a.2c",  	0x20000, 0xc7931cc2, 4 | BRF_GRA }, // 11
+	{ "snk88018a.2d",  	0x20000, 0xeed72232, 4 | BRF_GRA }, // 12
+	{ "snk88019a.3a",  	0x20000, 0x1775b8dd, 4 | BRF_GRA }, // 13
+	{ "snk88020a.3b",  	0x20000, 0xf8e752ec, 4 | BRF_GRA }, // 14
+	{ "snk88021a.3c",  	0x20000, 0x27e9fffe, 4 | BRF_GRA }, // 15
+	{ "snk88022a.3d",  	0x20000, 0xaa9c00d8, 4 | BRF_GRA }, // 16
+	{ "snk88023a.4a",  	0x20000, 0xadb6ad68, 4 | BRF_GRA }, // 17
+	{ "snk88024a.4b",  	0x20000, 0xdd41865a, 4 | BRF_GRA }, // 18
+	{ "snk88025a.4c",  	0x20000, 0x055759ad, 4 | BRF_GRA }, // 19
+	{ "snk88026a.4d",  	0x20000, 0x9bc261c5, 4 | BRF_GRA }, // 20
 
-	{ "dg7.d20",     0x10000, 0xaba9a9d3, 5 | BRF_SND }, // 21 upd7759 samples
+	{ "dg7.d20",     	0x10000, 0xaba9a9d3, 5 | BRF_SND }, // 21 upd7759 samples
 
-	{ "pal20l10.a6", 0x000cc, 0xc3d9e729, 0 | BRF_OPT }, // 22 pld
+	{ "pal20l10.a6", 	0x000cc, 0xc3d9e729, 0 | BRF_OPT }, // 22 pld
 };
 
 STD_ROM_PICK(pow)
@@ -1637,34 +1637,34 @@ struct BurnDriver BurnDrvpowa = {
 // Datsugoku - Prisoners of War (Japan)
 
 static struct BurnRomInfo powjRomDesc[] = {
-	{ "1-2",         0x20000, 0x2f17bfb0, 1 | BRF_PRG }, //  0 68k Code
-	{ "2-2",         0x20000, 0xbaa32354, 1 | BRF_PRG }, //  1
+	{ "1-2",         	0x20000, 0x2f17bfb0, 1 | BRF_PRG }, //  0 68k Code
+	{ "2-2",         	0x20000, 0xbaa32354, 1 | BRF_PRG }, //  1
 
-	{ "dg8.e25",     0x10000, 0xd1d61da3, 2 | BRF_PRG }, //  2 Z80 Code
+	{ "dg8.e25",     	0x10000, 0xd1d61da3, 2 | BRF_PRG }, //  2 Z80 Code
 
-	{ "dg9.l25",     0x08000, 0xdf864a08, 3 | BRF_GRA }, //  3 Characters
-	{ "dg10.m25",    0x08000, 0x9e470d53, 3 | BRF_GRA }, //  4
+	{ "dg9.l25",     	0x08000, 0xdf864a08, 3 | BRF_GRA }, //  3 Characters
+	{ "dg10.m25",    	0x08000, 0x9e470d53, 3 | BRF_GRA }, //  4
 
-	{ "snk880.11a",  0x20000, 0xe70fd906, 4 | BRF_GRA }, //  5 Sprites
-	{ "snk880.12a",  0x20000, 0x628b1aed, 4 | BRF_GRA }, //  6
-	{ "snk880.13a",  0x20000, 0x19dc8868, 4 | BRF_GRA }, //  7
-	{ "snk880.14a",  0x20000, 0x47cd498b, 4 | BRF_GRA }, //  8
-	{ "snk880.15a",  0x20000, 0x7a90e957, 4 | BRF_GRA }, //  9
-	{ "snk880.16a",  0x20000, 0xe40a6c13, 4 | BRF_GRA }, // 10
-	{ "snk880.17a",  0x20000, 0xc7931cc2, 4 | BRF_GRA }, // 11
-	{ "snk880.18a",  0x20000, 0xeed72232, 4 | BRF_GRA }, // 12
-	{ "snk880.19a",  0x20000, 0x1775b8dd, 4 | BRF_GRA }, // 13
-	{ "snk880.20a",  0x20000, 0xf8e752ec, 4 | BRF_GRA }, // 14
-	{ "snk880.21a",  0x20000, 0x27e9fffe, 4 | BRF_GRA }, // 15
-	{ "snk880.22a",  0x20000, 0xaa9c00d8, 4 | BRF_GRA }, // 16
-	{ "snk880.23a",  0x20000, 0xadb6ad68, 4 | BRF_GRA }, // 17
-	{ "snk880.24a",  0x20000, 0xdd41865a, 4 | BRF_GRA }, // 18
-	{ "snk880.25a",  0x20000, 0x055759ad, 4 | BRF_GRA }, // 19
-	{ "snk880.26a",  0x20000, 0x9bc261c5, 4 | BRF_GRA }, // 20
+	{ "snk88011a.1a",  	0x20000, 0xe70fd906, 4 | BRF_GRA }, //  5 Sprites
+	{ "snk88012a.1b",  	0x20000, 0x628b1aed, 4 | BRF_GRA }, //  6
+	{ "snk88013a.1c",  	0x20000, 0x19dc8868, 4 | BRF_GRA }, //  7
+	{ "snk88014a.1d",  	0x20000, 0x47cd498b, 4 | BRF_GRA }, //  8
+	{ "snk88015a.2a",  	0x20000, 0x7a90e957, 4 | BRF_GRA }, //  9
+	{ "snk88016a.2b",  	0x20000, 0xe40a6c13, 4 | BRF_GRA }, // 10
+	{ "snk88017a.2c",  	0x20000, 0xc7931cc2, 4 | BRF_GRA }, // 11
+	{ "snk88018a.2d",  	0x20000, 0xeed72232, 4 | BRF_GRA }, // 12
+	{ "snk88019a.3a",  	0x20000, 0x1775b8dd, 4 | BRF_GRA }, // 13
+	{ "snk88020a.3b",  	0x20000, 0xf8e752ec, 4 | BRF_GRA }, // 14
+	{ "snk88021a.3c",  	0x20000, 0x27e9fffe, 4 | BRF_GRA }, // 15
+	{ "snk88022a.3d",  	0x20000, 0xaa9c00d8, 4 | BRF_GRA }, // 16
+	{ "snk88023a.4a",  	0x20000, 0xadb6ad68, 4 | BRF_GRA }, // 17
+	{ "snk88024a.4b",  	0x20000, 0xdd41865a, 4 | BRF_GRA }, // 18
+	{ "snk88025a.4c",  	0x20000, 0x055759ad, 4 | BRF_GRA }, // 19
+	{ "snk88026a.4d",  	0x20000, 0x9bc261c5, 4 | BRF_GRA }, // 20
 
-	{ "dg7.d20",     0x10000, 0xaba9a9d3, 5 | BRF_SND }, // 21 upd7759 samples
+	{ "dg7.d20",     	0x10000, 0xaba9a9d3, 5 | BRF_SND }, // 21 upd7759 samples
 
-	{ "pal20l10.a6", 0x000cc, 0xc3d9e729, 0 | BRF_OPT }, // 22 pld
+	{ "pal20l10.a6", 	0x000cc, 0xc3d9e729, 0 | BRF_OPT }, // 22 pld
 };
 
 STD_ROM_PICK(powj)

@@ -9,8 +9,9 @@ static INT32 palette_bank;
 static UINT16 control_data[32];
 static UINT16 pf_scrolly[2];
 static UINT16 pf_scrollx[2];
-static INT32 mo_xscroll = 0;
-static INT32 mo_yscroll = 0;
+
+static INT32 pf_offsetx[2];
+static INT32 mob_offsetx;
 
 static UINT8 *playfield_data[3];
 static UINT16 *pf_data[3];
@@ -66,7 +67,7 @@ static void update_parameter(UINT16 data)
 	switch (control)
 	{
 		case 9:
-			mo_xscroll = data;
+			atarimo_set_xscroll(0, data + mob_offsetx);
 		break;
 
 		case 10:
@@ -78,7 +79,7 @@ static void update_parameter(UINT16 data)
 		break;
 
 		case 13:
-			mo_yscroll = data;
+			atarimo_set_yscroll(0, data);
 		break;
 
 		case 14:
@@ -238,8 +239,11 @@ INT32 AtariVADScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(control_data);
 		SCAN_VAR(pf_scrolly);
 		SCAN_VAR(pf_scrollx);
-		SCAN_VAR(mo_xscroll);
-		SCAN_VAR(mo_yscroll);
+		SCAN_VAR(tilerow_scanline);
+		SCAN_VAR(tilerow_partial_prev_line);
+		SCAN_VAR(atarivad_scanline_timer);
+		SCAN_VAR(atarivad_scanline_timer_enabled);
+		SCAN_VAR(atarivad_scanline);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -251,7 +255,7 @@ INT32 AtariVADScan(INT32 nAction, INT32 *pnMin)
 
 void AtariVADReset()
 {
-	memset (playfield_data[0], 0, 0x2000 * 3);
+	memset (playfield_data[0], 0, 0x4000 * 3);
 
 	playfield_latched = 0;
 	palette_bank = 0;
@@ -266,9 +270,13 @@ void AtariVADReset()
 
 	pf_scrolly[0] = pf_scrolly[1] = 0;
 	pf_scrollx[0] = pf_scrollx[1] = 0;
+}
 
-	mo_xscroll = 0;
-	mo_yscroll = 0;
+void AtariVADSetXOffsets(INT32 pf0, INT32 pf1, INT32 mob)
+{
+	pf_offsetx[0] = pf0;
+	pf_offsetx[1] = pf1;
+	mob_offsetx = mob;
 }
 
 void AtariVADInit(INT32 tmap_num0, INT32 tmap_num1, INT32 bg_map_type, void (*sl_timer_cb)(INT32), void (*palette_write)(INT32 offset, UINT16 data))
@@ -294,6 +302,8 @@ void AtariVADInit(INT32 tmap_num0, INT32 tmap_num1, INT32 bg_map_type, void (*sl
 	playfield_number[1] = tmap_num1;
 
 	atari_palette_write = palette_write ? palette_write : palette_write_dummy;
+
+	AtariVADSetXOffsets(0, 4, 0); // defaults for most games
 }
 
 void AtariVADSetPartialCB(void (*partial_cb)(INT32))
@@ -383,12 +393,9 @@ void AtariVADTileRowUpdate(INT32 scanline, UINT16 *alphamap_ram)
 
 void AtariVADDraw(UINT16 *pDestDraw, INT32 use_categories)
 {
-	atarimo_set_xscroll(0, mo_xscroll);
-	atarimo_set_yscroll(0, mo_yscroll);
-
-	GenericTilemapSetScrollX(playfield_number[0], pf_scrollx[0] + (pf_scrollx[1] & 7));
+	GenericTilemapSetScrollX(playfield_number[0], pf_scrollx[0] + (pf_scrollx[1] & 7) + pf_offsetx[0]);
 	GenericTilemapSetScrollY(playfield_number[0], pf_scrolly[0]);
-	GenericTilemapSetScrollX(playfield_number[1], pf_scrollx[1] + 4);
+	GenericTilemapSetScrollX(playfield_number[1], pf_scrollx[1] + pf_offsetx[1]);
 	GenericTilemapSetScrollY(playfield_number[1], pf_scrolly[1]);
 
 	if (use_categories)

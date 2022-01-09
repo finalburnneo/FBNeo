@@ -20,10 +20,6 @@ static SDL_Texture* sdlTexture = NULL;
 static int  nRotateGame = 0;
 static bool bFlipped = false;
 static SDL_Rect dstrect;
-static SDL_Rect title_texture_rect;
-static SDL_Rect dest_title_texture_rect;
-
-static int screenh, screenw;
 static char Windowtitle[512];
 
 
@@ -61,9 +57,12 @@ static int Exit()
 #endif
 	kill_inline_font(); //TODO: This is not supposed to be here
 	SDL_DestroyTexture(sdlTexture);
+	sdlTexture = NULL;
 	SDL_DestroyRenderer(sdlRenderer);
+	sdlRenderer = NULL;
 	SDL_DestroyWindow(sdlWindow);
-
+	sdlWindow = NULL;
+	
 	if (VidMem)
 	{
 		free(VidMem);
@@ -94,7 +93,7 @@ static int Init()
 	{
 		// Get the game screen size
 		BurnDrvGetVisibleSize(&nVidImageWidth, &nVidImageHeight);
-		if ((BurnDrvGetFlags() & (BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED)))
+		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
 		{
 			BurnDrvGetAspect(&GameAspectY, &GameAspectX);
 		}
@@ -111,7 +110,9 @@ static int Init()
 		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
 		{
 			BurnDrvGetVisibleSize(&nVidImageHeight, &nVidImageWidth);
+#ifdef FBNEO_DEBUG
 			printf("Vertical\n");
+#endif
 			nRotateGame = 1;
 			sr_set_rotation(1);
 			display_w = nVidImageWidth;
@@ -123,7 +124,9 @@ static int Init()
 		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
 		{
 			BurnDrvGetVisibleSize(&nVidImageHeight, &nVidImageWidth);
+#ifdef FBNEO_DEBUG
 			printf("Vertical\n");
+#endif
 			nRotateGame = 1;
 			display_w = nVidImageHeight * GameAspectX / GameAspectY;
 			display_h = nVidImageHeight;
@@ -132,7 +135,9 @@ static int Init()
 
 		if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED)
 		{
+#ifdef FBNEO_DEBUG
 			printf("Flipped\n");
+#endif
 			bFlipped = 1;
 		}
 	}
@@ -152,7 +157,9 @@ static int Init()
 	dstrect.w = display_w;
 
 	//Test refresh rate availability
+#ifdef FBNEO_DEBUG
 	printf("Game resolution: %dx%d@%f\n", nVidImageWidth, nVidImageHeight, nBurnFPS/100.0);
+#endif
 
 #ifdef INCLUDE_SWITCHRES
 	unsigned char interlace = 0; // FBN doesn't handle interlace yet, force it to disabled
@@ -224,19 +231,22 @@ static int Init()
 	if (BurnDrvGetFlags() & BDF_16BIT_ONLY)
 	{
 		nVidImageDepth = 16;
+#ifdef FBNEO_DEBUG
 		printf("Forcing 16bit color\n");
+#endif
 	}
+#ifdef FBNEO_DEBUG
 	printf("bbp: %d\n", nVidImageDepth);
-
+#endif
 	if (bIntegerScale)
 	{
 		SDL_RenderSetIntegerScale(sdlRenderer, SDL_TRUE);
 	}
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, videofiltering);
-
+#ifdef FBNEO_DEBUG
 	printf("setting logical size w: %d h: %d\n", display_w, display_h);
-
+#endif
 	if (nRotateGame)
 	{
 		SDL_RenderSetLogicalSize(sdlRenderer, display_h, display_w);
@@ -287,15 +297,17 @@ static int Init()
 	nBurnPitch = nVidImagePitch;
 
 	nMemLen = nVidImageWidth * nVidImageHeight * nVidImageBPP;
-
+#ifdef FBNEO_DEBUG
 	printf("nVidImageWidth=%d nVidImageHeight=%d nVidImagePitch=%d\n", nVidImageWidth, nVidImageHeight, nVidImagePitch);
-
+#endif
 	VidMem = (unsigned char*)malloc(nMemLen);
 	if (VidMem)
 	{
 		memset(VidMem, 0, nMemLen);
 		pVidImage = VidMem;
+#ifdef FBNEO_DEBUG
 		printf("Malloc for video Ok %d\n", nMemLen);
+#endif
 		return 0;
 	}
 	else
@@ -304,8 +316,9 @@ static int Init()
 		return 1;
 	}
 
-
+#ifdef FBNEO_DEBUG
 	printf("done vid init");
+#endif
 	return 0;
 }
 
@@ -330,8 +343,6 @@ static int Frame(bool bRedraw)                                          // bRedr
 // Paint the BlitFX surface onto the primary surface
 static int Paint(int bValidate)
 {
-	void* pixels;
-	int   pitch;
 
 	SDL_RenderClear(sdlRenderer);
 	SDL_UpdateTexture(sdlTexture, NULL, pVidImage, nVidImagePitch);

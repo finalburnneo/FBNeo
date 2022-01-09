@@ -2579,7 +2579,10 @@ static void YBoardRenderSpriteLayer()
 						offs = addr - 1;
 						for (x = xpos; (xdelta > 0 && x <= maxx) || (xdelta < 0 && x >= minx); )
 						{
-							UINT64 pixels = BURN_ENDIAN_SWAP_INT64(spritedata[++offs]);
+							UINT64 pixels = spritedata[++offs];
+#ifndef LSB_FIRST
+							pixels = BURN_ENDIAN_SWAP_INT64(pixels);
+#endif
 
 							/* draw four pixels */
 							pix = (pixels >> 60) & 0xf; ind = BURN_ENDIAN_SWAP_INT16(indirect[pix]); while (xacc < 0x200) { YBoardDrawPixel(x, ind, colorpri, pPixel); x += xdelta; xacc += zoom; } xacc -= 0x200;
@@ -2612,7 +2615,10 @@ static void YBoardRenderSpriteLayer()
 						offs = addr + 1;
 						for (x = xpos; (xdelta > 0 && x <= maxx) || (xdelta < 0 && x >= minx); )
 						{
-							UINT64 pixels = BURN_ENDIAN_SWAP_INT64(spritedata[--offs]);
+							UINT64 pixels = spritedata[--offs];
+#ifndef LSB_FIRST
+							pixels = BURN_ENDIAN_SWAP_INT64(pixels);
+#endif
 
 							/* draw four pixels */
 							pix = (pixels >>  0) & 0xf; ind = BURN_ENDIAN_SWAP_INT16(indirect[pix]); while (xacc < 0x200) { YBoardDrawPixel(x, ind, colorpri, pPixel); x += xdelta; xacc += zoom; } xacc -= 0x200;

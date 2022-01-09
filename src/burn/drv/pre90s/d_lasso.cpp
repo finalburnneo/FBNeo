@@ -510,9 +510,9 @@ static INT32 MemIndex()
 
 	DrvGfxROM0		= Next; Next += 0x020000;
 	DrvGfxROM1		= Next; Next += 0x020000;
-	DrvGfxROM2		= Next; Next += 0x010000;
-	DrvMapROM		= Next; Next += 0x004000;
+	DrvGfxROM2		= Next; Next += 0x020000;
 
+	DrvMapROM		= Next; Next += 0x004000;
 	DrvColPROM		= Next; Next += 0x000300;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x0141 * sizeof(UINT32);

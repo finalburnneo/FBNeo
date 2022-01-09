@@ -3079,6 +3079,44 @@ struct BurnDriver BurnDrvDkongbp = {
 };
 
 
+// Donkey Kong Barrelpalooza v1.07
+
+static struct BurnRomInfo dkongbp1RomDesc[] = {
+	{ "dkongbp1.5et",	0x1000, 0xc80c0431, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "dkongbp.5ct",	0x1000, 0xc742739c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dkongbp.5bt",	0x1000, 0xa46859ec, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dkongbp1.5at",	0x1000, 0x4742a48e, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "dkongbp.3i",		0x0800, 0x7590f5ee, 2 | BRF_PRG | BRF_ESS }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "dkongbp.5h",		0x0800, 0xcaf8820b, 3 | BRF_GRA },           //  6 gfx1
+	{ "dkongbp.3pt",	0x0800, 0xb0cd1e84, 3 | BRF_GRA },           //  7
+
+	{ "dkongbp.4m",		0x0800, 0x1b46aae1, 4 | BRF_GRA },           //  8 gfx2
+	{ "dkongbp.4n",		0x0800, 0xfbaaa6f0, 4 | BRF_GRA },           //  9
+	{ "dkongbp.4r",		0x0800, 0x919362a0, 4 | BRF_GRA },           // 10
+	{ "dkongbp.4s",		0x0800, 0xd57098ca, 4 | BRF_GRA },           // 11
+
+	{ "dkongbp.2k",		0x0100, 0x4826ce71, 5 | BRF_GRA },           // 12 proms
+	{ "dkongbp.2j",		0x0100, 0x4a7a511b, 5 | BRF_GRA },           // 13
+	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 | BRF_GRA },           // 14
+};
+
+STD_ROM_PICK(dkongbp1)
+STD_ROM_FN(dkongbp1)
+
+struct BurnDriver BurnDrvDkongbp1 = {
+	"dkongbp1", "dkong", NULL, "dkong", "2021",
+	"Donkey Kong Barrelpalooza v1.07\0", NULL, "Paul Goes", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkongbp1RomInfo, dkongbp1RomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
 // Donkey Kong - Pauline Edition (hack, rev 5)
 // "Pauline Edition" hack (rev 5, 4-22-2013), by Clay Cowgill based on Mike Mika's NES version
 

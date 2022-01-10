@@ -6,15 +6,15 @@ on:
       - "master"
 
 jobs:
-  nightly-release:
+  nightly_release:
     name: Create release
     runs-on: ubuntu-latest
     outputs:
-      upload_url: ${{ steps.nightly-release.outputs.upload_url }}
+      upload_url: ${{ steps.nightly_release.outputs.upload_url }}
 
     steps:
       - name: Create release
-        id: create_release
+        id: nightly_release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
@@ -24,7 +24,7 @@ jobs:
 
   nightly-assets:
     name: ${{ matrix.platform.name }} ${{ matrix.config.name }}
-    needs: nightly-release
+    needs: nightly_release
     runs-on: ${{ matrix.platform.os }}
     defaults:
       run:
@@ -80,7 +80,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ needs.nightly-release.outputs.upload_url }}
+        upload_url: ${{ needs.nightly_release.outputs.upload_url }}
         asset_name: ${{matrix.platform.name}}.zip
         asset_path: ${{matrix.platform.name}}.zip
         asset_content_type: application/zip

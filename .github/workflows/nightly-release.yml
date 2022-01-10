@@ -46,8 +46,8 @@ jobs:
         uses: msys2/setup-msys2@v2
         with:
           update: true
-          install: msys2-devel base-devel binutils mingw-w64-${{ matrix.platform.arch }}-toolchain mingw-w64-${{ matrix.platform.arch }}-nasm
-          msystem: ${{matrix.platform.msys}}
+          install: msys2-devel base-devel binutils mingw-w64-${{ matrix.platform.arch }}-toolchain mingw-w64-${{ matrix.platform.arch }}-nasm zip
+          msystem: ${{ matrix.platform.msys }}
 
       - name: Install Linux dependencies
         if: runner.os == 'Linux'
@@ -59,12 +59,12 @@ jobs:
 
       - name: Build FBNeo
         run: |
-          make -j$(nproc) SKIPDEPEND=1 ${{matrix.platform.makeopts}}
+          make -j$(nproc) SKIPDEPEND=1 ${{ matrix.platform.makeopts }}
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{matrix.platform.name}}
+          name: ${{ matrix.platform.name }}
           path: |
             fbneo.exe
             fbneod.exe
@@ -72,7 +72,7 @@ jobs:
 
       - name: Build release assets
         run: |
-          zip --junk-paths "${{matrix.platform.name}}.zip" fbneo.exe fbneod.exe fbneo src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+          zip --junk-paths "${{ matrix.platform.name }}.zip" fbneo.exe fbneod.exe fbneo src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
 
       - name: Upload release assets
         uses: actions/upload-release-asset@v1
@@ -80,8 +80,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.nightly_release.outputs.upload_url }}
-          asset_name: ${{matrix.platform.name}}.zip
-          asset_path: ${{matrix.platform.name}}.zip
+          asset_name: ${{ matrix.platform.name }}.zip
+          asset_path: ${{ matrix.platform.name }}.zip
           asset_content_type: application/zip
 
   # Using a custom job for macOS because it doesn't use make

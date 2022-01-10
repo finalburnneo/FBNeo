@@ -15,8 +15,8 @@ jobs:
         platform:
         - { name: Windows x32,         os: windows-2019, shell: msys2, makeopts: mingw510 USE_UCRT=1 RELEASEBUILD=1, arch: i686, msys: MINGW32 }
         - { name: Windows x32 (Debug), os: windows-2019, shell: msys2, makeopts: mingw510 USE_UCRT=1, arch: i686, msys: MINGW32 }
-        - { name: Linux SDL 2,         os: ubuntu-20.04, shell: bash,  makeopts: sdl2}
-        - { name: Linux SDL 1.2,       os: ubuntu-20.04, shell: bash,  makeopts: sdl}
+        - { name: Linux SDL 2,         os: ubuntu-20.04, shell: bash,  makeopts: RELEASEBUILD=1 sdl2}
+        - { name: Linux SDL 1.2,       os: ubuntu-20.04, shell: bash,  makeopts: RELEASEBUILD=1 sdl}
         #- { name: MacOS XCode, os: macos-latest }
         # x64 builds are broken due to mips3 x64 drc not building with recent gcc
         #- { name: Windows x64,         os: windows-2019, shell: msys2, makeopts: mingw510 USE_UCRT=1 BUILD_X64_EXE=1, arch: x86_64, msys: MINGW64 }
@@ -40,7 +40,7 @@ jobs:
 
     - name: Build FBNeo
       run: |
-        make -j$(nproc) RELEASEBUILD=1 SKIPDEPEND=1 ${{matrix.platform.makeopts}}
+        make -j$(nproc) SKIPDEPEND=1 ${{matrix.platform.makeopts}}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
@@ -48,4 +48,5 @@ jobs:
         name: ${{matrix.platform.name}} Artifact
         path: |
           fbneo.exe
+          fbneod.exe
           fbneo

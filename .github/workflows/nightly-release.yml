@@ -71,8 +71,9 @@ jobs:
             fbneo
 
       - name: Build release assets
+        # On windows, if you tell zip about both fbneo and fbneo.exe, it seems he'll compress fbneo.exe twice under the 2 different names, so don't use .exe here
         run: |
-          zip --junk-paths "${{ matrix.platform.name }}.zip" fbneo.exe fbneod.exe fbneo src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+          zip --junk-paths "${{ matrix.platform.name }}.zip" fbneo fbneod src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
 
       - name: Upload release assets
         uses: actions/upload-release-asset@v1
@@ -106,8 +107,11 @@ jobs:
           path: "projectfiles/xcode/build/Debug/FinalBurn Neo.app"
 
       - name: Build release assets
-        run: |
-          zip --junk-paths "macOS.zip" "projectfiles/xcode/build/Debug/FinalBurn Neo.app" src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+        uses: papeloto/action-zip@v1
+        with:
+          files: "projectfiles/xcode/build/Debug/FinalBurn Neo.app" src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+          recursive: false
+          dest: macOS.zip
 
       - name: Upload release assets
         uses: actions/upload-release-asset@v1

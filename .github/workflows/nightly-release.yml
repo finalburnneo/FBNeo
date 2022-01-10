@@ -24,6 +24,7 @@ jobs:
 
   nightly-assets:
     name: ${{ matrix.platform.name }} ${{ matrix.config.name }}
+    needs: nightly-release
     runs-on: ${{ matrix.platform.os }}
     defaults:
       run:

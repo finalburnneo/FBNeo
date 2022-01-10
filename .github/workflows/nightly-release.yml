@@ -107,11 +107,8 @@ jobs:
           path: "projectfiles/xcode/build/Debug/FinalBurn Neo.app"
 
       - name: Build release assets
-        uses: papeloto/action-zip@v1
-        with:
-          files: "projectfiles/xcode/build/Debug/FinalBurn Neo.app" src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
-          recursive: false
-          dest: macOS.zip
+        run: |
+          zip --junk-paths macOS.zip projectfiles/xcode/build/Debug/FinalBurn\ Neo.app src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
 
       - name: Upload release assets
         uses: actions/upload-release-asset@v1

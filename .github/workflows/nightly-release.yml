@@ -1,0 +1,69 @@
+name: "nightly-release"
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  nightly-release:
+    name: ${{ matrix.platform.name }} ${{ matrix.config.name }}
+    runs-on: ${{ matrix.platform.os }}
+    defaults:
+      run:
+        shell: ${{ matrix.platform.shell}} {0}
+
+    strategy:
+      matrix:
+        platform:
+        - { name: Windows x32,         os: windows-2019, shell: msys2, makeopts: mingw510 USE_UCRT=1 RELEASEBUILD=1, arch: i686, msys: MINGW32 }
+        - { name: Windows x32 (Debug), os: windows-2019, shell: msys2, makeopts: mingw510 USE_UCRT=1, arch: i686, msys: MINGW32 }
+        - { name: Linux SDL 2,         os: ubuntu-20.04, shell: bash,  makeopts: RELEASEBUILD=1 sdl2}
+        - { name: Linux SDL 1.2,       os: ubuntu-20.04, shell: bash,  makeopts: RELEASEBUILD=1 sdl}
+        #- { name: MacOS XCode, os: macos-latest }
+        # x64 builds are broken due to mips3 x64 drc not building with recent gcc
+        #- { name: Windows x64,         os: windows-2019, shell: msys2, makeopts: mingw510 USE_UCRT=1 BUILD_X64_EXE=1, arch: x86_64, msys: MINGW64 }
+
+    steps:
+    - name: Install Windows MSYS2 dependencies
+      if: runner.os == 'Windows'
+      uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: msys2-devel base-devel binutils mingw-w64-${{ matrix.platform.arch }}-toolchain mingw-w64-${{ matrix.platform.arch }}-nasm
+        msystem: ${{matrix.platform.msys}}
+
+    - name: Install Linux dependencies
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get -y update
+        sudo apt-get -y install libsdl2-dev libsdl2-image-dev libsdl1.2-dev
+
+    - uses: actions/checkout@v2
+
+    - name: Build FBNeo
+      run: |
+        make -j$(nproc) SKIPDEPEND=1 ${{matrix.platform.makeopts}}
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{matrix.platform.name}}
+        path: |
+          fbneo.exe
+          fbneod.exe
+          fbneo
+
+    - uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        prerelease: true
+        title: "${{matrix.platform.name}} nightly"
+        files: |
+          fbneo.exe
+          fbneod.exe
+          fbneo
+          src/license.txt
+          fbahelpfilesrc/fbneo.chm
+          whatsnew.html

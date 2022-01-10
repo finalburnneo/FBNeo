@@ -54,8 +54,8 @@ static void soundsgood_porta_w(UINT16, UINT8 data)
         ml.last80 = sg_ram[0x80/2];
     }
 
-    if (!ml.booting) {
-        DACWrite16Signed(which_dac, 0x4000 + (dacvalue << 6));
+	if (!ml.booting) {
+        DACWrite16Signed(which_dac, (dacvalue << 6));
     }
 }
 
@@ -63,8 +63,8 @@ static void soundsgood_portb_w(UINT16, UINT8 data)
 {
     dacvalue = (dacvalue & ~3) | (data >> 6);
 
-    if (!ml.booting) {
-        DACWrite16Signed(which_dac, 0x4000 + (dacvalue << 6));
+	if (!ml.booting) {
+        DACWrite16Signed(which_dac, (dacvalue << 6));
     }
 
 	if (pia_get_ddr_b(0) & 0x30) soundsgood_status = (data >> 4) & 3;

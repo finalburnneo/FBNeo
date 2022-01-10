@@ -7,6 +7,22 @@ on:
 
 jobs:
   nightly-release:
+    name: Create release
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.nightly-release.outputs.upload_url }}
+
+    steps:
+      - name: Create release
+        id: create_release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "nightly builds"
+
+  nightly-assets:
     name: ${{ matrix.platform.name }} ${{ matrix.config.name }}
     runs-on: ${{ matrix.platform.os }}
     defaults:
@@ -54,16 +70,16 @@ jobs:
           fbneod.exe
           fbneo
 
-    - uses: "marvinpinto/action-automatic-releases@latest"
+    - name: Build release assets
+      run: |
+        zip --junk-paths "${{matrix.platform.name}}" fbneo.exe fbneod.exe fbneo src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+
+    - name: Upload release assets
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "latest"
-        prerelease: true
-        title: "${{matrix.platform.name}} nightly"
-        files: |
-          fbneo.exe
-          fbneod.exe
-          fbneo
-          src/license.txt
-          fbahelpfilesrc/fbneo.chm
-          whatsnew.html
+        upload_url: ${{ needs.nightly-release.outputs.upload_url }}
+        asset_name: ${{matrix.platform.name}}.zip
+        asset_path: ${{matrix.platform.name}}.zip
+        asset_content_type: application/zip

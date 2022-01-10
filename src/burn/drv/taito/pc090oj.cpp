@@ -5,6 +5,7 @@
 #include "taito_ic.h"
 
 UINT8 *PC090OJRam = NULL;
+UINT8 *PC090OJRamBuffer = NULL;
 static INT32 PC090OJNumTiles;
 static INT32 PC090OJXOffset;
 static INT32 PC090OJYOffset;
@@ -14,7 +15,7 @@ INT32 PC090OJSpriteCtrl;
 
 void PC090OJDrawSprites(UINT8 *pSrc)
 {
-	UINT16 *VideoRam = (UINT16*)PC090OJRam;
+	UINT16 *VideoRam = (UINT16*)PC090OJRamBuffer;
 	
 	INT32 PC090OJCtrl = BURN_ENDIAN_SWAP_INT16(VideoRam[0xdff]);
 	
@@ -85,6 +86,13 @@ void PC090OJDrawSprites(UINT8 *pSrc)
 	}
 }
 
+void PC090OJBufferSprites()
+{
+	if (PC090OJUseBuffer) {
+		memcpy(PC090OJRamBuffer, PC090OJRam, 0x4000);
+	}
+}
+
 void PC090OJReset()
 {
 	PC090OJSpriteCtrl = 0;
@@ -92,9 +100,13 @@ void PC090OJReset()
 
 void PC090OJInit(INT32 nNumTiles, INT32 xOffset, INT32 yOffset, INT32 UseBuffer)
 {
-	PC090OJRam = (UINT8*)BurnMalloc(0x4000);
+	PC090OJRam = PC090OJRamBuffer = (UINT8*)BurnMalloc(0x4000);
 	memset(PC090OJRam, 0, 0x4000);
-	
+
+	if (UseBuffer) {
+		PC090OJRamBuffer = (UINT8*)BurnMalloc(0x4000);
+	}
+
 	PC090OJNumTiles = nNumTiles;
 	
 	PC090OJXOffset = xOffset;

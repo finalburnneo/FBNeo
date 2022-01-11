@@ -22,72 +22,177 @@ jobs:
           prerelease: true
           title: "nightly builds"
 
-  nightly-assets:
-    name: ${{ matrix.platform.name }}
+  build_windows:
+    name: Windows x32
     needs: nightly_release
-    runs-on: ${{ matrix.platform.os }}
+    runs-on: windows-2019
     defaults:
       run:
-        shell: ${{ matrix.platform.shell}} {0}
-
-    strategy:
-      matrix:
-        platform:
-        - { name: Windows x32,         os: windows-2019, shell: msys2, makeopts: mingw510 USE_UCRT=1 RELEASEBUILD=1, arch: i686, msys: MINGW32 }
-        - { name: Windows x32 (Debug), os: windows-2019, shell: msys2, makeopts: mingw510 USE_UCRT=1, arch: i686, msys: MINGW32 }
-        - { name: Linux SDL 2,         os: ubuntu-20.04, shell: bash,  makeopts: RELEASEBUILD=1 sdl2}
-        - { name: Linux SDL 1.2,       os: ubuntu-20.04, shell: bash,  makeopts: RELEASEBUILD=1 sdl}
-        # x64 builds are broken due to mips3 x64 drc not building with recent gcc
-        #- { name: Windows x64,         os: windows-2019, shell: msys2, makeopts: mingw510 USE_UCRT=1 BUILD_X64_EXE=1, arch: x86_64, msys: MINGW64 }
+        shell: msys2 {0}
 
     steps:
       - name: Install Windows MSYS2 dependencies
-        if: runner.os == 'Windows'
         uses: msys2/setup-msys2@v2
         with:
           update: true
-          install: msys2-devel base-devel binutils mingw-w64-${{ matrix.platform.arch }}-toolchain mingw-w64-${{ matrix.platform.arch }}-nasm zip
-          msystem: ${{ matrix.platform.msys }}
-
-      - name: Install Linux dependencies
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get -y update
-          sudo apt-get -y install libsdl2-dev libsdl2-image-dev libsdl1.2-dev
+          install: msys2-devel base-devel binutils mingw-w64-i686-toolchain mingw-w64-i686-nasm zip
+          msystem: MINGW32
 
       - uses: actions/checkout@v2
 
       - name: Build FBNeo
         run: |
-          make -j$(nproc) SKIPDEPEND=1 ${{ matrix.platform.makeopts }}
+          make -j$(nproc) mingw510 SKIPDEPEND=1 USE_UCRT=1 RELEASEBUILD=1
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.platform.name }}
+          name: Windows x32
           path: |
             fbneo.exe
-            fbneod.exe
-            fbneo
 
-      - name: Build release assets
-        # On windows, if you tell zip about both fbneo and fbneo.exe, it seems he'll compress fbneo.exe twice under the 2 different names, so don't use .exe here
+      - name: Build release asset
         run: |
-          zip --junk-paths "${{ matrix.platform.name }}.zip" fbneo fbneod src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+          zip --junk-paths "Windows x32.zip" fbneo.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
 
-      - name: Upload release assets
+      - name: Upload release asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.nightly_release.outputs.upload_url }}
-          asset_name: ${{ matrix.platform.name }}.zip
-          asset_path: ${{ matrix.platform.name }}.zip
+          asset_name: Windows x32.zip
+          asset_path: Windows x32.zip
           asset_content_type: application/zip
 
-  # Using a custom job for macOS because it doesn't use make
-  nightly-asset-macos:
+  build_windows_debug:
+    name: Windows x32 (Debug)
+    needs: nightly_release
+    runs-on: windows-2019
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+      - name: Install Windows MSYS2 dependencies
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: msys2-devel base-devel binutils mingw-w64-i686-toolchain mingw-w64-i686-nasm zip
+          msystem: MINGW32
+
+      - uses: actions/checkout@v2
+
+      - name: Build FBNeo
+        run: |
+          make -j$(nproc) mingw510 SKIPDEPEND=1 USE_UCRT=1
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Windows x32 (Debug)
+          path: |
+            fbneod.exe
+
+      - name: Build release asset
+        run: |
+          zip --junk-paths "Windows x32 (Debug).zip" fbneod.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
+          asset_name: Windows x32 (Debug).zip
+          asset_path: Windows x32 (Debug).zip
+          asset_content_type: application/zip
+
+  build_linux_sdl2:
+    name: Linux SDL 2
+    needs: nightly_release
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        shell: bash {0}
+
+    steps:
+      - name: Install Linux dependencies
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install libsdl2-dev libsdl2-image-dev
+
+      - uses: actions/checkout@v2
+
+      - name: Build FBNeo
+        run: |
+          make -j$(nproc) sdl2 SKIPDEPEND=1 RELEASEBUILD=1
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Linux SDL 2
+          path: |
+            fbneo
+
+      - name: Build release asset
+        run: |
+          zip --junk-paths "Linux SDL 2.zip" fbneo src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
+          asset_name: Linux SDL 2.zip
+          asset_path: Linux SDL 2.zip
+          asset_content_type: application/zip
+
+  build_linux_sdl12:
+    name: Linux SDL 1.2
+    needs: nightly_release
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        shell: bash {0}
+
+    steps:
+      - name: Install Linux dependencies
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install libsdl1.2-dev
+
+      - uses: actions/checkout@v2
+
+      - name: Build FBNeo
+        run: |
+          make -j$(nproc) sdl SKIPDEPEND=1 RELEASEBUILD=1
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Linux SDL 1.2
+          path: |
+            fbneo
+
+      - name: Build release asset
+        run: |
+          zip --junk-paths "Linux SDL 1.2.zip" fbneo src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
+          asset_name: Linux SDL 1.2.zip
+          asset_path: Linux SDL 1.2.zip
+          asset_content_type: application/zip
+
+  build_macos:
     name: macOS
+    needs: nightly_release
     runs-on: macOS-latest
     env:
       DEVELOPER_DIR: /Applications/Xcode.app

@@ -8,9 +8,9 @@ This is the official repository of FinalBurn Neo, an Emulator for Arcade Games &
 Use of this program and its source code is subject to the license conditions provided in the [license.txt](/src/license.txt) file in the src folder.
 
 # Work in Progress builds
-If the below build status badge is green, you can download the latest builds by clicking on it. Please note that if the below build status badge is not green then your build might not be available. As this build is of the last commit occasionally you might run into incomplete code, crashes or other issues that [official releases](https://github.com/finalburnneo/FBNeo/releases) will not have.
+You can download the latest builds by clicking on the badge below. Please note that the downloads might not be available immediately after a new commit. As this build is of the last commit occasionally you might run into incomplete code, crashes or other issues that [official releases](https://github.com/finalburnneo/FBNeo/releases) will not have.
 
-[![](https://byob.yarr.is/finalburnneo/FBNeo/Windows%20x32)![](https://byob.yarr.is/finalburnneo/FBNeo/Windows%20x32%Debug)![](https://byob.yarr.is/finalburnneo/FBNeo/Linux%20SDL%202)![](https://byob.yarr.is/finalburnneo/FBNeo/Linux%20SDL%201.2)](https://github.com/finalburnneo/FBNeo/releases/tag/latest)
+[![nightly-release](https://github.com/finalburnneo/FBNeo/actions/workflows/nightly-release.yml/badge.svg)](https://github.com/finalburnneo/FBNeo/releases/tag/latest)
 
 # Ports
 

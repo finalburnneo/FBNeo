@@ -10,7 +10,7 @@ Use of this program and its source code is subject to the license conditions pro
 # Work in Progress builds
 If the below build status badge is green, you can download the latest builds by clicking on it. Please note that if the below build status badge is not green then your build might not be available. As this build is of the last commit occasionally you might run into incomplete code, crashes or other issues that [official releases](https://github.com/finalburnneo/FBNeo/releases) will not have.
 
-[![Build status](https://github.com/finalburnneo/FBNeo/actions/workflows/nightly-release.yml/badge.svg)](https://github.com/finalburnneo/FBNeo/releases/tag/latest)
+[![](http://github-actions.40ants.com/finalburnneo/FBNeo/matrix.svg)](https://github.com/finalburnneo/FBNeo/releases/tag/latest)
 
 # Ports
 

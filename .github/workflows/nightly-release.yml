@@ -88,7 +88,6 @@ jobs:
   # Using a custom job for macOS because it doesn't use make
   nightly-asset-macos:
     name: macOS
-    needs: nightly_release
     runs-on: macOS-latest
     env:
       DEVELOPER_DIR: /Applications/Xcode.app
@@ -105,17 +104,3 @@ jobs:
         with:
           name: macOS
           path: "projectfiles/xcode/build/Debug/FinalBurn Neo.app"
-
-      - name: Build release assets
-        run: |
-          zip --junk-paths macOS.zip projectfiles/xcode/build/Debug/FinalBurn\ Neo.app src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
-
-      - name: Upload release assets
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
-          asset_name: macOS.zip
-          asset_path: macOS.zip
-          asset_content_type: application/zip

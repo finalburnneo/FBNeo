@@ -1,6 +1,8 @@
 // FB Alpha Rabio Lepus / Super Volleyball driver module
 // Based on MAME driver by Aaron Giles
 
+// Notes: bad palette of tmap layer 0 @ game start is not present on pcb
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
@@ -33,7 +35,7 @@ static UINT8 *sprite_offs;
 static UINT16 *DrvScrRegs;
 static UINT16 *DrvVidRegs;
 
-static UINT32  *DrvPalette;
+static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT8 DrvJoy1[8];
@@ -49,28 +51,28 @@ static INT32 crtc_timer;
 static INT32 game_select;
 
 static struct BurnInputInfo RpunchInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Rpunch)
@@ -286,7 +288,7 @@ static inline void palette_write(INT32 offset)
 	DrvPalette[offset/2] = BurnHighCol(r, g, b, 0);
 }
 
-void __fastcall rpunch_main_write_word(UINT32 address, UINT16 data)
+static void __fastcall rpunch_main_write_word(UINT32 address, UINT16 data)
 {
 	address &= 0x0fffff;
 
@@ -316,7 +318,7 @@ void __fastcall rpunch_main_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall rpunch_main_write_byte(UINT32 address, UINT8 data)
+static void __fastcall rpunch_main_write_byte(UINT32 address, UINT8 data)
 {
 	address &= 0x0fffff;
 
@@ -346,7 +348,7 @@ void __fastcall rpunch_main_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-UINT16 __fastcall rpunch_main_read_word(UINT32 address)
+static UINT16 __fastcall rpunch_main_read_word(UINT32 address)
 {
 	switch (address & 0x0fffff)
 	{
@@ -363,7 +365,7 @@ UINT16 __fastcall rpunch_main_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall rpunch_main_read_byte(UINT32 address)
+static UINT8 __fastcall rpunch_main_read_byte(UINT32 address)
 {
 	switch (address & 0x0fffff)
 	{
@@ -394,7 +396,7 @@ static void sound_bankswitch(INT32 data)
 	}
 }
 
-void __fastcall rpunch_sound_write(UINT16 address, UINT8 data)
+static void __fastcall rpunch_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -419,7 +421,7 @@ void __fastcall rpunch_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall rpunch_sound_read(UINT16 address)
+static UINT8 __fastcall rpunch_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -523,11 +525,7 @@ static void expand_graphics(UINT8 *gfx, INT32 len)
 
 static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 game)
 {
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (pRomLoadCallback) {
 		memset (DrvGfxROM0, 0xff, 0x80000);
@@ -562,18 +560,16 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 game)
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0xefff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0xefff, 2, DrvZ80ROM);
-	ZetMapArea(0xf800, 0xffff, 0, DrvZ80RAM);
-	ZetMapArea(0xf800, 0xffff, 1, DrvZ80RAM);
-	ZetMapArea(0xf800, 0xffff, 2, DrvZ80RAM);
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0xefff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM, 0xf800, 0xffff, MAP_RAM);
 	ZetSetWriteHandler(rpunch_sound_write);
 	ZetSetReadHandler(rpunch_sound_read);
 	ZetClose();
 
-	BurnYM2151Init(4000000);
+	BurnYM2151InitBuffered(4000000, 1, NULL, 0);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
 	BurnYM2151SetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
+	BurnTimerAttachZet(4000000);
 
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvSndROM);
 	UPD7759SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
@@ -596,8 +592,7 @@ static INT32 DrvExit()
 
 	GenericTilesExit();
 
-	BurnFree (AllMem);
-	AllMem = NULL;
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -681,19 +676,7 @@ static void draw_sprites(INT32 start, INT32 stop)
 		if (sx >= 304) sx -= 512;
 		if (sy >= 224) sy -= 512;
 
-		if (flipy) {
-			if (flipx) {
-				RenderCustomTile_Mask_FlipXY_Clip(pTransDraw, 16, 32, code, sx, sy, color, 4, 0xf, 0, DrvGfxROM2);
-			} else {
-				RenderCustomTile_Mask_FlipY_Clip(pTransDraw, 16, 32, code, sx, sy, color, 4, 0xf, 0, DrvGfxROM2);
-			}
-		} else {
-			if (flipx) {
-				RenderCustomTile_Mask_FlipX_Clip(pTransDraw, 16, 32, code, sx, sy, color, 4, 0xf, 0, DrvGfxROM2);
-			} else {
-				RenderCustomTile_Mask_Clip(pTransDraw, 16, 32, code, sx, sy, color, 4, 0xf, 0, DrvGfxROM2);
-			}
-		}
+		DrawCustomMaskTile(pTransDraw, 16, 32, code, sx, sy, flipx, flipy, color, 4, 0xf, 0, DrvGfxROM2);
 	}
 }
 
@@ -703,7 +686,6 @@ static INT32 DrvDraw()
 		for (INT32 i = 0; i < 0x800; i+=2) {
 			palette_write(i);
 		}
-
 		DrvRecalc = 0;
 	}
 
@@ -740,9 +722,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nSegment;
 	INT32 nInterleave = 10;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 8000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -755,27 +735,18 @@ static INT32 DrvFrame()
 
 		if (crtc_timer == 2 && i == ((nInterleave / 2) - 1)) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
-		CPU_RUN(1, Zet);
-
-		if (pBurnSoundOut) {
-			nSegment = nBurnSoundLen / nInterleave;
-			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-			nSoundBufferPos += nSegment;
-		}
+		CPU_RUN_TIMER(1);
 	}
 
 	if (crtc_timer) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
-	if (pBurnSoundOut) {
-		nSegment = nBurnSoundLen - nSoundBufferPos;
-		if (nSegment > 0) {
-			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-		}
-		UPD7759Render(pBurnSoundOut, nBurnSoundLen);
-	}
-
 	ZetClose();
 	SekClose();
+
+	if (pBurnSoundOut) {
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		UPD7759Render(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) {
 		DrvDraw();

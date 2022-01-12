@@ -28,6 +28,11 @@
 #define STAT_SMALL   3
 #define STAT_LARGE   4
 
+#ifdef LIGHT
+#undef APP_TITLE
+#define APP_TITLE "FinalBurn Neo Light"
+#endif
+
 int counter;           // General purpose variable used when debugging
 struct MovieExtInfo
 {

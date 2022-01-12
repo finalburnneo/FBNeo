@@ -206,39 +206,22 @@ else ifeq ($(platform), qnx)
 	HAVE_NEON = 1
 	USE_CYCLONE = 1
 
-# PS3
+# Lightweight PS3 Homebrew SDK
 else ifneq (,$(filter $(platform), ps3 psl1ght))
 	TARGET := $(TARGET_NAME)_libretro_$(platform).a
+	PLATFORM_DEFINES += -D__PS3__
+	ifeq ($(platform), psl1ght)
+       PLATFORM_DEFINES += -D__PSL1GHT__
+	endif
 	ENDIANNESS_DEFINES =  -DWORDS_BIGENDIAN
 	EXTERNAL_ZLIB = 1
 	STATIC_LINKING = 1
 	INCLUDE_7Z_SUPPORT = 0
+#	LIGHT = 1
 
-	ifneq ($(platdef),)
-        PLATFORM_DEFINES += -D$(platdef)
-    else
-        PLATFORM_DEFINES += -D__PSL1GHT__
-    endif
-	
-	# sncps3
-	ifneq (,$(findstring sncps3,$(platform)))
-		PLATFORM_DEFINES += -DSN_TARGET_PS3
-		CXX = $(CELL_SDK)/host-win32/sn/bin/ps3ppusnc.exe
-		CC = $(CELL_SDK)/host-win32/sn/bin/ps3ppusnc.exe
-		AR = $(CELL_SDK)/host-win32/sn/bin/ps3snarl.exe
-
-	# PS3
-	else ifneq (,$(findstring ps3,$(platform)))
-		CC = $(CELL_SDK)/host-win32/ppu/bin/ppu-lv2-gcc.exe
-		CXX = $(CELL_SDK)/host-win32/ppu/bin/ppu-lv2-g++.exe
-		AR = $(CELL_SDK)/host-win32/ppu/bin/ppu-lv2-ar.exe
-
-	# Lightweight PS3 Homebrew SDK
-	else ifneq (,$(findstring psl1ght,$(platform)))
-		CC = $(PS3DEV)/ppu/bin/ppu-gcc$(EXE_EXT)
-		CXX = $(PS3DEV)/ppu/bin/ppu-g++$(EXE_EXT)
-		AR = $(PS3DEV)/ppu/bin/ppu-ar$(EXE_EXT)
-	endif
+	CC = $(PS3DEV)/ppu/bin/ppu-$(COMMONLV)gcc$(EXE_EXT)
+	CXX = $(PS3DEV)/ppu/bin/ppu-$(COMMONLV)g++$(EXE_EXT)
+	AR = $(PS3DEV)/ppu/bin/ppu-$(COMMONLV)ar$(EXE_EXT)
 
 # Vita
 else ifeq ($(platform), vita)

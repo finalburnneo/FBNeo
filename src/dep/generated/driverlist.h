@@ -7223,6 +7223,8 @@ DRV		BurnSpecJetbikesim4;
 DRV		BurnSpecJetbikesim1;
 DRV		BurnDrvMSX_jetbomb;
 DRV		BurnDrvMSX_jetfight;
+DRV		BurnSpecjetpac;
+DRV		BurnSpecJetpacrx;
 DRV		BurnSpecJetpackbob;
 DRV		BurnSpecJetpaco;
 DRV		BurnDrvsg1k_jetpaco;
@@ -7230,12 +7232,9 @@ DRV		BurnSpecjswilly;
 DRV		BurnDrvMSX_jetsetw;
 DRV		BurnDrvMSX_jetsetwa;
 DRV		BurnSpecjswilly2;
-DRV		BurnSpecjswilly2e;
 DRV		BurnDrvMSX_Jsw2;
 DRV		BurnSpecjswilly3;
 DRV		BurnDrvnes_jetpaco;
-DRV		BurnSpecjetpac;
-DRV		BurnSpecJetpacrx;
 DRV		BurnSpecJetpackjock;
 DRV		BurnSpecJetsons;
 DRV		BurnDrvnes_jetsonsj;
@@ -7281,11 +7280,10 @@ DRV		BurnDrvnes_joemac;
 DRV		BurnDrvJoemacrj;
 DRV		BurnDrvJoemacra;
 DRV		BurnDrvJoemacr;
-DRV		BurnSpecjoebld;
+DRV		BurnSpecjoebld128;
+DRV		BurnSpecjoebld48;
 DRV		BurnDrvMSX_joeblade;
 DRV		BurnSpecjoebld2;
-DRV		BurnSpecjoebld2_48;
-DRV		BurnSpecjoebld3_128;
 DRV		BurnSpecjoebld3;
 DRV		BurnSpecJoeblob;
 DRV		BurnDrvsms_joemont;
@@ -10288,6 +10286,8 @@ DRV		BurnDrvnes_ninjakunashnosh;
 DRV		BurnDrvnes_ninjakunmajnobo;
 DRV		BurnDrvMSX_ninjakmb;
 DRV		BurnSpecninjajar;
+DRV		BurnSpecNinjakul2;
+DRV		BurnSpecNinjakul;
 DRV		BurnDrvNinjakun;
 DRV		BurnDrvnes_ninjarahoij;
 DRV		BurnDrvnes_ninjarahoi;
@@ -14131,6 +14131,8 @@ DRV		BurnDrvStoneage;
 DRV		BurnSpecstopexpr;
 DRV		BurnDrvMSX_bousousos;
 DRV		BurnDrvMSX_bousousosa;
+DRV		BurnSpecStopvirus;
+DRV		BurnSpecStopvirusaf;
 DRV		BurnDrvStmbladej;
 DRV		BurnDrvStmblade;
 DRV		BurnSpecstormbringer;
@@ -25371,6 +25373,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecJetbikesim1,		// Jet Bike Simulator - Lakes Standard
 	&BurnDrvMSX_jetbomb,		// Jet Bomber (Euro)
 	&BurnDrvMSX_jetfight,		// Jet Fighter (Euro)
+	&BurnSpecjetpac,			// Jet Pac (16K)
+	&BurnSpecJetpacrx,			// Jet Pac RX (48K) (HB)
 	&BurnSpecJetpackbob,		// Jet Pack Bob (48K) (HB)
 	&BurnSpecJetpaco,			// Jet Paco (48K) (HB)
 	&BurnDrvsg1k_jetpaco,		// Jet Paco and Jet Puri SG-1000 (HB)
@@ -25378,12 +25382,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_jetsetw,		// Jet Set Willy (Jpn)
 	&BurnDrvMSX_jetsetwa,		// Jet Set Willy (Jpn, Alt)
 	&BurnSpecjswilly2,			// Jet Set Willy II - The Final Frontier (48K)
-	&BurnSpecjswilly2e,			// Jet Set Willy II - The Final Frontier (end) (48K)
 	&BurnDrvMSX_Jsw2,			// Jet Set Willy II - The Final Frontier
 	&BurnSpecjswilly3,			// Jet Set Willy III (48K)
 	&BurnDrvnes_jetpaco,		// Jet-Paco (HB)
-	&BurnSpecjetpac,			// Jetpac (16K)
-	&BurnSpecJetpacrx,			// Jetpac RX (48K) (HB)
 	&BurnSpecJetpackjock,		// Jetpack Jock (128K) (HB)
 	&BurnSpecJetsons,			// Jetsons The Computer Game (128K)
 	&BurnDrvnes_jetsonsj,		// Jetsons, The - Cogswell's Caper! (Japan)
@@ -25429,12 +25430,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvJoemacrj,			// Joe & Mac Returns (Japan, Version 1.2, 1994.06.06)
 	&BurnDrvJoemacra,			// Joe & Mac Returns (World, Version 1.0, 1994.05.19)
 	&BurnDrvJoemacr,			// Joe & Mac Returns (World, Version 1.1, 1994.05.27)
-	&BurnSpecjoebld,			// Joe Blade (48K)
+	&BurnSpecjoebld128,			// Joe Blade (128K)
+	&BurnSpecjoebld48,			// Joe Blade (48K)
 	&BurnDrvMSX_joeblade,		// Joe Blade (Euro)
 	&BurnSpecjoebld2,			// Joe Blade II (128K)
-	&BurnSpecjoebld2_48,		// Joe Blade II (48K)
-	&BurnSpecjoebld3_128,		// Joe Blade III (128K)
-	&BurnSpecjoebld3,			// Joe Blade III (Trainer) (48K)
+	&BurnSpecjoebld3,			// Joe Blade III (128K)
 	&BurnSpecJoeblob,			// Joe Blob (128K) (HB, v2)
 	&BurnDrvsms_joemont,		// Joe Montana Football (Euro, USA, Bra)
 	&BurnDrvmd_joemont,			// Joe Montana Football (World)
@@ -28436,6 +28436,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_ninjakunmajnobo,// Ninja-kun - Majou no Bouken (Japan) (Rev 1)
 	&BurnDrvMSX_ninjakmb,		// Ninja-kun - Majou no Bouken (Jpn)
 	&BurnSpecninjajar,			// Ninjajar (128K) (HB, v1.1)
+	&BurnSpecNinjakul2,			// Ninjakul 2 The Last Ninja (128K) (HB)
+	&BurnSpecNinjakul,			// Ninjakul in the AUIC Temple (128K) (HB)
 	&BurnDrvNinjakun,			// Ninjakun Majou no Bouken
 	&BurnDrvnes_ninjarahoij,	// Ninjara Hoi! (Japan)
 	&BurnDrvnes_ninjarahoi,		// Ninjara Hoi! (T-eng)
@@ -32279,6 +32281,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecstopexpr,			// Stop the Express (48K)
 	&BurnDrvMSX_bousousos,		// Stop the Express. Bousou Tokkyuu SOS (Jpn)
 	&BurnDrvMSX_bousousosa,		// Stop the Express. Bousou Tokkyuu SOS (Jpn, Alt)
+	&BurnSpecStopvirus,			// Stop Virus (128K) (HB)
+	&BurnSpecStopvirusaf,		// Stop Virus (Axel F bgm) (128K) (HB)
 	&BurnDrvStmbladej,			// Storm Blade (Japan)
 	&BurnDrvStmblade,			// Storm Blade (US)
 	&BurnSpecstormbringer,		// Stormbringer (128K)

@@ -35,28 +35,22 @@ jobs:
         uses: msys2/setup-msys2@v2
         with:
           update: true
-          install: msys2-devel base-devel binutils mingw-w64-i686-nasm zip wget
+          install: msys2-devel base-devel binutils mingw-w64-i686-toolchain mingw-w64-i686-nasm zip wget
           msystem: MINGW32
 
-      - name: Downgrade to gcc-6.3.0
+      - name: Downgrade crt and pthread
         run: |
-          wget https://ns375257.ip-5-196-88.eu/msys2-archives/i686/mingw-w64-i686-gcc-6.3.0-3-any.pkg.tar.xz
-          wget https://ns375257.ip-5-196-88.eu/msys2-archives/i686/mingw-w64-i686-gcc-libs-6.3.0-3-any.pkg.tar.xz
-          wget https://ns375257.ip-5-196-88.eu/msys2-archives/i686/mingw-w64-i686-gcc-ada-6.3.0-3-any.pkg.tar.xz
-          wget https://ns375257.ip-5-196-88.eu/msys2-archives/i686/mingw-w64-i686-gcc-fortran-6.3.0-3-any.pkg.tar.xz
-          wget https://ns375257.ip-5-196-88.eu/msys2-archives/i686/mingw-w64-i686-gcc-libgfortran-6.3.0-3-any.pkg.tar.xz
-          wget https://ns375257.ip-5-196-88.eu/msys2-archives/i686/mingw-w64-i686-gcc-objc-6.3.0-3-any.pkg.tar.xz
-          wget https://ns375257.ip-5-196-88.eu/msys2-archives/i686/mingw-w64-i686-headers-git-6.0.0.5205.eb918246-1-any.pkg.tar.xz
-          wget https://ns375257.ip-5-196-88.eu/msys2-archives/i686/mingw-w64-i686-crt-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz
-          wget https://ns375257.ip-5-196-88.eu/msys2-archives/i686/mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
-          wget https://ns375257.ip-5-196-88.eu/msys2-archives/i686/mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
-          pacman -U --noconfirm mingw-w64-i686-gcc-6.3.0-3-any.pkg.tar.xz mingw-w64-i686-gcc-libs-6.3.0-3-any.pkg.tar.xz mingw-w64-i686-gcc-ada-6.3.0-3-any.pkg.tar.xz mingw-w64-i686-gcc-fortran-6.3.0-3-any.pkg.tar.xz mingw-w64-i686-gcc-libgfortran-6.3.0-3-any.pkg.tar.xz mingw-w64-i686-gcc-objc-6.3.0-3-any.pkg.tar.xz mingw-w64-i686-headers-git-6.0.0.5205.eb918246-1-any.pkg.tar.xz mingw-w64-i686-crt-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-headers-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz
+          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-crt-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz
+          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+          pacman -U --noconfirm mingw-w64-i686-headers-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz mingw-w64-i686-crt-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
 
       - uses: actions/checkout@v2
 
       - name: Build FBNeo
         run: |
-          make -j$(nproc) mingw510 SKIPDEPEND=1 USE_UCRT=1 RELEASEBUILD=1
+          make -j$(nproc) mingw510 SKIPDEPEND=1 RELEASEBUILD=1
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
@@ -92,28 +86,22 @@ jobs:
         uses: msys2/setup-msys2@v2
         with:
           update: true
-          install: msys2-devel base-devel binutils mingw-w64-i686-nasm zip wget
+          install: msys2-devel base-devel binutils mingw-w64-i686-toolchain mingw-w64-i686-nasm zip wget
           msystem: MINGW32
 
-      - name: Downgrade to gcc-6.3.0
+      - name: Downgrade crt and pthread
         run: |
-          wget https://ns375257.ip-5-196-88.eu/msys2-archives/i686/mingw-w64-i686-gcc-6.3.0-3-any.pkg.tar.xz
-          wget https://ns375257.ip-5-196-88.eu/msys2-archives/i686/mingw-w64-i686-gcc-libs-6.3.0-3-any.pkg.tar.xz
-          wget https://ns375257.ip-5-196-88.eu/msys2-archives/i686/mingw-w64-i686-gcc-ada-6.3.0-3-any.pkg.tar.xz
-          wget https://ns375257.ip-5-196-88.eu/msys2-archives/i686/mingw-w64-i686-gcc-fortran-6.3.0-3-any.pkg.tar.xz
-          wget https://ns375257.ip-5-196-88.eu/msys2-archives/i686/mingw-w64-i686-gcc-libgfortran-6.3.0-3-any.pkg.tar.xz
-          wget https://ns375257.ip-5-196-88.eu/msys2-archives/i686/mingw-w64-i686-gcc-objc-6.3.0-3-any.pkg.tar.xz
-          wget https://ns375257.ip-5-196-88.eu/msys2-archives/i686/mingw-w64-i686-headers-git-6.0.0.5205.eb918246-1-any.pkg.tar.xz
-          wget https://ns375257.ip-5-196-88.eu/msys2-archives/i686/mingw-w64-i686-crt-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz
-          wget https://ns375257.ip-5-196-88.eu/msys2-archives/i686/mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
-          wget https://ns375257.ip-5-196-88.eu/msys2-archives/i686/mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
-          pacman -U --noconfirm mingw-w64-i686-gcc-6.3.0-3-any.pkg.tar.xz mingw-w64-i686-gcc-libs-6.3.0-3-any.pkg.tar.xz mingw-w64-i686-gcc-ada-6.3.0-3-any.pkg.tar.xz mingw-w64-i686-gcc-fortran-6.3.0-3-any.pkg.tar.xz mingw-w64-i686-gcc-libgfortran-6.3.0-3-any.pkg.tar.xz mingw-w64-i686-gcc-objc-6.3.0-3-any.pkg.tar.xz mingw-w64-i686-headers-git-6.0.0.5205.eb918246-1-any.pkg.tar.xz mingw-w64-i686-crt-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-headers-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz
+          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-crt-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz
+          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+          pacman -U --noconfirm mingw-w64-i686-headers-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz mingw-w64-i686-crt-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
 
       - uses: actions/checkout@v2
 
       - name: Build FBNeo
         run: |
-          make -j$(nproc) mingw510 SKIPDEPEND=1 USE_UCRT=1
+          make -j$(nproc) mingw510 SKIPDEPEND=1
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2

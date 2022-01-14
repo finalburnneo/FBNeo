@@ -2043,26 +2043,6 @@ struct BurnDriver BurnDrvMSX_dslayer4 = {
 };
 
 
-// Dungeon Hunter (Jpn)
-
-static struct BurnRomInfo MSX_dngnhntrRomDesc[] = {
-	{ "rp231026d",	0x20000, 0x2526e568, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(MSX_dngnhntr, MSX_dngnhntr, msx_msx)
-STD_ROM_FN(MSX_dngnhntr)
-
-struct BurnDriver BurnDrvMSX_dngnhntr = {
-	"msx_dngnhntr", NULL, "msx_msx", NULL, "1989",
-	"Dungeon Hunter (Jpn)\0", "Light-Gun game", "ASCII", "MSX",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_SHOOT, 0,
-	MSXGetZipName, MSX_dngnhntrRomInfo, MSX_dngnhntrRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
-	272, 228, 4, 3
-};
-
-
 // Fantasy Zone (Jpn)
 
 static struct BurnRomInfo MSX_fantzoneRomDesc[] = {
@@ -2136,7 +2116,7 @@ struct BurnDriver BurnDrvMSX_gambler = {
 	"msx_gambler", NULL, "msx_msx", NULL, "1988",
 	"Gambler Jikochuushinha (Jpn)\0", NULL, "Game Arts", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII8, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII8, GBF_MAHJONG, 0,
 	MSXGetZipName, MSX_gamblerRomInfo, MSX_gamblerRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -2146,7 +2126,7 @@ struct BurnDriver BurnDrvMSX_gambler = {
 // Golvellius (Jpn)
 
 static struct BurnRomInfo MSX_golvellRomDesc[] = {
-	{ "compile ia-8701",	0x20000, 0x5eac55df, BRF_PRG | BRF_ESS },
+	{ "Golvellius (1987)(Compile).rom",	131072, 0x5eac55df, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_golvell, MSX_golvell, msx_msx)
@@ -2156,8 +2136,28 @@ struct BurnDriver BurnDrvMSX_golvell = {
 	"msx_golvell", NULL, "msx_msx", NULL, "1987",
 	"Golvellius (Jpn)\0", NULL, "Compile", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_PLATFORM | GBF_ADV, 0,
 	MSXGetZipName, MSX_golvellRomInfo, MSX_golvellRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Golvellius (T-Eng)
+
+static struct BurnRomInfo MSX_golvellenRomDesc[] = {
+	{ "Golvellius T-Eng (2008)(Compile).rom",	131072, 0x67cbd6d1, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_golvellen, MSX_golvellen, msx_msx)
+STD_ROM_FN(MSX_golvellen)
+
+struct BurnDriver BurnDrvMSX_golvellen = {
+	"msx_golvellen", "msx_golvell", "msx_msx", NULL, "1987-2008",
+	"Golvellius (T-Eng)\0", NULL, "Novalia Spirit", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_PLATFORM | GBF_ADV, 0,
+	MSXGetZipName, MSX_golvellenRomInfo, MSX_golvellenRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -6032,7 +6032,7 @@ struct BurnDriver BurnDrvMSX_cosmoexp = {
 	"msx_cosmoexp", NULL, "msx_msx", NULL, "1985",
 	"Cosmo-Explorer (Jpn)\0", NULL, "Sony", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_SHOOT, 0,
 	MSXGetZipName, MSX_cosmoexpRomInfo, MSX_cosmoexpRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -6052,7 +6052,7 @@ struct BurnDriver BurnDrvMSX_cosmoexpa = {
 	"msx_cosmoexpa", "msx_cosmoexp", "msx_msx", NULL, "1985",
 	"Cosmo-Explorer (Jpn, Alt)\0", NULL, "Sony", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_SHOOT, 0,
 	MSXGetZipName, MSX_cosmoexpaRomInfo, MSX_cosmoexpaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -6072,7 +6072,7 @@ struct BurnDriver BurnDrvMSX_craze = {
 	"msx_craze", NULL, "msx_msx", NULL, "1988",
 	"Craze (Jpn)\0", NULL, "Heart Soft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_RUNGUN, 0,
 	MSXGetZipName, MSX_crazeRomInfo, MSX_crazeRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -31318,43 +31318,5 @@ struct BurnDriver BurnDrvMSX_zoot = {
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_zootRomInfo, MSX_zootRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
-	272, 228, 4, 3
-};
-
-// Air Hockey (Jpn)
-
-static struct BurnRomInfo MSX_airhockeyRomDesc[] = {
-	{ "Air Hockey (1992)(ASCII).rom",	32768, 0xe6b77578, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(MSX_airhockey, MSX_airhockey, msx_msx)
-STD_ROM_FN(MSX_airhockey)
-
-struct BurnDriver BurnDrvMSX_airhockey = {
-	"msx_airhockey", NULL, "msx_msx", NULL, "1992",
-	"Air Hockey (Jpn)\0", "Light-Gun game", "ASCII", "MSX",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_SHOOT, 0,
-	MSXGetZipName, MSX_airhockeyRomInfo, MSX_airhockeyRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
-	272, 228, 4, 3
-};
-
-// Duck Hunt (HB)
-
-static struct BurnRomInfo MSX_duckhuntRomDesc[] = {
-	{ "Duck Hunt (2004)(Karoshi Corp.).rom",	8192, 0xf5b5ed7d, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(MSX_duckhunt, MSX_duckhunt, msx_msx)
-STD_ROM_FN(MSX_duckhunt)
-
-struct BurnDriver BurnDrvMSX_duckhunt = {
-	"msx_duckhunt", NULL, "msx_msx", NULL, "2004",
-	"Duck Hunt (HB)\0", "Light-Gun game", "Karoshi Corporation", "MSX",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_SHOOT, 0,
-	MSXGetZipName, MSX_duckhuntRomInfo, MSX_duckhuntRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

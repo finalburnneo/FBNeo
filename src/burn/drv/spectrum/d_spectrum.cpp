@@ -16,8 +16,9 @@ static INT32 SpecMode = 0;
 #define SPEC_TAP	(1 << 0)
 #define SPEC_Z80	(1 << 1)
 #define SPEC_128K   (1 << 2)
-#define SPEC_INVES	(1 << 3) // Spanish clone (non-contended ula)
-#define SPEC_AY8910	(1 << 4)
+#define SPEC_PLUS2  (1 << 3)
+#define SPEC_INVES	(1 << 4) // Spanish clone (non-contended ula)
+#define SPEC_AY8910	(1 << 5)
 
 static UINT8 SpecInputKbd[0x10][0x05] = {
 	{ 0, 0, 0, 0, 0 }, // Shift, Z, X, C, V
@@ -1060,6 +1061,8 @@ static INT32 Spectrum128Init(INT32 Mode)
 
 	BurnAllocMemIndex();
 
+	bprintf(0, _T("Spectrum128Init Mode: %x\n"), Mode);
+
 	INT32 nRet = 0;
 
 	if (SpecMode & SPEC_Z80) {
@@ -1094,7 +1097,7 @@ static INT32 Spectrum128Init(INT32 Mode)
 		z80_set_spectrum_tape_callback(SpecTAPDMACallback);
 	}
 	if (~SpecMode & SPEC_INVES) {
-		Z80InitContention(128, &update_ula);
+		Z80InitContention((SpecMode & SPEC_PLUS2) ? 1282 : 128, &update_ula);
 	}
 	ZetClose();
 
@@ -1144,6 +1147,11 @@ static INT32 SpecInit()
 static INT32 Spec128KInit()
 {
 	return Spectrum128Init(SPEC_128K | get_type());
+}
+
+static INT32 Spec128KPlus2Init()
+{
+	return Spectrum128Init(SPEC_128K | SPEC_PLUS2 | get_type());
 }
 
 static INT32 Spec128KInvesInit()
@@ -32238,7 +32246,7 @@ struct BurnDriver BurnSpecTokimal = {
 // Zooming Secretary (128K) (HB)
 
 static struct BurnRomInfo SpecZoomsecrRomDesc[] = {
-	{ "Zooming Secretary (2021)(PC NONO Games).z80", 50763, 0x21027efa, BRF_ESS | BRF_PRG },
+	{ "Zooming Secretary (2021)(PC NONO Games).tap", 47173, 0xd612501b, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecZoomsecr, SpecZoomsecr, Spec128)
@@ -32250,7 +32258,7 @@ struct BurnDriver BurnSpecZoomsecr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecZoomsecrRomInfo, SpecZoomsecrRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	Spec128KPlus2Init, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

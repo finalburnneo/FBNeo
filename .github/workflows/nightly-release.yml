@@ -1,0 +1,227 @@
+name: "nightly-release"
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  nightly_release:
+    name: Create release
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.nightly_release.outputs.upload_url }}
+
+    steps:
+      - name: Create release
+        id: nightly_release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "nightly builds"
+
+  build_windows:
+    name: Windows x32
+    needs: nightly_release
+    runs-on: windows-2019
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+      - name: Install Windows MSYS2 dependencies
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: msys2-devel base-devel binutils mingw-w64-i686-toolchain mingw-w64-i686-nasm zip wget
+          msystem: MINGW32
+
+      - name: Downgrade crt and pthread
+        run: |
+          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-headers-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz
+          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-crt-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz
+          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+          pacman -U --noconfirm mingw-w64-i686-headers-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz mingw-w64-i686-crt-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+
+      - uses: actions/checkout@v2
+
+      - name: Build FBNeo
+        run: |
+          make -j$(nproc) mingw510 SKIPDEPEND=1 RELEASEBUILD=1
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Windows x32
+          path: |
+            fbneo.exe
+
+      - name: Build release asset
+        run: |
+          zip --junk-paths "Windows x32.zip" fbneo.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
+          asset_name: Windows x32.zip
+          asset_path: Windows x32.zip
+          asset_content_type: application/zip
+
+  build_windows_debug:
+    name: Windows x32 (Debug)
+    needs: nightly_release
+    runs-on: windows-2019
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+      - name: Install Windows MSYS2 dependencies
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: msys2-devel base-devel binutils mingw-w64-i686-toolchain mingw-w64-i686-nasm zip wget
+          msystem: MINGW32
+
+      - name: Downgrade crt and pthread
+        run: |
+          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-headers-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz
+          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-crt-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz
+          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+          pacman -U --noconfirm mingw-w64-i686-headers-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz mingw-w64-i686-crt-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+
+      - uses: actions/checkout@v2
+
+      - name: Build FBNeo
+        run: |
+          make -j$(nproc) mingw510 SKIPDEPEND=1
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Windows x32 (Debug)
+          path: |
+            fbneod.exe
+
+      - name: Build release asset
+        run: |
+          zip --junk-paths "Windows x32 (Debug).zip" fbneod.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
+          asset_name: Windows x32 (Debug).zip
+          asset_path: Windows x32 (Debug).zip
+          asset_content_type: application/zip
+
+  build_linux_sdl2:
+    name: Linux SDL 2
+    needs: nightly_release
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        shell: bash {0}
+
+    steps:
+      - name: Install Linux dependencies
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install libsdl2-dev libsdl2-image-dev
+
+      - uses: actions/checkout@v2
+
+      - name: Build FBNeo
+        run: |
+          make -j$(nproc) sdl2 SKIPDEPEND=1 RELEASEBUILD=1
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Linux SDL 2
+          path: |
+            fbneo
+
+      - name: Build release asset
+        run: |
+          zip --junk-paths "Linux SDL 2.zip" fbneo src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
+          asset_name: Linux SDL 2.zip
+          asset_path: Linux SDL 2.zip
+          asset_content_type: application/zip
+
+  build_linux_sdl12:
+    name: Linux SDL 1.2
+    needs: nightly_release
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        shell: bash {0}
+
+    steps:
+      - name: Install Linux dependencies
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install libsdl1.2-dev
+
+      - uses: actions/checkout@v2
+
+      - name: Build FBNeo
+        run: |
+          make -j$(nproc) sdl SKIPDEPEND=1 RELEASEBUILD=1
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Linux SDL 1.2
+          path: |
+            fbneo
+
+      - name: Build release asset
+        run: |
+          zip --junk-paths "Linux SDL 1.2.zip" fbneo src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
+          asset_name: Linux SDL 1.2.zip
+          asset_path: Linux SDL 1.2.zip
+          asset_content_type: application/zip
+
+  build_macos:
+    name: macOS
+    needs: nightly_release
+    runs-on: macOS-latest
+    env:
+      DEVELOPER_DIR: /Applications/Xcode.app
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build FBNeo
+        run: |
+             cd projectfiles/xcode
+             xcodebuild ARCHS=x86_64 ONLY_ACTIVE_ARCH=NO -target Emulator -configuration Debug
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: macOS
+          path: "projectfiles/xcode/build/Debug/FinalBurn Neo.app"

@@ -628,10 +628,8 @@ static INT32 LoadRoms()
 		nYM2610ADPCMASize[nNeoActiveSlot] = nYM2610ADPCMBSize[nNeoActiveSlot] = 0;
 		if (pInfo->nADPCMOffset >= 0) {
 			// Add up the ADPCM-A & ADPCM-B roms
-			for (INT32 i = 0; i < pInfo->nADPCMANum; i++) {
-				BurnDrvGetRomInfo(&ri, pInfo->nADPCMOffset + i);
-				nYM2610ADPCMASize[nNeoActiveSlot] += ri.nLen;
-			}
+			BurnDrvGetRomInfo(&ri, pInfo->nADPCMOffset);
+			nYM2610ADPCMASize[nNeoActiveSlot] += ri.nLen * pInfo->nADPCMANum;
 
 			for (INT32 i = 0; i < pInfo->nADPCMBNum; i++) {
 				BurnDrvGetRomInfo(&ri, pInfo->nADPCMOffset + pInfo->nADPCMANum + i);

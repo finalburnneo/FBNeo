@@ -1407,8 +1407,8 @@ static INT32 CadashFrame()
 	{
 		CPU_RUN(0, Sek);
 		CPU_RUN_TIMER(1);
-		if (i == (nInterleave - 2)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-		if (i == (nInterleave - 1)) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 0) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 	}
 
 	if (pBurnSoundOut) {
@@ -1421,7 +1421,9 @@ static INT32 CadashFrame()
 	if (pBurnDraw) {
 		DrvDraw();
 	}
-	
+
+	PC090OJBufferSprites();
+
 	return 0;
 }
 

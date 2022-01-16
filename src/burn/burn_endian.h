@@ -15,11 +15,6 @@ typedef union
 #define BURN_ENDIAN_SWAP_INT64(x)				x
 #else
 
-// psl1ght uses those intrinsics too
-#if defined(__PSL1GHT__) && !defined(__CELLOS_LV2__)
-#define __CELLOS_LV2__
-#endif
-
 typedef union {
   struct { UINT8 h3,h2,h,l; } b;
   struct { UINT16 h,l; } w;
@@ -39,7 +34,7 @@ typedef union {
 #define BURN_ENDIAN_SWAP_INT32(x)				(_byteswap_ulong(x))
 #define BURN_ENDIAN_SWAP_INT64(x)				(_byteswap_uint64(x))
 // PS3
-#elif defined(__CELLOS_LV2__)
+#elif defined(__PS3__)
 #include <ppu_intrinsics.h>
 #include <math.h>
 #define BURN_ENDIAN_SWAP_INT8(x)				(x^1)

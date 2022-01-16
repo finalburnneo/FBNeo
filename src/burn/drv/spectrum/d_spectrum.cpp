@@ -168,10 +168,6 @@ static struct BurnDIPInfo SpecDIPList[]=
 {
 	DIP_OFFSET(0x43)
 
-	{0, 0xfe, 0   , 2   , "Hardware Version"		},
-	{0, 0x01, 0x80, 0x00, "Issue 2"					},
-	{0, 0x01, 0x80, 0x80, "Issue 3"					},
-
 	{0, 0xfe, 0   , 6   , "Joystick Config"			},
 	{0, 0x01, 0x0f, 0x00, "Kempston"				},
 	{0, 0x01, 0x0f, 0x01, "Sinclair Interface 2"	},
@@ -183,12 +179,7 @@ static struct BurnDIPInfo SpecDIPList[]=
 
 static struct BurnDIPInfo SpecDefaultDIPList[]=
 {
-	{0, 0xff, 0xff, 0x80, NULL						}, // Issue 3 + Kempston (Blinky's Scary School requires issue 3)
-};
-
-static struct BurnDIPInfo SpecIssue2DIPList[]=
-{
-	{0, 0xff, 0xff, 0x00, NULL						}, // Issue 2 + Kempston (Abu Simbel requires issue 2)
+	{0, 0xff, 0xff, 0x80, NULL						}, // Kempston
 };
 
 static struct BurnDIPInfo SpecIntf2DIPList[]=
@@ -212,14 +203,14 @@ static struct BurnDIPInfo SpecCursorKeysDIPList[]=
 };
 
 STDDIPINFOEXT(Spec, SpecDefault, Spec)
-STDDIPINFOEXT(SpecIssue2, SpecIssue2, Spec)
 STDDIPINFOEXT(SpecIntf2, SpecIntf2, Spec)
 STDDIPINFOEXT(SpecQAOPM, SpecQAOPM, Spec)
 STDDIPINFOEXT(SpecQAOPSpace, SpecQAOPSpace, Spec)
 STDDIPINFOEXT(SpecCursorKeys, SpecCursorKeys, Spec)
 
-static void spectrum128_bank(); // forward
+static void spectrum128_bank(); // forwards
 static void spectrum_loadz80();
+static void ula_run_cyc(INT32 cyc, INT32 draw_screen);
 
 // Spectrum 48k tap-loading robot -dink
 static INT32 CASFrameCounter = 0; // for autoloading
@@ -499,7 +490,7 @@ static INT32 check_symbol_shift()
 
 static UINT8 read_keyboard(UINT16 address)
 {
-	UINT8 keytmp = 0xff;
+	UINT8 keytmp = 0x1f;
 
 	for (INT32 i = 0; i < 8; i++) { // process all kbd rows
 		if (~address & (1 << (i + 8))) {
@@ -533,9 +524,7 @@ static UINT8 read_keyboard(UINT16 address)
 		}
 	}
 
-	keytmp |= 0xe0; // default bits set high
-
-	if (SpecDips[0] & 0x80) keytmp ^= 0x40; // Issue2 keyboard
+	keytmp |= (ula_border & 0x10) ? 0xe0 : 0xa0;
 
 	return keytmp;
 }
@@ -554,6 +543,8 @@ static UINT8 __fastcall SpecZ80PortRead(UINT16 address)
 	if ((address & 0xc002) == 0xc000 && (SpecMode & SPEC_AY8910)) {
 		return AY8910Read(0);
 	}
+
+	ula_run_cyc(ZetTotalCycles(), 0); // get up-to-date ula_byte!
 
 	return ula_byte; // Floating Memory
 }
@@ -652,6 +643,8 @@ static UINT8 __fastcall SpecSpec128Z80PortRead(UINT16 address)
 		// todo: figure out what 0x7ffd / 3ffd read does
 		//bprintf(0, _T("reading %x (%x)\n"), address, Spec128kMapper);
 	}
+
+	ula_run_cyc(ZetTotalCycles(), 0); // get up-to-date ula_byte!
 
 	return ula_byte; // Floating Memory
 }
@@ -1213,7 +1206,7 @@ static void ula_init(INT32 scanlines, INT32 cyc_scanline, INT32 contention)
 	SpecCylesPerScanline = cyc_scanline;
 	SpecContention = contention;
 
-	CONT_OFFSET = 3;
+	CONT_OFFSET = 2; // 2 cycles to floating bus
 	CONT_START  = (SpecContention + CONT_OFFSET); // 14335 / 14361
 	CONT_END    = (CONT_START + 192 * SpecCylesPerScanline);
 	BORDER_START= (SpecMode & SPEC_128K) ? 14368 : 14342;
@@ -1221,35 +1214,36 @@ static void ula_init(INT32 scanlines, INT32 cyc_scanline, INT32 contention)
 	BORDER_END  = SpecCylesPerScanline * (16+256+16);
 }
 
-static void ula_run_cyc(INT32 cyc)
+static void ula_run_cyc(INT32 cyc, INT32 draw_screen)
 {
-	// borders (top + sides + bottom)
+	ula_byte = 0xff; // open-bus byte 0xff unless ula fetches screen data
+
+	// borders (top + sides + bottom) - note: only drawing 16px borders!
 	if (cyc >= BORDER_START && cyc <= BORDER_END) {
 		INT32 offset = cyc - BORDER_START;
 		INT32 x = ((offset) % SpecCylesPerScanline) * 2;
 		INT32 y =  (offset) / SpecCylesPerScanline;
 		INT32 border = ula_border & 0x07;
 
-		if ((x & 7) == 0) {
-			INT32 draw = 0;
+		INT32 draw = 0;
 
-			// top border
-			if (y >= 0 && y < 16 && x >= 0 && x <= nScreenWidth-8) {
-				draw = 1;
-			}
+		// top border
+		if (y >= 0 && y < 16 && x >= 0 && x < nScreenWidth) {
+			draw = 1;
+		}
 
-			// side borders
-			if (y >= 16 && y < 16+192+16 && ((x >= 0 && x < 16) || (x >= 16+256 && x < 16+256+16)) && x <= nScreenWidth-8) {
-				draw = 1;
-			}
+		// side borders
+		if (y >= 16 && y < 16+192+16 && ((x >= 0 && x < 16) || (x >= 16+256 && x < 16+256+16)) && x < nScreenWidth) {
+			draw = 1;
+		}
 
-			// bottom border
-			if (y >= 16 + 192 && y < 16+192+16 && x >= 0 && x <= nScreenWidth-8) {
-				draw = 1;
-			}
+		// bottom border
+		if (y >= 16 + 192 && y < 16+192+16 && x >= 0 && x < nScreenWidth) {
+			draw = 1;
+		}
 
-			if (draw) {
-				ula_byte = 0xff;
+		if (draw) {
+			if (draw_screen && ((x & 7) == 0) && x <= nScreenWidth - 8) {
 				for (INT32 xx = x; xx < x + 8; xx++) {
 					pTransDraw[y * nScreenWidth + xx] = border;
 				}
@@ -1264,29 +1258,41 @@ static void ula_run_cyc(INT32 cyc)
 		INT32 y =  (offset) / SpecCylesPerScanline;
 
 		if (x < 256) {
-			switch (offset % 4) {
-				case 0:
-					ula_scr = SpecVideoRam[((y & 0xc0) << 5) | ((y & 0x38) << 2) | ((y & 7) << 8) | (x >> 3)];
+			switch (offset & 7) {
+				default: // 0, 1, 6, 7
+					ula_byte = 0xff;
 					break;
-				case 1:
+
+				case 2:
+				case 4:
+					ula_scr = SpecVideoRam[((y & 0xc0) << 5) | ((y & 0x38) << 2) | ((y & 7) << 8) | (x >> 3)];
+					ula_byte = ula_scr;
+					break;
+
+				case 3:
+				case 5:
 					ula_attr = SpecVideoRam[0x1800 | ((y & 0xf8) << 2) | (x >> 3)];
 					ula_byte = ula_attr;
-					break;
-				case 3:
+
 					UINT16 *dst = pTransDraw + ((y + 16) * nScreenWidth) + ((x + 16) & ~7);
 					UINT8 ink = (ula_attr & 0x07) + ((ula_attr >> 3) & 0x08);
 					UINT8 pap = (ula_attr >> 3) & 0x0f;
 
 					if (ula_flash & 0x10 && ula_attr & 0x80) ula_scr = ~ula_scr;
 
-					for (UINT8 b = 0x80; b != 0; b >>= 1) {
-						*dst++ = (ula_scr & b) ? ink : pap;
+					if (draw_screen) {
+						*dst++ = (ula_scr & (1 << 7)) ? ink : pap;
+						*dst++ = (ula_scr & (1 << 6)) ? ink : pap;
+						*dst++ = (ula_scr & (1 << 5)) ? ink : pap;
+						*dst++ = (ula_scr & (1 << 4)) ? ink : pap;
+						*dst++ = (ula_scr & (1 << 3)) ? ink : pap;
+						*dst++ = (ula_scr & (1 << 2)) ? ink : pap;
+						*dst++ = (ula_scr & (1 << 1)) ? ink : pap;
+						*dst++ = (ula_scr & (1 << 0)) ? ink : pap;
 					}
 					break;
 			}
 		}
-	} else {
-		ula_byte = 0xff;
 	}
 }
 
@@ -1295,13 +1301,13 @@ static void update_ula(INT32 cycle)
 	if (ula_last_cyc > cycle) {
 		// next frame! - finish up previous frame & restart
 		for (INT32 i = ula_last_cyc; i < BORDER_END; i++) {
-			ula_run_cyc(i);
+			ula_run_cyc(i, 1);
 		}
 		ula_last_cyc = 0;
 	}
 
 	for (INT32 i = ula_last_cyc; i < cycle; i++) {
-		ula_run_cyc(i);
+		ula_run_cyc(i, 1);
 	}
 
 	ula_last_cyc = cycle;
@@ -1404,14 +1410,16 @@ static INT32 SpecFrame()
 	ZetIdle(nExtraCycles);
 	nExtraCycles = 0;
 
+	const INT32 IRQ_LENGTH = 32;
+
 	for (INT32 i = 0; i < SpecScanlines; i++) {
 		if (i == 0) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			nCyclesDo += 32;
-			ZetRun(32);
+			nCyclesDo += IRQ_LENGTH;
+			ZetRun(IRQ_LENGTH);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 
-			nCyclesDo += SpecCylesPerScanline - 32;
+			nCyclesDo += SpecCylesPerScanline - IRQ_LENGTH;
 			ZetRun(nCyclesDo - ZetTotalCycles());
 
 			ula_flash = (ula_flash + 1) & 0x1f;
@@ -1680,7 +1688,7 @@ struct BurnDriver BurnSpecabusimprd = {
 	"Abu Simbel Profanation (Spanish) (48K)\0", NULL, "Dinamic Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
-	SpectrumGetZipName, SpecabusimprdRomInfo, SpecabusimprdRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIssue2DIPInfo,
+	SpectrumGetZipName, SpecabusimprdRomInfo, SpecabusimprdRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -1688,7 +1696,7 @@ struct BurnDriver BurnSpecabusimprd = {
 // Abu Simbel Profanation (English) (48K)
 
 static struct BurnRomInfo SpecabusimprRomDesc[] = {
-	{ "Abu Simbel Profanation (1987)(Gremlin Graphics Software)[re-release].z80", 0x09ab5, 0x54092dfb, BRF_ESS | BRF_PRG },
+	{ "Abu Simbel Profanation (1987)(Gremlin Graphics Software)[re-release].tap", 46362, 0x7849893d, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specabusimpr, Specabusimpr, Spectrum)
@@ -1699,7 +1707,7 @@ struct BurnDriver BurnSpecabusimpr = {
 	"Abu Simbel Profanation (English) (48K)\0", NULL, "Gremlin Graphics", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
-	SpectrumGetZipName, SpecabusimprRomInfo, SpecabusimprRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIssue2DIPInfo,
+	SpectrumGetZipName, SpecabusimprRomInfo, SpecabusimprRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -11902,7 +11910,7 @@ struct BurnDriver BurnSpecsnoopy = {
 	"Snoopy (48K)\0", NULL, "The Edge", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
-	SpectrumGetZipName, SpecsnoopyRomInfo, SpecsnoopyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIssue2DIPInfo,
+	SpectrumGetZipName, SpecsnoopyRomInfo, SpecsnoopyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

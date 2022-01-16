@@ -1091,17 +1091,16 @@ static void VideoBufferInit()
 void retro_run()
 {
 #if 0
-	// Disabled for now since retroarch might not be totally reliable about it ?
+	// Disabled for now because the api call result doesn't seem that much reliable
+	// we probably need a better api implementation for this
 	int nAudioVideoEnable = -1;
 	environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &nAudioVideoEnable);
 
-	// Only draw when required by frontend or core
+	// Draw when the "Enable Video" bit is enabled or the game has the BDF_RUNAHEAD_DRAWSYNC flag
 	pBurnDraw = ((BurnDrvGetFlags() & BDF_RUNAHEAD_DRAWSYNC) || (nAudioVideoEnable & 1)) ? pVidImage : NULL;
-	// Disabling audio seems broken in retroarch at the moment with runahead,
-	// i think it's playing back sound from all frames it ran or something, even when it says it won't,
-	// 2-instances with its hard-disabled-audio seems ok
-	// pBurnSoundOut = nAudioVideoEnable & 2 && !(nAudioVideoEnable & 8) ? pAudBuffer : NULL;
-	pBurnSoundOut = !(nAudioVideoEnable & 8) ? pAudBuffer : NULL;
+	// The "Enable Audio" bit doesn't seem to work properly at the moment (with runahead, is it used in another context ?),
+	// actually it might be doing the opposite of what api says, because rendering audio when retroarch says to disable it seems to work
+	pBurnSoundOut = !(nAudioVideoEnable & 2) || !(nAudioVideoEnable & 8) ? pAudBuffer : NULL;
 #else
 	pBurnDraw = pVidImage; // set to NULL to skip frame rendering
 	pBurnSoundOut = pAudBuffer; // set to NULL to skip sound rendering

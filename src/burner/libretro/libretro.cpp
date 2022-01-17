@@ -1090,21 +1090,44 @@ static void VideoBufferInit()
 
 void retro_run()
 {
-#if 0
-	// Disabled for now because the api call result doesn't seem that much reliable
-	// we probably need a better api implementation for this
-	int nAudioVideoEnable = -1;
-	environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &nAudioVideoEnable);
+	int nAudioVideoEnable = 0;
+	bool bEnableVideo = true;
+	bool bEmulateAudio = true;
+	bool bPresentAudio = true;
 
-	// Draw when the "Enable Video" bit is enabled or the game has the BDF_RUNAHEAD_DRAWSYNC flag
-	pBurnDraw = ((BurnDrvGetFlags() & BDF_RUNAHEAD_DRAWSYNC) || (nAudioVideoEnable & 1)) ? pVidImage : NULL;
-	// The "Enable Audio" bit doesn't seem to work properly at the moment (with runahead, is it used in another context ?),
-	// actually it might be doing the opposite of what api says, because rendering audio when retroarch says to disable it seems to work
-	pBurnSoundOut = !(nAudioVideoEnable & 2) || !(nAudioVideoEnable & 8) ? pAudBuffer : NULL;
-#else
-	pBurnDraw = pVidImage; // set to NULL to skip frame rendering
-	pBurnSoundOut = pAudBuffer; // set to NULL to skip sound rendering
-#endif
+	if (environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &nAudioVideoEnable))
+	{
+		// Video is required when "Enable Video" bit is set
+		// or the game has the BDF_RUNAHEAD_DRAWSYNC flag
+		bEnableVideo = (nAudioVideoEnable & 1) || (BurnDrvGetFlags() & BDF_RUNAHEAD_DRAWSYNC);
+
+		// Audio status is more complex:
+		// - If "Hard Disable Audio" bit is set, then audio
+		//   should not be emulated, and nothing should be
+		//   presented to the frontend
+		// - If "Hard Disable Audio" bit is not set, then
+		//   we need to check the "Enable Audio" bit
+		//   > If this is set, then audio should be emulated
+		//     and presented to the frontend
+		//   > If this is not set, then audio should not be
+		//     presented to the frontend - but audio should
+		//     be generated normally on the *next* frame,
+		//     and saving/loading states should operate
+		//     without issue. This means audio must still
+		//     be emulated for the *current* frame
+		// Note: "Hard Disable Audio" bit will only be set
+		// when using second instance runahead
+		if (nAudioVideoEnable & 8) // "Hard Disable Audio"
+		{
+			bEmulateAudio = false;
+			bPresentAudio = false;
+		}
+		else
+			bPresentAudio = (nAudioVideoEnable & 2); // "Enable Audio"
+	}
+
+	pBurnDraw = bEnableVideo ? pVidImage : NULL; // Set to NULL to skip frame rendering
+	pBurnSoundOut = bEmulateAudio ? pAudBuffer : NULL; // Set to NULL to skip sound rendering
 
 	bool bSkipFrame = false;
 
@@ -1166,21 +1189,25 @@ void retro_run()
 
 	ForceFrameStep(bSkipFrame);
 
-	if (bLowPassFilterEnabled)
-		DspDo(pAudBuffer, nBurnSoundLen);
-	audio_batch_cb(pAudBuffer, nBurnSoundLen);
-	bool updated = false;
+	if (bPresentAudio)
+	{
+		if (bLowPassFilterEnabled)
+			DspDo(pAudBuffer, nBurnSoundLen);
+		audio_batch_cb(pAudBuffer, nBurnSoundLen);
+	}
 
 	if (bVidImageNeedRealloc)
 	{
 		bVidImageNeedRealloc = false;
 		VideoBufferInit();
 		// current frame will be corrupted, let's dupe instead
-		video_cb(NULL, nGameWidth, nGameHeight, nBurnPitch);
+		if (bEnableVideo)
+			video_cb(NULL, nGameWidth, nGameHeight, nBurnPitch);
 	}
-	else
+	else if (bEnableVideo)
 		video_cb(pVidImage, nGameWidth, nGameHeight, nBurnPitch);
 
+	bool updated = false;
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE_UPDATE, &updated) && updated)
 	{
 		UINT32 old_nVerticalMode = nVerticalMode;

@@ -1676,35 +1676,16 @@ struct BurnDriver BurnSpec720deg = {
 
 // Abu Simbel Profanation (Spanish) (48K)
 
-static struct BurnRomInfo SpecabusimprdRomDesc[] = {
-	{ "Abu Simbel Profanation (1985)(Dinamic Software)(es).z80", 0x08dbc, 0xa18b280f, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(Specabusimprd, Specabusimprd, Spectrum)
-STD_ROM_FN(Specabusimprd)
-
-struct BurnDriver BurnSpecabusimprd = {
-	"spec_abusimprd", "spec_abusimpr", "spec_spectrum", NULL, "1985",
-	"Abu Simbel Profanation (Spanish) (48K)\0", NULL, "Dinamic Software", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
-	SpectrumGetZipName, SpecabusimprdRomInfo, SpecabusimprdRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 288, 224, 4, 3
-};
-
-// Abu Simbel Profanation (English) (48K)
-
 static struct BurnRomInfo SpecabusimprRomDesc[] = {
-	{ "Abu Simbel Profanation (1987)(Gremlin Graphics Software)[re-release].tap", 46362, 0x7849893d, BRF_ESS | BRF_PRG },
+	{ "Abu Simbel Profanation (1985)(Dinamic Software).tap", 46362, 0x7849893d, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specabusimpr, Specabusimpr, Spectrum)
 STD_ROM_FN(Specabusimpr)
 
 struct BurnDriver BurnSpecabusimpr = {
-	"spec_abusimpr", NULL, "spec_spectrum", NULL, "1987",
-	"Abu Simbel Profanation (English) (48K)\0", NULL, "Gremlin Graphics", "ZX Spectrum",
+	"spec_abusimpr", NULL, "spec_spectrum", NULL, "1985",
+	"Abu Simbel Profanation (Spanish) (48K)\0", NULL, "Dinamic Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecabusimprRomInfo, SpecabusimprRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -32327,7 +32308,7 @@ struct BurnDriver BurnSpecCyclus2 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Get Out Of Mars (128K) (HB)
+// Get Out Of Mars (128K) (HB, v1.1)
 
 static struct BurnRomInfo SpecGetmarsRomDesc[] = {
 	{ "Get Out Of Mars (2021)(Noentiendo).tap", 69762, 0xc699ac83, BRF_ESS | BRF_PRG },
@@ -32338,7 +32319,7 @@ STD_ROM_FN(SpecGetmars)
 
 struct BurnDriver BurnSpecGetmars = {
 	"spec_getmars", NULL, "spec_spec128", NULL, "2021",
-	"Get Out Of Mars (128K) (HB)\0", NULL, "Noentiendo", "ZX Spectrum",
+	"Get Out Of Mars (128K) (HB, v1.1)\0", NULL, "Noentiendo", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecGetmarsRomInfo, SpecGetmarsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -32387,7 +32368,7 @@ struct BurnDriver BurnSpecMagjim48 = {
 // TJ Cavern Capers (128K) (HB)
 
 static struct BurnRomInfo SpecTjccRomDesc[] = {
-	{ "TJ Cavern Capers (2021)(Gaz Marshall).tap", 27335, 0x13ef7638, BRF_ESS | BRF_PRG },
+	{ "TJ Cavern Capers (2021)(Gaz Marshall).tap", 33835, 0x2d4a85ab, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecTjcc, SpecTjcc, Spec128)

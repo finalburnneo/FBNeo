@@ -12,9 +12,10 @@ unexport
 
 # Check for changes in header files
 ifndef	SKIPDEPEND
-DEPEND = 1
+#DEPEND = 1
 endif
-
+# Note: DEPEND = 1 is a hassle and slows build time by about 500x
+# it's easier to "rm -rf obj" and rebuild than deal with DEPEND = 1
 
 #
 #	Declare variables
@@ -281,6 +282,12 @@ CXXFLAGS = -pipe \
 	   -Wno-unused-but-set-variable -Wno-sequence-point -Wno-narrowing -Wno-extra \
 	   -Wno-pedantic \
 	   $(DEF) $(incdir)
+
+ifdef BORKYCRT
+	#return back to msvcrt-style swprintf
+	CFLAGS += -D__USE_MINGW_ANSI_STDIO=0
+	CXXFLAGS += -D__USE_MINGW_ANSI_STDIO=0
+endif
 ifdef BUILD_X64_EXE
 	CFLAGS += -m64
 	CXXFLAGS += -m64

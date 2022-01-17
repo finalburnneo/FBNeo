@@ -1118,10 +1118,7 @@ void retro_run()
 		// Note: "Hard Disable Audio" bit will only be set
 		// when using second instance runahead
 		if (nAudioVideoEnable & 8) // "Hard Disable Audio"
-		{
-			bEmulateAudio = false;
-			bPresentAudio = false;
-		}
+			bEmulateAudio = bPresentAudio = false;
 		else
 			bPresentAudio = (nAudioVideoEnable & 2); // "Enable Audio"
 	}
@@ -1205,7 +1202,7 @@ void retro_run()
 			video_cb(NULL, nGameWidth, nGameHeight, nBurnPitch);
 	}
 	else if (bEnableVideo)
-		video_cb(pVidImage, nGameWidth, nGameHeight, nBurnPitch);
+		video_cb(bSkipFrame ? NULL : pVidImage, nGameWidth, nGameHeight, nBurnPitch);
 
 	bool updated = false;
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE_UPDATE, &updated) && updated)

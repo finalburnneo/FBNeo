@@ -1039,7 +1039,7 @@ static INT32 System16MemIndex()
 		System16Roads        = Next; Next += 0x40000;
 	}
 	
-	System16Palette      = (UINT32*)Next; Next += System16PaletteEntries * 3 * sizeof(UINT32) + (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) ? (0x40 * sizeof(UINT32)) : 0);
+	System16Palette      = (UINT32*)Next; Next += System16PaletteEntries * 3 * sizeof(UINT32) + (0x42 * sizeof(UINT32));//(((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) ? (0x40 * sizeof(UINT32)) : 0);
 	
 	if (UseTempDraw) { pTempDraw = (UINT16*)Next; Next += (512 * 512 * sizeof(UINT16)); }
 	
@@ -1929,6 +1929,7 @@ INT32 System16Init()
 			SekMapMemory(System16Code          , 0x000000, 0x0fffff, MAP_FETCH);
 			SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
 			SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
+			SekMapMemory(System16TextRam       , 0x411000, 0x411fff, MAP_RAM); // fantzone wants mirror here
 			SekMapMemory(System16SpriteRam     , 0x440000, 0x4407ff, MAP_RAM);
 			SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, MAP_RAM);
 			SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
@@ -2838,6 +2839,13 @@ INT32 System16AFrame()
 			}
 		}
 
+		if (i == 224) { // draw at vblank
+			if (System1668KEnable && !System16I8751RomNum) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+			if (Simulate8751) Simulate8751();
+
+			if (pBurnDraw) System16ARender();
+		}
+
 		if (pBurnSoundOut && i&1) {
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -2853,11 +2861,8 @@ INT32 System16AFrame()
 		N7751Close();
 	}
 
-	if (System1668KEnable && !System16I8751RomNum) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	SekClose();
 	
-	if (Simulate8751) Simulate8751();
-
 	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
@@ -2871,8 +2876,6 @@ INT32 System16AFrame()
 		
 		if (System167751ProgSize) DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
-	
-	if (pBurnDraw) System16ARender();
 
 	return 0;
 }

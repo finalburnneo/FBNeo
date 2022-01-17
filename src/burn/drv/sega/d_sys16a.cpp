@@ -2446,6 +2446,8 @@ void __fastcall System16AWriteByte(UINT32 a, UINT8 d)
 			ppi8255_w(0, (a & 7) >> 1, d & 0xff);
 			return;
 		}
+		case 0xc60000:
+			return; // watchdog
 	}
 
 #if 0 && defined FBNEO_DEBUG

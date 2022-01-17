@@ -3160,7 +3160,8 @@ inline static void System16AUpdateTileValues()
 INT32 System16ARender()
 {
 	if (!System16VideoEnable) {
-		BurnTransferClear();
+		BurnTransferClear(System16PaletteEntries * 3); // BLACK
+		BurnTransferCopy(System16Palette);
 		return 0;
 	}
 	

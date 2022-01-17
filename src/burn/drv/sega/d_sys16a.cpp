@@ -3790,13 +3790,20 @@ struct BurnDriver BurnDrvDumpmtmt = {
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
+static INT32 FantzoneInit()
+{
+	s16a_update_after_vblank = 1;
+
+	return System16Init();
+}
+
 struct BurnDriver BurnDrvFantzone = {
 	"fantzone", NULL, NULL, NULL, "1986",
 	"Fantasy Zone (Rev A, unprotected)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16A, GBF_HORSHOOT, 0,
 	NULL, FantzoneRomInfo, FantzoneRomName, NULL, NULL, NULL, NULL, System16aInputInfo, FantzoneDIPInfo,
-	System16Init, System16Exit, System16AFrame, System16ARender, System16Scan,
+	FantzoneInit, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -3806,7 +3813,7 @@ struct BurnDriver BurnDrvFantzone1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16A, GBF_HORSHOOT, 0,
 	NULL, Fantzone1RomInfo, Fantzone1RomName, NULL, NULL, NULL, NULL, System16aInputInfo, FantzoneDIPInfo,
-	System16Init, System16Exit, System16AFrame, System16ARender, System16Scan,
+	FantzoneInit, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -3816,7 +3823,7 @@ struct BurnDriver BurnDrvFantzonee = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089B_ENC, GBF_HORSHOOT, 0,
 	NULL, FantzoneeRomInfo, FantzoneeRomName, NULL, NULL, NULL, NULL, System16aInputInfo, FantzoneDIPInfo,
-	System16Init, System16Exit, System16AFrame, System16ARender, System16Scan,
+	FantzoneInit, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -3836,7 +3843,7 @@ struct BurnDriver BurnDrvFantzonepr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_SEGA_SYSTEM16A, GBF_HORSHOOT, 0,
 	NULL, FantzoneprRomInfo, FantzoneprRomName, NULL, NULL, NULL, NULL, System16aInputInfo, FantzoneDIPInfo,
-	System16Init, System16Exit, System16AFrame, System16ARender, System16Scan,
+	FantzoneInit, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 

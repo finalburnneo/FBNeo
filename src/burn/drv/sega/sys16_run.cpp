@@ -128,6 +128,7 @@ UINT32 System16BackupRamSize = 0;
 UINT32 System16BackupRam2Size = 0;
 
 bool System16HasGears = false;
+INT32 s16a_update_after_vblank = 0;
 
 UINT8 System16VideoControl;
 INT32 System16SoundLatch;
@@ -1968,9 +1969,10 @@ INT32 System16Init()
 		ppi8255_init(1);
 		ppi8255_set_write_ports(0, System16APPI0WritePortA, System16APPI0WritePortB, System16APPI0WritePortC);
 
-		BurnYM2151Init(4000000);
+		BurnYM2151InitBuffered(4000000, 1, NULL, 0);
 		BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
-		
+		BurnTimerAttachZet(4000000);
+
 		if (System167751ProgSize) {
 			N7751Init(0);
 			N7751Open(0);
@@ -2752,7 +2754,9 @@ INT32 System16Exit()
 		}
 #endif
 	}
-	
+
+	s16a_update_after_vblank = 0;
+
 	return 0;
 }
 
@@ -2783,8 +2787,6 @@ INT32 System16AFrame()
 	nCyclesTotal[3] = (8000000 / 12) / 60;
 	nSystem16CyclesDone[0] = nSystem16CyclesDone[1] = nSystem16CyclesDone[2] = nSystem16CyclesDone[3] = 0;
 
-	INT32 nSoundBufferPos = 0;
-
 	SekNewFrame();
 	ZetNewFrame();
 	I8039NewFrame(); // dac?
@@ -2810,12 +2812,9 @@ INT32 System16AFrame()
 		// Run Z80
 		nCurrentCPU = 1;
 		ZetOpen(0);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
+		CPU_RUN_TIMER(1);
 		ZetClose();
-		
+
 		if (System167751ProgSize) {
 			nCurrentCPU = 2;
 			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
@@ -2843,17 +2842,7 @@ INT32 System16AFrame()
 			if (System1668KEnable && !System16I8751RomNum) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 			if (Simulate8751) Simulate8751();
 
-			if (pBurnDraw) System16ARender();
-		}
-
-		if (pBurnSoundOut && i&1) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-			ZetOpen(0);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-			ZetClose();
+			if (pBurnDraw && s16a_update_after_vblank == 0) System16ARender();
 		}
 	}
 
@@ -2862,20 +2851,15 @@ INT32 System16AFrame()
 	}
 
 	SekClose();
-	
-	// Make sure the buffer is entirely filled.
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 
-		if (nSegmentLength) {
-			ZetOpen(0);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			ZetClose();
-		}
-		
+	if (pBurnSoundOut) {
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		if (System167751ProgSize) DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
+
+	if (pBurnDraw && s16a_update_after_vblank == 1) System16ARender();
+
+	System16AVideoEnableDelayed = System16VideoEnable;
 
 	return 0;
 }

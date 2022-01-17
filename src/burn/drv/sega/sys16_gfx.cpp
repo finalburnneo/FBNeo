@@ -10,6 +10,7 @@ UINT8 BootlegBgPage[4];
 INT32 System16ScrollX[4] = {0, 0, 0, 0};
 INT32 System16ScrollY[4] = {0, 0, 0, 0};
 INT32 System16VideoEnable;
+INT32 System16AVideoEnableDelayed; // for 16a
 INT32 System18VdpEnable;
 INT32 System18VdpMixing;
 INT32 System16ScreenFlip = 0;
@@ -64,6 +65,7 @@ void System16GfxScan(INT32 nAction)
 {
 	if (nAction & ACB_DRIVER_DATA) {
 		SCAN_VAR(System16VideoEnable);
+		SCAN_VAR(System16AVideoEnableDelayed);
 
 		if (nAction & ACB_WRITE) {
 			if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM16A) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_HANGON))  {
@@ -3159,7 +3161,7 @@ inline static void System16AUpdateTileValues()
 
 INT32 System16ARender()
 {
-	if (!System16VideoEnable) {
+	if (!System16AVideoEnableDelayed) {
 		BurnTransferClear(System16PaletteEntries * 3); // BLACK
 		BurnTransferCopy(System16Palette);
 		return 0;

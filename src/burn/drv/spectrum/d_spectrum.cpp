@@ -16,7 +16,7 @@ static INT32 SpecMode = 0;
 #define SPEC_TAP	(1 << 0)
 #define SPEC_Z80	(1 << 1)
 #define SPEC_128K   (1 << 2)
-#define SPEC_PLUS2  (1 << 3)
+#define SPEC_PLUS2  (1 << 3) // +2a (Amstrad model)
 #define SPEC_INVES	(1 << 4) // Spanish clone (non-contended ula)
 #define SPEC_AY8910	(1 << 5)
 
@@ -168,6 +168,10 @@ static struct BurnDIPInfo SpecDIPList[]=
 {
 	DIP_OFFSET(0x43)
 
+	{0, 0xfe, 0   , 2   , "Hardware Version (48K)"	},
+	{0, 0x01, 0x80, 0x00, "Issue 2"					},
+	{0, 0x01, 0x80, 0x80, "Issue 3"					},
+
 	{0, 0xfe, 0   , 6   , "Joystick Config"			},
 	{0, 0x01, 0x0f, 0x00, "Kempston"				},
 	{0, 0x01, 0x0f, 0x01, "Sinclair Interface 2"	},
@@ -179,7 +183,12 @@ static struct BurnDIPInfo SpecDIPList[]=
 
 static struct BurnDIPInfo SpecDefaultDIPList[]=
 {
-	{0, 0xff, 0xff, 0x80, NULL						}, // Kempston
+	{0, 0xff, 0xff, 0x80, NULL						}, // Issue 3 + Kempston (Blinky's Scary School requires issue 3)
+};
+
+static struct BurnDIPInfo SpecIssue2DIPList[]=
+{
+	{0, 0xff, 0xff, 0x00, NULL						}, // Issue 2 + Kempston (Abu Simbel (English/Gremlin) requires issue 2)
 };
 
 static struct BurnDIPInfo SpecIntf2DIPList[]=
@@ -203,6 +212,7 @@ static struct BurnDIPInfo SpecCursorKeysDIPList[]=
 };
 
 STDDIPINFOEXT(Spec, SpecDefault, Spec)
+STDDIPINFOEXT(SpecIssue2, SpecIssue2, Spec)
 STDDIPINFOEXT(SpecIntf2, SpecIntf2, Spec)
 STDDIPINFOEXT(SpecQAOPM, SpecQAOPM, Spec)
 STDDIPINFOEXT(SpecQAOPSpace, SpecQAOPSpace, Spec)
@@ -524,7 +534,11 @@ static UINT8 read_keyboard(UINT16 address)
 		}
 	}
 
-	keytmp |= (ula_border & 0x10) ? 0xe0 : 0xa0;
+	if (SpecMode & SPEC_128K || SpecDips[0] & 0x80) {	// 128K or Issue 3
+		keytmp |= (ula_border & 0x10) ? 0xe0 : 0xa0;
+	} else {											// Issue 2
+		keytmp |= (ula_border & 0x18) ? 0xe0 : 0xa0;
+	}
 
 	return keytmp;
 }
@@ -1676,19 +1690,38 @@ struct BurnDriver BurnSpec720deg = {
 
 // Abu Simbel Profanation (Spanish) (48K)
 
-static struct BurnRomInfo SpecabusimprRomDesc[] = {
+static struct BurnRomInfo SpecabusimprdRomDesc[] = {
 	{ "Abu Simbel Profanation (1985)(Dinamic Software).tap", 46362, 0x7849893d, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specabusimprd, Specabusimprd, Spectrum)
+STD_ROM_FN(Specabusimprd)
+
+struct BurnDriver BurnSpecabusimprd = {
+	"spec_abusimprd", "spec_abusimpr", "spec_spectrum", NULL, "1985",
+	"Abu Simbel Profanation (Spanish) (48K)\0", NULL, "Dinamic Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecabusimprdRomInfo, SpecabusimprdRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Abu Simbel Profanation (English) (48K)
+
+static struct BurnRomInfo SpecabusimprRomDesc[] = {
+	{ "Abu Simbel Profanation (1987)(Gremlin Graphics Software)[re-release].tap", 47312, 0x0635946a, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specabusimpr, Specabusimpr, Spectrum)
 STD_ROM_FN(Specabusimpr)
 
 struct BurnDriver BurnSpecabusimpr = {
-	"spec_abusimpr", NULL, "spec_spectrum", NULL, "1985",
-	"Abu Simbel Profanation (Spanish) (48K)\0", NULL, "Dinamic Software", "ZX Spectrum",
+	"spec_abusimpr", NULL, "spec_spectrum", NULL, "1987",
+	"Abu Simbel Profanation (English) (48K)\0", NULL, "Gremlin Graphics", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
-	SpectrumGetZipName, SpecabusimprRomInfo, SpecabusimprRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecabusimprRomInfo, SpecabusimprRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIssue2DIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

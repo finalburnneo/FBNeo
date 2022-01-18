@@ -3,7 +3,6 @@
 
 // to do:
 //	fix rambo alt sets inputs
-//	master of weapon title screen is incorrect (only w/ffwd)
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -1640,19 +1639,9 @@ static UINT16 Rambo3LGScaleX(UINT16 x)
 	return scalerange(x, 0x0c, 0xf2, 0x7b80, 0x8480);
 }
 
-static UINT16 Rambo3LGScaleX2(UINT16 x)
-{
-	return scalerange(x, 0, 0xff, 0x0010, 0x0130);
-}
-
 static UINT16 Rambo3LGScaleY(UINT16 y)
 {
 	return scalerange(y, 0x3a, 0xef, 0x0100, 0x0640);
-}
-
-static UINT16 Rambo3LGScaleY2(UINT16 y)
-{
-	return scalerange(y, 0, 0xff, 0x0038, 0x00d7);
 }
 
 static void DrvMakeInputs()

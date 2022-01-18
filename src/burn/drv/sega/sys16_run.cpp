@@ -128,6 +128,7 @@ UINT32 System16BackupRamSize = 0;
 UINT32 System16BackupRam2Size = 0;
 
 bool System16HasGears = false;
+INT32 s16a_update_after_vblank = 0;
 
 UINT8 System16VideoControl;
 INT32 System16SoundLatch;
@@ -1039,7 +1040,7 @@ static INT32 System16MemIndex()
 		System16Roads        = Next; Next += 0x40000;
 	}
 	
-	System16Palette      = (UINT32*)Next; Next += System16PaletteEntries * 3 * sizeof(UINT32) + (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) ? (0x40 * sizeof(UINT32)) : 0);
+	System16Palette      = (UINT32*)Next; Next += System16PaletteEntries * 3 * sizeof(UINT32) + (0x42 * sizeof(UINT32));//(((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) ? (0x40 * sizeof(UINT32)) : 0);
 	
 	if (UseTempDraw) { pTempDraw = (UINT16*)Next; Next += (512 * 512 * sizeof(UINT16)); }
 	
@@ -1929,6 +1930,7 @@ INT32 System16Init()
 			SekMapMemory(System16Code          , 0x000000, 0x0fffff, MAP_FETCH);
 			SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
 			SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
+			SekMapMemory(System16TextRam       , 0x411000, 0x411fff, MAP_RAM); // fantzone wants mirror here
 			SekMapMemory(System16SpriteRam     , 0x440000, 0x4407ff, MAP_RAM);
 			SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, MAP_RAM);
 			SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
@@ -1967,9 +1969,10 @@ INT32 System16Init()
 		ppi8255_init(1);
 		ppi8255_set_write_ports(0, System16APPI0WritePortA, System16APPI0WritePortB, System16APPI0WritePortC);
 
-		BurnYM2151Init(4000000);
+		BurnYM2151InitBuffered(4000000, 1, NULL, 0);
 		BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
-		
+		BurnTimerAttachZet(4000000);
+
 		if (System167751ProgSize) {
 			N7751Init(0);
 			N7751Open(0);
@@ -2751,7 +2754,9 @@ INT32 System16Exit()
 		}
 #endif
 	}
-	
+
+	s16a_update_after_vblank = 0;
+
 	return 0;
 }
 
@@ -2782,8 +2787,6 @@ INT32 System16AFrame()
 	nCyclesTotal[3] = (8000000 / 12) / 60;
 	nSystem16CyclesDone[0] = nSystem16CyclesDone[1] = nSystem16CyclesDone[2] = nSystem16CyclesDone[3] = 0;
 
-	INT32 nSoundBufferPos = 0;
-
 	SekNewFrame();
 	ZetNewFrame();
 	I8039NewFrame(); // dac?
@@ -2809,12 +2812,9 @@ INT32 System16AFrame()
 		// Run Z80
 		nCurrentCPU = 1;
 		ZetOpen(0);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
+		CPU_RUN_TIMER(1);
 		ZetClose();
-		
+
 		if (System167751ProgSize) {
 			nCurrentCPU = 2;
 			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
@@ -2838,14 +2838,11 @@ INT32 System16AFrame()
 			}
 		}
 
-		if (pBurnSoundOut && i&1) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (i == 224) { // draw at vblank
+			if (System1668KEnable && !System16I8751RomNum) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+			if (Simulate8751) Simulate8751();
 
-			ZetOpen(0);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-			ZetClose();
+			if (pBurnDraw && s16a_update_after_vblank == 0) System16ARender();
 		}
 	}
 
@@ -2853,26 +2850,16 @@ INT32 System16AFrame()
 		N7751Close();
 	}
 
-	if (System1668KEnable && !System16I8751RomNum) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	SekClose();
-	
-	if (Simulate8751) Simulate8751();
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			ZetOpen(0);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			ZetClose();
-		}
-		
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		if (System167751ProgSize) DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
-	
-	if (pBurnDraw) System16ARender();
+
+	if (pBurnDraw && s16a_update_after_vblank == 1) System16ARender();
+
+	System16AVideoEnableDelayed = System16VideoEnable;
 
 	return 0;
 }

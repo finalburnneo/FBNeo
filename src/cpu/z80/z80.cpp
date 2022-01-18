@@ -3877,6 +3877,7 @@ void Z80InitContention(int is_on_type, void (*rastercallback)(int))
 	const char *default_pattern = "00000000";
 	const char *ula_pattern 	= "65432100";
 	const char *s128k_banks     = "1357";
+	const char *s128kpls2_banks = "4567";
 	m_raster_cb = (rastercallback) ? rastercallback : raster_dummy_callback;
 
 	memset(&m_scripts, 0, sizeof(m_scripts));
@@ -3887,6 +3888,14 @@ void Z80InitContention(int is_on_type, void (*rastercallback)(int))
 			m_ula_variant = ULA_VARIANT_SINCLAIR;
 			m_ula_delay_sequence = ula_pattern;
 			m_contended_banks = s128k_banks; // 128k
+			m_cycles_contention_start = 14361; //128k (48k is 14335)
+			m_cycles_per_line = 228;
+			m_cycles_per_frame = 70908; //228*311
+			break;
+		case 1282: // +2
+			m_ula_variant = ULA_VARIANT_AMSTRAD;
+			m_ula_delay_sequence = ula_pattern;
+			m_contended_banks = s128kpls2_banks; // 128k
 			m_cycles_contention_start = 14361; //128k (48k is 14335)
 			m_cycles_per_line = 228;
 			m_cycles_per_frame = 70908; //228*311

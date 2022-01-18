@@ -214,6 +214,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="aceofaces" romof="msx">
+		<comment>Keys from 1 to 4 to change view - 'M' to display map</comment>
+		<description>Ace of Aces (Euro)</description>
+		<year>1986</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Ace of Aces (1986)(US Gold)[RUN'CAS-'].cas" size="60882" crc="78b80276"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="actman" romof="msx">
 		<description>Actman (Jpn)</description>
 		<year>1985</year>
@@ -609,6 +621,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="amida" romof="msx">
+		<description>Amida (Jpn)</description>
+		<year>1983</year>
+		<manufacturer>Victor JVC</manufacturer>
+		<rom name="Amida (Jpn)(1983)(JVC).rom" size="16384" crc="1afdfbc3"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="amomundo" romof="msx">
 		<description>Amo del Mundo (Spanish)</description>
 		<year>1990</year>
@@ -884,6 +907,40 @@
 		<year>198?</year>
 		<manufacturer>Zemina</manufacturer>
 		<rom name="arkanoid.rom" size="32768" crc="b62a0973"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="arkos1" romof="msx">
+		<description>Arkos - Part I (Spanish)</description>
+		<year>1988</year>
+		<manufacturer>Zigurat Software</manufacturer>
+		<rom name="Arkos Part 1 ES (1988)(Zigurat Software)[RUN'CAS-'].cas" size="55671" crc="e81e5cd3"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="arkos2" cloneof="arkos1" romof="arkos1">
+		<description>Arkos - Part II (Spanish)</description>
+		<year>1988</year>
+		<manufacturer>Zigurat Software</manufacturer>
+		<rom name="Arkos Part 2 ES (1988)(Zigurat Software)[RUN'CAS-'].cas" size="55671" crc="69a6781f"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="arkos3" cloneof="arkos1" romof="arkos1">
+		<comment>Password: 35098</comment>
+		<description>Arkos - Part III (Spanish)</description>
+		<year>1988</year>
+		<manufacturer>Zigurat Software</manufacturer>
+		<rom name="Arkos Part 3 ES (1988)(Zigurat Software)[RUN'CAS-'].cas" size="55671" crc="761481e5"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -2931,6 +2988,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="champgn" romof="msx">
+		<description>Champions Grand National (Jpn)</description>
+		<year>1984</year>
+		<manufacturer>Pony Canyon</manufacturer>
+		<rom name="Champions Grand National (Jpn)(1984)(Pony Canyon).rom" size="32768" crc="e6ba93c4"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="cloderun" romof="msx">
 		<description>Championship Lode Runner (Jpn)</description>
 		<year>1985</year>
@@ -4611,17 +4679,6 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dngnhntr" romof="msx">
-		<description>Dungeon Hunter (Jpn)</description>
-		<year>1989</year>
-		<manufacturer>ASCII</manufacturer>
-		<rom name="rp231026d" size="131072" crc="2526e568"/>
-		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
-		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
-		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
-		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="dunkshot" romof="msx">
 		<description>Dunk Shot (Jpn)</description>
 		<year>1986</year>
@@ -4818,6 +4875,17 @@
 		<year>1985</year>
 		<manufacturer>Bothtec</manufacturer>
 		<rom name="Eggy (1985)(Bothtec).rom" size="32768" crc="15149c0a"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="elcid" romof="msx">
+		<description>El Cid (Spanish)</description>
+		<year>1987</year>
+		<manufacturer>Dro Soft</manufacturer>
+		<rom name="El Cid ES (1987)(Dro Soft)[RUN'CAS-'].cas" size="38535" crc="22b46739"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -6114,7 +6182,19 @@
 		<description>Golvellius (Jpn)</description>
 		<year>1987</year>
 		<manufacturer>Compile</manufacturer>
-		<rom name="compile ia-8701" size="131072" crc="5eac55df"/>
+		<rom name="Golvellius (1987)(Compile).rom" size="131072" crc="5eac55df"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="golvellen" cloneof="golvell" romof="golvell">
+		<comment>Hack</comment>
+		<description>Golvellius (T-Eng)</description>
+		<year>1987-2008</year>
+		<manufacturer>Novalia Spirit</manufacturer>
+		<rom name="Golvellius T-Eng (2008)(Compile).rom" size="131072" crc="67cbd6d1"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7771,6 +7851,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="kaerushoot" romof="msx">
+		<description>Kaeru Shooter (Jpn)</description>
+		<year>1984</year>
+		<manufacturer>Hudson Soft</manufacturer>
+		<rom name="Kaeru Shooter (Jpn)(1984)(Hudson Soft).rom" size="16384" crc="253192ff"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="legkage" romof="msx">
 		<description>Kage no Densetsu - The Legend of Kage (Jpn)</description>
 		<year>1986</year>
@@ -8931,6 +9022,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="macadam" romof="msx">
+		<description>Macadam Bumper (Euro)</description>
+		<year>1985</year>
+		<manufacturer>Ere Informatique</manufacturer>
+		<rom name="Macadam Bumper (1985)(Ere Informatique).rom" size="65536" crc="06abd9ff"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mgunjoe" romof="msx">
 		<description>Machinegun Joe vs The Mafia (Jpn)</description>
 		<year>1984</year>
@@ -9599,9 +9701,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="mikie" romof="msx">
-		<description>Mikie. Shinnyuushain Tooru-Kun.</description>
-		<year>1984</year>
-		<manufacturer>Konami</manufacturer>
+		<description>Mikie - Shinnyuushain Tooru-Kun (Jpn)</description>
+		<year>1985</year>
+		<manufacturer>Konami - Sega</manufacturer>
 		<rom name="mikie.rom" size="32768" crc="f4567a08"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -9644,11 +9746,46 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="missilecmd" romof="msx">
+		<description>Missile Command (Euro)</description>
+		<year>1988</year>
+		<manufacturer>Eurosoft</manufacturer>
+		<rom name="Missile Command (1988)(Eurosoft).rom" size="65536" crc="0653b299"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mitsumgt" romof="msx">
 		<description>Mitsume Ga Tooru - The Three-Eyed One Comes Here (Jpn)</description>
 		<year>1989</year>
 		<manufacturer>Natsume</manufacturer>
 		<rom name="mitsumega toohru - three-eyed one comes here, the (japan).rom" size="131072" crc="4faccae0"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mitsumgten" cloneof="mitsumgt" romof="mitsumgt">
+		<comment>Hack</comment>
+		<description>Mitsume Ga Tooru - The Three-Eyed One Comes Here (T-Eng)</description>
+		<year>2021</year>
+		<manufacturer>Natsume</manufacturer>
+		<rom name="Mitsumega Toohru - The Three-Eyed One Comes Here T-Eng (1989-2021).rom" size="172032" crc="efe1b953"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mitsumgtru" cloneof="mitsumgt" romof="mitsumgt">
+		<comment>Hack</comment>
+		<description>Mitsume Ga Tooru - The Three-Eyed One Comes Here (T-Rus)</description>
+		<year>2021</year>
+		<manufacturer>Natsume</manufacturer>
+		<rom name="Mitsumega Toohru - The Three-Eyed One Comes Here T-Rus (1989-2021).rom" size="172032" crc="bd8c75d2"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -9668,7 +9805,7 @@
 	</game>
 	<game name="moaihihok" cloneof="moaihiho" romof="moaihiho">
 		<description>Moai no Hihou (Kor)</description>
-		<year>1986?</year>
+		<year>1987</year>
 		<manufacturer>Static Soft</manufacturer>
 		<rom name="moai no hibou (japan) (alt 1).rom" size="32768" crc="0b3061fc"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
@@ -9680,7 +9817,7 @@
 	<game name="suthir" romof="msx">
 		<description>Mobile Planet Suthirus - Approach from the Westgate (Jpn)</description>
 		<year>1986</year>
-		<manufacturer>HAL Kenkyuujo</manufacturer>
+		<manufacturer>HAL Laboratory</manufacturer>
 		<rom name="mobile planet suthirus - approach from the westgate (japan).rom" size="32768" crc="eba19259"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -9892,7 +10029,7 @@
 	</game>
 	<game name="mpatrolk" cloneof="mpatrol" romof="mpatrol">
 		<description>Moon Patrol (Kor)</description>
-		<year>19??</year>
+		<year>1985</year>
 		<manufacturer>Prosoft</manufacturer>
 		<rom name="moon patrol (1984)(irem)[cr prosoft].rom" size="16384" crc="d4151ce7"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
@@ -12782,6 +12919,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="safarix" romof="msx">
+		<description>Safari X (Jpn)</description>
+		<year>1985</year>
+		<manufacturer>Policy</manufacturer>
+		<rom name="Safari-X (1985)(Policy).rom" size="16384" crc="0d940900"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="smzoom" romof="msx">
 		<comment>Homebrew</comment>
 		<description>Saimazoom (HB)</description>
@@ -13384,7 +13532,7 @@
 	</game>
 	<game name="snakeit" romof="msx">
 		<description>Snake It (Euro)</description>
-		<year>1986?</year>
+		<year>1986</year>
 		<manufacturer>Eaglesoft</manufacturer>
 		<rom name="snake it (europe).rom" size="32768" crc="4a44bf23"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
@@ -13474,7 +13622,7 @@
 	</game>
 	<game name="sokobank" cloneof="sokoban" romof="sokoban">
 		<description>Soukoban (Kor)</description>
-		<year>1984?</year>
+		<year>198?</year>
 		<manufacturer>Qnix</manufacturer>
 		<rom name="soukoban (1984)(qnix).rom" size="16384" crc="ebb55d7f"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
@@ -13567,7 +13715,7 @@
 	<game name="spacmaze" romof="msx">
 		<description>Space Maze Attack (Jpn)</description>
 		<year>1983</year>
-		<manufacturer>HAL Kenkyuujo</manufacturer>
+		<manufacturer>HAL Laboratory</manufacturer>
 		<rom name="space maze attack (japan).rom" size="8192" crc="4a45cbc0"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -13578,7 +13726,7 @@
 	<game name="spacmazeb" cloneof="spacmaze" romof="spacmaze">
 		<description>Space Maze Attack (Jpn, Alt 2)</description>
 		<year>1983</year>
-		<manufacturer>HAL Kenkyuujo</manufacturer>
+		<manufacturer>HAL Laboratory</manufacturer>
 		<rom name="space maze attack (japan) (alt 2).rom" size="16384" crc="1932baf6"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -13589,7 +13737,7 @@
 	<game name="spacmazea" cloneof="spacmaze" romof="spacmaze">
 		<description>Space Maze Attack (Jpn, Alt)</description>
 		<year>1983</year>
-		<manufacturer>HAL Kenkyuujo</manufacturer>
+		<manufacturer>HAL Laboratory</manufacturer>
 		<rom name="space maze attack (japan) (alt 1).rom" size="8192" crc="d6eadaa2"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -13623,7 +13771,7 @@
 	<game name="spacetrb" romof="msx">
 		<description>Space Trouble (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>HAL Kenkyuujo</manufacturer>
+		<manufacturer>HAL Laboratory</manufacturer>
 		<rom name="space trouble (japan).rom" size="8192" crc="26119f0a"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -15204,6 +15352,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="timecurb" romof="msx">
+		<description>Time Curb (Euro)</description>
+		<year>1986</year>
+		<manufacturer>Aackosoft</manufacturer>
+		<rom name="Time Curb (1986)(Aackosoft)[RUN'CAS-'].cas" size="60520" crc="74f88d6c"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="timeplt" romof="msx">
 		<description>Time Pilot (Jpn)</description>
 		<year>1983</year>
@@ -15459,6 +15618,17 @@
 		<year>1986</year>
 		<manufacturer>Sein Soft</manufacturer>
 		<rom name="tritorn (japan).rom" size="32768" crc="c0a81a48"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tuareg" romof="msx">
+		<description>Tuareg (Spanish)</description>
+		<year>1988</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Tuareg ES (1988)(Topo Soft)[RUN'CAS-'].cas" size="55060" crc="16d6cbc5"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -15920,6 +16090,17 @@
 		<year>1984</year>
 		<manufacturer>Colpax?</manufacturer>
 		<rom name="water driver (japan).rom" size="16384" crc="d5af9e82"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="waytiger" romof="msx">
+		<description>Way of the Tiger, The (Euro)</description>
+		<year>1986</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
+		<rom name="Way of the Tiger, The (1986)(Gremlin Graphics).rom" size="385024" crc="884ce9c9"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -16644,6 +16825,17 @@
 		<year>198?</year>
 		<manufacturer>Prosoft</manufacturer>
 		<rom name="zoom 909 (1985)(sega)[cr prosoft].rom" size="32768" crc="34b186ad"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zoot" romof="msx">
+		<description>Zoot (Euro)</description>
+		<year>1986</year>
+		<manufacturer>Bug-Byte Software</manufacturer>
+		<rom name="Zoot (1986)(Bug-Byte Software)[RUN'CAS-'].cas" size="49462" crc="ac444ba8"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

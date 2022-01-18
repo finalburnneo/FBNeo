@@ -89,6 +89,12 @@ mingw471: FORCE
 
 mingw510: FORCE
 	@$(MAKE) -s -f makefile.mingw GCC510=1
+
+# MinGW w/gcc 5.1.x to gcc 11.x (present)
+# note: BORKYCRT fixes swprintf() which MSYS2 broke some time 2021
+mingw: FORCE
+	@$(MAKE) -s -f makefile.mingw GCC510=1 BORKYCRT=1
+
 #cross compile in linux only 32 bit for now
 mingwcc: FORCE
 	@$(MAKE) -s -f makefile.mingw GCC510=1 CC=i686-w64-mingw32-gcc CXX=i686-w64-mingw32-g++-win32  WINDRES=i686-w64-mingw32-windres

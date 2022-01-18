@@ -247,9 +247,9 @@ int h6280Run(int cycles)
 
 	/* Execute instructions */
 	do
-    {
-    	if ((h6280.ppc.w.l ^ h6280.pc.w.l) & 0xe000)
-    		CHANGE_PC;
+	{
+		if ((h6280.ppc.w.l ^ h6280.pc.w.l) & 0xe000)
+			CHANGE_PC;
 		h6280.ppc = h6280.pc;
 
 //		debugger_instruction_hook(Machine, PCW);

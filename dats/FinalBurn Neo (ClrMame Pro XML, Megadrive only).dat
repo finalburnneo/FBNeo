@@ -8933,9 +8933,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="junker" cloneof="outr2019" romof="outr2019">
+		<comment>Prototype</comment>
 		<description>Junker's High (Jpn, Prototype)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<year>1992</year>
+		<manufacturer>Sims Co.</manufacturer>
 		<rom name="junker's high (jpn) (beta) (bad dump).bin" size="1048576" crc="23534949"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10442,9 +10443,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="megamans" cloneof="megaman" romof="megaman">
+		<comment>Hack</comment>
 		<description>Mega Man - The Wily Wars (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Capcom</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="mega man - the wily wars (hack, spanish).bin" size="2097152" crc="c6c7f5b1"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10510,9 +10512,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="megaswivs" cloneof="megaswiv" romof="megaswiv">
+		<comment>Hack</comment>
 		<description>Mega SWIV (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Time Warner Interactive</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="mega swiv (hack, spanish).bin" size="1048576" crc="70f2d768"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10526,14 +10529,16 @@
 		<driver status="good"/>
 	</game>
 	<game name="megaturrs" cloneof="megaturr" romof="megaturr">
+		<comment>Hack</comment>
 		<description>Mega Turrican (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Data East</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="mega turrican (hack, spanish).bin" size="1048576" crc="b2901f8e"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="megaturrp" cloneof="megaturr" romof="megaturr">
+		<comment>Prototype</comment>
 		<description>Mega Turrican (Prototype, 19930518)</description>
 		<year>1993</year>
 		<manufacturer>Factor 5</manufacturer>
@@ -10660,6 +10665,15 @@
 		<year>2019</year>
 		<manufacturer>T-Arts Studio</manufacturer>
 		<rom name="metal blast 2277 (rev01-2019)(t-arts studio).bin" size="2647322" crc="dfd4fe49"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="metaldragon">
+		<comment>Homebrew</comment>
+		<description>Metal Dragon (HB)</description>
+		<year>2021-22</year>
+		<manufacturer>Kai Magazine Games</manufacturer>
+		<rom name="Metal Dragon (2021)(Kai Magazine Software).bin" size="4194304" crc="96cb4ef2"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -12384,6 +12398,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp16" cloneof="nhlas" romof="nhlas">
+		<comment>Prototype</comment>
 		<description>NHL All-Star Hockey '95 (Prototype, 19940914)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12392,6 +12407,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp15" cloneof="nhlas" romof="nhlas">
+		<comment>Prototype</comment>
 		<description>NHL All-Star Hockey '95 (Prototype, 19940929)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12400,6 +12416,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp14" cloneof="nhlas" romof="nhlas">
+		<comment>Prototype</comment>
 		<description>NHL All-Star Hockey '95 (Prototype, 19941001)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12408,6 +12425,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp13" cloneof="nhlas" romof="nhlas">
+		<comment>Prototype</comment>
 		<description>NHL All-Star Hockey '95 (Prototype, 19941021)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12416,6 +12434,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp12" cloneof="nhlas" romof="nhlas">
+		<comment>Prototype</comment>
 		<description>NHL All-Star Hockey '95 (Prototype, 19941107)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12424,6 +12443,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp11" cloneof="nhlas" romof="nhlas">
+		<comment>Prototype</comment>
 		<description>NHL All-Star Hockey '95 (Prototype, 19941109)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12432,6 +12452,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp10" cloneof="nhlas" romof="nhlas">
+		<comment>Prototype</comment>
 		<description>NHL All-Star Hockey '95 (Prototype, 19941119)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12440,6 +12461,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp09" cloneof="nhlas" romof="nhlas">
+		<comment>Prototype</comment>
 		<description>NHL All-Star Hockey '95 (Prototype, 19941121)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12448,6 +12470,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp08" cloneof="nhlas" romof="nhlas">
+		<comment>Prototype</comment>
 		<description>NHL All-Star Hockey '95 (Prototype, 19941122)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12456,6 +12479,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp07" cloneof="nhlas" romof="nhlas">
+		<comment>Prototype</comment>
 		<description>NHL All-Star Hockey '95 (Prototype, 19941123)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12464,6 +12488,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp06" cloneof="nhlas" romof="nhlas">
+		<comment>Prototype</comment>
 		<description>NHL All-Star Hockey '95 (Prototype, 19941127)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12472,6 +12497,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp05" cloneof="nhlas" romof="nhlas">
+		<comment>Prototype</comment>
 		<description>NHL All-Star Hockey '95 (Prototype, 19941128)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12480,6 +12506,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp04" cloneof="nhlas" romof="nhlas">
+		<comment>Prototype</comment>
 		<description>NHL All-Star Hockey '95 (Prototype, 19941129)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12488,6 +12515,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp02" cloneof="nhlas" romof="nhlas">
+		<comment>Prototype</comment>
 		<description>NHL All-Star Hockey '95 (Prototype, 19941201)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12496,6 +12524,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp03" cloneof="nhlas" romof="nhlas">
+		<comment>Prototype</comment>
 		<description>NHL All-Star Hockey '95 (Prototype, 19941201-B)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12504,6 +12533,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlasp01" cloneof="nhlas" romof="nhlas">
+		<comment>Prototype</comment>
 		<description>NHL All-Star Hockey '95 (Prototype, 19941202)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12528,8 +12558,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="nhlpa2k3" cloneof="nhl98" romof="nhl98">
+		<comment>Hack</comment>
 		<description>NHLPA 2003 (Rus)</description>
-		<year>199?</year>
+		<year>200?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="nhlpa 2003 (unl).bin" size="2097152" crc="4591571b"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
@@ -12584,6 +12615,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ncircp" cloneof="ncirc" romof="ncirc">
+		<comment>Prototype</comment>
 		<description>Nightmare Circus (Prototype)</description>
 		<year>199?</year>
 		<manufacturer>Sega</manufacturer>
@@ -12770,6 +12802,85 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ooze">
+		<description>Ooze, The (Euro)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="ooze, the (euro).bin" size="1048576" crc="e16b102c"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="oozep01" cloneof="ooze" romof="ooze">
+		<comment>Prototype</comment>
+		<description>Ooze, The (Euro, Prototype, 19950728)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="ooze, the (euro) (prototype - jul 28, 1995).bin" size="1048576" crc="7cf868e7"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="oozeju" cloneof="ooze" romof="ooze">
+		<description>Ooze, The (Jpn, USA)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="ooze, the (usa, jpn).bin" size="1048576" crc="1c0dd42f"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="oozep05" cloneof="ooze" romof="ooze">
+		<comment>Prototype</comment>
+		<description>Ooze, The (Prototype 104, 19950622)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="ooze, the (prototype 104 - jun 22, 1995).bin" size="966312" crc="ce1f139f"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="oozep04" cloneof="ooze" romof="ooze">
+		<comment>Prototype</comment>
+		<description>Ooze, The (Prototype 112, 19950626)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="ooze, the (prototype 112 - jun 26, 1995).bin" size="968048" crc="70419442"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="oozep07" cloneof="ooze" romof="ooze">
+		<comment>Prototype</comment>
+		<description>Ooze, The (Prototype, 19950615)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="ooze, the (prototype - jun 15, 1995).bin" size="931278" crc="921106fd"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="oozep06" cloneof="ooze" romof="ooze">
+		<comment>Prototype</comment>
+		<description>Ooze, The (Prototype, 19950619)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="ooze, the (prototype - jun 19, 1995).bin" size="1048576" crc="fa39281d"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="oozep02" cloneof="ooze" romof="ooze">
+		<comment>Prototype</comment>
+		<description>Ooze, The (Prototype, 19950629)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="ooze, the (prototype - jun 29, 1995).bin" size="1048576" crc="1776763b"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="oozep03" cloneof="ooze" romof="ooze">
+		<comment>Prototype</comment>
+		<description>Ooze, The (Prototype, 19950629-B)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="ooze, the (prototype - jun 29, 1995 - b).bin" size="975958" crc="ca93e93b"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="opeurope">
 		<description>Operation Europe - Path to Victory 1939-45 (USA)</description>
 		<year>1994</year>
@@ -12827,17 +12938,19 @@
 		<driver status="good"/>
 	</game>
 	<game name="outrunac" cloneof="outrun" romof="outrun">
+		<comment>Hack</comment>
 		<description>OutRun (Hack, Arcade Colors v2.1)</description>
 		<year>2018</year>
-		<manufacturer>Sega - Tor Landeel</manufacturer>
+		<manufacturer>Tor Landeel</manufacturer>
 		<rom name="outrun (arcade colors)(v2.1).bin" size="1048576" crc="921e6107"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="outruns" cloneof="outrun" romof="outrun">
+		<comment>Hack</comment>
 		<description>Outrun (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="outrun (hack, spanish).bin" size="1048576" crc="85774b3f"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -12859,9 +12972,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="outr2019s" cloneof="outr2019" romof="outr2019">
+		<comment>Hack</comment>
 		<description>Outrun 2019 (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="outrun 2019 (hack, spanish).bin" size="1048576" crc="1a831f41"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -12883,6 +12997,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="outr2019up" cloneof="outr2019" romof="outr2019">
+		<comment>Prototype</comment>
 		<description>OutRun 2019 (USA, Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
@@ -12891,9 +13006,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="orunnerss" cloneof="orunners" romof="orunners">
+		<comment>Hack</comment>
 		<description>OutRunners (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="outrunners (hack, spanish).bin" size="2097152" crc="3a0b4aba"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -12907,9 +13023,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="orunnershr" cloneof="orunners" romof="orunners">
+		<comment>Hack</comment>
 		<description>OutRunners (USA) (Hack, Restoration)</description>
 		<year>2020</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Diogo Ribeiro</manufacturer>
 		<rom name="outrunners (usa) (Hack, Restoration).bin" size="2097152" crc="e280aada"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -12986,18 +13103,45 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="pagemstr">
+		<description>Pagemaster, The (Euro)</description>
+		<year>1994</year>
+		<manufacturer>Fox Interactive</manufacturer>
+		<rom name="pagemaster, the (euro).bin" size="2097152" crc="79a180e2"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pagemstru" cloneof="pagemstr" romof="pagemstr">
+		<description>Pagemaster, The (USA)</description>
+		<year>1994</year>
+		<manufacturer>Fox Interactive</manufacturer>
+		<rom name="pagemaster, the (usa).bin" size="2097152" crc="75a96d4e"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pagemstrup" cloneof="pagemstr" romof="pagemstr">
+		<comment>Prototype</comment>
+		<description>Pagemaster, The (USA, Prototype)</description>
+		<year>1994</year>
+		<manufacturer>Fox Interactive</manufacturer>
+		<rom name="pagemaster, the (usa) (beta).bin" size="2097152" crc="29895e3d"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="pcottone" cloneof="pcotton" romof="pcotton">
+		<comment>Hack</comment>
 		<description>Panorama Cotton (Hack, English)</description>
 		<year>2019</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Malias</manufacturer>
 		<rom name="panorama cotton (Hack, English).bin" size="2621440" crc="ed7d8f14"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="pcottons" cloneof="pcotton" romof="pcotton">
+		<comment>Hack</comment>
 		<description>Panorama Cotton (Hack, Spanish)</description>
 		<year>2020</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>m0sca</manufacturer>
 		<rom name="panorama cotton (hack, spanish).bin" size="2621440" crc="7affb73a"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -19317,7 +19461,7 @@
 		<comment>Hack</comment>
 		<description>Teenage Mutant Ninja Turtles - The Hyperstone Heist (Hack, Enhanced Colors v2.0)</description>
 		<year>2015</year>
-		<manufacturer>Konami - Pyron</manufacturer>
+		<manufacturer>Pyron</manufacturer>
 		<rom name="teenage mutant ninja turtles - the hyperstone heist (enhanced colors v2.0).md" size="1048576" crc="3dd042f9"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -20015,78 +20159,6 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ooze">
-		<description>The Ooze (Euro)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="ooze, the (euro).bin" size="1048576" crc="e16b102c"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="oozep01" cloneof="ooze" romof="ooze">
-		<description>The Ooze (Euro, Prototype, 19950728)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="ooze, the (euro) (prototype - jul 28, 1995).bin" size="1048576" crc="7cf868e7"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="oozeju" cloneof="ooze" romof="ooze">
-		<description>The Ooze (Jpn, USA)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="ooze, the (usa, jpn).bin" size="1048576" crc="1c0dd42f"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="oozep05" cloneof="ooze" romof="ooze">
-		<description>The Ooze (Prototype 104, 19950622)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="ooze, the (prototype 104 - jun 22, 1995).bin" size="966312" crc="ce1f139f"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="oozep04" cloneof="ooze" romof="ooze">
-		<description>The Ooze (Prototype 112, 19950626)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="ooze, the (prototype 112 - jun 26, 1995).bin" size="968048" crc="70419442"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="oozep07" cloneof="ooze" romof="ooze">
-		<description>The Ooze (Prototype, 19950615)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="ooze, the (prototype - jun 15, 1995).bin" size="931278" crc="921106fd"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="oozep06" cloneof="ooze" romof="ooze">
-		<description>The Ooze (Prototype, 19950619)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="ooze, the (prototype - jun 19, 1995).bin" size="1048576" crc="fa39281d"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="oozep02" cloneof="ooze" romof="ooze">
-		<description>The Ooze (Prototype, 19950629)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="ooze, the (prototype - jun 29, 1995).bin" size="1048576" crc="1776763b"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="oozep03" cloneof="ooze" romof="ooze">
-		<description>The Ooze (Prototype, 19950629-B)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="ooze, the (prototype - jun 29, 1995 - b).bin" size="975958" crc="ca93e93b"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="ottifant">
 		<description>The Ottifants (Euro)</description>
 		<year>1993</year>
@@ -20101,30 +20173,6 @@
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ottifants, the (germany) (beta).bin" size="1048576" crc="c6e3dd23"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="pagemstr">
-		<description>The Pagemaster (Euro)</description>
-		<year>1994</year>
-		<manufacturer>Fox Interactive</manufacturer>
-		<rom name="pagemaster, the (euro).bin" size="2097152" crc="79a180e2"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="pagemstru" cloneof="pagemstr" romof="pagemstr">
-		<description>The Pagemaster (USA)</description>
-		<year>1994</year>
-		<manufacturer>Fox Interactive</manufacturer>
-		<rom name="pagemaster, the (usa).bin" size="2097152" crc="75a96d4e"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="pagemstrup" cloneof="pagemstr" romof="pagemstr">
-		<description>The Pagemaster (USA, Prototype)</description>
-		<year>1994</year>
-		<manufacturer>Fox Interactive</manufacturer>
-		<rom name="pagemaster, the (usa) (beta).bin" size="2097152" crc="29895e3d"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -21221,7 +21269,7 @@
 		<comment>Hack</comment>
 		<description>Turbo OutRun (Hack, Color Improvement)</description>
 		<year>2020</year>
-		<manufacturer>Sega - Dolsilwa</manufacturer>
+		<manufacturer>Dolsilwa</manufacturer>
 		<rom name="turbo outrun (color hack).md" size="524288" crc="8884c73a"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -21235,6 +21283,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="toutrunp" cloneof="toutrun" romof="toutrun">
+		<comment>Prototype</comment>
 		<description>Turbo OutRun (Prototype, 19911209)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>

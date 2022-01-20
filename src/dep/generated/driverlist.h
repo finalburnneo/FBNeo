@@ -9012,6 +9012,7 @@ DRV		BurnDrvMetalbj;
 DRV		BurnDrvMetalb;
 DRV		BurnDrvmd_mb2277;
 DRV		BurnDrvMetlclsh;
+DRV		BurnDrvmd_metaldragon;
 DRV		BurnDrvmd_metalfng;
 DRV		BurnDrvnes_metalfighter;
 DRV		BurnDrvnes_metalforce;
@@ -10452,6 +10453,15 @@ DRV		BurnDrvnes_onyankotown;
 DRV		BurnDrvOoparts;
 DRV		BurnSpecOoze;
 DRV		BurnDrvnes_oozerdx;
+DRV		BurnDrvmd_ooze;
+DRV		BurnDrvmd_oozep01;
+DRV		BurnDrvmd_oozeju;
+DRV		BurnDrvmd_oozep05;
+DRV		BurnDrvmd_oozep04;
+DRV		BurnDrvmd_oozep07;
+DRV		BurnDrvmd_oozep06;
+DRV		BurnDrvmd_oozep02;
+DRV		BurnDrvmd_oozep03;
 DRV		BurnDrvCoozumou;
 DRV		BurnDrvsms_opaopa;
 DRV		BurnDrvOpaopa;
@@ -10693,6 +10703,9 @@ DRV		BurnDrvmd_paddlegnk;
 DRV		BurnDrvmd_paddle;
 DRV		BurnDrvPaddlema;
 DRV		BurnDrvSamSho4k;
+DRV		BurnDrvmd_pagemstr;
+DRV		BurnDrvmd_pagemstru;
+DRV		BurnDrvmd_pagemstrup;
 DRV		BurnDrvMSX_paipanic;
 DRV		BurnDrvpaintrlr;
 DRV		BurnSpecPb2048p1;
@@ -15963,15 +15976,6 @@ DRV		BurnDrvNinjawu;
 DRV		BurnDrvNinjaw1;
 DRV		BurnDrvNinjaw;
 DRV		BurnDrvpce_ninjawar;
-DRV		BurnDrvmd_ooze;
-DRV		BurnDrvmd_oozep01;
-DRV		BurnDrvmd_oozeju;
-DRV		BurnDrvmd_oozep05;
-DRV		BurnDrvmd_oozep04;
-DRV		BurnDrvmd_oozep07;
-DRV		BurnDrvmd_oozep06;
-DRV		BurnDrvmd_oozep02;
-DRV		BurnDrvmd_oozep03;
 DRV		BurnDrvgg_ottifant;
 DRV		BurnDrvmd_ottifant;
 DRV		BurnDrvsms_ottifant;
@@ -15980,9 +15984,6 @@ DRV		BurnDrvOutfxiesj;
 DRV		BurnDrvOutfxiesja;
 DRV		BurnDrvOutfxiesa;
 DRV		BurnDrvOutfxies;
-DRV		BurnDrvmd_pagemstr;
-DRV		BurnDrvmd_pagemstru;
-DRV		BurnDrvmd_pagemstrup;
 DRV		BurnDrvPercuss;
 DRV		BurnDrvmd_piratedw1;
 DRV		BurnDrvmd_piratedws;
@@ -27195,6 +27196,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMetalb,				// Metal Black (World)
 	&BurnDrvmd_mb2277,			// Metal Blast 2277 (HB)
 	&BurnDrvMetlclsh,			// Metal Clash (Japan)
+	&BurnDrvmd_metaldragon,		// Metal Dragon (HB)
 	&BurnDrvmd_metalfng,		// Metal Fangs (Jpn)
 	&BurnDrvnes_metalfighter,	// Metal Fighter (Asia) (Sachen) (Unl)
 	&BurnDrvnes_metalforce,		// Metal Force (Korea) (Unl)
@@ -28635,6 +28637,15 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvOoparts,			// OOPArts (prototype, joystick hack)
 	&BurnSpecOoze,				// Ooze (128K) (HB)
 	&BurnDrvnes_oozerdx,		// Ooze Redux (HB)
+	&BurnDrvmd_ooze,			// Ooze, The (Euro)
+	&BurnDrvmd_oozep01,			// Ooze, The (Euro, Prototype, 19950728)
+	&BurnDrvmd_oozeju,			// Ooze, The (Jpn, USA)
+	&BurnDrvmd_oozep05,			// Ooze, The (Prototype 104, 19950622)
+	&BurnDrvmd_oozep04,			// Ooze, The (Prototype 112, 19950626)
+	&BurnDrvmd_oozep07,			// Ooze, The (Prototype, 19950615)
+	&BurnDrvmd_oozep06,			// Ooze, The (Prototype, 19950619)
+	&BurnDrvmd_oozep02,			// Ooze, The (Prototype, 19950629)
+	&BurnDrvmd_oozep03,			// Ooze, The (Prototype, 19950629-B)
 	&BurnDrvCoozumou,			// Oozumou - The Grand Sumo (DECO Cassette) (Japan)
 	&BurnDrvsms_opaopa,			// Opa Opa (Jpn)
 	&BurnDrvOpaopa,				// Opa Opa (MC-8123, 317-0042)
@@ -28876,6 +28887,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_paddle,			// Paddle Fighter (Jpn, SegaNet)
 	&BurnDrvPaddlema,			// Paddle Mania
 	&BurnDrvSamSho4k,			// Pae Wang Jeon Seol / Legend of a Warrior (Korean censored Samurai Shodown IV)
+	&BurnDrvmd_pagemstr,		// Pagemaster, The (Euro)
+	&BurnDrvmd_pagemstru,		// Pagemaster, The (USA)
+	&BurnDrvmd_pagemstrup,		// Pagemaster, The (USA, Prototype)
 	&BurnDrvMSX_paipanic,		// Pai Panic (Jpn)
 	&BurnDrvpaintrlr,			// Paint Roller (bootleg of Crush Roller)
 	&BurnSpecPb2048p1,			// PaintBall-2048 - 1 Player Version (128K) (HB)
@@ -34146,15 +34160,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvNinjaw1,			// The Ninja Warriors (World, earlier version)
 	&BurnDrvNinjaw,				// The Ninja Warriors (World, later version)
 	&BurnDrvpce_ninjawar,		// The Ninja Warriors
-	&BurnDrvmd_ooze,			// The Ooze (Euro)
-	&BurnDrvmd_oozep01,			// The Ooze (Euro, Prototype, 19950728)
-	&BurnDrvmd_oozeju,			// The Ooze (Jpn, USA)
-	&BurnDrvmd_oozep05,			// The Ooze (Prototype 104, 19950622)
-	&BurnDrvmd_oozep04,			// The Ooze (Prototype 112, 19950626)
-	&BurnDrvmd_oozep07,			// The Ooze (Prototype, 19950615)
-	&BurnDrvmd_oozep06,			// The Ooze (Prototype, 19950619)
-	&BurnDrvmd_oozep02,			// The Ooze (Prototype, 19950629)
-	&BurnDrvmd_oozep03,			// The Ooze (Prototype, 19950629-B)
 	&BurnDrvgg_ottifant,		// The Ottifants (Euro)
 	&BurnDrvmd_ottifant,		// The Ottifants (Euro)
 	&BurnDrvsms_ottifant,		// The Ottifants (Euro, Bra)
@@ -34163,9 +34168,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvOutfxiesja,			// The Outfoxies (Japan, OU1, alternate GFX ROMs)
 	&BurnDrvOutfxiesa,			// The Outfoxies (Korea?)
 	&BurnDrvOutfxies,			// The Outfoxies (World, OU2)
-	&BurnDrvmd_pagemstr,		// The Pagemaster (Euro)
-	&BurnDrvmd_pagemstru,		// The Pagemaster (USA)
-	&BurnDrvmd_pagemstrup,		// The Pagemaster (USA, Prototype)
 	&BurnDrvPercuss,			// The Percussor
 	&BurnDrvmd_piratedw1,		// The Pirates of Dark Water (Euro, USA, May 1994)
 	&BurnDrvmd_piratedws,		// The Pirates of Dark Water (Hack, Spanish)

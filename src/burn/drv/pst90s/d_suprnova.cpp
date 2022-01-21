@@ -2469,6 +2469,44 @@ struct BurnDriver BurnDrvGalpani4k = {
 	320, 240, 4, 3
 };
 
+// Gals Panic EX (Korea)
+
+static struct BurnRomInfo galpaniexRomDesc[] = {
+	{ "gpex_even_u10_d804_2001-2-6.u10",	0x100000, 0xd3b504e6, 1 | BRF_PRG | BRF_ESS },           //  0 user1
+	{ "gpex_odd_u8_14c6_2001-2-6.u8",		0x100000, 0xf3fe305a, 1 | BRF_PRG | BRF_ESS },           //  1
+
+	{ "gp4-100-00.u24",						0x200000, 0x1df61f01, 2 | BRF_GRA },           //  2 gfx1
+	{ "gp4-101-00.u20",						0x100000, 0x8e2c9349, 2 | BRF_GRA },           //  3
+
+	{ "gp4-200-00.u16",						0x200000, 0xf0781376, 3 | BRF_GRA },           //  4 gfx2
+	{ "gp4-201-00.u18",						0x200000, 0x10c4b183, 3 | BRF_GRA },           //  5
+
+	{ "gp4-300-00.u4",						0x200000, 0x8374663a, 5 | BRF_SND },           //  6 ymz
+	{ "gp4-301-01.u7",						0x200000, 0x886ef77f, 5 | BRF_SND },           //  7
+};
+
+STDROMPICKEXT(galpaniex, galpaniex, skns)
+STD_ROM_FN(galpaniex)
+
+static INT32 GalpaniexInit()
+{
+	sprite_kludge_x = -5;
+	sprite_kludge_y = -1;
+
+	return DrvInit(2 /*Asia*/);
+}
+
+struct BurnDriver BurnDrvGalpaniex = {
+	"galpaniex", "galpani4", "skns", NULL, "2000",
+	"Gals Panic EX (Korea)\0", NULL, "Kaneko", "Super Kaneko Nova System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
+	NULL, galpaniexRomInfo, galpaniexRomName, NULL, NULL, NULL, NULL, CyvernInputInfo, CyvernNoSpeedhackDIPInfo,
+	GalpaniexInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
 // Gals Panic DX (Asia)
 
 static struct BurnRomInfo galpanidxRomDesc[] = {

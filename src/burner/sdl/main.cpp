@@ -235,7 +235,7 @@ void DoGame(int gameToRun)
 	if (!DrvInit(gameToRun, 0))
 	{
 		MediaInit();
-		Init_Joysticks(usejoy);
+		//Init_Joysticks(usejoy);
 		RunMessageLoop();
 	}
 	else

@@ -189,9 +189,9 @@ CXX	= $(CC)
 LD	= $(CC)
 AS	= nasm
 
-# We need to compile the tools with host to make them available while cross compiling.
-# Cross compiling in EmuELEC has this variables set by default, HOST_CC, HOST_CXXFLAGS, HOST_LDFLAGS, HOST_CFLAGS
-# But if HOST_CC is not defined we assume not crosscompiling.
+# We need to compile the tools with host to make them available while cross-compiling.
+# Cross-compiling in EmuELEC has these variables set by default, HOST_CC, HOST_CXXFLAGS, HOST_LDFLAGS, HOST_CFLAGS
+# But if HOST_CC is not defined we assume not cross-compiling.
 
 ifeq ($(HOST_CC),)
 HOST_CC := $(CC)

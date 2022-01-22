@@ -106,7 +106,8 @@ int DrvInit(int nDrvNum, bool bRestore)
 	nMaxPlayers = BurnDrvGetMaxPlayers();
 	GameInpInit();                           // Init game input
 
-	ConfigGameLoad(true);
+	// if a config file was loaded, set bSaveInputs so that this config file won't be reset to default at exit
+	bSaveInputs = ConfigGameLoad(true);
 	InputMake(true);
 
 	GameInpDefault();

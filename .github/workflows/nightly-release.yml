@@ -132,7 +132,7 @@ jobs:
       - name: Install Linux dependencies
         run: |
           sudo apt-get -y update
-          sudo apt-get -y install mingw-w64
+          sudo apt-get -y install mingw-w64 nasm
 
       - uses: actions/checkout@v2
 

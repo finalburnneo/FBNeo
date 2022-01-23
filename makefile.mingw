@@ -187,6 +187,7 @@ LD	= $(CXX)
 AS	= nasm
 
 # While cross-compiling, tools need to be compiled for host so that they can be executed by host.
+# if HOST_CC is not set, then we aren't cross-compiling, so we'll use target compiler as host compiler
 ifeq ($(HOST_CC),)
 HOST_CC       := $(CC)
 HOST_CXX      := $(CXX)

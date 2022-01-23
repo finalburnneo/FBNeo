@@ -71,9 +71,9 @@ depobj	+= 	neocdlist.o \
 ifndef FORCE_SYSTEM_LIBPNG
 alldir	+= 	dep/libs/libpng
 
-depobj	+= 	png.o \ 
-            \
-            pngerror.o pngget.o pngmem.o pngpread.o pngread.o pngrio.o pngrtran.o pngrutil.o pngset.o pngtrans.o pngwio.o \
+depobj	+= 	png.o \
+			\
+			pngerror.o pngget.o pngmem.o pngpread.o pngread.o pngrio.o pngrtran.o pngrutil.o pngset.o pngtrans.o pngwio.o \
 			pngwrite.o pngwtran.o pngwutil.o
 endif
 
@@ -189,15 +189,14 @@ CXX	= $(CC)
 LD	= $(CC)
 AS	= nasm
 
-# We need to compile the tools with host to make them available while cross-compiling.
-# Cross-compiling in EmuELEC has these variables set by default, HOST_CC, HOST_CXXFLAGS, HOST_LDFLAGS, HOST_CFLAGS
-# But if HOST_CC is not defined we assume not cross-compiling.
-
+# While cross-compiling, tools need to be compiled for host so that they can be executed by host.
+# if HOST_CC is not set, then we aren't cross-compiling, so we'll use target compiler as host compiler
 ifeq ($(HOST_CC),)
-HOST_CC := $(CC)
+HOST_CC       := $(CC)
+HOST_CXX      := $(CXX)
+HOST_CFLAGS   := $(CFLAGS)
 HOST_CXXFLAGS := $(CXXFLAGS)
-HOST_LDFLAGS := $(LDFLAGS)
-HOST_CFLAGS := $(CFLAGS)
+HOST_LDFLAGS  := $(LDFLAGS)
 endif
 
 #LDFLAGS	= -static

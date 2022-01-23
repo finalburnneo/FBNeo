@@ -2370,7 +2370,7 @@ static struct BurnRomInfo galpani4RomDesc[] = {
 	{ "gp4-300-00.u4",	0x200000, 0x8374663a, 5 | BRF_SND },           //  6 YMZ280b Samples
 	{ "gp4-301-00.u7",	0x200000, 0x53e9f8fb, 5 | BRF_SND },           //  7 Different then GP4-301-01 used below
 		
-	{ "skns-r09.u9",	0x000117, 0xb02058d9, 0 | BRF_OPT },		   //  7 plds
+	{ "skns-r09.u9",	0x000117, 0xb02058d9, 0 | BRF_OPT },		   //  8 plds
 	{ "skns-r11.u11",	0x000117, 0xa9f05af4, 0 | BRF_OPT },		   
 };
 

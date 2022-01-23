@@ -765,7 +765,7 @@
 	</game>
 	<game name="kaettmarbro" romof="fdsbios">
 		<description>Kaettekita Mario Brothers (Japan)</description>
-		<year>1989?</year>
+		<year>1988</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Kaettekita Mario Brothers (Japan).fds" size="131016" crc="12358ded"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
@@ -774,17 +774,18 @@
 	</game>
 	<game name="kalinnotsurugij" cloneof="kalinnotsurugi" romof="kalinnotsurugi">
 		<description>Kalin no Tsurugi (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Square</manufacturer>
 		<rom name="Kalin no Tsurugi (Japan).fds" size="131000" crc="c63a0059"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="kalinnotsurugi" romof="fdsbios">
+		<comment>Hack</comment>
 		<description>Kalin no Tsurugi (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987-2005</year>
+		<manufacturer>filler, KingMike, satsu</manufacturer>
 		<rom name="Kalin no Tsurugi (T-Eng).fds" size="131000" crc="7825c974"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -792,8 +793,8 @@
 	</game>
 	<game name="kamenridbla" romof="fdsbios">
 		<description>Kamen Rider Black - Taiketsu Shadow Moon (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Bandai</manufacturer>
 		<rom name="Kamen Rider Black - Taiketsu Shadow Moon (Japan).fds" size="131016" crc="0db848ea"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -801,8 +802,8 @@
 	</game>
 	<game name="kickandrun" romof="fdsbios">
 		<description>Kick and Run (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Taito</manufacturer>
 		<rom name="Kick and Run (Japan).fds" size="131016" crc="a37d4c85"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -810,8 +811,8 @@
 	</game>
 	<game name="kickcha" romof="fdsbios">
 		<description>Kick Challenger - Air Foot (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Vap</manufacturer>
 		<rom name="Kick Challenger - Air Foot (Japan).fds" size="131016" crc="c83ef278"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -819,8 +820,8 @@
 	</game>
 	<game name="kietaprincess" romof="fdsbios">
 		<description>Kieta Princess (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1986</year>
+		<manufacturer>Imagineer</manufacturer>
 		<rom name="Kieta Princess (Japan).fds" size="131000" crc="60d55cea"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -828,8 +829,8 @@
 	</game>
 	<game name="kikikai" romof="fdsbios">
 		<description>Kiki Kaikai - Dotou Hen (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Taito</manufacturer>
 		<rom name="Kiki Kaikai - Dotou Hen (Japan).fds" size="131000" crc="7f446c09"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -837,8 +838,8 @@
 	</game>
 	<game name="kinni" romof="fdsbios">
 		<description>Kinnikuman - Kinnikusei Oui Soudatsusen (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Bandai</manufacturer>
 		<rom name="Kinnikuman - Kinnikusei Oui Soudatsusen (Japan).fds" size="131016" crc="5149b663"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -846,8 +847,8 @@
 	</game>
 	<game name="knighlor" romof="fdsbios">
 		<description>Knight Lore - Majou no Ookami Otoko (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1986</year>
+		<manufacturer>Jaleco</manufacturer>
 		<rom name="Knight Lore - Majou no Ookami Otoko (Japan).fds" size="131016" crc="c07a8b04"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -855,7 +856,7 @@
 	</game>
 	<game name="knightmovej" cloneof="knightmove" romof="knightmove">
 		<description>Knight Move (Japan)</description>
-		<year>1989?</year>
+		<year>1990</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Knight Move (Japan).fds" size="65500" crc="6d365e2f"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
@@ -863,9 +864,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="knightmove" romof="fdsbios">
+		<comment>Hack</comment>
 		<description>Knight Move (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990-2003</year>
+		<manufacturer>PentarouZero</manufacturer>
 		<rom name="Knight Move (T-Eng).fds" size="65500" crc="474b83c4"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -873,8 +875,8 @@
 	</game>
 	<game name="konamictennis" romof="fdsbios">
 		<description>Konamic Tennis (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Konami</manufacturer>
 		<rom name="Konamic Tennis (Japan).fds" size="131000" crc="edbaee55"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -882,17 +884,18 @@
 	</game>
 	<game name="konekmon" romof="fdsbios">
 		<description>Koneko Monogatari - The Adventures of Chatran (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1986</year>
+		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="Koneko Monogatari - The Adventures of Chatran (Japan).fds" size="131016" crc="e3387bf0"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="linknobouc" cloneof="linknobou" romof="linknobou">
+		<comment>Hack</comment>
 		<description>Link no Bouken - The Legend of Zelda 2 (Japan) (Rev 1) - Castellano v1.0</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987-2019</year>
+		<manufacturer>jackic</manufacturer>
 		<rom name="link no bouken - the legend of zelda 2 (japan) (rev 1) - castellano v1.0.fds" size="131000" crc="60a26198"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -900,7 +903,7 @@
 	</game>
 	<game name="linknobouj" cloneof="linknobou" romof="linknobou">
 		<description>Link no Bouken - The Legend of Zelda 2 (Japan)</description>
-		<year>1989?</year>
+		<year>1987</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Link no Bouken - The Legend of Zelda 2 (Japan).fds" size="131016" crc="a118214f"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
@@ -908,9 +911,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="linknobou" romof="fdsbios">
+		<comment>Hack</comment>
 		<description>Link no Bouken - The Legend of Zelda 2 (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987-2017</year>
+		<manufacturer>columbo</manufacturer>
 		<rom name="Link no Bouken - The Legend of Zelda 2 (T-Eng).fds" size="131000" crc="359d3f2b"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -918,8 +922,8 @@
 	</game>
 	<game name="lutter" romof="fdsbios">
 		<description>Lutter (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1989</year>
+		<manufacturer>Athena</manufacturer>
 		<rom name="Lutter (Japan).fds" size="131016" crc="54335232"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -927,8 +931,8 @@
 	</game>
 	<game name="maerchenveil" romof="fdsbios">
 		<description>Maerchen Veil (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Sunsoft</manufacturer>
 		<rom name="Maerchen Veil (Japan).fds" size="131016" crc="618d10a2"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -936,8 +940,8 @@
 	</game>
 	<game name="magmapro" romof="fdsbios">
 		<description>Magma Project - Hacker (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1989</year>
+		<manufacturer>Bits Laboratory</manufacturer>
 		<rom name="Magma Project - Hacker (Japan).fds" size="131016" crc="59d51115"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -945,8 +949,8 @@
 	</game>
 	<game name="matounohou" romof="fdsbios">
 		<description>Matou no Houkai - The Hero of Babel (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="Matou no Houkai - The Hero of Babel (Japan).fds" size="131016" crc="0596b36a"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -954,17 +958,18 @@
 	</game>
 	<game name="meikyjiidabj" cloneof="meikyjiidab" romof="meikyjiidab">
 		<description>Meikyuu Jiin Dababa (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Konami</manufacturer>
 		<rom name="Meikyuu Jiin Dababa (Japan).fds" size="131000" crc="1526d32e"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="meikyjiidab" romof="fdsbios">
+		<comment>Hack</comment>
 		<description>Meikyuu Jiin Dababa (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987-2017</year>
+		<manufacturer>FlashPV</manufacturer>
 		<rom name="Meikyuu Jiin Dababa (T-Eng).fds" size="131000" crc="4d13e6b7"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -972,7 +977,7 @@
 	</game>
 	<game name="metroidj" cloneof="metroid" romof="metroid">
 		<description>Metroid (Japan)</description>
-		<year>1989?</year>
+		<year>1986</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Metroid (Japan).fds" size="131000" crc="5e4f013d"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
@@ -980,9 +985,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="metroid" romof="fdsbios">
+		<comment>Hack</comment>
 		<description>Metroid (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1986-2016</year>
+		<manufacturer>Jordiway73</manufacturer>
 		<rom name="Metroid (T-Eng).fds" size="131000" crc="2711adba"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -990,8 +996,8 @@
 	</game>
 	<game name="michaengdai" romof="fdsbios">
 		<description>Michael English Daibouken (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Scorpion Soft</manufacturer>
 		<rom name="Michael English Daibouken (Japan).fds" size="131000" crc="e5ab0e6c"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -999,8 +1005,8 @@
 	</game>
 	<game name="moerotwi" romof="fdsbios">
 		<description>Moero TwinBee - Cinnamon Hakase wo Sukue! (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1986</year>
+		<manufacturer>Konami</manufacturer>
 		<rom name="Moero TwinBee - Cinnamon Hakase wo Sukue! (Japan).fds" size="131016" crc="0d684aa7"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>

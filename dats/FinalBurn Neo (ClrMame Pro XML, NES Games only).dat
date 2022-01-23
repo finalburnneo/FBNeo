@@ -3077,6 +3077,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="dveelng">
+		<comment>Homebrew</comment>
+		<description>D'Veel'Ng (HB)</description>
+		<year>2015</year>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="D'Veel'Ng (2015)(The Mojon Twins).nes" size="40976" crc="7a810742"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="dai2jisuprotajc" cloneof="dai2jisuprota" romof="dai2jisuprota">
 		<comment>Hack</comment>
 		<description>Dai-2-ji Super Robot Taisen (Japan) - Castellano v1.0</description>
@@ -8539,8 +8548,17 @@
 		<comment>Homebrew</comment>
 		<description>Lunar Limit (HB)</description>
 		<year>2017</year>
-		<manufacturer>pubby</manufacturer>
+		<manufacturer>Pubby</manufacturer>
 		<rom name="Lunar Limit (HB).nes" size="40976" crc="eb26681e"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="lunarlimitsw" cloneof="lunarlimit" romof="lunarlimit">
+		<comment>Homebrew</comment>
+		<description>Lunar Limit - Star Wars Edition (HB)</description>
+		<year>2021</year>
+		<manufacturer>Pubby</manufacturer>
+		<rom name="Lunar Limit - Star Wars Edition (2021)(Pubby).nes" size="40976" crc="c130d230"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -9721,6 +9739,15 @@
 		<manufacturer>Bunch Games</manufacturer>
 		<rom name="Moon Ranger (USA) (Unl).nes" size="131088" crc="22172117"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="moonglow">
+		<comment>Homebrew</comment>
+		<description>Moonglow (HB)</description>
+		<year>2021</year>
+		<manufacturer>Yurt Fiend</manufacturer>
+		<rom name="Moonglow (2021)(Yurt Fiend).nes" size="40976" crc="b4255e99"/>
+		<video orientation="horizontal" width="256" height="240" aspectx="256" aspecty="240"/>
 		<driver status="good"/>
 	</game>
 	<game name="mortakom3" cloneof="mortakomiispe" romof="mortakomiispe">

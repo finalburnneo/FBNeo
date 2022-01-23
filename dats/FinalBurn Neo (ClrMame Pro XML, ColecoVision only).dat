@@ -797,6 +797,19 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="coco" romof="coleco">
+		<comment>Homebrew</comment>
+		<description>CoCo and the Evil Robots (HB, v1.01)</description>
+		<year>2020</year>
+		<manufacturer>Robin Gravel</manufacturer>
+		<rom name="CoCo and the Evil Robots v1.01 (2020)(Robin Gravel).rom" size="16374" crc="d6b28d19"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="coldblood" romof="coleco">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Cold Blood (SGM) (HB)</description>
@@ -1950,6 +1963,19 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="karateka2" romof="coleco">
+		<comment>Homebrew</comment>
+		<description>Karateka 2 (HB)</description>
+		<year>2021</year>
+		<manufacturer>Nanochess</manufacturer>
+		<rom name="Karateka 2 (2021)(Nanochess).rom" size="32768" crc="59281c7f"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="kubjpok" romof="coleco">
 		<description>Ken Uston Blackjack-Poker</description>
 		<year>1983</year>
@@ -2934,6 +2960,19 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="pegged" romof="coleco">
+		<comment>Homebrew</comment>
+		<description>Pegged (HB)</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Pegged (2021)(Under4MHz).rom" size="32768" crc="1abf1b9e"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="pepper2" romof="coleco">
 		<description>Pepper II</description>
 		<year>1983</year>
@@ -3254,6 +3293,19 @@
 		<year>1984-2016</year>
 		<manufacturer>Namco</manufacturer>
 		<rom name="Rally-X (2016)(Team Pixelboy).rom" size="32768" crc="fb5dd80d"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="recrescue" romof="coleco">
+		<comment>Homebrew</comment>
+		<description>Recon Rescue (HB)</description>
+		<year>2021</year>
+		<manufacturer>Nicam Shilova</manufacturer>
+		<rom name="Recon Rescue (2021)(Nicam Shilova).rom" size="17746" crc="85aeb133"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -3858,6 +3910,19 @@
 		<year>1986-2015</year>
 		<manufacturer>Broderbund</manufacturer>
 		<rom name="Spelunker (2015)(Team Pixelboy).rom" size="131072" crc="75f84889"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="spinball" romof="coleco">
+		<comment>Homebrew</comment>
+		<description>SpinBall (HB)</description>
+		<year>2020</year>
+		<manufacturer>Nicam Shilova</manufacturer>
+		<rom name="SpinBall (2020)(Nicam Shilova).rom" size="17047" crc="e592805e"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>

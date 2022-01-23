@@ -724,11 +724,11 @@ INT32 ConfigCheatLoad()
 {
 	TCHAR szFilename[MAX_PATH] = _T("");
 
-	_stprintf(szFilename, _T("%s%s.ini"), szAppCheatsPath, BurnDrvGetText(DRV_NAME));
-	if (ConfigParseFile(szFilename)) {
-		_stprintf(szFilename, _T("%s%s.dat"), szAppCheatsPath, BurnDrvGetText(DRV_NAME));
-		if (ConfigParseNebulaFile(szFilename)) {
-			if (ConfigParseMAMEFile()) {
+	if (ConfigParseMAMEFile()) {
+		_stprintf(szFilename, _T("%s%s.ini"), szAppCheatsPath, BurnDrvGetText(DRV_NAME));
+		if (ConfigParseFile(szFilename)) {
+			_stprintf(szFilename, _T("%s%s.dat"), szAppCheatsPath, BurnDrvGetText(DRV_NAME));
+			if (ConfigParseNebulaFile(szFilename)) {
 				return 1;
 			}
 		}

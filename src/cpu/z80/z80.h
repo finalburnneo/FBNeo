@@ -79,6 +79,7 @@ void Z80GetContext (void *dst);
 void Z80SetContext (void *src);
 int Z80Scan(int nAction);
 INT32 z80TotalCycles();
+INT32 z80TstateCounter();
 void Z80StopExecute();
 void z80_set_spectrum_tape_callback(int (*tape_cb)());
 void z80_set_cycle_tables_msx();

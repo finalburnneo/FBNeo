@@ -19665,6 +19665,34 @@ struct BurnDriver BurnDrvcnbe = {
 	0x1000,	304, 224, 4, 3
 };
 
+// Codename - Blut Engel (2018-09-05)
+
+static struct BurnRomInfo cnbe2018RomDesc[] = {
+	{ "cnbe2018-p1.bin",  0x040000, 0x189fecd5, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "cnbe2018-s1.bin",  0x010000, 0xec227c62, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "cnbe2018-c1.bin",  0x040000, 0xdb0e9083, 3 | BRF_GRA },           //  2 Sprite data
+	{ "cnbe2018-c2.bin",  0x040000, 0x6114b6fb, 3 | BRF_GRA },           //  3 Sprite data
+
+	{ "cnbe2018-m1.bin",  0x010000, 0xb94f41b4, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "cnbe2018-v1.bin",  0x040000, 0x54947995, 5 | BRF_SND },           //  5 Sound data
+};
+
+STDROMPICKEXT(cnbe2018, cnbe2018, neogeo)
+STD_ROM_FN(cnbe2018)
+
+struct BurnDriver BurnDrvcnbe2018 = {
+	"cnbe2018", "cnbe", "neogeo", NULL, "2018",
+	"Codename - Blut Engel (2018-09-05)\0", NULL, "blastar@gmx.net", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_VERSHOOT, 0,
+	NULL, cnbe2018RomInfo, cnbe2018RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
 // Columns (Neo Geo)
 
 static struct BurnRomInfo columnsnRomDesc[] = {

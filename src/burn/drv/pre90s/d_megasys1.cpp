@@ -4736,7 +4736,7 @@ struct BurnDriver BurnDrvRodlandj = {
 };
 
 
-// Rod-Land (Japan bootleg)
+// Rod-Land (Japan bootleg with unencrypted program)
 
 static struct BurnRomInfo rodlandjbRomDesc[] = {
 	{ "rl19.bin",			0x10000, 0x028de21f, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
@@ -4780,11 +4780,75 @@ static INT32 rodlandjbInit()
 
 struct BurnDriver BurnDrvRodlandjb = {
 	"rodlandjb", "rodland", NULL, NULL, "1990",
-	"Rod-Land (Japan bootleg)\0", NULL, "bootleg", "Mega System 1",
+	"Rod-Land (Japan bootleg with unencrypted program)\0", NULL, "bootleg", "Mega System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, rodlandjbRomInfo, rodlandjbRomName, NULL, NULL, NULL, NULL, CommonInputInfo, RodlandDIPInfo,
 	rodlandjbInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 224, 4, 3
+};
+
+
+// Rod-Land (Japan bootleg with unencrypted program and GFX)
+
+static struct BurnRomInfo rodlandjb2RomDesc[] = {
+	{ "19.bin",				0x10000, 0x028de21f, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
+	{ "17.bin",				0x10000, 0x9c720046, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "20.bin",				0x10000, 0x3f536d07, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "18.bin",				0x10000, 0x5aa61717, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "12.bin",				0x10000, 0xc5b1075f, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "11.bin",				0x10000, 0x9ec61048, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "2.bin",				0x10000, 0xd26eae8f, 2 | BRF_PRG | BRF_ESS }, //  6 68k #1 Code
+	{ "1.bin",				0x10000, 0x04cf24bc, 2 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "27.bin",				0x10000, 0x673a5986, 3 | BRF_GRA },           //  6 Tilemap #0 Tiles
+	{ "28.bin",				0x10000, 0x523a731d, 3 | BRF_GRA },           //  7
+	{ "26.bin",				0x10000, 0x4d0a5c97, 3 | BRF_GRA },           //  8
+	{ "29b.bin",			0x10000, 0x2279cb76, 3 | BRF_GRA },           //  9
+	{ "30.bin",				0x10000, 0xb155f39e, 3 | BRF_GRA },           // 10
+	{ "29a.bin",			0x10000, 0x9fd628f1, 3 | BRF_GRA },           // 11
+	{ "31a.bin",			0x10000, 0xa9bc5b84, 3 | BRF_GRA },           // 12
+	{ "31b.bin",			0x10000, 0xfb2faa69, 3 | BRF_GRA },           // 13
+
+	{ "21.bin",				0x10000, 0x32fc0bc6, 4 | BRF_GRA },           // 14 Tilemap #1 Tiles
+	{ "22.bin",				0x10000, 0x0969daa9, 4 | BRF_GRA },           // 15
+	{ "13.bin",				0x10000, 0x1203cdf6, 4 | BRF_GRA },           // 16
+	{ "14.bin",				0x10000, 0xd53e094b, 4 | BRF_GRA },           // 17
+	{ "24.bin",				0x10000, 0xb04343e6, 4 | BRF_GRA },           // 18
+	{ "23.bin",				0x10000, 0x70aa7e2c, 4 | BRF_GRA },           // 19
+	{ "15.bin",				0x10000, 0x38ac846e, 4 | BRF_GRA },           // 20
+	{ "16.bin",				0x10000, 0x5e31f0b2, 4 | BRF_GRA },           // 21
+
+	{ "25.bin",				0x10000, 0x4ca57cb6, 5 | BRF_GRA },           // 22 Tilemap #2 Tiles
+
+	{ "4.bin",				0x10000, 0xcfcf9f97, 6 | BRF_GRA },           // 23 Sprites
+	{ "5.bin",				0x10000, 0x38c05d15, 6 | BRF_GRA },           // 24
+	{ "7.bin",				0x10000, 0xe117cb72, 6 | BRF_GRA },           // 25
+	{ "8.bin",				0x10000, 0x2f9b40c3, 6 | BRF_GRA },           // 26
+	{ "3.bin",				0x10000, 0xf6a88efd, 6 | BRF_GRA },           // 27
+	{ "6.bin",				0x10000, 0x90a78af1, 6 | BRF_GRA },           // 28
+	{ "9.bin",				0x10000, 0x427a0908, 6 | BRF_GRA },           // 29
+	{ "10.bin",				0x10000, 0x53cc2c11, 6 | BRF_GRA },           // 30
+
+	{ "ps89013a.14m",		0x00200, 0x8914e72d, 9 | BRF_GRA },           // 31 Priority PROM
+};
+
+STD_ROM_PICK(rodlandjb2)
+STD_ROM_FN(rodlandjb2)
+
+static INT32 rodlandjb2Init()
+{
+	return SystemInit(0xA, NULL);
+}
+
+struct BurnDriver BurnDrvRodlandjb2 = {
+	"rodlandjb2", "rodland", NULL, NULL, "1990",
+	"Rod-Land (Japan bootleg with unencrypted program and GFX)\0", NULL, "bootleg", "Mega System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, rodlandjb2RomInfo, rodlandjb2RomName, NULL, NULL, NULL, NULL, CommonInputInfo, RodlandDIPInfo,
+	rodlandjb2Init, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };
 

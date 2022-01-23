@@ -714,23 +714,23 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Lethal Crash Race (set 1)
 
 static struct BurnRomInfo crshraceRomDesc[] = {
-	{ "1",				0x080000, 0x21e34fb7, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "w21",			0x100000, 0xa5df7325, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "w22",			0x100000, 0xfc9d666d, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "1.ic10",			0x080000, 0x21e34fb7, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "w21.ic14",		0x100000, 0xa5df7325, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "w22.ic13",		0x100000, 0xfc9d666d, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "2",				0x020000, 0xe70a900f, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+	{ "2.ic58",			0x020000, 0xe70a900f, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
 
-	{ "h895",			0x100000, 0x36ad93c3, 3 | BRF_GRA },           //  4 Background Tiles
+	{ "h895.ic50",		0x100000, 0x36ad93c3, 3 | BRF_GRA },           //  4 Background Tiles
 
-	{ "w18",			0x100000, 0xb15df90d, 4 | BRF_GRA },           //  5 Foreground Tiles
-	{ "w19",			0x100000, 0x28326b93, 4 | BRF_GRA },           //  6
-	{ "w20",			0x100000, 0xd4056ad1, 4 | BRF_GRA },           //  7
+	{ "w18.rom-a",		0x100000, 0xb15df90d, 4 | BRF_GRA },           //  5 Foreground Tiles
+	{ "w19.rom-b",		0x100000, 0x28326b93, 4 | BRF_GRA },           //  6
+	{ "w20.rom-c",		0x100000, 0xd4056ad1, 4 | BRF_GRA },           //  7
 
-	{ "h897",			0x200000, 0xe3230128, 5 | BRF_GRA },           //  8 Sprites
-	{ "h896",			0x200000, 0xfff60233, 5 | BRF_GRA },           //  9
+	{ "h897.ic29",		0x200000, 0xe3230128, 5 | BRF_GRA },           //  8 Sprites
+	{ "h896.ic75",		0x200000, 0xfff60233, 5 | BRF_GRA },           //  9
 
-	{ "h894",			0x100000, 0xd53300c1, 6 | BRF_SND },           // 10 YM2610 Samples
-	{ "h893",			0x100000, 0x32513b63, 6 | BRF_SND },           // 11
+	{ "h894.ic73",		0x100000, 0xd53300c1, 6 | BRF_SND },           // 10 YM2610 Samples
+	{ "h893.ic69",		0x100000, 0x32513b63, 6 | BRF_SND },           // 11
 };
 
 STD_ROM_PICK(crshrace)
@@ -750,23 +750,23 @@ struct BurnDriver BurnDrvCrshrace = {
 // Lethal Crash Race (set 2)
 
 static struct BurnRomInfo crshrace2RomDesc[] = {
-	{ "01-ic10.bin",	0x080000, 0xb284aacd, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "w21",			0x100000, 0xa5df7325, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "w22",			0x100000, 0xfc9d666d, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "01.ic10",		0x080000, 0xb284aacd, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "w21.ic14",		0x100000, 0xa5df7325, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "w22.ic13",		0x100000, 0xfc9d666d, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "2",				0x020000, 0xe70a900f, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+	{ "2.ic58",			0x020000, 0xe70a900f, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
 
-	{ "h895",			0x100000, 0x36ad93c3, 3 | BRF_GRA },           //  4 Background Tiles
+	{ "h895.ic50",		0x100000, 0x36ad93c3, 3 | BRF_GRA },           //  4 Background Tiles
 
-	{ "w18",			0x100000, 0xb15df90d, 4 | BRF_GRA },           //  5 Foreground Tiles
-	{ "w19",			0x100000, 0x28326b93, 4 | BRF_GRA },           //  6
-	{ "w20",			0x100000, 0xd4056ad1, 4 | BRF_GRA },           //  7
+	{ "w18.rom-a",		0x100000, 0xb15df90d, 4 | BRF_GRA },           //  5 Foreground Tiles
+	{ "w19.rom-b",		0x100000, 0x28326b93, 4 | BRF_GRA },           //  6
+	{ "w20.rom-c",		0x100000, 0xd4056ad1, 4 | BRF_GRA },           //  7
 
-	{ "h897",			0x200000, 0xe3230128, 5 | BRF_GRA },           //  8 Sprites
-	{ "h896",			0x200000, 0xfff60233, 5 | BRF_GRA },           //  9
+	{ "h897.ic29",		0x200000, 0xe3230128, 5 | BRF_GRA },           //  8 Sprites
+	{ "h896.ic75",		0x200000, 0xfff60233, 5 | BRF_GRA },           //  9
 
-	{ "h894",			0x100000, 0xd53300c1, 6 | BRF_SND },           // 10 YM2610 Samples
-	{ "h893",			0x100000, 0x32513b63, 6 | BRF_SND },           // 11
+	{ "h894.ic73",		0x100000, 0xd53300c1, 6 | BRF_SND },           // 10 YM2610 Samples
+	{ "h893.ic69",		0x100000, 0x32513b63, 6 | BRF_SND },           // 11
 };
 
 STD_ROM_PICK(crshrace2)
@@ -778,6 +778,42 @@ struct BurnDriver BurnDrvCrshrace2 = {
 	L"Lethal Crash Race\0\u7206\u70C8 \u30AF\u30E9\u30C3\u30B7\u30E5 \u30EC\u30FC\u30B9 (set 2)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, crshrace2RomInfo, crshrace2RomName, NULL, NULL, NULL, NULL,  CrshraceInputInfo,  CrshraceDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	224, 320, 3, 4
+};
+
+
+// Lethal Crash Race (set 2, alternate sound ROM)
+
+static struct BurnRomInfo crshrace2aRomDesc[] = {
+	{ "01.ic10",		0x080000, 0xb284aacd, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "w21.ic14",		0x100000, 0xa5df7325, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "w22.ic13",		0x100000, 0xfc9d666d, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "2.ic58",			0x020000, 0x7ef4f9dc, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+
+	{ "h895.ic50",		0x100000, 0x36ad93c3, 3 | BRF_GRA },           //  4 Background Tiles
+
+	{ "w18.rom-a",		0x100000, 0xb15df90d, 4 | BRF_GRA },           //  5 Foreground Tiles
+	{ "w19.rom-b",		0x100000, 0x28326b93, 4 | BRF_GRA },           //  6
+	{ "w20.rom-c",		0x100000, 0xd4056ad1, 4 | BRF_GRA },           //  7
+
+	{ "h897.ic29",		0x200000, 0xe3230128, 5 | BRF_GRA },           //  8 Sprites
+	{ "h896.ic75",		0x200000, 0xfff60233, 5 | BRF_GRA },           //  9
+
+	{ "h894.ic73",		0x100000, 0xd53300c1, 6 | BRF_SND },           // 10 YM2610 Samples
+	{ "h893.ic69",		0x100000, 0x32513b63, 6 | BRF_SND },           // 11
+};
+
+STD_ROM_PICK(crshrace2a)
+STD_ROM_FN(crshrace2a)
+
+struct BurnDriver BurnDrvCrshrace2a = {
+	"crshrace2a", "crshrace", NULL, NULL, "1993",
+	"Lethal Crash Race (set 2, alternate sound ROM)\0", NULL, "Video System Co.", "Miscellaneous",
+	L"Lethal Crash Race\0\u7206\u70C8 \u30AF\u30E9\u30C3\u30B7\u30E5 \u30EC\u30FC\u30B9 (set 2, alternate sound ROM)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	NULL, crshrace2aRomInfo, crshrace2aRomName, NULL, NULL, NULL, NULL,  CrshraceInputInfo,  CrshraceDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 320, 3, 4
 };

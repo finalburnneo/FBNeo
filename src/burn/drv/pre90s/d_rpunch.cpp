@@ -1,7 +1,9 @@
 // FB Alpha Rabio Lepus / Super Volleyball driver module
 // Based on MAME driver by Aaron Giles
 
-// Notes: bad palette of tmap layer 0 @ game start is not present on pcb
+// *FIXED* bad palette of tmap layer 0 @ game start (not present on pcb)
+// Note: svolley has a few glitches, it has a completely different PCB, though
+// configured similarly to rpunch - needs investigation.
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -37,6 +39,8 @@ static UINT16 *DrvVidRegs;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
+
+static INT32 nExtraCycles;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -298,6 +302,12 @@ static void __fastcall rpunch_main_write_word(UINT32 address, UINT16 data)
 		return;
 	}
 
+	if ((address & 0x0fc000) == 0x80000) {
+		*((UINT16*)(DrvVidRAM + (address & 0x3ffe))) = data;
+		m68k_ICount -= 4 * 2; // 4 cyc/byte penalty writing to vram
+		return;
+	}
+
 	switch (address)
 	{
 		case 0x0c0000:
@@ -325,6 +335,12 @@ static void __fastcall rpunch_main_write_byte(UINT32 address, UINT8 data)
 	if ((address & 0x0ff800) == 0xa0000) {
 		DrvPalRAM[(address & 0x7ff) ^ 1] = data;
 		palette_write(address & 0x7fe);
+		return;
+	}
+
+	if ((address & 0x0fc000) == 0x80000) {
+		DrvVidRAM[(address & 0x3fff) ^ 1] = data;
+		m68k_ICount -= 4 * 1;
 		return;
 	}
 
@@ -467,6 +483,8 @@ static INT32 DrvDoReset()
 	crtc_register = 0;
 	crtc_timer = 0;
 
+	nExtraCycles = 0;
+
 	return 0;
 }
 
@@ -539,7 +557,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 game)
 		expand_graphics(DrvGfxROM2, 0x80000);
 	}
 
-	game_select = game;
+	game_select = game; // 0 rpunch/rabiolep, 1 svolley
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -548,7 +566,8 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 game)
 	SekMapMemory(Drv68KROM,			0x000000, 0x03ffff, MAP_ROM);
 	SekMapMemory(DrvBMPRAM,			0x040000, 0x04ffff, MAP_RAM);
 	SekMapMemory(DrvSprRAM,			0x060000, 0x060fff, MAP_RAM);
-	SekMapMemory(DrvVidRAM,			0x080000, 0x083fff, MAP_RAM);
+	// rpunch / rabiolep: handle vram contended writes in handlers
+	SekMapMemory(DrvVidRAM,			0x080000, 0x083fff, (game_select == 0) ? MAP_ROM : MAP_RAM);
 	SekMapMemory(DrvPalRAM,			0x0a0000, 0x0a07ff, MAP_ROM);
 	SekMapMemory(Drv68KRAM,			0x0fc000, 0x0fffff, MAP_RAM);
 
@@ -724,7 +743,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 10;
 	INT32 nCyclesTotal[2] = { 8000000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -742,6 +761,8 @@ static INT32 DrvFrame()
 
 	ZetClose();
 	SekClose();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
@@ -780,6 +801,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(crtc_register);
 		SCAN_VAR(crtc_timer);
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {

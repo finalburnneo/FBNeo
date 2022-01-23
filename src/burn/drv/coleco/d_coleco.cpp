@@ -8670,3 +8670,98 @@ struct BurnDriver BurnDrvcv_zoom909 = {
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
+
+// CoCo and the Evil Robots (HB, v1.01)
+
+static struct BurnRomInfo cv_cocoRomDesc[] = {
+	{ "CoCo and the Evil Robots v1.01 (2020)(Robin Gravel).rom",	16374, 0xd6b28d19, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_coco, cv_coco, cv_coleco)
+STD_ROM_FN(cv_coco)
+
+struct BurnDriver BurnDrvcv_coco = {
+	"cv_coco", NULL, "cv_coleco", NULL, "2020",
+	"CoCo and the Evil Robots (HB, v1.01)\0", NULL, "Robin Gravel", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_MAZE, 0,
+	CVGetZipName, cv_cocoRomInfo, cv_cocoRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Karateka 2 (HB)
+
+static struct BurnRomInfo cv_karateka2RomDesc[] = {
+	{ "Karateka 2 (2021)(Nanochess).rom",	32768, 0x59281c7f, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_karateka2, cv_karateka2, cv_coleco)
+STD_ROM_FN(cv_karateka2)
+
+struct BurnDriver BurnDrvcv_karateka2 = {
+	"cv_karateka2", NULL, "cv_coleco", NULL, "2021",
+	"Karateka 2 (HB)\0", NULL, "Nanochess", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_VSFIGHT, 0,
+	CVGetZipName, cv_karateka2RomInfo, cv_karateka2RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Pegged (HB)
+
+static struct BurnRomInfo cv_peggedRomDesc[] = {
+	{ "Pegged (2021)(Under4MHz).rom",	32768, 0x1abf1b9e, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_pegged, cv_pegged, cv_coleco)
+STD_ROM_FN(cv_pegged)
+
+struct BurnDriver BurnDrvcv_pegged = {
+	"cv_pegged", NULL, "cv_coleco", NULL, "2021",
+	"Pegged (HB)\0", NULL, "Under4Mhz", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PUZZLE, 0,
+	CVGetZipName, cv_peggedRomInfo, cv_peggedRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Recon Rescue (HB)
+
+static struct BurnRomInfo cv_recrescueRomDesc[] = {
+	{ "Recon Rescue (2021)(Nicam Shilova).rom",	17746, 0x85aeb133, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_recrescue, cv_recrescue, cv_coleco)
+STD_ROM_FN(cv_recrescue)
+
+struct BurnDriver BurnDrvcv_recrescue = {
+	"cv_recrescue", NULL, "cv_coleco", NULL, "2021",
+	"Recon Rescue (HB)\0", NULL, "Nicam Shilova", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+	CVGetZipName, cv_recrescueRomInfo, cv_recrescueRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// SpinBall (HB)
+
+static struct BurnRomInfo cv_spinballRomDesc[] = {
+	{ "SpinBall (2020)(Nicam Shilova).rom",	17047, 0xe592805e, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_spinball, cv_spinball, cv_coleco)
+STD_ROM_FN(cv_spinball)
+
+struct BurnDriver BurnDrvcv_spinball = {
+	"cv_spinball", NULL, "cv_coleco", NULL, "2020",
+	"SpinBall (HB)\0", NULL, "Nicam Shilova", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+	CVGetZipName, cv_spinballRomInfo, cv_spinballRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};

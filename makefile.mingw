@@ -186,6 +186,15 @@ CXX	= g++
 LD	= $(CXX)
 AS	= nasm
 
+# While cross-compiling, tools need to be compiled for host so that they can be executed by host.
+ifeq ($(HOST_CC),)
+HOST_CC       := $(CC)
+HOST_CXX      := $(CXX)
+HOST_CFLAGS   := $(CFLAGS) -mconsole
+HOST_CXXFLAGS := $(CXXFLAGS) -mconsole
+HOST_LDFLAGS  := $(LDFLAGS)
+endif
+
 LDFLAGS	= -static
 
 ifdef GCC345
@@ -571,7 +580,7 @@ endif
 about.o about.d: $(build_details.h)
 
 $(build_details.h):	$(srcdir)dep/scripts/build_details.cpp
-	@$(CXX) -mconsole $(CXXFLAGS) $(LDFLAGS) $< -o $(objdir)dep/generated/build_details.exe
+	@$(HOST_CXX) $(HOST_CXXFLAGS) $(HOST_LDFLAGS) $< -o $(objdir)dep/generated/build_details.exe
 	@$(objdir)dep/generated/build_details.exe >$@
 
 #
@@ -583,7 +592,7 @@ $(build_details.h):	$(srcdir)dep/scripts/build_details.cpp
 ifdef	BUILD_A68K
 $(a68k.o):	fba_make68k.c
 	@echo Compiling A68K MC68000 core...
-	@$(CC) -mconsole $(CFLAGS) $(LDFLAGS) -DWIN32 -Wno-unused -Wno-conversion -Wno-missing-prototypes \
+	@$(CC) $(CFLAGS) $(LDFLAGS) -DWIN32 -Wno-unused -Wno-conversion -Wno-missing-prototypes \
 		-s $< -o $(subst $(srcdir),$(objdir),$(<D))/$(<F:.c=.exe)
 	@$(subst $(srcdir),$(objdir),$(<D))/$(<F:.c=.exe) $(@:.o=.asm) \
 		$(@D)/a68k_tab.asm 00 $(ppro)
@@ -606,7 +615,7 @@ $(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kops.c: $(objdir)cpu/
 
 $(objdir)cpu/m68k/m68kmake.exe: $(srcdir)cpu/m68k/m68kmake.c
 	@echo Compiling Musashi MC680x0 core \(m68kmake.c\)...
-	@$(CC) $(CFLAGS) $(srcdir)cpu/m68k/m68kmake.c -o $(objdir)cpu/m68k/m68kmake.exe
+	@$(HOST_CC) $(HOST_CFLAGS) $(srcdir)cpu/m68k/m68kmake.c -o $(objdir)cpu/m68k/m68kmake.exe
 
 
 #
@@ -617,7 +626,7 @@ ctv.d ctv.o:	$(ctv.h)
 
 $(ctv.h):	ctv_make.cpp
 	@echo Generating $(srcdir)dep/generated/$(@F)...
-	@$(CC) -mconsole $(CXXFLAGS) $(LDFLAGS) $< \
+	@$(HOST_CC) $(HOST_CXXFLAGS) $(HOST_LDFLAGS) $< \
 		-o $(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe)
 	@$(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe) >$@
 
@@ -674,7 +683,7 @@ pgm_draw.d pgm_draw.o:	$(pgm_sprite.h)
 
 $(pgm_sprite.h):	pgm_sprite_create.cpp
 	@echo Generating $(srcdir)dep/generated/$(@F)...
-	@$(CC) -mconsole $(CXXFLAGS) $(LDFLAGS) $< \
+	@$(HOST_CC) $(HOST_CXXFLAGS) $(HOST_LDFLAGS) $< \
 		-o $(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe)
 	@$(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe) >$@
 

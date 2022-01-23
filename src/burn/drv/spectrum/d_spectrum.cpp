@@ -220,7 +220,9 @@ STDDIPINFOEXT(SpecCursorKeys, SpecCursorKeys, Spec)
 
 static void spectrum128_bank(); // forwards
 static void spectrum_loadz80();
+static void ula_init(INT32 scanlines, INT32 cyc_scanline, INT32 contention);
 static void ula_run_cyc(INT32 cyc, INT32 draw_screen);
+static void update_ula(INT32 cycle);
 
 // Spectrum 48k tap-loading robot -dink
 static INT32 CASFrameCounter = 0; // for autoloading
@@ -581,7 +583,7 @@ static void __fastcall SpecZ80PortWrite(UINT16 address, UINT8 data)
 
 	if ((address & 0xff) == 0xfd) return; // Ignore (Jetpac writes here due to a bug in the game code, and it's the reason it won't work on 128k)
 
-	bprintf(0, _T("pw %x %x\n"), address, data);
+	//bprintf(0, _T("pw %x %x\n"), address, data);
 }
 
 static void spectrum128_bank()
@@ -665,20 +667,19 @@ static UINT8 __fastcall SpecSpec128Z80PortRead(UINT16 address)
 
 static void __fastcall SpecSpec128Z80PortWrite(UINT16 address, UINT8 data)
 {
-	if (!(address & 0x8002)) {
-		//bprintf(0, _T("writing %x  %x\n"), address, data);
-		if (Spec128kMapper & 0x20) return; // memory lock-latch enabled
-
-		Spec128kMapper = data;
-
-		spectrum128_bank();
-		return;
-	}
-
 	if (~address & 0x0001) {
 		BuzzerAdd((data & 0x10) >> 4);
 
 		ula_border = data;
+		// needs to fall through!!
+	}
+
+	if (!(address & 0x8002)) {
+		if (Spec128kMapper & 0x20) return; // memory lock-out latch
+
+		Spec128kMapper = data;
+
+		spectrum128_bank();
 		return;
 	}
 
@@ -691,7 +692,7 @@ static void __fastcall SpecSpec128Z80PortWrite(UINT16 address, UINT8 data)
 
 	if (address == 0xff3b || address == 0xbf3b) return; // ignore (some games check for "ula plus" here)
 
-	bprintf(0, _T("pw %x %x\n"), address, data);
+	//bprintf(0, _T("pw %x %x\n"), address, data);
 }
 
 // Spectrum TAP loader (c) 2020 dink
@@ -990,9 +991,6 @@ static void spectrum_loadz80()
 	}
 }
 
-static void update_ula(INT32 cycle); // forward
-static void ula_init(INT32 scanlines, INT32 cyc_scanline, INT32 contention);
-
 static INT32 BurnGetLength(INT32 rom_index)
 {
 	struct BurnRomInfo ri = { "", 0, 0, 0 };
@@ -1208,7 +1206,6 @@ static INT32 SpecDraw()
 }
 
 // dink's ULA simulator 2000 SSEI (super special edition intense)
-static INT32 CONT_OFFSET;
 static INT32 CONT_START;
 static INT32 CONT_END;
 static INT32 BORDER_START;
@@ -1219,12 +1216,10 @@ static void ula_init(INT32 scanlines, INT32 cyc_scanline, INT32 contention)
 	SpecScanlines = scanlines;
 	SpecCylesPerScanline = cyc_scanline;
 	SpecContention = contention;
-
-	CONT_OFFSET = 2; // 2 cycles to floating bus
-	CONT_START  = (SpecContention + CONT_OFFSET); // 14335 / 14361
+	CONT_START  = SpecContention; // 48k; 14335 / 128k: 14361
 	CONT_END    = (CONT_START + 192 * SpecCylesPerScanline);
 	BORDER_START= (SpecMode & SPEC_128K) ? 14368 : 14342;
-	BORDER_START-=(SpecCylesPerScanline * 16) + 6; // "+ 6": (center handlebars in paperboy HS screen)
+	BORDER_START-=(SpecCylesPerScanline * 16) + 8;
 	BORDER_END  = SpecCylesPerScanline * (16+256+16);
 }
 
@@ -1232,7 +1227,7 @@ static void ula_run_cyc(INT32 cyc, INT32 draw_screen)
 {
 	ula_byte = 0xff; // open-bus byte 0xff unless ula fetches screen data
 
-	// borders (top + sides + bottom) - note: only drawing 16px borders!
+	// borders (top + sides + bottom) - note: only drawing 16px borders here!
 	if (cyc >= BORDER_START && cyc <= BORDER_END) {
 		INT32 offset = cyc - BORDER_START;
 		INT32 x = ((offset) % SpecCylesPerScanline) * 2;
@@ -1312,6 +1307,7 @@ static void ula_run_cyc(INT32 cyc, INT32 draw_screen)
 
 static void update_ula(INT32 cycle)
 {
+	//bprintf(0, _T("update_ula:  %d   last %d\n"), cycle, ula_last_cyc);
 	if (ula_last_cyc > cycle) {
 		// next frame! - finish up previous frame & restart
 		for (INT32 i = ula_last_cyc; i < BORDER_END; i++) {
@@ -1424,23 +1420,18 @@ static INT32 SpecFrame()
 	ZetIdle(nExtraCycles);
 	nExtraCycles = 0;
 
-	const INT32 IRQ_LENGTH = 32;
+	const INT32 IRQ_LENGTH = 38; // 48k 32, 128k 36 (z80 core takes care of this - only allowing irq for proper length of machine, so value here is OK)
 
 	for (INT32 i = 0; i < SpecScanlines; i++) {
 		if (i == 0) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			nCyclesDo += IRQ_LENGTH;
 			ZetRun(IRQ_LENGTH);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
-
-			nCyclesDo += SpecCylesPerScanline - IRQ_LENGTH;
-			ZetRun(nCyclesDo - ZetTotalCycles());
-
 			ula_flash = (ula_flash + 1) & 0x1f;
-		} else {
-			nCyclesDo += SpecCylesPerScanline;
-			ZetRun(nCyclesDo - ZetTotalCycles());
 		}
+
+		nCyclesDo += SpecCylesPerScanline;
+		ZetRun(nCyclesDo - ZetTotalCycles());
 
 		if (SpecMode & SPEC_INVES) {
 			update_ula(ZetTotalCycles());

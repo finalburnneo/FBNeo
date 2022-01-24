@@ -7352,7 +7352,7 @@ DRV		BurnDrvJojour2;
 DRV		BurnDrvJojour1;
 DRV		BurnDrvJojou;
 DRV		BurnDrvJollyjgr;
-DRV		BurnDrvltorb1;
+DRV		BurnDrvltorb;
 DRV		BurnDrvnes_jongbou;
 DRV		BurnDrvjongpute;
 DRV		BurnDrvSotsugyok;
@@ -13480,6 +13480,7 @@ DRV		BurnSpecSoccerpinball;
 DRV		BurnDrvmd_socket;
 DRV		BurnDrvMSX_sofia;
 DRV		BurnSpecSokoban;
+DRV		BurnDrvSokoban;
 DRV		BurnDrvpce_sokoban;
 DRV		BurnDrvSokonuke;
 DRV		BurnDrvSoldividk;
@@ -13844,6 +13845,7 @@ DRV		BurnDrvnes_spartanx2;
 DRV		BurnDrvSpatter;
 DRV		BurnDrvspeakresb;
 DRV		BurnDrvspeakres;
+DRV		BurnDrvSpeccies;
 DRV		BurnSpecSpeccybros;
 DRV		BurnDrvsms_sci;
 DRV		BurnDrvsms_scip;
@@ -14016,6 +14018,7 @@ DRV		BurnSpecspyvspy2;
 DRV		BurnDrvMSX_spyvssp2;
 DRV		BurnSpecspyvspy3;
 DRV		BurnSpecSqijzx;
+DRV		BurnDrvSquij;
 DRV		BurnDrvnes_sqoon;
 DRV		BurnDrvMSX_squardan;
 DRV		BurnDrvMSX_squareball;
@@ -25562,7 +25565,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvJojour1,			// JoJo's Venture / JoJo no Kimyou na Bouken (USA 990108)
 	&BurnDrvJojou,				// JoJo's Venture / JoJo no Kimyou na Bouken (USA 990128)
 	&BurnDrvJollyjgr,			// Jolly Jogger
-	&BurnDrvltorb1,				// Jonas Indiana and the Lost Temple of RA (20050717)
+	&BurnDrvltorb,				// Jonas Indiana and the Lost Temple of RA (20050717)
 	&BurnDrvnes_jongbou,		// Jongbou (Japan)
 	&BurnDrvjongpute,			// Jongputer [no comment, NOT WORKING]
 	&BurnDrvSotsugyok,			// Jor-eop Jeungmyeongseo (Korea)
@@ -31690,6 +31693,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_socket,			// Socket (USA)
 	&BurnDrvMSX_sofia,			// Sofia (Jpn)
 	&BurnSpecSokoban,			// Sokoban (Spanish) (128K) (HB)
+	&BurnDrvSokoban,			// Sokoban LE
 	&BurnDrvpce_sokoban,		// Sokoban World
 	&BurnDrvSokonuke,			// Sokonuke Taisen Game (Japan)
 	&BurnDrvSoldividk,			// Sol Divide - The Sword Of Darkness (Korea)
@@ -32054,6 +32058,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSpatter,			// Spatter (315-5xxx)
 	&BurnDrvspeakresb,			// Speak & Rescue (bootleg)
 	&BurnDrvspeakres,			// Speak & Rescue
+	&BurnDrvSpeccies,			// Speccies 2
 	&BurnSpecSpeccybros,		// Speccy Bros (48K) (HB)
 	&BurnDrvsms_sci,			// Special Criminal Investigation (Euro)
 	&BurnDrvsms_scip,			// Special Criminal Investigation (Euro, Prototype)
@@ -32226,6 +32231,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_spyvssp2,		// Spy vs Spy II - The Island Caper (Euro)
 	&BurnSpecspyvspy3,			// Spy vs Spy III - Arctic Antics (48K)
 	&BurnSpecSqijzx,			// Sqij ZX (48K) (HB)
+	&BurnDrvSquij,				// SQIJ!
 	&BurnDrvnes_sqoon,			// Sqoon (USA)
 	&BurnDrvMSX_squardan,		// Square Dancer (Jpn)
 	&BurnDrvMSX_squareball,		// SquareBall (HB)

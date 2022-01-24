@@ -5967,7 +5967,7 @@
 		<video orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ltorb1" romof="neogeo">
+	<game name="ltorb" romof="neogeo">
 		<comment>Homebrew</comment>
 		<description>Jonas Indiana and the Lost Temple of RA (20050717)</description>
 		<year>2005</year>

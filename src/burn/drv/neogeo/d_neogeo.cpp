@@ -19723,7 +19723,7 @@ struct BurnDriver BurnDrvcolumnsn = {
 
 // Jonas Indiana and the Lost Temple of RA (20050717)
 
-static struct BurnRomInfo ltorb1RomDesc[] = {
+static struct BurnRomInfo ltorbRomDesc[] = {
 	{ "nnp-p1.rom",   0x040000, 0x353f6b05, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "nnp-s1.rom",   0x010000, 0x8224d8b7, 2 | BRF_GRA },           //  1 Text layer tiles
@@ -19736,15 +19736,15 @@ static struct BurnRomInfo ltorb1RomDesc[] = {
 	{ "nnp-v1.rom",   0x080000, 0x0329c2e7, 5 | BRF_SND },           //  5 Sound data
 };
 
-STDROMPICKEXT(ltorb1, ltorb1, neogeo)
-STD_ROM_FN(ltorb1)
+STDROMPICKEXT(ltorb, ltorb, neogeo)
+STD_ROM_FN(ltorb)
 
-struct BurnDriver BurnDrvltorb1 = {
-	"ltorb1", NULL, "neogeo", NULL, "2005",
+struct BurnDriver BurnDrvltorb = {
+	"ltorb", NULL, "neogeo", NULL, "2005",
 	"Jonas Indiana and the Lost Temple of RA (20050717)\0", NULL, "blastar@gmx.net", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
-	NULL, ltorb1RomInfo, ltorb1RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, ltorbRomInfo, ltorbRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

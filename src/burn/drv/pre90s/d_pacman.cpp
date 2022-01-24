@@ -7943,3 +7943,137 @@ struct BurnDriver BurnDrvclubpacm = {
 	clubpacmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
+
+
+// Lazy Bug
+
+static struct BurnRomInfo lazybugRomDesc[] = {
+	{ "lazybug.1",    0x1000, 0x8cee62ee, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "lazybug.2",    0x1000, 0xc17a5571, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "lazybug.3",    0x1000, 0xac53ee82, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "lazybug.4",    0x1000, 0x22a4e136, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "lazybug.5",    0x1000, 0xba11a997, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "lazybug.6",    0x1000, 0xc8b79a5b, 1 | BRF_ESS | BRF_PRG },	//  5
+
+	{ "lazybug.5e",   0x1000, 0x4e72e4f5, 2 | BRF_GRA },			//  6 Graphics
+	{ "lazybug.5f",   0x1000, 0x35eaf3a5, 2 | BRF_GRA },			//  7
+
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  8 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  9
+
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 10 Sound Prom
+	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom (not used)
+};
+
+STD_ROM_PICK(lazybug)
+STD_ROM_FN(lazybug)
+
+struct BurnDriver BurnDrvlazybug = {
+	"lazybug", NULL, NULL, NULL, "1981",
+	"Lazy Bug\0", NULL, "David Widel", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HACK, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, lazybugRomInfo, lazybugRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
+	lizwizInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Wavy Bug
+
+static struct BurnRomInfo wavybugRomDesc[] = {
+	{ "lazybug.1",    0x1000, 0x8cee62ee, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "lazybug.2",    0x1000, 0xc17a5571, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "lazybug.3",    0x1000, 0xac53ee82, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "wavybug.4",    0x1000, 0x830c47fc, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "lazybug.5",    0x1000, 0xba11a997, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "lazybug.6",    0x1000, 0xc8b79a5b, 1 | BRF_ESS | BRF_PRG },	//  5
+
+	{ "lazybug.5e",   0x1000, 0x4e72e4f5, 2 | BRF_GRA },			//  6 Graphics
+	{ "lazybug.5f",   0x1000, 0x35eaf3a5, 2 | BRF_GRA },			//  7
+
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  8 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  9
+
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 10 Sound Prom
+	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom (not used)
+};
+
+STD_ROM_PICK(wavybug)
+STD_ROM_FN(wavybug)
+
+struct BurnDriver BurnDrvwavybug = {
+	"wavybug", "lazybug", NULL, NULL, "1981",
+	"Wavy Bug\0", NULL, "David Widel", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HACK, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, wavybugRomInfo, wavybugRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
+	lizwizInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Crash (Pac-Man)
+
+static struct BurnRomInfo crashhRomDesc[] = {
+	{ "crashh.1",     0x1000, 0x04353b41, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "crashh.2",     0x1000, 0xe03205c0, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "crashh.3",     0x1000, 0xb0fa8e46, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "crashh.4",     0x1000, 0xbfa4d2fe, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "crashh.5",     0x1000, 0x12f2f224, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "pacman.6j",    0x1000, 0x817d94e3, 1 | BRF_ESS | BRF_PRG },	//  5
+
+	{ "crashh.5e",    0x1000, 0x0a25969b, 2 | BRF_GRA },			//  6 Graphics
+	{ "crashh.5f",    0x1000, 0x447ea79c, 2 | BRF_GRA },			//  7
+
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  8 Color Proms
+	{ "crush.4a",     0x0100, 0x2bc5d339, 3 | BRF_GRA },			//  9
+
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 10 Sound Prom
+	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom (not used)
+};
+
+STD_ROM_PICK(crashh)
+STD_ROM_FN(crashh)
+
+struct BurnDriver BurnDrvcrashh = {
+	"crashh", NULL, NULL, NULL, "2002",
+	"Crash (Pac-Man)\0", NULL, "hack", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HACK, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, crashhRomInfo, crashhRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
+	lizwizInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Pac Manic Miner Man
+
+static struct BurnRomInfo pacminerRomDesc[] = {
+	{ "pacminer.6e",  0x1000, 0x11dee14e, 1 | BRF_ESS | BRF_PRG },	// 0 Z80 Code
+	{ "pacminer.6f",  0x1000, 0x8c449bd7, 1 | BRF_ESS | BRF_PRG },	// 1
+	{ "pacminer.6h",  0x1000, 0xa0e62570, 1 | BRF_ESS | BRF_PRG },	// 2
+
+	{ "pacminer.5e",  0x1000, 0x9b3cc7cd, 2 | BRF_GRA },			// 3 Graphics
+	{ "pacminer.5f",  0x1000, 0xc1b2dc90, 2 | BRF_GRA },			// 4
+
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 5 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 6
+
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 7 Sound Prom
+	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 8 Timing Prom (not used)
+};
+
+STD_ROM_PICK(pacminer)
+STD_ROM_FN(pacminer)
+
+struct BurnDriver BurnDrvpacminer = {
+	"pacminer", "puckman", NULL, NULL, "2012",
+	"Pac Manic Miner Man\0", NULL, "Jim Bagley", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HACK, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, pacminerRomInfo, pacminerRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+

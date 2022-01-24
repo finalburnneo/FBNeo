@@ -4357,3 +4357,79 @@ struct BurnDriver BurnDrvEvilston = {
 	EvilstonInit, DrvExit, Z80x2Frame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 320, 3, 4
 };
+
+
+// Sokoban LE
+
+static struct BurnRomInfo sokobanRomDesc[] = {
+	{ "sokoban.ic10",		0x10000, 0x5959ddb4, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+
+	{ "sokoban.ic9",		0x10000, 0x859e1ff4, 4 | BRF_GRA },           //  1 graphics data
+	{ "sokoban.ic8",		0x10000, 0x439a6670, 4 | BRF_GRA },           //  2
+
+	{ "gal16v8-b86-04.bin",	0x00117, 0xbf8c0ea0, 0 | BRF_OPT },           //  3 plds
+};
+
+STD_ROM_PICK(sokoban)
+STD_ROM_FN(sokoban)
+
+struct BurnDriver BurnDrvSokoban = {
+	"sokoban", NULL, NULL, NULL, "2015",
+	"Sokoban LE\0", NULL, "cmonkey", "Taito L System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
+	NULL, sokobanRomInfo, sokobanRomName, NULL, NULL, NULL, NULL, PlottingInputInfo, PlottingDIPInfo,
+	PlottingInit, DrvExit, Z80x1Frame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	320, 224, 4, 3
+};
+
+
+// Speccies 2
+
+static struct BurnRomInfo specciesRomDesc[] = {
+	{ "speccies.ic10",		0x055e9, 0x29e126ac, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+
+	{ "speccies.ic9",		0x10000, 0x11ed1528, 4 | BRF_GRA },           //  1 graphics data
+	{ "speccies.ic8",		0x10000, 0xfcfeb89f, 4 | BRF_GRA },           //  2
+
+	{ "mc68705p3.ic4",		0x00800, 0x085f68b4, 0 | BRF_OPT },           //  3 mcu ?
+	{ "gal16v8-b86-04.bin",	0x00117, 0xbf8c0ea0, 0 | BRF_OPT },           //  4 plds
+};
+
+STD_ROM_PICK(speccies)
+STD_ROM_FN(speccies)
+
+struct BurnDriver BurnDrvSpeccies = {
+	"speccies", NULL, NULL, NULL, "2015",
+	"Speccies 2\0", NULL, "Sokurah", "Taito L System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
+	NULL, specciesRomInfo, specciesRomName, NULL, NULL, NULL, NULL, PlottingInputInfo, PlottingDIPInfo,
+	PlottingInit, DrvExit, Z80x1Frame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	320, 224, 4, 3
+};
+
+
+// SQIJ!
+
+static struct BurnRomInfo sqijRomDesc[] = {
+	{ "sqij.ic10",			0x0f000, 0x214ba802, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+
+	{ "sqij.ic9",			0x10000, 0xc4de729b, 4 | BRF_GRA },           //  1 graphics data
+	{ "sqij.ic8",			0x10000, 0x978df42d, 4 | BRF_GRA },           //  2
+
+	{ "gal16v8-b86-04.bin",	0x00117, 0xbf8c0ea0, 0 | BRF_OPT },           //  3 plds
+};
+
+STD_ROM_PICK(sqij)
+STD_ROM_FN(sqij)
+
+struct BurnDriver BurnDrvSquij = {
+	"sqij", NULL, NULL, NULL, "2018",
+	"SQIJ!\0", NULL, "Sokurah", "Taito L System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
+	NULL, sqijRomInfo, sqijRomName, NULL, NULL, NULL, NULL, PlottingInputInfo, PlottingDIPInfo,
+	PlottingInit, DrvExit, Z80x1Frame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	320, 224, 4, 3
+};

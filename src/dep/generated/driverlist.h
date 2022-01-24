@@ -511,6 +511,7 @@ DRV		BurnDrvMSX_alien8;
 DRV		BurnDrvMSX_alien8h;
 DRV		BurnDrvAlienaru;
 DRV		BurnDrvAlienar;
+DRV		BurnDrvaa;
 DRV		BurnDrvMSX_alienattack;
 DRV		BurnDrvMSX_alienattackv35;
 DRV		BurnDrvAlienchac;
@@ -1181,6 +1182,7 @@ DRV		BurnSpecBallbreak128;
 DRV		BurnSpecBallbreak48;
 DRV		BurnDrvpce_ballistx;
 DRV		BurnDrvtg_ballistx;
+DRV		BurnDrvbace;
 DRV		BurnDrvBallbros;
 DRV		BurnDrvnes_balloonfight;
 DRV		BurnDrvnes_balloonmonster;
@@ -3539,6 +3541,7 @@ DRV		BurnDrvmd_deathrets;
 DRV		BurnDrvmd_deathret;
 DRV		BurnDrvDeathbrd;
 DRV		BurnDrvmd_deathcal;
+DRV		BurnDrvdderby;
 DRV		BurnDrvmd_deathdls;
 DRV		BurnDrvmd_deathdl;
 DRV		BurnSpecDeathpit;
@@ -18724,6 +18727,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_alien8h,		// Alien 8 (Jpn, Hacked?)
 	&BurnDrvAlienaru,			// Alien Arena (Stargate upgrade)
 	&BurnDrvAlienar,			// Alien Arena
+	&BurnDrvaa,					// Alien Armada
 	&BurnDrvMSX_alienattack,	// Alien Attack (HB, v1.06)
 	&BurnDrvMSX_alienattackv35,	// Alien Attack (HB, v3.5)
 	&BurnDrvAlienchac,			// Alien Challenge (China)
@@ -19394,6 +19398,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecBallbreak48,		// Ballbreaker (48K)
 	&BurnDrvpce_ballistx,		// Ballistix
 	&BurnDrvtg_ballistx,		// Ballistix
+	&BurnDrvbace,				// Balloon Ace
 	&BurnDrvBallbros,			// Balloon Brothers
 	&BurnDrvnes_balloonfight,	// Balloon Fight (USA)
 	&BurnDrvnes_balloonmonster,	// Balloon Monster (Unl)
@@ -21752,6 +21757,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_deathret,		// Death and Return of Superman, The (USA)
 	&BurnDrvDeathbrd,			// Death Brade (Japan ver JM-3)
 	&BurnDrvmd_deathcal,		// Death Caliber (Rus)
+	&BurnDrvdderby,				// Death Derby
 	&BurnDrvmd_deathdls,		// Death Duel (Hack, Spanish)
 	&BurnDrvmd_deathdl,			// Death Duel (USA)
 	&BurnSpecDeathpit,			// Death Pit (48K)

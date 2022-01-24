@@ -3125,6 +3125,7 @@ DRV		BurnDrvCrkdown;
 DRV		BurnDrvnes_crapjob;
 DRV		BurnDrvnes_crashnboy;
 DRV		BurnDrvHocrash;
+DRV		BurnDrvcrashh;
 DRV		BurnDrvmd_crash;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvCrater;			// Graphics Issues [NOT WORKING]
@@ -8134,6 +8135,7 @@ DRV		BurnDrvnes_laweste;
 DRV		BurnDrvnes_lawnmower;
 DRV		BurnDrvnes_laylaj;
 DRV		BurnDrvnes_layla;
+DRV		BurnDrvlazybug;
 DRV		BurnDrvMSX_lazyjones;
 DRV		BurnDrvBagnardi;
 DRV		BurnDrvBagnardio;
@@ -10626,6 +10628,7 @@ DRV		BurnDrvPacnpal;
 DRV		BurnDrvpacmanfm;
 DRV		BurnDrvpacmanug;
 DRV		BurnDrvcv_pacmancol;
+DRV		BurnDrvpacminer;
 DRV		BurnDrvMSX_pac01;
 DRV		BurnDrvgg_pacattak;
 DRV		BurnDrvmd_pacattak;
@@ -17308,6 +17311,7 @@ DRV		BurnDrvWmatch;
 DRV		BurnDrvWaterski;
 DRV		BurnDrvcv_watervil;
 DRV		BurnDrvmd_waterwld;
+DRV		BurnDrvwavybug;
 DRV		BurnSpecwayexplf;
 DRV		BurnDrvcv_explodingfoot;
 DRV		BurnDrvMSX_waytiger;
@@ -21331,6 +21335,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_crapjob,		// Crap Job (HB)
 	&BurnDrvnes_crashnboy,		// Crash 'n' the Boys - Street Challenge (USA)
 	&BurnDrvHocrash,			// Crash (bootleg of Head On)
+	&BurnDrvcrashh,				// Crash (Pac-Man)
 	&BurnDrvmd_crash,			// Crash Bandicoot (Rus)
 #if defined FBNEO_DEBUG
 	&BurnDrvCrater,				// Crater Raider [Graphics Issues, NOT WORKING]
@@ -26340,6 +26345,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_lawnmower,		// Lawn Mower (HB)
 	&BurnDrvnes_laylaj,			// Layla (Japan)
 	&BurnDrvnes_layla,			// Layla (T-Eng)
+	&BurnDrvlazybug,			// Lazy Bug
 	&BurnDrvMSX_lazyjones,		// Lazy Jones (Euro)
 	&BurnDrvBagnardi,			// Le Bagnard (Itisa, Spain)
 	&BurnDrvBagnardio,			// Le Bagnard (Itisa, Spain, older)
@@ -28832,6 +28838,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpacmanfm,			// Pac Man (FAMARE S.A. bootleg of Puck Man)
 	&BurnDrvpacmanug,			// Pac Man (U.G. bootleg of Puck Man)
 	&BurnDrvcv_pacmancol,		// Pac Man Collection
+	&BurnDrvpacminer,			// Pac Manic Miner Man
 	&BurnDrvMSX_pac01,			// PAC-01 (HB)
 	&BurnDrvgg_pacattak,		// Pac-Attack (Euro, USA)
 	&BurnDrvmd_pacattak,		// Pac-Attack (USA)
@@ -35514,6 +35521,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvWaterski,			// Water Ski
 	&BurnDrvcv_watervil,		// Waterville Rescue (HB)
 	&BurnDrvmd_waterwld,		// WaterWorld (Euro, Prototype)
+	&BurnDrvwavybug,			// Wavy Bug
 	&BurnSpecwayexplf,			// Way of the Exploding Fist, The (48K)
 	&BurnDrvcv_explodingfoot,	// Way of the Exploding Foot (HB)
 	&BurnDrvMSX_waytiger,		// Way of the Tiger, The (Euro)

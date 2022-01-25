@@ -618,17 +618,15 @@ void Reinitialise(void)
 	nNextGeometryCall = RETRO_ENVIRONMENT_SET_GEOMETRY;
 }
 
-static void ForceFrameStep(bool bSkip)
+static void ForceFrameStep()
 {
 #ifdef FBNEO_DEBUG
 	nFramesEmulated++;
 #endif
 	nCurrentFrame++;
 
-	if (bSkip)
-		pBurnDraw = NULL;
 #ifdef FBNEO_DEBUG
-	else
+	if (pBurnDraw != NULL)
 		nFramesRendered++;
 #endif
 	BurnDrvFrame();
@@ -1066,7 +1064,8 @@ void retro_reset()
 	if (bIsNeogeoCartGame)
 		set_neo_system_bios();
 
-	ForceFrameStep(1);
+	pBurnDraw = NULL;
+	ForceFrameStep();
 
 	// Loading minimal savestate (handle some machine settings)
 	if (bIsNeogeoCartGame && BurnStateLoad(g_autofs_path, 0, NULL) == 0)
@@ -1184,7 +1183,9 @@ void retro_run()
 		bUpdateAudioLatency = false;
 	}
 
-	ForceFrameStep(bSkipFrame);
+	if (bSkipFrame)
+		pBurnDraw = NULL;
+	ForceFrameStep();
 
 	if (bPresentAudio)
 	{
@@ -1198,11 +1199,10 @@ void retro_run()
 		bVidImageNeedRealloc = false;
 		VideoBufferInit();
 		// current frame will be corrupted, let's dupe instead
-		if (bEnableVideo)
-			video_cb(NULL, nGameWidth, nGameHeight, nBurnPitch);
+		pBurnDraw = NULL;
 	}
-	else if (bEnableVideo)
-		video_cb(bSkipFrame ? NULL : pVidImage, nGameWidth, nGameHeight, nBurnPitch);
+
+	video_cb(pBurnDraw, nGameWidth, nGameHeight, nBurnPitch);
 
 	bool updated = false;
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE_UPDATE, &updated) && updated)

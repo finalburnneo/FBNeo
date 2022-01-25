@@ -1094,6 +1094,9 @@ void retro_run()
 	bool bEmulateAudio = true;
 	bool bPresentAudio = true;
 
+#ifndef FBNEO_DEBUG
+	// Setting RA's video or audio driver to null will disable video/audio bits,
+	// however that's a problem because i do batch run with video/audio disabled to detect asan issues 
 	if (environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &nAudioVideoEnable))
 	{
 		// Video is required when "Enable Video" bit is set
@@ -1121,9 +1124,7 @@ void retro_run()
 		else
 			bPresentAudio = (nAudioVideoEnable & 2); // "Enable Audio"
 	}
-
-	pBurnDraw = bEnableVideo ? pVidImage : NULL; // Set to NULL to skip frame rendering
-	pBurnSoundOut = bEmulateAudio ? pAudBuffer : NULL; // Set to NULL to skip sound rendering
+#endif
 
 	bool bSkipFrame = false;
 
@@ -1183,15 +1184,16 @@ void retro_run()
 		bUpdateAudioLatency = false;
 	}
 
-	if (bSkipFrame)
-		pBurnDraw = NULL;
+	pBurnDraw = bEnableVideo && !bSkipFrame ? pVidImage : NULL; // Set to NULL to skip frame rendering
+	pBurnSoundOut = bEmulateAudio ? pAudBuffer : NULL; // Set to NULL to skip sound rendering
+
 	ForceFrameStep();
 
 	if (bPresentAudio)
 	{
 		if (bLowPassFilterEnabled)
-			DspDo(pAudBuffer, nBurnSoundLen);
-		audio_batch_cb(pAudBuffer, nBurnSoundLen);
+			DspDo(pBurnSoundOut, nBurnSoundLen);
+		audio_batch_cb(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (bVidImageNeedRealloc)

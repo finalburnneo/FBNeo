@@ -40,7 +40,7 @@ static INT16 nAnalogAxis[2] = {0,0};
 static UINT8 nCharAxis[2] = {0,0};
 
 enum { PACMAN=0, MSPACMAN, MSPACTWIN, CANNONBP, MAKETRAX, PIRANHA, VANVAN, NMOUSE, DREMSHPR,
-       MSCHAMP, BIGBUCKS, ROCKTRV2, ALIBABA, CRUSHS, SHOOTBUL, BIRDIY, EPOS, PENGO, JUMPSHOT };
+       MSCHAMP, BIGBUCKS, ROCKTRV2, ALIBABA, CRUSHS, SHOOTBUL, BIRDIY, EPOS, PENGO, JUMPSHOT, ZOLAPAC };
 
 static INT32 game_select;
 static INT32 acitya = 0;
@@ -62,6 +62,7 @@ static UINT8 *rocktrv2_prot_data;
 static INT8  epos_hardware_counter;
 static UINT8 mschamp_counter;
 static UINT8 cannonb_bit_to_read;
+static UINT8 zolapac_timer;
 
 static UINT32 watchdog;
 static INT32 watchdog_disable = 0;
@@ -2081,6 +2082,13 @@ UINT8 __fastcall pacman_in_port(UINT16 a)
 		case MSCHAMP:
 			if (a == 0) return mschamp_counter++;
 			return 0;
+
+		case ZOLAPAC:
+			if (a == 0) {
+				UINT8 timer_now = zolapac_timer;
+				zolapac_timer++;
+				return timer_now;
+			}
 	}
 
 	return 0;
@@ -2122,6 +2130,12 @@ void __fastcall pacman_out_port(UINT16 a, UINT8 d)
 				if (d == 0xbf) d = 0x3c;
 				if (d == 0xc6) d = 0x40;
 				interrupt_mode = d;
+			}
+		return;
+
+		case ZOLAPAC:
+			if (a == 0x11) {
+				zolapac_timer = d;
 			}
 		return;
 	}
@@ -3101,6 +3115,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(cannonb_bit_to_read);
 
 		SCAN_VAR(sublatch);
+
+		if (game_select == ZOLAPAC) {
+			SCAN_VAR(zolapac_timer);
+		}
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -8154,16 +8172,16 @@ static struct BurnRomInfo dderbyRomDesc[] = {
 	{ "dderby.6e",    0x1000, 0x6f373bd4, 1 | BRF_ESS | BRF_PRG },	// 0 Z80 Code
 	{ "dderby.6f",    0x1000, 0x2fbf16bf, 1 | BRF_ESS | BRF_PRG },	// 1
 	{ "dderby.6h",    0x1000, 0x6e16cd16, 1 | BRF_ESS | BRF_PRG },	// 2
-	{ "dderby.6j",    0x1000, 0xf7e09874, 1 | BRF_ESS | BRF_PRG },	// 2
+	{ "dderby.6j",    0x1000, 0xf7e09874, 1 | BRF_ESS | BRF_PRG },	// 3
 
-	{ "dderby.5e",    0x1000, 0x7e2c0a53, 2 | BRF_GRA },			// 3 Graphics
-	{ "dderby.5f",    0x1000, 0xcb2dd072, 2 | BRF_GRA },			// 4
+	{ "dderby.5e",    0x1000, 0x7e2c0a53, 2 | BRF_GRA },			// 4 Graphics
+	{ "dderby.5f",    0x1000, 0xcb2dd072, 2 | BRF_GRA },			// 5
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 5 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 6
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 6 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 7
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 7 Sound Prom
-	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 8 Timing Prom (not used)
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 8 Sound Prom
+	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 9 Timing Prom (not used)
 };
 
 STD_ROM_PICK(dderby)
@@ -8186,16 +8204,16 @@ static struct BurnRomInfo baceRomDesc[] = {
 	{ "bace.1",       0x1000, 0x8b60ff7c, 1 | BRF_ESS | BRF_PRG },	// 0 Z80 Code
 	{ "bace.2",       0x1000, 0x25d8361a, 1 | BRF_ESS | BRF_PRG },	// 1
 	{ "bace.3",       0x1000, 0xfc38d994, 1 | BRF_ESS | BRF_PRG },	// 2
-	{ "bace.4",       0x1000, 0x5853f341, 1 | BRF_ESS | BRF_PRG },	// 2
+	{ "bace.4",       0x1000, 0x5853f341, 1 | BRF_ESS | BRF_PRG },	// 3
 
-	{ "bace.5e",      0x1000, 0x6da99c7b, 2 | BRF_GRA },			// 3 Graphics
-	{ "bace.5f",      0x1000, 0xb81cdc64, 2 | BRF_GRA },			// 4
+	{ "bace.5e",      0x1000, 0x6da99c7b, 2 | BRF_GRA },			// 4 Graphics
+	{ "bace.5f",      0x1000, 0xb81cdc64, 2 | BRF_GRA },			// 5
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 5 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 6
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 6 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 7
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 7 Sound Prom
-	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 8 Timing Prom (not used)
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 8 Sound Prom
+	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 9 Timing Prom (not used)
 };
 
 STD_ROM_PICK(bace)
@@ -8208,6 +8226,41 @@ struct BurnDriver BurnDrvbace = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HACK, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, baceRomInfo, baceRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
 	widelInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Super Zola Pac Gal
+
+static struct BurnRomInfo zolapacRomDesc[] = {
+	{ "zolapac1.bin", 0x4000, 0x1aa2f312, 1 | BRF_ESS | BRF_PRG },	// 0 Z80 Code
+	{ "zolapac2.bin", 0x2000, 0x420ff603, 1 | BRF_ESS | BRF_PRG },	// 1
+
+	{ "5e",           0x1000, 0x5c281d01, 2 | BRF_GRA },			// 2 Graphics
+	{ "5f",           0x1000, 0x615af909, 2 | BRF_GRA },			// 3
+
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 4 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 5
+
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 6 Sound Prom
+	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 7 Timing Prom (not used)
+};
+
+STD_ROM_PICK(zolapac)
+STD_ROM_FN(zolapac)
+
+static INT32 zolapacInit()
+{
+	return DrvInit(WoodpekMap, NULL, ZOLAPAC);
+}
+
+struct BurnDriver BurnDrvzolapac = {
+	"zolapac", "mspacman", NULL, NULL, "2000",
+	"Super Zola Pac Gal\0", NULL, "Tqwn Amusement", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HACK, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, zolapacRomInfo, zolapacRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
+	zolapacInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
 

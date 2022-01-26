@@ -15,8 +15,8 @@ static UINT16 *sg_ram = NULL;
 
 // muting & pop-supression logic (tested: rampage, powerdrv, stargrds)
 struct anti_pop {
+	UINT16 last_tval;
 	INT32 booting;
-	INT32 last_tval;
 };
 
 static anti_pop ml;

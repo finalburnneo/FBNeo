@@ -2031,8 +2031,6 @@ static INT32 RampageInit()
 	sound_input_bank = 4;
 	port_write_handler = rampage_write_callback;
 
-    soundsgood_rampage = 1; // for sound-cleanup in soundsgood
-
     return DrvInit(0);
 }
 

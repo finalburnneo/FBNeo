@@ -13420,6 +13420,16 @@ struct BurnDriver BurnDrvCpsCybotsjd = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvCpsCybotsam = {
+	"cybotsam", "cybots", NULL, NULL, "1995",
+	"Cyberbots - fullmetal madness Unlock Hack\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
+	NULL, CybotamRomInfo, CybotamRomName, NULL, NULL, NULL, NULL, CybotsInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvCpsDdsomud = {
 	"ddsomud", "ddsom", NULL, NULL, "1996",
 	"Dungeons & Dragons - shadow over mystara (960619 USA Phoenix Edition)\0", NULL, "bootleg", "CPS2",

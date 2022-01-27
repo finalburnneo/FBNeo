@@ -4807,6 +4807,7 @@ DRV		BurnDrveyeszac;
 DRV		BurnDrveyes;
 DRV		BurnDrveyes2;
 DRV		BurnDrvnes_eyra;
+DRV		BurnDrvmd_eyra;
 DRV		BurnDrvF1dreamb;
 DRV		BurnDrvF1dreamba;
 DRV		BurnDrvF1dream;
@@ -12224,6 +12225,12 @@ DRV		BurnDrvRetofinv;
 DRV		BurnDrvJedi;
 DRV		BurnSpectraxtor2;
 DRV		BurnDrvgg_revenged;
+DRV		BurnDrvmd_revshin2;
+DRV		BurnDrvmd_revshin1;
+DRV		BurnDrvmd_revshin;
+DRV		BurnDrvmd_revshins;
+DRV		BurnDrvmd_revshinp1;
+DRV		BurnDrvmd_revshinp2;
 DRV		BurnDrvRevngr84;
 DRV		BurnDrvRevenger;
 DRV		BurnSpecRevpong;
@@ -13759,6 +13766,7 @@ DRV		BurnDrvSpacefba;
 DRV		BurnDrvSpacefbe;
 DRV		BurnDrvSpacefbe2;
 DRV		BurnDrvSpacefb;
+DRV		BurnDrvmd_sfattack;
 DRV		BurnDrvmd_spacebob;
 DRV		BurnDrvSpacfurya;
 DRV		BurnDrvSpacfuryb;
@@ -14989,6 +14997,11 @@ DRV		BurnDrvSshanghaj;
 DRV		BurnDrvSshanghak;
 DRV		BurnDrvSshangha;
 DRV		BurnDrvSshanghab;
+DRV		BurnDrvmd_supshin2;
+DRV		BurnDrvmd_supshin2p1;
+DRV		BurnDrvmd_supshin2p2;
+DRV		BurnDrvmd_supshin2c;
+DRV		BurnDrvmd_supshin;
 DRV		BurnDrvnes_supershi;
 DRV		BurnDrvSsideki;
 DRV		BurnDrvSsideki2;
@@ -16054,12 +16067,6 @@ DRV		BurnDrvGhostb3a;		// no comment [NOT WORKING]
 DRV		BurnDrvGhostb3;
 DRV		BurnDrvMSX_relic;
 DRV		BurnDrvRoishtar;
-DRV		BurnDrvmd_revshin2;
-DRV		BurnDrvmd_revshin1;
-DRV		BurnDrvmd_revshin;
-DRV		BurnDrvmd_revshins;
-DRV		BurnDrvmd_revshinp1;
-DRV		BurnDrvmd_revshinp2;
 DRV		BurnDrvnes_riseamo;
 DRV		BurnDrvmd_tsfss;
 DRV		BurnDrvmd_seconds;
@@ -16105,11 +16112,6 @@ DRV		BurnDrvmd_thorp1;
 DRV		BurnDrvmd_thorf;
 DRV		BurnDrvmd_thorj;
 DRV		BurnDrvmd_thorc;
-DRV		BurnDrvmd_supshin;
-DRV		BurnDrvmd_supshin2;
-DRV		BurnDrvmd_supshin2p1;
-DRV		BurnDrvmd_supshin2p2;
-DRV		BurnDrvmd_supshin2c;
 DRV		BurnDrvSuperspy;
 DRV		BurnDrvsms_termntrb;
 DRV		BurnDrvsms_termntrc;
@@ -16997,6 +16999,7 @@ DRV		BurnDrvVautour;
 DRV		BurnDrvVautourz;
 DRV		BurnDrvVautourza;
 DRV		BurnDrvMSX_vaxol;
+DRV		BurnDrvVbrakout;
 DRV		BurnDrvmd_vecman;
 DRV		BurnDrvmd_vecmanp1;
 DRV		BurnDrvmd_vecmanp3;
@@ -23033,6 +23036,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrveyes,				// Eyes (Digitrex Techstar)
 	&BurnDrveyes2,				// Eyes (Techstar)
 	&BurnDrvnes_eyra,			// Eyra - The Crow Maiden (HB)
+	&BurnDrvmd_eyra,			// Eyra the Crow Maiden (HB)
 	&BurnDrvF1dreamb,			// F-1 Dream (bootleg, set 1)
 	&BurnDrvF1dreamba,			// F-1 Dream (bootleg, set 2)
 	&BurnDrvF1dream,			// F-1 Dream
@@ -30450,6 +30454,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvJedi,				// Return of the Jedi
 	&BurnSpectraxtor2,			// Return of Traxtor (48K) (HB)
 	&BurnDrvgg_revenged,		// Revenge of Drancon (USA, Bra)
+	&BurnDrvmd_revshin2,		// Revenge of Shinobi, The (Euro, USA)
+	&BurnDrvmd_revshin1,		// Revenge of Shinobi, The (Euro, USA, Rev. A)
+	&BurnDrvmd_revshin,			// Revenge of Shinobi, The (Euro, USA, Rev. B)
+	&BurnDrvmd_revshins,		// Revenge of Shinobi, The (Hack, Spanish)
+	&BurnDrvmd_revshinp1,		// Revenge of Shinobi, The (Prototype, 19890821)
+	&BurnDrvmd_revshinp2,		// Revenge of Shinobi, The (Prototype, 19900201)
 	&BurnDrvRevngr84,			// Revenger '84 (set 1)
 	&BurnDrvRevenger,			// Revenger '84 (set 2) [Bad dump, NOT WORKING]
 	&BurnSpecRevpong,			// Reverse Pong (48K) (HB)
@@ -31379,7 +31389,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_shinobi3s,		// Shinobi III - Return of the Ninja Master (Hack, Spanish)
 	&BurnDrvmd_shinobi3p,		// Shinobi III - Return of the Ninja Master (Prototype, 19930629)
 	&BurnDrvmd_shinobi3u,		// Shinobi III - Return of the Ninja Master (USA)
-	&BurnDrvmd_shinobi3umj,		// Shinobi III - Return of the Ninja Master (USA, MIJET Hack)
+	&BurnDrvmd_shinobi3umj,		// Shinobi III - Return of the Ninja Master (USA, Hack)
 	&BurnDrvpce_shinobi,		// Shinobi
 	&BurnDrvmd_ship1,			// Ship (Prototype)
 	&BurnDrvmd_ship,			// Ship (Visitor Prototype)
@@ -31985,6 +31995,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSpacefbe,			// Space Firebird (rev. 03-e set 1)
 	&BurnDrvSpacefbe2,			// Space Firebird (rev. 03-e set 2)
 	&BurnDrvSpacefb,			// Space Firebird (rev. 04-u)
+	&BurnDrvmd_sfattack,		// Space Flies Attack (HB)
 	&BurnDrvmd_spacebob,		// Space Funky B.O.B. (Jpn)
 	&BurnDrvSpacfurya,			// Space Fury (revision A)
 	&BurnDrvSpacfuryb,			// Space Fury (revision B)
@@ -32554,7 +32565,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_streefigii,		// Street Fighter II - The World Warrior (Unl)
 	&BurnDrvCpsSf2ly,			// Street Fighter II - The World Warrior (with bosses like Champion Edition, 910522 Japan, CPS-B-11)
 	&BurnDrvnes_streefigiihac,	// Street Fighter II Hack (Hack of SFIII)
-	&BurnDrvCpssf2mix,			// Street Fighter II Mix (v1.0)
+	&BurnDrvCpssf2mix,			// Street Fighter II Mix (v1.2)
 	&BurnDrvCpsSf2cebltw,		// Street Fighter II' - Champion Edition (920313 'Taiwan' bootleg with PAL)
 	&BurnDrvCpsSf2ceeabl,		// Street Fighter II' - Champion Edition (920313 etc bootleg set 1)
 	&BurnDrvCpsSf2ceeab2,		// Street Fighter II' - Champion Edition (920313 etc bootleg set 2)
@@ -33215,6 +33226,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSshanghak,			// Super Shanghai Dragon's Eye (Korea)
 	&BurnDrvSshangha,			// Super Shanghai Dragon's Eye (World)
 	&BurnDrvSshanghab,			// Super Shanghai Dragon's Eye (World, bootleg)
+	&BurnDrvmd_supshin2,		// Super Shinobi II, The (Jpn, Kor)
+	&BurnDrvmd_supshin2p1,		// Super Shinobi II, The (Jpn, Prototype)
+	&BurnDrvmd_supshin2p2,		// Super Shinobi II, The (Jpn, Prototype, Earlier)
+	&BurnDrvmd_supshin2c,		// Super Shinobi II, The (T-Chi)
+	&BurnDrvmd_supshin,			// Super Shinobi, The (Jpn)
 	&BurnDrvnes_supershi,		// Super Shinobi, The (Unl)
 	&BurnDrvSsideki,			// Super Sidekicks / Tokuten Ou
 	&BurnDrvSsideki2,			// Super Sidekicks 2 - The World Championship / Tokuten Ou 2 - real fight football (NGM-061)(NGH-061)
@@ -34280,12 +34296,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGhostb3,			// The Real Ghostbusters (US 3 Players, revision 3B?)
 	&BurnDrvMSX_relic,			// The Relic (HB)
 	&BurnDrvRoishtar,			// The Return of Ishtar
-	&BurnDrvmd_revshin2,		// The Revenge of Shinobi (Euro, USA)
-	&BurnDrvmd_revshin1,		// The Revenge of Shinobi (Euro, USA, Rev. A)
-	&BurnDrvmd_revshin,			// The Revenge of Shinobi (Euro, USA, Rev. B)
-	&BurnDrvmd_revshins,		// The Revenge of Shinobi (Hack, Spanish)
-	&BurnDrvmd_revshinp1,		// The Revenge of Shinobi (Prototype, 19890821)
-	&BurnDrvmd_revshinp2,		// The Revenge of Shinobi (Prototype, 19900201)
 	&BurnDrvnes_riseamo,		// The Rise of Amondus (HB)
 	&BurnDrvmd_tsfss,			// The S Factor - Sonia And Silver (Hack)
 	&BurnDrvmd_seconds,			// The Second Samurai (Euro)
@@ -34331,11 +34341,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_thorf,			// The Story of Thor - A Successor of The Light (French)
 	&BurnDrvmd_thorj,			// The Story of Thor - Hikari o Tsugumono (Jpn)
 	&BurnDrvmd_thorc,			// The Story of Thor - Hikari o Tsugumono (T-Chi)
-	&BurnDrvmd_supshin,			// The Super Shinobi (Jpn)
-	&BurnDrvmd_supshin2,		// The Super Shinobi II (Jpn, Kor)
-	&BurnDrvmd_supshin2p1,		// The Super Shinobi II (Jpn, Prototype)
-	&BurnDrvmd_supshin2p2,		// The Super Shinobi II (Jpn, Prototype, Earlier)
-	&BurnDrvmd_supshin2c,		// The Super Shinobi II (T-Chi)
 	&BurnDrvSuperspy,			// The Super Spy (NGM-011)(NGH-011)
 	&BurnDrvsms_termntrb,		// The Terminator (Bra)
 	&BurnDrvsms_termntrc,		// The Terminator (Euro) - Castellano v1,0
@@ -35223,6 +35228,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvVautourz,			// Vautour (bootleg of Phoenix) (Z80 CPU)
 	&BurnDrvVautourza,			// Vautour (bootleg of Phoenix) (Z80 CPU, single PROM)
 	&BurnDrvMSX_vaxol,			// Vaxol (Jpn)
+	&BurnDrvVbrakout,			// Vector Breakout [h]
 	&BurnDrvmd_vecman,			// Vectorman (Euro, USA)
 	&BurnDrvmd_vecmanp1,		// Vectorman (Prototype)
 	&BurnDrvmd_vecmanp3,		// Vectorman (Prototype, 19950724)

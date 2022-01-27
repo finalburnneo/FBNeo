@@ -5263,23 +5263,25 @@
 	<game name="drrobotn">
 		<description>Dr. Robotnik's Mean Bean Machine (Euro)</description>
 		<year>1993</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Sega - Compile</manufacturer>
 		<rom name="dr. robotnik's mean bean machine (euro).bin" size="1048576" crc="70680706"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="drrobotns" cloneof="drrobotn" romof="drrobotn">
+		<comment>Hack</comment>
 		<description>Dr. Robotnik's Mean Bean Machine (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Max1323</manufacturer>
 		<rom name="dr. robotnik's mean bean machine (hack, spanish).bin" size="1048576" crc="86ed4079"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="drrobotnp" cloneof="drrobotn" romof="drrobotn">
+		<comment>Prototype</comment>
 		<description>Dr. Robotnik's Mean Bean Machine (Prototype B)</description>
 		<year>1993</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Sega - Compile</manufacturer>
 		<rom name="dr. robotnik's mean bean machine (prototype b).bin" size="1048576" crc="c631bfff"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5287,15 +5289,16 @@
 	<game name="drrobotnu" cloneof="drrobotn" romof="drrobotn">
 		<description>Dr. Robotnik's Mean Bean Machine (USA)</description>
 		<year>1993</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Sega - Compile</manufacturer>
 		<rom name="dr. robotnik's mean bean machine (usa).bin" size="1048576" crc="c7ca517f"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="drrobotnup" cloneof="drrobotn" romof="drrobotn">
+		<comment>Prototype</comment>
 		<description>Dr. Robotnik's Mean Bean Machine (USA, Prototype)</description>
 		<year>1993</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Sega - Compile</manufacturer>
 		<rom name="dr. robotnik's mean bean machine (usa) (beta).bin" size="1048576" crc="4d0e5273"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5327,7 +5330,7 @@
 	</game>
 	<game name="dballfinal">
 		<description>Dragon Ball - Final Bout</description>
-		<year>199?</year>
+		<year>1998</year>
 		<manufacturer>Unlicensed</manufacturer>
 		<rom name="Dragon Ball - Final Bout.md" size="2097152" crc="63847005"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
@@ -5694,14 +5697,16 @@
 		<driver status="good"/>
 	</game>
 	<game name="ejims" cloneof="ejim" romof="ejim">
+		<comment>Hack</comment>
 		<description>Earthworm Jim (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Playmates</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="earthworm jim (hack, spanish).bin" size="3145728" crc="21a1378f"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="ejimp" cloneof="ejim" romof="ejim">
+		<comment>Prototype</comment>
 		<description>Earthworm Jim (Prototype, 19940728)</description>
 		<year>1994</year>
 		<manufacturer>Virgin Interactive</manufacturer>
@@ -5726,14 +5731,16 @@
 		<driver status="good"/>
 	</game>
 	<game name="ejim2s" cloneof="ejim2" romof="ejim2">
+		<comment>Hack</comment>
 		<description>Earthworm Jim 2 (Hack, Spanish)</description>
 		<year>2020</year>
-		<manufacturer>Virgin Interactive</manufacturer>
+		<manufacturer>m0sca</manufacturer>
 		<rom name="earthworm jim 2 (hack, spanish).bin" size="3145728" crc="f5cab28c"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="ejim2p" cloneof="ejim2" romof="ejim2">
+		<comment>Prototype</comment>
 		<description>Earthworm Jim 2 (Protoype, 19950824)</description>
 		<year>1995</year>
 		<manufacturer>Virgin Interactive</manufacturer>
@@ -5766,6 +5773,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ecco2px11" cloneof="ecco2" romof="ecco2">
+		<comment>Prototype</comment>
 		<description>Ecco - The Tides of Time (USA, Prototype X11, 19940413)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -5774,6 +5782,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ecco2p" cloneof="ecco2" romof="ecco2">
+		<comment>Prototype</comment>
 		<description>Ecco - The Tides of Time (USA, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -5782,6 +5791,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ecco2p2" cloneof="ecco2" romof="ecco2">
+		<comment>Prototype</comment>
 		<description>Ecco - The Tides of Time (USA, Prototype, 19940429)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -5790,6 +5800,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ecco2p1" cloneof="ecco2" romof="ecco2">
+		<comment>Prototype</comment>
 		<description>Ecco - The Tides of Time (USA, Prototype, Alt)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -5822,9 +5833,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="eccos" cloneof="ecco" romof="ecco">
+		<comment>Hack</comment>
 		<description>Ecco the Dolphin (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="ecco the dolphin (hack, spanish).bin" size="1048576" crc="6cb0aad7"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5838,6 +5850,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="eccop" cloneof="ecco" romof="ecco">
+		<comment>Prototype</comment>
 		<description>Ecco the Dolphin (Prototype, 19930421)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
@@ -5854,9 +5867,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="elvientos" cloneof="elviento" romof="elviento">
+		<comment>Hack</comment>
 		<description>El Viento (Hack, Spanish)</description>
-		<year>2018</year>
-		<manufacturer>Wolf Team</manufacturer>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="el viento (hack, spanish).bin" size="1048576" crc="d1e1e998"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -6273,6 +6287,15 @@
 		<year>1993</year>
 		<manufacturer>Wisdom Tree</manufacturer>
 		<rom name="exodus - journey to the promised land (usa) (unl).bin" size="524288" crc="22e6fc04"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="eyra">
+		<comment>Homebrew</comment>
+		<description>Eyra the Crow Maiden (HB)</description>
+		<year>2021</year>
+		<manufacturer>2nd Dimension</manufacturer>
+		<rom name="Eyra the Crow Maiden (2021)(2nd Dimension).bin" size="2083840" crc="d48289e3"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -14655,6 +14678,57 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="revshin2" cloneof="revshin" romof="revshin">
+		<description>Revenge of Shinobi, The (Euro, USA)</description>
+		<year>1989</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="revenge of shinobi, the (euro, usa).bin" size="524288" crc="05f27994"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="revshin1" cloneof="revshin" romof="revshin">
+		<description>Revenge of Shinobi, The (Euro, USA, Rev. A)</description>
+		<year>1989</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="revenge of shinobi, the (euro, usa) (rev a).bin" size="524288" crc="fe91ab7e"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="revshin">
+		<description>Revenge of Shinobi, The (Euro, USA, Rev. B)</description>
+		<year>1989</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="mpr-12930b.bin" size="524288" crc="4d35ebe4"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="revshins" cloneof="revshin" romof="revshin">
+		<comment>Hack</comment>
+		<description>Revenge of Shinobi, The (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="the revenge of shinobi (hack, spanish).bin" size="524288" crc="99f889c1"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="revshinp1" cloneof="revshin" romof="revshin">
+		<comment>Prototype</comment>
+		<description>Revenge of Shinobi, The (Prototype, 19890821)</description>
+		<year>1989</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="revenge of shinobi, the (prototype - aug 21, 1989).bin" size="524288" crc="370253d8"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="revshinp2" cloneof="revshin" romof="revshin">
+		<comment>Prototype</comment>
+		<description>Revenge of Shinobi, The (Prototype, 19900201)</description>
+		<year>1989</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="revenge of shinobi, the (prototype - feb 1, 1990).bin" size="524288" crc="e488eb46"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="revx">
 		<description>Revolution X (Euro, USA)</description>
 		<year>1995</year>
@@ -14672,6 +14746,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rsbtp7" cloneof="rsbt" romof="rsbt">
+		<comment>Prototype</comment>
 		<description>Richard Scarry's Busytown (Prototype, 19940721)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -14680,6 +14755,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rsbtp6" cloneof="rsbt" romof="rsbt">
+		<comment>Prototype</comment>
 		<description>Richard Scarry's Busytown (Prototype, 19940809)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -14688,6 +14764,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rsbtp5" cloneof="rsbt" romof="rsbt">
+		<comment>Prototype</comment>
 		<description>Richard Scarry's Busytown (Prototype, 19940815)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -14696,6 +14773,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rsbtp4" cloneof="rsbt" romof="rsbt">
+		<comment>Prototype</comment>
 		<description>Richard Scarry's Busytown (Prototype, 19940816-B)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -14704,6 +14782,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rsbtp3" cloneof="rsbt" romof="rsbt">
+		<comment>Prototype</comment>
 		<description>Richard Scarry's Busytown (Prototype, 19940817)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -14712,6 +14791,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rsbtp2" cloneof="rsbt" romof="rsbt">
+		<comment>Prototype</comment>
 		<description>Richard Scarry's Busytown (Prototype, 19940825)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -14720,6 +14800,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rsbtp1" cloneof="rsbt" romof="rsbt">
+		<comment>Prototype</comment>
 		<description>Richard Scarry's Busytown (Prototype, 19940826)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -15701,14 +15782,16 @@
 		<driver status="good"/>
 	</game>
 	<game name="shdancers" cloneof="shdancer" romof="shdancer">
+		<comment>Hack</comment>
 		<description>Shadow Dancer - The Secret of Shinobi (Hack, Spanish)</description>
 		<year>2017</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="shadow dancer - the secret of shinobi (hack, spanish).bin" size="524288" crc="dd156a80"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="shdancerp" cloneof="shdancer" romof="shdancer">
+		<comment>Prototype</comment>
 		<description>Shadow Dancer - The Secret of Shinobi (Prototype, 19901002)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
@@ -15775,8 +15858,8 @@
 	</game>
 	<game name="shadowrnj" cloneof="shadowrn" romof="shadowrn">
 		<description>Shadowrun (Jpn)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<year>1993</year>
+		<manufacturer>Sega</manufacturer>
 		<rom name="shadowrun (jpn).bin" size="2097152" crc="d32199f7"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -15790,6 +15873,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shadowrnp4" cloneof="shadowrn" romof="shadowrn">
+		<comment>Prototype</comment>
 		<description>Shadowrun (USA, Prototype, 19931228)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
@@ -15798,6 +15882,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shadowrnp3" cloneof="shadowrn" romof="shadowrn">
+		<comment>Prototype</comment>
 		<description>Shadowrun (USA, Prototype, 19931231)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
@@ -15806,6 +15891,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shadowrnp1" cloneof="shadowrn" romof="shadowrn">
+		<comment>Prototype</comment>
 		<description>Shadowrun (USA, Prototype, 19940125)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -15814,6 +15900,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shadowrnp2" cloneof="shadowrn" romof="shadowrn">
+		<comment>Prototype</comment>
 		<description>Shadowrun (USA, Prototype, 19940125-C)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -15838,6 +15925,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shangh2p" cloneof="shangh2" romof="shangh2">
+		<comment>Prototype</comment>
 		<description>Shanghai II - Dragon's Eye (USA, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Activision</manufacturer>
@@ -15846,6 +15934,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shangh2p1" cloneof="shangh2" romof="shangh2">
+		<comment>Prototype</comment>
 		<description>Shanghai II - Dragon's Eye (USA, Prototype, Alt)</description>
 		<year>1994</year>
 		<manufacturer>Activision</manufacturer>
@@ -16062,14 +16151,16 @@
 		<driver status="good"/>
 	</game>
 	<game name="shinobi3s" cloneof="shinobi3" romof="shinobi3">
+		<comment>Hack</comment>
 		<description>Shinobi III - Return of the Ninja Master (Hack, Spanish)</description>
 		<year>2017</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="shinobi iii - return of the ninja master (hack, spanish).bin" size="1048576" crc="ecd332e1"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="shinobi3p" cloneof="shinobi3" romof="shinobi3">
+		<comment>Prototype</comment>
 		<description>Shinobi III - Return of the Ninja Master (Prototype, 19930629)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
@@ -16086,14 +16177,16 @@
 		<driver status="good"/>
 	</game>
 	<game name="shinobi3umj" cloneof="shinobi3" romof="shinobi3">
-		<description>Shinobi III - Return of the Ninja Master (USA, MIJET Hack)</description>
-		<year>1993</year>
-		<manufacturer>Sega</manufacturer>
+		<comment>Hack</comment>
+		<description>Shinobi III - Return of the Ninja Master (USA, Hack)</description>
+		<year>2016</year>
+		<manufacturer>MIJET</manufacturer>
 		<rom name="shinobi iii - return of the ninja master (usa,MIJETHack).bin" size="1048576" crc="aaea518f"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="ship1" cloneof="ship" romof="ship">
+		<comment>Prototype</comment>
 		<description>Ship (Prototype)</description>
 		<year>199?</year>
 		<manufacturer>Technopop</manufacturer>
@@ -16102,6 +16195,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ship">
+		<comment>Prototype</comment>
 		<description>Ship (Visitor Prototype)</description>
 		<year>199?</year>
 		<manufacturer>Technopop</manufacturer>
@@ -16208,9 +16302,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="sidepocks" cloneof="sidepock" romof="sidepock">
+		<comment>Hack</comment>
 		<description>Side Pocket (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Data East</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="side pocket (hack, spanish).bin" size="1048576" crc="8b0d72f8"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -16240,9 +16335,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="skelkrews" cloneof="skelkrew" romof="skelkrew">
+		<comment>Hack</comment>
 		<description>Skeleton Krew (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Core Design</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="skeleton krew (hack, spanish).bin" size="2097152" crc="fc818137"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -16264,6 +16360,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="slamshaq">
+		<comment>Prototype</comment>
 		<description>Slam - Shaq vs. the Legends (Prototype)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
@@ -16272,9 +16369,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="slapfighs" cloneof="slapfigh" romof="slapfigh">
+		<comment>Hack</comment>
 		<description>Slap Fight MD (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Tengen</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="slap fight md (hack, spanish).bin" size="1048576" crc="b825e72d"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17145,6 +17243,15 @@
 		<year>2004</year>
 		<manufacturer>Hivebrain</manufacturer>
 		<rom name="South Island Adventure V0.3.bin" size="577232" crc="ced56180"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sfattack">
+		<comment>Homebrew</comment>
+		<description>Space Flies Attack (HB)</description>
+		<year>2021</year>
+		<manufacturer>Timber Studio</manufacturer>
+		<rom name="Space Flies Attack (2021)(Timber Studio).bin" size="1376256" crc="8ebed810"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -18765,6 +18872,49 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="supshin2" cloneof="shinobi3" romof="shinobi3">
+		<description>Super Shinobi II, The (Jpn, Kor)</description>
+		<year>1993</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="super shinobi ii, the (jpn, kor).bin" size="1048576" crc="5b412816"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="supshin2p1" cloneof="shinobi3" romof="shinobi3">
+		<comment>Prototype</comment>
+		<description>Super Shinobi II, The (Jpn, Prototype)</description>
+		<year>1993</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="super shinobi ii, the (jpn) (beta).bin" size="1048576" crc="c47e8aea"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="supshin2p2" cloneof="shinobi3" romof="shinobi3">
+		<comment>Prototype</comment>
+		<description>Super Shinobi II, The (Jpn, Prototype, Earlier)</description>
+		<year>1993</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="super shinobi ii, the (jpn) (beta) (earlier).bin" size="1048576" crc="1ee5bce3"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="supshin2c" cloneof="shinobi3" romof="shinobi3">
+		<comment>Hack</comment>
+		<description>Super Shinobi II, The (T-Chi)</description>
+		<year>2009</year>
+		<manufacturer>cslrxyz</manufacturer>
+		<rom name="super shinobi ii, the (Chinese).bin" size="1048576" crc="8d8fb732"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="supshin" cloneof="revshin" romof="revshin">
+		<description>Super Shinobi, The (Jpn)</description>
+		<year>1989</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="mpr-12675.bin" size="524288" crc="5c7e5ea6"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sskid">
 		<description>Super Skidmarks (Euro, J-Cart)</description>
 		<year>1995</year>
@@ -20224,54 +20374,6 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="revshin2" cloneof="revshin" romof="revshin">
-		<description>The Revenge of Shinobi (Euro, USA)</description>
-		<year>1989</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="revenge of shinobi, the (euro, usa).bin" size="524288" crc="05f27994"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="revshin1" cloneof="revshin" romof="revshin">
-		<description>The Revenge of Shinobi (Euro, USA, Rev. A)</description>
-		<year>1989</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="revenge of shinobi, the (euro, usa) (rev a).bin" size="524288" crc="fe91ab7e"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="revshin">
-		<description>The Revenge of Shinobi (Euro, USA, Rev. B)</description>
-		<year>1989</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="mpr-12930b.bin" size="524288" crc="4d35ebe4"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="revshins" cloneof="revshin" romof="revshin">
-		<description>The Revenge of Shinobi (Hack, Spanish)</description>
-		<year>2017</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="the revenge of shinobi (hack, spanish).bin" size="524288" crc="99f889c1"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="revshinp1" cloneof="revshin" romof="revshin">
-		<description>The Revenge of Shinobi (Prototype, 19890821)</description>
-		<year>1989</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="revenge of shinobi, the (prototype - aug 21, 1989).bin" size="524288" crc="370253d8"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="revshinp2" cloneof="revshin" romof="revshin">
-		<description>The Revenge of Shinobi (Prototype, 19900201)</description>
-		<year>1989</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="revenge of shinobi, the (prototype - feb 1, 1990).bin" size="524288" crc="e488eb46"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="tsfss" cloneof="sonic" romof="sonic">
 		<description>The S Factor - Sonia And Silver (Hack)</description>
 		<year>2013</year>
@@ -20289,9 +20391,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="secondss" cloneof="seconds" romof="seconds">
+		<comment>Hack</comment>
 		<description>The Second Samurai (Hack, Spanish)</description>
 		<year>2013</year>
-		<manufacturer>Psygnosis</manufacturer>
+		<manufacturer>pepodmc</manufacturer>
 		<rom name="the second samurai (hack, spanish).bin" size="1048576" crc="ab66b8fc"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -20313,9 +20416,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="bartvssms" cloneof="bartvssm" romof="bartvssm">
+		<comment>Hack</comment>
 		<description>The Simpsons - Bart Vs The Space Mutants (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Flying Edge</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="the simpsons - bart vs the space mutants (hack, spanish).bin" size="524288" crc="310ef622"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -20434,46 +20538,6 @@
 		<year>2004</year>
 		<manufacturer>YUZO</manufacturer>
 		<rom name="story of thor, the - hikari o tsugumono (T-Chi).bin" size="3145728" crc="3ca3fcd7"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="supshin" cloneof="revshin" romof="revshin">
-		<description>The Super Shinobi (Jpn)</description>
-		<year>1989</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="mpr-12675.bin" size="524288" crc="5c7e5ea6"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="supshin2" cloneof="shinobi3" romof="shinobi3">
-		<description>The Super Shinobi II (Jpn, Kor)</description>
-		<year>1993</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="super shinobi ii, the (jpn, kor).bin" size="1048576" crc="5b412816"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="supshin2p1" cloneof="shinobi3" romof="shinobi3">
-		<description>The Super Shinobi II (Jpn, Prototype)</description>
-		<year>1993</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="super shinobi ii, the (jpn) (beta).bin" size="1048576" crc="c47e8aea"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="supshin2p2" cloneof="shinobi3" romof="shinobi3">
-		<description>The Super Shinobi II (Jpn, Prototype, Earlier)</description>
-		<year>1993</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="super shinobi ii, the (jpn) (beta) (earlier).bin" size="1048576" crc="1ee5bce3"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="supshin2c" cloneof="shinobi3" romof="shinobi3">
-		<description>The Super Shinobi II (T-Chi)</description>
-		<year>2009</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="super shinobi ii, the (Chinese).bin" size="1048576" crc="8d8fb732"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

@@ -129,7 +129,7 @@
 
 typedef void (*mcs48_ophandler)();
 extern const mcs48_ophandler s_upi41_opcodes[256];
-
+extern const mcs48_ophandler s_mcs48_opcodes[256];
 
 struct MCS48_t {
 	UINT16      prevpc;             /* 16-bit previous program counter */
@@ -305,6 +305,13 @@ void mcs48Init(INT32 nCpu, INT32 subtype, UINT8 *prg)
 		case 8042:
 			mcs48->opcode_table = s_upi41_opcodes;
 			mcs48->feature_mask = UPI41_FEATURE;
+			mcs48->ram_mask = 0x7f;
+			mcs48->prg_mask = 0x7ff;
+			break;
+		case 8049:
+		case 8749:
+			mcs48->opcode_table = s_mcs48_opcodes;
+			mcs48->feature_mask = I8048_FEATURE;
 			mcs48->ram_mask = 0x7f;
 			mcs48->prg_mask = 0x7ff;
 			break;

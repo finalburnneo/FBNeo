@@ -3,7 +3,7 @@
 
 #include "tiles_generic.h"
 #include "m6809_intf.h"
-#include "i8039.h"
+#include "mcs48.h"
 #include "sn76496.h"
 #include "dac.h"
 #include "resnet.h"
@@ -46,30 +46,32 @@ static UINT8 i8039_t1;
 static INT32 watchdog = 0;
 static INT32 vblank;
 
+static INT32 bootleg = 0;
+
 static struct BurnInputInfo FinalizrInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Finalizr)
@@ -180,6 +182,14 @@ static UINT8 finalizr_main_read(UINT16 address)
 	return 0;
 }
 
+static void sync_mcu()
+{
+	INT32 cyc = ((INT64)M6809TotalCycles() * (6144000 / 15) / 1536000) - mcs48TotalCycles();
+	if (cyc > 0) {
+		mcs48Run(cyc);
+	}
+}
+
 static void finalizr_main_write(UINT16 address, UINT8 data)
 {
 	switch (address)
@@ -215,51 +225,44 @@ static void finalizr_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x081c:
-			I8039SetIrqState(1);
+			sync_mcu();
+			mcs48SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x081d:
+			sync_mcu();
 			soundlatch = data;
 		return;
 	}
 }
 
-static UINT8 __fastcall finalizr_sound_read(UINT32 address)
+static void finalizr_sound_write_port(UINT32 port, UINT8 data)
 {
-	return DrvI8039ROM[address & 0x0fff];
-}
-
-static void __fastcall finalizr_sound_write_port(UINT32 port, UINT8 data)
-{
-	port &= 0x1ff;
-
 	switch (port)
 	{
-		case I8039_p1:
+		case MCS48_P1:
 			DACWrite(0, data);
 		return;
 
-		case I8039_p2:
-			if (~data & 0x80) I8039SetIrqState(0);
+		case MCS48_P2:
+			if (~data & 0x80) mcs48SetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
 
-		case I8039_t0:
+		case MCS48_T0:
 			// clock?
 		return;
 	}
 }
 
-static UINT8 __fastcall finalizr_sound_read_port(UINT32 port)
+static UINT8 finalizr_sound_read_port(UINT32 port)
 {
-	port &= 0x1ff;
-
 	if (port < 0x100) {
 		return soundlatch;
 	}
 
 	switch (port)
 	{
-		case I8039_t1:
+		case MCS48_T1: // only bootleg uses this!
 			i8039_t1 = (i8039_t1 + 1) & 0xf;
 			return (!(i8039_t1 % 3) && (i8039_t1 > 0));
 	}
@@ -267,10 +270,6 @@ static UINT8 __fastcall finalizr_sound_read_port(UINT32 port)
 	return 0;
 }
 
-static INT32 DrvSyncDAC()
-{
-	return (INT32)(float)(nBurnSoundLen * (I8039TotalCycles() / (614400.0000 / (nBurnFPS / 100.0000))));
-}
 
 static INT32 DrvDoReset(INT32 clear_ram)
 {
@@ -282,10 +281,10 @@ static INT32 DrvDoReset(INT32 clear_ram)
 	M6809Reset();
 	M6809Close();
 
-	I8039Open(0);
-	I8039Reset();
+	mcs48Open(0);
+	mcs48Reset();
 	DACReset();
-	I8039Close();
+	mcs48Close();
 
 	scroll = 0;
 	nmi_enable = 0;
@@ -392,12 +391,7 @@ static void DrvPaletteInit()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if ((BurnDrvGetFlags() & BDF_BOOTLEG) == 0)
 	{
@@ -459,20 +453,17 @@ static INT32 DrvInit()
 	M6809SetReadHandler(finalizr_main_read);
 	M6809Close();
 
-	I8039Init(0);
-	I8039Open(0);
-	I8039SetProgramReadHandler(finalizr_sound_read);
-	I8039SetCPUOpReadHandler(finalizr_sound_read);
-	I8039SetCPUOpReadArgHandler(finalizr_sound_read);
-	I8039SetIOReadHandler(finalizr_sound_read_port);
-	I8039SetIOWriteHandler(finalizr_sound_write_port);
-	I8039Close();
+	mcs48Init(0, 8749, DrvI8039ROM);
+	mcs48Open(0);
+	mcs48_set_read_port(finalizr_sound_read_port);
+	mcs48_set_write_port(finalizr_sound_write_port);
+	mcs48Close();
 
 	SN76489AInit(0, 1536000, 0);
 	SN76496SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);
     SN76496SetBuffered(M6809TotalCycles, 1536000);
 
-	DACInit(0, 0, 1, DrvSyncDAC);
+	DACInit(0, 0, 1, mcs48TotalCycles, (bootleg == 0) ? (6144000 / 15) : (9216000 / 15));
 	DACSetRoute(0, 0.15, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -487,12 +478,14 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	M6809Exit();
-	I8039Exit();
+	mcs48Exit();
 
 	SN76496Exit();
 	DACExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
+
+	bootleg = 0;
 
 	return 0;
 }
@@ -518,19 +511,7 @@ static void draw_bg_layer()
 		INT32 flipy = attr & 0x20;
 		INT32 flipx = attr & 0x10;
 
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM0);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM0);
-			}
-		}
+		Draw8x8Tile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 0, DrvGfxROM0);
 	}
 }
 
@@ -549,19 +530,7 @@ static void draw_fg_layer()
 		INT32 flipy = attr & 0x20;
 		INT32 flipx = attr & 0x10;
 
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM0);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM0);
-			}
-		}
+		Draw8x8Tile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 0, DrvGfxROM0);
 	}
 }
 
@@ -574,43 +543,13 @@ static void draw_16x16(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx,
 
 	for (INT32 i = 0; i < 4; i++)
 	{
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code + (flip^i), sx + (i & 1) * 8, sy + (i & 2) * 4, color, 4, 0, 0x100, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code + (flip^i), sx + (i & 1) * 8, sy + (i & 2) * 4, color, 4, 0, 0x100, DrvGfxROM0);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code + (flip^i), sx + (i & 1) * 8, sy + (i & 2) * 4, color, 4, 0, 0x100, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Mask_Clip(pTransDraw, code + (flip^i), sx + (i & 1) * 8, sy + (i & 2) * 4, color, 4, 0, 0x100, DrvGfxROM0);
-			}
-		}
+		Draw8x8MaskTile(pTransDraw, code + (flip^i), sx + (i & 1) * 8, sy + (i & 2) * 4, flipx, flipy, color, 4, 0, 0x100, DrvGfxROM0);
 	}
 }
 
 static void draw_8x8(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy)
 {
-	code &= 0xfff;
-	sy -= 16;
-
-	for (INT32 i = 0; i < 4; i++)
-	{
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0x100, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0x100, DrvGfxROM0);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0x100, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0x100, DrvGfxROM0);
-			}
-		}
-	}
+	Draw8x8MaskTile(pTransDraw, code & 0xfff, sx, sy - 16, flipx, flipy, color, 4, 0, 0x100, DrvGfxROM0);
 }
 
 static void draw_sprites()
@@ -710,7 +649,7 @@ static INT32 DrvFrame()
 	}
 
 	M6809NewFrame();
-	I8039NewFrame();
+	mcs48NewFrame();
 
 	{
 		memset (DrvInputs, 0xff, 3);
@@ -722,23 +661,25 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { 1536000 / 60, 9216000 / 15 / 60 };
+	INT32 nCyclesTotal[2] = { 1536000 / 60, 6144000 / 15 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
+	if (bootleg) nCyclesTotal[1] = 9216000 / 15 / 60;
+
 	M6809Open(0);
-	I8039Open(0);
+	mcs48Open(0);
 
 	vblank = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, M6809);
 
         if (i == 240 && irq_enable) M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		if (i == 240) vblank = 1;
 		if ((i % 32) == 31 && nmi_enable) M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 
-		nCyclesDone[1] += I8039Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		CPU_RUN_SYNCINT(1, mcs48);
 	}
 
 	if (pBurnSoundOut) {
@@ -746,7 +687,7 @@ static INT32 DrvFrame()
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
-	I8039Close();
+	mcs48Close();
 	M6809Close();
 
 	if (pBurnDraw) {
@@ -774,10 +715,10 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		M6809Scan(nAction);
-		I8039Scan(nAction,pnMin);
+		mcs48Scan(nAction);
 
-		DACScan(nAction,pnMin);
-		SN76496Scan(nAction,pnMin);
+		DACScan(nAction, pnMin);
+		SN76496Scan(nAction, pnMin);
 
 		SCAN_VAR(scroll);
 		SCAN_VAR(nmi_enable);
@@ -800,7 +741,7 @@ static struct BurnRomInfo finalizrRomDesc[] = {
 	{ "523k02.12c",		0x4000, 0x1bccc696, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "523k03.13c",		0x4000, 0xc48927c6, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "d8749hd.bin",	0x0800, 0x978dfc33, 2 | BRF_PRG | BRF_ESS }, //  3 I8039 Code
+	{ "snd01_715-057p.8a",	0x0800, 0x5459ab95, 2 | BRF_PRG | BRF_ESS }, //  3 I8039 Code
 
 	{ "523h04.5e",		0x4000, 0xc056d710, 3 | BRF_GRA },           //  4 Sprites & tiles
 	{ "523h07.5f",		0x4000, 0x50e512ba, 3 | BRF_GRA },           //  5
@@ -836,7 +777,7 @@ static struct BurnRomInfo finalizraRomDesc[] = {
 	{ "2.12c",			0x4000, 0x383dc94e, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "3.13c",			0x4000, 0xce177f6e, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "d8749hd.bin",	0x0800, 0x978dfc33, 2 | BRF_PRG | BRF_ESS }, //  3 I8039 Code
+	{ "snd01_715-057p.8a",	0x0800, 0x5459ab95, 2 | BRF_PRG | BRF_ESS }, //  3 I8039 Code
 
 	{ "523h04.5e",		0x4000, 0xc056d710, 3 | BRF_GRA },           //  4 Sprites & tiles
 	{ "523h07.5f",		0x4000, 0x50e512ba, 3 | BRF_GRA },           //  5
@@ -889,12 +830,19 @@ static struct BurnRomInfo finalizrbRomDesc[] = {
 STD_ROM_PICK(finalizrb)
 STD_ROM_FN(finalizrb)
 
+static INT32 bootlegInit()
+{
+	bootleg = 1;
+
+	return DrvInit();
+}
+
 struct BurnDriver BurnDrvFinalizrb = {
 	"finalizrb", "finalizr", NULL, NULL, "1985",
 	"Finalizer - Super Transformation (bootleg)\0", NULL, "bootleg", "GX523",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, finalizrbRomInfo, finalizrbRomName, NULL, NULL, NULL, NULL, FinalizrInputInfo, FinalizrDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	bootlegInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 272, 3, 4
 };

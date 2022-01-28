@@ -12604,10 +12604,10 @@ STDROMPICKEXT(fds_montyonrunj, fds_montyonrunj, fds_fdsbios)
 STD_ROM_FN(fds_montyonrunj)
 
 struct BurnDriver BurnDrvfds_montyonrunj = {
-	"fds_montyonrunj", "fds_montyonrun", "fds_fdsbios", NULL, "1989?",
-	"Monty on the Run - Monty no Doki Doki Dai Dassou (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"fds_montyonrunj", "fds_montyonrun", "fds_fdsbios", NULL, "1987",
+	"Monty on the Run - Monty no Doki Doki Dai Dassou (Japan)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_FDS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_PLATFORM, 0,
 	NESGetZipName, fds_montyonrunjRomInfo, fds_montyonrunjRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -12621,10 +12621,10 @@ STDROMPICKEXT(fds_montyonrun, fds_montyonrun, fds_fdsbios)
 STD_ROM_FN(fds_montyonrun)
 
 struct BurnDriver BurnDrvfds_montyonrun = {
-	"fds_montyonrun", NULL, "fds_fdsbios", NULL, "1989?",
-	"Monty on the Run - Monty no Doki Doki Dai Dassou (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
+	"fds_montyonrun", NULL, "fds_fdsbios", NULL, "1987-2021",
+	"Monty on the Run - Monty no Doki Doki Dai Dassou (T-Eng)\0", NULL, "Stardust Crusaders", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_FDS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_PLATFORM, 0,
 	NESGetZipName, fds_montyonrunRomInfo, fds_montyonrunRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -12638,10 +12638,10 @@ STDROMPICKEXT(fds_moonballmagic, fds_moonballmagic, fds_fdsbios)
 STD_ROM_FN(fds_moonballmagic)
 
 struct BurnDriver BurnDrvfds_moonballmagic = {
-	"fds_moonballmagic", NULL, "fds_fdsbios", NULL, "1989?",
-	"Moonball Magic (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"fds_moonballmagic", NULL, "fds_fdsbios", NULL, "1988",
+	"Moonball Magic (Japan)\0", NULL, "System Sacom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_FDS, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_FDS, GBF_PINBALL, 0,
 	NESGetZipName, fds_moonballmagicRomInfo, fds_moonballmagicRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -12655,11 +12655,28 @@ STDROMPICKEXT(fds_mystemurcas, fds_mystemurcas, fds_fdsbios)
 STD_ROM_FN(fds_mystemurcas)
 
 struct BurnDriver BurnDrvfds_mystemurcas = {
-	"fds_mystemurcas", NULL, "fds_fdsbios", NULL, "1989?",
-	"Mysterious Murasame Castle (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
+	"fds_mystemurcas", NULL, "fds_fdsbios", NULL, "1986-2011",
+	"Mysterious Murasame Castle (T-Eng)\0", NULL, "Spinner 8 and friends", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_FDS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_ACTION, 0,
 	NESGetZipName, fds_mystemurcasRomInfo, fds_mystemurcasRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo fds_namidaRomDesc[] = {
+	{ "Namida no Soukoban Special (Japan).fds",          131000, 0x0c5b12d6, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_namida, fds_namida, fds_fdsbios)
+STD_ROM_FN(fds_namida)
+
+struct BurnDriver BurnDrvfds_namida = {
+	"fds_namida", NULL, "fds_fdsbios", NULL, "1986",
+	"Namida no Soukoban Special (Japan)\0", NULL, "ASCII", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_FDS, GBF_PUZZLE, 0,
+	NESGetZipName, fds_namidaRomInfo, fds_namidaRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -12672,10 +12689,10 @@ STDROMPICKEXT(fds_nazonokab, fds_nazonokab, fds_fdsbios)
 STD_ROM_FN(fds_nazonokab)
 
 struct BurnDriver BurnDrvfds_nazonokab = {
-	"fds_nazonokab", NULL, "fds_fdsbios", NULL, "1989?",
-	"Nazo no Kabe - Block Kuzushi (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"fds_nazonokab", NULL, "fds_fdsbios", NULL, "1986",
+	"Nazo no Kabe - Block Kuzushi (Japan)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_FDS, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_FDS, GBF_BREAKOUT, 0,
 	NESGetZipName, fds_nazonokabRomInfo, fds_nazonokabRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -12689,10 +12706,10 @@ STDROMPICKEXT(fds_nazonomur, fds_nazonomur, fds_fdsbios)
 STD_ROM_FN(fds_nazonomur)
 
 struct BurnDriver BurnDrvfds_nazonomur = {
-	"fds_nazonomur", "fds_mystemurcas", "fds_fdsbios", NULL, "1989?",
+	"fds_nazonomur", "fds_mystemurcas", "fds_fdsbios", NULL, "1986",
 	"Nazo no Murasamejou (Japan)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_FDS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_ACTION, 0,
 	NESGetZipName, fds_nazonomurRomInfo, fds_nazonomurRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -12706,10 +12723,10 @@ STDROMPICKEXT(fds_otocky, fds_otocky, fds_fdsbios)
 STD_ROM_FN(fds_otocky)
 
 struct BurnDriver BurnDrvfds_otocky = {
-	"fds_otocky", NULL, "fds_fdsbios", NULL, "1989?",
-	"Otocky (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"fds_otocky", NULL, "fds_fdsbios", NULL, "1987",
+	"Otocky (Japan)\0", NULL, "ASCII", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_FDS, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_FDS, GBF_HORSHOOT, 0,
 	NESGetZipName, fds_otockyRomInfo, fds_otockyRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -19118,6 +19135,91 @@ struct BurnDriver BurnDrvnes_vanguard = {
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
+
+static struct BurnRomInfo nes_animalblkRomDesc[] = {
+	{ "Animal Blockes (200X)(Unknown).nes",          49168, 0xfc2b860c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_animalblk)
+STD_ROM_FN(nes_animalblk)
+
+struct BurnDriver BurnDrvnes_animalblk = {
+	"nes_animalblk", NULL, NULL, NULL, "200?",
+	"Animal Blockes (HB)\0", NULL, "Unknown", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_animalblkRomInfo, nes_animalblkRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_archerRomDesc[] = {
+	{ "Archer, The (200X)(Power Joy).nes",          24592, 0x911e0365, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_archer)
+STD_ROM_FN(nes_archer)
+
+struct BurnDriver BurnDrvnes_archer = {
+	"nes_archer", NULL, NULL, NULL, "200?",
+	"Archer, The (HB)\0", NULL, "Power Joy", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_archerRomInfo, nes_archerRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_awakeningRomDesc[] = {
+	{ "Alwa's Awakening - Prototype (2021)(Elden Pixels).nes",          524304, 0xc07533c0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_awakening)
+STD_ROM_FN(nes_awakening)
+
+struct BurnDriver BurnDrvnes_awakening = {
+	"nes_awakening", NULL, NULL, NULL, "2021",
+	"Alwa's Awakening (HB, Prototype)\0", NULL, "Elden Pixels", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_PROTOTYPE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_awakeningRomInfo, nes_awakeningRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_rainbriteRomDesc[] = {
+	{ "Rainbow Brite - Journey to Rainbow Land (2017)(Hallmark).nes",          524304, 0x8902cf08, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_rainbrite)
+STD_ROM_FN(nes_rainbrite)
+
+struct BurnDriver BurnDrvnes_rainbrite = {
+	"nes_rainbrite", NULL, NULL, NULL, "2017",
+	"Rainbow Brite - Journey to Rainbow Land (HB)\0", NULL, "Hallmark", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_rainbriteRomInfo, nes_rainbriteRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_tombiceRomDesc[] = {
+	{ "Tomb of Ice (2020)(HB)(FG Software).nes",          40976, 0x426d3439, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tombice)
+STD_ROM_FN(nes_tombice)
+
+struct BurnDriver BurnDrvnes_tombice = {
+	"nes_tombice", NULL, NULL, NULL, "2020",
+	"Tomb of Ice (HB)\0", "No sound", "FG Software", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_tombiceRomInfo, nes_tombiceRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_dveelngRomDesc[] = {
 	{ "D'Veel'Ng (2015)(The Mojon Twins).nes",          40976, 0x7a810742, BRF_ESS | BRF_PRG },

@@ -33,8 +33,6 @@ static UINT8 *DrvSprRAM2;
 
 static UINT8 *scroll;
 
-static UINT8 *RamPrioBitmap;
-
 static UINT8 *soundlatch;
 static UINT8 *video_disable;
 
@@ -59,10 +57,7 @@ static INT16 DrvAnalogPort1 = 0;
 static INT16 DrvAnalogPort2 = 0;
 static INT16 DrvAnalogPort3 = 0;
 
-static INT32 nExtraCycles;
-static INT32 nCurrentCycles;
-static INT32 nCyclesDone[2];
-static INT32 nCyclesTotal[2];
+static INT32 nExtraCycles[2];
 
 static INT32 Clock_16mhz = 0;
 static INT32 Kengo = 0;
@@ -76,61 +71,61 @@ static INT32 code_mask[4];
 static INT32 graphics_length[4];
 static INT32 video_offsets[2] = { 0, 0 };
 
-enum { Z80_NO_NMI=0, Z80_REAL_NMI, Z80_FAKE_NMI };
+enum { Z80_NO_NMI = 0, Z80_REAL_NMI, Z80_FAKE_NMI };
 enum { VECTOR_INIT, YM2151_ASSERT, YM2151_CLEAR, Z80_ASSERT, Z80_CLEAR };
 
 
 static struct BurnInputInfo CommonInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 3"	},
 	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 4"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 3"	},
 	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 4"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 4,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 4,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Common)
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo PoundforInputList[] = {
-	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy2 + 2,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 start"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
+	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy2 + 2,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 start"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	A("P1 Trackball X", BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis" ),
 	A("P1 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis" ),
 
-	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy2 + 3,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 start"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p2 fire 2"},
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy2 + 3,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 start"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p2 fire 2"	},
 	A("P2 Trackball X", BIT_ANALOG_REL, &DrvAnalogPort2,"p2 x-axis" ),
 	A("P2 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPort3,"p2 y-axis" ),
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 4,	"service"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 4,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 #undef A
 
@@ -1063,8 +1058,9 @@ static void __fastcall m72_main_write_port(UINT32 port, UINT8 data)
 			if (enable_z80_reset) {
 				if (data & 0x10) {
 					z80_reset = 0;
+					ZetSetRESETLine(0);
 				} else if (!z80_reset) { // don't reset it if its already resetting - fixes BGM in airduel -dink
-					ZetReset();
+					ZetSetRESETLine(1);
 					setvector_callback(VECTOR_INIT);
 					z80_reset = 1;
 				}
@@ -1198,12 +1194,9 @@ static void __fastcall m72_sound_write_port(UINT16 port, UINT8 data)
 	{
 		case 0x00:
 		case 0x40: // poundfor
-			BurnYM2151SelectRegister(data);
-		return;
-
 		case 0x01:
 		case 0x41: // poundfor
-			BurnYM2151WriteRegister(data);
+			BurnYM2151Write(port & 1, data);
 		return;
 
 		case 0x06:
@@ -1244,7 +1237,7 @@ static void __fastcall m72_sound_write_port(UINT16 port, UINT8 data)
 			DACSignedWrite(0, data);
 			sample_address = (sample_address + 1) & 0x3ffff;
 			if (!DrvSndROM[sample_address]) {
-				DACWrite(0, 0); // clear dac @ end of sample, fixes distortion in rtype2 level4 after death while also killing an air-tank
+ 				DACWrite(0, 0); // clear dac @ end of sample, fixes distortion in rtype2 level4 after death while also killing an air-tank
 			}
 		return;
 	}
@@ -1289,6 +1282,7 @@ static INT32 DrvDoReset()
 	ZetReset();
 	setvector_callback(VECTOR_INIT);
 	z80_reset = (enable_z80_reset) ? 1 : 0;
+	ZetSetRESETLine(z80_reset);
 	ZetClose();
 
 	BurnYM2151Reset();
@@ -1301,7 +1295,7 @@ static INT32 DrvDoReset()
 	if (!CosmicCop) m72_irq_base = 0;
 	majtitle_rowscroll_enable = 0;
 
-	nExtraCycles = 0;
+	nExtraCycles[0] = nExtraCycles[1] = 0;
 
 	return 0;
 }
@@ -1647,8 +1641,6 @@ static INT32 MemIndex()
 	DrvGfxROM3	= Next; Next += graphics_length[3] * 2;
 	DrvSndROM	= Next; Next += 0x040000;
 
-	RamPrioBitmap	= Next; Next += nScreenWidth * nScreenHeight;
-
 	AllRam	= Next;
 
 	DrvZ80RAM	= Next; Next += 0x010000;
@@ -1685,12 +1677,7 @@ static INT32 DrvInit(void (*pCPUMapCallback)(), void (*pSNDMapCallback)(), INT32
 
 	GetRoms(0);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (GetRoms(1)) return 1;
 
@@ -1746,10 +1733,11 @@ static INT32 DrvInit(void (*pCPUMapCallback)(), void (*pSNDMapCallback)(), INT32
 		break;
 	}
 
-	BurnYM2151Init(3579545);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
 	YM2151SetIrqHandler(0, &m72YM2151IRQHandler);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachZet(3579545);
 
 	DACInit(0, 0, 1, ZetTotalCycles, 3579545);
 	DACSetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
@@ -1769,7 +1757,7 @@ static INT32 DrvExit()
 	ZetExit();
 	VezExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	if (Poundfor)
 		BurnTrackballExit();
@@ -1813,7 +1801,7 @@ static void draw_layer(INT32 layer, INT32 forcelayer, INT32 type, INT32 start, I
 	for (INT32 sy = start; sy < finish; sy++)
 	{
 		UINT16 *dest = pTransDraw + (sy * nScreenWidth);
-		UINT8  *pri  = RamPrioBitmap + (sy * nScreenWidth);
+		//UINT8  *pri  = pPrioDraw + (sy * nScreenWidth);
 
 		INT32 scrolly1 = (scrolly + sy) & 0x1ff;
 		INT32 romoff1 = (scrolly1 & 0x07) << 3;
@@ -1874,7 +1862,7 @@ static void draw_layer(INT32 layer, INT32 forcelayer, INT32 type, INT32 start, I
 					if (mask & (1 << pxl)) continue;
 
 					dest[xx] = pxl | color;
-					pri[xx] = prio;
+					//pri[xx] = prio;
 				}
 			}
 		}
@@ -1929,19 +1917,7 @@ static void draw_sprites()
 
 				if (xx < -15 || yy < -15 || xx >= nScreenWidth || yy >= nScreenHeight) continue;
 
-				if (flipy) {
-					if (flipx) {
-						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, c, xx, yy, color, 4, 0, 0, DrvGfxROM0);
-					} else {
-						Render16x16Tile_Mask_FlipY_Clip(pTransDraw, c, xx, yy, color, 4, 0, 0, DrvGfxROM0);
-					}
-				} else {
-					if (flipx) {
-						Render16x16Tile_Mask_FlipX_Clip(pTransDraw, c, xx, yy, color, 4, 0, 0, DrvGfxROM0);
-					} else {
-						Render16x16Tile_Mask_Clip(pTransDraw, c, xx, yy, color, 4, 0, 0, DrvGfxROM0);
-					}
-				}
+				Draw16x16MaskTile(pTransDraw, c, xx, yy, flipx, flipy, color, 4, 0, 0, DrvGfxROM0);
 			}
 		}
 
@@ -1997,19 +1973,7 @@ static void majtitle_draw_sprites()
 
 				if (xx < -15 || yy < -15 || xx >= nScreenWidth || yy >= nScreenHeight) continue;
 
-				if (flipy) {
-					if (flipx) {
-						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, c, xx, yy, color, 4, 0, 0, DrvGfxROM3);
-					} else {
-						Render16x16Tile_Mask_FlipY_Clip(pTransDraw, c, xx, yy, color, 4, 0, 0, DrvGfxROM3);
-					}
-				} else {
-					if (flipx) {
-						Render16x16Tile_Mask_FlipX_Clip(pTransDraw, c, xx, yy, color, 4, 0, 0, DrvGfxROM3);
-					} else {
-						Render16x16Tile_Mask_Clip(pTransDraw, c, xx, yy, color, 4, 0, 0, DrvGfxROM3);
-					}
-				}
+				Draw16x16MaskTile(pTransDraw, c, xx, yy, flipx, flipy, color, 4, 0, 0, DrvGfxROM3);
 			}
 		}
 	}
@@ -2017,7 +1981,7 @@ static void majtitle_draw_sprites()
 
 static void dodrawline(INT32 start, INT32 finish)
 {
-	if (*video_disable) return;
+	if (*video_disable || !pBurnDraw) return;
 
 	if (nBurnLayer & 1) draw_layer(1, 1, m72_video_type, start, finish);
 	if (nBurnLayer & 2) draw_layer(0, 1, m72_video_type, start, finish);
@@ -2113,19 +2077,16 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	compile_inputs();
-	
+
 	INT32 multiplier = 3;
 	INT32 nInterleave = 256 * multiplier;
-	INT32 nSoundBufferPos = 0;
+	INT32 nSampleInt = nInterleave / 128;
+	INT32 nCyclesTotal[2] = { (INT32)((INT64)(8000000 / 55) * nBurnCPUSpeedAdjust / 0x0100), (INT32)((INT64)(3579545 / 55) * nBurnCPUSpeedAdjust / 0x0100) };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 	INT32 z80samplecount = 0;
 
 	if (Clock_16mhz) // Ken-go, Cosmic Cop
 		nCyclesTotal[0] = (INT32)((INT64)(16000000 / 55) * nBurnCPUSpeedAdjust / 0x0100);
-	else
-		nCyclesTotal[0] = (INT32)((INT64)(8000000 / 55) * nBurnCPUSpeedAdjust / 0x0100);
-	nCyclesTotal[1] = (INT32)((INT64)(3579545 / 55) * nBurnCPUSpeedAdjust / 0x0100);
-	nCyclesDone[0] = 0;
-	nCyclesDone[1] = nExtraCycles;
 
 	if (pBurnDraw) {
 		DrvDrawInitFrame();
@@ -2133,57 +2094,39 @@ static INT32 DrvFrame()
 
 	VezOpen(0);
 	ZetOpen(0);
+	ZetIdle(nExtraCycles[1]); // using timer
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCurrentCycles = nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += VezRun(nCurrentCycles);
+		CPU_RUN(0, Vez);
 
 		if ((i%multiplier)==0)
 			scanline_interrupts(i/multiplier);
 
-		if (z80_reset == 0) {
-			nCyclesDone[1] += ZetRun((nCyclesTotal[1] * (i + 1) / nInterleave) - nCyclesDone[1]);
-			if (i%multiplier==2 && i/multiplier & 1 && z80samplecount < 128) {
-				if (z80_nmi_enable == Z80_FAKE_NMI) {
-					z80samplecount++;
-					if (DrvSndROM[sample_address]) {
-						DACSignedWrite(0, DrvSndROM[sample_address]);
-						sample_address = (sample_address + 1) & 0x3ffff;
-					} else {
-						DACWrite(0, 0); // Clear DAC output buffer at end of sample - fixes distortion in Air Duel & second-to-last level of Mr. Heli
-					}
+		CPU_RUN_TIMER(1);
 
-				} else if (z80_nmi_enable == Z80_REAL_NMI) {
-					z80samplecount++;
-					ZetNmi();
+		if (i%nSampleInt == nSampleInt-1) { // 128x per frame
+			if (z80_nmi_enable == Z80_FAKE_NMI) {
+				z80samplecount++;
+				if (DrvSndROM[sample_address]) {
+					DACSignedWrite(0, DrvSndROM[sample_address]);
+					sample_address = (sample_address + 1) & 0x3ffff;
+				} else {
+					DACWrite(0, 0); // Clear DAC output buffer at end of sample - fixes distortion in Air Duel & second-to-last level of Mr. Heli
 				}
-			}
-		} else {
-			ZetIdle(nCyclesTotal[1] / nInterleave);
-		}
 
-		if ((i%multiplier)==0) {
-			if (pBurnSoundOut) {
-				INT32 nSegmentLength = nBurnSoundLen / (nInterleave / multiplier);
-				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-				BurnYM2151Render(pSoundBuf, nSegmentLength);
-
-				nSoundBufferPos += nSegmentLength;
+			} else if (z80_nmi_enable == Z80_REAL_NMI) {
+				z80samplecount++;
+				ZetNmi();
 			}
 		}
 	}
-	nExtraCycles = nCyclesDone[1] - nCyclesTotal[1]; // just for sound
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = ZetTotalCycles() - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-		}
-
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -2200,7 +2143,7 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {			// Return minimum compatible version
 		*pnMin = 0x029705;
 	}
@@ -2229,6 +2172,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(irqvector);
 		SCAN_VAR(z80_reset);
 		SCAN_VAR(majtitle_rowscroll_enable);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;

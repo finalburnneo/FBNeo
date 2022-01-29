@@ -1722,7 +1722,7 @@ static INT32 DrvInit(void (*pCPUMapCallback)(), void (*pSNDMapCallback)(), INT32
 		break;
 
 		case 2: // hharry, xmultipl
-		case 7: // cosmccop (layer offsets of type 2, flipxy of type 1)
+		case 7: // cosmccop, hharryu, dkgensan (layer offsets of type 2, flipxy of type 1)
 			video_offsets[0] = -4;
 			video_offsets[1] = -6;
 			if (video_type == 7) m72_video_type = 1; // cosmccop: diff flipx/y handling in draw_layer()
@@ -3422,7 +3422,7 @@ STD_ROM_FN(hharryu)
 
 static INT32 hharryuInit()
 {
-	return DrvInit(hharryu_main_cpu_map, sound_rom_map, dbreedm72RomLoadCallback, Z80_REAL_NMI, 1);
+	return DrvInit(hharryu_main_cpu_map, sound_rom_map, dbreedm72RomLoadCallback, Z80_REAL_NMI, 7);
 }
 
 struct BurnDriver BurnDrvHharryu = {

@@ -2782,23 +2782,23 @@ struct BurnDriver BurnDrvRallybik = {
 // Truxton / Tatsujin
 
 static struct BurnRomInfo truxtonRomDesc[] = {
-	{ "b65_11.bin",			0x20000, 0x1a62379a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "b65_10.bin",			0x20000, 0xaff5195d, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b65_11.7k",			0x20000, 0x1a62379a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "b65_10.7l",			0x20000, 0xaff5195d, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "b65_09.bin",			0x04000, 0x1bdd4ddc, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "b65_09.2f",			0x04000, 0x1bdd4ddc, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "b65_08.bin",			0x20000, 0xd2315b37, 3 | BRF_GRA },           //  3 Layer Tiles
-	{ "b65_07.bin",			0x20000, 0xfb83252a, 3 | BRF_GRA },           //  4
-	{ "b65_06.bin",			0x20000, 0x36cedcbe, 3 | BRF_GRA },           //  5
-	{ "b65_05.bin",			0x20000, 0x81cd95f1, 3 | BRF_GRA },           //  6
+	{ "b65_08.13e",			0x20000, 0xd2315b37, 3 | BRF_GRA },           //  3 Layer Tiles
+	{ "b65_07.11e",			0x20000, 0xfb83252a, 3 | BRF_GRA },           //  4
+	{ "b65_06.10e",			0x20000, 0x36cedcbe, 3 | BRF_GRA },           //  5
+	{ "b65_05.8e",			0x20000, 0x81cd95f1, 3 | BRF_GRA },           //  6
 
-	{ "b65_04.bin",			0x20000, 0x8c6ff461, 5 | BRF_GRA },           //  7 Sprites
-	{ "b65_03.bin",			0x20000, 0x58b1350b, 5 | BRF_GRA },           //  8
-	{ "b65_02.bin",			0x20000, 0x1dd55161, 5 | BRF_GRA },           //  9
-	{ "b65_01.bin",			0x20000, 0xe974937f, 5 | BRF_GRA },           // 10
+	{ "b65_04.20c",			0x20000, 0x8c6ff461, 5 | BRF_GRA },           //  7 Sprites
+	{ "b65_03.20b",			0x20000, 0x58b1350b, 5 | BRF_GRA },           //  8
+	{ "b65_02.20ab",		0x20000, 0x1dd55161, 5 | BRF_GRA },           //  9
+	{ "b65_01.20a",			0x20000, 0xe974937f, 5 | BRF_GRA },           // 10
 
-	{ "b65_12.bpr",			0x00020, 0xbc88cced, 0 | BRF_OPT },           // 11 PROMs
-	{ "b65_13.bpr",			0x00020, 0xa1e17492, 0 | BRF_OPT },           // 12
+	{ "b65_12.7c",			0x00020, 0xbc88cced, 0 | BRF_OPT },           // 11 PROMs
+	{ "b65_13.6d",			0x00020, 0xa1e17492, 0 | BRF_OPT },           // 12
 };
 
 STD_ROM_PICK(truxton)

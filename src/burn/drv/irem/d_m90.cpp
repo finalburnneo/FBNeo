@@ -1987,7 +1987,7 @@ struct BurnDriver BurnDrvShisen2 = {
 	384, 256, 4, 3
 };
 
-// The Dice Game!
+// Dice - The Dice Game!
 
 static struct BurnRomInfo dicegameRomDesc[] = {
 	{ "dice-p1.ic61",	0x20000, 0x8f2257d8, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -2016,7 +2016,7 @@ static INT32 DicegameInit()
 
 struct BurnDriver BurnDrvDicegame = {
 	"dicegame", NULL, NULL, NULL, "199?",
-	"The Dice Game!\0", NULL, "bootleg", "Irem M90",
+	"Dice - The Dice Game!\0", NULL, "bootleg (Tuning)", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M90, GBF_PUZZLE, 0,
 	NULL, dicegameRomInfo, dicegameRomName, NULL, NULL, NULL, NULL, p2commonInputInfo, DicegameDIPInfo,

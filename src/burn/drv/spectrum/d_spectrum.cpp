@@ -33206,10 +33206,10 @@ struct BurnDriver BurnSpecVoid = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Donkey Kong 3 (48K) (HB)
+// Donkey Kong 3 (48K) (HB, v1.1)
 
 static struct BurnRomInfo SpecDkong3RomDesc[] = {
-	{ "Donkey Kong 3 (2022)(je7ebel).tap", 39469, 0xd6937c50, BRF_ESS | BRF_PRG },
+	{ "Donkey Kong 3 v1.1 (2022)(je7ebel).tap", 39512, 0xef597223, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecDkong3, SpecDkong3, Spectrum)
@@ -33217,7 +33217,7 @@ STD_ROM_FN(SpecDkong3)
 
 struct BurnDriver BurnSpecDkong3 = {
 	"spec_dkong3", NULL, "spec_spectrum", NULL, "2022",
-	"Donkey Kong 3 (48K) (HB)\0", NULL, "je7ebel", "ZX Spectrum",
+	"Donkey Kong 3 (48K) (HB, v1.1)\0", NULL, "je7ebel", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecDkong3RomInfo, SpecDkong3RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,

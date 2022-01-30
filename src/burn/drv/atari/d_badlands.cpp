@@ -643,6 +643,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(playfield_bank);
 		SCAN_VAR(video_int_state);
+		SCAN_VAR(pedal);
 	}
 
 	AtariEEPROMScan(nAction, pnMin);

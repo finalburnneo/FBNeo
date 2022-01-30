@@ -771,6 +771,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(subcpu_halted);
 		SCAN_VAR(alpha_tile_bank);
 		SCAN_VAR(scanline_int_state);
+
 		SCAN_VAR(nExtraCycles);
 	}
 

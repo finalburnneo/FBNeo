@@ -861,6 +861,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(screen_intensity);
 		SCAN_VAR(video_disable);
 		SCAN_VAR(video_int_state);
+		SCAN_VAR(analog_port);
 	}
 
 	AtariEEPROMScan(nAction, pnMin);

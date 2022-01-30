@@ -4638,10 +4638,10 @@
 	</game>
 	<game name="dkong3" romof="spectrum">
 		<comment>Homebrew</comment>
-		<description>Donkey Kong 3 (48K) (HB)</description>
+		<description>Donkey Kong 3 (48K) (HB, v1.1)</description>
 		<year>2022</year>
 		<manufacturer>je7ebel</manufacturer>
-		<rom name="Donkey Kong 3 (2022)(je7ebel).tap" size="39469" crc="d6937c50"/>
+		<rom name="Donkey Kong 3 v1.1 (2022)(je7ebel).tap" size="39512" crc="ef597223"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

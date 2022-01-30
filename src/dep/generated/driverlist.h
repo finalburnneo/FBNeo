@@ -3708,7 +3708,7 @@ DRV		BurnDrvDevstors;
 DRV		BurnSpecDeviants;
 DRV		BurnDrvpce_devlcrsh;
 DRV		BurnDrvmd_devlcrsh;
-DRV		BurnDrvDevilfsg;
+DRV		BurnDrvDevilfshgb;
 DRV		BurnDrvDevilfsh;
 DRV		BurnDrvnes_devilmanj;
 DRV		BurnDrvnes_devilman;
@@ -14339,6 +14339,7 @@ DRV		BurnDrvCpsSf2b4;
 DRV		BurnDrvCpsSf2qp2;
 DRV		BurnDrvCpsSf2qp1;
 DRV		BurnDrvCpsSf2rk;
+DRV		BurnDrvCpsSf2rk2;
 DRV		BurnDrvCpsSf2stt;
 DRV		BurnDrvCpsSf2ebbl2;
 DRV		BurnDrvCpsSf2ebbl3;
@@ -21954,7 +21955,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecDeviants,			// Deviants (128K)
 	&BurnDrvpce_devlcrsh,		// Devil Crash - Naxat Pinball
 	&BurnDrvmd_devlcrsh,		// Devil Crash MD (Jpn)
-	&BurnDrvDevilfsg,			// Devil Fish (Galaxian hardware, bootleg?)
+	&BurnDrvDevilfshgb,			// Devil Fish (Galaxian hardware, bootleg)
 	&BurnDrvDevilfsh,			// Devil Fish
 	&BurnDrvnes_devilmanj,		// Devil Man (Japan)
 	&BurnDrvnes_devilman,		// Devil Man (T-eng)
@@ -22233,7 +22234,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_donkeykong,		// Donkey Kong (World) (Rev A)
 	&BurnDrvDkrainbow,			// Donkey Kong - Arcade Rainbow (hack)
 	&BurnDrvDkongpe,			// Donkey Kong - Pauline Edition (hack, rev 5)
-	&BurnSpecDkong3,			// Donkey Kong 3 (48K) (HB)
+	&BurnSpecDkong3,			// Donkey Kong 3 (48K) (HB, v1.1)
 	&BurnDrvDkong3b,			// Donkey Kong 3 (bootleg on Donkey Kong Jr. hardware)
 	&BurnDrvDkong3j,			// Donkey Kong 3 (Japan)
 	&BurnDrvDkong3,				// Donkey Kong 3 (US)
@@ -32584,7 +32585,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSf2b4,			// Street Fighter II - The World Warrior (bootleg, 910214 etc, set 4)
 	&BurnDrvCpsSf2qp2,			// Street Fighter II - The World Warrior (Quicken bootleg, 910522 USA)
 	&BurnDrvCpsSf2qp1,			// Street Fighter II - The World Warrior (Quicken Pt-I bootleg, 910214 USA)
-	&BurnDrvCpsSf2rk,			// Street Fighter II - The World Warrior (RK bootleg, 910214 etc)
+	&BurnDrvCpsSf2rk,			// Street Fighter II - The World Warrior (RK bootleg set 1, 910214 etc)
+	&BurnDrvCpsSf2rk2,			// Street Fighter II - The World Warrior (RK bootleg set 2, 910214 etc)
 	&BurnDrvCpsSf2stt,			// Street Fighter II - The World Warrior (STT, TAB Austria bootleg, 910214 etc)
 	&BurnDrvCpsSf2ebbl2,		// Street Fighter II - The World Warrior (TAB Austria bootleg set 2, 910214 etc)
 	&BurnDrvCpsSf2ebbl3,		// Street Fighter II - The World Warrior (TAB Austria bootleg set 3, 910214 etc)
@@ -34020,7 +34022,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_excdizzy,		// The Excellent Dizzy Collection (Euro, SMS Mode)
 	&BurnDrvsms_excdizzy,		// The Excellent Dizzy Collection (Euro, USA, Prototype)
 	&BurnDrvgg_excdizzyp,		// The Excellent Dizzy Collection (Prototype, SMS Mode)
-	&BurnDrvTeot,				// The Eye of Typhoon (Beta Version)
+	&BurnDrvTeot,				// The Eye of Typhoon (Beta 3 Version)
 	&BurnDrvFlstoryj,			// The FairyLand Story (Japan)
 	&BurnDrvFlstory,			// The FairyLand Story
 	&BurnDrvDaraku,				// The Fallen Angels (World) / Daraku Tenshi - The Fallen Angels (Japan)

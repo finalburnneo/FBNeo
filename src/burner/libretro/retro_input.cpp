@@ -1970,6 +1970,10 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 	if (strncmp("select", szb, 6) == 0 && bIsNeogeoCartGame)
 		GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L3, description);
 
+	// map VS unisystem select button to L3
+	if (strncmp("select", szb, 6) == 0 && (nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_MISC_PRE90S && strncmp("vs", drvname, 2) == 0)
+		GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L3, description);
+
 	return 0;
 }
 

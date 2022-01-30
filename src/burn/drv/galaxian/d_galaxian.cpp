@@ -9976,7 +9976,7 @@ struct BurnDriver BurnDrvAtlantisb = {
 };
 
 // Seperate sprite/tile roms with IRQ0 instead of NMI
-static struct BurnRomInfo DevilfsgRomDesc[] = {
+static struct BurnRomInfo DevilfshgbRomDesc[] = {
 	{ "dfish1.7f",     0x01000, 0x2ab19698, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "dfish2.7h",     0x01000, 0x4e77f097, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "dfish3.7k",     0x01000, 0x3f16a4c6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -9988,8 +9988,8 @@ static struct BurnRomInfo DevilfsgRomDesc[] = {
 	{ "82s123.6e",     0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
 };
 
-STD_ROM_PICK(Devilfsg)
-STD_ROM_FN(Devilfsg)
+STD_ROM_PICK(Devilfshgb)
+STD_ROM_FN(Devilfshgb)
 
 static void DevilfsgRearrangeRom()
 {
@@ -10037,12 +10037,12 @@ static INT32 DevilfsgInit()
 	return nRet;
 }
 
-struct BurnDriver BurnDrvDevilfsg = {
-	"devilfsg", "devilfsh", NULL, NULL, "1984",
-	"Devil Fish (Galaxian hardware, bootleg?)\0", NULL, "Vision / Artic", "Galaxian",
+struct BurnDriver BurnDrvDevilfshgb = {
+	"devilfshgb", "devilfsh", NULL, NULL, "1984",
+	"Devil Fish (Galaxian hardware, bootleg)\0", NULL, "bootleg (Vision)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
-	NULL, DevilfsgRomInfo, DevilfsgRomName, NULL, NULL, NULL, NULL, DevilfsgInputInfo, DevilfsgDIPInfo,
+	NULL, DevilfshgbRomInfo, DevilfshgbRomName, NULL, NULL, NULL, NULL, DevilfsgInputInfo, DevilfsgDIPInfo,
 	DevilfsgInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

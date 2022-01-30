@@ -20833,24 +20833,22 @@ struct BurnDriver BurnDrvNblktiger = {
 	0x1000, 304, 224, 4, 3
 };
 
-// The Eye of Typhoon (Beta Version)
+// The Eye of Typhoon (Beta 3 Version)
 // https://ozzyouzo.itch.io/teot
 
 static struct BurnRomInfo teotRomDesc[] = {
-	{ "teot-p1.bin",    0x0100000, 0x603fac98, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "teot-p2.bin",    0x0800000, 0x5f557ad5, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
+	{ "teot-p1.bin",    0x0100000, 0x0d5763ae, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "teot-p2.bin",    0x0800000, 0xbee21724, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
 
-	{ "teot-s1.bin",    0x0020000, 0xaba8f74c, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "teot-s1.bin",    0x0020000, 0x52895190, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "teot-c1.bin",    0x1000000, 0x7919ea09, 3 | BRF_GRA },           //  3 Sprite data
-	{ "teot-c2.bin",    0x1000000, 0x62aa59a8, 3 | BRF_GRA },           //  4
-	{ "teot-c3.bin",    0x1000000, 0x7919ea09, 3 | BRF_GRA },           //  5
-	{ "teot-c4.bin",    0x1000000, 0x62aa59a8, 3 | BRF_GRA },           //  6
+	{ "teot-c1.bin",    0x1000000, 0xf183c0a2, 3 | BRF_GRA },           //  3 Sprite data
+	{ "teot-c2.bin",    0x1000000, 0x93f47c21, 3 | BRF_GRA },           //  4
+	
+	{ "teot-m1.bin",    0x0010000, 0x583db6a5, 4 | BRF_ESS | BRF_PRG }, //  5 Z80 code
 
-	{ "teot-m1.bin",    0x0010000, 0xdc29f33b, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
-
-	{ "teot-v1.bin",    0x0800000, 0x91b3deed, 5 | BRF_SND },           //  8 Sound data
-	{ "teot-v2.bin",    0x0800000, 0x985e6f6b, 5 | BRF_SND },           //  9
+	{ "teot-v1.bin",    0x0800000, 0xd88114d4, 5 | BRF_SND },           //  6 Sound data
+	{ "teot-v2.bin",    0x0800000, 0x6fccb0d0, 5 | BRF_SND },           //  7
 };
 
 STDROMPICKEXT(teot, teot, neogeo)
@@ -20858,7 +20856,7 @@ STD_ROM_FN(teot)
 
 struct BurnDriver BurnDrvTeot = {
 	"teot", NULL, "neogeo", NULL, "2022",
-	"The Eye of Typhoon (Beta Version)\0", NULL, "OzzyOuzo", "Neo Geo MVS",
+	"The Eye of Typhoon (Beta 3 Version)\0", NULL, "OzzyOuzo", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
 	NULL, teotRomInfo, teotRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,

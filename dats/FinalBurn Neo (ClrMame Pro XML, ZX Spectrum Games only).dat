@@ -98,6 +98,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="1985tda" romof="spectrum">
+		<description>1985 - The Day After (48K)</description>
+		<year>1985</year>
+		<manufacturer>Mastertronic</manufacturer>
+		<rom name="1985 - The Day After (1985)(Mastertronic).tap" size="32574" crc="2bee2cb2"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="1stdivmanager" romof="spec128">
 		<description>1st Division Manager (128K)</description>
 		<year>1991</year>
@@ -337,6 +346,17 @@
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Abu Simbel Profanation (1985)(Dinamic Software).tap" size="46362" crc="7849893d"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ace2088" romof="spec128">
+		<comment>SHIFT+J/K: speed up/down - L, R, T: change weapons - W: set display</comment>
+		<description>ACE 2088 (128K)</description>
+		<year>1989</year>
+		<manufacturer>Cascade Games</manufacturer>
+		<rom name="ACE 2088 128K (1989)(Cascade Games).tap" size="55874" crc="4ebb46a9"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -784,7 +804,7 @@
 		<comment>Homebrew</comment>
 		<description>Aliens Neoplasma (128K) (HB)</description>
 		<year>2019</year>
-		<manufacturer>Sanchez Crew</manufacturer>
+		<manufacturer>SaNchez</manufacturer>
 		<rom name="Aliens Neoplasma (2019)(Sanchez Crew).tap" size="64233" crc="6cf1a406"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -2542,6 +2562,15 @@
 		<year>2013</year>
 		<manufacturer>Gabriele Amore</manufacturer>
 		<rom name="C is for Crabby (2013)(Gabriel Amore).tap" size="41821" crc="490a07d9"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="core" romof="spectrum">
+		<description>C.O.R.E. (48K)</description>
+		<year>1986</year>
+		<manufacturer>A'n'F Software</manufacturer>
+		<rom name="C.O.R.E. (1986)(A'n'F Software).tap" size="48919" crc="716221c7"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4519,7 +4548,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="djpuff" romof="spec128">
-		<description>DJ Puff (128K)</description>
+		<description>DJ Puff's Volcanic Capers (128K)</description>
 		<year>1992</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="DJ Puff (1992)(Codemasters).z80" size="66937" crc="38340567"/>
@@ -4603,6 +4632,16 @@
 		<year>1986</year>
 		<manufacturer>Ocean</manufacturer>
 		<rom name="Donkey Kong (1986)(Ocean).tap" size="57131" crc="f54f6058"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dkong3" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Donkey Kong 3 (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>je7ebel</manufacturer>
+		<rom name="Donkey Kong 3 (2022)(je7ebel).tap" size="39469" crc="d6937c50"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5472,21 +5511,11 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="feud" romof="spec128">
-		<description>Feud (128K)</description>
-		<year>1987</year>
-		<manufacturer>Bulldog</manufacturer>
-		<rom name="Feud (1987)(Bulldog)[128K].z80" size="40303" crc="71ccae18"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="feud_48" cloneof="feud" romof="feud">
+	<game name="feud" romof="spectrum">
 		<description>Feud (48K)</description>
 		<year>1987</year>
 		<manufacturer>Bulldog</manufacturer>
-		<rom name="Feud (1987)(Bulldog).z80" size="38607" crc="e9d169a7"/>
+		<rom name="Feud (1987)(Bulldog).tap" size="47901" crc="f69e87b4"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5673,45 +5702,26 @@
 		<description>Football Director (48K)</description>
 		<year>1986</year>
 		<manufacturer>D&amp;H Games</manufacturer>
-		<rom name="Football Director (1986)(D&amp;H Games).z80" size="39611" crc="6fdbf2bd"/>
+		<rom name="Football Director (1986)(D&amp;H Games).tap" size="47945" crc="71643b24"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="ftman" romof="spectrum">
-		<description>Football Manager (Addictive Games) (48K)</description>
+		<description>Football Manager (48K)</description>
 		<year>1982</year>
 		<manufacturer>Addictive Games</manufacturer>
-		<rom name="Football Manager (1982)(Addictive Games).z80" size="33357" crc="54fd204c"/>
+		<rom name="Football Manager (1982)(Addictive Games).tap" size="35582" crc="9ff2f05d"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ftmana" cloneof="ftman" romof="ftman">
-		<description>Football Manager (Unknown) (48K)</description>
-		<year>19xx</year>
-		<manufacturer>Unknown</manufacturer>
-		<rom name="Football Manager (19xx)(-).z80" size="37737" crc="d190faf5"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="ftmanp" romof="spectrum">
-		<description>Football Manager - Players (48K)</description>
-		<year>1982</year>
-		<manufacturer>Addictive Games</manufacturer>
-		<rom name="Football Manager - Players (1982)(Addictive Games).z80" size="36902" crc="0691e14c"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="ftmanwc" romof="spec128">
-		<description>Football Manager - World Cup Edition (Spanish) (128K)</description>
+	<game name="ftmanwc" romof="spectrum">
+		<description>Football Manager - World Cup Edition (48K)</description>
 		<year>1990</year>
 		<manufacturer>Addictive Games</manufacturer>
-		<rom name="Football Manager - World Cup Edition (1990)(Addictive Games)(es).z80" size="45105" crc="8f0527c8"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Football Manager - World Cup Edition (1990)(Addictive Games).tap" size="41462" crc="52f22bdb"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5719,25 +5729,16 @@
 		<description>Football Manager 2 (48K)</description>
 		<year>1988</year>
 		<manufacturer>Addictive Games</manufacturer>
-		<rom name="Football Manager 2 (1988)(Addictive Games).z80" size="43728" crc="b305dce4"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="footmn2e" romof="spectrum">
-		<description>Football Manager 2 - Expansion Kit (48K)</description>
-		<year>1989</year>
-		<manufacturer>Addictive Games</manufacturer>
-		<rom name="Football Manager 2 - Expansion Kit (1989)(Addictive Games).z80" size="40700" crc="155b7053"/>
+		<rom name="Football Manager 2 (1988)(Addictive Games).tap" size="50435" crc="060ddf75"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="footman3" romof="spectrum">
 		<description>Football Manager 3 (48K)</description>
-		<year>1992</year>
+		<year>1991</year>
 		<manufacturer>Addictive Games</manufacturer>
-		<rom name="Football Manager 3 (1992)(Addictive Games).z80" size="27122" crc="33db96d5"/>
+		<rom name="Football Manager 3 (1991)(Addictive Games).tap" size="46747" crc="5e1a8c16"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5814,7 +5815,7 @@
 		<description>Fred (48K)</description>
 		<year>1984</year>
 		<manufacturer>Quicksilva</manufacturer>
-		<rom name="Fred (1984)(Quicksilva).z80" size="23967" crc="b653c769"/>
+		<rom name="Fred (1984)(Quicksilva).tap" size="31242" crc="8c4bd9a9"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -6668,14 +6669,22 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gremlins2" romof="spec128">
+	<game name="gremlinsadv" romof="spectrum">
+		<description>Gremlins - The Adventure (48K)</description>
+		<year>1985</year>
+		<manufacturer>Adventure International</manufacturer>
+		<rom name="Gremlins - The Adventure (1985)(Adventure International).z80" size="45332" crc="7049389f"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gremlins2" romof="spectrum">
 		<comment>In options menu use Q, A and Space</comment>
-		<description>Gremlins 2 - The New Batch (128K)</description>
+		<description>Gremlins 2 - The New Batch (48K)</description>
 		<year>1990</year>
 		<manufacturer>Topo Soft - Elite Systems</manufacturer>
 		<rom name="Gremlins 2 - The New Batch (1990)(Topo Soft - Elite Systems).tap" size="160108" crc="b1402dfe"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -9008,12 +9017,23 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="lostulum" romof="spec128">
+	<game name="lostulumen" romof="spec128">
 		<comment>Homebrew</comment>
-		<description>Lost Treasures of Tulum, The (128K) (HB)</description>
+		<description>Lost Treasures of Tulum, The (English) (128K) (HB)</description>
 		<year>2020</year>
 		<manufacturer>RetroWorks</manufacturer>
-		<rom name="Lost Treasures of Tulum, the (2020)(RetroWorks).tap" size="75999" crc="c64c38ad"/>
+		<rom name="Lost Treasures of Tulum, The EN 128K (2020)(RetroWorks).tap" size="75999" crc="c64c38ad"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lostulumes" cloneof="lostulumen" romof="lostulumen">
+		<comment>Homebrew</comment>
+		<description>Lost Treasures of Tulum, The (Spanish) (128K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>RetroWorks</manufacturer>
+		<rom name="Lost Treasures of Tulum, The ES 128K (2020)(RetroWorks).tap" size="75999" crc="c4087b0e"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -10000,6 +10020,15 @@
 		<rom name="Moto Cross Simulator (1989)(Codemasters).tap" size="51225" crc="7abd5f87"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="motomadness" romof="spectrum">
+		<description>Motorbike Madness (48K)</description>
+		<year>1988</year>
+		<manufacturer>Mastertronic</manufacturer>
+		<rom name="Motorbike Madness 48K (1988)(Mastertronic).tap" size="68303" crc="8346f6c5"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -13785,6 +13814,26 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="speccies2" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Speccies 2, The (16K) (HB, v1.1)</description>
+		<year>2013</year>
+		<manufacturer>Tardis Remakes</manufacturer>
+		<rom name="Speccies 2, The v1.1 (2013)(Tardis Remakes).tap" size="15678" crc="eb239bb9"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="speccies" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Speccies, The (48K) (HB, v1.2)</description>
+		<year>2013</year>
+		<manufacturer>Tardis Remakes</manufacturer>
+		<rom name="Speccies, The v1.2 (2013)(Tardis Remakes).tap" size="44236" crc="7b5ffc84"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="speccybros" romof="spectrum">
 		<comment>Homebrew</comment>
 		<description>Speccy Bros (48K) (HB)</description>
@@ -13945,13 +13994,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="stainlesssteel" romof="spec128">
-		<description>Stainless Steel</description>
+	<game name="stainlesssteel" romof="spectrum">
+		<description>Stainless Steel (48K)</description>
 		<year>1986</year>
 		<manufacturer>Mikro-Gen</manufacturer>
 		<rom name="Stainless Steel (1986)(Mikro-Gen).tap" size="44663" crc="c01c4113"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -15749,12 +15797,22 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="vallation" romof="spec128">
+	<game name="vallation" cloneof="vallation128" romof="vallation128">
 		<comment>Homebrew</comment>
-		<description>Vallation (128K) (HB)</description>
+		<description>Vallation (48K) (HB, v1.1)</description>
+		<year>2016</year>
+		<manufacturer>Tardis Remakes</manufacturer>
+		<rom name="Vallation v1.1 (2016)(Tardis Remakes).tap" size="41179" crc="e67312ca"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="vallation128" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Vallation 128k (128K) (HB)</description>
 		<year>2017</year>
-		<manufacturer>Psytronik Software</manufacturer>
-		<rom name="Vallation (2017)(Psytronik).tap" size="68513" crc="a30a4662"/>
+		<manufacturer>Tardis Remakes</manufacturer>
+		<rom name="Vallation 128k (2017)(Tardis Remakes).tap" size="68513" crc="a30a4662"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -15899,6 +15957,17 @@
 		<year>2020</year>
 		<manufacturer>Invaders Group</manufacturer>
 		<rom name="Void 128K (2020)(Invaders Group).tap" size="80143" crc="a1fdfe03"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="vradark" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Vradark's Sphere (128K) (HB)</description>
+		<year>2018</year>
+		<manufacturer>SaNchez</manufacturer>
+		<rom name="Vradark's Sphere (2018)(Sanchez).tap" size="74713" crc="0ec63453"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -16526,6 +16595,17 @@
 		<manufacturer>Menyiques</manufacturer>
 		<rom name="ZX Enigma Machine (2021)(Menyiques).tap" size="28003" crc="c5bbd1e3"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zxfm2005" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>ZX Football Manager 2005 (128K) (HB)</description>
+		<year>2004</year>
+		<manufacturer>Cronosoft</manufacturer>
+		<rom name="ZX Football Manager 2005 (2004)(Cronosoft).tap" size="80114" crc="ec86d147"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

@@ -686,6 +686,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="awakening">
+		<comment>Homebrew, Prototype</comment>
+		<description>Alwa's Awakening (HB, Prototype)</description>
+		<year>2021</year>
+		<manufacturer>Elden Pixels</manufacturer>
+		<rom name="Alwa's Awakening - Prototype (2021)(Elden Pixels).nes" size="524304" crc="c07533c0"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="amagon">
 		<description>Amagon (USA)</description>
 		<year>1989</year>
@@ -745,6 +754,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="animalblk">
+		<comment>Homebrew</comment>
+		<description>Animal Blockes (HB)</description>
+		<year>200?</year>
+		<manufacturer>Unknown</manufacturer>
+		<rom name="Animal Blockes (200X)(Unknown).nes" size="49168" crc="fc2b860c"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="antaradv">
 		<description>Antarctic Adventure (Japan)</description>
 		<year>1985</year>
@@ -793,6 +811,15 @@
 		<year>1990</year>
 		<manufacturer>Acclaim</manufacturer>
 		<rom name="Arch Rivals - A Basketbrawl! (USA).nes" size="131088" crc="37ef8319"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="archer">
+		<comment>Homebrew</comment>
+		<description>Archer, The (HB)</description>
+		<year>200?</year>
+		<manufacturer>Power Joy</manufacturer>
+		<rom name="Archer, The (200X)(Power Joy).nes" size="24592" crc="911e0365"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -1076,7 +1103,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="badapple">
-		<comment>Homebrew</comment>
+		<comment>Demo, Homebrew</comment>
 		<description>Bad Apple (HB, Tech-Demo)</description>
 		<year>2015</year>
 		<manufacturer>Little Limit</manufacturer>
@@ -4401,8 +4428,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="eeeaaaooo">
-		<comment>Homebrew</comment>
-		<description>EEEAAAOOO (HB)</description>
+		<comment>Demo, Homebrew</comment>
+		<description>EEEAAAOOO - aka AAAEEEOOO (HB, Tech-Demo)</description>
 		<year>2020</year>
 		<manufacturer>N.K</manufacturer>
 		<rom name="EEEAAAOOO (HB).nes" size="589840" crc="ea1cb7b6"/>
@@ -6502,6 +6529,15 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Hello Kitty World (Japan).nes" size="131088" crc="54dc10cd"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="heohdemo">
+		<comment>Demo, Homebrew</comment>
+		<description>HEOH demo (HB, Tech-Demo)</description>
+		<year>2019</year>
+		<manufacturer>shiru</manufacturer>
+		<rom name="HEOH demo (2019)(shiru).nes" size="524304" crc="4fcd5116"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -11483,6 +11519,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="rainbrite">
+		<comment>Homebrew</comment>
+		<description>Rainbow Brite - Journey to Rainbow Land (HB)</description>
+		<year>2017</year>
+		<manufacturer>Hallmark</manufacturer>
+		<rom name="Rainbow Brite - Journey to Rainbow Land (2017)(Hallmark).nes" size="524304" crc="8902cf08"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="rainbisloce">
 		<description>Rainbow Islands - Ocean (Europe)</description>
 		<year>1988</year>
@@ -14669,6 +14714,15 @@
 		<year>1991</year>
 		<manufacturer>Hi Tech Expressions</manufacturer>
 		<rom name="Tom &amp; Jerry - The Ultimate Game of Cat and Mouse! (USA).nes" size="262160" crc="fca83867"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="tombice">
+		<comment>Homebrew, No sound</comment>
+		<description>Tomb of Ice (HB)</description>
+		<year>2020</year>
+		<manufacturer>FG Software</manufacturer>
+		<rom name="Tomb of Ice (2020)(HB)(FG Software).nes" size="40976" crc="426d3439"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

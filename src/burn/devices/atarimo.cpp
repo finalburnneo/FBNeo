@@ -759,7 +759,7 @@ UINT16 *atarimo_render(int map, const rectangle *cliprect, struct atarimo_rect_l
 		mo->next_xpos = 123456;
 
 		/* render the mos */
-		for (current = first; current != last; current += step)
+		for (current = first; last != NULL && current != last; current += step)
 			mo_render_object(mo, *current, &bandclip);
 	}
 

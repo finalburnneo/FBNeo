@@ -5025,6 +5025,31 @@ struct BurnDriver BurnDrvIchir = {
 };
 
 
+// Puzzle & Action: Ichidant-R (World) (bootleg)
+
+static struct BurnRomInfo ichirblRomDesc[] = {
+	{ "2.f11",					0x80000, 0xb8201c2e, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "1.f10",					0x80000, 0xaf0dd811, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "4.f8",					0x80000, 0x85d73722, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "3.f9",					0x80000, 0xbc3bbf25, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "2.e3",					0x80000, 0xfc7b0da5, 2 | BRF_SND },           //  4 UPD Samples
+};
+
+STD_ROM_PICK(ichirbl)
+STD_ROM_FN(ichirbl)
+
+struct BurnDriver BurnDrvIchirbl = {
+	"ichirbl", "ichir", NULL, NULL, "1994",
+	"Puzzle & Action: Ichidant-R (World) (bootleg)\0", NULL, "bootleg", "C2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
+	NULL, ichirblRomInfo, ichirblRomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, IchirDIPInfo,
+	NoProtectionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
+	320, 224, 4, 3
+};
+
+
 // Puzzle & Action: Ichidant-R (Korea)
 
 static struct BurnRomInfo ichirkRomDesc[] = {

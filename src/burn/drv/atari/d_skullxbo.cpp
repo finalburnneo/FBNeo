@@ -896,6 +896,15 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(video_int_state);
 		SCAN_VAR(scanline_int_state);
 		SCAN_VAR(cpu_halted);
+		SCAN_VAR(scanline_int_state);
+		SCAN_VAR(video_int_state);
+		SCAN_VAR(cpu_halted);
+		SCAN_VAR(playfield_latch);
+		SCAN_VAR(scrollx);
+		SCAN_VAR(scrollx_raw);
+		SCAN_VAR(scrolly);
+		SCAN_VAR(scrolly_raw);
+		SCAN_VAR(mobank);
 
 		SCAN_VAR(nExtraCycles);
 	}
@@ -904,7 +913,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	return 0;
 }
-
 
 // Skull & Crossbones (rev 5)
 

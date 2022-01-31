@@ -585,6 +585,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnWatchdogScan(nAction);
 
 		BurnTrackballScan();
+
+		SCAN_VAR(track_inf);
 	}
 
 	AtariEEPROMScan(nAction, pnMin);

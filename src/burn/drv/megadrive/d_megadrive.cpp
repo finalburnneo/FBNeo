@@ -44993,7 +44993,7 @@ STD_ROM_PICK(md_euro2004)
 STD_ROM_FN(md_euro2004)
 
 struct BurnDriver BurnDrvmd_euro2004 = {
-	"md_Euro2004", "md_issdx", NULL, NULL, "2004",
+	"md_euro2004", "md_issdx", NULL, NULL, "2004",
 	"UEFA Euro 2004 Portugal (ISSDX, Hack)\0", NULL, "Glorysun", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSFOOTBALL, 0,

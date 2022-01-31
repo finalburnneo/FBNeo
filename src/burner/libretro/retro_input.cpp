@@ -1971,7 +1971,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 		GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L3, description);
 
 	// map VS unisystem select button to L3
-	if (strncmp("select", szb, 6) == 0 && (nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_MISC_PRE90S && strncmp("vs", drvname, 2) == 0)
+	if (strncmp("select", szb, 6) == 0 && (nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_NVS)
 		GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L3, description);
 
 	return 0;
@@ -2327,7 +2327,7 @@ static INT32 GameInpOtherOne(struct GameInp* pgi, char* szi, char *szn)
 	}
 
 	// Sega system 24/32's "Service 1" is required to navigate in service menu
-	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM24 || ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MISC && strcmp(BurnDrvGetTextA(DRV_SYSTEM), "System 32") == 0)) {
+	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM24 || (nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM32) {
 		if (strcmp("Service 1", szn) == 0) {
 			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_R3, szn);
 		}

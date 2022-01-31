@@ -21516,7 +21516,7 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="Euro2004" cloneof="issdx" romof="issdx">
+	<game name="euro2004" cloneof="issdx" romof="issdx">
 		<description>UEFA Euro 2004 Portugal (ISSDX, Hack)</description>
 		<year>2004</year>
 		<manufacturer>Glorysun</manufacturer>

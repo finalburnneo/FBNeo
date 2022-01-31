@@ -10041,7 +10041,7 @@ struct BurnDriver BurnDrvDevilfshgb = {
 	"devilfshgb", "devilfsh", NULL, NULL, "1984",
 	"Devil Fish (Galaxian hardware, bootleg)\0", NULL, "bootleg (Vision)", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, DevilfshgbRomInfo, DevilfshgbRomName, NULL, NULL, NULL, NULL, DevilfsgInputInfo, DevilfsgDIPInfo,
 	DevilfsgInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4

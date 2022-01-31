@@ -692,6 +692,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_MIDWAY_YUNIT							(HARDWARE_PREFIX_MIDWAY | 0x00040000)
 
 #define HARDWARE_NES									(HARDWARE_PREFIX_NES)
+#define HARDWARE_NVS									(HARDWARE_PREFIX_NES | 0x00010000)
 #define HARDWARE_FDS									(HARDWARE_PREFIX_FDS)
 
 #define HARDWARE_CHANNELF                               (HARDWARE_PREFIX_CHANNELF)

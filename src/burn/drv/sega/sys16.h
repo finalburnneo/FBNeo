@@ -128,6 +128,8 @@ extern INT32 System16YM2413IRQInterval;
 
 extern bool System16HasGears;
 
+extern INT32 s16a_update_after_vblank;
+
 extern INT32 nSystem16CyclesDone[4]; 
 extern UINT32 System16ClockSpeed;
 extern UINT32 System16Z80ClockSpeed;
@@ -250,6 +252,7 @@ extern INT32 Pdrift_analog_target;
 
 // sys16_gfx.cpp
 extern INT32 System16VideoEnable;
+extern INT32 System16AVideoEnableDelayed;
 extern INT32 System18VdpEnable;
 extern INT32 System18VdpMixing;
 extern INT32 System16ScreenFlip;

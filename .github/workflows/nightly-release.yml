@@ -25,7 +25,7 @@ jobs:
   build_windows:
     name: Windows x32
     needs: nightly_release
-    runs-on: windows-2019
+    runs-on: windows-latest
     defaults:
       run:
         shell: msys2 {0}
@@ -38,19 +38,17 @@ jobs:
           install: msys2-devel base-devel binutils mingw-w64-i686-toolchain mingw-w64-i686-nasm zip wget
           msystem: MINGW32
 
-      - name: Downgrade crt and pthread
+      - name: Downgrade pthread
         run: |
-          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-headers-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz
-          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-crt-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz
           wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
           wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
-          pacman -U --noconfirm mingw-w64-i686-headers-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz mingw-w64-i686-crt-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+          pacman -U --noconfirm mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
 
       - uses: actions/checkout@v2
 
       - name: Build FBNeo
         run: |
-          make -j$(nproc) mingw510 SKIPDEPEND=1 RELEASEBUILD=1
+          make -j$(nproc) mingw SKIPDEPEND=1 RELEASEBUILD=1
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
@@ -76,7 +74,7 @@ jobs:
   build_windows_debug:
     name: Windows x32 (Debug)
     needs: nightly_release
-    runs-on: windows-2019
+    runs-on: windows-latest
     defaults:
       run:
         shell: msys2 {0}
@@ -89,19 +87,17 @@ jobs:
           install: msys2-devel base-devel binutils mingw-w64-i686-toolchain mingw-w64-i686-nasm zip wget
           msystem: MINGW32
 
-      - name: Downgrade crt and pthread
+      - name: Downgrade pthread
         run: |
-          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-headers-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz
-          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-crt-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz
           wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
           wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
-          pacman -U --noconfirm mingw-w64-i686-headers-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz mingw-w64-i686-crt-git-6.0.0.5225.fb06a4bf-1-any.pkg.tar.xz mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+          pacman -U --noconfirm mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
 
       - uses: actions/checkout@v2
 
       - name: Build FBNeo
         run: |
-          make -j$(nproc) mingw510 SKIPDEPEND=1
+          make -j$(nproc) mingw SKIPDEPEND=1
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
@@ -122,6 +118,47 @@ jobs:
           upload_url: ${{ needs.nightly_release.outputs.upload_url }}
           asset_name: Windows x32 (Debug).zip
           asset_path: Windows x32 (Debug).zip
+          asset_content_type: application/zip
+
+  build_windows_test:
+    name: Windows x32 (Test)
+    needs: nightly_release
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        shell: bash {0}
+
+    steps:
+      - name: Install Linux dependencies
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install mingw-w64 nasm
+
+      - uses: actions/checkout@v2
+
+      - name: Build FBNeo
+        run: |
+          make -j$(nproc) mingwcc SKIPDEPEND=1 RELEASEBUILD=1
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Windows x32 (Test)
+          path: |
+            fbneo.exe
+
+      - name: Build release asset
+        run: |
+          zip --junk-paths "Windows x32 (Test).zip" fbneo.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
+          asset_name: Windows x32 (Test).zip
+          asset_path: Windows x32 (Test).zip
           asset_content_type: application/zip
 
   build_linux_sdl2:

@@ -12,9 +12,10 @@ unexport
 
 # Check for changes in header files
 ifndef	SKIPDEPEND
-DEPEND = 1
+#DEPEND = 1
 endif
-
+# Note: DEPEND = 1 is a hassle and slows build time by about 500x
+# it's easier to "rm -rf obj" and rebuild than deal with DEPEND = 1
 
 #
 #	Declare variables
@@ -185,6 +186,16 @@ CXX	= g++
 LD	= $(CXX)
 AS	= nasm
 
+# While cross-compiling, tools need to be compiled for host so that they can be executed by host.
+# if HOST_CC is not set, then we aren't cross-compiling, so we'll use target compiler as host compiler
+ifeq ($(HOST_CC),)
+HOST_CC       := $(CC)
+HOST_CXX      := $(CXX)
+HOST_CFLAGS   := $(CFLAGS) -mconsole
+HOST_CXXFLAGS := $(CXXFLAGS) -mconsole
+HOST_LDFLAGS  := $(LDFLAGS)
+endif
+
 LDFLAGS	= -static
 
 ifdef GCC345
@@ -281,6 +292,12 @@ CXXFLAGS = -pipe \
 	   -Wno-unused-but-set-variable -Wno-sequence-point -Wno-narrowing -Wno-extra \
 	   -Wno-pedantic \
 	   $(DEF) $(incdir)
+
+ifdef BORKYCRT
+	#return back to msvcrt-style swprintf
+	CFLAGS += -D__USE_MINGW_ANSI_STDIO=0
+	CXXFLAGS += -D__USE_MINGW_ANSI_STDIO=0
+endif
 ifdef BUILD_X64_EXE
 	CFLAGS += -m64
 	CXXFLAGS += -m64
@@ -564,7 +581,7 @@ endif
 about.o about.d: $(build_details.h)
 
 $(build_details.h):	$(srcdir)dep/scripts/build_details.cpp
-	@$(CXX) -mconsole $(CXXFLAGS) $(LDFLAGS) $< -o $(objdir)dep/generated/build_details.exe
+	@$(HOST_CXX) $(HOST_CXXFLAGS) $(HOST_LDFLAGS) $< -o $(objdir)dep/generated/build_details.exe
 	@$(objdir)dep/generated/build_details.exe >$@
 
 #
@@ -576,7 +593,7 @@ $(build_details.h):	$(srcdir)dep/scripts/build_details.cpp
 ifdef	BUILD_A68K
 $(a68k.o):	fba_make68k.c
 	@echo Compiling A68K MC68000 core...
-	@$(CC) -mconsole $(CFLAGS) $(LDFLAGS) -DWIN32 -Wno-unused -Wno-conversion -Wno-missing-prototypes \
+	@$(CC) $(CFLAGS) $(LDFLAGS) -DWIN32 -Wno-unused -Wno-conversion -Wno-missing-prototypes \
 		-s $< -o $(subst $(srcdir),$(objdir),$(<D))/$(<F:.c=.exe)
 	@$(subst $(srcdir),$(objdir),$(<D))/$(<F:.c=.exe) $(@:.o=.asm) \
 		$(@D)/a68k_tab.asm 00 $(ppro)
@@ -599,7 +616,7 @@ $(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kops.c: $(objdir)cpu/
 
 $(objdir)cpu/m68k/m68kmake.exe: $(srcdir)cpu/m68k/m68kmake.c
 	@echo Compiling Musashi MC680x0 core \(m68kmake.c\)...
-	@$(CC) $(CFLAGS) $(srcdir)cpu/m68k/m68kmake.c -o $(objdir)cpu/m68k/m68kmake.exe
+	@$(HOST_CC) $(HOST_CFLAGS) $(srcdir)cpu/m68k/m68kmake.c -o $(objdir)cpu/m68k/m68kmake.exe
 
 
 #
@@ -610,7 +627,7 @@ ctv.d ctv.o:	$(ctv.h)
 
 $(ctv.h):	ctv_make.cpp
 	@echo Generating $(srcdir)dep/generated/$(@F)...
-	@$(CC) -mconsole $(CXXFLAGS) $(LDFLAGS) $< \
+	@$(HOST_CC) $(HOST_CXXFLAGS) $(HOST_LDFLAGS) $< \
 		-o $(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe)
 	@$(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe) >$@
 
@@ -667,7 +684,7 @@ pgm_draw.d pgm_draw.o:	$(pgm_sprite.h)
 
 $(pgm_sprite.h):	pgm_sprite_create.cpp
 	@echo Generating $(srcdir)dep/generated/$(@F)...
-	@$(CC) -mconsole $(CXXFLAGS) $(LDFLAGS) $< \
+	@$(HOST_CC) $(HOST_CXXFLAGS) $(HOST_LDFLAGS) $< \
 		-o $(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe)
 	@$(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe) >$@
 

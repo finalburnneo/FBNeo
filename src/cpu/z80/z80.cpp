@@ -135,7 +135,9 @@ static void parse_script(const char *script_desc, CM_SCRIPT_BREAKDOWN *breakdown
 static bool find_script();
 static void run_script();
 static int  get_ula_delay();
+static void make_ula_delay_lut();
 static int  get_memory_access_delay(UINT16 pc_address);
+static int  get_memory_is_contended(UINT16 pc_address);
 static void store_rwinfo(UINT16 addr, UINT8 val, UINT16 flags, const char *dbg);
 
 static int		m_ula_variant;			// ULA_VARIANT_SINCLAIR  | ULA_VARIANT_AMSTRAD
@@ -144,11 +146,13 @@ static const char*	m_contended_banks;		// "1357"                | "4567"
 static int		m_contended_banks_length;
 static CM_SCRIPT	m_scripts[MAX_CM_SCRIPTS];	// "pc:4,pc+1:4,ir:1" etc...
 static int 		m_cycles_contention_start;
+static int      m_ula_delay_lut[80000];
 static int 		m_cycles_per_line;
 static int 		m_cycles_per_frame;
 static void		(*m_raster_cb)(int); 			//Let the driver know a good time (in T-States) to update the video raster position.
 static OPCODE_HISTORY	m_opcode_history;		// A list of reads/writes per opcode.
 static int		m_tstate_counter;		// The current t-state / cpu cycle.
+static int		m_irq_length;			// The current maskable irq length
 static int		m_selected_bank; 		// What ram bank 7ffd port has selected.
 
 /****************************************************************************/
@@ -3139,8 +3143,8 @@ OP(ed,3d) { illegal_2();										} /* DB   ED          */
 OP(ed,3e) { illegal_2();										} /* DB   ED          */
 OP(ed,3f) { illegal_2();										} /* DB   ED          */
 
-OP(ed,40) { B = IN(BC); F = (F & CF) | SZP[B];					} /* IN   B,(C)       */
-OP(ed,41) { OUT(BC, B);											} /* OUT  (C),B       */
+OP(ed,40) { B = IN(BC); F = (F & CF) | SZP[B]; WZ = BC + 1; 	} /* IN   B,(C)       */
+OP(ed,41) { OUT(BC, B);	WZ = BC + 1;							} /* OUT  (C),B       */
 OP(ed,42) { SBC16( bc );										} /* SBC  HL,BC       */
 OP(ed,43) { EA = ARG16(); WM16( EA, &Z80.bc ); WZ = EA + 1;		} /* LD   (w),BC      */
 OP(ed,44) { NEG;												} /* NEG              */
@@ -3148,8 +3152,8 @@ OP(ed,45) { RETN;												} /* RETN;            */
 OP(ed,46) { IM = 0;												} /* IM   0           */
 OP(ed,47) { LD_I_A;												} /* LD   I,A         */
 
-OP(ed,48) { C = IN(BC); F = (F & CF) | SZP[C];					} /* IN   C,(C)       */
-OP(ed,49) { OUT(BC, C);											} /* OUT  (C),C       */
+OP(ed,48) { C = IN(BC); F = (F & CF) | SZP[C]; WZ = BC + 1; 	} /* IN   C,(C)       */
+OP(ed,49) { OUT(BC, C);	WZ = BC + 1;							} /* OUT  (C),C       */
 OP(ed,4a) { ADC16( bc );										} /* ADC  HL,BC       */
 OP(ed,4b) { EA = ARG16(); RM16( EA, &Z80.bc ); WZ = EA + 1;		} /* LD   BC,(w)      */
 OP(ed,4c) { NEG;												} /* NEG              */
@@ -3157,8 +3161,8 @@ OP(ed,4d) { RETI;												} /* RETI             */
 OP(ed,4e) { IM = 0;												} /* IM   0           */
 OP(ed,4f) { LD_R_A;												} /* LD   R,A         */
 
-OP(ed,50) { D = IN(BC); F = (F & CF) | SZP[D];					} /* IN   D,(C)       */
-OP(ed,51) { OUT(BC, D);											} /* OUT  (C),D       */
+OP(ed,50) { D = IN(BC); F = (F & CF) | SZP[D]; WZ = BC + 1; 	} /* IN   D,(C)       */
+OP(ed,51) { OUT(BC, D);	WZ = BC + 1;							} /* OUT  (C),D       */
 OP(ed,52) { SBC16( de );										} /* SBC  HL,DE       */
 OP(ed,53) { EA = ARG16(); WM16( EA, &Z80.de ); WZ = EA + 1;		} /* LD   (w),DE      */
 OP(ed,54) { NEG;												} /* NEG              */
@@ -3166,8 +3170,8 @@ OP(ed,55) { RETN;												} /* RETN;            */
 OP(ed,56) { IM = 1;												} /* IM   1           */
 OP(ed,57) { LD_A_I;												} /* LD   A,I         */
 
-OP(ed,58) { E = IN(BC); F = (F & CF) | SZP[E];					} /* IN   E,(C)       */
-OP(ed,59) { OUT(BC, E);											} /* OUT  (C),E       */
+OP(ed,58) { E = IN(BC); F = (F & CF) | SZP[E]; WZ = BC + 1; 	} /* IN   E,(C)       */
+OP(ed,59) { OUT(BC, E);	WZ = BC + 1;							} /* OUT  (C),E       */
 OP(ed,5a) { ADC16( de );										} /* ADC  HL,DE       */
 OP(ed,5b) { EA = ARG16(); RM16( EA, &Z80.de ); WZ = EA + 1;		} /* LD   DE,(w)      */
 OP(ed,5c) { NEG;												} /* NEG              */
@@ -3175,8 +3179,8 @@ OP(ed,5d) { RETI;												} /* RETI             */
 OP(ed,5e) { IM = 2;												} /* IM   2           */
 OP(ed,5f) { LD_A_R;												} /* LD   A,R         */
 
-OP(ed,60) { H = IN(BC); F = (F & CF) | SZP[H];					} /* IN   H,(C)       */
-OP(ed,61) { OUT(BC, H);											} /* OUT  (C),H       */
+OP(ed,60) { H = IN(BC); F = (F & CF) | SZP[H]; WZ = BC + 1; 	} /* IN   H,(C)       */
+OP(ed,61) { OUT(BC, H);	WZ = BC + 1;							} /* OUT  (C),H       */
 OP(ed,62) { SBC16( hl );										} /* SBC  HL,HL       */
 OP(ed,63) { EA = ARG16(); WM16( EA, &Z80.hl ); WZ = EA + 1;		} /* LD   (w),HL      */
 OP(ed,64) { NEG;												} /* NEG              */
@@ -3184,8 +3188,8 @@ OP(ed,65) { RETN;												} /* RETN;            */
 OP(ed,66) { IM = 0;												} /* IM   0           */
 OP(ed,67) { RRD;												} /* RRD  (HL)        */
 
-OP(ed,68) { L = IN(BC); F = (F & CF) | SZP[L];					} /* IN   L,(C)       */
-OP(ed,69) { OUT(BC, L);											} /* OUT  (C),L       */
+OP(ed,68) { L = IN(BC); F = (F & CF) | SZP[L]; WZ = BC + 1; 	} /* IN   L,(C)       */
+OP(ed,69) { OUT(BC, L);	WZ = BC + 1;							} /* OUT  (C),L       */
 OP(ed,6a) { ADC16( hl );										} /* ADC  HL,HL       */
 OP(ed,6b) { EA = ARG16(); RM16( EA, &Z80.hl ); WZ = EA + 1;		} /* LD   HL,(w)      */
 OP(ed,6c) { NEG;												} /* NEG              */
@@ -3193,8 +3197,8 @@ OP(ed,6d) { RETI;												} /* RETI             */
 OP(ed,6e) { IM = 0;												} /* IM   0           */
 OP(ed,6f) { RLD;												} /* RLD  (HL)        */
 
-OP(ed,70) { UINT8 res = IN(BC); F = (F & CF) | SZP[res];		} /* IN   0,(C)       */
-OP(ed,71) { OUT(BC, 0);											} /* OUT  (C),0       */
+OP(ed,70) { UINT8 res = IN(BC); F = (F & CF) | SZP[res]; WZ = BC + 1;	} /* IN   0,(C)       */
+OP(ed,71) { OUT(BC, 0);	WZ = BC + 1;							} /* OUT  (C),0       */
 OP(ed,72) { SBC16( sp );										} /* SBC  HL,SP       */
 OP(ed,73) { EA = ARG16(); WM16( EA, &Z80.sp ); WZ = EA + 1;		} /* LD   (w),SP      */
 OP(ed,74) { NEG;												} /* NEG              */
@@ -3203,7 +3207,7 @@ OP(ed,76) { IM = 1;												} /* IM   1           */
 OP(ed,77) { illegal_2();										} /* DB   ED,77       */
 
 OP(ed,78) { A = IN(BC); F = (F & CF) | SZP[A]; WZ = BC + 1;		} /* IN   E,(C)       */
-OP(ed,79) { OUT(BC, A);WZ = BC + 1;								} /* OUT  (C),A       */
+OP(ed,79) { OUT(BC, A); WZ = BC + 1;							} /* OUT  (C),A       */
 OP(ed,7a) { ADC16( sp );										} /* ADC  HL,SP       */
 OP(ed,7b) { EA = ARG16(); RM16( EA, &Z80.sp ); WZ = EA + 1;		} /* LD   SP,(w)      */
 OP(ed,7c) { NEG;												} /* NEG              */
@@ -3657,7 +3661,7 @@ static void take_interrupt(void)
 {
 	int irq_vector = Z80Vector;
 
-	if (m_ula_variant != ULA_VARIANT_NONE && m_tstate_counter >= 32)
+	if (m_ula_variant != ULA_VARIANT_NONE && m_tstate_counter >= m_irq_length)
 		return;
 
 	/* there isn't a valid previous program counter */
@@ -3891,6 +3895,7 @@ void Z80InitContention(int is_on_type, void (*rastercallback)(int))
 			m_cycles_contention_start = 14361; //128k (48k is 14335)
 			m_cycles_per_line = 228;
 			m_cycles_per_frame = 70908; //228*311
+			m_irq_length = 36;
 			break;
 		case 1282: // +2
 			m_ula_variant = ULA_VARIANT_AMSTRAD;
@@ -3899,6 +3904,7 @@ void Z80InitContention(int is_on_type, void (*rastercallback)(int))
 			m_cycles_contention_start = 14361; //128k (48k is 14335)
 			m_cycles_per_line = 228;
 			m_cycles_per_frame = 70908; //228*311
+			m_irq_length = 36;
 			break;
 		case 48:
 			m_ula_variant = ULA_VARIANT_SINCLAIR;
@@ -3907,6 +3913,7 @@ void Z80InitContention(int is_on_type, void (*rastercallback)(int))
 			m_cycles_contention_start = 14335;
 			m_cycles_per_line = 224;
 			m_cycles_per_frame = 69888; //224*312;
+			m_irq_length = 32;
 			break;
 		case 0:
 			m_ula_variant = ULA_VARIANT_NONE;
@@ -3917,6 +3924,9 @@ void Z80InitContention(int is_on_type, void (*rastercallback)(int))
 			m_cycles_per_frame = 0;
 			break;
 	}
+
+	// create ULA delay LUT
+	make_ula_delay_lut();
 
 	for(i=0; i<MAX_CM_SCRIPTS; i++)
 	{
@@ -4087,6 +4097,11 @@ void Z80StopExecute()
 INT32 z80TotalCycles()
 {
 	return Z80.cycles_left - Z80.ICount;
+}
+
+INT32 z80TstateCounter() // for spectrum ula
+{
+	return m_tstate_counter;
 }
 
 #if 0
@@ -4560,7 +4575,7 @@ void run_script()
 				Yes         |  Reset  | C:1, C:3
 				Yes         |   Set   | C:1, C:1, C:1, C:1
 				*/
-				if ((rw->addr >= 0x4000) && (rw->addr <= 0x7fff))
+				if (get_memory_is_contended(rw->addr))
 				{
 					high_byte  = true;
 				}
@@ -4889,7 +4904,13 @@ void parse_script(const char *script, CM_SCRIPT_BREAKDOWN *breakdown)
 }
 
 
-int get_ula_delay()
+#if 1
+static int get_ula_delay()
+{
+	return m_ula_delay_lut[m_tstate_counter];
+}
+#else
+static int get_ula_delay()
 {
 	if(m_tstate_counter >= m_cycles_contention_start)
 	{
@@ -4904,13 +4925,41 @@ int get_ula_delay()
 
 	return 0;
 }
+#endif
 
+static int get_ula_delay_algo(int tstate)
+{
+	if(tstate >= m_cycles_contention_start)
+	{
+		int base = tstate - m_cycles_contention_start;
+		int y_pos = base/m_cycles_per_line;
+		int x_pos = base%m_cycles_per_line;
+		if ((y_pos < 192) && (x_pos < 128))
+		{
+			return m_ula_delay_sequence[x_pos%8]-'0';
+		}
+	}
 
-int get_memory_access_delay(UINT16 pc_address)
+	return 0;
+}
+
+static void make_ula_delay_lut()
+{
+	if (m_ula_variant == ULA_VARIANT_NONE) return;
+
+	memset(&m_ula_delay_lut, 0, sizeof(m_ula_delay_lut));
+
+	for (int i = 0; i <= m_cycles_per_frame; i++)
+	{
+		m_ula_delay_lut[i] = get_ula_delay_algo(i);
+	}
+}
+
+static int get_memory_is_contended(UINT16 pc_address)
 {
 	if((pc_address >= 0x4000) && (pc_address <=0x7fff))
 	{
-		return get_ula_delay();
+		return 1;
 	}
 	else if((pc_address >= 0xc000) && (pc_address <=0xffff))
 	{
@@ -4921,12 +4970,21 @@ int get_memory_access_delay(UINT16 pc_address)
 			{
 				if(m_selected_bank == (m_contended_banks[i]-'0'))
 				{
-					return get_ula_delay();
+					return 1;
 				}
 			}
 		}
 	}
 
+	return 0;
+}
+
+static int get_memory_access_delay(UINT16 pc_address)
+{
+	if (get_memory_is_contended(pc_address))
+	{
+		return get_ula_delay();
+	}
 	return 0;
 }
 
@@ -4965,6 +5023,7 @@ void eat_cycles(int type, int cycles)
 	Z80.ICount -= cycles;
 	m_tstate_counter += cycles;
 	if(m_tstate_counter >= m_cycles_per_frame) {
+		m_raster_cb(m_tstate_counter); // end frame
 		//bprintf(0, _T("z80.cpp: spec frame eof %d\n"), m_tstate_counter);
 		m_tstate_counter -= m_cycles_per_frame;
 	}
@@ -5003,7 +5062,7 @@ void store_rwinfo(UINT16 addr, UINT8 val, UINT16 flags, const char *dbg)
 	{
 		if(rw->flags & RWINFO_IO_PORT)
 		{
-			if((addr & 0xff) == 0xfe) //Border change
+			if(~addr & 1) //Border change
 			{
 				m_raster_cb(m_tstate_counter);
 			}

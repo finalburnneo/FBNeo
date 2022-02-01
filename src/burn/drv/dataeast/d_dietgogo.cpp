@@ -502,6 +502,108 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
+// Diet Go Go (Euro v1.1 1992.09.26 V3)
+
+static struct BurnRomInfo dietgoRomDesc[] = {
+	{ "jy_00-3.4h",			0x040000, 0xa863ad0c, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "jy_01-3.5h",			0x040000, 0xef243eda, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "jy_02.14m",			0x010000, 0x4e3492a5, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
+
+	{ "may-00.10a",			0x100000, 0x234d1f8d, 3 | BRF_GRA },           //  3 Characters & Background Tiles
+
+	{ "may-01.14a",			0x100000, 0x2da57d04, 4 | BRF_GRA },           //  4 Sprites
+	{ "may-02.16a",			0x100000, 0x3a66a713, 4 | BRF_GRA },           //  5
+
+	{ "may-03.11l",			0x080000, 0xb6e42bae, 5 | BRF_SND },           //  6 OKI M6295 Samples
+
+	{ "pal16l8b_vd-00.6h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  7 PLDs
+	{ "pal16l8b_vd-01.7h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  8
+	{ "pal16r6a_vd-02.11h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  9
+};
+
+STD_ROM_PICK(dietgo)
+STD_ROM_FN(dietgo)
+
+struct BurnDriver BurnDrvDietgo = {
+	"dietgo", NULL, NULL, NULL, "1992",
+	"Diet Go Go (Euro v1.1 1992.09.26 V3)\0", NULL, "Data East Corporation", "DECO IC16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	NULL, dietgoRomInfo, dietgoRomName, NULL, NULL, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	320, 240, 4, 3
+};
+
+
+// Diet Go Go (Euro v1.1 1992.09.26 V2)
+
+static struct BurnRomInfo dietgoeRomDesc[] = {
+	{ "jy_00-2.4h",			0x040000, 0x014dcf62, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "jy_01-2.5h",			0x040000, 0x793ebd83, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "jy_02.14m",			0x010000, 0x4e3492a5, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
+
+	{ "may-00.10a",			0x100000, 0x234d1f8d, 3 | BRF_GRA },           //  3 Characters & Background Tiles
+
+	{ "may-01.14a",			0x100000, 0x2da57d04, 4 | BRF_GRA },           //  4 Sprites
+	{ "may-02.16a",			0x100000, 0x3a66a713, 4 | BRF_GRA },           //  5
+
+	{ "may-03.11l",			0x080000, 0xb6e42bae, 5 | BRF_SND },           //  6 OKI M6295 Samples
+
+	{ "pal16l8b_vd-00.6h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  7 PLDs
+	{ "pal16l8b_vd-01.7h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  8
+	{ "pal16r6a_vd-02.11h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  9
+};
+
+STD_ROM_PICK(dietgoe)
+STD_ROM_FN(dietgoe)
+
+struct BurnDriver BurnDrvDietgoe = {
+	"dietgoe", "dietgo", NULL, NULL, "1992",
+	"Diet Go Go (Euro v1.1 1992.09.26 V2)\0", NULL, "Data East Corporation", "DECO IC16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	NULL, dietgoeRomInfo, dietgoeRomName, NULL, NULL, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	320, 240, 4, 3
+};
+
+
+// Diet Go Go (Euro v1.1 1992.08.04)
+
+static struct BurnRomInfo dietgoeaRomDesc[] = {
+	{ "jy_00-1.4h",			0x040000, 0x8bce137d, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "jy_01-1.5h",			0x040000, 0xeca50450, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "jy_02.14m",			0x010000, 0x4e3492a5, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
+
+	{ "may-00.10a",			0x100000, 0x234d1f8d, 3 | BRF_GRA },           //  3 Characters & Background Tiles
+
+	{ "may-01.14a",			0x100000, 0x2da57d04, 4 | BRF_GRA },           //  4 Sprites
+	{ "may-02.16a",			0x100000, 0x3a66a713, 4 | BRF_GRA },           //  5
+
+	{ "may-03.11l",			0x080000, 0xb6e42bae, 5 | BRF_SND },           //  6 OKI M6295 Samples
+
+	{ "pal16l8b_vd-00.6h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  7 PLDs
+	{ "pal16l8b_vd-01.7h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  8
+	{ "pal16r6a_vd-02.11h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  9
+};
+
+STD_ROM_PICK(dietgoea)
+STD_ROM_FN(dietgoea)
+
+struct BurnDriver BurnDrvDietgoea = {
+	"dietgoea", "dietgo", NULL, NULL, "1992",
+	"Diet Go Go (Euro v1.1 1992.08.04)\0", NULL, "Data East Corporation", "DECO IC16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	NULL, dietgoeaRomInfo, dietgoeaRomName, NULL, NULL, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	320, 240, 4, 3
+};
+
+
 // Diet Go Go (USA v1.1 1992.09.26)
 
 static struct BurnRomInfo dietgouRomDesc[] = {
@@ -531,74 +633,6 @@ struct BurnDriver BurnDrvDietgou = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, dietgouRomInfo, dietgouRomName, NULL, NULL, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
-	320, 240, 4, 3
-};
-
-
-// Diet Go Go (Euro v1.1 1992.08.04)
-
-static struct BurnRomInfo dietgoeRomDesc[] = {
-	{ "jy_00-1.4h",			0x040000, 0x8bce137d, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "jy_01-1.5h",			0x040000, 0xeca50450, 1 | BRF_PRG | BRF_ESS }, //  1
-
-	{ "jy_02.14m",			0x010000, 0x4e3492a5, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
-
-	{ "may-00.10a",			0x100000, 0x234d1f8d, 3 | BRF_GRA },           //  3 Characters & Background Tiles
-
-	{ "may-01.14a",			0x100000, 0x2da57d04, 4 | BRF_GRA },           //  4 Sprites
-	{ "may-02.16a",			0x100000, 0x3a66a713, 4 | BRF_GRA },           //  5
-
-	{ "may-03.11l",			0x080000, 0xb6e42bae, 5 | BRF_SND },           //  6 OKI M6295 Samples
-
-	{ "pal16l8b_vd-00.6h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  7 PLDs
-	{ "pal16l8b_vd-01.7h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  8
-	{ "pal16r6a_vd-02.11h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  9
-};
-
-STD_ROM_PICK(dietgoe)
-STD_ROM_FN(dietgoe)
-
-struct BurnDriver BurnDrvDietgoe = {
-	"dietgoe", "dietgo", NULL, NULL, "1992",
-	"Diet Go Go (Euro v1.1 1992.08.04)\0", NULL, "Data East Corporation", "DECO IC16",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, dietgoeRomInfo, dietgoeRomName, NULL, NULL, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
-	320, 240, 4, 3
-};
-
-
-// Diet Go Go (Euro v1.1 1992.09.26)
-
-static struct BurnRomInfo dietgoRomDesc[] = {
-	{ "jy_00-2.4h",			0x040000, 0x014dcf62, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "jy_01-2.5h",			0x040000, 0x793ebd83, 1 | BRF_PRG | BRF_ESS }, //  1
-
-	{ "jy_02.14m",			0x010000, 0x4e3492a5, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
-
-	{ "may-00.10a",			0x100000, 0x234d1f8d, 3 | BRF_GRA },           //  3 Characters & Background Tiles
-
-	{ "may-01.14a",			0x100000, 0x2da57d04, 4 | BRF_GRA },           //  4 Sprites
-	{ "may-02.16a",			0x100000, 0x3a66a713, 4 | BRF_GRA },           //  5
-
-	{ "may-03.11l",			0x080000, 0xb6e42bae, 5 | BRF_SND },           //  6 OKI M6295 Samples
-
-	{ "pal16l8b_vd-00.6h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  7 PLDs
-	{ "pal16l8b_vd-01.7h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  8
-	{ "pal16r6a_vd-02.11h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  9
-};
-
-STD_ROM_PICK(dietgo)
-STD_ROM_FN(dietgo)
-
-struct BurnDriver BurnDrvDietgo = {
-	"dietgo", NULL, NULL, NULL, "1992",
-	"Diet Go Go (Euro v1.1 1992.09.26)\0", NULL, "Data East Corporation", "DECO IC16",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, dietgoRomInfo, dietgoRomName, NULL, NULL, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3
 };

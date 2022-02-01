@@ -10765,10 +10765,10 @@ STD_ROM_PICK(Sf2b2)
 STD_ROM_FN(Sf2b2)
 
 static struct BurnRomInfo Sf2b3RomDesc[] = {
-	// program roms u195 and u221 were missing from the PCB
+	// Program roms u195 and u221 were missing from the PCB
 //  { "prg.u195",      0x080000, 0x00000000, BRF_ESS | BRF_PRG | BRF_NODUMP }, // missing from dump
 //  { "prg.u221",      0x080000, 0x00000000, BRF_ESS | BRF_PRG | BRF_NODUMP }, // missing from dump
-//  Instead we use some programs rom from sf2eb
+	// Instead we use some programs rom from sf2eb
 	{ "sf2e_30b.11e",  0x020000, 0x57bd7051, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, 
 	{ "sf2e_37b.11f",  0x020000, 0x62691cdd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },  
 	{ "sf2e_31b.12e",  0x020000, 0xa673143d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, 
@@ -10887,6 +10887,42 @@ static struct BurnRomInfo Sf2rkRomDesc[] = {
 
 STD_ROM_PICK(Sf2rk)
 STD_ROM_FN(Sf2rk)
+
+static struct BurnRomInfo Sf2rk2RomDesc[] = {
+// 	u222.bin is almost identical to w6.u222 from sf2rk set; only 1 difference found at offset 2295: 60  6B. 
+// 	Probably a bitrot; needs redump.
+//  { "u222.bin",       	0x080000, 0x49422b6f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	
+	{ "u222.bin",     		0x080000, 0x10eea0b4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "u196.bin",       	0x080000, 0x7e9c8c2f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	
+// 	Different from sf2rk set. Instead it uses same GFX ROMs as sf2rules.
+	{ "u70.bin",    		0x100000, 0xa258de13, BRF_GRA | CPS1_TILES },
+	{ "u68.bin",    		0x100000, 0xc781bf87, BRF_GRA | CPS1_TILES },
+	{ "u69.bin",    		0x100000, 0x5726cab8, BRF_GRA | CPS1_TILES },
+	{ "u67.bin",    		0x100000, 0xbc90c12f, BRF_GRA | CPS1_TILES },
+	{ "u19.bin",    		0x100000, 0x187667cc, BRF_GRA | CPS1_TILES },
+	{ "u18.bin",    		0x100000, 0x5b585071, BRF_GRA | CPS1_TILES },
+	
+// 	Not present in original dump.
+	{ "sound.u191",    		0x010000, 0xa4823a1b, BRF_PRG | CPS1_Z80_PROGRAM },
+
+// 	Original dump has double size and part 1 and 2 are identical; it is probably an overdump.
+//	{ "u210.bin",    		0x080000, 0x44d62caa, BRF_SND | CPS1_OKIM6295_SAMPLES }, // 
+	{ "u210.bin",    		0x040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES }, // 
+	
+	//u31.bin is amost identical to 6.amf; only 1 difference found at offset 74500: 6B  69. 
+	// Probably a bitrot; needs redump.
+//	{ "u31.bin",        	0x020000, 0x3a85a275, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	{ "u31.bin",        	0x020000, 0x3e9b4e52, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	{ "u29.bin",        	0x020000, 0x9156472f, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	{ "u30.bin",        	0x020000, 0xecdb083b, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	{ "u28.bin",       		0x020000, 0x8fea8384, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	
+	{ "conv.u133",     		0x010000, 0x13ea1c44, BRF_OPT }, // unknown
+};
+
+STD_ROM_PICK(Sf2rk2)
+STD_ROM_FN(Sf2rk2)
 
 static struct BurnRomInfo Sf2rulesRomDesc[] = {
     { "prh2.u222",     		0x080000, 0xfff85f9b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -15501,6 +15537,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2b3"         , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2b4"         , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2rk"         , CPS_B_17    , mapper_STF29 , 0, NULL                },
+	{ "sf2rk2"        , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2rules"      , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2bhh"        , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ce"         , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -22009,11 +22046,21 @@ struct BurnDriver BurnDrvCpsSf2b4 = {
 
 struct BurnDriver BurnDrvCpsSf2rk = {
 	"sf2rk", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - The World Warrior (RK bootleg, 910214 etc)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (RK bootleg set 1, 910214 etc)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2rkRomInfo, Sf2rkRomName, NULL, NULL, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
 	Sf2rkInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSf2rk2 = {
+	"sf2rk2", "sf2", NULL, NULL, "1991",
+	"Street Fighter II - The World Warrior (RK bootleg set 2, 910214 etc)\0", NULL, "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2rk2RomInfo, Sf2rk2RomName, NULL, NULL, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
+	Sf2rulesInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -24425,9 +24472,9 @@ struct BurnDriver BurnDrvCpsWofjdr = {
 // For more infomation, please visit: https://sf2mix.github.io/
 
 static struct BurnRomInfo sf2mixRomDesc[] = {
-	{ "smxe_23b.8f",   0x080000, 0x316ddac7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "smx_22b.7f",    0x080000, 0xd3075211, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "smx_21a.6f",    0x080000, 0xd7e6b35d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "smxe_23b.8f",   0x080000, 0x997f551e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "smx_22b.7f",    0x080000, 0x414ab00b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "smx_21a.6f",    0x080000, 0x1221db31, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "smx-1m.3a",     0x080000, 0xa8f70643, BRF_GRA | CPS1_TILES },
 	{ "smx-3m.5a",     0x080000, 0xf73f1913, BRF_GRA | CPS1_TILES },
@@ -24460,8 +24507,8 @@ STD_ROM_PICK(sf2mix)
 STD_ROM_FN(sf2mix)
 
 struct BurnDriver BurnDrvCpssf2mix = {
-	"sf2mix", "sf2ce", NULL, NULL, "2021",
-	"Street Fighter II Mix (v1.0)\0", NULL, "Hack", "CPS1",
+	"sf2mix", "sf2ce", NULL, NULL, "2022",
+	"Street Fighter II Mix (v1.2)\0", NULL, "Hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, sf2mixRomInfo, sf2mixRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2mixDIPInfo,

@@ -1,4 +1,4 @@
-// FB Alpha 1942 driver module
+// FB Alpha asteroids driver module
 // Based on MAME driver by Brad Oliver, Bernd Wiebelt, Allard van der Bas
 
 #include "tiles_generic.h"
@@ -67,7 +67,7 @@ static struct BurnInputInfo AsteroidbInputList[] = {
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 start"	},
 	{"P1 Left",		    BIT_DIGITAL,	DrvJoy2 + 7,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 right"	},
-	{"P1 Fire",		    BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 1"	},
+	{"P1 Fire",		    BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 1"	},
 	{"P1 Thrust",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 2"	},
 	{"P1 Hyperspace",	BIT_DIGITAL,	DrvJoy3 + 7,	"p1 fire 3"	},
 
@@ -669,7 +669,7 @@ static UINT8 asteroidb_read(UINT16 address)
 				return (~DrvInputs[0] & 0x7f) | (avgdvg_done() ? 0 : 0x80);
 
 			case 0x2003:
-				return DrvInputs[1] ^ 0x0a;
+				return (DrvInputs[2] ? 0 : 0x80);
 		}
 		
 	return asteroid_read(address);
@@ -1054,7 +1054,7 @@ static INT32 DrvFrame()
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
-			DrvInputs[1] ^= (DrvJoy3[i] & 1) << i;
+			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
 
 		if (llander) {
@@ -1306,8 +1306,8 @@ struct BurnDriver BurnDrvAsteroidb2 = {
 	"Asteroids (bootleg on Lunar Lander hardware, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, asteroidb2RomInfo, asteroidb2RomName, NULL, NULL, NULL, NULL, AsteroidbInputInfo, AsteroidbDIPInfo,
-	AsteroidbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	NULL, asteroidb2RomInfo, asteroidb2RomName, NULL, NULL, NULL, NULL, AsteroidInputInfo, AsteroidDIPInfo,
+	AsteroidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	640, 480, 4, 3
 };
 

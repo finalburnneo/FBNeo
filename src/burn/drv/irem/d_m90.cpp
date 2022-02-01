@@ -486,6 +486,64 @@ static struct BurnDIPInfo RiskchalDIPList[]=
 
 STDDIPINFO(Riskchal)
 
+static struct BurnDIPInfo DicegameDIPList[]=
+{
+	{0x12, 0xff, 0xff, 0xbf, NULL							},
+	{0x13, 0xff, 0xff, 0xff, NULL							},
+
+	{0   , 0xfe, 0   ,    4, "Lives"						},
+	{0x12, 0x01, 0x03, 0x02, "2"							},
+	{0x12, 0x01, 0x03, 0x03, "3"							},
+	{0x12, 0x01, 0x03, 0x01, "4"							},
+	{0x12, 0x01, 0x03, 0x00, "5"							},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"					},
+	{0x12, 0x01, 0x0c, 0x08, "Easy"							},
+	{0x12, 0x01, 0x0c, 0x0c, "Medium"						},
+	{0x12, 0x01, 0x0c, 0x04, "Hard"							},
+	{0x12, 0x01, 0x0c, 0x00, "Hardest"						},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"					},
+	{0x12, 0x01, 0x40, 0x40, "Off"							},
+	{0x12, 0x01, 0x40, 0x00, "On"							},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"					},
+	{0x12, 0x01, 0x80, 0x80, "Off"							},
+	{0x12, 0x01, 0x80, 0x00, "On"							},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"					},
+	{0x13, 0x01, 0x01, 0x01, "Off"							},
+	{0x13, 0x01, 0x01, 0x00, "On"							},
+
+	{0   , 0xfe, 0   ,    2, "Coin Slots"					},
+	{0x13, 0x01, 0x04, 0x04, "Common"						},
+	{0x13, 0x01, 0x04, 0x00, "Separate"						},
+
+	{0   , 0xfe, 0   ,    2, "Coin Mode"					},
+	{0x13, 0x01, 0x08, 0x08, "1"							},
+	{0x13, 0x01, 0x08, 0x00, "2"							},
+
+	{0   , 0xfe, 0   ,    16, "Coinage"						},
+	{0x13, 0x01, 0xf0, 0xa0, "6 Coins 1 Credits"			},
+	{0x13, 0x01, 0xf0, 0xb0, "5 Coins 1 Credits"			},
+	{0x13, 0x01, 0xf0, 0xc0, "4 Coins 1 Credits"			},
+	{0x13, 0x01, 0xf0, 0xd0, "3 Coins 1 Credits"			},
+	{0x13, 0x01, 0xf0, 0xe0, "2 Coins 1 Credits"			},
+	{0x13, 0x01, 0xf0, 0x10, "2 Coins to Start/1 to Continue"	},
+	{0x13, 0x01, 0xf0, 0x30, "3 Coins 2 Credits"			},
+	{0x13, 0x01, 0xf0, 0x20, "4 Coins 3 Credits"			},
+	{0x13, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"			},
+	{0x13, 0x01, 0xf0, 0x40, "2 Coins 3 Credits"			},
+	{0x13, 0x01, 0xf0, 0x90, "1 Coin  2 Credits"			},
+	{0x13, 0x01, 0xf0, 0x80, "1 Coin  3 Credits"			},
+	{0x13, 0x01, 0xf0, 0x70, "1 Coin  4 Credits"			},
+	{0x13, 0x01, 0xf0, 0x60, "1 Coin  5 Credits"			},
+	{0x13, 0x01, 0xf0, 0x50, "1 Coin  6 Credits"			},
+	{0x13, 0x01, 0xf0, 0x00, "Free Play"					},
+};
+
+STDDIPINFO(Dicegame)
+
 static struct BurnDIPInfo BbmanwDIPList[]=
 {
 	{0x22, 0xff, 0xff, 0xbf, NULL							},
@@ -1927,4 +1985,41 @@ struct BurnDriver BurnDrvShisen2 = {
 	NULL, shisen2RomInfo, shisen2RomName, NULL, NULL, NULL, NULL, Matchit2InputInfo, Shisen2DIPInfo,
 	matchit2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
+};
+
+// Dice - The Dice Game!
+
+static struct BurnRomInfo dicegameRomDesc[] = {
+	{ "dice-p1.ic61",	0x20000, 0x8f2257d8, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "dice-p0.ic65",	0x20000, 0x9c191d18, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "dice-sp.ic23",	0x20000, 0x73e8796e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "dice-c0.ic66",	0x20000, 0xa1eda342, 3 | BRF_GRA },           //  3 Tiles and sprites
+	{ "dice-c1.ic67",	0x20000, 0x20850a15, 3 | BRF_GRA },           //  4
+	{ "dice-c2.ic68",	0x20000, 0x6c39915f, 3 | BRF_GRA },           //  5
+	{ "dice-c3.ic69",	0x20000, 0x81d58e68, 3 | BRF_GRA },           //  6
+
+	{ "dice-v0.ic20",	0x20000, 0x04dc9196, 4 | BRF_SND },           //  7 Samples
+};
+
+STD_ROM_PICK(dicegame)
+STD_ROM_FN(dicegame)
+
+static INT32 DicegameInit()
+{
+	video_offsets[0] = 80;
+	video_offsets[1] = 136;
+
+	return DrvInit(0x40000, 0x80000, 0x20000, 0, 0, NULL);
+}
+
+struct BurnDriver BurnDrvDicegame = {
+	"dicegame", NULL, NULL, NULL, "199?",
+	"Dice - The Dice Game!\0", NULL, "bootleg (Tuning)", "Irem M90",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M90, GBF_PUZZLE, 0,
+	NULL, dicegameRomInfo, dicegameRomName, NULL, NULL, NULL, NULL, p2commonInputInfo, DicegameDIPInfo,
+	DicegameInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	320, 240, 4, 3
 };

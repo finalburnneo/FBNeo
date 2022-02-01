@@ -109,6 +109,7 @@ struct atarimo_data
 	atarimo_entry *		activelist[ATARIMO_MAXPERBANK];	/* pointers to active motion objects */
 	atarimo_entry **	activelast;			/* pointer to the last pointer in the active list */
 	int					last_link;			/* previous starting point */
+	int                 rebase_last_link;   // runahead testfix
 
 	UINT8 *				dirtygrid;			/* grid of dirty rects for blending */
 	int					dirtywidth;			/* width of dirty grid */
@@ -384,6 +385,7 @@ int atarimo_init(int map, const atarimo_desc *desc)
 	mo->slipram       = (map == 0) ? atarimo_0_slipram : atarimo_1_slipram;
 
 	mo->last_link     = -1;
+	mo->rebase_last_link = 0;
 
 	/* allocate the temp bitmap */
 	BurnBitmapAllocate(31, nScreenWidth, nScreenHeight, false);
@@ -485,6 +487,11 @@ INT32 AtariMoScan(INT32 nAction, INT32 *pnMin)
 				SCAN_VAR(mo->last_xpos);
 				SCAN_VAR(mo->next_xpos);
 			}
+
+			if (nAction & ACB_WRITE) {
+				mo->rebase_last_link = 1;
+			}
+
 		}
 	}
 
@@ -553,6 +560,7 @@ static void build_active_list(atarimo_data *mo, int link)
 
 	/* remember the last link */
 	mo->last_link = link;
+	mo->rebase_last_link = 0; // OK!
 
 	/* visit all the motion objects and copy their data into the display list */
 	for (i = 0, current = mo->activelist; i < mo->maxperline && !movisit[link]; i++)
@@ -738,7 +746,7 @@ UINT16 *atarimo_render(int map, const rectangle *cliprect, struct atarimo_rect_l
 		}
 
 		/* if this matches the last link, we don't need to re-process the list */
-		if (link != mo->last_link)
+		if (link != mo->last_link || mo->rebase_last_link)
 			build_active_list(mo, link);
 
 		/* set the start and end points */
@@ -759,7 +767,7 @@ UINT16 *atarimo_render(int map, const rectangle *cliprect, struct atarimo_rect_l
 		mo->next_xpos = 123456;
 
 		/* render the mos */
-		for (current = first; current != last; current += step)
+		for (current = first; /*last != NULL &&*/ current != last; current += step)
 			mo_render_object(mo, *current, &bandclip);
 	}
 

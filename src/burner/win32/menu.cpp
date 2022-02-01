@@ -619,6 +619,13 @@ static void CreateCDItems()
 	SetMenuItemInfo(hMenu, MENU_CDIMAGE, 0, &menuItem);
 }
 #endif
+
+void MenuUpdateVolume()
+{
+	int var = MENU_AUDIO_VOLUME_0 + (nAudVolume / 1000);
+	CheckMenuRadioItem(hMenu, MENU_AUDIO_VOLUME_0, MENU_AUDIO_VOLUME_100, var, MF_BYCOMMAND);
+}
+
 // Update bullets, checkmarks, and item text
 void MenuUpdate()
 {
@@ -1066,8 +1073,7 @@ void MenuUpdate()
 	if (nAutoFireRate == 24) var = MENU_INPUT_AUTOFIRE_RATE_1;
 	CheckMenuRadioItem(hMenu, MENU_INPUT_AUTOFIRE_RATE_1, MENU_INPUT_AUTOFIRE_RATE_6, var, MF_BYCOMMAND);
 
-	var = MENU_AUDIO_VOLUME_0 + (nAudVolume / 1000);
-	CheckMenuRadioItem(hMenu, MENU_AUDIO_VOLUME_0, MENU_AUDIO_VOLUME_100, var, MF_BYCOMMAND);
+	MenuUpdateVolume(); // called in run.cpp by alt+ / alt-
 
 #ifdef BUILD_A68K
 	CheckMenuItem(hMenu, MENU_ASSEMBLYCORE, bBurnUseASMCPUEmulation ? MF_CHECKED : MF_UNCHECKED);
@@ -1490,3 +1496,4 @@ void MenuEnableItems()
 		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_2,		 MF_ENABLED  | MF_BYCOMMAND);
 	}
 }
+

@@ -7,6 +7,7 @@
 #include "mcs51.h"
 #include "burn_ym2203.h"
 #include "msm5205.h"
+#include "bitswap.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -1138,33 +1139,44 @@ struct BurnDriver BurnDrvToramich = {
 // Tiger Road (US bootleg)
 
 static struct BurnRomInfo tigeroadbRomDesc[] = {
-	{ "tgrroad.3",	0x10000, 0x14c87e07, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "tgrroad.5",	0x10000, 0x0904254c, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "tgrroad.2",	0x10000, 0xcedb1f46, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "tgrroad.4",	0x10000, 0xe117f0b1, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "cpu.ic18",		0x10000, 0x14c87e07, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "cpu.ic5",		0x10000, 0x0904254c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "cpu.ic19",		0x10000, 0xcedb1f46, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "cpu.ic6",		0x10000, 0xe117f0b1, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "tru05.bin",	0x08000, 0xf9a7c9bf, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+	{ "cpu.ic12",		0x08000, 0xf9a7c9bf, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 
-	{ "tr01.bin",	0x08000, 0x74a9f08c, 3 | BRF_GRA },           //  5 Character Tiles
+	{ "cpu.ic60",		0x08000, 0x74a9f08c, 3 | BRF_GRA },           //  5 Character Tiles
 
-	{ "tr-01a.bin",	0x20000, 0xa8aa2e59, 4 | BRF_GRA },           //  6 Background Tiles
-	{ "tr-04a.bin",	0x20000, 0x8863a63c, 4 | BRF_GRA },           //  7
-	{ "tr-02a.bin",	0x20000, 0x1a2c5f89, 4 | BRF_GRA },           //  8
-	{ "tr05.bin",	0x20000, 0x5bf453b3, 4 | BRF_GRA },           //  9
-	{ "tr-03a.bin",	0x20000, 0x1e0537ea, 4 | BRF_GRA },           // 10
-	{ "tr-06a.bin",	0x20000, 0xb636c23a, 4 | BRF_GRA },           // 11
-	{ "tr-07a.bin",	0x20000, 0x5f907d4d, 4 | BRF_GRA },           // 12
-	{ "tgrroad.17",	0x10000, 0x3f7539cc, 4 | BRF_GRA },           // 13
-	{ "tgrroad.18",	0x10000, 0xe2e053cb, 4 | BRF_GRA },           // 14
+	{ "gfx.ic84",		0x10000, 0x3db68b96, 4 | BRF_GRA },           //  6 Background Tiles
+	{ "gfx.ic82",		0x10000, 0xa12fa19d, 4 | BRF_GRA },           //  7
+	{ "gfx.ic115",		0x10000, 0xc9c396aa, 4 | BRF_GRA },           //  8
+	{ "gfx.ic113",		0x10000, 0x6bfc90a4, 4 | BRF_GRA },           //  9
+	{ "gfx.ic132",		0x10000, 0xdccf34bb, 4 | BRF_GRA },           // 10
+	{ "gfx.ic130",		0x10000, 0xa1cee4cd, 4 | BRF_GRA },           // 11
+	{ "gfx.ic171",		0x10000, 0x7266e3ad, 4 | BRF_GRA },           // 12
+	{ "gfx.ic169",		0x10000, 0x5ec867a6, 4 | BRF_GRA },           // 13
+	{ "gfx.ic83",		0x10000, 0x95c69541, 4 | BRF_GRA },           // 14
+	{ "gfx.ic81",		0x10000, 0xecb67157, 4 | BRF_GRA },           // 15
+	{ "gfx.ic114",		0x10000, 0x53f24910, 4 | BRF_GRA },           // 16
+	{ "gfx.ic112",		0x10000, 0x5a309d8b, 4 | BRF_GRA },           // 17
+	{ "gfx.ic131",		0x10000, 0x710feda8, 4 | BRF_GRA },           // 18
+	{ "gfx.ic129",		0x10000, 0x24b08a7e, 4 | BRF_GRA },           // 19
+	{ "gfx.ic170",		0x10000, 0x3f7539cc, 4 | BRF_GRA },           // 20
+	{ "gfx.ic168",		0x10000, 0xe2e053cb, 4 | BRF_GRA },           // 21
 
-	{ "tr-09a.bin",	0x20000, 0x3d98ad1e, 5 | BRF_GRA },           // 15 Sprites
-	{ "tr-10a.bin",	0x20000, 0x8f6f03d7, 5 | BRF_GRA },           // 16
-	{ "tr-11a.bin",	0x20000, 0xcd9152e5, 5 | BRF_GRA },           // 17
-	{ "tr-12a.bin",	0x20000, 0x7d8a99d0, 5 | BRF_GRA },           // 18
+	{ "gfx.ic51",		0x10000, 0x298c40a7, 5 | BRF_GRA },           // 22 Sprites
+	{ "gfx.ic52",		0x10000, 0x39866869, 5 | BRF_GRA },           // 23 
+	{ "gfx.ic4",		0x10000, 0x4a89c11d, 5 | BRF_GRA },           // 24
+	{ "gfx.ic5",		0x10000, 0xb0b94294, 5 | BRF_GRA },           // 25
+	{ "gfx.ic49",		0x10000, 0x7db7f0f1, 5 | BRF_GRA },           // 26
+	{ "gfx.ic50",		0x10000, 0xf48f94e1, 5 | BRF_GRA },           // 27
+	{ "gfx.ic2",		0x10000, 0xa0b4615c, 5 | BRF_GRA },           // 28
+	{ "gfx.ic3",		0x10000, 0xf956392e, 5 | BRF_GRA },           // 29
 
-	{ "tr13.bin",	0x08000, 0xa79be1eb, 6 | BRF_GRA },           // 19 Background Tilemaps
+	{ "gfx.ic175",		0x08000, 0xa79be1eb, 6 | BRF_GRA },           // 30 Background Tilemaps
 
-	{ "trprom.bin",	0x00100, 0xec80ae36, 7 | BRF_GRA | BRF_OPT }, // 20 Priority Proms (unused)
+	{ "82s129.ic74",	0x00100, 0xec80ae36, 7 | BRF_GRA | BRF_OPT }, // 31 Priority Proms (unused)
 };
 
 STD_ROM_PICK(tigeroadb)
@@ -1181,17 +1193,24 @@ static INT32 TigeroadbLoadRoms()
 
 	if (BurnLoadRom(DrvGfxROM0 + 0x00000,  5, 1)) return 1;
 
-	for (INT32 i = 0; i < 8; i++) {
-		if (BurnLoadRom(DrvGfxROM1 + i * 0x20000,  6 + i, 1)) return 1;
+	for (INT32 i = 0; i < 16; i++) {
+		if (BurnLoadRom(DrvGfxROM1 + i * 0x10000,  6 + i, 1)) return 1;
 	}
 
-	if (BurnLoadRom(DrvGfxROM1 + 0xf0000, 14, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x60000, 22, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x40000, 23, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x20000, 24, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x00000, 25, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x70000, 26, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x50000, 27, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x30000, 28, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x10000, 29, 1)) return 1;
+	
+	if (BurnLoadRom(DrvGfxROM3 + 0x00000, 30, 1)) return 1;
 
-	for (INT32 i = 0; i < 4; i++) {
-		if (BurnLoadRom(DrvGfxROM2 + i * 0x20000, 15 + i, 1)) return 1;
-	}
-
-	if (BurnLoadRom(DrvGfxROM3 + 0x00000, 19, 1)) return 1;
+	for (INT32 i = 0; i < 0x80000; i++) {
+    	DrvGfxROM2[i] = BITSWAP08(DrvGfxROM2[i], 4, 5, 6, 7, 0, 1, 2, 3);
+    }
 
 	return 0;
 }

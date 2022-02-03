@@ -14496,23 +14496,6 @@ struct BurnDriver BurnDrvnes_toprider = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_metalstormrrRomDesc[] = {
-	{ "Metal Storm (2019).nes",          524304, 0x33af86d9, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_metalstormrr)
-STD_ROM_FN(nes_metalstormrr)
-
-struct BurnDriver BurnDrvnes_metalstormrr = {
-	"nes_metalstormrr", NULL, NULL, NULL, "1991",
-	"Metal Storm Re-Release (USA)\0", NULL, "Irem", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
-	NESGetZipName, nes_metalstormrrRomInfo, nes_metalstormrrRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 // Willow (Hack, No Flash)
 // https://www.romhacking.net/hacks/4992/
 
@@ -14949,6 +14932,23 @@ struct BurnDriver BurnDrvnes_rockm4mi = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Metal Storm Re-Release (Mapper 268)
+static struct BurnRomInfo nes_metalstormrrRomDesc[] = {
+	{ "Metal Storm (2019).nes",          524304, 0x33af86d9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_metalstormrr)
+STD_ROM_FN(nes_metalstormrr)
+
+struct BurnDriver BurnDrvnes_metalstormrr = {
+	"nes_metalstormrr", "nes_metalstorm", NULL, NULL, "2019",
+	"Metal Storm (Re-Release)\0", NULL, "Irem - Retro-bit", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_metalstormrrRomInfo, nes_metalstormrrRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 // Pacman CE
 static struct BurnRomInfo nes_pacmanceRomDesc[] = {

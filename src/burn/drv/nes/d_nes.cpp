@@ -645,6 +645,7 @@ struct cartridge {
 	INT32    ExtDataSize;
 
 	INT32	 Mapper;
+	INT32	 SubMapper;
 	INT32	 Mirroring;
 	INT32	 Trainer;
 	UINT32	 Crc;
@@ -694,6 +695,8 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 		bprintf(0, _T("Invalid ROM header!\n"));
 		return 1;
 	}
+
+	NESMode = 0;
 
 	INT32 nes20 = (ROMData[7] & 0xc) == 0x8;
 
@@ -755,8 +758,10 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 
 	if (nes20) {
 		Cart.Mapper |= (ROMData[8] & 0x0f) << 8;
-		if (Cart.Mapper & 0xf00)
-			bprintf(0, _T("NES 2.0 Extended Mapper: %d\n"), Cart.Mapper);
+		Cart.SubMapper = (ROMData[8] & 0xf0) >> 4;
+
+		if (Cart.Mapper & 0xf00 || Cart.SubMapper != 0)
+			bprintf(0, _T("NES 2.0 Extended Mapper: %d\tSub: %d\n"), Cart.Mapper, Cart.SubMapper);
 	}
 
 	// Mapper EXT-hardware inits
@@ -829,7 +834,10 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 
 	if (nes20) {
 		// NES2.0 header specifies NV-Ram size (ex. Nova the Squirrel)
-		Cart.WorkRAMSize = 64 << ((ROMData[0xa] & 0xf0) >> 4);
+		INT32 l_shift0 = ((ROMData[0xa] & 0xf0) >> 4); // sram
+		INT32 l_shift1 = ((ROMData[0xa] & 0x0f) >> 0); // work-ram
+		INT32 use = (l_shift0 > l_shift1) ? l_shift0 : l_shift1; // use the larger of the 2?
+		Cart.WorkRAMSize = (use == 0) ? 0 : (64 << use);
 	}
 
 	if (PPUType > RP2C02) Cart.WorkRAMSize = 0x800; // VS. 6000-7fff 2k (mirrored)
@@ -847,6 +855,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 
 	bprintf(0, _T("Cartridge RAM: %d\n"), Cart.WorkRAMSize);
 	Cart.WorkRAM = (UINT8*)BurnMalloc(Cart.WorkRAMSize);
+	if (Cart.WorkRAMSize == 0) NESMode |= NO_WORKRAM;
 
 	// set-up MAPPER
 	bprintf(0, _T("Cartridge Mapper: %d   Mirroring: "), Cart.Mapper);
@@ -871,8 +880,6 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	Cart.WorkRAMMask = Cart.WorkRAMSize - 1;
 
 	// Game-specific stuff:
-	NESMode = 0;
-
 	// Mapper 7 or 4-way mirroring usually gets no workram (6000-7fff)
 	if (Cart.Mapper == 7 || (Cart.Mirroring == 4 && !(PPUType > RP2C02)))
 		NESMode |= NO_WORKRAM; // VS. is exempt from this limitation.
@@ -2652,15 +2659,17 @@ static void mapper03_cycle()
 #define mapper4_irqcount		(mapper_regs[0x1f - 3])
 #define mapper4_irqenable		(mapper_regs[0x1f - 4])
 #define mapper4_irqreload		(mapper_regs[0x1f - 5])
+#define mapper4_writeprotect    (mapper_regs[0x1f - 6])
 #define mapper12_lowchr			(mapper_regs16[0x1f - 0])
 #define mapper12_highchr		(mapper_regs16[0x1f - 1])
 #define mapper04_vs_prottype    (mapper_regs16[0x1f - 2])
 #define mapper04_vs_protidx	    (mapper_regs16[0x1f - 3])
-#define mapper115_prg           (mapper_regs[0x1f - 6])
-#define mapper115_chr           (mapper_regs[0x1f - 7])
-#define mapper115_prot          (mapper_regs[0x1f - 8])
-#define mapper262_reg           (mapper_regs[0x1f - 9])
-#define mapper189_reg           (mapper_regs[0x1f - 9]) // same as 262
+#define mapper115_prg           (mapper_regs[0x1f - 7])
+#define mapper115_chr           (mapper_regs[0x1f - 8])
+#define mapper115_prot          (mapper_regs[0x1f - 9])
+#define mapper262_reg           (mapper_regs[0x1f - 0xa])
+#define mapper189_reg           (mapper_regs[0x1f - 0xa]) // same as 262
+#define mapper268_reg(x)        (mapper_regs[(0x1f - 0xa) + (x)])
 
 static UINT8 mapper04_vs_rbi_tko_prot(UINT16 address)
 {
@@ -2705,6 +2714,7 @@ static void mapper04_write(UINT16 address, UINT8 data)
             case 0x8000: mapper4_banksel = data; break;
             case 0x8001: mapper_regs[(mapper4_banksel & 0x7)] = data; break;
 			case 0xA000: mapper4_mirror = ~data & 1; break;
+			case 0xA001: mapper4_writeprotect = ~data & 1; break;
             case 0xC000: mapper4_irqlatch = data; break;
             case 0xC001: mapper4_irqreload = 1; break;
             case 0xE000: mapper4_irqenable = 0; M6502SetIRQLine(0, CPU_IRQSTATUS_NONE); break;
@@ -2779,6 +2789,89 @@ static void mapper95_map()
 	mapper_map_chr(1, 5, mapper_regs[3]);
 	mapper_map_chr(1, 6, mapper_regs[4]);
 	mapper_map_chr(1, 7, mapper_regs[5]);
+}
+
+static void mapper268_prg(INT32 slot, INT32 bank)
+{
+	UINT32 prgmask = ((~mapper268_reg(3) & 0x10) >> 4) * 0x0f; // prg a13, a14, a15, a16 (GNROM)
+		   prgmask |= (~mapper268_reg(0) & 0x40) >> 2; // prg a17~
+		   prgmask |= (~mapper268_reg(1) & 0x80) >> 2; // prg a18~
+		   prgmask |=   mapper268_reg(1) & 0x40;       // prg a19
+		   prgmask |= ( mapper268_reg(1) & 0x20) << 2; // prg a20
+
+	UINT32 prgbase  = (mapper268_reg(3) & 0x0e);       // prg a16, a15, a14 (GNROM)
+		   prgbase |= (mapper268_reg(0) & 0x07) << 4;  // prg a19, a18, a17
+		   prgbase |= (mapper268_reg(1) & 0x10) << 3;  // prg a20
+		   prgbase |= (mapper268_reg(1) & 0x0c) << 6;  // prg a22, a21
+		   prgbase |= (mapper268_reg(0) & 0x30) << 6;  // prg a24, a23
+		   prgbase &= ~prgmask;
+
+	UINT32 gnprgmask = (mapper268_reg(3) & 0x10) ? ((mapper268_reg(1) & 0x02) | 0x01) : 0x00;
+
+	mapper_map_prg(8, slot, prgbase | (bank & prgmask) | (slot & gnprgmask));
+}
+
+// mapper 268: coolboy / mindkids
+static void mapper268_map()
+{
+	if (mapper268_reg(3) & (0x40)) {
+		bprintf(0, _T(" **  Mapper 268: 'weird' modes not supported yet.\n"));
+	}
+
+	mapper268_prg(1, mapper_regs[7]);
+
+    if (~mapper4_banksel & 0x40) {
+		mapper268_prg(0, mapper_regs[6]);
+		mapper268_prg(2, -2);
+    } else {
+		mapper268_prg(0, -2);
+		mapper268_prg(2, mapper_regs[6]);
+    }
+	mapper268_prg(3, -1);
+
+	// chr - only mmc3 for now! -dink feb3. 2022
+	INT32 chrmask = (mapper268_reg(0) & 0x80) ? 0x7f : 0xff;
+	INT32 chrbase = ((mapper268_reg(0) & 0x08) << 4) & ~chrmask;
+
+	if (~mapper4_banksel & 0x80) {
+		mapper_map_chr(2, 0, ((mapper_regs[0] & chrmask) + chrbase) >> 1);
+        mapper_map_chr(2, 1, ((mapper_regs[1] & chrmask) + chrbase) >> 1);
+
+		mapper_map_chr(1, 4, (mapper_regs[2] & chrmask) + chrbase);
+		mapper_map_chr(1, 5, (mapper_regs[3] & chrmask) + chrbase);
+		mapper_map_chr(1, 6, (mapper_regs[4] & chrmask) + chrbase);
+		mapper_map_chr(1, 7, (mapper_regs[5] & chrmask) + chrbase);
+	} else {
+		mapper_map_chr(1, 0, (mapper_regs[2] & chrmask) + chrbase);
+		mapper_map_chr(1, 1, (mapper_regs[3] & chrmask) + chrbase);
+		mapper_map_chr(1, 2, (mapper_regs[4] & chrmask) + chrbase);
+		mapper_map_chr(1, 3, (mapper_regs[5] & chrmask) + chrbase);
+
+		mapper_map_chr(2, 2, ((mapper_regs[0] & chrmask) + chrbase) >> 1);
+		mapper_map_chr(2, 3, ((mapper_regs[1] & chrmask) + chrbase) >> 1);
+	}
+
+	if (Cart.Mirroring != 4)
+		set_mirroring(mapper4_mirror ? VERTICAL : HORIZONTAL);
+}
+
+static void mapper268_write(UINT16 address, UINT8 data)
+{
+	if (address < 0x8000) {
+		cart_exp_write_abort = (mapper4_writeprotect & 0xc0) == 0x80;
+
+		if ((Cart.SubMapper == 1 && address >= 0x5000 && address <= 0x5fff) ||
+		   (Cart.SubMapper == 0 && address >= 0x6000 && address <= 0x6fff))
+		{
+			if ((mapper268_reg(3) & 0x90) != 0x80) {
+				mapper268_reg(address & 3) = data;
+
+				mapper_map();
+			}
+		}
+	} else {
+		mapper04_write(address, data);
+	}
 }
 
 static void mapper12_write(UINT16 address, UINT8 data)
@@ -8729,6 +8822,21 @@ static INT32 mapper_init(INT32 mappernum)
 			break;
 		}
 
+		case 268: { // mmc3 variant (COOLBOY / MINDKIDS)
+			mapper_write = mapper268_write;
+
+			if (Cart.SubMapper == 1) psg_area_write = mapper268_write; // 5000-5fff
+			else cart_exp_write = mapper268_write;                     // 6000-6fff
+
+			mapper_map   = mapper268_map;
+			mapper_scanline = mapper04_scanline;
+			mapper4_mirror = Cart.Mirroring;
+
+			mapper_map();
+			retval = 0;
+			break;
+		}
+
 		case 95: { // mmc3 variant (dragon buster)
 			mapper_write = mapper95_write;
 			mapper_map   = mapper95_map;
@@ -14385,6 +14493,23 @@ struct BurnDriver BurnDrvnes_toprider = {
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RACING, 0,
 	NESGetZipName, nes_topriderRomInfo, nes_topriderRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	topriderInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_metalstormrrRomDesc[] = {
+	{ "Metal Storm (2019).nes",          524304, 0x33af86d9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_metalstormrr)
+STD_ROM_FN(nes_metalstormrr)
+
+struct BurnDriver BurnDrvnes_metalstormrr = {
+	"nes_metalstormrr", NULL, NULL, NULL, "1991",
+	"Metal Storm Re-Release (USA)\0", NULL, "Irem", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_metalstormrrRomInfo, nes_metalstormrrRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 

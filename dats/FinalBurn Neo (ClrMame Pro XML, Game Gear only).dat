@@ -2093,6 +2093,22 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="jungle">
+		<description>Jungle Book, The (Euro)</description>
+		<year>1994</year>
+		<manufacturer>Virgin Interactive</manufacturer>
+		<rom name="jungle book, the (europe).bin" size="262144" crc="90100884"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="jungleu" cloneof="jungle" romof="jungle">
+		<description>Jungle Book, The (USA)</description>
+		<year>1994</year>
+		<manufacturer>Virgin Interactive</manufacturer>
+		<rom name="jungle book, the (usa).bin" size="262144" crc="30c09f31"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="jstrike">
 		<description>Jungle Strike (USA)</description>
 		<year>1995</year>
@@ -2298,6 +2314,30 @@
 		<year>1994</year>
 		<manufacturer>Psygnosis</manufacturer>
 		<rom name="lemmings 2 - the tribes [proto].bin" size="524288" crc="fbc807e1"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lionking">
+		<description>Lion King, The (Euro)</description>
+		<year>1994</year>
+		<manufacturer>Virgin Interactive</manufacturer>
+		<rom name="mpr-17271.ic1" size="524288" crc="0cd9c20b"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lionkingj" cloneof="lionking" romof="lionking">
+		<description>Lion King, The (Jpn)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="lion king, the (disney's) (jp).bin" size="524288" crc="c78b8637"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lionkingu" cloneof="lionking" romof="lionking">
+		<description>Lion King, The (USA)</description>
+		<year>1994</year>
+		<manufacturer>Virgin Interactive</manufacturer>
+		<rom name="mpr-17074.ic1" size="524288" crc="9808d7b3"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4161,6 +4201,30 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bartvssm">
+		<description>Simpsons, The - Bart vs. The Space Mutants (Euro, USA)</description>
+		<year>1992</year>
+		<manufacturer>Flying Edge</manufacturer>
+		<rom name="mpr-15229-s.ic1" size="262144" crc="c0009274"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bartvswd">
+		<description>Simpsons, The - Bart vs. The World (World)</description>
+		<year>1993</year>
+		<manufacturer>Flying Edge</manufacturer>
+		<rom name="mpr-15978.ic1" size="262144" crc="da7bd5c7"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bartman">
+		<description>Simpsons, The - Bartman Meets Radioactive Man (USA)</description>
+		<year>1992</year>
+		<manufacturer>Flying Edge</manufacturer>
+		<rom name="mpr-16373.ic1" size="262144" crc="ffa447a9"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="skweek" cloneof="slider" romof="slider">
 		<description>Skweek (Jpn)</description>
 		<year>1991</year>
@@ -5870,38 +5934,6 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jungle">
-		<description>The Jungle Book (Euro)</description>
-		<year>1994</year>
-		<manufacturer>Virgin Interactive</manufacturer>
-		<rom name="jungle book, the (europe).bin" size="262144" crc="90100884"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="jungleu" cloneof="jungle" romof="jungle">
-		<description>The Jungle Book (USA)</description>
-		<year>1994</year>
-		<manufacturer>Virgin Interactive</manufacturer>
-		<rom name="jungle book, the (usa).bin" size="262144" crc="30c09f31"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="lionking">
-		<description>The Lion King (Euro)</description>
-		<year>1994</year>
-		<manufacturer>Virgin Interactive</manufacturer>
-		<rom name="mpr-17271.ic1" size="524288" crc="0cd9c20b"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="lionkingj" cloneof="lionking" romof="lionking">
-		<description>The Lion King (Jpn)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="lion king, the (disney's) (jp).bin" size="524288" crc="c78b8637"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="lionkingp2" cloneof="lionking" romof="lionking">
 		<comment>Prototype</comment>
 		<description>The Lion King (Prototype, 19940817)</description>
@@ -5926,14 +5958,6 @@
 		<year>1994</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="lion king, the (prototype - aug 20,  1994).bin" size="523862" crc="3d0b31a2"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="lionkingu" cloneof="lionking" romof="lionking">
-		<description>The Lion King (USA)</description>
-		<year>1994</year>
-		<manufacturer>Virgin Interactive</manufacturer>
-		<rom name="mpr-17074.ic1" size="524288" crc="9808d7b3"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5983,30 +6007,6 @@
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-17816.ic1" size="524288" crc="736cdb76"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="bartvssm">
-		<description>The Simpsons - Bart vs. The Space Mutants (Euro, USA)</description>
-		<year>1992</year>
-		<manufacturer>Flying Edge</manufacturer>
-		<rom name="mpr-15229-s.ic1" size="262144" crc="c0009274"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="bartvswd">
-		<description>The Simpsons - Bart vs. The World (World)</description>
-		<year>1993</year>
-		<manufacturer>Flying Edge</manufacturer>
-		<rom name="mpr-15978.ic1" size="262144" crc="da7bd5c7"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="bartman">
-		<description>The Simpsons - Bartman Meets Radioactive Man (USA)</description>
-		<year>1992</year>
-		<manufacturer>Flying Edge</manufacturer>
-		<rom name="mpr-16373.ic1" size="262144" crc="ffa447a9"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

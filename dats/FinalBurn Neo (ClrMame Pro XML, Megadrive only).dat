@@ -1409,7 +1409,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="badapple">
-		<comment>Homebrew, 64 Mbit (8MB) cartridge</comment>
+		<comment>Demo, Homebrew, 64 Mbit (8MB) cartridge</comment>
 		<description>Bad Apple (HB, Tech-Demo)</description>
 		<year>2012</year>
 		<manufacturer>Stef_D</manufacturer>
@@ -4389,10 +4389,20 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="dariusev">
+		<comment>Homebrew</comment>
+		<description>Darius Extra Version (HB)</description>
+		<year>2020</year>
+		<manufacturer>Taito - Strictly Limited Games</manufacturer>
+		<rom name="Darius Extra Version (2020)(Strictly Limited Games).bin" size="4194304" crc="7fdc6236"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="darius2ec" cloneof="sagaia" romof="sagaia">
+		<comment>Hack</comment>
 		<description>Darius II (Hack, Enhanced Colors)</description>
 		<year>2016</year>
-		<manufacturer>Taito - Pyron</manufacturer>
+		<manufacturer>Pyron</manufacturer>
 		<rom name="darius ii (enhanced colors).md" size="1048576" crc="021faa21"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7942,6 +7952,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hpotter2" cloneof="mickmack" romof="mickmack">
+		<comment>Hack</comment>
 		<description>Harry Potter and the Chamber of Secrets (Rus)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
@@ -9321,7 +9332,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="knucklp" cloneof="sks2" romof="sks2">
-		<comment>Lock-On Technology</comment>
+		<comment>Hack, Prototype, Lock-On Technology</comment>
 		<description>Knuckles in Sonic 2 (Prototype 0524, 19940527, 10.46)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
@@ -10312,9 +10323,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="mcdonalds" cloneof="mcdonald" romof="mcdonald">
+		<comment>Hack</comment>
 		<description>Mcdonald's Treasure Land Adventure (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Treasure</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="mcdonald's treasure land adventure (hack, spanish).bin" size="1048576" crc="1245b748"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10328,6 +10340,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mcdonaldjp" cloneof="mcdonald" romof="mcdonald">
+		<comment>Prototype</comment>
 		<description>McDonald's Treasure Land Adventure (Jpn, Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
@@ -10577,6 +10590,15 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="megaturrdc">
+		<comment>Homebrew</comment>
+		<description>Mega Turrican - Director's Cut (HB)</description>
+		<year>2021</year>
+		<manufacturer>Factor 5 - Strictly Limited Games</manufacturer>
+		<rom name="Mega Turrican - Director's Cut (2021)(Strictly Limited Games).smd" size="5242880" crc="3226ec36"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="megalo1" cloneof="megalo" romof="megalo">
 		<description>Mega-Lo-Mania (Euro)</description>
 		<year>1992</year>
@@ -10774,9 +10796,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="mickmacks" cloneof="mickmack" romof="mickmack">
+		<comment>Hack</comment>
 		<description>Mick &amp; Mack as the Global Gladiators (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer> Virgin Games</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="mick &amp; mack as the global gladiators (hack, spanish).bin" size="1048576" crc="12236d34"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10790,6 +10813,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mickmackup" cloneof="mickmack" romof="mickmack">
+		<comment>Prototype</comment>
 		<description>Mick &amp; Mack as the Global Gladiators (USA, Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Virgin Games</manufacturer>
@@ -10806,9 +10830,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="mmanias" cloneof="mmania" romof="mmania">
+		<comment>Hack</comment>
 		<description>Mickey Mania - The Timeless Adventures of Mickey Mouse (Hack, Spanish)</description>
 		<year>2017</year>
-		<manufacturer>Sony Imagesoft</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="mickey mania - the timeless adventures of mickey mouse (hack, spanish).bin" size="2097152" crc="a65dae53"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10830,6 +10855,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mmaniaup" cloneof="mmania" romof="mmania">
+		<comment>Prototype</comment>
 		<description>Mickey Mania - The Timeless Adventures of Mickey Mouse (USA, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Sony Imagesoft</manufacturer>
@@ -10881,7 +10907,7 @@
 		<comment>Hack</comment>
 		<description>Micro Machines (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Codemasters</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="micro machines (hack, spanish).bin" size="524288" crc="3ba6932d"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10890,7 +10916,7 @@
 		<comment>Hack</comment>
 		<description>Micro Machines - Turbo Tournament '96 (Hack, Spanish)</description>
 		<year>2014</year>
-		<manufacturer>Codemasters</manufacturer>
+		<manufacturer>pepodmc</manufacturer>
 		<rom name="micro machines - turbo tournament '96 (hack, spanish).bin" size="1048576" crc="7ceb363d"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10939,7 +10965,7 @@
 		<comment>Hack</comment>
 		<description>Midnight Resistance (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Data East</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="midnight resistance (hack, spanish).bin" size="1048576" crc="fb38b80c"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -16427,6 +16453,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="snezkoro" cloneof="mickmack" romof="mickmack">
+		<comment>Hack</comment>
 		<description>Snezhnaya Koroleva (Rus)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
@@ -16531,6 +16558,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="skp12" cloneof="sk" romof="sk">
+		<comment>Prototype</comment>
 		<description>Sonic &amp; Knuckles (Prototype 0525, 19940525, 15.28)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -16539,6 +16567,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="skp10" cloneof="sk" romof="sk">
+		<comment>Prototype</comment>
 		<description>Sonic &amp; Knuckles (Prototype 0606, 19940606, 10.02)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -16547,6 +16576,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="skp08" cloneof="sk" romof="sk">
+		<comment>Homebrew</comment>
 		<description>Sonic &amp; Knuckles (Prototype 0608, 19940608, 05.03)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -16555,6 +16585,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="skp06" cloneof="sk" romof="sk">
+		<comment>Prototype</comment>
 		<description>Sonic &amp; Knuckles (Prototype 0610, 19940610, 07.49)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -16563,6 +16594,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="skp04" cloneof="sk" romof="sk">
+		<comment>Prototype</comment>
 		<description>Sonic &amp; Knuckles (Prototype 0612, 19940612, 18.27)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -16571,6 +16603,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="skp02" cloneof="sk" romof="sk">
+		<comment>Prototype</comment>
 		<description>Sonic &amp; Knuckles (Prototype 0618, 19940618, 09.15)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -16579,6 +16612,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="skp01" cloneof="sk" romof="sk">
+		<comment>Prototype</comment>
 		<description>Sonic &amp; Knuckles (Prototype 0619, 19940619, 08.18)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -16659,7 +16693,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="s3ktc" cloneof="sks3" romof="sks3">
-		<comment>Lock-On Technology</comment>
+		<comment>Hack, Lock-On Technology</comment>
 		<description>Sonic 3 &amp; Knuckles - The Challenges (Hack)</description>
 		<year>2009</year>
 		<manufacturer>ColinC10</manufacturer>
@@ -16668,7 +16702,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic3c" cloneof="sks3" romof="sks3">
-		<comment>Sonic the Hedgehog 3 Limited Edition (Prototype)</comment>
+		<comment>Prototype, Sonic the Hedgehog 3 Limited Edition (Prototype)</comment>
 		<description>Sonic 3C (Prototype 0408, 19940408, 17.29)</description>
 		<year>199?</year>
 		<manufacturer>Sega</manufacturer>
@@ -16677,7 +16711,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic3ca" cloneof="sks3" romof="sks3">
-		<comment>Sonic the Hedgehog 3 Limited Edition (Prototype)</comment>
+		<comment>Prototype, Sonic the Hedgehog 3 Limited Edition (Prototype)</comment>
 		<description>Sonic 3C (Prototype 0517, 19940517, 17.08)</description>
 		<year>199?</year>
 		<manufacturer>Sega</manufacturer>
@@ -16702,6 +16736,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic3dp8" cloneof="sonic3d" romof="sonic3d">
+		<comment>Prototype</comment>
 		<description>Sonic 3D Blast (Prototype 73, 19960703, 13.58)</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
@@ -16710,6 +16745,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic3dp7" cloneof="sonic3d" romof="sonic3d">
+		<comment>Prototype</comment>
 		<description>Sonic 3D Blast (Prototype 814, 19960815, 07.55)</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
@@ -16718,6 +16754,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic3dp6" cloneof="sonic3d" romof="sonic3d">
+		<comment>Prototype</comment>
 		<description>Sonic 3D Blast (Prototype 819, 19960819, 19.49)</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
@@ -16726,6 +16763,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic3dp5" cloneof="sonic3d" romof="sonic3d">
+		<comment>Prototype</comment>
 		<description>Sonic 3D Blast (Prototype 825, 19960826, 15.46)</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
@@ -16734,6 +16772,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic3dp4" cloneof="sonic3d" romof="sonic3d">
+		<comment>Prototype</comment>
 		<description>Sonic 3D Blast (Prototype 830, 19960831, 08.19)</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
@@ -16742,6 +16781,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic3dp3" cloneof="sonic3d" romof="sonic3d">
+		<comment>Prototype</comment>
 		<description>Sonic 3D Blast (Prototype 831, 19960903, 10.07)</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
@@ -16750,6 +16790,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic3dp2" cloneof="sonic3d" romof="sonic3d">
+		<comment>Prototype</comment>
 		<description>Sonic 3D Blast (Prototype 94, 19960904, 12.01)</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
@@ -16758,6 +16799,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic3dp1" cloneof="sonic3d" romof="sonic3d">
+		<comment>Prototype</comment>
 		<description>Sonic 3D Blast (USA, Prototype)</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
@@ -16766,9 +16808,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic3ddx" cloneof="sonic3d" romof="sonic3d">
+		<comment>Hack</comment>
 		<description>Sonic 3D Blast Director's Cut</description>
 		<year>2017</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>GameHut</manufacturer>
 		<rom name="Sonic 3D Blast  - Directors Cut.bin" size="4191682" crc="9767e840"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -16815,6 +16858,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="scrack">
+		<comment>Prototype</comment>
 		<description>Sonic Crackers (Jpn, Prototype)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
@@ -16823,9 +16867,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicere" cloneof="sonicer" romof="sonicer">
+		<comment>Hack</comment>
 		<description>Sonic Eraser (Hack, English)</description>
 		<year>2004</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>D</manufacturer>
 		<rom name="sonic eraser (english translation).md" size="262144" crc="26d9bc32"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -16895,6 +16940,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sspinp" cloneof="sspin" romof="sspin">
+		<comment>Prototype</comment>
 		<description>Sonic Spinball (Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
@@ -16903,6 +16949,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sspinp1" cloneof="sspin" romof="sspin">
+		<comment>Prototype</comment>
 		<description>Sonic Spinball (Prototype, 19930907)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
@@ -16943,8 +16990,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicpir" cloneof="sonic" romof="sonic">
+		<comment>Hack</comment>
 		<description>Sonic the Hedgehog (Pirate, Ripped from Golden 10 in 1)</description>
-		<year>1991?</year>
+		<year>199?</year>
 		<manufacturer>&lt;unlicensed&gt;</manufacturer>
 		<rom name="sonic the hedgehog (euro, usa) (pirate).bin" size="524288" crc="7a093f0b"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
@@ -17015,6 +17063,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic2p11" cloneof="sonic2" romof="sonic2">
+		<comment>Prototype</comment>
 		<description>Sonic the Hedgehog 2 (CENSOR Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
@@ -17023,6 +17072,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic2p2" cloneof="sonic2" romof="sonic2">
+		<comment>Prototype</comment>
 		<description>Sonic the Hedgehog 2 (Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
@@ -17031,6 +17081,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic2p10" cloneof="sonic2" romof="sonic2">
+		<comment>Prototype</comment>
 		<description>Sonic the Hedgehog 2 (Prototype, 19920821)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
@@ -17039,6 +17090,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic2p9" cloneof="sonic2" romof="sonic2">
+		<comment>Prototype</comment>
 		<description>Sonic the Hedgehog 2 (Prototype, 19920918)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
@@ -17055,6 +17107,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic2p1" cloneof="sonic2" romof="sonic2">
+		<comment>Prototype</comment>
 		<description>Sonic the Hedgehog 2 (World, Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
@@ -17111,14 +17164,16 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic3pir" cloneof="sonic3" romof="sonic3">
+		<comment>Hack</comment>
 		<description>Sonic the Hedgehog 3 (Pirate)</description>
-		<year>1994?</year>
+		<year>199?</year>
 		<manufacturer>&lt;unlicensed&gt;</manufacturer>
 		<rom name="sonic the hedgehog 3 (pirate).bin" size="2097152" crc="c818f6fd"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="sonic3p2" cloneof="sonic3" romof="sonic3">
+		<comment>Prototype</comment>
 		<description>Sonic the Hedgehog 3 (Prototype, 19931103)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -17127,6 +17182,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic3p1" cloneof="sonic3" romof="sonic3">
+		<comment>Prototype</comment>
 		<description>Sonic the Hedgehog 3 (Prototype, 19931120)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -17143,6 +17199,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="s3comp" cloneof="sks3" romof="sks3">
+		<comment>Hack</comment>
 		<description>Sonic the Hedgehog 3 Complete (World, Hack)</description>
 		<year>2013</year>
 		<manufacturer>Tiddles</manufacturer>

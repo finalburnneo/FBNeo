@@ -416,7 +416,9 @@ static INT32 DrvDoReset()
 	DrvADPCMPlaying = 0;
 	DrvADPCMPos = 0;
 	DrvADPCMEnd = 0;
-	
+
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1141,7 +1143,7 @@ struct BurnDriver BurnDrvRenegade = {
 	"renegade", NULL, NULL, NULL, "1986",
 	"Renegade (US)\0", NULL, "Technos (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvRomInfo, DrvRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	RenegadeInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x100, 240, 240, 4, 3
@@ -1151,7 +1153,7 @@ struct BurnDriver BurnDrvKuniokun = {
 	"kuniokun", "renegade", NULL, NULL, "1986",
 	"Nekketsu Kouha Kunio-kun (Japan)\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	RenegadeInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x100, 240, 240, 4, 3
@@ -1161,7 +1163,7 @@ struct BurnDriver BurnDrvRenegadeb = {
 	"renegadeb", "renegade", NULL, NULL, "1986",
 	"Renegade (US bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvubRomInfo, DrvubRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	KuniokunbInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x100, 240, 240, 4, 3
@@ -1171,7 +1173,7 @@ struct BurnDriver BurnDrvKuniokunb = {
 	"kuniokunb", "renegade", NULL, NULL, "1986",
 	"Nekketsu Kouha Kunio-kun (Japan bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	KuniokunbInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x100, 240, 240, 4, 3

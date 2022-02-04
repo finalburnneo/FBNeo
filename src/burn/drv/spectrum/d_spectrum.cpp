@@ -21933,6 +21933,82 @@ struct BurnDriver BurnSpecMotomadness = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// 19 Part 1 - Boot Camp (128K)
+
+static struct BurnRomInfo Spec19bootcampRomDesc[] = {
+	{ "19 Part 1 - Boot Camp 128K (1988)(Cascade Games).tap", 213402, 0xae022874, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Spec19bootcamp, Spec19bootcamp, Spec128)
+STD_ROM_FN(Spec19bootcamp)
+
+struct BurnDriver BurnSpec19bootcamp = {
+	"spec_19bootcamp", NULL, "spec_spec128", NULL, "1988",
+	"19 Part 1 - Boot Camp (128K)\0", NULL, "Cascade Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_SPECTRUM, GBF_ACTION | GBF_SHOOT, 0,
+	SpectrumGetZipName, Spec19bootcampRomInfo, Spec19bootcampRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// ACE - Air Combat Emulator (48K)
+
+static struct BurnRomInfo SpecAceRomDesc[] = {
+	{ "ACE 48K (1986)(Cascade Games).tap", 46187, 0x8568a584, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecAce, SpecAce, Spectrum)
+STD_ROM_FN(SpecAce)
+
+struct BurnDriver BurnSpecAce = {
+	"spec_ace", NULL, "spec_spectrum", NULL, "1986",
+	"ACE - Air Combat Emulator (48K)\0", "LSHIFT-Z: throttle - U: undercarriage - M: map - J: eject", "Cascade Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_SIM, 0,
+	SpectrumGetZipName, SpecAceRomInfo, SpecAceRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// ACE 2 - The Ultimate Head to Head Conflict (128K)
+
+static struct BurnRomInfo SpecAce2RomDesc[] = {
+	{ "ACE 2 The Ultimate Head to Head Conflict 128K (1987)(Cascade Games).tap", 52048, 0x4f850b86, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecAce2, SpecAce2, Spec128)
+STD_ROM_FN(SpecAce2)
+
+struct BurnDriver BurnSpecAce2 = {
+	"spec_ace2", NULL, "spec_spec128", NULL, "1987",
+	"ACE 2 - The Ultimate Head to Head Conflict (128K)\0", "D-S/K-J: throttle - W/O: select weapon - C/B: map", "Cascade Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SPECTRUM, GBF_SIM, 0,
+	SpectrumGetZipName, SpecAce2RomInfo, SpecAce2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Frightmare (128K)
+
+static struct BurnRomInfo SpecFrightmareRomDesc[] = {
+	{ "Frightmare 128K (1988)(Cascade Games).tap", 59861, 0xa5ba5804, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecFrightmare, SpecFrightmare, Spec128)
+STD_ROM_FN(SpecFrightmare)
+
+struct BurnDriver BurnSpecFrightmare = {
+	"spec_frightmare", NULL, "spec_spec128", NULL, "1988",
+	"Frightmare (128K)\0", NULL, "Cascade Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecFrightmareRomInfo, SpecFrightmareRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Homebrew Games (Post-2000)
 // Hereunder put only the HB ZX Spectrum games
 
@@ -33297,6 +33373,25 @@ struct BurnDriver BurnSpecZxfm2005 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_STRATEGY, 0,
 	SpectrumGetZipName, SpecZxfm2005RomInfo, SpecZxfm2005RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Forg Wants Love (128K) (HB)
+
+static struct BurnRomInfo SpecForgRomDesc[] = {
+	{ "Forg Wants Love (2021)(Bee Bush Games).tap", 26752, 0xd63afeb3, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecForg, SpecForg, Spec128)
+STD_ROM_FN(SpecForg)
+
+struct BurnDriver BurnSpecForg = {
+	"spec_forg", NULL, "spec_spec128", NULL, "2021",
+	"Forg Wants Love (128K) (HB)\0", NULL, "Bee Bush Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	SpectrumGetZipName, SpecForgRomInfo, SpecForgRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

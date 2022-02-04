@@ -111,6 +111,19 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="4x4offroad" romof="msx">
+		<comment>Switch tape side at title screen</comment>
+		<description>4x4 Off-Road Racing (Euro)</description>
+		<year>1988</year>
+		<manufacturer>U.S. Gold - Epyx Inc.</manufacturer>
+		<rom name="4x4 Off-Road Racing (1988)(US Gold)(Side A)[BLOAD'CAS-',R].cas" size="32138" crc="3c16aad4"/>
+		<rom name="4x4 Off-Road Racing (1988)(US Gold)(Side B)[BLOAD'CAS-',R].cas" size="38434" crc="2c1b6933"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="50metres" romof="msx">
 		<comment>Homebrew</comment>
 		<description>50 Metres (HB)</description>
@@ -604,6 +617,17 @@
 		<year>2021</year>
 		<manufacturer>Amaury Carvalho</manufacturer>
 		<rom name="Amadeus Classical Beats (2021)(Amaury Carvalho).rom" size="49152" crc="3b33c8c1"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="amaurote" romof="msx">
+		<description>Amaurote (Euro)</description>
+		<year>1987</year>
+		<manufacturer>Mastertronic</manufacturer>
+		<rom name="Amaurote (1987)(Mastertronic Added Dimension).rom" size="131072" crc="192d9c5d"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -1745,9 +1769,21 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bitlogic" romof="msx">
+	<game name="bitlogicfv" romof="msx">
 		<comment>Homebrew</comment>
-		<description>BitLogic a Cyberpunk Arcade Adventure (HB)</description>
+		<description>BitLogic a Cyberpunk Arcade Adventure (HB, final version)</description>
+		<year>2022</year>
+		<manufacturer>OxiAB Studio</manufacturer>
+		<rom name="Bitlogic final version (2022)(OxiAB Studio).rom" size="262144" crc="a3dd2687"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bitlogic" cloneof="bitlogicfv" romof="bitlogicfv">
+		<comment>Homebrew</comment>
+		<description>BitLogic a Cyberpunk Arcade Adventure (HB, MSXdev'15 ed.)</description>
 		<year>2015</year>
 		<manufacturer>OxiAB Studio</manufacturer>
 		<rom name="BITLOGIC_v_100.ROM" size="49152" crc="fbcd1942"/>
@@ -4634,6 +4670,29 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="romancia" romof="msx">
+		<description>Dragon Slayer Jr. - Romancia (Jpn)</description>
+		<year>1986</year>
+		<manufacturer>Nihon Falcom</manufacturer>
+		<rom name="Dragon Slayer Jr. - Romancia (1986)(Falcom).rom" size="131072" crc="387c1de7"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="romanciaen" cloneof="romancia" romof="romancia">
+		<comment>Hack</comment>
+		<description>Dragon Slayer Jr. - Romancia (T-Eng)</description>
+		<year>1986-2010</year>
+		<manufacturer>MSX Translations</manufacturer>
+		<rom name="Dragon Slayer Jr. - Romancia T-Eng (2010)(MSX Translations).rom" size="131072" crc="885773f9"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="drainer" romof="msx">
 		<description>Drainer (Jpn)</description>
 		<year>1987</year>
@@ -4915,28 +4974,6 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sideral" romof="msx">
-		<description>El Motorista Sideral (Spanish)</description>
-		<year>1986</year>
-		<manufacturer>Anaya Multimedia</manufacturer>
-		<rom name="motorista sideral, el (1986)(anaya multimedia)(es)[run'cas-'].cas" size="25647" crc="8b07f4f6"/>
-		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
-		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
-		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
-		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="mundoper" romof="msx">
-		<description>El Mundo Perdido (Spanish)</description>
-		<year>1988</year>
-		<manufacturer>Topo Soft</manufacturer>
-		<rom name="mundo perdido, el (1988)(topo soft)(es)[run'cas-'].cas" size="64327" crc="488a17b0"/>
-		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
-		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
-		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
-		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="elevator" romof="msx">
 		<description>Elevator Action (Jpn)</description>
 		<year>1985</year>
@@ -4953,6 +4990,17 @@
 		<year>1986</year>
 		<manufacturer>Aacksoft</manufacturer>
 		<rom name="elidon (1986)(aackosoft)[run'cas-'].cas" size="31854" crc="b8b68e85"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="esvgslam" romof="msx">
+		<description>Emilio Sanchez Vicario Grand Slam (Spanish)</description>
+		<year>1989</year>
+		<manufacturer>Zigurat Software</manufacturer>
+		<rom name="Emilio Sanchez Vicario Grand Slam (1989)(Zigurat).rom" size="65536" crc="6ea88602"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -5035,6 +5083,17 @@
 		<year>1984</year>
 		<manufacturer>ASCII</manufacturer>
 		<rom name="exchanger (japan) (alt 1).rom" size="16384" crc="691c0503"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="exjockey" romof="msx">
+		<description>Exciting Jockey (Jpn)</description>
+		<year>1984</year>
+		<manufacturer>Casio</manufacturer>
+		<rom name="Exciting Jockey (1984)(Casio).rom" size="16384" crc="76322e6a"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -5657,6 +5716,18 @@
 		<year>1985</year>
 		<manufacturer>Mind Games Espana</manufacturer>
 		<rom name="forbidden fruit (1985)(mind games espana)(es)[cload + run].cas" size="16303" crc="945a9dd0"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="forg" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Forg Wants Love (HB)</description>
+		<year>2021</year>
+		<manufacturer>Beebush Games</manufacturer>
+		<rom name="Forg Wants Love (2021)(Bee Bush Games).rom" size="753664" crc="f2f7b865"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -6688,9 +6759,21 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hansadv" romof="msx">
+	<game name="hansadvfv" romof="msx">
+		<comment>Homebrew, Bonus game: Stan the Dreamer</comment>
+		<description>Hans' Adventure (HB, final version)</description>
+		<year>2022</year>
+		<manufacturer>The Pets Mode</manufacturer>
+		<rom name="Hans' Adventure final version + bonus (2022)(The Pets Mode).rom" size="65536" crc="ff7c6dce"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hansadv" cloneof="hansadvfv" romof="hansadvfv">
 		<comment>Homebrew</comment>
-		<description>Hans' Adventure (HB)</description>
+		<description>Hans' Adventure (HB, MSXdev'10 ed.)</description>
 		<year>2010</year>
 		<manufacturer>The Pets Mode</manufacturer>
 		<rom name="hans' adventure (2010)(the pets mode).rom" size="49152" crc="c7452eca"/>
@@ -7101,9 +7184,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="hype" romof="msx">
-		<description>Hype</description>
+		<description>Hype (Euro)</description>
 		<year>1987</year>
-		<manufacturer>The Bytebusters</manufacturer>
+		<manufacturer>Methodic Solutions</manufacturer>
 		<rom name="hype.rom" size="32768" crc="f9c5977a"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -8244,6 +8327,30 @@
 		<year>1987</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="knightmare iii - shalom (japan).rom" size="262144" crc="cf60fa7d"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="knightm3en" cloneof="knightm3" romof="knightm3">
+		<comment>Hack</comment>
+		<description>Knightmare III - Shalom (T-Eng)</description>
+		<year>1987-2002</year>
+		<manufacturer>SLotman</manufacturer>
+		<rom name="Knightmare III - Shalom - Konami T-Eng (2002)(SLotman).rom" size="524288" crc="816d3ce0"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="knightm3sp" cloneof="knightm3" romof="knightm3">
+		<comment>Hack</comment>
+		<description>Knightmare III - Shalom (T-Spa)</description>
+		<year>1987-2012</year>
+		<manufacturer>Pablibiris</manufacturer>
+		<rom name="Knightmare III - Shalom - Konami T-Spa (2012)(Pablibiris).rom" size="524288" crc="a9f72c17"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -10272,6 +10379,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="sideral" romof="msx">
+		<description>Motorista Sideral, El (Spanish)</description>
+		<year>1986</year>
+		<manufacturer>Anaya Multimedia</manufacturer>
+		<rom name="motorista sideral, el (1986)(anaya multimedia)(es)[run'cas-'].cas" size="25647" crc="8b07f4f6"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mouser" romof="msx">
 		<description>Mouser (Jpn)</description>
 		<year>1983</year>
@@ -10555,6 +10673,17 @@
 		<year>1987</year>
 		<manufacturer>Zemina</manufacturer>
 		<rom name="valis - the fantasm soldier (1987)(zemina).rom" size="131072" crc="87361b76"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mundoper" romof="msx">
+		<description>Mundo Perdido, El (Spanish)</description>
+		<year>1988</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="mundo perdido, el (1988)(topo soft)(es)[run'cas-'].cas" size="64327" crc="488a17b0"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -11776,6 +11905,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="picopicoen" cloneof="picopico" romof="picopico">
+		<comment>Hack</comment>
+		<description>Pico Pico (T-Eng)</description>
+		<year>1983-2016</year>
+		<manufacturer>gdx</manufacturer>
+		<rom name="Pico Pico T-Eng (1983-2016)(Microcabin - gdx).rom" size="8192" crc="1d9522ec"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="picpuzzle" romof="msx">
 		<description>Picture Puzzle (Jpn)</description>
 		<year>1983</year>
@@ -12891,17 +13032,6 @@
 		<year>1984</year>
 		<manufacturer>HAL Kenkyuujo</manufacturer>
 		<rom name="roller ball (japan) (alt 1).rom" size="16384" crc="798fa044"/>
-		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
-		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
-		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
-		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="romancia" romof="msx">
-		<description>Romancia (Jpn)</description>
-		<year>1987</year>
-		<manufacturer>Nihon Falcom</manufacturer>
-		<rom name="831000-20" size="131072" crc="387c1de7"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

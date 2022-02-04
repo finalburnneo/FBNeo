@@ -9360,19 +9360,19 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="metalstormrr" cloneof="metalstorm" romof="metalstorm">
+		<description>Metal Storm (Re-Release)</description>
+		<year>2019</year>
+		<manufacturer>Irem - Retro-bit</manufacturer>
+		<rom name="Metal Storm (2019).nes" size="524304" crc="33af86d9"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="metalstorm">
 		<description>Metal Storm (USA)</description>
 		<year>1991</year>
 		<manufacturer>Irem</manufacturer>
 		<rom name="Metal Storm (USA).nes" size="393232" crc="98cefa51"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="metalstormrr">
-		<description>Metal Storm Re-Release (USA)</description>
-		<year>1991</year>
-		<manufacturer>Irem</manufacturer>
-		<rom name="Metal Storm (2019).nes" size="524304" crc="33af86d9"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

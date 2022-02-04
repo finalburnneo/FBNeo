@@ -919,8 +919,8 @@ static bool open_archive()
 			{
 				static char prev[1024];
 				strcpy(prev, text_missing_files);
-				sprintf(text_missing_files, "%s\nROM with name %s and CRC 0x%08x is missing", prev, rom_name, ri.nCrc);
 				BurnDrvGetRomName(&rom_name, i, 0);
+				sprintf(text_missing_files, "%s\nROM with name %s and CRC 0x%08x is missing", prev, rom_name, ri.nCrc);
 				log_cb(RETRO_LOG_ERROR, "[FBNeo] ROM at index %d with name %s and CRC 0x%08x is required\n", i, rom_name, ri.nCrc);
 				ret = false;
 			}

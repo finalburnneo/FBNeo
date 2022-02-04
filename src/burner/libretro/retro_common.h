@@ -109,6 +109,11 @@ struct dipswitch_core_option_value
 	struct GameInp *pgi;
 	BurnDIPInfo bdi;
 	std::string friendly_name;
+#if 0
+	struct GameInp *cond_pgi;
+	int nCondMask;
+	int nCondSetting;
+#endif
 };
 
 struct dipswitch_core_option

@@ -424,7 +424,14 @@ static int create_variables_from_dipswitches()
 				// Filter away NULL entries
 				if (bdi_value.nFlags == 0)
 				{
-					HandleMessage(RETRO_LOG_WARN, "Error in %sDIPList for DIPSWITCH '%s': the line '%d' is useless\n", drvname, dip_option->friendly_name.c_str(), k + 1);
+#if 0
+					//HandleMessage(RETRO_LOG_WARN, "Error in %sDIPList for DIPSWITCH '%s': the line '%d' is useless\n", drvname, dip_option->friendly_name.c_str(), k + 1);
+					// visibility should be toggled off if cond_pgi->Input.nVal & nCondMask != nCondSetting ?
+					dipswitch_core_option_value *prev_dip_value = &dip_option->values[values_count-1];
+					prev_dip_value->cond_pgi = pgi_value;
+					prev_dip_value->nCondMask = bdi_value.nMask;
+					prev_dip_value->nCondSetting = bdi_value.nSetting;
+#endif
 					continue;
 				}
 

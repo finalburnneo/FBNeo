@@ -14995,7 +14995,7 @@ static struct BurnRomInfo nes_yybeebissiiRomDesc[] = {
 STD_ROM_PICK(nes_yybeebissii)
 STD_ROM_FN(nes_yybeebissii)
 
-struct BurnDriver BurnDrvnes_nes_yybeebissii = {
+struct BurnDriver BurnDrvnesnes_yybeebissii = {
 	"nes_yybeebissii", NULL, NULL, NULL, "2021",
 	"Yeah Yeah Beebiss II\0", NULL, "Rigg'd Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,

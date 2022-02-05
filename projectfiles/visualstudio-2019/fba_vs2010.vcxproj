@@ -412,6 +412,7 @@
     <ClInclude Include="..\..\src\intf\video\win32\directx9_core.h" />
     <ClInclude Include="..\..\src\intf\video\win32\rgb_pattern.h" />
     <ClInclude Include="..\..\src\intf\video\win32\vid_directx_support.h" />
+    <ClInclude Include="..\..\src\intf\video\win32\vid_effect.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burner\conc.cpp" />
@@ -1203,6 +1204,7 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_blackt96.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_blmbycar.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_bloodbro.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_bloodbro_ms.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_crospang.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_crshrace.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_cultures.cpp" />
@@ -1255,6 +1257,7 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_pirates.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_pkscram.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_playmark.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_powerbal.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_powerins.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_ppmast93.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_pushman.cpp" />
@@ -1755,6 +1758,7 @@ del build_details.exe
     <ClCompile Include="..\..\src\intf\video\win32\vid_ddraw.cpp" />
     <ClCompile Include="..\..\src\intf\video\win32\vid_ddrawfx.cpp" />
     <ClCompile Include="..\..\src\intf\video\win32\vid_directx9.cpp" />
+    <ClCompile Include="..\..\src\intf\video\win32\vid_effect.cpp" />
     <ClCompile Include="..\..\src\intf\video\win32\vid_directx_support.cpp" />
   </ItemGroup>
   <ItemGroup>

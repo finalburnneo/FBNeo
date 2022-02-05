@@ -475,6 +475,9 @@
     <ClInclude Include="..\..\src\intf\video\win32\vid_directx_support.h">
       <Filter>interfaces\video\win32</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\intf\video\win32\vid_effect.h">
+      <Filter>interfaces\video\win32</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\intf\video\scalers\hq_shared32.h">
       <Filter>interfaces\video\scalers</Filter>
     </ClInclude>
@@ -2016,6 +2019,9 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_bloodbro.cpp">
       <Filter>Burn\drv\pst90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_bloodbro_ms.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_crospang.cpp">
       <Filter>Burn\drv\pst90s</Filter>
     </ClCompile>
@@ -2107,6 +2113,9 @@
       <Filter>Burn\drv\pst90s</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_pirates.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_powerbal.cpp">
       <Filter>Burn\drv\pst90s</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_powerins.cpp">
@@ -2701,6 +2710,9 @@
       <Filter>interfaces\video\win32</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\intf\video\win32\vid_directx9.cpp">
+      <Filter>interfaces\video\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\intf\video\win32\vid_effect.cpp">
       <Filter>interfaces\video\win32</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\intf\video\scalers\2xpm.cpp">

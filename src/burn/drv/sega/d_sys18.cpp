@@ -2432,6 +2432,34 @@ static struct BurnRomInfo WwallyjadRomDesc[] = {
 STD_ROM_PICK(Wwallyjad)
 STD_ROM_FN(Wwallyjad)
 
+static struct BurnRomInfo Wwallyja3pRomDesc[] = {
+	{ "epr-14730a.a4",  0x040000, 0xd897bcc6, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-14731a.a6",  0x040000, 0x64328385, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-14719.c1",   0x040000, 0x8b58c743, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-14720.c2",   0x040000, 0xf96d19f4, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-14721.c3",   0x040000, 0xc4ced91d, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "mpr-14726.c10",  0x100000, 0x7213d1d3, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14732.a10",  0x100000, 0x04ced549, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14727.c11",  0x100000, 0x3b74e0f0, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14733.a11",  0x100000, 0x6da0444f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14728.c12",  0x080000, 0x5b921587, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14734.a12",  0x080000, 0x6f3f5ed9, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-14725.c7",   0x020000, 0x2b29684f, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "mpr-14724.c6",   0x080000, 0x47cbea86, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-14723.c5",   0x080000, 0xbc5adc27, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-14722.c4",   0x080000, 0x1bd081f8, SYS16_ROM_RF5C68DATA | BRF_SND },
+	
+	{ "317-0198a.key",  0x002000, 0x00000000, SYS16_ROM_KEY | BRF_ESS | BRF_PRG | BRF_NODUMP },
+};
+
+
+STD_ROM_PICK(Wwallyja3p)
+STD_ROM_FN(Wwallyja3p)
+
 /*====================================================
 Memory Handlers
 ====================================================*/
@@ -3878,7 +3906,7 @@ struct BurnDriverD BurnDrvShdancbl = {
 
 struct BurnDriver BurnDrvWwallyj = {
 	"wwallyj", NULL, NULL, NULL, "1992",
-	"Wally wo Sagase! (rev B, Japan, FD1094 317-0197B)\0", NULL, "Sega", "System 18",
+	"Wally wo Sagase! (rev B, Japan, 2 players, FD1094 317-0197B)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5987, GBF_PUZZLE, 0,
 	NULL, WwallyjRomInfo, WwallyjRomName, NULL, NULL, NULL, NULL, WwallyInputInfo, WwallyDIPInfo,
@@ -3888,7 +3916,7 @@ struct BurnDriver BurnDrvWwallyj = {
 
 struct BurnDriver BurnDrvWwallyjd = {
 	"wwallyjd", "wwallyj", NULL, NULL, "1992",
-	"Wally wo Sagase! (rev B, Japan, FD1094 317-0197B decrypted)\0", NULL, "Sega", "System 18",
+	"Wally wo Sagase! (rev B, Japan, 2 players, FD1094 317-0197B decrypted)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5987, GBF_PUZZLE, 0,
 	NULL, WwallyjdRomInfo, WwallyjdRomName, NULL, NULL, NULL, NULL, WwallyInputInfo, WwallyDIPInfo,
@@ -3898,7 +3926,7 @@ struct BurnDriver BurnDrvWwallyjd = {
 
 struct BurnDriver BurnDrvWwallyja = {
 	"wwallyja", "wwallyj", NULL, NULL, "1992",
-	"Wally wo Sagase! (rev A, Japan, FD1094 317-0197A)\0", NULL, "Sega", "System 18",
+	"Wally wo Sagase! (rev A, Japan, 2 players, FD1094 317-0197A)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5987, GBF_PUZZLE, 0,
 	NULL, WwallyjaRomInfo, WwallyjaRomName, NULL, NULL, NULL, NULL, WwallyInputInfo, WwallyDIPInfo,
@@ -3908,10 +3936,20 @@ struct BurnDriver BurnDrvWwallyja = {
 
 struct BurnDriver BurnDrvWwallyjad = {
 	"wwallyjad", "wwallyj", NULL, NULL, "1992",
-	"Wally wo Sagase! (rev A, Japan, FD1094 317-0197A decrypted)\0", NULL, "Sega", "System 18",
+	"Wally wo Sagase! (rev A, Japan, 2 players, FD1094 317-0197A decrypted)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5987, GBF_PUZZLE, 0,
 	NULL, WwallyjadRomInfo, WwallyjadRomName, NULL, NULL, NULL, NULL, WwallyInputInfo, WwallyDIPInfo,
+	WwallyInit, WwallyExit, System18Frame, System18Render, WwallyScan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvWwallyja3p = {
+	"wwallyja3p", "wwallyj", NULL, NULL, "1992",
+	"Wally wo Sagase! (rev A, Japan, 3 players, FD1094 317-0198A)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5987, GBF_PUZZLE, 0,
+	NULL, Wwallyja3pRomInfo, Wwallyja3pRomName, NULL, NULL, NULL, NULL, WwallyInputInfo, WwallyDIPInfo,
 	WwallyInit, WwallyExit, System18Frame, System18Render, WwallyScan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

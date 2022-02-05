@@ -413,6 +413,8 @@ static INT32 DrvDoReset()
 	raster_irq_enable = 0;
 	previous_irq_value = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -882,7 +884,7 @@ struct BurnDriver BurnDrvShadfrce = {
 	"shadfrce", NULL, NULL, NULL, "1993",
 	"Shadow Force (World, Version 3)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, shadfrceRomInfo, shadfrceRomName, NULL, NULL, NULL, NULL, shadfrceInputInfo, shadfrceDIPInfo,
 	shadfrceInit, shadfrceExit, shadfrceFrame, shadfrceDraw, shadfrceScan, &bRecalcPalette, 0x4000,
 	320, 256, 4, 3
@@ -921,7 +923,7 @@ struct BurnDriver BurnDrvShadfrceu = {
 	"shadfrceu", "shadfrce", NULL, NULL, "1993",
 	"Shadow Force (US, Version 2)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, shadfrceuRomInfo, shadfrceuRomName, NULL, NULL, NULL, NULL, shadfrceInputInfo, shadfrceDIPInfo,
 	shadfrceInit, shadfrceExit, shadfrceFrame, shadfrceDraw, shadfrceScan, &bRecalcPalette, 0x4000,
 	320, 256, 4, 3
@@ -960,7 +962,7 @@ struct BurnDriver BurnDrvShadfrcej = {
 	"shadfrcej", "shadfrce", NULL, NULL, "1993",
 	"Shadow Force (Japan, Version 2)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, shadfrcejRomInfo, shadfrcejRomName, NULL, NULL, NULL, NULL, shadfrceInputInfo, shadfrceDIPInfo,
 	shadfrceInit, shadfrceExit, shadfrceFrame, shadfrceDraw, shadfrceScan, &bRecalcPalette, 0x4000,
 	320, 256, 4, 3

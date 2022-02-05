@@ -45,6 +45,7 @@ DRV		BurnSpec180;
 DRV		BurnDrvMSX_180;
 DRV		BurnDrvfds_19neunzehnj;
 DRV		BurnDrvfds_19neunzehn;
+DRV		BurnSpec19bootcamp;
 DRV		BurnDrvCps1941u;
 DRV		BurnDrvCps1941;
 DRV		BurnDrvCps1941j;
@@ -202,6 +203,8 @@ DRV		BurnSpecabusimpr;
 DRV		BurnSpecabusimprd;
 DRV		BurnDrvMSX_abusimbel;
 DRV		BurnDrvmd_abyssal;
+DRV		BurnSpecAce;
+DRV		BurnSpecAce2;
 DRV		BurnSpecAce2088;
 DRV		BurnDrvAceattac;
 DRV		BurnDrvAceattaca;
@@ -5393,6 +5396,7 @@ DRV		BurnDrvMSX_ffruit;
 DRV		BurnDrvForcebrk;
 DRV		BurnDrvgg_foreman;
 DRV		BurnDrvmd_foreman;
+DRV		BurnSpecForg;
 DRV		BurnDrvMSX_forg;
 DRV		BurnSpecforgottn;
 DRV		BurnDrvsms_forgottn;
@@ -5455,6 +5459,7 @@ DRV		BurnDrvnes_frenzy;
 DRV		BurnDrvcv_frenzy;
 DRV		BurnDrvnes_fridaythe13thc;
 DRV		BurnDrvnes_fridaythe13th;
+DRV		BurnSpecFrightmare;
 DRV		BurnDrvFriskyt;
 DRV		BurnDrvFriskyta;
 DRV		BurnDrvFriskytb;
@@ -16866,7 +16871,7 @@ DRV		BurnDrvmd_umk3h;
 DRV		BurnDrvmd_umk3mh;
 DRV		BurnDrvUmk3pb1;
 DRV		BurnDrvUmk3te;
-DRV		BurnDrvUmk3uc;
+DRV		BurnDrvUmk3uk;
 DRV		BurnDrvmd_umk3t;
 DRV		BurnDrvmd_ultqixs;
 DRV		BurnDrvmd_ultqix;
@@ -17293,6 +17298,7 @@ DRV		BurnDrvpce_wallaby;
 DRV		BurnDrvnes_wallybeanogan;
 DRV		BurnDrvWwallyjad;
 DRV		BurnDrvWwallyja;
+DRV		BurnDrvWwallyja3p;
 DRV		BurnDrvWwallyjd;
 DRV		BurnDrvWwallyj;
 DRV		BurnDrvsms_wpayton;
@@ -17991,6 +17997,7 @@ DRV		BurnSpecyazzie;
 DRV		BurnDrvmd_yazzie;
 DRV		BurnDrvMSX_yazzie;
 DRV		BurnDrvMSX_yazzier;
+DRV		BurnDrvnesnes_yybeebissii;
 DRV		BurnDrvYellowcbb;
 DRV		BurnDrvYellowcbj;
 DRV		BurnDrvMSX_yellowsb;
@@ -18310,6 +18317,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_180,			// 180 Degrees
 	&BurnDrvfds_19neunzehnj,	// 19 - Neunzehn (Japan)
 	&BurnDrvfds_19neunzehn,		// 19 - Neunzehn (T-Eng)
+	&BurnSpec19bootcamp,		// 19 Part 1 - Boot Camp (128K)
 	&BurnDrvCps1941u,			// 1941 - Counter Attack (900227 USA)
 	&BurnDrvCps1941,			// 1941 - Counter Attack (900227 World)
 	&BurnDrvCps1941j,			// 1941 - Counter Attack (Japan)
@@ -18467,6 +18475,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecabusimprd,			// Abu Simbel Profanation (Spanish) (48K)
 	&BurnDrvMSX_abusimbel,		// Abu Simbel Profanation (Spanish)
 	&BurnDrvmd_abyssal,			// Abyssal Infants (HB)
+	&BurnSpecAce,				// ACE - Air Combat Emulator (48K)
+	&BurnSpecAce2,				// ACE 2 - The Ultimate Head to Head Conflict (128K)
 	&BurnSpecAce2088,			// ACE 2088 (128K)
 	&BurnDrvAceattac,			// Ace Attacker (FD1094 317-0059)
 	&BurnDrvAceattaca,			// Ace Attacker (Japan, System 16A, FD1094 317-0060)
@@ -23658,6 +23668,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvForcebrk,			// Force Break (bootleg)
 	&BurnDrvgg_foreman,			// Foreman for Real (World)
 	&BurnDrvmd_foreman,			// Foreman for Real (World)
+	&BurnSpecForg,				// Forg Wants Love (128K) (HB)
 	&BurnDrvMSX_forg,			// Forg Wants Love (HB)
 	&BurnSpecforgottn,			// Forgotten Worlds (128K)
 	&BurnDrvsms_forgottn,		// Forgotten Worlds (Euro, Bra, Aus)
@@ -23720,6 +23731,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_frenzy,			// Frenzy
 	&BurnDrvnes_fridaythe13thc,	// Friday the 13th (USA) - Castellano v1.1
 	&BurnDrvnes_fridaythe13th,	// Friday the 13th (USA)
+	&BurnSpecFrightmare,		// Frightmare (128K)
 	&BurnDrvFriskyt,			// Frisky Tom (set 1)
 	&BurnDrvFriskyta,			// Frisky Tom (set 2)
 	&BurnDrvFriskytb,			// Frisky Tom (set 3, encrypted) [Broken, please use parent romset!, NOT WORKING]
@@ -35131,7 +35143,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_umk3mh,			// Ultimate Mortal Kombat 3 Mini (Hack, v13)
 	&BurnDrvUmk3pb1,			// Ultimate Mortal Kombat 3 Plus (Hack, Beta 1)
 	&BurnDrvUmk3te,				// Ultimate Mortal Kombat 3 Tournament Edition (hack, V2.0.042/August 2018)
-	&BurnDrvUmk3uc,				// Ultimate Mortal Kombat 3 Uk (Hack, Ver. 2021-07-20)
+	&BurnDrvUmk3uk,				// Ultimate Mortal Kombat 3 Uk (Hack, Ver. 2022-01-19)
 	&BurnDrvmd_umk3t,			// Ultimate Mortal Kombat Trilogy (Hack, rev.5149)
 	&BurnDrvmd_ultqixs,			// Ultimate Qix (Hack, Spanish)
 	&BurnDrvmd_ultqix,			// Ultimate Qix (USA)
@@ -35556,10 +35568,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_wallstreetkid,	// Wall Street Kid (USA)
 	&BurnDrvpce_wallaby,		// Wallaby!! - Usagi no Kuni no Kangaroo Race
 	&BurnDrvnes_wallybeanogan,	// Wally Bear & the No Gang (Unl)
-	&BurnDrvWwallyjad,			// Wally wo Sagase! (rev A, Japan, FD1094 317-0197A decrypted)
-	&BurnDrvWwallyja,			// Wally wo Sagase! (rev A, Japan, FD1094 317-0197A)
-	&BurnDrvWwallyjd,			// Wally wo Sagase! (rev B, Japan, FD1094 317-0197B decrypted)
-	&BurnDrvWwallyj,			// Wally wo Sagase! (rev B, Japan, FD1094 317-0197B)
+	&BurnDrvWwallyjad,			// Wally wo Sagase! (rev A, Japan, 2 players, FD1094 317-0197A decrypted)
+	&BurnDrvWwallyja,			// Wally wo Sagase! (rev A, Japan, 2 players, FD1094 317-0197A)
+	&BurnDrvWwallyja3p,			// Wally wo Sagase! (rev A, Japan, 3 players, FD1094 317-0198A) [no comment, NOT WORKING]
+	&BurnDrvWwallyjd,			// Wally wo Sagase! (rev B, Japan, 2 players, FD1094 317-0197B decrypted)
+	&BurnDrvWwallyj,			// Wally wo Sagase! (rev B, Japan, 2 players, FD1094 317-0197B)
 	&BurnDrvsms_wpayton,		// Walter Payton Football (USA)
 	&BurnDrvMSX_wampcola,		// Wamp Cola (Spanish)
 	&BurnDrvnes_wampus,			// Wampus (HB)
@@ -36256,6 +36269,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_yazzie,			// Yazzie (HB)
 	&BurnDrvMSX_yazzie,			// Yazzie (HB)
 	&BurnDrvMSX_yazzier,		// Yazzie Remastered (HB)
+	&BurnDrvnesnes_yybeebissii,	// Yeah Yeah Beebiss II
 	&BurnDrvYellowcbb,			// Yellow Cab (bootleg)
 	&BurnDrvYellowcbj,			// Yellow Cab (Japan)
 	&BurnDrvMSX_yellowsb,		// Yellow Submarine (Jpn)

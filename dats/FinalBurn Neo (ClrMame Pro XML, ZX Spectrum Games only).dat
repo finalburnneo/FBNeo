@@ -80,6 +80,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="19bootcamp" romof="spec128">
+		<description>19 Part 1 - Boot Camp (128K)</description>
+		<year>1988</year>
+		<manufacturer>Cascade Games</manufacturer>
+		<rom name="19 Part 1 - Boot Camp 128K (1988)(Cascade Games).tap" size="213402" crc="ae022874"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="1942" romof="spectrum">
 		<description>1942 (48K)</description>
 		<year>1986</year>
@@ -346,6 +356,27 @@
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Abu Simbel Profanation (1985)(Dinamic Software).tap" size="46362" crc="7849893d"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ace" romof="spectrum">
+		<comment>LSHIFT-Z: throttle - U: undercarriage - M: map - J: eject</comment>
+		<description>ACE - Air Combat Emulator (48K)</description>
+		<year>1986</year>
+		<manufacturer>Cascade Games</manufacturer>
+		<rom name="ACE 48K (1986)(Cascade Games).tap" size="46187" crc="8568a584"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ace2" romof="spec128">
+		<comment>D-S/K-J: throttle - W/O: select weapon - C/B: map</comment>
+		<description>ACE 2 - The Ultimate Head to Head Conflict (128K)</description>
+		<year>1987</year>
+		<manufacturer>Cascade Games</manufacturer>
+		<rom name="ACE 2 The Ultimate Head to Head Conflict 128K (1987)(Cascade Games).tap" size="52048" crc="4f850b86"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5761,6 +5792,17 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="forg" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Forg Wants Love (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Bee Bush Games</manufacturer>
+		<rom name="Forg Wants Love (2021)(Bee Bush Games).tap" size="26752" crc="d63afeb3"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="forgottn" romof="spec128">
 		<description>Forgotten Worlds (128K)</description>
 		<year>1989</year>
@@ -5836,6 +5878,16 @@
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Freddy Hardest in South Manhattan (1989)(Dinamic Software).tap" size="61774" crc="ffbc6590"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="frightmare" romof="spec128">
+		<description>Frightmare (128K)</description>
+		<year>1988</year>
+		<manufacturer>Cascade Games</manufacturer>
+		<rom name="Frightmare 128K (1988)(Cascade Games).tap" size="59861" crc="a5ba5804"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

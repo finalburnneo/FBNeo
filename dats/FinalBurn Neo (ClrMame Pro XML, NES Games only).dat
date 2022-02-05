@@ -15791,6 +15791,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="yybeebissii">
+		<description>Yeah Yeah Beebiss II</description>
+		<year>2021</year>
+		<manufacturer>Rigg'd Games</manufacturer>
+		<rom name="Yeah Yeah Beebiss II (2022).nes" size="65552" crc="4a8eed90"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="yiearkungfu">
 		<description>Yie Ar Kung-Fu (Japan) (Rev 1.4)</description>
 		<year>1985</year>

@@ -14986,6 +14986,25 @@ struct BurnDriver BurnDrvnes_gaplus = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Yeah Yeah Beebiss II
+// https://store.steampowered.com/app/1871700/Yeah_Yeah_Beebiss_II/
+static struct BurnRomInfo nes_yybeebissiiRomDesc[] = {
+	{ "Yeah Yeah Beebiss II (2022).nes",          65552, 0x4a8eed90, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_yybeebissii)
+STD_ROM_FN(nes_yybeebissii)
+
+struct BurnDriver BurnDrvnesnes_yybeebissii = {
+	"nes_yybeebissii", NULL, NULL, NULL, "2021",
+	"Yeah Yeah Beebiss II\0", NULL, "Rigg'd Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
+	NESGetZipName, nes_yybeebissiiRomInfo, nes_yybeebissiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Saint Seiya - Ougon Densetsu (T-Chi, v2.0)
 // Translation by Han Hua Ni Mei Team - Jiang Wei Di Er & Fen Mo & Zeng Ge
 static struct BurnRomInfo nes_saintseiyaodcRomDesc[] = {

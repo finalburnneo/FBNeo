@@ -1002,6 +1002,7 @@
 		FE55611C2590698100A19F2D /* d_lsasquad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE55611B2590698100A19F2D /* d_lsasquad.cpp */; };
 		FE5757222627406900FDFEA2 /* f8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE5757202627406900FDFEA2 /* f8.cpp */; };
 		FE5757252627409A00FDFEA2 /* d_channelf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE5757242627409A00FDFEA2 /* d_channelf.cpp */; };
+		FE5C759427AE379700E4365E /* d_bloodbro_ms.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE5C759327AE379700E4365E /* d_bloodbro_ms.cpp */; };
 		FE65925323EFE87200CA92B2 /* d_stuntair.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE65925223EFE87200CA92B2 /* d_stuntair.cpp */; };
 		FE68567C25FCB99800AF5DD4 /* d_namcona1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE68567B25FCB99800AF5DD4 /* d_namcona1.cpp */; };
 		FE6BB4BD25AECE9A007AED57 /* tlc34076.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE6BB4BB25AECE99007AED57 /* tlc34076.cpp */; };
@@ -2602,6 +2603,7 @@
 		FE5757202627406900FDFEA2 /* f8.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = f8.cpp; sourceTree = "<group>"; };
 		FE5757212627406900FDFEA2 /* f8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = f8.h; sourceTree = "<group>"; };
 		FE5757242627409A00FDFEA2 /* d_channelf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_channelf.cpp; sourceTree = "<group>"; };
+		FE5C759327AE379700E4365E /* d_bloodbro_ms.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_bloodbro_ms.cpp; sourceTree = "<group>"; };
 		FE65925223EFE87200CA92B2 /* d_stuntair.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_stuntair.cpp; sourceTree = "<group>"; };
 		FE68567B25FCB99800AF5DD4 /* d_namcona1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_namcona1.cpp; sourceTree = "<group>"; };
 		FE6BB4BB25AECE99007AED57 /* tlc34076.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tlc34076.cpp; sourceTree = "<group>"; };
@@ -3807,6 +3809,7 @@
 				FE1B1F7423561A680065200C /* d_bigstrkb.cpp */,
 				FE1B1F7823561A690065200C /* d_blackt96.cpp */,
 				FE1B1F6F23561A680065200C /* d_blmbycar.cpp */,
+				FE5C759327AE379700E4365E /* d_bloodbro_ms.cpp */,
 				FE1B1F5723561A680065200C /* d_bloodbro.cpp */,
 				FE6BB4BE25AECEBE007AED57 /* d_btoads.cpp */,
 				FEC0A0E324ACDFBE0015AABF /* d_cischeat.cpp */,
@@ -6466,6 +6469,7 @@
 				FE1B25AD23561A760065200C /* d_shaolins.cpp in Sources */,
 				FE1B278C23561A790065200C /* k007232.cpp in Sources */,
 				FE1B269323561A770065200C /* d_tecmo.cpp in Sources */,
+				FE5C759427AE379700E4365E /* d_bloodbro_ms.cpp in Sources */,
 				FE1B26BD23561A770065200C /* d_thedeep.cpp in Sources */,
 				FE1B251323561A760065200C /* d_mirage.cpp in Sources */,
 				FEE7CC44242285FC00B311BC /* d_inufuku.cpp in Sources */,

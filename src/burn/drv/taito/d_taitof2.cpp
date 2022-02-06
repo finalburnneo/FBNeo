@@ -4708,8 +4708,8 @@ STD_ROM_PICK(Ssib)
 STD_ROM_FN(Ssib)
 
 static struct BurnRomInfo Majest12uRomDesc[] = {
-	{ "c64_15.ic9",         0x040000, 0x3a6d591b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "c64_17.ic8",         0x040000, 0xfd514ad9, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c64_15-1.ic9",       0x040000, 0xce9308a6, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c64_17-1.ic8",       0x040000, 0x300d78ac, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 		
 	{ "c64-09.13",          0x010000, 0x88d7f65c, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
 	
@@ -4726,8 +4726,8 @@ STD_ROM_PICK(Majest12u)
 STD_ROM_FN(Majest12u)
 
 static struct BurnRomInfo Majest12uaRomDesc[] = {
-	{ "c64_12.ic9",         0x040000, 0xd5716d7e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "c64_14.ic8",         0x040000, 0xeee4ed8a, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c64_15.ic9",         0x040000, 0x3a6d591b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c64_17.ic8",         0x040000, 0xfd514ad9, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 		
 	{ "c64-09.13",          0x010000, 0x88d7f65c, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
 	
@@ -4742,6 +4742,24 @@ static struct BurnRomInfo Majest12uaRomDesc[] = {
 
 STD_ROM_PICK(Majest12ua)
 STD_ROM_FN(Majest12ua)
+
+static struct BurnRomInfo Majest12ubRomDesc[] = {
+	{ "c64_12.ic9",         0x040000, 0xd5716d7e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c64_14.ic8",         0x040000, 0xeee4ed8a, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+		
+	{ "c64-09.13",          0x010000, 0x88d7f65c, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	
+	{ "c64-01.1",           0x100000, 0xa1b4f486, BRF_GRA | TAITO_SPRITESA },
+	
+	{ "c64-02.2",           0x020000, 0x3cb0b907, BRF_SND | TAITO_YM2610A },
+	
+	// originals are protected PAL16L8s, these are brute-forced and reversed for GAL16V8s
+	{ "c64-10.ic42",		0x000117, 0x08e8c3d6, BRF_OPT },
+	{ "c64-11.ic43",		0x000117, 0xf116413e, BRF_OPT },
+};
+
+STD_ROM_PICK(Majest12ub)
+STD_ROM_FN(Majest12ub)
 
 static struct BurnRomInfo Majest12jRomDesc[] = {
 	{ "c64-07.10",          0x020000, 0xf29ed5c9, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -11504,7 +11522,7 @@ struct BurnDriver BurnDrvSolfigtr = {
 
 struct BurnDriver BurnDrvSsi = {
 	"ssi", NULL, NULL, NULL, "1990",
-	"Super Space Invaders '91 (World, Rev 1)\0", NULL, "Taito Corporation Japan", "Taito F2",
+	"Super Space Invaders '91 (World, revised code, Rev 1)\0", NULL, "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_TAITOF2, GBF_SHOOT, 0,
 	NULL, SsiRomInfo, SsiRomName, NULL, NULL, NULL, NULL, SsiInputInfo, SsiDIPInfo,
@@ -11514,7 +11532,7 @@ struct BurnDriver BurnDrvSsi = {
 
 struct BurnDriver BurnDrvSsia = {
 	"ssia", "ssi", NULL, NULL, "1990",
-	"Super Space Invaders '91 (World)\0", NULL, "Taito Corporation Japan", "Taito F2",
+	"Super Space Invaders '91 (World, revised code)\0", NULL, "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_TAITOF2, GBF_SHOOT, 0,
 	NULL, SsiaRomInfo, SsiaRomName, NULL, NULL, NULL, NULL, SsiInputInfo, SsiDIPInfo,
@@ -11524,7 +11542,7 @@ struct BurnDriver BurnDrvSsia = {
 
 struct BurnDriver BurnDrvSsib = {
 	"ssib", "ssi", NULL, NULL, "1990",
-	"Super Space Invaders '91 (World, earlier?)\0", NULL, "Taito Corporation Japan", "Taito F2",
+	"Super Space Invaders '91 (World, earlier code base)\0", NULL, "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_TAITOF2, GBF_SHOOT, 0,
 	NULL, SsibRomInfo, SsibRomName, NULL, NULL, NULL, NULL, SsiInputInfo, SsiDIPInfo,
@@ -11534,7 +11552,7 @@ struct BurnDriver BurnDrvSsib = {
 
 struct BurnDriver BurnDrvMajest12u = {
 	"majest12u", "ssi", NULL, NULL, "1990",
-	"Majestic Twelve - The Space Invaders Part IV (US)\0", NULL, "Taito America Corporation", "Taito F2",
+	"Majestic Twelve - The Space Invaders Part IV (US, revised code, Rev 1)\0", NULL, "Taito America Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_TAITOF2, GBF_SHOOT, 0,
 	NULL, Majest12uRomInfo, Majest12uRomName, NULL, NULL, NULL, NULL, SsiInputInfo, Majest12DIPInfo,
@@ -11544,10 +11562,20 @@ struct BurnDriver BurnDrvMajest12u = {
 
 struct BurnDriver BurnDrvMajest12ua = {
 	"majest12ua", "ssi", NULL, NULL, "1990",
-	"Majestic Twelve - The Space Invaders Part IV (US, earlier?)\0", NULL, "Taito America Corporation", "Taito F2",
+	"Majestic Twelve - The Space Invaders Part IV (US, revised code)\0", NULL, "Taito America Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_TAITOF2, GBF_SHOOT, 0,
 	NULL, Majest12uaRomInfo, Majest12uaRomName, NULL, NULL, NULL, NULL, SsiInputInfo, Majest12DIPInfo,
+	SsiInit, TaitoF2Exit, TaitoF2Frame, SsiDraw, TaitoF2Scan,
+	NULL, 0x2000, 224, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvMajest12ub = {
+	"majest12ub", "ssi", NULL, NULL, "1990",
+	"Majestic Twelve - The Space Invaders Part IV (US, earlier code base)\0", NULL, "Taito America Corporation", "Taito F2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_TAITOF2, GBF_SHOOT, 0,
+	NULL, Majest12ubRomInfo, Majest12ubRomName, NULL, NULL, NULL, NULL, SsiInputInfo, Majest12DIPInfo,
 	SsiInit, TaitoF2Exit, TaitoF2Frame, SsiDraw, TaitoF2Scan,
 	NULL, 0x2000, 224, 320, 3, 4
 };

@@ -182,7 +182,7 @@
 	</game>
 	<game name="addamfamc" cloneof="addamfam" romof="addamfam">
 		<comment>Hack</comment>
-		<description>Addams Family, The (USA) - Castellano v1.0</description>
+		<description>Addams Family, The (Hack, Spanish v1.0)</description>
 		<year>2020</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="addams family, the (usa) - castellano v1.0.nes" size="262160" crc="6bd3e973"/>
@@ -199,7 +199,7 @@
 	</game>
 	<game name="addamfampugsschuc" cloneof="addamfampugsschu" romof="addamfampugsschu">
 		<comment>Hack</comment>
-		<description>Addams Family, The - Pugsley's Scavenger Hunt (USA) - Castellano v1.1</description>
+		<description>Addams Family, The - Pugsley's Scavenger Hunt (Hack, Spanish v1.1)</description>
 		<year>2020</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="addams family, the - pugsley's scavenger hunt (usa) - castellano v1.1.nes" size="262160" crc="54bbec54"/>
@@ -216,7 +216,7 @@
 	</game>
 	<game name="advdddsc" cloneof="advddds" romof="advddds">
 		<comment>Hack</comment>
-		<description>Advanced Dungeons &amp; Dragons - Dragon Strike (USA) - Castellano v1.0</description>
+		<description>Advanced Dungeons &amp; Dragons - Dragon Strike (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="advanced dungeons &amp; dragons - dragon strike (usa) - castellano v1.0.nes" size="524304" crc="22cfb91d"/>
@@ -250,7 +250,7 @@
 	</game>
 	<game name="advddhlc" cloneof="advddhl" romof="advddhl">
 		<comment>Hack</comment>
-		<description>Advanced Dungeons &amp; Dragons - Heroes of the Lance (USA) - Castellano v1.0</description>
+		<description>Advanced Dungeons &amp; Dragons - Heroes of the Lance (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="advanced dungeons &amp; dragons - heroes of the lance (usa) - castellano v1.0.nes" size="262160" crc="365f9624"/>
@@ -283,7 +283,7 @@
 	</game>
 	<game name="adventureislandc" cloneof="adventureisland" romof="adventureisland">
 		<comment>Hack</comment>
-		<description>Adventure Island (USA) - Castellano v1.0</description>
+		<description>Adventure Island (Hack, Spanish v1.0)</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="adventure island (usa) - castellano v1.0.nes" size="65552" crc="abf6745d"/>
@@ -300,7 +300,7 @@
 	</game>
 	<game name="advenisl3c" cloneof="advenisl3" romof="advenisl3">
 		<comment>Hack</comment>
-		<description>Adventure Island 3 (USA) - Castellano v1.1</description>
+		<description>Adventure Island 3 (Hack, Spanish v1.1)</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="adventure island iii (usa) - castellano v1.1.nes" size="262160" crc="31c3056e"/>
@@ -315,20 +315,20 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="advenisliic" cloneof="advenislii" romof="advenislii">
+		<comment>Hack</comment>
+		<description>Adventure Island II (Hack, Spanish v1.0)</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="adventure island ii (usa) - castellano v1.0.nes" size="262160" crc="92f21250"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="advenisliiu" cloneof="advenislii" romof="advenislii">
 		<description>Adventure Island II (USA) (Beta)</description>
 		<year>1991</year>
 		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="Adventure Island II (USA) (Beta).nes" size="262160" crc="51a401ca"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="advenisliic" cloneof="advenislii" romof="advenislii">
-		<comment>Hack</comment>
-		<description>Adventure Island II (USA) - Castellano v1.0</description>
-		<year>2017</year>
-		<manufacturer>Wave</manufacturer>
-		<rom name="adventure island ii (usa) - castellano v1.0.nes" size="262160" crc="92f21250"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -342,8 +342,8 @@
 	</game>
 	<game name="advenislivc" cloneof="advenisliv" romof="advenisliv">
 		<comment>Hack</comment>
-		<description>Adventure Island IV (Japan) - Castellano v1.0</description>
-		<year>2000?</year>
+		<description>Adventure Island IV (Hack, Spanish v1.0)</description>
+		<year>200?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="adventure island iv (japan) - castellano v1.0.nes" size="393232" crc="9ba3eb86"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -520,7 +520,7 @@
 	</game>
 	<game name="akumadenjc" cloneof="castliii" romof="castliii">
 		<comment>Hack</comment>
-		<description>Akumajou Densetsu (Japan) - Castellano v1.1</description>
+		<description>Akumajou Densetsu (Hack, Spanish v1.1)</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="akumajou densetsu (japan) - castellano v1.1.nes" size="393232" crc="33ead706"/>
@@ -628,7 +628,7 @@
 	</game>
 	<game name="alien3c" cloneof="alien3" romof="alien3">
 		<comment>Hack</comment>
-		<description>Alien 3 (USA) - Castellano v1.1</description>
+		<description>Alien 3 (Hack, Spanish v1.1)</description>
 		<year>2020</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="alien 3 (usa) - castellano v1.1.nes" size="262160" crc="d16b91b7"/>
@@ -1207,6 +1207,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="bandana">
+		<comment>Homebrew</comment>
+		<description>Bandana (HB)</description>
+		<year>2021</year>
+		<manufacturer>Rodnade</manufacturer>
+		<rom name="Bandana (2021)(Rodnade).nes" size="524304" crc="292de1a8"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="bandikinancchi">
 		<description>Bandit Kings of Ancient China (USA)</description>
 		<year>1990</year>
@@ -1424,7 +1433,7 @@
 	</game>
 	<game name="battlolyc" cloneof="battloly" romof="battloly">
 		<comment>Hack</comment>
-		<description>Battle of Olympus, The (Europe) - Castellano v1.1</description>
+		<description>Battle of Olympus, The (Hack, Spanish v1.1)</description>
 		<year>2018</year>
 		<manufacturer>dmlan2000</manufacturer>
 		<rom name="battle of olympus, the (europe) - castellano v1.1.nes" size="131088" crc="ab9d1a2e"/>
@@ -1466,7 +1475,7 @@
 	</game>
 	<game name="battleshipc" cloneof="battleship" romof="battleship">
 		<comment>Hack</comment>
-		<description>Battleship (USA) - Castellano v1.0</description>
+		<description>Battleship (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="battleship (usa) - castellano v1.0.nes" size="65552" crc="cf1ee9d6"/>
@@ -1637,7 +1646,7 @@
 	</game>
 	<game name="bioniccommandoc" cloneof="bioniccommando" romof="bioniccommando">
 		<comment>Hack</comment>
-		<description>Bionic Commando (Japan) - Castellano v1.03</description>
+		<description>Bionic Commando (Hack, Spanish v1.03)</description>
 		<year>2013</year>
 		<manufacturer>TheFireRed</manufacturer>
 		<rom name="bionic commando (japan) - castellano v1.03.nes" size="262160" crc="ec5f3e79"/>
@@ -1729,7 +1738,7 @@
 	</game>
 	<game name="blastermasterc" cloneof="blastermaster" romof="blastermaster">
 		<comment>Hack</comment>
-		<description>Blaster Master (USA) - Castellano v1.0</description>
+		<description>Blaster Master (Hack, Spanish v1.0)</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="blaster master (usa) - castellano v1.0.nes" size="262160" crc="b63123db"/>
@@ -1973,7 +1982,7 @@
 	</game>
 	<game name="bramstosdrac" cloneof="bramstosdra" romof="bramstosdra">
 		<comment>Hack</comment>
-		<description>Bram Stoker's Dracula (USA) - Castellano v1.0</description>
+		<description>Bram Stoker's Dracula (Hack, Spanish v1.0)</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="bram stoker's dracula (usa) - castellano v1.0.nes" size="262160" crc="d6eb5f83"/>
@@ -2216,7 +2225,7 @@
 	</game>
 	<game name="captatsuvoliic" cloneof="captatsuvolii" romof="captatsuvolii">
 		<comment>Hack</comment>
-		<description>Captain Tsubasa Vol. II - Super Striker (Japan) - Castellano v1.0</description>
+		<description>Captain Tsubasa Vol. II - Super Striker (Hack, Spanish v1.0)</description>
 		<year>2013</year>
 		<manufacturer>pepodmc</manufacturer>
 		<rom name="captain tsubasa vol. ii - super striker (japan) - castellano v1.0.nes" size="393233" crc="49c692c5"/>
@@ -2298,7 +2307,7 @@
 	</game>
 	<game name="castlevaniac" cloneof="castlevania" romof="castlevania">
 		<comment>Hack</comment>
-		<description>Castlevania (USA) - Castellano 1.0</description>
+		<description>Castlevania (Hack, Spanish v1.0)</description>
 		<year>2012</year>
 		<manufacturer>Julian L.</manufacturer>
 		<rom name="castlevania (usa) - castellano 1.0.nes" size="131088" crc="de2e6b55"/>
@@ -2323,7 +2332,7 @@
 	</game>
 	<game name="castliic" cloneof="castlii" romof="castlii">
 		<comment>Hack</comment>
-		<description>Castlevania II - Simon's Quest (USA) - Castellano v2.0</description>
+		<description>Castlevania II - Simon's Quest (Hack, Spanish v2.0)</description>
 		<year>2013</year>
 		<manufacturer>Julian L.</manufacturer>
 		<rom name="castlevania ii - simon's quest (usa) - castellano v2.0.nes" size="262160" crc="38d393a9"/>
@@ -2376,6 +2385,15 @@
 		<year>2017</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="cave (2017)(mojon twins).nes" size="49168" crc="b86ce86b"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="cavedrill">
+		<comment>Homebrew</comment>
+		<description>Cave Driller (HB, v2)</description>
+		<year>2021</year>
+		<manufacturer>Mazin</manufacturer>
+		<rom name="Cave Driller v2 (2021)(Mazin).nes" size="40976" crc="334cc66a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -2530,8 +2548,8 @@
 	</game>
 	<game name="chipndalresrac" cloneof="chipndalresra" romof="chipndalresra">
 		<comment>Hack</comment>
-		<description>Chip 'n Dale - Rescue Rangers (USA) - Castellano v0.9</description>
-		<year>20XX?</year>
+		<description>Chip 'n Dale - Rescue Rangers (Hack, Spanish v0.9)</description>
+		<year>20??</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="chip 'n dale - rescue rangers (usa) - castellano v0.9.nes" size="262160" crc="7c6aed46"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -2547,7 +2565,7 @@
 	</game>
 	<game name="chipndalresra2c" cloneof="chipndalresra2" romof="chipndalresra2">
 		<comment>Hack</comment>
-		<description>Chip 'n Dale - Rescue Rangers 2 (USA) - Castellano v0.99</description>
+		<description>Chip 'n Dale - Rescue Rangers 2 (Hack, Spanish v0.99)</description>
 		<year>2019</year>
 		<manufacturer>jackic</manufacturer>
 		<rom name="chip 'n dale - rescue rangers 2 (usa) - castellano v0.99.nes" size="262160" crc="aa6e37e6"/>
@@ -2806,6 +2824,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="contracast" cloneof="contra" romof="contra">
+		<comment>Hack</comment>
+		<description>Contra (Hack, Spanish v1.0)</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="contra (usa) - castellano v1.0.nes" size="131088" crc="6a56fc08"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="contraj" cloneof="contra" romof="contra">
 		<description>Contra (Japan)</description>
 		<year>1988</year>
@@ -2828,15 +2855,6 @@
 		<year>1988</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Contra (T-Eng).nes" size="262160" crc="d93f2c45"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="contracast" cloneof="contra" romof="contra">
-		<comment>Hack</comment>
-		<description>Contra (USA) - Castellano v1.0</description>
-		<year>2019</year>
-		<manufacturer>Wave</manufacturer>
-		<rom name="contra (usa) - castellano v1.0.nes" size="131088" crc="6a56fc08"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -3065,7 +3083,7 @@
 	</game>
 	<game name="crystalisc" cloneof="crystalis" romof="crystalis">
 		<comment>Hack</comment>
-		<description>Crystalis (USA) - Castellano v1.0</description>
+		<description>Crystalis (Hack, Spanish v1.0)</description>
 		<year>2014</year>
 		<manufacturer>Teterilla</manufacturer>
 		<rom name="crystalis (usa) - castellano v1.0.nes" size="393232" crc="b23c737c"/>
@@ -3113,21 +3131,21 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="dai2jisuprotajc" cloneof="dai2jisuprota" romof="dai2jisuprota">
-		<comment>Hack</comment>
-		<description>Dai-2-ji Super Robot Taisen (Japan) - Castellano v1.0</description>
-		<year>2021</year>
-		<manufacturer>Max1323</manufacturer>
-		<rom name="Dai-2-ji Super Robot Taisen (Japan) - Castellano v1.0.nes" size="524304" crc="5b7ab480"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
 	<game name="dai2jisuprotaji" cloneof="dai2jisuprota" romof="dai2jisuprota">
 		<comment>Hack</comment>
-		<description>Dai-2-ji Super Robot Taisen (Japan) - Italian v0.98</description>
+		<description>Dai-2-ji Super Robot Taisen (Hack, Italian v0.98)</description>
 		<year>2019</year>
 		<manufacturer>Wolfgare</manufacturer>
 		<rom name="Super Robot Taisen (it) v0.98i (2019)(Wolfgare).nes" size="524304" crc="dfd59e4e"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="dai2jisuprotajc" cloneof="dai2jisuprota" romof="dai2jisuprota">
+		<comment>Hack</comment>
+		<description>Dai-2-ji Super Robot Taisen (Hack, Spanish v1.0)</description>
+		<year>2021</year>
+		<manufacturer>Max1323</manufacturer>
+		<rom name="Dai-2-ji Super Robot Taisen (Japan) - Castellano v1.0.nes" size="524304" crc="5b7ab480"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -3181,6 +3199,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="dangbridge">
+		<comment>Homebrew</comment>
+		<description>Danger Bridge (HB)</description>
+		<year>200?</year>
+		<manufacturer>Power Joy</manufacturer>
+		<rom name="Danger Bridge (200X)(Power Joy).nes" size="49168" crc="5e59a8b1"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="dannysulsindhe">
 		<description>Danny Sullivan's Indy Heat (USA)</description>
 		<year>1992</year>
@@ -3216,7 +3243,7 @@
 	</game>
 	<game name="darkmanc" cloneof="darkman" romof="darkman">
 		<comment>Hack</comment>
-		<description>Darkman (USA) - Castellano v1.0</description>
+		<description>Darkman (Hack, Spanish v1.0)</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="darkman (usa) - castellano v1.0.nes" size="262160" crc="e2cb1c36"/>
@@ -3419,7 +3446,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="destroyer">
-		<description>Destroyer (Unlicensed)</description>
+		<description>Destroyer (Unl)</description>
 		<year>1992</year>
 		<manufacturer>Mega Soft</manufacturer>
 		<rom name="Destroyer (1992)(Mega Soft).nes" size="65552" crc="d9362123"/>
@@ -3468,7 +3495,7 @@
 	</game>
 	<game name="diehardc" cloneof="diehard" romof="diehard">
 		<comment>Hack</comment>
-		<description>Die Hard (USA) - Castellano v1.1</description>
+		<description>Die Hard (Hack, Spanish v1.1)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="die hard (usa) - castellano v1.1.nes" size="262160" crc="602b9a29"/>
@@ -3557,7 +3584,7 @@
 	</game>
 	<game name="aladdinc" cloneof="aladdin" romof="aladdin">
 		<comment>Hack</comment>
-		<description>Disney's Aladdin (Europe) - Castellano v1.0</description>
+		<description>Disney's Aladdin (Hack, Spanish v1.0)</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="disney's aladdin (europe) - castellano v1.0.nes" size="262160" crc="b857fcf2"/>
@@ -3727,7 +3754,7 @@
 	</game>
 	<game name="doubledragonc" cloneof="doubledragon" romof="doubledragon">
 		<comment>Hack</comment>
-		<description>Double Dragon (USA) - Castellano v1.1</description>
+		<description>Double Dragon (Hack, Spanish v1.1)</description>
 		<year>2021</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="double dragon (usa) - castellano v1.1.nes" size="262160" crc="f5e19c32"/>
@@ -3744,7 +3771,7 @@
 	</game>
 	<game name="doubldraiic" cloneof="doubldraii" romof="doubldraii">
 		<comment>Hack</comment>
-		<description>Double Dragon II - The Revenge (USA) (Rev A) - Castellano v1.0</description>
+		<description>Double Dragon II - The Revenge (Hack, Spanish v1.0)</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="double dragon ii - the revenge (usa) (rev a) - castellano v1.0.nes" size="262160" crc="67a0d781"/>
@@ -3761,7 +3788,7 @@
 	</game>
 	<game name="doubldraiiic" cloneof="doubldraiii" romof="doubldraiii">
 		<comment>Hack</comment>
-		<description>Double Dragon III - The Sacred Stones (USA) - Castellano v1.0</description>
+		<description>Double Dragon III - The Sacred Stones (Hack, Spanish v1.0)</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="double dragon iii - the sacred stones (usa) - castellano v1.0.nes" size="262160" crc="aa40b251"/>
@@ -3928,6 +3955,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="dragobalzsupbu2c" cloneof="dragobalzsupbu2" romof="dragobalzsupbu2">
+		<comment>Hack</comment>
+		<description>Dragon Ball Z - Super Butouden 2 (Hack, Spanish v1.1)</description>
+		<year>2017</year>
+		<manufacturer>Terwilf</manufacturer>
+		<rom name="dragon ball z - super butouden 2 (unl) - castellano v1.1.nes" size="393232" crc="8e8ebd23"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="dragobalzsupbu2j" cloneof="dragobalzsupbu2" romof="dragobalzsupbu2">
 		<description>Dragon Ball Z - Super Butouden 2 (Japan)</description>
 		<year>1989?</year>
@@ -3941,15 +3977,6 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Dragon Ball Z - Super Butouden 2 (T-Eng).nes" size="393232" crc="df87586f"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="dragobalzsupbu2c" cloneof="dragobalzsupbu2" romof="dragobalzsupbu2">
-		<comment>Hack</comment>
-		<description>Dragon Ball Z - Super Butouden 2 (Unl) - Castellano v1.1</description>
-		<year>2017</year>
-		<manufacturer>Terwilf</manufacturer>
-		<rom name="dragon ball z - super butouden 2 (unl) - castellano v1.1.nes" size="393232" crc="8e8ebd23"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -3995,7 +4022,7 @@
 	</game>
 	<game name="dragobalziiirejinic" cloneof="dragobalziiirejini" romof="dragobalziiirejini">
 		<comment>Hack</comment>
-		<description>Dragon Ball Z III - Ressen Jinzou Ningen (Japan) - Castellano v1.0a</description>
+		<description>Dragon Ball Z III - Ressen Jinzou Ningen (Hacl, Spanish v1.0a)</description>
 		<year>2016</year>
 		<manufacturer>TransGen</manufacturer>
 		<rom name="dragon ball z iii - ressen jinzou ningen (japan) - castellano v1.0a.nes" size="524304" crc="ff1d3cf3"/>
@@ -4020,7 +4047,7 @@
 	</game>
 	<game name="dragonbusterc" cloneof="dragonbuster" romof="dragonbuster">
 		<comment>Hack</comment>
-		<description>Dragon Buster (Japan) - Castellano v1.0</description>
+		<description>Dragon Buster (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Max1323</manufacturer>
 		<rom name="dragon buster (japan) - castellano v1.0.nes" size="163856" crc="e718a85d"/>
@@ -4125,7 +4152,7 @@
 	</game>
 	<game name="dragonwarriorc" cloneof="dragonwarrior" romof="dragonwarrior">
 		<comment>Hack</comment>
-		<description>Dragon Warrior (USA) (Rev A) - Castellano v1.0</description>
+		<description>Dragon Warrior (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="dragon warrior (usa) (rev a) - castellano v1.0.nes" size="81936" crc="7442bd9f"/>
@@ -4150,7 +4177,7 @@
 	</game>
 	<game name="dragowariiic" cloneof="dragowariii" romof="dragowariii">
 		<comment>Hack</comment>
-		<description>Dragon Warrior III (USA) - Castellano v0.9</description>
+		<description>Dragon Warrior III (Hack, Spanish v0.9)</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="dragon warrior iii (usa) - castellano v0.9.nes" size="524304" crc="c3d2f589"/>
@@ -4167,7 +4194,7 @@
 	</game>
 	<game name="dragowarivc" cloneof="dragowariv" romof="dragowariv">
 		<comment>Hack</comment>
-		<description>Dragon Warrior IV (USA) - Castellano v1.0</description>
+		<description>Dragon Warrior IV (Hack, Spanish v1.0)</description>
 		<year>2016</year>
 		<manufacturer>Butz Klauser</manufacturer>
 		<rom name="dragon warrior iv (usa) - castellano v1.0.nes" size="524304" crc="f5577473"/>
@@ -4184,7 +4211,7 @@
 	</game>
 	<game name="dragonslairc" cloneof="dragonslair" romof="dragonslair">
 		<comment>Hack</comment>
-		<description>Dragon's Lair (USA) - Castellano v1.0</description>
+		<description>Dragon's Lair (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="dragon's lair (usa) - castellano v1.0.nes" size="131088" crc="db3d2678"/>
@@ -4267,7 +4294,7 @@
 	</game>
 	<game name="ducktalesc" cloneof="ducktales" romof="ducktales">
 		<comment>Hack</comment>
-		<description>DuckTales (USA) - Castellano v1.1</description>
+		<description>DuckTales (Hack, Spanish v1.1)</description>
 		<year>2017</year>
 		<manufacturer>Darkchaosblast</manufacturer>
 		<rom name="duck tales (usa) - castellano v1.1.nes" size="131088" crc="fcb58532"/>
@@ -4282,21 +4309,21 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="ducktales2cast" cloneof="ducktales2" romof="ducktales2">
+		<comment>Hack</comment>
+		<description>DuckTales 2 (Hack, Spanish v1.1)</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="duck tales 2 (usa) - castellano v1.1.nes" size="131088" crc="908c28ff"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="ducktales2c" cloneof="ducktales2" romof="ducktales2">
 		<comment>Hack</comment>
 		<description>DuckTales 2 (T-Chi, v1.1)</description>
 		<year>2019</year>
 		<manufacturer>DMG Team</manufacturer>
 		<rom name="DuckTales 2 (T-Chi, v1.1).nes" size="262160" crc="794dbb67"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="ducktales2cast" cloneof="ducktales2" romof="ducktales2">
-		<comment>Hack</comment>
-		<description>DuckTales 2 (USA) - Castellano v1.1</description>
-		<year>2017</year>
-		<manufacturer>Wave</manufacturer>
-		<rom name="duck tales 2 (usa) - castellano v1.1.nes" size="131088" crc="908c28ff"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -4394,7 +4421,7 @@
 	</game>
 	<game name="earthboundc" cloneof="earthbound" romof="earthbound">
 		<comment>Hack</comment>
-		<description>Earth Bound (USA) (Proto) - Castellano v2.2</description>
+		<description>Earth Bound (Hack, Spanish v2.2)</description>
 		<year>2016</year>
 		<manufacturer>OAD</manufacturer>
 		<rom name="earth bound (usa) (proto) - castellano v2.2.nes" size="524304" crc="d80e3217"/>
@@ -4403,7 +4430,7 @@
 	</game>
 	<game name="earthboundzeroc" cloneof="earthbound" romof="earthbound">
 		<comment>Hack</comment>
-		<description>Earth Bound Zero (USA) - Castellano v0.99</description>
+		<description>Earth Bound Zero (Hack, Spanish v0.99)</description>
 		<year>201?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="earth bound zero (usa) - castellano v0.99.nes" size="524304" crc="2e24c315"/>
@@ -4454,7 +4481,7 @@
 	</game>
 	<game name="elevatoractionc" cloneof="elevatoraction" romof="elevatoraction">
 		<comment>Hack</comment>
-		<description>Elevator Action (USA) - Castellano v1.0</description>
+		<description>Elevator Action (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="elevator action (usa) - castellano v1.0.nes" size="40976" crc="cb844314"/>
@@ -4507,6 +4534,15 @@
 		<year>2015</year>
 		<manufacturer>J. Kane &amp; K. Hanley</manufacturer>
 		<rom name="Enigmacore (2015)(J. Kane &amp; K. Hanley).nes" size="40976" crc="cf680195"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="enormadv">
+		<comment>Homebrew</comment>
+		<description>Enormous Adventures (HB)</description>
+		<year>2021</year>
+		<manufacturer>Game Losers</manufacturer>
+		<rom name="Enormous Adventures (2021)(Game Losers).nes" size="524304" crc="fc0a42ee"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -4856,20 +4892,20 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="famista93e" cloneof="famista93" romof="famista93">
-		<comment>Hack</comment>
-		<description>Famista '93 (Hack - T-Eng)</description>
-		<year>20XX?</year>
-		<manufacturer>Unknown</manufacturer>
-		<rom name="famista '93 (t-eng).nes" size="262160" crc="d9301c12"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
 	<game name="famista93">
 		<description>Famista '93 (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Namco</manufacturer>
 		<rom name="Famista '93 (Japan).nes" size="262160" crc="38511037"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="famista93e" cloneof="famista93" romof="famista93">
+		<comment>Hack</comment>
+		<description>Famista '93 (T-Eng)</description>
+		<year>20??</year>
+		<manufacturer>FlashPV</manufacturer>
+		<rom name="famista '93 (t-eng).nes" size="262160" crc="d9301c12"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -4921,6 +4957,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="faxanaduc" cloneof="faxanadu" romof="faxanadu">
+		<comment>Hack</comment>
+		<description>Faxanadu (Hack, Spanish v0.7)</description>
+		<year>2016</year>
+		<manufacturer>Dirak</manufacturer>
+		<rom name="faxanadu (usa) (rev a) - castellano v0.7.nes" size="262160" crc="181b0549"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="faxanaduj" cloneof="faxanadu" romof="faxanadu">
 		<description>Faxanadu (Japan)</description>
 		<year>1987</year>
@@ -4934,15 +4979,6 @@
 		<year>1987</year>
 		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="Faxanadu (T-Eng).nes" size="524304" crc="ed0a6836"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="faxanaduc" cloneof="faxanadu" romof="faxanadu">
-		<comment>Hack</comment>
-		<description>Faxanadu (USA) (Rev A) - Castellano v0.7</description>
-		<year>2016</year>
-		<manufacturer>Dirak</manufacturer>
-		<rom name="faxanadu (usa) (rev a) - castellano v0.7.nes" size="262160" crc="181b0549"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -5045,7 +5081,7 @@
 	</game>
 	<game name="finalfantasyc" cloneof="finalfantasy" romof="finalfantasy">
 		<comment>Hack</comment>
-		<description>Final Fantasy (USA) - Castellano v1.0</description>
+		<description>Final Fantasy (Hack, Spanish v1.0)</description>
 		<year>2002</year>
 		<manufacturer>Cunaaao</manufacturer>
 		<rom name="final fantasy (usa) - castellano v1.0.nes" size="262160" crc="83a1074c"/>
@@ -5078,7 +5114,7 @@
 	</game>
 	<game name="finalfantasyiic" cloneof="finalfantasyii" romof="finalfantasyii">
 		<comment>Hack</comment>
-		<description>Final Fantasy II (Japan) (Headered) - Castellano v1.0</description>
+		<description>Final Fantasy II (Hack, Spanish v1.0)</description>
 		<year>20XX?</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="final fantasy ii (japan) (headered) - castellano v1.0.nes" size="262160" crc="3fba77eb"/>
@@ -5095,7 +5131,7 @@
 	</game>
 	<game name="finalfaniiic" cloneof="finalfaniii" romof="finalfaniii">
 		<comment>Hack</comment>
-		<description>Final Fantasy III (Japan) - Castellano v1.0</description>
+		<description>Final Fantasy III (Hack, Spanish v1.0)</description>
 		<year>2015</year>
 		<manufacturer>Maeson</manufacturer>
 		<rom name="final fantasy iii (japan) - castellano v1.0.nes" size="1048592" crc="b328a638"/>
@@ -5414,7 +5450,7 @@
 	</game>
 	<game name="fridaythe13thc" cloneof="fridaythe13th" romof="fridaythe13th">
 		<comment>Hack</comment>
-		<description>Friday the 13th (USA) - Castellano v1.1</description>
+		<description>Friday the 13th (Hack, Spanish v1.1)</description>
 		<year>2017</year>
 		<manufacturer>JONNYVILLA2088</manufacturer>
 		<rom name="friday the 13th (usa) - castellano v1.1.nes" size="65552" crc="abecfd68"/>
@@ -5562,7 +5598,7 @@
 	</game>
 	<game name="ganbaregoemon2c" cloneof="ganbaregoemon2" romof="ganbaregoemon2">
 		<comment>Hack</comment>
-		<description>Ganbare Goemon 2 (Japan) - Castellano v0.99</description>
+		<description>Ganbare Goemon 2 (Hack, Spanish v0.99)</description>
 		<year>2021</year>
 		<manufacturer>jackic</manufacturer>
 		<rom name="ganbare goemon 2 (japan) - castellano v0.99.nes" size="262160" crc="eca0d0e1"/>
@@ -5587,7 +5623,7 @@
 	</game>
 	<game name="ganbagoegaic" cloneof="ganbagoegai" romof="ganbagoegai">
 		<comment>Hack</comment>
-		<description>Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Japan) - Castellano v0.99</description>
+		<description>Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Hack, Spanish v0.99)</description>
 		<year>2021</year>
 		<manufacturer>jackic</manufacturer>
 		<rom name="ganbare goemon gaiden - kieta ougon kiseru (japan) - castellano v0.99.nes" size="524304" crc="90ac0bda"/>
@@ -5628,7 +5664,7 @@
 	</game>
 	<game name="ganbagoec" cloneof="ganbagoe" romof="ganbagoe">
 		<comment>Hack</comment>
-		<description>Ganbare Goemon! - Karakuri Douchuu (Japan) - Castellano v1.0</description>
+		<description>Ganbare Goemon! - Karakuri Douchuu (Hack, Spanish v1.0)</description>
 		<year>2018</year>
 		<manufacturer>jackic</manufacturer>
 		<rom name="ganbare goemon! - karakuri douchuu (japan) - castellano v1.0.nes" size="262160" crc="bf99d7e4"/>
@@ -5977,7 +6013,7 @@
 	</game>
 	<game name="golgo13c" cloneof="golgo13" romof="golgo13">
 		<comment>Hack</comment>
-		<description>Golgo 13 - Top Secret Episode (USA) - Castellano v1.0</description>
+		<description>Golgo 13 - Top Secret Episode (Hack, Spanish v1.0)</description>
 		<year>2021</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="golgo 13 - top secret episode (usa) - castellano v1.0.nes" size="262160" crc="47cd6b0f"/>
@@ -5994,7 +6030,7 @@
 	</game>
 	<game name="gooniesc" cloneof="goonies" romof="goonies">
 		<comment>Hack</comment>
-		<description>Goonies (Japan) - Castellano v1.0</description>
+		<description>Goonies (Hack, Spanish v1.0)</description>
 		<year>2018</year>
 		<manufacturer>Darkchaosblast</manufacturer>
 		<rom name="goonies (japan) - castellano v1.0.nes" size="49168" crc="b74b6dc4"/>
@@ -6011,7 +6047,7 @@
 	</game>
 	<game name="gooniesiithec" cloneof="gooniesiithe" romof="gooniesiithe">
 		<comment>Hack</comment>
-		<description>Goonies II, The (USA) - Castellano v1.1</description>
+		<description>Goonies II, The (Hack, Spanish v1.1)</description>
 		<year>2018</year>
 		<manufacturer>Darkchaosblast</manufacturer>
 		<rom name="goonies ii, the (usa) - castellano v1.1.nes" size="131088" crc="6bc02b52"/>
@@ -6076,7 +6112,7 @@
 	</game>
 	<game name="grandmasterjc" cloneof="grandmaster" romof="grandmaster">
 		<comment>Hack</comment>
-		<description>Grand Master (Japan) - Castellano v1.0</description>
+		<description>Grand Master (Hack, Spanish v1.0)</description>
 		<year>2021</year>
 		<manufacturer>Max1323</manufacturer>
 		<rom name="grand master (japan) - castellano.nes" size="393232" crc="3ad512ce"/>
@@ -6679,7 +6715,7 @@
 	</game>
 	<game name="hokutonoken2c" cloneof="hokutonoken2" romof="hokutonoken2">
 		<comment>Hack</comment>
-		<description>Hokuto no Ken 2 (Japan) - Castellano v1.1</description>
+		<description>Hokuto no Ken 2 (Hack, Spanish v1.1)</description>
 		<year>2018</year>
 		<manufacturer>Jonathan</manufacturer>
 		<rom name="hokuto no ken 2 (japan) - castellano v1.1.nes" size="131088" crc="3a3cd6df"/>
@@ -6696,7 +6732,7 @@
 	</game>
 	<game name="hokutonoken3c" cloneof="hokutonoken3" romof="hokutonoken3">
 		<comment>Hack</comment>
-		<description>Hokuto no Ken 3 - Shin Seiki Souzou Seiken Restuden (Japan) - Castellano v1.0</description>
+		<description>Hokuto no Ken 3 - Shin Seiki Souzou Seiken Restuden (Hack, Spanish v1.0)</description>
 		<year>20XX?</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="hokuto no ken 3 - shin seiki souzou seiken restuden (japan) - castellano v1.0.nes" size="262160" crc="9e7cc5dc"/>
@@ -6816,9 +6852,35 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="hyakuit" cloneof="hyakuen" romof="hyakuen">
+		<comment>Hack</comment>
+		<description>Hyaku no Sekai no Monogatari - The 100 World Story (Hack, Italian v1.0)</description>
+		<year>1991-2021</year>
+		<manufacturer>Mog</manufacturer>
+		<rom name="Hyaku no Sekai no Monogatari - The 100 World Story (T-Ita)(2021)(Mog).nes" size="262160" crc="4d740153"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="hyakujp" cloneof="hyakuen" romof="hyakuen">
+		<description>Hyaku no Sekai no Monogatari - The 100 World Story (Japan)</description>
+		<year>1991</year>
+		<manufacturer>ASK</manufacturer>
+		<rom name="Hyaku no Sekai no Monogatari - The 100 World Story (J)(1991)(ASK).nes" size="262160" crc="84ed70ce"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="hyakuen">
+		<comment>Hack</comment>
+		<description>Hyaku no Sekai no Monogatari - The 100 World Story (T-Eng)</description>
+		<year>1991-2007</year>
+		<manufacturer>AlanMidas</manufacturer>
+		<rom name="Hyaku no Sekai no Monogatari - The 100 World Story (T-Eng)(2007)(AlanMidas).nes" size="262160" crc="1385e8a5"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="hydlidec" cloneof="hydlide" romof="hydlide">
 		<comment>Hack</comment>
-		<description>Hydlide (USA) - Castellano v1.0</description>
+		<description>Hydlide (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="hydlide (usa) - castellano v1.0.nes" size="40976" crc="9b4f06c0"/>
@@ -6915,7 +6977,7 @@
 	</game>
 	<game name="immortalthec" cloneof="immortalthe" romof="immortalthe">
 		<comment>Hack</comment>
-		<description>Immortal, The (USA) - Castellano v1.0</description>
+		<description>Immortal, The (Hack, Spanish v1.0)</description>
 		<year>2004</year>
 		<manufacturer>R. Merida</manufacturer>
 		<rom name="immortal, the (usa) - castellano v1.0.nes" size="393232" crc="bf87b488"/>
@@ -7396,7 +7458,7 @@
 	</game>
 	<game name="junglebookthec" cloneof="junglebookthe" romof="junglebookthe">
 		<comment>Hack</comment>
-		<description>Jungle Book, The (USA) - Castellano v1.0</description>
+		<description>Jungle Book, The (Hack, Spanish v1.0)</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="jungle book, the (usa) - castellano v1.0.nes" size="262160" crc="996a8677"/>
@@ -7429,8 +7491,8 @@
 	</game>
 	<game name="justbreedc" cloneof="justbreed" romof="justbreed">
 		<comment>Hack</comment>
-		<description>Just Breed (Japan) - Castellano v2.0</description>
-		<year>20XX?</year>
+		<description>Just Breed (Hack, Spanish v2.0)</description>
+		<year>20??</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="just breed (japan) - castellano v2.0.nes" size="786448" crc="e415a13f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -7631,6 +7693,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="kamimariodx" cloneof="smb" romof="smb">
+		<comment>Hack</comment>
+		<description>Kamikaze Mario DX+ (Hack, v1.9)</description>
+		<year>2021</year>
+		<manufacturer>79</manufacturer>
+		<rom name="Kamikaze Mario DX+ v1.9 (2021)(79).nes" size="147472" crc="b7518c16"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="kanshnagkannotogots">
 		<description>Kanshakudama Nage Kantarou no Toukaidou Gojuusan Tsugi (Japan)</description>
 		<year>1986</year>
@@ -7657,7 +7728,7 @@
 	</game>
 	<game name="karatekidthec" cloneof="karatekidthe" romof="karatekidthe">
 		<comment>Hack</comment>
-		<description>Karate Kid, The (USA) - Castellano v1.0</description>
+		<description>Karate Kid, The (Hack, Spanish v1.0)</description>
 		<year>2020</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="karate kid, the (usa) - castellano v1.0.nes" size="65552" crc="99cc2044"/>
@@ -7674,7 +7745,7 @@
 	</game>
 	<game name="karatekac" cloneof="karateka" romof="karateka">
 		<comment>Hack</comment>
-		<description>Karateka (Japan) - Castellano v1.0</description>
+		<description>Karateka (Hack, Spanish v1.0)</description>
 		<year>2020</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="karateka (japan) - castellano v1.0.nes" size="24592" crc="3839edb9"/>
@@ -8031,7 +8102,7 @@
 	</game>
 	<game name="krustsfunhouc" cloneof="krustsfunhou" romof="krustsfunhou">
 		<comment>Hack</comment>
-		<description>Krusty's Fun House (USA) - Castellano v1.0</description>
+		<description>Krusty's Fun House (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="krusty's fun house (usa) - castellano v1.0.nes" size="393232" crc="b09308d4"/>
@@ -8238,7 +8309,7 @@
 	</game>
 	<game name="legacwizc" cloneof="legacwiz" romof="legacwiz">
 		<comment>Hack</comment>
-		<description>Legacy of the Wizard (USA) - Castellano v1.0</description>
+		<description>Legacy of the Wizard (Hack, Spanish v1.0)</description>
 		<year>2020</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="legacy of the wizard (usa) - castellano v1.0.nes" size="196624" crc="e87e3d09"/>
@@ -8332,7 +8403,7 @@
 	</game>
 	<game name="legenzeli" cloneof="legenzel" romof="legenzel">
 		<comment>Hack</comment>
-		<description>Legend of Zelda, The (Europe) - Italian v1.0</description>
+		<description>Legend of Zelda, The (Hack, Italian v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Stich991</manufacturer>
 		<rom name="Legend of Zelda, The (it) (2019)(Stich991).nes" size="131088" crc="e0811f91"/>
@@ -8429,21 +8500,21 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="lionkingthec" cloneof="lionkingthe" romof="lionkingthe">
-		<comment>Hack</comment>
-		<description>Lion King, The (Europe) - Castellano v1.0</description>
-		<year>2019</year>
-		<manufacturer>Wave</manufacturer>
-		<rom name="lion king, the (europe) - castellano v1.0.nes" size="262160" crc="562245ae"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
 	<game name="lionkingthe">
 		<description>Lion King, The (Europe)</description>
 		<year>1994</year>
 		<manufacturer>Virgin Games</manufacturer>
 		<rom name="Lion King, The (Europe).nes" size="262160" crc="149e367f"/>
 		<video orientation="horizontal" width="256" height="232" aspectx="256" aspecty="232"/>
+		<driver status="good"/>
+	</game>
+	<game name="lionkingthec" cloneof="lionkingthe" romof="lionkingthe">
+		<comment>Hack</comment>
+		<description>Lion King, The (Hack, Spanish v1.0)</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="lion king, the (europe) - castellano v1.0.nes" size="262160" crc="562245ae"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="littlelanc">
@@ -8608,7 +8679,7 @@
 	</game>
 	<game name="lupinsanc" cloneof="lupinsan" romof="lupinsan">
 		<comment>Hack</comment>
-		<description>Lupin Sansei - Pandora no Isan (Japan) - Castellano v1.0</description>
+		<description>Lupin Sansei - Pandora no Isan (Hack, Spanish v1.0)</description>
 		<year>2018</year>
 		<manufacturer>jackic</manufacturer>
 		<rom name="lupin sansei - pandora no isan (japan) - castellano v1.0.nes" size="196624" crc="0bb24755"/>
@@ -8707,7 +8778,7 @@
 	</game>
 	<game name="mafatconc" cloneof="mafatcon" romof="mafatcon">
 		<comment>Hack</comment>
-		<description>Mafat Conspiracy - Golgo 13 (USA) - Castellano v1.1</description>
+		<description>Mafat Conspiracy - Golgo 13 (Hack, Spanish v1.1)</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="mafat conspiracy - golgo 13 (usa) - castellano v1.1.nes" size="262160" crc="b527ad27"/>
@@ -8796,7 +8867,7 @@
 	</game>
 	<game name="magicschc" cloneof="magicsch" romof="magicsch">
 		<comment>Hack</comment>
-		<description>Magic of Scheherazade, The (USA) - Castellano v0.99</description>
+		<description>Magic of Scheherazade, The (Hack, Spanish v0.99)</description>
 		<year>2019</year>
 		<manufacturer>jackic</manufacturer>
 		<rom name="magic of scheherazade, the (usa) - castellano v0.99.nes" size="262160" crc="9d080895"/>
@@ -8949,6 +9020,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="mancmansuproc" cloneof="maniacmansion" romof="maniacmansion">
+		<comment>Hack, Prototype</comment>
+		<description>Maniac Mansion (Hack, Spanish v1.0)</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="maniac mansion (usa) (prototype) - castellano v1.0.nes" size="262160" crc="3be70f25"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="maniacmansioni" cloneof="maniacmansion" romof="maniacmansion">
 		<description>Maniac Mansion (Italy)</description>
 		<year>1989</year>
@@ -8981,15 +9061,6 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="mancmansuproc" cloneof="maniacmansion" romof="maniacmansion">
-		<comment>Hack, Prototype</comment>
-		<description>Maniac Mansion (USA) (Prototype) - Castellano v1.0</description>
-		<year>2018</year>
-		<manufacturer>Wave</manufacturer>
-		<rom name="maniac mansion (usa) (prototype) - castellano v1.0.nes" size="262160" crc="3be70f25"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
 	<game name="maniacmansionuproto" cloneof="maniacmansion" romof="maniacmansion">
 		<comment>Prototype</comment>
 		<description>Maniac Mansion (USA) (Prototype)</description>
@@ -9008,6 +9079,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="maniacmanunc" cloneof="maniacmansion" romof="maniacmansion">
+		<comment>Hack</comment>
 		<description>Maniac Mansion Uncensored (Hack)</description>
 		<year>2020</year>
 		<manufacturer>Gzip</manufacturer>
@@ -9078,6 +9150,15 @@
 		<year>2017</year>
 		<manufacturer>pacnsacdave</manufacturer>
 		<rom name="Mario Kart GlobHack (2017)(pacnsacdave).nes" size="65552" crc="ca29d3f0"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="marioquest" cloneof="smb" romof="smb">
+		<comment>Hack</comment>
+		<description>Mario Quest (Hack)</description>
+		<year>2021</year>
+		<manufacturer>Kitsunefox</manufacturer>
+		<rom name="Mario Quest (2021)(Kitsunefox).nes" size="40976" crc="ed5be20d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -9211,7 +9292,7 @@
 	</game>
 	<game name="megamanc" cloneof="megaman" romof="megaman">
 		<comment>Hack</comment>
-		<description>Megaman (USA) - Castellano v1.0</description>
+		<description>Megaman (Hack, Spanish v1.0)</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="megaman (usa) - castellano v1.0.nes" size="131088" crc="53db1d74"/>
@@ -9220,7 +9301,7 @@
 	</game>
 	<game name="megaman2c" cloneof="megaman2" romof="megaman2">
 		<comment>Hack</comment>
-		<description>Megaman II (USA) - Castellano v1.0</description>
+		<description>Megaman II (Hack, Spanish v1.0)</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="megaman ii (usa) - castellano v1.0.nes" size="262160" crc="35babd12"/>
@@ -9229,7 +9310,7 @@
 	</game>
 	<game name="megaman3c" cloneof="megaman3" romof="megaman3">
 		<comment>Hack</comment>
-		<description>Megaman III (USA) - Castellano v1.0</description>
+		<description>Megaman III (Hack, Spanish v1.0)</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="megaman iii (usa) - castellano v1.0.nes" size="393232" crc="7e1471b2"/>
@@ -9238,7 +9319,7 @@
 	</game>
 	<game name="megaman4c" cloneof="megaman4" romof="megaman4">
 		<comment>Hack</comment>
-		<description>Megaman IV (USA) (Rev A) - Castellano v1.0</description>
+		<description>Megaman IV (Hack, Spanish v1.0)</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="megaman iv (usa) (rev a) - castellano v1.0.nes" size="524304" crc="d4141bb2"/>
@@ -9247,7 +9328,7 @@
 	</game>
 	<game name="megaman5c" cloneof="megaman5" romof="megaman5">
 		<comment>Hack</comment>
-		<description>Megaman V (USA) - Castellano v1.0</description>
+		<description>Megaman V (Hack, Spanish v1.0)</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="megaman v (usa) - castellano v1.0.nes" size="524304" crc="c46d7cd6"/>
@@ -9256,7 +9337,7 @@
 	</game>
 	<game name="megaman6c" cloneof="megaman6" romof="megaman6">
 		<comment>Hack</comment>
-		<description>Megaman VI (USA) - Castellano v1.1</description>
+		<description>Megaman VI (Hack, Spanish v1.1)</description>
 		<year>2016</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="megaman vi (usa) - castellano v1.1.nes" size="524304" crc="1b902805"/>
@@ -9305,7 +9386,7 @@
 	</game>
 	<game name="metalgearc" cloneof="metalgear" romof="metalgear">
 		<comment>Hack</comment>
-		<description>Metal Gear (USA) - Castellano v1.0</description>
+		<description>Metal Gear (Hack, Spanish v1.0)</description>
 		<year>2020</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="metal gear (usa) - castellano v1.0.nes" size="131088" crc="babc19e2"/>
@@ -9386,7 +9467,7 @@
 	</game>
 	<game name="metroidc" cloneof="metroid" romof="metroid">
 		<comment>Hack</comment>
-		<description>Metroid (USA) - Castellano v1.0</description>
+		<description>Metroid (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="metroid (usa) - castellano v1.0.nes" size="131088" crc="12767f2e"/>
@@ -9526,7 +9607,7 @@
 	</game>
 	<game name="mightfinfigc" cloneof="mightfinfig" romof="mightfinfig">
 		<comment>Hack</comment>
-		<description>Mighty Final Fight (USA) - Castellano v1.0</description>
+		<description>Mighty Final Fight (Hack, Spanish v1.0)</description>
 		<year>2016</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="mighty final fight (usa) - castellano v1.0.nes" size="262160" crc="79b72603"/>
@@ -10082,7 +10163,7 @@
 	</game>
 	<game name="nekkestrbascastc" cloneof="nekkestrbas" romof="nekkestrbas">
 		<comment>Hack</comment>
-		<description>Nekketsu! Street Basket - Ganbare Dunk Heroes (Japan) - Castellano v1.0</description>
+		<description>Nekketsu! Street Basket - Ganbare Dunk Heroes (Hack, Spanish v1.0)</description>
 		<year>2020</year>
 		<manufacturer>Max1323</manufacturer>
 		<rom name="nekketsu! street basket - ganbare dunk heroes (japan) - castellano v1.0.nes" size="262160" crc="3a2487c3"/>
@@ -10243,7 +10324,7 @@
 	</game>
 	<game name="ninjagaidenc" cloneof="ninjagaiden" romof="ninjagaiden">
 		<comment>Hack</comment>
-		<description>Ninja Gaiden (USA) - Castellano v1.01 + Addendum</description>
+		<description>Ninja Gaiden (Hack, Spanish v1.0 + Addendum)</description>
 		<year>2016</year>
 		<manufacturer>Terwilf</manufacturer>
 		<rom name="ninja gaiden (usa) - castellano v1.01.nes" size="262160" crc="7da08225"/>
@@ -10260,7 +10341,7 @@
 	</game>
 	<game name="ninjagaiiic" cloneof="ninjagaiii" romof="ninjagaiii">
 		<comment>Hack</comment>
-		<description>Ninja Gaiden II - The Dark Sword of Chaos (USA) - Castellano v1.0 + Addendum</description>
+		<description>Ninja Gaiden II - The Dark Sword of Chaos (Hack, Spanish v1.0 + Addendum)</description>
 		<year>2016</year>
 		<manufacturer>Terwilf</manufacturer>
 		<rom name="ninja gaiden ii - the dark sword of chaos (usa) - castellano v1.0.nes" size="262160" crc="5742d6c0"/>
@@ -10277,7 +10358,7 @@
 	</game>
 	<game name="ninjagaiiiic" cloneof="ninjagaiiii" romof="ninjagaiiii">
 		<comment>Hack</comment>
-		<description>Ninja Gaiden III - The Ancient Ship of Doom (USA) - Castellano v1.0 + Addendum</description>
+		<description>Ninja Gaiden III - The Ancient Ship of Doom (Hack, Spanish v1.0 + Addendum)</description>
 		<year>2016</year>
 		<manufacturer>Terwilf</manufacturer>
 		<rom name="ninja gaiden iii - the ancient ship of doom (usa) - castellano v1.0.nes" size="262160" crc="dfb2692b"/>
@@ -10458,21 +10539,21 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="northsouthc" cloneof="northsouth" romof="northsouth">
-		<comment>Hack</comment>
-		<description>North &amp; South (USA) - Castellano v2.0</description>
-		<year>2013</year>
-		<manufacturer>Julian L.</manufacturer>
-		<rom name="north &amp; south (usa) - castellano v2.0.nes" size="262160" crc="98907558"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
 	<game name="northsouthi" cloneof="northsouth" romof="northsouth">
 		<comment>Hack</comment>
-		<description>North &amp; South (USA) - Italian v2.0</description>
+		<description>North &amp; South (Hack, Italian v2.0)</description>
 		<year>2014</year>
 		<manufacturer>Julian L.</manufacturer>
 		<rom name="North &amp; South (it) v2.0 (2014)(Julian L.).nes" size="262160" crc="155fa336"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="northsouthc" cloneof="northsouth" romof="northsouth">
+		<comment>Hack</comment>
+		<description>North &amp; South (Hack, Spanish v2.0)</description>
+		<year>2013</year>
+		<manufacturer>Julian L.</manufacturer>
+		<rom name="north &amp; south (usa) - castellano v2.0.nes" size="262160" crc="98907558"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -10568,7 +10649,7 @@
 	</game>
 	<game name="powc" cloneof="pow" romof="pow">
 		<comment>Hack</comment>
-		<description>P.O.W. - Prisoners of War (USA) - Castellano v1.0</description>
+		<description>P.O.W. - Prisoners of War (Hack, Spanish v1.0)</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="p.o.w. - prisoners of war (usa) - castellano v1.0.nes" size="262160" crc="c24c8bcb"/>
@@ -10739,7 +10820,7 @@
 	</game>
 	<game name="parodiusdac" cloneof="parodiusda" romof="parodiusda">
 		<comment>Hack</comment>
-		<description>Parodius Da! (Japan) - Castellano v1.1</description>
+		<description>Parodius Da! (Hack, Spanish v1.1)</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="parodius da! (japan) - castellano v1.1.nes" size="393232" crc="746bb8a8"/>
@@ -11103,6 +11184,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="princeofpersiac" cloneof="princeofpersia" romof="princeofpersia">
+		<comment>Hack</comment>
+		<description>Prince of Persia (Hack, Spanish v1.0)</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="prince of persia (usa) - castellano v1.0.nes" size="131088" crc="3f11d7a3"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="princeofpersiar" cloneof="princeofpersia" romof="princeofpersia">
 		<description>Prince of Persia (Russia)</description>
 		<year>1992</year>
@@ -11116,15 +11206,6 @@
 		<year>1992</year>
 		<manufacturer>Virgin Games</manufacturer>
 		<rom name="prince of persia (spain).nes" size="131088" crc="7817051a"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="princeofpersiac" cloneof="princeofpersia" romof="princeofpersia">
-		<comment>Hack</comment>
-		<description>Prince of Persia (USA) - Castellano v1.0</description>
-		<year>2019</year>
-		<manufacturer>Wave</manufacturer>
-		<rom name="prince of persia (usa) - castellano v1.0.nes" size="131088" crc="3f11d7a3"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -11168,15 +11249,6 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="probotectorc" cloneof="contra" romof="contra">
-		<comment>Hack</comment>
-		<description>Probotector (Europe) - Castellano v1.0</description>
-		<year>2019</year>
-		<manufacturer>Wave</manufacturer>
-		<rom name="probotector (europe) - castellano v1.0.nes" size="131088" crc="9e9a6477"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
 	<game name="probotector" cloneof="contra" romof="contra">
 		<description>Probotector (Europe)</description>
 		<year>1990</year>
@@ -11185,9 +11257,18 @@
 		<video orientation="horizontal" width="256" height="232" aspectx="256" aspecty="232"/>
 		<driver status="good"/>
 	</game>
+	<game name="probotectorc" cloneof="contra" romof="contra">
+		<comment>Hack</comment>
+		<description>Probotector (Hack, Spanish v1.0)</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="probotector (europe) - castellano v1.0.nes" size="131088" crc="9e9a6477"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="probotectorretc" cloneof="superc" romof="superc">
 		<comment>Hack</comment>
-		<description>Probotector II - Return of the Evil Forces (Europe) - Castellano v1.0</description>
+		<description>Probotector II - Return of the Evil Forces (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="probotector ii - return of the evil forces (europe) - castellano v1.0.nes" size="262160" crc="f8d46d0b"/>
@@ -11246,7 +11327,7 @@
 	</game>
 	<game name="puyopuyoc" cloneof="puyopuyo" romof="puyopuyo">
 		<comment>Hack</comment>
-		<description>Puyo Puyo (Japan) - Castellano v1.1</description>
+		<description>Puyo Puyo (Hack, Spanish v1.1)</description>
 		<year>2020</year>
 		<manufacturer>Max1323</manufacturer>
 		<rom name="puyo puyo (japan) - castellano v1.1.nes" size="131088" crc="f55b69bd"/>
@@ -11570,7 +11651,7 @@
 	</game>
 	<game name="ramboc" cloneof="rambo" romof="rambo">
 		<comment>Hack</comment>
-		<description>Rambo (USA) (Rev 1) - Castellano v1.0</description>
+		<description>Rambo (Hack, Spanish v1.0)</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="rambo (usa) (rev 1) - castellano v1.0.nes" size="131088" crc="f28cc969"/>
@@ -11637,7 +11718,7 @@
 	</game>
 	<game name="renegadec" cloneof="renegade" romof="renegade">
 		<comment>Hack</comment>
-		<description>Renegade (USA) - Castellano v1.0</description>
+		<description>Renegade (Hack, Spanish v1.0)</description>
 		<year>2017</year>
 		<manufacturer>JonnyVilla2088</manufacturer>
 		<rom name="renegade (usa) - castellano v1.0.nes" size="131088" crc="acac361a"/>
@@ -11654,7 +11735,7 @@
 	</game>
 	<game name="rescuec" cloneof="rescue" romof="rescue">
 		<comment>Hack</comment>
-		<description>Rescue - The Embassy Mission (USA) - Castellano v1.0</description>
+		<description>Rescue - The Embassy Mission (Hack, Spanish v1.0)</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="rescue - the embassy mission (usa) - castellano v1.0.nes" size="262160" crc="ab441e08"/>
@@ -11743,7 +11824,7 @@
 	</game>
 	<game name="robocopc" cloneof="robocop" romof="robocop">
 		<comment>Hack</comment>
-		<description>RoboCop (USA) - Castellano v0.91</description>
+		<description>RoboCop (Hack, Spanish v0.91)</description>
 		<year>2016</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="robocop (usa) - castellano v0.91.nes" size="262160" crc="0f97e1e8"/>
@@ -11760,7 +11841,7 @@
 	</game>
 	<game name="robocop2c" cloneof="robocop2" romof="robocop2">
 		<comment>Hack</comment>
-		<description>RoboCop 2 (USA) (Rev 1) - Castellano v0.93</description>
+		<description>RoboCop 2 (Hack, Spanish v0.93)</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="robocop 2 (usa) (rev 1) - castellano v0.93.nes" size="262160" crc="4b3e87d9"/>
@@ -11785,7 +11866,7 @@
 	</game>
 	<game name="robocop3c" cloneof="robocop3" romof="robocop3">
 		<comment>Hack</comment>
-		<description>Robocop 3 (USA) - Castellano v0.9</description>
+		<description>Robocop 3 (Hack, Spanish v0.9)</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="robocop 3 (usa) - castellano v0.9.nes" size="262160" crc="eda2dcb2"/>
@@ -12013,7 +12094,7 @@
 	</game>
 	<game name="rushnattackc" cloneof="rushnattack" romof="rushnattack">
 		<comment>Hack</comment>
-		<description>Rush'n Attack (USA) - Castellano v1.1</description>
+		<description>Rush'n Attack (Hack, Spanish v1.1)</description>
 		<year>2021</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="rush'n attack (usa) - castellano v1.1.nes" size="131088" crc="b6bdb5e5"/>
@@ -12052,6 +12133,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="saintseiougdenc" cloneof="saintseiougden" romof="saintseiougden">
+		<comment>Hack</comment>
+		<description>Saint Seiya - Ougon Densetsu (Hack, Spanish v1.0)</description>
+		<year>2004</year>
+		<manufacturer>Juan</manufacturer>
+		<rom name="saint seiya - ougon densetsu - castellano v1.0.nes.nes" size="262160" crc="2abdcc86"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="saintseiougdenj" cloneof="saintseiougden" romof="saintseiougden">
 		<description>Saint Seiya - Ougon Densetsu (Japan)</description>
 		<year>1987</year>
@@ -12074,15 +12164,6 @@
 		<year>1987</year>
 		<manufacturer>Bandai</manufacturer>
 		<rom name="Saint Seiya - Ougon Densetsu (T-Eng).nes" size="262160" crc="0914dd20"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="saintseiougdenc" cloneof="saintseiougden" romof="saintseiougden">
-		<comment>Hack</comment>
-		<description>Saint Seiya - Ougon Densetsu - Castellano v1.0.nes</description>
-		<year>2004</year>
-		<manufacturer>Juan</manufacturer>
-		<rom name="saint seiya - ougon densetsu - castellano v1.0.nes.nes" size="262160" crc="2abdcc86"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -12164,7 +12245,7 @@
 	</game>
 	<game name="samuraispirits">
 		<description>Samurai Spirits (Unl)</description>
-		<year>199x</year>
+		<year>199?</year>
 		<manufacturer>Rex Soft</manufacturer>
 		<rom name="Samurai Spirits (Unl).nes" size="786448" crc="9b7305f7"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -12214,7 +12295,7 @@
 	</game>
 	<game name="sdgundgs2c" cloneof="sdgundgs2" romof="sdgundgs2">
 		<comment>Hack</comment>
-		<description>SD Gundam - Gachapon Senshi 2 - Capsule Senki (Japan) - Castellano v1.0</description>
+		<description>SD Gundam - Gachapon Senshi 2 - Capsule Senki (Hack, Spanish v1.0)</description>
 		<year>2020</year>
 		<manufacturer>Max1323</manufacturer>
 		<rom name="sd gundam - gachapon senshi 2 - capsule senki (japan) - castellano v1.0.nes" size="262160" crc="86274ffd"/>
@@ -12253,20 +12334,20 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="sdgunkgm">
-		<comment>Hack</comment>
-		<description>SD Gundam Gaiden - Knight Gundam Monogatari (Japan) (V1.0) (T-Eng)</description>
-		<year>2020</year>
-		<manufacturer>Bandai</manufacturer>
-		<rom name="sd gundam gaiden - knight gundam monogatari (japan) (v1.0) (t-eng).nes" size="393232" crc="2c91773e"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
 	<game name="sdgunkgmj" cloneof="sdgunkgm" romof="sdgunkgm">
-		<description>SD Gundam Gaiden - Knight Gundam Monogatari (Japan) (V1.1)</description>
+		<description>SD Gundam Gaiden - Knight Gundam Monogatari (Japan, v1.1)</description>
 		<year>1990</year>
 		<manufacturer>Bandai</manufacturer>
 		<rom name="sd gundam gaiden - knight gundam monogatari (japan) (v1.1).nes" size="393232" crc="b6cafb31"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="sdgunkgm">
+		<comment>Hack</comment>
+		<description>SD Gundam Gaiden - Knight Gundam Monogatari (T-Eng, v1.0)</description>
+		<year>2020</year>
+		<manufacturer>Bandai</manufacturer>
+		<rom name="sd gundam gaiden - knight gundam monogatari (japan) (v1.0) (t-eng).nes" size="393232" crc="2c91773e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -12288,7 +12369,7 @@
 	</game>
 	<game name="sdhstangc" cloneof="sdhstang" romof="sdhstang">
 		<comment>Hack</comment>
-		<description>SD Hero Soukessen - Taose! Aku no Gundan (Japan) - Castellano v1.0</description>
+		<description>SD Hero Soukessen - Taose! Aku no Gundan (Hack, Spanish v1.0)</description>
 		<year>2020</year>
 		<manufacturer>Max1323</manufacturer>
 		<rom name="sd hero soukessen - taose! aku no gundan (japan) - castellano v1.0.nes" size="262160" crc="7c0a15a4"/>
@@ -12706,7 +12787,7 @@
 	</game>
 	<game name="smashtvc" cloneof="smashtv" romof="smashtv">
 		<comment>Hack</comment>
-		<description>Smash T.V. (USA) - Castellano v1.0</description>
+		<description>Smash T.V. (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="smash t.v. (usa) - castellano v1.0.nes" size="262160" crc="658cbecc"/>
@@ -12739,7 +12820,7 @@
 	</game>
 	<game name="snakesrevengec" cloneof="snakesrevenge" romof="snakesrevenge">
 		<comment>Hack</comment>
-		<description>Snake's Revenge (USA) - Castellano v1.0</description>
+		<description>Snake's Revenge (Hack, Spanish v1.0)</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="snake's revenge (usa) - castellano v1.0.nes" size="262160" crc="3d4a2507"/>
@@ -12764,7 +12845,7 @@
 	</game>
 	<game name="snowbrothersc" cloneof="snowbrothers" romof="snowbrothers">
 		<comment>Hack</comment>
-		<description>Snow Brothers (USA) - Castellano v1.0</description>
+		<description>Snow Brothers (Hack, Spanish v1.0)</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="snow brothers (usa) - castellano v1.0.nes" size="262160" crc="29c40f70"/>
@@ -12828,7 +12909,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="somari">
-		<description>Somari (Unlicensed)</description>
+		<description>Somari (Unl)</description>
 		<year>1994</year>
 		<manufacturer>Hummer Team</manufacturer>
 		<rom name="Somari (Unl).nes" size="524304" crc="51589daf"/>
@@ -12985,7 +13066,7 @@
 	</game>
 	<game name="spyvsspyc" cloneof="spyvsspy" romof="spyvsspy">
 		<comment>Hack</comment>
-		<description>Spy Vs Spy (USA) - Castellano v1.0</description>
+		<description>Spy Vs Spy (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="spy vs spy (usa) - castellano v1.0.nes" size="40976" crc="0c4a3d91"/>
@@ -13122,9 +13203,18 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="starwarsc" cloneof="starwars" romof="starwars">
+		<comment>Hack</comment>
+		<description>Star Wars (Hack, Spanish v1.0)</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="star wars (usa) - castellano v1.0.nes" size="262160" crc="0e6e000c"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="starwarsjc" cloneof="starwars" romof="starwars">
 		<comment>Hack</comment>
-		<description>Star Wars (Japan) (Namco) - Castellano v1.0</description>
+		<description>Star Wars (Namco) (Hack, Spanish v1.0)</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="star wars (japan) (namco) - castellano v1.0.nes" size="262160" crc="eef6974a"/>
@@ -13144,15 +13234,6 @@
 		<year>1987</year>
 		<manufacturer>Namco</manufacturer>
 		<rom name="Star Wars (Namco) (T-eng).nes" size="262160" crc="8c04cec8"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="starwarsc" cloneof="starwars" romof="starwars">
-		<comment>Hack</comment>
-		<description>Star Wars (USA) - Castellano v1.0</description>
-		<year>2019</year>
-		<manufacturer>Wave</manufacturer>
-		<rom name="star wars (usa) - castellano v1.0.nes" size="262160" crc="0e6e000c"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -13255,7 +13336,7 @@
 	</game>
 	<game name="streefig201c" cloneof="streefig201" romof="streefig201">
 		<comment>Hack</comment>
-		<description>Street Fighter 2010 - The Final Fight (USA) - Castellano v1.0</description>
+		<description>Street Fighter 2010 - The Final Fight (Hack, Spanish v1.0)</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="street fighter 2010 - the final fight (usa) - castellano v1.0.nes" size="262160" crc="0c963bf7"/>
@@ -13272,8 +13353,8 @@
 	</game>
 	<game name="streefigiic" cloneof="streefigii" romof="streefigii">
 		<comment>Hack</comment>
-		<description>Street Fighter II - The World Warrior (Unl) - Castellano v1.0</description>
-		<year>2010?</year>
+		<description>Street Fighter II - The World Warrior (Hack, Spanish v1.0)</description>
+		<year>201?</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="street fighter ii - the world warrior (unl) - castellano v1.0.nes" size="262160" crc="03861489"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -13468,6 +13549,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="supermarioallst">
+		<comment>Hack</comment>
 		<description>Super Mario All Stars NES (Hack)</description>
 		<year>2020</year>
 		<manufacturer>infidelity</manufacturer>
@@ -13503,8 +13585,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="smbdx" cloneof="smb" romof="smb">
-		<comment>Hack, Homebrew</comment>
-		<description>Super Mario Bros DX (HB, v3.4)</description>
+		<comment>Hack</comment>
+		<description>Super Mario Bros DX (Hack, v3.4)</description>
 		<year>2018</year>
 		<manufacturer>Flamephanter</manufacturer>
 		<rom name="super mario bros dx (2018)(flamephanter) v3.4.nes" size="40978" crc="004768e4"/>
@@ -13513,7 +13595,7 @@
 	</game>
 	<game name="smbc" cloneof="smb" romof="smb">
 		<comment>Hack</comment>
-		<description>Super Mario Bros. (World) - Castellano v1.0</description>
+		<description>Super Mario Bros. (Hack, Spanish v1.0)</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="super mario bros. (world) - castellano v1.0.nes" size="40976" crc="54de5344"/>
@@ -13530,7 +13612,7 @@
 	</game>
 	<game name="smb2c" cloneof="smb2" romof="smb2">
 		<comment>Hack</comment>
-		<description>Super Mario Bros. 2 (USA) (Rev 1) - Castellano v1.0</description>
+		<description>Super Mario Bros. 2 (Hack, Spanish v1.0)</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="super mario bros. 2 (usa) (rev 1) - castellano v1.0.nes" size="262160" crc="36114415"/>
@@ -13553,21 +13635,21 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="smb3cast" cloneof="smb3" romof="smb3">
+		<comment>Hack</comment>
+		<description>Super Mario Bros. 3 (Hack, Spanish v1.0)</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="super mario bros. 3 (usa) (rev 1) - castellano v1.0.nes" size="393232" crc="2e094f49"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="smb3c" cloneof="smb3" romof="smb3">
 		<comment>Hack</comment>
 		<description>Super Mario Bros. 3 (T-Chi)</description>
 		<year>2016</year>
 		<manufacturer>NOKOH</manufacturer>
 		<rom name="Super Mario Bros. 3 (T-Chi).nes" size="458768" crc="e39b725d"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="smb3cast" cloneof="smb3" romof="smb3">
-		<comment>Hack</comment>
-		<description>Super Mario Bros. 3 (USA) (Rev 1) - Castellano v1.0</description>
-		<year>2018</year>
-		<manufacturer>Wave</manufacturer>
-		<rom name="super mario bros. 3 (usa) (rev 1) - castellano v1.0.nes" size="393232" crc="2e094f49"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -13596,6 +13678,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="smbchredi" cloneof="smb" romof="smb">
+		<comment>Hack</comment>
 		<description>Super Mario Bros. Christmas Edition (Hack)</description>
 		<year>2020</year>
 		<manufacturer>U Retro</manufacturer>
@@ -13604,7 +13687,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="smbendssmbha1" cloneof="smb" romof="smb">
-		<description>Super Mario Bros. Ende's SMB Hack 1 (Hack)</description>
+		<comment>Hack</comment>
+		<description>Super Mario Bros. Ende's SMB (Hack)</description>
 		<year>2004</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Super Mario Bros. Ende's SMB Hack 1 (Hack).nes" size="40976" crc="1eeab4b1"/>
@@ -13868,7 +13952,7 @@
 	</game>
 	<game name="swordmasterc" cloneof="swordmaster" romof="swordmaster">
 		<comment>Hack</comment>
-		<description>Sword Master (USA) - Castellano v1.0</description>
+		<description>Sword Master (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="sword master (usa) - castellano v1.0.nes" size="262160" crc="0f7fcbaf"/>
@@ -14039,7 +14123,7 @@
 	</game>
 	<game name="targetrenegadec" cloneof="targetrenegade" romof="targetrenegade">
 		<comment>Hack</comment>
-		<description>Target Renegade (USA) - Castellano v1.0</description>
+		<description>Target Renegade (Hack, Spanish v1.0)</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="target - renegade (usa) - castellano v1.0.nes" size="262160" crc="6754acae"/>
@@ -14166,21 +14250,21 @@
 		<video orientation="horizontal" width="256" height="232" aspectx="256" aspecty="232"/>
 		<driver status="good"/>
 	</game>
+	<game name="tmntcast" cloneof="tmnt" romof="tmnt">
+		<comment>Hack</comment>
+		<description>Teenage Mutant Ninja Turtles (Hack, Spanish v0.9)</description>
+		<year>2016</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="teenage mutant ninja turtles (usa) - castellano v0.9.nes" size="262160" crc="30cd0997"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="tmntc" cloneof="tmnt" romof="tmnt">
 		<comment>Hack</comment>
 		<description>Teenage Mutant Ninja Turtles (T-Chi, v1.0)</description>
 		<year>2020</year>
 		<manufacturer>MEZARANSU</manufacturer>
 		<rom name="Teenage Mutant Ninja Turtles (T-Chi, v1.0).nes" size="393232" crc="43ae114f"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="tmntcast" cloneof="tmnt" romof="tmnt">
-		<comment>Hack</comment>
-		<description>Teenage Mutant Ninja Turtles (USA) - Castellano v0.9</description>
-		<year>2016</year>
-		<manufacturer>Wave</manufacturer>
-		<rom name="teenage mutant ninja turtles (usa) - castellano v0.9.nes" size="262160" crc="30cd0997"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -14194,10 +14278,19 @@
 	</game>
 	<game name="tmnttoufigc" cloneof="tmnttoufig" romof="tmnttoufig">
 		<comment>Hack</comment>
-		<description>Teenage Mutant Ninja Turtles - Tournament Fighters (USA) - Castellano v1.0</description>
+		<description>Teenage Mutant Ninja Turtles - Tournament Fighters (Hack, Spanish v1.0)</description>
 		<year>2020</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="teenage mutant ninja turtles - tournament fighters (usa) - castellano v1.0.nes" size="262160" crc="32eac8c5"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="tmntiiarcgamc" cloneof="tmntiiarcgam" romof="tmntiiarcgam">
+		<comment>Hack</comment>
+		<description>Teenage Mutant Ninja Turtles II - The Arcade Game (Hack, Spanish v0.9)</description>
+		<year>2016</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="teenage mutant ninja turtles ii - the arcade game (usa) - castellano v0.9.nes" size="524304" crc="b83bcec8"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -14206,15 +14299,6 @@
 		<year>1990</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Teenage Mutant Ninja Turtles II - The Arcade Game (Japan).nes" size="524304" crc="7a476257"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="tmntiiarcgamc" cloneof="tmntiiarcgam" romof="tmntiiarcgam">
-		<comment>Hack</comment>
-		<description>Teenage Mutant Ninja Turtles II - The Arcade Game (USA) - Castellano v0.9</description>
-		<year>2016</year>
-		<manufacturer>Wave</manufacturer>
-		<rom name="teenage mutant ninja turtles ii - the arcade game (usa) - castellano v0.9.nes" size="524304" crc="b83bcec8"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -14236,7 +14320,7 @@
 	</game>
 	<game name="tmntiiic" cloneof="tmntiii" romof="tmntiii">
 		<comment>Hack</comment>
-		<description>Teenage Mutant Ninja Turtles III - The Manhattan Project (USA) - Castellano v0.91</description>
+		<description>Teenage Mutant Ninja Turtles III - The Manhattan Project (Hack, Spanish v0.91)</description>
 		<year>2017</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="teenage mutant ninja turtles iii - the manhattan project (usa) - castellano v0.91.nes" size="524304" crc="3e9ddb5c"/>
@@ -14333,7 +14417,7 @@
 	</game>
 	<game name="termi2c" cloneof="termi2" romof="termi2">
 		<comment>Hack</comment>
-		<description>Terminator 2 - Judgment Day (USA) - Castellano v1.0</description>
+		<description>Terminator 2 - Judgment Day (Hack, Spanish v1.0)</description>
 		<year>2016</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="terminator 2 - judgment day (usa) - castellano v1.0.nes" size="262160" crc="43d08e31"/>
@@ -14475,7 +14559,7 @@
 	</game>
 	<game name="thexderc" cloneof="thexder" romof="thexder">
 		<comment>Hack</comment>
-		<description>Thexder (Japan) - Castellano v1.0</description>
+		<description>Thexder (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="Thexder (japan) - castellano v1.0.nes" size="40976" crc="52ac30c1"/>
@@ -14604,7 +14688,7 @@
 	</game>
 	<game name="tinytooadvc" cloneof="tinytooadv" romof="tinytooadv">
 		<comment>Hack</comment>
-		<description>Tiny Toon Adventures (USA) - Castellano v1.0</description>
+		<description>Tiny Toon Adventures (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="tiny toon adventures (usa) - castellano v1.0.nes" size="262160" crc="bcd94fa2"/>
@@ -14637,7 +14721,7 @@
 	</game>
 	<game name="tinytooadv6c" cloneof="tinytooadv6" romof="tinytooadv6">
 		<comment>Hack</comment>
-		<description>Tiny Toon Adventures 6 (Unl) - Castellano v1.0</description>
+		<description>Tiny Toon Adventures 6 (Hack, Spanish v1.0)</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="tiny toon adventures 6 (unl) - castellano v1.0.nes" size="524304" crc="93db8d83"/>
@@ -14710,7 +14794,7 @@
 	</game>
 	<game name="tomjerultgamcatandmc" cloneof="tomjerultgamcatandm" romof="tomjerultgamcatandm">
 		<comment>Hack</comment>
-		<description>Tom &amp; Jerry - The Ultimate Game of Cat and Mouse! (USA) - Castellano v1.0</description>
+		<description>Tom &amp; Jerry - The Ultimate Game of Cat and Mouse! (Hack, Spanish v1.0)</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="tom &amp; jerry - the ultimate game of cat and mouse! (usa) - castellano v1.0.nes" size="262160" crc="9c6a9bcc"/>
@@ -14744,7 +14828,7 @@
 	</game>
 	<game name="topgunc" cloneof="topgun" romof="topgun">
 		<comment>Hack</comment>
-		<description>Top Gun (USA) (Rev 1) - Castellano v1.0</description>
+		<description>Top Gun (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="top gun (usa) (rev 1) - castellano v1.0.nes" size="131088" crc="879481af"/>
@@ -14761,7 +14845,7 @@
 	</game>
 	<game name="topgunsecmisc" cloneof="topgunsecmis" romof="topgunsecmis">
 		<comment>Hack</comment>
-		<description>Top Gun - The Second Mission (USA) - Castellano v1.0</description>
+		<description>Top Gun - The Second Mission (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="top gun - the second mission (usa) - castellano v1.0.nes" size="262160" crc="350f534b"/>
@@ -14794,7 +14878,7 @@
 	</game>
 	<game name="totalrecallc" cloneof="totalrecall" romof="totalrecall">
 		<comment>Hack</comment>
-		<description>Total Recall (USA) - Castellano v1.0</description>
+		<description>Total Recall (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="Total Recall (USA) - Castellano v1.0.nes" size="131088" crc="93a02a67"/>
@@ -15031,7 +15115,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="ultimexorem" cloneof="ultimaexodus" romof="ultimaexodus">
-		<description>Ultima - Exodus Remastered (USA)(Hack)</description>
+		<comment>Hack</comment>
+		<description>Ultima - Exodus Remastered (USA) (Hack)</description>
 		<year>2020</year>
 		<manufacturer>Fox Cunning</manufacturer>
 		<rom name="Ultima - Exodus Remastered (USA)(Hack).nes" size="262160" crc="8afe467a"/>
@@ -15105,7 +15190,7 @@
 	</game>
 	<game name="uncanxmenc" cloneof="uncanxmen" romof="uncanxmen">
 		<comment>Hack</comment>
-		<description>Uncanny X-Men, The (USA) - Castellano v1.0</description>
+		<description>Uncanny X-Men, The (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="uncanny x-men, the (usa) - castellano v1.0.nes" size="131088" crc="21a9db24"/>
@@ -15204,7 +15289,7 @@
 	</game>
 	<game name="valkynobouc" cloneof="valkynobou" romof="valkynobou">
 		<comment>Hack</comment>
-		<description>Valkyrie no Bouken - Toki no Kagi Densetsu (Japan) - Castellano v1.0</description>
+		<description>Valkyrie no Bouken - Toki no Kagi Densetsu (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Max1323</manufacturer>
 		<rom name="valkyrie no bouken - toki no kagi densetsu (japan) - castellano v1.0.nes" size="65552" crc="9e222fab"/>
@@ -15228,7 +15313,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="vanguard">
-		<description>Vanguard (Unl)</description>
+		<comment>Homebrew</comment>
+		<description>Vanguard (HB)</description>
 		<year>200?</year>
 		<manufacturer>Power Joy</manufacturer>
 		<rom name="Vanguard (20XX)(Power Joy).nes" size="163856" crc="b6c0c49e"/>
@@ -15558,20 +15644,20 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="willownfh" cloneof="willow" romof="willow">
+		<comment>Hack</comment>
+		<description>Willow (No Flash ed.) (Hak, v1.1)</description>
+		<year>2020</year>
+		<manufacturer>Jigglysaint</manufacturer>
+		<rom name="Willow (Hack, No Flash).nes" size="262160" crc="956ea1a6"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="willow">
 		<description>Willow (USA)</description>
 		<year>1989</year>
 		<manufacturer>Capcom</manufacturer>
 		<rom name="Willow (USA).nes" size="262160" crc="5f86a065"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="willownfh" cloneof="willow" romof="willow">
-		<comment>Hack</comment>
-		<description>Willow No Flash Hack (v1.1)</description>
-		<year>2020</year>
-		<manufacturer>Jigglysaint</manufacturer>
-		<rom name="Willow (Hack, No Flash).nes" size="262160" crc="956ea1a6"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -15635,7 +15721,7 @@
 	</game>
 	<game name="wizarwariiic" cloneof="wizarwariii" romof="wizarwariii">
 		<comment>Hack</comment>
-		<description>Wizards &amp; Warriors III - Kuros - Visions of Power (USA) - Castellano v1.0</description>
+		<description>Wizards &amp; Warriors III - Kuros - Visions of Power (Hack, Spanish v1.0)</description>
 		<year>2020</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="wizards &amp; warriors iii - kuros - visions of power (usa) - castellano v1.0.nes" size="262160" crc="7135c442"/>
@@ -15679,7 +15765,7 @@
 	</game>
 	<game name="wolverinec" cloneof="wolverine" romof="wolverine">
 		<comment>Hack</comment>
-		<description>Wolverine (USA) - Castellano v1.0</description>
+		<description>Wolverine (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="wolverine (usa) - castellano v1.0.nes" size="262160" crc="db5ee5cb"/>
@@ -15792,7 +15878,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="yybeebissii">
-		<description>Yeah Yeah Beebiss II</description>
+		<comment>Homebrew</comment>
+		<description>Yeah Yeah Beebiss II (HB)</description>
 		<year>2021</year>
 		<manufacturer>Rigg'd Games</manufacturer>
 		<rom name="Yeah Yeah Beebiss II (2022).nes" size="65552" crc="4a8eed90"/>
@@ -15809,7 +15896,7 @@
 	</game>
 	<game name="yiearkungfuc" cloneof="yiearkungfu" romof="yiearkungfu">
 		<comment>Hack</comment>
-		<description>Yie Ar Kung-Fu (Japan) (V1.4) - Castellano v1.0</description>
+		<description>Yie Ar Kung-Fu (V1.4) (Hack, Spanish v1.0)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="yie ar kung-fu (japan) (v1.4) - castellano v1.0.nes" size="24592" crc="032019a7"/>
@@ -15874,7 +15961,7 @@
 	</game>
 	<game name="ysc" cloneof="ys" romof="ys">
 		<comment>Hack</comment>
-		<description>Ys (Japan) - Castellano v1.1</description>
+		<description>Ys (Hack, Spanish v1.1)</description>
 		<year>2017</year>
 		<manufacturer>Takkun57</manufacturer>
 		<rom name="ys (japan) - castellano v1.1.nes" size="262160" crc="024dd1cf"/>
@@ -15899,9 +15986,9 @@
 	</game>
 	<game name="ysiic" cloneof="ysii" romof="ysii">
 		<comment>Hack</comment>
-		<description>Ys II - Ancient Ys Vanished - The Final Chapter (Japan) - Castellano v1.0</description>
-		<year>2010?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Ys II - Ancient Ys Vanished - The Final Chapter (Hack, Spanish v1.0)</description>
+		<year>2017</year>
+		<manufacturer>Takkun57</manufacturer>
 		<rom name="ys ii - ancient ys vanished - the final chapter (japan) - castellano v1.0.nes" size="393232" crc="20770bf0"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -15990,7 +16077,7 @@
 	</game>
 	<game name="zeldaiic" cloneof="zeldaii" romof="zeldaii">
 		<comment>Hack</comment>
-		<description>Zelda II - The Adventure of Link (Europe) (Rev 2) - Castellano v1.0</description>
+		<description>Zelda II - The Adventure of Link (Rev 2) (Hack, Spanish v1.0)</description>
 		<year>2016</year>
 		<manufacturer>jackic</manufacturer>
 		<rom name="zelda ii - the adventure of link (europe) (rev 2) - castellano v1.0.nes" size="262160" crc="d31d09ae"/>

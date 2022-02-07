@@ -29,7 +29,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aerialasj" cloneof="aerialas" romof="aerialas">
-		<description>Aerial Assault (Jpn, v1)</description>
+		<description>Aerial Assault (Jpn, v1.1)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="aerial assault (japan) (v1.1).bin" size="131072" crc="04fe6dde"/>
@@ -1651,7 +1651,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="glocj" cloneof="gloc" romof="gloc">
-		<description>G-LOC Air Battle (Jpn, v1)</description>
+		<description>G-LOC Air Battle (Jpn, v1.1)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="g-loc air battle (japanv1.1).bin" size="131072" crc="33237f50"/>
@@ -2531,7 +2531,7 @@
 	</game>
 	<game name="lastbibse" cloneof="lastbibs" romof="lastbibs">
 		<comment>Hack</comment>
-		<description>Megami Tensei Gaiden - Last Bible S (Hack, English)</description>
+		<description>Megami Tensei Gaiden - Last Bible S (Hack, English v1.02)</description>
 		<year>2018</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="megami tensei gaiden - last bible s (english translation).gg" size="524288" crc="1a1cb7f8"/>
@@ -2726,7 +2726,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nazopuyo">
-		<description>Nazo Puyo (Jpn, v1)</description>
+		<description>Nazo Puyo (Jpn, v1.1)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nazo puyo (japan)(v1.1).bin" size="131072" crc="d8d11f8d"/>
@@ -3431,6 +3431,14 @@
 		<year>1992</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="olympic gold (japan, usa) (en,fr,de,es,it,nl,pt,sv).bin" size="262144" crc="a2f9c7af"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ottifant">
+		<description>Ottifants, The (Euro)</description>
+		<year>1992</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="ottifants, the (europe) (en,fr,de,es,it).bin" size="262144" crc="1e673168"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5694,6 +5702,14 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="termntr">
+		<description>Terminator, The (Euro, USA)</description>
+		<year>1992</year>
+		<manufacturer>Virgin Interactive</manufacturer>
+		<rom name="terminator, the (usa, europe).bin" size="262144" crc="c029a5fd"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="tesserae">
 		<description>Tesserae (Euro, USA)</description>
 		<year>1993</year>
@@ -5986,14 +6002,6 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ottifant">
-		<description>The Ottifants (Euro)</description>
-		<year>1992</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="ottifants, the (europe) (en,fr,de,es,it).bin" size="262144" crc="1e673168"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="proyak91">
 		<description>The Pro Yakyuu '91 (Jpn)</description>
 		<year>1991</year>
@@ -6023,14 +6031,6 @@
 		<year>1995</year>
 		<manufacturer>Infogrames</manufacturer>
 		<rom name="smurfs travel the world, the.bin" size="262144" crc="3eb337df"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="termntr">
-		<description>The Terminator (Euro, USA)</description>
-		<year>1992</year>
-		<manufacturer>Virgin Interactive</manufacturer>
-		<rom name="terminator, the (usa, europe).bin" size="262144" crc="c029a5fd"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

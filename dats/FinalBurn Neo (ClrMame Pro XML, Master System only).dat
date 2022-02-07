@@ -46,7 +46,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="actionfg1" cloneof="actionfg" romof="actionfg">
-		<description>Action Fighter (Euro, Jpn, v1)</description>
+		<description>Action Fighter (Euro, Jpn, v1.1)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="action fighter (japan, europe) (v1.1).bin" size="131072" crc="d91b340d"/>
@@ -238,7 +238,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="alexkidd">
-		<description>Alex Kidd in Miracle World (Euro, USA, v1)</description>
+		<description>Alex Kidd in Miracle World (Euro, USA, v1.1)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="alex kidd in miracle world (usa, europe) (v1.1).bin" size="131072" crc="aed9aac4"/>
@@ -487,7 +487,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="asterix">
-		<description>Asterix (Euro, v1)</description>
+		<description>Asterix (Euro, v1.1)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="asterix (europe) (en,fr) (v1.1).bin" size="524288" crc="8c9d5be8"/>
@@ -752,20 +752,20 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bnzabrosc" cloneof="bnzabros" romof="bnzabros">
-		<comment>Hack</comment>
-		<description>Bonanza Bros. (Euro, Bra) - Castellano v1.0</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="bonanza bros. (euro, bra) - castellano v1.0.sms" size="262656" crc="a4999f47"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="bnzabros">
 		<description>Bonanza Bros. (Euro, Bra)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="bonanza bros. (europe).bin" size="262144" crc="caea8002"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bnzabrosc" cloneof="bnzabros" romof="bnzabros">
+		<comment>Hack</comment>
+		<description>Bonanza Bros. (Hack, Spanish v1.0)</description>
+		<year>2016</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="bonanza bros. (euro, bra) - castellano v1.0.sms" size="262656" crc="a4999f47"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -875,20 +875,20 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="casinoc" cloneof="casino" romof="casino">
-		<comment>Hack</comment>
-		<description>Casino Games (Euro, USA) - Castellano v1.0</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="casino games (euro, usa) - castellano v1.0.sms" size="262144" crc="bfe4457c"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="casino">
 		<description>Casino Games (Euro, USA)</description>
 		<year>1989</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-13167.ic1" size="262144" crc="3cff6e80"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="casinoc" cloneof="casino" romof="casino">
+		<comment>Hack</comment>
+		<description>Casino Games (Hack, Spanish v1.0)</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="casino games (euro, usa) - castellano v1.0.sms" size="262144" crc="bfe4457c"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -900,20 +900,20 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="castlillc" cloneof="castlill" romof="castlill">
-		<comment>Hack</comment>
-		<description>Castle of Illusion Starring Mickey Mouse (Euro, Bra) - Castellano v1.1</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="castle of illusion starring mickey mouse (euro, bra) - castellano v1.1.sms" size="262144" crc="a0941272"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="castlill">
 		<description>Castle of Illusion Starring Mickey Mouse (Euro, Bra)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-13584a.ic1" size="262144" crc="953f42e1"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="castlillc" cloneof="castlill" romof="castlill">
+		<comment>Hack</comment>
+		<description>Castle of Illusion Starring Mickey Mouse (Hack, Spanish v1.1)</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="castle of illusion starring mickey mouse (euro, bra) - castellano v1.1.sms" size="262144" crc="a0941272"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1048,20 +1048,20 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="columnsc" cloneof="columns" romof="columns">
-		<comment>Hack</comment>
-		<description>Columns (Euro, USA, Bra, Kor) - Castellano v1.0</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="columns (euro, usa, bra, kor) - castellano v1.0.sms" size="131072" crc="11deb730"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="columns">
 		<description>Columns (Euro, USA, Bra, Kor)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-13293.ic1" size="131072" crc="665fda92"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="columnsc" cloneof="columns" romof="columns">
+		<comment>Hack</comment>
+		<description>Columns (Hack, Spanish v1.0)</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="columns (euro, usa, bra, kor) - castellano v1.0.sms" size="131072" crc="11deb730"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1100,7 +1100,7 @@
 	</game>
 	<game name="comicaltw" cloneof="comical" romof="comical">
 		<description>Comical Machine Gun Joe (Tw)</description>
-		<year>1986?</year>
+		<year>198?</year>
 		<manufacturer>Aaronix</manufacturer>
 		<rom name="comical machine gun joe (tw).bin" size="32768" crc="84ad5ae4"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
@@ -1214,20 +1214,20 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="deepduckc" cloneof="deepduck" romof="deepduck">
-		<comment>Hack</comment>
-		<description>Deep Duck Trouble Starring Donald Duck (Euro, Bra) - Castellano v1.0</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="deep duck trouble starring donald duck (euro, bra) - castellano v1.0.sms" size="524288" crc="35c391e1"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="deepduck">
 		<description>Deep Duck Trouble Starring Donald Duck (Euro, Bra)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="deep duck trouble starring donald duck (europe).bin" size="524288" crc="42fc3a6e"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="deepduckc" cloneof="deepduck" romof="deepduck">
+		<comment>Hack</comment>
+		<description>Deep Duck Trouble Starring Donald Duck (Hack, Spanish v1.0)</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="deep duck trouble starring donald duck (euro, bra) - castellano v1.0.sms" size="524288" crc="35c391e1"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1381,9 +1381,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="doublhwkfm" cloneof="doublhwk" romof="doublhwk">
-		<comment>YM2413 FM sound chip supported</comment>
+		<comment>Hack, YM2413 FM sound chip supported</comment>
 		<description>Double Hawk (FM Mod)</description>
-		<year>1990</year>
+		<year>201?</year>
 		<manufacturer>Sega - fatnick</manufacturer>
 		<rom name="double hawk fm.bin" size="262144" crc="fe7f9f17"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
@@ -1430,15 +1430,6 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dcrystalc" cloneof="dcrystal" romof="dcrystal">
-		<comment>Hack</comment>
-		<description>Dragon Crystal (Euro, Bra) - Castellano v1.0</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="dragon crystal (euro, bra) - castellano v1.0.sms" size="131072" crc="4c77d21f"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="dcrystal">
 		<description>Dragon Crystal (Euro, Bra)</description>
 		<year>1991</year>
@@ -1447,11 +1438,20 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="dcrystalc" cloneof="dcrystal" romof="dcrystal">
+		<comment>Hack</comment>
+		<description>Dragon Crystal (Hack, Spanish v1.0)</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="dragon crystal (euro, bra) - castellano v1.0.sms" size="131072" crc="4c77d21f"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="dnukem">
-		<comment>Homebrew</comment>
+		<comment>Hack, Homebrew</comment>
 		<description>Duke Nukem (HB, Hack v0.93)</description>
 		<year>2017</year>
-		<manufacturer>revo-tibone-calindro</manufacturer>
+		<manufacturer>revo, tibone, calindro</manufacturer>
 		<rom name="duke nukem (2017)(revo-tibone-calindro).sms" size="524288" crc="a16dba3b"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1554,7 +1554,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="enduroi" cloneof="enduro" romof="enduro">
-		<description>Enduro Racer (Improvement v1.0)</description>
+		<comment>Hack</comment>
+		<description>Enduro Racer (Hack, Improvement v1.0)</description>
 		<year>2020</year>
 		<manufacturer>BcnAbel76</manufacturer>
 		<rom name="Enduro Racer (Improvement v1.0, by BcnAbel76)" size="262144" crc="d7685c77"/>
@@ -1612,7 +1613,7 @@
 	</game>
 	<game name="f16falctw" cloneof="f16fight" romof="f16fight">
 		<description>F-16 Fighting Falcon (Tw)</description>
-		<year>1985?</year>
+		<year>198?</year>
 		<manufacturer>Aaronix</manufacturer>
 		<rom name="f-16 fighting falcon (tw).bin" size="32768" crc="c4c53226"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
@@ -1676,7 +1677,7 @@
 	</game>
 	<game name="fantzonetw" cloneof="fantzone" romof="fantzone">
 		<description>Fantasy Zone (Tw)</description>
-		<year>1986?</year>
+		<year>198?</year>
 		<manufacturer>Aaronix</manufacturer>
 		<rom name="fantasy zone (tw).bin" size="131072" crc="5fd48352"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
@@ -1684,7 +1685,7 @@
 	</game>
 	<game name="fantzone1" cloneof="fantzone" romof="fantzone">
 		<comment>Prototype</comment>
-		<description>Fantasy Zone (World, v1, Prototype)</description>
+		<description>Fantasy Zone (World, v1.1, Prototype)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="fantasy zone (world) (v1.1) (beta).bin" size="131072" crc="f46264fe"/>
@@ -1946,8 +1947,8 @@
 	</game>
 	<game name="punpun">
 		<comment>Homebrew</comment>
-		<description>Geki Oko PunPun Maru ((HB, v20151031b)</description>
-		<year>2013</year>
+		<description>Geki Oko PunPun Maru ((HB, v2015.10.31b)</description>
+		<year>2013-15</year>
 		<manufacturer>Future Driver</manufacturer>
 		<rom name="punpun_20151031b.sms" size="262144" crc="b35ebcdf"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
@@ -2084,20 +2085,20 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gaxewarrc" cloneof="gaxewarr" romof="gaxewarr">
-		<comment>Hack</comment>
-		<description>Golden Axe Warrior (Euro, USA, Bra) - Castellano v1.0</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="golden axe warrior (euro, usa, bra) - castellano v1.0.sms" size="262144" crc="d5c88c4d"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="gaxewarr">
 		<description>Golden Axe Warrior (Euro, USA, Bra)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-13664-f.ic1" size="262144" crc="c7ded988"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gaxewarrc" cloneof="gaxewarr" romof="gaxewarr">
+		<comment>Hack</comment>
+		<description>Golden Axe Warrior (Hack, Spanish v1.0)</description>
+		<year>2013</year>
+		<manufacturer>Pikachumanson</manufacturer>
+		<rom name="golden axe warrior (euro, usa, bra) - castellano v1.0.sms" size="262144" crc="d5c88c4d"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2118,20 +2119,20 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="golvellc" cloneof="golvell" romof="golvell">
-		<comment>Hack</comment>
-		<description>Golvellius (Euro, USA) - Castellano v1.0</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="golvellius (euro, usa) - castellano v1.0.sms" size="262144" crc="15fae765"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="golvell">
 		<description>Golvellius (Euro, USA)</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-11935f.ic1" size="262144" crc="a51376fe"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="golvellc" cloneof="golvell" romof="golvell">
+		<comment>Hack</comment>
+		<description>Golvellius (Hack, Spanish v1.0)</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="golvellius (euro, usa) - castellano v1.0.sms" size="262144" crc="15fae765"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2285,7 +2286,7 @@
 	</game>
 	<game name="greatscrtw" cloneof="greatscr" romof="greatscr">
 		<description>Great Soccer (Tw)</description>
-		<year>1985?</year>
+		<year>198?</year>
 		<manufacturer>Aaronix</manufacturer>
 		<rom name="great soccer (tw).bin" size="32768" crc="84665648"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
@@ -2409,7 +2410,7 @@
 	</game>
 	<game name="highsce" cloneof="highsc" romof="highsc">
 		<comment>Hack</comment>
-		<description>High School! Kimengumi (Jpn) (T-Eng)</description>
+		<description>High School! Kimengumi (Hack, English)</description>
 		<year>2005</year>
 		<manufacturer>Sega - SMS Power!</manufacturer>
 		<rom name="high school! kimengumi (t-eng1.00).sms" size="131072" crc="8a296a3e"/>
@@ -2418,7 +2419,7 @@
 	</game>
 	<game name="highscc" cloneof="highsc" romof="highsc">
 		<comment>Hack</comment>
-		<description>High School! Kimengumi (Jpn) - Castellano v1.0</description>
+		<description>High School! Kimengumi (Hack, Spanish v1.0)</description>
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="high school! kimengumi (jpn) - castellano v1.0.sms" size="131072" crc="f12a3bb5"/>
@@ -2443,7 +2444,7 @@
 	</game>
 	<game name="hokutotw" cloneof="blackblt" romof="blackblt">
 		<description>Hokuto no Ken (Tw)</description>
-		<year>1986?</year>
+		<year>198?</year>
 		<manufacturer>Aaronix</manufacturer>
 		<rom name="hokuto no ken (tw).bin" size="131072" crc="c4ab363d"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
@@ -2532,15 +2533,6 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="indycrusc" cloneof="indycrus" romof="indycrus">
-		<comment>Hack</comment>
-		<description>Indiana Jones and the Last Crusade (Euro, Bra) - Castellano v1.0</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="indiana jones and the last crusade (euro, bra) - castellano v1.0.sms" size="262144" crc="e09b0b0e"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="indycrus">
 		<description>Indiana Jones and the Last Crusade (Euro, Bra)</description>
 		<year>1990</year>
@@ -2555,6 +2547,15 @@
 		<year>1990</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="indiana jones and the last crusade (europe) (beta).bin" size="262144" crc="acec894d"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="indycrusc" cloneof="indycrus" romof="indycrus">
+		<comment>Hack</comment>
+		<description>Indiana Jones and the Last Crusade (Hack, Spanish v1.0)</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="indiana jones and the last crusade (euro, bra) - castellano v1.0.sms" size="262144" crc="e09b0b0e"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2791,20 +2792,20 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="legndillc" cloneof="legndill" romof="legndill">
-		<comment>Hack</comment>
-		<description>Legend of Illusion Starring Mickey Mouse (Bra) - Castellano v1.0</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="legend of illusion starring mickey mouse (bra)- castellano v1.0.sms" size="524288" crc="611f2597"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="legndill">
 		<description>Legend of Illusion Starring Mickey Mouse (Bra)</description>
 		<year>1994</year>
 		<manufacturer>Tec Toy</manufacturer>
 		<rom name="mpr-20989-s.ic1" size="524288" crc="6350e649"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="legndillc" cloneof="legndill" romof="legndill">
+		<comment>Hack</comment>
+		<description>Legend of Illusion Starring Mickey Mouse (Hack, Spanish v1.0)</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="legend of illusion starring mickey mouse (bra)- castellano v1.0.sms" size="524288" crc="611f2597"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2875,11 +2876,37 @@
 		<driver status="good"/>
 	</game>
 	<game name="lostraider101">
-		<comment>Homebrew, The game lacks sound</comment>
+		<comment>Homebrew, No Sound</comment>
 		<description>Lost Raider (HB, v1.01)</description>
 		<year>2015</year>
 		<manufacturer>Vingazole &amp; Ichigobankai</manufacturer>
 		<rom name="LostRaider-SMS-1.01.sms" size="131072" crc="2553b745"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="luckydim">
+		<description>Lucky Dime Caper Starring Donald Duck, The (Euro, Bra)</description>
+		<year>1991</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="mpr-14358-f.ic1" size="262144" crc="a1710f13"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="luckydimp" cloneof="luckydim" romof="luckydim">
+		<comment>Prototype</comment>
+		<description>Lucky Dime Caper Starring Donald Duck, The (Euro, Prototype)</description>
+		<year>1991</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="lucky dime caper starring donald duck, the (europe) (beta).bin" size="262144" crc="7f6d0df6"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="luckydimc" cloneof="luckydim" romof="luckydim">
+		<comment>Hack</comment>
+		<description>Lucky Dime Caper Starring Donald Duck, The (Hack, Spanish v1.0)</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="the lucky dime caper starring donald duck (euro, bra) - castellano v1.0.sms" size="262144" crc="d285aefa"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2969,20 +2996,29 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mastdarkc" cloneof="mastdark" romof="mastdark">
-		<comment>Hack</comment>
-		<description>Master of Darkness (Euro, Bra) - Castellano v1.2</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="master of darkness (euro, bra) - castellano v1.2.sms" size="262144" crc="bda42f09"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="mastdark">
 		<description>Master of Darkness (Euro, Bra)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-15203-f.ic1" size="262144" crc="96fb4d4b"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mastdarki" cloneof="mastdark" romof="mastdark">
+		<comment>Hack</comment>
+		<description>Master of Darkness (Hack, Italian v1.2)</description>
+		<year>2016</year>
+		<manufacturer>Michele Di Somma</manufacturer>
+		<rom name="Master of Darkness (2016)(T-Ita v1.2)(Michele Di Somma).sms" size="262144" crc="83e3bc8e"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mastdarkc" cloneof="mastdark" romof="mastdark">
+		<comment>Hack</comment>
+		<description>Master of Darkness (Hack, Spanish v1.2)</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="Master of Darkness (2018)(T-Spa v1.2)(Wave).sms" size="262144" crc="56aff22c"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3067,6 +3103,14 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="xevious">
+		<description>Micro Xevious, The (Kor)</description>
+		<year>1990</year>
+		<manufacturer>Zemina</manufacturer>
+		<rom name="micro xevious, the (kr).bin" size="32768" crc="41cc2ade"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="minimsx">
 		<comment>Homebrew</comment>
 		<description>MiniMSX (HB)</description>
@@ -3076,20 +3120,20 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="miraclec" cloneof="miracle" romof="miracle">
-		<comment>Hack</comment>
-		<description>Miracle Warriors - Seal of the Dark Lord (Euro, USA, Bra) - Castellano v1.0</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="miracle warriors - seal of the dark lord (euro, usa, bra) - castellano v1.0.sms" size="262144" crc="7e3f6a4c"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="miracle">
 		<description>Miracle Warriors - Seal of the Dark Lord (Euro, USA, Bra)</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="miracle warriors - seal of the dark lord (usa, europe).bin" size="262144" crc="0e333b6e"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="miraclec" cloneof="miracle" romof="miracle">
+		<comment>Hack</comment>
+		<description>Miracle Warriors - Seal of the Dark Lord (Hack, Spanish v1.0)</description>
+		<year>2020</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="miracle warriors - seal of the dark lord (euro, usa, bra) - castellano v1.0.sms" size="262144" crc="7e3f6a4c"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3115,7 +3159,7 @@
 		<comment>Homebrew</comment>
 		<description>Moggy Master (HB, v1.00)</description>
 		<year>2015</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="mojon-twins--moggy-master.sms" size="65536" crc="039539df"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3294,6 +3338,14 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="tnzs">
+		<description>New Zealand Story, The (Euro)</description>
+		<year>1992</year>
+		<manufacturer>TecMagik</manufacturer>
+		<rom name="new zealand story, the (europe).bin" size="262144" crc="c660ff34"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ngaiden">
 		<description>Ninja Gaiden (Euro, Bra)</description>
 		<year>1992</year>
@@ -3308,6 +3360,22 @@
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ninja gaiden (europe) (beta).bin" size="262144" crc="761e9396"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ninja">
+		<description>Ninja, The (Euro, USA)</description>
+		<year>1986</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="mpr-11046.ic1" size="131072" crc="66a15bd9"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ninjaj" cloneof="ninja" romof="ninja">
+		<description>Ninja, The (Jpn)</description>
+		<year>1986</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="mpr-10409.ic1" size="131072" crc="320313ec"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3341,6 +3409,14 @@
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="operation wolf (europe).bin" size="262144" crc="205caae8"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ottifant">
+		<description>Ottifants, The (Euro, Bra)</description>
+		<year>1993</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="ottifants, the (europe) (en,fr,de,es,it).bin" size="262144" crc="82ef2a7d"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3460,7 +3536,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pstar1" cloneof="pstar" romof="pstar">
-		<description>Phantasy Star (Euro, USA, v2)</description>
+		<description>Phantasy Star (Euro, USA, v1.2)</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="phantasy star (usa, europe) (v1.2).bin" size="524288" crc="e4a65e79"/>
@@ -3589,15 +3665,6 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ppersiac" cloneof="ppersia" romof="ppersia">
-		<comment>Hack</comment>
-		<description>Prince of Persia (Euro, Bra) - Castellano v1.0</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="prince of persia (euro, bra) - castellano v1.0.sms" size="262144" crc="85e5065b"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="ppersia">
 		<description>Prince of Persia (Euro, Bra)</description>
 		<year>1992</year>
@@ -3606,11 +3673,28 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ppersiac" cloneof="ppersia" romof="ppersia">
+		<comment>Hack</comment>
+		<description>Prince of Persia (Hack, Spanish v1.0)</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="prince of persia (euro, bra) - castellano v1.0.sms" size="262144" crc="85e5065b"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="prowres">
 		<description>Pro Wrestling (Euro, USA, Bra)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-10154f.ic1" size="131072" crc="fbde42d3"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="proyakyu">
+		<description>Pro Yakyuu Pennant Race, The (Jpn)</description>
+		<year>1987</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="mpr-10749.ic1" size="131072" crc="da9be8f0"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4016,20 +4100,20 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="beastc" cloneof="beast" romof="beast">
-		<comment>Hack</comment>
-		<description>Shadow of the Beast (Euro, Bra) - Castellano v1.12a</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="shadow of the beast (euro, bra) - castellano v1.12a.sms" size="262144" crc="3e255ddb"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="beast">
 		<description>Shadow of the Beast (Euro, Bra)</description>
 		<year>1991</year>
 		<manufacturer>TecMagik</manufacturer>
 		<rom name="shadow of the beast (europe).bin" size="262144" crc="1575581d"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="beastc" cloneof="beast" romof="beast">
+		<comment>Hack</comment>
+		<description>Shadow of the Beast (Hack, Spanish v1.12a)</description>
+		<year>2020</year>
+		<manufacturer>Rod Merida</manufacturer>
+		<rom name="shadow of the beast (euro, bra) - castellano v1.12a.sms" size="262144" crc="3e255ddb"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4170,7 +4254,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="slapshota" cloneof="slapshot" romof="slapshot">
-		<description>Slap Shot (Euro, v1)</description>
+		<description>Slap Shot (Euro, v1.1)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="slap shot (europe) (v1.1).bin" size="262144" crc="d33b296a"/>
@@ -4178,7 +4262,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="slapshot">
-		<description>Slap Shot (USA, v2)</description>
+		<description>Slap Shot (USA, v1.2)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="slap shot (usa) (v1.2).bin" size="262144" crc="702c3e98"/>
@@ -4190,6 +4274,31 @@
 		<year>1992</year>
 		<manufacturer>Flying Edge</manufacturer>
 		<rom name="super smash t.v. (europe).bin" size="262144" crc="e0b1aff8"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="smurfs2">
+		<description>Smurfs 2, The (Euro)</description>
+		<year>1996</year>
+		<manufacturer>Infogrames</manufacturer>
+		<rom name="schtroumpfs autour du monde, les (europe) (en,fr,de,es).bin" size="262144" crc="97e5bb7d"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="smurfs2p" cloneof="smurfs2" romof="smurfs2">
+		<comment>Prototype</comment>
+		<description>Smurfs 2, The (Euro, Prototype)</description>
+		<year>1996</year>
+		<manufacturer>Infogrames</manufacturer>
+		<rom name="schtroumpfs autour du monde, les (europe) (en,fr,de,es) (beta).bin" size="262144" crc="7982ae67"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="smurfs">
+		<description>Smurfs, The (Euro, Bra)</description>
+		<year>1994</year>
+		<manufacturer>Infogrames</manufacturer>
+		<rom name="smurfs, the (europe) (en,fr,de,es).bin" size="262144" crc="3e63768a"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4236,7 +4345,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic2">
-		<description>Sonic The Hedgehog 2 (Euro, Bra, Kor, v1)</description>
+		<description>Sonic The Hedgehog 2 (Euro, Bra, Kor, v1.1)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic the hedgehog 2 (europe) (v1.1).bin" size="524288" crc="d6f2bfca"/>
@@ -4385,20 +4494,20 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spellcstc" cloneof="spellcst" romof="spellcst">
-		<comment>Hack</comment>
-		<description>SpellCaster (Euro, USA, Bra) - Castellano v0,99</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="spellcaster (euro, usa, bra) - castellano v0,99.sms" size="524288" crc="32b31c6e"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="spellcst">
 		<description>SpellCaster (Euro, USA, Bra)</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-12532-t.ic2" size="524288" crc="4752cae7"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="spellcstc" cloneof="spellcst" romof="spellcst">
+		<comment>Hack</comment>
+		<description>SpellCaster (Hack, Spanish v0,99)</description>
+		<year>2019</year>
+		<manufacturer>jackic</manufacturer>
+		<rom name="spellcaster (euro, usa, bra) - castellano v0,99.sms" size="524288" crc="32b31c6e"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4434,15 +4543,6 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spyvsspycast" cloneof="spyvsspy" romof="spyvsspy">
-		<comment>Hack</comment>
-		<description>Spy vs Spy (Euro, USA, Bra) - Castellano v1,0</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="spy vs. spy (euro, usa, bra) - castellano v1,0.sms" size="32768" crc="acc2eea4"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="spyvsspy">
 		<description>Spy vs Spy (Euro, USA, Bra)</description>
 		<year>1986</year>
@@ -4456,6 +4556,15 @@
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="spy vs. spy (usa, europe).bin" merge="spy vs. spy (usa, europe).bin" size="32768" crc="78d7faab"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="spyvsspycast" cloneof="spyvsspy" romof="spyvsspy">
+		<comment>Hack</comment>
+		<description>Spy vs Spy (Hack, Spanish v1.0)</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="spy vs. spy (euro, usa, bra) - castellano v1,0.sms" size="32768" crc="acc2eea4"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4934,20 +5043,45 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="term2c" cloneof="term2" romof="term2">
-		<comment>Hack</comment>
-		<description>Terminator 2 - Judgment Day (Euro) - Castellano v1,0</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="terminator 2 - judgment day (euro) - castellano v1,0.sms" size="262144" crc="87a3290f"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="term2">
 		<description>Terminator 2 - Judgment Day (Euro)</description>
 		<year>1993</year>
 		<manufacturer>Flying Edge</manufacturer>
 		<rom name="terminator 2 - judgment day (europe).bin" size="262144" crc="ac56104f"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="term2c" cloneof="term2" romof="term2">
+		<comment>Hack</comment>
+		<description>Terminator 2 - Judgment Day (Hack, Spanish v1.0)</description>
+		<year>2016</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="terminator 2 - judgment day (euro) - castellano v1,0.sms" size="262144" crc="87a3290f"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="termntrb" cloneof="termntr" romof="termntr">
+		<description>Terminator, The (Bra)</description>
+		<year>1992</year>
+		<manufacturer>Tec Toy</manufacturer>
+		<rom name="terminator, the (brazil).bin" size="262144" crc="e3d5ce9a"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="termntr">
+		<description>Terminator, The (Euro)</description>
+		<year>1992</year>
+		<manufacturer>Virgin Interactive</manufacturer>
+		<rom name="terminator, the (europe).bin" size="262144" crc="edc5c012"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="termntrc" cloneof="termntr" romof="termntr">
+		<comment>Hack</comment>
+		<description>Terminator, The (Hack, Spanish v1.0)</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="the terminator (euro) - castellano v1,0.sms" size="262144" crc="cea55b21"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5039,130 +5173,6 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="luckydimc" cloneof="luckydim" romof="luckydim">
-		<comment>Hack</comment>
-		<description>The Lucky Dime Caper Starring Donald Duck (Euro, Bra) - Castellano v1.0</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="the lucky dime caper starring donald duck (euro, bra) - castellano v1.0.sms" size="262144" crc="d285aefa"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="luckydim">
-		<description>The Lucky Dime Caper Starring Donald Duck (Euro, Bra)</description>
-		<year>1991</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="mpr-14358-f.ic1" size="262144" crc="a1710f13"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="luckydimp" cloneof="luckydim" romof="luckydim">
-		<comment>Prototype</comment>
-		<description>The Lucky Dime Caper Starring Donald Duck (Euro, Prototype)</description>
-		<year>1991</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="lucky dime caper starring donald duck, the (europe) (beta).bin" size="262144" crc="7f6d0df6"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="xevious">
-		<description>The Micro Xevious (Kor)</description>
-		<year>1990</year>
-		<manufacturer>Zemina</manufacturer>
-		<rom name="micro xevious, the (kr).bin" size="32768" crc="41cc2ade"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="tnzs">
-		<description>The New Zealand Story (Euro)</description>
-		<year>1992</year>
-		<manufacturer>TecMagik</manufacturer>
-		<rom name="new zealand story, the (europe).bin" size="262144" crc="c660ff34"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="ninja">
-		<description>The Ninja (Euro, USA)</description>
-		<year>1986</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="mpr-11046.ic1" size="131072" crc="66a15bd9"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="ninjaj" cloneof="ninja" romof="ninja">
-		<description>The Ninja (Jpn)</description>
-		<year>1986</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="mpr-10409.ic1" size="131072" crc="320313ec"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="ottifant">
-		<description>The Ottifants (Euro, Bra)</description>
-		<year>1993</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="ottifants, the (europe) (en,fr,de,es,it).bin" size="262144" crc="82ef2a7d"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="proyakyu">
-		<description>The Pro Yakyuu Pennant Race (Jpn)</description>
-		<year>1987</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="mpr-10749.ic1" size="131072" crc="da9be8f0"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="smurfs">
-		<description>The Smurfs (Euro, Bra)</description>
-		<year>1994</year>
-		<manufacturer>Infogrames</manufacturer>
-		<rom name="smurfs, the (europe) (en,fr,de,es).bin" size="262144" crc="3e63768a"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="smurfs2">
-		<description>The Smurfs 2 (Euro)</description>
-		<year>1996</year>
-		<manufacturer>Infogrames</manufacturer>
-		<rom name="schtroumpfs autour du monde, les (europe) (en,fr,de,es).bin" size="262144" crc="97e5bb7d"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="smurfs2p" cloneof="smurfs2" romof="smurfs2">
-		<comment>Prototype</comment>
-		<description>The Smurfs 2 (Euro, Prototype)</description>
-		<year>1996</year>
-		<manufacturer>Infogrames</manufacturer>
-		<rom name="schtroumpfs autour du monde, les (europe) (en,fr,de,es) (beta).bin" size="262144" crc="7982ae67"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="termntrb" cloneof="termntr" romof="termntr">
-		<description>The Terminator (Bra)</description>
-		<year>1992</year>
-		<manufacturer>Tec Toy</manufacturer>
-		<rom name="terminator, the (brazil).bin" size="262144" crc="e3d5ce9a"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="termntrc" cloneof="termntr" romof="termntr">
-		<comment>Hack</comment>
-		<description>The Terminator (Euro) - Castellano v1,0</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="the terminator (euro) - castellano v1,0.sms" size="262144" crc="cea55b21"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="termntr">
-		<description>The Terminator (Euro)</description>
-		<year>1992</year>
-		<manufacturer>Virgin Interactive</manufacturer>
-		<rom name="terminator, the (europe).bin" size="262144" crc="edc5c012"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="3dragon">
 		<description>Three Dragon Story, The (Kor)</description>
 		<year>19??</year>
@@ -5213,20 +5223,20 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tomjermvc" cloneof="tomjermv" romof="tomjermv">
-		<comment>Hack</comment>
-		<description>Tom and Jerry - The Movie (Euro, Bra) - Castellano v1,0</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="tom and jerry - the movie (euro, bra) - castellano v1,0.sms" size="262144" crc="8f549d4a"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="tomjermv">
 		<description>Tom and Jerry - The Movie (Euro, Bra)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tom and jerry - the movie (europe).bin" size="262144" crc="bf7b7285"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tomjermvc" cloneof="tomjermv" romof="tomjermv">
+		<comment>Hack</comment>
+		<description>Tom and Jerry - The Movie (Hack, Spanish v1.0)</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="tom and jerry - the movie (euro, bra) - castellano v1,0.sms" size="262144" crc="8f549d4a"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5368,8 +5378,8 @@
 	<game name="vampire" cloneof="mastdark" romof="mastdark">
 		<comment>Prototype</comment>
 		<description>Vampire (Euro, Prototype)</description>
-		<year>19??</year>
-		<manufacturer>Unknown</manufacturer>
+		<year>1992</year>
+		<manufacturer>Sega</manufacturer>
 		<rom name="vampire (europe) (beta).bin" size="262144" crc="20f40cae"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5516,15 +5526,6 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wboyc" cloneof="wboy" romof="wboy">
-		<comment>Hack</comment>
-		<description>Wonder Boy (Euro, USA, Bra, v1) - Castellano v1,0</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="wonder boy (euro, usa, bra, v1) - castellano v1,0.sms" size="131072" crc="ce62c859"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="wboy">
 		<description>Wonder Boy (Euro, USA, Bra, v1)</description>
 		<year>1987</year>
@@ -5533,12 +5534,12 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wboy3c" cloneof="wboy3" romof="wboy3">
+	<game name="wboyc" cloneof="wboy" romof="wboy">
 		<comment>Hack</comment>
-		<description>Wonder Boy III - The Dragon's Trap (Euro, USA, Kor) - Castellano v1,0</description>
-		<year>2017</year>
+		<description>Wonder Boy (Hack, Spanish v1.0)</description>
+		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
-		<rom name="wonder boy iii - the dragon's trap (euro, usa, kor) - castellano v1,0.sms" size="262144" crc="fed045bf"/>
+		<rom name="wonder boy (euro, usa, bra, v1) - castellano v1,0.sms" size="131072" crc="ce62c859"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5556,6 +5557,15 @@
 		<year>1999</year>
 		<manufacturer>Sega - Bock</manufacturer>
 		<rom name="wonder boy iii - the dragon's trap (fm mod).sms" size="262144" crc="9442cfff"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="wboy3c" cloneof="wboy3" romof="wboy3">
+		<comment>Hack</comment>
+		<description>Wonder Boy III - The Dragon's Trap (Hack, Spanish v1.0)</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="wonder boy iii - the dragon's trap (euro, usa, kor) - castellano v1,0.sms" size="262144" crc="fed045bf"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5584,15 +5594,6 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wboymwldc" cloneof="wboymwld" romof="wboymwld">
-		<comment>Hack</comment>
-		<description>Wonder Boy in Monster World (Euro, Kor) - Castellano v1,0</description>
-		<year>2018</year>
-		<manufacturer>jackic</manufacturer>
-		<rom name="Wonder Boy in Monster World (Euro, Kor) - Castellano v1,0.sms" size="524288" crc="db47ff25"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="wboymwld">
 		<description>Wonder Boy in Monster World (Euro, Kor)</description>
 		<year>1993</year>
@@ -5607,6 +5608,15 @@
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="wonder boy in monster world (europe) (beta).bin" size="524288" crc="81bff9bb"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="wboymwldc" cloneof="wboymwld" romof="wboymwld">
+		<comment>Hack</comment>
+		<description>Wonder Boy in Monster World (Hack, Spanish v1.0)</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="Wonder Boy in Monster World (Euro, Kor) - Castellano v1,0.sms" size="524288" crc="db47ff25"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5816,7 +5826,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zillion">
-		<description>Zillion (Euro, v2)</description>
+		<description>Zillion (Euro, v1.2)</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="zillion (europe) (v1.2).bin" size="131072" crc="7ba54510"/>
@@ -5824,7 +5834,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zilliona" cloneof="zillion" romof="zillion">
-		<description>Zillion (USA, v1)</description>
+		<description>Zillion (USA, v1.1)</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="zillion (usa) (v1.1).bin" size="131072" crc="5718762c"/>

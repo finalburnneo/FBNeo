@@ -891,21 +891,21 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="linknobouc" cloneof="linknobou" romof="linknobou">
-		<comment>Hack</comment>
-		<description>Link no Bouken - The Legend of Zelda 2 (Japan) (Rev 1) - Castellano v1.0</description>
-		<year>1987-2019</year>
-		<manufacturer>jackic</manufacturer>
-		<rom name="link no bouken - the legend of zelda 2 (japan) (rev 1) - castellano v1.0.fds" size="131000" crc="60a26198"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
 	<game name="linknobouj" cloneof="linknobou" romof="linknobou">
 		<description>Link no Bouken - The Legend of Zelda 2 (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Link no Bouken - The Legend of Zelda 2 (Japan).fds" size="131016" crc="a118214f"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="linknobouc" cloneof="linknobou" romof="linknobou">
+		<comment>Hack</comment>
+		<description>Link no Bouken - The Legend of Zelda 2 (Rev 1) (Hack, Spanish v1.0)</description>
+		<year>1987-2019</year>
+		<manufacturer>jackic</manufacturer>
+		<rom name="link no bouken - the legend of zelda 2 (japan) (rev 1) - castellano v1.0.fds" size="131000" crc="60a26198"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1178,9 +1178,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="sdgunworgacsescwac" cloneof="sdgunworgacsescwa" romof="sdgunworgacsescwa">
-		<description>SD Gundam World - Gachapon Senshi - Scramble Wars (Japan) [b] - Castellano v1.0</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Hack</comment>
+		<description>SD Gundam World - Gachapon Senshi - Scramble Wars (Hack, Spanish v1.0)</description>
+		<year>1987-2020</year>
+		<manufacturer>Max1323</manufacturer>
 		<rom name="sd gundam world - gachapon senshi - scramble wars (japan) [b] - castellano v1.0.fds" size="131016" crc="53f73319"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1188,8 +1189,8 @@
 	</game>
 	<game name="sdgunworgacsescwa" romof="fdsbios">
 		<description>SD Gundam World - Gachapon Senshi - Scramble Wars (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Bandai</manufacturer>
 		<rom name="SD Gundam World - Gachapon Senshi - Scramble Wars (Japan).fds" size="131000" crc="9d287c3f"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1197,8 +1198,8 @@
 	</game>
 	<game name="sectionz" romof="fdsbios">
 		<description>Section-Z (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Capcom</manufacturer>
 		<rom name="Section-Z (Japan).fds" size="131016" crc="392488e2"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1206,17 +1207,18 @@
 	</game>
 	<game name="seikepsyj" cloneof="seikepsy" romof="seikepsy">
 		<description>Seiken Psychocalibur - Majuu no Mori Densetsu (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Imagineer</manufacturer>
 		<rom name="Seiken Psychocalibur - Majuu no Mori Densetsu (Japan).fds" size="131000" crc="aea5691a"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="seikepsy" romof="fdsbios">
+		<comment>Hack</comment>
 		<description>Seiken Psychocalibur - Majuu no Mori Densetsu (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987-20??</year>
+		<manufacturer>The Spoony Bard</manufacturer>
 		<rom name="Seiken Psychocalibur - Majuu no Mori Densetsu (T-Eng).fds" size="131000" crc="1ec1552b"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1224,8 +1226,8 @@
 	</game>
 	<game name="sexyinvaders" romof="fdsbios">
 		<description>Sexy Invaders (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Super Pig</manufacturer>
 		<rom name="Sexy Invaders (Japan).fds" size="131000" crc="413e49da"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1233,17 +1235,18 @@
 	</game>
 	<game name="silvij" cloneof="silvi" romof="silvi">
 		<description>Silviana - Ai Ippai no Little Angel (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Pack-In-Video</manufacturer>
 		<rom name="Silviana - Ai Ippai no Little Angel (Japan).fds" size="131016" crc="4d721d90"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="silvi" romof="fdsbios">
+		<comment>Hack</comment>
 		<description>Silviana - Ai Ippai no Little Angel (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988-2002</year>
+		<manufacturer>Mute</manufacturer>
 		<rom name="Silviana - Ai Ippai no Little Angel (T-Eng).fds" size="131000" crc="c5b1bff7"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1251,8 +1254,8 @@
 	</game>
 	<game name="smashpingpong" romof="fdsbios">
 		<description>Smash Ping Pong (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Nintendo - Konami</manufacturer>
 		<rom name="Smash Ping Pong (Japan).fds" size="131016" crc="cc1eb0dc"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1260,8 +1263,8 @@
 	</game>
 	<game name="solomonnokagi" romof="fdsbios">
 		<description>Solomon no Kagi (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Tecmo</manufacturer>
 		<rom name="Solomon no Kagi (Japan).fds" size="65500" crc="5e298400"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1269,8 +1272,8 @@
 	</game>
 	<game name="superboyallan" romof="fdsbios">
 		<description>Super Boy Allan (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Sunsoft</manufacturer>
 		<rom name="Super Boy Allan (Japan).fds" size="131016" crc="fdc53496"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1278,8 +1281,8 @@
 	</game>
 	<game name="superlodrun" romof="fdsbios">
 		<description>Super Lode Runner (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Irem</manufacturer>
 		<rom name="Super Lode Runner (Japan).fds" size="131000" crc="e66f4682"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1287,17 +1290,18 @@
 	</game>
 	<game name="superlodrunii" romof="fdsbios">
 		<description>Super Lode Runner II (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Irem</manufacturer>
 		<rom name="Super Lode Runner II (Japan).fds" size="131000" crc="758888f4"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="supermarbroc" cloneof="supermarbro" romof="supermarbro">
-		<description>Super Mario Brothers (Japan) - Castellano v1.0</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Hack</comment>
+		<description>Super Mario Brothers (Hack, Spanish v1.0)</description>
+		<year>1986-2020</year>
+		<manufacturer>Noishe</manufacturer>
 		<rom name="super mario brothers (japan) - castellano v1.0.fds" size="65516" crc="42d4a7c5"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1305,7 +1309,7 @@
 	</game>
 	<game name="supermarbro" romof="fdsbios">
 		<description>Super Mario Brothers (Japan)</description>
-		<year>1989?</year>
+		<year>1986</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Super Mario Brothers (Japan).fds" size="65500" crc="e0890cf2"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
@@ -1314,7 +1318,7 @@
 	</game>
 	<game name="supermarbro2" romof="fdsbios">
 		<description>Super Mario Brothers 2 (Japan)</description>
-		<year>1989?</year>
+		<year>1986</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Super Mario Brothers 2 (Japan).fds" size="131016" crc="443ed7b3"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
@@ -1323,8 +1327,8 @@
 	</game>
 	<game name="tamafri" romof="fdsbios">
 		<description>Tama &amp; Friends - 3 Choume Daibouken (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1989</year>
+		<manufacturer>Bandai</manufacturer>
 		<rom name="Tama &amp; Friends - 3 Choume Daibouken (Japan).fds" size="131016" crc="8751a949"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1332,7 +1336,7 @@
 	</game>
 	<game name="tennis" romof="fdsbios">
 		<description>Tennis (Japan)</description>
-		<year>1989?</year>
+		<year>1986</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Tennis (Japan).fds" size="65516" crc="136c64ed"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
@@ -1341,8 +1345,8 @@
 	</game>
 	<game name="tobiddai" romof="fdsbios">
 		<description>Tobidase Daisakusen (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Square</manufacturer>
 		<rom name="Tobidase Daisakusen (Japan).fds" size="131016" crc="95546107"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1350,8 +1354,8 @@
 	</game>
 	<game name="topplezip" romof="fdsbios">
 		<description>Topple Zip (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Bothtec</manufacturer>
 		<rom name="Topple Zip (Japan).fds" size="131016" crc="7bf73c75"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1359,8 +1363,8 @@
 	</game>
 	<game name="trans" romof="fdsbios">
 		<description>Transformers - The Headmasters (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Takara</manufacturer>
 		<rom name="Transformers - The Headmasters (Japan).fds" size="131016" crc="8bd904cd"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1368,8 +1372,8 @@
 	</game>
 	<game name="twinbee" romof="fdsbios">
 		<description>TwinBee (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Konami</manufacturer>
 		<rom name="TwinBee (Japan).fds" size="65500" crc="517be396"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1377,8 +1381,8 @@
 	</game>
 	<game name="ultra" romof="fdsbios">
 		<description>Ultraman - Kaijuu Teikoku no Gyakushuu (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1986</year>
+		<manufacturer>Bandai</manufacturer>
 		<rom name="Ultraman - Kaijuu Teikoku no Gyakushuu (Japan).fds" size="131016" crc="2ab0c9bd"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1386,8 +1390,8 @@
 	</game>
 	<game name="ultra2" romof="fdsbios">
 		<description>Ultraman 2 - Shutsugeki Katoku Tai (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Bandai</manufacturer>
 		<rom name="Ultraman 2 - Shutsugeki Katoku Tai (Japan).fds" size="131016" crc="4010e726"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1395,8 +1399,8 @@
 	</game>
 	<game name="ultraclu" romof="fdsbios">
 		<description>Ultraman Club - Chikyuu Dakkan Sakusen (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Bandai</manufacturer>
 		<rom name="Ultraman Club - Chikyuu Dakkan Sakusen (Japan).fds" size="131000" crc="fd150e81"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1404,7 +1408,7 @@
 	</game>
 	<game name="volleyball" romof="fdsbios">
 		<description>Volleyball (Japan)</description>
-		<year>1989?</year>
+		<year>1986</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Volleyball (Japan).fds" size="65516" crc="0533c149"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
@@ -1413,7 +1417,7 @@
 	</game>
 	<game name="vsexcitebike" romof="fdsbios">
 		<description>Vs. Excitebike (Japan)</description>
-		<year>1989?</year>
+		<year>1988</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Vs. Excitebike (Japan).fds" size="131016" crc="b8a7c0a9"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>

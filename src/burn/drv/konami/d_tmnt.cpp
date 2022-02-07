@@ -2527,6 +2527,8 @@ static INT32 DrvDoReset()
 	TitleSamplePos = 0;
 	PriorityFlag = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -2541,8 +2543,6 @@ static INT32 TmntDoReset()
 	UPD7759StartWrite(0, 0); // First sample is cut w/o this hack. ("Fire!" after coin-up/select character)
 	UPD7759ResetWrite(0, 1);
 	ZetClose();
-
-	HiscoreReset();
 
 	return nRet;
 }
@@ -2561,7 +2561,9 @@ static INT32 CuebrickDoReset()
 	DrvNvRamBank = 0;
 	PriorityFlag = 0;
 	CuebrickSndIrqFire = 0;
-	
+
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -2591,7 +2593,9 @@ static INT32 BlswhstlDoReset()
 	BlswhstlTileRomBank = 0;
 	
 	K052109_irq_enabled = 0;
-	
+
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -2687,6 +2691,8 @@ static INT32 PunkshotDoReset()
 	
 	K052109_irq_enabled = 0;
 	DrvVBlank = 0;
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -6681,7 +6687,7 @@ struct BurnDriver BurnDrvMia = {
 	"mia", NULL, NULL, NULL, "1989",
 	"M.I.A. - Missing in Action (version T)\0", NULL, "Konami", "GX808",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_KONAMI_68K_Z80, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_RUNGUN, 0,
 	NULL, MiaRomInfo, MiaRomName, NULL, NULL, NULL, NULL, MiaInputInfo, MiaDIPInfo,
 	MiaInit, MiaExit, MiaFrame, TmntDraw, MiaScan,
 	NULL, 0x400, 304, 224, 4, 3
@@ -6691,7 +6697,7 @@ struct BurnDriver BurnDrvMia2 = {
 	"mia2", "mia", NULL, NULL, "1989",
 	"M.I.A. - Missing in Action (version S)\0", NULL, "Konami", "GX808",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_RUNGUN, 0,
 	NULL, Mia2RomInfo, Mia2RomName, NULL, NULL, NULL, NULL, MiaInputInfo, MiaDIPInfo,
 	MiaInit, MiaExit, MiaFrame, TmntDraw, MiaScan,
 	NULL, 0x400, 304, 224, 4, 3
@@ -6701,7 +6707,7 @@ struct BurnDriver BurnDrvCuebrick = {
 	"cuebrick", NULL, NULL, NULL, "1989",
 	"Cue Brick (World, version D)\0", NULL, "Konami", "GX903",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_KONAMI_68K_Z80, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_PUZZLE, 0,
 	NULL, CuebrickRomInfo, CuebrickRomName, NULL, NULL, NULL, NULL, MiaInputInfo, MiaDIPInfo,
 	CuebrickInit, CommonExit, CuebrickFrame, TmntDraw, CuebrickScan,
 	NULL, 0x400, 304, 224, 4, 3
@@ -6711,7 +6717,7 @@ struct BurnDriver BurnDrvBlswhstl = {
 	"blswhstl", NULL, NULL, NULL, "1991",
 	"Bells & Whistles (World, version L)\0", NULL, "Konami", "GX060",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, BlswhstlRomInfo, BlswhstlRomName, NULL, NULL, NULL, NULL, BlswhstlInputInfo, NULL,
 	BlswhstlInit, BlswhstlExit, BlswhstlFrame, BlswhstlDraw, SsridersScan,
 	NULL, 0x810, 224, 280, 3, 4
@@ -6721,7 +6727,7 @@ struct BurnDriver BurnDrvBlswhstla = {
 	"blswhstla", "blswhstl", NULL, NULL, "1991",
 	"Bells & Whistles (Asia, version M)\0", NULL, "Konami", "GX060",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, BlswhstlaRomInfo, BlswhstlaRomName, NULL, NULL, NULL, NULL, BlswhstlInputInfo, NULL,
 	BlswhstlInit, BlswhstlExit, BlswhstlFrame, BlswhstlDraw, SsridersScan,
 	NULL, 0x810, 224, 280, 3, 4
@@ -6731,7 +6737,7 @@ struct BurnDriver BurnDrvDetatwin = {
 	"detatwin", "blswhstl", NULL, NULL, "1991",
 	"Detana!! Twin Bee (Japan ver. J)\0", NULL, "Konami", "GX060",
 	L"\u51FA\u305F\u306A!! Twin Bee \u30C4\u30A4\u30F3\u30D3\u30FC (Japan, version J)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, DetatwinRomInfo, DetatwinRomName, NULL, NULL, NULL, NULL, BlswhstlInputInfo, NULL,
 	BlswhstlInit, BlswhstlExit, BlswhstlFrame, BlswhstlDraw, SsridersScan,
 	NULL, 0x810, 224, 280, 3, 4
@@ -6916,7 +6922,7 @@ struct BurnDriver BurnDrvLgtnfght = {
 	"lgtnfght", NULL, NULL, NULL, "1990",
 	"Lightning Fighters (World)\0", NULL, "Konami", "GX939",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, lgtnfghtRomInfo, lgtnfghtRomName, NULL, NULL, NULL, NULL, LgtnfghtInputInfo, LgtnfghtDIPInfo,
 	LgtnfghtInit, BlswhstlExit, LgtnfghtFrame, BlswhstlDraw, Thndrx2aScan, 
 	NULL, 0x800, 224, 288, 3, 4
@@ -6926,7 +6932,7 @@ struct BurnDriver BurnDrvLgtnfghtu = {
 	"lgtnfghtu", "lgtnfght", NULL, NULL, "1990",
 	"Lightning Fighters (US)\0", NULL, "Konami", "GX939",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, lgtnfghtuRomInfo, lgtnfghtuRomName, NULL, NULL, NULL, NULL, LgtnfghtInputInfo, LgtnfghtDIPInfo,
 	LgtnfghtInit, BlswhstlExit, LgtnfghtFrame, BlswhstlDraw, Thndrx2aScan, 
 	NULL, 0x800, 224, 288, 3, 4
@@ -6936,7 +6942,7 @@ struct BurnDriver BurnDrvLgtnfghta = {
 	"lgtnfghta", "lgtnfght", NULL, NULL, "1990",
 	"Lightning Fighters (Asia)\0", NULL, "Konami", "GX939",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, lgtnfghtaRomInfo, lgtnfghtaRomName, NULL, NULL, NULL, NULL, LgtnfghtInputInfo, LgtnfghtDIPInfo,
 	LgtnfghtInit, BlswhstlExit, LgtnfghtFrame, BlswhstlDraw, Thndrx2aScan, 
 	NULL, 0x800, 224, 288, 3, 4
@@ -6946,7 +6952,7 @@ struct BurnDriver BurnDrvTrigon = {
 	"trigon", "lgtnfght", NULL, NULL, "1990",
 	"Trigon (Japan)\0", NULL, "Konami", "GX939",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, trigonRomInfo, trigonRomName, NULL, NULL, NULL, NULL, LgtnfghtInputInfo, LgtnfghtDIPInfo,
 	LgtnfghtInit, BlswhstlExit, LgtnfghtFrame, BlswhstlDraw, Thndrx2aScan, 
 	NULL, 0x800, 224, 288, 3, 4
@@ -7026,7 +7032,7 @@ struct BurnDriver BurnDrvPunkshot = {
 	"punkshot", NULL, NULL, NULL, "1990",
 	"Punk Shot (US 4 Players)\0", NULL, "Konami", "GX907",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_KONAMI_68K_Z80, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_KONAMI_68K_Z80, GBF_SPORTSMISC, 0,
 	NULL, punkshotRomInfo, punkshotRomName, NULL, NULL, NULL, NULL, PunkshotInputInfo, PunkshotDIPInfo,
 	PunkshotInit, PunkshotExit, PunkshotFrame, PunkshotDraw, Thndrx2aScan, 
 	NULL, 0x800, 288, 224, 4, 3
@@ -7036,7 +7042,7 @@ struct BurnDriver BurnDrvPunkshot2 = {
 	"punkshot2", "punkshot", NULL, NULL, "1990",
 	"Punk Shot (US 2 Players)\0", NULL, "Konami", "GX907",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_SPORTSMISC, 0,
 	NULL, punkshot2RomInfo, punkshot2RomName, NULL, NULL, NULL, NULL, Punkshot2InputInfo, Punkshot2DIPInfo,
 	PunkshotInit, PunkshotExit, PunkshotFrame, PunkshotDraw, Thndrx2aScan, 
 	NULL, 0x800, 288, 224, 4, 3
@@ -7046,7 +7052,7 @@ struct BurnDriver BurnDrvPunkshot2e = {
 	"punkshot2e", "punkshot", NULL, NULL, "1990",
 	"Punk Shot (World 2 Players)\0", NULL, "Konami", "GX907",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_SPORTSMISC, 0,
 	NULL, punkshot2eRomInfo, punkshot2eRomName, NULL, NULL, NULL, NULL, Punkshot2InputInfo, Punkshot2DIPInfo,
 	PunkshotInit, PunkshotExit, PunkshotFrame, PunkshotDraw, Thndrx2aScan, 
 	NULL, 0x800, 288, 224, 4, 3
@@ -7056,7 +7062,7 @@ struct BurnDriver BurnDrvPunkshotj = {
 	"punkshotj", "punkshot", NULL, NULL, "1990",
 	"Punk Shot (Japan 2 Players)\0", NULL, "Konami", "GX907",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_SPORTSMISC, 0,
 	NULL, punkshotjRomInfo, punkshotjRomName, NULL, NULL, NULL, NULL, Punkshot2InputInfo, PunkshotjDIPInfo,
 	PunkshotInit, PunkshotExit, PunkshotFrame, PunkshotDraw, Thndrx2aScan, 
 	NULL, 0x800, 288, 224, 4, 3

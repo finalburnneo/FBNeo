@@ -14508,7 +14508,7 @@ STD_ROM_FN(nes_willownfh)
 
 struct BurnDriver BurnDrvnes_willownfh = {
 	"nes_willownfh", "nes_willow", NULL, NULL, "2020",
-	"Willow (No Flash ed.) (Hak, v1.1)\0", NULL, "Jigglysaint", "Miscellaneous",
+	"Willow (No Flash ed.) (Hack, v1.1)\0", NULL, "Jigglysaint", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_willownfhRomInfo, nes_willownfhRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15021,7 +15021,7 @@ struct BurnDriver BurnDrvnes_gaplus = {
 };
 
 // Saint Seiya - Ougon Densetsu (T-Chi, v2.0)
-// Translation by Han Hua Ni Mei Team - Jiang Wei Di Er & Fen Mo & Zeng Ge
+// Translation by HHNM Team - Jiang Wei Di Er & Fen Mo & Zeng Ge
 static struct BurnRomInfo nes_saintseiyaodcRomDesc[] = {
 	{ "Saint Seiya - Ougon Densetsu (T-Chi, v2.0).nes",          1310736, 0xf7df4b56, BRF_ESS | BRF_PRG },
 };
@@ -15031,7 +15031,7 @@ STD_ROM_FN(nes_saintseiyaodc)
 
 struct BurnDriver BurnDrvnes_saintseiyaodc = {
 	"nes_saintseiyaodc", "nes_saintseiougden", NULL, NULL, "2018",
-	"Saint Seiya - Ougon Densetsu (T-Chi, v2.0)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Saint Seiya - Ougon Densetsu (T-Chi, v2.0)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
 	NESGetZipName, nes_saintseiyaodcRomInfo, nes_saintseiyaodcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15040,7 +15040,7 @@ struct BurnDriver BurnDrvnes_saintseiyaodc = {
 };
 
 // Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi)
-// Translation by Han Hua Ni Mei Team - Jiang Wei Di Er & Xiao Ben Ben
+// Translation by HHNM Team - Jiang Wei Di Er & Xiao Ben Ben
 static struct BurnRomInfo nes_saintseiyaodkhcRomDesc[] = {
 	{ "Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi).nes",          524304, 0xb1651b70, BRF_ESS | BRF_PRG },
 };
@@ -15050,7 +15050,7 @@ STD_ROM_FN(nes_saintseiyaodkhc)
 
 struct BurnDriver BurnDrvnes_saintseiyaodkhc = {
 	"nes_saintseiyaodkhc", "nes_saintseiougdenkahen", NULL, NULL, "2017",
-	"Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
 	NESGetZipName, nes_saintseiyaodkhcRomInfo, nes_saintseiyaodkhcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15059,7 +15059,7 @@ struct BurnDriver BurnDrvnes_saintseiyaodkhc = {
 };
 
 // AV Mahjong Club (T-Chi) (Unl)
-// Translation by Han Hua Ni Mei Team - Shao Nian Bu Zhi Chou
+// Translation by HHNM Team - Shao Nian Bu Zhi Chou
 static struct BurnRomInfo nes_avmahjongclubcRomDesc[] = {
 	{ "AV Mahjong Club (T-Chi) (Unl).nes",          262160, 0x663870dd, BRF_ESS | BRF_PRG },
 };
@@ -15069,7 +15069,7 @@ STD_ROM_FN(nes_avmahjongclubc)
 
 struct BurnDriver BurnDrvnes_avmahjongclubc = {
 	"nes_avmahjongclubc", NULL, NULL, NULL, "2018",
-	"AV Mahjong Club (T-Chi) (Unl)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"AV Mahjong Club (T-Chi) (Unl)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_MAHJONG | GBF_ADV, 0,
 	NESGetZipName, nes_avmahjongclubcRomInfo, nes_avmahjongclubcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15098,7 +15098,7 @@ struct BurnDriver BurnDrvnes_jackalc = {
 };
 
 // Darkwing Duck (T-Chi)
-// Translation by Han Hua Ni Mei Team - Shao Nian Bu Zhi Chou
+// Translation by HHNM Team - Shao Nian Bu Zhi Chou
 static struct BurnRomInfo nes_darkwingduckcRomDesc[] = {
 	{ "Darkwing Duck (T-Chi).nes",          393232, 0x585f3500, BRF_ESS | BRF_PRG },
 };
@@ -15108,7 +15108,7 @@ STD_ROM_FN(nes_darkwingduckc)
 
 struct BurnDriver BurnDrvnes_darkwingduckc = {
 	"nes_darkwingduckc", "nes_darkwingduck", NULL, NULL, "2020",
-	"Darkwing Duck (T-Chi)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Darkwing Duck (T-Chi)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_darkwingduckcRomInfo, nes_darkwingduckcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15117,7 +15117,7 @@ struct BurnDriver BurnDrvnes_darkwingduckc = {
 };
 
 // Guardic Gaiden (T-Chi)
-// Translation by Han Hua Ni Mei Team - Shao Nian Bu Zhi Chou & Thirteen & Xing Ye Zhi Huan
+// Translation by HHNM Team - Shao Nian Bu Zhi Chou & Thirteen & Xing Ye Zhi Huan
 static struct BurnRomInfo nes_guardicgaidencRomDesc[] = {
 	{ "Guardic Gaiden (T-Chi, v1.1).nes",          262160, 0x77df8d83, BRF_ESS | BRF_PRG },
 };
@@ -15127,7 +15127,7 @@ STD_ROM_FN(nes_guardicgaidenc)
 
 struct BurnDriver BurnDrvnes_guardicgaidenc = {
 	"nes_guardicgaidenc", "nes_guardleg", NULL, NULL, "2017",
-	"Guardic Gaiden (T-Chi, v1.1)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Guardic Gaiden (T-Chi, v1.1)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SHOOT | GBF_ADV, 0,
 	NESGetZipName, nes_guardicgaidencRomInfo, nes_guardicgaidencRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15307,7 +15307,7 @@ struct BurnDriver BurnDrvnes_waiwaiworldc = {
 };
 
 // Saiyuuki World (T-Chi, v1.04)
-// Translation by Han Hua Ni Mei Team - Thirteen & Fen Mo & Jiang Wei Di Er & Zeng Ge & Xing Ye Zhi Huan & N0PFUUN
+// Translation by HHNM Team - Thirteen & Fen Mo & Jiang Wei Di Er & Zeng Ge & Xing Ye Zhi Huan & N0PFUUN
 static struct BurnRomInfo nes_saiyuukiworldcRomDesc[] = {
 	{ "Saiyuuki World (T-Chi, v1.04).nes",          262160, 0x6e66cf6f, BRF_ESS | BRF_PRG },
 };
@@ -15317,7 +15317,7 @@ STD_ROM_FN(nes_saiyuukiworldc)
 
 struct BurnDriver BurnDrvnes_saiyuukiworldc = {
 	"nes_saiyuukiworldc", "nes_saiyuukiworld", NULL, NULL, "2016",
-	"Saiyuuki World (T-Chi, v1.04)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Saiyuuki World (T-Chi, v1.04)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
 	NESGetZipName, nes_saiyuukiworldcRomInfo, nes_saiyuukiworldcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15402,7 +15402,7 @@ struct BurnDriver BurnDrvnes_mitsumegatooruc = {
 };
 
 // Akumajou Densetsu (T-Chi, v2.3)
-// Translation by Han Hua Ni Mei Team - Zeng Ge & Jiang Wei Di Er & Xing Ye Zhi Huan
+// Translation by HHNM Team - Zeng Ge & Jiang Wei Di Er & Xing Ye Zhi Huan
 static struct BurnRomInfo nes_akumadencRomDesc[] = {
 	{ "Akumajou Densetsu (T-Chi, v2.3).nes",          524304, 0xb810b79c, BRF_ESS | BRF_PRG },
 };
@@ -15412,7 +15412,7 @@ STD_ROM_FN(nes_akumadenc)
 
 struct BurnDriver BurnDrvnes_akumadenc = {
 	"nes_akumadenc", "nes_castliii", NULL, NULL, "2018",
-	"Akumajou Densetsu (T-Chi, v2.3)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Akumajou Densetsu (T-Chi, v2.3)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_akumadencRomInfo, nes_akumadencRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15421,7 +15421,7 @@ struct BurnDriver BurnDrvnes_akumadenc = {
 };
 
 // Batman - The Video Game (T-Chi)
-// Translation by Han Hua Ni Mei Team - Shao Nian Bu Zhi Chou & Luo Yun
+// Translation by HHNM Team - Shao Nian Bu Zhi Chou & Luo Yun
 static struct BurnRomInfo nes_batmavidgamcRomDesc[] = {
 	{ "Batman - The Video Game (T-Chi).nes",          393232, 0x4b2de665, BRF_ESS | BRF_PRG },
 };
@@ -15431,7 +15431,7 @@ STD_ROM_FN(nes_batmavidgamc)
 
 struct BurnDriver BurnDrvnes_batmavidgamc = {
 	"nes_batmavidgamc", "nes_batmavidgam", NULL, NULL, "2020",
-	"Batman - The Video Game (T-Chi)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Batman - The Video Game (T-Chi)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_batmavidgamcRomInfo, nes_batmavidgamcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15460,7 +15460,7 @@ struct BurnDriver BurnDrvnes_salamanderc = {
 };
 
 // Gun-Dec (T-Chi)
-// Translation by Han Hua Ni Mei Team - Shao Nian Bu Zhi Chou & Jiang Wei Di Er & Luo Yun
+// Translation by HHNM Team - Shao Nian Bu Zhi Chou & Jiang Wei Di Er & Luo Yun
 static struct BurnRomInfo nes_gundeccRomDesc[] = {
 	{ "Gun-Dec (T-Chi).nes",          393232, 0x647eccfa, BRF_ESS | BRF_PRG },
 };
@@ -15470,7 +15470,7 @@ STD_ROM_FN(nes_gundecc)
 
 struct BurnDriver BurnDrvnes_gundecc = {
 	"nes_gundecc", "nes_vice", NULL, NULL, "2019",
-	"Gun-Dec (T-Chi)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Gun-Dec (T-Chi)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SHOOT | GBF_PLATFORM, 0,
 	NESGetZipName, nes_gundeccRomInfo, nes_gundeccRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15499,7 +15499,7 @@ struct BurnDriver BurnDrvnes_tmntc = {
 };
 
 // Super Chinese II - Dragon Kid (T-Chi, v1.4)
-// Translation by Han Hua Ni Mei Team - Thirteen & Jiang Wei Di Er & Xing Ye Zhi Huan
+// Translation by HHNM Team - Thirteen & Jiang Wei Di Er & Xing Ye Zhi Huan
 static struct BurnRomInfo nes_superchiiRomDesc[] = {
 	{ "Super Chinese II - Dragon Kid (T-Chi, v1.4).nes",          524304, 0xa9e92ef3, BRF_ESS | BRF_PRG },
 };
@@ -15509,7 +15509,7 @@ STD_ROM_FN(nes_superchii)
 
 struct BurnDriver BurnDrvnes_superchii = {
 	"nes_superchii", "nes_littlninbro", NULL, NULL, "2019",
-	"Super Chinese II - Dragon Kid (T-Chi, v1.4)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Super Chinese II - Dragon Kid (T-Chi, v1.4)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN | GBF_RPG, 0,
 	NESGetZipName, nes_superchiiRomInfo, nes_superchiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15518,7 +15518,7 @@ struct BurnDriver BurnDrvnes_superchii = {
 };
 
 // Majou Densetsu II - Daimashikyou Galious (T-Chi, v2.2)
-// Translation by Han Hua Ni Mei Team - Zeng Ge & Jiang Wei Di Er & Luo Yun & Xia Tian & Xing Ye Zhi Huan
+// Translation by HHNM Team - Zeng Ge & Jiang Wei Di Er & Luo Yun & Xia Tian & Xing Ye Zhi Huan
 static struct BurnRomInfo nes_majoudeniicRomDesc[] = {
 	{ "Majou Densetsu II - Daimashikyou Galious (T-Chi, v2.2).nes",          262160, 0xa032170a, BRF_ESS | BRF_PRG },
 };
@@ -15528,7 +15528,7 @@ STD_ROM_FN(nes_majoudeniic)
 
 struct BurnDriver BurnDrvnes_majoudeniic = {
 	"nes_majoudeniic", "nes_majoudenii", NULL, NULL, "2018",
-	"Majou Densetsu II - Daimashikyou Galious (T-Chi, v2.2)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Majou Densetsu II - Daimashikyou Galious (T-Chi, v2.2)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_majoudeniicRomInfo, nes_majoudeniicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15537,7 +15537,7 @@ struct BurnDriver BurnDrvnes_majoudeniic = {
 };
 
 // Silk Worm (T-Chi, v1.1)
-// Translation by Han Hua Ni Mei Team - Shao Nian Bu Zhi Chou
+// Translation by HHNM Team - Shao Nian Bu Zhi Chou
 static struct BurnRomInfo nes_silkwormcRomDesc[] = {
 	{ "Silk Worm (T-Chi, v1.1).nes",          393232, 0x3d53c8ad, BRF_ESS | BRF_PRG },
 };
@@ -15547,7 +15547,7 @@ STD_ROM_FN(nes_silkwormc)
 
 struct BurnDriver BurnDrvnes_silkwormc = {
 	"nes_silkwormc", "nes_silkworm", NULL, NULL, "2020",
-	"Silk Worm (T-Chi, v1.1)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Silk Worm (T-Chi, v1.1)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_HORSHOOT, 0,
 	NESGetZipName, nes_silkwormcRomInfo, nes_silkwormcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15556,7 +15556,7 @@ struct BurnDriver BurnDrvnes_silkwormc = {
 };
 
 // Argos no Senshi (T-Chi, v1.11)
-// Translation by Han Hua Ni Mei Team - Thirteen & Fen Mo & Jiang Wei Di Er & MM Zhi Shen & Xing Ye Zhi Huan & N0PFUUN & Zeng Ge
+// Translation by HHNM Team - Thirteen & Fen Mo & Jiang Wei Di Er & MM Zhi Shen & Xing Ye Zhi Huan & N0PFUUN & Zeng Ge
 static struct BurnRomInfo nes_argosnosenshicRomDesc[] = {
 	{ "Argos no Senshi (T-Chi, v1.11).nes",          262160, 0xa1a22c10, BRF_ESS | BRF_PRG },
 };
@@ -15566,7 +15566,7 @@ STD_ROM_FN(nes_argosnosenshic)
 
 struct BurnDriver BurnDrvnes_argosnosenshic = {
 	"nes_argosnosenshic", "nes_rygar", NULL, NULL, "2016",
-	"Argos no Senshi (T-Chi, v1.11)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Argos no Senshi (T-Chi, v1.11)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN, 0,
 	NESGetZipName, nes_argosnosenshicRomInfo, nes_argosnosenshicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15593,19 +15593,19 @@ struct BurnDriver BurnDrvnes_supercontrac = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Hebereke (T-Chi, v1.2)
-// Translation by Lei Jing Ling
+// Hebereke (T-Chi)
 // mapper 69
+// http://www.nesbbs.com/bbs/thread-53253-1-1.html
 static struct BurnRomInfo nes_heberekecRomDesc[] = {
-	{ "Hebereke (T-Chi, v1.2).nes",          393232, 0x48e8bcee, BRF_ESS | BRF_PRG },
+	{ "Hebereke (T-Chi).nes",          393232, 0x0691129d, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_heberekec)
 STD_ROM_FN(nes_heberekec)
 
 struct BurnDriver BurnDrvnes_heberekecc= {
-	"nes_heberekec", "nes_ufouria", NULL, NULL, "2019",
-	"Hebereke (T-Chi, v1.2)\0", NULL, "Lei Jing Ling", "Miscellaneous",
+	"nes_heberekec", "nes_ufouria", NULL, NULL, "2022",
+	"Hebereke (T-Chi)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
 	NESGetZipName, nes_heberekecRomInfo, nes_heberekecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -19036,7 +19036,7 @@ struct BurnDriver BurnDrvnes_dai2jisuprotaji = {
 };
 
 // Grand Master (T-Chi, v1.1)
-// Translation by Han Hua Ni Mei Team - THIRTEEN, 姜维第二
+// Translation by HHNM Team - THIRTEEN, 姜维第二
 static struct BurnRomInfo nes_grandmastercRomDesc[] = {
 	{ "Grand Master (T-Chi, v1.1).nes",          1048592, 0x505d11c0, BRF_ESS | BRF_PRG },
 };
@@ -19046,7 +19046,7 @@ STD_ROM_FN(nes_grandmasterc)
 
 struct BurnDriver BurnDrvnes_grandmasterc = {
 	"nes_grandmasterc", "nes_grandmaster", NULL, NULL, "2021",
-	"Grand Master (T-Chi, v1.1)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Grand Master (T-Chi, v1.1)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_grandmastercRomInfo, nes_grandmastercRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -19055,7 +19055,7 @@ struct BurnDriver BurnDrvnes_grandmasterc = {
 };
 
 // Nekketsu! Street Basket - Ganbare Dunk Heroes (T-Chi, v2)
-// Translation by Han Hua Ni Mei Team - 惊风, 空气, 火光 & goner 
+// Translation by HHNM Team - 惊风, 空气, 火光 & goner 
 static struct BurnRomInfo nes_nekkestrbascRomDesc[] = {
 	{ "nekketsu! street basket - ganbare dunk heroes (T-Chi, v2).nes",          524304, 0x8f359b4f, BRF_ESS | BRF_PRG },
 };
@@ -19065,7 +19065,7 @@ STD_ROM_FN(nes_nekkestrbasc)
 
 struct BurnDriver BurnDrvnes_nekkestrbasc = {
 	"nes_nekkestrbasc", "nes_nekkestrbas", NULL, NULL, "2020",
-	"Nekketsu! Street Basket - Ganbare Dunk Heroes (T-Chi, v2)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Nekketsu! Street Basket - Ganbare Dunk Heroes (T-Chi, v2)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
 	NESGetZipName, nes_nekkestrbascRomInfo, nes_nekkestrbascRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -19409,7 +19409,7 @@ STD_ROM_PICK(nes_yybeebissii)
 STD_ROM_FN(nes_yybeebissii)
 
 struct BurnDriver BurnDrvnesnes_yybeebissii = {
-	"nes_yybeebissii", NULL, NULL, NULL, "2021",
+	"nes_yybeebissii", NULL, NULL, NULL, "2022",
 	"Yeah Yeah Beebiss II (HB)\0", NULL, "Rigg'd Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM | GBF_ACTION, 0,

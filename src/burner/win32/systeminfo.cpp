@@ -163,155 +163,162 @@ int PrintOSInfo()
 
 //	bprintf(PRINT_NORMAL, _T("%i, %i\n"), osvi.dwMajorVersion, osvi.dwMinorVersion);
 
-	AddText(_T("OS:  "));
+	AddText(_T("OS:  Microsoft "));
 	{
+		// https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-getproductinfo
+		typedef BOOL(WINAPI* GETPRODUCTINFO)(DWORD, DWORD, DWORD, DWORD, PDWORD);
+
+		GETPRODUCTINFO pGPI = NULL;
+		DWORD dwType = 0;
+
+		pGPI = (GETPRODUCTINFO)GetProcAddress(GetModuleHandle(_T("kernel32.dll")), "GetProductInfo");
+
+		if (pGPI) {
+			pGPI(osvi.dwMajorVersion, osvi.dwMinorVersion, 0, 0, &dwType);
+		}
+
 		if (osvi.dwPlatformId == VER_PLATFORM_WIN32_NT) {
 			// http://msdn.microsoft.com/en-us/library/ms724833(VS.85).aspx
-			if (osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 0) {
-				if (osvi.wProductType != VER_NT_WORKSTATION) {
-					if (osvi.wProductType & VER_SUITE_DATACENTER) {
-						AddText(_T("Microsoft Windows 2000 Datacenter Server"));
-					} else {
-						if (osvi.wProductType & VER_SUITE_ENTERPRISE) {
-							AddText(_T("Microsoft Windows 2000 Advanced Server"));
-						} else { AddText(_T("Microsoft Windows 2000 Server")); }
-					}
-				} else { AddText(_T("Microsoft Windows 2000 Professional")); }
-			}
-			if (osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 1) {
-				if (GetSystemMetrics(SM_TABLETPC)) {
-					AddText(_T("Microsoft Windows XP Tablet PC Edition")); // Pro
-				}
-				if (GetSystemMetrics(SM_MEDIACENTER)) {
-					AddText(_T("Microsoft Windows XP Media Center Edition")); // Pro
-				}
-				if (GetSystemMetrics(SM_STARTER)) {
-					AddText(_T("Microsoft Windows XP Starter"));
-				}
-				if (osvi.wSuiteMask & VER_SUITE_PERSONAL) {
-					AddText(_T("Microsoft Windows XP Home Edition"));
-				}
-				AddText(_T("Microsoft Windows XP "));
-			}
-			if (osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2) {
-				if (osvi.wProductType != VER_NT_WORKSTATION) {
-					if (GetSystemMetrics(SM_SERVERR2)) {
-						if (osvi.wSuiteMask & VER_SUITE_DATACENTER) {
-							AddText(_T("Windows Server 2003 R2 Datacenter Edition"));
-						}
-						if (osvi.wSuiteMask & VER_SUITE_ENTERPRISE) {
-							AddText(_T("Windows Server 2003 R2 Enterprise Edition"));
-						}
-						AddText(_T("Microsoft Windows 2003 R2 "));
-					}
-					else {
-						if (osvi.wSuiteMask & VER_SUITE_STORAGE_SERVER) {
-							AddText(_T("Windows Storage Server 2003"));
-						}
-						if (osvi.wSuiteMask & VER_SUITE_DATACENTER) {
-							AddText(_T("Windows Server 2003 Datacenter Edition"));
-						}
-						if (osvi.wSuiteMask & VER_SUITE_ENTERPRISE) {
-							AddText(_T("Windows Server 2003 Enterprise Edition"));
-						}
-						AddText(_T("Microsoft Windows 2003 "));
-					}
-				} else { AddText(_T("Windows XP Professional x64 Edition")); }
-			}
-			if (osvi.dwMajorVersion < 5 || osvi.dwMinorVersion > 3) {
-				AddText(_T("Microsoft Windows NT %d.%d "), osvi.dwMajorVersion, osvi.dwMinorVersion);
-			}
 			if (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 0 && osvi.wProductType == VER_NT_WORKSTATION) {
-				AddText(_T("Microsoft Windows Vista "));
+				AddText(_T("Windows Vista "));
 			}
 			if (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 0 && osvi.wProductType != VER_NT_WORKSTATION) {
-				AddText(_T("Microsoft Windows Server 2008 "));
+				AddText(_T("Windows Server 2008 "));
 			}
 			if (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 1 && osvi.wProductType != VER_NT_WORKSTATION) {
-				AddText(_T("Microsoft Windows Server 2008 R2 "));
+				if (dwType == 0x22) {	// PRODUCT_HOME_PREMIUM_SERVER
+					AddText(_T("Windows Home Server 2011"));
+				}
+				if (dwType == 0x32) {	// PRODUCT_SB_SOLUTION_SERVER
+					AddText(_T("Windows Small Business Server 2011 Essentials"));
+				}
+				if (dwType == 0x13) {	// PRODUCT_HOME_SERVER
+					AddText(_T("Windows Storage Server 2008 R2 Essentials"));
+				}
+
+				switch (dwType) {
+				case 0x22:
+				case 0x32:
+				case 0x13:
+					AddText(_T("%s (build %i)\r\n"), osvi.szCSDVersion, osvi.dwBuildNumber & 0xFFFF);
+					return 0;
+				default:
+					AddText(_T("Windows Server 2008 R2 "));
+				}
 			}
 			if (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 1 && osvi.wProductType == VER_NT_WORKSTATION) {
-				AddText(_T("Microsoft Windows 7 "));
+				AddText(_T("Windows 7 "));
 			}
 			if (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 2 && osvi.wProductType != VER_NT_WORKSTATION) {
-				AddText(_T("Microsoft Windows Server 2012 "));
+				AddText(_T("Windows Server 2012 "));
 			}
 			if (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 2 && osvi.wProductType == VER_NT_WORKSTATION) {
-				AddText(_T("Microsoft Windows 8 "));
+				AddText(_T("MWindows 8 "));
 			}
 			if (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 3 && osvi.wProductType != VER_NT_WORKSTATION) {
-				AddText(_T("Microsoft Windows Server 2012 R2 "));
+				AddText(_T("Windows Server 2012 R2 "));
 			}
 			if (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 3 && osvi.wProductType == VER_NT_WORKSTATION) {
-				AddText(_T("Microsoft Windows 8.1 "));
+				AddText(_T("Windows 8.1 "));
 			}
 			if (osvi.dwMajorVersion == 10 && osvi.dwMinorVersion == 0 && osvi.wProductType != VER_NT_WORKSTATION && osvi.dwBuildNumber <= 14393) {
-				AddText(_T("Microsoft Windows Server 2016 "));
+				AddText(_T("Windows Server 2016 "));
 			}
 			if (osvi.dwMajorVersion == 10 && osvi.dwMinorVersion == 0 && osvi.wProductType == VER_NT_WORKSTATION && osvi.dwBuildNumber < 22000) {
-				AddText(_T("Microsoft Windows 10 "));
+				AddText(_T("Windows 10 "));
 			}
 			if (osvi.dwMajorVersion == 10 && osvi.dwMinorVersion == 0 && osvi.wProductType != VER_NT_WORKSTATION && osvi.dwBuildNumber > 14393 && osvi.dwBuildNumber <= 17763) {
-				AddText(_T("Microsoft Windows Server 2019 "));
+				AddText(_T("Windows Server 2019 "));
 			}
 			if (osvi.dwMajorVersion == 10 && osvi.dwMinorVersion == 0 && osvi.wProductType == VER_NT_WORKSTATION && osvi.dwBuildNumber >= 22000) {
-				AddText(_T("Microsoft Windows 11 "));
+				AddText(_T("Windows 11 "));
 			}
 
-			// https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-getproductinfo
-			typedef BOOL(WINAPI *GETPRODUCTINFO)(DWORD, DWORD, DWORD, DWORD, PDWORD);
-
-			GETPRODUCTINFO pGPI = NULL;
-			DWORD dwType = 0;
-
-			pGPI = (GETPRODUCTINFO) GetProcAddress(GetModuleHandle(_T("kernel32.dll")), "GetProductInfo");
-
-			if (pGPI) {
-				pGPI(osvi.dwMajorVersion, osvi.dwMinorVersion, 0, 0, &dwType);
-			}
-
-			if (osvi.dwMajorVersion >= 5) {
-				switch (dwType)
-				{
-				case 0x09: // PRODUCT_SMALLBUSINESS_SERVER:
-				case 0x19: // PRODUCT_SMALLBUSINESS_SERVER_PREMIUM:
-					AddText(_T("Small Business Server"));
-					break;
-				case 0x07: // PRODUCT_STANDARD_SERVER:
-				case 0x24: // PRODUCT_STANDARD_SERVER_V:
-					AddText(_T("Standard"));
-					break;
-				case 0x11: // PRODUCT_WEB_SERVER:
-					AddText(_T("Web Server"));
-					break;
-				case 0x04: // PRODUCT_ENTERPRISE:
-				case 0x0A: // PRODUCT_ENTERPRISE_SERVER:
-				case 0x0F: // PRODUCT_ENTERPRISE_SERVER_IA64:
-					AddText(_T("Enterprise"));
-					break;
+			if (osvi.dwMajorVersion > 5) {
+				switch (dwType) {
 				case 0x06: // PRODUCT_BUSINESS:
+				case 0x10: // PRODUCT_BUSINESS_N:
 					AddText(_T("Business"));
 					break;
-				case 0x08: // PRODUCT_DATACENTER_SERVER:
-				case 0x25: // PRODUCT_DATACENTER_SERVER_V:
-					AddText(_T("Datacenter Edition"));
-					break;
-				case 0x79: // PRODUCT_EDUCATION:
-				case 0x7A: // PRODUCT_EDUCATION_N:
-					AddText(_T("Education"));
-					break;
-				case 0x01: // PRODUCT_ULTIMATE:
-					AddText(_T("Ultimate"));
-					break;
-				case 0x30: // PRODUCT_PROFESSIONAL:
-				case 0xA1: // PRODUCT_PRO_WORKSTATION:
-					AddText(_T("Professional"));
+				case 0x12: // PRODUCT_CLUSTER_SERVER:
+					AddText(_T("HPC Edition"));
 					break;
 				case 0x62: // PRODUCT_CORE_N:
 				case 0x63: // PRODUCT_CORE_COUNTRYSPECIFIC:
 				case 0x64: // PRODUCT_CORE_SINGLELANGUAGE:
 				case 0x65: // PRODUCT_CORE:
 					AddText(_T("Home"));
+					break;
+				case 0x08: // PRODUCT_DATACENTER_SERVER:
+				case 0x25: // PRODUCT_DATACENTER_SERVER_V:
+				case 0x50: // PRODUCT_DATACENTER_EVALUATION_SERVER:
+				case 0x91: // PRODUCT_DATACENTER_A_SERVER_CORE:
+				case 0x0C: // PRODUCT_DATACENTER_SERVER_CORE:
+				case 0x27: // PRODUCT_DATACENTER_SERVER_CORE_V
+					AddText(_T("Datacenter Edition"));
+					break;
+				case 0x79: // PRODUCT_EDUCATION:
+				case 0x7A: // PRODUCT_EDUCATION_N:
+					AddText(_T("Education"));
+					break;
+				case 0xBC: // PRODUCT_IOTENTERPRISE:
+				case 0xBF: // PRODUCT_IOTENTERPRISE_S:
+					AddText(_T("IoT Enterprise"));
+					break;
+				case 0x7B: // PRODUCT_IOTUAP:
+				case 0x83: // PRODUCT_IOTENTERPRISE_S:
+					AddText(_T("IoT Core"));
+					break;
+				case 0x3E: // PRODUCT_ESSENTIALBUSINESS_SERVER_ADDLSVC:
+				case 0x3B: // PRODUCT_ESSENTIALBUSINESS_SERVER_MGMT:
+				case 0x3D: // PRODUCT_ESSENTIALBUSINESS_SERVER_MGMTSVC:
+					AddText(_T("Essential Server Solution"));
+					break;
+				case 0x34: // PRODUCT_STANDARD_SERVER_SOLUTIONS:
+				case 0x35: // PRODUCT_STANDARD_SERVER_SOLUTIONS_CORE:
+					AddText(_T("Server Solutions Premium"));
+					break;
+				case 0x1E: // PRODUCT_MEDIUMBUSINESS_SERVER_MANAGEMENT:
+				case 0x20: // PRODUCT_MEDIUMBUSINESS_SERVER_MESSAGING:
+				case 0x1F: // PRODUCT_MEDIUMBUSINESS_SERVER_SECURITY:
+					AddText(_T("Essential Business Server"));
+					break;
+				case 0x38: // PRODUCT_SOLUTION_EMBEDDEDSERVER:
+				case 0x4D: // PRODUCT_MULTIPOINT_PREMIUM_SERVER:
+				case 0x4C: // PRODUCT_MULTIPOINT_STANDARD_SERVER:
+					AddText(_T("MultiPoint Server"));
+					break;
+				case 0x09: // PRODUCT_SMALLBUSINESS_SERVER:
+				case 0x19: // PRODUCT_SMALLBUSINESS_SERVER_PREMIUM:
+				case 0x3F: // PRODUCT_SMALLBUSINESS_SERVER_PREMIUM_CORE:
+					AddText(_T("Small Business Server"));
+					break;
+				case 0x4F: // PRODUCT_STANDARD_EVALUATION_SERVER:
+				case 0x07: // PRODUCT_STANDARD_SERVER:
+				case 0x28: // PRODUCT_STANDARD_SERVER_CORE_V:
+				case 0x0D: // PRODUCT_STANDARD_SERVER_CORE:
+				case 0x24: // PRODUCT_STANDARD_SERVER_V:
+					AddText(_T("Standard"));
+					break;
+				case 0x11: // PRODUCT_WEB_SERVER:
+				case 0x1D: // PRODUCT_WEB_SERVER_CORE:
+					AddText(_T("Web Server"));
+					break;
+				case 0x04: // PRODUCT_ENTERPRISE:
+				case 0x46: // PRODUCT_ENTERPRISE_E:
+				case 0x7D: // PRODUCT_ENTERPRISE_S:
+				case 0x1B: // PRODUCT_ENTERPRISE_N:
+				case 0x48: // PRODUCT_ENTERPRISE_EVALUATION:
+				case 0x54: // PRODUCT_ENTERPRISE_N_EVALUATION:
+				case 0x81: // PRODUCT_ENTERPRISE_S_EVALUATION:
+				case 0x7E: // PRODUCT_ENTERPRISE_S_N:
+				case 0x82: // PRODUCT_ENTERPRISE_S_N_EVALUATION:
+				case 0x0A: // PRODUCT_ENTERPRISE_SERVER:
+				case 0x0F: // PRODUCT_ENTERPRISE_SERVER_IA64:
+				case 0x0E: // PRODUCT_ENTERPRISE_SERVER_CORE:
+				case 0x29: // PRODUCT_ENTERPRISE_SERVER_CORE_V:
+				case 0x26: // PRODUCT_ENTERPRISE_SERVER_V:
+					AddText(_T("Enterprise"));
 					break;
 				case 0x02: // PRODUCT_HOME_BASIC:
 				case 0x05: // PRODUCT_HOME_BASIC_N:
@@ -321,41 +328,123 @@ int PrintOSInfo()
 				case 0x1A: // PRODUCT_HOME_PREMIUM_N:
 					AddText(_T("Home Premium"));
 					break;
-				case 0x22: // PRODUCT_HOME_PREMIUM_SERVER:
-					AddText(_T("Windows Home Server 2011"));
+				case 0x01: // PRODUCT_ULTIMATE:
+				case 0x1C: // PRODUCT_ULTIMATE_N:
+					AddText(_T("Ultimate"));
+					break;
+				case 0x30: // PRODUCT_PROFESSIONAL:
+				case 0x31: // PRODUCT_PROFESSIONAL_N:
+				case 0xA1: // PRODUCT_PRO_WORKSTATION:
+				case 0xA2: // PRODUCT_PRO_WORKSTATION_N:
+					AddText(_T("Professional"));
 					break;
 				case 0x0B: // PRODUCT_STARTER:
+				case 0x2F: // PRODUCT_STARTER_N:
 					AddText(_T("Starter"));
 					break;
-				case 0x12: // PRODUCT_CLUSTER_SERVER:
-					AddText(_T("HPC Edition"));
-					break;
+				case 0x17: // PRODUCT_STORAGE_ENTERPRISE_SERVER:
+				case 0x2E: // PRODUCT_STORAGE_ENTERPRISE_SERVER_CORE:
 				case 0x14: // PRODUCT_STORAGE_EXPRESS_SERVER:
-					AddText(_T("Storage Server Express"));
+				case 0x2B: // PRODUCT_STORAGE_EXPRESS_SERVER_CORE:
+				case 0x60: // PRODUCT_STORAGE_STANDARD_EVALUATION_SERVER:
+				case 0x15: // PRODUCT_STORAGE_STANDARD_SERVER:
+				case 0x2C: // PRODUCT_STORAGE_STANDARD_SERVER_CORE:
+				case 0x5F: // PRODUCT_STORAGE_WORKGROUP_EVALUATION_SERVER:
+				case 0x16: // PRODUCT_STORAGE_WORKGROUP_SERVER:
+				case 0x2D: // PRODUCT_STORAGE_WORKGROUP_SERVER_CORE:
+					AddText(_T("Storage Server"));
 					break;
 				}
+			}
+			if (osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 0) {
+				if (osvi.wProductType != VER_NT_WORKSTATION) {
+					if (osvi.wProductType & VER_SUITE_DATACENTER) {
+						AddText(_T("Windows 2000 Datacenter Server"));
+					} else if (osvi.wProductType & VER_SUITE_ENTERPRISE) {
+						AddText(_T("Windows 2000 Advanced Server"));
+					} else {
+						AddText(_T("Windows 2000 Server"));
+					}
+				} else {
+					AddText(_T("Windows 2000 Professional"));
+				}
+			}
+			if (osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 1) {
+				if (GetSystemMetrics(SM_TABLETPC) && GetSystemMetrics(SM_MEDIACENTER)) {
+					AddText(_T("Windows XP Tablet PC Edition with Media Center"));	// Pro (Ultimate hack)
+				} else if (GetSystemMetrics(SM_TABLETPC)) {
+					AddText(_T("Windows XP Tablet PC Edition"));					// Pro
+				} else if (GetSystemMetrics(SM_MEDIACENTER)) {
+					AddText(_T("Windows XP Media Center Edition"));					// Pro
+				} else if (GetSystemMetrics(SM_STARTER)) {
+					AddText(_T("Windows XP Starter Edition"));
+				} else if (osvi.wSuiteMask & VER_SUITE_PERSONAL) {
+					AddText(_T("Windows XP Home Edition"));
+				} else if (osvi.wSuiteMask & VER_SUITE_EMBEDDEDNT) {
+					AddText(_T("Windows XP Embedded"));
+				} else { 
+					AddText(_T("Windows XP")); 
+				}
+			}
+			if (osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2) {
+				if (osvi.wProductType != VER_NT_WORKSTATION) {
+					if (GetSystemMetrics(SM_SERVERR2)) {
+						if (osvi.wSuiteMask & VER_SUITE_DATACENTER) {
+							AddText(_T("Windows Server 2003 R2, Datacenter Edition"));
+						} else if (osvi.wSuiteMask & VER_SUITE_ENTERPRISE) {
+							AddText(_T("Windows Server 2003 R2, Enterprise Edition"));
+						} else if (osvi.wSuiteMask & VER_SUITE_ENTERPRISE) {
+							AddText(_T("Windows Server 2003 R2, Enterprise Edition"));
+						} else if (osvi.wSuiteMask & VER_SUITE_COMPUTE_SERVER) {
+							AddText(_T("Windows Storage Server 2003 R2"));
+						} else if (dwType == 0x07) {								// PRODUCT_STANDARD_SERVER
+							AddText(_T("Windows Server 2003 R2, Standard Edition"));
+						} else {
+							AddText(_T("Windows 2003 R2"));
+						}
+					} else {
+						if (osvi.wSuiteMask & VER_SUITE_STORAGE_SERVER) {
+							AddText(_T("Windows Storage Server 2003"));
+						} else if (osvi.wSuiteMask & VER_SUITE_DATACENTER) {
+							AddText(_T("Windows Server 2003, Datacenter Edition"));
+						} else if (osvi.wSuiteMask & VER_SUITE_ENTERPRISE) {
+							AddText(_T("Windows Server 2003, Enterprise Edition"));
+						} else if (osvi.wSuiteMask & VER_SUITE_BLADE) {
+							AddText(_T("Windows Server 2003, Web Edition"));
+						} else if (osvi.wSuiteMask & VER_SUITE_COMPUTE_SERVER) {
+							AddText(_T("Windows Compute Cluster Server 2003"));
+						} else {
+							AddText(_T("Windows 2003"));
+						}
+					}
+				} else {
+					AddText(_T("Windows XP Professional x64 Edition"));
+				}
+			}
+			if (osvi.dwMajorVersion < 5 || osvi.dwMinorVersion > 3) {
+				AddText(_T("Windows NT %d.%d "), osvi.dwMajorVersion, osvi.dwMinorVersion);
 			}
 			AddText(_T("%s (build %i)\r\n"), osvi.szCSDVersion, osvi.dwBuildNumber & 0xFFFF);
 		}
 
 		if (osvi.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS) {
 			if (osvi.dwMajorVersion == 4 && osvi.dwMinorVersion < 10) {
-				AddText(_T("Microsoft Windows 95"));
+				AddText(_T("Windows 95"));
 				if (osvi.szCSDVersion[1] == _T('B') || osvi.szCSDVersion[1] == _T('C')) {
 					AddText(_T(" OSR2"));
 				}
 			}
 			if (osvi.dwMajorVersion == 4 && osvi.dwMinorVersion == 10) {
-				AddText(_T("Microsoft Windows 98"));
+				AddText(_T("Windows 98"));
 				if (osvi.szCSDVersion[1] == _T('A')) {
 					AddText(_T(" SE"));
 				}
 			}
 			if (osvi.dwMajorVersion == 4 && osvi.dwMinorVersion == 90) {
-				AddText(_T("Microsoft Windows Me"));
+				AddText(_T("Windows Me"));
 			}
 			if (osvi.dwMajorVersion != 4 && osvi.dwMinorVersion < 10) {
-				AddText(_T("Microsoft Windows %d.%d "), osvi.dwMajorVersion, osvi.dwMinorVersion);
+				AddText(_T("Windows %d.%d "), osvi.dwMajorVersion, osvi.dwMinorVersion);
 			}
 			AddText(_T("\r\n"));
 		}
@@ -428,13 +517,9 @@ int PrintCPUInfo()
 					if (!isspace(szCpuName[i])) {
 						CPUBrandStringFinal[j++] = szCpuName[i];
 					}
-				}
-				else {
-					CPUBrandStringFinal[j++] = szCpuName[i];
-				}
+				} else { CPUBrandStringFinal[j++] = szCpuName[i]; }
 			}
-		}
-		else { sprintf(CPUBrandStringFinal, "%s", "CPU Detection not enabled for GCC builds"); }
+		} else { sprintf(CPUBrandStringFinal, "%s", "CPU Detection not enabled for GCC builds"); }
 
 		RegCloseKey(hKey);
 	}

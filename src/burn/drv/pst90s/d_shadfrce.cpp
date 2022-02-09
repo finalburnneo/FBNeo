@@ -767,7 +767,7 @@ static INT32 shadfrceFrame()
 			}
 		}
 
-		if (scanline == 247) {
+		if (scanline == 0 || scanline == 247) {
 			bVBlank = 0;
 		}
 

@@ -87,6 +87,7 @@ DRV		BurnDrv1945kiiin;
 DRV		BurnDrv1945kiii;
 DRV		BurnDrv1945kiiio;
 DRV		BurnSpec1985tda;
+DRV		BurnDrvnes_1991dumarac;
 DRV		BurnDrvCps19xxar1;
 DRV		BurnDrvCps19xxjr2;
 DRV		BurnDrvCps19xxd;
@@ -5232,6 +5233,7 @@ DRV		BurnDrvFirebarr;
 DRV		BurnDrvFirebatl;
 DRV		BurnDrvnes_firedragon;
 DRV		BurnDrvnes_fireembj;
+DRV		BurnDrvnes_fireembc;
 DRV		BurnDrvnes_fireemb;
 DRV		BurnDrvnes_fireembgaij;
 DRV		BurnDrvnes_fireembgai;
@@ -8489,6 +8491,7 @@ DRV		BurnDrvLuplup29;
 DRV		BurnDrvLuplup;
 DRV		BurnDrvnes_lupinsanc;
 DRV		BurnDrvnes_lupinsanj;
+DRV		BurnDrvnes_lupinsansc;
 DRV		BurnDrvnes_lupinsan;
 DRV		BurnDrvfds_lutter;
 DRV		BurnDrvcv_mash;
@@ -8651,6 +8654,7 @@ DRV		BurnDrvsg1k_mahjong;
 DRV		BurnDrvsg1k_mahjonga;
 DRV		BurnDrvsg1k_mahjongt;
 DRV		BurnDrvAkiss;
+DRV		BurnDrvnes_mahjongblock;
 DRV		BurnDrvmd_mahjongc;
 DRV		BurnDrvMSX_mjdojo;
 DRV		BurnDrvMjgtaste;
@@ -13563,6 +13567,7 @@ DRV		BurnDrvSnowbroswb;
 DRV		BurnDrvSnowbro2;
 DRV		BurnDrvSnowbro2ny;
 DRV		BurnDrvnes_snowbrothersc;
+DRV		BurnDrvnes_snowbrotherssc;
 DRV		BurnDrvnes_snowbrothers;
 DRV		BurnDrvSnowbro3;
 DRV		BurnDrvMSX_snowboard;
@@ -16360,6 +16365,7 @@ DRV		BurnDrvgg_tintin;
 DRV		BurnSpectintmoon;
 DRV		BurnDrvnes_tinytooadvc;
 DRV		BurnDrvmd_ttoonbhtk;
+DRV		BurnDrvnes_tinytooadvsc;
 DRV		BurnDrvnes_tinytooadv;
 DRV		BurnDrvmd_ttacme;
 DRV		BurnDrvmd_ttacmes;
@@ -17969,6 +17975,7 @@ DRV		BurnDrvXexexj;
 DRV		BurnDrvnes_xexyz;
 DRV		BurnDrvoldsplusnr;
 DRV		BurnDrvnes_xiaohonmao;
+DRV		BurnDrvnes_xiaomali;
 DRV		BurnDrvmd_xiaomo;
 DRV		BurnDrvmd_xinqig;
 DRV		BurnDrvmd_xinqig1;
@@ -18370,6 +18377,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrv1945kiii,			// 1945k III (newer, OPCX2 PCB)
 	&BurnDrv1945kiiio,			// 1945k III (older, OPCX1 PCB)
 	&BurnSpec1985tda,			// 1985 - The Day After (48K)
+	&BurnDrvnes_1991dumarac,	// 1991 Du Ma Racing (Unl)
 	&BurnDrvCps19xxar1,			// 19XX - the war against destiny (951207 Asia)
 	&BurnDrvCps19xxjr2,			// 19XX - the war against destiny (951207 Japan)
 	&BurnDrvCps19xxd,			// 19XX - the war against destiny (951207 USA Phoenix Edition)
@@ -23515,6 +23523,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvFirebatl,			// Fire Battle
 	&BurnDrvnes_firedragon,		// Fire Dragon (Asia)
 	&BurnDrvnes_fireembj,		// Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (Japan)
+	&BurnDrvnes_fireembc,		// Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (T-Chi)
 	&BurnDrvnes_fireemb,		// Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (T-Eng)
 	&BurnDrvnes_fireembgaij,	// Fire Emblem Gaiden (Japan)
 	&BurnDrvnes_fireembgai,		// Fire Emblem Gaiden (T-Eng)
@@ -24933,7 +24942,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvHwchamp,			// Heavyweight Champ (set 1)
 	&BurnDrvHwchampa,			// Heavyweight Champ (set 2)
 	&BurnDrvnes_heberekej,		// Hebereke (Japan)
-	&BurnDrvnes_heberekecc,		// Hebereke (T-Chi, v1.2)
+	&BurnDrvnes_heberekecc,		// Hebereke (T-Chi)
 	&BurnDrvnes_hebereke,		// Hebereke (T-Eng)
 	&BurnDrvHeberpop,			// Hebereke no Popoon (Japan)
 	&BurnDrvnes_hector87,		// Hector '87 (Japan)
@@ -26772,6 +26781,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvLuplup,				// Lup Lup Puzzle / Zhuan Zhuan Puzzle (version 3.0 / 990128)
 	&BurnDrvnes_lupinsanc,		// Lupin Sansei - Pandora no Isan (Hack, Spanish v1.0)
 	&BurnDrvnes_lupinsanj,		// Lupin Sansei - Pandora no Isan (Japan)
+	&BurnDrvnes_lupinsansc,		// Lupin Sansei - Pandora no Isan (T-Chi)
 	&BurnDrvnes_lupinsan,		// Lupin Sansei - Pandora no Isan (T-eng)
 	&BurnDrvfds_lutter,			// Lutter (Japan)
 	&BurnDrvcv_mash,			// M*A*S*H (Prototype)
@@ -26934,6 +26944,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_mahjonga,		// Mahjong (Jpn, Alt)
 	&BurnDrvsg1k_mahjongt,		// Mahjong (Tw)
 	&BurnDrvAkiss,				// Mahjong Angel Kiss (ver 1.0)
+	&BurnDrvnes_mahjongblock,	// Mahjong Block (Unl)
 	&BurnDrvmd_mahjongc,		// Mahjong Cop Ryuu - Shiro Ookami no Yabou (Jpn)
 	&BurnDrvMSX_mjdojo,			// Mahjong Dojo (Jpn)
 	&BurnDrvMjgtaste,			// Mahjong G-Taste
@@ -31846,6 +31857,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSnowbro2,			// Snow Bros. 2 - with new elves (Hanafram)
 	&BurnDrvSnowbro2ny,			// Snow Bros. 2 - with new elves (Nyanko)
 	&BurnDrvnes_snowbrothersc,	// Snow Brothers (Hack, Spanish v1.0)
+	&BurnDrvnes_snowbrotherssc,	// Snow Brothers (T-Chi)
 	&BurnDrvnes_snowbrothers,	// Snow Brothers (USA)
 	&BurnDrvSnowbro3,			// Snow Brothers 3 - Magical Adventure
 	&BurnDrvMSX_snowboard,		// Snowboarding (HB, v1.01)
@@ -33436,7 +33448,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSsf2th,			// Super Street Fighter II Turbo (super street fighter 2 X 940223 Hispanic)
 	&BurnDrvCpsSsf2tur1,		// Super Street Fighter II Turbo (super street fighter 2 X 940223 USA)
 	&BurnDrvCpsSsf2tu,			// Super Street Fighter II Turbo (super street fighter 2 X 940323 USA)
-	&BurnDrvCpsSsf2tnl,			// Super Street Fighter II Turbo New Legacy v0.5 (Beta) (Hack by Born2SPD)
+	&BurnDrvCpsSsf2tnl,			// Super Street Fighter II Turbo New Legacy v0.6 (Beta) (Hack by Born2SPD)
 	&BurnDrvCpsSsf2xjr1trn,		// Super Street Fighter II X - GMC Trainer (super street fighter 2 X 940223 Japan)
 	&BurnDrvCpsSsf2xjr1d,		// Super Street Fighter II X - grand master challenge (super street fighter 2 X 940223 Japan Phoenix Edition)
 	&BurnDrvCpsSsf2xjr1r,		// Super Street Fighter II X - grand master challenge (super street fighter 2 X 940223 Japan rent version)
@@ -34643,6 +34655,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpectintmoon,			// Tintin on the Moon (48K)
 	&BurnDrvnes_tinytooadvc,	// Tiny Toon Adventures (Hack, Spanish v1.0)
 	&BurnDrvmd_ttoonbhtk,		// Tiny Toon Adventures (Kor) [no comment, NOT WORKING]
+	&BurnDrvnes_tinytooadvsc,	// Tiny Toon Adventures (T-Chi)
 	&BurnDrvnes_tinytooadv,		// Tiny Toon Adventures (USA)
 	&BurnDrvmd_ttacme,			// Tiny Toon Adventures - Acme All-Stars (Euro)
 	&BurnDrvmd_ttacmes,			// Tiny Toon Adventures - Acme All-Stars (Hack, Spanish)
@@ -35748,7 +35761,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_wildsnake,		// WildSnake (Prototype / Unreleased)
 	&BurnDrvmd_arcadeghu,		// Williams Arcade's Greatest Hits (USA)
 	&BurnDrvCpsWillowj,			// Willow (Japan, Japanese)
-	&BurnDrvnes_willownfh,		// Willow (No Flash ed.) (Hak, v1.1)
+	&BurnDrvnes_willownfh,		// Willow (No Flash ed.) (Hack, v1.1)
 	&BurnDrvCpsWillowuo,		// Willow (USA Old Ver.)
 	&BurnDrvnes_willow,			// Willow (USA)
 	&BurnDrvCpsWillowu,			// Willow (USA)
@@ -36252,6 +36265,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_xexyz,			// Xexyz (USA)
 	&BurnDrvoldsplusnr,			// Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)
 	&BurnDrvnes_xiaohonmao,		// Xiao Hong Mao - Little Red Hood (Ch)
+	&BurnDrvnes_xiaomali,		// Xiao Ma Li (Unl)
 	&BurnDrvmd_xiaomo,			// Xiao Monv - Magic Girl (Chi)
 	&BurnDrvmd_xinqig,			// Xin Qi Gai Wang Zi (Chi)
 	&BurnDrvmd_xinqig1,			// Xin Qi Gai Wang Zi (Chi, Alt)

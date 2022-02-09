@@ -36,6 +36,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="1991dumarac">
+		<description>1991 Du Ma Racing (Unl)</description>
+		<year>1991</year>
+		<manufacturer>Idea-tek</manufacturer>
+		<rom name="1991 Du Ma Racing (Unl).nes" size="65552" crc="8cd7f9b1"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="2010">
 		<description>2010 - Street Fighter (Japan)</description>
 		<year>1990</year>
@@ -539,7 +547,7 @@
 		<comment>Hack</comment>
 		<description>Akumajou Densetsu (T-Chi, v2.3)</description>
 		<year>2018</year>
-		<manufacturer>Han Hua Ni Mei Team</manufacturer>
+		<manufacturer>HHNM Team</manufacturer>
 		<rom name="Akumajou Densetsu (T-Chi, v2.3).nes" size="524304" crc="b810b79c"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -835,7 +843,7 @@
 		<comment>Hack</comment>
 		<description>Argos no Senshi (T-Chi, v1.11)</description>
 		<year>2016</year>
-		<manufacturer>Han Hua Ni Mei Team</manufacturer>
+		<manufacturer>HHNM Team</manufacturer>
 		<rom name="Argos no Senshi (T-Chi, v1.11).nes" size="262160" crc="a1a22c10"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1049,7 +1057,7 @@
 		<comment>Hack</comment>
 		<description>AV Mahjong Club (T-Chi) (Unl)</description>
 		<year>2018</year>
-		<manufacturer>Han Hua Ni Mei Team</manufacturer>
+		<manufacturer>HHNM Team</manufacturer>
 		<rom name="AV Mahjong Club (T-Chi) (Unl).nes" size="262160" crc="663870dd"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1351,7 +1359,7 @@
 		<comment>Hack</comment>
 		<description>Batman - The Video Game (T-Chi)</description>
 		<year>2020</year>
-		<manufacturer>Han Hua Ni Mei Team</manufacturer>
+		<manufacturer>HHNM Team</manufacturer>
 		<rom name="Batman - The Video Game (T-Chi).nes" size="393232" crc="4b2de665"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3262,7 +3270,7 @@
 		<comment>Hack</comment>
 		<description>Darkwing Duck (T-Chi)</description>
 		<year>2020</year>
-		<manufacturer>Han Hua Ni Mei Team</manufacturer>
+		<manufacturer>HHNM Team</manufacturer>
 		<rom name="Darkwing Duck (T-Chi).nes" size="393232" crc="585f3500"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5227,6 +5235,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="fireembc" cloneof="fireemb" romof="fireemb">
+		<comment>Hack</comment>
+		<description>Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (T-Chi)</description>
+		<year>1990</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (T-Chi).nes" size="655376" crc="a3126533"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="fireemb">
 		<description>Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (T-Eng)</description>
 		<year>1989?</year>
@@ -6131,7 +6148,7 @@
 		<comment>Hack</comment>
 		<description>Grand Master (T-Chi, v1.1)</description>
 		<year>2021</year>
-		<manufacturer>Han Hua Ni Mei Team</manufacturer>
+		<manufacturer>HHNM Team</manufacturer>
 		<rom name="Grand Master (T-Chi, v1.1).nes" size="1048592" crc="505d11c0"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6231,7 +6248,7 @@
 		<comment>Hack</comment>
 		<description>Guardic Gaiden (T-Chi, v1.1)</description>
 		<year>2017</year>
-		<manufacturer>Han Hua Ni Mei Team</manufacturer>
+		<manufacturer>HHNM Team</manufacturer>
 		<rom name="Guardic Gaiden (T-Chi, v1.1).nes" size="262160" crc="77df8d83"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6313,7 +6330,7 @@
 		<comment>Hack</comment>
 		<description>Gun-Dec (T-Chi)</description>
 		<year>2019</year>
-		<manufacturer>Han Hua Ni Mei Team</manufacturer>
+		<manufacturer>HHNM Team</manufacturer>
 		<rom name="Gun-Dec (T-Chi).nes" size="393232" crc="647eccfa"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6505,10 +6522,10 @@
 	</game>
 	<game name="heberekec" cloneof="ufouria" romof="ufouria">
 		<comment>Hack</comment>
-		<description>Hebereke (T-Chi, v1.2)</description>
-		<year>2019</year>
-		<manufacturer>Lei Jing Ling</manufacturer>
-		<rom name="Hebereke (T-Chi, v1.2).nes" size="393232" crc="48e8bcee"/>
+		<description>Hebereke (T-Chi)</description>
+		<year>2022</year>
+		<manufacturer>HHNM Team</manufacturer>
+		<rom name="Hebereke (T-Chi).nes" size="393232" crc="0691129d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -8694,6 +8711,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="lupinsansc" cloneof="lupinsan" romof="lupinsan">
+		<comment>Hack</comment>
+		<description>Lupin Sansei - Pandora no Isan (T-Chi)</description>
+		<year>2021</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="Lupin Sansei - Pandora no Isan (T-Chi).nes" size="524304" crc="1fd2e927"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="lupinsan">
 		<description>Lupin Sansei - Pandora no Isan (T-eng)</description>
 		<year>1987</year>
@@ -8947,6 +8973,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="mahjongblock">
+		<description>Mahjong Block (Unl)</description>
+		<year>1991</year>
+		<manufacturer>Idea-tek</manufacturer>
+		<rom name="Mahjong Block (Super Mega) (Unl).nes" size="65552" crc="bcbbff38"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="majorleague">
 		<description>Major League (Japan)</description>
 		<year>1989</year>
@@ -8975,7 +9009,7 @@
 		<comment>Hack</comment>
 		<description>Majou Densetsu II - Daimashikyou Galious (T-Chi, v2.2)</description>
 		<year>2018</year>
-		<manufacturer>Han Hua Ni Mei Team</manufacturer>
+		<manufacturer>HHNM Team</manufacturer>
 		<rom name="Majou Densetsu II - Daimashikyou Galious (T-Chi, v2.2).nes" size="262160" crc="a032170a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10182,7 +10216,7 @@
 		<comment>Hack</comment>
 		<description>Nekketsu! Street Basket - Ganbare Dunk Heroes (T-Chi, v2)</description>
 		<year>2020</year>
-		<manufacturer>Han Hua Ni Mei Team</manufacturer>
+		<manufacturer>HHNM Team</manufacturer>
 		<rom name="nekketsu! street basket - ganbare dunk heroes (T-Chi, v2).nes" size="524304" crc="8f359b4f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12154,7 +12188,7 @@
 		<comment>Hack</comment>
 		<description>Saint Seiya - Ougon Densetsu (T-Chi, v2.0)</description>
 		<year>2018</year>
-		<manufacturer>Han Hua Ni Mei Team</manufacturer>
+		<manufacturer>HHNM Team</manufacturer>
 		<rom name="Saint Seiya - Ougon Densetsu (T-Chi, v2.0).nes" size="1310736" crc="f7df4b56"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12179,7 +12213,7 @@
 		<comment>Hack</comment>
 		<description>Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi)</description>
 		<year>2017</year>
-		<manufacturer>Han Hua Ni Mei Team</manufacturer>
+		<manufacturer>HHNM Team</manufacturer>
 		<rom name="Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi).nes" size="524304" crc="b1651b70"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12204,7 +12238,7 @@
 		<comment>Hack</comment>
 		<description>Saiyuuki World (T-Chi, v1.04)</description>
 		<year>2016</year>
-		<manufacturer>Han Hua Ni Mei Team</manufacturer>
+		<manufacturer>HHNM Team</manufacturer>
 		<rom name="Saiyuuki World (T-Chi, v1.04).nes" size="262160" crc="6e66cf6f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12600,7 +12634,7 @@
 		<comment>Hack</comment>
 		<description>Silk Worm (T-Chi, v1.1)</description>
 		<year>2020</year>
-		<manufacturer>Han Hua Ni Mei Team</manufacturer>
+		<manufacturer>HHNM Team</manufacturer>
 		<rom name="Silk Worm (T-Chi, v1.1).nes" size="393232" crc="3d53c8ad"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12849,6 +12883,15 @@
 		<year>2018</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="snow brothers (usa) - castellano v1.0.nes" size="262160" crc="29c40f70"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="snowbrotherssc" cloneof="snowbrothers" romof="snowbrothers">
+		<comment>Hack</comment>
+		<description>Snow Brothers (T-Chi)</description>
+		<year>2022</year>
+		<manufacturer>Han Xue Shi Zhe &amp; Jin Di Di San &amp; ZARD</manufacturer>
+		<rom name="Snow Brothers (T-Chi).nes" size="393232" crc="1a0eaa47"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -13509,7 +13552,7 @@
 		<comment>Hack</comment>
 		<description>Super Chinese II - Dragon Kid (T-Chi, v1.4)</description>
 		<year>2019</year>
-		<manufacturer>Han Hua Ni Mei Team</manufacturer>
+		<manufacturer>HHNM Team</manufacturer>
 		<rom name="Super Chinese II - Dragon Kid (T-Chi, v1.4).nes" size="524304" crc="a9e92ef3"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14695,6 +14738,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="tinytooadvsc" cloneof="tinytooadv" romof="tinytooadv">
+		<comment>Hack</comment>
+		<description>Tiny Toon Adventures (T-Chi)</description>
+		<year>2022</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="Tiny Toon Adventures (T-Chi).nes" size="344080" crc="fbf2bb98"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="tinytooadv">
 		<description>Tiny Toon Adventures (USA)</description>
 		<year>1991</year>
@@ -15646,7 +15698,7 @@
 	</game>
 	<game name="willownfh" cloneof="willow" romof="willow">
 		<comment>Hack</comment>
-		<description>Willow (No Flash ed.) (Hak, v1.1)</description>
+		<description>Willow (No Flash ed.) (Hack, v1.1)</description>
 		<year>2020</year>
 		<manufacturer>Jigglysaint</manufacturer>
 		<rom name="Willow (Hack, No Flash).nes" size="262160" crc="956ea1a6"/>
@@ -15877,10 +15929,18 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="xiaomali">
+		<description>Xiao Ma Li (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Xiao Ma Li (Unl).nes" size="24592" crc="c8f9a5ab"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="yybeebissii">
 		<comment>Homebrew</comment>
 		<description>Yeah Yeah Beebiss II (HB)</description>
-		<year>2021</year>
+		<year>2022</year>
 		<manufacturer>Rigg'd Games</manufacturer>
 		<rom name="Yeah Yeah Beebiss II (2022).nes" size="65552" crc="4a8eed90"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>

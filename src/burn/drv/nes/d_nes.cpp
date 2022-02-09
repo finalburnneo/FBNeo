@@ -2670,6 +2670,9 @@ static void mapper03_cycle()
 #define mapper262_reg           (mapper_regs[0x1f - 0xa])
 #define mapper189_reg           (mapper_regs[0x1f - 0xa]) // same as 262
 #define mapper268_reg(x)        (mapper_regs[(0x1f - 0xa) + (x)])
+// mapper 165 mmc3 w/mmc4-like 4k chr banking latch
+#define mapper165_chrlatch(x)   (mapper_regs[(0x1f - 0x0a) + (x)])
+#define mapper165_update        (mapper_regs[0x1f - 0xb])
 
 static UINT8 mapper04_vs_rbi_tko_prot(UINT16 address)
 {
@@ -3090,6 +3093,100 @@ static void mapper119_map()
 
 	if (Cart.Mirroring != 4)
 		set_mirroring((mapper4_mirror) ? VERTICAL : HORIZONTAL);
+}
+
+static void mapper165_ppu_clock(UINT16 address)
+{
+	if (mapper165_update) {
+		mapper_map();
+		mapper165_update = 0;
+	}
+
+	switch (address & 0x3ff8) {
+		case 0x0fd0:
+			mapper165_chrlatch(0) = 0;
+			mapper165_update = 1;
+			break;
+		case 0x0fe8:
+			mapper165_chrlatch(0) = 1;
+			mapper165_update = 1;
+			break;
+		case 0x1fd0:
+			mapper165_chrlatch(1) = 2;
+			mapper165_update = 1;
+			break;
+		case 0x1fe8:
+			mapper165_chrlatch(1) = 4;
+			mapper165_update = 1;
+			break;
+	}
+}
+
+static void mapper165_chrmap(INT32 slot, INT32 bank)
+{
+	mapper_map_chr_ramrom(4, slot, bank >> 2, (bank == 0x00) ? MEM_RAM : MEM_ROM);
+}
+
+static void mapper165_map()
+{
+    mapper_map_prg(8, 1, mapper_regs[7]);
+
+    if (~mapper4_banksel & 0x40) {
+        mapper_map_prg(8, 0, mapper_regs[6]);
+        mapper_map_prg(8, 2, -2);
+    } else {
+        mapper_map_prg(8, 0, -2);
+        mapper_map_prg(8, 2, mapper_regs[6]);
+    }
+
+	mapper165_chrmap(0, mapper_regs[mapper165_chrlatch(0)]);
+	mapper165_chrmap(1, mapper_regs[mapper165_chrlatch(1)]);
+
+	if (Cart.Mirroring != 4)
+		set_mirroring(mapper4_mirror ? VERTICAL : HORIZONTAL);
+}
+
+static void mapper192_chrmap(INT32 slot, INT32 bank)
+{
+	mapper_map_chr_ramrom(1, slot, bank, (bank >= 0x8 && bank <= 0xb) ? MEM_RAM : MEM_ROM);
+}
+
+static void mapper192_map()
+{
+    mapper_map_prg(8, 1, mapper_regs[7]);
+
+    if (~mapper4_banksel & 0x40) {
+        mapper_map_prg(8, 0, mapper_regs[6]);
+        mapper_map_prg(8, 2, -2);
+    } else {
+        mapper_map_prg(8, 0, -2);
+        mapper_map_prg(8, 2, mapper_regs[6]);
+    }
+
+    if (~mapper4_banksel & 0x80) {
+		mapper192_chrmap(0, mapper_regs[0] & 0xfe);
+		mapper192_chrmap(1, mapper_regs[0] | 0x01);
+        mapper192_chrmap(2, mapper_regs[1] & 0xfe);
+        mapper192_chrmap(3, mapper_regs[1] | 0x01);
+
+		mapper192_chrmap(4, mapper_regs[2]);
+		mapper192_chrmap(5, mapper_regs[3]);
+		mapper192_chrmap(6, mapper_regs[4]);
+		mapper192_chrmap(7, mapper_regs[5]);
+	} else {
+		mapper192_chrmap(0, mapper_regs[2]);
+		mapper192_chrmap(1, mapper_regs[3]);
+		mapper192_chrmap(2, mapper_regs[4]);
+		mapper192_chrmap(3, mapper_regs[5]);
+
+		mapper192_chrmap(4, mapper_regs[0] & 0xfe);
+		mapper192_chrmap(5, mapper_regs[0] | 0x01);
+		mapper192_chrmap(6, mapper_regs[1] & 0xfe);
+		mapper192_chrmap(7, mapper_regs[1] | 0x01);
+	}
+
+	if (Cart.Mirroring != 4)
+		set_mirroring(mapper4_mirror ? VERTICAL : HORIZONTAL);
 }
 
 static void mapper262_map()
@@ -3713,6 +3810,7 @@ static void mapper07_map()
 #define mapper9_chr_lo_C000		(mapper_regs[0xf - 5])
 #define mapper9_chr_hi_E000		(mapper_regs[0xf - 6])
 #define mapper9_mirror			(mapper_regs[0xf - 7])
+#define mapper9_update          (mapper_regs[0xf - 8])
 
 static void mapper09_write(UINT16 address, UINT8 data)
 {
@@ -3748,22 +3846,60 @@ static void mapper10_map()
 
 static void mapper09_ppu_clk(UINT16 busaddr)
 {
-	switch (busaddr & 0x3ff8) {
+	switch (busaddr & 0x3fff) {
 		case 0x0fd8:
 			mapper9_chr_lo_C000 = 0;
-			mapper_map();
+			mapper9_update = 1;
 			break;
 		case 0x0fe8:
 			mapper9_chr_lo_C000 = 1;
-			mapper_map();
+			mapper9_update = 1;
 			break;
+	}
+
+	switch (busaddr & 0x3ff8) {
 		case 0x1fd8:
 			mapper9_chr_hi_E000 = 0;
-			mapper_map();
+			mapper9_update = 1;
 			break;
 		case 0x1fe8:
 			mapper9_chr_hi_E000 = 1;
-			mapper_map();
+			mapper9_update = 1;
+			break;
+	}
+
+	if (mapper9_update) {
+		// mmc2 needs update immediately on latch
+		mapper9_update = 0;
+		mapper_map();
+	}
+}
+
+static void mapper10_ppu_clk(UINT16 busaddr)
+{
+	if (mapper9_update) {
+		// mmc4 needs delayed update.  right window borders break in fire emblem
+		// without
+		mapper9_update = 0;
+		mapper_map();
+	}
+
+	switch (busaddr & 0x3ff8) {
+		case 0x0fd8:
+			mapper9_chr_lo_C000 = 0;
+			mapper9_update = 1;
+			break;
+		case 0x0fe8:
+			mapper9_chr_lo_C000 = 1;
+			mapper9_update = 1;
+			break;
+		case 0x1fd8:
+			mapper9_chr_hi_E000 = 0;
+			mapper9_update = 1;
+			break;
+		case 0x1fe8:
+			mapper9_chr_hi_E000 = 1;
+			mapper9_update = 1;
 			break;
 	}
 }
@@ -3774,6 +3910,7 @@ static void mapper09_ppu_clk(UINT16 busaddr)
 #undef mapper9_chr_lo_C000
 #undef mapper9_chr_hi_E000
 #undef mapper9_mirror
+#undef mapper9_update
 
 // ---[ mapper 99 (VS NES)
 static void mapper99_write(UINT16 address, UINT8 data)
@@ -4748,6 +4885,94 @@ static void mapper227_map()
 
 	set_mirroring((mapper227_mirror & 0x02) ? HORIZONTAL : VERTICAL);
 }
+
+// ---[ mapper 172: 1991 Du Ma Racing
+#define jv001_register			(mapper_regs[0x1f - 0])
+#define jv001_invert			(mapper_regs[0x1f - 1])
+#define jv001_mode				(mapper_regs[0x1f - 2])
+#define jv001_input				(mapper_regs[0x1f - 3])
+#define jv001_output			(mapper_regs[0x1f - 4])
+
+#define jv001_d0d3_mask		(0x0f)
+#define jv001_d4d5_mask		(0x30)
+
+static UINT8 jv001_read()
+{
+	UINT8 ret;
+	ret =  (jv001_register & jv001_d0d3_mask);
+	// if (invert), bits d4 and d5 are inverted
+	ret |= (jv001_register & jv001_d4d5_mask) ^ (jv001_invert * jv001_d4d5_mask);
+
+	bprintf(0, _T("jv001_read:  %x\n"), ret);
+
+	return ret;
+}
+
+static void jv001_write(UINT16 address, UINT8 data)
+{
+	if (address & 0x8000) {
+		jv001_output = jv001_register;
+	} else {
+		switch (address & 0xe103) {
+			case 0x4100:
+				if (jv001_mode) {
+					// increment d0-d3, leaving d4-d5 unchanged
+					UINT8 before = jv001_register;
+					jv001_register = ((jv001_register + 1) & jv001_d0d3_mask) | (jv001_register & jv001_d4d5_mask);
+					bprintf(0, _T("jv001_inc: mode %x  before  %x  after  %x\n"), jv001_mode, before, jv001_register);
+				} else {
+					// load register.  if inverted invert d0-d3, leaving d4-d5 unchanged
+					UINT8 before = jv001_register;
+					jv001_register = (jv001_invert) ? ((~jv001_input & jv001_d0d3_mask) | (jv001_input & jv001_d4d5_mask)) : jv001_input;
+					bprintf(0, _T("jv001_load(inc): mode %x  before  %x  after  %x   input  %x\n"), jv001_mode, before, jv001_register, jv001_input);
+				}
+				break;
+			case 0x4101:
+				bprintf(0, _T("invert  %x\n"), data);
+				jv001_invert = (data & 0x10) >> 4;
+				break;
+			case 0x4102:
+				bprintf(0, _T("input  %x\n"), data);
+				jv001_input = data;
+				break;
+			case 0x4103:
+				bprintf(0, _T("mode  %x\n"), data);
+				jv001_mode = (data & 0x10) >> 4;
+				break;
+		}
+	}
+}
+
+// mapper 172: jv001 chip is mounted upside-down thus flipping d0 - d5
+static UINT8 mapper172_jv001_swap(UINT8 data)
+{
+	return ((data & 0x01) << 5) | ((data & 0x02) << 3) | ((data & 0x04) << 1) | ((data & 0x08) >> 1) | ((data & 0x10) >> 3) | ((data & 0x20) >> 5);
+}
+
+static UINT8 mapper172_read(UINT16 address)
+{
+	if ((address & 0xe100) == 0x4100) {
+		return mapper172_jv001_swap(jv001_read()) | (cpu_open_bus & 0xc0);
+	}
+
+	return cpu_open_bus;
+}
+
+static void mapper172_write(UINT16 address, UINT8 data)
+{
+	jv001_write(address, mapper172_jv001_swap(data));
+
+	if (address & 0x8000) mapper_map();
+}
+
+static void mapper172_map()
+{
+	mapper_map_prg(32, 0, 0);
+	mapper_map_chr( 8, 0, jv001_output & 0x03);
+
+	set_mirroring((jv001_invert) ? VERTICAL : HORIZONTAL);
+}
+
 
 // --[ mapper 228: Action52
 #define mapper228_mirror	(mapper_regs[0x1f - 0])
@@ -8002,7 +8227,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 10: { // mmc4: fire emblem (mmc2 + sram + different prg mapping)
 			mapper_write = mapper09_write;
 			mapper_map   = mapper10_map;
-			mapper_ppu_clock = mapper09_ppu_clk;
+			mapper_ppu_clock = mapper10_ppu_clk;
 			mapper_map();
 			retval = 0;
 			break;
@@ -8161,6 +8386,16 @@ static INT32 mapper_init(INT32 mappernum)
 		case 227: { // xxx-in-1, Waixing Bio Hazard
 			mapper_write = mapper227_write;
 			mapper_map   = mapper227_map;
+			mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 172: { // 1991 Du Ma Racing
+			psg_area_write = mapper172_write;	// 4020 - 5fff
+			psg_area_read = mapper172_read;		// 4020 - 5fff
+			mapper_write = mapper172_write;
+			mapper_map   = mapper172_map;
 			mapper_map();
 			retval = 0;
 			break;
@@ -8908,6 +9143,29 @@ static INT32 mapper_init(INT32 mappernum)
 			break;
 		}
 
+		case 165: { // mmc3-derivative w/mmc4-style char ram(bank0)+rom(others)
+			mapper_write = mapper04_write;
+			mapper_map   = mapper165_map;
+			mapper_ppu_clock = mapper165_ppu_clock;
+			mapper_scanline = mapper04_scanline;
+			mapper_set_chrtype(MEM_RAM);
+			mapper_map_prg( 8, 3, -1);
+		    mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 192: { // mmc3-derivative w/char ram+rom, ram mapped to chr banks 8, 9, a, b
+			mapper_write = mapper04_write;
+			mapper_map   = mapper192_map;
+			mapper_scanline = mapper04_scanline;
+			mapper_set_chrtype(MEM_RAM);
+			mapper_map_prg( 8, 3, -1);
+		    mapper_map();
+			retval = 0;
+			break;
+		}
+
 		case 189: { // mmc3-derivative
 			psg_area_write = mapper189_write; // 4020 - 5fff
 			cart_exp_write = mapper189_write; // 6000 - 7fff
@@ -9260,6 +9518,7 @@ static UINT8 ppu_read(UINT16 reg)
 				// vram buffer delay
 				ppu_dbus = ppu_buffer;
 				ppu_buffer = ppu_bus_read(ppu_bus_address);
+				//mapper_ppu_clock(ppu_bus_address);
 			} else {
 				// palette has no buffer delay, buffer gets stuffed with vram though (ppu quirk)
 				ppu_dbus = ppu_bus_read(ppu_bus_address);
@@ -9365,6 +9624,7 @@ static void ppu_write(UINT16 reg, UINT8 data)
 			break;
 		case 7: // PPUDATA
 			ppu_bus_write(ppu_bus_address, data);
+			//mapper_ppu_clock(ppu_bus_address);
 
 			ppu_inc_v_addr();
 			break;
@@ -14508,13 +14768,65 @@ STD_ROM_FN(nes_willownfh)
 
 struct BurnDriver BurnDrvnes_willownfh = {
 	"nes_willownfh", "nes_willow", NULL, NULL, "2020",
-	"Willow (No Flash ed.) (Hak, v1.1)\0", NULL, "Jigglysaint", "Miscellaneous",
+	"Willow (No Flash ed.) (Hack, v1.1)\0", NULL, "Jigglysaint", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_willownfhRomInfo, nes_willownfhRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
+
+static struct BurnRomInfo nes_xiaomaliRomDesc[] = {
+	{ "Xiao Ma Li (Unl).nes",          24592, 0xc8f9a5ab, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_xiaomali)
+STD_ROM_FN(nes_xiaomali)
+
+struct BurnDriver BurnDrvnes_xiaomali = {
+	"nes_xiaomali", NULL, NULL, NULL, "1989?",
+	"Xiao Ma Li (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_xiaomaliRomInfo, nes_xiaomaliRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_1991dumaracRomDesc[] = {
+	{ "1991 Du Ma Racing (Unl).nes",          65552, 0x8cd7f9b1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_1991dumarac)
+STD_ROM_FN(nes_1991dumarac)
+
+struct BurnDriver BurnDrvnes_1991dumarac = {
+	"nes_1991dumarac", NULL, NULL, NULL, "1991",
+	"1991 Du Ma Racing (Unl)\0", NULL, "Idea-tek", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_1991dumaracRomInfo, nes_1991dumaracRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_mahjongblockRomDesc[] = {
+	{ "Mahjong Block (Super Mega) (Unl).nes",          65552, 0xbcbbff38, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mahjongblock)
+STD_ROM_FN(nes_mahjongblock)
+
+struct BurnDriver BurnDrvnes_mahjongblock = {
+	"nes_mahjongblock", NULL, NULL, NULL, "1991",
+	"Mahjong Block (Unl)\0", NULL, "Idea-tek", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_mahjongblockRomInfo, nes_mahjongblockRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_samuraispiritsRomDesc[] = {
 	{ "Samurai Spirits (Unl).nes",          786448, 0x9b7305f7, BRF_ESS | BRF_PRG },
 };
@@ -15020,8 +15332,64 @@ struct BurnDriver BurnDrvnes_gaplus = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// http://www.nesbbs.com/bbs/thread-53027-1-1.html
+static struct BurnRomInfo nes_fireembcRomDesc[] = {
+	{ "Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (T-Chi).nes",          655376, 0xA3126533, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_fireembc)
+STD_ROM_FN(nes_fireembc)
+
+struct BurnDriver BurnDrvnes_fireembc = {
+	"nes_fireembc", "nes_fireemb", NULL, NULL, "1990",
+	"Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (T-Chi)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_STRATEGY | GBF_RPG, 0,
+	NESGetZipName, nes_fireembcRomInfo, nes_fireembcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Tiny Toon Adventures (T-Chi)
+// https://www.ppxclub.com/forum.php?mod=viewthread&tid=709671&fromuid=17888
+static struct BurnRomInfo nes_tinytooadvscRomDesc[] = {
+	{ "Tiny Toon Adventures (T-Chi).nes",          344080, 0xfbf2bb98, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tinytooadvsc)
+STD_ROM_FN(nes_tinytooadvsc)
+
+struct BurnDriver BurnDrvnes_tinytooadvsc = {
+	"nes_tinytooadvsc", "nes_tinytooadv", NULL, NULL, "2022",
+	"Tiny Toon Adventures (T-Chi)\0", NULL, "Wave", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_tinytooadvscRomInfo, nes_tinytooadvscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Lupin Sansei - Pandora no Isan (T-Chi)
+// https://www.ppxclub.com/forum.php?mod=viewthread&tid=705303&fromuid=17888
+static struct BurnRomInfo nes_lupinsanscRomDesc[] = {
+	{ "Lupin Sansei - Pandora no Isan (T-Chi).nes",          524304, 0x1fd2e927, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_lupinsansc)
+STD_ROM_FN(nes_lupinsansc)
+
+struct BurnDriver BurnDrvnes_lupinsansc = {
+	"nes_lupinsansc", "nes_lupinsan", NULL, NULL, "2021",
+	"Lupin Sansei - Pandora no Isan (T-Chi)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_lupinsanscRomInfo, nes_lupinsanscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Saint Seiya - Ougon Densetsu (T-Chi, v2.0)
-// Translation by Han Hua Ni Mei Team - Jiang Wei Di Er & Fen Mo & Zeng Ge
+// Translation by HHNM Team - Jiang Wei Di Er & Fen Mo & Zeng Ge
 static struct BurnRomInfo nes_saintseiyaodcRomDesc[] = {
 	{ "Saint Seiya - Ougon Densetsu (T-Chi, v2.0).nes",          1310736, 0xf7df4b56, BRF_ESS | BRF_PRG },
 };
@@ -15031,7 +15399,7 @@ STD_ROM_FN(nes_saintseiyaodc)
 
 struct BurnDriver BurnDrvnes_saintseiyaodc = {
 	"nes_saintseiyaodc", "nes_saintseiougden", NULL, NULL, "2018",
-	"Saint Seiya - Ougon Densetsu (T-Chi, v2.0)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Saint Seiya - Ougon Densetsu (T-Chi, v2.0)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
 	NESGetZipName, nes_saintseiyaodcRomInfo, nes_saintseiyaodcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15040,7 +15408,7 @@ struct BurnDriver BurnDrvnes_saintseiyaodc = {
 };
 
 // Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi)
-// Translation by Han Hua Ni Mei Team - Jiang Wei Di Er & Xiao Ben Ben
+// Translation by HHNM Team - Jiang Wei Di Er & Xiao Ben Ben
 static struct BurnRomInfo nes_saintseiyaodkhcRomDesc[] = {
 	{ "Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi).nes",          524304, 0xb1651b70, BRF_ESS | BRF_PRG },
 };
@@ -15050,7 +15418,7 @@ STD_ROM_FN(nes_saintseiyaodkhc)
 
 struct BurnDriver BurnDrvnes_saintseiyaodkhc = {
 	"nes_saintseiyaodkhc", "nes_saintseiougdenkahen", NULL, NULL, "2017",
-	"Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
 	NESGetZipName, nes_saintseiyaodkhcRomInfo, nes_saintseiyaodkhcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15059,7 +15427,7 @@ struct BurnDriver BurnDrvnes_saintseiyaodkhc = {
 };
 
 // AV Mahjong Club (T-Chi) (Unl)
-// Translation by Han Hua Ni Mei Team - Shao Nian Bu Zhi Chou
+// Translation by HHNM Team - Shao Nian Bu Zhi Chou
 static struct BurnRomInfo nes_avmahjongclubcRomDesc[] = {
 	{ "AV Mahjong Club (T-Chi) (Unl).nes",          262160, 0x663870dd, BRF_ESS | BRF_PRG },
 };
@@ -15069,7 +15437,7 @@ STD_ROM_FN(nes_avmahjongclubc)
 
 struct BurnDriver BurnDrvnes_avmahjongclubc = {
 	"nes_avmahjongclubc", NULL, NULL, NULL, "2018",
-	"AV Mahjong Club (T-Chi) (Unl)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"AV Mahjong Club (T-Chi) (Unl)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_MAHJONG | GBF_ADV, 0,
 	NESGetZipName, nes_avmahjongclubcRomInfo, nes_avmahjongclubcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15098,7 +15466,7 @@ struct BurnDriver BurnDrvnes_jackalc = {
 };
 
 // Darkwing Duck (T-Chi)
-// Translation by Han Hua Ni Mei Team - Shao Nian Bu Zhi Chou
+// Translation by HHNM Team - Shao Nian Bu Zhi Chou
 static struct BurnRomInfo nes_darkwingduckcRomDesc[] = {
 	{ "Darkwing Duck (T-Chi).nes",          393232, 0x585f3500, BRF_ESS | BRF_PRG },
 };
@@ -15108,7 +15476,7 @@ STD_ROM_FN(nes_darkwingduckc)
 
 struct BurnDriver BurnDrvnes_darkwingduckc = {
 	"nes_darkwingduckc", "nes_darkwingduck", NULL, NULL, "2020",
-	"Darkwing Duck (T-Chi)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Darkwing Duck (T-Chi)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_darkwingduckcRomInfo, nes_darkwingduckcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15117,7 +15485,7 @@ struct BurnDriver BurnDrvnes_darkwingduckc = {
 };
 
 // Guardic Gaiden (T-Chi)
-// Translation by Han Hua Ni Mei Team - Shao Nian Bu Zhi Chou & Thirteen & Xing Ye Zhi Huan
+// Translation by HHNM Team - Shao Nian Bu Zhi Chou & Thirteen & Xing Ye Zhi Huan
 static struct BurnRomInfo nes_guardicgaidencRomDesc[] = {
 	{ "Guardic Gaiden (T-Chi, v1.1).nes",          262160, 0x77df8d83, BRF_ESS | BRF_PRG },
 };
@@ -15127,7 +15495,7 @@ STD_ROM_FN(nes_guardicgaidenc)
 
 struct BurnDriver BurnDrvnes_guardicgaidenc = {
 	"nes_guardicgaidenc", "nes_guardleg", NULL, NULL, "2017",
-	"Guardic Gaiden (T-Chi, v1.1)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Guardic Gaiden (T-Chi, v1.1)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SHOOT | GBF_ADV, 0,
 	NESGetZipName, nes_guardicgaidencRomInfo, nes_guardicgaidencRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15307,7 +15675,7 @@ struct BurnDriver BurnDrvnes_waiwaiworldc = {
 };
 
 // Saiyuuki World (T-Chi, v1.04)
-// Translation by Han Hua Ni Mei Team - Thirteen & Fen Mo & Jiang Wei Di Er & Zeng Ge & Xing Ye Zhi Huan & N0PFUUN
+// Translation by HHNM Team - Thirteen & Fen Mo & Jiang Wei Di Er & Zeng Ge & Xing Ye Zhi Huan & N0PFUUN
 static struct BurnRomInfo nes_saiyuukiworldcRomDesc[] = {
 	{ "Saiyuuki World (T-Chi, v1.04).nes",          262160, 0x6e66cf6f, BRF_ESS | BRF_PRG },
 };
@@ -15317,7 +15685,7 @@ STD_ROM_FN(nes_saiyuukiworldc)
 
 struct BurnDriver BurnDrvnes_saiyuukiworldc = {
 	"nes_saiyuukiworldc", "nes_saiyuukiworld", NULL, NULL, "2016",
-	"Saiyuuki World (T-Chi, v1.04)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Saiyuuki World (T-Chi, v1.04)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
 	NESGetZipName, nes_saiyuukiworldcRomInfo, nes_saiyuukiworldcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15402,7 +15770,7 @@ struct BurnDriver BurnDrvnes_mitsumegatooruc = {
 };
 
 // Akumajou Densetsu (T-Chi, v2.3)
-// Translation by Han Hua Ni Mei Team - Zeng Ge & Jiang Wei Di Er & Xing Ye Zhi Huan
+// Translation by HHNM Team - Zeng Ge & Jiang Wei Di Er & Xing Ye Zhi Huan
 static struct BurnRomInfo nes_akumadencRomDesc[] = {
 	{ "Akumajou Densetsu (T-Chi, v2.3).nes",          524304, 0xb810b79c, BRF_ESS | BRF_PRG },
 };
@@ -15412,7 +15780,7 @@ STD_ROM_FN(nes_akumadenc)
 
 struct BurnDriver BurnDrvnes_akumadenc = {
 	"nes_akumadenc", "nes_castliii", NULL, NULL, "2018",
-	"Akumajou Densetsu (T-Chi, v2.3)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Akumajou Densetsu (T-Chi, v2.3)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_akumadencRomInfo, nes_akumadencRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15421,7 +15789,7 @@ struct BurnDriver BurnDrvnes_akumadenc = {
 };
 
 // Batman - The Video Game (T-Chi)
-// Translation by Han Hua Ni Mei Team - Shao Nian Bu Zhi Chou & Luo Yun
+// Translation by HHNM Team - Shao Nian Bu Zhi Chou & Luo Yun
 static struct BurnRomInfo nes_batmavidgamcRomDesc[] = {
 	{ "Batman - The Video Game (T-Chi).nes",          393232, 0x4b2de665, BRF_ESS | BRF_PRG },
 };
@@ -15431,7 +15799,7 @@ STD_ROM_FN(nes_batmavidgamc)
 
 struct BurnDriver BurnDrvnes_batmavidgamc = {
 	"nes_batmavidgamc", "nes_batmavidgam", NULL, NULL, "2020",
-	"Batman - The Video Game (T-Chi)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Batman - The Video Game (T-Chi)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_batmavidgamcRomInfo, nes_batmavidgamcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15460,7 +15828,7 @@ struct BurnDriver BurnDrvnes_salamanderc = {
 };
 
 // Gun-Dec (T-Chi)
-// Translation by Han Hua Ni Mei Team - Shao Nian Bu Zhi Chou & Jiang Wei Di Er & Luo Yun
+// Translation by HHNM Team - Shao Nian Bu Zhi Chou & Jiang Wei Di Er & Luo Yun
 static struct BurnRomInfo nes_gundeccRomDesc[] = {
 	{ "Gun-Dec (T-Chi).nes",          393232, 0x647eccfa, BRF_ESS | BRF_PRG },
 };
@@ -15470,7 +15838,7 @@ STD_ROM_FN(nes_gundecc)
 
 struct BurnDriver BurnDrvnes_gundecc = {
 	"nes_gundecc", "nes_vice", NULL, NULL, "2019",
-	"Gun-Dec (T-Chi)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Gun-Dec (T-Chi)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SHOOT | GBF_PLATFORM, 0,
 	NESGetZipName, nes_gundeccRomInfo, nes_gundeccRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15499,7 +15867,7 @@ struct BurnDriver BurnDrvnes_tmntc = {
 };
 
 // Super Chinese II - Dragon Kid (T-Chi, v1.4)
-// Translation by Han Hua Ni Mei Team - Thirteen & Jiang Wei Di Er & Xing Ye Zhi Huan
+// Translation by HHNM Team - Thirteen & Jiang Wei Di Er & Xing Ye Zhi Huan
 static struct BurnRomInfo nes_superchiiRomDesc[] = {
 	{ "Super Chinese II - Dragon Kid (T-Chi, v1.4).nes",          524304, 0xa9e92ef3, BRF_ESS | BRF_PRG },
 };
@@ -15509,7 +15877,7 @@ STD_ROM_FN(nes_superchii)
 
 struct BurnDriver BurnDrvnes_superchii = {
 	"nes_superchii", "nes_littlninbro", NULL, NULL, "2019",
-	"Super Chinese II - Dragon Kid (T-Chi, v1.4)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Super Chinese II - Dragon Kid (T-Chi, v1.4)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN | GBF_RPG, 0,
 	NESGetZipName, nes_superchiiRomInfo, nes_superchiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15518,7 +15886,7 @@ struct BurnDriver BurnDrvnes_superchii = {
 };
 
 // Majou Densetsu II - Daimashikyou Galious (T-Chi, v2.2)
-// Translation by Han Hua Ni Mei Team - Zeng Ge & Jiang Wei Di Er & Luo Yun & Xia Tian & Xing Ye Zhi Huan
+// Translation by HHNM Team - Zeng Ge & Jiang Wei Di Er & Luo Yun & Xia Tian & Xing Ye Zhi Huan
 static struct BurnRomInfo nes_majoudeniicRomDesc[] = {
 	{ "Majou Densetsu II - Daimashikyou Galious (T-Chi, v2.2).nes",          262160, 0xa032170a, BRF_ESS | BRF_PRG },
 };
@@ -15528,7 +15896,7 @@ STD_ROM_FN(nes_majoudeniic)
 
 struct BurnDriver BurnDrvnes_majoudeniic = {
 	"nes_majoudeniic", "nes_majoudenii", NULL, NULL, "2018",
-	"Majou Densetsu II - Daimashikyou Galious (T-Chi, v2.2)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Majou Densetsu II - Daimashikyou Galious (T-Chi, v2.2)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_majoudeniicRomInfo, nes_majoudeniicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15537,7 +15905,7 @@ struct BurnDriver BurnDrvnes_majoudeniic = {
 };
 
 // Silk Worm (T-Chi, v1.1)
-// Translation by Han Hua Ni Mei Team - Shao Nian Bu Zhi Chou
+// Translation by HHNM Team - Shao Nian Bu Zhi Chou
 static struct BurnRomInfo nes_silkwormcRomDesc[] = {
 	{ "Silk Worm (T-Chi, v1.1).nes",          393232, 0x3d53c8ad, BRF_ESS | BRF_PRG },
 };
@@ -15547,7 +15915,7 @@ STD_ROM_FN(nes_silkwormc)
 
 struct BurnDriver BurnDrvnes_silkwormc = {
 	"nes_silkwormc", "nes_silkworm", NULL, NULL, "2020",
-	"Silk Worm (T-Chi, v1.1)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Silk Worm (T-Chi, v1.1)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_HORSHOOT, 0,
 	NESGetZipName, nes_silkwormcRomInfo, nes_silkwormcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15556,7 +15924,7 @@ struct BurnDriver BurnDrvnes_silkwormc = {
 };
 
 // Argos no Senshi (T-Chi, v1.11)
-// Translation by Han Hua Ni Mei Team - Thirteen & Fen Mo & Jiang Wei Di Er & MM Zhi Shen & Xing Ye Zhi Huan & N0PFUUN & Zeng Ge
+// Translation by HHNM Team - Thirteen & Fen Mo & Jiang Wei Di Er & MM Zhi Shen & Xing Ye Zhi Huan & N0PFUUN & Zeng Ge
 static struct BurnRomInfo nes_argosnosenshicRomDesc[] = {
 	{ "Argos no Senshi (T-Chi, v1.11).nes",          262160, 0xa1a22c10, BRF_ESS | BRF_PRG },
 };
@@ -15566,7 +15934,7 @@ STD_ROM_FN(nes_argosnosenshic)
 
 struct BurnDriver BurnDrvnes_argosnosenshic = {
 	"nes_argosnosenshic", "nes_rygar", NULL, NULL, "2016",
-	"Argos no Senshi (T-Chi, v1.11)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Argos no Senshi (T-Chi, v1.11)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN, 0,
 	NESGetZipName, nes_argosnosenshicRomInfo, nes_argosnosenshicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15593,19 +15961,19 @@ struct BurnDriver BurnDrvnes_supercontrac = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Hebereke (T-Chi, v1.2)
-// Translation by Lei Jing Ling
+// Hebereke (T-Chi)
 // mapper 69
+// http://www.nesbbs.com/bbs/thread-53253-1-1.html
 static struct BurnRomInfo nes_heberekecRomDesc[] = {
-	{ "Hebereke (T-Chi, v1.2).nes",          393232, 0x48e8bcee, BRF_ESS | BRF_PRG },
+	{ "Hebereke (T-Chi).nes",          393232, 0x0691129d, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_heberekec)
 STD_ROM_FN(nes_heberekec)
 
 struct BurnDriver BurnDrvnes_heberekecc= {
-	"nes_heberekec", "nes_ufouria", NULL, NULL, "2019",
-	"Hebereke (T-Chi, v1.2)\0", NULL, "Lei Jing Ling", "Miscellaneous",
+	"nes_heberekec", "nes_ufouria", NULL, NULL, "2022",
+	"Hebereke (T-Chi)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
 	NESGetZipName, nes_heberekecRomInfo, nes_heberekecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15800,6 +16168,25 @@ struct BurnDriver BurnDrvnes_wanpakuduck = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_wanpakuduckRomInfo, nes_wanpakuduckRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// snowbrotherssc (T-Chi)
+// Translation by Han Xue Shi Zhe & Jin Di Di San & ZARD
+static struct BurnRomInfo nes_snowbrothersscRomDesc[] = {
+	{ "Snow Brothers (T-Chi).nes",          393232, 0x1a0eaa47, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_snowbrotherssc)
+STD_ROM_FN(nes_snowbrotherssc)
+
+struct BurnDriver BurnDrvnes_snowbrotherssc = {
+	"nes_snowbrotherssc", "nes_snowbrothers", NULL, NULL, "2022",
+	"Snow Brothers (T-Chi)\0", NULL, "Han Xue Shi Zhe & Jin Di Di San & ZARD", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_snowbrothersscRomInfo, nes_snowbrothersscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -19036,7 +19423,7 @@ struct BurnDriver BurnDrvnes_dai2jisuprotaji = {
 };
 
 // Grand Master (T-Chi, v1.1)
-// Translation by Han Hua Ni Mei Team - THIRTEEN, 姜维第二
+// Translation by HHNM Team - THIRTEEN, 姜维第二
 static struct BurnRomInfo nes_grandmastercRomDesc[] = {
 	{ "Grand Master (T-Chi, v1.1).nes",          1048592, 0x505d11c0, BRF_ESS | BRF_PRG },
 };
@@ -19046,7 +19433,7 @@ STD_ROM_FN(nes_grandmasterc)
 
 struct BurnDriver BurnDrvnes_grandmasterc = {
 	"nes_grandmasterc", "nes_grandmaster", NULL, NULL, "2021",
-	"Grand Master (T-Chi, v1.1)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Grand Master (T-Chi, v1.1)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_grandmastercRomInfo, nes_grandmastercRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -19055,7 +19442,7 @@ struct BurnDriver BurnDrvnes_grandmasterc = {
 };
 
 // Nekketsu! Street Basket - Ganbare Dunk Heroes (T-Chi, v2)
-// Translation by Han Hua Ni Mei Team - 惊风, 空气, 火光 & goner 
+// Translation by HHNM Team - 惊风, 空气, 火光 & goner 
 static struct BurnRomInfo nes_nekkestrbascRomDesc[] = {
 	{ "nekketsu! street basket - ganbare dunk heroes (T-Chi, v2).nes",          524304, 0x8f359b4f, BRF_ESS | BRF_PRG },
 };
@@ -19065,7 +19452,7 @@ STD_ROM_FN(nes_nekkestrbasc)
 
 struct BurnDriver BurnDrvnes_nekkestrbasc = {
 	"nes_nekkestrbasc", "nes_nekkestrbas", NULL, NULL, "2020",
-	"Nekketsu! Street Basket - Ganbare Dunk Heroes (T-Chi, v2)\0", NULL, "Han Hua Ni Mei Team", "Miscellaneous",
+	"Nekketsu! Street Basket - Ganbare Dunk Heroes (T-Chi, v2)\0", NULL, "HHNM Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
 	NESGetZipName, nes_nekkestrbascRomInfo, nes_nekkestrbascRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -19409,7 +19796,7 @@ STD_ROM_PICK(nes_yybeebissii)
 STD_ROM_FN(nes_yybeebissii)
 
 struct BurnDriver BurnDrvnesnes_yybeebissii = {
-	"nes_yybeebissii", NULL, NULL, NULL, "2021",
+	"nes_yybeebissii", NULL, NULL, NULL, "2022",
 	"Yeah Yeah Beebiss II (HB)\0", NULL, "Rigg'd Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM | GBF_ACTION, 0,

@@ -1580,7 +1580,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="barbpt1" romof="spectrum">
-		<comment>one and two players mode</comment>
+		<comment>one and two player mode</comment>
 		<description>Barbarian: The Ultimate Warrior - Part 1 (48K)</description>
 		<year>1987</year>
 		<manufacturer>Palace Software</manufacturer>
@@ -1590,7 +1590,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="barbpt2" cloneof="barbpt1" romof="barbpt1">
-		<comment>Only one player mode</comment>
+		<comment>only one player mode</comment>
 		<description>Barbarian: The Ultimate Warrior - Part 2 (48K)</description>
 		<year>1987</year>
 		<manufacturer>Palace Software</manufacturer>
@@ -2201,22 +2201,13 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bosconian128" romof="spec128">
+	<game name="bosconian" romof="spec128">
 		<description>Bosconian '87 (128K)</description>
 		<year>1987</year>
 		<manufacturer>Mastertronic</manufacturer>
-		<rom name="Bosconian '87 128K (1987)(Mastertronic).z80" size="35167" crc="abcd3a19"/>
+		<rom name="Bosconian '87 (1987)(Mastertronic).tap" size="46840" crc="3cc3e412"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="bosconian48" cloneof="bosconian128" romof="bosconian128">
-		<description>Bosconian '87 (48K)</description>
-		<year>1987</year>
-		<manufacturer>Mastertronic</manufacturer>
-		<rom name="Bosconian '87 48K (1987)(Mastertronic).z80" size="30873" crc="deb7845a"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2758,7 +2749,7 @@
 		<description>Carlos Sainz (Spanish) (128K)</description>
 		<year>1990</year>
 		<manufacturer>Zigurat Software</manufacturer>
-		<rom name="Carlos Sainz (1990)(Zigurat Software)(128k).z80" size="41541" crc="608dabf2"/>
+		<rom name="Carlos Sainz 128K (1990)(Zigurat).tap" size="48193" crc="3974f703"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -2844,7 +2835,7 @@
 	</game>
 	<game name="castlevania" romof="spec128">
 		<comment>Homebrew</comment>
-		<description>Castlevania - Spectral Interlude (128K) (HB)</description>
+		<description>Castlevania - Spectral Interlude (English) (128K) (HB)</description>
 		<year>2015</year>
 		<manufacturer>Rewind Team</manufacturer>
 		<rom name="Castlevania - Spectral Interlude (2015)(Rewind Team).tap" size="126394" crc="c100bb38"/>
@@ -3758,6 +3749,28 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="cubicexp" romof="spec128">
+		<comment>Homebrew, Press '2' to use controller</comment>
+		<description>Cubic Experience, The (128K) (HB, v1.0)</description>
+		<year>2022</year>
+		<manufacturer>Toku Soft</manufacturer>
+		<rom name="Cubic Experience, The v1.0 (2022)(Toku Soft).tap" size="37903" crc="366b62f0"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cubicexpve" cloneof="cubicexp" romof="cubicexp">
+		<comment>Homebrew, Visual Experince: the interactive tutorial of the game</comment>
+		<description>Cubic Experience, The - V.E. (128K) (HB, v1.0)</description>
+		<year>2022</year>
+		<manufacturer>Toku Soft</manufacturer>
+		<rom name="Cubic Experience, The VE v1.0 (2022)(Toku Soft).tap" size="25874" crc="02582bdf"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="cueboy" romof="spec128">
 		<description>Cue Boy (128K)</description>
 		<year>1992</year>
@@ -4320,7 +4333,7 @@
 		<comment>Homebrew</comment>
 		<description>Dingo (48K) (HB, v1.3)</description>
 		<year>2015</year>
-		<manufacturer>Sokurah, Tardis</manufacturer>
+		<manufacturer>Tardis Remakes</manufacturer>
 		<rom name="Dingo (2015)(Sokurah, Tardis).tap" size="41567" crc="b22b60c3"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -4889,6 +4902,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="dpbasket" romof="spec128">
+		<description>Drazen Petrovic Basket (Spanish) (128K)</description>
+		<year>1989</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Drazen Petrovic Basket ES 128K (1989)(Topo Soft).tap" size="64906" crc="f0d8a280"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="drmwalker" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Dreamwalker - Alter Ego 2 (128K) (HB, v1.1)</description>
@@ -5028,6 +5051,17 @@
 		<manufacturer>Mirrorsoft</manufacturer>
 		<rom name="Dynamite Dan II - Dr Blitzen And The Islands Of Arcanum (1985)(Mirrorsoft).z80" size="43758" crc="df00027d"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dynamdux" romof="spec128">
+		<comment>Press '2' to use controller</comment>
+		<description>Dynamite Dux (128K)</description>
+		<year>1989</year>
+		<manufacturer>Activision</manufacturer>
+		<rom name="Dynamite Dux (1989)(Activision).tap" size="150855" crc="c13fc9c0"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -7683,6 +7717,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="invaders" romof="spectrum">
+		<description>Invaders (16K)</description>
+		<year>1983</year>
+		<manufacturer>DK'Tronics</manufacturer>
+		<rom name="Invaders 16K (1983)(DK'Tronics).tap" size="6795" crc="a6263eb9"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="invforce" romof="spectrum">
 		<comment>Use A, S and F to play</comment>
 		<description>Invasion Force (16K)</description>
@@ -8374,6 +8417,25 @@
 		<year>1989</year>
 		<manufacturer>Byte Back</manufacturer>
 		<rom name="Kendo Warrior (1989)(Byte Back).tap" size="48724" crc="b4d3cb13"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="kdmanager" romof="spectrum">
+		<description>Kenny Dalglish Soccer Manager (48K)</description>
+		<year>1989</year>
+		<manufacturer>Cognito</manufacturer>
+		<rom name="Kenny Dalglish Soccer Manager 48K (1989)(Cognito).tap" size="54337" crc="aaa8bbb3"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="kdmatch" romof="spec128">
+		<description>Kenny Dalglish Soccer Match (128K)</description>
+		<year>1990</year>
+		<manufacturer>Impressions</manufacturer>
+		<rom name="Kenny Dalglish Soccer Match 128K (1990)(Impressions).tap" size="55717" crc="f9447e26"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -9265,7 +9327,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="majikazo" romof="spectrum">
-		<comment>Homebrew, Adaptation of Lemonize's MSX version</comment>
+		<comment>Homebrew, Convertion of Lemonize's MSX version</comment>
 		<description>Majikazo (48K) (HB)</description>
 		<year>2012</year>
 		<manufacturer>RetroWorks</manufacturer>
@@ -11061,6 +11123,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="papyrus" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Papyrus (48K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>F.J. Urbaneja</manufacturer>
+		<rom name="Papyrus 48K (2020)(F.J. Urbaneja).tap" size="29120" crc="f85af5a2"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="parachute" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Parachute (128K) (HB)</description>
@@ -11349,6 +11421,16 @@
 		<rom name="Pilot Attack v1.1 (2017)(TFW8b).tap" size="30930" crc="8e0f7278"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pinball" romof="spectrum">
+		<comment>Q: left flipper - P: right flipper - 0: launch the ball</comment>
+		<description>Pinball (16K)</description>
+		<year>1983</year>
+		<manufacturer>Sagittarian Software</manufacturer>
+		<rom name="Pinball 16K (1983)(Sagittarian).tap" size="16187" crc="26267d3e"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -11800,6 +11882,17 @@
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="R.A.M. ES (1990)(Topo Soft).tap" size="62593" crc="eaaf3bd1"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="rovr" romof="spec128">
+		<comment>Homebrew, Remote Operated Vehicle Recovery</comment>
+		<description>R.O.V.R. (128K) (HB)</description>
+		<year>2018</year>
+		<manufacturer>Paul Jenkinson</manufacturer>
+		<rom name="ROVR 128K (2018)(Paul Jenkinson).tap" size="33973" crc="577fd144"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -13460,13 +13553,13 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sitoponsgp" romof="spec128">
-		<description>Sito Pons 500cc Grand Prix (Spanish) (128K)</description>
+	<game name="sitoponsgp" romof="spectrum">
+		<comment>Press 'Z' to quit the game session</comment>
+		<description>Sito Pons 500cc Grand Prix (Spanish) (48K)</description>
 		<year>1990</year>
 		<manufacturer>Zigurat Software</manufacturer>
-		<rom name="Sito Pons 500cc Grand Prix (1990)(Zigurat Software)(es)(128k).z80" size="40559" crc="1f9a9466"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Sito Pons 500cc Grand Prix ES 48K (1990)(Zigurat).tap" size="49795" crc="1afbe22f"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -14027,11 +14120,22 @@
 	</game>
 	<game name="sqijzx" romof="spectrum">
 		<comment>Homebrew</comment>
-		<description>Sqij ZX (48K) (HB)</description>
+		<description>SQIJ! ZX (48K) (HB)</description>
 		<year>2018</year>
-		<manufacturer>Psytronik Software</manufacturer>
+		<manufacturer>Tardis Remakes</manufacturer>
 		<rom name="Sqij ZX (2018)(Psytronik Software).tap" size="46020" crc="d0af1a22"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sqijd" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>SQIJ'D (128K) (HB)</description>
+		<year>2018</year>
+		<manufacturer>Monument Microgames</manufacturer>
+		<rom name="SQIJ'D 128K (2018)(Monument Microgames).tap" size="42943" crc="494495e8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -15336,6 +15440,17 @@
 		<manufacturer>Infogrames</manufacturer>
 		<rom name="Tintin on the Moon (1989)(Infogrames).tap" size="40102" crc="1959b7a0"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tinydungs" romof="spec128">
+		<comment>Homebrew, Press 'Z', 'X' and 'C' to switch heroes</comment>
+		<description>Tiny Dungeons (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>RetroWorks</manufacturer>
+		<rom name="Tiny Dungeons 128K (2022)(RetroWorks).tap" size="83423" crc="4ec8a564"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -16658,6 +16773,16 @@
 		<rom name="ZX Football Manager 2005 (2004)(Cronosoft).tap" size="80114" crc="ec86d147"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zxparachute" romof="spectrum">
+		<comment>Homebrew, 1 or 2: left - 7 or 8: right</comment>
+		<description>ZX Parachute (16K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>Carles Oriol</manufacturer>
+		<rom name="ZX Parachute 16K (2020)(Carles Oriol).tap" size="12897" crc="c82e385e"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

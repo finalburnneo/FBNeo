@@ -33589,7 +33589,7 @@ struct BurnDriver BurnSpecSqijd = {
 // Tiny Dungeons (128K) (HB)
 
 static struct BurnRomInfo SpecTinydungsRomDesc[] = {
-	{ "Tiny Dungeons 128K (2022)(RetroWorks).tap", 83423, 0x4ec8a564, BRF_ESS | BRF_PRG },
+	{ "Tiny Dungeons 128K (2022)(RetroWorks).tap", 81973, 0xa35f23f6, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecTinydungs, SpecTinydungs, Spec128)

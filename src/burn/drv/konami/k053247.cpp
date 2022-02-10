@@ -218,6 +218,16 @@ INT32 K053246_is_IRQ_enabled()
 	return K053246Regs[5] & 0x10;
 }
 
+static INT32 frac_up(INT32 ff) // to next whole pixel
+{
+	if (ff & 0xfff) {
+		ff &= ~0xfff;
+		ff += 0x1000;
+	}
+
+	return ff;
+}
+
 void K053247SpritesRender()
 {
 #define NUM_SPRITES 256
@@ -364,6 +374,8 @@ void K053247SpritesRender()
 		}
 		else { zoomx = zoomy; x = y; }
 
+		//bprintf(0, _T("%x  -  %x %x   %x %x\n"), code, zoomx, x, zoomy, y);
+
 		if ( K053246Regs[5] & 0x08 ) // Check only "Bit #3 is '1'?" (NOTE: good guess)
 		{
 			zoomx >>= 1;		// Fix sprite width to HALF size
@@ -436,25 +448,30 @@ void K053247SpritesRender()
 
 		// apply global and display window offsets
 
+		// move ox, oy from int to the 20.12 frac realm
+		ox <<= 12;
+		oy <<= 12;
+
 		/* the coordinates given are for the *center* of the sprite */
-		ox -= (zoomx * w) >> 13;
-		oy -= (zoomy * h) >> 13;
+		ox -= (zoomx * w) >> 1;
+		oy -= (zoomy * h) >> 1;
 
 		dtable[15] = shadow ? 2 : 1;
 
 		for (y = 0;y < h;y++)
 		{
-			INT32 sx,sy,zw,zh;
+			INT32 sx,sy,zw,zh; // 20.12 fractional
 
-			sy = oy + ((zoomy * y + (1<<11)) >> 12);
-			zh = (oy + ((zoomy * (y+1) + (1<<11)) >> 12)) - sy;
+			sy = oy + frac_up(zoomy * y);
+			zh = (oy + frac_up(zoomy * (y+1))) - sy;
 
 			for (x = 0;x < w;x++)
 			{
 				INT32 c,fx,fy;
 
-				sx = ox + ((zoomx * x + (1<<11)) >> 12);
-				zw = (ox + ((zoomx * (x+1) + (1<<11)) >> 12)) - sx;
+				sx = ox + frac_up(zoomx * x);
+				zw = (ox + frac_up(zoomx * (x+1))) - sx;
+
 				c = code;
 				if (mirrorx)
 				{
@@ -502,25 +519,25 @@ void K053247SpritesRender()
 
 				if (shadow || wtable == stable) {
 					if (mirrory && h == 1)
-						konami_render_zoom_shadow_sprite(gfxbase, c, nBpp, color, sx, sy, fx, !fy, 16, 16, zw << 12, zh << 12, primask, highlight);
+						konami_render_zoom_shadow_sprite(gfxbase, c, nBpp, color, sx>>12, sy>>12, fx, !fy, 16, 16, zw, zh, primask, highlight);
 
-					konami_render_zoom_shadow_sprite(gfxbase, c, nBpp, color, sx, sy, fx, fy, 16, 16, zw << 12, zh << 12, primask, highlight);
+					konami_render_zoom_shadow_sprite(gfxbase, c, nBpp, color, sx>>12, sy>>12, fx, fy, 16, 16, zw, zh, primask, highlight);
 					continue;
 				}
 
 				if (mirrory && h == 1)
 				{
 					if (nozoom) {
-						konami_draw_16x16_prio_sprite(gfxbase, c, nBpp, color, sx, sy, fx, !fy, primask);
+						konami_draw_16x16_prio_sprite(gfxbase, c, nBpp, color, sx>>12, sy>>12, fx, !fy, primask);
 					} else {
-						konami_draw_16x16_priozoom_sprite(gfxbase, c, nBpp, color, 0, sx, sy, fx, !fy, 16, 16, zw<<12, zh<<12, primask);
+						konami_draw_16x16_priozoom_sprite(gfxbase, c, nBpp, color, 0, sx>>12, sy>>12, fx, !fy, 16, 16, zw, zh, primask);
 					}
 				}
 
 				if (nozoom) {
-					konami_draw_16x16_prio_sprite(gfxbase, c, nBpp, color, sx, sy, fx, fy, primask);
+					konami_draw_16x16_prio_sprite(gfxbase, c, nBpp, color, sx>>12, sy>>12, fx, fy, primask);
 				} else {
-					konami_draw_16x16_priozoom_sprite(gfxbase, c, nBpp, color, 0, sx, sy, fx, fy, 16, 16, zw<<12, zh<<12, primask);
+					konami_draw_16x16_priozoom_sprite(gfxbase, c, nBpp, color, 0, sx>>12, sy>>12, fx, fy, 16, 16, zw, zh, primask);
 				}
 			} // end of X loop
 		} // end of Y loop

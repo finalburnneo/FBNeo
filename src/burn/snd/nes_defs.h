@@ -175,7 +175,7 @@ typedef struct apu
 /* vblank length table used for squares, triangle, noise */
 static const uint8 vbl_length[32] =
 {
-   5, 127, 10, 1, 19,  2, 40,  3, 80,  4, 30,  5, 7,  6, 13,  7,
+   5, 127, 10, 1, 20,  2, 40,  3, 80,  4, 30,  5, 7,  6, 13,  7,
    6,   8, 12, 9, 24, 10, 48, 11, 96, 12, 36, 13, 8, 14, 16, 15
 };
 
@@ -186,10 +186,13 @@ static const INT32 freq_limit[8] =
 };
 
 /* table of noise frequencies */
-static const INT32 noise_freq[16] =
-{
-   4, 8, 16, 32, 64, 96, 128, 160, 202, 254, 380, 508, 762, 1016, 2034, 4068
-};
+static const INT32 noise_freq[2][16] =
+{   // NTSC
+	4, 8, 16, 32, 64, 96, 128, 160, 202, 254, 380, 508, 762, 1016, 2034, 4068
+},
+{   // PAL
+	4, 8, 14, 30, 60, 88, 118, 148, 188, 236, 354, 472, 708, 944, 1890, 3778
+} };
 
 /* dpcm transfer freqs */
 static const INT32 dpcm_freq[2][16] = {

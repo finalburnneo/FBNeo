@@ -23,6 +23,7 @@ static UINT8 *DrvSndROM;
 static UINT8 *DrvKonRAM;
 static UINT8 *DrvPalRAM;
 static UINT8 *DrvZ80RAM;
+static UINT8 *DefaultEEPROM = NULL;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -30,7 +31,6 @@ static UINT8 DrvRecalc;
 static UINT8 *nDrvBank;
 
 static INT32 videobank;
-static INT32 init_eeprom_count;
 static INT32 irq_enabled;
 static INT32 vblank = 0;
 static INT32 bankoffset;
@@ -273,16 +273,7 @@ UINT8 vendetta_main_read(UINT16 address)
 			return DrvInputs[3];
 
 		case 0x5fd0:
-		{
-			INT32 res = (EEPROMRead() & 1) | vblank | ((DrvJoy6 << 2) ^ 0xf6);
-
-			if (init_eeprom_count > 0)
-			{
-				init_eeprom_count--;
-				res &= 0xfb;
-			}
-			return res;
-		}
+			return (EEPROMRead() & 1) | vblank | ((DrvJoy6 << 2) ^ 0xf6);
 
 		case 0x5fd1:
 			return DrvInputs[4];
@@ -404,16 +395,7 @@ UINT8 esckids_main_read(UINT16 address)
 			return DrvInputs[3];
 
 		case 0x3f92:
-		{
-			INT32 res = (EEPROMRead() & 1) | vblank | ((DrvJoy6 << 2) ^ 0xf6);
-
-			if (init_eeprom_count > 0)
-			{
-				init_eeprom_count--;
-				res &= 0xfb;
-			}
-			return res;
-		}
+			return (EEPROMRead() & 1) | vblank | ((DrvJoy6 << 2) ^ 0xf6);
 
 		case 0x3f93:
 			return DrvInputs[4];
@@ -552,12 +534,6 @@ static INT32 DrvDoReset()
 
 	videobank = 0;
 
-	if (EEPROMAvailable()) {
-		init_eeprom_count = 0;
-	} else {
-		init_eeprom_count = 1000;
-	}
-
 	irq_enabled = 0;
 	videobank = 0;
 
@@ -579,6 +555,8 @@ static INT32 MemIndex()
 	DrvGfxROMExp1		= Next; Next += 0x800000;
 
 	DrvSndROM		= Next; Next += 0x100000;
+
+	DefaultEEPROM	= Next; Next += 0x000080;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x800 * sizeof(UINT32);
 
@@ -635,6 +613,8 @@ static INT32 DrvInit(INT32 nGame)
 		if (BurnLoadRomExt(DrvGfxROM1 + 0x000006,  7, 8, 2)) return 1;
 
 		if (BurnLoadRom(DrvSndROM  + 0x000000,  8, 1)) return 1;
+
+		if (BurnLoadRom(DefaultEEPROM, 9, 1)) return 1;
 
 		K052109GfxDecode(DrvGfxROM0, DrvGfxROMExp0, 0x100000);
 		K053247GfxDecode(DrvGfxROM1, DrvGfxROMExp1, 0x400000);
@@ -697,6 +677,7 @@ static INT32 DrvInit(INT32 nGame)
 	ZetClose();
 
 	EEPROMInit(&vendetta_eeprom_intf);
+	if (!EEPROMAvailable()) EEPROMFill(DefaultEEPROM,0, 0x80);
 
 	BurnYM2151Init(3579545);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
@@ -861,7 +842,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029705;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -911,7 +892,7 @@ static struct BurnRomInfo vendettaRomDesc[] = {
 
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },   //  9 EEPROM
 };
 
 STD_ROM_PICK(vendetta)
@@ -950,7 +931,7 @@ static struct BurnRomInfo vendettarRomDesc[] = {
 
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendettar.nv",  0x000080, 0xec3f0449, BRF_OPT },
+	{ "vendettar.nv",  0x000080, 0xec3f0449, BRF_ESS | BRF_PRG },  //  9 EEPROM
 };
 
 STD_ROM_PICK(vendettar)
@@ -984,7 +965,7 @@ static struct BurnRomInfo vendettazRomDesc[] = {
 
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },   //  9 EEPROM
 };
 
 STD_ROM_PICK(vendettaz)
@@ -1019,7 +1000,7 @@ static struct BurnRomInfo vendettaunRomDesc[] = {
 
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },   //  9 EEPROM
 };
 
 STD_ROM_PICK(vendettaun)
@@ -1053,7 +1034,7 @@ static struct BurnRomInfo vendetta2pwRomDesc[] = {
 
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },   //  9 EEPROM
 };
 
 STD_ROM_PICK(vendetta2pw)
@@ -1087,7 +1068,7 @@ static struct BurnRomInfo vendetta2pebaRomDesc[] = {
 
 	{ "081a03",            0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendetta.nv",    0x000080, 0xfbac4e30, BRF_OPT },
+	{ "vendetta.nv",    0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },        //  9 EEPROM
 };
 
 STD_ROM_PICK(vendetta2peba)
@@ -1122,7 +1103,7 @@ static struct BurnRomInfo vendetta2punRomDesc[] = {
 
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },   //  9 EEPROM
 };
 
 STD_ROM_PICK(vendetta2pun)
@@ -1156,7 +1137,7 @@ static struct BurnRomInfo vendetta2puRomDesc[] = {
 
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },   //  9 EEPROM
 };
 
 STD_ROM_PICK(vendetta2pu)
@@ -1190,7 +1171,7 @@ static struct BurnRomInfo vendetta2pdRomDesc[] = {
 
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },   //  9 EEPROM
 };
 
 STD_ROM_PICK(vendetta2pd)
@@ -1224,7 +1205,7 @@ static struct BurnRomInfo vendettanRomDesc[] = {
 
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendettaj.nv",  0x000080, 0x3550a54e, BRF_OPT },
+	{ "vendettaj.nv",  0x000080, 0x3550a54e, BRF_ESS | BRF_PRG },  //  9 EEPROM
 };
 
 STD_ROM_PICK(vendettan)
@@ -1258,7 +1239,7 @@ static struct BurnRomInfo vendetta2ppRomDesc[] = {
 
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendettaj.nv",  0x000080, 0x3550a54e, BRF_OPT },
+	{ "vendettaj.nv",  0x000080, 0x3550a54e, BRF_ESS | BRF_PRG },  //  9 EEPROM
 };
 
 STD_ROM_PICK(vendetta2pp)
@@ -1278,21 +1259,21 @@ struct BurnDriver BurnDrvVendetta2pp = {
 // Escape Kids (Asia, 4 Players)
 
 static struct BurnRomInfo esckidsRomDesc[] = {
-	{ "17c.bin",	0x020000, 0x9dfba99c, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
+	{ "17c.bin", 0x020000, 0x9dfba99c, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
 
-	{ "975f02",	0x010000, 0x994fb229, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
+	{ "975f02",	0x010000, 0x994fb229, 2 | BRF_PRG | BRF_ESS },  //  1 Z80 Code
 
-	{ "975c09",	0x080000, 0xbc52210e, 3 | BRF_GRA },           //  2 K052109 Tiles
-	{ "975c08",	0x080000, 0xfcff9256, 3 | BRF_GRA },           //  3
+	{ "975c09",	0x080000, 0xbc52210e, 3 | BRF_GRA },            //  2 K052109 Tiles
+	{ "975c08",	0x080000, 0xfcff9256, 3 | BRF_GRA },            //  3
 
-	{ "975c04",	0x100000, 0x15688a6f, 4 | BRF_GRA },           //  4 K053247 Tiles
-	{ "975c05",	0x100000, 0x1ff33bb7, 4 | BRF_GRA },           //  5
-	{ "975c06",	0x100000, 0x36d410f9, 4 | BRF_GRA },           //  6
-	{ "975c07",	0x100000, 0x97ec541e, 4 | BRF_GRA },           //  7
+	{ "975c04",	0x100000, 0x15688a6f, 4 | BRF_GRA },            //  4 K053247 Tiles
+	{ "975c05",	0x100000, 0x1ff33bb7, 4 | BRF_GRA },            //  5
+	{ "975c06",	0x100000, 0x36d410f9, 4 | BRF_GRA },            //  6
+	{ "975c07",	0x100000, 0x97ec541e, 4 | BRF_GRA },            //  7
 
-	{ "975c03",	0x080000, 0xdc4a1707, 5 | BRF_SND },           //  8 K053260 Samples
+	{ "975c03",	0x080000, 0xdc4a1707, 5 | BRF_SND },            //  8 K053260 Samples
 
-	{ "esckids.nv",  0x000080, 0xa8522e1f, BRF_OPT },
+	{ "esckids.nv",  0x000080, 0xa8522e1f, BRF_ESS | BRF_PRG }, //  9 EEPROM
 };
 
 STD_ROM_PICK(esckids)
@@ -1317,21 +1298,21 @@ struct BurnDriver BurnDrvEsckids = {
 // Escape Kids (Japan, 2 Players)
 
 static struct BurnRomInfo esckidsjRomDesc[] = {
-	{ "975r01",	0x020000, 0x7b5c5572, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
+	{ "975r01",	0x020000, 0x7b5c5572, 1 | BRF_PRG | BRF_ESS },   //  0 Konami Custom Code
 
-	{ "975f02",	0x010000, 0x994fb229, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
+	{ "975f02",	0x010000, 0x994fb229, 2 | BRF_PRG | BRF_ESS },   //  1 Z80 Code
 
-	{ "975c09",	0x080000, 0xbc52210e, 3 | BRF_GRA },           //  2 K052109 Tiles
-	{ "975c08",	0x080000, 0xfcff9256, 3 | BRF_GRA },           //  3
+	{ "975c09",	0x080000, 0xbc52210e, 3 | BRF_GRA },             //  2 K052109 Tiles
+	{ "975c08",	0x080000, 0xfcff9256, 3 | BRF_GRA },             //  3
 
-	{ "975c04",	0x100000, 0x15688a6f, 4 | BRF_GRA },           //  4 K053247 Tiles
-	{ "975c05",	0x100000, 0x1ff33bb7, 4 | BRF_GRA },           //  5
-	{ "975c06",	0x100000, 0x36d410f9, 4 | BRF_GRA },           //  6
-	{ "975c07",	0x100000, 0x97ec541e, 4 | BRF_GRA },           //  7
+	{ "975c04",	0x100000, 0x15688a6f, 4 | BRF_GRA },             //  4 K053247 Tiles
+	{ "975c05",	0x100000, 0x1ff33bb7, 4 | BRF_GRA },             //  5
+	{ "975c06",	0x100000, 0x36d410f9, 4 | BRF_GRA },             //  6
+	{ "975c07",	0x100000, 0x97ec541e, 4 | BRF_GRA },             //  7
 
-	{ "975c03",	0x080000, 0xdc4a1707, 5 | BRF_SND },           //  8 K053260 Samples
+	{ "975c03",	0x080000, 0xdc4a1707, 5 | BRF_SND },             //  8 K053260 Samples
 
-	{ "esckidsj.nv",  0x000080, 0x985e2a2d, BRF_OPT },
+	{ "esckidsj.nv",  0x000080, 0x985e2a2d, BRF_ESS | BRF_PRG }, //  9 EEPROM
 };
 
 STD_ROM_PICK(esckidsj)

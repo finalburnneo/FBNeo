@@ -4911,6 +4911,7 @@ static UINT8 jv001_read()
 static void jv001_write(UINT16 address, UINT8 data)
 {
 	if (address & 0x8000) {
+		bprintf(0, _T("jv001_latch address (%x) - output: %x\n"), address, jv001_register);
 		jv001_output = jv001_register;
 	} else {
 		switch (address & 0xe103) {
@@ -11775,7 +11776,7 @@ struct BurnDriver BurnDrvfds_donkeykongjr = {
 };
 
 static struct BurnRomInfo fds_doremikkoRomDesc[] = {
-	{ "Doremikko (Jap)(1987)(Konami).fds",          131000, 0xbee7a47b, BRF_ESS | BRF_PRG },
+	{ "Doremikko (Japan)(1987)(Konami).fds",          131000, 0xbee7a47b, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_doremikko, fds_doremikko, fds_fdsbios)
@@ -12183,7 +12184,7 @@ struct BurnDriver BurnDrvfds_firerock = {
 };
 
 static struct BurnRomInfo fds_fuuunankokuRomDesc[] = {
-	{ "Fuuun Shourinken - Ankoku no Maou (Jap)(1988)(Jaleco).fds",          131000, 0x3c5f6468, BRF_ESS | BRF_PRG },
+	{ "Fuuun Shourinken - Ankoku no Maou (Japan)(1988)(Jaleco).fds",          131000, 0x3c5f6468, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_fuuunankoku, fds_fuuunankoku, fds_fdsbios)
@@ -13305,7 +13306,7 @@ struct BurnDriver BurnDrvfds_rogerrabbit = {
 };
 
 static struct BurnRomInfo fds_samswordRomDesc[] = {
-	{ "Samurai Sword (Jap)(1988)(Capcom).fds",          131016, 0x5ca021ff, BRF_ESS | BRF_PRG },
+	{ "Samurai Sword (Japan)(1988)(Capcom).fds",          131016, 0x5ca021ff, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_samsword, fds_samsword, fds_fdsbios)
@@ -14879,7 +14880,7 @@ struct BurnDriver BurnDrvnes_1991dumarac = {
 };
 
 static struct BurnRomInfo nes_mahjongblockRomDesc[] = {
-	{ "Mahjong Block (Super Mega) (Unl).nes",          65552, 0xbcbbff38, BRF_ESS | BRF_PRG },
+	{ "Mahjong Block (Idea-tek) (Unl).nes",          65552, 0x30820b60, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_mahjongblock)

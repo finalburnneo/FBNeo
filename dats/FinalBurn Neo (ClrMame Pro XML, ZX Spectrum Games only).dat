@@ -15447,8 +15447,8 @@
 		<comment>Homebrew, Press 'Z', 'X' and 'C' to switch heroes</comment>
 		<description>Tiny Dungeons (128K) (HB)</description>
 		<year>2022</year>
-		<manufacturer>RetroWorks</manufacturer>
-		<rom name="Tiny Dungeons 128K (2022)(RetroWorks).tap" size="83423" crc="4ec8a564"/>
+		<manufacturer>RetroSouls</manufacturer>
+		<rom name="Tiny Dungeons 128K (2022)(RetroSouls).tap" size="81973" crc="a35f23f6"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

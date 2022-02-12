@@ -33589,7 +33589,7 @@ struct BurnDriver BurnSpecSqijd = {
 // Tiny Dungeons (128K) (HB)
 
 static struct BurnRomInfo SpecTinydungsRomDesc[] = {
-	{ "Tiny Dungeons 128K (2022)(RetroWorks).tap", 83423, 0x4ec8a564, BRF_ESS | BRF_PRG },
+	{ "Tiny Dungeons 128K (2022)(RetroSouls).tap", 81973, 0xa35f23f6, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecTinydungs, SpecTinydungs, Spec128)
@@ -33597,7 +33597,7 @@ STD_ROM_FN(SpecTinydungs)
 
 struct BurnDriver BurnSpecTinydungs = {
 	"spec_tinydungs", NULL, "spec_spec128", NULL, "2022",
-	"Tiny Dungeons (128K) (HB)\0", "Press 'Z', 'X' and 'C' to switch heroes", "RetroWorks", "ZX Spectrum",
+	"Tiny Dungeons (128K) (HB)\0", "Press 'Z', 'X' and 'C' to switch heroes", "RetroSouls", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_RPG, 0,
 	SpectrumGetZipName, SpecTinydungsRomInfo, SpecTinydungsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

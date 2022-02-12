@@ -186,7 +186,7 @@ static const INT32 freq_limit[8] =
 };
 
 /* table of noise frequencies */
-static const INT32 noise_freq[2][16] =
+static const INT32 noise_freq[2][16] = {
 {   // NTSC
 	4, 8, 16, 32, 64, 96, 128, 160, 202, 254, 380, 508, 762, 1016, 2034, 4068
 },

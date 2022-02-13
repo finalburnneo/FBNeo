@@ -25,8 +25,6 @@ static INT32 K053245Active = 0;
 
 INT32 K05324xZRejection = -1;
 
-INT32 K053245_TMNT2_Kludge = 0;
-
 INT32 K053245Reset()
 {
 	for (INT32 i = 0; i < K053245Active; i++) {
@@ -87,8 +85,6 @@ void K053245Exit()
 		K053245_dx[i] = 0;
 		K053245_dy[i] = 0;
 	}
-
-	K053245_TMNT2_Kludge = 0;
 
 	K053245Active = 0;
 }
@@ -257,12 +253,6 @@ void K053245SpritesRender(INT32 chip)
           >0x40 reduce (0x80 = half size)
         */
 		zoomy = BURN_ENDIAN_SWAP_INT16(sprbuf[offs+4]);
-
-		if (K053245_TMNT2_Kludge) {
-			if ((code & 0xff80) == 0x2600 && zoomy < 0x40) {
-				zoomy -= 3;
-			}
-		}
 
 		if (zoomy > 0x2000) continue;
 		if (zoomy) zoomy = (0x400000+zoomy/2) / zoomy;

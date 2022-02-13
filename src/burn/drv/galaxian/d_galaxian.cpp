@@ -7682,6 +7682,24 @@ static struct BurnRomInfo Redufob2RomDesc[] = {
 STD_ROM_PICK(Redufob2)
 STD_ROM_FN(Redufob2)
 
+static struct BurnRomInfo Redufob3RomDesc[] = {
+	{ "1.rom1",        0x00800, 0xad9930d3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2.rom2",        0x00800, 0x65d1792d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "3.rom3",        0x00800, 0xe1030d1c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "4.rom4",        0x00800, 0xd801b80d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "5.rom5",        0x00800, 0xf1e46275, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "6.rom6",        0x00800, 0x98513f8a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "7.rom7",        0x00800, 0xfd07d811, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "gfx.1h",        0x00800, 0x8a422b0d, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "gfx.1k",        0x00800, 0x1eb84cb1, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "82s123.6l",     0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Redufob3)
+STD_ROM_FN(Redufob3)
+
 static struct BurnRomInfo ExodusRomDesc[] = {
 	{ "exodus1.bin",   0x00800, 0x5dfe65e1, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "exodus2.bin",   0x00800, 0x6559222f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -8823,6 +8841,16 @@ struct BurnDriver BurnDrvRedufob2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, Redufob2RomInfo, Redufob2RomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, RedufobDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvRedufob3 = {
+	"redufob3", "redufo", NULL, NULL, "1981",
+	"Defend the Terra Attack on the Red UFO (bootleg, set 3)\0", NULL, "bootleg", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, Redufob3RomInfo, Redufob3RomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, RedufobDIPInfo,
 	GalInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

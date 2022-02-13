@@ -173,6 +173,16 @@ void K05324xSetZRejection(INT32 z)
 	K05324xZRejection = z;
 }
 
+static INT32 frac_up(INT32 ff) // to next whole pixel
+{
+	if (ff & 0xfff) {
+		ff &= ~0xfff;
+		ff += 0x1000;
+	}
+
+	return ff;
+}
+
 // Sprite Rendering
 
 void K053245SpritesRender(INT32 chip)
@@ -243,6 +253,7 @@ void K053245SpritesRender(INT32 chip)
           >0x40 reduce (0x80 = half size)
         */
 		zoomy = BURN_ENDIAN_SWAP_INT16(sprbuf[offs+4]);
+
 		if (zoomy > 0x2000) continue;
 		if (zoomy) zoomy = (0x400000+zoomy/2) / zoomy;
 		else zoomy = 2 * 0x400000;
@@ -285,23 +296,28 @@ void K053245SpritesRender(INT32 chip)
 		oy = (-(oy + spriteoffsY + 0x07)) & 0x3ff;
 		if (oy >= 640) oy -= 1024;
 
+		// move ox, oy from int to the 20.12 frac realm
+		ox <<= 12;
+		oy <<= 12;
+
 		/* the coordinates given are for the *center* of the sprite */
-		ox -= (zoomx * w) >> 13;
-		oy -= (zoomy * h) >> 13;
+		ox -= (zoomx * w) >> 1;
+		oy -= (zoomy * h) >> 1;
 
 		for (y = 0;y < h;y++)
 		{
 			INT32 sx,sy,zw,zh;
 
-			sy = oy + ((zoomy * y + (1<<11)) >> 12);
-			zh = (oy + ((zoomy * (y+1) + (1<<11)) >> 12)) - sy;
+			sy = oy + frac_up(zoomy * y);
+			zh = (oy + frac_up(zoomy * (y+1))) - sy;
 
 			for (x = 0;x < w;x++)
 			{
 				INT32 c,fx,fy;
 
-				sx = ox + ((zoomx * x + (1<<11)) >> 12);
-				zw = (ox + ((zoomx * (x+1) + (1<<11)) >> 12)) - sx;
+				sx = ox + frac_up(zoomx * x);
+				zw = (ox + frac_up(zoomx * (x+1))) - sx;
+
 				c = code;
 				if (mirrorx)
 				{
@@ -347,17 +363,17 @@ void K053245SpritesRender(INT32 chip)
 				c = ((c & 0x3f) | (code & ~0x3f)) & K053245MaskExp[chip];
 
 				if (shadow) {
-					konami_render_zoom_shadow_sprite(gfxdata, c, nBpp[chip], color, sx, sy, fx, fy, 16, 16, zw << 12, zh << 12, pri, 0);
+					konami_render_zoom_shadow_sprite(gfxdata, c, nBpp[chip], color, sx >> 12, sy >> 12, fx, fy, 16, 16, zw, zh, pri, 0);
 					continue;
 				}
 
 				if (zoomx == 0x10000 && zoomy == 0x10000)
 				{
-					konami_draw_16x16_prio_sprite(gfxdata, c, nBpp[chip], color, sx, sy, fx, fy, pri);
+					konami_draw_16x16_prio_sprite(gfxdata, c, nBpp[chip], color, sx >> 12, sy >> 12, fx, fy, pri);
 				}
 				else
 				{
-					konami_draw_16x16_priozoom_sprite(gfxdata, c, nBpp[chip], color, 0, sx, sy, fx, fy, 16, 16, zw << 12, zh << 12, pri);
+					konami_draw_16x16_priozoom_sprite(gfxdata, c, nBpp[chip], color, 0, sx >> 12, sy >> 12, fx, fy, 16, 16, zw, zh, pri);
 				}
 			}
 		}

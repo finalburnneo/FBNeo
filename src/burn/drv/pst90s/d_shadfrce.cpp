@@ -35,10 +35,10 @@ static UINT8 DrvDipBtn[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 static UINT8 DrvInput[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvReset = 0;
-static UINT8 nBrightness = 0xFF;
 
 static INT32 nExtraCycles;
 
+static UINT8 nBrightness;
 static UINT8 okibank;
 static UINT8 video_enable;
 static UINT8 irqs_enable;
@@ -49,8 +49,6 @@ static UINT8 bVBlank = 0;
 static UINT16 bg0scrollx, bg0scrolly, bg1scrollx, bg1scrolly;
 static UINT8 nSoundlatch = 0;
 static UINT8 bRecalcPalette = 0;
-
-static INT32 scanline;
 
 static struct BurnInputInfo shadfrceInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvDipBtn + 0,	"p1 coin"	},
@@ -419,6 +417,7 @@ static INT32 DrvDoReset()
 	raster_scanline = 0;
 	raster_irq_enable = 0;
 	previous_irq_value = 0;
+	nBrightness = 0xff;
 
 	nExtraCycles = 0;
 
@@ -763,8 +762,6 @@ static INT32 shadfrceFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		scanline = i;
-
 		if (i == 248-1) {
 			bVBlank = 1;
 		}
@@ -837,15 +834,18 @@ static INT32 shadfrceScan(INT32 nAction,INT32 *pnMin)
 		MSM6295Scan(nAction, pnMin);
 		BurnYM2151Scan(nAction, pnMin);
 
-		SCAN_VAR(DrvInput);
-		SCAN_VAR(nBrightness);
+		SCAN_VAR(okibank);
+		SCAN_VAR(video_enable);
+		SCAN_VAR(irqs_enable);
+		SCAN_VAR(raster_scanline);
+		SCAN_VAR(raster_irq_enable);
+		SCAN_VAR(previous_irq_value);
 		SCAN_VAR(bg0scrollx);
 		SCAN_VAR(bg0scrolly);
 		SCAN_VAR(bg1scrollx);
 		SCAN_VAR(bg1scrolly);
 		SCAN_VAR(nSoundlatch);
-		SCAN_VAR(video_enable);
-		SCAN_VAR(okibank);
+		SCAN_VAR(nBrightness);
 
 		SCAN_VAR(nExtraCycles);
 	}

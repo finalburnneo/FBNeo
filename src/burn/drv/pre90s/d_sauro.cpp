@@ -987,6 +987,46 @@ struct BurnDriver BurnDrvSauroa = {
 };
 
 
+// Sauro (set 3)
+
+static struct BurnRomInfo saurobRomDesc[] = {
+	{ "2 tecfri",		0x8000, 0x961567c7, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "1 tecfri",		0x8000, 0x6b564429, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "3 tecfri",		0x8000, 0x3eca1c5c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+
+	{ "6 tecfri",		0x8000, 0x4b77cb0f, 3 | BRF_GRA },           //  3 Background Tiles
+	{ "7 tecfri",		0x8000, 0x187da060, 3 | BRF_GRA },           //  4
+
+	{ "4 tecfri",		0x8000, 0x9b617cda, 4 | BRF_GRA },           //  5 Foreground Tiles
+	{ "5 tecfri",		0x8000, 0xa6e2640d, 4 | BRF_GRA },           //  6
+
+	{ "8 tecfri",		0x8000, 0xe08b5d5e, 5 | BRF_GRA },           //  7 Sprites
+	{ "9 tecfri",		0x8000, 0x7c707195, 5 | BRF_GRA },           //  8
+	{ "10 tecfri",		0x8000, 0xc93380d1, 5 | BRF_GRA },           //  9
+	{ "11 tecfri",		0x8000, 0xf47982a8, 5 | BRF_GRA },           // 10
+
+	{ "82s137-3.bin",	0x0400, 0xd52c4cd0, 6 | BRF_GRA },           // 11 Color data
+	{ "82s137-2.bin",	0x0400, 0xc3e96d5d, 6 | BRF_GRA },           // 12
+	{ "82s137-1.bin",	0x0400, 0xbdfcf00c, 6 | BRF_GRA },           // 13
+
+	{ "sp0256-al2.bin",	0x0800, 0xb504ac15, 7 | BRF_GRA },           // 14 Speech data
+};
+
+STD_ROM_PICK(saurob)
+STD_ROM_FN(saurob)
+
+struct BurnDriver BurnDrvSaurob = {
+	"saurob", "sauro", NULL, NULL, "1987",
+	"Sauro (set 3)\0", NULL, "Tecfri", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, saurobRomInfo, saurobRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
+	SauroInit, DrvExit, SauroFrame, SauroDraw, DrvScan, &DrvRecalc, 0x400,
+	240, 224, 4, 3
+};
+
+
 // Sauro (Philko license)
 
 static struct BurnRomInfo sauropRomDesc[] = {
@@ -1069,7 +1109,7 @@ struct BurnDriver BurnDrvSaurorr = {
 
 // Sauro (bootleg)
 
-static struct BurnRomInfo saurobRomDesc[] = {
+static struct BurnRomInfo sauroblRomDesc[] = {
 	{ "sauro02.7c",		0x8000, 0x72026b9a, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "sauro01.6c",		0x8000, 0x4ff12c25, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -1093,15 +1133,15 @@ static struct BurnRomInfo saurobRomDesc[] = {
 	{ "sauropr4.16h",	0x0200, 0x5261bc11, 7 | BRF_GRA },           // 14 Unknown prom
 };
 
-STD_ROM_PICK(saurob)
-STD_ROM_FN(saurob)
+STD_ROM_PICK(saurobl)
+STD_ROM_FN(saurobl)
 
-struct BurnDriver BurnDrvSaurob = {
-	"saurob", "sauro", NULL, NULL, "1987",
+struct BurnDriver BurnDrvSaurobl = {
+	"saurobl", "sauro", NULL, NULL, "1987",
 	"Sauro (bootleg)\0", "Missing speech is normal", "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, saurobRomInfo, saurobRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, SaurobDIPInfo,
+	NULL, sauroblRomInfo, sauroblRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, SaurobDIPInfo,
 	SauroInit, DrvExit, SauroFrame, SauroDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
 };

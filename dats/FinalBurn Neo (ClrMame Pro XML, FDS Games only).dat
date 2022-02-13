@@ -353,6 +353,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="doremikko" romof="fdsbios">
+		<description>Doremikko (Japan)</description>
+		<year>1987</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Doremikko (Japan)(1987)(Konami).fds" size="131000" crc="bee7a47b"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="drcha" romof="fdsbios">
 		<description>Dr. Chaos - Jigoku no Tobira (Japan)</description>
 		<year>1987</year>
@@ -576,6 +585,15 @@
 		<year>1987</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="Fuuun Shourin Ken (Japan).fds" size="131016" crc="b5b75934"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="fuuunankoku" romof="fdsbios">
+		<description>Fuuun Shourin Ken - Ankoku no Maou (Japan)</description>
+		<year>1988</year>
+		<manufacturer>Jaleco</manufacturer>
+		<rom name="Fuuun Shourinken - Ankoku no Maou (Japan)(1988)(Jaleco).fds" size="131000" crc="3c5f6468"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1177,6 +1195,25 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="samsword" cloneof="samsworden" romof="samsworden">
+		<description>Samurai Sword (Japan)</description>
+		<year>1988</year>
+		<manufacturer>Capcom</manufacturer>
+		<rom name="Samurai Sword (Japan)(1988)(Capcom).fds" size="131016" crc="5ca021ff"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="samsworden" romof="fdsbios">
+		<comment>Hack</comment>
+		<description>Samurai Sword (T-Eng)</description>
+		<year>1988-2003</year>
+		<manufacturer>Mute</manufacturer>
+		<rom name="Samurai Sword (T-Eng)(2003)(Mute).fds" size="131016" crc="45ddd0f4"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="sdgunworgacsescwac" cloneof="sdgunworgacsescwa" romof="sdgunworgacsescwa">
 		<comment>Hack</comment>
 		<description>SD Gundam World - Gachapon Senshi - Scramble Wars (Hack, Spanish v1.0)</description>
@@ -1426,8 +1463,8 @@
 	</game>
 	<game name="wakusatogai" romof="fdsbios">
 		<description>Wakusei Aton Gaiden (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Kokuzeichou</manufacturer>
 		<rom name="Wakusei Aton Gaiden (Japan).fds" size="131016" crc="94a825fa"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1435,8 +1472,8 @@
 	</game>
 	<game name="wardnernomori" romof="fdsbios">
 		<description>Wardner no Mori (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Taito</manufacturer>
 		<rom name="Wardner no Mori (Japan).fds" size="131016" crc="b5a04f7e"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1444,8 +1481,8 @@
 	</game>
 	<game name="wintergames" romof="fdsbios">
 		<description>Winter Games (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="Winter Games (Japan).fds" size="131000" crc="6ab5e1d6"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1453,7 +1490,7 @@
 	</game>
 	<game name="wreckingcrew" romof="fdsbios">
 		<description>Wrecking Crew (Japan)</description>
-		<year>1989?</year>
+		<year>1988</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Wrecking Crew (Japan).fds" size="65516" crc="f341f135"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
@@ -1462,17 +1499,18 @@
 	</game>
 	<game name="youkaiyashikij" cloneof="youkaiyashiki" romof="youkaiyashiki">
 		<description>Youkai Yashiki (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Irem</manufacturer>
 		<rom name="Youkai Yashiki (Japan).fds" size="131016" crc="a888c6df"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="youkaiyashiki" romof="fdsbios">
+		<comment>Hack</comment>
 		<description>Youkai Yashiki (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987-2008</year>
+		<manufacturer>KingMike's Translations</manufacturer>
 		<rom name="Youkai Yashiki (T-Eng).fds" size="131000" crc="546589ab"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1480,8 +1518,8 @@
 	</game>
 	<game name="yuumaze" romof="fdsbios">
 		<description>Yuu Maze (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Taito</manufacturer>
 		<rom name="Yuu Maze (Japan).fds" size="131016" crc="de297106"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1489,8 +1527,8 @@
 	</game>
 	<game name="zanac" romof="fdsbios">
 		<description>Zanac (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1986</year>
+		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="Zanac (Japan).fds" size="65516" crc="daa74bc4"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1498,7 +1536,7 @@
 	</game>
 	<game name="zeldanodenj" cloneof="zeldanoden" romof="zeldanoden">
 		<description>Zelda no Densetsu - The Hyrule Fantasy (Japan)</description>
-		<year>1989?</year>
+		<year>1986</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Zelda no Densetsu - The Hyrule Fantasy (Japan).fds" size="131016" crc="3fbdddcd"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
@@ -1506,9 +1544,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="zeldanoden" romof="fdsbios">
+		<comment>Hack</comment>
 		<description>Zelda no Densetsu - The Hyrule Fantasy (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1986-2016</year>
+		<manufacturer>Jordiway73</manufacturer>
 		<rom name="Zelda no Densetsu - The Hyrule Fantasy (T-Eng).fds" size="131016" crc="ee11aa63"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>

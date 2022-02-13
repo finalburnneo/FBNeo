@@ -4075,6 +4075,7 @@ DRV		BurnDrvpce_dorams;
 DRV		BurnDrvpce_dorandn;
 DRV		BurnDrvgg_doraemon;
 DRV		BurnDrvmd_doraemon;
+DRV		BurnDrvfds_doremikko;
 DRV		BurnDrvMSX_dorodon;
 DRV		BurnDrvDorodon;
 DRV		BurnDrvDorodon2;
@@ -5565,6 +5566,7 @@ DRV		BurnDrvMSX_futknight;
 DRV		BurnSpecFuturelooter;
 DRV		BurnDrvFutspy;
 DRV		BurnDrvfds_fuuunshoken;
+DRV		BurnDrvfds_fuuunankoku;
 DRV		BurnDrvnes_fuzzicalfighterj;
 DRV		BurnDrvnes_fuzzicalfighter;
 DRV		BurnDrvmd_fxunyuki;
@@ -12810,6 +12812,8 @@ DRV		BurnDrvgg_samspir;
 DRV		BurnDrvmd_samspir;
 DRV		BurnDrvnes_samuraispirits;
 DRV		Burnmd_Samsho2;
+DRV		BurnDrvfds_samsword;
+DRV		BurnDrvfds_samsworden;
 DRV		BurnSpecSamwarrior128k;
 DRV		BurnDrvtg_samuraig;
 DRV		Burnmd_Sanguoyan;
@@ -22377,6 +22381,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_dorandn,		// Doraemon - Nobita no Dorabian Night
 	&BurnDrvgg_doraemon,		// Doraemon - Waku Waku Pocket Paradise (Jpn)
 	&BurnDrvmd_doraemon,		// Doraemon - Yume Dorobou to 7-nin no Gozans (Jpn)
+	&BurnDrvfds_doremikko,		// Doremikko (Japan)
 	&BurnDrvMSX_dorodon,		// Dorodon (Jpn)
 	&BurnDrvDorodon,			// Dorodon (set 1)
 	&BurnDrvDorodon2,			// Dorodon (set 2)
@@ -23867,6 +23872,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecFuturelooter,		// Future Looter (48K) (HB)
 	&BurnDrvFutspy,				// Future Spy
 	&BurnDrvfds_fuuunshoken,	// Fuuun Shourin Ken (Japan)
+	&BurnDrvfds_fuuunankoku,	// Fuuun Shourin Ken - Ankoku no Maou (Japan)
 	&BurnDrvnes_fuzzicalfighterj,// Fuzzical Fighter (Japan)
 	&BurnDrvnes_fuzzicalfighter,// Fuzzical Fighter (T-Eng)
 	&BurnDrvmd_fxunyuki,		// FX Unit Yuki - the Henshin Engine (HB)
@@ -31112,6 +31118,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_samspir,			// Samurai Spirits (Jpn)
 	&BurnDrvnes_samuraispirits,	// Samurai Spirits (Unl)
 	&Burnmd_Samsho2,			// Samurai Spirits II
+	&BurnDrvfds_samsword,		// Samurai Sword (Japan)
+	&BurnDrvfds_samsworden,		// Samurai Sword (T-Eng)
 	&BurnSpecSamwarrior128k,	// Samurai Warrior - Usagi Yojimbo (128K)
 	&BurnDrvtg_samuraig,		// Samurai-Ghost
 	&Burnmd_Sanguoyan,			// San Guo Yan Yi - Huo Shao Chi Bi

@@ -8977,7 +8977,7 @@
 		<description>Mahjong Block (Unl)</description>
 		<year>1991</year>
 		<manufacturer>Idea-tek</manufacturer>
-		<rom name="Mahjong Block (Super Mega) (Unl).nes" size="65552" crc="bcbbff38"/>
+		<rom name="Mahjong Block (Idea-tek) (Unl).nes" size="65552" crc="30820b60"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

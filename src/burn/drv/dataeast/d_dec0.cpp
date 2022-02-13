@@ -1453,7 +1453,7 @@ STD_ROM_PICK(Ffantasyb)
 STD_ROM_FN(Ffantasyb)
 
 
-// Midnight Resistance (World)
+// Midnight Resistance (World, set 1)
 
 static struct BurnRomInfo MidresRomDesc[] = {
 	{ "fk_14.rom",          0x20000, 0xde7522df, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -1493,6 +1493,49 @@ static struct BurnRomInfo MidresRomDesc[] = {
 
 STD_ROM_PICK(Midres)
 STD_ROM_FN(Midres)
+
+
+// Midnight Resistance (World, set 2)
+// DE-0323-4 PCB, only the first 2 main CPU ROMs differ, ROM labels weren't original so unfortunately not possible to determine version
+
+static struct BurnRomInfo Midres2RomDesc[] = {
+	{ "mr14",          		0x20000, 0xad4617a9, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
+	{ "mr12",          		0x20000, 0xc9ed677b, BRF_ESS | BRF_PRG },	//  1
+	{ "mr15",               0x20000, 0x1328354e, BRF_ESS | BRF_PRG },	//  2
+	{ "mr13",               0x20000, 0xe3b3955e, BRF_ESS | BRF_PRG },	//  3
+	
+	{ "mr16",               0x10000, 0x66360bdf, BRF_ESS | BRF_PRG },	//  4	HuC6280 Program
+	
+	{ "mr05",          		0x10000, 0xd75aba06, BRF_GRA },				//  5	Characters
+	{ "mr04",          		0x10000, 0x8f5bbb79, BRF_GRA },				//  6
+
+	{ "fl09",               0x20000, 0x907d5910, BRF_GRA },				//  7	Tiles 1
+	{ "fl08",               0x20000, 0xa936c03c, BRF_GRA },				//  8
+	{ "fl07",               0x20000, 0x2068c45c, BRF_GRA },				//  9
+	{ "fl06",               0x20000, 0xb7241ab9, BRF_GRA },				// 10
+	
+	{ "fl11",               0x20000, 0xb86b73b4, BRF_GRA },				// 11	Tiles 2
+	{ "fl10",               0x20000, 0x92245b29, BRF_GRA },				// 12
+	
+	{ "fl01",               0x20000, 0x2c8b35a7, BRF_GRA },				// 13	Sprites
+	{ "fl03",               0x20000, 0x1eefed3c, BRF_GRA },				// 14
+	{ "fl00",               0x20000, 0x756fb801, BRF_GRA },				// 15
+	{ "fl02",               0x20000, 0x54d2c120, BRF_GRA },				// 16
+	
+	{ "mr17",               0x20000, 0x9029965d, BRF_SND },				// 17	Samples
+	
+	{ "7114.prm",           0x00100, 0xeb539ffb, BRF_OPT },				// 18	PROMs
+	
+	{ "pal16r4a-1.bin",     0x00104, 0xd28fb8e0, BRF_OPT },				// 19	PLDs
+	{ "pal16l8b-2.bin",     0x00104, 0xbcb591e3, BRF_OPT },				// 20
+	{ "pal16l8a-3.bin",     0x00104, 0xe12972ac, BRF_OPT },				// 21
+	{ "pal16l8a-4.bin",     0x00104, 0xc6437e49, BRF_OPT },				// 22
+	{ "pal16l8b-5.bin",     0x00104, 0xe9ee3a67, BRF_OPT },				// 23
+	{ "pal16l8a-6.bin",     0x00104, 0x23b17abe, BRF_OPT },				// 24
+};
+
+STD_ROM_PICK(Midres2)
+STD_ROM_FN(Midres2)
 
 
 // Midnight Resistance (US)
@@ -5899,10 +5942,20 @@ struct BurnDriver BurnDrvFfantasyb = {
 
 struct BurnDriver BurnDrvMidres = {
 	"midres", NULL, NULL, NULL, "1989",
-	"Midnight Resistance (World)\0", NULL, "Data East Corporation", "DEC0",
+	"Midnight Resistance (World, set 1)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
 	NULL, MidresRomInfo, MidresRomName, NULL, NULL, NULL, NULL, MidresInputInfo, MidresDIPInfo,
+	MidresInit, SlyspyExit, Dec1Frame, MidresDraw, SlyspyScan,
+	NULL, 0x400, 256, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvMidres2 = {
+	"midres2", "midres", NULL, NULL, "1989",
+	"Midnight Resistance (World, set 2)\0", NULL, "Data East Corporation", "DEC0",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
+	NULL, Midres2RomInfo, Midres2RomName, NULL, NULL, NULL, NULL, MidresInputInfo, MidresDIPInfo,
 	MidresInit, SlyspyExit, Dec1Frame, MidresDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };

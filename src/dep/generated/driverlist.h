@@ -3607,6 +3607,7 @@ DRV		BurnDrvDeerhunj;
 DRV		BurnDrvDefence;
 DRV		BurnDrvRedufob;
 DRV		BurnDrvRedufob2;
+DRV		BurnDrvRedufob3;
 DRV		BurnDrvRedufo;
 DRV		BurnDrvDefenderb;
 #if defined FBNEO_DEBUG
@@ -9261,6 +9262,7 @@ DRV		BurnDrvmd_midresj;
 DRV		BurnDrvMidresu;
 DRV		BurnDrvmd_midres;
 DRV		BurnDrvMidres;
+DRV		BurnDrvMidres2;
 DRV		BurnDrvMSX_midway;
 DRV		BurnDrvSsioprom;
 DRV		BurnDrvnes_miedow;
@@ -12887,11 +12889,12 @@ DRV		BurnDrvnes_saturnsmash;
 DRV		BurnDrvSaturnzi;
 DRV		BurnDrvsamsho2k;
 DRV		BurnDrvsamsho2ka;
-DRV		BurnDrvSaurob;
+DRV		BurnDrvSaurobl;
 DRV		BurnDrvSaurop;
 DRV		BurnDrvSaurorr;
 DRV		BurnDrvSauro;
 DRV		BurnDrvSauroa;
+DRV		BurnDrvSaurob;
 DRV		BurnDrvMSX_saurus;
 DRV		BurnSpecsavagei;
 DRV		BurnSpecsavage1;
@@ -20358,8 +20361,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBubsymphj,			// Bubble Symphony (Ver 2.5J 1994/10/05)
 	&BurnDrvBubsymphe,			// Bubble Symphony (Ver 2.5O 1994/10/05)
 	&BurnDrvBubsys,				// Bubble System BIOS [no comment, NOT WORKING]
-	&BurnDrvBubbletrj,			// Bubble Trouble (Japan, Rev C) [no comment, NOT WORKING]
-	&BurnDrvBubbletr,			// Bubble Trouble (World, Rev B) [no comment, NOT WORKING]
+	&BurnDrvBubbletrj,			// Bubble Trouble - Golly! Ghost! 2 (Japan, Rev C) [no comment, NOT WORKING]
+	&BurnDrvBubbletr,			// Bubble Trouble - Golly! Ghost! 2 (World, Rev B) [no comment, NOT WORKING]
 	&BurnDrvpce_bubblegm,		// Bubblegum Crash! - Knight Sabers 2034
 	&BurnSpecBubbler,			// Bubbler (48K)
 	&BurnDrvMSX_bubbler,		// Bubbler (Euro)
@@ -21913,6 +21916,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDefence,			// Defence Command (Defender bootleg)
 	&BurnDrvRedufob,			// Defend the Terra Attack on the Red UFO (bootleg, set 1)
 	&BurnDrvRedufob2,			// Defend the Terra Attack on the Red UFO (bootleg, set 2)
+	&BurnDrvRedufob3,			// Defend the Terra Attack on the Red UFO (bootleg, set 3)
 	&BurnDrvRedufo,				// Defend the Terra Attack on the Red UFO
 	&BurnDrvDefenderb,			// Defender (Blue label)
 #if defined FBNEO_DEBUG
@@ -27566,7 +27570,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_midresj,			// Midnight Resistance (Jpn)
 	&BurnDrvMidresu,			// Midnight Resistance (US)
 	&BurnDrvmd_midres,			// Midnight Resistance (USA)
-	&BurnDrvMidres,				// Midnight Resistance (World)
+	&BurnDrvMidres,				// Midnight Resistance (World, set 1)
+	&BurnDrvMidres2,			// Midnight Resistance (World, set 2)
 	&BurnDrvMSX_midway,			// Midway (Jpn)
 	&BurnDrvSsioprom,			// Midway SSIO Sound Board Internal pROM [Internal pROM only, NOT WORKING]
 	&BurnDrvnes_miedow,			// Miedow (HB)
@@ -31193,11 +31198,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSaturnzi,			// Saturn
 	&BurnDrvsamsho2k,			// Saulabi Spirits / Jin Saulabi Tu Hon (Korean release of Samurai Shodown II)
 	&BurnDrvsamsho2ka,			// Saulabi Spirits / Jin Saulabi Tu Hon (Korean release of Samurai Shodown II, set 2)
-	&BurnDrvSaurob,				// Sauro (bootleg)
+	&BurnDrvSaurobl,			// Sauro (bootleg)
 	&BurnDrvSaurop,				// Sauro (Philko license)
 	&BurnDrvSaurorr,			// Sauro (Recreativos Real S.A. license)
 	&BurnDrvSauro,				// Sauro (set 1)
 	&BurnDrvSauroa,				// Sauro (set 2)
+	&BurnDrvSaurob,				// Sauro (set 3)
 	&BurnDrvMSX_saurus,			// Saurusland (Jpn)
 	&BurnSpecsavagei,			// Savage - Intro (48K)
 	&BurnSpecsavage1,			// Savage - Part 1 (48K)
@@ -35636,7 +35642,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_wallybeanogan,	// Wally Bear & the No Gang (Unl)
 	&BurnDrvWwallyjad,			// Wally wo Sagase! (rev A, Japan, 2 players, FD1094 317-0197A decrypted)
 	&BurnDrvWwallyja,			// Wally wo Sagase! (rev A, Japan, 2 players, FD1094 317-0197A)
-	&BurnDrvWwallyja3p,			// Wally wo Sagase! (rev A, Japan, 3 players, FD1094 317-0198A) [no comment, NOT WORKING]
+	&BurnDrvWwallyja3p,			// Wally wo Sagase! (rev A, Japan, 3 players, FD1094 317-0198A)
 	&BurnDrvWwallyjd,			// Wally wo Sagase! (rev B, Japan, 2 players, FD1094 317-0197B decrypted)
 	&BurnDrvWwallyj,			// Wally wo Sagase! (rev B, Japan, 2 players, FD1094 317-0197B)
 	&BurnDrvsms_wpayton,		// Walter Payton Football (USA)

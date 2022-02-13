@@ -445,8 +445,8 @@ static INT32 DrvDraw()
 
 	KonamiClearBitmaps(DrvPalette[0x100]);
 
-	K051316_zoom_draw(0, 1);
-	K053245SpritesRender(0);
+	if (nBurnLayer & 1) K051316_zoom_draw(0, 1);
+	if (nSpriteEnable & 1) K053245SpritesRender(0);
 
 	KonamiBlendCopy(DrvPalette);
 

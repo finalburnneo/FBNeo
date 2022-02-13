@@ -5299,6 +5299,7 @@ static INT32 Tmnt2Init()
 	K053245Init(0, DrvSpriteRom, DrvSprites, 0x3fffff, K053245SsridersCallback);
 	K053245SetSpriteOffset(0, -112, 16);
 	K05324xSetZRejection(0);
+	K053245_TMNT2_Kludge = 1;
 
 	// Load 68000 Program Roms
 	nRet = BurnLoadRom(Drv68KRom + 0x000001, 0, 2); if (nRet != 0) return 1;

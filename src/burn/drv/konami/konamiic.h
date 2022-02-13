@@ -261,6 +261,7 @@ void K053244Write(INT32 chip, INT32 offset, INT32 data);
 void K053245Scan(INT32 nAction);
 
 extern UINT8 *K053245Ram[2];
+extern INT32 K053245_TMNT2_Kludge;
 
 // K053251.cpp
 //---------------------------------------------------------------------------------------------------------------

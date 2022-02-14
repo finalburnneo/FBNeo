@@ -99,6 +99,9 @@ mingw: FORCE
 mingwcc: FORCE
 	@$(MAKE) -s -f makefile.mingw GCC510=1 BORKYCRT=1 HOST_CC=gcc HOST_CXX=g++ CC=i686-w64-mingw32-gcc CXX=i686-w64-mingw32-g++ WINDRES=i686-w64-mingw32-windres
 
+mingwcc64: FORCE
+	@$(MAKE) -s -f makefile.mingw BUILD_X64_EXE=1 GCC510=1 BORKYCRT=1 HOST_CC=gcc HOST_CXX=g++ CC=x86_64-w64-mingw32-gcc CXX=x86_64-w64-mingw32-g++ WINDRES=x86_64-w64-mingw32-windres
+
 mamemingw: FORCE
 	@$(MAKE) -s -f makefile.mamemingw
 

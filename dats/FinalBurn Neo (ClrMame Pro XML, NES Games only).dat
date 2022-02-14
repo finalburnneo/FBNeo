@@ -997,6 +997,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="astyanaxc" cloneof="astyanax" romof="astyanax">
+		<comment>Hack</comment>
+		<description>Astyanax (T-Chi, v1.1)</description>
+		<year>2021</year>
+		<manufacturer>逆游の五彩魚</manufacturer>
+		<rom name="Astyanax (T-Chi, v1.1).nes" size="524304" crc="1517f03a"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="astyanax">
 		<description>Astyanax (USA)</description>
 		<year>1990</year>
@@ -2046,6 +2055,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="buckyoharec" cloneof="buckyohare" romof="buckyohare">
+		<comment>Hack</comment>
+		<description>Bucky O'Hare (T-Chi)</description>
+		<year>2018</year>
+		<manufacturer>Axi</manufacturer>
+		<rom name="Bucky O'Hare (T-Chi).nes" size="426000" crc="faa6e27c"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="buckyohare">
 		<description>Bucky O'Hare (USA)</description>
 		<year>1992</year>
@@ -2538,6 +2556,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="chikichimacmourac" cloneof="wackyraces" romof="wackyraces">
+		<comment>Hack</comment>
+		<description>Chiki Chiki Machine Mou Race (T-Chi)</description>
+		<year>2018</year>
+		<manufacturer>Nonamed Team</manufacturer>
+		<rom name="Chiki Chiki Machine Mou Race (T-Chi).nes" size="393232" crc="37e57151"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="chiller">
 		<description>Chiller (USA)</description>
 		<year>1990</year>
@@ -2563,6 +2590,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="chipndalresrasc" cloneof="chipndalresra" romof="chipndalresra">
+		<comment>Hack</comment>
+		<description>Chip 'n Dale - Rescue Rangers (T-Chi, v1.1)</description>
+		<year>2015</year>
+		<manufacturer>HHNM</manufacturer>
+		<rom name="Chip 'n Dale - Rescue Rangers (T-Chi, v1.1).nes" size="393232" crc="1c63b350"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="chipndalresra">
 		<description>Chip 'n Dale - Rescue Rangers (USA)</description>
 		<year>1990</year>
@@ -2577,6 +2613,15 @@
 		<year>2019</year>
 		<manufacturer>jackic</manufacturer>
 		<rom name="chip 'n dale - rescue rangers 2 (usa) - castellano v0.99.nes" size="262160" crc="aa6e37e6"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="chipndalresra2sc" cloneof="chipndalresra2" romof="chipndalresra2">
+		<comment>Hack</comment>
+		<description>Chip 'n Dale - Rescue Rangers 2 (T-Chi, v1.13)</description>
+		<year>2015</year>
+		<manufacturer>HHNM</manufacturer>
+		<rom name="Chip 'n Dale - Rescue Rangers 2 (T-Chi, v1.13).nes" size="393232" crc="4acc32ba"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -3647,6 +3692,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="dondokodon2c" cloneof="dondokodon2" romof="dondokodon2">
+		<comment>Hack</comment>
+		<description>Don Doko Don 2 (T-Chi)</description>
+		<year>2020</year>
+		<manufacturer>Advance Team</manufacturer>
+		<rom name="Don Doko Don 2 (T-Chi).nes" size="393232" crc="64bab6de"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="dondokodon2">
 		<description>Don Doko Don 2 (T-Eng)</description>
 		<year>1992</year>
@@ -4328,10 +4382,10 @@
 	</game>
 	<game name="ducktales2c" cloneof="ducktales2" romof="ducktales2">
 		<comment>Hack</comment>
-		<description>DuckTales 2 (T-Chi, v1.1)</description>
-		<year>2019</year>
+		<description>DuckTales 2 (T-Chi, v1.2)</description>
+		<year>2021</year>
 		<manufacturer>DMG Team</manufacturer>
-		<rom name="DuckTales 2 (T-Chi, v1.1).nes" size="262160" crc="794dbb67"/>
+		<rom name="DuckTales 2 (T-Chi, v1.2).nes" size="262160" crc="26815134"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -5014,6 +5068,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="festersquestc" cloneof="festersquest" romof="festersquest">
+		<comment>Hack</comment>
+		<description>Fester's Quest (T-Chi)</description>
+		<year>2021</year>
+		<manufacturer>DMG Team</manufacturer>
+		<rom name="Fester's Quest (T-Chi).nes" size="393232" crc="56a5335e"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="festersquest">
 		<description>Fester's Quest (USA)</description>
 		<year>1989</year>
@@ -5257,6 +5320,15 @@
 		<year>1992</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Fire Emblem Gaiden (Japan).nes" size="393232" crc="0a187cb4"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="fireembgaic" cloneof="fireembgai" romof="fireembgai">
+		<comment>Hack</comment>
+		<description>Fire Emblem Gaiden (T-Chi, v2.0)</description>
+		<year>2021</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Fire Emblem Gaiden (T-Chi, v2.0).nes" size="663568" crc="1df6fb24"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -5939,6 +6011,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="gimmickc" cloneof="gimmick" romof="gimmick">
+		<comment>Hack</comment>
+		<description>Gimmick! (T-Chi)</description>
+		<year>2021</year>
+		<manufacturer>Sunsoft</manufacturer>
+		<rom name="Gimmick! (T-Chi).nes" size="524304" crc="a442efa6"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="glukthuwar">
 		<description>Gluk the Thunder Warrior (Spain) (Gluk Video) (Unl)</description>
 		<year>1992</year>
@@ -6025,6 +6106,15 @@
 		<year>1987</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Golf (USA).nes" size="24592" crc="6c4e5a87"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="golgo13sc" cloneof="golgo13" romof="golgo13">
+		<comment>Hack</comment>
+		<description>Golgo 13 - Daiisshou - Kamigami no Tasogare (T-Chi)</description>
+		<year>2021</year>
+		<manufacturer>MEZARANSU</manufacturer>
+		<rom name="Golgo 13 - Daiisshou - Kamigami no Tasogare (T-Chi).nes" size="524304" crc="9671760e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -8012,6 +8102,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="kirbysadvc" cloneof="kirbysadv" romof="kirbysadv">
+		<comment>Hack</comment>
+		<description>Kirby's Adventure (T-Chi)</description>
+		<year>2020</year>
+		<manufacturer>DMG Team</manufacturer>
+		<rom name="Kirby's Adventure (T-Chi).nes" size="1048592" crc="0efa7d0f"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="kirbysadv">
 		<description>Kirby's Adventure (USA) (Rev A)</description>
 		<year>1993</year>
@@ -8543,6 +8642,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="littlemagicc">
+		<comment>Hack</comment>
+		<description>Little Magic (T-Chi)</description>
+		<year>1990</year>
+		<manufacturer>Waixing</manufacturer>
+		<rom name="Little Magic (T-Chi).nes" size="524304" crc="e68b67db"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="littlemedusa">
 		<comment>Homebrew</comment>
 		<description>Little Medusa (HB)</description>
@@ -8908,7 +9016,7 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="magickidsdor">
+	<game name="magickidsdor" cloneof="krioncon" romof="krioncon">
 		<description>Magical Kid's Doropie (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -9126,6 +9234,15 @@
 		<year>1984</year>
 		<manufacturer>Namco</manufacturer>
 		<rom name="Mappy (Japan).nes" size="24592" crc="3f0e8e0a"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="mappyc" cloneof="mappy" romof="mappy">
+		<comment>Hack</comment>
+		<description>Mappy (T-Chi, v2.0)</description>
+		<year>2017</year>
+		<manufacturer>Jiu Ban</manufacturer>
+		<rom name="Mappy (T-Chi, v2.0).nes" size="40976" crc="7c922692"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -9424,6 +9541,15 @@
 		<year>2020</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="metal gear (usa) - castellano v1.0.nes" size="131088" crc="babc19e2"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="metalgearsc" cloneof="metalgear" romof="metalgear">
+		<comment>Hack</comment>
+		<description>Metal Gear (T-Chi)</description>
+		<year>2015</year>
+		<manufacturer>Axi</manufacturer>
+		<rom name="Metal Gear (T-Chi).nes" size="262160" crc="3e2e5276"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -10353,6 +10479,15 @@
 		<year>1990</year>
 		<manufacturer>Sammy</manufacturer>
 		<rom name="Ninja Crusaders (USA).nes" size="131088" crc="dc84deb0"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="ninjacrusadersc" cloneof="ninjacrusaders" romof="ninjacrusaders">
+		<comment>Hack</comment>
+		<description>Ninja Crusaders - Ryuuga (T-Chi) </description>
+		<year>2019</year>
+		<manufacturer>HHNM Team</manufacturer>
+		<rom name="Ninja Crusaders - Ryuuga (T-Chi).nes" size="262160" crc="05fac5d5"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -12285,6 +12420,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="sangokushiiihanoucc">
+		<comment>Hack</comment>
+		<description>Sangokushi II - Hanou No Tairiku (T-Chi)</description>
+		<year>2017</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="Sangokushi II - Hanou No Tairiku (T-Chi).nes" size="524304" crc="611d79ff"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="sansaranagaj" cloneof="sansaranaga" romof="sansaranaga">
 		<description>Sansara Naga (Japan)</description>
 		<year>1990</year>
@@ -12606,6 +12750,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="sidepocketc" cloneof="sidepocket" romof="sidepocket">
+		<comment>Hack</comment>
+		<description>Side Pocket (T-Chi, v2)</description>
+		<year>2020</year>
+		<manufacturer>Xing Kong</manufacturer>
+		<rom name="Side Pocket (T-Chi, v2).nes" size="188432" crc="e34da569"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="sidepocket">
 		<description>Side Pocket (USA)</description>
 		<year>1987</year>
@@ -12888,10 +13041,10 @@
 	</game>
 	<game name="snowbrotherssc" cloneof="snowbrothers" romof="snowbrothers">
 		<comment>Hack</comment>
-		<description>Snow Brothers (T-Chi)</description>
+		<description>Snow Brothers (T-Chi, v1.1)</description>
 		<year>2022</year>
-		<manufacturer>Han Xue Shi Zhe &amp; Jin Di Di San &amp; ZARD</manufacturer>
-		<rom name="Snow Brothers (T-Chi).nes" size="393232" crc="1a0eaa47"/>
+		<manufacturer>LSP Team</manufacturer>
+		<rom name="Snow Brothers (T-Chi, v1.1).nes" size="393232" crc="dac8e3dc"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -13560,9 +13713,9 @@
 	<game name="supercontrac" cloneof="superc" romof="superc">
 		<comment>Hack</comment>
 		<description>Super Contra (T-Chi)</description>
-		<year>2017</year>
+		<year>2018</year>
 		<manufacturer>FlameCyclone</manufacturer>
-		<rom name="Super Contra (T-Chi).nes" size="393232" crc="048f7dd8"/>
+		<rom name="Super Contra (T-Chi).nes" size="393232" crc="8ccbab43"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -14304,10 +14457,10 @@
 	</game>
 	<game name="tmntc" cloneof="tmnt" romof="tmnt">
 		<comment>Hack</comment>
-		<description>Teenage Mutant Ninja Turtles (T-Chi, v1.0)</description>
-		<year>2020</year>
+		<description>Teenage Mutant Ninja Turtles (T-Chi, v1.1)</description>
+		<year>2021</year>
 		<manufacturer>MEZARANSU</manufacturer>
-		<rom name="Teenage Mutant Ninja Turtles (T-Chi, v1.0).nes" size="393232" crc="43ae114f"/>
+		<rom name="Teenage Mutant Ninja Turtles (T-Chi, v1.1).nes" size="393232" crc="a02316dc"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -14825,6 +14978,15 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Tokkyuu Shirei Solbrain (Japan).nes" size="262160" crc="6a09e2bb"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="tokkyshisolc" cloneof="shatterhand" romof="shatterhand">
+		<comment>Hack</comment>
+		<description>Tokkyuu Shirei Solbrain (T-Chi)</description>
+		<year>2021</year>
+		<manufacturer>逆游の五彩魚</manufacturer>
+		<rom name="Tokkyuu Shirei Solbrain (T-Chi).nes" size="524304" crc="e006a59f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -15547,12 +15709,12 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="wanpakuduck" cloneof="ducktales" romof="ducktales">
+	<game name="wanpakuduckc" cloneof="ducktales" romof="ducktales">
 		<comment>Hack</comment>
-		<description>Wanpaku Duck Yume Bouken (T-Chi)</description>
-		<year>2020</year>
-		<manufacturer>Ju Jue Rong Hua</manufacturer>
-		<rom name="Wanpaku Duck Yume Bouken (T-Chi).nes" size="196624" crc="9fe55e12"/>
+		<description>Wanpaku Duck Yume Bouken (T-Chi, v1.1)</description>
+		<year>2021</year>
+		<manufacturer>Advance Team</manufacturer>
+		<rom name="Wanpaku Duck Yume Bouken (T-Chi, v1.1).nes" size="196624" crc="7c952f46"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

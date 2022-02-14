@@ -161,6 +161,47 @@ jobs:
           asset_path: Windows x32 (Test).zip
           asset_content_type: application/zip
 
+  build_windows64_test:
+    name: Windows x64 (Test)
+    needs: nightly_release
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash {0}
+
+    steps:
+      - name: Install Linux dependencies
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install mingw-w64 nasm
+
+      - uses: actions/checkout@v2
+
+      - name: Build FBNeo
+        run: |
+          make -j$(nproc) mingwcc64 SKIPDEPEND=1 RELEASEBUILD=1
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Windows x64 (Test)
+          path: |
+            fbneo64.exe
+
+      - name: Build release asset
+        run: |
+          zip --junk-paths "Windows x64 (Test).zip" fbneo64.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
+          asset_name: Windows x64 (Test).zip
+          asset_path: Windows x64 (Test).zip
+          asset_content_type: application/zip
+
   build_linux_sdl2:
     name: Linux SDL 2
     needs: nightly_release

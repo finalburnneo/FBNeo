@@ -7924,13 +7924,13 @@ struct BurnDriver BurnDrvpenta = {
 // Alien Rescue (Homebrew, Test Build)
 
 static struct BurnRomInfo alienresRomDesc[] = {
-	{ "pacman.6e",    0x1000, 0x4D94CE2A, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "pacman.6f",    0x1000, 0x5F81D441, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "pacman.6e",    0x1000, 0x154E2017, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "pacman.6f",    0x1000, 0x75237455, 1 | BRF_ESS | BRF_PRG },	//  1
 	{ "pacman.6h",    0x1000, 0xC71C0011, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "pacman.6j",    0x1000, 0xC71C0011, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "pacman.5e",    0x1000, 0xAB38F274, 2 | BRF_GRA },			//  4 Graphics
-	{ "pacman.5f",    0x1000, 0xCE1C6CB2, 2 | BRF_GRA },			//  5
+	{ "pacman.5e",    0x1000, 0x57AE12E7, 2 | BRF_GRA },			//  4 Graphics
+	{ "pacman.5f",    0x1000, 0x097ECA05, 2 | BRF_GRA },			//  5
 
 	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  6 Color Proms
 	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  7

@@ -30124,7 +30124,7 @@ struct BurnDriver BurnDrvMSX_wingwarrdx = {
 // Aerial (HB)
 
 static struct BurnRomInfo MSX_aerialRomDesc[] = {
-	{ "Aerial (2021)(Inufuto).cas",	10492, 0x3b8f765c, BRF_PRG | BRF_ESS },
+	{ "Aerial (2021)(Inufuto).cas",	10508, 0x09BF64C9, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_aerial, MSX_aerial, msx_msx)

@@ -532,11 +532,19 @@ int PrintCPUInfo()
 // Print global memory information
 int PrintGlobalMemoryInfo()
 {
-	MEMORYSTATUS stat;
-	GlobalMemoryStatus(&stat);
+	MEMORYSTATUSEX stat;
 
-	AddLine(_T("Physical RAM: %7i KB (%4i MB) total, %7i KB (%4i MB) avail"), stat.dwTotalPhys / 1024, stat.dwTotalPhys / (1024 * 1024), stat.dwAvailPhys / 1024, stat.dwAvailPhys / (1024 * 1024));
-	AddLine(_T("Total RAM:    %7i KB (%4i MB) total, %7i KB (%4i MB) avail"), stat.dwTotalPageFile / 1024, stat.dwTotalPageFile / (1024 * 1024), stat.dwAvailPageFile / 1024, stat.dwAvailPageFile / (1024 * 1024));
+	stat.dwLength = sizeof(MEMORYSTATUSEX);
+
+	GlobalMemoryStatusEx(&stat);
+
+	DWORD dwTotalPhys = stat.ullTotalPhys / pow(1024, 2);
+	DWORD dwAvailPhys = stat.ullAvailPhys / pow(1024, 2);
+	DWORD dwTotalPageFile = stat.ullTotalPageFile / pow(1024, 2);
+	DWORD dwAvailPageFile = stat.ullAvailPageFile / pow(1024, 2);
+
+	AddLine(_T("Physical RAM: %d MB (%d GB) total, %d MB (%d GB) avail"), dwTotalPhys, dwTotalPhys / 1024, dwAvailPhys, dwAvailPhys / 1024);
+	AddLine(_T("PageFile RAM: %d MB (%d GB) total, %d MB (%d GB) avail"), dwTotalPageFile, dwTotalPageFile / 1024, dwAvailPageFile, dwAvailPageFile / 1024);
 
 	// Information on FB Alpha memory usage
 	BOOL (WINAPI* pGetProcessMemoryInfo)(HANDLE, PPROCESS_MEMORY_COUNTERS, DWORD) = NULL;

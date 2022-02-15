@@ -20131,20 +20131,20 @@ struct BurnDriver BurnDrvnes_hyakujp = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-//Elephant CJ's Antics (Codemasters)
-static struct BurnRomInfo nes_elecjantRomDesc[] = {
-	{ "Elephant CJ's Antics (1992)(Codemasters).nes",          65552, 0x875855f1, BRF_ESS | BRF_PRG },
+//CJ's Elephant Antics (Codemasters)
+static struct BurnRomInfo nes_cjeleantRomDesc[] = {
+	{ "CJ's Elephant Antics (1992)(Codemasters).nes",          65552, 0x875855f1, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(nes_elecjant)
-STD_ROM_FN(nes_elecjant)
+STD_ROM_PICK(nes_cjeleant)
+STD_ROM_FN(nes_cjeleant)
 
-struct BurnDriver BurnDrvnes_elecjant = {
-	"nes_elecjant", NULL, NULL, NULL, "1992",
-	"Elephant CJ's Antics (USA) (Unl)\0", NULL, "Camerica", "Miscellaneous",
+struct BurnDriver BurnDrvnes_cjeleant = {
+	"nes_cjeleant", NULL, NULL, NULL, "1992",
+	"CJ's Elephant Antics (USA) (Unl)\0", NULL, "Camerica", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_elecjantRomInfo, nes_elecjantRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_cjeleantRomInfo, nes_cjeleantRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

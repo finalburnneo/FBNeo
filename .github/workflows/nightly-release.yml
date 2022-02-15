@@ -120,6 +120,92 @@ jobs:
           asset_path: Windows x32 (Debug).zip
           asset_content_type: application/zip
 
+  build_windows64:
+    name: Windows x64
+    needs: nightly_release
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+      - name: Install Windows MSYS2 dependencies
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: msys2-devel base-devel binutils mingw-w64-x86_64-toolchain mingw-w64-x86_64-nasm zip wget
+          msystem: MINGW64
+
+      - uses: actions/checkout@v2
+
+      - name: Build FBNeo
+        run: |
+          make -j$(nproc) mingw BUILD_X64_EXE=1 SKIPDEPEND=1 RELEASEBUILD=1
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Windows x64
+          path: |
+            fbneo64.exe
+
+      - name: Build release asset
+        run: |
+          zip --junk-paths "Windows x64.zip" fbneo64.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
+          asset_name: Windows x64.zip
+          asset_path: Windows x64.zip
+          asset_content_type: application/zip
+
+  build_windows64_debug:
+    name: Windows x64 (Debug)
+    needs: nightly_release
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+      - name: Install Windows MSYS2 dependencies
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: msys2-devel base-devel binutils mingw-w64-x86_64-toolchain mingw-w64-x86_64-nasm zip wget
+          msystem: MINGW64
+
+      - uses: actions/checkout@v2
+
+      - name: Build FBNeo
+        run: |
+          make -j$(nproc) mingw BUILD_X64_EXE=1 SKIPDEPEND=1
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Windows x64 (Debug)
+          path: |
+            fbneo64d.exe
+
+      - name: Build release asset
+        run: |
+          zip --junk-paths "Windows x64 (Debug).zip" fbneo64d.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
+          asset_name: Windows x64 (Debug).zip
+          asset_path: Windows x64 (Debug).zip
+          asset_content_type: application/zip
+
   build_windows_test:
     name: Windows x32 (Test)
     needs: nightly_release

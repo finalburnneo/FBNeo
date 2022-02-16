@@ -654,6 +654,9 @@ static INT32 ConfigParseMAMEFile()
 				if (flags & 0x800000) {
 					pCurrentCheat->bRestoreOnDisable = 1; // restore previous value on disable
 				}
+				if (flags & 0x3000) {
+					pCurrentCheat->nPrefillMode = (flags & 0x3000) >> 12;
+				}
 				if ((flags & 0x6) == 0x6) {
 					pCurrentCheat->bWatchMode = 1; // display value @ address
 				}
@@ -702,6 +705,9 @@ static INT32 ConfigParseMAMEFile()
 			}
 			if (flags & 0x800000) {
 				pCurrentCheat->bRestoreOnDisable = 1; // restore previous value on disable
+			}
+			if (flags & 0x3000) {
+				pCurrentCheat->nPrefillMode = (flags & 0x3000) >> 12;
 			}
 			if ((flags & 0x6) == 0x6) {
 				pCurrentCheat->bWatchMode = 1; // display value @ address

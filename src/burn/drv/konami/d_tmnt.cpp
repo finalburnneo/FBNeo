@@ -3337,8 +3337,6 @@ static void tmnt2_protection_write()
 	zmod = (INT16)mod[8];	// global z
 	xzoom = mod[0x1c/2];
 	yzoom = (keepaspect) ? xzoom : mod[0x1e/2];
-	//extern int counter;
-	//yzoom += counter*0x10;
 	ylock = xlock = (i & 0x0020 && (!xzoom || xzoom == 0x100));
 
 	if (!xlock)
@@ -3347,7 +3345,7 @@ static void tmnt2_protection_write()
 		if (i > 0)
 		{
 			i >>= 8;
-			xoffs += (INT32)(pow(i, /*1.898461*/1.891292) * xoffs / 599.250121);
+			xoffs += (INT32)(pow(i, /*1.891292*/1.841292) * xoffs / 599.250121);
 		}
 		else if (i < 0)
 		{

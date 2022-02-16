@@ -64,6 +64,7 @@ static UINT32 NESMode = 0;
 #define ALT_TIMING2     0x0080 // Don Doko Don 2 doesn't like the nmi delay that gunnac, b-wings, etc needs.
 #define VS_ZAPPER		0x0010 // VS. UniSystem Zapper
 #define VS_REVERSED     0x0020 // VS. p1/p2 -> p2/p1 (inputs swapped)
+#define RAM_RANDOM      0x0040 // Init. ram w/random bytes (Go! Dizzy Go!)
 
 // Usually for Multi-Cart mappers
 static UINT32 RESETMode = 0;
@@ -905,6 +906,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0xab862073) ? ALT_TIMING : 0; // ultimate frogger champ.
 	NESMode |= (ROMCRC == 0x2a798367) ? ALT_TIMING : 0; // jy 45-in-1
 	NESMode |= (ROMCRC == 0xb4255e99) ? (IS_PAL | SHOW_OVERSCAN) : 0; // Moonglow (HB)
+	NESMode |= (ROMCRC == 0x78716f4f) ? RAM_RANDOM : 0; // Go! Dizzy Go!
 	NESMode |= (ROMCRC == 0x4d58c832) ? IS_PAL : 0; // Hammerin' Harry
 	NESMode |= (ROMCRC == 0x149e367f) ? IS_PAL : 0; // Lion King, The
 	NESMode |= (ROMCRC == 0xbf80b241) ? IS_PAL : 0; // Mr. Gimmick
@@ -954,6 +956,10 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 
 				case IS_PAL:
 					bprintf(0, _T("*  Enabling PAL weirdness.\n"));
+					break;
+
+				case RAM_RANDOM:
+					bprintf(0, _T("*  Init RAM w/random bytes.\n"));
 					break;
 			}
 		}
@@ -10529,6 +10535,14 @@ static INT32 DrvDoReset()
 {
 	if (RESETMode == RESET_POWER) {
 		memset(NES_CPU_RAM, 0x00, 0x800);  // only cleared @ power-on
+
+		if (NESMode & RAM_RANDOM) { // Some games prefer random RAM @ power-on
+			UINT8 Pattern[0x08] = { 0x00, 0x5a, 0x01, 0x49, 0xe5, 0xf8, 0xa5, 0x10 };
+
+			for (INT32 i = 0; i < 0x800; i++) {
+				NES_CPU_RAM[i] = Pattern[i & 0x07];
+			}
+		}
 	}
 	M6502Open(0);
 	M6502Reset();
@@ -14873,7 +14887,7 @@ struct BurnDriver BurnDrvnes_1991dumarac = {
 	"nes_1991dumarac", NULL, NULL, NULL, "1991",
 	"1991 Du Ma Racing (Unl)\0", NULL, "Idea-tek", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SPORTSMISC | GBF_MISC, 0,
 	NESGetZipName, nes_1991dumaracRomInfo, nes_1991dumaracRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14890,7 +14904,7 @@ struct BurnDriver BurnDrvnes_mahjongblock = {
 	"nes_mahjongblock", NULL, NULL, NULL, "1991",
 	"Mahjong Block (Unl)\0", NULL, "Idea-tek", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_mahjongblockRomInfo, nes_mahjongblockRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -20117,6 +20131,96 @@ struct BurnDriver BurnDrvnes_hyakujp = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+//CJ's Elephant Antics (Codemasters)
+static struct BurnRomInfo nes_cjeleantRomDesc[] = {
+	{ "CJ's Elephant Antics (1992)(Codemasters).nes",          65552, 0x875855f1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_cjeleant)
+STD_ROM_FN(nes_cjeleant)
+
+struct BurnDriver BurnDrvnes_cjeleant = {
+	"nes_cjeleant", NULL, NULL, NULL, "1992",
+	"CJ's Elephant Antics (USA) (Unl)\0", NULL, "Camerica", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_cjeleantRomInfo, nes_cjeleantRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+//Go! Dizzy Go! (Codemasters)
+static struct BurnRomInfo nes_godizzygoRomDesc[] = {
+	{ "Go! Dizzy Go! (1992)(Codemasters, Camerica).nes",          65552, 0x78716f4f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_godizzygo)
+STD_ROM_FN(nes_godizzygo)
+
+struct BurnDriver BurnDrvnes_godizzygo = {
+	"nes_godizzygo", NULL, NULL, NULL, "1992",
+	"Go! Dizzy Go! (USA) (Unl)\0", NULL, "Camerica", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MAZE | GBF_ACTION, 0,
+	NESGetZipName, nes_godizzygoRomInfo, nes_godizzygoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+//Tecmo Super Bowl 2020 v3.0 (Hack)
+static struct BurnRomInfo nes_tsb20v3RomDesc[] = {
+	{ "Tecmo Super Bowl 2020 v3.0 (2021)(SBlueman).nes",          524304, 0x24de7ae7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tsb20v3)
+STD_ROM_FN(nes_tsb20v3)
+
+struct BurnDriver BurnDrvnes_tsb20v3 = {
+	"nes_tsb20v3", "nes_tecmosuperbowl", NULL, NULL, "2021",
+	"Tecmo Super Bowl 2020 (Hack, v3.0)\0", NULL, "SBlueman", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_tsb20v3RomInfo, nes_tsb20v3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+//Tecmo Super Bowl 2021 Final Edition (Hack)
+static struct BurnRomInfo nes_tsb21feRomDesc[] = {
+	{ "Tecmo Super Bowl 2021 Final Edition (2022)(SBlueman).nes",          524304, 0x0557f756, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tsb21fe)
+STD_ROM_FN(nes_tsb21fe)
+
+struct BurnDriver BurnDrvnes_tsb21fe = {
+	"nes_tsb21fe", "nes_tecmosuperbowl", NULL, NULL, "2022",
+	"Tecmo Super Bowl 2021 Final Edition (Hack)\0", NULL, "SBlueman", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_tsb21feRomInfo, nes_tsb21feRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+//Tecmo Super Bowl 2022 NCAA D.1 Edition (Hack)
+static struct BurnRomInfo nes_tsb22ncaaRomDesc[] = {
+	{ "Tecmo Super Bowl - 2022 NCAA D.1 Ed. (2022)(SBlueman).nes",          524304, 0x54133719, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tsb22ncaa)
+STD_ROM_FN(nes_tsb22ncaa)
+
+struct BurnDriver BurnDrvnes_tsb22ncaa = {
+	"nes_tsb22ncaa", "nes_tecmosuperbowl", NULL, NULL, "2022",
+	"Tecmo Super Bowl 2022 NCAA D.1 Edition (Hack)\0", NULL, "SBlueman", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_tsb22ncaaRomInfo, nes_tsb22ncaaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
@@ -22057,6 +22161,23 @@ struct BurnDriver BurnDrvnes_porunchan = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_porunchanRomInfo, nes_porunchanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_porunamabieRomDesc[] = {
+	{ "Porun-chan no Onigiri Daisuki - Amabie (2020)(Mook-TV).nes",          262160, 0xc2c2e17a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_porunamabie)
+STD_ROM_FN(nes_porunamabie)
+
+struct BurnDriver BurnDrvnes_porunamabie = {
+	"nes_porunamabie", NULL, NULL, NULL, "2020",
+	"Porun-chan no Onigiri Daisuki - Amabie (HB)\0", NULL, "Mook-TV", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_porunamabieRomInfo, nes_porunamabieRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

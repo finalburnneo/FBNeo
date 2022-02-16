@@ -173,16 +173,6 @@ void K05324xSetZRejection(INT32 z)
 	K05324xZRejection = z;
 }
 
-static INT32 frac_up(INT32 ff) // to next whole pixel
-{
-	if (ff & 0xfff) {
-		ff &= ~0xfff;
-		ff += 0x1000;
-	}
-
-	return ff;
-}
-
 // Sprite Rendering
 
 void K053245SpritesRender(INT32 chip)
@@ -308,15 +298,17 @@ void K053245SpritesRender(INT32 chip)
 		{
 			INT32 sx,sy,zw,zh;
 
-			sy = oy + frac_up(zoomy * y);
-			zh = (oy + frac_up(zoomy * (y+1))) - sy;
+			sy = oy + (zoomy * y + (1<<11));
+			zh = (oy + (zoomy * (y+1) + (1<<11))) - sy;
+			if (zh & 0xfff) zh += (1 << 12);
 
 			for (x = 0;x < w;x++)
 			{
 				INT32 c,fx,fy;
 
-				sx = ox + frac_up(zoomx * x);
-				zw = (ox + frac_up(zoomx * (x+1))) - sx;
+				sx = ox + (zoomx * x + (1<<11));
+				zw = (ox + (zoomx * (x+1) + (1<<11))) - sx;
+				if (zw & 0xfff) zw += (1 << 12);
 
 				c = code;
 				if (mirrorx)

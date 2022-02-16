@@ -907,6 +907,9 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x2a798367) ? ALT_TIMING : 0; // jy 45-in-1
 	NESMode |= (ROMCRC == 0xb4255e99) ? (IS_PAL | SHOW_OVERSCAN) : 0; // Moonglow (HB)
 	NESMode |= (ROMCRC == 0x78716f4f) ? RAM_RANDOM : 0; // Go! Dizzy Go!
+	NESMode |= (ROMCRC == 0x8c4f37e2) ? RAM_RANDOM : 0; // Minna no Taabou no Nakayoshi Daisakusen (Japan)
+	NESMode |= (ROMCRC == 0x17336a80) ? RAM_RANDOM : 0; // Minna no Taabou no Nakayoshi Daisakusen (T-Eng)
+	NESMode |= (ROMCRC == 0xc0b4bce5) ? RAM_RANDOM : 0; // Terminator 2 (T2) - Judgement Day
 	NESMode |= (ROMCRC == 0x4d58c832) ? IS_PAL : 0; // Hammerin' Harry
 	NESMode |= (ROMCRC == 0x149e367f) ? IS_PAL : 0; // Lion King, The
 	NESMode |= (ROMCRC == 0xbf80b241) ? IS_PAL : 0; // Mr. Gimmick
@@ -14798,6 +14801,40 @@ struct BurnDriver BurnDrvnes_vstopgun = {
 };
 
 // Non Homebrew (hand-added!)
+
+static struct BurnRomInfo nes_minnanotaaboujRomDesc[] = {
+	{ "Minna no Taabou no Nakayoshi Daisakusen (Japan).nes",          65552, 0x8c4f37e2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_minnanotaabouj)
+STD_ROM_FN(nes_minnanotaabouj)
+
+struct BurnDriver BurnDrvnes_minnanotaabouj = {
+	"nes_minnanotaabouj", "nes_minnanotaabou", NULL, NULL, "1991",
+	"Minna no Taabou no Nakayoshi Daisakusen (Japan)\0", NULL, "Character Soft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_minnanotaaboujRomInfo, nes_minnanotaaboujRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_minnanotaabouRomDesc[] = {
+	{ "Minna no Taabou no Nakayoshi Daisakusen (T-Eng).nes",          65552, 0x17336a80, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_minnanotaabou)
+STD_ROM_FN(nes_minnanotaabou)
+
+struct BurnDriver BurnDrvnes_minnanotaabou = {
+	"nes_minnanotaabou", NULL, NULL, NULL, "1991",
+	"Minna no Taabou no Nakayoshi Daisakusen (T-Eng)\0", NULL, "Character Soft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_minnanotaabouRomInfo, nes_minnanotaabouRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static INT32 topriderInit()
 {

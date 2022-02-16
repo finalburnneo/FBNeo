@@ -2807,6 +2807,7 @@ DRV		BurnDrvnes_citytrouble;
 DRV		BurnDrvgg_cj;
 DRV		BurnSpeccjiiiusa;
 DRV		BurnSpeccjseleph128;
+DRV		BurnDrvnes_cjeleant;
 DRV		BurnDrvmd_clanofheroes;
 DRV		BurnDrvnes_clashatdem;
 DRV		BurnDrvClshroadd;
@@ -6048,6 +6049,7 @@ DRV		BurnDrvGo2000;
 DRV		BurnDrvGogold;
 DRV		BurnDrvYamagchi;
 DRV		BurnDrvnes_gobenny;
+DRV		BurnDrvnes_godizzygo;
 DRV		BurnDrvnes_goal;
 DRV		BurnDrvgoalx3;
 DRV		BurnDrvnes_goaltwo;
@@ -11433,6 +11435,7 @@ DRV		BurnDrvPorter;
 DRV		BurnDrvPortmanj;
 DRV		BurnDrvPortman;
 DRV		BurnDrvnes_porunchan;
+DRV		BurnDrvnes_porunamabie;
 DRV		BurnSpecPoseidon;
 DRV		BurnDrvsms_poseidon;
 DRV		BurnDrvMSX_postmortem;
@@ -15533,6 +15536,9 @@ DRV		BurnDrvmd_tecmosbwj;
 DRV		BurnDrvnes_tecmosuperbowl;
 DRV		BurnDrvmd_tecmosbwa;
 DRV		BurnDrvmd_tecmosbw;
+DRV		BurnDrvnes_tsb20v3;
+DRV		BurnDrvnes_tsb21fe;
+DRV		BurnDrvnes_tsb22ncaa;
 DRV		BurnDrvmd_tecmosb2;
 DRV		BurnDrvmd_tecmosb2j;
 DRV		BurnDrvmd_tecmosb3;
@@ -21134,6 +21140,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_cj,				// CJ Elephant Fugitive (Euro)
 	&BurnSpeccjiiiusa,			// CJ In the USA (128K)
 	&BurnSpeccjseleph128,		// CJ's Elephant Antics (128K)
+	&BurnDrvnes_cjeleant,		// CJ's Elephant Antics (USA) (Unl)
 	&BurnDrvmd_clanofheroes,	// Clan of Heroes - Generals of the Yang Family (HB)
 	&BurnDrvnes_clashatdem,		// Clash at Demonhead (USA)
 	&BurnDrvClshroadd,			// Clash-Road (Data East license)
@@ -24375,6 +24382,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGogold,				// Go For The Gold (Japan)
 	&BurnDrvYamagchi,			// Go Go Mr. Yamaguchi / Yuke Yuke Yamaguchi-kun
 	&BurnDrvnes_gobenny,		// Go! Benny! (Unl)
+	&BurnDrvnes_godizzygo,		// Go! Dizzy Go! (USA) (Unl)
 	&BurnDrvnes_goal,			// Goal! (USA)
 	&BurnDrvgoalx3,				// Goal! Goal! Goal!
 	&BurnDrvnes_goaltwo,		// Goal! Two (USA)
@@ -29760,6 +29768,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPortmanj,			// Port Man (Japan)
 	&BurnDrvPortman,			// Port Man
 	&BurnDrvnes_porunchan,		// Porun-chan No Onigiri Daisuki (HB, v1.1)
+	&BurnDrvnes_porunamabie,	// Porun-chan no Onigiri Daisuki - Amabie (HB)
 	&BurnSpecPoseidon,			// Poseidon - Planet Eleven (48K)
 	&BurnDrvsms_poseidon,		// Poseidon Wars 3-D (Euro, USA, Bra)
 	&BurnDrvMSX_postmortem,		// Post Mortem (Spanish)
@@ -33860,6 +33869,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_tecmosuperbowl,	// Tecmo Super Bowl (USA)
 	&BurnDrvmd_tecmosbwa,		// Tecmo Super Bowl (USA, 199309)
 	&BurnDrvmd_tecmosbw,		// Tecmo Super Bowl (USA, 199310)
+	&BurnDrvnes_tsb20v3,		// Tecmo Super Bowl 2020 (Hack, v3.0)
+	&BurnDrvnes_tsb21fe,		// Tecmo Super Bowl 2021 Final Edition (Hack)
+	&BurnDrvnes_tsb22ncaa,		// Tecmo Super Bowl 2022 NCAA D.1 Edition (Hack)
 	&BurnDrvmd_tecmosb2,		// Tecmo Super Bowl II (USA)
 	&BurnDrvmd_tecmosb2j,		// Tecmo Super Bowl II - Special Edition (Jpn)
 	&BurnDrvmd_tecmosb3,		// Tecmo Super Bowl III - Final Edition (USA)

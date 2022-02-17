@@ -213,6 +213,17 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 						bprintf(0, _T("NES-Cheat #%d, option #%d: "), nCheat, nOption);
 						nes_add_cheat(pAddressInfo->szGenieCode);
 					} else {
+						// Prefill data
+						if (pCurrentCheat->nPrefillMode) {
+							UINT8 nPrefill = 0x00;
+							switch (pCurrentCheat->nPrefillMode) {
+								case 1: nPrefill = 0xff; break;
+								case 2: nPrefill = 0x00; break;
+								case 3: nPrefill = 0x01; break;
+							}
+							cheat_subptr->write(pAddressInfo->nAddress, nPrefill);
+						}
+
 						// Copy the original values
 						pAddressInfo->nOriginalValue = cheat_subptr->read(pAddressInfo->nAddress);
 

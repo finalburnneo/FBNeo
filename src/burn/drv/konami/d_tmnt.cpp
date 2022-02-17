@@ -6312,7 +6312,7 @@ static INT32 Tmnt2Frame()
 
 	SsridersMakeInputs();
 
-	INT32 nInterleave = 262;
+	INT32 nInterleave = 256;
 	INT32 nSoundBufferPos = 0;
 	nCyclesTotal[0] = 16000000 / 60;
 	nCyclesTotal[1] = 8000000 / 60;
@@ -6323,17 +6323,21 @@ static INT32 Tmnt2Frame()
 	ZetNewFrame();
 
 	for (INT32 i = 0; i < nInterleave; i++) {
+		INT32 scanline = (i + 240) % 256;
+
 		SekOpen(0);
-		CPU_RUN(0, Sek);
-		if (i == 19) DrvVBlank = 0;
-		if (i == 243) {
+		if (scanline == 22) {
+			DrvVBlank = 0;
+			if (pBurnDraw) BlswhstlDraw();
+			drawn = 1;
+		}
+		if (scanline == 240) {
 			DrvVBlank = 1;
 			if (K052109_irq_enabled) {
 				SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-				if (pBurnDraw) BlswhstlDraw();
-				drawn = 1;
 			}
 		}
+		CPU_RUN(0, Sek);
 		SekClose();
 
 		ZetOpen(0);

@@ -907,6 +907,9 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x2a798367) ? ALT_TIMING : 0; // jy 45-in-1
 	NESMode |= (ROMCRC == 0xb4255e99) ? (IS_PAL | SHOW_OVERSCAN) : 0; // Moonglow (HB)
 	NESMode |= (ROMCRC == 0x78716f4f) ? RAM_RANDOM : 0; // Go! Dizzy Go!
+	NESMode |= (ROMCRC == 0x8c4f37e2) ? RAM_RANDOM : 0; // Minna no Taabou no Nakayoshi Daisakusen (Japan)
+	NESMode |= (ROMCRC == 0x17336a80) ? RAM_RANDOM : 0; // Minna no Taabou no Nakayoshi Daisakusen (T-Eng)
+	NESMode |= (ROMCRC == 0xc0b4bce5) ? RAM_RANDOM : 0; // Terminator 2 (T2) - Judgement Day
 	NESMode |= (ROMCRC == 0x4d58c832) ? IS_PAL : 0; // Hammerin' Harry
 	NESMode |= (ROMCRC == 0x149e367f) ? IS_PAL : 0; // Lion King, The
 	NESMode |= (ROMCRC == 0xbf80b241) ? IS_PAL : 0; // Mr. Gimmick
@@ -14799,6 +14802,40 @@ struct BurnDriver BurnDrvnes_vstopgun = {
 
 // Non Homebrew (hand-added!)
 
+static struct BurnRomInfo nes_minnanotaaboujRomDesc[] = {
+	{ "Minna no Taabou no Nakayoshi Daisakusen (Japan).nes",          65552, 0x8c4f37e2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_minnanotaabouj)
+STD_ROM_FN(nes_minnanotaabouj)
+
+struct BurnDriver BurnDrvnes_minnanotaabouj = {
+	"nes_minnanotaabouj", "nes_minnanotaabou", NULL, NULL, "1991",
+	"Minna no Taabou no Nakayoshi Daisakusen (Japan)\0", NULL, "Character Soft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_minnanotaaboujRomInfo, nes_minnanotaaboujRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_minnanotaabouRomDesc[] = {
+	{ "Minna no Taabou no Nakayoshi Daisakusen (T-Eng).nes",          65552, 0x17336a80, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_minnanotaabou)
+STD_ROM_FN(nes_minnanotaabou)
+
+struct BurnDriver BurnDrvnes_minnanotaabou = {
+	"nes_minnanotaabou", NULL, NULL, NULL, "1991",
+	"Minna no Taabou no Nakayoshi Daisakusen (T-Eng)\0", NULL, "Character Soft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_minnanotaabouRomInfo, nes_minnanotaabouRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static INT32 topriderInit()
 {
 	INT32 rc = NESInit();
@@ -15411,6 +15448,81 @@ struct BurnDriver BurnDrvnes_gaplus = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_gaplusRomInfo, nes_gaplusRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Happily Ever After (USA) (Prototype)
+static struct BurnRomInfo nes_happilyeaRomDesc[] = {
+	{ "Happily Ever After (USA) (Prototype).nes",          262160, 0x57f5c01d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_happilyea)
+STD_ROM_FN(nes_happilyea)
+
+struct BurnDriver BurnDrvnes_happilyea = {
+	"nes_happilyea", NULL, NULL, NULL, "1991",
+	"Happily Ever After (USA) (Prototype)\0", NULL, "SOFEL", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_happilyeaRomInfo, nes_happilyeaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Wai Wai World 2 - SOS!! Paseri Jou (T-Chi)
+// http://www.nesbbs.com/bbs/thread-53323-1-1.html
+static struct BurnRomInfo nes_waiwaiwor2cRomDesc[] = {
+	{ "Wai Wai World 2 - SOS!! Paseri Jou (T-Chi).nes",          786448, 0x7eb0796e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_waiwaiwor2c)
+STD_ROM_FN(nes_waiwaiwor2c)
+
+struct BurnDriver BurnDrvnes_waiwaiwor2c = {
+	"nes_waiwaiwor2c", "nes_waiwaiwor2", NULL, NULL, "2022",
+	"Wai Wai World 2 - SOS!! Paseri Jou (T-Chi)\0", NULL, "\u62d2\u7edd\u878d\u5316", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_waiwaiwor2cRomInfo, nes_waiwaiwor2cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// 1942 (T-Chi)
+// http://www.nesbbs.com/bbs/thread-49846-1-1.html
+static struct BurnRomInfo nes_1942cRomDesc[] = {
+	{ "1942 (T-Chi).nes",          81936, 0x555741fc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_1942c)
+STD_ROM_FN(nes_1942c)
+
+struct BurnDriver BurnDrvnes_1942c = {
+	"nes_1942c", "nes_1942", NULL, NULL, "2020",
+	"1942 (T-Chi)\0", NULL, "6502", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_VERSHOOT, 0,
+	NESGetZipName, nes_1942cRomInfo, nes_1942cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Little Nemo - The Dream Master (T-Chi)
+// http://www.nesbbs.com/bbs/thread-43984-1-1.html [Logo by ZARD]
+static struct BurnRomInfo nes_littlnemcRomDesc[] = {
+	{ "Little Nemo - The Dream Master (T-Chi).nes",          327696, 0x841cbcd1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_littlnemc)
+STD_ROM_FN(nes_littlnemc)
+
+struct BurnDriver BurnDrvnes_littlnemc = {
+	"nes_littlnemc", "nes_littlnem", NULL, NULL, "2017",
+	"Little Nemo - The Dream Master (T-Chi)\0", NULL, "Ice Team", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_littlnemcRomInfo, nes_littlnemcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -16482,8 +16594,7 @@ struct BurnDriver BurnDrvnes_saiyuwor2c = {
 // DuckTales 2 (T-Chi, v1.2)
 // http://www.nesbbs.com/bbs/thread-47555-1-1.html
 static struct BurnRomInfo nes_ducktales2cRomDesc[] = {
-	{ "DuckTales 2 (T-Chi, v1.2).nes",          262160, 0x26815134
-, BRF_ESS | BRF_PRG },
+	{ "DuckTales 2 (T-Chi, v1.2).nes",          262160, 0x26815134, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_ducktales2c)

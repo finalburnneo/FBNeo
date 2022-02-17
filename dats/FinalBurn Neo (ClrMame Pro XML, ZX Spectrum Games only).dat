@@ -646,6 +646,25 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="agentx" romof="spectrum">
+		<description>Agent X (48K)</description>
+		<year>1986</year>
+		<manufacturer>Mastertronic</manufacturer>
+		<rom name="Agent X 48K (1986)(Mastertronic).tap" size="73557" crc="cfac7765"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="agentx2" romof="spec128">
+		<description>Agent X II - The Mad Prof's Back! (128K)</description>
+		<year>1987</year>
+		<manufacturer>Mastertronic</manufacturer>
+		<rom name="Agent X II - The Mad Prof's Back! 128K (1987)(Mastertronic).tap" size="144693" crc="889a8e99"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ahdiddums" romof="spec128">
 		<description>Ah Diddums (48K)</description>
 		<year>1983</year>
@@ -789,6 +808,15 @@
 		<year>2020</year>
 		<manufacturer>Javier Fopiani</manufacturer>
 		<rom name="Alien Girl 48K ES (2020)(Javier Fopiani).tap" size="44505" crc="1f883dba"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="alienhw" romof="spectrum">
+		<description>Alien Highway (48K)</description>
+		<year>1986</year>
+		<manufacturer>Vortex Software</manufacturer>
+		<rom name="Alien Highway 48K (1986)(Vortex).tap" size="48086" crc="f5a22737"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1317,6 +1345,15 @@
 		<rom name="Autocrash (1991)(Zigurat).tap" size="49550" crc="02fe192c"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="automania" romof="spectrum">
+		<description>Automania (48K)</description>
+		<year>1984</year>
+		<manufacturer>Mikro-Gen</manufacturer>
+		<rom name="Automania 48K (1984)(Mikro-Gen).tap" size="39462" crc="c637b38a"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5313,6 +5350,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="estapantano" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Esta en el Pantano (Spanish) (48K) (HB)</description>
+		<year>2009</year>
+		<manufacturer>RELEVO</manufacturer>
+		<rom name="Esta en el Pantano ES 48K (2009)(RELEVO).tap" size="36408" crc="5e84ce2f"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="estacaja" romof="spectrum">
 		<comment>Homebrew</comment>
 		<description>Esta en la Caja (Spanish) (48K) (HB)</description>
@@ -5822,6 +5869,16 @@
 		<year>1987</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Footballer of the Year 2 (1987)(Gremlin Graphics Software).z80" size="36239" crc="3722f534"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="frcherry" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Forest Raider Cherry (48K) (HB)</description>
+		<year>2010</year>
+		<manufacturer>Timmy</manufacturer>
+		<rom name="Forest Raider Cherry 48K (2010)(Timmy).tap" size="34113" crc="62d75d3e"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -6916,6 +6973,16 @@
 		<year>1989</year>
 		<manufacturer>Domark</manufacturer>
 		<rom name="Hard Drivin' 128K (1989)(Domark).tap" size="47211" crc="f55dc984"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="havoc" romof="spec128">
+		<description>Havoc (128K)</description>
+		<year>1990</year>
+		<manufacturer>Players Premier</manufacturer>
+		<rom name="Havoc 128K (1990)(Players Premier).z80" size="48092" crc="510c85ea"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -9326,6 +9393,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="maincourse" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Main Course - The Retro Cut (48K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>Quantum Sheep</manufacturer>
+		<rom name="Main Course - The Retro Cut 48K (2020)(Quantum Sheep).tap" size="47151" crc="b64ed2bf"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="majikazo" romof="spectrum">
 		<comment>Homebrew, Convertion of Lemonize's MSX version</comment>
 		<description>Majikazo (48K) (HB)</description>
@@ -9354,6 +9431,16 @@
 		<rom name="Manchester United Europe (1991)(Krisalis).tap" size="79751" crc="c8b8d2aa"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mandarino" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Mandarino, El (48K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Mananuk</manufacturer>
+		<rom name="Mandarino, El 48K (2021)(Mananuk).tap" size="44308" crc="9d9b9c94"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -10313,6 +10400,17 @@
 		<year>1989</year>
 		<manufacturer>System 3</manufacturer>
 		<rom name="Myth - History In The Making (1989)(System 3 Software).tap" size="194414" crc="bc8f2fe4"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="nanakohell" romof="spec128">
+		<comment>Homebrew, Press 'O' to set 'Joystick'</comment>
+		<description>Nanako Descends to Hell (128K) (HB)</description>
+		<year>2009</year>
+		<manufacturer>Ubhres Productions</manufacturer>
+		<rom name="Nanako Descends to Hell 128K (2009)(Ubhres Productions).tap" size="55992" crc="8b88287c"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -16738,7 +16836,7 @@
 	<game name="zub" romof="spec128">
 		<description>Zub (128K)</description>
 		<year>1986</year>
-		<manufacturer>Mastertronic Added Dimension</manufacturer>
+		<manufacturer>MAD (Mastertronic Added Dimension)</manufacturer>
 		<rom name="Zub (1986)(Mastertronic Added Dimension).tap" size="62034" crc="e48404af"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>

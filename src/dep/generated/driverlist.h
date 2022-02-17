@@ -381,10 +381,12 @@ DRV		BurnSpecAgtbluedm;
 DRV		BurnSpecAgtbluenm;
 DRV		BurnSpecAgentorange;
 DRV		BurnDrvSuperbon;
+DRV		BurnSpecAgentx;
 DRV		BurnDrvAgentx1;
 DRV		BurnDrvAgentx2;
 DRV		BurnDrvAgentx3;
 DRV		BurnDrvAgentx4;
+DRV		BurnSpecAgentx2;
 DRV		BurnDrvaodk;
 DRV		BurnDrvsms_agidooly;
 DRV		BurnDrvAgressb;
@@ -532,6 +534,7 @@ DRV		BurnSpecAlienevolution;
 DRV		BurnSpecAliengirl128;
 DRV		BurnSpecAliengirl48en;
 DRV		BurnSpecAliengirl48es;
+DRV		BurnSpecAlienhw;
 DRV		BurnDrvAlinvade;
 DRV		BurnDrvCHF_alieninv;
 DRV		BurnDrvalienres;
@@ -1052,6 +1055,7 @@ DRV		BurnDrvAurail;
 DRV		BurnDrvmd_austrarl;
 DRV		BurnDrvmd_austrarlp;
 DRV		BurnSpecAutocrash;
+DRV		BurnSpecAutomania;
 DRV		BurnSpecAutocavexpl;
 DRV		BurnDrvnes_avmahjongclubc;
 DRV		BurnDrvpce_avpoker;
@@ -4746,6 +4750,7 @@ DRV		BurnDrvmd_espnspedp;
 DRV		BurnDrvmd_espnnfl;
 DRV		BurnDrvmd_espnnflp;
 DRV		BurnDrvMSX_estapantano;
+DRV		BurnSpecEstapantano;
 DRV		BurnDrvMSX_estacaja;
 DRV		BurnSpecEstacaja;
 DRV		BurnDrvmd_eswat;
@@ -5417,6 +5422,7 @@ DRV		BurnDrvMSX_ffruit;
 DRV		BurnDrvForcebrk;
 DRV		BurnDrvgg_foreman;
 DRV		BurnDrvmd_foreman;
+DRV		BurnSpecFrcherry;
 DRV		BurnSpecForg;
 DRV		BurnDrvMSX_forg;
 DRV		BurnSpecforgottn;
@@ -6611,6 +6617,7 @@ DRV		BurnDrvMSX_hhouse;
 DRV		BurnDrvnes_hauntedadv;
 DRV		BurnDrvmd_haunting;
 DRV		BurnDrvmd_hauntings;
+DRV		BurnSpecHavoc;
 DRV		BurnSpecHawkstorm;
 DRV		BurnDrvHayaosi2;
 DRV		BurnDrvHayaosi3a;
@@ -8707,6 +8714,7 @@ DRV		BurnDrvMSX_msolitaire;
 DRV		BurnDrvsms_msolitaire;
 DRV		BurnDrvsg1k_msolitaire;
 DRV		BurnDrvMahouDai;
+DRV		BurnSpecMaincourse;
 DRV		BurnDrvMainsnk;
 DRV		BurnDrvMstadium;
 DRV		BurnDrvpce_mikkokue;
@@ -8755,6 +8763,7 @@ DRV		BurnDrvMSX_malaikapq13;
 DRV		BurnSpecMaligore;
 DRV		BurnDrvmd_mamono;
 DRV		BurnSpecmanutdeu;
+DRV		BurnSpecMandarino;
 DRV		BurnDrvMSX_manes;
 DRV		BurnDrvMSX_manesb;
 DRV		BurnDrvMSX_manesa;
@@ -9927,6 +9936,7 @@ DRV		BurnDrvnes_namcoclassic;
 DRV		BurnDrvnes_namcoclassicii;
 DRV		BurnDrvNamenayo;
 DRV		BurnDrvfds_namida;
+DRV		BurnSpecNanakohell;
 DRV		BurnSpecNanako;
 DRV		BurnDrvNaname;
 #if defined FBNEO_DEBUG
@@ -18720,10 +18730,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecAgtbluenm,			// Agent Blue - Night Missions (128K) (HB)
 	&BurnSpecAgentorange,		// Agent Orange (48K)
 	&BurnDrvSuperbon,			// Agent Super Bond (scobra hardware)
+	&BurnSpecAgentx,			// Agent X (48K)
 	&BurnDrvAgentx1,			// Agent X (prototype, rev 1)
 	&BurnDrvAgentx2,			// Agent X (prototype, rev 2)
 	&BurnDrvAgentx3,			// Agent X (prototype, rev 3)
 	&BurnDrvAgentx4,			// Agent X (prototype, rev 4)
+	&BurnSpecAgentx2,			// Agent X II - The Mad Prof's Back! (128K)
 	&BurnDrvaodk,				// Aggressors of Dark Kombat / Tsuukai GANGAN Koushinkyoku (ADM-008)(ADH-008)
 	&BurnDrvsms_agidooly,		// Agigongnyong Dooly (Kor)
 	&BurnDrvAgressb,			// Agress (English bootleg)
@@ -18871,6 +18883,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecAliengirl128,		// Alien Girl (128K) (HB)
 	&BurnSpecAliengirl48en,		// Alien Girl (English) (48K) (HB)
 	&BurnSpecAliengirl48es,		// Alien Girl (Spanish) (48K) (HB)
+	&BurnSpecAlienhw,			// Alien Highway (48K)
 	&BurnDrvAlinvade,			// Alien Invaders
 	&BurnDrvCHF_alieninv,		// Alien Invasion
 	&BurnDrvalienres,			// Alien Rescue (Homebrew, Test Build July 2019)
@@ -19391,6 +19404,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_austrarl,		// Australian Rugby League (Euro)
 	&BurnDrvmd_austrarlp,		// Australian Rugby League (Prototype)
 	&BurnSpecAutocrash,			// AutoCrash (Spanish) (128K)
+	&BurnSpecAutomania,			// Automania (48K)
 	&BurnSpecAutocavexpl,		// Automated Cave Explorer (48K) (HB)
 	&BurnDrvnes_avmahjongclubc,	// AV Mahjong Club (T-Chi) (Unl)
 	&BurnDrvpce_avpoker,		// AV Poker
@@ -23085,6 +23099,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_espnnfl,			// ESPN Sunday Night NFL (USA)
 	&BurnDrvmd_espnnflp,		// ESPN Sunday Night NFL (USA, Prototype) [no comment, NOT WORKING]
 	&BurnDrvMSX_estapantano,	// Esta en el Pantano (HB)
+	&BurnSpecEstapantano,		// Esta en el Pantano (Spanish) (48K) (HB)
 	&BurnDrvMSX_estacaja,		// Esta en la Caja (HB, v1.1)
 	&BurnSpecEstacaja,			// Esta en la Caja (Spanish) (48K) (HB)
 	&BurnDrvmd_eswat,			// ESWAT - City Under Siege (Euro, USA, Rev. A)
@@ -23756,6 +23771,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvForcebrk,			// Force Break (bootleg)
 	&BurnDrvgg_foreman,			// Foreman for Real (World)
 	&BurnDrvmd_foreman,			// Foreman for Real (World)
+	&BurnSpecFrcherry,			// Forest Raider Cherry (48K) (HB)
 	&BurnSpecForg,				// Forg Wants Love (128K) (HB)
 	&BurnDrvMSX_forg,			// Forg Wants Love (HB)
 	&BurnSpecforgottn,			// Forgotten Worlds (128K)
@@ -24950,6 +24966,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_hauntedadv,		// Haunted House Adventure (HB)
 	&BurnDrvmd_haunting,		// Haunting Starring Polterguy (Euro, USA)
 	&BurnDrvmd_hauntings,		// Haunting Starring Polterguy (Hack, Spanish)
+	&BurnSpecHavoc,				// Havoc (128K)
 	&BurnSpecHawkstorm,			// Hawk Storm (128K)
 	&BurnDrvHayaosi2,			// Hayaoshi Quiz Grand Champion Taikai
 	&BurnDrvHayaosi3a,			// Hayaoshi Quiz Nettou Namahousou (ver 1.2)
@@ -27046,6 +27063,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_msolitaire,		// Mahjong Solitaire (HB)
 	&BurnDrvsg1k_msolitaire,	// Mahjong Solitaire (HB, v1.07)
 	&BurnDrvMahouDai,			// Mahou Daisakusen (Japan)
+	&BurnSpecMaincourse,		// Main Course - The Retro Cut (48K) (HB)
 	&BurnDrvMainsnk,			// Main Event (1984)
 	&BurnDrvMstadium,			// Main Stadium (Japan ver. 4)
 	&BurnDrvpce_mikkokue,		// Maison Ikkoku (Hack, English)
@@ -27094,6 +27112,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecMaligore,			// Malignant Gore, The (128K) (HB)
 	&BurnDrvmd_mamono,			// Mamono Hunter Youko - Dai 7 no Keishou (Jpn)
 	&BurnSpecmanutdeu,			// Manchester United Europe (128K)
+	&BurnSpecMandarino,			// Mandarino, El (48K) (HB)
 	&BurnDrvMSX_manes,			// Manes (Jpn)
 	&BurnDrvMSX_manesb,			// Manes (Jpn, Alt 2)
 	&BurnDrvMSX_manesa,			// Manes (Jpn, Alt)
@@ -28266,6 +28285,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_namcoclassicii,	// Namco Classic II (Japan)
 	&BurnDrvNamenayo,			// Namennayo (Japan)
 	&BurnDrvfds_namida,			// Namida no Soukoban Special (Japan)
+	&BurnSpecNanakohell,		// Nanako Descends to Hell (128K) (HB)
 	&BurnSpecNanako,			// Nanako in Classic Japanese Monster Castle (48K) (HB)
 	&BurnDrvNaname,				// Naname de Magic!
 #if defined FBNEO_DEBUG

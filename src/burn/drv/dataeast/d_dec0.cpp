@@ -12,7 +12,7 @@
 static UINT8 DrvInputPort0[8]       = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInputPort1[8]       = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInputPort2[8]       = {0, 0, 0, 0, 0, 0, 0, 0};
-static UINT8 DrvDip[2]              = {0, 0};
+static UINT8 DrvDip[3]              = {0, 0, 0};
 static UINT8 DrvInput[3]            = {0x00, 0x00, 0x00};
 static UINT8 DrvReset               = 0;
 
@@ -208,6 +208,7 @@ static struct BurnInputInfo HbarrelInputList[] =
 	{"Service"           , BIT_DIGITAL  , DrvInputPort2 + 6, "service"   },
 	{"Dip 1"             , BIT_DIPSWITCH, DrvDip + 0       , "dip"       },
 	{"Dip 2"             , BIT_DIPSWITCH, DrvDip + 1       , "dip"       },
+	{"Dip 3"             , BIT_DIPSWITCH, DrvDip + 2       , "dip"       },
 };
 
 STDINPUTINFO(Hbarrel)
@@ -280,6 +281,7 @@ static struct BurnInputInfo MidresInputList[] =
 	{"Service"           , BIT_DIGITAL  , DrvInputPort2 + 2, "service"   },
 	{"Dip 1"             , BIT_DIPSWITCH, DrvDip + 0       , "dip"       },
 	{"Dip 2"             , BIT_DIPSWITCH, DrvDip + 1       , "dip"       },
+	{"Dip 3"             , BIT_DIPSWITCH, DrvDip + 2       , "dip"       },
 };
 
 STDINPUTINFO(Midres)
@@ -494,6 +496,7 @@ static struct BurnDIPInfo HbarrelDIPList[]=
 	// Default Values
 	{0x00, 0xff, 0xff, 0xff, NULL                     },
 	{0x01, 0xff, 0xff, 0xbf, NULL                     },
+	{0x02, 0xff, 0xff, 0x00, NULL                     },
 
 	// Dip 1
 	{0   , 0xfe, 0   , 4   , "Coin A"                 },
@@ -542,6 +545,11 @@ static struct BurnDIPInfo HbarrelDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Allow continue"         },
 	{0x01, 0x01, 0x40, 0x40, "No"                     },
 	{0x01, 0x01, 0x40, 0x00, "Yes"                    },
+
+	// Dip 3
+	{0   , 0xfe, 0   , 2   , "Second Stick"           },
+	{0x02, 0x01, 0x01, 0x00, "Moves & Shoots"         },
+	{0x02, 0x01, 0x01, 0x01, "Moves"                  },
 };
 
 STDDIPINFO(Hbarrel)
@@ -663,6 +671,7 @@ static struct BurnDIPInfo MidresDIPList[]=
 	// Default Values
 	{0x00, 0xff, 0xff, 0xff, NULL                     },
 	{0x01, 0xff, 0xff, 0xbf, NULL                     },
+	{0x02, 0xff, 0xff, 0x00, NULL                     },
 
 	// Dip 1
 	{0   , 0xfe, 0   , 4   , "Coin A"                 },
@@ -705,6 +714,11 @@ static struct BurnDIPInfo MidresDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Allow continue"         },
 	{0x01, 0x01, 0x40, 0x40, "No"                     },
 	{0x01, 0x01, 0x40, 0x00, "Yes"                    },
+
+	// Dip 3
+	{0   , 0xfe, 0   , 2   , "Second Stick"           },
+	{0x02, 0x01, 0x01, 0x00, "Moves & Shoots"         },
+	{0x02, 0x01, 0x01, 0x01, "Moves"                  },
 };
 
 STDDIPINFO(Midres)
@@ -2500,21 +2514,24 @@ static void SuperJoy2Rotate() {
 	}
 
 	for (INT32 i = 0; i < 2; i++) { // p1 = 0, p2 = 1
-		if (NeedsAutoFire[i]) {
+		if (NeedsAutoFire[i]) { // or using Second Stick
 			UINT8 rot = Joy2Rotate(((!i) ? &FakeDrvInputPort0[0] : &FakeDrvInputPort1[0]));
 			if (rot != 0xff) {
 				nRotateTarget[i] = rot * rotate_gunpos_multiplier;
 			}
 			nRotateTry[i] = 0;
-			// fake auto-fire - there's probably a more elegant solution for this
-			if (nAutoFireCounter[i]++ & 0x4)
-			{
-				DrvInput[i] &= 0xef; // remove the fire bit &= ~0x10; //
+
+			if (~DrvDip[2] & 1) {
+				// fake auto-fire - there's probably a more elegant solution for this
+				if (nAutoFireCounter[i]++ & 0x4)
+				{
+					DrvInput[i] &= 0xef; // remove the fire bit &= ~0x10; //
+				}
+				else
+				{
+					DrvInput[i] |= 0x10; // turn on the fire bit
+				}
 			}
-			else
-			{
-				DrvInput[i] |= 0x10; // turn on the fire bit
-			}	
 		}
 		else if (DrvFakeInput[4 + i]) { //  rotate-button had been pressed
 			UINT8 rot = Joy2Rotate(((!i) ? &DrvInputPort0[0] : &DrvInputPort1[0]));
@@ -5823,6 +5840,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nRotateTarget);
 		SCAN_VAR(nRotateTry);
 		SCAN_VAR(nRotateHoldInput);
+		SCAN_VAR(nAutoFireCounter);
 
 		SCAN_VAR(nExtraCycles);
 	}

@@ -28,6 +28,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="1942c" cloneof="1942" romof="1942">
+		<comment>Hack</comment>
+		<description>1942 (T-Chi)</description>
+		<year>2020</year>
+		<manufacturer>6502</manufacturer>
+		<rom name="1942 (T-Chi).nes" size="81936" crc="555741fc"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="1943">
 		<description>1943 - The Battle of Midway (USA)</description>
 		<year>1988</year>
@@ -6542,6 +6551,15 @@
 		<video orientation="horizontal" width="256" height="232" aspectx="256" aspecty="232"/>
 		<driver status="good"/>
 	</game>
+	<game name="happilyea">
+		<comment>Prototype</comment>
+		<description>Happily Ever After (USA) (Prototype)</description>
+		<year>1991</year>
+		<manufacturer>SOFEL</manufacturer>
+		<rom name="Happily Ever After (USA) (Prototype).nes" size="262160" crc="57f5c01d"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="happycamper">
 		<description>Happy Camper (USA) (Proto)</description>
 		<year>1989?</year>
@@ -8692,6 +8710,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="littlnemc" cloneof="littlnem" romof="littlnem">
+		<comment>Hack</comment>
+		<description>Little Nemo - The Dream Master (T-Chi)</description>
+		<year>2017</year>
+		<manufacturer>Ice Team</manufacturer>
+		<rom name="Little Nemo - The Dream Master (T-Chi).nes" size="327696" crc="841cbcd1"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="littlnem">
 		<description>Little Nemo - The Dream Master (USA)</description>
 		<year>1990</year>
@@ -9861,6 +9888,22 @@
 		<year>1991</year>
 		<manufacturer>A Wave</manufacturer>
 		<rom name="Mini Putt (Japan).nes" size="262160" crc="098ad414"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="minnanotaabouj" cloneof="minnanotaabou" romof="minnanotaabou">
+		<description>Minna no Taabou no Nakayoshi Daisakusen (Japan)</description>
+		<year>1991</year>
+		<manufacturer>Character Soft</manufacturer>
+		<rom name="Minna no Taabou no Nakayoshi Daisakusen (Japan).nes" size="65552" crc="8c4f37e2"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="minnanotaabou">
+		<description>Minna no Taabou no Nakayoshi Daisakusen (T-Eng)</description>
+		<year>1991</year>
+		<manufacturer>Character Soft</manufacturer>
+		<rom name="Minna no Taabou no Nakayoshi Daisakusen (T-Eng).nes" size="65552" crc="17336a80"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -15707,6 +15750,15 @@
 		<year>1991</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Wai Wai World 2 - SOS!! Paseri Jou (Japan).nes" size="393232" crc="ebd96a66"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="waiwaiwor2c" cloneof="waiwaiwor2" romof="waiwaiwor2">
+		<comment>Hack</comment>
+		<description>Wai Wai World 2 - SOS!! Paseri Jou (T-Chi)</description>
+		<year>2022</year>
+		<manufacturer>拒绝融化</manufacturer>
+		<rom name="Wai Wai World 2 - SOS!! Paseri Jou (T-Chi).nes" size="786448" crc="7eb0796e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

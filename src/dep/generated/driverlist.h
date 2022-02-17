@@ -61,6 +61,7 @@ DRV		BurnDrvMSX_1942k;
 DRV		BurnDrvNineteen42a;
 DRV		BurnDrvNineteen42abl;
 DRV		BurnDrvNineteen42;
+DRV		BurnDrvnes_1942c;
 DRV		BurnDrvNineteen42w;
 DRV		BurnSpec1943;
 DRV		BurnDrvnes_1943;
@@ -6557,6 +6558,7 @@ DRV		BurnDrvpce_haniirod;
 DRV		BurnDrvMSX_hansadvfv;
 DRV		BurnDrvMSX_hansadv;
 DRV		BurnDrvfds_haokunnofusnata;
+DRV		BurnDrvnes_happilyea;
 DRV		BurnDrvhappy6100cn;
 DRV		BurnDrvhappy6100hk;
 DRV		BurnDrvhappy6101;
@@ -8382,6 +8384,7 @@ DRV		BurnDrvmd_littlemedusa;
 DRV		BurnDrvnes_littlemedusa;
 DRV		BurnDrvnes_littlmerj;
 DRV		BurnDrvnes_littlmer;
+DRV		BurnDrvnes_littlnemc;
 DRV		BurnDrvnes_littlnem;
 DRV		BurnDrvnes_littlninbro;
 DRV		BurnSpecLittlepuff;
@@ -9360,6 +9363,8 @@ DRV		BurnDrvsms_minimsx;
 DRV		BurnDrvminivadr;
 DRV		BurnDrvMmonkeyj;
 DRV		BurnDrvMmonkey;
+DRV		BurnDrvnes_minnanotaabouj;
+DRV		BurnDrvnes_minnanotaabou;
 DRV		BurnDrvmd_mfpool;
 DRV		BurnDrvnes_miracrops;
 DRV		BurnDrvsms_miracle;
@@ -17340,6 +17345,7 @@ DRV		BurnDrvnes_waiwaiworldj;
 DRV		BurnDrvnes_waiwaiworldc;
 DRV		BurnDrvnes_waiwaiworld;
 DRV		BurnDrvnes_waiwaiwor2j;
+DRV		BurnDrvnes_waiwaiwor2c;
 DRV		BurnDrvnes_waiwaiwor2;
 DRV		BurnDrvsms_waimanu;
 DRV		BurnDrvMj4simai;
@@ -18394,6 +18400,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvNineteen42a,		// 1942 (Revision A)
 	&BurnDrvNineteen42abl,		// 1942 (Revision A, bootleg)
 	&BurnDrvNineteen42,			// 1942 (Revision B)
+	&BurnDrvnes_1942c,			// 1942 (T-Chi)
 	&BurnDrvNineteen42w,		// 1942 (Williams Electronics license)
 	&BurnSpec1943,				// 1943 - The Battle of Midway (48K)
 	&BurnDrvnes_1943,			// 1943 - The Battle of Midway (USA)
@@ -24890,6 +24897,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_hansadvfv,		// Hans' Adventure (HB, final version)
 	&BurnDrvMSX_hansadv,		// Hans' Adventure (HB, MSXdev'10 ed.)
 	&BurnDrvfds_haokunnofusnata,// Hao-kun no Fushigi na Tabi (Japan)
+	&BurnDrvnes_happilyea,		// Happily Ever After (USA) (Prototype)
 	&BurnDrvhappy6100cn,		// Happy 6-in-1 (V100 - V100MK, China)
 	&BurnDrvhappy6100hk,		// Happy 6-in-1 (V100 - V100MK, Hong Kong)
 	&BurnDrvhappy6101,			// Happy 6-in-1 (V101 - V100MK, China)
@@ -26715,6 +26723,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_littlemedusa,	// Little Medusa (HB)
 	&BurnDrvnes_littlmerj,		// Little Mermaid, The (Japan)
 	&BurnDrvnes_littlmer,		// Little Mermaid, The (USA)
+	&BurnDrvnes_littlnemc,		// Little Nemo - The Dream Master (T-Chi)
 	&BurnDrvnes_littlnem,		// Little Nemo - The Dream Master (USA)
 	&BurnDrvnes_littlninbro,	// Little Ninja Brothers (USA)
 	&BurnSpecLittlepuff,		// Little Puff in Dragonland (128K)
@@ -27693,6 +27702,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvminivadr,			// Minivader
 	&BurnDrvMmonkeyj,			// Minky Monkey (Japan)
 	&BurnDrvMmonkey,			// Minky Monkey
+	&BurnDrvnes_minnanotaabouj,	// Minna no Taabou no Nakayoshi Daisakusen (Japan)
+	&BurnDrvnes_minnanotaabou,	// Minna no Taabou no Nakayoshi Daisakusen (T-Eng)
 	&BurnDrvmd_mfpool,			// Minnesota Fats - Pool Legend (USA)
 	&BurnDrvnes_miracrops,		// Miracle Ropit's - 2100 Nen no Daibouken (Japan)
 	&BurnDrvsms_miracle,		// Miracle Warriors - Seal of the Dark Lord (Euro, USA, Bra)
@@ -35673,6 +35684,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_waiwaiworldc,	// Wai Wai World (T-Chi)
 	&BurnDrvnes_waiwaiworld,	// Wai Wai World (T-Eng)
 	&BurnDrvnes_waiwaiwor2j,	// Wai Wai World 2 - SOS!! Paseri Jou (Japan)
+	&BurnDrvnes_waiwaiwor2c,	// Wai Wai World 2 - SOS!! Paseri Jou (T-Chi)
 	&BurnDrvnes_waiwaiwor2,		// Wai Wai World 2 - SOS!! Paseri Jou (T-Eng)
 	&BurnDrvsms_waimanu,		// Waimanu: Scary Monsters Saga (HB)
 	&BurnDrvMj4simai,			// Wakakusamonogatari Mahjong Yonshimai (Japan)

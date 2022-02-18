@@ -5349,7 +5349,7 @@ struct BurnDriver BurnSpecgryzor128 = {
 // Hammer Boy (Part 1) (128K)
 
 static struct BurnRomInfo Spechammerboy1RomDesc[] = {
-	{ "Hammer Boy (1991)(Dinamic Software)(Part 1 of 2)(128k).z80", 0x0a433, 0x52955ad2, BRF_ESS | BRF_PRG },
+	{ "Hammer Boy (1991)(Dinamic Software)(Part 1 of 2)(128k).tap", 48943, 0x1770245b, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Spechammerboy1, Spechammerboy1, Spec128)
@@ -5368,7 +5368,7 @@ struct BurnDriver BurnSpechammerboy1 = {
 // Hammer Boy (Part 2) (128K)
 
 static struct BurnRomInfo Spechammerboy2RomDesc[] = {
-	{ "Hammer Boy (1991)(Dinamic Software)(Part 2 of 2)(128k).z80", 0x0ad00, 0x6240dded, BRF_ESS | BRF_PRG },
+	{ "Hammer Boy (1991)(Dinamic Software)(Part 2 of 2)(128k).tap", 48943, 0x858a0af4, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Spechammerboy2, Spechammerboy2, Spec128)

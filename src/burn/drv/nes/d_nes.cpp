@@ -20332,9 +20332,62 @@ struct BurnDriver BurnDrvnes_tsb22ncaa = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+//Adam & Eve (Unl)
+static struct BurnRomInfo nes_adameveRomDesc[] = {
+	{ "Adam & Eve (1991)(Mega Soft)(Unl).nes",          49168, 0x9e2d9a66, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_adameve)
+STD_ROM_FN(nes_adameve)
+
+struct BurnDriver BurnDrvnes_adameve = {
+	"nes_adameve", NULL, NULL, NULL, "1991",
+	"Adam & Eve (Unl)\0", NULL, "Mega Soft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_adameveRomInfo, nes_adameveRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+//Creatom (Unl)
+static struct BurnRomInfo nes_creatomRomDesc[] = {
+	{ "Creatom (1991)(Micro Genius)(Unl).nes",          98320, 0x1a1328bc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_creatom)
+STD_ROM_FN(nes_creatom)
+
+struct BurnDriver BurnDrvnes_creatom = {
+	"nes_creatom", NULL, NULL, NULL, "1991",
+	"Creatom (Unl)\0", NULL, "Micro Genius", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_creatomRomInfo, nes_creatomRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
+
+static struct BurnRomInfo nes_almikaRomDesc[] = {
+	{ "Almika The Star Rider Densetsu Gaiden (2021)(Mouse Spirit).nes",          524304, 0x3b5a7745, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_almika)
+STD_ROM_FN(nes_almika)
+
+struct BurnDriver BurnDrvnes_almika = {
+	"nes_almika", NULL, NULL, NULL, "2021",
+	"Almika The Star Rider Densetsu Gaiden (HB)\0", NULL, "Mouse Spirit", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_almikaRomInfo, nes_almikaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_bandanaRomDesc[] = {
 	{ "Bandana (2021)(Rodnade).nes",          524304, 0x292de1a8, BRF_ESS | BRF_PRG },
@@ -20383,6 +20436,23 @@ struct BurnDriver BurnDrvnes_dangbridge = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_dangbridgeRomInfo, nes_dangbridgeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_td1990RomDesc[] = {
+	{ "Tower Defense 1990 (2018)(Ryan Lloyd).nes",          131088, 0x403af207, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_td1990)
+STD_ROM_FN(nes_td1990)
+
+struct BurnDriver BurnDrvnes_td1990 = {
+	"nes_td1990", NULL, NULL, NULL, "2018",
+	"Tower Defense 1990 (HB)\0", NULL, "Ryan Lloyd", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_STRATEGY, 0,
+	NESGetZipName, nes_td1990RomInfo, nes_td1990RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -21546,7 +21616,7 @@ struct BurnDriver BurnDrvnes_rockm5mp = {
 };
 
 static struct BurnRomInfo nes_magnilocaseRomDesc[] = {
-	{ "The Magnilo Case (2021)(Dalyen Retrogames).nes",          524304, 0x6ff47dba, BRF_ESS | BRF_PRG },
+	{ "Magnilo Case, The v1.1 (2021)(DalyenRetroGames).nes",          524304, 0x3b14782a, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_magnilocase)
@@ -21554,9 +21624,9 @@ STD_ROM_FN(nes_magnilocase)
 
 struct BurnDriver BurnDrvnes_magnilocase = {
 	"nes_magnilocase", NULL, NULL, NULL, "2021",
-	"Magnilo Case, The (HB)\0", NULL, "Dalyen Retrogames", "Miscellaneous",
+	"Magnilo Case, The (HB, v1.1)\0", NULL, "DalyenRetroGames", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ADV | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_magnilocaseRomInfo, nes_magnilocaseRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

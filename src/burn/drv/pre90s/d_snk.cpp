@@ -76,11 +76,11 @@ static UINT8  DrvJoy3[8];
 static UINT8  DrvJoy4[8];
 static UINT8  DrvJoy5[8];
 static UINT8  DrvJoy6[8];
-static UINT8  DrvDips[3];
+static UINT8  DrvDips[4];
 static UINT8  DrvInputs[6];
 static UINT8  DrvReset;
 
-static UINT8  DrvFakeInput[6] = {0, 0, 0, 0, 0, 0};
+static UINT8  DrvFakeInput[14]      = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // 0-5 legacy; 6-9 P1, 10-13 P2
 static INT32  nRotate[2]      = {0, 0};
 static INT32  nRotateTarget[2]      = {0, 0};
 static INT32  nRotateTry[2]      = {0, 0};
@@ -88,6 +88,7 @@ static UINT32 nRotateTime[2]  = {0, 0};
 static UINT8  game_rotates = 0;
 static UINT8  gwar_rot_last[2] = {0, 0};
 static UINT8  gwar_rot_cnt[2] = {0, 0};
+static UINT8  nAutoFireCounter[2] 	= {0, 0};
 
 
 static struct BurnInputInfo PsychosInputList[] = {
@@ -130,6 +131,10 @@ static struct BurnInputInfo GwarInputList[] = {
 	{"P1 Rotate Left",	BIT_DIGITAL,	DrvFakeInput + 0, "p1 rotate left" },
 	{"P1 Rotate Right",	BIT_DIGITAL,	DrvFakeInput + 1, "p1 rotate right" },
 	{"P1 Button 3 (rotate)", BIT_DIGITAL,DrvFakeInput + 4, "p1 fire 3" },
+	{"P1 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 6,  "p1 up 2" }, // 6
+	{"P1 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 7,  "p1 down 2" }, // 7
+	{"P1 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 8,  "p1 left 2" }, // 8
+	{"P1 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 9,  "p1 right 2" }, // 9
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 4,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 start"},
@@ -142,6 +147,10 @@ static struct BurnInputInfo GwarInputList[] = {
 	{"P2 Rotate Left",	BIT_DIGITAL,	DrvFakeInput + 2, "p2 rotate left" },
 	{"P2 Rotate Right",	BIT_DIGITAL,	DrvFakeInput + 3, "p2 rotate right" },
 	{"P2 Button 3 (rotate)", BIT_DIGITAL,DrvFakeInput + 5, "p2 fire 3" },
+	{"P2 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 10, "p2 up 2" },
+	{"P2 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 11, "p2 down 2" },
+	{"P2 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 12, "p2 left 2" },
+	{"P2 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 13, "p2 right 2" },
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 1,	"service"},
@@ -149,6 +158,8 @@ static struct BurnInputInfo GwarInputList[] = {
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
+	// Auto-fire on right-stick
+	{"Dip D",			BIT_DIPSWITCH, 	DrvDips + 3, 	"dip"},
 };
 
 STDINPUTINFO(Gwar)
@@ -408,6 +419,10 @@ static struct BurnInputInfo Tnk3InputList[] = {
 	{"P1 Rotate Left"       , BIT_DIGITAL  , DrvFakeInput + 0, "p1 rotate left" },
 	{"P1 Rotate Right"      , BIT_DIGITAL  , DrvFakeInput + 1, "p1 rotate right" },
 	{"P1 Button 3 (rotate)"      , BIT_DIGITAL  , DrvFakeInput + 4, "p1 fire 3" },
+	{"P1 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 6,  "p1 up 2" }, // 6
+	{"P1 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 7,  "p1 down 2" }, // 7
+	{"P1 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 8,  "p1 left 2" }, // 8
+	{"P1 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 9,  "p1 right 2" }, // 9
 
   	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"},
 	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 up"},
@@ -419,12 +434,18 @@ static struct BurnInputInfo Tnk3InputList[] = {
 	{"P2 Rotate Left"  , BIT_DIGITAL  , DrvFakeInput + 2, "p2 rotate left" },
 	{"P2 Rotate Right" , BIT_DIGITAL  , DrvFakeInput + 3, "p2 rotate right" },
 	{"P2 Button 3 (rotate)"      , BIT_DIGITAL  , DrvFakeInput + 5, "p2 fire 3" },
+	{"P2 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 10, "p2 up 2" },
+	{"P2 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 11, "p2 down 2" },
+	{"P2 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 12, "p2 left 2" },
+	{"P2 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 13, "p2 right 2" },
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
+	// Auto-fire on right-stick
+	{"Dip D",			BIT_DIPSWITCH, 	DrvDips + 3, 	"dip"},
 };
 
 STDINPUTINFO(Tnk3)
@@ -441,6 +462,10 @@ static struct BurnInputInfo IkariInputList[] = {
 	{"P1 Rotate Left"       , BIT_DIGITAL  , DrvFakeInput + 0, "p1 rotate left" },
 	{"P1 Rotate Right"      , BIT_DIGITAL  , DrvFakeInput + 1, "p1 rotate right" },
 	{"P1 Button 3 (rotate)"      , BIT_DIGITAL  , DrvFakeInput + 4, "p1 fire 3" },
+	{"P1 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 6,  "p1 up 2" }, // 6
+	{"P1 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 7,  "p1 down 2" }, // 7
+	{"P1 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 8,  "p1 left 2" }, // 8
+	{"P1 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 9,  "p1 right 2" }, // 9
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 4,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 start"},
@@ -453,12 +478,18 @@ static struct BurnInputInfo IkariInputList[] = {
 	{"P2 Rotate Left"  , BIT_DIGITAL  , DrvFakeInput + 2, "p2 rotate left" },
 	{"P2 Rotate Right" , BIT_DIGITAL  , DrvFakeInput + 3, "p2 rotate right" },
 	{"P2 Button 3 (rotate)"      , BIT_DIGITAL  , DrvFakeInput + 5, "p2 fire 3" },
+	{"P2 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 10, "p2 up 2" },
+	{"P2 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 11, "p2 down 2" },
+	{"P2 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 12, "p2 left 2" },
+	{"P2 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 13, "p2 right 2" },
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 1,	"service"},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
+	// Auto-fire on right-stick
+	{"Dip D",			BIT_DIPSWITCH, 	DrvDips + 3, 	"dip"},
 };
 
 STDINPUTINFO(Ikari)
@@ -475,6 +506,10 @@ static struct BurnInputInfo IkariaInputList[] = {
 	{"P1 Rotate Left"       , BIT_DIGITAL  , DrvFakeInput + 0, "p1 rotate left" },
 	{"P1 Rotate Right"      , BIT_DIGITAL  , DrvFakeInput + 1, "p1 rotate right" },
 	{"P1 Button 3 (rotate)"      , BIT_DIGITAL  , DrvFakeInput + 4, "p1 fire 3" },
+	{"P1 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 6,  "p1 up 2" }, // 6
+	{"P1 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 7,  "p1 down 2" }, // 7
+	{"P1 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 8,  "p1 left 2" }, // 8
+	{"P1 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 9,  "p1 right 2" }, // 9
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"},
@@ -487,12 +522,18 @@ static struct BurnInputInfo IkariaInputList[] = {
 	{"P2 Rotate Left"  , BIT_DIGITAL  , DrvFakeInput + 2, "p2 rotate left" },
 	{"P2 Rotate Right" , BIT_DIGITAL  , DrvFakeInput + 3, "p2 rotate right" },
 	{"P2 Button 3 (rotate)"      , BIT_DIGITAL  , DrvFakeInput + 5, "p2 fire 3" },
+	{"P2 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 10, "p2 up 2" },
+	{"P2 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 11, "p2 down 2" },
+	{"P2 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 12, "p2 left 2" },
+	{"P2 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 13, "p2 right 2" },
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
+	// Auto-fire on right-stick
+	{"Dip D",			BIT_DIPSWITCH, 	DrvDips + 3, 	"dip"},
 };
 
 STDINPUTINFO(Ikaria)
@@ -509,6 +550,10 @@ static struct BurnInputInfo VictroadInputList[] = {
 	{"P1 Rotate Left"       , BIT_DIGITAL  , DrvFakeInput + 0, "p1 rotate left" },
 	{"P1 Rotate Right"      , BIT_DIGITAL  , DrvFakeInput + 1, "p1 rotate right" },
 	{"P1 Button 3 (rotate)"      , BIT_DIGITAL  , DrvFakeInput + 4, "p1 fire 3" },
+	{"P1 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 6,  "p1 up 2" }, // 6
+	{"P1 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 7,  "p1 down 2" }, // 7
+	{"P1 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 8,  "p1 left 2" }, // 8
+	{"P1 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 9,  "p1 right 2" }, // 9
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 4,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 start"},
@@ -521,6 +566,10 @@ static struct BurnInputInfo VictroadInputList[] = {
 	{"P2 Rotate Left"  , BIT_DIGITAL  , DrvFakeInput + 2, "p2 rotate left" },
 	{"P2 Rotate Right" , BIT_DIGITAL  , DrvFakeInput + 3, "p2 rotate right" },
 	{"P2 Button 3 (rotate)"      , BIT_DIGITAL  , DrvFakeInput + 5, "p2 fire 3" },
+	{"P2 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 10, "p2 up 2" },
+	{"P2 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 11, "p2 down 2" },
+	{"P2 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 12, "p2 left 2" },
+	{"P2 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 13, "p2 right 2" },
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 1,	"service"},
@@ -528,6 +577,8 @@ static struct BurnInputInfo VictroadInputList[] = {
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
+	// Auto-fire on right-stick
+	{"Dip D",			BIT_DIPSWITCH, 	DrvDips + 3, 	"dip"},
 };
 
 STDINPUTINFO(Victroad)
@@ -660,6 +711,10 @@ static struct BurnInputInfo BermudatInputList[] = {
 	{"P1 Rotate Left"       , BIT_DIGITAL  , DrvFakeInput + 0, "p1 rotate left" },
 	{"P1 Rotate Right"      , BIT_DIGITAL  , DrvFakeInput + 1, "p1 rotate right" },
 	{"P1 Button 3 (rotate)"      , BIT_DIGITAL  , DrvFakeInput + 4, "p1 fire 3" },
+	{"P1 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 6,  "p1 up 2" }, // 6
+	{"P1 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 7,  "p1 down 2" }, // 7
+	{"P1 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 8,  "p1 left 2" }, // 8
+	{"P1 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 9,  "p1 right 2" }, // 9
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 4,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 start"},
@@ -672,6 +727,10 @@ static struct BurnInputInfo BermudatInputList[] = {
 	{"P2 Rotate Left"  , BIT_DIGITAL  , DrvFakeInput + 2, "p2 rotate left" },
 	{"P2 Rotate Right" , BIT_DIGITAL  , DrvFakeInput + 3, "p2 rotate right" },
 	{"P2 Button 3 (rotate)"      , BIT_DIGITAL  , DrvFakeInput + 5, "p2 fire 3" },
+	{"P2 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 10, "p2 up 2" },
+	{"P2 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 11, "p2 down 2" },
+	{"P2 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 12, "p2 left 2" },
+	{"P2 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 13, "p2 right 2" },
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 1,	"service"},
@@ -679,6 +738,8 @@ static struct BurnInputInfo BermudatInputList[] = {
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
+	// Auto-fire on right-stick
+	{"Dip D",			BIT_DIPSWITCH, 	DrvDips + 3, 	"dip"},
 };
 
 STDINPUTINFO(Bermudat)
@@ -951,54 +1012,63 @@ STDDIPINFO(Psychos)
 
 static struct BurnDIPInfo GwarDIPList[]=
 {
-	{0x19, 0xff, 0xff, 0x3b, NULL		},
-	{0x1a, 0xff, 0xff, 0x0a, NULL		},
-	{0x1b, 0xff, 0xff, 0x30, NULL		},
+	DIP_OFFSET(0x21)
+
+	{0x00, 0xff, 0xff, 0x3b, NULL		},
+	{0x01, 0xff, 0xff, 0x0a, NULL		},
+	{0x02, 0xff, 0xff, 0x30, NULL		},
+	{0x03, 0xff, 0xff, 0x00, NULL       },
+
 
 	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
-	{0x19, 0x01, 0x01, 0x00, "No"		},
-	{0x19, 0x01, 0x01, 0x01, "Yes"		},
+	{0x00, 0x01, 0x01, 0x00, "No"		},
+	{0x00, 0x01, 0x01, 0x01, "Yes"		},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x19, 0x01, 0x02, 0x02, "Off"		},
-	{0x19, 0x01, 0x02, 0x00, "On"		},
+	{0x00, 0x01, 0x02, 0x02, "Off"		},
+	{0x00, 0x01, 0x02, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x19, 0x01, 0x08, 0x08, "3"		},
-	{0x19, 0x01, 0x08, 0x00, "5"		},
+	{0x00, 0x01, 0x08, 0x08, "3"		},
+	{0x00, 0x01, 0x08, 0x00, "5"		},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"		},
-	{0x19, 0x01, 0x30, 0x00, "4 Coins 1 Credits"		},
-	{0x19, 0x01, 0x30, 0x10, "3 Coins 1 Credits"		},
-	{0x19, 0x01, 0x30, 0x20, "2 Coins 1 Credits"		},
-	{0x19, 0x01, 0x30, 0x30, "1 Coin  1 Credits"		},
+	{0x00, 0x01, 0x30, 0x00, "4 Coins 1 Credits"		},
+	{0x00, 0x01, 0x30, 0x10, "3 Coins 1 Credits"		},
+	{0x00, 0x01, 0x30, 0x20, "2 Coins 1 Credits"		},
+	{0x00, 0x01, 0x30, 0x30, "1 Coin  1 Credits"		},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"		},
-	{0x19, 0x01, 0xc0, 0x00, "1 Coin  2 Credits"		},
-	{0x19, 0x01, 0xc0, 0x40, "1 Coin  3 Credits"		},
-	{0x19, 0x01, 0xc0, 0x80, "1 Coin  4 Credits"		},
-	{0x19, 0x01, 0xc0, 0xc0, "1 Coin  6 Credits"		},
+	{0x00, 0x01, 0xc0, 0x00, "1 Coin  2 Credits"		},
+	{0x00, 0x01, 0xc0, 0x40, "1 Coin  3 Credits"		},
+	{0x00, 0x01, 0xc0, 0x80, "1 Coin  4 Credits"		},
+	{0x00, 0x01, 0xc0, 0xc0, "1 Coin  6 Credits"		},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x1a, 0x01, 0x03, 0x03, "Easy"		},
-	{0x1a, 0x01, 0x03, 0x02, "Normal"		},
-	{0x1a, 0x01, 0x03, 0x01, "Hard"		},
-	{0x1a, 0x01, 0x03, 0x00, "Hardest"		},
+	{0x01, 0x01, 0x03, 0x03, "Easy"		},
+	{0x01, 0x01, 0x03, 0x02, "Normal"		},
+	{0x01, 0x01, 0x03, 0x01, "Hard"		},
+	{0x01, 0x01, 0x03, 0x00, "Hardest"		},
 
 	{0   , 0xfe, 0   ,    4, "Game Mode"		},
-	{0x1a, 0x01, 0x0c, 0x0c, "Demo Sounds Off"		},
-	{0x1a, 0x01, 0x0c, 0x08, "Demo Sounds On"		},
-	{0x1a, 0x01, 0x0c, 0x00, "Freeze"		},
-	{0x1a, 0x01, 0x0c, 0x04, "Infinite Lives (Cheat)"		},
+	{0x01, 0x01, 0x0c, 0x0c, "Demo Sounds Off"		},
+	{0x01, 0x01, 0x0c, 0x08, "Demo Sounds On"		},
+	{0x01, 0x01, 0x0c, 0x00, "Freeze"		},
+	{0x01, 0x01, 0x0c, 0x04, "Infinite Lives (Cheat)"		},
 
 	{0   , 0xfe, 0   ,    7, "Bonus Life"		},
-	{0x1b, 0x01, 0x34, 0x30, "30k 60k 60k+"		},
-	{0x1b, 0x01, 0x34, 0x20, "40k 80k 80k+"		},
-	{0x1b, 0x01, 0x34, 0x10, "50k 100k 100k+"		},
-	{0x1b, 0x01, 0x34, 0x34, "30k 60k"		},
-	{0x1b, 0x01, 0x34, 0x24, "40k 80k"		},
-	{0x1b, 0x01, 0x34, 0x14, "50k 100k"		},
-	{0x1b, 0x01, 0x34, 0x00, "None"		},
+	{0x02, 0x01, 0x34, 0x30, "30k 60k 60k+"		},
+	{0x02, 0x01, 0x34, 0x20, "40k 80k 80k+"		},
+	{0x02, 0x01, 0x34, 0x10, "50k 100k 100k+"		},
+	{0x02, 0x01, 0x34, 0x34, "30k 60k"		},
+	{0x02, 0x01, 0x34, 0x24, "40k 80k"		},
+	{0x02, 0x01, 0x34, 0x14, "50k 100k"		},
+	{0x02, 0x01, 0x34, 0x00, "None"		},
+
+	// Dip 4
+	{0   , 0xfe, 0   , 2   , "Second Stick"           },
+	{0x03, 0x01, 0x01, 0x00, "Moves & Shoots"         },
+	{0x03, 0x01, 0x01, 0x01, "Moves"                  },
 };
 
 STDDIPINFO(Gwar)
@@ -1533,178 +1603,201 @@ STDDIPINFO(Athena)
 
 static struct BurnDIPInfo Tnk3DIPList[]=
 {
-	{0x17, 0xff, 0xff, 0x3d, NULL		},
-	{0x18, 0xff, 0xff, 0x34, NULL		},
-	{0x19, 0xff, 0xff, 0xc1, NULL		},
+	DIP_OFFSET(0x1f)
+
+	{0x00, 0xff, 0xff, 0x3d, NULL		},
+	{0x01, 0xff, 0xff, 0x34, NULL		},
+	{0x02, 0xff, 0xff, 0xc1, NULL		},
+	{0x03, 0xff, 0xff, 0x00, NULL       },
 
 	{0   , 0xfe, 0   ,    2, "No BG Collision (Cheat)"		},
-	{0x17, 0x01, 0x01, 0x01, "Off"		},
-	{0x17, 0x01, 0x01, 0x00, "On"		},
+	{0x00, 0x01, 0x01, 0x01, "Off"		},
+	{0x00, 0x01, 0x01, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x17, 0x01, 0x02, 0x00, "Upright"		},
-	{0x17, 0x01, 0x02, 0x02, "Cocktail"		},
+	{0x00, 0x01, 0x02, 0x00, "Upright"		},
+	{0x00, 0x01, 0x02, 0x02, "Cocktail"		},
 
 	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x17, 0x01, 0x04, 0x04, "3"		},
-	{0x17, 0x01, 0x04, 0x00, "5"		},
+	{0x00, 0x01, 0x04, 0x04, "3"		},
+	{0x00, 0x01, 0x04, 0x00, "5"		},
 
 	{0   , 0xfe, 0   ,    6, "Coinage"		},
-	{0x17, 0x01, 0x38, 0x20, "3 Coins 1 Credits"		},
-	{0x17, 0x01, 0x38, 0x18, "2 Coins 1 Credits"		},
-	{0x17, 0x01, 0x38, 0x38, "1 Coin  1 Credits"		},
-	{0x17, 0x01, 0x38, 0x30, "1 Coin  2 Credits"		},
-	{0x17, 0x01, 0x38, 0x28, "1 Coin  3 Credits"		},
-	{0x17, 0x01, 0x38, 0x00, "Free Play"		},
+	{0x00, 0x01, 0x38, 0x20, "3 Coins 1 Credits"		},
+	{0x00, 0x01, 0x38, 0x18, "2 Coins 1 Credits"		},
+	{0x00, 0x01, 0x38, 0x38, "1 Coin  1 Credits"		},
+	{0x00, 0x01, 0x38, 0x30, "1 Coin  2 Credits"		},
+	{0x00, 0x01, 0x38, 0x28, "1 Coin  3 Credits"		},
+	{0x00, 0x01, 0x38, 0x00, "Free Play"		},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x18, 0x01, 0x06, 0x06, "Easy"		},
-	{0x18, 0x01, 0x06, 0x04, "Normal"		},
-	{0x18, 0x01, 0x06, 0x02, "Hard"		},
-	{0x18, 0x01, 0x06, 0x00, "Hardest"		},
+	{0x01, 0x01, 0x06, 0x06, "Easy"		},
+	{0x01, 0x01, 0x06, 0x04, "Normal"		},
+	{0x01, 0x01, 0x06, 0x02, "Hard"		},
+	{0x01, 0x01, 0x06, 0x00, "Hardest"		},
 
 	{0   , 0xfe, 0   ,    4, "Game Mode"		},
-	{0x18, 0x01, 0x18, 0x18, "Demo Sounds Off"		},
-	{0x18, 0x01, 0x18, 0x10, "Demo Sounds On"		},
-	{0x18, 0x01, 0x18, 0x00, "Freeze"		},
-	{0x18, 0x01, 0x18, 0x08, "Infinite Lives (Cheat)"		},
+	{0x01, 0x01, 0x18, 0x18, "Demo Sounds Off"		},
+	{0x01, 0x01, 0x18, 0x10, "Demo Sounds On"		},
+	{0x01, 0x01, 0x18, 0x00, "Freeze"		},
+	{0x01, 0x01, 0x18, 0x08, "Infinite Lives (Cheat)"		},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x18, 0x01, 0x20, 0x20, "Off"		},
-	{0x18, 0x01, 0x20, 0x00, "On"		},
+	{0x01, 0x01, 0x20, 0x20, "Off"		},
+	{0x01, 0x01, 0x20, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
-	{0x18, 0x01, 0x80, 0x80, "No"		},
-	{0x18, 0x01, 0x80, 0x00, "5 Times"		},
+	{0x01, 0x01, 0x80, 0x80, "No"		},
+	{0x01, 0x01, 0x80, 0x00, "5 Times"		},
 
 	{0   , 0xfe, 0   ,    7, "Bonus Life"		},
-	{0x19, 0x01, 0xc1, 0xc1, "20k 60k 60k+"		},
-	{0x19, 0x01, 0xc1, 0x81, "40k 90k 90k+"		},
-	{0x19, 0x01, 0xc1, 0x41, "50k 120k 120k+"		},
-	{0x19, 0x01, 0xc1, 0xc0, "20k 60k"		},
-	{0x19, 0x01, 0xc1, 0x80, "40k 90k"		},
-	{0x19, 0x01, 0xc1, 0x40, "50k 120k"		},
-	{0x19, 0x01, 0xc1, 0x00, "None"		},
+	{0x02, 0x01, 0xc1, 0xc1, "20k 60k 60k+"		},
+	{0x02, 0x01, 0xc1, 0x81, "40k 90k 90k+"		},
+	{0x02, 0x01, 0xc1, 0x41, "50k 120k 120k+"		},
+	{0x02, 0x01, 0xc1, 0xc0, "20k 60k"		},
+	{0x02, 0x01, 0xc1, 0x80, "40k 90k"		},
+	{0x02, 0x01, 0xc1, 0x40, "50k 120k"		},
+	{0x02, 0x01, 0xc1, 0x00, "None"		},
+
+	// Dip 4
+	{0   , 0xfe, 0   , 2   , "Second Stick"           },
+	{0x03, 0x01, 0x01, 0x00, "Moves & Shoots"         },
+	{0x03, 0x01, 0x01, 0x01, "Moves"                  },
 };
 
 STDDIPINFO(Tnk3)
 
 static struct BurnDIPInfo IkariDIPList[]=
 {
-	{0x18, 0xff, 0xff, 0x3b, NULL		},
-	{0x19, 0xff, 0xff, 0x0a, NULL		},
-	{0x1a, 0xff, 0xff, 0x34, NULL		},
+	DIP_OFFSET(0x20)
+
+	{0x00, 0xff, 0xff, 0x3b, NULL		},
+	{0x01, 0xff, 0xff, 0x0a, NULL		},
+	{0x02, 0xff, 0xff, 0x34, NULL		},
+	{0x03, 0xff, 0xff, 0x00, NULL       },
 
 	{0   , 0xfe, 0   ,    2, "Allow killing each other"		},
-	{0x18, 0x01, 0x01, 0x01, "No"		},
-	{0x18, 0x01, 0x01, 0x00, "Yes"		},
+	{0x00, 0x01, 0x01, 0x01, "No"		},
+	{0x00, 0x01, 0x01, 0x00, "Yes"		},
 
 	{0   , 0xfe, 0   ,    2, "P1 & P2 Fire Buttons"		},
-	{0x18, 0x01, 0x02, 0x02, "Separate"		},
-	{0x18, 0x01, 0x02, 0x00, "Common"		},
+	{0x00, 0x01, 0x02, 0x02, "Separate"		},
+	{0x00, 0x01, 0x02, 0x00, "Common"		},
 
 	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x18, 0x01, 0x08, 0x08, "3"		},
-	{0x18, 0x01, 0x08, 0x00, "5"		},
+	{0x00, 0x01, 0x08, 0x08, "3"		},
+	{0x00, 0x01, 0x08, 0x00, "5"		},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"		},
-	{0x18, 0x01, 0x30, 0x00, "4 Coins 1 Credits"		},
-	{0x18, 0x01, 0x30, 0x10, "3 Coins 1 Credits"		},
-	{0x18, 0x01, 0x30, 0x20, "2 Coins 1 Credits"		},
-	{0x18, 0x01, 0x30, 0x30, "1 Coin  1 Credits"		},
+	{0x00, 0x01, 0x30, 0x00, "4 Coins 1 Credits"		},
+	{0x00, 0x01, 0x30, 0x10, "3 Coins 1 Credits"		},
+	{0x00, 0x01, 0x30, 0x20, "2 Coins 1 Credits"		},
+	{0x00, 0x01, 0x30, 0x30, "1 Coin  1 Credits"		},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"		},
-	{0x18, 0x01, 0xc0, 0x00, "1 Coin  2 Credits"		},
-	{0x18, 0x01, 0xc0, 0x40, "1 Coin  3 Credits"		},
-	{0x18, 0x01, 0xc0, 0x80, "1 Coin  4 Credits"		},
-	{0x18, 0x01, 0xc0, 0xc0, "1 Coin  6 Credits"		},
+	{0x00, 0x01, 0xc0, 0x00, "1 Coin  2 Credits"		},
+	{0x00, 0x01, 0xc0, 0x40, "1 Coin  3 Credits"		},
+	{0x00, 0x01, 0xc0, 0x80, "1 Coin  4 Credits"		},
+	{0x00, 0x01, 0xc0, 0xc0, "1 Coin  6 Credits"		},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x19, 0x01, 0x03, 0x03, "Easy"		},
-	{0x19, 0x01, 0x03, 0x02, "Normal"		},
-	{0x19, 0x01, 0x03, 0x01, "Hard"		},
-	{0x19, 0x01, 0x03, 0x00, "Hardest"		},
+	{0x01, 0x01, 0x03, 0x03, "Easy"		},
+	{0x01, 0x01, 0x03, 0x02, "Normal"		},
+	{0x01, 0x01, 0x03, 0x01, "Hard"		},
+	{0x01, 0x01, 0x03, 0x00, "Hardest"		},
 
 	{0   , 0xfe, 0   ,    4, "Game Mode"		},
-	{0x19, 0x01, 0x0c, 0x0c, "Demo Sounds Off"		},
-	{0x19, 0x01, 0x0c, 0x08, "Demo Sounds On"		},
-	{0x19, 0x01, 0x0c, 0x04, "Freeze"		},
-	{0x19, 0x01, 0x0c, 0x00, "Infinite Lives (Cheat)"		},
+	{0x01, 0x01, 0x0c, 0x0c, "Demo Sounds Off"		},
+	{0x01, 0x01, 0x0c, 0x08, "Demo Sounds On"		},
+	{0x01, 0x01, 0x0c, 0x04, "Freeze"		},
+	{0x01, 0x01, 0x0c, 0x00, "Infinite Lives (Cheat)"		},
 
 	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
-	{0x19, 0x01, 0x80, 0x80, "No"		},
-	{0x19, 0x01, 0x80, 0x00, "Yes"		},
+	{0x01, 0x01, 0x80, 0x80, "No"		},
+	{0x01, 0x01, 0x80, 0x00, "Yes"		},
 
 	{0   , 0xfe, 0   ,    7, "Bonus Life"		},
-	{0x1a, 0x01, 0x34, 0x34, "50k 100k 100k+"		},
-	{0x1a, 0x01, 0x34, 0x24, "60k 120k 120k+"		},
-	{0x1a, 0x01, 0x34, 0x14, "100k 200k 200k+"		},
-	{0x1a, 0x01, 0x34, 0x30, "50k 100k"		},
-	{0x1a, 0x01, 0x34, 0x20, "60k 120k"		},
-	{0x1a, 0x01, 0x34, 0x10, "100k 200k"		},
-	{0x1a, 0x01, 0x34, 0x00, "None"		},
+	{0x02, 0x01, 0x34, 0x34, "50k 100k 100k+"		},
+	{0x02, 0x01, 0x34, 0x24, "60k 120k 120k+"		},
+	{0x02, 0x01, 0x34, 0x14, "100k 200k 200k+"		},
+	{0x02, 0x01, 0x34, 0x30, "50k 100k"		},
+	{0x02, 0x01, 0x34, 0x20, "60k 120k"		},
+	{0x02, 0x01, 0x34, 0x10, "100k 200k"		},
+	{0x02, 0x01, 0x34, 0x00, "None"		},
+
+	// Dip 4
+	{0   , 0xfe, 0   , 2   , "Second Stick"           },
+	{0x03, 0x01, 0x01, 0x00, "Moves & Shoots"         },
+	{0x03, 0x01, 0x01, 0x01, "Moves"                  },
 };
 
 STDDIPINFO(Ikari)
 
 static struct BurnDIPInfo VictroadDIPList[]=
 {
-	{0x19, 0xff, 0xff, 0x3b, NULL		},
-	{0x1a, 0xff, 0xff, 0x8b, NULL		},
-	{0x1b, 0xff, 0xff, 0x34, NULL		},
+	DIP_OFFSET(0x21)
+
+	{0x00, 0xff, 0xff, 0x3b, NULL		},
+	{0x01, 0xff, 0xff, 0x8b, NULL		},
+	{0x02, 0xff, 0xff, 0x34, NULL		},
 
 	{0   , 0xfe, 0   ,    2, "Kill friend & walk everywhere (Cheat)"		},
-	{0x19, 0x01, 0x01, 0x01, "No"		},
-	{0x19, 0x01, 0x01, 0x00, "Yes"		},
+	{0x00, 0x01, 0x01, 0x01, "No"		},
+	{0x00, 0x01, 0x01, 0x00, "Yes"		},
 
 	{0   , 0xfe, 0   ,    2, "P1 & P2 Fire Buttons"		},
-	{0x19, 0x01, 0x02, 0x02, "Separate"		},
-	{0x19, 0x01, 0x02, 0x00, "Common"		},
+	{0x00, 0x01, 0x02, 0x02, "Separate"		},
+	{0x00, 0x01, 0x02, 0x00, "Common"		},
 
 	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x19, 0x01, 0x08, 0x08, "3"		},
-	{0x19, 0x01, 0x08, 0x00, "5"		},
+	{0x00, 0x01, 0x08, 0x08, "3"		},
+	{0x00, 0x01, 0x08, 0x00, "5"		},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"		},
-	{0x19, 0x01, 0x30, 0x00, "4 Coins 1 Credits"		},
-	{0x19, 0x01, 0x30, 0x10, "3 Coins 1 Credits"		},
-	{0x19, 0x01, 0x30, 0x20, "2 Coins 1 Credits"		},
-	{0x19, 0x01, 0x30, 0x30, "1 Coin  1 Credits"		},
+	{0x00, 0x01, 0x30, 0x00, "4 Coins 1 Credits"		},
+	{0x00, 0x01, 0x30, 0x10, "3 Coins 1 Credits"		},
+	{0x00, 0x01, 0x30, 0x20, "2 Coins 1 Credits"		},
+	{0x00, 0x01, 0x30, 0x30, "1 Coin  1 Credits"		},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"		},
-	{0x19, 0x01, 0xc0, 0x00, "1 Coin  2 Credits"		},
-	{0x19, 0x01, 0xc0, 0x40, "1 Coin  3 Credits"		},
-	{0x19, 0x01, 0xc0, 0x80, "1 Coin  4 Credits"		},
-	{0x19, 0x01, 0xc0, 0xc0, "1 Coin  6 Credits"		},
+	{0x00, 0x01, 0xc0, 0x00, "1 Coin  2 Credits"		},
+	{0x00, 0x01, 0xc0, 0x40, "1 Coin  3 Credits"		},
+	{0x00, 0x01, 0xc0, 0x80, "1 Coin  4 Credits"		},
+	{0x00, 0x01, 0xc0, 0xc0, "1 Coin  6 Credits"		},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x1a, 0x01, 0x03, 0x03, "Easy"		},
-	{0x1a, 0x01, 0x03, 0x02, "Normal"		},
-	{0x1a, 0x01, 0x03, 0x01, "Hard"		},
-	{0x1a, 0x01, 0x03, 0x00, "Hardest"		},
+	{0x01, 0x01, 0x03, 0x03, "Easy"		},
+	{0x01, 0x01, 0x03, 0x02, "Normal"		},
+	{0x01, 0x01, 0x03, 0x01, "Hard"		},
+	{0x01, 0x01, 0x03, 0x00, "Hardest"		},
 
 	{0   , 0xfe, 0   ,    4, "Game Mode"		},
-	{0x1a, 0x01, 0x0c, 0x0c, "Demo Sounds Off"		},
-	{0x1a, 0x01, 0x0c, 0x08, "Demo Sounds On"		},
-	{0x1a, 0x01, 0x0c, 0x00, "Freeze"		},
-	{0x1a, 0x01, 0x0c, 0x04, "Infinite Lives (Cheat)"		},
+	{0x01, 0x01, 0x0c, 0x0c, "Demo Sounds Off"		},
+	{0x01, 0x01, 0x0c, 0x08, "Demo Sounds On"		},
+	{0x01, 0x01, 0x0c, 0x00, "Freeze"		},
+	{0x01, 0x01, 0x0c, 0x04, "Infinite Lives (Cheat)"		},
 
 	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
-	{0x1a, 0x01, 0x40, 0x40, "No"		},
-	{0x1a, 0x01, 0x40, 0x00, "Yes"		},
+	{0x01, 0x01, 0x40, 0x40, "No"		},
+	{0x01, 0x01, 0x40, 0x00, "Yes"		},
 
 	{0   , 0xfe, 0   ,    2, "Credits Buy Lives During Play"		},
-	{0x1a, 0x01, 0x80, 0x00, "No"		},
-	{0x1a, 0x01, 0x80, 0x80, "Yes"		},
+	{0x01, 0x01, 0x80, 0x00, "No"		},
+	{0x01, 0x01, 0x80, 0x80, "Yes"		},
 
 	{0   , 0xfe, 0   ,    7, "Bonus Life"		},
-	{0x1b, 0x01, 0x34, 0x34, "50k 100k 100k+"		},
-	{0x1b, 0x01, 0x34, 0x24, "60k 120k 120k+"		},
-	{0x1b, 0x01, 0x34, 0x14, "100k 200k 200k+"		},
-	{0x1b, 0x01, 0x34, 0x30, "50k 100k"		},
-	{0x1b, 0x01, 0x34, 0x20, "60k 120k"		},
-	{0x1b, 0x01, 0x34, 0x10, "100k 200k"		},
-	{0x1b, 0x01, 0x34, 0x00, "None"		},
+	{0x02, 0x01, 0x34, 0x34, "50k 100k 100k+"		},
+	{0x02, 0x01, 0x34, 0x24, "60k 120k 120k+"		},
+	{0x02, 0x01, 0x34, 0x14, "100k 200k 200k+"		},
+	{0x02, 0x01, 0x34, 0x30, "50k 100k"		},
+	{0x02, 0x01, 0x34, 0x20, "60k 120k"		},
+	{0x02, 0x01, 0x34, 0x10, "100k 200k"		},
+	{0x02, 0x01, 0x34, 0x00, "None"		},
+
+	// Dip 4
+	{0   , 0xfe, 0   , 2   , "Second Stick"           },
+	{0x03, 0x01, 0x01, 0x00, "Moves & Shoots"         },
+	{0x03, 0x01, 0x01, 0x01, "Moves"                  },
 };
 
 STDDIPINFO(Victroad)
@@ -1961,56 +2054,64 @@ STDDIPINFO(Choppera)
 
 static struct BurnDIPInfo BermudatDIPList[]=
 {
-	{0x19, 0xff, 0xff, 0x3b, NULL		},
-	{0x1a, 0xff, 0xff, 0x8b, NULL		},
-	{0x1b, 0xff, 0xff, 0x34, NULL		},
+	DIP_OFFSET(0x21)
+
+	{0x00, 0xff, 0xff, 0x3b, NULL		},
+	{0x01, 0xff, 0xff, 0x8b, NULL		},
+	{0x02, 0xff, 0xff, 0x34, NULL		},
+	{0x03, 0xff, 0xff, 0x00, NULL 		},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x19, 0x01, 0x02, 0x02, "Off"		},
-	{0x19, 0x01, 0x02, 0x00, "On"		},
+	{0x00, 0x01, 0x02, 0x02, "Off"		},
+	{0x00, 0x01, 0x02, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x19, 0x01, 0x08, 0x08, "3"		},
-	{0x19, 0x01, 0x08, 0x00, "5"		},
+	{0x00, 0x01, 0x08, 0x08, "3"		},
+	{0x00, 0x01, 0x08, 0x00, "5"		},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"		},
-	{0x19, 0x01, 0x30, 0x00, "4 Coins 1 Credits"		},
-	{0x19, 0x01, 0x30, 0x10, "3 Coins 1 Credits"		},
-	{0x19, 0x01, 0x30, 0x20, "2 Coins 1 Credits"		},
-	{0x19, 0x01, 0x30, 0x30, "1 Coin  1 Credits"		},
+	{0x00, 0x01, 0x30, 0x00, "4 Coins 1 Credits"		},
+	{0x00, 0x01, 0x30, 0x10, "3 Coins 1 Credits"		},
+	{0x00, 0x01, 0x30, 0x20, "2 Coins 1 Credits"		},
+	{0x00, 0x01, 0x30, 0x30, "1 Coin  1 Credits"		},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"		},
-	{0x19, 0x01, 0xc0, 0x00, "1 Coin  2 Credits"		},
-	{0x19, 0x01, 0xc0, 0x40, "1 Coin  3 Credits"		},
-	{0x19, 0x01, 0xc0, 0x80, "1 Coin  4 Credits"		},
-	{0x19, 0x01, 0xc0, 0xc0, "1 Coin  6 Credits"		},
+	{0x00, 0x01, 0xc0, 0x00, "1 Coin  2 Credits"		},
+	{0x00, 0x01, 0xc0, 0x40, "1 Coin  3 Credits"		},
+	{0x00, 0x01, 0xc0, 0x80, "1 Coin  4 Credits"		},
+	{0x00, 0x01, 0xc0, 0xc0, "1 Coin  6 Credits"		},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x1a, 0x01, 0x03, 0x03, "Easy"		},
-	{0x1a, 0x01, 0x03, 0x02, "Normal"		},
-	{0x1a, 0x01, 0x03, 0x01, "Hard"		},
-	{0x1a, 0x01, 0x03, 0x00, "Hardest"		},
+	{0x01, 0x01, 0x03, 0x03, "Easy"		},
+	{0x01, 0x01, 0x03, 0x02, "Normal"		},
+	{0x01, 0x01, 0x03, 0x01, "Hard"		},
+	{0x01, 0x01, 0x03, 0x00, "Hardest"		},
 
 	{0   , 0xfe, 0   ,    4, "Game Mode"		},
-	{0x1a, 0x01, 0x0c, 0x0c, "Demo Sounds Off"		},
-	{0x1a, 0x01, 0x0c, 0x08, "Demo Sounds On"		},
-	{0x1a, 0x01, 0x0c, 0x00, "Freeze"		},
-	{0x1a, 0x01, 0x0c, 0x04, "Infinite Lives (Cheat)"		},
+	{0x01, 0x01, 0x0c, 0x0c, "Demo Sounds Off"		},
+	{0x01, 0x01, 0x0c, 0x08, "Demo Sounds On"		},
+	{0x01, 0x01, 0x0c, 0x00, "Freeze"		},
+	{0x01, 0x01, 0x0c, 0x04, "Infinite Lives (Cheat)"		},
 
 	{0   , 0xfe, 0   ,    4, "Game Style"		},
-	{0x1a, 0x01, 0xc0, 0xc0, "Normal without continue"		},
-	{0x1a, 0x01, 0xc0, 0x80, "Normal with continue"		},
-	{0x1a, 0x01, 0xc0, 0x40, "Time attack 3 minutes"		},
-	{0x1a, 0x01, 0xc0, 0x00, "Time attack 5 minutes"		},
+	{0x01, 0x01, 0xc0, 0xc0, "Normal without continue"		},
+	{0x01, 0x01, 0xc0, 0x80, "Normal with continue"		},
+	{0x01, 0x01, 0xc0, 0x40, "Time attack 3 minutes"		},
+	{0x01, 0x01, 0xc0, 0x00, "Time attack 5 minutes"		},
 
 	{0   , 0xfe, 0   ,    7, "Bonus Life"		},
-	{0x1b, 0x01, 0x34, 0x34, "50k 100k 100k+"		},
-	{0x1b, 0x01, 0x34, 0x24, "60k 120k 120k+"		},
-	{0x1b, 0x01, 0x34, 0x14, "100k 200k 200k+"		},
-	{0x1b, 0x01, 0x34, 0x30, "50k 100k"		},
-	{0x1b, 0x01, 0x34, 0x20, "60k 120k"		},
-	{0x1b, 0x01, 0x34, 0x10, "100k 200k"		},
-	{0x1b, 0x01, 0x34, 0x00, "None"		},
+	{0x02, 0x01, 0x34, 0x34, "50k 100k 100k+"		},
+	{0x02, 0x01, 0x34, 0x24, "60k 120k 120k+"		},
+	{0x02, 0x01, 0x34, 0x14, "100k 200k 200k+"		},
+	{0x02, 0x01, 0x34, 0x30, "50k 100k"		},
+	{0x02, 0x01, 0x34, 0x20, "60k 120k"		},
+	{0x02, 0x01, 0x34, 0x10, "100k 200k"		},
+	{0x02, 0x01, 0x34, 0x00, "None"		},
+
+	// Dip 4
+	{0   , 0xfe, 0   , 2   , "Second Stick"           },
+	{0x03, 0x01, 0x01, 0x00, "Moves & Shoots"         },
+	{0x03, 0x01, 0x01, 0x01, "Moves"                  },
 };
 
 STDDIPINFO(Bermudat)
@@ -2244,8 +2345,50 @@ static void RotateDoTick() {
 }
 
 static void SuperJoy2Rotate() {
+	UINT8 FakeDrvInputPort0[4] = {0, 0, 0, 0};
+	UINT8 FakeDrvInputPort1[4] = {0, 0, 0, 0};
+	UINT8 NeedsSecondStick[2] = {0, 0};
+
+	// prepare for right-stick rotation
+	// this is not especially readable though
+	for (INT32 i = 0; i < 2; i++) {
+		for (INT32 n = 0; n < 4; n++) {
+			UINT8* RotationInput = (!i) ? &FakeDrvInputPort0[0] : &FakeDrvInputPort1[0];
+			RotationInput[n] = DrvFakeInput[6 + i*4 + n];
+			NeedsSecondStick[i] |= RotationInput[n];
+		}
+	}
+
 	for (INT32 i = 0; i < 2; i++) { // p1 = 0, p2 = 1
-		if (DrvFakeInput[4 + i]) { //  rotate-button had been pressed
+		if (!NeedsSecondStick[i])
+			nAutoFireCounter[i] = 0;
+		if (NeedsSecondStick[i]) { // or using Second Stick
+			UINT8 rot = Joy2Rotate(((!i) ? &FakeDrvInputPort0[0] : &FakeDrvInputPort1[0]));
+			if (rot != 0xff) {
+				nRotateTarget[i] = rot * rotate_gunpos_multiplier;
+			}
+			nRotateTry[i] = 0;
+
+			if (~DrvDips[3] & 1) {
+				// only TNK3 and ASO have game_select as 4
+				// TNK3 uses a different fire button, and it's slower
+				UINT8 indexmask = ((!i) ? 0x01 : (game_select == 4 ? 0x04 : 0x08)); 
+				UINT8 countermask = (game_select == 4 ? 0x08 : 0x04); 
+				// fake auto-fire - there's probably a more elegant solution for this
+				if (nAutoFireCounter[i]++ & countermask)
+				{
+					// p1: bit index 0
+					// p2: bit index 3 - except on tnk3 - 2
+
+					DrvInputs[3] &= ~indexmask; // remove the fire bit &= ~0x10; //
+				}
+				else
+				{
+					DrvInputs[3] |= indexmask; // turn on the fire bit
+				}
+			}
+		}
+		else if (DrvFakeInput[4 + i]) { //  rotate-button had been pressed
 			UINT8 rot = Joy2Rotate(((!i) ? &DrvJoy2[0] : &DrvJoy3[0]));
 
 			if (rot != 0xff) {
@@ -6510,6 +6653,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nRotate);
 		SCAN_VAR(nRotateTarget);
 		SCAN_VAR(nRotateTry);
+		SCAN_VAR(nAutoFireCounter);
+		SCAN_VAR(nRotateTime);
 		SCAN_VAR(gwar_rot_last);
 		SCAN_VAR(gwar_rot_cnt);
 

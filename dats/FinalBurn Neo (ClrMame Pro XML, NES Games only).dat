@@ -197,6 +197,14 @@
 		<video orientation="horizontal" width="256" height="232" aspectx="256" aspecty="232"/>
 		<driver status="good"/>
 	</game>
+	<game name="adameve">
+		<description>Adam &amp; Eve (Unl)</description>
+		<year>1991</year>
+		<manufacturer>Mega Soft</manufacturer>
+		<rom name="Adam &amp; Eve (1991)(Mega Soft)(Unl).nes" size="49168" crc="9e2d9a66"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="addamfamc" cloneof="addamfam" romof="addamfam">
 		<comment>Hack</comment>
 		<description>Addams Family, The (Hack, Spanish v1.0)</description>
@@ -665,6 +673,15 @@
 		<year>1989</year>
 		<manufacturer>Tengen</manufacturer>
 		<rom name="Alien Syndrome (USA).nes" size="262160" crc="9e8351af"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="almika">
+		<comment>Homebrew</comment>
+		<description>Almika The Star Rider Densetsu Gaiden (HB)</description>
+		<year>2021</year>
+		<manufacturer>Mouse Spirit</manufacturer>
+		<rom name="Almika The Star Rider Densetsu Gaiden (2021)(Mouse Spirit).nes" size="524304" crc="3b5a7745"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -3098,6 +3115,14 @@
 		<year>1986</year>
 		<manufacturer>Nichibutsu</manufacturer>
 		<rom name="Crazy Climber (Japan).nes" size="131088" crc="83763841"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="creatom">
+		<description>Creatom (Unl)</description>
+		<year>1991</year>
+		<manufacturer>Micro Genius</manufacturer>
+		<rom name="Creatom (1991)(Micro Genius)(Unl).nes" size="98320" crc="1a1328bc"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -9101,10 +9126,10 @@
 	</game>
 	<game name="magnilocase">
 		<comment>Homebrew</comment>
-		<description>Magnilo Case, The (HB)</description>
+		<description>Magnilo Case, The (HB, v1.1)</description>
 		<year>2021</year>
-		<manufacturer>Dalyen Retrogames</manufacturer>
-		<rom name="The Magnilo Case (2021)(Dalyen Retrogames).nes" size="524304" crc="6ff47dba"/>
+		<manufacturer>DalyenRetroGames</manufacturer>
+		<rom name="Magnilo Case, The v1.1 (2021)(DalyenRetroGames).nes" size="524304" crc="3b14782a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -15232,6 +15257,15 @@
 		<year>1992</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="Toukon Club (Japan).nes" size="393232" crc="33963d30"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="td1990">
+		<comment>Homebrew</comment>
+		<description>Tower Defense 1990 (HB)</description>
+		<year>2018</year>
+		<manufacturer>Ryan Lloyd</manufacturer>
+		<rom name="Tower Defense 1990 (2018)(Ryan Lloyd).nes" size="131088" crc="403af207"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

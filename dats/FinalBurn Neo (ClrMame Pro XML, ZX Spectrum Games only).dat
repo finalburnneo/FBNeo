@@ -6943,7 +6943,7 @@
 		<description>Hammer Boy (Part 1) (128K)</description>
 		<year>1991</year>
 		<manufacturer>Dinamic Software</manufacturer>
-		<rom name="Hammer Boy (1991)(Dinamic Software)(Part 1 of 2)(128k).z80" size="42035" crc="52955ad2"/>
+		<rom name="Hammer Boy (1991)(Dinamic Software)(Part 1 of 2)(128k).tap" size="48943" crc="1770245b"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -6953,7 +6953,7 @@
 		<description>Hammer Boy (Part 2) (128K)</description>
 		<year>1991</year>
 		<manufacturer>Dinamic Software</manufacturer>
-		<rom name="Hammer Boy (1991)(Dinamic Software)(Part 2 of 2)(128k).z80" size="44288" crc="6240dded"/>
+		<rom name="Hammer Boy (1991)(Dinamic Software)(Part 2 of 2)(128k).tap" size="48943" crc="858a0af4"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

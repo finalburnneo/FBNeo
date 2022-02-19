@@ -253,6 +253,7 @@ DRV		BurnSpecAdastra;
 DRV		BurnSpecAdlunamplus;
 DRV		BurnSpecAdlunamplusit;
 DRV		BurnSpecAdlunampluses;
+DRV		BurnDrvnes_adameve;
 DRV		BurnDrvmd_addfamv;
 DRV		BurnDrvmd_addfamvs;
 DRV		BurnSpecaddfamth;
@@ -610,6 +611,7 @@ DRV		BurnDrvAligators;
 DRV		BurnDrvAligatorun;
 DRV		BurnDrvAligatoruna;
 DRV		BurnDrvAligator;
+DRV		BurnDrvnes_almika;
 DRV		BurnDrvnes_almosthero;
 DRV		BurnDrvMSX_alphablaster;
 #if defined FBNEO_DEBUG
@@ -3204,6 +3206,7 @@ DRV		BurnDrvCrzrallya;
 DRV		BurnDrvMSX_crazytrn;
 DRV		BurnDrvMSX_crazytrna;
 DRV		BurnDrvCrazywar;
+DRV		BurnDrvnes_creatom;
 DRV		BurnDrvnes_creepybrawlers;
 DRV		BurnDrvMooncrsl;
 DRV		BurnSpecCrimbo;
@@ -16611,6 +16614,7 @@ DRV		BurnDrvcv_ttennis;
 DRV		BurnDrvKaratblj;
 DRV		BurnSpectowdieen;
 DRV		BurnSpectowdiesk;
+DRV		BurnDrvnes_td1990;
 DRV		BurnDrvnes_towerdru;
 DRV		BurnDrvMSX_druaga;
 DRV		BurnDrvsms_toseasycb;
@@ -18602,6 +18606,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecAdlunamplus,		// Ad Lunam Plus (English) (128K) (HB, v1.1)
 	&BurnSpecAdlunamplusit,		// Ad Lunam Plus (Italian) (128K) (HB, v1.1)
 	&BurnSpecAdlunampluses,		// Ad Lunam Plus (Spanish) (128K) (HB, v1.1)
+	&BurnDrvnes_adameve,		// Adam & Eve (Unl)
 	&BurnDrvmd_addfamv,			// Addams Family Values (Euro)
 	&BurnDrvmd_addfamvs,		// Addams Family Values (Hack, Spanish)
 	&BurnSpecaddfamth,			// Addams Family, The (128K)
@@ -18959,6 +18964,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAligatorun,			// Alligator Hunt (unprotected, set 1)
 	&BurnDrvAligatoruna,		// Alligator Hunt (unprotected, set 2)
 	&BurnDrvAligator,			// Alligator Hunt (World, protected)
+	&BurnDrvnes_almika,			// Almika The Star Rider Densetsu Gaiden (HB)
 	&BurnDrvnes_almosthero,		// Almost Hero (HB)
 	&BurnDrvMSX_alphablaster,	// Alpha Blaster
 #if defined FBNEO_DEBUG
@@ -21553,6 +21559,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_crazytrn,		// Crazy Train (Jpn)
 	&BurnDrvMSX_crazytrna,		// Crazy Train (Jpn, Alt)
 	&BurnDrvCrazywar,			// Crazy War
+	&BurnDrvnes_creatom,		// Creatom (Unl)
 	&BurnDrvnes_creepybrawlers,	// Creepy Brawlers (HB)
 	&BurnDrvMooncrsl,			// Cresta Mundo (Laguna S.A. Spanish Moon Cresta bootleg)
 	&BurnSpecCrimbo,			// Crimbo: A Gloop Troops Tale (128K) (HB)
@@ -27027,7 +27034,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMagix,				// Magix / Rock
 	&BurnDrvfds_magmapro,		// Magma Project - Hacker (Japan)
 	&BurnDrvnes_magmax,			// Magmax (USA)
-	&BurnDrvnes_magnilocase,	// Magnilo Case, The (HB)
+	&BurnDrvnes_magnilocase,	// Magnilo Case, The (HB, v1.1)
 	&BurnDrvMSX_empcity,		// Magnum Kiki Ippatsu - Empire City 1931 (Jpn)
 	&BurnDrvMSX_empcitya,		// Magnum Kiki Ippatsu - Empire City 1931 (Jpn, Alt)
 	&BurnDrvnes_maharajaj,		// Maharaja (Japan)
@@ -34960,6 +34967,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKaratblj,			// Toushin Blazers (Japan, Tecmo license)
 	&BurnSpectowdieen,			// Towdie (English) (128K)
 	&BurnSpectowdiesk,			// Towdie (Slovak) (128K)
+	&BurnDrvnes_td1990,			// Tower Defense 1990 (HB)
 	&BurnDrvnes_towerdru,		// Tower of Druaga, The (Japan)
 	&BurnDrvMSX_druaga,			// Tower of Druaga, The (Jpn)
 	&BurnDrvsms_toseasycb,		// Tower of Sorrow - Easy (HB, v1.5 Color Blind)

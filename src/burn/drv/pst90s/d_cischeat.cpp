@@ -1006,9 +1006,9 @@ static UINT16 __fastcall wildplt_main_read_word(UINT32 address)
 		case 0x080010: {
 			switch (ip_select) {
 				case 1:
-					return (BurnGunReturnX(1) << 8) | BurnGunReturnY(1);
+					return (BurnGunReturnX(1) << 8) | (0xff - BurnGunReturnY(1));
 				case 2:
-					return (BurnGunReturnX(0) << 8) | BurnGunReturnY(0);
+					return (BurnGunReturnX(0) << 8) | (0xff - BurnGunReturnY(0));
 			}
 			return 0xffff;
 		}
@@ -2728,8 +2728,8 @@ static INT32 BigrunFrame()
 		}
 
 		if (is_game == 2) { // wildplt
-			BurnGunMakeInputs(0, Analog0, -Analog1); // reversed y axis
-			BurnGunMakeInputs(1, Analog2, -Analog3);
+			BurnGunMakeInputs(0, Analog0, Analog1);
+			BurnGunMakeInputs(1, Analog2, Analog3);
 		}
 	}
 

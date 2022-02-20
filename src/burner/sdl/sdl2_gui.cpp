@@ -1105,6 +1105,15 @@ int gui_process()
 		{
 			switch (e.type)
 			{
+				case SDL_WINDOWEVENT:
+        switch (event->window.event)
+					{
+						case SDL_WINDOWEVENT_SIZE_CHANGED:
+								nVidGuiWidth = event->window.data1;
+								nVidGuiHeight = event->window.data2;
+		            break;
+					}
+				break;
 				case SDL_CONTROLLERAXISMOTION:
 					switch (e.caxis.axis)
 					{

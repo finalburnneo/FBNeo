@@ -697,7 +697,8 @@ DRV		BurnSpecAndroide;
 DRV		BurnSpecandycapp;
 DRV		BurnDrvMSX_anexoes;
 DRV		BurnDrvAngelkds;
-DRV		BurnSpecangelnietopole;
+DRV		BurnSpecanpole128;
+DRV		BurnSpecanpole48;
 DRV		BurnDrvMSX_angelo;
 DRV		BurnDrvMSX_angeloa;
 DRV		BurnSpecAngels;
@@ -3221,6 +3222,7 @@ DRV		BurnDrvVendetta2pp;
 DRV		BurnDrvVendettan;
 DRV		BurnDrvnes_crisisforcej;
 DRV		BurnDrvnes_crisisforce;
+DRV		BurnSpecCriticmass;
 DRV		BurnDrvcrockman;
 DRV		BurnDrvcrockmnf;
 DRV		BurnSpecCronopiosen;
@@ -3569,6 +3571,7 @@ DRV		BurnSpecDfboy;
 DRV		BurnDrvnes_deadfox;
 DRV		BurnDrvpce_deadmoon;
 DRV		BurnDrvtg_deadmoon;
+DRV		BurnSpecDeadspace;
 DRV		BurnDrvnes_deadtomb;
 DRV		BurnDrvfds_deadzonej;
 DRV		BurnDrvfds_deadzone;
@@ -6308,6 +6311,7 @@ DRV		BurnDrvsms_greatglf1;
 DRV		BurnDrvsms_greatglj;
 DRV		BurnDrvsms_greatglk;
 DRV		BurnDrvsms_greatglfp;
+DRV		BurnSpecGreatgurian;
 DRV		BurnDrvsms_greatice;
 DRV		BurnDrvCpsGreatMahouDaiJ;
 DRV		BurnDrvGslgr94j;
@@ -8492,6 +8496,7 @@ DRV		BurnDrvJanjans1;
 DRV		BurnDrvJanjans2;
 DRV		BurnDrvLoverboy;
 DRV		BurnDrvnes_lowgman;
+DRV		BurnSpecLoxley;
 DRV		BurnDrvkovlsyx;
 DRV		BurnDrvkovlsyxqszl;
 DRV		BurnDrvkovlsyxqxzl;
@@ -9680,11 +9685,15 @@ DRV		BurnDrvmd_mkr;
 DRV		BurnDrvMosaicf2;
 DRV		BurnDrvMosaica;
 DRV		BurnDrvMosaic;
+DRV		BurnSpecmot128intro;
 DRV		BurnDrvMSX_motintro;
+DRV		BurnSpecmot128a;
 DRV		BurnSpecmotopera1;
 DRV		BurnDrvMSX_motpart1;
+DRV		BurnSpecmot128b;
 DRV		BurnSpecmotopera2;
 DRV		BurnDrvMSX_motpart2;
+DRV		BurnSpecmot128c;
 DRV		BurnSpecmotopera3;
 DRV		BurnDrvMSX_motpart3;
 DRV		BurnDrvnes_mother;
@@ -10728,6 +10737,7 @@ DRV		BurnDrvmd_orunners;
 DRV		BurnDrvOrunners;
 DRV		BurnDrvnes_overhorizon;
 DRV		BurnDrvovertop;
+DRV		BurnSpecOverlander;
 DRV		BurnDrvnes_overlord;
 DRV		BurnDrvpce_override;
 DRV		BurnDrvMSX_oyotango;
@@ -18342,7 +18352,9 @@ DRV		BurnSpecZxdestroyer;
 DRV		BurnSpecZxenigma;
 DRV		BurnSpecZxfm2005;
 DRV		BurnSpecZxparachute;
+DRV		BurnSpecSpec1282aBIOS;
 DRV		BurnSpecSpec128BIOS;
+DRV		BurnSpecSpec1282a;
 DRV		BurnSpecSpec128;
 DRV		BurnSpecSpectrum;
 DRV		BurnSpecSpectrumBIOS;
@@ -19050,7 +19062,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecandycapp,			// Andy Capp (128K)
 	&BurnDrvMSX_anexoes,		// Anexo 1, El Algoritmo (Spanish) (HB)
 	&BurnDrvAngelkds,			// Angel Kids (Japan)
-	&BurnSpecangelnietopole,	// Angel Nieto Pole 500cc (Spanish) (48K)
+	&BurnSpecanpole128,			// Angel Nieto Pole 500cc (Spanish) (128K)
+	&BurnSpecanpole48,			// Angel Nieto Pole 500cc (Spanish) (48K)
 	&BurnDrvMSX_angelo,			// Angelo (Jpn)
 	&BurnDrvMSX_angeloa,		// Angelo (Jpn, Alt)
 	&BurnSpecAngels,			// Angels (128K) (HB)
@@ -21574,6 +21587,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvVendettan,			// Crime Fighters 2 (Japan, 4 Players ver. N)
 	&BurnDrvnes_crisisforcej,	// Crisis Force (Japan)
 	&BurnDrvnes_crisisforce,	// Crisis Force (T-Eng)
+	&BurnSpecCriticmass,		// Critical Mass (48K)
 	&BurnDrvcrockman,			// Crock-Man (bootleg, Rene-Pierre)
 	&BurnDrvcrockmnf,			// Crock-Man (Marti Colls bootleg of Rene Pierre Crock-Man)
 	&BurnSpecCronopiosen,		// Cronopios Y Famas (English) (128K) (HB)
@@ -21922,6 +21936,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_deadfox,		// Dead Fox (Japan)
 	&BurnDrvpce_deadmoon,		// Dead Moon - Tsuki Sekai no Akumu
 	&BurnDrvtg_deadmoon,		// Dead Moon
+	&BurnSpecDeadspace,			// Dead Space (48K) (HB)
 	&BurnDrvnes_deadtomb,		// Dead Tomb (HB)
 	&BurnDrvfds_deadzonej,		// Dead Zone (Japan)
 	&BurnDrvfds_deadzone,		// Dead Zone (T-Eng)
@@ -24661,6 +24676,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_greatglj,		// Great Golf (Jpn)
 	&BurnDrvsms_greatglk,		// Great Golf (Kor)
 	&BurnDrvsms_greatglfp,		// Great Golf (Prototype)
+	&BurnSpecGreatgurian,		// Great Gurianos (48K)
 	&BurnDrvsms_greatice,		// Great Ice Hockey (Jpn, USA)
 	&BurnDrvCpsGreatMahouDaiJ,	// Great Mahou Daisakusen (000121 Japan)
 	&BurnDrvGslgr94j,			// Great Sluggers '94 (Japan)
@@ -26845,6 +26861,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvJanjans2,			// Lovely Pop Mahjong JangJang Shimasho 2 (Japan)
 	&BurnDrvLoverboy,			// Lover Boy
 	&BurnDrvnes_lowgman,		// Low G Man - The Low Gravity Man (USA)
+	&BurnSpecLoxley,			// Loxley (128K) (HB)
 	&BurnDrvkovlsyx,			// Luan Shi Ying Xiong (hack of Knights of Valour Super Heroes Plus, ver. 500)
 	&BurnDrvkovlsyxqszl,		// Luan Shi Ying Xiong - Qiu Sheng Zhi Lu (hack of Knights of Valour Super Heroes Plus, ver. 500)
 	&BurnDrvkovlsyxqxzl,		// Luan Shi Ying Xiong - Qun Xiong Zhu Lu (hack of Knights of Valour Super Heroes Plus, ver. 500)
@@ -28033,11 +28050,15 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMosaicf2,			// Mosaic (F2 System)
 	&BurnDrvMosaica,			// Mosaic (Fuuki)
 	&BurnDrvMosaic,				// Mosaic
+	&BurnSpecmot128intro,		// Mot - Intro (Spanish) (128K)
 	&BurnDrvMSX_motintro,		// Mot - Intro (Spanish)
+	&BurnSpecmot128a,			// Mot - Part 1 (Spanish) (128K)
 	&BurnSpecmotopera1,			// Mot - Part 1 (Spanish) (48K)
 	&BurnDrvMSX_motpart1,		// Mot - Part 1 (Spanish)
+	&BurnSpecmot128b,			// Mot - Part 2 (Spanish) (128K)
 	&BurnSpecmotopera2,			// Mot - Part 2 (Spanish) (48K)
 	&BurnDrvMSX_motpart2,		// Mot - Part 2 (Spanish)
+	&BurnSpecmot128c,			// Mot - Part 3 (Spanish) (128K)
 	&BurnSpecmotopera3,			// Mot - Part 3 (Spanish) (48K)
 	&BurnDrvMSX_motpart3,		// Mot - Part 3 (Spanish)
 	&BurnDrvnes_mother,			// Mother (Japan)
@@ -29081,6 +29102,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvOrunners,			// OutRunners (World)
 	&BurnDrvnes_overhorizon,	// Over Horizon (Japan)
 	&BurnDrvovertop,			// Over Top
+	&BurnSpecOverlander,		// Overlander (128K)
 	&BurnDrvnes_overlord,		// Overlord (USA)
 	&BurnDrvpce_override,		// Override
 	&BurnDrvMSX_oyotango,		// Oyoide Tango (Jpn)
@@ -36695,7 +36717,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecZxenigma,			// ZX Enigma Machine (48K) (HB)
 	&BurnSpecZxfm2005,			// ZX Football Manager 2005 (128K) (HB)
 	&BurnSpecZxparachute,		// ZX Parachute (16K) (HB)
+	&BurnSpecSpec1282aBIOS,		// ZX Spectrum 128 +2a BIOS [BIOS Only, NOT WORKING]
 	&BurnSpecSpec128BIOS,		// ZX Spectrum 128 BIOS [BIOS Only, NOT WORKING]
+	&BurnSpecSpec1282a,			// ZX Spectrum 128k 2a
 	&BurnSpecSpec128,			// ZX Spectrum 128k
 	&BurnSpecSpectrum,			// ZX Spectrum 48k
 	&BurnSpecSpectrumBIOS,		// ZX Spectrum BIOS [BIOS Only, NOT WORKING]

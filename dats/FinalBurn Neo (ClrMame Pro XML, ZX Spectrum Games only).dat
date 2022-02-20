@@ -950,12 +950,25 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="angelnietopole" romof="spectrum">
-		<comment>Press 6, 7 and ENTER to choose and set options</comment>
+	<game name="anpole128" romof="spec1282a">
+		<comment>Press '6', '7' and ENTER to choose and set options</comment>
+		<description>Angel Nieto Pole 500cc (Spanish) (128K)</description>
+		<year>1990</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Angel Nieto Pole 500cc 128K ES (1990)(Opera Soft).tap" size="68099" crc="010c9f97"/>
+		<rom name="zx128_2a_0.rom" merge="zx128_2a_0.rom" size="16384" crc="30c9f490"/>
+		<rom name="zx128_2a_1.rom" merge="zx128_2a_1.rom" size="16384" crc="a7916b3f"/>
+		<rom name="zx128_2a_2.rom" merge="zx128_2a_2.rom" size="16384" crc="c9a0b748"/>
+		<rom name="zx128_2a_3.rom" merge="zx128_2a_3.rom" size="16384" crc="b88fd6e3"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="anpole48" cloneof="anpole128" romof="anpole128">
+		<comment>Press '6', '7' and ENTER to choose and set options</comment>
 		<description>Angel Nieto Pole 500cc (Spanish) (48K)</description>
 		<year>1990</year>
 		<manufacturer>Opera Soft</manufacturer>
-		<rom name="Angel Nieto Pole 500cc ES (1990)(Opera Soft).tap" size="68296" crc="f3e448a8"/>
+		<rom name="Angel Nieto Pole 500cc 48K ES (1990)(Opera Soft).tap" size="68296" crc="f3e448a8"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3691,6 +3704,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="criticmass" romof="spectrum">
+		<description>Critical Mass (48K)</description>
+		<year>1985</year>
+		<manufacturer>Durell Software</manufacturer>
+		<rom name="Critical Mass 48K (1985)(Durell).tap" size="44720" crc="ba99bc3e"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="cronopiosen" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Cronopios Y Famas (English) (128K) (HB)</description>
@@ -4173,6 +4195,16 @@
 		<rom name="Dead Flesh Boy (2015)(VANB).tap" size="40669" crc="3375d2c9"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="deadspace" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Dead Space (48K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Radastan</manufacturer>
+		<rom name="Dead Space 48K (2021)(Radastan).tap" size="21695" crc="b7fb4c48"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5783,7 +5815,7 @@
 		<description>Flying Shark (128K)</description>
 		<year>1987</year>
 		<manufacturer>Firebird Software</manufacturer>
-		<rom name="Flying Shark (1987)(Firebird Software)(128k).z80" size="39621" crc="c818fccd"/>
+		<rom name="Flying Shark 128K (1987)(Firebird).tap" size="36523" crc="634f50aa"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -6789,6 +6821,15 @@
 		<year>1986</year>
 		<manufacturer>Ocean</manufacturer>
 		<rom name="Great Escape, The (1986)(Ocean).tap" size="50366" crc="0d3be279"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="greatgurian" romof="spectrum">
+		<description>Great Gurianos (48K)</description>
+		<year>1991</year>
+		<manufacturer>Hit-Pak</manufacturer>
+		<rom name="Great Gurianos 48K (1991)(Hit-Pak).z80" size="39089" crc="2a96de1d"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9230,6 +9271,17 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="loxley" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Loxley (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>World XXI Soft</manufacturer>
+		<rom name="Loxley 128K (2022)(World XXI Soft).tap" size="246218" crc="924ea55a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="lumascii" romof="spectrum">
 		<comment>Homebrew</comment>
 		<description>LumASCII (48K) (HB)</description>
@@ -10187,6 +10239,30 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mot128intro" romof="spec1282a">
+		<description>Mot - Intro (Spanish) (128K)</description>
+		<year>1989</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Mot - Intro ES 128K2a (1989)(Opera Soft).tap" size="49127" crc="76c4cac9"/>
+		<rom name="zx128_2a_0.rom" merge="zx128_2a_0.rom" size="16384" crc="30c9f490"/>
+		<rom name="zx128_2a_1.rom" merge="zx128_2a_1.rom" size="16384" crc="a7916b3f"/>
+		<rom name="zx128_2a_2.rom" merge="zx128_2a_2.rom" size="16384" crc="c9a0b748"/>
+		<rom name="zx128_2a_3.rom" merge="zx128_2a_3.rom" size="16384" crc="b88fd6e3"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mot128a" cloneof="mot128intro" romof="mot128intro">
+		<description>Mot - Part 1 (Spanish) (128K)</description>
+		<year>1989</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Mot - Part 1 ES 128K2a (1989)(Opera Soft).tap" size="49127" crc="0713edec"/>
+		<rom name="zx128_2a_0.rom" merge="zx128_2a_0.rom" size="16384" crc="30c9f490"/>
+		<rom name="zx128_2a_1.rom" merge="zx128_2a_1.rom" size="16384" crc="a7916b3f"/>
+		<rom name="zx128_2a_2.rom" merge="zx128_2a_2.rom" size="16384" crc="c9a0b748"/>
+		<rom name="zx128_2a_3.rom" merge="zx128_2a_3.rom" size="16384" crc="b88fd6e3"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="motopera1" romof="spectrum">
 		<description>Mot - Part 1 (Spanish) (48K)</description>
 		<year>1989</year>
@@ -10196,12 +10272,36 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mot128b" cloneof="mot128intro" romof="mot128intro">
+		<description>Mot - Part 2 (Spanish) (128K)</description>
+		<year>1989</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Mot - Part 2 ES 128K2a (1989)(Opera Soft).tap" size="49127" crc="ff0cb875"/>
+		<rom name="zx128_2a_0.rom" merge="zx128_2a_0.rom" size="16384" crc="30c9f490"/>
+		<rom name="zx128_2a_1.rom" merge="zx128_2a_1.rom" size="16384" crc="a7916b3f"/>
+		<rom name="zx128_2a_2.rom" merge="zx128_2a_2.rom" size="16384" crc="c9a0b748"/>
+		<rom name="zx128_2a_3.rom" merge="zx128_2a_3.rom" size="16384" crc="b88fd6e3"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="motopera2" cloneof="motopera1" romof="motopera1">
 		<description>Mot - Part 2 (Spanish) (48K)</description>
 		<year>1989</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="Mot (1989)(Opera Soft)(Sp)(48k)[Part 2 of 3].tap" size="49084" crc="9b20327d"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mot128c" cloneof="mot128intro" romof="mot128intro">
+		<description>Mot - Part 3 (Spanish) (128K)</description>
+		<year>1989</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Mot - Part 3 ES 128K2a (1989)(Opera Soft).tap" size="49127" crc="43ed24bc"/>
+		<rom name="zx128_2a_0.rom" merge="zx128_2a_0.rom" size="16384" crc="30c9f490"/>
+		<rom name="zx128_2a_1.rom" merge="zx128_2a_1.rom" size="16384" crc="a7916b3f"/>
+		<rom name="zx128_2a_2.rom" merge="zx128_2a_2.rom" size="16384" crc="c9a0b748"/>
+		<rom name="zx128_2a_3.rom" merge="zx128_2a_3.rom" size="16384" crc="b88fd6e3"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -11075,6 +11175,16 @@
 		<year>1991</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Outrun Europa (1991)(US Gold).tap" size="300496" crc="3240887e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="overlander" romof="spec128">
+		<description>Overlander (128K)</description>
+		<year>1988</year>
+		<manufacturer>Elite Systems</manufacturer>
+		<rom name="Overlander 128K (1988)(Elite Systems).tap" size="58270" crc="f0e79999"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -13834,7 +13944,7 @@
 		<description>Solomon's Key (48K)</description>
 		<year>1987</year>
 		<manufacturer>U.S. Gold</manufacturer>
-		<rom name="Solomon's Key (1987)(U.S. Gold).z80" size="38408" crc="e9a42bde"/>
+		<rom name="Solomon's Key 48K (1987)(U.S. Gold).tap" size="47085" crc="f8e955e0"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -16884,6 +16994,17 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="spec128k2a">
+		<description>ZX Spectrum 128k 2a</description>
+		<year>1984</year>
+		<manufacturer>Sinclair Research Limited</manufacturer>
+		<rom name="zx128_2a_0.rom" size="16384" crc="30c9f490"/>
+		<rom name="zx128_2a_1.rom" size="16384" crc="a7916b3f"/>
+		<rom name="zx128_2a_2.rom" size="16384" crc="c9a0b748"/>
+		<rom name="zx128_2a_3.rom" size="16384" crc="b88fd6e3"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="spec128k">
 		<description>ZX Spectrum 128k</description>
 		<year>1984</year>
@@ -16918,6 +17039,16 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
+	</game>
+	<game isbios="yes" name="spec1282a">
+		<comment>BIOS Only</comment>
+		<description>ZX Spectrum 128 +2a BIOS</description>
+		<year>1984</year>
+		<manufacturer>Sinclair Research Limited</manufacturer>
+		<rom name="zx128_2a_0.rom" size="16384" crc="30c9f490"/>
+		<rom name="zx128_2a_1.rom" size="16384" crc="a7916b3f"/>
+		<rom name="zx128_2a_2.rom" size="16384" crc="c9a0b748"/>
+		<rom name="zx128_2a_3.rom" size="16384" crc="b88fd6e3"/>
 	</game>
 	<game isbios="yes" name="spec128">
 		<comment>BIOS Only</comment>

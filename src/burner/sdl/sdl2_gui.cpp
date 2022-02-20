@@ -789,7 +789,7 @@ void RefreshRomList(bool force_rescan)
 
 			// draw a progress bar
 			float x = (i * 100) / nBurnDrvCount;
-			fillRect = { 0, 80, (int)(x * screenpercentage), 70 };
+			fillRect = (SDL_Rect){ 0, 80, (int)(x * screenpercentage), 70 };
 
 			SDL_SetRenderDrawColor(sdlRenderer, 0, 0xb3, 0x3b, 0xFF);
 			SDL_RenderFillRect(sdlRenderer, &fillRect);
@@ -1107,21 +1107,21 @@ int gui_process()
 			{
 				case SDL_CONTROLLERAXISMOTION:
 					switch (e.caxis.axis)
-					{				
+					{
 						case SDL_CONTROLLER_AXIS_LEFTY:
 							if (e.caxis.value <= -JOYSTICK_DEAD_ZONE)
 								startGame--;
-							else if (e.caxis.value >= JOYSTICK_DEAD_ZONE)	
+							else if (e.caxis.value >= JOYSTICK_DEAD_ZONE)
 								startGame++;
 							break;
 						case SDL_CONTROLLER_AXIS_LEFTX:
 							if (e.caxis.value <= -JOYSTICK_DEAD_ZONE)
 								startGame -= 10;
-							else if (e.caxis.value >= JOYSTICK_DEAD_ZONE)	
+							else if (e.caxis.value >= JOYSTICK_DEAD_ZONE)
 								startGame += 10;
 							break;
 					}
-					break;					
+					break;
 				case SDL_CONTROLLERBUTTONDOWN:
 				case SDL_CONTROLLERBUTTONUP:
 					switch (e.cbutton.button)
@@ -1146,7 +1146,7 @@ int gui_process()
 							{
 								return gametoplay;
 							}
-							break;						
+							break;
 						case SDL_CONTROLLER_BUTTON_LEFTSHOULDER:
 							findPrevLetter();
 							break;
@@ -1163,7 +1163,7 @@ int gui_process()
 					break;
 				case SDL_QUIT:
 					quit = true;
-					break;	
+					break;
 				case SDL_MOUSEWHEEL:
 					if (e.wheel.y > 0) // scroll up
 					{

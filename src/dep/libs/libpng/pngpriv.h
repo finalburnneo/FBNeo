@@ -38,7 +38,7 @@
 #ifndef _POSIX_SOURCE
 # define _POSIX_SOURCE 1 /* Just the POSIX 1003.1 and C89 APIs */
 #endif
-
+#define PNG_ARM_NEON_IMPLEMENTATION 0
 #ifndef PNG_VERSION_INFO_ONLY
 /* Standard library headers not required by png.h: */
 #  include <stdlib.h>
@@ -134,7 +134,7 @@
 #     define PNG_ARM_NEON_OPT 0
 #  endif
 #endif
-
+#define PNG_ARM_NEON_OPT 0
 #if PNG_ARM_NEON_OPT > 0
    /* NEON optimizations are to be at least considered by libpng, so enable the
     * callbacks to do this.

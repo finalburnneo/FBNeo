@@ -921,11 +921,14 @@ void gui_init()
 	{
 		SDL_RenderSetIntegerScale(sdlRenderer, SDL_TRUE);
 	}
+	inrenderer(sdlRenderer);
+	prepare_inline_font();
+
+
+
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, videofiltering);
 	SDL_RenderSetLogicalSize(sdlRenderer, nVidGuiWidth, nVidGuiHeight);
 
-	inrenderer(sdlRenderer);
-	prepare_inline_font();
 
 	halfscreenheight = nVidGuiHeight / 2;
 	halfscreenwidth = nVidGuiWidth / 2;
@@ -1106,11 +1109,26 @@ int gui_process()
 			switch (e.type)
 			{
 				case SDL_WINDOWEVENT:
-        switch (event->window.event)
+        switch (e.window.event)
 					{
 						case SDL_WINDOWEVENT_SIZE_CHANGED:
-								nVidGuiWidth = event->window.data1;
-								nVidGuiHeight = event->window.data2;
+								nVidGuiWidth = e.window.data1;
+								nVidGuiHeight = e.window.data2;
+
+								SDL_RenderSetLogicalSize(sdlRenderer, nVidGuiWidth, nVidGuiHeight);
+
+
+								halfscreenheight = nVidGuiHeight / 2;
+								halfscreenwidth = nVidGuiWidth / 2;
+								thirdscreenheight =nVidGuiHeight/ 3;
+								thirdscreenwidth = nVidGuiWidth / 3;
+
+								//gamesperscreen = (thirdscreenheight * 2) / 11;
+								gamesperscreen = (nVidGuiHeight-55) / 11;
+								gamesperscreen_halfway = gamesperscreen / 2;
+
+								listoffsetY = 0;
+								listwidthY = thirdscreenwidth * 2;								
 		            break;
 					}
 				break;

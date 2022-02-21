@@ -9273,10 +9273,10 @@
 	</game>
 	<game name="loxley" romof="spec128">
 		<comment>Homebrew</comment>
-		<description>Loxley (128K) (HB)</description>
+		<description>Loxley (128K) (HB, v1.1)</description>
 		<year>2022</year>
 		<manufacturer>World XXI Soft</manufacturer>
-		<rom name="Loxley 128K (2022)(World XXI Soft).tap" size="246218" crc="924ea55a"/>
+		<rom name="Loxley 128K v1.1 (2022)(World XXI Soft).tap" size="144187" crc="89ef517a"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

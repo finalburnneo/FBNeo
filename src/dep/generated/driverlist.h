@@ -26861,7 +26861,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvJanjans2,			// Lovely Pop Mahjong JangJang Shimasho 2 (Japan)
 	&BurnDrvLoverboy,			// Lover Boy
 	&BurnDrvnes_lowgman,		// Low G Man - The Low Gravity Man (USA)
-	&BurnSpecLoxley,			// Loxley (128K) (HB)
+	&BurnSpecLoxley,			// Loxley (128K) (HB, v1.1)
 	&BurnDrvkovlsyx,			// Luan Shi Ying Xiong (hack of Knights of Valour Super Heroes Plus, ver. 500)
 	&BurnDrvkovlsyxqszl,		// Luan Shi Ying Xiong - Qiu Sheng Zhi Lu (hack of Knights of Valour Super Heroes Plus, ver. 500)
 	&BurnDrvkovlsyxqxzl,		// Luan Shi Ying Xiong - Qun Xiong Zhu Lu (hack of Knights of Valour Super Heroes Plus, ver. 500)

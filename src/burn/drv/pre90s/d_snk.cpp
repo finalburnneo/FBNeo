@@ -2282,9 +2282,9 @@ static UINT8 rotate_gunpos_multiplier = 1;
 // game      p1   p2    clockwise value in memory
 // victroad: fdb6 fe06  0 2 4 6 8 a c e
 // ikari   : fdb6 fe06  0 2 4 6 8 a c e
-// tnk3    : fd43 fd89  0 1 2 3 4 5 6 7   // fd47 fd8d?
+// tnk3    : fd47 fd8d  0 2 4 6 8 a c e
 // gwar    : e3d3 e437  0 2 4 6 8 a c e
-// bermudat: e041 e055  0 1 2 3 4 5 6 7
+// bermudat: f408 f4a8  0 1 2 3 4 5 6 7
 
 static void RotateSetGunPosRAM(UINT8 *p1, UINT8 *p2, UINT8 multiplier) {
 	rotate_gunpos[0] = p1;
@@ -6418,6 +6418,12 @@ static INT32 Tnk3Frame()
 		}
 
 		if (game_rotates) {
+			if (~DrvDips[0] & 2) { // TNK3 Upright Mode (P1 joy for both players)
+				INT32 Player = (DrvTxtRAM[0x458] & 0x10) >> 4; // (0xFC58 & 0x10) == P2
+				const INT32 pl_rot[2] = { 0x547, 0x58d };
+				RotateSetGunPosRAM(&DrvTxtRAM[pl_rot[Player]], &DrvTxtRAM[0x58d], 2); // TNK3
+			}
+
 			SuperJoy2Rotate();
 		}
 		

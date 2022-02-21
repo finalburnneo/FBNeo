@@ -4342,7 +4342,7 @@ static INT32 BermudatInit()
 	game_select = 2;
 	game_rotates = 1;
 
-	RotateSetGunPosRAM(&DrvSprRAM[0x041], &DrvSprRAM[0x055], 1);
+	RotateSetGunPosRAM(&DrvSprRAM[0x1408], &DrvSprRAM[0x14a8], 1);
 
 	DrvDoReset();
 
@@ -4353,7 +4353,7 @@ static INT32 BermudatwwInit()
 {
 	INT32 nRet = BermudatInit();
 	if (!nRet) {
-		RotateSetGunPosRAM(&DrvSprRAM[0x041], &DrvSprRAM[0x049], 1);
+		RotateSetGunPosRAM(&DrvSprRAM[0x1408], &DrvSprRAM[0x1448], 2);
 	}
 
 	return nRet;
@@ -4474,6 +4474,8 @@ static INT32 GwaraInit()
 	game_select = 3;
 	game_rotates = 1;
 	bonus_dip_config = 0x3004;
+
+	RotateSetGunPosRAM(&DrvSprRAM[0x3d3], &DrvSprRAM[0x437], 2);
 
 	DrvDoReset();
 

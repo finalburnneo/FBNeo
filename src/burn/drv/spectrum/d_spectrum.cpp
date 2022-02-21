@@ -34068,10 +34068,10 @@ struct BurnDriver BurnSpecDeadspace = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Loxley (128K) (HB)
+// Loxley (128K) (HB, v1.1)
 
 static struct BurnRomInfo SpecLoxleyRomDesc[] = {
-	{ "Loxley 128K (2022)(World XXI Soft).tap", 246218, 0x924ea55a, BRF_ESS | BRF_PRG },
+	{ "Loxley 128K v1.1 (2022)(World XXI Soft).tap", 144187, 0x89ef517a, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecLoxley, SpecLoxley, Spec128)
@@ -34079,9 +34079,9 @@ STD_ROM_FN(SpecLoxley)
 
 struct BurnDriver BurnSpecLoxley = {
 	"spec_loxley", NULL, "spec_spec128", NULL, "2022",
-	"Loxley (128K) (HB)\0", NULL, "World XXI Soft", "ZX Spectrum",
+	"Loxley (128K) (HB, v1.1)\0", NULL, "World XXI Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_ADV, 0,
 	SpectrumGetZipName, SpecLoxleyRomInfo, SpecLoxleyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3

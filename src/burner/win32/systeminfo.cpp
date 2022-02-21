@@ -538,15 +538,15 @@ int PrintGlobalMemoryInfo()
 
 	GlobalMemoryStatusEx(&stat);
 
-	DWORD dwTotalPhys = stat.ullTotalPhys / pow(1024, 2);
-	DWORD dwAvailPhys = stat.ullAvailPhys / pow(1024, 2);
-	DWORD dwTotalPageFile = stat.ullTotalPageFile / pow(1024, 2);
-	DWORD dwAvailPageFile = stat.ullAvailPageFile / pow(1024, 2);
+	float fTotalPhys = stat.ullTotalPhys / pow(1024, 2);
+	float fAvailPhys = stat.ullAvailPhys / pow(1024, 2);
+	float fTotalPageFile = stat.ullTotalPageFile / pow(1024, 2);
+	float fAvailPageFile = stat.ullAvailPageFile / pow(1024, 2);
 
-	AddLine(_T("Physical RAM: %d MB (%d GB) total, %d MB (%d GB) avail"), dwTotalPhys, dwTotalPhys / 1024, dwAvailPhys, dwAvailPhys / 1024);
-	AddLine(_T("PageFile RAM: %d MB (%d GB) total, %d MB (%d GB) avail"), dwTotalPageFile, dwTotalPageFile / 1024, dwAvailPageFile, dwAvailPageFile / 1024);
+	AddLine(_T("Physical RAM: %.2f MB (%.2f GB) total, %.2f MB (%.2f GB) avail"), fTotalPhys, fTotalPhys / 1024, fAvailPhys, fAvailPhys / 1024);
+	AddLine(_T("PageFile RAM: %.2f MB (%.2f GB) total, %.2f MB (%.2f GB) avail"), fTotalPageFile, fTotalPageFile / 1024, fAvailPageFile, fAvailPageFile / 1024);
 
-	// Information on FB Alpha memory usage
+	// Information on FB Neo memory usage
 	BOOL (WINAPI* pGetProcessMemoryInfo)(HANDLE, PPROCESS_MEMORY_COUNTERS, DWORD) = NULL;
 	HINSTANCE hPsapiDLL;
 
@@ -564,7 +564,12 @@ int PrintGlobalMemoryInfo()
 				}
 				_sntprintf(szLine, 12, _T(APP_TITLE));
 				_sntprintf(szLine + length, 14 - length, _T(":                 "));
-				AddLine(_T("%s%7i KB in use (%i KB peak, %i KB virtual)"), szLine, pmc.WorkingSetSize / 1024, pmc.PeakWorkingSetSize / 1024, pmc.PagefileUsage / 1024);
+
+				float fWorkingSetSize = pmc.WorkingSetSize / pow(1024, 2);
+				float fPeakWorkingSetSize = pmc.PeakWorkingSetSize / pow(1024, 2);
+				float fPagefileUsage = pmc.PagefileUsage / pow(1024, 2);
+
+				AddLine(_T("%s%.2f MB in use (%.2f MB peak, %.2f MB virtual)"), szLine, fWorkingSetSize, fPeakWorkingSetSize, fPagefileUsage);
 			}
 		}
 		FreeLibrary(hPsapiDLL);

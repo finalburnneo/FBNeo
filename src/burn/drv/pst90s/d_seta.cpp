@@ -5197,6 +5197,16 @@ static UINT8 __fastcall usclssic_read_byte(UINT32 address)
 // calibr50
 
 // Rotation-handler code
+// Notes:
+// rotate_gunpos - value in game's ram which depicts the rotational position
+// 		of the hero
+// nRotate		 - value returned to the game's inputs
+// nRotateTarget - calculated position where rotate_gunpos needs to be
+// Theory:
+// Direction from joy is translated and a target is set, each frame (or every
+// other, depending on game's requirements) we clock towards that target.
+
+static INT32 nRotateTargetVSmemDistance;
 
 static void RotateReset() {
 	for (INT32 playernum = 0; playernum < 2; playernum++) {
@@ -5216,7 +5226,7 @@ static void RotateRight(INT32 *v) {
 		(*v)-=1;
 		if (*v < 0) *v = 0xb;
 	} else { // calibr50 mode
-		(*v)-=4;
+		(*v)-=(nRotateTargetVSmemDistance > 1) ? 4 : 1;
 		if (*v < 0) *v = 0x3c;
 	}
 }
@@ -5226,7 +5236,7 @@ static void RotateLeft(INT32 *v) {
 		(*v)+=1;
 		if (*v > 0xb) *v = 0;
 	} else { // calibr50 mode
-		(*v)+=4;
+		(*v)+=(nRotateTargetVSmemDistance > 1) ? 4 : 1;
 		if (*v > 0x3c) *v = 0;
 	}
 }
@@ -5325,15 +5335,17 @@ static INT32 get_distance(INT32 from, INT32 to) {
 	}
 
 	if (countA > countB) {
+		nRotateTargetVSmemDistance = countB;
 		return 1; // go negative
 	} else {
+		nRotateTargetVSmemDistance = countA;
 		return 0; // go positive
 	}
 }
 
 static void RotateDoTick() {
-	// since the game only allows for 1 rotation every other frame, we have to
-	// do this.
+	// some games only allows for 1 rotation every other frame, we have to
+	// limit clocking the rotation.
 	if (nCurrentFrame&1) return;
 
 	if (game_rotates == 1) { // calibr50 switcheroo
@@ -5353,7 +5365,7 @@ static void RotateDoTick() {
 			} else {
 				RotateRight(&nRotate[i]); // --
 			}
-			bprintf(0, _T("p%X target %X mempos %X nRotate %X try %X.\n"), i, nRotateTarget[0], *rotate_gunpos[0] & 0xff, nRotate[0], nRotateTry[i]);
+			bprintf(0, _T("p%X target %X mempos %X nRotate %X try %X.\n"), i, nRotateTarget[i], *rotate_gunpos[i] & 0xff, nRotate[i], nRotateTry[i]);
 			nRotateTry[i]++;
 			if (nRotateTry[i] > 0xf) nRotateTarget[i] = -1; // don't get stuck in a loop if something goes horribly wrong here.
 		} else {
@@ -5390,9 +5402,10 @@ static void SuperJoy2Rotate() {
 
 			if (~DrvDips[3] & 1) {
 				// fake auto-fire - there's probably a more elegant solution for this
-				if (nAutoFireCounter[i]++ & 0x2)
+				UINT8 counterfrequency = ((game_rotates == 2) ? 0x2 : 0x4); 
+				if (nAutoFireCounter[i]++ & counterfrequency)
 				{
-					DrvInputs[i] &= 0xef; // remove the fire bit &= ~0x10; //
+					DrvInputs[i] &= 0xef; // remove the fire bit. Only needed for Downtown
 				}
 				else
 				{

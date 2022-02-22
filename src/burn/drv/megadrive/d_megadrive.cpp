@@ -23785,6 +23785,25 @@ struct BurnDriver BurnDrvmd_pacman2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Pac-Man 2 - The New Adventures (T-Chi, v1.1)
+// http://www.nesbbs.com/bbs/thread-45543-1-1.html
+static struct BurnRomInfo md_pacman2cRomDesc[] = {
+	{ "pac-man 2 - the new adventures (t-chi, v1.1).bin", 0x280000, 0x9dde7643, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_pacman2c)
+STD_ROM_FN(md_pacman2c)
+
+struct BurnDriver BurnDrvmd_pacman2c = {
+	"md_pacman2c", "md_pacman2", NULL, NULL, "2018",
+	"Pac-Man 2 - The New Adventures (T-Chi, v1.1)\0", NULL, "Axi", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ADV, 0,
+	MegadriveGetZipName, md_pacman2cRomInfo, md_pacman2cRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Pac-Mania (Euro, USA)
 static struct BurnRomInfo md_pacmaniaRomDesc[] = {
 	{ "mpr-14392.bin", 0x040000, 0x74bba09b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -24851,6 +24870,25 @@ struct BurnDriver BurnDrvmd_pstar4p2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
 	MegadriveGetZipName, md_pstar4p2RomInfo, md_pstar4p2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Phantasy Star - The End of the Millennium (T-Chi, v1.6)
+// https://yzzl.kxb4u.com/viewthread.php?tid=115457&extra=page%3D1
+static struct BurnRomInfo md_pstar4cRomDesc[] = {
+	{ "phantasy star - the end of the millennium (t-chi, v1.6).bin", 0x320000, 0x0db82dd1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_pstar4c)
+STD_ROM_FN(md_pstar4c)
+
+struct BurnDriver BurnDrvmd_pstar4c = {
+	"md_pstar4c", "md_pstar4", NULL, NULL, "2022",
+	"Phantasy Star - The End of the Millennium (T-Chi, v1.6)\0", NULL, "Ken_Tse", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	MegadriveGetZipName, md_pstar4cRomInfo, md_pstar4cRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

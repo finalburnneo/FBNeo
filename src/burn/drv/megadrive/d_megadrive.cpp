@@ -45547,21 +45547,57 @@ struct BurnDriver BurnDrvmd_wmargin = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Cave Story Doukutsu (HB, v0.7.0)
-// https://github.com/andwn/cave-story-md/releases/tag/v0.7.0
+// Cave Story Doukutsu (HB, en, v0.8.0)
+// https://github.com/andwn/cave-story-md/releases/tag/v0.8.0
 static struct BurnRomInfo md_cavestoryRomDesc[] = {
-	{ "Cave Story Doukutsu (v0.7.0).bin", 0x400000, 0xea2967be, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Cave Story Doukutsu (HB, en, v0.8.0).bin", 0x400000, 0xd476a108, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_cavestory)
 STD_ROM_FN(md_cavestory)
 
 struct BurnDriver BurnDrvmd_cavestory = {
-	"md_cavestory", NULL, NULL, NULL, "2020-09-15",
-	"Cave Story Doukutsu (HB, v0.7.0)\0", NULL, "Studio Pixel", "Sega Megadrive",
+	"md_cavestory", NULL, NULL, NULL, "2022-02-22",
+	"Cave Story Doukutsu (HB, en, v0.8.0)\0", NULL, "Studio Pixel", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_cavestoryRomInfo, md_cavestoryRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Cave Story Doukutsu (HB, ja, v0.8.0)
+static struct BurnRomInfo md_cavestoryjRomDesc[] = {
+	{ "Cave Story Doukutsu (HB, ja, v0.8.0).bin", 0x400000, 0x21acbe48, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_cavestoryj)
+STD_ROM_FN(md_cavestoryj)
+
+struct BurnDriver BurnDrvmd_cavestoryj = {
+	"md_cavestoryj", "md_cavestory", NULL, NULL, "2022-02-22",
+	"Cave Story Doukutsu (HB, ja, v0.8.0)\0", NULL, "Studio Pixel", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_cavestoryjRomInfo, md_cavestoryjRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Cave Story Doukutsu (HB, zh, v0.8.0)
+static struct BurnRomInfo md_doukutsucRomDesc[] = {
+	{ "Cave Story Doukutsu (HB, zh, v0.8.0).bin", 0x400000, 0x0c1517fc, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_doukutsuc)
+STD_ROM_FN(md_doukutsuc)
+
+struct BurnDriver BurnDrvmd_doukutsuc = {
+	"md_cavestoryc", "md_cavestory", NULL, NULL, "2022-02-22",
+	"Cave Story Doukutsu (HB, zh, v0.8.0)\0", NULL, "Studio Pixel", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_doukutsucRomInfo, md_doukutsucRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

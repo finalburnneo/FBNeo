@@ -24270,10 +24270,10 @@ struct BurnDriver BurnDrvCpsCaptcommp4 = {
 
 // Captain Commando (Unlimited Bullet)
 // Hack by Jing Gai
-// GOTVG 20210224
+// GOTVG 20210428
 
 static struct BurnRomInfo Captcommr1pwxRomDesc[] = {
-	{ "ccub.bin",		0x300000, 0x4903d3bf, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "ccub.bin",		0x300000, 0x765ad7bf, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "cc-5m.3a",		0x080000, 0x7261d8ba, BRF_GRA | CPS1_TILES },
 	{ "cc-7m.5a",		0x080000, 0x6a60f949, BRF_GRA | CPS1_TILES },
@@ -24302,7 +24302,7 @@ STD_ROM_PICK(Captcommr1pwx)
 STD_ROM_FN(Captcommr1pwx)
 
 struct BurnDriver BurnDrvCpsCaptcommr1pwx = {
-	"captcommr1pwx", "captcomm", NULL, NULL, "2021-02-24",
+	"captcommr1pwx", "captcomm", NULL, NULL, "2021-04-28",
 	"Captain Commando (Unlimited Bullet)\0", NULL, "Hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
@@ -24313,10 +24313,10 @@ struct BurnDriver BurnDrvCpsCaptcommr1pwx = {
 
 // Cadillacs and Dinosaurs (God of War Edition, Hack)
 // Hacked by Ngs
-// GOTVG 20210408
+// GOTVG 20211007
 
 static struct BurnRomInfo DinodsRomDesc[] = {
-	{ "dinods.bin",		0x200000, 0x3e5b0c83, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "dinods.bin",		0x200000, 0x4639b278, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "cd-1m.3a",		0x080000, 0x8da4f917, BRF_GRA | CPS1_TILES },
 	{ "cd-3m.5a",		0x080000, 0x6c40f603, BRF_GRA | CPS1_TILES },
@@ -24341,7 +24341,7 @@ STD_ROM_PICK(Dinods)
 STD_ROM_FN(Dinods)
 
 struct BurnDriver BurnDrvCpsDinods = {
-	"dinods", "dino", NULL, NULL, "2021-04-08",
+	"dinods", "dino", NULL, NULL, "2021-10-07",
 	"Cadillacs and Dinosaurs (God of War Edition, Hack)\0", NULL, "Hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
@@ -24350,12 +24350,12 @@ struct BurnDriver BurnDrvCpsDinods = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Cadillacs and Dinosaurs (28th-Anniversary, Hack)
+// Cadillacs and Dinosaurs (30th-Anniversary, Hack)
 // Hacked by GeYu
-// GOTVG 20210325
+// GOTVG 20220105
 
 static struct BurnRomInfo DinosynRomDesc[] = {
-	{ "dinosyn.bin",	0x200000, 0x775151a3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "dinosyn.bin",	0x200000, 0x9b18e868, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "cd_01.3a",		0x080000, 0x8da4f917, BRF_GRA | CPS1_TILES },
 	{ "cd_02.4a",		0x080000, 0x6c40f603, BRF_GRA | CPS1_TILES },
@@ -24380,8 +24380,8 @@ STD_ROM_PICK(Dinosyn)
 STD_ROM_FN(Dinosyn)
 
 struct BurnDriver BurnDrvCpsDinosyn = {
-	"dinosyn", "dino", NULL, NULL, "2021-03-25",
-	"Cadillacs and Dinosaurs (28th-Anniversary, Hack)\0", NULL, "Hack", "CPS1 / QSound",
+	"dinosyn", "dino", NULL, NULL, "2022-01-05",
+	"Cadillacs and Dinosaurs (30th-Anniversary, Hack)\0", NULL, "Hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, DinosynRomInfo, DinosynRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -24391,10 +24391,10 @@ struct BurnDriver BurnDrvCpsDinosyn = {
 
 // Cadillacs and Dinosaurs (GOTVG 10th Anniversary Edition, Hack)
 // Hacked by GeYu
-// GOTVG 20210303
+// GOTVG 20220109
 
 static struct BurnRomInfo DinogaeRomDesc[] = {
-	{ "dinogae.bin",	0x200000, 0x5d32bf1a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "dinogae.bin",	0x200000, 0xb819428b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "cd_01.3a",		0x080000, 0x8da4f917, BRF_GRA | CPS1_TILES },
 	{ "cd_02.4a",		0x080000, 0x6c40f603, BRF_GRA | CPS1_TILES },
@@ -24419,7 +24419,7 @@ STD_ROM_PICK(Dinogae)
 STD_ROM_FN(Dinogae)
 
 struct BurnDriver BurnDrvCpsDinogae = {
-	"dinogae", "dino", NULL, NULL, "2021-03-03",
+	"dinogae", "dino", NULL, NULL, "2022-01-09",
 	"Cadillacs and Dinosaurs (GOTVG 10th Anniversary Edition, Hack)\0", NULL, "Hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,

@@ -2088,7 +2088,7 @@ struct BurnDriver BurnSpecanpole48 = {
 // APB - All Points Bulletin (128K)
 
 static struct BurnRomInfo SpecapbRomDesc[] = {
-	{ "APB - All Points Bulletin (1989)(Domark)[128K].z80", 0x13c67, 0x81a2cb39, BRF_ESS | BRF_PRG },
+	{ "APB - All Points Bulletin 128K (1989)(Domark).tap", 75630, 0x1d6e4ca9, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specapb, Specapb, Spec128)
@@ -5679,7 +5679,7 @@ struct BurnDriver BurnSpechowbast = {
 // Hudson Hawk (128K)
 
 static struct BurnRomInfo SpechudshawkRomDesc[] = {
-	{ "Hudson Hawk (1991)(Ocean)(128k).z80", 0x1a4dc, 0xa55148f8, BRF_ESS | BRF_PRG },
+	{ "Hudson Hawk 128K (1991)(Ocean).tap", 135956, 0xbccb6e2a, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Spechudshawk, Spechudshawk, Spec128)
@@ -5698,7 +5698,7 @@ struct BurnDriver BurnSpechudshawk = {
 // Hunchback (48K)
 
 static struct BurnRomInfo SpechunchbacRomDesc[] = {
-	{ "Hunchback (1984)(Ocean).z80", 0x07c76, 0xa7dde347, BRF_ESS | BRF_PRG },
+	{ "Hunchback 48K (1984)(Ocean).tap", 43449, 0x3fd8f859, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Spechunchbac, Spechunchbac, Spectrum)
@@ -5717,7 +5717,7 @@ struct BurnDriver BurnSpechunchbac = {
 // Hunchback II - Quasimodo's Revenge (48K)
 
 static struct BurnRomInfo Spechnchbac2RomDesc[] = {
-	{ "Hunchback II - Quasimodo's Revenge (1985)(Ocean).z80", 0x09254, 0x36eb410c, BRF_ESS | BRF_PRG },
+	{ "Hunchback II - Quasimodo's Revenge 48K (1984)(Ocean).tap", 49221, 0x65a9fcbe, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Spechnchbac2, Spechnchbac2, Spectrum)
@@ -5733,29 +5733,29 @@ struct BurnDriver BurnSpechnchbac2 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// I, Ball (128K)
+// I, Ball (48K)
 
-static struct BurnRomInfo Speciball_128RomDesc[] = {
-	{ "I, Ball (1987)(Firebird Software)(128k).z80", 0x099ae, 0x54263a76, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo SpeciballRomDesc[] = {
+	{ "I, Ball 48K (1987)(Firebird).tap", 53775, 0x4257b017, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Speciball_128, Speciball_128, Spec128)
-STD_ROM_FN(Speciball_128)
+STDROMPICKEXT(Speciball, Speciball, Spectrum)
+STD_ROM_FN(Speciball)
 
-struct BurnDriver BurnSpeciball_128 = {
-	"spec_iball_128", NULL, "spec_spec128", NULL, "1987",
-	"I, Ball (128K)\0", "Press '3' to use controller", "Firebird Software", "ZX Spectrum",
+struct BurnDriver BurnSpeciball = {
+	"spec_iball", NULL, "spec_spectrum", NULL, "1987",
+	"I, Ball (48K)\0", "Press '3' to use controller", "Firebird Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
-	SpectrumGetZipName, Speciball_128RomInfo, Speciball_128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpectrumGetZipName, SpeciballRomInfo, SpeciballRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
 // Incredible Shrinking Fireman, The (48K)
 
 static struct BurnRomInfo SpecincshrfRomDesc[] = {
-	{ "Incredible Shrinking Fireman, The (1986)(Mastertronic).z80", 0x08d68, 0x7061d0e3, BRF_ESS | BRF_PRG },
+	{ "Incredible Shrinking Fireman, The 48K (1986)(Mastertronic).tap", 46523, 0x1940b148, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specincshrf, Specincshrf, Spectrum)
@@ -24263,10 +24263,10 @@ struct BurnDriver BurnSpecPooperscooper = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Aliens Neoplasma (128K) (HB)
+// Aliens Neoplasma (English) (128K) (HB)
 
 static struct BurnRomInfo SpecAliensneoRomDesc[] = {
-	{ "Aliens Neoplasma (2019)(Sanchez Crew).tap", 64233, 0x6cf1a406, BRF_ESS | BRF_PRG },
+	{ "Aliens-Neoplasma EN 128K (2019)(SaNchez).tap", 64233, 0x6cf1a406, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecAliensneo, SpecAliensneo, Spec128)
@@ -24274,10 +24274,48 @@ STD_ROM_FN(SpecAliensneo)
 
 struct BurnDriver BurnSpecAliensneo = {
 	"spec_aliensneo", NULL, "spec_spec128", NULL, "2019",
-	"Aliens Neoplasma (128K) (HB)\0", NULL, "SaNchez", "ZX Spectrum",
+	"Aliens Neoplasma (English) (128K) (HB)\0", NULL, "SaNchez", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_RUNGUN | GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecAliensneoRomInfo, SpecAliensneoRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Aliens Neoplasma (Spanish) (128K) (HB)
+
+static struct BurnRomInfo SpecAliensneoesRomDesc[] = {
+	{ "Aliens-Neoplasma ES 128K (2019)(SaNchez).tap", 64212, 0x58a0d65f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecAliensneoes, SpecAliensneoes, Spec128)
+STD_ROM_FN(SpecAliensneoes)
+
+struct BurnDriver BurnSpecAliensneoes = {
+	"spec_aliensneoes", "spec_aliensneo", "spec_spec128", NULL, "2019",
+	"Aliens Neoplasma (Spanish) (128K) (HB)\0", NULL, "SaNchez", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecAliensneoesRomInfo, SpecAliensneoesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Aliens Neoplasma (Russian) (128K) (HB)
+
+static struct BurnRomInfo SpecAliensneoruRomDesc[] = {
+	{ "Aliens-Neoplasma RU 128K (2019)(SaNchez).tap", 64460, 0x84175b8b, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecAliensneoru, SpecAliensneoru, Spec128)
+STD_ROM_FN(SpecAliensneoru)
+
+struct BurnDriver BurnSpecAliensneoru = {
+	"spec_aliensneoru", "spec_aliensneo", "spec_spec128", NULL, "2019",
+	"Aliens Neoplasma (Russian) (128K) (HB)\0", NULL, "SaNchez", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecAliensneoruRomInfo, SpecAliensneoruRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

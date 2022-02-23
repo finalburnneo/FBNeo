@@ -475,6 +475,9 @@
     <ClInclude Include="..\..\src\intf\video\win32\vid_directx_support.h">
       <Filter>interfaces\video\win32</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\intf\video\win32\vid_effect.h">
+      <Filter>interfaces\video\win32</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\intf\video\scalers\hq_shared32.h">
       <Filter>interfaces\video\scalers</Filter>
     </ClInclude>
@@ -1176,6 +1179,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\dep\libs\lua\lzio.h">
       <Filter>libs\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burner\win32\scrn.h">
+      <Filter>burner\win32</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2013,6 +2019,9 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_bloodbro.cpp">
       <Filter>Burn\drv\pst90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_bloodbro_ms.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_crospang.cpp">
       <Filter>Burn\drv\pst90s</Filter>
     </ClCompile>
@@ -2104,6 +2113,9 @@
       <Filter>Burn\drv\pst90s</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_pirates.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_powerbal.cpp">
       <Filter>Burn\drv\pst90s</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_powerins.cpp">
@@ -2698,6 +2710,9 @@
       <Filter>interfaces\video\win32</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\intf\video\win32\vid_directx9.cpp">
+      <Filter>interfaces\video\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\intf\video\win32\vid_effect.cpp">
       <Filter>interfaces\video\win32</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\intf\video\scalers\2xpm.cpp">
@@ -4502,10 +4517,31 @@
     <ClCompile Include="..\..\src\dep\libs\lib7z\Sha1.c">
       <Filter>libs\7z</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\atari\d_missile.cpp">
+      <Filter>Burn\drv\atari</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_exerion.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_redclash.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_shangkid.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\taito\d_cyclemb.cpp">
+      <Filter>Burn\drv\taito</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\taito\d_nycaptor.cpp">
+      <Filter>Burn\drv\taito</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burner\luaengine.cpp">
       <Filter>burner</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burner\luasav.cpp">
+      <Filter>burner</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burner\nvram.cpp">
       <Filter>burner</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burner\win32\luaconsole.cpp">
@@ -4604,17 +4640,17 @@
     <ClCompile Include="..\..\src\dep\libs\lua\print.c">
       <Filter>libs\lua</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\pre90s\d_shangkid.cpp">
-      <Filter>Burn\drv\pre90s</Filter>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_discoboy.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\pre90s\d_exerion.cpp">
-      <Filter>Burn\drv\pre90s</Filter>
+    <ClCompile Include="..\..\src\intf\video\scalers\xbr32.cpp">
+      <Filter>interfaces\video\scalers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\taito\d_cyclemb.cpp">
-      <Filter>Burn\drv\taito</Filter>
+    <ClCompile Include="..\..\src\burn\drv\dataeast\d_pcktgal.cpp">
+      <Filter>Burn\drv\dataeast</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\pre90s\d_redclash.cpp">
-      <Filter>Burn\drv\pre90s</Filter>
+    <ClCompile Include="..\..\src\burn\drv\sega\d_segac2.cpp">
+      <Filter>Burn\drv\sega</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -4868,7 +4904,7 @@
       <UniqueIdentifier>{7b328658-4b49-4476-845a-5f20346da25f}</UniqueIdentifier>
     </Filter>
     <Filter Include="libs\lua">
-      <UniqueIdentifier>{d22d86a9-bbc1-47c5-bffb-273391323c05}</UniqueIdentifier>
+      <UniqueIdentifier>{ee022b51-1d01-4d89-b3f7-256630b4caa4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

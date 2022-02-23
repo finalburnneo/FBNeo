@@ -861,10 +861,32 @@
 	</game>
 	<game name="aliensneo" romof="spec128">
 		<comment>Homebrew</comment>
-		<description>Aliens Neoplasma (128K) (HB)</description>
+		<description>Aliens Neoplasma (English) (128K) (HB)</description>
 		<year>2019</year>
 		<manufacturer>SaNchez</manufacturer>
-		<rom name="Aliens Neoplasma (2019)(Sanchez Crew).tap" size="64233" crc="6cf1a406"/>
+		<rom name="Aliens-Neoplasma EN 128K (2019)(SaNchez).tap" size="64233" crc="6cf1a406"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="aliensneoru" cloneof="aliensneo" romof="aliensneo">
+		<comment>Homebrew</comment>
+		<description>Aliens Neoplasma (Russian) (128K) (HB)</description>
+		<year>2019</year>
+		<manufacturer>SaNchez</manufacturer>
+		<rom name="Aliens-Neoplasma RU 128K (2019)(SaNchez).tap" size="64460" crc="84175b8b"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="aliensneoes" cloneof="aliensneo" romof="aliensneo">
+		<comment>Homebrew</comment>
+		<description>Aliens Neoplasma (Spanish) (128K) (HB)</description>
+		<year>2019</year>
+		<manufacturer>SaNchez</manufacturer>
+		<rom name="Aliens-Neoplasma ES 128K (2019)(SaNchez).tap" size="64212" crc="58a0d65f"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -1019,7 +1041,7 @@
 		<description>APB - All Points Bulletin (128K)</description>
 		<year>1989</year>
 		<manufacturer>Domark</manufacturer>
-		<rom name="APB - All Points Bulletin (1989)(Domark)[128K].z80" size="80999" crc="81a2cb39"/>
+		<rom name="APB - All Points Bulletin 128K (1989)(Domark).tap" size="75630" crc="1d6e4ca9"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -7341,7 +7363,7 @@
 		<description>Hudson Hawk (128K)</description>
 		<year>1991</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Hudson Hawk (1991)(Ocean)(128k).z80" size="107740" crc="a55148f8"/>
+		<rom name="Hudson Hawk 128K (1991)(Ocean).tap" size="135956" crc="bccb6e2a"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -7380,7 +7402,7 @@
 		<description>Hunchback (48K)</description>
 		<year>1984</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Hunchback (1984)(Ocean).z80" size="31862" crc="a7dde347"/>
+		<rom name="Hunchback 48K (1984)(Ocean).tap" size="43449" crc="3fd8f859"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7389,7 +7411,7 @@
 		<description>Hunchback II - Quasimodo's Revenge (48K)</description>
 		<year>1985</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Hunchback II - Quasimodo's Revenge (1985)(Ocean).z80" size="37460" crc="36eb410c"/>
+		<rom name="Hunchback II - Quasimodo's Revenge 48K (1984)(Ocean).tap" size="49221" crc="65a9fcbe"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7509,14 +7531,13 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="iball_128" romof="spec128">
+	<game name="iball" romof="spectrum">
 		<comment>Press '3' to use controller</comment>
-		<description>I, Ball (128K)</description>
+		<description>I, Ball (48K)</description>
 		<year>1987</year>
 		<manufacturer>Firebird Software</manufacturer>
-		<rom name="I, Ball (1987)(Firebird Software)(128k).z80" size="39342" crc="54263a76"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="I, Ball 48K (1987)(Firebird).tap" size="53775" crc="4257b017"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -7665,7 +7686,7 @@
 		<description>Incredible Shrinking Fireman, The (48K)</description>
 		<year>1986</year>
 		<manufacturer>Mastertronic</manufacturer>
-		<rom name="Incredible Shrinking Fireman, The (1986)(Mastertronic).z80" size="36200" crc="7061d0e3"/>
+		<rom name="Incredible Shrinking Fireman, The 48K (1986)(Mastertronic).tap" size="46523" crc="1940b148"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

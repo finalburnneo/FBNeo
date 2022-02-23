@@ -3955,6 +3955,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="downtnekkousordac" cloneof="downtnekkousorda" romof="downtnekkousorda">
+		<comment>Hack</comment>
+		<description>Downtown - Nekketsu Koushinkyoku - Soreyuke Daiundoukai (T-Chi)</description>
+		<year>2022</year>
+		<manufacturer>NOKOH</manufacturer>
+		<rom name="Downtown - Nekketsu Koushinkyoku - Soreyuke Daiundoukai (T-Chi).nes" size="483344" crc="d1728e58"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="downtnekmon">
 		<description>Downtown - Nekketsu Monogatari (Japan)</description>
 		<year>1989?</year>
@@ -5061,6 +5070,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="fariaj" cloneof="faria" romof="faria">
+		<description>Faria - Fuuin no Tsurugi (Japan)</description>
+		<year>1989</year>
+		<manufacturer>Game Arts</manufacturer>
+		<rom name="Faria - Fuuin no Tsurugi (Japan).nes" size="262160" crc="a17079e4"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="faxanaduc" cloneof="faxanadu" romof="faxanadu">
 		<comment>Hack</comment>
 		<description>Faxanadu (Hack, Spanish v0.7)</description>
@@ -5296,6 +5313,15 @@
 		<year>1990</year>
 		<manufacturer>Natsume</manufacturer>
 		<rom name="Final Mission (Japan).nes" size="262160" crc="b8273b87"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="finalmissionjc" cloneof="scat" romof="scat">
+		<comment>Hack</comment>
+		<description>Final Mission (T-Chi)</description>
+		<year>2021</year>
+		<manufacturer>逆游の五彩魚</manufacturer>
+		<rom name="Final Mission (T-Chi).nes" size="393232" crc="9e25f63f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -6533,6 +6559,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="gyrussc" cloneof="gyruss" romof="gyruss">
+		<comment>Hack</comment>
+		<description>Gyruss (T-Chi)</description>
+		<year>2022</year>
+		<manufacturer>NOKOH</manufacturer>
+		<rom name="Gyruss (T-Chi).nes" size="188432" crc="b82b4f29"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="gyruss">
 		<description>Gyruss (USA)</description>
 		<year>1989</year>
@@ -7764,10 +7799,10 @@
 	</game>
 	<game name="kagec" cloneof="shadonin" romof="shadonin">
 		<comment>Hack</comment>
-		<description>Kage (T-Chi, v2.0)</description>
-		<year>2010</year>
-		<manufacturer>Xing Kong</manufacturer>
-		<rom name="Kage (T-Chi, v2.0).nes" size="270352" crc="a481e2bd"/>
+		<description>Kage (T-Chi)</description>
+		<year>2021</year>
+		<manufacturer>逆游の五彩魚</manufacturer>
+		<rom name="Kage (T-Chi).nes" size="270352" crc="2ff63b35"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -7776,6 +7811,15 @@
 		<year>1986</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="Kage no Densetsu (Japan).nes" size="49168" crc="6e55f630"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="kagenodensetsuc" cloneof="legenkag" romof="legenkag">
+		<comment>Hack</comment>
+		<description>Kage no Densetsu (T-Chi)</description>
+		<year>2022</year>
+		<manufacturer>NOKOH</manufacturer>
+		<rom name="Kage no Densetsu (T-Chi).nes" size="106512" crc="170884af"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -10006,10 +10050,10 @@
 	</game>
 	<game name="mitsumegatooruc" cloneof="mitsumegatooru" romof="mitsumegatooru">
 		<comment>Hack</comment>
-		<description>Mitsume ga Tooru (T-Chi)</description>
-		<year>2010</year>
-		<manufacturer>Xing Kong</manufacturer>
-		<rom name="Mitsume ga Tooru (T-Chi).nes" size="278544" crc="296c2307"/>
+		<description>Mitsume ga Tooru (T-Chi, v2)</description>
+		<year>2022</year>
+		<manufacturer>逆游の五彩魚</manufacturer>
+		<rom name="Mitsume ga Tooru (T-Chi, v2).nes" size="393232" crc="2c6d4e10"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -13213,6 +13257,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="sonsonc" cloneof="sonson" romof="sonson">
+		<comment>Hack</comment>
+		<description>Son Son (T-Chi)</description>
+		<year>2022</year>
+		<manufacturer>NOKOH</manufacturer>
+		<rom name="Son Son (T-Chi).nes" size="81936" crc="e05a2451"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="sonic" cloneof="somari" romof="somari">
 		<comment>Hack</comment>
 		<description>Sonic the Hedgehog (Hack)</description>
@@ -13300,6 +13353,15 @@
 		<year>1987</year>
 		<manufacturer>Irem</manufacturer>
 		<rom name="Spelunker II - Yuusha e no Chousen (T-eng).nes" size="262160" crc="72a28744"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="spidemanc" cloneof="spideman" romof="spideman">
+		<comment>Hack</comment>
+		<description>Spider-Man - Return of the Sinister Six (T-Chi)</description>
+		<year>2021</year>
+		<manufacturer>逆游の五彩魚</manufacturer>
+		<rom name="Spider-Man - Return of the Sinister Six (T-Chi).nes" size="393232" crc="a116d626"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -14352,6 +14414,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="takameivic" cloneof="advenisliv" romof="advenisliv">
+		<comment>Hack</comment>
+		<description>Takahashi Meijin no Bouken-jima IV (T-Chi)</description>
+		<year>2022</year>
+		<manufacturer>NOKOH</manufacturer>
+		<rom name="Takahashi Meijin no Bouken-jima IV (T-Chi).nes" size="524304" crc="5d164133"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="takahmeinobugho">
 		<description>Takahashi Meijin no Bugutte Honey (Japan)</description>
 		<year>1987</year>
@@ -14598,6 +14669,15 @@
 		<year>2020</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="teenage mutant ninja turtles - tournament fighters (usa) - castellano v1.0.nes" size="262160" crc="32eac8c5"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="tmnttoufigsc" cloneof="tmnttoufig" romof="tmnttoufig">
+		<comment>Hack</comment>
+		<description>Teenage Mutant Ninja Turtles - Tournament Fighters (T-Chi)</description>
+		<year>2022</year>
+		<manufacturer>NOKOH</manufacturer>
+		<rom name="Teenage Mutant Ninja Turtles - Tournament Fighters (T-Chi).nes" size="294928" crc="51ac1eb7"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -15015,7 +15095,7 @@
 		<comment>Hack</comment>
 		<description>Tiny Toon Adventures (T-Chi)</description>
 		<year>2022</year>
-		<manufacturer>Wave</manufacturer>
+		<manufacturer>逆游の五彩魚</manufacturer>
 		<rom name="Tiny Toon Adventures (T-Chi).nes" size="344080" crc="fbf2bb98"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -15765,9 +15845,9 @@
 	<game name="waiwaiworldc" cloneof="waiwaiworld" romof="waiwaiworld">
 		<comment>Hack</comment>
 		<description>Wai Wai World (T-Chi)</description>
-		<year>2012</year>
+		<year>2022</year>
 		<manufacturer>NOKOH</manufacturer>
-		<rom name="Wai Wai World (T-Chi).nes" size="524304" crc="ae26fdde"/>
+		<rom name="Wai Wai World (T-Chi).nes" size="524304" crc="7fe5c9f1"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

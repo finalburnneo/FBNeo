@@ -2956,12 +2956,48 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="cavestoryc" cloneof="cavestory" romof="cavestory">
+		<comment>Homebrew</comment>
+		<description>Cave Story Doukutsu (HB, Chinese, v0.8.0)</description>
+		<year>2022-02</year>
+		<manufacturer>Studio Pixel</manufacturer>
+		<rom name="Cave Story Doukutsu (HB, zh, v0.8.0).bin" size="4194304" crc="0c1517fc"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="cavestory">
 		<comment>Homebrew</comment>
-		<description>Cave Story Doukutsu (HB, v0.7.0)</description>
-		<year>2020-09-15</year>
+		<description>Cave Story Doukutsu (HB, English, v0.8.0)</description>
+		<year>2022-02</year>
 		<manufacturer>Studio Pixel</manufacturer>
-		<rom name="Cave Story Doukutsu (v0.7.0).bin" size="4194304" crc="ea2967be"/>
+		<rom name="Cave Story Doukutsu (HB, en, v0.8.0).bin" size="4194304" crc="d476a108"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cavestoryi" cloneof="cavestory" romof="cavestory">
+		<comment>Homebrew</comment>
+		<description>Cave Story Doukutsu (HB, Italian, v0.8.0)</description>
+		<year>2022-02</year>
+		<manufacturer>Studio Pixel</manufacturer>
+		<rom name="Cave Story Doukutsu (HB, it, v0.8.0).bin" size="4194304" crc="8ec855f9"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cavestoryj" cloneof="cavestory" romof="cavestory">
+		<comment>Homebrew</comment>
+		<description>Cave Story Doukutsu (HB, Japanese, v0.8.0)</description>
+		<year>2022-02</year>
+		<manufacturer>Studio Pixel</manufacturer>
+		<rom name="Cave Story Doukutsu (HB, ja, v0.8.0).bin" size="4194304" crc="21acbe48"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cavestorys" cloneof="cavestory" romof="cavestory">
+		<comment>Homebrew</comment>
+		<description>Cave Story Doukutsu (HB, Spanish, v0.8.0)</description>
+		<year>2022-02</year>
+		<manufacturer>Studio Pixel</manufacturer>
+		<rom name="Cave Story Doukutsu (HB, es, v0.8.0).bin" size="4194304" crc="06405697"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4859,7 +4895,7 @@
 	</game>
 	<game name="devwilltoo">
 		<comment>Homebrew</comment>
-		<description>Devwill Too (English) (HB)</description>
+		<description>Devwill Too (HB, English)</description>
 		<year>2020</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Devwill Too.bin" size="4194304" crc="34031793"/>
@@ -4868,7 +4904,7 @@
 	</game>
 	<game name="devwilltoopt" cloneof="devwilltoo" romof="devwilltoo">
 		<comment>Homebrew</comment>
-		<description>Devwill Too (Portuguese) (HB)</description>
+		<description>Devwill Too (HB, Portuguese)</description>
 		<year>2020</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Devwill Too MD (Pt-BR) (2020)(Mega Cat Studios).bin" size="3538944" crc="c14fc0d4"/>
@@ -4876,6 +4912,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="diablo" cloneof="fatallab" romof="fatallab">
+		<comment>Hack</comment>
 		<description>Diablo (Rus)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
@@ -6367,6 +6404,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="f22p" cloneof="f22" romof="f22">
+		<comment>Prototype</comment>
 		<description>F-22 Interceptor (Euro, USA, Prototype)</description>
 		<year>1991</year>
 		<manufacturer>Electronic Arts</manufacturer>
@@ -6399,6 +6437,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="f1wcp" cloneof="f1wc" romof="f1wc">
+		<comment>Prototype</comment>
 		<description>F1 - World Championship Edition (Euro, Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Domark</manufacturer>
@@ -6515,7 +6554,7 @@
 		<comment>Hack</comment>
 		<description>Fatal Labyrinth (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="fatal labyrinth (hack, spanish).bin" size="131072" crc="2b27dbd1"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -13104,6 +13143,15 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="pacman2c" cloneof="pacman2" romof="pacman2">
+		<comment>Hack</comment>
+		<description>Pac-Man 2 - The New Adventures (T-Chi, v1.1)</description>
+		<year>2018</year>
+		<manufacturer>Axi</manufacturer>
+		<rom name="pac-man 2 - the new adventures (t-chi, v1.1).bin" size="2621440" crc="9dde7643"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="pacman2">
 		<description>Pac-Man 2 - The New Adventures (USA)</description>
 		<year>1994</year>
@@ -13478,6 +13526,15 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="pstar4c" cloneof="pstar4" romof="pstar4">
+		<comment>Hack</comment>
+		<description>Phantasy Star - The End of the Millennium (T-Chi, v1.6)</description>
+		<year>2022</year>
+		<manufacturer>Ken_Tse</manufacturer>
+		<rom name="phantasy star - the end of the millennium (t-chi, v1.6).bin" size="3276800" crc="0db82dd1"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="pstar4u" cloneof="pstar4" romof="pstar4">
 		<description>Phantasy Star - The End of the Millennium (USA)</description>
 		<year>1994</year>
@@ -13696,9 +13753,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="phelioss" cloneof="phelios" romof="phelios">
+		<comment>Hack</comment>
 		<description>Phelios (Hack, Spanish)</description>
 		<year>2020</year>
-		<manufacturer>Namco</manufacturer>
+		<manufacturer>Max1323</manufacturer>
 		<rom name="phelios (hack, spanish).bin" size="524288" crc="3c7e8979"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -13767,6 +13825,31 @@
 		<year>1996</year>
 		<manufacturer>THQ</manufacturer>
 		<rom name="pinocchio (usa).bin" size="3145728" crc="cd4128d8"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="piratedw1" cloneof="piratedw" romof="piratedw">
+		<description>Pirates of Dark Water, The (Euro, USA, May 1994)</description>
+		<year>1994</year>
+		<manufacturer>Sunsoft</manufacturer>
+		<rom name="pirates of dark water, the (euro, usa) (may 1994).bin" size="2097152" crc="0a62de34"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="piratedws" cloneof="piratedw" romof="piratedw">
+		<comment>Hack</comment>
+		<description>Pirates of Dark Water, The (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="the pirates of dark water (hack, spanish).bin" size="2097152" crc="30c39d61"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="piratedw">
+		<description>Pirates of Dark Water, The (USA, January 1994)</description>
+		<year>1994</year>
+		<manufacturer>Sunsoft</manufacturer>
+		<rom name="pirates of dark water, the (usa) (january 1994).bin" size="2097152" crc="0c45b9f7"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -17894,6 +17977,82 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="thor">
+		<description>Story of Thor, The (Euro)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="mpr-17588+mpr-17606.bin" size="3145728" crc="1110b0db"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="thorg" cloneof="thor" romof="thor">
+		<description>Story of Thor, The (German)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="story of thor, the (germany).bin" size="3145728" crc="fa20d011"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="thorjp" cloneof="thor" romof="thor">
+		<comment>Prototype</comment>
+		<description>Story of Thor, The (Jpn, Prototype)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="story of thor, the (jpn) (beta) (bad dump).bin" size="1769472" crc="bfc11649"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="thork" cloneof="thor" romof="thor">
+		<description>Story of Thor, The (Kor)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="story of thor, the (kor).bin" size="3145728" crc="ee1603c5"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="thors" cloneof="thor" romof="thor">
+		<description>Story of Thor, The (Spanish)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="story of thor, the (spain).bin" size="3145728" crc="4631f941"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="thorp2" cloneof="thor" romof="thor">
+		<comment>Prototype</comment>
+		<description>Story of Thor, The (USA, Prototype, 19941004)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="story of thor, the (prototype - oct 04, 1994).bin" size="3145728" crc="9e486f91"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="thorp1" cloneof="thor" romof="thor">
+		<comment>Prototype</comment>
+		<description>Story of Thor, The (USA, Prototype, 19941017)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="story of thor, the (prototype - oct 17, 1994).bin" size="3145728" crc="aa43d34a"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="thorf" cloneof="thor" romof="thor">
+		<description>Story of Thor, The - A Successor of The Light (French)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="mpr-17720.ic1" size="2097152" crc="5385f970"/>
+		<rom name="mpr-17721.ic2" size="1048576" crc="158fa2aa"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="thorj" cloneof="thor" romof="thor">
+		<description>Story of Thor, The - Hikari o Tsugumono (Jpn)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="story of thor, the - hikari o tsugumono (jpn).bin" size="3145728" crc="4f39783c"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sf2p2" cloneof="sf2" romof="sf2">
 		<description>Street Fighter II' - Champion Edition (Prototype, 19930325)</description>
 		<year>1993</year>
@@ -19789,6 +19948,40 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="termintr">
+		<description>Terminator, The (Euro)</description>
+		<year>1991</year>
+		<manufacturer>Virgin Games</manufacturer>
+		<rom name="mpr-14925.bin" size="1048576" crc="15f4d302"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="termintrs" cloneof="termintr" romof="termintr">
+		<comment>Hack</comment>
+		<description>Terminator, The (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="the terminator (hack, spanish).bin" size="1048576" crc="3b460367"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="termintru" cloneof="termintr" romof="termintr">
+		<description>Terminator, The (USA)</description>
+		<year>1991</year>
+		<manufacturer>Virgin Games</manufacturer>
+		<rom name="terminator, the (usa).bin" size="1048576" crc="31a629be"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="termintruh" cloneof="termintr" romof="termintr">
+		<comment>Hack</comment>
+		<description>Terminator, The - Remastered Edition (Hack, USA)</description>
+		<year>2020</year>
+		<manufacturer>Linkuei</manufacturer>
+		<rom name="terminator, the (remastered hack, usa).bin" size="1139804" crc="d1fa8dfb"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="td2">
 		<description>Test Drive II - The Duel (Euro, USA)</description>
 		<year>1992</year>
@@ -20167,6 +20360,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="incredib" cloneof="tick" romof="tick">
+		<comment>Hack</comment>
 		<description>The Incredibles (Rus)</description>
 		<year>199?</year>
 		<manufacturer>Glorysun</manufacturer>
@@ -20383,30 +20577,6 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="piratedw1" cloneof="piratedw" romof="piratedw">
-		<description>The Pirates of Dark Water (Euro, USA, May 1994)</description>
-		<year>1994</year>
-		<manufacturer>Sunsoft</manufacturer>
-		<rom name="pirates of dark water, the (euro, usa) (may 1994).bin" size="2097152" crc="0a62de34"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="piratedws" cloneof="piratedw" romof="piratedw">
-		<description>The Pirates of Dark Water (Hack, Spanish)</description>
-		<year>2018</year>
-		<manufacturer>Sunsoft</manufacturer>
-		<rom name="the pirates of dark water (hack, spanish).bin" size="2097152" crc="30c39d61"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="piratedw">
-		<description>The Pirates of Dark Water (USA, January 1994)</description>
-		<year>1994</year>
-		<manufacturer>Sunsoft</manufacturer>
-		<rom name="pirates of dark water, the (usa) (january 1994).bin" size="2097152" crc="0c45b9f7"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="punisher">
 		<description>The Punisher (Euro)</description>
 		<year>1994</year>
@@ -20513,120 +20683,12 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="thor">
-		<description>The Story of Thor (Euro)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="mpr-17588+mpr-17606.bin" size="3145728" crc="1110b0db"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="thorg" cloneof="thor" romof="thor">
-		<description>The Story of Thor (German)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="story of thor, the (germany).bin" size="3145728" crc="fa20d011"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="thorjp" cloneof="thor" romof="thor">
-		<comment>Prototype</comment>
-		<description>The Story of Thor (Jpn, Prototype)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="story of thor, the (jpn) (beta) (bad dump).bin" size="1769472" crc="bfc11649"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="thork" cloneof="thor" romof="thor">
-		<description>The Story of Thor (Kor)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="story of thor, the (kor).bin" size="3145728" crc="ee1603c5"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="thors" cloneof="thor" romof="thor">
-		<description>The Story of Thor (Spanish)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="story of thor, the (spain).bin" size="3145728" crc="4631f941"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="thorp2" cloneof="thor" romof="thor">
-		<comment>Prototype</comment>
-		<description>The Story of Thor (USA, Prototype, 19941004)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="story of thor, the (prototype - oct 04, 1994).bin" size="3145728" crc="9e486f91"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="thorp1" cloneof="thor" romof="thor">
-		<comment>Prototype</comment>
-		<description>The Story of Thor (USA, Prototype, 19941017)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="story of thor, the (prototype - oct 17, 1994).bin" size="3145728" crc="aa43d34a"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="thorf" cloneof="thor" romof="thor">
-		<description>The Story of Thor - A Successor of The Light (French)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="mpr-17720.ic1" size="2097152" crc="5385f970"/>
-		<rom name="mpr-17721.ic2" size="1048576" crc="158fa2aa"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="thorj" cloneof="thor" romof="thor">
-		<description>The Story of Thor - Hikari o Tsugumono (Jpn)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="story of thor, the - hikari o tsugumono (jpn).bin" size="3145728" crc="4f39783c"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="thorc" cloneof="thor" romof="thor">
 		<comment>Hack</comment>
 		<description>The Story of Thor - Hikari o Tsugumono (T-Chi)</description>
 		<year>2004</year>
 		<manufacturer>YUZO</manufacturer>
 		<rom name="story of thor, the - hikari o tsugumono (T-Chi).bin" size="3145728" crc="3ca3fcd7"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="termintr">
-		<description>The Terminator (Euro)</description>
-		<year>1991</year>
-		<manufacturer>Virgin Games</manufacturer>
-		<rom name="mpr-14925.bin" size="1048576" crc="15f4d302"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="termintrs" cloneof="termintr" romof="termintr">
-		<description>The Terminator (Hack, Spanish)</description>
-		<year>2017</year>
-		<manufacturer> Virgin Games</manufacturer>
-		<rom name="the terminator (hack, spanish).bin" size="1048576" crc="3b460367"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="termintru" cloneof="termintr" romof="termintr">
-		<description>The Terminator (USA)</description>
-		<year>1991</year>
-		<manufacturer>Virgin Games</manufacturer>
-		<rom name="terminator, the (usa).bin" size="1048576" crc="31a629be"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="termintruh" cloneof="termintr" romof="termintr">
-		<description>The Terminator - Remastered Edition (Hack, USA)</description>
-		<year>2020</year>
-		<manufacturer>Linkuei</manufacturer>
-		<rom name="terminator, the (remastered hack, usa).bin" size="1139804" crc="d1fa8dfb"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -22558,9 +22620,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="wiznlizs" cloneof="wiznliz" romof="wiznliz">
+		<comment>Hack</comment>
 		<description>Wiz'n'Liz - The Frantic Wabbit Wescue (Hack, Spanish)</description>
 		<year>2020</year>
-		<manufacturer>Psysgnosis</manufacturer>
+		<manufacturer>m0sca</manufacturer>
 		<rom name="wiz'n'liz - the frantic wabbit wescue (hack, spanish).bin" size="1048576" crc="d33f76a8"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -22574,9 +22637,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="wolfchlds" cloneof="wolfchld" romof="wolfchld">
+		<comment>Hack</comment>
 		<description>Wolfchild (Hack,Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Published</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="wolfchild (hack, spanish).bin" size="1048576" crc="335e960d"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

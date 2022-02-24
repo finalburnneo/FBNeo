@@ -5301,7 +5301,6 @@ static UINT8 rotate_gunpos_multiplier = 1;
 //
 // calibr50 0xff2500+3   0xff2520+7   0 1 2 3 4 5 6 7 8 9 a b c d e f   2
 // ff4ede = 0xff = onplane
-// a00010 a00014 = plane rotate regs  MMIO INPUTS DUMBASS
 // p1 ff0e69 p2 ff0e89? rotate reg.
 
 static void RotateSetGunPosRAM(UINT8 *p1, UINT8 *p2, UINT8 multiplier) {
@@ -5343,10 +5342,19 @@ static INT32 get_distance(INT32 from, INT32 to) {
 	}
 }
 
+static UINT8 adjusted_rotate_gunpos(INT32 i)
+{
+	// calibr50: apply compensation while in the airplane
+	if (game_rotates == 1 && Drv68KRAM[0x4ede] == 0xff) {
+		// ff381c: plane's rotation (same orientation as player aka *rotate_gunpos[i])
+		return (Drv68KRAM[0x381c] + *rotate_gunpos[i]) & 0x0f;
+	}
+
+	return *rotate_gunpos[i];
+}
+
 static void RotateDoTick() {
-	// some games only allows for 1 rotation every other frame, we have to
-	// limit clocking the rotation.
-	if (nCurrentFrame&1) return;
+	if (nCurrentFrame&1) return; // limit rotation to every other frame to avoid confusing the game (comment v3.0)
 
 	if (game_rotates == 1) { // calibr50 switcheroo
 		if (Drv68KRAM[0x4ede] == 0xff) {
@@ -5359,13 +5367,13 @@ static void RotateDoTick() {
 	}
 
 	for (INT32 i = 0; i < 2; i++) {
-		if (rotate_gunpos[i] && (nRotateTarget[i] != -1) && (nRotateTarget[i] != (*rotate_gunpos[i] & 0xff))) {
-			if (get_distance(nRotateTarget[i], *rotate_gunpos[i] & 0x0f)) {
+		if (rotate_gunpos[i] && (nRotateTarget[i] != -1) && (nRotateTarget[i] != (adjusted_rotate_gunpos(i) & 0x0f))) {
+			if (get_distance(nRotateTarget[i], adjusted_rotate_gunpos(i) & 0x0f)) {
 				RotateLeft(&nRotate[i]);  // ++
 			} else {
 				RotateRight(&nRotate[i]); // --
 			}
-			bprintf(0, _T("p%X target %X mempos %X nRotate %X try %X.\n"), i, nRotateTarget[i], *rotate_gunpos[i] & 0xff, nRotate[i], nRotateTry[i]);
+			bprintf(0, _T("p%X target %X mempos %X nRotate %X try %X.\n"), i, nRotateTarget[i], adjusted_rotate_gunpos(i) & 0x0f, nRotate[i], nRotateTry[i]);
 			nRotateTry[i]++;
 			if (nRotateTry[i] > 0xf) nRotateTarget[i] = -1; // don't get stuck in a loop if something goes horribly wrong here.
 		} else {

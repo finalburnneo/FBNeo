@@ -14,7 +14,7 @@ static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
 static UINT8 DrvInputs[8];
-static UINT8 DrvDips[2];
+static UINT8 DrvDips[3];
 static UINT8 DrvReset;
 
 static INT32 Rotary1 = 0;
@@ -51,7 +51,7 @@ static INT32 sprite_flip;
 static INT32 pow_charbase;
 
 // Rotation stuff! -dink
-static UINT8  DrvFakeInput[6]       = {0, 0, 0, 0, 0, 0};
+static UINT8  DrvFakeInput[14]      = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // 0-5 legacy; 6-9 P1, 10-13 P2
 static UINT8  nRotateHoldInput[2]   = {0, 0};
 static INT32  nRotate[2]            = {0, 0};
 static INT32  nRotateTarget[2]      = {0, 0};
@@ -59,6 +59,7 @@ static INT32  nRotateTry[2]         = {0, 0};
 static UINT32 nRotateTime[2]        = {0, 0};
 static UINT8  game_rotates = 0;
 static UINT8  game_rotates_inverted = 0;
+static UINT8  nAutoFireCounter[2] 	= {0, 0};
 
 #define A(a, b, c, d) { a, b, (UINT8*)(c), d }
 
@@ -105,6 +106,10 @@ static struct BurnInputInfo IkariInputList[] = {
 	{"P1 Rotate Left"       , BIT_DIGITAL  , DrvFakeInput + 0, "p1 rotate left" },
 	{"P1 Rotate Right"      , BIT_DIGITAL  , DrvFakeInput + 1, "p1 rotate right" },
 	{"P1 Button 4 (rotate)" , BIT_DIGITAL  , DrvFakeInput + 4,  "p1 fire 4" },
+	{"P1 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 6,  "p1 up 2" }, // 6
+	{"P1 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 7,  "p1 down 2" }, // 7
+	{"P1 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 8,  "p1 left 2" }, // 8
+	{"P1 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 9,  "p1 right 2" }, // 9
 
 	//A("P1 Right / left",	BIT_ANALOG_REL, DrvAxis + 0,	"p1 z-axis"),
 
@@ -120,6 +125,10 @@ static struct BurnInputInfo IkariInputList[] = {
 	{"P2 Rotate Left"  , BIT_DIGITAL  , DrvFakeInput + 2, "p2 rotate left" },
 	{"P2 Rotate Right" , BIT_DIGITAL  , DrvFakeInput + 3, "p2 rotate right" },
 	{"P2 Button 4 (rotate)" , BIT_DIGITAL  , DrvFakeInput + 5,  "p2 fire 4" },
+	{"P2 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 10, "p2 up 2" },
+	{"P2 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 11, "p2 down 2" },
+	{"P2 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 12, "p2 left 2" },
+	{"P2 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 13, "p2 right 2" },
 
 	//A("P2 Right / left",	BIT_ANALOG_REL, DrvAxis + 1,	"p2 z-axis"),
 
@@ -128,6 +137,8 @@ static struct BurnInputInfo IkariInputList[] = {
 	{"Reset",	  BIT_DIGITAL  , &DrvReset,	"reset"    },
 	{"Dip 1",	  BIT_DIPSWITCH, DrvDips + 0,	"dip"	   },
 	{"Dip 2",	  BIT_DIPSWITCH, DrvDips + 1,	"dip"	   },
+	// Auto-fire on right stick
+	{"Dip 3",	  BIT_DIPSWITCH, DrvDips + 2,	"dip"	   },
 };
 
 STDINPUTINFO(Ikari)
@@ -364,116 +375,133 @@ STDDIPINFO(Streetsj)
 
 static struct BurnDIPInfo SarDIPList[]=
 {
-	{0x1a, 0xff, 0xff, 0x00, NULL                     },
-	{0x1b, 0xff, 0xff, 0x00, NULL                     },
+	DIP_OFFSET(0x22)
+
+	{0x00, 0xff, 0xff, 0x00, NULL                     },
+	{0x01, 0xff, 0xff, 0x00, NULL                     },
+	{0x02, 0xff, 0xff, 0x00, NULL                     },
 
 	{0   , 0xfe, 0   , 2   , "Joystick"               },
-	{0x1a, 0x01, 0x01, 0x00, "Rotary"                 },
-	{0x1a, 0x01, 0x01, 0x01, "Standard"               },
+	{0x00, 0x01, 0x01, 0x00, "Rotary"                 },
+	{0x00, 0x01, 0x01, 0x01, "Standard"               },
 
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
-	{0x1a, 0x01, 0x0c, 0x08, "2"                      },
-	{0x1a, 0x01, 0x0c, 0x00, "3"                      },
-	{0x1a, 0x01, 0x0c, 0x04, "4"                      },
-	{0x1a, 0x01, 0x0c, 0x0c, "5"                      },
+	{0x00, 0x01, 0x0c, 0x08, "2"                      },
+	{0x00, 0x01, 0x0c, 0x00, "3"                      },
+	{0x00, 0x01, 0x0c, 0x04, "4"                      },
+	{0x00, 0x01, 0x0c, 0x0c, "5"                      },
 
 	{0   , 0xfe, 0   , 4   , "Coin A & B"             },
-	{0x1a, 0x01, 0x30, 0x16, "2 Coins 1 Credit"       },
-	{0x1a, 0x01, 0x30, 0x00, "1 Coin  1 Credit"       },
-	{0x1a, 0x01, 0x30, 0x10, "1 Coin  2 Credits"      },
-	{0x1a, 0x01, 0x30, 0x30, "Free Play"              },
+	{0x00, 0x01, 0x30, 0x16, "2 Coins 1 Credit"       },
+	{0x00, 0x01, 0x30, 0x00, "1 Coin  1 Credit"       },
+	{0x00, 0x01, 0x30, 0x10, "1 Coin  2 Credits"      },
+	{0x00, 0x01, 0x30, 0x30, "Free Play"              },
 
 	{0   , 0xfe, 0   , 2   , "Bonus Ocurrence"        },
-	{0x1a, 0x01, 0x40, 0x00, "1st & 2nd only"         },
-	{0x1a, 0x01, 0x40, 0x40, "1st & every 2nd"        },
+	{0x00, 0x01, 0x40, 0x00, "1st & 2nd only"         },
+	{0x00, 0x01, 0x40, 0x40, "1st & every 2nd"        },
 
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-	{0x1a, 0x01, 0x80, 0x00, "Off"                    },
-	{0x1a, 0x01, 0x80, 0x80, "On"                     },
+	{0x00, 0x01, 0x80, 0x00, "Off"                    },
+	{0x00, 0x01, 0x80, 0x80, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Service Mode"           },
-	{0x1b, 0x01, 0x01, 0x00, "Off"                    },
-	{0x1b, 0x01, 0x01, 0x01, "On"                     },
+	{0x01, 0x01, 0x01, 0x00, "Off"                    },
+	{0x01, 0x01, 0x01, 0x01, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
-	{0x1b, 0x01, 0x02, 0x02, "No"                     },
-	{0x1b, 0x01, 0x02, 0x00, "Yes"                    },
+	{0x01, 0x01, 0x02, 0x02, "No"                     },
+	{0x01, 0x01, 0x02, 0x00, "Yes"                    },
 
 	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
-	{0x1b, 0x01, 0x0c, 0x00, "50k 200k"               },
-	{0x1b, 0x01, 0x0c, 0x08, "70k 270k"               },
-	{0x1b, 0x01, 0x0c, 0x04, "90k 350k"               },
-	{0x1b, 0x01, 0x0c, 0x0c, "None"                   },
+	{0x01, 0x01, 0x0c, 0x00, "50k 200k"               },
+	{0x01, 0x01, 0x0c, 0x08, "70k 270k"               },
+	{0x01, 0x01, 0x0c, 0x04, "90k 350k"               },
+	{0x01, 0x01, 0x0c, 0x0c, "None"                   },
 
 	{0   , 0xfe, 0   , 4   , "Game Mode"              },
-	{0x1b, 0x01, 0x30, 0x16, "Demo Sounds Off"        },
-	{0x1b, 0x01, 0x30, 0x00, "Demo Sounds On"         },
-	{0x1b, 0x01, 0x30, 0x30, "Freeze"                 },
-	{0x1b, 0x01, 0x30, 0x10, "Infinite Lives (Cheat)" },	
+	{0x01, 0x01, 0x30, 0x16, "Demo Sounds Off"        },
+	{0x01, 0x01, 0x30, 0x00, "Demo Sounds On"         },
+	{0x01, 0x01, 0x30, 0x30, "Freeze"                 },
+	{0x01, 0x01, 0x30, 0x10, "Infinite Lives (Cheat)" },	
 
 	{0   , 0xfe, 0   , 4   , "Difficulty"             },
-	{0x1b, 0x01, 0xc0, 0x80, "Easy"                   },
-	{0x1b, 0x01, 0xc0, 0x00, "Normal"                 },
-	{0x1b, 0x01, 0xc0, 0x40, "Hard"                   },
-	{0x1b, 0x01, 0xc0, 0xc0, "Hardest"                },
+	{0x01, 0x01, 0xc0, 0x80, "Easy"                   },
+	{0x01, 0x01, 0xc0, 0x00, "Normal"                 },
+	{0x01, 0x01, 0xc0, 0x40, "Hard"                   },
+	{0x01, 0x01, 0xc0, 0xc0, "Hardest"                },
+
+	// Dip 3
+	{0   , 0xfe, 0   , 2   , "Second Stick"           },
+	{0x02, 0x01, 0x01, 0x00, "Moves & Shoots"         },
+	{0x02, 0x01, 0x01, 0x01, "Moves"                  },
 };
 
 STDDIPINFO(Sar)
 
 static struct BurnDIPInfo IkariDIPList[]=
 {
-	{0x1a, 0xff, 0xff, 0x00, NULL                     },
-	{0x1b, 0xff, 0xff, 0x00, NULL                     },
+
+	DIP_OFFSET(0x22)
+
+	{0x00, 0xff, 0xff, 0x00, NULL                     },
+	{0x01, 0xff, 0xff, 0x00, NULL                     },
+	{0x02, 0xff, 0xff, 0x00, NULL                     },
 
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
-	{0x1a, 0x01, 0x03, 0x02, "2"                      },
-	{0x1a, 0x01, 0x03, 0x00, "3"                      },
-	{0x1a, 0x01, 0x03, 0x01, "4"                      },
-	{0x1a, 0x01, 0x03, 0x03, "5"                      },
+	{0x00, 0x01, 0x03, 0x02, "2"                      },
+	{0x00, 0x01, 0x03, 0x00, "3"                      },
+	{0x00, 0x01, 0x03, 0x01, "4"                      },
+	{0x00, 0x01, 0x03, 0x03, "5"                      },
 
 	{0   , 0xfe, 0   , 4   , "Coin A & B"             },
-	{0x1a, 0x01, 0x0c, 0x08, "First 2C_1C, then 1C_1C"},
-	{0x1a, 0x01, 0x0c, 0x00, "1 Coin 1 Credit"        },
-	{0x1a, 0x01, 0x0c, 0x04, "First 1C_2C, then 1C_1C"},
-	{0x1a, 0x01, 0x0c, 0x0c, "Free Play"              },
+	{0x00, 0x01, 0x0c, 0x08, "First 2C_1C, then 1C_1C"},
+	{0x00, 0x01, 0x0c, 0x00, "1 Coin 1 Credit"        },
+	{0x00, 0x01, 0x0c, 0x04, "First 1C_2C, then 1C_1C"},
+	{0x00, 0x01, 0x0c, 0x0c, "Free Play"              },
 
 	{0   , 0xfe, 0   , 2   , "Bonus Ocurrence"        },
-	{0x1a, 0x01, 0x16, 0x00, "1st & 2nd only"         },
-	{0x1a, 0x01, 0x16, 0x16, "1st & every 2nd"        },
+	{0x00, 0x01, 0x16, 0x00, "1st & 2nd only"         },
+	{0x00, 0x01, 0x16, 0x16, "1st & every 2nd"        },
 
 	{0   , 0xfe, 0   , 2   , "Blood"                  },
-	{0x1a, 0x01, 0x40, 0x40, "Off"                    },
-	{0x1a, 0x01, 0x40, 0x00, "On"                     },
+	{0x00, 0x01, 0x40, 0x40, "Off"                    },
+	{0x00, 0x01, 0x40, 0x00, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-	{0x1a, 0x01, 0x80, 0x00, "Off"                    },
-	{0x1a, 0x01, 0x80, 0x80, "On"                     },
+	{0x00, 0x01, 0x80, 0x00, "Off"                    },
+	{0x00, 0x01, 0x80, 0x80, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Service Mode"           },
-	{0x1b, 0x01, 0x01, 0x00, "Off"                    },
-	{0x1b, 0x01, 0x01, 0x01, "On"                     },
+	{0x01, 0x01, 0x01, 0x00, "Off"                    },
+	{0x01, 0x01, 0x01, 0x01, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
-	{0x1b, 0x01, 0x02, 0x02, "No"                     },
-	{0x1b, 0x01, 0x02, 0x00, "Yes"                    },
+	{0x01, 0x01, 0x02, 0x02, "No"                     },
+	{0x01, 0x01, 0x02, 0x00, "Yes"                    },
 
 	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
-	{0x1b, 0x01, 0x0c, 0x00, "20k 50k"                },
-	{0x1b, 0x01, 0x0c, 0x08, "40k 100k"               },
-	{0x1b, 0x01, 0x0c, 0x04, "60k 150k"               },
-	{0x1b, 0x01, 0x0c, 0x0c, "None"                   },
+	{0x01, 0x01, 0x0c, 0x00, "20k 50k"                },
+	{0x01, 0x01, 0x0c, 0x08, "40k 100k"               },
+	{0x01, 0x01, 0x0c, 0x04, "60k 150k"               },
+	{0x01, 0x01, 0x0c, 0x0c, "None"                   },
 
 	{0   , 0xfe, 0   , 4   , "Game Mode"              },
-	{0x1b, 0x01, 0x30, 0x16, "Demo Sounds Off"        },
-	{0x1b, 0x01, 0x30, 0x00, "Demo Sounds On"         },
-	{0x1b, 0x01, 0x30, 0x30, "Freeze"                 },
-	{0x1b, 0x01, 0x30, 0x10, "Infinite Lives (Cheat)" },	
+	{0x01, 0x01, 0x30, 0x16, "Demo Sounds Off"        },
+	{0x01, 0x01, 0x30, 0x00, "Demo Sounds On"         },
+	{0x01, 0x01, 0x30, 0x30, "Freeze"                 },
+	{0x01, 0x01, 0x30, 0x10, "Infinite Lives (Cheat)" },	
 
 	{0   , 0xfe, 0   , 4   , "Difficulty"             },
-	{0x1b, 0x01, 0xc0, 0x00, "Easy"                   },
-	{0x1b, 0x01, 0xc0, 0x80, "Normal"                 },
-	{0x1b, 0x01, 0xc0, 0x40, "Hard"                   },
-	{0x1b, 0x01, 0xc0, 0xc0, "Hardest"                },
+	{0x01, 0x01, 0xc0, 0x00, "Easy"                   },
+	{0x01, 0x01, 0xc0, 0x80, "Normal"                 },
+	{0x01, 0x01, 0xc0, 0x40, "Hard"                   },
+	{0x01, 0x01, 0xc0, 0xc0, "Hardest"                },
+
+	// Dip 3
+	{0   , 0xfe, 0   , 2   , "Second Stick"           },
+	{0x02, 0x01, 0x01, 0x00, "Moves & Shoots"         },
+	{0x02, 0x01, 0x01, 0x01, "Moves"                  },
 };
 
 STDDIPINFO(Ikari)
@@ -649,8 +677,47 @@ static void RotateDoTick() {
 }
 
 static void SuperJoy2Rotate() {
+	UINT8 FakeDrvInputPort0[4] = {0, 0, 0, 0};
+	UINT8 FakeDrvInputPort1[4] = {0, 0, 0, 0};
+	UINT8 NeedsSecondStick[2] = {0, 0};
+
+	// prepare for right-stick rotation
+	// this is not especially readable though
+	for (INT32 i = 0; i < 2; i++) {
+		for (INT32 n = 0; n < 4; n++) {
+			UINT8* RotationInput = (!i) ? &FakeDrvInputPort0[0] : &FakeDrvInputPort1[0];
+			RotationInput[n] = DrvFakeInput[6 + i*4 + n];
+			NeedsSecondStick[i] |= RotationInput[n];
+		}
+	}
+
 	for (INT32 i = 0; i < 2; i++) { // p1 = 0, p2 = 1
-		if (DrvFakeInput[4 + i]) { //  rotate-button had been pressed
+		if (!NeedsSecondStick[i])
+			nAutoFireCounter[i] = 0;
+		if (NeedsSecondStick[i]) { // or using Second Stick
+			UINT8 rot = Joy2Rotate(((!i) ? &FakeDrvInputPort0[0] : &FakeDrvInputPort1[0]));
+			if (rot != 0xff) {
+				nRotateTarget[i] = rot * rotate_gunpos_multiplier;
+			}
+			nRotateTry[i] = 0;
+
+			if (~DrvDips[2] & 1) {
+				// fake auto-fire - there's probably a more elegant solution for this
+				// DrvJoy1 + 4, DrvJoy2 + 4 - SAR
+				// Ikari3 should be Fire3, which uses the weapons they pick up: index 6
+				
+				UINT8 indexmask = ((game_select == 3) ? 0x40 : 0x10); 
+				if (nAutoFireCounter[i]++ & 0x4)
+				{
+					DrvInputs[i] &= ~indexmask; // remove the fire bit &= ~0x10; //
+				}
+				else
+				{
+					DrvInputs[i] |= indexmask; // turn on the fire bit
+				}
+			}
+		}
+		else if (DrvFakeInput[4 + i]) { //  rotate-button had been pressed
 			UINT8 rot = Joy2Rotate(((!i) ? &DrvJoy1[0] : &DrvJoy2[0]));
 			if (rot != 0xff) {
 				nRotateTarget[i] = rot * rotate_gunpos_multiplier;
@@ -1536,7 +1603,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(Rotary2);
 		SCAN_VAR(Rotary2OldVal);
 		SCAN_VAR(nRotate);
+		SCAN_VAR(nRotateTarget);
 		SCAN_VAR(nRotateTry);
+		SCAN_VAR(nRotateTime);
+		SCAN_VAR(nRotateHoldInput);
+		SCAN_VAR(nAutoFireCounter);
 
 		if (nAction & ACB_WRITE) {
 			RotateStateload();

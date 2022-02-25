@@ -60,17 +60,18 @@ static UINT8 DrvJoy3[8];
 static UINT8 DrvJoy4[8];
 static UINT8 DrvJoy5[8];
 static UINT8 DrvInputs[5];
-static UINT8 DrvDips[2];
+static UINT8 DrvDips[3];
 static UINT8 DrvReset;
 
 // Rotation stuff! -dink
-static UINT8  DrvFakeInput[6]       = {0, 0, 0, 0, 0, 0};
+static UINT8  DrvFakeInput[14]      = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // 0-5 legacy; 6-9 P1, 10-13 P2
 static UINT8  nRotateHoldInput[2]   = {0, 0};
 static INT32  nRotate[2]            = {0, 0};
 static INT32  nRotateTarget[2]      = {0, 0};
 static INT32  nRotateTry[2]         = {0, 0};
 static UINT32 nRotateTime[2]        = {0, 0};
 static UINT8  game_rotates = 0;
+static UINT8  nAutoFireCounter[2] 	= {0, 0};
 
 static struct BurnInputInfo GhostbInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 5,	"p1 coin"	},
@@ -485,6 +486,10 @@ static struct BurnInputInfo GondoInputList[] = {
 	{"P1 Fire 3 (Rotate)", BIT_DIGITAL,	DrvFakeInput + 4,  "p1 fire 3" },
 	{"P1 Rotate Left",	BIT_DIGITAL,	DrvFakeInput + 0,  "p1 rotate left" },
 	{"P1 Rotate Right",	BIT_DIGITAL,	DrvFakeInput + 1,  "p1 rotate right" },
+	{"P1 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 6,  "p1 up 2" }, // 6
+	{"P1 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 7,  "p1 down 2" }, // 7
+	{"P1 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 8,  "p1 left 2" }, // 8
+	{"P1 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 9,  "p1 right 2" }, // 9
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy5 + 6,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 start"	},
@@ -497,19 +502,26 @@ static struct BurnInputInfo GondoInputList[] = {
 	{"P2 Fire 3 (Rotate)", BIT_DIGITAL,	DrvFakeInput + 5,  "p2 fire 3" },
 	{"P2 Rotate Left",	BIT_DIGITAL,	DrvFakeInput + 2,  "p2 rotate left" },
 	{"P2 Rotate Right",	BIT_DIGITAL,	DrvFakeInput + 3,  "p2 rotate right" },
+	{"P2 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 10, "p2 up 2" },
+	{"P2 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 11, "p2 down 2" },
+	{"P2 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 12, "p2 left 2" },
+	{"P2 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 13, "p2 right 2" },
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	// Auto-fire on right-stick
+	{"Dip C", 			BIT_DIPSWITCH,	DrvDips + 2, 	"dip"       },
 };
 
 STDINPUTINFO(Gondo)
 
 static struct BurnDIPInfo GondoDIPList[]=
 {
-	DIP_OFFSET(0x17)
+	DIP_OFFSET(0x1f)
 	{0x00, 0xff, 0xff, 0xff, NULL					},
 	{0x01, 0xff, 0xff, 0xef, NULL					},
+	{0x02, 0xff, 0xff, 0x00, NULL                   },
 
 	{0   , 0xfe, 0   ,    4, "Coin A"				},
 	{0x00, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
@@ -550,6 +562,11 @@ static struct BurnDIPInfo GondoDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
 	{0x01, 0x01, 0x10, 0x10, "No"					},
 	{0x01, 0x01, 0x10, 0x00, "Yes"					},
+
+	// Dip 3
+	{0   , 0xfe, 0   , 2   , "Second Stick"           },
+	{0x02, 0x01, 0x01, 0x00, "Moves & Shoots"         },
+	{0x02, 0x01, 0x01, 0x01, "Moves"                  },
 };
 
 STDDIPINFO(Gondo)
@@ -3688,8 +3705,45 @@ static void RotateDoTick() {
 }
 
 static void SuperJoy2Rotate() {
+	UINT8 FakeDrvInputPort0[4] = {0, 0, 0, 0};
+	UINT8 FakeDrvInputPort1[4] = {0, 0, 0, 0};
+	UINT8 NeedsSecondStick[2] = {0, 0};
+
+	// prepare for right-stick rotation
+	// this is not especially readable though
+	for (INT32 i = 0; i < 2; i++) {
+		for (INT32 n = 0; n < 4; n++) {
+			UINT8* RotationInput = (!i) ? &FakeDrvInputPort0[0] : &FakeDrvInputPort1[0];
+			RotationInput[n] = DrvFakeInput[6 + i*4 + n];
+			NeedsSecondStick[i] |= RotationInput[n];
+		}
+	}
+
 	for (INT32 i = 0; i < 2; i++) { // p1 = 0, p2 = 1
-		if (DrvFakeInput[4 + i]) { //  rotate-button had been pressed
+		if (!NeedsSecondStick[i])
+			nAutoFireCounter[i] = 0;
+		if (NeedsSecondStick[i]) { // or using Second Stick
+			UINT8 rot = Joy2Rotate(((!i) ? &FakeDrvInputPort0[0] : &FakeDrvInputPort1[0]));
+			if (rot != 0xff) {
+				nRotateTarget[i] = rot * rotate_gunpos_multiplier;
+			}
+			nRotateTry[i] = 0;
+
+			if (~DrvDips[2] & 1) {
+				// fake auto-fire - there's probably a more elegant solution for this
+				// P1: DrvJoy3 + 0, P2: DrvJoy3 + 2
+				UINT8 indexmask = ((!i) ? 0x01 : 0x04); 
+				if (nAutoFireCounter[i]++ & 0x4)
+				{
+					DrvInputs[2] &= ~indexmask; // remove the fire bit &= ~0x10; //
+				}
+				else
+				{
+					DrvInputs[2] |= indexmask; // turn on the fire bit
+				}
+			}
+		}
+		else if (DrvFakeInput[4 + i]) { //  rotate-button had been pressed
 			UINT8 rot = Joy2Rotate(((!i) ? &DrvJoy1[0] : &DrvJoy2[0]));
 			if (rot != 0xff) {
 				nRotateTarget[i] = rot * rotate_gunpos_multiplier;
@@ -4297,6 +4351,8 @@ static INT32 GondoScan(INT32 nAction, INT32 *pnMin)
 			SCAN_VAR(nRotateTarget);
 			SCAN_VAR(nRotateTry);
 			SCAN_VAR(nRotateHoldInput);
+			SCAN_VAR(nAutoFireCounter);
+			SCAN_VAR(nRotateTime);
 		}
 
 		if (nAction & ACB_WRITE) {

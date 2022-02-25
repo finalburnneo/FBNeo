@@ -922,6 +922,23 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="aquagame">
+		<description>Aquatic Games Starring James Pond and the Aquabats, The (Euro, USA)</description>
+		<year>1992</year>
+		<manufacturer>Electronic Arts</manufacturer>
+		<rom name="aqua01.bin" size="524288" crc="400f4ba7"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="aquagames" cloneof="aquagame" romof="aquagame">
+		<comment>Hack</comment>
+		<description>Aquatic Games Starring James Pond and the Aquabats, The (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="the aquatic games starring james pond and the aquabats (hack, spanish).bin" size="524288" crc="1776fc2f"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="arapuca">
 		<comment>Homebrew</comment>
 		<description>Arapuca (HB)</description>
@@ -1800,6 +1817,22 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="redcliffa" cloneof="redcliff" romof="redcliff">
+		<description>Battle of Red Cliffs, The - Romance of the Three Kingdoms (Hacked out Protection?)</description>
+		<year>199?</year>
+		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<rom name="the battle of red cliffs (unl).bin" size="2097152" crc="63eca090"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="redcliff">
+		<description>Battle of Red Cliffs, The - Romance of the Three Kingdoms</description>
+		<year>199?</year>
+		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<rom name="the battle of red cliffs - romance of the three kingdoms (unl).bin" size="2097157" crc="44463492"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="battlesq">
 		<description>Battle Squadron (Euro, USA)</description>
 		<year>1990</year>
@@ -1972,7 +2005,205 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="berenss" cloneof="berens" romof="berens">
+		<comment>Hack</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>wave</manufacturer>
+		<rom name="the berenstain bears' camping adventure (hack, spanish).bin" size="1048576" crc="d2774706"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp20" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940323)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears' camping adventure, the (prototype - mar 23, 1994).bin" size="1048576" crc="bfbcd7cc"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp19" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940428)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears' camping adventure, the (prototype - apr 28, 1994).bin" size="1048576" crc="f222e946"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp18" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940429)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears' camping adventure, the (prototype - apr 29, 1994).bin" size="1048576" crc="e21493b4"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp17" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940506)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears' camping adventure, the (prototype - may 06, 1994).bin" size="1048576" crc="713c14d8"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp16" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940511)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears' camping adventure, the (prototype - may 11, 1994).bin" size="1048576" crc="f7b81c6a"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp15" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940517)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears' camping adventure, the (prototype - may 17, 1994).bin" size="1048576" crc="e1855ade"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp14" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940519)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears' camping adventure, the (prototype - may 19, 1994).bin" size="1048576" crc="07c9f71f"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp13" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940523)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears' camping adventure, the (prototype - may 23, 1994).bin" size="1048576" crc="913887b7"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp12" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940526)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears' camping adventure, the (prototype - may 26, 1994).bin" size="1048576" crc="d33c0fa4"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp11" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940530)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears' camping adventure, the (prototype - may 30, 1994).bin" size="1048576" crc="9c3bf429"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp10" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940602)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears' camping adventure, the (prototype - jun 02, 1994).bin" size="1048576" crc="83cf19e4"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp09" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940610)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears' camping adventure, the (prototype - jun 10, 1994).bin" size="1048576" crc="a748e2cf"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp08" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940709)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears' camping adventure, the (prototype - jul 09, 1994).bin" size="1048576" crc="bf6aa405"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp07" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940716)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears' camping adventure, the (prototype - jul 16, 1994).bin" size="1048576" crc="c84aad8e"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp06" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940720)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears' camping adventure, the (prototype - jul 20, 1994).bin" size="1048576" crc="abee4c5e"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp05" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940801)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears' camping adventure, the (prototype - aug 01, 1994).bin" size="1048576" crc="b7cd465c"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp04" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940802)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears' camping adventure, the (prototype - aug 02, 1994).bin" size="1048576" crc="383ad564"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp03" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940803)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears' camping adventure, the (prototype - aug 03, 1994).bin" size="1048576" crc="18f268a6"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp02" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940805)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears' camping adventure, the (prototype - aug 05, 1994).bin" size="1048576" crc="24159b6f"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp01" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940808)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears' camping adventure, the (prototype - aug 08, 1994).bin" size="1048576" crc="58b6b0fc"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berens">
+		<description>Berenstain Bears' Camping Adventure, The (USA)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears' camping adventure, the (usa).bin" size="1048576" crc="1f86237b"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bestofp" cloneof="bestof" romof="bestof">
+		<comment>Prototype</comment>
 		<description>Best of the Best - Championship Karate (Euro, Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Electro Brain</manufacturer>
@@ -3102,6 +3333,23 @@
 		<year>199?</year>
 		<manufacturer>Unlicensed</manufacturer>
 		<rom name="Chao Ji Poker.md" size="4194304" crc="c37e6858"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="chaosen2">
+		<comment>Prototype</comment>
+		<description>Chaos Engine 2, The (Euro, Prototype)</description>
+		<year>199?</year>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<rom name="chaos engine 2, the (euro) (prototype).bin" size="1048576" crc="3fb045c2"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="chaoseng">
+		<description>Chaos Engine, The (Euro)</description>
+		<year>1992</year>
+		<manufacturer>Microprose</manufacturer>
+		<rom name="chaos engine, the (euro).bin" size="1572864" crc="bd9eecf4"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4985,6 +5233,14 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="disneycl">
+		<description>Disney Collection, The - Mickey and Donald (Euro)</description>
+		<year>1996</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="disney collection, the (euro).bin" size="1048576" crc="adfde883"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="aladdin">
 		<description>Disney's Aladdin (Euro)</description>
 		<year>1993</year>
@@ -6752,6 +7008,15 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="fightveng">
+		<comment>Homebrew</comment>
+		<description>Fight for Vengeance (HB)</description>
+		<year>2021</year>
+		<manufacturer>PSCD Games</manufacturer>
+		<rom name="Fight for Vengeance (2021)(PSCD Games).bin" size="4194304" crc="7db61291"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="fightmass" cloneof="fightmas" romof="fightmas">
 		<description>Fighting Masters (Hack, Spanish)</description>
 		<year>2019</year>
@@ -7769,6 +8034,23 @@
 		<year>1994</year>
 		<manufacturer>Capcom</manufacturer>
 		<rom name="great circus mystery - mickey to minnie magical adventure 2 (jpn).bin" size="2097152" crc="5aa0f3a0"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mickeycms" cloneof="mickeycm" romof="mickeycm">
+		<comment>Hack</comment>
+		<description>Great Circus Mystery Starring Mickey &amp; Minnie, The (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="the great circus mystery starring mickey &amp; minnie (hack, spanish).bin" size="2097152" crc="58cd70c5"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mickeycm">
+		<description>Great Circus Mystery Starring Mickey &amp; Minnie, The (USA)</description>
+		<year>1994</year>
+		<manufacturer>Capcom</manufacturer>
+		<rom name="great circus mystery starring mickey &amp; minnie, the (usa).bin" size="2097152" crc="14744883"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -9241,6 +9523,14 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="kickbox" cloneof="bestof" romof="bestof">
+		<description>Kick Boxing, The (Jpn, Kor)</description>
+		<year>1993</year>
+		<manufacturer>Micro World</manufacturer>
+		<rom name="mpr-15333.bin" size="1048576" crc="9bdc230c"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="kickoff3">
 		<description>Kick Off 3 - European Challenge (Euro)</description>
 		<year>1994</year>
@@ -9872,6 +10162,23 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="lionkings" cloneof="lionking" romof="lionking">
+		<comment>Hack</comment>
+		<description>Lion King, The (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="the lion king (hack, spanish).bin" size="3145728" crc="5c8cf251"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lionking">
+		<description>Lion King, The (World)</description>
+		<year>1994</year>
+		<manufacturer>Virgin Interactive</manufacturer>
+		<rom name="mpr-17270.bin" size="3145728" crc="5696a5bc"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="littlemedusa">
 		<comment>Homebrew</comment>
 		<description>Little Medusa (HB)</description>
@@ -9882,6 +10189,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lobo">
+		<comment>Prototype</comment>
 		<description>Lobo (USA, Prototype)</description>
 		<year>1996</year>
 		<manufacturer>Ocean</manufacturer>
@@ -9927,6 +10235,40 @@
 		<year>199?</year>
 		<manufacturer>Glorysun</manufacturer>
 		<rom name="lord of the rings (unl).bin" size="2097152" crc="513ea675"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lostvik">
+		<description>Lost Vikings, The (Euro)</description>
+		<year>1993</year>
+		<manufacturer>Interplay</manufacturer>
+		<rom name="lost vikings, the (euro).bin" size="1048576" crc="1f14efc6"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lostvikp" cloneof="lostvik" romof="lostvik">
+		<comment>Prototype</comment>
+		<description>Lost Vikings, The (Euro, Prototype)</description>
+		<year>1993</year>
+		<manufacturer>Interplay</manufacturer>
+		<rom name="lost vikings, the (euro) (beta).bin" size="1048576" crc="17bed25f"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lostviks" cloneof="lostvik" romof="lostvik">
+		<comment>Hack</comment>
+		<description>Lost Vikings, The (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>jackic</manufacturer>
+		<rom name="the lost vikings (hack, spanish).bin" size="1048576" crc="8b88b1e8"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lostviku" cloneof="lostvik" romof="lostvik">
+		<description>Lost Vikings, The (USA)</description>
+		<year>1992</year>
+		<manufacturer>Interplay</manufacturer>
+		<rom name="lost vikings, the (usa).bin" size="1048576" crc="7ba49edb"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -13487,6 +13829,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pstar4p5" cloneof="pstar4" romof="pstar4">
+		<comment>Prototype</comment>
 		<description>Phantasy Star - The End of the Millennium (Prototype, 19940530)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -13495,6 +13838,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pstar4p4" cloneof="pstar4" romof="pstar4">
+		<comment>Prototype</comment>
 		<description>Phantasy Star - The End of the Millennium (Prototype, 19940608)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -13503,6 +13847,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pstar4p3" cloneof="pstar4" romof="pstar4">
+		<comment>Prototype</comment>
 		<description>Phantasy Star - The End of the Millennium (Prototype, 19940815)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -13511,6 +13856,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pstar4p2" cloneof="pstar4" romof="pstar4">
+		<comment>Prototype</comment>
 		<description>Phantasy Star - The End of the Millennium (Prototype, 19941027)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -13519,6 +13865,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pstar4p1" cloneof="pstar4" romof="pstar4">
+		<comment>Prototype</comment>
 		<description>Phantasy Star - The End of the Millennium (Prototype, 19941107)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -13569,9 +13916,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ps2aae" cloneof="ps2aa" romof="ps2aa">
+		<comment>Hack</comment>
 		<description>Phantasy Star II - Amia's Adventure (Hack, English)</description>
 		<year>2010</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Jon Najar</manufacturer>
 		<rom name="phantasy star ii - amia's adventure (english translation).bin" size="262144" crc="7fdb5fe9"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -13585,9 +13933,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ps2abe" cloneof="ps2ab" romof="ps2ab">
+		<comment>Hack</comment>
 		<description>Phantasy Star II - Anne's Adventure (Hack, English)</description>
 		<year>2010</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Jon Najar</manufacturer>
 		<rom name="phantasy star ii - anne's adventure (english translation).bin" size="262144" crc="355fad11"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -13601,9 +13950,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ps2ace" cloneof="ps2ac" romof="ps2ac">
+		<comment>Hack</comment>
 		<description>Phantasy Star II - Huey's Adventure (Hack, English)</description>
 		<year>2010</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Jon Najar</manufacturer>
 		<rom name="phantasy star ii - huey's adventure (english translation).bin" size="262144" crc="db2cce50"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -13625,9 +13975,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ps2ade" cloneof="ps2ad" romof="ps2ad">
+		<comment>Hack</comment>
 		<description>Phantasy Star II - Kinds's Adventure (Hack, English)</description>
 		<year>2010</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Jon Najar</manufacturer>
 		<rom name="phantasy star ii - kinds's adventure (english translation).bin" size="262144" crc="e91051e3"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -13641,9 +13992,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ps2aee" cloneof="ps2ae" romof="ps2ae">
+		<comment>Hack</comment>
 		<description>Phantasy Star II - Nei's Adventure (Hack, English)</description>
 		<year>2010</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Jon Najar</manufacturer>
 		<rom name="phantasy star ii - nei's adventure (english translation).bin" size="262144" crc="b0ce897c"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -13657,9 +14009,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ps2afe" cloneof="ps2af" romof="ps2af">
+		<comment>Hack</comment>
 		<description>Phantasy Star II - Rudger's Adventure (Hack, English)</description>
 		<year>2010</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Jon Najar</manufacturer>
 		<rom name="phantasy star ii - rudger's adventure (english translation).bin" size="262144" crc="3cd3bc1c"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -13673,9 +14026,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ps2age" cloneof="ps2ag" romof="ps2ag">
+		<comment>Hack</comment>
 		<description>Phantasy Star II - Shilka's Adventure (Hack, English)</description>
 		<year>2010</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Jon Najar</manufacturer>
 		<rom name="phantasy star ii - shilka's adventure (english translation).bin" size="262144" crc="76e56009"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -13689,9 +14043,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ps2ahe" cloneof="ps2ah" romof="ps2ah">
+		<comment>Hack</comment>
 		<description>Phantasy Star II - Yushis's Adventure (Hack, English)</description>
 		<year>2010</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Jon Najar</manufacturer>
 		<rom name="phantasy star ii - yushis's adventure (english translation).bin" size="262144" crc="5395a7e2"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -13862,6 +14217,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="piratesp1" cloneof="pirates" romof="pirates">
+		<comment>Prototype</comment>
 		<description>Pirates! Gold (Prototype, 19930401)</description>
 		<year>1993</year>
 		<manufacturer>Microprose</manufacturer>
@@ -13878,6 +14234,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="piratesp" cloneof="pirates" romof="pirates">
+		<comment>Prototype</comment>
 		<description>Pirates! Gold (USA, Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Microprose</manufacturer>
@@ -16585,9 +16942,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="soldforts" cloneof="chaoseng" romof="chaoseng">
+		<comment>Hack</comment>
 		<description>Soldiers of Fortune (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Spectrum Holobyte</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="soldiers of fortune (hack, spanish).bin" size="1572864" crc="a595e787"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -16659,7 +17017,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="skp08" cloneof="sk" romof="sk">
-		<comment>Homebrew</comment>
+		<comment>Prototype</comment>
 		<description>Sonic &amp; Knuckles (Prototype 0608, 19940608, 05.03)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -18050,6 +18408,15 @@
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="story of thor, the - hikari o tsugumono (jpn).bin" size="3145728" crc="4f39783c"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="thorc" cloneof="thor" romof="thor">
+		<comment>Hack</comment>
+		<description>Story of Thor, The - Hikari o Tsugumono (T-Chi)</description>
+		<year>2004</year>
+		<manufacturer>YUZO</manufacturer>
+		<rom name="story of thor, the - hikari o tsugumono (T-Chi).bin" size="3145728" crc="3ca3fcd7"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -20015,222 +20382,6 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="preliminary"/>
 	</game>
-	<game name="aquagame">
-		<description>The Aquatic Games Starring James Pond and the Aquabats (Euro, USA)</description>
-		<year>1992</year>
-		<manufacturer>Electronic Arts</manufacturer>
-		<rom name="aqua01.bin" size="524288" crc="400f4ba7"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="aquagames" cloneof="aquagame" romof="aquagame">
-		<description>The Aquatic Games Starring James Pond and the Aquabats (Hack, Spanish)</description>
-		<year>2019</year>
-		<manufacturer>Electronic Arts</manufacturer>
-		<rom name="the aquatic games starring james pond and the aquabats (hack, spanish).bin" size="524288" crc="1776fc2f"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="redcliffa" cloneof="redcliff" romof="redcliff">
-		<description>The Battle of Red Cliffs - Romance of the Three Kingdoms (Hacked out Protection?)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
-		<rom name="the battle of red cliffs (unl).bin" size="2097152" crc="63eca090"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="redcliff">
-		<description>The Battle of Red Cliffs - Romance of the Three Kingdoms</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
-		<rom name="the battle of red cliffs - romance of the three kingdoms (unl).bin" size="2097157" crc="44463492"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berenss" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Hack, Spanish)</description>
-		<year>2019</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="the berenstain bears' camping adventure (hack, spanish).bin" size="1048576" crc="d2774706"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp20" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940323)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears' camping adventure, the (prototype - mar 23, 1994).bin" size="1048576" crc="bfbcd7cc"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp19" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940428)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears' camping adventure, the (prototype - apr 28, 1994).bin" size="1048576" crc="f222e946"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp18" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940429)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears' camping adventure, the (prototype - apr 29, 1994).bin" size="1048576" crc="e21493b4"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp17" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940506)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears' camping adventure, the (prototype - may 06, 1994).bin" size="1048576" crc="713c14d8"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp16" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940511)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears' camping adventure, the (prototype - may 11, 1994).bin" size="1048576" crc="f7b81c6a"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp15" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940517)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears' camping adventure, the (prototype - may 17, 1994).bin" size="1048576" crc="e1855ade"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp14" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940519)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears' camping adventure, the (prototype - may 19, 1994).bin" size="1048576" crc="07c9f71f"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp13" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940523)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears' camping adventure, the (prototype - may 23, 1994).bin" size="1048576" crc="913887b7"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp12" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940526)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears' camping adventure, the (prototype - may 26, 1994).bin" size="1048576" crc="d33c0fa4"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp11" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940530)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears' camping adventure, the (prototype - may 30, 1994).bin" size="1048576" crc="9c3bf429"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp10" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940602)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears' camping adventure, the (prototype - jun 02, 1994).bin" size="1048576" crc="83cf19e4"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp09" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940610)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears' camping adventure, the (prototype - jun 10, 1994).bin" size="1048576" crc="a748e2cf"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp08" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940709)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears' camping adventure, the (prototype - jul 09, 1994).bin" size="1048576" crc="bf6aa405"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp07" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940716)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears' camping adventure, the (prototype - jul 16, 1994).bin" size="1048576" crc="c84aad8e"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp06" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940720)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears' camping adventure, the (prototype - jul 20, 1994).bin" size="1048576" crc="abee4c5e"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp05" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940801)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears' camping adventure, the (prototype - aug 01, 1994).bin" size="1048576" crc="b7cd465c"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp04" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940802)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears' camping adventure, the (prototype - aug 02, 1994).bin" size="1048576" crc="383ad564"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp03" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940803)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears' camping adventure, the (prototype - aug 03, 1994).bin" size="1048576" crc="18f268a6"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp02" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940805)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears' camping adventure, the (prototype - aug 05, 1994).bin" size="1048576" crc="24159b6f"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp01" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940808)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears' camping adventure, the (prototype - aug 08, 1994).bin" size="1048576" crc="58b6b0fc"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berens">
-		<description>The Berenstain Bears' Camping Adventure (USA)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears' camping adventure, the (usa).bin" size="1048576" crc="1f86237b"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="chaoseng">
-		<description>The Chaos Engine (Euro)</description>
-		<year>1992</year>
-		<manufacturer>Microprose</manufacturer>
-		<rom name="chaos engine, the (euro).bin" size="1572864" crc="bd9eecf4"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="chaosengcs" cloneof="chaoseng" romof="chaoseng">
 		<description>The Chaos Engine (Hack, Amiga Colors and Sound Fix v1.01)</description>
 		<year>2016</year>
@@ -20239,43 +20390,11 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chaosen2">
-		<description>The Chaos Engine 2 (Euro, Prototype)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
-		<rom name="chaos engine 2, the (euro) (prototype).bin" size="1048576" crc="3fb045c2"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="disneycl">
-		<description>The Disney Collection - Mickey and Donald (Euro)</description>
-		<year>1996</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="disney collection, the (euro).bin" size="1048576" crc="adfde883"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="wintchal1" cloneof="wintchal" romof="wintchal">
 		<description>The Games: Winter Challenge (Euro, USA)</description>
 		<year>1992</year>
 		<manufacturer>Ballistic</manufacturer>
 		<rom name="acwcsg_(12-91).bin" size="1048576" crc="dbc3ed1c"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="mickeycms" cloneof="mickeycm" romof="mickeycm">
-		<description>The Great Circus Mystery Starring Mickey &amp; Minnie (Hack, Spanish)</description>
-		<year>2018</year>
-		<manufacturer>Capcom</manufacturer>
-		<rom name="the great circus mystery starring mickey &amp; minnie (hack, spanish).bin" size="2097152" crc="58cd70c5"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="mickeycm">
-		<description>The Great Circus Mystery Starring Mickey &amp; Minnie (USA)</description>
-		<year>1994</year>
-		<manufacturer>Capcom</manufacturer>
-		<rom name="great circus mystery starring mickey &amp; minnie, the (usa).bin" size="2097152" crc="14744883"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -20376,14 +20495,6 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kickbox" cloneof="bestof" romof="bestof">
-		<description>The Kick Boxing (Jpn, Kor)</description>
-		<year>1993</year>
-		<manufacturer>Micro World</manufacturer>
-		<rom name="mpr-15333.bin" size="1048576" crc="9bdc230c"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="killshow" cloneof="fatalrew" romof="fatalrew">
 		<description>The Killing Game Show (Jpn)</description>
 		<year>1993</year>
@@ -20413,54 +20524,6 @@
 		<year>1994</year>
 		<manufacturer>Time Warner Interactive</manufacturer>
 		<rom name="lawnmower man, the (euro, usa).bin" size="1048576" crc="a7cacd59"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="lionkings" cloneof="lionking" romof="lionking">
-		<description>The Lion King (Hack, Spanish)</description>
-		<year>2018</year>
-		<manufacturer>Virgin Interactive</manufacturer>
-		<rom name="the lion king (hack, spanish).bin" size="3145728" crc="5c8cf251"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="lionking">
-		<description>The Lion King (World)</description>
-		<year>1994</year>
-		<manufacturer>Virgin Interactive</manufacturer>
-		<rom name="mpr-17270.bin" size="3145728" crc="5696a5bc"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="lostvik">
-		<description>The Lost Vikings (Euro)</description>
-		<year>1993</year>
-		<manufacturer>Interplay</manufacturer>
-		<rom name="lost vikings, the (euro).bin" size="1048576" crc="1f14efc6"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="lostvikp" cloneof="lostvik" romof="lostvik">
-		<description>The Lost Vikings (Euro, Prototype)</description>
-		<year>1993</year>
-		<manufacturer>Interplay</manufacturer>
-		<rom name="lost vikings, the (euro) (beta).bin" size="1048576" crc="17bed25f"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="lostviks" cloneof="lostvik" romof="lostvik">
-		<description>The Lost Vikings (Hack, Spanish)</description>
-		<year>2020</year>
-		<manufacturer>Published</manufacturer>
-		<rom name="the lost vikings (hack, spanish).bin" size="1048576" crc="8b88b1e8"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="lostviku" cloneof="lostvik" romof="lostvik">
-		<description>The Lost Vikings (USA)</description>
-		<year>1992</year>
-		<manufacturer>Interplay</manufacturer>
-		<rom name="lost vikings, the (usa).bin" size="1048576" crc="7ba49edb"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -20680,15 +20743,6 @@
 		<year>2019</year>
 		<manufacturer>Published</manufacturer>
 		<rom name="the steel empire (hack, spanish).bin" size="1048576" crc="5670f1fc"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="thorc" cloneof="thor" romof="thor">
-		<comment>Hack</comment>
-		<description>The Story of Thor - Hikari o Tsugumono (T-Chi)</description>
-		<year>2004</year>
-		<manufacturer>YUZO</manufacturer>
-		<rom name="story of thor, the - hikari o tsugumono (T-Chi).bin" size="3145728" crc="3ca3fcd7"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -21725,9 +21779,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="uxmen" cloneof="xmen" romof="xmen">
+		<comment>Hack</comment>
 		<description>Ultimate X-Men (Hack, Enhanced)</description>
 		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>BillyTime! Games</manufacturer>
 		<rom name="ultimate x-men (hack, enhanced).bin" size="1048576" crc="4528a2bb"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -23602,14 +23657,16 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmen2s" cloneof="xmen2" romof="xmen2">
+		<comment>Hack</comment>
 		<description>X-Men 2 - Clone Wars (Hack, Spanish)</description>
 		<year>2017</year>
-		<manufacturer>Published</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="x-men 2 - clone wars (hack, spanish).bin" size="2097152" crc="61914f62"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="xmen2p19" cloneof="xmen2" romof="xmen2">
+		<comment>Prototype</comment>
 		<description>X-Men 2 - Clone Wars (Prototype, 19940506)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -23618,6 +23675,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmen2p18" cloneof="xmen2" romof="xmen2">
+		<comment>Prototype</comment>
 		<description>X-Men 2 - Clone Wars (Prototype, 19940510)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -23626,6 +23684,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmen2p17" cloneof="xmen2" romof="xmen2">
+		<comment>Prototype</comment>
 		<description>X-Men 2 - Clone Wars (Prototype, 19941018)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -23634,6 +23693,7 @@
 		<driver status="preliminary"/>
 	</game>
 	<game name="xmen2p16" cloneof="xmen2" romof="xmen2">
+		<comment>Prototype</comment>
 		<description>X-Men 2 - Clone Wars (Prototype, 19941117)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -23642,6 +23702,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmen2p15" cloneof="xmen2" romof="xmen2">
+		<comment>Prototype</comment>
 		<description>X-Men 2 - Clone Wars (Prototype, 19941123)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -23650,6 +23711,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmen2p14" cloneof="xmen2" romof="xmen2">
+		<comment>Prototype</comment>
 		<description>X-Men 2 - Clone Wars (Prototype, 19941128)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -23658,6 +23720,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmen2p13" cloneof="xmen2" romof="xmen2">
+		<comment>Prototype</comment>
 		<description>X-Men 2 - Clone Wars (Prototype, 19941130)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -23666,6 +23729,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmen2p12" cloneof="xmen2" romof="xmen2">
+		<comment>Prototype</comment>
 		<description>X-Men 2 - Clone Wars (Prototype, 19941202)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -23674,6 +23738,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmen2p11" cloneof="xmen2" romof="xmen2">
+		<comment>Prototype</comment>
 		<description>X-Men 2 - Clone Wars (Prototype, 19941203)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -23682,6 +23747,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmen2p10" cloneof="xmen2" romof="xmen2">
+		<comment>Prototype</comment>
 		<description>X-Men 2 - Clone Wars (Prototype, 19941206)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -23690,6 +23756,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmen2p09" cloneof="xmen2" romof="xmen2">
+		<comment>Prototype</comment>
 		<description>X-Men 2 - Clone Wars (Prototype, 19941207)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -23698,6 +23765,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmen2p08" cloneof="xmen2" romof="xmen2">
+		<comment>Prototype</comment>
 		<description>X-Men 2 - Clone Wars (Prototype, 19941208)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -23706,6 +23774,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmen2p07" cloneof="xmen2" romof="xmen2">
+		<comment>Prototype</comment>
 		<description>X-Men 2 - Clone Wars (Prototype, 19941209)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -23714,6 +23783,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmen2p06" cloneof="xmen2" romof="xmen2">
+		<comment>Prototype</comment>
 		<description>X-Men 2 - Clone Wars (Prototype, 19941210)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -23722,6 +23792,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmen2p04" cloneof="xmen2" romof="xmen2">
+		<comment>Prototype</comment>
 		<description>X-Men 2 - Clone Wars (Prototype, 19941211)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -23730,6 +23801,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmen2p05" cloneof="xmen2" romof="xmen2">
+		<comment>Prototype</comment>
 		<description>X-Men 2 - Clone Wars (Prototype, 19941211-A)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -23738,6 +23810,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmen2p03" cloneof="xmen2" romof="xmen2">
+		<comment>Prototype</comment>
 		<description>X-Men 2 - Clone Wars (Prototype, 19941214)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -23746,6 +23819,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmen2p02" cloneof="xmen2" romof="xmen2">
+		<comment>Prototype</comment>
 		<description>X-Men 2 - Clone Wars (Prototype, 19941215)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -23754,6 +23828,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xmen2p01" cloneof="xmen2" romof="xmen2">
+		<comment>Prototype</comment>
 		<description>X-Men 2 - Clone Wars (Prototype, 19941216)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -23762,6 +23837,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xpertsp" cloneof="xperts" romof="xperts">
+		<comment>Prototype</comment>
 		<description>X-perts (Prototype)</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>

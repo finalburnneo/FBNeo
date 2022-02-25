@@ -751,6 +751,8 @@ DRV		BurnSpecAquanoids;
 DRV		BurnDrvAquariumj;
 DRV		BurnDrvAquarium;
 DRV		BurnSpecAquasquad;
+DRV		BurnDrvmd_aquagame;
+DRV		BurnDrvmd_aquagames;
 DRV		BurnDrvcv_aquatacka;
 DRV		BurnDrvMSX_aquatack;
 DRV		BurnDrvcv_aquatack;
@@ -1399,6 +1401,8 @@ DRV		BurnDrvAtlantis2;
 DRV		BurnDrvcv_bofhoth;
 DRV		BurnDrvnes_battlolyc;
 DRV		BurnDrvnes_battloly;
+DRV		BurnDrvmd_redcliffa;
+DRV		BurnDrvmd_redcliff;
 DRV		BurnDrvsms_battleor;
 DRV		BurnDrvsms_battleorfm;
 DRV		BurnDrvtg_batlroyl;
@@ -1514,6 +1518,28 @@ DRV		BurnDrvpce_benkei;
 DRV		BurnSpecBennyhil128;
 DRV		BurnSpecBennyhil;
 DRV		BurnDrvsg1k_bombjackk2;
+DRV		BurnDrvmd_berenss;
+DRV		BurnDrvmd_berensp20;
+DRV		BurnDrvmd_berensp19;
+DRV		BurnDrvmd_berensp18;
+DRV		BurnDrvmd_berensp17;
+DRV		BurnDrvmd_berensp16;
+DRV		BurnDrvmd_berensp15;
+DRV		BurnDrvmd_berensp14;
+DRV		BurnDrvmd_berensp13;
+DRV		BurnDrvmd_berensp12;
+DRV		BurnDrvmd_berensp11;
+DRV		BurnDrvmd_berensp10;
+DRV		BurnDrvmd_berensp09;
+DRV		BurnDrvmd_berensp08;
+DRV		BurnDrvmd_berensp07;
+DRV		BurnDrvmd_berensp06;
+DRV		BurnDrvmd_berensp05;
+DRV		BurnDrvmd_berensp04;
+DRV		BurnDrvmd_berensp03;
+DRV		BurnDrvmd_berensp02;
+DRV		BurnDrvmd_berensp01;
+DRV		BurnDrvmd_berens;
 DRV		BurnDrvgg_berlin;
 DRV		BurnDrvBermudatj;
 DRV		BurnDrvBermudata;
@@ -2574,6 +2600,8 @@ DRV		BurnDrvsg1k_bombjackt2;
 DRV		BurnDrvPgmdemo;
 DRV		BurnDrvCpsCps1demo;
 DRV		BurnDrvneodemo;
+DRV		BurnDrvmd_chaosen2;
+DRV		BurnDrvmd_chaoseng;
 DRV		BurnDrvnes_chaosworldj;
 DRV		BurnDrvnes_chaosworld;
 DRV		BurnDrvsms_chapolim;
@@ -3858,6 +3886,7 @@ DRV		BurnDrvDisco;
 DRV		BurnDrvDotrone;
 DRV		BurnDrvDotron;
 DRV		BurnDrvDotrona;
+DRV		BurnDrvmd_disneycl;
 DRV		BurnDrvmd_aladdin;
 DRV		BurnDrvsms_aladdin;
 DRV		BurnDrvgg_aladdin;
@@ -5140,6 +5169,7 @@ DRV		BurnDrvmd_fifa2k10;
 DRV		BurnDrvmd_fifa2k2;
 DRV		BurnDrvfightfev;
 DRV		BurnDrvfightfeva;
+DRV		BurnDrvmd_fightveng;
 DRV		BurnDrvFghtatck;
 DRV		BurnSpecFightbomb;
 DRV		BurnDrvFghthistjb;
@@ -6313,6 +6343,8 @@ DRV		BurnDrvsms_greatbsk;
 DRV		BurnDrvnes_greatbatcyb;
 DRV		BurnDrvnes_greatbox;
 DRV		BurnDrvmd_greatcirj;
+DRV		BurnDrvmd_mickeycms;
+DRV		BurnDrvmd_mickeycm;
 DRV		BurnSpecgreatesc;
 DRV		BurnDrvsms_greatftb;
 DRV		BurnDrvsms_greatglf;
@@ -7734,6 +7766,7 @@ DRV		BurnDrvfds_kickandrun;
 DRV		BurnDrvKicknrunu;
 DRV		BurnDrvKicknrun;
 DRV		BurnDrvgg_kickrush;
+DRV		BurnDrvmd_kickbox;
 DRV		BurnDrvKickboy;
 DRV		BurnDrvfds_kickcha;
 #if defined FBNEO_DEBUG
@@ -8394,8 +8427,10 @@ DRV		BurnDrvnes_lionkinleg;
 DRV		BurnDrvgg_lionking;
 DRV		BurnDrvnes_lionkingthe;
 DRV		BurnDrvnes_lionkingthec;
+DRV		BurnDrvmd_lionkings;
 DRV		BurnDrvgg_lionkingj;
 DRV		BurnDrvgg_lionkingu;
+DRV		BurnDrvmd_lionking;
 DRV		BurnDrvLiquidku;
 DRV		BurnDrvLiquidk;
 DRV		BurnSpecLiquidwar;
@@ -8491,6 +8526,10 @@ DRV		BurnDrvLosttomb;
 DRV		BurnDrvLosttombh;
 DRV		BurnSpeclostulumen;
 DRV		BurnSpeclostulumes;
+DRV		BurnDrvmd_lostvik;
+DRV		BurnDrvmd_lostvikp;
+DRV		BurnDrvmd_lostviks;
+DRV		BurnDrvmd_lostviku;
 DRV		BurnDrvMSX_lostwind;
 DRV		BurnDrvCpsLostwrldo;
 DRV		BurnDrvCpsLostwrld;
@@ -14411,6 +14450,7 @@ DRV		BurnDrvmd_thorp2;
 DRV		BurnDrvmd_thorp1;
 DRV		BurnDrvmd_thorf;
 DRV		BurnDrvmd_thorj;
+DRV		BurnDrvmd_thorc;
 DRV		BurnDrvStrfbomb;
 DRV		BurnSpecStranded;
 DRV		BurnSpecStranded25;
@@ -15843,42 +15883,17 @@ DRV		BurnDrvAlphaxz;
 DRV		BurnDrvmrflea;
 DRV		BurnDrvAnteateruk;
 DRV		BurnDrvMSX_apeman;
-DRV		BurnDrvmd_aquagame;
-DRV		BurnDrvmd_aquagames;
 DRV		BurnDrvAstyanax;
 DRV		BurnDrvAstyanaxa;
-DRV		BurnDrvmd_redcliffa;
-DRV		BurnDrvmd_redcliff;
 DRV		BurnDrvBattroad;
 DRV		BurnDrvnes_beatlesadv;
 DRV		BurnDrvcv_bbears;
-DRV		BurnDrvmd_berenss;
-DRV		BurnDrvmd_berensp20;
-DRV		BurnDrvmd_berensp19;
-DRV		BurnDrvmd_berensp18;
-DRV		BurnDrvmd_berensp17;
-DRV		BurnDrvmd_berensp16;
-DRV		BurnDrvmd_berensp15;
-DRV		BurnDrvmd_berensp14;
-DRV		BurnDrvmd_berensp13;
-DRV		BurnDrvmd_berensp12;
-DRV		BurnDrvmd_berensp11;
-DRV		BurnDrvmd_berensp10;
-DRV		BurnDrvmd_berensp09;
 DRV		BurnDrvgg_berensp17;
-DRV		BurnDrvmd_berensp08;
 DRV		BurnDrvgg_berensp16;
-DRV		BurnDrvmd_berensp07;
-DRV		BurnDrvmd_berensp06;
 DRV		BurnDrvgg_berensp15;
 DRV		BurnDrvgg_berensp14;
 DRV		BurnDrvgg_berensp13;
 DRV		BurnDrvgg_berensp12;
-DRV		BurnDrvmd_berensp05;
-DRV		BurnDrvmd_berensp04;
-DRV		BurnDrvmd_berensp03;
-DRV		BurnDrvmd_berensp02;
-DRV		BurnDrvmd_berensp01;
 DRV		BurnDrvgg_berensp10;
 DRV		BurnDrvgg_berensp11;
 DRV		BurnDrvgg_berensp09;
@@ -15891,7 +15906,6 @@ DRV		BurnDrvgg_berensp03;
 DRV		BurnDrvgg_berensp01;
 DRV		BurnDrvgg_berensp02;
 DRV		BurnDrvgg_berens;
-DRV		BurnDrvmd_berens;
 DRV		BurnDrvBerlwallt;
 DRV		BurnDrvBerlwallk;
 DRV		BurnDrvBerlwall;
@@ -15915,9 +15929,7 @@ DRV		BurnDrvMSX_blckony2;
 DRV		BurnDrvBounty2;
 DRV		BurnDrvBounty;
 DRV		BurnDrvsg1k_castle;
-DRV		BurnDrvmd_chaoseng;
 DRV		BurnDrvmd_chaosengcs;
-DRV		BurnDrvmd_chaosen2;
 DRV		BurnDrvgg_chessmst;
 DRV		BurnDrvsms_circuit;
 DRV		BurnDrvEdrandyj;
@@ -15937,7 +15949,6 @@ DRV		BurnSpecThedark;
 DRV		BurnDrvDealer;
 DRV		BurnDrvThedeep;
 DRV		BurnDrvMSX_dcrystal;
-DRV		BurnDrvmd_disneycl;
 DRV		BurnDrvDbldynj;
 DRV		BurnDrvDbldynu;
 DRV		BurnDrvcv_hazzard;
@@ -15972,8 +15983,6 @@ DRV		BurnDrvtheglobp;
 DRV		BurnDrvtheglobpb;
 DRV		BurnDrvTheglob3;
 DRV		BurnDrvTheglob;
-DRV		BurnDrvmd_mickeycms;
-DRV		BurnDrvmd_mickeycm;
 DRV		BurnDrvRagtimea;
 DRV		BurnDrvRagtime;
 DRV		BurnDrvmd_waldo;
@@ -16003,7 +16012,6 @@ DRV		BurnDrvmd_itchy;
 DRV		BurnDrvJleagueo;
 DRV		BurnDrvJleague;
 DRV		BurnDrvKaratour;
-DRV		BurnDrvmd_kickbox;
 DRV		BurnDrvKillbld100;
 DRV		BurnDrvKillbld104;
 DRV		BurnDrvKillbld106;
@@ -16148,17 +16156,11 @@ DRV		BurnDrvSilkroada;
 DRV		BurnDrvSilkroad;
 DRV		BurnDrvtg_legaxe2;
 DRV		BurnDrvtg_legaxe;
-DRV		BurnDrvmd_lionkings;
 DRV		BurnDrvgg_lionkingp2;
 DRV		BurnDrvgg_lionkingp3;
 DRV		BurnDrvgg_lionkingp1;
-DRV		BurnDrvmd_lionking;
 DRV		BurnDrvLordofk;
 DRV		BurnDrvDarkmist;
-DRV		BurnDrvmd_lostvik;
-DRV		BurnDrvmd_lostvikp;
-DRV		BurnDrvmd_lostviks;
-DRV		BurnDrvmd_lostviku;
 DRV		BurnDrvmd_lostwrld;
 DRV		BurnDrvmd_lostwrlds;
 DRV		BurnDrvgg_lostwrld;
@@ -16257,7 +16259,6 @@ DRV		BurnDrvSrumblr2;
 DRV		BurnDrvSrumblr3;
 DRV		BurnDrvMSX_spider;
 DRV		BurnDrvmd_steelemps;
-DRV		BurnDrvmd_thorc;
 DRV		BurnDrvSuperspy;
 DRV		BurnDrvStooges3;
 DRV		BurnDrvStooges3a;
@@ -19133,6 +19134,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAquariumj,			// Aquarium (Japan)
 	&BurnDrvAquarium,			// Aquarium (US)
 	&BurnSpecAquasquad,			// Aquasquad (48K)
+	&BurnDrvmd_aquagame,		// Aquatic Games Starring James Pond and the Aquabats, The (Euro, USA)
+	&BurnDrvmd_aquagames,		// Aquatic Games Starring James Pond and the Aquabats, The (Hack, Spanish)
 	&BurnDrvcv_aquatacka,		// Aquattack (Alt)
 	&BurnDrvMSX_aquatack,		// Aquattack (Jpn)
 	&BurnDrvcv_aquatack,		// Aquattack
@@ -19781,6 +19784,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_bofhoth,			// Battle of Hoth (HB)
 	&BurnDrvnes_battlolyc,		// Battle of Olympus, The (Hack, Spanish v1.1)
 	&BurnDrvnes_battloly,		// Battle of Olympus, The (USA)
+	&BurnDrvmd_redcliffa,		// Battle of Red Cliffs, The - Romance of the Three Kingdoms (Hacked out Protection?)
+	&BurnDrvmd_redcliff,		// Battle of Red Cliffs, The - Romance of the Three Kingdoms
 	&BurnDrvsms_battleor,		// Battle Out Run (Euro, Bra)
 	&BurnDrvsms_battleorfm,		// Battle Out Run (FM Mod)
 	&BurnDrvtg_batlroyl,		// Battle Royale
@@ -19896,6 +19901,28 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecBennyhil128,		// Benny Hill's Madcap Chase! (128K) (Hack)
 	&BurnSpecBennyhil,			// Benny Hill's Madcap Chase! (48K)
 	&BurnDrvsg1k_bombjackk2,	// Beom Jjaek (Kor)
+	&BurnDrvmd_berenss,			// Berenstain Bears' Camping Adventure, The (Hack, Spanish)
+	&BurnDrvmd_berensp20,		// Berenstain Bears' Camping Adventure, The (Prototype, 19940323)
+	&BurnDrvmd_berensp19,		// Berenstain Bears' Camping Adventure, The (Prototype, 19940428)
+	&BurnDrvmd_berensp18,		// Berenstain Bears' Camping Adventure, The (Prototype, 19940429)
+	&BurnDrvmd_berensp17,		// Berenstain Bears' Camping Adventure, The (Prototype, 19940506)
+	&BurnDrvmd_berensp16,		// Berenstain Bears' Camping Adventure, The (Prototype, 19940511)
+	&BurnDrvmd_berensp15,		// Berenstain Bears' Camping Adventure, The (Prototype, 19940517)
+	&BurnDrvmd_berensp14,		// Berenstain Bears' Camping Adventure, The (Prototype, 19940519)
+	&BurnDrvmd_berensp13,		// Berenstain Bears' Camping Adventure, The (Prototype, 19940523)
+	&BurnDrvmd_berensp12,		// Berenstain Bears' Camping Adventure, The (Prototype, 19940526)
+	&BurnDrvmd_berensp11,		// Berenstain Bears' Camping Adventure, The (Prototype, 19940530)
+	&BurnDrvmd_berensp10,		// Berenstain Bears' Camping Adventure, The (Prototype, 19940602)
+	&BurnDrvmd_berensp09,		// Berenstain Bears' Camping Adventure, The (Prototype, 19940610)
+	&BurnDrvmd_berensp08,		// Berenstain Bears' Camping Adventure, The (Prototype, 19940709)
+	&BurnDrvmd_berensp07,		// Berenstain Bears' Camping Adventure, The (Prototype, 19940716)
+	&BurnDrvmd_berensp06,		// Berenstain Bears' Camping Adventure, The (Prototype, 19940720)
+	&BurnDrvmd_berensp05,		// Berenstain Bears' Camping Adventure, The (Prototype, 19940801)
+	&BurnDrvmd_berensp04,		// Berenstain Bears' Camping Adventure, The (Prototype, 19940802)
+	&BurnDrvmd_berensp03,		// Berenstain Bears' Camping Adventure, The (Prototype, 19940803)
+	&BurnDrvmd_berensp02,		// Berenstain Bears' Camping Adventure, The (Prototype, 19940805)
+	&BurnDrvmd_berensp01,		// Berenstain Bears' Camping Adventure, The (Prototype, 19940808)
+	&BurnDrvmd_berens,			// Berenstain Bears' Camping Adventure, The (USA)
 	&BurnDrvgg_berlin,			// Berlin no Kabe - The Berlin Wall (Jpn)
 	&BurnDrvBermudatj,			// Bermuda Triangle (Japan)
 	&BurnDrvBermudata,			// Bermuda Triangle (World Wars) (US)
@@ -20956,6 +20983,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPgmdemo,			// Chaos (PGM Demo)
 	&BurnDrvCpsCps1demo,		// Chaos Demo (CPS-1)
 	&BurnDrvneodemo,			// Chaos Demo (Neo Geo)
+	&BurnDrvmd_chaosen2,		// Chaos Engine 2, The (Euro, Prototype)
+	&BurnDrvmd_chaoseng,		// Chaos Engine, The (Euro)
 	&BurnDrvnes_chaosworldj,	// Chaos World (Japan)
 	&BurnDrvnes_chaosworld,		// Chaos World (T-eng)
 	&BurnDrvsms_chapolim,		// Chapolim x Dracula - Um Duelo Assustador (Bra)
@@ -22240,6 +22269,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDotrone,			// Discs of Tron (Environmental)
 	&BurnDrvDotron,				// Discs of Tron (Upright, 10/4/83)
 	&BurnDrvDotrona,			// Discs of Tron (Upright, 9/22/83)
+	&BurnDrvmd_disneycl,		// Disney Collection, The - Mickey and Donald (Euro)
 	&BurnDrvmd_aladdin,			// Disney's Aladdin (Euro)
 	&BurnDrvsms_aladdin,		// Disney's Aladdin (Euro, Bra, Kor)
 	&BurnDrvgg_aladdin,			// Disney's Aladdin (Euro, USA, Bra)
@@ -23522,6 +23552,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_fifa2k2,			// FIFA World Cup 2002 (Rus)
 	&BurnDrvfightfev,			// Fight Fever (set 1)
 	&BurnDrvfightfeva,			// Fight Fever (set 2)
+	&BurnDrvmd_fightveng,		// Fight for Vengeance (HB)
 	&BurnDrvFghtatck,			// Fighter & Attacker (US)
 	&BurnSpecFightbomb,			// Fighter Bomber (48K)
 	&BurnDrvFghthistjb,			// Fighter's History (Japan ver 41-04, DE-0380-1 PCB)
@@ -24695,6 +24726,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_greatbatcyb,	// Great Battle Cyber (Japan)
 	&BurnDrvnes_greatbox,		// Great Boxing - Rush Up (Japan)
 	&BurnDrvmd_greatcirj,		// Great Circus Mystery - Mickey to Minnie Magical Adventure 2 (Jpn)
+	&BurnDrvmd_mickeycms,		// Great Circus Mystery Starring Mickey & Minnie, The (Hack, Spanish)
+	&BurnDrvmd_mickeycm,		// Great Circus Mystery Starring Mickey & Minnie, The (USA)
 	&BurnSpecgreatesc,			// Great Escape, The (48K)
 	&BurnDrvsms_greatftb,		// Great Football (World)
 	&BurnDrvsms_greatglf,		// Great Golf (Euro, USA) ~ Masters Golf (Japan)
@@ -26116,6 +26149,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKicknrunu,			// Kick and Run (US)
 	&BurnDrvKicknrun,			// Kick and Run (World)
 	&BurnDrvgg_kickrush,		// Kick and Rush (Jpn)
+	&BurnDrvmd_kickbox,			// Kick Boxing, The (Jpn, Kor)
 	&BurnDrvKickboy,			// Kick Boy
 	&BurnDrvfds_kickcha,		// Kick Challenger - Air Foot (Japan)
 #if defined FBNEO_DEBUG
@@ -26776,8 +26810,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_lionking,		// Lion King, The (Euro)
 	&BurnDrvnes_lionkingthe,	// Lion King, The (Europe)
 	&BurnDrvnes_lionkingthec,	// Lion King, The (Hack, Spanish v1.0)
+	&BurnDrvmd_lionkings,		// Lion King, The (Hack, Spanish)
 	&BurnDrvgg_lionkingj,		// Lion King, The (Jpn)
 	&BurnDrvgg_lionkingu,		// Lion King, The (USA)
+	&BurnDrvmd_lionking,		// Lion King, The (World)
 	&BurnDrvLiquidku,			// Liquid Kids (US)
 	&BurnDrvLiquidk,			// Liquid Kids (World)
 	&BurnSpecLiquidwar,			// Liquid War (48K) (HB)
@@ -26873,6 +26909,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvLosttombh,			// Lost Tomb (Hard)
 	&BurnSpeclostulumen,		// Lost Treasures of Tulum, The (English) (128K) (HB)
 	&BurnSpeclostulumes,		// Lost Treasures of Tulum, The (Spanish) (128K) (HB)
+	&BurnDrvmd_lostvik,			// Lost Vikings, The (Euro)
+	&BurnDrvmd_lostvikp,		// Lost Vikings, The (Euro, Prototype)
+	&BurnDrvmd_lostviks,		// Lost Vikings, The (Hack, Spanish)
+	&BurnDrvmd_lostviku,		// Lost Vikings, The (USA)
 	&BurnDrvMSX_lostwind,		// Lost Wind, The (Spanish) (HB)
 	&BurnDrvCpsLostwrldo,		// Lost Worlds (Japan Old ver.)
 	&BurnDrvCpsLostwrld,		// Lost Worlds (Japan)
@@ -32793,6 +32833,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_thorp1,			// Story of Thor, The (USA, Prototype, 19941017)
 	&BurnDrvmd_thorf,			// Story of Thor, The - A Successor of The Light (French)
 	&BurnDrvmd_thorj,			// Story of Thor, The - Hikari o Tsugumono (Jpn)
+	&BurnDrvmd_thorc,			// Story of Thor, The - Hikari o Tsugumono (T-Chi)
 	&BurnDrvStrfbomb,			// Strafe Bomb
 	&BurnSpecStranded,			// Stranded (48K) (HB)
 	&BurnSpecStranded25,		// Stranded 2.5 (128K) (HB)
@@ -34225,42 +34266,17 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmrflea,				// The Amazing Adventures of Mr. F. Lea
 	&BurnDrvAnteateruk,			// The Anteater (UK)
 	&BurnDrvMSX_apeman,			// The Apeman Strikes Again
-	&BurnDrvmd_aquagame,		// The Aquatic Games Starring James Pond and the Aquabats (Euro, USA)
-	&BurnDrvmd_aquagames,		// The Aquatic Games Starring James Pond and the Aquabats (Hack, Spanish)
 	&BurnDrvAstyanax,			// The Astyanax (EPROM version)
 	&BurnDrvAstyanaxa,			// The Astyanax (mask ROM version)
-	&BurnDrvmd_redcliffa,		// The Battle of Red Cliffs - Romance of the Three Kingdoms (Hacked out Protection?)
-	&BurnDrvmd_redcliff,		// The Battle of Red Cliffs - Romance of the Three Kingdoms
 	&BurnDrvBattroad,			// The Battle-Road
 	&BurnDrvnes_beatlesadv,		// The Beatles Adventures in Pepperland (GlobalHack)
 	&BurnDrvcv_bbears,			// The Berenstain Bears (Prototype)
-	&BurnDrvmd_berenss,			// The Berenstain Bears' Camping Adventure (Hack, Spanish)
-	&BurnDrvmd_berensp20,		// The Berenstain Bears' Camping Adventure (Prototype, 19940323)
-	&BurnDrvmd_berensp19,		// The Berenstain Bears' Camping Adventure (Prototype, 19940428)
-	&BurnDrvmd_berensp18,		// The Berenstain Bears' Camping Adventure (Prototype, 19940429)
-	&BurnDrvmd_berensp17,		// The Berenstain Bears' Camping Adventure (Prototype, 19940506)
-	&BurnDrvmd_berensp16,		// The Berenstain Bears' Camping Adventure (Prototype, 19940511)
-	&BurnDrvmd_berensp15,		// The Berenstain Bears' Camping Adventure (Prototype, 19940517)
-	&BurnDrvmd_berensp14,		// The Berenstain Bears' Camping Adventure (Prototype, 19940519)
-	&BurnDrvmd_berensp13,		// The Berenstain Bears' Camping Adventure (Prototype, 19940523)
-	&BurnDrvmd_berensp12,		// The Berenstain Bears' Camping Adventure (Prototype, 19940526)
-	&BurnDrvmd_berensp11,		// The Berenstain Bears' Camping Adventure (Prototype, 19940530)
-	&BurnDrvmd_berensp10,		// The Berenstain Bears' Camping Adventure (Prototype, 19940602)
-	&BurnDrvmd_berensp09,		// The Berenstain Bears' Camping Adventure (Prototype, 19940610)
 	&BurnDrvgg_berensp17,		// The Berenstain Bears' Camping Adventure (Prototype, 19940628)
-	&BurnDrvmd_berensp08,		// The Berenstain Bears' Camping Adventure (Prototype, 19940709)
 	&BurnDrvgg_berensp16,		// The Berenstain Bears' Camping Adventure (Prototype, 19940715-B)
-	&BurnDrvmd_berensp07,		// The Berenstain Bears' Camping Adventure (Prototype, 19940716)
-	&BurnDrvmd_berensp06,		// The Berenstain Bears' Camping Adventure (Prototype, 19940720)
 	&BurnDrvgg_berensp15,		// The Berenstain Bears' Camping Adventure (Prototype, 19940721)
 	&BurnDrvgg_berensp14,		// The Berenstain Bears' Camping Adventure (Prototype, 19940722)
 	&BurnDrvgg_berensp13,		// The Berenstain Bears' Camping Adventure (Prototype, 19940727)
 	&BurnDrvgg_berensp12,		// The Berenstain Bears' Camping Adventure (Prototype, 19940801)
-	&BurnDrvmd_berensp05,		// The Berenstain Bears' Camping Adventure (Prototype, 19940801)
-	&BurnDrvmd_berensp04,		// The Berenstain Bears' Camping Adventure (Prototype, 19940802)
-	&BurnDrvmd_berensp03,		// The Berenstain Bears' Camping Adventure (Prototype, 19940803)
-	&BurnDrvmd_berensp02,		// The Berenstain Bears' Camping Adventure (Prototype, 19940805)
-	&BurnDrvmd_berensp01,		// The Berenstain Bears' Camping Adventure (Prototype, 19940808)
 	&BurnDrvgg_berensp10,		// The Berenstain Bears' Camping Adventure (Prototype, 19940811)
 	&BurnDrvgg_berensp11,		// The Berenstain Bears' Camping Adventure (Prototype, 19940811-A)
 	&BurnDrvgg_berensp09,		// The Berenstain Bears' Camping Adventure (Prototype, 19940812)
@@ -34273,7 +34289,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_berensp01,		// The Berenstain Bears' Camping Adventure (Prototype, 19940826)
 	&BurnDrvgg_berensp02,		// The Berenstain Bears' Camping Adventure (Prototype, 19940826-B)
 	&BurnDrvgg_berens,			// The Berenstain Bears' Camping Adventure (USA)
-	&BurnDrvmd_berens,			// The Berenstain Bears' Camping Adventure (USA)
 	&BurnDrvBerlwallt,			// The Berlin Wall (bootleg ?)
 	&BurnDrvBerlwallk,			// The Berlin Wall (Korea)
 	&BurnDrvBerlwall,			// The Berlin Wall
@@ -34297,9 +34312,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBounty2,			// The Bounty (set 2)
 	&BurnDrvBounty,				// The Bounty
 	&BurnDrvsg1k_castle,		// The Castle (Jpn)
-	&BurnDrvmd_chaoseng,		// The Chaos Engine (Euro)
 	&BurnDrvmd_chaosengcs,		// The Chaos Engine (Hack, Amiga Colors and Sound Fix v1.01)
-	&BurnDrvmd_chaosen2,		// The Chaos Engine 2 (Euro, Prototype)
 	&BurnDrvgg_chessmst,		// The Chessmaster (Euro, USA)
 	&BurnDrvsms_circuit,		// The Circuit (Jpn)
 	&BurnDrvEdrandyj,			// The Cliffhanger - Edward Randy (Japan ver 3)
@@ -34319,7 +34332,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDealer,				// The Dealer
 	&BurnDrvThedeep,			// The Deep (Japan)
 	&BurnDrvMSX_dcrystal,		// The Demon Crystal (Jpn)
-	&BurnDrvmd_disneycl,		// The Disney Collection - Mickey and Donald (Euro)
 	&BurnDrvDbldynj,			// The Double Dynamites (Japan, 13NOV89)
 	&BurnDrvDbldynu,			// The Double Dynamites (US, 13NOV89)
 	&BurnDrvcv_hazzard,			// The Dukes of Hazzard
@@ -34354,8 +34366,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvtheglobpb,			// The Glob (Pac-Man hardware, bootleg)
 	&BurnDrvTheglob3,			// The Glob (set 3)
 	&BurnDrvTheglob,			// The Glob
-	&BurnDrvmd_mickeycms,		// The Great Circus Mystery Starring Mickey & Minnie (Hack, Spanish)
-	&BurnDrvmd_mickeycm,		// The Great Circus Mystery Starring Mickey & Minnie (USA)
 	&BurnDrvRagtimea,			// The Great Ragtime Show (Japan v1.3, 92.11.26)
 	&BurnDrvRagtime,			// The Great Ragtime Show (Japan v1.5, 92.12.07)
 	&BurnDrvmd_waldo,			// The Great Waldo Search (USA)
@@ -34385,7 +34395,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvJleagueo,			// The J.League 1994 (Japan)
 	&BurnDrvJleague,			// The J.League 1994 (Japan, Rev A)
 	&BurnDrvKaratour,			// The Karate Tournament
-	&BurnDrvmd_kickbox,			// The Kick Boxing (Jpn, Kor)
 	&BurnDrvKillbld100,			// The Killing Blade (V100, Taiwan)
 	&BurnDrvKillbld104,			// The Killing Blade (V104)
 	&BurnDrvKillbld106,			// The Killing Blade (V106)
@@ -34530,17 +34539,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSilkroad,			// The Legend of Silkroad
 	&BurnDrvtg_legaxe2,			// The Legendary Axe II
 	&BurnDrvtg_legaxe,			// The Legendary Axe
-	&BurnDrvmd_lionkings,		// The Lion King (Hack, Spanish)
 	&BurnDrvgg_lionkingp2,		// The Lion King (Prototype, 19940817)
 	&BurnDrvgg_lionkingp3,		// The Lion King (Prototype, 19940817-2)
 	&BurnDrvgg_lionkingp1,		// The Lion King (Prototype, 19940820)
-	&BurnDrvmd_lionking,		// The Lion King (World)
 	&BurnDrvLordofk,			// The Lord of King (Japan)
 	&BurnDrvDarkmist,			// The Lost Castle In Darkmist
-	&BurnDrvmd_lostvik,			// The Lost Vikings (Euro)
-	&BurnDrvmd_lostvikp,		// The Lost Vikings (Euro, Prototype)
-	&BurnDrvmd_lostviks,		// The Lost Vikings (Hack, Spanish)
-	&BurnDrvmd_lostviku,		// The Lost Vikings (USA)
 	&BurnDrvmd_lostwrld,		// The Lost World - Jurassic Park (Euro, USA)
 	&BurnDrvmd_lostwrlds,		// The Lost World - Jurassic Park (Hack, Spanish)
 	&BurnDrvgg_lostwrld,		// The Lost World - Jurassic Park (USA)
@@ -34639,7 +34642,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSrumblr3,			// The Speed Rumbler (set 3)
 	&BurnDrvMSX_spider,			// The Spider (Jpn)
 	&BurnDrvmd_steelemps,		// The Steel Empire (Hack, Spanish)
-	&BurnDrvmd_thorc,			// The Story of Thor - Hikari o Tsugumono (T-Chi)
 	&BurnDrvSuperspy,			// The Super Spy (NGM-011)(NGH-011)
 	&BurnDrvStooges3,			// The Three Stooges In Brides Is Brides (set 1)
 	&BurnDrvStooges3a,			// The Three Stooges In Brides Is Brides (set 2)

@@ -2501,7 +2501,7 @@ static void SuperJoy2Rotate() {
 	/// let's try not to over-optimize
 	UINT8 FakeDrvInputPort0[4] = {0, 0, 0, 0};
 	UINT8 FakeDrvInputPort1[4] = {0, 0, 0, 0};
-	UINT8 NeedsAutoFire[2] = {0, 0};
+	UINT8 NeedsSecondStick[2] = {0, 0};
 
 	// prepare for right-stick rotation
 	// this is not especially readable though
@@ -2509,12 +2509,14 @@ static void SuperJoy2Rotate() {
 		for (INT32 n = 0; n < 4; n++) {
 			UINT8* RotationInput = (!i) ? &FakeDrvInputPort0[0] : &FakeDrvInputPort1[0];
 			RotationInput[n] = DrvFakeInput[6 + i*4 + n];
-			NeedsAutoFire[i] |= RotationInput[n];
+			NeedsSecondStick[i] |= RotationInput[n];
 		}
 	}
 
 	for (INT32 i = 0; i < 2; i++) { // p1 = 0, p2 = 1
-		if (NeedsAutoFire[i]) { // or using Second Stick
+		if (!NeedsSecondStick[i])
+			nAutoFireCounter[i] = 0;
+		if (NeedsSecondStick[i]) { // or using Second Stick
 			UINT8 rot = Joy2Rotate(((!i) ? &FakeDrvInputPort0[0] : &FakeDrvInputPort1[0]));
 			if (rot != 0xff) {
 				nRotateTarget[i] = rot * rotate_gunpos_multiplier;
@@ -5841,6 +5843,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nRotateTry);
 		SCAN_VAR(nRotateHoldInput);
 		SCAN_VAR(nAutoFireCounter);
+		SCAN_VAR(nRotateTime);
 
 		SCAN_VAR(nExtraCycles);
 	}

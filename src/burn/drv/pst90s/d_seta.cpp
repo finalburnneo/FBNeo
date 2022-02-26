@@ -106,6 +106,12 @@ static UINT8 DrvDips[7];
 static UINT16 DrvInputs[7];
 static UINT8 DrvReset;
 
+static INT32 has_raster = 0; // for raster effect
+static INT32 raster_needs_update = 0;
+static INT32 lastline;
+static INT32 scanline;
+static void rasterUpdateDraw(); // forward
+
 // trackball stuff for Krazy Bowl & usclssic
 static INT32 trackball_mode = 0;
 static INT16 DrvAnalogPort0 = 0;
@@ -4010,12 +4016,14 @@ static void set_pcm_bank(INT32 data)
 #define SetaVidRAMCtrlWriteWord(num, base)						\
 	if ((address >= (base + 0)) && address <= (base + 5)) {				\
 		*((UINT16*)(DrvVIDCTRLRAM##num + (address & 0x06))) = BURN_ENDIAN_SWAP_INT16(data);	\
+		raster_needs_update = 1;				\
 		return;									\
 	}
 
 #define SetaVidRAMCtrlWriteByte(num, base)				\
 	if ((address >= (base + 0)) && (address <= (base + 5))) {	\
 		DrvVIDCTRLRAM##num[(address & 0x07)^1] = data;		\
+		raster_needs_update = 1;		\
 		return;							\
 	}
 
@@ -7278,6 +7286,8 @@ static INT32 DrvExit()
 	BurnFree (DrvGfxTransMask[2]);
 	BurnFree (DrvGfxTransMask[1]);
 
+	has_raster = 0;
+
 	return 0;
 }
 
@@ -7533,7 +7543,7 @@ static void seta_update(INT32 enable_tilemap2, INT32 tmap_flip)
 
 	layer_enable &= nBurnLayer;
 
-	BurnTransferClear();
+	if (has_raster == 0) BurnTransferClear();
 
 	if (order & 1)
 	{
@@ -7574,11 +7584,47 @@ static INT32 setaNoLayersDraw()
 	return 0;
 }
 
-static INT32 seta1layerDraw()
+static void rasterBeginDraw()
 {
-	DrvPaletteRecalc();
+	if (!pBurnDraw) return;
+
+	BurnTransferClear();
+
+	raster_needs_update = 0;
+	lastline = 0;
+}
+
+static void rasterUpdateDraw()
+{
+	if (!pBurnDraw || !has_raster) return;
+
+	if (scanline > nScreenHeight) scanline = nScreenHeight; // endofframe
+
+	if (scanline < 0 || scanline > nScreenHeight || scanline == lastline || lastline > scanline) return;
+	//bprintf(0, _T("%07d: partial %d - %d.\n"), nCurrentFrame, lastline, scanline);
+
+	GenericTilesSetClip(0, nScreenWidth, lastline, scanline);
 
 	seta_update(0, 0);
+
+	GenericTilesClearClip();
+
+	lastline = scanline;
+}
+
+static INT32 seta1layerDraw()
+{
+	if (has_raster == 0) DrvPaletteRecalc();
+
+	if (has_raster == 0) seta_update(0, 0);
+
+	if (has_raster) {
+		// finish drawing the frame (in raster chain)
+		// -or- draw the frame
+		DrvPaletteRecalc();
+
+		rasterUpdateDraw();
+	}
 
 	BurnTransferCopy(DrvPalette);
 
@@ -7780,23 +7826,32 @@ static INT32 DrvFrameMsgundam()
 
 static void Drv68k_Calibr50_FrameCallback()
 {
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 262;
 	INT32 nCyclesTotal[2] = { (8000000 * 100) / refresh_rate, (2000000 * 100) / refresh_rate}; //(cpuspeed * 100) / refresh_rate, ((cpuspeed/4) * 100) / refresh_rate};
 	INT32 nCyclesDone[2]  = { 0, 0 };
 
 	SekOpen(0);
 	M6502Open(0);
 
+	if (has_raster) rasterBeginDraw();
+
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
+		scanline = i;
+
+		if (i == (nInterleave - 1)) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if ((i%64) == 63) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+
 		CPU_RUN(0, Sek);
 
-		if (i == 240) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-		if ((i%64) == 63) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (raster_needs_update && scanline > -1) {
+			rasterUpdateDraw();
+			raster_needs_update = 0;
+		}
 
 		CPU_RUN(1, M6502);
 		if (usclssic) {
-			if (i == 240) M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			if (i == (nInterleave - 1)) M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		} else {// calibr50
 			if ((i%64) == 63) M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
@@ -11146,6 +11201,8 @@ static INT32 calibr50Init()
 	watchdog_enable = 1;
 	DrvSetColorOffsets(0, 0, 0);
 	DrvSetVideoOffsets(-1, 2, -3, -2);
+
+	has_raster = 1;
 
 	INT32 nRet = DrvInit(calibr5068kInit, 8000000, SET_IRQLINES(0x80, 0x80) /*custom*/, NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 1, -1));
 

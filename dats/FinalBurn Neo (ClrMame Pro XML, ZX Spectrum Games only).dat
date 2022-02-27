@@ -1775,6 +1775,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="btlzone" romof="spectrum">
+		<description>Battlezone (48K)</description>
+		<year>1984</year>
+		<manufacturer>Quicksilva</manufacturer>
+		<rom name="Battlezone 48K (1984)(Quicksilva).tap" size="36210" crc="af085e02"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="batty" romof="spectrum">
 		<comment>Press 'A' for 1P options and 'B' for 2P options</comment>
 		<description>Batty (48K)</description>
@@ -1815,6 +1824,24 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bhead" romof="spectrum">
+		<description>Beach-Head (48K)</description>
+		<year>1984</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Beach-Head 48K (1984)(U.S. Gold).tap" size="48048" crc="429ecb91"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bhead2" romof="spectrum">
+		<description>Beach-Head II - The Dictator Strikes Back! (48K)</description>
+		<year>1985</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Beach-Head II - The Dictator Strikes Back! 48K (1985)(U.S. Gold).tap" size="48857" crc="e977cfce"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="beanbros" romof="spec128">
 		<comment>Homebrew, Press 'down' to change character</comment>
 		<description>Bean Brothers (128K) (HB)</description>
@@ -1823,6 +1850,19 @@
 		<rom name="Bean Brothers (2018)(Stonechat Productions).tap" size="55722" crc="af989916"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bfeastie" romof="spec1282a">
+		<comment>Homebrew</comment>
+		<description>Beastie Feastie (128K) (HB)</description>
+		<year>2005</year>
+		<manufacturer>Beyker Soft</manufacturer>
+		<rom name="Beastie Feastie 128K2a (2005)(Beyker Soft).tap" size="84411" crc="f1c07740"/>
+		<rom name="zx128_2a_0.rom" merge="zx128_2a_0.rom" size="16384" crc="30c9f490"/>
+		<rom name="zx128_2a_1.rom" merge="zx128_2a_1.rom" size="16384" crc="a7916b3f"/>
+		<rom name="zx128_2a_2.rom" merge="zx128_2a_2.rom" size="16384" crc="c9a0b748"/>
+		<rom name="zx128_2a_3.rom" merge="zx128_2a_3.rom" size="16384" crc="b88fd6e3"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1889,6 +1929,27 @@
 		<year>1989</year>
 		<manufacturer>Virgin Mastertronic</manufacturer>
 		<rom name="Billy the Kid (1989)(Virgin Mastertronic).tap" size="34510" crc="bc4e886c"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="binland" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Binary Land (128K) (HB, v1.7)</description>
+		<year>2020</year>
+		<manufacturer>Joflof</manufacturer>
+		<rom name="Binary Land v1.7 128K (2020)(Joflof).z80" size="45797" crc="1ce4134e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="binland16" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Binary Land (16K) (HB, v1.7)</description>
+		<year>2020</year>
+		<manufacturer>Joflof</manufacturer>
+		<rom name="Binary Land v1.7 16K (2020)(Joflof).z80" size="14855" crc="b4523bc7"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3214,6 +3275,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="chubby" romof="spec128">
+		<description>Chubby Gristle (128K)</description>
+		<year>1988</year>
+		<manufacturer>Grandslam</manufacturer>
+		<rom name="Chubby Gristle 128K (1988)(Grandslam).tap" size="52414" crc="46a7bdd3"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="chuckegg" romof="spectrum">
 		<description>Chuckie Egg (48K)</description>
 		<year>1983</year>
@@ -3411,6 +3482,17 @@
 		<manufacturer>Ocean</manufacturer>
 		<rom name="Combat School 48K (1987)(Ocean).tap" size="109676" crc="14c7b9ea"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="comechip" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Comeme el Chip (128K) (HB)</description>
+		<year>2019</year>
+		<manufacturer>Beyker Soft</manufacturer>
+		<rom name="Comeme el Chip 128K (2019)(Beyker Soft).tap" size="43332" crc="1ef8fe2b"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3668,6 +3750,16 @@
 		<year>2021</year>
 		<manufacturer>Furillo Productions</manufacturer>
 		<rom name="La Coza De La Poza (2021)(Furillo Productions).tap" size="120638" crc="315bbb22"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="crackdown" romof="spec128">
+		<description>Crack Down (128K)</description>
+		<year>1990</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Crack Down 128K (1990)(U.S. Gold).tap" size="189590" crc="c82c010e"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -4284,6 +4376,16 @@
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Deep, The (1988)(U.S. Gold).tap" size="30931" crc="ac4f747e"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="defcom" romof="spec128">
+		<description>Defcom (128K)</description>
+		<year>1986</year>
+		<manufacturer>Quicksilva</manufacturer>
+		<rom name="Defcom 128K (1986)(Quicksilva).tap" size="55692" crc="0f2a7a1b"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -7426,6 +7528,17 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="huntbuck" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Hunt Buck - Nuclear Defence (Russian) (128K) (HB)</description>
+		<year>2019</year>
+		<manufacturer>Red Triangle</manufacturer>
+		<rom name="Hunt Buck - Nuclear Defence RU 128K (2019)(Red Triangle).tap" size="45254" crc="42bf6f68"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="hunter" romof="spec128">
 		<description>Hunter (128K)</description>
 		<year>1991</year>
@@ -8205,7 +8318,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jetbikesim5" cloneof="jetbikesim2" romof="jetbikesim2">
-		<description>Jet Bike Simulator - Coasts Expert</description>
+		<description>Jet Bike Simulator - Coasts Expert (48K)</description>
 		<year>1988</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Jet Bike Simulator - Coasts Expert (1988)(Codemasters).z80" size="38206" crc="c3d570e4"/>
@@ -8214,7 +8327,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jetbikesim2" romof="spectrum">
-		<description>Jet Bike Simulator - Coasts Standard</description>
+		<description>Jet Bike Simulator - Coasts Standard (48K)</description>
 		<year>1988</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Jet Bike Simulator - Coasts Standard (1988)(Codemasters).z80" size="37757" crc="2311bdb7"/>
@@ -8223,7 +8336,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jetbikesim6" cloneof="jetbikesim3" romof="jetbikesim3">
-		<description>Jet Bike Simulator - Docks Expert</description>
+		<description>Jet Bike Simulator - Docks Expert (48K)</description>
 		<year>1988</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Jet Bike Simulator - Docks Expert (1988)(Codemasters).z80" size="37673" crc="8e1e9ee5"/>
@@ -8232,7 +8345,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jetbikesim3" romof="spectrum">
-		<description>Jet Bike Simulator - Docks Standard</description>
+		<description>Jet Bike Simulator - Docks Standard (48K)</description>
 		<year>1988</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Jet Bike Simulator - Docks Standard (1988)(Codemasters).z80" size="37266" crc="94a6c7d8"/>
@@ -8241,7 +8354,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jetbikesim4" cloneof="jetbikesim1" romof="jetbikesim1">
-		<description>Jet Bike Simulator - Lakes Expert</description>
+		<description>Jet Bike Simulator - Lakes Expert (48K)</description>
 		<year>1988</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Jet Bike Simulator - Lakes Expert (1988)(Codemasters).z80" size="37906" crc="3681dac9"/>
@@ -8250,7 +8363,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jetbikesim1" romof="spectrum">
-		<description>Jet Bike Simulator - Lakes Standard</description>
+		<description>Jet Bike Simulator - Lakes Standard (48K)</description>
 		<year>1988</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Jet Bike Simulator - Lakes Standard (1988)(Codemasters).z80" size="37457" crc="4732d30c"/>
@@ -9455,6 +9568,26 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="magtower" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Magical Tower Adventure - 2019 Version (48K) (HB)</description>
+		<year>2019</year>
+		<manufacturer>Timmy</manufacturer>
+		<rom name="Magical Tower Adventure 2019 Version (2019)(Timmy).tap" size="29119" crc="31340284"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="magtowerold" cloneof="magtower" romof="magtower">
+		<comment>Homebrew</comment>
+		<description>Magical Tower Adventure - Mini Version (48K) (HB)</description>
+		<year>2016</year>
+		<manufacturer>Timmy</manufacturer>
+		<rom name="Magical Tower Adventure Mini Version (2016)(Timmy).tap" size="30281" crc="92b80407"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="msolitaire" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Mahjong Solitaire (128K) (HB)</description>
@@ -9492,6 +9625,17 @@
 		<year>2019</year>
 		<manufacturer>Sanctum Gamers</manufacturer>
 		<rom name="Malignant Gore, The (2019)(Sanctum Gamers).tap" size="41830" crc="e4db2507"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mangoldjoy" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Man with the Golden Joystick, The (128K) (HB, v1.2)</description>
+		<year>2022</year>
+		<manufacturer>Sloanysoft</manufacturer>
+		<rom name="Man with the Golden Joystick, The v1.2 (2022)(Sloanysoft).tap" size="46063" crc="b12c7a1a"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -13080,22 +13224,13 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="stunrun128k" romof="spec128">
+	<game name="stunrun" romof="spec128">
 		<description>S.T.U.N. Runner (128K)</description>
 		<year>1990</year>
 		<manufacturer>Domark</manufacturer>
-		<rom name="S.T.U.N. Runner 128K (1990)(Domark).z80" size="54349" crc="e6abdc96"/>
+		<rom name="S.T.U.N. Runner 128K (1990)(Domark).tap" size="60868" crc="3aec4137"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="stunrun48k" cloneof="stunrun128k" romof="stunrun128k">
-		<description>S.T.U.N. Runner (48K)</description>
-		<year>1990</year>
-		<manufacturer>Domark</manufacturer>
-		<rom name="S.T.U.N. Runner 48K (1990)(Domark).z80" size="35693" crc="96a08e01"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -14218,6 +14353,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="specross" romof="spectrum">
+		<comment>1: up - 9: left - 0: right</comment>
+		<description>Spectrum Cross (16K)</description>
+		<year>1983</year>
+		<manufacturer>Your Computer</manufacturer>
+		<rom name="Spectrum Cross 16K (1983)(Your Computer).tap" size="8210" crc="f16574c6"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="spellbound" romof="spec128">
 		<comment>A, Z and SPACE to choose and set main options</comment>
 		<description>Spellbound (128K)</description>
@@ -14308,6 +14453,17 @@
 		<manufacturer>Andy Farrell</manufacturer>
 		<rom name="Springbot - Mars Attack! (2020)(Andy Farrell).tap" size="44477" crc="5345e0ec"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sprouty" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Sprouty (128K) (HB)</description>
+		<year>2019</year>
+		<manufacturer>Stonechat Productions</manufacturer>
+		<rom name="Sprouty 128K (2019)(Stonechat Productions).tap" size="47357" crc="1fca6f57"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -14706,18 +14862,9 @@
 		<description>Stunt Car Racer (128K)</description>
 		<year>1989</year>
 		<manufacturer>Micro Style</manufacturer>
-		<rom name="Stunt Car Racer (1989)(Micro Style)[128K].z80" size="44695" crc="b3abb3a6"/>
+		<rom name="Stunt Car Racer 128K (1989)(Micro Style).tap" size="55835" crc="fdd995ec"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="stuntcar_48" cloneof="stuntcar" romof="stuntcar">
-		<description>Stunt Car Racer (48K)</description>
-		<year>1989</year>
-		<manufacturer>Micro Style</manufacturer>
-		<rom name="Stunt Car Racer (1989)(Micro Style).z80" size="36727" crc="c02a3c1f"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -15187,6 +15334,15 @@
 		<rom name="Tank battle (2020)(kas29).tap" size="44955" crc="2d909b3c"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tapper" romof="spectrum">
+		<description>Tapper (48K)</description>
+		<year>1985</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Tapper 48K (1985)(U.S. Gold).tap" size="48800" crc="dcc02c66"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

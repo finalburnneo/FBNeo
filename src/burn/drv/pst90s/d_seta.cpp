@@ -1185,10 +1185,8 @@ static struct BurnInputInfo Calibr50InputList[] = {
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3 (rotate)",		BIT_DIGITAL,	DrvFakeInput + 4,	"p1 fire 3"	},
-	{"P1 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 6,  "p1 up 2" }, // 6
-	{"P1 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 7,  "p1 down 2" }, // 7
-	{"P1 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 8,  "p1 left 2" }, // 8
-	{"P1 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 9,  "p1 right 2" }, // 9
+	A("P1 Aim X", BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	A("P1 Aim Y", BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
@@ -1199,10 +1197,8 @@ static struct BurnInputInfo Calibr50InputList[] = {
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 	{"P2 Button 3 (rotate)",		BIT_DIGITAL,	DrvFakeInput + 5,	"p2 fire 3"	},
-	{"P2 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 10, "p2 up 2" },
-	{"P2 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 11, "p2 down 2" },
-	{"P2 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 12, "p2 left 2" },
-	{"P2 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 13, "p2 right 2" },
+	A("P2 Aim X", BIT_ANALOG_REL, &DrvAnalogPort2,"p2 x-axis"),
+	A("P2 Aim Y", BIT_ANALOG_REL, &DrvAnalogPort3,"p2 y-axis"),
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy3 + 5,	"service"	},
@@ -1435,7 +1431,7 @@ STDDIPINFO(Usclssic)
 
 static struct BurnDIPInfo Calibr50DIPList[]=
 {
-	DIP_OFFSET(0x1d)
+	DIP_OFFSET(0x19)
 
 	{0x00, 0xff, 0xff, 0xfe, NULL			},
 	{0x01, 0xff, 0xff, 0xfd, NULL			},
@@ -5264,6 +5260,53 @@ static UINT8 Joy2Rotate(UINT8 *joy) { // ugly code, but the effect is awesome. -
 	return 0xff;
 }
 
+static UINT8 Joy2Rotate16(UINT8 *joy) { // even more ugly code
+	// Changing this to 16 directions
+	// 0 is up, 2 is up-right, 4 is right, 6 is down-right
+	// 8 is down, 10 is down-left, 12 is left, 14 is up-left
+	if (joy[0] && joy[2]) {
+		if (joy[0] > joy[2])
+			return 15;    // up+ left
+		else if (joy[0] < joy[2])
+			return 13;    // up left+
+		else
+			return 14;    // up left
+	}
+	if (joy[0] && joy[3]) {
+		if (joy[0] > joy[3])
+			return 1;    // up+ right
+		else if (joy[0] < joy[3])
+			return 3;    // up right+
+		else
+			return 2;     // up right
+	}
+
+	if (joy[1] && joy[2]) {
+		if (joy[1] > joy[2])
+			return 9;    // down+ left
+		else if (joy[1] < joy[2])
+			return 11;    // down left+
+		else
+			return 10;    // down left
+	}
+
+	if (joy[1] && joy[3]) {
+		if (joy[1] > joy[3])
+			return 7;    // down+ right
+		else if (joy[1] < joy[3])
+			return 5;    // down right+
+		else
+			return 6;    // down right
+	}
+
+	if (joy[0]) return 0;    // up
+	if (joy[1]) return 8;    // down
+	if (joy[2]) return 12;    // left
+	if (joy[3]) return 4;    // right
+
+	return 0xff;
+}
+
 static int dialRotation(INT32 playernum) {
     // p1 = 0, p2 = 1
 	UINT8 player[2] = { 0, 0 };
@@ -5367,10 +5410,10 @@ static void RotateDoTick() {
 	if (game_rotates == 1) { // calibr50 switcheroo
 		if (Drv68KRAM[0x4ede] == 0xff) {
 			// P1/P2 in the airplane
-			RotateSetGunPosRAM(Drv68KRAM + (0x0e69-1), Drv68KRAM + (0x0e89-1), 2);
+			RotateSetGunPosRAM(Drv68KRAM + (0x0e69-1), Drv68KRAM + (0x0e89-1), 1);
 		} else {
 			// P1/P2 normal.
-			RotateSetGunPosRAM(Drv68KRAM + (0x2503-1), Drv68KRAM + (0x2527-1), 2);
+			RotateSetGunPosRAM(Drv68KRAM + (0x2503-1), Drv68KRAM + (0x2527-1), 1);
 		}
 	}
 
@@ -5410,10 +5453,17 @@ static void SuperJoy2Rotate() {
 		if (!NeedsSecondStick[i])
 			nAutoFireCounter[i] = 0;
 		if (NeedsSecondStick[i]) { // or using Second Stick
-			UINT8 rot = Joy2Rotate(((!i) ? &FakeDrvInputPort0[0] : &FakeDrvInputPort1[0]));
+			UINT8 rot;
+			if (game_rotates == 1) {
+				// calibr50 uses 16 directions
+				rot = Joy2Rotate16(((!i) ? &FakeDrvInputPort0[0] : &FakeDrvInputPort1[0]));
+			} else {
+				rot = Joy2Rotate(((!i) ? &FakeDrvInputPort0[0] : &FakeDrvInputPort1[0]));
+			}
 			if (rot != 0xff) {
 				nRotateTarget[i] = rot * rotate_gunpos_multiplier;
 			}
+			
 			nRotateTry[i] = 0;
 
 			if (~DrvDips[3] & 1) {
@@ -5444,11 +5494,40 @@ static void SuperJoy2Rotate() {
 
 // end Rotation-handler
 
+static void ConvertAnalogToRotate() {
+	// converts analog inputs to something that the existing rotate logic can work with
+	INT16 AnalogInputs[4] = { 0, 0, 0, 0 }; // p1y, p1x, p2y, p2x - compatibility with Joy2Rotate
+	INT16 AnalogPorts[4] = { DrvAnalogPort1, DrvAnalogPort0, DrvAnalogPort3, DrvAnalogPort2 };
+
+	// clear fake inputs
+	// Note: DrvFakeInput 6/10 - up, 7/11 - down, 8/12 - left, 9/13 -right
+	for (int i = 6; i < 14; i++)
+		DrvFakeInput[i] = 0;
+	
+	// convert these x and y to something Joy2Rotate could read.
+	for (int i = 0; i < 4; i++) {
+		// ProcessAnalog() will convert the analog value to: 0x00 full left, 0x80 center, 0xff full right
+		// Range 16 makes it too biased towards the directions between diagonals and up/down/left/right
+		// Range 8 makes it more biased towards the diagonals, seems to be the sweet spot
+		UINT8 AnalogRange = 8;
+
+		AnalogInputs[i] = ProcessAnalog(AnalogPorts[i], 0, INPUT_DEADZONE, 0x00, 0xff) / ((256/AnalogRange));
+		if (AnalogInputs[i] < AnalogRange/2) {
+			DrvFakeInput[6 + 2*i] = AnalogRange/2-AnalogInputs[i];
+		} else if (AnalogInputs[i] > AnalogRange/2) {
+			DrvFakeInput[6 + 2*i + 1] = AnalogInputs[i]-AnalogRange/2;
+		}
+	}
+
+}
+
 static UINT16 calibr50_input_read(INT32 offset)
 {
 	INT32 dir1 = dialRotation(0); 					// analog port
 	INT32 dir2 = dialRotation(1);					// analog port
-
+	
+	ConvertAnalogToRotate();
+	
 	switch (offset & 0x1e)
 	{
 		case 0x00:	return DrvInputs[0];		// p1

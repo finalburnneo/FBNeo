@@ -15622,10 +15622,10 @@ struct BurnDriver BurnDrvnes_takameivic = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Wai Wai World 2 - SOS!! Paseri Jou (T-Chi)
+// Wai Wai World 2 - SOS!! Paseri Jou (T-Chi, v1.1)
 // http://www.nesbbs.com/bbs/thread-53323-1-1.html
 static struct BurnRomInfo nes_waiwaiwor2cRomDesc[] = {
-	{ "Wai Wai World 2 - SOS!! Paseri Jou (T-Chi).nes",          786448, 0x7eb0796e, BRF_ESS | BRF_PRG },
+	{ "Wai Wai World 2 - SOS!! Paseri Jou (T-Chi, v1.1).nes",          786448, 0xb03f3551, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_waiwaiwor2c)
@@ -15633,7 +15633,7 @@ STD_ROM_FN(nes_waiwaiwor2c)
 
 struct BurnDriver BurnDrvnes_waiwaiwor2c = {
 	"nes_waiwaiwor2c", "nes_waiwaiwor2", NULL, NULL, "2022",
-	"Wai Wai World 2 - SOS!! Paseri Jou (T-Chi)\0", NULL, "\u62d2\u7edd\u878d\u5316", "Miscellaneous",
+	"Wai Wai World 2 - SOS!! Paseri Jou (T-Chi, v1.1)\0", NULL, "DMG Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_waiwaiwor2cRomInfo, nes_waiwaiwor2cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15880,7 +15880,7 @@ STD_ROM_FN(nes_golgo13sc)
 
 struct BurnDriver BurnDrvnes_golgo13sc = {
 	"nes_golgo13sc", "nes_golgo13", NULL, NULL, "2021",
-	"Golgo 13 - Daiisshou - Kamigami no Tasogare (T-Chi)\0", NULL, "MEZARANSU", "Miscellaneous",
+	"Golgo 13 - Daiisshou - Kamigami no Tasogare (T-Chi)\0", NULL, "DMG Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_golgo13scRomInfo, nes_golgo13scRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

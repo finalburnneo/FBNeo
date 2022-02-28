@@ -6189,7 +6189,7 @@
 		<comment>Hack</comment>
 		<description>Golgo 13 - Daiisshou - Kamigami no Tasogare (T-Chi)</description>
 		<year>2021</year>
-		<manufacturer>MEZARANSU</manufacturer>
+		<manufacturer>DMG Team</manufacturer>
 		<rom name="Golgo 13 - Daiisshou - Kamigami no Tasogare (T-Chi).nes" size="524304" crc="9671760e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -15869,10 +15869,10 @@
 	</game>
 	<game name="waiwaiwor2c" cloneof="waiwaiwor2" romof="waiwaiwor2">
 		<comment>Hack</comment>
-		<description>Wai Wai World 2 - SOS!! Paseri Jou (T-Chi)</description>
+		<description>Wai Wai World 2 - SOS!! Paseri Jou (T-Chi, v1.1)</description>
 		<year>2022</year>
-		<manufacturer>拒绝融化</manufacturer>
-		<rom name="Wai Wai World 2 - SOS!! Paseri Jou (T-Chi).nes" size="786448" crc="7eb0796e"/>
+		<manufacturer>DMG Team</manufacturer>
+		<rom name="Wai Wai World 2 - SOS!! Paseri Jou (T-Chi, v1.1).nes" size="786448" crc="b03f3551"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

@@ -35800,7 +35800,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_waiwaiworldc,	// Wai Wai World (T-Chi)
 	&BurnDrvnes_waiwaiworld,	// Wai Wai World (T-Eng)
 	&BurnDrvnes_waiwaiwor2j,	// Wai Wai World 2 - SOS!! Paseri Jou (Japan)
-	&BurnDrvnes_waiwaiwor2c,	// Wai Wai World 2 - SOS!! Paseri Jou (T-Chi)
+	&BurnDrvnes_waiwaiwor2c,	// Wai Wai World 2 - SOS!! Paseri Jou (T-Chi, v1.1)
 	&BurnDrvnes_waiwaiwor2,		// Wai Wai World 2 - SOS!! Paseri Jou (T-Eng)
 	&BurnDrvsms_waimanu,		// Waimanu: Scary Monsters Saga (HB)
 	&BurnDrvMj4simai,			// Wakakusamonogatari Mahjong Yonshimai (Japan)

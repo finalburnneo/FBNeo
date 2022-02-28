@@ -5260,48 +5260,38 @@ static UINT8 Joy2Rotate(UINT8 *joy) { // ugly code, but the effect is awesome. -
 	return 0xff;
 }
 
+#define Rotate16CheckSector(num, joy0, joy1) \
+{ \
+	if (joy0 && joy1) { \
+		if (joy0 > joy1) \
+			return calibr50_sectors[num][0]; \
+		else if (joy0 < joy1) \
+			return calibr50_sectors[num][1]; \
+		else \
+			return calibr50_sectors[num][2]; \
+	} \
+}
+
 static UINT8 Joy2Rotate16(UINT8 *joy) { // even more ugly code
 	// Changing this to 16 directions
 	// 0 is up, 2 is up-right, 4 is right, 6 is down-right
 	// 8 is down, 10 is down-left, 12 is left, 14 is up-left
-	if (joy[0] && joy[2]) {
-		if (joy[0] > joy[2])
-			return 15;    // up+ left
-		else if (joy[0] < joy[2])
-			return 13;    // up left+
-		else
-			return 14;    // up left
-	}
-	if (joy[0] && joy[3]) {
-		if (joy[0] > joy[3])
-			return 1;    // up+ right
-		else if (joy[0] < joy[3])
-			return 3;    // up right+
-		else
-			return 2;     // up right
-	}
 
-	if (joy[1] && joy[2]) {
-		if (joy[1] > joy[2])
-			return 9;    // down+ left
-		else if (joy[1] < joy[2])
-			return 11;    // down left+
-		else
-			return 10;    // down left
-	}
+	static const UINT8 calibr50_sectors[4][3] = {
+		{ 15, 13, 14 }, // up+ left, up left+, up left
+		{  1,  3,  2 }, // up+ right, up right+, up right
+		{  9, 11, 10 }, // down+ left, down left+, down left
+		{  7,  5,  6 }  // down+ right, down right+, down right
+	};
 
-	if (joy[1] && joy[3]) {
-		if (joy[1] > joy[3])
-			return 7;    // down+ right
-		else if (joy[1] < joy[3])
-			return 5;    // down right+
-		else
-			return 6;    // down right
-	}
+	Rotate16CheckSector(0, joy[0], joy[2]);
+	Rotate16CheckSector(1, joy[0], joy[3]);
+	Rotate16CheckSector(2, joy[1], joy[2]);
+	Rotate16CheckSector(3, joy[1], joy[3]);
 
 	if (joy[0]) return 0;    // up
 	if (joy[1]) return 8;    // down
-	if (joy[2]) return 12;    // left
+	if (joy[2]) return 12;   // left
 	if (joy[3]) return 4;    // right
 
 	return 0xff;
@@ -5433,14 +5423,42 @@ static void RotateDoTick() {
 	}
 }
 
+static void ProcessAnalogInputs() {
+	// converts analog inputs to something that the existing rotate logic can work with
+	INT16 AnalogInputs[4] = { 0, 0, 0, 0 }; // p1y, p1x, p2y, p2x - compatibility with Joy2Rotate
+	INT16 AnalogPorts[4] = { DrvAnalogPort1, DrvAnalogPort0, DrvAnalogPort3, DrvAnalogPort2 };
+
+	// clear fake inputs
+	// Note: DrvFakeInput 6/10 - up, 7/11 - down, 8/12 - left, 9/13 - right
+	for (int i = 6; i < 14; i++)
+		DrvFakeInput[i] = 0;
+
+	// convert these x and y to something Joy2Rotate could read.
+	for (int i = 0; i < 4; i++) {
+		// ProcessAnalog() will convert the analog value to: 0x00 full left, 0x80 center, 0xff full right
+		// Range 16 makes it too biased towards the directions between diagonals and up/down/left/right
+		// Range 8 makes it more biased towards the diagonals, seems to be the sweet spot
+		UINT8 AnalogRange = 8;
+
+		AnalogInputs[i] = ProcessAnalog(AnalogPorts[i], 0, INPUT_DEADZONE, 0x00, 0xff) / ((256/AnalogRange));
+		if (AnalogInputs[i] < AnalogRange/2) {
+			DrvFakeInput[6 + 2*i] = AnalogRange/2-AnalogInputs[i];
+		} else if (AnalogInputs[i] > AnalogRange/2) {
+			DrvFakeInput[6 + 2*i + 1] = AnalogInputs[i]-AnalogRange/2;
+		}
+	}
+}
 
 static void SuperJoy2Rotate() {
-	UINT8 FakeDrvInputPort0[4] = {0, 0, 0, 0};
-	UINT8 FakeDrvInputPort1[4] = {0, 0, 0, 0};
-	UINT8 NeedsSecondStick[2] = {0, 0};
+	UINT8 FakeDrvInputPort0[4] = { 0, 0, 0, 0 };
+	UINT8 FakeDrvInputPort1[4] = { 0, 0, 0, 0 };
+	UINT8 NeedsSecondStick[2] = { 0, 0 };
 
 	// prepare for right-stick rotation
 	// this is not especially readable though
+
+	ProcessAnalogInputs();
+
 	for (INT32 i = 0; i < 2; i++) {
 		for (INT32 n = 0; n < 4; n++) {
 			UINT8* RotationInput = (!i) ? &FakeDrvInputPort0[0] : &FakeDrvInputPort1[0];
@@ -5452,7 +5470,7 @@ static void SuperJoy2Rotate() {
 	for (INT32 i = 0; i < 2; i++) { // p1 = 0, p2 = 1
 		if (!NeedsSecondStick[i])
 			nAutoFireCounter[i] = 0;
-		if (NeedsSecondStick[i]) { // or using Second Stick
+		if (NeedsSecondStick[i]) { // we've got input from the second stick
 			UINT8 rot;
 			if (game_rotates == 1) {
 				// calibr50 uses 16 directions
@@ -5477,7 +5495,11 @@ static void SuperJoy2Rotate() {
 			UINT8 rot = Joy2Rotate(((!i) ? &DrvJoy1[0] : &DrvJoy2[0]));
 			if (rot != 0xff) {
 				//bprintf(0, _T("joy2rotate[%x] = %X\n"), i, rot);
-				nRotateTarget[i] = rot * rotate_gunpos_multiplier;
+				if (game_rotates == 1) {
+					nRotateTarget[i] = rot * 2; // convert 8-way to 16-way (multiplier is 1 for the analog inputs)
+				} else {
+					nRotateTarget[i] = rot * rotate_gunpos_multiplier;
+				}
 			}
 			//DrvInput[i] &= ~0xf; // cancel out directionals since they are used to rotate here.
 			DrvInputs[i] = (DrvInputs[i] & ~0xf) | (nRotateHoldInput[i] & 0xf); // for midnight resistance! be able to duck + change direction of gun.
@@ -5494,40 +5516,11 @@ static void SuperJoy2Rotate() {
 
 // end Rotation-handler
 
-static void ConvertAnalogToRotate() {
-	// converts analog inputs to something that the existing rotate logic can work with
-	INT16 AnalogInputs[4] = { 0, 0, 0, 0 }; // p1y, p1x, p2y, p2x - compatibility with Joy2Rotate
-	INT16 AnalogPorts[4] = { DrvAnalogPort1, DrvAnalogPort0, DrvAnalogPort3, DrvAnalogPort2 };
-
-	// clear fake inputs
-	// Note: DrvFakeInput 6/10 - up, 7/11 - down, 8/12 - left, 9/13 -right
-	for (int i = 6; i < 14; i++)
-		DrvFakeInput[i] = 0;
-	
-	// convert these x and y to something Joy2Rotate could read.
-	for (int i = 0; i < 4; i++) {
-		// ProcessAnalog() will convert the analog value to: 0x00 full left, 0x80 center, 0xff full right
-		// Range 16 makes it too biased towards the directions between diagonals and up/down/left/right
-		// Range 8 makes it more biased towards the diagonals, seems to be the sweet spot
-		UINT8 AnalogRange = 8;
-
-		AnalogInputs[i] = ProcessAnalog(AnalogPorts[i], 0, INPUT_DEADZONE, 0x00, 0xff) / ((256/AnalogRange));
-		if (AnalogInputs[i] < AnalogRange/2) {
-			DrvFakeInput[6 + 2*i] = AnalogRange/2-AnalogInputs[i];
-		} else if (AnalogInputs[i] > AnalogRange/2) {
-			DrvFakeInput[6 + 2*i + 1] = AnalogInputs[i]-AnalogRange/2;
-		}
-	}
-
-}
-
 static UINT16 calibr50_input_read(INT32 offset)
 {
 	INT32 dir1 = dialRotation(0); 					// analog port
 	INT32 dir2 = dialRotation(1);					// analog port
-	
-	ConvertAnalogToRotate();
-	
+
 	switch (offset & 0x1e)
 	{
 		case 0x00:	return DrvInputs[0];		// p1
@@ -6832,7 +6825,7 @@ static void calibr5068kInit()
 	M6502Close();
 	m65c02_mode = 1;
 
-	RotateSetGunPosRAM(Drv68KRAM + (0x2503-1), Drv68KRAM + (0x2527-1), 2);
+	RotateSetGunPosRAM(Drv68KRAM + (0x2503-1), Drv68KRAM + (0x2527-1), 1);
 	game_rotates = 1;
 }
 

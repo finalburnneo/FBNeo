@@ -51027,6 +51027,23 @@ struct BurnDriver Burnmd_Zhanqichess = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+static struct BurnRomInfo md_timetraxpRomDesc[] = {
+	{ "Time Trax (prototype).bin", 1048576, 0xdff045eb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_timetraxp)
+STD_ROM_FN(md_timetraxp)
+
+struct BurnDriver BurnDrvmd_timetraxp = {
+	"md_timetraxp", NULL, NULL, NULL, "1994",
+	"Time Trax (prototype)\0", NULL, "Black Pearl Software", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_ADV, 0,
+	MegadriveGetZipName, md_timetraxpRomInfo, md_timetraxpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // radical rex (Hack, Spanish)
 // https://www.romhacking.net/translations/4267/
 static struct BurnRomInfo md_radrexsRomDesc[] = {

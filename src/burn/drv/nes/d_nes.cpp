@@ -38687,6 +38687,22 @@ struct BurnDriver BurnDrvnes_magickidsdor = {
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
+static struct BurnRomInfo nes_magickidsdorpRomDesc[] = {
+	{ "Magical Kid's Doropie (Prototype).nes",          262160, 0x84209fee, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_magickidsdorp)
+STD_ROM_FN(nes_magickidsdorp)
+
+struct BurnDriver BurnDrvnes_magickidsdorp = {
+	"nes_magickidsdorp", "nes_krioncon", NULL, NULL, "1989?",
+	"Magical Kid's Doropie (Prototype)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_magickidsdorpRomInfo, nes_magickidsdorpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_magictarkunRomDesc[] = {
 	{ "Magical Taruruuto-kun - Fantastic World!! (Japan).nes",          262160, 0x65b8e68b, BRF_ESS | BRF_PRG },

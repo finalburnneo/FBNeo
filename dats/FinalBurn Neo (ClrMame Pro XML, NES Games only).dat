@@ -9136,6 +9136,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="magickidsdorp" cloneof="krioncon" romof="krioncon">
+		<description>Magical Kid's Doropie (Prototype)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Magical Kid's Doropie (Prototype).nes" size="262160" crc="84209fee"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="magictarkun">
 		<description>Magical Taruruuto-kun - Fantastic World!! (Japan)</description>
 		<year>1991</year>

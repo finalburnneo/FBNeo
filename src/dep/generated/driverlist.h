@@ -8729,6 +8729,7 @@ DRV		BurnDrvMSX_mkidwizb;
 DRV		BurnDrvMSX_mkidwiza;
 DRV		BurnDrvsg1k_mkidwiz;
 DRV		BurnDrvnes_magickidsdor;
+DRV		BurnDrvnes_magickidsdorp;
 DRV		BurnDrvgg_magiclpp;
 DRV		BurnDrvMSX_magical;
 DRV		BurnDrvgg_mtaruru;
@@ -16449,6 +16450,7 @@ DRV		BurnDrvsms_timesold;
 DRV		BurnDrvTimesold1;
 DRV		BurnDrvTimesold;
 DRV		BurnDrvMSX_timetrax;
+DRV		BurnDrvmd_timetraxp;
 DRV		BurnDrvTimetunl;
 DRV		BurnDrvnes_timezonej;
 DRV		BurnDrvnes_timezone;
@@ -27127,6 +27129,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_mkidwiza,		// Magical Kid Wiz (Jpn, Alt)
 	&BurnDrvsg1k_mkidwiz,		// Magical Kid Wiz (Tw)
 	&BurnDrvnes_magickidsdor,	// Magical Kid's Doropie (Japan)
+	&BurnDrvnes_magickidsdorp,	// Magical Kid's Doropie (Prototype)
 	&BurnDrvgg_magiclpp,		// Magical Puzzle Popils (World)
 	&BurnDrvMSX_magical,		// Magical Stones (HB)
 	&BurnDrvgg_mtaruru,			// Magical Taruruuto-kun (Jpn)
@@ -34847,6 +34850,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTimesold1,			// Time Soldiers (US Rev 1)
 	&BurnDrvTimesold,			// Time Soldiers (US Rev 3)
 	&BurnDrvMSX_timetrax,		// Time Trax (Euro)
+	&BurnDrvmd_timetraxp,		// Time Trax (prototype)
 	&BurnDrvTimetunl,			// Time Tunnel
 	&BurnDrvnes_timezonej,		// Time Zone (Japan)
 	&BurnDrvnes_timezone,		// Time Zone (T-eng)

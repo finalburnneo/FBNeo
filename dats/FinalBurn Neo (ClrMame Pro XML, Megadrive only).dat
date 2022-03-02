@@ -20931,6 +20931,14 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="timetraxp">
+		<description>Time Trax (prototype)</description>
+		<year>1994</year>
+		<manufacturer>Black Pearl Software</manufacturer>
+		<rom name="Time Trax (prototype).bin" size="1048576" crc="dff045eb"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="tinheads" cloneof="tinhead" romof="tinhead">
 		<description>TinHead (Hack, Spanish)</description>
 		<year>2018</year>

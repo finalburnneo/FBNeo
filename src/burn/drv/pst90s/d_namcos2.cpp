@@ -2614,7 +2614,10 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 						{
 							if (color == 0xf00 && c==0xfe)
 							{
-								dest[x] |= shadow_offset;
+								if (dest[x] & 0x1000)
+									dest[x] |= 0x800;
+								else
+									dest[x] = 0x4000; // black pen
 							}
 							else
 							{
@@ -2651,7 +2654,10 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 						{
 							if (color == 0xf00 && c==0xfe)
 							{
-								dest[x] |= shadow_offset;
+								if (dest[x] & 0x1000)
+									dest[x] |= 0x800;
+								else
+									dest[x] = 0x4000; // black pen
 							}
 							else
 							{

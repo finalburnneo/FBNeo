@@ -1695,7 +1695,10 @@ static void c355_draw_sprite_line(INT32 line, INT32 priority)
 		if (pri[x] == priority && src[x] != 0xffff) {
 			if ((src[x] & 0xff) != 0xff) {
 				if (src[x] == 0xffe) { // apply palette offset (shadow palette)
-					dest[x] |= 0x800;  // gslgr94u, sws97, j-league prefer 0x800 (was 0x2000) -dink
+					if (dest[x] & 0x1000)
+						dest[x] |= 0x800; // gslgr94u, sws97, j-league needs this
+					else
+						dest[x] = 0x2000; // black pen
 				} else {
 					dest[x] = src[x];
 				}

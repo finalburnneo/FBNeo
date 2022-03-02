@@ -5428,6 +5428,8 @@ static void ProcessAnalogInputs() {
 	INT16 AnalogInputs[4] = { 0, 0, 0, 0 }; // p1y, p1x, p2y, p2x - compatibility with Joy2Rotate
 	INT16 AnalogPorts[4] = { DrvAnalogPort1, DrvAnalogPort0, DrvAnalogPort3, DrvAnalogPort2 };
 
+	if (game_rotates != 1) return;
+
 	// clear fake inputs
 	// Note: DrvFakeInput 6/10 - up, 7/11 - down, 8/12 - left, 9/13 - right
 	for (int i = 6; i < 14; i++)

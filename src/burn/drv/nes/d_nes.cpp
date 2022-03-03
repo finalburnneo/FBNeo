@@ -15481,7 +15481,7 @@ struct BurnDriver BurnDrvnes_magickidsdorp = {
 	"nes_magickidsdorp", "nes_krioncon", NULL, NULL, "1989?",
 	"Magical Kid's Doropie (Prototype)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_magickidsdorpRomInfo, nes_magickidsdorpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -18211,6 +18211,25 @@ struct BurnDriver BurnDrvnes_legenzeli = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+//Legend of Zelda Redux, The (Hack, v3.1)
+// https://www.romhacking.net/hacks/5752/
+static struct BurnRomInfo nes_legenzelrdRomDesc[] = {
+	{ "Legend of Zelda Redux, The v3.1 (2022)(ShadowOne333).nes",          131088, 0x183f0f76, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_legenzelrd)
+STD_ROM_FN(nes_legenzelrd)
+
+struct BurnDriver BurnDrvnes_legenzelrd = {
+	"nes_legenzelrd", "nes_legenzel", NULL, NULL, "2022",
+	"Legend of Zelda Redux, The (Hack, v3.1)\0", NULL, "ShadowOne333", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_legenzelrdRomInfo, nes_legenzelrdRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 //Lion King, The (Europe) - Castellano v1.0
 // https://www.romhacking.net/
 static struct BurnRomInfo nes_lionkingthecRomDesc[] = {
@@ -19699,6 +19718,25 @@ struct BurnDriver BurnDrvnes_zeldaiic = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Zelda II Redux - The Adventure of Link (Hack, v3.0)
+// https://www.romhacking.net/hacks/5440/
+static struct BurnRomInfo nes_zeldaiirdRomDesc[] = {
+	{ "Zelda II - The Adventure of Link Redux v3.0 (2022)(ShadowOne333).nes",          262160, 0xf4bdec40, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_zeldaiird)
+STD_ROM_FN(nes_zeldaiird)
+
+struct BurnDriver BurnDrvnes_zeldaiird = {
+	"nes_zeldaiird", "nes_zeldaii", NULL, NULL, "2022",
+	"Zelda II Redux - The Adventure of Link (Hack, v3.0)\0", NULL, "ShadowOne333", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	NESGetZipName, nes_zeldaiirdRomInfo, nes_zeldaiirdRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Adventure Island IV (Japan) - Castellano v1.0
 // https://www.romhacking.net/
 static struct BurnRomInfo nes_advenislivcRomDesc[] = {
@@ -20606,6 +20644,40 @@ struct BurnDriver BurnDrvnes_dangbridge = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_dangbridgeRomInfo, nes_dangbridgeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_ninninRomDesc[] = {
+	{ "Nin-Nin v1 (2020)(The Mojon Twins).nes",          65552, 0xd46b4955, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ninnin)
+STD_ROM_FN(nes_ninnin)
+
+struct BurnDriver BurnDrvnes_ninnin = {
+	"nes_ninnin", NULL, NULL, NULL, "2020",
+	"Nin-Nin (HB, v1)\0", NULL, "The Mojon Twins", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_ninninRomInfo, nes_ninninRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_pandaworldRomDesc[] = {
+	{ "Panda World (Unl)(20XX).nes",          262160, 0xdff2fe93, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_pandaworld)
+STD_ROM_FN(nes_pandaworld)
+
+struct BurnDriver BurnDrvnes_pandaworld = {
+	"nes_pandaworld", NULL, NULL, NULL, "20??",
+	"Panda World (HB)\0", NULL, "Unknown", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_pandaworldRomInfo, nes_pandaworldRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -21973,7 +22045,7 @@ struct BurnDriver BurnDrvnes_harrydwarf = {
 };
 
 static struct BurnRomInfo nes_slowmoleRomDesc[] = {
-	{ "Slow Mole v1.1 (2021)(Erik Rosenlund).nes",          524304, 0xeadc4e8b, BRF_ESS | BRF_PRG },
+	{ "Slow Mole v1.2b (2021)(Erik Rosenlund).nes",          524304, 0x61226e5f, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_slowmole)
@@ -21981,7 +22053,7 @@ STD_ROM_FN(nes_slowmole)
 
 struct BurnDriver BurnDrvnes_slowmole = {
 	"nes_slowmole", NULL, NULL, NULL, "2021",
-	"Slow Mole (HB, v1.1)\0", NULL, "Erik Rosenlund", "Miscellaneous",
+	"Slow Mole (HB, v1.2b)\0", NULL, "Erik Rosenlund", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_slowmoleRomInfo, nes_slowmoleRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

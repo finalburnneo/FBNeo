@@ -22223,7 +22223,7 @@ STD_ROM_FN(nes_hackmatch)
 
 struct BurnDriver BurnDrvnes_hackmatch = {
 	"nes_hackmatch", NULL, NULL, NULL, "2021",
-	"Hack Match (HB)\0", "Original game by Juice (1990)", "Zachtronics", "Miscellaneous",
+	"Hack*Match (HB)\0", "Original game by Juice (1990)", "Zachtronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_hackmatchRomInfo, nes_hackmatchRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

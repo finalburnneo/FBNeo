@@ -720,26 +720,26 @@ struct BurnDriver BurnDrvmrdu = {
 // Mr. Do! (prototype)
 
 static struct BurnRomInfo mrdoyRomDesc[] = {
-	{ "dosnow.1",     0x2000, 0xd3454e2c, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
-	{ "dosnow.2",     0x2000, 0x5120a6b2, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "dosnow.3",     0x2000, 0x96416dbe, 1 | BRF_ESS | BRF_PRG }, //  2
-	{ "dosnow.4",     0x2000, 0xc05051b6, 1 | BRF_ESS | BRF_PRG }, //  3
+	{ "dosnow.1",     		0x2000, 0xd3454e2c, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "dosnow.2",     		0x2000, 0x5120a6b2, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "dosnow.3",     		0x2000, 0x96416dbe, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "dosnow.4",     		0x2000, 0xc05051b6, 1 | BRF_ESS | BRF_PRG }, //  3
 
-	{ "dosnow.9",     0x1000, 0x85d16217, 2 | BRF_GRA },	       //  4 FG Tiles
-	{ "dosnow.10",    0x1000, 0x61a7f54b, 2 | BRF_GRA },	       //  5
+	{ "dosnow.9",     		0x1000, 0x85d16217, 2 | BRF_GRA },	       //  4 FG Tiles
+	{ "dosnow.10",    		0x1000, 0x61a7f54b, 2 | BRF_GRA },	       //  5
 
-	{ "dosnow.8",     0x1000, 0x2bd1239a, 3 | BRF_GRA },	       //  6 BG Tiles
-	{ "dosnow.7",     0x1000, 0xac8ffddf, 3 | BRF_GRA },	       //  7
+	{ "dosnow.8",     		0x1000, 0x2bd1239a, 3 | BRF_GRA },	       //  6 BG Tiles
+	{ "dosnow.7",     		0x1000, 0xac8ffddf, 3 | BRF_GRA },	       //  7
 
-	{ "dosnow.5",     0x1000, 0x7662d828, 4 | BRF_GRA },	       //  8 Sprite Tiles
-	{ "dosnow.6",     0x1000, 0x413f88d1, 4 | BRF_GRA },	       //  9
+	{ "dosnow.5",     		0x1000, 0x7662d828, 4 | BRF_GRA },	       //  8 Sprite Tiles
+	{ "dosnow.6",     		0x1000, 0x413f88d1, 4 | BRF_GRA },	       //  9
 
-	{ "u02--2.bin",   0x0020, 0x238a65d7, 5 | BRF_GRA },	       // 10 Palette (high bits)
-	{ "t02--3.bin",   0x0020, 0xae263dc0, 5 | BRF_GRA },	       // 11 Palette (low bits)
-	{ "f10--1.bin",   0x0020, 0x16ee4ca2, 5 | BRF_GRA },	       // 12 Sprite color lookup table
-	{ "j10--4.bin",   0x0020, 0xff7fe284, 5 | BRF_GRA },	       // 13 Timing (not used)
+	{ "u02--2.bin",   		0x0020, 0x238a65d7, 5 | BRF_GRA },	       // 10 Palette (high bits)
+	{ "t02--3.bin",   		0x0020, 0xae263dc0, 5 | BRF_GRA },	       // 11 Palette (low bits)
+	{ "f10--1.bin",   		0x0020, 0x16ee4ca2, 5 | BRF_GRA },	       // 12 Sprite color lookup table
+	{ "j10--4.bin",   		0x0020, 0xff7fe284, 5 | BRF_GRA },	       // 13 Timing (not used)
 	
-	{ "j2-u001.bin",  0x0117, 0xbadf5876, 0 | BRF_OPT },
+	{ "u001_pal16r6cn.j2",  0x0104, 0x84dbe498, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(mrdoy)
@@ -781,7 +781,7 @@ static struct BurnRomInfo mrdofabrRomDesc[] = {
 	{ "82s123.f10n",  0x0020, 0x16ee4ca2, 5 | BRF_GRA },	       // 12 Sprite color lookup table
 	{ "82s123.j10",   0x0020, 0xff7fe284, 5 | BRF_GRA },	       // 13 Timing (not used)
 	
-	{ "pal16r6.j2",   0x0117, 0xbadf5876, 0 | BRF_OPT },
+	{ "j2-u001.bin",  0x0117, 0xbadf5876, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(mrdofabr)
@@ -840,26 +840,26 @@ struct BurnDriver BurnDrvmrdobl = {
 // Yankee DO!
 
 static struct BurnRomInfo yankeedoRomDesc[] = {
-	{ "a4-01.bin",    0x2000, 0x03dcfba2, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
-	{ "yd_d2.c4",     0x2000, 0x7c9d7ce0, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "e4-03.bin",    0x2000, 0x358f5dc2, 1 | BRF_ESS | BRF_PRG }, //  2
-	{ "f4-04.bin",    0x2000, 0xf4190cfc, 1 | BRF_ESS | BRF_PRG }, //  3
+	{ "a4-01.bin",    		0x2000, 0x03dcfba2, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "yd_d2.c4",     		0x2000, 0x7c9d7ce0, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "e4-03.bin",    		0x2000, 0x358f5dc2, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "f4-04.bin",    		0x2000, 0xf4190cfc, 1 | BRF_ESS | BRF_PRG }, //  3
 
-	{ "s8-09.bin",    0x1000, 0xaa80c5b6, 2 | BRF_GRA },	       //  4 FG Tiles
-	{ "u8-10.bin",    0x1000, 0xd20ec85b, 2 | BRF_GRA },	       //  5
+	{ "s8-09.bin",    		0x1000, 0xaa80c5b6, 2 | BRF_GRA },	       //  4 FG Tiles
+	{ "u8-10.bin",    		0x1000, 0xd20ec85b, 2 | BRF_GRA },	       //  5
 
-	{ "r8-08.bin",    0x1000, 0xdbdc9ffa, 3 | BRF_GRA },	       //  6 BG Tiles
-	{ "n8-07.bin",    0x1000, 0x4b9973db, 3 | BRF_GRA },	       //  7
+	{ "r8-08.bin",    		0x1000, 0xdbdc9ffa, 3 | BRF_GRA },	       //  6 BG Tiles
+	{ "n8-07.bin",    		0x1000, 0x4b9973db, 3 | BRF_GRA },	       //  7
 
-	{ "yd_d5.h5",     0x1000, 0xf530b79b, 4 | BRF_GRA },	       //  8 Sprite Tiles
-	{ "yd_d6.k5",     0x1000, 0x790579aa, 4 | BRF_GRA },	       //  9
+	{ "yd_d5.h5",     		0x1000, 0xf530b79b, 4 | BRF_GRA },	       //  8 Sprite Tiles
+	{ "yd_d6.k5",     		0x1000, 0x790579aa, 4 | BRF_GRA },	       //  9
 
-	{ "u02--2.bin",   0x0020, 0x238a65d7, 5 | BRF_GRA },	       // 10 Palette (high bits)
-	{ "t02--3.bin",   0x0020, 0xae263dc0, 5 | BRF_GRA },	       // 11 Palette (low bits)
-	{ "f10--1.bin",   0x0020, 0x16ee4ca2, 5 | BRF_GRA },	       // 12 Sprite color lookup table
-	{ "j10--4.bin",   0x0020, 0xff7fe284, 5 | BRF_GRA },	       // 13 Timing (not used)
+	{ "u02--2.bin",   		0x0020, 0x238a65d7, 5 | BRF_GRA },	       // 10 Palette (high bits)
+	{ "t02--3.bin",   		0x0020, 0xae263dc0, 5 | BRF_GRA },	       // 11 Palette (low bits)
+	{ "f10--1.bin",   		0x0020, 0x16ee4ca2, 5 | BRF_GRA },	       // 12 Sprite color lookup table
+	{ "j10--4.bin",   		0x0020, 0xff7fe284, 5 | BRF_GRA },	       // 13 Timing (not used)
 	
-	{ "j2-u001.bin",  0x0117, 0xbadf5876, 0 | BRF_OPT },
+	{ "u001_pal16r6cn.j2",  0x0104, 0x84dbe498, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(yankeedo)

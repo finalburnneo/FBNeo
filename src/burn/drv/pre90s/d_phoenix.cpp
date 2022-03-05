@@ -2033,23 +2033,23 @@ struct BurnDriver BurnDrvPhoenixs = {
 // Phoenix (Assa, Spanish bootleg)
 
 static struct BurnRomInfo phoenixassRomDesc[] = {
-	{ "ic45.bin",		0x0800, 0x5b8c55a8, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
-	{ "ic46.bin",		0x0800, 0xdbc942fa, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "ic47.bin",		0x0800, 0xcbbb8839, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "ic48.bin",		0x0800, 0x1e2e2fc7, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "ic49.bin",		0x0800, 0x1a1ce0d0, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "ic50.bin",		0x0800, 0xac5e9ec1, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "ic51.bin",		0x0800, 0x2eab35b4, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "ic52.bin",		0x0800, 0x15a02d87, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "00-811.ic45",	0x0800, 0x5b8c55a8, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
+	{ "01-811.ic46",	0x0800, 0xdbc942fa, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "02-811.ic47",	0x0800, 0xcbbb8839, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "03-811.ic48",	0x0800, 0x1e2e2fc7, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "04-811.ic49",	0x0800, 0x1a1ce0d0, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "05-811.ic50",	0x0800, 0xac5e9ec1, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "06-811.ic51",	0x0800, 0x2eab35b4, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "07-811.ic52",	0x0800, 0x15a02d87, 1 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "ic23.bin",		0x0800, 0x3c7e623f, 2 | BRF_GRA },           //  8 Background Tiles
-	{ "ic24.bin",		0x0800, 0x59916d3b, 2 | BRF_GRA },           //  9
+	{ "10-811.ic23",	0x0800, 0x3c7e623f, 2 | BRF_GRA },           //  8 Background Tiles
+	{ "11-811.ic24",	0x0800, 0x59916d3b, 2 | BRF_GRA },           //  9
 
-	{ "ic39.bin",		0x0800, 0xbb0525ed, 3 | BRF_GRA },           // 10 Foreground Tiles
-	{ "ic40.bin",		0x0800, 0x4178aa4f, 3 | BRF_GRA },           // 11
+	{ "08-811.ic39",	0x0800, 0xbb0525ed, 3 | BRF_GRA },           // 10 Foreground Tiles
+	{ "09-811.ic40",	0x0800, 0x4178aa4f, 3 | BRF_GRA },           // 11
 
-	{ "prom.41",		0x0100, 0x7c9f2e00, 4 | BRF_GRA },           // 12 Color Proms
-	{ "prom.40",		0x0100, 0xe176b768, 4 | BRF_GRA },           // 13
+	{ "dm74s287n.ic41",	0x0100, 0x7c9f2e00, 4 | BRF_GRA },           // 12 Color Proms
+	{ "dm74s287n.ic40",	0x0100, 0xe176b768, 4 | BRF_GRA },           // 13
 };
 
 STD_ROM_PICK(phoenixass)

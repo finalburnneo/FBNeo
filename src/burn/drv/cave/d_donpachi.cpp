@@ -785,7 +785,7 @@ static struct BurnRomInfo donpachikrRomDesc[] = {
 
 	{ "atdp.u54",     0x100000, 0x6bda6b66, BRF_GRA },			 //  3 Layer 0 Tile data
 	{ "atdp.u57",     0x100000, 0x0a0e72b9, BRF_GRA },			 //  4 Layer 1 Tile data
-	{ "u58.bin",      0x040000, 0x285379ff, BRF_GRA },			 //  5 Layer 2 Tile data
+	{ "text.u58",     0x040000, 0x5dba06e7, BRF_GRA },			 //  5 Layer 2 Tile data
 
 	{ "atdp.u32",     0x100000, 0x0d89fcca, BRF_SND },			 //  6 MSM6295 #1 ADPCM data
 	{ "atdp.u33",     0x200000, 0xd749de00, BRF_SND },			 //  7 MSM6295 #0/1 ADPCM data

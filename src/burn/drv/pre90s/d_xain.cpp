@@ -1,59 +1,34 @@
-// FB Alpha Xain'd Sleena driver module
+// FinalBurn Neo Xain'd Sleena driver module
 // Based on MAME driver by Carlos A. Lozano, Rob Rosenbrock, Phil Stroffolino, and Bryan McPhail
 
 #include "tiles_generic.h"
 #include "m6809_intf.h"
-#include "m6805_intf.h"
+#include "taito_m68705.h"
 #include "burn_ym2203.h"
+#include "burn_pal.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
 static UINT8 *RamEnd;
-static UINT8 *DrvMainROM;
-static UINT8 *DrvSubROM;
-static UINT8 *DrvSoundROM;
+static UINT8 *DrvM6809ROM[3];
 static UINT8 *DrvMcuROM;
-static UINT8 *DrvGfxROM0;
-static UINT8 *DrvGfxROM1;
-static UINT8 *DrvGfxROM2;
-static UINT8 *DrvGfxROM3;
+static UINT8 *DrvGfxROM[4];
 static UINT8 *DrvShareRAM;
 static UINT8 *DrvCharRAM;
-static UINT8 *DrvBgRAM0;
-static UINT8 *DrvBgRAM1;
+static UINT8 *DrvBgRAM[2];
 static UINT8 *DrvSprRAM;
-static UINT8 *DrvPalRAM;
 static UINT8 *DrvSoundRAM;
 static UINT8 *DrvMcuRAM;
 
-static UINT32 *DrvPalette;
-static UINT8 DrvRecalc;
-
-static UINT8 nBankAData;
-static UINT8 nBankBData;
-static UINT16 scrollxp1;
-static UINT16 scrollyp1;
-static UINT16 scrollxp0;
-static UINT16 scrollyp0;
+static UINT8 main_bank;
+static UINT8 sub_bank;
+static UINT16 scrollx[2];
+static UINT16 scrolly[2];
 static INT32 vblank;
 static UINT8 soundlatch;
 static UINT8 flipscreen;
 static UINT8 xain_pri;
-
-static UINT8 port_a_out;
-static UINT8 port_b_out;
-static UINT8 port_c_out;
-static UINT8 port_a_in;
-static UINT8 port_b_in;
-static UINT8 port_c_in;
-static UINT8 ddr_a;
-static UINT8 ddr_b;
-static UINT8 ddr_c;
-static UINT8 from_mcu;
-static UINT8 from_main;
-static UINT8 mcu_ready;
-static UINT8 mcu_accept;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -62,115 +37,135 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
+static INT32 nExtraCycles[4];
+
 static INT32 is_bootleg;
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 coin"	},
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 coin"	},
-	{"P3 Coin",		BIT_DIGITAL,	DrvJoy3 + 2,	"p3 coin"	},
-
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 6,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoy3 + 2,	"p3 coin"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Drv)
 
 static struct BurnDIPInfo DrvDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0x3f, NULL			},
-	{0x13, 0xff, 0xff, 0xff, NULL			},
+	DIP_OFFSET(0x12)
+	{0x00, 0xff, 0xff, 0x7f, NULL					},
+	{0x01, 0xff, 0xff, 0xff, NULL					},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"		},
-	{0x12, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
-	{0x12, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
-	{0x12, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
-	{0x12, 0x01, 0x03, 0x01, "1 Coin  3 Credits"	},
+	{0   , 0xfe, 0   ,    4, "Coin B"				},
+	{0x00, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x03, 0x01, "1 Coin  3 Credits"	},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"		},
-	{0x12, 0x01, 0x0c, 0x00, "2 Coins 1 Credits"	},
-	{0x12, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"	},
-	{0x12, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"	},
-	{0x12, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"	},
+	{0   , 0xfe, 0   ,    4, "Coin A"				},
+	{0x00, 0x01, 0x0c, 0x00, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"	},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x12, 0x01, 0x10, 0x00, "Off"			},
-	{0x12, 0x01, 0x10, 0x10, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x00, 0x01, 0x10, 0x00, "Off"					},
+	{0x00, 0x01, 0x10, 0x10, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
-	{0x12, 0x01, 0x20, 0x00, "No"			},
-	{0x12, 0x01, 0x20, 0x20, "Yes"			},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x00, 0x01, 0x20, 0x00, "No"					},
+	{0x00, 0x01, 0x20, 0x20, "Yes"					},
 
-//	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-//	{0x12, 0x01, 0x40, 0x00, "Upright"		},
-//	{0x12, 0x01, 0x40, 0x40, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x00, 0x01, 0x40, 0x00, "Upright"				},
+	{0x00, 0x01, 0x40, 0x40, "Cocktail"				},
 
-//	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-//	{0x12, 0x01, 0x80, 0x00, "Off"			},
-//	{0x12, 0x01, 0x80, 0x80, "On"			},
+//	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+//	{0x00, 0x01, 0x80, 0x00, "Off"					},
+//	{0x00, 0x01, 0x80, 0x80, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x13, 0x01, 0x03, 0x03, "Easy"			},
-	{0x13, 0x01, 0x03, 0x02, "Normal"		},
-	{0x13, 0x01, 0x03, 0x01, "Hard"			},
-	{0x13, 0x01, 0x03, 0x00, "Hardest"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x01, 0x01, 0x03, 0x03, "Easy"					},
+	{0x01, 0x01, 0x03, 0x02, "Normal"				},
+	{0x01, 0x01, 0x03, 0x01, "Hard"					},
+	{0x01, 0x01, 0x03, 0x00, "Hardest"				},
 
-	{0   , 0xfe, 0   ,    4, "Game Time"		},
-	{0x13, 0x01, 0x0c, 0x0c, "Slow"			},
-	{0x13, 0x01, 0x0c, 0x08, "Normal"		},
-	{0x13, 0x01, 0x0c, 0x04, "Fast"			},
-	{0x13, 0x01, 0x0c, 0x00, "Very Fast"		},
+	{0   , 0xfe, 0   ,    4, "Game Time"			},
+	{0x01, 0x01, 0x0c, 0x0c, "Slow"					},
+	{0x01, 0x01, 0x0c, 0x08, "Normal"				},
+	{0x01, 0x01, 0x0c, 0x04, "Fast"					},
+	{0x01, 0x01, 0x0c, 0x00, "Very Fast"			},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x13, 0x01, 0x30, 0x30, "20k 70k and every 70k"},
-	{0x13, 0x01, 0x30, 0x20, "30k 80k and every 80k"},
-	{0x13, 0x01, 0x30, 0x10, "20k and 80k"		},
-	{0x13, 0x01, 0x30, 0x00, "30k and 80k"		},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0x01, 0x01, 0x30, 0x30, "20k 70k and every 70k"},
+	{0x01, 0x01, 0x30, 0x20, "30k 80k and every 80k"},
+	{0x01, 0x01, 0x30, 0x10, "20k and 80k"			},
+	{0x01, 0x01, 0x30, 0x00, "30k and 80k"			},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x13, 0x01, 0xc0, 0xc0, "3"			},
-	{0x13, 0x01, 0xc0, 0x80, "4"			},
-	{0x13, 0x01, 0xc0, 0x40, "6"			},
-	{0x13, 0x01, 0xc0, 0x00, "Infinite (Cheat)"	},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x01, 0x01, 0xc0, 0xc0, "3"					},
+	{0x01, 0x01, 0xc0, 0x80, "4"					},
+	{0x01, 0x01, 0xc0, 0x40, "6"					},
+	{0x01, 0x01, 0xc0, 0x00, "Infinite (Cheat)"		},
 };
 
 STDDIPINFO(Drv)
 
 static inline void palette_update(INT32 offset)
 {
-	INT32 b = DrvPalRAM[offset + 0x200] & 0x0f;
-	INT32 g = DrvPalRAM[offset] >> 4;
-	INT32 r = DrvPalRAM[offset] & 0x0f;
+	INT32 b = BurnPalRAM[offset + 0x200] & 0x0f;
+	INT32 g = BurnPalRAM[offset] >> 4;
+	INT32 r = BurnPalRAM[offset] & 0x0f;
 
-	DrvPalette[offset] = BurnHighCol(r+(r*16),g+(g*16),b+(b*16),0);
+	BurnPalette[offset] = BurnHighCol(pal4bit(r),pal4bit(g),pal4bit(b),0);
 }
 
-static void bankswitchA(INT32 data)
+static void main_bankswitch(INT32 data)
 {
-	nBankAData = data;
-	M6809MapMemory(DrvMainROM + ((data & 0x08) ? 0x14000 : 0x10000), 0x4000, 0x7fff, MAP_ROM);
+	main_bank = data;
+	M6809MapMemory(DrvM6809ROM[0] + ((data & 0x08) ? 0x14000 : 0x10000), 0x4000, 0x7fff, MAP_ROM);
+}
+
+static void sync_mcu()
+{
+	INT32 cyc = (M6809TotalCycles() * 2) - m6805TotalCycles();
+	if (cyc > 0) {
+		m6805Run(cyc);
+	}
+}
+
+static void sync_sound()
+{
+	INT32 cyc = M6809TotalCycles(0);
+
+	M6809CPUPush(2);
+	BurnTimerUpdate(cyc);
+	M6809CPUPop();
 }
 
 static void xain_main_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xfc00) == 0x3c00) {
-		DrvPalRAM[address & 0x3ff] = data;
+		BurnPalRAM[address & 0x3ff] = data;
 		palette_update(address & 0x1ff);
 		return;
 	}
@@ -179,36 +174,22 @@ static void xain_main_write(UINT16 address, UINT8 data)
 	{
 		case 0x3a00:
 		case 0x3a01:
-			scrollxp1 = ((data << ((address & 1) * 8)) | (scrollxp1 & (0xff00 >> ((address & 1) * 8)))) & 0x1ff;
+		case 0x3a04:
+		case 0x3a05:
+			scrollx[((address / 4) & 1) ^ 1] = ((data << ((address & 1) * 8)) | (scrollx[((address / 4) & 1) ^ 1] & (0xff00 >> ((address & 1) * 8)))) & 0x1ff;
 		return;
 
 		case 0x3a02:
 		case 0x3a03:
-			scrollyp1 = ((data << ((address & 1) * 8)) | (scrollyp1 & (0xff00 >> ((address & 1) * 8)))) & 0x1ff;
-		return;
-
-		case 0x3a04:
-		case 0x3a05:
-			scrollxp0 = ((data << ((address & 1) * 8)) | (scrollxp0 & (0xff00 >> ((address & 1) * 8)))) & 0x1ff;
-		return;
-
 		case 0x3a06:
 		case 0x3a07:
-			scrollyp0 = ((data << ((address & 1) * 8)) | (scrollyp0 & (0xff00 >> ((address & 1) * 8)))) & 0x1ff;
+			scrolly[((address / 4) & 1) ^ 1] = ((data << ((address & 1) * 8)) | (scrolly[((address / 4) & 1) ^ 1] & (0xff00 >> ((address & 1) * 8)))) & 0x1ff;
 		return;
 
 		case 0x3a08:
-		{
-			INT32 cycles = M6809TotalCycles();
-			M6809Close();
-			M6809Open(2);
-			BurnTimerUpdate(cycles);
+			sync_sound();
 			soundlatch = data;
-		//	M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
-			M6809SetIRQLine(0, CPU_IRQSTATUS_ACK); // hold line until soundlatch is read to ensure commands are read
-			M6809Close();
-			M6809Open(0);
-		}
+			M6809SetIRQLine(2, 0, CPU_IRQSTATUS_ACK); // hold line until soundlatch is read to ensure commands are read
 		return;
 
 		case 0x3a09:
@@ -224,9 +205,7 @@ static void xain_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x3a0c:
-		{
 			M6809SetIRQLine(1, 0x00, CPU_IRQSTATUS_ACK);
-		}
 		return;
 
 		case 0x3a0d:
@@ -235,20 +214,17 @@ static void xain_main_write(UINT16 address, UINT8 data)
 
 		case 0x3a0e:
 		{
-			from_main = data;
-			mcu_accept = 0;
-
 			if (is_bootleg == 0)
 			{
-				m6805Run((M6809TotalCycles() * 2) - m6805TotalCycles());
-				m68705SetIrqLine(0, 1 /*ASSERT_LINE*/);
+				sync_mcu();
+				standard_taito_mcu_write(data);
 			}
 		}
 		return;
 
 		case 0x3a0f:
 			xain_pri = data & 0x07;
-			bankswitchA(data);
+			main_bankswitch(data);
 		return;
 	}
 }
@@ -270,39 +246,31 @@ static UINT8 xain_main_read(UINT16 address)
 			return DrvDips[1];
 
 		case 0x3a04:
-			m6805Run((M6809TotalCycles() * 2) - m6805TotalCycles());
-			mcu_ready = 1;
-			return from_mcu;
+			sync_mcu();
+			return standard_taito_mcu_read();
 
 		case 0x3a05:
 		{
-			UINT8 ret = DrvInputs[2] & ~0x38;
+			UINT8 ret = DrvInputs[2] & ~0x20;
 
-			ret |= vblank ? 0x20 : 0;
-
-			if (is_bootleg)
+			if (is_bootleg == 0)
 			{
-				ret |= 0x18;
-			}
-			else
-			{
-				m6805Run((M6809TotalCycles() * 2) - m6805TotalCycles());
-				if (mcu_ready == 1) ret |= 0x08;
-				if (mcu_accept == 1) ret |= 0x10;
+				ret &= ~0x18;
+				sync_mcu();
+				if (mcu_sent == 0) ret |= 0x08;
+				if (main_sent == 0) ret |= 0x10;
 			}
 
-			return ret;
+			return ret | (vblank ? 0x20 : 0);
 		}
 
 		case 0x3a06:
 		{
 			if (is_bootleg == 0)
 			{
-				m6805Run((M6809TotalCycles() * 2) - m6805TotalCycles());
+				sync_mcu();
 
-				mcu_ready = 1;
-				mcu_accept = 1;
-				m68705SetIrqLine(0, 0 /*CLEAR_LINE*/);
+				m67805_taito_reset();
 			}
 			return 0xff;
 		}
@@ -311,10 +279,10 @@ static UINT8 xain_main_read(UINT16 address)
 	return 0;
 }
 
-static void bankswitchB(INT32 data)
+static void sub_bankswitch(INT32 data)
 {
-	nBankBData = data;
-	M6809MapMemory(DrvSubROM + ((data & 0x01) ? 0x14000 : 0x10000), 0x4000, 0x7fff, MAP_ROM);
+	sub_bank = data;
+	M6809MapMemory(DrvM6809ROM[1] + ((data & 0x01) ? 0x14000 : 0x10000), 0x4000, 0x7fff, MAP_ROM);
 }
 
 static void xain_sub_write(UINT16 address, UINT8 data)
@@ -322,17 +290,15 @@ static void xain_sub_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0x2000:
-		{
-			M6809SetIRQLine(0, 0x00, CPU_IRQSTATUS_ACK); // maincpu irq
-		}
+			M6809SetIRQLine(0, 0, CPU_IRQSTATUS_ACK); // maincpu irq
 		return;
 
 		case 0x2800:
-			M6809SetIRQLine(0x00, CPU_IRQSTATUS_NONE);
+			M6809SetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0x3000:
-			bankswitchB(data);
+			sub_bankswitch(data);
 		return;
 	}
 }
@@ -370,79 +336,38 @@ static UINT8 xain_sound_read(UINT16 address)
 	return 0;
 }
 
-static void xain_68705_port_b_write(UINT8 data) // ripped directly from MAME
+static tilemap_callback( tx )
 {
-	if ((ddr_b & 0x02) && (~data & 0x02))
-	{
-		port_a_in = from_main;
-	}
-	else if ((ddr_b & 0x02) && (~port_b_out & 0x02) && (data & 0x02))
-	{
-		mcu_accept = 1;
-		m68705SetIrqLine(0, 0 /*CLEAR_LINE*/);
-	}
+	INT32 attr = DrvCharRAM[offs + 0x400];
+	INT32 code = DrvCharRAM[offs + 0x000] + ((attr & 0x03) << 8);
+	INT32 color = attr >> 5; // & 7
 
-	if ((ddr_b & 0x04) && (~port_b_out & 0x04) && (data & 0x04))
-	{
-		mcu_ready = 0;
-		from_mcu = port_a_out;
-	}
-
-	port_b_out = data;
+	TILE_SET_INFO(0, code, color, 0);
 }
 
-static void xain_68705_write_ports(UINT16 address, UINT8 data)
+static tilemap_callback( bg ) // DrvBgRAM[0], DrvGfxROM[2]
 {
-	switch (address & 0x7ff)
-	{
-		case 0:
-			port_a_out = data;
-		return;
+	INT32 attr = DrvBgRAM[0][offs + 0x400];
+	INT32 code = DrvBgRAM[0][offs + 0x000] + ((attr & 0x07) << 8);
+	INT32 flipx  = attr & 0x80;
+	INT32 color  = (attr & 0x70) >> 4;
 
-		case 1:
-			xain_68705_port_b_write(data);
-		return;
-
-		case 2:
-			port_c_out = data;
-		return;
-
-		case 4:
-			ddr_a = data;
-		return;
-
-		case 5:
-			ddr_b = data;
-		return;
-
-		case 6:
-			ddr_c = data;
-		return;
-	}
+	TILE_SET_INFO(2, code, color, flipx ? TILE_FLIPX: 0);
 }
 
-static UINT8 xain_68705_read_ports(UINT16 address)
+static tilemap_callback( fg ) // DrvBgRAM[1], DrvGfxROM[1]
 {
-	switch (address & 0x7ff)
-	{
-		case 0:
-			return (port_a_out & ddr_a) | (port_a_in & ~ddr_a);
+	INT32 attr = DrvBgRAM[1][offs + 0x400];
+	INT32 code = DrvBgRAM[1][offs + 0x000] + ((attr & 0x07) << 8);
+	INT32 flipx  = attr & 0x80;
+	INT32 color  = (attr & 0x70) >> 4;
 
-		case 1:
-			return (port_b_out & ddr_b) | (port_b_in & ~ddr_b);
+	TILE_SET_INFO(1, code, color, flipx ? TILE_FLIPX: 0);
+}
 
-		case 2:
-		{
-			port_c_in = 0;
-		
-			if (!mcu_accept) port_c_in |= 0x01;
-			if (mcu_ready)   port_c_in |= 0x02;
-		
-			return (port_c_out & ddr_c) | (port_c_in & ~ddr_c);
-		}
-	}
-
-	return 0;
+static tilemap_scan( bg )
+{
+	return (col & 0x0f) + (((row & 0x0f) + (col & 0x10)) << 4) + ((row & 0x10) << 5);
 }
 
 inline static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
@@ -456,12 +381,12 @@ static INT32 DrvDoReset()
 
 	M6809Open(0);
 	M6809Reset();
-	bankswitchA(0);
+	main_bankswitch(0);
 	M6809Close();
 
 	M6809Open(1);
 	M6809Reset();
-	bankswitchB(0);
+	sub_bankswitch(0);
 	M6809Close();
 
 	M6809Open(2);
@@ -469,32 +394,18 @@ static INT32 DrvDoReset()
 	BurnYM2203Reset();
 	M6809Close();
 
-	m6805Open(0);
-	m68705Reset();
-	m6805Close();
+	m67805_taito_reset();
 
-	scrollxp1 = 0;
-	scrollyp1 = 0;
-	scrollxp0 = 0;
-	scrollyp0 = 0;
+	scrollx[1] = 0;
+	scrolly[1] = 0;
+	scrollx[0] = 0;
+	scrolly[0] = 0;
 	vblank = 0;
 	soundlatch = 0;
 	flipscreen = 0;
 	xain_pri = 0;
 
-	port_a_out = 0;
-	port_b_out = 0;
-	port_c_out = 0;
-	port_a_in = 0;
-	port_b_in = 0;
-	port_c_in = 0;
-	ddr_a = 0;
-	ddr_b = 0;
-	ddr_c = 0;
-	from_mcu = 0;
-	from_main = 0;
-	mcu_ready = 0;
-	mcu_accept = 0;
+	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = nExtraCycles[3] = 0;
 
 	return 0;
 }
@@ -503,26 +414,26 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvMainROM		= Next; Next += 0x018000;
-	DrvSubROM		= Next; Next += 0x018000;
-	DrvSoundROM		= Next; Next += 0x010000;
+	DrvM6809ROM[0]	= Next; Next += 0x018000;
+	DrvM6809ROM[1]	= Next; Next += 0x018000;
+	DrvM6809ROM[2]	= Next; Next += 0x010000;
 	DrvMcuROM		= Next; Next += 0x000800;
 
-	DrvGfxROM0		= Next; Next += 0x010000;
-	DrvGfxROM1		= Next; Next += 0x080000;
-	DrvGfxROM2		= Next; Next += 0x080000;
-	DrvGfxROM3		= Next; Next += 0x080000;
+	DrvGfxROM[0]	= Next; Next += 0x010000;
+	DrvGfxROM[1]	= Next; Next += 0x080000;
+	DrvGfxROM[2]	= Next; Next += 0x080000;
+	DrvGfxROM[3]	= Next; Next += 0x080000;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x0200 * sizeof(UINT32);
+	BurnPalette		= (UINT32*)Next; Next += 0x0200 * sizeof(UINT32);
 
 	AllRam			= Next;
 
 	DrvShareRAM		= Next; Next += 0x002000;
 	DrvCharRAM		= Next; Next += 0x000800;
-	DrvBgRAM0		= Next; Next += 0x000800;
-	DrvBgRAM1		= Next; Next += 0x000800;
+	DrvBgRAM[0]		= Next; Next += 0x000800;
+	DrvBgRAM[1]		= Next; Next += 0x000800;
 	DrvSprRAM		= Next; Next += 0x000200;
-	DrvPalRAM		= Next; Next += 0x000400;
+	BurnPalRAM		= Next; Next += 0x000400;
 	DrvSoundRAM		= Next; Next += 0x000800;
 	DrvMcuRAM		= Next; Next += 0x000080;
 
@@ -547,21 +458,21 @@ static INT32 DrvGfxDecode()
 		return 1;
 	}
 
-	memcpy (tmp, DrvGfxROM0, 0x08000);
+	memcpy (tmp, DrvGfxROM[0], 0x08000);
 
-	GfxDecode(0x0400, 4,  8,  8, Plane0, XOffs0, YOffs0, 0x100, tmp, DrvGfxROM0);
+	GfxDecode(0x0400, 4,  8,  8, Plane0, XOffs0, YOffs0, 0x100, tmp, DrvGfxROM[0]);
 
-	memcpy (tmp, DrvGfxROM1, 0x40000);
+	memcpy (tmp, DrvGfxROM[1], 0x40000);
 
-	GfxDecode(0x0800, 4, 16, 16, Plane1, XOffs1, YOffs1, 0x200, tmp, DrvGfxROM1);
+	GfxDecode(0x0800, 4, 16, 16, Plane1, XOffs1, YOffs1, 0x200, tmp, DrvGfxROM[1]);
 
-	memcpy (tmp, DrvGfxROM2, 0x40000);
+	memcpy (tmp, DrvGfxROM[2], 0x40000);
 
-	GfxDecode(0x0800, 4, 16, 16, Plane1, XOffs1, YOffs1, 0x200, tmp, DrvGfxROM2);
+	GfxDecode(0x0800, 4, 16, 16, Plane1, XOffs1, YOffs1, 0x200, tmp, DrvGfxROM[2]);
 
-	memcpy (tmp, DrvGfxROM3, 0x40000);
+	memcpy (tmp, DrvGfxROM[3], 0x40000);
 
-	GfxDecode(0x0800, 4, 16, 16, Plane1, XOffs1, YOffs1, 0x200, tmp, DrvGfxROM3);
+	GfxDecode(0x0800, 4, 16, 16, Plane1, XOffs1, YOffs1, 0x200, tmp, DrvGfxROM[3]);
 
 	BurnFree(tmp);
 
@@ -570,50 +481,51 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
+
+	BurnSetRefreshRate(57.44);
+
+	is_bootleg = (BurnDrvGetFlags() & BDF_BOOTLEG) ? 1 : 0;
 
 	{
-		if (BurnLoadRom(DrvMainROM  + 0x08000,  0, 1)) return 1;
-		if (BurnLoadRom(DrvMainROM  + 0x10000,  1, 1)) return 1;
+		if (BurnLoadRom(DrvM6809ROM[0] + 0x08000,  0, 1)) return 1;
+		if (BurnLoadRom(DrvM6809ROM[0] + 0x10000,  1, 1)) return 1;
 
-		if (BurnLoadRom(DrvSubROM   + 0x08000,  2, 1)) return 1;
-		if (BurnLoadRom(DrvSubROM   + 0x10000,  3, 1)) return 1;
+		if (BurnLoadRom(DrvM6809ROM[1] + 0x08000,  2, 1)) return 1;
+		if (BurnLoadRom(DrvM6809ROM[1] + 0x10000,  3, 1)) return 1;
 
-		if (BurnLoadRom(DrvSoundROM + 0x08000,  4, 1)) return 1;
+		if (BurnLoadRom(DrvM6809ROM[2] + 0x08000,  4, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  5, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[0] + 0x000000,  5, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM1 + 0x000000,  6, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x008000,  7, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x010000,  8, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x018000,  9, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x020000, 10, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x028000, 11, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x030000, 12, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x038000, 13, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[1] + 0x000000,  6, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[1] + 0x008000,  7, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[1] + 0x010000,  8, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[1] + 0x018000,  9, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[1] + 0x020000, 10, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[1] + 0x028000, 11, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[1] + 0x030000, 12, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[1] + 0x038000, 13, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM2 + 0x000000, 14, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x008000, 15, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x010000, 16, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x020000, 17, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x028000, 18, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x030000, 19, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[2] + 0x000000, 14, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[2] + 0x008000, 15, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[2] + 0x010000, 16, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[2] + 0x020000, 17, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[2] + 0x028000, 18, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[2] + 0x030000, 19, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM3 + 0x000000, 20, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM3 + 0x008000, 21, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM3 + 0x010000, 22, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM3 + 0x018000, 23, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM3 + 0x020000, 24, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM3 + 0x028000, 25, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM3 + 0x030000, 26, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM3 + 0x038000, 27, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[3] + 0x000000, 20, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[3] + 0x008000, 21, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[3] + 0x010000, 22, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[3] + 0x018000, 23, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[3] + 0x020000, 24, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[3] + 0x028000, 25, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[3] + 0x030000, 26, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[3] + 0x038000, 27, 1)) return 1;
 
-		is_bootleg = (BurnLoadRom(DrvMcuROM, 29, 1)) ? 1 : 0;
+		if (is_bootleg == 0) {
+			if (BurnLoadRom(DrvMcuROM    + 0x000000, 29, 1)) return 1;
+		}
 
 		DrvGfxDecode();
 	}
@@ -622,11 +534,11 @@ static INT32 DrvInit()
 	M6809Open(0);
 	M6809MapMemory(DrvShareRAM,		0x0000, 0x1fff, MAP_RAM);
 	M6809MapMemory(DrvCharRAM,		0x2000, 0x27ff, MAP_RAM);
-	M6809MapMemory(DrvBgRAM1,		0x2800, 0x2fff, MAP_RAM);
-	M6809MapMemory(DrvBgRAM0,		0x3000, 0x37ff, MAP_RAM);
+	M6809MapMemory(DrvBgRAM[1],		0x2800, 0x2fff, MAP_RAM);
+	M6809MapMemory(DrvBgRAM[0],		0x3000, 0x37ff, MAP_RAM);
 	M6809MapMemory(DrvSprRAM,		0x3800, 0x39ff, MAP_RAM);
-	M6809MapMemory(DrvPalRAM,		0x3c00, 0x3fff, MAP_ROM);
-	M6809MapMemory(DrvMainROM + 0x08000,	0x8000, 0xffff, MAP_ROM);
+	M6809MapMemory(BurnPalRAM,		0x3c00, 0x3fff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM[0] + 0x8000,	0x8000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(xain_main_write);
 	M6809SetReadHandler(xain_main_read);
 	M6809Close();
@@ -634,7 +546,7 @@ static INT32 DrvInit()
 	M6809Init(1);
 	M6809Open(1);
 	M6809MapMemory(DrvShareRAM,		0x0000, 0x1fff, MAP_RAM);
-	M6809MapMemory(DrvSubROM + 0x08000,	0x8000, 0xffff, MAP_ROM); 
+	M6809MapMemory(DrvM6809ROM[1] + 0x8000,	0x8000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(xain_sub_write);
 	M6809SetReadHandler(xain_sub_read);
 	M6809Close();
@@ -642,18 +554,12 @@ static INT32 DrvInit()
 	M6809Init(2);
 	M6809Open(2);
 	M6809MapMemory(DrvSoundRAM,		0x0000, 0x07ff, MAP_RAM);
-	M6809MapMemory(DrvSoundROM + 0x4000,	0x4000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM[2] + 0x4000,	0x4000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(xain_sound_write);
 	M6809SetReadHandler(xain_sound_read);
 	M6809Close();
 
-	m6805Init(1, 0x800);
-	m6805Open(0);
-	m6805MapMemory(DrvMcuRAM,		0x0010, 0x007f, MAP_RAM);
-	m6805MapMemory(DrvMcuROM + 0x80,	0x0080, 0x07ff, MAP_ROM);
-	m6805SetWriteHandler(xain_68705_write_ports);
-	m6805SetReadHandler(xain_68705_read_ports);
-	m6805Close();
+	m67805_taito_init(DrvMcuROM, DrvMcuRAM, &standard_m68705_interface);
 
 	BurnYM2203Init(2,  6000000/2, &DrvYM2203IRQHandler, 0);
 	BurnTimerAttachM6809(1500000);
@@ -667,6 +573,17 @@ static INT32 DrvInit()
 	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.40, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
+	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, tx_map_callback, 8, 8, 32, 32);
+	GenericTilemapInit(1, bg_map_scan, bg_map_callback, 16, 16, 32, 32);
+	GenericTilemapInit(2, bg_map_scan, fg_map_callback, 16, 16, 32, 32);
+	GenericTilemapSetGfx(0, DrvGfxROM[0], 4,  8,  8, 0x010000, 0x000, 0x07);
+	GenericTilemapSetGfx(1, DrvGfxROM[1], 4, 16, 16, 0x080000, 0x100, 0x07);
+	GenericTilemapSetGfx(2, DrvGfxROM[2], 4, 16, 16, 0x080000, 0x180, 0x07);
+	GenericTilemapSetGfx(3, DrvGfxROM[3], 4, 16, 16, 0x080000, 0x080, 0x07);
+	GenericTilemapSetTransparent(0, 0);
+	GenericTilemapSetTransparent(1, 0);
+	GenericTilemapSetTransparent(2, 0);
+	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -8);
 
 	DrvDoReset();
 
@@ -678,237 +595,69 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	M6809Exit();
-	m6805Exit();
+	m67805_taito_exit();
 
 	BurnYM2203Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
-}
-
-static inline INT32 scanline_to_vcount(INT32 scanline) // ripped directly from MAME
-{
-	INT32 vcount = scanline + 8;
-
-	if (vcount < 0x100)
-		return vcount;
-	else
-		return (vcount - 0x18) | 0x100;
-}
-				
-static void xain_scanline(INT32 scanline) // ripped directly from MAME
-{
-	INT32 screen_height = 240;
-	INT32 vcount_old = scanline_to_vcount((scanline == 0) ? screen_height - 1 : scanline - 1);
-	INT32 vcount = scanline_to_vcount(scanline);
-
-	if (!(vcount_old & 8) && (vcount & 8))
-	{
-		M6809SetIRQLine(0x01, CPU_IRQSTATUS_ACK);
-	}
-
-	if (vcount == 0xf8)
-	{
-		M6809SetIRQLine(0x20, CPU_IRQSTATUS_ACK);
-	}
-
-	vblank = (vcount >= (248 - 1)) ? 1 : 0; // -1 is a hack
-}
-
-static void draw_layer_8x8(INT32 transparent)
-{
-	if ((nBurnLayer & 0x01) == 0) return;
-
-	for (INT32 offs = 32; offs < 32 * 31; offs++)
-	{
-		INT32 sx = (offs & 0x1f) * 8;
-		INT32 sy = (offs / 0x20) * 8;
-
-		INT32 attr = DrvCharRAM[offs + 0x400];
-		INT32 code = DrvCharRAM[offs + 0x000] + ((attr & 0x03) * 256);
-		INT32 color = (attr & 0xe0) >> 5;
-
-		if (transparent) {
-			Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy - 8, color, 4, 0, 0, DrvGfxROM0);
-		} else {
-			Render8x8Tile_Clip(pTransDraw, code, sx, sy - 8, color, 4, 0, DrvGfxROM0);
-		}
-	}
-}
-
-static void draw_layer_16x16(UINT8 *ram, UINT8 *rom, INT32 color_offset, INT32 scrollx, INT32 scrolly, INT32 transparent)
-{
-	for (INT32 offs = 0; offs < 32 * 32; offs++)
-	{
-		INT32 sx = (offs & 0x1f);
-		INT32 sy = (offs / 0x20);
-
-		INT32 ofst = (sx & 0x0f) + (((sy & 0x0f) + (sx & 0x10)) << 4) + ((sy & 0x10) << 5);
-
-		sx = (sx * 16) - scrollx;
-		if (sx < -15) sx += 0x200;
-		sy = ((sy * 16) - scrolly) - 8;
-		if (sy < -15) sy += 0x200;
-
-		if (sx >= nScreenWidth || sy >= nScreenHeight || sx < -15 || sy < -15) continue;
-
-		INT32 attr = ram[ofst + 0x400];
-		INT32 code = ram[ofst + 0x000] + ((attr & 0x07) * 256);
-		INT32 flipx  = attr & 0x80;
-		INT32 color  = (attr & 0x70) >> 4;
-
-		if (transparent) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, color_offset, rom);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, color_offset, rom);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, color_offset, rom);
-			} else {
-				Render16x16Tile_Clip(pTransDraw, code, sx, sy, color, 4, color_offset, rom);
-			}
-		}
-	}
 }
 
 static void draw_sprites()
 {
 	for (INT32 offs = 0; offs < 0x180; offs += 4)
 	{
-		INT32 attr = DrvSprRAM[offs+1];
-		INT32 code = DrvSprRAM[offs+2] | ((attr & 7) << 8);
+		INT32 attr = DrvSprRAM[offs + 1];
+		INT32 code = DrvSprRAM[offs + 2] | ((attr & 7) << 8);
+		INT32 sx   = 238 - DrvSprRAM[offs + 3];
+		INT32 sy   = 240 - DrvSprRAM[offs + 0];
+		
 		INT32 color = (attr & 0x38) >> 3;
-
-		INT32 sx = 238 - DrvSprRAM[offs+3];
 		if (sx <= -7) sx += 256;
-		INT32 sy = 240 - DrvSprRAM[offs];
 		if (sy <= -7) sy += 256;
 		INT32 flipx = attr & 0x40;
 		INT32 flipy = 0;
 
-		if (attr & 0x80)
+		if (attr & 0x80) // double-height
 		{
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, (flipy ? sy+16:sy-16)-8, color, 4, 0, 0x80, DrvGfxROM3);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, (flipy ? sy+16:sy-16)-8, color, 4, 0, 0x80, DrvGfxROM3);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, (flipy ? sy+16:sy-16)-8, color, 4, 0, 0x80, DrvGfxROM3);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, (flipy ? sy+16:sy-16)-8, color, 4, 0, 0x80, DrvGfxROM3);
-				}
-			}
+			DrawGfxMaskTile(0, 3, code, sx, (flipy ? sy+16:sy-16)-8, flipx, flipy, color, 0);
+			code++;
+		}
 
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code+1, sx, sy-8, color, 4, 0, 0x80, DrvGfxROM3);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code+1, sx, sy-8, color, 4, 0, 0x80, DrvGfxROM3);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code+1, sx, sy-8, color, 4, 0, 0x80, DrvGfxROM3);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, code+1, sx, sy-8, color, 4, 0, 0x80, DrvGfxROM3);
-				}
-			}
-		}
-		else
-		{
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 8, color, 4, 0, 0x80, DrvGfxROM3);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy - 8, color, 4, 0, 0x80, DrvGfxROM3);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy - 8, color, 4, 0, 0x80, DrvGfxROM3);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy - 8, color, 4, 0, 0x80, DrvGfxROM3);
-				}
-			}
-		}
+		DrawGfxMaskTile(0, 3, code, sx, sy - 8, flipx, flipy, color, 0);
 	}
 }
 
 static INT32 DrvDraw()
 {
-	if (DrvRecalc) {
+	if (BurnRecalc) {
 		for (INT32 i = 0; i < 0x200; i++) {
 			palette_update(i);
 		}
-		DrvRecalc = 0;
+		BurnRecalc = 0;
 	}
 
 	BurnTransferClear();
 
-	switch (xain_pri & 0x07)
+	GenericTilemapSetScrollX(1, scrollx[0]);
+	GenericTilemapSetScrollY(1, scrolly[0]);
+	GenericTilemapSetScrollX(2, scrollx[1]);
+	GenericTilemapSetScrollY(2, scrolly[1]);
+
+	const INT32 lut[8][4] = { { 0, 1, 2, 3 }, { 1, 0, 2, 3 }, { 3, 0, 2, 1 },
+							  { 3, 1, 2, 0 }, { 0, 3, 2, 1 }, { 1, 3, 2, 0 },
+							  { 0, 2, 1, 3 }, { 1, 2, 0, 3 } };
+
+	for (INT32 i = 0; i < 4; i++)
 	{
-		case 0:
-			if (nBurnLayer & 1) draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 0);
-			if (nBurnLayer & 2) draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 1);
-			if (nSpriteEnable & 1) draw_sprites();
-			if (nBurnLayer & 4) draw_layer_8x8(1);
-		break;
-
-		case 1:
-			if (nBurnLayer & 2) draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 0);
-			if (nBurnLayer & 1) draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 1);
-			if (nSpriteEnable & 1) draw_sprites();
-			if (nBurnLayer & 4) draw_layer_8x8(1);
-		break;
-
-		case 2:
-			if (nBurnLayer & 4) draw_layer_8x8(0);
-			if (nBurnLayer & 1) draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 1);
-			if (nSpriteEnable & 1) draw_sprites();
-			if (nBurnLayer & 2) draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 1);
-		break;
-
-		case 3:
-			if (nBurnLayer & 4) draw_layer_8x8(0);
-			if (nBurnLayer & 2) draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 1);
-			if (nSpriteEnable & 1) draw_sprites();
-			if (nBurnLayer & 1) draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 1);
-		break;
-
-		case 4:
-			if (nBurnLayer & 1) draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 0);
-			if (nBurnLayer & 4) draw_layer_8x8(1);
-			if (nSpriteEnable & 1) draw_sprites();
-			if (nBurnLayer & 2) draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 1);
-		break;
-
-		case 5:
-			if (nBurnLayer & 2) draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 0);
-			if (nBurnLayer & 4) draw_layer_8x8(1);
-			if (nSpriteEnable & 1) draw_sprites();
-			if (nBurnLayer & 1) draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 1);
-		break;
-
-		case 6:
-			if (nBurnLayer & 1) draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 0);
-			if (nSpriteEnable & 1) draw_sprites();
-			if (nBurnLayer & 2) draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 1);
-			if (nBurnLayer & 4) draw_layer_8x8(1);
-		break;
-
-		case 7:
-			if (nBurnLayer & 2) draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 0);
-			if (nSpriteEnable & 1) draw_sprites();
-			if (nBurnLayer & 1) draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 1);
-			if (nBurnLayer & 4) draw_layer_8x8(1);
-		break;
+		if ((lut[xain_pri & 0x07][i] == 0) && (nBurnLayer & 1)) GenericTilemapDraw(1, 0, (i == 0) ? TMAP_FORCEOPAQUE : 0);
+		if ((lut[xain_pri & 0x07][i] == 1) && (nBurnLayer & 2)) GenericTilemapDraw(2, 0, (i == 0) ? TMAP_FORCEOPAQUE : 0);
+		if ((lut[xain_pri & 0x07][i] == 2) && (nSpriteEnable & 1)) draw_sprites();
+		if ((lut[xain_pri & 0x07][i] == 3) && (nBurnLayer & 4)) GenericTilemapDraw(0, 0, (i == 0) ? TMAP_FORCEOPAQUE : 0);
 	}
 
-	BurnTransferCopy(DrvPalette);
+	BurnTransferCopy(BurnPalette);
 
 	return 0;
 }
@@ -923,7 +672,8 @@ static INT32 DrvFrame()
 	m6805NewFrame();
 
 	{
-		memset (DrvInputs, 0xff, 3);
+		memset (DrvInputs, 0xff, sizeof(DrvInputs));
+
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -933,15 +683,35 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 272*8;
 	INT32 nCyclesTotal[4] = { (INT32)((double)1500000 / 57.44), (INT32)((double)1500000 / 57.44), (INT32)((double)1500000 / 57.44), (INT32)((double)3000000 / 57.44) };
-	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
+	INT32 nCyclesDone[4] = { nExtraCycles[0], nExtraCycles[1], 0, 0 };
 
 	m6805Open(0);
+	m6805Idle(nExtraCycles[3]);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6809Open(0);
-		if ((i%8) == 7)
-			xain_scanline(i/8);
+		if ((i&0x7) == 7) {
+			INT32 scanline = i / 8;
+
+			// IRQ1: 0-240 (240 inclusive), every 16 scanlines + once at 264
+			if ( (scanline < 241 && (scanline%16) == 0) || scanline == 264) {
+				M6809SetIRQLine(0x01, CPU_IRQSTATUS_ACK);
+			}
+			if (scanline == 8) {
+				vblank = 0;
+			}
+			if (scanline == 239) {
+				vblank = 1;
+			}
+			if (scanline == 240) {
+				M6809SetIRQLine(0x20, CPU_IRQSTATUS_ACK);
+
+				if (pBurnDraw) {
+					BurnDrvRedraw();
+				}
+			}
+		}
 		CPU_RUN(0, M6809);
 		M6809Close();
 
@@ -949,26 +719,21 @@ static INT32 DrvFrame()
 		CPU_RUN(1, M6809);
 		M6809Close();
 
-		CPU_RUN(3, m6805);
+		CPU_RUN_SYNCINT(3, m6805); // sync internally because m6805Run() in handler!
 
 		M6809Open(2);
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[2] / nInterleave));
+		CPU_RUN_TIMER(2);
 		M6809Close();
 	}
 
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nExtraCycles[3] = m6805TotalCycles() - nCyclesTotal[3];
+
 	m6805Close();
 
-	M6809Open(2);
-	BurnTimerEndFrame(nCyclesTotal[2]);
-	
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-	}
-
-	M6809Close();
-
-	if (pBurnDraw) {
-		DrvDraw();
 	}
 
 	return 0;
@@ -991,46 +756,30 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnAcb(&ba);
 
 		M6809Scan(nAction);
-		m6805Scan(nAction);
+		m68705_taito_scan(nAction);
 
 		BurnYM2203Scan(nAction, pnMin);
 
-		SCAN_VAR(nBankAData);
-		SCAN_VAR(nBankBData);
-		SCAN_VAR(scrollxp1);
-		SCAN_VAR(scrollyp1);
-		SCAN_VAR(scrollxp0);
-		SCAN_VAR(scrollyp0);
-		SCAN_VAR(vblank);
+		SCAN_VAR(main_bank);
+		SCAN_VAR(sub_bank);
+		SCAN_VAR(scrollx);
+		SCAN_VAR(scrolly);
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(xain_pri);
-		SCAN_VAR(port_a_out);
-		SCAN_VAR(port_b_out);
-		SCAN_VAR(port_c_out);
-		SCAN_VAR(port_a_in);
-		SCAN_VAR(port_b_in);
-		SCAN_VAR(port_c_in);
-		SCAN_VAR(ddr_a);
-		SCAN_VAR(ddr_b);
-		SCAN_VAR(ddr_c);
-		SCAN_VAR(from_mcu);
-		SCAN_VAR(from_main);
-		SCAN_VAR(mcu_ready);
-		SCAN_VAR(mcu_accept);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE)
 	{
 		M6809Open(0);
-		bankswitchA(nBankAData);
+		main_bankswitch(main_bank);
 		M6809Close();
 
 		M6809Open(1);
-		bankswitchB(nBankBData);
+		sub_bankswitch(sub_bank);
 		M6809Close();
-
-		DrvRecalc = 1;
 	}
 
 	return 0;
@@ -1089,7 +838,7 @@ struct BurnDriver BurnDrvXsleena = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TECHNOS, GBF_RUNGUN, 0,
 	NULL, xsleenaRomInfo, xsleenaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	256, 240, 4, 3
 };
 
@@ -1146,7 +895,7 @@ struct BurnDriver BurnDrvXsleenaj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_RUNGUN, 0,
 	NULL, xsleenajRomInfo, xsleenajRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	256, 240, 4, 3
 };
 
@@ -1203,7 +952,7 @@ struct BurnDriver BurnDrvSolrwarr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_RUNGUN, 0,
 	NULL, solrwarrRomInfo, solrwarrRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	256, 240, 4, 3
 };
 
@@ -1252,13 +1001,13 @@ static struct BurnRomInfo xsleenabRomDesc[] = {
 STD_ROM_PICK(xsleenab)
 STD_ROM_FN(xsleenab)
 
-struct BurnDriverD BurnDrvXsleenab = {
+struct BurnDriver BurnDrvXsleenab = {
 	"xsleenab", "xsleena", NULL, NULL, "1986",
 	"Xain'd Sleena (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TECHNOS, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TECHNOS, GBF_RUNGUN, 0,
 	NULL, xsleenabRomInfo, xsleenabRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	256, 240, 4, 3
 };
 
@@ -1309,12 +1058,12 @@ static struct BurnRomInfo xsleenabaRomDesc[] = {
 STD_ROM_PICK(xsleenaba)
 STD_ROM_FN(xsleenaba)
 
-struct BurnDriverD BurnDrvXsleenaba = {
+struct BurnDriver BurnDrvXsleenaba = {
 	"xsleenaba", "xsleena", NULL, NULL, "1987",
 	"Xain'd Sleena (bootleg, bugfixed)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TECHNOS, GBF_RUNGUN, 0,
 	NULL, xsleenabaRomInfo, xsleenabaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	256, 240, 4, 3
 };

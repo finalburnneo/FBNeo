@@ -692,24 +692,24 @@ struct BurnDriver BurnDrvManhatan = {
 // Jail Break (bootleg)
 
 static struct BurnRomInfo jailbrekbRomDesc[] = {
-	{ "1.k6",	0x8000, 0xdf0e8fc7, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "1.k6",		0x8000, 0xdf0e8fc7, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
 
-	{ "3.h6",	0x8000, 0xbf67a8ff, 2 | BRF_GRA },           //  1 Tiles
+	{ "3.h6",		0x8000, 0xbf67a8ff, 2 | BRF_GRA },           //  1 Tiles
 
-	{ "5.f6",	0x8000, 0x081d2eea, 3 | BRF_GRA },           //  2 Sprites
-	{ "4.g6",	0x8000, 0xe34b93b8, 3 | BRF_GRA },           //  3
+	{ "5.f6",		0x8000, 0x081d2eea, 3 | BRF_GRA },           //  2 Sprites
+	{ "4.g6",		0x8000, 0xe34b93b8, 3 | BRF_GRA },           //  3
 
 	{ "prom.j2",	0x0020, 0xf1909605, 4 | BRF_GRA },           //  4 Color Proms
 	{ "prom.i2",	0x0020, 0xf70bb122, 4 | BRF_GRA },           //  5
 	{ "prom.d6",	0x0100, 0xd4fe5c97, 4 | BRF_GRA },           //  6
 	{ "prom.e6",	0x0100, 0x0266c7db, 4 | BRF_GRA },           //  7
 
-	{ "2.i6",	0x2000, 0xd91d15e3, 5 | BRF_SND },           //  8 VLM5030 Samples
+	{ "2.i6",		0x2000, 0xd91d15e3, 5 | BRF_SND },           //  8 VLM5030 Samples
 
-	{ "k4.bin",	0x0001, 0x00000000, 6 | BRF_NODUMP },        //  9 plds
-	{ "a7.bin",	0x0001, 0x00000000, 6 | BRF_NODUMP },        // 10
-	{ "g9.bin",	0x0001, 0x00000000, 6 | BRF_NODUMP },        // 11
-	{ "k8.bin",	0x0001, 0x00000000, 6 | BRF_NODUMP },        // 12
+	{ "pal16l8.k4",	0x0104, 0x96e993c6, 6 | BRF_OPT },        	 //  9 plds
+	{ "pal16r4.a7",	0x0104, 0x3d074375, 6 | BRF_OPT },        	 // 10
+	{ "pal16r6.g9",	0x0104, 0xb6c4f22d, 6 | BRF_OPT },        	 // 11
+	{ "pal16l8.k8",	0x0104, 0x38783f49, 6 | BRF_OPT },        	 // 12
 };
 
 STD_ROM_PICK(jailbrekb)

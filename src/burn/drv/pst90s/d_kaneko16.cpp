@@ -1592,8 +1592,8 @@ STD_ROM_PICK(Mgcrystlo)
 STD_ROM_FN(Mgcrystlo)
 
 static struct BurnRomInfo MgcrystljRomDesc[] = {
-	{ "kaneko__mc100-u18j-02.u18",		0x020000, 0xafe5882d, BRF_ESS | BRF_PRG }, //  0 68000 Program Code /* Labeled as MC100J/U18-02 */
-	{ "kaneko__mc101-u19j-02.u19",		0x040000, 0x60da5492, BRF_ESS | BRF_PRG }, //  1 					/* Labeled as MC101J/U19-02 */
+	{ "kaneko__mc100-u18j-00.u18",		0x020000, 0xafe5882d, BRF_ESS | BRF_PRG }, //  0 68000 Program Code /* Labeled as MC100J/U18-02 */
+	{ "kaneko__mc101-u19j-00.u19",		0x040000, 0x60da5492, BRF_ESS | BRF_PRG }, //  1 					/* Labeled as MC101J/U19-02 */
 
 	{ "kaneko__mc-000_0001.u38",		0x100000, 0x28acf6f4, BRF_GRA },		   //  2 Sprites
 	{ "kaneko__mc-001_0002_r44.u37",	0x080000, 0x005bc43d, BRF_GRA },		   //  3

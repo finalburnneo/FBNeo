@@ -942,6 +942,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="amidar" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Amidar (Spanish) (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Salvador Camacho</manufacturer>
+		<rom name="Amidar (2022)(Salvador Camacho).tap" size="26664" crc="7dda9ac5"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ammytris" romof="spec128">
 		<description>Ammytris (128K)</description>
 		<year>1995</year>
@@ -2097,12 +2107,13 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="blinkys" romof="spectrum">
-		<description>Blinky's Scary School (48K)</description>
+	<game name="blinkys" romof="spec128">
+		<description>Blinky's Scary School (128K)</description>
 		<year>1990</year>
 		<manufacturer>Zeppelin Games</manufacturer>
-		<rom name="Blinky's Scary School (1990)(Zeppelin Games).z80" size="40159" crc="65b0cd8e"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="Blinky's Scary School (1990)(Zeppelin Games).tap" size="53665" crc="6fcf88b5"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2187,21 +2198,30 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bluemax" romof="spectrum">
+		<description>Blue Max (48K)</description>
+		<year>1984</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Blue Max 48K (1984)(U.S. Gold).tap" size="42721" crc="13b6bc71"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bmxfrees" romof="spec128">
 		<description>BMX Freestyle Simulator (128K)</description>
 		<year>1989</year>
 		<manufacturer>Codemasters</manufacturer>
-		<rom name="BMX Freestyle Simulator (1989)(Codemasters)[128K].z80" size="46902" crc="58d28848"/>
+		<rom name="BMX Freestyle Simulator (1989)(Codemasters).tap" size="41824" crc="711d4d6a"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bmxfrees_48" cloneof="bmxfrees" romof="bmxfrees">
+	<game name="bmxfrees48" cloneof="bmxfrees" romof="bmxfrees">
 		<description>BMX Freestyle Simulator (48K)</description>
 		<year>1989</year>
 		<manufacturer>Codemasters</manufacturer>
-		<rom name="BMX Freestyle Simulator (1989)(Codemasters).z80" size="40037" crc="10749c38"/>
+		<rom name="BMX Freestyle Simulator (1989)(Codemasters).tap" merge="BMX Freestyle Simulator (1989)(Codemasters).tap" size="41824" crc="711d4d6a"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5564,6 +5584,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="expraider" romof="spectrum">
+		<description>Express Raider (48K)</description>
+		<year>1987</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Express Raider 48K (1987)(U.S. Gold).z80" size="42604" crc="78fa11ff"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="exterminator" romof="spec128">
 		<comment>Press '5' to play with controller</comment>
 		<description>Exterminator (128K)</description>
@@ -5750,6 +5779,28 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="federuwen" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Federation Underwater (English) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Furillo Productions</manufacturer>
+		<rom name="Federation Underwater EN 128K (2022)(Furillo Productions).tap" size="117594" crc="1b111c3f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="federuwes" cloneof="federuwen" romof="federuwen">
+		<comment>Homebrew</comment>
+		<description>Federation Underwater (Spanish) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Furillo Productions</manufacturer>
+		<rom name="Federation Underwater ES 128K (2022)(Furillo Productions).tap" size="117591" crc="21048ce6"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="fedzen" romof="spectrum">
 		<comment>Homebrew</comment>
 		<description>Federation Z (English) (48K) (HB)</description>
@@ -5813,6 +5864,16 @@
 		<year>2018</year>
 		<manufacturer>g0blinish</manufacturer>
 		<rom name="FilloMania (2018)(g0blinish).tap" size="23139" crc="1aee9684"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="finalassault" romof="spec128">
+		<description>Final Assault (128K)</description>
+		<year>1988</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Final Assault 128K (1988)(U.S. Gold).z80" size="82875" crc="bd8bec7a"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -7219,6 +7280,17 @@
 		<manufacturer>Odin Computer Graphics</manufacturer>
 		<rom name="Heartland (1986)(Odin Computer Graphics).tap" size="42923" crc="d756125c"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="heavymetal" romof="spec128">
+		<comment>W/S: speed up/down - E: select weapon - D: smoke</comment>
+		<description>Heavy Metal (128K)</description>
+		<year>1990</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Heavy Metal 128K (1990)(U.S. Gold).tap" size="86702" crc="67e11acf"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -9066,6 +9138,15 @@
 		<year>2021</year>
 		<manufacturer>Zosya Entertainment</manufacturer>
 		<rom name="Lava 16K (2021)(Zosya Ent.).tap" size="8366" crc="a307f634"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="leaderboard" romof="spectrum">
+		<description>Leader Board (48K)</description>
+		<year>1987</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Leader Board 48K (1987)(U.S. Gold).tap" size="45712" crc="97794c06"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -12110,6 +12191,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="pssst" romof="spectrum">
+		<description>Pssst (16K)</description>
+		<year>1983</year>
+		<manufacturer>Ultimate Play The Game</manufacturer>
+		<rom name="Pssst 16K (1983)(Ultimate Play The Game).tap" size="15927" crc="5f5272d5"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="psychohopper" romof="spectrum">
 		<comment>Set '3 Sinclair' to use controller</comment>
 		<description>Psycho Hopper (48K)</description>
@@ -12195,6 +12285,16 @@
 		<year>1992</year>
 		<manufacturer>Zeppelin Games</manufacturer>
 		<rom name="Q10 Tank Buster 48K (1992)(Zeppelin Games).tap" size="43523" crc="1fad3a24"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="qi48k" romof="spectrum">
+		<comment>Homebrew, Press 'L' to place a 'directional arrow'</comment>
+		<description>QI (Spanish) (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Memsoftware</manufacturer>
+		<rom name="QI ES 48K (2022)(Memsoftware).tap" size="42543" crc="a3144c9f"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -12861,6 +12961,15 @@
 		<year>1987</year>
 		<manufacturer>Your Sinclair</manufacturer>
 		<rom name="Road Race (1987)(Your Sinclair).tap" size="46100" crc="a1daf3de"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="roadrunner" romof="spectrum">
+		<description>Road Runner (48K)</description>
+		<year>1987</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Road Runner 48K (1987)(U.S. Gold).z80" size="45123" crc="4b781d7c"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -14662,6 +14771,17 @@
 		<year>2015</year>
 		<manufacturer>kas29</manufacturer>
 		<rom name="STARS - Gumi 128K (2015)(kas29).tap" size="23775" crc="eb39a1df"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="starsgumi2" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>STARS - Gumi 2 (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>kas29</manufacturer>
+		<rom name="Stars - Gumi 2 (2022)(kas29).tap" size="41242" crc="64e2c5f5"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

@@ -6578,7 +6578,7 @@
 	</game>
 	<game name="hackmatch">
 		<comment>Homebrew, Original game by Juice (1990)</comment>
-		<description>Hack Match (HB)</description>
+		<description>Hack*Match (HB)</description>
 		<year>2021</year>
 		<manufacturer>Zachtronics</manufacturer>
 		<rom name="Hack Match (2021)(Zachtronics).nes" size="40976" crc="94554d49"/>
@@ -8620,6 +8620,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="legenzelrd" cloneof="legenzel" romof="legenzel">
+		<comment>Hack</comment>
+		<description>Legend of Zelda Redux, The (Hack, v3.1)</description>
+		<year>2022</year>
+		<manufacturer>ShadowOne333</manufacturer>
+		<rom name="Legend of Zelda Redux, The v3.1 (2022)(ShadowOne333).nes" size="131088" crc="183f0f76"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="legenzeli" cloneof="legenzel" romof="legenzel">
 		<comment>Hack</comment>
 		<description>Legend of Zelda, The (Hack, Italian v1.0)</description>
@@ -9137,6 +9146,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="magickidsdorp" cloneof="krioncon" romof="krioncon">
+		<comment>Prototype</comment>
 		<description>Magical Kid's Doropie (Prototype)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -10593,6 +10603,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="ninnin">
+		<comment>Homebrew</comment>
+		<description>Nin-Nin (HB, v1)</description>
+		<year>2020</year>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="Nin-Nin v1 (2020)(The Mojon Twins).nes" size="65552" crc="d46b4955"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="deadfoxc" cloneof="codenam" romof="codenam">
 		<comment>Hack</comment>
 		<description>Ningen Heiki - Dead Fox (T-Chi, v2.0)</description>
@@ -11031,6 +11050,15 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Panda Baby (Unl).nes" size="524304" crc="042f5b25"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="pandaworld">
+		<comment>Homebrew</comment>
+		<description>Panda World (HB)</description>
+		<year>20??</year>
+		<manufacturer>Unknown</manufacturer>
+		<rom name="Panda World (Unl)(20XX).nes" size="262160" crc="dff2fe93"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -13110,10 +13138,10 @@
 	</game>
 	<game name="slowmole">
 		<comment>Homebrew</comment>
-		<description>Slow Mole (HB, v1.1)</description>
+		<description>Slow Mole (HB, v1.2b)</description>
 		<year>2021</year>
 		<manufacturer>Erik Rosenlund</manufacturer>
-		<rom name="Slow Mole v1.1 (2021)(Erik Rosenlund).nes" size="524304" crc="eadc4e8b"/>
+		<rom name="Slow Mole v1.2b (2021)(Erik Rosenlund).nes" size="524304" crc="61226e5f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -16546,6 +16574,15 @@
 		<year>2021</year>
 		<manufacturer>Ok Impala!</manufacturer>
 		<rom name="Zelda II Amida's Curse GlobHack v1.7 (2021)(Ok Impala!).nes" size="262160" crc="a6ccfea4"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="zeldaiird" cloneof="zeldaii" romof="zeldaii">
+		<comment>Hack</comment>
+		<description>Zelda II Redux - The Adventure of Link (Hack, v3.0)</description>
+		<year>2022</year>
+		<manufacturer>ShadowOne333</manufacturer>
+		<rom name="Zelda II - The Adventure of Link Redux v3.0 (2022)(ShadowOne333).nes" size="262160" crc="f4bdec40"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

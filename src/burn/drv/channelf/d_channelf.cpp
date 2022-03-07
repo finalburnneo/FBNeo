@@ -568,7 +568,7 @@ struct BurnDriver BurnDrvCHF_democrt1 = {
 	"chf_democrt1", NULL, "chf_channelf", NULL, "1977",
 	"Democart 1\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_DEMO, 2, HARDWARE_CHANNELF, GBF_ACTION, 0,
 	ChannelfGetZipName, CHF_democrt1RomInfo, CHF_democrt1RomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -588,7 +588,7 @@ struct BurnDriver BurnDrvCHF_democrt2 = {
 	"chf_democrt2", NULL, "chf_channelf", NULL, "197?",
 	"Democart 2\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_DEMO, 2, HARDWARE_CHANNELF, GBF_ACTION, 0,
 	ChannelfGetZipName, CHF_democrt2RomInfo, CHF_democrt2RomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -608,7 +608,7 @@ struct BurnDriver BurnDrvCHF_tctactoe = {
 	"chf_tctactoe", NULL, "chf_channelf", NULL, "1976",
 	"Tic-Tac-Toe / Shooting Gallery / Doodle / Quadra-Doodle\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_ACTION, 0,
 	ChannelfGetZipName, CHF_tctactoeRomInfo, CHF_tctactoeRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -628,7 +628,7 @@ struct BurnDriver BurnDrvCHF_muehle = {
 	"chf_muehle", "chf_tctactoe", "chf_channelf", NULL, "1978",
 	"Muehle / Tontauben-Schiessen / Kreatives Malspiel / Videoscope (Ger)\0", NULL, "SABA", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CHANNELF, GBF_ACTION, 0,
 	ChannelfGetZipName, CHF_muehleRomInfo, CHF_muehleRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -648,7 +648,7 @@ struct BurnDriver BurnDrvCHF_dsrtfox = {
 	"chf_dsrtfox", NULL, "chf_channelf", NULL, "1976",
 	"Desert Fox / Shooting Gallery\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_SHOOT, 0,
 	ChannelfGetZipName, CHF_dsrtfoxRomInfo, CHF_dsrtfoxRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -668,7 +668,7 @@ struct BurnDriver BurnDrvCHF_vblckjck = {
 	"chf_vblckjck", NULL, "chf_channelf", NULL, "1976",
 	"Video Blackjack\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_CASINO, 0,
 	ChannelfGetZipName, CHF_vblckjckRomInfo, CHF_vblckjckRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -688,7 +688,7 @@ struct BurnDriver BurnDrvCHF_spitfire = {
 	"chf_spitfire", NULL, "chf_channelf", NULL, "1976",
 	"Spitfire\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_SHOOT, 0,
 	ChannelfGetZipName, CHF_spitfireRomInfo, CHF_spitfireRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -708,7 +708,7 @@ struct BurnDriver BurnDrvCHF_spitfirep = {
 	"chf_spitfirep", "chf_spitfire", "chf_channelf", NULL, "1976",
 	"Spitfire (Prototype)\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_CHANNELF, GBF_SHOOT, 0,
 	ChannelfGetZipName, CHF_spitfirepRomInfo, CHF_spitfirepRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -728,7 +728,7 @@ struct BurnDriver BurnDrvCHF_spacewar = {
 	"chf_spacewar", NULL, "chf_channelf", NULL, "1977",
 	"Space War\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_SHOOT, 0,
 	ChannelfGetZipName, CHF_spacewarRomInfo, CHF_spacewarRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -748,7 +748,7 @@ struct BurnDriver BurnDrvCHF_mthquiz1 = {
 	"chf_mthquiz1", NULL, "chf_channelf", NULL, "1976",
 	"Math Quiz 1\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_QUIZ, 0,
 	ChannelfGetZipName, CHF_mthquiz1RomInfo, CHF_mthquiz1RomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -768,7 +768,7 @@ struct BurnDriver BurnDrvCHF_mthquiz2 = {
 	"chf_mthquiz2", NULL, "chf_channelf", NULL, "1977",
 	"Math Quiz 2\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_QUIZ, 0,
 	ChannelfGetZipName, CHF_mthquiz2RomInfo, CHF_mthquiz2RomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -788,7 +788,7 @@ struct BurnDriver BurnDrvCHF_magicnum = {
 	"chf_magicnum", NULL, "chf_channelf", NULL, "1977",
 	"Magic Numbers / Mind Reader / Nim\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_PUZZLE, 0,
 	ChannelfGetZipName, CHF_magicnumRomInfo, CHF_magicnumRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -808,7 +808,7 @@ struct BurnDriver BurnDrvCHF_dragrace = {
 	"chf_dragrace", NULL, "chf_channelf", NULL, "1977",
 	"Drag Race\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_ACTION, 0,
 	ChannelfGetZipName, CHF_dragraceRomInfo, CHF_dragraceRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -828,7 +828,7 @@ struct BurnDriver BurnDrvCHF_maze = {
 	"chf_maze", NULL, "chf_channelf", NULL, "1977",
 	"Maze / Jailbreak / Blind-man's-bluff / Trailblazer\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MAZE, 0,
 	ChannelfGetZipName, CHF_mazeRomInfo, CHF_mazeRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -848,7 +848,7 @@ struct BurnDriver BurnDrvCHF_mazea = {
 	"chf_mazea", "chf_maze", "chf_channelf", NULL, "1977",
 	"Maze / Jailbreak / Blind-man's-bluff / Trailblazer (Alt)\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CHANNELF, GBF_MAZE, 0,
 	ChannelfGetZipName, CHF_mazeaRomInfo, CHF_mazeaRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -868,7 +868,7 @@ struct BurnDriver BurnDrvCHF_backgamm = {
 	"chf_backgamm", NULL, "chf_channelf", NULL, "1977",
 	"Backgammon / Acey-Deucey\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_PUZZLE, 0,
 	ChannelfGetZipName, CHF_backgammRomInfo, CHF_backgammRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -888,7 +888,7 @@ struct BurnDriver BurnDrvCHF_baseball = {
 	"chf_baseball", NULL, "chf_channelf", NULL, "1977",
 	"Baseball\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_SPORTSMISC, 0,
 	ChannelfGetZipName, CHF_baseballRomInfo, CHF_baseballRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -908,7 +908,7 @@ struct BurnDriver BurnDrvCHF_robotwar = {
 	"chf_robotwar", NULL, "chf_channelf", NULL, "1977",
 	"Robot War / Torpedo Alley\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_ACTION, 0,
 	ChannelfGetZipName, CHF_robotwarRomInfo, CHF_robotwarRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -928,7 +928,7 @@ struct BurnDriver BurnDrvCHF_robotwarp = {
 	"chf_robotwarp", "chf_robotwar", "chf_channelf", NULL, "1977",
 	"Robot War (Prototype)\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_CHANNELF, GBF_ACTION, 0,
 	ChannelfGetZipName, CHF_robotwarpRomInfo, CHF_robotwarpRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -948,7 +948,7 @@ struct BurnDriver BurnDrvCHF_sonrsrch = {
 	"chf_sonrsrch", NULL, "chf_channelf", NULL, "1977",
 	"Sonar Search\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_ACTION, 0,
 	ChannelfGetZipName, CHF_sonrsrchRomInfo, CHF_sonrsrchRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -968,7 +968,7 @@ struct BurnDriver BurnDrvCHF_memory = {
 	"chf_memory", NULL, "chf_channelf", NULL, "1978",
 	"Memory Match 1 & 2\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_PUZZLE, 0,
 	ChannelfGetZipName, CHF_memoryRomInfo, CHF_memoryRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -988,7 +988,7 @@ struct BurnDriver BurnDrvCHF_dodgeit = {
 	"chf_dodgeit", NULL, "chf_channelf", NULL, "1978",
 	"Dodge It\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_ACTION, 0,
 	ChannelfGetZipName, CHF_dodgeitRomInfo, CHF_dodgeitRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -1008,7 +1008,7 @@ struct BurnDriver BurnDrvCHF_pinball = {
 	"chf_pinball", NULL, "chf_channelf", NULL, "1978",
 	"Pinball Challenge\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_BREAKOUT, 0,
 	ChannelfGetZipName, CHF_pinballRomInfo, CHF_pinballRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -1028,7 +1028,7 @@ struct BurnDriver BurnDrvCHF_pinballa = {
 	"chf_pinballa", "chf_pinball", "chf_channelf", NULL, "1978",
 	"Pinball Challenge (Alt)\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CHANNELF, GBF_BREAKOUT, 0,
 	ChannelfGetZipName, CHF_pinballaRomInfo, CHF_pinballaRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -1048,7 +1048,7 @@ struct BurnDriver BurnDrvCHF_hangman = {
 	"chf_hangman", NULL, "chf_channelf", NULL, "1978",
 	"Hangman\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_CHANNELF, GBF_PUZZLE, 0,
 	ChannelfGetZipName, CHF_hangmanRomInfo, CHF_hangmanRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -1068,7 +1068,7 @@ struct BurnDriver BurnDrvCHF_ordtvlng = {
 	"chf_ordtvlng", "chf_hangman", "chf_channelf", NULL, "1978",
 	"Ordtavling (Swe)\0", NULL, "Luxor", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_CHANNELF, GBF_PUZZLE, 0,
 	ChannelfGetZipName, CHF_ordtvlngRomInfo, CHF_ordtvlngRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -1088,7 +1088,7 @@ struct BurnDriver BurnDrvCHF_ratmal = {
 	"chf_ratmal", "chf_hangman", "chf_channelf", NULL, "197?",
 	"Rat' Mal (Ger)\0", NULL, "SABA", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_CHANNELF, GBF_PUZZLE, 0,
 	ChannelfGetZipName, CHF_ratmalRomInfo, CHF_ratmalRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -1108,7 +1108,7 @@ struct BurnDriver BurnDrvCHF_checkers = {
 	"chf_checkers", NULL, "chf_channelf", NULL, "1978",
 	"Checkers\0", NULL, "Zircon", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_STRATEGY, 0,
 	ChannelfGetZipName, CHF_checkersRomInfo, CHF_checkersRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -1128,7 +1128,7 @@ struct BurnDriver BurnDrvCHF_whizball = {
 	"chf_whizball", NULL, "chf_channelf", NULL, "1978",
 	"Video Whizball\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_ACTION, 0,
 	ChannelfGetZipName, CHF_whizballRomInfo, CHF_whizballRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -1148,7 +1148,7 @@ struct BurnDriver BurnDrvCHF_schach = {
 	"chf_schach", NULL, "chf_channelf", NULL, "197?",
 	"Schach (Ger)\0", NULL, "SABA", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_STRATEGY, 0,
 	ChannelfGetZipName, CHF_schachRomInfo, CHF_schachRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -1168,7 +1168,7 @@ struct BurnDriver BurnDrvCHF_bowling = {
 	"chf_bowling", NULL, "chf_channelf", NULL, "1978",
 	"Bowling\0", NULL, "Fairchil", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_ACTION, 0,
 	ChannelfGetZipName, CHF_bowlingRomInfo, CHF_bowlingRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -1188,7 +1188,7 @@ struct BurnDriver BurnDrvCHF_slotmchn = {
 	"chf_slotmchn", NULL, "chf_channelf", NULL, "1980",
 	"Slot Machine\0", NULL, "Zircon", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_CHANNELF, GBF_CASINO, 0,
 	ChannelfGetZipName, CHF_slotmchnRomInfo, CHF_slotmchnRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -1208,7 +1208,7 @@ struct BurnDriver BurnDrvCHF_galactic = {
 	"chf_galactic", NULL, "chf_channelf", NULL, "1980",
 	"Galactic Space Wars / Lunar Lander\0", NULL, "Zircon", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_CHANNELF, GBF_ACTION, 0,
 	ChannelfGetZipName, CHF_galacticRomInfo, CHF_galacticRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -1228,7 +1228,7 @@ struct BurnDriver BurnDrvCHF_galacticp = {
 	"chf_galacticp", "chf_galactic", "chf_channelf", NULL, "1980",
 	"Galactic Space Wars (Prototype)\0", NULL, "Zircon", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_CHANNELF, GBF_ACTION, 0,
 	ChannelfGetZipName, CHF_galacticpRomInfo, CHF_galacticpRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -1248,7 +1248,7 @@ struct BurnDriver BurnDrvCHF_pfootbll = {
 	"chf_pfootbll", NULL, "chf_channelf", NULL, "1981",
 	"Pro Football\0", NULL, "Zircon", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_SPORTSMISC, 0,
 	ChannelfGetZipName, CHF_pfootbllRomInfo, CHF_pfootbllRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -1268,7 +1268,7 @@ struct BurnDriver BurnDrvCHF_football = {
 	"chf_football", "chf_pfootbll", "chf_channelf", NULL, "1981",
 	"Football (Prototype)\0", NULL, "Zircon", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_CHANNELF, GBF_SPORTSMISC, 0,
 	ChannelfGetZipName, CHF_footballRomInfo, CHF_footballRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -1288,7 +1288,7 @@ struct BurnDriver BurnDrvCHF_casinop = {
 	"chf_casinop", NULL, "chf_channelf", NULL, "1980",
 	"Casino Poker\0", NULL, "Zircon", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_CHANNELF, GBF_CASINO, 0,
 	ChannelfGetZipName, CHF_casinopRomInfo, CHF_casinopRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -1308,7 +1308,7 @@ struct BurnDriver BurnDrvCHF_drawpkr = {
 	"chf_drawpkr", "chf_casinop", "chf_channelf", NULL, "1980",
 	"Draw Poker (Prototype)\0", NULL, "Zircon", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_CHANNELF, GBF_CASINO, 0,
 	ChannelfGetZipName, CHF_drawpkrRomInfo, CHF_drawpkrRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -1328,7 +1328,7 @@ struct BurnDriver BurnDrvCHF_alieninv = {
 	"chf_alieninv", NULL, "chf_channelf", NULL, "1981",
 	"Alien Invasion\0", NULL, "Zircon", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_SHOOT, 0,
 	ChannelfGetZipName, CHF_alieninvRomInfo, CHF_alieninvRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -1348,7 +1348,7 @@ struct BurnDriver BurnDrvCHF_werbetxt = {
 	"chf_werbetxt", NULL, "chf_channelf", NULL, "198?",
 	"Werbetextcassette\0", NULL, "Electronic-Partner", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_CHANNELF, GBF_MISC, 0,
 	ChannelfGetZipName, CHF_werbetxtRomInfo, CHF_werbetxtRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -1368,7 +1368,7 @@ struct BurnDriver BurnDrvCHF_clrorgan = {
 	"chf_clrorgan", NULL, "chf_channelf", NULL, "19??",
 	"Color Organ (Prototype)\0", NULL, "Zircon", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_DEMO | BDF_PROTOTYPE, 1, HARDWARE_CHANNELF, GBF_MISC, 0,
 	ChannelfGetZipName, CHF_clrorganRomInfo, CHF_clrorganRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -1517,6 +1517,25 @@ struct BurnDriver BurnDrvCHF_tetris = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_CHANNELF, GBF_PUZZLE, 0,
 	ChannelfGetZipName, CHF_tetrisRomInfo, CHF_tetrisRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
+	102*SM, 58*SM, 4, 3
+};
+
+// Wrdl-F (HB)
+
+static struct BurnRomInfo CHF_wrdlfRomDesc[] = {
+	{ "Wrdl-F (2022)(Arlasoft).rom",	0x01FE1, 0x0ae07b86, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(CHF_wrdlf, CHF_wrdlf, CHF_channelf)
+STD_ROM_FN(CHF_wrdlf)
+
+struct BurnDriver BurnDrvCHF_wrdlf = {
+	"chf_wrdlf", NULL, "chf_channelf", NULL, "2022",
+	"Wrdl-F (HB)\0", NULL, "Arlasoft", "Channel F",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_CHANNELF, GBF_PUZZLE, 0,
+	ChannelfGetZipName, CHF_wrdlfRomInfo, CHF_wrdlfRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
 };

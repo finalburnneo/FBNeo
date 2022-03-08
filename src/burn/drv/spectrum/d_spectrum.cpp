@@ -17030,7 +17030,7 @@ STDROMPICKEXT(SpecHercslayer, SpecHercslayer, Spec128)
 STD_ROM_FN(SpecHercslayer)
 
 struct BurnDriver BurnSpecHercslayer = {
-	"spec_Hercslayer", NULL, "spec_spec128", NULL, "1988",
+	"spec_hercslayer", NULL, "spec_spec128", NULL, "1988",
 	"Hercules - Slayer of the Damned (128K)\0", NULL, "Gremlin Graphics", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_VSFIGHT, 0,
@@ -32464,7 +32464,7 @@ STDROMPICKEXT(SpecShoveladv, SpecShoveladv, Spec128)
 STD_ROM_FN(SpecShoveladv)
 
 struct BurnDriver BurnSpecShoveladv = {
-	"spec_Shoveladv", NULL, "spec_spec128", NULL, "2021",
+	"spec_shoveladv", NULL, "spec_spec128", NULL, "2021",
 	"Shovel Adventure ZX (128K) (HB, v1.2)\0", NULL, "Pat Morita Team", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MAZE | GBF_ACTION, 0,

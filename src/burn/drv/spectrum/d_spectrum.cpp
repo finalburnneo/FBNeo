@@ -175,12 +175,16 @@ static struct BurnDIPInfo SpecDIPList[]=
 	{0, 0x01, 0x80, 0x80, "Issue 3"					},
 
 	{0, 0xfe, 0   , 6   , "Joystick Config"			},
-	{0, 0x01, 0x0f, 0x00, "Kempston"				},
-	{0, 0x01, 0x0f, 0x01, "Sinclair Interface 2"	},
-	{0, 0x01, 0x0f, 0x02, "QAOPM"					},
-	{0, 0x01, 0x0f, 0x04, "QAOP Space"				},
-	{0, 0x01, 0x0f, 0x08, "Cursor Keys"				},
-	{0, 0x01, 0x0f, 0x10, "Disabled"				},
+	{0, 0x01, 0x1f, 0x00, "Kempston"				},
+	{0, 0x01, 0x1f, 0x01, "Sinclair Interface 2"	},
+	{0, 0x01, 0x1f, 0x02, "QAOPM"					},
+	{0, 0x01, 0x1f, 0x04, "QAOP Space"				},
+	{0, 0x01, 0x1f, 0x08, "Cursor Keys"				},
+	{0, 0x01, 0x1f, 0x10, "Disabled"				},
+
+	{0, 0xfe, 0   , 2   , "Interface 2 Joyport"		},
+	{0, 0x01, 0x20, 0x00, "Normal"					},
+	{0, 0x01, 0x20, 0x20, "Swapped: Joy1 <-> Joy2"	},
 };
 
 static struct BurnDIPInfo SpecDefaultDIPList[]=
@@ -196,6 +200,11 @@ static struct BurnDIPInfo SpecIssue2DIPList[]=
 static struct BurnDIPInfo SpecIntf2DIPList[]=
 {
 	{0, 0xff, 0xff, 0x81, NULL						}, // Sinclair Interface 2 (2 Joysticks)
+};
+
+static struct BurnDIPInfo SpecIntf2SwappedDIPList[]=
+{
+	{0, 0xff, 0xff, 0xa1, NULL						}, // Sinclair Interface 2 (2 Joysticks), Swapped (Joy1 <-> Joy2)
 };
 
 static struct BurnDIPInfo SpecQAOPMDIPList[]=
@@ -216,6 +225,7 @@ static struct BurnDIPInfo SpecCursorKeysDIPList[]=
 STDDIPINFOEXT(Spec, SpecDefault, Spec)
 STDDIPINFOEXT(SpecIssue2, SpecIssue2, Spec)
 STDDIPINFOEXT(SpecIntf2, SpecIntf2, Spec)
+STDDIPINFOEXT(SpecIntf2Swap, SpecIntf2Swapped, Spec)
 STDDIPINFOEXT(SpecQAOPM, SpecQAOPM, Spec)
 STDDIPINFOEXT(SpecQAOPSpace, SpecQAOPSpace, Spec)
 STDDIPINFOEXT(SpecCursorKeys, SpecCursorKeys, Spec)
@@ -1039,9 +1049,42 @@ static INT32 BurnGetLength(INT32 rom_index)
 	return ri.nLen;
 }
 
+struct s_modes {
+	INT32 mode;
+	TCHAR text[40];
+};
+
+static s_modes speccy_modes[] = {
+	{ SPEC_TAP,		_T(".tap file")						},
+	{ SPEC_Z80,		_T(".z80 file")						},
+	{ SPEC_128K,	_T("128K")							},
+	{ SPEC_PLUS2,	_T("+2a")							},
+	{ SPEC_INVES,	_T("Investronica (un-contended)")	},
+	{ SPEC_AY8910,	_T("AY-8910 PSG")					},
+	{ -1,			_T("")								}
+};
+
+static void PrintSpeccyMode()
+{
+	bprintf(0, _T("Speccy Init w/ "));
+
+	for (INT32 i = 0; speccy_modes[i].mode != -1; i++) {
+		if (SpecMode & speccy_modes[i].mode) {
+			bprintf(0, _T("%s, "), speccy_modes[i].text);
+		}
+	}
+
+	bprintf(0, _T("...\n"));
+}
+
+
 static INT32 SpectrumInit(INT32 Mode)
 {
 	SpecMode = Mode;
+
+	SpecMode |= SPEC_AY8910; // Add an AY-8910!
+
+	PrintSpeccyMode();
 
 	BurnSetRefreshRate(50.0);
 
@@ -1088,8 +1131,6 @@ static INT32 SpectrumInit(INT32 Mode)
 
 	// Init Buzzer (in DoReset!)
 
-	SpecMode |= SPEC_AY8910;
-
 	GenericTilesInit();
 
 	ula_init(312, 224, 14335);
@@ -1103,11 +1144,13 @@ static INT32 Spectrum128Init(INT32 Mode)
 {
 	SpecMode = Mode;
 
+	SpecMode |= SPEC_AY8910; // Add an AY-8910! (always on-board w/128K)
+
 	BurnSetRefreshRate(50.0);
 
 	BurnAllocMemIndex();
 
-	bprintf(0, _T("Spectrum128Init Mode: %x\n"), Mode);
+	PrintSpeccyMode();
 
 	INT32 nRet = 0;
 
@@ -1164,8 +1207,6 @@ static INT32 Spectrum128Init(INT32 Mode)
 	AY8910SetBuffered(ZetTotalCycles, 228*311*50);
 
 	// Init Buzzer (in DoReset!)
-
-	SpecMode |= SPEC_AY8910;
 
 	GenericTilesInit();
 
@@ -1402,6 +1443,13 @@ static void mix_dcblock(INT16 *inbuf, INT16 *outbuf, INT32 sample_nums)
 	}
 }
 
+static void SwapByte(UINT8 &a, UINT8 &b)
+{ // a <-> b, using xor
+	a = a ^ b;
+	b = a ^ b;
+	a = a ^ b;
+}
+
 static INT32 SpecFrame()
 {
 	if (SpecReset) SpecDoReset();
@@ -1416,17 +1464,23 @@ static INT32 SpecFrame()
 		SpecInput[8] = 0x00; // kempston joy (active high)
 		SpecInput[9] = SpecInput[10] = 0x1f; // intf2 joy (active low)
 
-		if (SpecDips[0] & 0x01) { // map kempston joy1 to intf2
+		if (SpecDips[0] & 0x01) { // use intf2: map kempston joy1 to intf2 joy1
 			SpecInputKbd[9][1] = SpecInputKbd[8][3];
 			SpecInputKbd[9][2] = SpecInputKbd[8][2];
 			SpecInputKbd[9][4] = SpecInputKbd[8][1];
 			SpecInputKbd[9][3] = SpecInputKbd[8][0];
 			SpecInputKbd[9][0] = SpecInputKbd[8][4];
+
+			if (SpecDips[0] & 0x20) { // swap intf2 joy1 <-> joy2
+				SwapByte(SpecInputKbd[9][1], SpecInputKbd[10][3]);
+				SwapByte(SpecInputKbd[9][2], SpecInputKbd[10][2]);
+				SwapByte(SpecInputKbd[9][4], SpecInputKbd[10][0]);
+				SwapByte(SpecInputKbd[9][3], SpecInputKbd[10][1]);
+				SwapByte(SpecInputKbd[9][0], SpecInputKbd[10][4]);
+			}
 		}
 
 		if (SpecDips[0] & (0x02|0x04)) { // map Kempston to QAOPM/QAOP SPACE
-			//if ( ((SpecMode & SPEC_TAP) && (CASAutoLoadPos == 0xff)) || (~SpecMode & SPEC_TAP) ) {
-
 			SpecInputKbd[2][0] |= SpecInputKbd[8][3]; // Up -> Q
 			SpecInputKbd[1][0] |= SpecInputKbd[8][2]; // Down -> A
 			SpecInputKbd[5][1] |= SpecInputKbd[8][1]; // Left -> O
@@ -1458,10 +1512,10 @@ static INT32 SpecFrame()
 		}
 
 		// Disable inactive hw
-		if ((SpecDips[0] & 0x0f) != 0x00) { // kempston not selected
+		if ((SpecDips[0] & 0x1f) != 0x00) { // kempston not selected
 			SpecInput[8] = 0xff; // kempston joy (active high, though none present returns 0xff)
 		}
-		if ((SpecDips[0] & 0x0f) != 0x01) { // intf2 not selected
+		if ((SpecDips[0] & 0x1f) != 0x01) { // intf2 not selected
 			SpecInput[9] = SpecInput[10] = 0x1f; // intf2 joy (active low)
 		}
 	}
@@ -1626,7 +1680,7 @@ STD_ROM_PICK(Spec1282a)
 STD_ROM_FN(Spec1282a)
 
 struct BurnDriver BurnSpecSpectrumBIOS = {
-	"spec_spectrum", NULL, NULL, NULL, "1984",
+	"spec_spectrum", NULL, NULL, NULL, "1982",
 	"ZX Spectrum BIOS\0", "BIOS Only", "Sinclair Research Limited", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_BOARDROM, 0, HARDWARE_SPECTRUM, GBF_BIOS, 0,
@@ -1636,7 +1690,7 @@ struct BurnDriver BurnSpecSpectrumBIOS = {
 };
 
 struct BurnDriver BurnSpecSpectrum = {
-	"spec_spec48k", NULL, NULL, NULL, "1984",
+	"spec_spec48k", NULL, NULL, NULL, "1982",
 	"ZX Spectrum 48k\0", NULL, "Sinclair Research Limited", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
@@ -1646,7 +1700,7 @@ struct BurnDriver BurnSpecSpectrum = {
 };
 
 struct BurnDriver BurnSpecSpec128BIOS = {
-	"spec_spec128", NULL, NULL, NULL, "1984",
+	"spec_spec128", NULL, NULL, NULL, "1986",
 	"ZX Spectrum 128 BIOS\0", "BIOS Only", "Sinclair Research Limited", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_BOARDROM, 0, HARDWARE_SPECTRUM, GBF_BIOS, 0,
@@ -1656,7 +1710,7 @@ struct BurnDriver BurnSpecSpec128BIOS = {
 };
 
 struct BurnDriver BurnSpecSpec1282aBIOS = {
-	"spec_spec1282a", NULL, NULL, NULL, "1984",
+	"spec_spec1282a", NULL, NULL, NULL, "1986",
 	"ZX Spectrum 128 +2a BIOS\0", "BIOS Only", "Sinclair Research Limited", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_BOARDROM, 0, HARDWARE_SPECTRUM, GBF_BIOS, 0,
@@ -1666,7 +1720,7 @@ struct BurnDriver BurnSpecSpec1282aBIOS = {
 };
 
 struct BurnDriver BurnSpecSpec128 = {
-	"spec_spec128k", NULL, NULL, NULL, "1984",
+	"spec_spec128k", NULL, NULL, NULL, "1986",
 	"ZX Spectrum 128k\0", NULL, "Sinclair Research Limited", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
@@ -1676,8 +1730,8 @@ struct BurnDriver BurnSpecSpec128 = {
 };
 
 struct BurnDriver BurnSpecSpec1282a = {
-	"spec_spec128k2a", NULL, NULL, NULL, "1984",
-	"ZX Spectrum 128k 2a\0", NULL, "Sinclair Research Limited", "ZX Spectrum",
+	"spec_spec128k2a", NULL, NULL, NULL, "1986",
+	"ZX Spectrum 128k +2a\0", NULL, "Sinclair Research Limited", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, Spec1282aRomInfo, Spec1282aRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -20622,10 +20676,10 @@ STD_ROM_FN(SpecExterminator)
 
 struct BurnDriver BurnSpecExterminator = {
 	"spec_exterminator", NULL, "spec_spec128", NULL, "1991",
-	"Exterminator (128K)\0", "Press '5' to play with controller", "Audiogenic", "ZX Spectrum",
+	"Exterminator (128K)\0", NULL, "Audiogenic", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SPECTRUM, GBF_ACTION, 0,
-	SpectrumGetZipName, SpecExterminatorRomInfo, SpecExterminatorRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	SpectrumGetZipName, SpecExterminatorRomInfo, SpecExterminatorRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2SwapDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -33111,10 +33165,10 @@ STD_ROM_FN(SpecMwcentip)
 
 struct BurnDriver BurnSpecMwcentip = {
 	"spec_mwcentip", NULL, "spec_spectrum", NULL, "2021",
-	"Mechwars Centipede (48K) (HB)\0", "Set '3 Keyboard' to use controller", "ZX Bitles", "ZX Spectrum",
+	"Mechwars Centipede (48K) (HB)\0", NULL, "ZX Bitles", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_SHOOT, 0,
-	SpectrumGetZipName, SpecMwcentipRomInfo, SpecMwcentipRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
+	SpectrumGetZipName, SpecMwcentipRomInfo, SpecMwcentipRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2SwapDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

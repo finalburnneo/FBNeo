@@ -25944,7 +25944,7 @@ struct BurnDriver BurnDrvMSX_mtritonc = {
 // Menace from Triton, the (HB, v1.1)
 
 static struct BurnRomInfo MSX_mtritonRomDesc[] = {
-	{ "menace from triton v1.1 (2020)(brain games).rom",	49152, 0xf7a83771, BRF_PRG | BRF_ESS },
+	{ "menace from triton v1.1 (2020)(brain games).rom",	49152, 0x02b38a95, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_mtriton, MSX_mtriton, msx_msx)

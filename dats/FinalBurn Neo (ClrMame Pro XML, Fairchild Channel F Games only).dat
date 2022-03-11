@@ -103,6 +103,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="clrorgan" romof="channelf">
+		<comment>Demo, Prototype</comment>
 		<description>Color Organ (Prototype)</description>
 		<year>19??</year>
 		<manufacturer>Zircon</manufacturer>
@@ -114,6 +115,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="democrt1" romof="channelf">
+		<comment>Demo</comment>
 		<description>Democart 1</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -125,6 +127,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="democrt2" romof="channelf">
+		<comment>Demo</comment>
 		<description>Democart 2</description>
 		<year>197?</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -169,6 +172,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="drawpkr" cloneof="casinop" romof="casinop">
+		<comment>Prototype</comment>
 		<description>Draw Poker (Prototype)</description>
 		<year>1980</year>
 		<manufacturer>Zircon</manufacturer>
@@ -180,6 +184,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="football" cloneof="pfootbll" romof="pfootbll">
+		<comment>Prototype</comment>
 		<description>Football (Prototype)</description>
 		<year>1981</year>
 		<manufacturer>Zircon</manufacturer>
@@ -191,6 +196,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="galacticp" cloneof="galactic" romof="galactic">
+		<comment>Prototype</comment>
 		<description>Galactic Space Wars (Prototype)</description>
 		<year>1980</year>
 		<manufacturer>Zircon</manufacturer>
@@ -404,6 +410,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="robotwarp" cloneof="robotwar" romof="robotwar">
+		<comment>Prototype</comment>
 		<description>Robot War (Prototype)</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -470,6 +477,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="spitfirep" cloneof="spitfire" romof="spitfire">
+		<comment>Prototype</comment>
 		<description>Spitfire (Prototype)</description>
 		<year>1976</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -541,6 +549,18 @@
 		<year>198?</year>
 		<manufacturer>Electronic-Partner</manufacturer>
 		<rom name="werbetextcassette.bin" size="4096" crc="da351c39"/>
+		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
+		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
+		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
+		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="wrdlf" romof="channelf">
+		<comment>Homebrew</comment>
+		<description>Wrdl-F (HB)</description>
+		<year>2022</year>
+		<manufacturer>Arlasoft</manufacturer>
+		<rom name="Wrdl-F (2022)(Arlasoft).rom" size="8161" crc="0ae07b86"/>
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>

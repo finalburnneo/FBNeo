@@ -821,6 +821,17 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="aliensh" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Alien Slaphead (128K) (HB, v2)</description>
+		<year>2022</year>
+		<manufacturer>Joesoft</manufacturer>
+		<rom name="Alien Slaphead v2 128K (2022)(Joesoft).tap" size="45449" crc="3194ad0d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="alienstorm" romof="spec128">
 		<description>Alien Storm (128K)</description>
 		<year>1991</year>
@@ -2226,6 +2237,24 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bmxninja" romof="spectrum">
+		<description>BMX Ninja (48K)</description>
+		<year>1988</year>
+		<manufacturer>Alternative</manufacturer>
+		<rom name="BMX Ninja 48K (1988)(Alternative).tap" size="57376" crc="64ed0d8b"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bmxrace" romof="spectrum">
+		<description>BMX Racers (48K)</description>
+		<year>1984</year>
+		<manufacturer>Mastertronic</manufacturer>
+		<rom name="BMX Racers 48K (1984)(Mastertronic).tap" size="45509" crc="40ec8744"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bmxsim" romof="spectrum">
 		<description>BMX Simulator (48K)</description>
 		<year>1987</year>
@@ -2437,13 +2466,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bounder" romof="spec128">
-		<description>Bounder (128K)</description>
+	<game name="bounder" romof="spectrum">
+		<description>Bounder (48K)</description>
 		<year>1986</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
-		<rom name="Bounder (1986)(Gremlin Graphics Software)(128k).z80" size="42033" crc="65b1da45"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Bounder 48K (1986)(Gremlin Graphics).tap" size="56669" crc="9308e223"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3107,6 +3135,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="champrun" romof="spectrum">
+		<description>Championship Run (48K)</description>
+		<year>1991</year>
+		<manufacturer>Impulze</manufacturer>
+		<rom name="Championship Run 48K (1991)(Impulze).tap" size="46687" crc="08eeabd6"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="chamspri" romof="spectrum">
 		<description>Championship Sprint (48K)</description>
 		<year>1988</year>
@@ -3206,13 +3243,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chicago30" romof="spec128">
-		<description>Chicago 30's (128K)</description>
+	<game name="chicago30" romof="spectrum">
+		<description>Chicago 30's (Spanish) (48K)</description>
 		<year>1988</year>
-		<manufacturer>U.S. Gold</manufacturer>
-		<rom name="Chicago 30's (1988)(US Gold)(128k).z80" size="34750" crc="16ef7dd5"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Chicago 30's ES 48K (1988)(Topo Soft).tap" size="48259" crc="fbcd39d9"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3285,13 +3321,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chronos" romof="spec128">
-		<description>Chronos - A Tapestry of Time (128K)</description>
+	<game name="chronos" romof="spectrum">
+		<description>Chronos - A Tapestry of Time (48K)</description>
 		<year>1987</year>
 		<manufacturer>Mastertronic</manufacturer>
-		<rom name="Chronos - A Tapestry of Time (1987)(Mastertronic)(128k).z80" size="43585" crc="3d9dd3bb"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Chronos - A Tapestry of Time 48K (1987)(Mastertronic).z80" size="42112" crc="9a40d9c4"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3306,19 +3341,21 @@
 		<driver status="good"/>
 	</game>
 	<game name="chuckegg" romof="spectrum">
+		<comment>Set '3' key type in Instructions 'I' menu to use controller</comment>
 		<description>Chuckie Egg (48K)</description>
 		<year>1983</year>
-		<manufacturer>A &amp; F Software</manufacturer>
-		<rom name="Chuckie Egg (1983)(A &amp; F Software).z80" size="19595" crc="f274304f"/>
+		<manufacturer>A'n'F Software</manufacturer>
+		<rom name="Chuckie Egg 48K (1983)(A'n'F Software).tap" size="20645" crc="15adf085"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="chuckeg2" romof="spectrum">
+		<comment>At title press 'Space' and wait for loading time, then press 'Space' again</comment>
 		<description>Chuckie Egg 2 (48K)</description>
 		<year>1985</year>
-		<manufacturer>A &amp; F Software</manufacturer>
-		<rom name="Chuckie Egg 2 (1985)(A &amp; F Software).z80" size="42457" crc="d5aa2184"/>
+		<manufacturer>A'n'F Software</manufacturer>
+		<rom name="Chuckie Egg 2 48K (1985)(A'n'F Software).tap" size="49012" crc="7917ac74"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5018,12 +5055,23 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="downpipe" romof="spectrum">
+	<game name="downpipe128" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Down the pipe (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>DF Design</manufacturer>
+		<rom name="Down the pipe 128K (2021)(DF Design).tap" size="58634" crc="6ff07621"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="downpipe48" cloneof="downpipe128" romof="downpipe128">
 		<comment>Homebrew</comment>
 		<description>Down the pipe (48K) (HB)</description>
 		<year>2021</year>
 		<manufacturer>DF Design</manufacturer>
-		<rom name="Down the pipe (2021)(DF Design).tap" size="46991" crc="71ce5665"/>
+		<rom name="Down the pipe 48K (2021)(DF Design).tap" size="46991" crc="71ce5665"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5594,7 +5642,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="exterminator" romof="spec128">
-		<comment>Press '5' to play with controller</comment>
 		<description>Exterminator (128K)</description>
 		<year>1991</year>
 		<manufacturer>Audiogenic</manufacturer>
@@ -6213,8 +6260,8 @@
 	<game name="frogger" romof="spectrum">
 		<description>Frogger (48K)</description>
 		<year>1983</year>
-		<manufacturer>A &amp; F Software</manufacturer>
-		<rom name="Frogger (1983)(A &amp; F Software).z80" size="15008" crc="52075e8c"/>
+		<manufacturer>A'n'F Software</manufacturer>
+		<rom name="Frogger 48K (1983)(A'n'F Software).tap" size="16497" crc="ab533972"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7315,7 +7362,7 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="Hercslayer" romof="spec128">
+	<game name="hercslayer" romof="spec128">
 		<description>Hercules - Slayer of the Damned (128K)</description>
 		<year>1988</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
@@ -9918,8 +9965,18 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mwarena" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Mechwars Arena (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>ZX Bitles</manufacturer>
+		<rom name="Mechwars Arena (2022)(ZX Bitles).tap" size="48091" crc="8a8ebce4"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mwcentip" romof="spectrum">
-		<comment>Homebrew, Set '3 Keyboard' to use controller</comment>
+		<comment>Homebrew</comment>
 		<description>Mechwars Centipede (48K) (HB)</description>
 		<year>2021</year>
 		<manufacturer>ZX Bitles</manufacturer>
@@ -11916,6 +11973,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="planetoids" romof="spectrum">
+		<description>Planetoids (16K)</description>
+		<year>1982</year>
+		<manufacturer>Sinclair Research</manufacturer>
+		<rom name="Planetoids 16K (1982)(Sinclair Research).tap" size="15635" crc="9c2a2474"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="platoon" romof="spec128">
 		<description>Platoon (128K)</description>
 		<year>1988</year>
@@ -12639,42 +12705,62 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="redraidside1" romof="spectrum">
-		<comment>Homebrew, Set 'Sinclair 2' to use joystick</comment>
+	<game name="redraidbeg1" romof="spectrum">
+		<comment>Homebrew</comment>
 		<description>Red Raid - The Beginning - Side A (48K) (HB)</description>
 		<year>2020</year>
 		<manufacturer>ZX Bitles</manufacturer>
-		<rom name="Red Raid - The Beginning, Side A (2020)(ZXBitles).tap" size="46995" crc="d768649a"/>
+		<rom name="Red Raid The Beginning - Side A (2020)(ZX Bitles).tap" size="46030" crc="bb242173"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="redraidside2" cloneof="redraidside1" romof="redraidside1">
-		<comment>Homebrew, Set 'Sinclair 2' to use joystick</comment>
+	<game name="redraidbeg2" cloneof="redraidbeg1" romof="redraidbeg1">
+		<comment>Homebrew</comment>
 		<description>Red Raid - The Beginning - Side B (48K) (HB)</description>
 		<year>2020</year>
 		<manufacturer>ZX Bitles</manufacturer>
-		<rom name="Red Raid - The Beginning, Side B (2020)(ZXBitles).tap" size="47521" crc="d534f9c0"/>
+		<rom name="Red Raid The Beginning - Side B (2020)(ZX Bitles).tap" size="47114" crc="fa5b7f8d"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="redraidsinking1" romof="spectrum">
-		<comment>Homebrew, Set 'Sinclair 2' to use joystick</comment>
+	<game name="redraidsink1" romof="spectrum">
+		<comment>Homebrew</comment>
 		<description>Red Raid - The Sinking - Side A (48K) (HB)</description>
 		<year>2020</year>
 		<manufacturer>ZX Bitles</manufacturer>
-		<rom name="Red Raid - The Sinking, Side A (2020)(ZXBitles).tap" size="47159" crc="5738cae9"/>
+		<rom name="Red Raid The Sinking - Side A (2020)(ZX Bitles).tap" size="46211" crc="095fab77"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="redraidsinking2" cloneof="redraidsinking1" romof="redraidsinking1">
-		<comment>Homebrew, Set 'Sinclair 2' to use joystick</comment>
+	<game name="redraidsink2" cloneof="redraidsink1" romof="redraidsink1">
+		<comment>Homebrew</comment>
 		<description>Red Raid - The Sinking - Side B (48K) (HB)</description>
 		<year>2020</year>
 		<manufacturer>ZX Bitles</manufacturer>
-		<rom name="Red Raid - The Sinking, Side B (2020)(ZXBitles).tap" size="47338" crc="c364362c"/>
+		<rom name="Red Raid The Sinking - Side B (2020)(ZX Bitles).tap" size="46408" crc="9067d221"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="redraidinf1" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Red Raid The Infiltrating - Side A (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>ZX Bitles</manufacturer>
+		<rom name="Red Raid The Infiltrating - Side A (2022)(ZX Bitles).tap" size="47597" crc="fa7ac305"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="redraidinf2" cloneof="redraidinf1" romof="redraidinf1">
+		<comment>Homebrew</comment>
+		<description>Red Raid The Infiltrating - Side B (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>ZX Bitles</manufacturer>
+		<rom name="Red Raid The Infiltrating - Side B (2022)(ZX Bitles).tap" size="47554" crc="9524172b"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -13011,6 +13097,17 @@
 		<manufacturer>Joesoft</manufacturer>
 		<rom name="Road Trippin' (2020)(Joesoft).tap" size="43691" crc="32b9471f"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="roadtripc2c" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Road Trippin' 2022 - Coast 2 Coast (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Joesoft</manufacturer>
+		<rom name="Road Trippin' 2022 - Coast 2 Coast 128K (2022)(Joesoft).tap" size="39520" crc="51e0c19e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -13834,7 +13931,7 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="Shoveladv" romof="spec128">
+	<game name="shoveladv" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Shovel Adventure ZX (128K) (HB, v1.2)</description>
 		<year>2021</year>
@@ -15978,6 +16075,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="titblinky" romof="spectrum">
+		<description>Titanic Blinky (48K)</description>
+		<year>1991</year>
+		<manufacturer>Zeppelin Games</manufacturer>
+		<rom name="Titanic Blinky 48K (1991)(Zeppelin Games).tap" size="46442" crc="dff53244"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="tjcc" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>TJ's Cavern Capers (128K) (HB)</description>
@@ -16948,7 +17054,7 @@
 	<game name="xeno" romof="spectrum">
 		<description>Xeno (48K)</description>
 		<year>1986</year>
-		<manufacturer>A'n'F</manufacturer>
+		<manufacturer>A'n'F Software</manufacturer>
 		<rom name="Xeno (1986)(A'n'F).z80" size="37264" crc="4d10e27a"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -17281,6 +17387,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="zxfrogger" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>ZX Frogger (48K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>ref</manufacturer>
+		<rom name="ZX Frogger 48K (2021)(ref).tap" size="22766" crc="12907894"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="zxparachute" romof="spectrum">
 		<comment>Homebrew, 1 or 2: left - 7 or 8: right</comment>
 		<description>ZX Parachute (16K) (HB)</description>
@@ -17292,8 +17408,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="spec128k2a">
-		<description>ZX Spectrum 128k 2a</description>
-		<year>1984</year>
+		<description>ZX Spectrum 128K +2a</description>
+		<year>1986</year>
 		<manufacturer>Sinclair Research Limited</manufacturer>
 		<rom name="zx128_2a_0.rom" size="16384" crc="30c9f490"/>
 		<rom name="zx128_2a_1.rom" size="16384" crc="a7916b3f"/>
@@ -17303,8 +17419,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="spec128k">
-		<description>ZX Spectrum 128k</description>
-		<year>1984</year>
+		<description>ZX Spectrum 128K</description>
+		<year>1986</year>
 		<manufacturer>Sinclair Research Limited</manufacturer>
 		<rom name="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -17312,8 +17428,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="spec48k">
-		<description>ZX Spectrum 48k</description>
-		<year>1984</year>
+		<description>ZX Spectrum 48K</description>
+		<year>1982</year>
 		<manufacturer>Sinclair Research Limited</manufacturer>
 		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -17340,7 +17456,7 @@
 	<game isbios="yes" name="spec1282a">
 		<comment>BIOS Only</comment>
 		<description>ZX Spectrum 128 +2a BIOS</description>
-		<year>1984</year>
+		<year>1986</year>
 		<manufacturer>Sinclair Research Limited</manufacturer>
 		<rom name="zx128_2a_0.rom" size="16384" crc="30c9f490"/>
 		<rom name="zx128_2a_1.rom" size="16384" crc="a7916b3f"/>
@@ -17350,7 +17466,7 @@
 	<game isbios="yes" name="spec128">
 		<comment>BIOS Only</comment>
 		<description>ZX Spectrum 128 BIOS</description>
-		<year>1984</year>
+		<year>1986</year>
 		<manufacturer>Sinclair Research Limited</manufacturer>
 		<rom name="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -17358,7 +17474,7 @@
 	<game isbios="yes" name="spectrum">
 		<comment>BIOS Only</comment>
 		<description>ZX Spectrum BIOS</description>
-		<year>1984</year>
+		<year>1982</year>
 		<manufacturer>Sinclair Research Limited</manufacturer>
 		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
 	</game>

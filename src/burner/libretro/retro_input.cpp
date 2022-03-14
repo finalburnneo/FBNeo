@@ -2301,21 +2301,31 @@ static INT32 GameInpOtherOne(struct GameInp* pgi, char* szi, char *szn)
 		}
 	}
 
-	// Qix service buttons are somehow needed
+	// Service buttons needed for service menu navigation on qix hardware
 	if ((parentrom && strcmp(parentrom, "qix") == 0) ||
-		(drvname && strcmp(drvname, "qix") == 0)
+		(drvname && strcmp(drvname, "qix") == 0) ||
+		(parentrom && strcmp(parentrom, "complexx") == 0) ||
+		(drvname && strcmp(drvname, "complexx") == 0) ||
+		(parentrom && strcmp(parentrom, "kram") == 0) ||
+		(drvname && strcmp(drvname, "kram") == 0) ||
+		(parentrom && strcmp(parentrom, "elecyoyo") == 0) ||
+		(drvname && strcmp(drvname, "elecyoyo") == 0) ||
+		(parentrom && strcmp(parentrom, "sdungeon") == 0) ||
+		(drvname && strcmp(drvname, "sdungeon") == 0) ||
+		(parentrom && strcmp(parentrom, "zookeep") == 0) ||
+		(drvname && strcmp(drvname, "zookeep") == 0)
 	) {
 		if (strcmp("Test Advance", szn) == 0) {
-			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_Y, szn);
+			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_R2, szn);
 		}
 		if (strcmp("Test Next Line", szn) == 0) {
-			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_X, szn);
+			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_L2, szn);
 		}
 		if (strcmp("Test Slew Up", szn) == 0) {
-			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_R, szn);
+			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_R3, szn);
 		}
 		if (strcmp("Test Slew Down", szn) == 0) {
-			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_L, szn);
+			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_L3, szn);
 		}
 	}
 

@@ -71,8 +71,8 @@
 	</game>
 	<game name="3dblock">
 		<description>3D Block (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>RCM Group</manufacturer>
 		<rom name="3D Block (Unl).nes" size="32784" crc="a760eeeb"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -268,7 +268,7 @@
 		<comment>Hack</comment>
 		<description>Advanced Dungeons &amp; Dragons - Dragons of Flame (T-Eng, v1.03)</description>
 		<year>2003</year>
-		<manufacturer>Pony Canyon - DvD Translations</manufacturer>
+		<manufacturer>DvD Translations</manufacturer>
 		<rom name="advanced dungeons &amp; dragons - dragons of flame (t-eng).nes" size="262160" crc="8196b978"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -368,24 +368,25 @@
 	<game name="advenislivc" cloneof="advenisliv" romof="advenisliv">
 		<comment>Hack</comment>
 		<description>Adventure Island IV (Hack, Spanish v1.0)</description>
-		<year>200?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2016</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="adventure island iv (japan) - castellano v1.0.nes" size="393232" crc="9ba3eb86"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="advenislivj" cloneof="advenisliv" romof="advenisliv">
 		<description>Adventure Island IV (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1994</year>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="Adventure Island IV (Japan).nes" size="393232" crc="a58fe808"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="advenisliv">
+		<comment>Hack</comment>
 		<description>Adventure Island IV (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2018</year>
+		<manufacturer>Zynk Oxhyde</manufacturer>
 		<rom name="Adventure Island IV (T-Eng).nes" size="393232" crc="54c153c6"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -512,9 +513,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="airwolft" cloneof="airwolf" romof="airwolf">
-		<description>Airwolf (T-eng)</description>
-		<year>1988</year>
-		<manufacturer>Kyugo Boueki</manufacturer>
+		<comment>Hack</comment>
+		<description>Airwolf (T-Eng)</description>
+		<year>2003</year>
+		<manufacturer>Vice Translations</manufacturer>
 		<rom name="Airwolf (T-eng).nes" size="262160" crc="deb8ef4a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -527,19 +529,20 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="akira">
+		<comment>Hack</comment>
+		<description>Akira (Hack, T-Eng)</description>
+		<year>2012</year>
+		<manufacturer>Grimm Translations</manufacturer>
+		<rom name="Akira (T-Eng).nes" size="524304" crc="ab6a9ee1"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="akiraj" cloneof="akira" romof="akira">
 		<description>Akira (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="Akira (Japan).nes" size="393232" crc="9d83974c"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="akira">
-		<description>Akira (T-Eng)</description>
-		<year>1988</year>
-		<manufacturer>Taito</manufacturer>
-		<rom name="Akira (T-Eng).nes" size="524304" crc="ab6a9ee1"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -620,16 +623,16 @@
 	</game>
 	<game name="aladdin4">
 		<description>Aladdin 4 (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1996</year>
+		<manufacturer>J.Y. Company</manufacturer>
 		<rom name="Aladdin 4 (Unl).nes" size="524304" crc="dda79434"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="alfommagla">
-		<description>Alfombra Magica, La (Spain) (Rev 1) (Gluk Video) (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Alfombra Magica, La (Unl) (Rev 1)</description>
+		<year>1991-92</year>
+		<manufacturer>Mega Soft - Gluk Video</manufacturer>
 		<rom name="Alfombra Magica, La (Spain) (Rev 1) (Gluk Video) (Unl).nes" size="65552" crc="7f165221"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -764,9 +767,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="americandream">
+		<comment>Hack</comment>
 		<description>American Dream (T-Eng)</description>
-		<year>1989</year>
-		<manufacturer>Coconuts</manufacturer>
+		<year>2007</year>
+		<manufacturer>Pale Dim</manufacturer>
 		<rom name="American Dream (T-Eng).nes" size="262160" crc="d2275854"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -924,9 +928,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="armadillo">
-		<description>Armadillo (T-eng)</description>
-		<year>1991</year>
-		<manufacturer>IGS</manufacturer>
+		<comment>Hack</comment>
+		<description>Armadillo (T-Eng)</description>
+		<year>2007</year>
+		<manufacturer>Vice Translations</manufacturer>
 		<rom name="Armadillo (T-eng).nes" size="393232" crc="651c9916"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -940,9 +945,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="armeddrafanvil">
+		<comment>Hack</comment>
 		<description>Armed Dragon Fantasy Villgust (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2018</year>
+		<manufacturer>LIPEMCO! Translations</manufacturer>
 		<rom name="Armed Dragon Fantasy Villgust (T-Eng).nes" size="524304" crc="de77f40a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -958,8 +964,8 @@
 	</game>
 	<game name="asmikkunland">
 		<description>Asmik-kun Land (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1991</year>
+		<manufacturer>Asmik</manufacturer>
 		<rom name="Asmik-kun Land (Japan).nes" size="262160" crc="3f871c93"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -993,15 +999,16 @@
 	<game name="astrofanj" cloneof="astrofan" romof="astrofan">
 		<description>Astro Fang - Super Machine (Japan)</description>
 		<year>1990</year>
-		<manufacturer>A Wave</manufacturer>
+		<manufacturer>A Wave Inc.</manufacturer>
 		<rom name="Astro Fang - Super Machine (Japan).nes" size="262160" crc="c3dae718"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="astrofan">
-		<description>Astro Fang - Super Machine (T-eng)</description>
-		<year>1990</year>
-		<manufacturer>A Wave</manufacturer>
+		<comment>Hack</comment>
+		<description>Astro Fang - Super Machine (T-Eng)</description>
+		<year>2001</year>
+		<manufacturer>Caution</manufacturer>
 		<rom name="Astro Fang - Super Machine (T-eng).nes" size="262160" crc="cfdb30c9"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1057,9 +1064,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="atlantisnonazo">
+		<comment>Hack</comment>
 		<description>Atlantis no Nazo (T-Eng)</description>
-		<year>1986</year>
-		<manufacturer>Sunsoft</manufacturer>
+		<year>2015</year>
+		<manufacturer>pacnsacdave</manufacturer>
 		<rom name="Atlantis no Nazo (T-Eng).nes" size="49168" crc="6a5ee2fc"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1073,9 +1081,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="attacanigak">
-		<description>Attack Animal Gakuen (T-eng)</description>
-		<year>1987</year>
-		<manufacturer>Pony Canyon</manufacturer>
+		<comment>Hack</comment>
+		<description>Attack Animal Gakuen (T-Eng)</description>
+		<year>2003</year>
+		<manufacturer>PentarouZero</manufacturer>
 		<rom name="Attack Animal Gakuen (T-eng).nes" size="131088" crc="efbf63ee"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1180,8 +1189,8 @@
 	</game>
 	<game name="ballsto">
 		<description>Ball Story - Jong Yuk Chuen Suet Fa Jong II (China)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1993</year>
+		<manufacturer>Sun Team Corp.</manufacturer>
 		<rom name="Ball Story - Jong Yuk Chuen Suet Fa Jong II (China).nes" size="131088" crc="1090a2e5"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1243,9 +1252,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="bananaprince">
+		<comment>Hack</comment>
 		<description>Banana Prince (T-Eng)</description>
-		<year>1992</year>
-		<manufacturer>Takara</manufacturer>
+		<year>2003</year>
+		<manufacturer>KingMike</manufacturer>
 		<rom name="Banana Prince (T-Eng).nes" size="262160" crc="3a2e77a7"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1349,8 +1359,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="bashibaz">
-		<description>Bashi Bazook - Morphoid Masher (USA) (Proto)</description>
-		<year>0000</year>
+		<comment>Prototype</comment>
+		<description>Bashi Bazook - Morphoid Masher (USA) (Prototype)</description>
+		<year>1989</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="Bashi Bazook - Morphoid Masher (USA) (Proto).nes" size="262160" crc="11c92b5d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1648,26 +1659,28 @@
 		<driver status="good"/>
 	</game>
 	<game name="bioforceape">
-		<description>Bio Force Ape (Japan) (En) (Proto)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Prototype</comment>
+		<description>Bio Force Ape (Japan) (Eng) (Prototype)</description>
+		<year>1991</year>
+		<manufacturer>Seta</manufacturer>
 		<rom name="Bio Force Ape (Japan) (En) (Proto).nes" size="262160" crc="339d5a6d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="biohazardc" cloneof="biohazard" romof="biohazard">
-		<description>Bio Hazard (China)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
-		<rom name="Bio Hazard (China).nes" size="1048592" crc="b4c8012d"/>
+	<game name="biohazard">
+		<comment>Hack</comment>
+		<description>Bio Hazard (T-Eng)</description>
+		<year>2018</year>
+		<manufacturer>pacnsacdave</manufacturer>
+		<rom name="Bio Hazard (T-Eng).nes" size="1048592" crc="4dffd969"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="biohazard">
-		<description>Bio Hazard (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
-		<rom name="Bio Hazard (T-Eng).nes" size="1048592" crc="4dffd969"/>
+	<game name="biohazardc" cloneof="biohazard" romof="biohazard">
+		<description>Bio Hazard (Unl) (China)</description>
+		<year>2003</year>
+		<manufacturer>Waixing</manufacturer>
+		<rom name="Bio Hazard (China).nes" size="1048592" crc="b4c8012d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -1684,6 +1697,15 @@
 		<year>1987</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="Bio Senshi Dan - Increaser Tono Tatakai (Japan).nes" size="262160" crc="5b2d91d0"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="biocats">
+		<comment>Homebrew</comment>
+		<description>Biocats (HB)</description>
+		<year>2022</year>
+		<manufacturer>PB Games</manufacturer>
+		<rom name="Biocats (2022)(PB Games).nes" size="524304" crc="9fd3fcfe"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -1705,9 +1727,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="bionicom" cloneof="bioniccommando" romof="bioniccommando">
+		<comment>Hack</comment>
 		<description>Bionic Commando - Return of Hitler (Hack)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2006</year>
+		<manufacturer>Chris M. Covell</manufacturer>
 		<rom name="Bionic Commando - Return of Hitler (Hack).nes" size="262160" crc="519a3005"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1722,8 +1745,8 @@
 	</game>
 	<game name="blackbas2j" cloneof="blackbas2" romof="blackbas2">
 		<description>Black Bass 2, The (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Hot-B</manufacturer>
 		<rom name="Black Bass 2, The (Japan).nes" size="131088" crc="5a514495"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1731,7 +1754,7 @@
 	<game name="blackbas2">
 		<description>Black Bass 2, The (USA)</description>
 		<year>1989</year>
-		<manufacturer>HOT・B</manufacturer>
+		<manufacturer>HOT-B</manufacturer>
 		<rom name="Black Bass 2, The (USA).nes" size="131088" crc="2e069e5f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1739,7 +1762,7 @@
 	<game name="blackbassthe">
 		<description>Black Bass, The (Japan)</description>
 		<year>1987</year>
-		<manufacturer>HOT・B</manufacturer>
+		<manufacturer>HOT-B</manufacturer>
 		<rom name="Black Bass, The (Japan).nes" size="131088" crc="73bccc8b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1807,8 +1830,8 @@
 	</game>
 	<game name="blobman">
 		<description>Blob Man (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2007</year>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="Blob Man (Unl).nes" size="40976" crc="eef9db4b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1865,9 +1888,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="bloodwar">
+		<comment>Hack</comment>
 		<description>Bloody Warriors - Shan-Go no Gyakushuu (T-Eng)</description>
-		<year>1990</year>
-		<manufacturer>Toei Animation</manufacturer>
+		<year>2021</year>
+		<manufacturer>BlackPaladin</manufacturer>
 		<rom name="Bloody Warriors - Shan-Go no Gyakushuu (T-Eng).nes" size="262160" crc="c06584e5"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1884,7 +1908,7 @@
 	<game name="bluemarlinthe">
 		<description>Blue Marlin, The (USA)</description>
 		<year>1992</year>
-		<manufacturer>HOT・B</manufacturer>
+		<manufacturer>HOT-B</manufacturer>
 		<rom name="Blue Marlin, The (USA).nes" size="262160" crc="d9e8e747"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1983,8 +2007,8 @@
 	</game>
 	<game name="boogerman">
 		<description>Boogerman (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1997</year>
+		<manufacturer>Realtec</manufacturer>
 		<rom name="Boogerman (Unl).nes" size="524304" crc="f10d5e5b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2155,9 +2179,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="buzzwaldog">
-		<description>Buzz &amp; Waldog (USA) (Proto) (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Prototype</comment>
+		<description>Buzz &amp; Waldog (Unl) (USA) (Prototype)</description>
+		<year>1993</year>
+		<manufacturer>Inovation Tech.</manufacturer>
 		<rom name="Buzz &amp; Waldog (USA) (Proto) (Unl).nes" size="262160" crc="1587bc5f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5631,6 +5656,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="frogadv">
+		<description>Frog Adventure (Unl)</description>
+		<year>1993</year>
+		<manufacturer>Sachen</manufacturer>
+		<rom name="Frog Adventure (Unl)(1993)(Sachen).nes" size="98320" crc="842d3e9f"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="frombelow">
 		<comment>Homebrew</comment>
 		<description>From Below (HB, v1.0)</description>
@@ -8272,8 +8305,8 @@
 	</game>
 	<game name="kokoadventure" cloneof="buzzwaldog" romof="buzzwaldog">
 		<description>Koko Adventure (Korea)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1993</year>
+		<manufacturer>Open</manufacturer>
 		<rom name="Koko Adventure (Korea).nes" size="262160" crc="a86e4d73"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9016,9 +9049,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="madcity" cloneof="advenbaybil" romof="advenbaybil">
+		<comment>Hack</comment>
 		<description>Mad City (T-Eng)</description>
-		<year>1988</year>
-		<manufacturer>Konami</manufacturer>
+		<year>2010</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Mad City (T-Eng).nes" size="262160" crc="52389803"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9940,7 +9974,7 @@
 		<comment>Homebrew</comment>
 		<description>Mine Mayhem (HB)</description>
 		<year>2021</year>
-		<manufacturer>Vectrex28</manufacturer>
+		<manufacturer>FG Software</manufacturer>
 		<rom name="Mine Mayhem (2021)(Vectrex28).nes" size="65552" crc="c6b47cca"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12244,6 +12278,15 @@
 		<year>1990</year>
 		<manufacturer>NTVIC</manufacturer>
 		<rom name="Rock 'n' Ball (USA).nes" size="196624" crc="03db2942"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="roshambo">
+		<comment>Homebrew</comment>
+		<description>Rock Paper Scissors Lizard Sbock (HB, v0.9b)</description>
+		<year>2017</year>
+		<manufacturer>Doug Fraker</manufacturer>
+		<rom name="Rock Paper Scissors Lizard Sbock v0.9b (2017)(Doug Fraker).nes" size="24592" crc="8c17a094"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -15095,25 +15138,28 @@
 		<driver status="good"/>
 	</game>
 	<game name="tinasadvisliii" cloneof="advenisl3" romof="advenisl3">
-		<description>Tina's Advanture Island III (USA)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Hack</comment>
+		<description>Tina's Advanture Island III (Hack)</description>
+		<year>2019</year>
+		<manufacturer>Zynk Oxhyde</manufacturer>
 		<rom name="Tina's Advanture Island III (USA).nes" size="262160" crc="774a6c79"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="tinasadvisl" cloneof="adventureisland" romof="adventureisland">
-		<description>Tina's Adventure Island (USA)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Hack</comment>
+		<description>Tina's Adventure Island (Hack)</description>
+		<year>2019</year>
+		<manufacturer>Zynk Oxhyde</manufacturer>
 		<rom name="Tina's Adventure Island (USA).nes" size="65552" crc="6663d1aa"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="tinasadvislii" cloneof="advenislii" romof="advenislii">
-		<description>Tina's Adventure Island II (USA)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Hack</comment>
+		<description>Tina's Adventure Island II (Hack)</description>
+		<year>2019</year>
+		<manufacturer>Zynk Oxhyde</manufacturer>
 		<rom name="Tina's Adventure Island II (USA).nes" size="262160" crc="28b36ecc"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -15353,8 +15399,8 @@
 	</game>
 	<game name="totsumac" cloneof="amagon" romof="amagon">
 		<description>Totsuzen! Machoman (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Sammy</manufacturer>
 		<rom name="Totsuzen! Machoman (Japan).nes" size="131088" crc="d1442067"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -16262,6 +16308,15 @@
 		<year>1987</year>
 		<manufacturer>dB-SOFT</manufacturer>
 		<rom name="Woody Poko (Japan).nes" size="131088" crc="9eb1c3cc"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="wordle">
+		<comment>Homebrew</comment>
+		<description>Wordle (HB, v1.03)</description>
+		<year>2022</year>
+		<manufacturer>FG Software</manufacturer>
+		<rom name="Wordle v1.03 (2022)(FG Software).nes" size="65552" crc="0f5b1e34"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

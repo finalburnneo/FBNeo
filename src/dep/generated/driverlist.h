@@ -440,9 +440,9 @@ DRV		BurnDrvAjax;
 DRV		BurnSpecAkane;
 DRV		BurnSpecAkenesp;
 DRV		BurnDrvfds_akitsunofusnoka;
+DRV		BurnDrvnes_akira;
 DRV		BurnDrvnes_akiraj;
 DRV		BurnDrvmd_akirap;
-DRV		BurnDrvnes_akira;
 DRV		BurnDrvAkkaarrh;
 DRV		BurnDrvAkkanvdr;
 DRV		BurnSpecAknadachcz;
@@ -1613,8 +1613,8 @@ DRV		BurnDrvMSX_binarylnd;
 DRV		BurnSpecBiniax;
 DRV		BurnDrvBioatack;
 DRV		BurnDrvnes_bioforceape;
-DRV		BurnDrvnes_biohazardc;
 DRV		BurnDrvnes_biohazard;
+DRV		BurnDrvnes_biohazardc;
 DRV		BurnDrvmd_biohazrb;
 DRV		BurnDrvmd_biohazrbs;
 DRV		BurnDrvmd_biohazrbp1;
@@ -1623,6 +1623,7 @@ DRV		BurnDrvfds_biomirbokupa;
 DRV		BurnDrvnes_biomirbokupa;
 DRV		BurnDrvnes_biosendan;
 DRV		BurnDrvBioship;
+DRV		BurnDrvnes_biocats;
 DRV		BurnDrvBiomtoyc;
 DRV		BurnDrvBiomtoyb;
 DRV		BurnDrvBiomtoya;
@@ -4449,6 +4450,7 @@ DRV		BurnDrvnes_dropzone;
 DRV		BurnDrvnes_druaganotou;
 DRV		BurnSpecDruid;
 DRV		BurnDrvfds_druid;
+DRV		BurnDrvfds_druiden;
 DRV		BurnSpecDruid2;
 DRV		BurnDrvCdsteljn;
 DRV		Burnmd_Dushenzhi;
@@ -5566,6 +5568,7 @@ DRV		BurnDrvFrogf;
 DRV		BurnDrvnes_frog;
 DRV		BurnDrvMSX_frog;
 DRV		BurnDrvFroggers;
+DRV		BurnDrvnes_frogadv;
 DRV		BurnDrvCpsCps1frog;
 DRV		BurnDrvcv_frogfeast;
 DRV		BurnDrvngfrog;
@@ -12663,6 +12666,7 @@ DRV		BurnDrvsg1k_rocknbol;
 DRV		BurnDrvmd_rnrracin;
 DRV		BurnDrvmd_rnrracinu;
 DRV		BurnDrvmd_rnrracinh;
+DRV		BurnDrvnes_roshambo;
 DRV		BurnSpecrocksham;
 DRV		BurnSpecRockstargoesbizarre;
 DRV		BurnDrvRocktris;
@@ -16485,8 +16489,8 @@ DRV		BurnDrvnes_timezone;
 DRV		BurnDrvtimesupd;
 DRV		BurnDrvtg_timeball;
 DRV		BurnDrvnes_tinasadvisliii;
-DRV		BurnDrvMSX_tinasadv;
 DRV		BurnDrvnes_tinasadvisl;
+DRV		BurnDrvMSX_tinasadv;
 DRV		BurnDrvnes_tinasadvislii;
 DRV		BurnDrvmd_tinheads;
 DRV		BurnDrvmd_tinhead;
@@ -17769,6 +17773,7 @@ DRV		BurnDrvgg_woodypop;
 DRV		BurnDrvsms_woodypop;
 DRV		BurnDrvMSX_worden;
 DRV		BurnDrvcv_wordfeud;
+DRV		BurnDrvnes_wordle;
 DRV		BurnDrvWorldadv;
 DRV		BurnDrvpce_wbeach;
 DRV		BurnDrvnes_worldchamp;
@@ -18861,7 +18866,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecairborneranger,	// Airborne Ranger (48K)
 	&BurnSpecairwolf,			// Airwolf (48K)
 	&BurnDrvnes_airwolfj,		// Airwolf (Japan)
-	&BurnDrvnes_airwolft,		// Airwolf (T-eng)
+	&BurnDrvnes_airwolft,		// Airwolf (T-Eng)
 	&BurnDrvAirwolfa,			// Airwolf (US)
 	&BurnDrvnes_airwolf,		// Airwolf (USA)
 	&BurnSpecairwolf2,			// Airwolf II (48K)
@@ -18871,9 +18876,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecAkane,				// Akane (English) (128K) (HB)
 	&BurnSpecAkenesp,			// Akane (Spanish) (128K) (HB)
 	&BurnDrvfds_akitsunofusnoka,// Aki to Tsukasa no Fushigi no Kabe (Japan)
+	&BurnDrvnes_akira,			// Akira (Hack, T-Eng)
 	&BurnDrvnes_akiraj,			// Akira (Japan)
 	&BurnDrvmd_akirap,			// Akira (Prototype)
-	&BurnDrvnes_akira,			// Akira (T-Eng)
 	&BurnDrvAkkaarrh,			// Akka Arrh (prototype)
 	&BurnDrvAkkanvdr,			// Akkanbeder (Ver 2.5J 1995/06/14)
 	&BurnSpecAknadachcz,		// Aknadach (Czech) (48K)
@@ -18935,7 +18940,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAlexkidd1,			// Alex Kidd: The Lost Stars (set 1, FD1089A 317-unknown)
 	&BurnDrvAlexkidd,			// Alex Kidd: The Lost Stars (set 2, unprotected)
 	&BurnDrvsms_alf,			// Alf (USA, Bra)
-	&BurnDrvnes_alfommagla,		// Alfombra Magica, La (Spain) (Rev 1) (Gluk Video) (Unl)
+	&BurnDrvnes_alfommagla,		// Alfombra Magica, La (Unl) (Rev 1)
 	&BurnDrvnes_alfonsarcadv,	// Alfonzo's Arctic Adventure (HB)
 	&BurnDrvnes_alfredchicken,	// Alfred Chicken (USA)
 	&BurnDrvalibaba,			// Ali Baba and 40 Thieves
@@ -19278,7 +19283,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvArmchmp2,			// Arm Champs II v2.7 [no comment, NOT WORKING]
 	&BurnDrvArmwrest,			// Arm Wrestling
 	&BurnDrvnes_armadilloj,		// Armadillo (Japan)
-	&BurnDrvnes_armadillo,		// Armadillo (T-eng)
+	&BurnDrvnes_armadillo,		// Armadillo (T-Eng)
 	&BurnSpecArmageddon,		// Armageddon (16K)
 	&BurnDrvcv_armagedn,		// Armageddon (HB)
 	&BurnDrvfds_armananokisekij,// Armana no Kiseki (Japan)
@@ -19398,7 +19403,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_astrobls,		// Astro Blaster (Euro)
 	&BurnDrvcv_astrododge,		// Astro Dodge (HB)
 	&BurnDrvnes_astrofanj,		// Astro Fang - Super Machine (Japan)
-	&BurnDrvnes_astrofan,		// Astro Fang - Super Machine (T-eng)
+	&BurnDrvnes_astrofan,		// Astro Fang - Super Machine (T-Eng)
 	&BurnDrvCastfant,			// Astro Fantasia (DECO Cassette) (US)
 	&BurnDrvAstrofl,			// Astro Flash (Japan)
 	&BurnDrvsms_astrofl,		// Astro Flash (Jpn, MyCard)
@@ -19479,7 +19484,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAttackf,			// Attack (Defender bootleg) [no comment, NOT WORKING]
 	&BurnDrvMSX_attack4,		// Attack 4 Women Volleyball (Jpn)
 	&BurnDrvnes_attacanigakj,	// Attack Animal Gakuen (Japan)
-	&BurnDrvnes_attacanigak,	// Attack Animal Gakuen (T-eng)
+	&BurnDrvnes_attacanigak,	// Attack Animal Gakuen (T-Eng)
 	&BurnDrvMSX_mosquiton,		// Attack Mosquiton
 	&BurnSpecAktomatoes,		// Attack of the Killer Tomatoes (48K)
 	&BurnDrvnes_attackiltom,	// Attack of the Killer Tomatoes (USA)
@@ -19727,7 +19732,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_basesloaded3,	// Bases Loaded 3 (USA)
 	&BurnDrvnes_basesloaded4,	// Bases Loaded 4 (USA)
 	&BurnDrvnes_basesloaii,		// Bases Loaded II - Second Season (USA)
-	&BurnDrvnes_bashibaz,		// Bashi Bazook - Morphoid Masher (USA) (Proto)
+	&BurnDrvnes_bashibaz,		// Bashi Bazook - Morphoid Masher (USA) (Prototype)
 	&BurnSpecbasilmouse,		// Basil the Great Mouse Detective (48K)
 	&BurnDrvsms_basketn,		// Basket Ball Nightmare (Euro, Bra)
 	&BurnDrvmd_bassmc,			// BASS Masters Classic (USA)
@@ -20043,9 +20048,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_binarylnd,		// Binary Land (Jpn)
 	&BurnSpecBiniax,			// Biniax 2.0 (128K) (HB)
 	&BurnDrvBioatack,			// Bio Attack
-	&BurnDrvnes_bioforceape,	// Bio Force Ape (Japan) (En) (Proto)
-	&BurnDrvnes_biohazardc,		// Bio Hazard (China)
+	&BurnDrvnes_bioforceape,	// Bio Force Ape (Japan) (Eng) (Prototype)
 	&BurnDrvnes_biohazard,		// Bio Hazard (T-Eng)
+	&BurnDrvnes_biohazardc,		// Bio Hazard (Unl) (China)
 	&BurnDrvmd_biohazrb,		// Bio Hazard Battle (Euro, USA)
 	&BurnDrvmd_biohazrbs,		// Bio Hazard Battle (Hack, Spanish)
 	&BurnDrvmd_biohazrbp1,		// Bio Hazard Battle (Prototype)
@@ -20054,6 +20059,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_biomirbokupa,	// Bio Miracle Bokutte Upa (Japan)
 	&BurnDrvnes_biosendan,		// Bio Senshi Dan - Increaser Tono Tatakai (Japan)
 	&BurnDrvBioship,			// Bio-ship Paladin
+	&BurnDrvnes_biocats,		// Biocats (HB)
 	&BurnDrvBiomtoyc,			// Biomechanical Toy (ver. 1.0.1870, checksum ba682195)
 	&BurnDrvBiomtoyb,			// Biomechanical Toy (ver. 1.0.1878, checksum d84b28ff)
 	&BurnDrvBiomtoya,			// Biomechanical Toy (ver. 1.0.1884, checksum 3f316c70)
@@ -20648,7 +20654,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_butampan,		// Butamaru Pants. Pig Mock (Jpn)
 	&BurnDrvButasanj,			// Butasan (Japan, Japanese)
 	&BurnDrvButasan,			// Butasan - Pig's & Bomber's (Japan, English)
-	&BurnDrvnes_buzzwaldog,		// Buzz & Waldog (USA) (Proto) (Unl)
+	&BurnDrvnes_buzzwaldog,		// Buzz & Waldog (Unl) (USA) (Prototype)
 	&BurnDrvMSX_buzzoff,		// Buzz Off! (Euro)
 	&BurnDrvBuzzard,			// Buzzard
 	&BurnSpecBuzzsaw,			// Buzzsaw+ (48K) (HB)
@@ -21365,7 +21371,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_cvjoytest,		// ColecoVision Joystick Test
 	&BurnDrvcv_sgmtest,			// ColecoVision SuperGame Module (SGM) Test
 	&BurnDrvcv_Coleco,			// ColecoVision System BIOS [BIOS only, NOT WORKING]
-	&BurnSpeccoliseum,			// Coliseum (128K)
+	&BurnSpeccoliseum,			// Coliseum (Spanish) (48K)
 	&BurnDrvMSX_coliseum,		// Coliseum (Spanish)
 	&BurnDrvmd_colleg96,		// College Football USA 96 (USA)
 	&BurnDrvmd_colleg96p,		// College Football USA 96 (USA, Prototype 19950621)
@@ -22880,6 +22886,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_druaganotou,	// Druaga no Tou (Japan)
 	&BurnSpecDruid,				// Druid (48K)
 	&BurnDrvfds_druid,			// Druid - Kyoufu no Tobira (Japan)
+	&BurnDrvfds_druiden,		// Druid - The Gate of Fear (T-Eng)
 	&BurnSpecDruid2,			// Druid II - Enlightenment (48K)
 	&BurnDrvCdsteljn,			// DS Telejan (DECO Cassette) (Japan)
 	&Burnmd_Dushenzhi,			// Du Shen Zhi Meng Huan Poker
@@ -23997,6 +24004,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_frog,			// Frog (HB)
 	&BurnDrvMSX_frog,			// Frog (Spanish)
 	&BurnDrvFroggers,			// Frog
+	&BurnDrvnes_frogadv,		// Frog Adventure (Unl)
 	&BurnDrvCpsCps1frog,		// Frog Feast (CPS-1)
 	&BurnDrvcv_frogfeast,		// Frog Feast (HB)
 	&BurnDrvngfrog,				// Frog Feast (Neo Geo)
@@ -31094,6 +31102,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_rnrracin,		// Rock n' Roll Racing (Euro)
 	&BurnDrvmd_rnrracinu,		// Rock n' Roll Racing (USA)
 	&BurnDrvmd_rnrracinh,		// Rock n' Roll Racing Hack v16 By Ti (Hack, January 20, 2020)
+	&BurnDrvnes_roshambo,		// Rock Paper Scissors Lizard Sbock (HB, v0.9b)
 	&BurnSpecrocksham,			// Rock Star Ate my Hamster (128K)
 	&BurnSpecRockstargoesbizarre,// Rock Star Goes Bizarre (128K)
 	&BurnDrvRocktris,			// Rock Tris
@@ -34915,10 +34924,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_timezone,		// Time Zone (T-eng)
 	&BurnDrvtimesupd,			// Time's Up (Demo)
 	&BurnDrvtg_timeball,		// Timeball
-	&BurnDrvnes_tinasadvisliii,	// Tina's Advanture Island III (USA)
+	&BurnDrvnes_tinasadvisliii,	// Tina's Advanture Island III (Hack)
+	&BurnDrvnes_tinasadvisl,	// Tina's Adventure Island (Hack)
 	&BurnDrvMSX_tinasadv,		// Tina's Adventure Island (HB)
-	&BurnDrvnes_tinasadvisl,	// Tina's Adventure Island (USA)
-	&BurnDrvnes_tinasadvislii,	// Tina's Adventure Island II (USA)
+	&BurnDrvnes_tinasadvislii,	// Tina's Adventure Island II (Hack)
 	&BurnDrvmd_tinheads,		// TinHead (Hack, Spanish)
 	&BurnDrvmd_tinhead,			// TinHead (USA)
 	&BurnDrvTinklpit,			// Tinkle Pit (Japan)
@@ -36200,6 +36209,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_woodypop,		// Woody Pop - Shinjinrui no Block Kuzushi (Jpn, MyCard)
 	&BurnDrvMSX_worden,			// Word (HB, v1.0)
 	&BurnDrvcv_wordfeud,		// Word Feud
+	&BurnDrvnes_wordle,			// Wordle (HB, v1.03)
 	&BurnDrvWorldadv,			// World Adventure
 	&BurnDrvpce_wbeach,			// World Beach Volley
 	&BurnDrvnes_worldchamp,		// World Champ (USA)

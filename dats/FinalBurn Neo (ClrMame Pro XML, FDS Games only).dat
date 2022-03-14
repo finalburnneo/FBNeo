@@ -380,11 +380,21 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="druid" romof="fdsbios">
+	<game name="druid" cloneof="druiden" romof="druiden">
 		<description>Druid - Kyoufu no Tobira (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="Druid - Kyoufu no Tobira (Japan).fds" size="131016" crc="b5d4e955"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="druiden" romof="fdsbios">
+		<comment>Hack</comment>
+		<description>Druid - The Gate of Fear (T-Eng)</description>
+		<year>1988-2022</year>
+		<manufacturer>BlackPaladin</manufacturer>
+		<rom name="Druid - Kyoufu no Tobira (T-Eng)(2022)(BlackPaladin).fds" size="131000" crc="1e9dc522"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>

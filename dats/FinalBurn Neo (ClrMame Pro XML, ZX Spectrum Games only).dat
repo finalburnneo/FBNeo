@@ -1553,8 +1553,8 @@
 	<game name="backfutu" romof="spectrum">
 		<description>Back to the Future (48K)</description>
 		<year>1985</year>
-		<manufacturer>Electric Dreams Software</manufacturer>
-		<rom name="Back to the Future (1985)(Electric Dreams Software).z80" size="36214" crc="9d8d8fa7"/>
+		<manufacturer>Electric Dreams</manufacturer>
+		<rom name="Back to the Future 48K (1985)(Electric Dreams).tap" size="50449" crc="f29bbae6"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2606,7 +2606,7 @@
 		<description>Bubble Bobble (128K)</description>
 		<year>1987</year>
 		<manufacturer>Firebird Software</manufacturer>
-		<rom name="Bubble Bobble (1987)(Firebird Software)[128K].z80" size="46536" crc="7919a50e"/>
+		<rom name="Bubble Bobble (1987)(Firebird).tap" size="53224" crc="dce45529"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -3147,7 +3147,7 @@
 	<game name="chamspri" romof="spectrum">
 		<description>Championship Sprint (48K)</description>
 		<year>1988</year>
-		<manufacturer>Electric Dreams Software</manufacturer>
+		<manufacturer>Electric Dreams</manufacturer>
 		<rom name="Championship Sprint (1988)(Electric Dreams Software).z80" size="28787" crc="f557d7f7"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -3453,13 +3453,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="coliseum" romof="spec128">
-		<description>Coliseum (128K)</description>
+	<game name="coliseum" romof="spectrum">
+		<description>Coliseum (Spanish) (48K)</description>
 		<year>1988</year>
-		<manufacturer>Kixx</manufacturer>
-		<rom name="Coliseum (1988)(Kixx)(128k).z80" size="46271" crc="1f0baec8"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Coliseum 48K ES (1988)(Topo Soft).tap" size="52375" crc="50c20efc"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4314,7 +4313,7 @@
 		<description>Darkman (128K)</description>
 		<year>1991</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Darkman (1991)(Ocean)(128k).z80" size="86878" crc="8246bf52"/>
+		<rom name="Darkman 128K (1991)(Ocean).tap" size="181471" crc="697be425"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -5155,6 +5154,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragonto" romof="spectrum">
+		<comment>At title-screen press 'S' to start game</comment>
 		<description>Dragontorc (48K)</description>
 		<year>1985</year>
 		<manufacturer>Hewson Consultants</manufacturer>
@@ -12408,7 +12408,7 @@
 	<game name="rtype" romof="spec128">
 		<description>R-Type (128K)</description>
 		<year>1988</year>
-		<manufacturer>Electric Dreams Software</manufacturer>
+		<manufacturer>Electric Dreams</manufacturer>
 		<rom name="R-Type (1988)(Electric Dreams Software).tap" size="132823" crc="a03330a0"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -13294,7 +13294,7 @@
 		<description>Rolling Thunder (48K)</description>
 		<year>1988</year>
 		<manufacturer>U.S. Gold</manufacturer>
-		<rom name="Rolling Thunder (1988)(U.S. Gold).z80" size="40535" crc="41bc00e3"/>
+		<rom name="Rolling Thunder 48K (1988)(U.S. Gold).tap" size="42913" crc="796b68c6"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -15217,7 +15217,7 @@
 	<game name="shangon" romof="spectrum">
 		<description>Super Hang-On - Part 1 - Beginner (48K)</description>
 		<year>1986</year>
-		<manufacturer>Electric Dreams Software</manufacturer>
+		<manufacturer>Electric Dreams</manufacturer>
 		<rom name="Super Hang-On - Part 1 - Beginner (1986)(Electric Dreams Software).z80" size="34840" crc="6021b420"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -15226,7 +15226,7 @@
 	<game name="shangon2" cloneof="shangon" romof="shangon">
 		<description>Super Hang-On - Part 2 - Junior (48K)</description>
 		<year>1986</year>
-		<manufacturer>Electric Dreams Software</manufacturer>
+		<manufacturer>Electric Dreams</manufacturer>
 		<rom name="Super Hang-On - Part 2 - Junior (1986)(Electric Dreams Software).z80" size="34448" crc="d8180d70"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -15235,7 +15235,7 @@
 	<game name="shangon3" cloneof="shangon" romof="shangon">
 		<description>Super Hang-On - Part 3 - Senior (48K)</description>
 		<year>1986</year>
-		<manufacturer>Electric Dreams Software</manufacturer>
+		<manufacturer>Electric Dreams</manufacturer>
 		<rom name="Super Hang-On - Part 3 - Senior (1986)(Electric Dreams Software).z80" size="35548" crc="363567ec"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -15244,7 +15244,7 @@
 	<game name="shangon4" cloneof="shangon" romof="shangon">
 		<description>Super Hang-On - Part 4 - Expert (48K)</description>
 		<year>1986</year>
-		<manufacturer>Electric Dreams Software</manufacturer>
+		<manufacturer>Electric Dreams</manufacturer>
 		<rom name="Super Hang-On - Part 4 - Expert (1986)(Electric Dreams Software).z80" size="34442" crc="8cb2ac52"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

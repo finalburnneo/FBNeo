@@ -2373,14 +2373,6 @@ static INT32 GameInpOtherOne(struct GameInp* pgi, char* szi, char *szn)
 		pgi_diag = pgi;
 	}
 
-	// Store the pgis for Neo-Geo Debug Dips
-	if (strcmp(szn, "Debug Dip 1") == 0) {
-		pgi_debug_dip_1 = pgi;
-	}
-	if (strcmp(szn, "Debug Dip 2") == 0) {
-		pgi_debug_dip_2 = pgi;
-	}
-
 	// If no unique nCode was set yet, make sure we set one
 	if(!bButtonMapped && !bInputInitialized) {
 		if (pgi->nInput == GIT_SWITCH) {
@@ -2470,13 +2462,24 @@ INT32 GameInpDefault()
 
 	// Fill all inputs still undefined
 	for (i = 0, pgi = GameInp; i < nGameInpCount; i++, pgi++) {
-		if (pgi->nInput) {											// Already defined - leave it alone
-			continue;
-		}
-
 		// Get the extra info about the input
 		bii.szInfo = NULL;
 		BurnDrvGetInputInfo(&bii, i);
+		if (bii.szName == NULL) {
+			bii.szName = "";
+		}
+
+		// Store the pgis for Neo-Geo Debug Dips
+		if (strcmp(bii.szName, "Debug Dip 1") == 0) {
+			pgi_debug_dip_1 = pgi;
+		}
+		if (strcmp(bii.szName, "Debug Dip 2") == 0) {
+			pgi_debug_dip_2 = pgi;
+		}
+
+		if (pgi->nInput) {											// Already defined - leave it alone
+			continue;
+		}
 		if (bii.pVal == NULL) {
 			continue;
 		}
@@ -2950,6 +2953,8 @@ void InputInit()
 				bAnalogRightMappingDone[i][j][k] = false;
 	pgi_reset = NULL;
 	pgi_diag = NULL;
+	pgi_debug_dip_1 = NULL;
+	pgi_debug_dip_2 = NULL;
 	normal_input_descriptors.clear();
 
 	GameInpInit();

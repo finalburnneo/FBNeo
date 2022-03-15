@@ -40,6 +40,8 @@ struct RomBiosInfo neogeo_bioses[] = {
 std::vector<dipswitch_core_option> dipswitch_core_options;
 struct GameInp *pgi_reset;
 struct GameInp *pgi_diag;
+struct GameInp *pgi_debug_dip_1;
+struct GameInp *pgi_debug_dip_2;
 bool bIsNeogeoCartGame = false;
 bool allow_neogeo_mode = true;
 bool neogeo_use_specific_default_bios = false;
@@ -332,7 +334,7 @@ static const struct retro_core_option_v2_definition var_fbneo_neogeo_mode = {
 	NULL,
 	"Load appropriate bios depending on your choice, under the condition such a bios is compatible with the running game",
 	NULL,
-	NULL,
+	"neogeo",
 	{
 		{ "DIPSWITCH", "Use bios set in BIOS dipswitch" },
 		{ "MVS_EUR", "MVS Europe/Asia (English)" },
@@ -351,11 +353,25 @@ static const struct retro_core_option_v2_definition var_fbneo_memcard_mode = {
 	NULL,
 	"Change the behavior for the memory card",
 	NULL,
-	NULL,
+	"neogeo",
 	{
 		{ "disabled", NULL },
 		{ "shared", NULL },
 		{ "per-game", NULL },
+		{ NULL, NULL },
+	},
+	"disabled"
+};
+static const struct retro_core_option_v2_definition var_fbneo_debug_dip_2_7 = {
+	"fbneo-debug-dip-2-7",
+	"Debug Dip 2_7",
+	NULL,
+	"Enable Debug Dip 2_7",
+	NULL,
+	"neogeo",
+	{
+		{ "disabled", NULL },
+		{ "enabled", NULL },
 		{ NULL, NULL },
 	},
 	"disabled"
@@ -652,19 +668,18 @@ void set_environment()
 	// Add the Global core options
 	vars_systems.push_back(&var_fbneo_allow_depth_32);
 	vars_systems.push_back(&var_fbneo_vertical_mode);
-	if (BurnDrvGetFlags() & BDF_HISCORE_SUPPORTED)
-		vars_systems.push_back(&var_fbneo_hiscores);
 	vars_systems.push_back(&var_fbneo_allow_patched_romsets);
 	vars_systems.push_back(&var_fbneo_analog_speed);
 	vars_systems.push_back(&var_fbneo_lightgun_hide_crosshair);
+	vars_systems.push_back(&var_fbneo_cpu_speed_adjust);
 #ifdef USE_CYCLONE
 	vars_systems.push_back(&var_fbneo_cyclone);
 #endif
+	if (BurnDrvGetFlags() & BDF_HISCORE_SUPPORTED)
+		vars_systems.push_back(&var_fbneo_hiscores);
 
 	if (pgi_diag)
-	{
 		vars_systems.push_back(&var_fbneo_diagnostic_input);
-	}
 
 	if (bIsNeogeoCartGame)
 	{
@@ -672,8 +687,13 @@ void set_environment()
 		if (allow_neogeo_mode)
 			vars_systems.push_back(&var_fbneo_neogeo_mode);
 		vars_systems.push_back(&var_fbneo_memcard_mode);
+#if 0
+		if (pgi_debug_dip_2)
+		{
+			vars_systems.push_back(&var_fbneo_debug_dip_2_7);
+		}
+#endif
 	}
-	vars_systems.push_back(&var_fbneo_cpu_speed_adjust);
 
 	// Frameskip settings
 	if (bLibretroSupportsAudioBuffStatus)
@@ -767,6 +787,11 @@ void set_environment()
 
 	static struct retro_core_option_v2_category option_cats_us[] =
 	{
+		{
+			"neogeo",
+			"Neo-Geo Settings",
+			"Configure Neo-Geo Settings"
+		},
 		{
 			"frameskip",
 			"Frameskip Settings",
@@ -1157,6 +1182,20 @@ void check_variables(void)
 				nMemcardMode = 1;
 			else if (strcmp(var.value, "per-game") == 0)
 				nMemcardMode = 2;
+		}
+		if (pgi_debug_dip_2)
+		{
+			var.key = var_fbneo_debug_dip_2_7.key;
+			if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+			{
+				if (strcmp(var.value, "enabled") == 0)
+					pgi_debug_dip_2->Input.Constant.nConst |= 0x40;
+				else
+					pgi_debug_dip_2->Input.Constant.nConst &= ~0x40;
+				pgi_debug_dip_2->Input.nVal = pgi_debug_dip_2->Input.Constant.nConst;
+				if (pgi_debug_dip_2->Input.pVal)
+					*(pgi_debug_dip_2->Input.pVal) = pgi_debug_dip_2->Input.nVal;
+			}
 		}
 	}
 

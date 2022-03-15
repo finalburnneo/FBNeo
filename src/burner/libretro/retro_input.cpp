@@ -2373,6 +2373,14 @@ static INT32 GameInpOtherOne(struct GameInp* pgi, char* szi, char *szn)
 		pgi_diag = pgi;
 	}
 
+	// Store the pgis for Neo-Geo Debug Dips
+	if (strcmp(szn, "Debug Dip 1") == 0) {
+		pgi_debug_dip_1 = pgi;
+	}
+	if (strcmp(szn, "Debug Dip 2") == 0) {
+		pgi_debug_dip_2 = pgi;
+	}
+
 	// If no unique nCode was set yet, make sure we set one
 	if(!bButtonMapped && !bInputInitialized) {
 		if (pgi->nInput == GIT_SWITCH) {

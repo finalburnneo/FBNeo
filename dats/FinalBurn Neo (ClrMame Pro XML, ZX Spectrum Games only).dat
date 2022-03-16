@@ -3420,12 +3420,132 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="cocoa2e1" romof="spec128">
+		<comment>Homebrew, Supporter Edition</comment>
+		<description>Cocoa 2, 24 Hour Parsley People - Episode 1 (English) (128K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Cocoa 2 Twenty Four Hour Parsley People EP1 EN (2020)(Minilop).tap" size="49168" crc="091c933d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cocoa2e1pt" cloneof="cocoa2e1" romof="cocoa2e1">
+		<comment>Homebrew, Supporter Edition</comment>
+		<description>Cocoa 2, 24 Hour Parsley People - Episode 1 (Portuguese) (128K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Cocoa 2 Twenty Four Hour Parsley People EP1 PT (2020)(Minilop).tap" size="49168" crc="12e1984a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cocoa2e1sp" cloneof="cocoa2e1" romof="cocoa2e1">
+		<comment>Homebrew, Supporter Edition</comment>
+		<description>Cocoa 2, 24 Hour Parsley People - Episode 1 (Spanish) (128K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Cocoa 2 Twenty Four Hour Parsley People EP1 ES (2020)(Minilop).tap" size="49168" crc="98b01da0"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cocoa2e2" cloneof="cocoa2e1" romof="cocoa2e1">
+		<comment>Homebrew, Supporter Edition</comment>
+		<description>Cocoa 2, 24 Hour Parsley People - Episode 2 (English) (128K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Cocoa 2 Twenty Four Hour Parsley People EP2 EN (2020)(Minilop).tap" size="49204" crc="cc0c836f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cocoa2e2pt" cloneof="cocoa2e1" romof="cocoa2e1">
+		<comment>Homebrew, Supporter Edition</comment>
+		<description>Cocoa 2, 24 Hour Parsley People - Episode 2 (Portuguese) (128K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Cocoa 2 Twenty Four Hour Parsley People EP2 PT (2020)(Minilop).tap" size="49204" crc="66efddd9"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cocoa2e2sp" cloneof="cocoa2e1" romof="cocoa2e1">
+		<comment>Homebrew, Supporter Edition</comment>
+		<description>Cocoa 2, 24 Hour Parsley People - Episode 2 (Spanish) (128K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Cocoa 2 Twenty Four Hour Parsley People EP2 ES (2020)(Minilop).tap" size="49204" crc="acf1b30d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cocoa2e3" cloneof="cocoa2e1" romof="cocoa2e1">
+		<comment>Homebrew, Supporter Edition</comment>
+		<description>Cocoa 2, 24 Hour Parsley People - Episode 3 (English) (128K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Cocoa 2 Twenty Four Hour Parsley People EP3 EN (2020)(Minilop).tap" size="49200" crc="28595082"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cocoa2e3pt" cloneof="cocoa2e1" romof="cocoa2e1">
+		<comment>Homebrew, Supporter Edition</comment>
+		<description>Cocoa 2, 24 Hour Parsley People - Episode 3 (Portuguese) (128K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Cocoa 2 Twenty Four Hour Parsley People EP3 PT (2020)(Minilop).tap" size="49200" crc="c135051e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cocoa2e3sp" cloneof="cocoa2e1" romof="cocoa2e1">
+		<comment>Homebrew, Supporter Edition</comment>
+		<description>Cocoa 2, 24 Hour Parsley People - Episode 3 (Spanish) (128K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Cocoa 2 Twenty Four Hour Parsley People EP3 ES (2020)(Minilop).tap" size="49200" crc="80202e0a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="cocoatm" romof="spec128">
 		<comment>Homebrew</comment>
-		<description>Cocoa and the Time Machine (128K) (HB)</description>
+		<description>Cocoa and the Time Machine (English) (128K) (HB)</description>
 		<year>2020</year>
 		<manufacturer>Minilop</manufacturer>
 		<rom name="Cocoa and the Time Machine (2020)(Minilop).tap" size="46020" crc="bba37879"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cocoapt" cloneof="cocoatm" romof="cocoatm">
+		<comment>Homebrew</comment>
+		<description>Cocoa and the Time Machine (Portuguese) (48K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Cocoa and the Time Machine PT (2020)(Minilop).tap" size="39130" crc="66dce3ad"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cocoasp" cloneof="cocoatm" romof="cocoatm">
+		<comment>Homebrew</comment>
+		<description>Cocoa and the Time Machine (Spanish) (128K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Cocoa and the Time Machine ES (2020)(Minilop).tap" size="46033" crc="dd44856a"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

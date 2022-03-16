@@ -573,9 +573,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="akumaden" cloneof="castliii" romof="castliii">
+		<comment>Hack</comment>
 		<description>Akumajou Densetsu (T-Eng)</description>
-		<year>1989</year>
-		<manufacturer>Konami</manufacturer>
+		<year>2003</year>
+		<manufacturer>Vice Translations</manufacturer>
 		<rom name="Akumajou Densetsu (T-Eng).nes" size="393232" crc="1965a3dc"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2213,7 +2214,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="caltron6in1">
-		<description>Caltron 6-in-1 (USA)</description>
+		<description>Caltron 6-in-1 (Unl) (USA)</description>
 		<year>1992</year>
 		<manufacturer>Caltron</manufacturer>
 		<rom name="Caltron 6-in-1 (USA).nes" size="393232" crc="f78e68db"/>
@@ -2221,9 +2222,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="caltron9in1">
-		<description>Caltron 9-in-1 (USA)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Caltron 9-in-1 (Unl) (USA)</description>
+		<year>1992</year>
+		<manufacturer>Caltron</manufacturer>
 		<rom name="Caltron 9-in-1 (USA).nes" size="786448" crc="9c529e3b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2318,9 +2319,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="captatsuvolii">
-		<description>Captain Tsubasa Vol. II - Super Striker (T-eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Hack</comment>
+		<description>Captain Tsubasa Vol. II - Super Striker (T-Eng)</description>
+		<year>2007</year>
+		<manufacturer>hayabusakun</manufacturer>
 		<rom name="Captain Tsubasa Vol. II - Super Striker (T-eng).nes" size="393232" crc="465917f7"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2400,9 +2402,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="castliih" cloneof="castlii" romof="castlii">
-		<description>Castlevania II - Simon's Quest (Hack, ReTrans+Map)</description>
-		<year>1988</year>
-		<manufacturer>Konami</manufacturer>
+		<comment>Hack</comment>
+		<description>Castlevania II - Simon's Quest (Hack, Re-translation+Map)</description>
+		<year>2020</year>
+		<manufacturer>Bisqwit</manufacturer>
 		<rom name="Castlevania II - Simon's Quest (Hack, ReTrans+Map).nes" size="262160" crc="153143e9"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2433,9 +2436,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="castlsim" cloneof="castlevania" romof="castlevania">
+		<comment>Hack</comment>
 		<description>Castlevania Simplified (Hack)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2013</year>
+		<manufacturer>Megafield64</manufacturer>
 		<rom name="Castlevania Simplified (Hack).nes" size="131088" crc="451a0c75"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2449,9 +2453,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="catnintey">
-		<description>Cat Ninden Teyandee (T-eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Hack</comment>
+		<description>Cat Ninden Teyandee (T-Eng)</description>
+		<year>2012</year>
+		<manufacturer>Dark Mark</manufacturer>
 		<rom name="Cat Ninden Teyandee (T-eng).nes" size="393232" crc="60f29773"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2516,16 +2521,17 @@
 	</game>
 	<game name="chaosworldj" cloneof="chaosworld" romof="chaosworld">
 		<description>Chaos World (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1991</year>
+		<manufacturer>Natsume</manufacturer>
 		<rom name="Chaos World (Japan).nes" size="393232" crc="e2ae3e63"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="chaosworld">
-		<description>Chaos World (T-eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Hack</comment>
+		<description>Chaos World (T-Eng)</description>
+		<year>2001</year>
+		<manufacturer>Aeon Genesis</manufacturer>
 		<rom name="Chaos World (T-eng).nes" size="393232" crc="fbd2a0e0"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2585,16 +2591,17 @@
 	</game>
 	<game name="chiisobaj" cloneof="chiisoba" romof="chiisoba">
 		<description>Chiisana Obake - Acchi Socchi Kocchi (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1992</year>
+		<manufacturer>Vap</manufacturer>
 		<rom name="Chiisana Obake - Acchi Socchi Kocchi (Japan).nes" size="262160" crc="305fa5d6"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="chiisoba">
+		<comment>Hack</comment>
 		<description>Chiisana Obake - Acchi Socchi Kocchi (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2005</year>
+		<manufacturer>KingMike</manufacturer>
 		<rom name="Chiisana Obake - Acchi Socchi Kocchi (T-Eng).nes" size="262160" crc="46dd3c86"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2626,8 +2633,8 @@
 	</game>
 	<game name="chinarabbab">
 		<description>China Rabbit Baby (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1996</year>
+		<manufacturer>J.Y. Company</manufacturer>
 		<rom name="China Rabbit Baby (Unl).nes" size="524304" crc="6ab0db42"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2718,16 +2725,17 @@
 	</game>
 	<game name="choujsenjetj" cloneof="choujsenjet" romof="choujsenjet">
 		<description>Choujin Sentai Jetman (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1991</year>
+		<manufacturer>Angel Studio</manufacturer>
 		<rom name="Choujin Sentai Jetman (Japan).nes" size="262160" crc="f899bf59"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="choujsenjet">
-		<description>Choujin Sentai Jetman (T-eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Hack</comment>
+		<description>Choujin Sentai Jetman (T-Eng)</description>
+		<year>2019</year>
+		<manufacturer>chronix</manufacturer>
 		<rom name="Choujin Sentai Jetman (T-eng).nes" size="262160" crc="7649c688"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2840,8 +2848,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cmc80sdemo">
-		<comment>Homebrew</comment>
-		<description>CMC 80's Demo (HB)</description>
+		<comment>Demo, Homebrew</comment>
+		<description>CMC 80's Demo (HB, Tech-Demo)</description>
 		<year>2000</year>
 		<manufacturer>Chris Covell</manufacturer>
 		<rom name="CMC 80's Demo (HB).nes" size="49168" crc="0135b0e8"/>
@@ -2874,23 +2882,24 @@
 	</game>
 	<game name="cocoronj" cloneof="cocoron" romof="cocoron">
 		<description>Cocoron (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1991</year>
+		<manufacturer>Takeru</manufacturer>
 		<rom name="Cocoron (Japan).nes" size="262160" crc="1d6b80da"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="cocoron">
-		<description>Cocoron (T-eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Hack</comment>
+		<description>Cocoron (T-Eng)</description>
+		<year>1999</year>
+		<manufacturer>Akujin, Dynamic-Designs</manufacturer>
 		<rom name="Cocoron (T-eng).nes" size="262160" crc="e486f7d3"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="codenam">
 		<description>Code Name - Viper (USA)</description>
-		<year>1990</year>
+		<year>1989</year>
 		<manufacturer>Capcom</manufacturer>
 		<rom name="Code Name - Viper (USA).nes" size="262160" crc="c8a23081"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -2963,9 +2972,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="contrat" cloneof="contra" romof="contra">
+		<comment>Hack</comment>
 		<description>Contra (T-Eng)</description>
-		<year>1988</year>
-		<manufacturer>Konami</manufacturer>
+		<year>1998</year>
+		<manufacturer>MadHacker</manufacturer>
 		<rom name="Contra (T-Eng).nes" size="262160" crc="d93f2c45"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2979,25 +2989,27 @@
 		<driver status="good"/>
 	</game>
 	<game name="contrredfalwar" cloneof="contra" romof="contra">
-		<description>Contra - Red Falcon War (USA)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Hack</comment>
+		<description>Contra - Red Falcon War (Hack)</description>
+		<year>2019</year>
+		<manufacturer>Azstar</manufacturer>
 		<rom name="Contra - Red Falcon War (USA).nes" size="262160" crc="59ef411a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="contrrevredfal" cloneof="contra" romof="contra">
-		<description>Contra - Revenge of the Red Falcon (USA)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Hack</comment>
+		<description>Contra - Revenge of the Red Falcon (Hack)</description>
+		<year>2016</year>
+		<manufacturer>Trax</manufacturer>
 		<rom name="Contra - Revenge of the Red Falcon (USA).nes" size="262160" crc="fa28193b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="contra168in1">
 		<description>Contra 168-in-1 (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>19??</year>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="Contra 168-in-1 (Unl).nes" size="1048592" crc="c6fd114e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3021,8 +3033,8 @@
 	</game>
 	<game name="contraspirits">
 		<description>Contra Spirits (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1996</year>
+		<manufacturer>J.Y. Company</manufacturer>
 		<rom name="Contra Spirits (Unl).nes" size="524304" crc="cea432be"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3061,16 +3073,17 @@
 	</game>
 	<game name="cosmopolgalj" cloneof="cosmopolgal" romof="cosmopolgal">
 		<description>Cosmo Police Galivan (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Nihon Bussan</manufacturer>
 		<rom name="Cosmo Police Galivan (Japan).nes" size="262160" crc="bccada80"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="cosmopolgal">
-		<description>Cosmo Police Galivan (T-eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Hack</comment>
+		<description>Cosmo Police Galivan (T-Eng)</description>
+		<year>2000</year>
+		<manufacturer>Jair</manufacturer>
 		<rom name="Cosmo Police Galivan (T-eng).nes" size="262160" crc="4f031cb0"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3177,9 +3190,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="crisisforce">
+		<comment>Hack</comment>
 		<description>Crisis Force (T-Eng)</description>
-		<year>1991</year>
-		<manufacturer>Konami</manufacturer>
+		<year>2008</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Crisis Force (T-Eng).nes" size="262160" crc="8a053054"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3278,9 +3292,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="dai2jisuprota">
-		<description>Dai-2-ji Super Robot Taisen (T-eng)</description>
-		<year>1991</year>
-		<manufacturer>Banpresto</manufacturer>
+		<comment>Hack</comment>
+		<description>Dai-2-ji Super Robot Taisen (T-Eng)</description>
+		<year>2013</year>
+		<manufacturer>Aeon Genesis</manufacturer>
 		<rom name="Dai-2-ji Super Robot Taisen (T-eng).nes" size="524304" crc="648c69fe"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3338,8 +3353,8 @@
 	</game>
 	<game name="daoshuai">
 		<description>Dao Shuai (Asia) (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1989</year>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="Dao Shuai (Asia) (Unl).nes" size="65552" crc="00951874"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3445,8 +3460,8 @@
 	</game>
 	<game name="deadfox" cloneof="codenam" romof="codenam">
 		<description>Dead Fox (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Capcom</manufacturer>
 		<rom name="Dead Fox (Japan).nes" size="262160" crc="f316b497"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3543,8 +3558,8 @@
 	</game>
 	<game name="dengeki" cloneof="clashatdem" romof="clashatdem">
 		<description>Dengeki - Big Bang! (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1989</year>
+		<manufacturer>Vic Tokai</manufacturer>
 		<rom name="Dengeki - Big Bang! (Japan).nes" size="262160" crc="4e0c2429"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3574,7 +3589,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="destructorel">
-		<description>Destructor, El (Spain) (Gluk Video) (Unl)</description>
+		<description>Destructor, El (Unl)</description>
 		<year>1992</year>
 		<manufacturer>Gluk Video</manufacturer>
 		<rom name="Destructor, El (Spain) (Gluk Video) (Unl).nes" size="65552" crc="eb33ea3b"/>
@@ -3590,9 +3605,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="devilman">
-		<description>Devil Man (T-eng)</description>
-		<year>1989</year>
-		<manufacturer>Namco</manufacturer>
+		<comment>Hack</comment>
+		<description>Devil Man (T-Eng)</description>
+		<year>2009</year>
+		<manufacturer>snark</manufacturer>
 		<rom name="Devil Man (T-eng).nes" size="262160" crc="0be5f3e3"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3606,9 +3622,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="diabloii">
+		<comment>Hack</comment>
 		<description>Diablo II (Hack)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>19??</year>
+		<manufacturer>Shenzan Nanjing</manufacturer>
 		<rom name="Diablo II (Hack).nes" size="2097168" crc="b870d5cd"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3671,9 +3688,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="digitdevmonmegte">
-		<description>Digital Devil Monogatari - Megami Tensei (T-eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Hack</comment>
+		<description>Digital Devil Monogatari - Megami Tensei (T-Eng)</description>
+		<year>2018</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Digital Devil Monogatari - Megami Tensei (T-eng).nes" size="393232" crc="ac5acc89"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3687,17 +3705,18 @@
 		<driver status="good"/>
 	</game>
 	<game name="digitdevmonmegteii">
-		<description>Digital Devil Monogatari - Megami Tensei II (T-eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Hack</comment>
+		<description>Digital Devil Monogatari - Megami Tensei II (T-Eng)</description>
+		<year>2016</year>
+		<manufacturer>Dushbadge</manufacturer>
 		<rom name="Digital Devil Monogatari - Megami Tensei II (T-eng).nes" size="524304" crc="31d915cd"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="dirtyhar">
 		<description>Dirty Harry - The War Against Drugs (USA)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Mindscape</manufacturer>
 		<rom name="Dirty Harry - The War Against Drugs (USA).nes" size="393232" crc="293952bd"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3713,8 +3732,8 @@
 	</game>
 	<game name="diveman">
 		<description>Dive Man (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>199?</year>
+		<manufacturer>Power Joy</manufacturer>
 		<rom name="Dive Man (Unl).nes" size="262160" crc="b12bfcc2"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3736,9 +3755,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="dokidokyuu">
+		<comment>Hack</comment>
 		<description>Doki!Doki! Yuuenchi - Crazy Land Daisakusen (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2016</year>
+		<manufacturer>pacnsacdave</manufacturer>
 		<rom name="Doki!Doki! Yuuenchi - Crazy Land Daisakusen (T-Eng).nes" size="262160" crc="9aad9b7a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3769,9 +3789,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="dondokodon2">
+		<comment>Hack</comment>
 		<description>Don Doko Don 2 (T-Eng)</description>
-		<year>1992</year>
-		<manufacturer>Taito</manufacturer>
+		<year>2014</year>
+		<manufacturer>MrRichard999</manufacturer>
 		<rom name="Don Doko Don 2 (T-Eng).nes" size="393232" crc="560142bc"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3810,8 +3831,8 @@
 	</game>
 	<game name="donkekoncou4">
 		<description>Donkey Kong Country 4 (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1997</year>
+		<manufacturer>J.Y. Company</manufacturer>
 		<rom name="Donkey Kong Country 4 (Unl).nes" size="524304" crc="5ae55685"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3835,8 +3856,8 @@
 	</game>
 	<game name="doolybravoland">
 		<description>Dooly Bravo Land (Korea)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1992</year>
+		<manufacturer>Daou Infosys</manufacturer>
 		<rom name="Dooly Bravo Land (Korea).nes" size="262160" crc="e7740e47"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3866,9 +3887,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="dorae">
-		<description>Doraemon - Giga Zombie no Gyakushuu (T-eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Hack</comment>
+		<description>Doraemon - Giga Zombie no Gyakushuu (T-Eng)</description>
+		<year>1999</year>
+		<manufacturer>WakdHacks</manufacturer>
 		<rom name="Doraemon - Giga Zombie no Gyakushuu (T-eng).nes" size="262160" crc="a9c510ac"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3949,9 +3971,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="doublmooden">
+		<comment>Hack</comment>
 		<description>Double Moon Densetsu (T-Eng)</description>
-		<year>1992</year>
-		<manufacturer>Masaya</manufacturer>
+		<year>2020</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Double Moon Densetsu (T-Eng).nes" size="524304" crc="2c2c43a4"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3991,8 +4014,8 @@
 	</game>
 	<game name="downtnekmon">
 		<description>Downtown - Nekketsu Monogatari (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1989</year>
+		<manufacturer>Technos</manufacturer>
 		<rom name="Downtown - Nekketsu Monogatari (Japan).nes" size="262160" crc="f7346e46"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4030,9 +4053,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="dracsnightout">
+		<comment>Prototype</comment>
 		<description>Drac's Night Out (USA) (Prototype)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1991</year>
+		<manufacturer>Parker Brothers</manufacturer>
 		<rom name="Drac's Night Out (USA) (Prototype).nes" size="262160" crc="2f81e727"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4046,9 +4070,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragobaldaimaofu">
+		<comment>Hack</comment>
 		<description>Dragon Ball - Dai Maou Fukkatsu (T-Eng)</description>
-		<year>1988</year>
-		<manufacturer>Bandai</manufacturer>
+		<year>2011</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Dragon Ball - Dai Maou Fukkatsu (T-Eng).nes" size="393232" crc="69beb7a5"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4062,9 +4087,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragobalshelonnona" cloneof="dragonpower" romof="dragonpower">
+		<comment>Hack</comment>
 		<description>Dragon Ball - Shen Long no Nazo (T-Eng)</description>
-		<year>1986</year>
-		<manufacturer>Bandai</manufacturer>
+		<year>2016</year>
+		<manufacturer>TransBRC</manufacturer>
 		<rom name="Dragon Ball - Shen Long no Nazo (T-Eng).nes" size="163856" crc="b4e31bf4"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4086,9 +4112,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragobalzkyosajin">
+		<comment>Hack</comment>
 		<description>Dragon Ball Z - Kyoushuu! Saiya Jin (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2005</year>
+		<manufacturer>Twilight Translations</manufacturer>
 		<rom name="Dragon Ball Z - Kyoushuu! Saiya Jin (T-Eng).nes" size="524304" crc="31d0d50a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4111,17 +4138,18 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragobalzsupbu2">
+		<comment>Hack</comment>
 		<description>Dragon Ball Z - Super Butouden 2 (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2019</year>
+		<manufacturer>Green Jerry</manufacturer>
 		<rom name="Dragon Ball Z - Super Butouden 2 (T-Eng).nes" size="393232" crc="df87586f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="dragonballz5">
-		<description>Dragon Ball Z 5 (China)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Dragon Ball Z 5 (Unl) (China)</description>
+		<year>19??</year>
+		<manufacturer>Rex Game Soft</manufacturer>
 		<rom name="Dragon Ball Z 5 (China).nes" size="786448" crc="1f2b86ea"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4135,9 +4163,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragobalzgaisajinze">
+		<comment>Hack</comment>
 		<description>Dragon Ball Z Gaiden - Saiya Jin Zetsumetsu Keikaku (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2007</year>
+		<manufacturer>Twilight Translations</manufacturer>
 		<rom name="Dragon Ball Z Gaiden - Saiya Jin Zetsumetsu Keikaku (T-Eng).nes" size="524304" crc="e7a5a03d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4151,9 +4180,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragobalziigefr">
-		<description>Dragon Ball Z II - Gekishin Freeza!! (T-Eng)</description>
-		<year>1991</year>
-		<manufacturer>Bandai</manufacturer>
+		<comment>Hack</comment>
+		<description>Dragon Ball Z II - Gekishin Freeza!! (T-Eng, v1.02)</description>
+		<year>2019</year>
+		<manufacturer>Gyroballer</manufacturer>
 		<rom name="Dragon Ball Z II - Gekishin Freeza!! (T-Eng).nes" size="524304" crc="ffa1e20e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4176,9 +4206,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragobalziiirejini">
+		<comment>Hack</comment>
 		<description>Dragon Ball Z III - Ressen Jinzou Ningen (T-Eng)</description>
-		<year>1992</year>
-		<manufacturer>Bandai</manufacturer>
+		<year>2007</year>
+		<manufacturer>Twilight Translations</manufacturer>
 		<rom name="Dragon Ball Z III - Ressen Jinzou Ningen (T-Eng).nes" size="524304" crc="209955ea"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4209,9 +4240,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragobusii">
-		<description>Dragon Buster II - Yami no Fuuin (T-eng)</description>
-		<year>1989</year>
-		<manufacturer>Namco</manufacturer>
+		<comment>Hack</comment>
+		<description>Dragon Buster II - Yami no Fuuin (T-Eng)</description>
+		<year>2003</year>
+		<manufacturer>PentarouZero</manufacturer>
 		<rom name="Dragon Buster II - Yami no Fuuin (T-eng).nes" size="196624" crc="ba54967b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4224,19 +4256,20 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="dragonknifec" cloneof="dragonknife" romof="dragonknife">
-		<description>Dragon Knife (Chinese)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
-		<rom name="Dragon Knife (Chinese).nes" size="524304" crc="eb5dbb86"/>
+	<game name="dragonknife">
+		<comment>Hack</comment>
+		<description>Dragon Knife (T-Eng)</description>
+		<year>2014</year>
+		<manufacturer>pacnsacdave</manufacturer>
+		<rom name="Dragon Knife (T-Eng).nes" size="524304" crc="142f21a6"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="dragonknife">
-		<description>Dragon Knife (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
-		<rom name="Dragon Knife (T-Eng).nes" size="524304" crc="142f21a6"/>
+	<game name="dragonknifec" cloneof="dragonknife" romof="dragonknife">
+		<description>Dragon Knife (Unl) (Chinese)</description>
+		<year>1993</year>
+		<manufacturer>Waixing</manufacturer>
+		<rom name="Dragon Knife (Chinese).nes" size="524304" crc="eb5dbb86"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -4250,8 +4283,8 @@
 	</game>
 	<game name="dragonrunning">
 		<description>Dragon Running (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>199?</year>
+		<manufacturer>ABAB Soft</manufacturer>
 		<rom name="Dragon Running (Unl).nes" size="262160" crc="dfb4c50a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4374,9 +4407,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="dreamworldpogie">
+		<comment>Prototype</comment>
 		<description>Dreamworld Pogie (Prototype)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1993</year>
+		<manufacturer>Camerica</manufacturer>
 		<rom name="Dreamworld Pogie (Prototype).nes" size="131088" crc="2ace2f1b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4392,8 +4426,8 @@
 	</game>
 	<game name="dringle">
 		<description>Dringle (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2005</year>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="Dringle (Unl).nes" size="40976" crc="05c38615"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4424,8 +4458,8 @@
 	</game>
 	<game name="duckmaze">
 		<description>Duck Maze (USA)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Bit Corp.</manufacturer>
 		<rom name="Duck Maze (USA).nes" size="40976" crc="01c1ca36"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4610,9 +4644,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="egypt">
+		<comment>Hack</comment>
 		<description>Egypt (T-Eng)</description>
-		<year>1991</year>
-		<manufacturer>Human Entertainment</manufacturer>
+		<year>2016</year>
+		<manufacturer>Dodgy Translations</manufacturer>
 		<rom name="Egypt (T-Eng).nes" size="65552" crc="bb7f1c06"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4660,8 +4695,8 @@
 	</game>
 	<game name="empircit">
 		<description>Empire City - 1931 (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Toshiba Emi</manufacturer>
 		<rom name="Empire City - 1931 (Japan).nes" size="131088" crc="bd736ec8"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4685,8 +4720,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="escapfroatl">
+		<comment>Prototype</comment>
 		<description>Escape From Atlantis, The (Prototype)</description>
-		<year>0000</year>
+		<year>199?</year>
 		<manufacturer>Color Dreams</manufacturer>
 		<rom name="Escape From Atlantis, The (Prototype).nes" size="131088" crc="3c550fd5"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -4718,9 +4754,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="esperdre2">
+		<comment>Hack</comment>
 		<description>Esper Dream 2 - Aratanaru Tatakai (T-Eng)</description>
-		<year>1992</year>
-		<manufacturer>Konami</manufacturer>
+		<year>2006</year>
+		<manufacturer>Aeon Genesis</manufacturer>
 		<rom name="Esper Dream 2 - Aratanaru Tatakai (T-Eng).nes" size="393232" crc="892b32eb"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4770,8 +4807,8 @@
 	</game>
 	<game name="excitral">
 		<description>Exciting Rally - World Rally Championship (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1992</year>
+		<manufacturer>Kaken Corp.</manufacturer>
 		<rom name="Exciting Rally - World Rally Championship (Japan).nes" size="262160" crc="8cefb613"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4811,6 +4848,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="explodingfist">
+		<comment>Prototype</comment>
 		<description>Exploding Fist (USA, Prototype)</description>
 		<year>1990</year>
 		<manufacturer>Tradewest</manufacturer>
@@ -4853,8 +4891,8 @@
 	</game>
 	<game name="f1sensation">
 		<description>F-1 Sensation (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1993</year>
+		<manufacturer>Konami</manufacturer>
 		<rom name="F-1 Sensation (Japan).nes" size="262160" crc="abb7157e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4901,9 +4939,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="f1circus">
+		<comment>Hack</comment>
 		<description>F1 Circus (T-Eng)</description>
-		<year>1992</year>
-		<manufacturer>Nichibutsu</manufacturer>
+		<year>2016</year>
+		<manufacturer>MrRichard999</manufacturer>
 		<rom name="F1 Circus (T-Eng).nes" size="393232" crc="67c75e53"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4942,9 +4981,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="famicomwars">
+		<comment>Hack</comment>
 		<description>Famicom Wars (T-Eng)</description>
-		<year>1988</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2016</year>
+		<manufacturer>Spinner 8 and friends</manufacturer>
 		<rom name="Famicom Wars (T-Eng).nes" size="196624" crc="896759d8"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4974,9 +5014,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="familycircuit">
+		<comment>Hack</comment>
 		<description>Family Circuit (T-Eng)</description>
-		<year>1988</year>
-		<manufacturer>Namco</manufacturer>
+		<year>2016</year>
+		<manufacturer>MrRichard999</manufacturer>
 		<rom name="Family Circuit (T-Eng).nes" size="163856" crc="e44892f7"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5072,9 +5113,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="fantasyzone">
-		<description>Fantasy Zone (Tengen) (USA)</description>
-		<year>1987</year>
-		<manufacturer>Sunsoft</manufacturer>
+		<description>Fantasy Zone (USA)</description>
+		<year>1989</year>
+		<manufacturer>Tengen</manufacturer>
 		<rom name="Fantasy Zone (Tengen) (USA).nes" size="131088" crc="9c546b0b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5121,9 +5162,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="faxanadut" cloneof="faxanadu" romof="faxanadu">
+		<comment>Hack</comment>
 		<description>Faxanadu (T-Eng)</description>
-		<year>1987</year>
-		<manufacturer>Hudson Soft</manufacturer>
+		<year>2019</year>
+		<manufacturer>Unsavory Maggot</manufacturer>
 		<rom name="Faxanadu (T-Eng).nes" size="524304" crc="ed0a6836"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5187,16 +5229,16 @@
 	</game>
 	<game name="fightinghero">
 		<description>Fighting Hero (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1991</year>
+		<manufacturer>Mega Soft</manufacturer>
 		<rom name="Fighting Hero (Unl).nes" size="393232" crc="2093f0e1"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="fightheriii">
 		<description>Fighting Hero III (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1993</year>
+		<manufacturer>NTDEC</manufacturer>
 		<rom name="Fighting Hero III (Unl).nes" size="786448" crc="52b2045f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5210,9 +5252,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="fightingroad">
+		<comment>Hack</comment>
 		<description>Fighting Road (T-Eng)</description>
-		<year>1988</year>
-		<manufacturer>Toei Animation</manufacturer>
+		<year>2016</year>
+		<manufacturer>Immutable</manufacturer>
 		<rom name="Fighting Road (T-Eng).nes" size="262160" crc="3b9e7aa1"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5227,10 +5270,19 @@
 		<driver status="good"/>
 	</game>
 	<game name="finalcombat">
-		<description>Final Combat (Asia) (NTSC) (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Final Combat (Unl) (Asia)</description>
+		<year>1992</year>
+		<manufacturer>Sachen</manufacturer>
 		<rom name="Final Combat (Asia) (NTSC) (Unl).nes" size="81936" crc="a7afcc45"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="finalfantasyi" cloneof="finalfantasy" romof="finalfantasy">
+		<comment>Hack</comment>
+		<description>Final Fantasy (Hack, Italian v1.0)</description>
+		<year>2020</year>
+		<manufacturer>FIUMI</manufacturer>
+		<rom name="Final Fantasy T-Ita (2020)(FIUMI).nes" size="262160" crc="74201d71"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -5260,9 +5312,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="finalfan12">
+		<comment>Hack</comment>
 		<description>Final Fantasy 1 &amp; 2 (T-eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2016</year>
+		<manufacturer>Demiforce</manufacturer>
 		<rom name="Final Fantasy 1 &amp; 2 (T-eng).nes" size="524304" crc="6f5f3bd2"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5277,8 +5330,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="finalfantasyii">
-		<description>Final Fantasy II (USA) (Proto)</description>
-		<year>0000</year>
+		<comment>Prototype</comment>
+		<description>Final Fantasy II (USA) (Prototype)</description>
+		<year>1991</year>
 		<manufacturer>Square</manufacturer>
 		<rom name="Final Fantasy II (USA) (Proto).nes" size="262160" crc="f60d282c"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -5302,25 +5356,26 @@
 		<driver status="good"/>
 	</game>
 	<game name="finalfanvii" cloneof="finalfanviiadvch" romof="finalfanviiadvch">
-		<description>Final Fantasy VII (China)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Final Fantasy VII (Unl) (China)</description>
+		<year>2005</year>
+		<manufacturer>ShenZhen Nanjing Technology</manufacturer>
 		<rom name="Final Fantasy VII (China).nes" size="2097168" crc="e5bf8f0c"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="finalfanviiadvch">
+		<comment>Hack</comment>
 		<description>Final Fantasy VII - Advent Children (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2015</year>
+		<manufacturer>Lindblum</manufacturer>
 		<rom name="Final Fantasy VII - Advent Children (T-Eng).nes" size="2097168" crc="8de6d62f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="finalfight3">
 		<description>Final Fight 3 (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1998</year>
+		<manufacturer>J.Y. Company</manufacturer>
 		<rom name="Final Fight 3 (Unl).nes" size="786448" crc="97f05116"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7288,6 +7343,15 @@
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="Insector X (Japan).nes" size="262160" crc="7dab812d"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="inttrans">
+		<comment>Homebrew</comment>
+		<description>Interglactic Transmissing (HB)</description>
+		<year>2018</year>
+		<manufacturer>GGJ</manufacturer>
+		<rom name="Interglactic Transmissing (2018)(GGJ).nes" size="40976" crc="e13adc0c"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -9848,8 +9912,8 @@
 	</game>
 	<game name="mickeymania7" cloneof="chinarabbab" romof="chinarabbab">
 		<description>Mickey Mania 7 (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1996</year>
+		<manufacturer>J.Y. Company</manufacturer>
 		<rom name="Mickey Mania 7 (Unl).nes" size="524304" crc="a1460ad3"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10533,6 +10597,15 @@
 		<year>2017</year>
 		<manufacturer>Hyperware Co.</manufacturer>
 		<rom name="NEO Heiankyo Alien (HB).nes" size="655376" crc="f9450fc9"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="hangman">
+		<comment>Homebrew</comment>
+		<description>NES Hangman (HB)</description>
+		<year>2015</year>
+		<manufacturer>FG Software</manufacturer>
+		<rom name="NES Hangman (2015)(FG Software).nes" size="40976" crc="b0500cd4"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -15967,8 +16040,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wall">
-		<comment>Homebrew</comment>
-		<description>Wall (Demo) (HB, Tech-Demo)</description>
+		<comment>Demo, Homebrew</comment>
+		<description>Wall (HB, Tech-Demo)</description>
 		<year>1999</year>
 		<manufacturer>Chris Covell</manufacturer>
 		<rom name="wall (Demo).nes" size="24592" crc="5da28b4f"/>

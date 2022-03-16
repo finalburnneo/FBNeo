@@ -4908,7 +4908,7 @@ struct BurnDriver BurnSpecfeud = {
 	"spec_feud", NULL, "spec_spectrum", NULL, "1987",
 	"Feud (48K)\0", NULL, "Bulldog", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
 	SpectrumGetZipName, SpecfeudRomInfo, SpecfeudRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -24793,7 +24793,7 @@ struct BurnDriver BurnSpecCarwars = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Cocoa and the Time Machine (128K) (HB)
+// Cocoa and the Time Machine (English) (128K) (HB)
 
 static struct BurnRomInfo SpecCocoatmRomDesc[] = {
 	{ "Cocoa and the Time Machine (2020)(Minilop).tap", 46020, 0xbba37879, BRF_ESS | BRF_PRG },
@@ -24804,10 +24804,48 @@ STD_ROM_FN(SpecCocoatm)
 
 struct BurnDriver BurnSpecCocoatm = {
 	"spec_cocoatm", NULL, "spec_spec128", NULL, "2020",
-	"Cocoa and the Time Machine (128K) (HB)\0", NULL, "Minilop", "ZX Spectrum",
+	"Cocoa and the Time Machine (English) (128K) (HB)\0", NULL, "Minilop", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecCocoatmRomInfo, SpecCocoatmRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cocoa and the Time Machine (Portuguese) (48K) (HB)
+
+static struct BurnRomInfo SpecCocoaptRomDesc[] = {
+	{ "Cocoa and the Time Machine PT (2020)(Minilop).tap", 39130, 0x66dce3ad, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCocoapt, SpecCocoapt, Spectrum)
+STD_ROM_FN(SpecCocoapt)
+
+struct BurnDriver BurnSpecCocoapt = {
+	"spec_cocoapt", "spec_cocoatm", "spec_spectrum", NULL, "2020",
+	"Cocoa and the Time Machine (Portuguese) (48K) (HB)\0", NULL, "Minilop", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecCocoaptRomInfo, SpecCocoaptRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cocoa and the Time Machine (Spanish) (128K) (HB)
+
+static struct BurnRomInfo SpecCocoaspRomDesc[] = {
+	{ "Cocoa and the Time Machine ES (2020)(Minilop).tap", 46033, 0xdd44856a, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCocoasp, SpecCocoasp, Spec128)
+STD_ROM_FN(SpecCocoasp)
+
+struct BurnDriver BurnSpecCocoasp = {
+	"spec_cocoasp", "spec_cocoatm", "spec_spec128", NULL, "2020",
+	"Cocoa and the Time Machine (Spanish) (128K) (HB)\0", NULL, "Minilop", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecCocoaspRomInfo, SpecCocoaspRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -34918,5 +34956,176 @@ struct BurnDriver BurnSpecZxfrogger = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecZxfroggerRomInfo, SpecZxfroggerRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cocoa 2 Twenty Four Hour Parsley People EP1 EN (HB)
+
+static struct BurnRomInfo SpecCocoa2e1RomDesc[] = {
+	{ "Cocoa 2 Twenty Four Hour Parsley People EP1 EN (2020)(Minilop).tap", 49168, 0x091c933d, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCocoa2e1, SpecCocoa2e1, Spec128)
+STD_ROM_FN(SpecCocoa2e1)
+
+struct BurnDriver BurnSpecCocoa2e1 = {
+	"spec_cocoa2e1", NULL, "spec_spec128", NULL, "2020",
+	"Cocoa 2, 24 Hour Parsley People - Episode 1 (English) (128K) (HB)\0", "Supporter Edition", "Minilop", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecCocoa2e1RomInfo, SpecCocoa2e1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cocoa 2 Twenty Four Hour Parsley People EP1 PT (HB)
+
+static struct BurnRomInfo SpecCocoa2e1ptRomDesc[] = {
+	{ "Cocoa 2 Twenty Four Hour Parsley People EP1 PT (2020)(Minilop).tap", 49168, 0x12e1984a, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCocoa2e1pt, SpecCocoa2e1pt, Spec128)
+STD_ROM_FN(SpecCocoa2e1pt)
+
+struct BurnDriver BurnSpecCocoa2e1pt = {
+	"spec_cocoa2e1pt", "spec_cocoa2e1", "spec_spec128", NULL, "2020",
+	"Cocoa 2, 24 Hour Parsley People - Episode 1 (Portuguese) (128K) (HB)\0", "Supporter Edition", "Minilop", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecCocoa2e1ptRomInfo, SpecCocoa2e1ptRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cocoa 2 Twenty Four Hour Parsley People EP1 ES (HB)
+
+static struct BurnRomInfo SpecCocoa2e1spRomDesc[] = {
+	{ "Cocoa 2 Twenty Four Hour Parsley People EP1 ES (2020)(Minilop).tap", 49168, 0x98b01da0, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCocoa2e1sp, SpecCocoa2e1sp, Spec128)
+STD_ROM_FN(SpecCocoa2e1sp)
+
+struct BurnDriver BurnSpecCocoa2e1sp = {
+	"spec_cocoa2e1sp", "spec_cocoa2e1", "spec_spec128", NULL, "2020",
+	"Cocoa 2, 24 Hour Parsley People - Episode 1 (Spanish) (128K) (HB)\0", "Supporter Edition", "Minilop", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecCocoa2e1spRomInfo, SpecCocoa2e1spRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cocoa 2 Twenty Four Hour Parsley People EP2 EN (HB)
+
+static struct BurnRomInfo SpecCocoa2e2RomDesc[] = {
+	{ "Cocoa 2 Twenty Four Hour Parsley People EP2 EN (2020)(Minilop).tap", 49204, 0xcc0c836f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCocoa2e2, SpecCocoa2e2, Spec128)
+STD_ROM_FN(SpecCocoa2e2)
+
+struct BurnDriver BurnSpecCocoa2e2 = {
+	"spec_cocoa2e2", "spec_cocoa2e1", "spec_spec128", NULL, "2020",
+	"Cocoa 2, 24 Hour Parsley People - Episode 2 (English) (128K) (HB)\0", "Supporter Edition", "Minilop", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecCocoa2e2RomInfo, SpecCocoa2e2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cocoa 2 Twenty Four Hour Parsley People EP2 PT (HB)
+
+static struct BurnRomInfo SpecCocoa2e2ptRomDesc[] = {
+	{ "Cocoa 2 Twenty Four Hour Parsley People EP2 PT (2020)(Minilop).tap", 49204, 0x66efddd9, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCocoa2e2pt, SpecCocoa2e2pt, Spec128)
+STD_ROM_FN(SpecCocoa2e2pt)
+
+struct BurnDriver BurnSpecCocoa2e2pt = {
+	"spec_cocoa2e2pt", "spec_cocoa2e1", "spec_spec128", NULL, "2020",
+	"Cocoa 2, 24 Hour Parsley People - Episode 2 (Portuguese) (128K) (HB)\0", "Supporter Edition", "Minilop", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecCocoa2e2ptRomInfo, SpecCocoa2e2ptRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cocoa 2 Twenty Four Hour Parsley People EP2 ES (HB)
+
+static struct BurnRomInfo SpecCocoa2e2spRomDesc[] = {
+	{ "Cocoa 2 Twenty Four Hour Parsley People EP2 ES (2020)(Minilop).tap", 49204, 0xacf1b30d, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCocoa2e2sp, SpecCocoa2e2sp, Spec128)
+STD_ROM_FN(SpecCocoa2e2sp)
+
+struct BurnDriver BurnSpecCocoa2e2sp = {
+	"spec_cocoa2e2sp", "spec_cocoa2e1", "spec_spec128", NULL, "2020",
+	"Cocoa 2, 24 Hour Parsley People - Episode 2 (Spanish) (128K) (HB)\0", "Supporter Edition", "Minilop", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecCocoa2e2spRomInfo, SpecCocoa2e2spRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cocoa 2 Twenty Four Hour Parsley People EP3 EN (HB)
+
+static struct BurnRomInfo SpecCocoa2e3RomDesc[] = {
+	{ "Cocoa 2 Twenty Four Hour Parsley People EP3 EN (2020)(Minilop).tap", 49200, 0x28595082, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCocoa2e3, SpecCocoa2e3, Spec128)
+STD_ROM_FN(SpecCocoa2e3)
+
+struct BurnDriver BurnSpecCocoa2e3 = {
+	"spec_cocoa2e3", "spec_cocoa2e1", "spec_spec128", NULL, "2020",
+	"Cocoa 2, 24 Hour Parsley People - Episode 3 (English) (128K) (HB)\0", "Supporter Edition", "Minilop", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecCocoa2e3RomInfo, SpecCocoa2e3RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cocoa 2 Twenty Four Hour Parsley People EP3 PT (HB)
+
+static struct BurnRomInfo SpecCocoa2e3ptRomDesc[] = {
+	{ "Cocoa 2 Twenty Four Hour Parsley People EP3 PT (2020)(Minilop).tap", 49200, 0xc135051e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCocoa2e3pt, SpecCocoa2e3pt, Spec128)
+STD_ROM_FN(SpecCocoa2e3pt)
+
+struct BurnDriver BurnSpecCocoa2e3pt = {
+	"spec_cocoa2e3pt", "spec_cocoa2e1", "spec_spec128", NULL, "2020",
+	"Cocoa 2, 24 Hour Parsley People - Episode 3 (Portuguese) (128K) (HB)\0", "Supporter Edition", "Minilop", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecCocoa2e3ptRomInfo, SpecCocoa2e3ptRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cocoa 2 Twenty Four Hour Parsley People EP3 ES (HB)
+
+static struct BurnRomInfo SpecCocoa2e3spRomDesc[] = {
+	{ "Cocoa 2 Twenty Four Hour Parsley People EP3 ES (2020)(Minilop).tap", 49200, 0x80202e0a, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCocoa2e3sp, SpecCocoa2e3sp, Spec128)
+STD_ROM_FN(SpecCocoa2e3sp)
+
+struct BurnDriver BurnSpecCocoa2e3sp = {
+	"spec_cocoa2e3sp", "spec_cocoa2e1", "spec_spec128", NULL, "2020",
+	"Cocoa 2, 24 Hour Parsley People - Episode 3 (Spanish) (128K) (HB)\0", "Supporter Edition", "Minilop", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecCocoa2e3spRomInfo, SpecCocoa2e3spRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

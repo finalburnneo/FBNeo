@@ -23971,6 +23971,7 @@ struct BurnDriver BurnDrvCpsWofsja = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+#ifdef CPS1_HACK_QSOUND
 struct BurnDriver BurnDrvCpsWofsjb = {
 	"wofsjb", "wof", NULL, NULL, "1992",
 	"Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 3, 921005 Asia)\0", "Imperfect Graphics", "bootleg", "CPS1 / QSound",
@@ -23980,6 +23981,17 @@ struct BurnDriver BurnDrvCpsWofsjb = {
 	WofsjbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
+#else
+struct BurnDriver BurnDrvCpsWofsjb = {
+	"wofsjb", "wof", NULL, NULL, "1992",
+	"Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 3, 921005 Asia)\0", "No sound", "bootleg", "CPS1",
+	L"\u4E09\u56FD\u5FD7 II: \u5723\u5251\u4E09\0Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 3, 921005 Asia)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, WofsjbRomInfo, WofsjbRomName, NULL, NULL, NULL, NULL, WofsjbInputInfo, NULL,
+	WofsjbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+#endif
 
 struct BurnDriver BurnDrvCpsWofsjc = {
 	"wofsjc", "wof", NULL, NULL, "1992",

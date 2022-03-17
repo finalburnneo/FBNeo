@@ -418,7 +418,7 @@ static void CheckDIP()
 		//bprintf(0, _T("DIP Changed! %X\n"), DrvDips[0]);
 		bLastSampleDIPMode = DrvDips[0];
 
-		MSM6295SetRoute(0, (bLastSampleDIPMode == 8) ? 0.00 : 1.60, BURN_SND_ROUTE_BOTH);
+		MSM6295SetRoute(0, (bLastSampleDIPMode == 8) ? 0.00 : 1.40, BURN_SND_ROUTE_BOTH);
 		BurnSampleSetAllRoutesAllSamples((bLastSampleDIPMode == 8) ? 0.40 : 0.00, BURN_SND_ROUTE_BOTH);
 	}
 }
@@ -678,9 +678,9 @@ static INT32 DrvInit()
 #ifdef USE_SAMPLE_HACK
 	MSM6295SetRoute(0, 0.00, BURN_SND_ROUTE_BOTH);
 #else
-	MSM6295SetRoute(0, 1.60, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 1.40, BURN_SND_ROUTE_BOTH);
 #endif
-	MSM6295SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 0.90, BURN_SND_ROUTE_BOTH);
 
 	NMK112_init(1 << 0, MSM6295ROM + 0x100000, MSM6295ROM, 0x200000, 0x300000);
 
@@ -694,7 +694,7 @@ static INT32 DrvInit()
 	bLastSampleDIPMode = DrvDips[0];
 
 	if (!(bLastSampleDIPMode == 8) || !bHasSamples) { // Samples not found, fallback to internal samples.
-		MSM6295SetRoute(0, 1.60, BURN_SND_ROUTE_BOTH);
+		MSM6295SetRoute(0, 1.40, BURN_SND_ROUTE_BOTH);
 		BurnSampleSetAllRoutesAllSamples(0.00, BURN_SND_ROUTE_BOTH);
 	}
 #endif

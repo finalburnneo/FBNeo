@@ -88,7 +88,7 @@ Write a report with details on the issue and your platform.
 Your hardware is probably too slow to run the game with normal settings. Try the following :
 * Check if there is a speedhack dipswitch in the core options, set it to "yes".
 * Try disabling rewind, runahead, or any other retroarch setting known for increasing overhead.
-* Try setting a value for frameskip in core options (note : recent retroarch versions allow an auto-frameskip feature).
+* Try setting a value for frameskip in core options (note : "Fixed" frameskip is recommended, the other methods don't seem to be nearly as efficient).
 * Try lowering CPU clock in core options (note : some games don't support this feature).
 * Try lowering audio settings in the core options.
 * A last resort on arm platforms would be to enable cyclone in core options, however keep in mind some games will stop working from this, so it's recommended to only enable it per-game if it's actually helping with performance on that specific game.
@@ -100,8 +100,8 @@ We won't accept requests for "making the core faster", as far as we are concerne
 Most likely for the same reason as above.
 
 ### Game XXX runs faster in MAME2003/MAME2010, why ?
-Overall, FBNeo is slower than old MAME version because it's more accurate (meaning less bugs).
-This libretro port also support various features which are usually buggy or absent in MAME cores (runahead, netplay, rewind, retroachievements, ...), so it might use additional resources.
+Overall, FBNeo is slower than old MAME version, because it's more accurate, meaning graphics, sound and gameplay are more likely to be faithful to the real machine.
+This libretro port also supports various features which are usually buggy or totally absent in MAME cores (runahead, netplay, rewind, retroachievements, ...), those features might use additional resources.
 
 ### How do i use cheat code ?
 From a libretro point of view, there should be partial support through the API relying on main ram exposition. 

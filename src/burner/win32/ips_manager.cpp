@@ -748,7 +748,7 @@ int IpsManagerCreate(HWND hParentWND)
     (((unsigned int)(bp)[0] << 8) & 0xFF00) | \
     ((unsigned int) (bp)[1] & 0x00FF)
 
-bool bDoIpsPatch = FALSE;
+bool bDoIpsPatch = false, bSaveIpsAddress = false;
 
 static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 {
@@ -775,6 +775,15 @@ static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 		bprintf(0, _T("IPS - Patching with: %S.\n"), ips_path);
 		UINT8 ch = 0;
 		int bRLE = 0;
+		char p[MAX_PATH]{ 0 }, v[15]{};
+		FILE* t = NULL;
+
+		if (bSaveIpsAddress) {
+			strncpy(p, ips_path, strlen(ips_path) - strlen(IPS_EXT));
+			strcat(p, ".txt");
+			t = fopen(p, "w");
+		}
+
 		while (!feof(f)) {
 			// read patch address offset
 			fread(buf, 1, 3, f);
@@ -803,11 +812,22 @@ static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
                     if (!bRLE) fgetc(f);
                 } else {
                     *mem8 = bRLE ? ch : fgetc(f);
+
+					// [Relative address] [Patched value]
+					// Examples:
+					// 0x006c18 0x10
+					// 0x00914d 0x05
+					// ...
+					if (bSaveIpsAddress && t) {
+						memset(v, 0, sizeof(v));
+						sprintf(v, "0x%06x 0x%02x\n", Offset - 1, *mem8);
+						fwrite(v, sizeof(v) - 1, 1, t);
+					}
                 }
 			}
 		}
+		if (bSaveIpsAddress && t) fclose(t);
 	}
-
 	fclose(f);
 }
 

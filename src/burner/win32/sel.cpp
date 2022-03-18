@@ -67,6 +67,7 @@ static int nDlgFilterGrpInitialPos[4];
 static int nDlgFilterTreeInitialPos[4];
 static int nDlgIpsGrpInitialPos[4];
 static int nDlgApplyIpsChbInitialPos[4];
+static int nDlgIpsAddressChbInitialPos[4];
 static int nDlgIpsManBtnInitialPos[4];
 static int nDlgSearchGrpInitialPos[4];
 static int nDlgSearchTxtInitialPos[4];
@@ -378,6 +379,7 @@ static void GetInitialPositions()
 	GetInititalControlPos(IDC_TREE2, nDlgFilterTreeInitialPos);
 	GetInititalControlPos(IDC_SEL_IPSGROUP, nDlgIpsGrpInitialPos);
 	GetInititalControlPos(IDC_SEL_APPLYIPS, nDlgApplyIpsChbInitialPos);
+	GetInititalControlPos(IDC_SEL_IPSADDRESS, nDlgIpsAddressChbInitialPos);
 	GetInititalControlPos(IDC_SEL_IPSMANAGER, nDlgIpsManBtnInitialPos);
 	GetInititalControlPos(IDC_SEL_SEARCHGROUP, nDlgSearchGrpInitialPos);
 	GetInititalControlPos(IDC_SEL_SEARCH, nDlgSearchTxtInitialPos);
@@ -1031,6 +1033,11 @@ static VOID CALLBACK InitPreviewTimerProc(HWND, UINT, UINT_PTR, DWORD)
 		if (!nShowMVSCartsOnly) EnableWindow(GetDlgItem(hSelDlg, IDC_SEL_APPLYIPS), TRUE);
 	} else {
 		EnableWindow(GetDlgItem(hSelDlg, IDC_SEL_APPLYIPS), FALSE);
+		EnableWindow(GetDlgItem(hSelDlg, IDC_SEL_IPSADDRESS), FALSE);
+		CheckDlgButton(hSelDlg, IDC_SEL_APPLYIPS, BST_UNCHECKED);
+		CheckDlgButton(hSelDlg, IDC_SEL_IPSADDRESS, BST_UNCHECKED);
+		bDoIpsPatch = false;
+		bSaveIpsAddress = false;
 	}
 
 	KillTimer(hSelDlg, nInitPreviewTimer);
@@ -1697,8 +1704,10 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		CreateFilters();
 
 		EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), FALSE);
+		EnableWindow(GetDlgItem(hDlg, IDC_SEL_IPSADDRESS), FALSE);
 		EnableWindow(GetDlgItem(hDlg, IDC_SEL_IPSMANAGER), FALSE);
-		bDoIpsPatch = FALSE;
+		bDoIpsPatch = false;
+		bSaveIpsAddress = false;
 		IpsPatchExit();
 
 		WndInMid(hDlg, hParent);
@@ -2161,6 +2170,11 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 							EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), TRUE);
 						} else {
 							EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), FALSE);
+							EnableWindow(GetDlgItem(hDlg, IDC_SEL_IPSADDRESS), FALSE);
+							CheckDlgButton(hDlg, IDC_SEL_APPLYIPS, BST_UNCHECKED);
+							CheckDlgButton(hDlg, IDC_SEL_IPSADDRESS, BST_UNCHECKED);
+							bDoIpsPatch = false;
+							bSaveIpsAddress = false;
 						}
                         SetFocus(hSelList);
 					} else {
@@ -2169,6 +2183,14 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					break;
 				case IDC_SEL_APPLYIPS:
 					bDoIpsPatch = !bDoIpsPatch;
+					EnableWindow(GetDlgItem(hDlg, IDC_SEL_IPSADDRESS), bDoIpsPatch);
+					if (!bDoIpsPatch) {
+						CheckDlgButton(hDlg, IDC_SEL_IPSADDRESS, BST_UNCHECKED);
+						bSaveIpsAddress = false;
+					}
+					break;
+				case IDC_SEL_IPSADDRESS:
+					bSaveIpsAddress = !bSaveIpsAddress;
 					break;
 			}
 		}
@@ -2278,6 +2300,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 		SetControlPosAlignBottomRight(IDC_SEL_IPSGROUP, nDlgIpsGrpInitialPos);
 		SetControlPosAlignBottomRight(IDC_SEL_APPLYIPS, nDlgApplyIpsChbInitialPos);
+		SetControlPosAlignBottomRight(IDC_SEL_IPSADDRESS, nDlgIpsAddressChbInitialPos);
 		SetControlPosAlignBottomRight(IDC_SEL_IPSMANAGER, nDlgIpsManBtnInitialPos);
 		SetControlPosAlignBottomRight(IDC_SEL_SEARCHGROUP, nDlgSearchGrpInitialPos);
 		SetControlPosAlignBottomRight(IDC_SEL_SEARCH, nDlgSearchTxtInitialPos);
@@ -2589,7 +2612,10 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				}
 			}
 
-            CheckDlgButton(hDlg, IDC_SEL_APPLYIPS, BST_UNCHECKED);
+			CheckDlgButton(hDlg, IDC_SEL_APPLYIPS, BST_UNCHECKED);
+			CheckDlgButton(hDlg, IDC_SEL_IPSADDRESS, BST_UNCHECKED);
+			bDoIpsPatch = false;
+			bSaveIpsAddress = false;
 
             if (GetIpsNumPatches()) {
 				if (!nShowMVSCartsOnly) EnableWindow(GetDlgItem(hDlg, IDC_SEL_IPSMANAGER), TRUE);
@@ -2602,6 +2628,11 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				if (!nShowMVSCartsOnly) EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), TRUE);
 			} else {
 				EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), FALSE);
+				EnableWindow(GetDlgItem(hDlg, IDC_SEL_IPSADDRESS), FALSE);
+				CheckDlgButton(hDlg, IDC_SEL_APPLYIPS, BST_UNCHECKED);
+				CheckDlgButton(hDlg, IDC_SEL_IPSADDRESS, BST_UNCHECKED);
+				bDoIpsPatch = false;
+				bSaveIpsAddress = false;
 			}
 
 			// Get the text from the drivers via BurnDrvGetText()

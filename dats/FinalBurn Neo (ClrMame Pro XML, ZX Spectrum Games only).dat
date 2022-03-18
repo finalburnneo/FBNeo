@@ -3453,7 +3453,7 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cocoa2e2" cloneof="cocoa2e1" romof="cocoa2e1">
+	<game name="cocoa2e2" romof="spec128">
 		<comment>Homebrew, Supporter Edition</comment>
 		<description>Cocoa 2, 24 Hour Parsley People - Episode 2 (English) (128K) (HB)</description>
 		<year>2020</year>
@@ -3464,7 +3464,7 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cocoa2e2pt" cloneof="cocoa2e1" romof="cocoa2e1">
+	<game name="cocoa2e2pt" cloneof="cocoa2e2" romof="cocoa2e2">
 		<comment>Homebrew, Supporter Edition</comment>
 		<description>Cocoa 2, 24 Hour Parsley People - Episode 2 (Portuguese) (128K) (HB)</description>
 		<year>2020</year>
@@ -3475,7 +3475,7 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cocoa2e2sp" cloneof="cocoa2e1" romof="cocoa2e1">
+	<game name="cocoa2e2sp" cloneof="cocoa2e2" romof="cocoa2e2">
 		<comment>Homebrew, Supporter Edition</comment>
 		<description>Cocoa 2, 24 Hour Parsley People - Episode 2 (Spanish) (128K) (HB)</description>
 		<year>2020</year>
@@ -3486,7 +3486,7 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cocoa2e3" cloneof="cocoa2e1" romof="cocoa2e1">
+	<game name="cocoa2e3" romof="spec128">
 		<comment>Homebrew, Supporter Edition</comment>
 		<description>Cocoa 2, 24 Hour Parsley People - Episode 3 (English) (128K) (HB)</description>
 		<year>2020</year>
@@ -3497,7 +3497,7 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cocoa2e3pt" cloneof="cocoa2e1" romof="cocoa2e1">
+	<game name="cocoa2e3pt" cloneof="cocoa2e3" romof="cocoa2e3">
 		<comment>Homebrew, Supporter Edition</comment>
 		<description>Cocoa 2, 24 Hour Parsley People - Episode 3 (Portuguese) (128K) (HB)</description>
 		<year>2020</year>
@@ -3508,7 +3508,7 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cocoa2e3sp" cloneof="cocoa2e1" romof="cocoa2e1">
+	<game name="cocoa2e3sp" cloneof="cocoa2e3" romof="cocoa2e3">
 		<comment>Homebrew, Supporter Edition</comment>
 		<description>Cocoa 2, 24 Hour Parsley People - Episode 3 (Spanish) (128K) (HB)</description>
 		<year>2020</year>

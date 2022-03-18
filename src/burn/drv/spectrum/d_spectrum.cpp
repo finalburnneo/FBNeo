@@ -35026,7 +35026,7 @@ STDROMPICKEXT(SpecCocoa2e2, SpecCocoa2e2, Spec128)
 STD_ROM_FN(SpecCocoa2e2)
 
 struct BurnDriver BurnSpecCocoa2e2 = {
-	"spec_cocoa2e2", "spec_cocoa2e1", "spec_spec128", NULL, "2020",
+	"spec_cocoa2e2", NULL, "spec_spec128", NULL, "2020",
 	"Cocoa 2, 24 Hour Parsley People - Episode 2 (English) (128K) (HB)\0", "Supporter Edition", "Minilop", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
@@ -35045,7 +35045,7 @@ STDROMPICKEXT(SpecCocoa2e2pt, SpecCocoa2e2pt, Spec128)
 STD_ROM_FN(SpecCocoa2e2pt)
 
 struct BurnDriver BurnSpecCocoa2e2pt = {
-	"spec_cocoa2e2pt", "spec_cocoa2e1", "spec_spec128", NULL, "2020",
+	"spec_cocoa2e2pt", "spec_cocoa2e2", "spec_spec128", NULL, "2020",
 	"Cocoa 2, 24 Hour Parsley People - Episode 2 (Portuguese) (128K) (HB)\0", "Supporter Edition", "Minilop", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
@@ -35064,7 +35064,7 @@ STDROMPICKEXT(SpecCocoa2e2sp, SpecCocoa2e2sp, Spec128)
 STD_ROM_FN(SpecCocoa2e2sp)
 
 struct BurnDriver BurnSpecCocoa2e2sp = {
-	"spec_cocoa2e2sp", "spec_cocoa2e1", "spec_spec128", NULL, "2020",
+	"spec_cocoa2e2sp", "spec_cocoa2e2", "spec_spec128", NULL, "2020",
 	"Cocoa 2, 24 Hour Parsley People - Episode 2 (Spanish) (128K) (HB)\0", "Supporter Edition", "Minilop", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
@@ -35083,7 +35083,7 @@ STDROMPICKEXT(SpecCocoa2e3, SpecCocoa2e3, Spec128)
 STD_ROM_FN(SpecCocoa2e3)
 
 struct BurnDriver BurnSpecCocoa2e3 = {
-	"spec_cocoa2e3", "spec_cocoa2e1", "spec_spec128", NULL, "2020",
+	"spec_cocoa2e3", NULL, "spec_spec128", NULL, "2020",
 	"Cocoa 2, 24 Hour Parsley People - Episode 3 (English) (128K) (HB)\0", "Supporter Edition", "Minilop", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
@@ -35102,7 +35102,7 @@ STDROMPICKEXT(SpecCocoa2e3pt, SpecCocoa2e3pt, Spec128)
 STD_ROM_FN(SpecCocoa2e3pt)
 
 struct BurnDriver BurnSpecCocoa2e3pt = {
-	"spec_cocoa2e3pt", "spec_cocoa2e1", "spec_spec128", NULL, "2020",
+	"spec_cocoa2e3pt", "spec_cocoa2e3", "spec_spec128", NULL, "2020",
 	"Cocoa 2, 24 Hour Parsley People - Episode 3 (Portuguese) (128K) (HB)\0", "Supporter Edition", "Minilop", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
@@ -35121,7 +35121,7 @@ STDROMPICKEXT(SpecCocoa2e3sp, SpecCocoa2e3sp, Spec128)
 STD_ROM_FN(SpecCocoa2e3sp)
 
 struct BurnDriver BurnSpecCocoa2e3sp = {
-	"spec_cocoa2e3sp", "spec_cocoa2e1", "spec_spec128", NULL, "2020",
+	"spec_cocoa2e3sp", "spec_cocoa2e3", "spec_spec128", NULL, "2020",
 	"Cocoa 2, 24 Hour Parsley People - Episode 3 (Spanish) (128K) (HB)\0", "Supporter Edition", "Minilop", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,

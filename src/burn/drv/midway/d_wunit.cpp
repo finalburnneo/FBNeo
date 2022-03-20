@@ -495,6 +495,7 @@ static struct BurnDIPInfo WwfmaniaDIPList[]=
 
 STDDIPINFO(Wwfmania)
 
+
 // Mortal Kombat 3 (rev 2.1)
 static struct BurnRomInfo mk3RomDesc[] = {
 	{ "mk321u54.bin",	0x080000, 0x9e344401, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010

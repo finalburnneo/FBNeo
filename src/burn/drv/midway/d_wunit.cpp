@@ -546,7 +546,6 @@ struct BurnDriver BurnDrvMk3 = {
 
 
 // Mortal Kombat 3 (rev 2.0)
-
 static struct BurnRomInfo mk3r20RomDesc[] = {
 	{ "mk320u54.bin",	0x080000, 0x453da302, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "mk320u63.bin",	0x080000, 0xf8dc0600, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -597,7 +596,6 @@ struct BurnDriver BurnDrvMk3r20 = {
 
 
 // Mortal Kombat 3 (rev 1.0)
-
 static struct BurnRomInfo mk3r10RomDesc[] = {
 	{ "mk310u54.bin",	0x080000, 0x41829228, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "mk310u63.bin",	0x080000, 0xb074e1e8, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -648,7 +646,6 @@ struct BurnDriver BurnDrvMk3r10 = {
 
 
 // Mortal Kombat 3 (rev 1 chip label p4.0)
-
 static struct BurnRomInfo mk3p40RomDesc[] = {
 	{ "mk3p40.u54",		0x080000, 0x4dfb0748, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "mk3p40.u63",		0x080000, 0xf25a8083, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -699,7 +696,6 @@ struct BurnDriver BurnDrvMk3p40 = {
 
 
 // Ultimate Mortal Kombat 3 (rev 1.2)
-
 static struct BurnRomInfo umk3RomDesc[] = {
 	{ "l1.2_mortal_kombat_3_u54_ultimate.u54",	0x080000, 0x712b4db6, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "l1.2_mortal_kombat_3_u63_ultimate.u63",	0x080000, 0x6d301faf, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -752,7 +748,6 @@ struct BurnDriver BurnDrvUmk3 = {
 
 
 // Ultimate Mortal Kombat 3 (rev 1.1)
-
 static struct BurnRomInfo umk3r11RomDesc[] = {
 	{ "l1.1_mortal_kombat_3_u54_ultimate.u54",	0x080000, 0x8bb27659, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "l1.1_mortal_kombat_3_u63_ultimate.u63",	0x080000, 0xea731783, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -805,7 +800,6 @@ struct BurnDriver BurnDrvUmk3r11 = {
 
 
 // Ultimate Mortal Kombat 3 (rev 1.0)
-
 static struct BurnRomInfo umk3r10RomDesc[] = {
 	{ "l1.0_mortal_kombat_3_u54_ultimate.u54",	0x080000, 0xdfd735da, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "l1.0_mortal_kombat_3_u63_ultimate.u63",	0x080000, 0x2dff0c83, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -857,7 +851,6 @@ struct BurnDriver BurnDrvUmk3r10 = {
 };
 
 // Ultimate Mortal Kombat 3 Tournament Edition 2.0.042 (August 2018)
-
 static struct BurnRomInfo umk3teRomDesc[] = {
 	{ "umk3te.u54",	0x080000, 0xd0df2866, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "umk3te.u63",	0x080000, 0x42314fb4, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -910,7 +903,6 @@ struct BurnDriver BurnDrvUmk3te = {
 
 
 // Ultimate Mortal Kombat 3 Uk (2021-07-20)
-
 static struct BurnRomInfo umk3ukRomDesc[] = {
 	{ "umk3uk-u54.bin",			0x080000, 0xbc509bce, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "umk3uk-u63.bin",			0x080000, 0x2f900a03, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -968,7 +960,6 @@ struct BurnDriver BurnDrvUmk3uk = {
 
 
 // Ultimate Mortal Kombat 3 Cup Edition (2020-12-01)
-
 static struct BurnRomInfo umk3ucRomDesc[] = {
 	{ "umk3uc-u54.bin",			0x080000, 0x5010d92d, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "umk3uc-u63.bin",			0x080000, 0xc5342423, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1024,67 +1015,65 @@ struct BurnDriver BurnDrvUmk3uc = {
 	400, 256, 4, 3
 };
 
-// Ultimate Mortal Kombat 3 Plus (Hack, Beta 1)
+// Ultimate Mortal Kombat 3 Plus (Hack, Beta 2)
 // Author: zpaul2fresh8
+static struct BurnRomInfo umk3pb2RomDesc[] = {
+	{ "umk3plusu54.bin",									0x080000, 0x1C538F78, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "umk3plusu63.bin",									0x080000, 0x9E55130E, 1 | BRF_PRG | BRF_ESS }, //  1
 
-static struct BurnRomInfo umk3pb1RomDesc[] = {
-	{ "umk3plus_beta1.u54",	                    0x080000, 0xa46ee73c, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
-	{ "umk3plus_beta1.u63",	                    0x080000, 0x4f200db2, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "umk3plus-u2.bin",									0x100000, 0x2C7F4A1D, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
+	{ "l1_mortal_kombat_3_u3_music_spch.u3",				0x100000, 0x856fe411, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "l1_mortal_kombat_3_u4_music_spch.u4",				0x100000, 0x428a406f, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "l1_mortal_kombat_3_u5_music_spch.u5",				0x100000, 0x3b98a09f, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "l2.0_mortal_kombat_3_u2_ultimate.u2",	0x100000, 0x3838cfe5, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
-	{ "l1_mortal_kombat_3_u3_music_spch.u3",	0x100000, 0x856fe411, 2 | BRF_PRG | BRF_ESS }, //  3
-	{ "l1_mortal_kombat_3_u4_music_spch.u4",	0x100000, 0x428a406f, 2 | BRF_PRG | BRF_ESS }, //  4
-	{ "l1_mortal_kombat_3_u5_music_spch.u5",	0x100000, 0x3b98a09f, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "l1_mortal_kombat_3_u133_game_rom.u133",				0x100000, 0x79b94667, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
+	{ "l1_mortal_kombat_3_u132_game_rom.u132",				0x100000, 0x13e95228, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
+	{ "l1_mortal_kombat_3_u131_game_rom.u131",				0x100000, 0x41001e30, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
+	{ "l1_mortal_kombat_3_u130_game_rom.u130",				0x100000, 0x49379dd7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
 
-	{ "l1_mortal_kombat_3_u133_game_rom.u133",	0x100000, 0x79b94667, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
-	{ "l1_mortal_kombat_3_u132_game_rom.u132",	0x100000, 0x13e95228, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
-	{ "l1_mortal_kombat_3_u131_game_rom.u131",	0x100000, 0x41001e30, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
-	{ "l1_mortal_kombat_3_u130_game_rom.u130",	0x100000, 0x49379dd7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
+	{ "l1_mortal_kombat_3_u129_game_rom.u129",				0x100000, 0xa8b41803, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10
+	{ "l1_mortal_kombat_3_u128_game_rom.u128",				0x100000, 0xb410d72f, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
+	{ "l1_mortal_kombat_3_u127_game_rom.u127",				0x100000, 0xbd985be7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
+	{ "l1_mortal_kombat_3_u126_game_rom.u126",				0x100000, 0xe7c32cf4, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
 
-	{ "l1_mortal_kombat_3_u129_game_rom.u129",	0x100000, 0xa8b41803, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10
-	{ "l1_mortal_kombat_3_u128_game_rom.u128",	0x100000, 0xb410d72f, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
-	{ "l1_mortal_kombat_3_u127_game_rom.u127",	0x100000, 0xbd985be7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
-	{ "l1_mortal_kombat_3_u126_game_rom.u126",	0x100000, 0xe7c32cf4, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
-
-	{ "l1_mortal_kombat_3_u125_game_rom.u125",	0x100000, 0x9a52227e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14
-	{ "l1_mortal_kombat_3_u124_game_rom.u124",	0x100000, 0x5c750ebc, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
-	{ "l1_mortal_kombat_3_u123_game_rom.u123",	0x100000, 0xf0ab88a8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
-	{ "l1_mortal_kombat_3_u122_game_rom.u122",	0x100000, 0x9b87cdac, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
+	{ "l1_mortal_kombat_3_u125_game_rom.u125",				0x100000, 0x9a52227e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14
+	{ "l1_mortal_kombat_3_u124_game_rom.u124",				0x100000, 0x5c750ebc, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
+	{ "l1_mortal_kombat_3_u123_game_rom.u123",				0x100000, 0xf0ab88a8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
+	{ "l1_mortal_kombat_3_u122_game_rom.u122",				0x100000, 0x9b87cdac, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
 
 	{ "mortal_kombat_iii_ultimate_u121_video_image.u121",	0x100000, 0xcc4b95db, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
 	{ "mortal_kombat_iii_ultimate_u120_video_image.u120",	0x100000, 0x1c8144cd, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
 	{ "mortal_kombat_iii_ultimate_u119_video_image.u119",	0x100000, 0x5f10c543, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
 	{ "mortal_kombat_iii_ultimate_u118_video_image.u118",	0x100000, 0xde0c4488, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
 	
-	{ "umk-u117.bin",	                        0x080000, 0x52ee547e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 0) }, // 22
-	{ "umk-u116.bin",	                        0x080000, 0xf6df5c98, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 1) }, // 23
-	{ "umk-u115.bin",	                        0x080000, 0xe003a51b, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 2) }, // 24
-	{ "umk-u114.bin",	                        0x080000, 0xb8504598, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 3) }, // 25
+	{ "umk3plus-u117.bin",									0x080000, 0x52EE547E, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 0) }, // 22
+	{ "umk3plus-u116.bin",									0x080000, 0xF6DF5C98, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 1) }, // 23
+	{ "umk3plus-u115.bin",									0x080000, 0xE003A51B, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 2) }, // 24
+	{ "umk3plus-u114.bin",									0x080000, 0xB8504598, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 3) }, // 25
 
 	{ "mortal_kombat_iii_ultimate_u113_video_image.u113",	0x100000, 0x99d74a1e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 0) }, // 26
 	{ "mortal_kombat_iii_ultimate_u112_video_image.u112",	0x100000, 0xb5a46488, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 27
 	{ "mortal_kombat_iii_ultimate_u111_video_image.u111",	0x100000, 0xa87523c8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 28
 	{ "mortal_kombat_iii_ultimate_u110_video_image.u110",	0x100000, 0x0038f205, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 29
 	
-	{ "463_mk3_ultimate.u64", 0x1009, 0x4f425218, 0 | BRF_OPT },
+	{ "463_mk3_ultimate.u64",								0x1009, 0x4f425218, 0 | BRF_OPT },
 };
 
-STD_ROM_PICK(umk3pb1)
-STD_ROM_FN(umk3pb1)
+STD_ROM_PICK(umk3pb2)
+STD_ROM_FN(umk3pb2)
 
-struct BurnDriver BurnDrvUmk3pb1 = {
-	"umk3pb1", "umk3", NULL, NULL, "2019",
-	"Ultimate Mortal Kombat 3 Plus (Hack, Beta 1)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
+struct BurnDriver BurnDrvUmk3pb2 = {
+	"umk3pb2", "umk3", NULL, NULL, "2022",
+	"Ultimate Mortal Kombat 3 PLUS (BETA 2)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
-	NULL, umk3pb1RomInfo, umk3pb1RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
+	NULL, umk3pb2RomInfo, umk3pb2RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
 };
 
 
 // 2 On 2 Open Ice Challenge (rev 1.21)
-
 static struct BurnRomInfo openiceRomDesc[] = {
 	{ "open_ice_l1.21.u54",	0x080000, 0xe4225284, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "open_ice_l1.21.u63",	0x080000, 0x97d308a3, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1131,7 +1120,6 @@ struct BurnDriver BurnDrvOpenice = {
 
 // 2 On 2 Open Ice Challenge (rev 1.2A)
 /* PCB had alternate ROM labels showing the dates & checksums */
-
 static struct BurnRomInfo openiceaRomDesc[] = {
 	{ "open_ice_781c_r1.2a.u54",	0x080000, 0x63296053, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "open_ice_6937_r1.2a.u63",	0x080000, 0x04441034, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1177,7 +1165,6 @@ struct BurnDriver BurnDrvOpenicea = {
 
 
 // NBA Hangtime (ver L1.3 10/10/96)
-
 static struct BurnRomInfo nbahangtRomDesc[] = {
 	{ "l1.3_nba_hangtime_u_54_game_rom.u54",	0x080000, 0xfd9ccca2, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "l1.3_nba_hangtime_u_63_game_rom.u63",	0x080000, 0x57de886f, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1230,7 +1217,6 @@ struct BurnDriver BurnDrvNbahangt = {
 
 
 // NBA Hangtime (ver M1.3 10/10/96)
-
 static struct BurnRomInfo nbahangtm13RomDesc[] = {
 	{ "m1.3_nba_hangtime_u_54_game_rom.u54",	0x080000, 0x3ee3a9f4, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "m1.3_nba_hangtime_u_63_game_rom.u63",	0x080000, 0x42e6aeca, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1283,7 +1269,6 @@ struct BurnDriver BurnDrvNbahangtm13 = {
 
 
 // NBA Hangtime (ver L1.2 8/29/96)
-
 static struct BurnRomInfo nbahangtl12RomDesc[] = {
 	{ "l1.2_nba_hangtime_u_54_game_rom.u54",	0x080000, 0xc90dc3cd, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "l1.2_nba_hangtime_u_63_game_rom.u63",	0x080000, 0x1883c461, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1336,7 +1321,6 @@ struct BurnDriver BurnDrvNbahangtl12 = {
 
 
 // NBA Hangtime (ver M1.2 8/29/96)
-
 static struct BurnRomInfo nbahangtm12RomDesc[] = {
 	{ "m1.2_nba_hangtime_u_54_game_rom.u54",	0x080000, 0x3be47f64, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "m1.2_nba_hangtime_u_63_game_rom.u63",	0x080000, 0xba4344ae, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1389,7 +1373,6 @@ struct BurnDriver BurnDrvNbahangtm12 = {
 
 
 // NBA Hangtime (ver L1.1 4/16/96)
-
 static struct BurnRomInfo nbahangtl11RomDesc[] = {
 	{ "l1.1_nba_hangtime_u_54_game_rom.u54",	0x080000, 0xc2875d98, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "l1.1_nba_hangtime_u_63_game_rom.u63",	0x080000, 0x6f4728c3, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1442,7 +1425,6 @@ struct BurnDriver BurnDrvNbahangtl11 = {
 
 
 // NBA Hangtime (ver M1.1 4/16/96)
-
 static struct BurnRomInfo nbahangtm11RomDesc[] = {
 	{ "m1.1_nba_hangtime_u_54_game_rom.u54",	0x080000, 0x113b37f4, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "m1.1_nba_hangtime_u_63_game_rom.u63",	0x080000, 0xbeaa3e92, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1496,11 +1478,12 @@ struct BurnDriver BurnDrvNbahangtm11 = {
 
 // NBA Maximum Hangtime (ver L1.03 06/09/97)
 /*
-The NBA Maximum Hangtime sets are a program ROM update for NBA Hangtime.  The MAX sets use all the same Music/SPCH ROMs,
-  Image ROMs and even the same security PIC chip.
+The NBA Maximum Hangtime sets are a program ROM update for NBA Hangtime.
+The MAX sets use all the same Music/SPCH ROMs,
+Image ROMs and even the same security PIC chip.
 The new MAX sets boast a 1997 player line up and during the atrack mode state: "All NBA team Rosters accurate as of 11/1/96"
 There are known "M" versions (EX: MAX HANGTIME - VER M1.0 11/08/96 ), but it's not known what the differences are between
-  those and a standard "L" version.  In fact the ROM labels specifically state they are "L" Version ROMs
+those and a standard "L" version.  In fact the ROM labels specifically state they are "L" Version ROMs
 */
 
 static struct BurnRomInfo nbamhtRomDesc[] = {
@@ -1555,7 +1538,6 @@ struct BurnDriver BurnDrvNbamht = {
 
 
 // NBA Maximum Hangtime (ver L1.0 11/08/96)
-
 static struct BurnRomInfo nbamhtl10RomDesc[] = {
 	{ "l1.0_maximum_hangtime_u54_l_version.u54",	0x080000, 0xdfb6b3ae, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "l1.0_maximum_hangtime_u63_l_version.u63",	0x080000, 0x78da472c, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1608,7 +1590,6 @@ struct BurnDriver BurnDrvNbamhtl10 = {
 
 
 // NBA Maximum Hangtime (ver M1.0 11/08/96)
-
 static struct BurnRomInfo nbamhtm10RomDesc[] = {
 	{ "m1.0_maximum_hangtime_u54_m_version.u54",	0x080000, 0xe4e665d5, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "m1.0_maximum_hangtime_u63_m_version.u63",	0x080000, 0x51cfda55, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1661,7 +1642,6 @@ struct BurnDriver BurnDrvNbamhtm10 = {
 
 
 // NBA Maximum Hangtime (ver L0.9 10/30/96)
-
 static struct BurnRomInfo nbamhtpRomDesc[] = {
 	{ "l0.9_maximum_hangtime_u54_l_version.u54",	0x080000, 0x0fbed60e, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "l0.9_maximum_hangtime_u63_l_version.u63",	0x080000, 0xa064645a, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1714,7 +1694,6 @@ struct BurnDriver BurnDrvNbamhtp = {
 
 
 // Rampage: World Tour (rev 1.3)
-
 static struct BurnRomInfo rmpgwtRomDesc[] = {
 	{ "1.3_rampage_world_u54_game.u54",			0x080000, 0x2a8f6e1e, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "1.3_rampage_world_u63_game.u63",			0x080000, 0x403ae41e, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1762,7 +1741,6 @@ struct BurnDriver BurnDrvRmpgwt = {
 
 
 // Rampage: World Tour (rev 1.1)
-
 static struct BurnRomInfo rmpgwt11RomDesc[] = {
 	{ "1.1_rampage_world_u54_game.u54",			0x080000, 0x3aa514eb, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "1.1_rampage_world_u63_game.u63",			0x080000, 0x031c908f, 1 | BRF_PRG | BRF_ESS }, //  1

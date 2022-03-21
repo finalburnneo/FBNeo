@@ -7032,7 +7032,7 @@ struct BurnDriver BurnDrvRedhawki = {
 };
 
 
-// Red Hawk (horizontal, Spain)
+// Red Hawk (horizontal, Spain, set 1)
 
 static struct BurnRomInfo redhawksRomDesc[] = {
 	{ "2.bin",			0x020000, 0x8b427ef8, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -7053,11 +7053,52 @@ STD_ROM_FN(redhawks)
 
 struct BurnDriver BurnDrvRedhawks = {
 	"redhawks", "stagger1", NULL, NULL, "1997",
-	"Red Hawk (horizontal, Spain)\0", NULL, "Afega (Hae Dong Corp license)", "NMK16",
+	"Red Hawk (horizontal, Spain, set 1)\0", NULL, "Afega (Hae Dong Corp license)", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, redhawksRomInfo, redhawksRomName, NULL, NULL, NULL, NULL, CommonInputInfo, Stagger1DIPInfo,
 	Stagger1Init, AfegaExit, AfegaFrame, RedhawkiDraw, DrvScan, NULL, 0x300,
+	256, 224, 4, 3
+};
+
+
+// Red Hawk (horizontal, Spain, set 2)
+
+static struct BurnRomInfo redhawksaRomDesc[] = {
+	{ "2.bin",			0x020000, 0x0e428cbb, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "3.bin",			0x020000, 0xe944627f, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "1.bin",			0x010000, 0x5d8cf28e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+
+	{ "4.bin",			0x080000, 0xaafb3cc4, 4 | BRF_GRA },           //  3 Tiles
+
+	{ "7.bin",			0x080000, 0x1a8c8560, 5 | BRF_GRA },           //  4 Characters
+	{ "6.bin",			0x080000, 0x533cb5f2, 5 | BRF_GRA },           //  5
+
+	{ "5.bin",			0x040000, 0xe911ce33, 6 | BRF_SND },           //  6 OKI1 Samples
+};
+
+STD_ROM_PICK(redhawksa)
+STD_ROM_FN(redhawksa)
+
+static INT32 RedhawksaInit()
+{
+	INT32 nRet = AfegaInit(Stagger1LoadCallback, pAfegaZ80Callback, 1);
+
+	if (nRet == 0) {
+		decryptcode(0x40000, 16, 17, 15, 14, 13);
+	}
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvRedhawksa = {
+	"redhawksa", "stagger1", NULL, NULL, "1997",
+	"Red Hawk (horizontal, Spain, set 2)\0", NULL, "Afega (Hae Dong Corp license)", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, redhawksaRomInfo, redhawksaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, Stagger1DIPInfo,
+	RedhawksaInit, AfegaExit, AfegaFrame, RedhawkiDraw, DrvScan, NULL, 0x300,
 	256, 224, 4, 3
 };
 

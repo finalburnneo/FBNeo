@@ -88,7 +88,9 @@ Write a report with details on the issue and your platform.
 Your hardware is probably too slow to run the game with normal settings. Try the following :
 * Check if there is a speedhack dipswitch in the core options, set it to "yes".
 * Try disabling rewind, runahead, or any other retroarch setting known for increasing overhead.
-* Try setting a value for frameskip in core options (note : "Fixed" frameskip is recommended, the other methods don't seem to be nearly as efficient).
+* Try enabling "Threaded Video" in retroarch settings.
+* Try changing "Max swapchain images" in retroarch settings (higher values gave a small performance benefit on my setup).
+* Try setting a value for frameskip in core options (note : "Fixed" frameskip is recommended, the other methods don't seem to be nearly as reliable).
 * Try lowering CPU clock in core options (note : some games don't support this feature).
 * Try lowering audio settings in the core options.
 * A last resort on arm platforms would be to enable cyclone in core options, however keep in mind some games will stop working from this, so it's recommended to only enable it per-game if it's actually helping with performance on that specific game.

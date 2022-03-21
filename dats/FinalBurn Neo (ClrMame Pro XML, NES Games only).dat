@@ -1460,6 +1460,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="battlecity">
+		<description>Battle City (Japan)</description>
+		<year>1985</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="BattleCity (Japan).nes" size="24592" crc="f599a07e"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="battleformula">
 		<description>Battle Formula (Japan)</description>
 		<year>1991</year>
@@ -1508,14 +1516,6 @@
 		<year>1990</year>
 		<manufacturer>Absolute</manufacturer>
 		<rom name="Battle Tank (USA).nes" size="65552" crc="49c9ff12"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="battlecity">
-		<description>BattleCity (Japan)</description>
-		<year>1985</year>
-		<manufacturer>Namco</manufacturer>
-		<rom name="BattleCity (Japan).nes" size="24592" crc="f599a07e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -1651,6 +1651,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="binarycity" cloneof="battlecity" romof="battlecity">
+		<comment>Hack</comment>
+		<description>Binary City (GlobalHack)</description>
+		<year>2009</year>
+		<manufacturer>AnS</manufacturer>
+		<rom name="Binary City GlobalHack (2009)(AnS).nes" size="40976" crc="84f56a94"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="binaryland">
 		<description>Binary Land (Japan)</description>
 		<year>1985</year>
@@ -1668,20 +1677,20 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="biohazardc" cloneof="biohazard" romof="biohazard">
+		<description>Bio Hazard (China) (Unl)</description>
+		<year>2003</year>
+		<manufacturer>Waixing</manufacturer>
+		<rom name="Bio Hazard (China).nes" size="1048592" crc="b4c8012d"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="biohazard">
 		<comment>Hack</comment>
 		<description>Bio Hazard (T-Eng)</description>
 		<year>2018</year>
 		<manufacturer>pacnsacdave</manufacturer>
 		<rom name="Bio Hazard (T-Eng).nes" size="1048592" crc="4dffd969"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="biohazardc" cloneof="biohazard" romof="biohazard">
-		<description>Bio Hazard (Unl) (China)</description>
-		<year>2003</year>
-		<manufacturer>Waixing</manufacturer>
-		<rom name="Bio Hazard (China).nes" size="1048592" crc="b4c8012d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -2181,7 +2190,7 @@
 	</game>
 	<game name="buzzwaldog">
 		<comment>Prototype</comment>
-		<description>Buzz &amp; Waldog (Unl) (USA) (Prototype)</description>
+		<description>Buzz &amp; Waldog (USA) (Unl) (Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Inovation Tech.</manufacturer>
 		<rom name="Buzz &amp; Waldog (USA) (Proto) (Unl).nes" size="262160" crc="1587bc5f"/>
@@ -2214,7 +2223,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="caltron6in1">
-		<description>Caltron 6-in-1 (Unl) (USA)</description>
+		<description>Caltron 6-in-1 (USA) (Unl)</description>
 		<year>1992</year>
 		<manufacturer>Caltron</manufacturer>
 		<rom name="Caltron 6-in-1 (USA).nes" size="393232" crc="f78e68db"/>
@@ -2222,7 +2231,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="caltron9in1">
-		<description>Caltron 9-in-1 (Unl) (USA)</description>
+		<description>Caltron 9-in-1 (USA) (Unl)</description>
 		<year>1992</year>
 		<manufacturer>Caltron</manufacturer>
 		<rom name="Caltron 9-in-1 (USA).nes" size="786448" crc="9c529e3b"/>
@@ -3630,6 +3639,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="dicktracy">
+		<description>Dick Tracy (USA)</description>
+		<year>1990</year>
+		<manufacturer>Bandai</manufacturer>
+		<rom name="Dick Tracy (USA)(1990)(Bandai).nes" size="131088" crc="e431136d"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="diehardc" cloneof="diehard" romof="diehard">
 		<comment>Hack</comment>
 		<description>Die Hard (Hack, Spanish v1.1)</description>
@@ -4147,7 +4164,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragonballz5">
-		<description>Dragon Ball Z 5 (Unl) (China)</description>
+		<description>Dragon Ball Z 5 (China) (Unl)</description>
 		<year>19??</year>
 		<manufacturer>Rex Game Soft</manufacturer>
 		<rom name="Dragon Ball Z 5 (China).nes" size="786448" crc="1f2b86ea"/>
@@ -4256,20 +4273,20 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="dragonknifec" cloneof="dragonknife" romof="dragonknife">
+		<description>Dragon Knife (China) (Unl)</description>
+		<year>1993</year>
+		<manufacturer>Waixing</manufacturer>
+		<rom name="Dragon Knife (Chinese).nes" size="524304" crc="eb5dbb86"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="dragonknife">
 		<comment>Hack</comment>
 		<description>Dragon Knife (T-Eng)</description>
 		<year>2014</year>
 		<manufacturer>pacnsacdave</manufacturer>
 		<rom name="Dragon Knife (T-Eng).nes" size="524304" crc="142f21a6"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="dragonknifec" cloneof="dragonknife" romof="dragonknife">
-		<description>Dragon Knife (Unl) (Chinese)</description>
-		<year>1993</year>
-		<manufacturer>Waixing</manufacturer>
-		<rom name="Dragon Knife (Chinese).nes" size="524304" crc="eb5dbb86"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -5356,7 +5373,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="finalfanvii" cloneof="finalfanviiadvch" romof="finalfanviiadvch">
-		<description>Final Fantasy VII (Unl) (China)</description>
+		<description>Final Fantasy VII (China) (Unl)</description>
 		<year>2005</year>
 		<manufacturer>ShenZhen Nanjing Technology</manufacturer>
 		<rom name="Final Fantasy VII (China).nes" size="2097168" crc="e5bf8f0c"/>
@@ -5431,9 +5448,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="firedragon">
-		<description>Fire Dragon (Asia)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Fire Dragon (Asia) (Unl)</description>
+		<year>199?</year>
+		<manufacturer>Gamtec</manufacturer>
 		<rom name="Fire Dragon (Asia).nes" size="40976" crc="8ac54f30"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5449,16 +5466,17 @@
 	<game name="fireembc" cloneof="fireemb" romof="fireemb">
 		<comment>Hack</comment>
 		<description>Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (T-Chi)</description>
-		<year>1990</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>20??</year>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (T-Chi).nes" size="655376" crc="a3126533"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="fireemb">
+		<comment>Hack</comment>
 		<description>Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2011</year>
+		<manufacturer>Quirino</manufacturer>
 		<rom name="Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (T-Eng).nes" size="393232" crc="dc848ddd"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5475,15 +5493,16 @@
 		<comment>Hack</comment>
 		<description>Fire Emblem Gaiden (T-Chi, v2.0)</description>
 		<year>2021</year>
-		<manufacturer>Nintendo</manufacturer>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="Fire Emblem Gaiden (T-Chi, v2.0).nes" size="663568" crc="1df6fb24"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="fireembgai">
+		<comment>Hack</comment>
 		<description>Fire Emblem Gaiden (T-Eng)</description>
-		<year>1992</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2009</year>
+		<manufacturer>Artemis251</manufacturer>
 		<rom name="Fire Emblem Gaiden (T-Eng).nes" size="393232" crc="ed74e1fa"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5506,8 +5525,8 @@
 	</game>
 	<game name="fishstory">
 		<description>Fish Story (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>200?</year>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="Fish Story (Unl).nes" size="49168" crc="afe5a331"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5522,8 +5541,8 @@
 	</game>
 	<game name="fivedays">
 		<description>Five Days (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2005</year>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="Five Days (Unl).nes" size="24592" crc="4d8858e4"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5622,8 +5641,8 @@
 	</game>
 	<game name="flyinghero">
 		<description>Flying Hero (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1989</year>
+		<manufacturer>ASCII</manufacturer>
 		<rom name="Flying Hero (Japan).nes" size="131088" crc="358277ef"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5661,9 +5680,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="freefall">
+		<comment>Prototype</comment>
 		<description>Free Fall (USA) (Proto)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>199?</year>
+		<manufacturer>Color Dreams</manufacturer>
 		<rom name="Free Fall (USA) (Proto).nes" size="131088" crc="913ec888"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5761,9 +5781,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="fuzzicalfighter">
+		<comment>Hack</comment>
 		<description>Fuzzical Fighter (T-Eng)</description>
-		<year>1991</year>
-		<manufacturer>Sigma Enterprises</manufacturer>
+		<year>2000</year>
+		<manufacturer>WakdHacks</manufacturer>
 		<rom name="Fuzzical Fighter (T-Eng).nes" size="262160" crc="7bbbacc3"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5785,9 +5806,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="gaiapolis">
-		<description>Gaiapolis (Asia)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Gaiapolis (Asia) (Unl)</description>
+		<year>1990</year>
+		<manufacturer>Sachen</manufacturer>
 		<rom name="Gaiapolis (Asia).nes" size="393232" crc="838dce25"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5813,6 +5834,15 @@
 		<year>1984</year>
 		<manufacturer>Namco</manufacturer>
 		<rom name="Galaxian (Japan).nes" size="24592" crc="6e4d873b"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="galaxiane" cloneof="galaxian" romof="galaxian">
+		<comment>Hack</comment>
+		<description>Galaxian Enhanced (Hack)</description>
+		<year>2016</year>
+		<manufacturer>TimeLord</manufacturer>
+		<rom name="Galaxian Enhanced Hack v1.0 (2016)(TimeLord).nes" size="24592" crc="47c2da76"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -6251,16 +6281,16 @@
 	</game>
 	<game name="goldenaxeiii">
 		<description>Golden Axe III (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2005</year>
+		<manufacturer>Waixing</manufacturer>
 		<rom name="Golden Axe III (Unl).nes" size="524304" crc="9cdbf17b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="goldenfive">
-		<description>Golden Five (Pegasus 5-in-1)(Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Golden Five (Pegasus 5-in-1) (Unl)</description>
+		<year>199?</year>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="Golden Five (Pegasus 5-in-1)(Unl).nes" size="1310736" crc="6e8a695f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8515,6 +8545,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="lanmaster">
+		<comment>Homebrew</comment>
+		<description>Lan Master (HB)</description>
+		<year>2011</year>
+		<manufacturer>Shiru</manufacturer>
+		<rom name="Lan Master (2011)(Shiru).nes" size="40976" crc="32d113b5"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="larry">
 		<comment>Homebrew</comment>
 		<description>Larry (HB)</description>
@@ -8798,6 +8837,15 @@
 		<year>1988</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Life Force (USA).nes" size="131088" crc="f7b55696"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="lightsout">
+		<comment>Homebrew</comment>
+		<description>Lights Out (HB)</description>
+		<year>2017</year>
+		<manufacturer>Mika Haarahiltunen</manufacturer>
+		<rom name="Lights Out (2017)(Mika Haarahiltunen).nes" size="24592" crc="3d4ab74b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -9508,9 +9556,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="marioadventure" cloneof="smb3" romof="smb3">
+		<comment>Hack</comment>
 		<description>Mario Adventure (Hack)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2004</year>
+		<manufacturer>DahrkDaiz</manufacturer>
 		<rom name="Mario Adventure (Hack).nes" size="426000" crc="2e6d3fdc"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12550,6 +12599,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="royalflush" cloneof="smb3" romof="smb3">
+		<comment>Hack</comment>
+		<description>Royal Flush - Princess Sidestory (GlobalHack)</description>
+		<year>2013</year>
+		<manufacturer>Darkdata</manufacturer>
+		<rom name="Royal Flush - Princess Sidestory GlobalHack (2013)(Darkdata).nes" size="393232" crc="95e67f56"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="rushnattackc" cloneof="rushnattack" romof="rushnattack">
 		<comment>Hack</comment>
 		<description>Rush'n Attack (Hack, Spanish v1.1)</description>
@@ -13369,6 +13427,31 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="solomonskeyj" cloneof="solomonskey" romof="solomonskey">
+		<description>Solomon no Kagi (Japan)</description>
+		<year>1986</year>
+		<manufacturer>Tecmo</manufacturer>
+		<rom name="Solomon no Kagi (Jpn)(1986)(Tecmo).nes" size="65552" crc="013ed497"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="solonokagi2" cloneof="firenice" romof="firenice">
+		<description>Solomon no Kagi 2 - Coolmintou Kyuushutsu Sakusen (Japan)</description>
+		<year>1992</year>
+		<manufacturer>Tecmo</manufacturer>
+		<rom name="Solomon no Kagi 2 - Coolmintou Kyuushutsu Sakusen (Jpn)(1992)(Tecmo).nes" size="262160" crc="f033b827"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="solonokagi2h" cloneof="firenice" romof="firenice">
+		<comment>Hack, 100 new levels</comment>
+		<description>Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.1)</description>
+		<year>2021</year>
+		<manufacturer>FoxyShadow</manufacturer>
+		<rom name="Solomon no Kagi 2 - Kitsune Attacks! Hack v1.1 (2021)(FoxyShadow).nes" size="262160" crc="a85d178a"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="solomonskey">
 		<description>Solomon's Key (USA)</description>
 		<year>1987</year>
@@ -14165,17 +14248,19 @@
 		<driver status="good"/>
 	</game>
 	<game name="smb3defedi" cloneof="smb3" romof="smb3">
+		<comment>Hack</comment>
 		<description>Super Mario Bros. 3 Definitive Edition (Hack)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2020</year>
+		<manufacturer>ActionGamer</manufacturer>
 		<rom name="Super Mario Bros. 3 Definitive Edition (Hack).nes" size="524304" crc="2a59f8c5"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="smb3mi" cloneof="smb3" romof="smb3">
+		<comment>Hack</comment>
 		<description>Super Mario Bros. 3Mix (Hack)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2014</year>
+		<manufacturer>Southbird</manufacturer>
 		<rom name="Super Mario Bros. 3Mix (Hack).nes" size="786448" crc="16b3fe50"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -16102,7 +16187,7 @@
 	<game name="warinthegulf">
 		<description>War in the Gulf (Unl)</description>
 		<year>1991</year>
-		<manufacturer>Gluk Video</manufacturer>
+		<manufacturer>Gluk Video - Mega Soft</manufacturer>
 		<rom name="War in the Gulf (Unl).nes" size="262160" crc="e45d5d88"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -16430,6 +16515,15 @@
 		<year>1985</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Wrecking Crew (World).nes" size="40976" crc="658d4fd4"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="wreckingcrewhd" cloneof="wreckingcrew" romof="wreckingcrew">
+		<comment>Hack</comment>
+		<description>Wrecking Crew HD (Hack)</description>
+		<year>2021</year>
+		<manufacturer>Scremer</manufacturer>
+		<rom name="Wrecking Crew HD Hack (2021)(Scremer).nes" size="40976" crc="8f732885"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

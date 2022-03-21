@@ -953,6 +953,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="attwrest" romof="spectrum">
+		<description>American Tag-Team Wrestling (48K)</description>
+		<year>1992</year>
+		<manufacturer>Zeppelin Games</manufacturer>
+		<rom name="American Tag-Team Wrestling 48K (1992)(Zeppelin Games).z80" size="38767" crc="afb4c0cc"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="amidar" romof="spectrum">
 		<comment>Homebrew</comment>
 		<description>Amidar (Spanish) (48K) (HB)</description>
@@ -1102,7 +1111,7 @@
 	<game name="aquasquad" romof="spectrum">
 		<description>Aquasquad (48K)</description>
 		<year>1988</year>
-		<manufacturer>Atlantis</manufacturer>
+		<manufacturer>Atlantis Software</manufacturer>
 		<rom name="Aquasquad (1988)(Atlantis).tap" size="55215" crc="8d07b136"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -1787,12 +1796,33 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="battlegrid" romof="spectrum">
+		<comment>Homebrew, Press 'I' to show the instructions</comment>
+		<description>Battle Grid (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>El Dr. Gusman</manufacturer>
+		<rom name="Battle Grid 48K (2022)(El Dr. Gusman).tap" size="47062" crc="d9b40afa"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="battleships" romof="spectrum">
 		<description>Battle Ships (48K)</description>
 		<year>1987</year>
 		<manufacturer>Hit-Pak</manufacturer>
 		<rom name="Battle Ships 48K (1987)(Hit-Pak).z80" size="38283" crc="fb32ab1a"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="btltank3d" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Battle Tank 3D and some Crazy Aliens (128K) (HB)</description>
+		<year>2014</year>
+		<manufacturer>Gabriele Amore</manufacturer>
+		<rom name="Battle Tank 3D and some Crazy Aliens 128K (2014)(Gabriele Amore).tap" size="20678" crc="69d1cf0a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1884,6 +1914,16 @@
 		<rom name="zx128_2a_1.rom" merge="zx128_2a_1.rom" size="16384" crc="a7916b3f"/>
 		<rom name="zx128_2a_2.rom" merge="zx128_2a_2.rom" size="16384" crc="c9a0b748"/>
 		<rom name="zx128_2a_3.rom" merge="zx128_2a_3.rom" size="16384" crc="b88fd6e3"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bedlam" romof="spec128">
+		<description>Bedlam (128K)</description>
+		<year>1988</year>
+		<manufacturer>Go!</manufacturer>
+		<rom name="Bedlam 128K (1988)(Go!).tap" size="106920" crc="733eb4ae"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3991,6 +4031,16 @@
 		<rom name="Crimbo 128K (2010)(Little Shop of Pixels).tap" size="44707" crc="8b519cdf"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="crimebust" romof="spectrum">
+		<comment>'Q', 'W' and Space to set options</comment>
+		<description>Crime Busters Featuring Bennie the Burglar (48K)</description>
+		<year>1988</year>
+		<manufacturer>Players Software</manufacturer>
+		<rom name="Crime Busters Featuring Bennie the Burglar (1988)(Players Software).tap" size="88832" crc="6fa4d165"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -7903,6 +7953,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="iceslidz" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Ice Slider Z (48K) (HB)</description>
+		<year>2015</year>
+		<manufacturer>EgoTrip</manufacturer>
+		<rom name="Ice Slider Z 48K (2015)(EgoTrip).tap" size="25840" crc="810f2cae"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="icetemple" romof="spectrum">
 		<description>Ice Temple, The (48K)</description>
 		<year>1986</year>
@@ -9305,6 +9365,15 @@
 		<year>2021</year>
 		<manufacturer>Zosya Entertainment</manufacturer>
 		<rom name="Lava 16K (2021)(Zosya Ent.).tap" size="8366" crc="a307f634"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lazertag" romof="spectrum">
+		<description>Lazer Tag (48K)</description>
+		<year>1988</year>
+		<manufacturer>Go!</manufacturer>
+		<rom name="Lazer Tag 48K (1988)(Go!).tap" size="29696" crc="a88a379d"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11027,6 +11096,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="neighbours" romof="spectrum">
+		<comment>Set '3 SINCLAIR' to use controller</comment>
+		<description>Neighbours (48K)</description>
+		<year>1992</year>
+		<manufacturer>Impulze</manufacturer>
+		<rom name="Neighbours 48K (1992)(Impulze).tap" size="52388" crc="1a852016"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="neloquqoen" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Nelo &amp; Quqo and the Last Butifarreisson (English) (128K) (HB)</description>
@@ -12471,6 +12550,27 @@
 		<year>1992</year>
 		<manufacturer>Zeppelin Games</manufacturer>
 		<rom name="Q10 Tank Buster 48K (1992)(Zeppelin Games).tap" size="43523" crc="1fad3a24"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="qbox128" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Qbox (128K) (HB)</description>
+		<year>2017</year>
+		<manufacturer>Sergio Llata Pena</manufacturer>
+		<rom name="Qbox 128K (2017)(Sergio Llata Pena).tap" size="53804" crc="f8e131b2"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="qbox48" cloneof="qbox128" romof="qbox128">
+		<comment>Homebrew</comment>
+		<description>Qbox (48K) (HB)</description>
+		<year>2017</year>
+		<manufacturer>Sergio Llata Pena</manufacturer>
+		<rom name="Qbox 48K (2017)(Sergio Llata Pena).tap" size="47711" crc="386bb09d"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -14041,6 +14141,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="skmoll" romof="spec128">
+		<description>Sharkey's Moll (128K)</description>
+		<year>1991</year>
+		<manufacturer>Zeppelin Games</manufacturer>
+		<rom name="Sharkey's Moll 128K (1991)(Zeppelin Games).tap" size="44068" crc="c831bf3f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="shinobi" romof="spec128">
 		<description>Shinobi (128K)</description>
 		<year>1989</year>
@@ -14861,6 +14971,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="stackup" romof="spectrum">
+		<description>Stack Up (48K)</description>
+		<year>1991</year>
+		<manufacturer>Zeppelin Games</manufacturer>
+		<rom name="Stack Up 48K (1991)(Zeppelin Games).tap" size="43582" crc="f07a8de4"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="stainlesssteel" romof="spectrum">
 		<description>Stainless Steel (48K)</description>
 		<year>1986</year>
@@ -15243,6 +15362,25 @@
 		<rom name="Subbuteo - The Computer Game 128K (1990)(Electronic Zoo).tap" size="76987" crc="9a6211f8"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="submarmk" romof="spectrum">
+		<comment>Homebrew, B: scuba diver - S: sonar</comment>
+		<description>Submarine! Remake (48K) (HB, v1.2)</description>
+		<year>2022</year>
+		<manufacturer>je7ebel</manufacturer>
+		<rom name="Submarine! Remake v1.2 (2022)(je7ebel).tap" size="46865" crc="0038288e"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="submariner" romof="spectrum">
+		<description>Submariner (48K)</description>
+		<year>1988</year>
+		<manufacturer>Atlantis Software</manufacturer>
+		<rom name="Submariner 48K (1988)(Atlantis).tap" size="37754" crc="bdaf3289"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -17033,7 +17171,7 @@
 	</game>
 	<game name="wwasp" romof="spec128">
 		<comment>Homebrew</comment>
-		<description>Willy The Wasp (HB)</description>
+		<description>Willy The Wasp (48K-128K) (HB)</description>
 		<year>2014</year>
 		<manufacturer>The Death Squad</manufacturer>
 		<rom name="Willy The Wasp (2014)(The Death Squad).tap" size="41193" crc="030e8442"/>
@@ -17044,7 +17182,7 @@
 	</game>
 	<game name="wwasp2" romof="spec128">
 		<comment>Homebrew</comment>
-		<description>Willy The Wasp 2 (HB)</description>
+		<description>Willy The Wasp 2 (128K) (HB)</description>
 		<year>2014</year>
 		<manufacturer>The Death Squad</manufacturer>
 		<rom name="Willy The Wasp 2 (2014)(The Death Squad).tap" size="64604" crc="3e8b70fb"/>
@@ -17401,6 +17539,25 @@
 		<year>1985</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Zaxxon (1985)(U.S. Gold).tap" size="49889" crc="6d169dbf"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zen" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>ZEN (48K) (HB)</description>
+		<year>2014</year>
+		<manufacturer>Einar Saukas</manufacturer>
+		<rom name="ZEN 48K (2014)(Einar Saukas).tap" size="40412" crc="3a9f650e"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zenji" romof="spectrum">
+		<description>Zenji (48K)</description>
+		<year>1984</year>
+		<manufacturer>Activision</manufacturer>
+		<rom name="Zenji 48K (1984)(Activision).tap" size="23232" crc="62e604e5"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

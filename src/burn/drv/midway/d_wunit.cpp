@@ -1019,10 +1019,10 @@ struct BurnDriver BurnDrvUmk3uc = {
 // Ultimate Mortal Kombat 3 Plus (Hack, Beta 2)
 // Author: zpaul2fresh8
 static struct BurnRomInfo umk3pb2RomDesc[] = {
-	{ "umk3plusu54.bin",									0x080000, 0x1C538F78, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
-	{ "umk3plusu63.bin",									0x080000, 0x9E55130E, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "l1.2_mortal_kombat_3_u54_ultimate.u54",				0x080000, 0x54A5359F, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "l1.2_mortal_kombat_3_u63_ultimate.u63",				0x080000, 0xFB83320D, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "umk3plus-u2.bin",									0x100000, 0x2C7F4A1D, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
+	{ "l2.0_mortal_kombat_3_u2_ultimate.u2",				0x100000, 0x2C7F4A1D, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
 	{ "l1_mortal_kombat_3_u3_music_spch.u3",				0x100000, 0x856fe411, 2 | BRF_PRG | BRF_ESS }, //  3
 	{ "l1_mortal_kombat_3_u4_music_spch.u4",				0x100000, 0x428a406f, 2 | BRF_PRG | BRF_ESS }, //  4
 	{ "l1_mortal_kombat_3_u5_music_spch.u5",				0x100000, 0x3b98a09f, 2 | BRF_PRG | BRF_ESS }, //  5

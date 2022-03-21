@@ -21675,15 +21675,15 @@ struct BurnDriver BurnDrvnes_filthyktcn = {
 };
 
 static struct BurnRomInfo nes_tapewormRomDesc[] = {
-	{ "Tapeworm Disco Puzzle (2021)(Lowtek Games).nes",          524304, 0xb71d9fa1, BRF_ESS | BRF_PRG },
+	{ "Tapeworm Disco Puzzle v05 (2022)(Lowtek Games).nes",          524304, 0x3cf42935, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_tapeworm)
 STD_ROM_FN(nes_tapeworm)
 
 struct BurnDriver BurnDrvnes_tapeworm = {
-	"nes_tapeworm", NULL, NULL, NULL, "2021",
-	"Tapeworm Disco Puzzle (HB)\0", NULL, "Lowtek Games", "Miscellaneous",
+	"nes_tapeworm", NULL, NULL, NULL, "2021-22",
+	"Tapeworm Disco Puzzle (HB, v05)\0", NULL, "Lowtek Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_tapewormRomInfo, nes_tapewormRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -33846,8 +33846,8 @@ STD_ROM_PICK(nes_gameparty)
 STD_ROM_FN(nes_gameparty)
 
 struct BurnDriver BurnDrvnes_gameparty = {
-	"nes_gameparty", NULL, NULL, NULL, "1989?",
-	"Game Party (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_gameparty", NULL, NULL, NULL, "1990",
+	"Game Party (Japan)\0", NULL, "Coconuts", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MINIGAMES, 0,
 	NESGetZipName, nes_gamepartyRomInfo, nes_gamepartyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -33880,10 +33880,10 @@ STD_ROM_PICK(nes_ganbaregoemon2)
 STD_ROM_FN(nes_ganbaregoemon2)
 
 struct BurnDriver BurnDrvnes_ganbaregoemon2 = {
-	"nes_ganbaregoemon2", NULL, NULL, NULL, "1989",
-	"Ganbare Goemon 2 (T-Eng)\0", NULL, "Konami", "Miscellaneous",
+	"nes_ganbaregoemon2", NULL, NULL, NULL, "2011",
+	"Ganbare Goemon 2 (T-Eng)\0", NULL, "Stardust Crusaders", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_ACTION | GBF_RPG, 0,
 	NESGetZipName, nes_ganbaregoemon2RomInfo, nes_ganbaregoemon2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -33914,10 +33914,10 @@ STD_ROM_PICK(nes_ganbagoegai)
 STD_ROM_FN(nes_ganbagoegai)
 
 struct BurnDriver BurnDrvnes_ganbagoegai = {
-	"nes_ganbagoegai", NULL, NULL, NULL, "1989?",
-	"Ganbare Goemon Gaiden - Kieta Ougon Kiseru (T-eng)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_ganbagoegai", NULL, NULL, NULL, "2017",
+	"Ganbare Goemon Gaiden - Kieta Ougon Kiseru (T-eng)\0", NULL, "Adventurous Translations", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_ganbagoegaiRomInfo, nes_ganbagoegaiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -33948,10 +33948,10 @@ STD_ROM_PICK(nes_ganbagoegai2)
 STD_ROM_FN(nes_ganbagoegai2)
 
 struct BurnDriver BurnDrvnes_ganbagoegai2 = {
-	"nes_ganbagoegai2", NULL, NULL, NULL, "1992",
-	"Ganbare Goemon Gaiden 2 - Tenka no Zaihou (T-eng)\0", NULL, "Konami", "Miscellaneous",
+	"nes_ganbagoegai2", NULL, NULL, NULL, "2019",
+	"Ganbare Goemon Gaiden 2 - Tenka no Zaihou (T-eng)\0", NULL, "Adventurous Translations", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_ganbagoegai2RomInfo, nes_ganbagoegai2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -33982,10 +33982,10 @@ STD_ROM_PICK(nes_ganbagoe)
 STD_ROM_FN(nes_ganbagoe)
 
 struct BurnDriver BurnDrvnes_ganbagoe = {
-	"nes_ganbagoe", NULL, NULL, NULL, "1986",
-	"Ganbare Goemon! - Karakuri Douchuu (T-Eng)\0", NULL, "Konami", "Miscellaneous",
+	"nes_ganbagoe", NULL, NULL, NULL, "2010",
+	"Ganbare Goemon! - Karakuri Douchuu (T-Eng)\0", NULL, "Spinner 8 and friends", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ADV | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_ADV | GBF_ACTION, 0,
 	NESGetZipName, nes_ganbagoeRomInfo, nes_ganbagoeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -34033,10 +34033,10 @@ STD_ROM_PICK(nes_gansosai)
 STD_ROM_FN(nes_gansosai)
 
 struct BurnDriver BurnDrvnes_gansosai = {
-	"nes_gansosai", NULL, NULL, NULL, "1986",
-	"Ganso Saiyuuki - Super Monkey Daibouken (T-Eng)\0", NULL, "Vap", "Miscellaneous",
+	"nes_gansosai", NULL, NULL, NULL, "2015",
+	"Ganso Saiyuuki - Super Monkey Daibouken (T-Eng)\0", NULL, "GAFF Translations", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_gansosaiRomInfo, nes_gansosaiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -34050,8 +34050,8 @@ STD_ROM_PICK(nes_gardenwar)
 STD_ROM_FN(nes_gardenwar)
 
 struct BurnDriver BurnDrvnes_gardenwar = {
-	"nes_gardenwar", NULL, NULL, NULL, "1989?",
-	"Garden War (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_gardenwar", NULL, NULL, NULL, "200?",
+	"Garden War (Unl)\0", NULL, "Unknown", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_gardenwarRomInfo, nes_gardenwarRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -34067,8 +34067,8 @@ STD_ROM_PICK(nes_garfi)
 STD_ROM_FN(nes_garfi)
 
 struct BurnDriver BurnDrvnes_garfi = {
-	"nes_garfi", NULL, NULL, NULL, "1989?",
-	"Garfield - A Week of Garfield (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_garfi", NULL, NULL, NULL, "1989",
+	"Garfield no Isshukan - A Week of Garfield (Japan)\0", NULL, "Towa Chiki", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_garfiRomInfo, nes_garfiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -34237,8 +34237,8 @@ STD_ROM_PICK(nes_genuinemonkeyc)
 STD_ROM_FN(nes_genuinemonkeyc)
 
 struct BurnDriver BurnDrvnes_genuinemonkeyc = {
-	"nes_genuinemonkeyc", "nes_genuinemonkey", NULL, NULL, "1989?",
-	"Genuine Monkey (China)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_genuinemonkeyc", "nes_genuinemonkey", NULL, NULL, "1999",
+	"Genuine Monkey (China) (Unl)\0", NULL, "Waixing", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_genuinemonkeycRomInfo, nes_genuinemonkeycRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -34254,10 +34254,10 @@ STD_ROM_PICK(nes_genuinemonkey)
 STD_ROM_FN(nes_genuinemonkey)
 
 struct BurnDriver BurnDrvnes_genuinemonkey = {
-	"nes_genuinemonkey", NULL, NULL, NULL, "1989?",
-	"Genuine Monkey (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_genuinemonkey", NULL, NULL, NULL, "2017",
+	"Genuine Monkey (T-Eng)\0", NULL, "pacnsacdave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_genuinemonkeyRomInfo, nes_genuinemonkeyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -34305,8 +34305,8 @@ STD_ROM_PICK(nes_ghostlion)
 STD_ROM_FN(nes_ghostlion)
 
 struct BurnDriver BurnDrvnes_ghostlion = {
-	"nes_ghostlion", NULL, NULL, NULL, "1989?",
-	"Ghost Lion (USA)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_ghostlion", NULL, NULL, NULL, "1992",
+	"Ghost Lion, Legend of the (USA)\0", NULL, "Kemco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_ghostlionRomInfo, nes_ghostlionRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -34356,10 +34356,10 @@ STD_ROM_PICK(nes_ghostsngoblinsh)
 STD_ROM_FN(nes_ghostsngoblinsh)
 
 struct BurnDriver BurnDrvnes_ghostsngoblinsh = {
-	"nes_ghostsngoblinsh", "nes_ghostsngoblins", NULL, NULL, "1989?",
-	"Ghosts'n Goblins (USA)(Hack, Very Easy Mode v2.0)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_ghostsngoblinsh", "nes_ghostsngoblins", NULL, NULL, "2019",
+	"Ghosts'n Goblins (USA)(Hack, Easy Mode v2.0)\0", NULL, "chronix", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_ghostsngoblinshRomInfo, nes_ghostsngoblinshRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -34492,10 +34492,10 @@ STD_ROM_PICK(nes_godsla)
 STD_ROM_FN(nes_godsla)
 
 struct BurnDriver BurnDrvnes_godsla = {
-	"nes_godsla", NULL, NULL, NULL, "1989?",
-	"God Slayer - Haruka Tenkuu no Sonata (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_godsla", "nes_crystalis", NULL, NULL, "1990",
+	"God Slayer - Haruka Tenkuu no Sonata (Japan)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_godslaRomInfo, nes_godslaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -39218,10 +39218,10 @@ STD_ROM_PICK(nes_makaimuraarcade)
 STD_ROM_FN(nes_makaimuraarcade)
 
 struct BurnDriver BurnDrvnes_makaimuraarcade = {
-	"nes_makaimuraarcade", "nes_ghostsngoblins", NULL, NULL, "1989?",
-	"Makaimura Arcade (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_makaimuraarcade", "nes_ghostsngoblins", NULL, NULL, "2010",
+	"Makaimura Arcade (Hack)\0", NULL, "2CH", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_makaimuraarcadeRomInfo, nes_makaimuraarcadeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

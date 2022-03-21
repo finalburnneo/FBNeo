@@ -1109,6 +1109,13 @@ void retro_run()
 		// Video is required when "Enable Video" bit is set
 		// or the game has the BDF_RUNAHEAD_DRAWSYNC flag
 		bEnableVideo = (nAudioVideoEnable & 1) || (BurnDrvGetFlags() & BDF_RUNAHEAD_DRAWSYNC);
+#if 0
+		// It needs to be set in a runahead context for the "runahead" frame (in single instance, it should be the frame that run the video, not sure about 2-instances)
+		// but retroarch will only tell us if video is required or not (which will always be true in a non-runahead context), it won't tell if runahead is enabled
+		// It would fix usage of hiscore.dat and cheat.dat, and possibly remove jitter with emulated gun
+		// note that the hack that force disable hiscores for fast savestates (see retro_serialize and other related functions) would also need to be removed
+		bBurnRunAheadFrame = 1;
+#endif
 
 		// Audio status is more complex:
 		// - If "Hard Disable Audio" bit is set, then audio

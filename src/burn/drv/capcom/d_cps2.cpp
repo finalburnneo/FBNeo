@@ -1887,7 +1887,7 @@ static struct BurnRomInfo CybotsuRomDesc[] = {
 STD_ROM_PICK(Cybotsu)
 STD_ROM_FN(Cybotsu)
 
-static struct BurnRomInfo CybotamRomDesc[] = {
+static struct BurnRomInfo CybotsamRomDesc[] = {
 	{ "cybe.03",       0x080000, 0x52e1a8a4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "cybe.04",       0x080000, 0x627be72a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "cyb.05",        0x080000, 0xec40408e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },

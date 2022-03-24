@@ -3948,7 +3948,7 @@ struct BurnDriver BurnSpecDtsupertest128 = {
 // Dan Dare - Pilot of the Future (48K)
 
 static struct BurnRomInfo SpecdandareRomDesc[] = {
-	{ "Dan Dare - Pilot of the Future (1986)(Virgin Games).z80", 0x0a5ac, 0x9378e2c3, BRF_ESS | BRF_PRG },
+	{ "Dan Dare - Pilot of the Future (1986)(Virgin Games).z80", 42412, 0x9378e2c3, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specdandare, Specdandare, Spectrum)
@@ -3967,7 +3967,7 @@ struct BurnDriver BurnSpecdandare = {
 // Dan Dare II - Mekon's Revenge (48K)
 
 static struct BurnRomInfo Specdandare2RomDesc[] = {
-	{ "Dan Dare II - Mekon's Revenge (1988)(Virgin Games).z80", 0x09f88, 0xcbd5a032, BRF_ESS | BRF_PRG },
+	{ "Dan Dare II - Mekon's Revenge (1988)(Virgin Games).z80", 44497, 0x03159016, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specdandare2, Specdandare2, Spectrum)
@@ -3986,7 +3986,7 @@ struct BurnDriver BurnSpecdandare2 = {
 // Dan Dare III - The Escape (48K)
 
 static struct BurnRomInfo Specdandare3RomDesc[] = {
-	{ "Dan Dare III - The Escape (1990)(Virgin Games).z80", 0x0a6a4, 0xad0767cb, BRF_ESS | BRF_PRG },
+	{ "Dan Dare III - The Escape (1990)(Virgin Games).z80", 42660, 0xad0767cb, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specdandare3, Specdandare3, Spectrum)
@@ -4746,7 +4746,7 @@ struct BurnDriver BurnSpecEmotion = {
 // Enduro Racer (128K)
 
 static struct BurnRomInfo SpecenduroRomDesc[] = {
-	{ "Enduro Racer (1987)(Activision)[128K].z80", 0x0a738, 0xf9d78fc5, BRF_ESS | BRF_PRG },
+	{ "Enduro Racer (1987)(Activision).tap", 49670, 0x0e34f8bf, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specenduro, Specenduro, Spec128)
@@ -5601,7 +5601,7 @@ struct BurnDriver BurnSpecheadheel = {
 // Heart Broken (48K)
 
 static struct BurnRomInfo SpechrtbbrknRomDesc[] = {
-	{ "Heart Broken (1989)(Atlantis Software).z80", 0x0a391, 0xed8b78f5, BRF_ESS | BRF_PRG },
+	{ "Heart Broken 48K (1989)(Atlantis Software).tap", 54856, 0x34ed13a7, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Spechrtbbrkn, Spechrtbbrkn, Spectrum)
@@ -5867,7 +5867,7 @@ struct BurnDriver BurnSpecinteagn = {
 // Ivan 'Ironman' Stewart's Super Off Road Racer (128K)
 
 static struct BurnRomInfo SpecironmanRomDesc[] = {
-	{ "Ivan 'Ironman' Stewart's Super Off Road Racer (1990)(Virgin Games)[128K].z80", 0x0932d, 0x1b98e2aa, BRF_ESS | BRF_PRG },
+	{ "Ivan 'Ironman' Stewart's Super Off Road Racer 128K (1990)(Virgin Games).tap", 40051, 0x68cf1ab9, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specironman, Specironman, Spec128)
@@ -7368,7 +7368,7 @@ struct BurnDriver BurnSpecpaperboy = {
 // Paperboy 2 (48K)
 
 static struct BurnRomInfo Specpaperby2RomDesc[] = {
-	{ "Paperboy 2 (1992)(Mindscape International).z80", 0x09bbe, 0x523b2b3b, BRF_ESS | BRF_PRG },
+	{ "Paperboy 2 (1992)(Mindscape International).z80", 39870, 0x523b2b3b, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specpaperby2, Specpaperby2, Spectrum)
@@ -7406,7 +7406,7 @@ struct BurnDriver BurnSpecpassshot = {
 // Peter Shilton's Handball Maradona (48K)
 
 static struct BurnRomInfo SpecpshandmRomDesc[] = {
-	{ "Peter Shilton's Handball Maradona (1986)(Grandslam Entertainments).z80", 0x09dff, 0x5d4a8e4d, BRF_ESS | BRF_PRG },
+	{ "Peter Shilton's Handball Maradona (1986)(Grandslam Entertainments).z80", 40447, 0x5d4a8e4d, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specpshandm, Specpshandm, Spectrum)
@@ -7520,7 +7520,7 @@ struct BurnDriver BurnSpecphoenix = {
 // Pippo (48K)
 
 static struct BurnRomInfo SpecpippoRomDesc[] = {
-	{ "Pippo (1986)(Mastertronic).z80", 0x0b03e, 0xf63e41be, BRF_ESS | BRF_PRG },
+	{ "Pippo 48K (1986)(Mastertronic).tap", 42906, 0xbf464d08, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specpippo, Specpippo, Spectrum)
@@ -7558,7 +7558,7 @@ struct BurnDriver BurnSpecpixymicrod2 = {
 // Platoon (128K)
 
 static struct BurnRomInfo SpecplatoonRomDesc[] = {
-	{ "Platoon (1988)(Ocean)[128K].z80", 0x1a121, 0xaa4d4d13, BRF_ESS | BRF_PRG },
+	{ "Platoon (1988)(Ocean)[128K].z80", 106785, 0xaa4d4d13, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specplatoon, Specplatoon, Spec128)
@@ -7577,7 +7577,7 @@ struct BurnDriver BurnSpecplatoon = {
 // Plotting (128K)
 
 static struct BurnRomInfo SpecplottingRomDesc[] = {
-	{ "Plotting (1990)(Ocean)[128K].z80", 0x09fb3, 0xdd65a0b5, BRF_ESS | BRF_PRG },
+	{ "Plotting (1990)(Ocean)[128K].z80", 40883, 0xdd65a0b5, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specplotting, Specplotting, Spec128)
@@ -35551,7 +35551,7 @@ struct BurnDriver BurnSpecZen = {
 // Bomb Bomb Buster (128K) (HB)
 
 static struct BurnRomInfo SpecBbbusterRomDesc[] = {
-	{ "Bomb Bomb Buster 128K (2022)(Packobilly).tap", 60424, 0x85246121, BRF_ESS | BRF_PRG },
+	{ "Bomb Bomb Buster 128K (2022)(Packobilly).tap", 56278, 0x041ddb4c, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBbbuster, SpecBbbuster, Spec128)
@@ -35589,7 +35589,7 @@ struct BurnDriver BurnSpecRabidmower = {
 // Rubinho Cucaracha (48K) (HB)
 
 static struct BurnRomInfo SpecRubcucaRomDesc[] = {
-	{ "Rubinho Cucaracha 48K (2022)(Zosya Ent.).tap", 46052, 0x538f9f2b, BRF_ESS | BRF_PRG },
+	{ "Rubinho Cucaracha 48K (2022)(Zosya Ent.).tap", 46052, 0xf73a1a84, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecRubcuca, SpecRubcuca, Spectrum)

@@ -2345,6 +2345,17 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bbbuster" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Bomb Bomb Buster (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Packobilly</manufacturer>
+		<rom name="Bomb Bomb Buster 128K (2022)(Packobilly).tap" size="56278" crc="041ddb4c"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bombjack_48" romof="spectrum">
 		<description>Bomb Jack (48K)</description>
 		<year>1986</year>
@@ -2728,6 +2739,17 @@
 		<manufacturer>Dro Soft</manufacturer>
 		<rom name="Budokan - The Martial Spirit 48K (1991)(Dro Soft).tap" size="110405" crc="7672dc9d"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bbwws" romof="spec128">
+		<comment>Set 'Sinclair port 1' to use controller</comment>
+		<description>Buffalo Bill's Wild West Show (128K)</description>
+		<year>1989</year>
+		<manufacturer>Tynesoft</manufacturer>
+		<rom name="Buffalo Bill's Wild West Show 128K (1989)(Tynesoft).tap" size="131092" crc="fc253b18"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3410,6 +3432,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="circusgames" romof="spectrum">
+		<description>Circus Games (48K)</description>
+		<year>1988</year>
+		<manufacturer>Tynesoft</manufacturer>
+		<rom name="Circus Games 48K (1988)(Tynesoft).tap" size="151897" crc="4d953275"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="cjiiiusa" romof="spec128">
 		<comment>In main menu: SPACE to choose, ENTER to select</comment>
 		<description>CJ In the USA (128K)</description>
@@ -3807,6 +3838,15 @@
 		<rom name="Cookie (1983)(Ultimate Play The Game)(16K).tap" size="15646" crc="fffe62ca"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="copout" romof="spectrum">
+		<description>Cop-Out (48K)</description>
+		<year>1986</year>
+		<manufacturer>Mikro-Gen</manufacturer>
+		<rom name="Cop-Out 48K (1986)(Mikro-Gen).tap" size="49468" crc="27dd134e"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4350,7 +4390,7 @@
 		<description>Dan Dare II - Mekon's Revenge (48K)</description>
 		<year>1988</year>
 		<manufacturer>Virgin Games</manufacturer>
-		<rom name="Dan Dare II - Mekon's Revenge (1988)(Virgin Games).z80" size="40840" crc="cbd5a032"/>
+		<rom name="Dan Dare II - Mekon's Revenge (1988)(Virgin Games).z80" size="44497" crc="03159016"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5679,7 +5719,7 @@
 		<description>Enduro Racer (128K)</description>
 		<year>1987</year>
 		<manufacturer>Activision</manufacturer>
-		<rom name="Enduro Racer (1987)(Activision)[128K].z80" size="42808" crc="f9d78fc5"/>
+		<rom name="Enduro Racer (1987)(Activision).tap" size="49670" crc="0e34f8bf"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -6355,6 +6395,15 @@
 		<rom name="Foxx Fights Back (1988)(Image Works).tap" size="47395" crc="7c9ae4b5"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="franknstein" romof="spectrum">
+		<description>Frank N Stein (48K)</description>
+		<year>1984</year>
+		<manufacturer>PSS</manufacturer>
+		<rom name="Frank N Stein 48K (1984)(PSS).tap" size="47860" crc="3ff60912"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -7456,7 +7505,7 @@
 		<description>Heart Broken (48K)</description>
 		<year>1989</year>
 		<manufacturer>Atlantis Software</manufacturer>
-		<rom name="Heart Broken (1989)(Atlantis Software).z80" size="41873" crc="ed8b78f5"/>
+		<rom name="Heart Broken 48K (1989)(Atlantis Software).tap" size="54856" crc="34ed13a7"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -8503,7 +8552,7 @@
 		<description>Ivan 'Ironman' Stewart's Super Off Road Racer (128K)</description>
 		<year>1990</year>
 		<manufacturer>Virgin Games</manufacturer>
-		<rom name="Ivan 'Ironman' Stewart's Super Off Road Racer (1990)(Virgin Games)[128K].z80" size="37677" crc="1b98e2aa"/>
+		<rom name="Ivan 'Ironman' Stewart's Super Off Road Racer 128K (1990)(Virgin Games).tap" size="40051" crc="68cf1ab9"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -12148,7 +12197,7 @@
 		<description>Pippo (48K)</description>
 		<year>1986</year>
 		<manufacturer>Mastertronic</manufacturer>
-		<rom name="Pippo (1986)(Mastertronic).z80" size="45118" crc="f63e41be"/>
+		<rom name="Pippo 48K (1986)(Mastertronic).tap" size="42906" crc="bf464d08"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -12693,6 +12742,17 @@
 		<manufacturer>ZX Computing</manufacturer>
 		<rom name="Rabbit Rabbit 16K (1983)(ZX Computing).tap" size="4937" crc="c741bf71"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="rabidmower" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Rabid Mower (128K) (HB)</description>
+		<year>2015</year>
+		<manufacturer>kas29</manufacturer>
+		<rom name="Rabid Mower 128K (2015)(kas29).tap" size="23329" crc="bfd089f6"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -13550,6 +13610,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="rubcuca" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Rubinho Cucaracha (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Zosya Entertainment</manufacturer>
+		<rom name="Rubinho Cucaracha 48K (2022)(Zosya Ent.).tap" size="46052" crc="f73a1a84"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ruffreddy" romof="spec128">
 		<description>Ruff and Reddy in the Space Adventure (128K)</description>
 		<year>1990</year>
@@ -13657,6 +13727,16 @@
 		<rom name="S.T.U.N. Runner 128K (1990)(Domark).tap" size="60868" crc="3aec4137"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sabotage" romof="spectrum">
+		<comment>Select icon 'S' to use controller</comment>
+		<description>Sabotage (48K)</description>
+		<year>1988</year>
+		<manufacturer>Zeppelin Games</manufacturer>
+		<rom name="Sabotage 48K (1988)(Zeppelin Games).tap" size="43408" crc="b83fb136"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -14182,6 +14262,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="sidearms" romof="spectrum">
+		<description>Side Arms (48K)</description>
+		<year>1988</year>
+		<manufacturer>Go!</manufacturer>
+		<rom name="Side Arms 48K (1988)(Go!).z80" size="47259" crc="cb9fcf76"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sidewize" romof="spectrum">
 		<description>Sidewize (48K)</description>
 		<year>1987</year>
@@ -14232,10 +14321,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="simulprotenis" romof="spec128">
-		<description>Simulador Profesional de Tenis (Spanish) (128K)</description>
+		<description>Simulador Profesional de Tenis (Spanish) (48K-128K)</description>
 		<year>1990</year>
 		<manufacturer>Dinamic Software</manufacturer>
-		<rom name="Simulador Profesional de Tenis (1990)(Dinamic Software)(es)(128k).z80" size="44573" crc="dc939284"/>
+		<rom name="Simulador Profesional de Tenis ES 128K (1990)(Dinamic).tap" size="53988" crc="2a031f63"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -15658,6 +15747,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="superman" romof="spectrum">
+		<comment>'6', '7' and ENTER to select options</comment>
 		<description>Superman - The Man of Steel (48K)</description>
 		<year>1989</year>
 		<manufacturer>Tynesoft</manufacturer>
@@ -17709,6 +17799,16 @@
 		<year>1982</year>
 		<manufacturer>Sinclair Research Limited</manufacturer>
 		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zxwordle" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>ZX Wordle (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Adam Ainsworth</manufacturer>
+		<rom name="ZX Wordle 48K (2022)(Adam Ainsworth).tap" size="30945" crc="cab302a6"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

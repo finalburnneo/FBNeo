@@ -5865,8 +5865,8 @@
 	</game>
 	<game name="gameparty">
 		<description>Game Party (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Coconuts</manufacturer>
 		<rom name="Game Party (Japan).nes" size="262160" crc="9c744bc3"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5889,9 +5889,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ganbaregoemon2">
+		<comment>Hack</comment>
 		<description>Ganbare Goemon 2 (T-Eng)</description>
-		<year>1989</year>
-		<manufacturer>Konami</manufacturer>
+		<year>2011</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Ganbare Goemon 2 (T-Eng).nes" size="262160" crc="b2fe26c7"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5914,9 +5915,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ganbagoegai">
+		<comment>Hack</comment>
 		<description>Ganbare Goemon Gaiden - Kieta Ougon Kiseru (T-eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2017</year>
+		<manufacturer>Adventurous Translations</manufacturer>
 		<rom name="Ganbare Goemon Gaiden - Kieta Ougon Kiseru (T-eng).nes" size="524304" crc="a1c4c69e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5930,9 +5932,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ganbagoegai2">
+		<comment>Hack</comment>
 		<description>Ganbare Goemon Gaiden 2 - Tenka no Zaihou (T-eng)</description>
-		<year>1992</year>
-		<manufacturer>Konami</manufacturer>
+		<year>2019</year>
+		<manufacturer>Adventurous Translations</manufacturer>
 		<rom name="Ganbare Goemon Gaiden 2 - Tenka no Zaihou (T-eng).nes" size="524304" crc="3de94076"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5955,9 +5958,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ganbagoe">
+		<comment>Hack</comment>
 		<description>Ganbare Goemon! - Karakuri Douchuu (T-Eng)</description>
-		<year>1986</year>
-		<manufacturer>Konami</manufacturer>
+		<year>2010</year>
+		<manufacturer>Spinner 8 and friends</manufacturer>
 		<rom name="Ganbare Goemon! - Karakuri Douchuu (T-Eng).nes" size="262160" crc="83fab5ff"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5979,9 +5983,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="gansosai">
+		<comment>Hack</comment>
 		<description>Ganso Saiyuuki - Super Monkey Daibouken (T-Eng)</description>
-		<year>1986</year>
-		<manufacturer>Vap</manufacturer>
+		<year>2015</year>
+		<manufacturer>GAFF Translations</manufacturer>
 		<rom name="Ganso Saiyuuki - Super Monkey Daibouken (T-Eng).nes" size="65552" crc="f6bc9964"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5996,16 +6001,16 @@
 	</game>
 	<game name="gardenwar">
 		<description>Garden War (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>200?</year>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="Garden War (Unl).nes" size="65552" crc="588a838e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="garfi">
-		<description>Garfield - A Week of Garfield (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Garfield no Isshukan - A Week of Garfield (Japan)</description>
+		<year>1989</year>
+		<manufacturer>Towa Chiki</manufacturer>
 		<rom name="Garfield - A Week of Garfield (Japan).nes" size="163856" crc="39c68f84"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6083,17 +6088,18 @@
 		<driver status="good"/>
 	</game>
 	<game name="genuinemonkeyc" cloneof="genuinemonkey" romof="genuinemonkey">
-		<description>Genuine Monkey (China)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Genuine Monkey (China) (Unl)</description>
+		<year>1999</year>
+		<manufacturer>Waixing</manufacturer>
 		<rom name="Genuine Monkey (China).nes" size="524304" crc="c2ad9c76"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="genuinemonkey">
+		<comment>Hack</comment>
 		<description>Genuine Monkey (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2017</year>
+		<manufacturer>pacnsacdave</manufacturer>
 		<rom name="Genuine Monkey (T-Eng).nes" size="524304" crc="66f20682"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6124,9 +6130,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="ghostlion">
-		<description>Ghost Lion (USA)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Ghost Lion, Legend of the (USA)</description>
+		<year>1992</year>
+		<manufacturer>Kemco</manufacturer>
 		<rom name="Ghost Lion (USA).nes" size="262160" crc="5d83c1e5"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6157,9 +6163,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ghostsngoblinsh" cloneof="ghostsngoblins" romof="ghostsngoblins">
-		<description>Ghosts'n Goblins (USA)(Hack, Very Easy Mode v2.0)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Hack</comment>
+		<description>Ghosts'n Goblins (USA)(Hack, Easy Mode v2.0)</description>
+		<year>2019</year>
+		<manufacturer>chronix</manufacturer>
 		<rom name="Ghosts'n Goblins (USA)(Hack, Very Easy Mode v2.0).nes" size="131088" crc="66751cad"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6246,10 +6253,10 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="godsla">
+	<game name="godsla" cloneof="crystalis" romof="crystalis">
 		<description>God Slayer - Haruka Tenkuu no Sonata (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>SNK</manufacturer>
 		<rom name="God Slayer - Haruka Tenkuu no Sonata (Japan).nes" size="393232" crc="718fd0af"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9407,9 +9414,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="makaimuraarcade" cloneof="ghostsngoblins" romof="ghostsngoblins">
-		<description>Makaimura Arcade (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Hack</comment>
+		<description>Makaimura Arcade (Hack)</description>
+		<year>2010</year>
+		<manufacturer>2CH</manufacturer>
 		<rom name="Makaimura Arcade (Japan).nes" size="131088" crc="b523b441"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14700,21 +14708,21 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="tapeworm">
-		<comment>Homebrew</comment>
-		<description>Tapeworm Disco Puzzle (HB)</description>
-		<year>2021</year>
-		<manufacturer>Lowtek Games</manufacturer>
-		<rom name="Tapeworm Disco Puzzle (2021)(Lowtek Games).nes" size="524304" crc="b71d9fa1"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
 	<game name="tapewormd" cloneof="tapeworm" romof="tapeworm">
 		<comment>Homebrew</comment>
 		<description>Tapeworm Disco Puzzle (HB, Demo)</description>
 		<year>2020</year>
 		<manufacturer>Lowtek Games</manufacturer>
 		<rom name="Tapeworm Disco Puzzle (HB)(Demo).nes" size="65552" crc="30e0689f"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="tapeworm">
+		<comment>Homebrew</comment>
+		<description>Tapeworm Disco Puzzle (HB, v05)</description>
+		<year>2021-22</year>
+		<manufacturer>Lowtek Games</manufacturer>
+		<rom name="Tapeworm Disco Puzzle v05 (2022)(Lowtek Games).nes" size="524304" crc="3cf42935"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

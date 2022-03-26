@@ -6618,18 +6618,18 @@ static struct BurnRomInfo Sfz3teRomDesc[] = {
 STD_ROM_PICK(Sfz3te)
 STD_ROM_FN(Sfz3te)
 
-// Street Fighter Zero 3 Mix v0.07 (hacked by Zero800)
+// Street Fighter Zero 3 Mix v0.07a (hacked by Zero800)
 // https://sfz3mix.github.io/
 
 static struct BurnRomInfo Sfz3mixRomDesc[] = {
-	{ "sfz3mix.03",    0x080000, 0xdc369f0e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.04",    0x080000, 0x42b6a449, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.05",    0x080000, 0xd1838163, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.06",    0x080000, 0xc02b9143, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.07",    0x080000, 0x82f44dfa, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.08",    0x080000, 0xe66748e2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.09",    0x080000, 0x732d899f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.10",    0x080000, 0x89449e2b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfz3mix.03",    0x080000, 0xa2a3a0f2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfz3mix.04",    0x080000, 0x21d71a16, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfz3mix.05",    0x080000, 0xe33af008, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfz3mix.06",    0x080000, 0xfbbd8bd7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfz3mix.07",    0x080000, 0x41d5f43d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfz3mix.08",    0x080000, 0xf62eb173, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfz3mix.09",    0x080000, 0xde20ca4e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfz3mix.10",    0x080000, 0x4a5c77a4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
 	{ "sfz3mix.13m",   0x400000, 0x1b5fc5f9, CPS2_GFX | BRF_GRA },
 	{ "sfz3mix.15m",   0x400000, 0x4f9de2d9, CPS2_GFX | BRF_GRA },
@@ -11157,7 +11157,7 @@ struct BurnDriver BurnDrvCpsSfz3te = {
 
 struct BurnDriver BurnDrvCpsSfzmix = {
 	"sfz3mix", "sfa3", NULL, NULL, "2022",
-	"Street Fighter Zero 3 Mix v0.07\0", NULL, "hack", "CPS2",
+	"Street Fighter Zero 3 Mix v0.07a\0", NULL, "hack", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfz3mixRomInfo, Sfz3mixRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,

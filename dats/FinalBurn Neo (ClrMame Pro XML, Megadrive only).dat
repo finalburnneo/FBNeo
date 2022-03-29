@@ -21,7 +21,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="13mahjan">
-		<description>13 Ma Jiang - 98 Mei Shao Nu Pian (Chi)</description>
+		<description>13 Ma Jiang - 98 Mei Shao Nu Pian (Unl) (Chi)</description>
 		<year>1998</year>
 		<manufacturer>BBD</manufacturer>
 		<rom name="13 mahjong 98 (unl).bin" size="655360" crc="68b372f6"/>
@@ -45,9 +45,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="16zhan">
-		<description>16 Zhang Ma Jiang (Chi)</description>
+		<description>16 Zhang Ma Jiang (Unl) (Chi)</description>
 		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="16 zhang ma jiang (chi) (unl).bin" size="1048576" crc="36407c82"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -218,7 +218,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="action52">
-		<description>Action 52 (USA)</description>
+		<description>Action 52 (Unl) (USA)</description>
 		<year>1993</year>
 		<manufacturer>Active Enterprises</manufacturer>
 		<rom name="action 52 (usa) (unl).bin" size="2097152" crc="29ff58ae"/>
@@ -226,7 +226,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="action52a" cloneof="action52" romof="action52">
-		<description>Action 52 (USA, Alt)</description>
+		<description>Action 52 (Unl) (USA, Alt)</description>
 		<year>1993</year>
 		<manufacturer>Active Enterprises</manufacturer>
 		<rom name="action 52 (usa) (alt) (unl).bin" size="2097152" crc="8809d666"/>
@@ -459,9 +459,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="adveboy">
-		<description>Adventurous Boy - Mao Xian Xiao Zi (Chi)</description>
+		<description>Adventurous Boy - Mao Xian Xiao Zi (Unl) (Chi)</description>
 		<year>1998</year>
-		<manufacturer>&lt;unlicensed&gt; Gamtec</manufacturer>
+		<manufacturer>Gamtec</manufacturer>
 		<rom name="adventurous boy - mao xian xiao zi (chi) (unl).bin" size="524288" crc="d4403913"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -642,9 +642,9 @@
 	</game>
 	<game name="aladdin2">
 		<comment>Hack</comment>
-		<description>Aladdin II</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Aladdin II (Unl)</description>
+		<year>1998</year>
+		<manufacturer>X Boy</manufacturer>
 		<rom name="aladdin ii (unl).bin" size="2097152" crc="be5f9397"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -858,6 +858,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="agassiup" cloneof="agassi" romof="agassi">
+		<comment>Prototype</comment>
 		<description>Andre Agassi Tennis (USA, Prototype)</description>
 		<year>1992</year>
 		<manufacturer>TecMagik</manufacturer>
@@ -874,9 +875,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="animanias" cloneof="animania" romof="animania">
+		<comment>Hack</comment>
 		<description>Animaniacs (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Konami</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="animaniacs (hack, spanish).bin" size="1048576" crc="cceaf148"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -915,7 +917,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aqrenk">
-		<description>Aq Renkan Awa (Chi)</description>
+		<description>Aq Renkan Awa (Unl) (Chi)</description>
 		<year>1995</year>
 		<manufacturer>C&amp;E</manufacturer>
 		<rom name="aq renkan awa (chi) (unl).bin" size="1048576" crc="2c6cbd77"/>
@@ -1561,6 +1563,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="barbvac">
+		<comment>Prototype</comment>
 		<description>Barbie Vacation Adventure (USA, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Hi Tech Expressions</manufacturer>
@@ -1646,6 +1649,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="barkley2p" cloneof="barkley2" romof="barkley2">
+		<comment>Prototype</comment>
 		<description>Barkley Shut Up and Jam! 2 (USA, Prototype)</description>
 		<year>1995</year>
 		<manufacturer>Accolade</manufacturer>
@@ -1661,19 +1665,20 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="barver">
-		<description>Barver Battle Saga - Tai Kong Zhan Shi (Chi)</description>
-		<year>1996</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
-		<rom name="barver battle saga - tai kong zhan shi (chi) (unl).bin" size="2097152" crc="d37a37c6"/>
+	<game name="barvere" cloneof="barver" romof="barver">
+		<comment>Hack</comment>
+		<description>Barver Battle Saga - Tai Kong Zhan Shi (Hack, English)</description>
+		<year>2010</year>
+		<manufacturer>Djinn</manufacturer>
+		<rom name="barver battle saga - tai kong zhan shi (english translation).md" size="2097152" crc="34e5445f"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="barvere" cloneof="barver" romof="barver">
-		<description>Barver Battle Saga - Tai Kong Zhan Shi (Hack, English)</description>
-		<year>2010</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
-		<rom name="barver battle saga - tai kong zhan shi (english translation).md" size="2097152" crc="34e5445f"/>
+	<game name="barver">
+		<description>Barver Battle Saga - Tai Kong Zhan Shi (Unl) (Chi)</description>
+		<year>1996</year>
+		<manufacturer>Chuanpu</manufacturer>
+		<rom name="barver battle saga - tai kong zhan shi (chi) (unl).bin" size="2097152" crc="d37a37c6"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2245,7 +2250,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bibleadv">
-		<description>Bible Adventures (USA)</description>
+		<description>Bible Adventures (Unl) (USA, v5.0)</description>
 		<year>1995</year>
 		<manufacturer>Wisdom Tree</manufacturer>
 		<rom name="bible adventures (usa) (unl).bin" size="524288" crc="64446b77"/>
@@ -5275,6 +5280,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aladdinup" cloneof="aladdin" romof="aladdin">
+		<comment>Prototype</comment>
 		<description>Disney's Aladdin (USA, Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
@@ -5283,7 +5289,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="aladdinfc" cloneof="aladdin" romof="aladdin">
-		<comment>Hack</comment>
 		<description>Disney's Aladdin - Final Cut (USA)</description>
 		<year>2019</year>
 		<manufacturer>Sega</manufacturer>
@@ -7340,14 +7345,16 @@
 		<driver status="good"/>
 	</game>
 	<game name="funcars" cloneof="funcar" romof="funcar">
-		<description>Fun Car Rally (Hack, Spanish) (Prototype)</description>
+		<comment>Hack</comment>
+		<description>Fun Car Rally (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Published</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="fun car rally (hack, spanish) (prototype).bin" size="1048576" crc="d53f67c7"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="funcar">
+		<comment>Prototype</comment>
 		<description>Fun Car Rally (USA, Prototype)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
@@ -7356,7 +7363,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="funnywld">
-		<description>Funny World &amp; Balloon Boy (USA)</description>
+		<description>Funny World &amp; Balloon Boy (Unl) (USA)</description>
 		<year>1993</year>
 		<manufacturer>Realtec</manufacturer>
 		<rom name="funny world &amp; balloon boy (usa) (unl).bin" size="524288" crc="a82f05f0"/>
@@ -7400,7 +7407,7 @@
 		<comment>Hack</comment>
 		<description>G-Loc Air Battle (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="g-loc air battle (hack, spanish).bin" size="1048576" crc="dc326396"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7414,6 +7421,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="glocp" cloneof="gloc" romof="gloc">
+		<comment>Prototype</comment>
 		<description>G-LOC Air Battle (World, Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
@@ -7422,9 +7430,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="gadgets" cloneof="gadget" romof="gadget">
+		<comment>Hack</comment>
 		<description>Gadget twins (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>GameTek</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="gadget twins (hack, spanish).bin" size="1048576" crc="b5e21dcb"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7438,9 +7447,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="gaiaress" cloneof="gaiares" romof="gaiares">
+		<comment>Hack</comment>
 		<description>Gaiares (Hack, Spanish)</description>
 		<year>2017</year>
-		<manufacturer>Renovation</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="gaiares (hack, spanish).bin" size="1048576" crc="a62ec19c"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7457,12 +7467,13 @@
 		<comment>Hack</comment>
 		<description>Gain Ground (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="gain ground (hack, spanish).bin" size="524288" crc="eb5e835c"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="gground1p" cloneof="gground" romof="gground">
+		<comment>Prototype</comment>
 		<description>Gain Ground (USA, Prototype)</description>
 		<year>1991</year>
 		<manufacturer>Renovation</manufacturer>
@@ -7487,17 +7498,19 @@
 		<driver status="good"/>
 	</game>
 	<game name="galahads" cloneof="galahad" romof="galahad">
+		<comment>Hack</comment>
 		<description>Galahad (Hack, Spanish)</description>
 		<year>2017</year>
-		<manufacturer>Electronic Arts</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="galahad (hack, spanish).bin" size="1048576" crc="29cb154b"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="gforce2s" cloneof="gforce2" romof="gforce2">
+		<comment>Hack</comment>
 		<description>Galaxy Force II (Hack, Spanish)</description>
 		<year>2020</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="galaxy force II (hack, spanish).bin" size="1048576" crc="21cdf3cd"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7964,8 +7977,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="gt5" cloneof="funcar" romof="funcar">
+		<comment>Hack</comment>
 		<description>Gran Turismo 5 (Rus)</description>
-		<year>199?</year>
+		<year>200?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="gran turismo 5 (unl).bin" size="1220816" crc="d4392181"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
@@ -10878,10 +10892,19 @@
 	</game>
 	<game name="mmworld">
 		<comment>Homebrew</comment>
-		<description>Mega Marble World (HB, v1.9)</description>
+		<description>Mega Marble World (HB, v1.90)</description>
 		<year>2018</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Mega Marble World v1.9 (2018)(Mega Cat Studios).bin" size="2621440" crc="438c7511"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mmworld2">
+		<comment>Homebrew</comment>
+		<description>Mega Marble World 2 (HB, v1.03)</description>
+		<year>2021</year>
+		<manufacturer>T-Arts Studios</manufacturer>
+		<rom name="Mega Marble World 2 v1.03 (2021)(T-Arts Studios).bin" size="1507328" crc="68222004"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -12020,8 +12043,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="narnia3" cloneof="galahad" romof="galahad">
-		<description>Narnia 3 (Rus)</description>
-		<year>199?</year>
+		<comment>Hack</comment>
+		<description>Narnia 3 (Unl) (Rus)</description>
+		<year>200?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="narnia 3 (unl).bin" size="1220032" crc="ab69bcd3"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
@@ -13328,6 +13352,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ootwp" cloneof="anotherw" romof="anotherw">
+		<comment>Prototype</comment>
 		<description>Out of this World (Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Virgin Games</manufacturer>

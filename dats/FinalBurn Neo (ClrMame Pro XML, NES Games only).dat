@@ -802,6 +802,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="animclip">
+		<comment>Homebrew</comment>
+		<description>Animal Clipper (HB)</description>
+		<year>2021</year>
+		<manufacturer>Okunyon</manufacturer>
+		<rom name="Animal Clipper (2021)(Okunyon).nes" size="40976" crc="47d22165"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="antaradv">
 		<description>Antarctic Adventure (Japan)</description>
 		<year>1985</year>
@@ -3573,6 +3582,22 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="depbomb1">
+		<description>Depth Bomb v1 (Unl)</description>
+		<year>2004</year>
+		<manufacturer>Nice Code Software</manufacturer>
+		<rom name="Depth Bomb v1 (Unl)(2004)(Nice Code).nes" size="24592" crc="a1d97a3e"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="depbomb2" cloneof="depbomb1" romof="depbomb1">
+		<description>Depth Bomb v2 (Unl)</description>
+		<year>2004</year>
+		<manufacturer>Nice Code Software</manufacturer>
+		<rom name="Depth Bomb v2 (Unl)(2004)(Nice Code).nes" size="24592" crc="4cf58383"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="destiear">
 		<description>Destination Earthstar (USA)</description>
 		<year>1990</year>
@@ -4973,6 +4998,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="famdepon">
+		<comment>Homebrew</comment>
+		<description>Famicom De Pon (HB)</description>
+		<year>2020</year>
+		<manufacturer>Okunyon</manufacturer>
+		<rom name="Famicom De Pon (2020)(Okunyon).nes" size="40976" crc="e2f88d81"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="famicjum">
 		<description>Famicom Jump - Eiyuu Retsuden (Japan)</description>
 		<year>1989</year>
@@ -5628,6 +5662,15 @@
 		<year>2018</year>
 		<manufacturer>Ludum Dare 40</manufacturer>
 		<rom name="Fluffy Space Escape (2018)(Ludum Dare 40).nes" size="81936" crc="ddd06400"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="flyaway">
+		<comment>Homebrew</comment>
+		<description>Fly a Way (HB)</description>
+		<year>2020</year>
+		<manufacturer>Okunyon</manufacturer>
+		<rom name="Fly a Way (2020)(Okunyon).nes" size="40976" crc="81e30194"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -6429,8 +6472,8 @@
 	</game>
 	<game name="grandmasterj" cloneof="grandmaster" romof="grandmaster">
 		<description>Grand Master (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1991</year>
+		<manufacturer>Varie</manufacturer>
 		<rom name="Grand Master (Japan).nes" size="393232" crc="eff4603a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6445,9 +6488,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="grandmaster">
+		<comment>Hack</comment>
 		<description>Grand Master (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2013</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Grand Master (T-Eng).nes" size="393232" crc="51cd513e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6586,9 +6630,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="gunnact" cloneof="gunnac" romof="gunnac">
+		<comment>Hack</comment>
 		<description>Gun Nac (T-Eng)</description>
-		<year>1990</year>
-		<manufacturer>Tonkin House</manufacturer>
+		<year>2017</year>
+		<manufacturer>Zynk Oxhyde</manufacturer>
 		<rom name="Gun Nac (T-Eng).nes" size="262160" crc="c5fc33f0"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6603,8 +6648,8 @@
 	</game>
 	<game name="gunsight">
 		<description>Gun Sight (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1991</year>
+		<manufacturer>Konami</manufacturer>
 		<rom name="Gun Sight (Japan).nes" size="262160" crc="592d3855"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6746,9 +6791,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="happycamper">
-		<description>Happy Camper (USA) (Proto)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Prototype</comment>
+		<description>Happy Camper (USA) (Prototype)</description>
+		<year>199?</year>
+		<manufacturer>Color Dreams</manufacturer>
 		<rom name="Happy Camper (USA) (Proto).nes" size="131088" crc="100bb526"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6839,9 +6885,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="hebereke" cloneof="ufouria" romof="ufouria">
+		<comment>Hack</comment>
 		<description>Hebereke (T-Eng)</description>
-		<year>1991</year>
-		<manufacturer>Sunsoft</manufacturer>
+		<year>2013</year>
+		<manufacturer>BMF54123</manufacturer>
 		<rom name="Hebereke (T-Eng).nes" size="393232" crc="ac2e16e9"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6863,17 +6910,18 @@
 		<driver status="good"/>
 	</game>
 	<game name="heisetenbak">
+		<comment>Hack</comment>
 		<description>Heisei Tensai Bakabon (T-Eng)</description>
-		<year>1991</year>
-		<manufacturer>Namco</manufacturer>
+		<year>2007</year>
+		<manufacturer>KingMike</manufacturer>
 		<rom name="Heisei Tensai Bakabon (T-Eng).nes" size="393232" crc="c41628ef"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="hellfighter">
-		<description>Hell Fighter (Asia) (PAL) (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Hell Fighter (Asia) (Unl)</description>
+		<year>1991</year>
+		<manufacturer>Sachen</manufacturer>
 		<rom name="Hell Fighter (Asia) (PAL) (Unl).nes" size="327696" crc="61700c98"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6904,17 +6952,19 @@
 		<driver status="good"/>
 	</game>
 	<game name="heroqueste" cloneof="heroquest" romof="heroquest">
+		<comment>Prototype</comment>
 		<description>Hero Quest (Europe) (Prototype)</description>
-		<year>0000</year>
-		<manufacturer>Gremlin</manufacturer>
+		<year>1991</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Hero Quest (Europe) (Prototype).nes" size="131088" crc="3a0b6dd2"/>
 		<video orientation="horizontal" width="256" height="232" aspectx="256" aspecty="232"/>
 		<driver status="good"/>
 	</game>
 	<game name="heroquest">
+		<comment>Prototype</comment>
 		<description>Hero Quest (USA) (Prototype)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1991</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Hero Quest (USA) (Prototype).nes" size="131088" crc="60484008"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6952,9 +7002,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="hikarnosenphoulgaon">
+		<comment>Hack</comment>
 		<description>Hikari no Senshi Photon - The Ultimate Game on Planet Earth (T-Eng)</description>
-		<year>1987</year>
-		<manufacturer>Takara</manufacturer>
+		<year>2003</year>
+		<manufacturer>KingMike</manufacturer>
 		<rom name="Hikari no Senshi Photon - The Ultimate Game on Planet Earth (T-Eng).nes" size="131088" crc="351a3bf3"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6968,9 +7019,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="hinothouhen">
+		<comment>Hack</comment>
 		<description>Hinotori Houou Hen - Gaou no Bouken (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2014</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Hinotori Houou Hen - Gaou no Bouken (T-Eng).nes" size="262160" crc="5f228691"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7059,7 +7111,7 @@
 	<game name="hokutonoken3c" cloneof="hokutonoken3" romof="hokutonoken3">
 		<comment>Hack</comment>
 		<description>Hokuto no Ken 3 - Shin Seiki Souzou Seiken Restuden (Hack, Spanish v1.0)</description>
-		<year>20XX?</year>
+		<year>20??</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="hokuto no ken 3 - shin seiki souzou seiken restuden (japan) - castellano v1.0.nes" size="262160" crc="9e7cc5dc"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -7090,9 +7142,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="holydiver">
+		<comment>Hack</comment>
 		<description>Holy Diver (T-Eng)</description>
-		<year>1989</year>
-		<manufacturer>Irem</manufacturer>
+		<year>2007</year>
+		<manufacturer>Monaco</manufacturer>
 		<rom name="Holy Diver (T-Eng).nes" size="262160" crc="28d1d380"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7148,8 +7201,8 @@
 	</game>
 	<game name="huangdi">
 		<description>Huang Di (Asia) (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1994</year>
+		<manufacturer>Asder</manufacturer>
 		<rom name="Huang Di (Asia) (Unl).nes" size="393232" crc="dfdec378"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7164,8 +7217,8 @@
 	</game>
 	<game name="hugeinsect">
 		<description>Huge Insect (Asia) (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1993</year>
+		<manufacturer>Thin Chen</manufacturer>
 		<rom name="Huge Insect (Asia) (Unl).nes" size="65552" crc="552a903a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7246,9 +7299,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="iceicehoccha">
+		<comment>Hack</comment>
 		<description>Ice Ice! Hockey Challenge (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2014</year>
+		<manufacturer>TransBRC</manufacturer>
 		<rom name="Ice Ice! Hockey Challenge (T-Eng).nes" size="262160" crc="d61c628e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14292,33 +14346,37 @@
 		<driver status="good"/>
 	</game>
 	<game name="smbspeh" cloneof="smb" romof="smb">
+		<comment>Hack</comment>
 		<description>Super Mario Bros. Special (Hack, Triforce89)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2020</year>
+		<manufacturer>Triforce89</manufacturer>
 		<rom name="Super Mario Bros. Special (Hack, Triforce89).nes" size="98320" crc="ab872e74"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="smbspe" cloneof="smb" romof="smb">
+		<comment>Hack</comment>
 		<description>Super Mario Bros. Special (Hack, v1.0-rc1)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2021</year>
+		<manufacturer>Frantik</manufacturer>
 		<rom name="Super Mario Bros. Special (Hack, v1.0-rc1).nes" size="73744" crc="ba34bcad"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="smbspex1" cloneof="smb" romof="smb">
+		<comment>Hack</comment>
 		<description>Super Mario Bros. Special X1 (Hack)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2017</year>
+		<manufacturer>Messatu</manufacturer>
 		<rom name="Super Mario Bros. Special X1 (Hack).nes" size="98320" crc="5a44876f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="smbtwopla" cloneof="smb" romof="smb">
+		<comment>Hack</comment>
 		<description>Super Mario Bros. Two Players (Hack)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2018</year>
+		<manufacturer>Corpse Grinder</manufacturer>
 		<rom name="Super Mario Bros. Two Players (Hack).nes" size="73744" crc="393bc874"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14343,8 +14401,8 @@
 	</game>
 	<game name="supermarwor">
 		<description>Super Mario World (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1995</year>
+		<manufacturer>JY Company</manufacturer>
 		<rom name="Super Mario World (Unl).nes" size="786448" crc="6d5953a8"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -16043,9 +16101,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="vssmbhomedi" cloneof="smb" romof="smb">
+		<comment>Hack</comment>
 		<description>VS. Super Mario Bros. Home Edition (Hack)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2021</year>
+		<manufacturer>BMF54123</manufacturer>
 		<rom name="VS. Super Mario Bros. Home Edition (Hack).nes" size="65552" crc="13c77383"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>

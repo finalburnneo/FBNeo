@@ -3305,6 +3305,17 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="chezmax" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Chez Maxime ZX (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>highriser</manufacturer>
+		<rom name="Chez Maxime ZX 128K (2022)(highriser).tap" size="48799" crc="ab6b980b"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="chicago30" romof="spectrum">
 		<description>Chicago 30's (Spanish) (48K)</description>
 		<year>1988</year>

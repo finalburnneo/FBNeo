@@ -106,6 +106,12 @@ static UINT8 DrvDips[7];
 static UINT16 DrvInputs[7];
 static UINT8 DrvReset;
 
+static INT32 has_raster = 0; // for raster effect
+static INT32 raster_needs_update = 0;
+static INT32 lastline;
+static INT32 scanline;
+static void rasterUpdateDraw(); // forward
+
 // trackball stuff for Krazy Bowl & usclssic
 static INT32 trackball_mode = 0;
 static INT16 DrvAnalogPort0 = 0;
@@ -122,7 +128,7 @@ static INT32 track_x2_last = 0;
 static INT32 track_y2_last = 0;
 
 // Rotation stuff! -dink
-static UINT8  DrvFakeInput[6]       = {0, 0, 0, 0, 0, 0};
+static UINT8  DrvFakeInput[14]      = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // 0-5 legacy; 6-9 P1, 10-13 P2
 static UINT8  nRotateHoldInput[2]   = {0, 0};
 static INT32  nRotate[2]            = {0, 0};
 static INT32  nRotateTarget[2]      = {0, 0};
@@ -130,6 +136,7 @@ static INT32  nRotateTry[2]         = {0, 0};
 static UINT32 nRotateTime[2]        = {0, 0};
 static UINT8  game_rotates = 0;
 static UINT8  clear_opposites = 0;
+static UINT8  nAutoFireCounter[2] 	= {0, 0};
 
 #define A(a, b, c, d) { a, b, (UINT8*)(c), d }
 
@@ -921,6 +928,10 @@ static struct BurnInputInfo DowntownInputList[] = {
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3 (rotate)",		BIT_DIGITAL,	DrvFakeInput + 4,	"p1 fire 3"	},
+	{"P1 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 6,  "p1 up 2" }, // 6
+	{"P1 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 7,  "p1 down 2" }, // 7
+	{"P1 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 8,  "p1 left 2" }, // 8
+	{"P1 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 9,  "p1 right 2" }, // 9
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
@@ -931,6 +942,10 @@ static struct BurnInputInfo DowntownInputList[] = {
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 	{"P2 Button 3 (rotate)",		BIT_DIGITAL,	DrvFakeInput + 5,	"p2 fire 3"	},
+	{"P2 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 10, "p2 up 2" },
+	{"P2 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 11, "p2 down 2" },
+	{"P2 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 12, "p2 left 2" },
+	{"P2 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 13, "p2 right 2" },
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy3 + 5,	"service"	},
@@ -938,6 +953,9 @@ static struct BurnInputInfo DowntownInputList[] = {
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	// Auto-fire on right-stick
+	{"Dip D", 		BIT_DIPSWITCH, 	DrvDips + 3, 	"dip"       },
+
 };
 
 STDINPUTINFO(Downtown)
@@ -1167,6 +1185,8 @@ static struct BurnInputInfo Calibr50InputList[] = {
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3 (rotate)",		BIT_DIGITAL,	DrvFakeInput + 4,	"p1 fire 3"	},
+	A("P1 Aim X", BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	A("P1 Aim Y", BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
@@ -1177,6 +1197,8 @@ static struct BurnInputInfo Calibr50InputList[] = {
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 	{"P2 Button 3 (rotate)",		BIT_DIGITAL,	DrvFakeInput + 5,	"p2 fire 3"	},
+	A("P2 Aim X", BIT_ANALOG_REL, &DrvAnalogPort2,"p2 x-axis"),
+	A("P2 Aim Y", BIT_ANALOG_REL, &DrvAnalogPort3,"p2 y-axis"),
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy3 + 5,	"service"	},
@@ -1184,6 +1206,8 @@ static struct BurnInputInfo Calibr50InputList[] = {
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	// Auto-fire on right-stick
+	{"Dip D", 		BIT_DIPSWITCH, 	DrvDips + 3, 	"dip"       },
 };
 
 STDINPUTINFO(Calibr50)
@@ -1407,63 +1431,71 @@ STDDIPINFO(Usclssic)
 
 static struct BurnDIPInfo Calibr50DIPList[]=
 {
-	{0x15, 0xff, 0xff, 0xfe, NULL			},
-	{0x16, 0xff, 0xff, 0xfd, NULL			},
-	{0x17, 0xff, 0xff, 0xff, NULL			},
+	DIP_OFFSET(0x19)
+
+	{0x00, 0xff, 0xff, 0xfe, NULL			},
+	{0x01, 0xff, 0xff, 0xfd, NULL			},
+	{0x02, 0xff, 0xff, 0xff, NULL			},
+	{0x03, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Licensed To"		},
-	{0x15, 0x01, 0x01, 0x01, "Romstar"		},
-	{0x15, 0x01, 0x01, 0x00, "None (Japan)"		},
+	{0x00, 0x01, 0x01, 0x01, "Romstar"		},
+	{0x00, 0x01, 0x01, 0x00, "None (Japan)"		},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x15, 0x01, 0x02, 0x02, "Off"			},
-	{0x15, 0x01, 0x02, 0x00, "On"			},
+	{0x00, 0x01, 0x02, 0x02, "Off"			},
+	{0x00, 0x01, 0x02, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x15, 0x01, 0x04, 0x04, "Off"			},
-	{0x15, 0x01, 0x04, 0x00, "On"			},
+	{0x00, 0x01, 0x04, 0x04, "Off"			},
+	{0x00, 0x01, 0x04, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x15, 0x01, 0x08, 0x00, "Off"			},
-	{0x15, 0x01, 0x08, 0x08, "On"			},
+	{0x00, 0x01, 0x08, 0x00, "Off"			},
+	{0x00, 0x01, 0x08, 0x08, "On"			},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"		},
-	{0x15, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
-	{0x15, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
-	{0x15, 0x01, 0x30, 0x00, "2 Coins 3 Credits"	},
-	{0x15, 0x01, 0x30, 0x20, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x30, 0x00, "2 Coins 3 Credits"	},
+	{0x00, 0x01, 0x30, 0x20, "1 Coin  2 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"		},
-	{0x15, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
-	{0x15, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"	},
-	{0x15, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"	},
-	{0x15, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"	},
+	{0x00, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x16, 0x01, 0x03, 0x03, "Easiest"		},
-	{0x16, 0x01, 0x03, 0x02, "Easy"			},
-	{0x16, 0x01, 0x03, 0x01, "Normal"		},
-	{0x16, 0x01, 0x03, 0x00, "Hard"			},
+	{0x01, 0x01, 0x03, 0x03, "Easiest"		},
+	{0x01, 0x01, 0x03, 0x02, "Easy"			},
+	{0x01, 0x01, 0x03, 0x01, "Normal"		},
+	{0x01, 0x01, 0x03, 0x00, "Hard"			},
 
 	{0   , 0xfe, 0   ,    2, "Score Digits"		},
-	{0x16, 0x01, 0x04, 0x04, "7"			},
-	{0x16, 0x01, 0x04, 0x00, "3"			},
+	{0x01, 0x01, 0x04, 0x04, "7"			},
+	{0x01, 0x01, 0x04, 0x00, "3"			},
 
 	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x16, 0x01, 0x08, 0x08, "3"			},
-	{0x16, 0x01, 0x08, 0x00, "4"			},
+	{0x01, 0x01, 0x08, 0x08, "3"			},
+	{0x01, 0x01, 0x08, 0x00, "4"			},
 
 	{0   , 0xfe, 0   ,    2, "Display Score"	},
-	{0x16, 0x01, 0x10, 0x00, "Off"			},
-	{0x16, 0x01, 0x10, 0x10, "On"			},
+	{0x01, 0x01, 0x10, 0x00, "Off"			},
+	{0x01, 0x01, 0x10, 0x10, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Erase Backup Ram"	},
-	{0x16, 0x01, 0x20, 0x00, "Off"			},
-	{0x16, 0x01, 0x20, 0x20, "On"			},
+	{0x01, 0x01, 0x20, 0x00, "Off"			},
+	{0x01, 0x01, 0x20, 0x20, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Licensed To"		},
-	{0x16, 0x01, 0x40, 0x40, "Taito America"	},
-	{0x16, 0x01, 0x40, 0x00, "Taito"		},
+	{0x01, 0x01, 0x40, 0x40, "Taito America"	},
+	{0x01, 0x01, 0x40, 0x00, "Taito"		},
+
+	// Dip D
+	{0   , 0xfe, 0   , 2   , "Second Stick"           },
+	{0x03, 0x01, 0x01, 0x00, "Moves & Shoots"         },
+	{0x03, 0x01, 0x01, 0x01, "Moves"                  },
 };
 
 STDDIPINFO(Calibr50)
@@ -1723,63 +1755,71 @@ STDDIPINFO(Arbalest)
 
 static struct BurnDIPInfo DowntownDIPList[]=
 {
-	{0x15, 0xff, 0xff, 0xf6, NULL			},
-	{0x16, 0xff, 0xff, 0xbd, NULL			},
-	{0x17, 0xff, 0xff, 0xff, NULL			},
+	DIP_OFFSET(0x1d)
+
+	{0x00, 0xff, 0xff, 0xf6, NULL			},
+	{0x01, 0xff, 0xff, 0xbd, NULL			},
+	{0x02, 0xff, 0xff, 0xff, NULL			},
+	{0x03, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Sales"		},
-	{0x15, 0x01, 0x01, 0x01, "Japan Only"		},
-	{0x15, 0x01, 0x01, 0x00, "World"		},
+	{0x00, 0x01, 0x01, 0x01, "Japan Only"		},
+	{0x00, 0x01, 0x01, 0x00, "World"		},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x15, 0x01, 0x02, 0x02, "Off"			},
-	{0x15, 0x01, 0x02, 0x00, "On"			},
+	{0x00, 0x01, 0x02, 0x02, "Off"			},
+	{0x00, 0x01, 0x02, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x15, 0x01, 0x04, 0x04, "Off"			},
-	{0x15, 0x01, 0x04, 0x00, "On"			},
+	{0x00, 0x01, 0x04, 0x04, "Off"			},
+	{0x00, 0x01, 0x04, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x15, 0x01, 0x08, 0x08, "Off"			},
-	{0x15, 0x01, 0x08, 0x00, "On"			},
+	{0x00, 0x01, 0x08, 0x08, "Off"			},
+	{0x00, 0x01, 0x08, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"		},
-	{0x15, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
-	{0x15, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
-	{0x15, 0x01, 0x30, 0x00, "2 Coins 3 Credits"	},
-	{0x15, 0x01, 0x30, 0x20, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x30, 0x00, "2 Coins 3 Credits"	},
+	{0x00, 0x01, 0x30, 0x20, "1 Coin  2 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"		},
-	{0x15, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
-	{0x15, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"	},
-	{0x15, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"	},
-	{0x15, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"	},
+	{0x00, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x16, 0x01, 0x03, 0x02, "Easy"			},
-	{0x16, 0x01, 0x03, 0x03, "Normal"		},
-	{0x16, 0x01, 0x03, 0x01, "Hard"			},
-	{0x16, 0x01, 0x03, 0x00, "Hardest"		},
+	{0x01, 0x01, 0x03, 0x02, "Easy"			},
+	{0x01, 0x01, 0x03, 0x03, "Normal"		},
+	{0x01, 0x01, 0x03, 0x01, "Hard"			},
+	{0x01, 0x01, 0x03, 0x00, "Hardest"		},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x16, 0x01, 0x0c, 0x0c, "Never"		},
-	{0x16, 0x01, 0x0c, 0x08, "50K Only"		},
-	{0x16, 0x01, 0x0c, 0x04, "100K Only"		},
-	{0x16, 0x01, 0x0c, 0x00, "50K, Every 150K"	},
+	{0x01, 0x01, 0x0c, 0x0c, "Never"		},
+	{0x01, 0x01, 0x0c, 0x08, "50K Only"		},
+	{0x01, 0x01, 0x0c, 0x04, "100K Only"		},
+	{0x01, 0x01, 0x0c, 0x00, "50K, Every 150K"	},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x16, 0x01, 0x30, 0x10, "2"			},
-	{0x16, 0x01, 0x30, 0x30, "3"			},
-	{0x16, 0x01, 0x30, 0x00, "4"			},
-	{0x16, 0x01, 0x30, 0x20, "5"			},
+	{0x01, 0x01, 0x30, 0x10, "2"			},
+	{0x01, 0x01, 0x30, 0x30, "3"			},
+	{0x01, 0x01, 0x30, 0x00, "4"			},
+	{0x01, 0x01, 0x30, 0x20, "5"			},
 
 	{0   , 0xfe, 0   ,    2, "World License"	},
-	{0x16, 0x01, 0x40, 0x40, "Romstar"		},
-	{0x16, 0x01, 0x40, 0x00, "Taito"		},
+	{0x01, 0x01, 0x40, 0x40, "Romstar"		},
+	{0x01, 0x01, 0x40, 0x00, "Taito"		},
 
 	{0   , 0xfe, 0   ,    2, "Coinage Type"		},
-	{0x16, 0x01, 0x80, 0x80, "1"			},
-	{0x16, 0x01, 0x80, 0x00, "2"			},
+	{0x01, 0x01, 0x80, 0x80, "1"			},
+	{0x01, 0x01, 0x80, 0x00, "2"			},
+
+	// Dip D
+	{0   , 0xfe, 0   , 2   , "Second Stick"           },
+	{0x03, 0x01, 0x01, 0x00, "Moves & Shoots"         },
+	{0x03, 0x01, 0x01, 0x01, "Moves"                  },
 };
 
 STDDIPINFO(Downtown)
@@ -3972,12 +4012,14 @@ static void set_pcm_bank(INT32 data)
 #define SetaVidRAMCtrlWriteWord(num, base)						\
 	if ((address >= (base + 0)) && address <= (base + 5)) {				\
 		*((UINT16*)(DrvVIDCTRLRAM##num + (address & 0x06))) = BURN_ENDIAN_SWAP_INT16(data);	\
+		raster_needs_update = 1;				\
 		return;									\
 	}
 
 #define SetaVidRAMCtrlWriteByte(num, base)				\
 	if ((address >= (base + 0)) && (address <= (base + 5))) {	\
 		DrvVIDCTRLRAM##num[(address & 0x07)^1] = data;		\
+		raster_needs_update = 1;		\
 		return;							\
 	}
 
@@ -5159,6 +5201,16 @@ static UINT8 __fastcall usclssic_read_byte(UINT32 address)
 // calibr50
 
 // Rotation-handler code
+// Notes:
+// rotate_gunpos - value in game's ram which depicts the rotational position
+// 		of the hero
+// nRotate		 - value returned to the game's inputs
+// nRotateTarget - calculated position where rotate_gunpos needs to be
+// Theory:
+// Direction from joy is translated and a target is set, each frame (or every
+// other, depending on game's requirements) we clock towards that target.
+
+static INT32 nRotateTargetVSmemDistance;
 
 static void RotateReset() {
 	for (INT32 playernum = 0; playernum < 2; playernum++) {
@@ -5178,7 +5230,7 @@ static void RotateRight(INT32 *v) {
 		(*v)-=1;
 		if (*v < 0) *v = 0xb;
 	} else { // calibr50 mode
-		(*v)-=4;
+		(*v)-=(nRotateTargetVSmemDistance > 1) ? 4 : 1;
 		if (*v < 0) *v = 0x3c;
 	}
 }
@@ -5188,7 +5240,7 @@ static void RotateLeft(INT32 *v) {
 		(*v)+=1;
 		if (*v > 0xb) *v = 0;
 	} else { // calibr50 mode
-		(*v)+=4;
+		(*v)+=(nRotateTargetVSmemDistance > 1) ? 4 : 1;
 		if (*v > 0x3c) *v = 0;
 	}
 }
@@ -5204,6 +5256,43 @@ static UINT8 Joy2Rotate(UINT8 *joy) { // ugly code, but the effect is awesome. -
 	if (joy[1]) return 4;    // down
 	if (joy[2]) return 6;    // left
 	if (joy[3]) return 2;    // right
+
+	return 0xff;
+}
+
+#define Rotate16CheckSector(num, joy0, joy1) \
+{ \
+	if (joy0 && joy1) { \
+		if (joy0 > joy1) \
+			return calibr50_sectors[num][0]; \
+		else if (joy0 < joy1) \
+			return calibr50_sectors[num][1]; \
+		else \
+			return calibr50_sectors[num][2]; \
+	} \
+}
+
+static UINT8 Joy2Rotate16(UINT8 *joy) { // even more ugly code
+	// Changing this to 16 directions
+	// 0 is up, 2 is up-right, 4 is right, 6 is down-right
+	// 8 is down, 10 is down-left, 12 is left, 14 is up-left
+
+	static const UINT8 calibr50_sectors[4][3] = {
+		{ 15, 13, 14 }, // up+ left, up left+, up left
+		{  1,  3,  2 }, // up+ right, up right+, up right
+		{  9, 11, 10 }, // down+ left, down left+, down left
+		{  7,  5,  6 }  // down+ right, down right+, down right
+	};
+
+	Rotate16CheckSector(0, joy[0], joy[2]);
+	Rotate16CheckSector(1, joy[0], joy[3]);
+	Rotate16CheckSector(2, joy[1], joy[2]);
+	Rotate16CheckSector(3, joy[1], joy[3]);
+
+	if (joy[0]) return 0;    // up
+	if (joy[1]) return 8;    // down
+	if (joy[2]) return 12;   // left
+	if (joy[3]) return 4;    // right
 
 	return 0xff;
 }
@@ -5253,7 +5342,6 @@ static UINT8 rotate_gunpos_multiplier = 1;
 //
 // calibr50 0xff2500+3   0xff2520+7   0 1 2 3 4 5 6 7 8 9 a b c d e f   2
 // ff4ede = 0xff = onplane
-// a00010 a00014 = plane rotate regs  MMIO INPUTS DUMBASS
 // p1 ff0e69 p2 ff0e89? rotate reg.
 
 static void RotateSetGunPosRAM(UINT8 *p1, UINT8 *p2, UINT8 multiplier) {
@@ -5287,35 +5375,46 @@ static INT32 get_distance(INT32 from, INT32 to) {
 	}
 
 	if (countA > countB) {
+		nRotateTargetVSmemDistance = countB;
 		return 1; // go negative
 	} else {
+		nRotateTargetVSmemDistance = countA;
 		return 0; // go positive
 	}
 }
 
+static UINT8 adjusted_rotate_gunpos(INT32 i)
+{
+	// calibr50: apply compensation while in the airplane
+	if (game_rotates == 1 && Drv68KRAM[0x4ede] == 0xff) {
+		// ff381c: plane's rotation (same orientation as player aka *rotate_gunpos[i])
+		return (Drv68KRAM[0x381c] + *rotate_gunpos[i]) & 0x0f;
+	}
+
+	return *rotate_gunpos[i];
+}
+
 static void RotateDoTick() {
-	// since the game only allows for 1 rotation every other frame, we have to
-	// do this.
-	if (nCurrentFrame&1) return;
+	if (nCurrentFrame&1) return; // limit rotation to every other frame to avoid confusing the game (comment v3.0)
 
 	if (game_rotates == 1) { // calibr50 switcheroo
 		if (Drv68KRAM[0x4ede] == 0xff) {
 			// P1/P2 in the airplane
-			RotateSetGunPosRAM(Drv68KRAM + (0x0e69-1), Drv68KRAM + (0x0e89-1), 2);
+			RotateSetGunPosRAM(Drv68KRAM + (0x0e69-1), Drv68KRAM + (0x0e89-1), 1);
 		} else {
 			// P1/P2 normal.
-			RotateSetGunPosRAM(Drv68KRAM + (0x2503-1), Drv68KRAM + (0x2527-1), 2);
+			RotateSetGunPosRAM(Drv68KRAM + (0x2503-1), Drv68KRAM + (0x2527-1), 1);
 		}
 	}
 
 	for (INT32 i = 0; i < 2; i++) {
-		if (rotate_gunpos[i] && (nRotateTarget[i] != -1) && (nRotateTarget[i] != (*rotate_gunpos[i] & 0xff))) {
-			if (get_distance(nRotateTarget[i], *rotate_gunpos[i] & 0x0f)) {
+		if (rotate_gunpos[i] && (nRotateTarget[i] != -1) && (nRotateTarget[i] != (adjusted_rotate_gunpos(i) & 0x0f))) {
+			if (get_distance(nRotateTarget[i], adjusted_rotate_gunpos(i) & 0x0f)) {
 				RotateLeft(&nRotate[i]);  // ++
 			} else {
 				RotateRight(&nRotate[i]); // --
 			}
-			bprintf(0, _T("p%X target %X mempos %X nRotate %X try %X.\n"), i, nRotateTarget[0], *rotate_gunpos[0] & 0xff, nRotate[0], nRotateTry[i]);
+			bprintf(0, _T("p%X target %X mempos %X nRotate %X try %X.\n"), i, nRotateTarget[i], adjusted_rotate_gunpos(i) & 0x0f, nRotate[i], nRotateTry[i]);
 			nRotateTry[i]++;
 			if (nRotateTry[i] > 0xf) nRotateTarget[i] = -1; // don't get stuck in a loop if something goes horribly wrong here.
 		} else {
@@ -5324,13 +5423,85 @@ static void RotateDoTick() {
 	}
 }
 
+static void ProcessAnalogInputs() {
+	// converts analog inputs to something that the existing rotate logic can work with
+	INT16 AnalogInputs[4] = { 0, 0, 0, 0 }; // p1y, p1x, p2y, p2x - compatibility with Joy2Rotate
+	INT16 AnalogPorts[4] = { DrvAnalogPort1, DrvAnalogPort0, DrvAnalogPort3, DrvAnalogPort2 };
+
+	if (game_rotates != 1) return;
+
+	// clear fake inputs
+	// Note: DrvFakeInput 6/10 - up, 7/11 - down, 8/12 - left, 9/13 - right
+	for (int i = 6; i < 14; i++)
+		DrvFakeInput[i] = 0;
+
+	// convert these x and y to something Joy2Rotate could read.
+	for (int i = 0; i < 4; i++) {
+		// ProcessAnalog() will convert the analog value to: 0x00 full left, 0x80 center, 0xff full right
+		// Range 16 makes it too biased towards the directions between diagonals and up/down/left/right
+		// Range 8 makes it more biased towards the diagonals, seems to be the sweet spot
+		UINT8 AnalogRange = 8;
+
+		AnalogInputs[i] = ProcessAnalog(AnalogPorts[i], 0, INPUT_DEADZONE, 0x00, 0xff) / ((256/AnalogRange));
+		if (AnalogInputs[i] < AnalogRange/2) {
+			DrvFakeInput[6 + 2*i] = AnalogRange/2-AnalogInputs[i];
+		} else if (AnalogInputs[i] > AnalogRange/2) {
+			DrvFakeInput[6 + 2*i + 1] = AnalogInputs[i]-AnalogRange/2;
+		}
+	}
+}
+
 static void SuperJoy2Rotate() {
+	UINT8 FakeDrvInputPort0[4] = { 0, 0, 0, 0 };
+	UINT8 FakeDrvInputPort1[4] = { 0, 0, 0, 0 };
+	UINT8 NeedsSecondStick[2] = { 0, 0 };
+
+	// prepare for right-stick rotation
+	// this is not especially readable though
+
+	ProcessAnalogInputs();
+
+	for (INT32 i = 0; i < 2; i++) {
+		for (INT32 n = 0; n < 4; n++) {
+			UINT8* RotationInput = (!i) ? &FakeDrvInputPort0[0] : &FakeDrvInputPort1[0];
+			RotationInput[n] = DrvFakeInput[6 + i*4 + n];
+			NeedsSecondStick[i] |= RotationInput[n];
+		}
+	}
+
 	for (INT32 i = 0; i < 2; i++) { // p1 = 0, p2 = 1
-		if (DrvFakeInput[4 + i]) { //  rotate-button had been pressed
+		if (!NeedsSecondStick[i])
+			nAutoFireCounter[i] = 0;
+		if (NeedsSecondStick[i]) { // we've got input from the second stick
+			UINT8 rot;
+			if (game_rotates == 1) {
+				// calibr50 uses 16 directions
+				rot = Joy2Rotate16(((!i) ? &FakeDrvInputPort0[0] : &FakeDrvInputPort1[0]));
+			} else {
+				rot = Joy2Rotate(((!i) ? &FakeDrvInputPort0[0] : &FakeDrvInputPort1[0]));
+			}
+			if (rot != 0xff) {
+				nRotateTarget[i] = rot * rotate_gunpos_multiplier;
+			}
+			
+			nRotateTry[i] = 0;
+
+			if (~DrvDips[3] & 1) {
+				// fire (calibr50) / auto-fire (downtown)
+				if ((nAutoFireCounter[i]++ & 0x2) || (game_rotates == 1)) {
+					DrvInputs[i] &= ~0x10;
+				}
+			}
+		}
+		else if (DrvFakeInput[4 + i]) { //  rotate-button had been pressed
 			UINT8 rot = Joy2Rotate(((!i) ? &DrvJoy1[0] : &DrvJoy2[0]));
 			if (rot != 0xff) {
 				//bprintf(0, _T("joy2rotate[%x] = %X\n"), i, rot);
-				nRotateTarget[i] = rot * rotate_gunpos_multiplier;
+				if (game_rotates == 1) {
+					nRotateTarget[i] = rot * 2; // convert 8-way to 16-way (multiplier is 1 for the analog inputs)
+				} else {
+					nRotateTarget[i] = rot * rotate_gunpos_multiplier;
+				}
 			}
 			//DrvInput[i] &= ~0xf; // cancel out directionals since they are used to rotate here.
 			DrvInputs[i] = (DrvInputs[i] & ~0xf) | (nRotateHoldInput[i] & 0xf); // for midnight resistance! be able to duck + change direction of gun.
@@ -6656,7 +6827,7 @@ static void calibr5068kInit()
 	M6502Close();
 	m65c02_mode = 1;
 
-	RotateSetGunPosRAM(Drv68KRAM + (0x2503-1), Drv68KRAM + (0x2527-1), 2);
+	RotateSetGunPosRAM(Drv68KRAM + (0x2503-1), Drv68KRAM + (0x2527-1), 1);
 	game_rotates = 1;
 }
 
@@ -7183,6 +7354,8 @@ static INT32 DrvExit()
 	BurnFree (DrvGfxTransMask[2]);
 	BurnFree (DrvGfxTransMask[1]);
 
+	has_raster = 0;
+
 	return 0;
 }
 
@@ -7438,7 +7611,7 @@ static void seta_update(INT32 enable_tilemap2, INT32 tmap_flip)
 
 	layer_enable &= nBurnLayer;
 
-	BurnTransferClear();
+	if (has_raster == 0) BurnTransferClear();
 
 	if (order & 1)
 	{
@@ -7479,11 +7652,47 @@ static INT32 setaNoLayersDraw()
 	return 0;
 }
 
-static INT32 seta1layerDraw()
+static void rasterBeginDraw()
 {
-	DrvPaletteRecalc();
+	if (!pBurnDraw) return;
+
+	BurnTransferClear();
+
+	raster_needs_update = 0;
+	lastline = 0;
+}
+
+static void rasterUpdateDraw()
+{
+	if (!pBurnDraw || !has_raster) return;
+
+	if (scanline > nScreenHeight) scanline = nScreenHeight; // endofframe
+
+	if (scanline < 0 || scanline > nScreenHeight || scanline == lastline || lastline > scanline) return;
+	//bprintf(0, _T("%07d: partial %d - %d.\n"), nCurrentFrame, lastline, scanline);
+
+	GenericTilesSetClip(0, nScreenWidth, lastline, scanline);
 
 	seta_update(0, 0);
+
+	GenericTilesClearClip();
+
+	lastline = scanline;
+}
+
+static INT32 seta1layerDraw()
+{
+	if (has_raster == 0) DrvPaletteRecalc();
+
+	if (has_raster == 0) seta_update(0, 0);
+
+	if (has_raster) {
+		// finish drawing the frame (in raster chain)
+		// -or- draw the frame
+		DrvPaletteRecalc();
+
+		rasterUpdateDraw();
+	}
 
 	BurnTransferCopy(DrvPalette);
 
@@ -7685,23 +7894,32 @@ static INT32 DrvFrameMsgundam()
 
 static void Drv68k_Calibr50_FrameCallback()
 {
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 262;
 	INT32 nCyclesTotal[2] = { (8000000 * 100) / refresh_rate, (2000000 * 100) / refresh_rate}; //(cpuspeed * 100) / refresh_rate, ((cpuspeed/4) * 100) / refresh_rate};
 	INT32 nCyclesDone[2]  = { 0, 0 };
 
 	SekOpen(0);
 	M6502Open(0);
 
+	if (has_raster) rasterBeginDraw();
+
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
+		scanline = i;
+
+		if (i == (nInterleave - 1)) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if ((i%64) == 63) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+
 		CPU_RUN(0, Sek);
 
-		if (i == 240) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-		if ((i%64) == 63) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (raster_needs_update && scanline > -1) {
+			rasterUpdateDraw();
+			raster_needs_update = 0;
+		}
 
 		CPU_RUN(1, M6502);
 		if (usclssic) {
-			if (i == 240) M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			if (i == (nInterleave - 1)) M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		} else {// calibr50
 			if ((i%64) == 63) M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
@@ -8057,6 +8275,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			SCAN_VAR(nRotateTarget);
 			SCAN_VAR(nRotateTry);
 			SCAN_VAR(nRotateTime);
+			SCAN_VAR(nAutoFireCounter);
 		}
 		keroppi_pairslove_scan();
 	}
@@ -9062,7 +9281,7 @@ static INT32 kamenridInit()
 
 struct BurnDriver BurnDrvKamenrid = {
 	"kamenrid", NULL, NULL, NULL, "1993",
-	"Masked Riders Club Battle Race\0", NULL, "Banpresto / Toei", "Seta",
+	"Masked Riders Club Battle Race / Kamen Rider Club Battle Racer\0", NULL, "Banpresto / Toei", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA1, GBF_RACING, 0,
 	NULL, kamenridRomInfo, kamenridRomName, NULL, NULL, NULL, NULL, KamenridInputInfo, KamenridDIPInfo,
@@ -11050,6 +11269,8 @@ static INT32 calibr50Init()
 	watchdog_enable = 1;
 	DrvSetColorOffsets(0, 0, 0);
 	DrvSetVideoOffsets(-1, 2, -3, -2);
+
+	has_raster = 1;
 
 	INT32 nRet = DrvInit(calibr5068kInit, 8000000, SET_IRQLINES(0x80, 0x80) /*custom*/, NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 1, -1));
 

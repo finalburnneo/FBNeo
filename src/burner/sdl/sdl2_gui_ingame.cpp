@@ -87,12 +87,12 @@ int CheatMenuSelected()
 	pCurrentCheat = pCheatInfo;
 	while (pCurrentCheat)
 	{
-		cheatMenu[c] = {pCurrentCheat->szCheatName, MainMenuSelected, NULL};
+		cheatMenu[c] = (MenuItem){pCurrentCheat->szCheatName, MainMenuSelected, NULL};
 		pCurrentCheat = pCurrentCheat->pNext;
 		c++;
 	}
 	i++;
-	cheatMenu[i] = {"BACK \0", MainMenuSelected, NULL};
+	cheatMenu[i] = (MenuItem){"BACK \0", MainMenuSelected, NULL};
 	cheatcount = i;
   return 0;
 }

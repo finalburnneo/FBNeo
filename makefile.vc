@@ -105,7 +105,7 @@ srcdir	= src/
 include makefile.burn_rules
 include makefile.burner_win32_rules
 
-incdir	= $(foreach dir,$(alldir),/I$(srcdir)$(dir)) /I$(objdir)dep/generated
+incdir	= $(foreach dir,$(alldir),/I$(srcdir)$(dir)) /I$(objdir)dep/generated /I$(srcdir)dep/mingw/include/directx9 /I$(srcdir)dep/vc/include/xaudio2
 
 ifdef UNICODE
 # lib	= unicows.lib
@@ -146,7 +146,7 @@ allobj	= $(objdir)cpu/m68k/m68kcpu.o $(objdir)cpu/m68k/m68kops.o $(objdir)burner
 	  $(foreach file,$(autobj:.o=.asm), \
 		$(foreach dir,$(alldir),$(subst $(srcdir),$(objdir), \
 		$(firstword $(subst .asm,.o,$(wildcard $(srcdir)$(dir)/$(file)))))))
-		
+
 ifdef BUILD_A68K
 allobj += $(a68k.o)
 endif
@@ -201,6 +201,10 @@ ifdef ROM_VERIFY
 	DEF	:= $(DEF) /DROM_VERIFY
 endif
 
+ifdef HACK_SOUND
+	DEF	:= $(DEF) /DCPS1_HACK_QSOUND
+endif
+
 ifdef INCLUDE_7Z_SUPPORT
 	DEF := $(DEF) /DINCLUDE_7Z_SUPPORT
 endif
@@ -226,7 +230,7 @@ ifdef BUILD_X86_ASM
 endif
 
 ifdef BUILD_X64_EXE
-	DEF := $(DEF) /DBUILD_X64_EXE /DXBYAK_NO_OP_NAMES /DMIPS3_X64_DRC
+	DEF := $(DEF) /DBUILD_X64_EXE # /DXBYAK_NO_OP_NAMES /DMIPS3_X64_DRC
 endif
 
 ifdef BUILD_VS_XP_TARGET

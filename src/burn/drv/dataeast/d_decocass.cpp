@@ -154,27 +154,27 @@ static INT32 fourway_mode = 0;
 // analog inputs - not emulated - unused by games in this system.
 
 static struct BurnInputInfo DecocassInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 6,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Bios setting",	BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
@@ -216,11 +216,12 @@ static struct BurnDIPInfo DecocassDIPList[]=
 	{0x12, 0x01, 0xe0, 0x60, "E"			},
 	{0x12, 0x01, 0xe0, 0x40, "F"			},
 
-	{0   , 0xfe, 0   ,    4, "Bios Version"		},
-	{0x13, 0x01, 0x03, 0x00, "Japan A, Newer"	},
-	{0x13, 0x01, 0x03, 0x01, "Japan A, Older"	},
-	{0x13, 0x01, 0x03, 0x02, "USA B, Newer"		},
-	{0x13, 0x01, 0x03, 0x03, "USA B, Older"		},
+	{0   , 0xfe, 0   ,    5, "Bios Version"		},
+	{0x13, 0x01, 0x07, 0x00, "Japan A, Newer"	},
+	{0x13, 0x01, 0x07, 0x01, "Japan A, Older"	},
+	{0x13, 0x01, 0x07, 0x02, "USA B, Newer"		},
+	{0x13, 0x01, 0x07, 0x03, "USA B, Older"		},
+	{0x13, 0x01, 0x07, 0x04, "Bios D (Europe?)" },
 };
 
 STDDIPINFO(Decocass)
@@ -364,6 +365,106 @@ static struct BurnDIPInfo CtislandDIPList[]=
 };
 
 STDDIPINFOEXT(Ctisland, Decocass, Ctisland)
+
+static struct BurnDIPInfo Ctisland3DIPList[]=
+{
+	{0x12, 0xff, 0xff, 0xef, NULL			},
+	{0x13, 0xff, 0xff, 0x04, NULL			},
+
+	{0   , 0xfe, 0   ,    2, "Lives"		},
+	{0x12, 0x01, 0x01, 0x01, "3"			},
+	{0x12, 0x01, 0x01, 0x00, "5"			},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0x12, 0x01, 0x06, 0x06, "15000"		},
+	{0x12, 0x01, 0x06, 0x04, "20000"		},
+	{0x12, 0x01, 0x06, 0x02, "25000"		},
+	{0x12, 0x01, 0x06, 0x00, "30000"		},
+};
+
+STDDIPINFOEXT(Ctisland3, Decocass, Ctisland3)
+
+static struct BurnInputInfo CtowerInputList[] = {
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 start"	},
+	{"P1 Left Stick Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
+	{"P1 Left Stick Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Left Stick Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Left Stick Right",     BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
+	{"P1 Right Stick Up",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 up 2"	},
+	{"P1 Right Stick Down",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 down 2"	},
+	{"P1 Right Stick Left",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 left 2"	},
+	{"P1 Right Stick Right",	BIT_DIGITAL,	DrvJoy1 + 5,	"p1 right 2"},
+
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 6,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 start"	},
+	{"P2 Left Stick Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
+	{"P2 Left Stick Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Left Stick Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Left Stick Right",     BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
+	{"P2 Right Stick Up",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 up 2"	},
+	{"P2 Right Stick Down",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 down 2"	},
+	{"P2 Right Stick Left",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 left 2"	},
+	{"P2 Right Stick Right",	BIT_DIGITAL,	DrvJoy2 + 5,	"p2 right 2"},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Bios setting",	BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+};
+
+STDINPUTINFO(Ctower)
+
+static struct BurnDIPInfo CtowerDIPList[]=
+{
+	DIP_OFFSET(0x15)
+	{0x00, 0xff, 0xff, 0xff, NULL			},
+	{0x01, 0xff, 0xff, 0x81, NULL			},
+	{0x02, 0xff, 0xff, 0x04, NULL			},
+
+	{0   , 0xfe, 0   ,    4, "Coin A"		},
+	{0x00, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x03, 0x01, "1 Coin  3 Credits"	},
+
+	{0   , 0xfe, 0   ,    4, "Coin B"		},
+	{0x00, 0x01, 0x0c, 0x00, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"	},
+
+	{0   , 0xfe, 0   ,    4, "Type of Tape"		},
+	{0x00, 0x01, 0x30, 0x00, "MT (Big)"		},
+	{0x00, 0x01, 0x30, 0x10, "invalid?"		},
+	{0x00, 0x01, 0x30, 0x20, "invalid?"		},
+	{0x00, 0x01, 0x30, 0x30, "MD (Small)"		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x00, 0x01, 0x40, 0x00, "Upright"		},
+	{0x00, 0x01, 0x40, 0x40, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    2, "Lives"			},
+	{0x01, 0x01, 0x01, 0x01, "2"				},
+	{0x01, 0x01, 0x01, 0x00, "4"				},
+
+	{0   , 0xfe, 0   ,    6, "Country Code"		},
+	{0x01, 0x01, 0xe0, 0xe0, "A"			},
+	{0x01, 0x01, 0xe0, 0xc0, "B"			},
+	{0x01, 0x01, 0xe0, 0xa0, "C"			},
+	{0x01, 0x01, 0xe0, 0x80, "D"			},
+	{0x01, 0x01, 0xe0, 0x60, "E"			},
+	{0x01, 0x01, 0xe0, 0x40, "F"			},
+
+	{0   , 0xfe, 0   ,    5, "Bios Version"		},
+	{0x02, 0x01, 0x07, 0x00, "Japan A, Newer"	},
+	{0x02, 0x01, 0x07, 0x01, "Japan A, Older"	},
+	{0x02, 0x01, 0x07, 0x02, "USA B, Newer"		},
+	{0x02, 0x01, 0x07, 0x03, "USA B, Older"		},
+	{0x02, 0x01, 0x07, 0x04, "Bios D (Europe?)" },
+};
+
+STDDIPINFO(Ctower)
 
 static struct BurnDIPInfo Cocean1aDIPList[]=
 {
@@ -2567,7 +2668,7 @@ static INT32 DrvDoReset()
 	// call before cpu resets to catch vectors!
 	if (DrvDips[2] != 0xff) // widel multi
 	{
-		INT32 bios_sets = 4; // total bios sets supported
+		INT32 bios_sets = 5; // total bios sets supported
 		INT32 bios_select = ((DrvDips[2] % bios_sets) * 8) + 0x80;
 
 		if (BurnLoadRom(DrvMainBIOS, bios_select + 0, 1)) return 1; // main m6502 bios
@@ -3461,11 +3562,19 @@ static struct BurnRomInfo decocassRomDesc[] = {
 	{ "",             	0x0000, 0x00000000, 0                  }, // 0x9e
 	{ "",             	0x0000, 0x00000000, 0                  }, // 0x9f
 
-	{ "cassmcu.1c", 	0x0400, 0xa6df18fd, BRF_BIOS | BRF_PRG }, // 0xa0 - MCU BIOS (Shared)
+	{ "v0d-.7e",		0x1000, 0x1e0c22b1, BRF_BIOS | BRF_PRG }, // 0xa0 - BIOS "D" - ctisland3, ctower (Main M6502)
+	{ "",             	0x0000, 0x00000000, 0                  }, // 0xa1
 
-#ifdef ROM_VERIFY
-	{ "v0d-.7e",		0x1000, 0x1e0c22b1, BRF_BIOS | BRF_PRG }, // 0xa1 - handcrafted (single byte changed) because ctisland3 requires region D
-#endif
+	{ "v1-.5a",     	0x0800, 0xb66b2c2a, BRF_BIOS | BRF_PRG }, // 0xa2 - BIOS "D" (Sound M6502)
+
+	{ "v2.3m",			0x0020, 0x238fdb40, BRF_BIOS | BRF_OPT }, // 0xa3 - BIOS "D" (prom)
+	{ "v4.10d",			0x0020, 0x3b5836b4, BRF_BIOS | BRF_OPT }, // 0xa4 - BIOS "D" (prom)
+	{ "v3.3j",			0x0020, 0x51eef657, BRF_BIOS | BRF_OPT }, // 0xa5 - BIOS "D" (prom)
+
+	{ "",             	0x0000, 0x00000000, 0                  }, // 0xa6
+	{ "",             	0x0000, 0x00000000, 0                  }, // 0xa7
+
+	{ "cassmcu.1c", 	0x0400, 0xa6df18fd, BRF_BIOS | BRF_PRG }, // 0xa8 - MCU BIOS (Shared)
 };
 
 STD_ROM_PICK(decocass)
@@ -4038,14 +4147,10 @@ struct BurnDriver BurnDrvCtisland2 = {
 };
 
 
-// Treasure Island (DECO Cassette) (unk)
+// Treasure Island (DECO Cassette) (Europe?)
 
 static struct BurnRomInfo ctisland3RomDesc[] = {
-#ifdef ROM_VERIFY
 	{ "ctisland3.pro",	0x0020, 0xb87b56a7, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
-#else
-	{ "de-0061.pro",	0x0020, 0xe09ae5de, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
-#endif
 
 	{ "ctislnd3.cas",	0x8000, 0x45464e1e, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
 
@@ -4058,16 +4163,49 @@ static struct BurnRomInfo ctisland3RomDesc[] = {
 STDROMPICKEXT(ctisland3, ctisland3, decocass)
 STD_ROM_FN(ctisland3)
 
+static UINT8 type1_latch_ctisland3[8] = { T1LATCHINV,T1PROM,T1PROM,T1DIRECT,T1PROM, T1PROM,T1LATCH,T1PROM };
+
+static INT32 Ctisland3Init()
+{
+	type1_map = type1_latch_ctisland3;
+	type1_inmap = MAKE_MAP(0,1,2,3,4,5,6,7);
+	type1_outmap = MAKE_MAP(0,1,2,3,4,5,6,7);
+
+	e900_enable = 1;
+
+	fourway_mode = 1;
+
+	return DecocassInit(decocass_type1_read,NULL);
+}
+
 struct BurnDriver BurnDrvCtisland3 = {
 	"ctisland3", "ctisland", "decocass", NULL, "1981",
-	"Treasure Island (DECO Cassette) (unk)\0", NULL, "Data East Corporation", "Cassette System",
+	"Treasure Island (DECO Cassette) (Europe?)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, ctisland3RomInfo, ctisland3RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CtislandDIPInfo,
-	CtislandInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	NULL, ctisland3RomInfo, ctisland3RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, Ctisland3DIPInfo,
+	Ctisland3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
 
+static struct BurnRomInfo ctowerRomDesc[] = {
+	{ "ctower.pro",	0x0020, 0x32e9dcd7, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+
+	{ "ctower.cas",	0x6900, 0x94ad1dd6, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+};
+
+STDROMPICKEXT(ctower, ctower, decocass)
+STD_ROM_FN(ctower)
+
+struct BurnDriver BurnDrvCtower = {
+	"ctower", NULL, "decocass", NULL, "1981",
+	"The Tower (DECO Cassette) (Europe?)\0", NULL, "Data East Corporation", "Cassette System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	NULL, ctowerRomInfo, ctowerRomName, NULL, NULL, NULL, NULL, CtowerInputInfo, CtowerDIPInfo,
+	Cfboy0a1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	240, 256, 3, 4
+};
 
 // Explorer (DECO Cassette) (US)
 

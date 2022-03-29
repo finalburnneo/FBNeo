@@ -23,6 +23,7 @@ static UINT8 *DrvSndROM;
 static UINT8 *DrvKonRAM;
 static UINT8 *DrvPalRAM;
 static UINT8 *DrvZ80RAM;
+static UINT8 *DefaultEEPROM = NULL;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -30,7 +31,6 @@ static UINT8 DrvRecalc;
 static UINT8 *nDrvBank;
 
 static INT32 videobank;
-static INT32 init_eeprom_count;
 static INT32 irq_enabled;
 static INT32 vblank = 0;
 static INT32 bankoffset;
@@ -273,16 +273,7 @@ UINT8 vendetta_main_read(UINT16 address)
 			return DrvInputs[3];
 
 		case 0x5fd0:
-		{
-			INT32 res = (EEPROMRead() & 1) | vblank | ((DrvJoy6 << 2) ^ 0xf6);
-
-			if (init_eeprom_count > 0)
-			{
-				init_eeprom_count--;
-				res &= 0xfb;
-			}
-			return res;
-		}
+			return (EEPROMRead() & 1) | vblank | ((DrvJoy6 << 2) ^ 0xf6);
 
 		case 0x5fd1:
 			return DrvInputs[4];
@@ -404,16 +395,7 @@ UINT8 esckids_main_read(UINT16 address)
 			return DrvInputs[3];
 
 		case 0x3f92:
-		{
-			INT32 res = (EEPROMRead() & 1) | vblank | ((DrvJoy6 << 2) ^ 0xf6);
-
-			if (init_eeprom_count > 0)
-			{
-				init_eeprom_count--;
-				res &= 0xfb;
-			}
-			return res;
-		}
+			return (EEPROMRead() & 1) | vblank | ((DrvJoy6 << 2) ^ 0xf6);
 
 		case 0x3f93:
 			return DrvInputs[4];
@@ -552,14 +534,10 @@ static INT32 DrvDoReset()
 
 	videobank = 0;
 
-	if (EEPROMAvailable()) {
-		init_eeprom_count = 0;
-	} else {
-		init_eeprom_count = 1000;
-	}
-
 	irq_enabled = 0;
 	videobank = 0;
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -577,6 +555,8 @@ static INT32 MemIndex()
 	DrvGfxROMExp1		= Next; Next += 0x800000;
 
 	DrvSndROM		= Next; Next += 0x100000;
+
+	DefaultEEPROM	= Next; Next += 0x000080;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x800 * sizeof(UINT32);
 
@@ -633,6 +613,8 @@ static INT32 DrvInit(INT32 nGame)
 		if (BurnLoadRomExt(DrvGfxROM1 + 0x000006,  7, 8, 2)) return 1;
 
 		if (BurnLoadRom(DrvSndROM  + 0x000000,  8, 1)) return 1;
+
+		if (BurnLoadRom(DefaultEEPROM, 9, 1)) return 1;
 
 		K052109GfxDecode(DrvGfxROM0, DrvGfxROMExp0, 0x100000);
 		K053247GfxDecode(DrvGfxROM1, DrvGfxROMExp1, 0x400000);
@@ -695,6 +677,7 @@ static INT32 DrvInit(INT32 nGame)
 	ZetClose();
 
 	EEPROMInit(&vendetta_eeprom_intf);
+	if (!EEPROMAvailable()) EEPROMFill(DefaultEEPROM,0, 0x80);
 
 	BurnYM2151Init(3579545);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
@@ -859,7 +842,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029705;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -909,7 +892,7 @@ static struct BurnRomInfo vendettaRomDesc[] = {
 
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },   //  9 EEPROM
 };
 
 STD_ROM_PICK(vendetta)
@@ -924,7 +907,7 @@ struct BurnDriver BurnDrvVendetta = {
 	"vendetta", NULL, NULL, NULL, "1991",
 	"Vendetta (World, 4 Players ver. T)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, vendettaRomInfo, vendettaRomName, NULL, NULL, NULL, NULL, Vendet4pInputInfo, NULL,
 	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
@@ -948,7 +931,7 @@ static struct BurnRomInfo vendettarRomDesc[] = {
 
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendettar.nv",  0x000080, 0xec3f0449, BRF_OPT },
+	{ "vendettar.nv",  0x000080, 0xec3f0449, BRF_ESS | BRF_PRG },  //  9 EEPROM
 };
 
 STD_ROM_PICK(vendettar)
@@ -958,7 +941,7 @@ struct BurnDriver BurnDrvVendettar = {
 	"vendettar", "vendetta", NULL, NULL, "1991",
 	"Vendetta (US, 4 Players ver. R)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, vendettarRomInfo, vendettarRomName, NULL, NULL, NULL, NULL, Vendet4pInputInfo, NULL,
 	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
@@ -982,7 +965,7 @@ static struct BurnRomInfo vendettazRomDesc[] = {
 
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },   //  9 EEPROM
 };
 
 STD_ROM_PICK(vendettaz)
@@ -992,7 +975,7 @@ struct BurnDriver BurnDrvVendettaz = {
 	"vendettaz", "vendetta", NULL, NULL, "1991",
 	"Vendetta (Asia, 4 Players ver. Z)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, vendettazRomInfo, vendettazRomName, NULL, NULL, NULL, NULL, Vendet4pInputInfo, NULL,
 	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
@@ -1017,7 +1000,7 @@ static struct BurnRomInfo vendettaunRomDesc[] = {
 
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },   //  9 EEPROM
 };
 
 STD_ROM_PICK(vendettaun)
@@ -1027,7 +1010,7 @@ struct BurnDriver BurnDrvVendettaun = {
 	"vendettaun", "vendetta", NULL, NULL, "1991",
 	"Vendetta (World, 4 Players, ver. ?)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, vendettaunRomInfo, vendettaunRomName, NULL, NULL, NULL, NULL, Vendet4pInputInfo, NULL,
 	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
@@ -1051,7 +1034,7 @@ static struct BurnRomInfo vendetta2pwRomDesc[] = {
 
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },   //  9 EEPROM
 };
 
 STD_ROM_PICK(vendetta2pw)
@@ -1061,7 +1044,7 @@ struct BurnDriver BurnDrvVendetta2pw = {
 	"vendetta2pw", "vendetta", NULL, NULL, "1991",
 	"Vendetta (World, 2 Players ver. W)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, vendetta2pwRomInfo, vendetta2pwRomName, NULL, NULL, NULL, NULL, VendettaInputInfo, NULL,
 	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
@@ -1085,7 +1068,7 @@ static struct BurnRomInfo vendetta2pebaRomDesc[] = {
 
 	{ "081a03",            0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendetta.nv",    0x000080, 0xfbac4e30, BRF_OPT },
+	{ "vendetta.nv",    0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },        //  9 EEPROM
 };
 
 STD_ROM_PICK(vendetta2peba)
@@ -1095,7 +1078,7 @@ struct BurnDriver BurnDrvVendetta2peba = {
     "vendetta2peba", "vendetta", NULL, NULL, "1991",
     "Vendetta (World, 2 Players ver. EB-A?)\0", NULL, "Konami", "GX081",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
     NULL, vendetta2pebaRomInfo, vendetta2pebaRomName, NULL, NULL, NULL, NULL, VendettaInputInfo, NULL,
     VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
     304, 224, 4, 3
@@ -1120,7 +1103,7 @@ static struct BurnRomInfo vendetta2punRomDesc[] = {
 
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },   //  9 EEPROM
 };
 
 STD_ROM_PICK(vendetta2pun)
@@ -1130,7 +1113,7 @@ struct BurnDriver BurnDrvVendetta2pun = {
 	"vendetta2pun", "vendetta", NULL, NULL, "1991",
 	"Vendetta (World, 2 Players ver. ?)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, vendetta2punRomInfo, vendetta2punRomName, NULL, NULL, NULL, NULL, VendettaInputInfo, NULL,
 	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
@@ -1154,7 +1137,7 @@ static struct BurnRomInfo vendetta2puRomDesc[] = {
 
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },   //  9 EEPROM
 };
 
 STD_ROM_PICK(vendetta2pu)
@@ -1164,7 +1147,7 @@ struct BurnDriver BurnDrvVendetta2pu = {
 	"vendetta2pu", "vendetta", NULL, NULL, "1991",
 	"Vendetta (Asia, 2 Players ver. U)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, vendetta2puRomInfo, vendetta2puRomName, NULL, NULL, NULL, NULL, VendettaInputInfo, NULL,
 	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
@@ -1188,7 +1171,7 @@ static struct BurnRomInfo vendetta2pdRomDesc[] = {
 
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },   //  9 EEPROM
 };
 
 STD_ROM_PICK(vendetta2pd)
@@ -1198,7 +1181,7 @@ struct BurnDriver BurnDrvVendetta2pd = {
 	"vendetta2pd", "vendetta", NULL, NULL, "1991",
 	"Vendetta (Asia, 2 Players ver. D)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, vendetta2pdRomInfo, vendetta2pdRomName, NULL, NULL, NULL, NULL, VendettaInputInfo, NULL,
 	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
@@ -1222,7 +1205,7 @@ static struct BurnRomInfo vendettanRomDesc[] = {
 
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendettaj.nv",  0x000080, 0x3550a54e, BRF_OPT },
+	{ "vendettaj.nv",  0x000080, 0x3550a54e, BRF_ESS | BRF_PRG },  //  9 EEPROM
 };
 
 STD_ROM_PICK(vendettan)
@@ -1232,7 +1215,7 @@ struct BurnDriver BurnDrvVendettan = {
 	"vendettan", "vendetta", NULL, NULL, "1991",
 	"Crime Fighters 2 (Japan, 4 Players ver. N)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, vendettanRomInfo, vendettanRomName, NULL, NULL, NULL, NULL, Vendet4pInputInfo, NULL,
 	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
@@ -1256,7 +1239,7 @@ static struct BurnRomInfo vendetta2ppRomDesc[] = {
 
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendettaj.nv",  0x000080, 0x3550a54e, BRF_OPT },
+	{ "vendettaj.nv",  0x000080, 0x3550a54e, BRF_ESS | BRF_PRG },  //  9 EEPROM
 };
 
 STD_ROM_PICK(vendetta2pp)
@@ -1266,7 +1249,7 @@ struct BurnDriver BurnDrvVendetta2pp = {
 	"vendetta2pp", "vendetta", NULL, NULL, "1991",
 	"Crime Fighters 2 (Japan, 2 Players ver. P)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, vendetta2ppRomInfo, vendetta2ppRomName, NULL, NULL, NULL, NULL, VendettaInputInfo, NULL,
 	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
@@ -1276,21 +1259,21 @@ struct BurnDriver BurnDrvVendetta2pp = {
 // Escape Kids (Asia, 4 Players)
 
 static struct BurnRomInfo esckidsRomDesc[] = {
-	{ "17c.bin",	0x020000, 0x9dfba99c, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
+	{ "17c.bin", 0x020000, 0x9dfba99c, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
 
-	{ "975f02",	0x010000, 0x994fb229, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
+	{ "975f02",	0x010000, 0x994fb229, 2 | BRF_PRG | BRF_ESS },  //  1 Z80 Code
 
-	{ "975c09",	0x080000, 0xbc52210e, 3 | BRF_GRA },           //  2 K052109 Tiles
-	{ "975c08",	0x080000, 0xfcff9256, 3 | BRF_GRA },           //  3
+	{ "975c09",	0x080000, 0xbc52210e, 3 | BRF_GRA },            //  2 K052109 Tiles
+	{ "975c08",	0x080000, 0xfcff9256, 3 | BRF_GRA },            //  3
 
-	{ "975c04",	0x100000, 0x15688a6f, 4 | BRF_GRA },           //  4 K053247 Tiles
-	{ "975c05",	0x100000, 0x1ff33bb7, 4 | BRF_GRA },           //  5
-	{ "975c06",	0x100000, 0x36d410f9, 4 | BRF_GRA },           //  6
-	{ "975c07",	0x100000, 0x97ec541e, 4 | BRF_GRA },           //  7
+	{ "975c04",	0x100000, 0x15688a6f, 4 | BRF_GRA },            //  4 K053247 Tiles
+	{ "975c05",	0x100000, 0x1ff33bb7, 4 | BRF_GRA },            //  5
+	{ "975c06",	0x100000, 0x36d410f9, 4 | BRF_GRA },            //  6
+	{ "975c07",	0x100000, 0x97ec541e, 4 | BRF_GRA },            //  7
 
-	{ "975c03",	0x080000, 0xdc4a1707, 5 | BRF_SND },           //  8 K053260 Samples
+	{ "975c03",	0x080000, 0xdc4a1707, 5 | BRF_SND },            //  8 K053260 Samples
 
-	{ "esckids.nv",  0x000080, 0xa8522e1f, BRF_OPT },
+	{ "esckids.nv",  0x000080, 0xa8522e1f, BRF_ESS | BRF_PRG }, //  9 EEPROM
 };
 
 STD_ROM_PICK(esckids)
@@ -1305,7 +1288,7 @@ struct BurnDriver BurnDrvEsckids = {
 	"esckids", NULL, NULL, NULL, "1991",
 	"Escape Kids (Asia, 4 Players)\0", NULL, "Konami", "GX975",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
 	NULL, esckidsRomInfo, esckidsRomName, NULL, NULL, NULL, NULL, EsckidsInputInfo, NULL,
 	EsckidsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
@@ -1315,21 +1298,21 @@ struct BurnDriver BurnDrvEsckids = {
 // Escape Kids (Japan, 2 Players)
 
 static struct BurnRomInfo esckidsjRomDesc[] = {
-	{ "975r01",	0x020000, 0x7b5c5572, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
+	{ "975r01",	0x020000, 0x7b5c5572, 1 | BRF_PRG | BRF_ESS },   //  0 Konami Custom Code
 
-	{ "975f02",	0x010000, 0x994fb229, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
+	{ "975f02",	0x010000, 0x994fb229, 2 | BRF_PRG | BRF_ESS },   //  1 Z80 Code
 
-	{ "975c09",	0x080000, 0xbc52210e, 3 | BRF_GRA },           //  2 K052109 Tiles
-	{ "975c08",	0x080000, 0xfcff9256, 3 | BRF_GRA },           //  3
+	{ "975c09",	0x080000, 0xbc52210e, 3 | BRF_GRA },             //  2 K052109 Tiles
+	{ "975c08",	0x080000, 0xfcff9256, 3 | BRF_GRA },             //  3
 
-	{ "975c04",	0x100000, 0x15688a6f, 4 | BRF_GRA },           //  4 K053247 Tiles
-	{ "975c05",	0x100000, 0x1ff33bb7, 4 | BRF_GRA },           //  5
-	{ "975c06",	0x100000, 0x36d410f9, 4 | BRF_GRA },           //  6
-	{ "975c07",	0x100000, 0x97ec541e, 4 | BRF_GRA },           //  7
+	{ "975c04",	0x100000, 0x15688a6f, 4 | BRF_GRA },             //  4 K053247 Tiles
+	{ "975c05",	0x100000, 0x1ff33bb7, 4 | BRF_GRA },             //  5
+	{ "975c06",	0x100000, 0x36d410f9, 4 | BRF_GRA },             //  6
+	{ "975c07",	0x100000, 0x97ec541e, 4 | BRF_GRA },             //  7
 
-	{ "975c03",	0x080000, 0xdc4a1707, 5 | BRF_SND },           //  8 K053260 Samples
+	{ "975c03",	0x080000, 0xdc4a1707, 5 | BRF_SND },             //  8 K053260 Samples
 
-	{ "esckidsj.nv",  0x000080, 0x985e2a2d, BRF_OPT },
+	{ "esckidsj.nv",  0x000080, 0x985e2a2d, BRF_ESS | BRF_PRG }, //  9 EEPROM
 };
 
 STD_ROM_PICK(esckidsj)
@@ -1339,7 +1322,7 @@ struct BurnDriver BurnDrvEsckidsj = {
 	"esckidsj", "esckids", NULL, NULL, "1991",
 	"Escape Kids (Japan, 2 Players)\0", NULL, "Konami", "GX975",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
 	NULL, esckidsjRomInfo, esckidsjRomName, NULL, NULL, NULL, NULL, EsckidsjInputInfo, NULL,
 	EsckidsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 240, 4, 3

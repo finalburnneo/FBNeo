@@ -35,8 +35,10 @@ static UINT8 DrvDipBtn[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 static UINT8 DrvInput[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvReset = 0;
-static UINT8 nBrightness = 0xFF;
 
+static INT32 nExtraCycles;
+
+static UINT8 nBrightness;
 static UINT8 okibank;
 static UINT8 video_enable;
 static UINT8 irqs_enable;
@@ -48,16 +50,13 @@ static UINT16 bg0scrollx, bg0scrolly, bg1scrollx, bg1scrolly;
 static UINT8 nSoundlatch = 0;
 static UINT8 bRecalcPalette = 0;
 
-static INT32 nZ80Cycles;
-
 static struct BurnInputInfo shadfrceInputList[] = {
-	{"P1 Coin",	BIT_DIGITAL,	DrvDipBtn + 0,	"p1 coin"	},
+	{"P1 Coin",		BIT_DIGITAL,	DrvDipBtn + 0,	"p1 coin"	},
 	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-
 	{"P1 Right",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
-	{"P1 Left",	BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
-	{"P1 Up",	BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
-	{"P1 Down",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
 	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",	BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",	BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
@@ -65,13 +64,12 @@ static struct BurnInputInfo shadfrceInputList[] = {
 	{"P1 Button 5",	BIT_DIGITAL,	DrvButton + 1,	"p1 fire 5"	},
 	{"P1 Button 6",	BIT_DIGITAL,	DrvButton + 2,	"p1 fire 6"	},
 
-	{"P2 Coin",	BIT_DIGITAL,	DrvDipBtn + 1,	"p2 coin"	},
+	{"P2 Coin",		BIT_DIGITAL,	DrvDipBtn + 1,	"p2 coin"	},
 	{"P2 Start",	BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-
 	{"P2 Right",	BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
-	{"P2 Left",	BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
-	{"P2 Up",	BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
-	{"P2 Down",	BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
 	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",	BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",	BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"	},
@@ -79,11 +77,11 @@ static struct BurnInputInfo shadfrceInputList[] = {
 	{"P2 Button 5",	BIT_DIGITAL,	DrvButton + 4,	"p2 fire 5"	},
 	{"P2 Button 6",	BIT_DIGITAL,	DrvButton + 5,	"p2 fire 6"	},
 
-	{"Reset",	BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",	BIT_DIPSWITCH,	DrvInput + 1,	"dip"		},
-	{"Dip B",	BIT_DIPSWITCH,	DrvInput + 3,	"dip"		},
-	{"Dip C",	BIT_DIPSWITCH,	DrvInput + 5,	"dip"		},
-	{"Dip D",	BIT_DIPSWITCH,	DrvInput + 7,	"dip"		},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",		BIT_DIPSWITCH,	DrvInput + 1,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvInput + 3,	"dip"		},
+	{"Dip C",		BIT_DIPSWITCH,	DrvInput + 5,	"dip"		},
+	{"Dip D",		BIT_DIPSWITCH,	DrvInput + 7,	"dip"		},
 };
 
 STDINPUTINFO(shadfrce)
@@ -175,7 +173,7 @@ static UINT8 __fastcall shadfrceReadByte(UINT32 sekAddress)
 			return ~DrvInput[4];
 
 		case 0x1D0026:
-			return ~(DrvInput[7] | (bVBlank << 2));
+			return (~DrvInput[7] & ~4) | (bVBlank << 2);
 
 		case 0x1D0027:
 			return ~DrvInput[6];
@@ -207,13 +205,19 @@ static UINT16 __fastcall shadfrceReadWord(UINT32 sekAddress)
 			return ~(DrvInput[4] | (DrvInput[5] << 8)) & 0x3FFF;
 
 		case 0x1D0026:
-			return ~(DrvInput[6] | ( (DrvInput[7] | (bVBlank << 2))<< 8));
+			return ~((DrvInput[6] | (DrvInput[7] << 8)) & ~0x400) | (bVBlank << (2+8));
 
 	//	default:
 	//		bprintf(PRINT_NORMAL, _T("Attempt to read word value of location %x\n"), sekAddress);
 	}
 
 	return 0;
+}
+
+static void sync_sound()
+{
+	INT32 cyc = (INT64)SekTotalCycles() * 3579545 / 14000000;
+	BurnTimerUpdate(cyc);
 }
 
 static void __fastcall shadfrceWriteByte(UINT32 sekAddress, UINT8 byteValue)
@@ -258,6 +262,7 @@ static void __fastcall shadfrceWriteByte(UINT32 sekAddress, UINT8 byteValue)
 
 		case 0x1D000C:
 			nSoundlatch = byteValue;
+			sync_sound();
 			ZetNmi();
 		break;
 
@@ -266,6 +271,7 @@ static void __fastcall shadfrceWriteByte(UINT32 sekAddress, UINT8 byteValue)
 			for(INT32 i=0;i<0x4000;i++) CalcCol(i);
 		break;
 
+		case 0x1C0009:
 		case 0x1C000D:
 		case 0x1D0011:
 		case 0x1D0013:
@@ -273,8 +279,8 @@ static void __fastcall shadfrceWriteByte(UINT32 sekAddress, UINT8 byteValue)
 		case 0x1D0017:	// NOP 
 		break;
 
-	//	default:
-	//		bprintf(PRINT_NORMAL, _T("Attempt to write byte value %x to location %x\n"), byteValue, sekAddress);
+		default:
+			bprintf(PRINT_NORMAL, _T("Attempt to write byte value %x to location %x\n"), byteValue, sekAddress);
 	}
 }
 
@@ -323,8 +329,16 @@ static void __fastcall shadfrceWriteWord(UINT32 sekAddress, UINT16 wordValue)
 			raster_scanline = 0;
 		break;
 
-	//	default:
-	//		bprintf(PRINT_NORMAL, _T("Attempt to write word value %x to location %x\n"), wordValue, sekAddress);
+		case 0x1C0008:
+		case 0x1C000C:
+		case 0x1D0010:
+		case 0x1D0012:
+		case 0x1D0014:
+		case 0x1D0018:	// NOP
+		break;
+
+		default:
+			bprintf(PRINT_NORMAL, _T("Attempt to write word value %x to location %x\n"), wordValue, sekAddress);
 	}
 }
 
@@ -349,23 +363,20 @@ static UINT8 __fastcall shadfrceZRead(UINT16 a)
 		case 0xE000:
 			return nSoundlatch;
 
-	//	default:
-	//		bprintf(PRINT_NORMAL, _T("Z80 address %04X read.\n"), a);
+		default:
+			bprintf(PRINT_NORMAL, _T("Z80 address %04X read.\n"), a);
 	}
 
 	return 0;
 }
 
-void __fastcall shadfrceZWrite(UINT16 a, UINT8 d)
+static void __fastcall shadfrceZWrite(UINT16 a, UINT8 d)
 {
 	switch (a)
 	{
 		case 0xC800:
-			BurnYM2151SelectRegister(d);
-		break;
-
 		case 0xC801:
-			BurnYM2151WriteRegister(d);
+			BurnYM2151Write(a & 1, d);
 		break;
 
 		case 0xD800:
@@ -377,28 +388,22 @@ void __fastcall shadfrceZWrite(UINT16 a, UINT8 d)
 			MSM6295SetBank(0, DrvOkiROM + okibank * 0x40000, 0, 0x3ffff);
 		break;
 
-	//	default:
-	//		bprintf(PRINT_NORMAL, _T("Z80 address %04X -> %02X.\n"), a, d);
+		default:
+			bprintf(PRINT_NORMAL, _T("Z80 address %04X -> %02X.\n"), a, d);
 	}
 }
 
 static void shadfrceYM2151IRQHandler(INT32 nStatus)
 {
-	if (nStatus) {
-		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
-		ZetRun(1024);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvDoReset()
 {
 	SekOpen(0);
-	SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	SekReset();
 	SekClose();
-	
+
 	ZetOpen(0);
 	ZetReset();
 	ZetClose();
@@ -412,6 +417,9 @@ static INT32 DrvDoReset()
 	raster_scanline = 0;
 	raster_irq_enable = 0;
 	previous_irq_value = 0;
+	nBrightness = 0xff;
+
+	nExtraCycles = 0;
 
 	HiscoreReset();
 
@@ -506,7 +514,7 @@ static tilemap_callback( foreground )
 {
 	INT32 attr = BURN_ENDIAN_SWAP_INT16(RamFg[offs * 2 + 1]) & 0xff;
 
-	TILE_SET_INFO(0, (BURN_ENDIAN_SWAP_INT16(RamFg[offs * 2]) & 0xff) + (attr << 8), attr >> 4, 0);
+	TILE_SET_INFO(0, (BURN_ENDIAN_SWAP_INT16(RamFg[offs * 2]) & 0xff) + ((attr & 0xf) << 8), ((attr & 0xf0) >> 4), 0);
 }
 
 static INT32 shadfrceInit()
@@ -518,7 +526,9 @@ static INT32 shadfrceInit()
 	INT32 nLen = MemEnd - (UINT8 *)0;
 	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(Mem, 0, nLen);
-	MemIndex();	
+	MemIndex();
+
+	BurnSetRefreshRate(57.44);
 
 	{
 		nRet = BurnLoadRom(Rom68K + 0x000000, 0, 2); if (nRet != 0) return 1;
@@ -567,18 +577,19 @@ static INT32 shadfrceInit()
 	ZetOpen(0);
 	ZetMapMemory(RomZ80,		0x0000, 0xbfff, MAP_ROM);
 	ZetMapMemory(RamZ80,		0xc000, 0xc7ff, MAP_RAM);
-	ZetMapMemory(RamZ80 + 0x0800,	0xf000, 0xffff, MAP_RAM);	
+	ZetMapMemory(RamZ80 + 0x0800,	0xf000, 0xffff, MAP_RAM);
 	ZetSetReadHandler(shadfrceZRead);
 	ZetSetWriteHandler(shadfrceZWrite);
 	ZetClose();
 
-	BurnYM2151Init(3579545);		// 3.5795 MHz
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);		// 3.5795 MHz
 	YM2151SetIrqHandler(0, &shadfrceYM2151IRQHandler);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachZet(3579545);
+
 	MSM6295Init(0, 12000, 1);		// 12.000 KHz
 	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
-	nZ80Cycles = 3579545 * 100 / nBurnFPS;
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, foreground_map_callback,   8,  8, 64, 32);
@@ -586,7 +597,7 @@ static INT32 shadfrceInit()
 	GenericTilemapInit(2, TILEMAP_SCAN_ROWS, background1_map_callback, 16, 16, 32, 32);
 	GenericTilemapSetGfx(0, RomGfx01, 6 /*actually 4*/,  8,  8, 0x040000, 0x0000, 0xff);
 	GenericTilemapSetGfx(1, RomGfx03, 6, 16, 16, 0x400000, 0x2000, 0x7f);
-//	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -8);
+	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -8);
 	GenericTilemapSetTransparent(0, 0);
 	GenericTilemapSetTransparent(1, 0);
 
@@ -634,10 +645,10 @@ static void drawSprites()
 		{
 			for (INT32 hcount = 0; hcount < height; hcount++)
 			{
-				RenderPrioSprite(pTransDraw, RomGfx02, tile+hcount, 0x1000 + color, 0, xpos,       ypos-hcount*16-16,       flipx, flipy, 16, 16, pri_mask);
-				RenderPrioSprite(pTransDraw, RomGfx02, tile+hcount, 0x1000 + color, 0, xpos-0x200, ypos-hcount*16-16,       flipx, flipy, 16, 16, pri_mask);
-				RenderPrioSprite(pTransDraw, RomGfx02, tile+hcount, 0x1000 + color, 0, xpos,       ypos-hcount*16-16+0x200, flipx, flipy, 16, 16, pri_mask);
-				RenderPrioSprite(pTransDraw, RomGfx02, tile+hcount, 0x1000 + color, 0, xpos-0x200, ypos-hcount*16-16+0x200, flipx, flipy, 16, 16, pri_mask);
+				RenderPrioSprite(pTransDraw, RomGfx02, tile+hcount, 0x1000 + color, 0, xpos,       ypos-hcount*16-24,       flipx, flipy, 16, 16, pri_mask);
+				RenderPrioSprite(pTransDraw, RomGfx02, tile+hcount, 0x1000 + color, 0, xpos-0x200, ypos-hcount*16-24,       flipx, flipy, 16, 16, pri_mask);
+				RenderPrioSprite(pTransDraw, RomGfx02, tile+hcount, 0x1000 + color, 0, xpos,       ypos-hcount*16-24+0x200, flipx, flipy, 16, 16, pri_mask);
+				RenderPrioSprite(pTransDraw, RomGfx02, tile+hcount, 0x1000 + color, 0, xpos-0x200, ypos-hcount*16-24+0x200, flipx, flipy, 16, 16, pri_mask);
 			}
 		}
 
@@ -665,6 +676,9 @@ static void draw_bg_layer_raster()
 
 	if (video_enable)
 	{
+		GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -8);
+		GenericTilemapSetOffsets(1, 0, +8);
+
 		GenericTilemapSetScrollX(2, bg1scrollx);
 		GenericTilemapSetScrollY(2, bg1scrolly);
 
@@ -688,17 +702,20 @@ static INT32 shadfrceDraw()
 	if (video_enable)
 	{
 		if (raster_irq_enable == 0) {
+			GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -8);
 			GenericTilemapSetScrollX(1, bg0scrollx);
 			GenericTilemapSetScrollY(1, bg0scrolly);
 			GenericTilemapSetScrollX(2, bg1scrollx);
 			GenericTilemapSetScrollY(2, bg1scrolly);
+
+			BurnTransferClear();
 
 			if (nBurnLayer & 1) GenericTilemapDraw(2, pTransDraw, 0);
 			if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 1);
 		}
 
 		if (nBurnLayer & 4) drawSprites();
-	
+
 		if (nBurnLayer & 8) GenericTilemapDraw(0, pTransDraw, 0);
 	}
 	else
@@ -735,75 +752,62 @@ static INT32 shadfrceFrame()
 	ZetNewFrame();
 
 	INT32 nInterleave = 272;
-	INT32 nCyclesTotal[2] = { 14000000 / 60, 3579545 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
- 	INT32 nSoundBufferPos = 0;
+	INT32 nCyclesTotal[2] = { (INT32)(14000000 / 57.444855), (INT32)(3579545 / 57.444855) };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
- 
-	bVBlank = 1;
 
-	for (INT32 scanline = 0; scanline < nInterleave; scanline++)
+	bVBlank = 0;
+
+	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		if (i == 248-1) {
+			bVBlank = 1;
+		}
 
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
-
-		if (raster_irq_enable && (scanline == raster_scanline)) {
+		if (raster_irq_enable && (i == raster_scanline)) {
 			raster_scanline = (raster_scanline + 1) % 240;
-			if (raster_scanline > 0) {
-				SekSetIRQLine(1, CPU_IRQSTATUS_ACK);
-			}
+			SekSetIRQLine(1, CPU_IRQSTATUS_ACK);
 		}
 
 		if (irqs_enable) {
-			if ((scanline & 0xf) == 0 && (scanline > 0)) {
+			if ((i & 0xf) == 0) {
 				SekSetIRQLine(2, CPU_IRQSTATUS_ACK);
 			}
 
-			if (scanline == 248) {
+			if (i == 248) {
 				SekSetIRQLine(3, CPU_IRQSTATUS_ACK);
 			}
 		}
 
-		if (scanline == 0 || scanline == 247) {
-			bVBlank = 0;
-		}
+		CPU_RUN(0, Sek);
 
-		if (scanline == 0 && raster_irq_enable) {
+		CPU_RUN_TIMER(1);
+
+		if (i == 8 && raster_irq_enable) {
 			draw_bg_layer_raster();
 		}
 
-		if (scanline < 256 && raster_irq_enable) {
-			draw_line(scanline);
+		if (i >= 8 && i < 248 && raster_irq_enable) {
+			draw_line(i-8);
 		}
+		if (i == 248) {
+			if (pBurnDraw) {
+				shadfrceDraw();
+			}
 
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = (nBurnSoundLen / nInterleave) - nSoundBufferPos;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos * 2);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
+			memcpy (SprBuf, RamSpr, 0x2000); // buffer one frame
 		}
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		BurnYM2151Render(pSoundBuf, nSegmentLength);
-		MSM6295Render(0, pSoundBuf, nSegmentLength);
-		nSoundBufferPos += nSegmentLength;
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();
 	SekClose();
-
-	if (pBurnDraw) {
-		shadfrceDraw();
-	}
-
-	memcpy (SprBuf, RamSpr, 0x2000); // buffer one frame
 
 	return 0;
 }
@@ -830,15 +834,20 @@ static INT32 shadfrceScan(INT32 nAction,INT32 *pnMin)
 		MSM6295Scan(nAction, pnMin);
 		BurnYM2151Scan(nAction, pnMin);
 
-		SCAN_VAR(DrvInput);
-		SCAN_VAR(nBrightness);
+		SCAN_VAR(okibank);
+		SCAN_VAR(video_enable);
+		SCAN_VAR(irqs_enable);
+		SCAN_VAR(raster_scanline);
+		SCAN_VAR(raster_irq_enable);
+		SCAN_VAR(previous_irq_value);
 		SCAN_VAR(bg0scrollx);
 		SCAN_VAR(bg0scrolly);
 		SCAN_VAR(bg1scrollx);
 		SCAN_VAR(bg1scrolly);
 		SCAN_VAR(nSoundlatch);
-		SCAN_VAR(video_enable);
-		SCAN_VAR(okibank);
+		SCAN_VAR(nBrightness);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -887,7 +896,7 @@ struct BurnDriver BurnDrvShadfrce = {
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, shadfrceRomInfo, shadfrceRomName, NULL, NULL, NULL, NULL, shadfrceInputInfo, shadfrceDIPInfo,
 	shadfrceInit, shadfrceExit, shadfrceFrame, shadfrceDraw, shadfrceScan, &bRecalcPalette, 0x4000,
-	320, 256, 4, 3
+	320, 240, 4, 3
 };
 
 
@@ -926,7 +935,7 @@ struct BurnDriver BurnDrvShadfrceu = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, shadfrceuRomInfo, shadfrceuRomName, NULL, NULL, NULL, NULL, shadfrceInputInfo, shadfrceDIPInfo,
 	shadfrceInit, shadfrceExit, shadfrceFrame, shadfrceDraw, shadfrceScan, &bRecalcPalette, 0x4000,
-	320, 256, 4, 3
+	320, 240, 4, 3
 };
 
 
@@ -965,5 +974,5 @@ struct BurnDriver BurnDrvShadfrcej = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, shadfrcejRomInfo, shadfrcejRomName, NULL, NULL, NULL, NULL, shadfrceInputInfo, shadfrceDIPInfo,
 	shadfrceInit, shadfrceExit, shadfrceFrame, shadfrceDraw, shadfrceScan, &bRecalcPalette, 0x4000,
-	320, 256, 4, 3
+	320, 240, 4, 3
 };

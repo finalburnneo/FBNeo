@@ -104,6 +104,8 @@ incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated \
 
 ifdef WINDOWS
 lib	= -lstdc++ `sdl2-config --libs` -lopengl32 -lSDL2_image -lm
+else ifdef DARWIN
+lib	= -lstdc++ `sdl2-config --libs` -lSDL2_image -lm
 else
 lib	= -lstdc++ `sdl2-config --libs` -lGL -lSDL2_image -lm
 endif
@@ -117,7 +119,7 @@ lib += -lpthread -lpulse-simple
 endif
 
 ifdef DARWIN
-lib += -L/System/Library/Frameworks/OpenGL.framework/Libraries/
+lib += -framework OpenGL
 endif
 
 ifdef INCLUDE_SWITCHRES
@@ -179,8 +181,7 @@ autdrv := $(drvsrc:.cpp=.o)
 #
 
 ifdef DARWIN
-	# GCC 4.2.1 Segfaults during build
-	CC	= gcc-9
+	CC	= gcc
 else
 	CC	= gcc
 endif
@@ -249,6 +250,10 @@ endif
 
 ifdef ROM_VERIFY
 	DEF	:= $(DEF) -DROM_VERIFY
+endif
+
+ifdef HACK_SOUND
+	DEF	:= $(DEF) -DCPS1_HACK_QSOUND
 endif
 
 ifdef INCLUDE_7Z_SUPPORT

@@ -911,11 +911,11 @@ struct BurnDriver BurnDrvUmk3te = {
 };
 
 
-// Ultimate Mortal Kombat 3 Uk (2022-01-19)
+// Ultimate Mortal Kombat 3 Uk (2022-03-02)
 
 static struct BurnRomInfo umk3ukRomDesc[] = {
-	{ "umk3uk-u54.bin",			0x080000, 0xf8bb9e27, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
-	{ "umk3uk-u63.bin",			0x080000, 0x20d12777, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "umk3uk-u54.bin",			0x080000, 0x3466c825, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "umk3uk-u63.bin",			0x080000, 0x6ab6468e, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "umk3uk-u2.bin",			0x100000, 0x3838cfe5, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
 	{ "umk3uk-u3.bin",			0x100000, 0x856fe411, 2 | BRF_PRG | BRF_ESS }, //  3
@@ -942,10 +942,10 @@ static struct BurnRomInfo umk3ukRomDesc[] = {
 	{ "umk3uk-u119.bin",		0x100000, 0xe62e43ec, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
 	{ "umk3uk-u118.bin",		0x100000, 0x70ebc1a4, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
 	
-	{ "umk3uk-u117.bin",		0x100000, 0x44dd107c, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 0) }, // 22
-	{ "umk3uk-u116.bin",		0x100000, 0xac2d2070, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 1) }, // 23
-	{ "umk3uk-u115.bin",		0x100000, 0x2f53a17b, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 2) }, // 24
-	{ "umk3uk-u114.bin",		0x100000, 0x23f042b2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 3) }, // 25
+	{ "umk3uk-u117.bin",		0x100000, 0xd9c5e74b, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 0) }, // 22
+	{ "umk3uk-u116.bin",		0x100000, 0x14781b26, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 1) }, // 23
+	{ "umk3uk-u115.bin",		0x100000, 0xfb812638, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 2) }, // 24
+	{ "umk3uk-u114.bin",		0x100000, 0xced0cbcc, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 3) }, // 25
 
 	{ "umk3uk-u113.bin",		0x100000, 0x0ad044f8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 0) }, // 26
 	{ "umk3uk-u112.bin",		0x100000, 0xb19b1d16, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 27
@@ -960,7 +960,7 @@ STD_ROM_FN(umk3uk)
 
 struct BurnDriver BurnDrvUmk3uk = {
 	"umk3uk", "umk3", NULL, NULL, "2022",
-	"Ultimate Mortal Kombat 3 Uk (Hack, Ver. 2022-01-19)\0", NULL, "hack", "MIDWAY Wolf-Unit",
+	"Ultimate Mortal Kombat 3 Uk (Hack, Ver. 2022-03-02)\0", NULL, "hack", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, umk3ukRomInfo, umk3ukRomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
@@ -969,14 +969,14 @@ struct BurnDriver BurnDrvUmk3uk = {
 };
 
 
-// Ultimate Mortal Kombat 3 Plus (Hack, Beta 1)
+// Ultimate Mortal Kombat 3 Plus (Hack, Beta 2)
 // Author: zpaul2fresh8
 
-static struct BurnRomInfo umk3pb1RomDesc[] = {
-	{ "umk3plus_beta1.u54",	                    0x080000, 0xa46ee73c, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
-	{ "umk3plus_beta1.u63",	                    0x080000, 0x4f200db2, 1 | BRF_PRG | BRF_ESS }, //  1
+static struct BurnRomInfo umk3pb2RomDesc[] = {
+	{ "u54_umk3plus.u54",	                    0x080000, 0x54a5359f, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "u63_umk3plus.u63",	                    0x080000, 0x4f425218, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "l2.0_mortal_kombat_3_u2_ultimate.u2",	0x100000, 0x3838cfe5, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
+	{ "l2.0_mortal_kombat_3_u2_umk3plus.u2",	0x100000, 0x2c7f4a1d, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
 	{ "l1_mortal_kombat_3_u3_music_spch.u3",	0x100000, 0x856fe411, 2 | BRF_PRG | BRF_ESS }, //  3
 	{ "l1_mortal_kombat_3_u4_music_spch.u4",	0x100000, 0x428a406f, 2 | BRF_PRG | BRF_ESS }, //  4
 	{ "l1_mortal_kombat_3_u5_music_spch.u5",	0x100000, 0x3b98a09f, 2 | BRF_PRG | BRF_ESS }, //  5
@@ -1014,15 +1014,15 @@ static struct BurnRomInfo umk3pb1RomDesc[] = {
 	{ "463_mk3_ultimate.u64", 0x1009, 0x4f425218, 0 | BRF_OPT },
 };
 
-STD_ROM_PICK(umk3pb1)
-STD_ROM_FN(umk3pb1)
+STD_ROM_PICK(umk3pb2)
+STD_ROM_FN(umk3pb2)
 
-struct BurnDriver BurnDrvUmk3pb1 = {
-	"umk3pb1", "umk3", NULL, NULL, "2019",
-	"Ultimate Mortal Kombat 3 Plus (Hack, Beta 1)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
+struct BurnDriver BurnDrvUmk3pb2 = {
+	"umk3pb2", "umk3", NULL, NULL, "2022",
+	"Ultimate Mortal Kombat 3 Plus (Hack, Beta 2)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
-	NULL, umk3pb1RomInfo, umk3pb1RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
+	NULL, umk3pb2RomInfo, umk3pb2RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
 };

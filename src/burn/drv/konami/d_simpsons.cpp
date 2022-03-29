@@ -24,6 +24,7 @@ static UINT8 *DrvKonRAM;
 static UINT8 *DrvPalRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvZ80RAM;
+static UINT8 *DefaultEEPROM = NULL;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -31,7 +32,6 @@ static UINT8 DrvRecalc;
 static UINT8 *nDrvBank;
 
 static INT32 videobank;
-static INT32 init_eeprom_count;
 static INT32 simpsons_firq_enabled;
 static INT32 K053246Irq;
 
@@ -187,16 +187,7 @@ static UINT8 simpsons_main_read(UINT16 address)
 	switch (address)
 	{
 		case 0x1f81:
-		{
-			INT32 res = ((EEPROMRead() & 1) << 4) | 0x20 | (~DrvDiag & 1);
-
-			if (init_eeprom_count > 0)
-			{
-				init_eeprom_count--;
-				res &= 0xfe;
-			}
-			return res;
-		}
+			return ((EEPROMRead() & 1) << 4) | 0x20 | (~DrvDiag & 1);
 
 		case 0x1f80:
 			return DrvInputs[4];
@@ -363,12 +354,6 @@ static INT32 DrvDoReset()
 
 	videobank = 0;
 
-	if (EEPROMAvailable()) {
-		init_eeprom_count = 0;
-	} else {
-		init_eeprom_count = 10;
-	}
-
 	simpsons_firq_enabled = 0;
 	K053246Irq = 0;
 	fa00_timer = 0;
@@ -391,6 +376,8 @@ static INT32 MemIndex()
 	DrvGfxROMExp1	= Next; Next += 0x800000;
 
 	DrvSndROM		= Next; Next += 0x200000;
+
+	DefaultEEPROM	= Next; Next += 0x000080;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x800 * sizeof(UINT32);
 
@@ -455,6 +442,8 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvSndROM  + 0x000000, 11, 1)) return 1;
 		if (BurnLoadRom(DrvSndROM  + 0x100000, 12, 1)) return 1;
 
+		if (BurnLoadRom(DefaultEEPROM, 13, 1)) return 1;
+
 		K052109GfxDecode(DrvGfxROM0, DrvGfxROMExp0, 0x100000);
 		K053247GfxDecode(DrvGfxROM1, DrvGfxROMExp1, 0x400000);
 	}
@@ -483,6 +472,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	EEPROMInit(&simpsons_eeprom_intf);
+	if (!EEPROMAvailable()) EEPROMFill(DefaultEEPROM,0, 0x80);
 
 	K052109Init(DrvGfxROM0, DrvGfxROMExp0, 0x0fffff);
 	K052109SetCallback(K052109Callback);
@@ -685,7 +675,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		EEPROMScan(nAction, pnMin);
 
 		SCAN_VAR(videobank);
-		SCAN_VAR(init_eeprom_count);
 		SCAN_VAR(simpsons_firq_enabled);
 		SCAN_VAR(K053246Irq);
 		SCAN_VAR(fa00_timer);
@@ -726,7 +715,7 @@ static struct BurnRomInfo simpsonsRomDesc[] = {
 	{ "072-d05.1f",		0x100000, 0x1397a73b, 5 | BRF_SND },           // 11 K053260 Samples
 	{ "072-d04.1d",		0x040000, 0x78778013, 5 | BRF_SND },           // 12
 
-	{ "simpsons.12c.nv",  0x000080, 0xec3f0449, BRF_OPT },
+	{ "simpsons.12c.nv",  0x000080, 0xec3f0449, BRF_ESS | BRF_PRG },   // 13 EEPROM
 };
 
 STD_ROM_PICK(simpsons)
@@ -746,25 +735,25 @@ struct BurnDriver BurnDrvSimpsons = {
 // The Simpsons (4 Players World, set 2)
 
 static struct BurnRomInfo simpsons4peRomDesc[] = {
-	{ "072-g02.16c",	0x020000, 0x580ce1d6, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
-	{ "072-g01.17c",	0x020000, 0x9f843def, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "072-m13.13c",	0x020000, 0xf36c9423, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "072-l12.15c",	0x020000, 0x84f9d9ba, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "072-g02.16c",	0x020000, 0x580ce1d6, 1 | BRF_PRG | BRF_ESS },  //  0 Konami Custom Code
+	{ "072-g01.17c",	0x020000, 0x9f843def, 1 | BRF_PRG | BRF_ESS },  //  1
+	{ "072-m13.13c",	0x020000, 0xf36c9423, 1 | BRF_PRG | BRF_ESS },  //  2
+	{ "072-l12.15c",	0x020000, 0x84f9d9ba, 1 | BRF_PRG | BRF_ESS },  //  3
 
-	{ "072-e03.6g",		0x020000, 0x866b7a35, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+	{ "072-e03.6g",		0x020000, 0x866b7a35, 2 | BRF_PRG | BRF_ESS },  //  4 Z80 Code
 
-	{ "072-b07.18h",	0x080000, 0xba1ec910, 3 | BRF_GRA },           //  5 K052109 Tiles
-	{ "072-b06.16h",	0x080000, 0xcf2bbcab, 3 | BRF_GRA },           //  6
+	{ "072-b07.18h",	0x080000, 0xba1ec910, 3 | BRF_GRA },            //  5 K052109 Tiles
+	{ "072-b06.16h",	0x080000, 0xcf2bbcab, 3 | BRF_GRA },            //  6
 
-	{ "072-b08.3n",		0x100000, 0x7de500ad, 4 | BRF_GRA },           //  7 K053247 Tiles
-	{ "072-b09.8n",		0x100000, 0xaa085093, 4 | BRF_GRA },           //  8
-	{ "072-b10.12n",	0x100000, 0x577dbd53, 4 | BRF_GRA },           //  9
-	{ "072-b11.16l",	0x100000, 0x55fab05d, 4 | BRF_GRA },           // 10
+	{ "072-b08.3n",		0x100000, 0x7de500ad, 4 | BRF_GRA },            //  7 K053247 Tiles
+	{ "072-b09.8n",		0x100000, 0xaa085093, 4 | BRF_GRA },            //  8
+	{ "072-b10.12n",	0x100000, 0x577dbd53, 4 | BRF_GRA },            //  9
+	{ "072-b11.16l",	0x100000, 0x55fab05d, 4 | BRF_GRA },            // 10
 
-	{ "072-d05.1f",		0x100000, 0x1397a73b, 5 | BRF_SND },           // 11 K053260 Samples
-	{ "072-d04.1d",		0x040000, 0x78778013, 5 | BRF_SND },           // 12
+	{ "072-d05.1f",		0x100000, 0x1397a73b, 5 | BRF_SND },            // 11 K053260 Samples
+	{ "072-d04.1d",		0x040000, 0x78778013, 5 | BRF_SND },            // 12
 
-	{ "simpsons4pe.12c.nv",  0x000080, 0xec3f0449, BRF_OPT },
+	{ "simpsons4pe.12c.nv",  0x000080, 0xec3f0449, BRF_ESS | BRF_PRG }, // 13 EEPROM
 };
 
 STD_ROM_PICK(simpsons4pe)
@@ -784,25 +773,25 @@ struct BurnDriver BurnDrvSimpsons4pe = {
 // The Simpsons (4 Players Asia)
 
 static struct BurnRomInfo simpsons4paRomDesc[] = {
-	{ "072-v02.16c",	0x020000, 0x580ce1d6, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
-	{ "072-v01.17c",	0x020000, 0xeffd6c09, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "072-x13.13c",	0x020000, 0x3304abb9, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "072-x12.15c",	0x020000, 0xfa4fca12, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "072-v02.16c",	0x020000, 0x580ce1d6, 1 | BRF_PRG | BRF_ESS },  //  0 Konami Custom Code
+	{ "072-v01.17c",	0x020000, 0xeffd6c09, 1 | BRF_PRG | BRF_ESS },  //  1
+	{ "072-x13.13c",	0x020000, 0x3304abb9, 1 | BRF_PRG | BRF_ESS },  //  2
+	{ "072-x12.15c",	0x020000, 0xfa4fca12, 1 | BRF_PRG | BRF_ESS },  //  3
 
-	{ "072-g03.6g",		0x020000, 0x76c1850c, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+	{ "072-g03.6g",		0x020000, 0x76c1850c, 2 | BRF_PRG | BRF_ESS },  //  4 Z80 Code
 
-	{ "072-b07.18h",	0x080000, 0xba1ec910, 3 | BRF_GRA },           //  5 K052109 Tiles
-	{ "072-b06.16h",	0x080000, 0xcf2bbcab, 3 | BRF_GRA },           //  6
+	{ "072-b07.18h",	0x080000, 0xba1ec910, 3 | BRF_GRA },            //  5 K052109 Tiles
+	{ "072-b06.16h",	0x080000, 0xcf2bbcab, 3 | BRF_GRA },            //  6
 
-	{ "072-b08.3n",		0x100000, 0x7de500ad, 4 | BRF_GRA },           //  7 K053247 Tiles
-	{ "072-b09.8n",		0x100000, 0xaa085093, 4 | BRF_GRA },           //  8
-	{ "072-b10.12n",	0x100000, 0x577dbd53, 4 | BRF_GRA },           //  9
-	{ "072-b11.16l",	0x100000, 0x55fab05d, 4 | BRF_GRA },           // 10
+	{ "072-b08.3n",		0x100000, 0x7de500ad, 4 | BRF_GRA },            //  7 K053247 Tiles
+	{ "072-b09.8n",		0x100000, 0xaa085093, 4 | BRF_GRA },            //  8
+	{ "072-b10.12n",	0x100000, 0x577dbd53, 4 | BRF_GRA },            //  9
+	{ "072-b11.16l",	0x100000, 0x55fab05d, 4 | BRF_GRA },            // 10
 
-	{ "072-d05.1f",		0x100000, 0x1397a73b, 5 | BRF_SND },           // 11 K053260 Samples
-	{ "072-d04.1d",		0x040000, 0x78778013, 5 | BRF_SND },           // 12
+	{ "072-d05.1f",		0x100000, 0x1397a73b, 5 | BRF_SND },            // 11 K053260 Samples
+	{ "072-d04.1d",		0x040000, 0x78778013, 5 | BRF_SND },            // 12
 
-	{ "simpsons4pa.12c.nv",  0x000080, 0xec3f0449, BRF_OPT },
+	{ "simpsons4pa.12c.nv",  0x000080, 0xec3f0449, BRF_ESS | BRF_PRG }, // 13 EEPROM
 };
 
 STD_ROM_PICK(simpsons4pa)
@@ -840,7 +829,7 @@ static struct BurnRomInfo simpsons2pRomDesc[] = {
 	{ "072-d05.1f",		0x100000, 0x1397a73b, 5 | BRF_SND },           // 11 K053260 Samples
 	{ "072-d04.1d",		0x040000, 0x78778013, 5 | BRF_SND },           // 12
 
-	{ "simpsons2p.12c.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+	{ "simpsons2p.12c.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG }, // 13 EEPROM
 };
 
 STD_ROM_PICK(simpsons2p)
@@ -860,25 +849,25 @@ struct BurnDriver BurnDrvSimpsons2p = {
 // The Simpsons (2 Players World, set 2)
 
 static struct BurnRomInfo simpsons2p2RomDesc[] = {
-	{ "072-g02.16c",	0x020000, 0x580ce1d6, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
-	{ "072-p01.17c",	0x020000, 0x07ceeaea, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "072-_13.13c",	0x020000, 0x54e6df66, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "072-_12.15c",	0x020000, 0x96636225, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "072-g02.16c",	0x020000, 0x580ce1d6, 1 | BRF_PRG | BRF_ESS },  //  0 Konami Custom Code
+	{ "072-p01.17c",	0x020000, 0x07ceeaea, 1 | BRF_PRG | BRF_ESS },  //  1
+	{ "072-_13.13c",	0x020000, 0x54e6df66, 1 | BRF_PRG | BRF_ESS },  //  2
+	{ "072-_12.15c",	0x020000, 0x96636225, 1 | BRF_PRG | BRF_ESS },  //  3
 
-	{ "072-g03.6g",		0x020000, 0x76c1850c, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+	{ "072-g03.6g",		0x020000, 0x76c1850c, 2 | BRF_PRG | BRF_ESS },  //  4 Z80 Code
 
-	{ "072-b07.18h",	0x080000, 0xba1ec910, 3 | BRF_GRA },           //  5 K052109 Tiles
-	{ "072-b06.16h",	0x080000, 0xcf2bbcab, 3 | BRF_GRA },           //  6
+	{ "072-b07.18h",	0x080000, 0xba1ec910, 3 | BRF_GRA },            //  5 K052109 Tiles
+	{ "072-b06.16h",	0x080000, 0xcf2bbcab, 3 | BRF_GRA },            //  6
 
-	{ "072-b08.3n",		0x100000, 0x7de500ad, 4 | BRF_GRA },           //  7 K053247 Tiles
-	{ "072-b09.8n",		0x100000, 0xaa085093, 4 | BRF_GRA },           //  8
-	{ "072-b10.12n",	0x100000, 0x577dbd53, 4 | BRF_GRA },           //  9
-	{ "072-b11.16l",	0x100000, 0x55fab05d, 4 | BRF_GRA },           // 10
+	{ "072-b08.3n",		0x100000, 0x7de500ad, 4 | BRF_GRA },            //  7 K053247 Tiles
+	{ "072-b09.8n",		0x100000, 0xaa085093, 4 | BRF_GRA },            //  8
+	{ "072-b10.12n",	0x100000, 0x577dbd53, 4 | BRF_GRA },            //  9
+	{ "072-b11.16l",	0x100000, 0x55fab05d, 4 | BRF_GRA },            // 10
 
-	{ "072-d05.1f",		0x100000, 0x1397a73b, 5 | BRF_SND },           // 11 K053260 Samples
-	{ "072-d04.1d",		0x040000, 0x78778013, 5 | BRF_SND },           // 12
+	{ "072-d05.1f",		0x100000, 0x1397a73b, 5 | BRF_SND },            // 11 K053260 Samples
+	{ "072-d04.1d",		0x040000, 0x78778013, 5 | BRF_SND },            // 12
 
-	{ "simpsons2p2.12c.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+	{ "simpsons2p2.12c.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG }, // 13 EEPROM
 };
 
 STD_ROM_PICK(simpsons2p2)
@@ -903,20 +892,20 @@ static struct BurnRomInfo simpsons2p3RomDesc[] = {
 	{ "4.13c",          0x020000, 0xc3040e4f, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "3.15c",          0x020000, 0xeb4f5781, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "072-g03.6g",        0x020000, 0x76c1850c, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+	{ "072-g03.6g",     0x020000, 0x76c1850c, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 
 	{ "072-b07.18h",    0x080000, 0xba1ec910, 3 | BRF_GRA },           //  5 K052109 Tiles
 	{ "072-b06.16h",    0x080000, 0xcf2bbcab, 3 | BRF_GRA },           //  6
 
-	{ "072-b08.3n",        0x100000, 0x7de500ad, 4 | BRF_GRA },           //  7 K053247 Tiles
-	{ "072-b09.8n",        0x100000, 0xaa085093, 4 | BRF_GRA },           //  8
+	{ "072-b08.3n",     0x100000, 0x7de500ad, 4 | BRF_GRA },           //  7 K053247 Tiles
+	{ "072-b09.8n",     0x100000, 0xaa085093, 4 | BRF_GRA },           //  8
 	{ "072-b10.12n",    0x100000, 0x577dbd53, 4 | BRF_GRA },           //  9
 	{ "072-b11.16l",    0x100000, 0x55fab05d, 4 | BRF_GRA },           // 10
 
-	{ "072-d05.1f",        0x100000, 0x1397a73b, 5 | BRF_SND },           // 11 K053260 Samples
-	{ "072-d04.1d",        0x040000, 0x78778013, 5 | BRF_SND },           // 12
+	{ "072-d05.1f",     0x100000, 0x1397a73b, 5 | BRF_SND },           // 11 K053260 Samples
+	{ "072-d04.1d",     0x040000, 0x78778013, 5 | BRF_SND },           // 12
 
-	{ "simpsons2p.12c.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+	{ "simpsons2p.12c.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG }, // 13 EEPROM
 };
 
 STD_ROM_PICK(simpsons2p3)
@@ -936,25 +925,25 @@ struct BurnDriver BurnDrvSimpsons2p3 = {
 // The Simpsons (2 Players Asia)
 
 static struct BurnRomInfo simpsons2paRomDesc[] = {
-	{ "072-g02.16c",	0x020000, 0x580ce1d6, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
-	{ "072-p01.17c",	0x020000, 0x07ceeaea, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "072-113.13c",	0x020000, 0x8781105a, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "072-112.15c",	0x020000, 0x3bd69404, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "072-g02.16c",	0x020000, 0x580ce1d6, 1 | BRF_PRG | BRF_ESS },  //  0 Konami Custom Code
+	{ "072-p01.17c",	0x020000, 0x07ceeaea, 1 | BRF_PRG | BRF_ESS },  //  1
+	{ "072-113.13c",	0x020000, 0x8781105a, 1 | BRF_PRG | BRF_ESS },  //  2
+	{ "072-112.15c",	0x020000, 0x3bd69404, 1 | BRF_PRG | BRF_ESS },  //  3
 
-	{ "072-e03.6g",		0x020000, 0x866b7a35, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+	{ "072-e03.6g",		0x020000, 0x866b7a35, 2 | BRF_PRG | BRF_ESS },  //  4 Z80 Code
 
-	{ "072-b07.18h",	0x080000, 0xba1ec910, 3 | BRF_GRA },           //  5 K052109 Tiles
-	{ "072-b06.16h",	0x080000, 0xcf2bbcab, 3 | BRF_GRA },           //  6
+	{ "072-b07.18h",	0x080000, 0xba1ec910, 3 | BRF_GRA },            //  5 K052109 Tiles
+	{ "072-b06.16h",	0x080000, 0xcf2bbcab, 3 | BRF_GRA },            //  6
 
-	{ "072-b08.3n",		0x100000, 0x7de500ad, 4 | BRF_GRA },           //  7 K053247 Tiles
-	{ "072-b09.8n",		0x100000, 0xaa085093, 4 | BRF_GRA },           //  8
-	{ "072-b10.12n",	0x100000, 0x577dbd53, 4 | BRF_GRA },           //  9
-	{ "072-b11.16l",	0x100000, 0x55fab05d, 4 | BRF_GRA },           // 10
+	{ "072-b08.3n",		0x100000, 0x7de500ad, 4 | BRF_GRA },            //  7 K053247 Tiles
+	{ "072-b09.8n",		0x100000, 0xaa085093, 4 | BRF_GRA },            //  8
+	{ "072-b10.12n",	0x100000, 0x577dbd53, 4 | BRF_GRA },            //  9
+	{ "072-b11.16l",	0x100000, 0x55fab05d, 4 | BRF_GRA },            // 10
 
-	{ "072-d05.1f",		0x100000, 0x1397a73b, 5 | BRF_SND },           // 11 K053260 Samples
-	{ "072-d04.1d",		0x040000, 0x78778013, 5 | BRF_SND },           // 12
+	{ "072-d05.1f",		0x100000, 0x1397a73b, 5 | BRF_SND },            // 11 K053260 Samples
+	{ "072-d04.1d",		0x040000, 0x78778013, 5 | BRF_SND },            // 12
 
-	{ "simpsons2pa.12c.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+	{ "simpsons2pa.12c.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG }, // 13 EEPROM
 };
 
 STD_ROM_PICK(simpsons2pa)
@@ -974,25 +963,25 @@ struct BurnDriver BurnDrvSimpsons2pa = {
 // The Simpsons (2 Players Japan)
 
 static struct BurnRomInfo simpsons2pjRomDesc[] = {
-	{ "072-s02.16c",	0x020000, 0x265f7a47, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
-	{ "072-t01.17c",	0x020000, 0x91de5c2d, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "072-213.13c",	0x020000, 0xb326a9ae, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "072-212.15c",	0x020000, 0x584d9d37, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "072-s02.16c",	0x020000, 0x265f7a47, 1 | BRF_PRG | BRF_ESS },  //  0 Konami Custom Code
+	{ "072-t01.17c",	0x020000, 0x91de5c2d, 1 | BRF_PRG | BRF_ESS },  //  1
+	{ "072-213.13c",	0x020000, 0xb326a9ae, 1 | BRF_PRG | BRF_ESS },  //  2
+	{ "072-212.15c",	0x020000, 0x584d9d37, 1 | BRF_PRG | BRF_ESS },  //  3
 
-	{ "072-g03.6g",		0x020000, 0x76c1850c, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+	{ "072-g03.6g",		0x020000, 0x76c1850c, 2 | BRF_PRG | BRF_ESS },  //  4 Z80 Code
 
-	{ "072-b07.18h",	0x080000, 0xba1ec910, 3 | BRF_GRA },           //  5 K052109 Tiles
-	{ "072-b06.16h",	0x080000, 0xcf2bbcab, 3 | BRF_GRA },           //  6
+	{ "072-b07.18h",	0x080000, 0xba1ec910, 3 | BRF_GRA },            //  5 K052109 Tiles
+	{ "072-b06.16h",	0x080000, 0xcf2bbcab, 3 | BRF_GRA },            //  6
 
-	{ "072-b08.3n",		0x100000, 0x7de500ad, 4 | BRF_GRA },           //  7 K053247 Tiles
-	{ "072-b09.8n",		0x100000, 0xaa085093, 4 | BRF_GRA },           //  8
-	{ "072-b10.12n",	0x100000, 0x577dbd53, 4 | BRF_GRA },           //  9
-	{ "072-b11.16l",	0x100000, 0x55fab05d, 4 | BRF_GRA },           // 10
+	{ "072-b08.3n",		0x100000, 0x7de500ad, 4 | BRF_GRA },            //  7 K053247 Tiles
+	{ "072-b09.8n",		0x100000, 0xaa085093, 4 | BRF_GRA },            //  8
+	{ "072-b10.12n",	0x100000, 0x577dbd53, 4 | BRF_GRA },            //  9
+	{ "072-b11.16l",	0x100000, 0x55fab05d, 4 | BRF_GRA },            // 10
 
-	{ "072-d05.1f",		0x100000, 0x1397a73b, 5 | BRF_SND },           // 11 K053260 Samples
-	{ "072-d04.1d",		0x040000, 0x78778013, 5 | BRF_SND },           // 12
+	{ "072-d05.1f",		0x100000, 0x1397a73b, 5 | BRF_SND },            // 11 K053260 Samples
+	{ "072-d04.1d",		0x040000, 0x78778013, 5 | BRF_SND },            // 12
 
-	{ "simpsons2pj.12c.nv",  0x000080, 0x3550a54e, BRF_OPT },
+	{ "simpsons2pj.12c.nv",  0x000080, 0x3550a54e, BRF_ESS | BRF_PRG }, // 13 EEPROM
 };
 
 STD_ROM_PICK(simpsons2pj)

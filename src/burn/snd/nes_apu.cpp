@@ -127,6 +127,7 @@ static UINT8 *dmc_buffer;
 INT16 *nes_ext_buffer;
 INT16 (*nes_ext_sound_cb)();
 
+static const INT32 *noise_clocks;
 static const INT32 *dpcm_clocks;
 
 static int8 apu_dpcm(struct nesapu_info *info, dpcm_t *chan);
@@ -414,7 +415,7 @@ static int8 apu_noise(struct nesapu_info *info, noise_t *chan)
    chan->phaseacc -= 4;
    if (chan->phaseacc < 0)
    {
-      chan->phaseacc += noise_freq[chan->regs[2] & 0x0F];
+      chan->phaseacc += noise_clocks[chan->regs[2] & 0x0F];
 
 	  UINT16 feedback = (chan->lfsr & 0x01) ^ ((chan->lfsr >> ((chan->regs[2] & 0x80) ? 6 : 1)) & 0x01);
 	  chan->lfsr = ((chan->lfsr >> 1) | (feedback << 14)) & 0x7fff;
@@ -967,6 +968,7 @@ void nesapuInit(INT32 chip, INT32 clock, INT32 is_pal, UINT32 (*pSyncCallback)(I
 	/* Initialize global variables */
 	cycles_per_frame = (is_pal) ? 33248 : 29781;
 
+	noise_clocks = &noise_freq[(is_pal) ? 1 : 0][0];
 	dpcm_clocks = &dpcm_freq[(is_pal) ? 1 : 0][0];
 
 	info->samps_per_sync = 7445; //(rate * 100) / nBurnFPS;

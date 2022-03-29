@@ -1,0 +1,21 @@
+Exclude NASM version, please use visualstudio-2019
+
+Pre-Building:
+
+1) download and run visual studio 2022 IDE community edition installer from https://visualstudio.microsoft.com/ 
+2) select Desktop development with C++
+3) next you will need a perl interpreter for windows. I recommend ActivePerl (https://www.activestate.com/products/activeperl/downloads/). I usually use the oldest version available. Make sure that you have enabled the checkbox to add perl to the current path.
+4) Then you need NASM for the assembly files. Go here: https://github.com/ShiftMediaProject/VSNASM. Simple configuration of NASM compilation environment.
+
+Building
+1) checkout the code using git (Optionally: fork it first!)
+2) in the checked out code, open projectfiles then visualstudio-2022, then open fbneo_vs2022.sln
+3) select the correctly platform and build type. 
+4) hit build!
+
+
+
+
+
+
+

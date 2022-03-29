@@ -167,7 +167,7 @@ ifdef	BUILD_X86_ASM
 	autobj += burn_sound_a.o
 endif
 
-ifdef	BUILD_X64_EXE
-	alldir += cpu/mips3/x64
-	depobj += mips3_x64.o
-endif
+#ifdef	BUILD_X64_EXE
+#	alldir += cpu/mips3/x64
+#	depobj += mips3_x64.o
+#endif

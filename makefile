@@ -53,6 +53,9 @@ endif
 # Include rom set verifying features (comment this for release builds)
 #ROM_VERIFY = 1
 
+# CPS1 games (No sound) with QSound [Hack]
+#HACK_SOUND = 1
+
 # Force recompilation of files that need it (i.e. use __TIME__, __DATE__, SPECIALBUILD).
 FORCE_UPDATE = 1
 
@@ -98,6 +101,10 @@ mingw: FORCE
 # Cross compile a 32 bits windows binary from linux
 mingwcc: FORCE
 	@$(MAKE) -s -f makefile.mingw GCC510=1 BORKYCRT=1 HOST_CC=gcc HOST_CXX=g++ CC=i686-w64-mingw32-gcc CXX=i686-w64-mingw32-g++ WINDRES=i686-w64-mingw32-windres
+
+# Cross compile a 64 bits windows binary from linux
+mingwcc64: FORCE
+	@$(MAKE) -s -f makefile.mingw BUILD_X64_EXE=1 GCC510=1 BORKYCRT=1 HOST_CC=gcc HOST_CXX=g++ CC=x86_64-w64-mingw32-gcc CXX=x86_64-w64-mingw32-g++ WINDRES=x86_64-w64-mingw32-windres
 
 mamemingw: FORCE
 	@$(MAKE) -s -f makefile.mamemingw

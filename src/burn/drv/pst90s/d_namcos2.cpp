@@ -2614,7 +2614,10 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 						{
 							if (color == 0xf00 && c==0xfe)
 							{
-								dest[x] |= shadow_offset;
+								if (dest[x] & 0x1000)
+									dest[x] |= 0x800;
+								else
+									dest[x] = 0x4000; // black pen
 							}
 							else
 							{
@@ -2651,7 +2654,10 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 						{
 							if (color == 0xf00 && c==0xfe)
 							{
-								dest[x] |= shadow_offset;
+								if (dest[x] & 0x1000)
+									dest[x] |= 0x800;
+								else
+									dest[x] = 0x4000; // black pen
 							}
 							else
 							{
@@ -6053,7 +6059,7 @@ struct BurnDriver BurnDrvGollygho = {
 };
 
 
-// Bubble Trouble (World, Rev B)
+// Bubble Trouble - Golly! Ghost! 2 (World, Rev B)
 
 static struct BurnRomInfo bubbletrRomDesc[] = {
 	{ "bt2-mpr0b.bin",	0x20000, 0x26fbfce3, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
@@ -6111,7 +6117,7 @@ static INT32 BubbletrInit()
 
 struct BurnDriver BurnDrvBubbletr = {
 	"bubbletr", NULL, NULL, NULL, "1992",
-	"Bubble Trouble (World, Rev B)\0", NULL, "Namco", "System 2",
+	"Bubble Trouble - Golly! Ghost! 2 (World, Rev B)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, bubbletrRomInfo, bubbletrRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //BubbletrInputInfo, BubbletrDIPInfo,
@@ -6120,7 +6126,7 @@ struct BurnDriver BurnDrvBubbletr = {
 };
 
 
-// Bubble Trouble (Japan, Rev C)
+// Bubble Trouble - Golly! Ghost! 2 (Japan, Rev C)
 
 static struct BurnRomInfo bubbletrjRomDesc[] = {
 	{ "bt1-mpr0c.11d",	0x20000, 0x64eb3496, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
@@ -6160,7 +6166,7 @@ STD_ROM_FN(bubbletrj)
 
 struct BurnDriver BurnDrvBubbletrj = {
 	"bubbletrj", "bubbletr", NULL, NULL, "1992",
-	"Bubble Trouble (Japan, Rev C)\0", NULL, "Namco", "System 2",
+	"Bubble Trouble - Golly! Ghost! 2 (Japan, Rev C)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, bubbletrjRomInfo, bubbletrjRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //BubbletrInputInfo, BubbletrDIPInfo,

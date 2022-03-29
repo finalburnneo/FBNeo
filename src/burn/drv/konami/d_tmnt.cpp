@@ -52,6 +52,9 @@ static INT32 LayerPri[3];
 static UINT8 DrvSoundLatch;
 static INT32 PriorityFlag;
 
+static INT32 LastCntrl;
+static INT32 Toggle;
+
 static INT32 dim_c, dim_v;
 static INT32 NoDim = 0;
 
@@ -354,156 +357,156 @@ static struct BurnInputInfo Ssriders4psInputList[] =
 STDINPUTINFO(Ssriders4ps)
 
 static struct BurnInputInfo Thndrx2InputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvInputPort1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvInputPort1 + 0,	"p1 coin"	},
 
 	{"P1 Start",		BIT_DIGITAL,	DrvInputPort0 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvInputPort0 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvInputPort0 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvInputPort0 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvInputPort0 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvInputPort0 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvInputPort0 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvInputPort0 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvInputPort0 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvInputPort0 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvInputPort1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvInputPort1 + 1,	"p2 coin"	},
 
 	{"P2 Start",		BIT_DIGITAL,	DrvInputPort2 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvInputPort2 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvInputPort2 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvInputPort2 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvInputPort2 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvInputPort2 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvInputPort2 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvInputPort2 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvInputPort2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvInputPort2 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvInputPort1 + 2,	"service"	},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,			"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvInputPort1 + 2,	"service"	},
 	{"Diagnostics",		BIT_DIGITAL,	DrvInputPort1 + 3,	"diag"		},
 };
 
 STDINPUTINFO(Thndrx2)
 
 static struct BurnInputInfo LgtnfghtInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvInputPort0 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvInputPort0 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvInputPort0 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvInputPort1 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvInputPort1 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvInputPort1 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvInputPort1 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvInputPort1 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvInputPort1 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvInputPort1 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvInputPort1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvInputPort1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvInputPort1 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvInputPort0 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvInputPort0 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvInputPort0 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvInputPort2 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvInputPort2 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvInputPort2 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvInputPort2 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvInputPort2 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvInputPort2 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvInputPort2 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvInputPort2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvInputPort2 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvInputPort2 + 6,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvInputPort0 + 6,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,		"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,		"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDip + 2,		"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,			"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvInputPort0 + 6,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDip + 0,			"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDip + 1,			"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDip + 2,			"dip"		},
 };
 
 STDINPUTINFO(Lgtnfght)
 
 static struct BurnInputInfo QgakumonInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvInputPort0 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvInputPort0 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvInputPort1 + 7,	"p1 start"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvInputPort1 + 2,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvInputPort1 + 3,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvInputPort1 + 0,	"p1 fire 3"	},
 	{"P1 Button 4",		BIT_DIGITAL,	DrvInputPort1 + 1,	"p1 fire 4"	},
-	{"P1 Push",		BIT_DIGITAL,	DrvInputPort1 + 4,	"p1 fire 5"	},
+	{"P1 Push",			BIT_DIGITAL,	DrvInputPort1 + 4,	"p1 fire 5"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvInputPort0 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvInputPort0 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvInputPort2 + 7,	"p2 start"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvInputPort2 + 2,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvInputPort2 + 3,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvInputPort2 + 0,	"p2 fire 3"	},
 	{"P2 Button 4",		BIT_DIGITAL,	DrvInputPort2 + 1,	"p2 fire 4"	},
-	{"P2 Push",		BIT_DIGITAL,	DrvInputPort2 + 4,	"p2 fire 5"	},
+	{"P2 Push",			BIT_DIGITAL,	DrvInputPort2 + 4,	"p2 fire 5"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvInputPort0 + 4,	"service"	},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,			"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvInputPort0 + 4,	"service"	},
 	{"Diagnostics",		BIT_DIGITAL,	DrvInputPort5 + 7,	"diag"		},
 };
 
 STDINPUTINFO(Qgakumon)
 
 static struct BurnInputInfo PunkshotInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvInputPort0 + 0,	"p1 coin"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvInputPort1 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvInputPort1 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvInputPort1 + 0,	"p1 left"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvInputPort0 + 0,	"p1 coin"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvInputPort1 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvInputPort1 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvInputPort1 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvInputPort1 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvInputPort1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvInputPort1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvInputPort0 + 1,	"p2 coin"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvInputPort2 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvInputPort2 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvInputPort2 + 0,	"p2 left"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvInputPort0 + 1,	"p2 coin"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvInputPort2 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvInputPort2 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvInputPort2 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvInputPort2 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvInputPort2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvInputPort2 + 5,	"p2 fire 2"	},
 
-	{"P3 Coin",		BIT_DIGITAL,	DrvInputPort0 + 2,	"p3 coin"	},
-	{"P3 Up",		BIT_DIGITAL,	DrvInputPort3 + 2,	"p3 up"		},
-	{"P3 Down",		BIT_DIGITAL,	DrvInputPort3 + 3,	"p3 down"	},
-	{"P3 Left",		BIT_DIGITAL,	DrvInputPort3 + 0,	"p3 left"	},
+	{"P3 Coin",			BIT_DIGITAL,	DrvInputPort0 + 2,	"p3 coin"	},
+	{"P3 Up",			BIT_DIGITAL,	DrvInputPort3 + 2,	"p3 up"		},
+	{"P3 Down",			BIT_DIGITAL,	DrvInputPort3 + 3,	"p3 down"	},
+	{"P3 Left",			BIT_DIGITAL,	DrvInputPort3 + 0,	"p3 left"	},
 	{"P3 Right",		BIT_DIGITAL,	DrvInputPort3 + 1,	"p3 right"	},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvInputPort3 + 4,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvInputPort3 + 5,	"p3 fire 2"	},
 
-	{"P4 Coin",		BIT_DIGITAL,	DrvInputPort0 + 3,	"p4 coin"	},
-	{"P4 Up",		BIT_DIGITAL,	DrvInputPort4 + 2,	"p4 up"		},
-	{"P4 Down",		BIT_DIGITAL,	DrvInputPort4 + 3,	"p4 down"	},
-	{"P4 Left",		BIT_DIGITAL,	DrvInputPort4 + 0,	"p4 left"	},
+	{"P4 Coin",			BIT_DIGITAL,	DrvInputPort0 + 3,	"p4 coin"	},
+	{"P4 Up",			BIT_DIGITAL,	DrvInputPort4 + 2,	"p4 up"		},
+	{"P4 Down",			BIT_DIGITAL,	DrvInputPort4 + 3,	"p4 down"	},
+	{"P4 Left",			BIT_DIGITAL,	DrvInputPort4 + 0,	"p4 left"	},
 	{"P4 Right",		BIT_DIGITAL,	DrvInputPort4 + 1,	"p4 right"	},
 	{"P4 Button 1",		BIT_DIGITAL,	DrvInputPort4 + 4,	"p4 fire 1"	},
 	{"P4 Button 2",		BIT_DIGITAL,	DrvInputPort4 + 5,	"p4 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,			"reset"		},
 	{"Service 1",		BIT_DIGITAL,	DrvInputPort0 + 4,	"service"	},
 	{"Service 2",		BIT_DIGITAL,	DrvInputPort0 + 5,	"service2"	},
 	{"Service 3",		BIT_DIGITAL,	DrvInputPort0 + 6,	"service3"	},
 	{"Service 4",		BIT_DIGITAL,	DrvInputPort0 + 7,	"service4"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,		"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,		"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDip + 2,		"dip"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDip + 0,			"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDip + 1,			"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDip + 2,			"dip"		},
 };
 
 STDINPUTINFO(Punkshot)
 
 static struct BurnInputInfo Punkshot2InputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvInputPort0 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvInputPort0 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvInputPort5 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvInputPort1 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvInputPort1 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvInputPort1 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvInputPort1 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvInputPort1 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvInputPort1 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvInputPort1 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvInputPort1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvInputPort1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvInputPort0 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvInputPort0 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvInputPort5 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvInputPort2 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvInputPort2 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvInputPort2 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvInputPort2 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvInputPort2 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvInputPort2 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvInputPort2 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvInputPort2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvInputPort2 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvInputPort0 + 4,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,		"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,		"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDip + 2,		"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,			"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvInputPort0 + 4,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDip + 0,			"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDip + 1,			"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDip + 2,			"dip"		},
 };
 
 STDINPUTINFO(Punkshot2)
@@ -544,7 +547,7 @@ static inline void DrvMakeInputs()
 static inline void SsridersMakeInputs()
 {
 	DrvMakeInputs();
-	
+
 	DrvInput[5] ^= 0xf6;
 	//if (DrvInputPort5[7]) DrvInput[5] -= 0x80;
 }
@@ -2268,7 +2271,7 @@ static INT32 TmntMemIndex()
 
 	RamEnd                 = Next;
 
-	konami_palette32	= (UINT32*)Next;
+	konami_palette32	   = (UINT32*)Next;
 	DrvPalette             = (UINT32*)Next; Next += 0x00400 * sizeof(UINT32);
 	DrvTitleSample         = (INT16*)Next; Next += 0x40000 * sizeof(INT16);
 	DrvTiles               = Next; Next += 0x008000 * 8 * 8;
@@ -2697,7 +2700,7 @@ static INT32 PunkshotDoReset()
 	return 0;
 }
 
-UINT8 __fastcall Tmnt68KReadByte(UINT32 a)
+static UINT8 __fastcall Tmnt68KReadByte(UINT32 a)
 {
 	K052109WordNoA12Read(0x100000)
 	K051937ByteRead(0x140000)
@@ -2744,7 +2747,7 @@ UINT8 __fastcall Tmnt68KReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Tmnt68KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall Tmnt68KWriteByte(UINT32 a, UINT8 d)
 {
 	K052109WordNoA12Write(0x100000)
 	K015937ByteWrite(0x140000)
@@ -2752,13 +2755,12 @@ void __fastcall Tmnt68KWriteByte(UINT32 a, UINT8 d)
 
 	switch (a) {
 		case 0x0a0001: {
-			static INT32 Last;
-			if (Last == 0x08 && (d & 0x08) == 0) {
+			if (LastCntrl == 0x08 && (d & 0x08) == 0) {
 				ZetOpen(0);
 				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 				ZetClose();
 			}
-			Last = d & 0x08;
+			LastCntrl = d & 0x08;
 			
 			bIrqEnable = (d & 0x20) ? 1 : 0;
 			
@@ -2792,7 +2794,7 @@ void __fastcall Tmnt68KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Tmnt68KReadWord(UINT32 a)
+static UINT16 __fastcall Tmnt68KReadWord(UINT32 a)
 {
 	switch (a) {
 		default: {
@@ -2803,7 +2805,7 @@ UINT16 __fastcall Tmnt68KReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Tmnt68KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Tmnt68KWriteWord(UINT32 a, UINT16 d)
 {
 	K051960WordWrite(0x140400)
 	
@@ -2814,7 +2816,7 @@ void __fastcall Tmnt68KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall Mia68KReadByte(UINT32 a)
+static UINT8 __fastcall Mia68KReadByte(UINT32 a)
 {
 	K052109WordNoA12Read(0x100000)
 	K051937ByteRead(0x140000)
@@ -2853,7 +2855,7 @@ UINT8 __fastcall Mia68KReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Mia68KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall Mia68KWriteByte(UINT32 a, UINT8 d)
 {
 	K052109WordNoA12Write(0x100000)
 	K015937ByteWrite(0x140000)
@@ -2861,13 +2863,12 @@ void __fastcall Mia68KWriteByte(UINT32 a, UINT8 d)
 	
 	switch (a) {
 		case 0x0a0001: {
-			static INT32 Last;
-			if (Last == 0x08 && (d & 0x08) == 0) {
+			if (LastCntrl == 0x08 && (d & 0x08) == 0) {
 				ZetOpen(0);
 				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 				ZetClose();
 			}
-			Last = d & 0x08;
+			LastCntrl = d & 0x08;
 			
 			bIrqEnable = (d & 0x20) ? 1 : 0;
 			
@@ -2896,7 +2897,7 @@ void __fastcall Mia68KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Mia68KReadWord(UINT32 a)
+static UINT16 __fastcall Mia68KReadWord(UINT32 a)
 {
 	switch (a) {
 		default: {
@@ -2907,7 +2908,7 @@ UINT16 __fastcall Mia68KReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Mia68KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Mia68KWriteWord(UINT32 a, UINT16 d)
 {
 	K051960WordWrite(0x140400)
 	
@@ -2918,7 +2919,7 @@ void __fastcall Mia68KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall Cuebrick68KReadByte(UINT32 a)
+static UINT8 __fastcall Cuebrick68KReadByte(UINT32 a)
 {
 	K052109WordNoA12Read(0x100000)
 	K051937ByteRead(0x140000)
@@ -2968,7 +2969,7 @@ UINT8 __fastcall Cuebrick68KReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Cuebrick68KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall Cuebrick68KWriteByte(UINT32 a, UINT8 d)
 {
 	K052109WordNoA12Write(0x100000)
 	K015937ByteWrite(0x140000)
@@ -3013,7 +3014,7 @@ void __fastcall Cuebrick68KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Cuebrick68KReadWord(UINT32 a)
+static UINT16 __fastcall Cuebrick68KReadWord(UINT32 a)
 {
 	if (a >= 0x0b0000 && a <= 0x0b03ff) {
 		SEK_DEF_READ_WORD(0, a);
@@ -3029,7 +3030,7 @@ UINT16 __fastcall Cuebrick68KReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Cuebrick68KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Cuebrick68KWriteWord(UINT32 a, UINT16 d)
 {
 	K051960WordWrite(0x140400)
 	
@@ -3045,7 +3046,7 @@ void __fastcall Cuebrick68KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall Blswhstl68KReadByte(UINT32 a)
+static UINT8 __fastcall Blswhstl68KReadByte(UINT32 a)
 {
 	if (a >= 0x180000 && a <= 0x183fff) {
 		INT32 Offset = (a - 0x180000) >> 1;
@@ -3098,10 +3099,7 @@ UINT8 __fastcall Blswhstl68KReadByte(UINT32 a)
 		}
 		
 		case 0x700005: {
-			UINT8 Res;
-			static INT32 Toggle;
-
-			Res = 0xff - DrvInput[0];
+			UINT8 Res = 0xff - DrvInput[0];
 			
 			if (InitEEPROMCount) {
 				InitEEPROMCount--;
@@ -3131,7 +3129,7 @@ UINT8 __fastcall Blswhstl68KReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Blswhstl68KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall Blswhstl68KWriteByte(UINT32 a, UINT8 d)
 {
 	if (a >= 0x180000 && a <= 0x183fff) {
 		INT32 Offset = (a - 0x180000) >> 1;
@@ -3225,7 +3223,7 @@ void __fastcall Blswhstl68KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Blswhstl68KReadWord(UINT32 a)
+static UINT16 __fastcall Blswhstl68KReadWord(UINT32 a)
 {
 	if (a >= 0x300000 && a <= 0x303fff) {
 		UINT16 *SpriteRam = (UINT16*)DrvSpriteRam;
@@ -3248,7 +3246,7 @@ UINT16 __fastcall Blswhstl68KReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Blswhstl68KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Blswhstl68KWriteWord(UINT32 a, UINT16 d)
 {
 	if (a >= 0x180000 && a <= 0x183fff) {
 		INT32 Offset = (a - 0x180000) >> 1;
@@ -3339,7 +3337,6 @@ static void tmnt2_protection_write()
 	zmod = (INT16)mod[8];	// global z
 	xzoom = mod[0x1c/2];
 	yzoom = (keepaspect) ? xzoom : mod[0x1e/2];
-
 	ylock = xlock = (i & 0x0020 && (!xzoom || xzoom == 0x100));
 
 	if (!xlock)
@@ -3348,7 +3345,7 @@ static void tmnt2_protection_write()
 		if (i > 0)
 		{
 			i >>= 8;
-			xoffs += (INT32)(pow(i, /*1.898461*/1.891292) * xoffs / 599.250121);
+			xoffs += (INT32)(pow(i, /*1.891292*/1.841292) * xoffs / 599.250121);
 		}
 		else if (i < 0)
 		{
@@ -3362,7 +3359,7 @@ static void tmnt2_protection_write()
 		if (i > 0)
 		{
 			i >>= 8;
-			yoffs += (INT32)(pow(i, /*1.898461*/1.891292) * yoffs / 599.250121);
+			yoffs += (INT32)(pow(i, /*1.891292*/1.841292) * yoffs / 599.250121);
 		}
 		else if (i < 0)
 		{
@@ -3382,12 +3379,12 @@ static void tmnt2_protection_write()
 	SekWriteWord((dst_addr + 12) * 2, attr2 | color);
 }
 
-void __fastcall Tmnt268KProtWord(UINT32 a, UINT16 d)
+static void __fastcall Tmnt268KProtWord(UINT32 a, UINT16 d)
 {
 	*((UINT16*)(Drv68KRam + 0x4800 + (a & 0x1e))) = BURN_ENDIAN_SWAP_INT16(d);
 }
 
-void __fastcall Tmnt268KProtByte(UINT32 a, UINT8 d)
+static void __fastcall Tmnt268KProtByte(UINT32 a, UINT8 d)
 {
 	a &= 0x1f;
 	Drv68KRam[0x4801 ^ a] = d;
@@ -3458,7 +3455,7 @@ static void ssriders_protection_w(INT32 offset)
 	}
 }
 
-UINT8 __fastcall Ssriders68KReadByte(UINT32 a)
+static UINT8 __fastcall Ssriders68KReadByte(UINT32 a)
 {
 	if (a >= 0x180000 && a <= 0x183fff) {
 		INT32 Offset = (a - 0x180000);
@@ -3522,10 +3519,8 @@ UINT8 __fastcall Ssriders68KReadByte(UINT32 a)
 		}
 		
 		case 0x1c0103: {
-			UINT8 Res;
-			static INT32 Toggle;
+			UINT8 Res = DrvInput[5];
 
-			Res = DrvInput[5];
 			if (DrvVBlank) Res |= 0x08;
 			Res |= EEPROMRead() & 0x01;
 			
@@ -3558,7 +3553,7 @@ UINT8 __fastcall Ssriders68KReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Ssriders68KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall Ssriders68KWriteByte(UINT32 a, UINT8 d)
 {
 	if (a >= 0x180000 && a <= 0x183fff) {
 		INT32 Offset = (a - 0x180000);
@@ -3657,7 +3652,7 @@ void __fastcall Ssriders68KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Ssriders68KReadWord(UINT32 a)
+static UINT16 __fastcall Ssriders68KReadWord(UINT32 a)
 {
 	if (a >= 0x180000 && a <= 0x183fff) {
 		UINT16 *SpriteRam = (UINT16*)DrvSpriteRam;
@@ -3686,7 +3681,7 @@ UINT16 __fastcall Ssriders68KReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Ssriders68KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Ssriders68KWriteWord(UINT32 a, UINT16 d)
 {
 	if (a >= 0x180000 && a <= 0x183fff) {
 		UINT16 *SpriteRam = (UINT16*)DrvSpriteRam;
@@ -3732,7 +3727,7 @@ void __fastcall Ssriders68KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall Thndrx268KReadByte(UINT32 a)
+static UINT8 __fastcall Thndrx268KReadByte(UINT32 a)
 {
 	K052109WordNoA12Read(0x600000)
 	K051937ByteRead(0x700000)
@@ -3771,11 +3766,10 @@ UINT8 __fastcall Thndrx268KReadByte(UINT32 a)
 
 		case 0x500202:
 		{
-			static INT32 toggle;
-			toggle ^= 0x08;
+			Toggle ^= 0x08;
 			INT32 ret = 0xfe;
 			ret |= (EEPROMRead() & 1);
-			ret ^= toggle;
+			ret ^= Toggle;
 
 			return ret;
 		}
@@ -3788,7 +3782,7 @@ UINT8 __fastcall Thndrx268KReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Thndrx268KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Thndrx268KWriteWord(UINT32 a, UINT16 d)
 {
 	if ((a & 0xffffc00) == 0x700400) {
 		K051960Write((a & 0x3fe) | 0, d >> 8);
@@ -3797,7 +3791,7 @@ void __fastcall Thndrx268KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-void __fastcall Thndrx268KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall Thndrx268KWriteByte(UINT32 a, UINT8 d)
 {
 	K052109WordNoA12Write(0x600000)
 	K015937ByteWrite(0x700000)
@@ -3832,12 +3826,11 @@ void __fastcall Thndrx268KWriteByte(UINT32 a, UINT8 d)
 
 		//	EEPROMWrite(d & 0x04, d & 0x02, d & 0x01);
 
-			static INT32 last;
-			if (last == 0 && (d & 0x20) != 0) {
+			if (LastCntrl == 0 && (d & 0x20) != 0) {
 				ZetSetVector(0xff);
 				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			}
-			last = d & 0x20;
+			LastCntrl = d & 0x20;
 
 			K052109RMRDLine = d & 0x40;
 		}
@@ -3845,7 +3838,7 @@ void __fastcall Thndrx268KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Lgtnfght68KReadWord(UINT32 a)
+static UINT16 __fastcall Lgtnfght68KReadWord(UINT32 a)
 {
 	if (a >= 0xb0000 && a <= 0xb3fff) {
 		UINT16 *SpriteRam = (UINT16*)DrvSpriteRam;
@@ -3862,7 +3855,7 @@ UINT16 __fastcall Lgtnfght68KReadWord(UINT32 a)
 	return 0;
 }
 
-UINT8 __fastcall Lgtnfght68KReadByte(UINT32 a)
+static UINT8 __fastcall Lgtnfght68KReadByte(UINT32 a)
 {
 	K052109WordNoA12Read(0x100000)
 
@@ -3916,7 +3909,7 @@ UINT8 __fastcall Lgtnfght68KReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Lgtnfght68KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Lgtnfght68KWriteWord(UINT32 a, UINT16 d)
 {
 	if (a >= 0xb0000 && a <= 0xb3fff) {
 		UINT16 *SpriteRam = (UINT16*)DrvSpriteRam;
@@ -3931,7 +3924,7 @@ void __fastcall Lgtnfght68KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-void __fastcall Lgtnfght68KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall Lgtnfght68KWriteByte(UINT32 a, UINT8 d)
 {
 	K052109WordNoA12Write(0x100000)
 
@@ -3975,12 +3968,11 @@ void __fastcall Lgtnfght68KWriteByte(UINT32 a, UINT8 d)
 	{
 		case 0xa0019:
 		{
-			static INT32 last;
-			if (last == 0 && (d & 0x4) != 0) {
+			if (LastCntrl == 0 && (d & 0x4) != 0) {
 				ZetSetVector(0xff);
 				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			}
-			last = d & 0x4;
+			LastCntrl = d & 0x4;
 
 			K052109RMRDLine = d & 0x8;
 		}
@@ -3995,7 +3987,7 @@ void __fastcall Lgtnfght68KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Punkshot68KReadWord(UINT32 a)
+static UINT16 __fastcall Punkshot68KReadWord(UINT32 a)
 {
 	if ((a & 0xfffc00) == 0x110400) {
 		return K051960Read((a & 0x3fe) | 1) | (K051960Read((a & 0x3fe) | 0) << 8);
@@ -4004,7 +3996,7 @@ UINT16 __fastcall Punkshot68KReadWord(UINT32 a)
 	return 0;
 }
 
-UINT8 __fastcall Punkshot68KReadByte(UINT32 a)
+static UINT8 __fastcall Punkshot68KReadByte(UINT32 a)
 {
 	K052109WordNoA12Read(0x100000)
 	K051937ByteRead(0x110000)
@@ -4050,7 +4042,7 @@ UINT8 __fastcall Punkshot68KReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Punkshot68KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Punkshot68KWriteWord(UINT32 a, UINT16 d)
 {
 	if ((a & 0xfffc00) == 0x110400) {
 		K051960Write((a & 0x3fe) | 0, d >> 8);
@@ -4065,7 +4057,7 @@ void __fastcall Punkshot68KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-void __fastcall Punkshot68KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall Punkshot68KWriteByte(UINT32 a, UINT8 d)
 {
 	K052109WordNoA12Write(0x100000)
 	K015937ByteWrite(0x110000)
@@ -4081,15 +4073,14 @@ void __fastcall Punkshot68KWriteByte(UINT32 a, UINT8 d)
 		case 0x0a0020:
 		case 0x0a0021:
 		{
-			static INT32 last;
 			K052109RMRDLine = d & 0x08;
 
-			if (last == 0x04 && (d & 0x04) == 0x00) {
+			if (LastCntrl == 0x04 && (d & 0x04) == 0x00) {
 				ZetSetVector(0xff);
 				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			}
 
-			last = d & 0x04; 
+			LastCntrl = d & 0x04;
 		}
 		return;
 
@@ -4103,7 +4094,7 @@ void __fastcall Punkshot68KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall TmntZ80Read(UINT16 a)
+static UINT8 __fastcall TmntZ80Read(UINT16 a)
 {
 	if (a >= 0xb000 && a <= 0xb00d) {
 		return K007232ReadReg(0, a - 0xb000);
@@ -4135,7 +4126,7 @@ UINT8 __fastcall TmntZ80Read(UINT16 a)
 	return 0;
 }
 
-void __fastcall TmntZ80Write(UINT16 a, UINT8 d)
+static void __fastcall TmntZ80Write(UINT16 a, UINT8 d)
 {
 	if (a >= 0xb000 && a <= 0xb00d) {
 		K007232WriteReg(0, (a - 0xb000), d);
@@ -4182,7 +4173,7 @@ void __fastcall TmntZ80Write(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall MiaZ80Read(UINT16 a)
+static UINT8 __fastcall MiaZ80Read(UINT16 a)
 {
 	if (a >= 0xb000 && a <= 0xb00d) {
 		return K007232ReadReg(0, a - 0xb000);
@@ -4208,7 +4199,7 @@ UINT8 __fastcall MiaZ80Read(UINT16 a)
 	return 0;
 }
 
-void __fastcall MiaZ80Write(UINT16 a, UINT8 d)
+static void __fastcall MiaZ80Write(UINT16 a, UINT8 d)
 {
 	if (a >= 0xb000 && a <= 0xb00d) {
 		K007232WriteReg(0, (a - 0xb000), d);
@@ -4234,7 +4225,7 @@ void __fastcall MiaZ80Write(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall BlswhstlZ80Read(UINT16 a)
+static UINT8 __fastcall BlswhstlZ80Read(UINT16 a)
 {
 	if (a >= 0xfa00 && a <= 0xfa2f) {
 		if (a == 0xfa00) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
@@ -4254,7 +4245,7 @@ UINT8 __fastcall BlswhstlZ80Read(UINT16 a)
 	return 0;
 }
 
-void __fastcall BlswhstlZ80Write(UINT16 a, UINT8 d)
+static void __fastcall BlswhstlZ80Write(UINT16 a, UINT8 d)
 {
 	if (a >= 0xfa00 && a <= 0xfa2f) {
 		K053260Write(0, (a - 0xfa00), d);
@@ -4284,7 +4275,7 @@ void __fastcall BlswhstlZ80Write(UINT16 a, UINT8 d)
 	}
 }
 
-void __fastcall Thndrx2Z80Write(UINT16 a, UINT8 d)
+static void __fastcall Thndrx2Z80Write(UINT16 a, UINT8 d)
 {
 	if (a >= 0xfc00 && a <= 0xfc2f) {
 		K053260Write(0, (a - 0xfc00), d);
@@ -4310,7 +4301,7 @@ void __fastcall Thndrx2Z80Write(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall Thndrx2Z80Read(UINT16 a)
+static UINT8 __fastcall Thndrx2Z80Read(UINT16 a)
 {
 	if (a >= 0xfc00 && a <= 0xfc2f) {
 		if (a == 0xfc00) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
@@ -4327,7 +4318,7 @@ UINT8 __fastcall Thndrx2Z80Read(UINT16 a)
 	return 0;
 }
 
-void __fastcall LgtnfghtZ80Write(UINT16 a, UINT8 d)
+static void __fastcall LgtnfghtZ80Write(UINT16 a, UINT8 d)
 {
 	if (a >= 0xc000 && a <= 0xc02f) {
 		K053260Write(0, (a - 0xc000), d);
@@ -4346,7 +4337,7 @@ void __fastcall LgtnfghtZ80Write(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall LgtnfghtZ80Read(UINT16 a)
+static UINT8 __fastcall LgtnfghtZ80Read(UINT16 a)
 {
 	if (a >= 0xc000 && a <= 0xc02f) {
 		if (a == 0xc000) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
@@ -6321,7 +6312,7 @@ static INT32 Tmnt2Frame()
 
 	SsridersMakeInputs();
 
-	INT32 nInterleave = 262;
+	INT32 nInterleave = 256;
 	INT32 nSoundBufferPos = 0;
 	nCyclesTotal[0] = 16000000 / 60;
 	nCyclesTotal[1] = 8000000 / 60;
@@ -6332,17 +6323,21 @@ static INT32 Tmnt2Frame()
 	ZetNewFrame();
 
 	for (INT32 i = 0; i < nInterleave; i++) {
+		INT32 scanline = (i + 240) % 256;
+
 		SekOpen(0);
-		CPU_RUN(0, Sek);
-		if (i == 19) DrvVBlank = 0;
-		if (i == 243) {
+		if (scanline == 22) {
+			DrvVBlank = 0;
+			if (pBurnDraw) BlswhstlDraw();
+			drawn = 1;
+		}
+		if (scanline == 240) {
 			DrvVBlank = 1;
 			if (K052109_irq_enabled) {
 				SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-				if (pBurnDraw) BlswhstlDraw();
-				drawn = 1;
 			}
 		}
+		CPU_RUN(0, Sek);
 		SekClose();
 
 		ZetOpen(0);
@@ -6471,6 +6466,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvVBlank);
 		SCAN_VAR(dim_c);
 		SCAN_VAR(dim_v);
+
+		SCAN_VAR(LastCntrl);
+		SCAN_VAR(Toggle);
 
 		BurnRandomScan(nAction);
 	}

@@ -1842,6 +1842,9 @@ static INT32 DrvFrame()
 		if (i == 248) {
 			SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
 			deco16_vblank = 0x08;
+			if (pBurnDraw) {
+				BurnDrvRedraw();
+			}
 		}
 
 		if (pBurnSoundOut && i&1) {
@@ -1863,10 +1866,6 @@ static INT32 DrvFrame()
 	
 	h6280Close();
 	SekClose();
-
-	if (pBurnDraw) {
-		BurnDrvRedraw();
-	}
 
 	return 0;
 }

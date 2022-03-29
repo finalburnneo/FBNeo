@@ -4682,6 +4682,42 @@ struct BurnDriver BurnDrvmspacmbmc = {
 };
 
 
+// Ms. Pac-Man (Leisure and Allied bootleg)
+
+static struct BurnRomInfo mspacmanlaiRomDesc[] = {
+	{ "1-cpu.6e",		0x1000, 0xd16b31b7, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "2-cpu.6f", 		0x1000, 0x0d32de5e, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "3-cpu.6h", 		0x1000, 0x1821ee0b, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "4-cpu.6j", 		0x1000, 0xe30f2dae, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "5-cpu.6k", 		0x1000, 0x8c3e6de6, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "6-cpu.6m", 		0x0800, 0x286041cf, 1 | BRF_ESS | BRF_PRG },	//  5
+
+	{ "4-vid.5e",   	0x0800, 0x93933d1d, 2 | BRF_GRA },				//  6 Graphics
+	{ "2-vid.5h",   	0x0800, 0xec7caeba, 2 | BRF_GRA },				//  7
+	{ "3-vid.5f",   	0x0800, 0x22b0188a, 2 | BRF_GRA },				//  8
+	{ "1-vid.5j",   	0x0800, 0x50c7477d, 2 | BRF_GRA },				//  9
+
+	{ "82s123-cpu.7f", 	0x0020, 0x2fc650bd, 3 | BRF_GRA },				// 10 Color Proms
+	{ "82s126-vid.4a", 	0x0100, 0x3eb3a8e4, 3 | BRF_GRA },				// 11
+
+	{ "82s126-vid.1m", 	0x0100, 0xa9cc86bf, 4 | BRF_SND },				// 12 Sound Prom
+	{ "82s126-vid.3m", 	0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom (not used)
+};
+
+STD_ROM_PICK(mspacmanlai)
+STD_ROM_FN(mspacmanlai)
+
+struct BurnDriver BurnDrvmspacmanlai = {
+	"mspacmanlai", "mspacman", NULL, NULL, "1982",
+	"Ms. Pac-Man (Leisure and Allied bootleg)\0", NULL, "bootleg (Leisure and Allied)", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, mspacmanlaiRomInfo, mspacmanlaiRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
+	mspacmanbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
 // Pac-Gal
 
 static struct BurnRomInfo pacgalRomDesc[] = {
@@ -7924,13 +7960,13 @@ struct BurnDriver BurnDrvpenta = {
 // Alien Rescue (Homebrew, Test Build)
 
 static struct BurnRomInfo alienresRomDesc[] = {
-	{ "pacman.6e",    0x1000, 0x4D94CE2A, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "pacman.6f",    0x1000, 0x5F81D441, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "pacman.6e",    0x1000, 0x154E2017, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "pacman.6f",    0x1000, 0x75237455, 1 | BRF_ESS | BRF_PRG },	//  1
 	{ "pacman.6h",    0x1000, 0xC71C0011, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "pacman.6j",    0x1000, 0xC71C0011, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "pacman.5e",    0x1000, 0xAB38F274, 2 | BRF_GRA },			//  4 Graphics
-	{ "pacman.5f",    0x1000, 0xCE1C6CB2, 2 | BRF_GRA },			//  5
+	{ "pacman.5e",    0x1000, 0x57AE12E7, 2 | BRF_GRA },			//  4 Graphics
+	{ "pacman.5f",    0x1000, 0x097ECA05, 2 | BRF_GRA },			//  5
 
 	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  6 Color Proms
 	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  7

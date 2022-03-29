@@ -904,7 +904,7 @@ inline void tlcs900_handle_timers( tlcs900_state *cpustate )
 			cpustate->timer[0] += 1;
 			if ( cpustate->timer[0] == cpustate->reg[TREG0] )
 			{
-				if ( ( cpustate->reg[T01MOD] & 0x0c ) == 0x00 )
+				if ( ( cpustate->reg[TRUN] & 0x02 ) && ( cpustate->reg[T01MOD] & 0x0c ) == 0x00 )
 				{
 					cpustate->timer_change[1] += 1;
 				}
@@ -981,7 +981,7 @@ inline void tlcs900_handle_timers( tlcs900_state *cpustate )
 			cpustate->timer[2] += 1;
 			if ( cpustate->timer[2] == cpustate->reg[TREG2] )
 			{
-				if ( ( cpustate->reg[T23MOD] & 0x0c ) == 0x00 )
+				if ( ( cpustate->reg[TRUN] & 0x08 ) && ( cpustate->reg[T23MOD] & 0x0c ) == 0x00 )
 				{
 					cpustate->timer_change[3] += 1;
 				}

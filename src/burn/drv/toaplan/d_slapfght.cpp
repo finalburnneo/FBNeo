@@ -1605,6 +1605,11 @@ static struct BurnRomInfo alconRomDesc[] = {
 	{ "21_82s129.12q",		0x0100, 0xa0efaf99, 7 | BRF_GRA },           // 14 Color Data
 	{ "20_82s129.12m",		0x0100, 0xa56d57e5, 7 | BRF_GRA },           // 15
 	{ "19_82s129.12n",		0x0100, 0x5cbf9fbf, 7 | BRF_GRA },           // 16
+	{ "14_82s129.2c",		0x0100, 0x4dc04453, 7 | BRF_GRA },           // 17
+	{ "15_82s129.8b",		0x0100, 0x48ac3db4, 7 | BRF_GRA },           // 18
+	{ "16_82s129.1e",		0x0100, 0x59490887, 7 | BRF_GRA },           // 19
+	{ "17_82s129.1c",		0x0100, 0xd492e6c2, 7 | BRF_GRA },           // 20
+	{ "18_82s123.2b",		0x0020, 0xaa0ca5a5, 7 | BRF_GRA },           // 21
 };
 
 STD_ROM_PICK(alcon)
@@ -1647,6 +1652,11 @@ static struct BurnRomInfo slapfighRomDesc[] = {
 	{ "21_82s129.12q",		0x0100, 0xa0efaf99, 7 | BRF_GRA },           // 14 Color Data
 	{ "20_82s129.12m",		0x0100, 0xa56d57e5, 7 | BRF_GRA },           // 15
 	{ "19_82s129.12n",		0x0100, 0x5cbf9fbf, 7 | BRF_GRA },           // 16
+	{ "14_82s129.2c",		0x0100, 0x4dc04453, 7 | BRF_GRA },           // 17
+	{ "15_82s129.8b",		0x0100, 0x48ac3db4, 7 | BRF_GRA },           // 18
+	{ "16_82s129.1e",		0x0100, 0x59490887, 7 | BRF_GRA },           // 19
+	{ "17_82s129.1c",		0x0100, 0xd492e6c2, 7 | BRF_GRA },           // 20
+	{ "18_82s123.2b",		0x0020, 0xaa0ca5a5, 7 | BRF_GRA },           // 21
 };
 
 STD_ROM_PICK(slapfigh)
@@ -1690,6 +1700,11 @@ static struct BurnRomInfo slapfighaRomDesc[] = {
 	{ "a76-17.12q",			0x0100, 0xa0efaf99, 7 | BRF_GRA },           // 15 Color Data
 	{ "a76-15.12m",			0x0100, 0xa56d57e5, 7 | BRF_GRA },           // 16
 	{ "a76-16.12n",			0x0100, 0x5cbf9fbf, 7 | BRF_GRA },           // 17
+	{ "14_82s129.2c",		0x0100, 0x4dc04453, 7 | BRF_GRA },           // 17
+	{ "15_82s129.8b",		0x0100, 0x48ac3db4, 7 | BRF_GRA },           // 18
+	{ "16_82s129.1e",		0x0100, 0x59490887, 7 | BRF_GRA },           // 19
+	{ "17_82s129.1c",		0x0100, 0xd492e6c2, 7 | BRF_GRA },           // 20
+	{ "18_82s123.2b",		0x0020, 0xaa0ca5a5, 7 | BRF_GRA },           // 21
 };
 
 STD_ROM_PICK(slapfigha)

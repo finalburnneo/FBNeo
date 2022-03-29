@@ -974,7 +974,7 @@ struct BurnDriver BurnDrvUmk3uk = {
 
 static struct BurnRomInfo umk3pb2RomDesc[] = {
 	{ "u54_umk3plus.u54",	                    0x080000, 0x54a5359f, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
-	{ "u63_umk3plus.u63",	                    0x080000, 0x4f425218, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "u63_umk3plus.u63",	                    0x080000, 0xfb83320d, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "l2.0_mortal_kombat_3_u2_umk3plus.u2",	0x100000, 0x2c7f4a1d, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
 	{ "l1_mortal_kombat_3_u3_music_spch.u3",	0x100000, 0x856fe411, 2 | BRF_PRG | BRF_ESS }, //  3

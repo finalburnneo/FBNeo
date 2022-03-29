@@ -35623,3 +35623,22 @@ struct BurnDriver BurnSpecZxwordle = {
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
+
+// Chez Maxime ZX (128K) (HB)
+
+static struct BurnRomInfo SpecChezmaxRomDesc[] = {
+	{ "Chez Maxime ZX 128K (2022)(highriser).tap", 48799, 0xab6b980b, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecChezmax, SpecChezmax, Spec128)
+STD_ROM_FN(SpecChezmax)
+
+struct BurnDriver BurnSpecChezmax = {
+	"spec_chezmax", NULL, "spec_spec128", NULL, "2022",
+	"Chez Maxime ZX (128K) (HB)\0", NULL, "highriser", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	SpectrumGetZipName, SpecChezmaxRomInfo, SpecChezmaxRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

@@ -23,12 +23,20 @@ INT32 nPGMSPRColMaskLen = 0;
 INT32 nPGMSPRMaskMaskLen = 0;
 INT32 nPGMExternalARMLen = 0;
 
+UINT16 pgm_bg_scrollx;
+UINT16 pgm_bg_scrolly;
+UINT16 pgm_fg_scrollx;
+UINT16 pgm_fg_scrolly;
+UINT16 pgm_video_control;
+static UINT16 pgm_unk_video_flags;
+static INT32 pgm_z80_connect_bus;
+
+UINT16 *PGMZoomRAM;
 UINT32 *PGMBgRAM;
 UINT32 *PGMTxtRAM;
 UINT32 *RamCurPal;
 UINT16 *PGMRowRAM;
 UINT16 *PGMPalRAM;
-UINT16 *PGMVidReg;
 UINT16 *PGMSprBuf;
 static UINT8 *RamZ80;
 UINT8 *PGM68KRAM;
@@ -60,19 +68,11 @@ INT32 nPGMArm7Type = 0;
 UINT32 nPgmAsicRegionHackAddress = 0;
 
 INT32 pgm_cave_refresh = 0;
+#define Z80_FREQ	8468000
 
-#define M68K_FREQ  20000000
-#define Z80_FREQ   8468000
-
-#define M68K_CYCS_PER_FRAME	((M68K_FREQ * 100) / nBurnFPS)
+#define M68K_CYCS_PER_FRAME	((20000000 * 100) / nBurnFPS)
 #define ARM7_CYCS_PER_FRAME	((20000000 * 100) / nBurnFPS)
-#define Z80_CYCS_PER_FRAME	(( Z80_FREQ * 100) / nBurnFPS)
-
-#define	PGM_INTER_LEAVE	200
-
-#define M68K_CYCS_PER_INTER	(M68K_CYCS_PER_FRAME / PGM_INTER_LEAVE)
-#define ARM7_CYCS_PER_INTER	(ARM7_CYCS_PER_FRAME / PGM_INTER_LEAVE)
-#define Z80_CYCS_PER_INTER	(Z80_CYCS_PER_FRAME  / PGM_INTER_LEAVE)
+#define Z80_CYCS_PER_FRAME	((Z80_FREQ * 100) / nBurnFPS)
 
 static INT32 nCyclesDone[3];
 static INT32 nCyclesTotal[3];
@@ -87,34 +87,33 @@ static INT32 pgmMemIndex()
 
 	PGMProtROM			= PGMUSER0 + 0x10000; // Olds, Killbld, drgw3
 
-	if (BurnDrvGetHardwareCode() & HARDWARE_IGS_USE_ARM_CPU) {
-		PGMARMROM		= Next; Next += 0x0004000;
-	}
+	PGMARMROM			= Next; Next += 0x0004000;	// Just always allocate this - only 16kb
+
+	RamCurPal			= (UINT32 *) Next; Next += (0x0002004 / 2) * sizeof(UINT32);
 
 	RamStart			= Next;
 
 	PGM68KRAM			= Next; Next += 0x0020000;
 	RamZ80				= Next; Next += 0x0010000;
 
-	if (BurnDrvGetHardwareCode() & HARDWARE_IGS_USE_ARM_CPU) {
-		PGMARMShareRAM	= Next; Next += 0x0010000;
-		PGMARMShareRAM2	= Next; Next += 0x0010000;
-		PGMARMRAM0		= Next; Next += 0x0001000; // minimum map is 0x1000 - should be 0x400
+	if (nEnableArm7) {
+		PGMARMShareRAM	= Next; Next += 0x0020000;
+		PGMARMShareRAM2	= Next; Next += 0x0020000;
+		PGMARMRAM0		= Next; Next += 0x0001000; // minimum page size in arm7 is 0x1000
 		PGMARMRAM1		= Next; Next += 0x0040000;
-		PGMARMRAM2		= Next; Next += 0x0001000; // minimum map is 0x1000 - should be 0x400
+		PGMARMRAM2		= Next; Next += 0x0001000; // minimum page size in arm7 is 0x1000
 	}
+
+	PGMZoomRAM			= (UINT16 *) Next; Next += 0x0000040;
 
 	PGMBgRAM			= (UINT32 *) Next; Next += 0x0001000;
 	PGMTxtRAM			= (UINT32 *) Next; Next += 0x0002000;
 
 	PGMRowRAM			= (UINT16 *) Next; Next += 0x0001000;	// Row Scroll
-	PGMPalRAM			= (UINT16 *) Next; Next += 0x0001400;	// Palette R5G5B5
-	PGMVidReg			= (UINT16 *) Next; Next += 0x0010000;	// Video Regs inc. Zoom Table
-	PGMSprBuf			= (UINT16 *) Next; Next += 0x0000a00;
+	PGMPalRAM			= (UINT16 *) Next; Next += 0x0002000;	// Palette R5G5B5
+	PGMSprBuf			= (UINT16 *) Next; Next += 0x0001000;
 
 	RamEnd				= Next;
-
-	RamCurPal			= (UINT32 *) Next; Next += (0x0001204 / 2) * sizeof(UINT32);
 
 	MemEnd				= Next;
 
@@ -205,7 +204,7 @@ static INT32 pgmGetRoms(bool bLoad)
 		if ((ri.nType & BRF_PRG) && (ri.nType & 0x0f) == 7)
 		{
 			if (bLoad) {
-				if (BurnDrvGetHardwareCode() & HARDWARE_IGS_USE_ARM_CPU) {
+				if (nEnableArm7) {
 					BurnLoadRom(PGMARMROM + ((ri.nLen == 0x3e78) ? 0x188 : 0), i, 1);
 				}
 			}
@@ -214,7 +213,7 @@ static INT32 pgmGetRoms(bool bLoad)
 
 		if ((ri.nType & BRF_PRG) && (ri.nType & 0x0f) == 8)
 		{
-			if (BurnDrvGetHardwareCode() & HARDWARE_IGS_USE_ARM_CPU) {
+			if (nEnableArm7) {
 				if (bLoad) BurnLoadRom(PGMUSER0Load, i, 1);
 				PGMUSER0Load += ri.nLen;
 			}
@@ -284,9 +283,79 @@ static void ics2115_soundlatch_w(INT32 i, UINT16 d)
 	bSoundlatchRead[i] = 0;
 }
 
+static inline INT32 get_current_scanline()
+{
+	UINT32 ret = (SekTotalCycles() * 262) / (M68K_CYCS_PER_FRAME);
+
+	return (ret > 263) ? 263 : ret;
+}
+
+static void _fastcall PgmVideoControllerWriteWord(UINT32 sekAddress, UINT16 wordValue)
+{
+	switch (sekAddress & 0x0f000)
+	{
+		case 0x0000: bprintf (0, _T("VideoController write word: %5.5x, %4.4x\n"), sekAddress, wordValue); break; // Sprite buffer is not writeable by the 68K
+		case 0x1000: PGMZoomRAM[(sekAddress >> 1) & 0x1f] = wordValue; break; // size is guessed
+		case 0x2000: pgm_bg_scrolly = wordValue; break;
+		case 0x3000: pgm_bg_scrollx = wordValue; break;
+		case 0x4000: bprintf (0, _T("VideoController write word: %5.5x, %4.4x\n"), sekAddress, wordValue); pgm_unk_video_flags = wordValue; break;
+		case 0x5000: pgm_fg_scrolly = wordValue; break;
+		case 0x6000: pgm_fg_scrollx = wordValue; break;
+		case 0x7000: bprintf (0, _T("VideoController write word: %5.5x, %4.4x\n"), sekAddress, wordValue); break; // ?
+		case 0x8000: bprintf (0, _T("VideoController write word: %5.5x, %4.4x\n"), sekAddress, wordValue); break; // ?
+		case 0x9000: bprintf (0, _T("VideoController write word: %5.5x, %4.4x\n"), sekAddress, wordValue); break; // ?
+		case 0xa000: bprintf (0, _T("VideoController write word: %5.5x, %4.4x\n"), sekAddress, wordValue); break; // ?
+		case 0xb000: bprintf (0, _T("VideoController write word: %5.5x, %4.4x\n"), sekAddress, wordValue); break; // ?
+		case 0xc000: bprintf (0, _T("VideoController write word: %5.5x, %4.4x\n"), sekAddress, wordValue); break; // ?
+		case 0xd000: bprintf (0, _T("VideoController write word: %5.5x, %4.4x\n"), sekAddress, wordValue); break; // ?
+		case 0xe000: pgm_video_control = wordValue; break;
+		case 0xf000: bprintf (0, _T("VideoController write word: %5.5x, %4.4x\n"), sekAddress, wordValue); break; // ?
+	}
+}
+
+static void __fastcall PgmVideoControllerWriteByte(UINT32 sekAddress, UINT8 byteValue)
+{
+	bprintf (0, _T("VideoController Write Byte: %5.5x, %2.2x PC(%5.5x)\n"), sekAddress, byteValue, SekGetPC(-1));
+}
+
+static UINT16 _fastcall PgmVideoControllerReadWord(UINT32 sekAddress)
+{
+	bprintf (0, _T("VideoController Read Word: %5.5x, PC(%5.5x)\n"), sekAddress, SekGetPC(-1));
+
+	// ddp2 seems to read from the sprite buffer?
+	switch (sekAddress & 0x0f000)
+	{
+		case 0x0000: return PGMSprBuf[(sekAddress >> 1) & 0x7ff];
+		case 0x1000: return 0; // zoom ram is not readable by the 68K
+		case 0x2000: return pgm_bg_scrolly;
+		case 0x3000: return pgm_bg_scrollx;
+		case 0x4000: return pgm_unk_video_flags;
+		case 0x5000: return pgm_fg_scrolly;
+		case 0x6000: return pgm_fg_scrollx;
+		case 0x7000: return get_current_scanline(); // scanline counter? 0 - 107
+		case 0x8000: return 0; // ?
+		case 0x9000: return 0; // ?
+		case 0xa000: return 0; // ?
+		case 0xb000: return 0; // ?
+		case 0xc000: return 0; // accesses here cause video to refresh?
+		case 0xd000: return 0; // accesses here cause video to refresh?
+		case 0xe000: return pgm_video_control;
+		case 0xf000: return 0;
+	}
+	
+	return 0;
+}
+
+static UINT8 __fastcall PgmVideoControllerReadByte(UINT32 sekAddress)
+{
+	bprintf (0, _T("VideoController Read Byte: %5.5x, PC(%5.5x)\n"), sekAddress, SekGetPC(-1));
+
+	return 0;
+}
+
 static UINT8 __fastcall PgmReadByte(UINT32 sekAddress)
 {
-	switch (sekAddress)
+	switch (sekAddress & ~0xe7ff8)
 	{
 		case 0xC00007:
 			return v3021Read();
@@ -303,13 +372,12 @@ static UINT8 __fastcall PgmReadByte(UINT32 sekAddress)
 
 static UINT16 __fastcall PgmReadWord(UINT32 sekAddress)
 {
-	switch (sekAddress)
+	switch (sekAddress & ~0xe7ff8)
 	{
 		case 0xC00004:
 			pgmSynchroniseZ80(0);
-
 			return ics2115_soundlatch_r(1);
-
+			
 		case 0xC00006:	// ketsui wants this
 			return v3021Read();
 
@@ -351,17 +419,18 @@ static void __fastcall PgmWriteWord(UINT32 sekAddress, UINT16 wordValue)
 	{
 		case 0x700006:	// Watchdog?
 			break;
-			
+	}
+	
+	switch (sekAddress & ~0xe7ff0)
+	{
 		case 0xC00002:
 			pgmSynchroniseZ80(0);
-
 			ics2115_soundlatch_w(0, wordValue);
 			ZetNmi();
 			break;
 
 		case 0xC00004:
 			pgmSynchroniseZ80(0);
-
 			ics2115_soundlatch_w(1, wordValue);
 			break;
 
@@ -383,12 +452,13 @@ static void __fastcall PgmWriteWord(UINT32 sekAddress, UINT16 wordValue)
 
 			break;
 
-		case 0xC0000A:	// z80_ctrl_w
+		case 0xC0000A:	// z80 controller
+			if (wordValue == 0x45d3) pgm_z80_connect_bus = 1;
+			if (wordValue == 0x0a0a) pgm_z80_connect_bus = 0;
 			break;
 
 		case 0xC0000C:
 			pgmSynchroniseZ80(0);
-
 			ics2115_soundlatch_w(2, wordValue);
 			break;
 
@@ -419,6 +489,8 @@ static UINT16 __fastcall PgmZ80ReadWord(UINT32 sekAddress)
 {
 	pgmSynchroniseZ80(0);
 
+//	if (pgm_z80_connect_bus == 0) return 0;
+
 	sekAddress &= 0xffff;
 	return (RamZ80[sekAddress] << 8) | RamZ80[sekAddress + 1];
 }
@@ -435,6 +507,8 @@ static void __fastcall PgmZ80WriteByte(UINT32 sekAddress, UINT8 byteValue)
 static void __fastcall PgmZ80WriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
 	pgmSynchroniseZ80(0);
+
+//	if (pgm_z80_connect_bus == 0) return;
 
 	sekAddress &= 0xffff;
 	RamZ80[sekAddress    ] = wordValue >> 8;
@@ -457,17 +531,16 @@ inline static UINT32 CalcCol(UINT16 nColour)
 
 static void __fastcall PgmPaletteWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
-	sekAddress = (sekAddress - 0xa00000) >> 1;
+	sekAddress = (sekAddress & 0x1ffe) >> 1;
 	PGMPalRAM[sekAddress] = BURN_ENDIAN_SWAP_INT16(wordValue);
 	RamCurPal[sekAddress] = CalcCol(wordValue);
 }
 
 static void __fastcall PgmPaletteWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
-	sekAddress -= 0xa00000;
+	sekAddress &= 0x1fff;
 	UINT8 *pal = (UINT8*)PGMPalRAM;
 	pal[sekAddress ^ 1] = byteValue;
-
 	RamCurPal[sekAddress >> 1] = CalcCol(PGMPalRAM[sekAddress >> 1]);
 }
 
@@ -551,6 +624,14 @@ static INT32 PgmDoReset()
 	nCyclesDone[0] = nCyclesDone[1] = nCyclesDone[2] = 0;
 
 	HiscoreReset();
+
+	pgm_bg_scrollx = 0;
+	pgm_bg_scrolly = 0;
+	pgm_fg_scrollx = 0;
+	pgm_fg_scrolly = 0;
+	pgm_video_control = 0;
+	pgm_unk_video_flags = 0;
+	pgm_z80_connect_bus = 1;
 
 	return 0;
 }
@@ -659,16 +740,18 @@ INT32 pgmInit()
 {
 	BurnSetRefreshRate(((BurnDrvGetHardwareCode() & HARDWARE_IGS_JAMMAPCB) || pgm_cave_refresh) ? 59.17 : 60.00);
 
+	nEnableArm7 = (BurnDrvGetHardwareCode() / HARDWARE_IGS_USE_ARM_CPU) & 1;
+
 	Mem = NULL;
 
 	pgmGetRoms(false);
 
 	expand_colourdata();
 
-	PGMTileROM      = (UINT8*)BurnMalloc(nPGMTileROMLen);		// 8x8 Text Tiles + 32x32 BG Tiles
+	PGMTileROM      = (UINT8*)BurnMalloc(nPGMTileROMLen);			// 8x8 Text Tiles + 32x32 BG Tiles
 	PGMTileROMExp   = (UINT8*)BurnMalloc((nPGMTileROMLen / 5) * 8);	// Expanded 8x8 Text Tiles and 32x32 BG Tiles
 	PGMSPRMaskROM	= (UINT8*)BurnMalloc(nPGMSPRMaskROMLen);
-	ICSSNDROM	= (UINT8*)BurnMalloc(nPGMSNDROMLen);
+	ICSSNDROM		= (UINT8*)BurnMalloc(nPGMSNDROMLen);
 
 	pgmMemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -695,17 +778,20 @@ INT32 pgmInit()
 		}
 		else
 		{
-			SekMapMemory(PGM68KBIOS,			0x000000, 0x07ffff, MAP_ROM);				// 68000 BIOS
+			// if a cart is mapped at 100000+, the BIOS is mapped from 0-fffff, if no cart inserted, the BIOS is mapped to 7fffff!
+			for (INT32 i = 0; i < 0x100000; i+= 0x20000) { // DDP3 bios is 512k in size, but >= 20000 is 0-filled!
+				SekMapMemory(PGM68KBIOS,			0x000000 | i, 0x01ffff | i, MAP_ROM);			// 68000 BIOS
+			}
+
 			SekMapMemory(PGM68KROM,				0x100000, (nPGM68KROMLen-1)+0x100000, MAP_ROM);		// 68000 ROM
-			if (strcmp(BurnDrvGetTextA(DRV_NAME), "kov2pfwll") == 0)
-				SekMapMemory((PGM68KROM + 0x300000), 0x600000, 0x6FFFFF, MAP_ROM); // Many hacks from GOTVG, such as zerofx, kovshpd and kovplus2012 serials, use this as protection.
+
+			// from 0 to 7fffff is completely mappable by the cartridge (it can cover the bios!)
 		}
 
         for (INT32 i = 0; i < 0x100000; i+=0x20000) {		// Main Ram + Mirrors...
-			SekMapMemory(PGM68KRAM,            		0x800000 | i, 0x81ffff | i, MAP_RAM);
+			SekMapMemory(PGM68KRAM,            	0x800000 | i, 0x81ffff | i, MAP_RAM);
 		}
 
-		// Thanks to FBA Shuffle for this
 		for (INT32 i = 0; i < 0x100000; i+=0x08000) {		// Video Ram + Mirrors...
 			SekMapMemory((UINT8 *)PGMBgRAM,		0x900000 | i, 0x900fff | i, MAP_RAM);
 			SekMapMemory((UINT8 *)PGMBgRAM,		0x901000 | i, 0x901fff | i, MAP_RAM); // mirror
@@ -716,11 +802,17 @@ INT32 pgmInit()
 			SekMapMemory((UINT8 *)PGMRowRAM,	0x907000 | i, 0x907fff | i, MAP_RAM);
 		}
 
-		SekMapMemory((UINT8 *)PGMPalRAM,		0xa00000, 0xa013ff, MAP_ROM); // palette
-		SekMapMemory((UINT8 *)PGMVidReg,		0xb00000, 0xb0ffff, MAP_RAM); // should be mirrored?
+		for (INT32 i = 0; i < 0x100000; i+= 0x02000) { // mirror
+			SekMapMemory((UINT8 *)PGMPalRAM,	0xa00000 | i, 0xa01fff | i, MAP_ROM); // palette
+		}
 
-		SekMapHandler(1,					0xa00000, 0xa013ff, MAP_WRITE);
-		SekMapHandler(2,					0xc10000, 0xc1ffff, MAP_READ | MAP_WRITE);
+		SekMapHandler(1,						0xa00000, 0xafffff, MAP_WRITE);
+		SekMapHandler(2,						0xb00000, 0xbfffff, MAP_READ | MAP_WRITE);
+		for (INT32 i = 0; i < 0x100000; i += 0x20000) { // mirror
+			SekMapHandler(3,					0xc10000 | i, 0xc1ffff | i, MAP_READ | MAP_WRITE);
+		}
+
+		// from d00000 to ffffff is completely mappable by the cartridge
 
 		SekSetReadWordHandler(0, PgmReadWord);
 		SekSetReadByteHandler(0, PgmReadByte);
@@ -730,10 +822,16 @@ INT32 pgmInit()
 		SekSetWriteByteHandler(1, PgmPaletteWriteByte);
 		SekSetWriteWordHandler(1, PgmPaletteWriteWord);
 
-		SekSetReadWordHandler(2, PgmZ80ReadWord);
-		SekSetReadByteHandler(2, PgmZ80ReadByte);
-		SekSetWriteWordHandler(2, PgmZ80WriteWord);
-		SekSetWriteByteHandler(2, PgmZ80WriteByte);
+		SekSetReadWordHandler(2,	PgmVideoControllerReadWord);
+		SekSetReadByteHandler(2,	PgmVideoControllerReadByte);
+		SekSetWriteWordHandler(2,	PgmVideoControllerWriteWord);
+		SekSetWriteByteHandler(2,	PgmVideoControllerWriteByte);
+
+		SekSetReadWordHandler(3, PgmZ80ReadWord);
+		SekSetReadByteHandler(3, PgmZ80ReadByte);
+		SekSetWriteWordHandler(3, PgmZ80WriteWord);
+		SekSetWriteByteHandler(3, PgmZ80WriteByte);
+
 		SekClose();
 	}
 
@@ -744,10 +842,6 @@ INT32 pgmInit()
 		ZetSetOutHandler(PgmZ80PortWrite);
 		ZetSetInHandler(PgmZ80PortRead);
 		ZetClose();
-	}
-
-	if (BurnDrvGetHardwareCode() & HARDWARE_IGS_USE_ARM_CPU) {
-		nEnableArm7 = 1;
 	}
 
 	pgmInitDraw();
@@ -830,6 +924,21 @@ INT32 pgmExit()
 	return 0;
 }
 
+static void pgm_sprite_buffer()
+{
+	if (pgm_video_control & 0x0001) // verified
+	{
+		UINT16 *ram16 = (UINT16*)PGM68KRAM;
+		
+		for (INT32 i = 0; i < 0xa00/2; i+= 10/2)
+		{
+			memcpy (PGMSprBuf + (i / (10 / 2)) * (16 / 2), ram16 + i, 10); // 16 bytes per buffered sprite, 10 per pre-buffer
+
+			if ((ram16[i+4] & 0x7fff) == 0) break; // verified on hardware
+		}
+	}
+}
+
 INT32 pgmFrame()
 {
 	if (PgmReset) {
@@ -838,8 +947,9 @@ INT32 pgmFrame()
 
 	// compile inputs
 	{
-        memset (PgmInput, 0, 6);
-		for (INT32 i = 0; i < 8; i++) {
+        memset (PgmInput, 0, sizeof(PgmInput));
+
+		for (INT32 i = 0; i < sizeof(PgmJoy1); i++) {
 			PgmInput[0] |= (PgmJoy1[i] & 1) << i;
 			PgmInput[1] |= (PgmJoy2[i] & 1) << i;
 			PgmInput[2] |= (PgmJoy3[i] & 1) << i;
@@ -873,8 +983,6 @@ INT32 pgmFrame()
 	SekIdle(nCyclesDone[0]);
 	ZetIdle(nCyclesDone[1]);
 
-	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
-
 	if (nEnableArm7)
 	{
 		Arm7NewFrame();
@@ -896,39 +1004,26 @@ INT32 pgmFrame()
 		} else if (nPgmAsicRegionHackAddress) {
 			PGMARMROM[nPgmAsicRegionHackAddress] = PgmInput[7];
 		}
+	}
 
+	{
+		INT32 nInterleave = 262; // 262 scanlines
 		nCyclesTotal[0] = M68K_CYCS_PER_FRAME;
 		nCyclesTotal[1] = Z80_CYCS_PER_FRAME;
 		nCyclesTotal[2] = ARM7_CYCS_PER_FRAME;
 
-		while (SekTotalCycles() < nCyclesTotal[0] / 2)
-			SekRun(nCyclesTotal[0] / 2 - SekTotalCycles());
+		for (INT32 i = 0; i < nInterleave; i++)
+		{
+			if (i == 224) {
+				SekSetIRQLine(6, CPU_IRQSTATUS_AUTO); // vblank - cart-controlled!
+				pgm_sprite_buffer();
+			}
+			if (i == 218 && !nPGMDisableIRQ4) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO); // verified on Dragon World II cart - Cart-controlled! 
 
-		if (!nPGMDisableIRQ4)
-			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-
-		while (SekTotalCycles() < nCyclesTotal[0])
-			SekRun(nCyclesTotal[0] - SekTotalCycles());
-
-		while (Arm7TotalCycles() < nCyclesTotal[2])
-			Arm7Run(nCyclesTotal[2] - Arm7TotalCycles());
-
-		nCyclesDone[2] = Arm7TotalCycles() - nCyclesTotal[2];
-		Arm7Close();
-	}
-	else
-	{
-		nCyclesTotal[0] = (UINT32)((UINT64)(M68K_FREQ) * nBurnCPUSpeedAdjust * 100 / (0x0100 * nBurnFPS));
-		nCyclesTotal[1] = Z80_CYCS_PER_FRAME;
-
-		while (SekTotalCycles() < nCyclesTotal[0] / 2)
-			SekRun(nCyclesTotal[0] / 2 - SekTotalCycles());
-
-		if (!nPGMDisableIRQ4)
-			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-
-		while (SekTotalCycles() < nCyclesTotal[0])
-			SekRun(nCyclesTotal[0] - SekTotalCycles());
+			CPU_RUN(0, Sek);
+		//	CPU_IDLE_SYNCINT(1, Zet); // sync'd on reads and writes and at the end of the frame
+			if (nEnableArm7) CPU_RUN_SYNCINT(2, Arm7);
+		}
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[1]);
@@ -936,15 +1031,15 @@ INT32 pgmFrame()
 
 	nCyclesDone[0] = SekTotalCycles() - nCyclesTotal[0];
 	nCyclesDone[1] = ZetTotalCycles() - nCyclesTotal[1];
-
+	if (nEnableArm7) nCyclesDone[2] = Arm7TotalCycles() - nCyclesTotal[2];
+	
+	if (nEnableArm7) Arm7Close();
 	ZetClose();
 	SekClose();
 
 	if (pBurnDraw) {
 		pgmDraw();
 	}
-
-	memcpy (PGMSprBuf, PGM68KRAM /* Sprite RAM 0-bff */, 0xa00); // buffer sprites
 
 	return 0;
 }
@@ -1001,15 +1096,21 @@ INT32 pgmScan(INT32 nAction,INT32 *pnMin)
 		BurnAcb(&ba);
 
 		ba.Data		= PGMPalRAM;
-		ba.nLen		= 0x0001400;
+		ba.nLen		= 0x0002000;
 		ba.nAddress	= 0xA00000;
-		ba.szName	= "Palette";
+		ba.szName	= "Palette RAM";
 		BurnAcb(&ba);
 
-		ba.Data		= PGMVidReg;
-		ba.nLen		= 0x0010000;
+		ba.Data		= PGMSprBuf;
+		ba.nLen		= 0x001000;
 		ba.nAddress	= 0xB00000;
-		ba.szName	= "Video Regs";
+		ba.szName	= "Sprite Buffer";
+		BurnAcb(&ba);
+		
+		ba.Data		= PGMZoomRAM;
+		ba.nLen		= 0x000040;
+		ba.nAddress	= 0xB01000;
+		ba.szName	= "Zoom Regs";
 		BurnAcb(&ba);
 		
 		ba.Data		= RamZ80;
@@ -1040,6 +1141,14 @@ INT32 pgmScan(INT32 nAction,INT32 *pnMin)
 
 		SCAN_VAR(nSoundlatch);
 		SCAN_VAR(bSoundlatchRead);
+
+		SCAN_VAR(pgm_bg_scrollx);
+		SCAN_VAR(pgm_bg_scrolly);
+		SCAN_VAR(pgm_fg_scrollx);
+		SCAN_VAR(pgm_fg_scrolly);
+		SCAN_VAR(pgm_video_control);
+		SCAN_VAR(pgm_unk_video_flags);
+		SCAN_VAR(pgm_z80_connect_bus);
 
 		ics2115_scan(nAction, pnMin);
 	}

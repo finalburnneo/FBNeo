@@ -972,7 +972,7 @@ struct BurnDriver BurnDrvUmk3uk = {
 // Ultimate Mortal Kombat 3 Plus (Hack, Beta 2)
 // Author: zpaul2fresh8
 
-static struct BurnRomInfo umk3pb2RomDesc[] = {
+static struct BurnRomInfo umk3pRomDesc[] = {
 	{ "u54_umk3plus.u54",	                    0x080000, 0x54a5359f, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "u63_umk3plus.u63",	                    0x080000, 0xfb83320d, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -1014,15 +1014,15 @@ static struct BurnRomInfo umk3pb2RomDesc[] = {
 	{ "463_mk3_ultimate.u64", 0x1009, 0x4f425218, 0 | BRF_OPT },
 };
 
-STD_ROM_PICK(umk3pb2)
-STD_ROM_FN(umk3pb2)
+STD_ROM_PICK(umk3p)
+STD_ROM_FN(umk3p)
 
-struct BurnDriver BurnDrvUmk3pb2 = {
-	"umk3pb2", "umk3", NULL, NULL, "2022",
+struct BurnDriver BurnDrvUmk3p = {
+	"umk3p", "umk3", NULL, NULL, "2022",
 	"Ultimate Mortal Kombat 3 Plus (Hack, Beta 2)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
-	NULL, umk3pb2RomInfo, umk3pb2RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
+	NULL, umk3pRomInfo, umk3pRomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
 };

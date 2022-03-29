@@ -919,25 +919,6 @@ void pgm_decrypt_pgm3in1()
 	}
 }
 
-void pgm_descramble_happy6_data(UINT8 *src, INT32 len)
-{
-	UINT8 *buffer = (UINT8*)BurnMalloc(0x800000);
-
-	for (INT32 x = 0; x < len; x += 0x800000)
-	{
-		for (INT32 i = 0; i < 0x800000; i++) //=0x200)
-		{
-			INT32 j = (i & 0xf8c01ff) | ((i >> 12) & 0x600) | ((i << 2) & 0x43f800) | ((i << 4) & 0x300000);
-
-			buffer[i] = src[j + x];
-		}
-
-		memcpy (src + x, buffer, 0x800000);
-	}
-
-	BurnFree (buffer);
-}
-
 // ------------------------------------------------------------------------------------------------------------
 // Bootleg decryption routines
 
@@ -947,7 +928,9 @@ static void decode_kovqhsgs_gfx_block(UINT8 *src)
 
 	for (INT32 i = 0; i < 0x800000; i++)
 	{
-		dec[BITSWAP24(i, 23, 10, 9, 22, 19, 18, 20, 21, 17, 16, 15, 14, 13, 12, 11, 8, 7, 6, 5, 4, 3, 2, 1, 0)] = src[i];
+		INT32 j = BITSWAP24(i, 23, 10, 9, 22, 19, 18, 20, 21, 17, 16, 15, 14, 13, 12, 11, 8, 7, 6, 5, 4, 3, 2, 1, 0);
+
+		dec[j] = src[i];
 	}
 
 	memcpy (src, dec, 0x800000);
@@ -987,7 +970,7 @@ static void pgm_decode_kovqhsgs_samples()
 	}
 }
 
-static void pgm_decrypt_kovqhsgs_program()
+static void pgm_decode_kovqhsgs_program()
 {
 	UINT16 *src = (UINT16*)PGM68KROM;
 	UINT16 *dst = (UINT16*)BurnMalloc(0x400000);
@@ -1006,7 +989,7 @@ static void pgm_decrypt_kovqhsgs_program()
 
 void pgm_decrypt_kovqhsgs()
 {
-	pgm_decrypt_kovqhsgs_program();
+	pgm_decode_kovqhsgs_program();
 
 	decode_kovqhsgs_gfx_block(PGMSPRMaskROM + 0x000000);
 	decode_kovqhsgs_gfx_block(PGMSPRMaskROM + 0x800000);
@@ -1016,7 +999,7 @@ void pgm_decrypt_kovqhsgs()
 	pgm_decode_kovqhsgs_samples();
 }
 
-static void pgm_decrypt_kovlsqh2_program()
+static void pgm_decode_kovlsqh2_program()
 {
 	UINT16 *src = (UINT16*)PGM68KROM;
 	UINT16 *dst = (UINT16*)BurnMalloc(0x400000);
@@ -1035,7 +1018,7 @@ static void pgm_decrypt_kovlsqh2_program()
 
 void pgm_decrypt_kovlsqh2()
 {
-	pgm_decrypt_kovlsqh2_program();
+	pgm_decode_kovlsqh2_program();
 
 	decode_kovqhsgs_gfx_block(PGMSPRMaskROM + 0x000000);
 	decode_kovqhsgs_gfx_block(PGMSPRMaskROM + 0x800000);
@@ -1045,7 +1028,7 @@ void pgm_decrypt_kovlsqh2()
 	pgm_decode_kovqhsgs_samples();
 }
 
-static void pgm_decrypt_kovassgplus_program()
+static void pgm_decode_kovassg_program()
 {
 	UINT16 *src = (UINT16 *)PGM68KROM;
 	UINT16 *dst = (UINT16 *)BurnMalloc(0x400000);
@@ -1054,23 +1037,17 @@ static void pgm_decrypt_kovassgplus_program()
 	{
 		INT32 j = (i & ~0xffff) | (BITSWAP16(i, 15, 14, 13, 12,  11, 10, 7, 3,  1, 9, 4, 8,  6, 0, 2, 5) ^ 0x019c);
 
-		dst[i] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(src[j]), 13, 9, 10, 11, 2, 0, 12, 5, 4, 1, 14, 8, 15, 6, 3, 7) ^ 0x9d05);
+		dst[i] = BITSWAP16(src[j], 13, 9, 10, 11, 2, 0, 12, 5, 4, 1, 14, 8, 15, 6, 3, 7) ^ 0x9d05;
 	}
 
-	// unknown encryption for 300000-3fffff region
-
 	memcpy (src, dst, 0x400000);
-
-	// Change 'status' returns
-	src[0x9b32c/2] = 0x0088;
-	src[0x9b550/2] = 0x0088;
 
 	BurnFree (dst);
 }
 
-void pgm_decrypt_kovassgplus()
+void pgm_decrypt_kovassg()
 {
-	pgm_decrypt_kovassgplus_program();
+	pgm_decode_kovassg_program();
 
 	decode_kovqhsgs_gfx_block(PGMSPRMaskROM + 0x000000);
 	decode_kovqhsgs_gfx_block(PGMSPRMaskROM + 0x800000);
@@ -1080,92 +1057,21 @@ void pgm_decrypt_kovassgplus()
 	pgm_decode_kovqhsgs_samples();
 }
 
-static void pgm_decrypt_kovassge_program()
+void pgm_descramble_happy6_data(UINT8 *src, INT32 len)
 {
-	UINT16 *src = (UINT16*)PGM68KROM;
-	UINT16 *dst = (UINT16*)BurnMalloc(0x400000);
+	UINT8 *buffer = (UINT8*)BurnMalloc(0x800000);
 
-	for (INT32 i = 0; i < 0x400000 / 2; i++)
+	for (INT32 x = 0; x < len; x += 0x800000)
 	{
-		INT32 j = (i & ~0xffff) | (BITSWAP16(i, 15, 14, 13, 12, 11, 10,    5, 0,  3, 4, 1, 7,  8, 6, 2, 9) ^ 0x00f9);
+		for (INT32 i = 0; i < 0x800000; i++) //=0x200)
+		{
+			INT32 j = (i & 0xf8c01ff) | ((i >> 12) & 0x600) | ((i << 2) & 0x43f800) | ((i << 4) & 0x300000);
 
-		dst[i] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(src[j] ^ 0x43df), 4, 7, 11, 2, 5, 15, 10, 12, 0, 13, 3, 6, 1, 14, 8, 9));
+			buffer[i] = src[j + x];
+		}
+
+		memcpy (src + x, buffer, 0x800000);
 	}
 
-	memcpy (src, dst, 0x400000);
-
-	// this region is further encrypted
-	for (INT32 i = 0x300000/2; i < 0x3f0000/2; i++)
-	{
-		INT32 j = (i & ~0xffff) | BITSWAP16(i, 15, 14, 13, 12, 11, 10, 7, 9, 5, 4, 6, 1, 2, 0, 8, 3) ^ 0x00cf;
-		
-		dst[i] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(src[j] ^ 0x107d), 9, 15, 14, 7, 10, 6, 12, 4, 2, 0, 8, 11, 3, 13, 1, 5));
-	}
-
-	memcpy (src + (0x300000/2), dst + (0x300000/2), 0xf0000);
-
-	BurnFree (dst);
-}
-
-void pgm_decrypt_kovassge()
-{
-	pgm_decrypt_kovassge_program();
-}
-
-static void pgm_decrypt_kovassgn_program()
-{
-	UINT16 *src = (UINT16 *)PGM68KROM;
-	UINT16 *dst = (UINT16 *)BurnMalloc(0x400000);
-	
-	for (INT32 i = 0; i < 0x400000/2; i++)
-	{
-		INT32 j = (i & 0x1fff00) | BITSWAP08(i, 6, 7, 5, 4, 3, 2, 1, 0);
-
-		dst[i] = BITSWAP16(src[j], 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 4, 5, 3, 2, 1, 0);
-	}
-
-	memcpy (src, dst, 0x400000);
-
-	BurnFree (dst);
-}
-
-void pgm_decrypt_kovassgn()
-{
-	pgm_decrypt_kovassgn_program();
-}
-
-void pgm_decrypt_kovlsqho()
-{
-	pgm_decrypt_kovassgn_program();
-	
-	decode_kovqhsgs_gfx_block(PGMSPRMaskROM + 0x000000);
-	decode_kovqhsgs_gfx_block(PGMSPRMaskROM + 0x800000);
-
-	// sprite colors are decoded in pgm_run.cpp
-
-	pgm_decode_kovqhsgs_samples();
-}
-
-void pgm_decrypt_kovgsyx_program()
-{
-	UINT16 *src = (UINT16 *)PGM68KROM;
-	UINT16 *dst = (UINT16 *)BurnMalloc(0x400000);
-
-	for (INT32 i = 0; i < 0x400000/2; i++)
-	{
-		INT32 j = BITSWAP24((i & 0x7ffff) | ((((i >> 19) + 1) & 3) << 19), 23, 22, 21, 20, 19,  18, 16, 1, 3, 5, 7, 9, 11, 13, 15, 17, 14, 12, 10, 8, 6, 4, 0, 2);
-
-		dst[i] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(src[j]), 15, 0, 10, 12, 3, 4, 11, 5, 2, 13, 9, 6, 1, 14, 8, 7));
-	}
-
-	memcpy (src, dst, 0x400000);
-
-	BurnFree (dst);
-}
-
-void pgm_decrypt_kovgsyx()
-{
-	pgm_decrypt_kovgsyx_program();
-	
-	// graphics when dumped?
+	BurnFree (buffer);
 }

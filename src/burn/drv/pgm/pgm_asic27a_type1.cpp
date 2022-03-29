@@ -8,7 +8,7 @@
 		Knights of Valour Superheroes
 		Photo Y2K
 		Knights of Valour Super Heroes Plus (Using a small hack)
-		Various Knights of Valour/Knights of Valour Super Heroes/Knights of Valour Super Heroes Plus bootlegs
+		Various Knights of Valour bootlegs
 
 	Simulations
 
@@ -28,12 +28,11 @@
 		Puzzle Star - NOT WORKING!
 */
 
-static UINT16 highlatch_to_arm;
-static UINT16 lowlatch_to_arm;
-static UINT16 highlatch_to_68k;
-static UINT16 lowlatch_to_68k;
-
-static UINT32 arm_counter;
+static UINT16 kovsh_highlatch_arm_w;
+static UINT16 kovsh_lowlatch_arm_w;
+static UINT16 kovsh_highlatch_68k_w;
+static UINT16 kovsh_lowlatch_68k_w ;
+static UINT32 kovsh_counter;
 
 static inline void pgm_cpu_sync()
 {
@@ -43,37 +42,37 @@ static inline void pgm_cpu_sync()
 
 static void __fastcall kovsh_asic27a_write_word(UINT32 address, UINT16 data)
 {
-	switch (address & 0x6)
+	switch (address)
 	{
-		case 0:
-			lowlatch_to_arm = data;
+		case 0x500000:
+		case 0x600000:
+			kovsh_lowlatch_68k_w = data;
 		return;
 
-		case 2:
-			highlatch_to_arm = data;
-		return;
-		
-		case 4:
-			// this MUST be written to before writing a new command (at least on a bootleg)
+		case 0x500002:
+		case 0x600002:
+			kovsh_highlatch_68k_w = data;
 		return;
 	}
 }
 
 static UINT16 __fastcall kovsh_asic27a_read_word(UINT32 address)
 {
-	if ((address & 0xffffe0) == 0x4f0000) {
-		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(PGMARMShareRAM + (address & 0x1e))));
+	if ((address & 0xffffc0) == 0x4f0000) {
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(PGMARMShareRAM + (address & 0x3e))));
 	}
 
-	switch (address & 0x6)
+	switch (address)
 	{
-		case 0:
+		case 0x500000:
+		case 0x600000:
 			pgm_cpu_sync();
-			return lowlatch_to_68k;
+			return kovsh_lowlatch_arm_w;
 
-		case 2:
+		case 0x500002:
+		case 0x600002:
 			pgm_cpu_sync();
-			return highlatch_to_68k;
+			return kovsh_highlatch_arm_w;
 	}
 
 	return 0;
@@ -81,8 +80,8 @@ static UINT16 __fastcall kovsh_asic27a_read_word(UINT32 address)
 
 static void kovsh_asic27a_arm7_write_word(UINT32 address, UINT16 data)
 {
-	if ((address & 0xffffff80) == 0x50800000) {	// written and never read
-		*((UINT16*)(PGMARMShareRAM + ((address>>1) & 0x1e))) = BURN_ENDIAN_SWAP_INT16(data);
+	if ((address & 0xffffff80) == 0x50800000) {	// written... but never read?
+		*((UINT16*)(PGMARMShareRAM + ((address>>1) & 0x3e))) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 }
@@ -93,10 +92,11 @@ static void kovsh_asic27a_arm7_write_long(UINT32 address, UINT32 data)
 	{
 		case 0x40000000:
 		{
-			highlatch_to_68k = data >> 16;
-			lowlatch_to_68k = data;
-			lowlatch_to_arm = 0;
-			highlatch_to_arm = 0;
+			kovsh_highlatch_arm_w = data >> 16;
+			kovsh_lowlatch_arm_w = data;
+
+			kovsh_highlatch_68k_w = 0;
+			kovsh_lowlatch_68k_w = 0;
 		}
 		return;
 	}
@@ -107,10 +107,10 @@ static UINT32 kovsh_asic27a_arm7_read_long(UINT32 address)
 	switch (address)
 	{
 		case 0x40000000:
-			return (highlatch_to_arm << 16) | lowlatch_to_arm;
+			return (kovsh_highlatch_68k_w << 16) | (kovsh_lowlatch_68k_w);
 
 		case 0x4000000c:
-			return arm_counter++;
+			return kovsh_counter++;
 	}
 
 	return 0;
@@ -118,12 +118,11 @@ static UINT32 kovsh_asic27a_arm7_read_long(UINT32 address)
 
 static void reset_kovsh_asic27a()
 {
-	highlatch_to_arm = 0;
-	lowlatch_to_arm = 0;
-	highlatch_to_68k = 0;
-	lowlatch_to_68k = 0;
-
-	arm_counter = 1;
+	kovsh_highlatch_arm_w = 0;
+	kovsh_lowlatch_arm_w = 0;
+	kovsh_highlatch_68k_w = 0;
+	kovsh_lowlatch_68k_w = 0;
+	kovsh_counter = 1;
 }
 
 static INT32 kovsh_asic27aScan(INT32 nAction, INT32 *)
@@ -153,12 +152,11 @@ static INT32 kovsh_asic27aScan(INT32 nAction, INT32 *)
 	if (nAction & ACB_DRIVER_DATA) {
 		Arm7Scan(nAction);
 
-		SCAN_VAR(highlatch_to_arm);
-		SCAN_VAR(lowlatch_to_arm);
-		SCAN_VAR(highlatch_to_68k);
-		SCAN_VAR(lowlatch_to_68k);
-
-		SCAN_VAR(arm_counter);
+		SCAN_VAR(kovsh_highlatch_arm_w);
+		SCAN_VAR(kovsh_lowlatch_arm_w);
+		SCAN_VAR(kovsh_highlatch_68k_w);
+		SCAN_VAR(kovsh_lowlatch_68k_w);
+		SCAN_VAR(kovsh_counter);
 	}
 
  	return 0;
@@ -166,107 +164,38 @@ static INT32 kovsh_asic27aScan(INT32 nAction, INT32 *)
 
 void install_protection_asic27a_kovsh()
 {
+	nPGMArm7Type = 1;
 	pPgmScanCallback = kovsh_asic27aScan;
 	pPgmResetCallback = reset_kovsh_asic27a;
 
 	SekOpen(0);
-	SekMapMemory(PGMARMShareRAM,	0x4f0000, 0x4f001f|0x3ff, MAP_ROM); // This is a 32 byte overlay at 4f0000, it is NOT WRITEABLE! (68k Page size in FBN is 1024 byte)
+	SekMapMemory(PGMARMShareRAM,	0x4f0000, 0x4f003f, MAP_RAM);
 
-	SekMapHandler(4,				0x500000, 0x600005, MAP_READ | MAP_WRITE);
-	SekSetReadWordHandler(4, 		kovsh_asic27a_read_word);
-	SekSetWriteWordHandler(4, 		kovsh_asic27a_write_word);
+	SekMapHandler(4,		0x500000, 0x600005, MAP_READ | MAP_WRITE);
+	SekSetReadWordHandler(4, 	kovsh_asic27a_read_word);
+	SekSetWriteWordHandler(4, 	kovsh_asic27a_write_word);
 	SekClose();
 
 	Arm7Init(0);
 	Arm7Open(0);
-	Arm7MapMemory(PGMARMROM,		0x00000000, 0x00003fff, MAP_ROM);
-//	encrypted 68k rom is mapped		0x08100000, 0x083fffff
-	Arm7MapMemory(PGMARMRAM0,		0x10000000, 0x100003ff, MAP_RAM);
-	Arm7MapMemory(PGMARMRAM2,		0x50000000, 0x500003ff, MAP_RAM);
+	Arm7MapMemory(PGMARMROM,	0x00000000, 0x00003fff, MAP_ROM);
+	Arm7MapMemory(PGMARMRAM0,	0x10000000, 0x100003ff, MAP_RAM);
+	Arm7MapMemory(PGMARMRAM2,	0x50000000, 0x500003ff, MAP_RAM);
 	Arm7SetWriteWordHandler(kovsh_asic27a_arm7_write_word);
 	Arm7SetWriteLongHandler(kovsh_asic27a_arm7_write_long);
 	Arm7SetReadLongHandler(kovsh_asic27a_arm7_read_long);
 	Arm7Close();
 }
 
-/*
-	This is how the internal arm7 rom calculates the hash for the following games:
-
-struct define_hash
-{
-	unsigned int start_address;
-	unsigned short add_or_xor;
-	unsigned short length;
-};
-
-// kovsh
-static define_hash hash_regions_kovsh[0x0d] = {	// table in asic @ $2144
-	{ 0x00000, 0x0002, 0x1000 },
-	{ 0x48000, 0x0001, 0x8000 },
-	{ 0x58000, 0x0002, 0x8000 },
-	{ 0x68000, 0x0001, 0x8000 },
-	{ 0x78000, 0x0002, 0x8000 },
-	{ 0x88000, 0x0001, 0x8000 },
-	{ 0x98000, 0x0002, 0x8000 },
-	{ 0xa8000, 0x0001, 0x8000 },
-	{ 0xb8000, 0x0002, 0x8000 },
-	{ 0xc8000, 0x0001, 0x8000 },
-	{ 0xd8000, 0x0002, 0x4000 },
-	{ 0xe8000, 0x0001, 0x3000 },
-	{ 0x39abe, 0, 0 }	// address to find stored hash
-};
-
-// photoy2k
-static define_hash hash_regions_photoy2k[0x11] = { // table in asic @ 17c0
-	{ 0x010000, 0x0001, 0x5000 },
-	{ 0x030000, 0x0002, 0x5000 },
-	{ 0x050000, 0x0001, 0x5000 },
-	{ 0x070000, 0x0002, 0x5000 },
-	{ 0x090000, 0x0001, 0x5000 },
-	{ 0x0b0000, 0x0002, 0x5000 },
-	{ 0x0d0000, 0x0001, 0x5000 },
-	{ 0x0f0000, 0x0002, 0x5000 },
-	{ 0x110000, 0x0001, 0x5000 },
-	{ 0x130000, 0x0002, 0x5000 },
-	{ 0x150000, 0x0001, 0x5000 },
-	{ 0x170000, 0x0002, 0x5000 },
-	{ 0x190000, 0x0001, 0x5000 },
-	{ 0x1b0000, 0x0002, 0x5000 },
-	{ 0x1d0000, 0x0001, 0x5000 },
-	{ 0x1e0000, 0x0002, 0x5000 },
-	{ 0x1f0000, 0, 0 } // address to find stored hash
-};
-
-void verify_hash_function()
-{
-	int i, j;
-	unsigned short shash = 0, hash = 0, value, *rom = (unsigned short*)PGM68KROM;
-	define_hash *ptr = hash_regions_kovsh;
-	int entries = sizeof(hash_regions_kovsh)/sizeof(define_hash);
-
-	for (i = 0; i < entries-1; i++, hash += shash)
-	{
-		for (j = 0, shash = 0; j < ptr->length; j+=2)
-		{
-			value = rom[(ptr->start_address + j)/2];
-			shash = (ptr->add_or_xor == 1) ? (shash + value) : (shash ^ value);
-		}
-			ptr++;
-	}
-	
-	printf ("Calculated: %4.4x, Correct: %4.4x\n", hash, *((unsigned short*)(src + ptr->start_address)));
-}
-*/
-
 //-------------------------------
 // Knights of Valour Super Heroes Plus Hack
 
-static void __fastcall kovshp_asic27a_write_word(UINT32 address, UINT16 data)
+void __fastcall kovshp_asic27a_write_word(UINT32 address, UINT16 data)
 {
 	switch (address & 6)
 	{
 		case 0:
-			lowlatch_to_arm = data;
+			kovsh_lowlatch_68k_w = data;
 		return;
 
 		case 2:
@@ -274,66 +203,61 @@ static void __fastcall kovshp_asic27a_write_word(UINT32 address, UINT16 data)
 			unsigned char asic_key = data >> 8;
 			unsigned char asic_cmd = (data & 0xff) ^ asic_key;
 
-		//	bprintf (0, _T("Command: %2.2x, data: %4.4x, key: %2.2x PC(%5.5x)\n"), asic_cmd, lowlatch_to_arm ^ (asic_key) ^ (asic_key << 8), asic_key, SekGetPC(-1));
-
 			switch (asic_cmd) // Intercept commands and translate them to those used by kovsh
 			{
-			// kovassga
-				case 0x9a: asic_cmd = 0x99; break;
-				case 0xa6: asic_cmd = 0xa9; break;
-				case 0xaa: asic_cmd = 0x56; break;
-				case 0xf8: asic_cmd = 0xf3; break;
+				case 0x9a: asic_cmd = 0x99; break; // kovassga
+				case 0xa6: asic_cmd = 0xa9; break; // kovassga
+				case 0xaa: asic_cmd = 0x56; break; // kovassga
+				case 0xf8: asic_cmd = 0xf3; break; // kovassga
 
-			// kovshp
-				case 0x38: asic_cmd = 0xad; break;
-				case 0x43: asic_cmd = 0xca; break;
-				case 0x56: asic_cmd = 0xac; break;
-				case 0x73: asic_cmd = 0x93; break;
-				case 0x84: asic_cmd = 0xb3; break;
-				case 0x87: asic_cmd = 0xb1; break;
-				case 0x89: asic_cmd = 0xb6; break;
-				case 0x93: asic_cmd = 0x73; break;
-				case 0xa5: asic_cmd = 0xa9; break;
-				case 0xac: asic_cmd = 0x56; break;
-				case 0xad: asic_cmd = 0x38; break;
-				case 0xb1: asic_cmd = 0x87; break;
-				case 0xb3: asic_cmd = 0x84; break;
-				case 0xb4: asic_cmd = 0x90; break;
-				case 0xb6: asic_cmd = 0x89; break;
-				case 0xc5: asic_cmd = 0x8c; break;
-				case 0xca: asic_cmd = 0x43; break;
-				case 0xcc: asic_cmd = 0xf0; break;
-				case 0xd0: asic_cmd = 0xe0; break;
-				case 0xe0: asic_cmd = 0xd0; break;
-				case 0xe7: asic_cmd = 0x70; break;
-				case 0xed: asic_cmd = 0xcb; break;
-				case 0xf0: asic_cmd = 0xcc; break;
-				case 0xf1: asic_cmd = 0xf5; break;
-				case 0xf2: asic_cmd = 0xf1; break;
-				case 0xf4: asic_cmd = 0xf2; break;
-				case 0xf5: asic_cmd = 0xf4; break;
-				case 0xfc: asic_cmd = 0xc0; break;
-				case 0xfe: asic_cmd = 0xc3; break;
+		                case 0x38: asic_cmd = 0xad; break;
+		                case 0x43: asic_cmd = 0xca; break;
+		                case 0x56: asic_cmd = 0xac; break;
+		                case 0x73: asic_cmd = 0x93; break;
+		                case 0x84: asic_cmd = 0xb3; break;
+		                case 0x87: asic_cmd = 0xb1; break;
+		                case 0x89: asic_cmd = 0xb6; break;
+		                case 0x93: asic_cmd = 0x73; break;
+		                case 0xa5: asic_cmd = 0xa9; break;
+		                case 0xac: asic_cmd = 0x56; break;
+		                case 0xad: asic_cmd = 0x38; break;
+		                case 0xb1: asic_cmd = 0x87; break;
+		                case 0xb3: asic_cmd = 0x84; break;
+		                case 0xb4: asic_cmd = 0x90; break;
+		                case 0xb6: asic_cmd = 0x89; break;
+		                case 0xc5: asic_cmd = 0x8c; break;
+		                case 0xca: asic_cmd = 0x43; break;
+		                case 0xcc: asic_cmd = 0xf0; break;
+		                case 0xd0: asic_cmd = 0xe0; break;
+		                case 0xe0: asic_cmd = 0xd0; break;
+		                case 0xe7: asic_cmd = 0x70; break;
+		                case 0xed: asic_cmd = 0xcb; break;
+		                case 0xf0: asic_cmd = 0xcc; break;
+		                case 0xf1: asic_cmd = 0xf5; break;
+		                case 0xf2: asic_cmd = 0xf1; break;
+		                case 0xf4: asic_cmd = 0xf2; break;
+		                case 0xf5: asic_cmd = 0xf4; break;
+		                case 0xfc: asic_cmd = 0xc0; break;
+		                case 0xfe: asic_cmd = 0xc3; break;
 			}
 
-			highlatch_to_arm = asic_cmd ^ (asic_key | (asic_key << 8));
+			kovsh_highlatch_68k_w = asic_cmd ^ (asic_key | (asic_key << 8));
 		}
 		return;
-		
-		case 4: return;
 	}
 }
 
 void install_protection_asic27a_kovshp()
 {
+	nPGMArm7Type = 1;
 	pPgmScanCallback = kovsh_asic27aScan;
 
 	SekOpen(0);
-	SekMapMemory(PGMARMShareRAM,	0x4f0000, 0x4f001f | 0x3ff, MAP_ROM);
+	SekMapMemory(PGMARMShareRAM,	0x4f0000, 0x4f003f, MAP_RAM);
 
-	SekMapHandler(4,				0x500000, 0x600005, MAP_READ | MAP_WRITE);
-	SekSetReadWordHandler(4, 		kovsh_asic27a_read_word);
-	SekSetWriteWordHandler(4, 		kovshp_asic27a_write_word);
+	SekMapHandler(4,		0x500000, 0x600005, MAP_READ | MAP_WRITE);
+	SekSetReadWordHandler(4, 	kovsh_asic27a_read_word);
+	SekSetWriteWordHandler(4, 	kovshp_asic27a_write_word);
 	SekClose();
 
 	Arm7Init(0);
@@ -347,110 +271,6 @@ void install_protection_asic27a_kovshp()
 	Arm7Close();
 }
 
-
-//-------------------------------
-// Preliminary kovgsyx Hack
-
-
-static void __fastcall kovgsyx_asic27a_write_word(UINT32 address, UINT16 data)
-{
-	static const UINT8 gsyx_cmd_lut[0x100] = { // 00 is unknown
-		0x00, 0x25, 0x40, 0x13, 0x51, 0x56, 0x5e, 0x24, 0x24, 0x93, 0x50, 0x75, 0x3e, 0x68, 0x46, 0x46,
-		0x75, 0x24, 0x58, 0x6a, 0x60, 0x68, 0x40, 0x13, 0x93, 0x24, 0x59, 0xca, 0x4a, 0x93, 0x60, 0x58,	
-		0x68, 0x7d, 0x40, 0x68, 0x72, 0x51, 0x75, 0x13, 0x11, 0x3e, 0x93, 0x51, 0x58, 0x35, 0x72, 0x51,	
-		0x62, 0x51, 0x4d, 0x7d, 0xca, 0x59, 0x7d, 0x24, 0x5e, 0x7d, 0x5e, 0x46, 0x72, 0x13, 0x4a, 0x11,
-		0x60, 0x3e, 0x62, 0x53, 0x6a, 0x7d, 0x36, 0x6a, 0x36, 0x53, 0x53, 0x6a, 0x53, 0x11, 0x5e, 0xca,
-		0x68, 0x5d, 0x35, 0x25, 0x4a, 0x36, 0xca, 0x60, 0x50, 0x6c, 0x59, 0x46, 0x36, 0x5d, 0x5e, 0x36,
-		0x72, 0x51, 0x62, 0x56, 0x68, 0x72, 0x6a, 0x40, 0x72, 0xca, 0x58, 0x62, 0x75, 0xca, 0x6f, 0x53,
-		0x75, 0x35, 0x25, 0x13, 0x53, 0x46, 0xad, 0x58, 0x60, 0x60, 0x62, 0x5e, 0x7d, 0x58, 0xac, 0x6a,
-		0x00, 0x00, 0x00, 0xb5, 0x00, 0xe0, 0x89, 0xb1, 0x73, 0xf3, 0xe0, 0xcc, 0xf5, 0xd4, 0x8a, 0xc3,
-		0xc3, 0x00, 0x00, 0x00, 0xec, 0xa9, 0x00, 0x89, 0x00, 0xcc, 0xa2, 0xab, 0xb1, 0xa2, 0x00, 0x00,
-		0x00, 0x00, 0x00, 0xd0, 0x00, 0xf2, 0x84, 0xa1, 0xdc, 0x73, 0x00, 0xdc, 0xdc, 0x38, 0x00, 0xcc,
-		0x73, 0x00, 0xd0, 0xc0, 0xcb, 0x00, 0xc3, 0x89, 0x00, 0x73, 0x00, 0xe0, 0x00, 0x89, 0xc0, 0xd0,
-		0x00, 0xe0, 0x00, 0xcb, 0xdc, 0xcc, 0xcc, 0xdc, 0xc3, 0x84, 0xe0, 0xb5, 0xa2, 0x90, 0x00, 0xcb,
-		0xf1, 0x00, 0xa1, 0xc0, 0xb5, 0xb5, 0xc0, 0x89, 0xcb, 0xa1, 0x00, 0xcc, 0x00, 0x00, 0x00, 0xc0,
-		0x00, 0x89, 0xf4, 0xa2, 0x00, 0xcb, 0x00, 0xd0, 0xc9, 0x00, 0xa2, 0xcd, 0x00, 0xe2, 0xcb, 0x99,
-		0xf0, 0x90, 0xc0, 0xa1, 0xa1, 0x00, 0x00, 0x00, 0x00, 0x00, 0xd0, 0x70, 0x00, 0xc3, 0xc3, 0x00
-	};
-
-	switch (address & 6)
-	{
-		case 0:
-			lowlatch_to_arm = data;
-		return;
-
-		case 2:
-		{
-			unsigned char asic_key = data >> 8;
-			unsigned char asic_cmd = (data & 0xff) ^ asic_key;
-
-			if (gsyx_cmd_lut[asic_cmd]) asic_cmd = gsyx_cmd_lut[asic_cmd];
-
-#if 0
-			UINT16 hack_data = lowlatch_to_arm ^ asic_key ^ (asic_key << 8);
-
-			switch (asic_cmd)
-			{
-				case 0xb5:	// verified on hardware
-				{
-					char s[16] = { 'W', 'D', 'F', '*', 'Z', 'S', 'C', 'S', '-', '0', '4', '5', '9', 0x16, 0, 0 };
-					response = (unsigned char)s[hack_data & 0xf];
-				}
-				break;
-			
-				case 0xbc:	// verified on hardware
-				{
-					char s[16] = { 'V', '3', '0', '0', 'C', 'N', 0xf3, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-					response = (unsigned char)s[hack_data & 0xf];
-				}
-				break;
-			
-				case 0xe9:	// verified on hardware
-				{
-					char s[16] = { '2', '0', '1', '1', '-', '0', '4', '-', '2', '8', 0xb7, 0, 0, 0, 0, 0 };
-					response = (unsigned char)s[hack_data & 0xf];
-				}
-			}
-#endif
-
-			highlatch_to_arm = asic_cmd ^ (asic_key | (asic_key << 8));
-		}
-		return;
-	}
-}
-
-void install_protection_asic27a_kovgsyx()
-{
-	pPgmScanCallback = kovsh_asic27aScan;
-
-	// asic responds 880000 as default response, this expects 910000, hack it out in the program
-	{
-		UINT16 *rom = (UINT16*)PGM68KROM;
-
-		rom[0x9b32c/2] = 0x0088;
-		rom[0x9b550/2] = 0x0088;
-	}
-
-	SekOpen(0);
-	SekMapMemory(PGMARMShareRAM,		0x4f0000, 0x4f003f, MAP_RAM);
-	SekMapMemory(PGM68KROM + 0x300000,	0x500000, 0x5fffff, MAP_ROM); // mirror last 1mb
-	SekMapMemory(PGM68KROM + 0x300000,	0x600000, 0x6fffff, MAP_ROM); // mirror last 1mb
-	SekMapHandler(4,					0xd00000, 0xd00005, MAP_READ | MAP_WRITE);
-	SekMapMemory(PGM68KROM + 0x300000,	0xf00000, 0xffffff, MAP_ROM); // mirror last 1mb
-	SekSetReadWordHandler(4, 		kovsh_asic27a_read_word);
-	SekSetWriteWordHandler(4, 		kovgsyx_asic27a_write_word);
-	SekClose();
-
-	Arm7Init(0);
-	Arm7Open(0);
-	Arm7MapMemory(PGMARMROM,	0x00000000, 0x00003fff, MAP_ROM);
-	Arm7MapMemory(PGMARMRAM0,	0x10000000, 0x100003ff, MAP_RAM);
-	Arm7MapMemory(PGMARMRAM2,	0x50000000, 0x500003ff, MAP_RAM);
-	Arm7SetWriteWordHandler(kovsh_asic27a_arm7_write_word);
-	Arm7SetWriteLongHandler(kovsh_asic27a_arm7_write_long);
-	Arm7SetReadLongHandler(kovsh_asic27a_arm7_read_long);
-	Arm7Close();
-}
 
 
 //------------------------------------------
@@ -466,7 +286,7 @@ static UINT8  asic27a_sim_internal_slot;
 
 static void (*asic27a_sim_command)(UINT8);
 
-static void __fastcall asic27a_sim_write(UINT32 offset, UINT16 data)
+void __fastcall asic27a_sim_write(UINT32 offset, UINT16 data)
 {
 	switch (offset & 0x06)
 	{
@@ -492,7 +312,7 @@ static void __fastcall asic27a_sim_write(UINT32 offset, UINT16 data)
 		}
 		return;
 
-		case 4: return; // cannot start a new command without writing to this first (data & 1) == 0!
+		case 4: return;
 	}
 }
 
@@ -605,7 +425,7 @@ void install_protection_asic27a_ketsui()
 	asic27a_sim_command = ddp3_asic27a_sim_command;
 
 	SekOpen(0);
-	SekMapHandler(4,			0x400000, 0x400005, MAP_READ | MAP_WRITE);
+	SekMapHandler(4,		0x400000, 0x400005, MAP_READ | MAP_WRITE);
 	SekSetReadWordHandler(4, 	asic27a_sim_read);
 	SekSetWriteWordHandler(4, 	asic27a_sim_write);
 	SekClose();
@@ -618,7 +438,7 @@ void install_protection_asic27a_ddp3()
 	asic27a_sim_command = ddp3_asic27a_sim_command;
 
 	SekOpen(0);
-	SekMapHandler(4,			0x500000, 0x500005, MAP_READ | MAP_WRITE);
+	SekMapHandler(4,		0x500000, 0x500005, MAP_READ | MAP_WRITE);
 	SekSetReadWordHandler(4, 	asic27a_sim_read);
 	SekSetWriteWordHandler(4, 	asic27a_sim_write);
 	SekClose();
@@ -853,9 +673,9 @@ void install_protection_asic27a_oldsplus()
 	asic27a_sim_command = oldsplus_asic27a_sim_command;
 
 	SekOpen(0);
-	SekMapMemory(PGMUSER0,		0x4f0000, 0x4f001f | 0x3ff, MAP_READ); // ram
+	SekMapMemory(PGMUSER0,		0x4f0000, 0x4f003f | 0x3ff, MAP_READ); // ram
 
-	SekMapHandler(4,			0x500000, 0x500003, MAP_READ | MAP_WRITE);
+	SekMapHandler(4,		0x500000, 0x500003, MAP_READ | MAP_WRITE);
 	SekSetReadWordHandler(4, 	asic27a_sim_read);
 	SekSetWriteWordHandler(4, 	asic27a_sim_write);
 	SekClose();
@@ -888,8 +708,8 @@ static void kov_asic27a_sim_command(UINT8 command)
             break;
             
         case 0xc5: // kovplus
-            asic27a_sim_slots[asic27a_sim_value & 0xf] = asic27a_sim_slots[asic27a_sim_value & 0xf] - 1;
             asic27a_sim_response = 0x880000;
+            asic27a_sim_slots[asic27a_sim_value & 0xf] = asic27a_sim_slots[asic27a_sim_value & 0xf] - 1;
         break;
             
         case 0x99: // Reset
@@ -908,8 +728,11 @@ static void kov_asic27a_sim_command(UINT8 command)
         case 0xb4: // Copy slot 'a' to slot 'b'
         case 0xb7: // kovsgqyz (b4)
         {
-            asic27a_sim_slots[(asic27a_sim_value >> 8) & 0x0f] = asic27a_sim_slots[(asic27a_sim_value >> 4) & 0x0f] + asic27a_sim_slots[(asic27a_sim_value >> 0) & 0x0f];
             asic27a_sim_response = 0x880000;
+            
+//            if (asic27a_sim_value == 0x0102) asic27a_sim_value = 0x0100; // why?
+            
+            asic27a_sim_slots[(asic27a_sim_value >> 8) & 0x0f] = asic27a_sim_slots[(asic27a_sim_value >> 4) & 0x0f] + asic27a_sim_slots[(asic27a_sim_value >> 0) & 0x0f];
         }
         break;
             
@@ -944,8 +767,8 @@ static void kov_asic27a_sim_command(UINT8 command)
         break;
             
         case 0xd6: // Copy slot to slot 0
-            asic27a_sim_slots[asic27a_sim_value & 0xf] = asic27a_sim_slots[asic27a_sim_value & 0xf] + 1;
             asic27a_sim_response = 0x880000;
+            asic27a_sim_slots[asic27a_sim_value & 0xf] = asic27a_sim_slots[asic27a_sim_value & 0xf] + 1;
         break;
             
         case 0xdc: // Background palette offset
@@ -960,17 +783,18 @@ static void kov_asic27a_sim_command(UINT8 command)
             
         case 0xe5: // Write slot (low)
         {
-            asic27a_sim_slots[asic27a_sim_internal_slot] = (asic27a_sim_slots[asic27a_sim_internal_slot] & 0x00ff0000) | ((asic27a_sim_value & 0xffff) <<  0);
             asic27a_sim_response = 0x880000;
+
+            asic27a_sim_slots[asic27a_sim_internal_slot] = (asic27a_sim_slots[asic27a_sim_internal_slot] & 0x00ff0000) | ((asic27a_sim_value & 0xffff) <<  0);
         }
         break;
             
         case 0xe7: // Write slot (and slot select) (high)
         {
+            asic27a_sim_response = 0x880000;
             asic27a_sim_internal_slot = (asic27a_sim_value >> 12) & 0x0f;
 
             asic27a_sim_slots[asic27a_sim_internal_slot] = (asic27a_sim_slots[asic27a_sim_internal_slot] & 0x0000ffff) | ((asic27a_sim_value & 0x00ff) << 16);
-            asic27a_sim_response = 0x880000;
         }
         break;
             
@@ -1004,9 +828,9 @@ void install_protection_asic27_kov()
 	asic27a_sim_command = kov_asic27a_sim_command;
 
 	SekOpen(0);
-	SekMapMemory(PGMUSER0,		0x4f0000, 0x4f001f | 0x3ff, MAP_READ);
+	SekMapMemory(PGMUSER0,		0x4f0000, 0x4f003f | 0x3ff, MAP_READ);
 
-	SekMapHandler(4,			0x500000, 0x500003, MAP_READ | MAP_WRITE);
+	SekMapHandler(4,		0x500000, 0x500003, MAP_READ | MAP_WRITE);
 	SekSetReadWordHandler(4, 	asic27a_sim_read);
 	SekSetWriteWordHandler(4, 	asic27a_sim_write);
 	SekClose();
@@ -1907,8 +1731,6 @@ void install_protection_asic27a_puzlstar()
 }
 
 #if 0
-// Reference simulation for photoy2k - use emulation instead
-
 static UINT32 photoy2k_seqpos;
 
 static UINT32 photoy2k_spritenum()

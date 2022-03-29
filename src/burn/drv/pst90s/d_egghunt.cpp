@@ -343,7 +343,7 @@ static void draw_sprites()
 		INT32 sx    = DrvSprRAM[offs + 3] | ((attr & 0x10) << 4);
 		INT32 sy    = ((DrvSprRAM[offs + 2] + 8) & 0xff) - 8;
 
-		if ((attr & 0xe0) && (gfx_bank & 0x20)) code += 0x400 << (gfx_bank & 1);
+		if ((attr & 0xe0) && (gfx_bank & 0x20)) code += 0x100 << ((gfx_bank >> 4) & 3);
 
 		DrawGfxMaskTile(0, 1, code, sx - 64, sy - 8, 0, 0, attr & 0x0f, 0xf);
 	}

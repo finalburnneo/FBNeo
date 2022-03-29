@@ -1993,7 +1993,9 @@ static UINT8 __fastcall SquirrelKingExtraReadByte(UINT32 /*sekAddress*/)
 
 static UINT16 __fastcall SquirrelKingExtraReadWord(UINT32 sekAddress)
 {
-	return RamMisc->SquirrelkingExtra;
+	bprintf(PRINT_NORMAL, _T("SquirrelKingExtra Read Word %x\n"), sekAddress);
+
+	return 0;
 }
 
 static void __fastcall SquirrelKingExtraWriteByte(UINT32 /*sekAddress*/, UINT8 byteValue)
@@ -2003,7 +2005,7 @@ static void __fastcall SquirrelKingExtraWriteByte(UINT32 /*sekAddress*/, UINT8 b
 
 static void __fastcall SquirrelKingExtraWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
-	RamMisc->SquirrelkingExtra = wordValue;
+	bprintf(PRINT_NORMAL, _T("SquirrelKingExtra write word value %04x to location %08x\n"), wordValue, sekAddress);
 }
 
 static UINT8 __fastcall SmouseProtReadByte(UINT32 sekAddress)

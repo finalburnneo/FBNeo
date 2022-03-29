@@ -1613,12 +1613,12 @@ static INT32 HotmindRender()
 {
 	BurnTransferClear();
 	if (DrvScreenEnable) {
-		if (nBurnLayer & 1) HotmindRenderTileLayer(0);
-		if (nSpriteEnable & 1) DrvRenderSprites(2, 0x1000, 16, 2, -9, -8);
-		if (nSpriteEnable & 2) DrvRenderSprites(2, 0x1000, 16, 1, -9, -8);
-		if (nSpriteEnable & 4) DrvRenderSprites(2, 0x1000, 16, 0, -9, -8);
-		if (nBurnLayer & 2) HotmindRenderTileLayer(1);
-		if (nBurnLayer & 4) HotmindRenderCharLayer();
+		HotmindRenderTileLayer(0);
+		HotmindRenderTileLayer(1);
+		DrvRenderSprites(2, 0x1000, 16, 2, -9, -8);
+		DrvRenderSprites(2, 0x1000, 16, 1, -9, -8);
+		DrvRenderSprites(2, 0x1000, 16, 0, -9, -8);
+		HotmindRenderCharLayer();
 	}
 	BurnTransferCopy(DrvPalette);
 

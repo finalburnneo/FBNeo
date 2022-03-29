@@ -497,7 +497,6 @@ static INT32 DrvFrame()
 #ifdef USE_SAMPLE_HACK
 				BurnSampleRender(pSoundBuf, nSegmentLength);
 #endif
-				if (~DrvDips[0] & 8) BurnSoundDCFilter(); // area 3 has nasty dc offset when music fades out
 			}
 		}
 	}

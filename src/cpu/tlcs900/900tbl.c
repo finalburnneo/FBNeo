@@ -641,7 +641,7 @@ INLINE void ldcf8( tlcs900_state *cpustate, UINT8 a, UINT8 b )
 }
 
 
-INLINE void ldcf16( tlcs900_state *cpustate, UINT8 a, UINT16 b )
+INLINE void ldcf16( tlcs900_state *cpustate, UINT8 a, UINT8 b )
 {
 	if ( b & ( 1 << ( a & 0x0f ) ) )
 		cpustate->sr.b.l |= FLAG_CF;
@@ -659,7 +659,7 @@ INLINE void andcf8( tlcs900_state *cpustate, UINT8 a, UINT8 b )
 }
 
 
-INLINE void andcf16( tlcs900_state *cpustate, UINT8 a, UINT16 b )
+INLINE void andcf16( tlcs900_state *cpustate, UINT8 a, UINT8 b )
 {
 	if ( ( b & ( 1 << ( a & 0x0f ) ) ) && ( cpustate->sr.b.l & FLAG_CF ) )
 		cpustate->sr.b.l |= FLAG_CF;
@@ -675,7 +675,7 @@ INLINE void orcf8( tlcs900_state *cpustate, UINT8 a, UINT8 b )
 }
 
 
-INLINE void orcf16( tlcs900_state *cpustate, UINT8 a, UINT16 b )
+INLINE void orcf16( tlcs900_state *cpustate, UINT8 a, UINT8 b )
 {
 	if ( b & ( 1 << ( a & 0x0f ) ) )
 		cpustate->sr.b.l |= FLAG_CF;
@@ -689,7 +689,7 @@ INLINE void xorcf8( tlcs900_state *cpustate, UINT8 a, UINT8 b )
 }
 
 
-INLINE void xorcf16( tlcs900_state *cpustate, UINT8 a, UINT16 b )
+INLINE void xorcf16( tlcs900_state *cpustate, UINT8 a, UINT8 b )
 {
 	if ( b & ( 1 << ( a & 0x0f ) ) )
 		cpustate->sr.b.l ^= FLAG_CF;

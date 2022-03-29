@@ -6618,40 +6618,6 @@ static struct BurnRomInfo Sfz3teRomDesc[] = {
 STD_ROM_PICK(Sfz3te)
 STD_ROM_FN(Sfz3te)
 
-// Street Fighter Zero 3 Mix v0.07b (hacked by Zero800)
-// https://sfz3mix.github.io/
-
-static struct BurnRomInfo Sfz3mixRomDesc[] = {
-	{ "sfz3mix.03",    0x080000, 0x906ad276, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.04",    0x080000, 0x4ef3bbe9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.05",    0x080000, 0xbaa534fc, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.06",    0x080000, 0xe85ca573, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.07",    0x080000, 0xf53a20d8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.08",    0x080000, 0x3bd7d2d4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.09",    0x080000, 0x1a93bd2d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.10",    0x080000, 0x8c75a221, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-
-	{ "sfz3mix.13m",   0x400000, 0x1b5fc5f9, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.15m",   0x400000, 0x4f9de2d9, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.17m",   0x400000, 0x1fdd472e, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.19m",   0x400000, 0x646a311f, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.14m",   0x400000, 0xe96ce6cc, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.16m",   0x400000, 0xb15d2507, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.18m",   0x400000, 0xb52f88f3, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.20m",   0x400000, 0x8c7b3fa3, CPS2_GFX | BRF_GRA },
-
-	{ "sz3.01",        0x020000, 0xde810084, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "sz3.02",        0x020000, 0x72445dc4, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-
-	{ "sz3.11m",       0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
-	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
-	
-	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
-};
-
-STD_ROM_PICK(Sfz3mix)
-STD_ROM_FN(Sfz3mix)
-
 static struct BurnRomInfo SgemfRomDesc[] = {
 	{ "pcfu.03",       0x080000, 0xac2e8566, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "pcf.04",        0x080000, 0xf4314c96, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -11151,16 +11117,6 @@ struct BurnDriver BurnDrvCpsSfz3te = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfz3teRomInfo, Sfz3teRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
-	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-
-struct BurnDriver BurnDrvCpsSfzmix = {
-	"sfz3mix", "sfa3", NULL, NULL, "2022",
-	"Street Fighter Zero 3 Mix v0.07b\0", NULL, "hack", "CPS2",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
-	NULL, Sfz3mixRomInfo, Sfz3mixRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

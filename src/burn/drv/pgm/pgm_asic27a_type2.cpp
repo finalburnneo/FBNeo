@@ -21,31 +21,44 @@ static inline void pgm_cpu_sync()
 		Arm7Run(SekTotalCycles() - Arm7TotalCycles());
 }
 
-static void __fastcall asic27a_write_byte(UINT32 /*address*/, UINT8 data)
+static void __fastcall asic27a_write_byte(UINT32 address, UINT8 data)
 {
-	// ddp2 requires this
-	pgm_cpu_sync();
-	asic27a_to_arm = data;
-	Arm7SetIRQLine(ARM7_FIRQ_LINE, CPU_IRQSTATUS_ACK);
+	if ((address & 0xfffffe) == 0xd10000) {	// ddp2
+		pgm_cpu_sync();
+		asic27a_to_arm = data;
+		Arm7SetIRQLine(ARM7_FIRQ_LINE, CPU_IRQSTATUS_ACK);
+		return;
+	}
 }
 
-static void __fastcall asic27a_write_word(UINT32 /*address*/, UINT16 data)
+static void __fastcall asic27a_write_word(UINT32 address, UINT16 data)
 {
-	pgm_cpu_sync();
-	asic27a_to_arm = data;
-	Arm7SetIRQLine(ARM7_FIRQ_LINE, CPU_IRQSTATUS_ACK);
+	if ((address & 0xfffffe) == 0xd10000) {
+		pgm_cpu_sync();
+		asic27a_to_arm = data & 0xff;
+		Arm7SetIRQLine(ARM7_FIRQ_LINE, CPU_IRQSTATUS_ACK);
+		return;
+	}
 }
 
-static UINT8 __fastcall asic27a_read_byte(UINT32 /*address*/)
+static UINT8 __fastcall asic27a_read_byte(UINT32 address)
 {
-	pgm_cpu_sync();
-	return asic27a_to_68k;
+	if ((address & 0xfffffc) == 0xd10000) {
+		pgm_cpu_sync();
+		return asic27a_to_68k;
+	}
+
+	return 0;
 }
 
-static UINT16 __fastcall asic27a_read_word(UINT32 /*address*/)
+static UINT16 __fastcall asic27a_read_word(UINT32 address)
 {
-	pgm_cpu_sync();
-	return asic27a_to_68k;
+	if ((address & 0xfffffc) == 0xd10000) {
+		pgm_cpu_sync();
+		return asic27a_to_68k;
+	}
+
+	return 0;
 }
 
 static void asic27a_arm7_write_byte(UINT32 address, UINT8 data)
@@ -112,29 +125,28 @@ static INT32 asic27aScan(INT32 nAction,INT32 *)
 
 void install_protection_asic27a_martmast()
 {
+	nPGMArm7Type = 2;
 	pPgmScanCallback = asic27aScan;
 
 	SekOpen(0);
 
-	for (INT32 i = 0; i < 0x100000; i += 0x20000) { // mirroring verified on real hardware
-		SekMapMemory(PGMARMShareRAM,	0xd00000 + i, 0xd0ffff+i, MAP_RAM);
-		SekMapHandler(4,				0xd10000 + i, 0xd1ffff+i, MAP_READ | MAP_WRITE);
-	}
-	
-	SekSetReadWordHandler(4, 	asic27a_read_word);
-	SekSetReadByteHandler(4, 	asic27a_read_byte);
-	SekSetWriteWordHandler(4, 	asic27a_write_word);
-	SekSetWriteByteHandler(4, 	asic27a_write_byte);
+	SekMapMemory(PGMARMShareRAM,	0xd00000, 0xd0ffff, MAP_RAM);
+
+	SekMapHandler(4,		0xd10000, 0xd10003, MAP_READ | MAP_WRITE);
+	SekSetReadWordHandler(4, asic27a_read_word);
+	SekSetReadByteHandler(4, asic27a_read_byte);
+	SekSetWriteWordHandler(4, asic27a_write_word);
+	SekSetWriteByteHandler(4, asic27a_write_byte);
 	SekClose();
 
 	Arm7Init(0);
 	Arm7Open(0);
-	Arm7MapMemory(PGMARMROM,			0x00000000, 0x00003fff, MAP_ROM);
-	Arm7MapMemory(PGMUSER0,				0x08000000, 0x08000000+(nPGMExternalARMLen-1), MAP_ROM);
-	Arm7MapMemory(PGMARMRAM0,			0x10000000, 0x100003ff, MAP_RAM);
-	Arm7MapMemory(PGMARMRAM1,			0x18000000, 0x1800ffff, MAP_RAM);
-	Arm7MapMemory(PGMARMShareRAM,		0x48000000, 0x4800ffff, MAP_RAM);
-	Arm7MapMemory(PGMARMRAM2,			0x50000000, 0x500003ff, MAP_RAM);
+	Arm7MapMemory(PGMARMROM,	0x00000000, 0x00003fff, MAP_ROM);
+	Arm7MapMemory(PGMUSER0,		0x08000000, 0x08000000+(nPGMExternalARMLen-1), MAP_ROM);
+	Arm7MapMemory(PGMARMRAM0,	0x10000000, 0x100003ff, MAP_RAM);
+	Arm7MapMemory(PGMARMRAM1,	0x18000000, 0x1800ffff, MAP_RAM);
+	Arm7MapMemory(PGMARMShareRAM,	0x48000000, 0x4800ffff, MAP_RAM);
+	Arm7MapMemory(PGMARMRAM2,	0x50000000, 0x500003ff, MAP_RAM);
 	Arm7SetWriteByteHandler(asic27a_arm7_write_byte);
 	Arm7SetReadByteHandler(asic27a_arm7_read_byte);
 	Arm7Close();

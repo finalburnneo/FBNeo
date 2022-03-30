@@ -25,8 +25,9 @@ static inline void pgm_cpu_sync()
 static void svg_set_ram_bank(INT32 data)
 {
 	svg_ram_sel = data & 1;
-	Arm7MapMemory(svg_ram[svg_ram_sel],	0x38000000, 0x3800ffff, MAP_RAM);
-	SekMapMemory(svg_ram[svg_ram_sel^1],	0x500000, 0x50ffff, MAP_RAM);
+	Arm7MapMemory(svg_ram[svg_ram_sel],	0x38000000, 0x3801ffff, MAP_RAM);
+	SekMapMemory(svg_ram[svg_ram_sel^1],	0x500000, 0x51ffff, MAP_RAM);
+	SekMapMemory(svg_ram[svg_ram_sel^1],	0x520000, 0x53ffff, MAP_RAM); // mirror
 }
 
 static void __fastcall svg_write_byte(UINT32 address, UINT8 /*data*/)
@@ -48,6 +49,7 @@ static void __fastcall svg_write_word(UINT32 address, UINT16 data)
 	switch (address)
 	{
 		case 0x5c0300:
+			pgm_cpu_sync();
 			asic27a_68k_to_arm = data; // byte
 		return;
 	}
@@ -145,8 +147,6 @@ static INT32 svg_asic27aScan(INT32 nAction,INT32 *)
 
 void install_protection_asic27a_svg()
 {
-	nPGMArm7Type = 3;
-
 	pPgmScanCallback = svg_asic27aScan;
 
 	svg_ram_sel = 0;
@@ -154,7 +154,7 @@ void install_protection_asic27a_svg()
 	svg_ram[1] = PGMARMShareRAM2;
 
 	SekOpen(0);
-	SekMapHandler(5,		0x500000, 0x5fffff, MAP_RAM);
+	SekMapHandler(5,		0x5c0000, 0x5cffff, MAP_RAM);
 	SekSetReadWordHandler(5, 	svg_read_word);
 	SekSetWriteWordHandler(5, 	svg_write_word);
 	SekSetWriteByteHandler(5, 	svg_write_byte);

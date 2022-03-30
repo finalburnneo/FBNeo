@@ -608,7 +608,18 @@ static INT32 PgmDoReset()
 		Arm7Close();
 
 		// region hack
-		if (nPgmAsicRegionHackAddress) {
+		if (strncmp(BurnDrvGetTextA(DRV_NAME), "dmnfrnt", 7) == 0) {
+			PGMARMShareRAM[0x158] = PgmInput[7];
+			PGMARMShareRAM2[0x158] = PgmInput[7];
+
+			// dmnfrntpcb - requires this - set internal rom version
+			PGMARMShareRAM[0x164] = '1'; // S101KR (101 Korea) - $69be8 in ROM
+			PGMARMShareRAM[0x165] = 'S';
+			PGMARMShareRAM[0x166] = '1';
+			PGMARMShareRAM[0x167] = '0';
+			PGMARMShareRAM[0x168] = 'R';
+			PGMARMShareRAM[0x169] = 'K';
+		} else if (nPgmAsicRegionHackAddress) {
 			PGMARMROM[nPgmAsicRegionHackAddress] = PgmInput[7];
 		}
 	}
@@ -993,20 +1004,6 @@ INT32 pgmFrame()
 		Arm7NewFrame();
 		Arm7Open(0);
 		Arm7Idle(nCyclesDone[2]);
-
-		// region for demon front
-		if (strncmp(BurnDrvGetTextA(DRV_NAME), "dmnfrnt", 7) == 0) {
-			PGMARMShareRAM[0x158] = PgmInput[7];
-			PGMARMShareRAM2[0x158] = PgmInput[7];
-
-			// dmnfrntpcb - requires this - set internal rom version
-			PGMARMShareRAM[0x164] = '1'; // S101KR (101 Korea) - $69be8 in ROM
-			PGMARMShareRAM[0x165] = 'S';
-			PGMARMShareRAM[0x166] = '1';
-			PGMARMShareRAM[0x167] = '0';	
-			PGMARMShareRAM[0x168] = 'R';
-			PGMARMShareRAM[0x169] = 'K';
-		}
 	}
 
 	{

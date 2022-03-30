@@ -6836,6 +6836,9 @@ DRV		BurnSpecHeroquestwitchlord;
 DRV		BurnDrvsms_had;
 DRV		BurnDrvMSX_heroesarena;
 DRV		BurnDrvcv_heroesar;
+#if defined FBNEO_DEBUG
+DRV		BurnDrvKovgsyx;			// Imperfect Protection Emulation [NOT WORKING]
+#endif
 DRV		BurnSpecHerorescue;
 DRV		BurnDrvmd_herzog;
 DRV		BurnDrvmd_herzogs;
@@ -8053,11 +8056,16 @@ DRV		BurnDrvKovsh101;
 DRV		BurnDrvKovsh102;
 DRV		BurnDrvKovsh103;
 DRV		BurnDrvKovsh;
-DRV		BurnDrvkovassga;
+DRV		BurnDrvkovassge;
+DRV		BurnDrvkovassgn;
+DRV		BurnDrvkovassg;
 #if defined FBNEO_DEBUG
-DRV		BurnDrvkovassg;			// Incomplete dump [NOT WORKING]
+DRV		BurnDrvkovassgplus;		// Incomplete dump [NOT WORKING]
 DRV		BurnDrvkovlsjba;		// Incomplete dump [NOT WORKING]
 DRV		BurnDrvkovlsjb;			// no comment [NOT WORKING]
+#endif
+DRV		BurnDrvkovlsqho;
+#if defined FBNEO_DEBUG
 DRV		BurnDrvkovlsqh;			// Incomplete dump [NOT WORKING]
 DRV		BurnDrvkovlsqh2;		// Incomplete dump [NOT WORKING]
 #endif
@@ -10308,6 +10316,7 @@ DRV		BurnDrvNeoGeoMVS;
 DRV		BurnDrvnes_neoheiali;
 DRV		BurnDrvneomrdo;
 DRV		BurnDrvneonopon;
+DRV		BurnDrvneopang;
 DRV		BurnDrvneoponga;
 DRV		BurnDrvneopong;
 DRV		BurnDrvNsmb;
@@ -12645,7 +12654,7 @@ DRV		BurnDrvnes_robinhoo;
 DRV		BurnDrvcv_robinh;
 DRV		BurnSpecrobinofwood;
 DRV		BurnDrvRoboarmy;
-DRV		BurnDrvRoboarma;
+DRV		BurnDrvRoboarmya;
 DRV		BurnDrvnes_robowarrior;
 DRV		BurnDrvRobowres;
 DRV		BurnDrvnes_roboccowars;
@@ -16187,6 +16196,7 @@ DRV		BurnDrvKof98ka;
 DRV		BurnDrvKof98h;
 DRV		BurnDrvKof98;
 DRV		BurnDrvKof98a;
+DRV		BurnDrvkof98bc2nd;
 DRV		BurnDrvkof98eck20;
 DRV		BurnDrvkof98eckvs;
 DRV		BurnDrvKof98mix;
@@ -16554,6 +16564,7 @@ DRV		BurnDrvTimetunl;
 DRV		BurnDrvnes_timezonej;
 DRV		BurnDrvnes_timezone;
 DRV		BurnDrvtimesupd;
+DRV		BurnDrvtimesup;
 DRV		BurnDrvtg_timeball;
 DRV		BurnDrvnes_tinasadvisliii;
 DRV		BurnDrvnes_tinasadvisl;
@@ -25345,6 +25356,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_had,			// Heroes Against Demons (HB, v1.03)
 	&BurnDrvMSX_heroesarena,	// Heroes Arena (HB)
 	&BurnDrvcv_heroesar,		// Heroes Arena (SGM) (HB)
+#if defined FBNEO_DEBUG
+	&BurnDrvKovgsyx,			// Heroes of the World Special Edition / Gaishi Xingxiong Tebie Ban (V302CN, China) [Imperfect Protection Emulation, NOT WORKING]
+#endif
 	&BurnSpecHerorescue,		// Heroes Rescue (128K) (HB)
 	&BurnDrvmd_herzog,			// Herzog Zwei (Euro, USA)
 	&BurnDrvmd_herzogs,			// Herzog Zwei (Hack, Spanish)
@@ -26562,11 +26576,16 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKovsh102,			// Knights of Valour Superheroes / Sangoku Senki Superheroes (V102)
 	&BurnDrvKovsh103,			// Knights of Valour Superheroes / Sangoku Senki Superheroes (V103)
 	&BurnDrvKovsh,				// Knights of Valour Superheroes / Sangoku Senki Superheroes (V104, China)
-	&BurnDrvkovassga,			// Knights of Valour: Ao Shi San Guo / Sangoku Senki: Ao shi San Guo (V202CN, China)
+	&BurnDrvkovassge,			// Knights of Valour: Ao Shi San Guo / Sangoku Senki: Ao shi San Guo (Encrypted, V202CN, China)
+	&BurnDrvkovassgn,			// Knights of Valour: Ao Shi San Guo / Sangoku Senki: Ao shi San Guo (Newer, V202CN, China)
+	&BurnDrvkovassg,			// Knights of Valour: Ao Shi San Guo / Sangoku Senki: Ao shi San Guo (V202CN, China)
 #if defined FBNEO_DEBUG
-	&BurnDrvkovassg,			// Knights of Valour: Ao Shi San Guo / Sangoku Senki: Ao Shi San Guo (V315CN, China) [Incomplete dump, NOT WORKING]
+	&BurnDrvkovassgplus,		// Knights of Valour: Ao Shi San Guo / Sangoku Senki: Ao Shi San Guo Plus(V315CN, China) [Incomplete dump, NOT WORKING]
 	&BurnDrvkovlsjba,			// Knights of Valour: Luan Shi Jie Ba / Sangoku Senki: Luan Shi Jie Ba (V200CN alt, China) [Incomplete dump, NOT WORKING]
 	&BurnDrvkovlsjb,			// Knights of Valour: Luan Shi Jie Ba / Sangoku Senki: Luan Shi Jie Ba (V200CN, China) [no comment, NOT WORKING]
+#endif
+	&BurnDrvkovlsqho,			// Knights of Valour: Luan Shi Quan Huang / Sangoku Senki: Luan Shi Quan Huang (V112CN, China)
+#if defined FBNEO_DEBUG
 	&BurnDrvkovlsqh,			// Knights of Valour: Luan Shi Quan Huang / Sangoku Senki: Luan Shi Quan Huang (V200CN, China) [Incomplete dump, NOT WORKING]
 	&BurnDrvkovlsqh2,			// Knights of Valour: Luan Shi Quan Huang II / Sangoku Senki: Luan Shi Quan Huang II (V200CN, China) [Incomplete dump, NOT WORKING]
 #endif
@@ -28817,6 +28836,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_neoheiali,		// NEO Heiankyo Alien (HB)
 	&BurnDrvneomrdo,			// Neo Mr. Do!
 	&BurnDrvneonopon,			// Neo No Panepon (beta)
+	&BurnDrvneopang,			// Neo Pang
 	&BurnDrvneoponga,			// Neo Pong (ver 1.0)
 	&BurnDrvneopong,			// Neo Pong (ver 1.1)
 	&BurnDrvNsmb,				// Neo Super Mario Bros (Demo, v0.01)
@@ -31154,7 +31174,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_robinh,			// Robin Hood
 	&BurnSpecrobinofwood,		// Robin of the Wood (128K)
 	&BurnDrvRoboarmy,			// Robo Army (set 1)
-	&BurnDrvRoboarma,			// Robo Army (set 2)
+	&BurnDrvRoboarmya,			// Robo Army (set 2)
 	&BurnDrvnes_robowarrior,	// Robo Warrior (USA)
 	&BurnDrvRobowres,			// Robo Wres 2001
 	&BurnDrvnes_roboccowars,	// Robocco Wars (Japan)
@@ -34696,6 +34716,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKof98h,				// The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGH-2420)
 	&BurnDrvKof98,				// The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGM-2420)
 	&BurnDrvKof98a,				// The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGM-2420, alternate board)
+	&BurnDrvkof98bc2nd,			// The King of Fighters '98 BC 2nd Impact Edition (Hack, Ver.2020-07-29)
 	&BurnDrvkof98eck20,			// The King of Fighters '98 Easy Combo King (YZKOF Version, Hack)
 	&BurnDrvkof98eckvs,			// The King of Fighters '98 Easy Combo King 2014 (Versus Version, Hack)
 	&BurnDrvKof98mix,			// The King of Fighters '98 Mix (2015-12-29)
@@ -35062,7 +35083,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTimetunl,			// Time Tunnel
 	&BurnDrvnes_timezonej,		// Time Zone (Japan)
 	&BurnDrvnes_timezone,		// Time Zone (T-eng)
-	&BurnDrvtimesupd,			// Time's Up (Demo)
+	&BurnDrvtimesupd,			// Time's UP! (Demo)
+	&BurnDrvtimesup,			// Time's Up
 	&BurnDrvtg_timeball,		// Timeball
 	&BurnDrvnes_tinasadvisliii,	// Tina's Advanture Island III (Hack)
 	&BurnDrvnes_tinasadvisl,	// Tina's Adventure Island (Hack)

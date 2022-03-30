@@ -4357,7 +4357,7 @@ struct BurnDriver BurnDrvdmnfrnta = {
 
 /* IGS PCB-0361-02-F0 MADE IN TAIWAN
    IGS PCB-0421-00-F0-A MADE IN TAIWAN
-   SCREEN VER PIC: M68K VERSION 101 06/06/03 16:17:27 107
+   SCREEN VER PIC: M68K VERSION V101 06/06/03 16:17:27 V107
    ROM TYPES: U6 V101 MX MX27C4096DC
    ROM TYPES: U26 V107 ST M27C160
    CREDITS TO: "GC8TECH.COM" */
@@ -4457,8 +4457,12 @@ struct BurnDriver BurnDrvTheglad = {
 
 // The Gladiator - Road Of The Sword / Shen Jian (V100)
 
+/* IGS PCB-0361-02-F0 MADE IN TAIWAN
+   IGS PCB-0421-00-F0-A MADE IN TAIWAN
+   SCREEN VER PIC: 03/13/03 14:06:44 V101 */
+
 static struct BurnRomInfo theglad101RomDesc[] = {
-	{ "v100.u6",					0x0080000, 0xbcf3b172, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "v100_u6.u6",					0x0080000, 0xbcf3b172, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 	{ "igs_t04601w64m.u33",			0x0800000, 0xe5dab371, 2 | BRF_GRA },			//  1 Tile data
 
@@ -4475,7 +4479,7 @@ static struct BurnRomInfo theglad101RomDesc[] = {
 	{ "theglad_igs027a_execute_only_area",	    0x0000188, 0x00000000, 0 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
 	{ "theglad_igs027a_v100_overseas.bin",      0x0003e78, 0x02fe6f52, 7 | BRF_PRG | BRF_ESS },  //  9
 
-	{ "v101.u26",					0x0200000, 0x23faec02, 8 | BRF_PRG | BRF_ESS },	// 10 External ARM7 Rom
+	{ "v101_u26.u26",					0x0200000, 0x23faec02, 8 | BRF_PRG | BRF_ESS },	// 10 External ARM7 Rom
 };
 
 STDROMPICKEXT(theglad101, theglad101, pgm)
@@ -4493,6 +4497,11 @@ struct BurnDriver BurnDrvTheglad101 = {
 
 
 // The Gladiator - Road of The Sword / Shen Jian (V100, Taiwan)
+
+/* IGS PCB-0361-02-F0 MADE IN TAIWAN
+   IGS PCB-0421-00-F0-A MADE IN TAIWAN 	
+   SERIAL N0: 460050
+   SCREEN VER PIC: 01/16/03 10:39:25 V100 */
 
 static struct BurnRomInfo theglad100RomDesc[] = {
 	{ "u6.rom",						0x0080000, 0x14c85212, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -5569,7 +5578,7 @@ static struct BurnRomInfo ddpdojpRomDesc[] = {
 
 	{ "sndmask.rom_mcs1.u3.27c322",	0x0400000, 0x5a0dbd76, 5 | BRF_SND },           // 10 Samples
 
-	{ "ddp3_defaults.nv",			0x0020000, 0x571e96c0, 0xA | BRF_PRG },           // 11 NV RAM
+	{ "ddp3_defaults.nv",			0x0020000, 0x571e96c0, 0xA | BRF_PRG },         // 11 NV RAM
 };
 
 STDROMPICKEXT(ddpdojp, ddpdojp, ddp3Bios) // custom bios
@@ -6562,13 +6571,13 @@ struct BurnDriver BurnDrvPgemeni = {
    DATE: DEC 29 2010
    TIME: 16:31:32
 
-   WDF PCB NO-0908-1
-   IGS PCB NO-0213
+   WDF PCB NO-0908-1 2010-04-16 MADE IN CHINA
+   IGS PCB NO-0213 2009-09-01 MADE IN TAIWAN
    ROM TYPES: U3 ST M27C322
    CREDITS TO: "GC8TECH.COM" AND IQ_132 */
 
 static struct BurnRomInfo kovgsyxRomDesc[] = {
-	{ "igs m3001.m3",				0x0400000, 0x4018559f, 1 | BRF_PRG | BRF_ESS }, // 0 68K Code
+	{ "igs_m3004.u3",				0x0400000, 0x4018559f, 1 | BRF_PRG | BRF_ESS }, // 0 68K Code
 
 	// none of the other roms aside from the program have been dumped, use parent's
 	{ "pgm_t0600.u2",    			0x0800000, 0x4acc1ad6, 2 | BRF_GRA },			//  1 Tile data
@@ -6710,7 +6719,7 @@ struct BurnDriver BurnDrvkovqhsgsa = {
 
 /* SN: WDF-QHSG-0097
    VER: V300CN  V303CN
-   DATE: NOV 21  2008
+   DATE: NOV 21 2008
    TIME: 19:03:49 */
    
 static struct BurnRomInfo kovqhsgsdRomDesc[] = {
@@ -6861,7 +6870,7 @@ struct BurnDriverD BurnDrvkovlsqh = {
 // Nov 20, 2008 @ $3ffff0
 
 static struct BurnRomInfo kovlsqhoRomDesc[] = {
-	{ "lsqh_v112cn.bin",  			0x0400000, 0x092FCD3D, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "lsqh_v112cn.bin",  			0x0400000, 0x092fcd3d, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 //	these were not dumped
 	{ "lsqh2_t01.rom",				0x1000000, 0xd498d97f, 2 | BRF_GRA },			//  1 Tile data
@@ -7036,7 +7045,7 @@ struct BurnDriverD BurnDrvkovassgplus = {
 // Knights of Valour: Ao Shi San Guo / Sangoku Senki: Ao Shi San Guo (V202CN, China)
 
 /* VER: V202CN
-   DATE: OCT  6  2008
+   DATE: OCT 6 2008
    TIME: 09:59:26 */
    
 static struct BurnRomInfo kovassgRomDesc[] = {
@@ -7087,12 +7096,12 @@ struct BurnDriver BurnDrvkovassg = {
 
 // Knights of Valour: Ao Shi San Guo / Sangoku Senki: Ao Shi San Guo (Encrypted, V202CN, China)
 /* VER: V202CN
-   DATE: OCT  6  2008
+   DATE: OCT 6 2008
    TIME: 09:59:26 */
 
 static struct BurnRomInfo kovassgeRomDesc[] = {
 //	samme data as kovassg, but is encrypted
-	{ "aoshisango.bin",				0x0400000, 0x5B14A711, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "aoshisango.bin",				0x0400000, 0x5b14a711, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "t0600.rom",     				0x0800000, 0x4acc1ad6, 2 | BRF_GRA },			//  1 Tile data
 
@@ -7137,10 +7146,9 @@ struct BurnDriver BurnDrvkovassge = {
 };
 
 
-
 // Knights of Valour: Ao Shi San Guo / Sangoku Senki: Ao Shi San Guo (Newer, V202CN, China)
 /* VER: V202CN
-   DATE: OCT  6  2008
+   DATE: OCT 6 2008
    TIME: 09:59:26 */
 
 static struct BurnRomInfo kovassgnRomDesc[] = {

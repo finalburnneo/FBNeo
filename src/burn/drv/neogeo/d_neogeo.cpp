@@ -3106,7 +3106,7 @@ struct BurnDriver BurnDrvRoboarmy = {
 // Robo Army (NGM-032) (NGH-032)
 /* MVS AND AES VERSION*/
 
-static struct BurnRomInfo roboarmaRomDesc[] = {
+static struct BurnRomInfo roboarmyaRomDesc[] = {
 	/* Found on legitimate Robo Army MVS and AES Carts. Debug code button which check control a sound test has been patched out
 	because in a multislot situation that code could have been enabled 	that would stop roboarmy from working, 	sending it into an infinite loop ;
 	correct chip label unknown */
@@ -3125,15 +3125,15 @@ static struct BurnRomInfo roboarmaRomDesc[] = {
 	{ "032-v2.v2",    0x100000, 0xeb95de70, 5 | BRF_SND },           //  8 / TC538200
 };
 
-STDROMPICKEXT(roboarma, roboarma, neogeo)
-STD_ROM_FN(roboarma)
+STDROMPICKEXT(roboarmya, roboarmya, neogeo)
+STD_ROM_FN(roboarmya)
 
-struct BurnDriver BurnDrvRoboarma = {
-	"roboarma", "roboarmy", "neogeo", NULL, "1991",
+struct BurnDriver BurnDrvRoboarmya = {
+	"roboarmya", "roboarmy", "neogeo", NULL, "1991",
 	"Robo Army (set 2)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SCRFIGHT, 0,
-	NULL, roboarmaRomInfo, roboarmaRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, roboarmyaRomInfo, roboarmyaRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
@@ -19868,6 +19868,34 @@ struct BurnDriver BurnDrvneonopon = {
 	0x1000,	304, 224, 4, 3
 };
 
+// Neo Pang by CeL
+
+static struct BurnRomInfo neopangRomDesc[] = {
+	{ "pang_p1.rom",  0x080000, 0xdc5922ee, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "pang_s1.rom",  0x010000, 0xd78bd9a0, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "pang_c1.rom",  0x100000, 0x62f5405c, 3 | BRF_GRA },           //  2 Sprite data
+	{ "pang_c2.rom",  0x100000, 0xe1183030, 3 | BRF_GRA },           //  3
+
+	{ "pang_m1.rom",  0x020000, 0x9c0291ea, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "pang_v1.rom",  0x080000, 0xdebeb8fb, 5 | BRF_SND },           //  5 Sound data
+};
+
+STDROMPICKEXT(neopang, neopang, neogeo)
+STD_ROM_FN(neopang)
+
+struct BurnDriver BurnDrvneopang = {
+	"neopang", NULL, "neogeo", NULL, "2010",
+	"Neo Pang\0", NULL, "CeL", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_BALLPADDLE, 0,
+	NULL, neopangRomInfo, neopangRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
 // Neo Pong
 
 static struct BurnRomInfo neopongRomDesc[] = {
@@ -20495,7 +20523,38 @@ struct BurnDriver BurnDrvneoww2 = {
 };
 
 
-// Time's UP (Demo)
+// Time's UP! 
+
+static struct BurnRomInfo timesupRomDesc[] = {
+	{ "tup_p1.rom",   0x100000, 0xb4be3ede, 1 | BRF_ESS | BRF_PRG },	//  0 68K Code
+
+	{ "tup_s1.rom",   0x020000, 0xa545b593, 2 | BRF_GRA },				//  1 Text data
+
+	{ "tup_c1.rom",   0x200000, 0x1c83fc38, 3 | BRF_GRA },				//  2 Sprite data
+	{ "tup_c2.rom",   0x200000, 0x2b3f48b4, 3 | BRF_GRA },				//  3
+
+	{ "tup_m1.rom",   0x020000, 0x8b83308b, 4 | BRF_ESS | BRF_PRG },	//  4 Z80 code
+
+	{ "tup_v1.rom",   0x200000, 0x1b48708b, 5 | BRF_SND },				//  5 Sound data
+	{ "tup_v2.rom",   0x200000, 0x6b17df84, 5 | BRF_SND },				//  6
+	{ "tup_v3.rom",   0x200000, 0x6c798d46, 5 | BRF_SND },				//  7 
+};
+
+STDROMPICKEXT(timesup, timesup, neogeo)
+STD_ROM_FN(timesup)
+
+struct BurnDriver BurnDrvtimesup = {
+	"timesup", NULL, "neogeo", NULL, "2012",
+	"Time's Up\0", NULL, "NGF Dev. Inc.", "Neo Geo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_VERSHOOT, 0,
+	NULL, timesupRomInfo, timesupRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
+// Time's UP! (Demo)
 
 static struct BurnRomInfo timesupdRomDesc[] = {
 	{ "tup_p1.rom",   0x200000, 0xbe86adb1, 1 | BRF_ESS | BRF_PRG },	//  0 68K Code
@@ -20516,7 +20575,7 @@ STD_ROM_FN(timesupd)
 
 struct BurnDriver BurnDrvtimesupd = {
 	"timesupd", NULL, "neogeo", NULL, "2012",
-	"Time's Up (Demo)\0", NULL, "NGF Dev. Inc.", "Neo Geo",
+	"Time's UP! (Demo)\0", NULL, "NGF Dev. Inc.", "Neo Geo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_VERSHOOT, 0,
 	NULL, timesupdRomInfo, timesupdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

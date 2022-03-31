@@ -813,11 +813,14 @@ static struct BurnRomInfo ddp3BiosRomDesc[] = {
 // -----------------------------------------------------------------------------
 // Normal Games
 
-
+  
 // Oriental Legend / Xi Yo Gi Shi Re Zuang (V126)
 
+/* ORIENTAL LEGEND V0001 01/14/98 18:16:38
+   Shows V126T, V126H, V126X, V126Np, V106MK @ 161150 */
+
 static struct BurnRomInfo orlegendRomDesc[] = {
-	{ "p0103.rom",					0x0200000, 0xd5e93543, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "pgm_p0103.u2",				0x0200000, 0xd5e93543, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 	{ "pgm_t0100.u8",				0x0400000, 0x61425e1e, 2 | BRF_GRA },			//  1 Tile data
 
@@ -858,6 +861,9 @@ struct BurnDriver BurnDrvOrlegend = {
 
 // Oriental Legend / Xi Yo Gi Shi Re Zuang (V112)
 
+/* ORIENTAL LEGEND V0001 07/14/97 11:19:45
+   V113T, V112C, V112J, V112K, V112H, V112X, V112NP, V104MK @ 161160 */
+	
 static struct BurnRomInfo orlegend112eRomDesc[] = {
 	{ "pgm_p0102.u2",				0x0200000, 0x4d0f6cc5, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
@@ -891,11 +897,52 @@ struct BurnDriver BurnDrvOrlegend112e = {
 };
 
 
+// Oriental Legend / Xi Yo Gi Shi Re Zuang (V112, World)
+
+/* ORIENTAL LEGEND V0001 05/05/97 10:08:21
+   V113T, V112C, V112J, V112K, V112H, V112X, V112NP, V103MK @ 160fe0 */
+	
+static struct BurnRomInfo orlegend112ceRomDesc[] = {
+	{ "p0101_v103mk.u2",			0x0200000, 0x13e7486d, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	
+	{ "pgm_t0100.u8",				0x0400000, 0x61425e1e, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "pgm_a0100.u5",				0x0400000, 0x8b3bd88a, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "pgm_a0101.u6",				0x0400000, 0x3b9e9644, 3 | BRF_GRA },			//  3	  
+	{ "pgm_a0102.u7",				0x0400000, 0x069e2c38, 3 | BRF_GRA },			//  4
+	{ "pgm_a0103.u8",				0x0400000, 0x4460a3fd, 3 | BRF_GRA },			//  5
+	{ "pgm_a0104.u11",				0x0400000, 0x5f8abb56, 3 | BRF_GRA },			//  6
+	{ "pgm_a0105.u12",				0x0400000, 0xa17a7147, 3 | BRF_GRA },			//  7
+
+	{ "pgm_b0100.u9",				0x0400000, 0x69d2e48c, 4 | BRF_GRA },			//  8 Sprite Masks & Color Indexes
+	{ "pgm_b0101.u10",				0x0400000, 0x0d587bf3, 4 | BRF_GRA },			//  9
+	{ "pgm_b0102.u15",				0x0400000, 0x43823c1e, 4 | BRF_GRA },			// 10
+
+	{ "pgm_m0100.u1",				0x0200000, 0xe5c36c83, 5 | BRF_SND },			// 11 Samples
+};
+
+STDROMPICKEXT(orlegend112ce, orlegend112ce, pgm)
+STD_ROM_FN(orlegend112ce)
+
+struct BurnDriver BurnDrvOrlegend112ce = {
+	"orlegendce", "orlegend", "pgm", NULL, "1997",
+	"Oriental Legend - Xi Yo Gi Shi Re Zuang (V112, World)\0", NULL, "IGS", "PolyGameMaster",
+	L"Oriental Legend\0\u897F\u6E38\u91CA\u5384\u4F20 (V112, World)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
+	NULL, orlegend112ceRomInfo, orlegend112ceRomName, NULL, NULL, NULL, NULL, pgmInputInfo, orlegendDIPInfo,
+	orlegendInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
 // Oriental Legend / Xi Yo Gi Shi Re Zuang (V112, China)
 
+/* ORIENTAL LEGEND V0001 05/05/97 10:08:21
+   V113T, V112C, V112J, V112K, V112H, V112X, V112NP, V103MK @ 160fe0 */
+	
 static struct BurnRomInfo orlegend112cRomDesc[] = {
 	{ "pgm_p0101.u2",			    0x0200000, 0xb24f0c1e, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
-
+	
 	{ "pgm_t0100.u8",				0x0400000, 0x61425e1e, 2 | BRF_GRA },			//  1 Tile data
 
 	/* Different labels comparing to others sets except for PGM B0102 in U15 and PGM M0100 in U1; it probably needs to be dumped */
@@ -929,6 +976,9 @@ struct BurnDriver BurnDrvOrlegend112c = {
 
 // Oriental Legend / Xi Yo Gi Shi Re Zuang (V112 alt,China)
 
+/* ORIENTAL LEGEND V0001 04/02/97 13:35:43
+   V112T, V112C, V112J, V112K, V112H, V112X, V112NP, V102MK @ 160f90 */
+   
 static struct BurnRomInfo orlegend112caRomDesc[] = {
 	{ "p0101.102",					0x0200000, 0x7a22e1cb, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
@@ -963,6 +1013,9 @@ struct BurnDriver BurnDrvOrlegend112ca = {
 
 
 // Oriental Legend / Xi Yo Gi Shi Re Zuang (V111, China)
+
+/* ORIENTAL LEGEND V0001 no date
+   V111T, V111C, V111J, V111K, V111H, V111X, V111NP, MRV100 @ 160cc0 */
 
 static struct BurnRomInfo orlegend111cRomDesc[] = {
 	{ "olv_111_china_u6.u6",		0x0080000, 0x5fb86373, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -1001,6 +1054,9 @@ struct BurnDriver BurnDrvOrlegend111c = {
 
 
 // Oriental Legend / Xi Yo Gi Shi Re Zuang (V111, Taiwan)
+
+/* ORIENTAL LEGEND V0001 no date
+   V111T, V111C, V111J, V111K, V111H, V111X, V111NP, MRV100 @ 160cc0 */
 
 static struct BurnRomInfo orlegend111tRomDesc[] = {
 	{ "olv_111_taiwan_u6.u6",		0x0080000, 0xb205a733, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -1041,7 +1097,9 @@ struct BurnDriver BurnDrvOrlegend111t = {
 
 // Oriental Legend / Xi Yo Gi Shi Re Zuang (V111, Korea)
 
-/* IGS PCB NO-0134-2 MADE IN TAIWAN
+/* ORIENTAL LEGEND V0001 no date
+   V111T, V111C, V111J, V111K, V111H, V111X, V111NP, MRV100 @ 160cc0
+   IGS PCB NO-0134-2 MADE IN TAIWAN
    SCREEN VER PIC: THERE IS NO VERSION NUMBER ON BOOT SCREEN.
    ROM TYPES: U6 U7 U9 U11  MX  MX27C4000DC
    CREDITS TO: "GC8TECH.COM" */
@@ -1084,6 +1142,9 @@ struct BurnDriver BurnDrvOrlegend111k = {
 
 // Oriental Legend (V105, Korea)
 
+/* ORIENTAL LEGEND V0000 no date
+   V105T, V105C, V105J, V105K, V105H, V105X, V105NP @15f650 */
+	
 static struct BurnRomInfo orlegend105kRomDesc[] = {
 	{ "olv_105_korea_u6.u6",		0x0080000, 0xb86703fe, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 	{ "olv_105_korea_u9.u9",		0x0080000, 0x5a108e39, 1 | BRF_PRG | BRF_ESS },	//  1
@@ -1122,7 +1183,9 @@ struct BurnDriver BurnDrvOrlegend105k = {
 
 // Oriental Legend (V105, Taiwan)
 
-/* IGS PCB NO-0134-2 MADE IN TAIWAN
+/* ORIENTAL LEGEND V0000 no date
+   V105T, V105C, V105J, V105K, V105H, V105X, V105NP @15f650 
+   IGS PCB NO-0134-2 MADE IN TAIWAN
    IGS PCB NO-0135 MADE IN TAIWAN
    SCREEN VER PIC: THERE IS NO VERSON NUMBER ON BOOT SCREEN.
    ROM TYPES: U6 U7 U9 U11  MX  MX27C4000DC
@@ -2121,7 +2184,7 @@ struct BurnDriver BurnDrvKov115 = {
 };
 
 
-// Knights of Valour Plus / Sangoku Senki (V114, Hong Kong)
+// Knights of Valour / Sangoku Senki (V114, Hong Kong)
 
 /* IGS PCB NO-0212-1 MADE IN TAIWAN
    IGS PCB NO-0213T MADE IN TAIWAN 
@@ -8362,7 +8425,7 @@ struct BurnDriver BurnDrvkovshpd3dw = {
 	"kovshpd3dw", "kovshp", "pgm", NULL, "2020-12-18",
 	"Luan Shi Ying Xiong - Qun Xiong Zhu Lu Wu Shuang Edition (Hack, ver. 500)\0", "Imperfect Protection Emulation", "Hack", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovshpd3dwRomInfo, kovshpd3dwRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,  
 	kovassgInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3

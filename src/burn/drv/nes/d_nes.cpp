@@ -9562,10 +9562,11 @@ static void ppu_write(UINT16 reg, UINT8 data)
 				if ((~ctrl.reg & 0x80) && status.bit.VBlank) {
 					//--Note: If NMI is fired here, it will break:
 					//Bram Stokers Dracula, Galaxy 5000, GLUK The Thunder aka Thunder Warrior
-					//Solution: Delay NMI by 1 cpu-operation.
+					//Animal Clipper (HB) - nmi clobbers A register during bootup.
+					//Solution: Delay NMI by 4(?) cpu-cycles.
 					//Note: Dragon Power needs a slightly longer delay? (GetPC instead of GetPPC) Otherwise scrolling goes bad
 					bprintf(0, _T("PPUCTRL: toggle-nmi-arm! scanline %d  pixel %d    frame: %d   PPC %X\n"), scanline, pixel, nCurrentFrame, M6502GetPrevPC(-1));
-					ppu_runextranmi = M6502GetPC(-1);
+					ppu_runextranmi = cyc_counter + 4;
 				}
 			} else {
 				//bprintf(0, _T("PPUCTRL: %X  cancel-nmi?  scanline %d  pixel %d   frame %d\n"), data, scanline, pixel, nCurrentFrame);
@@ -9964,8 +9965,8 @@ void ppu_cycle()
 		}
 	}
 
-	if (ppu_runextranmi && ppu_runextranmi != M6502GetPrevPC(-1)) {
-		// Delay by 1 cpu-op when nmi toggled via PPUCTRL during vblank.
+	if (ppu_runextranmi && cyc_counter >= ppu_runextranmi) {
+		// Delay by x cpu-cycles when nmi toggled via PPUCTRL during vblank.
 		// Bram Stokers Dracula, Galaxy 5000, GLUK The Thunder aka Thunder Warrior
 		// will get stuck in the game's nmi handler if the "sta $nmistatus_addr"
 		// op gets executed after the nmi:

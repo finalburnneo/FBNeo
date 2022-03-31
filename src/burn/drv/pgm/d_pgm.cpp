@@ -1965,7 +1965,7 @@ struct BurnDriver BurnDrvOlds = {
 
 // Oriental Legend Special / Xi Yo Gi Shi Re Zuang Super (V100, China)
 
-/* IGS PCB NO-' 0191 MADE IN TAIWAN
+/* IGS PCB NO- 0191 MADE IN TAIWAN
    IGS PCB NO- 0135 MADE IN TAIWAN
    SCREEN VER PIC: THE ROM DOES NOT DISPLAY ITS VERSION ON SCREEN.
    ROM TYPES: U2 U3 U4 U5 MX 27C4000
@@ -2020,6 +2020,11 @@ struct BurnDriver BurnDrvOlds100 = {
 
 
 // Oriental Legend Special / Xi Yo Gi Shi Re Zuang Super (V100 alt, China)
+
+/* IGS PCB N0- 0191-2 MADE IN TAIWAN
+   IGS PCB N0- 0191-1 MADE IN TAIWAN 
+   IGS PCB N0- 0135 MADE IN TAIWAN 
+   LABEL: ORIENTAL LEGEND SUPER*/
 
 static struct BurnRomInfo olds100aRomDesc[] = {
 	{ "pgm_p0500_v100.u24",			0x0400000, 0x8981fc87, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -2234,6 +2239,11 @@ struct BurnDriver BurnDrvKov114 = {
 
 /* IGS PCB NO-0212-1 MADE IN TAIWAN
    IGS PCB NO-0213T MADE IN TAIWAN
+   三国战纪 SAV111_U4  on sticker
+   三国战纪 SAV111_U5  on sticker
+   三国战纪 SAV111_U7  on sticker
+   三国战纪 SAV111_U8  on sticker
+   三国战纪 SAV111_U10 on sticker
    SCREEN VER PIC: THE ROM DOES NOT DISPLAY ITS VERSION ON SCREEN.
    ROM TYPES: U4 U5 U7 U8 ALL TI TMS27C040
    ROM TYPES: U10 TI TMS27C240
@@ -2356,7 +2366,8 @@ struct BurnDriver BurnDrvKovplusa = {
 
 // Knights of Valour Superheroes / Sangoku Senki Superheroes (V104, China)
 
-/* IGS PCB NO-0222-1 MADE IN TAIWAN
+/* IGS PCB N0-0222-1 MADE IN TAIWAN
+   IGS PCB-N0-213 MADE IN TAIWAN
    SCREEN VER PIC: V104 CHINA
    ROM TYPES: U1 ST M27C322
    CREDITS TO: "GC8TECH.COM"*/
@@ -2678,7 +2689,8 @@ struct BurnDriver BurnDrvphotoy2k103j = {
 
 // Real and Fake / Photo Y2K (V102, Japan)
 
-/* IGS PCB NO-0220 MADE IN TAIWAN
+/* IGS PCB N0-0220 MADE IN TAIWAN
+   IGS PCB N0-0221 MADE IN TAIWAIN
    SCREEN VER PIC: V102 JAPAN
    ROM TYPES: U4 U5 U6 U8 TI TMS27C040
    CREDITS TO: "GC8TECH.COM" */
@@ -2693,7 +2705,7 @@ static struct BurnRomInfo photoy2k102jRomDesc[] = {
 
 	{ "pgm_a0700.u2",       		0x0800000, 0x503c855b, 3 | BRF_GRA },			//  2 Sprite Color Data
 	{ "pgm_a0701.u4",       		0x0800000, 0x845e11a8, 3 | BRF_GRA },			//  3
-	{ "pgm_a0702.u3", 				0x0080000, 0x42239e1b, 3 | BRF_GRA },			//  4
+	{ "photo_yk2_cg_v101_u3.u3", 	0x0080000, 0x42239e1b, 3 | BRF_GRA },			//  4
 	
 	{ "pgm_b0700.u7",       		0x0800000, 0x8cd027f6, 4 | BRF_GRA },			//  5 Sprite Masks & Color Indexes
 	{ "photo_y2k_cg_v101_u6.u6",    0x0020000, 0xda02ec3e, 4 | BRF_GRA },			//  6
@@ -2931,6 +2943,10 @@ struct BurnDriver BurnDrvMartmast = {
 // Martial Masters / Xing Yi (V104, 102, 101, China)
 // Needs proper martial_masters_v102_cn.asic to be dumped
 
+/* IGS PCB-0293-01 MADE IN TAIWAN
+   形意拳 V102_16M on sticker IGS PCB-0301-00 MADE IN TAIWAN
+   形意拳 V104_32M on sticker IGS PCB N0-0268-2 MADE IN TAIWAN */
+
 static struct BurnRomInfo martmast104cRomDesc[] = {
 	{ "v104_32m.u9",   				0x0400000, 0xcfd9dff4, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
@@ -3024,6 +3040,11 @@ struct BurnDriver BurnDrvmartmast103c = {
 
 // Martial Masters / Xing Yi (V102, 101, 101, China)
 
+/* IGS PCB-0293-00T MADE IN TAIWAN
+   IGS PCB-0292-00 MADE IN TAIWAN
+   SCREEN VER PIC: V102, V101, V101
+   ROM TYPES: U9 U10 OKI M27C3202CZ */
+
 static struct BurnRomInfo martmast102cRomDesc[] = {
 	{ "mm_v102_u9.u9",			    0x0400000, 0xbb24b92a, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
@@ -3063,6 +3084,7 @@ struct BurnDriver BurnDrvmartmast102c = {
 // Photo Y2K 2 (VM101XX, China)
 
 /* IGS PCB-0313-00 MADE IN TAIWAN
+   IGS PCB-0314-00 MADE IN TAIWAN
    SCREEN VER PIC: M101XX CHINA
    ROM TYPES: U1 ST M27C160
    CREDITS TO: "GC8TECH.COM"*/
@@ -3108,6 +3130,7 @@ struct BurnDriver BurnDrvPy2k2 = {
 // Photo Y2K 2 (V100, Japan)
 
 /* IGS PCB-0313-00 MADE IN TAIWAN
+   IGS PCB-0314-00 MADE IN TAIWAN
    SCREEN VER PIC: JAPAN V100
    ROM TYPES: U1 ST M27C800
    CREDITS TO: "GC8TECH.COM" */
@@ -3243,7 +3266,10 @@ struct BurnDriver BurnDrvKov2106 = {
 
 // Knights of Valour 2 (V104, China)
 
-/* IGS PCB-0333-01-FI MADE IN TAIWAN 
+/* IGS PCB-0333-01-FI MADE IN TAIWAN
+   IGS PCB-0334-00 MADE IN TAIWAN
+   三国战纪 2 V104_U18 on sticker 
+   三国战纪 2 v102_U19 on sticker IGS PCB-0301-00 MADE IN TAIWAN
    SCREEN VER PIC: 01/19/01 10:19:38 V104
    ROM TYPES: U19 ST M27C160
    ROM TYPES: U18 ST M27C322
@@ -3580,9 +3606,10 @@ struct BurnDriver BurnDrvKov2p203 = {
 };
 
 
-// Knights of Valour 2 Plus - Nine Dragons (VM202XX, Japan)
+// Knights of Valour 2 Plus - Nine Dragons (VM202XX, Japan) 
 
 /* IGS PCB-0333-02-FI MADE IN TAIWAN
+   IGS PCB-0334-00 MADE IN TAIWAN
    SCREEN VER PIC: M202XX 07/09/01 11:03:50
    ROM TYPES: U8  ST M27C322
    ROM TYPES: U23  ST M27C160
@@ -4740,7 +4767,8 @@ struct BurnDriver BurnDrvPgm3in1c100 = {
 // Happy 6-in-1 (V102 - V101MK, China)
 // All ROMs labels are on stickers
 
-/* SCREEN VER PIC: CHINA - M68K VERSION 101 03/16/04 14:29:17 V102
+/* TEST OK F0089535 BY IGS
+   SCREEN VER PIC: CHINA - M68K VERSION 101 03/16/04 14:29:17 V102
    ROM TYPES: U5 ST M27C4002
    ROM TYPES: U26 ST M27C322
    CREDITS TO: "GC8TECH.COM" */
@@ -4814,6 +4842,9 @@ struct BurnDriver BurnDrvhappy6 = {
 
 // Happy 6-in-1 (V101 - V100MK, China)
 // All ROMs labels are on stickers
+
+/* IGS PCB-0464-010 -GT MADE IN TAIWAN
+   IGS PCB-0468-01-01 GT-A MADE IN TAIWAN */
 
 static struct BurnRomInfo happy6101RomDesc[] = {
 	{ "v100cn_u5.u5",				0x0080000, 0xa25418e8, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -5236,6 +5267,7 @@ struct BurnDriver BurnDrvoldsplus = {
 
 /* IGS PCB-0490-00-G7 MADE IN TAIWAN
    IGS PCB-0491-00-GZ-A MADE IN TAIWAN
+   PINK LABEL: 西游释厄传 - 群魔乱舞
    SCREEN VER PIC: V203 CHINA
    ROM TYPES: U10  ST  M27C322
    CREDITS TO: "GC8TECH.COM" */
@@ -5276,6 +5308,8 @@ struct BurnDriver BurnDrvoldsplus203 = {
 
 /* IGS PCB-0361-02-F0 MADE IN TAIWAN
    IGS PCB-0491-00-GZ-A
+   傲剑狂刀+ V300XX_U6 on sticker
+   傲剑狂刀+ V300XXX_U26 on sticker
    SCREEN VER PIC: V300 CHINA
    ROM TYPES: U26 ST M27C160
    ROM TYPES: U6 ST M27C4002
@@ -5332,6 +5366,7 @@ struct BurnDriver BurnDrvKillbldp = {
 // S.V.G. - Spectral vs Generation (V200, China)
 
 /* IGS PCB-0529-02-HH
+   IGS PCB-0532-00-HH-A
    SCREEN VER PIC: M68K VERSION V200 10/11/05 10:07:20 V201 CHINA 
    ROM TYPES: U30 MX MX27C4096DC
    ROM TYPES: U26 ST M27C322
@@ -5499,6 +5534,7 @@ struct BurnDriverD BurnDrvSvgtw = {
 // S.V.G. - Spectral vs Generation (V100, Hong Kong)
 
 /* IGS PCB-0529-02-HH
+   IGS PCB-0532-00-HH-A
    SCREEN VER PIC: M68K VERSION V100 06/20/05 11:36:15 V100 
    ROM TYPES: U30 MX MX27C4096DC
    ROM TYPES: U26 ST M27C322

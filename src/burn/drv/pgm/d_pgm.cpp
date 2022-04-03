@@ -859,7 +859,7 @@ struct BurnDriver BurnDrvOrlegend = {
 };
 
 
-// Oriental Legend / Xi Yo Gi Shi Re Zuang (V112)
+// Oriental Legend / Xi Yo Gi Shi Re Zuang (V112, set 1)
 
 /* ORIENTAL LEGEND V0001 07/14/97 11:19:45
    V113T, V112C, V112J, V112K, V112H, V112X, V112NP, V104MK @ 161160 */
@@ -888,8 +888,8 @@ STD_ROM_FN(orlegend112e)
 
 struct BurnDriver BurnDrvOrlegend112e = {
 	"orlegende", "orlegend", "pgm", NULL, "1997",
-	"Oriental Legend - Xi Yo Gi Shi Re Zuang (V112)\0", NULL, "IGS", "PolyGameMaster",
-	L"Oriental Legend\0\u897F\u6E38\u91CA\u5384\u4F20 (V112)\0", NULL, NULL, NULL,
+	"Oriental Legend - Xi Yo Gi Shi Re Zuang (V112, set 1)\0", NULL, "IGS", "PolyGameMaster",
+	L"Oriental Legend\0\u897F\u6E38\u91CA\u5384\u4F20 (V112, set 1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
 	NULL, orlegend112eRomInfo, orlegend112eRomName, NULL, NULL, NULL, NULL, pgmInputInfo, orlegendDIPInfo,
 	orlegendInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -897,12 +897,12 @@ struct BurnDriver BurnDrvOrlegend112e = {
 };
 
 
-// Oriental Legend / Xi Yo Gi Shi Re Zuang (V112, World)
+// Oriental Legend / Xi Yo Gi Shi Re Zuang (V112, set 2)
 
 /* ORIENTAL LEGEND V0001 05/05/97 10:08:21
    V113T, V112C, V112J, V112K, V112H, V112X, V112NP, V103MK @ 160fe0 */
 	
-static struct BurnRomInfo orlegend112ceRomDesc[] = {
+static struct BurnRomInfo orlegend112eaRomDesc[] = {
 	{ "p0101_v103mk.u2",			0x0200000, 0x13e7486d, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 	
 	{ "pgm_t0100.u8",				0x0400000, 0x61425e1e, 2 | BRF_GRA },			//  1 Tile data
@@ -921,15 +921,15 @@ static struct BurnRomInfo orlegend112ceRomDesc[] = {
 	{ "pgm_m0100.u1",				0x0200000, 0xe5c36c83, 5 | BRF_SND },			// 11 Samples
 };
 
-STDROMPICKEXT(orlegend112ce, orlegend112ce, pgm)
-STD_ROM_FN(orlegend112ce)
+STDROMPICKEXT(orlegend112ea, orlegend112ea, pgm)
+STD_ROM_FN(orlegend112ea)
 
-struct BurnDriver BurnDrvOrlegend112ce = {
-	"orlegendce", "orlegend", "pgm", NULL, "1997",
-	"Oriental Legend - Xi Yo Gi Shi Re Zuang (V112, World)\0", NULL, "IGS", "PolyGameMaster",
-	L"Oriental Legend\0\u897F\u6E38\u91CA\u5384\u4F20 (V112, World)\0", NULL, NULL, NULL,
+struct BurnDriver BurnDrvOrlegend112ea = {
+	"orlegendea", "orlegend", "pgm", NULL, "1997",
+	"Oriental Legend - Xi Yo Gi Shi Re Zuang (V112, set 2)\0", NULL, "IGS", "PolyGameMaster",
+	L"Oriental Legend\0\u897F\u6E38\u91CA\u5384\u4F20 (V112, set 2)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
-	NULL, orlegend112ceRomInfo, orlegend112ceRomName, NULL, NULL, NULL, NULL, pgmInputInfo, orlegendDIPInfo,
+	NULL, orlegend112eaRomInfo, orlegend112eaRomName, NULL, NULL, NULL, NULL, pgmInputInfo, orlegendDIPInfo,
 	orlegendInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -6988,7 +6988,7 @@ struct BurnDriverD BurnDrvkovlsqh = {
 };
 
 
-// Knights of Valour: Luan Shi Quan Huang / Sangoku Senki: Luan Shi Quan Huang (V112CN, China)
+// Knights of Valour: Luan Shi Quan Huang Te Bie Ban / Sangoku Senki: Luan Shi Quan Huang Te Bie Ban (V112CN, China)
 
 // Nov 20, 2008 @ $3ffff0
 
@@ -7036,8 +7036,8 @@ static INT32 kovlsqhoInit()
 
 struct BurnDriver BurnDrvkovlsqho = {
 	"kovlsqho", "kovshp", "pgm", NULL, "2009",
-	"Knights of Valour: Luan Shi Quan Huang / Sangoku Senki: Luan Shi Quan Huang (V112CN, China)\0", "Incomplete dump", "IGS", "PolyGameMaster",
-	L"Knights of Valour: Luan Shi Quan Huang\0\u4E09\u56FD\u6218\u7EAA\0\u4E71\u4E16\u62F3\u7687 (V112CN, China)\0", NULL, NULL, NULL,
+	"Knights of Valour: Luan Shi Quan Huang Te Bie Ban / Sangoku Senki: Luan Shi Quan Huang Te Bie Ban (V112CN, China)\0", "Incomplete dump", "IGS", "PolyGameMaster",
+	L"Knights of Valour: Luan Shi Quan Huang Te Bie Ban\0\u4E09\u56FD\u6218\u7EAA\0\u4E71\u4E16\u62F3\u7687\u0020\u7279\u522B\u7248 (V112CN, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovlsqhoRomInfo, kovlsqhoRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
 	kovlsqhoInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -7122,7 +7122,7 @@ struct BurnDriverD BurnDrvkovlsjba = {
 // listed as assgplus in code
 
 static struct BurnRomInfo kovassgplusRomDesc[] = {
-	{ "assg_v315cn.rom",  			0x0400000, 0xb9885d5c, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "assgplus_v315cn.rom",  		0x0400000, 0xb9885d5c, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "lsqh2_t01.rom",				0x1000000, 0xd498d97f, 2 | BRF_GRA },			//  1 Tile data
 
@@ -7156,8 +7156,8 @@ static INT32 kovassgplusInit()
 
 struct BurnDriverD BurnDrvkovassgplus = {
 	"kovassgplus", "kovshp", "pgm", NULL, "2008",
-	"Knights of Valour: Ao Shi San Guo / Sangoku Senki: Ao Shi San Guo Plus(V315CN, China)\0", "Incomplete dump", "IGS", "PolyGameMaster",
-	L"Knights of Valour: Ao Shi San Guo Plus\0\u4E09\u56FD\u6218\u7EAA\0\u50B2\u4E16\u4E09\u56FD (V315CN, China)\0", NULL, NULL, NULL,
+	"Knights of Valour: Ao Shi San Guo Plus / Sangoku Senki: Ao Shi San Guo Plus(V315CN, China)\0", "Incomplete dump", "IGS", "PolyGameMaster",
+	L"Knights of Valour: Ao Shi San Guo Plus\0\u4E09\u56FD\u6218\u7EAA\0\u50B2\u4E16\u4E09\u56FD Plus (V315CN, China)\0", NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM /* | HARDWARE_IGS_USE_ARM_CPU */, GBF_SCRFIGHT, 0,
 	NULL, kovassgplusRomInfo, kovassgplusRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
 	kovassgplusInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,

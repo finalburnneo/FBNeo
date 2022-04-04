@@ -9562,10 +9562,11 @@ static void ppu_write(UINT16 reg, UINT8 data)
 				if ((~ctrl.reg & 0x80) && status.bit.VBlank) {
 					//--Note: If NMI is fired here, it will break:
 					//Bram Stokers Dracula, Galaxy 5000, GLUK The Thunder aka Thunder Warrior
-					//Solution: Delay NMI by 1 cpu-operation.
+					//Animal Clipper (HB) - nmi clobbers A register during bootup.
+					//Solution: Delay NMI by 4(?) cpu-cycles.
 					//Note: Dragon Power needs a slightly longer delay? (GetPC instead of GetPPC) Otherwise scrolling goes bad
 					bprintf(0, _T("PPUCTRL: toggle-nmi-arm! scanline %d  pixel %d    frame: %d   PPC %X\n"), scanline, pixel, nCurrentFrame, M6502GetPrevPC(-1));
-					ppu_runextranmi = M6502GetPC(-1);
+					ppu_runextranmi = cyc_counter + 4;
 				}
 			} else {
 				//bprintf(0, _T("PPUCTRL: %X  cancel-nmi?  scanline %d  pixel %d   frame %d\n"), data, scanline, pixel, nCurrentFrame);
@@ -9964,8 +9965,8 @@ void ppu_cycle()
 		}
 	}
 
-	if (ppu_runextranmi && ppu_runextranmi != M6502GetPrevPC(-1)) {
-		// Delay by 1 cpu-op when nmi toggled via PPUCTRL during vblank.
+	if (ppu_runextranmi && cyc_counter >= ppu_runextranmi) {
+		// Delay by x cpu-cycles when nmi toggled via PPUCTRL during vblank.
 		// Bram Stokers Dracula, Galaxy 5000, GLUK The Thunder aka Thunder Warrior
 		// will get stuck in the game's nmi handler if the "sta $nmistatus_addr"
 		// op gets executed after the nmi:
@@ -13178,11 +13179,28 @@ STDROMPICKEXT(fds_patla, fds_patla, fds_fdsbios)
 STD_ROM_FN(fds_patla)
 
 struct BurnDriver BurnDrvfds_patla = {
-	"fds_patla", NULL, "fds_fdsbios", NULL, "1989",
+	"fds_patla", "fds_patlaen", "fds_fdsbios", NULL, "1989",
 	"Patlabor - The Mobile Police - Dai 2 Shoutai Shutsudou Seyo! (Japan)\0", NULL, "Bandai", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_FDS, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_SHOOT | GBF_PLATFORM, 0,
 	NESGetZipName, fds_patlaRomInfo, fds_patlaRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo fds_patlaenRomDesc[] = {
+	{ "Patlabor - The Mobile Police - Dai 2 Shoutai Shutsudou Seyo! T-Eng (2003)(Vice Translations).fds",          131016, 0x9d8236f8, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_patlaen, fds_patlaen, fds_fdsbios)
+STD_ROM_FN(fds_patlaen)
+
+struct BurnDriver BurnDrvfds_patlaen = {
+	"fds_patlaen", NULL, "fds_fdsbios", NULL, "1989-2003",
+	"Patlabor - The Mobile Police - Dai 2 Shoutai Shutsudou Seyo! (T-Eng)\0", NULL, "Vice Translations", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_SHOOT | GBF_PLATFORM, 0,
+	NESGetZipName, fds_patlaenRomInfo, fds_patlaenRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -20680,7 +20698,7 @@ STD_ROM_FN(nes_animclip)
 
 struct BurnDriver BurnDrvnes_animclip = {
 	"nes_animclip", NULL, NULL, NULL, "2021",
-	"Animal Clipper (HB)\0", NULL, "Okunyon", "Miscellaneous",
+	"Animal Clipper (HB)\0", "If the board completely empties the music crashes", "Okunyon", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_animclipRomInfo, nes_animclipRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

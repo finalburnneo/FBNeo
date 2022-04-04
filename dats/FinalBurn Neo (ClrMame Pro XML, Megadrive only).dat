@@ -285,9 +285,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="gleylancs" cloneof="gleylanc" romof="gleylanc">
+		<comment>Hack</comment>
 		<description>Advanced Busterhawk Gleylancer (Hack, Spanish)</description>
 		<year>2017</year>
-		<manufacturer>NCS</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="advanced busterhawk gleylancer (hack, spanish).bin" size="1048576" crc="c30496b5"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1139,6 +1140,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="asterpgp" cloneof="asterpg" romof="asterpg">
+		<comment>Prototype</comment>
 		<description>Asterix and the Power of the Gods (Euro, Prototype)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -1147,9 +1149,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="atomrobos" cloneof="atomrobo" romof="atomrobo">
+		<comment>Hack</comment>
 		<description>Atomic Robo-Kid (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Treco</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="atomic robo-kid (hack, spanish).bin" size="524288" crc="ce250d1b"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1179,9 +1182,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="atomruns" cloneof="atomrun" romof="atomrun">
+		<comment>Hack</comment>
 		<description>Atomic Runner (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Data East</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="atomic runner (hack, spanish).bin" size="1048576" crc="930a9593"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1203,6 +1207,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="atptourp7" cloneof="atptour" romof="atptour">
+		<comment>Prototype</comment>
 		<description>ATP Tour Championship Tennis (Prototype, 19940509)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -1211,6 +1216,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="atptourp6" cloneof="atptour" romof="atptour">
+		<comment>Prototype</comment>
 		<description>ATP Tour Championship Tennis (Prototype, 19940719)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -1219,6 +1225,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="atptourp5" cloneof="atptour" romof="atptour">
+		<comment>Prototype</comment>
 		<description>ATP Tour Championship Tennis (Prototype, 19940723)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -1227,6 +1234,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="atptourp4" cloneof="atptour" romof="atptour">
+		<comment>Prototype</comment>
 		<description>ATP Tour Championship Tennis (Prototype, 19940802)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -1235,6 +1243,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="atptourp3" cloneof="atptour" romof="atptour">
+		<comment>Prototype</comment>
 		<description>ATP Tour Championship Tennis (Prototype, 19940805)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -1243,6 +1252,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="atptourp2" cloneof="atptour" romof="atptour">
+		<comment>Prototype</comment>
 		<description>ATP Tour Championship Tennis (Prototype, 19940808)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -1251,6 +1261,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="atptourp1" cloneof="atptour" romof="atptour">
+		<comment>Prototype</comment>
 		<description>ATP Tour Championship Tennis (Prototype, 19940908)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -1275,6 +1286,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="austrarlp" cloneof="austrarl" romof="austrarl">
+		<comment>Prototype</comment>
 		<description>Australian Rugby League (Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Electronic Arts</manufacturer>
@@ -1300,6 +1312,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="awepossmp" cloneof="awepossm" romof="awepossm">
+		<comment>Prototype</comment>
 		<description>Awesome Possum (USA, Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Tengen</manufacturer>
@@ -2283,9 +2296,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="btomatog">
-		<comment>originally planned for 1994</comment>
-		<description>Bill's Tomato Game (Unl, Prototype)</description>
-		<year>2017</year>
+		<comment>Prototype, originally planned for 1994</comment>
+		<description>Bill's Tomato Game (Unl) (Prototype)</description>
+		<year>1994-2017</year>
 		<manufacturer>Psygnosis</manufacturer>
 		<rom name="bill's tomato game (unl)(2017)(psygnosis).bin" size="1048576" crc="0e1f263f"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
@@ -3546,9 +3559,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="chuckrcks" cloneof="chuckrck" romof="chuckrck">
+		<comment>Hack</comment>
 		<description>Chuck Rock (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Virgin Games</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="chuck rock (hack, spanish).bin" size="1048576" crc="97bea810"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3578,9 +3592,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="chukrck2s" cloneof="chukrck2" romof="chukrck2">
+		<comment>Hack</comment>
 		<description>Chuck Rock II - Son Of Chuck (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Virgin Games</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="chuck rock ii - son of chuck (hack, spanish).bin" size="1048576" crc="7b46f45e"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3594,6 +3609,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chukrck2up" cloneof="chukrck2" romof="chukrck2">
+		<comment>Prototype</comment>
 		<description>Chuck Rock II - Son of Chuck (USA, Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Virgin Games</manufacturer>
@@ -5164,6 +5180,15 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="devwillpro">
+		<comment>Homebrew</comment>
+		<description>Devwill Too Prologue (HB)</description>
+		<year>2022</year>
+		<manufacturer>Amaweks - Manganga Team</manufacturer>
+		<rom name="Devwill Too Prologue (2022)(Amaweks).bin" size="3168608" crc="736a07e2"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="diablo" cloneof="fatallab" romof="fatallab">
 		<comment>Hack</comment>
 		<description>Diablo (Rus)</description>
@@ -5173,33 +5198,35 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dialqo">
-		<description>Dial Q o Mawase! (Jpn)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
-		<rom name="dial q o mawase! (jpn) (unl).bin" size="1048576" crc="c632e5af"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="dialqoc" cloneof="dialqo" romof="dialqo">
-		<description>Dial Q o Mawase! (T-Chi)</description>
-		<year>2001</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<comment>Hack</comment>
+		<description>Dial Q o Mawase! (Unl) (Hack, Chinese)</description>
+		<year>200?</year>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="dial q o mawase! (T-Chi) (unl).bin" size="1048576" crc="1002c02f"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="dialqo">
+		<description>Dial Q o Mawase! (Unl) (Jpn)</description>
+		<year>1992</year>
+		<manufacturer>Studio Fazzy</manufacturer>
+		<rom name="dial q o mawase! (jpn) (unl).bin" size="1048576" crc="c632e5af"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="dicktrs" cloneof="dicktr" romof="dicktr">
+		<comment>Hack</comment>
 		<description>Dick Tracy (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>jackic</manufacturer>
 		<rom name="dick tracy (hack, spanish).bin" size="524288" crc="f3b40a46"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="dicktr">
 		<description>Dick Tracy (World)</description>
-		<year>1991</year>
+		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-13661.bin" size="524288" crc="ef887533"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
@@ -7769,9 +7796,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="gleylance" cloneof="gleylanc" romof="gleylanc">
+		<comment>Hack</comment>
 		<description>GleyLancer (Hack, English)</description>
 		<year>2007</year>
-		<manufacturer>NCS</manufacturer>
+		<manufacturer>Jon Najar</manufacturer>
 		<rom name="advanced busterhawk gleylancer (english translation).bin" size="1048576" crc="1b744d15"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7779,7 +7807,7 @@
 	<game name="gleylanc">
 		<description>GleyLancer (Jpn)</description>
 		<year>1992</year>
-		<manufacturer>NCS</manufacturer>
+		<manufacturer>Masaya - NCS Corp.</manufacturer>
 		<rom name="advanced busterhawk gleylancer (jpn).bin" size="1048576" crc="42cf9b5b"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7805,7 +7833,7 @@
 		<comment>Hack</comment>
 		<description>Gods (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Mindscape</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="gods (hack, spanish).bin" size="1048576" crc="184498c6"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7827,6 +7855,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="godsup" cloneof="gods" romof="gods">
+		<comment>Prototype</comment>
 		<description>Gods (USA, Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Mindscape</manufacturer>
@@ -8577,25 +8606,28 @@
 		<driver status="good"/>
 	</game>
 	<game name="iceage" cloneof="awepossm" romof="awepossm">
-		<description>Ice Age (Rus)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<comment>Hack</comment>
+		<description>Ice Age (Unl) (Rus)</description>
+		<year>200?</year>
+		<manufacturer>KDS</manufacturer>
 		<rom name="ice age.bin" size="4194304" crc="3a585408"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="iceage3" cloneof="chuckrck" romof="chuckrck">
-		<description>Ice Age 3 (Rus)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<comment>Hack</comment>
+		<description>Ice Age 3 (Unl) (Rus)</description>
+		<year>200?</year>
+		<manufacturer>KDS</manufacturer>
 		<rom name="ice age 3 (unl).bin" size="1077536" crc="58fcffb3"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="iceage4" cloneof="chuckrck" romof="chuckrck">
-		<description>Ice Age 4 (Rus)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<comment>Hack</comment>
+		<description>Ice Age 4 (Unl) (Rus)</description>
+		<year>200?</year>
+		<manufacturer>KDS</manufacturer>
 		<rom name="ice age 4 (unl).bin" size="1107488" crc="92e86cfc"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9766,7 +9798,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kuzyaeo" cloneof="chukrck2" romof="chukrck2">
-		<description>Kuzya - Ekologiya V Opasnosti (Rus)</description>
+		<comment>Hack</comment>
+		<description>Kuzya - Ekologiya V Opasnosti (Unl) (Rus)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="agent hugo - environment at risk (unl).bin" size="2097152" crc="be32d65b"/>
@@ -9774,7 +9807,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="kuzyamd" cloneof="chukrck2" romof="chukrck2">
-		<description>Kuzya - V Mire Dinozavrov (Rus)</description>
+		<comment>Hack</comment>
+		<description>Kuzya - V Mire Dinozavrov (Unl) (Rus)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="agent hugo - in the world of dinosaurs (unl).bin" size="2097152" crc="bd0ebe1c"/>
@@ -10425,9 +10459,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="mafia" cloneof="dicktr" romof="dicktr">
-		<description>Mafia (Rus)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<comment>Hack</comment>
+		<description>Mafia (Unl) (Rus)</description>
+		<year>2010</year>
+		<manufacturer>BMB</manufacturer>
 		<rom name="mafia (unl).bin" size="1048576" crc="ede60834"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -15106,9 +15141,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="rastan2s" cloneof="rastan2" romof="rastan2">
+		<comment>Hack</comment>
 		<description>Rastan Saga II (Hack, Spanish)</description>
 		<year>2017</year>
-		<manufacturer>Taito</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="rastan saga ii (hack, spanish).bin" size="524288" crc="aef20d9e"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -15162,9 +15198,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="resq">
+		<comment>Prototype</comment>
 		<description>Resq (Euro, Prototype)</description>
 		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<manufacturer>Psygnosis</manufacturer>
 		<rom name="resq (euro) (prototype).bin" size="1048576" crc="558e35e0"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

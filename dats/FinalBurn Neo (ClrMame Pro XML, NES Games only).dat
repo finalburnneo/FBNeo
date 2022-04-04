@@ -803,7 +803,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="animclip">
-		<comment>Homebrew</comment>
+		<comment>Homebrew, If the board completely empties the music crashes</comment>
 		<description>Animal Clipper (HB)</description>
 		<year>2021</year>
 		<manufacturer>Okunyon</manufacturer>

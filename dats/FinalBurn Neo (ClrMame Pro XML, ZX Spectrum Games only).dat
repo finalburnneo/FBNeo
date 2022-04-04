@@ -982,6 +982,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="anarchy" romof="spectrum">
+		<description>Anarchy (48K)</description>
+		<year>1987</year>
+		<manufacturer>Rack-It - Hewson</manufacturer>
+		<rom name="Anarchy 48K (1987)(Rack-It).tap" size="39327" crc="a48348c3"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="androide" romof="spectrum">
 		<comment>Homebrew</comment>
 		<description>Androide (48K) (HB)</description>
@@ -1826,6 +1835,17 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="btlvalley" romof="spec128">
+		<comment>Double click on fire button to stop/reverse</comment>
+		<description>Battle Valley (128K)</description>
+		<year>1988</year>
+		<manufacturer>Rack-It - Hewson</manufacturer>
+		<rom name="Battle Valley 128K (1988)(Rack-It).tap" size="39021" crc="93b3ce85"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="btlzone" romof="spectrum">
 		<description>Battlezone (48K)</description>
 		<year>1984</year>
@@ -1943,6 +1963,15 @@
 		<year>1985</year>
 		<manufacturer>DK'Tronics</manufacturer>
 		<rom name="Benny Hill's Madcap Chase! (1985)(DK'Tronics).tap" size="33223" crc="e7a95cef"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bestialwrr" romof="spectrum">
+		<description>Bestial Warrior (Spanish) (48K)</description>
+		<year>1989</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Bestial Warrior 48K ES (1989)(Dinamic).tap" size="55620" crc="f1fb3cb5"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2898,6 +2927,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="captsevilla" romof="spectrum">
+		<comment>SPACE: change to Cap. Sevilla (if available)</comment>
+		<description>Capitan Sevilla (Spanish) (48K)</description>
+		<year>1988</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Capitan Sevilla 48K ES (1988)(Dinamic).tap" size="97238" crc="8f8c61e7"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="captrueno1" romof="spectrum">
 		<description>Capitan Trueno, El - Part 1 (Spanish) (48K)</description>
 		<year>1989</year>
@@ -3307,7 +3346,7 @@
 	</game>
 	<game name="chezmax" romof="spec128">
 		<comment>Homebrew</comment>
-		<description>Chez Maxime ZX (128K) (HB)</description>
+		<description>Chez Maxime ZX (French) (128K) (HB)</description>
 		<year>2022</year>
 		<manufacturer>highriser</manufacturer>
 		<rom name="Chez Maxime ZX 128K (2022)(highriser).tap" size="48799" crc="ab6b980b"/>
@@ -3479,16 +3518,6 @@
 		<year>1986</year>
 		<manufacturer>Ocean</manufacturer>
 		<rom name="Cobra (1986)(Ocean).z80" size="42218" crc="28a20fe7"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="cobratr" cloneof="cobra" romof="cobra">
-		<comment>Infinite Lives</comment>
-		<description>Cobra (Trainer) (48K)</description>
-		<year>1986</year>
-		<manufacturer>Ocean</manufacturer>
-		<rom name="Cobra - trainer (1986)(Ocean).tap" size="47827" crc="5b2ab724"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3832,16 +3861,6 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="contcirct" cloneof="contcirc" romof="contcirc">
-		<description>Continental Circus (Trainer) (128K)</description>
-		<year>1989</year>
-		<manufacturer>Virgin Mastertronic</manufacturer>
-		<rom name="Continental Circus (1989)(Virgin Mastertronic)[128K].z80" size="64688" crc="f95c5332"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="cookie" romof="spec128">
 		<description>Cookie (16K)</description>
 		<year>1983</year>
@@ -3911,6 +3930,16 @@
 		<rom name="Cosmic Payback (2020)(John Connolly).tap" size="58570" crc="c91aa72f"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="csheriff" romof="spectrum">
+		<comment>ENTER: quit game, come back to options screen</comment>
+		<description>Cosmic Sheriff (Spanish) (48K)</description>
+		<year>1990</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Cosmic Sheriff 48K ES (1990)(Dinamic).tap" size="43690" crc="3bee0827"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4799,6 +4828,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="dilithium" romof="spectrum">
+		<description>Di-Lithium Lift (16K)</description>
+		<year>1983</year>
+		<manufacturer>Hewson Consultants</manufacturer>
+		<rom name="Di-Lithium Lift 16K (1983)(Hewson Consultants).tap" size="8878" crc="c04e50e2"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="dingo" romof="spectrum">
 		<comment>Homebrew</comment>
 		<description>Dingo (48K) (HB, v1.3)</description>
@@ -5380,6 +5418,15 @@
 		<year>1985</year>
 		<manufacturer>Hewson Consultants</manufacturer>
 		<rom name="Dragontorc (1985)(Hewson Consultants).z80" size="40230" crc="c2e5c32e"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="drgenius" romof="spectrum">
+		<description>Draughts Genius (48K)</description>
+		<year>1987</year>
+		<manufacturer>Rack-It - Hewson</manufacturer>
+		<rom name="Draughts Genius 48K (1987)(Rack-It).tap" size="48605" crc="3d91e93f"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7399,6 +7446,15 @@
 		<year>1987</year>
 		<manufacturer>Firebird Software</manufacturer>
 		<rom name="Gunstar 48K (1987)(Firebird).tap" size="47715" crc="23aedf6b"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gutz" romof="spectrum">
+		<description>Gutz (48K)</description>
+		<year>1988</year>
+		<manufacturer>Ocean</manufacturer>
+		<rom name="Gutz 48K (1988)(Ocean).tap" size="43037" crc="ad8a6a47"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11242,7 +11298,7 @@
 	<game name="tnzs" romof="spec128">
 		<description>New Zealand Story, The (128K)</description>
 		<year>1989</year>
-		<manufacturer>Ocean Software</manufacturer>
+		<manufacturer>Ocean</manufacturer>
 		<rom name="New Zealand Story, The (1989)(Ocean Software).tap" size="178176" crc="e6f32d53"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -11566,6 +11622,17 @@
 		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="Nuclear Bowls 48K (1986)(Zigurat).tap" size="49570" crc="8a383a82"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="oceano" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Oceano (128K) (HB)</description>
+		<year>2015</year>
+		<manufacturer>EgoTrip</manufacturer>
+		<rom name="Oceano (2015)(EgoTrip).tap" size="24434" crc="1ef0dccd"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -14552,6 +14619,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="snake" romof="spectrum">
+		<comment>Homebrew, Redefine keys to use controller</comment>
+		<description>Snake (48K) (HB, v3)</description>
+		<year>2021-22</year>
+		<manufacturer>JBizzel</manufacturer>
+		<rom name="Snake v3 48K (2022)(JBizzel).tap" size="26586" crc="172abcaf"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="snakeescape" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Snake Escape (128K) (HB)</description>
@@ -15467,10 +15544,10 @@
 	</game>
 	<game name="submarmk" romof="spectrum">
 		<comment>Homebrew, B: scuba diver - S: sonar</comment>
-		<description>Submarine! Remake (48K) (HB, v1.2)</description>
+		<description>Submarine! Remake (48K) (HB, v1.5)</description>
 		<year>2022</year>
 		<manufacturer>je7ebel</manufacturer>
-		<rom name="Submarine! Remake v1.2 (2022)(je7ebel).tap" size="46865" crc="0038288e"/>
+		<rom name="Submarine! Remake v1.5 (2022)(je7ebel).tap" size="47428" crc="d1b19ffc"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17374,7 +17451,7 @@
 	<game name="wwfwresmania" romof="spec128">
 		<description>WWF WrestleMania (128K)</description>
 		<year>1991</year>
-		<manufacturer>Ocean Software</manufacturer>
+		<manufacturer>Ocean</manufacturer>
 		<rom name="WWF WrestleMania (1991)(Ocean Software).tap" size="209329" crc="b377350f"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>

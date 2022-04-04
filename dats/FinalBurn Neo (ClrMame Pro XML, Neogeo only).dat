@@ -2323,7 +2323,7 @@
 		<description>Cabal (Neo-Geo Conversion)</description>
 		<year>1988-2021</year>
 		<manufacturer>TAD Corporation</manufacturer>
-		<rom name="cabal-p1.bin" size="1048576" crc="4da4adf2"/>
+		<rom name="cabal-p1.bin" size="1048576" crc="bb193926"/>
 		<rom name="cabal-s1.bin" size="131072" crc="45f0bc5e"/>
 		<rom name="cabal-c1.bin" size="1048576" crc="9f5ea8bb"/>
 		<rom name="cabal-c2.bin" size="1048576" crc="edf277f2"/>
@@ -23402,7 +23402,7 @@
 	</game>
 	<game name="timesup" romof="neogeo">
 		<comment>Homebrew</comment>
-		<description>Time's Up</description>
+		<description>Time's UP!</description>
 		<year>2012</year>
 		<manufacturer>NGF Dev. Inc.</manufacturer>
 		<rom name="tup_p1.rom" size="1048576" crc="b4be3ede"/>

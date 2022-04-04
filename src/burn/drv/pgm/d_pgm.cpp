@@ -7037,7 +7037,7 @@ static INT32 kovlsqhoInit()
 struct BurnDriver BurnDrvkovlsqho = {
 	"kovlsqho", "kovshp", "pgm", NULL, "2009",
 	"Knights of Valour: Luan Shi Quan Huang Te Bie Ban / Sangoku Senki: Luan Shi Quan Huang Te Bie Ban (V112CN, China)\0", "Incomplete dump", "IGS", "PolyGameMaster",
-	L"Knights of Valour: Luan Shi Quan Huang Te Bie Ban\0\u4E09\u56FD\u6218\u7EAA\0\u4E71\u4E16\u62F3\u7687\u0020\u7279\u522B\u7248 (V112CN, China)\0", NULL, NULL, NULL,
+	L"Knights of Valour: Luan Shi Quan Huang Te Bie Ban\0\u4E09\u56FD\u6218\u7EAA\0\u4E71\u4E16\u62F3\u7687 \u7279\u522B\u7248 (V112CN, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovlsqhoRomInfo, kovlsqhoRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
 	kovlsqhoInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,

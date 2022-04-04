@@ -20545,7 +20545,7 @@ STD_ROM_FN(timesup)
 
 struct BurnDriver BurnDrvtimesup = {
 	"timesup", NULL, "neogeo", NULL, "2012",
-	"Time's Up\0", NULL, "NGF Dev. Inc.", "Neo Geo",
+	"Time's UP!\0", NULL, "NGF Dev. Inc.", "Neo Geo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_VERSHOOT, 0,
 	NULL, timesupRomInfo, timesupRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -20962,7 +20962,7 @@ struct BurnDriver BurnDrvTeot = {
 // Cabal (Neo-Geo Conversion)
 
 static struct BurnRomInfo cabalngRomDesc[] = {
-	{ "cabal-p1.bin",   0x100000, 0x4da4adf2, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+	{ "cabal-p1.bin",   0x100000, 0xbb193926, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
 
 	{ "cabal-s1.bin",	0x020000, 0x45f0bc5e, 2 | BRF_GRA },           	//  1 Text layer tiles
 

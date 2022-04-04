@@ -1411,11 +1411,11 @@ struct BurnDriver BurnDrvStinger = {
 // Stinger (prototype?)
 
 static struct BurnRomInfo stinger2RomDesc[] = {
-	{ "n1.bin",	0x2000, 0xf2d2790c, 1 }, //  0 maincpu
-	{ "n2.bin",	0x2000, 0x8fd2d8d8, 1 }, //  1
-	{ "n3.bin",	0x2000, 0xf1794d36, 1 }, //  2
-	{ "n4.bin",	0x2000, 0x230ba682, 1 }, //  3
-	{ "n5.bin",	0x2000, 0xa03a01da, 1 }, //  4
+	{ "n1.bin",		0x2000, 0xf2d2790c, 1 }, //  0 maincpu
+	{ "n2.bin",		0x2000, 0x8fd2d8d8, 1 }, //  1
+	{ "n3.bin",		0x2000, 0xf1794d36, 1 }, //  2
+	{ "n4.bin",		0x2000, 0x230ba682, 1 }, //  3
+	{ "n5.bin",		0x2000, 0xa03a01da, 1 }, //  4
 
 	{ "6-9f.bin",	0x2000, 0x79757f0c, 2 }, //  5 audiocpu
 
@@ -1423,9 +1423,9 @@ static struct BurnRomInfo stinger2RomDesc[] = {
 	{ "8-11e.bin",	0x2000, 0x43c61b3f, 3 }, //  7
 	{ "9-14e.bin",	0x2000, 0xc9ed8fc7, 3 }, //  8
 
-	{ "10.bin",	0x2000, 0xf6721930, 4 }, //  9 gfx2
-	{ "11.bin",	0x2000, 0xa4404e63, 4 }, // 10
-	{ "12.bin",	0x2000, 0xb60fa88c, 4 }, // 11
+	{ "10.bin",		0x2000, 0xf6721930, 4 }, //  9 gfx2
+	{ "11.bin",		0x2000, 0xa4404e63, 4 }, // 10
+	{ "12.bin",		0x2000, 0xb60fa88c, 4 }, // 11
 
 	{ "stinger.a7",	0x0100, 0x52c06fc2, 5 }, // 12 proms
 	{ "stinger.b7",	0x0100, 0x9985e575, 5 }, // 13
@@ -1441,6 +1441,45 @@ struct BurnDriver BurnDrvStinger2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, stinger2RomInfo, stinger2RomName, NULL, NULL, stingerSampleInfo, stingerSampleName, StingerInputInfo, Stinger2DIPInfo,
+	StingerInit, DrvExit, DrvFrame, StingerDraw, DrvScan,
+	&DrvRecalc, 0x100, 224, 256, 3, 4
+};
+
+// Finger (bootleg of Stinger)
+// AFC 02300 Rev.0 + AFC 03300 Rev.0 PCBs. Only the first three main CPU ROMs differ. Basically just a GFX hack of the stinger2 set.
+
+static struct BurnRomInfo fingerRomDesc[] = {
+	{ "1.5j",		0x2000, 0x4949ae39, 1 }, //  0 maincpu
+	{ "2.7j",		0x2000, 0x7288db11, 1 }, //  1
+	{ "3.8j",		0x2000, 0x386c6207, 1 }, //  2
+	{ "4.9j",		0x2000, 0x230ba682, 1 }, //  3
+	{ "5.10j",		0x2000, 0xa03a01da, 1 }, //  4
+
+	{ "6.9f",		0x2000, 0x79757f0c, 2 }, //  5 audiocpu
+
+	{ "7.9e",		0x2000, 0x775489be, 3 }, //  6 gfx1
+	{ "8.11e",		0x2000, 0x43c61b3f, 3 }, //  7
+	{ "9.14e",		0x2000, 0xc9ed8fc7, 3 }, //  8
+
+	// Labels were actually all 1 but overwritten with a marker
+	{ "10.9h",		0x2000, 0xf6721930, 4 }, //  9 gfx2
+	{ "11.11h",		0x2000, 0xa4404e63, 4 }, // 10
+	{ "12.14h",		0x2000, 0xb60fa88c, 4 }, // 11
+
+	{ "6301.a7",	0x0100, 0x52c06fc2, 5 }, // 12 proms
+	{ "6301.b7",	0x0100, 0x9985e575, 5 }, // 13
+	{ "6301.a8",	0x0100, 0x76b57629, 5 }, // 14
+};
+
+STD_ROM_PICK(finger)
+STD_ROM_FN(finger)
+
+struct BurnDriver BurnDrvFinger = {
+	"finger", "stinger", NULL, "stinger", "1983",
+	"Finger (bootleg of Stinger)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, fingerRomInfo, fingerRomName, NULL, NULL, stingerSampleInfo, stingerSampleName, StingerInputInfo, Stinger2DIPInfo,
 	StingerInit, DrvExit, DrvFrame, StingerDraw, DrvScan,
 	&DrvRecalc, 0x100, 224, 256, 3, 4
 };

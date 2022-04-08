@@ -18380,7 +18380,7 @@ struct BurnDriver BurnDrvkof2000otc = {
 	9.修复原版大量BUG */
 
 static struct BurnRomInfo kof2000spRomDesc[] = {
-	{ "257-pg1sp.p1",		0x100000, 0xccf429a2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "257-pg1sp.p1",		0x100000, 0xd31861a2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "257-pg2sp.sp2", 		0x400000, 0x48a1a381, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */

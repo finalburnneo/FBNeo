@@ -18555,6 +18555,84 @@ struct BurnDriver BurnDrvkf2k1pkz = {
 	0x1000, 304, 224, 4, 3
 };
 
+// The King of Fighters 2001 Remix Ultra 2.3
+// Version 2004-05-07 Hack By Jason FGCH
+
+static struct BurnRomInfo kof2001ruRomDesc[] = {
+	{ "2k1ru-p1.p1",       0x100000, 0x3377ebee, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "2k1ru-p2.p2",       0x400000, 0x394bcc59, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "2k1ru-s1.s1",       0x020000, 0xa5d90035, 2 | BRF_GRA },     //  2 Text layer tiles
+
+	{ "262-c1d.c1",        0x800000, 0x103225b1, 3 | BRF_GRA },     //  3 Sprite Data
+	{ "262-c2d.c2",        0x800000, 0xf9d05d99, 3 | BRF_GRA },     //  4
+	{ "262-c3d.c3",        0x800000, 0x4c7ec427, 3 | BRF_GRA },     //  5
+	{ "262-c4d.c4",        0x800000, 0x1d237aa6, 3 | BRF_GRA },     //  6
+	{ "262-c5d.c5",        0x800000, 0xc2256db5, 3 | BRF_GRA },     //  7
+	{ "262-c6d.c6",        0x800000, 0x8d6565a9, 3 | BRF_GRA },     //  8
+	{ "262-c7d.c7",        0x800000, 0xd1408776, 3 | BRF_GRA },     //  9
+	{ "262-c8d.c8",        0x800000, 0x954d0e16, 3 | BRF_GRA },     //  10
+
+	{ "2k1ru-m1d.m1",      0x020000, 0x2fb0a8a5, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "262-v1-08-e0.v1",   0x400000, 0x83d49ecf, 5 | BRF_SND },           // 12 Sound data
+	{ "262-v2-08-e0.v2",   0x400000, 0x003f1843, 5 | BRF_SND },           // 13
+	{ "262-v3-08-e0.v3",   0x400000, 0x2ae38dbe, 5 | BRF_SND },           // 14
+	{ "262-v4-08-e0.v4",   0x400000, 0x26ec4dd9, 5 | BRF_SND },           // 15
+};
+
+STDROMPICKEXT(kof2001ru, kof2001ru, neogeo)
+STD_ROM_FN(kof2001ru)
+
+struct BurnDriver BurnDrvkof2001ru = {
+	"kof2001ru", "kof2001", "neogeo", NULL, "Version 2004-05-07",
+	"The King of Fighters 2001 Remix Ultra 2.3 (Hack By Jason FGCH)\0", NULL, "Hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof2001ruRomInfo, kof2001ruRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// The King of Fighters 2001 Remix Pro v1.02 Final
+// Version 2004-03-01 Hack By Jason,Kim & Raymonose
+
+static struct BurnRomInfo kof2001rpfRomDesc[] = {
+	{ "262rp-p1.p1",       0x100000, 0xe9e42e55, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "262rp-sp2.sp2",     0x500000, 0x37a818ed, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "262rp-s1d.s1",      0x020000, 0x492f5efe, 2 | BRF_GRA },     //  2 Text layer tiles
+
+	{ "262-c1d.c1",        0x800000, 0x103225b1, 3 | BRF_GRA },     //  3 Sprite Data
+	{ "262-c2d.c2",        0x800000, 0xf9d05d99, 3 | BRF_GRA },     //  4
+	{ "262-c3d.c3",        0x800000, 0x4c7ec427, 3 | BRF_GRA },     //  5
+	{ "262-c4d.c4",        0x800000, 0x1d237aa6, 3 | BRF_GRA },     //  6
+	{ "262-c5d.c5",        0x800000, 0xc2256db5, 3 | BRF_GRA },     //  7
+	{ "262-c6d.c6",        0x800000, 0x8d6565a9, 3 | BRF_GRA },     //  8
+	{ "262-c7d.c7",        0x800000, 0xd1408776, 3 | BRF_GRA },     //  9
+	{ "262-c8d.c8",        0x800000, 0x954d0e16, 3 | BRF_GRA },     //  10
+
+	{ "262rp-m1d.m1",      0x040000, 0x4bcc537b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "262-v1-08-e0.v1",   0x400000, 0x83d49ecf, 5 | BRF_SND },           // 12 Sound data
+	{ "262-v2-08-e0.v2",   0x400000, 0x003f1843, 5 | BRF_SND },           // 13
+	{ "262-v3-08-e0.v3",   0x400000, 0x2ae38dbe, 5 | BRF_SND },           // 14
+	{ "262-v4-08-e0.v4",   0x400000, 0x26ec4dd9, 5 | BRF_SND },           // 15
+};
+
+STDROMPICKEXT(kof2001rpf, kof2001rpf, neogeo)
+STD_ROM_FN(kof2001rpf)
+
+struct BurnDriver BurnDrvkof2001rpf = {
+	"kof2001rpf", "kof2001", "neogeo", NULL, "Version 2004-03-01",
+	"The King of Fighters 2001 Remix Pro v1.02 Final (Hack By Jason, Kim & Raymonose)\0", NULL, "Hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof2001rpfRomInfo, kof2001rpfRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
 // The King of Fighters 2002 Plus (bootleg set 3)
 
 static struct BurnRomInfo kf2k2plbRomDesc[] = {

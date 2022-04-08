@@ -23278,7 +23278,7 @@ STDROMPICKEXT(SpecPostmortem, SpecPostmortem, Spectrum)
 STD_ROM_FN(SpecPostmortem)
 
 struct BurnDriver BurnSpecPostmortem = {
-	"spec_postmortem", NULL, "spec_spectrum", NULL, "1988",
+	"spec_postmortem", NULL, "spec_spectrum", NULL, "1987",
 	"Post Mortem (Spanish) (48K)\0", NULL, "Iber Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
@@ -35791,6 +35791,120 @@ struct BurnDriver BurnSpecSnake = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecSnakeRomInfo, SpecSnakeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecCursorKeysDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Dead Zone - Check Point version (English) (128K) (HB)
+
+static struct BurnRomInfo SpecDzone1enRomDesc[] = {
+	{ "Dead Zone - Check Point version EN (2019)(PC NONO Games).tap", 45639, 0x34d62528, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDzone1en, SpecDzone1en, Spec128)
+STD_ROM_FN(SpecDzone1en)
+
+struct BurnDriver BurnSpecDzone1en = {
+	"spec_dzone1en", NULL, "spec_spec128", NULL, "2019",
+	"Dead Zone - Check Point version (English) (128K) (HB)\0", NULL, "PC NONO Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
+	SpectrumGetZipName, SpecDzone1enRomInfo, SpecDzone1enRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Dead Zone  - Punto de Control version (Spanish) (128K) (HB)
+
+static struct BurnRomInfo SpecDzone1esRomDesc[] = {
+	{ "Dead Zone  - Punto de Control version ES (2019)(PC NONO Games).tap", 45754, 0xb06a5bff, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDzone1es, SpecDzone1es, Spec128)
+STD_ROM_FN(SpecDzone1es)
+
+struct BurnDriver BurnSpecDzone1es = {
+	"spec_dzone1es", NULL, "spec_spec128", NULL, "2019",
+	"Dead Zone  - Punto de Control version (Spanish) (128K) (HB)\0", NULL, "PC NONO Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
+	SpectrumGetZipName, SpecDzone1esRomInfo, SpecDzone1esRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Dead Zone - Survival version (English) (128K) (HB)
+
+static struct BurnRomInfo SpecDzone2enRomDesc[] = {
+	{ "Dead Zone - Survival version EN (2019)(PC NONO Games).tap", 45564, 0xde6ef5a4, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDzone2en, SpecDzone2en, Spec128)
+STD_ROM_FN(SpecDzone2en)
+
+struct BurnDriver BurnSpecDzone2en = {
+	"spec_dzone2en", "spec_dzone1en", "spec_spec128", NULL, "2019",
+	"Dead Zone - Survival version (English) (128K) (HB)\0", NULL, "PC NONO Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
+	SpectrumGetZipName, SpecDzone2enRomInfo, SpecDzone2enRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Dead Zone  - Supervivencia version (Spanish) (128K) (HB)
+
+static struct BurnRomInfo SpecDzone2esRomDesc[] = {
+	{ "Dead Zone  - Supervivencia version ES (2019)(PC NONO Games).tap", 45681, 0xaf486c59, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDzone2es, SpecDzone2es, Spec128)
+STD_ROM_FN(SpecDzone2es)
+
+struct BurnDriver BurnSpecDzone2es = {
+	"spec_dzone2es", "spec_dzone1es", "spec_spec128", NULL, "2019",
+	"Dead Zone  - Supervivencia version (Spanish) (128K) (HB)\0", NULL, "PC NONO Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
+	SpectrumGetZipName, SpecDzone2esRomInfo, SpecDzone2esRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Xenoblast (128K) (HB)
+
+static struct BurnRomInfo SpecXenoblast128RomDesc[] = {
+	{ "Xenoblast 128K (2021)(Tony Kingsmill).tap", 53319, 0xf7412190, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecXenoblast128, SpecXenoblast128, Spec128)
+STD_ROM_FN(SpecXenoblast128)
+
+struct BurnDriver BurnSpecXenoblast128 = {
+	"spec_xenoblast128", NULL, "spec_spec128", NULL, "2021",
+	"Xenoblast (128K) (HB)\0", NULL, "Tony Kingsmill", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
+	SpectrumGetZipName, SpecXenoblast128RomInfo, SpecXenoblast128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Xenoblast (48K) (HB)
+
+static struct BurnRomInfo SpecXenoblast48RomDesc[] = {
+	{ "Xenoblast 48K (2021)(Tony Kingsmill).tap", 39743, 0xc2be176f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecXenoblast48, SpecXenoblast48, Spectrum)
+STD_ROM_FN(SpecXenoblast48)
+
+struct BurnDriver BurnSpecXenoblast48 = {
+	"spec_xenoblast48", "spec_xenoblast128", "spec_spectrum", NULL, "2021",
+	"Xenoblast (48K) (HB)\0", NULL, "Tony Kingsmill", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
+	SpectrumGetZipName, SpecXenoblast48RomInfo, SpecXenoblast48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

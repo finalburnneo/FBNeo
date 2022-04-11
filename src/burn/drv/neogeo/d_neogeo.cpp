@@ -18697,19 +18697,13 @@ static struct BurnRomInfo kof2k1rpRomDesc[] = {
 STDROMPICKEXT(kof2k1rp, kof2k1rp, neogeo)
 STD_ROM_FN(kof2k1rp)
 
-static INT32 kof2k1rpInit()
-{
-	nNeoProtectionXor = 0x1E;
-	return NeoInit();
-}
-
 struct BurnDriver BurnDrvkof2k1rp = {
 	"kof2k1rp", "kof2001", "neogeo", NULL, "Version 2004-03-01",
 	"The King of Fighters 2001 Remix Pro v1.02 Final (Hack By Jason, Kim & Raymonose)\0", NULL, "Hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof2k1rpRomInfo, kof2k1rpRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	kof2k1rpInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	kof2001Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 

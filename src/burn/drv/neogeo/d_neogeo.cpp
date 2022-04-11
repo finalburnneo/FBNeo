@@ -18599,7 +18599,7 @@ struct BurnDriver BurnDrvkof2001ru = {
 
 static struct BurnRomInfo kof2001rpfRomDesc[] = {
 	{ "262rp-p1.p1",       0x100000, 0xe9e42e55, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "262rp-sp2.sp2",     0x500000, 0x37a818ed, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "262rp-sp2.sp2",     0x400000, 0x91668d86, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "262rp-s1d.s1",      0x020000, 0x492f5efe, 2 | BRF_GRA },     //  2 Text layer tiles
 
@@ -18612,7 +18612,7 @@ static struct BurnRomInfo kof2001rpfRomDesc[] = {
 	{ "262-c7d.c7",        0x800000, 0xd1408776, 3 | BRF_GRA },     //  9
 	{ "262-c8d.c8",        0x800000, 0x954d0e16, 3 | BRF_GRA },     //  10
 
-	{ "262rp-m1d.m1",      0x040000, 0x4bcc537b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "262rp-m1d.m1",      0x020000, 0x2fb0a8a5, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
 	{ "262-v1-08-e0.v1",   0x400000, 0x83d49ecf, 5 | BRF_SND },           // 12 Sound data
 	{ "262-v2-08-e0.v2",   0x400000, 0x003f1843, 5 | BRF_SND },           // 13

@@ -137,6 +137,9 @@ static INT32 pgmGetRoms(bool bLoad)
 	if (bLoad && nPGM68KROMLen == 0x80000 && nPGMSNDROMLen == 0x600000) { // dw2001 & dwpc
 		PGMSNDROMLoad -= 0x200000;
 	}
+	if (bLoad && (0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov2dzxx"))) { // kovdzxx
+		PGMSNDROMLoad -= 0x600000;
+	}
 
 	for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++) {
 
@@ -796,7 +799,16 @@ INT32 pgmInit()
 		{
 			// if a cart is mapped at 100000+, the BIOS is mapped from 0-fffff, if no cart inserted, the BIOS is mapped to 7fffff!
 			for (INT32 i = 0; i < 0x100000; i+= 0x20000) { // DDP3 bios is 512k in size, but >= 20000 is 0-filled!
-				SekMapMemory(PGM68KBIOS,			0x000000 | i, 0x01ffff | i, MAP_ROM);			// 68000 BIOS
+				if (0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov2dzxx")) { // kov2dzxx 68K BIOS, Mapped addresses other than 7fffff will fail
+					if (0x07ffff == (0x01ffff | i)) {
+						SekMapMemory(PGM68KBIOS, 0x000000, 0x07ffff, MAP_ROM);
+						break;
+					} else {
+						continue;
+					}
+				} else {
+					SekMapMemory(PGM68KBIOS,			0x000000 | i, 0x01ffff | i, MAP_ROM);			// 68000 BIOS
+				}
 			}
 
 			SekMapMemory(PGM68KROM,				0x100000, (nPGM68KROMLen-1)+0x100000, MAP_ROM);		// 68000 ROM

@@ -10238,7 +10238,7 @@ struct BurnDriver BurnDrvkf2k3upl = {
 static struct BurnRomInfo kf2k3ps2spRomDesc[] = {
 	{ "271ps2sp.p1",     0x400000, 0xa2b1cd0b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "271ps2sp.p2",     0x400000, 0xc2321f79, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "271ps2sp.p3",     0x100000, 0xd9250cc6, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "271ps2sp.p3",     0x100000, 0x48af7f48, 1 | BRF_ESS | BRF_PRG }, //  2
 
 	{ "271ps2sp.c1",     0x800000, 0x3c43a170, 3 | BRF_GRA },           //  3 Sprite data
 	{ "271ps2sp.c2",     0x800000, 0xd8a64d42, 3 | BRF_GRA },           //  4

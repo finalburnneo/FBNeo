@@ -632,7 +632,7 @@ static struct BurnDIPInfo dwex101cnDIPList[] = {
 static struct BurnDIPInfo svgDIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x00, NULL								},
 
-	{0,	0xFE, 0,	7,    "Region (Fake)"						},
+	{0,		0xFE, 0,	7,    "Region (Fake)"					},
 	{0x2E,	0x01, 0x07,	0x00, "China"							},
 	{0x2E,	0x01, 0x07,	0x01, "Taiwan"							},
 	{0x2E,	0x01, 0x07,	0x02, "Japan"							},
@@ -645,7 +645,7 @@ static struct BurnDIPInfo svgDIPList[] = {
 static struct BurnDIPInfo svgtwDIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x01, NULL								},
 
-	{0,	0xFE, 0,	8,    "Region (Fake)"						},
+	{0,		0xFE, 0,	8,    "Region (Fake)"					},
 	{0x2E,	0x01, 0x07,	0x00, "China"							},
 	{0x2E,	0x01, 0x07,	0x01, "Taiwan"							},
 	{0x2E,	0x01, 0x07,	0x02, "Japan"							},
@@ -659,7 +659,7 @@ static struct BurnDIPInfo svgtwDIPList[] = {
 static struct BurnDIPInfo svghkDIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x04, NULL								},
 
-	{0,	0xFE, 0,	8,    "Region (Fake)"						},
+	{0,		0xFE, 0,	8,    "Region (Fake)"					},
 	{0x2E,	0x01, 0x07,	0x00, "China"							},
 	{0x2E,	0x01, 0x07,	0x01, "Taiwan"							},
 	{0x2E,	0x01, 0x07,	0x02, "Japan"							},
@@ -668,6 +668,24 @@ static struct BurnDIPInfo svghkDIPList[] = {
 	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"				},
 	{0x2E,  0x01, 0x07, 0x06, "World"							},
 	{0x2E,  0x01, 0x07, 0xff, "Don't Change"					},
+};
+
+static struct BurnDIPInfo kov2dzxxDIPList[] = {
+	{0,		0xFE, 0,	2,    "Music"							},
+	{0x2D,	0x01, 0x02,	0x02, "Off"								},
+	{0x2D,	0x01, 0x02,	0x00, "On"								},
+
+	{0,		0xFE, 0,	2,    "Voice"							},
+	{0x2D,	0x01, 0x04,	0x04, "Off"								},
+	{0x2D,	0x01, 0x04,	0x00, "On"								},
+
+	{0,		0xFE, 0,	2,    "Free play"						},
+	{0x2D,	0x01, 0x08,	0x00, "Off"								},
+	{0x2D,	0x01, 0x08,	0x08, "On"								},
+
+	{0,		0xFE, 0,	2,    "Stop mode"						},
+	{0x2D,	0x01, 0x10,	0x00, "Off"								},
+	{0x2D,	0x01, 0x10,	0x10, "On"								}
 };
 
 STDDIPINFOEXT(orlegend,		pgm,	orlegend		)
@@ -722,7 +740,8 @@ STDDIPINFOEXT(svgtw,		pgm,	svgtw	 		)
 STDDIPINFOEXT(svghk,		pgm,	svghk	 		)
 STDDIPINFOEXT(dmnfrntpcb,   jamma,	dmnfrntpcb		)
 STDDIPINFOEXT(dmnfrntpcba,  jamma,	dmnfrntpcba		)
-STDDIPINFOEXT(thegladpcb,   jamma,	thegladpcb		)
+STDDIPINFOEXT(thegladpcb,	jamma,	thegladpcb		)
+STDDIPINFOEXT(kov2dzxx,		jamma,	kov2dzxx		) // The selection of [Region] and [BIOS] is shielded
 
 // -----------------------------------------------------------------------------
 // BIOS
@@ -807,6 +826,14 @@ static struct BurnRomInfo ddp3BiosRomDesc[] = {
 	{ "pgm_m01s.rom", 				0x0200000, 0x45ae7159, BRF_SND | BRF_BIOS },	// 0x81 - Samples
 
 	{ "ddp3_bios.u37",				0x0080000, 0xb3cc5c8f, BRF_PRG | BRF_BIOS },	// 0x82 - 68K BIOS (V0001, custom? 07/17/97 19:44:59)
+};
+
+static struct BurnRomInfo kov2dzxxBiosRomDesc[] = {
+	{ "dzxx_t01s.rom", 				0x0200000, 0xdf276585, BRF_GRA | BRF_BIOS },	// 0x80 - 8x8 Text Layer Tiles
+
+	{ "pgm_m01s.rom", 				0x0200000, 0x45ae7159, BRF_SND | BRF_BIOS },	// 0x81 - Samples
+
+	{ "dzxx_p02s.u20", 				0x0080000, 0x38a1ae33, BRF_PRG | BRF_BIOS },	// 0x82 - 68K BIOS (hack)
 };
 
 
@@ -8152,7 +8179,7 @@ static struct BurnRomInfo oldsdsglRomDesc[] = {
 	{ "dsgl_b0503.u16",			0x0400000, 0x4922301f, 4 | BRF_GRA },			// 13
 
 	{ "pgm_m0500.u1",			0x0200000, 0x37928cdd, 5 | BRF_SND },			// 14 Samples
-	
+
 #if !defined (ROM_VERIFY)
 	{ "sp_data.u6",				0x010000, 0xe7613dda, 9 | BRF_PRG | BRF_ESS },	// 15 Protection Rom
 #else
@@ -8488,5 +8515,43 @@ struct BurnDriver BurnDrvkovshpd3dw = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovshpd3dwRomInfo, kovshpd3dwRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,  
 	kovassgInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+// Knights of Valour 2 (Dou Zhuan Xing Xuan, ver.110)
+// Hacked by BOLAO
+// Contributor: Creamymami (FBAs)
+
+static struct BurnRomInfo kov2dzxxRomDesc[] = {
+	{ "dzxx_v110_u18.u18",			0x0400000, 0xfd087eca, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+
+	{ "dzxx_t1200.u27",	   			0x0800000, 0xe27c3fab, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "pgm_a1200.u1",	   			0x0800000, 0xceeb81d8, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "pgm_a1201.u4",   			0x0800000, 0x21063ca7, 3 | BRF_GRA },			//  3
+	{ "pgm_a1202.u6",	   			0x0800000, 0x4bb92fae, 3 | BRF_GRA },			//  4
+	{ "pgm_a1203.u8",	   			0x0800000, 0xe73cb627, 3 | BRF_GRA },			//  5
+	{ "pgm_a1204.u10",   			0x0200000, 0x14b4b5bb, 3 | BRF_GRA },			//  6
+
+	{ "pgm_b1200.u5",	   			0x0800000, 0xbed7d994, 4 | BRF_GRA },			//  7 Sprite Masks & Color Indexes
+	{ "pgm_b1201.u7",	   			0x0800000, 0xf251eb57, 4 | BRF_GRA },			//  8
+
+	{ "dzxx_m1200.u3",	   			0x0a00000, 0xc13c47fd, 5 | BRF_SND },			//  10 Samples
+
+	{ "kov2dzxx_v110_china.asic", 	0x0004000, 0xed3198b4, 7 | BRF_PRG | BRF_ESS }, // 11 Internal ARM7 Rom
+
+	{ "dzxx_v110_u19.u19",			0x0300000, 0x8e903c94, 8 | BRF_PRG | BRF_ESS }, // 12 External ARM7 Rom
+};
+
+STDROMPICKEXT(kov2dzxx, kov2dzxx, kov2dzxxBios)
+STD_ROM_FN(kov2dzxx)
+
+struct BurnDriver BurnDrvkov2dzxx = {
+	"kov2dzxx", "kov2", "pgm", NULL, "2000",
+	"Knights of Valour 2 (Dou Zhuan Xing Xuan, ver.110)\0", NULL, "IGS", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kov2dzxxRomInfo, kov2dzxxRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kov2dzxxDIPInfo,
+	kov2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

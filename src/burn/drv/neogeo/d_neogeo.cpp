@@ -10232,6 +10232,42 @@ struct BurnDriver BurnDrvkf2k3upl = {
 	0x1000,	304, 224, 4, 3
 };
 
+// The King of Fighters 2003 - PS2 Style Portraits (Hack)
+// Hack By 0 Day-S,Eddids,Hiker
+
+static struct BurnRomInfo kf2k3ps2spRomDesc[] = {
+	{ "271ps2sp.p1",     0x400000, 0xa2b1cd0b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "271ps2sp.p2",     0x400000, 0xc2321f79, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "271ps2sp.p3",     0x100000, 0xd9250cc6, 1 | BRF_ESS | BRF_PRG }, //  2
+
+	{ "271ps2sp.c1",     0x800000, 0x3c43a170, 3 | BRF_GRA },           //  3 Sprite data
+	{ "271ps2sp.c2",     0x800000, 0xd8a64d42, 3 | BRF_GRA },           //  4
+	{ "271ps2sp.c3",     0x800000, 0xd818be4e, 3 | BRF_GRA },           //  5
+	{ "271ps2sp.c4",     0x800000, 0xeb8bd6d6, 3 | BRF_GRA },           //  6
+	{ "271ps2sp.c5",     0x800000, 0x53bb6706, 3 | BRF_GRA },           //  7
+	{ "271ps2sp.c6",     0x800000, 0x993254d5, 3 | BRF_GRA },           //  8
+	{ "271ps2sp.c7",     0x800000, 0x51db8ffe, 3 | BRF_GRA },           //  9
+	{ "271ps2sp.c8",     0x800000, 0x7dad01ab, 3 | BRF_GRA },           // 10
+
+	{ "271-m1c.m1",      0x080000, 0xf5515629, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "271-v1c.v1",      0x800000, 0xffa3f8c7, 5 | BRF_SND },           // 12 Sound data
+	{ "271-v2c.v2",      0x800000, 0x5382c7d1, 5 | BRF_SND },           // 13
+};
+
+STDROMPICKEXT(kf2k3ps2sp, kf2k3ps2sp, neogeo)
+STD_ROM_FN(kf2k3ps2sp)
+
+struct BurnDriver BurnDrvkf2k3ps2sp = {
+	"kf2k3ps2sp", "kof2003", "neogeo", NULL, "20??",
+	"The King of Fighters 2003 - PS2 Style Portraits (Hack By 0 Day-S, Eddids, Hiker)\0", "Secret Characters available in MVS", "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_P32 | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_KOF,
+	NULL, kf2k3ps2spRomInfo, kf2k3ps2spRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	kof2003Init, NeoPVCExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
 // Samurai Shodown V Special / Samurai Spirits Zero Special (NGM-2720)
 /* Encrypted Set */ /* MVS VERSION */
 
@@ -18485,6 +18521,44 @@ struct BurnDriver BurnDrvkof2000sp = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof2000spRomInfo, kof2000spRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// The King of Fighters 2000 SP XXX (Hack)
+
+static struct BurnRomInfo kof2kxxxRomDesc[] = {
+	{ "257xxx-p1.p1",    0x100000, 0xb88cd5eb, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "257xxx-p2.sp2",   0x400000, 0x1a10f2be, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "257xxx-c1.c1",    0x800000, 0x3006a5e4, 3 | BRF_GRA },           //  2 Sprite data
+	{ "257xxx-c2.c2",    0x800000, 0x366fd118, 3 | BRF_GRA },           //  3
+	{ "257xxx-c3.c3",    0x800000, 0x5b16d7e3, 3 | BRF_GRA },           //  4
+	{ "257xxx-c4.c4",    0x800000, 0x7e57dfc1, 3 | BRF_GRA },           //  5
+	{ "257xxx-c5.c5",    0x800000, 0x671904f4, 3 | BRF_GRA },           //  6
+	{ "257xxx-c6.c6",    0x800000, 0x68adf255, 3 | BRF_GRA },           //  7
+	{ "257xxx-c7.c7",    0x800000, 0x8c6b22b3, 3 | BRF_GRA },           //  8
+	{ "257xxx-c8.c8",    0x800000, 0x6223bd1d, 3 | BRF_GRA },           //  9
+
+	{ "257-m1.m1",       0x040000, 0x4b749113, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+
+	{ "257-v1.v1",       0x400000, 0x17cde847, 5 | BRF_SND },           // 11 Sound data
+	{ "257-v2.v2",       0x400000, 0x1afb20ff, 5 | BRF_SND },           // 12
+	{ "257-v3.v3",       0x400000, 0x4605036a, 5 | BRF_SND },           // 13
+	{ "257-v4.v4",       0x400000, 0x764bbd6b, 5 | BRF_SND },           // 14
+};
+
+STDROMPICKEXT(kof2kxxx, kof2kxxx, neogeo)
+STD_ROM_FN(kof2kxxx)
+
+struct BurnDriver BurnDrvkof2kxxx = {
+	"kof2kxxx", "kof2000", "neogeo", NULL, "2016",
+	"The King of Fighters 2000 SP XXX (Hack, Ver. 2016-01-04)\0", NULL, "Hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof2kxxxRomInfo, kof2kxxxRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	kof2000nInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 

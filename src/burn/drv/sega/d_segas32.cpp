@@ -1932,8 +1932,9 @@ static void tilemap_configure_allocate()
 	BurnShiftInit(SHIFT_POSITION_BOTTOM_RIGHT, SHIFT_COLOR_GREEN, 80); // slipstrm
 }
 
-inline static void DrvFMIRQHandler(INT32, INT32 state)
+inline static void DrvFMIRQHandler(INT32 chip, INT32 state)
 {
+	if (chip != 0) return; // only chip #0 can generate irq's
 	if (state)
 		signal_sound_irq(SOUND_IRQ_YM3438);
 	else

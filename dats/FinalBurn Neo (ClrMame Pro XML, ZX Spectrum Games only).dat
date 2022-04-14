@@ -556,23 +556,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="aerial128" romof="spec128">
-		<comment>Homebrew</comment>
-		<description>Aerial (128K) (HB)</description>
-		<year>2021</year>
-		<manufacturer>Inufuto</manufacturer>
-		<rom name="Aerial (2021)(Inufuto).tap" size="11486" crc="6a837856"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="aerial48" cloneof="aerial128" romof="aerial128">
-		<comment>Homebrew</comment>
+	<game name="aerial" romof="spectrum">
+		<comment>Homebrew, AY Sound support</comment>
 		<description>Aerial (48K) (HB)</description>
 		<year>2021</year>
 		<manufacturer>Inufuto</manufacturer>
-		<rom name="Aerial (2021)(Inufuto).tap" merge="Aerial (2021)(Inufuto).tap" size="11486" crc="6a837856"/>
+		<rom name="Aerial (2021)(Inufuto).tap" size="11486" crc="6a837856"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1226,6 +1215,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ascend" romof="spectrum">
+		<comment>Homebrew, AY Sound support</comment>
+		<description>Ascend (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Inufuto</manufacturer>
+		<rom name="Ascend (2022)(Inufuto).tap" size="9277" crc="37e43835"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="aspargpmas" romof="spectrum">
 		<comment>Set '3. Teclado' to use controller</comment>
 		<description>Aspar GP Master (Spanish) (48K)</description>
@@ -1544,6 +1543,15 @@
 		<year>1984</year>
 		<manufacturer>Imagine Software</manufacturer>
 		<rom name="B.C. Bill (1984)(Imagine).tap" size="30496" crc="61b2d9bf"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="babaliba" romof="spectrum">
+		<description>Babaliba (48K)</description>
+		<year>1984</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Babaliba 48K (1984)(Dinamic Software).tap" size="47064" crc="fe7fc680"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1973,6 +1981,16 @@
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Bestial Warrior 48K ES (1989)(Dinamic).tap" size="55620" crc="f1fb3cb5"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bhcop" romof="spec128">
+		<description>Beverly Hills Cop (128K)</description>
+		<year>1990</year>
+		<manufacturer>Tynesoft</manufacturer>
+		<rom name="Beverly Hills Cop 128K (1990)(Tynesoft).tap" size="117310" crc="2b8a9a2f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3177,23 +3195,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cavit128" romof="spec128">
-		<comment>Homebrew</comment>
-		<description>Cavit (128K) (HB)</description>
-		<year>2021</year>
-		<manufacturer>Inufuto</manufacturer>
-		<rom name="Cavit (2021)(Inufuto).tap" size="11732" crc="1e7f06b4"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="cavit48" cloneof="cavit128" romof="cavit128">
-		<comment>Homebrew</comment>
+	<game name="cavit" romof="spectrum">
+		<comment>Homebrew, AY Sound support</comment>
 		<description>Cavit (48K) (HB)</description>
 		<year>2021</year>
 		<manufacturer>Inufuto</manufacturer>
-		<rom name="Cavit (2021)(Inufuto).tap" merge="Cavit (2021)(Inufuto).tap" size="11732" crc="1e7f06b4"/>
+		<rom name="Cavit (2021)(Inufuto).tap" size="11732" crc="1e7f06b4"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4444,6 +4451,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="dangmouse" romof="spectrum">
+		<description>Danger Mouse in Double Trouble (48K)</description>
+		<year>1984</year>
+		<manufacturer>Creative Sparks</manufacturer>
+		<rom name="Danger Mouse in Double Trouble 48K (1984)(Creative Sparks).z80" size="44510" crc="691c3c67"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="danterrifik" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Danterrifik (128K) (HB, v1.1)</description>
@@ -4625,6 +4641,50 @@
 		<manufacturer>Radastan</manufacturer>
 		<rom name="Dead Space 48K (2021)(Radastan).tap" size="21695" crc="b7fb4c48"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dzone1es" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Dead Zone  - Punto de Control version (Spanish) (128K) (HB)</description>
+		<year>2019</year>
+		<manufacturer>PC NONO Games</manufacturer>
+		<rom name="Dead Zone  - Punto de Control version ES (2019)(PC NONO Games).tap" size="45754" crc="b06a5bff"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dzone2es" cloneof="dzone1es" romof="dzone1es">
+		<comment>Homebrew</comment>
+		<description>Dead Zone  - Supervivencia version (Spanish) (128K) (HB)</description>
+		<year>2019</year>
+		<manufacturer>PC NONO Games</manufacturer>
+		<rom name="Dead Zone  - Supervivencia version ES (2019)(PC NONO Games).tap" size="45681" crc="af486c59"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dzone1en" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Dead Zone - Check Point version (English) (128K) (HB)</description>
+		<year>2019</year>
+		<manufacturer>PC NONO Games</manufacturer>
+		<rom name="Dead Zone - Check Point version EN (2019)(PC NONO Games).tap" size="45639" crc="34d62528"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dzone2en" cloneof="dzone1en" romof="dzone1en">
+		<comment>Homebrew</comment>
+		<description>Dead Zone - Survival version (English) (128K) (HB)</description>
+		<year>2019</year>
+		<manufacturer>PC NONO Games</manufacturer>
+		<rom name="Dead Zone - Survival version EN (2019)(PC NONO Games).tap" size="45564" crc="de6ef5a4"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5503,6 +5563,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="duckout" romof="spectrum">
+		<description>Duck Out! (48K)</description>
+		<year>1989</year>
+		<manufacturer>Dro Soft</manufacturer>
+		<rom name="Duck Out! 48K (1989)(Dro Soft).tap" size="108898" crc="2d8955dc"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="duckstroma" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Duckstroma (128K) (HB, v1.02)</description>
@@ -5998,6 +6067,16 @@
 		<rom name="Fairlight II 128K (1986)(The Edge).tap" size="97674" crc="5fac6ab2"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="fallenang" romof="spectrum">
+		<comment>Select '2) Sinclair SJS' to use controller</comment>
+		<description>Fallen Angel (48K)</description>
+		<year>1989</year>
+		<manufacturer>Screen 7</manufacturer>
+		<rom name="Fallen Angel 48K (1989)(Screen 7).tap" size="82545" crc="0067c07c"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -8129,23 +8208,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="impetus128" romof="spec128">
-		<comment>Homebrew</comment>
-		<description>Impetus (128K) (HB)</description>
-		<year>2021</year>
-		<manufacturer>Inufuto</manufacturer>
-		<rom name="Impetus (2021)(Inufuto).tap" size="16231" crc="059b3699"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="impetus48" cloneof="impetus128" romof="impetus128">
-		<comment>Homebrew</comment>
+	<game name="impetus" romof="spectrum">
+		<comment>Homebrew, AY Sound support</comment>
 		<description>Impetus (48K) (HB)</description>
 		<year>2021</year>
 		<manufacturer>Inufuto</manufacturer>
-		<rom name="Impetus (2021)(Inufuto).tap" merge="Impetus (2021)(Inufuto).tap" size="16231" crc="059b3699"/>
+		<rom name="Impetus (2021)(Inufuto).tap" size="16231" crc="059b3699"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10239,23 +10307,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mazy128" romof="spec128">
-		<comment>Homebrew</comment>
-		<description>Mazy (128K) (HB)</description>
-		<year>2021</year>
-		<manufacturer>Inufuto</manufacturer>
-		<rom name="Mazy (2021)(Inufuto).tap" size="7646" crc="2a38c609"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="mazy48" cloneof="mazy128" romof="mazy128">
-		<comment>Homebrew</comment>
+	<game name="mazy" romof="spectrum">
+		<comment>Homebrew, AY Sound support</comment>
 		<description>Mazy (48K) (HB)</description>
 		<year>2021</year>
 		<manufacturer>Inufuto</manufacturer>
-		<rom name="Mazy (2021)(Inufuto).tap" merge="Mazy (2021)(Inufuto).tap" size="7646" crc="2a38c609"/>
+		<rom name="Mazy (2021)(Inufuto).tap" size="7646" crc="2a38c609"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11274,23 +11331,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="neuras128" romof="spec128">
-		<comment>Homebrew</comment>
-		<description>Neuras (128K) (HB)</description>
-		<year>2021</year>
-		<manufacturer>Inufuto</manufacturer>
-		<rom name="Neuras (2021)(Inufuto).tap" size="10055" crc="71ed6d45"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="neuras48" cloneof="neuras128" romof="neuras128">
-		<comment>Homebrew</comment>
+	<game name="neuras" romof="spectrum">
+		<comment>Homebrew, AY Sound support</comment>
 		<description>Neuras (48K) (HB)</description>
 		<year>2021</year>
 		<manufacturer>Inufuto</manufacturer>
-		<rom name="Neuras (2021)(Inufuto).tap" merge="Neuras (2021)(Inufuto).tap" size="10055" crc="71ed6d45"/>
+		<rom name="Neuras (2021)(Inufuto).tap" size="10055" crc="71ed6d45"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -12414,6 +12460,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="postmortem" romof="spectrum">
+		<description>Post Mortem (Spanish) (48K)</description>
+		<year>1987</year>
+		<manufacturer>Iber Soft</manufacturer>
+		<rom name="Post Mortem 48K ES (1988)(Iber Soft).z80" size="39261" crc="fbdeb9b7"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="pdrift" romof="spec128">
 		<description>Power Drift (128K)</description>
 		<year>1989</year>
@@ -12668,6 +12723,15 @@
 		<year>1984</year>
 		<manufacturer>Mikro-Gen</manufacturer>
 		<rom name="Pyjamarama 48K (1984)(Mikro-Gen).z80" size="42069" crc="6801d962"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pyracurse" romof="spectrum">
+		<description>Pyracurse (48K)</description>
+		<year>1986</year>
+		<manufacturer>Hewson Consultants</manufacturer>
+		<rom name="Pyracurse 48K (1986)(Hewson Consultants).tap" size="47935" crc="0b498400"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -13156,32 +13220,22 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="renegadestd" romof="spec128">
+	<game name="renegade128" romof="spec128">
 		<description>Renegade (128K)</description>
 		<year>1987</year>
 		<manufacturer>Imagine Software</manufacturer>
-		<rom name="Renegade (1987)(Imagine Software)(Standard)(128k).z80" size="93302" crc="0ec1661b"/>
+		<rom name="Renegade 128K (1987)(Imagine).z80" size="93965" crc="cd930d9a"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="renegade_48" cloneof="renegadestd" romof="renegadestd">
+	<game name="renegade48" cloneof="renegade128" romof="renegade128">
 		<description>Renegade (48K)</description>
 		<year>1987</year>
 		<manufacturer>Imagine Software</manufacturer>
-		<rom name="Renegade (1987)(Imagine Software).z80" size="41687" crc="9faf0d9e"/>
+		<rom name="Renegade 48K (1987)(Imagine).tap" size="48977" crc="0cd81e69"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="renegade" cloneof="renegadestd" romof="renegadestd">
-		<description>Renegade (Trainer) (128K)</description>
-		<year>1987</year>
-		<manufacturer>Imagine Software</manufacturer>
-		<rom name="Renegade (1987)(Imagine Software)[128K].z80" size="93965" crc="cd930d9a"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -13210,15 +13264,15 @@
 		<description>Renegade III - The Final Chapter (128K)</description>
 		<year>1989</year>
 		<manufacturer>Imagine Software</manufacturer>
-		<rom name="Renegade III - The Final Chapter (1989)(Imagine Software)[128K].z80" size="99609" crc="45f783f9"/>
+		<rom name="Renegade III - The Final Chapter 128K (1989)(Imagine).tap" size="79244" crc="d0c2761b"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="renegad3rc" cloneof="renegad3" romof="renegad3">
-		<comment>Hack, Homebrew</comment>
-		<description>Renegade III Re-Coloured (128K) (HB)</description>
+		<comment>Hack</comment>
+		<description>Renegade III Re-Coloured (128K) (Hack)</description>
 		<year>2015</year>
 		<manufacturer>Rafal Miazga</manufacturer>
 		<rom name="Renegade III 128K Re-Coloured (2015)(Rafal Miazga).tap" size="80464" crc="1eba3cb9"/>
@@ -13227,7 +13281,7 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="renegade128rc" cloneof="renegadestd" romof="renegadestd">
+	<game name="renegade128rc" cloneof="renegade128" romof="renegade128">
 		<comment>Hack</comment>
 		<description>Renegade Recoloured (128K) (Hack)</description>
 		<year>2013</year>
@@ -13333,40 +13387,23 @@
 		<driver status="good"/>
 	</game>
 	<game name="rex" romof="spec128">
-		<description>Rex (Part 1 of 2) (128K)</description>
+		<description>Rex (aka Zenith) - Part 1 (128K)</description>
 		<year>1988</year>
 		<manufacturer>Martech Games</manufacturer>
-		<rom name="Rex (Part 1)(1988)(Martech Games)(128k).z80" size="45367" crc="6b11054c"/>
+		<rom name="Rex (aka Zenith) - Part 1 (1988)(Martech Games).tap" size="48077" crc="7284eb38"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="rex_48" romof="spectrum">
-		<description>Rex (Part 1 of 2) (48K)</description>
-		<year>1988</year>
-		<manufacturer>Martech Games</manufacturer>
-		<rom name="Rex (1988)(Martech Games)[Part 1 of 2].z80" size="43703" crc="ecb7d3dc"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="rex2" cloneof="rex" romof="rex">
-		<description>Rex (Part 2 of 2) (128K)</description>
+		<comment>Password: 8881808384829507</comment>
+		<description>Rex (aka Zenith) - Part 2 (128K)</description>
 		<year>1988</year>
 		<manufacturer>Martech Games</manufacturer>
-		<rom name="Rex (Part 2)(1988)(Martech Games)(128k).z80" size="42428" crc="66097e41"/>
+		<rom name="Rex (aka Zenith) - Part 2 (1988)(Martech Games).tap" size="47681" crc="7a54760c"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="rex2_48" cloneof="rex_48" romof="rex_48">
-		<description>Rex (Part 2 of 2) (48K)</description>
-		<year>1988</year>
-		<manufacturer>Martech Games</manufacturer>
-		<rom name="Rex (1988)(Martech Games)[Part 2 of 2].z80" size="40762" crc="51130dc0"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -17501,6 +17538,27 @@
 		<year>1983</year>
 		<manufacturer>Anirog</manufacturer>
 		<rom name="Xeno II 16K (1983)(Anirog).z80" size="23368" crc="0406cb03"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="xenoblast128" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Xenoblast (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Tony Kingsmill</manufacturer>
+		<rom name="Xenoblast 128K (2021)(Tony Kingsmill).tap" size="53319" crc="f7412190"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="xenoblast48" cloneof="xenoblast128" romof="xenoblast128">
+		<comment>Homebrew</comment>
+		<description>Xenoblast (48K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Tony Kingsmill</manufacturer>
+		<rom name="Xenoblast 48K (2021)(Tony Kingsmill).tap" size="39743" crc="c2be176f"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

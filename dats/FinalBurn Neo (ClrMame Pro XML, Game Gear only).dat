@@ -45,9 +45,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="alexkidd">
-		<description>Alex Kidd in Miracle World (Tw, SMS Mode)</description>
+		<description>Alex Kidd in Miracle World (Unl) (Tw, SMS Mode)</description>
 		<year>198?</year>
-		<manufacturer>Unknown</manufacturer>
+		<manufacturer>Hung Tao Hsin</manufacturer>
 		<rom name="alex kidd in miracle world [sms-gg] (tw).bin" size="131072" crc="6f8e46cf"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -71,7 +71,7 @@
 	<game name="aliensyn">
 		<description>Alien Syndrome (Euro, USA)</description>
 		<year>1992</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>SIMS Co. - Sega</manufacturer>
 		<rom name="alien syndrome (usa, europe).bin" size="131072" crc="bb5e10e0"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -79,7 +79,7 @@
 	<game name="aliensynj" cloneof="aliensyn" romof="aliensyn">
 		<description>Alien Syndrome (Jpn)</description>
 		<year>1992</year>
-		<manufacturer>SIMS</manufacturer>
+		<manufacturer>SIMS Co. - Sega</manufacturer>
 		<rom name="alien syndrome (japan).bin" size="131072" crc="ffe4ed47"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -271,7 +271,7 @@
 		<comment>Prototype</comment>
 		<description>Barbie Super Model (Prototype)</description>
 		<year>199?</year>
-		<manufacturer>Unknown</manufacturer>
+		<manufacturer>Hi Tech Expressions</manufacturer>
 		<rom name="barbie super model (unknown) (proto).bin" size="262144" crc="03a0ce9e"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -311,7 +311,7 @@
 	<game name="btoads">
 		<description>Battletoads (Euro, Jpn)</description>
 		<year>1993</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Tradewest - Sega</manufacturer>
 		<rom name="battletoads (japan, europe).bin" size="262144" crc="cb3cd075"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -319,7 +319,7 @@
 	<game name="btoadsu" cloneof="btoads" romof="btoads">
 		<description>Battletoads (USA)</description>
 		<year>1993</year>
-		<manufacturer>Tradewest</manufacturer>
+		<manufacturer>Tradewest - Sega</manufacturer>
 		<rom name="battletoads (usa).bin" size="262144" crc="817cc0ca"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -334,10 +334,171 @@
 	</game>
 	<game name="beavisp" cloneof="beavis" romof="beavis">
 		<comment>Prototype</comment>
-		<description>Beavis and Butt-head (Prototype?)</description>
+		<description>Beavis and Butt-head (Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Viacom New Media</manufacturer>
 		<rom name="beavis and butt-head (usa).bin" size="524288" crc="3858f14f"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp17" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940628)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears (prototype - jun 28,  1994).bin" size="262144" crc="75a7a8ca"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp16" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940715-B)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears (prototype - jul 15,  1994 - b).bin" size="262144" crc="fcf47bc9"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp15" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940721)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears (prototype - jul 21,  1994).bin" size="262144" crc="a279c6bc"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp14" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940722)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears (prototype - jul 22,  1994).bin" size="262144" crc="ffbf5abe"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp13" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940727)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears (prototype - jul 27,  1994).bin" size="262144" crc="112b123f"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp12" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940801)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears (prototype - aug 01,  1994).bin" size="262144" crc="882b8f53"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp10" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940811)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears (prototype - aug 11,  1994).bin" size="262144" crc="50d400b8"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp11" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940811-A)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears (prototype - aug 11,  1994 - a).bin" size="262144" crc="81a5e68f"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp09" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940812)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears (prototype - aug 12,  1994).bin" size="262144" crc="0e676927"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp08" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940813)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears (prototype - aug 13,  1994).bin" size="262144" crc="f8f11b2a"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp07" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940814)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears (prototype - aug 14,  1994).bin" size="262144" crc="d0971f78"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp06" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940819)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears (prototype - aug 19,  1994).bin" size="262144" crc="177d65ac"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp05" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940820)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears (prototype - aug 20,  1994).bin" size="262144" crc="f61ac1e8"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp04" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940824)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears (prototype - aug 24,  1994).bin" size="262144" crc="b73486d6"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp03" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940825-B)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears (prototype - aug 25,  1994 - b).bin" size="262144" crc="e07b865e"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp01" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940826)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears (prototype - aug 26,  1994).bin" size="262144" crc="167a4af6"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berensp02" cloneof="berens" romof="berens">
+		<comment>Prototype</comment>
+		<description>Berenstain Bears' Camping Adventure, The (Prototype, 19940826-B)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears (prototype - aug 26,  1994 - b).bin" size="262144" crc="217b1ef0"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="berens">
+		<description>Berenstain Bears' Camping Adventure, The (USA)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="berenstain bears' camping adventure, the (usa).bin" size="262144" crc="a4bb9ffb"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -361,7 +522,7 @@
 		<comment>Hack</comment>
 		<description>Bishoujo Senshi Sailor Moon S (T-Eng, v1.1)</description>
 		<year>2019</year>
-		<manufacturer>Bandai - Supper</manufacturer>
+		<manufacturer>Supper</manufacturer>
 		<rom name="bishoujo senshi sailor moon s (t-eng1.1).gg" size="1048576" crc="a9a6f271"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -438,7 +599,7 @@
 	</game>
 	<game name="breakthru">
 		<comment>Prototype</comment>
-		<description>Break Thru! (Prototype / Unreleased)</description>
+		<description>Break Thru! (Prototype)</description>
 		<year>199?</year>
 		<manufacturer>Spectrum HoloByte</manufacturer>
 		<rom name="BreakThru! (Proto)(Unl)(Patched).gg" size="131072" crc="6edd48a6"/>
@@ -464,7 +625,7 @@
 	<game name="bam">
 		<description>Bust-A-Move (Euro, USA)</description>
 		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Taito</manufacturer>
 		<rom name="bust-a-move (usa, europe).bin" size="262144" crc="c90f29ef"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -546,6 +707,14 @@
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="cheese catastrophe (euro).bin" size="524288" crc="4e78fd36"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="chessmst">
+		<description>Chessmaster, The (Euro, USA)</description>
+		<year>1991</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="chessmaster, the (usa, europe).bin" size="131072" crc="da811ba6"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -850,7 +1019,7 @@
 		<comment>Hack</comment>
 		<description>Coca Cola Kid (T-Eng, v1.1)</description>
 		<year>2018</year>
-		<manufacturer>Sega - SMS Power!</manufacturer>
+		<manufacturer>SMS Power!</manufacturer>
 		<rom name="Coca-Cola Kid T-Eng v1.1 (2018)(SMS Power).gg" size="524288" crc="ea32dbc5"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -915,7 +1084,7 @@
 		<comment>Hack</comment>
 		<description>Crayon Shin-chan - Taiketsu! Kantamu Panic!! (T-Eng)</description>
 		<year>2018</year>
-		<manufacturer>Bandai - Psyklax</manufacturer>
+		<manufacturer>Psyklax</manufacturer>
 		<rom name="Crayon Shin-Chan - Taiketsu! Tankam Panic!! (T-Eng).gg" size="524288" crc="48c18828"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1278,7 +1447,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="drfrankn">
-		<description>Dr. Franken (Prototype Demo)</description>
+		<comment>Prototype</comment>
+		<description>Dr. Franken (Prototype, no sound)</description>
 		<year>1993</year>
 		<manufacturer>Elite</manufacturer>
 		<rom name="dr. franken (demo).bin" size="131072" crc="c9907dce"/>
@@ -1461,7 +1631,7 @@
 		<comment>Hack</comment>
 		<description>Eternal Legend - Eien no Densetsu (T-Eng)</description>
 		<year>2020</year>
-		<manufacturer>Sega - Supper</manufacturer>
+		<manufacturer>Supper</manufacturer>
 		<rom name="eternal legend (t-eng).gg" size="1048576" crc="ab7ab2e3"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1472,6 +1642,23 @@
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-15391.ic1" size="262144" crc="36aaf536"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="excdizzy">
+		<description>Excellent Dizzy Collection, The (Euro, SMS Mode)</description>
+		<year>1995</year>
+		<manufacturer>Codemasters</manufacturer>
+		<rom name="excellent dizzy collection, the (europe).bin" size="524288" crc="aa140c9c"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="excdizzyp" cloneof="excdizzy" romof="excdizzy">
+		<comment>Prototype</comment>
+		<description>Excellent Dizzy Collection, The (Prototype, SMS Mode)</description>
+		<year>1995</year>
+		<manufacturer>Codemasters</manufacturer>
+		<rom name="excellent dizzy collection, the (prototype) [s][!].bin" size="262144" crc="8813514b"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="f15se">
@@ -1620,8 +1807,8 @@
 	</game>
 	<game name="frogger">
 		<description>Frogger (USA, Prototype)</description>
-		<year>199?</year>
-		<manufacturer>Unknown</manufacturer>
+		<year>1991</year>
+		<manufacturer>Sega</manufacturer>
 		<rom name="frogger (usa) (proto).bin" size="131072" crc="02bbf994"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1669,7 +1856,7 @@
 	<game name="galaga2">
 		<description>Galaga 2 (Euro)</description>
 		<year>1993</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Namco - Sega</manufacturer>
 		<rom name="galaga 2 (europe).bin" size="131072" crc="95ecece2"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1778,6 +1965,22 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="shinobi">
+		<description>GG Shinobi, The (Euro, USA)</description>
+		<year>1991</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="shinobi (usa, europe).bin" size="262144" crc="30f1c984"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="shinobij" cloneof="shinobi" romof="shinobi">
+		<description>GG Shinobi, The (Jpn)</description>
+		<year>1991</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="gg shinobi, the (japan).bin" size="262144" crc="83926bd1"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ggtrcn">
 		<comment>Homebrew</comment>
 		<description>GG Turrican (HB, Demo v1.0)</description>
@@ -1799,7 +2002,7 @@
 		<comment>Hack</comment>
 		<description>Godzilla - Kaijuu Daishingeki (T-Eng, v1.1)</description>
 		<year>2019</year>
-		<manufacturer>Sega - Supper</manufacturer>
+		<manufacturer>Supper</manufacturer>
 		<rom name="godzilla - kaijuu daishingeki (english translation).gg" size="1048576" crc="fc0ac103"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1944,8 +2147,24 @@
 	<game name="wakevamp" cloneof="mastdark" romof="mastdark">
 		<description>In the Wake of Vampire (Jpn)</description>
 		<year>1992</year>
-		<manufacturer>SIMS</manufacturer>
+		<manufacturer>SIMS Co.</manufacturer>
 		<rom name="mpr-15156.ic1" size="262144" crc="dab0f265"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="crashdum">
+		<description>Incredible Crash Dummies, The (World)</description>
+		<year>1992</year>
+		<manufacturer>Acclaim Entertainment</manufacturer>
+		<rom name="incredible crash dummies, the (usa, europe).bin" size="262144" crc="087fc247"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hulk">
+		<description>Incredible Hulk, The (Euro, USA)</description>
+		<year>1994</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="incredible hulk, the (usa, europe).bin" size="524288" crc="d7055f88"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1970,6 +2189,14 @@
 		<year>1996</year>
 		<manufacturer>Acclaim Entertainment</manufacturer>
 		<rom name="iron man x-o manowar in heavy metal (u) [a1].bin" size="524288" crc="847ae5ce"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="itchy">
+		<description>Itchy and Scratchy Game, The (Euro, USA)</description>
+		<year>1995</year>
+		<manufacturer>Acclaim Entertainment</manufacturer>
+		<rom name="itchy and scratchy game, the (usa, europe).bin" size="262144" crc="44e7e2da"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2333,6 +2560,33 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="lionkingp2" cloneof="lionking" romof="lionking">
+		<comment>Prototype</comment>
+		<description>Lion King, The (Prototype, 19940817)</description>
+		<year>1994</year>
+		<manufacturer>Virgin Interactive</manufacturer>
+		<rom name="lion king, the (prototype - aug 17,  1994).bin" size="514538" crc="4214c474"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lionkingp3" cloneof="lionking" romof="lionking">
+		<comment>Prototype</comment>
+		<description>Lion King, The (Prototype, 19940817-2)</description>
+		<year>1994</year>
+		<manufacturer>Virgin Interactive</manufacturer>
+		<rom name="lion king, the (prototype - aug 17,  1994 - 2).bin" size="514618" crc="b65030d0"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lionkingp1" cloneof="lionking" romof="lionking">
+		<comment>Prototype</comment>
+		<description>Lion King, The (Prototype, 19940820)</description>
+		<year>1994</year>
+		<manufacturer>Virgin Interactive</manufacturer>
+		<rom name="lion king, the (prototype - aug 20,  1994).bin" size="523862" crc="3d0b31a2"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="lionkingu" cloneof="lionking" romof="lionking">
 		<description>Lion King, The (USA)</description>
 		<year>1994</year>
@@ -2341,19 +2595,36 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="lunare" cloneof="lunar" romof="lunar">
-		<description>Lunar - Sanposuru Gakuen (Hack, English)</description>
-		<year>2009</year>
-		<manufacturer>Game Arts</manufacturer>
-		<rom name="lunar - sanposuru gakuen (english translation).gg" size="1048576" crc="19f3f168"/>
+	<game name="lostwrld">
+		<description>Lost World, The - Jurassic Park (USA)</description>
+		<year>1997</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="mpr-19811-s.ic2" size="1048576" crc="8d1597f5"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="luckydim">
+		<description>Lucky Dime Caper, The (Euro, USA)</description>
+		<year>1991</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="mpr-14461 j09.ic1" size="262144" crc="07a7815a"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="lunar">
 		<description>Lunar - Sanposuru Gakuen (Jpn)</description>
-		<year>1996</year>
+		<year>1995</year>
 		<manufacturer>Game Arts</manufacturer>
 		<rom name="lunar - sanposuru gakuen (japan).bin" size="524288" crc="58459edd"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lunare" cloneof="lunar" romof="lunar">
+		<comment>Hack</comment>
+		<description>Lunar - Sanposuru Gakuen (T-Eng)</description>
+		<year>2009</year>
+		<manufacturer>Aeon Genesis</manufacturer>
+		<rom name="lunar - sanposuru gakuen (english translation).gg" size="1048576" crc="19f3f168"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2410,7 +2681,7 @@
 		<comment>Hack</comment>
 		<description>Madou Monogatari II - Arle 16-Sai (T-Eng, v1.2)</description>
 		<year>2020</year>
-		<manufacturer>Sega - Supper</manufacturer>
+		<manufacturer>Supper</manufacturer>
 		<rom name="madou monogatari ii - arle 16-sai (T+Eng1.2).gg" size="1048576" crc="ef7d7c02"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2435,7 +2706,7 @@
 		<comment>Hack</comment>
 		<description>Madou Monogatari III - Kyuukyoku Joou-sama (T-Eng, v1.2)</description>
 		<year>2020</year>
-		<manufacturer>Sega - Supper</manufacturer>
+		<manufacturer>Supper</manufacturer>
 		<rom name="madou monogatari iii - kyuukyoku joou-sama (english translation).gg" size="1048576" crc="e90126c0"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2452,7 +2723,7 @@
 		<comment>Hack</comment>
 		<description>Magic Knight Rayearth (T-Eng)</description>
 		<year>2018</year>
-		<manufacturer>Sega - Filler</manufacturer>
+		<manufacturer>Filler</manufacturer>
 		<rom name="Magic Knight Rayearth T-Eng (2018)(Filler).gg" size="524288" crc="6c9b8b15"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2478,6 +2749,15 @@
 		<year>1991</year>
 		<manufacturer>Tsukuda Original</manufacturer>
 		<rom name="magical taruruuto-kun (japan).bin" size="131072" crc="6e1cc23c"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="majors">
+		<comment>Game doesn't work</comment>
+		<description>Majors Pro Baseball, The (USA)</description>
+		<year>1992</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="majors pro baseball, the (usa).bin" size="262144" crc="36ebcd6d"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2508,7 +2788,7 @@
 	<game name="mastdark">
 		<description>Master of Darkness (Euro)</description>
 		<year>1993</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>SIMS Co. - Sega</manufacturer>
 		<rom name="master of darkness (eu).bin" size="262144" crc="07d0eb42"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2533,7 +2813,7 @@
 		<comment>Hack</comment>
 		<description>Megami Tensei Gaiden - Last Bible S (Hack, English v1.02)</description>
 		<year>2018</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>MrRichard999</manufacturer>
 		<rom name="megami tensei gaiden - last bible s (english translation).gg" size="524288" crc="1a1cb7f8"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2656,7 +2936,7 @@
 		<comment>Hack</comment>
 		<description>Moldorian - Hikari to Yami no Sister (T-Eng, v1.1)</description>
 		<year>2019</year>
-		<manufacturer>Sega - Supper</manufacturer>
+		<manufacturer>Supper</manufacturer>
 		<rom name="moldorian - hikari to yami no shisutaa (t-eng1.1).gg" size="1048576" crc="7ab0081f"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3485,8 +3765,8 @@
 	<game name="pacintim">
 		<comment>Prototype</comment>
 		<description>Pac-In-Time (Prototype)</description>
-		<year>199?</year>
-		<manufacturer>Unknown</manufacturer>
+		<year>1994</year>
+		<manufacturer>Namco</manufacturer>
 		<rom name="pac-in-time (unknown) (proto).bin" size="262144" crc="64c28e20"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3611,20 +3891,20 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pstargdne" cloneof="pstargdn" romof="pstargdn">
-		<comment>Hack</comment>
-		<description>Phantasy Star Gaiden (Hack, English)</description>
-		<year>1999</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="phantasy star gaiden (english translation).gg" size="262144" crc="1c98154a"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="pstargdn">
 		<description>Phantasy Star Gaiden (Jpn)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="phantasy star gaiden (japan).bin" size="262144" crc="a942514a"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pstargdne" cloneof="pstargdn" romof="pstargdn">
+		<comment>Hack</comment>
+		<description>Phantasy Star Gaiden (T-Eng)</description>
+		<year>1999</year>
+		<manufacturer>Dynamic-Designs, Taskforce</manufacturer>
+		<rom name="phantasy star gaiden (english translation).gg" size="262144" crc="1c98154a"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3655,7 +3935,7 @@
 	<game name="pokerfbj">
 		<description>Poker Face Paul's Blackjack (USA)</description>
 		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Adrenalin - Sega</manufacturer>
 		<rom name="poker faced paul's blackjack (usa).bin" size="131072" crc="89d34067"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3663,7 +3943,7 @@
 	<game name="pokerfp">
 		<description>Poker Face Paul's Poker (USA)</description>
 		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Adrenalin - Sega</manufacturer>
 		<rom name="poker faced paul's poker (usa).bin" size="131072" crc="e783daf8"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3671,7 +3951,7 @@
 	<game name="pokerfs">
 		<description>Poker Face Paul's Solitaire (USA)</description>
 		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Adrenalin - Sega</manufacturer>
 		<rom name="poker faced paul's solitaire (usa).bin" size="131072" crc="0e9b0c0a"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3679,7 +3959,7 @@
 	<game name="pokerfg">
 		<description>Poker Faced Paul's Gin (USA)</description>
 		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Adrenalin - Sega</manufacturer>
 		<rom name="poker faced paul's gin (usa).bin" size="131072" crc="afd61b89"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3745,6 +4025,14 @@
 		<year>1992</year>
 		<manufacturer>Domark</manufacturer>
 		<rom name="prince of persia (usa, europe).bin" size="262144" crc="311d2863"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="proyak91">
+		<description>Pro Yakyuu '91, The (Jpn)</description>
+		<year>1991</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="pro yakyuu '91, the (japan).bin" size="131072" crc="6d3a10d3"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3842,6 +4130,14 @@
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="quest for the shaven yak starring ren hoek and stimpy (usa, europe).bin" size="524288" crc="6c451ee1"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="quizgear">
+		<description>Quiz Gear Fight!!, The (Jpn)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="mpr-17816.ic1" size="524288" crc="736cdb76"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3987,20 +4283,20 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="royalstne" cloneof="royalstn" romof="royalstn">
-		<comment>Hack</comment>
-		<description>Royal Stone - Hirakareshi Toki no Tobira (Hack, English)</description>
-		<year>2013</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="royal stone - hirakareshi toki no tobira (english translation).gg" size="524288" crc="e4677b07"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="royalstn">
 		<description>Royal Stone - Hirakareshi Toki no Tobira (Jpn)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="royal stone - hirakareshi toki no tobira (japan).bin" size="524288" crc="445d7cd2"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="royalstne" cloneof="royalstn" romof="royalstn">
+		<comment>Hack</comment>
+		<description>Royal Stone - Hirakareshi Toki no Tobira (T-Eng)</description>
+		<year>2013</year>
+		<manufacturer>Aeon Genesis</manufacturer>
+		<rom name="royal stone - hirakareshi toki no tobira (english translation).gg" size="524288" crc="e4677b07"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4069,6 +4365,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sega4in1p" cloneof="sega4in1" romof="sega4in1">
+		<comment>Prototype</comment>
 		<description>Sega Game Pack 4 in 1 (Euro, Prototype)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
@@ -4132,20 +4429,20 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="shinfrgfe" cloneof="shinfrgf" romof="shinfrgf">
-		<comment>Hack</comment>
-		<description>Shining Force Gaiden - Final Conflict (Hack, English)</description>
-		<year>2006</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="shining force gaiden - final conflict (english translation).gg" size="524288" crc="23bac434"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="shinfrgf">
 		<description>Shining Force Gaiden - Final Conflict (Jpn)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="shining force gaiden - final conflict (japan).bin" size="524288" crc="6019fe5e"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="shinfrgfe" cloneof="shinfrgf" romof="shinfrgf">
+		<comment>Hack</comment>
+		<description>Shining Force Gaiden - Final Conflict (T-Eng)</description>
+		<year>2006</year>
+		<manufacturer>Shining Force Central</manufacturer>
+		<rom name="shining force gaiden - final conflict (english translation).gg" size="524288" crc="23bac434"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4236,7 +4533,7 @@
 	<game name="skweek" cloneof="slider" romof="slider">
 		<description>Skweek (Jpn)</description>
 		<year>1991</year>
-		<manufacturer>Victor Musical Industries</manufacturer>
+		<manufacturer>Victor</manufacturer>
 		<rom name="skweek (japan).bin" size="131072" crc="3d9c92c7"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4244,7 +4541,7 @@
 	<game name="slider">
 		<description>Slider (Euro, USA)</description>
 		<year>1991</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Victor</manufacturer>
 		<rom name="slider (usa, europe).bin" size="131072" crc="4dc6f555"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4254,6 +4551,22 @@
 		<year>1992</year>
 		<manufacturer>Flying Edge</manufacturer>
 		<rom name="super smash t.v. (world).bin" size="262144" crc="1006e4e3"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="smurfs2">
+		<description>Smurfs 2, The (Euro)</description>
+		<year>1995</year>
+		<manufacturer>Infogrames</manufacturer>
+		<rom name="smurfs travel the world, the.bin" size="262144" crc="3eb337df"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="smurfs">
+		<description>Smurfs, The (Euro)</description>
+		<year>1994</year>
+		<manufacturer>Infogrames</manufacturer>
+		<rom name="smurfs, the (europe) (en,fr,de,es).bin" size="262144" crc="354e1cbd"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4706,7 +5019,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950308)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - mar 08,  1995).bin" size="131072" crc="c38d41c3"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4715,7 +5028,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950309)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - mar 09,  1995).bin" size="131072" crc="34407fe9"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4724,7 +5037,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950313)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - mar 13,  1995).bin" size="262144" crc="a8d1ac51"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4733,7 +5046,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950316-1MEG)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - mar 16,  1995 - 1meg).bin" size="131072" crc="464f1b51"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4742,7 +5055,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950316-2MEG)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - mar 16,  1995 - 2meg).bin" size="262144" crc="caf87d8b"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4751,7 +5064,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950317-2MEG)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - mar 17,  1995 - 2meg).bin" size="262144" crc="43bb6b10"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4760,7 +5073,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950320-2MEG)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - mar 20,  1995 - 2meg).bin" size="262144" crc="e7aff566"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4769,7 +5082,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950320-QTEST)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - mar 20,  1995 - qtest).bin" size="262144" crc="a3e57816"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4778,7 +5091,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950321-2MEG)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - mar 21,  1995 - 2meg).bin" size="262144" crc="18cf6145"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4787,7 +5100,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950323-2MEG)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - mar 23,  1995 - 2meg).bin" size="262144" crc="27816c09"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4796,7 +5109,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950323-ALGOTEST)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - mar 23,  1995 - algotest).bin" size="262144" crc="9a8ad5ca"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4805,7 +5118,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950323-QTEST)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - mar 23,  1995 - qtest).bin" size="262144" crc="acb7e580"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4814,7 +5127,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950327-2MEG)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - mar 27,  1995 - 2meg).bin" size="262144" crc="517bd817"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4823,7 +5136,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950327-ALGOTEST)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - mar 27,  1995 - algotest).bin" size="262144" crc="511b1d24"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4832,7 +5145,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950329-2MEG)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - mar 29,  1995 - 2meg).bin" size="262144" crc="e906fbd8"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4841,7 +5154,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950329-ALGOTEST)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - mar 29,  1995 - algotest).bin" size="262144" crc="e80459b3"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4850,7 +5163,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950329-QTEST)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - mar 29,  1995 - qtest).bin" size="262144" crc="05047357"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4859,7 +5172,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950330-2MEG-D)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - mar 30,  1995 - 2meg - d).bin" size="262144" crc="302b9b36"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4868,7 +5181,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950330-QTEST)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - mar 30,  1995 - qtest).bin" size="262144" crc="f3f9a87b"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4877,7 +5190,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950403-2MEG)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - apr 03,  1995 - 2meg).bin" size="262144" crc="3e3d6728"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4886,7 +5199,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950403-QTEST)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - apr 03,  1995 - qtest).bin" size="262144" crc="c68762e6"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4895,7 +5208,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950404-2MEG)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - apr 04,  1995 - 2meg).bin" size="262144" crc="d61a366f"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4904,7 +5217,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950405-2MEG-B)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - apr 05,  1995 - 2meg - b).bin" size="262144" crc="818ec54c"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4913,7 +5226,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950405-2MEG-C)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - apr 05,  1995 - 2meg - c).bin" size="262144" crc="f88a55f4"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4922,7 +5235,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950405-QTEST)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - apr 05,  1995 - qtest).bin" size="262144" crc="93b98f19"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4931,7 +5244,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950406-2MEG)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - apr 06,  1995 - 2meg).bin" size="262144" crc="cab74070"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4940,7 +5253,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950407-2MEG)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - apr 07,  1995 - 2meg).bin" size="262144" crc="352e8b8c"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4949,7 +5262,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950407-QTEST)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - apr 07,  1995 - qtest).bin" size="262144" crc="961ae378"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4958,7 +5271,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950411-2MEG)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - apr 11,  1995 - 2meg).bin" size="262144" crc="8bdb184d"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4967,7 +5280,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950412-2MEG)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - apr 12,  1995 - 2meg).bin" size="262144" crc="1e360a20"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4976,7 +5289,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950425-1MEG)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - apr 25,  1995 - 1meg).bin" size="131072" crc="895af58a"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4985,7 +5298,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950425-QTEST)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - apr 25,  1995 - qtest).bin" size="131072" crc="7524957c"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4994,7 +5307,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950427-1MEG)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - apr 27,  1995 - 1meg).bin" size="131072" crc="7898919f"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5003,7 +5316,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950428-2MEG)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - apr 28,  1995 - 2meg).bin" size="262144" crc="26470d2b"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5012,7 +5325,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950502-2MEG)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - may 02,  1995 - 2meg).bin" size="262144" crc="15e7e261"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5021,7 +5334,7 @@
 		<comment>Prototype</comment>
 		<description>Sports Trivia (Prototype, 19950504-1MEG)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (prototype - may 04,  1995 - 1meg).bin" size="131072" crc="bba4cf7b"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5029,7 +5342,7 @@
 	<game name="sporttrv">
 		<description>Sports Trivia (USA)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia (usa).bin" size="131072" crc="a7af7ca9"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5037,7 +5350,7 @@
 	<game name="sprtrvce">
 		<description>Sports Trivia - Championship Edition (Euro, USA)</description>
 		<year>1995</year>
-		<manufacturer>Sega?</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="sports trivia - championship edition (usa, europe).bin" size="262144" crc="5b5de94d"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5337,7 +5650,7 @@
 		<comment>Hack</comment>
 		<description>Sylvan Tale (T-Eng)</description>
 		<year>2001</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Aeon Genesis</manufacturer>
 		<rom name="sylvan tale (english translation).gg" size="524288" crc="5d803486"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5718,6 +6031,15 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="tetris4gg">
+		<comment>Homebrew</comment>
+		<description>Tetris4GG (HB, v0.9)</description>
+		<year>2022</year>
+		<manufacturer>Armix</manufacturer>
+		<rom name="Tetris4GG v0.9 (2022)(Armix).gg" size="65536" crc="e0654d27"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="addfam">
 		<description>The Addams Family (World)</description>
 		<year>1993</year>
@@ -5734,303 +6056,11 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="berensp17" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940628)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears (prototype - jun 28,  1994).bin" size="262144" crc="75a7a8ca"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp16" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940715-B)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears (prototype - jul 15,  1994 - b).bin" size="262144" crc="fcf47bc9"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp15" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940721)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears (prototype - jul 21,  1994).bin" size="262144" crc="a279c6bc"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp14" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940722)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears (prototype - jul 22,  1994).bin" size="262144" crc="ffbf5abe"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp13" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940727)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears (prototype - jul 27,  1994).bin" size="262144" crc="112b123f"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp12" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940801)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears (prototype - aug 01,  1994).bin" size="262144" crc="882b8f53"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp10" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940811)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears (prototype - aug 11,  1994).bin" size="262144" crc="50d400b8"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp11" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940811-A)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears (prototype - aug 11,  1994 - a).bin" size="262144" crc="81a5e68f"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp09" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940812)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears (prototype - aug 12,  1994).bin" size="262144" crc="0e676927"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp08" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940813)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears (prototype - aug 13,  1994).bin" size="262144" crc="f8f11b2a"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp07" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940814)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears (prototype - aug 14,  1994).bin" size="262144" crc="d0971f78"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp06" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940819)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears (prototype - aug 19,  1994).bin" size="262144" crc="177d65ac"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp05" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940820)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears (prototype - aug 20,  1994).bin" size="262144" crc="f61ac1e8"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp04" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940824)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears (prototype - aug 24,  1994).bin" size="262144" crc="b73486d6"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp03" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940825-B)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears (prototype - aug 25,  1994 - b).bin" size="262144" crc="e07b865e"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp01" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940826)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears (prototype - aug 26,  1994).bin" size="262144" crc="167a4af6"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berensp02" cloneof="berens" romof="berens">
-		<description>The Berenstain Bears' Camping Adventure (Prototype, 19940826-B)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears (prototype - aug 26,  1994 - b).bin" size="262144" crc="217b1ef0"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="berens">
-		<description>The Berenstain Bears' Camping Adventure (USA)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="berenstain bears' camping adventure, the (usa).bin" size="262144" crc="a4bb9ffb"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="chessmst">
-		<description>The Chessmaster (Euro, USA)</description>
-		<year>1991</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="chessmaster, the (usa, europe).bin" size="131072" crc="da811ba6"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="excdizzy">
-		<description>The Excellent Dizzy Collection (Euro, SMS Mode)</description>
-		<year>1995</year>
-		<manufacturer>Codemasters</manufacturer>
-		<rom name="excellent dizzy collection, the (europe).bin" size="524288" crc="aa140c9c"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="excdizzyp" cloneof="excdizzy" romof="excdizzy">
-		<description>The Excellent Dizzy Collection (Prototype, SMS Mode)</description>
-		<year>1995</year>
-		<manufacturer>Codemasters</manufacturer>
-		<rom name="excellent dizzy collection, the (prototype) [s][!].bin" size="262144" crc="8813514b"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="shinobi">
-		<description>The GG Shinobi (Euro, USA)</description>
-		<year>1991</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="shinobi (usa, europe).bin" size="262144" crc="30f1c984"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="shinobij" cloneof="shinobi" romof="shinobi">
-		<description>The GG Shinobi (Jpn)</description>
-		<year>1991</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="gg shinobi, the (japan).bin" size="262144" crc="83926bd1"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="shinobi2">
 		<description>The GG Shinobi II (World)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-15154-f.ic1" size="262144" crc="6201c694"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="crashdum">
-		<description>The Incredible Crash Dummies (World)</description>
-		<year>1992</year>
-		<manufacturer>Acclaim Entertainment</manufacturer>
-		<rom name="incredible crash dummies, the (usa, europe).bin" size="262144" crc="087fc247"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="hulk">
-		<description>The Incredible Hulk (Euro, USA)</description>
-		<year>1994</year>
-		<manufacturer>U.S. Gold</manufacturer>
-		<rom name="incredible hulk, the (usa, europe).bin" size="524288" crc="d7055f88"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="itchy">
-		<description>The Itchy and Scratchy Game (Euro, USA)</description>
-		<year>1995</year>
-		<manufacturer>Acclaim Entertainment</manufacturer>
-		<rom name="itchy and scratchy game, the (usa, europe).bin" size="262144" crc="44e7e2da"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="lionkingp2" cloneof="lionking" romof="lionking">
-		<comment>Prototype</comment>
-		<description>The Lion King (Prototype, 19940817)</description>
-		<year>1994</year>
-		<manufacturer>Virgin Interactive</manufacturer>
-		<rom name="lion king, the (prototype - aug 17,  1994).bin" size="514538" crc="4214c474"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="lionkingp3" cloneof="lionking" romof="lionking">
-		<comment>Prototype</comment>
-		<description>The Lion King (Prototype, 19940817-2)</description>
-		<year>1994</year>
-		<manufacturer>Virgin Interactive</manufacturer>
-		<rom name="lion king, the (prototype - aug 17,  1994 - 2).bin" size="514618" crc="b65030d0"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="lionkingp1" cloneof="lionking" romof="lionking">
-		<comment>Prototype</comment>
-		<description>The Lion King (Prototype, 19940820)</description>
-		<year>1994</year>
-		<manufacturer>Virgin Interactive</manufacturer>
-		<rom name="lion king, the (prototype - aug 20,  1994).bin" size="523862" crc="3d0b31a2"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="lostwrld">
-		<description>The Lost World - Jurassic Park (USA)</description>
-		<year>1997</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="mpr-19811-s.ic2" size="1048576" crc="8d1597f5"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="luckydim">
-		<description>The Lucky Dime Caper (Euro, USA)</description>
-		<year>1991</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="mpr-14461 j09.ic1" size="262144" crc="07a7815a"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="majors">
-		<comment>Game doesn't work</comment>
-		<description>The Majors Pro Baseball (USA)</description>
-		<year>1992</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="majors pro baseball, the (usa).bin" size="262144" crc="36ebcd6d"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="proyak91">
-		<description>The Pro Yakyuu '91 (Jpn)</description>
-		<year>1991</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="pro yakyuu '91, the (japan).bin" size="131072" crc="6d3a10d3"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="quizgear">
-		<description>The Quiz Gear Fight!! (Jpn)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="mpr-17816.ic1" size="524288" crc="736cdb76"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="smurfs">
-		<description>The Smurfs (Euro)</description>
-		<year>1994</year>
-		<manufacturer>Infogrames</manufacturer>
-		<rom name="smurfs, the (europe) (en,fr,de,es).bin" size="262144" crc="354e1cbd"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="smurfs2">
-		<description>The Smurfs 2 (Euro)</description>
-		<year>1995</year>
-		<manufacturer>Infogrames</manufacturer>
-		<rom name="smurfs travel the world, the.bin" size="262144" crc="3eb337df"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -6093,7 +6123,7 @@
 	<game name="vampire" cloneof="mastdark" romof="mastdark">
 		<description>Vampire - Master of Darkness (USA)</description>
 		<year>1993</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>SIMS Co. - Sega</manufacturer>
 		<rom name="vampire - master of darkness (usa).bin" size="262144" crc="7ec64025"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -6148,7 +6178,7 @@
 	</game>
 	<game name="wildsnake">
 		<comment>Prototype</comment>
-		<description>WildSnake (Prototype / Unreleased)</description>
+		<description>WildSnake (Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Spectrum HoloByte</manufacturer>
 		<rom name="WildSnake [Proto].gg" size="131072" crc="d460cc7f"/>
@@ -6410,8 +6440,8 @@
 	<game name="yogibear">
 		<comment>Prototype</comment>
 		<description>Yogi Bear in Yogi Bear's Goldrush (Prototype)</description>
-		<year>199?</year>
-		<manufacturer>Unknown</manufacturer>
+		<year>1994</year>
+		<manufacturer>GameTek</manufacturer>
 		<rom name="yogi bear in yogi bear's goldrush (unknown) (proto).bin" size="262144" crc="e678f264"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

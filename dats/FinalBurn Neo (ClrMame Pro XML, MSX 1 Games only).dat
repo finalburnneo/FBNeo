@@ -240,8 +240,8 @@
 	</game>
 	<game name="actman" romof="msx">
 		<description>Actman (Jpn)</description>
-		<year>1985</year>
-		<manufacturer>Mass Tael</manufacturer>
+		<year>1984</year>
+		<manufacturer>ASCII Corp. - Mass Tael</manufacturer>
 		<rom name="actman (japan).rom" size="16384" crc="e4dbcdbd"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -251,8 +251,8 @@
 	</game>
 	<game name="actmana" cloneof="actman" romof="actman">
 		<description>Actman (Jpn, Alt)</description>
-		<year>1985</year>
-		<manufacturer>Mass Tael</manufacturer>
+		<year>1984</year>
+		<manufacturer>ASCII Corp. - Mass Tael</manufacturer>
 		<rom name="actman (japan) (alt 1).rom" size="16384" crc="7179a4bd"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -679,7 +679,7 @@
 	</game>
 	<game name="amurisus" romof="msx">
 		<comment>Demo, Homebrew</comment>
-		<description>Amurisus (HB, Tech-demo)</description>
+		<description>Amurisus (HB, Tech-Demo)</description>
 		<year>2013</year>
 		<manufacturer>Lieves!Tuore</manufacturer>
 		<rom name="amurisus.rom" size="65536" crc="acf0cab8"/>
@@ -716,7 +716,7 @@
 	<game name="angelo" romof="msx">
 		<description>Angelo (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>Mass Tael</manufacturer>
+		<manufacturer>ASCII Corp. - Mass Tael</manufacturer>
 		<rom name="angelo (japan).rom" size="16384" crc="20143ec7"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -727,7 +727,7 @@
 	<game name="angeloa" cloneof="angelo" romof="angelo">
 		<description>Angelo (Jpn, Alt)</description>
 		<year>1984</year>
-		<manufacturer>Mass Tael</manufacturer>
+		<manufacturer>ASCII Corp. - Mass Tael</manufacturer>
 		<rom name="angelo (japan) (alt 1).rom" size="16384" crc="3d8d0f4b"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -1088,7 +1088,7 @@
 	<game name="athlball" romof="msx">
 		<description>Athletic Ball (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="athletic ball (japan).rom" size="16384" crc="11bac0e6"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -1132,7 +1132,7 @@
 	</game>
 	<game name="atsarias" romof="msx">
 		<comment>Demo, Homebrew</comment>
-		<description>Atsarias (HB, Tech-demo)</description>
+		<description>Atsarias (HB, Tech-Demo)</description>
 		<year>2013</year>
 		<manufacturer>Lieves!Tuore</manufacturer>
 		<rom name="atsarias.rom" size="65536" crc="e7e245de"/>
@@ -1818,7 +1818,7 @@
 	<game name="blckony2" romof="msx">
 		<description>Black Onyx II, The - Search For The Fire Crystal (Jpn)</description>
 		<year>1986</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="lh231013" size="131072" crc="67bf8337"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -1829,7 +1829,7 @@
 	<game name="blckonyx" romof="msx">
 		<description>Black Onyx, The (Jpn)</description>
 		<year>1985</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="black onyx, the (japan).rom" size="32768" crc="e258c032"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -1985,6 +1985,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="boardello" romof="msx">
+		<description>Boardello (Euro)</description>
+		<year>1985</year>
+		<manufacturer>Bubble Bus Software</manufacturer>
+		<rom name="Boardello (1985)(Bubblebus Software)[RUN'CAS-'].cas" size="33494" crc="874bd3ee"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="boggy84" romof="msx">
 		<description>Boggy '84 (Jpn)</description>
 		<year>1984</year>
@@ -2032,7 +2043,7 @@
 	<game name="bokosuka" romof="msx">
 		<description>Bokosuka Wars (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="bokosuka wars (japan).rom" size="16384" crc="dd6d9aad"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -2043,7 +2054,7 @@
 	<game name="bokosukaa" cloneof="bokosuka" romof="bokosuka">
 		<description>Bokosuka Wars (Jpn, Alt)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="bokosuka wars (japan) (alt 1).rom" size="16384" crc="93b8917a"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -2053,7 +2064,7 @@
 	</game>
 	<game name="bold" romof="msx">
 		<comment>Demo, Homebrew</comment>
-		<description>Bold (HB, Tech-demo)</description>
+		<description>Bold (HB, Tech-Demo)</description>
 		<year>2009</year>
 		<manufacturer>dvik &amp; joyrex</manufacturer>
 		<rom name="bold.rom" size="131072" crc="00d02aa4"/>
@@ -2177,7 +2188,7 @@
 	<game name="boomrang" romof="msx">
 		<description>Boomerang (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="boomerang (japan).rom" size="16384" crc="0a140b27"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -2188,7 +2199,7 @@
 	<game name="boomranga" cloneof="boomrang" romof="boomrang">
 		<description>Boomerang (Jpn, Alt)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="boomerang (japan) (alt 1).rom" size="16384" crc="5f1f9288"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -2332,7 +2343,7 @@
 	<game name="breakout" romof="msx">
 		<description>Break Out (Jpn)</description>
 		<year>1983</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="break out (japan).rom" size="16384" crc="70113f76"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -2670,7 +2681,7 @@
 	<game name="candoon" romof="msx">
 		<description>Candoo Ninja (Jpn)</description>
 		<year>1983</year>
-		<manufacturer>Mass Tael</manufacturer>
+		<manufacturer>ASCII Corp. - Mass Tael</manufacturer>
 		<rom name="candoo ninja (japan).rom" size="16384" crc="b6ab6786"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -2681,7 +2692,7 @@
 	<game name="candoona" cloneof="candoon" romof="candoon">
 		<description>Candoo Ninja (Jpn, Alt)</description>
 		<year>1983</year>
-		<manufacturer>Mass Tael</manufacturer>
+		<manufacturer>ASCII Corp. - Mass Tael</manufacturer>
 		<rom name="candoo ninja (japan) (alt 1).rom" size="16384" crc="037ba8b7"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -2904,7 +2915,7 @@
 	<game name="castlex" romof="msx">
 		<description>Castle Excellent (Jpn)</description>
 		<year>1986</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="castle excellent (japan).rom" size="32768" crc="90f38029"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -2915,7 +2926,7 @@
 	<game name="castlexa" cloneof="castlex" romof="castlex">
 		<description>Castle Excellent (Jpn, Alt)</description>
 		<year>1986</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="castle excellent (japan) (alt 1).rom" size="32768" crc="3794a648"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -2926,7 +2937,7 @@
 	<game name="castle" romof="msx">
 		<description>Castle, The (Jpn)</description>
 		<year>1985</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="castle, the (japan).rom" size="32768" crc="2149c32d"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -3596,7 +3607,7 @@
 	<game name="cometail" romof="msx">
 		<description>Comet Tail (Jpn)</description>
 		<year>1983</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="comet tail (japan).rom" size="16384" crc="74af0726"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -3761,7 +3772,7 @@
 	<game name="cosmo" romof="msx">
 		<description>Cosmo (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="cosmo (japan).rom" size="16384" crc="5780acfd"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -3772,7 +3783,7 @@
 	<game name="cosmoa" cloneof="cosmo" romof="cosmo">
 		<description>Cosmo (Jpn, Alt)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="cosmo (japan) (alt 1).rom" size="16384" crc="ff3c8091"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -3840,7 +3851,7 @@
 	<game name="crazybul" romof="msx">
 		<description>Crazy Bullet (Jpn)</description>
 		<year>1983</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="crazy bullet (japan).rom" size="16384" crc="d0e8f418"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -4165,7 +4176,7 @@
 	<game name="dangerx4" romof="msx">
 		<description>Danger X4 (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="danger x4 (japan).rom" size="16384" crc="571f12fb"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -4176,7 +4187,7 @@
 	<game name="dangerx4b" cloneof="dangerx4" romof="dangerx4">
 		<description>Danger X4 (Jpn, Alt 2)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="danger x4 (japan) (alt 2).rom" size="16384" crc="22f5e82a"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -4187,7 +4198,7 @@
 	<game name="dangerx4a" cloneof="dangerx4" romof="dangerx4">
 		<description>Danger X4 (Jpn, Alt)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="danger x4 (japan) (alt 1).rom" size="16384" crc="3cf16a16"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -4288,10 +4299,10 @@
 	</game>
 	<game name="defence" romof="msx">
 		<comment>Homebrew</comment>
-		<description>Defence (HB, v1.1)</description>
+		<description>Defence (HB, v1.2)</description>
 		<year>2022</year>
 		<manufacturer>GameCast Entertainment</manufacturer>
-		<rom name="Defence v1.1 (2022)(GameCast Ent.).rom" size="32768" crc="9534d094"/>
+		<rom name="Defence v1.2 (2022)(GameCast Ent.).rom" size="32768" crc="c39b5168"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -5230,7 +5241,7 @@
 	<game name="exchangr" romof="msx">
 		<description>Exchanger (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="exchanger (japan).rom" size="16384" crc="2c2b8a0e"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -5241,7 +5252,7 @@
 	<game name="exchangra" cloneof="exchangr" romof="exchangr">
 		<description>Exchanger (Jpn, Alt)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="exchanger (japan) (alt 1).rom" size="16384" crc="691c0503"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -5473,7 +5484,7 @@
 	<game name="fairy" romof="msx">
 		<description>Fairy (Jpn)</description>
 		<year>1985</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ZAP Corp.</manufacturer>
 		<rom name="fairy (japan).rom" size="16384" crc="314728c3"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -5577,6 +5588,29 @@
 		<year>1985</year>
 		<manufacturer>Toshiba EMI</manufacturer>
 		<rom name="fathom (japan).rom" size="32768" crc="f06a58da"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="fmbasket" romof="msx">
+		<description>Fernando Martin Basket Master (Spanish)</description>
+		<year>1986</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Fernando Martin Basket Master ES (1986)(Dinamic Software)[BLOAD'CAS-',R].cas" size="41191" crc="3ad1b2b2"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="fmbasketex" romof="msx">
+		<comment>Redefine '5 Elegir Control' to use controller</comment>
+		<description>Fernando Martin Basket Master - Executive (Spanish)</description>
+		<year>1987</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Fernando Martin Basket Master - Executive ES (1987)(Dinamic Software)[RUN'CAS-'].cas" size="48671" crc="642895c4"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -5828,7 +5862,7 @@
 	<game name="flipper" romof="msx">
 		<description>Flipper Slipper (Jpn)</description>
 		<year>1983</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="flipper slipper (japan).rom" size="16384" crc="fd7de91e"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -5839,7 +5873,7 @@
 	<game name="flippera" cloneof="flipper" romof="flipper">
 		<description>Flipper Slipper (Jpn, Alt)</description>
 		<year>1983</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="flipper slipper (japan) (alt 1).rom" size="16384" crc="f0b5fe8d"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -6076,7 +6110,7 @@
 	<game name="funmouse" romof="msx">
 		<description>Funky Mouse (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ZAP Corp.</manufacturer>
 		<rom name="funky mouse (japan).rom" size="16384" crc="b5c0dace"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -6435,7 +6469,7 @@
 	<game name="golfgame" romof="msx">
 		<description>Golf Game (Jpn)</description>
 		<year>1983</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="golf game (japan).rom" size="16384" crc="5d88275f"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -6969,7 +7003,7 @@
 		<comment>Press '0' to restart level</comment>
 		<description>Harapeko Pakkun (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>Pax Softonica</manufacturer>
 		<rom name="harapeko pakkun (japan).rom" size="8192" crc="145bb27b"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -7069,7 +7103,7 @@
 	<game name="helitank" romof="msx">
 		<description>Helitank (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="helitank (japan).rom" size="16384" crc="cd63cd50"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -7103,7 +7137,7 @@
 	<game name="highway" romof="msx">
 		<description>High Way Star (Jpn)</description>
 		<year>1983</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="high way star (japan).rom" size="16384" crc="24851440"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -7114,7 +7148,7 @@
 	<game name="highwayk" cloneof="highway" romof="highway">
 		<description>High Way Star (Kor)</description>
 		<year>1983</year>
-		<manufacturer>Qnix</manufacturer>
+		<manufacturer>Qnix Corp.</manufacturer>
 		<rom name="high way star (korea).rom" size="16384" crc="ed1625d8"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -7701,7 +7735,7 @@
 	</game>
 	<game name="invasion" romof="msx">
 		<comment>Demo, Homebrew</comment>
-		<description>Invasion of the big pixels (HB, Tech-demo)</description>
+		<description>Invasion of the big pixels (HB, Tech-Demo)</description>
 		<year>2008</year>
 		<manufacturer>noice</manufacturer>
 		<rom name="invasion.rom" size="131072" crc="261c87aa"/>
@@ -7795,7 +7829,7 @@
 	<game name="jpwinkle" romof="msx">
 		<description>J.P. Winkle (Jpn)</description>
 		<year>1986</year>
-		<manufacturer>ASCII ~ MSX Magazine</manufacturer>
+		<manufacturer>ASCII Corp. - MSX Magazine</manufacturer>
 		<rom name="j.p. winkle (japan).rom" size="32768" crc="57e1221c"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -8053,7 +8087,7 @@
 	<game name="jump" romof="msx">
 		<description>Jump (Jpn)</description>
 		<year>1985</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp. - Mass Teal</manufacturer>
 		<rom name="jump (japan).rom" size="16384" crc="0599617b"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -8177,6 +8211,18 @@
 		<year>1986</year>
 		<manufacturer>Casio</manufacturer>
 		<rom name="stone of wisdom, the (japan).rom" size="32768" crc="8c7a7435"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="stonewise" cloneof="stonewis" romof="stonewis">
+		<comment>Hack</comment>
+		<description>Kenja no Ishi - The Stone of Wisdom (T-Eng)</description>
+		<year>1986-2021</year>
+		<manufacturer>GDX</manufacturer>
+		<rom name="Kenja no Ishi - The Stone of Wisdom (T-Eng Hack)(2021)(GDX).rom" size="32768" crc="f728c9de"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -8398,6 +8444,18 @@
 		<year>198?</year>
 		<manufacturer>San Ho</manufacturer>
 		<rom name="wrestling.rom" size="32768" crc="36ed61af"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="kinnikume" cloneof="kinnikum" romof="kinnikum">
+		<comment>Hack</comment>
+		<description>Kinnikuman - Colosseum Deathmatch (T-Eng)</description>
+		<year>1985-2021</year>
+		<manufacturer>GDX</manufacturer>
+		<rom name="Kinnikuman - Colosseum Deathmatch (T-Eng Hack)(2021)(GDX).rom" size="32768" crc="1ed66216"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -8919,7 +8977,7 @@
 	<game name="kungfum" romof="msx">
 		<description>Kung Fu Master (Jpn)</description>
 		<year>1983</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp. - Mass Tael</manufacturer>
 		<rom name="kung fu master (japan).rom" size="16384" crc="08f23b3e"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -8930,7 +8988,7 @@
 	<game name="kungfumb" cloneof="kungfum" romof="kungfum">
 		<description>Kung Fu Master (Jpn, Alt 2)</description>
 		<year>1983</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp. - Mass Tael</manufacturer>
 		<rom name="kung fu master (japan) (alt 2).rom" size="16384" crc="103724ad"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -8941,7 +8999,7 @@
 	<game name="kungfuma" cloneof="kungfum" romof="kungfum">
 		<description>Kung Fu Master (Jpn, Alt)</description>
 		<year>1983</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp. - Mass Tael</manufacturer>
 		<rom name="kung fu master (japan) (alt 1).rom" size="16384" crc="10fc1118"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -8952,7 +9010,7 @@
 	<game name="seikacho" romof="msx">
 		<description>Kung Fu Master - Seiken Achou (Jpn)</description>
 		<year>1985</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="kung fu acho (japan).rom" size="32768" crc="999dd794"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -8963,7 +9021,7 @@
 	<game name="seikachoa" cloneof="seikacho" romof="seikacho">
 		<description>Kung Fu Master - Seiken Achou (Jpn, Alt)</description>
 		<year>1985</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="kung fu acho (japan) (alt 1).rom" size="32768" crc="0da11df8"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -9246,7 +9304,7 @@
 	<game name="lordover" romof="msx">
 		<description>Lord Over (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="lord over (japan).rom" size="16384" crc="ab5e42fe"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -9600,7 +9658,7 @@
 	<game name="manes" romof="msx">
 		<description>Manes (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ZAP Corp.</manufacturer>
 		<rom name="manes (japan).rom" size="16384" crc="b7002f08"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -9611,7 +9669,7 @@
 	<game name="manesb" cloneof="manes" romof="manes">
 		<description>Manes (Jpn, Alt 2)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ZAP Corp.</manufacturer>
 		<rom name="manes (japan) (alt 2).rom" size="16384" crc="af275ca8"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -9622,7 +9680,7 @@
 	<game name="manesa" cloneof="manes" romof="manes">
 		<description>Manes (Jpn, Alt)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ZAP Corp.</manufacturer>
 		<rom name="manes (japan) (alt 1).rom" size="16384" crc="a97a19ec"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -9688,7 +9746,7 @@
 	<game name="marinbat" romof="msx">
 		<description>Marine Battle (Jpn)</description>
 		<year>1983</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="marine battle (japan).rom" size="16384" crc="24923bdb"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -10038,7 +10096,7 @@
 	<game name="midbuild" romof="msx">
 		<description>Midnight Building (Jpn)</description>
 		<year>1983</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="midnight building (japan).rom" size="16384" crc="7b5282e4"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -10697,7 +10755,7 @@
 	<game name="mrdowildh" cloneof="mrdowild" romof="mrdowild">
 		<description>Mr. Do's Wild Ride (Jpn, Hacked?)</description>
 		<year>1985</year>
-		<manufacturer>Angel?</manufacturer>
+		<manufacturer>Angel</manufacturer>
 		<rom name="mr. do's wildride (1985)(nippon columbia - colpax - universal)[cr angel].rom" size="16384" crc="01ea3a27"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -10819,7 +10877,7 @@
 	<game name="sokoban" romof="msx">
 		<description>MSX Soukoban (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="soukoban (japan).rom" size="16384" crc="030ddf11"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -10830,7 +10888,7 @@
 	<game name="sokobanb" cloneof="sokoban" romof="sokoban">
 		<description>MSX Soukoban (Jpn, Alt 2)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="soukoban (japan) (alt 2).rom" size="16384" crc="e683af8a"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -10841,7 +10899,7 @@
 	<game name="sokobana" cloneof="sokoban" romof="sokoban">
 		<description>MSX Soukoban (Jpn, Alt)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="soukoban (japan) (alt 1).rom" size="32768" crc="bc815cfa"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -10862,7 +10920,7 @@
 	</game>
 	<game name="unleashed" romof="msx">
 		<comment>Demo, Homebrew</comment>
-		<description>MSX Unleashed (HB, Tech-demo)</description>
+		<description>MSX Unleashed (HB, Tech-Demo)</description>
 		<year>2006</year>
 		<manufacturer>dvik &amp; joyrex</manufacturer>
 		<rom name="unleashed.rom" size="262144" crc="10f86aa9"/>
@@ -11138,6 +11196,18 @@
 		<year>1988</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="nemesis 3 - the eve of destruction (japan, europe).rom" size="262144" crc="4b61ae91"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="nenokatas" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Nenokatas (HB)</description>
+		<year>2015</year>
+		<manufacturer>Baa</manufacturer>
+		<rom name="Nenokatas (2015)(Baa).rom" size="32768" crc="55fbd319"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -11454,6 +11524,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="numberman" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Numberman (HB)</description>
+		<year>2020</year>
+		<manufacturer>Anemotionalfish</manufacturer>
+		<rom name="Numberman (2020)(Anemotionalfish).rom" size="32768" crc="71c4ea78"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="nutsmilk" romof="msx">
 		<description>Nuts &amp; Milk (Jpn)</description>
 		<year>1983</year>
@@ -11467,8 +11549,8 @@
 	</game>
 	<game name="omacfarm" romof="msx">
 		<description>O'Mac Farmer (Jpn)</description>
-		<year>1983</year>
-		<manufacturer>ASCII</manufacturer>
+		<year>1984</year>
+		<manufacturer>ASCII Corp. - Mass Tael</manufacturer>
 		<rom name="o'mac farmer (japan).rom" size="16384" crc="b05ffed2"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -11783,7 +11865,7 @@
 	<game name="paipanic" romof="msx">
 		<description>Pai Panic (Jpn)</description>
 		<year>1983</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="pai panic (japan).rom" size="16384" crc="6fd70773"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -11806,7 +11888,7 @@
 	<game name="pairs" romof="msx">
 		<description>Pairs (Jpn)</description>
 		<year>1983</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="pairs (japan).rom" size="16384" crc="9c1c10ca"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -11817,7 +11899,7 @@
 	<game name="pairsa" cloneof="pairs" romof="pairs">
 		<description>Pairs (Jpn, Alt)</description>
 		<year>1983</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="pairs (japan) (alt 1).rom" size="16384" crc="3f042540"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -11842,6 +11924,17 @@
 		<year>2005</year>
 		<manufacturer>Paxanga Soft</manufacturer>
 		<rom name="pjoe.rom" size="32768" crc="bff072fe"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="parisdakar" romof="msx">
+		<description>Paris-Dakar (Spanish)</description>
+		<year>1988</year>
+		<manufacturer>Zigurat Software</manufacturer>
+		<rom name="Paris-Dakar ES (1988)(Zigurat Software)[RUN'CAS-'].cas" size="87172" crc="cbf50e66"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -11998,7 +12091,7 @@
 	<game name="penguinw" romof="msx">
 		<description>Penguin-kun Wars (Jpn)</description>
 		<year>1985</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="penguin-kun wars (japan).rom" size="32768" crc="6d2b3e0c"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -12147,7 +12240,7 @@
 		<comment>Hack</comment>
 		<description>Pico Pico (T-Eng)</description>
 		<year>1983-2016</year>
-		<manufacturer>gdx</manufacturer>
+		<manufacturer>GDX</manufacturer>
 		<rom name="Pico Pico T-Eng (1983-2016)(Microcabin - gdx).rom" size="8192" crc="1d9522ec"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -12481,7 +12574,7 @@
 	<game name="poppaq" romof="msx">
 		<description>Poppaq the Fish (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp. - Mass Tael</manufacturer>
 		<rom name="poppaq the fish (japan).rom" size="16384" crc="bd387377"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -12744,7 +12837,7 @@
 	<game name="queenglf" romof="msx">
 		<description>Queen's Golf (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="queen's golf (japan).rom" size="16384" crc="40eef5cd"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -12755,7 +12848,7 @@
 	<game name="queenglfa" cloneof="queenglf" romof="queenglf">
 		<description>Queen's Golf (Jpn, Alt)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="queen's golf (japan) (alt 2).rom" size="16384" crc="9c4787d7"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -12766,7 +12859,7 @@
 	<game name="queenglfb" cloneof="queenglf" romof="queenglf">
 		<description>Queen's Golf (Jpn, Hacked?)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="queen's golf (japan) (alt 1).rom" size="16384" crc="27b78cb3"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -12801,6 +12894,17 @@
 		<year>1990</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="r.a.m. (1990)(topo soft)(es)[run'cas-'].cas" size="65880" crc="497462cc"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="rabbian" romof="msx">
+		<description>Rabbian (Jpn)</description>
+		<year>1984</year>
+		<manufacturer>Soft Pro</manufacturer>
+		<rom name="Rabbian (1984)(Soft Pro).rom" size="16384" crc="24c74920"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12966,7 +13070,7 @@
 	<game name="redzone" romof="msx">
 		<description>Red Zone (Jpn)</description>
 		<year>1985</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>Yellow Horn Co.</manufacturer>
 		<rom name="red zone (japan).rom" size="16384" crc="e9b5b6ff"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -12977,7 +13081,7 @@
 	<game name="redzonea" cloneof="redzone" romof="redzone">
 		<description>Red Zone (Jpn, Alt)</description>
 		<year>1985</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>Yellow Horn Co.</manufacturer>
 		<rom name="red zone (japan) (alt 1).rom" size="16384" crc="0c2da50f"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -13045,7 +13149,7 @@
 	<game name="risedung" romof="msx">
 		<description>Rise Out from Dungeons (Jpn)</description>
 		<year>1983</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="rise out from dungeons (japan).rom" size="16384" crc="6a6d37cf"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -13056,7 +13160,7 @@
 	<game name="risedunga" cloneof="risedung" romof="risedung">
 		<description>Rise Out from Dungeons (Jpn, Alt)</description>
 		<year>1983</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="rise out from dungeons (japan) (alt 1).rom" size="16384" crc="01043328"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -13077,7 +13181,7 @@
 	</game>
 	<game name="riyadh" romof="msx">
 		<comment>Demo, Homebrew</comment>
-		<description>Riyadh (HB, Tech-demo)</description>
+		<description>Riyadh (HB, Tech-Demo)</description>
 		<year>2001</year>
 		<manufacturer>Bandwagon</manufacturer>
 		<rom name="riyadh.rom" size="262144" crc="3e207332"/>
@@ -13135,7 +13239,7 @@
 	<game name="robofrog" romof="msx">
 		<description>Robofrog (Jpn)</description>
 		<year>1985</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>Mass Tael</manufacturer>
 		<rom name="robofrog (japan).rom" size="16384" crc="99ddb974"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -13146,7 +13250,7 @@
 	<game name="robofroga" cloneof="robofrog" romof="robofrog">
 		<description>Robofrog (Jpn, Alt)</description>
 		<year>1985</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>Mass Tael</manufacturer>
 		<rom name="robofrog (japan) (alt 1).rom" size="16384" crc="82e47a43"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -13159,6 +13263,18 @@
 		<year>1986</year>
 		<manufacturer>Eaglesoft</manufacturer>
 		<rom name="robot wars (1986)(eaglesoft)(nl)[run'cas-'].cas" size="50306" crc="08f5270d"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="robotto" romof="msx">
+		<comment>Demo, Homebrew</comment>
+		<description>Robotto (HB, Tech-Demo)</description>
+		<year>2019</year>
+		<manufacturer>The Pets Mode</manufacturer>
+		<rom name="Robotto Tech-Demo (2019)(The Pets Mode).rom" size="262144" crc="8d407b3a"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -13279,7 +13395,7 @@
 	<game name="rotors" romof="msx">
 		<description>Rotors (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="rotors (japan).rom" size="16384" crc="1cdb462e"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -13416,8 +13532,8 @@
 	</game>
 	<game name="sasa" romof="msx">
 		<description>Sasa (Jpn)</description>
-		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<year>1983</year>
+		<manufacturer>ASCII Corp. - Mass Tael</manufacturer>
 		<rom name="sasa (japan).rom" size="16384" crc="7faf00c0"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -13427,8 +13543,8 @@
 	</game>
 	<game name="sasaa" cloneof="sasa" romof="sasa">
 		<description>Sasa (Jpn, Alt)</description>
-		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<year>1983</year>
+		<manufacturer>ASCII Corp. - Mass Tael</manufacturer>
 		<rom name="sasa (japan) (alt 1).rom" size="16384" crc="ae6f517d"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -13622,7 +13738,7 @@
 		<comment>aka Commando</comment>
 		<description>Senjou no Ookami (Jpn)</description>
 		<year>1987</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="lh231073" size="131072" crc="427b3f14"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -14413,7 +14529,7 @@
 	<game name="squishem" romof="msx">
 		<description>Squish'em (Jpn)</description>
 		<year>1983</year>
-		<manufacturer>Sirius - ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="squish'em (japan).rom" size="16384" crc="f3b22c91"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -14424,7 +14540,7 @@
 	<game name="squishema" cloneof="squishem" romof="squishem">
 		<description>Squish'em (Jpn, Alt)</description>
 		<year>1983</year>
-		<manufacturer>Sirius - ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="squish'em (japan) (alt 1).rom" size="16384" crc="da50254f"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -14612,7 +14728,7 @@
 	<game name="starship" romof="msx">
 		<description>Starship Simulator (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="starship simulator (japan).rom" size="16384" crc="236d2ab1"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -14623,7 +14739,7 @@
 	<game name="starshipa" cloneof="starship" romof="starship">
 		<description>Starship Simulator (Jpn, Alt)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="starship simulator (japan) (alt 1).rom" size="16384" crc="87824af6"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -14679,7 +14795,7 @@
 	<game name="stepper" romof="msx">
 		<description>Stepper (Jpn)</description>
 		<year>1985</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="stepper (japan).rom" size="16384" crc="0fb7df8f"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -14829,7 +14945,7 @@
 	<game name="suparobo" romof="msx">
 		<description>Suparobo (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>Mass Tael</manufacturer>
 		<rom name="suparobo (japan).rom" size="16384" crc="483eddcc"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -15249,7 +15365,7 @@
 	<game name="tatica" romof="msx">
 		<description>Tatica (Jpn)</description>
 		<year>1985</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp. - Mass Tael</manufacturer>
 		<rom name="tatica (japan).rom" size="16384" crc="7914f7a6"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -15260,7 +15376,7 @@
 	<game name="tawarakn" romof="msx">
 		<description>Tawara-kun (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="tawara-kun (japan).rom" size="16384" crc="589ce03e"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -15271,7 +15387,7 @@
 	<game name="tawaraknb" cloneof="tawarakn" romof="tawarakn">
 		<description>Tawara-kun (Jpn, Alt 2)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="tawara-kun (japan) (alt 2).rom" size="16384" crc="895cb183"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -15282,7 +15398,7 @@
 	<game name="tawarakna" cloneof="tawarakn" romof="tawarakn">
 		<description>Tawara-kun (Jpn, Alt)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="tawara-kun (japan) (alt 1).rom" size="16384" crc="d69e9ea6"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -15314,8 +15430,8 @@
 	</game>
 	<game name="telebunn" romof="msx">
 		<description>Telebunnie (Jpn)</description>
-		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<year>1983</year>
+		<manufacturer>ASCII Corp. - Mass Tael</manufacturer>
 		<rom name="telebunnie (japan).rom" size="16384" crc="377fefef"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -15325,8 +15441,8 @@
 	</game>
 	<game name="telebunna" cloneof="telebunn" romof="telebunn">
 		<description>Telebunnie (Jpn, Alt)</description>
-		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<year>1983</year>
+		<manufacturer>ASCII Corp. - Mass Tael</manufacturer>
 		<rom name="telebunnie (japan) (alt 1).rom" size="16384" crc="29314400"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -15438,7 +15554,7 @@
 	<game name="tetrahor" romof="msx">
 		<description>Tetra Horror (Jpn)</description>
 		<year>1983</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>Mass Tael</manufacturer>
 		<rom name="tetra horror (japan).rom" size="16384" crc="e2d3377c"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -15449,7 +15565,7 @@
 	<game name="tetrahora" cloneof="tetrahor" romof="tetrahor">
 		<description>Tetra Horror (Jpn, Alt)</description>
 		<year>1983</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>Mass Tael</manufacturer>
 		<rom name="tetra horror (japan) (alt 1).rom" size="16384" crc="2e1be8b6"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -15572,7 +15688,7 @@
 	<game name="theseus" romof="msx">
 		<description>Theseus - Iligks I (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="iriegas - theseus (japan).rom" size="16384" crc="80495007"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -15583,7 +15699,7 @@
 	<game name="theseusa" cloneof="theseus" romof="theseus">
 		<description>Theseus - Iligks I (Jpn, Alt)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="iriegas - theseus (japan) (alt 1).rom" size="16384" crc="53236741"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -15671,7 +15787,7 @@
 	<game name="thndrbal" romof="msx">
 		<description>Thunder Ball (Jpn)</description>
 		<year>1985</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="thunder ball (japan).rom" size="32768" crc="86f902a9"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -15682,7 +15798,7 @@
 	<game name="thndrbala" cloneof="thndrbal" romof="thndrbal">
 		<description>Thunder Ball (Jpn, Alt)</description>
 		<year>1985</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="thunder ball (japan) (alt 1).rom" size="32768" crc="b06b8920"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -16046,7 +16162,7 @@
 	<game name="trialski" romof="msx">
 		<description>Trial Ski (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="trial ski (japan).rom" size="16384" crc="152bebc2"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -16113,7 +16229,7 @@
 	<game name="turboat" romof="msx">
 		<description>Turboat (Jpn)</description>
 		<year>1983</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp. - Mass Tael</manufacturer>
 		<rom name="turboat (japan).rom" size="16384" crc="c7abc409"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -16134,8 +16250,8 @@
 	</game>
 	<game name="turmoil" romof="msx">
 		<description>Turmoil (Jpn)</description>
-		<year>1984</year>
-		<manufacturer>ASCII</manufacturer>
+		<year>1983</year>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="turmoil (japan).rom" size="16384" crc="17683f42"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -16145,8 +16261,8 @@
 	</game>
 	<game name="turmoilk" cloneof="turmoil" romof="turmoil">
 		<description>Turmoil (Kor)</description>
-		<year>1984?</year>
-		<manufacturer>Qnix</manufacturer>
+		<year>1984</year>
+		<manufacturer>Qnix Corp.</manufacturer>
 		<rom name="turmoil (1984)(qnix).rom" size="16384" crc="2cf9d4ab"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -16236,7 +16352,7 @@
 	<game name="tzr" romof="msx">
 		<description>TZR - GrandPrix Rider (Jpn)</description>
 		<year>1986</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="tzr - grand prix rider (japan).rom" size="32768" crc="d792c827"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -16360,7 +16476,7 @@
 	</game>
 	<game name="vesikauhu" romof="msx">
 		<comment>Demo, Homebrew</comment>
-		<description>Vesikauhu (HB, Tech-demo)</description>
+		<description>Vesikauhu (HB, Tech-Demo)</description>
 		<year>2000</year>
 		<manufacturer>Bandwagon</manufacturer>
 		<rom name="Vesikauhu.rom" size="262144" crc="7392b7c7"/>
@@ -16530,7 +16646,7 @@
 	<game name="warroid" romof="msx">
 		<description>Warroid (Jpn)</description>
 		<year>1985</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="warroid (japan).rom" size="32768" crc="a0a19fd5"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -16541,7 +16657,7 @@
 	<game name="warroida" cloneof="warroid" romof="warroid">
 		<description>Warroid (Jpn, Alt)</description>
 		<year>1985</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="warroid (japan) (alt 1).rom" size="32768" crc="e621ebc9"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -16552,7 +16668,7 @@
 	<game name="waterdrv" romof="msx">
 		<description>Water Driver (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>Colpax?</manufacturer>
+		<manufacturer>Colpax</manufacturer>
 		<rom name="water driver (japan).rom" size="16384" crc="d5af9e82"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -16669,6 +16785,17 @@
 		<year>1987</year>
 		<manufacturer>Erbe Software</manufacturer>
 		<rom name="whopper chase (1987)(erbe software)(es)[run'cas-'][martos].cas" size="36675" crc="7c28051b"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="wildcat" romof="msx">
+		<description>Wild Cat (Jpn)</description>
+		<year>1984</year>
+		<manufacturer>Colpax</manufacturer>
+		<rom name="Wild Cat (1984)(Colpax).rom" size="16384" crc="04b90104"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -16873,7 +17000,7 @@
 	<game name="xyzolog" romof="msx">
 		<description>Xyzolog (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>Nidecom</manufacturer>
+		<manufacturer>Taito</manufacturer>
 		<rom name="xyxolog (japan).rom" size="16384" crc="c7303910"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -16884,7 +17011,7 @@
 	<game name="xyzologa" cloneof="xyzolog" romof="xyzolog">
 		<description>Xyzolog (Jpn, Alt)</description>
 		<year>1984</year>
-		<manufacturer>Nidecom</manufacturer>
+		<manufacturer>Taito</manufacturer>
 		<rom name="xyxolog (japan) (alt 1).rom" size="16384" crc="c9074b91"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -17251,7 +17378,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zcalavera" romof="msx">
-		<comment>Homebrew, Original game by Mojon Twins</comment>
+		<comment>Homebrew, Original game by 'The Mojon Twins'</comment>
 		<description>Zombie Calavera Prologue (HB)</description>
 		<year>2021</year>
 		<manufacturer>Nanochess</manufacturer>

@@ -6801,7 +6801,7 @@
 	</game>
 	<game name="haradiuszero">
 		<comment>Homebrew</comment>
-		<description>Haradius Zero (HB)</description>
+		<description>Haradius Zero (HB, v1.2a)</description>
 		<year>2019</year>
 		<manufacturer>Impact Soft</manufacturer>
 		<rom name="Haradius Zero (HB).nes" size="786448" crc="d2f19ba1"/>
@@ -7551,9 +7551,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="jajamgek">
+		<comment>Hack</comment>
 		<description>Jajamaru Gekimaden - Maboroshi no Kinmajou (T-Eng)</description>
-		<year>1990</year>
-		<manufacturer>Jaleco</manufacturer>
+		<year>2009</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Jajamaru Gekimaden - Maboroshi no Kinmajou (T-Eng).nes" size="262160" crc="367df135"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7567,9 +7568,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="jajamnincho">
+		<comment>Hack</comment>
 		<description>Jajamaru Ninpou Chou (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2020</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Jajamaru Ninpou Chou (T-Eng).nes" size="393232" crc="70fc8e57"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7633,9 +7635,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="jesus">
+		<comment>Hack</comment>
 		<description>Jesus - Kyoufu no Bio Monster (T-eng)</description>
-		<year>1989</year>
-		<manufacturer>King Records</manufacturer>
+		<year>2016</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Jesus - Kyoufu no Bio Monster (T-eng).nes" size="262160" crc="308c72f5"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7651,8 +7654,8 @@
 	</game>
 	<game name="jetsonsj" cloneof="jetsons" romof="jetsons">
 		<description>Jetsons, The - Cogswell's Caper! (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1993</year>
+		<manufacturer>Taito</manufacturer>
 		<rom name="Jetsons, The - Cogswell's Caper! (Japan).nes" size="393232" crc="4733c232"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7782,8 +7785,8 @@
 	</game>
 	<game name="jovialrace">
 		<description>Jovial Race (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1989</year>
+		<manufacturer>Thin Chen</manufacturer>
 		<rom name="Jovial Race (Unl).nes" size="98320" crc="52c262b4"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7797,9 +7800,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="joymechfight">
+		<comment>Hack</comment>
 		<description>Joy Mech Fight (T-eng)</description>
-		<year>1993</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2016</year>
+		<manufacturer>AlanMidas</manufacturer>
 		<rom name="Joy Mech Fight (T-eng).nes" size="524304" crc="8bb8bc54"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7822,8 +7826,8 @@
 	</game>
 	<game name="jumpjump">
 		<description>Jump-Jump (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>200?</year>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="Jump-Jump (Unl).nes" size="40976" crc="3fe43784"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7864,8 +7868,8 @@
 	</game>
 	<game name="jurassicboy">
 		<description>Jurassic Boy (Asia) (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Sachen</manufacturer>
 		<rom name="Jurassic Boy (Asia) (Unl).nes" size="393232" crc="dbce3424"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7896,9 +7900,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="justbreed">
+		<comment>Hack</comment>
 		<description>Just Breed (T-Eng)</description>
-		<year>1992</year>
-		<manufacturer>Enix</manufacturer>
+		<year>2004</year>
+		<manufacturer>Stealth Translations</manufacturer>
 		<rom name="Just Breed (T-Eng).nes" size="786448" crc="a4863269"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7930,9 +7935,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="juuouki">
+		<comment>Hack</comment>
 		<description>Juuouki (T-eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2005</year>
+		<manufacturer>aka translations</manufacturer>
 		<rom name="Juuouki (T-eng).nes" size="262160" crc="b6cf6cbc"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7954,17 +7960,18 @@
 		<driver status="good"/>
 	</game>
 	<game name="juveiquest">
+		<comment>Hack</comment>
 		<description>Juvei Quest (T-Eng)</description>
-		<year>1991</year>
-		<manufacturer>Namco</manufacturer>
+		<year>2013</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Juvei Quest (T-Eng).nes" size="786448" crc="00a5b4f2"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="jy45in1">
 		<description>JY 45-in-1 (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1998</year>
+		<manufacturer>J.Y. Company</manufacturer>
 		<rom name="JY 45-in-1 (Unl).nes" size="4194320" crc="2a798367"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12209,6 +12216,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="ralph4">
+		<comment>Homebrew</comment>
+		<description>Ralph 4 (HB)</description>
+		<year>2016</year>
+		<manufacturer>Pubby</manufacturer>
+		<rom name="Ralph 4 (2016)(Pubby).nes" size="24592" crc="af85d620"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="ramboc" cloneof="rambo" romof="rambo">
 		<comment>Hack</comment>
 		<description>Rambo (Hack, Spanish v1.0)</description>
@@ -14402,7 +14418,7 @@
 	<game name="supermarwor">
 		<description>Super Mario World (Unl)</description>
 		<year>1995</year>
-		<manufacturer>JY Company</manufacturer>
+		<manufacturer>J.Y. Company</manufacturer>
 		<rom name="Super Mario World (Unl).nes" size="786448" crc="6d5953a8"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -15729,6 +15745,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="trouble2a03">
+		<comment>Homebrew</comment>
+		<description>Trouble in 2a03 (HB)</description>
+		<year>2021</year>
+		<manufacturer>Team Disposable</manufacturer>
+		<rom name="Trouble in 2a03 (2021)(Team Disposable).nes" size="65552" crc="5559e594"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="tsupparioozumou">
 		<description>Tsuppari Oozumou (Japan)</description>
 		<year>1987</year>
@@ -16000,6 +16025,23 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="ushiotoraj" cloneof="ushiotora" romof="ushiotora">
+		<description>Ushio to Tora - Shinen no Taiyou (Japan)</description>
+		<year>1993</year>
+		<manufacturer>Yutaka</manufacturer>
+		<rom name="Ushio to Tora - Shinen no Taiyou (J)(1993)(Yutaka).nes" size="393232" crc="7aa8f7d0"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="ushiotora">
+		<comment>Hack</comment>
+		<description>Ushio to Tora - Shinen no Taiyou (T-Eng)</description>
+		<year>2022</year>
+		<manufacturer>BlackPaladin</manufacturer>
+		<rom name="Ushio to Tora - Shinen no Taiyou T-Eng (2022)(BlackPaladin).nes" size="393232" crc="9472f0af"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="utsurundesu">
 		<description>Utsurun Desu (Japan)</description>
 		<year>1989?</year>
@@ -16114,6 +16156,15 @@
 		<year>1992</year>
 		<manufacturer>Atlus</manufacturer>
 		<rom name="Wacky Races (USA).nes" size="262160" crc="6a862965"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="waddles">
+		<comment>Homebrew</comment>
+		<description>Waddles the Duck (HB)</description>
+		<year>2017</year>
+		<manufacturer>CP Programs</manufacturer>
+		<rom name="Waddles the Duck (2017)(CP Programs).nes" size="65552" crc="e6b45c0e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

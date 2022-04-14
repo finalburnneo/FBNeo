@@ -146,13 +146,14 @@ INT32 NeoLoadSprites(INT32 nOffset, INT32 nNum, UINT8* pDest, UINT32 nSpriteSize
 				}
 			} else {
 				// The kof2k3 PCB has 96MB of graphics ROM, however the last 16MB are unused, and the protection/decryption hardware does not see them
-
-				for (UINT32 j = 0; j < nRomSize; j += 0x400000) {
-//					BurnUpdateProgress(dProgress / 2.0, NULL/*, 0*/, 0);
-					NeoKOFAddressDecrypt(pBuf2, pBuf1, j, j + 0x400000);
-					NeoPCBDataDecrypt(pBuf1 + j, 0x400000);
-//					BurnUpdateProgress(dProgress, NULL, /*0,*/ 0);
-					NeoCMCDecrypt(nNeoProtectionXor, pDest + 0x4000000, pBuf1 + j, j, 0x400000, 0x1000000);
+				if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_DEDICATED_PCB) {
+					for (UINT32 j = 0; j < nRomSize; j += 0x400000) {
+						//					BurnUpdateProgress(dProgress / 2.0, NULL/*, 0*/, 0);
+						NeoKOFAddressDecrypt(pBuf2, pBuf1, j, j + 0x400000);
+						NeoPCBDataDecrypt(pBuf1 + j, 0x400000);
+						//					BurnUpdateProgress(dProgress, NULL, /*0,*/ 0);
+						NeoCMCDecrypt(nNeoProtectionXor, pDest + 0x4000000, pBuf1 + j, j, 0x400000, 0x1000000);
+					}
 				}
 			}
 		}

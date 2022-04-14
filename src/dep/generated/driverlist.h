@@ -8098,9 +8098,10 @@ DRV		BurnDrvKov2p203;
 DRV		BurnDrvKov2p204;
 DRV		BurnDrvKov2p;
 DRV		BurnDrvkov2pshpd;
-DRV		BurnDrvkovplus2020tx;
+DRV		BurnDrvkovplus20tx;
 DRV		BurnDrvKovplus;
 DRV		BurnDrvKovplusa;
+DRV		BurnDrvkovplus12dw;
 DRV		BurnDrvkovytzyce;
 DRV		BurnDrvkovytzyws;
 DRV		BurnDrvkovshpzqhl;
@@ -10884,7 +10885,7 @@ DRV		BurnDrvOrlegend112ea;
 DRV		BurnDrvOrlegend;
 DRV		BurnDrvoldsplus203;
 DRV		BurnDrvoldsplus;
-DRV		BurnDrvoldspluso;
+DRV		BurnDrvoldsplusok;
 DRV		BurnDrvoldsdsgl;
 DRV		BurnDrvoldsmx;
 DRV		BurnDrvOlds100a;
@@ -26674,9 +26675,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKov2p204,			// Knights of Valour 2 Plus - Nine Dragons (VM204XX, China)
 	&BurnDrvKov2p,				// Knights of Valour 2 Plus - Nine Dragons (VM205XX, China)
 	&BurnDrvkov2pshpd,			// Knights of Valour 2 Plus - Xie Feng Tian Chi (Hack)
-	&BurnDrvkovplus2020tx,		// Knights of Valour Plus - Qun Xiong Luan Wu 2020 (Hack)
+	&BurnDrvkovplus20tx,		// Knights of Valour Plus - Qun Xiong Luan Wu 2020 (Hack)
 	&BurnDrvKovplus,			// Knights of Valour Plus - Sangoku Senki Plus (V119)
 	&BurnDrvKovplusa,			// Knights of Valour Plus - Sangoku Senki Plus (V119, Korea)
+	&BurnDrvkovplus12dw,		// Knights of Valour Plus 2012 (Wu Shuang Edition)
 	&BurnDrvkovytzyce,			// Knights of Valour Super Heroes / Yi Tong Zhong Yuan Qing Ban (2020-A, hack)
 	&BurnDrvkovytzyws,			// Knights of Valour Super Heroes / Yi Tong Zhong Yuan Wu Shuang Ban (2019-0, hack)
 	&BurnDrvkovshpzqhl,			// Knights of Valour Super Heroes Plus (The Best Firepower In 2020, 2020-02-06)
@@ -29460,7 +29462,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvOrlegend,			// Oriental Legend - Xi Yo Gi Shi Re Zuang (V126)
 	&BurnDrvoldsplus203,		// Oriental Legend 2 (Korea) / Xi You Shi E Zhuan Super Plus (World, China, Japan, Hong Kong, Taiwan) (V203)
 	&BurnDrvoldsplus,			// Oriental Legend 2 (Korea) / Xi You Shi E Zhuan Super Plus (World, China, Japan, Hong Kong, Taiwan) (V205)
-	&BurnDrvoldspluso,			// Oriental Legend 2 (One Key Edition, Hack)
+	&BurnDrvoldsplusok,			// Oriental Legend 2 (One Key Edition, Hack)
 	&BurnDrvoldsdsgl,			// Oriental Legend Special - Da Sheng Gui Lai (Hack)
 	&BurnDrvoldsmx,				// Oriental Legend Special - Meng Xun Ling Shan (Hack)
 	&BurnDrvOlds100a,			// Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super (V100 alt, China)

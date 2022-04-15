@@ -39,6 +39,7 @@ static UINT32 *DrvPalette;
 static UINT8 bRecalcPalette = 0;
 
 static UINT32 PalBank;
+static INT32 no_palbank = 0;
 
 static INT32 sprite_extent = 0;
 static UINT8 m92_sprite_buffer_busy;
@@ -1341,7 +1342,9 @@ static void __fastcall m92WriteByte(UINT32 address, UINT8 data)
 			return;
 
 		case 0xf9800:
-			PalBank = (data & 0x02) ? 0x0800 : 0x0000;
+			if (!no_palbank) {
+				PalBank = (data & 0x02) ? 0x0800 : 0x0000;
+			}
 			m92_video_reg = (m92_video_reg & 0xff00) | (data << 0);
 			return;
 
@@ -1845,6 +1848,7 @@ static INT32 DrvExit()
 	m92_raster_irq_position = 0;
 	nScreenOffsets[0] = nScreenOffsets[1] = 0;
 	m92_ok_to_blank = 0;
+	no_palbank = 0;
 
 	return 0;
 }
@@ -2664,6 +2668,8 @@ static INT32 rtypeleoInit()
 	m92_kludge = 4+1; // fix for sporatic tilemap corruption in the first attract-mode stage (stage 2)
 	// same as nbbatman, but without scroll offset.
 	m92_ok_to_blank = 1;
+
+	no_palbank = 1;
 
 	return DrvInit(rtypeleoRomLoad, rtypeleo_decryption_table, 1, 0x200000, 0x400000);
 }

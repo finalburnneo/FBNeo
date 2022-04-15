@@ -1763,8 +1763,11 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 	}
 
 	// Caliber 50
+	// Time Soldiers
 	if ((parentrom && strcmp(parentrom, "calibr50") == 0) ||
-		(drvname && strcmp(drvname, "calibr50") == 0)
+		(drvname && strcmp(drvname, "calibr50") == 0) ||
+		(parentrom && strcmp(parentrom, "timesold") == 0) ||
+		(drvname && strcmp(drvname, "timesold") == 0)
 	) {
 		if (strcmp("Aim X", description) == 0) {
 			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, RETRO_DEVICE_INDEX_ANALOG_RIGHT, description);

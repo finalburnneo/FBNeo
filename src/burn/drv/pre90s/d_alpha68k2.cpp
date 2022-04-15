@@ -65,6 +65,10 @@ static UINT8 DrvInputs[6];
 static UINT8 DrvReset;
 
 // Rotation stuff! -dink
+static INT16 DrvAnalogPort0 = 0;
+static INT16 DrvAnalogPort1 = 0;
+static INT16 DrvAnalogPort2 = 0;
+static INT16 DrvAnalogPort3 = 0;
 static UINT8  DrvFakeInput[14]      = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // 0-5 legacy; 6-9 P1, 10-13 P2
 static UINT8  nRotateHoldInput[2]   = {0, 0};
 static INT32  nRotate[2]            = {0, 0};
@@ -73,6 +77,8 @@ static INT32  nRotateTry[2]         = {0, 0};
 static UINT32 nRotateTime[2]        = {0, 0};
 static UINT8  game_rotates = 0;
 static UINT8  nAutoFireCounter[2] 	= {0, 0};
+
+#define A(a, b, c, d) { a, b, (UINT8*)(c), d }
 
 static struct BurnInputInfo TimesoldInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
@@ -86,10 +92,8 @@ static struct BurnInputInfo TimesoldInputList[] = {
 	{"P1 Rotate Left"       , BIT_DIGITAL  , DrvFakeInput + 0, "p1 rotate left" },
 	{"P1 Rotate Right"      , BIT_DIGITAL  , DrvFakeInput + 1, "p1 rotate right" },
 	{"P1 Button 3 (rotate)" , BIT_DIGITAL  , DrvFakeInput + 4,  "p1 fire 3" },
-	{"P1 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 6,  "p1 up 2" }, // 6
-	{"P1 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 7,  "p1 down 2" }, // 7
-	{"P1 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 8,  "p1 left 2" }, // 8
-	{"P1 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 9,  "p1 right 2" }, // 9
+	A("P1 Aim X", 		BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	A("P1 Aim Y", 		BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
@@ -102,10 +106,8 @@ static struct BurnInputInfo TimesoldInputList[] = {
 	{"P2 Rotate Left"  , BIT_DIGITAL  , DrvFakeInput + 2, "p2 rotate left" },
 	{"P2 Rotate Right" , BIT_DIGITAL  , DrvFakeInput + 3, "p2 rotate right" },
 	{"P2 Button 3 (rotate)" , BIT_DIGITAL  , DrvFakeInput + 5,  "p2 fire 3" },
-	{"P2 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 10, "p2 up 2" },
-	{"P2 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 11, "p2 down 2" },
-	{"P2 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 12, "p2 left 2" },
-	{"P2 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 13, "p2 right 2" },
+	A("P2 Aim X", 		BIT_ANALOG_REL, &DrvAnalogPort2,"p2 x-axis"),
+	A("P2 Aim Y", 		BIT_ANALOG_REL, &DrvAnalogPort3,"p2 y-axis"),
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy4 + 0,	"service"	},
@@ -130,10 +132,8 @@ static struct BurnInputInfo BtlfieldInputList[] = {
 	{"P1 Rotate Left"       , BIT_DIGITAL  , DrvFakeInput + 0, "p1 rotate left" },
 	{"P1 Rotate Right"      , BIT_DIGITAL  , DrvFakeInput + 1, "p1 rotate right" },
 	{"P1 Button 3 (rotate)" , BIT_DIGITAL  , DrvFakeInput + 4,  "p1 fire 3" },
-	{"P1 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 6,  "p1 up 2" }, // 6
-	{"P1 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 7,  "p1 down 2" }, // 7
-	{"P1 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 8,  "p1 left 2" }, // 8
-	{"P1 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 9,  "p1 right 2" }, // 9
+	A("P1 Aim X", 		BIT_ANALOG_REL, &DrvAnalogPort2,"p1 x-axis"),
+	A("P1 Aim Y", 		BIT_ANALOG_REL, &DrvAnalogPort3,"p1 y-axis"),
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
@@ -146,10 +146,8 @@ static struct BurnInputInfo BtlfieldInputList[] = {
 	{"P2 Rotate Left"  , BIT_DIGITAL  , DrvFakeInput + 2, "p2 rotate left" },
 	{"P2 Rotate Right" , BIT_DIGITAL  , DrvFakeInput + 3, "p2 rotate right" },
 	{"P2 Button 3 (rotate)" , BIT_DIGITAL  , DrvFakeInput + 5,  "p2 fire 3" },
-	{"P2 Shoot Up"       	, BIT_DIGITAL  , DrvFakeInput + 10, "p2 up 2" },
-	{"P2 Shoot Down"      	, BIT_DIGITAL  , DrvFakeInput + 11, "p2 down 2" },
-	{"P2 Shoot Left"       	, BIT_DIGITAL  , DrvFakeInput + 12, "p2 left 2" },
-	{"P2 Shoot Right"      	, BIT_DIGITAL  , DrvFakeInput + 13, "p2 right 2" },
+	A("P2 Aim X", 		BIT_ANALOG_REL, &DrvAnalogPort2,"p2 x-axis"),
+	A("P2 Aim Y", 		BIT_ANALOG_REL, &DrvAnalogPort3,"p2 y-axis"),
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy4 + 0,	"service"	},
@@ -311,7 +309,7 @@ STDINPUTINFO(Sbasebal)
 
 static struct BurnDIPInfo TimesoldDIPList[]=
 {
-	DIP_OFFSET(0x21)
+	DIP_OFFSET(0x1d)
 
 	{0x00, 0xff, 0xff, 0xdc, NULL				},
 	{0x01, 0xff, 0xff, 0xff, NULL				},
@@ -365,7 +363,7 @@ STDDIPINFO(Timesold)
 
 static struct BurnDIPInfo BtlfieldDIPList[]=
 {
-	DIP_OFFSET(0x21)
+	DIP_OFFSET(0x1d)
 
 	{0x00, 0xff, 0xff, 0xfd, NULL				},
 	{0x01, 0xff, 0xff, 0xf7, NULL				},
@@ -831,6 +829,44 @@ static UINT8 Joy2Rotate(UINT8 *joy) { // ugly code, but the effect is awesome. -
 	return 0xff;
 }
 
+static UINT8 Joy2Rotate12(UINT8 *joy) { // even more ugly code
+	// Changing this to 12 directions
+	// using clock hand positions: 0 - up, 3 - right, 6 - down, 9 - left
+	if (joy[0] && joy[2]) { // up and left
+		if (joy[0] > joy[2])
+			return 11;    
+		else 
+			return 10;    
+	}
+	if (joy[0] && joy[3]) {
+		if (joy[0] > joy[3])
+			return 1;
+		else
+			return 2;
+	}
+
+	if (joy[1] && joy[2]) {
+		if (joy[1] > joy[2])
+			return 7;
+		else 
+			return 8;
+	}
+
+	if (joy[1] && joy[3]) {
+		if (joy[1] > joy[3])
+			return 5;
+		else 
+			return 4;
+	}
+
+	if (joy[0]) return 0;    // up
+	if (joy[1]) return 6;    // down
+	if (joy[2]) return 9;    // left
+	if (joy[3]) return 3;    // right
+
+	return 0xff;
+}
+
 static int dialRotation(INT32 playernum) {
     // p1 = 0, p2 = 1
 	UINT8 player[2] = { 0, 0 };
@@ -951,7 +987,7 @@ static void SuperJoy2Rotate() {
 		if (!NeedsSecondStick[i])
 			nAutoFireCounter[i] = 0;
 		if (NeedsSecondStick[i]) { // or using Second Stick
-			UINT8 rot = Joy2Rotate(((!i) ? &FakeDrvInputPort0[0] : &FakeDrvInputPort1[0]));
+			UINT8 rot = Joy2Rotate12(((!i) ? &FakeDrvInputPort0[0] : &FakeDrvInputPort1[0]));
 			if (rot != 0xff) {
 				nRotateTarget[i] = rot * rotate_gunpos_multiplier;
 			}
@@ -2034,6 +2070,33 @@ static INT32 SbasebalDraw()
 	return 0;
 }
 
+static void ConvertAnalogToRotate() {
+	// converts analog inputs to something that the existing rotate logic can work with
+	INT16 AnalogInputs[4] = { 0, 0, 0, 0 }; // p1y, p1x, p2y, p2x - compatibility with Joy2Rotate
+	INT16 AnalogPorts[4] = { DrvAnalogPort1, DrvAnalogPort0, DrvAnalogPort3, DrvAnalogPort2 };
+
+	// clear fake inputs
+	// Note: DrvFakeInput 6/10 - up, 7/11 - down, 8/12 - left, 9/13 -right
+	for (int i = 6; i < 14; i++)
+		DrvFakeInput[i] = 0;
+
+	// convert these x and y to something Joy2Rotate could read.
+	for (int i = 0; i < 4; i++) {
+		// ProcessAnalog() will convert the analog value to: 0x00 full left, 0x80 center, 0xff full right
+		// Range 16 makes it too biased towards the directions between diagonals and up/down/left/right
+		// Range 8 makes it more biased towards the diagonals, seems to be the sweet spot
+		UINT8 AnalogRange = 6;
+
+		AnalogInputs[i] = ProcessAnalog(AnalogPorts[i], 0, INPUT_DEADZONE, 0x00, 0xff) / ((256/AnalogRange));
+		if (AnalogInputs[i] < AnalogRange/2) {
+			DrvFakeInput[6 + 2*i] = AnalogRange/2-AnalogInputs[i];
+		} else if (AnalogInputs[i] > AnalogRange/2) {
+			DrvFakeInput[6 + 2*i + 1] = AnalogInputs[i]-AnalogRange/2;
+		}
+	}
+
+}
+
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -2065,6 +2128,7 @@ static INT32 DrvFrame()
 		}
 
 		if (game_rotates) {
+			ConvertAnalogToRotate();
 			SuperJoy2Rotate();
 		}
 	}

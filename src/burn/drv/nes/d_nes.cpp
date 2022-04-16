@@ -15523,6 +15523,62 @@ struct BurnDriver BurnDrvnes_magickidsdorp = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Double Dragon III - The Sacred Stones (T-Chi)
+// https://www.ppxclub.com/forum.php?mod=viewthread&tid=711718
+static struct BurnRomInfo nes_doubldraiiiscRomDesc[] = {
+	{ "Double Dragon III - The Sacred Stones (T-Chi).nes",          262160, 0x4b992f63, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_doubldraiiisc)
+STD_ROM_FN(nes_doubldraiiisc)
+
+struct BurnDriver BurnDrvnes_doubldraiiisc = {
+	"nes_doubldraiiisc", "nes_doubldraiii", NULL, NULL, "2022",
+	"Double Dragon III - The Sacred Stones (T-Chi)\0", NULL, "asiwish", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_doubldraiiiscRomInfo, nes_doubldraiiiscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Downtown - Nekketsu Monogatari (T-Chi)
+// https://www.ppxclub.com/forum.php?mod=viewthread&tid=711718
+static struct BurnRomInfo nes_downtnekmoncRomDesc[] = {
+	{ "Downtown - Nekketsu Monogatari (T-Chi).nes",          262160, 0x60a9ee52, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_downtnekmonc)
+STD_ROM_FN(nes_downtnekmonc)
+
+struct BurnDriver BurnDrvnes_downtnekmonc = {
+	"nes_downtnekmonc", "nes_downtnekmon", NULL, NULL, "2022",
+	"Downtown - Nekketsu Monogatari (T-Chi)\0", NULL, "asiwish", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_downtnekmoncRomInfo, nes_downtnekmoncRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Mission Impossible (T-Chi)
+// https://www.ppxclub.com/forum.php?mod=viewthread&tid=711906
+static struct BurnRomInfo nes_missiimpcRomDesc[] = {
+	{ "Mission Impossible (T-Chi).nes",          524304, 0xf930b169, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_missiimpc)
+STD_ROM_FN(nes_missiimpc)
+
+struct BurnDriver BurnDrvnes_missiimpc = {
+	"nes_missiimpc", "nes_missiimp", NULL, NULL, "2022",
+	"Mission Impossible (T-Chi)\0", NULL, "LSP Team", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RUNGUN | GBF_ADV, 0,
+	NESGetZipName, nes_missiimpcRomInfo, nes_missiimpcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 // Final Mission (T-Chi)
 // https://www.ppxclub.com/forum.php?mod=viewthread&tid=708048

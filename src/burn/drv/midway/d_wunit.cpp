@@ -911,11 +911,13 @@ struct BurnDriver BurnDrvUmk3te = {
 };
 
 
-// Ultimate Mortal Kombat 3 Uk (2022/04/06)
+// Ultimate Mortal Kombat 3 Uk (2021/07/20)
+// Supports the latest special edition of FBNeo
+// Before the latest special edition came out, IPS was recommended
 
 static struct BurnRomInfo umk3ukRomDesc[] = {
-	{ "umk3uk-u54.bin",			0x080000, 0x9fc578a6, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
-	{ "umk3uk-u63.bin",			0x080000, 0xecf37541, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "umk3uk-u54.bin",			0x080000, 0xbc509bce, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "umk3uk-u63.bin",			0x080000, 0x2f900a03, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "umk3uk-u2.bin",			0x100000, 0x3838cfe5, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
 	{ "umk3uk-u3.bin",			0x100000, 0x856fe411, 2 | BRF_PRG | BRF_ESS }, //  3
@@ -937,30 +939,30 @@ static struct BurnRomInfo umk3ukRomDesc[] = {
 	{ "umk3uk-u123.bin",		0x100000, 0x6a65e954, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
 	{ "umk3uk-u122.bin",		0x100000, 0xe6274718, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
 
-	{ "umk3uk-u121.bin",		0x100000, 0x2a941ed3, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
-	{ "umk3uk-u120.bin",		0x100000, 0x57b7a2c1, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
-	{ "umk3uk-u119.bin",		0x100000, 0xe62e43ec, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
-	{ "umk3uk-u118.bin",		0x100000, 0x70ebc1a4, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
-	
-	{ "umk3uk-u117.bin",		0x100000, 0x0fbe24ac, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 0) }, // 22
-	{ "umk3uk-u116.bin",		0x100000, 0x94c8284f, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 1) }, // 23
-	{ "umk3uk-u115.bin",		0x100000, 0xf36e8eb1, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 2) }, // 24
-	{ "umk3uk-u114.bin",		0x100000, 0x76e02647, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 3) }, // 25
+	{ "umk3uk-u121.bin",		0x100000, 0xefd4084c, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
+	{ "umk3uk-u120.bin",		0x100000, 0x42a6c0e6, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
+	{ "umk3uk-u119.bin",		0x100000, 0x948d4aa7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
+	{ "umk3uk-u118.bin",		0x100000, 0xab7ca588, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
 
-	{ "umk3uk-u113.bin",		0x100000, 0x0ad044f8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 0) }, // 26
-	{ "umk3uk-u112.bin",		0x100000, 0xb19b1d16, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 27
-	{ "umk3uk-u111.bin",		0x100000, 0xbfa93ae2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 28
-	{ "umk3uk-u110.bin",		0x100000, 0x5b915289, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 29
-	
-	{ "463_mk3_ultimate.u64",	0x1009, 0x4f425218, 0 | BRF_OPT },
+	{ "umk3uk-u117.bin",		0x100000, 0x36739726, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 0) }, // 22
+	{ "umk3uk-u116.bin",		0x100000, 0xcdf4adac, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 1) }, // 23
+	{ "umk3uk-u115.bin",		0x100000, 0xd800d13f, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 2) }, // 24
+	{ "umk3uk-u114.bin",		0x100000, 0x9ec22b64, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 3) }, // 25
+
+	{ "umk3uk-u113.bin",		0x100000, 0xb352019b, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 0) }, // 26
+	{ "umk3uk-u112.bin",		0x100000, 0x71143b7c, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 27
+	{ "umk3uk-u111.bin",		0x100000, 0x09821226, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 28
+	{ "umk3uk-u110.bin",		0x100000, 0x88f78828, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 29
+
+	{ "463_mk3_ultimate.u64",	0x001009, 0x4f425218, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(umk3uk)
 STD_ROM_FN(umk3uk)
 
 struct BurnDriver BurnDrvUmk3uk = {
-	"umk3uk", "umk3", NULL, NULL, "2022",
-	"Ultimate Mortal Kombat 3 Uk (Hack, Ver. 2022-04-06)\0", NULL, "hack", "MIDWAY Wolf-Unit",
+	"umk3uk", "umk3", NULL, NULL, "2021",
+	"Ultimate Mortal Kombat 3 Uk (FBNeo, Ver. 2021-07-20)\0", NULL, "hack", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, umk3ukRomInfo, umk3ukRomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,

@@ -944,11 +944,11 @@ STD_ROM_FN(grdianssy)
 
 // Denjin Makai II (LBS Edition, Hack)
 // Hack by Bindi
-// GOTVG 2022/03/08
+// GOTVG 2022/04/10
 
 static struct BurnRomInfo grdianslbsRomDesc[] = {
-	{ "u2_lbs.bin",		0x080000, 0xa5b0d400, BRF_ESS | BRF_PRG },	// 68000 code
-	{ "u3_lbs.bin",		0x080000, 0xbc547876, BRF_ESS | BRF_PRG },
+	{ "u2_lbs.bin",		0x080000, 0x6d5b355c, BRF_ESS | BRF_PRG },	// 68000 code
+	{ "u3_lbs.bin",		0x080000, 0x5a462d7c, BRF_ESS | BRF_PRG },
 	{ "u4.bin",			0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
 	{ "u5.bin",			0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
 
@@ -994,7 +994,7 @@ static struct BurnRomInfo grdianslbssRomDesc[] = {
 STD_ROM_PICK(grdianslbss)
 STD_ROM_FN(grdianslbss)
 
-// Denjin Makai II (Kerron Edition, Hack)
+// Denjin Makai II (Kerron Edition)
 // Hack by Bindi
 // GOTVG 2022/02/18
 

@@ -166,6 +166,12 @@
     <ClInclude Include="..\..\src\burn\snd\ymz280b.h">
       <Filter>Burn\snd</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\burn\snd\mpeg_audio.h">
+      <Filter>Burn\snd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burn\snd\ymz770.h">
+      <Filter>Burn\snd</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\burn\devices\8255ppi.h">
       <Filter>Burn\devices</Filter>
     </ClInclude>
@@ -653,6 +659,12 @@
       <Filter>Burn\devices</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\burn\devices\x2212.h">
+      <Filter>Burn\devices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burn\devices\rtc9701.h">
+      <Filter>Burn\devices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burn\devices\serflash.h">
       <Filter>Burn\devices</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\burn\drv\capcom\d_kenseim.h">
@@ -1369,6 +1381,12 @@
       <Filter>Burn\devices</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\devices\vdc.cpp">
+      <Filter>Burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\rtc9701.cpp">
+      <Filter>Burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\serflash.cpp">
       <Filter>Burn\devices</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\capcom\cps.cpp">
@@ -3961,6 +3979,12 @@
       <Filter>Burn\snd</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\snd\ym2612.c">
+      <Filter>Burn\snd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\snd\mpeg_audio.cpp">
+      <Filter>Burn\snd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\snd\ymz770.cpp">
       <Filter>Burn\snd</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\burn_bitmap.cpp">

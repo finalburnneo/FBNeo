@@ -97,6 +97,8 @@
     <ClInclude Include="..\..\src\burn\devices\vdc.h" />
     <ClInclude Include="..\..\src\burn\devices\watchdog.h" />
     <ClInclude Include="..\..\src\burn\devices\x2212.h" />
+    <ClInclude Include="..\..\src\burn\devices\rtc9701.h" />
+    <ClInclude Include="..\..\src\burn\devices\serflash.h" />
     <ClInclude Include="..\..\src\burn\driver.h" />
     <ClInclude Include="..\..\src\burn\drv\capcom\cps.h" />
     <ClInclude Include="..\..\src\burn\drv\capcom\ctv_do.h" />
@@ -246,6 +248,8 @@
     <ClInclude Include="..\..\src\burn\snd\ymf271.h" />
     <ClInclude Include="..\..\src\burn\snd\ymf278b.h" />
     <ClInclude Include="..\..\src\burn\snd\ymz280b.h" />
+    <ClInclude Include="..\..\src\burn\snd\mpeg_audio.h" />
+    <ClInclude Include="..\..\src\burn\snd\ymz770.h" />
     <ClInclude Include="..\..\src\burn\state.h" />
     <ClInclude Include="..\..\src\burn\stdfunc.h" />
     <ClInclude Include="..\..\src\burn\tilemap_generic.h" />
@@ -542,6 +546,8 @@
     <ClCompile Include="..\..\src\burn\devices\vdc.cpp" />
     <ClCompile Include="..\..\src\burn\devices\watchdog.cpp" />
     <ClCompile Include="..\..\src\burn\devices\x2212.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\rtc9701.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\serflash.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_akkaarrh.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_arcadecl.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_atarig1.cpp" />
@@ -1477,6 +1483,8 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\snd\ymdeltat.c" />
     <ClCompile Include="..\..\src\burn\snd\ymf278b.c" />
     <ClCompile Include="..\..\src\burn\snd\ymz280b.cpp" />
+    <ClCompile Include="..\..\src\burn\snd\mpeg_audio.cpp" />
+    <ClCompile Include="..\..\src\burn\snd\ymz770.cpp" />
     <ClCompile Include="..\..\src\burn\tilemap_generic.cpp" />
     <ClCompile Include="..\..\src\burn\tiles_generic.cpp" />
     <ClCompile Include="..\..\src\burn\timer.cpp" />

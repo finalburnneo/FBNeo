@@ -4556,7 +4556,7 @@ static struct BurnDIPInfo WillowDIPList[]=
 	// Dip A
         CPS1_COINAGE_3(0x15)
 
-        {0   , 0xfe, 0   , 3   , "Cabinet"                },
+	{0   , 0xfe, 0   , 3   , "Cabinet"                },
 	{0x15, 0x01, 0xc0, 0x00, "Upright 1P"             },
 	{0x15, 0x01, 0xc0, 0x40, "Upright 2P"             },
 	{0x15, 0x01, 0xc0, 0xc0, "Cocktail"               },
@@ -15939,7 +15939,8 @@ static const struct GameConfig ConfigTable[] =
 	{ "varthr1"       , CPS_B_04    , mapper_VA63B , 0, NULL                },
 	{ "varthu"        , CPS_B_04    , mapper_VA63B , 0, NULL                },
 	{ "varthj"        , CPS_B_21_BT5, mapper_VA22B , 0, NULL                },
-	{ "varthjr"       , CPS_B_21_BT5, mapper_VA63B , 0, NULL                }, // CPSB test has been patched out (72=0001) register is also written to, possibly leftover from development */   
+	{ "varthjr"       , CPS_B_21_BT5, mapper_VA63B , 0, NULL                }, // CPSB test has been patched out (72=0001) register is also written to, possibly leftover from development */
+	{ "varthjwm"      , CPS_B_21_BT5, mapper_VA22B , 0, NULL                },
 	{ "varthb"        , CPS_B_04    , mapper_VA63B , 0, NULL                },
 	{ "willow"        , CPS_B_03    , mapper_WL24B , 0, NULL                },
 	{ "willowu"       , CPS_B_03    , mapper_WL24B , 0, NULL                },
@@ -25331,6 +25332,66 @@ struct BurnDriver BurnDrvCpsPunisherhr = {
 	NULL, PunisherhrRomInfo, PunisherhrRomName, NULL, NULL, NULL, NULL, PunisherInputInfo, PunisherDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Varth - operation thunderstorm (Wingman Edition) 2018/04/28
+/*	2p automatically launches bullets. It is invincible, but it can't put bomb. It's equivalent to playing with an invincible wingman.
+	2p doesn't stay where it is. It will move in place at ordinary times. If 1p stops acting, 2p will rush to the top of the screen.
+	Mainly for the modification of Mister FPGA, playing alone is not so lonely.
+	Throw 2 coins and press 2p start key to start the game, then 2p will automatically select the top double ball. If 2p joins halfway, 2p will automatically select the side double ball.
+	The enemy's bullet speed maintains the initial speed of the corresponding difficulty, and will not speed up or slow down.
+	Like high difficulty, low difficulty will also have special enemies covering and protecting the photosphere.*/
+// https://www.ppxclub.com/forum.php?mod=viewthread&tid=712127
+static struct BurnRomInfo VarthjwmRomDesc[] = {
+	{ "jwm_36b.12f",   0x020000, 0xe12341cf, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "jwm_42b.12h",   0x020000, 0xadcd022e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "jwm_37b.13f",   0x020000, 0x41f788a8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "jwm_43b.13h",   0x020000, 0x30745ae5, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "vaj_34b.10f",   0x020000, 0x87c79aed, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "vaj_40b.10h",   0x020000, 0x210b4bd0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "vaj_35b.11f",   0x020000, 0x6b0da69f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "vaj_41b.11h",   0x020000, 0x6542c8a4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "va_09.4b",      0x020000, 0x183dfaa8, BRF_GRA | CPS1_TILES },
+	{ "va_01.4a",      0x020000, 0xc41312b5, BRF_GRA | CPS1_TILES },
+	{ "va_13.9b",      0x020000, 0x45537e69, BRF_GRA | CPS1_TILES },
+	{ "va_05.9a",      0x020000, 0x7065d4e9, BRF_GRA | CPS1_TILES },
+	{ "va_24.5e",      0x020000, 0x57191ccf, BRF_GRA | CPS1_TILES },
+	{ "va_17.5c",      0x020000, 0x054f5a5b, BRF_GRA | CPS1_TILES },
+	{ "va_38.8h",      0x020000, 0xe117a17e, BRF_GRA | CPS1_TILES },
+	{ "va_32.8f",      0x020000, 0x3b4f40b2, BRF_GRA | CPS1_TILES },
+	{ "va_10.5b",      0x020000, 0xd62750cd, BRF_GRA | CPS1_TILES },
+	{ "va_02.5a",      0x020000, 0x11590325, BRF_GRA | CPS1_TILES },
+	{ "va_14.10b",     0x020000, 0xdc2f4783, BRF_GRA | CPS1_TILES },
+	{ "va_06.10a",     0x020000, 0x06e833ac, BRF_GRA | CPS1_TILES },
+	{ "va_25.7e",      0x020000, 0x51d90690, BRF_GRA | CPS1_TILES },
+	{ "va_18.7c",      0x020000, 0xa17817c0, BRF_GRA | CPS1_TILES },
+	{ "va_39.9h",      0x020000, 0xb0b12f51, BRF_GRA | CPS1_TILES },
+	{ "va_33.9f",      0x020000, 0x4b003af7, BRF_GRA | CPS1_TILES },
+
+	{ "va_23.13c",     0x010000, 0x7a99446e, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "va_30.12e",     0x020000, 0xde30510e, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "va_31.13e",     0x020000, 0x0610a4ac, BRF_SND | CPS1_OKIM6295_SAMPLES },
+
+	A_BOARD_PLDS
+
+	{ "va22b.1a",      0x000117, 0xbd7cd574, BRF_OPT },	// b-board PLDs
+	{ "lwio.12c",      0x000117, 0xad52b90c, BRF_OPT },
+	{ "ioc1.ic1",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
+};
+
+STD_ROM_PICK(Varthjwm)
+STD_ROM_FN(Varthjwm)
+
+struct BurnDriver BurnDrvCpsVarthjwm = {
+	"varthjwm", "varth", NULL, NULL, "2018",
+	"Varth - operation thunderstorm (Wingman Edition)\0", NULL, "\u5b89\u8f6c\u6362", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VERSHOOT, 0,
+	NULL, VarthjwmRomInfo, VarthjwmRomName, NULL, NULL, NULL, NULL, VarthInputInfo, VarthDIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
 };
 
 #include "d_kenseim.h"

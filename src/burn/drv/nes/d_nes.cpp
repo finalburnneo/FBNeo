@@ -15533,10 +15533,10 @@ STD_ROM_PICK(nes_zeldanodenc)
 STD_ROM_FN(nes_zeldanodenc)
 
 struct BurnDriver BurnDrvnes_zeldanodenc = {
-	"nes_zeldanodenc", NULL, NULL, NULL, "2022",
+	"nes_zeldanodenc", "nes_legenzel", NULL, NULL, "2022",
 	"Zelda no Densetsu - The Hyrule Fantasy (T-Chi)\0", NULL, "NOKOH", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_zeldanodencRomInfo, nes_zeldanodencRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

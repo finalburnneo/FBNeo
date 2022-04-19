@@ -971,7 +971,7 @@ INT32 pgmFrame()
 
 	// compile inputs
 	{
-        memset (PgmInput, 0, sizeof(PgmInput));
+		memset (PgmInput, 0, 6); // 6 is correct! Regions are stored in 7!
 
 		for (INT32 i = 0; i < sizeof(PgmJoy1); i++) {
 			PgmInput[0] |= (PgmJoy1[i] & 1) << i;

@@ -12510,6 +12510,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="primaderezx" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Prima Dere ZX (HB)</description>
+		<year>2022</year>
+		<manufacturer>AppSir Games</manufacturer>
+		<rom name="Prima Dere ZX 48K (2022)(AppSir Games).tap" size="40838" crc="4909cec0"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="princeclumsy" romof="spectrum">
 		<description>Prince Clumsy (48K)</description>
 		<year>1990</year>

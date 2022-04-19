@@ -3988,6 +3988,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="doubldraiiisc" cloneof="doubldraiii" romof="doubldraiii">
+		<description>Double Dragon III - The Sacred Stones (T-Chi)</description>
+		<year>2022</year>
+		<manufacturer>asiwish</manufacturer>
+		<rom name="Double Dragon III - The Sacred Stones (T-Chi).nes" size="262160" crc="4b992f63"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="doubldraiii">
 		<description>Double Dragon III - The Sacred Stones (USA)</description>
 		<year>1991</year>
@@ -4059,6 +4067,14 @@
 		<year>1989</year>
 		<manufacturer>Technos</manufacturer>
 		<rom name="Downtown - Nekketsu Monogatari (Japan).nes" size="262160" crc="f7346e46"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="downtnekmonc" cloneof="downtnekmon" romof="downtnekmon">
+		<description>Downtown - Nekketsu Monogatari (T-Chi)</description>
+		<year>2022</year>
+		<manufacturer>asiwish</manufacturer>
+		<rom name="Downtown - Nekketsu Monogatari (T-Chi).nes" size="262160" crc="60a9ee52"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -6379,6 +6395,30 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="gomokuj" cloneof="gomoku" romof="gomoku">
+		<description>Gomoku Narabe Renju (Japan)</description>
+		<year>1983</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Gomoku Narabe Renju (Japan).nes" size="24592" crc="28843bb1"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="gomokuc" cloneof="gomoku" romof="gomoku">
+		<description>Gomoku Narabe Renju (T-Chi)</description>
+		<year>2020</year>
+		<manufacturer>厌鱼猫猫</manufacturer>
+		<rom name="Gomoku Narabe Renju (T-Chi).nes" size="24592" crc="bccf3f36"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="gomoku">
+		<description>Gomoku Narabe Renju (T-Eng)</description>
+		<year>2017</year>
+		<manufacturer>Psyklax</manufacturer>
+		<rom name="Gomoku Narabe Renju (T-Eng).nes" size="24592" crc="18513cfc"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="gooniesc" cloneof="goonies" romof="goonies">
 		<comment>Hack</comment>
 		<description>Goonies (Hack, Spanish v1.0)</description>
@@ -6624,7 +6664,7 @@
 		<comment>Hack</comment>
 		<description>Gun Nac (T-Chi)</description>
 		<year>2013</year>
-		<manufacturer>Jiu Ban &amp; KASURA J.</manufacturer>
+		<manufacturer>九班</manufacturer>
 		<rom name="Gun Nac (T-Chi).nes" size="393232" crc="3c63f85a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8221,6 +8261,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="kickmasterc" cloneof="kickmaster" romof="kickmaster">
+		<description>Kick Master (T-Chi)</description>
+		<year>2022</year>
+		<manufacturer>Managus</manufacturer>
+		<rom name="Kick Master (T-Chi).nes" size="393232" crc="85f44191"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="kickmaster">
 		<description>Kick Master (USA)</description>
 		<year>1992</year>
@@ -8536,6 +8584,14 @@
 		<year>1985</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Kung Fu (Japan, USA).nes" size="40976" crc="32b45889"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="kungfuc" cloneof="kungfu" romof="kungfu">
+		<description>Kung Fu (T-Chi)</description>
+		<year>2010</year>
+		<manufacturer>九班</manufacturer>
+		<rom name="Kung Fu (T-Chi).nes" size="24592" crc="480a29b7"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -9474,6 +9530,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="makaimurac" cloneof="ghostsngoblins" romof="ghostsngoblins">
+		<description>Makaimura (T-Chi)</description>
+		<year>2020</year>
+		<manufacturer>Advance Team</manufacturer>
+		<rom name="Makaimura (T-Chi).nes" size="131088" crc="415d7c05"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="makaimuraarcade" cloneof="ghostsngoblins" romof="ghostsngoblins">
 		<comment>Hack</comment>
 		<description>Makaimura Arcade (Hack)</description>
@@ -9586,7 +9650,7 @@
 		<comment>Hack</comment>
 		<description>Mappy (T-Chi, v2.0)</description>
 		<year>2017</year>
-		<manufacturer>Jiu Ban</manufacturer>
+		<manufacturer>九班</manufacturer>
 		<rom name="Mappy (T-Chi, v2.0).nes" size="40976" crc="7c922692"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10239,6 +10303,14 @@
 		<year>1990</year>
 		<manufacturer>Bunch Games</manufacturer>
 		<rom name="Mission Cobra (USA) (Unl).nes" size="49168" crc="66683e28"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="missiimpc" cloneof="missiimp" romof="missiimp">
+		<description>Mission Impossible (T-Chi)</description>
+		<year>2022</year>
+		<manufacturer>LSP Team</manufacturer>
+		<rom name="Mission Impossible (T-Chi).nes" size="524304" crc="f930b169"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -12111,11 +12183,27 @@
 		<video orientation="horizontal" width="256" height="232" aspectx="256" aspecty="232"/>
 		<driver status="good"/>
 	</game>
+	<game name="radracerc" cloneof="radracer" romof="radracer">
+		<description>Rad Racer (T-Chi)</description>
+		<year>2010</year>
+		<manufacturer>九班</manufacturer>
+		<rom name="Rad Racer (T-Chi).nes" size="131088" crc="13cfd9ca"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="radracer">
 		<description>Rad Racer (USA)</description>
 		<year>1988</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Rad Racer (USA).nes" size="131088" crc="595daa35"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="radraceriic" cloneof="radracerii" romof="radracerii">
+		<description>Rad Racer II (T-Chi)</description>
+		<year>2010</year>
+		<manufacturer>九班</manufacturer>
+		<rom name="Rad Racer II (T-Chi).nes" size="131088" crc="1d7e1802"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -12347,6 +12435,14 @@
 		<year>1985</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Road Fighter (Japan).nes" size="24592" crc="f57abbf1"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="roadfighterc" cloneof="roadfighter" romof="roadfighter">
+		<description>Road Fighter (T-Chi, v1.2)</description>
+		<year>2009</year>
+		<manufacturer>九班</manufacturer>
+		<rom name="Road Fighter (T-Chi, v1.2).nes" size="24592" crc="b5d69e4c"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -16932,6 +17028,22 @@
 		<year>2021</year>
 		<manufacturer>Zero Meaning</manufacturer>
 		<rom name="Zelda Kong (2021)(Zero Meaning).nes" size="24592" crc="4c801a11"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="zeldanodenc" cloneof="legenzel" romof="legenzel">
+		<description>Zelda no Densetsu - The Hyrule Fantasy (T-Chi)</description>
+		<year>2022</year>
+		<manufacturer>NOKOH</manufacturer>
+		<rom name="Zelda no Densetsu - The Hyrule Fantasy (T-Chi).nes" size="131088" crc="4522aa89"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="zenc" cloneof="zen" romof="zen">
+		<description>Zen - Intergalactic Ninja (T-Chi)</description>
+		<year>2022</year>
+		<manufacturer>逆游の五彩魚</manufacturer>
+		<rom name="Zen - Intergalactic Ninja (T-Chi).nes" size="524304" crc="b8e36aee"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

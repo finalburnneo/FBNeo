@@ -4278,6 +4278,7 @@ DRV		BurnDrvDdragon2;
 DRV		BurnSpecddragon2;
 DRV		BurnSpecddragon3;
 DRV		BurnDrvnes_doubldraiiic;
+DRV		BurnDrvnes_doubldraiiisc;
 DRV		BurnDrvnes_doubldraiii;
 DRV		BurnDrvmd_ddragon5s;
 DRV		BurnDrvmd_ddragon5;
@@ -4309,6 +4310,7 @@ DRV		BurnDrvpce_download;
 DRV		BurnDrvnes_downtnekkousorda;
 DRV		BurnDrvnes_downtnekkousordac;
 DRV		BurnDrvnes_downtnekmon;
+DRV		BurnDrvnes_downtnekmonc;
 DRV		BurnDrvDowntownj;
 DRV		BurnDrvDowntownp;
 DRV		BurnDrvDowntown;
@@ -6348,6 +6350,9 @@ DRV		BurnSpecGommyen;
 DRV		BurnSpecGommyes;
 DRV		BurnDrvMSX_gomokuna;
 DRV		BurnDrvMSX_gomokunaa;
+DRV		BurnDrvnes_gomokuj;
+DRV		BurnDrvnes_gomokuc;
+DRV		BurnDrvnes_gomoku;
 DRV		BurnDrvpce_gomola;
 DRV		BurnDrvImsorryj;
 DRV		BurnDrvGondou;
@@ -7907,6 +7912,7 @@ DRV		BurnDrvKickgoal;
 DRV		BurnDrvKickgoala;
 DRV		BurnDrvMSX_kickit;
 DRV		BurnDrvMSX_kickita;
+DRV		BurnDrvnes_kickmasterc;
 DRV		BurnDrvnes_kickmaster;
 DRV		BurnSpeckickoff;
 DRV		BurnDrvnes_kickoff;
@@ -8241,6 +8247,7 @@ DRV		BurnDrvKuhga;
 DRV		BurnDrvsms_kujaku;
 DRV		BurnDrvmd_kujaku2;
 DRV		BurnDrvnes_kungfu;
+DRV		BurnDrvnes_kungfuc;
 DRV		BurnDrvsms_kungfuk;
 DRV		BurnDrvMSX_kungfum;
 DRV		BurnDrvMSX_kungfumb;
@@ -8961,6 +8968,7 @@ DRV		BurnDrvMakaimuc;
 DRV		BurnDrvMakaimug;
 DRV		BurnDrvMakaimur;
 DRV		BurnDrvnes_makaimura;
+DRV		BurnDrvnes_makaimurac;
 DRV		BurnDrvnes_makaimuraarcade;
 DRV		BurnDrvMSX_makethemfall;
 DRV		BurnDrvMSX_makethemjump;
@@ -9634,6 +9642,7 @@ DRV		BurnDrvM660;
 DRV		BurnDrvnes_missioncobra;
 DRV		BurnDrvMisncrfta;
 DRV		BurnDrvMisncrft;
+DRV		BurnDrvnes_missiimpc;
 DRV		BurnDrvnes_missiimp;
 DRV		BurnSpecMissionjupiter;
 DRV		BurnSpecMissomega;
@@ -11794,6 +11803,7 @@ DRV		BurnDrvSailorMoonk;
 DRV		BurnDrvSailorMoont;
 DRV		BurnDrvSailorMoonu;
 DRV		BurnDrvMSX_pricemag;
+DRV		BurnSpecPrimaderezx;
 DRV		BurnDrvgg_primal;
 DRV		BurnDrvmd_primal;
 DRV		BurnDrvPrmtmfgt;
@@ -12264,7 +12274,9 @@ DRV		BurnDrvnes_racketsrivals;
 DRV		BurnDrvRdaction;
 DRV		BurnDrvRadmu;
 DRV		BurnDrvRadm;
+DRV		BurnDrvnes_radracerc;
 DRV		BurnDrvnes_radracer;
+DRV		BurnDrvnes_radraceriic;
 DRV		BurnDrvnes_radracerii;
 DRV		BurnDrvnes_radrac;
 DRV		BurnDrvRadrj;
@@ -12700,6 +12712,7 @@ DRV		BurnDrvsms_roadfght;
 DRV		BurnDrvRoadf;
 DRV		BurnDrvRoadf2;
 DRV		BurnDrvRoadf3;
+DRV		BurnDrvnes_roadfighterc;
 DRV		BurnDrvsg1k_roadfght;
 DRV		BurnSpecRoadrace;
 DRV		BurnDrvgg_roadrash;
@@ -18430,9 +18443,11 @@ DRV		BurnDrvnes_zeldaiiac;
 DRV		BurnDrvnes_zeldaiird;
 DRV		BurnDrvnes_zeldakong;
 DRV		BurnDrvfds_zeldanodenj;
+DRV		BurnDrvnes_zeldanodenc;
 DRV		BurnDrvfds_zeldanoden;
 DRV		BurnDrvMSX_baduk;
 DRV		BurnSpecZen;
+DRV		BurnDrvnes_zenc;
 DRV		BurnDrvnes_zen;
 DRV		BurnSpecZenji;
 DRV		BurnDrvMSX_zenji;
@@ -22855,6 +22870,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecddragon2,			// Double Dragon II: The Revenge (128K)
 	&BurnSpecddragon3,			// Double Dragon III - The Rosetta Stone (128K)
 	&BurnDrvnes_doubldraiiic,	// Double Dragon III - The Sacred Stones (Hack, Spanish v1.0)
+	&BurnDrvnes_doubldraiiisc,	// Double Dragon III - The Sacred Stones (T-Chi)
 	&BurnDrvnes_doubldraiii,	// Double Dragon III - The Sacred Stones (USA)
 	&BurnDrvmd_ddragon5s,		// Double Dragon V - The Shadow Falls (Hack, Spanish)
 	&BurnDrvmd_ddragon5,		// Double Dragon V - The Shadow Falls (USA)
@@ -22886,6 +22902,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_downtnekkousorda,// Downtown - Nekketsu Koushinkyoku - Soreyuke Daiundoukai (Japan)
 	&BurnDrvnes_downtnekkousordac,// Downtown - Nekketsu Koushinkyoku - Soreyuke Daiundoukai (T-Chi)
 	&BurnDrvnes_downtnekmon,	// Downtown - Nekketsu Monogatari (Japan)
+	&BurnDrvnes_downtnekmonc,	// Downtown - Nekketsu Monogatari (T-Chi)
 	&BurnDrvDowntownj,			// DownTown / Mokugeki (Joystick Hack)
 	&BurnDrvDowntownp,			// DownTown / Mokugeki (prototype)
 	&BurnDrvDowntown,			// DownTown / Mokugeki (Set 1)
@@ -24925,6 +24942,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecGommyes,			// Gommy Defensor Medieval (Spanish) (128K) (HB)
 	&BurnDrvMSX_gomokuna,		// Gomoku Narabe (Jpn)
 	&BurnDrvMSX_gomokunaa,		// Gomoku Narabe (Jpn, Alt)
+	&BurnDrvnes_gomokuj,		// Gomoku Narabe Renju (Japan)
+	&BurnDrvnes_gomokuc,		// Gomoku Narabe Renju (T-Chi)
+	&BurnDrvnes_gomoku,			// Gomoku Narabe Renju (T-Eng)
 	&BurnDrvpce_gomola,			// Gomola Speed
 	&BurnDrvImsorryj,			// Gonbee no I'm Sorry (315-5110, Japan)
 	&BurnDrvGondou,				// Gondomania (US)
@@ -26484,6 +26504,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKickgoala,			// Kick Goal (set 2)
 	&BurnDrvMSX_kickit,			// Kick It (Jpn)
 	&BurnDrvMSX_kickita,		// Kick It (Jpn, Alt)
+	&BurnDrvnes_kickmasterc,	// Kick Master (T-Chi)
 	&BurnDrvnes_kickmaster,		// Kick Master (USA)
 	&BurnSpeckickoff,			// Kick Off (48K)
 	&BurnDrvnes_kickoff,		// Kick Off (Europe)
@@ -26818,6 +26839,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_kujaku,			// Kujaku Ou (Jpn)
 	&BurnDrvmd_kujaku2,			// Kujaku Ou 2 - Geneijou (Jpn)
 	&BurnDrvnes_kungfu,			// Kung Fu (Japan, USA)
+	&BurnDrvnes_kungfuc,		// Kung Fu (T-Chi)
 	&BurnDrvsms_kungfuk,		// Kung Fu Kid (Euro, USA, Bra)
 	&BurnDrvMSX_kungfum,		// Kung Fu Master (Jpn)
 	&BurnDrvMSX_kungfumb,		// Kung Fu Master (Jpn, Alt 2)
@@ -27538,6 +27560,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMakaimug,			// Makai-Mura (Japan revision G)
 	&BurnDrvMakaimur,			// Makai-Mura (Japan)
 	&BurnDrvnes_makaimura,		// Makaimura (Japan)
+	&BurnDrvnes_makaimurac,		// Makaimura (T-Chi)
 	&BurnDrvnes_makaimuraarcade,// Makaimura Arcade (Hack)
 	&BurnDrvMSX_makethemfall,	// Make Them Fall (HB)
 	&BurnDrvMSX_makethemjump,	// Make Them Jump (HB)
@@ -28211,6 +28234,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_missioncobra,	// Mission Cobra (USA) (Unl)
 	&BurnDrvMisncrfta,			// Mission Craft (version 2.4)
 	&BurnDrvMisncrft,			// Mission Craft (version 2.7)
+	&BurnDrvnes_missiimpc,		// Mission Impossible (T-Chi)
 	&BurnDrvnes_missiimp,		// Mission Impossible (USA)
 	&BurnSpecMissionjupiter,	// Mission Jupiter (48K)
 	&BurnSpecMissomega,			// Mission Omega (48K)
@@ -30371,6 +30395,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSailorMoont,		// Pretty Soldier Sailor Moon (ver. 95/03/22B, Taiwan)
 	&BurnDrvSailorMoonu,		// Pretty Soldier Sailor Moon (ver. 95/03/22B, USA)
 	&BurnDrvMSX_pricemag,		// Price of Magik, The (Euro)
+	&BurnSpecPrimaderezx,		// Prima Dere ZX (HB)
 	&BurnDrvgg_primal,			// Primal Rage (Euro, USA)
 	&BurnDrvmd_primal,			// Primal Rage (Euro, USA)
 	&BurnDrvPrmtmfgt,			// Prime Time Fighter (Ver 2.1A 1993/05/21) (New Version)
@@ -30841,7 +30866,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRdaction,			// Rad Action / NinjaKun Ashura no Shou
 	&BurnDrvRadmu,				// Rad Mobile (US)
 	&BurnDrvRadm,				// Rad Mobile (World)
+	&BurnDrvnes_radracerc,		// Rad Racer (T-Chi)
 	&BurnDrvnes_radracer,		// Rad Racer (USA)
+	&BurnDrvnes_radraceriic,	// Rad Racer II (T-Chi)
 	&BurnDrvnes_radracerii,		// Rad Racer II (USA)
 	&BurnDrvnes_radrac,			// Rad Racket - Deluxe Tennis II (USA)
 	&BurnDrvRadrj,				// Rad Rally (Japan)
@@ -31277,6 +31304,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRoadf,				// Road Fighter (set 1)
 	&BurnDrvRoadf2,				// Road Fighter (set 2)
 	&BurnDrvRoadf3,				// Road Fighter (set 3, conversion hack on Hyper Sports PCB)
+	&BurnDrvnes_roadfighterc,	// Road Fighter (T-Chi, v1.2)
 	&BurnDrvsg1k_roadfght,		// Road Fighter (Tw)
 	&BurnSpecRoadrace,			// Road Race (48K)
 	&BurnDrvgg_roadrash,		// Road Rash (Euro)
@@ -35731,7 +35759,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_umk3mh,			// Ultimate Mortal Kombat 3 Mini (Hack, v13)
 	&BurnDrvUmk3p,				// Ultimate Mortal Kombat 3 Plus (Hack, Beta 2)
 	&BurnDrvUmk3te,				// Ultimate Mortal Kombat 3 Tournament Edition (hack, V2.0.042/August 2018)
-	&BurnDrvUmk3uk,				// Ultimate Mortal Kombat 3 Uk (Hack, Ver. 2022-04-06)
+	&BurnDrvUmk3uk,				// Ultimate Mortal Kombat 3 Uk (FBNeo, Ver. 2021-07-20)
 	&BurnDrvmd_umk3t,			// Ultimate Mortal Kombat Trilogy (Hack, rev.5149)
 	&BurnDrvmd_ultqixs,			// Ultimate Qix (Hack, Spanish)
 	&BurnDrvmd_ultqix,			// Ultimate Qix (USA)
@@ -37007,9 +37035,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_zeldaiird,		// Zelda II Redux - The Adventure of Link (Hack, v3.0)
 	&BurnDrvnes_zeldakong,		// Zelda Kong (HB, Global Hack)
 	&BurnDrvfds_zeldanodenj,	// Zelda no Densetsu - The Hyrule Fantasy (Japan)
+	&BurnDrvnes_zeldanodenc,	// Zelda no Densetsu - The Hyrule Fantasy (T-Chi)
 	&BurnDrvfds_zeldanoden,		// Zelda no Densetsu - The Hyrule Fantasy (T-Eng)
 	&BurnDrvMSX_baduk,			// Zemmix Baduk Gyosil (Kor)
 	&BurnSpecZen,				// ZEN (48K) (HB)
+	&BurnDrvnes_zenc,			// Zen - Intergalactic Ninja (T-Chi)
 	&BurnDrvnes_zen,			// Zen - Intergalactic Ninja (USA)
 	&BurnSpecZenji,				// Zenji (48K)
 	&BurnDrvMSX_zenji,			// Zenji (Jpn)

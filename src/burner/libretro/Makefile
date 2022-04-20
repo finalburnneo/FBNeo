@@ -233,7 +233,7 @@ else ifeq ($(platform), vita)
 	PLATFORM_DEFINES += -DVITA
 	ENDIANNESS_DEFINES := -DLSB_FIRST
 	CFLAGS += -mfloat-abi=hard -fsingle-precision-constant
-	CXXFLAGS += -mfloat-abi=hard -fsingle-precision-constant -fpermissive -fno-rtti -fno-exceptions
+	CXXFLAGS += -mfloat-abi=hard -fsingle-precision-constant -fpermissive -fno-rtti
 	EXTERNAL_ZLIB = 1
 	STATIC_LINKING = 1
 	USE_CYCLONE = 1
@@ -247,7 +247,7 @@ else ifeq ($(platform), ctr)
 	PLATFORM_DEFINES += -D_3DS
 	ENDIANNESS_DEFINES := -DLSB_FIRST
 	CFLAGS += -march=armv6k -mtune=mpcore -mfloat-abi=hard
-	CXXFLAGS += -march=armv6k -mtune=mpcore -mfloat-abi=hard -fpermissive -fno-rtti -fno-exceptions
+	CXXFLAGS += -march=armv6k -mtune=mpcore -mfloat-abi=hard -fpermissive -fno-rtti
 	EXTERNAL_ZLIB = 1
 	STATIC_LINKING = 1
 	USE_CYCLONE = 1
@@ -283,7 +283,7 @@ else ifeq ($(platform), libnx)
 		-fPIE -I$(LIBNX)/include/ -ffunction-sections -fdata-sections -ftls-model=local-exec -Wl,--allow-multiple-definition -specs=$(LIBNX)/switch.specs
 	CFLAGS += $(INCDIRS)
 	CFLAGS	+=	$(INCLUDE)  -D__SWITCH__ -DHAVE_LIBNX
-	CXXFLAGS := $(ASFLAGS) $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
+	CXXFLAGS := $(ASFLAGS) $(CFLAGS) -fno-rtti -std=gnu++11
 	CFLAGS += -std=gnu11
 	STATIC_LINKING = 1
 	# 2021-05-18 : disabling 7z again for libnx, it seems the lib version linked to RA is old

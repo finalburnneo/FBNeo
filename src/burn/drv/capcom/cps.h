@@ -473,6 +473,11 @@ void dino_decode();
 void punisher_decode();
 void slammast_decode();
 
+void wof_patch(void);
+void dino_patch(void);
+void punisher_patch(void);
+void slammast_patch(void);
+
 // cps2_crypt.cpp
 void cps2_decrypt_game_data();
 

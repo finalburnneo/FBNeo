@@ -396,7 +396,7 @@ INT32 BurnDrvGetHDDName(char** pszName, UINT32 i, INT32 nAka);
 
 void Reinitialise();
 
-extern bool bDoIpsPatch;
+extern bool bDoIpsPatch, bDoBuiltinPatch;
 extern INT32 nIpsMaxFileLen;
 void IpsApplyPatches(UINT8* base, char* rom_name);
 
@@ -419,6 +419,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define BDF_HISCORE_SUPPORTED							(1 << 11)
 #define BDF_RUNAHEAD_DRAWSYNC                           (1 << 12)
 #define BDF_RUNAHEAD_DISABLED                           (1 << 13)
+#define BDF_BUILTIN										(1 << 14)
 
 // Flags for the hardware member
 // Format: 0xDDEEFFFF, where DD: Manufacturer, EE: Hardware platform, FFFF: Flags (used by driver)

@@ -187,6 +187,7 @@ BEGIN
 	IDS_SEL_BOARDTYPE			"Board Type"
 	IDS_SEL_BOOTLEG				"Bootleg"
 	IDS_SEL_PROTOTYPE			"Prototype"
+	IDS_SEL_BUILTIN				"Built-in Patch"
 	IDS_SEL_HACK				"Hack"
 	IDS_SEL_HOMEBREW			"Homebrew"
 	IDS_SEL_DEMO				"Demo"

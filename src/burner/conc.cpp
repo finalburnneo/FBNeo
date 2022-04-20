@@ -727,7 +727,7 @@ static INT32 ConfigParseMAMEFile()
 	INT32 ret = 1;
 
 	if (fz) {
-		ret = ConfigParseMAMEFile_internal(fz, BurnDrvGetText(DRV_NAME));
+		ret = ConfigParseMAMEFile_internal(fz, BurnDrvGetTextA(DRV_NAME));
 		// let's try using parent entry as a fallback if no cheat was found for this romset
 		if (ret && (BurnDrvGetFlags() & BDF_CLONE) && BurnDrvGetTextA(DRV_PARENT)) {
 			fseek(fz, 0, SEEK_SET);

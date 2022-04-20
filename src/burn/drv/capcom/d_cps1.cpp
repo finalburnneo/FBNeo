@@ -12629,8 +12629,6 @@ static struct BurnRomInfo Sf2amf10RomDesc[] = {
 	{ "23.bin",     0x020000, 0x94a46525, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "21.bin",     0x020000, 0x8fb3dd47, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
-	{ "30.bin",   	0x010000, 0xa4823a1b, BRF_PRG | CPS1_Z80_PROGRAM },
-
 	{ "a.bin",   	0x080000, 0x817af36b, BRF_GRA | CPS1_TILES },
 	{ "b.bin",   	0x080000, 0x38668d02, BRF_GRA | CPS1_TILES },
 	{ "g.bin",   	0x080000, 0xa69ee127, BRF_GRA | CPS1_TILES },	
@@ -12643,6 +12641,8 @@ static struct BurnRomInfo Sf2amf10RomDesc[] = {
 	{ "f.bin",   	0x080000, 0xd9ee7246, BRF_GRA | CPS1_TILES },
 	{ "k.bin",   	0x080000, 0x6639a843, BRF_GRA | CPS1_TILES },
 	{ "l.bin",   	0x080000, 0x9ac6e349, BRF_GRA | CPS1_TILES },
+
+	{ "30.bin",   	0x010000, 0xa4823a1b, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "28.4",       0x010000, 0x8153ef93, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	{ "25.2",       0x010000, 0x45bca686, BRF_SND | CPS1_OKIM6295_SAMPLES },
@@ -18723,6 +18723,13 @@ static INT32 Sf2amf2Init()
 	return Sf2koryu2Init();
 }
 
+static INT32 Sf2amf10Init()
+{
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2amf10;
+
+	return Sf2koryu2Init();
+}
+
 UINT8 __fastcall Sf2mdtReadByte(UINT32 a)
 {
 	switch (a) {
@@ -23195,9 +23202,9 @@ struct BurnDriver BurnDrvCpsSf2amf10 = {
 	"sf2amf10", "sf2ce", NULL, NULL, "1992",
 	"Street Fighter II - Champion Edition (L735 Test Rom, bootleg, set 3)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2amf10RomInfo, Sf2amf10RomName, NULL, NULL, NULL, NULL, Sf2yycInputInfo, Sf2amfDIPInfo,
-	Sf2amf2Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Sf2amf10Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 struct BurnDriver BurnDrvCpsSf2mega = {

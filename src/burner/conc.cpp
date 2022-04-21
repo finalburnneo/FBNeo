@@ -507,6 +507,8 @@ static INT32 ConfigParseMAMEFile_internal(FILE *fz, const TCHAR *name)
 	UINT32 nValue = 0;
 	UINT32 nAttrib = 0;
 
+	bool bRealCheatFound = false;
+
 	CheatInfo* pCurrentCheat = NULL;
 	_stprintf(gName, _T(":%s:"), name);
 
@@ -630,6 +632,9 @@ static INT32 ConfigParseMAMEFile_internal(FILE *fz, const TCHAR *name)
 				continue;
 			}
 
+			// we likely found a real cheat, it's not some kind of title or separator
+			bRealCheatFound = true;
+
 			OptionName(_T("Disabled"));
 
 			if (nAddress) {
@@ -711,8 +716,11 @@ static INT32 ConfigParseMAMEFile_internal(FILE *fz, const TCHAR *name)
 		}
 	}
 
-	// if no cheat was found, don't return success code
-	if (pCurrentCheat == NULL) return 1;
+	// if no real cheat was found, reset pCheatInfo and don't return success code
+	if (!bRealCheatFound) {
+		pCheatInfo = NULL;
+		return 1;
+	}
 
 	return 0;
 }

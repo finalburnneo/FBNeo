@@ -1394,6 +1394,15 @@ INT32 CpsLoadTilesSf2ebbl3(INT32 nStart)
 	return 0;
 }
 
+INT32 CpsLoadTilesSf2amf10(INT32 nStart)
+{
+	CpsLoadTilesBootlegSwap(CpsGfx + 0x000000, nStart + 0);
+	CpsLoadTilesBootlegSwap(CpsGfx + 0x200000, nStart + 4);
+	CpsLoadTilesBootlegSwap(CpsGfx + 0x400000, nStart + 8);
+
+	return 0;
+}
+
 INT32 CpsLoadTilesFcrash(INT32 nStart)
 {
 	CpsLoadTilesBootlegType3(CpsGfx + 0x000000, nStart +  0);

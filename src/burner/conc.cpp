@@ -453,7 +453,7 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 
 #define IS_MIDWAY ((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_MIDWAY) == HARDWARE_PREFIX_MIDWAY)
 
-static INT32 ConfigParseMAMEFile_internal(FILE *fz, const char *name)
+static INT32 ConfigParseMAMEFile_internal(FILE *fz, const TCHAR *name)
 {
 #define AddressInfo()	\
 	INT32 k = (flags >> 20) & 3;	\
@@ -729,9 +729,9 @@ static INT32 ConfigParseMAMEFile()
 	if (fz) {
 		ret = ConfigParseMAMEFile_internal(fz, BurnDrvGetText(DRV_NAME));
 		// let's try using parent entry as a fallback if no cheat was found for this romset
-		if (ret && (BurnDrvGetFlags() & BDF_CLONE) && BurnDrvGetTextA(DRV_PARENT)) {
+		if (ret && (BurnDrvGetFlags() & BDF_CLONE) && BurnDrvGetText(DRV_PARENT)) {
 			fseek(fz, 0, SEEK_SET);
-			ret = ConfigParseMAMEFile_internal(fz, BurnDrvGetTextA(DRV_PARENT));
+			ret = ConfigParseMAMEFile_internal(fz, BurnDrvGetText(DRV_PARENT));
 		}
 
 		fclose(fz);

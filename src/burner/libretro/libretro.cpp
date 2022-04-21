@@ -1825,9 +1825,17 @@ static bool retro_load_game_common()
 	}
 	else
 	{
-		SetUguiError("Romset is unknown\nRead https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo");
-		HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Romset is unknown\n");
-		HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Read https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo\n");
+		const char* s1 = "Romset is unknown.\n";
+#ifndef LIGHT
+		const char* s2 = "\n";
+#else
+		const char* s2 = "Note that your device's limitations prevent you from running a full FBNeo build.\nSo the support for this romset might have been removed.\n\n";
+#endif
+		const char* s3 = "Read https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo";
+
+		static char uguiText[4096];
+		sprintf(uguiText, "%s%s%s", s1, s2, s3);
+		SetUguiError(uguiText);
 		goto end;
 	}
 	return true;

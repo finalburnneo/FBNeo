@@ -217,6 +217,7 @@ static struct BurnInputInfo DinoInputList[] =
 	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6 ,  "diag"    },
 	{"Service"          , BIT_DIGITAL  , CpsInp018+2 ,  "service" },
 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E     ,  "dip"     },
+	{"Dip D"            , BIT_DIPSWITCH, &fQSoundDip ,  "dip"     },
 };
 
 STDINPUTINFO(Dino)
@@ -256,48 +257,10 @@ static struct BurnInputInfo DinohInputList[] =
 	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6 ,  "diag"    },
 	{"Service"          , BIT_DIGITAL  , CpsInp018+2 ,  "service" },
 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E     ,  "dip"     },
+	{"Dip D"            , BIT_DIPSWITCH, &fQSoundDip ,  "dip"     },
 };
 
 STDINPUTINFO(Dinoh)
-
-static struct BurnInputInfo Jurassic99InputList[] =
-{
-	{"P1 Coin"          , BIT_DIGITAL  , CpsInp018+0 , "p1 coin"  },
-	{"P1 Start"         , BIT_DIGITAL  , CpsInp018+4 , "p1 start" },
-	{"P1 Up"            , BIT_DIGITAL  , CpsInp001+3 , "p1 up"    },
-	{"P1 Down"          , BIT_DIGITAL  , CpsInp001+2 , "p1 down"  },
-	{"P1 Left"          , BIT_DIGITAL  , CpsInp001+1 , "p1 left"  },
-	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0 , "p1 right" },
-	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001+4 , "p1 fire 1"},
-	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001+5 , "p1 fire 2"},
-	{"P1 Bomb"          , BIT_DIGITAL  , CpsInp001+6 , "p1 fire 3"},
-
-	{"P2 Coin"          , BIT_DIGITAL  , CpsInp018+1 , "p2 coin"  },
-	{"P2 Start"         , BIT_DIGITAL  , CpsInp018+5 , "p2 start" },
-	{"P2 Up"            , BIT_DIGITAL  , CpsInp000+3 , "p2 up"    },
-	{"P2 Down"          , BIT_DIGITAL  , CpsInp000+2 , "p2 down"  },
-	{"P2 Left"          , BIT_DIGITAL  , CpsInp000+1 , "p2 left"  },
-	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0 , "p2 right" },
-	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000+4 , "p2 fire 1"},
-	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000+5 , "p2 fire 2"},
-	{"P2 Bomb"          , BIT_DIGITAL  , CpsInp000+6 , "p2 fire 3"},
-
-	{"P3 Coin"          , BIT_DIGITAL  , CpsInpc001+6, "p3 coin"  },
-	{"P3 Start"         , BIT_DIGITAL  , CpsInpc001+7, "p3 start" },
-	{"P3 Up"            , BIT_DIGITAL  , CpsInpc001+3, "p3 up"    },
-	{"P3 Down"          , BIT_DIGITAL  , CpsInpc001+2, "p3 down"  },
-	{"P3 Left"          , BIT_DIGITAL  , CpsInpc001+1, "p3 left"  },
-	{"P3 Right"         , BIT_DIGITAL  , CpsInpc001+0, "p3 right" },
-	{"P3 Attack"        , BIT_DIGITAL  , CpsInpc001+4, "p3 fire 1"},
-	{"P3 Jump"          , BIT_DIGITAL  , CpsInpc001+5, "p3 fire 2"},
-
-	{"Reset"            , BIT_DIGITAL  , &CpsReset   ,  "reset"   },
-	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6 ,  "diag"    },
-	{"Service"          , BIT_DIGITAL  , CpsInp018+2 ,  "service" },
-	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E     ,  "dip"     },
-};
-
-STDINPUTINFO(Jurassic99)
 
 static struct BurnInputInfo DynwarInputList[] =
 {
@@ -930,6 +893,7 @@ static struct BurnInputInfo PunisherInputList[] =
 	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6, "diag"      },
 	{"Service"          , BIT_DIGITAL  , CpsInp018+2, "service"   },
 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    , "dip"       },
+	{"Dip D"            , BIT_DIPSWITCH, &fQSoundDip, "dip"       },
 };
 
 STDINPUTINFO(Punisher)
@@ -1281,6 +1245,7 @@ static struct BurnInputInfo SlammastInputList[] =
  	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6 , "diag"     },
  	{"Service"          , BIT_DIGITAL  , CpsInp018+2 , "service"  },
  	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E     , "dip"      },
+	{"Dip D"            , BIT_DIPSWITCH, &fQSoundDip , "dip"      },
 };
 
 STDINPUTINFO(Slammast)
@@ -1427,6 +1392,7 @@ static struct BurnInputInfo VarthInputList[] =
  	{"Dip A"            , BIT_DIPSWITCH, &Cpi01A    , "dip"       },
  	{"Dip B"            , BIT_DIPSWITCH, &Cpi01C    , "dip"       },
  	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    , "dip"       },
+	{"Dip D"            , BIT_DIPSWITCH, &fFakeDip  , "dip"       },
 };
 
 STDINPUTINFO(Varth)
@@ -1492,10 +1458,11 @@ static struct BurnInputInfo WofInputList[] =
  	{"P3 Attack"        , BIT_DIGITAL  , CpsInpc001+4, "p3 fire 1"},
  	{"P3 Jump"          , BIT_DIGITAL  , CpsInpc001+5, "p3 fire 2"},
 
- 	{"Reset"            , BIT_DIGITAL  , &CpsReset,   "reset"     },
- 	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6, "diag"      },
- 	{"Service"          , BIT_DIGITAL  , CpsInp018+2, "service"   },
- 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    , "dip"       },
+ 	{"Reset"            , BIT_DIGITAL  , &CpsReset  ,  "reset"    },
+ 	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6,  "diag"     },
+ 	{"Service"          , BIT_DIGITAL  , CpsInp018+2,  "service"  },
+	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    ,  "dip"      },
+	{"Dip D"            , BIT_DIPSWITCH, &fQSoundDip,  "dip"      },
 };
 
 STDINPUTINFO(Wof)
@@ -1734,7 +1701,8 @@ static struct BurnInputInfo WofsjbInputList[] =
  	{"Reset"            , BIT_DIGITAL  , &CpsReset,   "reset"     },
  	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6, "diag"      },
  	{"Service"          , BIT_DIGITAL  , CpsInp018+2, "service"   },
- 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    , "dip"       },
+	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    , "dip"       },
+	{"Dip D"            , BIT_DIPSWITCH, &fQSoundDip, "dip"       },
 };
 
 STDINPUTINFO(Wofsjb)
@@ -2243,7 +2211,7 @@ static struct BurnDIPInfo DynwarDIPList[]=
 	// Dip A
         CPS1_COINAGE_3(0x14)
 
-        {0   , 0xfe, 0   , 2   , "Free Play"              },
+    {0   , 0xfe, 0   , 2   , "Free Play"              },
 	{0x14, 0x01, 0x80, 0x00, "Off"                    },
 	{0x14, 0x01, 0x80, 0x80, "On"                     },
 
@@ -4312,7 +4280,7 @@ STDDIPINFO(Sf2mega)
 static struct BurnDIPInfo SlammastDIPList[]=
 {
 	// Defaults
-	{0x23, 0xff, 0xff, 0x00, NULL                     },
+	{0x23, 0xff, 0xff, 0x08, NULL                     },
 
 	// Dip C
 	{0   , 0xfe, 0   , 2   , "Freeze"                 },
@@ -4835,6 +4803,77 @@ static struct BurnDIPInfo Wof3sjDIPList[]=
 };
 
 STDDIPINFO(Wof3sj)
+
+static struct BurnDIPInfo DinoQSDIPList[] =
+{
+	// Defaults
+	{0x1c, 0xff, 0xff, 0x00, NULL                     },
+
+	// Fake Dip
+	{0   , 0xfe, 0   , 2   , "QSound"          },
+	{0x1c, 0x01, 0x01, 0x00, "Off"                    },
+	{0x1c, 0x01, 0x01, 0x01, "On"                     },
+};
+
+STDDIPINFO(DinoQS)
+
+static struct BurnDIPInfo DinohQSDIPList[] =
+{
+	// Defaults
+	{0x1e, 0xff, 0xff, 0x00, NULL                     },
+
+	// Fake Dip
+	{0   , 0xfe, 0   , 2   , "QSound"          },
+	{0x1e, 0x01, 0x01, 0x00, "Off"                    },
+	{0x1e, 0x01, 0x01, 0x01, "On"                     },
+};
+
+STDDIPINFO(DinohQS)
+
+static struct BurnDIPInfo PunisherQSDIPList[] =
+{
+	// Defaults
+	{0x14, 0xff, 0xff, 0x00, NULL                     },
+
+	// Fake Dip
+	{0   , 0xfe, 0   , 2   , "QSound"                 },
+	{0x14, 0x01, 0x01, 0x00, "Off"                    },
+	{0x14, 0x01, 0x01, 0x01, "On"                     },
+};
+
+STDDIPINFO(PunisherQS)
+
+static struct BurnDIPInfo SlammastQSDIPList[] =
+{
+	// Defaults
+	{0x24, 0xff, 0xff, 0x01, NULL                     },
+
+	// Fake Dip
+	{0   , 0xfe, 0   , 2   , "QSound"                 },
+	{0x24, 0x01, 0x01, 0x01, "Off"                    },
+	{0x24, 0x01, 0x01, 0x00, "On"                     },
+};
+
+STDDIPINFO(SlammastQS)
+
+static struct BurnDIPInfo WingmanDIPList[] =
+{
+	// Defaults
+	{0x18, 0xff, 0xff, 0x00, NULL                     },
+
+	// Fake Dip
+	{0   , 0xfe, 0   , 2   , "Wingman Mode"           },
+	{0x18, 0x01, 0x01, 0x00, "Off"                    },
+	{0x18, 0x01, 0x01, 0x01, "On"                     },
+};
+
+STDDIPINFO(Wingman)
+
+STDDIPINFOEXT(DinoQSound, Dino, DinoQS)
+STDDIPINFOEXT(DinohQSound, Dinoh, DinohQS)
+STDDIPINFOEXT(PunisherQSound, Punisher, PunisherQS)
+STDDIPINFOEXT(SlammastQSound, Slammast, SlammastQS)
+STDDIPINFOEXT(Varthj, Varth, Wingman)
 
 // Rom Definitions
 
@@ -5947,7 +5986,7 @@ static struct BurnRomInfo DinopicRomDesc[] = {
 	{ "12.bin",        0x080000, 0xb284c4a7, BRF_GRA | CPS1_TILES },
 	{ "11.bin",        0x080000, 0xb7ad3394, BRF_GRA | CPS1_TILES },
 	{ "10.bin",        0x080000, 0x88847705, BRF_GRA | CPS1_TILES },
-#ifdef CPS1_HACK_QSOUND
+
 	{ "cd_q.5k",       0x020000, 0x605fdb0b, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "cd-q1.1k",      0x080000, 0x60927775, BRF_SND | CPS1_QSOUND_SAMPLES },
@@ -5965,12 +6004,11 @@ static struct BurnRomInfo DinopicRomDesc[] = {
 	{ "d8l1.8l",       0x000117, 0x539fc7da, BRF_OPT },
 	{ "d9k2.9k",       0x000117, 0xcd85a156, BRF_OPT },
 	{ "d10f1.10f",     0x000117, 0x6619c494, BRF_OPT },
-#else
+
 	/* PIC16c57 - protected, dump isn't valid */	
 	{ "pic16c57-rp",   0x002d4c, 0x5a6d393c, BRF_PRG | CPS1_PIC },
 
 	{ "1.bin",         0x080000, 0x7d921309, BRF_SND | CPS1_OKIM6295_SAMPLES },
-#endif
 };
 
 STD_ROM_PICK(Dinopic)
@@ -5990,7 +6028,7 @@ static struct BurnRomInfo Dinopic2RomDesc[] = {
 	{ "27c4000-m12481-7.bin",	0x080000, 0xb284c4a7, BRF_GRA | CPS1_TILES },
 	{ "27c4000-m12481-6.bin",	0x080000, 0xb7ad3394, BRF_GRA | CPS1_TILES },
 	{ "27c4000-m12481-5.bin",	0x080000, 0x88847705, BRF_GRA | CPS1_TILES },
-#ifdef CPS1_HACK_QSOUND
+
 	{ "cd_q.5k",				0x020000, 0x605fdb0b, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "cd-q1.1k",				0x080000, 0x60927775, BRF_SND | CPS1_QSOUND_SAMPLES },
@@ -6008,7 +6046,7 @@ static struct BurnRomInfo Dinopic2RomDesc[] = {
 	{ "d8l1.8l",				0x000117, 0x539fc7da, BRF_OPT },
 	{ "d9k2.9k",				0x000117, 0xcd85a156, BRF_OPT },
 	{ "d10f1.10f",				0x000117, 0x6619c494, BRF_OPT },
-#else
+
 	/* PIC16c57 - protected, dump isn't valid */
 	{ "pic16c57-xt.hex",		0x0026cc, 0xa6a5eac4, BRF_PRG | CPS1_PIC },
 
@@ -6020,7 +6058,6 @@ static struct BurnRomInfo Dinopic2RomDesc[] = {
 	{ "palce16v8h-1.bin",		0x000117, 0x48253c66, BRF_OPT },
 	{ "palce16v8h-2.bin",		0x000117, 0x9ae375ba, BRF_OPT },
 	{ "palce16v8h-3.bin",		0x000117, 0xb0f10adf, BRF_OPT },
-#endif
 };
 
 STD_ROM_PICK(Dinopic2)
@@ -6033,7 +6070,7 @@ static struct BurnRomInfo Dinopic3RomDesc[] = {
 
 	{ "tb416-02_27c160.bin",    0x200000, 0xbfd01d21, BRF_GRA | CPS1_TILES },
 	{ "tb415-01_27c160.bin",	0x200000, 0xef508ec5, BRF_GRA | CPS1_TILES },
-#ifdef CPS1_HACK_QSOUND
+
 	{ "cd_q.5k",				0x020000, 0x605fdb0b, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "cd-q1.1k",				0x080000, 0x60927775, BRF_SND | CPS1_QSOUND_SAMPLES },
@@ -6051,7 +6088,7 @@ static struct BurnRomInfo Dinopic3RomDesc[] = {
 	{ "d8l1.8l",				0x000117, 0x539fc7da, BRF_OPT },
 	{ "d9k2.9k",				0x000117, 0xcd85a156, BRF_OPT },
 	{ "d10f1.10f",				0x000117, 0x6619c494, BRF_OPT },
-#else
+
 	{ "ti-i_27c040.bin",		0x080000, 0x7d921309, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	
 	{ "1_palce20v8.bin",		0x000157, 0xcd99ca47, BRF_OPT },
@@ -6060,7 +6097,6 @@ static struct BurnRomInfo Dinopic3RomDesc[] = {
 	{ "4_palce16v8.bin",		0x000117, 0x97a67c6d, BRF_OPT },
 	{ "5_palce16v8.bin",		0x000117, 0x48253c66, BRF_OPT },
 	{ "6_palce16v8.bin",		0x000117, 0x9ae375ba, BRF_OPT },
-#endif
 };
 
 STD_ROM_PICK(Dinopic3)
@@ -6080,7 +6116,7 @@ static struct BurnRomInfo Dinopic4RomDesc[] = {
 	{ "27c4000-m15263-a-1-12.bin",  0x080000, 0xb284c4a7, BRF_GRA | CPS1_TILES },
 	{ "27c4000-m15377-a-11.bin",  	0x080000, 0xb7ad3394, BRF_GRA | CPS1_TILES },
 	{ "27c4000-m15279-a-10.bin",  	0x080000, 0x88847705, BRF_GRA | CPS1_TILES },
-#ifdef CPS1_HACK_QSOUND
+
 	{ "cd_q.5k",					0x020000, 0x605fdb0b, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "cd-q1.1k",					0x080000, 0x60927775, BRF_SND | CPS1_QSOUND_SAMPLES },
@@ -6098,7 +6134,7 @@ static struct BurnRomInfo Dinopic4RomDesc[] = {
 	{ "d8l1.8l",					0x000117, 0x539fc7da, BRF_OPT },
 	{ "d9k2.9k",					0x000117, 0xcd85a156, BRF_OPT },
 	{ "d10f1.10f",					0x000117, 0x6619c494, BRF_OPT },
-#else
+
 	{ "pic16c57-rc.bin",			0x001030, 0x4d262eaa, BRF_PRG | CPS1_PIC },
 
 	{ "27c4000-m15388-a-1.bin",		0x080000, 0x7d921309, BRF_SND | CPS1_OKIM6295_SAMPLES },
@@ -6109,7 +6145,6 @@ static struct BurnRomInfo Dinopic4RomDesc[] = {
 	{ "gal20v8a-3.bin",				0x000157, 0x049b7f4f, BRF_OPT },
 	{ "palce16v8h-1.bin",			0x000117, 0x48253c66, BRF_OPT },
 	{ "palce16v8h-2.bin",			0x000117, 0x9ae375ba, BRF_OPT },
-#endif
 };
 
 STD_ROM_PICK(Dinopic4)
@@ -6159,7 +6194,7 @@ static struct BurnRomInfo Jurassic99RomDesc[] = {
 
 	{ "210101a_cda2.bin",	0x200000, 0x3f167412, BRF_GRA | CPS1_TILES },
 	{ "210102_cdb2.bin",	0x200000, 0x8a6920d8, BRF_GRA | CPS1_TILES },
-#ifdef CPS1_HACK_QSOUND
+
 	{ "cd_q.5k",			0x020000, 0x605fdb0b, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "cd-q1.1k",			0x080000, 0x60927775, BRF_SND | CPS1_QSOUND_SAMPLES },
@@ -6177,7 +6212,7 @@ static struct BurnRomInfo Jurassic99RomDesc[] = {
 	{ "d8l1.8l",			0x000117, 0x539fc7da, BRF_OPT },
 	{ "d9k2.9k",			0x000117, 0xcd85a156, BRF_OPT },
 	{ "d10f1.10f",			0x000117, 0x6619c494, BRF_OPT },
-#else
+
 	{ "21003_u27.bin",		0x080000, 0x7d921309, BRF_SND | CPS1_OKIM6295_SAMPLES },
 
 	{ "1_atf20v8.u25",		0x000157, 0xcd99ca47, BRF_OPT },
@@ -6191,7 +6226,6 @@ static struct BurnRomInfo Jurassic99RomDesc[] = {
 	{ "8_atf16v8.u98g",		0x000117, 0x11f38ab7, BRF_OPT },
 	{ "8_atf16v8.u99g",		0x000117, 0x11f38ab7, BRF_OPT },
 	{ "8_atf16v8.u134g",	0x000117, 0x11f38ab7, BRF_OPT },
-#endif
 };
 
 STD_ROM_PICK(Jurassic99)
@@ -6249,7 +6283,7 @@ static struct BurnRomInfo DinotpicRomDesc[] = {
 
 	{ "cd-a.160",			0x200000, 0x7e4f9fb3, BRF_GRA | CPS1_TILES },
 	{ "cd-b.160",			0x200000, 0x89532d85, BRF_GRA | CPS1_TILES },
-#ifdef CPS1_HACK_QSOUND
+
 	{ "cd_q.5k",			0x020000, 0x605fdb0b, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "cd-q1.1k",			0x080000, 0x60927775, BRF_SND | CPS1_QSOUND_SAMPLES },
@@ -6267,7 +6301,6 @@ static struct BurnRomInfo DinotpicRomDesc[] = {
 	{ "d8l1.8l",			0x000117, 0x539fc7da, BRF_OPT },
 	{ "d9k2.9k",			0x000117, 0xcd85a156, BRF_OPT },
 	{ "d10f1.10f",			0x000117, 0x6619c494, BRF_OPT },
-#endif
 };
 
 STD_ROM_PICK(Dinotpic)
@@ -9301,7 +9334,7 @@ static struct BurnRomInfo PunipicRomDesc[] = {
 	{ "gfx12.bin",     0x080000, 0xa3c205c1, BRF_GRA | CPS1_TILES },
 	{ "gfx11.bin",     0x080000, 0x22f2ec92, BRF_GRA | CPS1_TILES },
 	{ "gfx10.bin",     0x080000, 0x763974c9, BRF_GRA | CPS1_TILES },
-#ifdef CPS1_HACK_QSOUND
+
 	{ "ps_q.5k",       0x020000, 0x49ff4446, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "ps-q1.1k",      0x080000, 0x31fd8726, BRF_SND | CPS1_QSOUND_SAMPLES },
@@ -9319,11 +9352,10 @@ static struct BurnRomInfo PunipicRomDesc[] = {
 	{ "d8l1.8l",       0x000117, 0x539fc7da, BRF_OPT },
 	{ "d9k2.9k",       0x000117, 0xcd85a156, BRF_OPT },
 	{ "d10f1.10f",     0x000117, 0x6619c494, BRF_OPT },
-#else
+
 	{ "pic16c57",      0x004000, 0x00000000, BRF_PRG | BRF_NODUMP | CPS1_PIC },
 
 	{ "sound.bin",     0x080000, 0xaeec9dc6, BRF_SND | CPS1_OKIM6295_SAMPLES },
-#endif
 };
 
 STD_ROM_PICK(Punipic)
@@ -9337,7 +9369,7 @@ static struct BurnRomInfo Punipic2RomDesc[] = {
 	
 	{ "pu11256.bin",   0x200000, 0x6581faea, BRF_GRA | CPS1_TILES },
 	{ "pu13478.bin",   0x200000, 0x61613de4, BRF_GRA | CPS1_TILES },
-#ifdef CPS1_HACK_QSOUND
+
 	{ "ps_q.5k",       0x020000, 0x49ff4446, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "ps-q1.1k",      0x080000, 0x31fd8726, BRF_SND | CPS1_QSOUND_SAMPLES },
@@ -9355,13 +9387,12 @@ static struct BurnRomInfo Punipic2RomDesc[] = {
 	{ "d8l1.8l",       0x000117, 0x539fc7da, BRF_OPT },
 	{ "d9k2.9k",       0x000117, 0xcd85a156, BRF_OPT },
 	{ "d10f1.10f",     0x000117, 0x6619c494, BRF_OPT },
-#else
+
 	{ "pic16c57",      0x004000, 0x00000000, BRF_PRG | BRF_NODUMP | CPS1_PIC },
 
 	{ "sound.bin",     0x080000, 0xaeec9dc6, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	
 	{ "93c46.bin",     0x000080, 0x36ab4e7d, BRF_OPT },
-#endif
 };
 
 STD_ROM_PICK(Punipic2)
@@ -9377,7 +9408,7 @@ static struct BurnRomInfo Punipic3RomDesc[] = {
 	
 	{ "psb-a.rom",     0x200000, 0x57f0f5e3, BRF_GRA | CPS1_TILES },
 	{ "psb-b.rom",     0x200000, 0xd9eb867e, BRF_GRA | CPS1_TILES },
-#ifdef CPS1_HACK_QSOUND
+
 	{ "ps_q.5k",       0x020000, 0x49ff4446, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "ps-q1.1k",      0x080000, 0x31fd8726, BRF_SND | CPS1_QSOUND_SAMPLES },
@@ -9395,11 +9426,10 @@ static struct BurnRomInfo Punipic3RomDesc[] = {
 	{ "d8l1.8l",       0x000117, 0x539fc7da, BRF_OPT },
 	{ "d9k2.9k",       0x000117, 0xcd85a156, BRF_OPT },
 	{ "d10f1.10f",     0x000117, 0x6619c494, BRF_OPT },
-#else
+
 //	{ "pic16c57",      0x004000, 0x00000000, BRF_PRG | BRF_NODUMP | CPS1_PIC },
 
 //	{ "sound.bin",     0x080000, 0xaeec9dc6, BRF_SND | CPS1_OKIM6295_SAMPLES },
-#endif
 };
 
 STD_ROM_PICK(Punipic3)
@@ -14196,7 +14226,7 @@ static struct BurnRomInfo SlampicRomDesc[] = {
 	
 	// not in dump but the game expects to read it as protection, maybe the PIC writes to the same area?
 	{ "mb_qa.5k",			0x020000, 0xe21a03c4, BRF_ESS | BRF_PRG | CPS1_Z80_PROGRAM },
-#ifdef CPS1_HACK_QSOUND
+
 	{ "mb-q1.1k",		 	0x080000, 0x0630c3ce, BRF_SND | CPS1_QSOUND_SAMPLES },
 	{ "mb-q2.2k",		 	0x080000, 0x354f9c21, BRF_SND | CPS1_QSOUND_SAMPLES },
 	{ "mb-q3.3k",			0x080000, 0x7838487c, BRF_SND | CPS1_QSOUND_SAMPLES },
@@ -14217,12 +14247,12 @@ static struct BurnRomInfo SlampicRomDesc[] = {
 	{ "d8l1.8l",		  	0x000117, 0x539fc7da, BRF_OPT },
 	{ "d9k2.9k",		   	0x000117, 0xcd85a156, BRF_OPT },
 	{ "d10f1.10f",			0x000117, 0x6619c494, BRF_OPT },
-#endif	
+
 	{ "pic16c57-xt-p.bin",	0x002000, 0xaeae5ccc, BRF_PRG | CPS1_PIC },
 #if !defined ROM_VERIFY
 	{ "pic16c57-xt-p.hex",	0x005a1e, 0x61f8607e, BRF_OPT }, // hex dump of PIC
 #endif
-#ifndef CPS1_HACK_QSOUND
+
 	{ "18.bin",				0x080000, 0x73a0c11c, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	
 	{ "1_palce16v8.bin",	0x000117, 0xbac89609, BRF_OPT },
@@ -14231,7 +14261,6 @@ static struct BurnRomInfo SlampicRomDesc[] = {
 	{ "4_palce20v8.bin",	0x000157, 0x20946530, BRF_OPT },
 	{ "5_palce20v8.bin",	0x000157, 0x44df0cc6, BRF_OPT },
 	{ "6_palce16v8.bin",	0x000117, 0x12516583, BRF_OPT },
-#endif
 };
 
 STD_ROM_PICK(Slampic)
@@ -15343,7 +15372,7 @@ static struct BurnRomInfo WofsjbRomDesc[] = {
 	{ "tk2_gfx7.rom",  0x080000, 0x3edeb949, BRF_GRA | CPS1_TILES },
 	{ "tk2_gfx6.rom",  0x080000, 0x1abd14d6, BRF_GRA | CPS1_TILES },
 	{ "tk2_gfx8.rom",  0x080000, 0xb27948e3, BRF_GRA | CPS1_TILES },
-#ifdef CPS1_HACK_QSOUND
+
 	{ "tk2_qa.5k",     0x020000, 0xc9183a0d, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "tk2-q1.1k",     0x080000, 0x611268cf, BRF_SND | CPS1_QSOUND_SAMPLES },
@@ -15363,10 +15392,9 @@ static struct BurnRomInfo WofsjbRomDesc[] = {
 	{ "d8l1.8l",       0x000117, 0x539fc7da, BRF_OPT },
 	{ "d9k1.9k",       0x000117, 0x6c35c805, BRF_OPT },
 	{ "d10f1.10f",     0x000117, 0x6619c494, BRF_OPT },
-#else
+
 	// using the sound roms from wofhfh or wof3js doesn't give the right result
 	// it doesn't use Q-Sound either
-#endif
 };
 
 STD_ROM_PICK(Wofsjb)
@@ -15432,7 +15460,7 @@ static struct BurnRomInfo WofpicRomDesc[] = {
 	{ "m12073-5",      0x080000, 0x90c93dd2, BRF_GRA | CPS1_TILES },
 	{ "m12073-4",      0x080000, 0x219fd7e2, BRF_GRA | CPS1_TILES },
 	{ "m12073-3",      0x080000, 0xefc17c9a, BRF_GRA | CPS1_TILES },
-#ifdef CPS1_HACK_QSOUND
+
 	{ "tk2_qa.5k",     0x020000, 0xc9183a0d, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "tk2-q1.1k",     0x080000, 0x611268cf, BRF_SND | CPS1_QSOUND_SAMPLES },
@@ -15452,11 +15480,10 @@ static struct BurnRomInfo WofpicRomDesc[] = {
 	{ "d8l1.8l",       0x000117, 0x539fc7da, BRF_OPT },
 	{ "d9k1.9k",       0x000117, 0x6c35c805, BRF_OPT },
 	{ "d10f1.10f",     0x000117, 0x6619c494, BRF_OPT },
-#else
+
 	{ "pic.bin",   	   0x001007, 0x00000000, BRF_PRG | CPS1_PIC | BRF_NODUMP},
 	
 	{ "ma12073.4mm",   0x080000, 0xac421276, BRF_SND | CPS1_OKIM6295_SAMPLES },
-#endif
 };
 
 STD_ROM_PICK(Wofpic)
@@ -15656,19 +15683,10 @@ static const struct GameConfig ConfigTable[] =
 	{ "dinoa"         , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinou"         , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinoj"         , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
-#ifdef CPS1_HACK_QSOUND
-	{ "dinopic"       , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
-	{ "dinopic2"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
-#else
-	{ "dinopic"       , CPS_B_21_QS2, mapper_CD63B , 0, NULL                },
-	{ "dinopic2"      , CPS_B_21_QS2, mapper_CD63B , 0, NULL                },
-#endif
+	{ "dinopic"       , CPS_B_21_QS2, mapper_CD63B , 0, dino_patch			},
+	{ "dinopic2"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_patch			},
 	{ "dinopic3"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
-#ifdef CPS1_HACK_QSOUND
-	{ "dinopic4"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
-#else
-	{ "dinopic4"      , CPS_B_21_QS2, mapper_CD63B , 0, NULL                },
-#endif
+	{ "dinopic4"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_patch			},
 	{ "dinopic5"      , CPS_B_21_QS2, mapper_CD63B , 0, NULL                },
 	{ "jurassic99"    , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinoeh"        , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
@@ -15771,15 +15789,9 @@ static const struct GameConfig ConfigTable[] =
 	{ "punisheru"     , CPS_B_21_QS3, mapper_PS63B , 0, punisher_decode     },
 	{ "punisherj"     , CPS_B_21_QS3, mapper_PS63B , 0, punisher_decode     },
 	{ "punisherh"     , CPS_B_21_QS3, mapper_PS63B , 0, punisher_decode     },
-#ifdef CPS1_HACK_QSOUND
-	{ "punipic"       , CPS_B_21_QS3, mapper_PS63B , 0, punisher_decode     }, // game controls layers at 0x98000c
-	{ "punipic2"      , CPS_B_21_QS3, mapper_PS63B , 0, punisher_decode     }, // game controls layers at 0x98000c
-	{ "punipic3"      , CPS_B_21_QS3, mapper_PS63B , 0, punisher_decode     }, // game controls layers at 0x98000c
-#else
-	{ "punipic"       , CPS_B_21_QS3, mapper_PS63B , 0, NULL                }, // game controls layers at 0x98000c
-	{ "punipic2"      , CPS_B_21_QS3, mapper_PS63B , 0, NULL                }, // game controls layers at 0x98000c
-	{ "punipic3"      , CPS_B_21_QS3, mapper_PS63B , 0, NULL                }, // game controls layers at 0x98000c
-#endif
+	{ "punipic"       , CPS_B_21_QS3, mapper_PS63B , 0, punisher_patch		}, // game controls layers at 0x98000c
+	{ "punipic2"      , CPS_B_21_QS3, mapper_PS63B , 0, punisher_patch		}, // game controls layers at 0x98000c
+	{ "punipic3"      , CPS_B_21_QS3, mapper_PS63B , 0, punisher_patch		}, // game controls layers at 0x98000c
 	{ "punisherbz"    , CPS_B_21_DEF, mapper_PS63B , 0, NULL                },
 	{ "punisherb"     , CPS_B_21_QS3, mapper_PS63B , 0, NULL                },
 	{ "punisherly"    , CPS_B_21_QS3, mapper_PS63B , 0, punisher_decode     },
@@ -15921,11 +15933,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "mbomberj"      , CPS_B_21_QS4, mapper_MB63B , 0, slammast_decode     },
 	{ "mbombrd"       , CPS_B_21_QS5, mapper_MB63B , 0, slammast_decode     },
 	{ "mbombrdj"      , CPS_B_21_QS5, mapper_MB63B , 0, slammast_decode     },
-#ifdef CPS1_HACK_QSOUND
-	{ "slampic"       , CPS_B_21_QS4, mapper_MB63B , 0, slammast_decode     },
-#else
-	{ "slampic"       , CPS_B_21_QS4, mapper_MB63B , 0, NULL                },
-#endif
+	{ "slampic"       , CPS_B_21_QS4, mapper_MB63B , 0, slammast_patch		},
 	{ "slampic2"      , CPS_B_21_QS4, mapper_MB63B , 0, NULL                },
 	{ "strider"       , CPS_B_01    , mapper_ST24M1, 1, NULL                },
 	{ "striderua"     , CPS_B_01    , mapper_ST24M1, 1, NULL                },
@@ -15960,18 +15968,10 @@ static const struct GameConfig ConfigTable[] =
 	{ "wof3sja"       , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wofsj"         , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wofsja"        , HACK_B_6    , mapper_TK263B, 0, NULL                },
-#ifdef CPS1_HACK_QSOUND
-	{ "wofsjb"        , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
-#else
-	{ "wofsjb"        , CPS_B_21_DEF, mapper_TK263B, 0, NULL                },
-#endif
+	{ "wofsjb"        , CPS_B_21_DEF, mapper_TK263B, 0, wof_patch			},
 	{ "wofsjc"        , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wofr1bl"       , CPS_B_21_DEF, mapper_TK263B, 0, NULL                }, // game controls layers at 0x98000c
-#ifdef CPS1_HACK_QSOUND
-	{ "wofpic"        , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          }, // game controls layers at 0x98000c
-#else
-	{ "wofpic"        , CPS_B_21_DEF, mapper_TK263B, 0, NULL                }, // game controls layers at 0x98000c
-#endif
+	{ "wofpic"        , CPS_B_21_DEF, mapper_TK263B, 0, wof_patch			}, // game controls layers at 0x98000c
 	{ "wofjh"         , CPS_B_21_QS1, mapper_TK263B, 0, wof_decode          },
 	{ "wofabl"        , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wofah"         , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
@@ -16137,7 +16137,7 @@ static INT32 Cps1LoadRoms(INT32 bLoad)
 				i++;
 			}
 		}
-		
+
 		// Graphics
 		if (nCpsGfxLen) {
 			Offset = 0;
@@ -16208,7 +16208,7 @@ static INT32 Cps1LoadRoms(INT32 bLoad)
 				}
 			}			
 		}
-		
+
 		// Z80 Program
 		if (nCpsZRomLen) {
 			Offset = 0;
@@ -16668,80 +16668,71 @@ void __fastcall DinopicLayerWrite(UINT32 a, UINT16 d)
 	SEK_DEF_WRITE_WORD(0, a, d);
 }
 
-#ifdef CPS1_HACK_QSOUND
 static void Jurassic99PatchCallback()
 {
-	UINT32 patch_fix[] = {
-		// Fix draw scroll
-		0x0006c2, 0xc0, 0x0006c3, 0xff,
-
-		// Fix gfx
-		0x000472, 0xfc, 0x000473, 0x33, 0x000474, 0x00, 0x000475, 0x90, 0x000476, 0x80, 0x000478, 0x00,
-		0x000479, 0x01, 0x00047a, 0xfc, 0x00047b, 0x33, 0x00047c, 0x80, 0x00047d, 0x90, 0x00047e, 0x80,
-		0x000480, 0x02, 0x000481, 0x01, 0x000482, 0xfc, 0x000483, 0x33, 0x000484, 0xc0, 0x000485, 0x90,
-		0x000486, 0x80, 0x000487, 0x00, 0x000488, 0x04, 0x000489, 0x01, 0x00048a, 0xfc, 0x00048b, 0x33,
-		0x00048c, 0x00, 0x00048d, 0x91, 0x00048e, 0x80, 0x00048f, 0x00, 0x000490, 0x06, 0x000491, 0x01,
-		0x0006cc, 0x80, 0x0006cd, 0x00, 0x0006ce, 0x0c, 0x0006cf, 0x01, 0x0006de, 0x80, 0x0006df, 0x00,
-		0x0006e0, 0x10, 0x0006e1, 0x01, 0x0006f0, 0x80, 0x0006f1, 0x00, 0x0006f2, 0x14, 0x0006f3, 0x01,
-		0x000704, 0x80, 0x000705, 0x00, 0x000706, 0x0e, 0x000707, 0x01, 0x000718, 0x80, 0x000719, 0x00,
-		0x00071a, 0x12, 0x00071b, 0x01, 0x00072c, 0x80, 0x00072d, 0x00, 0x00072e, 0x16, 0x00072f, 0x01,
-
+	UINT32 patch_fix_a[] = {
 		// Fix screen transitions
 		0x000b28, 0x00, 0x000b29, 0x70, 0x000b2a, 0x00, 0x000b2b, 0x72, 0x000b2c, 0x3c, 0x000b2d, 0x34,
-		0x000b32, 0xc1, 0x000b33, 0x20,
-
-		// Fix sound
-		0x000666, 0xf1, 0x000667, 0x00, 0x000668, 0x02, 0x000669, 0x80, 0x0aaa6c, 0xd8, 0x0aaa6d, 0x00
+		0x000b32, 0xc1, 0x000b33, 0x20
 	};
 
-	for (INT32 i = 0; i < (sizeof(patch_fix) / sizeof(UINT32)) >> 1; i++) {
-		CpsRom[patch_fix[i * 2 + 0]] = patch_fix[i * 2 + 1];
+	for (INT32 i = 0; i < (sizeof(patch_fix_a) / sizeof(UINT32)) >> 1; i++) {
+		CpsRom[patch_fix_a[(i << 1) + 0]] = patch_fix_a[(i << 1) + 1];
+	}
+
+	if (fQSoundDip & 1) {
+		UINT32 patch_fix_b[] = {
+			// Fix draw scroll
+			0x0006c2, 0xc0, 0x0006c3, 0xff,
+
+			// Fix gfx
+			0x000472, 0xfc, 0x000473, 0x33, 0x000474, 0x00, 0x000475, 0x90, 0x000476, 0x80, 0x000478, 0x00,
+			0x000479, 0x01, 0x00047a, 0xfc, 0x00047b, 0x33, 0x00047c, 0x80, 0x00047d, 0x90, 0x00047e, 0x80,
+			0x000480, 0x02, 0x000481, 0x01, 0x000482, 0xfc, 0x000483, 0x33, 0x000484, 0xc0, 0x000485, 0x90,
+			0x000486, 0x80, 0x000487, 0x00, 0x000488, 0x04, 0x000489, 0x01, 0x00048a, 0xfc, 0x00048b, 0x33,
+			0x00048c, 0x00, 0x00048d, 0x91, 0x00048e, 0x80, 0x00048f, 0x00, 0x000490, 0x06, 0x000491, 0x01,
+			0x0006cc, 0x80, 0x0006cd, 0x00, 0x0006ce, 0x0c, 0x0006cf, 0x01, 0x0006de, 0x80, 0x0006df, 0x00,
+			0x0006e0, 0x10, 0x0006e1, 0x01, 0x0006f0, 0x80, 0x0006f1, 0x00, 0x0006f2, 0x14, 0x0006f3, 0x01,
+			0x000704, 0x80, 0x000705, 0x00, 0x000706, 0x0e, 0x000707, 0x01, 0x000718, 0x80, 0x000719, 0x00,
+			0x00071a, 0x12, 0x00071b, 0x01, 0x00072c, 0x80, 0x00072d, 0x00, 0x00072e, 0x16, 0x00072f, 0x01,
+
+			// Fix sound
+			0x000666, 0xf1, 0x000667, 0x00, 0x000668, 0x02, 0x000669, 0x80, 0x0aaa6c, 0xd8, 0x0aaa6d, 0x00
+		};
+
+		for (INT32 i = 0; i < (sizeof(patch_fix_b) / sizeof(UINT32)) >> 1; i++) {
+			CpsRom[patch_fix_b[(i << 1) + 0]] = patch_fix_b[(i << 1) + 1];
+		}
 	}
 }
-#else
-static void Jurassic99PatchCallback()
-{
-	// patch from HBMAME
-	UINT8 *mem8 = (UINT8*)CpsRom;
-
-	// Fix screen transitions 
-	mem8[0x00b28] = 0x00; 
-	mem8[0x00b29] = 0x70;
-	mem8[0x00b2a] = 0x00;
-	mem8[0x00b2b] = 0x72;
-	mem8[0x00b2c] = 0x3c;
-	mem8[0x00b2d] = 0x34;
-	mem8[0x00b32] = 0xc1;
-	mem8[0x00b33] = 0x20;
-}
-#endif
 
 static INT32 DinopicInit()
 {
 	Cps1DisablePSnd = 1;
 	CpsBootlegEEPROM = 1;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesDinopic;
-#ifdef CPS1_HACK_QSOUND
-	AmendProgRomCallback = Jurassic99PatchCallback;
-#else
-	Cps1ObjGetCallbackFunction = DinopicObjGet;
-	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
-#endif
+	if (fQSoundDip & 1) {
+		AmendProgRomCallback = Jurassic99PatchCallback;
+	} else {
+		Cps1ObjGetCallbackFunction = DinopicObjGet;
+		Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	}
 	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 		
 	INT32 nRet = TwelveMhzInit();
 	if (nRet) return nRet;
-#ifndef CPS1_HACK_QSOUND
-	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
-	
-	SekOpen(0);
-	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, MAP_RAM);
-	SekMapHandler(1, 0x980000, 0x98000f, MAP_WRITE);
-	SekSetWriteWordHandler(1, DinopicScrollWrite);
-	SekMapHandler(2, 0x800200, 0x8002ff, MAP_WRITE);
-	SekSetWriteWordHandler(2, DinopicLayerWrite);
-	SekClose();
-#endif
+
+	if (fQSoundDip ^ 1) {
+		CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
+
+		SekOpen(0);
+		SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, MAP_RAM);
+		SekMapHandler(1, 0x980000, 0x98000f, MAP_WRITE);
+		SekSetWriteWordHandler(1, DinopicScrollWrite);
+		SekMapHandler(2, 0x800200, 0x8002ff, MAP_WRITE);
+		SekSetWriteWordHandler(2, DinopicLayerWrite);
+		SekClose();
+	}
 	return nRet;
 }
 
@@ -16772,27 +16763,28 @@ static INT32 Dinopic3Init()
 	Cps1DisablePSnd = 1;
 	CpsBootlegEEPROM = 1;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160Alt;
-#ifdef CPS1_HACK_QSOUND
-	AmendProgRomCallback = Jurassic99PatchCallback;
-#else
-	Cps1ObjGetCallbackFunction = DinopicObjGet;
-	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
-#endif
+	if (fQSoundDip & 1) {
+		AmendProgRomCallback = Jurassic99PatchCallback;
+	} else {
+		Cps1ObjGetCallbackFunction = DinopicObjGet;
+		Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	}
 	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 	
 	INT32 nRet = TwelveMhzInit();
 	if (nRet) return nRet;
-#ifndef CPS1_HACK_QSOUND
-	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
-	
-	SekOpen(0);
-	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, MAP_RAM);
-	SekMapHandler(1, 0x980000, 0x98000f, MAP_WRITE);
-	SekSetWriteWordHandler(1, DinopicScrollWrite);
-	SekMapHandler(2, 0x800200, 0x8002ff, MAP_WRITE);
-	SekSetWriteWordHandler(2, DinopicLayerWrite);
-	SekClose();
-#endif
+
+	if (fQSoundDip ^ 1) {
+		CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
+
+		SekOpen(0);
+		SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, MAP_RAM);
+		SekMapHandler(1, 0x980000, 0x98000f, MAP_WRITE);
+		SekSetWriteWordHandler(1, DinopicScrollWrite);
+		SekMapHandler(2, 0x800200, 0x8002ff, MAP_WRITE);
+		SekSetWriteWordHandler(2, DinopicLayerWrite);
+		SekClose();
+	}
 	return nRet;
 }
 
@@ -16879,27 +16871,28 @@ static INT32 DinotpicInit()
 	Cps1DisablePSnd = 1;
 	CpsBootlegEEPROM = 1;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160;
-#ifdef CPS1_HACK_QSOUND
-	AmendProgRomCallback = Jurassic99PatchCallback;
-#else
-	Cps1ObjGetCallbackFunction = DinopicObjGet;
-	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
-#endif
+	if (fQSoundDip & 1) {
+		AmendProgRomCallback = Jurassic99PatchCallback;
+	} else {
+		Cps1ObjGetCallbackFunction = DinopicObjGet;
+		Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	}
 	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 	
 	INT32 nRet = TwelveMhzInit();
 	if (nRet) return nRet;
-#ifndef CPS1_HACK_QSOUND
-	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
-	
-	SekOpen(0);
-	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, MAP_RAM);
-	SekMapHandler(1, 0x980000, 0x98000f, MAP_WRITE);
-	SekSetWriteWordHandler(1, DinopicScrollWrite);
-	SekMapHandler(2, 0x800200, 0x8002ff, MAP_WRITE);
-	SekSetWriteWordHandler(2, DinopicLayerWrite);
-	SekClose();
-#endif
+
+	if (fQSoundDip ^ 1) {
+		CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
+
+		SekOpen(0);
+		SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, MAP_RAM);
+		SekMapHandler(1, 0x980000, 0x98000f, MAP_WRITE);
+		SekSetWriteWordHandler(1, DinopicScrollWrite);
+		SekMapHandler(2, 0x800200, 0x8002ff, MAP_WRITE);
+		SekSetWriteWordHandler(2, DinopicLayerWrite);
+		SekClose();
+	}
 	return nRet;
 }
 
@@ -16908,12 +16901,12 @@ static INT32 Jurassic99Init()
 	Cps1DisablePSnd = 1;
 	CpsBootlegEEPROM = 1;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160;
-#ifdef CPS1_HACK_QSOUND
-	AmendProgRomCallback = Jurassic99PatchCallback;
-#else
-	Cps1ObjGetCallbackFunction = DinopicObjGet;
-	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
-#endif
+	if (fQSoundDip & 1) {
+		AmendProgRomCallback = Jurassic99PatchCallback;
+	} else {
+		Cps1ObjGetCallbackFunction = DinopicObjGet;
+		Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	}
 	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 
 	INT32 nRet = TwelveMhzInit();
@@ -16923,12 +16916,12 @@ static INT32 Jurassic99Init()
 
 	SekOpen(0);
 	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, MAP_RAM);
-#ifndef CPS1_HACK_QSOUND
-	SekMapHandler(1, 0x980000, 0x98000f, MAP_WRITE);
-	SekSetWriteWordHandler(1, DinopicScrollWrite);
-	SekMapHandler(2, 0x800200, 0x8002ff, MAP_WRITE);
-	SekSetWriteWordHandler(2, DinopicLayerWrite);
-#endif
+	if (fQSoundDip ^ 1) {
+		SekMapHandler(1, 0x980000, 0x98000f, MAP_WRITE);
+		SekSetWriteWordHandler(1, DinopicScrollWrite);
+		SekMapHandler(2, 0x800200, 0x8002ff, MAP_WRITE);
+		SekSetWriteWordHandler(2, DinopicLayerWrite);
+	}
 	SekClose();
 
 	return nRet;
@@ -18028,7 +18021,6 @@ static INT32 PunipicScanCallback(INT32 nAction, INT32 *pnMin)
 	return CpsBootlegSpriteRamScanCallback(nAction, pnMin);
 }
 
-#ifdef CPS1_HACK_QSOUND
 static void PunipicPatchCallback()
 {
 	UINT32 patch_fix[] = {
@@ -18081,26 +18073,23 @@ static void PunipicPatchCallback()
 	};
 
 	for (INT32 i = 0; i < (sizeof(patch_fix) / sizeof(UINT32)) >> 1; i++) {
-		CpsRom[patch_fix[i * 2 + 0]] = patch_fix[i * 2 + 1];
+		CpsRom[patch_fix[(i << 1) + 0]] = patch_fix[(i << 1) + 1];
 	}
 }
-#endif
 
 static INT32 PunipicInit()
 {
 	Cps1DisablePSnd = 1;
 	bCpsUpdatePalEveryFrame = 1;
-#ifndef CPS1_HACK_QSOUND
-	Cps1OverrideLayers = 1;
-#endif
 	CpsBootlegEEPROM = 1;
+	if (fQSoundDip & 1) {
+		AmendProgRomCallback = PunipicPatchCallback;
+	} else {
+		Cps1OverrideLayers = 1;
+		Cps1ObjGetCallbackFunction = DinopicObjGet;
+		Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	}
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesDinopic;
-#ifdef CPS1_HACK_QSOUND
-	AmendProgRomCallback = PunipicPatchCallback;
-#else
-	Cps1ObjGetCallbackFunction = DinopicObjGet;
-	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
-#endif
 	CpsMemScanCallbackFunction = PunipicScanCallback;
 	
 	INT32 nRet = TwelveMhzInit();
@@ -18133,17 +18122,15 @@ static INT32 Punipic2Init()
 {
 	Cps1DisablePSnd = 1;
 	bCpsUpdatePalEveryFrame = 1;
-#ifndef CPS1_HACK_QSOUND
-	Cps1OverrideLayers = 1;
-#endif
 	CpsBootlegEEPROM = 1;
+	if (fQSoundDip & 1) {
+		AmendProgRomCallback = PunipicPatchCallback;
+	} else {
+		Cps1OverrideLayers = 1;
+		Cps1ObjGetCallbackFunction = DinopicObjGet;
+		Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	}
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160Alt;
-#ifdef CPS1_HACK_QSOUND
-	AmendProgRomCallback = PunipicPatchCallback;
-#else
-	Cps1ObjGetCallbackFunction = DinopicObjGet;
-	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
-#endif
 	CpsMemScanCallbackFunction = PunipicScanCallback;
 	
 	INT32 nRet = TwelveMhzInit();
@@ -18169,17 +18156,15 @@ static INT32 Punipic3Init()
 {
 	Cps1DisablePSnd = 1;
 	bCpsUpdatePalEveryFrame = 1;
-#ifndef CPS1_HACK_QSOUND
-	Cps1OverrideLayers = 1;
-#endif
 	CpsBootlegEEPROM = 1;
+	if (fQSoundDip & 1) {
+		AmendProgRomCallback = PunipicPatchCallback;
+	} else {
+		Cps1OverrideLayers = 1;
+		Cps1ObjGetCallbackFunction = DinopicObjGet;
+		Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	}
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160;
-#ifdef CPS1_HACK_QSOUND
-	AmendProgRomCallback = PunipicPatchCallback;
-#else
-	Cps1ObjGetCallbackFunction = DinopicObjGet;
-	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
-#endif
 	CpsMemScanCallbackFunction = PunipicScanCallback;
 
 	INT32 nRet = TwelveMhzInit();
@@ -19778,7 +19763,6 @@ void __fastcall SlampicFFWriteWord(UINT32 a, UINT16 d)
 	RAM[((a & 0xffff) >> 1)] = d;
 }
 
-#ifdef CPS1_HACK_QSOUND
 static void SlampicPatchCallback()
 {
 	UINT32 patch_fix[] = {
@@ -19800,10 +19784,9 @@ static void SlampicPatchCallback()
 	};
 
 	for (INT32 i = 0; i < (sizeof(patch_fix) / sizeof(UINT32)) >> 1; i++) {
-		CpsRom[patch_fix[i * 2 + 0]] = patch_fix[i * 2 + 1];
+		CpsRom[patch_fix[(i << 1) + 0]] = patch_fix[(i << 1) + 1];
 	}
 }
-#endif
 
 static INT32 SlampicInit()
 {
@@ -19811,87 +19794,43 @@ static INT32 SlampicInit()
 	CpsBootlegEEPROM = 1;
 	bCpsUpdatePalEveryFrame = 1;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesSlampic;
-#ifdef CPS1_HACK_QSOUND
-	AmendProgRomCallback = SlampicPatchCallback;
-#else
-	Cps1ObjGetCallbackFunction = Sf2mdtObjGet;
-	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
-#endif
+	if (fQSoundDip & 1) {
+		AmendProgRomCallback = SlampicPatchCallback;
+	} else {
+		Cps1ObjGetCallbackFunction = Sf2mdtObjGet;
+		Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	}
 	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 
 	INT32 nRet = TwelveMhzInit();
 
 	if (!nRet) {
-#ifndef CPS1_HACK_QSOUND
-		for (INT32 i = 0x7fff; i >= 0; i--) {
-			CpsZRom[(i << 1) + 0] = CpsZRom[i];
-			CpsZRom[(i << 1) + 1] = 0xff;
+		if (fQSoundDip ^ 1) {
+			for (INT32 i = 0x7fff; i >= 0; i--) {
+				CpsZRom[(i << 1) + 0] = CpsZRom[i];
+				CpsZRom[(i << 1) + 1] = 0xff;
+			}
 		}
-#endif
 		CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 
 		SekOpen(0);
-#ifndef CPS1_HACK_QSOUND
-		SekMapMemory(CpsZRom, 0xf00000, 0xf0ffff, MAP_ROM);
-#endif
+		if (fQSoundDip ^ 1)
+			SekMapMemory(CpsZRom, 0xf00000, 0xf0ffff, MAP_ROM);
 		SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, MAP_RAM);
 		SekMapHandler(1, 0xf18000, 0xf19fff, MAP_READ);
-#ifndef CPS1_HACK_QSOUND
-		SekSetReadByteHandler(1, SlampicF18Read);
-#endif
+		if (fQSoundDip ^ 1)
+			SekSetReadByteHandler(1, SlampicF18Read);
 		SekMapHandler(2, 0xf1e000, 0xf1ffff, MAP_READ);
-#ifndef CPS1_HACK_QSOUND
-		SekSetReadByteHandler(2, SlampicF18Read);
-#endif
+		if (fQSoundDip ^ 1)
+			SekSetReadByteHandler(2, SlampicF18Read);
 		SekMapHandler(3, 0x980000, 0x980fff, MAP_WRITE);
-#ifndef CPS1_HACK_QSOUND
-		SekSetWriteWordHandler(3, SlampicScrollWrite);
-#endif
+		if (fQSoundDip ^ 1)
+			SekSetWriteWordHandler(3, SlampicScrollWrite);
 		SekMapHandler(4, 0xff0000, 0xffffff, MAP_WRITE);
 		SekSetWriteByteHandler(4, SlampicFFWriteByte);
 		SekSetWriteWordHandler(4, SlampicFFWriteWord);
 		SekClose();
 	}
-
-	return nRet;
-}
-
-
-static INT32 Slampic2Init()
-{
-	Cps1DisablePSnd = 1;
-	CpsBootlegEEPROM = 1;
-	bCpsUpdatePalEveryFrame = 1;
-	Cps1GfxLoadCallbackFunction = CpsLoadTilesSlampic;
-	Cps1ObjGetCallbackFunction = Sf2mdtObjGet;
-	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
-	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
-
-	INT32 nRet = TwelveMhzInit();
-
-	if (!nRet) {
-		for (INT32 i = 0x7fff; i >= 0; i--) {
-			CpsZRom[(i << 1) + 0] = CpsZRom[i];
-			CpsZRom[(i << 1) + 1] = 0xff;
-		}
-
-		CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
-
-		SekOpen(0);
-		SekMapMemory(CpsZRom, 0xf00000, 0xf0ffff, MAP_ROM);
-		SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, MAP_RAM);
-		SekMapHandler(1, 0xf18000, 0xf19fff, MAP_READ);
-		SekSetReadByteHandler(1, SlampicF18Read);
-		SekMapHandler(2, 0xf1e000, 0xf1ffff, MAP_READ);
-		SekSetReadByteHandler(2, SlampicF18Read);
-		SekMapHandler(3, 0x980000, 0x980fff, MAP_WRITE);
-		SekSetWriteWordHandler(3, SlampicScrollWrite);
-		SekMapHandler(4, 0xff0000, 0xffffff, MAP_WRITE);
-		SekSetWriteByteHandler(4, SlampicFFWriteByte);
-		SekSetWriteWordHandler(4, SlampicFFWriteWord);
-		SekClose();
-	}
-
 	return nRet;
 }
 
@@ -20468,7 +20407,6 @@ static INT32 WofsjInit()
 	return nRet;
 }
 
-#ifdef CPS1_HACK_QSOUND
 static void WofsjbPatchCallback()
 {
 	UINT16 patch_fix[] = {
@@ -20485,10 +20423,9 @@ static void WofsjbPatchCallback()
 	};
 
 	for (INT32 i = 0; i < (sizeof(patch_fix) / sizeof(UINT16)) >> 1; i++) {
-		CpsRom[patch_fix[i * 2 + 0]] = patch_fix[i * 2 + 1];
+		CpsRom[patch_fix[(i << 1) + 0]] = patch_fix[(i << 1) + 1];
 	}
 }
-#endif
 
 static INT32 WofsjbInit()
 {
@@ -20498,9 +20435,9 @@ static INT32 WofsjbInit()
 
 	Cps1DisablePSnd = 1;
 
-#ifdef CPS1_HACK_QSOUND
-	AmendProgRomCallback = WofsjbPatchCallback;
-#endif
+	if (fQSoundDip & 1)
+		AmendProgRomCallback = WofsjbPatchCallback;
+
 	return TwelveMhzInit();
 }
 
@@ -20596,7 +20533,6 @@ void __fastcall Wofr1bl98WriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-#ifdef CPS1_HACK_QSOUND
 static void WofpicPatchCallback()
 {
 	UINT32 patch_fix[] = {
@@ -20606,53 +20542,46 @@ static void WofpicPatchCallback()
 	};
 
 	for (INT32 i = 0; i < (sizeof(patch_fix) / sizeof(UINT32)) >> 1; i++) {
-		CpsRom[patch_fix[i * 2 + 0]] = patch_fix[i * 2 + 1];
+		CpsRom[patch_fix[(i << 1) + 0]] = patch_fix[(i << 1) + 1];
 	}
 }
-
-static INT32 WofpicInit()
-{
-	bCpsUpdatePalEveryFrame = 1;
-	CpsBootlegEEPROM = 1;
-	AmendProgRomCallback = WofpicPatchCallback;
-	Cps1GfxLoadCallbackFunction = CpsLoadTilesDinopic;
-	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
-
-	return TwelveMhzInit();
-}
-#endif
 
 static INT32 Wofr1blInit()
 {
 	bCpsUpdatePalEveryFrame = 1;
-	Cps1OverrideLayers = 1;
-	Port6SoundWrite = 1;
 	CpsBootlegEEPROM = 1;
-	CpsLayer1XOffs = 0xffc0;
-	CpsLayer2XOffs = 0xffc0;
-	CpsLayer3XOffs = 0xffc0;
+	if (fQSoundDip & 1) {
+		AmendProgRomCallback = WofpicPatchCallback;
+	} else {
+		Cps1OverrideLayers = 1;
+		Port6SoundWrite = 1;
+		CpsLayer1XOffs = 0xffc0;
+		CpsLayer2XOffs = 0xffc0;
+		CpsLayer3XOffs = 0xffc0;
+		Cps1ObjGetCallbackFunction = DinopicObjGet;
+		Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	}
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesDinopic;
-	Cps1ObjGetCallbackFunction = DinopicObjGet;
-	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 
 	INT32 nRet = TwelveMhzInit();
 	if (nRet) return nRet;
 
-	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
+	if (fQSoundDip ^ 1) {
+		CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 
-	SekOpen(0);
-	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, MAP_RAM);
-	SekMapHandler(1, 0x980000, 0x98ffff, MAP_WRITE);
-	SekSetWriteWordHandler(1, Wofr1bl98WriteWord);
-	SekMapHandler(2, 0xff0000, 0xffffff, MAP_WRITE);
-	SekSetWriteByteHandler(2, Wofr1blFFWriteByte);
-	SekSetWriteWordHandler(2, Wofr1blFFWriteWord);
-	SekClose();
+		SekOpen(0);
+		SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, MAP_RAM);
+		SekMapHandler(1, 0x980000, 0x98ffff, MAP_WRITE);
+		SekSetWriteWordHandler(1, Wofr1bl98WriteWord);
+		SekMapHandler(2, 0xff0000, 0xffffff, MAP_WRITE);
+		SekSetWriteByteHandler(2, Wofr1blFFWriteByte);
+		SekSetWriteWordHandler(2, Wofr1blFFWriteWord);
+		SekClose();
 
-	// scroll3 ram offset
-	*((UINT16*)(CpsReg + 0x06)) = BURN_ENDIAN_SWAP_INT16(0x9100);
-
+		// scroll3 ram offset
+		*((UINT16*)(CpsReg + 0x06)) = BURN_ENDIAN_SWAP_INT16(0x9100);
+	}
 	return nRet;
 }
 
@@ -20756,6 +20685,33 @@ static INT32 WofablInit()
 	SekClose();
 	
 	return nRet;
+}
+
+// Wingman mode - 2P automatically acts and is invincible.
+
+static void VarthjWingmanMode()
+{
+	UINT32 patch_fix[] = {
+		0x00197c, 0x7c, 0x00197d, 0x1b, 0x00197e, 0x00, 0x00197f, 0x00, 0x001980, 0xb3, 0x001981, 0x04,
+		0x001982, 0x00, 0x001983, 0x46, 0x001984, 0x47, 0x00198e, 0x7c, 0x00198f, 0x1b, 0x001990, 0x96,
+		0x001991, 0x00, 0x001992, 0x23, 0x001993, 0x04, 0x003fb0, 0x71, 0x003fb1, 0x4e, 0x003fb2, 0x71,
+		0x003fb3, 0x4e, 0x004030, 0x71, 0x004031, 0x4e, 0x004032, 0x71, 0x004033, 0x4e, 0x00406c, 0x71,
+		0x00406d, 0x4e, 0x00406e, 0x71, 0x00406f, 0x4e, 0x004106, 0x71, 0x004107, 0x4e, 0x004108, 0x71,
+		0x004109, 0x4e, 0x00410a, 0x71, 0x00410b, 0x4e, 0x074066, 0x71, 0x074067, 0x4e, 0x074068, 0x71,
+		0x074069, 0x4e
+	};
+
+	for (INT32 i = 0; i < (sizeof(patch_fix) / sizeof(UINT32)) >> 1; i++) {
+		CpsRom[patch_fix[(i << 1) + 0]] = patch_fix[(i << 1) + 1];
+	}
+}
+
+static INT32 VarthjInit()
+{
+	if (fFakeDip & 1)
+		AmendProgRomCallback = VarthjWingmanMode;
+
+	return TwelveMhzInit();
 }
 
 // Driver Definitions
@@ -21100,53 +21056,12 @@ struct BurnDriver BurnDrvCpsDinou = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-#ifdef CPS1_HACK_QSOUND
-struct BurnDriver BurnDrvCpsDinopic = {
-	"dinopic", "dino", NULL, NULL, "1993",
-	"Cadillacs and Dinosaurs (bootleg set 1 (with PIC16c57), 930201 etc)\0", NULL, "Capcom", "CPS1 / QSound",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
-	NULL, DinopicRomInfo, DinopicRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
-	DinopicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-
-struct BurnDriver BurnDrvCpsDinopic2 = {
-	"dinopic2", "dino", NULL, NULL, "1993",
-	"Cadillacs and Dinosaurs (bootleg set 2 (with PIC16c57), 930201 etc)\0", NULL, "Capcom", "CPS1 / QSound",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
-	NULL, Dinopic2RomInfo, Dinopic2RomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
-	DinopicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-
-struct BurnDriver BurnDrvCpsDinopic3 = {
-	"dinopic3", "dino", NULL, NULL, "1993",
-	"Cadillacs and Dinosaurs (bootleg set 3 (with PIC16c57), 930201 etc)\0", NULL, "Capcom", "CPS1 / QSound",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
-	NULL, Dinopic3RomInfo, Dinopic3RomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
-	Dinopic3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-
-struct BurnDriver BurnDrvCpsDinopic4 = {
-	"dinopic4", "dino", NULL, NULL, "1993",
-	"Cadillacs and Dinosaurs (bootleg set 4 (with PIC16c57), 930201 etc)\0", NULL, "Capcom", "CPS1 / QSound",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
-	NULL, Dinopic4RomInfo, Dinopic4RomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
-	DinopicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-#else
 struct BurnDriver BurnDrvCpsDinopic = {
 	"dinopic", "dino", NULL, NULL, "1993",
 	"Cadillacs and Dinosaurs (bootleg set 1 (with PIC16c57), 930201 etc)\0", "No sound", "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, DinopicRomInfo, DinopicRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
+	NULL, DinopicRomInfo, DinopicRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoQSoundDIPInfo,
 	DinopicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -21156,7 +21071,7 @@ struct BurnDriver BurnDrvCpsDinopic2 = {
 	"Cadillacs and Dinosaurs (bootleg set 2 (with PIC16c57), 930201 etc)\0", "No sound", "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, Dinopic2RomInfo, Dinopic2RomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
+	NULL, Dinopic2RomInfo, Dinopic2RomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoQSoundDIPInfo,
 	DinopicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -21166,7 +21081,7 @@ struct BurnDriver BurnDrvCpsDinopic3 = {
 	"Cadillacs and Dinosaurs (bootleg set 3 (with PIC16c57), 930201 etc)\0", "No sound", "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, Dinopic3RomInfo, Dinopic3RomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
+	NULL, Dinopic3RomInfo, Dinopic3RomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoQSoundDIPInfo,
 	Dinopic3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -21176,11 +21091,10 @@ struct BurnDriver BurnDrvCpsDinopic4 = {
 	"Cadillacs and Dinosaurs (bootleg set 4 (with PIC16c57), 930201 etc)\0", "No sound", "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, Dinopic4RomInfo, Dinopic4RomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
+	NULL, Dinopic4RomInfo, Dinopic4RomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoQSoundDIPInfo,
 	DinopicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
-#endif
 
 struct BurnDriver BurnDrvCpsDinopic5 = {
 	"dinopic5", "dino", NULL, NULL, "1993",
@@ -21192,27 +21106,15 @@ struct BurnDriver BurnDrvCpsDinopic5 = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-#ifdef CPS1_HACK_QSOUND
-struct BurnDriver BurnDrvCpsJurassic99 = {
-	"jurassic99", "dino", NULL, NULL, "1993",
-	"Jurassic 99 (Cadillacs and Dinosaurs bootleg with EM78P447AP, 930201 ?)\0", NULL, "bootleg", "CPS1 / QSound",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
-	NULL, Jurassic99RomInfo, Jurassic99RomName, NULL, NULL, NULL, NULL, Jurassic99InputInfo, DinoDIPInfo,
-	Jurassic99Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-#else
 struct BurnDriver BurnDrvCpsJurassic99 = {
 	"jurassic99", "dino", NULL, NULL, "1993",
 	"Jurassic 99 (Cadillacs and Dinosaurs bootleg with EM78P447AP, 930201 ?)\0", "No sound", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, Jurassic99RomInfo, Jurassic99RomName, NULL, NULL, NULL, NULL, Jurassic99InputInfo, DinoDIPInfo,
+	NULL, Jurassic99RomInfo, Jurassic99RomName, NULL, NULL, NULL, NULL, DinohInputInfo, DinohQSoundDIPInfo,
 	Jurassic99Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
-#endif
 
 struct BurnDriver BurnDrvCpsDinoh = {
 	"dinoh", "dino", NULL, NULL, "1993",
@@ -21234,27 +21136,15 @@ struct BurnDriver BurnDrvCpsDinot = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-#ifdef CPS1_HACK_QSOUND
-struct BurnDriver BurnDrvCpsDinotpic = {
-	"dinotpic", "dino", NULL, NULL, "1993",
-	"Cadillacs and Dinosaurs Turbo (bootleg set 2 (with PIC16c57), 930201 etc)\0", NULL, "bootleg", "CPS1 / QSound",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
-	NULL, DinotpicRomInfo, DinotpicRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
-	DinotpicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-#else
 struct BurnDriver BurnDrvCpsDinotpic = {
 	"dinotpic", "dino", NULL, NULL, "1993",
 	"Cadillacs and Dinosaurs Turbo (bootleg set 2 (with PIC16c57), 930201 etc)\0", "No sound", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, DinotpicRomInfo, DinotpicRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
+	NULL, DinotpicRomInfo, DinotpicRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoQSoundDIPInfo,
 	DinotpicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
-#endif
 
 struct BurnDriver BurnDrvCpsDinohunt = {
 	"dinohunt", "dino", NULL, NULL, "1993",
@@ -22186,43 +22076,12 @@ struct BurnDriver BurnDrvCpsPunisherh = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-#ifdef CPS1_HACK_QSOUND
-struct BurnDriver BurnDrvCpsPunipic = {
-	"punipic", "punisher", NULL, NULL, "1993",
-	"The Punisher (bootleg set 1 (with PIC16c57), 930422 etc)\0", NULL, "bootleg", "CPS1 / QSound",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
-	NULL, PunipicRomInfo, PunipicRomName, NULL, NULL, NULL, NULL, PunisherInputInfo, PunisherDIPInfo,
-	PunipicInit, PunipicExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-
-struct BurnDriver BurnDrvCpsPunipic2 = {
-	"punipic2", "punisher", NULL, NULL, "1993",
-	"The Punisher (bootleg set 2 (with PIC16c57), 930422 etc)\0", NULL, "bootleg", "CPS1 / QSound",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
-	NULL, Punipic2RomInfo, Punipic2RomName, NULL, NULL, NULL, NULL, PunisherInputInfo, PunisherDIPInfo,
-	Punipic2Init, PunipicExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-
-struct BurnDriver BurnDrvCpsPunipic3 = {
-	"punipic3", "punisher", NULL, NULL, "1993",
-	"The Punisher (bootleg set 3 (with PIC16c57), 930422 etc)\0", NULL, "bootleg", "CPS1 / QSound",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
-	NULL, Punipic3RomInfo, Punipic3RomName, NULL, NULL, NULL, NULL, PunisherInputInfo, PunisherDIPInfo,
-	Punipic3Init, PunipicExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-#else
 struct BurnDriver BurnDrvCpsPunipic = {
 	"punipic", "punisher", NULL, NULL, "1993",
 	"The Punisher (bootleg set 1 (with PIC16c57), 930422 etc)\0", "No sound", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, PunipicRomInfo, PunipicRomName, NULL, NULL, NULL, NULL, PunisherInputInfo, PunisherDIPInfo,
+	NULL, PunipicRomInfo, PunipicRomName, NULL, NULL, NULL, NULL, PunisherInputInfo, PunisherQSoundDIPInfo,
 	PunipicInit, PunipicExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -22232,7 +22091,7 @@ struct BurnDriver BurnDrvCpsPunipic2 = {
 	"The Punisher (bootleg set 2 (with PIC16c57), 930422 etc)\0", "No sound", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, Punipic2RomInfo, Punipic2RomName, NULL, NULL, NULL, NULL, PunisherInputInfo, PunisherDIPInfo,
+	NULL, Punipic2RomInfo, Punipic2RomName, NULL, NULL, NULL, NULL, PunisherInputInfo, PunisherQSoundDIPInfo,
 	Punipic2Init, PunipicExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -22242,11 +22101,10 @@ struct BurnDriver BurnDrvCpsPunipic3 = {
 	"The Punisher (bootleg set 3 (with PIC16c57), 930422 etc)\0", "No sound", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, Punipic3RomInfo, Punipic3RomName, NULL, NULL, NULL, NULL, PunisherInputInfo, PunisherDIPInfo,
+	NULL, Punipic3RomInfo, Punipic3RomName, NULL, NULL, NULL, NULL, PunisherInputInfo, PunisherQSoundDIPInfo,
 	Punipic3Init, PunipicExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
-#endif
 
 struct BurnDriver BurnDrvCpsPunisherbz = {
 	"punisherbz", "punisher", NULL, NULL, "2002",
@@ -23647,27 +23505,15 @@ struct BurnDriver BurnDrvCpsMbombrdj = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-#ifdef CPS1_HACK_QSOUND
-struct BurnDriver BurnDrvCpsSlampic = {
-	"slampic", "slammast", NULL, NULL, "1993",
-	"Saturday Night Slam Masters (bootleg with PIC16C57, set 1, 930713 etc)\0", NULL, "bootleg", "CPS1 / QSound",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_VSFIGHT, 0,
-	NULL, SlampicRomInfo, SlampicRomName, NULL, NULL, NULL, NULL, SlammastInputInfo, SlammastDIPInfo,
-	SlampicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-#else
 struct BurnDriver BurnDrvCpsSlampic = {
 	"slampic", "slammast", NULL, NULL, "1993",
 	"Saturday Night Slam Masters (bootleg with PIC16C57, set 1, 930713 etc)\0", "No Sound", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, 0,
-	NULL, SlampicRomInfo, SlampicRomName, NULL, NULL, NULL, NULL, SlammastInputInfo, SlammastDIPInfo,
+	NULL, SlampicRomInfo, SlampicRomName, NULL, NULL, NULL, NULL, SlammastInputInfo, SlammastQSoundDIPInfo,
 	SlampicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
-#endif
 
 struct BurnDriver BurnDrvCpsSlampic2 = {
 	"slampic2", "slammast", NULL, NULL, "1993",
@@ -23675,7 +23521,7 @@ struct BurnDriver BurnDrvCpsSlampic2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, 0,
 	NULL, Slampic2RomInfo, Slampic2RomName, NULL, NULL, NULL, NULL, SlammastInputInfo, SlammastDIPInfo,
-	Slampic2Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	SlampicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -23784,8 +23630,8 @@ struct BurnDriver BurnDrvCpsVarthj = {
 	"Varth - operation thunderstorm (920714 Japan)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VERSHOOT, 0,
-	NULL, VarthjRomInfo, VarthjRomName, NULL, NULL, NULL, NULL, VarthInputInfo, VarthDIPInfo,
-	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	NULL, VarthjRomInfo, VarthjRomName, NULL, NULL, NULL, NULL, VarthInputInfo, VarthjDIPInfo,
+	VarthjInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
 };
 
@@ -24029,27 +23875,15 @@ struct BurnDriver BurnDrvCpsWofsja = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-#ifdef CPS1_HACK_QSOUND
-struct BurnDriver BurnDrvCpsWofsjb = {
-	"wofsjb", "wof", NULL, NULL, "1992",
-	"Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 3, 921005 Asia)\0", "Imperfect Graphics", "bootleg", "CPS1 / QSound",
-	L"\u4E09\u56FD\u5FD7 II: \u5723\u5251\u4E09\0Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 3, 921005 Asia)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
-	NULL, WofsjbRomInfo, WofsjbRomName, NULL, NULL, NULL, NULL, WofsjbInputInfo, NULL,
-	WofsjbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-#else
 struct BurnDriver BurnDrvCpsWofsjb = {
 	"wofsjb", "wof", NULL, NULL, "1992",
 	"Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 3, 921005 Asia)\0", "No sound", "bootleg", "CPS1",
 	L"\u4E09\u56FD\u5FD7 II: \u5723\u5251\u4E09\0Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 3, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, WofsjbRomInfo, WofsjbRomName, NULL, NULL, NULL, NULL, WofsjbInputInfo, NULL,
+	NULL, WofsjbRomInfo, WofsjbRomName, NULL, NULL, NULL, NULL, WofsjbInputInfo, DinoQSDIPInfo,
 	WofsjbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
-#endif
 
 struct BurnDriver BurnDrvCpsWofsjc = {
 	"wofsjc", "wof", NULL, NULL, "1992",
@@ -24071,27 +23905,15 @@ struct BurnDriver BurnDrvCpsWofr1bl = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-#ifdef CPS1_HACK_QSOUND
-struct BurnDriver BurnDrvCpsWofpic = {
-	"wofpic", "wof", NULL, NULL, "1992",
-	"Warriors of Fate (bootleg with PIC16C57, 921002 etc)\0", NULL, "bootleg", "CPS1 / QSound",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
-	NULL, WofpicRomInfo, WofpicRomName, NULL, NULL, NULL, NULL, WofInputInfo, WofDIPInfo,
-	WofpicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-#else
 struct BurnDriver BurnDrvCpsWofpic = {
 	"wofpic", "wof", NULL, NULL, "1992",
 	"Warriors of Fate (bootleg with PIC16C57, 921002 etc)\0", "no sound", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, WofpicRomInfo, WofpicRomName, NULL, NULL, NULL, NULL, WofInputInfo, WofDIPInfo,
+	NULL, WofpicRomInfo, WofpicRomName, NULL, NULL, NULL, NULL, WofInputInfo, DinoQSoundDIPInfo,
 	Wofr1blInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
-#endif
 
 struct BurnDriver BurnDrvCpsWofjh = {
 	"wofjh", "wof", NULL, NULL, "1992",
@@ -25129,10 +24951,10 @@ struct BurnDriver BurnDrvCpsDinogae = {
 
 // Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition, Hack)
 // Hacked by Bindi
-// GOTVG 2022/04/12
+// GOTVG 2022/04/18
 
 static struct BurnRomInfo WofjdrRomDesc[] = {
-	{ "tk2j_dr.bin",	0x200000, 0x63aaf686, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "tk2j_dr.bin",	0x200000, 0xd983d9b3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "tk2_01.3a",		0x080000, 0x0d9cb9bf, BRF_GRA | CPS1_TILES },
 	{ "tk2_02.4a",		0x080000, 0x45227027, BRF_GRA | CPS1_TILES },

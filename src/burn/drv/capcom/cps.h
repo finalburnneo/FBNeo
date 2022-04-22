@@ -190,6 +190,7 @@ extern CpsMemScanCallback CpsMemScanCallbackFunction;
 
 // cps_run.cpp
 extern UINT8 CpsReset;
+extern UINT8 fQSoundDip;
 extern INT32 nCpsCyclesExtra;
 extern UINT8 Cpi01A, Cpi01C, Cpi01E;
 extern UINT8 fFakeDip;
@@ -472,6 +473,11 @@ void wof_decode();
 void dino_decode();
 void punisher_decode();
 void slammast_decode();
+
+void wof_patch(void);
+void dino_patch(void);
+void punisher_patch(void);
+void slammast_patch(void);
 
 // cps2_crypt.cpp
 void cps2_decrypt_game_data();

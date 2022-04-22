@@ -541,6 +541,11 @@ static INT32 ConfigParseMAMEFile_internal(FILE *fz, const TCHAR *name)
 			else continue;
 		}
 
+		if (_tcsstr(szLine, _T("----:REASON"))) {
+			// reason to leave!
+			break;
+		}
+
 		nFound = 1;
 
 		INT32 c0[16], c1 = 0;					// find colons / break

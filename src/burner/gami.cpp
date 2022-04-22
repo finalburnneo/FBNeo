@@ -17,6 +17,7 @@ INT32 nFireButtons = 0;
 
 bool bStreetFighterLayout = false;
 bool bLeftAltkeyMapped = false;
+bool bDoBuiltinPatch = false;
 
 // These are mappable global macros for mapping Pause/FFWD etc to controls in the input mapping dialogue. -dink
 UINT8 macroSystemPause = 0;
@@ -2023,6 +2024,71 @@ INT32 ConfigGameLoadHardwareDefaults()
 	return 0;
 }
 
+// Judgement of built-in patch switch status.
+bool IsDIPSWBuiltinPatch()
+{
+	BurnDIPInfo bdi;
+	signed int i = 0;
+	while (0 == BurnDrvGetDIPInfo(&bdi, i)) {
+		if (0xf0 == (bdi.nFlags & 0xf0)) {
+			if ((bdi.nFlags == 0xfe || bdi.nFlags == 0xfd)) {
+				if (NULL != bdi.szText) {
+					if (0 == strcmp(bdi.szText, "Patch On")) {
+						return true;
+					}
+				}
+			}
+			i++;
+		} else {
+			BurnDIPInfo tmp;
+			signed int nOffset = 0;
+			for (signed int j = 0; BurnDrvGetDIPInfo(&tmp, j) == 0; j++) {
+				if (tmp.nFlags == 0xf0) {
+					nOffset = tmp.nInput;
+					break;
+				}
+			}
+
+			BurnDrvGetDIPInfo(&tmp, i);
+			struct GameInp* pgi = GameInp + tmp.nInput + nOffset;
+			if ((pgi->Input.Constant.nConst & tmp.nMask) != tmp.nSetting) {
+				i += (bdi.nFlags & 0x0f);
+				continue;
+			}
+
+			unsigned char nFlags = tmp.nFlags;
+			if ((nFlags & 0x0f) <= 1) {
+				if (NULL != bdi.szText) {
+					if (0 == strcmp(bdi.szText, "Patch On")) {
+						return true;
+					}
+				}
+			} else {
+				for (signed int j = 1; j < (nFlags & 0x0f); j++) {
+					BurnDrvGetDIPInfo(&tmp, i + j);
+					pgi = GameInp + tmp.nInput + nOffset;
+					if (nFlags & 0x80) {
+						if ((pgi->Input.Constant.nConst & tmp.nMask) == tmp.nSetting) {
+							break;
+						}
+					} else {
+						if ((pgi->Input.Constant.nConst & tmp.nMask) != tmp.nSetting) {
+							break;
+						}
+					}
+				}
+				if (NULL != bdi.szText) {
+					if (0 == strcmp(bdi.szText, "Patch On")) {
+						return true;
+					}
+				}
+			}
+			i += (bdi.nFlags & 0x0f);
+		}
+	}
+	return false;
+}
+
 // Auto-configure any undefined inputs to defaults
 INT32 GameInpDefault()
 {
@@ -2078,7 +2144,8 @@ INT32 GameInpDefault()
 		GameInpAutoOne(pgi, pgi->Macro.szName);
 	}
 #endif
-
+	// Before entering the game, confirm which driver to use.
+	bDoBuiltinPatch = IsDIPSWBuiltinPatch();
 	return 0;
 }
 

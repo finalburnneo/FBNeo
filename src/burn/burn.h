@@ -400,6 +400,8 @@ extern bool bDoIpsPatch;
 extern INT32 nIpsMaxFileLen;
 void IpsApplyPatches(UINT8* base, char* rom_name);
 
+extern bool bDoBuiltinPatch;
+
 // ---------------------------------------------------------------------------
 // Flags used with the Burndriver structure
 

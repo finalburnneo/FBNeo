@@ -335,10 +335,6 @@ ifdef ROM_VERIFY
 	DEF	:= $(DEF) -DROM_VERIFY
 endif
 
-ifdef HACK_SOUND
-	DEF	:= $(DEF) -DCPS1_HACK_QSOUND
-endif
-
 ifdef INCLUDE_7Z_SUPPORT
 	DEF := $(DEF) -DINCLUDE_7Z_SUPPORT
 endif

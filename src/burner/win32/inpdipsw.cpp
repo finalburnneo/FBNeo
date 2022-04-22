@@ -228,6 +228,8 @@ static void InpDIPSWSelect()
 
 static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
+	bool bNewStatus = bDoBuiltinPatch;
+
 	if (Msg == WM_INITDIALOG) {
 
 //		EnableWindow(hScrnWnd, FALSE);
@@ -262,6 +264,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 		if (Id == IDOK && Notify == BN_CLICKED) {			// OK button
 			bOK = true;
+			bDoBuiltinPatch = bNewStatus;
 			SendMessage(hDlg, WM_CLOSE, 0, 0);
 			return 0;
 		}
@@ -279,6 +282,10 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			for (int i = 0; i <= nSel; i++) {
 				do {
 					BurnDrvGetDIPInfo(&bdi, nDIPGroup + 1 + j++);
+					if (0 == strcmp(bdi.szText, "Patch On")) 
+						bNewStatus = true;
+					if (0 == strcmp(bdi.szText, "Patch Off"))
+						bNewStatus = false;
 				} while (bdi.nFlags == 0);
 			}
 			pgi = GameInp + bdi.nInput + nDIPOffset;
@@ -300,11 +307,10 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 		// New DIPswitch selected
 		if (Id == IDC_INPC_RESET && Notify == BN_CLICKED) {
-
 			InpDIPSWResetDIPs();
-
 			InpDIPSWListMake();								// refresh view
 			SendMessage(GetDlgItem(hInpDIPSWDlg, IDC_INPCX1_VALUE), CB_RESETCONTENT, 0, 0);
+			bNewStatus = false;
 			return 0;
 	   }
 

@@ -27574,7 +27574,7 @@ STD_ROM_FN(sms_lostraider101)
 
 struct BurnDriver BurnDrvsms_lostraider101 = {
 	"sms_lostraider101", NULL, NULL, NULL, "2015",
-	"Lost Raider (HB, v1.01)\0", "No Sound", "Vingazole & Ichigobankai", "Sega Master System",
+	"Lost Raider (HB, v1.01)\0", "No Sound", "Vingazole & Ichigo Bankai", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_lostraider101RomInfo, sms_lostraider101RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -27764,7 +27764,7 @@ STD_ROM_FN(sms_silvervalley)
 
 struct BurnDriver BurnDrvsms_silvervalley = {
 	"sms_silvervalley", NULL, NULL, NULL, "2018",
-	"Silver Valley (HB)\0", NULL, "MIKGAMES / Enrique Ruiz", "Sega Master System",
+	"Silver Valley (HB)\0", NULL, "MikGames / Enrique Ruiz", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RUNGUN | GBF_PLATFORM, 0,
 	SMSGetZipName, sms_silvervalleyRomInfo, sms_silvervalleyRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -27810,10 +27810,10 @@ struct BurnDriverD BurnDrvsms_vdptest = {
 	256, 192, 4, 3
 };
 
-// Flight of Pigarus (HB, Version 1.0)
+// Flight of Pigarus (HB, Version 1.11)
 
 static struct BurnRomInfo sms_fpigarusRomDesc[] = {
-	{ "FlightOfPigarus-SMS-1.00.sms",	0x40000, 0x838574d1, BRF_PRG | BRF_ESS },
+	{ "Flight of Pigarus v1.11 (2018)(Kagesan).sms",	262144, 0x60b86f18, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_fpigarus)
@@ -27821,7 +27821,7 @@ STD_ROM_FN(sms_fpigarus)
 
 struct BurnDriver BurnDrvsms_fpigarus = {
 	"sms_fpigarus", NULL, NULL, NULL, "2018",
-	"Flight of Pigarus (HB, v1.0)\0", NULL, "Kagesan", "Sega Master System",
+	"Flight of Pigarus (HB, v1.11)\0", NULL, "Kagesan", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VERSHOOT, 0,
 	SMSGetZipName, sms_fpigarusRomInfo, sms_fpigarusRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -27905,6 +27905,25 @@ struct BurnDriver BurnDrvsms_sydhunt = {
 	256, 192, 4, 3
 };
 
+// Heroes Against Demons (HB, v1.04b)
+
+static struct BurnRomInfo sms_hadretailRomDesc[] = {
+	{ "Heroes Against Demons v1.04b (2020)(Ichigo).sms",	262144, 0x8c77f8bf, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_hadretail)
+STD_ROM_FN(sms_hadretail)
+
+struct BurnDriver BurnDrvsms_hadretail = {
+	"sms_hadretail", NULL, NULL, NULL, "2020",
+	"Heroes Against Demons (HB, v1.04b)\0", "Retail ROM", "Ichigo Bankai", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_hadretailRomInfo, sms_hadretailRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Heroes Against Demons (HB, v1.03)
 
 static struct BurnRomInfo sms_hadRomDesc[] = {
@@ -27915,10 +27934,10 @@ STD_ROM_PICK(sms_had)
 STD_ROM_FN(sms_had)
 
 struct BurnDriver BurnDrvsms_had = {
-	"sms_had", NULL, NULL, NULL, "2020",
-	"Heroes Against Demons (HB, v1.03)\0", NULL, "Ichigo", "Sega Master System",
+	"sms_had", "sms_hadretail", NULL, NULL, "2020",
+	"Heroes Against Demons (HB, v1.03)\0", NULL, "Ichigo Bankai", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_hadRomInfo, sms_hadRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -27954,7 +27973,7 @@ STD_ROM_FN(sms_moncrunch)
 
 struct BurnDriver BurnDrvsms_moncrunch = {
 	"sms_moncrunch", NULL, NULL, NULL, "2020",
-	"Monster Crunch (HB, v1.00)\0", NULL, "Ichigo", "Sega Master System",
+	"Monster Crunch (HB, v1.00)\0", NULL, "Ichigo Bankai", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_moncrunchRomInfo, sms_moncrunchRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -29320,7 +29339,7 @@ STD_ROM_FN(sms_minimsx)
 
 struct BurnDriver BurnDrvsms_minimsx = {
 	"sms_minimsx", NULL, NULL, NULL, "2021",
-	"MiniMSX (HB)\0", NULL, "MIKGAMES", "Sega Master System",
+	"MiniMSX (HB)\0", NULL, "MikGames", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MINIGAMES, 0,
 	SMSGetZipName, sms_minimsxRomInfo, sms_minimsxRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -30065,6 +30084,63 @@ struct BurnDriver BurnDrvgg_tetris4gg = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PUZZLE, 0,
 	GGGetZipName, gg_tetris4ggRomInfo, gg_tetris4ggRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Do The Same (HB, v1.1)
+
+static struct BurnRomInfo sms_dothesameRomDesc[] = {
+	{ "Do The Same v1.1 (2022)(Ricco59).sms",	49152, 0x3e03d019, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_dothesame)
+STD_ROM_FN(sms_dothesame)
+
+struct BurnDriver BurnDrvsms_dothesame = {
+	"sms_dothesame", NULL, NULL, NULL, "2022",
+	"Do The Same (HB, v1.1)\0", "No Sound", "Ricco59", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_dothesameRomInfo, sms_dothesameRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Galactic Revenge (HB, v3)
+
+static struct BurnRomInfo sms_galrevengeRomDesc[] = {
+	{ "Galactic Revenge v3 (2018)(MikGames).sms",	131072, 0x4d69cd2c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_galrevenge)
+STD_ROM_FN(sms_galrevenge)
+
+struct BurnDriver BurnDrvsms_galrevenge = {
+	"sms_galrevenge", NULL, NULL, NULL, "2018",
+	"Galactic Revenge (HB, v3)\0", NULL, "MikGames", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RUNGUN, 0,
+	SMSGetZipName, sms_galrevengeRomInfo, sms_galrevengeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Green Beret Remake (HB, v2)
+
+static struct BurnRomInfo sms_gberetrmkRomDesc[] = {
+	{ "Green Beret Remake (2022)(MikGames).sms",	131072, 0x529172bd, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_gberetrmk)
+STD_ROM_FN(sms_gberetrmk)
+
+struct BurnDriver BurnDrvsms_gberetrmk = {
+	"sms_gberetrmk", NULL, NULL, NULL, "2022",
+	"Green Beret Remake (HB, v2)\0", NULL, "MikGames", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SMSGetZipName, sms_gberetrmkRomInfo, sms_gberetrmkRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

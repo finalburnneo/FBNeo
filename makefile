@@ -53,9 +53,6 @@ endif
 # Include rom set verifying features (comment this for release builds)
 #ROM_VERIFY = 1
 
-# CPS1 games (No sound) with QSound [Hack]
-#HACK_SOUND = 1
-
 # Force recompilation of files that need it (i.e. use __TIME__, __DATE__, SPECIALBUILD).
 FORCE_UPDATE = 1
 

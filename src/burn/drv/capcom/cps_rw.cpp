@@ -22,7 +22,6 @@ INT32 CpsPaddle2Value = 0;
 INT32 CpsPaddle1 = 0;
 INT32 CpsPaddle2 = 0;
 static INT32 nDial055, nDial05d;
-UINT8 fFakeDip = 0;
 
 INT32 PangEEP = 0;
 INT32 Forgottn = 0;

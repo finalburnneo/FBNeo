@@ -168,17 +168,17 @@ void slammast_decode(void) { cps1_decode(0x54321076,0x65432107,0x3131,0x19); }
 
 void wof_patch(void) {
 	if (fQSoundDip & 1)
-		cps1_decode(0x01234567, 0x54163072, 0x5151, 0x51);
+		wof_decode();
 }
 void dino_patch(void) {
 	if (fQSoundDip & 1)
-		cps1_decode(0x76543210, 0x24601357, 0x4343, 0x43);
+		dino_decode();
 }
 void punisher_patch(void) {
 	if (fQSoundDip & 1)
-		cps1_decode(0x67452103, 0x75316024, 0x2222, 0x22);
+		punisher_decode();
 }
 void slammast_patch(void) {
 	if (fQSoundDip & 1)
-		cps1_decode(0x54321076, 0x65432107, 0x3131, 0x19);
+		slammast_decode();
 }

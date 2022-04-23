@@ -217,7 +217,6 @@ static struct BurnInputInfo DinoInputList[] =
 	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6 ,  "diag"    },
 	{"Service"          , BIT_DIGITAL  , CpsInp018+2 ,  "service" },
 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E     ,  "dip"     },
-	{"Dip D"            , BIT_DIPSWITCH, &fQSoundDip ,  "dip"     },
 };
 
 STDINPUTINFO(Dino)
@@ -257,7 +256,6 @@ static struct BurnInputInfo DinohInputList[] =
 	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6 ,  "diag"    },
 	{"Service"          , BIT_DIGITAL  , CpsInp018+2 ,  "service" },
 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E     ,  "dip"     },
-	{"Dip D"            , BIT_DIPSWITCH, &fQSoundDip ,  "dip"     },
 };
 
 STDINPUTINFO(Dinoh)
@@ -893,7 +891,6 @@ static struct BurnInputInfo PunisherInputList[] =
 	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6, "diag"      },
 	{"Service"          , BIT_DIGITAL  , CpsInp018+2, "service"   },
 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    , "dip"       },
-	{"Dip D"            , BIT_DIPSWITCH, &fQSoundDip, "dip"       },
 };
 
 STDINPUTINFO(Punisher)
@@ -1245,7 +1242,6 @@ static struct BurnInputInfo SlammastInputList[] =
  	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6 , "diag"     },
  	{"Service"          , BIT_DIGITAL  , CpsInp018+2 , "service"  },
  	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E     , "dip"      },
-	{"Dip D"            , BIT_DIPSWITCH, &fQSoundDip , "dip"      },
 };
 
 STDINPUTINFO(Slammast)
@@ -1392,7 +1388,6 @@ static struct BurnInputInfo VarthInputList[] =
  	{"Dip A"            , BIT_DIPSWITCH, &Cpi01A    , "dip"       },
  	{"Dip B"            , BIT_DIPSWITCH, &Cpi01C    , "dip"       },
  	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    , "dip"       },
-	{"Dip D"            , BIT_DIPSWITCH, &fFakeDip  , "dip"       },
 };
 
 STDINPUTINFO(Varth)
@@ -1462,7 +1457,6 @@ static struct BurnInputInfo WofInputList[] =
  	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6,  "diag"     },
  	{"Service"          , BIT_DIGITAL  , CpsInp018+2,  "service"  },
 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    ,  "dip"      },
-	{"Dip D"            , BIT_DIPSWITCH, &fQSoundDip,  "dip"      },
 };
 
 STDINPUTINFO(Wof)
@@ -1706,6 +1700,24 @@ static struct BurnInputInfo WofsjbInputList[] =
 };
 
 STDINPUTINFO(Wofsjb)
+
+static struct BurnInputInfo QSoundPatchInputList[] =
+{
+	{"Dip D"            , BIT_DIPSWITCH, &fQSoundDip, "dip"       },
+};
+
+static struct BurnInputInfo WingmanModeInputList[] =
+{
+	{"Dip D"            , BIT_DIPSWITCH, &fFakeDip  , "dip"       },
+};
+
+STDINPUTINFOEXT(DinoQS, Dino, QSoundPatch)
+STDINPUTINFOEXT(DinohQS, Dinoh, QSoundPatch)
+STDINPUTINFOEXT(PunisherQS, Punisher, QSoundPatch)
+STDINPUTINFOEXT(SlammastQS, Slammast, QSoundPatch)
+STDINPUTINFOEXT(WofQS,Wof, QSoundPatch)
+STDINPUTINFOEXT(Varthj, Varth, WingmanMode)
+
 
 // Dip Switch Definitions
 
@@ -4804,7 +4816,7 @@ static struct BurnDIPInfo Wof3sjDIPList[]=
 
 STDDIPINFO(Wof3sj)
 
-static struct BurnDIPInfo DinoQSDIPList[] =
+static struct BurnDIPInfo DinoQSoundDIPList[] =
 {
 	// Defaults
 	{0x1c, 0xff, 0xff, 0x00, NULL                     },
@@ -4815,9 +4827,9 @@ static struct BurnDIPInfo DinoQSDIPList[] =
 	{0x1c, 0x01, 0x01, 0x01, "On"                     },
 };
 
-STDDIPINFO(DinoQS)
+STDDIPINFO(DinoQSound) // For Wofsjb
 
-static struct BurnDIPInfo DinohQSDIPList[] =
+static struct BurnDIPInfo DinohQSoundDIPList[] =
 {
 	// Defaults
 	{0x1e, 0xff, 0xff, 0x00, NULL                     },
@@ -4828,9 +4840,7 @@ static struct BurnDIPInfo DinohQSDIPList[] =
 	{0x1e, 0x01, 0x01, 0x01, "On"                     },
 };
 
-STDDIPINFO(DinohQS)
-
-static struct BurnDIPInfo PunisherQSDIPList[] =
+static struct BurnDIPInfo PunisherQSoundDIPList[] =
 {
 	// Defaults
 	{0x14, 0xff, 0xff, 0x00, NULL                     },
@@ -4841,9 +4851,7 @@ static struct BurnDIPInfo PunisherQSDIPList[] =
 	{0x14, 0x01, 0x01, 0x01, "On"                     },
 };
 
-STDDIPINFO(PunisherQS)
-
-static struct BurnDIPInfo SlammastQSDIPList[] =
+static struct BurnDIPInfo SlammastQSoundDIPList[] =
 {
 	// Defaults
 	{0x24, 0xff, 0xff, 0x01, NULL                     },
@@ -4853,8 +4861,6 @@ static struct BurnDIPInfo SlammastQSDIPList[] =
 	{0x24, 0x01, 0x01, 0x01, "Off"                    },
 	{0x24, 0x01, 0x01, 0x00, "On"                     },
 };
-
-STDDIPINFO(SlammastQS)
 
 static struct BurnDIPInfo WingmanDIPList[] =
 {
@@ -4867,12 +4873,10 @@ static struct BurnDIPInfo WingmanDIPList[] =
 	{0x18, 0x01, 0x01, 0x01, "On"                     },
 };
 
-STDDIPINFO(Wingman)
-
-STDDIPINFOEXT(DinoQSound, Dino, DinoQS)
-STDDIPINFOEXT(DinohQSound, Dinoh, DinohQS)
-STDDIPINFOEXT(PunisherQSound, Punisher, PunisherQS)
-STDDIPINFOEXT(SlammastQSound, Slammast, SlammastQS)
+STDDIPINFOEXT(DinoQS, Dino, DinoQSound)
+STDDIPINFOEXT(DinohQS, Dinoh, DinohQSound)
+STDDIPINFOEXT(PunisherQS, Punisher, PunisherQSound)
+STDDIPINFOEXT(SlammastQS, Slammast, SlammastQSound)
 STDDIPINFOEXT(Varthj, Varth, Wingman)
 
 // Rom Definitions
@@ -21061,7 +21065,7 @@ struct BurnDriver BurnDrvCpsDinopic = {
 	"Cadillacs and Dinosaurs (bootleg set 1 (with PIC16c57), 930201 etc)\0", "No sound", "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, DinopicRomInfo, DinopicRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoQSoundDIPInfo,
+	NULL, DinopicRomInfo, DinopicRomName, NULL, NULL, NULL, NULL, DinoQSInputInfo, DinoQSDIPInfo,
 	DinopicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -21071,7 +21075,7 @@ struct BurnDriver BurnDrvCpsDinopic2 = {
 	"Cadillacs and Dinosaurs (bootleg set 2 (with PIC16c57), 930201 etc)\0", "No sound", "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, Dinopic2RomInfo, Dinopic2RomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoQSoundDIPInfo,
+	NULL, Dinopic2RomInfo, Dinopic2RomName, NULL, NULL, NULL, NULL, DinoQSInputInfo, DinoQSDIPInfo,
 	DinopicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -21081,7 +21085,7 @@ struct BurnDriver BurnDrvCpsDinopic3 = {
 	"Cadillacs and Dinosaurs (bootleg set 3 (with PIC16c57), 930201 etc)\0", "No sound", "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, Dinopic3RomInfo, Dinopic3RomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoQSoundDIPInfo,
+	NULL, Dinopic3RomInfo, Dinopic3RomName, NULL, NULL, NULL, NULL, DinoQSInputInfo, DinoQSDIPInfo,
 	Dinopic3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -21091,7 +21095,7 @@ struct BurnDriver BurnDrvCpsDinopic4 = {
 	"Cadillacs and Dinosaurs (bootleg set 4 (with PIC16c57), 930201 etc)\0", "No sound", "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, Dinopic4RomInfo, Dinopic4RomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoQSoundDIPInfo,
+	NULL, Dinopic4RomInfo, Dinopic4RomName, NULL, NULL, NULL, NULL, DinoQSInputInfo, DinoQSDIPInfo,
 	DinopicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -21111,7 +21115,7 @@ struct BurnDriver BurnDrvCpsJurassic99 = {
 	"Jurassic 99 (Cadillacs and Dinosaurs bootleg with EM78P447AP, 930201 ?)\0", "No sound", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, Jurassic99RomInfo, Jurassic99RomName, NULL, NULL, NULL, NULL, DinohInputInfo, DinohQSoundDIPInfo,
+	NULL, Jurassic99RomInfo, Jurassic99RomName, NULL, NULL, NULL, NULL, DinohQSInputInfo, DinohQSDIPInfo,
 	Jurassic99Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -21141,7 +21145,7 @@ struct BurnDriver BurnDrvCpsDinotpic = {
 	"Cadillacs and Dinosaurs Turbo (bootleg set 2 (with PIC16c57), 930201 etc)\0", "No sound", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, DinotpicRomInfo, DinotpicRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoQSoundDIPInfo,
+	NULL, DinotpicRomInfo, DinotpicRomName, NULL, NULL, NULL, NULL, DinoQSInputInfo, DinoQSDIPInfo,
 	DinotpicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -22081,7 +22085,7 @@ struct BurnDriver BurnDrvCpsPunipic = {
 	"The Punisher (bootleg set 1 (with PIC16c57), 930422 etc)\0", "No sound", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, PunipicRomInfo, PunipicRomName, NULL, NULL, NULL, NULL, PunisherInputInfo, PunisherQSoundDIPInfo,
+	NULL, PunipicRomInfo, PunipicRomName, NULL, NULL, NULL, NULL, PunisherQSInputInfo, PunisherQSDIPInfo,
 	PunipicInit, PunipicExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -22091,7 +22095,7 @@ struct BurnDriver BurnDrvCpsPunipic2 = {
 	"The Punisher (bootleg set 2 (with PIC16c57), 930422 etc)\0", "No sound", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, Punipic2RomInfo, Punipic2RomName, NULL, NULL, NULL, NULL, PunisherInputInfo, PunisherQSoundDIPInfo,
+	NULL, Punipic2RomInfo, Punipic2RomName, NULL, NULL, NULL, NULL, PunisherQSInputInfo, PunisherQSDIPInfo,
 	Punipic2Init, PunipicExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -22101,7 +22105,7 @@ struct BurnDriver BurnDrvCpsPunipic3 = {
 	"The Punisher (bootleg set 3 (with PIC16c57), 930422 etc)\0", "No sound", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, Punipic3RomInfo, Punipic3RomName, NULL, NULL, NULL, NULL, PunisherInputInfo, PunisherQSoundDIPInfo,
+	NULL, Punipic3RomInfo, Punipic3RomName, NULL, NULL, NULL, NULL, PunisherQSInputInfo, PunisherQSDIPInfo,
 	Punipic3Init, PunipicExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -23510,7 +23514,7 @@ struct BurnDriver BurnDrvCpsSlampic = {
 	"Saturday Night Slam Masters (bootleg with PIC16C57, set 1, 930713 etc)\0", "No Sound", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, 0,
-	NULL, SlampicRomInfo, SlampicRomName, NULL, NULL, NULL, NULL, SlammastInputInfo, SlammastQSoundDIPInfo,
+	NULL, SlampicRomInfo, SlampicRomName, NULL, NULL, NULL, NULL, SlammastQSInputInfo, SlammastQSDIPInfo,
 	SlampicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -23880,7 +23884,7 @@ struct BurnDriver BurnDrvCpsWofsjb = {
 	"Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 3, 921005 Asia)\0", "No sound", "bootleg", "CPS1",
 	L"\u4E09\u56FD\u5FD7 II: \u5723\u5251\u4E09\0Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 3, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, WofsjbRomInfo, WofsjbRomName, NULL, NULL, NULL, NULL, WofsjbInputInfo, DinoQSDIPInfo,
+	NULL, WofsjbRomInfo, WofsjbRomName, NULL, NULL, NULL, NULL, WofsjbInputInfo, DinoQSoundDIPInfo,
 	WofsjbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -23910,7 +23914,7 @@ struct BurnDriver BurnDrvCpsWofpic = {
 	"Warriors of Fate (bootleg with PIC16C57, 921002 etc)\0", "no sound", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, WofpicRomInfo, WofpicRomName, NULL, NULL, NULL, NULL, WofInputInfo, DinoQSoundDIPInfo,
+	NULL, WofpicRomInfo, WofpicRomName, NULL, NULL, NULL, NULL, WofQSInputInfo, DinoQSDIPInfo,
 	Wofr1blInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

@@ -23634,7 +23634,7 @@ struct BurnDriver BurnDrvCpsVarthj = {
 	"Varth - operation thunderstorm (920714 Japan)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VERSHOOT, 0,
-	NULL, VarthjRomInfo, VarthjRomName, NULL, NULL, NULL, NULL, VarthInputInfo, VarthjDIPInfo,
+	NULL, VarthjRomInfo, VarthjRomName, NULL, NULL, NULL, NULL, VarthjInputInfo, VarthjDIPInfo,
 	VarthjInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
 };
@@ -24955,10 +24955,10 @@ struct BurnDriver BurnDrvCpsDinogae = {
 
 // Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition, Hack)
 // Hacked by Bindi
-// GOTVG 2022/04/18
+// GOTVG 2022/04/22
 
 static struct BurnRomInfo WofjdrRomDesc[] = {
-	{ "tk2j_dr.bin",	0x200000, 0xd983d9b3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "tk2j_dr.bin",	0x200000, 0xe7380b22, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "tk2_01.3a",		0x080000, 0x0d9cb9bf, BRF_GRA | CPS1_TILES },
 	{ "tk2_02.4a",		0x080000, 0x45227027, BRF_GRA | CPS1_TILES },

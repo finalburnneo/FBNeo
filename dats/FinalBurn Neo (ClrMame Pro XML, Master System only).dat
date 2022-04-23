@@ -1331,6 +1331,15 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="dothesame">
+		<comment>Homebrew, No Sound</comment>
+		<description>Do The Same (HB, v1.1)</description>
+		<year>2022</year>
+		<manufacturer>Ricco59</manufacturer>
+		<rom name="Do The Same v1.1 (2022)(Ricco59).sms" size="49152" crc="3e03d019"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="dokidoki" cloneof="pengland" romof="pengland">
 		<description>Doki Doki Penguin Land - Uchuu Daibouken (Jpn)</description>
 		<year>1987</year>
@@ -1790,10 +1799,10 @@
 	</game>
 	<game name="fpigarus">
 		<comment>Homebrew</comment>
-		<description>Flight of Pigarus (HB, v1.0)</description>
+		<description>Flight of Pigarus (HB, v1.11)</description>
 		<year>2018</year>
 		<manufacturer>Kagesan</manufacturer>
-		<rom name="FlightOfPigarus-SMS-1.00.sms" size="262144" crc="838574d1"/>
+		<rom name="Flight of Pigarus v1.11 (2018)(Kagesan).sms" size="262144" crc="60b86f18"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1876,6 +1885,15 @@
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-11385.ic1" size="131072" crc="a6fa42d0"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="galrevenge">
+		<comment>Homebrew</comment>
+		<description>Galactic Revenge (HB, v3)</description>
+		<year>2018</year>
+		<manufacturer>MikGames</manufacturer>
+		<rom name="Galactic Revenge v3 (2018)(MikGames).sms" size="131072" crc="4d69cd2c"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2316,6 +2334,15 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="gberetrmk">
+		<comment>Homebrew</comment>
+		<description>Green Beret Remake (HB, v2)</description>
+		<year>2022</year>
+		<manufacturer>MikGames</manufacturer>
+		<rom name="Green Beret Remake (2022)(MikGames).sms" size="131072" crc="529172bd"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="grimez80">
 		<comment>Homebrew</comment>
 		<description>Grime Z80 (HB)</description>
@@ -2399,12 +2426,21 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="had">
+	<game name="had" cloneof="hadretail" romof="hadretail">
 		<comment>Homebrew</comment>
 		<description>Heroes Against Demons (HB, v1.03)</description>
 		<year>2020</year>
-		<manufacturer>Ichigo</manufacturer>
+		<manufacturer>Ichigo Bankai</manufacturer>
 		<rom name="HeroesAgainstDemons_1.03.sms" size="131072" crc="35f47e0a"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hadretail">
+		<comment>Homebrew, Retail ROM</comment>
+		<description>Heroes Against Demons (HB, v1.04b)</description>
+		<year>2020</year>
+		<manufacturer>Ichigo Bankai</manufacturer>
+		<rom name="Heroes Against Demons v1.04b (2020)(Ichigo).sms" size="262144" crc="8c77f8bf"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2879,7 +2915,7 @@
 		<comment>Homebrew, No Sound</comment>
 		<description>Lost Raider (HB, v1.01)</description>
 		<year>2015</year>
-		<manufacturer>Vingazole &amp; Ichigobankai</manufacturer>
+		<manufacturer>Vingazole &amp; Ichigo Bankai</manufacturer>
 		<rom name="LostRaider-SMS-1.01.sms" size="131072" crc="2553b745"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3115,7 +3151,7 @@
 		<comment>Homebrew</comment>
 		<description>MiniMSX (HB)</description>
 		<year>2021</year>
-		<manufacturer>MIKGAMES</manufacturer>
+		<manufacturer>MikGames</manufacturer>
 		<rom name="MiniMSX (2021)(MikGames).sms" size="131072" crc="eb6c0944"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3201,7 +3237,7 @@
 		<comment>Homebrew</comment>
 		<description>Monster Crunch (HB, v1.00)</description>
 		<year>2020</year>
-		<manufacturer>Ichigo</manufacturer>
+		<manufacturer>Ichigo Bankai</manufacturer>
 		<rom name="MonsterCrunch-SMS-1.00.sms" size="32768" crc="7eacf20c"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4172,7 +4208,7 @@
 		<comment>Homebrew</comment>
 		<description>Silver Valley (HB)</description>
 		<year>2018</year>
-		<manufacturer>MIKGAMES / Enrique Ruiz</manufacturer>
+		<manufacturer>MikGames / Enrique Ruiz</manufacturer>
 		<rom name="silvervalley-final.sms" size="262144" crc="2774b5cc"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

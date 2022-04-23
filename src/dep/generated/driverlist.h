@@ -4063,6 +4063,7 @@ DRV		BurnDrvDjboyua;
 DRV		BurnDrvmd_djboyu;
 DRV		BurnDrvDjboy;
 DRV		BurnSpecDjpuff;
+DRV		BurnDrvsms_dothesame;
 DRV		BurnDrvMSX_dothesame;
 DRV		BurnDrvDorunrunc;
 DRV		BurnDrvDorunrunca;
@@ -5792,6 +5793,7 @@ DRV		BurnDrvGground;
 DRV		BurnDrvsms_gboogers;
 DRV		BurnDrvnes_galaccru;
 DRV		BurnDrvsms_galactpr;
+DRV		BurnDrvsms_galrevenge;
 DRV		BurnDrvCHF_galacticp;
 DRV		BurnDrvCHF_galactic;
 DRV		BurnDrvGalastrm;
@@ -6498,6 +6500,7 @@ DRV		BurnDrvMSX_gberet;
 DRV		BurnDrvMSX_gbereta;
 DRV		BurnDrvfds_greenberet;
 DRV		BurnDrvMSX_gberetk;
+DRV		BurnDrvsms_gberetrmk;
 DRV		BurnDrvGberet;
 DRV		BurnDrvgg_greendog;
 DRV		BurnDrvmd_greendog;
@@ -6892,6 +6895,7 @@ DRV		BurnDrvnes_heroqueste;
 DRV		BurnDrvnes_heroquest;
 DRV		BurnSpecHeroquestwitchlord;
 DRV		BurnDrvsms_had;
+DRV		BurnDrvsms_hadretail;
 DRV		BurnDrvMSX_heroesarena;
 DRV		BurnDrvcv_heroesar;
 #if defined FBNEO_DEBUG
@@ -22655,6 +22659,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_djboyu,			// DJ Boy (USA)
 	&BurnDrvDjboy,				// DJ Boy (World)
 	&BurnSpecDjpuff,			// DJ Puff's Volcanic Capers (128K)
+	&BurnDrvsms_dothesame,		// Do The Same (HB, v1.1)
 	&BurnDrvMSX_dothesame,		// Do the Same (HB, v1.1)
 	&BurnDrvDorunrunc,			// Do! Run Run (Do's Castle hardware, set 1)
 	&BurnDrvDorunrunca,			// Do! Run Run (Do's Castle hardware, set 2)
@@ -24108,7 +24113,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_flickyt,		// Flicky (Tw)
 	&BurnDrvMSX_flideck,		// Flight Deck (Jpn)
 	&BurnDrvMSX_flidecka,		// Flight Deck (Jpn, Alt)
-	&BurnDrvsms_fpigarus,		// Flight of Pigarus (HB, v1.0)
+	&BurnDrvsms_fpigarus,		// Flight of Pigarus (HB, v1.11)
 	&BurnDrvnes_flighint,		// Flight of the Intruder (USA)
 	&BurnDrvMSX_fsim,			// Flight Simulator - Gyorai Kougeki (Jpn)
 	&BurnDrvmd_flink,			// Flink (Euro)
@@ -24384,6 +24389,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_gboogers,		// Galactic Boogers (HB)
 	&BurnDrvnes_galaccru,		// Galactic Crusader (USA) (Unl)
 	&BurnDrvsms_galactpr,		// Galactic Protector (Jpn)
+	&BurnDrvsms_galrevenge,		// Galactic Revenge (HB, v3)
 	&BurnDrvCHF_galacticp,		// Galactic Space Wars (Prototype)
 	&BurnDrvCHF_galactic,		// Galactic Space Wars / Lunar Lander
 	&BurnDrvGalastrm,			// Galactic Storm (Japan)
@@ -25090,6 +25096,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_gbereta,		// Green Beret (Euro, Alt)
 	&BurnDrvfds_greenberet,		// Green Beret (Japan)
 	&BurnDrvMSX_gberetk,		// Green Beret (Kor)
+	&BurnDrvsms_gberetrmk,		// Green Beret Remake (HB, v2)
 	&BurnDrvGberet,				// Green Beret
 	&BurnDrvgg_greendog,		// Greendog (Euro, USA)
 	&BurnDrvmd_greendog,		// Greendog - The Beached Surfer Dude! (Euro, USA)
@@ -25484,6 +25491,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_heroquest,		// Hero Quest (USA) (Prototype)
 	&BurnSpecHeroquestwitchlord,// Hero Quest - Return of the Witch Lord (128K)
 	&BurnDrvsms_had,			// Heroes Against Demons (HB, v1.03)
+	&BurnDrvsms_hadretail,		// Heroes Against Demons (HB, v1.04b)
 	&BurnDrvMSX_heroesarena,	// Heroes Arena (HB)
 	&BurnDrvcv_heroesar,		// Heroes Arena (SGM) (HB)
 #if defined FBNEO_DEBUG

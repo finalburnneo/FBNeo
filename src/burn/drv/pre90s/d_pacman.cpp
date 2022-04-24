@@ -2892,7 +2892,7 @@ static void DrawBackground()
 		INT32 code  = (charbank << 8) | DrvVidRAM[ofst];
 		INT32 color = (DrvColRAM[ofst] & 0x1f) | (colortablebank << 5) | (palettebank << 6);
 
-		if (game_select == BIRDIY && *flipscreen) {
+		if ((game_select == BIRDIY || game_select == MAKETRAX) && *flipscreen) {
 			Render8x8Tile_FlipXY_Clip(pTransDraw, code, (272 - (sx * 8)) + 8, (224 - (sy * 8)) - 8, color, 2, 0, DrvGfxROM);
 		} else {
 			Render8x8Tile_Clip(pTransDraw, code, sx * 8, sy * 8, color, 2, 0, DrvGfxROM);

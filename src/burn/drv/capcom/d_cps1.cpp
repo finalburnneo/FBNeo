@@ -4292,12 +4292,12 @@ STDDIPINFO(Sf2mega)
 static struct BurnDIPInfo SlammastDIPList[]=
 {
 	// Defaults
-	{0x23, 0xff, 0xff, 0x08, NULL                     },
+	{0x27, 0xff, 0xff, 0x08, NULL                     },
 
 	// Dip C
 	{0   , 0xfe, 0   , 2   , "Freeze"                 },
-	{0x23, 0x01, 0x08, 0x08, "Off"                    },
-	{0x23, 0x01, 0x08, 0x00, "On"                     },
+	{0x27, 0x01, 0x08, 0x08, "Off"                    },
+	{0x27, 0x01, 0x08, 0x00, "On"                     },
 };
 
 STDDIPINFO(Slammast)
@@ -4854,12 +4854,12 @@ static struct BurnDIPInfo PunisherQSoundDIPList[] =
 static struct BurnDIPInfo SlammastQSoundDIPList[] =
 {
 	// Defaults
-	{0x24, 0xff, 0xff, 0x01, NULL                     },
+	{0x29, 0xff, 0xff, 0x00, NULL                     },
 
 	// Fake Dip
 	{0   , 0xfe, 0   , 2   , "QSound"                 },
-	{0x24, 0x01, 0x01, 0x01, "Off"                    },
-	{0x24, 0x01, 0x01, 0x00, "On"                     },
+	{0x29, 0x01, 0x01, 0x00, "Off"                    },
+	{0x29, 0x01, 0x01, 0x01, "On"                     },
 };
 
 static struct BurnDIPInfo WingmanDIPList[] =

@@ -3425,6 +3425,7 @@ DRV		BurnDrvMSX_Currojimenez;
 DRV		BurnDrvmd_curse;
 DRV		BurnDrvmd_cursep;
 DRV		BurnDrvmd_curseibay;
+DRV		BurnDrvMSX_rabenstein;
 DRV		BurnSpecSherwood;
 DRV		BurnDrvCurvebal;
 DRV		BurnDrvmd_custodian;
@@ -9211,6 +9212,8 @@ DRV		BurnDrvmd_mcdonaldu;
 DRV		BurnSpecMeanstreak;
 DRV		BurnDrvMSX_mecha8;
 DRV		BurnDrvcv_mecha8;
+DRV		BurnDrvMSX_mecha8ex;
+DRV		BurnDrvMSX_mecha9;
 DRV		BurnDrvcv_mecha9;
 DRV		BurnDrvMechattj;
 DRV		BurnDrvMechattu;
@@ -21979,7 +21982,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCrusherm,			// Crusher Makochan (Japan)
 	&BurnDrvmd_crying,			// Crying - Aseimei Sensou (Jpn)
 	&BurnDrvnes_crypto,			// Crypto (HB)
-	&BurnDrvMSX_cryptogram,		// Cryptogram Anagrams Crosswords (HB)
+	&BurnDrvMSX_cryptogram,		// Cryptogram Anagrams Crosswords (HB, v1.1)
 	&BurnDrvCcastlesj,			// Crystal Castles (joystick version)
 	&BurnDrvCcastles1,			// Crystal Castles (version 1)
 	&BurnDrvCcastles2,			// Crystal Castles (version 2)
@@ -22021,6 +22024,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_curse,			// Curse (Jpn)
 	&BurnDrvmd_cursep,			// Curse (Prototype, 19900626)
 	&BurnDrvmd_curseibay,		// Curse of Illmoore Bay, the (HB)
+	&BurnDrvMSX_rabenstein,		// Curse of Rabenstein, The (HB)
 	&BurnSpecSherwood,			// Curse of Sherwood, The (48K)
 	&BurnDrvCurvebal,			// Curve Ball
 	&BurnDrvmd_custodian,		// Custodian MD (HB)
@@ -27807,6 +27811,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecMeanstreak,		// Mean Streak (128K)
 	&BurnDrvMSX_mecha8,			// Mecha-8 (HB)
 	&BurnDrvcv_mecha8,			// Mecha-8 (SGM) (HB)
+	&BurnDrvMSX_mecha8ex,		// Mecha-8 EX (HB)
+	&BurnDrvMSX_mecha9,			// Mecha-9 (HB)
 	&BurnDrvcv_mecha9,			// Mecha-9 (SGM) (HB)
 	&BurnDrvMechattj,			// Mechanized Attack (Japan)
 	&BurnDrvMechattu,			// Mechanized Attack (US)
@@ -30716,7 +30722,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_qbert,			// Q*bert
 	&BurnDrvnes_qbert,			// Q-bert (USA)
 	&BurnSpecQ10tb,				// Q10 Tank Buster (48K)
-	&BurnDrvMSX_qbiqs,			// QBIQS (HB)
+	&BurnDrvMSX_qbiqs,			// QBIQS (HB, v1.2)
 	&BurnDrvcv_qbiqs,			// qbIqS (SGM) (HB)
 	&BurnSpecQbox128,			// Qbox (128K) (HB)
 	&BurnSpecQbox48,			// Qbox (48K) (HB)

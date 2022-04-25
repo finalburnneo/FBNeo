@@ -3949,10 +3949,10 @@
 	</game>
 	<game name="cryptogram" romof="msx">
 		<comment>Homebrew</comment>
-		<description>Cryptogram Anagrams Crosswords (HB)</description>
+		<description>Cryptogram Anagrams Crosswords (HB, v1.1)</description>
 		<year>2022</year>
 		<manufacturer>Amaury Carvalho</manufacturer>
-		<rom name="Cryptogram Anagrams Crosswords v1.0 (2022)(Amaury Carvalho).rom" size="49152" crc="9d07079c"/>
+		<rom name="Cryptogram Anagrams Crosswords v1.1 (2022)(Amaury Carvalho).rom" size="49152" crc="0a8152fb"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -3976,6 +3976,18 @@
 		<year>1989</year>
 		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="Curro Jimenez (1989)(Zigurat Software)(ES)[RUN'CAS-'].cas" size="67095" crc="8357fc9c"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="rabenstein" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Curse of Rabenstein, The (HB)</description>
+		<year>2022</year>
+		<manufacturer>Puddle Software</manufacturer>
+		<rom name="Curse of Rabenstein, The (2022)(Puddle).rom" size="753664" crc="41406735"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -9911,12 +9923,36 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mecha8" romof="msx">
+	<game name="mecha8" cloneof="mecha8ex" romof="mecha8ex">
 		<comment>Homebrew</comment>
 		<description>Mecha-8 (HB)</description>
-		<year>2011</year>
+		<year>2012</year>
 		<manufacturer>Oscar Toledo G.</manufacturer>
-		<rom name="mecha8.rom" size="32768" crc="c60e346e"/>
+		<rom name="Mecha 8 (2012)(Oscar Toledo Gutierrez).rom" size="32768" crc="c60e346e"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mecha8ex" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Mecha-8 EX (HB)</description>
+		<year>2012-13</year>
+		<manufacturer>Oscar Toledo G.</manufacturer>
+		<rom name="Mecha 8 EX (2013)(Oscar Toledo Gutierrez).rom" size="65536" crc="b722cb45"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mecha9" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Mecha-9 (HB)</description>
+		<year>2015</year>
+		<manufacturer>Oscar Toledo G.</manufacturer>
+		<rom name="Mecha 9 (2015)(Oscar Toledo Gutierrez).rom" size="131072" crc="a29176e3"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12789,10 +12825,10 @@
 	</game>
 	<game name="qbiqs" romof="msx">
 		<comment>Homebrew</comment>
-		<description>QBIQS (HB)</description>
+		<description>QBIQS (HB, v1.2)</description>
 		<year>2010</year>
-		<manufacturer>Z80st-Software</manufacturer>
-		<rom name="qbiqs (2010)(z80st-software).rom" size="49152" crc="c1b8c64f"/>
+		<manufacturer>Z80st Software</manufacturer>
+		<rom name="qbiqs (2010)(z80st-software).rom" size="49152" crc="11d4e90e"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

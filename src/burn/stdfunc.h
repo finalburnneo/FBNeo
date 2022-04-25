@@ -80,6 +80,25 @@ static INT32 Name##InputInfo(struct BurnInputInfo* pii, UINT32 i)		\
 	return 0;															\
 }
 
+#define STDINPUTINFOEXT(Name, Info1, Info2)									\
+static INT32 Name##InputInfo(struct BurnInputInfo* pii, UINT32 i)			\
+{																			\
+	if (i >= sizeof(Info1##InputList) / sizeof(Info1##InputList[0])) {		\
+		i -= sizeof(Info1##InputList) / sizeof(Info1##InputList[0]);		\
+		if (i >= sizeof(Info2##InputList) / sizeof(Info2##InputList[0])) {	\
+			return 1;														\
+		}																	\
+		if (pii) {															\
+			*pii = Info2##InputList[i];										\
+		}																	\
+		return 0;															\
+	}																		\
+	if (pii) {																\
+		*pii = Info1##InputList[i];											\
+	}																		\
+	return 0;																\
+}
+
 #define STDDIPINFO(Name)												\
 static INT32 Name##DIPInfo(struct BurnDIPInfo* pdi, UINT32 i)			\
 {																		\

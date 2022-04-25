@@ -18855,21 +18855,59 @@ struct BurnDriver BurnDrvMSX_zaxxones = {
 	272, 228, 4, 3
 };
 
+// Mecha-8 EX (HB)
+
+static struct BurnRomInfo MSX_mecha8exRomDesc[] = {
+	{ "Mecha 8 EX (2013)(Oscar Toledo Gutierrez).rom",	65536, 0xb722cb45, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_mecha8ex, MSX_mecha8ex, msx_msx)
+STD_ROM_FN(MSX_mecha8ex)
+
+struct BurnDriver BurnDrvMSX_mecha8ex = {
+	"msx_mecha8ex", NULL, "msx_msx", NULL, "2012-13",
+	"Mecha-8 EX (HB)\0", NULL, "Oscar Toledo G.", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_VERSHOOT, 0,
+	MSXGetZipName, MSX_mecha8exRomInfo, MSX_mecha8exRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Mecha-8 (HB)
 
 static struct BurnRomInfo MSX_mecha8RomDesc[] = {
-	{ "mecha8.rom",	0x08000, 0xc60e346e, BRF_PRG | BRF_ESS },
+	{ "Mecha 8 (2012)(Oscar Toledo Gutierrez).rom",	32768, 0xc60e346e, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_mecha8, MSX_mecha8, msx_msx)
 STD_ROM_FN(MSX_mecha8)
 
 struct BurnDriver BurnDrvMSX_mecha8 = {
-	"msx_mecha8", NULL, "msx_msx", NULL, "2011",
+	"msx_mecha8", "msx_mecha8ex", "msx_msx", NULL, "2012",
 	"Mecha-8 (HB)\0", NULL, "Oscar Toledo G.", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_VERSHOOT, 0,
 	MSXGetZipName, MSX_mecha8RomInfo, MSX_mecha8RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Mecha-9 (HB)
+
+static struct BurnRomInfo MSX_mecha9RomDesc[] = {
+	{ "Mecha 9 (2015)(Oscar Toledo Gutierrez).rom",	131072, 0xa29176e3, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_mecha9, MSX_mecha9, msx_msx)
+STD_ROM_FN(MSX_mecha9)
+
+struct BurnDriver BurnDrvMSX_mecha9 = {
+	"msx_mecha9", NULL, "msx_msx", NULL, "2015",
+	"Mecha-9 (HB)\0", NULL, "Oscar Toledo G.", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_VERSHOOT, 0,
+	MSXGetZipName, MSX_mecha9RomInfo, MSX_mecha9RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -25674,10 +25712,10 @@ struct BurnDriver BurnDrvMSX_jetbomb = {
 };
 
 
-// QBIQS (HB)
+// QBIQS (HB, v1.2)
 
 static struct BurnRomInfo MSX_qbiqsRomDesc[] = {
-	{ "qbiqs (2010)(z80st-software).rom",	0x0c000, 0xc1b8c64f, BRF_PRG | BRF_ESS },
+	{ "qbiqs (2010)(z80st-software).rom",	49152, 0x11d4e90e, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_qbiqs, MSX_qbiqs, msx_msx)
@@ -25685,7 +25723,7 @@ STD_ROM_FN(MSX_qbiqs)
 
 struct BurnDriver BurnDrvMSX_qbiqs = {
 	"msx_qbiqs", NULL, "msx_msx", NULL, "2010",
-	"QBIQS (HB)\0", NULL, "Z80st-Software", "MSX",
+	"QBIQS (HB, v1.2)\0", NULL, "Z80st Software", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_MSX, GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_qbiqsRomInfo, MSX_qbiqsRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -31780,10 +31818,10 @@ struct BurnDriver BurnDrvMSX_blastoid = {
 	272, 228, 4, 3
 };
 
-// Cryptogram Anagrams Crosswords (HB)
+// Cryptogram Anagrams Crosswords (HB, v1.1)
 
 static struct BurnRomInfo MSX_cryptogramRomDesc[] = {
-	{ "Cryptogram Anagrams Crosswords v1.0 (2022)(Amaury Carvalho).rom",	49152, 0x9d07079c, BRF_PRG | BRF_ESS },
+	{ "Cryptogram Anagrams Crosswords v1.1 (2022)(Amaury Carvalho).rom",	49152, 0x0a8152fb, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_cryptogram, MSX_cryptogram, msx_msx)
@@ -31791,7 +31829,7 @@ STD_ROM_FN(MSX_cryptogram)
 
 struct BurnDriver BurnDrvMSX_cryptogram = {
 	"msx_cryptogram", NULL, "msx_msx", NULL, "2022",
-	"Cryptogram Anagrams Crosswords (HB)\0", NULL, "Amaury Carvalho", "MSX",
+	"Cryptogram Anagrams Crosswords (HB, v1.1)\0", NULL, "Amaury Carvalho", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_cryptogramRomInfo, MSX_cryptogramRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -32309,6 +32347,25 @@ struct BurnDriver BurnDrvMSX_wildcat = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_SHOOT, 0,
 	MSXGetZipName, MSX_wildcatRomInfo, MSX_wildcatRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Curse of Rabenstein, The (HB)
+
+static struct BurnRomInfo MSX_rabensteinRomDesc[] = {
+	{ "Curse of Rabenstein, The (2022)(Puddle).rom",	753664, 0x41406735, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_rabenstein, MSX_rabenstein, msx_msx)
+STD_ROM_FN(MSX_rabenstein)
+
+struct BurnDriver BurnDrvMSX_rabenstein = {
+	"msx_rabenstein", NULL, "msx_msx", NULL, "2022",
+	"Curse of Rabenstein, The (HB)\0", NULL, "Puddle Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII8, GBF_ADV, 0,
+	MSXGetZipName, MSX_rabensteinRomInfo, MSX_rabensteinRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

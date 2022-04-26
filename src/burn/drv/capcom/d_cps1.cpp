@@ -16100,10 +16100,7 @@ static INT32 Cps1LoadRoms(INT32 bLoad)
 			
 		} while (ri.nLen);
 
-		// Some IPS come from hack games in which CpsRom is expanded.
-		// For this purpose, 0x100000 length is reserved.
-		nCpsRomLen += bDoIpsPatch ? 0x100000 : 0;
-
+		if (bDoIpsPatch && (0x200000 > nCpsRomLen)) nCpsRomLen = 0x200000;	// Some ips come from hack games in which CpsRom is expanded.
 		if (Cps1Qs) nCpsZRomLen *= 2;
 		if (GameHasStars) nCpsGfxLen += 0x2000;
 		if (PangEEP) nCpsGfxLen *= 2;

@@ -92,9 +92,67 @@ static INT32 __cdecl StateCompressAcb(struct BurnArea* pba)
 	return 0;
 }
 
+// --------- Raw / Uncompressed state handling ----------
+static INT32 nTotalLenUncomp = 0;
+static UINT8 *BufferUncomp = NULL;
+static UINT8 *pBufferUncomp = NULL;
+
+static INT32 __cdecl UncompLenAcb(struct BurnArea* pba)
+{
+	nTotalLenUncomp += pba->nLen;
+
+	return 0;
+}
+
+static INT32 __cdecl UncompSaveAcb(struct BurnArea* pba)
+{
+	memcpy(pBufferUncomp, pba->Data, pba->nLen);
+	pBufferUncomp += pba->nLen;
+
+	return 0;
+}
+
+static INT32 __cdecl UncompLoadAcb(struct BurnArea* pba)
+{
+	memcpy(pba->Data, pBufferUncomp, pba->nLen);
+	pBufferUncomp += pba->nLen;
+
+	return 0;
+}
+
 // Compress a state using deflate
 INT32 BurnStateCompress(UINT8** pDef, INT32* pnDefLen, INT32 bAll)
 {
+	if ((BurnDrvGetHardwareCode() & 0xffff0000) == 0x06010000) {
+		// Systems with a huge amount of data can be defined here to
+		// use this raw state handler.
+
+		nTotalLenUncomp = 0;
+		BurnAcb = UncompLenAcb; // Get length of state buffer
+
+		if (bAll) BurnAreaScan(ACB_FULLSCAN | ACB_READ, NULL);		// scan all ram, read (from driver <- decompress)
+		else      BurnAreaScan(ACB_NVRAM    | ACB_READ, NULL);		// scan nvram,   read (from driver <- decompress)
+
+		BufferUncomp = (UINT8*)malloc (nTotalLenUncomp);
+
+		pBufferUncomp = BufferUncomp;
+		BurnAcb = UncompSaveAcb;
+
+		if (bAll) BurnAreaScan(ACB_FULLSCAN | ACB_READ, NULL);		// scan all ram, read (from driver <- decompress)
+		else      BurnAreaScan(ACB_NVRAM    | ACB_READ, NULL);		// scan nvram,   read (from driver <- decompress)
+
+		// Return the buffer
+		if (pDef) {
+			*pDef = BufferUncomp;
+		}
+		if (pnDefLen) {
+			*pnDefLen = nTotalLenUncomp;
+		}
+
+		return 0;
+	}
+
+	// FBN-Standard / Compressed state handler
 	void* NewMem = NULL;
 
 	memset(&Zstr, 0, sizeof(Zstr));
@@ -152,6 +210,19 @@ static INT32 __cdecl StateDecompressAcb(struct BurnArea* pba)
 
 INT32 BurnStateDecompress(UINT8* Def, INT32 nDefLen, INT32 bAll)
 {
+	if ((BurnDrvGetHardwareCode() & 0xffff0000) == 0x06010000) {
+		// Systems with a huge amount of data can be defined here to
+		// use this raw state handler.
+		pBufferUncomp = Def;
+		BurnAcb = UncompLoadAcb;
+
+		if (bAll) BurnAreaScan(ACB_FULLSCAN | ACB_WRITE, NULL);		// scan all ram, write (to driver <- decompress)
+		else      BurnAreaScan(ACB_NVRAM    | ACB_WRITE, NULL);		// scan nvram,   write (to driver <- decompress)
+
+		return 0;
+	}
+
+	// FBN-Standard / Compressed state handler
 	memset(&Zstr, 0, sizeof(Zstr));
 	inflateInit(&Zstr);
 

@@ -180,6 +180,26 @@ void IpsApplyPatches(UINT8* base, char* rom_name)
 #endif
 }
 
+INT32 GetIpsesMaxLen(char* rom_name)
+{
+	INT32 nRet = -1;	// The function returns the last patched address if it succeeds, and -1 if it fails.
+#if 0
+	if (NULL != rom_name) {
+		char ips_data[MAX_PATH];
+		nIpsMaxFileLen = 0;
+		int nActivePatches = GetIpsNumActivePatches();
+
+		for (int i = 0; i < nActivePatches; i++) {
+			memset(ips_data, 0, MAX_PATH);
+			TCHARToANSI(szIpsActivePatches[i], ips_data, sizeof(ips_data));
+			DoPatchGame(ips_data, rom_name, NULL, true);
+			if (nIpsMaxFileLen > nRet) nRet = nIpsMaxFileLen;	// Returns the address with the largest length in ipses.
+		}
+	}
+#endif
+	return nRet;
+}
+
 void IpsPatchExit()
 {
 	bDoIpsPatch = FALSE;

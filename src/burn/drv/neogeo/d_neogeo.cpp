@@ -19338,25 +19338,24 @@ static struct BurnRomInfo kof2k2plusRomDesc[] = {
 	{ "265-p1pls.p1",		0x100000, 0x059da6f9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "265-p2pls.sp2",		0x500000, 0xb0ac3d06, 1 | BRF_ESS | BRF_PRG }, //  1
 	{ "265-p3pls.p3",		0x020000, 0x80aacc1f, 1 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
-
-	{ "265-s1pls.s1",		0x020000, 0x96bdd036, 2 | BRF_GRA },           //  3 Text layer tiles
-
+	
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
-	{ "265-c1pls.c1",		0x800000, 0x7edfc0bd, 3 | BRF_GRA },           //  4 Sprite data
-	{ "265-c2pls.c2",		0x800000, 0xb4f0de84, 3 | BRF_GRA },           //  5
+	{ "265-c1pls.c1",		0x800000, 0x7edfc0bd, 3 | BRF_GRA },           //  3 Sprite data
+	{ "265-c2pls.c2",		0x800000, 0xb4f0de84, 3 | BRF_GRA },           //  4
 	{ "265-c3pls.c3",		0x800000, 0x009a05ec, 3 | BRF_GRA },           //  5
 	{ "265-c4pls.c4",		0x800000, 0x68c38128, 3 | BRF_GRA },           //  6
 	{ "265-c5pls.c5",		0x800000, 0x26b43328, 3 | BRF_GRA },           //  7
 	{ "265-c6pls.c6",		0x800000, 0xb27c49b6, 3 | BRF_GRA },           //  8
 	{ "265-c7pls.c7",		0x800000, 0x80533c3f, 3 | BRF_GRA },           //  9
-	{ "265-c8pls.c8",		0x800000, 0x3d5c17ae, 3 | BRF_GRA },           // 10
+	{ "265-c8pls.c8",		0x800000, 0x3d5c17ae, 3 | BRF_GRA },           //  10
 
 	/* Encrypted */
-	{ "265-m1.m1",			0x020000, 0x85aaa632, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "265-m1.m1",			0x020000, 0x85aaa632, 4 | BRF_ESS | BRF_PRG }, //  11 Z80 code
 
 	/* Encrypted */
-	{ "265-v1.v1",			0x800000, 0x15e8f3f5, 5 | BRF_SND },           // 12 Sound data
-	{ "265-v2.v2",			0x800000, 0xda41d6f9, 5 | BRF_SND },           // 13
+	{ "265-v1.v1",			0x800000, 0x15e8f3f5, 5 | BRF_SND },           //  12 Sound data
+	{ "265-v2.v2",			0x800000, 0xda41d6f9, 5 | BRF_SND },           //  13
 };
 
 STDROMPICKEXT(kof2k2plus, kof2k2plus, neogeo)

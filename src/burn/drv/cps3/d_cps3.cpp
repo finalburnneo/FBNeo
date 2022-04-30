@@ -485,6 +485,21 @@ static struct BurnRomInfo sfiii2jRomDesc[] = {
 STD_ROM_PICK(sfiii2j)
 STD_ROM_FN(sfiii2j)
 
+// ----------------------------------------------------------
+// Street Fighter III 2nd Impact: Giant Attack (Hispanic 970930)
+// ----------------------------------------------------------
+static struct BurnRomInfo sfiii2hRomDesc[] = {
+
+	{ "sfiii2_hispanic.29f400.u2",			0x080000, 0x5c799526, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	
+#if !defined ROM_VERIFY
+	SFIII2_970930_FLASH
+#endif
+};
+
+STD_ROM_PICK(sfiii2h)
+STD_ROM_FN(sfiii2h)
+
 // ----------------------------------------------------------------
 // Street Fighter III 2nd Impact: Giant Attack (Asia 970930, NO CD)
 // ----------------------------------------------------------------
@@ -1540,6 +1555,16 @@ struct BurnDriver BurnDrvSfiii2j = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, FBF_SF,
 	NULL, sfiii2jRomInfo, sfiii2jRomName, NULL, NULL, NULL, NULL, cps3InputInfo, sfiiiwidejapanDIPInfo,
+	sfiii2Init, cps3Exit, cps3Frame, DrvCps3Draw, cps3Scan, &cps3_palette_change, 0x40000,
+	384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvSfiii2h = {
+	"sfiii2h", "sfiii2", NULL, NULL, "1997",
+	"Street Fighter III 2nd Impact: Giant Attack (Hispanic 970930)\0", NULL, "Capcom", "CPS-3",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, FBF_SF,
+	NULL, sfiii2hRomInfo, sfiii2hRomName, NULL, NULL, NULL, NULL, cps3InputInfo, sfiiiwidehispanicDIPInfo,
 	sfiii2Init, cps3Exit, cps3Frame, DrvCps3Draw, cps3Scan, &cps3_palette_change, 0x40000,
 	384, 224, 4, 3
 };

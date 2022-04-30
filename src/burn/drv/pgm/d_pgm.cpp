@@ -3397,6 +3397,44 @@ struct BurnDriver BurnDrvKov2103 = {
 };
 
 
+// Knights of Valour 2 (V102, 102, 100HK)
+/* SCREEN VER PIC: 12/14/00 10:33:36 V102 */
+
+static struct BurnRomInfo kov21022RomDesc[] = {
+	{ "v102_u18.u18",				0x0400000, 0xa2489c37, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+
+	{ "pgm_t1200.u27",	   			0x0800000, 0xd7e26609, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "pgm_a1200.u1",	   			0x0800000, 0xceeb81d8, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "pgm_a1201.u4",   			0x0800000, 0x21063ca7, 3 | BRF_GRA },			//  3
+	{ "pgm_a1202.u6",	   			0x0800000, 0x4bb92fae, 3 | BRF_GRA },			//  4
+	{ "pgm_a1203.u8",	   			0x0800000, 0xe73cb627, 3 | BRF_GRA },			//  5
+	{ "pgm_a1204.u10",   			0x0200000, 0x14b4b5bb, 3 | BRF_GRA },			//  6
+
+	{ "pgm_b1200.u5",	   			0x0800000, 0xbed7d994, 4 | BRF_GRA },			//  7 Sprite Masks & Color Indexes
+	{ "pgm_b1201.u7",	   			0x0800000, 0xf251eb57, 4 | BRF_GRA },			//  8
+
+	{ "pgm_m1200.u3",	   			0x0800000, 0xb0d88720, 5 | BRF_SND },			//  9 Samples
+
+	{ "kov2_v100_hongkong.asic",	0x0004000, 0xe0d7679f, 7 | BRF_PRG | BRF_ESS }, // 10 Internal ARM7 Rom
+
+	{ "v102_u19.u19",				0x0200000, 0x462e2980, 8 | BRF_PRG | BRF_ESS }, // 11 External ARM7 Rom
+};
+
+STDROMPICKEXT(kov21022, kov21022, pgm)
+STD_ROM_FN(kov21022)
+
+struct BurnDriver BurnDrvKov21022 = {
+	"kov21022", "kov2", "pgm", NULL, "2000",
+	"Knights of Valour 2 (V102, 102, 100HK Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
+	L"Knights of Valour 2\0\u4e09\u56fd\u6218\u7eaa 2 (V102, 102, 100HK)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kov21022RomInfo, kov21022RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kov2DIPInfo,
+	kov2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
 // Knights of Valour 2 (V102, Hong Kong)
 /* SCREEN VER PIC: 12/14/00 10:33:36 V102 */
 

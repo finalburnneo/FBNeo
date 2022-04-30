@@ -18362,6 +18362,46 @@ struct BurnDriver BurnDrvkof99eur = {
 	0x1000, 304, 224, 4, 3
 };
 
+// The King of Fighters '99 - Evolution Ultra Remix 2015
+// Original By Yashional (Version 2015-07-13)
+// In HBMAME File is kof99s36
+
+static struct BurnRomInfo kof99eur2RomDesc[] = {
+	{ "251h36.p1",    0x100000, 0xbdb0aad2, 1 | BRF_ESS | BRF_PRG }, //  0
+	{ "251h36.p2",    0x400000, 0x115a796a, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "251h36.s1",    0x020000, 0xb39bf6ed, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "251eur.c1",    0x800000, 0xc7e8bf32, 3 | BRF_GRA },           //  3 Sprite data
+	{ "251eur.c2",    0x800000, 0x4e8f9f7d, 3 | BRF_GRA },           //  4
+	{ "proto_251.c3", 0x800000, 0xf20959e8, 3 | BRF_GRA },           //  5
+	{ "proto_251.c4", 0x800000, 0x54ffbe9f, 3 | BRF_GRA },           //  6
+	{ "proto_251.c5", 0x800000, 0xd87a3bbc, 3 | BRF_GRA },           //  7
+	{ "proto_251.c6", 0x800000, 0x4d40a691, 3 | BRF_GRA },           //  8
+	{ "251eur.c7",    0x800000, 0xf0b5ff02, 3 | BRF_GRA },           //  9
+	{ "251eur.c8",    0x800000, 0x7107b8d5, 3 | BRF_GRA },           //  10
+
+	{ "251ae.m1",     0x020000, 0xf847e188, 4 | BRF_ESS | BRF_PRG }, //  11 Z80 code
+
+	{ "251ae.v1",     0x400000, 0x4ae46226, 5 | BRF_SND },           //  12 Sound data
+	{ "251ae.v2",     0x400000, 0x07d70650, 5 | BRF_SND },           //  13
+	{ "251-v3.v3",    0x400000, 0x821901da, 5 | BRF_SND },           //  14
+	{ "251-v4.v4",    0x200000, 0xb49e6178, 5 | BRF_SND },           //  15
+};
+
+STDROMPICKEXT(kof99eur2, kof99eur2, neogeo)
+STD_ROM_FN(kof99eur2)
+
+struct BurnDriver BurnDrvkof99eur2 = {
+	"kof99eur2", "kof99", "neogeo", NULL, "2015",
+	"The King of Fighters '99 Evolution Ultra Remix 2015 (Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof99eur2RomInfo, kof99eur2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	Kof99TimePatchInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
 // The King of Fighters '99 - Summer Revolution (Hack By FCHT - FightChina Hackteam)
 
 static struct BurnRomInfo kof99srRomDesc[] = {

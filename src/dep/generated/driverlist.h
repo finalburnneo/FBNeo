@@ -1808,10 +1808,11 @@ DRV		BurnDrvBloodbro;
 DRV		BurnSpecbloodbrothers1;
 DRV		BurnSpecbloodbrothers2;
 DRV		BurnSpecbloodbrothers3;
-DRV		BurnDrvBloodstm10;
-DRV		BurnDrvBloodstm11;
-DRV		BurnDrvBloodstm21;
-DRV		BurnDrvBloodstm22;
+DRV		BurnDrvBloodstm104;
+DRV		BurnDrvBloodstm110;
+DRV		BurnDrvBloodstm210;
+DRV		BurnDrvBloodstm220;
+DRV		BurnDrvBloodstm221;
 DRV		BurnDrvBloodstm;
 DRV		BurnDrvBloodwar;
 DRV		BurnDrvnes_bloodfall;
@@ -2312,6 +2313,7 @@ DRV		BurnSpecCadaveriones;
 DRV		BurnDrvCpsDinou;
 DRV		BurnDrvCpsDino;
 DRV		BurnDrvCpsDinoa;
+DRV		BurnDrvCpsDinore;
 DRV		BurnDrvCpsDinosyn;
 DRV		BurnDrvCpsDinopic;
 DRV		BurnDrvCpsDinopic2;
@@ -8097,6 +8099,7 @@ DRV		BurnDrvKov;
 DRV		BurnDrvkov2dzxx;
 DRV		BurnDrvKov2100;
 DRV		BurnDrvKov2101;
+DRV		BurnDrvKov21022;
 DRV		BurnDrvKov2102;
 DRV		BurnDrvKov2103;
 DRV		BurnDrvKov2104;
@@ -9233,6 +9236,9 @@ DRV		BurnDrvMegablst;
 DRV		BurnDrvmd_megabomb;
 DRV		BurnDrvmd_megabombu;
 DRV		BurnDrvmd_megabm8;
+DRV		BurnDrvmd_casanova;
+DRV		BurnDrvmd_casanova2;
+DRV		BurnDrvmd_casanova3;
 DRV		BurnDrvmd_cperils;
 DRV		BurnDrvMegaforcu;
 DRV		BurnDrvMegaforc;
@@ -9270,6 +9276,7 @@ DRV		BurnDrvmd_mmworld2;
 DRV		BurnDrvmd_mindtris;
 DRV		BurnSpecMegaphoenix;
 DRV		BurnDrvmd_megaqbert12;
+DRV		BurnDrvmd_queenjour;
 DRV		BurnDrvmd_megaswiv;
 DRV		BurnDrvmd_megaswivb;
 DRV		BurnDrvmd_megaswivci;
@@ -14880,6 +14887,7 @@ DRV		BurnDrvCpsSf2dongb;
 DRV		BurnDrvCpsSf2ceb;
 DRV		BurnDrvnes_streefigiii;
 DRV		BurnDrvSfiii2n;
+DRV		BurnDrvSfiii2h;
 DRV		BurnDrvSfiii2j;
 DRV		BurnDrvSfiii2;
 DRV		BurnDrvSfiii4n;
@@ -15350,6 +15358,7 @@ DRV		BurnDrvmd_smba;
 DRV		BurnDrvMarukin;
 DRV		BurnDrvnes_smaruo;
 DRV		BurnDrvSgmast;
+DRV		BurnDrvmd_smoverkill;
 DRV		BurnDrvpce_smcrush;
 DRV		BurnDrvSuprmatk;
 DRV		BurnDrvSuprmatkd;
@@ -16282,6 +16291,7 @@ DRV		BurnDrvkof99;
 DRV		BurnDrvkof99p;
 DRV		BurnDrvkof99ae;
 DRV		BurnDrvkof99eur;
+DRV		BurnDrvkof99eur2;
 DRV		BurnDrvkof99rp2f;
 DRV		BurnDrvkof99sr;
 DRV		BurnDrvmd_kof99;
@@ -20408,10 +20418,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecbloodbrothers1,	// Blood Brothers (Module 1) (128K)
 	&BurnSpecbloodbrothers2,	// Blood Brothers (Module 2) (128K)
 	&BurnSpecbloodbrothers3,	// Blood Brothers (Module 3) (128K)
-	&BurnDrvBloodstm10,			// Blood Storm (v1.04)
-	&BurnDrvBloodstm11,			// Blood Storm (v1.10)
-	&BurnDrvBloodstm21,			// Blood Storm (v2.10)
-	&BurnDrvBloodstm22,			// Blood Storm (v2.20)
+	&BurnDrvBloodstm104,		// Blood Storm (v1.04)
+	&BurnDrvBloodstm110,		// Blood Storm (v1.10)
+	&BurnDrvBloodstm210,		// Blood Storm (v2.10)
+	&BurnDrvBloodstm220,		// Blood Storm (v2.20)
+	&BurnDrvBloodstm221,		// Blood Storm (v2.21)
 	&BurnDrvBloodstm,			// Blood Storm (v2.22)
 	&BurnDrvBloodwar,			// Blood Warrior
 	&BurnDrvnes_bloodfall,		// Bloodfall (HB)
@@ -20912,6 +20923,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsDinou,			// Cadillacs & Dinosaurs (930201 USA)
 	&BurnDrvCpsDino,			// Cadillacs & Dinosaurs (930201 World)
 	&BurnDrvCpsDinoa,			// Cadillacs & Dinosaurs (930223 Asia TW)
+	&BurnDrvCpsDinore,			// Cadillacs & Dinosaurs Readjusted (Hack, v1.0)
 	&BurnDrvCpsDinosyn,			// Cadillacs and Dinosaurs (30th-Anniversary, Hack)
 	&BurnDrvCpsDinopic,			// Cadillacs and Dinosaurs (bootleg set 1 (with PIC16c57), 930201 etc)
 	&BurnDrvCpsDinopic2,		// Cadillacs and Dinosaurs (bootleg set 2 (with PIC16c57), 930201 etc)
@@ -26697,6 +26709,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkov2dzxx,			// Knights of Valour 2 (Dou Zhuan Xing Xuan, ver.110)
 	&BurnDrvKov2100,			// Knights of Valour 2 (V100, Hong Kong)
 	&BurnDrvKov2101,			// Knights of Valour 2 (V101, Hong Kong)
+	&BurnDrvKov21022,			// Knights of Valour 2 (V102, 102, 100HK Hong Kong)
 	&BurnDrvKov2102,			// Knights of Valour 2 (V102, Hong Kong)
 	&BurnDrvKov2103,			// Knights of Valour 2 (V103, Hong Kong)
 	&BurnDrvKov2104,			// Knights of Valour 2 (V104, China)
@@ -27833,6 +27846,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_megabomb,		// Mega Bomberman (Euro, Kor)
 	&BurnDrvmd_megabombu,		// Mega Bomberman (USA)
 	&BurnDrvmd_megabm8,			// Mega Bomberman - 8 Player Demo
+	&BurnDrvmd_casanova,		// Mega Casanova (HB, v1.3)
+	&BurnDrvmd_casanova2,		// Mega Casanova 2 (HB, v1.0)
+	&BurnDrvmd_casanova3,		// Mega Casanova 3 (HB, v1.0)
 	&BurnDrvmd_cperils,			// Mega Cheril Perils (HB)
 	&BurnDrvMegaforcu,			// Mega Force (US)
 	&BurnDrvMegaforc,			// Mega Force (World)
@@ -27870,6 +27886,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_mindtris,		// Mega Mindtris (HB, v1.2)
 	&BurnSpecMegaphoenix,		// Mega Phoenix (128K)
 	&BurnDrvmd_megaqbert12,		// Mega Q-Bert (HB, v1.2)
+	&BurnDrvmd_queenjour,		// Mega Queen Journey, The (HB)
 	&BurnDrvmd_megaswiv,		// Mega SWIV (Euro)
 	&BurnDrvmd_megaswivb,		// Mega SWIV (Euro, Pirate)
 	&BurnDrvmd_megaswivci,		// Mega SWIV (Hack, Color Improvement v1.05)
@@ -33480,6 +33497,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSf2ceb,			// Street Fighter II': Champion Edition (Playmark bootleg, set 1)
 	&BurnDrvnes_streefigiii,	// Street Fighter III (Unl)
 	&BurnDrvSfiii2n,			// Street Fighter III 2nd Impact: Giant Attack (Asia 970930, NO CD)
+	&BurnDrvSfiii2h,			// Street Fighter III 2nd Impact: Giant Attack (Hispanic 970930)
 	&BurnDrvSfiii2j,			// Street Fighter III 2nd Impact: Giant Attack (Japan 970930)
 	&BurnDrvSfiii2,				// Street Fighter III 2nd Impact: Giant Attack (USA 970930)
 	&BurnDrvSfiii4n,			// Street Fighter III 3rd Strike: Fight for the Future (4rd Arrange Edition 2013)
@@ -33950,6 +33968,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMarukin,			// Super Marukin-Ban (Japan 901017)
 	&BurnDrvnes_smaruo,			// Super Maruo
 	&BurnDrvSgmast,				// Super Masters Golf (World?, Floppy Based, FD1094 317-0058-05d?)
+	&BurnDrvmd_smoverkill,		// Super Maximum Overkill (HB)
 	&BurnDrvpce_smcrush,		// Super Metal Crusher
 	&BurnDrvSuprmatk,			// Super Missile Attack (for rev 1)
 	&BurnDrvSuprmatkd,			// Super Missile Attack (not encrypted)
@@ -34882,6 +34901,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkof99p,				// The King of Fighters '99 - Millennium Battle (prototype)
 	&BurnDrvkof99ae,			// The King of Fighters '99 Anniversary Edition (hack)
 	&BurnDrvkof99eur,			// The King of Fighters '99 Evolution Ultra Remix (Hack By Yashional)
+	&BurnDrvkof99eur2,			// The King of Fighters '99 Evolution Ultra Remix 2015 (Hack)
 	&BurnDrvkof99rp2f,			// The King of Fighters '99 Remix Pro V2.0 Final (Hack By FCHT)
 	&BurnDrvkof99sr,			// The King of Fighters '99 Summer Revolution (Hack By FCHT)
 	&BurnDrvmd_kof99,			// The King of Fighters '99
@@ -35123,7 +35143,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvThndrx2,			// Thunder Cross II (World)
 	&BurnDrvTdragon1,			// Thunder Dragon (4th Jun. 1991, protected)
 	&BurnDrvTdragon,			// Thunder Dragon (8th Jan. 1992, unprotected)
-	&BurnDrvTdragonb,			// Thunder Dragon (bootleg)
+	&BurnDrvTdragonb,			// Thunder Dragon (bootleg with Raiden sounds, encrypted)
 	&BurnDrvTdragon2a,			// Thunder Dragon 2 (1st Oct. 1993)
 	&BurnDrvTdragon2,			// Thunder Dragon 2 (9th Nov. 1993)
 	&BurnDrvTdragon3h,			// Thunder Dragon 3 (bootleg of Thunder Dragon 2)

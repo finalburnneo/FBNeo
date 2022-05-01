@@ -8852,9 +8852,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ishidos" cloneof="ishido" romof="ishido">
+		<comment>Hack</comment>
 		<description>Ishido - The Way of Stones (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Accolade</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="ishido - the way of stones (hack, spanish).bin" size="131072" crc="9f24780c"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10835,6 +10836,33 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="casanova">
+		<comment>Homebrew</comment>
+		<description>Mega Casanova (HB, v1.3)</description>
+		<year>2016</year>
+		<manufacturer>TLT, Tomahomae</manufacturer>
+		<rom name="Mega Casanova (W)(REV02)[!].bin" size="1890898" crc="c03fd6a1"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="casanova2">
+		<comment>Homebrew</comment>
+		<description>Mega Casanova 2 (HB, v1.0)</description>
+		<year>2021</year>
+		<manufacturer>Tomahome，arekuse，TLT</manufacturer>
+		<rom name="Mega Casanova 2 (W)(REV01)[!].bin" size="1788570" crc="6e570d41"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="casanova3">
+		<comment>Homebrew</comment>
+		<description>Mega Casanova 3 (HB, v1.0)</description>
+		<year>2022</year>
+		<manufacturer>Tomahome, arekuse, TLT</manufacturer>
+		<rom name="Mega Casanova 3 (W)(REV00)[!].bin" size="1341556" crc="b1bfedf9"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="cperils">
 		<comment>Homebrew</comment>
 		<description>Mega Cheril Perils (HB)</description>
@@ -10958,6 +10986,15 @@
 		<year>2016</year>
 		<manufacturer>Jaklub</manufacturer>
 		<rom name="Mega Qbert.bin" size="524288" crc="8e48002d"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="queenjour">
+		<comment>Homebrew</comment>
+		<description>Mega Queen Journey, The (HB)</description>
+		<year>2019</year>
+		<manufacturer>DnWn</manufacturer>
+		<rom name="Mega Queen Journey, The.bin" size="4170516" crc="3c8f21e3"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -13129,14 +13166,16 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjabt" cloneof="ninjab" romof="ninjab">
+		<comment>Hack</comment>
 		<description>Ninja Burai Densetsu (T-Chi)</description>
-		<year>1991</year>
-		<manufacturer>Sega</manufacturer>
+		<year>199?</year>
+		<manufacturer>Xu Yong Sheng</manufacturer>
 		<rom name="ninja burai densetsu (T-Chi).bin" size="1048576" crc="107cbf61"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="ngaiden">
+		<comment>Prototype</comment>
 		<description>Ninja Gaiden (Jpn, Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
@@ -13169,9 +13208,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="nobuhaoc" cloneof="nobuhao" romof="nobuhao">
+		<comment>Hack</comment>
 		<description>Nobunaga no Yabou - Haouden (T-Chi)</description>
-		<year>1994</year>
-		<manufacturer>Koei</manufacturer>
+		<year>199?</year>
+		<manufacturer>Xu Yong Sheng</manufacturer>
 		<rom name="nobunaga no yabou - haouden (T-Chi).bin" size="2097152" crc="0a0993cf"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -13284,9 +13324,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="onslaus" cloneof="onslau" romof="onslau">
+		<comment>Hack</comment>
 		<description>Onslaught (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Ballistic</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="onslaught (hack, spanish).bin" size="524288" crc="f47789e3"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -19410,6 +19451,15 @@
 		<year>199?</year>
 		<manufacturer>&lt;unlicensed&gt;</manufacturer>
 		<rom name="super mario world (unl).bin" size="2097152" crc="cf540ba6"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="smoverkill">
+		<comment>Homebrew</comment>
+		<description>Super Maximum Overkill (HB)</description>
+		<year>2022</year>
+		<manufacturer>Space Pants Games</manufacturer>
+		<rom name="Super Maximum Overkill v1.0 (2022)(Space Pants Games).bin" size="912072" crc="95e07e04"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

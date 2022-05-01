@@ -107,7 +107,7 @@ static mpeg_audio *mpeg_decoder[16];
 
 struct ymz_sequence
 {
-	UINT32 delay;
+	INT32 delay;
 	UINT16 sequence;
 	UINT16 timer;
 	UINT16 stopchan;
@@ -328,7 +328,7 @@ static void ymz770_stream_update(INT16 **streams, INT32 samples)
 					mpeg_decoder[ch]->clear();
 			}
 
-			else if (channel.is_playing && !channel.is_paused)
+			if (channel.output_remaining == 0 && channel.is_playing && !channel.is_paused)
 			{
 retry:
 				if (channel.last_block)
@@ -363,13 +363,7 @@ retry:
 					}
 
 					channel.last_block = channel.output_remaining < 1152;
-					channel.output_remaining--;
-					channel.output_ptr = 1;
-
-					INT32 smpl = ((INT32)channel.output_data[0] * (channel.volume >> 17)) >> 7;
-					smpl = (smpl * channel.volume2) >> 7;
-					mixr += (smpl * channel.pan) >> 7;
-					mixl += (smpl * (128 - channel.pan)) >> 7;
+					channel.output_ptr = 0;
 				}
 			}
 		}
@@ -430,9 +424,12 @@ static void ymz770_sequencer()
 						sequence.is_playing = false;
 					break;
 				case 0x0e:
-					sequence.delay = sequence.timer * 32 + 32 - 1;
+					sequence.delay += sequence.timer * 32 + 32 - 1;
 					break;
 				default:
+					// Let's assume starting a sequence takes an extra cycle - this fixes mmpork's title
+					// without breaking ddpdfk music loop-points (character select & level 1 music)
+					sequence.delay = -1;
 					internal_reg_write(reg, data);
 					break;
 				}
@@ -515,8 +512,9 @@ static void ymz770_internal_reg_write(UINT8 reg, UINT8 data)
 
 					m_channels[ch].is_playing = true;
 				}
-				else if ((data & 6) == 0)
+				else if ((data & 6) == 0) {
 					m_channels[ch].is_playing = false;
+				}
 
 				m_channels[ch].loop = (data & 1) ? 255 : 0;
 				break;

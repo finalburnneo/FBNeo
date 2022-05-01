@@ -143,6 +143,16 @@ void rtc9701_exit()
 
 void rtc9701_reset()
 {
+	rtc_state = CMD_WAIT;
+	cmd_stream_pos = 0;
+	current_cmd = 0;
+	rtc9701_address_pos = 0;
+	rtc9701_current_address = 0;
+	rtc9701_current_data = 0;
+	rtc9701_data_pos = 0;
+	m_latch = 0;
+	m_reset_line = 0;
+	m_clock_line = 0;
 }
 
 

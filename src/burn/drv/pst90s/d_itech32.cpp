@@ -3812,9 +3812,55 @@ struct BurnDriver BurnDrvBloodstm = {
 };
 
 
+// Blood Storm (v2.21)
+
+static struct BurnRomInfo bloodstm221RomDesc[] = {
+	{ "bld00_v21.u83",						0x040000, 0x01907aec, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "bld01_v21.u88",						0x040000, 0xeeae123e, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "bldsnd_v10.u17",						0x020000, 0xdddeedbb, 2 | BRF_PRG | BRF_ESS }, //  2 M6809 Code
+
+	{ "bsgrom0.bin",						0x080000, 0x4e10b8c1, 3 | BRF_GRA },           //  3 Graphics (Blitter data)
+	{ "bsgrom5.bin",						0x080000, 0x6333b6ce, 3 | BRF_GRA },           //  4
+	{ "bsgrom10.bin",						0x080000, 0xa972a65c, 3 | BRF_GRA },           //  5
+	{ "bsgrom15.bin",						0x080000, 0x9a8f54aa, 3 | BRF_GRA },           //  6
+	{ "bsgrom1.bin",						0x080000, 0x10abf660, 3 | BRF_GRA },           //  7
+	{ "bsgrom6.bin",						0x080000, 0x06a260d5, 3 | BRF_GRA },           //  8
+	{ "bsgrom11.bin",						0x080000, 0xf2cab3c7, 3 | BRF_GRA },           //  9
+	{ "bsgrom16.bin",						0x080000, 0x403aef7b, 3 | BRF_GRA },           // 10
+	{ "bsgrom2.bin",						0x080000, 0x488200b1, 3 | BRF_GRA },           // 11
+	{ "bsgrom7.bin",						0x080000, 0x5bb19727, 3 | BRF_GRA },           // 12
+	{ "bsgrom12.bin",						0x080000, 0xb10d674f, 3 | BRF_GRA },           // 13
+	{ "bsgrom17.bin",						0x080000, 0x7119df7e, 3 | BRF_GRA },           // 14
+	{ "bsgrom3.bin",						0x080000, 0x2378792e, 3 | BRF_GRA },           // 15
+	{ "bsgrom8.bin",						0x080000, 0x3640ca2e, 3 | BRF_GRA },           // 16
+	{ "bsgrom13.bin",						0x080000, 0xbd4a071d, 3 | BRF_GRA },           // 17
+	{ "bsgrom18.bin",						0x080000, 0x12959bb8, 3 | BRF_GRA },           // 18
+
+	{ "ensoniq.2m",							0x200000, 0x9fdc4825, 4 | BRF_SND },           // 19 Ensoniq Bank 0
+
+	{ "bssrom0.bin",						0x080000, 0xee4570c8, 6 | BRF_SND },           // 20 Ensoniq Bank 2
+	{ "bssrom1.bin",						0x080000, 0xb0f32ec5, 6 | BRF_SND },           // 21
+	{ "bssrom2.bin",						0x040000, 0x8aee1e77, 6 | BRF_SND },           // 22
+};
+
+STD_ROM_PICK(bloodstm221)
+STD_ROM_FN(bloodstm221)
+
+struct BurnDriver BurnDrvBloodstm221 = {
+	"bloodstm221", "bloodstm", NULL, NULL, "1994",
+	"Blood Storm (v2.21)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, bloodstm221RomInfo, bloodstm221RomName, NULL, NULL, NULL, NULL, BloodstmInputInfo, BloodstmDIPInfo,
+	Common16BitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	384, 240, 4, 3
+};
+
+
 // Blood Storm (v2.20)
 
-static struct BurnRomInfo bloodstm22RomDesc[] = {
+static struct BurnRomInfo bloodstm220RomDesc[] = {
 	{ "bld00_v22.u83",						0x040000, 0x904e9208, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 	{ "bld01_v22.u88",						0x040000, 0x78336a7b, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -3844,15 +3890,15 @@ static struct BurnRomInfo bloodstm22RomDesc[] = {
 	{ "bssrom2.bin",						0x040000, 0x8aee1e77, 6 | BRF_SND },           // 22
 };
 
-STD_ROM_PICK(bloodstm22)
-STD_ROM_FN(bloodstm22)
+STD_ROM_PICK(bloodstm220)
+STD_ROM_FN(bloodstm220)
 
-struct BurnDriver BurnDrvBloodstm22 = {
-	"bloodstm22", "bloodstm", NULL, NULL, "1994",
+struct BurnDriver BurnDrvBloodstm220 = {
+	"bloodstm220", "bloodstm", NULL, NULL, "1994",
 	"Blood Storm (v2.20)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, bloodstm22RomInfo, bloodstm22RomName, NULL, NULL, NULL, NULL, BloodstmInputInfo, BloodstmDIPInfo,
+	NULL, bloodstm220RomInfo, bloodstm220RomName, NULL, NULL, NULL, NULL, BloodstmInputInfo, BloodstmDIPInfo,
 	Common16BitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
 };
@@ -3860,7 +3906,7 @@ struct BurnDriver BurnDrvBloodstm22 = {
 
 // Blood Storm (v2.10)
 
-static struct BurnRomInfo bloodstm21RomDesc[] = {
+static struct BurnRomInfo bloodstm210RomDesc[] = {
 	{ "bld00_v21.u83",						0x040000, 0x71215c8e, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 	{ "bld01_v21.u88",						0x040000, 0xda403da6, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -3890,15 +3936,15 @@ static struct BurnRomInfo bloodstm21RomDesc[] = {
 	{ "bssrom2.bin",						0x040000, 0x8aee1e77, 6 | BRF_SND },           // 22
 };
 
-STD_ROM_PICK(bloodstm21)
-STD_ROM_FN(bloodstm21)
+STD_ROM_PICK(bloodstm210)
+STD_ROM_FN(bloodstm210)
 
-struct BurnDriver BurnDrvBloodstm21 = {
-	"bloodstm21", "bloodstm", NULL, NULL, "1994",
+struct BurnDriver BurnDrvBloodstm210 = {
+	"bloodstm210", "bloodstm", NULL, NULL, "1994",
 	"Blood Storm (v2.10)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, bloodstm21RomInfo, bloodstm21RomName, NULL, NULL, NULL, NULL, BloodstmInputInfo, BloodstmDIPInfo,
+	NULL, bloodstm210RomInfo, bloodstm210RomName, NULL, NULL, NULL, NULL, BloodstmInputInfo, BloodstmDIPInfo,
 	Common16BitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
 };
@@ -3906,7 +3952,7 @@ struct BurnDriver BurnDrvBloodstm21 = {
 
 // Blood Storm (v1.10)
 
-static struct BurnRomInfo bloodstm11RomDesc[] = {
+static struct BurnRomInfo bloodstm110RomDesc[] = {
 	{ "bld00_v11.u83",						0x040000, 0x4fff8f9b, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 	{ "bld01_v11.u88",						0x040000, 0x59ce23ea, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -3936,15 +3982,15 @@ static struct BurnRomInfo bloodstm11RomDesc[] = {
 	{ "bssrom2.bin",						0x040000, 0x8aee1e77, 6 | BRF_SND },           // 22
 };
 
-STD_ROM_PICK(bloodstm11)
-STD_ROM_FN(bloodstm11)
+STD_ROM_PICK(bloodstm110)
+STD_ROM_FN(bloodstm110)
 
-struct BurnDriver BurnDrvBloodstm11 = {
-	"bloodstm11", "bloodstm", NULL, NULL, "1994",
+struct BurnDriver BurnDrvBloodstm110 = {
+	"bloodstm110", "bloodstm", NULL, NULL, "1994",
 	"Blood Storm (v1.10)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, bloodstm11RomInfo, bloodstm11RomName, NULL, NULL, NULL, NULL, BloodstmInputInfo, BloodstmDIPInfo,
+	NULL, bloodstm110RomInfo, bloodstm110RomName, NULL, NULL, NULL, NULL, BloodstmInputInfo, BloodstmDIPInfo,
 	Common16BitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
 };
@@ -3952,7 +3998,7 @@ struct BurnDriver BurnDrvBloodstm11 = {
 
 // Blood Storm (v1.04)
 
-static struct BurnRomInfo bloodstm10RomDesc[] = {
+static struct BurnRomInfo bloodstm104RomDesc[] = {
 	{ "bld00_v10.u83",						0x040000, 0xa0982119, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 	{ "bld01_v10.u88",						0x040000, 0x65800339, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -3982,15 +4028,15 @@ static struct BurnRomInfo bloodstm10RomDesc[] = {
 	{ "bssrom2.bin",						0x040000, 0x8aee1e77, 6 | BRF_SND },           // 22
 };
 
-STD_ROM_PICK(bloodstm10)
-STD_ROM_FN(bloodstm10)
+STD_ROM_PICK(bloodstm104)
+STD_ROM_FN(bloodstm104)
 
-struct BurnDriver BurnDrvBloodstm10 = {
-	"bloodstm10", "bloodstm", NULL, NULL, "1994",
+struct BurnDriver BurnDrvBloodstm104 = {
+	"bloodstm104", "bloodstm", NULL, NULL, "1994",
 	"Blood Storm (v1.04)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, bloodstm10RomInfo, bloodstm10RomName, NULL, NULL, NULL, NULL, BloodstmInputInfo, BloodstmDIPInfo,
+	NULL, bloodstm104RomInfo, bloodstm104RomName, NULL, NULL, NULL, NULL, BloodstmInputInfo, BloodstmDIPInfo,
 	Common16BitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
 };

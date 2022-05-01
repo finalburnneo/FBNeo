@@ -98,6 +98,8 @@ static const struct retro_core_option_v2_definition var_fbneo_vertical_mode = {
 		{ "disabled", NULL },
 		{ "enabled", NULL },
 		{ "alternate", NULL },
+		{ "TATE", NULL },
+		{ "TATE alternate", NULL },
 		{ NULL, NULL },
 	},
 	"disabled"
@@ -1272,6 +1274,10 @@ void check_variables(void)
 			nVerticalMode = 1;
 		else if (strcmp(var.value, "alternate") == 0)
 			nVerticalMode = 2;
+		else if (strcmp(var.value, "TATE") == 0)
+			nVerticalMode = 3;
+		else if (strcmp(var.value, "TATE alternate") == 0)
+			nVerticalMode = 4;
 		else
 			nVerticalMode = 0;
 	}

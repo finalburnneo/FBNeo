@@ -938,13 +938,13 @@ static void SetRotation()
 	switch (BurnDrvGetFlags() & (BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL))
 	{
 		case BDF_ORIENTATION_VERTICAL:
-			rotation = (nVerticalMode == 1 ? 0 : (nVerticalMode == 2 ? 2 : 1));
+			rotation = (nVerticalMode == 1 || nVerticalMode == 3 ? 0 : (nVerticalMode == 2 || nVerticalMode == 4 ? 2 : 1));
 			break;
 		case BDF_ORIENTATION_FLIPPED:
 			rotation = (nVerticalMode == 1 ? 1 : (nVerticalMode == 2 ? 3 : 2));
 			break;
 		case BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED:
-			rotation = (nVerticalMode == 1 ? 2 : (nVerticalMode == 2 ? 0 : 3));
+			rotation = (nVerticalMode == 1 || nVerticalMode == 3 ? 2 : (nVerticalMode == 2 || nVerticalMode == 4 ? 0 : 3));
 			break;
 		default:
 			rotation = (nVerticalMode == 1 ? 3 : (nVerticalMode == 2 ? 1 : 0));;
@@ -1270,6 +1270,12 @@ void retro_get_system_av_info(struct retro_system_av_info *info)
 		game_aspect_x = 4;
 		game_aspect_y = 3;
 	}
+	if ((nVerticalMode == 1 || nVerticalMode == 2) || ((nVerticalMode == 3 || nVerticalMode == 4) && (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)))
+	{
+		int temp = game_aspect_x;
+		game_aspect_x = game_aspect_y;
+		game_aspect_y = temp;
+	}
 
 	INT32 oldMax = nGameMaximumGeometry;
 	nGameMaximumGeometry = nGameWidth > nGameHeight ? nGameWidth : nGameHeight;
@@ -1278,7 +1284,7 @@ void retro_get_system_av_info(struct retro_system_av_info *info)
 	if (oldMax != 0 && oldMax < nGameMaximumGeometry)
 		nNextGeometryCall = RETRO_ENVIRONMENT_SET_SYSTEM_AV_INFO;
 
-	geom.aspect_ratio = (nVerticalMode != 0 ? ((float)game_aspect_y / (float)game_aspect_x) : ((float)game_aspect_x / (float)game_aspect_y));
+	geom.aspect_ratio = (float)game_aspect_x / (float)game_aspect_y;
 
 	struct retro_system_timing timing = { (nBurnFPS / 100.0), (nBurnFPS / 100.0) * nAudSegLen };
 

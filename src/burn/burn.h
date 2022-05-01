@@ -399,6 +399,7 @@ void Reinitialise();
 extern bool bDoIpsPatch;
 extern INT32 nIpsMaxFileLen;
 void IpsApplyPatches(UINT8* base, char* rom_name);
+INT32 GetIpsesMaxLen(char* rom_name);
 
 // ---------------------------------------------------------------------------
 // Flags used with the Burndriver structure

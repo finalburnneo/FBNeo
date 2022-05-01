@@ -3233,6 +3233,8 @@ static INT32 Kaneko16DoReset()
 	memset(Kaneko16Layer0Regs, 0, 0x10 * sizeof(UINT16));
 	memset(Kaneko16Layer1Regs, 0, 0x10 * sizeof(UINT16));
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -7606,7 +7608,7 @@ struct BurnDriver BurnDrvBlazeon = {
 	"blazeon", NULL, NULL, NULL, "1992",
 	"Blaze On (World)\0", NULL, "A.I (Atlus license)", "Kaneko16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_KANEKO16, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO16, GBF_HORSHOOT, 0,
 	NULL, BlazeonRomInfo, BlazeonRomName, NULL, NULL, NULL, NULL, BlazeonInputInfo, BlazeonDIPInfo,
 	BlazeonInit, BlazeonExit, BlazeonFrame, BlazeonFrameRender, BlazeonScan,
 	NULL, 0x1000, 320, 232, 4, 3
@@ -7616,7 +7618,7 @@ struct BurnDriver BurnDrvBlazeonj = {
 	"blazeonj", "blazeon", NULL, NULL, "1992",
 	"Blaze On (Japan)\0", NULL, "A.I (Atlus license)", "Kaneko16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO16, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO16, GBF_HORSHOOT, 0,
 	NULL, BlazeonjRomInfo, BlazeonjRomName, NULL, NULL, NULL, NULL, BlazeonInputInfo, BlazeonDIPInfo,
 	BlazeonInit, BlazeonExit, BlazeonFrame, BlazeonFrameRender, BlazeonScan,
 	NULL, 0x1000, 320, 232, 4, 3

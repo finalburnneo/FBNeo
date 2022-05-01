@@ -4,8 +4,6 @@
 // Inputs:
 UINT8 CpsReset = 0;
 UINT8 Cpi01A = 0, Cpi01C = 0, Cpi01E = 0;
-UINT8 fFakeDip = 0;
-UINT8 fQSoundDip = 0;
 
 static INT32 nInterrupt;
 static INT32 nIrqLine, nIrqCycles;

@@ -796,7 +796,7 @@ static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 			}
 
 			while (Size--) {
-				mem8 = base + Offset;
+				if (!readonly) mem8 = base + Offset; // When in the read-only state, the only thing is to get nIpsMaxFileLen, thus avoiding memory out-of-bounds.
                 Offset++;
                 if (Offset > nIpsMaxFileLen) nIpsMaxFileLen = Offset; // file size is growing
                 if (readonly) {
@@ -844,7 +844,7 @@ static char* stristr_int(const char* str1, const char* str2)
     return (*p2) ? NULL : (char*)r;
 }
 
-static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, INT32 readonly)
+static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, bool readonly)
 {
 	char s[MAX_PATH];
     char* p = NULL;
@@ -938,7 +938,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name)
 {
 	char ips_data[MAX_PATH];
 
-    nIpsMaxFileLen = 0;
+	nIpsMaxFileLen = 0;
 
 	int nActivePatches = GetIpsNumActivePatches();
 
@@ -946,7 +946,26 @@ void IpsApplyPatches(UINT8* base, char* rom_name)
 		memset(ips_data, 0, MAX_PATH);
 		TCHARToANSI(szIpsActivePatches[i], ips_data, sizeof(ips_data));
 		DoPatchGame(ips_data, rom_name, base, false);
-    }
+	}
+}
+
+INT32 GetIpsesMaxLen(char* rom_name)
+{
+	INT32 nRet = -1;	// The function returns the last patched address if it succeeds, and -1 if it fails.
+
+	if (NULL != rom_name) {
+		char ips_data[MAX_PATH];
+		nIpsMaxFileLen = 0;
+		int nActivePatches = GetIpsNumActivePatches();
+
+		for (int i = 0; i < nActivePatches; i++) {
+			memset(ips_data, 0, MAX_PATH);
+			TCHARToANSI(szIpsActivePatches[i], ips_data, sizeof(ips_data));
+			DoPatchGame(ips_data, rom_name, NULL, true);
+			if (nIpsMaxFileLen > nRet) nRet = nIpsMaxFileLen;	// Returns the address with the largest length in ipses.
+		}
+	}
+	return nRet;
 }
 
 void IpsPatchExit()

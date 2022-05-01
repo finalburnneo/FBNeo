@@ -2,14 +2,6 @@
 // copyright-holders:David Haywood, Luca Elia
 /* Serial Flash Device */
 
-/* todo: cleanup, refactor etc. */
-/* ghosteo.c is similar? */
-
-// **FBNeo port note**
-// Flash data saved to the device doesn't get saved or loaded, since what
-// we're using this for simply uses the flash chips as a ROM source.
-// - dink  april 16, 2022
-
 #include "burnint.h"
 #include "serflash.h"
 
@@ -51,6 +43,8 @@ static void flash_change_state(UINT8 state); // forward
 //-------------------------------------------------
 //  device_start - device-specific startup
 //-------------------------------------------------
+void serflash_nvram_read();
+void serflash_nvram_write();
 
 void serflash_scan(INT32 nAction, INT32 *pnMin)
 {
@@ -73,6 +67,15 @@ void serflash_scan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(m_flash_addr);
 
 		ScanVar(m_flash_page_data, m_flash_page_size, "FlashPageData");
+	}
+
+	if (nAction & ACB_NVRAM) {
+		if (nAction & ACB_READ) { // read from game -> write to state
+			serflash_nvram_write();
+		}
+		if (nAction & ACB_WRITE) { // write to game <- read from state
+			serflash_nvram_read();
+		}
 	}
 }
 
@@ -137,23 +140,20 @@ void serflash_reset()
 
 void serflash_nvram_read()
 {
-#if 0
 	if (m_length % m_flash_page_size) return; // region size must be multiple of flash page size
 	int size = m_length / m_flash_page_size;
 
-
-	if (file.is_open())
 	{
-		UINT32 page;
-		file.read(&page, 4);
+		UINT32 page = 0xffffffff; // prevent stupidity when fbn state tallys nvram size
+		SCAN_VAR(page);
 		while (page < size)
 		{
+			//bprintf(0, _T("reading block @ page %x\n"), page);
 			m_flashwritemap[page] = 1;
-			file.read(m_region + page * m_flash_page_size, m_flash_page_size);
-			file.read(&page, 4);
+			ScanVar(m_region + page * m_flash_page_size, m_flash_page_size, "block");
+			SCAN_VAR(page);
 		}
 	}
-#endif
 }
 
 
@@ -164,7 +164,6 @@ void serflash_nvram_read()
 
 void serflash_nvram_write()
 {
-#if 0
 	if (m_length % m_flash_page_size) return; // region size must be multiple of flash page size
 	int size = m_length / m_flash_page_size;
 
@@ -173,13 +172,13 @@ void serflash_nvram_write()
 	{
 		if (m_flashwritemap[page])
 		{
-			file.write(&page, 4);
-			file.write(m_region + page * m_flash_page_size, m_flash_page_size);
+			//bprintf(0, _T("writing block @ page %x\n"), page);
+			SCAN_VAR(page);
+			ScanVar(m_region + page * m_flash_page_size, m_flash_page_size, "block");
 		}
 		page++;
 	}
-	file.write(&page, 4);
-#endif
+	SCAN_VAR(page);
 }
 
 void serflash_enab_write(UINT8 data)
@@ -272,9 +271,9 @@ void serflash_cmd_write(UINT8 data)
 					if (m_flash_row < m_row_num)
 					{
 						m_flashwritemap[m_flash_row] |= 1;
-						memset(m_region + m_flash_col * m_flash_page_size, 0xff, m_flash_page_size);
+						memset(m_region + m_flash_row * m_flash_page_size, 0xff, m_flash_page_size);
 					}
-					//logerror("erased block %04x (%08x - %08x)\n", m_flash_col, m_flash_col * m_flash_page_size,  ((m_flash_col+1) * m_flash_page_size)-1);
+					//bprintf(0, _T("erased block %04x (%08x - %08x)\n"), m_flash_row, m_flash_row * m_flash_page_size,  ((m_flash_row+1) * m_flash_page_size)-1);
 				}
 				else
 				{
@@ -287,10 +286,11 @@ void serflash_cmd_write(UINT8 data)
 					flash_change_state( PAGE_PROGRAM );
 					if (m_flash_row < m_row_num)
 					{
-						m_flashwritemap[m_flash_row] |= (memcmp(m_region + m_flash_row * m_flash_page_size, &m_flash_page_data[0], m_flash_page_size) != 0);
+						m_flashwritemap[m_flash_row] |= (memcmp(m_region + m_flash_row * m_flash_page_size, m_flash_page_data, m_flash_page_size) != 0);
 						memcpy(m_region + m_flash_row * m_flash_page_size, m_flash_page_data, m_flash_page_size);
 					}
-					//logerror("re-written block %04x (%08x - %08x)\n", m_flash_row, m_flash_row * m_flash_page_size,  ((m_flash_row+1) * m_flash_page_size)-1);
+					//bprintf(0, _T("re-written block %04x (%08x - %08x)\n"), m_flash_row, m_flash_row * m_flash_page_size,  ((m_flash_row+1) * m_flash_page_size)-1);
+					//bprintf(0, _T("writemap for block %x: %x\n"), m_flash_row, m_flashwritemap[m_flash_row]);
 				}
 				else
 				{

@@ -9196,7 +9196,7 @@ struct BurnDriver BurnDrvTdragon1 = {
 };
 
 
-// Thunder Dragon (bootleg)
+// Thunder Dragon (bootleg with Raiden sounds, encrypted)
 
 static struct BurnRomInfo tdragonbRomDesc[] = {
 	{ "td_04.bin",		0x020000, 0xe8a62d3e, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -9250,7 +9250,7 @@ static INT32 TdragonbInit()
 
 struct BurnDriver BurnDrvTdragonb = {
 	"tdragonb", "tdragon", NULL, NULL, "1991",
-	"Thunder Dragon (bootleg)\0", NULL, "bootleg", "NMK16",
+	"Thunder Dragon (bootleg with Raiden sounds, encrypted)\0", NULL, "bootleg", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, tdragonbRomInfo, tdragonbRomName, NULL, NULL, NULL, NULL, CommonInputInfo, TdragonbDIPInfo,

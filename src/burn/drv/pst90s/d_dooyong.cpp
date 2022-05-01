@@ -1366,6 +1366,8 @@ static INT32 Z80YM2151DoReset()
 	priority_select = 0;
 	text_layer_enable = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -3602,7 +3604,7 @@ struct BurnDriver BurnDrvFlytiger = {
 	"flytiger", NULL, NULL, NULL, "1992",
 	"Flying Tiger (set 1)\0", NULL, "Dooyong", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, flytigerRomInfo, flytigerRomName, NULL, NULL, NULL, NULL, BluehawkInputInfo, FlytigerDIPInfo,
 	FlytigerInit, Z80YM2151Exit, FlytigerFrame, FlytigerDraw, Z80YM2151Scan, &DrvRecalc, 0x400,
 	240, 384, 3, 4
@@ -3648,7 +3650,7 @@ struct BurnDriver BurnDrvFlytigera = {
 	"flytigera", "flytiger", NULL, NULL, "1992",
 	"Flying Tiger (set 2)\0", NULL, "Dooyong", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, flytigeraRomInfo, flytigeraRomName, NULL, NULL, NULL, NULL, BluehawkInputInfo, FlytigerDIPInfo,
 	FlytigeraInit, Z80YM2151Exit, FlytigerFrame, FlytigerDraw, Z80YM2151Scan, &DrvRecalc, 0x400,
 	240, 384, 3, 4

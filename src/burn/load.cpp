@@ -25,6 +25,12 @@ INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 nFlags)
 
 	if ((nGap>1) || (nFlags & LD_NIBBLES) || (nFlags & LD_XOR))
 	{
+		if (bDoIpsPatch) { // Ipses larger than the length of the rom are allowed.
+			INT32 nIpsesMaxLen = GetIpsesMaxLen(RomName);
+			if (nIpsesMaxLen > nLen)
+				nLen = nIpsesMaxLen;
+		}
+
 		INT32 nLoadLen=0;
 		UINT8 *Load=(UINT8 *)BurnMalloc(nLen);
 		if (Load==NULL) return 1;
@@ -35,8 +41,8 @@ INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 nFlags)
 		if (bDoIpsPatch) IpsApplyPatches(Load, RomName);
 		if (nRet!=0) { if (Load) { BurnFree(Load); Load = NULL; } return 1; }
 
-		if (nLoadLen<0) nLoadLen=0;
-		if (nLoadLen>nLen) nLoadLen=nLen;
+		if (nLoadLen < 0) nLoadLen = 0;
+		if (nLoadLen > nLen || bDoIpsPatch) nLoadLen = nLen;
 
 		INT32 nGroup = (LD_GROUP(nFlags) > 0) ? LD_GROUP(nFlags) : 1;
 		INT32 nInvert = (nFlags & LD_INVERT) ? 0xff : 0;
@@ -50,8 +56,8 @@ INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 nFlags)
 
 		for (INT32 n = 0, z = 0; n < nLoadLen; n += nGroup, z += nGap) {
 			if (nNibbles) {
-				Dest[z+0] = (Src[n^nByteswap] ^ nInvert) & 0xf;
-				Dest[z+1] = (Src[n^nByteswap] ^ nInvert) >> 4;
+				Dest[z + 0] = (Src[n ^ nByteswap] ^ nInvert) & 0xf;
+				Dest[z + 1] = (Src[n ^ nByteswap] ^ nInvert) >> 4;
 			} else {
 				if (nReverse) {
 					for (INT32 j = 0; j < nGroup; j++) {
@@ -73,9 +79,7 @@ INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 nFlags)
 			BurnFree(Load);
 			Load = NULL;
 		}
-	}
-	else
-	{
+	} else {
  		// If no XOR, and gap of 1, just copy straight in
 		nRet=BurnExtLoadRom(Dest,NULL,i);
 		if (bDoIpsPatch) IpsApplyPatches(Dest, RomName);

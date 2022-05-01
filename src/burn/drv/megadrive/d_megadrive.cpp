@@ -44253,6 +44253,78 @@ struct BurnDriver BurnDrvmd_fatalsmarties = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Mega Casanova (HB, v1.3)
+static struct BurnRomInfo md_casanovaRomDesc[] = {
+	{ "Mega Casanova (W)(REV02)[!].bin", 1890898, 0xc03fd6a1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_casanova)
+STD_ROM_FN(md_casanova)
+
+struct BurnDriver BurnDrvmd_casanova = {
+	"md_casanova", NULL, NULL, NULL, "2016",
+	"Mega Casanova (HB, v1.3)\0", NULL, "TLT, Tomahomae", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SIM, 0,
+	MegadriveGetZipName, md_casanovaRomInfo, md_casanovaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Mega Casanova 2 (HB, v1.0)
+static struct BurnRomInfo md_casanova2RomDesc[] = {
+	{ "Mega Casanova 2 (W)(REV01)[!].bin", 1788570, 0x6e570d41, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_casanova2)
+STD_ROM_FN(md_casanova2)
+
+struct BurnDriver BurnDrvmd_casanova2 = {
+	"md_casanova2", NULL, NULL, NULL, "2021",
+	"Mega Casanova 2 (HB, v1.0)\0", NULL, "Tomahome，arekuse，TLT", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SIM, 0,
+	MegadriveGetZipName, md_casanova2RomInfo, md_casanova2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Mega Casanova 3 (HB, v1.0)
+static struct BurnRomInfo md_casanova3RomDesc[] = {
+	{ "Mega Casanova 3 (W)(REV00)[!].bin", 1341556, 0xb1bfedf9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_casanova3)
+STD_ROM_FN(md_casanova3)
+
+struct BurnDriver BurnDrvmd_casanova3 = {
+	"md_casanova3", NULL, NULL, NULL, "2022",
+	"Mega Casanova 3 (HB, v1.0)\0", NULL, "Tomahome, arekuse, TLT", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SIM, 0,
+	MegadriveGetZipName, md_casanova3RomInfo, md_casanova3RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Mega Queen Journey, The (HB)
+static struct BurnRomInfo md_queenjourRomDesc[] = {
+	{ "Mega Queen Journey, The.bin", 4170516, 0x3c8f21e3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_queenjour)
+STD_ROM_FN(md_queenjour)
+
+struct BurnDriver BurnDrvmd_queenjour = {
+	"md_queenjour", NULL, NULL, NULL, "2019",
+	"Mega Queen Journey, The (HB)\0", NULL, "DnWn", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_queenjourRomInfo, md_queenjourRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // -- Prototype/Hack additions below --
 
 // Super Street Fighter II - The New Challengers (Hack, Color and Graphic)

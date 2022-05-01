@@ -15621,7 +15621,7 @@ STD_ROM_PICK(Wofabl)
 STD_ROM_FN(Wofabl)
 
 static struct BurnRomInfo WofablaRomDesc[] = {
-	{ "22233.bin",	0x100000, 0xcb28807e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "2233.bin",	0x100000, 0xcb28807e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "1.bin",		0x080000, 0x0d9cb9bf, BRF_GRA | CPS1_TILES },
 	{ "2.bin",		0x080000, 0x45227027, BRF_GRA | CPS1_TILES },

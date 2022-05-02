@@ -23059,7 +23059,7 @@ struct BurnDriver BurnDrvmd_ninjab = {
 	"md_ninjab", NULL, NULL, NULL, "1991",
 	"Ninja Burai Densetsu (Jpn)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_STRATEGY, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_EEPROM, GBF_STRATEGY, 0,
 	MegadriveGetZipName, md_ninjabRomInfo, md_ninjabRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3

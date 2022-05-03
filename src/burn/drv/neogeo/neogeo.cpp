@@ -91,7 +91,12 @@ INT32 NeoLoadSprites(INT32 nOffset, INT32 nNum, UINT8* pDest, UINT32 nSpriteSize
 			}
 		}
 
-		pBuf1 = (UINT8*)BurnMalloc(nRomSize * 2);
+		// The length of the temporary memory corresponding to the CMC decryption.
+		// If the temporary memory length here is not set enough, a memory out-of-bounds error will occur during the [BurnExtLoadRom] process of [load.cpp].
+		// The temporary memory length here corresponds to the setting of [neo_run.cpp] in the ips environment.
+		UINT32 nBuf1Len = bDoIpsPatch ? (nRomSize << 1) + (0x800000 << 2) : nRomSize << 1;
+
+		pBuf1 = (UINT8*)BurnMalloc(nBuf1Len);
 		if (pBuf1 == NULL) {
 			return 1;
 		}
@@ -144,6 +149,13 @@ INT32 NeoLoadSprites(INT32 nOffset, INT32 nNum, UINT8* pDest, UINT32 nSpriteSize
 //					BurnUpdateProgress(dProgress, NULL/*, 0*/, 0);
 					NeoCMCDecrypt(nNeoProtectionXor, pDest, pBuf1 + j, i * (nRomSize * 2) + j, 0x400000, nSpriteSize);
 				}
+
+				// CMC decryption will not process data other than 0x4000000 in non PCB status.
+				// ips expansion data must be additionally loaded into reserved memory.
+				// In ips mode, the data segments that expand the capacity are not encrypted, otherwise CMC encryption will cause data redundancy.
+				if (bDoIpsPatch && i == (nNum >> 1) - 1) {
+					memcpy(pDest + (i + 1) * (nRomSize << 1), pBuf1 + (nRomSize << 1), nBuf1Len - (nRomSize << 1));
+				}
 			} else {
 				// The kof2k3 PCB has 96MB of graphics ROM, however the last 16MB are unused, and the protection/decryption hardware does not see them
 				if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_DEDICATED_PCB) {
@@ -153,6 +165,17 @@ INT32 NeoLoadSprites(INT32 nOffset, INT32 nNum, UINT8* pDest, UINT32 nSpriteSize
 						NeoPCBDataDecrypt(pBuf1 + j, 0x400000);
 						//					BurnUpdateProgress(dProgress, NULL, /*0,*/ 0);
 						NeoCMCDecrypt(nNeoProtectionXor, pDest + 0x4000000, pBuf1 + j, j, 0x400000, 0x1000000);
+					}
+				} else {
+					// Hack games that expands the capacity of Sprites.
+					// Additional processing of data after 0x4000000, loaded into memory.
+					// To prevent overflow, the data here should no longer be used to increase capacity ips.
+					memcpy(pDest + i * (nRomSize << 1), pBuf1, nRomSize << 1);
+
+					for (UINT32 j = 0; j < nRomSize * 2; j += 0x400000) {
+
+						// For CMC encryption in non-PCB state, the data after the 0x4000000 is also decrypted.
+						NeoCMCDecrypt(nNeoProtectionXor, pDest+ i * (nRomSize << 1), pBuf1 + j, j, 0x400000, nRomSize << 1);
 					}
 				}
 			}

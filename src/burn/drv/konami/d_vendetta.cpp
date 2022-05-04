@@ -680,8 +680,8 @@ static INT32 DrvInit(INT32 nGame)
 	if (!EEPROMAvailable()) EEPROMFill(DefaultEEPROM,0, 0x80);
 
 	BurnYM2151Init(3579545);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.05, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.05, BURN_SND_ROUTE_RIGHT);
 
 	K053260Init(0, 3579545, DrvSndROM, 0x100000 >> nGame);
 	K053260SetRoute(0, BURN_SND_K053260_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
@@ -893,6 +893,9 @@ static struct BurnRomInfo vendettaRomDesc[] = {
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
 	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },   //  9 EEPROM
+
+	{ "p1-pal16l8acn.17e",	0x000117, 0xeae70da3, 7 | BRF_OPT },   // 10 PLDs (BAD_DUMP / Bruteforced)
+	{ "p2-pal16l8acn.14e",	0x000117, 0xb84abb7d, 7 | BRF_OPT },   // 11      (BAD_DUMP / Bruteforced)
 };
 
 STD_ROM_PICK(vendetta)
@@ -932,6 +935,9 @@ static struct BurnRomInfo vendettarRomDesc[] = {
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
 	{ "vendettar.nv",  0x000080, 0xec3f0449, BRF_ESS | BRF_PRG },  //  9 EEPROM
+
+	{ "p1-pal16l8acn.17e",	0x000117, 0xeae70da3, 7 | BRF_OPT },   // 10 PLDs (BAD_DUMP / Bruteforced)
+	{ "p2-pal16l8acn.14e",	0x000117, 0xb84abb7d, 7 | BRF_OPT },   // 11      (BAD_DUMP / Bruteforced)
 };
 
 STD_ROM_PICK(vendettar)
@@ -966,6 +972,9 @@ static struct BurnRomInfo vendettazRomDesc[] = {
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
 	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },   //  9 EEPROM
+
+	{ "p1-pal16l8acn.17e",	0x000117, 0xeae70da3, 7 | BRF_OPT },   // 10 PLDs (BAD_DUMP / Bruteforced)
+	{ "p2-pal16l8acn.14e",	0x000117, 0xb84abb7d, 7 | BRF_OPT },   // 11      (BAD_DUMP / Bruteforced)
 };
 
 STD_ROM_PICK(vendettaz)
@@ -1001,6 +1010,9 @@ static struct BurnRomInfo vendettaunRomDesc[] = {
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
 	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },   //  9 EEPROM
+
+	{ "p1-pal16l8acn.17e",	0x000117, 0xeae70da3, 7 | BRF_OPT },   // 10 PLDs (BAD_DUMP / Bruteforced)
+	{ "p2-pal16l8acn.14e",	0x000117, 0xb84abb7d, 7 | BRF_OPT },   // 11      (BAD_DUMP / Bruteforced)
 };
 
 STD_ROM_PICK(vendettaun)
@@ -1035,6 +1047,9 @@ static struct BurnRomInfo vendetta2pwRomDesc[] = {
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
 	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },   //  9 EEPROM
+
+	{ "p1-pal16l8acn.17e",	0x000117, 0xeae70da3, 7 | BRF_OPT },   // 10 PLDs (BAD_DUMP / Bruteforced)
+	{ "p2-pal16l8acn.14e",	0x000117, 0xb84abb7d, 7 | BRF_OPT },   // 11      (BAD_DUMP / Bruteforced)
 };
 
 STD_ROM_PICK(vendetta2pw)
@@ -1069,6 +1084,9 @@ static struct BurnRomInfo vendetta2pebaRomDesc[] = {
 	{ "081a03",            0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
 	{ "vendetta.nv",    0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },        //  9 EEPROM
+
+	{ "p1-pal16l8acn.17e",	0x000117, 0xeae70da3, 7 | BRF_OPT },          // 10 PLDs (BAD_DUMP / Bruteforced)
+	{ "p2-pal16l8acn.14e",	0x000117, 0xb84abb7d, 7 | BRF_OPT },          // 11      (BAD_DUMP / Bruteforced)
 };
 
 STD_ROM_PICK(vendetta2peba)
@@ -1104,6 +1122,9 @@ static struct BurnRomInfo vendetta2punRomDesc[] = {
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
 	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },   //  9 EEPROM
+
+	{ "p1-pal16l8acn.17e",	0x000117, 0xeae70da3, 7 | BRF_OPT },   // 10 PLDs (BAD_DUMP / Bruteforced)
+	{ "p2-pal16l8acn.14e",	0x000117, 0xb84abb7d, 7 | BRF_OPT },   // 11      (BAD_DUMP / Bruteforced)
 };
 
 STD_ROM_PICK(vendetta2pun)
@@ -1138,6 +1159,9 @@ static struct BurnRomInfo vendetta2puRomDesc[] = {
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
 	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },   //  9 EEPROM
+
+	{ "p1-pal16l8acn.17e",	0x000117, 0xeae70da3, 7 | BRF_OPT },   // 10 PLDs (BAD_DUMP / Bruteforced)
+	{ "p2-pal16l8acn.14e",	0x000117, 0xb84abb7d, 7 | BRF_OPT },   // 11      (BAD_DUMP / Bruteforced)
 };
 
 STD_ROM_PICK(vendetta2pu)
@@ -1172,6 +1196,9 @@ static struct BurnRomInfo vendetta2pdRomDesc[] = {
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
 	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_ESS | BRF_PRG },   //  9 EEPROM
+
+	{ "p1-pal16l8acn.17e",	0x000117, 0xeae70da3, 7 | BRF_OPT },   // 10 PLDs (BAD_DUMP / Bruteforced)
+	{ "p2-pal16l8acn.14e",	0x000117, 0xb84abb7d, 7 | BRF_OPT },   // 11      (BAD_DUMP / Bruteforced)
 };
 
 STD_ROM_PICK(vendetta2pd)
@@ -1206,6 +1233,9 @@ static struct BurnRomInfo vendettanRomDesc[] = {
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
 	{ "vendettaj.nv",  0x000080, 0x3550a54e, BRF_ESS | BRF_PRG },  //  9 EEPROM
+
+	{ "p1-pal16l8acn.17e",	0x000117, 0xeae70da3, 7 | BRF_OPT },   // 10 PLDs (BAD_DUMP / Bruteforced)
+	{ "p2-pal16l8acn.14e",	0x000117, 0xb84abb7d, 7 | BRF_OPT },   // 11      (BAD_DUMP / Bruteforced)
 };
 
 STD_ROM_PICK(vendettan)
@@ -1240,6 +1270,9 @@ static struct BurnRomInfo vendetta2ppRomDesc[] = {
 	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
 	{ "vendettaj.nv",  0x000080, 0x3550a54e, BRF_ESS | BRF_PRG },  //  9 EEPROM
+
+	{ "p1-pal16l8acn.17e",	0x000117, 0xeae70da3, 7 | BRF_OPT },   // 10 PLDs (BAD_DUMP / Bruteforced)
+	{ "p2-pal16l8acn.14e",	0x000117, 0xb84abb7d, 7 | BRF_OPT },   // 11      (BAD_DUMP / Bruteforced)
 };
 
 STD_ROM_PICK(vendetta2pp)

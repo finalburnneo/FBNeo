@@ -31567,6 +31567,25 @@ struct BurnDriver BurnDrvnes_drmario = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// https://www.romhacking.net/hacks/6158/
+
+static struct BurnRomInfo nes_drmariotRomDesc[] = {
+	{ "Dr. Mario Turbo Hack v1.0 (2021)(TheExactSame).nes",          262160, 0xc1605818, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_drmariot)
+STD_ROM_FN(nes_drmariot)
+
+struct BurnDriver BurnDrvnes_drmariot = {
+	"nes_drmariot", "nes_drmario", NULL, NULL, "2021",
+	"Dr. Mario Turbo (Hack, v1.0)\0", NULL, "TheExactSame", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_drmariotRomInfo, nes_drmariotRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_dracsnightoutRomDesc[] = {
 	{ "Drac's Night Out (USA) (Prototype).nes",          262160, 0x2f81e727, BRF_ESS | BRF_PRG },
 };

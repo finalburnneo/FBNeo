@@ -177,7 +177,6 @@ ifeq ($(LIGHT), 1)
 		$(FBNEO_BURN_SND_DIR)/iremga20.cpp \
 		$(FBNEO_BURN_SND_DIR)/mpeg_audio.cpp \
 		$(FBNEO_BURN_SND_DIR)/multipcm.cpp \
-		$(FBNEO_BURN_SND_DIR)/x1010.cpp \
 		$(FBNEO_BURN_SND_DIR)/ymf271.cpp \
 		$(FBNEO_BURN_SND_DIR)/ymz770.cpp \
 		$(FBNEO_CPU_DIR)/adsp2100_intf.cpp \
@@ -294,7 +293,6 @@ ifeq ($(LIGHT), 1)
 		$(PST90S_DIR)/d_jchan.cpp \
 		$(PST90S_DIR)/d_galpani3.cpp \
 		$(PST90S_DIR)/d_mirage.cpp \
-		$(PST90S_DIR)/d_seta.cpp \
 		$(PST90S_DIR)/d_seta2.cpp \
 		$(SEGA_DIR)/d_segas32.cpp \
 		$(SEGA_DIR)/d_sys24.cpp \

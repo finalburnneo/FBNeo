@@ -108,6 +108,8 @@ ifneq (,$(findstring unix,$(platform)))
 		endif
 	endif
 
+	PLATFORM_DEFINES += -pthread
+
 # OS X
 else ifeq ($(platform), osx)
 	TARGET := $(TARGET_NAME)_libretro.dylib

@@ -558,7 +558,7 @@ static INT32 DrvFrame()
 		ymz770_update(pBurnSoundOut, nBurnSoundLen);
 	}
 
-	nExtraCycles[0] = Sh3TotalCycles() - nCyclesTotal[0];
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 
 	Sh3Close();
 

@@ -61,6 +61,7 @@ MIPS3_X64_DRC_CPU_DIR	:= $(MIPS3_CPU_DIR)/x64
 NEC_CPU_DIR				:= $(FBNEO_CPU_DIR)/nec
 PIC16C5X_CPU_DIR		:= $(FBNEO_CPU_DIR)/pic16c5x
 SH2_CPU_DIR				:= $(FBNEO_CPU_DIR)/sh2
+SH4_CPU_DIR				:= $(FBNEO_CPU_DIR)/sh4
 TLCS900_CPU_DIR			:= $(FBNEO_CPU_DIR)/tlcs900
 TMS34010_CPU_DIR		:= $(FBNEO_CPU_DIR)/tms34
 UPD7725_CPU_DIR			:= $(FBNEO_CPU_DIR)/upd7725
@@ -152,9 +153,33 @@ BURN_BLACKLIST := $(ADSP2100_CPU_DIR)/2100ops.c \
 ifeq ($(LIGHT), 1)
 	# those drivers won't run well on those memory-constrained systems (3ds/wii/gc),
 	# so don't bother keeping them, we'll save memory
-	BURN_BLACKLIST += $(FBNEO_BURN_DEVICES_DIR)/sknsspr.cpp \
+	BURN_BLACKLIST += $(FBNEO_BURN_DEVICES_DIR)/tlc34076.cpp \
+		$(FBNEO_BURN_DEVICES_DIR)/epic12.cpp \
+		$(FBNEO_BURN_DEVICES_DIR)/serflash.cpp \
+		$(FBNEO_BURN_DEVICES_DIR)/bsmt2000.cpp \
+		$(FBNEO_BURN_DEVICES_DIR)/mb87078.cpp \
+		$(FBNEO_BURN_DEVICES_DIR)/poly.cpp \
+		$(FBNEO_BURN_DEVICES_DIR)/sknsspr.cpp \
+		$(FBNEO_BURN_DEVICES_DIR)/qs1000.cpp \
+		$(FBNEO_BURN_DEVICES_DIR)/v3021.cpp \
+		$(FBNEO_BURN_DEVICES_DIR)/decobsmt.cpp \
+		$(FBNEO_BURN_DEVICES_DIR)/intelfsh.cpp \
+		$(FBNEO_BURN_DEVICES_DIR)/st0020.cpp \
 		$(FBNEO_BURN_DEVICES_DIR)/vdc.cpp \
+		$(FBNEO_BURN_DEVICES_DIR)/ds2404.cpp \
+		$(FBNEO_BURN_DEVICES_DIR)/rtc9701.cpp \
+		$(FBNEO_BURN_SND_DIR)/burn_ymf271.cpp \
+		$(FBNEO_BURN_SND_DIR)/c352.cpp \
 		$(FBNEO_BURN_SND_DIR)/c6280.cpp \
+		$(FBNEO_BURN_SND_DIR)/es5506.cpp \
+		$(FBNEO_BURN_SND_DIR)/i5000.cpp \
+		$(FBNEO_BURN_SND_DIR)/ics2115.cpp \
+		$(FBNEO_BURN_SND_DIR)/iremga20.cpp \
+		$(FBNEO_BURN_SND_DIR)/mpeg_audio.cpp \
+		$(FBNEO_BURN_SND_DIR)/multipcm.cpp \
+		$(FBNEO_BURN_SND_DIR)/x1010.cpp \
+		$(FBNEO_BURN_SND_DIR)/ymf271.cpp \
+		$(FBNEO_BURN_SND_DIR)/ymz770.cpp \
 		$(FBNEO_CPU_DIR)/adsp2100_intf.cpp \
 		$(FBNEO_CPU_DIR)/arm_intf.cpp \
 		$(FBNEO_CPU_DIR)/arm7_intf.cpp \
@@ -171,12 +196,14 @@ ifeq ($(LIGHT), 1)
 		$(MIPS3_CPU_DIR)/mips3.cpp \
 		$(PIC16C5X_CPU_DIR)/pic16c5x.cpp \
 		$(SH2_CPU_DIR)/sh2.cpp \
+		$(SH4_CPU_DIR)/sh4.cpp \
 		$(TMS34010_CPU_DIR)/tms34010.cpp \
 		$(UPD7725_CPU_DIR)/upd7725.cpp \
 		$(V60_CPU_DIR)/v60.cpp \
 		$(ARM7_CPU_DIR)/arm7.cpp \
 		$(ADSP2100_CPU_DIR)/adsp2100.cpp \
 		$(I386_CPU_DIR)/i386.cpp \
+		$(CAVE_DIR)/d_cv1k.cpp \
 		$(CPS3_DIR)/cps3run.cpp \
 		$(CPS3_DIR)/cps3snd.cpp \
 		$(CPS3_DIR)/d_cps3.cpp \
@@ -204,6 +231,8 @@ ifeq ($(LIGHT), 1)
 		$(DATAEAST_DIR)/d_rohga.cpp \
 		$(DATAEAST_DIR)/d_sshangha.cpp \
 		$(DATAEAST_DIR)/d_pktgaldx.cpp \
+		$(IREM_DIR)/d_m92.cpp \
+		$(IREM_DIR)/d_m107.cpp \
 		$(MIDWAY_DIR)/dcs2k.cpp \
 		$(MIDWAY_DIR)/d_kinst.cpp \
 		$(MIDWAY_DIR)/d_tunit.cpp \
@@ -265,6 +294,8 @@ ifeq ($(LIGHT), 1)
 		$(PST90S_DIR)/d_jchan.cpp \
 		$(PST90S_DIR)/d_galpani3.cpp \
 		$(PST90S_DIR)/d_mirage.cpp \
+		$(PST90S_DIR)/d_seta.cpp \
+		$(PST90S_DIR)/d_seta2.cpp \
 		$(SEGA_DIR)/d_segas32.cpp \
 		$(SEGA_DIR)/d_sys24.cpp \
 		$(SPECTRUM_DIR)/d_spectrum.cpp \
@@ -337,6 +368,7 @@ FBNEO_CPU_DIRS := $(FBNEO_CPU_DIR) \
 	$(NEC_CPU_DIR) \
 	$(PIC16C5X_CPU_DIR) \
 	$(SH2_CPU_DIR) \
+	$(SH4_CPU_DIR) \
 	$(TMS34010_CPU_DIR) \
 	$(UPD7725_CPU_DIR) \
 	$(V60_CPU_DIR) \
@@ -409,6 +441,7 @@ INCLUDE_DIRS := $(FBNEO_BURNER_DIR)/win32 \
 	$(V60_CPU_DIR) \
 	$(Z80_CPU_DIR) \
 	$(Z180_CPU_DIR) \
+	$(SH4_CPU_DIR) \
 	$(FBNEO_LIB_DIR)/zlib \
 	$(FBNEO_LIB_DIR)/lib7z \
 	$(CAPCOM_DIR) \

@@ -4110,6 +4110,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="drmariot" cloneof="drmario" romof="drmario">
+		<comment>Hack</comment>
+		<description>Dr. Mario Turbo (Hack, v1.0)</description>
+		<year>2021</year>
+		<manufacturer>TheExactSame</manufacturer>
+		<rom name="Dr. Mario Turbo Hack v1.0 (2021)(TheExactSame).nes" size="262160" crc="c1605818"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="dracsnightout">
 		<comment>Prototype</comment>
 		<description>Drac's Night Out (USA) (Prototype)</description>
@@ -7274,7 +7283,7 @@
 	<game name="hyakuit" cloneof="hyakuen" romof="hyakuen">
 		<comment>Hack</comment>
 		<description>Hyaku no Sekai no Monogatari - The 100 World Story (Hack, Italian v1.0)</description>
-		<year>1991-2021</year>
+		<year>2021</year>
 		<manufacturer>Mog</manufacturer>
 		<rom name="Hyaku no Sekai no Monogatari - The 100 World Story (T-Ita)(2021)(Mog).nes" size="262160" crc="4d740153"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -7291,7 +7300,7 @@
 	<game name="hyakuen">
 		<comment>Hack</comment>
 		<description>Hyaku no Sekai no Monogatari - The 100 World Story (T-Eng)</description>
-		<year>1991-2007</year>
+		<year>2007</year>
 		<manufacturer>AlanMidas</manufacturer>
 		<rom name="Hyaku no Sekai no Monogatari - The 100 World Story (T-Eng)(2007)(AlanMidas).nes" size="262160" crc="1385e8a5"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -8262,6 +8271,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kickmasterc" cloneof="kickmaster" romof="kickmaster">
+		<comment>Hack</comment>
 		<description>Kick Master (T-Chi)</description>
 		<year>2022</year>
 		<manufacturer>Managus</manufacturer>
@@ -11602,6 +11612,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="pinky">
+		<comment>Homebrew</comment>
+		<description>Pinky (HB)</description>
+		<year>2020</year>
+		<manufacturer>Axbakk Games</manufacturer>
+		<rom name="Pinky (2020)(Axbakk Games).nes" size="524304" crc="cb0bcb5d"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="pizzapopj" cloneof="pizzapop" romof="pizzapop">
 		<description>Pizza Pop! (Japan)</description>
 		<year>1992</year>
@@ -11975,8 +11994,8 @@
 	</game>
 	<game name="puyopuyo">
 		<description>Puyo Puyo (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1993</year>
+		<manufacturer>Tokuma Shoten</manufacturer>
 		<rom name="Puyo Puyo (Japan).nes" size="131088" crc="3f42a1cc"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12032,8 +12051,8 @@
 	</game>
 	<game name="qboy">
 		<description>Q Boy (Asia) (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1994</year>
+		<manufacturer>Sachen</manufacturer>
 		<rom name="Q Boy (Asia) (Unl).nes" size="262160" crc="2dce9f48"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12048,8 +12067,8 @@
 	</game>
 	<game name="qiwan">
 		<description>Qi Wang - Chinese Chess (China, MGC-001)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>199?</year>
+		<manufacturer>TXC Corp.</manufacturer>
 		<rom name="Qi Wang - Chinese Chess (China, MGC-001).nes" size="98320" crc="5eef4729"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12112,9 +12131,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="questofkithe">
+		<comment>Hack</comment>
 		<description>Quest of Ki, The (T-eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2019</year>
+		<manufacturer>Zynk Oxhyde</manufacturer>
 		<rom name="Quest of Ki, The (T-eng).nes" size="196624" crc="027c28bd"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12184,9 +12204,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="radracerc" cloneof="radracer" romof="radracer">
+		<comment>Hack</comment>
 		<description>Rad Racer (T-Chi)</description>
 		<year>2010</year>
-		<manufacturer>九班</manufacturer>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="Rad Racer (T-Chi).nes" size="131088" crc="13cfd9ca"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12200,9 +12221,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="radraceriic" cloneof="radracerii" romof="radracerii">
+		<comment>Hack</comment>
 		<description>Rad Racer II (T-Chi)</description>
 		<year>2010</year>
-		<manufacturer>九班</manufacturer>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="Rad Racer II (T-Chi).nes" size="131088" crc="1d7e1802"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12232,9 +12254,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="radiasen">
+		<comment>Hack</comment>
 		<description>Radia Senki - Reimei Hen (T-eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1999</year>
+		<manufacturer>Dreamless, Jair, [cx]</manufacturer>
 		<rom name="Radia Senki - Reimei Hen (T-eng).nes" size="393232" crc="1d76af30"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13354,8 +13377,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="simcity">
+		<comment>Prototype</comment>
 		<description>Sim City (Prototype)</description>
-		<year>1989?</year>
+		<year>1991</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Sim City (Prototype).nes" size="262160" crc="6dcc8626"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -17040,6 +17064,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zenc" cloneof="zen" romof="zen">
+		<comment>Hack</comment>
 		<description>Zen - Intergalactic Ninja (T-Chi)</description>
 		<year>2022</year>
 		<manufacturer>逆游の五彩魚</manufacturer>

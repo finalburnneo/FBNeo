@@ -1849,6 +1849,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="blacksea" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Black Sea - Treasure Hunters (HB)</description>
+		<year>2022</year>
+		<manufacturer>Mananuk</manufacturer>
+		<rom name="Black Sea - Treasure Hunters (2022)(Mananuk).rom" size="65536" crc="db5218db"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="blackbeard" romof="msx">
 		<description>Blackbeard (Spanish)</description>
 		<year>1988</year>
@@ -10249,6 +10261,18 @@
 		<year>2021</year>
 		<manufacturer>Natsume</manufacturer>
 		<rom name="Mitsumega Toohru - The Three-Eyed One Comes Here T-Rus (1989-2021).rom" size="172032" crc="bd8c75d2"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mix" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Mix (HB)</description>
+		<year>2022</year>
+		<manufacturer>Uninteresting</manufacturer>
+		<rom name="Mix v1.0 (2022)(Uninteresting).rom" size="16384" crc="e14ae602"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

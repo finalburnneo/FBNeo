@@ -21796,29 +21796,26 @@
 		<video orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kf2k2ps2b" cloneof="kof2002" romof="kof2002">
+	<game name="kof2002ps2" cloneof="kof2002" romof="kof2002">
 		<comment>Hack, hack only enabled in AES mode</comment>
 		<description>The King of Fighters 2002 (PlayStation 2, Hack)</description>
 		<year>2018</year>
 		<manufacturer>Hack</manufacturer>
 		<rom name="265-p1ps2.p1" size="1048576" crc="9da95b36"/>
-		<rom name="265-p2ps2.sp2" size="5242880" crc="9846db3a"/>
-		<rom name="265-s1ps2.s1" size="131072" crc="714ade47"/>
-		<rom name="265-c1ps2.c1" size="8388608" crc="7efa6ef7"/>
-		<rom name="265-c2ps2.c2" size="8388608" crc="aa82948b"/>
-		<rom name="265-c3ps2.c3" size="8388608" crc="959fad0b"/>
-		<rom name="265-c4ps2.c4" size="8388608" crc="efe6a468"/>
-		<rom name="265-c5ps2.c5" size="8388608" crc="74bba7c6"/>
-		<rom name="265-c6ps2.c6" size="8388608" crc="e20d2216"/>
-		<rom name="265-c7ps2.c7" size="8388608" crc="f0897b93"/>
-		<rom name="265-c8ps2.c8" size="8388608" crc="8d27a4a6"/>
-		<rom name="265-c9ps2.c9" size="8388608" crc="9939c08a"/>
-		<rom name="265-c10ps2.c10" size="8388608" crc="c724c069"/>
-		<rom name="265-m1ps2.m1" size="131072" crc="ab9d360e"/>
-		<rom name="265-v1sp2.v1" size="4194304" crc="13d98607"/>
-		<rom name="265-v2sp2.v2" size="4194304" crc="9cf74677"/>
-		<rom name="265-v3sp2.v3" size="4194304" crc="8e9448b5"/>
-		<rom name="265-v4sp2.v4" size="4194304" crc="067271b5"/>
+		<rom name="265-p2ps2.sp2" size="5242880" crc="11419517"/>
+		<rom name="265-c1ps2.c1" size="8388608" crc="a92b140e"/>
+		<rom name="265-c2ps2.c2" size="8388608" crc="365e3945"/>
+		<rom name="265-c3ps2.c3" size="8388608" crc="e88beb81"/>
+		<rom name="265-c4ps2.c4" size="8388608" crc="06c374e8"/>
+		<rom name="265-c5ps2.c5" size="8388608" crc="4ffb0fdf"/>
+		<rom name="265-c6ps2.c6" size="8388608" crc="a33c38b9"/>
+		<rom name="265-c7ps2.c7" size="8388608" crc="186cd736"/>
+		<rom name="265-c8ps2.c8" size="8388608" crc="af60bcf9"/>
+		<rom name="265-c9ps2.c9" size="8388608" crc="bbbd99e5"/>
+		<rom name="265-c10ps2.c10" size="8388608" crc="5d820e2e"/>
+		<rom name="265-m1ps2.m1" size="131072" crc="23961378"/>
+		<rom name="265-v1.v1" merge="265-v1.v1" size="8388608" crc="15e8f3f5"/>
+		<rom name="265-v2.v2" merge="265-v2.v2" size="8388608" crc="da41d6f9"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>

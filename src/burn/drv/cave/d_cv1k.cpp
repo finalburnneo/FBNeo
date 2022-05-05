@@ -558,7 +558,7 @@ static INT32 DrvFrame()
 		ymz770_update(pBurnSoundOut, nBurnSoundLen);
 	}
 
-	nExtraCycles[0] = Sh3TotalCycles() - nCyclesTotal[0];
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 
 	Sh3Close();
 
@@ -615,7 +615,7 @@ struct BurnDriver BurnDrvMushisam = {
 	"mushisam", NULL, NULL, NULL, "2004",
 	"Mushihime-Sama (2004/10/12.MASTER VER.)\0", NULL, "Cave (AMI license)", "CA011",
 	L"Mushihime-Sama\0\u866b\u59eb\u3055\u307e (2004/10/12.MASTER VER.)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, mushisamRomInfo, mushisamRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -640,7 +640,7 @@ struct BurnDriver BurnDrvMushisama = {
 	"mushisama", "mushisam", NULL, NULL, "2004",
 	"Mushihime-Sama (2004/10/12 MASTER VER.)\0", NULL, "Cave (AMI license)", "CA011",
 	L"Mushihime-Sama\0\u866b\u59eb\u3055\u307e (2004/10/12 MASTER VER.)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, mushisamaRomInfo, mushisamaRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -665,7 +665,7 @@ struct BurnDriver BurnDrvMushisamb = {
 	"mushisamb", "mushisam", NULL, NULL, "2004",
 	"Mushihime-Sama (2004/10/12 MASTER VER)\0", NULL, "Cave (AMI license)", "CA011",
 	L"Mushihime-Sama\0\u866b\u59eb\u3055\u307e (2004/10/12 MASTER VER)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, mushisambRomInfo, mushisambRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -690,7 +690,7 @@ struct BurnDriver BurnDrvEspgal2 = {
 	"espgal2", NULL, NULL, NULL, "2005",
 	"Espgaluda II (2005/11/14 MASTER VER, newer CV1000-B PCB)\0", NULL, "Cave (AMI license)", "CA013",
 	L"Espgaluda II\0\u30a8\u30b9\u30d7\u30ac\u30eb\u30fc\u30c0II (2005/11/14 MASTER VER, newer CV1000-B PCB)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, espgal2RomInfo, espgal2RomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -715,7 +715,7 @@ struct BurnDriver BurnDrvEspgal2a = {
 	"espgal2a", "espgal2", NULL, NULL, "2005",
 	"Espgaluda II (2005/11/14 MASTER VER, original CV1000-B PCB)\0", NULL, "Cave (AMI license)", "CA013",
 	L"Espgaluda II\0\u30a8\u30b9\u30d7\u30ac\u30eb\u30fc\u30c0II (2005/11/14 MASTER VER, original CV1000-B PCB)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, espgal2aRomInfo, espgal2aRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -740,7 +740,7 @@ struct BurnDriver BurnDrvMushitam = {
 	"mushitam", NULL, NULL, NULL, "2005",
 	"Puzzle! Mushihime-Tama (2005/09/09.MASTER VER)\0", NULL, "Cave (AMI license)", "CA???",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CAVE_CV1000, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_PUZZLE, 0,
 	NULL, mushitamRomInfo, mushitamRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
@@ -765,7 +765,7 @@ struct BurnDriver BurnDrvMushitama = {
 	"mushitama", "mushitam", NULL, NULL, "2005",
 	"Puzzle! Mushihime-Tama (2005/09/09 MASTER VER)\0", NULL, "Cave (AMI license)", "CA???",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAVE_CV1000, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_PUZZLE, 0,
 	NULL, mushitamaRomInfo, mushitamaRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
@@ -790,7 +790,7 @@ struct BurnDriver BurnDrvFutari15 = {
 	"futari15", NULL, NULL, NULL, "2006",
 	"Mushihime-Sama Futari Ver 1.5 (2006/12/8.MASTER VER. 1.54.)\0", NULL, "Cave (AMI license)", "CA015",
 	L"Mushihime-Sama Futari Ver 1.5\0\u866b\u59eb\u3055\u307e\u3075\u305f\u308a Ver 1.5 (2006/12/8.MASTER VER. 1.54.)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, futari15RomInfo, futari15RomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -815,7 +815,7 @@ struct BurnDriver BurnDrvFutari15a = {
 	"futari15a", "futari15", NULL, NULL, "2006",
 	"Mushihime-Sama Futari Ver 1.5 (2006/12/8 MASTER VER 1.54)\0", NULL, "Cave (AMI license)", "CA015",
 	L"Mushihime-Sama Futari Ver 1.5\0\u866b\u59eb\u3055\u307e\u3075\u305f\u308a Ver 1.5 (2006/12/8 MASTER VER 1.54)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, futari15aRomInfo, futari15aRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -840,7 +840,7 @@ struct BurnDriver BurnDrvFutari10 = {
 	"futari10", "futari15", NULL, NULL, "2006",
 	"Mushihime-Sama Futari Ver 1.0 (2006/10/23 MASTER VER.)\0", NULL, "Cave (AMI license)", "CA015",
 	L"Mushihime-Sama Futari Ver 1.0\0\u866b\u59eb\u3055\u307e\u3075\u305f\u308a Ver 1.0 (2006/10/23 MASTER VER.)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, futari10RomInfo, futari10RomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -865,7 +865,7 @@ struct BurnDriver BurnDrvFutaribl = {
 	"futaribl", NULL, NULL, NULL, "2007",
 	"Mushihime-Sama Futari Black Label - Another Ver (2009/11/27 INTERNATIONAL BL)\0", NULL, "Cave (AMI license)", "CA015B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, futariblRomInfo, futariblRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -890,7 +890,7 @@ struct BurnDriver BurnDrvFutariblj = {
 	"futariblj", "futaribl", NULL, NULL, "2007",
 	"Mushihime-Sama Futari Black Label (2007/12/11 BLACK LABEL VER)\0", NULL, "Cave (AMI license)", "CA015B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, futaribljRomInfo, futaribljRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -915,7 +915,7 @@ struct BurnDriver BurnDrvIbara = {
 	"ibara", NULL, NULL, NULL, "2005",
 	"Ibara (2005/03/22 MASTER VER..)\0", NULL, "Cave (AMI license)", "CA012",
 	L"Ibara\0\u92f3\u8594\u8587 (2005/03/22 MASTER VER..)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, ibaraRomInfo, ibaraRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1ksDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -940,7 +940,7 @@ struct BurnDriver BurnDrvIbarablk = {
 	"ibarablk", NULL, NULL, NULL, "2006",
 	"Ibara Kuro Black Label (2006/02/06. MASTER VER.)\0", NULL, "Cave (AMI license)", "CA012B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, ibarablkRomInfo, ibarablkRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1ksDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -965,7 +965,7 @@ struct BurnDriver BurnDrvIbarablka = {
 	"ibarablka", "ibarablk", NULL, NULL, "2006",
 	"Ibara Kuro Black Label (2006/02/06 MASTER VER.)\0", NULL, "Cave (AMI license)", "CA012B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, ibarablkaRomInfo, ibarablkaRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1ksDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -990,7 +990,7 @@ struct BurnDriver BurnDrvDeathsml = {
 	"deathsml", NULL, NULL, NULL, "2007",
 	"Deathsmiles (2007/10/09 MASTER VER)\0", NULL, "Cave (AMI license)", "CA017",
 	L"Deathsmiles\0\uc730\ub930\ub930\ua430\ueb30\uba30 (2007/10/09 MASTER VER)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CAVE_CV1000, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_HORSHOOT, 0,
 	NULL, deathsmlRomInfo, deathsmlRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
@@ -1015,7 +1015,7 @@ struct BurnDriver BurnDrvMmpork = {
 	"mmpork", NULL, NULL, NULL, "2007",
 	"Muchi Muchi Pork! (2007/ 4/17 MASTER VER.)\0", NULL, "Cave (AMI license)", "CA016",
 	L"Muchi Muchi Pork!\0\u3080\u3061\u3080\u3061\u30dd\u30fc\u30af! (2007/ 4/17 MASTER VER.)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, mmporkRomInfo, mmporkRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1ksDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -1040,7 +1040,7 @@ struct BurnDriverD BurnDrvMmmbanc = {
 	"mmmbanc", NULL, NULL, NULL, "2007",
 	"Medal Mahjong Moukari Bancho (2007/06/05 MASTER VER.)\0", NULL, "Cave (AMI license)", "CMDL01",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING, 2, HARDWARE_CAVE_CV1000, GBF_MISC, 0,
+	BDF_GAME_NOT_WORKING | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_MISC, 0,
 	NULL, mmmbancRomInfo, mmmbancRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
@@ -1065,7 +1065,7 @@ struct BurnDriver BurnDrvPinkswts = {
 	"pinkswts", NULL, NULL, NULL, "2006",
 	"Pink Sweets: Ibara Sorekara (2006/04/06 MASTER VER....)\0", NULL, "Cave (AMI license)", "CA014",
 	L"Pink Sweets: Ibara Sorekara\0\u30d4\u30f3\u30af\u30b9\u30a6\u30a3\u30fc\u30c4 \uff5e\u92f3\u8594\u8587\u305d\u308c\u304b\u3089\uff5e (2006/04/06 MASTER VER....)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, pinkswtsRomInfo, pinkswtsRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1ksDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -1090,7 +1090,7 @@ struct BurnDriver BurnDrvPinkswtsa = {
 	"pinkswtsa", "pinkswts", NULL, NULL, "2006",
 	"Pink Sweets: Ibara Sorekara (2006/04/06 MASTER VER...)\0", NULL, "Cave (AMI license)", "CA014",
 	L"Pink Sweets: Ibara Sorekara\0\u30d4\u30f3\u30af\u30b9\u30a6\u30a3\u30fc\u30c4 \uff5e\u92f3\u8594\u8587\u305d\u308c\u304b\u3089\uff5e (2006/04/06 MASTER VER...)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, pinkswtsaRomInfo, pinkswtsaRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1ksDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -1115,7 +1115,7 @@ struct BurnDriver BurnDrvPinkswtsb = {
 	"pinkswtsb", "pinkswts", NULL, NULL, "2006",
 	"Pink Sweets: Ibara Sorekara (2006/04/06 MASTER VER.)\0", NULL, "Cave (AMI license)", "CA014",
 	L"Pink Sweets: Ibara Sorekara\0\u30d4\u30f3\u30af\u30b9\u30a6\u30a3\u30fc\u30c4 \uff5e\u92f3\u8594\u8587\u305d\u308c\u304b\u3089\uff5e (2006/04/06 MASTER VER.)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, pinkswtsbRomInfo, pinkswtsbRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1ksDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -1140,7 +1140,7 @@ struct BurnDriver BurnDrvPinkswtsx = {
 	"pinkswtsx", "pinkswts", NULL, NULL, "2006",
 	"Pink Sweets: Ibara Sorekara (2006/xx/xx MASTER VER.)\0", NULL, "Cave (AMI license)", "CA014",
 	L"Pink Sweets: Ibara Sorekara\0\u30d4\u30f3\u30af\u30b9\u30a6\u30a3\u30fc\u30c4 \uff5e\u92f3\u8594\u8587\u305d\u308c\u304b\u3089\uff5e (2006/xx/xx MASTER VER.)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, pinkswtsxRomInfo, pinkswtsxRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1ksDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -1165,7 +1165,7 @@ struct BurnDriver BurnDrvPinkswtssc = {
 	"pinkswtssc", "pinkswts", NULL, NULL, "2017",
 	"Pink Sweets: Suicide Club (2017/10/31 SUICIDECLUB VER., bootleg)\0", NULL, "bootleg (Four Horsemen)", "CA014",
 	L"Pink Sweets: Suicide Club\0\u30d4\u30f3\u30af\u30b9\u30a6\u30a3\u30fc\u30c4 \uff5e\u92f3\u8594\u8587\u305d\u308c\u304b\u3089\uff5e (2017/10/31 SUICIDECLUB VER., bootleg)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, pinkswtsscRomInfo, pinkswtsscRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1ksDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -1190,7 +1190,7 @@ struct BurnDriver BurnDrvDdpdfk = {
 	"ddpdfk", NULL, NULL, NULL, "2008",
 	"DoDonPachi Dai-Fukkatsu Ver 1.5 (2008/06/23 MASTER VER 1.5)\0", NULL, "Cave (AMI license)", "CA019",
 	L"DoDonPachi Dai-Fukkatsu Ver 1.5\0\u6012\u9996\u9818\u8702 \u5927\u5fa9\u6d3b Ver 1.5 (2008/06/23 MASTER VER 1.5)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, ddpdfkRomInfo, ddpdfkRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -1215,7 +1215,7 @@ struct BurnDriver BurnDrvDdpdfk10 = {
 	"ddpdfk10", "ddpdfk", NULL, NULL, "2008",
 	"DoDonPachi Dai-Fukkatsu Ver 1.0 (2008/05/16 MASTER VER)\0", NULL, "Cave (AMI license)", "CA019",
 	L"DoDonPachi Dai-Fukkatsu Ver 1.0\0\u6012\u9996\u9818\u8702 \u5927\u5fa9\u6d3b Ver 1.0 (2008/05/16 MASTER VER)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, ddpdfk10RomInfo, ddpdfk10RomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -1240,7 +1240,7 @@ struct BurnDriver BurnDrvDsmbl = {
 	"dsmbl", NULL, NULL, NULL, "2008",
 	"Deathsmiles MegaBlack Label (2008/10/06 MEGABLACK LABEL VER)\0", NULL, "Cave (AMI license)", "CA017B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CAVE_CV1000, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_HORSHOOT, 0,
 	NULL, dsmblRomInfo, dsmblRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -1265,7 +1265,7 @@ struct BurnDriver BurnDrvDfkbl = {
 	"dfkbl", NULL, NULL, NULL, "2010",
 	"DoDonPachi Dai-Fukkatsu Black Label (2010/1/18 BLACK LABEL)\0", NULL, "Cave", "CA019B",
 	L"DoDonPachi Dai-Fukkatsu Black Label\0\u6012\u9996\u9818\u8702 \u5927\u5fa9\u6d3b (2010/1/18 BLACK LABEL)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, dfkblRomInfo, dfkblRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -1290,7 +1290,7 @@ struct BurnDriver BurnDrvDdpsdoj = {
 	"ddpsdoj", NULL, NULL, NULL, "2012",
 	"DoDonPachi SaiDaiOuJou (2012/ 4/20)\0", NULL, "Cave", "CA???",
 	L"DoDonPachi SaiDaiOuJou\0\u6012\u9996\u9818\u8702 \u5927\u5fa9\u6d3b (2012/4/20)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, ddpsdojRomInfo, ddpsdojRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -1315,7 +1315,7 @@ struct BurnDriver BurnDrvAkatana = {
 	"akatana", NULL, NULL, NULL, "2010",
 	"Akai Katana (2010/ 8/13 MASTER VER.)\0", NULL, "Cave", "CA021",
 	L"Akai Katana\0\u8d64\u3044\u5200 (2010/ 8/13 MASTER VER.)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CAVE_CV1000, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_HORSHOOT, 0,
 	NULL, akatanaRomInfo, akatanaRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3

@@ -959,53 +959,61 @@ int CreateAllDatfiles()
 	INT32 nRet = 0;
 	TCHAR szFilename[MAX_PATH];
 
-	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, Arcade only");
+#ifdef LIGHT
+	#define DAT_FOLDER "dats/light"
+#else
+	#define DAT_FOLDER "dats"
+#endif
+
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", DAT_FOLDER, PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, Arcade only");
 	create_datfile(szFilename, DAT_ARCADE_ONLY);
 
-	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, Megadrive only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", DAT_FOLDER, PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, Megadrive only");
 	create_datfile(szFilename, DAT_MEGADRIVE_ONLY);
 
-	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, PC-Engine only");
-	create_datfile(szFilename, DAT_PCENGINE_ONLY);
-
-	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, TurboGrafx16 only");
-	create_datfile(szFilename, DAT_TG16_ONLY);
-
-	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, SuprGrafx only");
-	create_datfile(szFilename, DAT_SGX_ONLY);
-
-	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, Sega SG-1000 only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", DAT_FOLDER, PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, Sega SG-1000 only");
 	create_datfile(szFilename, DAT_SG1000_ONLY);
 
-	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, ColecoVision only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", DAT_FOLDER, PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, ColecoVision only");
 	create_datfile(szFilename, DAT_COLECO_ONLY);
 
-	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, Master System only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", DAT_FOLDER, PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, Master System only");
 	create_datfile(szFilename, DAT_MASTERSYSTEM_ONLY);
 
-	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, Game Gear only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", DAT_FOLDER, PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, Game Gear only");
 	create_datfile(szFilename, DAT_GAMEGEAR_ONLY);
 
-	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, MSX 1 Games only");
-	create_datfile(szFilename, DAT_MSX_ONLY);
-
-	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, ZX Spectrum Games only");
-	create_datfile(szFilename, DAT_SPECTRUM_ONLY);
-
-	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, NES Games only");
-	create_datfile(szFilename, DAT_NES_ONLY);
-
-	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, FDS Games only");
-	create_datfile(szFilename, DAT_FDS_ONLY);
-
-	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, Neogeo only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", DAT_FOLDER, PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, Neogeo only");
 	create_datfile(szFilename, DAT_NEOGEO_ONLY);
 
-	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, NeoGeo Pocket Games only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", DAT_FOLDER, PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, NeoGeo Pocket Games only");
 	create_datfile(szFilename, DAT_NGP_ONLY);
 
-	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, Fairchild Channel F Games only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", DAT_FOLDER, PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, Fairchild Channel F Games only");
 	create_datfile(szFilename, DAT_CHANNELF_ONLY);
+
+#ifndef LIGHT
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", DAT_FOLDER, PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, PC-Engine only");
+	create_datfile(szFilename, DAT_PCENGINE_ONLY);
+
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", DAT_FOLDER, PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, TurboGrafx16 only");
+	create_datfile(szFilename, DAT_TG16_ONLY);
+
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", DAT_FOLDER, PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, SuprGrafx only");
+	create_datfile(szFilename, DAT_SGX_ONLY);
+
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", DAT_FOLDER, PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, NES Games only");
+	create_datfile(szFilename, DAT_NES_ONLY);
+
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", DAT_FOLDER, PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, FDS Games only");
+	create_datfile(szFilename, DAT_FDS_ONLY);
+
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", DAT_FOLDER, PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, MSX 1 Games only");
+	create_datfile(szFilename, DAT_MSX_ONLY);
+
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", DAT_FOLDER, PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, ZX Spectrum Games only");
+	create_datfile(szFilename, DAT_SPECTRUM_ONLY);
+#endif
 
 	return nRet;
 }

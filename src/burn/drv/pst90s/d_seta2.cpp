@@ -1607,18 +1607,19 @@ void __fastcall grdiansWriteWord(UINT32 sekAddress, UINT16 wordValue)
 	}
 }
 
-UINT8 __fastcall setaSoundRegReadByte(UINT32 /*sekAddress*/)
+// d_seta.cpp
+//void __fastcall setaSoundRegWriteByte(UINT32 sekAddress, UINT8 byteValue);
+void __fastcall setaSoundRegWriteWord(UINT32 sekAddress, UINT16 wordValue);
+//UINT8 __fastcall setaSoundRegReadByte(UINT32 sekAddress);
+UINT16 __fastcall setaSoundRegReadWord(UINT32 sekAddress);
+
+static UINT8 __fastcall setaSoundRegReadByte(UINT32 /*sekAddress*/)
 {
 	//bprintf(PRINT_NORMAL, _T("x1-010 to read byte value of location %x\n"), sekAddress);
 	return 0;
 }
 
-UINT16 __fastcall setaSoundRegReadWord(UINT32 sekAddress)
-{
-	return x1010_sound_read_word((sekAddress & 0x3ffff) >> 1);
-}
-
-void __fastcall setaSoundRegWriteByte(UINT32 sekAddress, UINT8 byteValue)
+static void __fastcall setaSoundRegWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
 	// bprintf(PRINT_NORMAL, _T("x1-010 to write byte value %x to location %x\n"), byteValue, sekAddress);
 	UINT32 offset = (sekAddress & 0x00003fff) >> 1;
@@ -1643,26 +1644,6 @@ void __fastcall setaSoundRegWriteByte(UINT32 sekAddress, UINT8 byteValue)
 
 	}
 
-}
-
-void __fastcall setaSoundRegWriteWord(UINT32 sekAddress, UINT16 wordValue)
-{
-	//bprintf(PRINT_NORMAL, _T("x1-010 to write word value %x to location %x\n"), wordValue, sekAddress);
-	UINT32 offset = (sekAddress & 0x00003fff) >> 1;
-	INT32 channel, reg;
-
-	x1_010_chip->HI_WORD_BUF[ offset ] = wordValue >> 8;
-
-	offset ^= x1_010_chip->address;
-
-	channel	= offset / sizeof(X1_010_CHANNEL);
-	reg		= offset % sizeof(X1_010_CHANNEL);
-
-	if( channel < SETA_NUM_CHANNELS && reg == 0 && (x1_010_chip->reg[offset]&1) == 0 && (wordValue&1) != 0 ) {
-	 	x1_010_chip->smp_offset[channel] = 0;
-	 	x1_010_chip->env_offset[channel] = 0;
-	}
-	x1_010_chip->reg[offset] = wordValue & 0xff;
 }
 
 void __fastcall setaVideoRegWriteWord(UINT32 sekAddress, UINT16 wordValue)

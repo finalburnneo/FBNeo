@@ -94,7 +94,7 @@ incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated \
 ifdef WINDOWS
 lib	= -lstdc++ -lSDL `sdl-config --libs` -lopengl32  -lm
 else
-lib	= -lstdc++ -lSDL `sdl-config --libs` -lGL -lm
+lib	= -lstdc++ -lSDL `sdl-config --libs` -lGL -lm -lpthread
 endif
 
 ifdef DARWIN

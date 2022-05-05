@@ -123,7 +123,7 @@ static INT32 __cdecl UncompLoadAcb(struct BurnArea* pba)
 // Compress a state using deflate
 INT32 BurnStateCompress(UINT8** pDef, INT32* pnDefLen, INT32 bAll)
 {
-	if ((BurnDrvGetHardwareCode() & 0xffff0000) == 0x06010000) {
+	if ((BurnDrvGetHardwareCode() & 0xffff0000) == HARDWARE_CAVE_CV1000) {
 		// Systems with a huge amount of data can be defined here to
 		// use this raw state handler.
 
@@ -210,7 +210,7 @@ static INT32 __cdecl StateDecompressAcb(struct BurnArea* pba)
 
 INT32 BurnStateDecompress(UINT8* Def, INT32 nDefLen, INT32 bAll)
 {
-	if ((BurnDrvGetHardwareCode() & 0xffff0000) == 0x06010000) {
+	if ((BurnDrvGetHardwareCode() & 0xffff0000) == HARDWARE_CAVE_CV1000) {
 		// Systems with a huge amount of data can be defined here to
 		// use this raw state handler.
 		pBufferUncomp = Def;

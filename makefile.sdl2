@@ -105,9 +105,9 @@ incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated \
 ifdef WINDOWS
 lib	= -lstdc++ `sdl2-config --libs` -lopengl32 -lSDL2_image -lm
 else ifdef DARWIN
-lib	= -lstdc++ `sdl2-config --libs` -lSDL2_image -lm
+lib	= -lstdc++ `sdl2-config --libs` -lSDL2_image -lm -lpthread
 else
-lib	= -lstdc++ `sdl2-config --libs` -lGL -lSDL2_image -lm
+lib	= -lstdc++ `sdl2-config --libs` -lGL -lSDL2_image -lm -lpthread
 endif
 
 ifdef FORCE_SYSTEM_LIBPNG
@@ -115,7 +115,7 @@ lib += -lpng
 endif
 
 ifdef FORCE_PULSE_AUDIO
-lib += -lpthread -lpulse-simple
+lib += -lpulse-simple
 endif
 
 ifdef DARWIN

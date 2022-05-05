@@ -569,6 +569,9 @@ static INT32 LoadRoms()
 		}
 		nCodeSize[nNeoActiveSlot] = (nCodeSize[nNeoActiveSlot] + 0x0FFFFF) & ~0x0FFFFF;
 
+		// Extend the length of[nCodeSize] to fit the ips of the hack games.
+		if (bDoIpsPatch) nCodeSize[nNeoActiveSlot] += (0x200000 << 1);
+
 		nSpriteSize[nNeoActiveSlot] = 0;
 
 		if (BurnDrvGetHardwareCode() & HARDWARE_SNK_SWAPC) {
@@ -605,6 +608,9 @@ static INT32 LoadRoms()
 			nSpriteSize[nNeoActiveSlot] += ri.nLen * 2;
 		}
 
+		// The [nSpriteSize] here corresponds to the setting of [nBuf1Len] in [neogeo.cpp].
+		if (bDoIpsPatch) nSpriteSize[nNeoActiveSlot] += (0x800000 << 2);
+
 		{
 			UINT32 nSize = nSpriteSize[nNeoActiveSlot];
 //			if (nSize > 0x4000000) {
@@ -633,12 +639,13 @@ static INT32 LoadRoms()
 				BurnDrvGetRomInfo(&ri, pInfo->nADPCMOffset + i);
 				if (ri.nLen > nMaxSize) nMaxSize = ri.nLen;
 			}
-			nYM2610ADPCMASize[nNeoActiveSlot] += nMaxSize * pInfo->nADPCMANum;
+			nYM2610ADPCMASize[nNeoActiveSlot] += bDoIpsPatch ? (nMaxSize << 1) * pInfo->nADPCMANum : nMaxSize * pInfo->nADPCMANum;
 
 			for (INT32 i = 0; i < pInfo->nADPCMBNum; i++) {
 				BurnDrvGetRomInfo(&ri, pInfo->nADPCMOffset + pInfo->nADPCMANum + i);
 				nYM2610ADPCMBSize[nNeoActiveSlot] += ri.nLen;
 			}
+			if (bDoIpsPatch) nYM2610ADPCMBSize[nNeoActiveSlot] *= 2;
 
 			bprintf(0, _T("ADPCM-A Size:\t%x\n"), nYM2610ADPCMASize[nNeoActiveSlot]);
 			bprintf(0, _T("ADPCM-B Size:\t%x\n"), nYM2610ADPCMBSize[nNeoActiveSlot]);
@@ -692,9 +699,33 @@ static INT32 LoadRoms()
 			// Load S ROM data
 			BurnLoadRom(NeoTextROM[nNeoActiveSlot], pInfo->nTextOffset, 1);
 		} else {
+			// With IPS, The true length of [nSpriteSize] will be obtained.
+			UINT32 nRealSpriteSize = nSpriteSize[nNeoActiveSlot];
+
+			if (bDoIpsPatch) {
+
+				// If the expansion bytes of 0x800000 << 2 are all empty data,
+				// then [SpriteSize] will subtract the expansion part to ensure that [NeoTextROM] is obtained correctly.
+				for (INT32 i = 0, nIndex = 0; i < ((0x800000 << 2) / nNeoTextROMSize[nNeoActiveSlot]); i++, nIndex++) {
+
+					// The last byte position segment to appear is the true Length of [nSpriteSize].
+					// First move the pointer to the last data segment of the length of [nNeoTextROMSize].
+					UINT8* pFind = NeoSpriteROM[nNeoActiveSlot] + nSpriteSize[nNeoActiveSlot] - ((i + 1) * nNeoTextROMSize[nNeoActiveSlot]);
+
+					for (INT32 j = 0; j < (nNeoTextROMSize[nNeoActiveSlot] / sizeof(UINT32)); j += sizeof(UINT32)) {
+						// Data has been found
+						if (0 != *(UINT32*)&pFind[j]) {
+							i = ((0x800000 << 2) / nNeoTextROMSize[nNeoActiveSlot]);
+							break;
+						}
+					}
+					if (i != ((0x800000 << 2) / nNeoTextROMSize[nNeoActiveSlot]))
+						nRealSpriteSize -= nNeoTextROMSize[nNeoActiveSlot];
+				}
+			}
 			// Extract data from the end of C ROMS
 			BurnUpdateProgress(0.0, _T("Decrypting text layer graphics...")/*, BST_DECRYPT_TXT*/, 0);
-			NeoCMCExtractSData(NeoSpriteROM[nNeoActiveSlot], NeoTextROM[nNeoActiveSlot], nSpriteSize[nNeoActiveSlot], nNeoTextROMSize[nNeoActiveSlot]);
+			NeoCMCExtractSData(NeoSpriteROM[nNeoActiveSlot], NeoTextROM[nNeoActiveSlot], nRealSpriteSize, nNeoTextROMSize[nNeoActiveSlot]);
 
 			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_DEDICATED_PCB) {
 				for (INT32 i = 0; i < nNeoTextROMSize[nNeoActiveSlot]; i++) {

@@ -1200,50 +1200,50 @@ STDINPUTINFO(Sfzch)
 
 static struct BurnInputInfo SlammastInputList[] =
 {
- 	{"P1 Coin"          , BIT_DIGITAL  , CpsInp018+0, "p1 coin"   },
- 	{"P1 Start"         , BIT_DIGITAL  , CpsInp018+4, "p1 start"  },
- 	{"P1 Up"            , BIT_DIGITAL  , CpsInp001+3, "p1 up"     },
- 	{"P1 Down"          , BIT_DIGITAL  , CpsInp001+2, "p1 down"   },
- 	{"P1 Left"          , BIT_DIGITAL  , CpsInp001+1, "p1 left"   },
- 	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0, "p1 right"  },
- 	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" },
- 	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
- 	{"P1 Pin"           , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" },
+ 	{"P1 Coin"          , BIT_DIGITAL  , CpsInp018+0, "p1 coin"   }, //  0
+ 	{"P1 Start"         , BIT_DIGITAL  , CpsInp018+4, "p1 start"  }, //  1
+ 	{"P1 Up"            , BIT_DIGITAL  , CpsInp001+3, "p1 up"     }, //  2
+ 	{"P1 Down"          , BIT_DIGITAL  , CpsInp001+2, "p1 down"   }, //  3
+ 	{"P1 Left"          , BIT_DIGITAL  , CpsInp001+1, "p1 left"   }, //  4
+ 	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0, "p1 right"  }, //  5
+ 	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" }, //  6
+ 	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" }, //  7
+ 	{"P1 Pin"           , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" }, //  8
 
- 	{"P2 Coin"          , BIT_DIGITAL  , CpsInp018+1, "p2 coin"   },
- 	{"P2 Start"         , BIT_DIGITAL  , CpsInp018+5, "p2 start"  },
- 	{"P2 Up"            , BIT_DIGITAL  , CpsInp000+3, "p2 up"     },
- 	{"P2 Down"          , BIT_DIGITAL  , CpsInp000+2, "p2 down"   },
- 	{"P2 Left"          , BIT_DIGITAL  , CpsInp000+1, "p2 left"   },
- 	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0, "p2 right"  },
- 	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" },
- 	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" },
- 	{"P2 Pin"           , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3" },
+ 	{"P2 Coin"          , BIT_DIGITAL  , CpsInp018+1, "p2 coin"   }, //  9
+ 	{"P2 Start"         , BIT_DIGITAL  , CpsInp018+5, "p2 start"  }, //  a
+ 	{"P2 Up"            , BIT_DIGITAL  , CpsInp000+3, "p2 up"     }, //  b
+ 	{"P2 Down"          , BIT_DIGITAL  , CpsInp000+2, "p2 down"   }, //  c
+ 	{"P2 Left"          , BIT_DIGITAL  , CpsInp000+1, "p2 left"   }, //  d
+ 	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0, "p2 right"  }, //  e
+ 	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" }, //  f
+ 	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" }, // 10
+ 	{"P2 Pin"           , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3" }, // 11
 
- 	{"P3 Coin"          , BIT_DIGITAL  , CpsInpc001+6, "p3 coin"  },
- 	{"P3 Start"         , BIT_DIGITAL  , CpsInpc001+7, "p3 start" },
- 	{"P3 Up"            , BIT_DIGITAL  , CpsInpc001+3, "p3 up"    },
- 	{"P3 Down"          , BIT_DIGITAL  , CpsInpc001+2, "p3 down"  },
- 	{"P3 Left"          , BIT_DIGITAL  , CpsInpc001+1, "p3 left"  },
- 	{"P3 Right"         , BIT_DIGITAL  , CpsInpc001+0, "p3 right" },
- 	{"P3 Attack"        , BIT_DIGITAL  , CpsInpc001+4, "p3 fire 1"},
- 	{"P3 Jump"          , BIT_DIGITAL  , CpsInpc001+5, "p3 fire 2"},
- 	{"P3 Pin"           , BIT_DIGITAL  , CpsInp001+7 , "p3 fire 3"},
+ 	{"P3 Coin"          , BIT_DIGITAL  , CpsInpc001+6, "p3 coin"  }, // 12
+ 	{"P3 Start"         , BIT_DIGITAL  , CpsInpc001+7, "p3 start" }, // 13
+ 	{"P3 Up"            , BIT_DIGITAL  , CpsInpc001+3, "p3 up"    }, // 14
+ 	{"P3 Down"          , BIT_DIGITAL  , CpsInpc001+2, "p3 down"  }, // 15
+ 	{"P3 Left"          , BIT_DIGITAL  , CpsInpc001+1, "p3 left"  }, // 16
+ 	{"P3 Right"         , BIT_DIGITAL  , CpsInpc001+0, "p3 right" }, // 17
+ 	{"P3 Attack"        , BIT_DIGITAL  , CpsInpc001+4, "p3 fire 1"}, // 18
+ 	{"P3 Jump"          , BIT_DIGITAL  , CpsInpc001+5, "p3 fire 2"}, // 19
+ 	{"P3 Pin"           , BIT_DIGITAL  , CpsInp001+7 , "p3 fire 3"}, // 1a
 
- 	{"P4 Coin"          , BIT_DIGITAL  , CpsInpc003+6, "p4 coin"  },
- 	{"P4 Start"         , BIT_DIGITAL  , CpsInpc003+7, "p4 start" },
- 	{"P4 Up"            , BIT_DIGITAL  , CpsInpc003+3, "p4 up"    },
- 	{"P4 Down"          , BIT_DIGITAL  , CpsInpc003+2, "p4 down"  },
- 	{"P4 Left"          , BIT_DIGITAL  , CpsInpc003+1, "p4 left"  },
- 	{"P4 Right"         , BIT_DIGITAL  , CpsInpc003+0, "p4 right" },
- 	{"P4 Attack"        , BIT_DIGITAL  , CpsInpc003+4, "p4 fire 1"},
- 	{"P4 Jump"          , BIT_DIGITAL  , CpsInpc003+5, "p4 fire 2"},
- 	{"P4 Pin"           , BIT_DIGITAL  , CpsInp000+7 , "p4 fire 3"},
+ 	{"P4 Coin"          , BIT_DIGITAL  , CpsInpc003+6, "p4 coin"  }, // 1b
+ 	{"P4 Start"         , BIT_DIGITAL  , CpsInpc003+7, "p4 start" }, // 1c
+ 	{"P4 Up"            , BIT_DIGITAL  , CpsInpc003+3, "p4 up"    }, // 1d
+ 	{"P4 Down"          , BIT_DIGITAL  , CpsInpc003+2, "p4 down"  }, // 1e
+ 	{"P4 Left"          , BIT_DIGITAL  , CpsInpc003+1, "p4 left"  }, // 1f
+ 	{"P4 Right"         , BIT_DIGITAL  , CpsInpc003+0, "p4 right" }, // 20
+ 	{"P4 Attack"        , BIT_DIGITAL  , CpsInpc003+4, "p4 fire 1"}, // 21
+ 	{"P4 Jump"          , BIT_DIGITAL  , CpsInpc003+5, "p4 fire 2"}, // 22
+ 	{"P4 Pin"           , BIT_DIGITAL  , CpsInp000+7 , "p4 fire 3"}, // 23
 
- 	{"Reset"            , BIT_DIGITAL  , &CpsReset   , "reset"    },
- 	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6 , "diag"     },
- 	{"Service"          , BIT_DIGITAL  , CpsInp018+2 , "service"  },
- 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E     , "dip"      },
+ 	{"Reset"            , BIT_DIGITAL  , &CpsReset   , "reset"    }, // 24
+ 	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6 , "diag"     }, // 25
+ 	{"Service"          , BIT_DIGITAL  , CpsInp018+2 , "service"  }, // 26
+ 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E     , "dip"      }, // 27
 };
 
 STDINPUTINFO(Slammast)
@@ -1581,41 +1581,41 @@ STDINPUTINFO(Wofhfh)
 
 static struct BurnInputInfo WofhInputList[] =
 {
- 	{"P1 Coin"          , BIT_DIGITAL  , CpsInp018+0, "p1 coin"   },
- 	{"P1 Start"         , BIT_DIGITAL  , CpsInp018+4, "p1 start"  },
- 	{"P1 Up"            , BIT_DIGITAL  , CpsInp001+3, "p1 up"     },
- 	{"P1 Down"          , BIT_DIGITAL  , CpsInp001+2, "p1 down"   },
- 	{"P1 Left"          , BIT_DIGITAL  , CpsInp001+1, "p1 left"   },
- 	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0, "p1 right"  },
- 	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" },
- 	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
- 	{"P1 Fire 3"        , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" },
+ 	{"P1 Coin"          , BIT_DIGITAL  , CpsInp018+0, "p1 coin"   }, //  0
+ 	{"P1 Start"         , BIT_DIGITAL  , CpsInp018+4, "p1 start"  }, //  1
+ 	{"P1 Up"            , BIT_DIGITAL  , CpsInp001+3, "p1 up"     }, //  2
+ 	{"P1 Down"          , BIT_DIGITAL  , CpsInp001+2, "p1 down"   }, //  3
+ 	{"P1 Left"          , BIT_DIGITAL  , CpsInp001+1, "p1 left"   }, //  4
+ 	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0, "p1 right"  }, //  5
+ 	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" }, //  6
+ 	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" }, //  7
+ 	{"P1 Fire 3"        , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" }, //  8
 
- 	{"P2 Coin"          , BIT_DIGITAL  , CpsInp018+1, "p2 coin"   },
- 	{"P2 Start"         , BIT_DIGITAL  , CpsInp018+5, "p2 start"  },
- 	{"P2 Up"            , BIT_DIGITAL  , CpsInp000+3, "p2 up"     },
- 	{"P2 Down"          , BIT_DIGITAL  , CpsInp000+2, "p2 down"   },
- 	{"P2 Left"          , BIT_DIGITAL  , CpsInp000+1, "p2 left"   },
- 	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0, "p2 right"  },
- 	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" },
- 	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" },
- 	{"P2 Fire 3"        , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3" },
+ 	{"P2 Coin"          , BIT_DIGITAL  , CpsInp018+1, "p2 coin"   }, //  9
+ 	{"P2 Start"         , BIT_DIGITAL  , CpsInp018+5, "p2 start"  }, //  a
+ 	{"P2 Up"            , BIT_DIGITAL  , CpsInp000+3, "p2 up"     }, //  b
+ 	{"P2 Down"          , BIT_DIGITAL  , CpsInp000+2, "p2 down"   }, //  c
+ 	{"P2 Left"          , BIT_DIGITAL  , CpsInp000+1, "p2 left"   }, //  d
+ 	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0, "p2 right"  }, //  e
+ 	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" }, //  f
+ 	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" }, // 10
+ 	{"P2 Fire 3"        , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3" }, // 11
 
- 	{"P3 Coin"          , BIT_DIGITAL  , CpsInp177+6, "p3 coin"   }, // doesn't work in some sets?
- 	{"P3 Start"         , BIT_DIGITAL  , CpsInp177+7, "p3 start"  },
- 	{"P3 Up"            , BIT_DIGITAL  , CpsInp177+3, "p3 up"     },
- 	{"P3 Down"          , BIT_DIGITAL  , CpsInp177+2, "p3 down"   },
- 	{"P3 Left"          , BIT_DIGITAL  , CpsInp177+1, "p3 left"   },
- 	{"P3 Right"         , BIT_DIGITAL  , CpsInp177+0, "p3 right"  },
- 	{"P3 Attack"        , BIT_DIGITAL  , CpsInp177+4, "p3 fire 1" },
- 	{"P3 Jump"          , BIT_DIGITAL  , CpsInp177+5, "p3 fire 2" },
- 	{"P3 Fire 3"        , BIT_DIGITAL  , CpsInp177+6, "p3 fire 3" },
+ 	{"P3 Coin"          , BIT_DIGITAL  , CpsInp177+6, "p3 coin"   }, // 12	doesn't work in some sets?
+ 	{"P3 Start"         , BIT_DIGITAL  , CpsInp177+7, "p3 start"  }, // 13
+ 	{"P3 Up"            , BIT_DIGITAL  , CpsInp177+3, "p3 up"     }, // 14
+ 	{"P3 Down"          , BIT_DIGITAL  , CpsInp177+2, "p3 down"   }, // 15
+ 	{"P3 Left"          , BIT_DIGITAL  , CpsInp177+1, "p3 left"   }, // 16
+ 	{"P3 Right"         , BIT_DIGITAL  , CpsInp177+0, "p3 right"  }, // 17
+ 	{"P3 Attack"        , BIT_DIGITAL  , CpsInp177+4, "p3 fire 1" }, // 18
+ 	{"P3 Jump"          , BIT_DIGITAL  , CpsInp177+5, "p3 fire 2" }, // 19
+ 	{"P3 Fire 3"        , BIT_DIGITAL  , CpsInp177+6, "p3 fire 3" }, // 1a
 
- 	{"Reset"            , BIT_DIGITAL  , &CpsReset,   "reset"     },
- 	{"Service"          , BIT_DIGITAL  , CpsInp018+2, "service"   },
- 	{"Dip A"            , BIT_DIPSWITCH, &Cpi01A    , "dip"       },
- 	{"Dip B"            , BIT_DIPSWITCH, &Cpi01C    , "dip"       },
- 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    , "dip"       },
+ 	{"Reset"            , BIT_DIGITAL  , &CpsReset,   "reset"     }, // 1b
+ 	{"Service"          , BIT_DIGITAL  , CpsInp018+2, "service"   }, // 1c
+ 	{"Dip A"            , BIT_DIPSWITCH, &Cpi01A    , "dip"       }, // 1d
+ 	{"Dip B"            , BIT_DIPSWITCH, &Cpi01C    , "dip"       }, // 1e
+ 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    , "dip"       }, // 1f
 };
 
 STDINPUTINFO(Wofh)
@@ -1702,6 +1702,46 @@ static struct BurnInputInfo WofsjbInputList[] =
 };
 
 STDINPUTINFO(Wofsjb)
+
+// Maximum three players, no third fire button, DIPSW has ABC input scheme.
+static struct BurnInputInfo WofablaInputList[] =
+{
+	{"P1 Coin"          , BIT_DIGITAL  , CpsInp018 + 0, "p1 coin"   }, //  0
+	{"P1 Start"         , BIT_DIGITAL  , CpsInp018 + 4, "p1 start"  }, //  1
+	{"P1 Up"            , BIT_DIGITAL  , CpsInp001 + 3, "p1 up"     }, //  2
+	{"P1 Down"          , BIT_DIGITAL  , CpsInp001 + 2, "p1 down"   }, //  3
+	{"P1 Left"          , BIT_DIGITAL  , CpsInp001 + 1, "p1 left"   }, //  4
+	{"P1 Right"         , BIT_DIGITAL  , CpsInp001 + 0, "p1 right"  }, //  5
+	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001 + 4, "p1 fire 1" }, //  6
+	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001 + 5, "p1 fire 2" }, //  7
+
+	{"P2 Coin"          , BIT_DIGITAL  , CpsInp018 + 1, "p2 coin"   }, //  8
+	{"P2 Start"         , BIT_DIGITAL  , CpsInp018 + 5, "p2 start"  }, //  9
+	{"P2 Up"            , BIT_DIGITAL  , CpsInp000 + 3, "p2 up"     }, //  a
+	{"P2 Down"          , BIT_DIGITAL  , CpsInp000 + 2, "p2 down"   }, //  b
+	{"P2 Left"          , BIT_DIGITAL  , CpsInp000 + 1, "p2 left"   }, //  c
+	{"P2 Right"         , BIT_DIGITAL  , CpsInp000 + 0, "p2 right"  }, //  d
+	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000 + 4, "p2 fire 1" }, //  e
+	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000 + 5, "p2 fire 2" }, //  f
+
+	{"P3 Coin"          , BIT_DIGITAL  , CpsInp177 + 6, "p3 coin"   }, // 10
+	{"P3 Start"         , BIT_DIGITAL  , CpsInp177 + 7, "p3 start"  }, // 11
+	{"P3 Up"            , BIT_DIGITAL  , CpsInp177 + 3, "p3 up"     }, // 12
+	{"P3 Down"          , BIT_DIGITAL  , CpsInp177 + 2, "p3 down"   }, // 13
+	{"P3 Left"          , BIT_DIGITAL  , CpsInp177 + 1, "p3 left"   }, // 14
+	{"P3 Right"         , BIT_DIGITAL  , CpsInp177 + 0, "p3 right"  }, // 15
+	{"P3 Attack"        , BIT_DIGITAL  , CpsInp177 + 4, "p3 fire 1" }, // 16
+	{"P3 Jump"          , BIT_DIGITAL  , CpsInp177 + 5, "p3 fire 2" }, // 17
+
+	{"Reset"            , BIT_DIGITAL  , &CpsReset    , "reset"     }, // 18
+	{"Service"          , BIT_DIGITAL  , CpsInp018 + 2, "service"   }, // 19
+	{"Dip A"            , BIT_DIPSWITCH, &Cpi01A      , "dip"       }, // 1a
+	{"Dip B"            , BIT_DIPSWITCH, &Cpi01C      , "dip"       }, // 1b
+	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E      , "dip"       }, // 1c
+};
+
+STDINPUTINFO(Wofabla)
+
 
 static struct BurnInputInfo QSoundPatchInputList[] =
 {
@@ -4532,7 +4572,7 @@ static struct BurnDIPInfo WillowDIPList[]=
 	// Dip A
         CPS1_COINAGE_3(0x15)
 
-        {0   , 0xfe, 0   , 3   , "Cabinet"                },
+    {0   , 0xfe, 0   , 3   , "Cabinet"                },
 	{0x15, 0x01, 0xc0, 0x00, "Upright 1P"             },
 	{0x15, 0x01, 0xc0, 0x40, "Upright 2P"             },
 	{0x15, 0x01, 0xc0, 0xc0, "Cocktail"               },
@@ -4811,6 +4851,62 @@ static struct BurnDIPInfo Wof3sjDIPList[]=
 };
 
 STDDIPINFO(Wof3sj)
+
+static struct BurnDIPInfo WofablaDIPList[] =
+{
+	// Defaults
+	{0x1a, 0xff, 0xff, 0x00, NULL                     },
+	{0x1b, 0xff, 0xff, 0x13, NULL                     },
+	{0x1c, 0xff, 0xff, 0x20, NULL                     },
+
+	// Dip A
+	{0   , 0xfe, 0   , 10   , "Coinage"                },
+	{0x1a, 0x01, 0x09, 0x00, "1 Coin 1 Credit"        },
+	{0x1a, 0x01, 0x09, 0x01, "1 Coin 2 Credits"       },
+	{0x1a, 0x01, 0x09, 0x02, "1 Coin 3 Credits"       },
+	{0x1a, 0x01, 0x09, 0x03, "1 Coin 4 Credits"       },
+	{0x1a, 0x01, 0x09, 0x04, "1 Coin 6 Credits"       },
+	{0x1a, 0x01, 0x09, 0x05, "2 Coin 1 Credits"       },
+	{0x1a, 0x01, 0x09, 0x06, "3 Coin 1 Credits"       },
+	{0x1a, 0x01, 0x09, 0x07, "4 Coin 1 Credits"       },
+	{0x1a, 0x01, 0x09, 0x08, "2 Coins Start, 1 Coin Continue" },
+	{0x1a, 0x01, 0x09, 0x09, "Free Play"              },
+
+	// Dip B
+	{0   , 0xfe, 0   , 8   , "Game Difficulty"        },
+	{0x1b, 0x01, 0x07, 0x00, "0 (Extra Easy)"         },
+	{0x1b, 0x01, 0x07, 0x01, "1 (Very Easy)"          },
+	{0x1b, 0x01, 0x07, 0x02, "2 (Easy)"               },
+	{0x1b, 0x01, 0x07, 0x03, "3 (Normal)"             },
+	{0x1b, 0x01, 0x07, 0x04, "4 (Hard)"               },
+	{0x1b, 0x01, 0x07, 0x05, "5 (Very Hard)"          },
+	{0x1b, 0x01, 0x07, 0x06, "6 (Extra Hard)"         },
+	{0x1b, 0x01, 0x07, 0x07, "7 (Hardest)"            },
+
+	{0   , 0xfe, 0   , 8   , "Lives"                  },
+	{0x1b, 0x01, 0x70, 0x70, "Start 4 Continue 5"     },
+	{0x1b, 0x01, 0x70, 0x60, "Start 3 Continue 4"     },
+	{0x1b, 0x01, 0x70, 0x50, "Start 2 Continue 3"     },
+	{0x1b, 0x01, 0x70, 0x40, "Start 1 Continue 2"     },
+	{0x1b, 0x01, 0x70, 0x30, "Start 4 Continue 4"     },
+	{0x1b, 0x01, 0x70, 0x20, "Start 3 Continue 3"     },
+	{0x1b, 0x01, 0x70, 0x10, "Start 2 Continue 2"     },
+	{0x1b, 0x01, 0x70, 0x00, "Start 1 Continue 1"     },
+
+	// Dip C
+	{0   , 0xfe, 0   , 3   , "Coin Slots"             },
+	{0x1c, 0x01, 0x02, 0x00, "3 Players 3 Shooters"   },
+	{0x1c, 0x01, 0x02, 0x01, "3 Players 1 Shooters"   },
+	{0x1c, 0x01, 0x02, 0x02, "2 Players 1 Shooters"   },
+
+	{0   , 0xfe, 0   , 4   , "Extend"                 },
+	{0x1c, 0x01, 0x30, 0x00, "No Extend"              },
+	{0x1c, 0x01, 0x30, 0x10, "100000 pts."            },
+	{0x1c, 0x01, 0x30, 0x20, "300000 pts."            },
+	{0x1c, 0x01, 0x30, 0x30, "100000, 300000, 500000, 1000000 pts." },
+};
+
+STDDIPINFO(Wofabla)
 
 static struct BurnDIPInfo DinoQSoundDIPList[] =
 {
@@ -15524,6 +15620,27 @@ static struct BurnRomInfo WofablRomDesc[] = {
 STD_ROM_PICK(Wofabl)
 STD_ROM_FN(Wofabl)
 
+static struct BurnRomInfo WofablaRomDesc[] = {
+	{ "2233.bin",	0x100000, 0xcb28807e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "1.bin",		0x080000, 0x0d9cb9bf, BRF_GRA | CPS1_TILES },
+	{ "2.bin",		0x080000, 0x45227027, BRF_GRA | CPS1_TILES },
+	{ "3.bin",		0x080000, 0xc5ca2460, BRF_GRA | CPS1_TILES },
+	{ "4.bin",		0x080000, 0xe349551c, BRF_GRA | CPS1_TILES },
+	{ "5.bin",		0x080000, 0x291f0f0b, BRF_GRA | CPS1_TILES },
+	{ "6.bin",		0x080000, 0x3edeb949, BRF_GRA | CPS1_TILES },
+	{ "7.bin",		0x080000, 0x1abd14d6, BRF_GRA | CPS1_TILES },
+	{ "8.bin",		0x080000, 0xb27948e3, BRF_GRA | CPS1_TILES },
+
+	{ "9.bin",		0x010000, 0x210c376f, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "18.bin",		0x020000, 0xc04be720, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "19.bin",		0x020000, 0xfbb8d8c1, BRF_SND | CPS1_OKIM6295_SAMPLES },
+};
+
+STD_ROM_PICK(Wofabla)
+STD_ROM_FN(Wofabla)
+
 static struct BurnRomInfo WofahRomDesc[] = {
 	{ "htk2a_23b.rom", 0x080000, 0x1b17fc85, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "tk2a_22b.rom",  0x080000, 0x900ad4cd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -15980,6 +16097,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "wofpic"        , CPS_B_21_DEF, mapper_TK263B, 0, wof_patch			}, // game controls layers at 0x98000c
 	{ "wofjh"         , CPS_B_21_QS1, mapper_TK263B, 0, wof_decode          },
 	{ "wofabl"        , HACK_B_6    , mapper_TK263B, 0, NULL                },
+	{ "wofabla"       , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wofah"         , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
 	{ "wofaha"        , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
 	{ "wofahb"        , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
@@ -23907,11 +24025,21 @@ struct BurnDriver BurnDrvCpsWofjh = {
 
 struct BurnDriver BurnDrvCpsWofabl = {
 	"wofabl", "wof", NULL, NULL, "1992",
-	"Sangokushi II (bootleg)\0", NULL, "hack", "CPS1",
-	L"\u4E09\u56FD\u5FD7 II\0Sangokushi II (bootleg)\0", NULL, NULL, NULL,
+	"Sangokushi II (Asia, bootleg, set 1)\0", NULL, "hack", "CPS1",
+	L"\u4E09\u56FD\u5FD7 II\0Sangokushi II (Asia, bootleg, set 1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, WofablRomInfo, WofablRomName, NULL, NULL, NULL, NULL, WofInputInfo, WofDIPInfo,
 	WofablInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsWofabla = {
+	"wofabla", "wof", NULL, NULL, "1992",
+	"Sangokushi II (Asia, bootleg, set 2)\0", NULL, "Imperfect graphics", "CPS1",
+	L"\u4E09\u56FD\u5FD7 II\0Sangokushi II (Asia, bootleg, set 2)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, WofablaRomInfo, WofablaRomName, NULL, NULL, NULL, NULL, WofablaInputInfo, WofablaDIPInfo,
+	WofsjInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

@@ -32369,3 +32369,41 @@ struct BurnDriver BurnDrvMSX_rabenstein = {
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
+
+// Black Sea - Treasure Hunters (HB)
+
+static struct BurnRomInfo MSX_blackseaRomDesc[] = {
+	{ "Black Sea - Treasure Hunters (2022)(Mananuk).rom",	65536, 0xdb5218db, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_blacksea, MSX_blacksea, msx_msx)
+STD_ROM_FN(MSX_blacksea)
+
+struct BurnDriver BurnDrvMSX_blacksea = {
+	"msx_blacksea", NULL, "msx_msx", NULL, "2022",
+	"Black Sea - Treasure Hunters (HB)\0", NULL, "Mananuk", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI_SCC, GBF_ACTION, 0,
+	MSXGetZipName, MSX_blackseaRomInfo, MSX_blackseaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Mix (HB)
+
+static struct BurnRomInfo MSX_mixRomDesc[] = {
+	{ "Mix v1.0 (2022)(Uninteresting).rom",	16384, 0xe14ae602, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_mix, MSX_mix, msx_msx)
+STD_ROM_FN(MSX_mix)
+
+struct BurnDriver BurnDrvMSX_mix = {
+	"msx_mix", NULL, "msx_msx", NULL, "2022",
+	"Mix (HB)\0", NULL, "Uninteresting", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_mixRomInfo, MSX_mixRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};

@@ -9205,6 +9205,7 @@ DRV		BurnDrvMayday;
 DRV		BurnDrvMaydaya;
 DRV		BurnDrvMaydayb;
 DRV		BurnDrvMSX_mayhem;
+DRV		BurnSpecMazania;
 DRV		BurnDrvCHF_mazea;
 DRV		BurnDrvCHF_maze;
 DRV		BurnDrvsms_mazehunt;
@@ -10035,6 +10036,7 @@ DRV		BurnDrvmrtnt;
 DRV		BurnDrvMSX_mrwong;
 DRV		BurnDrvDonight;
 DRV		BurnDrvMrsdyna;
+DRV		BurnSpecMsnampac;
 DRV		BurnDrvMspactwin;
 DRV		BurnDrvmspacman;
 DRV		BurnDrvmspacmat;
@@ -16094,6 +16096,8 @@ DRV		BurnDrvTerraf;
 DRV		BurnSpecTerrahawks;
 DRV		BurnDrvMSX_terramex;
 DRV		BurnDrvCterrani;
+DRV		BurnSpecTerrapinsen;
+DRV		BurnSpecTerrapinses;
 DRV		BurnSpecTerrorballs;
 DRV		BurnDrvMSX_terrorpods;
 DRV		BurnDrvnes_teslavsedison;
@@ -27853,6 +27857,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMaydaya,			// Mayday (set 2)
 	&BurnDrvMaydayb,			// Mayday (set 3)
 	&BurnDrvMSX_mayhem,			// Mayhem
+	&BurnSpecMazania,			// Mazania - Mage Rage Part II (48K) (HB)
 	&BurnDrvCHF_mazea,			// Maze / Jailbreak / Blind-man's-bluff / Trailblazer (Alt)
 	&BurnDrvCHF_maze,			// Maze / Jailbreak / Blind-man's-bluff / Trailblazer
 	&BurnDrvsms_mazehunt,		// Maze Hunter 3-D (Euro, USA, Bra)
@@ -28683,6 +28688,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_mrwong,			// Mr. Wong's Loopy Laundry (Euro)
 	&BurnDrvDonight,			// Mr.Do's Nightmare (hack by Krazy Ivan)
 	&BurnDrvMrsdyna,			// Mrs. Dynamite
+	&BurnSpecMsnampac,			// Ms Nampac (128K) (HB, v0.0.5)
 	&BurnDrvMspactwin,			// Ms PacMan Twin (Argentina)
 	&BurnDrvmspacman,			// MS Pacman
 	&BurnDrvmspacmat,			// Ms. Pac Attack
@@ -34742,6 +34748,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecTerrahawks,		// Terrahawks (128K) (HB)
 	&BurnDrvMSX_terramex,		// Terramex (Euro)
 	&BurnDrvCterrani,			// Terranean (DECO Cassette) (US)
+	&BurnSpecTerrapinsen,		// Terrapins ZX (English) (128K) (HB)
+	&BurnSpecTerrapinses,		// Terrapins ZX (Spanish) (128K) (HB)
 	&BurnSpecTerrorballs,		// Terrorballs (48K)
 	&BurnDrvMSX_terrorpods,		// Terrorpods
 	&BurnDrvnes_teslavsedison,	// Tesla vs Edison (HB)

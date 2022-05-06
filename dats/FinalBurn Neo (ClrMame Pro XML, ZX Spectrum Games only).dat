@@ -3355,7 +3355,7 @@
 		<comment>Homebrew</comment>
 		<description>Chez Maxime ZX (French) (128K) (HB)</description>
 		<year>2022</year>
-		<manufacturer>highriser</manufacturer>
+		<manufacturer>Highrise</manufacturer>
 		<rom name="Chez Maxime ZX 128K (2022)(highriser).tap" size="48799" crc="ab6b980b"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -10307,6 +10307,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mazania" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Mazania - Mage Rage Part II (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>JoeSoft</manufacturer>
+		<rom name="Mazania - Mage Rage Part II 48K (2022)(JoeSoft).tap" size="40396" crc="f1648263"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mazy" romof="spectrum">
 		<comment>Homebrew, AY Sound support</comment>
 		<description>Mazy (48K) (HB)</description>
@@ -11056,6 +11066,17 @@
 		<year>2019</year>
 		<manufacturer>Adrian Singh</manufacturer>
 		<rom name="Mr. Do! (2019)(Adrian Singh).tap" size="59653" crc="e3983c0e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="msnampac" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Ms Nampac (128K) (HB, v0.0.5)</description>
+		<year>2022</year>
+		<manufacturer>Jordi</manufacturer>
+		<rom name="Ms Nampac v0.0.5 128K (2022)(Jordi).tap" size="33045" crc="70c69fdc"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -16227,6 +16248,32 @@
 		<rom name="Terrahawks (2014)(Gary James).tap" size="24138" crc="d6f05303"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="terrapinsen" romof="spec1282a">
+		<comment>Homebrew</comment>
+		<description>Terrapins ZX (English) (128K) (HB)</description>
+		<year>2017</year>
+		<manufacturer>Highrise</manufacturer>
+		<rom name="Terrapins ZX EN 128K (2017)(Highrise).tap" size="48853" crc="b90d0afa"/>
+		<rom name="zx128_2a_0.rom" merge="zx128_2a_0.rom" size="16384" crc="30c9f490"/>
+		<rom name="zx128_2a_1.rom" merge="zx128_2a_1.rom" size="16384" crc="a7916b3f"/>
+		<rom name="zx128_2a_2.rom" merge="zx128_2a_2.rom" size="16384" crc="c9a0b748"/>
+		<rom name="zx128_2a_3.rom" merge="zx128_2a_3.rom" size="16384" crc="b88fd6e3"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="terrapinses" cloneof="terrapinsen" romof="terrapinsen">
+		<comment>Homebrew</comment>
+		<description>Terrapins ZX (Spanish) (128K) (HB)</description>
+		<year>2017</year>
+		<manufacturer>Highrise</manufacturer>
+		<rom name="Terrapins ZX ES 128K (2017)(Highrise).tap" size="48854" crc="16a8bd5f"/>
+		<rom name="zx128_2a_0.rom" merge="zx128_2a_0.rom" size="16384" crc="30c9f490"/>
+		<rom name="zx128_2a_1.rom" merge="zx128_2a_1.rom" size="16384" crc="a7916b3f"/>
+		<rom name="zx128_2a_2.rom" merge="zx128_2a_2.rom" size="16384" crc="c9a0b748"/>
+		<rom name="zx128_2a_3.rom" merge="zx128_2a_3.rom" size="16384" crc="b88fd6e3"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

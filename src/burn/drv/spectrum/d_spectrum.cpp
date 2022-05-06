@@ -35749,7 +35749,7 @@ STD_ROM_FN(SpecChezmax)
 
 struct BurnDriver BurnSpecChezmax = {
 	"spec_chezmax", NULL, "spec_spec128", NULL, "2022",
-	"Chez Maxime ZX (French) (128K) (HB)\0", NULL, "highriser", "ZX Spectrum",
+	"Chez Maxime ZX (French) (128K) (HB)\0", NULL, "Highrise", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecChezmaxRomInfo, SpecChezmaxRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -35925,5 +35925,81 @@ struct BurnDriver BurnSpecPrimaderezx = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecPrimaderezxRomInfo, SpecPrimaderezxRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Mazania - Mage Rage Part II (48K) (HB)
+
+static struct BurnRomInfo SpecMazaniaRomDesc[] = {
+	{ "Mazania - Mage Rage Part II 48K (2022)(JoeSoft).tap", 40396, 0xf1648263, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMazania, SpecMazania, Spectrum)
+STD_ROM_FN(SpecMazania)
+
+struct BurnDriver BurnSpecMazania = {
+	"spec_mazania", NULL, "spec_spectrum", NULL, "2022",
+	"Mazania - Mage Rage Part II (48K) (HB)\0", NULL, "JoeSoft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_MAZE, 0,
+	SpectrumGetZipName, SpecMazaniaRomInfo, SpecMazaniaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Ms Nampac (128K) (HB, v0.0.5)
+
+static struct BurnRomInfo SpecMsnampacRomDesc[] = {
+	{ "Ms Nampac v0.0.5 128K (2022)(Jordi).tap", 33045, 0x70c69fdc, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMsnampac, SpecMsnampac, Spec128)
+STD_ROM_FN(SpecMsnampac)
+
+struct BurnDriver BurnSpecMsnampac = {
+	"spec_msnampac", NULL, "spec_spec128", NULL, "2022",
+	"Ms Nampac (128K) (HB, v0.0.5)\0", NULL, "Jordi", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_MAZE, 0,
+	SpectrumGetZipName, SpecMsnampacRomInfo, SpecMsnampacRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Terrapins ZX (English) (128K) (HB)
+
+static struct BurnRomInfo SpecTerrapinsenRomDesc[] = {
+	{ "Terrapins ZX EN 128K (2017)(Highrise).tap", 48853, 0xb90d0afa, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecTerrapinsen, SpecTerrapinsen, Spec1282a)
+STD_ROM_FN(SpecTerrapinsen)
+
+struct BurnDriver BurnSpecTerrapinsen = {
+	"spec_terrapinsen", NULL, "spec_spec1282a", NULL, "2017",
+	"Terrapins ZX (English) (128K) (HB)\0", NULL, "Highrise", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_MAZE, 0,
+	SpectrumGetZipName, SpecTerrapinsenRomInfo, SpecTerrapinsenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KPlus2Init, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Terrapins ZX (Spanish) (128K) (HB)
+
+static struct BurnRomInfo SpecTerrapinsesRomDesc[] = {
+	{ "Terrapins ZX ES 128K (2017)(Highrise).tap", 48854, 0x16a8bd5f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecTerrapinses, SpecTerrapinses, Spec1282a)
+STD_ROM_FN(SpecTerrapinses)
+
+struct BurnDriver BurnSpecTerrapinses = {
+	"spec_terrapinses", "spec_terrapinsen", "spec_spec1282a", NULL, "2017",
+	"Terrapins ZX (Spanish) (128K) (HB)\0", NULL, "Highrise", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_MAZE, 0,
+	SpectrumGetZipName, SpecTerrapinsesRomInfo, SpecTerrapinsesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KPlus2Init, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

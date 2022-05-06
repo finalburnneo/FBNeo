@@ -1026,6 +1026,13 @@
 		FE96B12E269C1B4900DC6A88 /* d_exerion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE96B12D269C1B4900DC6A88 /* d_exerion.cpp */; };
 		FE9968F8273C3FC700090835 /* d_pcktgal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE9968F7273C3FC700090835 /* d_pcktgal.cpp */; };
 		FEA1AB8823B5D49700D6082A /* d_spdodgeb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AB8723B5D49700D6082A /* d_spdodgeb.cpp */; };
+		FEA22A7C2824415200A1A7AF /* d_cv1k.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA22A7B2824415100A1A7AF /* d_cv1k.cpp */; };
+		FEA22A7E2824418500A1A7AF /* epic12.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA22A7D2824418500A1A7AF /* epic12.cpp */; };
+		FEA22A82282441C800A1A7AF /* serflash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA22A81282441C800A1A7AF /* serflash.cpp */; };
+		FEA22A85282441DA00A1A7AF /* rtc9701.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA22A83282441DA00A1A7AF /* rtc9701.cpp */; };
+		FEA22A8A2824420300A1A7AF /* mpeg_audio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA22A872824420000A1A7AF /* mpeg_audio.cpp */; };
+		FEA22A8B2824420300A1A7AF /* ymz770.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA22A892824420000A1A7AF /* ymz770.cpp */; };
+		FEA22A8F282448F300A1A7AF /* sh4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA22A752824401300A1A7AF /* sh4.cpp */; };
 		FEA35F6F246A6E04008938BC /* d_pasha2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA35F6D246A6E03008938BC /* d_pasha2.cpp */; };
 		FEA35F70246A6E04008938BC /* d_shangha3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA35F6E246A6E03008938BC /* d_shangha3.cpp */; };
 		FEA5E79223563F5400DA2D9D /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E79023563F5400DA2D9D /* misc.cpp */; };
@@ -2639,6 +2646,21 @@
 		FE9968F7273C3FC700090835 /* d_pcktgal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_pcktgal.cpp; sourceTree = "<group>"; };
 		FE9A990D235F82C900507894 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		FEA1AB8723B5D49700D6082A /* d_spdodgeb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_spdodgeb.cpp; sourceTree = "<group>"; };
+		FEA22A752824401300A1A7AF /* sh4.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sh4.cpp; sourceTree = "<group>"; };
+		FEA22A7B2824415100A1A7AF /* d_cv1k.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_cv1k.cpp; sourceTree = "<group>"; };
+		FEA22A7D2824418500A1A7AF /* epic12.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = epic12.cpp; sourceTree = "<group>"; };
+		FEA22A7F282441A300A1A7AF /* epic12.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = epic12.h; sourceTree = "<group>"; };
+		FEA22A80282441C700A1A7AF /* serflash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = serflash.h; sourceTree = "<group>"; };
+		FEA22A81282441C800A1A7AF /* serflash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = serflash.cpp; sourceTree = "<group>"; };
+		FEA22A83282441DA00A1A7AF /* rtc9701.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtc9701.cpp; sourceTree = "<group>"; };
+		FEA22A84282441DA00A1A7AF /* rtc9701.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtc9701.h; sourceTree = "<group>"; };
+		FEA22A862824420000A1A7AF /* ymz770.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ymz770.h; sourceTree = "<group>"; };
+		FEA22A872824420000A1A7AF /* mpeg_audio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mpeg_audio.cpp; sourceTree = "<group>"; };
+		FEA22A882824420000A1A7AF /* mpeg_audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mpeg_audio.h; sourceTree = "<group>"; };
+		FEA22A892824420000A1A7AF /* ymz770.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ymz770.cpp; sourceTree = "<group>"; };
+		FEA22A8C2824470F00A1A7AF /* sh4_intf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sh4_intf.h; sourceTree = "<group>"; };
+		FEA22A8D2824471A00A1A7AF /* sh4comn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sh4comn.h; sourceTree = "<group>"; };
+		FEA22A8E282447C900A1A7AF /* sh3comn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sh3comn.h; sourceTree = "<group>"; };
 		FEA35F6D246A6E03008938BC /* d_pasha2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_pasha2.cpp; sourceTree = "<group>"; };
 		FEA35F6E246A6E03008938BC /* d_shangha3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_shangha3.cpp; sourceTree = "<group>"; };
 		FEA5E79023563F5400DA2D9D /* misc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = misc.cpp; sourceTree = "<group>"; };
@@ -2867,13 +2889,13 @@
 				FE57571F2627406900FDFEA2 /* f8 */,
 				FE1B1CC423561A620065200C /* h6280 */,
 				FE1B1D7323561A630065200C /* hd6309 */,
-				FEDF17F826072DE80082732C /* i386 */,
 				FE1B1CA423561A610065200C /* i8x41 */,
+				FEDF17F826072DE80082732C /* i386 */,
 				FE1B1CDA23561A620065200C /* i8039 */,
 				FE1B1D7C23561A630065200C /* i8051 */,
 				FE1B1D2023561A630065200C /* konami */,
-				FEDF04C325EB472400F3EDD9 /* m377 */,
 				FE1B1C9923561A610065200C /* m68k */,
+				FEDF04C325EB472400F3EDD9 /* m377 */,
 				FE1B1CCD23561A620065200C /* m6502 */,
 				FE1B1D1623561A620065200C /* m6800 */,
 				FE1B1CA923561A610065200C /* m6805 */,
@@ -2883,10 +2905,11 @@
 				FE1B1D5D23561A630065200C /* pic16c5x */,
 				FE1B1D7923561A630065200C /* s2650 */,
 				FE1B1CB523561A620065200C /* sh2 */,
+				FEA22A6E2824401300A1A7AF /* sh4 */,
 				FE1B1D8323561A630065200C /* tlcs90 */,
 				FEECE3FE247AC7BE007724A2 /* tlcs900 */,
-				FE1B1D4323561A630065200C /* tms32010 */,
 				FEFB2E7125A9A083005D9281 /* tms34 */,
+				FE1B1D4323561A630065200C /* tms32010 */,
 				FE1B1CDF23561A620065200C /* tms34010 */,
 				FE1B1D3023561A630065200C /* upd7725 */,
 				FE1B1D8523561A630065200C /* upd7810 */,
@@ -2894,52 +2917,52 @@
 				FE1B1CB923561A620065200C /* z80 */,
 				FE1B1D3523561A630065200C /* z180 */,
 				FE1B1D4123561A630065200C /* adsp2100_intf.cpp */,
-				FE1B1CB323561A620065200C /* adsp2100_intf.h */,
 				FE1B1CCC23561A620065200C /* arm_intf.cpp */,
-				FE1B1CB123561A620065200C /* arm_intf.h */,
 				FE1B1D5623561A630065200C /* arm7_intf.cpp */,
+				FE1B1CDE23561A620065200C /* h6280_intf.cpp */,
+				FE1B1D8B23561A640065200C /* hd6309_intf.cpp */,
+				FE1B1D5423561A630065200C /* konami_intf.cpp */,
+				FE1B1D3423561A630065200C /* m6502_intf.cpp */,
+				FE1B1CA823561A610065200C /* m6800_intf.cpp */,
+				FE1B1D7823561A630065200C /* m6805_intf.cpp */,
+				FE1B1D3323561A630065200C /* m6809_intf.cpp */,
+				FE1B1CB423561A620065200C /* m68000_intf.cpp */,
+				FE1B1CAE23561A620065200C /* mips3_intf.cpp */,
+				FE1B1CC223561A620065200C /* nec_intf.cpp */,
+				FE1B1CB823561A620065200C /* pic16c5x_intf.cpp */,
+				FE1B1D2E23561A630065200C /* s2650_intf.cpp */,
+				FE1B1D5523561A630065200C /* tlcs90_intf.cpp */,
+				FEFB2E7A25A9A128005D9281 /* tms34_intf.cpp */,
+				FE1B1CB223561A620065200C /* tms34010_intf.cpp */,
+				FE1B1CA323561A610065200C /* z80_intf.cpp */,
+				FE1B1CA223561A610065200C /* z180_intf.cpp */,
+				FE1B1CB323561A620065200C /* adsp2100_intf.h */,
+				FE1B1CB123561A620065200C /* arm_intf.h */,
 				FE1B1D2623561A630065200C /* arm7_intf.h */,
 				FE8329132439A3E000059993 /* e132xs_intf.h */,
-				FE1B1CDE23561A620065200C /* h6280_intf.cpp */,
 				FE1B1CCB23561A620065200C /* h6280_intf.h */,
-				FE1B1D8B23561A640065200C /* hd6309_intf.cpp */,
 				FE1B1CD923561A620065200C /* hd6309_intf.h */,
 				FEDF17F726072DE80082732C /* i386_intf.h */,
-				FE1B1D5423561A630065200C /* konami_intf.cpp */,
 				FE1B1D8023561A630065200C /* konami_intf.h */,
 				FEDF04C925EB472400F3EDD9 /* m377_intf.h */,
-				FE1B1D3423561A630065200C /* m6502_intf.cpp */,
 				FE1B1CAF23561A620065200C /* m6502_intf.h */,
-				FE1B1CA823561A610065200C /* m6800_intf.cpp */,
 				FE1B1CCA23561A620065200C /* m6800_intf.h */,
-				FE1B1D7823561A630065200C /* m6805_intf.cpp */,
 				FE1B1D2F23561A630065200C /* m6805_intf.h */,
-				FE1B1D3323561A630065200C /* m6809_intf.cpp */,
 				FE1B1D2D23561A630065200C /* m6809_intf.h */,
 				FE1B1CB723561A620065200C /* m68000_debug.h */,
-				FE1B1CB423561A620065200C /* m68000_intf.cpp */,
 				FE1B1CED23561A620065200C /* m68000_intf.h */,
-				FE1B1CAE23561A620065200C /* mips3_intf.cpp */,
 				FE1B1CB023561A620065200C /* mips3_intf.h */,
-				FE1B1CC223561A620065200C /* nec_intf.cpp */,
 				FE1B1D1523561A620065200C /* nec_intf.h */,
-				FE1B1CB823561A620065200C /* pic16c5x_intf.cpp */,
 				FE1B1D2523561A630065200C /* pic16c5x_intf.h */,
-				FE1B1D2E23561A630065200C /* s2650_intf.cpp */,
 				FE1B1D5723561A630065200C /* s2650_intf.h */,
 				FE1B1CDD23561A620065200C /* sh2_intf.h */,
-				FE1B1D5523561A630065200C /* tlcs90_intf.cpp */,
 				FE1B1CC323561A620065200C /* tlcs90_intf.h */,
 				FEECE402247AC7BF007724A2 /* tlcs900_intf.h */,
-				FEFB2E7A25A9A128005D9281 /* tms34_intf.cpp */,
 				FEFB2E7B25A9A128005D9281 /* tms34_intf.h */,
-				FE1B1CB223561A620065200C /* tms34010_intf.cpp */,
 				FE1B1CC923561A620065200C /* tms34010_intf.h */,
 				FE1B1D4223561A630065200C /* upd7810_intf.h */,
 				FE1B1CAD23561A620065200C /* v60_intf.h */,
-				FE1B1CA323561A610065200C /* z80_intf.cpp */,
 				FE1B1D8223561A630065200C /* z80_intf.h */,
-				FE1B1CA223561A610065200C /* z180_intf.cpp */,
 				FE1B1D8123561A630065200C /* z180_intf.h */,
 			);
 			name = cpu;
@@ -3742,28 +3765,29 @@
 		FE1B1EE823561A670065200C /* cave */ = {
 			isa = PBXGroup;
 			children = (
-				FE1B1EE923561A670065200C /* d_feversos.cpp */,
+				FE1B1EEE23561A670065200C /* cave_palette.cpp */,
+				FE1B1EFB23561A670065200C /* cave_sprite_render_zoom.h */,
 				FE1B1EEA23561A670065200C /* cave_sprite_render.h */,
 				FE1B1EEB23561A670065200C /* cave_sprite.cpp */,
-				FE1B1EEC23561A670065200C /* d_metmqstr.cpp */,
-				FE1B1EED23561A670065200C /* d_esprade.cpp */,
-				FE1B1EEE23561A670065200C /* cave_palette.cpp */,
-				FE1B1EEF23561A670065200C /* cave.cpp */,
-				FE1B1EF023561A670065200C /* d_korokoro.cpp */,
-				FE1B1EF123561A670065200C /* d_dodonpachi.cpp */,
-				FE1B1EF223561A670065200C /* d_mazinger.cpp */,
-				FE1B1EF323561A670065200C /* cave_tile.cpp */,
-				FE1B1EF423561A670065200C /* d_gaia.cpp */,
 				FE1B1EF523561A670065200C /* cave_tile_render.h */,
+				FE1B1EF323561A670065200C /* cave_tile.cpp */,
+				FE1B1EEF23561A670065200C /* cave.cpp */,
+				FE1B1EFC23561A670065200C /* cave.h */,
+				FEA22A7B2824415100A1A7AF /* d_cv1k.cpp */,
+				FE1B1EF123561A670065200C /* d_dodonpachi.cpp */,
 				FE1B1EF623561A670065200C /* d_donpachi.cpp */,
-				FE1B1EF723561A670065200C /* d_uopoko.cpp */,
-				FE1B1EF823561A670065200C /* d_pwrinst2.cpp */,
+				FE1B1EED23561A670065200C /* d_esprade.cpp */,
+				FE1B1EE923561A670065200C /* d_feversos.cpp */,
+				FE1B1EF423561A670065200C /* d_gaia.cpp */,
 				FE1B1EF923561A670065200C /* d_guwange.cpp */,
 				FE1B1EFA23561A670065200C /* d_hotdogst.cpp */,
-				FE1B1EFB23561A670065200C /* cave_sprite_render_zoom.h */,
-				FE1B1EFC23561A670065200C /* cave.h */,
-				FE1B1EFD23561A670065200C /* d_tjumpman.cpp */,
+				FE1B1EF023561A670065200C /* d_korokoro.cpp */,
+				FE1B1EF223561A670065200C /* d_mazinger.cpp */,
+				FE1B1EEC23561A670065200C /* d_metmqstr.cpp */,
+				FE1B1EF823561A670065200C /* d_pwrinst2.cpp */,
 				FE1B1EFE23561A670065200C /* d_sailormn.cpp */,
+				FE1B1EFD23561A670065200C /* d_tjumpman.cpp */,
+				FE1B1EF723561A670065200C /* d_uopoko.cpp */,
 			);
 			path = cave;
 			sourceTree = "<group>";
@@ -4736,6 +4760,8 @@
 				FE1B226223561A700065200C /* k054539.h */,
 				FE1B21F823561A700065200C /* llander.cpp */,
 				FE1B223923561A700065200C /* llander.h */,
+				FEA22A872824420000A1A7AF /* mpeg_audio.cpp */,
+				FEA22A882824420000A1A7AF /* mpeg_audio.h */,
 				FE1B21ED23561A6F0065200C /* msm5205.cpp */,
 				FE1B224323561A700065200C /* msm5205.h */,
 				FE1B225823561A700065200C /* msm5232.cpp */,
@@ -4813,6 +4839,8 @@
 				FE1B226F23561A710065200C /* ymf278b.h */,
 				FE1B21EC23561A6F0065200C /* ymz280b.cpp */,
 				FE1B227223561A710065200C /* ymz280b.h */,
+				FEA22A892824420000A1A7AF /* ymz770.cpp */,
+				FEA22A862824420000A1A7AF /* ymz770.h */,
 			);
 			path = snd;
 			sourceTree = "<group>";
@@ -4850,6 +4878,8 @@
 				FE1B228C23561A710065200C /* earom.h */,
 				FE1B22D323561A720065200C /* eeprom.cpp */,
 				FE1B228923561A710065200C /* eeprom.h */,
+				FEA22A7D2824418500A1A7AF /* epic12.cpp */,
+				FEA22A7F282441A300A1A7AF /* epic12.h */,
 				FE1B229223561A710065200C /* gaelco_crypt.cpp */,
 				FE1B22B923561A710065200C /* gaelco_crypt.h */,
 				FE1E0C7C245333E500C774C3 /* i4x00.cpp */,
@@ -4898,10 +4928,14 @@
 				FE83291A2439A41200059993 /* qs1000.h */,
 				FE1B228523561A710065200C /* resnet.cpp */,
 				FE1B229123561A710065200C /* resnet.h */,
+				FEA22A83282441DA00A1A7AF /* rtc9701.cpp */,
+				FEA22A84282441DA00A1A7AF /* rtc9701.h */,
 				FE1B22AE23561A710065200C /* seibucop.cpp */,
 				FE1B22D923561A720065200C /* seibucop.h */,
 				FE1B22D023561A720065200C /* seibusnd.cpp */,
 				FE1B22A423561A710065200C /* seibusnd.h */,
+				FEA22A81282441C800A1A7AF /* serflash.cpp */,
+				FEA22A80282441C700A1A7AF /* serflash.h */,
 				FE1B22BE23561A710065200C /* sknsspr.cpp */,
 				FE1B22BC23561A710065200C /* sknsspr.h */,
 				FE1B229423561A710065200C /* slapstic.cpp */,
@@ -5087,6 +5121,17 @@
 				FE8868342410D54D0022BEE6 /* d_nes.cpp */,
 			);
 			path = nes;
+			sourceTree = "<group>";
+		};
+		FEA22A6E2824401300A1A7AF /* sh4 */ = {
+			isa = PBXGroup;
+			children = (
+				FEA22A8E282447C900A1A7AF /* sh3comn.h */,
+				FEA22A8D2824471A00A1A7AF /* sh4comn.h */,
+				FEA22A8C2824470F00A1A7AF /* sh4_intf.h */,
+				FEA22A752824401300A1A7AF /* sh4.cpp */,
+			);
+			path = sh4;
 			sourceTree = "<group>";
 		};
 		FEA5E7982356472200DA2D9D /* macos */ = {
@@ -5574,6 +5619,7 @@
 				FE1B25F023561A760065200C /* d_hcastle.cpp in Sources */,
 				FE1B278123561A790065200C /* ym2612.c in Sources */,
 				FE1B23BB23561A750065200C /* m6502.cpp in Sources */,
+				FEA22A7C2824415200A1A7AF /* d_cv1k.cpp in Sources */,
 				FE1B278023561A790065200C /* ymf262.cpp in Sources */,
 				FE1B263523561A770065200C /* ps.cpp in Sources */,
 				FE1B262E23561A770065200C /* cpst.cpp in Sources */,
@@ -5681,6 +5727,7 @@
 				FE1B23C823561A750065200C /* cop0.cpp in Sources */,
 				FE1B266D23561A770065200C /* pc080sn.cpp in Sources */,
 				FE1B264A23561A770065200C /* tc0360pri.cpp in Sources */,
+				FEA22A8F282448F300A1A7AF /* sh4.cpp in Sources */,
 				FE1B245C23561A750065200C /* trees.c in Sources */,
 				FE1B257A23561A760065200C /* deco146.cpp in Sources */,
 				FE1E0C842456832100C774C3 /* d_eolith.cpp in Sources */,
@@ -5878,6 +5925,7 @@
 				FE1B252623561A760065200C /* d_sandscrp.cpp in Sources */,
 				FE1B277323561A790065200C /* burn_ymf278b.cpp in Sources */,
 				FE1B25E723561A760065200C /* d_battlnts.cpp in Sources */,
+				FEA22A8B2824420300A1A7AF /* ymz770.cpp in Sources */,
 				FE1B257423561A760065200C /* d_simpl156.cpp in Sources */,
 				FE1B266C23561A770065200C /* tc0220ioc.cpp in Sources */,
 				FE1B240623561A750065200C /* m6805_intf.cpp in Sources */,
@@ -5951,6 +5999,7 @@
 				FEDF04CC25EB476700F3EDD9 /* d_ms32.cpp in Sources */,
 				FE1B256423561A760065200C /* fd1089.cpp in Sources */,
 				FE1B257F23561A760065200C /* d_dreambal.cpp in Sources */,
+				FEA22A8A2824420300A1A7AF /* mpeg_audio.cpp in Sources */,
 				FE1B262123561A770065200C /* cps3run.cpp in Sources */,
 				FE1B273323561A780065200C /* d_senjyo.cpp in Sources */,
 				FE1B27AE23561A790065200C /* c140.cpp in Sources */,
@@ -5984,6 +6033,7 @@
 				FE1B25D223561A760065200C /* d_rockrage.cpp in Sources */,
 				FE1B274B23561A780065200C /* d_battlex.cpp in Sources */,
 				FE1B24F523561A760065200C /* d_ohmygod.cpp in Sources */,
+				FEA22A85282441DA00A1A7AF /* rtc9701.cpp in Sources */,
 				FE1B26CA23561A780065200C /* d_cabal.cpp in Sources */,
 				FE5560FD258E84A400A19F2D /* d_gladiatr.cpp in Sources */,
 				FE1B261323561A760065200C /* d_truxton2.cpp in Sources */,
@@ -6263,6 +6313,7 @@
 				FE1B271523561A780065200C /* d_blockade.cpp in Sources */,
 				FE1B25E123561A760065200C /* d_ajax.cpp in Sources */,
 				FE1B23D423561A750065200C /* konami.cpp in Sources */,
+				FEA22A82282441C800A1A7AF /* serflash.cpp in Sources */,
 				FEED9DFA23576B9F00B7AF83 /* support_paths.cpp in Sources */,
 				FE1B27B023561A790065200C /* burn_ym2203.cpp in Sources */,
 				FE1B240A23561A750065200C /* tlcs90.cpp in Sources */,
@@ -6338,6 +6389,7 @@
 				FE1B268A23561A770065200C /* d_pgm.cpp in Sources */,
 				FE1B271023561A780065200C /* d_qbert.cpp in Sources */,
 				FE1B24B223561A750065200C /* d_m58.cpp in Sources */,
+				FEA22A7E2824418500A1A7AF /* epic12.cpp in Sources */,
 				FE1B270023561A780065200C /* d_holeland.cpp in Sources */,
 				FEC28FE7266481BD00EF37C2 /* AKGamepadManager.m in Sources */,
 				FE1B261F23561A770065200C /* d_cps3.cpp in Sources */,

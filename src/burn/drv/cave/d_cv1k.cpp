@@ -491,7 +491,7 @@ static INT32 DrvExit()
 
 static INT32 DrvDraw()
 {
-	epic12_draw_screen();
+	epic12_draw_screen(DrvRecalc);
 
 	return 0;
 }

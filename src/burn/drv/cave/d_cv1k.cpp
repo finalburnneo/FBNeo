@@ -491,7 +491,7 @@ static INT32 DrvExit()
 
 static INT32 DrvDraw()
 {
-	epic12_draw_screen();
+	epic12_draw_screen(DrvRecalc);
 
 	return 0;
 }
@@ -1243,7 +1243,7 @@ struct BurnDriver BurnDrvDsmbl = {
 	BDF_GAME_WORKING | BDF_32BIT_ONLY, 2, HARDWARE_CAVE_CV1000, GBF_HORSHOOT, 0,
 	NULL, dsmblRomInfo, dsmblRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
-	240, 320, 3, 4
+	320, 240, 4, 3
 };
 
 

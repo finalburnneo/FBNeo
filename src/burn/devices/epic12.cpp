@@ -56,6 +56,8 @@ static UINT8 epic12_device_colrtable[0x20][0x40];
 static UINT8 epic12_device_colrtable_rev[0x20][0x40];
 static UINT8 epic12_device_colrtable_add[0x20][0x20];
 
+static UINT16 *pal16 = NULL; // palette lut for 16bpp video emulation
+
 #include "epic12.h"
 
 struct _clr_t
@@ -285,6 +287,11 @@ static void run_blitter_cb()
 void epic12_exit()
 {
 	BurnFree(m_bitmaps);
+
+	if (pal16) {
+		BurnFree(pal16);
+		pal16 = NULL;
+	}
 
 	thready.exit();
 }
@@ -817,14 +824,63 @@ static void gfx_exec_write(UINT32 offset, UINT32 data)
 	}
 }
 
+static void pal16_check_init()
+{
+	if (nBurnBpp < 3 && !pal16) {
+		pal16 = (UINT16 *)BurnMalloc((1 << 24) * sizeof (UINT16));
 
-void epic12_draw_screen()
+		for (INT32 i = 0; i < (1 << 24); i++) {
+			pal16[i] = BurnHighCol(i / 0x10000, (i / 0x100) & 0xff, i & 0xff, 0);
+		}
+	}
+}
+
+static void epic12_draw_screen16_24bpp()
+{
+	INT32 scrollx = -m_gfx_scroll_0_x;
+	INT32 scrolly = -m_gfx_scroll_0_y;
+
+	UINT8  *dst = (UINT8  *)pBurnDraw;
+	UINT32 *src = (UINT32 *)m_bitmaps;
+	const INT32 heightmask = 0x1000 - 1;
+	const INT32 widthmask  = 0x2000 - 1;
+
+	for (INT32 y = 0; y < nScreenHeight; y++)
+	{
+		UINT32 *s0 = &src[((y - scrolly) & heightmask) * 0x2000];
+		INT32 sx;
+
+		switch (nBurnBpp) {
+			case 2: // 16bpp
+				for (INT32 x = 0; x < nScreenWidth; x++, dst += nBurnBpp)
+				{
+					sx = x - scrollx;
+					PutPix(dst, pal16[s0[sx & widthmask]&((1<<24)-1)]);
+				}
+				break;
+			case 3: // 24bpp
+				for (INT32 x = 0; x < nScreenWidth; x++, dst += nBurnBpp)
+				{
+					sx = x - scrollx;
+					PutPix(dst, s0[sx & widthmask]);
+				}
+				break;
+		}
+	}
+}
+
+void epic12_draw_screen(UINT8 &recalc_palette)
 {
 	INT32 scrollx = -m_gfx_scroll_0_x;
 	INT32 scrolly = -m_gfx_scroll_0_y;
 
 	if (nBurnBpp != 4) {
-		//bprintf(0, _T("epic12_draw_screen(): need 32bit for now!\n"));
+		if (recalc_palette) {
+			pal16_check_init();
+			recalc_palette = 0;
+		}
+
+		epic12_draw_screen16_24bpp();
 		return;
 	}
 

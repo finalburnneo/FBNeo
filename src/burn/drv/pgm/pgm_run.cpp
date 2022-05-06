@@ -137,6 +137,9 @@ static INT32 pgmGetRoms(bool bLoad)
 	if (bLoad && nPGM68KROMLen == 0x80000 && nPGMSNDROMLen == 0x600000) { // dw2001 & dwpc
 		PGMSNDROMLoad -= 0x200000;
 	}
+	if (bLoad && (0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov2dzxx"))) { // kov2dzxx
+		PGMSNDROMLoad -= 0x600000;
+	}
 
 	for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++) {
 
@@ -608,7 +611,18 @@ static INT32 PgmDoReset()
 		Arm7Close();
 
 		// region hack
-		if (nPgmAsicRegionHackAddress) {
+		if (strncmp(BurnDrvGetTextA(DRV_NAME), "dmnfrnt", 7) == 0) {
+			PGMARMShareRAM[0x158] = PgmInput[7];
+			PGMARMShareRAM2[0x158] = PgmInput[7];
+
+			// dmnfrntpcb - requires this - set internal rom version
+			PGMARMShareRAM[0x164] = '1'; // S101KR (101 Korea) - $69be8 in ROM
+			PGMARMShareRAM[0x165] = 'S';
+			PGMARMShareRAM[0x166] = '1';
+			PGMARMShareRAM[0x167] = '0';
+			PGMARMShareRAM[0x168] = 'R';
+			PGMARMShareRAM[0x169] = 'K';
+		} else if (nPgmAsicRegionHackAddress) {
 			PGMARMROM[nPgmAsicRegionHackAddress] = PgmInput[7];
 		}
 	}
@@ -785,6 +799,11 @@ INT32 pgmInit()
 		{
 			// if a cart is mapped at 100000+, the BIOS is mapped from 0-fffff, if no cart inserted, the BIOS is mapped to 7fffff!
 			for (INT32 i = 0; i < 0x100000; i+= 0x20000) { // DDP3 bios is 512k in size, but >= 20000 is 0-filled!
+				if (0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov2dzxx")) { // kov2dzxx 68K BIOS, Mapped addresses other than 7fffff will fail
+					SekMapMemory(PGM68KBIOS, 0x000000, 0x07ffff, MAP_ROM);
+					break;
+				}
+
 				SekMapMemory(PGM68KBIOS,			0x000000 | i, 0x01ffff | i, MAP_ROM);			// 68000 BIOS
 			}
 
@@ -952,7 +971,7 @@ INT32 pgmFrame()
 
 	// compile inputs
 	{
-        memset (PgmInput, 0, sizeof(PgmInput));
+		memset (PgmInput, 0, 6); // 6 is correct! Regions are stored in 7!
 
 		for (INT32 i = 0; i < sizeof(PgmJoy1); i++) {
 			PgmInput[0] |= (PgmJoy1[i] & 1) << i;
@@ -993,20 +1012,6 @@ INT32 pgmFrame()
 		Arm7NewFrame();
 		Arm7Open(0);
 		Arm7Idle(nCyclesDone[2]);
-
-		// region for demon front
-		if (strncmp(BurnDrvGetTextA(DRV_NAME), "dmnfrnt", 7) == 0) {
-			PGMARMShareRAM[0x158] = PgmInput[7];
-			PGMARMShareRAM2[0x158] = PgmInput[7];
-
-			// dmnfrntpcb - requires this - set internal rom version
-			PGMARMShareRAM[0x164] = '1'; // S101KR (101 Korea) - $69be8 in ROM
-			PGMARMShareRAM[0x165] = 'S';
-			PGMARMShareRAM[0x166] = '1';
-			PGMARMShareRAM[0x167] = '0';	
-			PGMARMShareRAM[0x168] = 'R';
-			PGMARMShareRAM[0x169] = 'K';
-		}
 	}
 
 	{

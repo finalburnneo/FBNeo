@@ -399,6 +399,7 @@ void Reinitialise();
 extern bool bDoIpsPatch;
 extern INT32 nIpsMaxFileLen;
 void IpsApplyPatches(UINT8* base, char* rom_name);
+INT32 GetIpsesMaxLen(char* rom_name);
 
 // ---------------------------------------------------------------------------
 // Flags used with the Burndriver structure
@@ -412,13 +413,14 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define BDF_CLONE										(1 << 4)
 #define BDF_BOOTLEG										(1 << 5)
 #define BDF_PROTOTYPE									(1 << 6)
-#define BDF_16BIT_ONLY									(1 << 7)
-#define BDF_HACK										(1 << 8)
-#define BDF_HOMEBREW									(1 << 9)
-#define BDF_DEMO										(1 << 10)
-#define BDF_HISCORE_SUPPORTED							(1 << 11)
-#define BDF_RUNAHEAD_DRAWSYNC                           (1 << 12)
-#define BDF_RUNAHEAD_DISABLED                           (1 << 13)
+#define BDF_HACK										(1 << 7)
+#define BDF_HOMEBREW									(1 << 8)
+#define BDF_DEMO										(1 << 9)
+#define BDF_16BIT_ONLY									(1 << 10)
+#define BDF_32BIT_ONLY									(1 << 11)
+#define BDF_HISCORE_SUPPORTED							(1 << 12)
+#define BDF_RUNAHEAD_DRAWSYNC							(1 << 13)
+#define BDF_RUNAHEAD_DISABLED							(1 << 14)
 
 // Flags for the hardware member
 // Format: 0xDDEEFFFF, where DD: Manufacturer, EE: Hardware platform, FFFF: Flags (used by driver)
@@ -549,6 +551,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_CAVE_68K_Z80							(HARDWARE_PREFIX_CAVE | 0x0001)
 #define HARDWARE_CAVE_M6295								(0x0002)
 #define HARDWARE_CAVE_YM2151							(0x0004)
+#define HARDWARE_CAVE_CV1000							(HARDWARE_PREFIX_CAVE | 0x00010000)
 
 #define HARDWARE_IGS_PGM								(HARDWARE_PREFIX_IGS_PGM)
 #define HARDWARE_IGS_USE_ARM_CPU						(0x0001)

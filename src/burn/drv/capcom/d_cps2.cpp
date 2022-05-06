@@ -3352,6 +3352,32 @@ static struct BurnRomInfo Hsf2j1RomDesc[] = {
 STD_ROM_PICK(Hsf2j1)
 STD_ROM_FN(Hsf2j1)
 
+static struct BurnRomInfo Hsf2ppRomDesc[] = {
+	{ "hsf2pp.03",     0x080000, 0x652728a6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hsf2pp.04",     0x080000, 0x7a02d7b6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.05",        0x080000, 0xdde34a35, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.06",        0x080000, 0xf4e56dda, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.07",        0x080000, 0xee4420fc, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.08",        0x080000, 0xc9441533, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.09",        0x080000, 0x3fc638a8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.10",        0x080000, 0x20d0f9e4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "hs2.13m",       0x800000, 0xa6ecab17, CPS2_GFX | BRF_GRA },
+	{ "hs2.15m",       0x800000, 0x10a0ae4d, CPS2_GFX | BRF_GRA },
+	{ "hs2.17m",       0x800000, 0xadfa7726, CPS2_GFX | BRF_GRA },
+	{ "hs2.19m",       0x800000, 0xbb3ae322, CPS2_GFX | BRF_GRA },
+
+	{ "hs2.01",        0x020000, 0xc1a13786, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "hs2.02",        0x020000, 0x2d8794aa, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "hs2.11m",       0x800000, 0x0e15c359, CPS2_QSND | BRF_SND },
+
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Hsf2pp)
+STD_ROM_FN(Hsf2pp)
+
 static struct BurnRomInfo JyangokuRomDesc[] = {
 	{ "majj.03",       0x080000, 0x4614a3b2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
@@ -6618,27 +6644,27 @@ static struct BurnRomInfo Sfz3teRomDesc[] = {
 STD_ROM_PICK(Sfz3te)
 STD_ROM_FN(Sfz3te)
 
-// Street Fighter Zero 3 Mix v0.08 (hacked by Zero800)
+// Street Fighter Zero 3 Mix v0.10 (hacked by Zero800)
 // https://sfz3mix.github.io/
 
 static struct BurnRomInfo Sfz3mixRomDesc[] = {
-	{ "sfz3mix.03",    0x080000, 0xdccb6f06, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.04",    0x080000, 0x8617a7c4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.05",    0x080000, 0x0f9e0705, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.06",    0x080000, 0xf328c438, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.07",    0x080000, 0x5bf5ed94, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.08",    0x080000, 0xf5d17042, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.09",    0x080000, 0x0928ede4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.10",    0x080000, 0x0f369728, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfz3mix.03",    0x080000, 0x12ee6b5a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfz3mix.04",    0x080000, 0x56aab557, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfz3mix.05",    0x080000, 0xd6118829, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfz3mix.06",    0x080000, 0x3f3712fb, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfz3mix.07",    0x080000, 0x3ff0aaa7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfz3mix.08",    0x080000, 0x008d8e1e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfz3mix.09",    0x080000, 0x9642bc00, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfz3mix.10",    0x080000, 0x56ac1a00, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "sfz3mix.13m",   0x400000, 0x1b5fc5f9, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.15m",   0x400000, 0x4f9de2d9, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.17m",   0x400000, 0x1fdd472e, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.19m",   0x400000, 0x646a311f, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.14m",   0x400000, 0xe96ce6cc, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.16m",   0x400000, 0xb15d2507, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.18m",   0x400000, 0xb52f88f3, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.20m",   0x400000, 0x8c7b3fa3, CPS2_GFX | BRF_GRA },
+	{ "sfz3mix.13m",   0x400000, 0x65ab82b8, CPS2_GFX | BRF_GRA },
+	{ "sfz3mix.15m",   0x400000, 0xef8fbc0a, CPS2_GFX | BRF_GRA },
+	{ "sfz3mix.17m",   0x400000, 0x652b1493, CPS2_GFX | BRF_GRA },
+	{ "sfz3mix.19m",   0x400000, 0x0a1b38b9, CPS2_GFX | BRF_GRA },
+	{ "sfz3mix.14m",   0x400000, 0x62496779, CPS2_GFX | BRF_GRA },
+	{ "sfz3mix.16m",   0x400000, 0x1e7aa3cb, CPS2_GFX | BRF_GRA },
+	{ "sfz3mix.18m",   0x400000, 0x95e161ce, CPS2_GFX | BRF_GRA },
+	{ "sfz3mix.20m",   0x400000, 0xa6afdc2d, CPS2_GFX | BRF_GRA },
 
 	{ "sz3.01",        0x020000, 0xde810084, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 	{ "sz3.02",        0x020000, 0x72445dc4, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
@@ -10025,6 +10051,16 @@ struct BurnDriver BurnDrvCpsHsf2j1 = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvCpsHsf2pp = {
+	"hsf2pp", "hsf2", NULL, NULL, "2017",
+	"Hyper Street Fighter II Plus Plus\0", NULL, "hack", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Hsf2ppRomInfo, Hsf2ppRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Ssf2tInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvCpsJyangoku = {
 	"jyangoku", NULL, NULL, NULL, "1999",
 	"Jyangokushi  -Haoh no Saihai- (990527 Japan)\0", NULL, "Mitchell", "CPS2",
@@ -10889,7 +10925,7 @@ struct BurnDriver BurnDrvCpsSfa2uhc = {
 	"sfa2uhc", "sfa2", "sfa2ur1", NULL, "2009",
 	"Street Fighter Alpha 2 - Unlock Hidden Characters (Hack By Yumeji)\0", NULL, "Hack", "CPS2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfa2uhcRomInfo, Sfa2uhcRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Sfa2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -11019,7 +11055,7 @@ struct BurnDriver BurnDrvCpsSfz2adl = {
 	"sfz2adl", "sfz2al", "sfz2alj", NULL, "2009",
 	"Street Fighter Zero 2 Alpha - Dragon Level (Hack by pipi899, Ver.2009-04-24)\0", NULL, "Hack", "CPS2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfz2adlRomInfo, Sfz2adlRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Sfa2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -11157,7 +11193,7 @@ struct BurnDriver BurnDrvCpsSfz3te = {
 
 struct BurnDriver BurnDrvCpsSfzmix = {
 	"sfz3mix", "sfa3", NULL, NULL, "2022",
-	"Street Fighter Zero 3 Mix v0.08\0", NULL, "hack", "CPS2",
+	"Street Fighter Zero 3 Mix v0.10\0", NULL, "hack", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfz3mixRomInfo, Sfz3mixRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
@@ -11549,7 +11585,7 @@ struct BurnDriver BurnDrvCpsSsf2xjr1trn = {
    "ssf2xjr1trn", "ssf2t", NULL, NULL, "1994",
    "Super Street Fighter II X - GMC Trainer (super street fighter 2 X 940223 Japan)\0", NULL, "Hack", "CPS2",
    NULL, NULL, NULL, NULL,
-   BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+   BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
    NULL, Ssf2xjr1trnRomInfo, Ssf2xjr1trnRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
    Ssf2tInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
    &CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -13842,7 +13878,7 @@ struct BurnDriver BurnDrvCpsSfa3xl = {
 	"sfa3xl", "sfa3", NULL, NULL, "2009",
 	"Street Fighter Alpha 3 - Xiang Long Edition (Hack by pipi899, Ver.2009-05-10)\0", NULL, "Hack", "CPS2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfa3xlRomInfo, Sfa3xlRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3

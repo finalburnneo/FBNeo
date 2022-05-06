@@ -94,7 +94,7 @@ incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated \
 ifdef WINDOWS
 lib	= -lstdc++ -lSDL `sdl-config --libs` -lopengl32  -lm
 else
-lib	= -lstdc++ -lSDL `sdl-config --libs` -lGL -lm
+lib	= -lstdc++ -lSDL `sdl-config --libs` -lGL -lm -lpthread
 endif
 
 ifdef DARWIN
@@ -207,10 +207,6 @@ endif
 
 ifdef ROM_VERIFY
 	DEF	:= $(DEF) -DROM_VERIFY
-endif
-
-ifdef HACK_SOUND
-	DEF	:= $(DEF) -DCPS1_HACK_QSOUND
 endif
 
 ifdef INCLUDE_7Z_SUPPORT

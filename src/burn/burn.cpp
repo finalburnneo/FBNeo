@@ -950,6 +950,14 @@ INT32 BurnAreaScan(INT32 nAction, INT32* pnMin)
 		nRet |= pDriver[nBurnDrvActive]->AreaScan(nAction, pnMin);
 	}
 
+#ifdef __LIBRETRO__
+	// standalone method to handle hiscores with runahead
+	// doesn't work with libretro's second instance or 2+ frames
+	if (nAction & (ACB_RUNAHEAD | ACB_2RUNAHEAD)) {
+		HiscoreScan(nAction, pnMin);
+	}
+#endif
+
 	return nRet;
 }
 
@@ -1153,15 +1161,23 @@ void logerror(char* szFormat, ...)
 void BurnDump_(char *filename, UINT8 *buffer, INT32 bufsize, INT32 append)
 {
 	FILE *f = fopen(filename, (append) ? "a+b" : "wb+");
-    fwrite(buffer, 1, bufsize, f);
-    fclose(f);
+	if (f) {
+		fwrite(buffer, 1, bufsize, f);
+		fclose(f);
+	} else {
+		bprintf(PRINT_ERROR, _T(" - BurnDump() - Error writing file.\n"));
+	}
 }
 
 void BurnDumpLoad_(char *filename, UINT8 *buffer, INT32 bufsize)
 {
-    FILE *f = fopen(filename, "rb+");
-    fread(buffer, 1, bufsize, f);
-    fclose(f);
+	FILE *f = fopen(filename, "rb+");
+	if (f) {
+		fread(buffer, 1, bufsize, f);
+		fclose(f);
+	} else {
+		bprintf(PRINT_ERROR, _T(" - BurnDumpLoad() - File not found.\n"));
+	}
 }
 #endif
 

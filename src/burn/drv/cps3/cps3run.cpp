@@ -2207,7 +2207,7 @@ INT32 cps3Scan(INT32 nAction, INT32 *pnMin)
 		ba.szName	= "Palette";
 		BurnAcb(&ba);
 
-		if ((nAction & ACB_NET_OPT) == 0) {
+		if (~nAction & (ACB_RUNAHEAD | ACB_NET_OPT)) {
 			ba.Data		= RamCRam;
 			ba.nLen		= 0x0800000;
 			ba.nAddress = 0;

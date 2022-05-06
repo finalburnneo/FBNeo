@@ -849,6 +849,8 @@ static INT32 DrvDoReset()
 
 	fogcnt = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1399,7 +1401,7 @@ struct BurnDriver BurnDrvMoomesa = {
 	"moomesa", NULL, NULL, NULL, "1992",
 	"Wild West C.O.W.-Boys of Moo Mesa (ver EAB)\0", NULL, "Konami", "GX151",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, moomesaRomInfo, moomesaRomName, NULL, NULL, NULL, NULL, MooInputInfo, MooDIPInfo,
 	MooInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
@@ -1436,7 +1438,7 @@ struct BurnDriver BurnDrvMoomesauac = {
 	"moomesauac", "moomesa", NULL, NULL, "1992",
 	"Wild West C.O.W.-Boys of Moo Mesa (ver UAC)\0", NULL, "Konami", "GX151",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, moomesauacRomInfo, moomesauacRomName, NULL, NULL, NULL, NULL, MooInputInfo, MooDIPInfo,
 	MooInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
@@ -1473,7 +1475,7 @@ struct BurnDriver BurnDrvMoomesauab = {
 	"moomesauab", "moomesa", NULL, NULL, "1992",
 	"Wild West C.O.W.-Boys of Moo Mesa (ver UAB)\0", NULL, "Konami", "GX151",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, moomesauabRomInfo, moomesauabRomName, NULL, NULL, NULL, NULL, MooInputInfo, MooDIPInfo,
 	MooInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
@@ -1510,7 +1512,7 @@ struct BurnDriver BurnDrvMoomesaaab = {
 	"moomesaaab", "moomesa", NULL, NULL, "1992",
 	"Wild West C.O.W.-Boys of Moo Mesa (ver AAB)\0", NULL, "Konami", "GX151",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, moomesaaabRomInfo, moomesaaabRomName, NULL, NULL, NULL, NULL, MooInputInfo, MooDIPInfo,
 	MooInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
@@ -1555,7 +1557,7 @@ struct BurnDriverD BurnDrvMoomesabl = {
 	"moomesabl", "moomesa", NULL, NULL, "1992",
 	"Wild West C.O.W.-Boys of Moo Mesa (bootleg)\0", NULL, "bootleg", "GX151",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_NOT_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, moomesablRomInfo, moomesablRomName, NULL, NULL, NULL, NULL, MooInputInfo, MooDIPInfo,
 	moomesablInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
@@ -1593,7 +1595,7 @@ struct BurnDriver BurnDrvBucky = {
 	"bucky", NULL, NULL, NULL, "1992",
 	"Bucky O'Hare (ver EAB)\0", NULL, "Konami", "GX173",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, buckyRomInfo, buckyRomName, NULL, NULL, NULL, NULL, BuckyInputInfo, BuckyDIPInfo,
 	BuckyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	384, 224, 4, 3
@@ -1631,7 +1633,7 @@ struct BurnDriver BurnDrvBuckyea = {
 	"buckyea", "bucky", NULL, NULL, "1992",
 	"Bucky O'Hare (ver EA)\0", NULL, "Konami", "GX173",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, buckyeaRomInfo, buckyeaRomName, NULL, NULL, NULL, NULL, BuckyInputInfo, BuckyDIPInfo,
 	BuckyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	384, 224, 4, 3
@@ -1669,7 +1671,7 @@ struct BurnDriver BurnDrvBuckyjaa = {
 	"buckyjaa", "bucky", NULL, NULL, "1992",
 	"Bucky O'Hare (ver JAA)\0", NULL, "Konami", "GX173",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, buckyjaaRomInfo, buckyjaaRomName, NULL, NULL, NULL, NULL, BuckyInputInfo, BuckyDIPInfo,
 	BuckyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	384, 224, 4, 3
@@ -1708,7 +1710,7 @@ struct BurnDriver BurnDrvBuckyaa = {
 	"buckyaa", "bucky", NULL, NULL, "1992",
 	"Bucky O'Hare (ver AA)\0", NULL, "Konami", "GX173",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, buckyaaRomInfo, buckyaaRomName, NULL, NULL, NULL, NULL, BuckyInputInfo, BuckyDIPInfo,
 	BuckyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	384, 224, 4, 3
@@ -1746,7 +1748,7 @@ struct BurnDriver BurnDrvBuckyuab = {
 	"buckyuab", "bucky", NULL, NULL, "1992",
 	"Bucky O'Hare (ver UAB)\0", NULL, "Konami", "GX173",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, buckyuabRomInfo, buckyuabRomName, NULL, NULL, NULL, NULL, BuckyInputInfo, BuckyDIPInfo,
 	BuckyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	384, 224, 4, 3
@@ -1784,7 +1786,7 @@ struct BurnDriver BurnDrvBuckyaab = {
 	"buckyaab", "bucky", NULL, NULL, "1992",
 	"Bucky O'Hare (ver AAB)\0", NULL, "Konami", "GX173",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, buckyaabRomInfo, buckyaabRomName, NULL, NULL, NULL, NULL, BuckyInputInfo, BuckyDIPInfo,
 	BuckyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	384, 224, 4, 3

@@ -4233,7 +4233,7 @@ static struct BurnDIPInfo JumpbugDIPList[]=
 	{0x11, 0x01, 0x03, 0x01, "3"                      },
 	{0x11, 0x01, 0x03, 0x02, "4"                      },
 	{0x11, 0x01, 0x03, 0x03, "5"                      },
-	{0x11, 0x01, 0x03, 0x00, "Infinite"               },
+	{0x11, 0x01, 0x03, 0x00, "Infinite (Cheat)"       },
 	
 	{0   , 0xfe, 0   , 4   , "Coinage"                },
 	{0x11, 0x01, 0x0c, 0x04, "A 2C/1P  B 2C/1P"       },
@@ -4717,38 +4717,26 @@ static struct BurnDIPInfo MooncrstDIPList[]=
 {
 	// Default Values
 	{0x0b, 0xff, 0xff, 0x00, NULL                     },
-	{0x0c, 0xff, 0xff, 0x80, NULL                     },
 	{0x0d, 0xff, 0xff, 0x00, NULL                     },
-	
+
 	// Dip 1
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x0b, 0x01, 0x20, 0x00, "Upright"                },
 	{0x0b, 0x01, 0x20, 0x20, "Cocktail"               },
-	
-	// Dip 2
-	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
-	{0x0c, 0x01, 0x40, 0x00, "30000"                  },
-	{0x0c, 0x01, 0x40, 0x40, "50000"                  },
-	
-	{0   , 0xfe, 0   , 2   , "Language"               },
-	{0x0c, 0x01, 0x80, 0x80, "English"                },
-	{0x0c, 0x01, 0x80, 0x00, "Japanese"               },
-	
+
 	// Dip 3
 	{0   , 0xfe, 0   , 4   , "Coin A"                 },
 	{0x0d, 0x01, 0x03, 0x03, "4 Coins 1 Play"         },
 	{0x0d, 0x01, 0x03, 0x02, "3 Coins 1 Play"         },
 	{0x0d, 0x01, 0x03, 0x01, "2 Coins 1 Play"         },
 	{0x0d, 0x01, 0x03, 0x00, "1 Coin  1 Play"         },
-	
+
 	{0   , 0xfe, 0   , 4   , "Coin B"                 },
 	{0x0d, 0x01, 0x0c, 0x00, "1 Coin 1 Play"          },
 	{0x0d, 0x01, 0x0c, 0x04, "1 Coin 2 Plays"         },
 	{0x0d, 0x01, 0x0c, 0x08, "1 Coin 3 Plays"         },
-	{0x0d, 0x01, 0x0c, 0x0c, "Freeplay"               },
+	{0x0d, 0x01, 0x0c, 0x0c, "Free Play"              },
 };
-
-STDDIPINFO(Mooncrst)
 
 static struct BurnDIPInfo MooncregDIPList[]=
 {
@@ -4789,43 +4777,6 @@ static struct BurnDIPInfo MooncregDIPList[]=
 };
 
 STDDIPINFO(Mooncreg)
-
-static struct BurnDIPInfo MooncrslDIPList[]=
-{
-	// Default Values
-	{0x0b, 0xff, 0xff, 0x00, NULL                     },
-	{0x0c, 0xff, 0xff, 0xc0, NULL                     },
-	{0x0d, 0xff, 0xff, 0x00, NULL                     },
-	
-	// Dip 1
-	{0   , 0xfe, 0   , 2   , "Cabinet"                },
-	{0x0b, 0x01, 0x20, 0x00, "Upright"                },
-	{0x0b, 0x01, 0x20, 0x20, "Cocktail"               },
-	
-	// Dip 2
-	{0   , 0xfe, 0   , 2   , "Difficulty"             },
-	{0x0c, 0x01, 0x40, 0x40, "Easy"                   },
-	{0x0c, 0x01, 0x40, 0x00, "Hard"                   },
-	
-	{0   , 0xfe, 0   , 2   , "Player's Bullet Speed"  },
-	{0x0c, 0x01, 0x80, 0x00, "Slow"                   },
-	{0x0c, 0x01, 0x80, 0x80, "Fast"                   },
-	
-	// Dip 3
-	{0   , 0xfe, 0   , 4   , "Coin A"                 },
-	{0x0d, 0x01, 0x03, 0x03, "4 Coins 1 Play"         },
-	{0x0d, 0x01, 0x03, 0x02, "3 Coins 1 Play"         },
-	{0x0d, 0x01, 0x03, 0x01, "2 Coins 1 Play"         },
-	{0x0d, 0x01, 0x03, 0x00, "1 Coin  1 Play"         },
-	
-	{0   , 0xfe, 0   , 4   , "Coin B"                 },
-	{0x0d, 0x01, 0x0c, 0x00, "1 Coin 1 Play"          },
-	{0x0d, 0x01, 0x0c, 0x04, "1 Coin 2 Plays"         },
-	{0x0d, 0x01, 0x0c, 0x08, "1 Coin 3 Plays"         },
-	{0x0d, 0x01, 0x0c, 0x0c, "Freeplay"               },
-};
-
-STDDIPINFO(Mooncrsl)
 
 static struct BurnDIPInfo MoonqsrDIPList[]=
 {
@@ -6373,6 +6324,39 @@ static struct BurnDIPInfo VpoolDIPList[]=
 };
 
 STDDIPINFO(Vpool)
+
+static struct BurnDIPInfo MooncrstExtDIPList[] =
+{
+	// Default Values
+	{0x0c, 0xff, 0xff, 0x80, NULL                     },
+
+	// Dip 2
+	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
+	{0x0c, 0x01, 0x40, 0x00, "30000"                  },
+	{0x0c, 0x01, 0x40, 0x40, "50000"                  },
+
+	{0   , 0xfe, 0   , 2   , "Language"               },
+	{0x0c, 0x01, 0x80, 0x80, "English"                },
+	{0x0c, 0x01, 0x80, 0x00, "Japanese"               },
+};
+
+static struct BurnDIPInfo MooncrslExtDIPList[] =
+{
+	// Default Values
+	{0x0c, 0xff, 0xff, 0xc0, NULL                     },
+
+	// Dip 2
+	{0   , 0xfe, 0   , 2   , "Difficulty"             },
+	{0x0c, 0x01, 0x40, 0x40, "Easy"                   },
+	{0x0c, 0x01, 0x40, 0x00, "Hard"                   },
+
+	{0   , 0xfe, 0   , 2   , "Player's Bullet Speed"  },
+	{0x0c, 0x01, 0x80, 0x00, "Slow"                   },
+	{0x0c, 0x01, 0x80, 0x80, "Fast"                   },
+};
+
+STDDIPINFOEXT(Mooncrst, MooncrstExt, Mooncrst)
+STDDIPINFOEXT(Mooncrsl, MooncrslExt, Mooncrst)
 
 static struct BurnDIPInfo WarofbugDIPList[]=
 {
@@ -11501,6 +11485,28 @@ static struct BurnRomInfo MooncregRomDesc[] = {
 STD_ROM_PICK(Mooncreg)
 STD_ROM_FN(Mooncreg)
 
+// more similar to 'floritasm'
+static struct BurnRomInfo Mooncreg2RomDesc[] = {
+	{ "1.bin",			0x00800, 0xf82b5b29, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2_bb.bin",		0x00800, 0xb5e90c11, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 }, // unique
+	{ "3.bin",			0x00800, 0xa1939def, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "4_b.bin",		0x00800, 0x27f7cda1, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "5.bin",			0x00800, 0x32cd9adc, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "6.bin",			0x00800, 0xf0230048, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "7_r.bin",		0x00800, 0x3e798858, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 }, // unique
+	{ "8.bin",			0x00800, 0xbead5e83, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+
+	{ "cm_2b.bin",		0x00800, 0x528da705, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "cm_4.bin",		0x00800, 0x5a4b17ea, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "cm_1b.bin",		0x00800, 0x4e79ff6b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "cm_3.bin",		0x00800, 0xe0edccbd, BRF_GRA | GAL_ROM_TILES_SHARED },
+
+	{ "mb7051.bin",		0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Mooncreg2)
+STD_ROM_FN(Mooncreg2)
+
 static struct BurnRomInfo MooncrslRomDesc[] = {
 	{ "01.bin",        0x00800, 0xa67ca4af, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "02.bin",        0x00800, 0x16edce3e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -12299,10 +12305,20 @@ struct BurnDriver BurnDrvFloritasm = {
 
 struct BurnDriver BurnDrvMooncreg = {
 	"mooncreg", "mooncrst", NULL, NULL, "1980",
-	"Moon Cresta (Electrogame S.A. Spanish bootleg)\0", NULL, "bootleg (Electrogame S.A.)", "Galaxian",
+	"Moon Cresta (Electrogame S.A. Spanish bootleg, set 1)\0", NULL, "bootleg (Electrogame S.A.)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, MooncregRomInfo, MooncregRomName, NULL, NULL, NULL, NULL, OmegabInputInfo, MooncregDIPInfo,
+	MooncrstInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvMooncreg2 = {
+	"mooncreg2", "mooncrst", NULL, NULL, "1980",
+	"Moon Cresta (Electrogame S.A. Spanish bootleg, set 2)\0", NULL, "bootleg (Electrogame S.A.)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, Mooncreg2RomInfo, Mooncreg2RomName, NULL, NULL, NULL, NULL, OmegabInputInfo, MooncrslDIPInfo,
 	MooncrstInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
@@ -13865,6 +13881,28 @@ static struct BurnRomInfo JumpbugbRomDesc[] = {
 STD_ROM_PICK(Jumpbugb)
 STD_ROM_FN(Jumpbugb)
 
+// bootleg on an original Midway Galaxian PCB
+// b6 and b7 differ from jumpbugb
+static struct BurnRomInfo OlibugRomDesc[] = {
+	{ "b1.bin",				0x01000, 0x415aa1b7, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "b2.bin",				0x01000, 0xb1c27510, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "b3.bin",				0x01000, 0xcb8b8a0f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "b4.bin",				0x01000, 0x66751d12, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "b5.bin",				0x01000, 0x7553b5e2, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "b6.bin",				0x01000, 0xbed2e85c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "b7.bin",				0x01000, 0x859a11d0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+
+	{ "b10.bin",			0x00800, 0x9a091b0a, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "b9.bin",				0x01000, 0xfeb20db0, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "b11.bin",			0x00800, 0x795e81be, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "b8.bin",				0x01000, 0x9a9d35b3, BRF_GRA | GAL_ROM_TILES_SHARED },
+
+	{ "m866l_im5610.6l",	0x00020, 0xb549ad5a, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Olibug)
+STD_ROM_FN(Olibug)
+
 static struct BurnRomInfo LeversRomDesc[] = {
 	{ "g96059.a8",     0x01000, 0x9550627a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "g96060.d8",     0x01000, 0x5ac64646, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -14103,6 +14141,16 @@ struct BurnDriver BurnDrvJumpbugb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, JumpbugbRomInfo, JumpbugbRomName, NULL, NULL, NULL, NULL, JumpbugInputInfo, JumpbugDIPInfo,
+	JumpbugInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvOlibug = {
+	"olibug", "jumpbug", NULL, NULL, "1982",
+	"Oli Bug (Jump Bug bootleg)\0", NULL, "bootleg", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
+	NULL, OlibugRomInfo, OlibugRomName, NULL, NULL, NULL, NULL, JumpbugInputInfo, JumpbugDIPInfo,
 	JumpbugInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

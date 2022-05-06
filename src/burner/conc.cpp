@@ -453,8 +453,7 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 
 #define IS_MIDWAY ((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_MIDWAY) == HARDWARE_PREFIX_MIDWAY)
 
-//TODO: make cross platform
-static INT32 ConfigParseMAMEFile()
+static INT32 ConfigParseMAMEFile_internal(FILE *fz, const TCHAR *name)
 {
 #define AddressInfo()	\
 	INT32 k = (flags >> 20) & 3;	\
@@ -493,14 +492,6 @@ static INT32 ConfigParseMAMEFile()
 	_tcsncpy (tmp, szLine + c0[a] + 1, c0[a+1] - (c0[a]+1));	\
 	tmp[c0[a+1] - (c0[a]+1)] = '\0';				\
 
-	TCHAR szFileName[MAX_PATH] = _T("");
-	_stprintf(szFileName, _T("%scheat.dat"), szAppCheatsPath);
-
-	FILE *fz = _tfopen(szFileName, _T("rt"));
-	if (fz == NULL) {
-		return 1;
-	}
-
 	TCHAR tmp[256];
 	TCHAR tmp2[256];
 	TCHAR gName[64];
@@ -517,7 +508,7 @@ static INT32 ConfigParseMAMEFile()
 	UINT32 nAttrib = 0;
 
 	CheatInfo* pCurrentCheat = NULL;
-	_stprintf(gName, _T(":%s:"), BurnDrvGetText(DRV_NAME));
+	_stprintf(gName, _T(":%s:"), name);
 
 	while (1)
 	{
@@ -548,6 +539,11 @@ static INT32 ConfigParseMAMEFile()
 #endif
 			if (nFound) break;
 			else continue;
+		}
+
+		if (_tcsstr(szLine, _T("----:REASON"))) {
+			// reason to leave!
+			break;
 		}
 
 		nFound = 1;
@@ -720,9 +716,33 @@ static INT32 ConfigParseMAMEFile()
 		}
 	}
 
-	fclose (fz);
+	// if no cheat was found, don't return success code
+	if (pCurrentCheat == NULL) return 1;
 
 	return 0;
+}
+
+static INT32 ConfigParseMAMEFile()
+{
+	TCHAR szFileName[MAX_PATH] = _T("");
+	_stprintf(szFileName, _T("%scheat.dat"), szAppCheatsPath);
+
+	FILE *fz = _tfopen(szFileName, _T("rt"));
+
+	INT32 ret = 1;
+
+	if (fz) {
+		ret = ConfigParseMAMEFile_internal(fz, BurnDrvGetText(DRV_NAME));
+		// let's try using parent entry as a fallback if no cheat was found for this romset
+		if (ret && (BurnDrvGetFlags() & BDF_CLONE) && BurnDrvGetText(DRV_PARENT)) {
+			fseek(fz, 0, SEEK_SET);
+			ret = ConfigParseMAMEFile_internal(fz, BurnDrvGetText(DRV_PARENT));
+		}
+
+		fclose(fz);
+	}
+
+	return ret;
 }
 
 

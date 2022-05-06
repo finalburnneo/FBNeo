@@ -22,8 +22,14 @@ void IpsApplyPatches(UINT8 *, char *)
 
 }
 
+INT32 GetIpsesMaxLen(char *)
+{
+	return 0;
+}
+
 void InpDIPSWResetDIPs()
 {
+
 }
 
 

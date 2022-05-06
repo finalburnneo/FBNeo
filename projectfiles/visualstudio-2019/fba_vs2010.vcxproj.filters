@@ -166,6 +166,12 @@
     <ClInclude Include="..\..\src\burn\snd\ymz280b.h">
       <Filter>Burn\snd</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\burn\snd\mpeg_audio.h">
+      <Filter>Burn\snd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burn\snd\ymz770.h">
+      <Filter>Burn\snd</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\burn\devices\8255ppi.h">
       <Filter>Burn\devices</Filter>
     </ClInclude>
@@ -653,6 +659,12 @@
       <Filter>Burn\devices</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\burn\devices\x2212.h">
+      <Filter>Burn\devices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burn\devices\rtc9701.h">
+      <Filter>Burn\devices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burn\devices\serflash.h">
       <Filter>Burn\devices</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\burn\drv\capcom\d_kenseim.h">
@@ -1183,6 +1195,12 @@
     <ClInclude Include="..\..\src\burner\win32\scrn.h">
       <Filter>burner\win32</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\burn\devices\epic12.h">
+      <Filter>Burn\devices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\cpu\sh4\sh4.h">
+      <Filter>cpus\sh4</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -1369,6 +1387,12 @@
       <Filter>Burn\devices</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\devices\vdc.cpp">
+      <Filter>Burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\rtc9701.cpp">
+      <Filter>Burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\serflash.cpp">
       <Filter>Burn\devices</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\capcom\cps.cpp">
@@ -3963,6 +3987,12 @@
     <ClCompile Include="..\..\src\burn\snd\ym2612.c">
       <Filter>Burn\snd</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\snd\mpeg_audio.cpp">
+      <Filter>Burn\snd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\snd\ymz770.cpp">
+      <Filter>Burn\snd</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\burn_bitmap.cpp">
       <Filter>Burn</Filter>
     </ClCompile>
@@ -4652,6 +4682,15 @@
     <ClCompile Include="..\..\src\burn\drv\sega\d_segac2.cpp">
       <Filter>Burn\drv\sega</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\cave\d_cv1k.cpp">
+      <Filter>Burn\drv\cave</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\epic12.cpp">
+      <Filter>Burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cpu\sh4\sh4.cpp">
+      <Filter>cpus\sh4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">
@@ -4905,6 +4944,9 @@
     </Filter>
     <Filter Include="libs\lua">
       <UniqueIdentifier>{ee022b51-1d01-4d89-b3f7-256630b4caa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cpus\sh4">
+      <UniqueIdentifier>{1eeb3491-c4c0-441d-a899-df353583a3f3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

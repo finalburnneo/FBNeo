@@ -567,6 +567,16 @@ void HiscoreApply()
 	}
 }
 
+void HiscoreScan(INT32 nAction, INT32* pnMin)
+{
+	if (pnMin)
+		*pnMin = 0x029743;
+
+	for (UINT32 i = 0; i < nHiscoreNumRanges; i++) {
+		SCAN_VAR(HiscoreMemRange[i]);
+	}
+}
+
 void HiscoreExit()
 {
 #if defined FBNEO_DEBUG

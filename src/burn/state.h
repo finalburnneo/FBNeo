@@ -31,8 +31,9 @@ void StateRunAheadLoad();
 #define ACB_MEMORY_RAM	 (1<<5)
 #define ACB_DRIVER_DATA	 (1<<6)
 
-#define ACB_RUNAHEAD	 (1<<7) // exclusions for runahead
-#define ACB_NET_OPT		 (1<<8) // exclusions for net games
+#define ACB_RUNAHEAD	 (1<<7) // for single instance runahead
+#define ACB_2RUNAHEAD	 (1<<8) // for second instance runahead
+#define ACB_NET_OPT		 (1<<9) // for netplay
 
 #define ACB_FULLSCAN	(ACB_NVRAM | ACB_MEMCARD | ACB_MEMORY_RAM | ACB_DRIVER_DATA)
 

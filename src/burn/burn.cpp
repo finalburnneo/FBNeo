@@ -950,6 +950,14 @@ INT32 BurnAreaScan(INT32 nAction, INT32* pnMin)
 		nRet |= pDriver[nBurnDrvActive]->AreaScan(nAction, pnMin);
 	}
 
+#ifdef __LIBRETRO__
+	// standalone method to handle hiscores with runahead
+	// doesn't work with libretro's second instance or 2+ frames
+	if (nAction & (ACB_RUNAHEAD | ACB_2RUNAHEAD)) {
+		HiscoreScan(nAction, pnMin);
+	}
+#endif
+
 	return nRet;
 }
 

@@ -33636,7 +33636,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSfz3jr1,			// Street Fighter Zero 3 (980727 Japan)
 	&BurnDrvCpsSfz3a,			// Street Fighter Zero 3 (980904 Asia)
 	&BurnDrvCpsSfz3j,			// Street Fighter Zero 3 (980904 Japan)
-	&BurnDrvCpsSfzmix,			// Street Fighter Zero 3 Mix v0.10
+	&BurnDrvCpsSfzmix,			// Street Fighter Zero 3 Mix v0.11
 	&BurnDrvCpsSfz3te,			// Street Fighter Zero 3 Training Edition v1.1 (980629 Japan)
 	&BurnDrvSftm110,			// Street Fighter: The Movie (v1.10)
 	&BurnDrvSftm111,			// Street Fighter: The Movie (v1.11)

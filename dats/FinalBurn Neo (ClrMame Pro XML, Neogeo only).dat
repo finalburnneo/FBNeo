@@ -17410,7 +17410,7 @@
 	<game name="kof96ae20" cloneof="kof96" romof="kof96">
 		<comment>Hack</comment>
 		<description>The King of Fighters '96 (The Anniversary Edition 2.0, Build 2.3.0320)</description>
-		<year>2019</year>
+		<year>2020</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="214ae-p1.p1" size="1048576" crc="c718ea76"/>
 		<rom name="214ae-p2.p2" size="4194304" crc="2638be07"/>
@@ -17585,21 +17585,20 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97ip" cloneof="kof97" romof="kof97">
-		<comment>Hack, Do not use MVS!</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '97 (Invincible Plus! B2.1.2107)</description>
 		<year>2021</year>
 		<manufacturer>Hack</manufacturer>
 		<rom name="232-p1ip.p1" size="2097152" crc="9cd04061"/>
 		<rom name="232-p2ip.sp2" size="4194304" crc="7ce0fc4d"/>
-		<rom name="232-s1ip.s1" size="131072" crc="de61d11c"/>
-		<rom name="232-c1ip.c1" size="8388608" crc="271e4ba4"/>
-		<rom name="232-c2ip.c2" size="8388608" crc="04efe3df"/>
-		<rom name="232-c3ip.c3" size="8388608" crc="e9927918"/>
-		<rom name="232-c4ip.c4" size="8388608" crc="dd73554f"/>
-		<rom name="232-c5ip.c5" size="8388608" crc="5f481842"/>
-		<rom name="232-c6ip.c6" size="8388608" crc="0f2ec052"/>
-		<rom name="232-c7ip.c7" size="8388608" crc="a5864964"/>
-		<rom name="232-c8ip.c8" size="8388608" crc="a8bc0759"/>
+		<rom name="232-c1ip.c1" size="8388608" crc="8b6315fd"/>
+		<rom name="232-c2ip.c2" size="8388608" crc="3fe2d05b"/>
+		<rom name="232-c3ip.c3" size="8388608" crc="999955d0"/>
+		<rom name="232-c4ip.c4" size="8388608" crc="b30ee22c"/>
+		<rom name="232-c5ip.c5" size="8388608" crc="f91f949a"/>
+		<rom name="232-c6ip.c6" size="8388608" crc="2ee0de5e"/>
+		<rom name="232-c7ip.c7" size="8388608" crc="1a6a322f"/>
+		<rom name="232-c8ip.c8" size="8388608" crc="e6b9b8ee"/>
 		<rom name="232-m1ip.m1" size="131072" crc="fcd044b5"/>
 		<rom name="232-v1ip.v1" size="8388608" crc="3f7d07ec"/>
 		<rom name="232-v2ip.v2" size="8388608" crc="517b9787"/>
@@ -17937,10 +17936,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97pm" cloneof="kof97" romof="kof97">
-		<comment>Hack, need AES for practice mode</comment>
+		<comment>Hack</comment>
 		<description>The King of Fighters '97 (Practice Mode)</description>
 		<year>1997</year>
-		<manufacturer>hack</manufacturer>
+		<manufacturer>Hack</manufacturer>
 		<rom name="232pm-p1.p1" size="1048576" crc="34ccabae"/>
 		<rom name="232-p2.sp2" merge="232-p2.sp2" size="4194304" crc="158b23f6"/>
 		<rom name="232-s1.s1" merge="232-s1.s1" size="131072" crc="8514ecf5"/>

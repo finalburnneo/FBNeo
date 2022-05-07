@@ -15523,7 +15523,64 @@ struct BurnDriver BurnDrvnes_magickidsdorp = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Zelda no Densetsu - The Hyrule Fantasy (T-Chi)
+// Jackal - Endless Mission (v1.2) 2021-03-13
+// http://www.nesbbs.com/bbs/thread-51662-1-1.html
+static struct BurnRomInfo nes_jackalemRomDesc[] = {
+	{ "Jackal - Endless Mission (v1.2).nes",          262160, 0x833c6bc4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_jackalem)
+STD_ROM_FN(nes_jackalem)
+
+struct BurnDriver BurnDrvnes_jackalem = {
+	"nes_jackalem", "nes_jackal", NULL, NULL, "2021",
+	"Jackal - Endless Mission (v1.2)\0", NULL, "HHNM Team - ZENG GE", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN, 0,
+	NESGetZipName, nes_jackalemRomInfo, nes_jackalemRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Flintstones, The - The Rescue of Dino & Hoppy (T-Chi)
+// http://www.nesbbs.com/bbs/thread-53671-1-1.html
+static struct BurnRomInfo nes_flintresdinhopcRomDesc[] = {
+	{ "Flintstones, The - The Rescue of Dino & Hoppy (T-Chi).nes",          655376, 0x773ffd89, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_flintresdinhopc)
+STD_ROM_FN(nes_flintresdinhopc)
+
+struct BurnDriver BurnDrvnes_flintresdinhopc = {
+	"nes_flintresdinhopc", "nes_flintresdinhop", NULL, NULL, "2022",
+	"Flintstones, The - The Rescue of Dino & Hoppy (T-Chi)\0", NULL, "HHNM Team", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_flintresdinhopcRomInfo, nes_flintresdinhopcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Captain America and the Avengers (T-Chi)
+// https://www.ppxclub.com/forum.php?mod=viewthread&tid=712633
+static struct BurnRomInfo nes_captaameandavecRomDesc[] = {
+	{ "Captain America and the Avengers (T-Chi).nes",          393232, 0xcfdf0dc5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_captaameandavec)
+STD_ROM_FN(nes_captaameandavec)
+
+struct BurnDriver BurnDrvnes_captaameandavec = {
+	"nes_captaameandavec", "nes_captaameandave", NULL, NULL, "2022",
+	"Captain America and the Avengers (T-Chi)\0", NULL, "LSP Team", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_captaameandavecRomInfo, nes_captaameandavecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Zelda no Densetsu - The Hyrule Fantasy (T-Chi) - (FDS to NES)
 // https://www.ppxclub.com/forum.php?mod=viewthread&tid=711227
 static struct BurnRomInfo nes_zeldanodencRomDesc[] = {
 	{ "Zelda no Densetsu - The Hyrule Fantasy (T-Chi).nes",          131088, 0x4522aa89, BRF_ESS | BRF_PRG },
@@ -15533,7 +15590,7 @@ STD_ROM_PICK(nes_zeldanodenc)
 STD_ROM_FN(nes_zeldanodenc)
 
 struct BurnDriver BurnDrvnes_zeldanodenc = {
-	"nes_zeldanodenc", "nes_legenzel", NULL, NULL, "2022",
+	"nes_zeldanodenc", "fds_zeldanoden", NULL, NULL, "2022",
 	"Zelda no Densetsu - The Hyrule Fantasy (T-Chi)\0", NULL, "NOKOH", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
@@ -43853,10 +43910,10 @@ STD_ROM_PICK(nes_redarremerii)
 STD_ROM_FN(nes_redarremerii)
 
 struct BurnDriver BurnDrvnes_redarremerii = {
-	"nes_redarremerii", NULL, NULL, NULL, "1989?",
+	"nes_redarremerii", "nes_gargosqueii", NULL, NULL, "1992",
 	"Red Arremer II (Japan)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ADV | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV | GBF_PLATFORM, 0,
 	NESGetZipName, nes_redarremeriiRomInfo, nes_redarremeriiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

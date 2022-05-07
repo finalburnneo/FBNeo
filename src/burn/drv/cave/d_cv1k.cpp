@@ -38,6 +38,7 @@ static UINT8 DrvJoy4[8];
 static UINT8 DrvDips[3];
 static UINT8 DrvInputs[5];
 static UINT8 DrvReset;
+static HoldCoin<2> hold_coin;
 
 // cpu speed changing
 static INT32 DriverClock; // selected cpu clockrate
@@ -339,6 +340,8 @@ static INT32 DrvDoReset()
 
 	nPrevBurnCPUSpeedAdjust = -1;
 
+	hold_coin.reset();
+
 	return 0;
 }
 
@@ -537,6 +540,9 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
+
+		hold_coin.checklow(0, DrvInputs[0], 1<<2, 2);
+		hold_coin.checklow(1, DrvInputs[0], 1<<3, 2);
 	}
 
 	Sh3NewFrame();
@@ -589,6 +595,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		epic12_scan(nAction, pnMin);
 
 		SCAN_VAR(nExtraCycles);
+
+		hold_coin.scan();
 	}
 
 	serflash_scan(nAction, pnMin); // writes back to flash (hiscores ddpdfk, etc) here

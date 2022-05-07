@@ -248,7 +248,7 @@ struct dtimer
 		if (tparam != -1) timer_param = tparam;
 		time_trig = trig_at;
 		time_current = 0;
-		prescale_counter = 0;
+		//prescale_counter = 0; <-- not here!
 		retrig = retrigger;
 		//if (counter) bprintf(0, _T("timer %d START:  %d  cycles - running: %d\n"), timer_param, time_trig, running);
 		//if (counter) bprintf(0, _T("timer %d   running %d - timeleft  %d  time_trig %d  time_current %d\n"), timer_param, running, time_trig - time_current, time_trig, time_current);
@@ -270,12 +270,10 @@ struct dtimer
 	}
 
 	void run_prescale(INT32 cyc) {
-		for (INT32 i = 0; i < cyc; i++) {
-			prescale_counter++;
-			if (prescale_counter >= timer_prescaler) {
-				prescale_counter = 0;
-				run(1);
-			}
+		prescale_counter += cyc;
+		while (prescale_counter >= timer_prescaler) {
+			prescale_counter -= timer_prescaler;
+			run(1);
 		}
 	}
 
@@ -301,12 +299,13 @@ struct dtimer
 	}
 
 	void reset() {
+		stop();
+		prescale_counter = 0; // this must be free-running (only reset here!)
+	}
+	void stop() {
 		running = 0;
 		time_current = 0;
 		timer_param = 0;
-	}
-	void stop() {
-		reset();
 	}
 	INT32 isrunning() {
 		return running;

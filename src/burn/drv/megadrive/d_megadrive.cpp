@@ -49455,6 +49455,25 @@ struct BurnDriver BurnDrvmd_ghoulss = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Ghosts'n Goblins (HB, Ver. 2021-11-01)
+// https://twitter.com/Fabio_16bits/status/1401829359980326912
+static struct BurnRomInfo md_gnghbRomDesc[] = {
+	{ "Ghosts'n Goblins (HB, Ver. 2021-11-01).bin", 0x4dd00, 0xfa4da29a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_gnghb)
+STD_ROM_FN(md_gnghb)
+
+struct BurnDriver BurnDrvmd_gnghb = {
+	"md_gnghb", NULL, NULL, NULL, "2021",
+	"Ghosts'n Goblins (HB, Ver. 2021-11-01)\0", NULL, "Fabrice Fernandez", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
+	MegadriveGetZipName, md_gnghbRomInfo, md_gnghbRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // advanced busterhawk gleylancer (Hack, Spanish)
 // https://www.romhacking.net/translations/3042/
 static struct BurnRomInfo md_gleylancsRomDesc[] = {

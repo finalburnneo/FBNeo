@@ -100,6 +100,26 @@ static struct BurnRomInfo batsugunbRomDesc[] = {
 STD_ROM_PICK(batsugunb)
 STD_ROM_FN(batsugunb)
 
+// very similar to batsuguna, same main CPU label, seems to have just a tiny bit more code
+static struct BurnRomInfo batsugncRomDesc[] = {
+	{ "tp-030_01.u69",				0x080000, 0x545305c4, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+
+	{ "tp030_rom3-l.u55",			0x100000, 0x3024b793, BRF_GRA },           //  1 GP9001 #1 Tile data
+	{ "tp030_rom3-h.u56",			0x100000, 0xed75730b, BRF_GRA },           //  2
+	{ "tp030_rom4-l.u54",			0x100000, 0xfedb9861, BRF_GRA },           //  3
+	{ "tp030_rom4-h.u57",			0x100000, 0xd482948b, BRF_GRA },           //  4
+
+	{ "tp030_rom5.u32",				0x100000, 0xbcf5ba05, BRF_GRA },           //  5
+	{ "tp030_rom6.u31",				0x100000, 0x0666fecd, BRF_GRA },           //  6
+
+	{ "tp030_rom2.u65",				0x040000, 0x276146f5, BRF_SND },           //  7 ADPCM data
+
+	{ "tp030_u19_gal16v8b-15.bin",	0x000117, 0xf71669e8, BRF_OPT },           //  8 Logic for mixing output of both GP9001 GFX controllers
+};
+
+STD_ROM_PICK(batsugnc)
+STD_ROM_FN(batsugnc)
+
 static struct BurnInputInfo batsugunInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvButton + 3,	"p1 coin"	},
 	{"P1 Start",	BIT_DIGITAL,	DrvButton + 5,	"p1 start"	},
@@ -780,7 +800,7 @@ static INT32 DrvFrame()
 
 struct BurnDriver BurnDrvBatsugun = {
 	"batsugun", NULL, NULL, NULL, "1993",
-	"Batsugun (set 1)\0", NULL, "Toaplan", "Dual Toaplan GP9001 based",
+	"Batsugun\0", NULL, "Toaplan", "Dual Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_VERSHOOT, 0,
 	NULL, batsugunRomInfo, batsugunRomName, NULL, NULL, NULL, NULL, batsugunInputInfo, batsugunDIPInfo,
@@ -790,7 +810,7 @@ struct BurnDriver BurnDrvBatsugun = {
 
 struct BurnDriver BurnDrvBatsugunSP = {
 	"batsugunsp", "batsugun", NULL, NULL, "1993",
-	"Batsugun (Special Ver.)\0", NULL, "Toaplan", "Dual Toaplan GP9001 based",
+	"Batsugun - Special Version\0", NULL, "Toaplan", "Dual Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_VERSHOOT, 0,
 	NULL, batugnspRomInfo, batugnspRomName, NULL, NULL, NULL, NULL, batsugunInputInfo, batsugunDIPInfo,
@@ -800,7 +820,7 @@ struct BurnDriver BurnDrvBatsugunSP = {
 
 struct BurnDriver BurnDrvBatsugna = {
 	"batsuguna", "batsugun", NULL, NULL, "1993",
-	"Batsugun (set 2)\0", NULL, "Toaplan", "Dual Toaplan GP9001 based",
+	"Batsugun (older, set 1)\0", NULL, "Toaplan", "Dual Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_VERSHOOT, 0,
 	NULL, batsugnaRomInfo, batsugnaRomName, NULL, NULL, NULL, NULL, batsugunInputInfo, batsugunDIPInfo,
@@ -815,5 +835,15 @@ struct BurnDriver BurnDrvBatsugunb = {
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_VERSHOOT, 0,
 	NULL, batsugunbRomInfo, batsugunbRomName, NULL, NULL, NULL, NULL, batsugunInputInfo, batsugunDIPInfo,
 	BatsugunbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	240, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvBatsugnc = {
+	"batsugunc", "batsugun", NULL, NULL, "1993",
+	"Batsugun (older, set 2)\0", NULL, "Toaplan", "Dual Toaplan GP9001 based",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_VERSHOOT, 0,
+	NULL, batsugncRomInfo, batsugncRomName, NULL, NULL, NULL, NULL, batsugunInputInfo, batsugunDIPInfo,
+	BatsugunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };

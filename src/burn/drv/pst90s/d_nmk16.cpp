@@ -7035,17 +7035,23 @@ struct BurnDriver BurnDrvRedhawki = {
 // Red Hawk (horizontal, Spain, set 1)
 
 static struct BurnRomInfo redhawksRomDesc[] = {
-	{ "2.bin",			0x020000, 0x8b427ef8, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "3.bin",			0x020000, 0x117e3813, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "2.bin",			0x020000, 0x8b427ef8, 1 | BRF_PRG | BRF_ESS },    //  0 68k code
+	{ "3.bin",			0x020000, 0x117e3813, 1 | BRF_PRG | BRF_ESS },    //  1
 
-	{ "1.bin",			0x010000, 0x5d8cf28e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+	{ "1.bin",			0x010000, 0x5d8cf28e, 2 | BRF_PRG | BRF_ESS },    //  2 Z80 code
 
-	{ "4.bin",			0x080000, 0x03a8d952, 4 | BRF_GRA },           //  3 Tiles
+	{ "4.bin",			0x080000, 0x03a8d952, 4 | BRF_GRA },              //  3 Tiles
 
-	{ "7.bin",			0x080000, 0x5c5b5fa1, 5 | BRF_GRA },           //  4 Characters
-	{ "6.bin",			0x080000, 0xaa6564e6, 5 | BRF_GRA },           //  5
+	{ "7.bin",			0x080000, 0x5c5b5fa1, 5 | BRF_GRA },              //  4 Characters
+	{ "6.bin",			0x080000, 0xaa6564e6, 5 | BRF_GRA },              //  5
 
-	{ "5.bin",			0x040000, 0xe911ce33, 6 | BRF_SND },           //  6 OKI1 Samples
+	{ "5.bin",			0x040000, 0xe911ce33, 6 | BRF_SND },              //  6 OKI1 Samples
+
+	{ "n82s147an.bin",	0x000200, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, //  7 OPT
+	{ "n82s129n.bin",	0x000100, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, //  8
+
+	{ "gal16v8d.bin",	0x000117, 0x00000000, 8 | BRF_OPT | BRF_NODUMP }, //  9 PLDs
+	{ "gal20v8b.bin",	0x000157, 0x00000000, 8 | BRF_OPT | BRF_NODUMP }, // 10
 };
 
 STD_ROM_PICK(redhawks)
@@ -7065,17 +7071,22 @@ struct BurnDriver BurnDrvRedhawks = {
 // Red Hawk (horizontal, Spain, set 2)
 
 static struct BurnRomInfo redhawksaRomDesc[] = {
-	{ "2.bin",			0x020000, 0x0e428cbb, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "3.bin",			0x020000, 0xe944627f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "2.bin",			0x020000, 0x0e428cbb, 1 | BRF_PRG | BRF_ESS },    //  0 68k code
+	{ "3.bin",			0x020000, 0xe944627f, 1 | BRF_PRG | BRF_ESS },    //  1
 
-	{ "1.bin",			0x010000, 0x5d8cf28e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+	{ "1.bin",			0x010000, 0x5d8cf28e, 2 | BRF_PRG | BRF_ESS },    //  2 Z80 code
 
-	{ "4.bin",			0x080000, 0xaafb3cc4, 4 | BRF_GRA },           //  3 Tiles
+	{ "4.bin",			0x080000, 0xaafb3cc4, 4 | BRF_GRA },              //  3 Tiles
 
-	{ "7.bin",			0x080000, 0x1a8c8560, 5 | BRF_GRA },           //  4 Characters
-	{ "6.bin",			0x080000, 0x533cb5f2, 5 | BRF_GRA },           //  5
+	{ "7.bin",			0x080000, 0x1a8c8560, 5 | BRF_GRA },              //  4 Characters
+	{ "6.bin",			0x080000, 0x533cb5f2, 5 | BRF_GRA },              //  5
 
-	{ "5.bin",			0x040000, 0xe911ce33, 6 | BRF_SND },           //  6 OKI1 Samples
+	{ "5.bin",			0x040000, 0xe911ce33, 6 | BRF_SND },              //  6 OKI1 Samples
+
+	{ "gal16v8d.bin",	0x000200, 0x00000117, 7 | BRF_OPT | BRF_NODUMP }, //  7 OPT
+	{ "gal16v8d_2.bin",	0x000100, 0x00000117, 7 | BRF_OPT | BRF_NODUMP }, //  8
+	{ "gal20v8b.bin",	0x000117, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, //  9 PLDs
+	{ "gal22v10b.bin",	0x000157, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 10
 };
 
 STD_ROM_PICK(redhawksa)
@@ -9255,6 +9266,70 @@ struct BurnDriver BurnDrvTdragonb = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, tdragonbRomInfo, tdragonbRomName, NULL, NULL, NULL, NULL, CommonInputInfo, TdragonbDIPInfo,
 	TdragonbInit, SeibuSoundExit, SeibuSoundFrame, MacrossDraw, DrvScan, NULL, 0x400,
+	224, 256, 3, 4
+};
+
+// Thunder Dragon (bootleg with Raiden sounds, unencrypted)
+
+static struct BurnRomInfo tdragonb3RomDesc[] = {
+	{ "tms27c010a.19e",		0x020000, 0x659167c4, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "tms27c010a.19c",		0x020000, 0x02f5befc, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "d27512.4b",			0x010000, 0x99ee7505, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+
+	{ "tms27c010a.2k",		0x020000, 0x5144dc69, 3 | BRF_GRA },           //  3 Characters
+
+	{ "unreadable.18h",		0x100000, 0xd0bde826, 4 | BRF_GRA },           //  4 Tiles - [BAD_DUMP] undumpable on this PCB, probably the same as the original as the other 2 GFX ROMs are
+
+	{ "upd27c8000.18f",		0x100000, 0x3eedc2fe, 5 | BRF_GRA },           //  5 Sprites
+
+	{ "tms27c020.20g",		0x040000, 0x1ed8a2da, 6 },                     //  6 unknown_rom - between the main CPU and the bgtile ROMs
+
+	{ "m27c512.1c",			0x010000, 0xf6f6c4bf, 7 | BRF_SND },           //  7 OKI1 Samples
+
+	{ "n82s147n.7f",		0x000200, 0xed0bd072, 8 | BRF_OPT },           //  8 OPT
+
+	{ "pal16l8acn.8b",		0x000104, 0x92fa095c, 9 | BRF_OPT },           //  9 PLDs
+};
+
+STD_ROM_PICK(tdragonb3)
+STD_ROM_FN(tdragonb3)
+
+static INT32 Tdragonb3LoadCallback()
+{
+	if (BurnLoadRom(Drv68KROM + 0x000001, 0, 2)) return 1;
+	if (BurnLoadRom(Drv68KROM + 0x000000, 1, 2)) return 1;
+
+	if (BurnLoadRom(DrvZ80ROM + 0x000000, 2, 1)) return 1;
+	memcpy(DrvZ80ROM + 0x10000, DrvZ80ROM + 0x8000, 0x8000);
+	memcpy(DrvZ80ROM + 0x18000, DrvZ80ROM + 0x0000, 0x8000);
+
+	if (BurnLoadRom(DrvGfxROM0 + 0x000000, 3, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM1 + 0x000000, 4, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM2 + 0x000000, 5, 1)) return 1;
+	BurnByteswap(DrvGfxROM2, 0x100000);
+
+	if (BurnLoadRom(DrvSndROM0 + 0x000000, 7, 1)) return 1;
+
+	DrvGfxDecode(0x20000, 0x100000, 0x100000);
+
+	return 0;
+}
+
+static INT32 Tdragonb3Init()
+{
+	return SeibuSoundInit(Tdragonb3LoadCallback, 0);
+}
+
+struct BurnDriver BurnDrvTdragonb3 = {
+	"tdragonb3", "tdragon", NULL, NULL, "1991",
+	"Thunder Dragon (bootleg with Raiden sounds, unencrypted)\0", NULL, "bootleg", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, tdragonb3RomInfo, tdragonb3RomName, NULL, NULL, NULL, NULL, CommonInputInfo, TdragonbDIPInfo,
+	Tdragonb3Init, SeibuSoundExit, SeibuSoundFrame, MacrossDraw, DrvScan, NULL, 0x400,
 	224, 256, 3, 4
 };
 

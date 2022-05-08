@@ -7768,6 +7768,15 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="gnghb">
+		<comment>Homebrew</comment>
+		<description>Ghosts'n Goblins (HB, Ver. 2021-11-01)</description>
+		<year>2021</year>
+		<manufacturer>Fabrice Fernandez</manufacturer>
+		<rom name="Ghosts'n Goblins (HB, Ver. 2021-11-01).bin" size="318720" crc="fa4da29a"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ghouls1" cloneof="ghouls" romof="ghouls">
 		<description>Ghouls'n Ghosts (Euro, USA)</description>
 		<year>1989</year>

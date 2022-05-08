@@ -2255,6 +2255,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="captaameandavec" cloneof="captaameandave" romof="captaameandave">
+		<description>Captain America and the Avengers (T-Chi)</description>
+		<year>2022</year>
+		<manufacturer>LSP Team</manufacturer>
+		<rom name="Captain America and the Avengers (T-Chi).nes" size="393232" crc="cfdf0dc5"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="captaameandave">
 		<description>Captain America and the Avengers (USA)</description>
 		<year>1991</year>
@@ -5657,6 +5665,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="flintresdinhopc" cloneof="flintresdinhop" romof="flintresdinhop">
+		<description>Flintstones, The - The Rescue of Dino &amp; Hoppy (T-Chi)</description>
+		<year>2022</year>
+		<manufacturer>HHNM Team</manufacturer>
+		<rom name="Flintstones, The - The Rescue of Dino &amp; Hoppy (T-Chi).nes" size="655376" crc="773ffd89"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="flintresdinhop">
 		<description>Flintstones, The - The Rescue of Dino &amp; Hoppy (USA)</description>
 		<year>1991</year>
@@ -7572,6 +7588,15 @@
 		<year>1988</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Jackal (USA).nes" size="131088" crc="d7dfa90f"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="jackalem" cloneof="jackal" romof="jackal">
+		<comment>Hack</comment>
+		<description>Jackal - Endless Mission (v1.2)</description>
+		<year>2021</year>
+		<manufacturer>HHNM Team - ZENG GE</manufacturer>
+		<rom name="Jackal - Endless Mission (v1.2).nes" size="262160" crc="833c6bc4"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -10638,6 +10663,15 @@
 		<year>1986</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="Musashi no Ken - Tadaima Shugyou Chuu (Japan).nes" size="65552" crc="d21ff7d9"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="musheaven" cloneof="smb" romof="smb">
+		<comment>Hack</comment>
+		<description>Mushroom Heaven (Hack)</description>
+		<year>2022</year>
+		<manufacturer>sinksadventure</manufacturer>
+		<rom name="Mushroom Heaven (2022)(sinksadventure).nes" size="40976" crc="d5ce9457"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -13963,9 +13997,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="startrevfinfr">
+		<comment>Prototype</comment>
 		<description>Star Trek V - The Final Frontier (Prototype)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1989</year>
+		<manufacturer>Bandai</manufacturer>
 		<rom name="Star Trek V - The Final Frontier (Prototype).nes" size="262160" crc="49365548"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14014,9 +14049,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="starwarst" cloneof="starwars" romof="starwars">
+		<comment>Hack</comment>
 		<description>Star Wars (Namco) (T-eng)</description>
-		<year>1987</year>
-		<manufacturer>Namco</manufacturer>
+		<year>2005</year>
+		<manufacturer>Mukimuki &amp; Shinta</manufacturer>
 		<rom name="Star Wars (Namco) (T-eng).nes" size="262160" crc="8c04cec8"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14038,17 +14074,19 @@
 		<driver status="good"/>
 	</game>
 	<game name="starwaresbeas" cloneof="starwaresb" romof="starwaresb">
+		<comment>Hack</comment>
 		<description>Star Wars - The Empire Strikes Back Easy (Hack)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2019</year>
+		<manufacturer>chronix</manufacturer>
 		<rom name="Star Wars - The Empire Strikes Back Easy (Hack).nes" size="524304" crc="11be60fe"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="starwarseasy" cloneof="starwars" romof="starwars">
+		<comment>Hack</comment>
 		<description>Star Wars Easy (Hack)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2018</year>
+		<manufacturer>chronix</manufacturer>
 		<rom name="Star Wars Easy (Hack).nes" size="262160" crc="964f462d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14086,9 +14124,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="sted">
+		<comment>Hack</comment>
 		<description>Sted - Iseki Wakusei no Yabou (T-eng)</description>
-		<year>1990</year>
-		<manufacturer>KAC</manufacturer>
+		<year>1999</year>
+		<manufacturer>J2e Translations</manufacturer>
 		<rom name="Sted - Iseki Wakusei no Yabou (T-eng).nes" size="262160" crc="5e63ec57"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14107,6 +14146,15 @@
 		<year>1987</year>
 		<manufacturer>KAC</manufacturer>
 		<rom name="Stick Hunter - Exciting Ice Hockey (Japan).nes" size="131088" crc="67495228"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="sting">
+		<comment>Homebrew</comment>
+		<description>STING (HB)</description>
+		<year>2008</year>
+		<manufacturer>smkdan</manufacturer>
+		<rom name="STING (2008)(smkdan).nes" size="40976" crc="f0c8191b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -14146,32 +14194,33 @@
 	</game>
 	<game name="streefigii">
 		<description>Street Fighter II - The World Warrior (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1992</year>
+		<manufacturer>Yoko Soft</manufacturer>
 		<rom name="Street Fighter II - The World Warrior (Unl).nes" size="262160" crc="dedfa5bb"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="streefigiihac" cloneof="streefigiii" romof="streefigiii">
+		<comment>Hack</comment>
 		<description>Street Fighter II Hack (Hack of SFIII)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>199?</year>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="Street Fighter II Hack (Hack of SFIII).nes" size="655376" crc="470ce47e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="streefigiii">
 		<description>Street Fighter III (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>199?</year>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="Street Fighter III (Unl).nes" size="655376" crc="a21b5886"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="streetheroes">
 		<description>Street Heroes (Taiwan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1995</year>
+		<manufacturer>Sachen</manufacturer>
 		<rom name="Street Heroes (Taiwan).nes" size="1048592" crc="dd65a6cc"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14209,33 +14258,35 @@
 		<driver status="good"/>
 	</game>
 	<game name="sugorque">
+		<comment>Hack</comment>
 		<description>Sugoro Quest - Dice no Senshitachi (T-eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2007</year>
+		<manufacturer>AlanMidas</manufacturer>
 		<rom name="Sugoro Quest - Dice no Senshitachi (T-eng).nes" size="262160" crc="d2cdeb7b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="sukebandeka3j" cloneof="sukebandeka3" romof="sukebandeka3">
 		<description>Sukeban Deka 3 (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Toei Animation</manufacturer>
 		<rom name="Sukeban Deka 3 (Japan).nes" size="131088" crc="1bc8ce10"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="sukebandeka3">
+		<comment>Hack</comment>
 		<description>Sukeban Deka 3 (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2016</year>
+		<manufacturer>MrRichard999</manufacturer>
 		<rom name="Sukeban Deka 3 (T-Eng).nes" size="131088" crc="fec242b9"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="summecar92">
 		<description>Summer Carnival '92 - Recca (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1992</year>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="Summer Carnival '92 - Recca (Japan).nes" size="262160" crc="2e15075a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14249,8 +14300,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="sunman">
+		<comment>Prototype</comment>
 		<description>Sunman (Europe) (Prototype)</description>
-		<year>0000</year>
+		<year>1992</year>
 		<manufacturer>Sunsoft</manufacturer>
 		<rom name="Sunman (Europe) (Prototype).nes" size="262160" crc="2bce4dc7"/>
 		<video orientation="horizontal" width="256" height="232" aspectx="256" aspecty="232"/>
@@ -14317,8 +14369,8 @@
 	</game>
 	<game name="supergun">
 		<description>Super Gun (USA)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1992</year>
+		<manufacturer>Caltron</manufacturer>
 		<rom name="Super Gun (USA).nes" size="98320" crc="3555dc26"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14562,24 +14614,24 @@
 	</game>
 	<game name="superpang">
 		<description>Super Pang (Taiwan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1991</year>
+		<manufacturer>Sachen</manufacturer>
 		<rom name="Super Pang (Taiwan).nes" size="65552" crc="f7c73ecc"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="superpang2">
 		<description>Super Pang 2 (Taiwan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1992</year>
+		<manufacturer>Sachen</manufacturer>
 		<rom name="Super Pang 2 (Taiwan).nes" size="98320" crc="a5043905"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="superpinball">
 		<description>Super Pinball (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Coconuts/C-Dream</manufacturer>
 		<rom name="Super Pinball (Japan).nes" size="131088" crc="c8ee3210"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14619,6 +14671,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="srroulette">
+		<comment>Homebrew</comment>
 		<description>Super Russian Roulette (HB)</description>
 		<year>2017</year>
 		<manufacturer>Andrew Reitano</manufacturer>
@@ -14628,8 +14681,8 @@
 	</game>
 	<game name="supershi">
 		<description>Super Shinobi, The (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>199?</year>
+		<manufacturer>Realtec</manufacturer>
 		<rom name="Super Shinobi, The (Unl).nes" size="524304" crc="a36c26e7"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14668,9 +14721,9 @@
 	</game>
 	<game name="supertiltbro">
 		<comment>Homebrew</comment>
-		<description>Super Tilt Bro (HB)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Super Tilt Bro (HB, v2 alpha1)</description>
+		<year>2018</year>
+		<manufacturer>Broke Studio</manufacturer>
 		<rom name="Super Tilt Bro (HB).nes" size="524304" crc="58829008"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14725,9 +14778,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="sweethomee" cloneof="sweethome" romof="sweethome">
-		<description>Sweet Home (Eng Hack)</description>
-		<year>1989</year>
-		<manufacturer>Capcom</manufacturer>
+		<comment>Hack</comment>
+		<description>Sweet Home (English Hack)</description>
+		<year>2000</year>
+		<manufacturer>Gaijin Productions</manufacturer>
 		<rom name="Sweet Home (Eng Hack).nes" size="262160" crc="0bd7d357"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14750,9 +14804,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="swordmasterh" cloneof="swordmaster" romof="swordmaster">
+		<comment>Hack</comment>
 		<description>Sword Master (USA)(Hack Sample Fix)</description>
-		<year>1992</year>
-		<manufacturer>Activision</manufacturer>
+		<year>2020</year>
+		<manufacturer>TakuikaNinja</manufacturer>
 		<rom name="Sword Master (USA)(Hack Sample Fix).nes" size="262160" crc="cc1a0cfa"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14830,9 +14885,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="taitograpri">
+		<comment>Hack</comment>
 		<description>Taito Grand Prix - Eikou e no License (T-Eng)</description>
-		<year>1987</year>
-		<manufacturer>Taito</manufacturer>
+		<year>2015</year>
+		<manufacturer>MrRichard999</manufacturer>
 		<rom name="Taito Grand Prix - Eikou e no License (T-Eng).nes" size="262160" crc="b58f4f5a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14846,9 +14902,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="taiyonoyuufir">
+		<comment>Hack</comment>
 		<description>Taiyou no Yuusha Firebird (T-eng)</description>
-		<year>1992</year>
-		<manufacturer>Irem</manufacturer>
+		<year>2016</year>
+		<manufacturer>Dragoon-X Translations</manufacturer>
 		<rom name="Taiyou no Yuusha Firebird (T-eng).nes" size="262160" crc="bfacf6de"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14870,6 +14927,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="takesschaj" cloneof="takesscha" romof="takesscha">
+		<description>Takeshi no Chousenjou (Japan)</description>
+		<year>1986</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="Takeshi's Challenge (Japan).nes" size="131088" crc="e810b35c"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="takesnosenfuu">
 		<description>Takeshi no Sengoku Fuuunji (Japan)</description>
 		<year>1988</year>
@@ -14878,18 +14943,11 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="takesschaj" cloneof="takesscha" romof="takesscha">
-		<description>Takeshi's Challenge (Japan)</description>
-		<year>1986</year>
-		<manufacturer>Taito</manufacturer>
-		<rom name="Takeshi's Challenge (Japan).nes" size="131088" crc="e810b35c"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
 	<game name="takesscha">
+		<comment>Hack</comment>
 		<description>Takeshi's Challenge (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2011</year>
+		<manufacturer>KingMike</manufacturer>
 		<rom name="Takeshi's Challenge (T-Eng).nes" size="262160" crc="18c9b8ad"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -15191,6 +15249,15 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Tekken 3 (Unl).nes" size="393232" crc="c61358ab"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="tdilemma">
+		<comment>Homebrew</comment>
+		<description>Temple Dilemma (HB)</description>
+		<year>2019</year>
+		<manufacturer>Oldschool Interactive</manufacturer>
+		<rom name="Temple Dilemma (2019)(Oldschool Interactive).nes" size="524304" crc="5e2a4eeb"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -17055,7 +17122,7 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="zeldanodenc" cloneof="legenzel" romof="legenzel">
+	<game name="zeldanodenc" cloneof="zeldanoden" romof="zeldanoden">
 		<description>Zelda no Densetsu - The Hyrule Fantasy (T-Chi)</description>
 		<year>2022</year>
 		<manufacturer>NOKOH</manufacturer>

@@ -64,6 +64,25 @@ static struct BurnRomInfo dogyuuntRomDesc[] = {
 STD_ROM_PICK(dogyuunt)
 STD_ROM_FN(dogyuunt)
 
+// found on a standard TP-022-1 PCB, main CPU ROM had a MR sticker.
+// It's a little closer to the location test than to the released versions (i.e region configuration).
+// maybe a newer location test version, instead.
+
+static struct BurnRomInfo dogyuunbRomDesc[] = {
+	{ "mr.u64",       0x080000, 0x4dc258dc, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+
+	{ "tp022_3.w92",  0x100000, 0x191b595f, BRF_GRA },           //  1 GP9001 #1 Tile data
+	{ "tp022_4.w93",  0x100000, 0xd58d29ca, BRF_GRA },           //  2
+
+	{ "tp022_5.w16",  0x200000, 0xd4c1db45, BRF_GRA },           //  3 GP9001 #2 Tile data
+	{ "tp022_6.w17",  0x200000, 0xd48dc74f, BRF_GRA },           //  4
+
+	{ "tp022_2.w30",  0x040000, 0x043271b3, BRF_SND },           //  5 ADPCM data
+};
+
+STD_ROM_PICK(dogyuunb)
+STD_ROM_FN(dogyuunb)
+
 static struct BurnInputInfo dogyuunInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvButton + 3,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvButton + 5,	"p1 start"	},
@@ -782,6 +801,16 @@ struct BurnDriver BurnDrvDogyuunt = {
 	L"Dogyuun (test location version)\0Dogyuun \u30C9\u30AD\u30E5\u30FC\u30F3\uFF01\uFF01\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_VERSHOOT, 0,
 	NULL, dogyuuntRomInfo, dogyuuntRomName, NULL, NULL, NULL, NULL, dogyuunInputInfo, dogyuuntDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	240, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvDogyuunb = {
+	"dogyuunb", "dogyuun", NULL, NULL, "1992",
+	"Dogyuun (oldest set)\0", NULL, "Toaplan", "Dual Toaplan GP9001 based",
+	L"Dogyuun (oldest set)\0Dogyuun \u30C9\u30AD\u30E5\u30FC\u30F3\uFF01\uFF01\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_VERSHOOT, 0,
+	NULL, dogyuunbRomInfo, dogyuunbRomName, NULL, NULL, NULL, NULL, dogyuunInputInfo, dogyuuntDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };

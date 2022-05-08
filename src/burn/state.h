@@ -43,7 +43,7 @@ void StateRunAheadLoad();
 #define ACB_VOLATILE    (ACB_MEMORY_RAM | ACB_DRIVER_DATA)
 
 /* Structure used for area scanning */
-struct BurnArea { void *Data; UINT32 nLen; INT32 nAddress; char *szName; };
+typedef struct BurnArea { void *Data; UINT32 nLen; INT32 nAddress; char *szName; };
 
 /* Application-defined callback for processing the area */
 extern INT32 (__cdecl *BurnAcb) (struct BurnArea* pba);

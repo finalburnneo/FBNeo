@@ -797,13 +797,14 @@ static UINT32 gfx_ready_read()
 		return 0x00000010;
 }
 
-
 static void gfx_exec_write(UINT32 offset, UINT32 data)
 {
 //	if ( ACCESSING_BITS_0_7 )
 	{
 		if (data & 1)
 		{
+			thready.notify_wait();
+
 			if (epic12_device_blit_delay && m_delay_scale)
 			{
 				m_blitter_busy = 1;
@@ -818,8 +819,7 @@ static void gfx_exec_write(UINT32 offset, UINT32 data)
 			}
 
 			epic12_device_blit_delay = 0;
-
-			if (!bBurnRunAheadFrame) thready.notify(); // run gfx_exec(), w/ threading if set (via dip option)
+			thready.notify(); // run gfx_exec(), w/ threading if set (via dip option)
 		}
 	}
 }

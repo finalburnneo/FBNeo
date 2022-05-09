@@ -217,7 +217,7 @@ static UINT32 __fastcall main_read_long(UINT32 offset)
 		return epic12_blitter_read(offset & 0xff);
 	}
 
-	bprintf(0, _T("mrl %x\n"), offset);
+	//bprintf(0, _T("mrl %x\n"), offset);
 
 	return 0;
 }
@@ -517,9 +517,8 @@ static INT32 DrvFrame()
 		ymz770_set_buffered(Sh3TotalCycles, DriverClock);
 
 		bprintf(0, _T("Driver Clock %d\n"), DriverClock);
-		//bprintf(0, _T("speedhack_burn %x\n"), speedhack_burn);
 	}
-	// set blitter delay via dip setting
+	// set blitter delay, blitter threading & speedhack via dip setting
 	{
 		INT32 delay = DrvDips[2] & 0x1f;
 

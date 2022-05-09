@@ -10365,7 +10365,7 @@ struct BurnDriver BurnDrvsms_tennis = {
 // Tensai Bakabon (Jpn)
 
 static struct BurnRomInfo sms_bakabonRomDesc[] = {
-	{ "tensai bakabon (japan).bin",	0x40000, 0x8132ab2c, BRF_PRG | BRF_ESS },
+	{ "tensai bakabon (japan).bin",	262144, 0x8132ab2c, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_bakabon)
@@ -10377,6 +10377,25 @@ struct BurnDriver BurnDrvsms_bakabon = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_ADV, 0,
 	SMSGetZipName, sms_bakabonRomInfo, sms_bakabonRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// The Genius Bakabon (Hack, T-Eng)
+
+static struct BurnRomInfo sms_bakabonenRomDesc[] = {
+	{ "Tensai Bakabon (2022)(FCandChill).sms",	262144, 0x96ce2f05, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_bakabonen)
+STD_ROM_FN(sms_bakabonen)
+
+struct BurnDriver BurnDrvsms_bakabonen = {
+	"sms_bakabonen", "sms_bakabon", NULL, NULL, "2022",
+	"The Genius Bakabon (Hack, T-Eng)\0", NULL, "FCandChill", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_ADV, 0,
+	SMSGetZipName, sms_bakabonenRomInfo, sms_bakabonenRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -30088,10 +30107,10 @@ struct BurnDriver BurnDrvgg_tetris4gg = {
 	256, 192, 4, 3
 };
 
-// Do The Same (HB, v1.1)
+// Do The Same (HB, v1.30)
 
 static struct BurnRomInfo sms_dothesameRomDesc[] = {
-	{ "Do The Same v1.1 (2022)(Ricco59).sms",	49152, 0x3e03d019, BRF_PRG | BRF_ESS },
+	{ "Do The Same v1.30 (2022)(Ricco59).sms",	49152, 0x01e68ff7, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_dothesame)
@@ -30099,7 +30118,7 @@ STD_ROM_FN(sms_dothesame)
 
 struct BurnDriver BurnDrvsms_dothesame = {
 	"sms_dothesame", NULL, NULL, NULL, "2022",
-	"Do The Same (HB, v1.1)\0", "No Sound", "Ricco59", "Sega Master System",
+	"Do The Same (HB, v1.30)\0", "No Sound", "Ricco59", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_dothesameRomInfo, sms_dothesameRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

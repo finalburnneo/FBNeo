@@ -15590,10 +15590,10 @@ STD_ROM_PICK(nes_zeldanodenc)
 STD_ROM_FN(nes_zeldanodenc)
 
 struct BurnDriver BurnDrvnes_zeldanodenc = {
-	"nes_zeldanodenc", "fds_zeldanoden", NULL, NULL, "2022",
-	"Zelda no Densetsu - The Hyrule Fantasy (T-Chi)\0", NULL, "NOKOH", "Miscellaneous",
+	"nes_zeldanodenc", "nes_legenzel", NULL, NULL, "2022",
+	"Zelda no Densetsu - The Hyrule Fantasy (T-Chi)\0", "FDS to NES Hack", "NOKOH", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_zeldanodencRomInfo, nes_zeldanodencRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -50459,10 +50459,10 @@ STD_ROM_PICK(nes_ys)
 STD_ROM_FN(nes_ys)
 
 struct BurnDriver BurnDrvnes_ys = {
-	"nes_ys", NULL, NULL, NULL, "1988",
-	"Ys (T-eng)\0", NULL, "Victor", "Miscellaneous",
+	"nes_ys", NULL, NULL, NULL, "2000",
+	"Ys (T-eng)\0", NULL, "David Mullen", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_ysRomInfo, nes_ysRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -50493,10 +50493,10 @@ STD_ROM_PICK(nes_ysii)
 STD_ROM_FN(nes_ysii)
 
 struct BurnDriver BurnDrvnes_ysii = {
-	"nes_ysii", NULL, NULL, NULL, "1990",
-	"Ys II - Ancient Ys Vanished - The Final Chapter (T-eng)\0", NULL, "Victor", "Miscellaneous",
+	"nes_ysii", NULL, NULL, NULL, "2000",
+	"Ys II - Ancient Ys Vanished - The Final Chapter (T-eng)\0", NULL, "David Mullen", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_ysiiRomInfo, nes_ysiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -50527,10 +50527,10 @@ STD_ROM_PICK(nes_ysiii)
 STD_ROM_FN(nes_ysiii)
 
 struct BurnDriver BurnDrvnes_ysiii = {
-	"nes_ysiii", NULL, NULL, NULL, "1991",
-	"Ys III - Wanderers from Ys (T-eng)\0", NULL, "Victor", "Miscellaneous",
+	"nes_ysiii", NULL, NULL, NULL, "2005",
+	"Ys III - Wanderers from Ys (T-eng)\0", NULL, "Vice Translations", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
 	NESGetZipName, nes_ysiiiRomInfo, nes_ysiiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -50544,8 +50544,8 @@ STD_ROM_PICK(nes_yumepenmonj)
 STD_ROM_FN(nes_yumepenmonj)
 
 struct BurnDriver BurnDrvnes_yumepenmonj = {
-	"nes_yumepenmonj", "nes_yumepenmon", NULL, NULL, "1989?",
-	"Yume Penguin Monogatari (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_yumepenmonj", "nes_yumepenmon", NULL, NULL, "1991",
+	"Yume Penguin Monogatari (Japan)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_yumepenmonjRomInfo, nes_yumepenmonjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -50561,10 +50561,10 @@ STD_ROM_PICK(nes_yumepenmon)
 STD_ROM_FN(nes_yumepenmon)
 
 struct BurnDriver BurnDrvnes_yumepenmon = {
-	"nes_yumepenmon", NULL, NULL, NULL, "1989?",
-	"Yume Penguin Monogatari (T-eng)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_yumepenmon", NULL, NULL, NULL, "2006",
+	"Yume Penguin Monogatari (T-eng)\0", NULL, "Vice Translations", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_yumepenmonRomInfo, nes_yumepenmonRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -50578,8 +50578,8 @@ STD_ROM_PICK(nes_yuuyuuhakfin)
 STD_ROM_FN(nes_yuuyuuhakfin)
 
 struct BurnDriver BurnDrvnes_yuuyuuhakfin = {
-	"nes_yuuyuuhakfin", NULL, NULL, NULL, "1989?",
-	"Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_yuuyuuhakfin", NULL, NULL, NULL, "1996",
+	"Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Unl) (Japan)\0", NULL, "N.T", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
 	NESGetZipName, nes_yuuyuuhakfinRomInfo, nes_yuuyuuhakfinRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -50646,8 +50646,8 @@ STD_ROM_PICK(nes_zhenbenxiyouji)
 STD_ROM_FN(nes_zhenbenxiyouji)
 
 struct BurnDriver BurnDrvnes_zhenbenxiyouji = {
-	"nes_zhenbenxiyouji", NULL, NULL, NULL, "1989?",
-	"Zhen Ben Xi You Ji (Asia) (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_zhenbenxiyouji", NULL, NULL, NULL, "1994",
+	"Zhen Ben Xi You Ji (Asia) (Unl)\0", NULL, "Asder Soft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
 	NESGetZipName, nes_zhenbenxiyoujiRomInfo, nes_zhenbenxiyoujiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

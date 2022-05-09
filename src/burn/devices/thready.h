@@ -32,6 +32,7 @@ struct threadystruct
 	INT32 end_thread;
 	HANDLE our_thread;
 	HANDLE our_event;
+	HANDLE wait_event;
 	DWORD our_threadid;
 	void (*our_callback)();
 
@@ -50,12 +51,13 @@ struct threadystruct
 
 		end_thread = 0; // good to go!
 
-		our_event = CreateEvent(NULL, TRUE, FALSE, TEXT("blitEvent"));
+		our_event = CreateEvent(NULL, FALSE, FALSE, NULL);
+		wait_event = CreateEvent(NULL, FALSE, TRUE, NULL);
 		our_thread = CreateThread(NULL, 0, ThreadyProc, NULL, 0, &our_threadid);
 
 		SetThreadIdealProcessor(our_thread, thready_proc);
 
-		if (our_event && our_thread) {
+		if (our_event && wait_event && our_thread) {
 			//bprintf(0, _T("Thready: we're gonna git 'r dun!\n"));
 			thready_ok = 1;
 			ok_to_thread = 1;
@@ -66,7 +68,6 @@ struct threadystruct
 
 	void exit() {
 		if (thready_ok) {
-			//bprintf(0, _T("Thready: notify thread to exit..\n"));
 			end_thread = 1;
 			SetEvent(our_event);
 			do {
@@ -74,12 +75,12 @@ struct threadystruct
 			} while (~end_thread & 0x100);
 			CloseHandle(our_event);
 			CloseHandle(our_thread);
+			CloseHandle(wait_event);
 			thready_ok = 0;
 		}
 	}
 
-	void set_threading(INT32 value)
-	{
+	void set_threading(INT32 value)	{
 		ok_to_thread = value;
 	}
 
@@ -89,6 +90,11 @@ struct threadystruct
 		} else {
 			// fallback to single-threaded mode
 			our_callback();
+		}
+	}
+	void notify_wait() {
+		if (ok_to_thread) {
+			WaitForSingleObject(wait_event, INFINITE);
 		}
 	}
 };
@@ -101,8 +107,9 @@ long unsigned int __stdcall ThreadyProc(void*) {
 
 		if (dwWaitResult == WAIT_OBJECT_0 && thready.end_thread == 0) {
 			thready.our_callback();
-			ResetEvent(thready.our_event);
+			SetEvent(thready.wait_event);
 		} else {
+			SetEvent(thready.wait_event);
 			thready.end_thread |= 0x100;
 			//bprintf(0, _T("Thready: thread-event thread ending..\n"));
 			return 0;
@@ -122,6 +129,8 @@ struct threadystruct
 	INT32 ok_to_thread;
 	INT32 end_thread;
 	sem_t our_event;
+	sem_t wait_event;
+	INT32 is_running;
 	pthread_t our_thread;
 	void (*our_callback)();
 
@@ -129,18 +138,20 @@ struct threadystruct
 		thready_ok = 0;
 		ok_to_thread = 0;
 		end_thread = 0;
+		is_running = 0;
 
 		our_callback = thread_callback;
 
 		INT32 our_event_rv = sem_init(&our_event, 0, 0);
+		INT32 wait_event_rv = sem_init(&wait_event, 0, 0);
 		INT32 our_thread_rv = pthread_create(&our_thread, NULL, ThreadyProc, NULL);
 
-		if (our_thread_rv == 0 && our_event_rv == 0) {
-			//bprintf(0, _T("Thready: we're gonna git 'r dun!\n"));
+		if (our_thread_rv == 0 && wait_event_rv == 0 && our_event_rv == 0) {
+			bprintf(0, _T("Thready: we're gonna git 'r dun!\n"));
 			thready_ok = 1;
 			ok_to_thread = 1;
 		} else {
-			//bprintf(0, _T("Thready: failure to create thread - falling back to single-thread mode!\n"));
+			bprintf(0, _T("Thready: failure to create thread - falling back to single-thread mode!\n"));
 		}
 	}
 
@@ -150,11 +161,13 @@ struct threadystruct
 			end_thread = 1;
 			sem_post(&our_event);
 			do {
-				sleep(1); // let thread realize it's time to die
+				sleep(0.10); // let thread realize it's time to die
 			} while (~end_thread & 0x100);
 			pthread_join(our_thread, NULL);
 			sem_destroy(&our_event);
+			sem_destroy(&wait_event);
 			thready_ok = 0;
+			is_running = 0;
 		}
 	}
 
@@ -171,19 +184,28 @@ struct threadystruct
 			our_callback();
 		}
 	}
+	void notify_wait() {
+		if (ok_to_thread) {
+			sem_wait(&wait_event);
+		}
+	}
 };
 
 static threadystruct thready;
 
 static void *ThreadyProc(void*) {
 	do {
+		sem_post(&thready.wait_event);
 		sem_wait(&thready.our_event);
 
 		if (thready.end_thread == 0) {
+			thready.is_running = 1;
 			thready.our_callback();
+			thready.is_running = 0;
 		} else {
+			sem_post(&thready.wait_event);
 			thready.end_thread |= 0x100;
-			//bprintf(0, _T("Thready: thread-event thread ending..\n"));
+			bprintf(0, _T("Thready: thread-event thread ending..\n"));
 			return 0;
 		}
 	} while (1);
@@ -216,6 +238,8 @@ struct threadystruct
 	void notify() {
 		// fallback to single-threaded mode
 		our_callback();
+	}
+	void notify_wait() {
 	}
 };
 

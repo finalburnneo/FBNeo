@@ -1333,10 +1333,10 @@
 	</game>
 	<game name="dothesame">
 		<comment>Homebrew, No Sound</comment>
-		<description>Do The Same (HB, v1.1)</description>
+		<description>Do The Same (HB, v1.30)</description>
 		<year>2022</year>
 		<manufacturer>Ricco59</manufacturer>
-		<rom name="Do The Same v1.1 (2022)(Ricco59).sms" size="49152" crc="3e03d019"/>
+		<rom name="Do The Same v1.30 (2022)(Ricco59).sms" size="49152" crc="01e68ff7"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5206,6 +5206,15 @@
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="circuit, the (japan).bin" size="131072" crc="8fb75994"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bakabonen" cloneof="bakabon" romof="bakabon">
+		<comment>Hack</comment>
+		<description>The Genius Bakabon (Hack, T-Eng)</description>
+		<year>2022</year>
+		<manufacturer>FCandChill</manufacturer>
+		<rom name="Tensai Bakabon (2022)(FCandChill).sms" size="262144" crc="96ce2f05"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

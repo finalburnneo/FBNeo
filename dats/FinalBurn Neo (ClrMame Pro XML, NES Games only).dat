@@ -16980,9 +16980,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ys">
+		<comment>Hack</comment>
 		<description>Ys (T-eng)</description>
-		<year>1988</year>
-		<manufacturer>Victor</manufacturer>
+		<year>2000</year>
+		<manufacturer>David Mullen</manufacturer>
 		<rom name="Ys (T-eng).nes" size="262160" crc="9171e8b2"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -17005,9 +17006,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ysii">
+		<comment>Hack</comment>
 		<description>Ys II - Ancient Ys Vanished - The Final Chapter (T-eng)</description>
-		<year>1990</year>
-		<manufacturer>Victor</manufacturer>
+		<year>2000</year>
+		<manufacturer>David Mullen</manufacturer>
 		<rom name="Ys II - Ancient Ys Vanished - The Final Chapter (T-eng).nes" size="393232" crc="ab6b7ac1"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -17021,25 +17023,27 @@
 		<driver status="good"/>
 	</game>
 	<game name="ysiii">
+		<comment>Hack</comment>
 		<description>Ys III - Wanderers from Ys (T-eng)</description>
-		<year>1991</year>
-		<manufacturer>Victor</manufacturer>
+		<year>2005</year>
+		<manufacturer>Vice Translations</manufacturer>
 		<rom name="Ys III - Wanderers from Ys (T-eng).nes" size="393232" crc="93328bf1"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="yumepenmonj" cloneof="yumepenmon" romof="yumepenmon">
 		<description>Yume Penguin Monogatari (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1991</year>
+		<manufacturer>Konami</manufacturer>
 		<rom name="Yume Penguin Monogatari (Japan).nes" size="262160" crc="16f3a6aa"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="yumepenmon">
+		<comment>Hack</comment>
 		<description>Yume Penguin Monogatari (T-eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2006</year>
+		<manufacturer>Vice Translations</manufacturer>
 		<rom name="Yume Penguin Monogatari (T-eng).nes" size="262160" crc="df92c173"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -17054,9 +17058,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="yuuyuuhakfin">
-		<description>Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Unl) (Japan)</description>
+		<year>1996</year>
+		<manufacturer>N.T</manufacturer>
 		<rom name="Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Japan).nes" size="393232" crc="93b37bb3"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -17122,7 +17126,8 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="zeldanodenc" cloneof="zeldanoden" romof="zeldanoden">
+	<game name="zeldanodenc" cloneof="legenzel" romof="legenzel">
+		<comment>Hack, FDS to NES Hack</comment>
 		<description>Zelda no Densetsu - The Hyrule Fantasy (T-Chi)</description>
 		<year>2022</year>
 		<manufacturer>NOKOH</manufacturer>
@@ -17149,8 +17154,8 @@
 	</game>
 	<game name="zhenbenxiyouji">
 		<description>Zhen Ben Xi You Ji (Asia) (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1994</year>
+		<manufacturer>Asder Soft</manufacturer>
 		<rom name="Zhen Ben Xi You Ji (Asia) (Unl).nes" size="393232" crc="301ce43a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>

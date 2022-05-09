@@ -4072,8 +4072,8 @@ DRV		BurnDrvDjboyua;
 DRV		BurnDrvmd_djboyu;
 DRV		BurnDrvDjboy;
 DRV		BurnSpecDjpuff;
-DRV		BurnDrvsms_dothesame;
 DRV		BurnDrvMSX_dothesame;
+DRV		BurnDrvsms_dothesame;
 DRV		BurnDrvDorunrunc;
 DRV		BurnDrvDorunrunca;
 DRV		BurnDrvDorunrun;
@@ -9418,18 +9418,21 @@ DRV		BurnDrvmslug;
 DRV		BurnDrvmslug2fm;
 DRV		BurnDrvmslug2dg;
 DRV		BurnDrvMSlug2;
+DRV		BurnDrvmslug2unity;
 DRV		BurnDrvMSlug2t;
 DRV		BurnDrvmslug3g;
 DRV		BurnDrvmslug3v;
 DRV		BurnDrvmslug3h;
 DRV		BurnDrvmslug3;
 DRV		BurnDrvmslug3a;
+DRV		BurnDrvmslug3unity;
 DRV		BurnDrvmslug4a;
 DRV		BurnDrvmslug4lw;
 DRV		BurnDrvmslug4dg;
 DRV		BurnDrvmslug4h;
 DRV		BurnDrvmslug4;
 DRV		BurnDrvms4plus;
+DRV		BurnDrvmslug4unity;
 DRV		BurnDrvmslug5b;
 DRV		BurnDrvmslug5b2;
 DRV		BurnDrvms5pcb;
@@ -9439,9 +9442,12 @@ DRV		BurnDrvMslug5w;
 DRV		BurnDrvmslug5h;
 DRV		BurnDrvmslug5;
 DRV		BurnDrvms5plus;
+DRV		BurnDrvmslug5unity;
 DRV		BurnDrvmslug3b6;
+DRV		BurnDrvmslugunity;
 DRV		BurnDrvMSlugxsrf;
 DRV		BurnDrvMSlugx;
+DRV		BurnDrvmslugxunity;
 DRV		BurnDrvMsisaac;
 DRV		BurnDrvmd_msonichd;
 DRV		BurnDrvpce_metlstok;
@@ -16234,6 +16240,7 @@ DRV		BurnDrvFroundl;
 DRV		BurnDrvFround;
 DRV		BurnDrvGametngk;
 DRV		BurnDrvmd_wintchal1;
+DRV		BurnDrvsms_bakabonen;
 DRV		BurnDrvgg_shinobi2;
 DRV		BurnDrvTheglad101;
 DRV		BurnDrvThegladpcba;
@@ -22734,8 +22741,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_djboyu,			// DJ Boy (USA)
 	&BurnDrvDjboy,				// DJ Boy (World)
 	&BurnSpecDjpuff,			// DJ Puff's Volcanic Capers (128K)
-	&BurnDrvsms_dothesame,		// Do The Same (HB, v1.1)
 	&BurnDrvMSX_dothesame,		// Do the Same (HB, v1.1)
+	&BurnDrvsms_dothesame,		// Do The Same (HB, v1.30)
 	&BurnDrvDorunrunc,			// Do! Run Run (Do's Castle hardware, set 1)
 	&BurnDrvDorunrunca,			// Do! Run Run (Do's Castle hardware, set 2)
 	&BurnDrvDorunrun,			// Do! Run Run (set 1)
@@ -28080,18 +28087,21 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmslug2fm,			// Metal Slug 2 - Super Vehicle-001/II (CZXINc FC2 Ver.2 20210415, hack)
 	&BurnDrvmslug2dg,			// Metal Slug 2 - Super Vehicle-001/II (Multifunction Hack, 20170509)
 	&BurnDrvMSlug2,				// Metal Slug 2 - Super Vehicle-001/II (NGM-2410) (NGH-2410)
+	&BurnDrvmslug2unity,		// Metal Slug 2 - Super Vehicle-001/II Unity (Added Timer Ver. 2021-01-22)
 	&BurnDrvMSlug2t,			// Metal Slug 2 Turbo (NGM-9410)
 	&BurnDrvmslug3g,			// Metal Slug 3 (Multifunction Hack, 20190119)
 	&BurnDrvmslug3v,			// Metal Slug 3 (NGH-2560) (Enhanced Violence Version, hack by EEZEZY)
 	&BurnDrvmslug3h,			// Metal Slug 3 (NGH-2560)
 	&BurnDrvmslug3,				// Metal Slug 3 (NGM-2560)
 	&BurnDrvmslug3a,			// Metal Slug 3 (NGM-2560, earlier)
+	&BurnDrvmslug3unity,		// Metal Slug 3 Unity (Added Timer Ver. 2021-02-13)
 	&BurnDrvmslug4a,			// Metal Slug 4 (20th Anniversary)
 	&BurnDrvmslug4lw,			// Metal Slug 4 (Last Bullet Remix Hack)
 	&BurnDrvmslug4dg,			// Metal Slug 4 (Multifunction Hack, 20171225)
 	&BurnDrvmslug4h,			// Metal Slug 4 (NGH-2630)
 	&BurnDrvmslug4,				// Metal Slug 4 (NGM-2630)
 	&BurnDrvms4plus,			// Metal Slug 4 Plus (bootleg)
+	&BurnDrvmslug4unity,		// Metal Slug 4 Unity (Added Timer Ver. 2021-01-30)
 	&BurnDrvmslug5b,			// Metal Slug 5 (bootleg, set 1)
 	&BurnDrvmslug5b2,			// Metal Slug 5 (bootleg, set 2)
 	&BurnDrvms5pcb,				// Metal Slug 5 (JAMMA PCB)
@@ -28101,9 +28111,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmslug5h,			// Metal Slug 5 (NGH-2680)
 	&BurnDrvmslug5,				// Metal Slug 5 (NGM-2680)
 	&BurnDrvms5plus,			// Metal Slug 5 Plus (bootleg)
+	&BurnDrvmslug5unity,		// Metal Slug 5 Unity (Added Timer Ver. 2021-04-23)
 	&BurnDrvmslug3b6,			// Metal Slug 6 (Metal Slug 3 bootleg)
+	&BurnDrvmslugunity,			// Metal Slug Unity (Added Timer Ver. 2021-02-05)
 	&BurnDrvMSlugxsrf,			// Metal Slug X - Super Vehicle-001 (AzStar Soda Remix FC2 Version, hack)
 	&BurnDrvMSlugx,				// Metal Slug X - Super Vehicle-001 (NGM-2500)(NGH-2500)
+	&BurnDrvmslugxunity,		// Metal Slug X - Super Vehicle-001 Unity (Added Timer Ver. 2021-01-23)
 	&BurnDrvMsisaac,			// Metal Soldier Isaac II
 	&BurnDrvmd_msonichd,		// Metal Sonic Hyperdrive (Hack V4.2)
 	&BurnDrvpce_metlstok,		// Metal Stoker
@@ -34896,6 +34909,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvFround,				// The Final Round (ver. M)
 	&BurnDrvGametngk,			// The Game Paradise - Master of Shooting! / Game Tengoku - The Game Paradise (ver 1.0)
 	&BurnDrvmd_wintchal1,		// The Games: Winter Challenge (Euro, USA)
+	&BurnDrvsms_bakabonen,		// The Genius Bakabon (Hack, T-Eng)
 	&BurnDrvgg_shinobi2,		// The GG Shinobi II (World)
 	&BurnDrvTheglad101,			// The Gladiator - Road Of The Sword / Shen Jian (V100)
 	&BurnDrvThegladpcba,		// The Gladiator - Road Of The Sword / Shen Jian (V100, Japan, Single PCB Version)
@@ -37128,7 +37142,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecYumikohm,			// Yumiko in the haunted mansion (128K) (HB)
 	&BurnDrvnes_yunr5,			// Yun R5 (HB)
 	&BurnDrvfds_yuumaze,		// Yuu Maze (Japan)
-	&BurnDrvnes_yuuyuuhakfin,	// Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Japan)
+	&BurnDrvnes_yuuyuuhakfin,	// Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Unl) (Japan)
 	&BurnDrvpce_yuyu,			// Yuu Yuu Jinsei - Victory Life
 	&BurnDrvYuyugogo,			// Yuuyu no Quiz de GO!GO! (Japan)
 	&BurnDrvMSX_zmazingo,		// Z - Mazin Go (HB)

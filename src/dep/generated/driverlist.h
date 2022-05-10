@@ -2818,6 +2818,7 @@ DRV		BurnDrvChopliftu;
 DRV		BurnDrvsms_chopliftp;
 DRV		BurnDrvgg_choplft3;
 DRV		BurnDrvcv_choplift;
+DRV		BurnSpecChopdef;
 DRV		BurnSpecChopperdrop;
 DRV		BurnDrvChoppera;
 DRV		BurnDrvChopper;
@@ -4674,6 +4675,7 @@ DRV		BurnDrvgg_dheadp1;
 DRV		BurnDrvDleaguej;
 DRV		BurnDrvDleague;
 DRV		BurnDrvngpc_dynaslug;
+DRV		BurnSpecDynawars;
 DRV		BurnDrvCpsDynwar;
 DRV		BurnDrvCpsDynwara;
 DRV		BurnDrvmd_dynoblaz;
@@ -4723,6 +4725,7 @@ DRV		BurnDrvnes_earthboundzeroc;
 DRV		BurnDrvnes_earthboundzero;
 DRV		BurnDrvmd_earthdef;
 DRV		BurnDrvnes_earthbound;
+DRV		BurnSpecEarthlight;
 DRV		BurnDrvsms_ejim;
 DRV		BurnDrvgg_ejim;
 DRV		BurnDrvmd_ejim;
@@ -8313,7 +8316,6 @@ DRV		BurnDrvmd_kuuga;
 DRV		BurnDrvmd_kuzyaeo;
 DRV		BurnDrvmd_kuzyamd;
 DRV		BurnSpecksdizzy;
-DRV		BurnSpecksdizzy_48;
 DRV		BurnSpecKydcadet;
 DRV		BurnSpecKydcadet3;
 DRV		BurnSpecKydcadet2;
@@ -11598,6 +11600,7 @@ DRV		BurnSpecpixymicrod2;
 DRV		BurnDrvnes_pizzapopj;
 DRV		BurnDrvnes_pizzapop;
 DRV		BurnDrvPkscram;
+DRV		BurnSpecPlanet10;
 DRV		BurnDrvPprobe;
 DRV		BurnSpecPlanetoids;
 DRV		BurnDrvnes_plasmaballj;
@@ -11770,6 +11773,7 @@ DRV		BurnSpecPoseidon;
 DRV		BurnDrvsms_poseidon;
 DRV		BurnSpecPostmortem;
 DRV		BurnDrvMSX_postmortem;
+DRV		BurnSpecPostman;
 DRV		BurnDrvPotopoto;
 DRV		BurnDrvPoundforj;
 DRV		BurnDrvPoundforu;
@@ -17772,6 +17776,7 @@ DRV		BurnDrvWelltrisj;
 DRV		BurnDrvWelltris;
 DRV		BurnDrvCHF_werbetxt;
 DRV		BurnDrvnes_werew;
+DRV		BurnSpecWerewolves;
 DRV		BurnSpecWestbank;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvWeststry;		// no comment [NOT WORKING]
@@ -21487,6 +21492,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_chopliftp,		// Choplifter (USA, Prototype)
 	&BurnDrvgg_choplft3,		// Choplifter III (USA)
 	&BurnDrvcv_choplift,		// Choplifter!
+	&BurnSpecChopdef,			// Chopper Defence (48K) (HB, v1.2)
 	&BurnSpecChopperdrop,		// Chopper Drop (128K) (HB, v1.1)
 	&BurnDrvChoppera,			// Chopper I (US ver 1?)
 	&BurnDrvChopper,			// Chopper I (US ver 2)
@@ -23343,6 +23349,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDleaguej,			// Dynamite League (Japan)
 	&BurnDrvDleague,			// Dynamite League (US)
 	&BurnDrvngpc_dynaslug,		// Dynamite Slugger (Euro, Jpn)
+	&BurnSpecDynawars,			// Dynasty Wars (48K)
 	&BurnDrvCpsDynwar,			// Dynasty Wars (US set 1)
 	&BurnDrvCpsDynwara,			// Dynasty Wars (US set 2)
 	&BurnDrvmd_dynoblaz,		// Dyno Blaze (Early Prototype)
@@ -23392,6 +23399,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_earthboundzero,	// Earth Bound Zero (USA)
 	&BurnDrvmd_earthdef,		// Earth Defense, The (USA)
 	&BurnDrvnes_earthbound,		// Earthbound (USA) (Prototype)
+	&BurnSpecEarthlight,		// Earthlight (128K)
 	&BurnDrvsms_ejim,			// Earthworm Jim (Bra)
 	&BurnDrvgg_ejim,			// Earthworm Jim (Euro)
 	&BurnDrvmd_ejim,			// Earthworm Jim (Euro)
@@ -26982,7 +26990,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_kuzyaeo,			// Kuzya - Ekologiya V Opasnosti (Unl) (Rus)
 	&BurnDrvmd_kuzyamd,			// Kuzya - V Mire Dinozavrov (Unl) (Rus)
 	&BurnSpecksdizzy,			// Kwik Snax Dizzy (128K)
-	&BurnSpecksdizzy_48,		// Kwik Snax Dizzy (48K)
 	&BurnSpecKydcadet,			// Kyd Cadet (48K) (HB, v1.2)
 	&BurnSpecKydcadet3,			// Kyd Cadet 3 - The Eyeburx Plee (48K) (HB)
 	&BurnSpecKydcadet2,			// Kyd Cadet II - The Rescue of Pobbleflu (48K) (HB)
@@ -30267,6 +30274,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_pizzapopj,		// Pizza Pop! (Japan)
 	&BurnDrvnes_pizzapop,		// Pizza Pop! (T-Eng)
 	&BurnDrvPkscram,			// PK Scramble
+	&BurnSpecPlanet10,			// Planet 10 (48K)
 	&BurnDrvPprobe,				// Planet Probe (prototype?)
 	&BurnSpecPlanetoids,		// Planetoids (16K)
 	&BurnDrvnes_plasmaballj,	// Plasma Ball (Japan)
@@ -30439,6 +30447,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_poseidon,		// Poseidon Wars 3-D (Euro, USA, Bra)
 	&BurnSpecPostmortem,		// Post Mortem (Spanish) (48K)
 	&BurnDrvMSX_postmortem,		// Post Mortem (Spanish)
+	&BurnSpecPostman,			// Postman Pat - The Computer Game (48K)
 	&BurnDrvPotopoto,			// Poto Poto (Japan, Rev A)
 	&BurnDrvPoundforj,			// Pound for Pound (Japan)
 	&BurnDrvPoundforu,			// Pound for Pound (US)
@@ -36441,6 +36450,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvWelltris,			// Welltris - Alexey Pajitnov's (World?, 2 players)
 	&BurnDrvCHF_werbetxt,		// Werbetextcassette
 	&BurnDrvnes_werew,			// Werewolf - The Last Warrior (USA)
+	&BurnSpecWerewolves,		// Werewolves of London (48K)
 	&BurnSpecWestbank,			// West Bank (48K)
 #if defined FBNEO_DEBUG
 	&BurnDrvWeststry,			// West Story (bootleg of Blood Bros., set 1) [no comment, NOT WORKING]

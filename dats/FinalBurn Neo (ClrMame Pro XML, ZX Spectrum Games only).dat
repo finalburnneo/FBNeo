@@ -3420,6 +3420,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="chopdef" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Chopper Defence (48K) (HB, v1.2)</description>
+		<year>2022</year>
+		<manufacturer>Psychic Parrot</manufacturer>
+		<rom name="Chopper Defence v1.2 48K (2022)(Psychic Parrot).tap" size="29454" crc="1a77fcba"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="chopperdrop" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Chopper Drop (128K) (HB, v1.1)</description>
@@ -5663,6 +5673,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="dynawars" romof="spectrum">
+		<comment>Press '1' for one player mode or '2' for two player mode</comment>
+		<description>Dynasty Wars (48K)</description>
+		<year>1990</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Dynasty Wars 48K (1990)(U.S. Gold).tap" size="100253" crc="ae3317af"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="emotion" romof="spec128">
 		<description>E-motion (128K)</description>
 		<year>1990</year>
@@ -5678,6 +5698,17 @@
 		<year>1990</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="E-SWAT (1990)(U.S. Gold).tap" size="213337" crc="721ab30f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="earthlight" romof="spec128">
+		<comment>Q: increase altitude - W: decrease altitude</comment>
+		<description>Earthlight (128K)</description>
+		<year>1988</year>
+		<manufacturer>Firebird</manufacturer>
+		<rom name="Earthlight 128K (1988)(Firebird).tap" size="61597" crc="063d61f4"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -9320,7 +9351,7 @@
 		<description>Kong (Ocean) (48K)</description>
 		<year>1984</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Kong (1984)(Ocean).z80" size="21789" crc="0b3fcf53"/>
+		<rom name="Kong 48K (1983)(Ocean).tap" size="45603" crc="d5a04266"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9330,7 +9361,7 @@
 		<description>Kong 2 - Kong Strikes Back (48K)</description>
 		<year>1985</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Kong 2 - Kong Strikes Back (1985)(Ocean).z80" size="28643" crc="9f2f534a"/>
+		<rom name="Kong Strikes Back! 48K (1984)(Ocean).tap" size="32685" crc="134e89ea"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9398,18 +9429,9 @@
 		<description>Kwik Snax Dizzy (128K)</description>
 		<year>1990</year>
 		<manufacturer>Codemasters</manufacturer>
-		<rom name="Kwik Snax Dizzy (1990)(Codemasters)[128K].z80" size="86155" crc="7e358203"/>
+		<rom name="Kwik Snax Dizzy 128K (1990)(Codemasters).tap" size="100738" crc="0b234319"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="ksdizzy_48" cloneof="ksdizzy" romof="ksdizzy">
-		<description>Kwik Snax Dizzy (48K)</description>
-		<year>1990</year>
-		<manufacturer>Codemasters</manufacturer>
-		<rom name="Kwik Snax Dizzy (1990)(Codemasters).z80" size="38309" crc="ff50b072"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -12366,6 +12388,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="planet10" romof="spectrum">
+		<description>Planet 10 (48K)</description>
+		<year>1989</year>
+		<manufacturer>Mastertronic</manufacturer>
+		<rom name="Planet 10 48K (1989)(Mastertronic).tap" size="48937" crc="4ae2d7a9"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="planetoids" romof="spectrum">
 		<description>Planetoids (16K)</description>
 		<year>1982</year>
@@ -12486,6 +12517,15 @@
 		<year>1987</year>
 		<manufacturer>Iber Soft</manufacturer>
 		<rom name="Post Mortem 48K ES (1988)(Iber Soft).z80" size="39261" crc="fbdeb9b7"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="postman" romof="spectrum">
+		<description>Postman Pat - The Computer Game (48K)</description>
+		<year>1989</year>
+		<manufacturer>Alternative</manufacturer>
+		<rom name="Postman Pat - The Computer Game 48K (1989)(Alternative).z80" size="43141" crc="c991a405"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17359,6 +17399,16 @@
 		<rom name="WEC Le Mans (1989)(Imagine)(48K-128K).tap" size="112833" crc="835ac96a"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="werewolves" romof="spectrum">
+		<comment>O/P: select icon - H: pause - R: restart</comment>
+		<description>Werewolves of London (48K)</description>
+		<year>1989</year>
+		<manufacturer>Mastertronic</manufacturer>
+		<rom name="Werewolves of London 48K (1989)(Mastertronic).tap" size="47170" crc="8b9b9683"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

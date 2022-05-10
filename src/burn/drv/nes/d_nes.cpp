@@ -45733,10 +45733,10 @@ STD_ROM_PICK(nes_solstice)
 STD_ROM_FN(nes_solstice)
 
 struct BurnDriver BurnDrvnes_solstice = {
-	"nes_solstice", NULL, NULL, NULL, "1990",
-	"Solstice (Japan)\0", NULL, "Epic / Sony Records", "Miscellaneous",
+	"nes_solstice", "nes_solst", NULL, NULL, "1990",
+	"Solstice - Sanjigen Meikyuu no Kyoujuu (Japan)\0", NULL, "Epic / Sony Records", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_PUZZLE, 0,
 	NESGetZipName, nes_solsticeRomInfo, nes_solsticeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -50008,6 +50008,23 @@ struct BurnDriver BurnDrvnes_willow = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_willowRomInfo, nes_willowRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_willowjRomDesc[] = {
+	{ "Willow (Japan).nes",          262160, 0x189462c2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_willowj)
+STD_ROM_FN(nes_willowj)
+
+struct BurnDriver BurnDrvnes_willowj = {
+	"nes_willowj", "nes_willow", NULL, NULL, "1989",
+	"Willow (Japan)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG, 0,
+	NESGetZipName, nes_willowjRomInfo, nes_willowjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

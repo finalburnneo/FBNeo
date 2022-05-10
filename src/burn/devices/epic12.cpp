@@ -1,4 +1,6 @@
+/* ported from mame 0.155 */
 /* emulation of Altera Cyclone EPIC12 FPGA programmed as a blitter */
+/* code by David Haywood, Luca Elia, MetalliC */
 
 #include "burnint.h"
 #include "tiles_generic.h"

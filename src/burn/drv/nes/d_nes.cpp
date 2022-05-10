@@ -15646,7 +15646,7 @@ STD_ROM_FN(nes_gomokuc)
 
 struct BurnDriver BurnDrvnes_gomokuc = {
 	"nes_gomokuc", "nes_gomoku", NULL, NULL, "2020",
-	"Gomoku Narabe Renju (T-Chi)\0", NULL, "\u538c\u9c7c\u732b\u732b", "Miscellaneous",
+	"Gomoku Narabe Renju (T-Chi)\0", NULL, "Yan Yu Mao Mao", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_STRATEGY, 0,
 	NESGetZipName, nes_gomokucRomInfo, nes_gomokucRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15664,7 +15664,7 @@ STD_ROM_FN(nes_roadfighterc)
 
 struct BurnDriver BurnDrvnes_roadfighterc = {
 	"nes_roadfighterc", "nes_roadfighter", NULL, NULL, "2009",
-	"Road Fighter (T-Chi, v1.2)\0", NULL, "\u4e5d\u73ed", "Miscellaneous",
+	"Road Fighter (T-Chi, v1.2)\0", NULL, "Jiu Ban", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RACING, 0,
 	NESGetZipName, nes_roadfightercRomInfo, nes_roadfightercRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15682,7 +15682,7 @@ STD_ROM_FN(nes_kungfuc)
 
 struct BurnDriver BurnDrvnes_kungfuc = {
 	"nes_kungfuc", "nes_kungfu", NULL, NULL, "2010",
-	"Kung Fu (T-Chi)\0", NULL, "\u4e5d\u73ed", "Miscellaneous",
+	"Kung Fu (T-Chi)\0", NULL, "Jiu Ban", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_kungfucRomInfo, nes_kungfucRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15738,7 +15738,7 @@ STD_ROM_FN(nes_zenc)
 
 struct BurnDriver BurnDrvnes_zenc = {
 	"nes_zenc", "nes_zen", NULL, NULL, "2022",
-	"Zen - Intergalactic Ninja (T-Chi)\0", NULL, "\u9006\u6e38\u306e\u4e94\u5f69\u9b5a", "Miscellaneous",
+	"Zen - Intergalactic Ninja (T-Chi)\0", NULL, "Ni You De Wu Cai Yu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN, 0,
 	NESGetZipName, nes_zencRomInfo, nes_zencRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15852,7 +15852,7 @@ STD_ROM_FN(nes_finalmissionjc)
 
 struct BurnDriver BurnDrvnes_finalmissionjc = {
 	"nes_finalmissionjc", "nes_scat", NULL, NULL, "2021",
-	"Final Mission (T-Chi)\0", NULL, "\u9006\u6e38\u306e\u4e94\u5f69\u9b5a", "Miscellaneous",
+	"Final Mission (T-Chi)\0", NULL, "Ni You De Wu Cai Yu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_HORSHOOT, 0,
 	NESGetZipName, nes_finalmissionjcRomInfo, nes_finalmissionjcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15871,7 +15871,7 @@ STD_ROM_FN(nes_spidemanc)
 
 struct BurnDriver BurnDrvnes_spidemanc = {
 	"nes_spidemanc", "nes_spideman", NULL, NULL, "2021",
-	"Spider-Man - Return of the Sinister Six (T-Chi)\0", NULL, "\u9006\u6e38\u306e\u4e94\u5f69\u9b5a", "Miscellaneous",
+	"Spider-Man - Return of the Sinister Six (T-Chi)\0", NULL, "Ni You De Wu Cai Yu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_spidemancRomInfo, nes_spidemancRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -16136,7 +16136,7 @@ STD_ROM_FN(nes_tokkyshisolc)
 
 struct BurnDriver BurnDrvnes_tokkyshisolc = {
 	"nes_tokkyshisolc", "nes_shatterhand", NULL, NULL, "2021",
-	"Tokkyuu Shirei Solbrain (T-Chi)\0", NULL, "\u9006\u6e38\u306e\u4e94\u5f69\u9b5a", "Miscellaneous",
+	"Tokkyuu Shirei Solbrain (T-Chi)\0", NULL, "Ni You De Wu Cai Yu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_tokkyshisolcRomInfo, nes_tokkyshisolcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -16155,7 +16155,7 @@ STD_ROM_FN(nes_astyanaxc)
 
 struct BurnDriver BurnDrvnes_astyanaxc = {
 	"nes_astyanaxc", "nes_astyanax", NULL, NULL, "2021",
-	"Astyanax (T-Chi, v1.1)\0", NULL, "\u9006\u6e38\u306e\u4e94\u5f69\u9b5a", "Miscellaneous",
+	"Astyanax (T-Chi, v1.1)\0", NULL, "Ni You De Wu Cai Yu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_astyanaxcRomInfo, nes_astyanaxcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -16289,7 +16289,7 @@ STD_ROM_FN(nes_mappyc)
 
 struct BurnDriver BurnDrvnes_mappyc = {
 	"nes_mappyc", "nes_mappy", NULL, NULL, "2017",
-	"Mappy (T-Chi, v2.0)\0", NULL, "\u4e5d\u73ed", "Miscellaneous",
+	"Mappy (T-Chi, v2.0)\0", NULL, "Jiu Ban", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_mappycRomInfo, nes_mappycRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -16422,7 +16422,7 @@ STD_ROM_FN(nes_tinytooadvsc)
 
 struct BurnDriver BurnDrvnes_tinytooadvsc = {
 	"nes_tinytooadvsc", "nes_tinytooadv", NULL, NULL, "2022",
-	"Tiny Toon Adventures (T-Chi)\0", NULL, "\u9006\u6e38\u306e\u4e94\u5f69\u9b5a", "Miscellaneous",
+	"Tiny Toon Adventures (T-Chi)\0", NULL, "Ni You De Wu Cai Yu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_tinytooadvscRomInfo, nes_tinytooadvscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -16650,7 +16650,7 @@ STD_ROM_FN(nes_kagec)
 
 struct BurnDriver BurnDrvnes_kagec = {
 	"nes_kagec", "nes_shadonin", NULL, NULL, "2021",
-	"Kage (T-Chi)\0", NULL, "\u9006\u6e38\u306e\u4e94\u5f69\u9b5a", "Miscellaneous",
+	"Kage (T-Chi)\0", NULL, "Ni You De Wu Cai Yu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NESGetZipName, nes_kagecRomInfo, nes_kagecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -16801,7 +16801,7 @@ STD_ROM_FN(nes_gunnacc)
 
 struct BurnDriver BurnDrvnes_gunnacc = {
 	"nes_gunnacc", "nes_gunnac", NULL, NULL, "2013",
-	"Gun Nac (T-Chi)\0", NULL, "\u4e5d\u73ed", "Miscellaneous",
+	"Gun Nac (T-Chi)\0", NULL, "Jiu Ban", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
 	NESGetZipName, nes_gunnaccRomInfo, nes_gunnaccRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -16809,10 +16809,10 @@ struct BurnDriver BurnDrvnes_gunnacc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Mitsume ga Tooru (T-Chi, v2)
+// Mitsume ga Tooru (T-Chi, v3)
 // https://www.ppxclub.com/forum.php?mod=viewthread&tid=710666
 static struct BurnRomInfo nes_mitsumegatoorucRomDesc[] = {
-	{ "Mitsume ga Tooru (T-Chi, v2).nes",          393232, 0x2c6d4e10, BRF_ESS | BRF_PRG },
+	{ "Mitsume ga Tooru (T-Chi, v3).nes",          393232, 0x5087a64d, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_mitsumegatooruc)
@@ -16820,7 +16820,7 @@ STD_ROM_FN(nes_mitsumegatooruc)
 
 struct BurnDriver BurnDrvnes_mitsumegatooruc = {
 	"nes_mitsumegatooruc", "nes_mitsumegatooru", NULL, NULL, "2022",
-	"Mitsume ga Tooru (T-Chi, v2)\0", NULL, "\u9006\u6e38\u306e\u4e94\u5f69\u9b5a", "Miscellaneous",
+	"Mitsume ga Tooru (T-Chi, v3)\0", NULL, "Ni You De Wu Cai Yu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_mitsumegatoorucRomInfo, nes_mitsumegatoorucRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -17038,7 +17038,7 @@ struct BurnDriver BurnDrvnes_heberekecc= {
 };
 
 // Gun.Smoke (T-Chi)
-// Translation by MEZARANSU & gonerFC
+// http://www.dmgrom.com/cnpage.html
 static struct BurnRomInfo nes_gunsmokecRomDesc[] = {
 	{ "Gun.Smoke (T-Chi).nes",          163856, 0x4e0b7a7d, BRF_ESS | BRF_PRG },
 };
@@ -17048,7 +17048,7 @@ STD_ROM_FN(nes_gunsmokec)
 
 struct BurnDriver BurnDrvnes_gunsmokec = {
 	"nes_gunsmokec", "nes_gunsmoke", NULL, NULL, "2019",
-	"Gun.Smoke (T-Chi)\0", NULL, "MEZARANSU & gonerFC", "Miscellaneous",
+	"Gun.Smoke (T-Chi)\0", NULL, "DMG Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN, 0,
 	NESGetZipName, nes_gunsmokecRomInfo, nes_gunsmokecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -17143,7 +17143,7 @@ STD_ROM_FN(nes_daikunogensanc)
 
 struct BurnDriver BurnDrvnes_daikunogensanc = {
 	"nes_daikunogensanc", "nes_daikunogensan", NULL, NULL, "2019",
-	"Daiku no Gen-san (T-Chi)\0", NULL, "MEZARANSU", "Miscellaneous",
+	"Daiku no Gen-san (T-Chi)\0", NULL, "DMG Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_daikunogensancRomInfo, nes_daikunogensancRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -17161,7 +17161,7 @@ STD_ROM_FN(nes_jigokgokmarc)
 
 struct BurnDriver BurnDrvnes_jigokgokmarc = {
 	"nes_jigokgokmarc", "nes_kabuki", NULL, NULL, "2019",
-	"Jigoku Gokuraku Maru (T-Chi)\0", NULL, "MEZARANSU & Jin Di", "Miscellaneous",
+	"Jigoku Gokuraku Maru (T-Chi)\0", NULL, "DMG Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_jigokgokmarcRomInfo, nes_jigokgokmarcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -20525,6 +20525,44 @@ struct BurnDriver BurnDrvnes_dai2jisuprotaji = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_STRATEGY, 0,
 	NESGetZipName, nes_dai2jisuprotajiRomInfo, nes_dai2jisuprotajiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Shin 4 Nin Uchi Mahjong (T-Chi)
+// http://wangyixiao.ysepan.com/
+static struct BurnRomInfo nes_shin4ninuchmacRomDesc[] = {
+	{ "Shin 4 Nin Uchi Mahjong (T-Chi).nes",          393232, 0x975f7379, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_shin4ninuchmac)
+STD_ROM_FN(nes_shin4ninuchmac)
+
+struct BurnDriver BurnDrvnes_shin4ninuchmac = {
+	"nes_shin4ninuchmac", "nes_shin4ninuchma", NULL, NULL, "2013",
+	"Shin 4 Nin Uchi Mahjong (T-Chi)\0", NULL, "Wang Yixiao", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_NES, GBF_MAHJONG, 0,
+	NESGetZipName, nes_shin4ninuchmacRomInfo, nes_shin4ninuchmacRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Alien 3 (T-Chi, v1.1)
+// http://www.dmgrom.com/cnpage.html
+static struct BurnRomInfo nes_alien3scRomDesc[] = {
+	{ "Alien 3 (T-Chi, v1.1).nes",          262160, 0x70506f6f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_alien3sc)
+STD_ROM_FN(nes_alien3sc)
+
+struct BurnDriver BurnDrvnes_alien3sc = {
+	"nes_alien3sc", "nes_alien3", NULL, NULL, "2020",
+	"Alien 3 (T-Chi, v1.1)\0", NULL, "DMG Team", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_alien3scRomInfo, nes_alien3scRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -45695,10 +45733,10 @@ STD_ROM_PICK(nes_solstice)
 STD_ROM_FN(nes_solstice)
 
 struct BurnDriver BurnDrvnes_solstice = {
-	"nes_solstice", NULL, NULL, NULL, "1990",
-	"Solstice (Japan)\0", NULL, "Epic / Sony Records", "Miscellaneous",
+	"nes_solstice", "nes_solst", NULL, NULL, "1990",
+	"Solstice - Sanjigen Meikyuu no Kyoujuu (Japan)\0", NULL, "Epic / Sony Records", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_PUZZLE, 0,
 	NESGetZipName, nes_solsticeRomInfo, nes_solsticeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -49970,6 +50008,23 @@ struct BurnDriver BurnDrvnes_willow = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_willowRomInfo, nes_willowRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_willowjRomDesc[] = {
+	{ "Willow (Japan).nes",          262160, 0x189462c2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_willowj)
+STD_ROM_FN(nes_willowj)
+
+struct BurnDriver BurnDrvnes_willowj = {
+	"nes_willowj", "nes_willow", NULL, NULL, "1989",
+	"Willow (Japan)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG, 0,
+	NESGetZipName, nes_willowjRomInfo, nes_willowjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

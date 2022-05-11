@@ -519,6 +519,7 @@ DRV		BurnDrvsms_alien3c;
 DRV		BurnDrvnes_alien3c;
 DRV		BurnDrvmd_alien3s;
 DRV		BurnDrvgg_alien3j;
+DRV		BurnDrvnes_alien3sc;
 DRV		BurnDrvnes_alien3;
 DRV		BurnSpecAlien8;
 DRV		BurnDrvMSX_alien8;
@@ -4098,6 +4099,7 @@ DRV		BurnDrvDdp3blkb;
 DRV		BurnDrvDdp3blk;
 DRV		BurnDrvDdp3blka;
 DRV		BurnDrvDdp3;
+DRV		BurnDrvsdojak;
 DRV		BurnDrvDdpsdoj;
 DRV		BurnDrvDogfight;
 DRV		BurnDrvMSX_dogfight;
@@ -4827,6 +4829,7 @@ DRV		BurnDrvmd_elit96;
 DRV		BurnSpecElixirvitae;
 DRV		BurnDrvnes_elnarknozaihou;
 DRV		BurnSpecelvewarr;
+DRV		BurnDrvEmeraldah;
 DRV		BurnDrvEmeraldaj;
 DRV		BurnDrvEmeraldaja;
 DRV		BurnDrvEmeralda;
@@ -13578,6 +13581,7 @@ DRV		BurnDrvmd_sokoban;
 DRV		BurnDrvmd_shikinjo;
 DRV		BurnDrvgg_shikinjo;
 DRV		BurnDrvnes_shin4ninuchma;
+DRV		BurnDrvnes_shin4ninuchmac;
 DRV		BurnDrvnes_shinsamspi2;
 DRV		BurnDrvmd_ragnacen;
 DRV		BurnDrvmd_ragnacenp;
@@ -17837,6 +17841,7 @@ DRV		BurnDrvWwestern;
 DRV		BurnDrvWwestern1;
 DRV		BurnDrvgg_wildsnake;
 DRV		BurnDrvmd_arcadeghu;
+DRV		BurnDrvnes_willowj;
 DRV		BurnDrvCpsWillowj;
 DRV		BurnDrvnes_willownfh;
 DRV		BurnDrvCpsWillowuo;
@@ -19193,6 +19198,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_alien3c,		// Alien 3 (Hack, Spanish v1.1)
 	&BurnDrvmd_alien3s,			// Alien 3 (Hack, Spanish)
 	&BurnDrvgg_alien3j,			// Alien 3 (Jpn)
+	&BurnDrvnes_alien3sc,		// Alien 3 (T-Chi, v1.1)
 	&BurnDrvnes_alien3,			// Alien 3 (USA)
 	&BurnSpecAlien8,			// Alien 8 (48K)
 	&BurnDrvMSX_alien8,			// Alien 8 (Jpn)
@@ -22772,6 +22778,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDdp3blk,			// DoDonPachi Dai-Ou-Jou Black Label (Japan, 2002.10.07.Black Ver, newer)
 	&BurnDrvDdp3blka,			// DoDonPachi Dai-Ou-Jou Black Label (Japan, 2002.10.07.Black Ver, older)
 	&BurnDrvDdp3,				// DoDonPachi III (World, 2002.05.15 Master Ver)
+	&BurnDrvsdojak,				// DoDonPachi SaiDaiOuJou & Knuckles (CaveDwellers Hack)
 	&BurnDrvDdpsdoj,			// DoDonPachi SaiDaiOuJou (2012/ 4/20)
 	&BurnDrvDogfight,			// Dog Fight (Thunderbolt)
 	&BurnDrvMSX_dogfight,		// Dog Fighter (Euro)
@@ -23501,6 +23508,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecElixirvitae,		// Elixir Vitae (128K) (HB)
 	&BurnDrvnes_elnarknozaihou,	// Elnark no Zaihou (Japan)
 	&BurnSpecelvewarr,			// Elven Warrior (128K)
+	&BurnDrvEmeraldah,			// Emeraldia (Bankbank New Rotate Hack)
 	&BurnDrvEmeraldaj,			// Emeraldia (Japan Version B)
 	&BurnDrvEmeraldaja,			// Emeraldia (Japan)
 	&BurnDrvEmeralda,			// Emeraldia (World)
@@ -28377,7 +28385,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_misterionilo,	// Misterio del Nilo, El (Spanish)
 	&BurnDrvnes_mitokou,		// Mito Koumon - Sekai Manyuu Ki (Japan)
 	&BurnDrvnes_mitsumegatooruj,// Mitsume ga Tooru (Japan)
-	&BurnDrvnes_mitsumegatooruc,// Mitsume ga Tooru (T-Chi, v2)
+	&BurnDrvnes_mitsumegatooruc,// Mitsume ga Tooru (T-Chi, v3)
 	&BurnDrvnes_mitsumegatooru,	// Mitsume ga Tooru (T-Eng)
 	&BurnDrvMSX_mitsumgt,		// Mitsume Ga Tooru - The Three-Eyed One Comes Here (Jpn)
 	&BurnDrvMSX_mitsumgten,		// Mitsume Ga Tooru - The Three-Eyed One Comes Here (T-Eng)
@@ -32252,6 +32260,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_shikinjo,		// Shikinjoh (Jpn)
 	&BurnDrvgg_shikinjo,		// Shikinjou (Jpn)
 	&BurnDrvnes_shin4ninuchma,	// Shin 4 Nin Uchi Mahjong (Japan)
+	&BurnDrvnes_shin4ninuchmac,	// Shin 4 Nin Uchi Mahjong (T-Chi)
 	&BurnDrvnes_shinsamspi2,	// Shin Samurai Spirits 2 - Haoumaru Jigoku Hen (China)
 	&BurnDrvmd_ragnacen,		// Shin Souseiki Ragnacenty (Jpn)
 	&BurnDrvmd_ragnacenp,		// Shin Souseiki Ragnacenty (Jpn, Prototype)
@@ -32700,7 +32709,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecsolomon,			// Solomon's Key (48K)
 	&BurnDrvSolomon,			// Solomon's Key (US)
 	&BurnDrvnes_solomonskey,	// Solomon's Key (USA)
-	&BurnDrvnes_solstice,		// Solstice (Japan)
+	&BurnDrvnes_solstice,		// Solstice - Sanjigen Meikyuu no Kyoujuu (Japan)
 	&BurnDrvnes_solst,			// Solstice - The Quest for the Staff of Demnos (USA)
 	&BurnDrvnes_somari,			// Somari (Unl)
 	&BurnDrvmd_somarita,		// Somari The Adventurer (Hack V1.1)
@@ -34910,7 +34919,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTheendss,			// The End (SegaSA / Sonic)
 	&BurnDrvTheends,			// The End (Stern)
 	&BurnDrvTheend,				// The End
-	&BurnDrvTeot,				// The Eye of Typhoon (Beta 3 Version)
+	&BurnDrvTeot,				// The Eye of Typhoon (Beta 4 Version)
 	&BurnDrvFlstoryj,			// The FairyLand Story (Japan)
 	&BurnDrvFlstory,			// The FairyLand Story
 	&BurnDrvDaraku,				// The Fallen Angels (World) / Daraku Tenshi - The Fallen Angels (Japan)
@@ -36511,6 +36520,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvWwestern1,			// Wild Western (set 2)
 	&BurnDrvgg_wildsnake,		// WildSnake (Prototype)
 	&BurnDrvmd_arcadeghu,		// Williams Arcade's Greatest Hits (USA)
+	&BurnDrvnes_willowj,		// Willow (Japan)
 	&BurnDrvCpsWillowj,			// Willow (Japan, Japanese)
 	&BurnDrvnes_willownfh,		// Willow (No Flash ed.) (Hack, v1.1)
 	&BurnDrvCpsWillowuo,		// Willow (USA Old Ver.)

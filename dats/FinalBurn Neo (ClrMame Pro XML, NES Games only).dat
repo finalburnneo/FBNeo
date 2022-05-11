@@ -664,6 +664,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="alien3sc" cloneof="alien3" romof="alien3">
+		<comment>Hack</comment>
+		<description>Alien 3 (T-Chi, v1.1)</description>
+		<year>2020</year>
+		<manufacturer>DMG Team</manufacturer>
+		<rom name="Alien 3 (T-Chi, v1.1).nes" size="262160" crc="70506f6f"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="alien3">
 		<description>Alien 3 (USA)</description>
 		<year>1993</year>
@@ -1044,7 +1053,7 @@
 		<comment>Hack</comment>
 		<description>Astyanax (T-Chi, v1.1)</description>
 		<year>2021</year>
-		<manufacturer>逆游の五彩魚</manufacturer>
+		<manufacturer>Ni You De Wu Cai Yu</manufacturer>
 		<rom name="Astyanax (T-Chi, v1.1).nes" size="524304" crc="1517f03a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3338,7 +3347,7 @@
 		<comment>Hack</comment>
 		<description>Daiku no Gen-san (T-Chi)</description>
 		<year>2019</year>
-		<manufacturer>MEZARANSU</manufacturer>
+		<manufacturer>DMG Team</manufacturer>
 		<rom name="Daiku no Gen-san (T-Chi).nes" size="393232" crc="f0543c45"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -5484,7 +5493,7 @@
 		<comment>Hack</comment>
 		<description>Final Mission (T-Chi)</description>
 		<year>2021</year>
-		<manufacturer>逆游の五彩魚</manufacturer>
+		<manufacturer>Ni You De Wu Cai Yu</manufacturer>
 		<rom name="Final Mission (T-Chi).nes" size="393232" crc="9e25f63f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6431,7 +6440,7 @@
 	<game name="gomokuc" cloneof="gomoku" romof="gomoku">
 		<description>Gomoku Narabe Renju (T-Chi)</description>
 		<year>2020</year>
-		<manufacturer>厌鱼猫猫</manufacturer>
+		<manufacturer>Yan Yu Mao Mao</manufacturer>
 		<rom name="Gomoku Narabe Renju (T-Chi).nes" size="24592" crc="bccf3f36"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6689,7 +6698,7 @@
 		<comment>Hack</comment>
 		<description>Gun Nac (T-Chi)</description>
 		<year>2013</year>
-		<manufacturer>九班</manufacturer>
+		<manufacturer>Jiu Ban</manufacturer>
 		<rom name="Gun Nac (T-Chi).nes" size="393232" crc="3c63f85a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6748,7 +6757,7 @@
 		<comment>Hack</comment>
 		<description>Gun.Smoke (T-Chi)</description>
 		<year>2019</year>
-		<manufacturer>MEZARANSU &amp; gonerFC</manufacturer>
+		<manufacturer>DMG Team</manufacturer>
 		<rom name="Gun.Smoke (T-Chi).nes" size="163856" crc="4e0b7a7d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7754,7 +7763,7 @@
 		<comment>Hack</comment>
 		<description>Jigoku Gokuraku Maru (T-Chi)</description>
 		<year>2019</year>
-		<manufacturer>MEZARANSU &amp; Jin Di</manufacturer>
+		<manufacturer>DMG Team</manufacturer>
 		<rom name="Jigoku Gokuraku Maru (T-Chi).nes" size="393232" crc="375bf357"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8070,7 +8079,7 @@
 		<comment>Hack</comment>
 		<description>Kage (T-Chi)</description>
 		<year>2021</year>
-		<manufacturer>逆游の五彩魚</manufacturer>
+		<manufacturer>Ni You De Wu Cai Yu</manufacturer>
 		<rom name="Kage (T-Chi).nes" size="270352" crc="2ff63b35"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8625,7 +8634,7 @@
 	<game name="kungfuc" cloneof="kungfu" romof="kungfu">
 		<description>Kung Fu (T-Chi)</description>
 		<year>2010</year>
-		<manufacturer>九班</manufacturer>
+		<manufacturer>Jiu Ban</manufacturer>
 		<rom name="Kung Fu (T-Chi).nes" size="24592" crc="480a29b7"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9685,7 +9694,7 @@
 		<comment>Hack</comment>
 		<description>Mappy (T-Chi, v2.0)</description>
 		<year>2017</year>
-		<manufacturer>九班</manufacturer>
+		<manufacturer>Jiu Ban</manufacturer>
 		<rom name="Mappy (T-Chi, v2.0).nes" size="40976" crc="7c922692"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10391,10 +10400,10 @@
 	</game>
 	<game name="mitsumegatooruc" cloneof="mitsumegatooru" romof="mitsumegatooru">
 		<comment>Hack</comment>
-		<description>Mitsume ga Tooru (T-Chi, v2)</description>
+		<description>Mitsume ga Tooru (T-Chi, v3)</description>
 		<year>2022</year>
-		<manufacturer>逆游の五彩魚</manufacturer>
-		<rom name="Mitsume ga Tooru (T-Chi, v2).nes" size="393232" crc="2c6d4e10"/>
+		<manufacturer>Ni You De Wu Cai Yu</manufacturer>
+		<rom name="Mitsume ga Tooru (T-Chi, v3).nes" size="393232" crc="5087a64d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -12498,7 +12507,7 @@
 	<game name="roadfighterc" cloneof="roadfighter" romof="roadfighter">
 		<description>Road Fighter (T-Chi, v1.2)</description>
 		<year>2009</year>
-		<manufacturer>九班</manufacturer>
+		<manufacturer>Jiu Ban</manufacturer>
 		<rom name="Road Fighter (T-Chi, v1.2).nes" size="24592" crc="b5d69e4c"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13271,6 +13280,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="shin4ninuchmac" cloneof="shin4ninuchma" romof="shin4ninuchma">
+		<comment>Hack</comment>
+		<description>Shin 4 Nin Uchi Mahjong (T-Chi)</description>
+		<year>2013</year>
+		<manufacturer>Wang Yixiao</manufacturer>
+		<rom name="Shin 4 Nin Uchi Mahjong (T-Chi).nes" size="393232" crc="975f7379"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="shinsamspi2">
 		<description>Shin Samurai Spirits 2 - Haoumaru Jigoku Hen (China)</description>
 		<year>1989?</year>
@@ -13692,8 +13710,8 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="solstice">
-		<description>Solstice (Japan)</description>
+	<game name="solstice" cloneof="solst" romof="solst">
+		<description>Solstice - Sanjigen Meikyuu no Kyoujuu (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Epic / Sony Records</manufacturer>
 		<rom name="Solstice (Japan).nes" size="131088" crc="59bb08e7"/>
@@ -13827,7 +13845,7 @@
 		<comment>Hack</comment>
 		<description>Spider-Man - Return of the Sinister Six (T-Chi)</description>
 		<year>2021</year>
-		<manufacturer>逆游の五彩魚</manufacturer>
+		<manufacturer>Ni You De Wu Cai Yu</manufacturer>
 		<rom name="Spider-Man - Return of the Sinister Six (T-Chi).nes" size="393232" crc="a116d626"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -15604,7 +15622,7 @@
 		<comment>Hack</comment>
 		<description>Tiny Toon Adventures (T-Chi)</description>
 		<year>2022</year>
-		<manufacturer>逆游の五彩魚</manufacturer>
+		<manufacturer>Ni You De Wu Cai Yu</manufacturer>
 		<rom name="Tiny Toon Adventures (T-Chi).nes" size="344080" crc="fbf2bb98"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -15694,7 +15712,7 @@
 		<comment>Hack</comment>
 		<description>Tokkyuu Shirei Solbrain (T-Chi)</description>
 		<year>2021</year>
-		<manufacturer>逆游の五彩魚</manufacturer>
+		<manufacturer>Ni You De Wu Cai Yu</manufacturer>
 		<rom name="Tokkyuu Shirei Solbrain (T-Chi).nes" size="524304" crc="e006a59f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -16621,6 +16639,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="willowj" cloneof="willow" romof="willow">
+		<description>Willow (Japan)</description>
+		<year>1989</year>
+		<manufacturer>Capcom</manufacturer>
+		<rom name="Willow (Japan).nes" size="262160" crc="189462c2"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="willownfh" cloneof="willow" romof="willow">
 		<comment>Hack</comment>
 		<description>Willow (No Flash ed.) (Hack, v1.1)</description>
@@ -17139,7 +17165,7 @@
 		<comment>Hack</comment>
 		<description>Zen - Intergalactic Ninja (T-Chi)</description>
 		<year>2022</year>
-		<manufacturer>逆游の五彩魚</manufacturer>
+		<manufacturer>Ni You De Wu Cai Yu</manufacturer>
 		<rom name="Zen - Intergalactic Ninja (T-Chi).nes" size="524304" crc="b8e36aee"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>

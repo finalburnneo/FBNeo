@@ -1531,6 +1531,29 @@ struct BurnDriver BurnDrvEmeraldaja = {
 };
 
 
+// Emeraldia (Bankbank New Rotate Hack)
+
+static struct BurnRomInfo emeraldahRomDesc[] = {
+	{ "em1-ep0l.6c",			0x080000, 0x9b60320f, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "em1-ep0u.6f",			0x080000, 0x5411cbec, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "em1-ep1l.7c",			0x080000, 0x6c3e5b53, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "em1-ep1u.7f",			0x080000, 0xdee15a81, 1 | BRF_PRG | BRF_ESS }, //  3
+};
+
+STDROMPICKEXT(emeraldah, emeraldah, namcoc69)
+STD_ROM_FN(emeraldah)
+
+struct BurnDriver BurnDrvEmeraldah = {
+	"emeraldah", "emeralda", "namcoc69", NULL, "2022",
+	"Emeraldia (Bankbank New Rotate Hack)\0", "Slight GFX Issues", "Namco", "NA-1 / NA-2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, emeraldahRomInfo, emeraldahRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
+	EmeraldaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
+	304, 224, 4, 3
+};
+
+
 // Exvania (World)
 
 static struct BurnRomInfo exvaniaRomDesc[] = {

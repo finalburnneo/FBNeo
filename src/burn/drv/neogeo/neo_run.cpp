@@ -706,7 +706,7 @@ static INT32 LoadRoms()
 
 				// If the expansion bytes of 0x800000 << 2 are all empty data,
 				// then [SpriteSize] will subtract the expansion part to ensure that [NeoTextROM] is obtained correctly.
-				for (INT32 i = 0, nIndex = 0; i < ((0x800000 << 2) / nNeoTextROMSize[nNeoActiveSlot]); i++, nIndex++) {
+				for (INT32 i = 0; i < ((0x800000 << 2) / nNeoTextROMSize[nNeoActiveSlot]); i++) {
 
 					// The last byte position segment to appear is the true Length of [nSpriteSize].
 					// First move the pointer to the last data segment of the length of [nNeoTextROMSize].

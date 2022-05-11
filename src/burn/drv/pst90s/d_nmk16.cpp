@@ -9338,24 +9338,24 @@ struct BurnDriver BurnDrvTdragonb3 = {
 // Acrobat Mission
 
 static struct BurnRomInfo acrobatmRomDesc[] = {
-	{ "02_ic100.bin",	0x020000, 0x3fe487f4, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "01_ic101.bin",	0x020000, 0x17175753, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "2.ic100",	0x020000, 0x3fe487f4, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "1.ic101",	0x020000, 0x17175753, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "04_ic74.bin",	0x010000, 0x176905fb, 2 | BRF_PRG | BRF_ESS }, //  2 NMK004 data
+	{ "4.ic74",		0x010000, 0x176905fb, 2 | BRF_PRG | BRF_ESS }, //  2 NMK004 data
 
-	{ "03_ic79.bin",	0x010000, 0xd86c186e, 3 | BRF_GRA },           //  3 Characters
+	{ "3.ic79",		0x010000, 0xd86c186e, 3 | BRF_GRA },           //  3 Characters
 
-	{ "09_ic8.bin",		0x100000, 0x7c12afed, 4 | BRF_GRA },           //  4 Tiles
+	{ "am-03.ic8",	0x100000, 0x7c12afed, 4 | BRF_GRA },           //  4 Tiles
 
-	{ "07_ic42.bin",	0x100000, 0x5672bdaa, 5 | BRF_GRA },           //  5 Sprites
-	{ "08_ic29.bin",	0x080000, 0xb4c0ace3, 5 | BRF_GRA },           //  6
+	{ "am-01.ic42",	0x100000, 0x5672bdaa, 5 | BRF_GRA },           //  5 Sprites
+	{ "am-02.ic29",	0x080000, 0xb4c0ace3, 5 | BRF_GRA },           //  6
 
-	{ "05_ic54.bin",	0x080000, 0x3b8c2b0e, 6 | BRF_SND },           //  7 OKI1 Samples
+	{ "am-05.ic54",	0x080000, 0x3b8c2b0e, 6 | BRF_SND },           //  7 OKI1 Samples
 
-	{ "06_ic53.bin",	0x080000, 0xc1517cd4, 7 | BRF_SND },           //  8 OKI2 Samples
+	{ "am-04.ic53",	0x080000, 0xc1517cd4, 7 | BRF_SND },           //  8 OKI2 Samples
 
-	{ "10_ic81.bin",	0x000100, 0xcfdbb86c, 0 | BRF_OPT },           //  9 Unused proms
-	{ "11_ic80.bin",	0x000100, 0x633ab1c9, 0 | BRF_OPT },           // 10
+	{ "10.ic81",	0x000100, 0xcfdbb86c, 0 | BRF_OPT },           //  9 Unused proms
+	{ "11.ic80",	0x000100, 0x633ab1c9, 0 | BRF_OPT },           // 10
 };
 
 STDROMPICKEXT(acrobatm, acrobatm, nmk004)

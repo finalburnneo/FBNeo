@@ -401,7 +401,7 @@ static speedy_s gamelist[] = {
 	   "pinkswtsx", "pinkswtssc", "\0", }, 				0xc05176a, 0xc002310 },
 	{ {"deathsml", "\0", }, 							0xc0519a2, 0xc002310 },
 	{ {"dsmbl", "ddpdfk", "ddpdfk10", "dfkbl",
-	   "akatana", "ddpsdoj", "\0", }, 					0xc1d1346, 0xc002310 },
+	   "akatana", "ddpsdoj", "sdojak", "\0", },			0xc1d1346, 0xc002310 },
 	{ {"\0", }, 0, 0 },
 };
 
@@ -568,6 +568,8 @@ static INT32 DrvFrame()
 	Sh3Close();
 
 	rtc9701_once_per_frame();
+
+	epic12_wait_blitterthread();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -1299,6 +1301,31 @@ struct BurnDriver BurnDrvDdpsdoj = {
 	L"DoDonPachi SaiDaiOuJou\0\u6012\u9996\u9818\u8702 \u5927\u5fa9\u6d3b (2012/4/20)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, ddpsdojRomInfo, ddpsdojRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	240, 320, 3, 4
+};
+
+
+// DoDonPachi SaiDaiOuJou & Knuckles (CaveDwellers Hack)
+
+static struct BurnRomInfo sdojakRomDesc[] = {
+	{ "sdojak.u4",		0x0400000, 0xa878ff4c, 2 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
+
+	{ "sdojak.u2",		0x8400000, 0x54353425, 2 | BRF_PRG | BRF_ESS }, //  1 Flash
+
+	{ "u23",			0x0400000, 0x32b91544, 4 | BRF_SND },           //  2 YMZ770 Samples
+	{ "u24",			0x0400000, 0x7b9e749f, 4 | BRF_SND },           //  3
+};
+
+STD_ROM_PICK(sdojak)
+STD_ROM_FN(sdojak)
+
+struct BurnDriver BurnDrvsdojak = {
+	"sdojak", "ddpsdoj", NULL, NULL, "2012",
+	"DoDonPachi SaiDaiOuJou & Knuckles (CaveDwellers Hack)\0", NULL, "Cave", "CA???",
+	L"DoDonPachi SaiDaiOuJou & Knuckles (CaveDwellers Hack)\0\u6012\u9996\u9818\u8702 \u5927\u5fa9\u6d3b (2012/4/20)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	NULL, sdojakRomInfo, sdojakRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
 };

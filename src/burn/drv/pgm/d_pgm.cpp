@@ -8606,12 +8606,12 @@ struct BurnDriver BurnDrvkov2dzxx = {
 
 
 // Knights of Valour Plus 2012 (Wu Shuang Edition)
-// GOTVG 2022/01/30
+// GOTVG 2022/05/09
 
 static struct BurnRomInfo kovplus12dwRomDesc[] = {
-	{ "12dw_p0603_119.u1",	0x0400000, 0x56928cb8, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "12dw_p0603_119.u1",	0x0400000, 0x574dca7a, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
-	{ "12dw_t0600.u11",		0x0800000, 0x842b7711, 2 | BRF_GRA },			//  1 Tile data
+	{ "12dw_t0600.u11",		0x0800000, 0x253503e6, 2 | BRF_GRA },			//  1 Tile data
 
 	{ "12dw_a0600.u2",		0x0800000, 0x5bd7ea9f, 3 | BRF_GRA },			//  2 Sprite Color Data
 	{ "pgm_a0601.u4",		0x0800000, 0xff7a4373, 3 | BRF_GRA },			//  3

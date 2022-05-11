@@ -76,7 +76,7 @@ It is either not supported or you have a bad rom, your logs will give you more d
 There is also a few games marked as not working, try one of their clones.
 
 ### I patched game XXX and can't run it, why ?
-Because it's considered a bad rom since the crcs won't match, however there is a method to use a patched romset, if you put the patched version of the romset into `SYSTEM_DIRECTORY/fbneo/patched` it will work (NB: you can strip it of any file that don't differ from non-patched romset if you want)
+Because it's considered a bad rom since the crcs won't match, however there is a method to use a patched romset, if you put the patched version of the romset into `SYSTEM_DIRECTORY/fbneo/patched` it will work (NB: you can strip it of any file that don't differ from non-patched romset if you want). **The romset you must launch is still the original non-patched romset though (its content will be overrided by the content of the patched one)**, you can disable that override by toggling off the `Allow patched romsets` core option.
 
 ### I bought unibios from http://unibios.free.fr/ and can't run it, why ?
 Same as above.

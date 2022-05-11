@@ -1,4 +1,8 @@
 /* ported from mame 0.155 */
+/*
+Copyright (c) 1997-2015 Nicola Salmoria and the MAME team
+Redistributions may not be sold, nor may they be used in a commercial product or activity.
+*/
 /*****************************************************************************
  *
  *   sh4.c

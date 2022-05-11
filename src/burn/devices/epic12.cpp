@@ -1,4 +1,8 @@
 /* ported from mame 0.155 */
+/*
+Copyright (c) 1997-2015 Nicola Salmoria and the MAME team
+Redistributions may not be sold, nor may they be used in a commercial product or activity.
+*/
 /* emulation of Altera Cyclone EPIC12 FPGA programmed as a blitter */
 /* code by David Haywood, Luca Elia, MetalliC */
 

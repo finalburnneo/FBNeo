@@ -569,6 +569,8 @@ static INT32 DrvFrame()
 
 	rtc9701_once_per_frame();
 
+	epic12_wait_blitterthread();
+
 	if (pBurnDraw) {
 		BurnDrvRedraw();
 	}

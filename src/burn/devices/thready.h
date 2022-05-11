@@ -29,6 +29,7 @@ struct threadystruct
 {
 	INT32 thready_ok;
 	INT32 ok_to_thread;
+	INT32 ok_to_wait;
 	INT32 end_thread;
 	HANDLE our_thread;
 	HANDLE our_event;
@@ -39,6 +40,7 @@ struct threadystruct
 	void init(void (*thread_callback)()) {
 		thready_ok = 0;
 		ok_to_thread = 0;
+		ok_to_wait = 0;
 
 		our_callback = thread_callback;
 
@@ -87,14 +89,16 @@ struct threadystruct
 	void notify() {
 		if (thready_ok && ok_to_thread) {
 			SetEvent(our_event);
+			ok_to_wait = 1;
 		} else {
 			// fallback to single-threaded mode
 			our_callback();
 		}
 	}
 	void notify_wait() {
-		if (ok_to_thread) {
+		if (ok_to_thread && ok_to_wait) {
 			WaitForSingleObject(wait_event, INFINITE);
+			ok_to_wait = 0;
 		}
 	}
 };
@@ -127,6 +131,7 @@ struct threadystruct
 {
 	INT32 thready_ok;
 	INT32 ok_to_thread;
+	INT32 ok_to_wait;
 	INT32 end_thread;
 	sem_t our_event;
 	sem_t wait_event;
@@ -137,6 +142,7 @@ struct threadystruct
 	void init(void (*thread_callback)()) {
 		thready_ok = 0;
 		ok_to_thread = 0;
+		ok_to_wait = 0;
 		end_thread = 0;
 		is_running = 0;
 
@@ -179,14 +185,16 @@ struct threadystruct
 	void notify() {
 		if (thready_ok && ok_to_thread) {
 			sem_post(&our_event);
+			ok_to_wait = 1;
 		} else {
 			// fallback to single-threaded mode
 			our_callback();
 		}
 	}
 	void notify_wait() {
-		if (ok_to_thread) {
+		if (ok_to_wait) {
 			sem_wait(&wait_event);
+			ok_to_wait = 0;
 		}
 	}
 };

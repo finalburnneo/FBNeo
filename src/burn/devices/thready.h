@@ -34,6 +34,10 @@ struct threadystruct
 	HANDLE our_thread;
 	HANDLE our_event;
 	HANDLE wait_event;
+
+	HANDLE startup_timer;
+	LARGE_INTEGER startup_timer_i;
+
 	DWORD our_threadid;
 	void (*our_callback)();
 
@@ -54,8 +58,11 @@ struct threadystruct
 		end_thread = 0; // good to go!
 
 		our_event = CreateEvent(NULL, FALSE, FALSE, NULL);
-		wait_event = CreateEvent(NULL, FALSE, TRUE, NULL);
+		wait_event = CreateEvent(NULL, FALSE, FALSE, NULL);
 		our_thread = CreateThread(NULL, 0, ThreadyProc, NULL, 0, &our_threadid);
+
+		startup_timer = CreateWaitableTimer(NULL, TRUE, NULL);
+		startup_timer_i.QuadPart = -1000; // 100usec, negative = "relative to current time"
 
 		SetThreadIdealProcessor(our_thread, thready_proc);
 
@@ -78,6 +85,7 @@ struct threadystruct
 			CloseHandle(our_event);
 			CloseHandle(our_thread);
 			CloseHandle(wait_event);
+			CloseHandle(startup_timer);
 			thready_ok = 0;
 		}
 	}
@@ -89,6 +97,11 @@ struct threadystruct
 	void notify() {
 		if (thready_ok && ok_to_thread) {
 			SetEvent(our_event);
+
+			// allow thread to get started (1/10 ms) (bug: mushisam doesn't like threaded blitter)
+			SetWaitableTimer(startup_timer, &startup_timer_i, 0, NULL, NULL, 0);
+			WaitForSingleObject(startup_timer, INFINITE);
+
 			ok_to_wait = 1;
 		} else {
 			// fallback to single-threaded mode
@@ -185,6 +198,7 @@ struct threadystruct
 	void notify() {
 		if (thready_ok && ok_to_thread) {
 			sem_post(&our_event);
+			usleep(100);
 			ok_to_wait = 1;
 		} else {
 			// fallback to single-threaded mode
@@ -203,13 +217,13 @@ static threadystruct thready;
 
 static void *ThreadyProc(void*) {
 	do {
-		sem_post(&thready.wait_event);
 		sem_wait(&thready.our_event);
 
 		if (thready.end_thread == 0) {
 			thready.is_running = 1;
 			thready.our_callback();
 			thready.is_running = 0;
+			sem_post(&thready.wait_event);
 		} else {
 			sem_post(&thready.wait_event);
 			thready.end_thread |= 0x100;

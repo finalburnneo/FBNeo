@@ -1701,21 +1701,24 @@ static void NeoPVCInstallHandlers()
 
 static INT32 NeoPVCInit()
 {
-	PVCRAM = (UINT8*)BurnMalloc(0x2000);
-	if (!PVCRAM) return 1;
+	// Turn off PVC protection in ips environment.
+	if (!bDoIpsPatch) {
+		PVCRAM = (UINT8*)BurnMalloc(0x2000);
+		if (!PVCRAM) return 1;
 
-	memset(PVCRAM, 0, 0x2000);
+		memset(PVCRAM, 0, 0x2000);
 
-	NeoCallbackActive->pInstallHandlers = NeoPVCInstallHandlers;
-	NeoCallbackActive->pBankswitch      = NeoPVCMapBank;
-	NeoCallbackActive->pScan            = NeoPVCScan;
+		NeoCallbackActive->pInstallHandlers = NeoPVCInstallHandlers;
+		NeoCallbackActive->pBankswitch = NeoPVCMapBank;
+		NeoCallbackActive->pScan = NeoPVCScan;
+	}
 
 	return NeoInit();
 }
 
 static INT32 NeoPVCExit()
 {
-	BurnFree(PVCRAM);
+	if (NULL != PVCRAM) BurnFree(PVCRAM);
 
 	return NeoExit();
 }
@@ -8735,7 +8738,8 @@ static void mslug5Callback()
 	for (i = 0x100000; i < 0x700000; i++)
 		Neo68KROMActive[i] ^= ~Neo68KROMActive[0x7fffe0 + (i & 0x1f)];
 
-	for (i = 0x100000; i < 0x0500000; i += 4)
+	// Allow byte interleaving to extend to [0x500000 - 0x700000]
+	for (i = 0x100000; i < 0x0700000; i += 4)
 	{
 		UINT16 rom16 = BURN_UNALIGNED_READ16(Neo68KROMActive + i + 1);
 		rom16 = BITSWAP16(rom16, 15, 14, 13, 12, 10, 11, 8, 9, 6, 7, 4, 5, 3, 2, 1, 0);

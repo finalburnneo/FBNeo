@@ -232,6 +232,11 @@ ifeq ($(LIGHT), 1)
 		$(DATAEAST_DIR)/d_pktgaldx.cpp \
 		$(IREM_DIR)/d_m92.cpp \
 		$(IREM_DIR)/d_m107.cpp \
+		$(KONAMI_DIR)/d_gijoe.cpp \
+		$(KONAMI_DIR)/d_moo.cpp \
+		$(KONAMI_DIR)/d_mystwarr.cpp \
+		$(KONAMI_DIR)/d_xexex.cpp \
+		$(KONAMI_DIR)/d_xmen.cpp \
 		$(MIDWAY_DIR)/dcs2k.cpp \
 		$(MIDWAY_DIR)/d_kinst.cpp \
 		$(MIDWAY_DIR)/d_tunit.cpp \

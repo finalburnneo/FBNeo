@@ -9279,6 +9279,15 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="jtoblivion">
+		<comment>Homebrew</comment>
+		<description>Journey to Oblivion (HB, v0.2.7.2)</description>
+		<year>2021</year>
+		<manufacturer>Mega Studios</manufacturer>
+		<rom name="Journey to Oblivion HB v0.2.7.2 (2021)(Mega Studios).bin" size="3860224" crc="4db77bc3"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="jdreddp1" cloneof="jdredd" romof="jdredd">
 		<description>Judge Dredd (USA, Prototype)</description>
 		<year>1995</year>

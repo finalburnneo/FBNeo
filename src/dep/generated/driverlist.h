@@ -7654,6 +7654,7 @@ DRV		BurnDrvJsk;				// Unemulated CPU [NOT WORKING]
 DRV		BurnDrvmd_joshua;
 DRV		BurnDrvnes_joshubatjer;
 DRV		BurnDrvgg_striderr;
+DRV		BurnDrvmd_jtoblivion;
 DRV		BurnDrvnes_journsil;
 DRV		BurnDrvnes_journeyal;
 DRV		BurnDrvJourney;
@@ -18313,6 +18314,7 @@ DRV		BurnDrvCpsXmvsfa;
 DRV		BurnDrvCpsXmvsfb;
 DRV		BurnDrvCpsXmvsfj;
 DRV		BurnDrvCpsXmvsfu;
+DRV		BurnDrvCpsXmvsfcph;
 DRV		BurnDrvmd_xpertsp;
 DRV		BurnDrvmd_xperts;
 DRV		BurnDrvX2222o;
@@ -26333,6 +26335,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_joshua,			// Joshua & The Battle of Jericho (USA)
 	&BurnDrvnes_joshubatjer,	// Joshua & the Battle of Jericho (USA)
 	&BurnDrvgg_striderr,		// Journey from Darkness - Strider Returns (Euro, USA)
+	&BurnDrvmd_jtoblivion,		// Journey to Oblivion (HB, v0.2.7.2)
 	&BurnDrvnes_journsil,		// Journey to Silius (USA)
 	&BurnDrvnes_journeyal,		// Journey to the Center of the Alien (HB)
 	&BurnDrvJourney,			// Journey
@@ -36992,6 +36995,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsXmvsfb,			// X-Men vs Street Fighter (961023 Brazil)
 	&BurnDrvCpsXmvsfj,			// X-Men vs Street Fighter (961023 Japan)
 	&BurnDrvCpsXmvsfu,			// X-Men vs Street Fighter (961023 USA)
+	&BurnDrvCpsXmvsfcph,		// X-Men vs Street Fighter (Hack, 961004 Coop)
 	&BurnDrvmd_xpertsp,			// X-perts (Prototype)
 	&BurnDrvmd_xperts,			// X-perts (USA)
 	&BurnDrvX2222o,				// X2222 (5-level prototype)

@@ -47025,6 +47025,26 @@ struct BurnDriver BurnDrvmd_bravebtl = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Journey to Oblivion
+// source: https://mega-studios-jto.itch.io/journey-to-oblivion
+
+static struct BurnRomInfo md_jtoblivionRomDesc[] = {
+	{ "Journey to Oblivion HB v0.2.7.2 (2021)(Mega Studios).bin",3860224, 0x4db77bc3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_jtoblivion)
+STD_ROM_FN(md_jtoblivion)
+
+struct BurnDriver BurnDrvmd_jtoblivion = {
+	"md_jtoblivion", NULL, NULL, NULL, "2021",
+	"Journey to Oblivion (HB, v0.2.7.2)\0", NULL, "Mega Studios", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
+	MegadriveGetZipName, md_jtoblivionRomInfo, md_jtoblivionRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Metal Blast 2277 (HB)
 static struct BurnRomInfo md_mb2277RomDesc[] = {
 	{ "metal blast 2277 (rev01-2019)(t-arts studio).bin", 2647322, 0xdfd4fe49, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

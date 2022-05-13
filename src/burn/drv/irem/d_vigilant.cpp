@@ -1468,7 +1468,7 @@ static INT32 DrvInit()
 {
 	INT32 nRet = 0, nLen;
 
-	BurnSetRefreshRate(55.0);
+	BurnSetRefreshRate(56.34);
 
 	// Allocate and Blank all required memory
 	Mem = NULL;
@@ -1577,7 +1577,7 @@ static INT32 DrvcInit()
 {
 	INT32 nRet = 0, nLen;
 
-	BurnSetRefreshRate(55.0);
+	BurnSetRefreshRate(56.34);
 
 	// Allocate and Blank all required memory
 	Mem = NULL;
@@ -1685,7 +1685,7 @@ static INT32 DrvbInit()
 {
 	INT32 nRet = 0, nLen;
 
-	BurnSetRefreshRate(55.0);
+	BurnSetRefreshRate(56.34);
 
 	// Allocate and Blank all required memory
 	Mem = NULL;

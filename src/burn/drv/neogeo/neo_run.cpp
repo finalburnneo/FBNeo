@@ -4098,6 +4098,9 @@ static INT32 NeoInitCommon()
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "zedblade")) {
 		bRenderLineByLine = true;
 	}
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "crswd2bl")) {
+		bRenderLineByLine = true;
+	}
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "spinmast")) {
 		NEO_RASTER_IRQ_TWEAK = 3; // fix glitches along the bottom of screen in the water level.
 	}

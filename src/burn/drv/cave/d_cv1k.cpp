@@ -35,7 +35,7 @@ static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
 static UINT8 DrvJoy4[8];
-static UINT8 DrvDips[3];
+static UINT8 DrvDips[4];
 static UINT8 DrvInputs[5];
 static UINT8 DrvReset;
 static HoldCoin<2> hold_coin;
@@ -43,6 +43,7 @@ static HoldCoin<2> hold_coin;
 // cpu speed changing
 static INT32 DriverClock; // selected cpu clockrate
 static INT32 nPrevBurnCPUSpeedAdjust;
+static UINT8 nPrevCPUTenth;
 static INT32 speedhack_burn; // 10ms @ cpu clock, calculated in DrvFrame
 
 static struct BurnInputInfo Cv1kInputList[] = {
@@ -75,6 +76,7 @@ static struct BurnInputInfo Cv1kInputList[] = {
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 };
 
 STDINPUTINFO(Cv1k)
@@ -122,6 +124,18 @@ static struct BurnDIPInfo DefaultDIPList[]=
 	{0x02, 0x01, 0x1f, 0x1d, "78"			},
 	{0x02, 0x01, 0x1f, 0x1e, "79"			},
 	{0x02, 0x01, 0x1f, 0x1f, "80"			},
+
+	{0   , 0xfe, 0   ,   10, "el_rika's CPU Rate tenth-percent adjust"},
+	{0x03, 0x01, 0x0f, 0x00, ".0"			},
+	{0x03, 0x01, 0x0f, 0x01, ".1"			},
+	{0x03, 0x01, 0x0f, 0x02, ".2"			},
+	{0x03, 0x01, 0x0f, 0x03, ".3"			},
+	{0x03, 0x01, 0x0f, 0x04, ".4"			},
+	{0x03, 0x01, 0x0f, 0x05, ".5"			},
+	{0x03, 0x01, 0x0f, 0x06, ".6"			},
+	{0x03, 0x01, 0x0f, 0x07, ".7"			},
+	{0x03, 0x01, 0x0f, 0x08, ".8"			},
+	{0x03, 0x01, 0x0f, 0x09, ".9"			},
 };
 
 static struct BurnDIPInfo Cv1kDIPList[]=
@@ -130,6 +144,7 @@ static struct BurnDIPInfo Cv1kDIPList[]=
 	{0x00, 0xff, 0xff, 0x00, NULL			},
 	{0x01, 0xff, 0xff, 0x03, NULL			},
 	{0x02, 0xff, 0xff, 0x00, NULL			},
+	{0x03, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "S2:1"			},
 	{0x00, 0x01, 0x01, 0x00, "Off"			},
@@ -154,6 +169,7 @@ static struct BurnDIPInfo Cv1ksDIPList[]=
 	{0x00, 0xff, 0xff, 0x00, NULL			},
 	{0x01, 0xff, 0xff, 0x03, NULL			},
 	{0x02, 0xff, 0xff, 0x00, NULL			},
+	{0x03, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"	},
 	{0x00, 0x01, 0x01, 0x00, "Off"			},
@@ -339,6 +355,7 @@ static INT32 DrvDoReset()
 	nExtraCycles[0] = 0;
 
 	nPrevBurnCPUSpeedAdjust = -1;
+	nPrevCPUTenth = 0xff;
 
 	hold_coin.reset();
 
@@ -506,17 +523,21 @@ static INT32 DrvFrame()
 	}
 
 	// check if cpu rate changes here..
-	if (nPrevBurnCPUSpeedAdjust != nBurnCPUSpeedAdjust) {
+	if (nPrevBurnCPUSpeedAdjust != nBurnCPUSpeedAdjust || DrvDips[3] != nPrevCPUTenth) {
 		bprintf(0, _T("Setting CPU Clock selection.\n"));
 		nPrevBurnCPUSpeedAdjust = nBurnCPUSpeedAdjust;
+		nPrevCPUTenth = DrvDips[3];
 
-		DriverClock = (INT32)((INT64)SH3_CLOCK * nBurnCPUSpeedAdjust / 256);
-		speedhack_burn = (double)((double)DriverClock / 1000000) * 10;
+		INT32 i_percent = 100 * nBurnCPUSpeedAdjust / 256; // whole percent comes from UI
+		double dPercent = i_percent + (0.1 * (DrvDips[3] & 0xf)); // .x tenth percent comes from DIPS
+
+		DriverClock = (INT32)((INT64)SH3_CLOCK * dPercent / 100);
+		speedhack_burn = (double)((double)DriverClock / 1000000) * 10; // 10us
 
 		Sh3SetClockCV1k(DriverClock);
 		ymz770_set_buffered(Sh3TotalCycles, DriverClock);
 
-		bprintf(0, _T("Driver Clock %d\n"), DriverClock);
+		bprintf(0, _T("Main Clock %d  at %0.1f%%  Adjusted Clock %d\n"), SH3_CLOCK, dPercent, DriverClock);
 	}
 	// set blitter delay, blitter threading & speedhack via dip setting
 	{

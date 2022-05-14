@@ -15,7 +15,7 @@
 	<game name="1941">
 		<description>1941 - Counter Attack</description>
 		<year>1991</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="1941 - counter attack (japan).pce" size="1048576" crc="8c4588e2"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -23,7 +23,7 @@
 	<game name="aldynes">
 		<description>Aldynes</description>
 		<year>1991</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="aldynes (japan).pce" size="1048576" crc="4c2126b0"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -31,7 +31,7 @@
 	<game name="battlace">
 		<description>Battle Ace</description>
 		<year>1989</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="battle ace (japan).pce" size="524288" crc="3b13af61"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -63,7 +63,7 @@
 	<game name="granzort">
 		<description>Madou Ou Granzort</description>
 		<year>1990</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="madou ou granzort (japan).pce" size="524288" crc="1f041166"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

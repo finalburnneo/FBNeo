@@ -15,7 +15,7 @@
 	<game name="1943kai">
 		<description>1943 Kai</description>
 		<year>1991</year>
-		<manufacturer>Naxat</manufacturer>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="1943 kai (japan).pce" size="524288" crc="fde08d6d"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -31,7 +31,7 @@
 	<game name="advislnd">
 		<description>Adventure Island</description>
 		<year>1991</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="adventure island (japan).pce" size="262144" crc="8e71d4f3"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -39,7 +39,7 @@
 	<game name="aeroblst">
 		<description>Aero Blasters</description>
 		<year>1990</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="aero blasters (japan).pce" size="524288" crc="25be2b81"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -55,7 +55,7 @@
 	<game name="acrush">
 		<description>Alien Crush</description>
 		<year>1988</year>
-		<manufacturer>Naxat</manufacturer>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="alien crush (japan).pce" size="262144" crc="60edf4e1"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -71,7 +71,7 @@
 	<game name="aoiblink">
 		<description>Aoi Blink</description>
 		<year>1990</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="aoi blink (japan).pce" size="393216" crc="08a09b9a"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -79,7 +79,7 @@
 	<game name="appgateb">
 		<description>Appare! Gateball</description>
 		<year>1988</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="appare gateball (japan).pce" size="262144" crc="2b54cba2"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -101,7 +101,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="atlantean">
-		<description>Atlantean</description>
+		<comment>Homebrew</comment>
+		<description>Atlantean (HB)</description>
 		<year>2014</year>
 		<manufacturer>Aetherbyte</manufacturer>
 		<rom name="atlantean.pce" size="524800" crc="ef596649"/>
@@ -159,7 +160,7 @@
 	<game name="batloder">
 		<description>Battle Lode Runner</description>
 		<year>1993</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="battle lode runner (japan).pce" size="262144" crc="59e44f45"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -167,7 +168,7 @@
 	<game name="beball">
 		<description>Be Ball</description>
 		<year>1990</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="be ball (japan).pce" size="262144" crc="261f1013"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -191,7 +192,7 @@
 	<game name="bikkuri1" cloneof="bikkuri" romof="bikkuri">
 		<description>Bikkuriman World (Alt)</description>
 		<year>1987</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="bikkuriman world (japan) [a].pce" size="262144" crc="34893891"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -199,7 +200,7 @@
 	<game name="bikkuri">
 		<description>Bikkuriman World</description>
 		<year>1987</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="bikkuriman world (japan).pce" size="262144" crc="2841fd1e"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -207,7 +208,7 @@
 	<game name="blodia">
 		<description>Blodia</description>
 		<year>1990</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="blodia (japan).pce" size="131072" crc="958bcd09"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -223,7 +224,7 @@
 	<game name="bombmn93s" cloneof="bombmn93" romof="bombmn93">
 		<description>Bomberman '93 (Special Version)</description>
 		<year>1992</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="bomberman '93 (special version) (japan).pce" size="524288" crc="02309aa0"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -231,7 +232,7 @@
 	<game name="bombmn93">
 		<description>Bomberman '93</description>
 		<year>1992</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="bomberman '93 (japan).pce" size="524288" crc="b300c5d0"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -239,7 +240,7 @@
 	<game name="bombmn94">
 		<description>Bomberman '94</description>
 		<year>1993</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="bomberman '94 (japan).pce" size="1048576" crc="05362516"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -247,7 +248,7 @@
 	<game name="bombmnub">
 		<description>Bomberman - Users Battle</description>
 		<year>19??</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="bomberman - users battle (japan).pce" size="262144" crc="1489fa51"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -255,7 +256,7 @@
 	<game name="bombman">
 		<description>Bomberman</description>
 		<year>1990</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="bomberman (japan).pce" size="262144" crc="9abb4d1f"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -271,16 +272,34 @@
 	<game name="breakin">
 		<description>Break In</description>
 		<year>1989</year>
-		<manufacturer>Naxat</manufacturer>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="break in (japan).pce" size="262144" crc="c9d7426a"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bubblegme" cloneof="bubblegm" romof="bubblegm">
+		<comment>Hack</comment>
+		<description>Bubblegum Crash! - Knight Sabers 2034 (Hack, English)</description>
+		<year>2008-2022</year>
+		<manufacturer>Dave Shadoff, filler</manufacturer>
+		<rom name="Bubblegum Crash! - Knight Sabers 2034 (T-Eng)(2022)(Dave Shadoff).pce" size="786432" crc="704b6916"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="bubblegm">
 		<description>Bubblegum Crash! - Knight Sabers 2034</description>
 		<year>1991</year>
-		<manufacturer>Naxat</manufacturer>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="bubblegum crash! - knight sabers 2034 (japan).pce" size="524288" crc="0d766139"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bughunt">
+		<comment>Homebrew</comment>
+		<description>Bug Hunt (HB)</description>
+		<year>2013</year>
+		<manufacturer>Cabbage</manufacturer>
+		<rom name="Bug Hunt (2013)(Cabbage).pce" size="196608" crc="c15a2b45"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -295,7 +314,7 @@
 	<game name="burnangl">
 		<description>Burning Angels</description>
 		<year>1990</year>
-		<manufacturer>Naxat</manufacturer>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="burning angels (japan).pce" size="393216" crc="d233c05a"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -336,7 +355,7 @@
 	<game name="chikuden1" cloneof="chikuden" romof="chikuden">
 		<description>Chikudenya Toubei - Kubikiri Yakata Yori (Alt)</description>
 		<year>1990</year>
-		<manufacturer>Naxat</manufacturer>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="chikudenya toubei - kubikiri yakata yori (japan) [a].pce" size="524288" crc="84098884"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -344,7 +363,7 @@
 	<game name="chikuden">
 		<description>Chikudenya Toubei - Kubikiri Yakata Yori</description>
 		<year>1990</year>
-		<manufacturer>Naxat</manufacturer>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="chikudenya toubei - kubikiri yakata yori (japan).pce" size="524288" crc="cab21b2e"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -366,10 +385,11 @@
 		<driver status="good"/>
 	</game>
 	<game name="cityhunte" cloneof="cityhunt" romof="cityhunt">
-		<description>City Hunter (Hack, English)</description>
-		<year>2019</year>
-		<manufacturer>Sunsoft</manufacturer>
-		<rom name="city hunter (english translation).pce" size="393728" crc="db435a9d"/>
+		<comment>Hack</comment>
+		<description>City Hunter T-Eng (Hack, English v1.1)</description>
+		<year>2022</year>
+		<manufacturer>filler, cabbage</manufacturer>
+		<rom name="City Hunter (T-Eng v1.1)(2022)(filler, cabbage).pce" size="393216" crc="23f3df33"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -390,9 +410,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="contranes">
+		<comment>Hack</comment>
 		<description>Contra (NES Mod Version 3.0)</description>
-		<year>1988</year>
-		<manufacturer>Konami</manufacturer>
+		<year>20??</year>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="Contra.pce" size="524288" crc="aaf5aeb4"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -400,7 +421,7 @@
 	<game name="coryoon1" cloneof="coryoon" romof="coryoon">
 		<description>Coryoon - Child of Dragon (Alt)</description>
 		<year>1991</year>
-		<manufacturer>Naxat</manufacturer>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="coryoon - child of dragon (japan) [a].pce" size="524288" crc="d5389889"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -408,7 +429,7 @@
 	<game name="coryoon">
 		<description>Coryoon - Child of Dragon</description>
 		<year>1991</year>
-		<manufacturer>Naxat</manufacturer>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="coryoon - child of dragon (japan).pce" size="524288" crc="b4d29e3b"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -504,7 +525,7 @@
 	<game name="devlcrsh">
 		<description>Devil Crash - Naxat Pinball</description>
 		<year>1990</year>
-		<manufacturer>Naxat</manufacturer>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="devil crash - naxat pinball (japan).pce" size="393216" crc="4ec81a80"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -520,7 +541,7 @@
 	<game name="digichmp">
 		<description>Digital Champ</description>
 		<year>1989</year>
-		<manufacturer>Naxat</manufacturer>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="digital champ (japan).pce" size="262144" crc="17ba3032"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -536,7 +557,7 @@
 	<game name="dorams">
 		<description>Doraemon - Meikyuu Dai Sakusen</description>
 		<year>1989</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="doraemon - meikyuu dai sakusen (japan).pce" size="262144" crc="dc760a07"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -544,7 +565,7 @@
 	<game name="dorandn">
 		<description>Doraemon - Nobita no Dorabian Night</description>
 		<year>1991</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="doraemon - nobita no dorabian night (japan).pce" size="524288" crc="013a747f"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -573,10 +594,19 @@
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="dragnegge" cloneof="dragnegg" romof="dragnegg">
+		<comment>Hack</comment>
+		<description>Dragon Egg! (Hack, English)</description>
+		<year>2022</year>
+		<manufacturer>onionzoo</manufacturer>
+		<rom name="Dragon Egg! (T-Eng)(2022)(onionzoo).pce" size="524288" crc="bde8ea74"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="dragnegg">
 		<description>Dragon Egg!</description>
 		<year>1991</year>
-		<manufacturer>Masiya</manufacturer>
+		<manufacturer>NCS, Masaya</manufacturer>
 		<rom name="dragon egg! (japan).pce" size="524288" crc="442405d5"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -624,7 +654,7 @@
 	<game name="dungexpl">
 		<description>Dungeon Explorer</description>
 		<year>1989</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="dungeon explorer (japan).pce" size="393216" crc="1b1a80a2"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -736,7 +766,7 @@
 	<game name="finalsols" cloneof="finalsol" romof="finalsol">
 		<description>Final Soldier (Special Version)</description>
 		<year>19??</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="final soldier (special version) (japan).pce" size="524288" crc="02a578c5"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -744,7 +774,7 @@
 	<game name="finalsol">
 		<description>Final Soldier</description>
 		<year>1991</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="final soldier (japan).pce" size="524288" crc="af2dd2af"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -888,7 +918,7 @@
 	<game name="gunhedht">
 		<description>GunHed - Hudson GunHed Taikai</description>
 		<year>1989</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="gunhed - hudson gunhed taikai (japan).pce" size="262144" crc="57f183ae"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -896,7 +926,7 @@
 	<game name="gunhed">
 		<description>GunHed</description>
 		<year>1989</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="gunhed (japan).pce" size="393216" crc="a17d4d7e"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -957,16 +987,26 @@
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="haniiskye" cloneof="haniisky" romof="haniisky">
+		<comment>Hack</comment>
+		<description>Honey in the Sky (Hack, English + 3-button controller)</description>
+		<year>2022</year>
+		<manufacturer>filler, cabbage</manufacturer>
+		<rom name="Honey in the Sky (T-Eng)(2022)(filler).pce" size="262144" crc="d1dc2f66"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ddanpei">
 		<description>Honoo no Toukyuuji - Dodge Danpei</description>
 		<year>1992</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="honoo no toukyuuji dodge danpei (japan).pce" size="524288" crc="b01ee703"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="huzero">
-		<description>HuZERO</description>
+		<comment>Homebrew</comment>
+		<description>HuZERO - Caravan Edition (HB)</description>
 		<year>2014</year>
 		<manufacturer>Chris Covell</manufacturer>
 		<rom name="HuZERO_by_Chris_Covell.pce" size="262144" crc="2871c4c0"/>
@@ -1008,7 +1048,7 @@
 	<game name="jchan">
 		<description>Jackie Chan</description>
 		<year>1991</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="jackie chan (japan).pce" size="524288" crc="c6fa6373"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1072,7 +1112,7 @@
 	<game name="katochan">
 		<description>Kato Chan &amp; Ken Chan</description>
 		<year>1987</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="kato chan &amp; ken chan (japan).pce" size="262144" crc="6069c5e7"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1254,9 +1294,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="mikkokue" cloneof="mikkoku" romof="mikkoku">
+		<comment>Hack</comment>
 		<description>Maison Ikkoku (Hack, English)</description>
 		<year>2008</year>
-		<manufacturer>Micro Cabin</manufacturer>
+		<manufacturer>Dave Shadoff, filler</manufacturer>
 		<rom name="maison ikkoku (english translation).pce" size="524800" crc="b5ed56d8"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1272,8 +1313,17 @@
 	<game name="wataru">
 		<description>Majin Eiyuu Den Wataru</description>
 		<year>1988</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="majin eiyuu den wataru (japan).pce" size="262144" crc="2f8935aa"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="makaihake" cloneof="makaihak" romof="makaihak">
+		<comment>Hack</comment>
+		<description>Makai Hakken Den Shada (Hack, English)</description>
+		<year>2015</year>
+		<manufacturer>Shubibiman</manufacturer>
+		<rom name="Makai Hakkenden Shada (T-Eng)(2015)(Shubibiman).pce" size="262144" crc="017de16d"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1288,7 +1338,7 @@
 	<game name="makaipri">
 		<description>Makai Prince Dorabocchan</description>
 		<year>1990</year>
-		<manufacturer>Naxat</manufacturer>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="makai prince dorabocchan (japan).pce" size="393216" crc="b101b333"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1304,7 +1354,7 @@
 	<game name="maniacpw">
 		<description>Maniac Pro Wres - Asu e no Tatakai</description>
 		<year>1990</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="maniac puroresu - asu e no tatakai (japan).pce" size="524288" crc="99f2865c"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1344,7 +1394,7 @@
 	<game name="momogdn">
 		<description>Momotarou Densetsu Gaiden Dai 1 Shuu</description>
 		<year>1992</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="momotarou densetsu gaiden dai 1 shuu (japan).pce" size="524288" crc="f860455c"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1352,7 +1402,7 @@
 	<game name="momo2">
 		<description>Momotarou Densetsu II</description>
 		<year>1990</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="momotarou densetsu ii (japan).pce" size="786432" crc="d9e1549a"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1360,7 +1410,7 @@
 	<game name="momotrbo">
 		<description>Momotarou Densetsu Turbo</description>
 		<year>1990</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="momotarou densetsu turbo (japan).pce" size="393216" crc="625221a6"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1368,7 +1418,7 @@
 	<game name="momoktsg">
 		<description>Momotarou Katsugeki</description>
 		<year>1990</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="momotarou katsugeki (japan).pce" size="524288" crc="345f43e9"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1430,7 +1480,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="nantet">
-		<description>Nantettatte Engine</description>
+		<comment>Homebrew</comment>
+		<description>Nantettatte Engine (HB)</description>
 		<year>2017</year>
 		<manufacturer>Atherbyte</manufacturer>
 		<rom name="Nantettatte Engine.pce" size="262144" crc="3974fb41"/>
@@ -1448,7 +1499,7 @@
 	<game name="naxopen">
 		<description>Naxat Open</description>
 		<year>1989</year>
-		<manufacturer>Naxat</manufacturer>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="naxat open (japan).pce" size="393216" crc="60ecae22"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1456,7 +1507,7 @@
 	<game name="naxstad">
 		<description>Naxat Stadium</description>
 		<year>1990</year>
-		<manufacturer>Naxat</manufacturer>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="naxat stadium (japan).pce" size="524288" crc="20a7d128"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1472,7 +1523,7 @@
 	<game name="necromcr">
 		<description>Necromancer</description>
 		<year>1988</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="necromancer (japan).pce" size="262144" crc="53109ae6"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1488,7 +1539,7 @@
 	<game name="nectaris">
 		<description>Nectaris</description>
 		<year>1990</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="nectaris (japan).pce" size="393216" crc="0243453b"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1496,7 +1547,7 @@
 	<game name="nekdodge">
 		<description>Nekketsu Koukou Dodgeball Bu - PC Bangai Hen</description>
 		<year>1990</year>
-		<manufacturer>Naxat</manufacturer>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="nekketsu koukou dodgeball bu - pc bangai hen (japan).pce" size="262144" crc="65fdb863"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1504,7 +1555,7 @@
 	<game name="neksoccr">
 		<description>Nekketsu Koukou Dodgeball Bu - Soccer PC Hen</description>
 		<year>1992</year>
-		<manufacturer>Naxat</manufacturer>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="nekketsu koukou dodgeball bu - soccer pc hen (japan).pce" size="524288" crc="f2285c6d"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1512,7 +1563,7 @@
 	<game name="neutopi2">
 		<description>Neutopia II</description>
 		<year>1991</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="neutopia ii (japan).pce" size="786432" crc="2b94aedc"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1520,7 +1571,7 @@
 	<game name="neutopia">
 		<description>Neutopia</description>
 		<year>1989</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="neutopia (japan).pce" size="393216" crc="9c49ef11"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1544,7 +1595,7 @@
 	<game name="nryukend">
 		<description>Ninja Ryukenden</description>
 		<year>1992</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="ninja ryuuken den (japan).pce" size="524288" crc="67573bac"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1558,9 +1609,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="offthewall">
+		<comment>Prototype</comment>
 		<description>Off the Wall (Prototype)</description>
 		<year>1992</year>
-		<manufacturer>Tengen/Atari</manufacturer>
+		<manufacturer>Tengen, Atari</manufacturer>
 		<rom name="Off the Wall [Proto 1].pce" size="524800" crc="40f04a7c"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1614,7 +1666,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pacland">
-		<description>Pac-land</description>
+		<description>Pac-Land</description>
 		<year>1989</year>
 		<manufacturer>Namcot</manufacturer>
 		<rom name="pac-land (japan).pce" size="262144" crc="14fad3ba"/>
@@ -1632,7 +1684,7 @@
 	<game name="paranoia">
 		<description>Paranoia</description>
 		<year>1990</year>
-		<manufacturer>Naxat</manufacturer>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="paranoia (japan).pce" size="262144" crc="9893e0e6"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1656,7 +1708,7 @@
 	<game name="pcdenja" cloneof="pcdenj" romof="pcdenj">
 		<description>PC Denjin - Punkic Cyborgs (Alt)</description>
 		<year>1992</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="pc denjin - punkic cyborgs (japan) [a].pce" size="524288" crc="8fb4f228"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1664,7 +1716,7 @@
 	<game name="pcdenj">
 		<description>PC Denjin - Punkic Cyborgs</description>
 		<year>1992</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="pc denjin - punkic cyborgs (japan).pce" size="524288" crc="740491c2"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1672,7 +1724,7 @@
 	<game name="pcgenja" cloneof="pcgenj" romof="pcgenj">
 		<description>PC Genjin - Pithecanthropus Computerurus (Alt)</description>
 		<year>1989</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="pc genjin - pithecanthropus computerurus (japan) [a].pce" size="393216" crc="67b35e6e"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1680,7 +1732,7 @@
 	<game name="pcgenj">
 		<description>PC Genjin - Pithecanthropus Computerurus</description>
 		<year>1989</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="pc genjin - pithecanthropus computerurus (japan).pce" size="393216" crc="2cb5cd55"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1688,7 +1740,7 @@
 	<game name="pcgenj2">
 		<description>PC Genjin 2 - Pithecanthropus Computerurus</description>
 		<year>1991</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="pc genjin 2 - pithecanthropus computerurus (japan).pce" size="524288" crc="3028f7ca"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1696,7 +1748,7 @@
 	<game name="pcgenj3t">
 		<description>PC Genjin 3 - Pithecanthropus Computerurus (Taikenban)</description>
 		<year>1993</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="pc genjin 3 - pithecanthropus computerurus (taikenban) (japan).pce" size="786432" crc="6f6ed301"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1704,7 +1756,7 @@
 	<game name="pcgenj3">
 		<description>PC Genjin 3 - Pithecanthropus Computerurus</description>
 		<year>1993</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="pc genjin 3 - pithecanthropus computerurus (japan).pce" size="1048576" crc="a170b60e"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1720,7 +1772,7 @@
 	<game name="populous1" cloneof="populous" romof="populous">
 		<description>Populous (Alt)</description>
 		<year>1991</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="populous (japan) [a].pce" size="524288" crc="0a9ade99"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1728,7 +1780,7 @@
 	<game name="populous">
 		<description>Populous</description>
 		<year>1991</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="populous (japan).pce" size="524288" crc="083c956a"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1752,7 +1804,7 @@
 	<game name="power11">
 		<description>Power Eleven</description>
 		<year>1991</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="power eleven (japan).pce" size="393216" crc="3e647d8b"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1768,7 +1820,7 @@
 	<game name="pgolf">
 		<description>Power Golf</description>
 		<year>1989</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="power golf (japan).pce" size="393216" crc="ea324f07"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1776,7 +1828,7 @@
 	<game name="pleag93">
 		<description>Power League '93</description>
 		<year>1993</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="power league '93 (japan).pce" size="786432" crc="7d3e6f33"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1784,7 +1836,7 @@
 	<game name="pleagas">
 		<description>Power League (All Star Version)</description>
 		<year>19??</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="power league (all star version) (japan).pce" size="262144" crc="04a85769"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1792,7 +1844,7 @@
 	<game name="pleag3">
 		<description>Power League III</description>
 		<year>1990</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="power league iii (japan).pce" size="393216" crc="8aa4b220"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1800,7 +1852,7 @@
 	<game name="pleag2">
 		<description>Power League II</description>
 		<year>1989</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="power league ii (japan).pce" size="393216" crc="c5fdfa89"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1808,7 +1860,7 @@
 	<game name="pleag4">
 		<description>Power League IV</description>
 		<year>1991</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="power league iv (japan).pce" size="524288" crc="30cc3563"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1816,7 +1868,7 @@
 	<game name="pleag5">
 		<description>Power League V</description>
 		<year>1992</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="power league v (japan).pce" size="786432" crc="8b61e029"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1824,7 +1876,7 @@
 	<game name="pleague">
 		<description>Power League</description>
 		<year>1988</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="power league (japan).pce" size="262144" crc="69180984"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1832,7 +1884,7 @@
 	<game name="psports">
 		<description>Power Sports</description>
 		<year>1992</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="power sports (japan).pce" size="524288" crc="29eec024"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1840,7 +1892,7 @@
 	<game name="ptennis">
 		<description>Power Tennis</description>
 		<year>1993</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="power tennis (japan).pce" size="524288" crc="8def5aa1"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1872,7 +1924,7 @@
 	<game name="psychas">
 		<description>Psycho Chaser</description>
 		<year>1990</year>
-		<manufacturer>Naxat</manufacturer>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="psycho chaser (japan).pce" size="262144" crc="03883ee8"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1904,7 +1956,7 @@
 	<game name="rtypep1">
 		<description>R-Type Part-1</description>
 		<year>1988</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="r-type part-1 (japan).pce" size="262144" crc="cec3d28a"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1912,7 +1964,7 @@
 	<game name="rtypep2v11" cloneof="rtypep2" romof="rtypep2">
 		<description>R-Type Part-2 (v1.1)</description>
 		<year>1988</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="r-type part-2 v1.1 (japan).pce" size="262144" crc="417b961d"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1920,7 +1972,7 @@
 	<game name="rtypep2">
 		<description>R-Type Part-2</description>
 		<year>1988</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="r-type part-2 (japan).pce" size="262144" crc="f207ecae"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1944,7 +1996,7 @@
 	<game name="raiden">
 		<description>Raiden</description>
 		<year>1991</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="raiden (japan).pce" size="786432" crc="850829f2"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1958,7 +2010,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="reflectron">
-		<description>Reflectron</description>
+		<comment>Homebrew</comment>
+		<description>Reflectron (HB)</description>
 		<year>2013</year>
 		<manufacturer>Aetherbyte</manufacturer>
 		<rom name="reflectron.pce" size="262144" crc="6a3727e2"/>
@@ -1984,7 +2037,7 @@
 	<game name="sadaki7">
 		<description>Sadakichi 7 Series - Hideyoshi no Ougon</description>
 		<year>1988</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="sadakichi 7 series - hideyoshi no ougon (japan).pce" size="262144" crc="f999356f"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2006,7 +2059,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="santatlantean">
-		<description>Santatlantean</description>
+		<comment>Homebrew</comment>
+		<description>Santatlantean (HB)</description>
 		<year>2014</year>
 		<manufacturer>Aetherbyte</manufacturer>
 		<rom name="Santatlantean.pce" size="524800" crc="e6b38af1"/>
@@ -2024,7 +2078,7 @@
 	<game name="sengokmj">
 		<description>Sengoku Mahjong</description>
 		<year>1988</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="sengoku mahjong (japan).pce" size="262144" crc="90e6bf49"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2032,7 +2086,7 @@
 	<game name="shanghai">
 		<description>Shanghai</description>
 		<year>1987</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="shanghai (japan).pce" size="131072" crc="6923d736"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2112,7 +2166,7 @@
 	<game name="soldblas">
 		<description>Soldier Blade Special - Caravan Stage</description>
 		<year>19??</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="soldier blade special - caravan stage (japan).pce" size="524288" crc="f39f38ed"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2120,7 +2174,7 @@
 	<game name="soldblad">
 		<description>Soldier Blade</description>
 		<year>1992</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="soldier blade (japan).pce" size="524288" crc="8420b12b"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2216,7 +2270,7 @@
 	<game name="smomo2">
 		<description>Super Momotarou Dentetsu II</description>
 		<year>1991</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="super momotarou dentetsu ii (japan).pce" size="786432" crc="2bc023fc"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2224,7 +2278,7 @@
 	<game name="smomo">
 		<description>Super Momotarou Dentetsu</description>
 		<year>1989</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="super momotarou dentetsu (japan).pce" size="393216" crc="3eb5304a"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2232,7 +2286,7 @@
 	<game name="sssoldr">
 		<description>Super Star Soldier</description>
 		<year>1990</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="super star soldier (japan).pce" size="524288" crc="5d0e3105"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2248,7 +2302,7 @@
 	<game name="susano">
 		<description>Susanoo Densetsu</description>
 		<year>1989</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="susanoo densetsu (japan).pce" size="524288" crc="cf73d8fc"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2264,7 +2318,7 @@
 	<game name="takameib">
 		<description>Takahashi Meijin no Shin Boukenjima</description>
 		<year>1992</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="takahashi meijin no shin boukenjima (japan).pce" size="524288" crc="e415ea19"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2328,7 +2382,7 @@
 	<game name="kungfu">
 		<description>The Kung Fu</description>
 		<year>1987</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="kung fu, the (japan).pce" size="262144" crc="b552c906"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2376,7 +2430,7 @@
 	<game name="titan">
 		<description>Titan</description>
 		<year>1991</year>
-		<manufacturer>Naxat</manufacturer>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="titan (japan).pce" size="262144" crc="d20f382f"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2390,7 +2444,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tongueman">
-		<description>Tongueman's Logic</description>
+		<comment>Homebrew</comment>
+		<description>Tongueman's Logic (HB)</description>
 		<year>2007</year>
 		<manufacturer>Chris Covell</manufacturer>
 		<rom name="Tongueman's Logic (FINAL 1.0).pce" size="524288" crc="fe451c22"/>
@@ -2408,7 +2463,7 @@
 	<game name="etercity">
 		<description>Toshi Tensou Keikaku - Eternal City</description>
 		<year>1991</year>
-		<manufacturer>Naxat</manufacturer>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="toshi tensou keikaku - eternal city (japan).pce" size="393216" crc="b18d102d"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2432,7 +2487,7 @@
 	<game name="tsuppari">
 		<description>Tsuppari Oozumou - Heisei Ban</description>
 		<year>1993</year>
-		<manufacturer>Naxat</manufacturer>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="tsuppari oozumou - heisei ban (japan).pce" size="262144" crc="61a6e210"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2477,6 +2532,15 @@
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="valkyriee" cloneof="valkyrie" romof="valkyrie">
+		<comment>Hack</comment>
+		<description>Valkyrie no Densetsu (Hack, English)</description>
+		<year>2015</year>
+		<manufacturer>cabbage</manufacturer>
+		<rom name="Valkyrie no Densetsu (T-eng)(2015)(cabbage).pce" size="524288" crc="97a62bd1"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="valkyrie">
 		<description>Valkyrie no Densetsu</description>
 		<year>1990</year>
@@ -2496,7 +2560,7 @@
 	<game name="victoryr">
 		<description>Victory Run</description>
 		<year>1987</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="victory run (japan).pce" size="262144" crc="03e28cff"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2528,7 +2592,7 @@
 	<game name="wring">
 		<description>W-ring - The Double Rings</description>
 		<year>1990</year>
-		<manufacturer>Naxat</manufacturer>
+		<manufacturer>Naxat Soft</manufacturer>
 		<rom name="w-ring - the double rings (japan).pce" size="393216" crc="be990010"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2608,7 +2672,7 @@
 	<game name="yuyu">
 		<description>Yuu Yuu Jinsei - Victory Life</description>
 		<year>1988</year>
-		<manufacturer>Hudson</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="yuu yuu jinsei - victory life (japan).pce" size="262144" crc="c0905ca9"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

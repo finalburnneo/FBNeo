@@ -87,7 +87,7 @@
 	<game name="bonk3">
 		<description>Bonk III - Bonk's Big Adventure</description>
 		<year>1993</year>
-		<manufacturer>TTI</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="bonk iii - bonk's big adventure (usa).pce" size="1048576" crc="5a3f76d8"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

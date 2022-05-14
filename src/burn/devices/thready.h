@@ -14,6 +14,7 @@
 #define THREADY THREADY_PTHREAD
 #include <semaphore.h>
 #include <pthread.h>
+#include <sched.h>
 #include <unistd.h>
 #endif
 
@@ -162,7 +163,37 @@ struct threadystruct
 
 		our_callback = thread_callback;
 
+#ifdef PRIO_METHOD_1
+		pthread_attr_t our_thread_attr;
+		sched_param our_thread_param;
+		if (pthread_attr_init(&our_thread_attr) == 0)
+		{
+			if (pthread_attr_setschedpolicy(&our_thread_attr, SCHED_FIFO) == 0)
+			{
+				bprintf(0, _T("Thready: policy changed successfully\n"));
+				if (pthread_attr_getschedparam(&our_thread_attr, &our_thread_param) == 0)
+				{
+					our_thread_param.sched_priority = sched_get_priority_max(SCHED_FIFO);
+					if (pthread_attr_setschedparam(&our_thread_attr, &our_thread_param) == 0)
+					{
+						bprintf(0, _T("Thready: priority changed successfully\n"));
+					}
+				}
+			}
+		}
+		INT32 our_thread_rv = pthread_create(&our_thread, &our_thread_attr, ThreadyProc, NULL);
+#else
 		INT32 our_thread_rv = pthread_create(&our_thread, NULL, ThreadyProc, NULL);
+#endif
+
+#ifdef PRIO_METHOD_1
+		int policy = 0;
+		if (pthread_getschedparam(our_thread, &policy, &our_thread_param) == 0)
+		{
+			bprintf(0, _T("Thready: policy %d | priority %d\n"), (policy == SCHED_FIFO), our_thread_param.sched_priority);
+		}
+#endif
+
 		INT32 our_event_rv = sem_init(&our_event, 0, 0);
 		INT32 wait_event_rv = sem_init(&wait_event, 0, 0);
 		INT32 ready_event_rv = sem_init(&thready_ready_event, 0, 0);
@@ -172,6 +203,19 @@ struct threadystruct
 			bprintf(0, _T("Thready: we're gonna git 'r dun!\n"));
 			thready_ok = 1;
 			ok_to_thread = 1;
+#ifdef PRIO_METHOD_2
+			sched_param our_thread_param;
+			our_thread_param.sched_priority = sched_get_priority_max(SCHED_FIFO);
+			if (pthread_setschedparam(our_thread, SCHED_FIFO, &our_thread_param) == 0)
+			{
+				bprintf(0, _T("Thready: priority/policy changed successfully\n"));
+			}
+			int policy = 0;
+			if (pthread_getschedparam(our_thread, &policy, &our_thread_param) == 0)
+			{
+				bprintf(0, _T("Thready: policy %d | priority %d\n"), (policy == SCHED_FIFO), our_thread_param.sched_priority);
+			}
+#endif
 		} else {
 			bprintf(0, _T("Thready: failure to create thread - falling back to single-thread mode!\n"));
 		}

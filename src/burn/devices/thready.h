@@ -148,6 +148,7 @@ struct threadystruct
 	INT32 end_thread;
 	sem_t our_event;
 	sem_t wait_event;
+	sem_t thready_ready_event; // ok to start processing notifications?
 	INT32 is_running;
 	pthread_t our_thread;
 	void (*our_callback)();
@@ -161,11 +162,13 @@ struct threadystruct
 
 		our_callback = thread_callback;
 
+		INT32 our_thread_rv = pthread_create(&our_thread, NULL, ThreadyProc, NULL);
 		INT32 our_event_rv = sem_init(&our_event, 0, 0);
 		INT32 wait_event_rv = sem_init(&wait_event, 0, 0);
-		INT32 our_thread_rv = pthread_create(&our_thread, NULL, ThreadyProc, NULL);
+		INT32 ready_event_rv = sem_init(&thready_ready_event, 0, 0);
 
-		if (our_thread_rv == 0 && wait_event_rv == 0 && our_event_rv == 0) {
+		if (our_thread_rv == 0 && wait_event_rv == 0 && our_event_rv == 0 && ready_event_rv == 0) {
+			sem_wait(&thready_ready_event);
 			bprintf(0, _T("Thready: we're gonna git 'r dun!\n"));
 			thready_ok = 1;
 			ok_to_thread = 1;
@@ -185,6 +188,7 @@ struct threadystruct
 			pthread_join(our_thread, NULL);
 			sem_destroy(&our_event);
 			sem_destroy(&wait_event);
+			sem_destroy(&thready_ready_event);
 			thready_ok = 0;
 			is_running = 0;
 		}
@@ -214,8 +218,19 @@ struct threadystruct
 };
 
 static threadystruct thready;
-
+#include "math.h"
 static void *ThreadyProc(void*) {
+	// for android: prime thread's fuel line and choke carburator to make for
+	// a nice thread startup.
+	// basically: peg the cpu in this thread so the android scheduler notices us
+	double zoop = 0.0;
+	for (INT32 i = 0; i < 1000000; i++) {
+		for (INT32 j = 0; j < 5; j++) {
+			zoop += cos(rand() * 1.7777);
+			zoop = pow(1.77, zoop) + j;
+		}
+	}
+	sem_post(&thready.thready_ready_event); // thready.init() can continue!
 	do {
 		sem_wait(&thready.our_event);
 

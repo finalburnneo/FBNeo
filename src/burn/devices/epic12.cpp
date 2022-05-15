@@ -816,6 +816,8 @@ static void gfx_exec_write(UINT32 offset, UINT32 data)
 	{
 		if (data & 1)
 		{
+			thready.notify_wait();
+
 			if (epic12_device_blit_delay && m_delay_scale)
 			{
 				m_blitter_busy = 1;

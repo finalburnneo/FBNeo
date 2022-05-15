@@ -147,7 +147,6 @@ struct threadystruct
 	INT32 end_thread;
 	sem_t our_event;
 	sem_t wait_event;
-	INT32 is_running;
 	pthread_t our_thread;
 	void (*our_callback)();
 	INT32 startup_frame;
@@ -157,7 +156,6 @@ struct threadystruct
 		ok_to_thread = 0;
 		ok_to_wait = 0;
 		end_thread = 0;
-		is_running = 0;
 
 		our_callback = thread_callback;
 
@@ -186,7 +184,6 @@ struct threadystruct
 			sem_destroy(&our_event);
 			sem_destroy(&wait_event);
 			thready_ok = 0;
-			is_running = 0;
 		}
 	}
 
@@ -228,9 +225,7 @@ static void *ThreadyProc(void*) {
 		sem_wait(&thready.our_event);
 
 		if (thready.end_thread == 0) {
-			thready.is_running = 1;
 			thready.our_callback();
-			thready.is_running = 0;
 			sem_post(&thready.wait_event);
 		} else {
 			sem_post(&thready.wait_event);

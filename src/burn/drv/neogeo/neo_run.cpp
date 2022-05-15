@@ -4805,12 +4805,6 @@ INT32 NeoFrame()
 	bRenderImage = false;
 	bForceUpdateOnStatusRead = false;
 
-	if (pBurnDraw) {
-		NeoUpdatePalette();											// Update the palette
-		NeoClearScreen();
-	}
-	nSliceEnd = 0x10;
-
 	SekNewFrame();
 	ZetNewFrame();
 
@@ -4875,6 +4869,11 @@ INT32 NeoFrame()
 	bForcePartialRender = false;
 
 	// Display starts here
+	if (pBurnDraw) {
+		NeoUpdatePalette();											// Update the palette
+		NeoClearScreen();
+	}
+	nSliceEnd = 0x10;
 
 	nCyclesVBlank = nCyclesTotal[0]; //nSekCyclesScanline * 248;
 	if (bRenderLineByLine) {

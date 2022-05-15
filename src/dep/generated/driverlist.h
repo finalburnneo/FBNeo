@@ -1836,6 +1836,7 @@ DRV		BurnDrvBlox16b;
 DRV		BurnDrvBloxeedu;
 DRV		BurnDrvBloxeedc;
 DRV		BurnDrvmd_bluealma;
+DRV		BurnDrvpce_aoiblinke;
 DRV		BurnDrvBluehawkn;
 DRV		BurnDrvBluehawk;
 DRV		BurnDrvnes_bluemarlinthe;
@@ -8095,6 +8096,7 @@ DRV		BurnDrvfds_knighlor;
 DRV		BurnDrvfds_knightmovej;
 DRV		BurnDrvfds_knightmove;
 DRV		BurnDrvnes_knightrider;
+DRV		BurnDrvpce_knightrse;
 DRV		BurnDrvpce_knightrs;
 DRV		BurnSpecknighttyme;
 DRV		BurnDrvcv_knightmore;
@@ -8511,6 +8513,8 @@ DRV		BurnDrvnes_legenzeldx;
 DRV		BurnDrvnes_legenzelrd;
 DRV		BurnDrvnes_legenzeli;
 DRV		BurnDrvnes_legenzel;
+DRV		BurnDrvtg_legaxe2;
+DRV		BurnDrvtg_legaxe;
 DRV		BurnDrvLwingsb;
 DRV		BurnDrvLwings;
 DRV		BurnDrvLwings2;
@@ -10516,6 +10520,7 @@ DRV		BurnDrvnes_newyornya;
 DRV		BurnSpecTnzs;
 DRV		BurnDrvsms_tnzs;
 DRV		BurnDrvnes_newzeasto;
+DRV		BurnDrvpce_tnzs;
 DRV		BurnDrvNzeroteam;
 DRV		BurnDrvNzeroteama;
 DRV		BurnDrvmd_newmanh;
@@ -10982,6 +10987,7 @@ DRV		BurnDrvfds_otocky;
 DRV		BurnDrvgg_ottifant;
 DRV		BurnDrvsms_ottifant;
 DRV		BurnDrvottopz;
+DRV		BurnDrvpce_outlivee;
 DRV		BurnDrvpce_outlive;
 DRV		BurnDrvmd_ootwp;
 DRV		BurnDrvmd_ootw;
@@ -16440,8 +16446,6 @@ DRV		BurnDrvLkageoo;
 DRV		BurnDrvLkage;
 DRV		BurnDrvSilkroada;
 DRV		BurnDrvSilkroad;
-DRV		BurnDrvtg_legaxe2;
-DRV		BurnDrvtg_legaxe;
 DRV		BurnDrvLordofk;
 DRV		BurnDrvDarkmist;
 DRV		BurnDrvmd_lostwrld;
@@ -16462,7 +16466,6 @@ DRV		BurnDrvmd_miraclep;
 DRV		BurnDrvmd_tnzsac;
 DRV		BurnDrvmd_tnzss;
 DRV		BurnDrvmd_tnzs;
-DRV		BurnDrvpce_tnzs;
 DRV		BurnDrvtnzsj;
 DRV		BurnDrvTnzsjo;
 DRV		BurnDrvTnzsuo;
@@ -20524,6 +20527,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBloxeedu,			// Bloxeed (US, C System, Rev A)
 	&BurnDrvBloxeedc,			// Bloxeed (World, C System)
 	&BurnDrvmd_bluealma,		// Blue Almanac (Jpn)
+	&BurnDrvpce_aoiblinke,		// Blue Blink (Hack, English v0.99b)
 	&BurnDrvBluehawkn,			// Blue Hawk (NTC)
 	&BurnDrvBluehawk,			// Blue Hawk
 	&BurnDrvnes_bluemarlinthe,	// Blue Marlin, The (USA)
@@ -21602,7 +21606,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCitycon,			// City Connection (set 1)
 	&BurnDrvCitycona,			// City Connection (set 2)
 	&BurnDrvnes_cityconnection,	// City Connection (USA)
-	&BurnDrvpce_cityhunte,		// City Hunter T-Eng (Hack, English v1.1)
+	&BurnDrvpce_cityhunte,		// City Hunter (Hack, English v1.1)
 	&BurnDrvpce_cityhunt,		// City Hunter
 	&BurnDrvnes_citytrouble,	// City Trouble (HB)
 	&BurnDrvgg_cj,				// CJ Elephant Fugitive (Euro)
@@ -26783,6 +26787,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfds_knightmovej,	// Knight Move (Japan)
 	&BurnDrvfds_knightmove,		// Knight Move (T-Eng)
 	&BurnDrvnes_knightrider,	// Knight Rider (USA)
+	&BurnDrvpce_knightrse,		// Knight Rider Special (Hack, English v2.0)
 	&BurnDrvpce_knightrs,		// Knight Rider Special
 	&BurnSpecknighttyme,		// Knight Tyme (128K)
 	&BurnDrvcv_knightmore,		// Knight'n More (HB)
@@ -27199,6 +27204,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_legenzelrd,		// Legend of Zelda Redux, The (Hack, v3.1)
 	&BurnDrvnes_legenzeli,		// Legend of Zelda, The (Hack, Italian v1.0)
 	&BurnDrvnes_legenzel,		// Legend of Zelda, The (USA) (Rev A)
+	&BurnDrvtg_legaxe2,			// Legendary Axe II, The
+	&BurnDrvtg_legaxe,			// Legendary Axe, The
 	&BurnDrvLwingsb,			// Legendary Wings (bootleg)
 	&BurnDrvLwings,				// Legendary Wings (US set 1)
 	&BurnDrvLwings2,			// Legendary Wings (US set 2)
@@ -28408,7 +28415,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_mitsumgtru,		// Mitsume Ga Tooru - The Three-Eyed One Comes Here (T-Rus)
 	&BurnDrvMSX_mix,			// Mix (HB)
 	&BurnDrvQuiz18k,			// Miyasu Nonki no Quiz 18-Kin
-	&BurnDrvpce_mizubaku,		// Mizubaku Dai Bouken
+	&BurnDrvpce_mizubaku,		// Mizubaku Dai Bouken (Liquid Kids)
 	&BurnDrvMizubaku,			// Mizubaku Daibouken (Japan)
 	&BurnDrvngpc_mizuki,		// Mizuki Shigeru no Youkai Shashinkan (Jpn)
 	&BurnDrvmd_mk5a,			// MK 5 - Mortal Combat - SubZero (Pirate)
@@ -29204,6 +29211,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecTnzs,				// New Zealand Story, The (128K)
 	&BurnDrvsms_tnzs,			// New Zealand Story, The (Euro)
 	&BurnDrvnes_newzeasto,		// New Zealand Story, The (Europe)
+	&BurnDrvpce_tnzs,			// New Zealand Story, The
 	&BurnDrvNzeroteam,			// New Zero Team (V33 SYSTEM TYPE_B hardware)
 	&BurnDrvNzeroteama,			// New Zero Team (V33 SYSTEM TYPE_B hardware, China?)
 	&BurnDrvmd_newmanh,			// Newman Haas IndyCar Featuring Nigel Mansell ~ Nigel Mansell Indy Car (World)
@@ -29670,6 +29678,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_ottifant,		// Ottifants, The (Euro)
 	&BurnDrvsms_ottifant,		// Ottifants, The (Euro, Bra)
 	&BurnDrvottopz,				// Otto Project PZ (hack)
+	&BurnDrvpce_outlivee,		// Out Live (Hack, English v1.1)
 	&BurnDrvpce_outlive,		// Out Live
 	&BurnDrvmd_ootwp,			// Out of this World (Prototype)
 	&BurnDrvmd_ootw,			// Out of This World (USA)
@@ -35128,8 +35137,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvLkage,				// The Legend of Kage
 	&BurnDrvSilkroada,			// The Legend of Silkroad (larger roms)
 	&BurnDrvSilkroad,			// The Legend of Silkroad
-	&BurnDrvtg_legaxe2,			// The Legendary Axe II
-	&BurnDrvtg_legaxe,			// The Legendary Axe
 	&BurnDrvLordofk,			// The Lord of King (Japan)
 	&BurnDrvDarkmist,			// The Lost Castle In Darkmist
 	&BurnDrvmd_lostwrld,		// The Lost World - Jurassic Park (Euro, USA)
@@ -35150,7 +35157,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_tnzsac,			// The New Zealand Story (Hack, Arcade Colors)
 	&BurnDrvmd_tnzss,			// The New Zealand Story (Hack, Spanish)
 	&BurnDrvmd_tnzs,			// The New Zealand Story (Jpn)
-	&BurnDrvpce_tnzs,			// The New Zealand Story
 	&BurnDrvtnzsj,				// The NewZealand Story (Japan, new version, newer PCB)
 	&BurnDrvTnzsjo,				// The NewZealand Story (Japan, old version) (older PCB)
 	&BurnDrvTnzsuo,				// The NewZealand Story (US, old version) (older PCB)

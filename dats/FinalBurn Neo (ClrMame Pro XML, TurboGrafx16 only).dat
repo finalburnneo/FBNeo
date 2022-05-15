@@ -374,6 +374,22 @@
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="legaxe2">
+		<description>Legendary Axe II, The</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="legendary axe ii, the (usa).pce" size="262144" crc="220ebf91"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="legaxe">
+		<description>Legendary Axe, The</description>
+		<year>1989</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="legendary axe, the (usa).pce" size="262144" crc="2d211007"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="magchase">
 		<description>Magical Chase</description>
 		<year>1991</year>
@@ -464,7 +480,7 @@
 	</game>
 	<game name="panzakb">
 		<description>Panza Kick Boxing</description>
-		<year>1990</year>
+		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="panza kick boxing (usa).pce" size="524288" crc="a980e0e9"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
@@ -627,22 +643,6 @@
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="talespin (usa).pce" size="524288" crc="bae9cecc"/>
-		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="legaxe2">
-		<description>The Legendary Axe II</description>
-		<year>1990</year>
-		<manufacturer>NEC</manufacturer>
-		<rom name="legendary axe ii, the (usa).pce" size="262144" crc="220ebf91"/>
-		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="legaxe">
-		<description>The Legendary Axe</description>
-		<year>1989</year>
-		<manufacturer>NEC</manufacturer>
-		<rom name="legendary axe, the (usa).pce" size="262144" crc="2d211007"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

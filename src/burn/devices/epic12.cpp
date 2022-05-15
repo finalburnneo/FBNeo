@@ -374,6 +374,8 @@ void epic12_reset()
 	m_gfx_scroll_1_x = 0;
 	m_gfx_scroll_1_y = 0;
 	epic12_device_blit_delay = 0;
+
+	thready.reset();
 }
 
 static UINT16 READ_NEXT_WORD(UINT32 *addr)
@@ -814,6 +816,8 @@ static void gfx_exec_write(UINT32 offset, UINT32 data)
 	{
 		if (data & 1)
 		{
+			thready.notify_wait();
+
 			if (epic12_device_blit_delay && m_delay_scale)
 			{
 				m_blitter_busy = 1;

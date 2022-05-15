@@ -5,6 +5,8 @@
 #define THREADY_PTHREAD 2 // anything that supports pthreads (linux, android, mac)
 #define THREADY_0THREAD 3 // neither of the above.. (no threading!)
 
+#define STARTUP_FRAMES 300
+
 #if defined(WIN32)
 #define THREADY THREADY_WINDOWS
 #include "windows.h"
@@ -34,12 +36,9 @@ struct threadystruct
 	HANDLE our_thread;
 	HANDLE our_event;
 	HANDLE wait_event;
-
-	HANDLE startup_timer;
-	LARGE_INTEGER startup_timer_i;
-
 	DWORD our_threadid;
 	void (*our_callback)();
+	INT32 startup_frame;
 
 	void init(void (*thread_callback)()) {
 		thready_ok = 0;
@@ -60,9 +59,6 @@ struct threadystruct
 		our_event = CreateEvent(NULL, FALSE, FALSE, NULL);
 		wait_event = CreateEvent(NULL, FALSE, FALSE, NULL);
 		our_thread = CreateThread(NULL, 0, ThreadyProc, NULL, 0, &our_threadid);
-
-		startup_timer = CreateWaitableTimer(NULL, TRUE, NULL);
-		startup_timer_i.QuadPart = -1000; // 100usec, negative = "relative to current time"
 
 		SetThreadIdealProcessor(our_thread, thready_proc);
 
@@ -85,9 +81,12 @@ struct threadystruct
 			CloseHandle(our_event);
 			CloseHandle(our_thread);
 			CloseHandle(wait_event);
-			CloseHandle(startup_timer);
 			thready_ok = 0;
 		}
+	}
+
+	void reset() {
+		startup_frame = STARTUP_FRAMES;
 	}
 
 	void set_threading(INT32 value)	{
@@ -97,15 +96,15 @@ struct threadystruct
 	void notify() {
 		if (thready_ok && ok_to_thread) {
 			SetEvent(our_event);
-
-			// allow thread to get started (1/10 ms) (bug: mushisam doesn't like threaded blitter)
-			SetWaitableTimer(startup_timer, &startup_timer_i, 0, NULL, NULL, 0);
-			WaitForSingleObject(startup_timer, INFINITE);
-
 			ok_to_wait = 1;
 		} else {
 			// fallback to single-threaded mode
 			our_callback();
+		}
+		if (startup_frame > 0) {
+			// run in synchronous mode for startup_frame frames
+			startup_frame--;
+			notify_wait();
 		}
 	}
 	void notify_wait() {
@@ -148,27 +147,23 @@ struct threadystruct
 	INT32 end_thread;
 	sem_t our_event;
 	sem_t wait_event;
-	sem_t thready_ready_event; // ok to start processing notifications?
-	INT32 is_running;
 	pthread_t our_thread;
 	void (*our_callback)();
+	INT32 startup_frame;
 
 	void init(void (*thread_callback)()) {
 		thready_ok = 0;
 		ok_to_thread = 0;
 		ok_to_wait = 0;
 		end_thread = 0;
-		is_running = 0;
 
 		our_callback = thread_callback;
 
 		INT32 our_thread_rv = pthread_create(&our_thread, NULL, ThreadyProc, NULL);
 		INT32 our_event_rv = sem_init(&our_event, 0, 0);
 		INT32 wait_event_rv = sem_init(&wait_event, 0, 0);
-		INT32 ready_event_rv = sem_init(&thready_ready_event, 0, 0);
 
-		if (our_thread_rv == 0 && wait_event_rv == 0 && our_event_rv == 0 && ready_event_rv == 0) {
-			sem_wait(&thready_ready_event);
+		if (our_thread_rv == 0 && wait_event_rv == 0 && our_event_rv == 0) {
 			bprintf(0, _T("Thready: we're gonna git 'r dun!\n"));
 			thready_ok = 1;
 			ok_to_thread = 1;
@@ -188,10 +183,12 @@ struct threadystruct
 			pthread_join(our_thread, NULL);
 			sem_destroy(&our_event);
 			sem_destroy(&wait_event);
-			sem_destroy(&thready_ready_event);
 			thready_ok = 0;
-			is_running = 0;
 		}
+	}
+
+	void reset() {
+		startup_frame = STARTUP_FRAMES;
 	}
 
 	void set_threading(INT32 value)
@@ -202,11 +199,15 @@ struct threadystruct
 	void notify() {
 		if (thready_ok && ok_to_thread) {
 			sem_post(&our_event);
-			usleep(100);
 			ok_to_wait = 1;
 		} else {
 			// fallback to single-threaded mode
 			our_callback();
+		}
+		if (startup_frame > 0) {
+			// run in synchronous mode for startup_frame frames
+			startup_frame--;
+			notify_wait();
 		}
 	}
 	void notify_wait() {
@@ -218,26 +219,13 @@ struct threadystruct
 };
 
 static threadystruct thready;
-#include "math.h"
+
 static void *ThreadyProc(void*) {
-	// for android: prime thread's fuel line and choke carburator to make for
-	// a nice thread startup.
-	// basically: peg the cpu in this thread so the android scheduler notices us
-	double zoop = 0.0;
-	for (INT32 i = 0; i < 1000000; i++) {
-		for (INT32 j = 0; j < 5; j++) {
-			zoop += cos(rand() * 1.7777);
-			zoop = pow(1.77, zoop) + j;
-		}
-	}
-	sem_post(&thready.thready_ready_event); // thready.init() can continue!
 	do {
 		sem_wait(&thready.our_event);
 
 		if (thready.end_thread == 0) {
-			thready.is_running = 1;
 			thready.our_callback();
-			thready.is_running = 0;
 			sem_post(&thready.wait_event);
 		} else {
 			sem_post(&thready.wait_event);
@@ -264,6 +252,9 @@ struct threadystruct
 	}
 
 	void exit() {
+	}
+
+	void reset() {
 	}
 
 	void set_threading(INT32 value)

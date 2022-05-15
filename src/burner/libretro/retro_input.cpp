@@ -2929,10 +2929,10 @@ void InputMake(void)
 void RefreshLightgunCrosshair()
 {
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES)
-		bBurnGunHide[0] = (bLightgunHideCrosshairEnabled && nDeviceType[1] == RETRO_DEVICE_LIGHTGUN);
+		bBurnGunHide[0] = (nLightgunCrosshairEmulation == 0 && nDeviceType[1] == RETRO_DEVICE_LIGHTGUN) || (nLightgunCrosshairEmulation == 1);
 	else
 		for (int i = 0; i < MAX_GUNS; i++)
-			bBurnGunHide[i] = (bLightgunHideCrosshairEnabled && nDeviceType[i] == RETRO_DEVICE_LIGHTGUN);
+			bBurnGunHide[i] = (nLightgunCrosshairEmulation == 0 && nDeviceType[i] == RETRO_DEVICE_LIGHTGUN) || (nLightgunCrosshairEmulation == 1);
 }
 
 void InputInit()

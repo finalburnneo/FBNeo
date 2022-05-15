@@ -46,7 +46,6 @@ bool bIsNeogeoCartGame = false;
 bool allow_neogeo_mode = true;
 bool neogeo_use_specific_default_bios = false;
 bool bAllowDepth32 = false;
-bool bLightgunHideCrosshairEnabled = true;
 bool bPatchedRomsetsEnabled = true;
 bool bLibretroSupportsAudioBuffStatus = false;
 bool bLowPassFilterEnabled = false;
@@ -54,6 +53,7 @@ UINT32 nVerticalMode = 0;
 UINT32 nFrameskip = 1;
 INT32 g_audio_samplerate = 48000;
 UINT32 nMemcardMode = 0;
+UINT32 nLightgunCrosshairEmulation = 0;
 UINT8 *diag_input;
 uint32_t g_opt_neo_geo_mode = 0;
 
@@ -298,19 +298,20 @@ static const struct retro_core_option_v2_definition var_fbneo_analog_speed = {
 	},
 	"100%"
 };
-static const struct retro_core_option_v2_definition var_fbneo_lightgun_hide_crosshair = {
-	"fbneo-lightgun-hide-crosshair",
-	"No crosshair with lightgun device",
+static const struct retro_core_option_v2_definition var_fbneo_lightgun_crosshair_emulation = {
+	"fbneo-lightgun-crosshair-emulation",
+	"Crosshair emulation",
 	NULL,
-	"Hide crosshair if you play with a lightgun device",
+	"Change emulated crosshair behavior",
 	NULL,
 	NULL,
 	{
-		{ "disabled", NULL },
-		{ "enabled", NULL },
+		{ "hide with lightgun device", NULL },
+		{ "always hide", NULL },
+		{ "always show", NULL },
 		{ NULL, NULL },
 	},
-	"enabled"
+	"hide with lightgun device"
 };
 #ifdef USE_CYCLONE
 static const struct retro_core_option_v2_definition var_fbneo_cyclone = {
@@ -882,7 +883,7 @@ void set_environment()
 	vars_systems.push_back(&var_fbneo_vertical_mode);
 	vars_systems.push_back(&var_fbneo_allow_patched_romsets);
 	vars_systems.push_back(&var_fbneo_analog_speed);
-	vars_systems.push_back(&var_fbneo_lightgun_hide_crosshair);
+	vars_systems.push_back(&var_fbneo_lightgun_crosshair_emulation);
 	vars_systems.push_back(&var_fbneo_cpu_speed_adjust);
 #ifdef USE_CYCLONE
 	vars_systems.push_back(&var_fbneo_cyclone);
@@ -1640,13 +1641,15 @@ void check_variables(void)
 		nAnalogSpeed = percent_parser(var.value);
 	}
 
-	var.key = var_fbneo_lightgun_hide_crosshair.key;
+	var.key = var_fbneo_lightgun_crosshair_emulation.key;
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
-		if (strcmp(var.value, "enabled") == 0)
-			bLightgunHideCrosshairEnabled = true;
-		else if (strcmp(var.value, "disabled") == 0)
-			bLightgunHideCrosshairEnabled = false;
+		if (strcmp(var.value, "hide with lightgun device") == 0)
+			nLightgunCrosshairEmulation = 0;
+		else if (strcmp(var.value, "always hide") == 0)
+			nLightgunCrosshairEmulation = 1;
+		else if (strcmp(var.value, "always show") == 0)
+			nLightgunCrosshairEmulation = 2;
 		RefreshLightgunCrosshair();
 	}
 

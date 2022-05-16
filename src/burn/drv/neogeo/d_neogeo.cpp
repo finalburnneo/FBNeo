@@ -15737,10 +15737,8 @@ struct BurnDriver BurnDrvmslug4lw = {
 // GOTVG 2021-08-26
 
 static struct BurnRomInfo mslug4aRomDesc[] = {
-	{ "263-p1a.bin",	0x100000, 0x0f2b0fc2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "263-p2a.bin",	0x400000, 0x87dc01b9, 1 | BRF_ESS | BRF_PRG }, //  1
-
-																				   
+	{ "263-p1a.p1",		0x100000, 0x0f2b0fc2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "263-p2a.sp2",	0x400000, 0x87dc01b9, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */

@@ -15734,37 +15734,41 @@ struct BurnDriver BurnDrvmslug4lw = {
 };
 
 // Metal Slug 4 (20th Anniversary)
-// GOTVG
+// GOTVG 2021-08-26
 
 static struct BurnRomInfo mslug4aRomDesc[] = {
-	{ "263-p1.bin",    0x100000, 0x61cdef09, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "263-p2.bin",    0x400000, 0xc07e895d, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "263-p1a.bin",	0x100000, 0x0f2b0fc2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "263-p2a.bin",	0x400000, 0x87dc01b9, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "263-s1.bin",    0x080000, 0x1eaa05e0, 2 | BRF_GRA },			  //  2 Text layer tiles
+																				   
 
-	{ "263-c1.rom",	   0x800000, 0xa75ffcde, 3 | BRF_GRA },			  //  3 Sprite data
-	{ "263-c2.rom",	   0x800000, 0x5ab0d12b, 3 | BRF_GRA },			  //  4
-	{ "263-c3.rom",	   0x800000, 0x61af560c, 3 | BRF_GRA },			  //  5
-	{ "263-c4.rom",	   0x800000, 0xf2c544fd, 3 | BRF_GRA },			  //  6
-	{ "263-c5.rom",	   0x800000, 0x84c66c44, 3 | BRF_GRA },			  //  7
-	{ "263-c6.rom",	   0x800000, 0x5ed018ab, 3 | BRF_GRA },			  //  8
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "263-c1.c1",		0x800000, 0x84865f8a, 3 | BRF_GRA },           //  2 Sprite data
+	{ "263-c2.c2",		0x800000, 0x81df97f2, 3 | BRF_GRA },           //  3
+	{ "263-c3.c3",		0x800000, 0x1a343323, 3 | BRF_GRA },           //  4
+	{ "263-c4.c4",		0x800000, 0x942cfb44, 3 | BRF_GRA },           //  5
+	{ "263-c5.c5",		0x800000, 0xa748854f, 3 | BRF_GRA },           //  6
+	{ "263-c6.c6",		0x800000, 0x5c8ba116, 3 | BRF_GRA },           //  7
 
-	{ "263-m1.bin",    0x020000, 0xef5db532, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+	/* Encrypted */
+	{ "263-m1.m1",		0x020000, 0x46ac8228, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
 
-	{ "263-v1.bin",	   0x800000, 0xfd6b982e, 5 | BRF_SND }, 			// 10 Sound data
-	{ "263-v2.bin",	   0x800000, 0x20125227, 5 | BRF_SND },			    // 11
+	/* Encrypted */
+	{ "263-v1.v1",		0x800000, 0x01e9b9cd, 5 | BRF_SND },           //  9 Sound data
+	{ "263-v2.v2",		0x800000, 0x4ab2bf81, 5 | BRF_SND },           // 10
 };
 
 STDROMPICKEXT(mslug4a, mslug4a, neogeo)
 STD_ROM_FN(mslug4a)
 
 struct BurnDriver BurnDrvmslug4a = {
-	"mslug4a", "mslug4", "neogeo", NULL, "2017",
-	"Metal Slug 4 (20th Anniversary)\0", NULL, "hack", "Neo Geo",
+	"mslug4a", "mslug4", "neogeo", NULL, "2021",
+	"Metal Slug 4 (20th Anniversary)\0", NULL, "Hack", "Neo Geo",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug4aRomInfo, mslug4aRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	mslug4Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 

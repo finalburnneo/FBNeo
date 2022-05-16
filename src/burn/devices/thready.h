@@ -5,7 +5,7 @@
 #define THREADY_PTHREAD 2 // anything that supports pthreads (linux, android, mac)
 #define THREADY_0THREAD 3 // neither of the above.. (no threading!)
 
-#define STARTUP_FRAMES 300
+#define STARTUP_FRAMES 180
 
 #if defined(WIN32)
 #define THREADY THREADY_WINDOWS
@@ -94,17 +94,18 @@ struct threadystruct
 	}
 
 	void notify() {
+		if (startup_frame > 0) {
+			// run in synchronous mode for startup_frame frames
+			startup_frame--;
+			our_callback();
+			return;
+		}
 		if (thready_ok && ok_to_thread) {
 			SetEvent(our_event);
 			ok_to_wait = 1;
 		} else {
 			// fallback to single-threaded mode
 			our_callback();
-		}
-		if (startup_frame > 0) {
-			// run in synchronous mode for startup_frame frames
-			startup_frame--;
-			notify_wait();
 		}
 	}
 	void notify_wait() {
@@ -197,17 +198,18 @@ struct threadystruct
 	}
 
 	void notify() {
+		if (startup_frame > 0) {
+			// run in synchronous mode for startup_frame frames
+			startup_frame--;
+			our_callback();
+			return;
+		}
 		if (thready_ok && ok_to_thread) {
 			sem_post(&our_event);
 			ok_to_wait = 1;
 		} else {
 			// fallback to single-threaded mode
 			our_callback();
-		}
-		if (startup_frame > 0) {
-			// run in synchronous mode for startup_frame frames
-			startup_frame--;
-			notify_wait();
 		}
 	}
 	void notify_wait() {

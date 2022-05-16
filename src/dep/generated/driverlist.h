@@ -860,6 +860,7 @@ DRV		BurnDrvfds_armananokiseki;
 DRV		BurnDrvnes_armeddrafanvilj;
 DRV		BurnDrvnes_armeddrafanvil;
 DRV		BurnDrvnes_armedbat;
+DRV		BurnDrvnes_armedbatle;
 DRV		BurnDrvArmedff;
 DRV		BurnDrvpce_armedf;
 DRV		BurnDrvArmedf;
@@ -985,6 +986,7 @@ DRV		BurnDrvMSX_amc;
 DRV		BurnSpecastmarcs;
 DRV		BurnSpecastmarcs2;
 DRV		BurnDrvnes_astronm;
+DRV		BurnDrvnes_astronmdx;
 DRV		BurnSpecAstrophobos;
 DRV		BurnDrvMSX_astroplm;
 DRV		BurnDrvnes_astrorobosasa;
@@ -1489,6 +1491,7 @@ DRV		BurnDrvmd_beastw;
 DRV		BurnDrvmd_beastbal;
 DRV		BurnSpecBfeastie;
 DRV		BurnDrvbeastfp;
+DRV		BurnDrvnes_beee;
 DRV		BurnDrvnes_beautandbea;
 DRV		BurnDrvmd_beautys;
 DRV		BurnDrvmd_beautyrbs;
@@ -11543,6 +11546,7 @@ DRV		BurnDrvPinkswtsx;
 DRV		BurnDrvPinkswtssc;
 DRV		BurnDrvnes_pinky;
 DRV		BurnDrvMSX_pinkychs;
+DRV		BurnDrvnes_pinkyxmas;
 DRV		BurnDrvmd_pinoc;
 DRV		BurnDrvmd_pinocu;
 DRV		BurnDrvPballoonr;
@@ -18381,6 +18385,7 @@ DRV		BurnDrvXybotsg;
 DRV		BurnDrvXybots0;
 DRV		BurnDrvXybots1;
 DRV		BurnDrvXybots;
+DRV		BurnDrvnes_xybots;
 DRV		BurnDrvXyonix;
 DRV		BurnDrvMSX_xyzolog;
 DRV		BurnDrvMSX_xyzologa;
@@ -19551,6 +19556,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_armeddrafanvilj,// Armed Dragon Fantasy Villgust (Japan)
 	&BurnDrvnes_armeddrafanvil,	// Armed Dragon Fantasy Villgust (T-Eng)
 	&BurnDrvnes_armedbat,		// Armed for Battle (HB)
+	&BurnDrvnes_armedbatle,		// Armed for Battle - Limited Edition (HB)
 	&BurnDrvArmedff,			// Armed Formation (Fillmore license)
 	&BurnDrvpce_armedf,			// Armed Formation F
 	&BurnDrvArmedf,				// Armed Formation
@@ -19676,6 +19682,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecastmarcs,			// Astro Marine Corps - Part 1 (Spanish) (128K)
 	&BurnSpecastmarcs2,			// Astro Marine Corps - Part 2 (Spanish) (128K)
 	&BurnDrvnes_astronm,		// Astro Ninja Man (HB)
+	&BurnDrvnes_astronmdx,		// Astro Ninja Man DX (HB)
 	&BurnSpecAstrophobos,		// Astro Phobos (128K) (HB, v1.3)
 	&BurnDrvMSX_astroplm,		// Astro Plumber (Euro)
 	&BurnDrvnes_astrorobosasa,	// Astro Robo Sasa (Japan)
@@ -20180,6 +20187,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_beastbal,		// Beastball (Prototype)
 	&BurnSpecBfeastie,			// Beastie Feastie (128K) (HB)
 	&BurnDrvbeastfp,			// Beastie Feastie (Pac-Man conversion)
+	&BurnDrvnes_beee,			// Beat 'Em & Eat 'Em (HB)
 	&BurnDrvnes_beautandbea,	// Beauty and the Beast (Europe)
 	&BurnDrvmd_beautys,			// Beauty And The Beast - Belle's Quest (Hack, Spanish)
 	&BurnDrvmd_beautyrbs,		// Beauty And The Beast - Roar Of The Beast (Hack, Spanish)
@@ -28181,9 +28189,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfds_metroidj,		// Metroid (Japan)
 	&BurnDrvfds_metroid,		// Metroid (T-Eng)
 	&BurnDrvnes_metroid,		// Metroid (USA)
-	&BurnDrvnes_metroorienh,	// Metroid - Origin Enhanced (USA)
-	&BurnDrvnes_metrorogdaw,	// Metroid - Rogue Dawn (USA)
-	&BurnDrvnes_metroidmother,	// Metroid Mother (Hack)
+	&BurnDrvnes_metroorienh,	// Metroid - Origin Enhanced (Hack, v2.1.2)
+	&BurnDrvnes_metrorogdaw,	// Metroid - Rogue Dawn (Hack, v1.21)
+	&BurnDrvnes_metroidmother,	// Metroid mOTHER (Hack)
 	&BurnDrvMSX_metropolis,		// Metropolis (Spanish)
 	&BurnDrvMexico86,			// Mexico 86 (bootleg of Kick and Run) (set 1)
 #if defined FBNEO_DEBUG
@@ -30234,6 +30242,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPinkswtssc,			// Pink Sweets: Suicide Club (2017/10/31 SUICIDECLUB VER., bootleg)
 	&BurnDrvnes_pinky,			// Pinky (HB)
 	&BurnDrvMSX_pinkychs,		// Pinky Chase (Jpn)
+	&BurnDrvnes_pinkyxmas,		// Pinky Xmas (HB)
 	&BurnDrvmd_pinoc,			// Pinocchio (Euro)
 	&BurnDrvmd_pinocu,			// Pinocchio (USA)
 	&BurnDrvPballoonr,			// Pioneer Balloon (Rock-Ola license)
@@ -36496,7 +36505,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvWexpressb3,			// Western Express (bootleg set 3)
 	&BurnDrvWexpress,			// Western Express (Japan, rev 4)
 	&BurnDrvmd_whacacri,		// Whac-a-Critter (USA) [no comment, NOT WORKING]
-	&BurnDrvnes_whatremains,	// What Remains (HB)
+	&BurnDrvnes_whatremains,	// What Remains (HB, v1.0.2)
 	&BurnSpecWhb,				// WHB (128K) (HB)
 	&BurnDrvgg_wheelof,			// Wheel of Fortune (USA)
 	&BurnDrvmd_wheelfor,		// Wheel of Fortune (USA)
@@ -36708,7 +36717,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_worden,			// Word (English) (HB, v1.1)
 	&BurnDrvMSX_wordes,			// Word (Spanish) (HB, v1.1)
 	&BurnDrvcv_wordfeud,		// Word Feud
-	&BurnDrvnes_wordle,			// Wordle (HB, v1.03)
+	&BurnDrvnes_wordle,			// Wordle (HB, v1.1)
 	&BurnDrvWorldadv,			// World Adventure
 	&BurnDrvpce_wbeach,			// World Beach Volley
 	&BurnDrvnes_worldchamp,		// World Champ (USA)
@@ -37072,6 +37081,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvXybots0,			// Xybots (rev 0)
 	&BurnDrvXybots1,			// Xybots (rev 1)
 	&BurnDrvXybots,				// Xybots (rev 2)
+	&BurnDrvnes_xybots,			// Xybots (USA) (Prototype)
 	&BurnDrvXyonix,				// Xyonix
 	&BurnDrvMSX_xyzolog,		// Xyzolog (Jpn)
 	&BurnDrvMSX_xyzologa,		// Xyzolog (Jpn, Alt)

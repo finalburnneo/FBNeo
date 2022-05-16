@@ -972,12 +972,21 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="armedbat">
+	<game name="armedbat" cloneof="armedbatle" romof="armedbatle">
 		<comment>Homebrew</comment>
 		<description>Armed for Battle (HB)</description>
 		<year>2014</year>
 		<manufacturer>1010 Howe</manufacturer>
 		<rom name="Armed for Battle (2014)(1010 Howe).nes" size="131088" crc="a7deed94"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="armedbatle">
+		<comment>Homebrew</comment>
+		<description>Armed for Battle - Limited Edition (HB)</description>
+		<year>2014</year>
+		<manufacturer>1010 Howe</manufacturer>
+		<rom name="Armed for Battle - Limited Edition (2014) (1010 Howe).nes" size="131088" crc="542bbace"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -1032,12 +1041,21 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="astronm">
+	<game name="astronm" cloneof="astronmdx" romof="astronmdx">
 		<comment>Homebrew</comment>
 		<description>Astro Ninja Man (HB)</description>
 		<year>2020</year>
 		<manufacturer>RiKi</manufacturer>
 		<rom name="Astro Ninja Man (2020)(RiKi).nes" size="786448" crc="f709e1e0"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="astronmdx">
+		<comment>Homebrew</comment>
+		<description>Astro Ninja Man DX (HB)</description>
+		<year>2022</year>
+		<manufacturer>RiKi</manufacturer>
+		<rom name="Astro Ninja Man DX (2022)(RiKi).nes" size="786448" crc="27d5371f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -1576,6 +1594,15 @@
 		<year>1993</year>
 		<manufacturer>Tradewest</manufacturer>
 		<rom name="Battletoads-Double Dragon (USA).nes" size="262160" crc="53b02f3d"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="beee">
+		<comment>Homebrew, Adult game</comment>
+		<description>Beat 'Em &amp; Eat 'Em (HB)</description>
+		<year>2014</year>
+		<manufacturer>FG Software</manufacturer>
+		<rom name="Beat 'Em &amp; Eat 'Em v1.0 (2014)(FG Software).nes" size="40976" crc="11175864"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -9976,15 +10003,15 @@
 	<game name="metalfighter">
 		<description>Metal Fighter (Asia) (Sachen) (Unl)</description>
 		<year>1989</year>
-		<manufacturer>Color Dreams</manufacturer>
+		<manufacturer>Sachen - Color Dreams</manufacturer>
 		<rom name="Metal Fighter (Asia) (Sachen) (Unl).nes" size="65552" crc="6595575e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="metalforce">
 		<description>Metal Force (Korea) (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1993</year>
+		<manufacturer>Open</manufacturer>
 		<rom name="Metal Force (Korea) (Unl).nes" size="524304" crc="7e3ba9fd"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10024,9 +10051,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="metalmax">
+		<comment>Hack</comment>
 		<description>Metal Max (T-Eng)</description>
-		<year>1991</year>
-		<manufacturer>Data East</manufacturer>
+		<year>2000</year>
+		<manufacturer>Aeon Genesis</manufacturer>
 		<rom name="Metal Max (T-Eng).nes" size="786448" crc="74a85272"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10048,9 +10076,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="metalslaglo">
+		<comment>Hack</comment>
 		<description>Metal Slader Glory (T-Eng)</description>
-		<year>1991</year>
-		<manufacturer>HAL Laboratory</manufacturer>
+		<year>2018</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Metal Slader Glory (T-Eng).nes" size="1572880" crc="13981241"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10097,33 +10126,36 @@
 		<driver status="good"/>
 	</game>
 	<game name="metroorienh" cloneof="metroid" romof="metroid">
-		<description>Metroid - Origin Enhanced (USA)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Hack</comment>
+		<description>Metroid - Origin Enhanced (Hack, v2.1.2)</description>
+		<year>2016</year>
+		<manufacturer>JoQualian</manufacturer>
 		<rom name="Metroid - Origin Enhanced (USA).nes" size="393232" crc="a81055ab"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="metrorogdaw" cloneof="metroid" romof="metroid">
-		<description>Metroid - Rogue Dawn (USA)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
-		<rom name="Metroid - Rogue Dawn (USA).nes" size="786448" crc="2120dfea"/>
+		<comment>Hack</comment>
+		<description>Metroid - Rogue Dawn (Hack, v1.21)</description>
+		<year>2022</year>
+		<manufacturer>snarfblam</manufacturer>
+		<rom name="Metroid - Rogue Dawn (Hack, v1.21)(2022)(snarfblam).nes" size="786448" crc="5cc08cb1"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="metroidmother" cloneof="metroid" romof="metroid">
-		<description>Metroid Mother (Hack)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Hack</comment>
+		<description>Metroid mOTHER (Hack)</description>
+		<year>2014</year>
+		<manufacturer>dACE</manufacturer>
 		<rom name="Metroid Mother (Hack).nes" size="393232" crc="04819e27"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="micemission">
 		<description>Mice Mission (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>200?</year>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="Mice Mission (Unl).nes" size="40976" crc="78820fd8"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10153,9 +10185,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="mickemouiii">
+		<comment>Hack</comment>
 		<description>Mickey Mouse III - Yume Fuusen (T-Eng)</description>
-		<year>1992</year>
-		<manufacturer>Kemco</manufacturer>
+		<year>2013</year>
+		<manufacturer>NikcDC</manufacturer>
 		<rom name="Mickey Mouse III - Yume Fuusen (T-Eng).nes" size="262160" crc="5cb55b23"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10278,9 +10311,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="minelsag">
+		<comment>Hack</comment>
 		<description>Minelvaton Saga - Ragon no Fukkatsu (T-Eng)</description>
-		<year>1987</year>
-		<manufacturer>Taito</manufacturer>
+		<year>2020</year>
+		<manufacturer>aishsha</manufacturer>
 		<rom name="Minelvaton Saga - Ragon no Fukkatsu (T-Eng).nes" size="393232" crc="a0da91d6"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11661,6 +11695,15 @@
 		<year>2020</year>
 		<manufacturer>Axbakk Games</manufacturer>
 		<rom name="Pinky (2020)(Axbakk Games).nes" size="524304" crc="cb0bcb5d"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="pinkyxmas">
+		<comment>Homebrew</comment>
+		<description>Pinky Xmas (HB)</description>
+		<year>2020</year>
+		<manufacturer>Axbakk Games</manufacturer>
+		<rom name="Pinky Xmas (2020)(Axbakk Games).nes" size="524304" crc="c1d80a1d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -16584,8 +16627,8 @@
 	</game>
 	<game name="whatremains">
 		<comment>Homebrew</comment>
-		<description>What Remains (HB)</description>
-		<year>2019</year>
+		<description>What Remains (HB, v1.0.2)</description>
+		<year>2019-20</year>
 		<manufacturer>Iodine Dynamics</manufacturer>
 		<rom name="What Remains (HB).nes" size="524304" crc="2f2d03e5"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -16802,10 +16845,10 @@
 	</game>
 	<game name="wordle">
 		<comment>Homebrew</comment>
-		<description>Wordle (HB, v1.03)</description>
+		<description>Wordle (HB, v1.1)</description>
 		<year>2022</year>
 		<manufacturer>FG Software</manufacturer>
-		<rom name="Wordle v1.03 (2022)(FG Software).nes" size="65552" crc="0f5b1e34"/>
+		<rom name="Wordle v1.1 (2022)(FG Software).nes" size="65552" crc="604ff03b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -16903,6 +16946,15 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Xiao Ma Li (Unl).nes" size="24592" crc="c8f9a5ab"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="xybots">
+		<comment>Prototype</comment>
+		<description>Xybots (USA) (Prototype)</description>
+		<year>1990</year>
+		<manufacturer>Tengen</manufacturer>
+		<rom name="Xybots (proto)(1990)(Tengen).nes" size="196624" crc="59dae478"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

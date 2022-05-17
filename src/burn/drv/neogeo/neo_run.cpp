@@ -534,6 +534,8 @@ static INT32 LoadRoms()
 	NeoGameInfo info;
 	NeoGameInfo* pInfo = &info;
 
+	UINT32 nSpriteRomSize = 0;
+
 	{
 		struct BurnRomInfo ri;
 
@@ -618,6 +620,9 @@ static INT32 LoadRoms()
 			nSpriteSize[nNeoActiveSlot] += ri.nLen * 2;
 		}
 
+		// Keep actual ROMs length.
+		nSpriteRomSize = nSpriteSize[nNeoActiveSlot];
+
 		// The [nSpriteSize] here corresponds to the setting of [nBuf1Len] in [neogeo.cpp].
 		if (bDoIpsPatch) nSpriteSize[nNeoActiveSlot] += (0x800000 << 2);
 
@@ -696,7 +701,8 @@ static INT32 LoadRoms()
 	}
 
 	// Load sprite data
-	NeoLoadSprites(pInfo->nSpriteOffset, pInfo->nSpriteNum, NeoSpriteROM[nNeoActiveSlot], nSpriteSize[nNeoActiveSlot]);
+	// nSpriteRomSize - Make sure the 6C ROMs are decrypted correctly (NeoCMCDecrypt).
+	NeoLoadSprites(pInfo->nSpriteOffset, pInfo->nSpriteNum, NeoSpriteROM[nNeoActiveSlot], nSpriteRomSize);
 
 	NeoTextROM[nNeoActiveSlot] = (UINT8*)BurnMalloc(nNeoTextROMSize[nNeoActiveSlot]);
 	if (NeoTextROM[nNeoActiveSlot] == NULL) {
@@ -710,27 +716,24 @@ static INT32 LoadRoms()
 			BurnLoadRom(NeoTextROM[nNeoActiveSlot], pInfo->nTextOffset, 1);
 		} else {
 			// With IPS, The true length of [nSpriteSize] will be obtained.
-			UINT32 nRealSpriteSize = nSpriteSize[nNeoActiveSlot];
+			UINT32 nRealSpriteSize = nSpriteRomSize;
 
 			if (bDoIpsPatch) {
 
 				// If the expansion bytes of 0x800000 << 2 are all empty data,
 				// then [SpriteSize] will subtract the expansion part to ensure that [NeoTextROM] is obtained correctly.
-				for (INT32 i = 0; i < ((0x800000 << 2) / nNeoTextROMSize[nNeoActiveSlot]); i++) {
+				for (INT32 i = 0; i < (0x800000 << 2); i += (0x800000 << 1)) {
 
-					// The last byte position segment to appear is the true Length of [nSpriteSize].
-					// First move the pointer to the last data segment of the length of [nNeoTextROMSize].
-					UINT8* pFind = NeoSpriteROM[nNeoActiveSlot] + nSpriteSize[nNeoActiveSlot] - ((i + 1) * nNeoTextROMSize[nNeoActiveSlot]);
+					// Move the pointer to the starting position of the capacity expansion.
+					UINT8* pFind = NeoSpriteROM[nNeoActiveSlot] + nSpriteRomSize + i;
 
-					for (INT32 j = 0; j < (nNeoTextROMSize[nNeoActiveSlot] / sizeof(UINT32)); j += sizeof(UINT32)) {
+					for (INT32 j = 0; j < ((0x800000 << 1) / sizeof(UINT32)); j++) {
 						// Data has been found
-						if (0 != *(UINT32*)&pFind[j]) {
-							i = ((0x800000 << 2) / nNeoTextROMSize[nNeoActiveSlot]);
+						if (0 != ((UINT32*)pFind)[j]) {
+							nRealSpriteSize += (0x800000 << 1);
 							break;
 						}
 					}
-					if (i != ((0x800000 << 2) / nNeoTextROMSize[nNeoActiveSlot]))
-						nRealSpriteSize -= nNeoTextROMSize[nNeoActiveSlot];
 				}
 			}
 			// Extract data from the end of C ROMS

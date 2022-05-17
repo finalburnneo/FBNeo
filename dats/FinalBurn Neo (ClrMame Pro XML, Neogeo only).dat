@@ -8301,20 +8301,19 @@
 	<game name="mslug4a" cloneof="mslug4" romof="mslug4">
 		<comment>Hack</comment>
 		<description>Metal Slug 4 (20th Anniversary)</description>
-		<year>2017</year>
-		<manufacturer>hack</manufacturer>
-		<rom name="263-p1.bin" size="1048576" crc="61cdef09"/>
-		<rom name="263-p2.bin" size="4194304" crc="c07e895d"/>
-		<rom name="263-s1.bin" size="524288" crc="1eaa05e0"/>
-		<rom name="263-c1.rom" size="8388608" crc="a75ffcde"/>
-		<rom name="263-c2.rom" size="8388608" crc="5ab0d12b"/>
-		<rom name="263-c3.rom" size="8388608" crc="61af560c"/>
-		<rom name="263-c4.rom" size="8388608" crc="f2c544fd"/>
-		<rom name="263-c5.rom" size="8388608" crc="84c66c44"/>
-		<rom name="263-c6.rom" size="8388608" crc="5ed018ab"/>
-		<rom name="263-m1.bin" size="131072" crc="ef5db532"/>
-		<rom name="263-v1.bin" size="8388608" crc="fd6b982e"/>
-		<rom name="263-v2.bin" size="8388608" crc="20125227"/>
+		<year>2021</year>
+		<manufacturer>Hack</manufacturer>
+		<rom name="263-p1a.p1" size="1048576" crc="0f2b0fc2"/>
+		<rom name="263-p2a.sp2" size="4194304" crc="87dc01b9"/>
+		<rom name="263-c1.c1" merge="263-c1.c1" size="8388608" crc="84865f8a"/>
+		<rom name="263-c2.c2" merge="263-c2.c2" size="8388608" crc="81df97f2"/>
+		<rom name="263-c3.c3" merge="263-c3.c3" size="8388608" crc="1a343323"/>
+		<rom name="263-c4.c4" merge="263-c4.c4" size="8388608" crc="942cfb44"/>
+		<rom name="263-c5.c5" merge="263-c5.c5" size="8388608" crc="a748854f"/>
+		<rom name="263-c6.c6" merge="263-c6.c6" size="8388608" crc="5c8ba116"/>
+		<rom name="263-m1.m1" merge="263-m1.m1" size="131072" crc="46ac8228"/>
+		<rom name="263-v1.v1" merge="263-v1.v1" size="8388608" crc="01e9b9cd"/>
+		<rom name="263-v2.v2" merge="263-v2.v2" size="8388608" crc="4ab2bf81"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>

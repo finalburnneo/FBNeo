@@ -14563,6 +14563,39 @@ static struct BurnRomInfo StriderjRomDesc[] = {
 STD_ROM_PICK(Striderj)
 STD_ROM_FN(Striderj)
 
+// Strider arcade graphic and music fixes, author: NeoInvader
+// source: https://www.romhacking.net/hacks/6758/
+
+static struct BurnRomInfo StriderfixRomDesc[] = {
+	{ "striderfix.11f",        0x020000, 0x8be794bf, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "striderfix.11h",        0x020000, 0x9318060c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "31.12f",                0x020000, 0xd20786db, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "36.12h",                0x020000, 0x21aa2863, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "st-14.8h",              0x080000, 0x9b3cfc08, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "striderfix.8a",         0x080000, 0xea572e97, BRF_GRA | CPS1_TILES },
+	{ "striderfix.10a",        0x080000, 0xd0bb852f, BRF_GRA | CPS1_TILES },
+	{ "striderfix.4a",         0x080000, 0x8c408787, BRF_GRA | CPS1_TILES },
+	{ "striderfix.6a",         0x080000, 0x07ba4914, BRF_GRA | CPS1_TILES },
+	{ "st-1.7a",               0x080000, 0x005f000b, BRF_GRA | CPS1_TILES },
+	{ "st-10.9a",              0x080000, 0xb9441519, BRF_GRA | CPS1_TILES },
+	{ "st-4.3a",               0x080000, 0xb7d04e8b, BRF_GRA | CPS1_TILES },
+	{ "st-8.5a",               0x080000, 0x6b4713b4, BRF_GRA | CPS1_TILES },
+
+	{ "striderfix.12b",        0x010000, 0x08d63519, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "18.11c",                0x020000, 0x4386bc80, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "19.12c",                0x020000, 0x444536d7, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "st24m1.1a",             0x000117, 0xa80d357e, BRF_OPT },	// b-board PLDs
+	{ "lwio.11e",              0x000117, 0xad52b90c, BRF_OPT },
+};
+
+STD_ROM_PICK(Striderfix)
+STD_ROM_FN(Striderfix)
+
 static struct BurnRomInfo UnsquadRomDesc[] = {
 	{ "aru_30.11f",    0x020000, 0x24d8f88d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "aru_35.11h",    0x020000, 0x8b954b59, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -16063,6 +16096,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "strideruc"     , CPS_B_17    , mapper_ST24M1, 1, NULL                },
 	{ "striderjr"     , CPS_B_21_DEF, mapper_ST24M1, 1, NULL                },
 	{ "striderj"      , CPS_B_01    , mapper_ST22B , 1, NULL                },
+	{ "striderfix"    , CPS_B_01    , mapper_ST24M1, 1, NULL                },
 	{ "unsquad"       , CPS_B_11    , mapper_AR24B , 0, NULL                },
 	{ "area88"        , CPS_B_11    , mapper_AR22B , 0, NULL                },
 	{ "area88r"       , CPS_B_21_DEF, mapper_AR22B , 0, NULL                },
@@ -23670,6 +23704,16 @@ struct BurnDriver BurnDrvCpsStriderj = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
 	NULL, StriderjRomInfo, StriderjRomName, NULL, NULL, NULL, NULL, StriderInputInfo, StriderDIPInfo,
 	StriderjInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsStriderfix = {
+	"striderfix", "strider", NULL, NULL, "2022",
+	"Strider (US set 1)(Graphic and music fixes, Hack)\0", NULL, "NeoInvader", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
+	NULL, StriderfixRomInfo, StriderfixRomName, NULL, NULL, NULL, NULL, StriderInputInfo, StriderDIPInfo,
+	StriderInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

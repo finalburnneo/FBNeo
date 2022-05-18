@@ -1518,9 +1518,13 @@ static INT32 NeoSMAInit(void (*pInitCallback)(), pSekWriteWordHandler pBankswitc
 	pSMABankswitchHandler[nNeoActiveSlot] = pBankswitchHandler;
 
 	NeoCallbackActive->pInitialise = pInitCallback;
-	NeoCallbackActive->pInstallHandlers = NeoSMAInstallHanders;
-	NeoCallbackActive->pBankswitch = NeoSMABankswitch;
-	NeoCallbackActive->pScan = NeoSMAScan;
+
+	// Control SMA protection in ips environment.
+	if (!bDoIpsPatch || GetIpsDrvProtection()) {
+		NeoCallbackActive->pInstallHandlers = NeoSMAInstallHanders;
+		NeoCallbackActive->pBankswitch = NeoSMABankswitch;
+		NeoCallbackActive->pScan = NeoSMAScan;
+	}
 
 	nSMARandomNumber[nNeoActiveSlot] = 0x2345;
 
@@ -1701,8 +1705,8 @@ static void NeoPVCInstallHandlers()
 
 static INT32 NeoPVCInit()
 {
-	// Turn off PVC protection in ips environment.
-	if (!bDoIpsPatch) {
+	// Control PVC protection in ips environment.
+	if (!bDoIpsPatch || GetIpsDrvProtection()) {
 		PVCRAM = (UINT8*)BurnMalloc(0x2000);
 		if (!PVCRAM) return 1;
 
@@ -1712,6 +1716,7 @@ static INT32 NeoPVCInit()
 		NeoCallbackActive->pBankswitch = NeoPVCMapBank;
 		NeoCallbackActive->pScan = NeoPVCScan;
 	}
+
 
 	return NeoInit();
 }
@@ -15515,32 +15520,32 @@ struct BurnDriver BurnDrvmslug2fm = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug 2 Turbo (NGM-9410)
-/* MVS VERSION */
+// Metal Slug 2 - Super Vehicle-001/II (Turbo)
+// 20161224
 
 static struct BurnRomInfo mslug2tRomDesc[] = {
-	{ "941-p1.p1",    0x100000, 0xdf5d6fbc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "241-p2.sp2",   0x200000, 0x38883f44, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "241-p1t.p1",		0x100000, 0xdf5d6fbc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "241-p2.sp2",		0x200000, 0x38883f44, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "241-s1.s1",    0x020000, 0xf3d32f0f, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "241-s1.s1",		0x020000, 0xf3d32f0f, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "241-c1.c1",    0x800000, 0x394b5e0d, 3 | BRF_GRA },           //  3 Sprite data
-	{ "241-c2.c2",    0x800000, 0xe5806221, 3 | BRF_GRA },           //  4
-	{ "241-c3.c3",    0x800000, 0x9f6bfa6f, 3 | BRF_GRA },           //  5
-	{ "241-c4.c4",    0x800000, 0x7d3e306f, 3 | BRF_GRA },           //  6
+	{ "241-c1.c1",		0x800000, 0x394b5e0d, 3 | BRF_GRA },           //  3 Sprite data
+	{ "241-c2.c2",		0x800000, 0xe5806221, 3 | BRF_GRA },           //  4
+	{ "241-c3.c3",		0x800000, 0x9f6bfa6f, 3 | BRF_GRA },           //  5
+	{ "241-c4.c4",		0x800000, 0x7d3e306f, 3 | BRF_GRA },           //  6
 
-	{ "241-m1.m1",    0x020000, 0x94520ebd, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
+	{ "241-m1.m1",		0x020000, 0x94520ebd, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
 
-	{ "241-v1.v1",    0x400000, 0x99ec20e8, 5 | BRF_SND },           //  8 Sound data
-	{ "241-v2.v2",    0x400000, 0xecb16799, 5 | BRF_SND },           //  9
+	{ "241-v1.v1",		0x400000, 0x99ec20e8, 5 | BRF_SND },           //  8 Sound data
+	{ "241-v2.v2",		0x400000, 0xecb16799, 5 | BRF_SND },           //  9
 };
 
 STDROMPICKEXT(mslug2t, mslug2t, neogeo)
 STD_ROM_FN(mslug2t)
 
 struct BurnDriver BurnDrvMSlug2t = {
-	"mslug2t", "mslug2", "neogeo", NULL, "2015",
-	"Metal Slug 2 Turbo (NGM-9410)\0", NULL, "Hack", "Neo Geo MVS",
+	"mslug2t", "mslug2", "neogeo", NULL, "2016",
+	"Metal Slug 2 - Super Vehicle-001/II (Turbo)\0", NULL, "Hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug2tRomInfo, mslug2tRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

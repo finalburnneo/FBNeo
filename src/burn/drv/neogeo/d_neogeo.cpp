@@ -21286,3 +21286,35 @@ struct BurnDriver BurnDrvmslug5unity = {
 	mslug5Init, NeoPVCExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
+
+// Metal Slug (HB)
+// 20220111
+static struct BurnRomInfo mslughbRomDesc[] = {
+	{ "mslug-p1hb.p1",	0x400000, 0x1E0506CF, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "mslug-p2hb.p2",	0x400000, 0x894CD3DD, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "mslug-c1hb.c1",	0x800000, 0x92a89586, 3 | BRF_GRA },           //  2 Sprite data
+	{ "mslug-c2hb.c2",	0x800000, 0x18d14a71, 3 | BRF_GRA },           //  3
+
+	/* Encrypted */
+	{ "mslug-m1hb.m1",	0x020000, 0x876df5e1, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	/* Encrypted */
+	{ "mslug-v1hb.v1",	0x800000, 0x5d904213, 5 | BRF_SND },           //  5 Sound data
+	{ "mslug-v2hb.v2",	0x800000, 0x97cee550, 5 | BRF_SND },           //  6
+};
+
+STDROMPICKEXT(mslughb, mslughb, neogeo)
+STD_ROM_FN(mslughb)
+
+struct BurnDriver BurnDrvmslughb = {
+	"mslughb", NULL, "neogeo", NULL, "2022",
+	"Metal Slug (HB)\0", NULL, "Hack", "Neo Geo AES",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_P32 | HARDWARE_SNK_ENCRYPTED_M1, GBF_MISC, FBF_MSLUG,
+	NULL, mslughbRomInfo, mslughbRomName, NULL, NULL, NULL, NULL, neoForceAESInputInfo, neoForceAESDIPInfo,
+	mslug5Init, NeoPVCExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};

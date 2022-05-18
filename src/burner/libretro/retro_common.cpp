@@ -104,6 +104,20 @@ static const struct retro_core_option_v2_definition var_fbneo_vertical_mode = {
 	},
 	"disabled"
 };
+static const struct retro_core_option_v2_definition var_fbneo_force_60hz = {
+	"fbneo-force-60hz",
+	"Force 60Hz",
+	NULL,
+	"Force 60Hz instead of original refresh rate",
+	NULL,
+	NULL,
+	{
+		{ "disabled", NULL },
+		{ "enabled", NULL },
+		{ NULL, NULL },
+	},
+	"disabled"
+};
 static const struct retro_core_option_v2_definition var_fbneo_fixed_frameskip = {
 	"fbneo-fixed-frameskip",
 	"Fixed Frameskip",
@@ -881,6 +895,7 @@ void set_environment()
 	// Add the Global core options
 	vars_systems.push_back(&var_fbneo_allow_depth_32);
 	vars_systems.push_back(&var_fbneo_vertical_mode);
+	vars_systems.push_back(&var_fbneo_force_60hz);
 	vars_systems.push_back(&var_fbneo_allow_patched_romsets);
 	vars_systems.push_back(&var_fbneo_analog_speed);
 	vars_systems.push_back(&var_fbneo_lightgun_crosshair_emulation);
@@ -1281,6 +1296,15 @@ void check_variables(void)
 			nVerticalMode = 4;
 		else
 			nVerticalMode = 0;
+	}
+
+	var.key = var_fbneo_force_60hz.key;
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+	{
+		if (strcmp(var.value, "enabled") == 0)
+			bForce60Hz = true;
+		else
+			bForce60Hz = false;
 	}
 
 	if (bLibretroSupportsAudioBuffStatus)

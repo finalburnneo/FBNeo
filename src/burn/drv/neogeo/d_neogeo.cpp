@@ -17825,80 +17825,81 @@ struct BurnDriver BurnDrvkof98pfe = {
 	0x1000,	320, 224, 4, 3
 };
 
-// The King of Fighters '98 - Easy Combo King 2014 (Versus Version, hack)
-/* Hacked by gunloc941 - Build 2019-02-17 */
+// The King of Fighters '98 - Easy Combo King (GOTVG Version, hack)
+/* Hacked by gunloc941 - Build 2020-04-09 */
 
-static struct BurnRomInfo kof98eckvsRomDesc[] = {
-	{ "98eckvs-p1.bin", 	0x100000, 0xb3afd80f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "98eckvs-p2.bin", 	0x400000, 0x5d59e3ae, 1 | BRF_ESS | BRF_PRG }, //  1
+static struct BurnRomInfo kof98eckgRomDesc[] = {
+	/* P1 Encrypted */
+	{ "242-p1eck.p1",	0x200000, 0x2aed3a91, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "242-p2eck.sp2",	0x400000, 0xef36876a, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "98eckvs-s1.bin", 	0x020000, 0xf91c29d2, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "242-s1eck.s1",	0x020000, 0x5a498ed2, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "98eckvs-c1.bin", 	0x800000, 0xd3da4dc1, 3 | BRF_GRA },           //  3 Sprite data
-	{ "98eckvs-c2.bin", 	0x800000, 0xf5a5d149, 3 | BRF_GRA },           //  4
-	{ "98eckvs-c3.bin", 	0x800000, 0x0689e5b1, 3 | BRF_GRA },           //  5
-	{ "98eckvs-c4.bin",     0x800000, 0x5cc4d647, 3 | BRF_GRA },           //  6
-	{ "98eckvs-c5.bin",     0x800000, 0x1531b766, 3 | BRF_GRA },           //  7
-	{ "98eckvs-c6.bin",     0x800000, 0x04131307, 3 | BRF_GRA },           //  8
-	{ "98eckvs-c7.bin",     0x800000, 0x6f879c38, 3 | BRF_GRA },           //  9
-	{ "98eckvs-c8.bin",     0x800000, 0x89c797df, 3 | BRF_GRA },           // 10
+	{ "242-c1eckg.c1",	0x800000, 0xd3da4dc1, 3 | BRF_GRA },           //  3 Sprite data
+	{ "242-c2eckg.c2",	0x800000, 0xf5a5d149, 3 | BRF_GRA },           //  4
+	{ "242-c3eckg.c3",	0x800000, 0x0689e5b1, 3 | BRF_GRA },           //  5
+	{ "242-c4eckg.c4",	0x800000, 0x5cc4d647, 3 | BRF_GRA },           //  6
+	{ "242-c5eckg.c5",	0x800000, 0x1531b766, 3 | BRF_GRA },           //  7
+	{ "242-c6eckg.c6",	0x800000, 0x04131307, 3 | BRF_GRA },           //  8
+	{ "242-c7eckg.c7",	0x800000, 0x6f879c38, 3 | BRF_GRA },           //  9
+	{ "242-c8eckg.c8",	0x800000, 0x89c797df, 3 | BRF_GRA },           // 10
 
-	{ "98eckvs-mg1.bin", 	0x040000, 0x4e7a6b1b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "242-m1.m1",		0x040000, 0x4e7a6b1b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "98eckvs-v1.bin",   	0x400000, 0x32da3c63, 5 | BRF_SND },           // 16 Sound data
-	{ "98eckvs-v2.bin",   	0x400000, 0x246edf6d, 5 | BRF_SND },           // 17
-	{ "98eckvs-v3.bin",   	0x400000, 0x308b0393, 5 | BRF_SND },           // 18
-	{ "98eckvs-v4.bin",   	0x400000, 0x00276d91, 5 | BRF_SND },           // 19
+	{ "242-v1eckg.v1",	0x400000, 0x32da3c63, 5 | BRF_SND },           // 16 Sound data
+	{ "242-v2eckg.v2",	0x400000, 0x246edf6d, 5 | BRF_SND },           // 17
+	{ "242-v3eckg.v3",	0x400000, 0x308b0393, 5 | BRF_SND },           // 18
+	{ "242-v4eckg.v4",	0x400000, 0x00276d91, 5 | BRF_SND },           // 19
 };
 
-STDROMPICKEXT(kof98eckvs, kof98eckvs, neogeo)
-STD_ROM_FN(kof98eckvs)
+STDROMPICKEXT(kof98eckg, kof98eckg, neogeo)
+STD_ROM_FN(kof98eckg)
 
-struct BurnDriver BurnDrvkof98eckvs = {
-	"kof98eckvs", "kof98", "neogeo", NULL, "2019",
-	"The King of Fighters '98 Easy Combo King 2014 (Versus Version, Hack)\0", NULL, "hack", "Neo Geo MVS",
+struct BurnDriver BurnDrvkof98eckg = {
+	"kof98eckg", "kof98", "neogeo", NULL, "2020",
+	"The King of Fighters '98 Easy Combo King (GOTVG Version, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
-	NULL, kof98eckvsRomInfo, kof98eckvsRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	NULL, kof98eckgRomInfo, kof98eckgRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	kof98Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
 // The King of Fighters '98 - Easy Combo King (YZKOF Version, hack)
 /* Hacked by gunloc941 - YZKOF Build 2020-04-09 */
 
-static struct BurnRomInfo kof98eck20RomDesc[] = {
-	{ "98eck20-p1.bin", 	0x100000, 0x0ced4a93, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "98eck20-p2.bin", 	0x400000, 0xef36876a, 1 | BRF_ESS | BRF_PRG }, //  1
+static struct BurnRomInfo kof98eckyRomDesc[] = {
+	{ "242-pn1eck.p1",	0x100000, 0x0ced4a93, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "242-p2eck.sp2",	0x400000, 0xef36876a, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "98eck20-s1.bin", 	0x020000, 0x5a498ed2, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "242-s1eck.s1", 	0x020000, 0x5a498ed2, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "98eck20-c1.bin", 	0x800000, 0xd528dab9, 3 | BRF_GRA },           //  3 Sprite data
-	{ "98eck20-c2.bin", 	0x800000, 0x73556130, 3 | BRF_GRA },           //  4
-	{ "98eck20-c3.bin", 	0x800000, 0x4091bca0, 3 | BRF_GRA },           //  5
-	{ "98eck20-c4.bin",     0x800000, 0x56918bab, 3 | BRF_GRA },           //  6
-	{ "98eck20-c5.bin",     0x800000, 0x76252bdc, 3 | BRF_GRA },           //  7
-	{ "98eck20-c6.bin",     0x800000, 0x13d5b9b7, 3 | BRF_GRA },           //  8
-	{ "98eck20-c7.bin",     0x800000, 0x1b3a6aa9, 3 | BRF_GRA },           //  9
-	{ "98eck20-c8.bin",     0x800000, 0xef3390ca, 3 | BRF_GRA },           // 10
+	{ "242-c1ecky.c1", 	0x800000, 0xd528dab9, 3 | BRF_GRA },           //  3 Sprite data
+	{ "242-c2ecky.c2", 	0x800000, 0x73556130, 3 | BRF_GRA },           //  4
+	{ "242-c3ecky.c3", 	0x800000, 0x4091bca0, 3 | BRF_GRA },           //  5
+	{ "242-c4ecky.c4",	0x800000, 0x56918bab, 3 | BRF_GRA },           //  6
+	{ "242-c5ecky.c5",	0x800000, 0x76252bdc, 3 | BRF_GRA },           //  7
+	{ "242-c6ecky.c6",	0x800000, 0x13d5b9b7, 3 | BRF_GRA },           //  8
+	{ "242-c7ecky.c7",	0x800000, 0x1b3a6aa9, 3 | BRF_GRA },           //  9
+	{ "242-c8ecky.c8",	0x800000, 0xef3390ca, 3 | BRF_GRA },           // 10
 
-	{ "98eck20-mg1.bin", 	0x040000, 0x4e7a6b1b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "242-mg1.m1",		0x040000, 0x4e7a6b1b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "98eck20-v1.bin",   	0x400000, 0xb5650f76, 5 | BRF_SND },           // 16 Sound data
-	{ "98eck20-v2.bin",   	0x400000, 0xb43b83ee, 5 | BRF_SND },           // 17
-	{ "98eck20-v3.bin",   	0x400000, 0x59c53922, 5 | BRF_SND },           // 18
-	{ "98eck20-v4.bin",   	0x400000, 0x46ca6f5e, 5 | BRF_SND },           // 19
+	{ "242-v1ecky.v1",	0x400000, 0xb5650f76, 5 | BRF_SND },           // 16 Sound data
+	{ "242-v2ecky.v2",	0x400000, 0xb43b83ee, 5 | BRF_SND },           // 17
+	{ "242-v3ecky.v3",	0x400000, 0x59c53922, 5 | BRF_SND },           // 18
+	{ "242-v4ecky.v4",	0x400000, 0x46ca6f5e, 5 | BRF_SND },           // 19
 };
 
-STDROMPICKEXT(kof98eck20, kof98eck20, neogeo)
-STD_ROM_FN(kof98eck20)
+STDROMPICKEXT(kof98ecky, kof98ecky, neogeo)
+STD_ROM_FN(kof98ecky)
 
-struct BurnDriver BurnDrvkof98eck20 = {
-	"kof98eck20", "kof98", "neogeo", NULL, "2020",
-	"The King of Fighters '98 Easy Combo King (YZKOF Version, Hack)\0", NULL, "hack", "Neo Geo MVS",
+struct BurnDriver BurnDrvkof98ecky = {
+	"kof98ecky", "kof98", "neogeo", NULL, "2020",
+	"The King of Fighters '98 Easy Combo King (YZKOF Version, Hack)\0", NULL, "Hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
-	NULL, kof98eck20RomInfo, kof98eck20RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, kof98eckyRomInfo, kof98eckyRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

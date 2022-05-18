@@ -1,4 +1,10 @@
+/* ported from mame 0.155 */
+/*
+Copyright (c) 1997-2015 Nicola Salmoria and the MAME team
+Redistributions may not be sold, nor may they be used in a commercial product or activity.
+*/
 /* emulation of Altera Cyclone EPIC12 FPGA programmed as a blitter */
+/* code by David Haywood, Luca Elia, MetalliC */
 
 #include "burnint.h"
 #include "tiles_generic.h"
@@ -368,6 +374,8 @@ void epic12_reset()
 	m_gfx_scroll_1_x = 0;
 	m_gfx_scroll_1_y = 0;
 	epic12_device_blit_delay = 0;
+
+	thready.reset();
 }
 
 static UINT16 READ_NEXT_WORD(UINT32 *addr)
@@ -797,6 +805,10 @@ static UINT32 gfx_ready_read()
 		return 0x00000010;
 }
 
+void epic12_wait_blitterthread()
+{
+	thready.notify_wait();
+}
 
 static void gfx_exec_write(UINT32 offset, UINT32 data)
 {
@@ -804,6 +816,8 @@ static void gfx_exec_write(UINT32 offset, UINT32 data)
 	{
 		if (data & 1)
 		{
+			thready.notify_wait();
+
 			if (epic12_device_blit_delay && m_delay_scale)
 			{
 				m_blitter_busy = 1;
@@ -818,8 +832,7 @@ static void gfx_exec_write(UINT32 offset, UINT32 data)
 			}
 
 			epic12_device_blit_delay = 0;
-
-			if (!bBurnRunAheadFrame) thready.notify(); // run gfx_exec(), w/ threading if set (via dip option)
+			thready.notify(); // run gfx_exec(), w/ threading if set (via dip option)
 		}
 	}
 }

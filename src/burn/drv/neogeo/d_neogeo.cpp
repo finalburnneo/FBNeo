@@ -1,4 +1,4 @@
-// FB Alpha Neo Geo driver module
+// FBNeo Neo Geo driver module
 
 #include "neogeo.h"
 #include "bitswap.h"
@@ -101,6 +101,41 @@ static struct BurnInputInfo neoMVSInputList[] = {
 };
 
 STDINPUTINFO(neoMVS)
+
+static struct BurnInputInfo neoForceAESInputList[] = {
+	{"P1 Start",	BIT_DIGITAL,	NeoButton1 + 0,	"p1 start"},		//	0
+	{"P1 Select",	BIT_DIGITAL,	NeoButton1 + 1,	"p1 select"},		//  1
+
+	{"P1 Up",		BIT_DIGITAL,	NeoJoy1 + 0,	"p1 up"},			//  2
+	{"P1 Down",		BIT_DIGITAL,	NeoJoy1 + 1,	"p1 down"},			//  3
+	{"P1 Left",		BIT_DIGITAL,	NeoJoy1 + 2,	"p1 left"},			//	4
+	{"P1 Right",	BIT_DIGITAL,	NeoJoy1 + 3,	"p1 right"},		//	5
+	{"P1 Button A",	BIT_DIGITAL,	NeoJoy1 + 4,	"p1 fire 1"},		//	6
+	{"P1 Button B",	BIT_DIGITAL,	NeoJoy1 + 5,	"p1 fire 2"},		//	7
+	{"P1 Button C",	BIT_DIGITAL,	NeoJoy1 + 6,	"p1 fire 3"},		//	8
+	{"P1 Button D",	BIT_DIGITAL,	NeoJoy1 + 7,	"p1 fire 4"},		//	9
+
+	{"P2 Start",	BIT_DIGITAL,	NeoButton1 + 2,	"p2 start"},		//	A
+	{"P2 Select",	BIT_DIGITAL,	NeoButton1 + 3,	"p2 select"},		//	B
+
+	{"P2 Up",		BIT_DIGITAL,	NeoJoy2 + 0,	"p2 up"},			//	C
+	{"P2 Down",		BIT_DIGITAL,	NeoJoy2 + 1,	"p2 down"},			//  D
+	{"P2 Left",		BIT_DIGITAL,	NeoJoy2 + 2,	"p2 left"},			//  E
+	{"P2 Right",	BIT_DIGITAL,	NeoJoy2 + 3,	"p2 right"},		//  F
+	{"P2 Button A",	BIT_DIGITAL,	NeoJoy2 + 4,	"p2 fire 1"},		// 10
+	{"P2 Button B",	BIT_DIGITAL,	NeoJoy2 + 5,	"p2 fire 2"},		// 11
+	{"P2 Button C",	BIT_DIGITAL,	NeoJoy2 + 6,	"p2 fire 3"},		// 12
+	{"P2 Button D",	BIT_DIGITAL,	NeoJoy2 + 7,	"p2 fire 4"},		// 13
+
+	{"Reset",		BIT_DIGITAL,	&NeoReset,		"reset"},			// 14
+	{"Dip 1",		BIT_DIPSWITCH,	NeoInput + 4,	"dip"},				// 15
+	{"Dip 2",		BIT_DIPSWITCH,	NeoInput + 5,	"dip"},				// 16
+
+	{"System",		BIT_DIPSWITCH,	&NeoSystem,		"dip"},				// 17
+	{"Slots",		BIT_DIPSWITCH,	&nNeoNumSlots,	"dip"},				// 18
+};
+
+STDINPUTINFO(neoForceAES)
 
 static struct BurnDIPInfo ms5pcbDIPList[] = {
 	// Offset
@@ -562,6 +597,23 @@ static struct BurnDIPInfo neodefaultDIPList[] = {
 	{0x00,	0x01, 0x04,	0x04, "On"},
 };
 
+static struct BurnDIPInfo neoaesdefaultDIPList[] = {
+	// Offset
+	{0x19,	0xF0, 0x00,	0x00, NULL},
+
+	// Defaults
+	{0x00,	0xFF, 0xFF,	0x00, NULL},
+	{0x01,	0xFF, 0x7F,	0x00, NULL},
+	// Fake DIPs
+	{0x02,	0xFF, 0xFF,	0x8f, NULL},  // aes_jpn
+	{0x03,	0xFF, 0xFF,	0x02, NULL},
+
+	{0,		0xFE, 0,	2,	  "Autofire"},
+	{0x00,	0x01, 0x04,	0x00, "Off"},
+	{0x00,	0x01, 0x04,	0x04, "On"},
+};
+
+
 static struct BurnDIPInfo neousadefaultDIPList[] = {
 	// Offset
 	{0x19,	0xF0, 0x00,	0x00, NULL},
@@ -726,6 +778,7 @@ STDDIPINFOEXT(neopaddle, neopaddle, neogeo)
 STDDIPINFOEXT(neodual, neodual, neogeo)
 STDDIPINFOEXT(neomahjong, neomahjong, neogeo)
 STDDIPINFOEXT(neogeousa, neousadefault, neogeo)
+STDDIPINFOEXT(neoaes, neoaesdefault, neogeo)
 STDDIPINFOEXT(neogeouni, neounidefault, neogeo)
 
 static struct BurnDIPInfo neoKOFDIPList[] = {
@@ -781,7 +834,7 @@ static struct BurnDIPInfo neoFakeDIPList[] = {
 
 	// Fake DIPs
 	// BIOS
-	{0,	0xFD, 0,	33,   "BIOS"                     	         },
+	{0,		0xFD, 0,	33,   "BIOS"                     	     },
 	{0x02,	0x01, 0x3f,	0x00, "MVS Asia/Europe ver. 6 (1 slot)"  },
 	{0x02,	0x01, 0x3f,	0x01, "MVS Asia/Europe ver. 5 (1 slot)"  },
 	{0x02,	0x01, 0x3f,	0x02, "MVS Asia/Europe ver. 3 (4 slot)"  },
@@ -916,23 +969,42 @@ static struct BurnDIPInfo neotrackballDIPList[] = {
 
 STDDIPINFO(neotrackball)
 
-static struct BurnDIPInfo neoaesjapanDIPList[] = {
+// Some games can only be played in AES.
+static struct BurnDIPInfo neoForceAESDIPList[] = {
 	// Offset
-	{0x19,	0xF0, 0x00,	0x00, NULL},
+	{0x15,	0xF0, 0x00,	0x00, NULL              }, // neoForceAESInputList
 
 	// Defaults
-	{0x00,	0xFF, 0xFF,	0x00, NULL},
-	{0x01,	0xFF, 0x7F,	0x00, NULL},
-	// Fake DIPs
-	{0x02,	0xFF, 0xFF,	0x8f, NULL},  // aes_jpn
-	{0x03,	0xFF, 0xFF,	0x02, NULL},
+	{0x00,	0xFF, 0xFF,	0x40, NULL              }, // DIP 1 [Autofire = Off] [Free play = On]
+	{0x01,	0xFF, 0x7F,	0x00, NULL              }, // DIP 2
+	{0x02,	0xFF, 0xFF,	0x8f, NULL              }, // System [AES Japan] [Memory card = Writable]
+	{0x03,	0xFF, 0xFF,	0x03, NULL              }, // Slots [3]
 
-	{0,		0xFE, 0,	2,	  "Autofire"},
-	{0x00,	0x01, 0x04,	0x00, "Off"},
-	{0x00,	0x01, 0x04,	0x04, "On"},
+	// DIP 1
+	{0,		0xFE, 0,	2,	  "Autofire"        },
+	{0x00,	0x01, 0x04,	0x00, "Off"             },
+	{0x00,	0x01, 0x04,	0x04, "On"              },
+
+	{0,		0xFE, 0,	2,	  "Free play"       },
+	{0x00,	0x01, 0x40,	0x00, "Off"             },
+	{0x00,	0x01, 0x40,	0x40, "On"              },
+
+	// System - BIOS
+	{0,		0xFD, 0,	2,    "BIOS"            },
+	{0x02,	0x01, 0x3f,	0x0f, "AES Japan"       },
+	{0x02,	0x01, 0x3f,	0x10, "AES Asia"        },
+
+	// System - Memory card
+	{0,		0xFD, 0,	2,	  "Memory card"     },
+	{0x02,	0x01, 0x80,	0x80, "Writable"        },
+	{0x02,	0x01, 0x80,	0x00, "Write-protected" },
+
+	{0,		0xFD, 0,	2,	  "New card type"   },
+	{0x02,	0x01, 0x40,	0x40, "1 Megabit"       },
+	{0x02,	0x01, 0x40,	0x00, "Normal"          },
 };
 
-STDDIPINFOEXT(neoaesjapan, neoaesjapan, neogeo)
+STDDIPINFO(neoForceAES)
 
 // Rom information
 static struct BurnRomInfo neogeoRomDesc[] = {
@@ -1629,21 +1701,24 @@ static void NeoPVCInstallHandlers()
 
 static INT32 NeoPVCInit()
 {
-	PVCRAM = (UINT8*)BurnMalloc(0x2000);
-	if (!PVCRAM) return 1;
+	// Turn off PVC protection in ips environment.
+	if (!bDoIpsPatch) {
+		PVCRAM = (UINT8*)BurnMalloc(0x2000);
+		if (!PVCRAM) return 1;
 
-	memset(PVCRAM, 0, 0x2000);
+		memset(PVCRAM, 0, 0x2000);
 
-	NeoCallbackActive->pInstallHandlers = NeoPVCInstallHandlers;
-	NeoCallbackActive->pBankswitch      = NeoPVCMapBank;
-	NeoCallbackActive->pScan            = NeoPVCScan;
+		NeoCallbackActive->pInstallHandlers = NeoPVCInstallHandlers;
+		NeoCallbackActive->pBankswitch = NeoPVCMapBank;
+		NeoCallbackActive->pScan = NeoPVCScan;
+	}
 
 	return NeoInit();
 }
 
 static INT32 NeoPVCExit()
 {
-	BurnFree(PVCRAM);
+	if (NULL != PVCRAM) BurnFree(PVCRAM);
 
 	return NeoExit();
 }
@@ -8663,7 +8738,8 @@ static void mslug5Callback()
 	for (i = 0x100000; i < 0x700000; i++)
 		Neo68KROMActive[i] ^= ~Neo68KROMActive[0x7fffe0 + (i & 0x1f)];
 
-	for (i = 0x100000; i < 0x0500000; i += 4)
+	// Allow byte interleaving to extend to [0x500000 - 0x700000]
+	for (i = 0x100000; i < 0x0700000; i += 4)
 	{
 		UINT16 rom16 = BURN_UNALIGNED_READ16(Neo68KROMActive + i + 1);
 		rom16 = BITSWAP16(rom16, 15, 14, 13, 12, 10, 11, 8, 9, 6, 7, 4, 5, 3, 2, 1, 0);
@@ -15658,37 +15734,39 @@ struct BurnDriver BurnDrvmslug4lw = {
 };
 
 // Metal Slug 4 (20th Anniversary)
-// GOTVG
+// GOTVG 2021-08-26
 
 static struct BurnRomInfo mslug4aRomDesc[] = {
-	{ "263-p1.bin",    0x100000, 0x61cdef09, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "263-p2.bin",    0x400000, 0xc07e895d, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "263-p1a.p1",		0x100000, 0x0f2b0fc2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "263-p2a.sp2",	0x400000, 0x87dc01b9, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "263-s1.bin",    0x080000, 0x1eaa05e0, 2 | BRF_GRA },			  //  2 Text layer tiles
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "263-c1.c1",		0x800000, 0x84865f8a, 3 | BRF_GRA },           //  2 Sprite data
+	{ "263-c2.c2",		0x800000, 0x81df97f2, 3 | BRF_GRA },           //  3
+	{ "263-c3.c3",		0x800000, 0x1a343323, 3 | BRF_GRA },           //  4
+	{ "263-c4.c4",		0x800000, 0x942cfb44, 3 | BRF_GRA },           //  5
+	{ "263-c5.c5",		0x800000, 0xa748854f, 3 | BRF_GRA },           //  6
+	{ "263-c6.c6",		0x800000, 0x5c8ba116, 3 | BRF_GRA },           //  7
 
-	{ "263-c1.rom",	   0x800000, 0xa75ffcde, 3 | BRF_GRA },			  //  3 Sprite data
-	{ "263-c2.rom",	   0x800000, 0x5ab0d12b, 3 | BRF_GRA },			  //  4
-	{ "263-c3.rom",	   0x800000, 0x61af560c, 3 | BRF_GRA },			  //  5
-	{ "263-c4.rom",	   0x800000, 0xf2c544fd, 3 | BRF_GRA },			  //  6
-	{ "263-c5.rom",	   0x800000, 0x84c66c44, 3 | BRF_GRA },			  //  7
-	{ "263-c6.rom",	   0x800000, 0x5ed018ab, 3 | BRF_GRA },			  //  8
+	/* Encrypted */
+	{ "263-m1.m1",		0x020000, 0x46ac8228, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
 
-	{ "263-m1.bin",    0x020000, 0xef5db532, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
-
-	{ "263-v1.bin",	   0x800000, 0xfd6b982e, 5 | BRF_SND }, 			// 10 Sound data
-	{ "263-v2.bin",	   0x800000, 0x20125227, 5 | BRF_SND },			    // 11
+	/* Encrypted */
+	{ "263-v1.v1",		0x800000, 0x01e9b9cd, 5 | BRF_SND },           //  9 Sound data
+	{ "263-v2.v2",		0x800000, 0x4ab2bf81, 5 | BRF_SND },           // 10
 };
 
 STDROMPICKEXT(mslug4a, mslug4a, neogeo)
 STD_ROM_FN(mslug4a)
 
 struct BurnDriver BurnDrvmslug4a = {
-	"mslug4a", "mslug4", "neogeo", NULL, "2017",
-	"Metal Slug 4 (20th Anniversary)\0", NULL, "hack", "Neo Geo",
+	"mslug4a", "mslug4", "neogeo", NULL, "2021",
+	"Metal Slug 4 (20th Anniversary)\0", NULL, "Hack", "Neo Geo",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug4aRomInfo, mslug4aRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	mslug4Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
@@ -16637,7 +16715,7 @@ STDROMPICKEXT(kof96ae20, kof96ae20, neogeo)
 STD_ROM_FN(kof96ae20)
 
 struct BurnDriver BurnDrvkof96ae20 = {
-	"kof96ae20", "kof96", "neogeo", NULL, "2019",
+	"kof96ae20", "kof96", "neogeo", NULL, "2020",
 	"The King of Fighters '96 (The Anniversary Edition 2.0, Build 2.3.0320)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
@@ -17036,372 +17114,71 @@ static struct BurnRomInfo kof97tRomDesc[] = {
 
 STDROMPICKEXT(kof97t, kof97t, neogeo)
 STD_ROM_FN(kof97t)
-static INT32 Kof97tPatchInit() // Now fully cracked!
+
+static void kof97tPatchCallback()
 {
- 	INT32 nRet = NeoInit();
-	UINT8* ROM = (UINT8*)Neo68KROMActive;
-	ROM[0x01A0] = 0xE7;
-	ROM[0x01A1] = 0x48;
-	ROM[0x01A2] = 0x00;
-	ROM[0x01A3] = 0x80;
-	ROM[0x01A4] = 0x39;
-	ROM[0x01A5] = 0x20;
-	ROM[0x01A6] = 0x10;
-	ROM[0x01A7] = 0x00;
-	ROM[0x01A8] = 0x00;
-	ROM[0x01A9] = 0x85;
-	ROM[0x01AA] = 0xBC;
-	ROM[0x01AB] = 0xB0;
-	ROM[0x01AC] = 0x00;
-	ROM[0x01AD] = 0x00;
-	ROM[0x01AE] = 0x18;
-	ROM[0x01AF] = 0xEA;
-	ROM[0x01B0] = 0x00;
-	ROM[0x01B1] = 0x67;
-	ROM[0x01B2] = 0x10;
-	ROM[0x01B3] = 0x00;
-	ROM[0x01B4] = 0xBC;
-	ROM[0x01B5] = 0xB0;
-	ROM[0x01B6] = 0x01;
-	ROM[0x01B7] = 0x00;
-	ROM[0x01B8] = 0xD0;
-	ROM[0x01B9] = 0xF9;
-	ROM[0x01BA] = 0x00;
-	ROM[0x01BB] = 0x67;
-	ROM[0x01BC] = 0x14;
-	ROM[0x01BD] = 0x00;
-	ROM[0x01BE] = 0x00;
-	ROM[0x01BF] = 0x60;
-	ROM[0x01C0] = 0x20;
-	ROM[0x01C1] = 0x00;
-	ROM[0x01C2] = 0x3C;
-	ROM[0x01C3] = 0x30;
-	ROM[0x01C4] = 0x8A;
-	ROM[0x01C5] = 0x59;
-	ROM[0x01C6] = 0xC0;
-	ROM[0x01C7] = 0x33;
-	ROM[0x01C8] = 0x10;
-	ROM[0x01C9] = 0x00;
-	ROM[0x01CA] = 0x16;
-	ROM[0x01CB] = 0xA8;
-	ROM[0x01CC] = 0x00;
-	ROM[0x01CD] = 0x60;
-	ROM[0x01CE] = 0x12;
-	ROM[0x01CF] = 0x00;
-	ROM[0x01D0] = 0x3C;
-	ROM[0x01D1] = 0x30;
-	ROM[0x01D2] = 0x8A;
-	ROM[0x01D3] = 0x89;
-	ROM[0x01D4] = 0xC0;
-	ROM[0x01D5] = 0x33;
-	ROM[0x01D6] = 0x10;
-	ROM[0x01D7] = 0x00;
-	ROM[0x01D8] = 0x38;
-	ROM[0x01D9] = 0x82;
-	ROM[0x01DA] = 0xC0;
-	ROM[0x01DB] = 0x33;
-	ROM[0x01DC] = 0x10;
-	ROM[0x01DD] = 0x00;
-	ROM[0x01DE] = 0x38;
-	ROM[0x01DF] = 0x84;
-	ROM[0x01E0] = 0xDF;
-	ROM[0x01E1] = 0x4C;
-	ROM[0x01E2] = 0x01;
-	ROM[0x01E3] = 0x00;
-	ROM[0x01E4] = 0xC0;
-	ROM[0x01E5] = 0x13;
-	ROM[0x01E6] = 0x30;
-	ROM[0x01E7] = 0x00;
-	ROM[0x01E8] = 0x01;
-	ROM[0x01E9] = 0x00;
-	ROM[0x01EA] = 0x75;
-	ROM[0x01EB] = 0x4E;
-	ROM[0x9EBE] = 0xB9;
-	ROM[0x9EBF] = 0x4E;
-	ROM[0x9EC0] = 0x00;
-	ROM[0x9EC2] = 0xA0;
-	ROM[0x9EC3] = 0x01;
-	ROM[0x022458] = 0xED;
-	ROM[0x02245A] = 0x3F;
-	ROM[0x02245B] = 0x28;
-	ROM[0x022464] = 0xED;
-	ROM[0x022466] = 0x50;
-	ROM[0x022467] = 0x28;
-	ROM[0x02246C] = 0x48;
-	ROM[0x02246D] = 0x50;
-	ROM[0x02246E] = 0x4A;
-	ROM[0x02246F] = 0x50;
-	ROM[0x02247A] = 0xE0;
-	ROM[0x02247B] = 0x00;
-	ROM[0x02247E] = 0x04;
-	ROM[0x022482] = 0x05;
-	ROM[0x022486] = 0x06;
-	ROM[0x0224B6] = 0xC6;
-	ROM[0x0224B8] = 0x2D;
-	ROM[0x0224B9] = 0x09;
-	ROM[0x0224BA] = 0xF2;
-	ROM[0x0224BB] = 0x27;
-	ROM[0x0224C8] = 0x98;
-	ROM[0x0224C9] = 0x6D;
-	ROM[0x0224D2] = 0x99;
-	ROM[0x0224D3] = 0x6D;
-	ROM[0x0224FC] = 0xC2;
-	ROM[0x0224FE] = 0xC2;
-	ROM[0x022502] = 0xC6;
-	ROM[0x022504] = 0xC6;
-	ROM[0x022508] = 0xE0;
-	ROM[0x02250A] = 0xE0;
-	ROM[0x02250E] = 0xE4;
-	ROM[0x022510] = 0xE4;
-	ROM[0x022514] = 0xE8;
-	ROM[0x022516] = 0xE8;
-	ROM[0x02252A] = 0xB8;
-	ROM[0x02252B] = 0x4E;
-	ROM[0x02252C] = 0x26;
-	ROM[0x02252D] = 0x30;
-	ROM[0x02252E] = 0x40;
-	ROM[0x02252F] = 0x02;
-	ROM[0x022530] = 0x1F;
-	ROM[0x022531] = 0x00;
-	ROM[0x022532] = 0x40;
-	ROM[0x022533] = 0x39;
-	ROM[0x022534] = 0xD6;
-	ROM[0x022535] = 0x00;
-	ROM[0x022536] = 0xBC;
-	ROM[0x022537] = 0x28;
-	ROM[0x022538] = 0x02;
-	ROM[0x022539] = 0x00;
-	ROM[0x02253A] = 0x3C;
-	ROM[0x02253B] = 0x25;
-	ROM[0x02253C] = 0x00;
-	ROM[0x02253D] = 0x70;
-	ROM[0x02253E] = 0x6C;
-	ROM[0x02253F] = 0x26;
-	ROM[0x022540] = 0x84;
-	ROM[0x022541] = 0x00;
-	ROM[0x022542] = 0x6C;
-	ROM[0x022543] = 0x20;
-	ROM[0x022544] = 0xC6;
-	ROM[0x022545] = 0x00;
-	ROM[0x022546] = 0x28;
-	ROM[0x022547] = 0x1C;
-	ROM[0x022548] = 0x03;
-	ROM[0x022549] = 0x00;
-	ROM[0x02254A] = 0x2C;
-	ROM[0x02254B] = 0x4A;
-	ROM[0x02254C] = 0xF8;
-	ROM[0x02254D] = 0x00;
-	ROM[0x02254E] = 0x74;
-	ROM[0x02254F] = 0x66;
-	ROM[0x022552] = 0xFA;
-	ROM[0x022554] = 0x14;
-	ROM[0x022556] = 0x40;
-	ROM[0x022557] = 0x11;
-	ROM[0x022558] = 0x0A;
-	ROM[0x022559] = 0x00;
-	ROM[0x02255A] = 0x00;
-	ROM[0x02255B] = 0x52;
-	ROM[0x02255C] = 0x40;
-	ROM[0x02255D] = 0x11;
-	ROM[0x02255E] = 0x0B;
-	ROM[0x02255F] = 0x00;
-	ROM[0x022560] = 0x00;
-	ROM[0x022561] = 0x52;
-	ROM[0x022562] = 0x40;
-	ROM[0x022563] = 0x11;
-	ROM[0x022564] = 0x0C;
-	ROM[0x022565] = 0x00;
-	ROM[0x022566] = 0x2C;
-	ROM[0x022567] = 0x52;
-	ROM[0x022568] = 0xFA;
-	ROM[0x022569] = 0x00;
-	ROM[0x02256A] = 0x28;
-	ROM[0x02256B] = 0x10;
-	ROM[0x02256C] = 0x01;
-	ROM[0x02256D] = 0x00;
-	ROM[0x02256E] = 0x00;
-	ROM[0x02256F] = 0x0C;
-	ROM[0x022570] = 0x0B;
-	ROM[0x022571] = 0x00;
-	ROM[0x022572] = 0x20;
-	ROM[0x022573] = 0x67;
-	ROM[0x022574] = 0x00;
-	ROM[0x022575] = 0x0C;
-	ROM[0x022576] = 0x0C;
-	ROM[0x022577] = 0x00;
-	ROM[0x022578] = 0x1A;
-	ROM[0x022579] = 0x67;
-	ROM[0x02257A] = 0x00;
-	ROM[0x02257B] = 0x0C;
-	ROM[0x02257C] = 0x0E;
-	ROM[0x02257D] = 0x00;
-	ROM[0x02257E] = 0x14;
-	ROM[0x02257F] = 0x67;
-	ROM[0x022580] = 0x00;
-	ROM[0x022581] = 0x0C;
-	ROM[0x022582] = 0x0D;
-	ROM[0x022583] = 0x00;
-	ROM[0x022584] = 0x14;
-	ROM[0x022585] = 0x66;
-	ROM[0x022586] = 0x28;
-	ROM[0x022587] = 0x10;
-	ROM[0x022588] = 0x0A;
-	ROM[0x022589] = 0x00;
-	ROM[0x02258A] = 0x68;
-	ROM[0x02258B] = 0x11;
-	ROM[0x02258C] = 0x0C;
-	ROM[0x02258E] = 0x0A;
-	ROM[0x02258F] = 0x00;
-	ROM[0x022590] = 0x40;
-	ROM[0x022591] = 0x11;
-	ROM[0x022592] = 0x0C;
-	ROM[0x022593] = 0x00;
-	ROM[0x022594] = 0x03;
-	ROM[0x022595] = 0x7C;
-	ROM[0x022596] = 0x6C;
-	ROM[0x022597] = 0x53;
-	ROM[0x022598] = 0xD6;
-	ROM[0x022599] = 0x00;
-	ROM[0x02259A] = 0x6C;
-	ROM[0x02259B] = 0x20;
-	ROM[0x02259C] = 0xC2;
-	ROM[0x02259D] = 0x00;
-	ROM[0x02259E] = 0x00;
-	ROM[0x02259F] = 0x70;
-	ROM[0x0225A0] = 0x80;
-	ROM[0x0225A1] = 0x10;
-	ROM[0x0225BC] = 0x70;
-	ROM[0x0225C0] = 0xC2;
-	ROM[0x0225CA] = 0x06;
-	ROM[0x0225CC] = 0x02;
-	ROM[0x0225D2] = 0x70;
-	ROM[0x0225D6] = 0xC2;
-	ROM[0x0225DC] = 0xC2;
-	ROM[0x0225E4] = 0x40;
-	ROM[0x0225E5] = 0x02;
-	ROM[0x0225E6] = 0x70;
-	ROM[0x0225E7] = 0x00;
-	ROM[0x0225E9] = 0x4A;
-	ROM[0x0225EA] = 0x00;
-	ROM[0x0225EB] = 0x67;
-	ROM[0x0225EC] = 0x4A;
-	ROM[0x0225ED] = 0x00;
-	ROM[0x0225EE] = 0x04;
-	ROM[0x0225F0] = 0x02;
-	ROM[0x0225FA] = 0xF4;
-	ROM[0x0225FE] = 0x0A;
-	ROM[0x022620] = 0xF4;
-	ROM[0x022626] = 0xE7;
-	ROM[0x022627] = 0x48;
-	ROM[0x022628] = 0x80;
-	ROM[0x022629] = 0xC0;
-	ROM[0x02262A] = 0x3C;
-	ROM[0x02262B] = 0x30;
-	ROM[0x02262C] = 0x1D;
-	ROM[0x02262D] = 0x00;
-	ROM[0x02262E] = 0xB8;
-	ROM[0x02262F] = 0x4E;
-	ROM[0x022631] = 0x77;
-	ROM[0x022632] = 0xDF;
-	ROM[0x022633] = 0x4C;
-	ROM[0x022634] = 0x03;
-	ROM[0x022635] = 0x01;
-	ROM[0x022636] = 0x46;
-	ROM[0x022637] = 0x11;
-	ROM[0x022638] = 0x03;
-	ROM[0x02263A] = 0x06;
-	ROM[0x02263B] = 0x0C;
-	ROM[0x02263C] = 0x03;
-	ROM[0x02263D] = 0x00;
-	ROM[0x022648] = 0x4A;
-	ROM[0x022664] = 0xFA;
-	ROM[0x022665] = 0x45;
-	ROM[0x022666] = 0xE6;
-	ROM[0x022667] = 0xFF;
-	ROM[0x02266E] = 0xFA;
-	ROM[0x02266F] = 0x45;
-	ROM[0x022670] = 0xE8;
-	ROM[0x022671] = 0xFF;
-	ROM[0x022672] = 0x4A;
-	ROM[0x022678] = 0xC6;
-	ROM[0x0226FE] = 0x0A;
-	ROM[0x022700] = 0x98;
-	ROM[0x022701] = 0xC6;
-	ROM[0x0227B6] = 0x83;
-	ROM[0x0227B7] = 0xEC;
-	ROM[0x0227B8] = 0x24;
-	ROM[0x0227B9] = 0x83;
-	ROM[0x0227BA] = 0x6C;
-	ROM[0x0227BB] = 0x24;
-	ROM[0x0227BC] = 0x38;
-	ROM[0x0227BD] = 0x01;
-	ROM[0x0227BE] = 0x8B;
-	ROM[0x0227BF] = 0x4C;
-	ROM[0x0227C0] = 0x24;
-	ROM[0x0227C1] = 0x28;
-	ROM[0x0227C2] = 0x8B;
-	ROM[0x0227C3] = 0x81;
-	ROM[0x0227C4] = 0xA4;
-	ROM[0x0227C5] = 0x01;
-	ROM[0x0227C6] = 0x00;
-	ROM[0x0227C7] = 0x00;
-	ROM[0x0227C8] = 0x8B;
-	ROM[0x0227C9] = 0x91;
-	ROM[0x0227CA] = 0x20;
-	ROM[0x0227CB] = 0x01;
-	ROM[0x0227CC] = 0x00;
-	ROM[0x0227CD] = 0x00;
-	ROM[0x0227CE] = 0x55;
-	ROM[0x0227CF] = 0x8B;
-	ROM[0x0227D0] = 0x69;
-	ROM[0x0227D1] = 0x5C;
-	ROM[0x0227D2] = 0x8B;
-	ROM[0x0227D3] = 0x48;
-	ROM[0x0227D4] = 0x08;
-	ROM[0x0227D5] = 0x89;
-	ROM[0x0227D6] = 0x4C;
-	ROM[0x0227D7] = 0x24;
-	ROM[0x0227D8] = 0x0C;
-	ROM[0x0227D9] = 0x8B;
-	ROM[0x0227DA] = 0x48;
-	ROM[0x0227DB] = 0x0C;
-	ROM[0x0227DC] = 0x89;
-	ROM[0x0227DD] = 0x4C;
-	ROM[0x0227DE] = 0x24;
-	ROM[0x0227DF] = 0x1C;
-	ROM[0x0227E0] = 0x8B;
-	ROM[0x0227E1] = 0x48;
-	ROM[0x0227E2] = 0x10;
-	ROM[0x0227E3] = 0x8B;
-	ROM[0x0227E4] = 0x40;
-	ROM[0x0227E5] = 0x14;
-	ROM[0x0227E6] = 0x89;
-	ROM[0x0227E7] = 0x6C;
-	ROM[0x0227E8] = 0x24;
-	ROM[0x0227E9] = 0x20;
-	ROM[0x0227EA] = 0x89;
-	ROM[0x0227EB] = 0x54;
-	ROM[0x0227EC] = 0x24;
-	ROM[0x0227ED] = 0x18;
-	ROM[0x0227EE] = 0x89;
-	ROM[0x0227EF] = 0x4C;
-	ROM[0x0227F0] = 0x24;
-	ROM[0x0227F1] = 0x14;
-	ROM[0x0227F2] = 0x89;
-	ROM[0x0227F3] = 0x44;
-	ROM[0x0227F4] = 0x24;
-	ROM[0x0227F5] = 0x10;
-	ROM[0x0227F6] = 0xCC;
-	ROM[0x0227F7] = 0xCC;
-	ROM[0x0227F8] = 0xCC;
-	ROM[0x0227F9] = 0xCC;
-	ROM[0x0227FA] = 0xCC;
-	ROM[0x0227FB] = 0xCC;
-	ROM[0x0227FC] = 0xCC;
-	ROM[0x0227FD] = 0xCC;
-	ROM[0x0227FE] = 0xAC;
-	ROM[0x0227FF] = 0x11;
-	return nRet;
+	if (!bDoIpsPatch) {
+
+		// Crash Patch
+		UINT32 patch_fix[] = {
+			0x0001a0, 0xe7, 0x0001a1, 0x48, 0x0001a2, 0x00, 0x0001a3, 0x80, 0x0001a4, 0x39, 0x0001a5, 0x20, 0x0001a6, 0x10, 0x0001a7, 0x00,
+			0x0001a8, 0x00, 0x0001a9, 0x85, 0x0001aa, 0xbc, 0x0001ab, 0xb0, 0x0001ac, 0x00, 0x0001ad, 0x00, 0x0001ae, 0x18, 0x0001af, 0xea,
+			0x0001b0, 0x00, 0x0001b1, 0x67, 0x0001b2, 0x10, 0x0001b3, 0x00, 0x0001b4, 0xbc, 0x0001b5, 0xb0, 0x0001b6, 0x01, 0x0001b7, 0x00,
+			0x0001b8, 0xd0, 0x0001b9, 0xf9, 0x0001ba, 0x00, 0x0001bb, 0x67, 0x0001bc, 0x14, 0x0001bd, 0x00, 0x0001be, 0x00, 0x0001bf, 0x60,
+			0x0001c0, 0x20, 0x0001c1, 0x00, 0x0001c2, 0x3c, 0x0001c3, 0x30, 0x0001c4, 0x8a, 0x0001c5, 0x59, 0x0001c6, 0xc0, 0x0001c7, 0x33,
+			0x0001c8, 0x10, 0x0001c9, 0x00, 0x0001ca, 0x16, 0x0001cb, 0xa8, 0x0001cc, 0x00, 0x0001cd, 0x60, 0x0001ce, 0x12, 0x0001cf, 0x00,
+			0x0001d0, 0x3c, 0x0001d1, 0x30, 0x0001d2, 0x8a, 0x0001d3, 0x89, 0x0001d4, 0xc0, 0x0001d5, 0x33, 0x0001d6, 0x10, 0x0001d7, 0x00,
+			0x0001d8, 0x38, 0x0001d9, 0x82, 0x0001da, 0xc0, 0x0001db, 0x33, 0x0001dc, 0x10, 0x0001dd, 0x00, 0x0001de, 0x38, 0x0001df, 0x84,
+			0x0001e0, 0xdf, 0x0001e1, 0x4c, 0x0001e2, 0x01, 0x0001e3, 0x00, 0x0001e4, 0xc0, 0x0001e5, 0x13, 0x0001e6, 0x30, 0x0001e7, 0x00,
+			0x0001e8, 0x01, 0x0001e9, 0x00, 0x0001ea, 0x75, 0x0001eb, 0x4e, 0x009ebe, 0xb9, 0x009ebf, 0x4e, 0x009ec0, 0x00, 0x009ec2, 0xa0,
+			0x009ec3, 0x01, 0x022458, 0xed, 0x02245a, 0x3f, 0x02245b, 0x28, 0x022464, 0xed, 0x022466, 0x50, 0x022467, 0x28, 0x02246c, 0x48,
+			0x02246d, 0x50, 0x02246e, 0x4a, 0x02246f, 0x50, 0x02247a, 0xe0, 0x02247b, 0x00, 0x02247e, 0x04, 0x022482, 0x05, 0x022486, 0x06,
+			0x0224b6, 0xc6, 0x0224b8, 0x2d, 0x0224b9, 0x09, 0x0224ba, 0xf2, 0x0224bb, 0x27, 0x0224c8, 0x98, 0x0224c9, 0x6d, 0x0224d2, 0x99,
+			0x0224d3, 0x6d, 0x0224fc, 0xc2, 0x0224fe, 0xc2, 0x022502, 0xc6, 0x022504, 0xc6, 0x022508, 0xe0, 0x02250a, 0xe0, 0x02250e, 0xe4,
+			0x022510, 0xe4, 0x022514, 0xe8, 0x022516, 0xe8, 0x02252a, 0xb8, 0x02252b, 0x4e, 0x02252c, 0x26, 0x02252d, 0x30, 0x02252e, 0x40,
+			0x02252f, 0x02, 0x022530, 0x1f, 0x022531, 0x00, 0x022532, 0x40, 0x022533, 0x39, 0x022534, 0xd6, 0x022535, 0x00, 0x022536, 0xbc,
+			0x022537, 0x28, 0x022538, 0x02, 0x022539, 0x00, 0x02253a, 0x3c, 0x02253b, 0x25, 0x02253c, 0x00, 0x02253d, 0x70, 0x02253e, 0x6c,
+			0x02253f, 0x26, 0x022540, 0x84, 0x022541, 0x00, 0x022542, 0x6c, 0x022543, 0x20, 0x022544, 0xc6, 0x022545, 0x00, 0x022546, 0x28,
+			0x022547, 0x1c, 0x022548, 0x03, 0x022549, 0x00, 0x02254a, 0x2c, 0x02254b, 0x4a, 0x02254c, 0xf8, 0x02254d, 0x00, 0x02254e, 0x74,
+			0x02254f, 0x66, 0x022552, 0xfa, 0x022554, 0x14, 0x022556, 0x40, 0x022557, 0x11, 0x022558, 0x0a, 0x022559, 0x00, 0x02255a, 0x00,
+			0x02255b, 0x52, 0x02255c, 0x40, 0x02255d, 0x11, 0x02255e, 0x0b, 0x02255f, 0x00, 0x022560, 0x00, 0x022561, 0x52, 0x022562, 0x40,
+			0x022563, 0x11, 0x022564, 0x0c, 0x022565, 0x00, 0x022566, 0x2c, 0x022567, 0x52, 0x022568, 0xfa, 0x022569, 0x00, 0x02256a, 0x28,
+			0x02256b, 0x10, 0x02256c, 0x01, 0x02256d, 0x00, 0x02256e, 0x00, 0x02256f, 0x0c, 0x022570, 0x0b, 0x022571, 0x00, 0x022572, 0x20,
+			0x022573, 0x67, 0x022574, 0x00, 0x022575, 0x0c, 0x022576, 0x0c, 0x022577, 0x00, 0x022578, 0x1a, 0x022579, 0x67, 0x02257a, 0x00,
+			0x02257b, 0x0c, 0x02257c, 0x0e, 0x02257d, 0x00, 0x02257e, 0x14, 0x02257f, 0x67, 0x022580, 0x00, 0x022581, 0x0c, 0x022582, 0x0d,
+			0x022583, 0x00, 0x022584, 0x14, 0x022585, 0x66, 0x022586, 0x28, 0x022587, 0x10, 0x022588, 0x0a, 0x022589, 0x00, 0x02258a, 0x68,
+			0x02258b, 0x11, 0x02258c, 0x0c, 0x02258e, 0x0a, 0x02258f, 0x00, 0x022590, 0x40, 0x022591, 0x11, 0x022592, 0x0c, 0x022593, 0x00,
+			0x022594, 0x03, 0x022595, 0x7c, 0x022596, 0x6c, 0x022597, 0x53, 0x022598, 0xd6, 0x022599, 0x00, 0x02259a, 0x6c, 0x02259b, 0x20,
+			0x02259c, 0xc2, 0x02259d, 0x00, 0x02259e, 0x00, 0x02259f, 0x70, 0x0225a0, 0x80, 0x0225a1, 0x10, 0x0225bc, 0x70, 0x0225c0, 0xc2,
+			0x0225ca, 0x06, 0x0225cc, 0x02, 0x0225d2, 0x70, 0x0225d6, 0xc2, 0x0225dc, 0xc2, 0x0225e4, 0x40, 0x0225e5, 0x02, 0x0225e6, 0x70,
+			0x0225e7, 0x00, 0x0225e9, 0x4a, 0x0225ea, 0x00, 0x0225eb, 0x67, 0x0225ec, 0x4a, 0x0225ed, 0x00, 0x0225ee, 0x04, 0x0225f0, 0x02,
+			0x0225fa, 0xf4, 0x0225fe, 0x0a, 0x022620, 0xf4, 0x022626, 0xe7, 0x022627, 0x48, 0x022628, 0x80, 0x022629, 0xc0, 0x02262a, 0x3c,
+			0x02262b, 0x30, 0x02262c, 0x1d, 0x02262d, 0x00, 0x02262e, 0xb8, 0x02262f, 0x4e, 0x022631, 0x77, 0x022632, 0xdf, 0x022633, 0x4c,
+			0x022634, 0x03, 0x022635, 0x01, 0x022636, 0x46, 0x022637, 0x11, 0x022638, 0x03, 0x02263a, 0x06, 0x02263b, 0x0c, 0x02263c, 0x03,
+			0x02263d, 0x00, 0x022648, 0x4a, 0x022664, 0xfa, 0x022665, 0x45, 0x022666, 0xe6, 0x022667, 0xff, 0x02266e, 0xfa, 0x02266f, 0x45,
+			0x022670, 0xe8, 0x022671, 0xff, 0x022672, 0x4a, 0x022678, 0xc6, 0x0226fe, 0x0a, 0x022700, 0x98, 0x022701, 0xc6, 0x0227b6, 0x83,
+			0x0227b7, 0xec, 0x0227b8, 0x24, 0x0227b9, 0x83, 0x0227ba, 0x6c, 0x0227bb, 0x24, 0x0227bc, 0x38, 0x0227bd, 0x01, 0x0227be, 0x8b,
+			0x0227bf, 0x4c, 0x0227c0, 0x24, 0x0227c1, 0x28, 0x0227c2, 0x8b, 0x0227c3, 0x81, 0x0227c4, 0xa4, 0x0227c5, 0x01, 0x0227c6, 0x00,
+			0x0227c7, 0x00, 0x0227c8, 0x8b, 0x0227c9, 0x91, 0x0227ca, 0x20, 0x0227cb, 0x01, 0x0227cc, 0x00, 0x0227cd, 0x00, 0x0227ce, 0x55,
+			0x0227cf, 0x8b, 0x0227d0, 0x69, 0x0227d1, 0x5c, 0x0227d2, 0x8b, 0x0227d3, 0x48, 0x0227d4, 0x08, 0x0227d5, 0x89, 0x0227d6, 0x4c,
+			0x0227d7, 0x24, 0x0227d8, 0x0c, 0x0227d9, 0x8b, 0x0227da, 0x48, 0x0227db, 0x0c, 0x0227dc, 0x89, 0x0227dd, 0x4c, 0x0227de, 0x24,
+			0x0227df, 0x1c, 0x0227e0, 0x8b, 0x0227e1, 0x48, 0x0227e2, 0x10, 0x0227e3, 0x8b, 0x0227e4, 0x40, 0x0227e5, 0x14, 0x0227e6, 0x89,
+			0x0227e7, 0x6c, 0x0227e8, 0x24, 0x0227e9, 0x20, 0x0227ea, 0x89, 0x0227eb, 0x54, 0x0227ec, 0x24, 0x0227ed, 0x18, 0x0227ee, 0x89,
+			0x0227ef, 0x4c, 0x0227f0, 0x24, 0x0227f1, 0x14, 0x0227f2, 0x89, 0x0227f3, 0x44, 0x0227f4, 0x24, 0x0227f5, 0x10, 0x0227f6, 0xcc,
+			0x0227f7, 0xcc, 0x0227f8, 0xcc, 0x0227f9, 0xcc, 0x0227fa, 0xcc, 0x0227fb, 0xcc, 0x0227fc, 0xcc, 0x0227fd, 0xcc, 0x0227fe, 0xac,
+			0x0227ff, 0x11
+		};
+
+		for (INT32 i = 0; i < (sizeof(patch_fix) / sizeof(UINT32)) >> 1; i++)
+			Neo68KROMActive[patch_fix[(i << 1) + 0]] = patch_fix[(i << 1) + 1];
+	}
+}
+
+static INT32 kof97tInit()
+{
+	NeoCallbackActive->pInitialise = kof97tPatchCallback;
+
+	return NeoInit();
 }
 
 struct BurnDriver BurnDrvkof97t = {
@@ -17410,7 +17187,7 @@ struct BurnDriver BurnDrvkof97t = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof97tRomInfo, kof97tRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	Kof97tPatchInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	kof97tInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
@@ -17448,7 +17225,7 @@ struct BurnDriver BurnDrvkof97ae = {
 	"The King of Fighters '97 - Anniversary Edition (Build 2.1.0212)\0", NULL, "EGHT", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
-	NULL, kof97aeRomInfo, kof97aeRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
+	NULL, kof97aeRomInfo, kof97aeRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
@@ -17498,7 +17275,7 @@ struct BurnDriver BurnDrvkof97aef = {
 	"The King of Fighters '97 - Anniversary Edition (Build 2.1.1811)\0", NULL, "Hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
-	NULL, kof97aefRomInfo, kof97aefRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
+	NULL, kof97aefRomInfo, kof97aefRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesDIPInfo,
 	kof97aefInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
@@ -17551,24 +17328,23 @@ static struct BurnRomInfo kof97ipRomDesc[] = {
 	{ "232-p1ip.p1",	0x200000, 0x9cd04061, 1 | BRF_ESS | BRF_PRG },	//  0 68K code
 	{ "232-p2ip.sp2",	0x400000, 0x7ce0fc4d, 1 | BRF_ESS | BRF_PRG },	//  1
 
-	{ "232-s1ip.s1",	0x020000, 0xde61d11c, 2 | BRF_GRA },			//  2 Text layer tiles
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "232-c1ip.c1",	0x800000, 0x8b6315fd, 3 | BRF_GRA },			//  2 Sprite data
+	{ "232-c2ip.c2",	0x800000, 0x3fe2d05b, 3 | BRF_GRA },			//  3
+	{ "232-c3ip.c3",	0x800000, 0x999955d0, 3 | BRF_GRA },			//  4
+	{ "232-c4ip.c4",	0x800000, 0xb30ee22c, 3 | BRF_GRA },			//  5
+	{ "232-c5ip.c5",	0x800000, 0xf91f949a, 3 | BRF_GRA },			//  6
+	{ "232-c6ip.c6",	0x800000, 0x2ee0de5e, 3 | BRF_GRA },			//  7
+	{ "232-c7ip.c7",	0x800000, 0x1a6a322f, 3 | BRF_GRA },			//  8
+	{ "232-c8ip.c8",	0x800000, 0xe6b9b8ee, 3 | BRF_GRA },			//  9
 
 	/* Encrypted */
-	{ "232-c1ip.c1",	0x800000, 0x271e4ba4, 3 | BRF_GRA },			//  3 Sprite data
-	{ "232-c2ip.c2",	0x800000, 0x04efe3df, 3 | BRF_GRA },			//  4
-	{ "232-c3ip.c3",	0x800000, 0xe9927918, 3 | BRF_GRA },			//  5
-	{ "232-c4ip.c4",	0x800000, 0xdd73554f, 3 | BRF_GRA },			//  6
-	{ "232-c5ip.c5",	0x800000, 0x5f481842, 3 | BRF_GRA },			//  7
-	{ "232-c6ip.c6",	0x800000, 0x0f2ec052, 3 | BRF_GRA },			//  8
-	{ "232-c7ip.c7",	0x800000, 0xa5864964, 3 | BRF_GRA },			//  9
-	{ "232-c8ip.c8",	0x800000, 0xa8bc0759, 3 | BRF_GRA },			//  10
+	{ "232-m1ip.m1",	0x020000, 0xfcd044b5, 4 | BRF_ESS | BRF_PRG },	//  10 Z80 code
 
 	/* Encrypted */
-	{ "232-m1ip.m1",	0x020000, 0xfcd044b5, 4 | BRF_ESS | BRF_PRG },	//  11 Z80 code
-
-	/* Encrypted */
-	{ "232-v1ip.v1",	0x800000, 0x3f7d07ec, 5 | BRF_SND },			//  12 Sound data
-	{ "232-v2ip.v2",	0x800000, 0x517b9787, 5 | BRF_SND },			//  13
+	{ "232-v1ip.v1",	0x800000, 0x3f7d07ec, 5 | BRF_SND },			//  11 Sound data
+	{ "232-v2ip.v2",	0x800000, 0x517b9787, 5 | BRF_SND },			//  12
 };
 
 STDROMPICKEXT(kof97ip, kof97ip, neogeo)
@@ -17609,10 +17385,10 @@ static INT32 kof97ipInit()
 
 struct BurnDriver BurnDrvkof97ip = {
 	"kof97ip", "kof97", "neogeo", NULL, "2021",
-	"The King of Fighters '97 (Invincible Plus! B2.1.2107)\0", "Do not use MVS!", "Hack", "Neo Geo MVS",
+	"The King of Fighters '97 (Invincible Plus! B2.1.2107)\0", NULL, "Hack", "Neo Geo AES",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_KOF,
-	NULL, kof97ipRomInfo, kof97ipRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
+	NULL, kof97ipRomInfo, kof97ipRomName, NULL, NULL, NULL, NULL, neoForceAESInputInfo, neoForceAESDIPInfo,
 	kof97ipInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
@@ -17645,10 +17421,10 @@ STD_ROM_FN(kof97pm)
 
 struct BurnDriver BurnDrvKof97pm = {
 	"kof97pm", "kof97", "neogeo", NULL, "1997",
-	"The King of Fighters '97 (Practice Mode)\0", "need AES for practice mode", "hack", "Neo Geo MVS",
+	"The King of Fighters '97 (Practice Mode)\0", NULL, "Hack", "Neo Geo AES",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
-	NULL, kof97pmRomInfo, kof97pmRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, kof97pmRomInfo, kof97pmRomName, NULL, NULL, NULL, NULL, neoForceAESInputInfo, neoForceAESDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
@@ -18509,7 +18285,7 @@ struct BurnDriver BurnDrvkof2000otc = {
 	"The King of Fighters 2000 (OTC, hack)\0", "ZERO only enabled in AES mode", "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ALTERNATE_TEXT, GBF_VSFIGHT, FBF_KOF,
-	NULL, kof2000otcRomInfo, kof2000otcRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
+	NULL, kof2000otcRomInfo, kof2000otcRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
@@ -18736,7 +18512,7 @@ struct BurnDriver BurnDrvkf2k1pkz = {
 	"The King of Fighters 2001 (PS2 Krizalid Edition)\0", "hack only enable in AES mode", "Hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
-	NULL, kf2k1pkzRomInfo, kf2k1pkzRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
+	NULL, kf2k1pkzRomInfo, kf2k1pkzRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesDIPInfo,
 	kf2k1plsInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
@@ -19008,7 +18784,7 @@ struct BurnDriver BurnDrvkof2002ps2 = {
 	"The King of Fighters 2002 (PlayStation 2, Hack)\0", "hack only enabled in AES mode", "Hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_KOF,
-	NULL, kof2002ps2RomInfo, kof2002ps2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
+	NULL, kof2002ps2RomInfo, kof2002ps2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesDIPInfo,
 	kof2002Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
@@ -19325,7 +19101,7 @@ struct BurnDriver BurnDrvK2k2ps2re1 = {
 	"The King of Fighters 2002 (PlayStation 2 v1.0 Public Beta)\0", "hack only enable in AES mode, imperfect sound", "Hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
-	NULL, K2k2ps2re1RomInfo, K2k2ps2re1RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
+	NULL, K2k2ps2re1RomInfo, K2k2ps2re1RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesDIPInfo,
 	K2k2ps2re1Init, K2k2ps2re1Exit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
@@ -19399,7 +19175,7 @@ struct BurnDriver BurnDrvkof2k2plus = {
 	"The King of Fighters 2002 (Plus 2017)\0", NULL, "Hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_KOF,
-	NULL, kof2k2plusRomInfo, kof2k2plusRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
+	NULL, kof2k2plusRomInfo, kof2k2plusRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesDIPInfo,
 	kof2k2plusInit, kof2k2plusExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
@@ -19514,7 +19290,7 @@ struct BurnDriver BurnDrvkf2k3ps2 = {
 	"The King of Fighters 2003 PlayStation 2 (Hack By EGCG)\0", "Use AES (Console) mode!", "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
-	NULL, kf2k3ps2RomInfo, kf2k3ps2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
+	NULL, kf2k3ps2RomInfo, kf2k3ps2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
@@ -21149,7 +20925,7 @@ struct BurnDriver BurnDrvNsmb = {
 	"Neo Super Mario Bros (Demo, v0.01)\0", NULL, "OzzyOuzo", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
-	NULL, nsmbRomInfo, nsmbRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
+	NULL, nsmbRomInfo, nsmbRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
@@ -21195,27 +20971,27 @@ struct BurnDriver BurnDrvNblktiger = {
 	"Neo Black Tiger (Demo)\0", NULL, "OzzyOuzo", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
-	NULL, nblktigerRomInfo, nblktigerRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
+	NULL, nblktigerRomInfo, nblktigerRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
-// The Eye of Typhoon (Beta 3 Version)
+// The Eye of Typhoon (Beta 4 Version)
 // https://ozzyouzo.itch.io/teot
 
 static struct BurnRomInfo teotRomDesc[] = {
-	{ "teot-p1.bin",    0x0100000, 0x2af068c0, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "teot-p2.bin",    0x0800000, 0x3ddc321d, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
+	{ "teot-p1.bin",    0x0100000, 0xfdb9a8d4, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "teot-p2.bin",    0x0800000, 0x02dd52ed, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
 
-	{ "teot-s1.bin",    0x0020000, 0x52895190, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "teot-s1.bin",    0x0020000, 0x6d05f74b, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "teot-c1.bin",    0x1000000, 0x360e5362, 3 | BRF_GRA },           //  3 Sprite data
-	{ "teot-c2.bin",    0x1000000, 0x1fdff0ce, 3 | BRF_GRA },           //  4
+	{ "teot-c1.bin",    0x1000000, 0x66f0afa6, 3 | BRF_GRA },           //  3 Sprite data
+	{ "teot-c2.bin",    0x1000000, 0xe773037f, 3 | BRF_GRA },           //  4
 	
-	{ "teot-m1.bin",    0x0010000, 0x5edaa24d, 4 | BRF_ESS | BRF_PRG }, //  5 Z80 code
+	{ "teot-m1.bin",    0x0010000, 0x16f81e41, 4 | BRF_ESS | BRF_PRG }, //  5 Z80 code
 
-	{ "teot-v1.bin",    0x0800000, 0x70042574, 5 | BRF_SND },           //  6 Sound data
-	{ "teot-v2.bin",    0x0800000, 0xd84d05b2, 5 | BRF_SND },           //  7
+	{ "teot-v1.bin",    0x0800000, 0xd2911e9c, 5 | BRF_SND },           //  6 Sound data
+	{ "teot-v2.bin",    0x0800000, 0x49e3afe6, 5 | BRF_SND },           //  7
 };
 
 STDROMPICKEXT(teot, teot, neogeo)
@@ -21223,10 +20999,10 @@ STD_ROM_FN(teot)
 
 struct BurnDriver BurnDrvTeot = {
 	"teot", NULL, "neogeo", NULL, "2022",
-	"The Eye of Typhoon (Beta 3 Version)\0", NULL, "OzzyOuzo", "Neo Geo MVS",
+	"The Eye of Typhoon (Beta 4 Version)\0", NULL, "OzzyOuzo", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
-	NULL, teotRomInfo, teotRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
+	NULL, teotRomInfo, teotRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
@@ -21316,5 +21092,229 @@ struct BurnDriver BurnDrvHypernoid = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_BREAKOUT, 0,
 	NULL, hypernoidRomInfo, hypernoidRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+static struct BurnRomInfo mslugunityRomDesc[] = {
+	{ "201-p1.p1",    0x200000, 0xa3186dfd, 1 | BRF_ESS | BRF_PRG }, //  0 68K code		/ TC5316200
+
+	{ "201-s1.s1",    0x020000, 0x2f55958d, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
+
+	{ "201-c1.c1",    0x400000, 0x72813676, 3 | BRF_GRA },           //  2 Sprite data		/ TC5332205
+	{ "201-c2.c2",    0x400000, 0x96f62574, 3 | BRF_GRA },           //  3 					/ TC5332205
+	{ "201-c3.c3",    0x400000, 0x5121456a, 3 | BRF_GRA },           //  4 					/ TC5332205
+	{ "201-c4.c4",    0x400000, 0xf4ad59a3, 3 | BRF_GRA },           //  5 					/ TC5332205
+
+	{ "201-m1.m1",    0x020000, 0xc28b3253, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ TC531001
+
+	{ "201-v1.v1",    0x400000, 0x23d22ed1, 5 | BRF_SND },           //  7 Sound data		/ TC5332204
+	{ "201-v2.v2",    0x400000, 0x472cf9db, 5 | BRF_SND },           //  8 					/ TC5332204
+};
+
+STDROMPICKEXT(mslugunity, mslugunity, neogeo)
+STD_ROM_FN(mslugunity)
+
+struct BurnDriver BurnDrvmslugunity = {
+	"mslugunity", "mslug", "neogeo", NULL, "2021",
+	"Metal Slug Unity (Added Timer Ver. 2021-02-05)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslugunityRomInfo, mslugunityRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+static struct BurnRomInfo mslug2unityRomDesc[] = {
+	{ "241-p1.bin",   0x100000, 0x1562cf23, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "241-p2.sp2",   0x200000, 0x38883f44, 1 | BRF_ESS | BRF_PRG }, //  1 
+
+	{ "241-s1.s1",    0x020000, 0xf3d32f0f, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "241-c1.c1",    0x800000, 0x394b5e0d, 3 | BRF_GRA },           //  3 Sprite data
+	{ "241-c2.c2",    0x800000, 0xe5806221, 3 | BRF_GRA },           //  4 
+	{ "241-c3.c3",    0x800000, 0x9f6bfa6f, 3 | BRF_GRA },           //  5 
+	{ "241-c4.c4",    0x800000, 0x7d3e306f, 3 | BRF_GRA },           //  6 
+
+	{ "241-m1.m1",    0x020000, 0x94520ebd, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
+
+	{ "241-v1.v1",    0x400000, 0x99ec20e8, 5 | BRF_SND },           //  8 Sound data
+	{ "241-v2.v2",    0x400000, 0xecb16799, 5 | BRF_SND },           //  9 
+};
+
+STDROMPICKEXT(mslug2unity, mslug2unity, neogeo)
+STD_ROM_FN(mslug2unity)
+
+struct BurnDriver BurnDrvmslug2unity = {
+	"mslug2unity", "mslug2", "neogeo", NULL, "2021",
+	"Metal Slug 2 - Super Vehicle-001/II Unity (Added Timer Ver. 2021-01-22)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug2unityRomInfo, mslug2unityRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+static struct BurnRomInfo mslugxunityRomDesc[] = {
+	{ "250-p1.p1",    0x100000, 0x36102d34, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2.ep1",   0x400000, 0x1fda2e12, 1 | BRF_ESS | BRF_PRG }, //  1 
+
+	{ "250-s1.s1",    0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "250-c1.c1",    0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
+	{ "250-c2.c2",    0x800000, 0x31679821, 3 | BRF_GRA },           //  4 
+	{ "250-c3.c3",    0x800000, 0xfd602019, 3 | BRF_GRA },           //  5 
+	{ "250-c4.c4",    0x800000, 0x31354513, 3 | BRF_GRA },           //  6 
+	{ "250-c5.c5",    0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7 
+	{ "250-c6.c6",    0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8 
+
+	{ "250-m1.m1",    0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "250-v1.v1",    0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
+	{ "250-v2.v2",    0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11 
+	{ "250-v3.v3",    0x200000, 0x2ca65102, 5 | BRF_SND },           // 12 
+};
+
+STDROMPICKEXT(mslugxunity, mslugxunity, neogeo)
+STD_ROM_FN(mslugxunity)
+
+struct BurnDriver BurnDrvmslugxunity = {
+	"mslugxunity", "mslugx", "neogeo", NULL, "2021",
+	"Metal Slug X - Super Vehicle-001 Unity (Added Timer Ver. 2021-01-23)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslugxunityRomInfo, mslugxunityRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+static struct BurnRomInfo mslug3unityRomDesc[] = {
+	{ "green.neo-sma",  0x040000, 0x3c6c536b, 9 | BRF_ESS | BRF_PRG }, //  0 68K code		/ stored in the custom chip
+																	   /* The SMA for this release has a green colour marking; the older revision has a white colour marking */
+	{ "256-pg1.p1",   	0x400000, 0xb07edfd5, 1 | BRF_ESS | BRF_PRG }, //  1 				/ TC5332202
+	{ "256-pg2.p2",   	0x400000, 0xea0c22b6, 1 | BRF_ESS | BRF_PRG }, //  2 				/ TC5332202
+
+																	   /* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+																	   /* Encrypted */
+	{ "256-c1.c1",    	0x800000, 0x5a79c34e, 3 | BRF_GRA },           //  3 Sprite data	/ TC5364202
+	{ "256-c2.c2",    	0x800000, 0x944c362c, 3 | BRF_GRA },           //  4 				/ TC5364202
+	{ "256-c3.c3",    	0x800000, 0x6e69d36f, 3 | BRF_GRA },           //  5 				/ TC5364202		
+	{ "256-c4.c4",    	0x800000, 0xb755b4eb, 3 | BRF_GRA },           //  6 				/ TC5364202
+	{ "256-c5.c5",    	0x800000, 0x7aacab47, 3 | BRF_GRA },           //  7 				/ TC5364202
+	{ "256-c6.c6",    	0x800000, 0xc698fd5d, 3 | BRF_GRA },           //  8 				/ TC5364202	
+	{ "256-c7.c7",    	0x800000, 0xcfceddd2, 3 | BRF_GRA },           //  9 				/ TC5364202
+	{ "256-c8.c8",    	0x800000, 0x4d9be34c, 3 | BRF_GRA },           // 10 				/ TC5364202
+
+	{ "256-m1.m1",    	0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code		/ mask rom TC534000
+
+	{ "256-v1.v1",    	0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data 	/ TC5332204
+	{ "256-v2.v2",    	0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13 				/ TC5332204
+	{ "256-v3.v3",    	0x400000, 0x0eaec17c, 5 | BRF_SND },           // 14 				/ TC5332204
+	{ "256-v4.v4",    	0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 15 				/ TC5332204
+};
+
+STDROMPICKEXT(mslug3unity, mslug3unity, neogeo)
+STD_ROM_FN(mslug3unity)
+
+struct BurnDriver BurnDrvmslug3unity = {
+	"mslug3unity", "mslug3", "neogeo", NULL, "2021",
+	"Metal Slug 3 Unity (Added Timer Ver. 2021-02-13)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug3unityRomInfo, mslug3unityRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslug3Init, NeoSMAExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+static struct BurnRomInfo mslug4unityRomDesc[] = {
+	{ "263-p1.p1",    0x100000, 0xef3501b6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "263-p2.sp2",   0x400000, 0xfdb7aed8, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "263-c1.c1",    0x800000, 0x84865f8a, 3 | BRF_GRA },           //  2 Sprite data
+	{ "263-c2.c2",    0x800000, 0x81df97f2, 3 | BRF_GRA },           //  3
+	{ "263-c3.c3",    0x800000, 0x1a343323, 3 | BRF_GRA },           //  4
+	{ "263-c4.c4",    0x800000, 0x942cfb44, 3 | BRF_GRA },           //  5
+	{ "263-c5.c5",    0x800000, 0xa748854f, 3 | BRF_GRA },           //  6
+	{ "263-c6.c6",    0x800000, 0x5c8ba116, 3 | BRF_GRA },           //  7
+
+	{ "263-m1.m1",    0x020000, 0x46ac8228, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
+
+	{ "263-v1.v1",    0x800000, 0x01e9b9cd, 5 | BRF_SND },           //  9 Sound data
+	{ "263-v2.v2",    0x800000, 0x4ab2bf81, 5 | BRF_SND },           // 10
+};
+
+STDROMPICKEXT(mslug4unity, mslug4unity, neogeo)
+STD_ROM_FN(mslug4unity)
+
+struct BurnDriver BurnDrvmslug4unity = {
+	"mslug4unity", "mslug4", "neogeo", NULL, "2021",
+	"Metal Slug 4 Unity (Added Timer Ver. 2021-01-30)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug4unityRomInfo, mslug4unityRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslug4Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+static struct BurnRomInfo mslug5unityRomDesc[] = {
+	{ "268-p1cr.p1",   0x400000, 0xced9f5a8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "268-p2cr.p2",   0x400000, 0x1c08dbb6, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "268-c1c.c1",    0x800000, 0xab7c389a, 3 | BRF_GRA },           //  2 Sprite data
+	{ "268-c2c.c2",    0x800000, 0x3560881b, 3 | BRF_GRA },           //  3
+	{ "268-c3c.c3",    0x800000, 0x3af955ea, 3 | BRF_GRA },           //  4
+	{ "268-c4c.c4",    0x800000, 0xc329c373, 3 | BRF_GRA },           //  5
+	{ "268-c5c.c5",    0x800000, 0x959c8177, 3 | BRF_GRA },           //  6
+	{ "268-c6c.c6",    0x800000, 0x010a831b, 3 | BRF_GRA },           //  7
+	{ "268-c7c.c7",    0x800000, 0x6d72a969, 3 | BRF_GRA },           //  8
+	{ "268-c8c.c8",    0x800000, 0x551d720e, 3 | BRF_GRA },           //  9
+
+	{ "268-m1.bin",   0x080000, 0x4a5a6e0e, 4 | BRF_ESS | BRF_PRG },
+
+	{ "268-v1c.v1",    0x800000, 0xae31d60c, 5 | BRF_SND },           // 11 Sound data
+	{ "268-v2c.v2",    0x800000, 0xc40613ed, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(mslug5unity, mslug5unity, neogeo)
+STD_ROM_FN(mslug5unity)
+
+struct BurnDriver BurnDrvmslug5unity = {
+	"mslug5unity", "mslug5", "neogeo", NULL, "2021",
+	"Metal Slug 5 Unity (Added Timer Ver. 2021-04-23)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_P32 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug5unityRomInfo, mslug5unityRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslug5Init, NeoPVCExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Metal Slug (HB)
+// 20220111
+static struct BurnRomInfo mslughbRomDesc[] = {
+	{ "mslug-p1hb.p1",	0x400000, 0x1E0506CF, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "mslug-p2hb.p2",	0x400000, 0x894CD3DD, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "mslug-c1hb.c1",	0x800000, 0x92a89586, 3 | BRF_GRA },           //  2 Sprite data
+	{ "mslug-c2hb.c2",	0x800000, 0x18d14a71, 3 | BRF_GRA },           //  3
+
+	/* Encrypted */
+	{ "mslug-m1hb.m1",	0x020000, 0x876df5e1, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	/* Encrypted */
+	{ "mslug-v1hb.v1",	0x800000, 0x5d904213, 5 | BRF_SND },           //  5 Sound data
+	{ "mslug-v2hb.v2",	0x800000, 0x97cee550, 5 | BRF_SND },           //  6
+};
+
+STDROMPICKEXT(mslughb, mslughb, neogeo)
+STD_ROM_FN(mslughb)
+
+struct BurnDriver BurnDrvmslughb = {
+	"mslughb", NULL, "neogeo", NULL, "2022",
+	"Metal Slug (HB)\0", NULL, "Hack", "Neo Geo AES",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_P32 | HARDWARE_SNK_ENCRYPTED_M1, GBF_MISC, FBF_MSLUG,
+	NULL, mslughbRomInfo, mslughbRomName, NULL, NULL, NULL, NULL, neoForceAESInputInfo, neoForceAESDIPInfo,
+	mslug5Init, NeoPVCExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };

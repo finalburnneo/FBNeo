@@ -52,7 +52,7 @@ static void sh4_timer_recompute(int which)
 	//ticks = tcnt;
 	//m_timer[which]->adjust(sh4_scale_up_mame_time(attotime::from_hz(m_pm_clock) * tcnt_div[tcr & 7], ticks), which);
 	//bprintf(0, _T("sh4_timer_recompute(), starting timer #%d\n"), which);
-	m_timer[which].set_prescaler((m_pm_divider) * (tcnt_div[tcr & 7]));
+	m_timer[which].set_prescaler(m_pm_divider * tcnt_div[tcr & 7] * ratio_multi);
 	m_timer[which].start(tcnt, which, 1, 0);
 }
 

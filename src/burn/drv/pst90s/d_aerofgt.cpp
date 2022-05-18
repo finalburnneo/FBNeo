@@ -2756,15 +2756,10 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 	if (nAction & ACB_MEMORY_RAM) {
 		memset(&ba, 0, sizeof(ba));
-    		ba.Data	  = RamStart;
+		ba.Data	  = RamStart;
 		ba.nLen	  = RamEnd-RamStart;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
-		
-		if (nAction & ACB_WRITE) {
-			// update palette while loaded
-			DrvRecalc = 1;
-		}
 	}
 
 	if (nAction & ACB_DRIVER_DATA)
@@ -2772,24 +2767,27 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SekScan(nAction);
 		ZetScan(nAction);
 
-		SCAN_VAR(RamGfxBank);
-		SCAN_VAR(DrvInput);
-
-		ZetOpen(0);
 		BurnYM2610Scan(nAction, pnMin);
-		ZetClose();
+
+		SCAN_VAR(RamGfxBank);
+		SCAN_VAR(bg1scrollx);
+		SCAN_VAR(bg2scrollx);
+		SCAN_VAR(bg1scrolly);
+		SCAN_VAR(bg2scrolly);
+
 		SCAN_VAR(nSoundlatch);
 		SCAN_VAR(nAerofgtZ80Bank);
+		SCAN_VAR(pending_command);
 
 		SCAN_VAR(spritepalettebank);
 		SCAN_VAR(charpalettebank);
 
 		if (nAction & ACB_WRITE) {
 			INT32 nBank = nAerofgtZ80Bank;
-                        nAerofgtZ80Bank = -1;
-                        ZetOpen(0);
-                        aerofgtSndBankSwitch(nBank);
-                        ZetClose();
+			nAerofgtZ80Bank = -1;
+			ZetOpen(0);
+			aerofgtSndBankSwitch(nBank);
+			ZetClose();
 		}
 	}
 

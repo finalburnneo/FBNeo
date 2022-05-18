@@ -35,13 +35,15 @@ static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
 static UINT8 DrvJoy4[8];
-static UINT8 DrvDips[3];
+static UINT8 DrvDips[4];
 static UINT8 DrvInputs[5];
 static UINT8 DrvReset;
+static HoldCoin<2> hold_coin;
 
 // cpu speed changing
 static INT32 DriverClock; // selected cpu clockrate
 static INT32 nPrevBurnCPUSpeedAdjust;
+static UINT8 nPrevCPUTenth;
 static INT32 speedhack_burn; // 10ms @ cpu clock, calculated in DrvFrame
 
 static struct BurnInputInfo Cv1kInputList[] = {
@@ -74,6 +76,7 @@ static struct BurnInputInfo Cv1kInputList[] = {
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 };
 
 STDINPUTINFO(Cv1k)
@@ -121,6 +124,18 @@ static struct BurnDIPInfo DefaultDIPList[]=
 	{0x02, 0x01, 0x1f, 0x1d, "78"			},
 	{0x02, 0x01, 0x1f, 0x1e, "79"			},
 	{0x02, 0x01, 0x1f, 0x1f, "80"			},
+
+	{0   , 0xfe, 0   ,   10, "el_rika's CPU Rate tenth-percent adjust"},
+	{0x03, 0x01, 0x0f, 0x00, ".0"			},
+	{0x03, 0x01, 0x0f, 0x01, ".1"			},
+	{0x03, 0x01, 0x0f, 0x02, ".2"			},
+	{0x03, 0x01, 0x0f, 0x03, ".3"			},
+	{0x03, 0x01, 0x0f, 0x04, ".4"			},
+	{0x03, 0x01, 0x0f, 0x05, ".5"			},
+	{0x03, 0x01, 0x0f, 0x06, ".6"			},
+	{0x03, 0x01, 0x0f, 0x07, ".7"			},
+	{0x03, 0x01, 0x0f, 0x08, ".8"			},
+	{0x03, 0x01, 0x0f, 0x09, ".9"			},
 };
 
 static struct BurnDIPInfo Cv1kDIPList[]=
@@ -129,6 +144,7 @@ static struct BurnDIPInfo Cv1kDIPList[]=
 	{0x00, 0xff, 0xff, 0x00, NULL			},
 	{0x01, 0xff, 0xff, 0x03, NULL			},
 	{0x02, 0xff, 0xff, 0x00, NULL			},
+	{0x03, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "S2:1"			},
 	{0x00, 0x01, 0x01, 0x00, "Off"			},
@@ -153,6 +169,7 @@ static struct BurnDIPInfo Cv1ksDIPList[]=
 	{0x00, 0xff, 0xff, 0x00, NULL			},
 	{0x01, 0xff, 0xff, 0x03, NULL			},
 	{0x02, 0xff, 0xff, 0x00, NULL			},
+	{0x03, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"	},
 	{0x00, 0x01, 0x01, 0x00, "Off"			},
@@ -216,7 +233,7 @@ static UINT32 __fastcall main_read_long(UINT32 offset)
 		return epic12_blitter_read(offset & 0xff);
 	}
 
-	bprintf(0, _T("mrl %x\n"), offset);
+	//bprintf(0, _T("mrl %x\n"), offset);
 
 	return 0;
 }
@@ -338,6 +355,9 @@ static INT32 DrvDoReset()
 	nExtraCycles[0] = 0;
 
 	nPrevBurnCPUSpeedAdjust = -1;
+	nPrevCPUTenth = 0xff;
+
+	hold_coin.reset();
 
 	return 0;
 }
@@ -398,7 +418,7 @@ static speedy_s gamelist[] = {
 	   "pinkswtsx", "pinkswtssc", "\0", }, 				0xc05176a, 0xc002310 },
 	{ {"deathsml", "\0", }, 							0xc0519a2, 0xc002310 },
 	{ {"dsmbl", "ddpdfk", "ddpdfk10", "dfkbl",
-	   "akatana", "ddpsdoj", "\0", }, 					0xc1d1346, 0xc002310 },
+	   "akatana", "ddpsdoj", "sdojak", "\0", },			0xc1d1346, 0xc002310 },
 	{ {"\0", }, 0, 0 },
 };
 
@@ -503,20 +523,23 @@ static INT32 DrvFrame()
 	}
 
 	// check if cpu rate changes here..
-	if (nPrevBurnCPUSpeedAdjust != nBurnCPUSpeedAdjust) {
+	if (nPrevBurnCPUSpeedAdjust != nBurnCPUSpeedAdjust || DrvDips[3] != nPrevCPUTenth) {
 		bprintf(0, _T("Setting CPU Clock selection.\n"));
 		nPrevBurnCPUSpeedAdjust = nBurnCPUSpeedAdjust;
+		nPrevCPUTenth = DrvDips[3];
 
-		DriverClock = (INT32)((INT64)SH3_CLOCK * nBurnCPUSpeedAdjust / 256);
-		speedhack_burn = (double)((double)DriverClock / 1000000) * 10;
+		INT32 i_percent = 100 * nBurnCPUSpeedAdjust / 256; // whole percent comes from UI
+		double dPercent = i_percent + (0.1 * (DrvDips[3] & 0xf)); // .x tenth percent comes from DIPS
+
+		DriverClock = (INT32)((INT64)SH3_CLOCK * dPercent / 100);
+		speedhack_burn = (double)((double)DriverClock / 1000000) * 10; // 10us
 
 		Sh3SetClockCV1k(DriverClock);
 		ymz770_set_buffered(Sh3TotalCycles, DriverClock);
 
-		bprintf(0, _T("Driver Clock %d\n"), DriverClock);
-		//bprintf(0, _T("speedhack_burn %x\n"), speedhack_burn);
+		bprintf(0, _T("Main Clock %d  at %0.1f%%  Adjusted Clock %d\n"), SH3_CLOCK, dPercent, DriverClock);
 	}
-	// set blitter delay via dip setting
+	// set blitter delay, blitter threading & speedhack via dip setting
 	{
 		INT32 delay = DrvDips[2] & 0x1f;
 
@@ -537,6 +560,9 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
+
+		hold_coin.checklow(0, DrvInputs[0], 1<<2, 2);
+		hold_coin.checklow(1, DrvInputs[0], 1<<3, 2);
 	}
 
 	Sh3NewFrame();
@@ -564,6 +590,8 @@ static INT32 DrvFrame()
 
 	rtc9701_once_per_frame();
 
+	epic12_wait_blitterthread();
+
 	if (pBurnDraw) {
 		BurnDrvRedraw();
 	}
@@ -589,6 +617,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		epic12_scan(nAction, pnMin);
 
 		SCAN_VAR(nExtraCycles);
+
+		hold_coin.scan();
 	}
 
 	serflash_scan(nAction, pnMin); // writes back to flash (hiscores ddpdfk, etc) here
@@ -1292,6 +1322,31 @@ struct BurnDriver BurnDrvDdpsdoj = {
 	L"DoDonPachi SaiDaiOuJou\0\u6012\u9996\u9818\u8702 \u5927\u5fa9\u6d3b (2012/4/20)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, ddpsdojRomInfo, ddpsdojRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	240, 320, 3, 4
+};
+
+
+// DoDonPachi SaiDaiOuJou & Knuckles (CaveDwellers Hack)
+
+static struct BurnRomInfo sdojakRomDesc[] = {
+	{ "sdojak.u4",		0x0400000, 0xa878ff4c, 2 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
+
+	{ "sdojak.u2",		0x8400000, 0x54353425, 2 | BRF_PRG | BRF_ESS }, //  1 Flash
+
+	{ "u23",			0x0400000, 0x32b91544, 4 | BRF_SND },           //  2 YMZ770 Samples
+	{ "u24",			0x0400000, 0x7b9e749f, 4 | BRF_SND },           //  3
+};
+
+STD_ROM_PICK(sdojak)
+STD_ROM_FN(sdojak)
+
+struct BurnDriver BurnDrvsdojak = {
+	"sdojak", "ddpsdoj", NULL, NULL, "2012",
+	"DoDonPachi SaiDaiOuJou & Knuckles (CaveDwellers Hack)\0", NULL, "Cave", "CA???",
+	L"DoDonPachi SaiDaiOuJou & Knuckles (CaveDwellers Hack)\0\u6012\u9996\u9818\u8702 \u5927\u5fa9\u6d3b (2012/4/20)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	NULL, sdojakRomInfo, sdojakRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
 };

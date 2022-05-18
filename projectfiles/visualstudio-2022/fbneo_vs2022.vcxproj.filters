@@ -4320,8 +4320,6 @@
     <ClCompile Include="..\..\src\burner\dynhuff.cpp">
       <Filter>burner</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\pre90s\d_exprraid.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_stuntair.cpp">
       <Filter>Burn\drv\pre90s</Filter>
     </ClCompile>
@@ -4691,6 +4689,12 @@
     <ClCompile Include="..\..\src\burn\drv\sega\d_segac2.cpp">
       <Filter>Burn\drv\sega</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_exprraid.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">
@@ -4944,6 +4948,9 @@
     </Filter>
     <Filter Include="libs\lua">
       <UniqueIdentifier>{ee022b51-1d01-4d89-b3f7-256630b4caa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cpus\sh4">
+      <UniqueIdentifier>{1eeb3491-c4c0-441d-a899-df353583a3f3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

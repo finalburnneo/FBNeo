@@ -1,3 +1,8 @@
+/* ported from mame 0.155 */
+/*
+Copyright (c) 1997-2015 Nicola Salmoria and the MAME team
+Redistributions may not be sold, nor may they be used in a commercial product or activity.
+*/
 /*****************************************************************************
  *
  *   sh4.c
@@ -149,7 +154,14 @@ static int     m_is_slave;
 static int     m_cpu_clock;
 static int     m_bus_clock;
 static int     m_pm_clock;
-static int	   m_pm_divider;
+
+static int	   m_pm_divider; // clock divider of timer unit
+
+// for scaling up to the prescaler of timer unit when using cpu rate selection
+// see notes in Sh3SetClockCV1k
+#define ratio_multi 100000 // float -> int, format ii.fffff  (for speed)
+static int     m_ratio;
+
 static int     m_fpu_sz;
 static int     m_fpu_pr;
 static int     m_ioport16_pullup;
@@ -248,7 +260,7 @@ struct dtimer
 		if (tparam != -1) timer_param = tparam;
 		time_trig = trig_at;
 		time_current = 0;
-		prescale_counter = 0;
+		//prescale_counter = 0; <-- not here!
 		retrig = retrigger;
 		//if (counter) bprintf(0, _T("timer %d START:  %d  cycles - running: %d\n"), timer_param, time_trig, running);
 		//if (counter) bprintf(0, _T("timer %d   running %d - timeleft  %d  time_trig %d  time_current %d\n"), timer_param, running, time_trig - time_current, time_trig, time_current);
@@ -262,7 +274,7 @@ struct dtimer
 	void config(INT32 tparam, void (*callback)(int)) {
 		timer_param = tparam;
 		timer_exec = callback;
-		timer_prescaler = 1;
+		timer_prescaler = 1 * ratio_multi;
 	}
 
 	void set_prescaler(INT32 prescale) {
@@ -270,12 +282,10 @@ struct dtimer
 	}
 
 	void run_prescale(INT32 cyc) {
-		for (INT32 i = 0; i < cyc; i++) {
-			prescale_counter++;
-			if (prescale_counter >= timer_prescaler) {
-				prescale_counter = 0;
-				run(1);
-			}
+		prescale_counter += cyc * m_ratio;
+		while (prescale_counter >= timer_prescaler) {
+			prescale_counter -= timer_prescaler;
+			run(1);
 		}
 	}
 
@@ -301,12 +311,13 @@ struct dtimer
 	}
 
 	void reset() {
+		stop();
+		prescale_counter = 0; // this must be free-running (only reset here!)
+	}
+	void stop() {
 		running = 0;
 		time_current = 0;
 		timer_param = 0;
-	}
-	void stop() {
-		reset();
 	}
 	INT32 isrunning() {
 		return running;
@@ -355,8 +366,12 @@ static void cave_blitter_delay_func(int param)
 void Sh3SetClockCV1k(INT32 clock)
 {
 	c_clock = clock;
-	m_pm_divider = clock / (12800000 * 2);
 	bprintf(0, _T("Sh3SetClockCV1k:  %d   tmu prescale %d\n"), c_clock, m_pm_divider);
+
+	// cpu rate change
+	// scale-up using integer representing floating point (ii.fffff, 1 = 100000 (ratio_multi))
+	//m_ratio_needed = m_pm_divider * ratio_multi;
+	m_ratio = ((double)(12800000 * 8) / clock) * ratio_multi;
 }
 
 INT32 sh4_get_cpu_speed() {
@@ -460,7 +475,10 @@ INT32 Sh3Scan(INT32 nAction)
 	SCAN_VAR(m_cpu_clock);
 	SCAN_VAR(m_bus_clock);
 	SCAN_VAR(m_pm_clock);
-	SCAN_VAR(m_pm_divider);
+
+	SCAN_VAR(m_pm_divider); // timer clock prescaler
+	SCAN_VAR(m_ratio);
+
 	SCAN_VAR(m_fpu_sz);
 	SCAN_VAR(m_fpu_pr);
 	SCAN_VAR(m_ioport16_pullup);

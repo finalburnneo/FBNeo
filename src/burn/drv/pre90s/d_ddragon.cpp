@@ -192,7 +192,7 @@ static struct BurnDIPInfo Drv2DIPList[]=
 {
 	// Default Values
 	{0x14, 0xff, 0xff, 0xff, NULL                     },
-	{0x15, 0xff, 0xff, 0x92, NULL                     },
+	{0x15, 0xff, 0xff, 0x96, NULL                     },
 
 	// Dip 1
 	{0   , 0xfe, 0   , 8   , "Coin A"                 },
@@ -229,6 +229,10 @@ static struct BurnDIPInfo Drv2DIPList[]=
 	{0x15, 0x01, 0x03, 0x03, "Medium"                 },
 	{0x15, 0x01, 0x03, 0x02, "Hard"                   },
 	{0x15, 0x01, 0x03, 0x00, "Hardest"                },
+
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
+	{0x15, 0x01, 0x04, 0x00, "Off"                    },
+	{0x15, 0x01, 0x04, 0x04, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Hurricane Kick"         },
 	{0x15, 0x01, 0x08, 0x00, "Easy"                   },

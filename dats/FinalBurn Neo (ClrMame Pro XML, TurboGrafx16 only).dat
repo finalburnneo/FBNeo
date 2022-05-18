@@ -15,7 +15,7 @@
 	<game name="aeroblst">
 		<description>Aero Blasters</description>
 		<year>1990</year>
-		<manufacturer>NEC</manufacturer>
+		<manufacturer>NEC - Hudson Soft</manufacturer>
 		<rom name="aero blasters (usa).pce" size="524288" crc="b03e0b32"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -31,15 +31,15 @@
 	<game name="acrush">
 		<description>Alien Crush</description>
 		<year>1989</year>
-		<manufacturer>NEC</manufacturer>
+		<manufacturer>NEC - Hudson Soft</manufacturer>
 		<rom name="alien crush (usa).pce" size="262144" crc="ea488494"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="ballistx">
 		<description>Ballistix</description>
-		<year>1992</year>
-		<manufacturer>NEC</manufacturer>
+		<year>1991</year>
+		<manufacturer>NEC - Psygnosis</manufacturer>
 		<rom name="ballistix (usa).pce" size="262144" crc="420fa189"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -55,7 +55,7 @@
 	<game name="blazlazr">
 		<description>Blazing Lazers</description>
 		<year>1989</year>
-		<manufacturer>NEC</manufacturer>
+		<manufacturer>NEC - Hudson Soft</manufacturer>
 		<rom name="blazing lazers (usa).pce" size="393216" crc="b4a1b0f6"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -63,7 +63,7 @@
 	<game name="blodwolf">
 		<description>Bloody Wolf</description>
 		<year>1990</year>
-		<manufacturer>NEC</manufacturer>
+		<manufacturer>NEC - Data East</manufacturer>
 		<rom name="bloody wolf (usa).pce" size="524288" crc="37baf6bc"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -79,7 +79,7 @@
 	<game name="bombman">
 		<description>Bomberman</description>
 		<year>1991</year>
-		<manufacturer>NEC</manufacturer>
+		<manufacturer>NEC - Hudson Soft</manufacturer>
 		<rom name="bomberman (usa).pce" size="262144" crc="5f6f3c2a"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -95,7 +95,7 @@
 	<game name="bonk">
 		<description>Bonk's Adventure</description>
 		<year>1990</year>
-		<manufacturer>NEC</manufacturer>
+		<manufacturer>NEC - Hudson Soft</manufacturer>
 		<rom name="bonk's adventure (usa).pce" size="393216" crc="599ead9b"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -103,7 +103,7 @@
 	<game name="bonk2">
 		<description>Bonk's Revenge</description>
 		<year>1991</year>
-		<manufacturer>NEC</manufacturer>
+		<manufacturer>NEC - Hudson Soft</manufacturer>
 		<rom name="bonk's revenge (usa).pce" size="524288" crc="14250f9a"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -313,7 +313,7 @@
 	<game name="impossam">
 		<description>Impossamole</description>
 		<year>1991</year>
-		<manufacturer>NEC</manufacturer>
+		<manufacturer>NEC - Gremlin Graphics</manufacturer>
 		<rom name="impossamole (usa).pce" size="524288" crc="e2470f5f"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -321,7 +321,7 @@
 	<game name="jjnjeff">
 		<description>J.J. &amp; Jeff</description>
 		<year>1990</year>
-		<manufacturer>NEC</manufacturer>
+		<manufacturer>NEC - Hudson Soft</manufacturer>
 		<rom name="j.j. &amp; jeff (usa).pce" size="262144" crc="e01c5127"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -433,7 +433,7 @@
 	<game name="advislnd">
 		<description>New Adventure Island</description>
 		<year>1992</year>
-		<manufacturer>TTI</manufacturer>
+		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="new adventure island (usa).pce" size="524288" crc="756a1802"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -449,7 +449,7 @@
 	<game name="nspirit">
 		<description>Ninja Spirit</description>
 		<year>1990</year>
-		<manufacturer>NEC</manufacturer>
+		<manufacturer>NEC - Irem</manufacturer>
 		<rom name="ninja spirit (usa).pce" size="524288" crc="de8af1c1"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -601,7 +601,7 @@
 	<game name="splatth">
 		<description>Splatterhouse</description>
 		<year>1990</year>
-		<manufacturer>NEC</manufacturer>
+		<manufacturer>NEC - Namco</manufacturer>
 		<rom name="splatterhouse (usa).pce" size="524288" crc="d00ca74f"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

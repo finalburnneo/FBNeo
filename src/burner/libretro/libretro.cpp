@@ -1296,6 +1296,8 @@ void retro_get_system_av_info(struct retro_system_av_info *info)
 
 	struct retro_system_timing timing = { (nBurnFPS / 100.0), (nBurnFPS / 100.0) * nAudSegLen };
 
+	HandleMessage(RETRO_LOG_INFO, "[FBNeo] Timing set to %f Hz\n", timing.fps);
+
 	info->geometry = geom;
 	info->timing   = timing;
 }

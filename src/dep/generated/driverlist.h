@@ -1259,6 +1259,7 @@ DRV		BurnDrvcv_bankbuild;
 DRV		Burnmd_Baoxiao;
 DRV		BurnDrvsms_baraburu;
 DRV		BurnDrvBaraduke;
+DRV		BurnDrvpce_barbarian;
 DRV		BurnSpecbarbarian;
 DRV		BurnDrvMSX_barb;
 DRV		BurnSpecbarbarn2;
@@ -5406,6 +5407,7 @@ DRV		BurnDrvFinalap3;
 DRV		BurnDrvFinalap3a;
 DRV		BurnDrvpce_finallap;
 DRV		BurnDrvtg_finallap;
+DRV		BurnDrvpce_finalmtladies;
 DRV		BurnDrvpce_finalmt;
 DRV		BurnSpecfinalmatrix;
 DRV		BurnDrvnes_finalmissionj;
@@ -6665,6 +6667,7 @@ DRV		BurnSpecGunfright;
 DRV		BurnSpecGunhead;
 DRV		BurnDrvnes_gunhed;
 DRV		BurnDrvpce_gunhedht;
+DRV		BurnDrvpce_gunhedfx;
 DRV		BurnDrvpce_gunhed;
 DRV		BurnDrvGunlock;
 DRV		BurnDrvGunnail;
@@ -9429,6 +9432,7 @@ DRV		BurnDrvnes_metalmec;
 DRV		BurnDrvMetlsavr;
 DRV		BurnDrvnes_metalslagloj;
 DRV		BurnDrvnes_metalslaglo;
+DRV		BurnDrvmslughb;
 DRV		BurnDrvmslugdg;
 DRV		BurnDrvngpc_mslug1st;
 DRV		BurnDrvngpc_mslug2ndd;
@@ -12303,11 +12307,11 @@ DRV		BurnDrvRtypej;
 DRV		BurnDrvMSX_rtype;
 DRV		BurnDrvMSX_rtypea;
 DRV		BurnDrvsms_rtypep;
+DRV		BurnDrvsgx_rtypeuh;
 DRV		BurnDrvRtypeu;
 DRV		BurnDrvRtypeb;
 DRV		BurnDrvRtype;
 DRV		BurnDrvsms_rtype;
-DRV		BurnDrvsgx_rtypeuh;
 DRV		BurnDrvRtype2j;
 DRV		BurnDrvRtype2jc;
 DRV		BurnDrvRtype2;
@@ -14469,6 +14473,7 @@ DRV		BurnDrvmd_splatth2u;
 DRV		BurnDrvmd_splatth3s;
 DRV		BurnDrvmd_splatth3;
 DRV		BurnDrvmd_splatth3be;
+DRV		BurnDrvpce_splatthc;
 DRV		BurnDrvmd_splatth2j;
 DRV		BurnDrvmd_splatth3j;
 DRV		BurnDrvmd_splatth3jbe;
@@ -19955,6 +19960,7 @@ static struct BurnDriver* pDriver[] = {
 	&Burnmd_Baoxiao,			// Bao Xiao San Guo
 	&BurnDrvsms_baraburu,		// Bara Buruu (HB, v1.0)
 	&BurnDrvBaraduke,			// Baraduke
+	&BurnDrvpce_barbarian,		// Barbarian (HB)
 	&BurnSpecbarbarian,			// Barbarian (Psygnosis) (48K)
 	&BurnDrvMSX_barb,			// Barbarian (Spanish)
 	&BurnSpecbarbarn2,			// Barbarian II - The Dungeon of Drax (128K)
@@ -22228,7 +22234,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsDaimakair,		// Dai Makai-Mura (Japan Resale Ver.)
 	&BurnDrvCpsDaimakai,		// Dai Makai-Mura (Japan)
 	&BurnDrvsgx_daimakai1,		// Dai Makaimura (Alt)
-	&BurnDrvsgx_daimakaid,		// Dai Makaimura (Chris Covell's Debug Menu Hack)
+	&BurnDrvsgx_daimakaid,		// Dai Makaimura (Debug Menu Hack)
 	&BurnDrvmd_daimakai,		// Dai Makaimura (Jpn)
 	&BurnDrvsgx_daimakai,		// Dai Makaimura
 	&BurnDrvDairesya,			// Dai Ressya Goutou (Japan)
@@ -24102,6 +24108,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvFinalap3a,			// Final Lap 3 (World, set 2)
 	&BurnDrvpce_finallap,		// Final Lap Twin
 	&BurnDrvtg_finallap,		// Final Lap Twin
+	&BurnDrvpce_finalmtladies,	// Final Match Tennis - Ladies (Super CD-Rom Hack)
 	&BurnDrvpce_finalmt,		// Final Match Tennis
 	&BurnSpecfinalmatrix,		// Final Matrix, The (48K)
 	&BurnDrvnes_finalmissionj,	// Final Mission (Japan)
@@ -25361,6 +25368,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecGunhead,			// Gunhead (128K)
 	&BurnDrvnes_gunhed,			// Gunhed - Aratanaru Tatakai (Japan)
 	&BurnDrvpce_gunhedht,		// GunHed - Hudson GunHed Taikai
+	&BurnDrvpce_gunhedfx,		// GunHed FX1 (Hack)
 	&BurnDrvpce_gunhed,			// GunHed
 	&BurnDrvGunlock,			// Gunlock (Ver 2.3O 1994/01/20)
 	&BurnDrvGunnail,			// GunNail (28th May. 1992)
@@ -28125,6 +28133,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMetlsavr,			// Metal Saver
 	&BurnDrvnes_metalslagloj,	// Metal Slader Glory (Japan)
 	&BurnDrvnes_metalslaglo,	// Metal Slader Glory (T-Eng)
+	&BurnDrvmslughb,			// Metal Slug (HB)
 	&BurnDrvmslugdg,			// Metal Slug (Multifunction Hack, 20180430)
 	&BurnDrvngpc_mslug1st,		// Metal Slug - 1st Mission (World)
 	&BurnDrvngpc_mslug2ndd,		// Metal Slug - 2nd Mission (Demo)
@@ -30999,11 +31008,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_rtype,			// R-Type (Jpn)
 	&BurnDrvMSX_rtypea,			// R-Type (Jpn, Alt)
 	&BurnDrvsms_rtypep,			// R-Type (Prototype)
+	&BurnDrvsgx_rtypeuh,		// R-Type (Unfinished SGX Hack)
 	&BurnDrvRtypeu,				// R-Type (US)
 	&BurnDrvRtypeb,				// R-Type (World bootleg)
 	&BurnDrvRtype,				// R-Type (World)
 	&BurnDrvsms_rtype,			// R-Type (World)
-	&BurnDrvsgx_rtypeuh,		// R-Type - Chris Covell's Unfinished SGX Hack
 	&BurnDrvRtype2j,			// R-Type II (Japan)
 	&BurnDrvRtype2jc,			// R-Type II (Japan, revision C)
 	&BurnDrvRtype2,				// R-Type II (World)
@@ -33165,6 +33174,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_splatth3s,		// Splatterhouse 3 (Hack, Spanish)
 	&BurnDrvmd_splatth3,		// Splatterhouse 3 (USA)
 	&BurnDrvmd_splatth3be,		// Splatterhouse 3 Bloody Edition Hack (USA)
+	&BurnDrvpce_splatthc,		// Splatterhouse Chrome (Hack)
 	&BurnDrvmd_splatth2j,		// Splatterhouse Part 2 (Jpn)
 	&BurnDrvmd_splatth3j,		// Splatterhouse Part 3 (Jpn, Kor)
 	&BurnDrvmd_splatth3jbe,		// Splatterhouse Part 3 Bloody Edition Hack (Jpn, Kor)

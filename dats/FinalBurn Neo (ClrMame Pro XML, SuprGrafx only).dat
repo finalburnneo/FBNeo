@@ -45,9 +45,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="daimakaid" cloneof="daimakai" romof="daimakai">
-		<description>Dai Makaimura (Chris Covell's Debug Menu Hack)</description>
-		<year>1990</year>
-		<manufacturer>NEC Avenue</manufacturer>
+		<comment>Hack</comment>
+		<description>Dai Makaimura (Debug Menu Hack)</description>
+		<year>2007</year>
+		<manufacturer>Chris Covell</manufacturer>
 		<rom name="daimakai mura (japan)[debug].pce" size="1048576" crc="d6722c04"/>
 		<video orientation="horizontal" width="320" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -69,9 +70,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="rtypeuh">
-		<description>R-Type - Chris Covell's Unfinished SGX Hack</description>
+		<comment>Hack</comment>
+		<description>R-Type (Unfinished SGX Hack)</description>
 		<year>2019</year>
-		<manufacturer>NEC</manufacturer>
+		<manufacturer>Chris Covell</manufacturer>
 		<rom name="r-type (unfinished hack).sgx" size="524288" crc="cdc9bb74"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

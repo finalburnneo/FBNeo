@@ -128,8 +128,17 @@
 	<game name="ballistx">
 		<description>Ballistix</description>
 		<year>1991</year>
-		<manufacturer>Coconuts Japan</manufacturer>
+		<manufacturer>Coconuts Japan - Psygnosis</manufacturer>
 		<rom name="ballistix (japan).pce" size="262144" crc="8acfc8aa"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="barbarian">
+		<comment>Homebrew</comment>
+		<description>Barbarian (HB)</description>
+		<year>2017</year>
+		<manufacturer>F.L</manufacturer>
+		<rom name="Barbarian (2017)(F.L).pce" size="754176" crc="42d3c3f9"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -764,6 +773,15 @@
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="finalmtladies">
+		<comment>Hack</comment>
+		<description>Final Match Tennis - Ladies (Super CD-Rom Hack)</description>
+		<year>2002-2016</year>
+		<manufacturer>Human - Mooz</manufacturer>
+		<rom name="Final Match Tennis - Ladies (2002-2016)(Human-MooZ).pce" size="262144" crc="e92d1290"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="finalmt">
 		<description>Final Match Tennis</description>
 		<year>1991</year>
@@ -929,6 +947,15 @@
 		<year>1989</year>
 		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="gunhed - hudson gunhed taikai (japan).pce" size="262144" crc="57f183ae"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gunhedfx" cloneof="gunhed" romof="gunhed">
+		<comment>Hack</comment>
+		<description>GunHed FX1 (Hack)</description>
+		<year>2016</year>
+		<manufacturer>Phase</manufacturer>
+		<rom name="Gunhed FX1 (Hack, 2016)(Phase).pce" size="393216" crc="9710c85c"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2262,10 +2289,19 @@
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="splatthc" cloneof="splatth" romof="splatth">
+		<comment>Hack</comment>
+		<description>Splatterhouse Chrome (Hack)</description>
+		<year>2009</year>
+		<manufacturer>guemmai</manufacturer>
+		<rom name="Splatterhouse Chrome (Hack, 2009)(guemmai).pce" size="524800" crc="f6ab818b"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="splatth">
 		<description>Splatterhouse</description>
 		<year>1990</year>
-		<manufacturer>Namcot</manufacturer>
+		<manufacturer>Namco</manufacturer>
 		<rom name="splatterhouse (japan).pce" size="524288" crc="6b319457"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2281,7 +2317,7 @@
 	<game name="sf2ce">
 		<description>Street Fighter II' - Champion Edition</description>
 		<year>1993</year>
-		<manufacturer>NEC Home Electronics</manufacturer>
+		<manufacturer>NEC - Capcom</manufacturer>
 		<rom name="street fighter ii' - champion edition (japan).pce" size="2621440" crc="d15cb6bb"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

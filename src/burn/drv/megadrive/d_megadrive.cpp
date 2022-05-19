@@ -44436,15 +44436,16 @@ struct BurnDriver BurnDrvmd_bigfd = {
 };
 
 // Sega Master System Brawl (HB)
+// source: https://bonaf.itch.io/master-system-brawl
 static struct BurnRomInfo md_smsbrawlRomDesc[] = {
-	{ "SMSBrawl.bin", 0x178e2a, 0x7e4a52f3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Sega Master System Brawl (2021)(Bonaf).bin", 0x2a52e8, 0x8ad82cf6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_smsbrawl)
 STD_ROM_FN(md_smsbrawl)
 
 struct BurnDriver BurnDrvmd_smsbrawl = {
-	"md_smsbrawl", NULL, NULL, NULL, "2014",
+	"md_smsbrawl", NULL, NULL, NULL, "2021",
 	"Sega Master System Brawl (HB)\0", NULL, "Bonaf", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,

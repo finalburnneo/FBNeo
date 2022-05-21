@@ -544,7 +544,7 @@ static void __fastcall Sh3DummyWriteLong(UINT32, UINT32) { }
 
 static INT32 Sh3MapInit()
 {
-	bprintf(0, _T("Init Sh3 MEMMAP\n"));
+	//bprintf(0, _T("Init Sh3 MEMMAP\n"));
 	memset(MemMap, 0, sizeof(MemMap));
 
 	return 0;
@@ -685,10 +685,12 @@ void Sh3BurnCycles(INT32 cycles)
 	sh3_total_cycles += cycles;
 }
 
-void Sh3Idle(INT32 cycles)
+INT32 Sh3Idle(INT32 cycles)
 {
 	m_sh4_icount -= cycles;
 	sh3_total_cycles += cycles;
+
+	return cycles;
 }
 
 static UINT8 __fastcall Sh3LowerReadByte(UINT32 a)
@@ -751,6 +753,43 @@ static void __fastcall Sh3UpperWriteLong(UINT32 a, UINT32 d)
 	sh3_internal_high_w((a - SH3_UPPER_REGBASE)>>2, d, 0xffffffff);
 }
 
+static inline void WB(UINT32 A, UINT8 V); // forward
+static inline UINT8 RB(UINT32 A); // forward
+
+static void cheat_write(UINT32 a, UINT8 d)
+{
+	WB(a, d);
+}
+
+static UINT8 cheat_read(UINT32 a)
+{
+	return RB(a);
+}
+
+void Sh3CheatSetIRQLine(INT32 cpunum, INT32 line, INT32 state)
+{
+	Sh3SetIRQLine(line, state);
+}
+
+cpu_core_config sh3Config =
+{
+	"sh3",
+	Sh3Open,
+	Sh3Close,
+	cheat_read,
+	cheat_write,
+	Sh3GetActive,
+	Sh3TotalCycles,
+	Sh3NewFrame,
+	Sh3Idle,
+	Sh3CheatSetIRQLine,
+	Sh3Run,
+	Sh3RunEnd,
+	Sh3Reset,
+	0x1000000,
+	0
+};
+
 void Sh3Init(INT32 num, INT32 hz, char md0, char md1, char md2, char md3, char md4, char md5, char md6, char md7, char md8 )
 {
 	if (num != 0) {
@@ -807,6 +846,8 @@ void Sh3Init(INT32 num, INT32 hz, char md0, char md1, char md2, char md3, char m
 	m_test_irq = 0;
 
 	Sh3SetClockCV1k(c_clock);
+
+	CpuCheatRegister(0, &sh3Config);
 }
 
 void Sh3Exit()
@@ -820,6 +861,11 @@ void Sh3Open(const INT32 i)
 
 void Sh3Close()
 {
+}
+
+INT32 Sh3GetActive()
+{
+	return 0;
 }
 
 /* Called for unimplemented opcodes */

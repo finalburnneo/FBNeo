@@ -21174,7 +21174,7 @@ STD_ROM_FN(nes_ramondus)
 
 struct BurnDriver BurnDrvnes_ramondus = {
 	"nes_ramondus", NULL, NULL, NULL, "2015",
-	"Rise of Amondus, The (HB)\0", NULL, "Sly Dog Studios", "Miscellaneous",
+	"Rise of Amondus, The (HB) (Sly Dog Studios)\0", NULL, "Sly Dog Studios", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
 	NESGetZipName, nes_ramondusRomInfo, nes_ramondusRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

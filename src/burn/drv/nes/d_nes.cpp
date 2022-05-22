@@ -21140,7 +21140,7 @@ STD_ROM_FN(nes_madwizsds)
 
 struct BurnDriver BurnDrvnes_madwizsds = {
 	"nes_madwizsds", NULL, NULL, NULL, "2014",
-	"Mad Wizard, The - A Candelabra Chronicle (HB)\0", NULL, "Sly Dog Studios", "Miscellaneous",
+	"Mad Wizard, The - A Candelabra Chronicle (HB) (Sly Dog Studios)\0", NULL, "Sly Dog Studios", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_madwizsdsRomInfo, nes_madwizsdsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

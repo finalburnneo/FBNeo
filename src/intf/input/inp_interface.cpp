@@ -1,6 +1,9 @@
 // Burner Input module
 #include "burner.h"
-//#include <vector>
+
+#if defined(__APPLE__)
+#include <vector>
+#endif
 
 UINT32 nInputSelect = 0;
 bool bInputOkay = false;
@@ -40,7 +43,7 @@ static struct InputInOut *pInputInOut[]=
 
 #define INPUT_LEN (sizeof(pInputInOut) / sizeof(pInputInOut[0]))
 
-#if 0
+#if defined(__APPLE__)
 std::vector<const InputInOut *> InputGetInterfaces()
 {
 	std::vector<const InputInOut *> list;

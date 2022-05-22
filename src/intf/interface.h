@@ -2,7 +2,7 @@
 #ifdef FBNEO_DEBUG
  #define PRINT_DEBUG_INFO
 #endif
-#include <vector>
+//#include <vector> // what's this for - it's breaking the build...
 
 // GameInp structure
 #include "gameinp.h"
@@ -49,7 +49,7 @@ INT32 InputMake(bool bCopy);
 INT32 InputFind(const INT32 nFlags);
 INT32 InputGetControlName(INT32 nCode, TCHAR* pszDeviceName, TCHAR* pszControlName);
 InterfaceInfo* InputGetInfo();
-std::vector<const InputInOut *> InputGetInterfaces();
+//std::vector<const InputInOut *> InputGetInterfaces();  // this & include @ top is breaking the build..
 
 extern bool bInputOkay;
 extern UINT32 nInputSelect;

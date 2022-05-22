@@ -32,7 +32,8 @@ extern "C" {
 #endif
 #include "luaengine.h"
 #include "luasav.h"
-#include "../cpu/m68000_intf.h"
+#include "../cpu/m68k/m68k.h"
+//#include "../cpu/m68000_intf.h"
 #include "../cpu/z80/z80.h"
 extern Z80_Regs Z80;
 
@@ -137,10 +138,6 @@ static const char* luaCallIDStrings [] =
 	"CALL_HOTKEY_3",
 	"CALL_HOTKEY_4",
 	"CALL_HOTKEY_5",
-	"CALL_HOTKEY_6",
-	"CALL_HOTKEY_7",
-	"CALL_HOTKEY_8",
-	"CALL_HOTKEY_9",
 };
 
 static char* rawToCString(lua_State* L, int idx=0);
@@ -310,7 +307,7 @@ static int fba_pause(lua_State *L) {
 
 	// If it's on a frame boundary, we also yield.
 	frameAdvanceWaiting = TRUE;
-	return lua_yield(L, 0);
+	return lua_yield(L, 0);;
 }
 
 
@@ -903,6 +900,9 @@ static void CallRegisteredLuaMemHook_LuaMatch(unsigned int address, int size, un
 }
 void CallRegisteredLuaMemHook(unsigned int address, int size, unsigned int value, LuaMemHookType hookType)
 {
+	if (address == 0xFF8400) {
+		printf("hello world");
+	}
 	// performance critical! (called VERY frequently)
 	// I suggest timing a large number of calls to this function in Release if you change anything in here,
 	// before and after, because even the most innocent change can make it become 30% to 400% slower.
@@ -910,8 +910,8 @@ void CallRegisteredLuaMemHook(unsigned int address, int size, unsigned int value
 	// (on my system that consistently took 200 ms total in the former case and 350 ms total in the latter case)
 	if(hookedRegions[hookType].NotEmpty())
 	{
-		//if((hookType <= LUAMEMHOOK_EXEC) && (address >= 0xE00000))
-		//      address |= 0xFF0000; // account for mirroring of RAM
+		if((hookType <= LUAMEMHOOK_EXEC) && (address >= 0xE00000))
+		      address |= 0xFF0000; // account for mirroring of RAM
 		if(hookedRegions[hookType].Contains(address, size))
 			CallRegisteredLuaMemHook_LuaMatch(address, size, value, hookType); // something has hooked this specific address
 	}
@@ -1209,37 +1209,65 @@ cpuToRegisterMaps [] =
 	{"z80.", z80RegPointerMap},
 };
 
+char* m68k_reg_map[] = {
+	"d0", // 0
+	"d1", // 1
+	"d2", // 2
+	"d3", // 3
+	"d4", // 4
+	"d5", // 5
+	"d6", // 6
+	"d7", // 7
+	"a0", // 8
+	"a1", // 9
+	"a2", // 10
+	"a3", // 11
+	"a4", // 12
+	"a5", // 13
+	"a6", // 14
+	"a7", // 15
+	"pc", // 16
+	0
+};
 
 //DEFINE_LUA_FUNCTION(memory_getregister, "cpu_dot_registername_string")
-static int memory_getregister(lua_State *L)
+static int memory_getregister(lua_State* L)
 {
-	const char* qualifiedRegisterName = luaL_checkstring(L,1);
-	lua_settop(L,0);
-	for(int cpu = 0; cpu < sizeof(cpuToRegisterMaps)/sizeof(*cpuToRegisterMaps); cpu++)
-	{
-		cpuToRegisterMap ctrm = cpuToRegisterMaps[cpu];
-		int cpuNameLen = strlen(ctrm.cpuName);
-		if(!strnicmp(qualifiedRegisterName, ctrm.cpuName, cpuNameLen))
-		{
-			qualifiedRegisterName += cpuNameLen;
-			for(int reg = 0; ctrm.rpmap[reg].dataSize; reg++)
-			{
-				registerPointerMap rpm = ctrm.rpmap[reg];
-				if(!stricmp(qualifiedRegisterName, rpm.registerName))
-				{
-					switch(rpm.dataSize)
-					{ default:
-					case 1: lua_pushinteger(L, *(unsigned char*)rpm.pointer); break;
-					case 2: lua_pushinteger(L, *(unsigned short*)rpm.pointer); break;
-					case 4: lua_pushinteger(L, *(unsigned long*)rpm.pointer); break;
-					}
-					return 1;
-				}
-			}
-			lua_pushnil(L);
+	const char* qualifiedRegisterName = luaL_checkstring(L, 1);
+	lua_settop(L, 0);
+	for (int reg_num = 0; m68k_reg_map[reg_num]; reg_num++ ){
+		if (!stricmp(qualifiedRegisterName, m68k_reg_map[reg_num])) {
+			lua_pushinteger(L, m68k_get_reg(NULL, (m68k_register_t)reg_num));
 			return 1;
-		}
-	}
+		};
+	};
+	//for(int cpu = 0; cpu < sizeof(cpuToRegisterMaps)/sizeof(*cpuToRegisterMaps); cpu++)
+	//{
+	//	cpuToRegisterMap ctrm = cpuToRegisterMaps[cpu];
+	//	int cpuNameLen = strlen(ctrm.cpuName);
+	//	if(!strnicmp(qualifiedRegisterName, ctrm.cpuName, cpuNameLen))
+	//	{
+	//		qualifiedRegisterName += cpuNameLen;
+	//		for(int reg = 0; ctrm.rpmap[reg].dataSize; reg++)
+	//		{
+	//			registerPointerMap rpm = ctrm.rpmap[reg];
+	//			auto test = m68k_get_reg(NULL, M68K_REG_D0);
+	//			if(!stricmp(qualifiedRegisterName, rpm.registerName))
+	//			{
+	//				switch(rpm.dataSize)
+	//				{ default:
+	//				case 1: lua_pushinteger(L, *(unsigned char*)rpm.pointer); break;
+	//				case 2: lua_pushinteger(L, *(unsigned short*)rpm.pointer); break;
+	//				case 4: lua_pushinteger(L, *(unsigned long*)rpm.pointer); break;
+	//				}
+	//				return 1;
+	//			}
+	//		}
+	//		lua_pushnil(L);
+	//		return 1;
+	//	}
+
+	//}
 	lua_pushnil(L);
 	return 1;
 }
@@ -1249,30 +1277,37 @@ static int memory_setregister(lua_State *L)
 	const char* qualifiedRegisterName = luaL_checkstring(L,1);
 	unsigned long value = (unsigned long)(luaL_checkinteger(L,2));
 	lua_settop(L,0);
-	for(int cpu = 0; cpu < sizeof(cpuToRegisterMaps)/sizeof(*cpuToRegisterMaps); cpu++)
-	{
-		cpuToRegisterMap ctrm = cpuToRegisterMaps[cpu];
-		int cpuNameLen = strlen(ctrm.cpuName);
-		if(!_strnicmp(qualifiedRegisterName, ctrm.cpuName, cpuNameLen))
-		{
-			qualifiedRegisterName += cpuNameLen;
-			for(int reg = 0; ctrm.rpmap[reg].dataSize; reg++)
-			{
-				registerPointerMap rpm = ctrm.rpmap[reg];
-				if(!stricmp(qualifiedRegisterName, rpm.registerName))
-				{
-					switch(rpm.dataSize)
-					{ default:
-					case 1: *(unsigned char*)rpm.pointer = (unsigned char)(value & 0xFF); break;
-					case 2: *(unsigned short*)rpm.pointer = (unsigned short)(value & 0xFFFF); break;
-					case 4: *(unsigned long*)rpm.pointer = value; break;
-					}
-					return 0;
-				}
-			}
-			return 0;
-		}
-	}
+	for (int reg_num = 0; m68k_reg_map[reg_num]; reg_num++) {
+		if (!stricmp(qualifiedRegisterName, m68k_reg_map[reg_num])) {
+			m68k_set_reg((m68k_register_t)reg_num, value);
+			return 1;
+		};
+	};
+
+	//for(int cpu = 0; cpu < sizeof(cpuToRegisterMaps)/sizeof(*cpuToRegisterMaps); cpu++)
+	//{
+	//	cpuToRegisterMap ctrm = cpuToRegisterMaps[cpu];
+	//	int cpuNameLen = strlen(ctrm.cpuName);
+	//	if(!_strnicmp(qualifiedRegisterName, ctrm.cpuName, cpuNameLen))
+	//	{
+	//		qualifiedRegisterName += cpuNameLen;
+	//		for(int reg = 0; ctrm.rpmap[reg].dataSize; reg++)
+	//		{
+	//			registerPointerMap rpm = ctrm.rpmap[reg];
+	//			if(!stricmp(qualifiedRegisterName, rpm.registerName))
+	//			{
+	//				switch(rpm.dataSize)
+	//				{ default:
+	//				case 1: *(unsigned char*)rpm.pointer = (unsigned char)(value & 0xFF); break;
+	//				case 2: *(unsigned short*)rpm.pointer = (unsigned short)(value & 0xFFFF); break;
+	//				case 4: *(unsigned long*)rpm.pointer = value; break;
+	//				}
+	//				return 0;
+	//			}
+	//		}
+	//		return 0;
+	//	}
+	//}
 	return 0;
 }
 
@@ -2430,6 +2465,7 @@ static int gui_parsecolor(lua_State *L)
 // from the function HK_screenShot().
 static int gui_savescreenshot(lua_State *L) {
 	//HK_screenShot(0);
+	MakeScreenShot();
 	return 1;
 }
 
@@ -3200,9 +3236,9 @@ use_console:
 static int input_registerhotkey(lua_State *L)
 {
 	int hotkeyNumber = luaL_checkinteger(L,1);
-	if (hotkeyNumber < 1 || hotkeyNumber > 9)
+	if(hotkeyNumber < 1 || hotkeyNumber > 5)
 	{
-		luaL_error(L, "input.registerhotkey(n,func) requires 1 <= n <= 9, but got n = %d.", hotkeyNumber);
+		luaL_error(L, "input.registerhotkey(n,func) requires 1 <= n <= 5, but got n = %d.", hotkeyNumber);
 		return 0;
 	}
 	else

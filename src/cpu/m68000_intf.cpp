@@ -4,6 +4,19 @@
 #include "m68000_intf.h"
 #include "m68000_debug.h"
 
+enum LuaMemHookType
+{
+	LUAMEMHOOK_WRITE,
+	LUAMEMHOOK_READ,
+	LUAMEMHOOK_EXEC,
+	LUAMEMHOOK_WRITE_SUB,
+	LUAMEMHOOK_READ_SUB,
+	LUAMEMHOOK_EXEC_SUB,
+
+	LUAMEMHOOK_COUNT
+};
+void CallRegisteredLuaMemHook(unsigned int address, int size, unsigned int value, LuaMemHookType hookType);
+
 #ifdef EMU_M68K
 INT32 nSekM68KContextSize[SEK_MAX];
 INT8* SekM68KContext[SEK_MAX];
@@ -262,6 +275,7 @@ inline static UINT8 ReadByte(UINT32 a)
 	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("read8 0x%08X\n"), a);
+	CallRegisteredLuaMemHook(a, 1, 0, LUAMEMHOOK_READ);
 
 	pr = FIND_R(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER) {
@@ -292,7 +306,7 @@ inline static void WriteByte(UINT32 a, UINT8 d)
 	UINT8* pr;
 
 	a &= nSekAddressMaskActive;
-
+	CallRegisteredLuaMemHook(a, 1, d, LUAMEMHOOK_WRITE);
 //	bprintf(PRINT_NORMAL, _T("write8 0x%08X\n"), a);
 
 	pr = FIND_W(a);
@@ -309,6 +323,7 @@ inline static void WriteByteROM(UINT32 a, UINT8 d)
 	UINT8* pr;
 
 	a &= nSekAddressMaskActive;
+	CallRegisteredLuaMemHook(a, 1, d, LUAMEMHOOK_WRITE);
 
 	// changed from FIND_R to allow for encrypted games (fd1094 etc) to work -dink apr. 23, 2021
 	// (on non-encrypted games, Fetch is mapped to Read)

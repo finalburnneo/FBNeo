@@ -20174,6 +20174,8 @@ STD_ROM_PICK(Sfx)
 STD_ROM_FN(Sfx)
 
 static struct BurnRomInfo SkelagonRomDesc[] = {
+	// first 4k of game is missing, take it from SF-X
+	{ "sfx_b-0.1j",    0x02000, 0xe5bc6952, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 }, // BAD_DUMP
 	{ "31.bin",        0x01000, 0xae6f8647, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "32.bin",        0x01000, 0xa28c5838, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "33.bin",        0x01000, 0x32f7e99c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -20402,6 +20404,7 @@ static INT32 SfxInit()
 	return nRet;
 }
 
+#if 0
 static void SkelagonPostLoad()
 {
 	MapTheend();
@@ -20434,11 +20437,12 @@ static void SkelagonPostLoad()
 	
 	nGalCyclesTotal[2] = (14318000 / 8) / 60;
 }
+#endif
 
 static INT32 SkelagonInit()
 {
-	INT32 nRet;
-	
+	INT32 nRet = SfxInit();
+#if 0
 	GalPostLoadCallbackFunction = SkelagonPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC;
 	GalZ80Rom1Size = 0x1000;
@@ -20458,6 +20462,10 @@ static INT32 SkelagonInit()
 
 	SfxTilemap = 1;
 	GalOrientationFlipX = 1;
+#endif
+	if (nRet) return 1;
+
+	GalZ80Rom1[0x24] = 0xca; // ROM_FILL( 0x24, 0x01, 0xca )
 
 	return nRet;
 }
@@ -20535,7 +20543,7 @@ struct BurnDriverD BurnDrvSkelagon = {
 	"skelagon", "sfx", NULL, NULL, "1983",
 	"Skelagon\0", "Bad Dump", "Taiyo System (Nichibutsu USA license)", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, SkelagonRomInfo, SkelagonRomName, NULL, NULL, NULL, NULL, SfxInputInfo, SfxDIPInfo,
 	SkelagonInit, KonamiExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 256, 224, 4, 3

@@ -748,7 +748,7 @@ int IpsManagerCreate(HWND hParentWND)
     (((unsigned int)(bp)[0] << 8) & 0xFF00) | \
     ((unsigned int) (bp)[1] & 0x00FF)
 
-bool bDoIpsPatch = FALSE;
+bool bDoIpsPatch = false;
 
 static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 {
@@ -949,6 +949,50 @@ void IpsApplyPatches(UINT8* base, char* rom_name)
 	}
 }
 
+bool GetIpsDrvProtection()
+{
+	if (!bDoIpsPatch) return false;
+
+	char ips_data[MAX_PATH];
+	int nActivePatches = GetIpsNumActivePatches();
+
+	for (int i = 0; i < nActivePatches; i++) {
+		memset(ips_data, 0, MAX_PATH);
+		TCHARToANSI(szIpsActivePatches[i], ips_data, sizeof(ips_data));
+
+		char str[MAX_PATH] = { 0 }, * ptr = NULL, * tmp = NULL;
+		FILE* fp = NULL;
+
+		if (NULL != (fp = fopen(ips_data, "rb"))) {
+			while (!feof(fp)) {
+				if (NULL != fgets(str, sizeof(str), fp)) {
+					ptr = str;
+
+					// skip UTF-8 sig
+					if (0 == strncmp(ptr, UTF8_SIGNATURE, strlen(UTF8_SIGNATURE)))
+						ptr += strlen(UTF8_SIGNATURE);
+
+					if (NULL == (tmp = strtok(ptr, " \t\r\n")))
+						continue;
+					if (0 != strcmp(tmp, "#define"))
+						continue;
+					if (NULL == (tmp = strtok(NULL, " \t\r\n")))
+						break;
+
+					// #define	__PROTECTION__
+					// Control protection of sma / pvc etc.
+					if (0 == strcmp(tmp, "__PROTECTION__")) {
+						fclose(fp);
+						return true;
+					}
+				}
+			}
+			fclose(fp);
+		}
+	}
+	return false;
+}
+
 INT32 GetIpsesMaxLen(char* rom_name)
 {
 	INT32 nRet = -1;	// The function returns the last patched address if it succeeds, and -1 if it fails.
@@ -970,5 +1014,5 @@ INT32 GetIpsesMaxLen(char* rom_name)
 
 void IpsPatchExit()
 {
-	bDoIpsPatch = FALSE;
+	bDoIpsPatch = false;
 }

@@ -1626,7 +1626,7 @@
 		<comment>Homebrew</comment>
 		<description>BeerSlinger (HB)</description>
 		<year>2018</year>
-		<manufacturer>Second Dimension</manufacturer>
+		<manufacturer>2nd Dimension</manufacturer>
 		<rom name="BeerSlinger (HB).nes" size="40976" crc="ae0ebf22"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1645,6 +1645,15 @@
 		<year>2019</year>
 		<manufacturer>Parisoft</manufacturer>
 		<rom name="Berzerk (2019)(Parisoft).nes" size="65552" crc="25a46b45"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="beyopins">
+		<comment>Homebrew</comment>
+		<description>Beyond the Pins (HB)</description>
+		<year>2021</year>
+		<manufacturer>Khan Games</manufacturer>
+		<rom name="Beyond the Pins (2021)(KHAN Games).nes" size="524304" crc="d5a3f7a0"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -1955,7 +1964,7 @@
 		<comment>Homebrew</comment>
 		<description>Blow'Em Out! (HB)</description>
 		<year>2018</year>
-		<manufacturer>Second Dimension</manufacturer>
+		<manufacturer>2nd Dimension</manufacturer>
 		<rom name="Blow'Em Out! (HB).nes" size="40976" crc="dc1468fc"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3598,6 +3607,15 @@
 		<year>1990</year>
 		<manufacturer>Kemco</manufacturer>
 		<rom name="Deja Vu (USA).nes" size="393232" crc="67b25db5"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="dellatales" cloneof="ducktales" romof="ducktales">
+		<comment>Hack</comment>
+		<description>Della DuckTales (Hack)</description>
+		<year>2022</year>
+		<manufacturer>Garrett Gilchrist</manufacturer>
+		<rom name="Della DuckTales (GlobalHack)(2022)(Garrett Gilchrist).nes" size="131088" crc="43e9a226"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -6232,11 +6250,20 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="germsquash">
+		<comment>Homebrew</comment>
+		<description>Germ Squashers (HB)</description>
+		<year>2015</year>
+		<manufacturer>8bit Evolution</manufacturer>
+		<rom name="Germ Squashers (2015)(8bit Evolution).nes" size="65552" crc="cd6349b4"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="getemgary">
 		<comment>Homebrew</comment>
 		<description>Get'Em Gary (HB)</description>
 		<year>2016</year>
-		<manufacturer>Second Dimension</manufacturer>
+		<manufacturer>2nd Dimension</manufacturer>
 		<rom name="Get'Em Gary (HB).nes" size="40976" crc="b559ce3e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -7535,6 +7562,15 @@
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="Insector X (Japan).nes" size="262160" crc="7dab812d"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="gadget" cloneof="gumshoe" romof="gumshoe">
+		<comment>Hack</comment>
+		<description>Inspector Gadget (Hack)</description>
+		<year>2022</year>
+		<manufacturer>Garrett Gilchrist</manufacturer>
+		<rom name="Inspector Gadget (GlobalHack)(2022)(Garrett Gilchrist).nes" size="172048" crc="51a2c04b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -9372,6 +9408,24 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="madwizsds">
+		<comment>Homebrew</comment>
+		<description>Mad Wizard, The - A Candelabra Chronicle (HB) (Sly Dog Studios)</description>
+		<year>2014</year>
+		<manufacturer>Sly Dog Studios</manufacturer>
+		<rom name="The Mad Wizard - a Candelabra Chronicle (2014)(Sly Dog Studios).nes" size="131088" crc="5481d022"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="madwiz" cloneof="madwizsds" romof="madwizsds">
+		<comment>Homebrew</comment>
+		<description>Mad Wizard, The - A Candelabra Chronicle (HB)</description>
+		<year>2014</year>
+		<manufacturer>Robert L. Bryant</manufacturer>
+		<rom name="The Mad Wizard - A Candelabra Chronicle (HB).nes" size="131088" crc="7750dac6"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="mafatconc" cloneof="mafatcon" romof="mafatcon">
 		<comment>Hack</comment>
 		<description>Mafat Conspiracy - Golgo 13 (Hack, Spanish v1.1)</description>
@@ -10547,6 +10601,15 @@
 		<video orientation="horizontal" width="256" height="240" aspectx="256" aspecty="240"/>
 		<driver status="good"/>
 	</game>
+	<game name="moreglider">
+		<comment>Homebrew</comment>
+		<description>More Glider (HB)</description>
+		<year>2009</year>
+		<manufacturer>Retro USB</manufacturer>
+		<rom name="More Glider (2009)(Retro USB).nes" size="524304" crc="4ed588ce"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="mortakom3" cloneof="mortakomiispe" romof="mortakomiispe">
 		<description>Mortal Kombat 3 - Special 56 Peoples (Unl)</description>
 		<year>1989?</year>
@@ -11604,7 +11667,7 @@
 		<comment>Homebrew</comment>
 		<description>Perfect Pair (HB)</description>
 		<year>2016</year>
-		<manufacturer>Second Dimension</manufacturer>
+		<manufacturer>2nd Dimension</manufacturer>
 		<rom name="Perfect Pair (HB).nes" size="40976" crc="efef8b35"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12531,6 +12594,24 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="ramondus">
+		<comment>Homebrew</comment>
+		<description>Rise of Amondus, The (HB) (Sly Dog Studios)</description>
+		<year>2015</year>
+		<manufacturer>Sly Dog Studios</manufacturer>
+		<rom name="Rise of Amondus, The (2015)(Sly Dog Studios).nes" size="131088" crc="c609eb0b"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="riseamo" cloneof="ramondus" romof="ramondus">
+		<comment>Homebrew</comment>
+		<description>Rise of Amondus, The (HB)</description>
+		<year>2015</year>
+		<manufacturer>Robert L. Bryant</manufacturer>
+		<rom name="The Rise of Amondus (HB).nes" size="131088" crc="b15ac0fe"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="rivercitran">
 		<description>River City Ransom (USA)</description>
 		<year>1990</year>
@@ -13441,24 +13522,25 @@
 	</game>
 	<game name="silvasagaj" cloneof="silvasaga" romof="silvasaga">
 		<description>Silva Saga (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1992</year>
+		<manufacturer>Seta</manufacturer>
 		<rom name="Silva Saga (Japan).nes" size="524304" crc="3648889b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="silvasaga">
+		<comment>Hack</comment>
 		<description>Silva Saga (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2016</year>
+		<manufacturer>aishsha</manufacturer>
 		<rom name="Silva Saga (T-Eng).nes" size="786448" crc="75a9eb48"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="silvereagle">
 		<description>Silver Eagle (Taiwan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1994</year>
+		<manufacturer>Sachen</manufacturer>
 		<rom name="Silver Eagle (Taiwan).nes" size="262160" crc="16d7c36f"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13853,9 +13935,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="spartanx2">
+		<comment>Hack</comment>
 		<description>Spartan X 2 (T-Eng)</description>
-		<year>1991</year>
-		<manufacturer>Irem</manufacturer>
+		<year>2003</year>
+		<manufacturer>Abstract Crouton Productions</manufacturer>
 		<rom name="Spartan X 2 (T-Eng).nes" size="262160" crc="30003fc6"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13877,9 +13960,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="speluii">
+		<comment>Hack</comment>
 		<description>Spelunker II - Yuusha e no Chousen (T-eng)</description>
-		<year>1987</year>
-		<manufacturer>Irem</manufacturer>
+		<year>2003</year>
+		<manufacturer>Sarysa</manufacturer>
 		<rom name="Spelunker II - Yuusha e no Chousen (T-eng).nes" size="262160" crc="72a28744"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13969,9 +14053,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="spyvsspyislca">
+		<comment>Hack</comment>
 		<description>Spy vs Spy - The Island Caper (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2015</year>
+		<manufacturer>pacnsacdave</manufacturer>
 		<rom name="Spy vs Spy - The Island Caper (T-Eng).nes" size="131088" crc="f9e51c93"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13985,8 +14070,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="squashed">
-		<description>Squashed (USA) (Proto)</description>
-		<year>0000</year>
+		<comment>Prototype</comment>
+		<description>Squashed (USA) (Prototype)</description>
+		<year>1991</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="Squashed (USA) (Proto).nes" size="262160" crc="daad65e0"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -15493,30 +15579,12 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="madwiz">
-		<comment>Homebrew</comment>
-		<description>The Mad Wizard - A Candelabra Chronicle (HB)</description>
-		<year>2014</year>
-		<manufacturer>Robert L. Bryant</manufacturer>
-		<rom name="The Mad Wizard - A Candelabra Chronicle (HB).nes" size="131088" crc="7750dac6"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
 	<game name="meating">
 		<comment>Homebrew</comment>
 		<description>The Meating - Cafeparty (HB, Demo)</description>
 		<year>2019</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="The Meating - Cafeparty Demo (HB).nes" size="262160" crc="e704ef0a"/>
-		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="riseamo">
-		<comment>Homebrew</comment>
-		<description>The Rise of Amondus (HB)</description>
-		<year>2015</year>
-		<manufacturer>Robert L. Bryant</manufacturer>
-		<rom name="The Rise of Amondus (HB).nes" size="131088" crc="b15ac0fe"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -15534,6 +15602,15 @@
 		<year>1985</year>
 		<manufacturer>Square</manufacturer>
 		<rom name="Thexder (Japan).nes" size="40976" crc="f82c7789"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="thiefcob" cloneof="smb2" romof="smb2">
+		<comment>Hack, Homebrew</comment>
+		<description>Thief and the Cobbler (Hack)</description>
+		<year>2022</year>
+		<manufacturer>Garrett Gilchrist</manufacturer>
+		<rom name="Thief and the Cobbler (GlobHack)(2022)(Garrett Gilchrist).nes" size="262160" crc="64cf1223"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -16368,8 +16445,8 @@
 	<game name="nesvircle">
 		<comment>Homebrew</comment>
 		<description>Virus Cleaner (HB)</description>
-		<year>2016</year>
-		<manufacturer>Second Dimension</manufacturer>
+		<year>2011-2016</year>
+		<manufacturer>2nd Dimension - Sly Dog Studios</manufacturer>
 		<rom name="NES Virus Cleaner (HB).nes" size="40976" crc="5f17cb98"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -16458,9 +16535,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="waiwaiworld">
+		<comment>Hack</comment>
 		<description>Wai Wai World (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2019</year>
+		<manufacturer>Zynk Oxhyde</manufacturer>
 		<rom name="Wai Wai World (T-Eng).nes" size="262160" crc="f668103d"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -16483,9 +16561,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="waiwaiwor2">
+		<comment>Hack</comment>
 		<description>Wai Wai World 2 - SOS!! Paseri Jou (T-Eng)</description>
-		<year>1991</year>
-		<manufacturer>Konami</manufacturer>
+		<year>2018</year>
+		<manufacturer>chronix</manufacturer>
 		<rom name="Wai Wai World 2 - SOS!! Paseri Jou (T-Eng).nes" size="393232" crc="45fadda1"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -16861,17 +16940,18 @@
 		<driver status="good"/>
 	</game>
 	<game name="worldwarc" cloneof="worldwar" romof="worldwar">
-		<description>World of Warcraft - Demon Hunter (China)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>World of Warcraft - Demon Hunter (China) (Unl)</description>
+		<year>2008</year>
+		<manufacturer>ShenZhen Nanjing Technology</manufacturer>
 		<rom name="World of Warcraft - Demon Hunter (China).nes" size="1048592" crc="c9644f6c"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="worldwar">
+		<comment>Hack</comment>
 		<description>World of Warcraft - Demon Hunter (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2020</year>
+		<manufacturer>pacnsacdave</manufacturer>
 		<rom name="World of Warcraft - Demon Hunter (T-Eng).nes" size="1048592" crc="45593e64"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -17136,7 +17216,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="yuuyuuhakfin">
-		<description>Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Unl) (Japan)</description>
+		<description>Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Japan) (Unl)</description>
 		<year>1996</year>
 		<manufacturer>N.T</manufacturer>
 		<rom name="Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Japan).nes" size="393232" crc="93b37bb3"/>

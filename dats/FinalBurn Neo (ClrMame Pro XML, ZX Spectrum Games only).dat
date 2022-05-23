@@ -321,6 +321,28 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ateamp1" romof="spec128">
+		<comment>SPACE: smart bomb</comment>
+		<description>A-Team, The - El Equipo A - Part 1 (Spanish) (128K)</description>
+		<year>1988</year>
+		<manufacturer>Zafiro Software Division</manufacturer>
+		<rom name="A-Team, the - El Equipo A ES 128K - Part1 (1988)(Zafiro Software).tap" size="48242" crc="9acf83a6"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ateamp2" cloneof="ateamp1" romof="ateamp1">
+		<comment>Password: WHJONDPEAQR</comment>
+		<description>A-Team, The - El Equipo A - Part 2 (Spanish) (128K)</description>
+		<year>1988</year>
+		<manufacturer>Zafiro Software Division</manufacturer>
+		<rom name="A-Team, the - El Equipo A ES 128K - Part2 (1988)(Zafiro Software).tap" size="49137" crc="8e139fd1"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="aaargh" romof="spectrum">
 		<description>Aaargh! (48K)</description>
 		<year>1989</year>
@@ -1955,6 +1977,27 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="beethrev128" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Beethoven's Revenge (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Sebastian Braunert</manufacturer>
+		<rom name="Beethoven's Revenge 128K (2022)(Sebastian Braunert).tap" size="82557" crc="dae78c19"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="beethrev48" cloneof="beethrev128" romof="beethrev128">
+		<comment>Homebrew</comment>
+		<description>Beethoven's Revenge (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Sebastian Braunert</manufacturer>
+		<rom name="Beethoven's Revenge 48K (2022)(Sebastian Braunert).tap" size="59634" crc="184eaa29"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bennyhil128" cloneof="bennyhil" romof="bennyhil">
 		<comment>Hack, AY-PSG music</comment>
 		<description>Benny Hill's Madcap Chase! (128K) (Hack)</description>
@@ -3308,6 +3351,17 @@
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Che-Man (2019)(Mojon Twins).tap" size="21346" crc="ab6e3d27"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ccmmm" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Cheesy Chase Moritz and the Mildewed Moon (128K) (HB)</description>
+		<year>2019</year>
+		<manufacturer>Sebastian Braunert</manufacturer>
+		<rom name="Cheesy Chase Moritz and the Mildewed Moon 128K (2019)(Sebastian Braunert).tap" size="68545" crc="f0e827c2"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5929,6 +5983,15 @@
 		<rom name="Escape from the Planet of the Robot Monsters (1990)(Domark).tap" size="111578" crc="9f95584c"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="eskeddie" romof="spectrum">
+		<description>Eskimo Eddie (48K)</description>
+		<year>1984</year>
+		<manufacturer>Ocean</manufacturer>
+		<rom name="Eskimo Eddie 48K (1984)(Ocean).tap" size="36318" crc="4b532294"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -9843,6 +9906,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ladbust" romof="spec128">
+		<description>Los Angeles Drugs Bust (128K)</description>
+		<year>1990</year>
+		<manufacturer>Players Software</manufacturer>
+		<rom name="LA Drugs Bust 128K (1990)(Players Software).tap" size="50858" crc="20fbc4bd"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="lostcavern" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Lost Cavern (128K) (HB)</description>
@@ -13498,6 +13571,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ridrapids" romof="spectrum">
+		<description>Riding the Rapids (48K)</description>
+		<year>1987</year>
+		<manufacturer>Players Software</manufacturer>
+		<rom name="Riding the Rapids 48K (1987)(Players Software).tap" size="47675" crc="940cabf6"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="rblaster" romof="spec128">
 		<description>Road Blasters (128K)</description>
 		<year>1988</year>
@@ -14397,6 +14479,15 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="shaolinroad" romof="spectrum">
+		<description>Shao Lin's Road (48K)</description>
+		<year>1986</year>
+		<manufacturer>The Edge</manufacturer>
+		<rom name="Shao Lin's Road 48K (1986)(The Edge).tap" size="43831" crc="100a17ad"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="shark" romof="spec128">
 		<description>Shark (128K)</description>
 		<year>1989</year>
@@ -14724,6 +14815,16 @@
 		<rom name="Smash TV (1991)(Ocean)[128K].z80" size="59073" crc="2f90973d"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sbmr" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Smudge Bad Moonee Rising (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Clebin Games</manufacturer>
+		<rom name="Smudge Bad Moonee Rising 48K (2022)(Clebin Games).tap" size="32385" crc="db530914"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

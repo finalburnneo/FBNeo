@@ -6300,14 +6300,16 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarss" cloneof="tazmars" romof="tazmars">
+		<comment>Hack</comment>
 		<description>Escape from Mars Starring Taz (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="escape from mars starring taz (hack, spanish).bin" size="2097152" crc="4e2074d1"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp11" cloneof="tazmars" romof="tazmars">
+		<comment>Prototype</comment>
 		<description>Escape from Mars Starring Taz (Prototype, 19940309)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -6316,6 +6318,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp10" cloneof="tazmars" romof="tazmars">
+		<comment>Prototype</comment>
 		<description>Escape from Mars Starring Taz (Prototype, 19940418)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -6324,6 +6327,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp09" cloneof="tazmars" romof="tazmars">
+		<comment>Prototype</comment>
 		<description>Escape from Mars Starring Taz (Prototype, 19940509)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -6332,6 +6336,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp08" cloneof="tazmars" romof="tazmars">
+		<comment>Prototype</comment>
 		<description>Escape from Mars Starring Taz (Prototype, 19940518)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -6340,6 +6345,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp07" cloneof="tazmars" romof="tazmars">
+		<comment>Prototype</comment>
 		<description>Escape from Mars Starring Taz (Prototype, 19940523)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -6348,6 +6354,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp06" cloneof="tazmars" romof="tazmars">
+		<comment>Prototype</comment>
 		<description>Escape from Mars Starring Taz (Prototype, 19940602)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -6356,6 +6363,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp05" cloneof="tazmars" romof="tazmars">
+		<comment>Prototype</comment>
 		<description>Escape from Mars Starring Taz (Prototype, 19940607)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -6364,6 +6372,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp04" cloneof="tazmars" romof="tazmars">
+		<comment>Prototype</comment>
 		<description>Escape from Mars Starring Taz (Prototype, 19940610)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -6372,6 +6381,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp03" cloneof="tazmars" romof="tazmars">
+		<comment>Prototype</comment>
 		<description>Escape from Mars Starring Taz (Prototype, 19940614)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -6380,6 +6390,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp02" cloneof="tazmars" romof="tazmars">
+		<comment>Prototype</comment>
 		<description>Escape from Mars Starring Taz (Prototype, 19940618-A)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -6388,6 +6399,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmarsp01" cloneof="tazmars" romof="tazmars">
+		<comment>Prototype</comment>
 		<description>Escape from Mars Starring Taz (Prototype, 19940620)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -6420,6 +6432,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="espnhnp" cloneof="espnhn" romof="espnhn">
+		<comment>Prototype</comment>
 		<description>ESPN National Hockey Night (USA, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Sony Imagesoft</manufacturer>
@@ -6436,6 +6449,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="espnspedp" cloneof="espnsped" romof="espnsped">
+		<comment>Prototype</comment>
 		<description>ESPN Speedworld (USA, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Sony Imagesoft</manufacturer>
@@ -6455,6 +6469,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="espnnflp" cloneof="espnnfl" romof="espnnfl">
+		<comment>Prototype</comment>
 		<description>ESPN Sunday Night NFL (USA, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Sony Imagesoft</manufacturer>
@@ -6474,9 +6489,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="eswats" cloneof="eswat" romof="eswat">
+		<comment>Hack</comment>
 		<description>ESWAT - City Under Siege (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="eswat - city under siege (hack, spanish).bin" size="524288" crc="63611cb7"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -6490,6 +6506,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="eternalcp" cloneof="eternalc" romof="eternalc">
+		<comment>Prototype</comment>
 		<description>Eternal Champions (Euro, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -6506,6 +6523,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="eternalcjp" cloneof="eternalc" romof="eternalc">
+		<comment>Prototype</comment>
 		<description>Eternal Champions (Jpn, Prototype, 19931117)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -6514,6 +6532,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="eternalcup" cloneof="eternalc" romof="eternalc">
+		<comment>Prototype</comment>
 		<description>Eternal Champions (USA, Prototype, 19931117)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -6538,9 +6557,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="euroclubs" cloneof="euroclub" romof="euroclub">
+		<comment>Hack</comment>
 		<description>European Club Soccer (Hack, Spanish)</description>
-		<year>2018</year>
-		<manufacturer>Published</manufacturer>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="european club soccer (hack, spanish).bin" size="524288" crc="67fea477"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9158,9 +9178,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="jimpower" cloneof="jimpowerpiko" romof="jimpowerpiko">
-		<comment>imperfect graphics</comment>
+		<comment>Prototype, imperfect graphics</comment>
 		<description>Jim Power - The Arcade Game (USA, Prototype)</description>
-		<year>199?</year>
+		<year>1993</year>
 		<manufacturer>Loriciel</manufacturer>
 		<rom name="jim power - the arcade game (usa) (prototype) (bad dump).bin" size="1048576" crc="1cf3238b"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
@@ -10517,6 +10537,60 @@
 		<year>2018</year>
 		<manufacturer>The Bitmap Brothers</manufacturer>
 		<rom name="Magic Pockets (HB).bin" size="3407872" crc="cdfc764f"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="msbp12" cloneof="msb" romof="msb">
+		<comment>Prototype</comment>
+		<description>Magic School Bus, The (Prototype, 19950112)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="magic school bus, the (prototype - jan 12, 1995).bin" size="963300" crc="946346f9"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="msbp11" cloneof="msb" romof="msb">
+		<comment>Prototype</comment>
+		<description>Magic School Bus, The (Prototype, 19950202)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="magic school bus, the (prototype - feb 02, 1995).bin" size="1048576" crc="7805b5c9"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="msbp10" cloneof="msb" romof="msb">
+		<comment>Prototype</comment>
+		<description>Magic School Bus, The (Prototype, 19950217)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="magic school bus, the (prototype - feb 17, 1995).bin" size="915132" crc="2b7a88c0"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="msbp09" cloneof="msb" romof="msb">
+		<comment>Prototype</comment>
+		<description>Magic School Bus, The (Prototype, 19950307)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="magic school bus, the (prototype - mar 07, 1995).bin" size="957096" crc="26c71eb8"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="msbp08" cloneof="msb" romof="msb">
+		<comment>Prototype</comment>
+		<description>Magic School Bus, The (Prototype, 19950314)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="magic school bus, the (prototype - mar 14, 1995).bin" size="990256" crc="37a6a1af"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="msbp07" cloneof="msb" romof="msb">
+		<comment>Prototype</comment>
+		<description>Magic School Bus, The (Prototype, 19950327)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="magic school bus, the (prototype - mar 27, 1995).bin" size="1004264" crc="b065da40"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -13258,6 +13332,15 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="odecarros">
+		<comment>Homebrew</comment>
+		<description>Odeio Carros (HB)</description>
+		<year>2020</year>
+		<manufacturer>Menos Playstation</manufacturer>
+		<rom name="Odeio Carros (2020)(Menos Playstation).bin" size="917504" crc="770969b6"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ohmummy">
 		<comment>Homebrew</comment>
 		<description>Oh Mummy (HB)</description>
@@ -14781,14 +14864,16 @@
 		<driver status="good"/>
 	</game>
 	<game name="puggsys" cloneof="puggsy" romof="puggsy">
+		<comment>Hack</comment>
 		<description>Puggsy (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Psygnosis</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="puggsy (hack, spanish).bin" size="1048576" crc="b7cce9e5"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="puggsyp" cloneof="puggsy" romof="puggsy">
+		<comment>Prototype</comment>
 		<description>Puggsy (Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Psygnosis</manufacturer>
@@ -14805,9 +14890,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="pulsemane" cloneof="pulseman" romof="pulseman">
+		<comment>Hack</comment>
 		<description>Pulseman (Hack, English)</description>
 		<year>2007</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Jon Najar</manufacturer>
 		<rom name="pulseman (english translation).bin" size="2097152" crc="a8e0de99"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -14817,6 +14903,31 @@
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="pulseman (jpn).bin" size="2097152" crc="138a104e"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="punisher">
+		<description>Punisher, The (Euro)</description>
+		<year>1994</year>
+		<manufacturer>Capcom</manufacturer>
+		<rom name="punisher, the (euro).bin" size="2097152" crc="729edd17"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="punishers" cloneof="punisher" romof="punisher">
+		<comment>Hack</comment>
+		<description>Punisher, The (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="the punisher (hack, spanish).bin" size="2097152" crc="d1315970"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="punisheru" cloneof="punisher" romof="punisher">
+		<description>Punisher, The (USA)</description>
+		<year>1994</year>
+		<manufacturer>Capcom</manufacturer>
+		<rom name="punisher, the (usa).bin" size="2097152" crc="695cd8b8"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -16126,9 +16237,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="slammasts" cloneof="slammast" romof="slammast">
+		<comment>Hack</comment>
 		<description>Saturday Night Slammasters (Hack, Spanish)</description>
 		<year>2020</year>
-		<manufacturer>Capcom</manufacturer>
+		<manufacturer>Max1323</manufacturer>
 		<rom name="saturday night slammasters (hack, spanish).bin" size="4194304" crc="c4ebbfa1"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -16142,6 +16254,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="msbp06" cloneof="msb" romof="msb">
+		<comment>Prototype</comment>
 		<description>Scholastic's The Magic School Bus (Prototype, 19950331)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -16150,6 +16263,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="msbp05" cloneof="msb" romof="msb">
+		<comment>Prototype</comment>
 		<description>Scholastic's The Magic School Bus (Prototype, 19950411)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -16158,6 +16272,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="msbp04" cloneof="msb" romof="msb">
+		<comment>Prototype</comment>
 		<description>Scholastic's The Magic School Bus (Prototype, 19950421)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -16166,6 +16281,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="msbp03" cloneof="msb" romof="msb">
+		<comment>Prototype</comment>
 		<description>Scholastic's The Magic School Bus (Prototype, 19950425)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -16174,6 +16290,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="msbp02" cloneof="msb" romof="msb">
+		<comment>Prototype</comment>
 		<description>Scholastic's The Magic School Bus (Prototype, 19950428)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -16182,6 +16299,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="msbp01" cloneof="msb" romof="msb">
+		<comment>Prototype</comment>
 		<description>Scholastic's The Magic School Bus (Prototype, 19950505)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -16198,9 +16316,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="scoobys" cloneof="scooby" romof="scooby">
+		<comment>Hack</comment>
 		<description>Scooby Doo Mystery (Hack, Spanish)</description>
 		<year>2016</year>
-		<manufacturer>Sunsoft</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="scooby doo mystery (hack, spanish).bin" size="2097152" crc="ebf49926"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -16272,9 +16391,9 @@
 	<game name="smsbrawl">
 		<comment>Homebrew</comment>
 		<description>Sega Master System Brawl (HB)</description>
-		<year>2014</year>
+		<year>2021</year>
 		<manufacturer>Bonaf</manufacturer>
-		<rom name="SMSBrawl.bin" size="1543722" crc="7e4a52f3"/>
+		<rom name="Sega Master System Brawl (2021)(Bonaf).bin" size="2773736" crc="8ad82cf6"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -17898,6 +18017,15 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="spaceinv">
+		<comment>Homebrew</comment>
+		<description>Space Invaders (HB, v1.6)</description>
+		<year>2022</year>
+		<manufacturer>SplinterGU</manufacturer>
+		<rom name="Space Invaders v1.6 (2022)(SplinterGU).bin" size="262144" crc="23402deb"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sinv90" cloneof="sinv91" romof="sinv91">
 		<description>Space Invaders 90 (Jpn)</description>
 		<year>1990</year>
@@ -17907,9 +18035,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="sinv91s" cloneof="sinv91" romof="sinv91">
-		<description>space invaders 91 (Hack, Spanish)</description>
+		<comment>Hack</comment>
+		<description>Space Invaders 91 (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Taito</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="space invaders 91 (hack, spanish).bin" size="262144" crc="648c1179"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17931,9 +18060,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="sparkstrs" cloneof="sparkstr" romof="sparkstr">
+		<comment>Hack</comment>
 		<description>Sparkster (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Konami</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="sparkster (hack, spanish).bin" size="1048576" crc="a110dfe9"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -18367,8 +18497,17 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="steelemps" cloneof="empsteel" romof="empsteel">
+		<comment>Hack</comment>
+		<description>Steel Empire, The (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="the steel empire (hack, spanish).bin" size="1048576" crc="5670f1fc"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="steelemp" cloneof="empsteel" romof="empsteel">
-		<description>Steel Empire (USA)</description>
+		<description>Steel Empire, The (USA)</description>
 		<year>1992</year>
 		<manufacturer>Flying Edge</manufacturer>
 		<rom name="steel empire (usa).bin" size="1048576" crc="d0e7a0b6"/>
@@ -18423,7 +18562,17 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="stonprot">
+	<game name="stonprotpiko">
+		<comment>Homebrew, Original title by Vic Tokai</comment>
+		<description>Stone Protectors (HB)</description>
+		<year>2022</year>
+		<manufacturer>Piko Interactive</manufacturer>
+		<rom name="Stone Protectors (2022)(Piko Int.).bin" size="2097152" crc="43709ea7"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="stonprot" cloneof="stonprotpiko" romof="stonprotpiko">
+		<comment>Prototype</comment>
 		<description>Stone Protectors (USA, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Vic Tokai</manufacturer>
@@ -20121,9 +20270,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="tazmanias" cloneof="tazmania" romof="tazmania">
+		<comment>Hack</comment>
 		<description>Taz-Mania (Hack, Spanish)</description>
 		<year>2013</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>pepodmc</manufacturer>
 		<rom name="taz-mania (hack, spanish).bin" size="524288" crc="3943f0fe"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -20445,6 +20595,15 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="telehugs">
+		<comment>Homebrew</comment>
+		<description>Telethugs (HB)</description>
+		<year>2020</year>
+		<manufacturer>Menos Playstation</manufacturer>
+		<rom name="Telethugs (2020)(Menos Playstation).bin" size="1310720" crc="742da49f"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="termintr">
 		<description>Terminator, The (Euro)</description>
 		<year>1991</year>
@@ -20673,54 +20832,6 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="msbp12" cloneof="msb" romof="msb">
-		<description>The Magic School Bus (Prototype, 19950112)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="magic school bus, the (prototype - jan 12, 1995).bin" size="963300" crc="946346f9"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="msbp11" cloneof="msb" romof="msb">
-		<description>The Magic School Bus (Prototype, 19950202)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="magic school bus, the (prototype - feb 02, 1995).bin" size="1048576" crc="7805b5c9"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="msbp10" cloneof="msb" romof="msb">
-		<description>The Magic School Bus (Prototype, 19950217)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="magic school bus, the (prototype - feb 17, 1995).bin" size="915132" crc="2b7a88c0"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="msbp09" cloneof="msb" romof="msb">
-		<description>The Magic School Bus (Prototype, 19950307)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="magic school bus, the (prototype - mar 07, 1995).bin" size="957096" crc="26c71eb8"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="msbp08" cloneof="msb" romof="msb">
-		<description>The Magic School Bus (Prototype, 19950314)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="magic school bus, the (prototype - mar 14, 1995).bin" size="990256" crc="37a6a1af"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="msbp07" cloneof="msb" romof="msb">
-		<description>The Magic School Bus (Prototype, 19950327)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="magic school bus, the (prototype - mar 27, 1995).bin" size="1004264" crc="b065da40"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="miraclep">
 		<description>The Miracle Piano Teaching System (USA)</description>
 		<year>1992</year>
@@ -20767,30 +20878,6 @@
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ottifants, the (germany) (beta).bin" size="1048576" crc="c6e3dd23"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="punisher">
-		<description>The Punisher (Euro)</description>
-		<year>1994</year>
-		<manufacturer>Capcom</manufacturer>
-		<rom name="punisher, the (euro).bin" size="2097152" crc="729edd17"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="punishers" cloneof="punisher" romof="punisher">
-		<description>The Punisher (Hack, Spanish)</description>
-		<year>2018</year>
-		<manufacturer>Published</manufacturer>
-		<rom name="the punisher (hack, spanish).bin" size="2097152" crc="d1315970"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="punisheru" cloneof="punisher" romof="punisher">
-		<description>The Punisher (USA)</description>
-		<year>1994</year>
-		<manufacturer>Capcom</manufacturer>
-		<rom name="punisher, the (usa).bin" size="2097152" crc="695cd8b8"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -20865,14 +20952,6 @@
 		<year>1996</year>
 		<manufacturer>Infogrames</manufacturer>
 		<rom name="smurfs travel the world, the (euro).bin" size="1048576" crc="b28bdd69"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="steelemps" cloneof="empsteel" romof="empsteel">
-		<description>The Steel Empire (Hack, Spanish)</description>
-		<year>2019</year>
-		<manufacturer>Published</manufacturer>
-		<rom name="the steel empire (hack, spanish).bin" size="1048576" crc="5670f1fc"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -22492,6 +22571,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wario3" cloneof="puggsy" romof="puggsy">
+		<comment>Hack</comment>
 		<description>Wario Land 3 (Rus)</description>
 		<year>199?</year>
 		<manufacturer>Glorysun</manufacturer>
@@ -23667,9 +23747,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="worldtss" cloneof="euroclub" romof="euroclub">
+		<comment>Hack</comment>
 		<description>World Trophy Soccer (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer> Virgin Interactive</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="world trophy soccer (hack, spanish).bin" size="524288" crc="cb8df213"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

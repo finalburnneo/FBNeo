@@ -134,6 +134,7 @@ bool bAlwaysProcessKeyboardInput;
 bool bDoIpsPatch;
 void IpsApplyPatches(UINT8 *, char *) {}
 INT32 GetIpsesMaxLen(char* rom_name) {return -1;}
+bool GetIpsDrvProtection() { return false; };
 
 TCHAR szAppEEPROMPath[MAX_PATH];
 TCHAR szAppHiscorePath[MAX_PATH];

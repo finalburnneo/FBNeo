@@ -7872,12 +7872,12 @@
 		<video orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mslug2unity" cloneof="mslug2" romof="mslug2">
+	<game name="mslug2t" cloneof="mslug2" romof="mslug2">
 		<comment>Hack</comment>
-		<description>Metal Slug 2 - Super Vehicle-001/II Unity (Added Timer Ver. 2021-01-22)</description>
-		<year>2021</year>
-		<manufacturer>hack</manufacturer>
-		<rom name="241-p1.bin" size="1048576" crc="1562cf23"/>
+		<description>Metal Slug 2 - Super Vehicle-001/II (Turbo)</description>
+		<year>2016</year>
+		<manufacturer>Hack</manufacturer>
+		<rom name="241-p1t.p1" size="1048576" crc="df5d6fbc"/>
 		<rom name="241-p2.sp2" merge="241-p2.sp2" size="2097152" crc="38883f44"/>
 		<rom name="241-s1.s1" merge="241-s1.s1" size="131072" crc="f3d32f0f"/>
 		<rom name="241-c1.c1" merge="241-c1.c1" size="8388608" crc="394b5e0d"/>
@@ -7928,12 +7928,12 @@
 		<video orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mslug2t" cloneof="mslug2" romof="mslug2">
+	<game name="mslug2unity" cloneof="mslug2" romof="mslug2">
 		<comment>Hack</comment>
-		<description>Metal Slug 2 Turbo (NGM-9410)</description>
-		<year>2015</year>
-		<manufacturer>Hack</manufacturer>
-		<rom name="941-p1.p1" size="1048576" crc="df5d6fbc"/>
+		<description>Metal Slug 2 - Super Vehicle-001/II Unity (Added Timer Ver. 2021-01-22)</description>
+		<year>2021</year>
+		<manufacturer>hack</manufacturer>
+		<rom name="241-p1.bin" size="1048576" crc="1562cf23"/>
 		<rom name="241-p2.sp2" merge="241-p2.sp2" size="2097152" crc="38883f44"/>
 		<rom name="241-s1.s1" merge="241-s1.s1" size="131072" crc="f3d32f0f"/>
 		<rom name="241-c1.c1" merge="241-c1.c1" size="8388608" crc="394b5e0d"/>
@@ -19698,27 +19698,27 @@
 		<video orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kof98eck20" cloneof="kof98" romof="kof98">
+	<game name="kof98eckg" cloneof="kof98" romof="kof98">
 		<comment>Hack</comment>
-		<description>The King of Fighters '98 Easy Combo King (YZKOF Version, Hack)</description>
+		<description>The King of Fighters '98 Easy Combo King (GOTVG Version, Hack)</description>
 		<year>2020</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="98eck20-p1.bin" size="1048576" crc="0ced4a93"/>
-		<rom name="98eck20-p2.bin" size="4194304" crc="ef36876a"/>
-		<rom name="98eck20-s1.bin" size="131072" crc="5a498ed2"/>
-		<rom name="98eck20-c1.bin" size="8388608" crc="d528dab9"/>
-		<rom name="98eck20-c2.bin" size="8388608" crc="73556130"/>
-		<rom name="98eck20-c3.bin" size="8388608" crc="4091bca0"/>
-		<rom name="98eck20-c4.bin" size="8388608" crc="56918bab"/>
-		<rom name="98eck20-c5.bin" size="8388608" crc="76252bdc"/>
-		<rom name="98eck20-c6.bin" size="8388608" crc="13d5b9b7"/>
-		<rom name="98eck20-c7.bin" size="8388608" crc="1b3a6aa9"/>
-		<rom name="98eck20-c8.bin" size="8388608" crc="ef3390ca"/>
-		<rom name="98eck20-mg1.bin" size="262144" crc="4e7a6b1b"/>
-		<rom name="98eck20-v1.bin" size="4194304" crc="b5650f76"/>
-		<rom name="98eck20-v2.bin" size="4194304" crc="b43b83ee"/>
-		<rom name="98eck20-v3.bin" size="4194304" crc="59c53922"/>
-		<rom name="98eck20-v4.bin" size="4194304" crc="46ca6f5e"/>
+		<rom name="242-p1eck.p1" size="2097152" crc="2aed3a91"/>
+		<rom name="242-p2eck.sp2" size="4194304" crc="ef36876a"/>
+		<rom name="242-s1eck.s1" size="131072" crc="5a498ed2"/>
+		<rom name="242-c1eckg.c1" size="8388608" crc="d3da4dc1"/>
+		<rom name="242-c2eckg.c2" size="8388608" crc="f5a5d149"/>
+		<rom name="242-c3eckg.c3" size="8388608" crc="0689e5b1"/>
+		<rom name="242-c4eckg.c4" size="8388608" crc="5cc4d647"/>
+		<rom name="242-c5eckg.c5" size="8388608" crc="1531b766"/>
+		<rom name="242-c6eckg.c6" size="8388608" crc="04131307"/>
+		<rom name="242-c7eckg.c7" size="8388608" crc="6f879c38"/>
+		<rom name="242-c8eckg.c8" size="8388608" crc="89c797df"/>
+		<rom name="242-m1.m1" size="262144" crc="4e7a6b1b"/>
+		<rom name="242-v1eckg.v1" size="4194304" crc="32da3c63"/>
+		<rom name="242-v2eckg.v2" size="4194304" crc="246edf6d"/>
+		<rom name="242-v3eckg.v3" size="4194304" crc="308b0393"/>
+		<rom name="242-v4eckg.v4" size="4194304" crc="00276d91"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -19760,27 +19760,27 @@
 		<video orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kof98eckvs" cloneof="kof98" romof="kof98">
+	<game name="kof98ecky" cloneof="kof98" romof="kof98">
 		<comment>Hack</comment>
-		<description>The King of Fighters '98 Easy Combo King 2014 (Versus Version, Hack)</description>
-		<year>2019</year>
-		<manufacturer>hack</manufacturer>
-		<rom name="98eckvs-p1.bin" size="1048576" crc="b3afd80f"/>
-		<rom name="98eckvs-p2.bin" size="4194304" crc="5d59e3ae"/>
-		<rom name="98eckvs-s1.bin" size="131072" crc="f91c29d2"/>
-		<rom name="98eckvs-c1.bin" size="8388608" crc="d3da4dc1"/>
-		<rom name="98eckvs-c2.bin" size="8388608" crc="f5a5d149"/>
-		<rom name="98eckvs-c3.bin" size="8388608" crc="0689e5b1"/>
-		<rom name="98eckvs-c4.bin" size="8388608" crc="5cc4d647"/>
-		<rom name="98eckvs-c5.bin" size="8388608" crc="1531b766"/>
-		<rom name="98eckvs-c6.bin" size="8388608" crc="04131307"/>
-		<rom name="98eckvs-c7.bin" size="8388608" crc="6f879c38"/>
-		<rom name="98eckvs-c8.bin" size="8388608" crc="89c797df"/>
-		<rom name="98eckvs-mg1.bin" size="262144" crc="4e7a6b1b"/>
-		<rom name="98eckvs-v1.bin" size="4194304" crc="32da3c63"/>
-		<rom name="98eckvs-v2.bin" size="4194304" crc="246edf6d"/>
-		<rom name="98eckvs-v3.bin" size="4194304" crc="308b0393"/>
-		<rom name="98eckvs-v4.bin" size="4194304" crc="00276d91"/>
+		<description>The King of Fighters '98 Easy Combo King (YZKOF Version, Hack)</description>
+		<year>2020</year>
+		<manufacturer>Hack</manufacturer>
+		<rom name="242-pn1eck.p1" size="1048576" crc="0ced4a93"/>
+		<rom name="242-p2eck.sp2" size="4194304" crc="ef36876a"/>
+		<rom name="242-s1eck.s1" size="131072" crc="5a498ed2"/>
+		<rom name="242-c1ecky.c1" size="8388608" crc="d528dab9"/>
+		<rom name="242-c2ecky.c2" size="8388608" crc="73556130"/>
+		<rom name="242-c3ecky.c3" size="8388608" crc="4091bca0"/>
+		<rom name="242-c4ecky.c4" size="8388608" crc="56918bab"/>
+		<rom name="242-c5ecky.c5" size="8388608" crc="76252bdc"/>
+		<rom name="242-c6ecky.c6" size="8388608" crc="13d5b9b7"/>
+		<rom name="242-c7ecky.c7" size="8388608" crc="1b3a6aa9"/>
+		<rom name="242-c8ecky.c8" size="8388608" crc="ef3390ca"/>
+		<rom name="242-mg1.m1" size="262144" crc="4e7a6b1b"/>
+		<rom name="242-v1ecky.v1" size="4194304" crc="b5650f76"/>
+		<rom name="242-v2ecky.v2" size="4194304" crc="b43b83ee"/>
+		<rom name="242-v3ecky.v3" size="4194304" crc="59c53922"/>
+		<rom name="242-v4ecky.v4" size="4194304" crc="46ca6f5e"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>

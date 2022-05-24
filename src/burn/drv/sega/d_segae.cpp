@@ -1,10 +1,14 @@
 // based on MESS/MAME driver by David Haywood
 
+// todo:
+// megrescu - unflip 2p coctail, figure out where flip bit is
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "sn76496.h"
 #include "bitswap.h"
 #include "mc8123.h"
+#include "burn_gun.h" // dial for megrescu / ridleofp
 
 static UINT8 DrvJoy0[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvJoy1[8] = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -19,10 +23,7 @@ static UINT8 DrvRecalc;
 
 static INT16 DrvWheel = 0;
 static INT16 DrvAccel = 0;
-static INT32 Paddle = 0;
-
-static INT32 nCyclesDone, nCyclesTotal;
-static INT32 nCyclesSegment;
+static INT16 Analog[2];
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -291,59 +292,86 @@ static struct BurnDIPInfo OpaopaDIPList[]=
 
 STDDIPINFO(Opaopa)
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo RidleofpInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy0 + 0,	"p1 coin"},
-	{"P1 Start",	BIT_DIGITAL,	DrvJoy0 + 6,	"p1 start"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 left"   },
-	{"P1 Right",	BIT_DIGITAL,	DrvJoy4 + 1,	"p1 right"  },
-	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy3 + 0,	"p1 fire 1"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy0 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy0 + 6,	"p1 start"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 left"   },
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p1 right"  },
+	A("P1 Spinner",		BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"),
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 fire 1"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",		BIT_DIGITAL,	DrvJoy0 + 3,	"service"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy0 + 3,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDip + 0,		"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDip + 1,		"dip"		},
 };
 
 STDINPUTINFO(Ridleofp)
 
 static struct BurnDIPInfo RidleOfpDIPList[]=
 {
-	{0x07, 0xff, 0xff, 0xff, NULL		}, // coinage defs.
-	{0x08, 0xff, 0xff, 0xff, NULL		},
+	DIP_OFFSET(0x08)
+	{0x00, 0xff, 0xff, 0xff, NULL				}, // coinage defs.
+	{0x01, 0xff, 0xff, 0xff, NULL				},
 
 	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x08, 0x01, 0x03, 0x03, "3"		},
-	{0x08, 0x01, 0x03, 0x02, "4"		},
-	{0x08, 0x01, 0x03, 0x01, "5"		},
-	{0x08, 0x01, 0x03, 0x00, "100 (Cheat)"	},
+	{0x01, 0x01, 0x03, 0x03, "3"				},
+	{0x01, 0x01, 0x03, 0x02, "4"				},
+	{0x01, 0x01, 0x03, 0x01, "5"				},
+	{0x01, 0x01, 0x03, 0x00, "100 (Cheat)"		},
 
-	{0   , 0xfe, 0   ,    2, "Ball Speed"	},
-	{0x08, 0x01, 0x08, 0x08, "Easy"		},
-	{0x08, 0x01, 0x08, 0x00, "Difficult"	},
+	{0   , 0xfe, 0   ,    2, "Ball Speed"		},
+	{0x01, 0x01, 0x08, 0x08, "Easy"				},
+	{0x01, 0x01, 0x08, 0x00, "Difficult"		},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x08, 0x01, 0x60, 0x60, "50K 100K 200K 1M 2M 10M 20M 50M"		},
-	{0x08, 0x01, 0x60, 0x40, "100K 200K 1M 2M 10M 20M 50M"		},
-	{0x08, 0x01, 0x60, 0x20, "200K 1M 2M 10M 20M 50M"		},
-	{0x08, 0x01, 0x60, 0x00, "None"		},
+	{0x01, 0x01, 0x60, 0x60, "50K 100K 200K 1M 2M 10M 20M 50M"	},
+	{0x01, 0x01, 0x60, 0x40, "100K 200K 1M 2M 10M 20M 50M"		},
+	{0x01, 0x01, 0x60, 0x20, "200K 1M 2M 10M 20M 50M"			},
+	{0x01, 0x01, 0x60, 0x00, "None"				},
 };
 
 STDDIPINFO(RidleOfp)
 
+static struct BurnInputInfo MegrescuInputList[] = {
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy0 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy0 + 6,	"p1 start"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p1 right"	},
+	A("P1 Spinner",		BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"),
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 fire 1"	},
+
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy0 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy0 + 7,	"p2 start"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy4 + 2,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy4 + 3,	"p2 right"	},
+	A("P2 Spinner",		BIT_ANALOG_REL, &Analog[1],		"p2 x-axis"),
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 fire 1"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy0 + 3,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDip + 0,		"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDip + 1,		"dip"		},
+};
+
+STDINPUTINFO(Megrescu)
+
 static struct BurnDIPInfo MegrescuDIPList[]=
 {
-	{0x07, 0xff, 0xff, 0xff, NULL		}, // coinage defs.
-	{0x08, 0xff, 0xff, 0x0c, NULL		},
+	DIP_OFFSET(0x0e)
+	{0x00, 0xff, 0xff, 0xff, NULL				}, // coinage defs.
+	{0x01, 0xff, 0xff, 0xff, NULL				},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x08, 0x01, 0x0c, 0x00, "Cheat"		},
-	{0x08, 0x01, 0x0c, 0x0c, "2"		},
-	{0x08, 0x01, 0x0c, 0x08, "3"		},
-	{0x08, 0x01, 0x0c, 0x04, "4"		},
+	{0   , 0xfe, 0   ,    4, "Lives"			},
+	{0x01, 0x01, 0x0c, 0x0c, "2"				},
+	{0x01, 0x01, 0x0c, 0x08, "3"				},
+	{0x01, 0x01, 0x0c, 0x04, "4"				},
+	{0x01, 0x01, 0x0c, 0x00, "100 (Cheat)"		},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"	},
-	{0x08, 0x01, 0x10, 0x00, "Upright"		},
-	{0x08, 0x01, 0x10, 0x10, "Cocktail"	},
+	{0   , 0xfe, 0   ,    2, "Cabinet"			},
+	{0x01, 0x01, 0x10, 0x00, "Upright"			},
+	{0x01, 0x01, 0x10, 0x10, "Coctail"			},
 };
 
 STDDIPINFO(Megrescu)
@@ -415,18 +443,18 @@ static void __fastcall ridleofp_port_fa_write(UINT8 data)
 {
 	/* 0x10 is written before reading the dial (hold counters?) */
 	/* 0x03 is written after reading the dial (reset counters?) */
-
+	//bprintf(0, _T("FA write: %x\n"), data);
 	port_fa_last = (data & 0x0c) >> 2;
 
 	if (data & 1)
 	{
-		INT32 curr = (Paddle & 0xfff) | (DrvJoy3[0]^1) << (6+8);
+		INT32 curr = (BurnTrackballReadWord(0, 0) & 0xfff) | ((DrvInput[3]&1)?0xf:0x0) << 12;
 		paddle_diff1 = ((curr - paddle_last1) & 0x0fff) | (curr & 0xf000);
 		paddle_last1 = curr;
 	}
 	if (data & 2)
 	{
-		INT32 curr = 0xffff/*p2 not used in game*/ & 0x0fff;
+		INT32 curr = (BurnTrackballReadWord(0, 1) & 0xfff) | ((DrvInput[3]&2)?0xf:0x0) << 12;
 		paddle_diff2 = ((curr - paddle_last2) & 0x0fff) | (curr & 0xf000);
 		paddle_last2 = curr;
 	}
@@ -445,6 +473,7 @@ static void segae_bankswitch (void)
 
 static void __fastcall bank_write(UINT8 data)
 {
+	//bprintf(0, _T("bank write: %x\n"), data);
 	segae_vdp_vrambank[0]	= (data & 0x80) >> 7; /* Back  Layer VDP (0) VRAM Bank */
 	segae_vdp_vrambank[1]	= (data & 0x40) >> 6; /* Front Layer VDP (1) VRAM Bank */
 	segae_8000bank			= (data & 0x20) >> 5; /* 0x8000 Write Select */
@@ -626,9 +655,9 @@ static UINT8 __fastcall systeme_main_in(UINT16 port)
 		case 0xbe: return segae_vdp_data_r(1);
 		case 0xbf: return segae_vdp_reg_r(1);
 
-		case 0xe0: return 0xff - DrvInput[0];
-		case 0xe1: return 0xff - DrvInput[1];
-		case 0xe2: return 0xff - DrvInput[2];
+		case 0xe0: return DrvInput[0];
+		case 0xe1: return DrvInput[1];
+		case 0xe2: return DrvInput[2];
 		case 0xf2: return DrvDip[0];
 		case 0xf3: return DrvDip[1];
 		case 0xf8: return (ridleofp) ? ridleofp_port_f8_read(port) : hangonjr_port_f8_read(port);
@@ -785,13 +814,13 @@ static INT32 MemIndex()
 	return 0;
 }
 
-//-----------------------
 static INT32 DrvExit()
 {
 	ZetExit();
 	GenericTilesExit();
 	SN76496Exit();
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
+	BurnTrackballExit();
 
 	leftcolumnblank = 0;
 	leftcolumnblank_special = 0;
@@ -812,7 +841,7 @@ static INT32 DrvDoReset()
 	hintcount = 0;
 	vintpending = 0;
 	hintpending = 0;
-	Paddle = 0;
+
 	SN76496Reset();
 	ZetOpen(0);
 	segae_bankswitch();
@@ -824,31 +853,34 @@ static INT32 DrvDoReset()
 
 static inline void DrvClearOpposites(UINT8* nJoystickInputs)
 {
-	if ((*nJoystickInputs & 0x03) == 0x03) {
-		*nJoystickInputs &= ~0x03;
+	if ((*nJoystickInputs & 0x03) == 0x00) {
+		*nJoystickInputs |= 0x03;
 	}
 	if ((*nJoystickInputs & 0x0c) == 0x0c) {
-		*nJoystickInputs &= ~0x0c;
+		*nJoystickInputs |= 0x0c;
 	}
 }
 
 static inline void DrvMakeInputs()
 {
 	// Reset Inputs
-	DrvInput[0] = DrvInput[1] = DrvInput[2] = DrvInput[3] = DrvInput[4] = 0x00;
+	DrvInput[0] = DrvInput[1] = DrvInput[2] = 0xff; // active low
+	DrvInput[3] = DrvInput[4] = 0x00;
 
 	// Compile Digital Inputs
 	for (INT32 i = 0; i < 8; i++) {
-		DrvInput[0] |= (DrvJoy0[i] & 1) << i;
-		DrvInput[1] |= (DrvJoy1[i] & 1) << i;
-		DrvInput[2] |= (DrvJoy2[i] & 1) << i;
-		DrvInput[3] |= (DrvJoy3[i] & 1) << i;
-		DrvInput[4] |= (DrvJoy4[i] & 1) << i;
+		DrvInput[0] ^= (DrvJoy0[i] & 1) << i;
+		DrvInput[1] ^= (DrvJoy1[i] & 1) << i;
+		DrvInput[2] ^= (DrvJoy2[i] & 1) << i;
+		DrvInput[3] ^= (DrvJoy3[i] & 1) << i;
+		DrvInput[4] ^= (DrvJoy4[i] & 1) << i;
 	}
 
 	if (ridleofp) { // paddle
-		if (DrvJoy4[0]) Paddle -= 4*4;
-		if (DrvJoy4[1]) Paddle += 4*4;
+		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
+		BurnTrackballFrame(0, Analog[0], Analog[1], 0x00, 0x3f);
+		BurnTrackballUDLR(0, DrvJoy4[2], DrvJoy4[3], DrvJoy4[0], DrvJoy4[1]);
+		BurnTrackballUpdate(0);
 	}
 
 	// Clear Opposites
@@ -1093,8 +1125,6 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	BurnTransferCopy(DrvPalette);
-
 	UINT16 *pDst = pTransDraw;
 	UINT8 *pSrc = &cache_bitmap[16];
 
@@ -1107,6 +1137,9 @@ static INT32 DrvDraw()
 		pDst += nScreenWidth;
 		pSrc += 288;
 	}
+
+	BurnTransferCopy(DrvPalette);
+//	BurnTransferFlip(); - megrescu - unflip 2p coctail, figure out where flip bit is
 
 	return 0;
 }
@@ -1156,31 +1189,27 @@ static void segae_interrupt ()
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = 262;
-
 	if (DrvReset) DrvDoReset();
 
 	DrvMakeInputs();
 
-	nCyclesTotal = 10738635 / 2 / 60;
-	nCyclesDone = 0;
+	INT32 nInterleave = 262;
+	INT32 nCyclesTotal[1] = { 10738635 / 2 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
+
 	currentLine = 0;
 
 	ZetNewFrame();
 
+	ZetOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nNext;
+		CPU_RUN(0, Zet);
 
-		// Run Z80 #1
-		ZetOpen(0);
-		nNext = (i + 1) * nCyclesTotal / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone;
-		nCyclesDone += ZetRun(nCyclesSegment);
 		currentLine = (i - 4) & 0xff;
 
 		segae_interrupt();
-		ZetClose();
 	}
+	ZetClose();
 
 	if (pBurnSoundOut)
 	{
@@ -1195,12 +1224,7 @@ static INT32 DrvFrame()
 
 static INT32 DrvInit(UINT8 game)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	switch (game) {
 		case 0:
@@ -1269,6 +1293,10 @@ static INT32 DrvInit(UINT8 game)
 
 	SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
+
+	if (ridleofp) { // and megrescu
+		BurnTrackballInit(1);
+	}
 
 	GenericTilesInit();
 
@@ -1351,6 +1379,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(segae_vdp_vrambank);
 
+		if (ridleofp) {
+			BurnTrackballScan();
+		}
 		SCAN_VAR(paddle_diff1);
 		SCAN_VAR(paddle_diff2);
 		SCAN_VAR(paddle_last1);
@@ -1653,26 +1684,25 @@ struct BurnDriver BurnDrvRidleOfp = {
 	192, 240, 3, 4
 };
 
-// Megumi Rescue (Japan)
+// Megumi Rescue
 
-static struct BurnRomInfo MegrescuRomDesc[] = {
-
-	{ "v10_30ic.7", 0x8000, 0x490d0059, BRF_ESS | BRF_PRG }, // 0 maincpu
-	{ "v10_30ic.5", 0x8000, 0x278caba8, BRF_ESS | BRF_PRG }, // 1
-	{ "v10_30ic.4", 0x8000, 0xbda242d1, BRF_ESS | BRF_PRG }, // 2
-	{ "v10_30ic.3", 0x8000, 0x56e36f85, BRF_ESS | BRF_PRG }, // 3
-	{ "v10_30ic.2", 0x8000, 0x5b74c767, BRF_ESS | BRF_PRG }, // 4
+static struct BurnRomInfo megrescuRomDesc[] = {
+	{ "v10_30ic.7",	0x8000, 0x490d0059, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "v10_30ic.5",	0x8000, 0x278caba8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "v10_30ic.4",	0x8000, 0xbda242d1, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "v10_30ic.3",	0x8000, 0x56e36f85, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "v10_30ic.2",	0x8000, 0x5b74c767, 1 | BRF_PRG | BRF_ESS }, //  4
 };
 
-STD_ROM_PICK(Megrescu)
-STD_ROM_FN(Megrescu)
+STD_ROM_PICK(megrescu)
+STD_ROM_FN(megrescu)
 
 struct BurnDriver BurnDrvMegrescu = {
 	"megrescu", NULL, NULL, NULL, "1987",
-	"Megumi Rescue (Japan)\0", NULL, "Sega / Exa", "System E",
+	"Megumi Rescue\0", NULL, "Sega / Exa", "System E",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_SEGA_MISC, GBF_BREAKOUT, 0,
-	NULL, MegrescuRomInfo, MegrescuRomName, NULL, NULL, NULL, NULL, RidleofpInputInfo, MegrescuDIPInfo,
+	NULL, megrescuRomInfo, megrescuRomName, NULL, NULL, NULL, NULL, MegrescuInputInfo, MegrescuDIPInfo,
 	DrvRidleOfpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	192, 240, 3, 4
 };

@@ -139,7 +139,9 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 		return 1;
 	}
 
-	cheat_ptr = &cpus[0]; // first cpu...
+	//cheat_ptr = &cpus[0]; // first cpu...
+	cheat_ptr = &cpus[1]; // first cpu...
+
 	cheat_subptr = cheat_ptr->cpuconfig;
 
 	while (pCurrentCheat && nCurrentCheat <= nCheat) {

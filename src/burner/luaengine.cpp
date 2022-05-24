@@ -32,8 +32,8 @@ extern "C" {
 #endif
 #include "luaengine.h"
 #include "luasav.h"
-#include "../cpu/m68k/m68k.h"
-//#include "../cpu/m68000_intf.h"
+//#include "../cpu/m68k/m68k.h"
+#include "../cpu/m68000_intf.h"
 #include "../cpu/z80/z80.h"
 extern Z80_Regs Z80;
 
@@ -900,6 +900,9 @@ static void CallRegisteredLuaMemHook_LuaMatch(unsigned int address, int size, un
 }
 void CallRegisteredLuaMemHook(unsigned int address, int size, unsigned int value, LuaMemHookType hookType)
 {
+	if (hookType == LUAMEMHOOK_EXEC) {
+		printf("exechook");
+	}
 	if (address == 0xFF8400) {
 		printf("hello world");
 	}
@@ -1210,23 +1213,23 @@ cpuToRegisterMaps [] =
 };
 
 char* m68k_reg_map[] = {
-	"d0", // 0
-	"d1", // 1
-	"d2", // 2
-	"d3", // 3
-	"d4", // 4
-	"d5", // 5
-	"d6", // 6
-	"d7", // 7
-	"a0", // 8
-	"a1", // 9
-	"a2", // 10
-	"a3", // 11
-	"a4", // 12
-	"a5", // 13
-	"a6", // 14
-	"a7", // 15
-	"pc", // 16
+	"m68000.d0", // 0
+	"m68000.d1", // 1
+	"m68000.d2", // 2
+	"m68000.d3", // 3
+	"m68000.d4", // 4
+	"m68000.d5", // 5
+	"m68000.d6", // 6
+	"m68000.d7", // 7
+	"m68000.a0", // 8
+	"m68000.a1", // 9
+	"m68000.a2", // 10
+	"m68000.a3", // 11
+	"m68000.a4", // 12
+	"m68000.a5", // 13
+	"m68000.a6", // 14
+	"m68000.a7", // 15
+	"m68000.pc", // 16
 	0
 };
 

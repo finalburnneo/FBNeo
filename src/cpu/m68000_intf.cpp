@@ -343,7 +343,7 @@ inline static UINT16 ReadWord(UINT32 a)
 	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("read16 0x%08X\n"), a);
-
+	CallRegisteredLuaMemHook(a, 2, 0, LUAMEMHOOK_READ);
 	pr = FIND_R(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER)
 	{
@@ -390,6 +390,7 @@ inline static void WriteWord(UINT32 a, UINT16 d)
 	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("write16 0x%08X\n"), a);
+	CallRegisteredLuaMemHook(a, 2, d, LUAMEMHOOK_WRITE);
 
 	pr = FIND_W(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER)
@@ -418,6 +419,7 @@ inline static void WriteWordROM(UINT32 a, UINT16 d)
 	UINT8* pr;
 
 	a &= nSekAddressMaskActive;
+	CallRegisteredLuaMemHook(a, 2, d, LUAMEMHOOK_WRITE);
 
 	pr = FIND_R(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER) {
@@ -438,6 +440,7 @@ inline static UINT32 ReadLong(UINT32 a)
 	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("read32 0x%08X\n"), a);
+	CallRegisteredLuaMemHook(a, 4, 0, LUAMEMHOOK_READ);
 
 	pr = FIND_R(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER)
@@ -506,6 +509,7 @@ inline static void WriteLong(UINT32 a, UINT32 d)
 	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("write32 0x%08X\n"), a);
+	CallRegisteredLuaMemHook(a, 4, d, LUAMEMHOOK_WRITE);
 
 	pr = FIND_W(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER)
@@ -537,6 +541,7 @@ inline static void WriteLongROM(UINT32 a, UINT32 d)
 	UINT8* pr;
 
 	a &= nSekAddressMaskActive;
+	CallRegisteredLuaMemHook(a, 4, d, LUAMEMHOOK_WRITE);
 
 	pr = FIND_R(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER) {
@@ -816,7 +821,9 @@ void SekWriteByte(UINT32 a, UINT8 d) { WriteByte(a, d); }
 void SekWriteWord(UINT32 a, UINT16 d) { WriteWord(a, d); }
 void SekWriteLong(UINT32 a, UINT32 d) { WriteLong(a, d); }
 
-void SekWriteByteROM(UINT32 a, UINT8 d) { WriteByteROM(a, d); }
+void SekWriteByteROM(UINT32 a, UINT8 d) { 
+	WriteByteROM(a, d); 
+}
 void SekWriteWordROM(UINT32 a, UINT16 d) { WriteWordROM(a, d); }
 void SekWriteLongROM(UINT32 a, UINT32 d) { WriteLongROM(a, d); }
 
@@ -1772,7 +1779,8 @@ INT32 SekRun(const INT32 nCycles)
 
 #ifdef EMU_M68K
 		nSekCyclesToDo = nCycles;
-
+		CallRegisteredLuaMemHook(m68k_get_reg(NULL, M68K_REG_PC), 1, 0, LUAMEMHOOK_EXEC);
+		
 		if (nSekRESETLine[nSekActive] || nSekHALT[nSekActive])
 		{
 			nSekCyclesSegment = nCycles; // idle when RESET high or halted

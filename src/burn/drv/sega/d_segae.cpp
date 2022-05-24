@@ -330,6 +330,24 @@ static struct BurnDIPInfo RidleOfpDIPList[]=
 
 STDDIPINFO(RidleOfp)
 
+static struct BurnDIPInfo MegrescuDIPList[]=
+{
+	{0x07, 0xff, 0xff, 0xff, NULL		}, // coinage defs.
+	{0x08, 0xff, 0xff, 0x0c, NULL		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x08, 0x01, 0x0c, 0x00, "Cheat"		},
+	{0x08, 0x01, 0x0c, 0x0c, "2"		},
+	{0x08, 0x01, 0x0c, 0x08, "3"		},
+	{0x08, 0x01, 0x0c, 0x04, "4"		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"	},
+	{0x08, 0x01, 0x10, 0x00, "Upright"		},
+	{0x08, 0x01, 0x10, 0x10, "Cocktail"	},
+};
+
+STDDIPINFO(Megrescu)
+
 
 static UINT8 __fastcall systeme_main_read(UINT16 address)
 {
@@ -1631,6 +1649,30 @@ struct BurnDriver BurnDrvRidleOfp = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_SEGA_MISC, GBF_BREAKOUT, 0,
 	NULL, RidleOfpRomInfo, RidleOfpRomName, NULL, NULL, NULL, NULL, RidleofpInputInfo, RidleOfpDIPInfo,
+	DrvRidleOfpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
+	192, 240, 3, 4
+};
+
+// Megumi Rescue (Japan)
+
+static struct BurnRomInfo MegrescuRomDesc[] = {
+
+	{ "v10_30ic.7", 0x8000, 0x490d0059, BRF_ESS | BRF_PRG }, // 0 maincpu
+	{ "v10_30ic.5", 0x8000, 0x278caba8, BRF_ESS | BRF_PRG }, // 1
+	{ "v10_30ic.4", 0x8000, 0xbda242d1, BRF_ESS | BRF_PRG }, // 2
+	{ "v10_30ic.3", 0x8000, 0x56e36f85, BRF_ESS | BRF_PRG }, // 3
+	{ "v10_30ic.2", 0x8000, 0x5b74c767, BRF_ESS | BRF_PRG }, // 4
+};
+
+STD_ROM_PICK(Megrescu)
+STD_ROM_FN(Megrescu)
+
+struct BurnDriver BurnDrvMegrescu = {
+	"megrescu", NULL, NULL, NULL, "1987",
+	"Megumi Rescue (Japan)\0", NULL, "Sega / Exa", "System E",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_SEGA_MISC, GBF_BREAKOUT, 0,
+	NULL, MegrescuRomInfo, MegrescuRomName, NULL, NULL, NULL, NULL, RidleofpInputInfo, MegrescuDIPInfo,
 	DrvRidleOfpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	192, 240, 3, 4
 };

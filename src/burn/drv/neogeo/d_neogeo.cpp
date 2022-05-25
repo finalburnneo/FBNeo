@@ -6484,7 +6484,7 @@ struct BurnDriver BurnDrvkof99 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof99RomInfo, kof99RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	kof99Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	kof99Init, NeoSMAExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
@@ -18060,41 +18060,52 @@ struct BurnDriver BurnDrvkof99ae = {
 	0x1000, 304, 224, 4, 3
 };
 
-// The King of Fighters '99 - Remix Pro V2.0 Final (Hack By FCHT - FightChina Hackteam)
+// The King of Fighters '99 - Remix Pro V2.01 Final (Hack By FCHT - FightChina Hackteam)
+// Hack By FCHT - FightChina Hackteam - 2006
+// Bug fixed by Ice Flame Fantasy - 2022/02/15 (http://www.nesbbs.com/bbs/thread-53283-1-1.html)
 
-static struct BurnRomInfo kof99rp2fRomDesc[] = {
-	{ "kf99rp2f-p1.rom",   	   0x100000, 0x1c5fd0ad, 1 | BRF_ESS | BRF_PRG }, // 0 68K code
-	{ "kf99rp2f-p2.rom",       0x400000, 0x01E111B3, 1 | BRF_ESS | BRF_PRG }, // 1
+static struct BurnRomInfo kof99rpRomDesc[] = {
+	{ "rp.neo-sma",		0x040000, 0x173e7ac4, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "251-p1rp.p1",	0x400000, 0xeffd218b, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "251-p2rp.p2",	0x400000, 0x6b8f8478, 1 | BRF_ESS | BRF_PRG }, //  2
 
-	{ "kf99rp2f-s1.rom",       0x020000, 0xca942904, 2 | BRF_GRA },           // 2 Text layer tiles
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "251-c1rp.c1",	0x800000, 0x39fbe868, 3 | BRF_GRA },           //  3 Sprite data
+	{ "251-c2rp.c2",	0x800000, 0xef461a92, 3 | BRF_GRA },           //  4
+	{ "251-c3rp.c3",	0x800000, 0xc79dfe9d, 3 | BRF_GRA },           //  5
+	{ "251-c4rp.c4",	0x800000, 0x24907843, 3 | BRF_GRA },           //  6
+	{ "251-c5rp.c5",	0x800000, 0x3192738e, 3 | BRF_GRA },           //  7
+	{ "251-c6rp.c6",	0x800000, 0x0c9f4912, 3 | BRF_GRA },           //  8
+	{ "251-c7rp.c7",	0x800000, 0x54bc5d03, 3 | BRF_GRA },           //  9
+	{ "251-c8rp.c8",	0x800000, 0x4943a1c3, 3 | BRF_GRA },           // 10
 
-	{ "kf99rp2f-c1.rom",   	   0x800000, 0xf0409101, 3 | BRF_GRA },           // 3 Sprite data
-	{ "kf99rp2f-c2.rom",   	   0x800000, 0x3a9eff54, 3 | BRF_GRA },           // 4
-	{ "kf99rp2f-c3.rom",   	   0x800000, 0xb047c9d5, 3 | BRF_GRA },           // 5
-	{ "kf99rp2f-c4.rom",   	   0x800000, 0x6bc8e4b1, 3 | BRF_GRA },           // 6
-	{ "kf99rp2f-c5.rom",   	   0x800000, 0xdd023649, 3 | BRF_GRA },           // 7
-	{ "kf99rp2f-c6.rom",   	   0x800000, 0xb8f60a8c, 3 | BRF_GRA },           // 8
-	{ "kf99rp2f-c7.rom",   	   0x800000, 0x1dfd5103, 3 | BRF_GRA },           // 9
-	{ "kf99rp2f-c8.rom",   	   0x800000, 0x23fe3c43, 3 | BRF_GRA },           // 10
+	{ "251-m1rp.m1",	0x020000, 0x0cb24d46, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "kf99rp2f-m1.rom",       0x020000, 0x0cb24d46, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
-
-	{ "kf99rp2f-v1.rom",       0x400000, 0xef2eecc8, 5 | BRF_SND },           // 12 Sound data
-	{ "kf99rp2f-v2.rom",       0x400000, 0x73e211ca, 5 | BRF_SND },           // 13
-	{ "kf99rp2f-v3.rom",       0x400000, 0x403628da, 5 | BRF_SND },           // 14
-	{ "kf99rp2f-v4.rom",       0x200000, 0xb49e6178, 5 | BRF_SND },           // 15
+	{ "251-v1.v1",		0x400000, 0xef2eecc8, 5 | BRF_SND },           // 12 Sound data
+	{ "251-v2.v2",		0x400000, 0x73e211ca, 5 | BRF_SND },           // 13
+	{ "251-v3rp.v3",	0x400000, 0x403628da, 5 | BRF_SND },           // 14
+	{ "251-v4.v4",		0x200000, 0xb49e6178, 5 | BRF_SND },           // 15
 };
 
-STDROMPICKEXT(kof99rp2f, kof99rp2f, neogeo)
-STD_ROM_FN(kof99rp2f)
+STDROMPICKEXT(kof99rp, kof99rp, neogeo)
+STD_ROM_FN(kof99rp)
 
-struct BurnDriver BurnDrvkof99rp2f = {
-	"kof99rp2f", "kof99", "neogeo", NULL, "2006",
-	"The King of Fighters '99 Remix Pro V2.0 Final (Hack By FCHT)\0", NULL, "hack", "Neo Geo MVS",
+static INT32 kof99rpInit()
+{
+	nNeoProtectionXor = 0x00;
+	NeoCallbackActive->pInitialise = kof99SMADecrypt;
+
+	return NeoInit();
+}
+
+struct BurnDriver BurnDrvkof99rp = {
+	"kof99rp", "kof99", "neogeo", NULL, "2022",
+	"The King of Fighters '99 Remix Pro (v2.01 Final)\0", NULL, "Hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
-	NULL, kof99rp2fRomInfo, kof99rp2fRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof99rpRomInfo, kof99rpRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	kof99rpInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
@@ -21317,7 +21328,7 @@ STD_ROM_FN(mslughb)
 
 struct BurnDriver BurnDrvmslughb = {
 	"mslughb", NULL, "neogeo", NULL, "2022",
-	"Metal Slug (HB)\0", NULL, "Hack", "Neo Geo AES",
+	"Metal Slug (HB)\0", NULL, "Homebrew", "Neo Geo AES",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_P32 | HARDWARE_SNK_ENCRYPTED_M1, GBF_MISC, FBF_MSLUG,
 	NULL, mslughbRomInfo, mslughbRomName, NULL, NULL, NULL, NULL, neoForceAESInputInfo, neoForceAESDIPInfo,

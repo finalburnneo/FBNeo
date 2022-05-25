@@ -174,7 +174,7 @@ static void __fastcall atari_vad_write_word(UINT32 address, UINT16 data)
 		return;
 	}
 
-	if ((address & 0xfe000) == 0x12000) { // playfield_latched_lsb_w
+	if ((address & 0xfe000) == 0x12000 || (address & 0xfe000) == 0x18000) { // playfield_latched_lsb_w - 18000 for marble madness 2
 		address = (address & 0x1ffe) / 2;
 		pf_data[0][address] = BURN_ENDIAN_SWAP_INT16(data);
 		if (playfield_latched) {
@@ -193,7 +193,7 @@ static void __fastcall atari_vad_write_word(UINT32 address, UINT16 data)
 	}
 
 	// relief pitcher goes nuts with unmapped writes.
-	//bprintf (0, _T("VAD,WW: %5.5x, %4.4x\n"), address, data);
+	bprintf (0, _T("VAD,WW: %5.5x, %4.4x\n"), address, data);
 }
 
 static UINT16 __fastcall atari_vad_read_word(UINT32 address)
@@ -317,24 +317,32 @@ void AtariVADExit()
 	BurnFree(palette_ram);
 }
 
-void AtariVADMap(INT32 startaddress, INT32 endaddress, INT32 shuuz)
+void AtariVADMap(INT32 startaddress, INT32 endaddress, INT32 config)
 {
 	INT32 range = (endaddress + 1) - startaddress;
 	INT32 address = startaddress;
 
-	SekMapHandler(5,					address, address + range - 1, MAP_WRITE);
+	if (config != 2)
+	{
+		SekMapHandler(5,					address, address + range - 1, MAP_WRITE);
+	}
 	SekSetWriteWordHandler(5,			atari_vad_write_word);
 	SekSetWriteByteHandler(5,			atari_vad_write_byte);
 
-	SekMapHandler(6,					address + 0xfc00, address + 0x0ffff, MAP_READ);
+	SekMapHandler(6,					address + 0xfc00, address + 0x0ffff, MAP_RAM);
 	SekSetReadWordHandler(6,			atari_vad_read_word);
 	SekSetReadByteHandler(6,			atari_vad_read_byte);
+	SekSetWriteWordHandler(6,			atari_vad_write_word);
+	SekSetWriteByteHandler(6,			atari_vad_write_byte);
 
 	SekMapMemory(palette_ram,			address + 0x00000, address + 0x00fff, MAP_ROM);
 
-	if (shuuz) { // shuuz
+	if (config == 1) { // shuuz
 		SekMapMemory(playfield_data[0],		address + 0x14000, address + 0x15fff, MAP_ROM);
 		SekMapMemory(playfield_data[2],		address + 0x16000, address + 0x17fff, MAP_RAM);
+	} else if (config == 2) { // marble madness 2
+		SekMapHandler(5,					address + 0x18000, address + 0x19fff, MAP_WRITE);
+		SekMapMemory(playfield_data[0],		address + 0x18000, address + 0x19fff, MAP_ROM);
 	} else {
 		SekMapMemory(playfield_data[1],		address + 0x10000, address + 0x11fff, MAP_ROM);
 		SekMapMemory(playfield_data[0],		address + 0x12000, address + 0x13fff, MAP_ROM);

@@ -3030,6 +3030,9 @@
     <ClCompile Include="..\..\src\burn\drv\atari\d_xybots.cpp">
       <Filter>Burn\drv\atari</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\atari\d_marblmd2.cpp">
+      <Filter>Burn\drv\atari</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\coleco\d_coleco.cpp">
       <Filter>Burn\drv\coleco</Filter>
     </ClCompile>

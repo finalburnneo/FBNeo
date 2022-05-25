@@ -9104,6 +9104,7 @@ DRV		BurnDrvgg_marble;
 DRV		BurnDrvmd_marble;
 DRV		BurnDrvnes_marblemadness;
 DRV		BurnSpecmarblem;
+DRV		BurnDrvMarblmd2;
 DRV		BurnDrvMmaze;
 DRV		BurnDrvMmaze2;
 DRV		BurnDrvpce_marchen;
@@ -9385,6 +9386,7 @@ DRV		BurnDrvMSX_megaphoenix;
 DRV		BurnDrvmd_megatrax;
 DRV		BurnDrvmd_megaxmas;
 DRV		BurnDrvsms_megumi;
+DRV		BurnDrvMegrescu;
 DRV		BurnDrvMeijinsn;
 DRV		BurnDrvMeijinsna;
 DRV		BurnDrvKikcubic;
@@ -27828,6 +27830,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_marble,			// Marble Madness (Euro, USA)
 	&BurnDrvnes_marblemadness,	// Marble Madness (USA)
 	&BurnSpecmarblem,			// Marble Madness - Deluxe Edition (48K)
+	&BurnDrvMarblmd2,			// Marble Madness II (prototype)
 	&BurnDrvMmaze,				// Marchen Maze (Japan)
 	&BurnDrvMmaze2,				// Marchen Maze (Japan, hack?)
 	&BurnDrvpce_marchen,		// Marchen Maze
@@ -28109,6 +28112,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_megatrax,		// MegaTrax (Jpn)
 	&BurnDrvmd_megaxmas,		// MegaXmas (HB)
 	&BurnDrvsms_megumi,			// Megumi Rescue (Jpn)
+	&BurnDrvMegrescu,			// Megumi Rescue
 	&BurnDrvMeijinsn,			// Meijinsen (set 1)
 	&BurnDrvMeijinsna,			// Meijinsen (set 2)
 	&BurnDrvKikcubic,			// Meikyu Jima (Japan)

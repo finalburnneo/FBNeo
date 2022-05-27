@@ -16836,7 +16836,7 @@ static void Jurassic99PatchCallback()
 	};
 
 	for (INT32 i = 0; i < (sizeof(patch_fix_a) / sizeof(UINT32)) >> 1; i++) {
-		CpsRom[patch_fix_a[(i << 1) + 0]] = patch_fix_a[(i << 1) + 1];
+		CpsRom[patch_fix_a[(i << 1) + 0]] = (UINT8)patch_fix_a[(i << 1) + 1];
 	}
 
 	if (Cps1QSDip & 1) {
@@ -16860,7 +16860,7 @@ static void Jurassic99PatchCallback()
 		};
 
 		for (INT32 i = 0; i < (sizeof(patch_fix_b) / sizeof(UINT32)) >> 1; i++) {
-			CpsRom[patch_fix_b[(i << 1) + 0]] = patch_fix_b[(i << 1) + 1];
+			CpsRom[patch_fix_b[(i << 1) + 0]] = (UINT8)patch_fix_b[(i << 1) + 1];
 		}
 	}
 }
@@ -18232,7 +18232,7 @@ static void PunipicPatchCallback()
 	};
 
 	for (INT32 i = 0; i < (sizeof(patch_fix) / sizeof(UINT32)) >> 1; i++) {
-		CpsRom[patch_fix[(i << 1) + 0]] = patch_fix[(i << 1) + 1];
+		CpsRom[patch_fix[(i << 1) + 0]] = (UINT8)patch_fix[(i << 1) + 1];
 	}
 }
 
@@ -19943,7 +19943,7 @@ static void SlampicPatchCallback()
 	};
 
 	for (INT32 i = 0; i < (sizeof(patch_fix) / sizeof(UINT32)) >> 1; i++) {
-		CpsRom[patch_fix[(i << 1) + 0]] = patch_fix[(i << 1) + 1];
+		CpsRom[patch_fix[(i << 1) + 0]] = (UINT8)patch_fix[(i << 1) + 1];
 	}
 }
 
@@ -20582,7 +20582,7 @@ static void WofsjbPatchCallback()
 	};
 
 	for (INT32 i = 0; i < (sizeof(patch_fix) / sizeof(UINT16)) >> 1; i++) {
-		CpsRom[patch_fix[(i << 1) + 0]] = patch_fix[(i << 1) + 1];
+		CpsRom[patch_fix[(i << 1) + 0]] = (UINT8)patch_fix[(i << 1) + 1];
 	}
 }
 
@@ -20701,7 +20701,7 @@ static void WofpicPatchCallback()
 	};
 
 	for (INT32 i = 0; i < (sizeof(patch_fix) / sizeof(UINT32)) >> 1; i++) {
-		CpsRom[patch_fix[(i << 1) + 0]] = patch_fix[(i << 1) + 1];
+		CpsRom[patch_fix[(i << 1) + 0]] = (UINT8)patch_fix[(i << 1) + 1];
 	}
 }
 
@@ -25149,10 +25149,10 @@ struct BurnDriver BurnDrvCpsDinore = {
 };
 
 // Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition, Hack)
-// Hacked by Bindi - 2022/05/13
+// Hacked by Bindi - 2022/05/25
 
 static struct BurnRomInfo WofjdrRomDesc[] = {
-	{ "tk2j_dr.bin",	0x200000, 0xf6a2bbc7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "tk2j_dr.bin",	0x200000, 0xfabbc160, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "tk2_01.3a",		0x080000, 0x0d9cb9bf, BRF_GRA | CPS1_TILES },
 	{ "tk2_02.4a",		0x080000, 0x45227027, BRF_GRA | CPS1_TILES },

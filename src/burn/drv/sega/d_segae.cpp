@@ -1,8 +1,5 @@
 // based on MESS/MAME driver by David Haywood
 
-// todo:
-// megrescu - unflip 2p coctail, figure out where flip bit is
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "sn76496.h"
@@ -57,6 +54,7 @@ static UINT8 leftcolumnblank = 0; // most games need this, except tetris
 static UINT8 leftcolumnblank_special = 0; // for fantzn2, move over the screen 8px
 static UINT8 sprite_bug = 0; // for fantzn2 & ridleofp
 static UINT8 ridleofp = 0;
+static UINT8 megrescu = 0;
 
 #define CHIPS 2							/* There are 2 VDP Chips */
 
@@ -448,13 +446,13 @@ static void __fastcall ridleofp_port_fa_write(UINT8 data)
 
 	if (data & 1)
 	{
-		INT32 curr = (BurnTrackballReadWord(0, 0) & 0xfff) | ((DrvInput[3]&1)?0xf:0x0) << 12;
+		INT32 curr = (BurnTrackballReadWord(0, 0) & 0xfff) | ((DrvInput[3]&3) ? 0xf000 : 0);
 		paddle_diff1 = ((curr - paddle_last1) & 0x0fff) | (curr & 0xf000);
 		paddle_last1 = curr;
 	}
 	if (data & 2)
 	{
-		INT32 curr = (BurnTrackballReadWord(0, 1) & 0xfff) | ((DrvInput[3]&2)?0xf:0x0) << 12;
+		INT32 curr = (BurnTrackballReadWord(0, 1) & 0xfff);
 		paddle_diff2 = ((curr - paddle_last2) & 0x0fff) | (curr & 0xf000);
 		paddle_last2 = curr;
 	}
@@ -829,6 +827,7 @@ static INT32 DrvExit()
 	mc8123_banked = 0;
 
 	ridleofp = 0;
+	megrescu = 0;
 
 	return 0;
 }
@@ -1138,8 +1137,11 @@ static INT32 DrvDraw()
 		pSrc += 288;
 	}
 
+	if ( megrescu && (DrvDip[1] & 0x10) && (DrvRAM[0x18/*c018*/] == 0xff) ) {
+		BurnTransferFlip(1, 1); //- megrescu - unflip 2p coctail
+	}
+
 	BurnTransferCopy(DrvPalette);
-//	BurnTransferFlip(); - megrescu - unflip 2p coctail, figure out where flip bit is
 
 	return 0;
 }
@@ -1697,12 +1699,19 @@ static struct BurnRomInfo megrescuRomDesc[] = {
 STD_ROM_PICK(megrescu)
 STD_ROM_FN(megrescu)
 
+static INT32 MegrescuInit()
+{
+	megrescu = 1;
+
+	return (DrvRidleOfpInit());
+}
+
 struct BurnDriver BurnDrvMegrescu = {
 	"megrescu", NULL, NULL, NULL, "1987",
 	"Megumi Rescue\0", NULL, "Sega / Exa", "System E",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_SEGA_MISC, GBF_BREAKOUT, 0,
 	NULL, megrescuRomInfo, megrescuRomName, NULL, NULL, NULL, NULL, MegrescuInputInfo, MegrescuDIPInfo,
-	DrvRidleOfpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
-	192, 240, 3, 4
+	MegrescuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
+	192, 248, 3, 4
 };

@@ -17175,7 +17175,7 @@ static void kof97tPatchCallback()
 		};
 
 		for (INT32 i = 0; i < (sizeof(patch_fix) / sizeof(UINT32)) >> 1; i++)
-			Neo68KROMActive[patch_fix[(i << 1) + 0]] = patch_fix[(i << 1) + 1];
+			Neo68KROMActive[patch_fix[(i << 1) + 0]] = (UINT8)patch_fix[(i << 1) + 1];
 	}
 }
 
@@ -17369,7 +17369,7 @@ static void kof97ipCallback()
 		};
 
 		for (INT32 i = 0; i < (sizeof(patch_fix) / sizeof(UINT16)) >> 1; i++)
-			Neo68KROMActive[patch_fix[(i << 1) + 0]] = patch_fix[(i << 1) + 1];
+			Neo68KROMActive[patch_fix[(i << 1) + 0]] = (UINT8)patch_fix[(i << 1) + 1];
 	}
 }
 
@@ -17826,14 +17826,14 @@ struct BurnDriver BurnDrvkof98pfe = {
 };
 
 // The King of Fighters '98 - Easy Combo King (GOTVG Version, hack)
-/* Hacked by gunloc941 - Build 2020-04-09 */
+/* Hacked by gunloc941 - Build 2019-02-17 */
 
 static struct BurnRomInfo kof98eckgRomDesc[] = {
 	/* P1 Encrypted */
-	{ "242-p1eck.p1",	0x200000, 0x2aed3a91, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "242-p2eck.sp2",	0x400000, 0xef36876a, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "242-p1eckg.p1",	0x200000, 0x9746a706, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "242-p2eckg.sp2",	0x400000, 0x5d59e3ae, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "242-s1eck.s1",	0x020000, 0x5a498ed2, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "242-s1eckg.s1",	0x020000, 0xf91c29d2, 2 | BRF_GRA },           //  2 Text layer tiles
 
 	{ "242-c1eckg.c1",	0x800000, 0xd3da4dc1, 3 | BRF_GRA },           //  3 Sprite data
 	{ "242-c2eckg.c2",	0x800000, 0xf5a5d149, 3 | BRF_GRA },           //  4
@@ -17856,7 +17856,7 @@ STDROMPICKEXT(kof98eckg, kof98eckg, neogeo)
 STD_ROM_FN(kof98eckg)
 
 struct BurnDriver BurnDrvkof98eckg = {
-	"kof98eckg", "kof98", "neogeo", NULL, "2020",
+	"kof98eckg", "kof98", "neogeo", NULL, "2019",
 	"The King of Fighters '98 Easy Combo King (GOTVG Version, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
@@ -17869,10 +17869,10 @@ struct BurnDriver BurnDrvkof98eckg = {
 /* Hacked by gunloc941 - YZKOF Build 2020-04-09 */
 
 static struct BurnRomInfo kof98eckyRomDesc[] = {
-	{ "242-pn1eck.p1",	0x100000, 0x0ced4a93, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "242-p2eck.sp2",	0x400000, 0xef36876a, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "242-pn1ecky.p1",	0x100000, 0x0ced4a93, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "242-p2ecky.sp2",	0x400000, 0xef36876a, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "242-s1eck.s1", 	0x020000, 0x5a498ed2, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "242-s1ecky.s1", 	0x020000, 0x5a498ed2, 2 | BRF_GRA },           //  2 Text layer tiles
 
 	{ "242-c1ecky.c1", 	0x800000, 0xd528dab9, 3 | BRF_GRA },           //  3 Sprite data
 	{ "242-c2ecky.c2", 	0x800000, 0x73556130, 3 | BRF_GRA },           //  4

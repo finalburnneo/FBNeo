@@ -1064,6 +1064,7 @@ DRV		BurnDrvMSX_mosquiton;
 DRV		BurnSpecAktomatoes;
 DRV		BurnDrvMSX_aktomatoes;
 DRV		BurnDrvnes_attackiltom;
+DRV		BurnDrvmd_atkpetscii;
 DRV		BurnDrvMSX_Attacked;
 DRV		BurnSpecatvsim;
 DRV		BurnSpecaufwiemo;
@@ -5561,7 +5562,6 @@ DRV		BurnDrvMSX_flidecka;
 DRV		BurnDrvsms_fpigarus;
 DRV		BurnDrvnes_flighint;
 DRV		BurnDrvMSX_fsim;
-DRV		BurnDrvmd_flink;
 DRV		BurnSpecFlintstones;
 DRV		BurnDrvmd_flint;
 DRV		BurnDrvMSX_flintstones;
@@ -9700,6 +9700,7 @@ DRV		BurnDrvnes_miraisen;
 DRV		BurnDrvMirax;
 DRV		BurnDrvMiraxa;
 DRV		BurnSpecMiremare;
+DRV		BurnDrvmd_flink;
 DRV		BurnSpecmisifucga;
 DRV		BurnSpecmisifucolor;
 DRV		BurnDrvmd_misplaced;
@@ -16416,7 +16417,7 @@ DRV		BurnDrvkof99p;
 DRV		BurnDrvkof99ae;
 DRV		BurnDrvkof99eur;
 DRV		BurnDrvkof99eur2;
-DRV		BurnDrvkof99rp2f;
+DRV		BurnDrvkof99rp;
 DRV		BurnDrvkof99sr;
 DRV		BurnDrvmd_kof99;
 DRV		BurnDrvngpc_kofpara;
@@ -19790,6 +19791,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecAktomatoes,		// Attack of the Killer Tomatoes (48K)
 	&BurnDrvMSX_aktomatoes,		// Attack of the Killer Tomatoes (Euro)
 	&BurnDrvnes_attackiltom,	// Attack of the Killer Tomatoes (USA)
+	&BurnDrvmd_atkpetscii,		// Attack of the Petscii Robots (HB)
 	&BurnDrvMSX_Attacked,		// Attacked
 	&BurnSpecatvsim,			// ATV Simulator - All Terrain Vehicle (48K)
 	&BurnSpecaufwiemo,			// Auf Wiedersehen Monty (128K)
@@ -24157,7 +24159,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_fzone,			// Final Zone (Jpn)
 	&BurnDrvMSX_fzonek,			// Final Zone (Kor)
 	&BurnDrvmd_fzone,			// Final Zone (USA) ~ FZ Senki Axis (Jpn)
-	&BurnDrvmd_fzones,			// Final Zone -- FZ Senki Axis (Hack, Spanish)
+	&BurnDrvmd_fzones,			// Final Zone ~ FZ Senki Axis (Hack, Spanish)
 	&BurnDrvFinalizrb,			// Finalizer - Super Transformation (bootleg)
 	&BurnDrvFinalizr,			// Finalizer - Super Transformation (set 1)
 	&BurnDrvFinalizra,			// Finalizer - Super Transformation (set 2)
@@ -24244,7 +24246,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCfboy0a1,			// Flash Boy (vertical) [DECO Cassette MD] (No.12/Ver.0/Set.1,Japan)
 	&BurnSpecFlashgordon,		// Flash Gordon (48K)
 	&BurnDrvMSX_flashgor,		// Flash Gordon (Euro)
-	&BurnDrvmd_flashps,			// Flash Point (Hack, Spanish) ( Prototype)
+	&BurnDrvmd_flashps,			// Flash Point (Hack, Spanish)
 	&BurnDrvFpointbj,			// Flash Point (Japan, bootleg)
 	&BurnDrvmd_flashp,			// Flash Point (Jpn, Prototype)
 	&BurnDrvFpoint1d,			// Flash Point (set 1, Japan, FD1094 317-0127A decrypted)
@@ -24287,7 +24289,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_fpigarus,		// Flight of Pigarus (HB, v1.11)
 	&BurnDrvnes_flighint,		// Flight of the Intruder (USA)
 	&BurnDrvMSX_fsim,			// Flight Simulator - Gyorai Kougeki (Jpn)
-	&BurnDrvmd_flink,			// Flink (Euro)
 	&BurnSpecFlintstones,		// Flintstones, the (128K)
 	&BurnDrvmd_flint,			// Flintstones, The (Euro)
 	&BurnDrvMSX_flintstones,	// Flintstones, The (Euro)
@@ -28426,6 +28427,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMirax,				// Mirax (set 1)
 	&BurnDrvMiraxa,				// Mirax (set 2)
 	&BurnSpecMiremare,			// Mire Mare (48K) (HB, v1.09)
+	&BurnDrvmd_flink,			// Misadventures of Flink, The (Euro)
 	&BurnSpecmisifucga,			// Misifu Remeow CGA (128K) (HB, v1.4.1)
 	&BurnSpecmisifucolor,		// Misifu Remeow Color (128K) (HB, v1.4.1)
 	&BurnDrvmd_misplaced,		// Misplaced (HB, English)
@@ -35142,7 +35144,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkof99ae,			// The King of Fighters '99 Anniversary Edition (hack)
 	&BurnDrvkof99eur,			// The King of Fighters '99 Evolution Ultra Remix (Hack By Yashional)
 	&BurnDrvkof99eur2,			// The King of Fighters '99 Evolution Ultra Remix 2015 (Hack)
-	&BurnDrvkof99rp2f,			// The King of Fighters '99 Remix Pro V2.0 Final (Hack By FCHT)
+	&BurnDrvkof99rp,			// The King of Fighters '99 Remix Pro (v2.01 Final)
 	&BurnDrvkof99sr,			// The King of Fighters '99 Summer Revolution (Hack By FCHT)
 	&BurnDrvmd_kof99,			// The King of Fighters '99
 	&BurnDrvngpc_kofpara,		// The King of Fighters - Battle de Paradise (Jpn)

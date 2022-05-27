@@ -7547,7 +7547,7 @@
 		<comment>Homebrew</comment>
 		<description>Metal Slug (HB)</description>
 		<year>2022</year>
-		<manufacturer>Hack</manufacturer>
+		<manufacturer>Homebrew</manufacturer>
 		<rom name="mslug-p1hb.p1" size="4194304" crc="1e0506cf"/>
 		<rom name="mslug-p2hb.p2" size="4194304" crc="894cd3dd"/>
 		<rom name="mslug-c1hb.c1" size="8388608" crc="92a89586"/>
@@ -20445,27 +20445,27 @@
 		<video orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kof99rp2f" cloneof="kof99" romof="kof99">
+	<game name="kof99rp" cloneof="kof99" romof="kof99">
 		<comment>Hack</comment>
-		<description>The King of Fighters '99 Remix Pro V2.0 Final (Hack By FCHT)</description>
-		<year>2006</year>
-		<manufacturer>hack</manufacturer>
-		<rom name="kf99rp2f-p1.rom" size="1048576" crc="1c5fd0ad"/>
-		<rom name="kf99rp2f-p2.rom" size="4194304" crc="01e111b3"/>
-		<rom name="kf99rp2f-s1.rom" size="131072" crc="ca942904"/>
-		<rom name="kf99rp2f-c1.rom" size="8388608" crc="f0409101"/>
-		<rom name="kf99rp2f-c2.rom" size="8388608" crc="3a9eff54"/>
-		<rom name="kf99rp2f-c3.rom" size="8388608" crc="b047c9d5"/>
-		<rom name="kf99rp2f-c4.rom" size="8388608" crc="6bc8e4b1"/>
-		<rom name="kf99rp2f-c5.rom" size="8388608" crc="dd023649"/>
-		<rom name="kf99rp2f-c6.rom" size="8388608" crc="b8f60a8c"/>
-		<rom name="kf99rp2f-c7.rom" size="8388608" crc="1dfd5103"/>
-		<rom name="kf99rp2f-c8.rom" size="8388608" crc="23fe3c43"/>
-		<rom name="kf99rp2f-m1.rom" size="131072" crc="0cb24d46"/>
-		<rom name="kf99rp2f-v1.rom" size="4194304" crc="ef2eecc8"/>
-		<rom name="kf99rp2f-v2.rom" size="4194304" crc="73e211ca"/>
-		<rom name="kf99rp2f-v3.rom" size="4194304" crc="403628da"/>
-		<rom name="kf99rp2f-v4.rom" size="2097152" crc="b49e6178"/>
+		<description>The King of Fighters '99 Remix Pro (v2.01 Final)</description>
+		<year>2022</year>
+		<manufacturer>Hack</manufacturer>
+		<rom name="rp.neo-sma" size="262144" crc="173e7ac4"/>
+		<rom name="251-p1rp.p1" size="4194304" crc="effd218b"/>
+		<rom name="251-p2rp.p2" size="4194304" crc="6b8f8478"/>
+		<rom name="251-c1rp.c1" size="8388608" crc="39fbe868"/>
+		<rom name="251-c2rp.c2" size="8388608" crc="ef461a92"/>
+		<rom name="251-c3rp.c3" size="8388608" crc="c79dfe9d"/>
+		<rom name="251-c4rp.c4" size="8388608" crc="24907843"/>
+		<rom name="251-c5rp.c5" size="8388608" crc="3192738e"/>
+		<rom name="251-c6rp.c6" size="8388608" crc="0c9f4912"/>
+		<rom name="251-c7rp.c7" size="8388608" crc="54bc5d03"/>
+		<rom name="251-c8rp.c8" size="8388608" crc="4943a1c3"/>
+		<rom name="251-m1rp.m1" size="131072" crc="0cb24d46"/>
+		<rom name="251-v1.v1" merge="251-v1.v1" size="4194304" crc="ef2eecc8"/>
+		<rom name="251-v2.v2" merge="251-v2.v2" size="4194304" crc="73e211ca"/>
+		<rom name="251-v3rp.v3" size="4194304" crc="403628da"/>
+		<rom name="251-v4.v4" merge="251-v4.v4" size="2097152" crc="b49e6178"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>

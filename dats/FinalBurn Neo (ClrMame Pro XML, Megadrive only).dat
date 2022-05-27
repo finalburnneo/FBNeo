@@ -1277,6 +1277,15 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="atkpetscii">
+		<comment>Homebrew</comment>
+		<description>Attack of the Petscii Robots (HB)</description>
+		<year>2022</year>
+		<manufacturer>The 8-bit Guy</manufacturer>
+		<rom name="Attack of the Petscii Robots (2022)(The 8-bit Guy).bin" size="2097152" crc="a7004964"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="austrarl">
 		<description>Australian Rugby League (Euro)</description>
 		<year>1994</year>
@@ -7070,9 +7079,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="fightmass" cloneof="fightmas" romof="fightmas">
+		<comment>Hack</comment>
 		<description>Fighting Masters (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Treco</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="fighting masters (hack, spanish).bin" size="524288" crc="128cddbe"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7110,9 +7120,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="fzones" cloneof="fzone" romof="fzone">
-		<description>Final Zone -- FZ Senki Axis (Hack, Spanish)</description>
+		<comment>Hack</comment>
+		<description>Final Zone ~ FZ Senki Axis (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Renovation</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="final zone -- fz senki axis (hack, spanish).bin" size="524288" crc="d0294acb"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7136,15 +7147,16 @@
 	<game name="fireshrk">
 		<description>Fire Shark (Euro)</description>
 		<year>1991</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Toaplan</manufacturer>
 		<rom name="mpr-14341.bin" size="524288" crc="2351ce61"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="fireshrks" cloneof="fireshrk" romof="fireshrk">
+		<comment>Hack</comment>
 		<description>Fire Shark (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>DreamWorks</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="fire shark (hack, spanish).bin" size="524288" crc="9f0eca9e"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7175,17 +7187,19 @@
 		<driver status="good"/>
 	</game>
 	<game name="flashps" cloneof="flashp" romof="flashp">
-		<description>Flash Point (Hack, Spanish) ( Prototype)</description>
+		<comment>Hack</comment>
+		<description>Flash Point (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="flash point (hack, spanish) ( prototype).bin" size="131072" crc="cedef845"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="flashp">
+		<comment>Prototype</comment>
 		<description>Flash Point (Jpn, Prototype)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<year>1989</year>
+		<manufacturer>Sega</manufacturer>
 		<rom name="flash point (japan) (proto).bin" size="131072" crc="0655074d"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7207,9 +7221,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="flashbs" cloneof="flashb" romof="flashb">
+		<comment>Hack</comment>
 		<description>Flashback - The Quest for Identity (Hack, Spanish)</description>
 		<year>2020</year>
-		<manufacturer>U.S. Gold</manufacturer>
+		<manufacturer>jackic</manufacturer>
 		<rom name="flashback - the quest for identity (hack, spanish).bin" size="1572864" crc="d88b3a54"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7239,18 +7254,11 @@
 		<driver status="good"/>
 	</game>
 	<game name="flickys" cloneof="flicky" romof="flicky">
+		<comment>Hack</comment>
 		<description>Flicky (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="flicky (hack, spanish).bin" size="131072" crc="cb2072fa"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="flink">
-		<description>Flink (Euro)</description>
-		<year>1994</year>
-		<manufacturer>Sony Imagesoft</manufacturer>
-		<rom name="flink (euro).bin" size="1048576" crc="bef9a4f4"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -11770,6 +11778,14 @@
 		<year>1995</year>
 		<manufacturer>Data East</manufacturer>
 		<rom name="minnesota fats - pool legend (usa).bin" size="1048576" crc="38174f40"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="flink">
+		<description>Misadventures of Flink, The (Euro)</description>
+		<year>1994</year>
+		<manufacturer>Psygnosis</manufacturer>
+		<rom name="flink (euro).bin" size="1048576" crc="bef9a4f4"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

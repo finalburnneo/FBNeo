@@ -8,6 +8,7 @@
 #include "sh3comn.h"
 #include "sh4dmac.h"
 */
+#include "serflash.h"
 
 static const int dmasize[8] = { 8, 1, 2, 4, 32, 0, 0, 0 };
 
@@ -116,6 +117,29 @@ static int sh4_dma_transfer(int channel, int timermode, UINT32 chcr, UINT32 *sar
 	src &= AM;
 	dst &= AM;
 
+	if (size == 1 && (src & AM) == 0x10000000) { // slightly faster path to serialflash-DMA on cv1000
+		INT32 x_or = 0;
+		for(int i=0; i<count; i++)
+		{
+			if(incs == 2)
+				src --;
+			if(incd == 2)
+				dst --;
+#ifdef LSB_FIRST
+			x_or = 1;
+#endif
+			UINT8 *pw = MemMapW[ dst >> SH3_SHIFT ];
+			pw[(dst^x_or) & SH3_PAGEM] = serflash_io_read();
+
+			//WB(dst, serflash_io_read());
+
+			if(incs == 1)
+				src ++;
+			if(incd == 1)
+				dst ++;
+		}
+		count = 0;
+	} else
 	switch(size)
 	{
 	case 1: // 8 bit

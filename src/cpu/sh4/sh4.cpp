@@ -285,12 +285,36 @@ struct dtimer
 		prescale_counter += cyc * m_ratio;
 		while (prescale_counter >= timer_prescaler) {
 			prescale_counter -= timer_prescaler;
-			run(1);
+
+			// note: we can't optimize this, f.ex:
+			//run(prescale_counter / timer_prescaler); prescale_counter %= timer_prescaler;
+			// why? when the timer hits, the prescaler can & will change.
+
+			// note2:
+			//run(1);  this is just the contents of run(1) from below
+			if (running) {
+				time_current += 1;
+
+				if (time_current >= time_trig) { // should be while (retrig needs this, not used by sh4)
+					//if (counter) bprintf(0, _T("timer %d hits @ %d\n"), timer_param, time_current);
+
+					if (retrig == 0) {
+						running = 0;
+						//time_trig = -1;
+						//stop();
+						//break;
+					}
+					if (timer_exec) {
+						timer_exec(timer_param); // NOTE: this cb _might_ re-start/init the timer!
+					}
+					//time_current -= time_trig;
+				}
+			}
 		}
 	}
 
 	void run(INT32 cyc) {
-		if (running && time_trig != -1) {
+		if (running) {
 			time_current += cyc;
 
 			if (time_current >= time_trig) { // should be while (retrig needs this, not used by sh4)
@@ -528,7 +552,9 @@ INT32 Sh3Scan(INT32 nAction)
 
 #define	SH3_MAXHANDLER	(8)
 
-static UINT8 *MemMap[SH3_PAGE_COUNT * 3];
+static UINT8 *MemMapR[SH3_PAGE_COUNT];
+static UINT8 *MemMapW[SH3_PAGE_COUNT];
+static UINT8 *MemMapF[SH3_PAGE_COUNT];
 static pSh3ReadByteHandler ReadByte[SH3_MAXHANDLER];
 static pSh3WriteByteHandler WriteByte[SH3_MAXHANDLER];
 static pSh3ReadWordHandler ReadWord[SH3_MAXHANDLER];
@@ -545,7 +571,9 @@ static void __fastcall Sh3DummyWriteLong(UINT32, UINT32) { }
 static INT32 Sh3MapInit()
 {
 	//bprintf(0, _T("Init Sh3 MEMMAP\n"));
-	memset(MemMap, 0, sizeof(MemMap));
+	memset(MemMapR, 0, sizeof(MemMapR));
+	memset(MemMapW, 0, sizeof(MemMapW));
+	memset(MemMapF, 0, sizeof(MemMapF));
 
 	return 0;
 }
@@ -553,12 +581,14 @@ static INT32 Sh3MapInit()
 INT32 Sh3MapMemory(UINT8* pMemory, UINT32 nStart, UINT32 nEnd, INT32 nType)
 {
 	UINT8* Ptr = pMemory - nStart;
-	UINT8** pMemMap = MemMap + (nStart >> SH3_SHIFT);
+	UINT8** pMemMapR = MemMapR + (nStart >> SH3_SHIFT);
+	UINT8** pMemMapW = MemMapW + (nStart >> SH3_SHIFT);
+	UINT8** pMemMapF = MemMapF + (nStart >> SH3_SHIFT);
 
-	for (UINT64 i = (nStart & ~SH3_PAGEM); i <= nEnd; i += SH3_PAGE_SIZE, pMemMap++) {
-		if (nType & MAP_READ)  pMemMap[0] 				= Ptr + i;
-		if (nType & MAP_WRITE) pMemMap[SH3_WADD] 		= Ptr + i;
-		if (nType & MAP_FETCHOP) pMemMap[SH3_WADD*2]	= Ptr + i;
+	for (UINT64 i = (nStart & ~SH3_PAGEM); i <= nEnd; i += SH3_PAGE_SIZE, pMemMapR++, pMemMapW++, pMemMapF++) {
+		if (nType & MAP_READ)	  pMemMapR[0] = Ptr + i;
+		if (nType & MAP_WRITE)	  pMemMapW[0] = Ptr + i;
+		if (nType & MAP_FETCHOP)  pMemMapF[0] = Ptr + i;
 	}
 
 	return 0;
@@ -566,12 +596,14 @@ INT32 Sh3MapMemory(UINT8* pMemory, UINT32 nStart, UINT32 nEnd, INT32 nType)
 
 INT32 Sh3MapHandler(uintptr_t nHandler, UINT32 nStart, UINT32 nEnd, INT32 nType)
 {
-	UINT8** pMemMap = MemMap + (nStart >> SH3_SHIFT);
+	UINT8** pMemMapR = MemMapR + (nStart >> SH3_SHIFT);
+	UINT8** pMemMapW = MemMapW + (nStart >> SH3_SHIFT);
+	UINT8** pMemMapF = MemMapF + (nStart >> SH3_SHIFT);
 
-	for (UINT64 i = (nStart & ~SH3_PAGEM); i <= nEnd; i += SH3_PAGE_SIZE, pMemMap++) {
-		if (nType & MAP_READ)  pMemMap[0]		 		= (UINT8*)nHandler;
-		if (nType & MAP_WRITE) pMemMap[SH3_WADD] 		= (UINT8*)nHandler;
-		if (nType & MAP_FETCHOP) pMemMap[SH3_WADD*2]	= (UINT8*)nHandler;
+	for (UINT64 i = (nStart & ~SH3_PAGEM); i <= nEnd; i += SH3_PAGE_SIZE, pMemMapR++, pMemMapW++, pMemMapF++) {
+		if (nType & MAP_READ)	 pMemMapR[0] = (UINT8*)nHandler;
+		if (nType & MAP_WRITE)	 pMemMapW[0] = (UINT8*)nHandler;
+		if (nType & MAP_FETCHOP) pMemMapF[0] = (UINT8*)nHandler;
 	}
 	return 0;
 }
@@ -666,6 +698,7 @@ void Sh3BurnUntilInt()
 
 void Sh3RunEnd()
 {
+	bprintf(PRINT_ERROR, _T("Sh3RunEnd() disabled (for speed)\n"));
 	sh3_end_run = 1;
 }
 
@@ -873,13 +906,13 @@ static void TODO(const UINT16 opcode)
 {
 }
 
-static UINT8 *pr = NULL;
+//static UINT8 *pr = NULL;
 
 static inline UINT16 sh3_cpu_readop16(UINT32 A)
 {
 	WaitState(A, 0);
 
-	pr = MemMap[(A >> SH3_SHIFT) + SH3_WADD * 2]; // MAP_FETCH
+	UINT8 *pr = MemMapF[ A >> SH3_SHIFT ]; // fetch
 
 	return *((UINT16 *)(pr + (A & SH3_PAGEM)));
 }
@@ -891,7 +924,7 @@ static inline UINT8 RB(UINT32 A)
 		WaitState(A, 0);
 	}
 
-	pr = MemMap[ A >> SH3_SHIFT ];
+	UINT8 *pr = MemMapR[ A >> SH3_SHIFT ];
 	if ( (uintptr_t)pr >= SH3_MAXHANDLER ) {
 #ifdef LSB_FIRST
 		A ^= 1;
@@ -908,7 +941,7 @@ static inline UINT16 RW(UINT32 A)
 		WaitState(A, 0);
 	}
 
-	pr = MemMap[ A >> SH3_SHIFT ];
+	UINT8 *pr = MemMapR[ A >> SH3_SHIFT ];
 	if ( (uintptr_t)pr >= SH3_MAXHANDLER ) {
 #ifdef LSB_FIRST
 	//	A ^= 2;
@@ -926,7 +959,7 @@ static inline UINT32 RL(UINT32 A)
 		WaitState(A, 0);
 	}
 
-	pr = MemMap[ A >> SH3_SHIFT ];
+	UINT8 *pr = MemMapR[ A >> SH3_SHIFT ];
 	if ( (uintptr_t)pr >= SH3_MAXHANDLER ) {
 		UINT32 V = *((UINT32 *)(pr + (A & SH3_PAGEM)));
 		V = (V << 16) | (V >> 16);
@@ -942,7 +975,7 @@ static inline void WB(UINT32 A, UINT8 V)
 		WaitState(A, 1);
 	}
 
-	pr = MemMap[(A >> SH3_SHIFT) + SH3_WADD];
+	UINT8 *pr = MemMapW[ A >> SH3_SHIFT ];
 	if ((uintptr_t)pr >= SH3_MAXHANDLER) {
 #ifdef LSB_FIRST
 	    A ^= 1;
@@ -960,7 +993,7 @@ static inline void WW(UINT32 A, UINT16 V)
 		WaitState(A, 1);
 	}
 
-	pr = MemMap[(A >> SH3_SHIFT) + SH3_WADD];
+	UINT8 *pr = MemMapW[ A >> SH3_SHIFT ];
 	if ((uintptr_t)pr >= SH3_MAXHANDLER) {
 #ifdef LSB_FIRST
 	 //   A ^= 2;
@@ -978,7 +1011,7 @@ static inline void WL(UINT32 A, UINT32 V)
 		WaitState(A, 1);
 	}
 
-	pr = MemMap[(A >> SH3_SHIFT) + SH3_WADD];
+	UINT8 *pr = MemMapW[ A >> SH3_SHIFT ];
 	if ((uintptr_t)pr >= SH3_MAXHANDLER) {
 		V = (V << 16) | (V >> 16);
 		*((UINT32 *)(pr + (A & SH3_PAGEM))) = (UINT32)V;
@@ -4604,7 +4637,56 @@ static inline void execute_one(const UINT16 opcode)
 	}
 
 
-int Sh3Run(int cycles)
+static int Sh3Run_timerhack(int cycles)
+{
+	m_sh4_icount = cycles;
+	sh3_end_run = 0;
+
+	if (m_cpu_off)
+	{
+		m_sh4_icount = 0;
+		sh3_total_cycles += cycles;
+		return cycles;
+	}
+
+	do
+	{
+		if (m_delay)
+		{
+			const UINT16 opcode = sh3_cpu_readop16((UINT32)(m_delay & AM));
+
+			m_delay = 0;
+			m_ppc = m_pc;
+
+			execute_one(opcode);
+		}
+		else
+		{
+			const UINT16 opcode = sh3_cpu_readop16((UINT32)(m_pc & AM));
+
+			m_pc += 2;
+			m_ppc = m_pc;
+
+			execute_one(opcode);
+		}
+		if (m_test_irq && !m_delay)
+		{
+			sh4_check_pending_irq(/*"mame_sh4_execute"*/);
+		}
+
+		EAT(1);
+	} while( m_sh4_icount > 0);// && !sh3_end_run );
+
+	cycles = cycles - m_sh4_icount;
+
+	sh4_run_timers(cycles);
+
+	m_sh4_icount = 0;
+
+	return cycles;
+}
+
+static int Sh3Run_normal(int cycles)
 {
 	m_sh4_icount = cycles;
 	sh3_end_run = 0;
@@ -4623,56 +4705,40 @@ int Sh3Run(int cycles)
 		{
 			const UINT16 opcode = sh3_cpu_readop16((UINT32)(m_delay & AM));
 
-			//debugger_instruction_hook(this, m_delay & AM);
-
 			m_delay = 0;
 			m_ppc = m_pc;
 
 			execute_one(opcode);
-
-
-			if (m_test_irq && !m_delay)
-			{
-				sh4_check_pending_irq(/*"mame_sh4_execute"*/);
-			}
-
-
 		}
 		else
 		{
 			const UINT16 opcode = sh3_cpu_readop16((UINT32)(m_pc & AM));
 
-			//debugger_instruction_hook(this, m_pc & AM);
-
 			m_pc += 2;
 			m_ppc = m_pc;
 
 			execute_one(opcode);
-
-			if (m_test_irq && !m_delay)
-			{
-				sh4_check_pending_irq(/*"mame_sh4_execute"*/);
-			}
 		}
-		m_sh4_icount-=1;
-		sh3_total_cycles += 1;
-
-		if (timer_granularity == 0) {
-			sh4_run_timers((sh3_total_cycles - tot_cyc_start));
+		if (m_test_irq && !m_delay)
+		{
+			sh4_check_pending_irq(/*"mame_sh4_execute"*/);
 		}
-	} while( m_sh4_icount > 0 && !sh3_end_run );
+
+		EAT(1);
+		sh4_run_timers((sh3_total_cycles - tot_cyc_start));
+	} while( m_sh4_icount > 0);// && !sh3_end_run );
 
 	cycles = cycles - m_sh4_icount;
-
-	if (timer_granularity) {
-		sh4_run_timers(cycles);
-	}
 
 	m_sh4_icount = 0;
 
 	return cycles;
 }
 
+int Sh3Run(int cycles)
+{
+	return (timer_granularity == 0) ? Sh3Run_normal(cycles) : Sh3Run_timerhack(cycles);
+}
 
 #if 0
 void device_start()

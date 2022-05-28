@@ -1659,24 +1659,25 @@ struct BurnDriver BurnDrvZzyzzyxx2 = {
 
 
 // Brix
+// P-1244-1A PCB
 
 static struct BurnRomInfo brixRomDesc[] = {
-	{ "a",			0x1000, 0x050e0d70, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "b",			0x1000, 0x668118ae, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "c",			0x1000, 0xff5ed6cf, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "d",			0x1000, 0xc3ae45a9, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "e",			0x1000, 0xdef99fa9, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "f",			0x1000, 0xdde717ed, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "g",			0x1000, 0xadca02d8, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "h",			0x1000, 0xbc3b878c, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "brix_a.2f",	0x1000, 0x050e0d70, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "brix_b.3f",	0x1000, 0x668118ae, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "brix_c.4f",	0x1000, 0xff5ed6cf, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "brix_d.6f",	0x1000, 0xc3ae45a9, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "brix_e.7f",	0x1000, 0xdef99fa9, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "brix_f.7e",	0x1000, 0xdde717ed, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "brix_g.6e",	0x1000, 0xadca02d8, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "brix_h.4e",	0x1000, 0xbc3b878c, 1 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "i.5a",		0x1000, 0xc7742460, 2 | BRF_PRG | BRF_ESS }, //  8 Z80 #1 Code
-	{ "j.6a",		0x1000, 0x72166ccd, 2 | BRF_PRG | BRF_ESS }, //  9
+	{ "brix_i.5a",	0x1000, 0xc7742460, 2 | BRF_PRG | BRF_ESS }, //  8 Z80 #1 Code
+	{ "brix_j.6a",	0x1000, 0x72166ccd, 2 | BRF_PRG | BRF_ESS }, //  9
 
-	{ "n",			0x1000, 0x8064910e, 3 | BRF_GRA },           // 10 Graphics
-	{ "m.1d",		0x1000, 0x217b1402, 3 | BRF_GRA },           // 11
-	{ "k",			0x1000, 0xc7d7e2a0, 3 | BRF_GRA },           // 12
-	{ "l.1a",		0x1000, 0xab421a83, 3 | BRF_GRA },           // 13
+	{ "brix_n.1c",	0x1000, 0x8064910e, 3 | BRF_GRA },           // 10 Graphics
+	{ "brix_m.1d",	0x1000, 0x217b1402, 3 | BRF_GRA },           // 11
+	{ "brix_k.1b",	0x1000, 0xc7d7e2a0, 3 | BRF_GRA },           // 12
+	{ "brix_l.1a",	0x1000, 0xab421a83, 3 | BRF_GRA },           // 13
 };
 
 STD_ROM_PICK(brix)

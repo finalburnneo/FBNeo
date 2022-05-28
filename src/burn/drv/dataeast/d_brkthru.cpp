@@ -464,14 +464,14 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvGfxROM2   + 0x08000, 10, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM2   + 0x10000, 11, 1)) return 1;
 
-		if (BurnLoadRom(DrvColPROM + 0x00000, 12, 1)) return 1;
+		if (BurnLoadRom(DrvColPROM   + 0x00000, 12, 1)) return 1;
 		if (0 == strcmp(BurnDrvGetTextA(DRV_NAME), "brkthrut")) {
 			for (INT32 i = 0x40, j = 0x20; i < 0x0200; i += 0x40, j += 0x20)
 				memcpy(DrvColPROM + j, DrvColPROM + i, 0x20);
 
 			memset(DrvColPROM + 0x100, 0, 0x100);
 		}
-		if (BurnLoadRom(DrvColPROM + 0x00100, 13, 1)) return 1;
+		if (BurnLoadRom(DrvColPROM   + 0x00100, 13, 1)) return 1;
 
 		DrvGfxDecode();
 	}

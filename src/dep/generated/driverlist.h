@@ -658,6 +658,7 @@ DRV		BurnDrvAltbeast6;
 DRV		BurnDrvAltbeast;
 DRV		BurnDrvmd_alterego;
 DRV		BurnDrvnes_awakening;
+DRV		BurnDrvnes_awakeningp;
 DRV		BurnDrvMSX_amadeuscb;
 DRV		BurnDrvnes_amagon;
 DRV		BurnDrvMSX_amaurote;
@@ -10484,6 +10485,7 @@ DRV		BurnSpecNwarlock;
 DRV		BurnDrvCpsNemor1;
 DRV		BurnDrvCpsNemoj;
 DRV		BurnDrvCpsNemo;
+DRV		BurnDrvnes_nemulesis;
 DRV		BurnDrvMSX_nenokatas;
 DRV		BurnDrvneo2500;
 DRV		BurnDrvNblktiger;
@@ -11644,6 +11646,7 @@ DRV		BurnDrvsms_pitman;
 DRV		BurnDrvsg1k_pitman;
 DRV		BurnDrvcv_pitstopa;
 DRV		BurnDrvcv_pitstop;
+DRV		BurnDrvnes_pixelpoops;
 DRV		BurnSpecpixymicrod2;
 DRV		BurnDrvnes_pizzapopj;
 DRV		BurnDrvnes_pizzapop;
@@ -19384,7 +19387,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAltbeast6,			// Altered Beast (set 6, 8751 317-0076)
 	&BurnDrvAltbeast,			// Altered Beast (set 8, 8751 317-0078)
 	&BurnDrvmd_alterego,		// AlterEgo Remastered (HB)
-	&BurnDrvnes_awakening,		// Alwa's Awakening (HB, Prototype)
+	&BurnDrvnes_awakening,		// Alwa's Awakening (HB)
+	&BurnDrvnes_awakeningp,		// Alwa's Awakening (HB, Prototype)
 	&BurnDrvMSX_amadeuscb,		// Amadeus Classical Beats (HB)
 	&BurnDrvnes_amagon,			// Amagon (USA)
 	&BurnDrvMSX_amaurote,		// Amaurote (Euro)
@@ -28412,7 +28416,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMmonkeyj,			// Minky Monkey (Japan)
 	&BurnDrvMmonkey,			// Minky Monkey
 	&BurnDrvnes_minnanotaabouj,	// Minna no Taabou no Nakayoshi Daisakusen (Japan)
-	&BurnDrvnes_minnanotaabou,	// Minna no Taabou no Nakayoshi Daisakusen (T-Eng)
+	&BurnDrvnes_minnanotaabou,	// Minna no Taabou no Nakayoshi Daisakusen (T-Eng, v1.01)
 	&BurnDrvmd_mfpool,			// Minnesota Fats - Pool Legend (USA)
 	&BurnDrvnes_miracrops,		// Miracle Ropit's - 2100 Nen no Daibouken (Japan)
 	&BurnDrvsms_miracle,		// Miracle Warriors - Seal of the Dark Lord (Euro, USA, Bra)
@@ -28734,7 +28738,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecmotopera3,			// Mot - Part 3 (Spanish) (48K)
 	&BurnDrvMSX_motpart3,		// Mot - Part 3 (Spanish)
 	&BurnDrvnes_mother,			// Mother (Japan)
-	&BurnDrvnes_mothe25tannedi,	// Mother - 25th Anniversay Edition (Hack)
+	&BurnDrvnes_mothe25tannedi,	// Mother - 25th Anniversay Edition (Hack, v1.11)
 	&BurnSpecMotocrosssim,		// Moto Cross Simulator (128K)
 	&BurnDrvpce_motorod2a,		// Moto Roader II (Alt)
 	&BurnDrvpce_motorod2,		// Moto Roader II
@@ -29211,6 +29215,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsNemor1,			// Nemo (90 11 09 etc)
 	&BurnDrvCpsNemoj,			// Nemo (90 11 20 Japan)
 	&BurnDrvCpsNemo,			// Nemo (90 11 30 etc)
+	&BurnDrvnes_nemulesis,		// neMULEsis (HB)
 	&BurnDrvMSX_nenokatas,		// Nenokatas (HB)
 	&BurnDrvneo2500,			// Neo 2500 Demo
 	&BurnDrvNblktiger,			// Neo Black Tiger (Demo)
@@ -30371,6 +30376,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_pitman,		// Pitman (HB, v1.03)
 	&BurnDrvcv_pitstopa,		// Pitstop (Alt)
 	&BurnDrvcv_pitstop,			// Pitstop
+	&BurnDrvnes_pixelpoops,		// Pixel Poops Number Two (HB)
 	&BurnSpecpixymicrod2,		// Pixy the Microdot 2 (48K)
 	&BurnDrvnes_pizzapopj,		// Pizza Pop! (Japan)
 	&BurnDrvnes_pizzapop,		// Pizza Pop! (T-Eng)
@@ -33790,7 +33796,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSfz3jr1,			// Street Fighter Zero 3 (980727 Japan)
 	&BurnDrvCpsSfz3a,			// Street Fighter Zero 3 (980904 Asia)
 	&BurnDrvCpsSfz3j,			// Street Fighter Zero 3 (980904 Japan)
-	&BurnDrvCpsSfzmix,			// Street Fighter Zero 3 Mix v0.12
+	&BurnDrvCpsSfzmix,			// Street Fighter Zero 3 Mix v0.13
 	&BurnDrvCpsSfz3te,			// Street Fighter Zero 3 Training Edition v1.1 (980629 Japan)
 	&BurnDrvSftm110,			// Street Fighter: The Movie (v1.10)
 	&BurnDrvSftm111,			// Street Fighter: The Movie (v1.11)

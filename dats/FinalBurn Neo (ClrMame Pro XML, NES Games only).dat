@@ -734,6 +734,15 @@
 		<driver status="good"/>
 	</game>
 	<game name="awakening">
+		<comment>Homebrew</comment>
+		<description>Alwa's Awakening (HB)</description>
+		<year>2021</year>
+		<manufacturer>Elden Pixels</manufacturer>
+		<rom name="Alwa's Awakening (2021)(Elden Pixels).nes" size="524304" crc="5cc1abc7"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="awakeningp" cloneof="awakening" romof="awakening">
 		<comment>Homebrew, Prototype</comment>
 		<description>Alwa's Awakening (HB, Prototype)</description>
 		<year>2021</year>
@@ -4733,7 +4742,7 @@
 		<comment>Hack</comment>
 		<description>Earth Bound Zero (Hack, Spanish v0.99)</description>
 		<year>201?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<manufacturer>jackic</manufacturer>
 		<rom name="earth bound zero (usa) - castellano v0.99.nes" size="524304" crc="2e24c315"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4741,15 +4750,16 @@
 	<game name="earthboundzero" cloneof="earthbound" romof="earthbound">
 		<comment>Hack</comment>
 		<description>Earth Bound Zero (USA)</description>
-		<year>201?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2014</year>
+		<manufacturer>Giygas999</manufacturer>
 		<rom name="earth bound zero (usa).nes" size="524304" crc="6a5e39e2"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="earthbound">
+		<comment>Prototype</comment>
 		<description>Earthbound (USA) (Prototype)</description>
-		<year>1989?</year>
+		<year>1990</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Earthbound (USA) (Prototype).nes" size="524304" crc="f5ef5002"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -10399,9 +10409,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="minnanotaabou">
-		<description>Minna no Taabou no Nakayoshi Daisakusen (T-Eng)</description>
-		<year>1991</year>
-		<manufacturer>Character Soft</manufacturer>
+		<comment>Hack</comment>
+		<description>Minna no Taabou no Nakayoshi Daisakusen (T-Eng, v1.01)</description>
+		<year>2017</year>
+		<manufacturer>Suicidal Translations</manufacturer>
 		<rom name="Minna no Taabou no Nakayoshi Daisakusen (T-Eng).nes" size="65552" crc="17336a80"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10423,9 +10434,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="miraisen">
+		<comment>Hack</comment>
 		<description>Mirai Senshi - Lios (T-Eng)</description>
-		<year>1989</year>
-		<manufacturer>Pack-In-Video</manufacturer>
+		<year>2000</year>
+		<manufacturer>Aeon Genesis</manufacturer>
 		<rom name="Mirai Senshi - Lios (T-Eng).nes" size="262160" crc="932c263b"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10463,9 +10475,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="missisatjik">
+		<comment>Hack</comment>
 		<description>Mississippi Satsujin Jiken (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2017</year>
+		<manufacturer>GAFF Translations</manufacturer>
 		<rom name="Mississippi Satsujin Jiken (T-Eng).nes" size="163856" crc="f698e872"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10496,17 +10509,18 @@
 		<driver status="good"/>
 	</game>
 	<game name="mitsumegatooru">
+		<comment>Hack</comment>
 		<description>Mitsume ga Tooru (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2019</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Mitsume ga Tooru (T-Eng).nes" size="262160" crc="c5f60062"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="moaikun">
 		<description>Moai-kun (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Konami</manufacturer>
 		<rom name="Moai-kun (Japan).nes" size="65552" crc="a3a19253"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10570,16 +10584,17 @@
 	</game>
 	<game name="mooncrystalj" cloneof="mooncrystal" romof="mooncrystal">
 		<description>Moon Crystal (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1992</year>
+		<manufacturer>Hector</manufacturer>
 		<rom name="Moon Crystal (Japan).nes" size="524304" crc="463d5c4c"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="mooncrystal">
+		<comment>Hack</comment>
 		<description>Moon Crystal (T-eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2000</year>
+		<manufacturer>Alex W. Jackson</manufacturer>
 		<rom name="Moon Crystal (T-eng).nes" size="524304" crc="e05b0f24"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10612,40 +10627,41 @@
 	</game>
 	<game name="mortakom3" cloneof="mortakomiispe" romof="mortakomiispe">
 		<description>Mortal Kombat 3 - Special 56 Peoples (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1995</year>
+		<manufacturer>J.Y. Company</manufacturer>
 		<rom name="Mortal Kombat 3 - Special 56 Peoples (Unl).nes" size="655376" crc="0ba8e82e"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="mortalkombat4h" cloneof="mortalkombat4" romof="mortalkombat4">
+		<comment>Hack</comment>
 		<description>Mortal Kombat 4 (Hack, UMK3)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>200?</year>
+		<manufacturer>Ka Sheng</manufacturer>
 		<rom name="Mortal Kombat 4 (Hack, UMK3).nes" size="2097168" crc="eecfb699"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="mortalkombat4">
 		<description>Mortal Kombat 4 (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>200?</year>
+		<manufacturer>ABAB Soft</manufacturer>
 		<rom name="Mortal Kombat 4 (Unl).nes" size="262160" crc="89001958"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="mortakomiispe">
 		<description>Mortal Kombat II Special (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1995</year>
+		<manufacturer>J.Y. Company</manufacturer>
 		<rom name="Mortal Kombat II Special (Unl).nes" size="655376" crc="99d81100"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="mortakomiiispe" cloneof="mortakomiispe" romof="mortakomiispe">
 		<description>Mortal Kombat III Special (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1995</year>
+		<manufacturer>J.Y. Company</manufacturer>
 		<rom name="Mortal Kombat III Special (Unl).nes" size="655376" crc="17937518"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10659,9 +10675,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="mothe25tannedi" cloneof="earthbound" romof="earthbound">
-		<description>Mother - 25th Anniversay Edition (Hack)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Hack</comment>
+		<description>Mother - 25th Anniversay Edition (Hack, v1.11)</description>
+		<year>2014</year>
+		<manufacturer>DragonDePlatino</manufacturer>
 		<rom name="Mother - 25th Anniversay Edition (Hack).nes" size="524304" crc="6e24f190"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10675,9 +10692,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="motoccha">
+		<comment>Hack</comment>
 		<description>Motocross Champion (T-eng)</description>
-		<year>1989</year>
-		<manufacturer>Konami</manufacturer>
+		<year>2001</year>
+		<manufacturer>Suicidal Translations</manufacturer>
 		<rom name="Motocross Champion (T-eng).nes" size="262160" crc="c252e03a"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10928,6 +10946,15 @@
 		<year>2020</year>
 		<manufacturer>HHNM Team</manufacturer>
 		<rom name="nekketsu! street basket - ganbare dunk heroes (T-Chi, v2).nes" size="524304" crc="8f359b4f"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="nemulesis">
+		<comment>Homebrew</comment>
+		<description>neMULEsis (HB)</description>
+		<year>2021-22</year>
+		<manufacturer>John Vanderhoef</manufacturer>
+		<rom name="neMULEsis (4.27.22)(John Vanderhoef).nes" size="524304" crc="d33b8949"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -11770,6 +11797,15 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="pixelpoops">
+		<comment>Homebrew</comment>
+		<description>Pixel Poops Number Two (HB)</description>
+		<year>2021</year>
+		<manufacturer>Techmaster Games</manufacturer>
+		<rom name="Pixel Poops Number Two (2021)(Techmaster Games).nes" size="524304" crc="50ca8022"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="pizzapopj" cloneof="pizzapop" romof="pizzapop">
 		<description>Pizza Pop! (Japan)</description>
 		<year>1992</year>
@@ -11779,9 +11815,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="pizzapop">
+		<comment>Hack</comment>
 		<description>Pizza Pop! (T-Eng)</description>
-		<year>1992</year>
-		<manufacturer>Jaleco</manufacturer>
+		<year>2019</year>
+		<manufacturer>pacnsacdave</manufacturer>
 		<rom name="Pizza Pop! (T-Eng).nes" size="262160" crc="bcde6e2c"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11795,9 +11832,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="plasmaball">
+		<comment>Hack</comment>
 		<description>Plasma Ball (T-eng)</description>
-		<year>1992</year>
-		<manufacturer>Jaleco</manufacturer>
+		<year>2019</year>
+		<manufacturer>MrRichard999</manufacturer>
 		<rom name="Plasma Ball (T-eng).nes" size="393232" crc="71cf9877"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>

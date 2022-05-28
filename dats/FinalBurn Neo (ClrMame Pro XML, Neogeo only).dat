@@ -19701,11 +19701,11 @@
 	<game name="kof98eckg" cloneof="kof98" romof="kof98">
 		<comment>Hack</comment>
 		<description>The King of Fighters '98 Easy Combo King (GOTVG Version, Hack)</description>
-		<year>2020</year>
+		<year>2019</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="242-p1eck.p1" size="2097152" crc="2aed3a91"/>
-		<rom name="242-p2eck.sp2" size="4194304" crc="ef36876a"/>
-		<rom name="242-s1eck.s1" size="131072" crc="5a498ed2"/>
+		<rom name="242-p1eckg.p1" size="2097152" crc="9746a706"/>
+		<rom name="242-p2eckg.sp2" size="4194304" crc="5d59e3ae"/>
+		<rom name="242-s1eckg.s1" size="131072" crc="f91c29d2"/>
 		<rom name="242-c1eckg.c1" size="8388608" crc="d3da4dc1"/>
 		<rom name="242-c2eckg.c2" size="8388608" crc="f5a5d149"/>
 		<rom name="242-c3eckg.c3" size="8388608" crc="0689e5b1"/>
@@ -19765,9 +19765,9 @@
 		<description>The King of Fighters '98 Easy Combo King (YZKOF Version, Hack)</description>
 		<year>2020</year>
 		<manufacturer>Hack</manufacturer>
-		<rom name="242-pn1eck.p1" size="1048576" crc="0ced4a93"/>
-		<rom name="242-p2eck.sp2" size="4194304" crc="ef36876a"/>
-		<rom name="242-s1eck.s1" size="131072" crc="5a498ed2"/>
+		<rom name="242-pn1ecky.p1" size="1048576" crc="0ced4a93"/>
+		<rom name="242-p2ecky.sp2" size="4194304" crc="ef36876a"/>
+		<rom name="242-s1ecky.s1" size="131072" crc="5a498ed2"/>
 		<rom name="242-c1ecky.c1" size="8388608" crc="d528dab9"/>
 		<rom name="242-c2ecky.c2" size="8388608" crc="73556130"/>
 		<rom name="242-c3ecky.c3" size="8388608" crc="4091bca0"/>

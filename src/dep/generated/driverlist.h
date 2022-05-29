@@ -2076,6 +2076,8 @@ DRV		BurnDrvMSX_breakinj;
 DRV		BurnDrvpce_breakin;
 DRV		BurnDrvMSX_breakout;
 DRV		BurnDrvMSX_breakoutt;
+DRV		BurnDrvBrkthrubl;
+DRV		BurnDrvBrkthrut;
 DRV		BurnDrvBrkthru;
 DRV		BurnDrvgg_breakthru;
 DRV		BurnDrvMSX_breaker;
@@ -20806,6 +20808,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_breakin,		// Break In
 	&BurnDrvMSX_breakout,		// Break Out (Jpn)
 	&BurnDrvMSX_breakoutt,		// Break Out! - The Great Computer Adventure (Jpn)
+	&BurnDrvBrkthrubl,			// Break Thru (bootleg)
+	&BurnDrvBrkthrut,			// Break Thru (Tecfri license)
 	&BurnDrvBrkthru,			// Break Thru (US)
 	&BurnDrvgg_breakthru,		// Break Thru! (Prototype)
 	&BurnDrvMSX_breaker,		// Breaker Breaker (Euro)

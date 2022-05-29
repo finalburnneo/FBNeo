@@ -58,7 +58,13 @@ MAIN_FBNEO_DIR	:= ../..
 VERSION_SCRIPT	:= $(MAIN_FBNEO_DIR)/burner/libretro/link.T
 
 # TARGET
-TARGET_NAME := fbneo
+ifeq ($(subset),)
+	TARGET_NAME := fbneo
+	INCLUDED_MAKEFILE = Makefile.common
+else
+	TARGET_NAME := fbneo_$(subset)
+	INCLUDED_MAKEFILE = Makefile.$(subset)
+endif
 
 # Unix
 ifneq (,$(findstring unix,$(platform)))
@@ -504,7 +510,7 @@ endif
 CC_SYSTEM = gcc
 CXX_SYSTEM = g++
 
-include Makefile.common
+include $(INCLUDED_MAKEFILE)
 
 FBNEO_CXXOBJ := $(SOURCES_CXX:.cpp=.o)
 FBNEO_COBJ := $(SOURCES_C:.c=.o)

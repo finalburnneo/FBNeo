@@ -33,6 +33,11 @@
 #define APP_TITLE "FinalBurn Neo Light"
 #endif
 
+#ifdef SUBSET
+#undef APP_TITLE
+#define APP_TITLE "FinalBurn Neo (" SUBSET " subset)"
+#endif
+
 int counter;           // General purpose variable used when debugging
 struct MovieExtInfo
 {
@@ -2446,7 +2451,7 @@ char* GameDecoration(UINT32 nBurnDrv)
 	return szGameDecoration;
 }
 
-#ifdef LIGHT
+#ifdef NO_NES
 // stub those functions
 void nes_add_cheat(char *code) {}
 void nes_remove_cheat(char *code) {}

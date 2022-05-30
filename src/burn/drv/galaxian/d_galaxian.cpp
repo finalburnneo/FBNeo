@@ -517,33 +517,6 @@ static struct BurnInputInfo DarkplntInputList[] =
 
 STDINPUTINFO(Darkplnt)
 
-static struct BurnInputInfo DevilfsgInputList[] =
-{
-	{"Coin 1"            , BIT_DIGITAL   , GalInputPort0 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , GalInputPort1 + 0, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , GalInputPort0 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL   , GalInputPort1 + 1, "p2 start"  },
-
-	{"Up"                , BIT_DIGITAL   , GalInputPort0 + 7, "p1 up"     },
-	{"Down"              , BIT_DIGITAL   , GalInputPort0 + 5, "p1 down"   },
-	{"Left"              , BIT_DIGITAL   , GalInputPort0 + 2, "p1 left"   },
-	{"Right"             , BIT_DIGITAL   , GalInputPort0 + 3, "p1 right"  },
-	{"Fire 1"            , BIT_DIGITAL   , GalInputPort0 + 4, "p1 fire 1" },
-	
-	{"Up (Cocktail)"     , BIT_DIGITAL   , GalInputPort0 + 6, "p2 up"     },
-	{"Down (Cocktail)"   , BIT_DIGITAL   , GalInputPort1 + 5, "p2 down"   },
-	{"Left (Cocktail)"   , BIT_DIGITAL   , GalInputPort1 + 2, "p2 left"   },
-	{"Right (Cocktail)"  , BIT_DIGITAL   , GalInputPort1 + 3, "p2 right"  },
-	{"Fire 1 (Cocktail)" , BIT_DIGITAL   , GalInputPort1 + 4, "p2 fire 1" },
-
-	{"Reset"             , BIT_DIGITAL   , &GalReset        , "reset"     },
-	{"Dip 1"             , BIT_DIPSWITCH , GalDip + 0       , "dip"       },
-	{"Dip 2"             , BIT_DIPSWITCH , GalDip + 1       , "dip"       },
-	{"Dip 3"             , BIT_DIPSWITCH , GalDip + 2       , "dip"       },
-};
-
-STDINPUTINFO(Devilfsg)
-
 static struct BurnInputInfo DevilfshInputList[] =
 {
 	{"Coin 1"            , BIT_DIGITAL   , GalInputPort0 + 7, "p1 coin"   },
@@ -570,6 +543,33 @@ static struct BurnInputInfo DevilfshInputList[] =
 };
 
 STDINPUTINFO(Devilfsh)
+
+static struct BurnInputInfo DevilfshgInputList[] =
+{
+	{"Coin 1"            , BIT_DIGITAL   , GalInputPort0 + 0, "p1 coin"   },
+	{"Start 1"           , BIT_DIGITAL   , GalInputPort1 + 0, "p1 start"  },
+	{"Coin 2"            , BIT_DIGITAL   , GalInputPort0 + 1, "p2 coin"   },
+	{"Start 2"           , BIT_DIGITAL   , GalInputPort1 + 1, "p2 start"  },
+
+	{"Up"                , BIT_DIGITAL   , GalInputPort0 + 7, "p1 up"     },
+	{"Down"              , BIT_DIGITAL   , GalInputPort0 + 5, "p1 down"   },
+	{"Left"              , BIT_DIGITAL   , GalInputPort0 + 2, "p1 left"   },
+	{"Right"             , BIT_DIGITAL   , GalInputPort0 + 3, "p1 right"  },
+	{"Fire 1"            , BIT_DIGITAL   , GalInputPort0 + 4, "p1 fire 1" },
+
+	{"Up (Cocktail)"     , BIT_DIGITAL   , GalInputPort0 + 6, "p2 up"     },
+	{"Down (Cocktail)"   , BIT_DIGITAL   , GalInputPort1 + 5, "p2 down"   },
+	{"Left (Cocktail)"   , BIT_DIGITAL   , GalInputPort1 + 2, "p2 left"   },
+	{"Right (Cocktail)"  , BIT_DIGITAL   , GalInputPort1 + 3, "p2 right"  },
+	{"Fire 1 (Cocktail)" , BIT_DIGITAL   , GalInputPort1 + 4, "p2 fire 1" },
+
+	{"Reset"             , BIT_DIGITAL   , &GalReset        , "reset"     },
+	{"Dip 1"             , BIT_DIPSWITCH , GalDip + 0       , "dip"       },
+	{"Dip 2"             , BIT_DIPSWITCH , GalDip + 1       , "dip"       },
+	{"Dip 3"             , BIT_DIPSWITCH , GalDip + 2       , "dip"       },
+};
+
+STDINPUTINFO(Devilfshg)
 
 static struct BurnInputInfo DingoInputList[] =
 {
@@ -3138,40 +3138,6 @@ static struct BurnDIPInfo DarkplntDIPList[]=
 
 STDDIPINFO(Darkplnt)
 
-static struct BurnDIPInfo DevilfsgDIPList[]=
-{
-	// Default Values
-	{0x0f, 0xff, 0xff, 0x00, NULL                     },
-	{0x10, 0xff, 0xff, 0xc0, NULL                     },
-	{0x11, 0xff, 0xff, 0x00, NULL                     },
-	
-	// Dip 1
-	
-	// Dip 2
-	{0   , 0xfe, 0   , 2   , "Coin A"                 },
-	{0x10, 0x01, 0x40, 0x00, "2 Coins 1 Play"         },
-	{0x10, 0x01, 0x40, 0x40, "1 Coin  1 Play"         },
-	
-	{0   , 0xfe, 0   , 2   , "Coin B"                 },
-	{0x10, 0x01, 0x80, 0x80, "1 Coin 3 Plays"         },
-	{0x10, 0x01, 0x80, 0x00, "1 Coin 5 Plays"         },
-	
-	// Dip 3
-	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
-	{0x11, 0x01, 0x01, 0x00, "10000"                  },
-	{0x11, 0x01, 0x01, 0x01, "15000"                  },
-	
-	{0   , 0xfe, 0   , 2   , "Lives"                  },
-	{0x11, 0x01, 0x04, 0x00, "4"                      },
-	{0x11, 0x01, 0x04, 0x04, "5"                      },
-	
-	{0   , 0xfe, 0   , 2   , "Cabinet"                },
-	{0x11, 0x01, 0x08, 0x00, "Upright"                },
-	{0x11, 0x01, 0x08, 0x08, "Cocktail"               },
-};
-
-STDDIPINFO(Devilfsg)
-
 static struct BurnDIPInfo DevilfshDIPList[]=
 {
 	// Default Values
@@ -3205,6 +3171,40 @@ static struct BurnDIPInfo DevilfshDIPList[]=
 };
 
 STDDIPINFO(Devilfsh)
+
+static struct BurnDIPInfo DevilfshgDIPList[] =
+{
+	// Default Values
+	{0x0f, 0xff, 0xff, 0x00, NULL                     },
+	{0x10, 0xff, 0xff, 0xc0, NULL                     },
+	{0x11, 0xff, 0xff, 0x00, NULL                     },
+
+	// Dip 1
+
+	// Dip 2
+	{0   , 0xfe, 0   , 2   , "Coin A"                 },
+	{0x10, 0x01, 0x40, 0x00, "2 Coins 1 Play"         },
+	{0x10, 0x01, 0x40, 0x40, "1 Coin  1 Play"         },
+
+	{0   , 0xfe, 0   , 2   , "Coin B"                 },
+	{0x10, 0x01, 0x80, 0x80, "1 Coin 3 Plays"         },
+	{0x10, 0x01, 0x80, 0x00, "1 Coin 5 Plays"         },
+
+	// Dip 3
+	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
+	{0x11, 0x01, 0x01, 0x00, "10000"                  },
+	{0x11, 0x01, 0x01, 0x01, "15000"                  },
+
+	{0   , 0xfe, 0   , 2   , "Lives"                  },
+	{0x11, 0x01, 0x04, 0x00, "4"                      },
+	{0x11, 0x01, 0x04, 0x04, "5"                      },
+
+	{0   , 0xfe, 0   , 2   , "Cabinet"                },
+	{0x11, 0x01, 0x08, 0x00, "Upright"                },
+	{0x11, 0x01, 0x08, 0x08, "Cocktail"               },
+};
+
+STDDIPINFO(Devilfshg)
 
 static struct BurnDIPInfo DingoDIPList[]=
 {
@@ -8974,6 +8974,21 @@ static struct BurnRomInfo OmniRomDesc[] = {
 STD_ROM_PICK(Omni)
 STD_ROM_FN(Omni)
 
+// Closest to omni
+static struct BurnRomInfo SupershpRomDesc[] = {
+	{ "ss_1.bin",	0x01000, 0x55bd4e46, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 }, // on a riser board
+	{ "ss_2.bin",	0x01000, 0x1e08cba8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "ss_3.bin",	0x01000, 0xbab514fa, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+
+	{ "ss_j.j1",	0x01000, 0x2dba9e0e, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "ss_k.k1",	0x01000, 0xcdc5aa26, BRF_GRA | GAL_ROM_TILES_SHARED },
+
+	{ "colour.bin",	0x00020, 0x57a45057, BRF_GRA | GAL_ROM_PROM }, // BAD_DUMP, not dumped for this set, probably the same given how close this is
+};
+
+STD_ROM_PICK(Supershp)
+STD_ROM_FN(Supershp)
+
 static struct BurnRomInfo UniwarsRomDesc[] = {
 	{ "f07_1a.bin",    0x00800, 0xd975af10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "h07_2a.bin",    0x00800, 0xb2ed14c3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -9368,10 +9383,20 @@ struct BurnDriver BurnDrvPiscesb = {
 
 struct BurnDriver BurnDrvOmni = {
 	"omni", "pisces", NULL, NULL, "1982",
-	"Omni\0", NULL, "bootleg", "Galaxian",
+	"Omni\0", NULL, "bootleg (Videa System)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, OmniRomInfo, OmniRomName, NULL, NULL, NULL, NULL, OmegabInputInfo, PiscesbDIPInfo,
+	PiscesInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvSupershp = {
+	"supershp", "pisces", NULL, NULL, "1982",
+	"Supershp\0", NULL, "bootleg", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, SupershpRomInfo, SupershpRomName, NULL, NULL, NULL, NULL, OmegabInputInfo, PiscesbDIPInfo,
 	PiscesInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
@@ -9984,78 +10009,6 @@ struct BurnDriver BurnDrvAtlantisb = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, AtlantisbRomInfo, AtlantisbRomName, NULL, NULL, NULL, NULL, Phoenxp2InputInfo, AtlantisbDIPInfo,
 	AtlantisbInit, GalExit, GalFrame, GalDraw, GalScan,
-	NULL, 392, 224, 256, 3, 4
-};
-
-// Seperate sprite/tile roms with IRQ0 instead of NMI
-static struct BurnRomInfo DevilfshgbRomDesc[] = {
-	{ "dfish1.7f",     0x01000, 0x2ab19698, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "dfish2.7h",     0x01000, 0x4e77f097, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "dfish3.7k",     0x01000, 0x3f16a4c6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "dfish4.7m",     0x01000, 0x11fc7e59, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },	
-	
-	{ "dfish5.1h",     0x01000, 0xace6e31f, BRF_GRA | GAL_ROM_TILES_SHARED },
-	{ "dfish6.1k",     0x01000, 0xd7a6c4c4, BRF_GRA | GAL_ROM_TILES_SHARED },
-	
-	{ "82s123.6e",     0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
-};
-
-STD_ROM_PICK(Devilfshgb)
-STD_ROM_FN(Devilfshgb)
-
-static void DevilfsgRearrangeRom()
-{
-	GalTempRom = (UINT8*)BurnMalloc(GalZ80Rom1Size);
-	memcpy(GalTempRom, GalZ80Rom1, GalZ80Rom1Size);
-	memcpy(GalZ80Rom1 + 0x2000, GalTempRom + 0x0000, 0x800);
-	memcpy(GalZ80Rom1 + 0x0000, GalTempRom + 0x0800, 0x800);
-	memcpy(GalZ80Rom1 + 0x2800, GalTempRom + 0x1000, 0x800);
-	memcpy(GalZ80Rom1 + 0x0800, GalTempRom + 0x1800, 0x800);
-	memcpy(GalZ80Rom1 + 0x3000, GalTempRom + 0x2000, 0x800);
-	memcpy(GalZ80Rom1 + 0x1000, GalTempRom + 0x2800, 0x800);
-	memcpy(GalZ80Rom1 + 0x3800, GalTempRom + 0x3000, 0x800);
-	memcpy(GalZ80Rom1 + 0x1800, GalTempRom + 0x3800, 0x800);
-	BurnFree(GalTempRom);
-}
-
-static INT32 DevilfsgInit()
-{
-	INT32 nRet;
-	
-	GalPostLoadCallbackFunction = DevilfsgRearrangeRom;
-	
-	nRet = GalInit();
-	
-	GalNumChars = 0x100;
-	GalNumSprites = 0x40;
-	CharPlaneOffsets[1] = 0x4000;
-	SpritePlaneOffsets[1] = 0x4000;
-	
-	UINT8 *TempRom = (UINT8*)BurnMalloc(0x2000);
-	GalTempRom = (UINT8*)BurnMalloc(0x1000);
-	nRet = BurnLoadRom(TempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1); if (nRet) return 1;
-	nRet = BurnLoadRom(TempRom + 0x1000, GAL_ROM_OFFSET_TILES_SHARED + 1, 1); if (nRet) return 1;
-	memcpy(GalTempRom + 0x0000, TempRom + 0x0800, 0x800);
-	memcpy(GalTempRom + 0x0800, TempRom + 0x1800, 0x800);
-	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
-	memcpy(GalTempRom + 0x0000, TempRom + 0x0000, 0x800);
-	memcpy(GalTempRom + 0x0800, TempRom + 0x1000, 0x800);	
-	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);
-	BurnFree(GalTempRom);
-	BurnFree(TempRom);
-	
-	GalIrqType = GAL_IRQ_TYPE_IRQ0;
-	
-	return nRet;
-}
-
-struct BurnDriver BurnDrvDevilfshgb = {
-	"devilfshgb", "devilfsh", NULL, NULL, "1984",
-	"Devil Fish (Galaxian hardware, bootleg)\0", NULL, "bootleg (Vision)", "Galaxian",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
-	NULL, DevilfshgbRomInfo, DevilfshgbRomName, NULL, NULL, NULL, NULL, DevilfsgInputInfo, DevilfsgDIPInfo,
-	DevilfsgInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 
@@ -17052,6 +17005,45 @@ static struct BurnRomInfo DevilfshRomDesc[] = {
 STD_ROM_PICK(Devilfsh)
 STD_ROM_FN(Devilfsh)
 
+// Artic Multi-System, CPU enclosed in epoxy block
+static struct BurnRomInfo DevilfshgRomDesc[] = {
+	{ "df1",		0x00800, 0x5af8db02, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "df2",		0x00800, 0x6e4eb2af, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "df3",		0x00800, 0xef37cc08, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "df4",		0x00800, 0xd344706f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "df5",		0x00800, 0xab9f2f7c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "df6",		0x00800, 0x5681d1f9, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "df7",		0x00800, 0x16a4b6c3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "df8",		0x00800, 0x236fd69d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+
+	{ "df12",		0x00800, 0xaa62441d, BRF_GRA | GAL_ROM_TILES_CHARS },
+	{ "df11",		0x00800, 0x12a1f15d, BRF_GRA | GAL_ROM_TILES_CHARS },
+
+	{ "df10",		0x00800, 0x5da97ccf, BRF_GRA | GAL_ROM_TILES_SPRITES },
+	{ "df9",		0x00800, 0xedd41c4c, BRF_GRA | GAL_ROM_TILES_SPRITES },
+
+	{ "mmi6331.6l",	0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Devilfshg)
+STD_ROM_FN(Devilfshg)
+
+// Seperate sprite/tile roms with IRQ0 instead of NMI
+static struct BurnRomInfo DevilfshgbRomDesc[] = {
+	{ "dfish1.7f",     0x01000, 0x2ab19698, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "dfish2.7h",     0x01000, 0x4e77f097, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "dfish3.7k",     0x01000, 0x3f16a4c6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "dfish4.7m",     0x01000, 0x11fc7e59, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+
+	{ "dfish5.1h",     0x01000, 0xace6e31f, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "dfish6.1k",     0x01000, 0xd7a6c4c4, BRF_GRA | GAL_ROM_TILES_SHARED },
+
+	{ "82s123.6e",     0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Devilfshgb)
+STD_ROM_FN(Devilfshgb)
+
 static struct BurnRomInfo Newsin7RomDesc[] = {
 	{ "newsin.1",      0x01000, 0xe6c23fe0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "newsin.2",      0x01000, 0x3d477b5f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -18366,6 +18358,76 @@ static INT32 DevilfshInit()
 	return nRet;
 }
 
+static INT32 DevilfshgInit()
+{
+	INT32 nRet = GalInit();
+
+	// descramble address lines
+	if (0 == nRet) {
+		GalTempRom = (UINT8*)BurnMalloc(GalZ80Rom1Size);
+
+		if (NULL != GalTempRom) {
+			memcpy(GalTempRom, GalZ80Rom1, GalZ80Rom1Size);
+
+			for (INT32 i = 0; i < GalZ80Rom1Size; i++)
+				GalZ80Rom1[i] = GalTempRom[(i & ~0x1f) | BITSWAP05(i, 1, 0, 3, 4, 2)];
+
+			BurnFree(GalTempRom);
+			GalTempRom = NULL;
+
+			GalIrqType = GAL_IRQ_TYPE_IRQ0;
+		}
+	}
+
+	return nRet;
+}
+
+static void DevilfshgbRearrangeRom()
+{
+	GalTempRom = (UINT8*)BurnMalloc(GalZ80Rom1Size);
+	memcpy(GalTempRom, GalZ80Rom1, GalZ80Rom1Size);
+	memcpy(GalZ80Rom1 + 0x2000, GalTempRom + 0x0000, 0x800);
+	memcpy(GalZ80Rom1 + 0x0000, GalTempRom + 0x0800, 0x800);
+	memcpy(GalZ80Rom1 + 0x2800, GalTempRom + 0x1000, 0x800);
+	memcpy(GalZ80Rom1 + 0x0800, GalTempRom + 0x1800, 0x800);
+	memcpy(GalZ80Rom1 + 0x3000, GalTempRom + 0x2000, 0x800);
+	memcpy(GalZ80Rom1 + 0x1000, GalTempRom + 0x2800, 0x800);
+	memcpy(GalZ80Rom1 + 0x3800, GalTempRom + 0x3000, 0x800);
+	memcpy(GalZ80Rom1 + 0x1800, GalTempRom + 0x3800, 0x800);
+	BurnFree(GalTempRom);
+}
+
+static INT32 DevilfshgbInit()
+{
+	INT32 nRet;
+
+	GalPostLoadCallbackFunction = DevilfshgbRearrangeRom;
+
+	nRet = GalInit();
+
+	GalNumChars = 0x100;
+	GalNumSprites = 0x40;
+	CharPlaneOffsets[1] = 0x4000;
+	SpritePlaneOffsets[1] = 0x4000;
+
+	UINT8* TempRom = (UINT8*)BurnMalloc(0x2000);
+	GalTempRom = (UINT8*)BurnMalloc(0x1000);
+	nRet = BurnLoadRom(TempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1); if (nRet) return 1;
+	nRet = BurnLoadRom(TempRom + 0x1000, GAL_ROM_OFFSET_TILES_SHARED + 1, 1); if (nRet) return 1;
+	memcpy(GalTempRom + 0x0000, TempRom + 0x0800, 0x800);
+	memcpy(GalTempRom + 0x0800, TempRom + 0x1800, 0x800);
+	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
+	memcpy(GalTempRom + 0x0000, TempRom + 0x0000, 0x800);
+	memcpy(GalTempRom + 0x0800, TempRom + 0x1000, 0x800);
+	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);
+	BurnFree(GalTempRom);
+	BurnFree(TempRom);
+
+	GalIrqType = GAL_IRQ_TYPE_IRQ0;
+
+	return nRet;
+}
+
 static void Newsin7PostLoad()
 {
 	MarsDecrypt();
@@ -18880,11 +18942,31 @@ struct BurnDriver BurnDrvMars = {
 
 struct BurnDriver BurnDrvDevilfsh = {
 	"devilfsh", NULL, NULL, NULL, "1982",
-	"Devil Fish\0", NULL, "Artic", "Galaxian",
+	"Devil Fish (Scramble hardware)\0", NULL, "Artic", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, DevilfshRomInfo, DevilfshRomName, NULL, NULL, NULL, NULL, DevilfshInputInfo, DevilfshDIPInfo,
 	DevilfshInit, KonamiExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvDevilfshg = {
+	"devilfshg", "devilfsh", NULL, NULL, "1984",
+	"Devil Fish (Galaxian hardware)\0", NULL, "Artic", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
+	NULL, DevilfshgRomInfo, DevilfshgRomName, NULL, NULL, NULL, NULL, DevilfshgInputInfo, DevilfshgDIPInfo,
+	DevilfshgInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvDevilfshgb = {
+	"devilfshgb", "devilfsh", NULL, NULL, "1984",
+	"Devil Fish (Galaxian hardware, bootleg)\0", NULL, "bootleg (Vision)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
+	NULL, DevilfshgbRomInfo, DevilfshgbRomName, NULL, NULL, NULL, NULL, DevilfshgInputInfo, DevilfshgDIPInfo,
+	DevilfshgbInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 

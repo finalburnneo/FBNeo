@@ -4821,10 +4821,44 @@ INT32 NeoFrame()
 	nuPD4990ATicks = nCyclesExtra[0];
 
 	// Run 68000
-	//nCyclesSegment = nSekCyclesScanline * 24;
-	/* Do scanlines: [248, 263] followed by [0, 23] ==
-	 *               [248, 264) followed by [0, 24)
-	 */
+	// Do scanlines: [248, 263] == [248, 264)
+	nCyclesSegment = nSekCyclesScanline * 16;
+	while (SekTotalCycles() < nCyclesSegment) {
+
+		if ((nIRQControl & 0x10) && (nIRQCycles < NO_IRQ_PENDING) && (SekTotalCycles() >= nIRQCycles)) {
+
+			nIRQAcknowledge &= ~2;
+			SekSetIRQLine(nScanlineIRQ, CPU_IRQSTATUS_ACK);
+
+#if 0 || defined LOG_IRQ
+			bprintf(PRINT_NORMAL, _T("  - IRQ triggered (line %3i + %3i cycles).\n"), NeoCurrentScanline(), NeoCurrentScanlineOffset());
+#endif
+
+			if (nIRQControl & 0x80) {
+				nIRQCycles += NeoConvertIRQPosition(nIRQOffset + 1);
+
+#if 0 || defined LOG_IRQ
+				bprintf(PRINT_NORMAL, _T("  - IRQ Line -> %3i (at line %3i, autoload).\n"), nIRQCycles / nSekCyclesScanline, NeoCurrentScanline());
+#endif
+
+			}
+		}
+
+		if (nCyclesSegment < nIRQCycles || SekTotalCycles() >= nIRQCycles) {
+			NeoSekRun(nCyclesSegment - SekTotalCycles());
+		} else {
+			NeoSekRun(nIRQCycles - SekTotalCycles());
+		}
+	}
+
+	if ((nIRQControl & 8) == 0) {
+		if (++nSpriteFrameTimer > nSpriteFrameSpeed) {
+			nSpriteFrameTimer = 0;
+			nNeoSpriteFrame++;
+		}
+	}
+
+	// Do scanlines: [  0,  23] == [  0,  24)
 	nCyclesSegment = nSekCyclesScanline * (16 + 24);
 	while (SekTotalCycles() < nCyclesSegment) {
 
@@ -4878,7 +4912,8 @@ INT32 NeoFrame()
 	}
 	nSliceEnd = 0x10;
 
-	nCyclesVBlank = nCyclesTotal[0]; //nSekCyclesScanline * 248;
+	// Do scanlines: [ 24, 247] == [ 24, 248)
+	nCyclesVBlank = nCyclesTotal[0];
 	if (bRenderLineByLine) {
 		INT32 nLastIRQ = nIRQCycles - 1;
 		while (SekTotalCycles() < nCyclesVBlank) {
@@ -5093,13 +5128,6 @@ INT32 NeoFrame()
 
 	ZetClose();
 	SekClose();
-
-	if ((nIRQControl & 8) == 0) {
-		if (++nSpriteFrameTimer > nSpriteFrameSpeed) {
-			nSpriteFrameTimer = 0;
-			nNeoSpriteFrame++;
-		}
-	}
 
 	if (pBurnSoundOut) {
 		if ((nNeoSystemType & NEO_SYS_CD) && !(LC8951RegistersW[10] & 4))

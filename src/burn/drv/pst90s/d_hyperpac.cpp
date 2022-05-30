@@ -4309,7 +4309,7 @@ struct BurnDriver BurnDrvMulti96 = {
 
 struct BurnDriver BurnDrvHoneydol = {
 	"honeydol", NULL, NULL, NULL, "1995",
-	"Honey Dolls\0", NULL, "Barko Corp", "Kaneko Pandora based",
+	"Honey Doll\0", NULL, "Barko Corp", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, HoneydolRomInfo, HoneydolRomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, HoneydolDIPInfo,

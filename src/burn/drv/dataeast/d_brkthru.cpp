@@ -465,6 +465,12 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvGfxROM2   + 0x10000, 11, 1)) return 1;
 
 		if (BurnLoadRom(DrvColPROM   + 0x00000, 12, 1)) return 1;
+		if (0 == strcmp(BurnDrvGetTextA(DRV_NAME), "brkthrut")) {
+			for (INT32 i = 0x40, j = 0x20; i < 0x0200; i += 0x40, j += 0x20)
+				memcpy(DrvColPROM + j, DrvColPROM + i, 0x20);
+
+			memset(DrvColPROM + 0x100, 0, 0x100);
+		}
 		if (BurnLoadRom(DrvColPROM   + 0x00100, 13, 1)) return 1;
 
 		DrvGfxDecode();
@@ -804,22 +810,22 @@ static struct BurnRomInfo brkthrujRomDesc[] = {
 	{ "1",			0x4000, 0x09bd60ee, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
 	{ "2",			0x8000, 0xf2b2cd1c, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "4",			0x8000, 0xb42b3359, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "brkthru.3",		0x8000, 0x2f2c40c2, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "brkthru.3",	0x8000, 0x2f2c40c2, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "brkthru.5",		0x8000, 0xc309435f, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 #1 Code
+	{ "brkthru.5",	0x8000, 0xc309435f, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 #1 Code
 
 	{ "12",			0x2000, 0x3d9a7003, 3 | BRF_GRA },           //  5 Characters
 
-	{ "brkthru.7",		0x8000, 0x920cc56a, 4 | BRF_GRA },           //  6 Background Layer
+	{ "brkthru.7",	0x8000, 0x920cc56a, 4 | BRF_GRA },           //  6 Background Layer
 	{ "6",			0x8000, 0xcb47b395, 4 | BRF_GRA },           //  7
 	{ "8",			0x8000, 0x5e5a2cd7, 4 | BRF_GRA },           //  8
 
-	{ "brkthru.9",		0x8000, 0xf54e50a7, 5 | BRF_GRA },           //  9 Sprites
-	{ "brkthru.10",		0x8000, 0xfd156945, 5 | BRF_GRA },           // 10
-	{ "brkthru.11",		0x8000, 0xc152a99b, 5 | BRF_GRA },           // 11
+	{ "brkthru.9",	0x8000, 0xf54e50a7, 5 | BRF_GRA },           //  9 Sprites
+	{ "brkthru.10",	0x8000, 0xfd156945, 5 | BRF_GRA },           // 10
+	{ "brkthru.11",	0x8000, 0xc152a99b, 5 | BRF_GRA },           // 11
 
-	{ "brkthru.13",		0x0100, 0xaae44269, 6 | BRF_GRA },           // 12 Color data
-	{ "brkthru.14",		0x0100, 0xf2d4822a, 6 | BRF_GRA },           // 13
+	{ "brkthru.13",	0x0100, 0xaae44269, 6 | BRF_GRA },           // 12 Color data
+	{ "brkthru.14",	0x0100, 0xf2d4822a, 6 | BRF_GRA },           // 13
 };
 
 STD_ROM_PICK(brkthruj)
@@ -831,6 +837,84 @@ struct BurnDriver BurnDrvBrkthruj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, brkthrujRomInfo, brkthrujRomName, NULL, NULL, NULL, NULL, BrkthruInputInfo, BrkthrujDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	240, 240, 4, 3
+};
+
+
+// Break Thru (Tecfri license)
+// Tecfri PCB with Data East license (DE-0230-2 / DE-0231-2).
+
+static struct BurnRomInfo brkthrutRomDesc[] = {
+	{ "5_de-0230-2_27128.f9",	0x4000, 0x158e660a, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
+	{ "6_de-0230-2_27256.f11",	0x8000, 0x62dbe49e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "8_de-0230-2_27256.f13",	0x8000, 0x8cabf252, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "7_de-0230-2_27256.f12",	0x8000, 0x2f2c40c2, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "4_de-0230-2_27256.d6",	0x8000, 0xc309435f, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 #1 Code
+
+	{ "9_de-0231-2_2764.c8",	0x2000, 0x58c0b29b, 3 | BRF_GRA },           //  5 Characters
+
+	{ "2_de-0230-2_27256.a6",	0x8000, 0x920cc56a, 4 | BRF_GRA },           //  6 Background Layer
+	{ "1_de-0230-2_27256.a5",	0x8000, 0xfd3cee40, 4 | BRF_GRA },           //  7
+	{ "3_de-0230-2_27256.a8",	0x8000, 0xf67ee64e, 4 | BRF_GRA },           //  8
+
+	{ "10_de-0231-2_27156.h2",	0x8000, 0xf54e50a7, 5 | BRF_GRA },           //  9 Sprites
+	{ "11_de-0231-2_27156.h4",	0x8000, 0xfd156945, 5 | BRF_GRA },           // 10
+	{ "12_de-0231-2_27156.h5",	0x8000, 0xc152a99b, 5 | BRF_GRA },           // 11
+
+	// Truly dumped on the Tecfri PCB.
+	{ "6309.c2",				0x0200, 0xcd9709be, 6 | BRF_GRA },           // 12 Color data
+	{ "6301.c1",				0x0100, 0xf2d4822a, 6 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(brkthrut)
+STD_ROM_FN(brkthrut)
+
+struct BurnDriver BurnDrvBrkthrut = {
+	"brkthrut", "brkthru", NULL, NULL, "1986",
+	"Break Thru (Tecfri license)\0", NULL, "Data East Corporation (Tecfri license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
+	NULL, brkthrutRomInfo, brkthrutRomName, NULL, NULL, NULL, NULL, BrkthruInputInfo, BrkthrujDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	240, 240, 4, 3
+};
+
+
+// Break Thru (bootleg)
+
+static struct BurnRomInfo brkthrublRomDesc[] = {
+	{ "4",			0x4000, 0x0f21b4c5, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
+	{ "3",			0x8000, 0x51c7c378, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "1",			0x8000, 0x209484c2, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "2",			0x8000, 0x2f2c40c2, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "5",			0x8000, 0xc309435f, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 #1 Code
+
+	{ "12",			0x2000, 0x58c0b29b, 3 | BRF_GRA },           //  5 Characters
+
+	{ "7",			0x8000, 0x920cc56a, 4 | BRF_GRA },           //  6 Background Layer
+	{ "6",			0x8000, 0xfd3cee40, 4 | BRF_GRA },           //  7
+	{ "8",			0x8000, 0xf67ee64e, 4 | BRF_GRA },           //  8
+
+	{ "9",			0x8000, 0xf54e50a7, 5 | BRF_GRA },           //  9 Sprites
+	{ "10",			0x8000, 0xfd156945, 5 | BRF_GRA },           // 10
+	{ "11",			0x8000, 0xc152a99b, 5 | BRF_GRA },           // 11
+
+	{ "brkthru.13",	0x0100, 0xaae44269, 6 | BRF_GRA },           // 12 Color data
+	{ "brkthru.14",	0x0100, 0xf2d4822a, 6 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(brkthrubl)
+STD_ROM_FN(brkthrubl)
+
+struct BurnDriver BurnDrvBrkthrubl = {
+	"brkthrubl", "brkthru", NULL, NULL, "1986",
+	"Break Thru (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
+	NULL, brkthrublRomInfo, brkthrublRomName, NULL, NULL, NULL, NULL, BrkthruInputInfo, BrkthrujDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 240, 4, 3
 };

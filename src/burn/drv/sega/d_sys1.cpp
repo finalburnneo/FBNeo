@@ -3503,7 +3503,7 @@ static struct BurnRomInfo ChopliftblRomDesc[] = {
 STD_ROM_PICK(Chopliftbl)
 STD_ROM_FN(Chopliftbl)
 
-// Wonder Boy in Monster Land (Japan New Ver., MC-8123, 317-0043)
+// "Wonder Boy - Monster Land (Japan New Ver., MC-8123, 317-0043)
 
 static struct BurnRomInfo wbmlRomDesc[] = {
 	{ "epr-11031a.90",	0x8000, 0xbd3349e5, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
@@ -3512,27 +3512,27 @@ static struct BurnRomInfo wbmlRomDesc[] = {
 
 	{ "epr-11037.126",	0x8000, 0x7a4ee585, BRF_ESS | BRF_PRG }, //  3 Z80 #2 Program Code
 
-	{ "epr-11034.4",	0x8000, 0x37a2077d, BRF_GRA }, //  4 Tiles
-	{ "epr-11035.5",	0x8000, 0xcdf2a21b, BRF_GRA }, //  5
-	{ "epr-11036.6",	0x8000, 0x644687fa, BRF_GRA }, //  6
+	{ "epr-11034.4",	0x8000, 0x37a2077d, BRF_GRA },           //  4 Tiles
+	{ "epr-11035.5",	0x8000, 0xcdf2a21b, BRF_GRA },           //  5
+	{ "epr-11036.6",	0x8000, 0x644687fa, BRF_GRA },           //  6
 
-	{ "epr-11028.87",	0x8000, 0xaf0b3972, BRF_GRA }, //  7 Sprites
-	{ "epr-11027.86",	0x8000, 0x277d8f1d, BRF_GRA }, //  8
-	{ "epr-11030.89",	0x8000, 0xf05ffc76, BRF_GRA }, //  9
-	{ "epr-11029.88",	0x8000, 0xcedc9c61, BRF_GRA }, // 10
+	{ "epr-11028.87",	0x8000, 0xaf0b3972, BRF_GRA },           //  7 Sprites
+	{ "epr-11027.86",	0x8000, 0x277d8f1d, BRF_GRA },           //  8
+	{ "epr-11030.89",	0x8000, 0xf05ffc76, BRF_GRA },           //  9
+	{ "epr-11029.88",	0x8000, 0xcedc9c61, BRF_GRA },           // 10
 
-	{ "pr11026.20",		0x0100, 0x27057298, BRF_GRA }, // 11 Red PROM
-	{ "pr11025.14",		0x0100, 0x41e4d86b, BRF_GRA }, // 12 Blue
-	{ "pr11024.8",		0x0100, 0x08d71954, BRF_GRA }, // 13 Green
-	{ "pr5317.37",		0x0100, 0x648350b8, BRF_GRA }, // 14 Timing PROM
+	{ "pr11026.20",		0x0100, 0x27057298, BRF_GRA },           // 11 Red PROM
+	{ "pr11025.14",		0x0100, 0x41e4d86b, BRF_GRA },           // 12 Blue
+	{ "pr11024.8",		0x0100, 0x08d71954, BRF_GRA },           // 13 Green
+	{ "pr5317.37",		0x0100, 0x648350b8, BRF_GRA },           // 14 Timing PROM
 
-	{ "317-0043.key",	0x2000, 0xe354abfc, BRF_ESS }, // 15 Encryption Key
+	{ "317-0043.key",	0x2000, 0xe354abfc, BRF_ESS },           // 15 Encryption Key
 };
 
 STD_ROM_PICK(wbml)
 STD_ROM_FN(wbml)
 
-// Wonder Boy in Monster Land (Japan not encrypted)
+// Wonder Boy - Monster Land (Japan bootleg)
 
 static struct BurnRomInfo wbmljbRomDesc[] = {
 	{ "wbml.01",		0x10000, 0x66482638, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
@@ -3541,25 +3541,25 @@ static struct BurnRomInfo wbmljbRomDesc[] = {
 
 	{ "epr-11037.126",	0x08000, 0x7a4ee585, BRF_ESS | BRF_PRG }, //  3 Z80 #2 Program Code
 
-	{ "epr-11034.4",	0x08000, 0x37a2077d, BRF_GRA }, //  4 Tiles
-	{ "epr-11035.5",	0x08000, 0xcdf2a21b, BRF_GRA }, //  5
-	{ "epr-11036.6",	0x08000, 0x644687fa, BRF_GRA }, //  6
+	{ "epr-11034.4",	0x08000, 0x37a2077d, BRF_GRA },           //  4 Tiles
+	{ "epr-11035.5",	0x08000, 0xcdf2a21b, BRF_GRA },           //  5
+	{ "epr-11036.6",	0x08000, 0x644687fa, BRF_GRA },           //  6
 
-	{ "epr-11028.87",	0x08000, 0xaf0b3972, BRF_GRA }, //  7 Sprites
-	{ "epr-11027.86",	0x08000, 0x277d8f1d, BRF_GRA }, //  8
-	{ "epr-11030.89",	0x08000, 0xf05ffc76, BRF_GRA }, //  9
-	{ "epr-11029.88",	0x08000, 0xcedc9c61, BRF_GRA }, // 10
+	{ "epr-11028.87",	0x08000, 0xaf0b3972, BRF_GRA },           //  7 Sprites
+	{ "epr-11027.86",	0x08000, 0x277d8f1d, BRF_GRA },           //  8
+	{ "epr-11030.89",	0x08000, 0xf05ffc76, BRF_GRA },           //  9
+	{ "epr-11029.88",	0x08000, 0xcedc9c61, BRF_GRA },           // 10
 
-	{ "pr11026.20",		0x00100, 0x27057298, BRF_GRA }, // 11 Red PROM
-	{ "pr11025.14",		0x00100, 0x41e4d86b, BRF_GRA }, // 12 Blue
-	{ "pr11024.8",		0x00100, 0x08d71954, BRF_GRA }, // 13 Green
-	{ "pr5317.37",		0x00100, 0x648350b8, BRF_GRA }, // 14 Timing PROM
+	{ "pr11026.20",		0x00100, 0x27057298, BRF_GRA },           // 11 Red PROM
+	{ "pr11025.14",		0x00100, 0x41e4d86b, BRF_GRA },           // 12 Blue
+	{ "pr11024.8",		0x00100, 0x08d71954, BRF_GRA },           // 13 Green
+	{ "pr5317.37",		0x00100, 0x648350b8, BRF_GRA },           // 14 Timing PROM
 };
 
 STD_ROM_PICK(wbmljb)
 STD_ROM_FN(wbmljb)
 
-// Wonder Boy in Monster Land (Japan Old Ver., MC-8123, 317-0043)
+// Wonder Boy - Monster Land (Japan Old Ver., MC-8123, 317-0043)
 
 static struct BurnRomInfo wbmljoRomDesc[] = {
 	{ "epr-11031.90",	0x8000, 0x497ebfb4, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
@@ -3568,27 +3568,27 @@ static struct BurnRomInfo wbmljoRomDesc[] = {
 
 	{ "epr-11037.126",	0x8000, 0x7a4ee585, BRF_ESS | BRF_PRG }, //  3 Z80 #2 Program Code
 
-	{ "epr-11034.4",	0x8000, 0x37a2077d, BRF_GRA }, //  4 Tiles
-	{ "epr-11035.5",	0x8000, 0xcdf2a21b, BRF_GRA }, //  5
-	{ "epr-11036.6",	0x8000, 0x644687fa, BRF_GRA }, //  6
+	{ "epr-11034.4",	0x8000, 0x37a2077d, BRF_GRA },           //  4 Tiles
+	{ "epr-11035.5",	0x8000, 0xcdf2a21b, BRF_GRA },           //  5
+	{ "epr-11036.6",	0x8000, 0x644687fa, BRF_GRA },           //  6
 
-	{ "epr-11028.87",	0x8000, 0xaf0b3972, BRF_GRA }, //  7 Sprites
-	{ "epr-11027.86",	0x8000, 0x277d8f1d, BRF_GRA }, //  8
-	{ "epr-11030.89",	0x8000, 0xf05ffc76, BRF_GRA }, //  9
-	{ "epr-11029.88",	0x8000, 0xcedc9c61, BRF_GRA }, // 10
+	{ "epr-11028.87",	0x8000, 0xaf0b3972, BRF_GRA },           //  7 Sprites
+	{ "epr-11027.86",	0x8000, 0x277d8f1d, BRF_GRA },           //  8
+	{ "epr-11030.89",	0x8000, 0xf05ffc76, BRF_GRA },           //  9
+	{ "epr-11029.88",	0x8000, 0xcedc9c61, BRF_GRA },           // 10
 
-	{ "pr11026.20",		0x0100, 0x27057298, BRF_GRA }, // 11 Red PROM
-	{ "pr11025.14",		0x0100, 0x41e4d86b, BRF_GRA }, // 12 Blue
-	{ "pr11024.8",		0x0100, 0x08d71954, BRF_GRA }, // 13 Green
-	{ "pr5317.37",		0x0100, 0x648350b8, BRF_GRA }, // 14 Timing PROM
+	{ "pr11026.20",		0x0100, 0x27057298, BRF_GRA },           // 11 Red PROM
+	{ "pr11025.14",		0x0100, 0x41e4d86b, BRF_GRA },           // 12 Blue
+	{ "pr11024.8",		0x0100, 0x08d71954, BRF_GRA },           // 13 Green
+	{ "pr5317.37",		0x0100, 0x648350b8, BRF_GRA },           // 14 Timing PROM
 
-	{ "317-0043.key",	0x2000, 0xe354abfc, BRF_ESS }, // 15 Encryption Key
+	{ "317-0043.key",	0x2000, 0xe354abfc, BRF_ESS },           // 15 Encryption Key
 };
 
 STD_ROM_PICK(wbmljo)
 STD_ROM_FN(wbmljo)
 
-// Wonder Boy in Monster Land (English bootleg set 1)
+// Wonder Boy - Monster Land (English bootleg set 1)
 
 static struct BurnRomInfo wbmlbRomDesc[] = {
 	{ "wbml.01",		0x10000, 0x66482638, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
@@ -3597,25 +3597,79 @@ static struct BurnRomInfo wbmlbRomDesc[] = {
 
 	{ "epr-11037.126",	0x08000, 0x7a4ee585, BRF_ESS | BRF_PRG }, //  3 Z80 #2 Program Code
 
-	{ "wbml.08",		0x08000, 0xbbea6afe, BRF_GRA }, //  4 Tiles
-	{ "wbml.09",		0x08000, 0x77567d41, BRF_GRA }, //  5
-	{ "wbml.10",		0x08000, 0xa52ffbdd, BRF_GRA }, //  6
+	{ "wbml.08",		0x08000, 0xbbea6afe, BRF_GRA },           //  4 Tiles
+	{ "wbml.09",		0x08000, 0x77567d41, BRF_GRA },           //  5
+	{ "wbml.10",		0x08000, 0xa52ffbdd, BRF_GRA },           //  6
 
-	{ "epr-11028.87",	0x08000, 0xaf0b3972, BRF_GRA }, //  7 Sprites
-	{ "epr-11027.86",	0x08000, 0x277d8f1d, BRF_GRA }, //  8
-	{ "epr-11030.89",	0x08000, 0xf05ffc76, BRF_GRA }, //  9
-	{ "epr-11029.88",	0x08000, 0xcedc9c61, BRF_GRA }, // 10
+	{ "epr-11028.87",	0x08000, 0xaf0b3972, BRF_GRA },           //  7 Sprites
+	{ "epr-11027.86",	0x08000, 0x277d8f1d, BRF_GRA },           //  8
+	{ "epr-11030.89",	0x08000, 0xf05ffc76, BRF_GRA },           //  9
+	{ "epr-11029.88",	0x08000, 0xcedc9c61, BRF_GRA },           // 10
 
-	{ "pr11026.20",		0x00100, 0x27057298, BRF_GRA }, // 11 Red PROM
-	{ "pr11025.14",		0x00100, 0x41e4d86b, BRF_GRA }, // 12 Blue
-	{ "pr11024.8",		0x00100, 0x08d71954, BRF_GRA }, // 13 Green
-	{ "pr5317.37",		0x00100, 0x648350b8, BRF_GRA }, // 14 Timing PROM
+	{ "pr11026.20",		0x00100, 0x27057298, BRF_GRA },           // 11 Red PROM
+	{ "pr11025.14",		0x00100, 0x41e4d86b, BRF_GRA },           // 12 Blue
+	{ "pr11024.8",		0x00100, 0x08d71954, BRF_GRA },           // 13 Green
+	{ "pr5317.37",		0x00100, 0x648350b8, BRF_GRA },           // 14 Timing PROM
 };
 
 STD_ROM_PICK(wbmlb)
 STD_ROM_FN(wbmlb)
 
-// Wonder Boy in Monster Land (English, Virtual Console)
+// Wonder Boy - Monster Land (English bootleg set 2)
+
+static struct BurnRomInfo wbmlbgRomDesc[] = {
+	{ "galaxy.ic90",	0x10000, 0x66482638, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
+	{ "galaxy.ic91",	0x10000, 0x89a8ab93, BRF_ESS | BRF_PRG }, //  1
+	{ "galaxy.ic92",	0x08000, 0x39e07286, BRF_ESS | BRF_PRG }, //  2
+
+	{ "epr-11037.126",	0x08000, 0x7a4ee585, BRF_ESS | BRF_PRG }, //  3 Z80 #2 Program Code
+
+	{ "galaxy.ic4",		0x08000, 0xab75d056, BRF_GRA },           //  4 Tiles
+	{ "galaxy.ic6",		0x08000, 0x6bb5e601, BRF_GRA },           //  5
+	{ "galaxy.ic5",		0x08000, 0x3c11d151, BRF_GRA },           //  6
+
+	{ "epr-11028.87",	0x08000, 0xaf0b3972, BRF_GRA },           //  7 Sprites
+	{ "epr-11027.86",	0x08000, 0x277d8f1d, BRF_GRA },           //  8
+	{ "epr-11030.89",	0x08000, 0xf05ffc76, BRF_GRA },           //  9
+	{ "epr-11029.88",	0x08000, 0xcedc9c61, BRF_GRA },           // 10
+
+	{ "pr11026.20",		0x00100, 0x27057298, BRF_GRA },           // 11 Red PROM
+	{ "pr11025.14",		0x00100, 0x41e4d86b, BRF_GRA },           // 12 Blue
+	{ "pr11024.8",		0x00100, 0x08d71954, BRF_GRA },           // 13 Green
+	{ "pr5317.37",		0x00100, 0x648350b8, BRF_GRA },           // 14 Timing PROM
+};
+
+STD_ROM_PICK(wbmlbg)
+STD_ROM_FN(wbmlbg)
+
+// Wonder Boy - Monster Land (English bootleg set 3)
+
+static struct BurnRomInfo wbmlbgeRomDesc[] = {
+	{ "3.k3",		0x10000, 0xb4f90adc, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
+	{ "2.k4",		0x10000, 0x1896c19b, BRF_ESS | BRF_PRG }, //  1
+	{ "1.k4",		0x10000, 0x0e827f13, BRF_ESS | BRF_PRG }, //  2
+
+	{ "11.d9",		0x08000, 0x7a4ee585, BRF_ESS | BRF_PRG }, //  3 Z80 #2 Program Code
+
+	{ "8.y6",		0x08000, 0xab75d056, BRF_GRA },           //  4 Tiles
+	{ "9.y5",		0x08000, 0x6bb5e601, BRF_GRA },           //  5
+	{ "10.y5",		0x08000, 0x3c11d151, BRF_GRA },           //  6
+
+	{ "5.k2",		0x08000, 0xaf0b3972, BRF_GRA },           //  7 Sprites
+	{ "4.k2",		0x08000, 0x277d8f1d, BRF_GRA },           //  8
+	{ "7.k1",		0x08000, 0xf05ffc76, BRF_GRA },           //  9
+	{ "6.k1",		0x08000, 0xcedc9c61, BRF_GRA },           // 10
+
+	{ "3.z8",		0x00100, 0x27057298, BRF_GRA },           // 11 Red PROM
+	{ "2.y8",		0x00100, 0x41e4d86b, BRF_GRA },           // 12 Blue
+	{ "1.x8",		0x00100, 0x08d71954, BRF_GRA },           // 13 Green
+	{ "pr5317.37",	0x00100, 0x648350b8, BRF_GRA },           // 14 Timing PROM
+};
+
+STD_ROM_PICK(wbmlbge)
+STD_ROM_FN(wbmlbge)
+
+// Wonder Boy - Monster Land (English, Virtual Console)
 
 static struct BurnRomInfo wbmlvcRomDesc[] = {
 	{ "vc.ic90",		0x10000, 0x093c4852, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
@@ -3624,23 +3678,107 @@ static struct BurnRomInfo wbmlvcRomDesc[] = {
 
 	{ "epr-11037.126",	0x08000, 0x7a4ee585, BRF_ESS | BRF_PRG }, //  3 Z80 #2 Program Code
 
-	{ "vc.ic4",		    0x08000, 0x820bee59, BRF_GRA }, //  4 Tiles
-	{ "vc.ic5",		    0x08000, 0xa9a1447e, BRF_GRA }, //  5
-	{ "vc.ic6",		    0x08000, 0x359026a0, BRF_GRA }, //  6
+	{ "vc.ic4",		    0x08000, 0x820bee59, BRF_GRA },           //  4 Tiles
+	{ "vc.ic5",		    0x08000, 0xa9a1447e, BRF_GRA },           //  5
+	{ "vc.ic6",		    0x08000, 0x359026a0, BRF_GRA },           //  6
 
-	{ "epr-11028.87",	0x08000, 0xaf0b3972, BRF_GRA }, //  7 Sprites
-	{ "epr-11027.86",	0x08000, 0x277d8f1d, BRF_GRA }, //  8
-	{ "epr-11030.89",	0x08000, 0xf05ffc76, BRF_GRA }, //  9
-	{ "epr-11029.88",	0x08000, 0xcedc9c61, BRF_GRA }, // 10
+	{ "epr-11028.87",	0x08000, 0xaf0b3972, BRF_GRA },           //  7 Sprites
+	{ "epr-11027.86",	0x08000, 0x277d8f1d, BRF_GRA },           //  8
+	{ "epr-11030.89",	0x08000, 0xf05ffc76, BRF_GRA },           //  9
+	{ "epr-11029.88",	0x08000, 0xcedc9c61, BRF_GRA },           // 10
 
-	{ "pr11026.20",		0x00100, 0x27057298, BRF_GRA }, // 11 Red PROM
-	{ "pr11025.14",		0x00100, 0x41e4d86b, BRF_GRA }, // 12 Blue
-	{ "pr11024.8",		0x00100, 0x08d71954, BRF_GRA }, // 13 Green
-	{ "pr5317.37",		0x00100, 0x648350b8, BRF_GRA }, // 14 Timing PROM
+	{ "pr11026.20",		0x00100, 0x27057298, BRF_GRA },           // 11 Red PROM
+	{ "pr11025.14",		0x00100, 0x41e4d86b, BRF_GRA },           // 12 Blue
+	{ "pr11024.8",		0x00100, 0x08d71954, BRF_GRA },           // 13 Green
+	{ "pr5317.37",		0x00100, 0x648350b8, BRF_GRA },           // 14 Timing PROM
 };
 
 STD_ROM_PICK(wbmlvc)
 STD_ROM_FN(wbmlvc)
+
+// Wonder Boy - Monster Land (decrypted bootleg of English, Virtual Console release)
+// Fully decrypted version
+
+static struct BurnRomInfo wbmlvcdRomDesc[] = {
+	{ "wbmlvcd.ic90",	0x08000, 0xf9c04c07, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
+	{ "wbmlvcd.ic91",	0x08000, 0x87167a57, BRF_ESS | BRF_PRG }, //  1
+	{ "wbmlvcd.ic92",	0x08000, 0xffb69e82, BRF_ESS | BRF_PRG }, //  2
+
+	{ "epr-11037.126",	0x08000, 0x7a4ee585, BRF_ESS | BRF_PRG }, //  3 Z80 #2 Program Code
+
+	{ "vc.ic4",			0x08000, 0x820bee59, BRF_GRA },           //  4 Tiles
+	{ "vc.ic5",			0x08000, 0xa9a1447e, BRF_GRA },           //  5
+	{ "vc.ic6",			0x08000, 0x359026a0, BRF_GRA },           //  6
+
+	{ "epr-11028.87",	0x08000, 0xaf0b3972, BRF_GRA },           //  7 Sprites
+	{ "epr-11027.86",	0x08000, 0x277d8f1d, BRF_GRA },           //  8
+	{ "epr-11030.89",	0x08000, 0xf05ffc76, BRF_GRA },           //  9
+	{ "epr-11029.88",	0x08000, 0xcedc9c61, BRF_GRA },           // 10
+
+	{ "pr11026.20",		0x00100, 0x27057298, BRF_GRA },           // 11 Red PROM
+	{ "pr11025.14",		0x00100, 0x41e4d86b, BRF_GRA },           // 12 Blue
+	{ "pr11024.8",		0x00100, 0x08d71954, BRF_GRA },           // 13 Green
+	{ "pr5317.37",		0x00100, 0x648350b8, BRF_GRA },           // 14 Timing PROM
+};
+
+STD_ROM_PICK(wbmlvcd)
+STD_ROM_FN(wbmlvcd)
+
+// Wonder Boy - Monster Land (decrypted bootleg of Japan New Ver., MC-8123, 317-0043)
+// Fully decrypted version
+
+static struct BurnRomInfo wbmldRomDesc[] = {
+	{ "decrypted_epr-11031a.90",	0x08000, 0xaba42eb7, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
+	{ "decrypted_epr-11032.91",		0x08000, 0x1b158845, BRF_ESS | BRF_PRG }, //  1
+	{ "decrypted_epr-11033.92",		0x08000, 0x39e07286, BRF_ESS | BRF_PRG }, //  2
+
+	{ "epr-11037.126",				0x08000, 0x7a4ee585, BRF_ESS | BRF_PRG }, //  3 Z80 #2 Program Code
+
+	{ "epr-11034.4",				0x08000, 0x37a2077d, BRF_GRA },           //  4 Tiles
+	{ "epr-11035.5",				0x08000, 0xcdf2a21b, BRF_GRA },           //  5
+	{ "epr-11036.6",				0x08000, 0x644687fa, BRF_GRA },           //  6
+
+	{ "epr-11028.87",				0x08000, 0xaf0b3972, BRF_GRA },           //  7 Sprites
+	{ "epr-11027.86",				0x08000, 0x277d8f1d, BRF_GRA },           //  8
+	{ "epr-11030.89",				0x08000, 0xf05ffc76, BRF_GRA },           //  9
+	{ "epr-11029.88",				0x08000, 0xcedc9c61, BRF_GRA },           // 10
+
+	{ "pr11026.20",					0x00100, 0x27057298, BRF_GRA },           // 11 Red PROM
+	{ "pr11025.14",					0x00100, 0x41e4d86b, BRF_GRA },           // 12 Blue
+	{ "pr11024.8",					0x00100, 0x08d71954, BRF_GRA },           // 13 Green
+	{ "pr5317.37",					0x00100, 0x648350b8, BRF_GRA },           // 14 Timing PROM
+};
+
+STD_ROM_PICK(wbmld)
+STD_ROM_FN(wbmld)
+
+// Wonder Boy - Monster Land (decrypted bootleg of Japan Old Ver., MC-8123, 317-0043)
+// Fully decrypted version
+
+static struct BurnRomInfo wbmljodRomDesc[] = {
+	{ "decrypted_epr-11031.90",	0x08000, 0x940b35bf, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
+	{ "decrypted_epr-11032.91",	0x08000, 0x1b158845, BRF_ESS | BRF_PRG }, //  1
+	{ "decrypted_epr-11033.92",	0x08000, 0x39e07286, BRF_ESS | BRF_PRG }, //  2
+
+	{ "epr-11037.126",			0x08000, 0x7a4ee585, BRF_ESS | BRF_PRG }, //  3 Z80 #2 Program Code
+
+	{ "epr-11034.4",			0x08000, 0x37a2077d, BRF_GRA },           //  4 Tiles
+	{ "epr-11035.5",			0x08000, 0xcdf2a21b, BRF_GRA },           //  5
+	{ "epr-11036.6",			0x08000, 0x644687fa, BRF_GRA },           //  6
+
+	{ "epr-11028.87",			0x08000, 0xaf0b3972, BRF_GRA },           //  7 Sprites
+	{ "epr-11027.86",			0x08000, 0x277d8f1d, BRF_GRA },           //  8
+	{ "epr-11030.89",			0x08000, 0xf05ffc76, BRF_GRA },           //  9
+	{ "epr-11029.88",			0x08000, 0xcedc9c61, BRF_GRA },           // 10
+
+	{ "pr11026.20",				0x00100, 0x27057298, BRF_GRA },           // 11 Red PROM
+	{ "pr11025.14",				0x00100, 0x41e4d86b, BRF_GRA },           // 12 Blue
+	{ "pr11024.8",				0x00100, 0x08d71954, BRF_GRA },           // 13 Green
+	{ "pr5317.37",				0x00100, 0x648350b8, BRF_GRA },           // 14 Timing PROM
+};
+
+STD_ROM_PICK(wbmljod)
+STD_ROM_FN(wbmljod)
 
 /*==============================================================================================
 Decode Functions
@@ -5205,31 +5343,28 @@ static INT32 System2Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 		BurnDrvGetRomInfo(&ri, i);
 	}
 
-	if (System1BankedRom)
-	{
+	if (System1BankedRom) {
 		memcpy(System1TempRom, System1Rom1, 0x40000);
 		memset(System1Rom1, 0, 0x40000);
 
-		if (System1BankedRom == 1)
-		{ // Encrypted, banked
+		if (System1BankedRom == 1) {
+			// Encrypted, banked
 			memcpy(System1Rom1 + 0x00000, System1TempRom + 0x00000, 0x8000);
 			memcpy(System1Rom1 + 0x10000, System1TempRom + 0x08000, 0x8000);
 			memcpy(System1Rom1 + 0x18000, System1TempRom + 0x10000, 0x8000);
 		}
 
-		if (System1BankedRom == 2)
-		{ // Unencrypted, banked
+		if (System1BankedRom == 2) {
+			// last rom half the size, reload it into the last slot
+			UINT32 nOffset = ((UINT32)nZ80Rom1Size == (ri.nLen * 2)) ? 0x20000 : 0x28000;
+
+			// Unencrypted, banked
 			memcpy(System1Rom1 + 0x20000, System1TempRom + 0x00000, 0x8000);
 			memcpy(System1Rom1 + 0x00000, System1TempRom + 0x08000, 0x8000);
 			memcpy(System1Rom1 + 0x30000, System1TempRom + 0x10000, 0x8000);//fetch
 			memcpy(System1Rom1 + 0x10000, System1TempRom + 0x18000, 0x8000);
 			memcpy(System1Rom1 + 0x38000, System1TempRom + 0x20000, 0x8000);//fetch
-			memcpy(System1Rom1 + 0x18000, System1TempRom + 0x28000, 0x8000);
-
-			if ((UINT32)nZ80Rom1Size == (ri.nLen * 2))
-			{ // last rom half the size, reload it into the last slot
-				memcpy (System1Rom1 + 0x18000, System1TempRom + 0x20000, 0x8000);
-			}
+			memcpy(System1Rom1 + 0x18000, System1TempRom + nOffset, 0x8000);
 		}
 	}
 
@@ -7196,7 +7331,7 @@ struct BurnDriver BurnDrvUfosensi = {
 
 struct BurnDriver BurnDrvWbml = {
 	"wbml", NULL, NULL, NULL, "1987",
-	"Wonder Boy in Monster Land (Japan New Ver., MC-8123, 317-0043)\0", NULL, "Sega / Westone", "System 2",
+	"Wonder Boy - Monster Land (Japan New Ver., MC-8123, 317-0043)\0", NULL, "Sega / Westone", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmlRomInfo, wbmlRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
@@ -7206,9 +7341,9 @@ struct BurnDriver BurnDrvWbml = {
 
 struct BurnDriver BurnDrvWbmljb = {
 	"wbmljb", "wbml", NULL, NULL, "1987",
-	"Wonder Boy in Monster Land (Japan not encrypted)\0", NULL, "bootleg", "System 2",
+	"Wonder Boy - Monster Land (Japan bootleg)\0", NULL, "bootleg", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmljbRomInfo, wbmljbRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
 	WbmljbInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7216,7 +7351,7 @@ struct BurnDriver BurnDrvWbmljb = {
 
 struct BurnDriver BurnDrvWbmljo = {
 	"wbmljo", "wbml", NULL, NULL, "1987",
-	"Wonder Boy in Monster Land (Japan Old Ver., MC-8123, 317-0043)\0", NULL, "Sega / Westone", "System 2",
+	"Wonder Boy - Monster Land (Japan Old Ver., MC-8123, 317-0043)\0", NULL, "Sega / Westone", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmljoRomInfo, wbmljoRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
@@ -7226,22 +7361,72 @@ struct BurnDriver BurnDrvWbmljo = {
 
 struct BurnDriver BurnDrvWbmlb = {
 	"wbmlb", "wbml", NULL, NULL, "1987",
-	"Wonder Boy in Monster Land (English bootleg set 1)\0", NULL, "bootleg", "System 2",
+	"Wonder Boy - Monster Land (English bootleg set 1)\0", NULL, "bootleg", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmlbRomInfo, wbmlbRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
+	WbmljbInit, System1Exit, System1Frame, System2Render, System1Scan,
+	NULL, 0x800, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvWbmlbg = {
+	"wbmlbg", "wbml", NULL, NULL, "1987",
+	"Wonder Boy - Monster Land (English bootleg set 2)\0", NULL, "bootleg (Galaxy Electronics)", "System 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, wbmlbgRomInfo, wbmlbgRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
+	WbmljbInit, System1Exit, System1Frame, System2Render, System1Scan,
+	NULL, 0x800, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvWbmlbge = {
+	"wbmlbge", "wbml", NULL, NULL, "1987",
+	"Wonder Boy - Monster Land (English bootleg set 3)\0", NULL, "bootleg (Gecas)", "System 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, wbmlbgeRomInfo, wbmlbgeRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
 	WbmljbInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvWbmlvc = {
 	"wbmlvc", "wbml", NULL, NULL, "2009",
-	"Wonder Boy in Monster Land (English, Virtual Console)\0", NULL, "Sega", "Miscellaneous",
+	"Wonder Boy - Monster Land (English, Virtual Console)\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmlvcRomInfo, wbmlvcRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
 	WbmljbInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x600, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvWbmlvcd = {
+	"wbmlvcd", "wbml", NULL, NULL, "2009",
+	"Wonder Boy - Monster Land (decrypted bootleg of English, Virtual Console release)\0", NULL, "bootleg (mpatou)", "System 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, wbmlvcdRomInfo, wbmlvcdRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
+	TokisensaInit, System1Exit, System1Frame, System2Render, System1Scan,
+	NULL, 0x800, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvWbmld = {
+	"wbmld", "wbml", NULL, NULL, "1987",
+	"Wonder Boy - Monster Land (decrypted bootleg of Japan New Ver., MC-8123, 317-0043)\0", NULL, "bootleg (mpatou)", "System 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, wbmldRomInfo, wbmldRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
+	TokisensaInit, System1Exit, System1Frame, System2Render, System1Scan,
+	NULL, 0x800, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvWbmljod = {
+	"wbmljod", "wbml", NULL, NULL, "1987",
+	"Wonder Boy - Monster Land (decrypted bootleg of Japan Old Ver., MC-8123, 317-0043)\0", NULL, "bootleg (mpatou)", "System 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, wbmljodRomInfo, wbmljodRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
+	TokisensaInit, System1Exit, System1Frame, System2Render, System1Scan,
+	NULL, 0x800, 256, 224, 4, 3
 };
 
 // shtngmst and clones

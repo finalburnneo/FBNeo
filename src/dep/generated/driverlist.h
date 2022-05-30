@@ -18000,6 +18000,16 @@ DRV		BurnDrvWboy2u;
 DRV		BurnDrvWboy3;
 DRV		BurnDrvWboy4;
 DRV		BurnDrvWboy5;
+DRV		BurnDrvWbmlvcd;
+DRV		BurnDrvWbmld;
+DRV		BurnDrvWbmljod;
+DRV		BurnDrvWbmlb;
+DRV		BurnDrvWbmlbg;
+DRV		BurnDrvWbmlbge;
+DRV		BurnDrvWbmlvc;
+DRV		BurnDrvWbmljb;
+DRV		BurnDrvWbml;
+DRV		BurnDrvWbmljo;
 DRV		BurnDrvgg_wboydtrp;
 DRV		BurnDrvWbdeluxe;
 #if defined FBNEO_DEBUG
@@ -18023,13 +18033,8 @@ DRV		BurnDrvgg_wboydtrpp;
 DRV		BurnDrvsms_wboy3;
 DRV		BurnDrvsms_wboy3fm;
 DRV		BurnDrvsms_wboy3c;
-DRV		BurnDrvWbmlb;
-DRV		BurnDrvWbmlvc;
 DRV		BurnDrvsms_wboymlnd;
 DRV		BurnDrvsms_wboymlnda;
-DRV		BurnDrvWbml;
-DRV		BurnDrvWbmljb;
-DRV		BurnDrvWbmljo;
 DRV		BurnDrvsms_wboymlndp;
 DRV		BurnDrvsms_wboymwld;
 DRV		BurnDrvsms_wboymwldp;
@@ -20777,7 +20782,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_bounder,		// Bounder (Euro)
 	&BurnSpecBountybob,			// Bounty Bob Strikes Back! (48K)
 	&BurnSpecBountyhunter,		// Bounty Hunter (128K)
-	&BurnDrvBowlrama,			// Bowl-O-Rama
+	&BurnDrvBowlrama,			// Bowl-O-Rama Rev 1.0
 	&BurnDrvCHF_bowling,		// Bowling
 	&BurnDrvnes_bowsette2,		// Bowsette 2 (Hack, Red version)
 	&BurnSpecBoxreload,			// Box Reloaded (48K) (HB)
@@ -36732,6 +36737,16 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvWboy3,				// Wonder Boy (set 3, 315-5135)
 	&BurnDrvWboy4,				// Wonder Boy (set 4, 315-5162)
 	&BurnDrvWboy5,				// Wonder Boy (set 5, bootleg)
+	&BurnDrvWbmlvcd,			// Wonder Boy - Monster Land (decrypted bootleg of English, Virtual Console release)
+	&BurnDrvWbmld,				// Wonder Boy - Monster Land (decrypted bootleg of Japan New Ver., MC-8123, 317-0043)
+	&BurnDrvWbmljod,			// Wonder Boy - Monster Land (decrypted bootleg of Japan Old Ver., MC-8123, 317-0043)
+	&BurnDrvWbmlb,				// Wonder Boy - Monster Land (English bootleg set 1)
+	&BurnDrvWbmlbg,				// Wonder Boy - Monster Land (English bootleg set 2)
+	&BurnDrvWbmlbge,			// Wonder Boy - Monster Land (English bootleg set 3)
+	&BurnDrvWbmlvc,				// Wonder Boy - Monster Land (English, Virtual Console)
+	&BurnDrvWbmljb,				// Wonder Boy - Monster Land (Japan bootleg)
+	&BurnDrvWbml,				// Wonder Boy - Monster Land (Japan New Ver., MC-8123, 317-0043)
+	&BurnDrvWbmljo,				// Wonder Boy - Monster Land (Japan Old Ver., MC-8123, 317-0043)
 	&BurnDrvgg_wboydtrp,		// Wonder Boy - The Dragon's Trap (Euro)
 	&BurnDrvWbdeluxe,			// Wonder Boy Deluxe
 #if defined FBNEO_DEBUG
@@ -36755,13 +36770,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_wboy3,			// Wonder Boy III - The Dragon's Trap (Euro, USA, Kor)
 	&BurnDrvsms_wboy3fm,		// Wonder Boy III - The Dragon's Trap (FM Mod)
 	&BurnDrvsms_wboy3c,			// Wonder Boy III - The Dragon's Trap (Hack, Spanish v1.0)
-	&BurnDrvWbmlb,				// Wonder Boy in Monster Land (English bootleg set 1)
-	&BurnDrvWbmlvc,				// Wonder Boy in Monster Land (English, Virtual Console)
 	&BurnDrvsms_wboymlnd,		// Wonder Boy in Monster Land (Euro, USA)
 	&BurnDrvsms_wboymlnda,		// Wonder Boy in Monster Land (Euro, USA, Hacked?)
-	&BurnDrvWbml,				// Wonder Boy in Monster Land (Japan New Ver., MC-8123, 317-0043)
-	&BurnDrvWbmljb,				// Wonder Boy in Monster Land (Japan not encrypted)
-	&BurnDrvWbmljo,				// Wonder Boy in Monster Land (Japan Old Ver., MC-8123, 317-0043)
 	&BurnDrvsms_wboymlndp,		// Wonder Boy in Monster Land (Prototype)
 	&BurnDrvsms_wboymwld,		// Wonder Boy in Monster World (Euro, Kor)
 	&BurnDrvsms_wboymwldp,		// Wonder Boy in Monster World (Euro, Prototype)

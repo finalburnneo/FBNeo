@@ -66,8 +66,8 @@ STD_ROM_PICK(bgareggat)
 STD_ROM_FN(bgareggat)
 
 static struct BurnRomInfo bgareggazRomDesc[] = {
-	{ "garegga-prg0.bin",     0x080000, 0x6F4AF466, BRF_ESS | BRF_PRG }, //  0 CPU #0 code (even)
-	{ "garegga-prg1.bin",     0x080000, 0xB4DC9A48, BRF_ESS | BRF_PRG }, //  1				(odd)
+	{ "garegga-prg0.bin",     0x080000, 0xec2f86d0, BRF_ESS | BRF_PRG }, //  0 CPU #0 code (even)
+	{ "garegga-prg1.bin",     0x080000, 0x371a0e42, BRF_ESS | BRF_PRG }, //  1				(odd)
 
 	{ "rom4.bin",     0x200000, 0xB333D81F, BRF_GRA },			 //  2 GP9001 Tile data
 	{ "rom3.bin",     0x200000, 0x51B9EBFB, BRF_GRA },			 //  3
@@ -1048,7 +1048,7 @@ struct BurnDriver BurnDrvBgareggat = {
 };
 
 struct BurnDriver BurnDrvBgareggaz = {
-	"bgareggaz", "bgaregga", NULL, NULL, "2008",
+	"bgareggaz", "bgaregga", NULL, NULL, "2019",
 	"Battle Garegga Zakk version (Europe / USA / Japan / Asia) (Sat Feb 3 1996)\0", NULL, "Raizing / 8ing", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,

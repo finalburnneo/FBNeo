@@ -709,6 +709,23 @@ static struct BurnDIPInfo HeadonDIPList[]=
 
 STDDIPINFO(Headon)
 
+static struct BurnDIPInfo StartrksDIPList[]=
+{
+	{0x07, 0xff, 0xff, 0x00, NULL						},
+
+	{0   , 0xfe, 0   ,    4, "Lives"					},
+	{0x07, 0x01, 0x03, 0x00, "2"						},
+	{0x07, 0x01, 0x03, 0x01, "3"						},
+	{0x07, 0x01, 0x03, 0x02, "4"						},
+	{0x07, 0x01, 0x03, 0x03, "5"						},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"				},
+	{0x07, 0x01, 0x04, 0x04, "Off"						},
+	{0x07, 0x01, 0x04, 0x00, "On"						},
+};
+
+STDDIPINFO(Startrks)
+
 static struct BurnDIPInfo BrdrlineDIPList[]=
 {
 	{0x0e, 0xff, 0xff, 0x05, NULL						},
@@ -2800,8 +2817,35 @@ struct BurnDriverD BurnDrvInvinco = {
 
 
 // Samurai
+// Found on a Gremlin 'EXTENDED ROM VIDEO LOGIC ASSY NO 800-003' PCB with a '834-0118' sticker and a Sega 96718-P-A riser board.
+// Everything on the board is dated 1979, but possibly the PCB was converted from something else, given the epr numbers are way bigger than the Japanese version ones
 
 static struct BurnRomInfo samuraiRomDesc[] = {
+	{ "epr-1217.u33",	0x0400, 0xa1a9cb03, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "epr-1218.u32",	0x0400, 0x4b45d07d, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "epr-1219.u31",	0x0400, 0x9fd4b195, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "epr-1220.u30",	0x0400, 0x90370e13, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "epr-1221.u29",	0x0400, 0xdcc47158, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "epr-1222.u28",	0x0400, 0xd2fab27a, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "epr-1223.u27",	0x0400, 0xf7e2ad95, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "epr-1224.u26",	0x0400, 0xd46e306b, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "epr-1225.u8",	0x0400, 0x3dd5c41f, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "epr-1226.u7",	0x0400, 0x7c3561b1, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "epr-1227.u6",	0x0400, 0xe72c71a4, 1 | BRF_PRG | BRF_ESS }, // 10
+	{ "epr-1228.u5",	0x0400, 0xd76f4a56, 1 | BRF_PRG | BRF_ESS }, // 11
+	{ "epr-1229.u4",	0x0400, 0xe0d40395, 1 | BRF_PRG | BRF_ESS }, // 12
+	{ "epr-1230.u3",	0x0400, 0x55e9a5c4, 1 | BRF_PRG | BRF_ESS }, // 13
+
+	{ "pr55.clr",		0x0020, 0x975f5fb0, 1 | BRF_GRA },           // 14 Color data
+};
+
+STD_ROM_PICK(samurai)
+STD_ROM_FN(samurai)
+
+
+// Samuraij
+
+static struct BurnRomInfo samuraijRomDesc[] = {
 	{ "epr-289.u33",		0x0400, 0xa1a9cb03, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
 	{ "epr-290.u32",		0x0400, 0x49fede51, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "epr-291.u31",		0x0400, 0x6503dd72, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -2819,12 +2863,12 @@ static struct BurnRomInfo samuraiRomDesc[] = {
 
 	{ "pr55.clr",			0x0020, 0x975f5fb0, 1 | BRF_GRA },           // 14 Color data
 
-	{ "316-0043.u87",		0x0020, 0xe60a7960, 0 | BRF_OPT },           // 15 Unused PROMs
-	{ "316-0042.u88",		0x0020, 0xa1506b9d, 0 | BRF_OPT },           // 16
+	{ "316-0043.u87",		0x0020, 0xe60a7960, 0 | BRF_OPT },           // 15 Control PROM
+	{ "316-0042.u88",		0x0020, 0xa1506b9d, 0 | BRF_OPT },           // 16 Sequence PROM
 };
 
-STD_ROM_PICK(samurai)
-STD_ROM_FN(samurai)
+STD_ROM_PICK(samuraij)
+STD_ROM_FN(samuraij)
 
 static void samurai_map()
 {
@@ -2836,12 +2880,22 @@ static INT32 SamuraiInit()
 	return DrvInit(0x4000, 0x8000, 0, samurai_write_port, samurai_read_port, samurai_map, NULL);
 }
 
-struct BurnDriverD BurnDrvSamurai = {
+struct BurnDriver BurnDrvSamurai = {
 	"samurai", NULL, NULL, NULL, "1980",
-	"Samurai\0", "No sound", "Sega", "Vic Dual",
+	"Samurai (World)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, samuraiRomInfo, samuraiRomName, NULL, NULL, NULL, NULL, SamuraiInputInfo, SamuraiDIPInfo,
+	SamuraiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
+	224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvSamuraij = {
+	"samuraij", "samurai", NULL, NULL, "1980",
+	"Samurai (Japan)\0", "No sound", "Sega", "Vic Dual",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	NULL, samuraijRomInfo, samuraijRomName, NULL, NULL, NULL, NULL, SamuraiInputInfo, SamuraiDIPInfo,
 	SamuraiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
 };
@@ -3179,11 +3233,41 @@ STD_ROM_PICK(startrks)
 STD_ROM_FN(startrks)
 
 struct BurnDriver BurnDrvStartrks = {
-	"startrks", NULL, NULL, NULL, "198?",
+	"startrks", "nostromo", NULL, NULL, "198?",
 	"Star Trek (Head On hardware)\0", "No sound", "bootleg (Sidam)", "Vic Dual",
 	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING |BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, startrksRomInfo, startrksRomName, NULL, NULL, NULL, NULL, HeadonInputInfo, StartrksDIPInfo,
+	HeadonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
+	256, 224, 4, 3
+};
+
+
+// Nostromo
+
+static struct BurnRomInfo nostromoRomDesc[] = {
+	{ "ns_1.bin",		0x0400, 0x2ba4202a, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "ns_2.bin",		0x0400, 0xcf6081b8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ns_3.bin",		0x0400, 0xfd983c0c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ns_4.bin",		0x0400, 0x79e1dc92, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ns_5.bin",		0x0400, 0x4deb2ce3, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "ns_6.bin",		0x0400, 0xe4ddf052, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "ns_7.bin",		0x0400, 0xa5315dc8, 1 | BRF_PRG | BRF_ESS }, //  6
+
+	// Timing PROMs, not dumped for this set but probably same as startrks given how close they are
+	{ "82s123.15c",		0x0020, 0xe60a7960, 0 | BRF_OPT },           //  7 BAD_DUMP, Control PROM
+	{ "82s123.14c",		0x0020, 0xa1506b9d, 0 | BRF_OPT },           //  8 BAD_DUMP, Sequence PROM
+};
+
+STD_ROM_PICK(nostromo)
+STD_ROM_FN(nostromo)
+
+struct BurnDriver BurnDrvNostromo = {
+	"nostromo", NULL, NULL, NULL, "198?",
+	"Nostromo\0", "No sound", "bootleg", "Vic Dual",
+	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, startrksRomInfo, startrksRomName, NULL, NULL, NULL, NULL, HeadonInputInfo, HeadonDIPInfo,
+	NULL, nostromoRomInfo, nostromoRomName, NULL, NULL, NULL, NULL, HeadonInputInfo, StartrksDIPInfo,
 	HeadonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 224, 4, 3
 };

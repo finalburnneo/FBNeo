@@ -77,16 +77,16 @@ int KailleraGetInput()
 	// Initialize controls to 0
 	memset(nControls, 0, INPUTSIZE);
 
-	// Pack all DIP switches + common controls + player 1 controls
+	// Pack all player 1 controls, common controls, analog controls & DIP switches
 	for (i = 0, j = 0; i < nPlayerInputs[0]; i++, j++) {
 		BurnDrvGetInputInfo(&bii, i + nPlayerOffset[0]);
-		if (*bii.pVal && bii.nType == BIT_DIGITAL) {
+		if (bii.pVal && *bii.pVal && bii.nType == BIT_DIGITAL) {
 			nControls[j >> 3] |= (1 << (j & 7));
 		}
 	}
 	for (i = 0; i < nCommonInputs; i++, j++) {
 		BurnDrvGetInputInfo(&bii, i + nCommonOffset);
-		if (*bii.pVal) {
+		if (bii.pVal && *bii.pVal) {
 			nControls[j >> 3] |= (1 << (j & 7));
 		}
 	}
@@ -97,12 +97,18 @@ int KailleraGetInput()
 	// Analog controls/constants
 	for (i = 0; i < nPlayerInputs[0]; i++) {
 		BurnDrvGetInputInfo(&bii, i + nPlayerOffset[0]);
-		if (*bii.pVal && bii.nType != BIT_DIGITAL) {
+		if (bii.nType != BIT_DIGITAL) {
 			if (bii.nType & BIT_GROUP_ANALOG) {
-				nControls[j++] = *bii.pShortVal >> 8;
-				nControls[j++] = *bii.pShortVal & 0xFF;
+				if (bii.pVal && *bii.pShortVal) {
+					nControls[j] = *bii.pShortVal >> 8;
+					nControls[j+1] = *bii.pShortVal & 0xFF;
+				}
+				j += 2;
 			} else {
-				nControls[j++] = *bii.pVal;
+				if (bii.pVal && *bii.pVal) {
+					nControls[j] = *bii.pVal;
+				}
+				j += 1;
 			}
 		}
 	}
@@ -127,18 +133,18 @@ int KailleraGetInput()
 		BurnDrvGetInputInfo(&bii, i + nPlayerOffset[0]);
 		if (bii.nType == BIT_DIGITAL) {
 			if (nControls[j >> 3] & (1 << (j & 7))) {
-				*bii.pVal = 0x01;
+				if (bii.pVal) *bii.pVal = 0x01;
 			} else {
-				*bii.pVal = 0x00;
+				if (bii.pVal) *bii.pVal = 0x00;
 			}
 		}
 	}
 	for (i = 0; i < nCommonInputs; i++, j++) {
 		BurnDrvGetInputInfo(&bii, i + nCommonOffset);
 		if (nControls[j >> 3] & (1 << (j & 7))) {
-			*bii.pVal = 0x01;
+			if (bii.pVal) *bii.pVal = 0x01;
 		} else {
-			*bii.pVal = 0x00;
+			if (bii.pVal) *bii.pVal = 0x00;
 		}
 	}
 
@@ -147,17 +153,24 @@ int KailleraGetInput()
 
 	// Analog inputs
 	for (i = 0; i < nPlayerInputs[0]; i++) {
-		BurnDrvGetInputInfo(&bii, i + nDIPOffset);
-		if (bii.nType & BIT_GROUP_ANALOG) {
-			*bii.pShortVal = (nControls[j] << 8) | nControls[j + 1];
-			j += 2;
+		BurnDrvGetInputInfo(&bii, i + nPlayerOffset[0]);
+
+		if (bii.nType != BIT_DIGITAL) {
+			if (bii.nType & BIT_GROUP_ANALOG) {
+				if (bii.pShortVal) *bii.pShortVal = (nControls[j] << 8) | nControls[j + 1];
+				j += 2;
+			} else {
+				if (bii.pVal) *bii.pVal = nControls[j];
+				j++;
+			}
 		}
 	}
 
 	// DIP switches
 	for (i = 0; i < nDIPInputs; i++, j++) {
 		BurnDrvGetInputInfo(&bii, i + nDIPOffset);
-		*bii.pVal = nControls[j];
+		if (bii.pVal) *bii.pVal = nControls[j];
+		//bprintf(0, _T("remote dip %d:   %x\n"), i, nControls[j]);
 	}
 
 	// Decode other player's input blocks
@@ -167,9 +180,9 @@ int KailleraGetInput()
 				BurnDrvGetInputInfo(&bii, i + nPlayerOffset[l]);
 				if (bii.nType == BIT_DIGITAL) {
 					if (nControls[j >> 3] & (1 << (j & 7))) {
-						*bii.pVal = 0x01;
+						if (bii.pVal) *bii.pVal = 0x01;
 					} else {
-						*bii.pVal = 0x00;
+						if (bii.pVal) *bii.pVal = 0x00;
 					}
 				}
 			}
@@ -179,7 +192,7 @@ int KailleraGetInput()
 					// Allow other players to use common inputs: Only ZX Spectrum
 					BurnDrvGetInputInfo(&bii, i + nCommonOffset);
 					if (nControls[j >> 3] & (1 << (j & 7))) {
-						*bii.pVal |= 0x01;
+						if (bii.pVal) *bii.pVal |= 0x01;
 					}
 				}
 			}
@@ -192,8 +205,11 @@ int KailleraGetInput()
 				BurnDrvGetInputInfo(&bii, i + nPlayerOffset[l]);
 				if (bii.nType != BIT_DIGITAL) {
 					if (bii.nType & BIT_GROUP_ANALOG) {
-						*bii.pShortVal = (nControls[j] << 8) | nControls[j + 1];
+						if (bii.pShortVal) *bii.pShortVal = (nControls[j] << 8) | nControls[j + 1];
 						j += 2;
+					} else {
+						if (bii.pVal) *bii.pVal = nControls[j];
+						j++;
 					}
 				}
 			}

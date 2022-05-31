@@ -3895,6 +3895,7 @@ DRV		BurnDrvDevstors;
 DRV		BurnSpecDeviants;
 DRV		BurnDrvpce_devlcrsh;
 DRV		BurnDrvmd_devlcrsh;
+DRV		BurnDrvDevilfshg;
 DRV		BurnDrvDevilfshgb;
 DRV		BurnDrvDevilfsh;
 DRV		BurnDrvnes_devilmanj;
@@ -10845,6 +10846,7 @@ DRV		BurnSpecnorthstar;
 DRV		BurnDrvNostj;
 DRV		BurnDrvNostk;
 DRV		BurnDrvNost;
+DRV		BurnDrvNostromo;
 DRV		BurnSpecNosy;
 DRV		BurnDrvNouryokup;
 DRV		BurnDrvNouryoku;
@@ -13213,9 +13215,8 @@ DRV		BurnDrvSamesame2;
 DRV		BurnDrvmd_samesame;
 DRV		BurnDrvcv_sammylfa;
 DRV		BurnDrvcv_sammylf;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvSamurai;			// No sound
-#endif
+DRV		BurnDrvSamuraij;
+DRV		BurnDrvSamurai;
 DRV		BurnDrvSamuraiA;
 DRV		BurnDrvTsamuraih;
 DRV		BurnDrvTsamurai;
@@ -15734,6 +15735,7 @@ DRV		BurnDrvgg_superman;
 DRV		BurnDrvmd_superman;
 DRV		BurnDrvsms_superman;
 DRV		BurnDrvgg_supermanp;
+DRV		BurnDrvSupershp;
 DRV		BurnDrvMSX_suptrip;
 DRV		BurnDrvnes_super16in1;
 DRV		BurnDrvgg_surfninj;
@@ -22632,8 +22634,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecDeviants,			// Deviants (128K)
 	&BurnDrvpce_devlcrsh,		// Devil Crash - Naxat Pinball
 	&BurnDrvmd_devlcrsh,		// Devil Crash MD (Jpn)
+	&BurnDrvDevilfshg,			// Devil Fish (Galaxian hardware)
 	&BurnDrvDevilfshgb,			// Devil Fish (Galaxian hardware, bootleg)
-	&BurnDrvDevilfsh,			// Devil Fish
+	&BurnDrvDevilfsh,			// Devil Fish (Scramble hardware)
 	&BurnDrvnes_devilmanj,		// Devil Man (Japan)
 	&BurnDrvnes_devilman,		// Devil Man (T-Eng)
 	&BurnDrvnes_devilworld,		// Devil World (Japan) (Rev A)
@@ -29582,6 +29585,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvNostj,				// Nostradamus (Japan)
 	&BurnDrvNostk,				// Nostradamus (Korea)
 	&BurnDrvNost,				// Nostradamus
+	&BurnDrvNostromo,			// Nostromo
 	&BurnSpecNosy,				// Nosy (48K) (HB)
 	&BurnDrvNouryokup,			// Nouryoku Koujou Iinkai (prototype)
 	&BurnDrvNouryoku,			// Nouryoku Koujou Iinkai
@@ -31950,9 +31954,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_samesame,		// Same! Same! Same! (Jpn)
 	&BurnDrvcv_sammylfa,		// Sammy Lightfoot (Alt)
 	&BurnDrvcv_sammylf,			// Sammy Lightfoot
-#if defined FBNEO_DEBUG
-	&BurnDrvSamurai,			// Samurai [No sound]
-#endif
+	&BurnDrvSamuraij,			// Samurai (Japan)
+	&BurnDrvSamurai,			// Samurai (World)
 	&BurnDrvSamuraiA,			// Samurai Aces (World)
 	&BurnDrvTsamuraih,			// Samurai Nihon-Ichi (bootleg, harder)
 	&BurnDrvTsamurai,			// Samurai Nihon-Ichi (set 1)
@@ -34471,6 +34474,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_superman,		// Superman - The Man of Steel (Euro)
 	&BurnDrvsms_superman,		// Superman - The Man of Steel (Euro, Bra)
 	&BurnDrvgg_supermanp,		// Superman - The Man of Steel (Euro, Prototype)
+	&BurnDrvSupershp,			// Supershp
 	&BurnDrvMSX_suptrip,		// Supertripper (Spanish)
 	&BurnDrvnes_super16in1,		// Supervision 16-in-1 (Unl)
 	&BurnDrvgg_surfninj,		// Surf Ninjas (USA, Bra)

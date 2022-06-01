@@ -35045,7 +35045,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTheendss,			// The End (SegaSA / Sonic)
 	&BurnDrvTheends,			// The End (Stern)
 	&BurnDrvTheend,				// The End
-	&BurnDrvTeot,				// The Eye of Typhoon (Beta 4 Version)
+	&BurnDrvTeot,				// The Eye of Typhoon (Beta 5 Version)
 	&BurnDrvFlstoryj,			// The FairyLand Story (Japan)
 	&BurnDrvFlstory,			// The FairyLand Story
 	&BurnDrvDaraku,				// The Fallen Angels (World) / Daraku Tenshi - The Fallen Angels (Japan)

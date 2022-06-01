@@ -89,6 +89,7 @@ typedef struct
 	irq_entry     irq_queue[16];
 
 	INT8	irq_line_state[17];
+	INT8	irq_line_hold[17];
 	UINT32	m[0x200];
 	INT8  nmi_line_state;
 
@@ -155,6 +156,7 @@ enum {
 
 static UINT32 sh2_internal_r(UINT32 A, UINT32 mask);
 static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask);
+static void Sh2SetIRQLine_Internal(const int line, int state);
 
 //-- sh2 memory handler for Finalburn Alpha ---------------------
 
@@ -810,6 +812,11 @@ SH2_INLINE void sh2_exception(/*const char *message,*/ int irqline)
 	{
 		vector = 11;
 		//LOG(("SH-2 #%d nmi exception (autovector: $%x) after [%s]\n", cpu_getactivecpu(), vector, message));
+	}
+
+	if (sh2->irq_line_hold[irqline]) {
+		Sh2SetIRQLine_Internal(irqline, CPU_IRQSTATUS_NONE);
+		sh2->irq_line_hold[irqline] = 0;
 	}
 
 	sh2->r[15] -= 4;
@@ -3362,17 +3369,23 @@ int Sh2Run(int cycles)
 	return cycles;
 }
 
-static void Sh2SetIRQLine_Internal(const int line, const int state)
+static void Sh2SetIRQLine_Internal(const int line, int state)
 {
+	INT32 hold = (state == CPU_IRQSTATUS_HOLD);
+	if (hold) state = CPU_IRQSTATUS_ACK;
+
 	if (sh2->irq_line_state[line] == state) return;
 	sh2->irq_line_state[line] = state;
 
 	if( state == CPU_IRQSTATUS_NONE ) {
 		// LOG(("SH-2 #%d cleared irq #%d\n", cpu_getactivecpu(), line));
 		sh2->pending_irq &= ~(1 << line);
+		sh2->irq_line_hold[line] = 0;
 	} else {
 		//LOG(("SH-2 #%d assert irq #%d\n", cpu_getactivecpu(), line));
 		sh2->pending_irq |= 1 << line;
+		sh2->irq_line_hold[line] = hold;
+
 		if(sh2->delay)
 			sh2->test_irq = 1;
 		else

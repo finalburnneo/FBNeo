@@ -2529,7 +2529,7 @@
 	<game name="bomber">
 		<description>Bomber</description>
 		<year>2005</year>
-		<manufacturer>TecToy</manufacturer>
+		<manufacturer>Tec Toy</manufacturer>
 		<rom name="bomber [!].bin" size="131072" crc="6389a658"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3990,6 +3990,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="comixp" cloneof="comix" romof="comix">
+		<comment>Prototype</comment>
 		<description>Comix Zone (Euro, Prototype, 19950628)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -3998,6 +3999,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="comixup01" cloneof="comix" romof="comix">
+		<comment>Prototype</comment>
 		<description>Comix Zone (Euro, Prototype, 19950712)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -4006,10 +4008,20 @@
 		<driver status="good"/>
 	</game>
 	<game name="comixi" cloneof="comix" romof="comix">
+		<comment>Hack</comment>
 		<description>Comix Zone (Hack, Italian)</description>
 		<year>2002</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="comix zone (italian translation).bin" size="2097152" crc="f2bba578"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="comixs" cloneof="comix" romof="comix">
+		<comment>Hack</comment>
+		<description>Comix Zone (Hack, Spanish)</description>
+		<year>2014</year>
+		<manufacturer>Kale</manufacturer>
+		<rom name="comix zone (hack, spanish).bin" size="2097152" crc="9acaffc5"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4022,6 +4034,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="comixkp" cloneof="comix" romof="comix">
+		<comment>Prototype</comment>
 		<description>Comix Zone (Kor, Prototype, 19950609)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -4029,15 +4042,8 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="comixs" cloneof="comix" romof="comix">
-		<description>Comix Zone (NTSC) (Hack, Spanish)</description>
-		<year>2014</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="comix zone (hack, spanish).bin" size="2097152" crc="9acaffc5"/>
-		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="comixup10" cloneof="comix" romof="comix">
+		<comment>Prototype</comment>
 		<description>Comix Zone (Prototype, 19950526)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -4046,6 +4052,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="comixup09" cloneof="comix" romof="comix">
+		<comment>Prototype</comment>
 		<description>Comix Zone (Prototype, 19950530)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -4054,6 +4061,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="comixsc" cloneof="comix" romof="comix">
+		<comment>Prototype</comment>
 		<description>Comix Zone (Sega Channel, Prototype, 19950612)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -4070,6 +4078,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="comixup" cloneof="comix" romof="comix">
+		<comment>Prototype</comment>
 		<description>Comix Zone (USA, Prototype)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -4078,6 +4087,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="comixup05" cloneof="comix" romof="comix">
+		<comment>Prototype</comment>
 		<description>Comix Zone (USA, Prototype, 19950601)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -4086,6 +4096,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="comixup08" cloneof="comix" romof="comix">
+		<comment>Prototype</comment>
 		<description>Comix Zone (USA, Prototype, 19950601-B)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -4094,6 +4105,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="comixup07" cloneof="comix" romof="comix">
+		<comment>Prototype</comment>
 		<description>Comix Zone (USA, Prototype, 19950601-C)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -4102,6 +4114,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="comixup06" cloneof="comix" romof="comix">
+		<comment>Prototype</comment>
 		<description>Comix Zone (USA, Prototype, 19950601-D)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -4110,6 +4123,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="comixup03" cloneof="comix" romof="comix">
+		<comment>Prototype</comment>
 		<description>Comix Zone (USA, Prototype, 19950602)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -4118,6 +4132,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="comixup04" cloneof="comix" romof="comix">
+		<comment>Prototype</comment>
 		<description>Comix Zone (USA, Prototype, 19950602-B)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -4126,6 +4141,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="comixup02" cloneof="comix" romof="comix">
+		<comment>Prototype</comment>
 		<description>Comix Zone (USA, Prototype, 19950603)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -4150,9 +4166,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="congo">
+		<comment>Prototype</comment>
 		<description>Congo (Prototype)</description>
 		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<manufacturer>Visual Concepts</manufacturer>
 		<rom name="congo (unknown) (prototype).bin" size="1015094" crc="13746716"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4199,9 +4216,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="coolspots" cloneof="coolspot" romof="coolspot">
+		<comment>Hack</comment>
 		<description>Cool Spot (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Virgin Interactive</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="cool spot (hack, spanish).bin" size="1048576" crc="40a18f52"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4223,6 +4241,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="coolspotup" cloneof="coolspot" romof="coolspot">
+		<comment>Prototype</comment>
 		<description>Cool Spot (USA, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Virgin Games</manufacturer>
@@ -6942,6 +6961,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ferrarip" cloneof="ferrari" romof="ferrari">
+		<comment>Prototype</comment>
 		<description>Ferrari Grand Prix Challenge (Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Flying Edge</manufacturer>
@@ -6966,6 +6986,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fidodido">
+		<comment>Prototype</comment>
 		<description>Fido Dido (USA, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Kaneko</manufacturer>
@@ -11307,7 +11328,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="mgs" cloneof="crkdown" romof="crkdown">
-		<description>Metal Gear Solid (Rus)</description>
+		<comment>Hack</comment>
+		<description>Metal Gear Solid (Unl) (Rus)</description>
 		<year>199?</year>
 		<manufacturer>Glorysun</manufacturer>
 		<rom name="metal gear solid (unl).bin" size="524288" crc="b38191eb"/>
@@ -18280,9 +18302,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="spongbob" cloneof="coolspot" romof="coolspot">
-		<description>Sponge Bob (Rus)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<comment>Hack</comment>
+		<description>Sponge Bob (Unl) (Rus)</description>
+		<year>20??</year>
+		<manufacturer>KDS</manufacturer>
 		<rom name="sponge bob.bin" size="1048576" crc="c5437496"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -20572,17 +20595,17 @@
 		<driver status="good"/>
 	</game>
 	<game name="tekkn3sp">
-		<description>Tekken 3 Special</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Tekken 3 Special (Unl)</description>
+		<year>1997</year>
+		<manufacturer>Gamtec</manufacturer>
 		<rom name="tekken 3 special (unl).bin" size="2097152" crc="7fcae658"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="tekkensp">
-		<description>Tekken Special</description>
-		<year>199?</year>
-		<manufacturer>Unlicensed</manufacturer>
+		<description>Tekken Special (Unl)</description>
+		<year>1996</year>
+		<manufacturer>Gamtec</manufacturer>
 		<rom name="Tekken Special.md" size="2097152" crc="010f6369"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -20606,7 +20629,7 @@
 	<game name="telebrad">
 		<description>Telebradesco Residencia (Bra)</description>
 		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<manufacturer>Tec Toy</manufacturer>
 		<rom name="telebradesco residencia (bra).bin" size="262144" crc="1db99045"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -24162,7 +24185,16 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="xump2">
+	<game name="xump2rv">
+		<comment>Homebrew</comment>
+		<description>Xump 2 - Back to Space (HB, Retail Version)</description>
+		<year>2020</year>
+		<manufacturer>Retroguru</manufacturer>
+		<rom name="Xump 2 - Back to Space (2020)(Retroguru).bin" size="1441792" crc="3bc0b742"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="xump2" cloneof="xump2rv" romof="xump2rv">
 		<comment>Homebrew</comment>
 		<description>Xump2 (HB, rev2017)</description>
 		<year>2017</year>

@@ -3102,9 +3102,9 @@ DRV		BurnDrvmd_comix;
 DRV		BurnDrvmd_comixp;
 DRV		BurnDrvmd_comixup01;
 DRV		BurnDrvmd_comixi;
+DRV		BurnDrvmd_comixs;
 DRV		BurnDrvmd_comixj;
 DRV		BurnDrvmd_comixkp;
-DRV		BurnDrvmd_comixs;
 DRV		BurnDrvmd_comixup10;
 DRV		BurnDrvmd_comixup09;
 DRV		BurnDrvmd_comixsc;
@@ -18419,6 +18419,7 @@ DRV		BurnDrvMSX_xor2021;
 DRV		BurnDrvXorworld;
 DRV		BurnDrvMSX_xracing;
 DRV		BurnDrvMSX_xspelunk;
+DRV		BurnDrvmd_xump2rv;
 DRV		BurnDrvmd_xump2;
 DRV		BurnDrvsg1k_cloderunt;
 DRV		BurnDrvXxmissio;
@@ -21841,9 +21842,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_comixp,			// Comix Zone (Euro, Prototype, 19950628)
 	&BurnDrvmd_comixup01,		// Comix Zone (Euro, Prototype, 19950712)
 	&BurnDrvmd_comixi,			// Comix Zone (Hack, Italian)
+	&BurnDrvmd_comixs,			// Comix Zone (Hack, Spanish)
 	&BurnDrvmd_comixj,			// Comix Zone (Jpn)
 	&BurnDrvmd_comixkp,			// Comix Zone (Kor, Prototype, 19950609)
-	&BurnDrvmd_comixs,			// Comix Zone (NTSC) (Hack, Spanish)
 	&BurnDrvmd_comixup10,		// Comix Zone (Prototype, 19950526)
 	&BurnDrvmd_comixup09,		// Comix Zone (Prototype, 19950530)
 	&BurnDrvmd_comixsc,			// Comix Zone (Sega Channel, Prototype, 19950612)
@@ -28184,7 +28185,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_metalgearc,		// Metal Gear (Hack, Spanish v1.0)
 	&BurnDrvnes_metalgearsc,	// Metal Gear (T-Chi)
 	&BurnDrvnes_metalgear,		// Metal Gear (USA)
-	&BurnDrvmd_mgs,				// Metal Gear Solid (Rus)
+	&BurnDrvmd_mgs,				// Metal Gear Solid (Unl) (Rus)
 	&BurnDrvMetlhawkj,			// Metal Hawk (Japan, Rev F)
 	&BurnDrvMetlhawk,			// Metal Hawk (Rev C)
 	&BurnSpecMetalman,			// Metal Man (Russian) (48K) (HB)
@@ -33260,7 +33261,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecSplattr,			// splATTR (128K) (HB)
 	&BurnDrvnes_splitsecond,	// Split Second (HB)
 	&BurnSpecSploids,			// Sploids (128K) (HB)
-	&BurnDrvmd_spongbob,		// Sponge Bob (Rus)
+	&BurnDrvmd_spongbob,		// Sponge Bob (Unl) (Rus)
 	&BurnDrvMSX_spooksl,		// Spooks & Ladders (Euro)
 	&BurnDrvmd_sportg,			// Sport Games (Bra)
 	&BurnDrvgg_sportill,		// Sports Illustrated Championship Football and Baseball (Euro, USA)
@@ -34821,8 +34822,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTekiPaki,			// Teki Paki
 	&BurnDrvnes_tekken2,		// Tekken 2 (Unl)
 	&BurnDrvnes_tekken3,		// Tekken 3 (Unl)
-	&BurnDrvmd_tekkn3sp,		// Tekken 3 Special
-	&Burnmd_Tekkensp,			// Tekken Special
+	&BurnDrvmd_tekkn3sp,		// Tekken 3 Special (Unl)
+	&Burnmd_Tekkensp,			// Tekken Special (Unl)
 	&BurnDrvTeljan,				// Tel Jan
 	&BurnDrvmd_telmah,			// Tel-Tel Mahjong (Jpn)
 	&BurnDrvmd_telstad,			// Tel-Tel Stadium (Jpn)
@@ -37158,6 +37159,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvXorworld,			// Xor World (prototype)
 	&BurnDrvMSX_xracing,		// Xracing (HB, v1.0.4)
 	&BurnDrvMSX_xspelunk,		// XSpelunker (HB)
+	&BurnDrvmd_xump2rv,			// Xump 2 - Back to Space (HB, Retail Version)
 	&BurnDrvmd_xump2,			// Xump2 (HB, rev2017)
 	&BurnDrvsg1k_cloderunt,		// Xun Bao Er Dai (Tw)
 	&BurnDrvXxmissio,			// XX Mission

@@ -20,7 +20,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="backgamm" romof="channelf">
@@ -31,7 +31,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="baseball" romof="channelf">
@@ -42,7 +42,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="bowling" romof="channelf">
@@ -53,7 +53,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="casinop" romof="channelf">
@@ -64,7 +64,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="multicrt" romof="channelf">
@@ -76,7 +76,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="multicrto" cloneof="multicrt" romof="multicrt">
@@ -88,7 +88,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="checkers" romof="channelf">
@@ -99,7 +99,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="clrorgan" romof="channelf">
@@ -111,7 +111,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="democrt1" romof="channelf">
@@ -123,7 +123,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="democrt2" romof="channelf">
@@ -135,7 +135,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="dsrtfox" romof="channelf">
@@ -146,7 +146,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="dodgeit" romof="channelf">
@@ -157,7 +157,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="dragrace" romof="channelf">
@@ -168,7 +168,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="drawpkr" cloneof="casinop" romof="casinop">
@@ -180,7 +180,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="football" cloneof="pfootbll" romof="pfootbll">
@@ -192,7 +192,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="galacticp" cloneof="galactic" romof="galactic">
@@ -204,7 +204,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="galactic" romof="channelf">
@@ -215,7 +215,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="hangman" romof="channelf">
@@ -226,7 +226,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="builtin" romof="channelf">
@@ -238,7 +238,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="lightsout" romof="channelf">
@@ -250,7 +250,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="magicnum" romof="channelf">
@@ -261,7 +261,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mthquiz1" romof="channelf">
@@ -272,7 +272,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mthquiz2" romof="channelf">
@@ -283,7 +283,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mazea" cloneof="maze" romof="maze">
@@ -294,7 +294,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="maze" romof="channelf">
@@ -305,7 +305,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="memory" romof="channelf">
@@ -316,7 +316,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="muehle" cloneof="tctactoe" romof="tctactoe">
@@ -327,7 +327,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="ordtvlng" cloneof="hangman" romof="hangman">
@@ -338,7 +338,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="pacman" romof="channelf">
@@ -350,7 +350,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="pacmanv2" cloneof="pacman" romof="pacman">
@@ -362,7 +362,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="pinballa" cloneof="pinball" romof="pinball">
@@ -373,7 +373,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="pinball" romof="channelf">
@@ -384,7 +384,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="pfootbll" romof="channelf">
@@ -395,7 +395,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="ratmal" cloneof="hangman" romof="hangman">
@@ -406,7 +406,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="robotwarp" cloneof="robotwar" romof="robotwar">
@@ -418,7 +418,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="robotwar" romof="channelf">
@@ -429,7 +429,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="schach" romof="channelf">
@@ -440,7 +440,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="slotmchn" romof="channelf">
@@ -451,7 +451,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="sonrsrch" romof="channelf">
@@ -462,7 +462,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="spacewar" romof="channelf">
@@ -473,7 +473,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="spitfirep" cloneof="spitfire" romof="spitfire">
@@ -485,7 +485,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="spitfire" romof="channelf">
@@ -496,7 +496,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="tetris" romof="channelf">
@@ -508,7 +508,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="tctactoe" romof="channelf">
@@ -519,7 +519,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="vblckjck" romof="channelf">
@@ -530,7 +530,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="whizball" romof="channelf">
@@ -541,7 +541,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="werbetxt" romof="channelf">
@@ -552,7 +552,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="wrdlf" romof="channelf">
@@ -564,7 +564,7 @@
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
-		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
+		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game isbios="yes" name="channelf">

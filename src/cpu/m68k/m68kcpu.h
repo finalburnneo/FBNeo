@@ -2058,7 +2058,7 @@ INLINE void m68ki_check_interrupts(void)
 	else if(CPU_INT_LEVEL > FLAG_INT_MASK)
 		m68ki_exception_interrupt(CPU_INT_LEVEL>>8);
 }
-
+void m68k_set_pc_changed_cb(void (*cbf)(UINT32));
 /* ======================================================================== */
 /* ============================== END OF FILE ============================= */
 /* ======================================================================== */

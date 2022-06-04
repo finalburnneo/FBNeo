@@ -452,7 +452,10 @@ const uint8 m68ki_ea_idx_cycle_table[64] =
 /* Default callbacks used if the callback hasn't been set yet, or if the
  * callback is set to NULL
  */
-
+static void (*pc_changed_cb)(UINT32) = NULL;
+void m68k_set_pc_changed_cb(void (*cbf)(UINT32)) {
+	pc_changed_cb = cbf;
+}
 /* Interrupt acknowledge */
 static int default_int_ack_callback_data;
 static int default_int_ack_callback(int int_level)
@@ -667,7 +670,11 @@ void m68k_set_tas_instr_callback(int  (*callback)(void))
 void m68k_set_pc_changed_callback(void  (*callback)(unsigned int new_pc))
 {
 	CALLBACK_PC_CHANGED = callback ? callback : default_pc_changed_callback;
+	// Figure out why the above doesnt work but this does
+	pc_changed_cb = callback;
+
 }
+
 
 void m68k_set_fc_callback(void  (*callback)(unsigned int new_fc))
 {
@@ -826,6 +833,10 @@ int m68k_execute(int num_cycles)
 			/* Record previous program counter */
 			REG_PPC = REG_PC;
 
+			if (pc_changed_cb) {
+				pc_changed_cb(REG_PC);
+			}
+
 			/* Read an instruction and call its handler */
 			REG_IR = m68ki_read_imm_16();
 			m68ki_instruction_jump_table[REG_IR]();
@@ -840,6 +851,7 @@ int m68k_execute(int num_cycles)
 	}
 	else
 		SET_CYCLES(0);
+
 
 	/* return how many clocks we used */
 	return m68ki_cpu.initial_cycles - GET_CYCLES();
@@ -998,7 +1010,8 @@ void m68k_init(void)
 	m68k_set_cmpild_instr_callback(NULL);
 	m68k_set_rte_instr_callback(NULL);
 	m68k_set_tas_instr_callback(NULL);
-	m68k_set_pc_changed_callback(NULL);
+	// This was overriding the other callback setting
+	//m68k_set_pc_changed_callback(NULL);
 	m68k_set_fc_callback(NULL);
 	m68k_set_instr_hook_callback(NULL);
 

@@ -3,6 +3,7 @@
 #include "burnint.h"
 #include "m68000_intf.h"
 #include "m68000_debug.h"
+#include <m68k/m68kcpu.h>
 
 enum LuaMemHookType
 {
@@ -821,9 +822,7 @@ void SekWriteByte(UINT32 a, UINT8 d) { WriteByte(a, d); }
 void SekWriteWord(UINT32 a, UINT16 d) { WriteWord(a, d); }
 void SekWriteLong(UINT32 a, UINT32 d) { WriteLong(a, d); }
 
-void SekWriteByteROM(UINT32 a, UINT8 d) { 
-	WriteByteROM(a, d); 
-}
+void SekWriteByteROM(UINT32 a, UINT8 d) { WriteByteROM(a, d); }
 void SekWriteWordROM(UINT32 a, UINT16 d) { WriteWordROM(a, d); }
 void SekWriteLongROM(UINT32 a, UINT32 d) { WriteLongROM(a, d); }
 
@@ -1072,9 +1071,16 @@ UINT8 SekCheatRead(UINT32 a)
 {
 	return SekReadByte(a);
 }
+static void CallLuaExec(unsigned int newPC)
+{
+	CallRegisteredLuaMemHook(newPC, 1, 0, LUAMEMHOOK_EXEC);
+}
+
 
 INT32 SekInit(INT32 nCount, INT32 nCPUType)
 {
+	m68k_set_pc_changed_callback(CallLuaExec);
+
 	DebugCPU_SekInitted = 1;
 	
 	struct SekExt* ps = NULL;
@@ -1252,6 +1258,7 @@ static void SekCPUExitM68K(INT32 i)
 }
 #endif
 
+
 INT32 SekExit()
 {
 #if defined FBNEO_DEBUG
@@ -1270,7 +1277,7 @@ INT32 SekExit()
 #ifdef EMU_M68K
 		SekCPUExitM68K(i);
 #endif
-
+		m68k_set_pc_changed_callback(NULL);
 		// Deallocate other context data
 		if (SekExt[i]) {
 			free(SekExt[i]);
@@ -1332,7 +1339,6 @@ void SekReset(INT32 nCPU)
 
 	SekCPUPop();
 }
-
 // ----------------------------------------------------------------------------
 // Control the active CPU
 
@@ -1361,6 +1367,8 @@ void SekOpen(const INT32 i)
 
 #ifdef EMU_M68K
 			m68k_set_context(SekM68KContext[nSekActive]);
+			//m68k_set_pc_changed_callback(TestCallback);
+
 #endif
 
 #ifdef EMU_A68K
@@ -1779,7 +1787,8 @@ INT32 SekRun(const INT32 nCycles)
 
 #ifdef EMU_M68K
 		nSekCyclesToDo = nCycles;
-		CallRegisteredLuaMemHook(m68k_get_reg(NULL, M68K_REG_PC), 1, 0, LUAMEMHOOK_EXEC);
+		//CallRegisteredLuaMemHook(m68k_get_reg(NULL, M68K_REG_PC), 1, 0, LUAMEMHOOK_EXEC);
+
 		
 		if (nSekRESETLine[nSekActive] || nSekHALT[nSekActive])
 		{

@@ -900,12 +900,6 @@ static void CallRegisteredLuaMemHook_LuaMatch(unsigned int address, int size, un
 }
 void CallRegisteredLuaMemHook(unsigned int address, int size, unsigned int value, LuaMemHookType hookType)
 {
-	if (hookType == LUAMEMHOOK_EXEC) {
-		printf("exechook");
-	}
-	if (address == 0xFF8400) {
-		printf("hello world");
-	}
 	// performance critical! (called VERY frequently)
 	// I suggest timing a large number of calls to this function in Release if you change anything in here,
 	// before and after, because even the most innocent change can make it become 30% to 400% slower.

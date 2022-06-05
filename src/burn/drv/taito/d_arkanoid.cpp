@@ -1593,8 +1593,8 @@ struct BurnDriver BurnDrvarkatour = {
 // Tournament version, newer
 
 static struct BurnRomInfo arkatour2RomDesc[] = {
-	{ "a75-28.ic36",  0x8000, 0xf3b1923e, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
-	{ "a75-27.ic37",  0x8000, 0x7c74987b, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "a75-36.ic16",  0x8000, 0xf3b1923e, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "a75-37.ic17",  0x8000, 0x7c74987b, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "a75_38.ic14",  0x0800, 0x00000000, 2 | BRF_ESS | BRF_PRG | BRF_NODUMP }, //  2 MCU
 

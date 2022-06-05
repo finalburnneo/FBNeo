@@ -541,7 +541,7 @@ static INT32 DrvFrame()
 	{
 		INT32 delay = DrvDips[2] & 0x1f;
 
-		epic12_set_blitterdelay((delay) ? (delay + 50) : 0, speedhack_burn);
+		epic12_set_blitterdelay((delay) ? ((delay - 1) + 50) : 0, speedhack_burn);
 		epic12_set_blitterthreading(DrvDips[1] & 1);
 		Sh3SetTimerGranularity(DrvDips[1] & 2);
 	}

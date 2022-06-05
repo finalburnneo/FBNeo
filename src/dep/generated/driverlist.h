@@ -853,6 +853,7 @@ DRV		BurnDrvgg_arliel;
 DRV		BurnDrvArmchmp2o;
 DRV		BurnDrvArmchmp2o2;
 DRV		BurnDrvArmchmp2;
+DRV		BurnDrvnes_armwrestl;
 DRV		BurnDrvArmwrest;
 DRV		BurnDrvnes_armadilloj;
 DRV		BurnDrvnes_armadillo;
@@ -4357,6 +4358,7 @@ DRV		BurnDrvnes_downtspekunkunnojid;
 DRV		BurnDrvnes_drchaos;
 DRV		BurnDrvfds_drcha;
 DRV		BurnDrvgg_drfrankn;
+DRV		BurnDrvnes_drgarfield;
 DRV		BurnDrvMSX_drhello;
 DRV		BurnDrvsms_drhello;
 DRV		BurnDrvnes_drjekandmrhy;
@@ -6749,8 +6751,6 @@ DRV		BurnDrvgg_halleyw;
 DRV		BurnDrvfds_halleywars;
 DRV		BurnDrvgg_halleywj;
 DRV		BurnSpecHknight;
-DRV		BurnDrvnes_halloween86;
-DRV		BurnDrvnes_halloween86a;
 DRV		BurnDrvChamburger;
 DRV		BurnDrvHamaway;
 DRV		BurnSpechammerboy1;
@@ -6837,6 +6837,9 @@ DRV		BurnDrvHcastlee;
 DRV		BurnDrvHcastlek;
 DRV		BurnDrvHcastle;
 DRV		BurnDrvnes_halloween85;
+DRV		BurnDrvnes_halloween86;
+DRV		BurnDrvnes_halloween86a;
+DRV		BurnDrvnes_halloween86roe;
 DRV		BurnDrvMSX_hhouse;
 DRV		BurnDrvnes_hauntedadv;
 DRV		BurnDrvmd_haunting;
@@ -9250,6 +9253,8 @@ DRV		BurnDrvfds_matounohou;
 DRV		BurnDrvmatrimbl;
 DRV		BurnDrvMatrimbh;
 DRV		BurnDrvmatrim;
+DRV		BurnDrvnes_mawthornej;
+DRV		BurnDrvnes_mawthorne;
 DRV		BurnDrvMaxrpm;
 DRV		BurnDrvnes_maxwar;
 DRV		BurnDrvMSX_maxima;
@@ -16847,6 +16852,7 @@ DRV		BurnDrvMahmajn2;		// no comment [NOT WORKING]
 DRV		BurnDrvnes_tokorsannomammosemo;
 DRV		BurnDrvJackalj;
 DRV		BurnDrvTndrcadej;
+DRV		BurnDrvnes_tola;
 DRV		BurnDrvnes_tomjerultgamcatandmc;
 DRV		BurnDrvnes_tomjerultgamcatandm;
 DRV		BurnDrvsms_tomjerry;
@@ -16926,6 +16932,7 @@ DRV		BurnDrvTornado2;		// no comment [NOT WORKING]
 DRV		BurnSpecTornadoecr;
 DRV		BurnDrvMSX_tortillaen;
 DRV		BurnDrvMSX_tortillaes;
+DRV		BurnDrvnes_tortoises;
 DRV		BurnDrvToryumon;
 DRV		BurnDrvpce_etercity;
 DRV		BurnDrvTotcarnp;
@@ -17616,6 +17623,7 @@ DRV		BurnDrvmd_vru;			// no comment [NOT WORKING]
 DRV		BurnDrvmd_vbart;
 DRV		BurnDrvmd_vpinball;
 DRV		BurnSpecVirus;
+DRV		BurnDrvnes_virus;
 DRV		BurnDrvnes_nesvircle;
 DRV		BurnDrvMSX_viruslqp;
 #if defined FBNEO_DEBUG
@@ -19593,6 +19601,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvArmchmp2o,			// Arm Champs II v1.7 [no comment, NOT WORKING]
 	&BurnDrvArmchmp2o2,			// Arm Champs II v2.6 [no comment, NOT WORKING]
 	&BurnDrvArmchmp2,			// Arm Champs II v2.7 [no comment, NOT WORKING]
+	&BurnDrvnes_armwrestl,		// Arm Wrestling Classic, The (HB)
 	&BurnDrvArmwrest,			// Arm Wrestling
 	&BurnDrvnes_armadilloj,		// Armadillo (Japan)
 	&BurnDrvnes_armadillo,		// Armadillo (T-Eng)
@@ -23097,6 +23106,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_drchaos,		// Dr. Chaos (USA)
 	&BurnDrvfds_drcha,			// Dr. Chaos - Jigoku no Tobira (Japan)
 	&BurnDrvgg_drfrankn,		// Dr. Franken (Prototype, no sound)
+	&BurnDrvnes_drgarfield,		// Dr. Garfield (Hack, v1.0)
 	&BurnDrvMSX_drhello,		// Dr. Hello (Kor)
 	&BurnDrvsms_drhello,		// Dr. HELLO (Kor)
 	&BurnDrvnes_drjekandmrhy,	// Dr. Jekyll and Mr. Hyde (USA)
@@ -25489,8 +25499,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfds_halleywars,		// Halley Wars (Japan)
 	&BurnDrvgg_halleywj,		// Halley Wars (Jpn)
 	&BurnSpecHknight,			// Hallowed Knight (48K) (HB, v1.4)
-	&BurnDrvnes_halloween86,	// Halloween'86 (HB)
-	&BurnDrvnes_halloween86a,	// Halloween'86 (HB, alt)
 	&BurnDrvChamburger,			// Hamburger (DECO Cassette) (Japan)
 	&BurnDrvHamaway,			// Hammer Away (prototype)
 	&BurnSpechammerboy1,		// Hammer Boy (Part 1) (128K)
@@ -25577,6 +25585,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvHcastlek,			// Haunted Castle (ver. K)
 	&BurnDrvHcastle,			// Haunted Castle (ver. M)
 	&BurnDrvnes_halloween85,	// Haunted Halloween'85 (HB)
+	&BurnDrvnes_halloween86,	// Haunted Halloween'86 (HB)
+	&BurnDrvnes_halloween86a,	// Haunted Halloween'86 (HB, alt)
+	&BurnDrvnes_halloween86roe,	// Haunted Halloween'86 - Remastered Onslaught Edition (HB)
 	&BurnDrvMSX_hhouse,			// Haunted House (Euro)
 	&BurnDrvnes_hauntedadv,		// Haunted House Adventure (HB)
 	&BurnDrvmd_haunting,		// Haunting Starring Polterguy (Euro, USA)
@@ -26730,7 +26741,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKickman,			// Kickman (upright)
 	&BurnDrvmd_kidcham,			// Kid Chameleon (Euro, Korea, USA)
 	&BurnDrvmd_kidchams,		// Kid Chameleon (Hack, Spanish)
-	&BurnDrvnes_kiddracula,		// Kid Dracula (English)
+	&BurnDrvnes_kiddracula,		// Kid Dracula (T-Eng)
 	&BurnDrvnes_kidicarus,		// Kid Icarus (USA, Europe)
 	&BurnDrvnes_kidkloinnigmawo,// Kid Klown in Night Mayor World (USA)
 	&BurnDrvnes_kidkooandquesewohe,// Kid Kool and the Quest for the Seven Wonder Herbs (USA)
@@ -27990,6 +28001,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmatrimbl,			// Matrimelee / Shin Gouketsuji Ichizoku Toukon (bootleg)
 	&BurnDrvMatrimbh,			// Matrimelee / Shin Gouketsuji Ichizoku Toukon (Enable Hidden Characters V2)
 	&BurnDrvmatrim,				// Matrimelee / Shin Gouketsuji Ichizoku Toukon (NGM-2660) (NGH-2660)
+	&BurnDrvnes_mawthornej,		// Mawthorne (Japan) (HB)
+	&BurnDrvnes_mawthorne,		// Mawthorne (USA) (HB)
 	&BurnDrvMaxrpm,				// Max RPM (ver 2)
 	&BurnDrvnes_maxwar,			// Max Warrior - Wakusei Kaigenrei (Japan)
 	&BurnDrvMSX_maxima,			// Maxima (Euro)
@@ -35587,6 +35600,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_tokorsannomammosemo,// Tokoro-san no Mamoru mo Semeru mo (Japan)
 	&BurnDrvJackalj,			// Tokushu Butai Jackal (Japan, 8-way Joystick)
 	&BurnDrvTndrcadej,			// Tokusyu Butai U.A.G. (Japan)
+	&BurnDrvnes_tola,			// Tola (HB)
 	&BurnDrvnes_tomjerultgamcatandmc,// Tom & Jerry - The Ultimate Game of Cat and Mouse! (Hack, Spanish v1.0)
 	&BurnDrvnes_tomjerultgamcatandm,// Tom & Jerry - The Ultimate Game of Cat and Mouse! (USA)
 	&BurnDrvsms_tomjerry,		// Tom and Jerry (Prototype)
@@ -35666,6 +35680,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecTornadoecr,		// Tornado ECR (48K)
 	&BurnDrvMSX_tortillaen,		// Tortilla Sunrise (English) (HB, v1.1)
 	&BurnDrvMSX_tortillaes,		// Tortilla Sunrise (Spanish) (HB, v1.1)
+	&BurnDrvnes_tortoises,		// Tortoises (HB)
 	&BurnDrvToryumon,			// Toryumon
 	&BurnDrvpce_etercity,		// Toshi Tensou Keikaku - Eternal City
 	&BurnDrvTotcarnp,			// Total Carnage (prototype, proto v 1.0 01/25/92)
@@ -36356,6 +36371,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_vbart,			// Virtual Bart (World)
 	&BurnDrvmd_vpinball,		// Virtual Pinball (Euro, USA)
 	&BurnSpecVirus,				// Virus (48K)
+	&BurnDrvnes_virus,			// Virus (USA) (Prototype)
 	&BurnDrvnes_nesvircle,		// Virus Cleaner (HB)
 	&BurnDrvMSX_viruslqp,		// Virus LQP-79 (HB, v1.2)
 #if defined FBNEO_DEBUG

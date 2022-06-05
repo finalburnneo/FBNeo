@@ -165,8 +165,8 @@
 	<game name="actio53vol1stbu">
 		<comment>Homebrew</comment>
 		<description>Action 53 vol 1 Streemerz Bundle (HB)</description>
-		<year>20XX?</year>
-		<manufacturer>Nintendo?</manufacturer>
+		<year>2013</year>
+		<manufacturer>Damian Yerrick &amp; Contributors</manufacturer>
 		<rom name="Action 53 vol 1 Streemerz Bundle (HB).nes" size="524304" crc="54fc4fae"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -174,8 +174,8 @@
 	<game name="actio53vol2doac">
 		<comment>Homebrew</comment>
 		<description>Action 53 vol 2 Double Action (HB)</description>
-		<year>20XX?</year>
-		<manufacturer>Nintendo?</manufacturer>
+		<year>2015</year>
+		<manufacturer>Damian Yerrick &amp; Contributors</manufacturer>
 		<rom name="Action 53 vol 2 Double Action (HB).nes" size="524304" crc="4e9c9174"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -183,8 +183,8 @@
 	<game name="actio53vol3retw">
 		<comment>Homebrew</comment>
 		<description>Action 53 vol 3 Revenge of the Twins (HB)</description>
-		<year>20XX?</year>
-		<manufacturer>Nintendo?</manufacturer>
+		<year>2018</year>
+		<manufacturer>Damian Yerrick &amp; Contributors</manufacturer>
 		<rom name="Action 53 vol 3 Revenge of the Twins (HB).nes" size="1048592" crc="0dc9110b"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -947,6 +947,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="armwrestl">
+		<comment>Homebrew</comment>
+		<description>Arm Wrestling Classic, The (HB)</description>
+		<year>2022</year>
+		<manufacturer>Fista Games</manufacturer>
+		<rom name="Arm Wrestling Classic, The (2022)(Fista Games).nes" size="524304" crc="5c62c55a"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="armadilloj" cloneof="armadillo" romof="armadillo">
 		<description>Armadillo (Japan)</description>
 		<year>1991</year>
@@ -966,8 +975,8 @@
 	</game>
 	<game name="armeddrafanvilj" cloneof="armeddrafanvil" romof="armeddrafanvil">
 		<description>Armed Dragon Fantasy Villgust (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1993</year>
+		<manufacturer>Angel Studios</manufacturer>
 		<rom name="Armed Dragon Fantasy Villgust (Japan).nes" size="393232" crc="5a8bfdf5"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3450,8 +3459,8 @@
 	</game>
 	<game name="darklord">
 		<description>Dark Lord (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1991</year>
+		<manufacturer>Data East</manufacturer>
 		<rom name="Dark Lord (Japan).nes" size="393232" crc="1be8483a"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -3581,8 +3590,8 @@
 	</game>
 	<game name="deblock">
 		<description>Deblock (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1991</year>
+		<manufacturer>Athena</manufacturer>
 		<rom name="Deblock (Japan).nes" size="65552" crc="70eac605"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -4162,6 +4171,15 @@
 		<year>1988</year>
 		<manufacturer>FCI</manufacturer>
 		<rom name="Dr. Chaos (USA).nes" size="131088" crc="406bda35"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="drgarfield" cloneof="drmario" romof="drmario">
+		<comment>Hack</comment>
+		<description>Dr. Garfield (Hack, v1.0)</description>
+		<year>2020</year>
+		<manufacturer>Pangent Technologies</manufacturer>
+		<rom name="Dr. Garfield (2020)(Pangent Technologies).nes" size="65552" crc="2d651591"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -6893,24 +6911,6 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="halloween86">
-		<comment>Homebrew</comment>
-		<description>Halloween'86 (HB)</description>
-		<year>2016</year>
-		<manufacturer>Retrotainment Games</manufacturer>
-		<rom name="Halloween'86 (HB).nes" size="524304" crc="454252a4"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="halloween86a" cloneof="halloween86" romof="halloween86">
-		<comment>Homebrew</comment>
-		<description>Halloween'86 (HB, alt)</description>
-		<year>2016</year>
-		<manufacturer>Retrotainment Games</manufacturer>
-		<rom name="Halloween'86 (HB, alt).nes" size="524304" crc="d008091a"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
 	<game name="hammerinharry" cloneof="daikunogensan" romof="daikunogensan">
 		<description>Hammerin' Harry (Europe)</description>
 		<year>1992</year>
@@ -6977,6 +6977,33 @@
 		<year>2015</year>
 		<manufacturer>Retrotainment Games</manufacturer>
 		<rom name="Halloween'85 (HB).nes" size="524304" crc="4bcf7ae5"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="halloween86">
+		<comment>Homebrew</comment>
+		<description>Haunted Halloween'86 (HB)</description>
+		<year>2016</year>
+		<manufacturer>Retrotainment Games</manufacturer>
+		<rom name="Halloween'86 (HB).nes" size="524304" crc="454252a4"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="halloween86a" cloneof="halloween86" romof="halloween86">
+		<comment>Homebrew</comment>
+		<description>Haunted Halloween'86 (HB, alt)</description>
+		<year>2016</year>
+		<manufacturer>Retrotainment Games</manufacturer>
+		<rom name="Halloween'86 (HB, alt).nes" size="524304" crc="d008091a"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="halloween86roe">
+		<comment>Homebrew</comment>
+		<description>Haunted Halloween'86 - Remastered Onslaught Edition (HB)</description>
+		<year>2018</year>
+		<manufacturer>Retrotainment Games</manufacturer>
+		<rom name="Haunted Halloween '86 - Remastered Onslaught Edition (2018)(Retrotainment Games).nes" size="524304" crc="94f92f7c"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -7635,8 +7662,8 @@
 	</game>
 	<game name="jleafigsoc">
 		<description>J.League Fighting Soccer - The King of Ace Strikers (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1993</year>
+		<manufacturer>IGS</manufacturer>
 		<rom name="J.League Fighting Soccer - The King of Ace Strikers (Japan).nes" size="262160" crc="6975d3cd"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8199,9 +8226,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="kaikeyanmar2">
+		<comment>Hack</comment>
 		<description>Kaiketsu Yancha Maru 2 - Karakuri Land (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2020</year>
+		<manufacturer>Zynk Oxhyde</manufacturer>
 		<rom name="Kaiketsu Yancha Maru 2 - Karakuri Land (T-Eng).nes" size="262160" crc="0f038e8f"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8240,8 +8268,8 @@
 	</game>
 	<game name="kamennoninhan">
 		<description>Kamen no Ninja - Hanamaru (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Capcom</manufacturer>
 		<rom name="Kamen no Ninja - Hanamaru (Japan).nes" size="262160" crc="8b002a9d"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8331,8 +8359,8 @@
 	</game>
 	<game name="kartfighter">
 		<description>Kart Fighter (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1994</year>
+		<manufacturer>Ge De Industry Co.</manufacturer>
 		<rom name="Kart Fighter (Unl).nes" size="393232" crc="7318bed4"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8346,9 +8374,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="kerokerkernoda">
+		<comment>Hack</comment>
 		<description>Kero Kero Keroppi no Daibouken (T-eng)</description>
-		<year>1991</year>
-		<manufacturer>Character Soft</manufacturer>
+		<year>2016</year>
+		<manufacturer>Gaijin Productions</manufacturer>
 		<rom name="Kero Kero Keroppi no Daibouken (T-eng).nes" size="65552" crc="0dfbda9c"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8362,9 +8391,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="kerokerkernoda2">
+		<comment>Hack</comment>
 		<description>Kero Kero Keroppi no Daibouken 2 - Donuts Ike wa Oosawagi! (T-eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2016</year>
+		<manufacturer>The Spoony Bard</manufacturer>
 		<rom name="Kero Kero Keroppi no Daibouken 2 - Donuts Ike wa Oosawagi! (T-eng).nes" size="262160" crc="8b3c7d79"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8411,9 +8441,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="kiddracula">
-		<description>Kid Dracula (English)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<comment>Hack</comment>
+		<description>Kid Dracula (T-Eng)</description>
+		<year>2019</year>
+		<manufacturer>chronix</manufacturer>
 		<rom name="Kid Dracula (English).nes" size="393232" crc="e9c3dc89"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8452,8 +8483,8 @@
 	</game>
 	<game name="kiddysuninfan">
 		<description>Kiddy Sun in Fantasia (Taiwan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Eratech</manufacturer>
 		<rom name="Kiddy Sun in Fantasia (Taiwan).nes" size="65552" crc="2d1b3ae7"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8592,8 +8623,8 @@
 	</game>
 	<game name="kittyscatch">
 		<description>Kitty's Catch (USA)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1989</year>
+		<manufacturer>David Wiebenson</manufacturer>
 		<rom name="Kitty's Catch (USA).nes" size="40976" crc="60ca8d8c"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9895,6 +9926,24 @@
 		<year>1990</year>
 		<manufacturer>Bothtec (Quest)</manufacturer>
 		<rom name="Matendouji (Japan).nes" size="262160" crc="d8ca4be6"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="mawthornej" cloneof="mawthorne" romof="mawthorne">
+		<comment>Homebrew</comment>
+		<description>Mawthorne (Japan) (HB)</description>
+		<year>2022</year>
+		<manufacturer>CGT Games</manufacturer>
+		<rom name="Mawthorne (Japan)(2022)(CGT Games).nes" size="524304" crc="471ddcbf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="mawthorne">
+		<comment>Homebrew</comment>
+		<description>Mawthorne (USA) (HB)</description>
+		<year>2022</year>
+		<manufacturer>CGT Games</manufacturer>
+		<rom name="Mawthorne (USA, Europe)(2022)(CGT Games).nes" size="524304" crc="447bec5d"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -14792,7 +14841,7 @@
 		<comment>Homebrew</comment>
 		<description>Super Painter (HB)</description>
 		<year>2015</year>
-		<manufacturer>Retro Souls</manufacturer>
+		<manufacturer>RetroSouls</manufacturer>
 		<rom name="Super Painter (HB).nes" size="40976" crc="5d483272"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -15891,6 +15940,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="tola">
+		<comment>Homebrew</comment>
+		<description>Tola (HB)</description>
+		<year>2022</year>
+		<manufacturer>OmniRetro Games</manufacturer>
+		<rom name="Tola (2022)(OmniRetro Games).nes" size="40976" crc="315309f6"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="tomjerultgamcatandmc" cloneof="tomjerultgamcatandm" romof="tomjerultgamcatandm">
 		<comment>Hack</comment>
 		<description>Tom &amp; Jerry - The Ultimate Game of Cat and Mouse! (Hack, Spanish v1.0)</description>
@@ -15972,6 +16030,15 @@
 		<year>1992</year>
 		<manufacturer>Namco</manufacturer>
 		<rom name="Top Striker (Japan).nes" size="262160" crc="b1e92643"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="tortoises">
+		<comment>Homebrew</comment>
+		<description>Tortoises (HB)</description>
+		<year>2017</year>
+		<manufacturer>FG Software</manufacturer>
+		<rom name="Tortoises (2017)(FG Software).nes" size="65552" crc="05f4f4e2"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -16477,6 +16544,15 @@
 		<year>1991</year>
 		<manufacturer>Sammy</manufacturer>
 		<rom name="Vice - Project Doom (USA).nes" size="262160" crc="5fa46034"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="virus" cloneof="drmario" romof="drmario">
+		<comment>Prototype</comment>
+		<description>Virus (USA) (Prototype)</description>
+		<year>1990</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Virus (U)(Proto)(1990)(Nintendo).nes" size="49168" crc="409c55f5"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

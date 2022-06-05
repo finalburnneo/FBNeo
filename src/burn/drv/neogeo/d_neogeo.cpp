@@ -19155,8 +19155,6 @@ static struct BurnRomInfo kof2k2plusRomDesc[] = {
 STDROMPICKEXT(kof2k2plus, kof2k2plus, neogeo)
 STD_ROM_FN(kof2k2plus)
 
-static UINT8* kof2k2plusExtraROM;
-
 static INT32 kof2k2plusInit()
 {
 	nNeoProtectionXor = 0xEC;
@@ -19164,12 +19162,8 @@ static INT32 kof2k2plusInit()
 	INT32 nRet = NeoInit();
 
 	if (nRet == 0) {
-		kof2k2plusExtraROM = (UINT8*)BurnMalloc(0x20000);
-
-		if (BurnLoadRom(kof2k2plusExtraROM, 2, 1)) return 1;
-
 		SekOpen(0);
-		SekMapMemory(kof2k2plusExtraROM, 0x900000, 0x91ffff, MAP_ROM);
+		SekMapMemory(Neo68KROMActive + 0x600000, 0x900000, 0x91ffff, MAP_ROM);
 		SekClose();
 
 		const PCM2DecryptV2Info Info = { 0xa5000, 0x000000, { 0xf9, 0xe0, 0x5d, 0xf3, 0xea, 0x92, 0xbe, 0xef } };
@@ -19180,20 +19174,13 @@ static INT32 kof2k2plusInit()
 	return nRet;
 }
 
-static INT32 kof2k2plusExit()
-{
-	BurnFree(kof2k2plusExtraROM);
-
-	return NeoExit();
-}
-
 struct BurnDriver BurnDrvkof2k2plus = {
 	"kof2k2plus", "kof2002", "neogeo", NULL, "2020",
 	"The King of Fighters 2002 (Plus 2017)\0", NULL, "Hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof2k2plusRomInfo, kof2k2plusRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesDIPInfo,
-	kof2k2plusInit, kof2k2plusExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	kof2k2plusInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 

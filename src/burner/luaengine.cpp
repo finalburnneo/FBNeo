@@ -32,7 +32,6 @@ extern "C" {
 #endif
 #include "luaengine.h"
 #include "luasav.h"
-//#include "../cpu/m68k/m68k.h"
 #include "../cpu/m68000_intf.h"
 #include "../cpu/z80/z80.h"
 extern Z80_Regs Z80;
@@ -138,6 +137,10 @@ static const char* luaCallIDStrings [] =
 	"CALL_HOTKEY_3",
 	"CALL_HOTKEY_4",
 	"CALL_HOTKEY_5",
+	"CALL_HOTKEY_6",
+	"CALL_HOTKEY_7",
+	"CALL_HOTKEY_8",
+	"CALL_HOTKEY_9",
 };
 
 static char* rawToCString(lua_State* L, int idx=0);
@@ -307,7 +310,7 @@ static int fba_pause(lua_State *L) {
 
 	// If it's on a frame boundary, we also yield.
 	frameAdvanceWaiting = TRUE;
-	return lua_yield(L, 0);;
+	return lua_yield(L, 0);
 }
 
 
@@ -907,8 +910,8 @@ void CallRegisteredLuaMemHook(unsigned int address, int size, unsigned int value
 	// (on my system that consistently took 200 ms total in the former case and 350 ms total in the latter case)
 	if(hookedRegions[hookType].NotEmpty())
 	{
-		if((hookType <= LUAMEMHOOK_EXEC) && (address >= 0xE00000))
-		      address |= 0xFF0000; // account for mirroring of RAM
+		//if((hookType <= LUAMEMHOOK_EXEC) && (address >= 0xE00000))
+		//      address |= 0xFF0000; // account for mirroring of RAM
 		if(hookedRegions[hookType].Contains(address, size))
 			CallRegisteredLuaMemHook_LuaMatch(address, size, value, hookType); // something has hooked this specific address
 	}
@@ -1207,23 +1210,23 @@ cpuToRegisterMaps [] =
 };
 
 char* m68k_reg_map[] = {
-	"m68000.d0", // 0
-	"m68000.d1", // 1
-	"m68000.d2", // 2
-	"m68000.d3", // 3
-	"m68000.d4", // 4
-	"m68000.d5", // 5
-	"m68000.d6", // 6
-	"m68000.d7", // 7
-	"m68000.a0", // 8
-	"m68000.a1", // 9
-	"m68000.a2", // 10
-	"m68000.a3", // 11
-	"m68000.a4", // 12
-	"m68000.a5", // 13
-	"m68000.a6", // 14
-	"m68000.a7", // 15
-	"m68000.pc", // 16
+	"m68000.d0",
+	"m68000.d1",
+	"m68000.d2",
+	"m68000.d3",
+	"m68000.d4",
+	"m68000.d5",
+	"m68000.d6",
+	"m68000.d7",
+	"m68000.a0",
+	"m68000.a1",
+	"m68000.a2",
+	"m68000.a3",
+	"m68000.a4",
+	"m68000.a5",
+	"m68000.a6",
+	"m68000.a7",
+	"m68000.pc",
 	0
 };
 
@@ -2462,7 +2465,6 @@ static int gui_parsecolor(lua_State *L)
 // from the function HK_screenShot().
 static int gui_savescreenshot(lua_State *L) {
 	//HK_screenShot(0);
-	MakeScreenShot();
 	return 1;
 }
 
@@ -3233,9 +3235,9 @@ use_console:
 static int input_registerhotkey(lua_State *L)
 {
 	int hotkeyNumber = luaL_checkinteger(L,1);
-	if(hotkeyNumber < 1 || hotkeyNumber > 5)
+	if (hotkeyNumber < 1 || hotkeyNumber > 9)
 	{
-		luaL_error(L, "input.registerhotkey(n,func) requires 1 <= n <= 5, but got n = %d.", hotkeyNumber);
+		luaL_error(L, "input.registerhotkey(n,func) requires 1 <= n <= 9, but got n = %d.", hotkeyNumber);
 		return 0;
 	}
 	else

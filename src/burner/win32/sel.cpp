@@ -1021,16 +1021,18 @@ static VOID CALLBACK InitPreviewTimerProc(HWND, UINT, UINT_PTR, DWORD)
 	UpdatePreview(true, szAppPreviewsPath, IDC_SCREENSHOT_H, IDC_SCREENSHOT_V);
 
 	if (GetIpsNumPatches()) {
-		if (!nShowMVSCartsOnly) EnableWindow(GetDlgItem(hSelDlg, IDC_SEL_IPSMANAGER), TRUE);
+		if (!nShowMVSCartsOnly) {
+			EnableWindow(GetDlgItem(hSelDlg, IDC_SEL_IPSMANAGER), TRUE);
+			LoadIpsActivePatches();
+
+			// Whether IDC_SEL_APPLYIPS is enabled must be subordinate to IDC_SEL_IPSMANAGER
+			// to verify that xxx.dat is not removed after saving config.
+			// Reduce useless array lookups.
+			EnableWindow(GetDlgItem(hSelDlg, IDC_SEL_APPLYIPS), GetIpsNumActivePatches());
+		}
 	} else {
 		EnableWindow(GetDlgItem(hSelDlg, IDC_SEL_IPSMANAGER), FALSE);
-	}
-
-	LoadIpsActivePatches();
-	if (GetIpsNumActivePatches()) {
-		if (!nShowMVSCartsOnly) EnableWindow(GetDlgItem(hSelDlg, IDC_SEL_APPLYIPS), TRUE);
-	} else {
-		EnableWindow(GetDlgItem(hSelDlg, IDC_SEL_APPLYIPS), FALSE);
+		EnableWindow(GetDlgItem(hSelDlg, IDC_SEL_APPLYIPS), FALSE);	// xxx.dat path not found, must be disabled.
 	}
 
 	KillTimer(hSelDlg, nInitPreviewTimer);
@@ -1698,7 +1700,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 		EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), FALSE);
 		EnableWindow(GetDlgItem(hDlg, IDC_SEL_IPSMANAGER), FALSE);
-		bDoIpsPatch = FALSE;
+		bDoIpsPatch = false;
 		IpsPatchExit();
 
 		WndInMid(hDlg, hParent);
@@ -2592,16 +2594,18 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
             CheckDlgButton(hDlg, IDC_SEL_APPLYIPS, BST_UNCHECKED);
 
             if (GetIpsNumPatches()) {
-				if (!nShowMVSCartsOnly) EnableWindow(GetDlgItem(hDlg, IDC_SEL_IPSMANAGER), TRUE);
+				if (!nShowMVSCartsOnly) {
+					EnableWindow(GetDlgItem(hDlg, IDC_SEL_IPSMANAGER), TRUE);
+					LoadIpsActivePatches();
+
+					// Whether IDC_SEL_APPLYIPS is enabled must be subordinate to IDC_SEL_IPSMANAGER
+					// to verify that xxx.dat is not removed after saving config.
+					// Reduce useless array lookups.
+					EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), GetIpsNumActivePatches());
+				}
 			} else {
 				EnableWindow(GetDlgItem(hDlg, IDC_SEL_IPSMANAGER), FALSE);
-			}
-
-			LoadIpsActivePatches();
-			if (GetIpsNumActivePatches()) {
-				if (!nShowMVSCartsOnly) EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), TRUE);
-			} else {
-				EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), FALSE);
+				EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), FALSE);	// xxx.dat path not found, must be disabled.
 			}
 
 			// Get the text from the drivers via BurnDrvGetText()

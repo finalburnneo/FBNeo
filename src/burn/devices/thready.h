@@ -47,10 +47,12 @@ struct threadystruct
 
 		our_callback = thread_callback;
 
+#if 0
 		SYSTEM_INFO info;
 		GetSystemInfo(&info);
 		INT32 maxproc = (info.dwNumberOfProcessors > 4) ? 4 : info.dwNumberOfProcessors;
 		INT32 thready_proc = rand() % maxproc;
+#endif
 
 		//bprintf(0, _T("Thready: processors available: %d, blitter processor: %d\n"), info.dwNumberOfProcessors, thready_proc);
 
@@ -60,7 +62,9 @@ struct threadystruct
 		wait_event = CreateEvent(NULL, FALSE, FALSE, NULL);
 		our_thread = CreateThread(NULL, 0, ThreadyProc, NULL, 0, &our_threadid);
 
+#if 0
 		SetThreadIdealProcessor(our_thread, thready_proc);
+#endif
 
 		if (our_event && wait_event && our_thread) {
 			//bprintf(0, _T("Thready: we're gonna git 'r dun!\n"));

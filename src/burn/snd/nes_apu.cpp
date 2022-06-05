@@ -96,6 +96,7 @@ struct nesapu_info
 	UINT32 (*pSyncCallback)(INT32 samples_per_frame);
 	INT32 current_position;
 	INT32 fill_buffer_hack;
+	INT32 dmc_direction_normal;
 	double gain[2];
 	INT32 output_dir[2];
 	INT32 bAdd;
@@ -131,6 +132,12 @@ static const INT32 *noise_clocks;
 static const INT32 *dpcm_clocks;
 
 static int8 apu_dpcm(struct nesapu_info *info, dpcm_t *chan);
+
+void nesapuSetDMCBitDirection(INT32 reversed)
+{
+	struct nesapu_info *info = &nesapu_chips[0];
+	info->dmc_direction_normal = !reversed;
+}
 
 void nesapu_runclock(INT32 cycle)
 {
@@ -473,14 +480,27 @@ static int8 apu_dpcm(struct nesapu_info *info, dpcm_t *chan)
 	   chan->phaseacc += freq;
 
 	   if (chan->enabled) {
-		   if (chan->cur_byte & 1) {
-			   if (chan->vol < (0x7f - 2))
-				   chan->vol += 2;
+
+		   if (info->dmc_direction_normal) {
+			   if (chan->cur_byte & 1) {
+				   if (chan->vol < (0x7f - 2))
+					   chan->vol += 2;
+			   } else {
+				   if (chan->vol > 0)
+					   chan->vol -= 2;
+			   }
+			   chan->cur_byte >>= 1;
 		   } else {
-			   if (chan->vol > 0)
-				   chan->vol -= 2;
+			   // reversed!
+			   if (chan->cur_byte & 0x80) {
+				   if (chan->vol < (0x7f - 2))
+					   chan->vol += 2;
+			   } else {
+				   if (chan->vol > 0)
+					   chan->vol -= 2;
+			   }
+			   chan->cur_byte <<= 1;
 		   }
-		   chan->cur_byte >>= 1;
 	   }
 
 	   chan->bits_left--;

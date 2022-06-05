@@ -4695,6 +4695,9 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp">
       <Filter>Burn\drv\pre90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\atari\d_marblmd2.cpp">
+      <Filter>Burn\drv\atari</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">

@@ -1593,9 +1593,9 @@ struct BurnDriver BurnDrvSidearmsj = {
 // Turtle Ship (North America)
 
 static struct BurnRomInfo turtshipRomDesc[] = {
-	{ "t-3.bin",		0x08000, 0xb73ed7f2, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU
+	{ "t-3.5g",			0x08000, 0xb73ed7f2, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU
 	{ "t-2.3g",			0x08000, 0x2327b35a, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "t-1.bin",		0x08000, 0xa258ffec, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "t-1.3e",			0x08000, 0xa258ffec, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "t-4.8a",			0x08000, 0x1cbe48e8, 2 | BRF_PRG | BRF_ESS }, //  3 Sound CPU
 
@@ -1609,11 +1609,15 @@ static struct BurnRomInfo turtshipRomDesc[] = {
 	{ "t-9.3a",			0x10000, 0x44762916, 4 | BRF_GRA },           // 10
 
 	{ "t-13.1i",		0x10000, 0x599f5246, 5 | BRF_GRA },           // 11 Sprites
-	{ "t-15.bin",		0x10000, 0x6489b7b4, 5 | BRF_GRA },           // 12
+	{ "t-15.3i",		0x10000, 0x6489b7b4, 5 | BRF_GRA },           // 12
 	{ "t-12.1g",		0x10000, 0xfb54cd33, 5 | BRF_GRA },           // 13
-	{ "t-14.bin",		0x10000, 0x1b67b674, 5 | BRF_GRA },           // 14
+	{ "t-14.3g",		0x10000, 0x1b67b674, 5 | BRF_GRA },           // 14
 
 	{ "t-16.9f",		0x08000, 0x1a5a45d7, 6 | BRF_GRA },           // 15 Tilemap
+
+	{ "82s129.11p",		0x00100, 0x75af3553, 7 | BRF_OPT },           // 16 Vertical timing
+	{ "82s129.11r",		0x00100, 0xc47c182a, 7 | BRF_OPT },           // 17 Horizontal timing
+	{ "82s123.9e",		0x00020, 0xc5817816, 7 | BRF_OPT },           // 18 Tied to the sound Z80 and without it there's no sound on the real PCB
 };
 
 STD_ROM_PICK(turtship)
@@ -1654,6 +1658,10 @@ static struct BurnRomInfo turtshipjRomDesc[] = {
 	{ "t-14.3g",		0x10000, 0xd636873c, 5 | BRF_GRA },           // 14
 
 	{ "t-16.9f",		0x08000, 0x1a5a45d7, 6 | BRF_GRA },           // 15 Tilemap
+
+	{ "82s129.11p",		0x00100, 0x75af3553, 7 | BRF_OPT },           // 16 Vertical timing
+	{ "82s129.11r",		0x00100, 0xc47c182a, 7 | BRF_OPT },           // 17 Horizontal timing
+	{ "82s123.9e",		0x00020, 0xc5817816, 7 | BRF_OPT },           // 18 Tied to the sound Z80 and without it there's no sound on the real PCB
 };
 
 STD_ROM_PICK(turtshipj)
@@ -1694,6 +1702,10 @@ static struct BurnRomInfo turtshipkRomDesc[] = {
 	{ "turtship.014",	0x10000, 0xb3ea74a3, 5 | BRF_GRA },           // 14
 
 	{ "turtship.016",	0x08000, 0xaffd51dd, 6 | BRF_GRA },           // 15 Tilemap
+
+	{ "82s129.11p",		0x00100, 0x75af3553, 7 | BRF_OPT },           // 16 Vertical timing
+	{ "82s129.11r",		0x00100, 0xc47c182a, 7 | BRF_OPT },           // 17 Horizontal timing
+	{ "82s123.9e",		0x00020, 0xc5817816, 7 | BRF_OPT },           // 18 Tied to the sound Z80 and without it there's no sound on the real PCB
 };
 
 STD_ROM_PICK(turtshipk)
@@ -1734,6 +1746,10 @@ static struct BurnRomInfo turtshipkoRomDesc[] = {
 	{ "t-14.g3",		0x10000, 0xa30e3346, 5 | BRF_GRA },           // 14
 
 	{ "t-16.f9",		0x08000, 0x9b377277, 6 | BRF_GRA },           // 15 Tilemap
+
+	{ "82s129.11p",		0x00100, 0x75af3553, 7 | BRF_OPT },           // 16 Vertical timing
+	{ "82s129.11r",		0x00100, 0xc47c182a, 7 | BRF_OPT },           // 17 Horizontal timing
+	{ "82s123.9e",		0x00020, 0xc5817816, 7 | BRF_OPT },           // 18 Tied to the sound Z80 and without it there's no sound on the real PCB
 };
 
 STD_ROM_PICK(turtshipko)
@@ -1774,6 +1790,10 @@ static struct BurnRomInfo turtshipknRomDesc[] = {
 	{ "t-14.g3",		0x10000, 0xee162dc0, 5 | BRF_GRA },           // 14
 
 	{ "t-16.f9",		0x08000, 0x9b377277, 6 | BRF_GRA },           // 15 Tilemap
+
+	{ "82s129.11p",		0x00100, 0x75af3553, 7 | BRF_OPT },           // 16 Vertical timing
+	{ "82s129.11r",		0x00100, 0xc47c182a, 7 | BRF_OPT },           // 17 Horizontal timing
+	{ "82s123.9e",		0x00020, 0xc5817816, 7 | BRF_OPT },           // 18 Tied to the sound Z80 and without it there's no sound on the real PCB
 };
 
 STD_ROM_PICK(turtshipkn)

@@ -2,7 +2,10 @@
 #ifdef FBNEO_DEBUG
  #define PRINT_DEBUG_INFO
 #endif
+
+#if defined(__APPLE__)
 #include <vector>
+#endif
 
 // GameInp structure
 #include "gameinp.h"
@@ -49,7 +52,10 @@ INT32 InputMake(bool bCopy);
 INT32 InputFind(const INT32 nFlags);
 INT32 InputGetControlName(INT32 nCode, TCHAR* pszDeviceName, TCHAR* pszControlName);
 InterfaceInfo* InputGetInfo();
-std::vector<const InputInOut *> InputGetInterfaces();
+
+#if defined(__APPLE__)
+std::vector<const InputInOut *> InputGetInterfaces();  // this & include @ top is breaking the build..
+#endif
 
 extern bool bInputOkay;
 extern UINT32 nInputSelect;

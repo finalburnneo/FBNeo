@@ -96,6 +96,14 @@
 		 ((((n) >> (bit01)) & 1) <<  1) | 									\
 		 ((((n) >> (bit00)) & 1) <<  0))
 
+#define BITSWAP05(n, 														\
+				  bit04, bit03, bit02, bit01, bit00)						\
+		(((((n) >> (bit04)) & 1) <<  4) | 									\
+		 ((((n) >> (bit03)) & 1) <<  3) | 									\
+		 ((((n) >> (bit02)) & 1) <<  2) | 									\
+		 ((((n) >> (bit01)) & 1) <<  1) | 									\
+		 ((((n) >> (bit00)) & 1) <<  0))
+
 #define BIT(x,n) 		(((x)>>(n))&1)
 
 /* ----- macros for accessing bytes and words within larger chunks ----- */

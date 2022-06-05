@@ -98,7 +98,7 @@
     <ClInclude Include="..\..\src\burn\devices\watchdog.h" />
     <ClInclude Include="..\..\src\burn\devices\x2212.h" />
     <ClInclude Include="..\..\src\burn\devices\rtc9701.h" />
-    <ClInclude Include="..\..\src\burn\devices\serflash.h" /> 
+    <ClInclude Include="..\..\src\burn\devices\serflash.h" />
     <ClInclude Include="..\..\src\burn\devices\epic12.h" />
     <ClInclude Include="..\..\src\burn\driver.h" />
     <ClInclude Include="..\..\src\burn\drv\capcom\cps.h" />
@@ -560,6 +560,7 @@
     <ClCompile Include="..\..\src\burn\drv\atari\d_eprom.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_gauntlet.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_klax.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\atari\d_marblmd2.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_missile.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_offtwall.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_rampart.cpp" />

@@ -1938,7 +1938,8 @@ static void get_line_ram_info(INT32 which_map, INT32 sx, INT32 sy, INT32 pos, UI
 		else if(pri&0x8000) //alpha2
 			line_enable=3;
 		else if((pri&0x3000) && (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x6230/2]) != 0)  && (pos == 2) &&
-				(((BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(0x6200/2) + (y)]) >> 4) & 0xf) != 0xb) && (f3_game == EACTION2))
+				(((BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(0x6200/2) + (y)]) >> 4) & 0xf) != 0xb) &&
+				(BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(0x6200/2) + (y)]) != 0x7777) && (f3_game == EACTION2))
 		{
 			line_enable=0x22;
 		}

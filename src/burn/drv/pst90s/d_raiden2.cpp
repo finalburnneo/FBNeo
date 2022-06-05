@@ -2809,7 +2809,7 @@ static INT32 ZeroteamInit()
 
 	zeroteam_common_map();
 
-	seibu_sound_init(0, 0, 3579545, 3579545, 1320000 / 132);
+	seibu_sound_init(0, 0, 3579545, 3579545, 1022727 / 132);
 
 	GenericTilesInit();
 
@@ -3000,7 +3000,7 @@ static INT32 NzeroteamInit()
 	VezSetReadHandler(nzeroteam_main_read);
 	VezClose();
 
-	seibu_sound_init(0, 0, 3579545, 3579545, 1320000 / 132);
+	seibu_sound_init(0, 0, 3579545, 3579545, 1022727 / 132);
 
 	GenericTilesInit();
 
@@ -3083,7 +3083,7 @@ static INT32 Zerotm2kInit()
 	VezSetReadHandler(zerotm2k_main_read);
 	VezClose();
 
-	seibu_sound_init(0, 0, 3579545, 3579545, 1320000 / 132);
+	seibu_sound_init(0, 0, 3579545, 3579545, 1022727 / 132);
 
 	EEPROMInit(&eeprom_interface_93C46);
 

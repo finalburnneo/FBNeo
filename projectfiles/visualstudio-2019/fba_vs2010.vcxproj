@@ -560,6 +560,7 @@
     <ClCompile Include="..\..\src\burn\drv\atari\d_eprom.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_gauntlet.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_klax.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\atari\d_marblmd2.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_missile.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_offtwall.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_rampart.cpp" />

@@ -15521,10 +15521,10 @@ struct BurnDriver BurnDrvmslug2fm = {
 };
 
 // Metal Slug 2 - Super Vehicle-001/II (Turbo)
-// 20161224
+// ID-0941 - community produced hack
 
 static struct BurnRomInfo mslug2tRomDesc[] = {
-	{ "241-p1t.p1",		0x100000, 0xdf5d6fbc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "941-p1.p1",		0x100000, 0xdf5d6fbc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "241-p2.sp2",		0x200000, 0x38883f44, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "241-s1.s1",		0x020000, 0xf3d32f0f, 2 | BRF_GRA },           //  2 Text layer tiles

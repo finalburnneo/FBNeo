@@ -3067,10 +3067,14 @@ static struct BurnRomInfo masterwRomDesc[] = {
 	{ "b72_04.34",			0x020000, 0x141e964c, TAITO_68KROM1_BYTESWAP }, //  2
 	{ "b72_03.25",			0x020000, 0xf4523496, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "b72_07.30",			0x010000, 0x2b1a946f, TAITO_Z80ROM1 },		//  4 Z80 code
+	{ "b72_07.30",			0x010000, 0x2b1a946f, TAITO_Z80ROM1 },			//  4 Z80 code
 
-	{ "b72-02.6",			0x080000, 0x843444eb, TAITO_CHARS },		//  5 Graphics Tiles
-	{ "b72-01.5",			0x080000, 0xa24ac26e, TAITO_CHARS },		//  6
+	{ "b72-02.6",			0x080000, 0x843444eb, TAITO_CHARS },			//  5 Graphics Tiles
+	{ "b72-01.5",			0x080000, 0xa24ac26e, TAITO_CHARS },			//  6
+	
+	{ "b72-08.ic3",			0x000104, 0x1501a44a, BRF_OPT },				//  7 PLDs
+	{ "b72-09.ic23",		0x000104, 0xa1d19d49, BRF_OPT },				//  8
+	{ "b72-10.ic32",		0x000104, 0x20b0450b, BRF_OPT },				//  9
 };
 
 STD_ROM_PICK(masterw)
@@ -3100,10 +3104,14 @@ static struct BurnRomInfo masterwuRomDesc[] = {
 	{ "b72_04.34",			0x020000, 0x141e964c, TAITO_68KROM1_BYTESWAP }, //  2
 	{ "b72_03.25",			0x020000, 0xf4523496, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "b72_07.30",			0x010000, 0x2b1a946f, TAITO_Z80ROM1 },		//  4 Z80 code
+	{ "b72_07.30",			0x010000, 0x2b1a946f, TAITO_Z80ROM1 },			//  4 Z80 code
 
-	{ "b72-02.6",			0x080000, 0x843444eb, TAITO_CHARS },		//  5 Graphics Tiles
-	{ "b72-01.5",			0x080000, 0xa24ac26e, TAITO_CHARS },		//  6
+	{ "b72-02.6",			0x080000, 0x843444eb, TAITO_CHARS },			//  5 Graphics Tiles
+	{ "b72-01.5",			0x080000, 0xa24ac26e, TAITO_CHARS },			//  6
+	
+	{ "b72-08.ic3",			0x000104, 0x1501a44a, BRF_OPT },				//  7 PLDs
+	{ "b72-09.ic23",		0x000104, 0xa1d19d49, BRF_OPT },				//  8
+	{ "b72-10.ic32",		0x000104, 0x20b0450b, BRF_OPT },				//  9
 };
 
 STD_ROM_PICK(masterwu)
@@ -3128,10 +3136,14 @@ static struct BurnRomInfo masterwjRomDesc[] = {
 	{ "b72_04.34",			0x020000, 0x141e964c, TAITO_68KROM1_BYTESWAP }, //  2
 	{ "b72_03.25",			0x020000, 0xf4523496, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "b72_07.30",			0x010000, 0x2b1a946f, TAITO_Z80ROM1 },		//  4 Z80 Code
+	{ "b72_07.30",			0x010000, 0x2b1a946f, TAITO_Z80ROM1 },			//  4 Z80 Code
 
-	{ "b72-02.6",			0x080000, 0x843444eb, TAITO_CHARS },		//  5 Graphics Tiles
-	{ "b72-01.5",			0x080000, 0xa24ac26e, TAITO_CHARS },		//  6
+	{ "b72-02.6",			0x080000, 0x843444eb, TAITO_CHARS },			//  5 Graphics Tiles
+	{ "b72-01.5",			0x080000, 0xa24ac26e, TAITO_CHARS },			//  6
+	
+	{ "b72-08.ic3",			0x000104, 0x1501a44a, BRF_OPT },				//  7 PLDs
+	{ "b72-09.ic23",		0x000104, 0xa1d19d49, BRF_OPT },				//  8
+	{ "b72-10.ic32",		0x000104, 0x20b0450b, BRF_OPT },				//  9
 };
 
 STD_ROM_PICK(masterwj)
@@ -3156,8 +3168,8 @@ static struct BurnRomInfo yukiwoRomDesc[] = {
 	{ "ic34-rom1e.bin",		0x010000, 0x5ab7bc95, TAITO_68KROM1_BYTESWAP }, //  2
 	{ "ic25-rom10.bin",		0x010000, 0x0571b986, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "ic30-snd.bin",		0x008000, 0x8632adb7, TAITO_Z80ROM1 },		//  4 Z80 Code
-	{ "ic30-snd.bin",		0x008000, 0x8632adb7, TAITO_Z80ROM1 },		//
+	{ "ic30-snd.bin",		0x008000, 0x8632adb7, TAITO_Z80ROM1 },			//  4 Z80 Code
+	{ "ic30-snd.bin",		0x008000, 0x8632adb7, TAITO_Z80ROM1 },			//
 
 	{ "ic5-9df1.bin",		0x020000, 0x0507b908, TAITO_CHARS_BYTESWAP },	//  5 Graphics Tiles
 	{ "ic1-a010.bin",		0x020000, 0x0030dce2, TAITO_CHARS_BYTESWAP },	//  6
@@ -3191,16 +3203,16 @@ static struct BurnRomInfo nastarRomDesc[] = {
 	{ "b81-10.49",			0x020000, 0x53f34344, TAITO_68KROM1_BYTESWAP }, //  2
 	{ "b81-09.30",			0x020000, 0x630d34af, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "b81-11.37",			0x010000, 0x3704bf09, TAITO_Z80ROM1 },		//  4 Z80 Code
+	{ "b81-11.37",			0x010000, 0x3704bf09, TAITO_Z80ROM1 },			//  4 Z80 Code
 
-	{ "b81-03.14",			0x080000, 0x551b75e6, TAITO_CHARS },		//  5 Graphics Tiles
-	{ "b81-04.15",			0x080000, 0xcf734e12, TAITO_CHARS },		//  6
+	{ "b81-03.14",			0x080000, 0x551b75e6, TAITO_CHARS },			//  5 Graphics Tiles
+	{ "b81-04.15",			0x080000, 0xcf734e12, TAITO_CHARS },			//  6
 
-	{ "b81-02.2",			0x080000, 0x20ec3b86, TAITO_YM2610A },		//  7 YM2610 A Samples
+	{ "b81-02.2",			0x080000, 0x20ec3b86, TAITO_YM2610A },			//  7 YM2610 A Samples
 
-	{ "b81-01.1",			0x080000, 0xb33f796b, TAITO_YM2610B },		//  8 YM2610 B Samples
+	{ "b81-01.1",			0x080000, 0xb33f796b, TAITO_YM2610B },			//  8 YM2610 B Samples
 
-	{ "ampal16l8-b81-05.21",	0x000104, 0x922fd368, BRF_OPT },		//  9 PLDs
+	{ "ampal16l8-b81-05.21",	0x000104, 0x922fd368, BRF_OPT },			//  9 PLDs
 	{ "ampal16l8-b81-06a.22",	0x000104, 0xbb1cec84, BRF_OPT },	        // 10
 };
 
@@ -3232,14 +3244,14 @@ static struct BurnRomInfo rastsag2RomDesc[] = {
 	{ "b81-10.49",			0x020000, 0x53f34344, TAITO_68KROM1_BYTESWAP }, //  2
 	{ "b81-09.30",			0x020000, 0x630d34af, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "b81-11.37",			0x010000, 0x3704bf09, TAITO_Z80ROM1 },		//  4 Z80 Code
+	{ "b81-11.37",			0x010000, 0x3704bf09, TAITO_Z80ROM1 },			//  4 Z80 Code
 
-	{ "b81-03.14",			0x080000, 0x551b75e6, TAITO_CHARS },		//  5 Graphics Tiles
-	{ "b81-04.15",			0x080000, 0xcf734e12, TAITO_CHARS },		//  6
+	{ "b81-03.14",			0x080000, 0x551b75e6, TAITO_CHARS },			//  5 Graphics Tiles
+	{ "b81-04.15",			0x080000, 0xcf734e12, TAITO_CHARS },			//  6
 
-	{ "b81-02.2",			0x080000, 0x20ec3b86, TAITO_YM2610A },		//  7 YM2610 A Samples
+	{ "b81-02.2",			0x080000, 0x20ec3b86, TAITO_YM2610A },			//  7 YM2610 A Samples
 
-	{ "b81-01.1",			0x080000, 0xb33f796b, TAITO_YM2610B },		//  8 YM2610 B Samples
+	{ "b81-01.1",			0x080000, 0xb33f796b, TAITO_YM2610B },			//  8 YM2610 B Samples
 };
 
 STD_ROM_PICK(rastsag2)
@@ -3264,14 +3276,14 @@ static struct BurnRomInfo nastarwRomDesc[] = {
 	{ "b81-10.49",			0x020000, 0x53f34344, TAITO_68KROM1_BYTESWAP }, //  2
 	{ "b81-09.30",			0x020000, 0x630d34af, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "b81-11.37",			0x010000, 0x3704bf09, TAITO_Z80ROM1 },		//  4 Z80 Code
+	{ "b81-11.37",			0x010000, 0x3704bf09, TAITO_Z80ROM1 },			//  4 Z80 Code
 
-	{ "b81-03.14",			0x080000, 0x551b75e6, TAITO_CHARS },		//  5 Graphics Tiles
-	{ "b81-04.15",			0x080000, 0xcf734e12, TAITO_CHARS },		//  6
+	{ "b81-03.14",			0x080000, 0x551b75e6, TAITO_CHARS },			//  5 Graphics Tiles
+	{ "b81-04.15",			0x080000, 0xcf734e12, TAITO_CHARS },			//  6
 
-	{ "b81-02.2",			0x080000, 0x20ec3b86, TAITO_YM2610A },		//  7 YM2610 A Samples
+	{ "b81-02.2",			0x080000, 0x20ec3b86, TAITO_YM2610A },			//  7 YM2610 A Samples
 
-	{ "b81-01.1",			0x080000, 0xb33f796b, TAITO_YM2610B },		//  8 YM2610 B Samples
+	{ "b81-01.1",			0x080000, 0xb33f796b, TAITO_YM2610B },			//  8 YM2610 B Samples
 };
 
 STD_ROM_PICK(nastarw)

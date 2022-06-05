@@ -3160,7 +3160,7 @@ static struct BurnRomInfo headonnRomDesc[] = {
 
 	{ "prom.g2",			0x0020, 0x67104ea9, 1 | BRF_GRA },           //  8 Color data
 
-	{ "prom.b6",			0x0020, 0x67104ea9, 0 | BRF_OPT },           //  9 Unused PROMs
+	{ "prom.b6",			0x0020, 0x7e1cb76b, 0 | BRF_OPT },           //  9 Unused PROMs
 	{ "prom.f2",			0x0020, 0xa1506b9d, 0 | BRF_OPT },           // 10
 };
 

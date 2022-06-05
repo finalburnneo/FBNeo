@@ -649,7 +649,7 @@ struct BurnDriver BurnDrvAztarac = {
 	"aztarac", NULL, NULL, NULL, "1983",
 	"Aztarac\0", "Vector graphics", "Centuri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, aztaracRomInfo, aztaracRomName, NULL, NULL, NULL, NULL, AztaracInputInfo, AztaracDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
 	1024, 768, 4, 3

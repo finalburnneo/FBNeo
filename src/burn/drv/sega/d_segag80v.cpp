@@ -1514,7 +1514,7 @@ struct BurnDriver BurnDrvElim2 = {
 	"elim2", NULL, NULL, "elim2", "1981",
 	"Eliminator (2 Players, set 1)\0", NULL, "Gremlin", "G80 Vector",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, elim2RomInfo, elim2RomName, NULL, NULL, elim2SampleInfo, elim2SampleName, Elim2InputInfo, Elim2DIPInfo,
 	Elim2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	800, 600, 4, 3
@@ -1551,7 +1551,7 @@ struct BurnDriver BurnDrvElim2a = {
 	"elim2a", "elim2", NULL, "elim2", "1981",
 	"Eliminator (2 Players, set 2)\0", NULL, "Gremlin", "G80 Vector",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, elim2aRomInfo, elim2aRomName, NULL, NULL, elim2SampleInfo, elim2SampleName, Elim2InputInfo, Elim2DIPInfo,
 	Elim2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	800, 600, 4, 3
@@ -1588,7 +1588,7 @@ struct BurnDriver BurnDrvElim2c = {
 	"elim2c", "elim2", NULL, "elim2", "1981",
 	"Eliminator (2 Players, cocktail)\0", NULL, "Gremlin", "G80 Vector",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, elim2cRomInfo, elim2cRomName, NULL, NULL, elim2SampleInfo, elim2SampleName, Elim2cInputInfo, Elim2DIPInfo,
 	Elim2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	800, 600, 4, 3
@@ -1675,7 +1675,7 @@ struct BurnDriver BurnDrvElim4 = {
 	"elim4", "elim2", NULL, "elim2", "1981",
 	"Eliminator (4 Players)\0", NULL, "Gremlin", "G80 Vector",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, elim4RomInfo, elim4RomName, NULL, NULL, elim2SampleInfo, elim2SampleName, Elim4InputInfo, Elim4DIPInfo,
 	Elim4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	800, 600, 4, 3
@@ -1713,7 +1713,7 @@ struct BurnDriver BurnDrvElim4p = {
 	"elim4p", "elim2", NULL, "elim2", "1981",
 	"Eliminator (4 Players, prototype)\0", NULL, "Gremlin", "G80 Vector",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, elim4pRomInfo, elim4pRomName, NULL, NULL, elim2SampleInfo, elim2SampleName, Elim4InputInfo, Elim4DIPInfo,
 	Elim4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	800, 600, 4, 3
@@ -1860,7 +1860,7 @@ struct BurnDriver BurnDrvSpacfury = {
 	"spacfury", NULL, NULL, "spacfury", "1981",
 	"Space Fury (revision C)\0", NULL, "Sega", "G80 Vector",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, spacfuryRomInfo, spacfuryRomName, NULL, NULL, spacfurySampleInfo, spacfurySampleName, SpacfuryInputInfo, SpacfuryDIPInfo,
 	SpacfuryInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	800, 600, 4, 3
@@ -1900,7 +1900,7 @@ struct BurnDriver BurnDrvSpacfurya = {
 	"spacfurya", "spacfury", NULL, "spacfury", "1981",
 	"Space Fury (revision A)\0", NULL, "Sega", "G80 Vector",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, spacfuryaRomInfo, spacfuryaRomName, NULL, NULL, spacfurySampleInfo, spacfurySampleName, SpacfuryInputInfo, SpacfuryDIPInfo,
 	SpacfuryInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	800, 600, 4, 3
@@ -1940,7 +1940,7 @@ struct BurnDriver BurnDrvSpacfuryb = {
 	"spacfuryb", "spacfury", NULL, "spacfury", "1981",
 	"Space Fury (revision B)\0", NULL, "Sega", "G80 Vector",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, spacfurybRomInfo, spacfurybRomName, NULL, NULL, spacfurySampleInfo, spacfurySampleName, SpacfuryInputInfo, SpacfuryDIPInfo,
 	SpacfuryInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	800, 600, 4, 3
@@ -2100,7 +2100,7 @@ struct BurnDriver BurnDrvZektor = {
 	"zektor", NULL, NULL, "zektor", "1982",
 	"Zektor (revision B)\0", NULL, "Sega", "G80 Vector",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, zektorRomInfo, zektorRomName, NULL, NULL, zektorSampleInfo, zektorSampleName, ZektorInputInfo, ZektorDIPInfo,
 	ZektorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	800, 600, 4, 3
@@ -2178,7 +2178,7 @@ struct BurnDriver BurnDrvTacscan = {
 	"tacscan", NULL, NULL, NULL, "1982",
 	"Tac/Scan\0", NULL, "Sega", "G80 Vector",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT | GBF_VECTOR, 0,
 	NULL, tacscanRomInfo, tacscanRomName, NULL, NULL, NULL, NULL, TacscanInputInfo, TacscanDIPInfo,
 	TacscanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	600, 800, 3, 4
@@ -2272,7 +2272,7 @@ struct BurnDriver BurnDrvStartrek = {
 	"startrek", NULL, NULL, NULL, "1982",
 	"Star Trek\0", NULL, "Sega", "G80 Vector",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, startrekRomInfo, startrekRomName, NULL, NULL, NULL, NULL, StartrekInputInfo, StartrekDIPInfo,
 	StartrekInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	800, 600, 4, 3

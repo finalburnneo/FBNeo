@@ -443,7 +443,7 @@ void GameDetector::Update()
 			if (start_detected) {
 				DetectorSetState(ST_WAIT_WINNER, score1, score2);
 				if (bVidSaveOverlayFiles) {
-					VidOverlaySaveFiles(false, false, true); // to save characters (if there's any detected)
+					VidOverlaySaveFiles(false, false, true, 0); // to save characters (if there's any detected)
 				}
 			}
 			break;
@@ -464,7 +464,7 @@ void GameDetector::Update()
 				if (player1_detected) {
 					score1++;
 					DetectorSetState(ST_WAIT_START, score1, score2);
-					VidOverlaySetGameScores(score1, score2);
+					VidOverlaySetGameScores(score1, score2, 1);
 					VidSSetGameScores(score1, score2);
 					winner = 1;
 				}
@@ -472,7 +472,7 @@ void GameDetector::Update()
 				if (player2_detected) {
 					score2++;
 					DetectorSetState(ST_WAIT_START, score1, score2);
-					VidOverlaySetGameScores(score1, score2);
+					VidOverlaySetGameScores(score1, score2, 2);
 					VidSSetGameScores(score1, score2);
 					winner = 2;
 				}
@@ -1310,11 +1310,11 @@ void VidOverlaySetGameInfo(const wchar_t *name1, const wchar_t *name2, int spect
 
 	// save overlay to data files
 	if (bVidSaveOverlayFiles) {
-		VidOverlaySaveFiles(true, false, false); // save only info
+		VidOverlaySaveFiles(true, false, false, 0); // save only info
 	}
 }
 
-void VidOverlaySetGameScores(int score1, int score2)
+void VidOverlaySetGameScores(int score1, int score2, int winner)
 {
 	wchar_t buf[32];
 	player1.score.Set(_itow(score1, buf, 10));
@@ -1322,7 +1322,7 @@ void VidOverlaySetGameScores(int score1, int score2)
 
 	// save overlay to data files
 	if (bVidSaveOverlayFiles) {
-		VidOverlaySaveFiles(false, true, false); // save only scores
+		VidOverlaySaveFiles(false, true, false, winner); // save only scores
 	}
 }
 
@@ -1338,6 +1338,17 @@ void VidOverlaySetSystemMessage(const wchar_t *text)
 	system_message.Set(text);
 }
 
+extern int nRollbackFrames;
+extern int nRollbackCount;
+
+// jitter detector
+#define PINGSIZE 10
+static int jitterPingArray[PINGSIZE] = {};
+static int jitterArray[PINGSIZE] = {};
+static int jitterArrayPos = 0;
+static int jitterPingAvg = 0;
+static int jitterAvg = 0;
+
 void VidOverlaySetStats(double fps, int ping, int delay)
 {
 	wchar_t buf[64];
@@ -1345,26 +1356,66 @@ void VidOverlaySetStats(double fps, int ping, int delay)
 		swprintf(buf, 64, _T("%2.2ffps"), fps);
 	}
 	else {
-		swprintf(buf, 64, _T("%2.2ffps | %dms-d%d-ra%d"), fps, ping, delay, nVidRunahead);
+		// average rollback
+		float nRollbackAvg = 0;
+		if (nRollbackFrames > 0 && nRollbackCount > 0) {
+			nRollbackAvg = (float)nRollbackFrames / nRollbackCount;
+		}
+		// jitter
+		if (ping > 0 && nFramesEmulated > 600) {
+			int pingSum = 0;
+			int jitterSum = 0;
+			jitterPingArray[jitterArrayPos] = ping;
+			if (jitterArrayPos > 0)
+				jitterArray[jitterArrayPos - 1] = abs(jitterPingArray[jitterArrayPos] - jitterPingArray[jitterArrayPos - 1]);
+			for (int i = 0; i < PINGSIZE; i++) {
+				pingSum += jitterArray[i];
+				if (i < PINGSIZE - 1) jitterSum += jitterArray[i];
+			}
+			jitterPingAvg = pingSum / PINGSIZE;
+			jitterAvg = jitterSum / (PINGSIZE- 1);
+			jitterArrayPos++;
+			if (jitterArrayPos > PINGSIZE) {
+				jitterArrayPos = 0;
+			}
+		}
+		if (jitterAvg > jitterPingAvg * 0.15 && jitterAvg > 10)
+			VidOverlaySetWarning(120, false);
+
+		if (bShowFPS == 1)
+			swprintf(buf, 64, _T("%2.2ffps d%d-ra%d %dms"), fps, delay, nVidRunahead, ping);
+		else if (bShowFPS == 2)
+			swprintf(buf, 64, _T("%2.2ffps d%d-ra%d %dms/j%dms (%2.1f)"), fps, delay, nVidRunahead, ping, jitterAvg, nRollbackAvg);
+	}
+
+	// send warning if fps went down the thresold
+	if (fps < ((nBurnFPS / 100) - 4)) {
+		if (nFramesEmulated > 2000) {
+			VidOverlaySetWarning(150, true);
+		}
 	}
 
 	stats.Set(buf);
 }
 
-void VidOverlaySetWarning(int warning)
+void VidOverlaySetWarning(int warning, bool fpswarn)
 {
 	frame_warning+= warning;
 	if (frame_warning > WARNING_MAX) {
 		frame_warning = WARNING_MAX;
 	}
 
-	if (frame_warning > WARNING_THRESHOLD) {
+	if (kNetGame && !kNetSpectator && frame_warning > WARNING_THRESHOLD) {
 		if (!frame_warning_sent) {
 			// only 3 warnings
 			if (frame_warning_count < WARNING_MSGCOUNT) {
+				/*
 				char buffer[32];
 				sprintf(buffer, "%d,%d", CMD_FPSWARNING, game_player);
 				QuarkSendChatCmd(buffer, 'C');
+				if (fpswarn)
+					VidOverlayAddChatLine(_T("FPS"), _T("WARNING"));
+				*/
 				// send next warning in 15 seconds
 				frame_warning_sent = 60 * 15;
 				frame_warning_count++;
@@ -1373,11 +1424,9 @@ void VidOverlaySetWarning(int warning)
 	}
 }
 
-void VidOverlayShowVolume(int vol)
+void VidOverlayShowVolume(const wchar_t* text)
 {
-	wchar_t buffer[32];
-	swprintf(buffer, 32, _T("VOL %d%%"), vol / 100);
-	volume.Set(buffer);
+	volume.Set(text);
 	volume_time = frame_time + INFO_FRAMES;
 }
 
@@ -1387,7 +1436,7 @@ void VidOverlaySetChatInput(const wchar_t *text)
 	chat_time = frame_time + CHAT_FRAMES;
 	show_chat_input = true;
 	show_chat = true;
-	VidOverlaySetWarning(-10000);
+	VidOverlaySetWarning(-10000, false);
 }
 
 void VidOverlayAddChatLine(const wchar_t *name, const wchar_t *text)
@@ -1463,7 +1512,7 @@ void VidOverlaySaveFile(const char *file, const wchar_t *text)
 	}
 }
 
-void VidOverlaySaveFiles(bool save_info, bool save_scores, bool save_characters)
+void VidOverlaySaveFiles(bool save_info, bool save_scores, bool save_characters, int save_winner)
 {
 	struct SaveTxt {
 		wchar_t text[128] = {};
@@ -1478,6 +1527,8 @@ void VidOverlaySaveFiles(bool save_info, bool save_scores, bool save_characters)
 	static SaveTxt saveVs;
 	static SaveTxt saveGame;
 	static SaveTxt saveType;
+	static SaveTxt saveQuark;
+	static SaveTxt saveWinner;
 	static SaveTxt saveP1name;
 	static SaveTxt saveP2name;
 	static SaveTxt saveP1rank;
@@ -1498,6 +1549,7 @@ void VidOverlaySaveFiles(bool save_info, bool save_scores, bool save_characters)
 		saveVs.Save("fightcade/vs.txt", vs);
 		saveGame.Save("fightcade/game.txt", BurnDrvGetText(DRV_NAME));
 		saveType.Save("fightcade/gametype.txt", kNetSpectator ? _T("Spectator") : _T("Game"));
+		saveQuark.Save("fightcade/gamequark.txt", ANSIToTCHAR(kNetQuarkId, NULL, NULL));
 		saveP1name.Save("fightcade/p1name.txt", player1.name.str);
 		saveP2name.Save("fightcade/p2name.txt", player2.name.str);
 		saveP1rank.Save("fightcade/p1rank.txt", ranks[player1.rank]);
@@ -1512,6 +1564,9 @@ void VidOverlaySaveFiles(bool save_info, bool save_scores, bool save_characters)
 		sprintf(buf, "ui/flags/%s.png", TCHARToANSI(player2.country.str, NULL, NULL));
 		DeleteFile(_T("fightcade/p2country.png"));
 		CopyFileContents(buf, "fightcade/p2country.png");
+	}
+	if (save_winner > 0) {
+		saveWinner.Save("fightcade/winner.txt", save_winner == 1 ? player1.name.str : player2.name.str);
 	}
 	if (save_scores) {
 		saveP1score.Save("fightcade/p1score.txt", player1.score.str);

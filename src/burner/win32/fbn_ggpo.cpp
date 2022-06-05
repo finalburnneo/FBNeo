@@ -10,8 +10,8 @@ void QuarkInitPerfMon();
 void QuarkPerfMonUpdate(GGPONetworkStats *stats);
 
 extern int nAcbVersion;
-extern int bMediaExit;
 extern int nAcbLoadState;
+extern int bMediaExit;
 
 static bool bDirect = false;
 static bool bReplaySupport = false;
@@ -42,10 +42,18 @@ void SetBurnFPS(const char *name, int version)
 		return;
 	}
 
+	// UMK3UC at 60fps rate
+	if (kNetVersion >= NET_VERSION_UMK3UC_FRAMERATE) {
+		if (!strcmp(name, "umk3uc")) {
+			return;
+		}
+	}
+
+	// MK Framerate at original rate (54fps)
 	if (kNetVersion >= NET_VERSION_MK_FRAMERATE) {
-		// Version 5: 
 		if (!strcmp(name, "mk") || !strcmp(name, "mk2") || !strcmp(name, "mk2p") || !strcmp(name, "mk3") ||
-			!strcmp(name, "umk3") || !strcmp(name, "umk3pb1") || !strcmp(name, "umk3uc")) {
+			!strcmp(name, "umk3") || !strcmp(name, "umk3p") || !strcmp(name, "umk3uc") || !strcmp(name, "umk3uk") ||
+			!strcmp(name, "wwfman")) {
 			bForce60Hz = 0;
 			return;
 		}
@@ -83,7 +91,7 @@ bool __cdecl ggpo_on_client_event_callback(GGPOClientEvent *info)
 		if (kNetSpectator) {
 			kNetVersion = strlen(info->u.matchinfo.blurb) > 0 ? atoi(info->u.matchinfo.blurb) : NET_VERSION;
 		}
-		SetBurnFPS(TCHARToANSI(BurnDrvGetText(DRV_NAME), NULL, 0), kNetVersion);
+		SetBurnFPS(BurnDrvGetTextA(DRV_NAME), kNetVersion);
 		TCHAR szUser1[128];
 		TCHAR szUser2[128];
 		VidOverlaySetGameInfo(ANSIToTCHAR(info->u.matchinfo.p1, szUser1, 128), ANSIToTCHAR(info->u.matchinfo.p2, szUser2, 128), kNetSpectator, iRanked, iPlayer);
@@ -460,6 +468,7 @@ void QuarkInit(TCHAR *tconnect)
 	kNetGame = 1;
 	kNetLua = 0;
 	kNetSpectator = 0;
+	kNetQuarkId[0] = 0;
 	bForce60Hz = 1;
 	iRanked = 0;
 	iPlayer = 0;
@@ -487,6 +496,7 @@ void QuarkInit(TCHAR *tconnect)
 		iSeed = GetHash(quarkid, strlen(quarkid) - 2);
 		ggpo = ggpo_client_connect(&cb, game, quarkid, port);
 		ggpo_set_frame_delay(ggpo, delay);
+		strcpy(kNetQuarkId, quarkid);
 		VidOverlaySetSystemMessage(_T("Connecting..."));
 	}
 	else if (strncmp(connect, "quark:direct", strlen("quark:direct")) == 0) {
@@ -514,6 +524,7 @@ void QuarkInit(TCHAR *tconnect)
 		kNetLua = 1;
 		iSeed = 0;
 		ggpo = ggpo_start_streaming(&cb, game, quarkid, remotePort);
+		strcpy(kNetQuarkId, quarkid);
 		VidOverlaySetSystemMessage(_T("Connecting..."));
 	}
 	else if (strncmp(connect, "quark:replay", strlen("quark:replay")) == 0) {
@@ -522,6 +533,8 @@ void QuarkInit(TCHAR *tconnect)
 		kNetLua = 1;
 		iSeed = 0;
 		ggpo = ggpo_start_replay(&cb, connect + strlen("quark:replay,"));
+		strcpy(kNetQuarkId, quarkid);
+		VidOverlaySetSystemMessage(_T("Connecting..."));
 	}
 	else if (strncmp(connect, "quark:debugdetector", strlen("quark:debugdetector")) == 0) {
 		sscanf(connect, "quark:debugdetector,%[^,]", game);
@@ -533,8 +546,7 @@ void QuarkInit(TCHAR *tconnect)
 		// load game
 		TCHAR tgame[128];
 		ANSIToTCHAR(game, tgame, 128);
-		UINT32 i;
-		for (i = 0; i < nBurnDrvCount; i++) {
+		for (UINT32 i = 0; i < nBurnDrvCount; i++) {
 			nBurnDrvActive = i;
 			if ((_tcscmp(BurnDrvGetText(DRV_NAME), tgame) == 0) && (!(BurnDrvGetFlags() & BDF_BOARDROM))) {
 				// Load game

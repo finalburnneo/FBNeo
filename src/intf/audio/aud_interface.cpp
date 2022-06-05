@@ -1,24 +1,26 @@
-#// Audio Output
+// Audio Output
 #include "burner.h"
 
-INT32 nAudSampleRate[8] = { 44100, 44100, 22050, 22050, 22050, 22050, 22050, 22050 };			// sample rate
+INT32 nAudSampleRate[8] = { 44100, 44100, 48000, 44100, 44100, 44100, 44100, 44100 };	// sample rate
 INT32 nAudVolume = 10000;			// Sound volume (% * 100)
-INT32 nAudSegCount = 6;				// Segs in the pdsbLoop buffer
-INT32 nAudSegLen = 0;					// Seg length in samples (calculated from Rate/Fps)
-INT32 nAudAllocSegLen = 0;		// Seg length in bytes
-UINT8 bAudOkay = 0;						// True if was initted okay
+INT32 nAudSegCount[8] = { 6, 6, 4, 6, 6, 6, 6, 6 };										// Segs in the pdsbLoop buffer
+INT32 nAudSegLen = 0;				// Seg length in samples (calculated from Rate/Fps)
+INT32 nAudExclusive = 0;			// Exclusive mode
+INT32 nAudAllocSegLen = 0;			// Seg length in bytes
+UINT8 bAudOkay = 0;					// True if was initted okay
 UINT8 bAudPlaying = 0;				// True if the Loop buffer is playing
 
 INT32 nAudDSPModule[8] = { 0, };	// DSP module to use: 0 = none, 1 = low-pass filter
 
-INT16* nAudNextSound = NULL;	// The next sound seg we will add to the sample loop
+INT16* nAudNextSound = NULL;		// The next sound seg we will add to the sample loop
 
-UINT32 nAudSelect = 1;				// Which audio plugin is selected
+UINT32 nAudSelect = 0;				// Which audio plugin is selected
 static UINT32 nAudActive = 0;
 
 #if defined (BUILD_WIN32)
 	extern struct AudOut AudOutDx;
 	extern struct AudOut AudOutXAudio2;
+	extern struct AudOut AudOutWasapi;
 #elif defined (BUILD_MACOS)
     extern struct AudOut AudOutMacOS;
 #elif defined (BUILD_SDL) 
@@ -43,6 +45,7 @@ static struct AudOut *pAudOut[]=
 #if defined (BUILD_WIN32)
 	&AudOutDx,
 	&AudOutXAudio2,
+	&AudOutWasapi,
 #elif defined (BUILD_MACOS)
     &AudOutMacOS,
 #elif defined (BUILD_SDL) 
@@ -84,7 +87,7 @@ INT32 AudSoundInit()
 		return 1;
 	}
 
-	nAudActive = nAudSelect;
+	nAudActive = kNetSpectator ? 0 : nAudSelect;
 
 	if ((nRet = pAudOut[nAudActive]->SoundInit()) == 0) {
 		bAudOkay = true;
@@ -186,6 +189,16 @@ InterfaceInfo* AudGetInfo()
 	}
 
 	return &AudInfo;
+}
+
+INT32 AudSoundGetSampleRate()
+{
+	return kNetSpectator ? nAudSampleRate[0] : nAudSampleRate[nAudSelect];
+}
+
+INT32 AudSoundGetSegLen()
+{
+	return nAudSegLen;
 }
 
 INT32 AudSelect(UINT32 nPlugIn)

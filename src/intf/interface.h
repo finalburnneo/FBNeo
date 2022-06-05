@@ -128,18 +128,21 @@ INT32 AudSoundFrame();
 INT32 AudSoundPlay();
 INT32 AudSoundStop();
 INT32 AudSoundSetVolume();
+INT32 AudSoundGetSampleRate();
+INT32 AudSoundGetSegLen();
 InterfaceInfo* AudGetInfo();
 void AudWriteSilence();
 
 extern INT32 nAudSampleRate[8];     // sample rate
-extern INT32 nAudVolume;						// Sound volume (% * 100)
-extern INT32 nAudSegCount;          // Segs in the pdsbLoop buffer
+extern INT32 nAudVolume;			// Sound volume (% * 100)
+extern INT32 nAudSegCount[8];       // Segs in the pdsbLoop buffer
 extern INT32 nAudSegLen;            // Seg length in samples (calculated from Rate/Fps)
+extern INT32 nAudExclusive;			// Exclusive mode
 extern INT32 nAudAllocSegLen;
 extern INT16 *nAudNextSound;       	// The next sound seg we will add to the sample loop
-extern UINT8 bAudOkay;    					// True if DSound was initted okay
-extern UINT8 bAudPlaying;						// True if the Loop buffer is playing
-extern INT32 nAudDSPModule[8];			// DSP module to use: 0 = none, 1 = low-pass filter
+extern UINT8 bAudOkay;    			// True if DSound was initted okay
+extern UINT8 bAudPlaying;			// True if the Loop buffer is playing
+extern INT32 nAudDSPModule[8];		// DSP module to use: 0 = none, 1 = low-pass filter
 extern UINT32 nAudSelect;
 
 // Video Output plugin:

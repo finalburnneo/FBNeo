@@ -513,6 +513,18 @@ static void OnActivateApp(HWND hwnd, BOOL fActivate, DWORD /* dwThreadId */)
 	}
 }
 
+void LuaOpenDialog()
+{
+	if (UseDialogs()) {
+		if (!LuaConsoleHWnd) {
+			InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
+			LuaConsoleHWnd = CreateDialog(hAppInst, MAKEINTRESOURCE(IDD_LUA), NULL, (DLGPROC) DlgLuaScriptDialog);
+		}
+		else
+			SetForegroundWindow(LuaConsoleHWnd);
+	}
+}
+
 extern HWND hSelDlg;
 
 void PausedRedraw(void)
@@ -867,14 +879,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		}
 
 		case ID_LUA_OPEN:
-			if (UseDialogs()) {
-				if (!LuaConsoleHWnd) {
-					InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
-					LuaConsoleHWnd = CreateDialog(hAppInst, MAKEINTRESOURCE(IDD_LUA), NULL, (DLGPROC) DlgLuaScriptDialog);
-				}
-				else
-					SetForegroundWindow(LuaConsoleHWnd);
-			}
+			LuaOpenDialog();
 			break;
 		case ID_LUA_CLOSE_ALL:
 			if (LuaConsoleHWnd) {
@@ -1685,6 +1690,11 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			POST_INITIALISE_MESSAGE;
 			break;
 
+		case MENU_AUD_PLUGIN_3:
+			AudSelect(2);
+			POST_INITIALISE_MESSAGE;
+			break;
+
 		case MENU_DSOUND_NOSOUND:
 			if (!bDrvOkay) {
 				nAudSampleRate[0] = 0;
@@ -1747,6 +1757,37 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 			break;
 
+		case MENU_WASAPI_NOSOUND:
+			if (!bDrvOkay) {
+				nAudSampleRate[2] = 0;
+				POST_INITIALISE_MESSAGE;
+			}
+			break;
+		case MENU_WASAPI_11025:
+			if (!bDrvOkay) {
+				nAudSampleRate[2] = 11025;
+				POST_INITIALISE_MESSAGE;
+			}
+			break;
+		case MENU_WASAPI_22050:
+			if (!bDrvOkay) {
+				nAudSampleRate[2] = 22050;
+				POST_INITIALISE_MESSAGE;
+			}
+			break;
+		case MENU_WASAPI_44100:
+			if (!bDrvOkay) {
+				nAudSampleRate[2] = 44100;
+				POST_INITIALISE_MESSAGE;
+			}
+			break;
+		case MENU_WASAPI_48000:
+			if (!bDrvOkay) {
+				nAudSampleRate[2] = 48000;
+				POST_INITIALISE_MESSAGE;
+			}
+			break;
+
 		case MENU_FRAMES:
 			if (UseDialogs()) {
 				if (!bDrvOkay) {
@@ -1787,6 +1828,14 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_XAUDIO_REVERB:
 			nAudDSPModule[1] ^= 2;
+			break;
+
+		case MENU_WASAPI_BASS:
+			nAudDSPModule[2] = !nAudDSPModule[2];
+			break;
+
+		case MENU_WASAPI_EXCLUSIVE:
+			nAudExclusive = !nAudExclusive;
 			break;
 
 		case MENU_WLOGSTART:
@@ -1848,6 +1897,14 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_HIDE_ROM_WARNINGS:
 			bHideROMWarnings = !bHideROMWarnings;
+			break;
+
+		case MENU_KEYPAD_VOLUME:
+			bKeypadVolume = !bKeypadVolume;
+			break;
+
+		case MENU_HITBOX_SOCD:
+			bHitboxSOCD = !bHitboxSOCD;
 			break;
 
 		case MENU_SAVEHISCORES:

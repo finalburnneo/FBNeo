@@ -16,7 +16,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
 
 	switch (Msg) {
 		case WM_INITDIALOG:
-			nRet = nAudSegCount;
+			nRet = nAudSegCount[nAudSelect];
 			SetWindowText(hDlg, FBALoadStringEx(hAppInst, IDS_NUMDIAL_NUM_FRAMES, true));
 			SetDlgItemInt(hDlg, IDC_VALUE_EDIT, nRet, TRUE);
 			return TRUE;
@@ -34,7 +34,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
 		case WM_CLOSE:
 			nRet = GetDlgItemInt(hDlg, IDC_VALUE_EDIT, &fTrue, TRUE);
 			if (fTrue) {
-				nAudSegCount = nRet;
+				nAudSegCount[nAudSelect] = nRet;
 			}
 			EndDialog(hDlg, 0);
 	}

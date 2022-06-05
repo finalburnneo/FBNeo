@@ -42,10 +42,9 @@ static UINT8 priority_reg;
 static UINT8 gfx_bank;
 
 static struct BurnInputInfo Nmg5InputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy2 + 0,	 "p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy2 + 1,	 "p2 coin"  },
-
+	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy2 + 0,	 "p1 coin"  },
 	{"P1 Start"     , BIT_DIGITAL  , DrvJoy3 + 7,	 "p1 start" },
+
 	{"P1 Up"        , BIT_DIGITAL  , DrvJoy3 + 0,    "p1 up"    },
 	{"P1 Down"      , BIT_DIGITAL  , DrvJoy3 + 1,    "p1 down"  },
 	{"P1 Left"      , BIT_DIGITAL  , DrvJoy3 + 2,    "p1 left"  },
@@ -54,7 +53,9 @@ static struct BurnInputInfo Nmg5InputList[] = {
 	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy3 + 5,	 "p1 fire 2"},
 	{"P1 Button 3"  , BIT_DIGITAL  , DrvJoy3 + 6,	 "p1 fire 3"},
 
+	{"P2 Coin"      , BIT_DIGITAL  , DrvJoy2 + 1,	 "p2 coin"  },
 	{"P2 Start"     , BIT_DIGITAL  , DrvJoy3 + 15,	 "p2 start" },
+
 	{"P2 Up"        , BIT_DIGITAL  , DrvJoy3 + 8,    "p2 up"    },
 	{"P2 Down"      , BIT_DIGITAL  , DrvJoy3 + 9,    "p2 down"  },
 	{"P2 Left"      , BIT_DIGITAL  , DrvJoy3 + 10,   "p2 left"  },
@@ -71,9 +72,9 @@ static struct BurnInputInfo Nmg5InputList[] = {
 STDINPUTINFO(Nmg5)
 
 static struct BurnInputInfo SearcheyInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy2 + 0,	 "p1 coin"  },
-
+	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy2 + 0,	 "p1 coin"  },
 	{"P1 Start"     , BIT_DIGITAL  , DrvJoy3 + 7,	 "p1 start" },
+
 	{"P1 Up"        , BIT_DIGITAL  , DrvJoy3 + 0,    "p1 up"    },
 	{"P1 Down"      , BIT_DIGITAL  , DrvJoy3 + 1,    "p1 down"  },
 	{"P1 Left"      , BIT_DIGITAL  , DrvJoy3 + 2,    "p1 left"  },
@@ -81,7 +82,9 @@ static struct BurnInputInfo SearcheyInputList[] = {
 	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy3 + 4,	 "p1 fire 1"},
 	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy3 + 5,	 "p1 fire 2"},
 
+	{"P2 Coin"      , BIT_DIGITAL  , DrvJoy2 + 1,	 "p2 coin"  },
 	{"P2 Start"     , BIT_DIGITAL  , DrvJoy3 + 15,	 "p2 start" },
+
 	{"P2 Up"        , BIT_DIGITAL  , DrvJoy3 + 8,    "p2 up"    },
 	{"P2 Down"      , BIT_DIGITAL  , DrvJoy3 + 9,    "p2 down"  },
 	{"P2 Left"      , BIT_DIGITAL  , DrvJoy3 + 10,   "p2 left"  },
@@ -97,9 +100,9 @@ static struct BurnInputInfo SearcheyInputList[] = {
 STDINPUTINFO(Searchey)
 
 static struct BurnInputInfo PclubysInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy2 + 0,	 "p1 coin"  },
-
+	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy2 + 0,	 "p1 coin"  },
 	{"P1 Start"     , BIT_DIGITAL  , DrvJoy3 + 7,	 "p1 start" },
+
 	{"P1 Up"        , BIT_DIGITAL  , DrvJoy3 + 0,    "p1 up"    },
 	{"P1 Down"      , BIT_DIGITAL  , DrvJoy3 + 1,    "p1 down"  },
 	{"P1 Left"      , BIT_DIGITAL  , DrvJoy3 + 2,    "p1 left"  },
@@ -108,7 +111,9 @@ static struct BurnInputInfo PclubysInputList[] = {
 	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy3 + 5,	 "p1 fire 2"},
 	{"P1 Button 3"  , BIT_DIGITAL  , DrvJoy3 + 6,	 "p1 fire 3"},
 
+	{"P2 Coin"      , BIT_DIGITAL  , DrvJoy2 + 1,	 "p2 coin"  },
 	{"P2 Start"     , BIT_DIGITAL  , DrvJoy3 + 15,	 "p2 start" },
+
 	{"P2 Up"        , BIT_DIGITAL  , DrvJoy3 + 8,    "p2 up"    },
 	{"P2 Down"      , BIT_DIGITAL  , DrvJoy3 + 9,    "p2 down"  },
 	{"P2 Left"      , BIT_DIGITAL  , DrvJoy3 + 10,   "p2 left"  },
@@ -125,9 +130,9 @@ static struct BurnInputInfo PclubysInputList[] = {
 STDINPUTINFO(Pclubys)
 
 static struct BurnInputInfo GarogunInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy2 + 0,	 "p1 coin"  },
-
+	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy2 + 0,	 "p1 coin"  },
 	{"P1 Start"     , BIT_DIGITAL  , DrvJoy3 + 7,	 "p1 start" },
+
 	{"P1 Up"        , BIT_DIGITAL  , DrvJoy3 + 0,    "p1 up"    },
 	{"P1 Down"      , BIT_DIGITAL  , DrvJoy3 + 1,    "p1 down"  },
 	{"P1 Left"      , BIT_DIGITAL  , DrvJoy3 + 2,    "p1 left"  },
@@ -143,9 +148,9 @@ static struct BurnInputInfo GarogunInputList[] = {
 STDINPUTINFO(Garogun)
 
 static struct BurnInputInfo Ordi7InputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy2 + 0,	 "p1 coin"  },
-
+	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy2 + 0,	 "p1 coin"  },
 	{"P1 Start"     , BIT_DIGITAL  , DrvJoy3 + 7,	 "p1 start" },
+
 	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy3 + 2,	 "p1 fire 1"},
 	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy3 + 3,	 "p1 fire 2"},
 	{"P1 Button 3"  , BIT_DIGITAL  , DrvJoy3 + 4,	 "p1 fire 3"},

@@ -62,6 +62,7 @@
 #define IDR_MENU_BLITTER_8					114
 #define IDR_MENU_AUD_PLUGIN_1				130
 #define IDR_MENU_AUD_PLUGIN_2				131
+#define IDR_MENU_AUD_PLUGIN_3				132
 #define	IDR_MENU_GAMESEL					140
 #define IDR_ACCELERATOR                 	150
 
@@ -556,6 +557,8 @@
 #define MENU_DSOUND_BASS                    10201
 #define MENU_XAUDIO_BASS                    10202
 #define MENU_XAUDIO_REVERB                  10203
+#define MENU_WASAPI_BASS					10204
+#define MENU_WASAPI_EXCLUSIVE				10205
 #define MENU_DSOUND_NOSOUND					10210
 #define MENU_DSOUND_11025               	10211
 #define MENU_DSOUND_22050               	10212
@@ -566,6 +569,11 @@
 #define MENU_XAUDIO_22050                   10222
 #define MENU_XAUDIO_44100                   10223
 #define MENU_XAUDIO_48000                   10224
+#define MENU_WASAPI_NOSOUND					10225
+#define MENU_WASAPI_11025					10226
+#define MENU_WASAPI_22050					10227
+#define MENU_WASAPI_44100					10228
+#define MENU_WASAPI_48000					10229
 #define MENU_INTERPOLATE_0					10230
 #define MENU_INTERPOLATE_1					10231
 #define MENU_INTERPOLATE_3					10233
@@ -719,7 +727,9 @@
 #define MENU_AUTOSCANGAMELIST               10734
 #define MENU_CLRMAME_PRO_XML_NES_ONLY       10735
 #define MENU_CLRMAME_PRO_XML_FDS_ONLY       10736
-#define MENU_HIDE_ROM_WARNINGS							10750
+#define MENU_HIDE_ROM_WARNINGS				10750
+#define MENU_KEYPAD_VOLUME					10751
+#define MENU_HITBOX_SOCD					10752
 
 #define MENU_BASIC_NORMAL          	    	11001
 #define MENU_BASIC_SCAN                	    11002

@@ -18,6 +18,9 @@ INT32 nFireButtons = 0;
 bool bStreetFighterLayout = false;
 bool bLeftAltkeyMapped = false;
 
+INT32 InpDirections[2][4] = {}; // Up, Down, Left, Right
+bool bClearOpposites = false;
+
 // These are mappable global macros for mapping Pause/FFWD etc to controls in the input mapping dialogue. -dink
 UINT8 macroSystemPause = 0;
 UINT8 macroSystemFFWD = 0;
@@ -25,7 +28,27 @@ UINT8 macroSystemFrame = 0;
 UINT8 macroSystemSaveState = 0;
 UINT8 macroSystemLoadState = 0;
 UINT8 macroSystemUNDOState = 0;
-UINT8 macroSystemBoostCPU = 0;
+UINT8 macroSystemLuaHotkey1 = 0;
+UINT8 macroSystemLuaHotkey2 = 0;
+UINT8 macroSystemLuaHotkey3 = 0;
+UINT8 macroSystemLuaHotkey4 = 0;
+UINT8 macroSystemLuaHotkey5 = 0;
+UINT8 macroSystemLuaHotkey6 = 0;
+UINT8 macroSystemLuaHotkey7 = 0;
+UINT8 macroSystemLuaHotkey8 = 0;
+UINT8 macroSystemLuaHotkey9 = 0;
+
+std::vector<UINT8*> lua_hotkeys = {
+	&macroSystemLuaHotkey1,
+	&macroSystemLuaHotkey2,
+	&macroSystemLuaHotkey3,
+	&macroSystemLuaHotkey4,
+	&macroSystemLuaHotkey5,
+	&macroSystemLuaHotkey6,
+	&macroSystemLuaHotkey7,
+	&macroSystemLuaHotkey8,
+	&macroSystemLuaHotkey9
+};
 
 #define HW_NEOGEO ( ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOCD) )
 
@@ -352,17 +375,19 @@ static void GameInpInitMacros()
 			nMacroCount++;
 			pgi++;
 
-			/*
-			pgi->nInput = GIT_MACRO_AUTO;
-			pgi->nType = BIT_DIGITAL;
-			pgi->Macro.nMode = 0;
-			pgi->Macro.nSysMacro = 1;
-			sprintf(pgi->Macro.szName, "Boost CPU Speed");
-			pgi->Macro.pVal[0] = &macroSystemBoostCPU;
-			pgi->Macro.nVal[0] = 1;
-			nMacroCount++;
-			pgi++;
-			*/
+			for (UINT32 hotkey_num = 0; hotkey_num < lua_hotkeys.size(); hotkey_num++) {
+				char hotkey_name[20];
+				sprintf(hotkey_name, "Lua Hotkey %d", (hotkey_num + 1));
+				pgi->nInput = GIT_MACRO_AUTO;
+				pgi->nType = BIT_DIGITAL;
+				pgi->Macro.nMode = 0;
+				pgi->Macro.nSysMacro = 1;
+				sprintf(pgi->Macro.szName, hotkey_name);
+				pgi->Macro.pVal[0] = lua_hotkeys[hotkey_num];
+				pgi->Macro.nVal[0] = 1;
+				nMacroCount++;
+				pgi++;
+			}
 	}
 	
 	if (!kNetGame)
@@ -805,6 +830,22 @@ INT32 GameInpInit()
 	}
 	memset(GameInp, 0, nSize);
 
+	// cache input directions for clearing opposites
+	memset(InpDirections[0], 0, 4 * sizeof(INT32));
+	memset(InpDirections[1], 0, 4 * sizeof(INT32));
+	struct BurnInputInfo bii;
+	for (UINT32 i = 0; i < nGameInpCount; i++) {
+		BurnDrvGetInputInfo(&bii, i);
+		if (!_stricmp(bii.szName, "p1 up")) InpDirections[0][0] = i; else
+		if (!_stricmp(bii.szName, "p1 down")) InpDirections[0][1] = i; else
+		if (!_stricmp(bii.szName, "p1 left")) InpDirections[0][2] = i; else
+		if (!_stricmp(bii.szName, "p1 right")) InpDirections[0][3] = i; else
+		if (!_stricmp(bii.szName, "p2 up")) InpDirections[1][0] = i; else
+		if (!_stricmp(bii.szName, "p2 down")) InpDirections[1][1] = i; else
+		if (!_stricmp(bii.szName, "p2 left")) InpDirections[1][2] = i; else
+		if (!_stricmp(bii.szName, "p2 right")) InpDirections[1][3] = i;
+	}
+
 	GameInpBlank(1);
 
 	InpDIPSWResetDIPs();
@@ -812,6 +853,19 @@ INT32 GameInpInit()
 	GameInpInitMacros();
 
 	nAnalogSpeed = 0x0100;
+
+	// check if game needs clear opposites
+	bClearOpposites = false;
+	const char* clearOppositesGameList[] = {
+		"umk3", "umk3p", "umk3uc", "umk3uk", "dbz2", "jojo"
+	};
+	const char* gameName = BurnDrvGetTextA(DRV_NAME);
+	for (UINT32 i = 0; i < 6; i++) {
+		if (strstr(gameName, clearOppositesGameList[i]) == gameName) {
+			bClearOpposites = true;
+			break;
+		}
+	}
 
 	return 0;
 }
@@ -1901,4 +1955,61 @@ INT32 GameInpMacroRead(TCHAR* szVal, bool bOverWrite)
 INT32 GameInpCustomRead(TCHAR* szVal, bool bOverWrite)
 {
 	return AddCustomMacro(szVal, bOverWrite);
+}
+
+void GameInpClearOpposites(bool bCopy)
+{
+	if (kNetVersion >= NET_VERSION_SOCD && bClearOpposites) {
+		if (bHitboxSOCD) {
+			// Hitbox SOCD cleaner
+			struct GameInp* pgi = GameInp;
+			for (int i = 0; i < 2; i++) {
+				int *nPlayer = InpDirections[i];
+				// D + U = U || (neutral if L or R)
+				if (pgi[nPlayer[0]].Input.nVal && pgi[nPlayer[1]].Input.nVal) {
+					if (pgi[nPlayer[2]].Input.nVal || pgi[nPlayer[3]].Input.nVal) {
+						pgi[nPlayer[0]].Input.nVal = 0;
+						if (bCopy)
+							*(pgi[nPlayer[0]].Input.pVal) = 0;
+					}
+					pgi[nPlayer[1]].Input.nVal = 0;
+					if (bCopy)
+						*(pgi[nPlayer[1]].Input.pVal) = 0;
+				}
+				// L + R = neutral
+				if (pgi[nPlayer[2]].Input.nVal && pgi[nPlayer[3]].Input.nVal) {
+					pgi[nPlayer[2]].Input.nVal = 0;
+					pgi[nPlayer[3]].Input.nVal = 0;
+					if (bCopy) {
+						*(pgi[nPlayer[2]].Input.pVal) = 0;
+						*(pgi[nPlayer[3]].Input.pVal) = 0;
+					}
+				}
+			}
+		} else {
+			// Hitbox SOCD cleaner
+			struct GameInp* pgi = GameInp;
+			for (int i = 0; i < 2; i++) {
+				int *nPlayer = InpDirections[i];
+				// D + U = neutral
+				if (pgi[nPlayer[0]].Input.nVal && pgi[nPlayer[1]].Input.nVal) {
+					pgi[nPlayer[0]].Input.nVal = 0;
+					pgi[nPlayer[1]].Input.nVal = 0;
+					if (bCopy) {
+						*(pgi[nPlayer[0]].Input.pVal) = 0;
+						*(pgi[nPlayer[1]].Input.pVal) = 0;
+					}
+				}
+				// L + R = neutral
+				if (pgi[nPlayer[2]].Input.nVal && pgi[nPlayer[3]].Input.nVal) {
+					pgi[nPlayer[2]].Input.nVal = 0;
+					pgi[nPlayer[3]].Input.nVal = 0;
+					if (bCopy) {
+						*(pgi[nPlayer[2]].Input.pVal) = 0;
+						*(pgi[nPlayer[3]].Input.pVal) = 0;
+					}
+				}
+			}
+		}
+	}
 }

@@ -340,6 +340,7 @@ int MenuCreate()
 
 		hAudioPluginMenu[0] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_AUD_PLUGIN_1));
 		hAudioPluginMenu[1] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_AUD_PLUGIN_2));
+		hAudioPluginMenu[2] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_AUD_PLUGIN_3));
 	}
 
 	if (hMenuPopup == NULL) {
@@ -634,6 +635,8 @@ void MenuUpdate()
 
 //	CreateCDItems();
 //	CheckMenuRadioItem(hMenu, MENU_CDIMAGE, MENU_CDIMAGE, MENU_CDIMAGE + nCDEmuSelect, MF_BYCOMMAND);
+
+	CheckMenuItem(hMenu, MENU_ALLRAM, bDrvSaveAll ? MF_CHECKED : MF_UNCHECKED);
 
 	CheckMenuItem(hMenu, MENU_SETCPUCLOCK, nBurnCPUSpeedAdjust != 0x0100 ? MF_CHECKED : MF_UNCHECKED);
 	CreateCPUSpeedItem(nBurnCPUSpeedAdjust != 0x0100);
@@ -1001,6 +1004,29 @@ void MenuUpdate()
 			CheckMenuItem(hMenu, MENU_XAUDIO_REVERB, (nAudDSPModule[1] & 2) ? MF_CHECKED : MF_UNCHECKED);
 			break;
 		}
+
+		case 2: {
+			var = MENU_WASAPI_NOSOUND;
+			if (nAudSampleRate[2] > 0) {
+				if (nAudSampleRate[2] <= 11025) {
+					var = MENU_WASAPI_11025;
+				} else {
+					if (nAudSampleRate[2] <= 22050) {
+						var = MENU_WASAPI_22050;
+					} else {
+						if (nAudSampleRate[2] <= 44100) {
+							var = MENU_WASAPI_44100;
+						} else {
+							var = MENU_WASAPI_48000;
+						}
+					}
+				}
+			}
+			CheckMenuRadioItem(hMenu, MENU_WASAPI_NOSOUND, MENU_WASAPI_48000, var, MF_BYCOMMAND);
+			CheckMenuItem(hMenu, MENU_WASAPI_BASS, nAudDSPModule[2] ? MF_CHECKED : MF_UNCHECKED);
+			CheckMenuItem(hMenu, MENU_WASAPI_EXCLUSIVE, nAudExclusive ? MF_CHECKED : MF_UNCHECKED);
+			break;
+		}
 	}
 
 	var = MENU_INTERPOLATE_0 + nInterpolation;
@@ -1034,6 +1060,8 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_AUTOLOADGAMELIST, bAutoLoadGameList ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_AUTOSCANGAMELIST, !bSkipStartupCheck ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_HIDE_ROM_WARNINGS, bHideROMWarnings ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_KEYPAD_VOLUME, bKeypadVolume ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_HITBOX_SOCD, bHitboxSOCD ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_SAVEHISCORES, EnableHiscores ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_USEBLEND, bBurnUseBlend ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_GEARSHIFT, BurnShiftEnabled ? MF_CHECKED : MF_UNCHECKED);
@@ -1056,6 +1084,7 @@ void MenuUpdate()
 
 	switch (nAppProcessPriority) {
 	case HIGH_PRIORITY_CLASS:
+		var = MENU_PRIORITY_HIGH;
 		break;
 	case ABOVE_NORMAL_PRIORITY_CLASS:
 		var = MENU_PRIORITY_ABOVE_NORMAL;
@@ -1299,17 +1328,23 @@ void MenuEnableItems()
 	if (bDrvOkay) {
 		EnableMenuItem(hMenu, MENU_QUIT,				MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_INPUT,				MF_ENABLED | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_FORCE60HZ,				MF_GRAYED  | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_DSOUND_NOSOUND,				MF_GRAYED  | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_DSOUND_11025,				MF_GRAYED  | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_DSOUND_22050,				MF_GRAYED  | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_DSOUND_44100,				MF_GRAYED  | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_DSOUND_48000,				MF_GRAYED  | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_XAUDIO_NOSOUND,				MF_GRAYED  | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_XAUDIO_11025,				MF_GRAYED  | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_XAUDIO_22050,				MF_GRAYED  | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_XAUDIO_44100,				MF_GRAYED  | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_XAUDIO_48000,				MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_FORCE60HZ,			MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_DSOUND_NOSOUND,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_DSOUND_11025,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_DSOUND_22050,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_DSOUND_44100,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_DSOUND_48000,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_XAUDIO_NOSOUND,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_XAUDIO_11025,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_XAUDIO_22050,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_XAUDIO_44100,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_XAUDIO_48000,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_EXCLUSIVE,	MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_NOSOUND,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_11025,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_22050,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_44100,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_48000,		MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_INTERPOLATE_FM_0,	MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_INTERPOLATE_FM_3,	MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_FRAMES,				MF_GRAYED  | MF_BYCOMMAND);
@@ -1325,6 +1360,7 @@ void MenuEnableItems()
 
 		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_1, MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_2, MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_3, MF_GRAYED  | MF_BYCOMMAND);
 
 		BurnDIPInfo bdi;
 		if (BurnDrvGetDIPInfo(&bdi, 0) == 0 && !kNetGame && !kNetSpectator) {
@@ -1478,16 +1514,22 @@ void MenuEnableItems()
 		EnableMenuItem(hMenu, MENU_STATE_SAVE_SLOT,		MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_STATE_SAVE_DIALOG,	MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_FRAMES,				MF_ENABLED | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_DSOUND_NOSOUND,				MF_ENABLED | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_DSOUND_11025,				MF_ENABLED | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_DSOUND_22050,				MF_ENABLED | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_DSOUND_44100,				MF_ENABLED | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_DSOUND_48000,				MF_ENABLED | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_XAUDIO_NOSOUND,				MF_ENABLED | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_XAUDIO_11025,				MF_ENABLED | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_XAUDIO_22050,				MF_ENABLED | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_XAUDIO_44100,				MF_ENABLED | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_XAUDIO_48000,				MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_DSOUND_NOSOUND,		MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_DSOUND_11025,		MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_DSOUND_22050,		MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_DSOUND_44100,		MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_DSOUND_48000,		MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_XAUDIO_NOSOUND,		MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_XAUDIO_11025,		MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_XAUDIO_22050,		MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_XAUDIO_44100,		MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_XAUDIO_48000,		MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_EXCLUSIVE,	MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_NOSOUND,		MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_11025,		MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_22050,		MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_44100,		MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_48000,		MF_ENABLED | MF_BYCOMMAND);
 //		EnableMenuItem(hMenu, MENU_INTERPOLATE_1,		MF_ENABLED | MF_BYCOMMAND);
 //		EnableMenuItem(hMenu, MENU_INTERPOLATE_3,		MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_WLOGSTART,			MF_GRAYED  | MF_BYCOMMAND);
@@ -1496,15 +1538,16 @@ void MenuEnableItems()
 		EnableMenuItem(hMenu, MENU_WLOGEND,				MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_SAVESNAP,			MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_SNAPFACT,			MF_GRAYED  | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_PALETTEVIEWER,		MF_GRAYED | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_SAVEGAMEINPUTNOW,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_PALETTEVIEWER,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_SAVEGAMEINPUTNOW,	MF_GRAYED  | MF_BYCOMMAND);
 #ifdef INCLUDE_AVI_RECORDING
-		EnableMenuItem(hMenu, MENU_AVISTART,	        MF_GRAYED | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_AVISTOP,		        MF_GRAYED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_AVISTART,	        MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_AVISTOP,		        MF_GRAYED  | MF_BYCOMMAND);
 #endif
 		EnableMenuItem(hMenu, MENU_CDIMAGE,				MF_ENABLED | MF_BYCOMMAND);
 
-		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_1, 		MF_ENABLED  | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_2,		 MF_ENABLED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_1, 		MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_2,		MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_3,		MF_ENABLED | MF_BYCOMMAND);
 	}
 }

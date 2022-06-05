@@ -288,6 +288,8 @@ INT32 ReplayInput()
 	}
 #endif
 
+	GameInpClearOpposites(false);
+
 	if (end_of_buffer) {
 		StopReplay();
 		return 1;

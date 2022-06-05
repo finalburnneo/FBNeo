@@ -116,6 +116,7 @@ INT32 GameInpWrite(FILE* h);
 INT32 GameInpRead(TCHAR* szVal, bool bOverWrite);
 INT32 GameInpMacroRead(TCHAR* szVal, bool bOverWrite);
 INT32 GameInpCustomRead(TCHAR* szVal, bool bOverWrite);
+void GameInpClearOpposites(bool bCopy);
 
 // inp_interface.cpp
 extern INT32 nAutoFireRate;
@@ -131,6 +132,15 @@ extern UINT8 macroSystemFrame;
 extern UINT8 macroSystemSaveState;
 extern UINT8 macroSystemLoadState;
 extern UINT8 macroSystemUNDOState;
+extern UINT8 macroSystemLuaHotkey1;
+extern UINT8 macroSystemLuaHotkey2;
+extern UINT8 macroSystemLuaHotkey3;
+extern UINT8 macroSystemLuaHotkey4;
+extern UINT8 macroSystemLuaHotkey5;
+extern UINT8 macroSystemLuaHotkey6;
+extern UINT8 macroSystemLuaHotkey7;
+extern UINT8 macroSystemLuaHotkey8;
+extern UINT8 macroSystemLuaHotkey9;
 
 // scrn.cpp
 extern void scrnSSUndo();

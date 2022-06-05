@@ -1096,6 +1096,7 @@ BEGIN
     	BEGIN
     	    MENUITEM "DirectSound",					MENU_AUD_PLUGIN_1
     	    MENUITEM "XAudio2",						MENU_AUD_PLUGIN_2
+			MENUITEM "Wasapi",						MENU_AUD_PLUGIN_3
     	END
     	MENUITEM "Plugin &options",					MENU_AUDIO_OPTIONS, GRAYED
     	MENUITEM SEPARATOR
@@ -1143,10 +1144,12 @@ BEGIN
            MENUITEM "Display mode indicator",				MENU_DISPLAYINDICATOR
            MENUITEM "Modeless menu",					MENU_MODELESS
            MENUITEM "Don't change Num Lock status",			MENU_NOCHANGENUMLOCK
-					 MENUITEM "Create support folders at runtime",		MENU_CREATEDIRS
+           MENUITEM "Create support folders at runtime",		MENU_CREATEDIRS
            //MENUITEM "Show Game List at start-up",			MENU_AUTOLOADGAMELIST
            //MENUITEM "Scan ROMs at start-up (if needed)",	MENU_AUTOSCANGAMELIST
-					 MENUITEM "Hide ROM Warnings",		MENU_HIDE_ROM_WARNINGS
+           MENUITEM "Hide ROM Warnings",		MENU_HIDE_ROM_WARNINGS
+           MENUITEM "Keypad Volume Shortcuts",		MENU_KEYPAD_VOLUME
+           MENUITEM "HitBox style SOCD",			MENU_HITBOX_SOCD
            MENUITEM SEPARATOR
            POPUP "Set application process priority"
            BEGIN
@@ -1163,14 +1166,14 @@ BEGIN
            MENUITEM "Save High Scores when supported",			MENU_SAVEHISCORES
 	   MENUITEM "Use alpha blend effects when supported",		MENU_USEBLEND
 	   MENUITEM "Display Gear-Shift Indicator when supported",	MENU_GEARSHIFT
-#ifdef INCLUDE_AVI_RECORDING
+//#ifdef INCLUDE_AVI_RECORDING
 	   POPUP "AVI Writer Output size"
        	   BEGIN
 	      MENUITEM "1x",						MENU_AVI1X
 	      MENUITEM "2x",						MENU_AVI2X
 	      MENUITEM "3x",						MENU_AVI3X
 	   END
-#endif
+//#endif
 	END
         MENUITEM SEPARATOR
         POPUP    "Generate dat file"
@@ -1567,11 +1570,11 @@ BEGIN
 	BEGIN
 		MENUITEM "Use Low-pass filter",					MENU_DSOUND_BASS
 		MENUITEM SEPARATOR
-		MENUITEM "Sound disabled",					MENU_DSOUND_NOSOUND
-        	MENUITEM "11025Hz samplerate",					MENU_DSOUND_11025
-        	MENUITEM "22050Hz samplerate",					MENU_DSOUND_22050
-        	MENUITEM "44100Hz samplerate",					MENU_DSOUND_44100
-        	MENUITEM "48000Hz samplerate",					MENU_DSOUND_48000
+		MENUITEM "Sound disabled",						MENU_DSOUND_NOSOUND
+        	MENUITEM "11025Hz samplerate",				MENU_DSOUND_11025
+        	MENUITEM "22050Hz samplerate",				MENU_DSOUND_22050
+        	MENUITEM "44100Hz samplerate",				MENU_DSOUND_44100
+        	MENUITEM "48000Hz samplerate",				MENU_DSOUND_48000
 	END
 END
 
@@ -1580,13 +1583,28 @@ BEGIN
 	POPUP "XAudio2 plugin"
 	BEGIN
 		MENUITEM "Use Low-pass filter",					MENU_XAUDIO_BASS
-		MENUITEM "Use reverb",						MENU_XAUDIO_REVERB
+		MENUITEM "Use reverb",							MENU_XAUDIO_REVERB
 		MENUITEM SEPARATOR
-		MENUITEM "Sound disabled",					MENU_XAUDIO_NOSOUND
-        	MENUITEM "11025Hz samplerate",					MENU_XAUDIO_11025
-        	MENUITEM "22050Hz samplerate",					MENU_XAUDIO_22050
-        	MENUITEM "44100Hz samplerate",					MENU_XAUDIO_44100
-        	MENUITEM "48000Hz samplerate",					MENU_XAUDIO_48000
+		MENUITEM "Sound disabled",						MENU_XAUDIO_NOSOUND
+        	MENUITEM "11025Hz samplerate",				MENU_XAUDIO_11025
+        	MENUITEM "22050Hz samplerate",				MENU_XAUDIO_22050
+        	MENUITEM "44100Hz samplerate",				MENU_XAUDIO_44100
+        	MENUITEM "48000Hz samplerate",				MENU_XAUDIO_48000
+	END
+END
+
+IDR_MENU_AUD_PLUGIN_3 MENU
+BEGIN
+	POPUP "Wasapi plugin"
+	BEGIN
+		MENUITEM "Use Low-pass filter",					MENU_WASAPI_BASS
+		MENUITEM "Use Exclusive mode",					MENU_WASAPI_EXCLUSIVE
+		MENUITEM SEPARATOR
+		MENUITEM "Sound disabled",						MENU_WASAPI_NOSOUND
+        	MENUITEM "11025Hz samplerate",				MENU_WASAPI_11025
+        	MENUITEM "22050Hz samplerate",				MENU_WASAPI_22050
+        	MENUITEM "44100Hz samplerate",				MENU_WASAPI_44100
+        	MENUITEM "48000Hz samplerate",				MENU_WASAPI_48000
 	END
 END
 

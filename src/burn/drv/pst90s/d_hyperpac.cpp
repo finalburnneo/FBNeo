@@ -218,6 +218,44 @@ static struct BurnDIPInfo Cookbib2DIPList[]=
 
 STDDIPINFO(Cookbib2)
 
+static struct BurnDIPInfo Cookbib2cDIPList[]=
+{
+	// Default Values
+	{0x13, 0xff, 0xff, 0xfc, NULL                     },
+	{0x14, 0xff, 0xff, 0xff, NULL                     },
+
+	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Demo Sound"             },
+	{0x13, 0x01, 0x01, 0x01, "Off"                    },
+	{0x13, 0x01, 0x01, 0x00, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Language"           	  },
+	{0x13, 0x01, 0x02, 0x02, "English"                },
+	{0x13, 0x01, 0x02, 0x00, "Korean"                 },
+
+	{0   , 0xfe, 0   , 8   , "Coin : Credit"          },
+	{0x13, 0x01, 0x1c, 0x00, "5 : 1"                  },
+	{0x13, 0x01, 0x1c, 0x04, "4 : 1"                  },
+	{0x13, 0x01, 0x1c, 0x08, "3 : 1"                  },
+	{0x13, 0x01, 0x1c, 0x0c, "2 : 1"                  },
+	{0x13, 0x01, 0x1c, 0x1c, "1 : 1"                  },
+	{0x13, 0x01, 0x1c, 0x14, "2 : 3"                  },
+	{0x13, 0x01, 0x1c, 0x18, "1 : 2"                  },
+	{0x13, 0x01, 0x1c, 0x10, "1 : 3"                  },
+
+	{0   , 0xfe, 0   , 4   , "Difficulty"             },
+	{0x13, 0x01, 0x60, 0x00, "Easy"                   },
+	{0x13, 0x01, 0x60, 0x60, "Normal"                 },
+	{0x13, 0x01, 0x60, 0x40, "Hard"                   },
+	{0x13, 0x01, 0x60, 0x20, "Very Hard"              },
+
+	{0   , 0xfe, 0   , 2   , "Mode"                   },
+	{0x13, 0x01, 0x80, 0x80, "Game"                   },
+	{0x13, 0x01, 0x80, 0x00, "Test"                   },
+};
+
+STDDIPINFO(Cookbib2c)
+
 static struct BurnDIPInfo Cookbib3DIPList[]=
 {
 	// Default Values
@@ -794,6 +832,27 @@ static struct BurnRomInfo Cookbib2bRomDesc[] = {
 
 STD_ROM_PICK(Cookbib2b)
 STD_ROM_FN(Cookbib2b)
+
+static struct BurnRomInfo Cookbib2cRomDesc[] = {
+	{ "unico.uh12",      	0x40000, 0xbe021efa, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "unico.ui12",      	0x40000, 0xed49a0e5, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+
+	{ "unico.ua4",   		0x80000, 0x3de7a813, BRF_GRA },			 //  2	Sprites
+	{ "unico.ua5",   		0x80000, 0x6d543788, BRF_GRA },			 //  3	Sprites
+	{ "unico.ua6",   		0x40000, 0x13cc9bf4, BRF_GRA },			 //  4	Sprites
+
+	{ "unico.u1",   	    0x10000, 0xf1100b20, BRF_SND },			 //  5	Z80 Program Code
+
+	{ "unico.uj15",   		0x20000, 0xae5cc9e5, BRF_SND },			 //  6	Samples
+
+	{ "87c52.mcu",     		0x10000, 0x00000000, BRF_NODUMP },
+
+	{ "protdata.bin",  		0x00200, 0xb956f056, BRF_ESS | BRF_PRG }, //  Data from shared RAM
+};
+
+
+STD_ROM_PICK(Cookbib2c)
+STD_ROM_FN(Cookbib2c)
 
 static struct BurnRomInfo Cookbib3RomDesc[] = {
 	{ "u52.bin",       0x40000, 0x65134893, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
@@ -4153,6 +4212,16 @@ struct BurnDriver BurnDrvCookbib2b = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, Cookbib2bRomInfo, Cookbib2bRomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, Cookbib2DIPInfo,
+	Cookbib2Init, HyperpacExit, HyperpacFrame, HyperpacRender, HyperpacScan,
+	NULL, 0x200, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCookbib2c = {
+	"cookbib2c", "cookbib2", NULL, NULL, "1996",
+	"Cookie & Bibi 2 (English / Korean)\0", NULL, "SemiCom", "Kaneko Pandora based",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, Cookbib2cRomInfo, Cookbib2cRomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, Cookbib2cDIPInfo,
 	Cookbib2Init, HyperpacExit, HyperpacFrame, HyperpacRender, HyperpacScan,
 	NULL, 0x200, 256, 224, 4, 3
 };

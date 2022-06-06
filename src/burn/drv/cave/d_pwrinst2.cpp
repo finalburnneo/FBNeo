@@ -17,7 +17,6 @@ static UINT8 *Rom01, *RomZ80;
 static UINT8 *Ram01, *RamZ80;
 
 static UINT8 DrvReset = 0;
-static UINT8 bDrawScreen;
 static bool bVBlank;
 
 static INT8 nVideoIRQ;
@@ -28,6 +27,7 @@ static INT8 nIRQPending;
 
 static INT32 nCyclesTotal[2];
 static INT32 nCyclesDone[2];
+static INT32 nCyclesExtra[2];
 
 static INT32 SoundLatch;
 static INT32 SoundLatchReply[48];
@@ -437,6 +437,8 @@ static INT32 DrvDoReset()
 	DrvZ80Bank = 0;
 	NMK112Reset();
 
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
+
 	return 0;
 }
 
@@ -472,17 +474,8 @@ static INT32 DrvDraw()
 	
 	CaveClearScreen(CavePalette[0x7f00]);
 
-	if (bDrawScreen) {
-//		CaveGetBitmap();
-
-		CaveTileRender(1);					// Render tiles
-	}
+	CaveTileRender(1);					// Render tiles
 	
-	return 0;
-}
-
-inline static INT32 CheckSleep(INT32)
-{
 	return 0;
 }
 
@@ -512,10 +505,13 @@ static INT32 DrvFrame()
 	
 	SekOpen(0);
 	ZetOpen(0);
-	
+
+	ZetIdle(nCyclesExtra[1]); // using timer, must idle extra cycles (timer syncs to cpuTotalCycles()!)
+
 	nCyclesTotal[0] = (INT32)((INT64)16000000 * nBurnCPUSpeedAdjust / (0x0100 * CAVE_REFRESHRATE));
 	nCyclesTotal[1] = (INT32)(8000000 / CAVE_REFRESHRATE);
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	nCyclesDone[0] = nCyclesExtra[0];
+	nCyclesDone[1] = 0;
 
 	nCyclesVBlank = nCyclesTotal[0] - (INT32)((nCyclesTotal[0] * CAVE_VBLANK_LINES) / 271.5);
 	bVBlank = false;
@@ -530,11 +526,7 @@ static INT32 DrvFrame()
 		if (!bVBlank && nNext > nCyclesVBlank) {
 			if (nCyclesDone[nCurrentCPU] < nCyclesVBlank) {
 				nCyclesSegment = nCyclesVBlank - nCyclesDone[nCurrentCPU];
-				if (!CheckSleep(nCurrentCPU)) {							// See if this CPU is busywaiting
-					nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-				} else {
-					nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
-				}
+				nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 			}
 
 			if (pBurnDraw != NULL) {
@@ -549,15 +541,13 @@ static INT32 DrvFrame()
 		}
 
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		if (!CheckSleep(nCurrentCPU)) {									// See if this CPU is busywaiting
-			nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		} else {
-			nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
-		}
-		
+        nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+
 		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
 	}
 	
+    nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = ZetTotalCycles() - nCyclesTotal[1];
 	SekClose();
 	
 	BurnTimerEndFrame(nCyclesTotal[1]);
@@ -743,14 +733,18 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nVideoIRQ);
 		SCAN_VAR(nSoundIRQ);
 		SCAN_VAR(nUnknownIRQ);
-		SCAN_VAR(bVBlank);
 
 		CaveScanGraphics();
 
-		SCAN_VAR(DrvInput);
 		SCAN_VAR(SoundLatch);
+		SCAN_VAR(SoundLatchStatus);
+		SCAN_VAR(SoundLatchReply);
+		SCAN_VAR(SoundLatchReplyIndex);
+		SCAN_VAR(SoundLatchReplyMax);
 		SCAN_VAR(DrvZ80Bank);
-		
+
+		SCAN_VAR(nCyclesExtra);
+
 		if (nAction & ACB_WRITE) {
 			ZetOpen(0);
 			ZetMapArea(0x8000, 0xbFFF, 0, RomZ80 + (DrvZ80Bank * 0x4000));
@@ -874,8 +868,6 @@ static INT32 DrvInit()
 		rom[0xD46C/2] = 0xD482;	// kurara dash fix  0xd400 -> 0xd482
 	}
 	
-	bDrawScreen = true;
-
 	DrvDoReset(); // Reset machine
 
 	return 0;
@@ -954,8 +946,6 @@ static INT32 PlegendsInit()
 
 	NMK112_init(0, MSM6295ROM, MSM6295ROM + 0x400000, 0x400000, 0x400000);
 	
-	bDrawScreen = true;
-
 	DrvDoReset(); // Reset machine
 
 	return 0;

@@ -27,6 +27,7 @@ static INT8 nIRQPending;
 
 static INT32 nCyclesTotal[2];
 static INT32 nCyclesDone[2];
+static INT32 nCyclesExtra;
 
 static UINT16 DrvSoundLatch;
 static UINT8 DrvZ80Bank;
@@ -359,6 +360,8 @@ static INT32 DrvDoReset()
 	DrvOkiBank1 = 0;
 	DrvOkiBank2 = 0;
 
+	nCyclesExtra = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -403,7 +406,8 @@ static INT32 DrvFrame()
 
 	nCyclesTotal[0] = (INT32)((INT64)16000000 * nBurnCPUSpeedAdjust / (0x0100 * CAVE_REFRESHRATE));
 	nCyclesTotal[1] = (INT32)(4000000 / CAVE_REFRESHRATE);
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	nCyclesDone[0] = nCyclesExtra;
+	nCyclesDone[1] = 0;
 
 	nCyclesVBlank = nCyclesTotal[0] - (INT32)((nCyclesTotal[0] * CAVE_VBLANK_LINES) / 271.5);
 	bVBlank = false;
@@ -433,11 +437,12 @@ static INT32 DrvFrame()
 		}
 
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+        nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 
 		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
 	}
 
+    nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 	SekClose();
 
 	BurnTimerEndFrame(nCyclesTotal[1]);
@@ -559,15 +564,15 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nVideoIRQ);
 		SCAN_VAR(nSoundIRQ);
 		SCAN_VAR(nUnknownIRQ);
-		SCAN_VAR(bVBlank);
 
 		CaveScanGraphics();
 
-		SCAN_VAR(DrvInput);
 		SCAN_VAR(DrvSoundLatch);
 		SCAN_VAR(DrvZ80Bank);
 		SCAN_VAR(DrvOkiBank1);
 		SCAN_VAR(DrvOkiBank2);
+
+		SCAN_VAR(nCyclesExtra);
 
 		if (nAction & ACB_WRITE) {
 			ZetOpen(0);

@@ -16,7 +16,6 @@ static UINT8 *Ram01, *RamZ80;
 static UINT8 *MSM6295ROMSrc1, *MSM6295ROMSrc2;
 
 static UINT8 DrvReset = 0;
-static UINT8 bDrawScreen;
 static bool bVBlank;
 
 static INT8 nVideoIRQ;
@@ -27,6 +26,7 @@ static INT8 nIRQPending;
 
 static INT32 nCyclesTotal[2];
 static INT32 nCyclesDone[2];
+static INT32 nCyclesExtra[2];
 
 static INT32 SoundLatch;
 static INT32 SoundLatchReply[48];
@@ -385,7 +385,9 @@ static INT32 DrvDoReset()
 	memset(SoundLatchReply, 0, sizeof(SoundLatchReply));
 	SoundLatchReplyIndex = 0;
 	SoundLatchReplyMax = -1;
-	
+
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
+
 	return 0;
 }
 
@@ -395,17 +397,8 @@ static INT32 DrvDraw()
 
 	CaveClearScreen(CavePalette[0x7F00]);
 
-	if (bDrawScreen) {
-//		CaveGetBitmap();
+	CaveTileRender(1);					// Render tiles
 
-		CaveTileRender(1);					// Render tiles
-	}
-
-	return 0;
-}
-
-inline static INT32 CheckSleep(INT32)
-{
 	return 0;
 }
 
@@ -439,7 +432,8 @@ static INT32 DrvFrame()
 	
 	nCyclesTotal[0] = (INT32)((INT64)16000000 * nBurnCPUSpeedAdjust / (0x0100 * CAVE_REFRESHRATE));
 	nCyclesTotal[1] = (INT32)(8000000 / CAVE_REFRESHRATE);
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	nCyclesDone[0] = nCyclesExtra[0];
+	nCyclesDone[1] = nCyclesExtra[1];
 
 	nCyclesVBlank = nCyclesTotal[0] - (INT32)((nCyclesTotal[0] * CAVE_VBLANK_LINES) / 271.5);
 	bVBlank = false;
@@ -454,11 +448,7 @@ static INT32 DrvFrame()
 		if (!bVBlank && nNext > nCyclesVBlank) {
 			if (nCyclesDone[nCurrentCPU] < nCyclesVBlank) {
 				nCyclesSegment = nCyclesVBlank - nCyclesDone[nCurrentCPU];
-				if (!CheckSleep(nCurrentCPU)) {							// See if this CPU is busywaiting
-					nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-				} else {
-					nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
-				}
+				nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 			}
 
 			if (pBurnDraw != NULL) {
@@ -478,18 +468,13 @@ static INT32 DrvFrame()
 		SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		if (!CheckSleep(nCurrentCPU)) {									// See if this CPU is busywaiting
-			nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		} else {
-			nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
-		}
-		
+        nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+
 		nCurrentCPU = 1;
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[nCurrentCPU] += nCyclesSegment;
-		
+		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
+
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -510,6 +495,8 @@ static INT32 DrvFrame()
 		}
 	}
 	
+    nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
 	SekClose();
 	ZetClose();
 	
@@ -612,7 +599,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_VOLATILE) {		// Scan volatile ram
 		memset(&ba, 0, sizeof(ba));
-    		ba.Data		= RamStart;
+		ba.Data		= RamStart;
 		ba.nLen		= RamEnd - RamStart;
 		ba.szName	= "RAM";
 		BurnAcb(&ba);
@@ -626,12 +613,17 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nVideoIRQ);
 		SCAN_VAR(nSoundIRQ);
 		SCAN_VAR(nUnknownIRQ);
-		SCAN_VAR(bVBlank);
+		SCAN_VAR(nCyclesExtra);
 
 		CaveScanGraphics();
 
-		SCAN_VAR(DrvInput);
 		SCAN_VAR(SoundLatch);
+		SCAN_VAR(SoundLatchReply);
+		SCAN_VAR(SoundLatchStatus);
+
+		SCAN_VAR(SoundLatchReplyIndex);
+		SCAN_VAR(SoundLatchReplyMax);
+
 		SCAN_VAR(DrvZ80Bank);
 		SCAN_VAR(DrvOkiBank1_1);
 		SCAN_VAR(DrvOkiBank1_2);
@@ -648,8 +640,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			MSM6295SetBank(0, MSM6295ROMSrc1 + 0x20000 * DrvOkiBank1_2, 0x20000, 0x3ffff);
 			MSM6295SetBank(1, MSM6295ROMSrc2 + 0x20000 * DrvOkiBank2_1, 0x00000, 0x1ffff);
 			MSM6295SetBank(1, MSM6295ROMSrc2 + 0x20000 * DrvOkiBank2_2, 0x20000, 0x3ffff);
-
-			CaveRecalcPalette = 1;
 		}
 	}
 
@@ -756,8 +746,6 @@ static INT32 DrvInit()
 	MSM6295Init(1, 2000000 / 132, 1);
 	MSM6295SetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
 	MSM6295SetRoute(1, 0.25, BURN_SND_ROUTE_BOTH);
-
-	bDrawScreen = true;
 
 	DrvDoReset(); // Reset machine
 

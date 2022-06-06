@@ -21,8 +21,8 @@ static INT8 nVideoIRQ;
 static INT8 nSoundIRQ;
 static INT8 nUnknownIRQ;
 static INT8 nIRQPending;
+static INT32 nCyclesExtra;
 
-static INT32 nPrevCoinHack = 0;
 static INT32 watchdog;
 static INT32 tjumpman_hopper;
 
@@ -30,8 +30,8 @@ static struct BurnInputInfo TjumpmanInputList[] = {
 	{"Coin",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 coin"	},
 	{"1 Bet",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"	},
 	{"3 Bet",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 fire 2"	},
-	{"No (not)",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 start"	},
-	{"Yes (do)",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 4"	},
+	{"No (not)",	BIT_DIGITAL,	DrvJoy2 + 4,	"p1 start"	},
+	{"Yes (do)",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 4"	},
 	{"Pay Out",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 5"	},
 	{"Go",			BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 3"	},
 
@@ -281,12 +281,12 @@ static INT32 DrvDoReset()
 	nUnknownIRQ = 1;
 
 	nIRQPending = 0;
+	nCyclesExtra = 0;
 
 	MSM6295Reset(0);
 
 	tjumpman_hopper = 0;
 	watchdog = 0;
-//	nPrevCoinHack = 0;
 
 	return 0;
 }
@@ -299,11 +299,6 @@ static INT32 DrvDraw()
 
 	CaveTileRender(1);
 
-	return 0;
-}
-
-inline static INT32 CheckSleep(INT32)
-{
 	return 0;
 }
 
@@ -329,15 +324,8 @@ static INT32 DrvFrame()
 		DrvInput[1] |= (DrvJoy2[i] & 1) << i;
 	}
 
-	//if ((nPrevCoinHack != (DrvInput[1] & 0x0040)) && (DrvInput[1] & 0x0040)) {
-	//	Ram01[0x24]++;
-	//	if (Ram01[0x24] > 9) Ram01[0x24] = 9; // ?
-	//}
-
-	nPrevCoinHack = DrvInput[1] & 0x0040;
-
 	nCyclesTotal[0] = (INT32)((INT64)14000000 * nBurnCPUSpeedAdjust / (0x0100 * CAVE_REFRESHRATE));
-	nCyclesDone[0] = 0;
+	nCyclesDone[0] = nCyclesExtra;
 
 	nCyclesVBlank = nCyclesTotal[0] - (INT32)((nCyclesTotal[0] * CAVE_VBLANK_LINES) / 271.5);
 	bVBlank = false;
@@ -365,7 +353,7 @@ static INT32 DrvFrame()
 		}
 
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+        nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 
 		// end of vblank
 		if (i == nInterleave) {
@@ -379,6 +367,7 @@ static INT32 DrvFrame()
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
+    nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 	SekClose();
 
 	return 0;
@@ -391,8 +380,8 @@ static INT32 MemIndex()
 	Next 			= Mem;
 
 	Rom01			= Next; Next += 0x080000;
-	CaveSpriteROM		= Next; Next += 0x200000;
-	CaveTileROM[0]		= Next; Next += 0x100000;
+	CaveSpriteROM	= Next; Next += 0x200000;
+	CaveTileROM[0]	= Next; Next += 0x100000;
 
 	MSM6295ROM		= Next; Next += 0x040000;
 
@@ -400,8 +389,8 @@ static INT32 MemIndex()
 
 	RamStart		= Next;
 
-	CaveTileRAM[0]		= Next; Next += 0x008000;
-	CaveSpriteRAM		= Next; Next += 0x010000;
+	CaveTileRAM[0]	= Next; Next += 0x008000;
+	CaveSpriteRAM	= Next; Next += 0x010000;
 	CavePalSrc		= Next; Next += 0x010000;
 
 	RamEnd			= Next;
@@ -466,7 +455,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_VOLATILE) {
 
 		memset(&ba, 0, sizeof(ba));
-    		ba.Data		= RamStart;
+		ba.Data		= RamStart;
 		ba.nLen		= RamEnd - RamStart;
 		ba.szName	= "RAM";
 		BurnAcb(&ba);
@@ -478,8 +467,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nVideoIRQ);
 		SCAN_VAR(nSoundIRQ);
 		SCAN_VAR(nUnknownIRQ);
+		SCAN_VAR(nCyclesExtra);
 
 		SCAN_VAR(tjumpman_hopper);
+		SCAN_VAR(watchdog);
 
 		CaveScanGraphics();
 	}

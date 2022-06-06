@@ -854,7 +854,7 @@ static struct BurnRomInfo xsleenajRomDesc[] = {
 
 	{ "p2-0.ic49",		0x8000, 0xa5318cb8, 3 | BRF_PRG | BRF_ESS }, //  4 Sound M6809 Code
 
-	{ "pb-01.ic24",		0x8000, 0x83c00dd8, 4 | BRF_GRA },           //  5 Character
+	{ "pb-0.ic24",		0x8000, 0x83c00dd8, 4 | BRF_GRA },           //  5 Character
 
 	{ "pk-0.ic136",		0x8000, 0x11eb4247, 5 | BRF_GRA },           //  6 Background Layer 1 tiles
 	{ "pl-0.ic135",		0x8000, 0x422b536e, 5 | BRF_GRA },           //  7
@@ -911,7 +911,7 @@ static struct BurnRomInfo solrwarrRomDesc[] = {
 
 	{ "p2-0.ic49",		0x8000, 0xa5318cb8, 3 | BRF_PRG | BRF_ESS }, //  4 Sound M6809 Code
 
-	{ "pb-01.ic24",		0x8000, 0x83c00dd8, 4 | BRF_GRA },           //  5 Character
+	{ "pb-0.ic24",		0x8000, 0x83c00dd8, 4 | BRF_GRA },           //  5 Character
 
 	{ "pk-0.ic136",		0x8000, 0x11eb4247, 5 | BRF_GRA },           //  6 Background Layer 1 tiles
 	{ "pl-0.ic135",		0x8000, 0x422b536e, 5 | BRF_GRA },           //  7
@@ -968,7 +968,7 @@ static struct BurnRomInfo xsleenabRomDesc[] = {
 
 	{ "p2-0.ic49",		0x8000, 0xa5318cb8, 3 | BRF_PRG | BRF_ESS }, //  4 Sound M6809 Code
 
-	{ "pb-01.ic24",		0x8000, 0x83c00dd8, 4 | BRF_GRA },           //  5 Character
+	{ "pb-0.ic24",		0x8000, 0x83c00dd8, 4 | BRF_GRA },           //  5 Character
 
 	{ "pk-0.ic136",		0x8000, 0x11eb4247, 5 | BRF_GRA },           //  6 Background Layer 1 tiles
 	{ "pl-0.ic135",		0x8000, 0x422b536e, 5 | BRF_GRA },           //  7
@@ -1025,7 +1025,7 @@ static struct BurnRomInfo xsleenabaRomDesc[] = {
 
 	{ "p2-0.ic49",		0x8000, 0xa5318cb8, 3 | BRF_PRG | BRF_ESS }, //  4 Sound M6809 Code
 
-	{ "pb-01.ic24",		0x8000, 0x83c00dd8, 4 | BRF_GRA },           //  5 Character
+	{ "pb-0.ic24",		0x8000, 0x83c00dd8, 4 | BRF_GRA },           //  5 Character
 
 	{ "pk-0.ic136",		0x8000, 0x11eb4247, 5 | BRF_GRA },           //  6 Background Layer 1 tiles
 	{ "pl-0.ic135",		0x8000, 0x422b536e, 5 | BRF_GRA },           //  7

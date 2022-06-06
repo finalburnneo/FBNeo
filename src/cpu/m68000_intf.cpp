@@ -1079,8 +1079,6 @@ static void CallLuaExec(unsigned int newPC)
 
 INT32 SekInit(INT32 nCount, INT32 nCPUType)
 {
-	m68k_set_pc_changed_callback(CallLuaExec);
-
 	DebugCPU_SekInitted = 1;
 	
 	struct SekExt* ps = NULL;
@@ -1209,6 +1207,8 @@ INT32 SekInit(INT32 nCount, INT32 nCPUType)
 			SekExit();
 			return 1;
 		}
+		m68k_set_pc_changed_callback(CallLuaExec);
+
 #endif
 
 #ifdef EMU_A68K
@@ -1276,8 +1276,8 @@ INT32 SekExit()
 
 #ifdef EMU_M68K
 		SekCPUExitM68K(i);
-#endif
 		m68k_set_pc_changed_callback(NULL);
+#endif
 		// Deallocate other context data
 		if (SekExt[i]) {
 			free(SekExt[i]);
@@ -1367,8 +1367,6 @@ void SekOpen(const INT32 i)
 
 #ifdef EMU_M68K
 			m68k_set_context(SekM68KContext[nSekActive]);
-			//m68k_set_pc_changed_callback(TestCallback);
-
 #endif
 
 #ifdef EMU_A68K

@@ -3193,6 +3193,7 @@ DRV		BurnDrvnes_contraforce;
 DRV		BurnDrvnes_contraspirits;
 DRV		BurnDrvCookbib;
 DRV		BurnDrvCookbiba;
+DRV		BurnDrvCookbib2c;
 DRV		BurnDrvCookbib2;
 DRV		BurnDrvCookbib2a;
 DRV		BurnDrvCookbib2b;
@@ -16967,6 +16968,7 @@ DRV		BurnDrvnes_toukonclub;
 DRV		BurnSpectour91;
 DRV		BurnSpectrmline;
 DRV		BurnDrvmd_tourmaline;
+DRV		BurnDrvarkatour2;
 DRV		BurnDrvarkatour;
 DRV		BurnDrvCprogolfj;
 DRV		BurnDrvCprogolf;
@@ -17601,6 +17603,8 @@ DRV		BurnDrvViprp1s;
 DRV		BurnDrvViprp1u;
 DRV		BurnDrvViprp1ua;
 DRV		BurnDrvViprp1;
+DRV		BurnDrvMSX_virgilsexen;
+DRV		BurnDrvMSX_virgilsexpt;
 DRV		BurnSpecVirgilsen;
 DRV		BurnSpecVirgilspt;
 DRV		BurnDrvmd_vf2;
@@ -21941,6 +21945,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_contraspirits,	// Contra Spirits (Unl)
 	&BurnDrvCookbib,			// Cookie & Bibi (set 1)
 	&BurnDrvCookbiba,			// Cookie & Bibi (set 2)
+	&BurnDrvCookbib2c,			// Cookie & Bibi 2 (English / Korean)
 	&BurnDrvCookbib2,			// Cookie & Bibi 2 (set 1)
 	&BurnDrvCookbib2a,			// Cookie & Bibi 2 (set 2)
 	&BurnDrvCookbib2b,			// Cookie & Bibi 2 (set 3)
@@ -28508,7 +28513,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_mitsumgt,		// Mitsume Ga Tooru - The Three-Eyed One Comes Here (Jpn)
 	&BurnDrvMSX_mitsumgten,		// Mitsume Ga Tooru - The Three-Eyed One Comes Here (T-Eng)
 	&BurnDrvMSX_mitsumgtru,		// Mitsume Ga Tooru - The Three-Eyed One Comes Here (T-Rus)
-	&BurnDrvMSX_mix,			// Mix (HB)
+	&BurnDrvMSX_mix,			// Mix (HB, v1.1)
 	&BurnDrvQuiz18k,			// Miyasu Nonki no Quiz 18-Kin
 	&BurnDrvpce_mizubaku,		// Mizubaku Dai Bouken (Liquid Kids)
 	&BurnDrvMizubaku,			// Mizubaku Daibouken (Japan)
@@ -35715,7 +35720,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpectour91,			// Tour 91 (Spanish) (128K)
 	&BurnSpectrmline,			// Tourmaline (128K) (HB)
 	&BurnDrvmd_tourmaline,		// Tourmaline (HB)
-	&BurnDrvarkatour,			// Tournament Arkanoid (US)
+	&BurnDrvarkatour2,			// Tournament Arkanoid (US, newer) [no comment, NOT WORKING]
+	&BurnDrvarkatour,			// Tournament Arkanoid (US, older)
 	&BurnDrvCprogolfj,			// Tournament Pro Golf (DECO Cassette) (Japan)
 	&BurnDrvCprogolf,			// Tournament Pro Golf (DECO Cassette) (US)
 	&BurnDrvcv_ttennis,			// Tournament Tennis
@@ -36349,6 +36355,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvViprp1u,			// Viper Phase 1 (New Version, US set 1)
 	&BurnDrvViprp1ua,			// Viper Phase 1 (New Version, US set 2)
 	&BurnDrvViprp1,				// Viper Phase 1 (New Version, World)
+	&BurnDrvMSX_virgilsexen,	// Virgil's Purgatory EX (English) (HB)
+	&BurnDrvMSX_virgilsexpt,	// Virgil's Purgatory EX (Portuguese) (HB)
 	&BurnSpecVirgilsen,			// Virgil's Purgatory ZX (English) (128K) (HB)
 	&BurnSpecVirgilspt,			// Virgil's Purgatory ZX (Portuguese) (128K) (HB)
 	&BurnDrvmd_vf2,				// Virtua Fighter 2 - Genesis (Euro, USA)

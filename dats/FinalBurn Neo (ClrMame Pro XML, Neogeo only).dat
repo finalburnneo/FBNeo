@@ -7877,7 +7877,7 @@
 		<description>Metal Slug 2 - Super Vehicle-001/II (Turbo)</description>
 		<year>2016</year>
 		<manufacturer>Hack</manufacturer>
-		<rom name="241-p1t.p1" size="1048576" crc="df5d6fbc"/>
+		<rom name="941-p1.p1" size="1048576" crc="df5d6fbc"/>
 		<rom name="241-p2.sp2" merge="241-p2.sp2" size="2097152" crc="38883f44"/>
 		<rom name="241-s1.s1" merge="241-s1.s1" size="131072" crc="f3d32f0f"/>
 		<rom name="241-c1.c1" merge="241-c1.c1" size="8388608" crc="394b5e0d"/>

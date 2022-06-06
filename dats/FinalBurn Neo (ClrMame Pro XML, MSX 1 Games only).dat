@@ -10269,10 +10269,10 @@
 	</game>
 	<game name="mix" romof="msx">
 		<comment>Homebrew</comment>
-		<description>Mix (HB)</description>
+		<description>Mix (HB, v1.1)</description>
 		<year>2022</year>
 		<manufacturer>Uninteresting</manufacturer>
-		<rom name="Mix v1.0 (2022)(Uninteresting).rom" size="16384" crc="e14ae602"/>
+		<rom name="Mix v1.1 (2022)(uninteresting).rom" size="16384" crc="ae5c8bdb"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -16618,6 +16618,30 @@
 		<year>1990</year>
 		<manufacturer>Clover</manufacturer>
 		<rom name="vigilante_(clover).rom" size="32768" crc="2619f221"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="virgilsexen" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Virgil's Purgatory EX (English) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Amaweks</manufacturer>
+		<rom name="Virgil's Purgatory EX (ENG)(2022)(Amaweks).rom" size="49152" crc="b33602f3"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="virgilsexpt" cloneof="virgilsexen" romof="virgilsexen">
+		<comment>Homebrew</comment>
+		<description>Virgil's Purgatory EX (Portuguese) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Amaweks</manufacturer>
+		<rom name="Virgil's Purgatory EX (PT-BR)(2022)(Amaweks).rom" size="49152" crc="6fa80528"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

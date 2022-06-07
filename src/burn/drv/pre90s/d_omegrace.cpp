@@ -549,7 +549,7 @@ struct BurnDriver BurnDrvOmegrace = {
 	"omegrace", NULL, NULL, NULL, "1981",
 	"Omega Race (set 1)\0", NULL, "Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, omegraceRomInfo, omegraceRomName, NULL, NULL, NULL, NULL, OmegraceInputInfo, OmegraceDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	800, 600, 4, 3
@@ -578,7 +578,7 @@ struct BurnDriver BurnDrvOmegrace2 = {
 	"omegrace2", "omegrace", NULL, NULL, "1981",
 	"Omega Race (set 2)\0", NULL, "Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, omegrace2RomInfo, omegrace2RomName, NULL, NULL, NULL, NULL, OmegraceInputInfo, OmegraceDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	800, 600, 4, 3
@@ -607,7 +607,7 @@ struct BurnDriver BurnDrvDeltrace = {
 	"deltrace", "omegrace", NULL, NULL, "1981",
 	"Delta Race\0", NULL, "bootleg (Allied Leisure)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, deltraceRomInfo, deltraceRomName, NULL, NULL, NULL, NULL, OmegraceInputInfo, OmegraceDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	800, 600, 4, 3

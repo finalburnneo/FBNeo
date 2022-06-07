@@ -32389,10 +32389,10 @@ struct BurnDriver BurnDrvMSX_blacksea = {
 	272, 228, 4, 3
 };
 
-// Mix (HB)
+// Mix (HB, v1.1)
 
 static struct BurnRomInfo MSX_mixRomDesc[] = {
-	{ "Mix v1.0 (2022)(Uninteresting).rom",	16384, 0xe14ae602, BRF_PRG | BRF_ESS },
+	{ "Mix v1.1 (2022)(uninteresting).rom",	16384, 0xae5c8bdb, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_mix, MSX_mix, msx_msx)
@@ -32400,10 +32400,48 @@ STD_ROM_FN(MSX_mix)
 
 struct BurnDriver BurnDrvMSX_mix = {
 	"msx_mix", NULL, "msx_msx", NULL, "2022",
-	"Mix (HB)\0", NULL, "Uninteresting", "MSX",
+	"Mix (HB, v1.1)\0", NULL, "Uninteresting", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_mixRomInfo, MSX_mixRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Virgil's Purgatory EX (English) (HB)
+
+static struct BurnRomInfo MSX_virgilsexenRomDesc[] = {
+	{ "Virgil's Purgatory EX (ENG)(2022)(Amaweks).rom",	49152, 0xb33602f3, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_virgilsexen, MSX_virgilsexen, msx_msx)
+STD_ROM_FN(MSX_virgilsexen)
+
+struct BurnDriver BurnDrvMSX_virgilsexen = {
+	"msx_virgilsexen", NULL, "msx_msx", NULL, "2022",
+	"Virgil's Purgatory EX (English) (HB)\0", NULL, "Amaweks", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_virgilsexenRomInfo, MSX_virgilsexenRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Virgil's Purgatory EX (Portuguese) (HB)
+
+static struct BurnRomInfo MSX_virgilsexptRomDesc[] = {
+	{ "Virgil's Purgatory EX (PT-BR)(2022)(Amaweks).rom",	49152, 0x6fa80528, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_virgilsexpt, MSX_virgilsexpt, msx_msx)
+STD_ROM_FN(MSX_virgilsexpt)
+
+struct BurnDriver BurnDrvMSX_virgilsexpt = {
+	"msx_virgilsexpt", "msx_virgilsexen", "msx_msx", NULL, "2022",
+	"Virgil's Purgatory EX (Portuguese) (HB)\0", NULL, "Amaweks", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_virgilsexptRomInfo, MSX_virgilsexptRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

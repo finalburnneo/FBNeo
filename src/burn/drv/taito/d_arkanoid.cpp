@@ -1474,8 +1474,8 @@ static struct BurnRomInfo arkanoidRomDesc[] = {
 	
 	{ "arkanoid1_68705p3.ic14", 0x0800, 0x1b68e2d8, 0 | BRF_PRG | BRF_OPT },  //  9 Decapped roms
 	{ "arkanoid_mcu.ic14",      0x0800, 0x4e44b50a, 0 | BRF_PRG | BRF_OPT },  // 10
-	{ "a75__06.ic14",  0x0800, 0x0be83647, 0 | BRF_PRG | BRF_OPT },  // 11
-	{ "a75-06__bootleg_68705.ic14", 0x0800, 0x515d77b6, 0 | BRF_OPT },
+	{ "a75__06.ic14",  			0x0800, 0x0be83647, 0 | BRF_PRG | BRF_OPT },  // 11
+	{ "a75-06__bootleg_68705.ic14", 0x0800, 0x515d77b6, 0 | BRF_OPT },		  // 12
 };
 
 STD_ROM_PICK(arkanoid)
@@ -1557,7 +1557,8 @@ struct BurnDriver BurnDrvarkanoiduo = {
 };
 
 
-// Tournament Arkanoid (US)
+// Tournament Arkanoid (US, older)
+// Tournament version
 
 static struct BurnRomInfo arkatourRomDesc[] = {
 	{ "a75-27.ic17",  0x8000, 0xe3b8faf5, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
@@ -1579,10 +1580,42 @@ STD_ROM_FN(arkatour)
 
 struct BurnDriver BurnDrvarkatour = {
 	"arkatour", NULL, NULL, NULL, "1987",
-	"Tournament Arkanoid (US)\0", NULL, "Taito America Corporation (Romstar license)", "Arkanoid",
+	"Tournament Arkanoid (US, older)\0", NULL, "Taito America Corporation (Romstar license)", "Arkanoid",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
 	NULL, arkatourRomInfo, arkatourRomName, NULL, NULL, NULL, NULL, DrvInputInfo, arkanoidDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 256, 3, 4
+};
+
+
+// Tournament Arkanoid (US, newer)
+// Tournament version, newer
+
+static struct BurnRomInfo arkatour2RomDesc[] = {
+	{ "a75-36.ic16",  0x8000, 0xf3b1923e, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "a75-37.ic17",  0x8000, 0x7c74987b, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "a75_38.ic14",  0x0800, 0x00000000, 2 | BRF_ESS | BRF_PRG | BRF_NODUMP }, //  2 MCU
+
+	{ "a75-29.ic64",  0x8000, 0x5ddea3cf, 3 | BRF_GRA },	       //  3 Graphics
+	{ "a75-30.ic63",  0x8000, 0x5fcf2e85, 3 | BRF_GRA },	       //  4
+	{ "a75-31.ic62",  0x8000, 0x7b76b192, 3 | BRF_GRA },	       //  5
+
+	{ "a75-33.ic24",  0x0200, 0xb4bf3c81, 4 | BRF_GRA },	       //  6 Color Proms
+	{ "a75-34.ic23",  0x0200, 0xde85a803, 4 | BRF_GRA },	       //  7
+	{ "a75-35.ic22",  0x0200, 0x38acfd3b, 4 | BRF_GRA },	       //  8
+};
+
+STD_ROM_PICK(arkatour2)
+STD_ROM_FN(arkatour2)
+
+struct BurnDriver BurnDrvarkatour2 = {
+	"arkatour2", "arkatour", NULL, NULL, "1987",
+	"Tournament Arkanoid (US, newer)\0", NULL, "Taito America Corporation (Romstar license)", "Arkanoid",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
+	NULL, arkatour2RomInfo, arkatour2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, arkanoidDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };

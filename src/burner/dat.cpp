@@ -560,7 +560,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		INT32 nGameWidth, nGameHeight, nGameAspectX, nGameAspectY;
 		BurnDrvGetVisibleSize(&nGameWidth, &nGameHeight);
 		BurnDrvGetAspect(&nGameAspectX, &nGameAspectY);
-		fprintf(fDat, "\t\t<video orientation=\"%s\" width=\"%d\" height=\"%d\" aspectx=\"%d\" aspecty=\"%d\"/>\n", (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL ? "vertical" : "horizontal"), nGameWidth, nGameHeight, nGameAspectX, nGameAspectY);
+		fprintf(fDat, "\t\t<video type=\"%s\" orientation=\"%s\" width=\"%d\" height=\"%d\" aspectx=\"%d\" aspecty=\"%d\"/>\n", (BurnDrvGetGenreFlags() & GBF_VECTOR ? "vector" : "raster"), (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL ? "vertical" : "horizontal"), nGameWidth, nGameHeight, nGameAspectX, nGameAspectY);
 		fprintf(fDat, "\t\t<driver status=\"%s\"/>\n", (BurnDrvGetFlags() & BDF_GAME_WORKING ? "good" : "preliminary"));
 
 		fprintf(fDat, "\t</game>\n");

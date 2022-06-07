@@ -4698,10 +4698,10 @@ static struct BurnRomInfo mspacmanlaiRomDesc[] = {
 	{ "1-vid.5j",   	0x0800, 0x50c7477d, 2 | BRF_GRA },				//  9
 
 	{ "82s123-cpu.7f", 	0x0020, 0x2fc650bd, 3 | BRF_GRA },				// 10 Color Proms
-	{ "82s126-vid.4a", 	0x0100, 0x3eb3a8e4, 3 | BRF_GRA },				// 11
+	{ "82s129-vid.4a", 	0x0100, 0x3eb3a8e4, 3 | BRF_GRA },				// 11
 
-	{ "82s126-vid.1m", 	0x0100, 0xa9cc86bf, 4 | BRF_SND },				// 12 Sound Prom
-	{ "82s126-vid.3m", 	0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom (not used)
+	{ "82s129-vid.1m", 	0x0100, 0xa9cc86bf, 4 | BRF_SND },				// 12 Sound Prom
+	{ "82s129-vid.3m", 	0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom (not used)
 };
 
 STD_ROM_PICK(mspacmanlai)

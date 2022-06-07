@@ -36,6 +36,7 @@ static INT8 nSoundIRQ;
 static INT8 nUnknownIRQ;
 
 static INT32 nCaveCyclesDone[2];
+static INT32 nCyclesExtra[2];
 
 static INT32 agalletamode = 0;
 static INT32 nWhichGame;	// 0 - sailormn/sailormno
@@ -493,6 +494,8 @@ static INT32 DrvDoReset()
 	MSM6295Reset();
 	BurnYM2151Reset();
 
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -527,11 +530,6 @@ static INT32 DrvDraw()
 	return 0;
 }
 
-inline static INT32 CheckSleep(INT32)
-{
-	return 0;
-}
-
 static INT32 DrvFrame()
 {
 	INT32 nCyclesVBlank;
@@ -558,16 +556,13 @@ static INT32 DrvFrame()
 	SekNewFrame();
 
 	nCyclesTotal[0] = (INT32)((INT64)16000000 * nBurnCPUSpeedAdjust / (0x0100 * CAVE_REFRESHRATE));
-	nCaveCyclesDone[0] = 0;
+	nCaveCyclesDone[0] = nCyclesExtra[0];
 #if 0
 	nCyclesTotal[1] = (INT32)((INT64)8000000 * nBurnCPUSpeedAdjust / (0x0100 * CAVE_REFRESHRATE));
 #else
 	nCyclesTotal[1] = (INT32)(8000000 / CAVE_REFRESHRATE);
 #endif
-	nCaveCyclesDone[1] -= nCyclesTotal[1];
-	if (nCaveCyclesDone[1] < 0) {
-		nCaveCyclesDone[1] = 0;
-	}
+	nCaveCyclesDone[1] = nCyclesExtra[1];
 
 	nCyclesVBlank = nCyclesTotal[0] - (INT32)((nCyclesTotal[0] * CAVE_VBLANK_LINES) / 271.5);
 	nVBlank = 0;
@@ -605,11 +600,7 @@ static INT32 DrvFrame()
 		}
 
 		nCyclesSegment = nNext - nCaveCyclesDone[nCurrentCPU];
-		if (nVBlank || (!CheckSleep(nCurrentCPU))) {					// See if this CPU is busywaiting
-			nCaveCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		} else {
-			nCaveCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
-		}
+        nCaveCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 
 		// Run Z80
 		nCurrentCPU = 1;
@@ -637,6 +628,8 @@ static INT32 DrvFrame()
 		}
 	}
 
+    nCyclesExtra[0] = nCaveCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCaveCyclesDone[1] - nCyclesTotal[1];
 	SekClose();
 
 	{
@@ -845,11 +838,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nVideoIRQ);
 		SCAN_VAR(nSoundIRQ);
 		SCAN_VAR(nUnknownIRQ);
-		SCAN_VAR(nVBlank);
+		SCAN_VAR(nCyclesExtra);
+
+		SCAN_VAR(agalletamode);
 
 		CaveScanGraphics();
-
-		SCAN_VAR(DrvInput);
 
 		if (nAction & ACB_WRITE) {
 			INT32 nBank = nCurrentBank;
@@ -857,8 +850,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			ZetOpen(0);
 			drvZ80Bankswitch(nBank);
 			ZetClose();
-
-		  CaveRecalcPalette = 1;
 		}
 	}
 

@@ -11851,7 +11851,7 @@
 		<description>Pixel Poops Number Two (HB)</description>
 		<year>2021</year>
 		<manufacturer>Techmaster Games</manufacturer>
-		<rom name="Pixel Poops Number Two (2021)(Techmaster Games).nes" size="524304" crc="50ca8022"/>
+		<rom name="Pixel Poops Number Two (2021)(Techmaster Games).nes" size="524304" crc="17812952"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

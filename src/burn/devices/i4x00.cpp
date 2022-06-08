@@ -216,7 +216,7 @@ static inline UINT8 get_tile_pix(UINT16 code, UINT8 x, UINT8 y, INT32 big, UINT1
 	}
 	else
 	{
-		UINT32 tile2 = big ? ((((tile & 0xfffff) + 4*(code & 0xf))) * 0x100) : ((((tile & 0xfffff) + (code & 0xf))) * 0x40);
+		UINT32 tile2 = big ? ((((tile & 0xfffff) + 4*(code & 0xf))) * 0x40) : ((((tile & 0xfffff) + (code & 0xf))) * 0x40);
 
 		if (tile2 >= (graphics_length*2)) {
 			return 0;

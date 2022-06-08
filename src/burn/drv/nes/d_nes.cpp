@@ -21294,7 +21294,7 @@ struct BurnDriver BurnDrvnes_nemulesis = {
 };
 
 static struct BurnRomInfo nes_pixelpoopsRomDesc[] = {
-	{ "Pixel Poops Number Two (2021)(Techmaster Games).nes",          524304, 0x50ca8022, BRF_ESS | BRF_PRG },
+	{ "Pixel Poops Number Two (2021)(Techmaster Games).nes",          524304, 0x17812952, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_pixelpoops)

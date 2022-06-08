@@ -17727,7 +17727,7 @@ static struct BurnRomInfo kof98pfeRomDesc[] = {
 	{ "242-p2pfe.sp2",	0x400000, 0xdfa686e9, 1 | BRF_ESS | BRF_PRG }, //  1
 	{ "242-p3pfe.p3",	0x020000, 0x930ea34e, 1 | BRF_ESS | BRF_PRG }, //  2
 
-	{ "242-s1pfe.s1",	0x020000, 0x7f4dbf23, 2 | BRF_GRA },           //  3 Text layer tiles / TC531000
+	{ "242-s1pfe.s1",	0x020000, 0x7f4dbf23, 2 | BRF_GRA },           //  3 Text layer tiles
 
 	{ "242-c1pfe.c1",	0x800000, 0x379654a5, 3 | BRF_GRA },           //  4 Sprite data
 	{ "242-c2pfe.c2",	0x800000, 0x9c71fa3d, 3 | BRF_GRA },           //  5

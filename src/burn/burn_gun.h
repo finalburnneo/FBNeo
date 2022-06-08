@@ -58,7 +58,7 @@ void BurnTrackballUpdatePortB(INT32 dev);
 void BurnTrackballUpdateSlither(INT32 dev);
 
 // BurnTrackballUDLR() can be used to load digital inputs into the trackball
-void BurnTrackballUDLR(INT32 dev, INT32 u, INT32 d, INT32 l, INT32 r);
+void BurnTrackballUDLR(INT32 dev, INT32 u, INT32 d, INT32 l, INT32 r, INT32 speed = 0);
 
 // Configure if an axis (Port) is reversed (1) or normal (0)
 void BurnTrackballConfig(INT32 dev, INT32 PortA_rev, INT32 PortB_rev);
@@ -76,7 +76,9 @@ INT32 BurnTrackballGetDirection(INT32 num, INT32 isB); // -1 backwards (left, do
 INT32 BurnTrackballGetDirection(INT32 dev);
 
 // Reset the position counters
-void BurnTrackballReadReset();
+void BurnTrackballReadReset(); // all devices
+void BurnTrackballReadReset(INT32 num, INT32 isB);
+void BurnTrackballReadReset(INT32 dev);
 
 #define BurnTrackballExit BurnGunExit
 #define BurnTrackballScan BurnGunScan

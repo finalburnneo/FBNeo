@@ -6,6 +6,8 @@ Input defs
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 
+static INT16 Analog[6]; // wwally trackball
+
 static struct BurnInputInfo System18InputList[] = {
 	{"P1 Coin"           , BIT_DIGITAL  , System16InputPort0 + 0, "p1 coin"   },
 	{"P1 Start"          , BIT_DIGITAL  , System16InputPort0 + 4, "p1 start"  },
@@ -304,18 +306,22 @@ STDINPUTINFO(Mwalk)
 static struct BurnInputInfo WwallyInputList[] = {
 	{"P1 Coin"           , BIT_DIGITAL   , System16InputPort0 + 0, "p1 coin"   },
 	{"P1 Start"          , BIT_DIGITAL   , System16InputPort0 + 4, "p1 start"  },
-	{"P1 Up"             , BIT_DIGITAL   , System16InputPort1 + 3, "p1 up"     },
-	{"P1 Down"           , BIT_DIGITAL   , System16InputPort1 + 4, "p1 down"   },
-	{"P1 Left"           , BIT_DIGITAL   , System16InputPort1 + 1, "p1 left"   },
-	{"P1 Right"          , BIT_DIGITAL   , System16InputPort1 + 2, "p1 right"  },
+	{"P1 Up"             , BIT_DIGITAL   , System16InputPort4 + 3, "p1 up"     },
+	{"P1 Down"           , BIT_DIGITAL   , System16InputPort4 + 4, "p1 down"   },
+	{"P1 Left"           , BIT_DIGITAL   , System16InputPort4 + 1, "p1 left"   },
+	{"P1 Right"          , BIT_DIGITAL   , System16InputPort4 + 2, "p1 right"  },
+	A("P1 Trackball X",	BIT_ANALOG_REL, &Analog[0],    	"p1 x-axis" ),
+	A("P1 Trackball Y",	BIT_ANALOG_REL, &Analog[1],    	"p1 y-axis" ),
 	{"P1 Fire 1"         , BIT_DIGITAL   , System16InputPort1 + 0, "p1 fire 1" },
 
 	{"P2 Coin"           , BIT_DIGITAL   , System16InputPort0 + 1, "p2 coin"   },
 	{"P2 Start"          , BIT_DIGITAL   , System16InputPort0 + 5, "p2 start"  },
-	{"P2 Up"             , BIT_DIGITAL   , System16InputPort2 + 3, "p2 up"     },
-	{"P2 Down"           , BIT_DIGITAL   , System16InputPort2 + 4, "p2 down"   },
-	{"P2 Left"           , BIT_DIGITAL   , System16InputPort2 + 1, "p2 left"   },
-	{"P2 Right"          , BIT_DIGITAL   , System16InputPort2 + 2, "p2 right"  },
+	{"P2 Up"             , BIT_DIGITAL   , System16InputPort5 + 3, "p2 up"     },
+	{"P2 Down"           , BIT_DIGITAL   , System16InputPort5 + 4, "p2 down"   },
+	{"P2 Left"           , BIT_DIGITAL   , System16InputPort5 + 1, "p2 left"   },
+	{"P2 Right"          , BIT_DIGITAL   , System16InputPort5 + 2, "p2 right"  },
+	A("P2 Trackball X",	BIT_ANALOG_REL, &Analog[2],    	"p2 x-axis" ),
+	A("P2 Trackball Y",	BIT_ANALOG_REL, &Analog[3],    	"p2 y-axis" ),
 	{"P2 Fire 1"         , BIT_DIGITAL   , System16InputPort2 + 0, "p2 fire 1" },
 
 	{"Service"           , BIT_DIGITAL   , System16InputPort0 + 3 , "service"  },
@@ -328,29 +334,35 @@ static struct BurnInputInfo WwallyInputList[] = {
 STDINPUTINFO(Wwally)
 
 static struct BurnInputInfo Wwally3pInputList[] = {
-	{"P1 Coin"           , BIT_DIGITAL   , System16InputPort0 + 0, "p1 coin"   },
+	{"P1 Coin"           , BIT_DIGITAL   , System16InputPort0 + 6, "p1 coin"   },
 	{"P1 Start"          , BIT_DIGITAL   , System16InputPort0 + 4, "p1 start"  },
-	{"P1 Up"             , BIT_DIGITAL   , System16InputPort1 + 3, "p1 up"     },
-	{"P1 Down"           , BIT_DIGITAL   , System16InputPort1 + 4, "p1 down"   },
-	{"P1 Left"           , BIT_DIGITAL   , System16InputPort1 + 1, "p1 left"   },
-	{"P1 Right"          , BIT_DIGITAL   , System16InputPort1 + 2, "p1 right"  },
+	{"P1 Up"             , BIT_DIGITAL   , System16InputPort4 + 3, "p1 up"     },
+	{"P1 Down"           , BIT_DIGITAL   , System16InputPort4 + 4, "p1 down"   },
+	{"P1 Left"           , BIT_DIGITAL   , System16InputPort4 + 1, "p1 left"   },
+	{"P1 Right"          , BIT_DIGITAL   , System16InputPort4 + 2, "p1 right"  },
+	A("P1 Trackball X",	BIT_ANALOG_REL, &Analog[0],    	"p1 x-axis" ),
+	A("P1 Trackball Y",	BIT_ANALOG_REL, &Analog[1],    	"p1 y-axis" ),
 	{"P1 Fire 1"         , BIT_DIGITAL   , System16InputPort1 + 0, "p1 fire 1" },
 
 	{"P2 Coin"           , BIT_DIGITAL   , System16InputPort0 + 1, "p2 coin"   },
 	{"P2 Start"          , BIT_DIGITAL   , System16InputPort0 + 5, "p2 start"  },
-	{"P2 Up"             , BIT_DIGITAL   , System16InputPort2 + 3, "p2 up"     },
-	{"P2 Down"           , BIT_DIGITAL   , System16InputPort2 + 4, "p2 down"   },
-	{"P2 Left"           , BIT_DIGITAL   , System16InputPort2 + 1, "p2 left"   },
-	{"P2 Right"          , BIT_DIGITAL   , System16InputPort2 + 2, "p2 right"  },
+	{"P2 Up"             , BIT_DIGITAL   , System16InputPort5 + 3, "p2 up"     },
+	{"P2 Down"           , BIT_DIGITAL   , System16InputPort5 + 4, "p2 down"   },
+	{"P2 Left"           , BIT_DIGITAL   , System16InputPort5 + 1, "p2 left"   },
+	{"P2 Right"          , BIT_DIGITAL   , System16InputPort5 + 2, "p2 right"  },
+	A("P2 Trackball X",	BIT_ANALOG_REL, &Analog[2],    	"p2 x-axis" ),
+	A("P2 Trackball Y",	BIT_ANALOG_REL, &Analog[3],    	"p2 y-axis" ),
 	{"P2 Fire 1"         , BIT_DIGITAL   , System16InputPort2 + 0, "p2 fire 1" },
 
-	{"P3 Coin"           , BIT_DIGITAL   , System16InputPort0 + 7, "p3 coin"   },
-	{"P3 Start"          , BIT_DIGITAL   , System16InputPort3 + 3, "p3 start"  },
-	{"P3 Up"             , BIT_DIGITAL   , System16InputPort3 + 3, "p2 up"     },
-	{"P3 Down"           , BIT_DIGITAL   , System16InputPort3 + 4, "p2 down"   },
-	{"P3 Left"           , BIT_DIGITAL   , System16InputPort3 + 1, "p2 left"   },
-	{"P3 Right"          , BIT_DIGITAL   , System16InputPort3 + 2, "p2 right"  },
-	{"P3 Fire 1"         , BIT_DIGITAL   , System16InputPort3 + 0, "p2 fire 1" },
+	{"P3 Coin"           , BIT_DIGITAL   , System16InputPort0 + 0, "p3 coin"   },
+	{"P3 Start"          , BIT_DIGITAL   , System16InputPort0 + 7, "p3 start"  },
+	{"P3 Up"             , BIT_DIGITAL   , System16InputPort6 + 3, "p3 up"     },
+	{"P3 Down"           , BIT_DIGITAL   , System16InputPort6 + 4, "p3 down"   },
+	{"P3 Left"           , BIT_DIGITAL   , System16InputPort6 + 1, "p3 left"   },
+	{"P3 Right"          , BIT_DIGITAL   , System16InputPort6 + 2, "p3 right"  },
+	A("P3 Trackball X",	BIT_ANALOG_REL, &Analog[4],    	"p3 x-axis" ),
+	A("P3 Trackball Y",	BIT_ANALOG_REL, &Analog[5],    	"p3 y-axis" ),
+	{"P3 Fire 1"         , BIT_DIGITAL   , System16InputPort1 + 2, "p3 fire 1" },
 
 	{"Service"           , BIT_DIGITAL   , System16InputPort0 + 3 , "service"  },
 	{"Diagnostics"       , BIT_DIGITAL   , System16InputPort0 + 2 , "diag"     },
@@ -917,62 +929,64 @@ STDDIPINFO(Shdancer)
 
 static struct BurnDIPInfo WwallyDIPList[]=
 {
+	DIP_OFFSET(0x15)
 	// Default Values
-	{0x11, 0xff, 0xff, 0xff, NULL                                 },
-	{0x12, 0xff, 0xff, 0xfd, NULL                                 },
+	{0x00, 0xff, 0xff, 0xff, NULL                                 },
+	{0x01, 0xff, 0xff, 0xfd, NULL                                 },
 
 	// Dip 1
-	SYSTEM18_COINAGE(0x11)
+	SYSTEM18_COINAGE(0x00)
 
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "2 Credits to Start"                 },
-	{0x12, 0x01, 0x01, 0x01, "Off"                                },
-	{0x12, 0x01, 0x01, 0x00, "On"                                 },
+	{0x01, 0x01, 0x01, 0x01, "Off"                                },
+	{0x01, 0x01, 0x01, 0x00, "On"                                 },
 
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"                        },
-	{0x12, 0x01, 0x02, 0x02, "Off"                                },
-	{0x12, 0x01, 0x02, 0x00, "On"                                 },
+	{0x01, 0x01, 0x02, 0x02, "Off"                                },
+	{0x01, 0x01, 0x02, 0x00, "On"                                 },
 
 	{0   , 0xfe, 0   , 2   , "Coin Chute"                         },
-	{0x12, 0x01, 0x04, 0x04, "Common"                             },
-	{0x12, 0x01, 0x04, 0x00, "Individual"                         },
+	{0x01, 0x01, 0x04, 0x04, "Common"                             },
+	{0x01, 0x01, 0x04, 0x00, "Individual"                         },
 
 	{0   , 0xfe, 0   , 4   , "Difficulty"                         },
-	{0x12, 0x01, 0x60, 0x40, "Easy"                               },
-	{0x12, 0x01, 0x60, 0x60, "Normal"                             },
-	{0x12, 0x01, 0x60, 0x20, "Hard"                               },
-	{0x12, 0x01, 0x60, 0x00, "Hardest"                            },
+	{0x01, 0x01, 0x60, 0x40, "Easy"                               },
+	{0x01, 0x01, 0x60, 0x60, "Normal"                             },
+	{0x01, 0x01, 0x60, 0x20, "Hard"                               },
+	{0x01, 0x01, 0x60, 0x00, "Hardest"                            },
 };
 
 STDDIPINFO(Wwally)
 
 static struct BurnDIPInfo Wwally3pDIPList[]=
 {
+	DIP_OFFSET(0x1e)
 	// Default Values
-	{0x11, 0xff, 0xff, 0xff, NULL                                 },
-	{0x12, 0xff, 0xff, 0xfd, NULL                                 },
+	{0x00, 0xff, 0xff, 0xff, NULL                                 },
+	{0x01, 0xff, 0xff, 0xfd, NULL                                 },
 
 	// Dip 1
-	SYSTEM18_COINAGE(0x11)
+	SYSTEM18_COINAGE(0x00)
 
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "2 Credits to Start"                 },
-	{0x12, 0x01, 0x01, 0x01, "Off"                                },
-	{0x12, 0x01, 0x01, 0x00, "On"                                 },
+	{0x01, 0x01, 0x01, 0x01, "Off"                                },
+	{0x01, 0x01, 0x01, 0x00, "On"                                 },
 
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"                        },
-	{0x12, 0x01, 0x02, 0x02, "Off"                                },
-	{0x12, 0x01, 0x02, 0x00, "On"                                 },
+	{0x01, 0x01, 0x02, 0x02, "Off"                                },
+	{0x01, 0x01, 0x02, 0x00, "On"                                 },
 
 	{0   , 0xfe, 0   , 2   , "Coin Chute"                         },
-	{0x12, 0x01, 0x04, 0x00, "Common"                             },
-	{0x12, 0x01, 0x04, 0x04, "Individual"                         },
+	{0x01, 0x01, 0x04, 0x00, "Common"                             },
+	{0x01, 0x01, 0x04, 0x04, "Individual"                         },
 
 	{0   , 0xfe, 0   , 4   , "Difficulty"                         },
-	{0x12, 0x01, 0x60, 0x40, "Easy"                               },
-	{0x12, 0x01, 0x60, 0x60, "Normal"                             },
-	{0x12, 0x01, 0x60, 0x20, "Hard"                               },
-	{0x12, 0x01, 0x60, 0x00, "Hardest"                            },
+	{0x01, 0x01, 0x60, 0x40, "Easy"                               },
+	{0x01, 0x01, 0x60, 0x60, "Normal"                             },
+	{0x01, 0x01, 0x60, 0x20, "Hard"                               },
+	{0x01, 0x01, 0x60, 0x00, "Hardest"                            },
 };
 
 STDDIPINFO(Wwally3p)
@@ -2848,31 +2862,31 @@ static void LghostWriteIO(UINT32 offset, UINT8 d)
 	sega_315_5195_io_write(offset, d);
 }
 
-static INT16 WwallyTrack1X = 0;
-static INT16 WwallyTrack1Y = 0;
-static INT16 WwallyTrack2X = 0;
-static INT16 WwallyTrack2Y = 0;
-
-static UINT8 WwallyLastX[2];
-static UINT8 WwallyLastY[2];
-
 static UINT8 WwallyReadIO(UINT32 offset)
 {
 	switch (offset) {
 		case 0x1800: {
-			return (WwallyTrack1X - WwallyLastX[0]) & 0xff;
+			return BurnTrackballRead(0, 0);
 		}
 
 		case 0x1802: {
-			return (WwallyTrack1Y - WwallyLastY[0]) & 0xff;
+			return BurnTrackballRead(0, 1);
 		}
 
 		case 0x1804: {
-			return (WwallyTrack2X - WwallyLastX[1]) & 0xff;
+			return BurnTrackballRead(1, 0);
 		}
 
 		case 0x1806: {
-			return (WwallyTrack2Y - WwallyLastY[1]) & 0xff;
+			return BurnTrackballRead(1, 1);
+		}
+
+		case 0x1808: {
+			return BurnTrackballRead(2, 0);
+		}
+
+		case 0x180a: {
+			return BurnTrackballRead(2, 1);
 		}
 	}
 
@@ -2883,14 +2897,20 @@ static void WwallyWriteIO(UINT32 offset, UINT8 d)
 {
 	switch (offset) {
 		case 0x1800: {
-			WwallyLastX[0] = WwallyTrack1X;
-			WwallyLastY[0] = WwallyTrack1Y;
+			BurnTrackballReadReset(0, 0);
+			BurnTrackballReadReset(0, 1);
 			return;
 		}
 
 		case 0x1804: {
-			WwallyLastX[1] = WwallyTrack2X;
-			WwallyLastY[1] = WwallyTrack2Y;
+			BurnTrackballReadReset(1, 0);
+			BurnTrackballReadReset(1, 1);
+			return;
+		}
+
+		case 0x1808: {
+			BurnTrackballReadReset(2, 0);
+			BurnTrackballReadReset(2, 1);
 			return;
 		}
 	}
@@ -3220,25 +3240,20 @@ Driver inits
 
 static void WwallyMakeAnalogInputs()
 {
-	if (System16InputPort1[1]) WwallyTrack1X += 0x4;
-	if (System16InputPort1[2]) WwallyTrack1X -= 0x4;
-	if (WwallyTrack1X >= 0x100) WwallyTrack1X = 0;
-	if (WwallyTrack1X < 0) WwallyTrack1X = 0xfc;
+	BurnTrackballConfig(0, AXIS_REVERSED, AXIS_NORMAL);
+	BurnTrackballFrame(0, Analog[0], Analog[1], 0x01, 0x3f);
+	BurnTrackballUDLR(0, System16InputPort4[3], System16InputPort4[4], System16InputPort4[1], System16InputPort4[2], 8);
+	BurnTrackballUpdate(0);
 
-	if (System16InputPort1[3]) WwallyTrack1Y -= 0x4;
-	if (System16InputPort1[4]) WwallyTrack1Y += 0x4;
-	if (WwallyTrack1Y >= 0x100) WwallyTrack1Y = 0;
-	if (WwallyTrack1Y < 0) WwallyTrack1Y = 0xfc;
+	BurnTrackballConfig(1, AXIS_REVERSED, AXIS_NORMAL);
+	BurnTrackballFrame(1, Analog[2], Analog[3], 0x01, 0x3f);
+	BurnTrackballUDLR(1, System16InputPort5[3], System16InputPort5[4], System16InputPort5[1], System16InputPort5[2], 8);
+	BurnTrackballUpdate(1);
 
-	if (System16InputPort2[1]) WwallyTrack2X += 0x4;
-	if (System16InputPort2[2]) WwallyTrack2X -= 0x4;
-	if (WwallyTrack2X >= 0x100) WwallyTrack2X = 0;
-	if (WwallyTrack2X < 0) WwallyTrack2X = 0xfc;
-
-	if (System16InputPort2[3]) WwallyTrack2Y -= 0x4;
-	if (System16InputPort2[4]) WwallyTrack2Y += 0x4;
-	if (WwallyTrack2Y >= 0x100) WwallyTrack2Y = 0;
-	if (WwallyTrack2Y < 0) WwallyTrack2Y = 0xfc;
+	BurnTrackballConfig(2, AXIS_REVERSED, AXIS_NORMAL);
+	BurnTrackballFrame(2, Analog[4], Analog[5], 0x01, 0x3f);
+	BurnTrackballUDLR(2, System16InputPort6[3], System16InputPort6[4], System16InputPort6[1], System16InputPort6[2], 8);
+	BurnTrackballUpdate(2);
 }
 
 static INT32 System18Bank40000Init()
@@ -3420,6 +3435,8 @@ static INT32 WwallyInit()
 	sega_315_5195_custom_io_do = WwallyReadIO;
 	sega_315_5195_custom_io_write_do = WwallyWriteIO;
 
+	BurnTrackballInit(3);
+
 	return System16Init();
 }
 
@@ -3433,7 +3450,7 @@ static INT32 System18Exit()
 	return System16Exit();
 }
 
-static INT32 System18Scan(INT32 nAction,INT32 *pnMin)
+static INT32 System18Scan(INT32 nAction, INT32 *pnMin)
 {
 	if (pnMin != NULL) {					// Return minimum compatible version
 		*pnMin =  0x029660;
@@ -3469,13 +3486,7 @@ static INT32 LghostScan(INT32 nAction,INT32 *pnMin)
 
 static INT32 WwallyExit()
 {
-	WwallyTrack1X = 0;
-	WwallyTrack1Y = 0;
-	WwallyTrack2X = 0;
-	WwallyTrack2Y = 0;
-
-	memset(WwallyLastX, 0, sizeof(WwallyLastX));
-	memset(WwallyLastY, 0, sizeof(WwallyLastY));
+	BurnTrackballExit();
 
 	return System18Exit();
 }
@@ -3487,12 +3498,7 @@ static INT32 WwallyScan(INT32 nAction,INT32 *pnMin)
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
-		SCAN_VAR(WwallyTrack1X);
-		SCAN_VAR(WwallyTrack1Y);
-		SCAN_VAR(WwallyTrack2X);
-		SCAN_VAR(WwallyTrack2Y);
-		SCAN_VAR(WwallyLastX);
-		SCAN_VAR(WwallyLastY);
+		BurnTrackballScan();
 	}
 
 	return System18Scan(nAction, pnMin);;

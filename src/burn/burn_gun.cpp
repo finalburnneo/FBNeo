@@ -164,13 +164,14 @@ static UINT8 DrvJoyT[MAX_GUNS * 4];  // direction bytes
 static UINT8 TrackRev[MAX_GUNS * 2]; // normal/reversed config
 static INT32 TrackStart[MAX_GUNS * 2]; // Start / Stop points
 static INT32 TrackStop[MAX_GUNS * 2];
+static INT32 UDLRSpeed[MAX_GUNS];
 
 void BurnTrackballFrame(INT32 dev, INT16 PortA, INT16 PortB, INT32 VelocityStart, INT32 VelocityMax)
 {
 	BurnDialINF dial = { VelocityStart, VelocityMax, (VelocityStart + VelocityMax) / 2, 0, 0, 0 };
 
-	DIAL_INC[(dev*2) + 0] = dial.VelocityMidpoint;		// defaults for digital (UDLR)
-	DIAL_INC[(dev*2) + 1] = dial.VelocityMidpoint;
+	DIAL_INC[(dev*2) + 0] = (UDLRSpeed[dev]) ? UDLRSpeed[dev] : dial.VelocityMidpoint;		// defaults for digital (UDLR)
+	DIAL_INC[(dev*2) + 1] = (UDLRSpeed[dev]) ? UDLRSpeed[dev] : dial.VelocityMidpoint;
 
 	DIAL_VEL[(dev*2) + 0] = 0; // testing!
 	DIAL_VEL[(dev*2) + 1] = 0;
@@ -402,20 +403,35 @@ INT32 BurnTrackballReadSigned(INT32 dev, INT32 isB)
 		return TrackA[dev];
 }
 
+void BurnTrackballReadReset(INT32 dev)
+{
+	BurnTrackballReadReset(dev >> 1, dev & 1);
+}
+
+void BurnTrackballReadReset(INT32 dev, INT32 isB)
+{
+	if (isB)
+		TrackB[dev] = 0;
+	else
+		TrackA[dev] = 0;
+}
+
 void BurnTrackballReadReset()
 {
 	for (INT32 i = 0; i < MAX_GUNS; i++) {
-		TrackA[i] = 0;
-		TrackB[i] = 0;
+		BurnTrackballReadReset(i, 0);
+		BurnTrackballReadReset(i, 1);
 	}
 }
 
-void BurnTrackballUDLR(INT32 dev, INT32 u, INT32 d, INT32 l, INT32 r)
+void BurnTrackballUDLR(INT32 dev, INT32 u, INT32 d, INT32 l, INT32 r, INT32 speed)
 {
 	DrvJoyT[(dev*4) + 0] |= l;
 	DrvJoyT[(dev*4) + 1] |= r;
 	DrvJoyT[(dev*4) + 2] |= u;
 	DrvJoyT[(dev*4) + 3] |= d;
+
+	UDLRSpeed[dev] = speed;
 }
 
 void BurnTrackballConfig(INT32 dev, INT32 PortA_rev, INT32 PortB_rev)
@@ -559,6 +575,8 @@ void BurnGunInit(INT32 nNumPlayers, bool bDrawTargets)
 	memset(&DrvJoyT, 0, sizeof(DrvJoyT));
 	memset(&DIAL_INC, 0, sizeof(DIAL_INC));
 	memset(&TrackRev, 0, sizeof(TrackRev));
+	memset(&UDLRSpeed, 0, sizeof(UDLRSpeed));
+
 	for (INT32 i = 0; i < MAX_GUNS*2; i++) {
 		TrackStart[i] = -1;
 		TrackStop[i]  = -1;

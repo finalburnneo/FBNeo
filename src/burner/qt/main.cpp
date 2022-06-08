@@ -22,9 +22,9 @@ void IpsApplyPatches(UINT8 *, char *)
 
 }
 
-bool GetIpsDrvProtection()
+UINT32 GetIpsDrvDefine()
 {
-	return false;
+	return 0;
 }
 
 INT32 GetIpsesMaxLen(char *)

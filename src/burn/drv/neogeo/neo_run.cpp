@@ -265,7 +265,9 @@ UINT8 *Neo68KBIOS, *NeoZ80BIOS;
 static UINT8 *Neo68KRAM, *NeoZ80RAM, *NeoNVRAM, *NeoNVRAM2, *NeoMemoryCard;
 
 static UINT32 nSpriteSize[MAX_SLOT] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-static UINT32 nCodeSize[MAX_SLOT] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+static UINT32 nCodeSize[MAX_SLOT] = { 0, 0, 0, 0, 0, 0, 0, 0 }, nAllCodeSize = 0;
+
+static UINT32 nIpsDefine = 0, nProgSize = 0, nExtraProgSize = 0;
 
 UINT8* NeoGraphicsRAM;
 
@@ -536,6 +538,12 @@ static INT32 LoadRoms()
 
 	UINT32 nSpriteRomSize = 0;
 
+	if (bDoIpsPatch) {
+		nIpsDefine = GetIpsDrvDefine();
+		nProgSize = IPS_PROG_VALUE(nIpsDefine);
+		nExtraProgSize = IPS_NEOP3_VALUE(nIpsDefine);
+	}
+
 	{
 		struct BurnRomInfo ri;
 
@@ -582,8 +590,10 @@ static INT32 LoadRoms()
 		nCodeSize[nNeoActiveSlot] = (nCodeSize[nNeoActiveSlot] + 0x0FFFFF) & ~0x0FFFFF;
 
 		// Extend the length of[nCodeSize] to fit the ips of the hack games.
-		if (bDoIpsPatch) nCodeSize[nNeoActiveSlot] += (0x200000 << 1);
+		if (bDoIpsPatch)
+			nCodeSize[nNeoActiveSlot] = (nProgSize >= nCodeSize[nNeoActiveSlot]) ? nProgSize + nExtraProgSize : nCodeSize[nNeoActiveSlot] += (0x200000 << 1);
 
+		nAllCodeSize = nCodeSize[nNeoActiveSlot];
 		nSpriteSize[nNeoActiveSlot] = 0;
 
 		if (BurnDrvGetHardwareCode() & HARDWARE_SNK_SWAPC) {
@@ -719,7 +729,6 @@ static INT32 LoadRoms()
 			UINT32 nRealSpriteSize = nSpriteRomSize;
 
 			if (bDoIpsPatch) {
-
 				// If the expansion bytes of 0x800000 << 2 are all empty data,
 				// then [SpriteSize] will subtract the expansion part to ensure that [NeoTextROM] is obtained correctly.
 				for (INT32 i = 0; i < (0x800000 << 2); i += (0x800000 << 1)) {
@@ -4070,6 +4079,10 @@ static INT32 NeoInitCommon()
 			ZetSetOutHandler(neogeoZ80Out);
 		}
 	}
+
+	// Mapping extra rom.
+	if (bDoIpsPatch && ((nProgSize + nExtraProgSize) == nAllCodeSize))
+		SekMapMemory(Neo68KROMActive + nProgSize, 0x900000, 0x900000 + nExtraProgSize - 1, MAP_ROM);
 
 	ZetClose();
 	SekClose();

@@ -2700,6 +2700,7 @@ static void mapper03_cycle()
 #define mapper115_prg           (mapper_regs[0x1f - 7])
 #define mapper115_chr           (mapper_regs[0x1f - 8])
 #define mapper115_prot          (mapper_regs[0x1f - 9])
+#define mapper258_reg           (mapper_regs[0x1f - 0xa])
 #define mapper262_reg           (mapper_regs[0x1f - 0xa])
 #define mapper189_reg           (mapper_regs[0x1f - 0xa]) // same as 262
 #define mapper268_reg(x)        (mapper_regs[(0x1f - 0xa) + (x)])
@@ -2792,6 +2793,67 @@ static void mapper04_map()
 
 	if (Cart.Mirroring != 4)
 		set_mirroring(mapper4_mirror ? VERTICAL : HORIZONTAL);
+}
+
+static void mapper258_map()
+{
+	if (mapper258_reg & 0x80) {
+		// mmc3 prg-override (similar to mapper 115)
+		if (mapper258_reg & 0x20) {
+			mapper_map_prg(32, 0, (mapper258_reg & 0x7) >> 1);
+		} else {
+			mapper_map_prg(16, 0, mapper258_reg & 0x7);
+			mapper_map_prg(16, 1, mapper258_reg & 0x7);
+		}
+	} else {
+		mapper_map_prg(8, 1, mapper_regs[7] & 0xf);
+
+		if (~mapper4_banksel & 0x40) {
+			mapper_map_prg(8, 0, mapper_regs[6] & 0xf);
+			mapper_map_prg(8, 2, -2);
+		} else {
+			mapper_map_prg(8, 0, -2);
+			mapper_map_prg(8, 2, mapper_regs[6] & 0xf);
+		}
+		mapper_map_prg(8, 3, -1);
+	}
+
+    if (~mapper4_banksel & 0x80) {
+		mapper_map_chr(2, 0, (mapper_regs[0] + mapper12_lowchr) >> 1);
+        mapper_map_chr(2, 1, (mapper_regs[1] + mapper12_lowchr) >> 1);
+
+		mapper_map_chr(1, 4, mapper_regs[2] + mapper12_highchr);
+		mapper_map_chr(1, 5, mapper_regs[3] + mapper12_highchr);
+		mapper_map_chr(1, 6, mapper_regs[4] + mapper12_highchr);
+		mapper_map_chr(1, 7, mapper_regs[5] + mapper12_highchr);
+	} else {
+		mapper_map_chr(1, 0, mapper_regs[2] + mapper12_lowchr);
+		mapper_map_chr(1, 1, mapper_regs[3] + mapper12_lowchr);
+		mapper_map_chr(1, 2, mapper_regs[4] + mapper12_lowchr);
+		mapper_map_chr(1, 3, mapper_regs[5] + mapper12_lowchr);
+
+		mapper_map_chr(2, 2, (mapper_regs[0] + mapper12_highchr) >> 1);
+		mapper_map_chr(2, 3, (mapper_regs[1] + mapper12_highchr) >> 1);
+	}
+
+	if (Cart.Mirroring != 4)
+		set_mirroring(mapper4_mirror ? VERTICAL : HORIZONTAL);
+}
+
+static UINT8 mapper258_read(UINT16 address)
+{
+	const UINT8 lut[8] = { 0, 0, 0, 1, 2, 4, 0xf, 0 };
+
+	return cpu_open_bus | lut[address & 7];
+}
+
+static void mapper258_write(UINT16 address, UINT8 data)
+{
+	if ((address & 0x7) == 0x0) {
+		mapper258_reg = data;
+
+		mapper_map();
+	}
 }
 
 static void mapper76_map()
@@ -9212,6 +9274,32 @@ static INT32 mapper_init(INT32 mappernum)
 			break;
 		}
 
+		case 258: { // mmc3-derivative (blood of jurassic)
+			psg_area_write = mapper258_write;	// 4020 - 5fff
+			psg_area_read = mapper258_read;		// 4020 - 5fff
+			mapper_write = mapper04_write;		// 8000 - ffff
+			mapper_map   = mapper258_map;
+			mapper_scanline = mapper04_scanline;
+			mapper4_mirror = Cart.Mirroring; // wagyan land doesn't set the mapper bit!
+
+			// default mmc3 regs:
+			// chr
+			mapper_regs[0] = 0;
+			mapper_regs[1] = 2;
+			mapper_regs[2] = 4;
+			mapper_regs[3] = 5;
+			mapper_regs[4] = 6;
+			mapper_regs[5] = 7;
+			// prg
+			mapper_regs[6] = 0;
+			mapper_regs[7] = 1;
+
+			mapper_map_prg( 8, 3, -1);
+		    mapper_map();
+			retval = 0;
+			break;
+		}
+
 		case 262: { // mmc3-derivative (Street Heroes)
 			psg_area_write = mapper262_write;
 			psg_area_read = mapper262_read;
@@ -15213,6 +15301,25 @@ struct BurnDriver BurnDrvnes_blockout = {
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
+
+
+static struct BurnRomInfo nes_bloodjurRomDesc[] = {
+	{ "Blood of Jurassic (1997)(gd-98).nes",          262160, 0x76ea1e9f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_bloodjur)
+STD_ROM_FN(nes_bloodjur)
+
+struct BurnDriver BurnDrvnes_bloodjur = {
+	"nes_bloodjur", NULL, NULL, NULL, "1997",
+	"Blood of Jurassic (Unl)\0", NULL, "Shanghai PS&T", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_bloodjurRomInfo, nes_bloodjurRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
+	NESZapperInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 
 static struct BurnRomInfo nes_bookymanRomDesc[] = {
 	{ "Bookyman (1991)(Mega Soft).nes",          24592, 0xd8f11b78, BRF_ESS | BRF_PRG },

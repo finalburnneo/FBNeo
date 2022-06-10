@@ -15497,7 +15497,7 @@ struct BurnDriver BurnDrvmslug2dg = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug 2 - Super Vehicle-001/II (CZXINc FC2 Ver.2 20210415, hack)
+// Metal Slug 2 - Super Vehicle-001/II (Friendly Fire FC2 Ver.2 20210415, hack by CZXINc)
 // GOTVG
 
 static struct BurnRomInfo mslug2fmRomDesc[] = {
@@ -15522,7 +15522,7 @@ STD_ROM_FN(mslug2fm)
 
 struct BurnDriver BurnDrvmslug2fm = {
 	"mslug2fm", "mslug2", "neogeo", NULL, "2021",
-	"Metal Slug 2 - Super Vehicle-001/II (CZXINc FC2 Ver.2 20210415, hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug 2 - Super Vehicle-001/II (Friendly Fire FC2 Ver.2 20210415, hack by CZXINc)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug2fmRomInfo, mslug2fmRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -21672,7 +21672,7 @@ struct BurnDriver BurnDrvmslug5mg = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 5 (Remake Final, Hack)
+// Metal Slug 5 (Remake Final FC2 Version, Hack)
 // GOTVG 20211003
 static struct BurnRomInfo mslug5sgfRomDesc[] = {
 	{ "268-p1dsgf.bin",	0x600000, 0xb1fbb850, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -21701,7 +21701,7 @@ STD_ROM_FN(mslug5sgf)
 
 struct BurnDriver BurnDrvmslug5sgf = {
 	"mslug5sgf", "mslug5", "neogeo", NULL, "2021",
-	"Metal Slug 5 (Remake Final, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug 5 (Remake Final FC2 Version, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5sgfRomInfo, mslug5sgfRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

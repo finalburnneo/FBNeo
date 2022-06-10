@@ -1,4 +1,4 @@
-// FB Alpha Snow Bros. driver module
+// FB Neo Snow Bros. driver module
 // Based on MAME driver by David Haywood, Mike Coates
 
 // Todo:
@@ -209,7 +209,7 @@ static struct BurnDIPInfo Cookbib2DIPList[]=
 	{0x13, 0x01, 0x60, 0x00, "Easy"                   },
 	{0x13, 0x01, 0x60, 0x60, "Normal"                 },
 	{0x13, 0x01, 0x60, 0x40, "Hard"                   },
-	{0x13, 0x01, 0x60, 0x20, "Very Hard"              },
+	{0x13, 0x01, 0x60, 0x20, "Hardest"                },
 
 	{0   , 0xfe, 0   , 2   , "Mode"                   },
 	{0x13, 0x01, 0x80, 0x80, "Game"                   },
@@ -247,7 +247,7 @@ static struct BurnDIPInfo Cookbib2cDIPList[]=
 	{0x13, 0x01, 0x60, 0x00, "Easy"                   },
 	{0x13, 0x01, 0x60, 0x60, "Normal"                 },
 	{0x13, 0x01, 0x60, 0x40, "Hard"                   },
-	{0x13, 0x01, 0x60, 0x20, "Very Hard"              },
+	{0x13, 0x01, 0x60, 0x20, "Hardest"                },
 
 	{0   , 0xfe, 0   , 2   , "Mode"                   },
 	{0x13, 0x01, 0x80, 0x80, "Game"                   },
@@ -824,7 +824,7 @@ static struct BurnRomInfo Cookbib2bRomDesc[] = {
 
 	{ "uj15.010",   		0x20000, 0x5e6f76b8, BRF_SND },			 //  6	Samples
 
-	{ "87c52.mcu",     		0x10000, 0x00000000, BRF_NODUMP },
+	{ "87c52.mcu",     		0x02000, 0x00000000, BRF_NODUMP },
 
 	{ "protdata_alt.bin",  	0x00200, 0xbc136ead, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
@@ -845,7 +845,7 @@ static struct BurnRomInfo Cookbib2cRomDesc[] = {
 
 	{ "unico.uj15",   		0x20000, 0xae5cc9e5, BRF_SND },			 //  6	Samples
 
-	{ "87c52.mcu",     		0x10000, 0x00000000, BRF_NODUMP },
+	{ "87c52.mcu",     		0x02000, 0x00000000, BRF_NODUMP },
 
 	{ "protdata.bin",  		0x00200, 0xb956f056, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
@@ -4188,7 +4188,7 @@ struct BurnDriver BurnDrvHyperpacb = {
 
 struct BurnDriver BurnDrvCookbib2 = {
 	"cookbib2", NULL, NULL, NULL, "1996",
-	"Cookie & Bibi 2 (set 1)\0", NULL, "SemiCom", "Kaneko Pandora based",
+	"Cookie & Bibi 2 (English, set 1)\0", NULL, "SemiCom", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, Cookbib2RomInfo, Cookbib2RomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, Cookbib2DIPInfo,
@@ -4198,7 +4198,7 @@ struct BurnDriver BurnDrvCookbib2 = {
 
 struct BurnDriver BurnDrvCookbib2a = {
 	"cookbib2a", "cookbib2", NULL, NULL, "1996",
-	"Cookie & Bibi 2 (set 2)\0", NULL, "SemiCom", "Kaneko Pandora based",
+	"Cookie & Bibi 2 (English, set 2)\0", NULL, "SemiCom", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, Cookbib2aRomInfo, Cookbib2aRomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, Cookbib2DIPInfo,
@@ -4208,7 +4208,7 @@ struct BurnDriver BurnDrvCookbib2a = {
 
 struct BurnDriver BurnDrvCookbib2b = {
 	"cookbib2b", "cookbib2", NULL, NULL, "1996",
-	"Cookie & Bibi 2 (set 3)\0", NULL, "SemiCom", "Kaneko Pandora based",
+	"Cookie & Bibi 2 (English, set 3)\0", NULL, "SemiCom", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, Cookbib2bRomInfo, Cookbib2bRomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, Cookbib2DIPInfo,

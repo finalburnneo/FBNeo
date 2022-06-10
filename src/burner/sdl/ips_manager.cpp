@@ -180,10 +180,12 @@ void IpsApplyPatches(UINT8* base, char* rom_name)
 #endif
 }
 
-bool GetIpsDrvProtection()
+UINT32 GetIpsDrvDefine()
 {
 #if 0
-	if (!bDoIpsPatch) return false;
+	if (!bDoIpsPatch) return 0;
+
+	UINT32 nRet = 0;
 
 	char ips_data[MAX_PATH];
 	int nActivePatches = GetIpsNumActivePatches();
@@ -211,19 +213,69 @@ bool GetIpsDrvProtection()
 					if (NULL == (tmp = strtok(NULL, " \t\r\n")))
 						break;
 
-					// #define	__PROTECTION__
-					// Control protection of sma / pvc etc.
-					if (0 == strcmp(tmp, "__PROTECTION__")) {
-						fclose(fp);
-						return true;
+					if (0 == strcmp(tmp, "IPS_USE_PROTECT")) {
+						nRet |= IPS_USE_PROTECT;
+						continue;
+					}
+
+					// Assignment is only allowed once
+					if (!INCLUDE_NEOP3(nRet)) {
+						if (0 == strcmp(tmp, "IPS_NEOP3_20000")) {
+							nRet |= IPS_NEOP3_20000;
+							continue;
+						}
+						if (0 == strcmp(tmp, "IPS_NEOP3_40000")) {
+							nRet |= IPS_NEOP3_40000;
+							continue;
+						}
+					}
+					if (!INCLUDE_PROG(nRet)) {
+						if (0 == strcmp(tmp, "IPS_PROG_100000")) {
+							nRet |= IPS_PROG_100000;
+							continue;
+						}
+						if (0 == strcmp(tmp, "IPS_PROG_200000")) {
+							nRet |= IPS_PROG_200000;
+							continue;
+						}
+						if (0 == strcmp(tmp, "IPS_PROG_300000")) {
+							nRet |= IPS_PROG_300000;
+							continue;
+						}
+						if (0 == strcmp(tmp, "IPS_PROG_400000")) {
+							nRet |= IPS_PROG_400000;
+							continue;
+						}
+						if (0 == strcmp(tmp, "IPS_PROG_500000")) {
+							nRet |= IPS_PROG_500000;
+							continue;
+						}
+						if (0 == strcmp(tmp, "IPS_PROG_600000")) {
+							nRet |= IPS_PROG_600000;
+							continue;
+						}
+						if (0 == strcmp(tmp, "IPS_PROG_700000")) {
+							nRet |= IPS_PROG_700000;
+							continue;
+						}
+						if (0 == strcmp(tmp, "IPS_PROG_800000")) {
+							nRet |= IPS_PROG_800000;
+							continue;
+						}
+						if (0 == strcmp(tmp, "IPS_PROG_900000")) {
+							nRet |= IPS_PROG_900000;
+							continue;
+						}
 					}
 				}
 			}
 			fclose(fp);
 		}
 	}
+
+	return nRet;
 #endif
-	return false;
+	return 0;
 }
 
 INT32 GetIpsesMaxLen(char* rom_name)

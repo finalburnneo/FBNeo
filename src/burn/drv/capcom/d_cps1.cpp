@@ -16250,10 +16250,16 @@ static INT32 Cps1LoadRoms(INT32 bLoad)
 				nCpsExtraTilesRomNum++;
 			}
 			i++;
-			
+
 		} while (ri.nLen);
 
-		if (bDoIpsPatch && (0x300000 > nCpsRomLen)) nCpsRomLen = 0x300000;	// Some ips come from hack games in which CpsRom is expanded.
+		if (bDoIpsPatch) {
+			// Some ips come from hack games in which CpsRom is expanded.
+			UINT32 nIpsDefine = GetIpsDrvDefine(), nProgSize = IPS_PROG_VALUE(nIpsDefine);
+
+			nCpsRomLen = (nProgSize >= nCpsRomLen) ? nProgSize : nCpsRomLen + 0x200000;
+		}
+
 		if (Cps1Qs) nCpsZRomLen *= 2;
 		if (GameHasStars) nCpsGfxLen += 0x2000;
 		if (PangEEP) nCpsGfxLen *= 2;
@@ -23909,7 +23915,7 @@ struct BurnDriver BurnDrvCpsWofch = {
 
 struct BurnDriver BurnDrvCpsWofchdx = {
 	"wofchdx", "wofch", NULL, NULL, "2018",
-	"Sangokushi III Gaiden: Kakou-On's Revenge DX (hack)\0", NULL, "Hack", "CPS Changer",
+	"Sangokushi III Gaiden: Kakou-On's Revenge DX (hack)\0", NULL, "hack", "CPS Changer",
 	L"\u4E09\u56FD\u5FD7 III \u5916\u4F20: \u590F\u4FAF\u6069\u7684\u590D\u4EC7\0Sangokushi III Gaiden: Kakou-On's Revenge DX (hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_CAPCOM_CPSCHANGER, GBF_SCRFIGHT, 0,
 	NULL, WofchdxRomInfo, WofchdxRomName, NULL, NULL, NULL, NULL, WofchpInputInfo, NULL,
@@ -24976,7 +24982,7 @@ STD_ROM_FN(Captcommr1pwx)
 
 struct BurnDriver BurnDrvCpsCaptcommr1pwx = {
 	"captcommr1pwx", "captcomm", NULL, NULL, "2021",
-	"Captain Commando (Unlimited Bullet)\0", NULL, "Hack", "CPS1",
+	"Captain Commando (Unlimited Bullet)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Captcommr1pwxRomInfo, Captcommr1pwxRomName, NULL, NULL, NULL, NULL, CaptcommInputInfo, Captcomm4pDIPInfo,  
@@ -25015,7 +25021,7 @@ STD_ROM_FN(Dinods)
 
 struct BurnDriver BurnDrvCpsDinods = {
 	"dinods", "dino", NULL, NULL, "2021",
-	"Cadillacs and Dinosaurs (God of War Edition, Hack)\0", NULL, "Hack", "CPS1 / QSound",
+	"Cadillacs and Dinosaurs (God of War Edition, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, DinodsRomInfo, DinodsRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -25054,7 +25060,7 @@ STD_ROM_FN(Dinosyn)
 
 struct BurnDriver BurnDrvCpsDinosyn = {
 	"dinosyn", "dino", NULL, NULL, "2022",
-	"Cadillacs and Dinosaurs (30th-Anniversary, Hack)\0", NULL, "Hack", "CPS1 / QSound",
+	"Cadillacs and Dinosaurs (30th-Anniversary, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, DinosynRomInfo, DinosynRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -25093,7 +25099,7 @@ STD_ROM_FN(Dinogae)
 
 struct BurnDriver BurnDrvCpsDinogae = {
 	"dinogae", "dino", NULL, NULL, "2022",
-	"Cadillacs and Dinosaurs (GOTVG 10th Anniversary Edition, Hack)\0", NULL, "Hack", "CPS1 / QSound",
+	"Cadillacs and Dinosaurs (GOTVG 10th Anniversary Edition, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, DinogaeRomInfo, DinogaeRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -25149,10 +25155,10 @@ struct BurnDriver BurnDrvCpsDinore = {
 };
 
 // Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition, Hack)
-// Hacked by Bindi - 2022/05/25
+// Hacked by Bindi - 2022/06/03
 
 static struct BurnRomInfo WofjdrRomDesc[] = {
-	{ "tk2j_dr.bin",	0x200000, 0xfabbc160, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "tk2j_dr.bin",	0x200000, 0x32567a36, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "tk2_01.3a",		0x080000, 0x0d9cb9bf, BRF_GRA | CPS1_TILES },
 	{ "tk2_02.4a",		0x080000, 0x45227027, BRF_GRA | CPS1_TILES },
@@ -25189,7 +25195,7 @@ STD_ROM_FN(Wofjdr)
 
 struct BurnDriver BurnDrvCpsWofjdr = {
 	"wofjdr", "wof", NULL, NULL, "2022",
-	"Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition)\0", NULL, "Hack", "CPS1 / QSound",
+	"Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition)\0", NULL, "hack", "CPS1 / QSound",
 	L"\u5929\u5730\u3092\u55b0\u3089\u3046 II - \u8d64\u58c1\u306e\u6226\u3044 (\u9054\u4eba \u30d0\u30fc\u30b8\u30e7\u30f3)\0Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition)\0 ", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, WofjdrRomInfo, WofjdrRomName, NULL, NULL, NULL, NULL, WofInputInfo, WofDIPInfo,
@@ -25238,7 +25244,7 @@ STD_ROM_FN(sf2mix)
 
 struct BurnDriver BurnDrvCpssf2mix = {
 	"sf2mix", "sf2ce", NULL, NULL, "2022",
-	"Street Fighter II Mix (v1.2)\0", NULL, "Hack", "CPS1",
+	"Street Fighter II Mix (v1.2)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, sf2mixRomInfo, sf2mixRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2mixDIPInfo,

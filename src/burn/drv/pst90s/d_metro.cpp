@@ -2,7 +2,12 @@
 // Based on MAME driver by Luca Elia and David Haywood
 
 /*
-	Needs porting:
+	Tofix:
+ 		Sky alert priorities
+ 		blzntrnd roz offset
+
+
+ 	Needs porting:
 		dokyusei	(ym2413+msm6295 sound)
 		dokyusp		(ym2413+msm6295 sound)
 		mouja		(ym2413+msm6295 sound)
@@ -62,7 +67,7 @@ static UINT32 graphics_length;
 static INT32 vblank_bit = 0;
 static INT32 irq_line = 1;
 static INT32 blitter_bit = 0;
-static UINT32 main_cpu_cycles = 12000000 / 60;
+static INT32 main_cpu_cycles = 12000000 / 60;
 static INT32 ymf278bint = 0;
 static INT32 has_zoom = 0;
 
@@ -179,7 +184,7 @@ static struct BurnInputInfo SkyalertInputList[] = {
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
-	
+
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 0,	"service"	},
 	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 1,	"tilt"		},
@@ -948,7 +953,7 @@ static struct BurnDIPInfo LadykillDIPList[]=
 	{0x0b, 0x01, 0x03, 0x00, "2"							},
 	{0x0b, 0x01, 0x03, 0x03, "3"							},
 	{0x0b, 0x01, 0x03, 0x02, "4"							},
-	
+
 	{0   , 0xfe, 0   ,    4, "Difficulty"					},
 	{0x0b, 0x01, 0x0c, 0x08, "Easy"							},
 	{0x0b, 0x01, 0x0c, 0x0c, "Normal"						},
@@ -1090,7 +1095,7 @@ static struct BurnDIPInfo PururunDIPList[]=
 	{0x00, 0x01, 0x38, 0x28, "1 Coin  3 Credits"			},
 	{0x00, 0x01, 0x38, 0x20, "1 Coin  4 Credits"			},
 	{0x00, 0x01, 0x38, 0x00, "Free Play"					},
-	
+
 	{0   , 0xfe, 0   ,    2, "Flip Screen"					},
 	{0x00, 0x01, 0x40, 0x40, "Off"							},
 	{0x00, 0x01, 0x40, 0x00, "On"							},
@@ -1108,7 +1113,7 @@ static struct BurnDIPInfo PururunDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Join In"						},
 	{0x01, 0x01, 0x04, 0x00, "No"							},
 	{0x01, 0x01, 0x04, 0x04, "Yes"							},
-	
+
 	{0   , 0xfe, 0   ,    2, "2 Players Game"				},
 	{0x01, 0x01, 0x08, 0x00, "1 Credit"						},
 	{0x01, 0x01, 0x08, 0x08, "2 Credits"					},
@@ -1251,7 +1256,7 @@ static struct BurnDIPInfo DaitoridDIPList[]=
 STDDIPINFO(Daitorid)
 
 static struct BurnDIPInfo GunmastDIPList[]=
-{	
+{
 	{0x15, 0xff, 0xff, 0xff, NULL							},
 	{0x16, 0xff, 0xff, 0xff, NULL							},
 
@@ -1573,7 +1578,7 @@ static struct BurnDIPInfo BalcubeDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Flip Screen"					},
 	{0x11, 0x01, 0x40, 0x40, "Off"							},
 	{0x11, 0x01, 0x40, 0x00, "On"							},
-	
+
 	{0   , 0xfe, 0   ,    2, "Service Mode"					},
 	{0x11, 0x01, 0x80, 0x80, "Off"							},
 	{0x11, 0x01, 0x80, 0x00, "On"							},
@@ -1627,7 +1632,7 @@ static struct BurnDIPInfo BangballDIPList[]=
 	{0x11, 0x01, 0x38, 0x28, "1 Coin  3 Credits"			},
 	{0x11, 0x01, 0x38, 0x20, "1 Coin  4 Credits"			},
 	{0x11, 0x01, 0x38, 0x00, "Free Play"					},
-	
+
 	{0   , 0xfe, 0   ,    2, "Flip Screen"					},
 	{0x11, 0x01, 0x40, 0x40, "Off"							},
 	{0x11, 0x01, 0x40, 0x00, "On"							},
@@ -1747,7 +1752,7 @@ static struct BurnDIPInfo vmetalDIPList[]=
 	{0x17, 0x01, 0x03, 0x03, "Normal"					},
 	{0x17, 0x01, 0x03, 0x01, "Hard"						},
 	{0x17, 0x01, 0x03, 0x00, "Hardest"					},
-			
+
 	{0   , 0xfe, 0   ,    4, "Lives"					},
 	{0x17, 0x01, 0x0c, 0x08, "1"						},
 	{0x17, 0x01, 0x0c, 0x04, "2"						},
@@ -3242,7 +3247,7 @@ static INT32 DrvDoReset()
 	if (has_zoom) {
 		K053936Reset();
 	}
-	
+
 	i4x00_reset();
 	i4x00_irq_enable = 0;
 
@@ -3319,7 +3324,7 @@ static void __fastcall blzntrnd_roz_write_byte(UINT32 address, UINT8 data)
 static tilemap_callback( blzntrnd )
 {
 	INT32 code = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvK053936RAM + offs * 2)));
-	
+
 	TILE_SET_INFO(0, code, 0, 0);
 }
 
@@ -3406,13 +3411,13 @@ static INT32 blzntrndInit()
 	GenericTilemapSetGfx(0, DrvRozROM, 8, 8, 8, 0x200000, 0xe00, 0);
 	GenericTilemapUseDirtyTiles(0);
 	BurnBitmapAllocate(1, 256 * 8, 512 * 8, true);
-	
+
 	K053936Init(0, DrvK053936RAM, 0x40000, 256 * 8, 512 * 8, pBlzntrnd_roz_callback);
 	K053936SetOffset(0, -69-8, -21);
 
 	i4x00_set_offsets(8, 8, 8);
 	i4x00_set_extrachip_callback(blzntrnd_zoomchip_draw);
-	
+
 	vblank_bit = 0;
 	irq_line = 1;
 	blitter_bit = 0;
@@ -3431,7 +3436,7 @@ static tilemap_scan( gstrik2 )
 static tilemap_callback( gstrik2 )
 {
 	INT32 code = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvK053936RAM + offs * 2)));
-	
+
 	TILE_SET_INFO(0, code >> 2, 0, 0);
 }
 
@@ -3454,7 +3459,7 @@ static INT32 gstrik2GfxDecode()
 	}
 
 	BurnNibbleExpand(DrvGfxROM, DrvGfxROM0, graphics_length, 1, 0);
-		
+
 	memcpy (tmp, DrvRozROM, 0x200000);
 
 	GfxDecode(0x2000, 8, 16, 16, Plane, XOffs, YOffs, 0x800, tmp, DrvRozROM);
@@ -3492,7 +3497,7 @@ static INT32 gstrik2Init()
 		if (BurnLoadRom(DrvYMROMA + 0x0000000, 14, 1)) return 1;
 
 		if (BurnLoadRom(DrvYMROMB + 0x0000000, 15, 1)) return 1;
-		
+
 		gstrik2GfxDecode();
 	}
 
@@ -4034,7 +4039,7 @@ static INT32 daitoridInit()
 	main_cpu_cycles = 16000000 / 58;
 
 	INT32 nRet = common_type1_init(4200, 0x200000, 2, daitoridMapCallback, NULL, 5/*udp + ym2151*/);
-	
+
 	i4x00_set_offsets(-2, -2, -2);
 
 	return nRet;
@@ -4045,7 +4050,7 @@ static INT32 puzzliaInit()
 	main_cpu_cycles = 16000000 / 58;
 
 	INT32 nRet = common_type1_init(4200, 0x200000, 2, pururunMapCallback, NULL, 5/*udp + ym2151*/);
-	
+
 	i4x00_set_offsets(-2, -2, -2);
 
 	return nRet;
@@ -4196,7 +4201,7 @@ static INT32 vmetalInit()
 static INT32 DrvExit()
 {
 	i4x00_exit();
-	
+
 	switch (sound_system)
 	{
 		case 1: {
@@ -4240,7 +4245,7 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	SekExit();
-	
+
 	BurnFreeMemIndex();
 
 	MSM6295ROM = NULL;
@@ -4277,14 +4282,15 @@ static INT32 Z80Frame()
 
 	INT32 nInterleave = 240;
 	INT32 nCyclesTotal[2] = { 16000000 / 58, 8000000 / 58 };
-	
+	INT32 nCyclesDone[2] = { 0, 0 };
+
 	SekOpen(0);
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		INT32 previous_cycles = SekTotalCycles();
-		SekRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Sek);
 
 		if ((i % 28) == 26) {
 			requested_int[4] = 1;
@@ -4307,7 +4313,7 @@ static INT32 Z80Frame()
 			}
 		}
 
-		BurnTimerUpdate((nCyclesTotal[1] * (i + 1)) / nInterleave);
+		CPU_RUN_TIMER(1);
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[1]);
@@ -4318,7 +4324,7 @@ static INT32 Z80Frame()
 
 	ZetClose();
 	SekClose();
-	
+
 	if (pBurnDraw) {
 		BurnDrvRedraw();
 	}
@@ -4349,14 +4355,15 @@ static INT32 NoZ80Frame()
 
 	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 240;
-	UINT32 nCyclesTotal[2] = { main_cpu_cycles, main_cpu_cycles };
+	INT32 nCyclesTotal[2] = { main_cpu_cycles, main_cpu_cycles };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		INT32 previous_cycles = SekTotalCycles();
-		SekRun((nCyclesTotal[0] / nInterleave));
+		CPU_RUN(0, Sek);
 
 		if (sound_system == 2 || sound_system == 5) {
 			upd7810Run((nCyclesTotal[1] / nInterleave));
@@ -4406,7 +4413,7 @@ static INT32 NoZ80Frame()
 	{
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		
+
 		switch (sound_system)
 		{
 			case 2:
@@ -4462,16 +4469,17 @@ static INT32 YMF278bFrame()
 	SekNewFrame();
 
 	INT32 nInterleave = 240;
-	UINT32 nCyclesTotal[1] = { main_cpu_cycles };
-	
+	INT32 nCyclesTotal[1] = { main_cpu_cycles };
+
 	SekOpen(0);
 
 	INT32 sound_int_mod = (ymf278bint == 1) ? sound_int_mod = nInterleave : 28;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 previous_cycles = SekTotalCycles();		
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
+		INT32 previous_cycles = SekTotalCycles();
+
+		CPU_RUN_TIMER(0);
 
 		if ((i % sound_int_mod) == 0) {
 			requested_int[4] = 1;
@@ -4504,7 +4512,7 @@ static INT32 YMF278bFrame()
 	}
 
 	SekClose();
-	
+
 	if (pBurnDraw) {
 		BurnDrvRedraw();
 	}
@@ -4521,7 +4529,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 	}
 
 	if (nAction & ACB_MEMORY_ROM)
-	{	
+	{
 		ba.Data		= Drv68KROM;
 		ba.nLen		= 0x0200000;
 		ba.nAddress	= 0;
@@ -4729,9 +4737,9 @@ static struct BurnRomInfo gstrik2jRomDesc[] = {
 	{ "chr5.83",				0x200000, 0xa4d49e95, 3 | BRF_GRA },           // 10
 	{ "chr6.82",				0x200000, 0x32eb33b0, 3 | BRF_GRA },           // 11
 	{ "chr7.81",				0x200000, 0x2d30a21e, 3 | BRF_GRA },           // 12
-	
+
 	{ "psacrom.60",				0x200000, 0x73f1f279, 4 | BRF_GRA },           // 13 Roz tiles
-	
+
 	{ "sndpcm-b.22",			0x200000, 0xa5d844d2, 5 | BRF_SND },           // 14 YM2610 Delta T Samples
 
 	{ "sndpcm-a.23",			0x200000, 0xe6d32373, 6 | BRF_SND },           // 15 YM2610 Samples
@@ -5157,7 +5165,7 @@ static struct BurnRomInfo dharmaRomDesc[] = {
 	{ "dd__wa-4.u5",			0x080000, 0x36ca7848, 3 | BRF_GRA },           //  4
 	{ "dd__wa-1.u10",			0x080000, 0xd8034574, 3 | BRF_GRA },           //  5
 	{ "dd__wa-3.u11",			0x080000, 0xfe320fa3, 3 | BRF_GRA },           //  6
-	
+
 	{ "dd__wa-7.u3",			0x040000, 0x7ce817eb, 4 | BRF_SND },           //  7 MSM6295 Samples
 };
 
@@ -5870,7 +5878,7 @@ static struct BurnRomInfo vmetalnRomDesc[] = {
 	{ "4.u30",					0x200000, 0x5a25a49c, 2 | BRF_GRA },           //  5
 
 	{ "8.u9",					0x080000, 0xc14c001c, 3 | BRF_SND },           //  6 MSM6295 Samples
-	
+
 	{ "7.u12",					0x200000, 0xa88c52f1, 4 | BRF_SND },           //  7 ES8712 Samples
 };
 

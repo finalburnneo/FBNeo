@@ -26731,7 +26731,7 @@ struct BurnDriver BurnSpecNinjagardensim = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Nosy (48K) (HB)
+// Nosy - first version (48K) (HB)
 
 static struct BurnRomInfo SpecNosyRomDesc[] = {
 	{ "Nosy (2020)(Javier Fopiani).tap", 43998, 0xefb0331a, BRF_ESS | BRF_PRG },
@@ -26741,10 +26741,10 @@ STDROMPICKEXT(SpecNosy, SpecNosy, Spectrum)
 STD_ROM_FN(SpecNosy)
 
 struct BurnDriver BurnSpecNosy = {
-	"spec_nosy", NULL, "spec_spectrum", NULL, "2020",
-	"Nosy (48K) (HB)\0", NULL, "Javier Fopiani", "ZX Spectrum",
+	"spec_nosy", "spec_nosyen", "spec_spectrum", NULL, "2020",
+	"Nosy - first version (48K) (HB)\0", NULL, "Javier Fopiani", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_RUNGUN | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
 	SpectrumGetZipName, SpecNosyRomInfo, SpecNosyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -36286,5 +36286,119 @@ struct BurnDriver BurnSpecSbmr = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecSbmrRomInfo, SpecSbmrRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Deva (English) (48K) (HB)
+
+static struct BurnRomInfo SpecDevaenRomDesc[] = {
+	{ "Deva 48K EN (2022)(Furillo Productions).tap", 41902, 0x131b4d56, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDevaen, SpecDevaen, Spectrum)
+STD_ROM_FN(SpecDevaen)
+
+struct BurnDriver BurnSpecDevaen = {
+	"spec_devaen", NULL, "spec_spectrum", NULL, "2022",
+	"Deva (English) (48K) (HB)\0", NULL, "Furillo Productions", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecDevaenRomInfo, SpecDevaenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Deva - Hard (English) (48K) (HB)
+
+static struct BurnRomInfo SpecDevaenhRomDesc[] = {
+	{ "Deva 48K EN - Hard (2022)(Furillo Productions).tap", 41861, 0x655039a6, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDevaenh, SpecDevaenh, Spectrum)
+STD_ROM_FN(SpecDevaenh)
+
+struct BurnDriver BurnSpecDevaenh = {
+	"spec_devaenh", "spec_devaen", "spec_spectrum", NULL, "2022",
+	"Deva - Hard (English) (48K) (HB)\0", NULL, "Furillo Productions", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecDevaenhRomInfo, SpecDevaenhRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Deva (Spanish) (48K) (HB)
+
+static struct BurnRomInfo SpecDevaspRomDesc[] = {
+	{ "Deva 48K SP (2022)(Furillo Productions).tap", 41565, 0xcdf42de4, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDevasp, SpecDevasp, Spectrum)
+STD_ROM_FN(SpecDevasp)
+
+struct BurnDriver BurnSpecDevasp = {
+	"spec_devasp", "spec_devaen", "spec_spectrum", NULL, "2022",
+	"Deva (Spanish) (48K) (HB)\0", NULL, "Furillo Productions", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecDevaspRomInfo, SpecDevaspRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Deva - Hard (Spanish) (48K) (HB)
+
+static struct BurnRomInfo SpecDevasphRomDesc[] = {
+	{ "Deva 48K SP - Hard (2022)(Furillo Productions).tap", 41524, 0x62b9fd11, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDevasph, SpecDevasph, Spectrum)
+STD_ROM_FN(SpecDevasph)
+
+struct BurnDriver BurnSpecDevasph = {
+	"spec_devasph", "spec_devaen", "spec_spectrum", NULL, "2022",
+	"Deva - Hard (Spanish) (48K) (HB)\0", NULL, "Furillo Productions", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecDevasphRomInfo, SpecDevasphRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Nosy (English) (128K) (HB)
+
+static struct BurnRomInfo SpecNosyenRomDesc[] = {
+	{ "Nosy 128K EN (2022)(Javier Fopiani).tap", 125924, 0x97a842a0, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecNosyen, SpecNosyen, Spec1282a)
+STD_ROM_FN(SpecNosyen)
+
+struct BurnDriver BurnSpecNosyen = {
+	"spec_nosyen", NULL, "spec_spec1282a", NULL, "2022",
+	"Nosy (English) (128K) (HB)\0", NULL, "Javier Fopiani", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
+	SpectrumGetZipName, SpecNosyenRomInfo, SpecNosyenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KPlus2Init, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Nosy (Spanish) (128K) (HB)
+
+static struct BurnRomInfo SpecNosyesRomDesc[] = {
+	{ "Nosy 128K ES (2022)(Javier Fopiani).tap", 125815, 0xc9fe4df5, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecNosyes, SpecNosyes, Spec1282a)
+STD_ROM_FN(SpecNosyes)
+
+struct BurnDriver BurnSpecNosyes = {
+	"spec_nosyes", "spec_nosyen", "spec_spec1282a", NULL, "2022",
+	"Nosy (Spanish) (128K) (HB)\0", NULL, "Javier Fopiani", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
+	SpectrumGetZipName, SpecNosyesRomInfo, SpecNosyesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KPlus2Init, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

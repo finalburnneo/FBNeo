@@ -1824,6 +1824,7 @@ DRV		BurnDrvBloodbro;
 DRV		BurnSpecbloodbrothers1;
 DRV		BurnSpecbloodbrothers2;
 DRV		BurnSpecbloodbrothers3;
+DRV		BurnDrvnes_bloodjur;
 DRV		BurnDrvBloodstm104;
 DRV		BurnDrvBloodstm110;
 DRV		BurnDrvBloodstm210;
@@ -9469,18 +9470,25 @@ DRV		BurnDrvngpc_mslug1st;
 DRV		BurnDrvngpc_mslug2ndd;
 DRV		BurnDrvngpc_mslug2nd;
 DRV		BurnDrvmslug;
+DRV		BurnDrvmslug2r;
 DRV		BurnDrvmslug2fm;
 DRV		BurnDrvmslug2dg;
 DRV		BurnDrvMSlug2;
+DRV		BurnDrvmslug2ct;
 DRV		BurnDrvMSlug2t;
 DRV		BurnDrvmslug2unity;
+DRV		BurnDrvmslug3c;
+DRV		BurnDrvmslug3eb;
 DRV		BurnDrvmslug3g;
 DRV		BurnDrvmslug3v;
 DRV		BurnDrvmslug3h;
 DRV		BurnDrvmslug3;
 DRV		BurnDrvmslug3a;
+DRV		BurnDrvmslug3rb;
 DRV		BurnDrvmslug3unity;
 DRV		BurnDrvmslug4a;
+DRV		BurnDrvmslug4ar;
+DRV		BurnDrvmslug4c;
 DRV		BurnDrvmslug4lw;
 DRV		BurnDrvmslug4dg;
 DRV		BurnDrvmslug4h;
@@ -9489,17 +9497,24 @@ DRV		BurnDrvms4plus;
 DRV		BurnDrvmslug4unity;
 DRV		BurnDrvmslug5b;
 DRV		BurnDrvmslug5b2;
+DRV		BurnDrvmslug5c;
+DRV		BurnDrvmslug5mg;
 DRV		BurnDrvms5pcb;
 DRV		BurnDrvmslug5g;
 DRV		BurnDrvmslug5wd;
 DRV		BurnDrvMslug5w;
 DRV		BurnDrvmslug5h;
 DRV		BurnDrvmslug5;
+DRV		BurnDrvmslug5sgf;
+DRV		BurnDrvmslug5x;
 DRV		BurnDrvms5plus;
 DRV		BurnDrvmslug5unity;
 DRV		BurnDrvmslug3b6;
 DRV		BurnDrvmslugunity;
 DRV		BurnDrvMSlugxsrf;
+DRV		BurnDrvmslugxc2;
+DRV		BurnDrvmslugxlb;
+DRV		BurnDrvmslugxeb;
 DRV		BurnDrvMSlugx;
 DRV		BurnDrvmslugxunity;
 DRV		BurnDrvMsisaac;
@@ -16406,7 +16421,7 @@ DRV		BurnDrvKof97pls;
 DRV		BurnDrvkof97pla;
 DRV		BurnDrvkof98ae2016;
 DRV		BurnDrvkof98ae;
-DRV		BurnDrvkof98cps;
+DRV		BurnDrvkof98cp;
 DRV		BurnDrvkof98cb;
 DRV		BurnDrvkof98pfe;
 DRV		BurnDrvKof98ratio;
@@ -16458,7 +16473,7 @@ DRV		BurnDrvkof2k2omg;
 DRV		BurnDrvkof2k2omg8;
 DRV		BurnDrvkof2k2omg9b;
 DRV		BurnDrvkof2k2omg9;
-DRV		BurnDrvK2k2ps2re1;
+DRV		BurnDrvk2k2ps2re;
 DRV		BurnDrvkf2k2ps2;
 DRV		BurnDrvkof2002ps2;
 DRV		BurnDrvkof2k2plus;
@@ -20576,6 +20591,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecbloodbrothers1,	// Blood Brothers (Module 1) (128K)
 	&BurnSpecbloodbrothers2,	// Blood Brothers (Module 2) (128K)
 	&BurnSpecbloodbrothers3,	// Blood Brothers (Module 3) (128K)
+	&BurnDrvnes_bloodjur,		// Blood of Jurassic (Unl)
 	&BurnDrvBloodstm104,		// Blood Storm (v1.04)
 	&BurnDrvBloodstm110,		// Blood Storm (v1.10)
 	&BurnDrvBloodstm210,		// Blood Storm (v2.10)
@@ -28221,18 +28237,25 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvngpc_mslug2ndd,		// Metal Slug - 2nd Mission (Demo)
 	&BurnDrvngpc_mslug2nd,		// Metal Slug - 2nd Mission (World)
 	&BurnDrvmslug,				// Metal Slug - Super Vehicle-001
-	&BurnDrvmslug2fm,			// Metal Slug 2 - Super Vehicle-001/II (CZXINc FC2 Ver.2 20210415, hack)
+	&BurnDrvmslug2r,			// Metal Slug 2 - Super Vehicle-001/II (Enemies Reset, Hack)
+	&BurnDrvmslug2fm,			// Metal Slug 2 - Super Vehicle-001/II (Friendly Fire FC2 Ver.2 20210415, hack by CZXINc)
 	&BurnDrvmslug2dg,			// Metal Slug 2 - Super Vehicle-001/II (Multifunction Hack, 20170509)
 	&BurnDrvMSlug2,				// Metal Slug 2 - Super Vehicle-001/II (NGM-2410) (NGH-2410)
+	&BurnDrvmslug2ct,			// Metal Slug 2 - Super Vehicle-001/II (Survival, Hack)
 	&BurnDrvMSlug2t,			// Metal Slug 2 - Super Vehicle-001/II (Turbo)
 	&BurnDrvmslug2unity,		// Metal Slug 2 - Super Vehicle-001/II Unity (Added Timer Ver. 2021-01-22)
+	&BurnDrvmslug3c,			// Metal Slug 3 (Enemies Reset, Hack)
+	&BurnDrvmslug3eb,			// Metal Slug 3 (Green Blue, Hack)
 	&BurnDrvmslug3g,			// Metal Slug 3 (Multifunction Hack, 20190119)
 	&BurnDrvmslug3v,			// Metal Slug 3 (NGH-2560) (Enhanced Violence Version, hack by EEZEZY)
 	&BurnDrvmslug3h,			// Metal Slug 3 (NGH-2560)
 	&BurnDrvmslug3,				// Metal Slug 3 (NGM-2560)
 	&BurnDrvmslug3a,			// Metal Slug 3 (NGM-2560, earlier)
+	&BurnDrvmslug3rb,			// Metal Slug 3 (The Last Warhear, Hack)
 	&BurnDrvmslug3unity,		// Metal Slug 3 Unity (Added Timer Ver. 2021-02-13)
 	&BurnDrvmslug4a,			// Metal Slug 4 (20th Anniversary)
+	&BurnDrvmslug4ar,			// Metal Slug 4 (Enemies Reset Fusion 20th Anniversary, Hack)
+	&BurnDrvmslug4c,			// Metal Slug 4 (Enemies Reset, Hack)
 	&BurnDrvmslug4lw,			// Metal Slug 4 (Last Bullet Remix Hack)
 	&BurnDrvmslug4dg,			// Metal Slug 4 (Multifunction Hack, 20171225)
 	&BurnDrvmslug4h,			// Metal Slug 4 (NGH-2630)
@@ -28241,17 +28264,24 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmslug4unity,		// Metal Slug 4 Unity (Added Timer Ver. 2021-01-30)
 	&BurnDrvmslug5b,			// Metal Slug 5 (bootleg, set 1)
 	&BurnDrvmslug5b2,			// Metal Slug 5 (bootleg, set 2)
+	&BurnDrvmslug5c,			// Metal Slug 5 (Enemies Reset, Hack)
+	&BurnDrvmslug5mg,			// Metal Slug 5 (Enemy Demons, Hack)
 	&BurnDrvms5pcb,				// Metal Slug 5 (JAMMA PCB)
 	&BurnDrvmslug5g,			// Metal Slug 5 (Multifunction Hack, 20170523)
 	&BurnDrvmslug5wd,			// Metal Slug 5 (New Campaign)
 	&BurnDrvMslug5w,			// Metal Slug 5 (New Campaign, 2016-03-10)
 	&BurnDrvmslug5h,			// Metal Slug 5 (NGH-2680)
 	&BurnDrvmslug5,				// Metal Slug 5 (NGM-2680)
+	&BurnDrvmslug5sgf,			// Metal Slug 5 (Remake Final FC2 Version, Hack)
+	&BurnDrvmslug5x,			// Metal Slug 5 (X, Hack)
 	&BurnDrvms5plus,			// Metal Slug 5 Plus (bootleg)
 	&BurnDrvmslug5unity,		// Metal Slug 5 Unity (Added Timer Ver. 2021-04-23)
 	&BurnDrvmslug3b6,			// Metal Slug 6 (Metal Slug 3 bootleg)
 	&BurnDrvmslugunity,			// Metal Slug Unity (Added Timer Ver. 2021-02-05)
 	&BurnDrvMSlugxsrf,			// Metal Slug X - Super Vehicle-001 (AzStar Soda Remix FC2 Version, hack)
+	&BurnDrvmslugxc2,			// Metal Slug X - Super Vehicle-001 (Enemies Reset, Hack)
+	&BurnDrvmslugxlb,			// Metal Slug X - Super Vehicle-001 (Extreme Zone, Hack)
+	&BurnDrvmslugxeb,			// Metal Slug X - Super Vehicle-001 (Green Blue, Hack)
 	&BurnDrvMSlugx,				// Metal Slug X - Super Vehicle-001 (NGM-2500)(NGH-2500)
 	&BurnDrvmslugxunity,		// Metal Slug X - Super Vehicle-001 Unity (Added Timer Ver. 2021-01-23)
 	&BurnDrvMsisaac,			// Metal Soldier Isaac II
@@ -35158,7 +35188,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkof97pla,			// The King of Fighters '97 Plus 2003 (bootleg / hack)
 	&BurnDrvkof98ae2016,		// The King of Fighters '98 (Anniversary Edition build 1.2.0827)
 	&BurnDrvkof98ae,			// The King of Fighters '98 (Anniversary Edition, EGHT hack)
-	&BurnDrvkof98cps,			// The King of Fighters '98 (Combo Plus)
+	&BurnDrvkof98cp,			// The King of Fighters '98 (Combo Plus)
 	&BurnDrvkof98cb,			// The King of Fighters '98 (Combo, hack)
 	&BurnDrvkof98pfe,			// The King of Fighters '98 (Plus Final Edition 2017-07-23)
 	&BurnDrvKof98ratio,			// The King of Fighters '98 (Ratio hack)
@@ -35210,7 +35240,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkof2k2omg8,			// The King of Fighters 2002 (Omega v0.8)
 	&BurnDrvkof2k2omg9b,		// The King of Fighters 2002 (Omega v0.9 beta)
 	&BurnDrvkof2k2omg9,			// The King of Fighters 2002 (Omega v0.9)
-	&BurnDrvK2k2ps2re1,			// The King of Fighters 2002 (PlayStation 2 v1.0 Public Beta)
+	&BurnDrvk2k2ps2re,			// The King of Fighters 2002 (PlayStation 2 v1.0 Public Beta)
 	&BurnDrvkf2k2ps2,			// The King of Fighters 2002 (PlayStation 2 ver 0.4, EGHT hack)
 	&BurnDrvkof2002ps2,			// The King of Fighters 2002 (PlayStation 2, Hack)
 	&BurnDrvkof2k2plus,			// The King of Fighters 2002 (Plus 2017)

@@ -1952,6 +1952,14 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="bloodjur">
+		<description>Blood of Jurassic (Unl)</description>
+		<year>1997</year>
+		<manufacturer>Shanghai PS&amp;T</manufacturer>
+		<rom name="Blood of Jurassic (1997)(gd-98).nes" size="262160" crc="76ea1e9f"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="bloodfall">
 		<comment>Homebrew</comment>
 		<description>Bloodfall (HB)</description>

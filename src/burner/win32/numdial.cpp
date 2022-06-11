@@ -745,7 +745,7 @@ static INT_PTR CALLBACK CPUClockProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
 			SendDlgItemMessage(hDlg, IDC_CPUCLOCK_SLIDER, TBM_SETPOS, (WPARAM)true, (LPARAM)nBurnCPUSpeedAdjust);
 
 			// Set the edit control to current value
-			_stprintf(szText, _T("%i"), nBurnCPUSpeedAdjust * 100 / 256);
+			_stprintf(szText, _T("%i"), (int)((double)nBurnCPUSpeedAdjust * 100 / 256 + 0.5));
 			SendDlgItemMessage(hDlg, IDC_CPUCLOCK_EDIT, WM_SETTEXT, (WPARAM)0, (LPARAM)szText);
 
 			return TRUE;
@@ -783,8 +783,8 @@ static INT_PTR CALLBACK CPUClockProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
 
 						if (bValid) {
 							nValue = _tcstol(szText, NULL, 0);
-							if (nValue < 25) {
-								nValue = 25;
+							if (nValue < 1) {
+								nValue = 1;
 							} else {
 								if (nValue > 400) {
 									nValue = 400;
@@ -836,8 +836,8 @@ static INT_PTR CALLBACK CPUClockProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
 
 				SendDlgItemMessage(hDlg, IDC_CPUCLOCK_EDIT, WM_GETTEXT, (WPARAM)16, (LPARAM)szText);
 				nBurnCPUSpeedAdjust = _tcstol(szText, NULL, 0);
-				if (nBurnCPUSpeedAdjust < 25) {
-					nBurnCPUSpeedAdjust = 25;
+				if (nBurnCPUSpeedAdjust < 1) {
+					nBurnCPUSpeedAdjust = 1;
 				} else {
 					if (nBurnCPUSpeedAdjust > 400) {
 						nBurnCPUSpeedAdjust = 400;

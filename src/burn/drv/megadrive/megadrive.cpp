@@ -4514,7 +4514,7 @@ INT32 MegadriveDraw()
 	if (interlacemode2) {
 		//+ ((interlacemode2 & RamVreg->field) * 224)
 		// Normal / "Screen Resize"
-		for (INT32 j=0; j < screen_height*2; j++) {
+		for (INT32 j=0; j < screen_height; j++) {
 			UINT16 *pSrc = LineBuf + ((j/2) * 320) + ((j&1) * 240 * 320);
 			for (INT32 i = 0; i < screen_width; i++)
 				pDest[i] = pSrc[i];

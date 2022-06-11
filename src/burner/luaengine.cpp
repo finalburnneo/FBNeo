@@ -1393,8 +1393,7 @@ static int joypad_set(lua_State *L) {
 
 	// Set up for taking control of the indicated controller
 	lua_joypads_used = 1;
-	memset(lua_joypads,0,sizeof(lua_joypads));
-
+	memset(lua_joypads,0,0x0100);
 	// Update the values of all the inputs
 	for (i = 0, pgi = GameInp; i < nGameInpCount; i++, pgi++) {
 		if (pgi->nType == 0) {
@@ -3240,7 +3239,7 @@ use_console:
 static int input_registerhotkey(lua_State *L)
 {
 	int hotkeyNumber = luaL_checkinteger(L,1);
-	if (hotkeyNumber < 1 || hotkeyNumber > 9)
+	if(hotkeyNumber < 1 || hotkeyNumber > 9)
 	{
 		luaL_error(L, "input.registerhotkey(n,func) requires 1 <= n <= 9, but got n = %d.", hotkeyNumber);
 		return 0;
@@ -4006,7 +4005,7 @@ int FBA_LoadLuaCode(const char *filename) {
 	info_onstop = WinLuaOnStop;
 	//if(!LuaConsoleHWnd)
 	//	LuaConsoleHWnd = CreateDialog(hAppInst, MAKEINTRESOURCE(IDD_LUA), NULL, (DLGPROC) DlgLuaScriptDialog);
-	info_uid = (INT64)LuaConsoleHWnd;
+	info_uid = (int)LuaConsoleHWnd;
 #else
 	info_print = NULL;
 	info_onstart = NULL;
@@ -4132,7 +4131,7 @@ UINT32 FBA_LuaReadJoypad() {
 		}
 
 		lua_joypads_used = 0;
-		memset(lua_joypads,0,sizeof(lua_joypads));
+		memset(lua_joypads,0,0x0100);
 		return 0;
 	}
 	else

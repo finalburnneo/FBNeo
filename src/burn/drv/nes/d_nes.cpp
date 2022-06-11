@@ -21333,7 +21333,7 @@ struct BurnDriver BurnDrvnes_armwrestl = {
 };
 
 static struct BurnRomInfo nes_drgarfieldRomDesc[] = {
-	{ "Dr. Garfield hack v21 (2022)(Pangent Technologies).nes",          114704, 0xdfc8d113, BRF_ESS | BRF_PRG },
+	{ "Dr. Garfield hack v22 (2022)(Pangent Technologies).nes",          114704, 0xfdd0a135, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_drgarfield)
@@ -21341,7 +21341,7 @@ STD_ROM_FN(nes_drgarfield)
 
 struct BurnDriver BurnDrvnes_drgarfield = {
 	"nes_drgarfield", "nes_drmario", NULL, NULL, "2022",
-	"Dr. Garfield (Hack, v21)\0", NULL, "Pangent Technologies", "Miscellaneous",
+	"Dr. Garfield (Hack, v22)\0", NULL, "Pangent Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_drgarfieldRomInfo, nes_drgarfieldRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

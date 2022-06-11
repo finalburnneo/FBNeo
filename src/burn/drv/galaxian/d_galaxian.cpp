@@ -1,6 +1,6 @@
 #include "gal.h"
 
-// FB Alpha Galaxian driver module
+// FB Neo Galaxian driver module
 // Based on MAME driver by Aaron Giles, Couriersud,Stephane Humbert
 
 static INT32 ScrambleInit();
@@ -11481,6 +11481,28 @@ static struct BurnRomInfo MooncrslRomDesc[] = {
 STD_ROM_PICK(Mooncrsl)
 STD_ROM_FN(Mooncrsl)
 
+// similar to above
+static struct BurnRomInfo mooncrecmRomDesc[] = {
+	{ "mc1b.bin",	0x00800, 0xbfc72c59, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mc2b.bin",	0x00800, 0x0e78c5a1, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mc3b.bin",	0x00800, 0xa1939def, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mc4b.bin",	0x00800, 0x068f8830, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mc5b.bin",	0x00800, 0x59a390d0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mc6b.bin",	0x00800, 0x00286799, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mc7b.bin",	0x00800, 0x34e7a54e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mc8b.bin",	0x00800, 0xbead5e83, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+
+	{ "f2.bin",		0x00800, 0x528da705, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "f4.bin",		0x00800, 0x5a4b17ea, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "f1.bin",		0x00800, 0x4e79ff6b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "f3.bin",		0x00800, 0xe0edccbd, BRF_GRA | GAL_ROM_TILES_SHARED },
+
+	{ "prom.6l",	0x00020, 0xaa1f7f5e, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(mooncrecm)
+STD_ROM_FN(mooncrecm)
+
 static struct BurnRomInfo SteraRomDesc[] = {
 	{ "stera.1",       0x00800, 0xcd04fea8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "stera.2",       0x00800, 0xccd1878e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -12282,6 +12304,16 @@ struct BurnDriver BurnDrvMooncrsl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, MooncrslRomInfo, MooncrslRomName, NULL, NULL, NULL, NULL, OmegabInputInfo, MooncrslDIPInfo,
+	MooncrstInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvmooncrecm = {
+	"mooncrecm", "mooncrst", NULL, NULL, "1980",
+	"Moon Cresta (Centromatic Spanish bootleg)\0", NULL, "bootleg (Centromatic)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, mooncrecmRomInfo, mooncrecmRomName, NULL, NULL, NULL, NULL, OmegabInputInfo, MooncrslDIPInfo,
 	MooncrstInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

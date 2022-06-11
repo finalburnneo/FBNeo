@@ -526,7 +526,7 @@ static INT32 DrvFrame()
 		nPrevBurnCPUSpeedAdjust = nBurnCPUSpeedAdjust;
 		nPrevCPUTenth = DrvDips[3];
 
-		INT32 i_percent = 100 * nBurnCPUSpeedAdjust / 256; // whole percent comes from UI
+		INT32 i_percent = ((double)100 * nBurnCPUSpeedAdjust / 256) + 0.5; // whole percent comes from UI
 		double dPercent = i_percent + (0.1 * (DrvDips[3] & 0xf)); // .x tenth percent comes from DIPS
 
 		DriverClock = (INT32)((INT64)SH3_CLOCK * dPercent / 100);

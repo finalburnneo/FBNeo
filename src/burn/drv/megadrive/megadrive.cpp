@@ -4458,40 +4458,40 @@ static INT32 PicoLine(INT32 /*scan*/)
 }
 
 static INT32 screen_width = 0;
-
+static INT32 screen_height = 0;
+const INT32 v_res[2] = { 224, 240 };
 static INT32 res_check()
 {
 	if (pBurnDraw == NULL) return 1; // Don't try to change modes if display not active.
 
-	if ((RamVReg->reg[12] & (4|2)) == (4|2)) { // interlace mode 2
-		INT32 Height;
-		BurnDrvGetVisibleSize(&screen_width, &Height);
+	INT32 v_idx = (RamVReg->reg[1] & 8) >> 3;
 
-		if (Height != (224*2)) {
-			bprintf(0, _T("switching to 320 x (224*2) mode\n"));
-			BurnDrvSetVisibleSize(320, (224*2));
+	if ((RamVReg->reg[12] & (4|2)) == (4|2)) { // interlace mode 2
+		BurnDrvGetVisibleSize(&screen_width, &screen_height);
+
+		if (screen_height != (v_res[v_idx]*2)) {
+			bprintf(0, _T("switching to 320 x (%d*2) mode\n"), v_res[v_idx]);
+			BurnDrvSetVisibleSize(320, (v_res[v_idx]*2));
 			Reinitialise();
 			return 1;
 		}
 	}
 	else
 	if ((MegadriveDIP[1] & 3) == 3 && (~RamVReg->reg[12] & 1)) {
-		INT32 Height;
-		BurnDrvGetVisibleSize(&screen_width, &Height);
+		BurnDrvGetVisibleSize(&screen_width, &screen_height);
 
-		if (screen_width != 256 || Height != 224) {
-			bprintf(0, _T("switching to 256 x 224 mode\n"));
-			BurnDrvSetVisibleSize(256, 224);
+		if (screen_width != 256 || screen_height != v_res[v_idx]) {
+			bprintf(0, _T("switching to 256 x %d mode\n"), v_res[v_idx]);
+			BurnDrvSetVisibleSize(256, v_res[v_idx]);
 			Reinitialise();
 			return 1;
 		}
 	} else {
-		INT32 Height;
-		BurnDrvGetVisibleSize(&screen_width, &Height);
+		BurnDrvGetVisibleSize(&screen_width, &screen_height);
 
-		if (screen_width != 320 || Height != 224) {
-			bprintf(0, _T("switching to 320 x 224 mode\n"));
-			BurnDrvSetVisibleSize(320, 224);
+		if (screen_width != 320 || screen_height != v_res[v_idx]) {
+			bprintf(0, _T("switching to 320 x %d mode\n"), v_res[v_idx]);
+			BurnDrvSetVisibleSize(320, v_res[v_idx]);
 			Reinitialise();
 			return 1;
 		}
@@ -4514,7 +4514,7 @@ INT32 MegadriveDraw()
 	if (interlacemode2) {
 		//+ ((interlacemode2 & RamVreg->field) * 224)
 		// Normal / "Screen Resize"
-		for (INT32 j=0; j < 224*2; j++) {
+		for (INT32 j=0; j < screen_height; j++) {
 			UINT16 *pSrc = LineBuf + ((j/2) * 320) + ((j&1) * 240 * 320);
 			for (INT32 i = 0; i < screen_width; i++)
 				pDest[i] = pSrc[i];
@@ -4523,7 +4523,7 @@ INT32 MegadriveDraw()
 	} else
 	if ((RamVReg->reg[12]&1) || ((MegadriveDIP[1] & 0x03) == 0 || (MegadriveDIP[1] & 0x03) == 3) ) {
 		// Normal / "Screen Resize"
-		for (INT32 j=0; j < 224; j++) {
+		for (INT32 j=0; j < screen_height; j++) {
 			UINT16 *pSrc = LineBuf + (j * 320);
 			for (INT32 i = 0; i < screen_width; i++)
 				pDest[i] = pSrc[i];
@@ -4535,7 +4535,7 @@ INT32 MegadriveDraw()
 		if (( MegadriveDIP[1] & 0x03 ) == 0x01 ) {
 			// Center
 			pDest += 32;
-			for (INT32 j = 0; j < 224; j++) {
+			for (INT32 j = 0; j < screen_height; j++) {
 				UINT16 *pSrc = LineBuf + (j * 320);
 
 				memset((UINT8 *)pDest -  32*2, 0, 64);
@@ -4549,7 +4549,7 @@ INT32 MegadriveDraw()
 			}
 		} else {
 			// Zoom
-			for (INT32 j = 0; j < 224; j++) {
+			for (INT32 j = 0; j < screen_height; j++) {
 				UINT16 *pSrc = LineBuf + (j * 320);
 				UINT32 delta = 0;
 				for (INT32 i = 0; i < 320; i++) {

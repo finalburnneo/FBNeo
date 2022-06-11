@@ -3718,6 +3718,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="dethcomplex">
+		<comment>Homebrew</comment>
+		<description>Deth Complex! (HB)</description>
+		<year>2022</year>
+		<manufacturer>T-Bone Studios</manufacturer>
+		<rom name="Deth Complex (2022)(T-bone).nes" size="524304" crc="7b213380"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="devilmanj" cloneof="devilman" romof="devilman">
 		<description>Devil Man (Japan)</description>
 		<year>1989</year>
@@ -4184,10 +4193,10 @@
 	</game>
 	<game name="drgarfield" cloneof="drmario" romof="drmario">
 		<comment>Hack</comment>
-		<description>Dr. Garfield (Hack, v1.0)</description>
-		<year>2020</year>
+		<description>Dr. Garfield (Hack, v21)</description>
+		<year>2022</year>
 		<manufacturer>Pangent Technologies</manufacturer>
-		<rom name="Dr. Garfield (2020)(Pangent Technologies).nes" size="65552" crc="2d651591"/>
+		<rom name="Dr. Garfield hack v21 (2022)(Pangent Technologies).nes" size="114704" crc="dfc8d113"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -8581,7 +8590,7 @@
 		<comment>Homebrew</comment>
 		<description>Kira Kira Star Night AC (HB)</description>
 		<year>2017</year>
-		<manufacturer>RIKI</manufacturer>
+		<manufacturer>RiKi</manufacturer>
 		<rom name="Kira Kira Star Night AC (HB).nes" size="524304" crc="9e650f69"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8590,7 +8599,7 @@
 		<comment>Homebrew</comment>
 		<description>Kira Kira Star Night DX (HB)</description>
 		<year>2016</year>
-		<manufacturer>RIKI</manufacturer>
+		<manufacturer>RiKi</manufacturer>
 		<rom name="Kira Kira Star Night DX (HB).nes" size="524304" crc="66a30110"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8599,7 +8608,7 @@
 		<comment>Homebrew</comment>
 		<description>Kira Kira Star Night GOLD (HB)</description>
 		<year>2016</year>
-		<manufacturer>RIKI</manufacturer>
+		<manufacturer>RiKi</manufacturer>
 		<rom name="Kira Kira Star Night GOLD (HB).nes" size="524304" crc="d2526d60"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9493,17 +9502,17 @@
 		<driver status="good"/>
 	</game>
 	<game name="magicblock">
-		<description>Magic Block (Mega Soft)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Magic Block (Unl)</description>
+		<year>1991</year>
+		<manufacturer>Mega Soft</manufacturer>
 		<rom name="Magic Block (Mega Soft).nes" size="131088" crc="2eba03bd"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="magiccar100">
 		<description>Magic Carpet 1001 (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1992</year>
+		<manufacturer>Caltron</manufacturer>
 		<rom name="Magic Carpet 1001 (Unl).nes" size="65552" crc="1ab5b8c5"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9518,24 +9527,24 @@
 	</game>
 	<game name="magicdragon">
 		<description>Magic Dragon (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>199?</year>
+		<manufacturer>Magic</manufacturer>
 		<rom name="Magic Dragon (J).nes" size="196624" crc="1ad30965"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="magicjewelry">
 		<description>Magic Jewelry (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>RCM</manufacturer>
 		<rom name="Magic Jewelry (Unl).nes" size="40976" crc="26ad6047"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="magicjewelry2">
 		<description>Magic Jewelry 2 (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1992</year>
+		<manufacturer>RCM</manufacturer>
 		<rom name="Magic Jewelry 2 (Unl).nes" size="65552" crc="9d4b8891"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9558,8 +9567,8 @@
 	</game>
 	<game name="magickidgoogoo">
 		<description>Magic Kid GooGoo (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1992</year>
+		<manufacturer>Zemina</manufacturer>
 		<rom name="Magic Kid GooGoo (Unl).nes" size="393232" crc="12332a62"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9648,9 +9657,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="maharaja">
+		<comment>Hack</comment>
 		<description>Maharaja (T-eng)</description>
-		<year>1989</year>
-		<manufacturer>Sunsoft</manufacturer>
+		<year>2009</year>
+		<manufacturer>snark</manufacturer>
 		<rom name="Maharaja (T-eng).nes" size="262160" crc="d6883037"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9906,9 +9916,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="mashieiydenwatga">
+		<comment>Hack</comment>
 		<description>Mashin Eiyuu Den Wataru Gaiden (T-eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2013</year>
+		<manufacturer>Hubz</manufacturer>
 		<rom name="Mashin Eiyuu Den Wataru Gaiden (T-eng).nes" size="262160" crc="806af261"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9923,8 +9934,8 @@
 	</game>
 	<game name="mastershooter">
 		<description>Master Shooter (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1993</year>
+		<manufacturer>NTDEC</manufacturer>
 		<rom name="Master Shooter (Unl).nes" size="65552" crc="d2dcae89"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9957,8 +9968,8 @@
 	</game>
 	<game name="maxwar">
 		<description>Max Warrior - Wakusei Kaigenrei (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Vap</manufacturer>
 		<rom name="Max Warrior - Wakusei Kaigenrei (Japan).nes" size="262160" crc="d4dddcb9"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9996,17 +10007,19 @@
 		<driver status="good"/>
 	</game>
 	<game name="megaman3imp" cloneof="megaman3" romof="megaman3">
-		<description>Mega Man 3 Improvement (Hack v2.22)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
-		<rom name="Mega Man 3 Improvement (Hack v2.22).nes" size="786448" crc="29e9eb9e"/>
+		<comment>Hack</comment>
+		<description>Mega Man 3 Improvement (Hack v2.31)</description>
+		<year>2022</year>
+		<manufacturer>kuja killer</manufacturer>
+		<rom name="Mega Man 3 Improvement v2.31 (2022)(kuja killer).nes" size="786448" crc="5b579be6"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="megaman3rev" cloneof="megaman3" romof="megaman3">
+		<comment>Hack</comment>
 		<description>Mega Man 3 Revamped (Hack v1.1)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2019</year>
+		<manufacturer>TheSkipper1995</manufacturer>
 		<rom name="Mega Man 3 Revamped (Hack v1.1).nes" size="786448" crc="a0858e49"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10036,9 +10049,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="megamancx">
+		<comment>Hack</comment>
 		<description>Mega Man CX (USA)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2016</year>
+		<manufacturer>Zenkaku Himajin</manufacturer>
 		<rom name="Mega Man CX (USA).nes" size="524304" crc="454a1ed4"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11796,6 +11810,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="picopico" cloneof="bassedefadv" romof="bassedefadv">
+		<comment>Homebrew</comment>
+		<description>Pico Pico Grand Adventure (HB)</description>
+		<year>2019-20</year>
+		<manufacturer>Columbus Circle</manufacturer>
+		<rom name="Pico Pico Grand Adventure (J)(2019)(Broke Studio).nes" size="524304" crc="3950140d"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="pictionary">
 		<description>Pictionary (USA)</description>
 		<year>1990</year>
@@ -12322,6 +12345,15 @@
 		<year>1991</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="QIX (USA).nes" size="131088" crc="4724713d"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="quadralords">
+		<comment>Homebrew</comment>
+		<description>Quadralords (HB)</description>
+		<year>2016</year>
+		<manufacturer>RetroUSB</manufacturer>
+		<rom name="Quadralords (2016)(RetroUSB).nes" size="524304" crc="88b407f7"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -13244,9 +13276,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="sansaranaga">
+		<comment>Hack</comment>
 		<description>Sansara Naga (T-eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2014</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Sansara Naga (T-eng).nes" size="655376" crc="84d7b375"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13369,8 +13402,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="secretties">
+		<comment>Prototype</comment>
 		<description>Secret Ties (USA) (Proto)</description>
-		<year>0000</year>
+		<year>1991</year>
 		<manufacturer>Vic Tokai</manufacturer>
 		<rom name="Secret Ties (USA) (Proto).nes" size="262160" crc="9e131010"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -13378,8 +13412,8 @@
 	</game>
 	<game name="sectionz">
 		<description>Section-Z (USA)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Capcom</manufacturer>
 		<rom name="Section-Z (USA).nes" size="131088" crc="3ce543e6"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -14845,6 +14879,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="snesnake2">
+		<comment>Homebrew</comment>
+		<description>Super NeSnake 2 (HB)</description>
+		<year>2008</year>
+		<manufacturer>RetroUSB</manufacturer>
+		<rom name="Super NeSnake 2 (2008)(RetroUSB).nes" size="131088" crc="a8d9d559"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="superpainter">
 		<comment>Homebrew</comment>
 		<description>Super Painter (HB)</description>
@@ -16202,16 +16245,17 @@
 	</game>
 	<game name="tsurikicsanj" cloneof="tsurikicsan" romof="tsurikicsan">
 		<description>Tsuri Kichi Sanpei - Blue Marlin Hen (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>Victor</manufacturer>
 		<rom name="Tsuri Kichi Sanpei - Blue Marlin Hen (Japan).nes" size="131088" crc="99ef9cc3"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="tsurikicsan">
+		<comment>Hack</comment>
 		<description>Tsuri Kichi Sanpei - Blue Marlin Hen (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2015</year>
+		<manufacturer>MrRichard999</manufacturer>
 		<rom name="Tsuri Kichi Sanpei - Blue Marlin Hen (T-Eng).nes" size="131088" crc="a3479469"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>

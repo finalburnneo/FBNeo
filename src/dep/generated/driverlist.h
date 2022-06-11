@@ -3891,6 +3891,11 @@ DRV		BurnDrvcv_destructsce;
 DRV		BurnDrvnes_destructorel;
 DRV		BurnDrvDetatwin;
 DRV		BurnDrvpce_twinbee;
+DRV		BurnDrvnes_dethcomplex;
+DRV		BurnSpecDevaen;
+DRV		BurnSpecDevasp;
+DRV		BurnSpecDevaenh;
+DRV		BurnSpecDevasph;
 DRV		BurnDrvDevstors2;
 DRV		BurnDrvDevstorsv;
 DRV		BurnDrvDevstorsx;
@@ -9889,6 +9894,7 @@ DRV		BurnDrvMooncrsb;
 DRV		BurnDrvMooncrs2;
 DRV		BurnDrvMooncrs3;
 DRV		BurnDrvMooncrs5;
+DRV		BurnDrvmooncrecm;
 DRV		BurnDrvMooncreg;
 DRV		BurnDrvMooncreg2;
 DRV		BurnDrvMooncrstg;
@@ -10868,6 +10874,8 @@ DRV		BurnDrvNostj;
 DRV		BurnDrvNostk;
 DRV		BurnDrvNost;
 DRV		BurnDrvNostromo;
+DRV		BurnSpecNosyen;
+DRV		BurnSpecNosyes;
 DRV		BurnSpecNosy;
 DRV		BurnDrvNouryokup;
 DRV		BurnDrvNouryoku;
@@ -11562,6 +11570,7 @@ DRV		BurnDrvPickin;
 DRV		BurnDrvMSX_pickinx;
 DRV		BurnDrvMSX_picopico;
 DRV		BurnDrvMSX_picopicoen;
+DRV		BurnDrvnes_picopico;
 DRV		BurnDrvnes_pictionary;
 DRV		BurnDrvngpc_picturep;
 DRV		BurnDrvMSX_picpuzzle;
@@ -12284,6 +12293,7 @@ DRV		BurnDrvmd_quackshts;
 DRV		BurnDrvmd_quacksht;
 DRV		BurnDrvmd_quacksht1;
 DRV		BurnDrvmd_quadchal;
+DRV		BurnDrvnes_quadralords;
 DRV		BurnDrvQuantump;
 DRV		BurnDrvQuantum1;
 DRV		BurnDrvQuantum;
@@ -15545,6 +15555,7 @@ DRV		BurnSpecSupmoritz;
 DRV		BurnDrvSuprmous;
 DRV		BurnDrvCpsSmbombr1;
 DRV		BurnDrvCpsSmbomb;
+DRV		BurnDrvnes_snesnake2;
 DRV		BurnDrvsms_superoff;
 DRV		BurnDrvgg_superoff;
 DRV		BurnDrvmd_superoff;
@@ -21962,9 +21973,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCookbib,			// Cookie & Bibi (set 1)
 	&BurnDrvCookbiba,			// Cookie & Bibi (set 2)
 	&BurnDrvCookbib2c,			// Cookie & Bibi 2 (English / Korean)
-	&BurnDrvCookbib2,			// Cookie & Bibi 2 (set 1)
-	&BurnDrvCookbib2a,			// Cookie & Bibi 2 (set 2)
-	&BurnDrvCookbib2b,			// Cookie & Bibi 2 (set 3)
+	&BurnDrvCookbib2,			// Cookie & Bibi 2 (English, set 1)
+	&BurnDrvCookbib2a,			// Cookie & Bibi 2 (English, set 2)
+	&BurnDrvCookbib2b,			// Cookie & Bibi 2 (English, set 3)
 	&BurnDrvCookbib3,			// Cookie & Bibi 3
 	&BurnSpecCookie,			// Cookie (16K)
 	&BurnDrvngpc_coolboar,		// Cool Boarders Pocket (Euro, Jpn)
@@ -22658,6 +22669,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_destructorel,	// Destructor, El (Unl)
 	&BurnDrvDetatwin,			// Detana!! Twin Bee (Japan ver. J)
 	&BurnDrvpce_twinbee,		// Detana!! Twinbee
+	&BurnDrvnes_dethcomplex,	// Deth Complex! (HB)
+	&BurnSpecDevaen,			// Deva (English) (48K) (HB)
+	&BurnSpecDevasp,			// Deva (Spanish) (48K) (HB)
+	&BurnSpecDevaenh,			// Deva - Hard (English) (48K) (HB)
+	&BurnSpecDevasph,			// Deva - Hard (Spanish) (48K) (HB)
 	&BurnDrvDevstors2,			// Devastators (ver. 2)
 	&BurnDrvDevstorsv,			// Devastators (ver. V)
 	&BurnDrvDevstorsx,			// Devastators (ver. X)
@@ -23127,7 +23143,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_drchaos,		// Dr. Chaos (USA)
 	&BurnDrvfds_drcha,			// Dr. Chaos - Jigoku no Tobira (Japan)
 	&BurnDrvgg_drfrankn,		// Dr. Franken (Prototype, no sound)
-	&BurnDrvnes_drgarfield,		// Dr. Garfield (Hack, v1.0)
+	&BurnDrvnes_drgarfield,		// Dr. Garfield (Hack, v21)
 	&BurnDrvMSX_drhello,		// Dr. Hello (Kor)
 	&BurnDrvsms_drhello,		// Dr. HELLO (Kor)
 	&BurnDrvnes_drjekandmrhy,	// Dr. Jekyll and Mr. Hyde (USA)
@@ -27656,7 +27672,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecMrage48,			// Mage Rage (48K) (HB)
 	&BurnSpecMagjim128,			// Magenta Jim (128K) (HB)
 	&BurnSpecMagjim48,			// Magenta Jim (48K) (HB)
-	&BurnDrvnes_magicblock,		// Magic Block (Mega Soft)
+	&BurnDrvnes_magicblock,		// Magic Block (Unl)
 	&BurnDrvmbrush,				// Magic Brush (bootleg of Crush Roller)
 	&BurnDrvMagicbubc,			// Magic Bubble (Adult version, YS-0211 PCB)
 	&BurnDrvMagicbuba,			// Magic Bubble (Adult version, YS-1302 PCB, set 1)
@@ -28109,7 +28125,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsMegaman2,		// Mega Man 2 - the power fighters (960708 USA)
 	&BurnDrvCpsMegaman2h,		// Mega Man 2 - the power fighters (960712 Hispanic)
 	&BurnDrvnes_megaman3,		// Mega Man 3 (USA)
-	&BurnDrvnes_megaman3imp,	// Mega Man 3 Improvement (Hack v2.22)
+	&BurnDrvnes_megaman3imp,	// Mega Man 3 Improvement (Hack v2.31)
 	&BurnDrvnes_megaman3rev,	// Mega Man 3 Revamped (Hack v1.1)
 	&BurnDrvnes_megaman4,		// Mega Man 4 (USA) (Rev A)
 	&BurnDrvnes_megaman5,		// Mega Man 5 (USA)
@@ -28656,6 +28672,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMooncrs2,			// Moon Cresta (bootleg set 2)
 	&BurnDrvMooncrs3,			// Moon Cresta (bootleg set 3)
 	&BurnDrvMooncrs5,			// Moon Cresta (bootleg set 4)
+	&BurnDrvmooncrecm,			// Moon Cresta (Centromatic Spanish bootleg)
 	&BurnDrvMooncreg,			// Moon Cresta (Electrogame S.A. Spanish bootleg, set 1)
 	&BurnDrvMooncreg2,			// Moon Cresta (Electrogame S.A. Spanish bootleg, set 2)
 	&BurnDrvMooncrstg,			// Moon Cresta (Gremlin)
@@ -29635,7 +29652,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvNostk,				// Nostradamus (Korea)
 	&BurnDrvNost,				// Nostradamus
 	&BurnDrvNostromo,			// Nostromo
-	&BurnSpecNosy,				// Nosy (48K) (HB)
+	&BurnSpecNosyen,			// Nosy (English) (128K) (HB)
+	&BurnSpecNosyes,			// Nosy (Spanish) (128K) (HB)
+	&BurnSpecNosy,				// Nosy - first version (48K) (HB)
 	&BurnDrvNouryokup,			// Nouryoku Koujou Iinkai (prototype)
 	&BurnDrvNouryoku,			// Nouryoku Koujou Iinkai
 	&BurnDrvNova2001,			// Nova 2001 (Japan)
@@ -30329,6 +30348,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_pickinx,		// PickinX (HB)
 	&BurnDrvMSX_picopico,		// Pico Pico (Jpn)
 	&BurnDrvMSX_picopicoen,		// Pico Pico (T-Eng)
+	&BurnDrvnes_picopico,		// Pico Pico Grand Adventure (HB)
 	&BurnDrvnes_pictionary,		// Pictionary (USA)
 	&BurnDrvngpc_picturep,		// Picture Puzzle (Euro, USA)
 	&BurnDrvMSX_picpuzzle,		// Picture Puzzle (Jpn)
@@ -31051,6 +31071,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_quacksht,		// QuackShot Starring Donald Duck ~ QuackShot - Guruzia Ou no Hihou (World)
 	&BurnDrvmd_quacksht1,		// QuackShot Starring Donald Duck ~ QuackShot - Guruzia Ou no Hihou (World, Alt)
 	&BurnDrvmd_quadchal,		// Quad Challenge (USA)
+	&BurnDrvnes_quadralords,	// Quadralords (HB)
 	&BurnDrvQuantump,			// Quantum (prototype)
 	&BurnDrvQuantum1,			// Quantum (rev 1)
 	&BurnDrvQuantum,			// Quantum (rev 2)
@@ -34312,6 +34333,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSuprmous,			// Super Mouse
 	&BurnDrvCpsSmbombr1,		// Super Muscle Bomber - the international blowout (940808 Japan)
 	&BurnDrvCpsSmbomb,			// Super Muscle Bomber - the international blowout (940831 Japan)
+	&BurnDrvnes_snesnake2,		// Super NeSnake 2 (HB)
 	&BurnDrvsms_superoff,		// Super Off Road (Euro)
 	&BurnDrvgg_superoff,		// Super Off Road (Euro, USA)
 	&BurnDrvmd_superoff,		// Super Off Road (Euro, USA)

@@ -4898,6 +4898,46 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="devaen" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Deva (English) (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Furillo Productions</manufacturer>
+		<rom name="Deva 48K EN (2022)(Furillo Productions).tap" size="41902" crc="131b4d56"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="devasp" cloneof="devaen" romof="devaen">
+		<comment>Homebrew</comment>
+		<description>Deva (Spanish) (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Furillo Productions</manufacturer>
+		<rom name="Deva 48K SP (2022)(Furillo Productions).tap" size="41565" crc="cdf42de4"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="devaenh" cloneof="devaen" romof="devaen">
+		<comment>Homebrew</comment>
+		<description>Deva - Hard (English) (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Furillo Productions</manufacturer>
+		<rom name="Deva 48K EN - Hard (2022)(Furillo Productions).tap" size="41861" crc="655039a6"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="devasph" cloneof="devaen" romof="devaen">
+		<comment>Homebrew</comment>
+		<description>Deva - Hard (Spanish) (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Furillo Productions</manufacturer>
+		<rom name="Deva 48K SP - Hard (2022)(Furillo Productions).tap" size="41524" crc="62b9fd11"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="deviants" romof="spec128">
 		<description>Deviants (128K)</description>
 		<year>1987</year>
@@ -11768,9 +11808,35 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="nosy" romof="spectrum">
+	<game name="nosyen" romof="spec1282a">
 		<comment>Homebrew</comment>
-		<description>Nosy (48K) (HB)</description>
+		<description>Nosy (English) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Javier Fopiani</manufacturer>
+		<rom name="Nosy 128K EN (2022)(Javier Fopiani).tap" size="125924" crc="97a842a0"/>
+		<rom name="zx128_2a_0.rom" merge="zx128_2a_0.rom" size="16384" crc="30c9f490"/>
+		<rom name="zx128_2a_1.rom" merge="zx128_2a_1.rom" size="16384" crc="a7916b3f"/>
+		<rom name="zx128_2a_2.rom" merge="zx128_2a_2.rom" size="16384" crc="c9a0b748"/>
+		<rom name="zx128_2a_3.rom" merge="zx128_2a_3.rom" size="16384" crc="b88fd6e3"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="nosyes" cloneof="nosyen" romof="nosyen">
+		<comment>Homebrew</comment>
+		<description>Nosy (Spanish) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Javier Fopiani</manufacturer>
+		<rom name="Nosy 128K ES (2022)(Javier Fopiani).tap" size="125815" crc="c9fe4df5"/>
+		<rom name="zx128_2a_0.rom" merge="zx128_2a_0.rom" size="16384" crc="30c9f490"/>
+		<rom name="zx128_2a_1.rom" merge="zx128_2a_1.rom" size="16384" crc="a7916b3f"/>
+		<rom name="zx128_2a_2.rom" merge="zx128_2a_2.rom" size="16384" crc="c9a0b748"/>
+		<rom name="zx128_2a_3.rom" merge="zx128_2a_3.rom" size="16384" crc="b88fd6e3"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="nosy" cloneof="nosyen" romof="nosyen">
+		<comment>Homebrew</comment>
+		<description>Nosy - first version (48K) (HB)</description>
 		<year>2020</year>
 		<manufacturer>Javier Fopiani</manufacturer>
 		<rom name="Nosy (2020)(Javier Fopiani).tap" size="43998" crc="efb0331a"/>

@@ -3,7 +3,7 @@
 #include <math.h>
 
 // Generic Light Gun & Trackball (dial, paddle, wheel, trackball) support for FBA
-// written by Barry Harris (Treble Winner) based on the code in Kev's opwolf driver
+// Based on the code in Kev's opwolf driver
 // Trackball/Paddle/Dial emulation by dink
 
 INT32 nBurnGunNumPlayers = 0;

@@ -364,6 +364,21 @@ INT32 BurnTrackballGetDirection(INT32 dev)
 	return BurnTrackballGetDirection(dev >> 1, dev & 1);
 }
 
+INT32 BurnTrackballGetVelocity(INT32 num, INT32 isB)
+{
+	if (num > MAX_GUNS - 1) return 0;
+
+	BurnDialINF dial;
+	BurnPaddleGetDial(dial, num, isB);
+
+	return dial.Velocity;
+}
+
+INT32 BurnTrackballGetVelocity(INT32 dev)
+{
+	return BurnTrackballGetVelocity(dev >> 1, dev & 1);
+}
+
 UINT8 BurnTrackballRead(INT32 dev) // linear device #
 {
 	return BurnTrackballRead(dev >> 1, dev & 1);
@@ -576,6 +591,9 @@ void BurnGunInit(INT32 nNumPlayers, bool bDrawTargets)
 	memset(&DIAL_INC, 0, sizeof(DIAL_INC));
 	memset(&TrackRev, 0, sizeof(TrackRev));
 	memset(&UDLRSpeed, 0, sizeof(UDLRSpeed));
+	memset(&PaddleLast, 0, sizeof(PaddleLast));
+	memset(&BurnPaddleX, 0, sizeof(BurnPaddleX));
+	memset(&BurnPaddleY, 0, sizeof(BurnPaddleY));
 
 	for (INT32 i = 0; i < MAX_GUNS*2; i++) {
 		TrackStart[i] = -1;

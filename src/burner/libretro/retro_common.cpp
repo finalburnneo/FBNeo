@@ -1000,7 +1000,7 @@ void set_environment()
 		if (neogeo_use_specific_default_bios && bIsNeogeoCartGame && dipswitch_core_options[dip_idx].friendly_name.compare("[Dipswitch] BIOS") == 0)
 			option_defs_us[idx_var].info         = "THIS NEOGEO GAME USES A DIFFERENT DEFAULT BIOS, CHANGE IT AT YOUR OWN RISK";
 		else
-			option_defs_us[idx_var].info         = "Dipswitch setting, setting is specific to the running romset";
+			option_defs_us[idx_var].info         = "Dipswitch setting, setting is specific to the running romset. Some dipswitches require a restart to work properly.";
 		for (int dip_value_idx = 0; dip_value_idx < dipswitch_core_options[dip_idx].values.size(); dip_value_idx++)
 		{
 			option_defs_us[idx_var].values[dip_value_idx].value = dipswitch_core_options[dip_idx].values[dip_value_idx].friendly_name.c_str();

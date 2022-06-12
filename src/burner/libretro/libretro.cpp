@@ -482,9 +482,8 @@ static int create_variables_from_dipswitches()
 
 static bool is_dipswitch_active(dipswitch_core_option *dip_option)
 {
-	bool visible = true;
+	bool active = true;
 
-#if 0
 	for (int dip_value_idx = 0; dip_value_idx < dip_option->values.size(); dip_value_idx++)
 	{
 		dipswitch_core_option_value *dip_value = &(dip_option->values[dip_value_idx]);
@@ -493,18 +492,17 @@ static bool is_dipswitch_active(dipswitch_core_option *dip_option)
 		{
 			if (dip_value->bdi.nFlags & 0x80)
 			{
-				visible = (dip_value->cond_pgi->Input.Constant.nConst & dip_value->nCondMask) != dip_value->nCondSetting;
+				active = (dip_value->cond_pgi->Input.Constant.nConst & dip_value->nCondMask) != dip_value->nCondSetting;
 			}
 			else
 			{
-				visible = (dip_value->cond_pgi->Input.Constant.nConst & dip_value->nCondMask) == dip_value->nCondSetting;
+				active = (dip_value->cond_pgi->Input.Constant.nConst & dip_value->nCondMask) == dip_value->nCondSetting;
 			}
 		}
-		return visible;
+		return active;
 	}
-#endif
 
-	return visible;
+	return active;
 }
 
 static void set_dipswitches_visibility(void)

@@ -453,7 +453,6 @@ const uint8 m68ki_ea_idx_cycle_table[64] =
  * callback is set to NULL
  */
 #if defined (BUILD_WIN32)
-static void (*pc_changed_cb)(UINT32) = NULL;
 void m68k_set_pc_changed_cb(void (*cbf)(UINT32)) {
 	pc_changed_cb = cbf;
 }

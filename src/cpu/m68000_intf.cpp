@@ -5,8 +5,6 @@
 #include "m68000_debug.h"
 
 #if defined (BUILD_WIN32)
-	#include <m68k/m68kcpu.h>
-
 	enum LuaMemHookType
 	{
 		LUAMEMHOOK_WRITE,

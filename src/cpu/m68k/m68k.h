@@ -335,6 +335,12 @@ unsigned int m68k_get_virq(unsigned int level);
 /* For Megadrive -dink */
 int m68k_check_shouldinterrupt(void);
 
+/* For m68k lua implementation */
+#if defined (BUILD_WIN32)
+static void (*pc_changed_cb)(UINT32);
+#endif	
+
+
 /* Halt the CPU as if you pulsed the HALT pin. */
 void m68k_pulse_halt(void);
 

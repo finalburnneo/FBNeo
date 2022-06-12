@@ -432,14 +432,11 @@ static int create_variables_from_dipswitches()
 				// Filter away NULL entries
 				if (bdi_value.nFlags == 0)
 				{
-#if 0
-					//HandleMessage(RETRO_LOG_WARN, "Error in %sDIPList for DIPSWITCH '%s': the line '%d' is useless\n", drvname, dip_option->friendly_name.c_str(), k + 1);
-					// visibility should be toggled off if cond_pgi->Input.nVal & nCondMask != nCondSetting ?
 					dipswitch_core_option_value *prev_dip_value = &dip_option->values[values_count-1];
-					prev_dip_value->cond_pgi = pgi_value;
-					prev_dip_value->nCondMask = bdi_value.nMask;
+					prev_dip_value->cond_pgi     = pgi_value;
+					prev_dip_value->nCondMask    = bdi_value.nMask;
 					prev_dip_value->nCondSetting = bdi_value.nSetting;
-#endif
+
 					continue;
 				}
 
@@ -448,6 +445,7 @@ static int create_variables_from_dipswitches()
 				BurnDrvGetDIPInfo(&(dip_value->bdi), k + i + 1);
 				dip_value->pgi = pgi_value;
 				dip_value->friendly_name = dip_value->bdi.szText;
+				dip_value->cond_pgi      = NULL;
 
 				bool is_default_value = (dip_value->pgi->Input.Constant.nConst & dip_value->bdi.nMask) == (dip_value->bdi.nSetting);
 
@@ -482,6 +480,46 @@ static int create_variables_from_dipswitches()
 	return 0;
 }
 
+static bool is_dipswitch_active(dipswitch_core_option *dip_option)
+{
+	bool visible = true;
+
+	for (int dip_value_idx = 0; dip_value_idx < dip_option->values.size(); dip_value_idx++)
+	{
+		dipswitch_core_option_value *dip_value = &(dip_option->values[dip_value_idx]);
+
+		if (dip_value->cond_pgi != NULL)
+		{
+			if (dip_value->bdi.nFlags & 0x80)
+			{
+				visible = (dip_value->cond_pgi->Input.Constant.nConst & dip_value->nCondMask) != dip_value->nCondSetting;
+			}
+			else
+			{
+				visible = (dip_value->cond_pgi->Input.Constant.nConst & dip_value->nCondMask) == dip_value->nCondSetting;
+			}
+		}
+		return visible;
+	}
+
+	return true;
+}
+
+static void set_dipswitches_visibility(void)
+{
+	struct retro_core_option_display option_display;
+
+	for (int dip_idx = 0; dip_idx < dipswitch_core_options.size(); dip_idx++)
+	{
+		dipswitch_core_option *dip_option = &dipswitch_core_options[dip_idx];
+
+		option_display.key = dip_option->option_name.c_str();
+		option_display.visible = is_dipswitch_active(dip_option);
+
+		environ_cb(RETRO_ENVIRONMENT_SET_CORE_OPTIONS_DISPLAY, &option_display);
+	}
+}
+
 // Update DIP switches value  depending of the choice the user made in core options
 static bool apply_dipswitches_from_variables()
 {
@@ -494,6 +532,8 @@ static bool apply_dipswitches_from_variables()
 	for (int dip_idx = 0; dip_idx < dipswitch_core_options.size(); dip_idx++)
 	{
 		dipswitch_core_option *dip_option = &dipswitch_core_options[dip_idx];
+		if (!is_dipswitch_active(dip_option))
+			continue;
 
 		var.key = dip_option->option_name.c_str();
 		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) == false || !var.value)
@@ -530,6 +570,8 @@ static bool apply_dipswitches_from_variables()
 			}
 		}
 	}
+
+	set_dipswitches_visibility();
 
 	return dip_changed;
 }

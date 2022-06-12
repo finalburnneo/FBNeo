@@ -256,9 +256,8 @@ int DrvInit(int nDrvNum, bool bRestore)
 		if (bRestore) {
 			StatedAuto(0);
 			bSaveRAM = true;
-
-			ConfigCheatLoad();
 		}
+		ConfigCheatLoad();
 	}
 
 	nBurnLayer = 0xFF;				// show all layers

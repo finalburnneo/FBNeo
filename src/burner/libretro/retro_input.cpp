@@ -428,7 +428,10 @@ static inline void CinpDirectCoord(int port, int axis)
 		else if ((nDeviceType[port] == RETRO_DEVICE_LIGHTGUN && sAxiBinds[axis].id == RETRO_DEVICE_ID_LIGHTGUN_SCREEN_Y) || (nDeviceType[port] == RETRO_DEVICE_POINTER && sAxiBinds[axis].id == RETRO_DEVICE_ID_POINTER_Y))
 			pointerValues[port][1] = (INT32)(height * (double(val)/double(0x10000)));
 	}
-	BurnGunSetCoords(((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES ? 0 : port), pointerValues[port][0], pointerValues[port][1]);
+	int player = port;
+	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES || (strcmp(BurnDrvGetTextA(DRV_NAME), "cybertnk") == 0))
+		player = 0;
+	BurnGunSetCoords(player, pointerValues[port][0], pointerValues[port][1]);
 }
 
 static inline int CinpMouseAxis(int port, int axis)

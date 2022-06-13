@@ -4193,10 +4193,10 @@
 	</game>
 	<game name="drgarfield" cloneof="drmario" romof="drmario">
 		<comment>Hack</comment>
-		<description>Dr. Garfield (Hack, v21)</description>
+		<description>Dr. Garfield (Hack, v22)</description>
 		<year>2022</year>
 		<manufacturer>Pangent Technologies</manufacturer>
-		<rom name="Dr. Garfield hack v21 (2022)(Pangent Technologies).nes" size="114704" crc="dfc8d113"/>
+		<rom name="Dr. Garfield hack v22 (2022)(Pangent Technologies).nes" size="114704" crc="fdd0a135"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

@@ -9813,6 +9813,10 @@ DRV		BurnDrvsms_moggym100;
 DRV		BurnDrvMoguchan;
 DRV		BurnDrvMogura;
 DRV		BurnDrvnes_mojontwimul;
+DRV		BurnSpecMojoniek;
+DRV		BurnSpecMojoniem;
+DRV		BurnSpecMojonism;
+DRV		BurnSpecMojonisn;
 DRV		BurnDrvMSX_mokarima;
 DRV		BurnDrvgg_moldoran;
 DRV		BurnDrvgg_moldorane;
@@ -23143,7 +23147,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_drchaos,		// Dr. Chaos (USA)
 	&BurnDrvfds_drcha,			// Dr. Chaos - Jigoku no Tobira (Japan)
 	&BurnDrvgg_drfrankn,		// Dr. Franken (Prototype, no sound)
-	&BurnDrvnes_drgarfield,		// Dr. Garfield (Hack, v21)
+	&BurnDrvnes_drgarfield,		// Dr. Garfield (Hack, v22)
 	&BurnDrvMSX_drhello,		// Dr. Hello (Kor)
 	&BurnDrvsms_drhello,		// Dr. HELLO (Kor)
 	&BurnDrvnes_drjekandmrhy,	// Dr. Jekyll and Mr. Hyde (USA)
@@ -28591,6 +28595,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMoguchan,			// Mogu Chan (bootleg?)
 	&BurnDrvMogura,				// Mogura Desse
 	&BurnDrvnes_mojontwimul,	// Mojon Twins Multicart (HB)
+	&BurnSpecMojoniek,			// Mojoni - kid (English) (128K) (HB, v1.1)
+	&BurnSpecMojoniem,			// Mojoni - men (English) (128K) (HB, v1.1)
+	&BurnSpecMojonism,			// Mojoni- macho (Spanish) (128K) (HB, v1.1)
+	&BurnSpecMojonisn,			// Mojoni- nene (Spanish) (128K) (HB, v1.1)
 	&BurnDrvMSX_mokarima,		// Mokari Makka? Bochibochi Denna! (Jpn)
 	&BurnDrvgg_moldoran,		// Moldorian - Hikari to Yami no Sister (Jpn)
 	&BurnDrvgg_moldorane,		// Moldorian - Hikari to Yami no Sister (T-Eng, v1.1)

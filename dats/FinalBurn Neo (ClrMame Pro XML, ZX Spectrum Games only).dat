@@ -10867,6 +10867,50 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mojoniek" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Mojoni - kid (English) (128K) (HB, v1.1)</description>
+		<year>2022</year>
+		<manufacturer>Isaias Diaz</manufacturer>
+		<rom name="Mojoni - kid EN v1.1 (2022)(Isaias Diaz).tap" size="47022" crc="b83dc99a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mojoniem" cloneof="mojoniek" romof="mojoniek">
+		<comment>Homebrew</comment>
+		<description>Mojoni - men (English) (128K) (HB, v1.1)</description>
+		<year>2022</year>
+		<manufacturer>Isaias Diaz</manufacturer>
+		<rom name="Mojoni - men EN v1.1 (2022)(Isaias Diaz).tap" size="47153" crc="078b037e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mojonism" cloneof="mojoniek" romof="mojoniek">
+		<comment>Homebrew</comment>
+		<description>Mojoni- macho (Spanish) (128K) (HB, v1.1)</description>
+		<year>2022</year>
+		<manufacturer>Isaias Diaz</manufacturer>
+		<rom name="Mojoni- macho SP v1.1 (2022)(Isaias Diaz).tap" size="47161" crc="4c4a424a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mojonisn" cloneof="mojoniek" romof="mojoniek">
+		<comment>Homebrew</comment>
+		<description>Mojoni- nene (Spanish) (128K) (HB, v1.1)</description>
+		<year>2022</year>
+		<manufacturer>Isaias Diaz</manufacturer>
+		<rom name="Mojoni- nene SP v1.1 (2022)(Isaias Diaz).tap" size="47024" crc="2a1cfd5b"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="monkeyj" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Monkey J - The Treasure Of The Gold Temple (128K) (HB)</description>

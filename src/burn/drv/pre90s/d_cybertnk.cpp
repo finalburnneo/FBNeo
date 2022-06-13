@@ -272,11 +272,11 @@ static UINT8 __fastcall cybertnk_main_read_byte(UINT32 address)
 		case 0x1100d5: {
 			switch (mux_data) {
 				case 0x00: {
-					return 0xff - BurnGunReturnX(0);
+					return 0xff - scalerange(BurnGunReturnX(0), 0x2c, 0xd7, 0x32, 0xa6);
 				}
 				
 				case 0x01: {
-					return 0xff - BurnGunReturnY(0);
+					return 0xff - scalerange(BurnGunReturnY(0), 0x0f, 0xa9, 0x36, 0xc2);
 				}
 				
 				case 0x02: {

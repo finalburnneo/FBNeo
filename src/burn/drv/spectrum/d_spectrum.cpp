@@ -36402,3 +36402,79 @@ struct BurnDriver BurnSpecNosyes = {
 	Spec128KPlus2Init, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
+
+// Mojoni - kid (English) (128K) (HB, v1.1)
+
+static struct BurnRomInfo SpecMojoniekRomDesc[] = {
+	{ "Mojoni - kid EN v1.1 (2022)(Isaias Diaz).tap", 47022, 0xb83dc99a, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMojoniek, SpecMojoniek, Spec128)
+STD_ROM_FN(SpecMojoniek)
+
+struct BurnDriver BurnSpecMojoniek = {
+	"spec_mojoniek", NULL, "spec_spec128", NULL, "2022",
+	"Mojoni - kid (English) (128K) (HB, v1.1)\0", NULL, "Isaias Diaz", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecMojoniekRomInfo, SpecMojoniekRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Mojoni - men (English) (128K) (HB, v1.1)
+
+static struct BurnRomInfo SpecMojoniemRomDesc[] = {
+	{ "Mojoni - men EN v1.1 (2022)(Isaias Diaz).tap", 47153, 0x078b037e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMojoniem, SpecMojoniem, Spec128)
+STD_ROM_FN(SpecMojoniem)
+
+struct BurnDriver BurnSpecMojoniem = {
+	"spec_mojoniem", "spec_mojoniek", "spec_spec128", NULL, "2022",
+	"Mojoni - men (English) (128K) (HB, v1.1)\0", NULL, "Isaias Diaz", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecMojoniemRomInfo, SpecMojoniemRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Mojoni- macho (Spanish) (128K) (HB, v1.1)
+
+static struct BurnRomInfo SpecMojonismRomDesc[] = {
+	{ "Mojoni- macho SP v1.1 (2022)(Isaias Diaz).tap", 47161, 0x4c4a424a, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMojonism, SpecMojonism, Spec128)
+STD_ROM_FN(SpecMojonism)
+
+struct BurnDriver BurnSpecMojonism = {
+	"spec_mojonism", "spec_mojoniek", "spec_spec128", NULL, "2022",
+	"Mojoni- macho (Spanish) (128K) (HB, v1.1)\0", NULL, "Isaias Diaz", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecMojonismRomInfo, SpecMojonismRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Mojoni- nene (Spanish) (128K) (HB, v1.1)
+
+static struct BurnRomInfo SpecMojonisnRomDesc[] = {
+	{ "Mojoni- nene SP v1.1 (2022)(Isaias Diaz).tap", 47024, 0x2a1cfd5b, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMojonisn, SpecMojonisn, Spec128)
+STD_ROM_FN(SpecMojonisn)
+
+struct BurnDriver BurnSpecMojonisn = {
+	"spec_mojonisn", "spec_mojoniek", "spec_spec128", NULL, "2022",
+	"Mojoni- nene (Spanish) (128K) (HB, v1.1)\0", NULL, "Isaias Diaz", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecMojonisnRomInfo, SpecMojonisnRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

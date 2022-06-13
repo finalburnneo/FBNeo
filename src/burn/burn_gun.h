@@ -74,6 +74,8 @@ INT32 BurnTrackballReadSigned(INT32 dev, INT32 isB);
 INT32 BurnTrackballReadSigned(INT32 dev);
 INT32 BurnTrackballGetDirection(INT32 num, INT32 isB); // -1 backwards (left, down), +1 forward (right, up), 0 idle
 INT32 BurnTrackballGetDirection(INT32 dev);
+INT32 BurnTrackballGetVelocity(INT32 num, INT32 isB);
+INT32 BurnTrackballGetVelocity(INT32 dev);
 
 // Reset the position counters
 void BurnTrackballReadReset(); // all devices

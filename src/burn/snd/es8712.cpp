@@ -20,6 +20,9 @@
 #include "math.h"
 #include "es8712.h"
 
+#include "stream.h"
+static Stream stream;
+
 #define MAX_ES8712_CHIPS	1
 
 #define MAX_SAMPLE_CHUNK	10000
@@ -51,6 +54,8 @@ struct _es8712_state
 	INT32 output_dir;
 	INT32 addSignal;			/* add signal to stream? */
 };
+
+static void (*es8712irq_cb)(INT32) = NULL;
 
 static INT16 *tbuf[MAX_ES8712_CHIPS] = { NULL };
 
@@ -97,6 +102,12 @@ static void compute_tables()
 	}
 }
 
+static void reset_handler(INT32 state)
+{
+	if (es8712irq_cb) {
+		es8712irq_cb(state);
+	}
+}
 
 /**********************************************************************************************
 
@@ -104,8 +115,10 @@ static void compute_tables()
 
 ***********************************************************************************************/
 
-static void generate_adpcm(INT16 *buffer, INT32 samples)
+static void sound_update(INT16 **streams, INT32 samples)
 {
+	INT16 *buffer = streams[0];
+
 	/* if this chip is active */
 	if (chip->playing)
 	{
@@ -142,8 +155,10 @@ static void generate_adpcm(INT16 *buffer, INT32 samples)
 			samples--;
 
 			/* next! */
-			if (++sample >= count)
+			++sample;
+			if (sample >= count || sample >= 0x100000)
 			{
+				reset_handler(1);
 				if (chip->repeat)
 				{
 					sample = 0;
@@ -166,7 +181,8 @@ static void generate_adpcm(INT16 *buffer, INT32 samples)
 
 	/* fill the rest with silence */
 	while (samples--)
-		*buffer++ = 0;
+		*buffer++ = (INT32)(chip->signal * 16 * chip->volume);   // no clicks, please
+		//*buffer++ = 0;
 }
 
 
@@ -176,47 +192,14 @@ static void generate_adpcm(INT16 *buffer, INT32 samples)
 
 ***********************************************************************************************/
 
-void es8712Update(INT32 device, INT16 *buffer, INT32 samples)
+void es8712Update(INT32 device, INT16 *outputs, INT32 samples_len)
 {
-#if defined FBNEO_DEBUG
-	if (!DebugSnd_ES8712Initted) bprintf(PRINT_ERROR, _T("es8712Update called without init\n"));
-#endif
-
-	if (device >= MAX_ES8712_CHIPS) return;
-
-	chip = &chips[device];
-
-	INT32 sample_num = (INT32)((float)(((samples / nBurnSoundLen) * 1.0000) * chip->sample_rate));
-
-	float step = ((chip->sample_rate * 1.00000) / nBurnSoundLen);
-
-	INT16 *buf = tbuf[device];
-
-	generate_adpcm(buf, sample_num);
-
-	float r = 0;
-	for (INT32 i = 0; i < samples; i++, r += step, buffer+=2) {
-		INT32 nLeftSample = 0, nRightSample = 0;
-		
-		if ((chip->output_dir & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample += (INT32)(buf[(INT32)r] * chip->volume);
-		}
-		if ((chip->output_dir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample += (INT32)(buf[(INT32)r] * chip->volume);
-		}
-		
-		nLeftSample = BURN_SND_CLIP(nLeftSample);
-		nRightSample = BURN_SND_CLIP(nRightSample);
-		
-		if (chip->addSignal) {
-			buffer[0] += nLeftSample;
-			buffer[1] += nRightSample;
-		} else {
-			buffer[0] = nLeftSample;
-			buffer[1] = nRightSample;
-		}
+	if (samples_len != nBurnSoundLen) {
+		bprintf(0, _T("es8712Update(): once per frame, please!\n"));
+		return;
 	}
-	
+
+	stream.render(outputs, samples_len);
 }
 
 
@@ -230,6 +213,10 @@ void es8712Init(INT32 device, UINT8 *rom, INT32 sample_rate, INT32 addSignal)
 {
 	DebugSnd_ES8712Initted = 1;
 
+	if (device != 0) {
+		bprintf(0, _T("es8712Init(dev, x, x, x): core supports 1 device (#0)!\n"));
+		return;
+	}
 	if (device >= MAX_ES8712_CHIPS) return;
 
 	chip = &chips[device];
@@ -255,6 +242,21 @@ void es8712Init(INT32 device, UINT8 *rom, INT32 sample_rate, INT32 addSignal)
 	if (tbuf[device] == NULL) {
 		tbuf[device] = (INT16*)BurnMalloc(sample_rate * sizeof(INT16));
 	}
+
+	stream.init(sample_rate, nBurnSoundRate, 1, 0, sound_update);
+    stream.set_volume(0.30);
+
+	es8712irq_cb = NULL;
+}
+
+void es8712SetBuffered(INT32 (*pCPUCyclesCB)(), INT32 nCpuMhz)
+{
+	stream.set_buffered(pCPUCyclesCB, nCpuMhz);
+}
+
+void es8712SetIRQ(void (*pIRQCB)(INT32))
+{
+	es8712irq_cb = pIRQCB;
 }
 
 void es8712SetRoute(INT32 device, double nVolume, INT32 nRouteDir)
@@ -268,6 +270,9 @@ void es8712SetRoute(INT32 device, double nVolume, INT32 nRouteDir)
 	chip = &chips[device];
 	chip->volume = nVolume;
 	chip->output_dir = nRouteDir;
+
+	stream.set_volume(nVolume);
+	stream.set_route(nRouteDir);
 }
 
 /**********************************************************************************************
@@ -291,7 +296,9 @@ void es8712Exit(INT32 device)
 	memset (chip, 0, sizeof(_es8712_state));
 
 	BurnFree (tbuf[device]);
-		
+
+	stream.exit();
+
 	DebugSnd_ES8712Initted = 0;
 }
 
@@ -310,6 +317,8 @@ void es8712Reset(INT32 device)
 	if (device >= MAX_ES8712_CHIPS) return;
 
 	chip = &chips[device];
+
+	reset_handler(0);
 
 	if (chip->playing)
 	{
@@ -333,6 +342,8 @@ void es8712SetBankBase(INT32 device, INT32 base)
 #endif
 
 	if (device >= MAX_ES8712_CHIPS) return;
+
+	stream.update();
 
 	chip = &chips[device];
 
@@ -364,11 +375,13 @@ void es8712Play(INT32 device)
 			chip->base_offset = chip->start;
 			chip->sample = 0;
 			chip->count = 2 * (chip->end - chip->start + 1);
-			chip->repeat = 0;//1;
+			chip->repeat = 0;
+			//bprintf(0, _T("playing.. start %x\tend %x \tcount %x\n"), chip->start, chip->end, chip->count);
 
 			/* also reset the ADPCM parameters */
-			chip->signal = (UINT32)-2;
-			chip->step = 0;
+			//chip->signal = (UINT32)-2;  // makes clicks (dink)
+			//chip->step = 0;
+			reset_handler(0);
 		}
 	}
 	/* invalid samples go here */
@@ -378,6 +391,7 @@ void es8712Play(INT32 device)
 		{
 			/* update the stream */
 			chip->playing = 0;
+			reset_handler(1);
 		}
 	}
 }
@@ -415,6 +429,8 @@ void es8712Write(INT32 device, INT32 offset, UINT8 data)
 	if (device >= MAX_ES8712_CHIPS) return;
 
 	chip = &chips[device];
+
+	stream.update();
 
 	switch (offset)
 	{

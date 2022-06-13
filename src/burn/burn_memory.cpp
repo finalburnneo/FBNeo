@@ -6,7 +6,9 @@
 
 #include "burnint.h"
 
-#define LOG_MEMORY_USAGE 0
+#define LOG_MEMORY_USAGE    0
+#define OOB_CHECKER         1
+#define OOB_CHECK			0x200 // default oob detection range (512bytes)
 
 #define MAX_MEM_PTR	0x400 // more than 1024 malloc calls should be insane...
 
@@ -29,20 +31,21 @@ UINT8 *_BurnMalloc(INT32 size, char *file, INT32 line)
 	for (INT32 i = 0; i < MAX_MEM_PTR; i++)
 	{
 		if (memptr[i] == NULL) {
-			memptr[i] = (UINT8*)malloc(size);
+			INT32 spill = (OOB_CHECKER) ? OOB_CHECK : 0;
+			memptr[i] = (UINT8*)malloc(size + spill);
 
 			if (memptr[i] == NULL) {
 				bprintf (0, _T("BurnMalloc failed to allocate %d bytes of memory!\n"), size);
 				return NULL;
 			}
 
-			memset (memptr[i], 0, size); // set contents to 0
+			memset (memptr[i], 0, size + spill); // set contents to 0
 
-			mem_allocated += size;
+			mem_allocated += size; // important: do not record "spill" here (see check_overwrite())
 			memsize[i] = size;
 
 #if LOG_MEMORY_USAGE
-			bprintf (0, _T("(%S:%d) BurnMalloc(%d): index %d.  %d total!\n"), file, line, size, i, mem_allocated);
+			bprintf (0, _T("(%S:%d) BurnMalloc(%x): index %d.  %d total!\n"), file, line, size, i, mem_allocated);
 #endif
 
 			return memptr[i];
@@ -61,7 +64,8 @@ UINT8 *BurnRealloc(void *ptr, INT32 size)
 	for (INT32 i = 0; i < MAX_MEM_PTR; i++)
 	{
 		if (memptr[i] == mptr) {
-			memptr[i] = (UINT8*)realloc(ptr, size);
+			INT32 spill = (OOB_CHECKER) ? OOB_CHECK : 0;
+			memptr[i] = (UINT8*)realloc(ptr, size + spill);
 			mem_allocated -= memsize[i];
 			mem_allocated += size;
 			memsize[i] = size;
@@ -72,6 +76,27 @@ UINT8 *BurnRealloc(void *ptr, INT32 size)
 	return NULL;
 }
 
+static void check_overwrite(INT32 i)
+{
+	if (OOB_CHECKER == 0) return;
+
+	UINT8 *p = memptr[i];
+	INT32 size = memsize[i];
+
+	INT32 found_oob = 0;
+
+	for (INT32 z = 0; z < OOB_CHECK; z++) {
+		if (p[size + z] != 0) {
+			bprintf(0, _T("burn_memory.cpp: OOB detected in allocated index %d @ %x!!\n"), i, z);
+			found_oob = 1;
+		}
+	}
+
+	if (found_oob) {
+		bprintf(0, _T("->OOB memory issue detected in allocated index %d, please let FBNeo team know!\n"), i);
+	}
+}
+
 // call BurnFree() instead of "free" (see macro in burnint.h)
 void _BurnFree(void *ptr)
 {
@@ -80,14 +105,15 @@ void _BurnFree(void *ptr)
 	for (INT32 i = 0; i < MAX_MEM_PTR; i++)
 	{
 		if (mptr != NULL && memptr[i] == mptr) {
+			check_overwrite(i);
 			free (memptr[i]);
 			memptr[i] = NULL;
 
 			mem_allocated -= memsize[i];
-			memsize[i] = 0;
 #if LOG_MEMORY_USAGE
-			bprintf(0, _T("BurnFree(): index %d.  %d total!\n"), i, mem_allocated);
+			bprintf(0, _T("BurnFree(): index %d, size %x.  %d total!\n"), i, memsize[i], mem_allocated);
 #endif
+			memsize[i] = 0;
 			break;
 		}
 	}

@@ -1076,7 +1076,9 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 			sprintf(szRecordedFrom, "%s", (bStartFromReset) ? "Power-On" : "Savestate");
 
 		if (nThisMovieVersion >= 0x0401) {
-			sprintf(szRecordedTime, "%02d/%02d/%04d @ %02d:%02d:%02d%s", MovieInfo.month+1, MovieInfo.day, 2000 + (MovieInfo.year%100), (MovieInfo.hour>12) ? MovieInfo.hour-12 : MovieInfo.hour, MovieInfo.minute, MovieInfo.second, (MovieInfo.hour>12) ? "pm" : "am");
+			int fixhour = (MovieInfo.hour>12) ? MovieInfo.hour-12 : MovieInfo.hour;
+			if (fixhour == 0) fixhour = 12;
+			sprintf(szRecordedTime, "%02d/%02d/%04d @ %02d:%02d:%02d%s", MovieInfo.month+1, MovieInfo.day, 2000 + (MovieInfo.year%100), fixhour, MovieInfo.minute, MovieInfo.second, (MovieInfo.hour>12) ? "pm" : "am");
 		}
 
 		SetDlgItemTextA(hDlg, IDC_LENGTH, szLengthString);

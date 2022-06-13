@@ -2808,13 +2808,11 @@ INT32 System16AFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		// Run 68000
-		SekOpen(0);
 		if (System1668KEnable) {
 			CPU_RUN(0, Sek);
 		} else {
 			CPU_IDLE(0, Sek);
 		}
-		SekClose();
 
 		// Run Z80
 		ZetOpen(0);

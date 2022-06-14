@@ -2187,9 +2187,6 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_unico.cpp">
       <Filter>Burn\drv\pst90s</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\pst90s\d_vmetal.cpp">
-      <Filter>Burn\drv\pst90s</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_welltris.cpp">
       <Filter>Burn\drv\pst90s</Filter>
     </ClCompile>

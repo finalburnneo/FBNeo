@@ -324,7 +324,6 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_tecmosys.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_tumbleb.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_unico.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\pst90s\d_vmetal.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_welltris.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_wwfwfest.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_xorworld.cpp" />

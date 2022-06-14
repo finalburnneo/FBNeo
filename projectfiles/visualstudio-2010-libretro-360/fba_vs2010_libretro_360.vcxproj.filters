@@ -929,9 +929,6 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_unico.cpp">
       <Filter>Source Files\burn\drv\pst90s</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\pst90s\d_vmetal.cpp">
-      <Filter>Source Files\burn\drv\pst90s</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_welltris.cpp">
       <Filter>Source Files\burn\drv\pst90s</Filter>
     </ClCompile>

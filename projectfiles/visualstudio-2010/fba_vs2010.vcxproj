@@ -1046,7 +1046,6 @@ rm %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_thoop2.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_tumbleb.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_unico.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\pst90s\d_vmetal.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_welltris.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_wrally.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_wwfwfest.cpp" />

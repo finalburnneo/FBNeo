@@ -270,7 +270,6 @@
 		FE1B253123561A760065200C /* d_kaneko16.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F5E23561A680065200C /* d_kaneko16.cpp */; };
 		FE1B253223561A760065200C /* d_mosaic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F5F23561A680065200C /* d_mosaic.cpp */; };
 		FE1B253323561A760065200C /* d_seta2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F6123561A680065200C /* d_seta2.cpp */; };
-		FE1B253423561A760065200C /* d_vmetal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F6223561A680065200C /* d_vmetal.cpp */; };
 		FE1B253523561A760065200C /* d_legionna.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F6323561A680065200C /* d_legionna.cpp */; };
 		FE1B253623561A760065200C /* d_nmg5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F6423561A680065200C /* d_nmg5.cpp */; };
 		FE1B253723561A760065200C /* d_namcos2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F6523561A680065200C /* d_namcos2.cpp */; };
@@ -1678,7 +1677,6 @@
 		FE1B1F5F23561A680065200C /* d_mosaic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_mosaic.cpp; sourceTree = "<group>"; };
 		FE1B1F6023561A680065200C /* kanekotb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kanekotb.h; sourceTree = "<group>"; };
 		FE1B1F6123561A680065200C /* d_seta2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_seta2.cpp; sourceTree = "<group>"; };
-		FE1B1F6223561A680065200C /* d_vmetal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_vmetal.cpp; sourceTree = "<group>"; };
 		FE1B1F6323561A680065200C /* d_legionna.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_legionna.cpp; sourceTree = "<group>"; };
 		FE1B1F6423561A680065200C /* d_nmg5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_nmg5.cpp; sourceTree = "<group>"; };
 		FE1B1F6523561A680065200C /* d_namcos2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_namcos2.cpp; sourceTree = "<group>"; };
@@ -3940,7 +3938,6 @@
 				FE1B1F7E23561A690065200C /* d_unico.cpp */,
 				FE83290E2439A3A000059993 /* d_vamphalf.cpp */,
 				FE83290B2439A3A000059993 /* d_vegaeo.cpp */,
-				FE1B1F6223561A680065200C /* d_vmetal.cpp */,
 				FE1B1F8023561A690065200C /* d_welltris.cpp */,
 				FE1B1F7D23561A690065200C /* d_wrally.cpp */,
 				FE1B1F4A23561A680065200C /* d_wwfwfest.cpp */,
@@ -5666,7 +5663,6 @@
 				FE1B26CD23561A780065200C /* d_atetris.cpp in Sources */,
 				FE1B243D23561A750065200C /* XzCrc64.c in Sources */,
 				FE1B24E523561A760065200C /* d_shuuz.cpp in Sources */,
-				FE1B253423561A760065200C /* d_vmetal.cpp in Sources */,
 				FEF4EE8123635500004E0DCE /* FBEmulatorController.m in Sources */,
 				FE1B24FB23561A760065200C /* d_suprnova.cpp in Sources */,
 				FE1B257D23561A760065200C /* d_tumblep.cpp in Sources */,

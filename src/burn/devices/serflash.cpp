@@ -138,6 +138,8 @@ void serflash_reset()
 //  .nv file
 //-------------------------------------------------
 
+#define END_MARKER 0x12345678
+
 void serflash_nvram_read()
 {
 	if (m_length % m_flash_page_size) return; // region size must be multiple of flash page size
@@ -146,9 +148,9 @@ void serflash_nvram_read()
 	{
 		UINT32 page = 0xffffffff; // prevent stupidity when fbn state tallys nvram size
 		SCAN_VAR(page);
-		while (page < size)
+
+		while (page < size && page != END_MARKER)
 		{
-			//bprintf(0, _T("reading block @ page %x\n"), page);
 			m_flashwritemap[page] = 1;
 			ScanVar(m_region + page * m_flash_page_size, m_flash_page_size, "block");
 			SCAN_VAR(page);
@@ -172,12 +174,14 @@ void serflash_nvram_write()
 	{
 		if (m_flashwritemap[page])
 		{
-			//bprintf(0, _T("writing block @ page %x\n"), page);
 			SCAN_VAR(page);
 			ScanVar(m_region + page * m_flash_page_size, m_flash_page_size, "block");
 		}
 		page++;
 	}
+
+	page = END_MARKER;
+
 	SCAN_VAR(page);
 }
 

@@ -402,11 +402,6 @@ void K054539Exit()
 	nNumChips = 0;
 }
 
-static INT32 signdiff(INT32 a, INT32 b)
-{
-	return ((a >= 0 && b < 0) || (a < 0 && b >= 0));
-}
-
 void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 {
 #if defined FBNEO_DEBUG
@@ -418,9 +413,8 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 #define VOL_CAP 1.80
 
 	static const INT16 dpcm[16] = {
-		0<<8, 1<<8, 4<<8, 9<<8, 16<<8, 25<<8, 36<<8, 49<<8,
-		0, -49<<8, -36<<8, -25<<8, -16<<8, -9<<8, -4<<8, -1<<8 // make symmetrical -dink
-		//-64<<8, -49<<8, -36<<8, -25<<8, -16<<8, -9<<8, -4<<8, -1<<8
+		0 * 0x100,   1 * 0x100,   2 * 0x100,   4 * 0x100,  8 * 0x100, 16 * 0x100, 32 * 0x100, 64 * 0x100,
+		0 * 0x100, -64 * 0x100, -32 * 0x100, -16 * 0x100, -8 * 0x100, -4 * 0x100, -2 * 0x100, -1 * 0x100
 	};
 #if DELAY_DEBUG
 	bprintf(0, _T("-- frame %d --\n"), nCurrentFrame);
@@ -534,7 +528,7 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 					pdelta = +1;
 				}
 
-				INT32 cur_pfrac, cur_val, cur_pval, cur_pval2;
+				INT32 cur_pfrac, cur_val, cur_pval;
 				if(cur_pos != (INT32)chan->pos) {
 					chan->pos = cur_pos;
 					cur_pfrac = 0;
@@ -604,7 +598,6 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 						cur_pfrac += fdelta;
 						cur_pos += pdelta;
 
-						cur_pval2 = cur_pval;
 						cur_pval = cur_val;
 						cur_val = rom[cur_pos>>1];
 						if(cur_val == 0x88 && (base2[1] & 1)) {
@@ -613,11 +606,7 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 						}
 						if(cur_val == 0x88) {
 							k054539_keyoff(ch);
-							//bprintf(0, _T("4bit dpcm off ch %X. cur_val %X cur_pval %X cur_pval2 %X\n"), ch, cur_val, cur_pval, cur_pval2);
-							// at the end of the sample: if there's a huge jump between pval and pval2, use pval2(previous sample).  this is a stupidly weird dc offset -dink
-							if (signdiff(cur_pval, cur_pval2))
-								cur_pval = cur_pval2;
-							cur_val = cur_pval;
+							cur_val = 0;
 							break;
 						}
 						if(cur_pos & 1)

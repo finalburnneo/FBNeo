@@ -306,21 +306,27 @@ static UINT32 __fastcall speedhack_read_long(UINT32 offset)
 
 static UINT16 __fastcall speedhack_read_word(UINT32 offset)
 {
+#if 0
+	// speedhack for all games uses long handler, just passthru for word/byte
+	// reads since this is a high-traffic area. (0xc000000 - 0xc00ffff)
 	UINT32 pc = Sh3GetPC(-1);
 	if ( offset == hacky_idle_ram && (pc == hacky_idle_pc || pc == hacky_idle_pc+2)) {
 		//bprintf(0, _T("w"));
 		Sh3BurnCycles(speedhack_burn);
 	}
+#endif
 	return *((UINT16 *)(DrvMainRAM + (offset & 0xfffffe)));
 }
 
 static UINT8 __fastcall speedhack_read_byte(UINT32 offset)
 {
+#if 0
 	UINT32 pc = Sh3GetPC(-1);
 	if ( offset == hacky_idle_ram && (pc == hacky_idle_pc || pc == hacky_idle_pc+2)) {
 		//bprintf(0, _T("b"));
 		Sh3BurnCycles(speedhack_burn);
 	}
+#endif
 	return DrvMainRAM[(offset & 0xffffff) ^ 1];
 }
 

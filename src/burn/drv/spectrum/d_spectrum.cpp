@@ -35599,7 +35599,7 @@ struct BurnDriver BurnSpecCocoa2e2 = {
 	"spec_cocoa2e2", NULL, "spec_spec128", NULL, "2020",
 	"Cocoa 2, 24 Hour Parsley People - Episode 2 (English) (128K) (HB)\0", "Supporter Edition", "Minilop", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecCocoa2e2RomInfo, SpecCocoa2e2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -35656,7 +35656,7 @@ struct BurnDriver BurnSpecCocoa2e3 = {
 	"spec_cocoa2e3", NULL, "spec_spec128", NULL, "2020",
 	"Cocoa 2, 24 Hour Parsley People - Episode 3 (English) (128K) (HB)\0", "Supporter Edition", "Minilop", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecCocoa2e3RomInfo, SpecCocoa2e3RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -36112,7 +36112,7 @@ struct BurnDriver BurnSpecPrimaderezx = {
 	"spec_primaderezx", NULL, "spec_spectrum", NULL, "2022",
 	"Prima Dere ZX (HB)\0", NULL, "AppSir Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecPrimaderezxRomInfo, SpecPrimaderezxRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3

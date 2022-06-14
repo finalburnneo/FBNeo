@@ -16654,8 +16654,8 @@ static struct BurnRomInfo kof96aeRomDesc[] = {
 
 	{ "214-m1ae.bin",	0x020000, 0xc9dd0348, 4 | BRF_ESS | BRF_PRG }, // 15 Z80 code
 
-	{ "214-v1.bin",		0x400000, 0x63f7b045, 5 | BRF_SND },           // 16 Sound data
-	{ "214-v2.bin",		0x400000, 0x25929059, 5 | BRF_SND },           // 17
+	{ "214-v1.v1",		0x400000, 0x63f7b045, 5 | BRF_SND },           // 16 Sound data
+	{ "214-v2.v2",		0x400000, 0x25929059, 5 | BRF_SND },           // 17
 	{ "214-v3ae.bin",	0x400000, 0x143923a7, 5 | BRF_SND },           // 18
 };
 

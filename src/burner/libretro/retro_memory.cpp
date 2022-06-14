@@ -251,6 +251,16 @@ size_t retro_serialize_size()
 
 	LibretroAreaScan(nAction);
 
+	// cv1k and ngp/ngpc need overallocation
+	switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+	{
+		case HARDWARE_CAVE_CV1000:
+		case HARDWARE_SNK_NGP:
+		case HARDWARE_SNK_NGPC:
+			nStateLen += (128*1024);
+			break;
+	}
+
 	return nStateLen;
 }
 

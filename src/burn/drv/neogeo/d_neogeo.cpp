@@ -16682,10 +16682,10 @@ static struct BurnRomInfo kof96ae20RomDesc[] = {
 
 	{ "214-c1ae2.c1",  	0x800000, 0xa7466eea, 3 | BRF_GRA },           //  3 Sprite data
 	{ "214-c2ae2.c2",  	0x800000, 0x6ff22256, 3 | BRF_GRA },           //  4
-	{ "214-c1ae2.c3",  	0x800000, 0x48d81318, 3 | BRF_GRA },           //  5
-	{ "214-c1ae2.c4",  	0x800000, 0xd69836e6, 3 | BRF_GRA },           //  6
-	{ "214-c1ae2.c5",  	0x800000, 0xed71e6bb, 3 | BRF_GRA },           //  7
-	{ "214-c1ae2.c6",  	0x800000, 0x059fa364, 3 | BRF_GRA },           //  8
+	{ "214-c3ae2.c3",  	0x800000, 0x48d81318, 3 | BRF_GRA },           //  5
+	{ "214-c4ae2.c4",  	0x800000, 0xd69836e6, 3 | BRF_GRA },           //  6
+	{ "214-c5ae2.c5",  	0x800000, 0xed71e6bb, 3 | BRF_GRA },           //  7
+	{ "214-c6ae2.c6",  	0x800000, 0x059fa364, 3 | BRF_GRA },           //  8
 
 	{ "214-m1ae2.m1",  	0x020000, 0x3a4a7c21, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 

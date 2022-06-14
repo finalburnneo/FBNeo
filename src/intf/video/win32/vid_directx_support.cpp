@@ -387,7 +387,7 @@ int VidSEnterFullscreenMode(int nZoom, int nDepth)
 	if (FAILED(pDD->SetDisplayMode(nWidth, nHeight, nDepth, nVidRefresh, 0))) {
 		VidSRestoreScreenMode();
 
-		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_FULL_PROBLEM));
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_FULL_PROBLEM), nWidth, nHeight, nDepth);
 		if (bVidArcaderes && (nWidth != 320 && nHeight != 240)) {
 			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_FULL_CUSTRES));
 		}

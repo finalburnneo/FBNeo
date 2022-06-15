@@ -57,6 +57,32 @@ UINT8 *_BurnMalloc(INT32 size, char *file, INT32 line)
 	return NULL; // Freak out!
 }
 
+enum {
+	MEM_FREE = 0,
+	MEM_REALLOC
+};
+
+static void check_overwrite(INT32 i, INT32 type)
+{
+	if (OOB_CHECKER == 0) return;
+
+	UINT8 *p = memptr[i];
+	INT32 size = memsize[i];
+
+	INT32 found_oob = 0;
+
+	for (INT32 z = 0; z < OOB_CHECK; z++) {
+		if (p[size + z] != 0) {
+			bprintf(0, _T("burn_memory.cpp(%s): OOB detected in allocated index %d @ %x!!\n"), (type == MEM_FREE) ? _T("BurnFree()") : _T("BurnRealloc()"), i, z);
+			found_oob = 1;
+		}
+	}
+
+	if (found_oob) {
+		bprintf(0, _T("->OOB memory issue detected in allocated index %d, please let FBNeo team know!\n"), i);
+	}
+}
+
 UINT8 *BurnRealloc(void *ptr, INT32 size)
 {
 	UINT8 *mptr = (UINT8*)ptr;
@@ -64,6 +90,7 @@ UINT8 *BurnRealloc(void *ptr, INT32 size)
 	for (INT32 i = 0; i < MAX_MEM_PTR; i++)
 	{
 		if (memptr[i] == mptr) {
+			check_overwrite(i, MEM_REALLOC);
 			INT32 spill = (OOB_CHECKER) ? OOB_CHECK : 0;
 			memptr[i] = (UINT8*)realloc(ptr, size + spill);
 			if (memsize[i] > size)
@@ -78,27 +105,6 @@ UINT8 *BurnRealloc(void *ptr, INT32 size)
 	return NULL;
 }
 
-static void check_overwrite(INT32 i)
-{
-	if (OOB_CHECKER == 0) return;
-
-	UINT8 *p = memptr[i];
-	INT32 size = memsize[i];
-
-	INT32 found_oob = 0;
-
-	for (INT32 z = 0; z < OOB_CHECK; z++) {
-		if (p[size + z] != 0) {
-			bprintf(0, _T("burn_memory.cpp: OOB detected in allocated index %d @ %x!!\n"), i, z);
-			found_oob = 1;
-		}
-	}
-
-	if (found_oob) {
-		bprintf(0, _T("->OOB memory issue detected in allocated index %d, please let FBNeo team know!\n"), i);
-	}
-}
-
 // call BurnFree() instead of "free" (see macro in burnint.h)
 void _BurnFree(void *ptr)
 {
@@ -107,7 +113,7 @@ void _BurnFree(void *ptr)
 	for (INT32 i = 0; i < MAX_MEM_PTR; i++)
 	{
 		if (mptr != NULL && memptr[i] == mptr) {
-			check_overwrite(i);
+			check_overwrite(i, MEM_FREE);
 			free (memptr[i]);
 			memptr[i] = NULL;
 

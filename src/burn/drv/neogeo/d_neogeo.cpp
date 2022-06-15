@@ -21179,8 +21179,8 @@ struct BurnDriver BurnDrvmslug5unity = {
 // Metal Slug 3 (X, Homebrew)
 // 20220111
 static struct BurnRomInfo mslug3xRomDesc[] = {
-	{ "mslug3x-p1cr.p1",	0x400000, 0x1E0506CF, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "mslug3x-p2cr.p2",	0x400000, 0x894CD3DD, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "mslug3x-p1cr.p1",	0x400000, 0x1e0506cf, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "mslug3x-p2cr.p2",	0x400000, 0x894cd3dd, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */

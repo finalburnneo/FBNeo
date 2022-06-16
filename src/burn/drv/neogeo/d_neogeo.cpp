@@ -21177,15 +21177,15 @@ struct BurnDriver BurnDrvmslug5unity = {
 };
 
 // Metal Slug 3 (X, Homebrew)
-// 20220111
+// 20220203
 static struct BurnRomInfo mslug3xRomDesc[] = {
-	{ "mslug3x-p1cr.p1",	0x400000, 0x1e0506cf, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "mslug3x-p2cr.p2",	0x400000, 0x894cd3dd, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "mslug3x-p1cr.p1",	0x400000, 0x840b5b8e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "mslug3x-p2cr.p2",	0x400000, 0xc7635ac9, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
-	{ "mslug3x-c1c.c1",		0x800000, 0x92a89586, 3 | BRF_GRA },           //  2 Sprite data
-	{ "mslug3x-c2c.c2",		0x800000, 0x18d14a71, 3 | BRF_GRA },           //  3
+	{ "mslug3x-c1c.c1",		0x800000, 0xbbb8d9f6, 3 | BRF_GRA },           //  2 Sprite data
+	{ "mslug3x-c2c.c2",		0x800000, 0x5fb3498a, 3 | BRF_GRA },           //  3
 
 	/* Encrypted */
 	{ "mslug3x-m1.m1",		0x020000, 0x876df5e1, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
@@ -21200,8 +21200,8 @@ STD_ROM_FN(mslug3x)
 
 struct BurnDriver BurnDrvmslug3x = {
 	"mslug3x", NULL, "neogeo", NULL, "2022",
-	"Metal Slug 3 (X, Homebrew)\0", NULL, "Willnie", "Neo Geo AES",
-	L"Metal Slug 3 (X, Homebrew)\0\u5408\u91d1\u5f48\u982d\u5f69\u86cb\u6bcd\u8266\u5927\u6c7a\u6230 (\u81ea\u88fd\u7248)\0", NULL, NULL, NULL,
+	"Metal Slug 3 (X, Homebrew, 20220203)\0", NULL, "Willnie", "Neo Geo AES",
+	L"Metal Slug 3 (X, Homebrew, 20220203)\0\u5408\u91d1\u5f48\u982d\u5f69\u86cb\u6bcd\u8266\u5927\u6c7a\u6230 (\u81ea\u88fd\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_P32 | HARDWARE_SNK_ENCRYPTED_M1, GBF_MISC, FBF_MSLUG,
 	NULL, mslug3xRomInfo, mslug3xRomName, NULL, NULL, NULL, NULL, neoForceAESInputInfo, neoForceAESDIPInfo,
 	mslug5Init, NeoPVCExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
@@ -21456,10 +21456,10 @@ struct BurnDriver BurnDrvmslug3eb = {
 
 // Metal Slug 3 (Last Bullet Remix, Hack)
 // Enter the portal with the following commands : Start + Button D
-// 20220613
+// 20220616
 static struct BurnRomInfo mslug3lwRomDesc[] = {
 	{ "256-ph1lw.p1",	0x100000, 0xf804b927, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-ph2lw.sp2",	0x400000, 0x7eed7c81, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "256-ph2lw.sp2",	0x400000, 0xed558b74, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "256-s1d.s1",		0x020000, 0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
 

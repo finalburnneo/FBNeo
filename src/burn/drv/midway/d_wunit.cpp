@@ -1079,8 +1079,8 @@ struct BurnDriver BurnDrvUmk3p = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, umk3pRomInfo, umk3pRomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
-	WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-	400, 256, 4, 3
+  WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
+  400, 256, 4, 3
 };
 
 // 2 On 2 Open Ice Challenge (rev 1.21)

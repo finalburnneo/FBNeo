@@ -42186,19 +42186,20 @@ struct BurnDriver BurnDrvmd_bigfd = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Sega Master System Brawl
+// Sega Master System Brawl (HB)
+// source: https://bonaf.itch.io/master-system-brawl
 static struct BurnRomInfo md_smsbrawlRomDesc[] = {
-	{ "SMSBrawl.bin", 0x178e2a, 0x7e4a52f3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Sega Master System Brawl (2021)(Bonaf).bin", 0x2a52e8, 0x8ad82cf6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_smsbrawl)
 STD_ROM_FN(md_smsbrawl)
 
 struct BurnDriver BurnDrvmd_smsbrawl = {
-	"md_smsbrawl", NULL, NULL, NULL, "2014",
-	"Sega Master System Brawl\0", NULL, "2014 Bonaf", "Sega Megadrive",
+	"md_smsbrawl", NULL, NULL, NULL, "2021",
+	"Sega Master System Brawl (HB)\0", NULL, "Bonaf", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_smsbrawlRomInfo, md_smsbrawlRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -43188,6 +43189,24 @@ struct BurnDriver BurnDrvmd_sor2sfv4 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Streets of Rage 2 - Fight'n Rage (Hack)
+static struct BurnRomInfo md_sor2fnrRomDesc[] = {
+	{ "Streets of Rage 2 - Fight'n Rage Hack (2021)(savok).md", 3623338, 0xade1923d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2fnr)
+STD_ROM_FN(md_sor2fnr)
+
+struct BurnDriver BurnDrvmd_sor2fnr = {
+	"md_sor2fnr", "md_sor2", NULL, NULL, "2021",
+	"Streets of Rage 2 - Fight'n Rage (Hack)\0", NULL, "Savok", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2fnrRomInfo, md_sor2fnrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Sega Sonic Bros. C2 Port, revision 2
 static struct BurnRomInfo md_ssonicbror2RomDesc[] = {
 	{ "SegaSonicBrosMDRev2.bin", 0xc0000, 0x91537567, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -43490,6 +43509,24 @@ struct BurnDriver BurnDrvmd_yazzie = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_yazzieRomInfo, md_yazzieRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Telethugs (HB)
+static struct BurnRomInfo md_telehugsRomDesc[] = {
+	{ "Telethugs (2020)(Menos Playstation).bin", 1310720, 0x742da49f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_telehugs)
+STD_ROM_FN(md_telehugs)
+
+struct BurnDriver BurnDrvmd_telehugs = {
+	"md_telehugs", NULL, NULL, NULL, "2020",
+	"Telethugs (HB)\0", NULL, "Menos Playstation", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
+	MegadriveGetZipName, md_telehugsRomInfo, md_telehugsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

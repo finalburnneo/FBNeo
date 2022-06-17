@@ -449,6 +449,7 @@ static struct BurnInputInfo WwfmaniaInputList[] = {
 
 STDINPUTINFO(Wwfmania)
 
+
 static struct BurnDIPInfo WwfmaniaDIPList[]=
 {
 	{0x1a, 0xff, 0xff, 0xfd, NULL		},
@@ -495,8 +496,8 @@ static struct BurnDIPInfo WwfmaniaDIPList[]=
 
 STDDIPINFO(Wwfmania)
 
-
 // Mortal Kombat 3 (rev 2.1)
+
 static struct BurnRomInfo mk3RomDesc[] = {
 	{ "mk321u54.bin",	0x080000, 0x9e344401, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "mk321u63.bin",	0x080000, 0x64d34776, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -547,6 +548,7 @@ struct BurnDriver BurnDrvMk3 = {
 
 
 // Mortal Kombat 3 (rev 2.0)
+
 static struct BurnRomInfo mk3r20RomDesc[] = {
 	{ "mk320u54.bin",	0x080000, 0x453da302, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "mk320u63.bin",	0x080000, 0xf8dc0600, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -597,6 +599,7 @@ struct BurnDriver BurnDrvMk3r20 = {
 
 
 // Mortal Kombat 3 (rev 1.0)
+
 static struct BurnRomInfo mk3r10RomDesc[] = {
 	{ "mk310u54.bin",	0x080000, 0x41829228, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "mk310u63.bin",	0x080000, 0xb074e1e8, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -647,6 +650,7 @@ struct BurnDriver BurnDrvMk3r10 = {
 
 
 // Mortal Kombat 3 (rev 1 chip label p4.0)
+
 static struct BurnRomInfo mk3p40RomDesc[] = {
 	{ "mk3p40.u54",		0x080000, 0x4dfb0748, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "mk3p40.u63",		0x080000, 0xf25a8083, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -697,6 +701,7 @@ struct BurnDriver BurnDrvMk3p40 = {
 
 
 // Ultimate Mortal Kombat 3 (rev 1.2)
+
 static struct BurnRomInfo umk3RomDesc[] = {
 	{ "l1.2_mortal_kombat_3_u54_ultimate.u54",	0x080000, 0x712b4db6, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "l1.2_mortal_kombat_3_u63_ultimate.u63",	0x080000, 0x6d301faf, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -749,6 +754,7 @@ struct BurnDriver BurnDrvUmk3 = {
 
 
 // Ultimate Mortal Kombat 3 (rev 1.1)
+
 static struct BurnRomInfo umk3r11RomDesc[] = {
 	{ "l1.1_mortal_kombat_3_u54_ultimate.u54",	0x080000, 0x8bb27659, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "l1.1_mortal_kombat_3_u63_ultimate.u63",	0x080000, 0xea731783, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -801,6 +807,7 @@ struct BurnDriver BurnDrvUmk3r11 = {
 
 
 // Ultimate Mortal Kombat 3 (rev 1.0)
+
 static struct BurnRomInfo umk3r10RomDesc[] = {
 	{ "l1.0_mortal_kombat_3_u54_ultimate.u54",	0x080000, 0xdfd735da, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "l1.0_mortal_kombat_3_u63_ultimate.u63",	0x080000, 0x2dff0c83, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -852,6 +859,7 @@ struct BurnDriver BurnDrvUmk3r10 = {
 };
 
 // Ultimate Mortal Kombat 3 Tournament Edition 2.0.042 (August 2018)
+
 static struct BurnRomInfo umk3teRomDesc[] = {
 	{ "umk3te.u54",	0x080000, 0xd0df2866, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "umk3te.u63",	0x080000, 0x42314fb4, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -904,6 +912,7 @@ struct BurnDriver BurnDrvUmk3te = {
 
 
 // Ultimate Mortal Kombat 3 Uk (2021-07-20)
+
 static struct BurnRomInfo umk3ukRomDesc[] = {
 	{ "umk3uk-u54.bin",			0x080000, 0xbc509bce, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "umk3uk-u63.bin",			0x080000, 0x2f900a03, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -961,6 +970,7 @@ struct BurnDriver BurnDrvUmk3uk = {
 
 
 // Ultimate Mortal Kombat 3 Cup Edition (2020-12-01)
+
 static struct BurnRomInfo umk3ucRomDesc[] = {
 	{ "umk3uc-u54.bin",			0x080000, 0x5010d92d, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "umk3uc-u63.bin",			0x080000, 0xc5342423, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1046,7 +1056,7 @@ static struct BurnRomInfo umk3pRomDesc[] = {
 	{ "mortal_kombat_iii_ultimate_u120_video_image.u120",	0x100000, 0x1c8144cd, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
 	{ "mortal_kombat_iii_ultimate_u119_video_image.u119",	0x100000, 0x5f10c543, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
 	{ "mortal_kombat_iii_ultimate_u118_video_image.u118",	0x100000, 0xde0c4488, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
-	
+
 	{ "umk3plus-u117.bin",									0x080000, 0x52EE547E, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 0) }, // 22
 	{ "umk3plus-u116.bin",									0x080000, 0xF6DF5C98, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 1) }, // 23
 	{ "umk3plus-u115.bin",									0x080000, 0xE003A51B, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 2) }, // 24
@@ -1056,7 +1066,7 @@ static struct BurnRomInfo umk3pRomDesc[] = {
 	{ "mortal_kombat_iii_ultimate_u112_video_image.u112",	0x100000, 0xb5a46488, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 27
 	{ "mortal_kombat_iii_ultimate_u111_video_image.u111",	0x100000, 0xa87523c8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 28
 	{ "mortal_kombat_iii_ultimate_u110_video_image.u110",	0x100000, 0x0038f205, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 29
-	
+
 	{ "463_mk3_ultimate.u64",								0x1009, 0x4f425218, 0 | BRF_OPT },
 };
 
@@ -1069,12 +1079,12 @@ struct BurnDriver BurnDrvUmk3p = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, umk3pRomInfo, umk3pRomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
-    WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+  WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
+  400, 256, 4, 3
 };
 
-
 // 2 On 2 Open Ice Challenge (rev 1.21)
+
 static struct BurnRomInfo openiceRomDesc[] = {
 	{ "open_ice_l1.21.u54",	0x080000, 0xe4225284, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "open_ice_l1.21.u63",	0x080000, 0x97d308a3, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1121,6 +1131,7 @@ struct BurnDriver BurnDrvOpenice = {
 
 // 2 On 2 Open Ice Challenge (rev 1.2A)
 /* PCB had alternate ROM labels showing the dates & checksums */
+
 static struct BurnRomInfo openiceaRomDesc[] = {
 	{ "open_ice_781c_r1.2a.u54",	0x080000, 0x63296053, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "open_ice_6937_r1.2a.u63",	0x080000, 0x04441034, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1166,6 +1177,7 @@ struct BurnDriver BurnDrvOpenicea = {
 
 
 // NBA Hangtime (ver L1.3 10/10/96)
+
 static struct BurnRomInfo nbahangtRomDesc[] = {
 	{ "l1.3_nba_hangtime_u_54_game_rom.u54",	0x080000, 0xfd9ccca2, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "l1.3_nba_hangtime_u_63_game_rom.u63",	0x080000, 0x57de886f, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1218,6 +1230,7 @@ struct BurnDriver BurnDrvNbahangt = {
 
 
 // NBA Hangtime (ver M1.3 10/10/96)
+
 static struct BurnRomInfo nbahangtm13RomDesc[] = {
 	{ "m1.3_nba_hangtime_u_54_game_rom.u54",	0x080000, 0x3ee3a9f4, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "m1.3_nba_hangtime_u_63_game_rom.u63",	0x080000, 0x42e6aeca, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1270,6 +1283,7 @@ struct BurnDriver BurnDrvNbahangtm13 = {
 
 
 // NBA Hangtime (ver L1.2 8/29/96)
+
 static struct BurnRomInfo nbahangtl12RomDesc[] = {
 	{ "l1.2_nba_hangtime_u_54_game_rom.u54",	0x080000, 0xc90dc3cd, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "l1.2_nba_hangtime_u_63_game_rom.u63",	0x080000, 0x1883c461, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1322,6 +1336,7 @@ struct BurnDriver BurnDrvNbahangtl12 = {
 
 
 // NBA Hangtime (ver M1.2 8/29/96)
+
 static struct BurnRomInfo nbahangtm12RomDesc[] = {
 	{ "m1.2_nba_hangtime_u_54_game_rom.u54",	0x080000, 0x3be47f64, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "m1.2_nba_hangtime_u_63_game_rom.u63",	0x080000, 0xba4344ae, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1374,6 +1389,7 @@ struct BurnDriver BurnDrvNbahangtm12 = {
 
 
 // NBA Hangtime (ver L1.1 4/16/96)
+
 static struct BurnRomInfo nbahangtl11RomDesc[] = {
 	{ "l1.1_nba_hangtime_u_54_game_rom.u54",	0x080000, 0xc2875d98, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "l1.1_nba_hangtime_u_63_game_rom.u63",	0x080000, 0x6f4728c3, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1426,6 +1442,7 @@ struct BurnDriver BurnDrvNbahangtl11 = {
 
 
 // NBA Hangtime (ver M1.1 4/16/96)
+
 static struct BurnRomInfo nbahangtm11RomDesc[] = {
 	{ "m1.1_nba_hangtime_u_54_game_rom.u54",	0x080000, 0x113b37f4, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "m1.1_nba_hangtime_u_63_game_rom.u63",	0x080000, 0xbeaa3e92, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1479,12 +1496,11 @@ struct BurnDriver BurnDrvNbahangtm11 = {
 
 // NBA Maximum Hangtime (ver L1.03 06/09/97)
 /*
-The NBA Maximum Hangtime sets are a program ROM update for NBA Hangtime.
-The MAX sets use all the same Music/SPCH ROMs,
-Image ROMs and even the same security PIC chip.
+The NBA Maximum Hangtime sets are a program ROM update for NBA Hangtime.  The MAX sets use all the same Music/SPCH ROMs,
+  Image ROMs and even the same security PIC chip.
 The new MAX sets boast a 1997 player line up and during the atrack mode state: "All NBA team Rosters accurate as of 11/1/96"
 There are known "M" versions (EX: MAX HANGTIME - VER M1.0 11/08/96 ), but it's not known what the differences are between
-those and a standard "L" version.  In fact the ROM labels specifically state they are "L" Version ROMs
+  those and a standard "L" version.  In fact the ROM labels specifically state they are "L" Version ROMs
 */
 
 static struct BurnRomInfo nbamhtRomDesc[] = {
@@ -1539,6 +1555,7 @@ struct BurnDriver BurnDrvNbamht = {
 
 
 // NBA Maximum Hangtime (ver L1.0 11/08/96)
+
 static struct BurnRomInfo nbamhtl10RomDesc[] = {
 	{ "l1.0_maximum_hangtime_u54_l_version.u54",	0x080000, 0xdfb6b3ae, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "l1.0_maximum_hangtime_u63_l_version.u63",	0x080000, 0x78da472c, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1591,6 +1608,7 @@ struct BurnDriver BurnDrvNbamhtl10 = {
 
 
 // NBA Maximum Hangtime (ver M1.0 11/08/96)
+
 static struct BurnRomInfo nbamhtm10RomDesc[] = {
 	{ "m1.0_maximum_hangtime_u54_m_version.u54",	0x080000, 0xe4e665d5, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "m1.0_maximum_hangtime_u63_m_version.u63",	0x080000, 0x51cfda55, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1643,6 +1661,7 @@ struct BurnDriver BurnDrvNbamhtm10 = {
 
 
 // NBA Maximum Hangtime (ver L0.9 10/30/96)
+
 static struct BurnRomInfo nbamhtpRomDesc[] = {
 	{ "l0.9_maximum_hangtime_u54_l_version.u54",	0x080000, 0x0fbed60e, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "l0.9_maximum_hangtime_u63_l_version.u63",	0x080000, 0xa064645a, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1695,6 +1714,7 @@ struct BurnDriver BurnDrvNbamhtp = {
 
 
 // Rampage: World Tour (rev 1.3)
+
 static struct BurnRomInfo rmpgwtRomDesc[] = {
 	{ "1.3_rampage_world_u54_game.u54",			0x080000, 0x2a8f6e1e, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "1.3_rampage_world_u63_game.u63",			0x080000, 0x403ae41e, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1742,6 +1762,7 @@ struct BurnDriver BurnDrvRmpgwt = {
 
 
 // Rampage: World Tour (rev 1.1)
+
 static struct BurnRomInfo rmpgwt11RomDesc[] = {
 	{ "1.1_rampage_world_u54_game.u54",			0x080000, 0x3aa514eb, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "1.1_rampage_world_u63_game.u63",			0x080000, 0x031c908f, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1789,6 +1810,7 @@ struct BurnDriver BurnDrvRmpgwt11 = {
 
 
 // WWF: Wrestlemania (rev 1.30 08/10/95)
+
 static struct BurnRomInfo wwfmaniaRomDesc[] = {
 	{ "wwf_game_rom_l1.30.u54",	0x080000, 0xeeb7bf58, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "wwf_game_rom_l1.30.u63",	0x080000, 0x09759529, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1834,6 +1856,7 @@ struct BurnDriver BurnDrvWwfmania = {
 
 
 // WWF: Wrestlemania (rev 1.20 08/02/95)
+
 static struct BurnRomInfo wwfmaniabRomDesc[] = {
 	{ "wwf_game_rom_l1.20.u54",	0x080000, 0x1b2dce48, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "wwf_game_rom_l1.20.u63",	0x080000, 0x1262f0bb, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1879,6 +1902,7 @@ struct BurnDriver BurnDrvWwfmaniab = {
 
 
 // WWF: Wrestlemania (rev 1.1 07/11/95)
+
 static struct BurnRomInfo wwfmaniacRomDesc[] = {
 	{ "wwf_game_rom_l1.10.u54",	0x080000, 0xae1a3195, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "wwf_game_rom_l1.10.u63",	0x080000, 0xd809eb60, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1925,6 +1949,7 @@ struct BurnDriver BurnDrvWwfmaniac = {
 
 
 // WWF: Wrestlemania (proto 2.01 06/07/95)
+
 static struct BurnRomInfo wwfmaniapRomDesc[] = {
 	{ "wwf_game_rom_p2.01.u54",	0x080000, 0xa3d0b6d1, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "wwf_game_rom_p2.01.u63",	0x080000, 0x22b80ae4, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1972,36 +1997,29 @@ struct BurnDriver BurnDrvWwfmaniap = {
 static struct BurnRomInfo wwfmanacRomDesc[] = {
 	{ "wwf.54",		0x080000, 0xFFD1ABC6, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "wwf.63",		0x080000, 0x41260903, 1 | BRF_PRG | BRF_ESS }, //  1
-
 	{ "wwf.2",		0x100000, 0xa9acb250, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
 	{ "wwf.3",		0x100000, 0x9442b6c9, 2 | BRF_PRG | BRF_ESS }, //  3
 	{ "wwf.4",		0x100000, 0xcee78fac, 2 | BRF_PRG | BRF_ESS }, //  4
 	{ "wwf.5",		0x100000, 0x5b31fd40, 2 | BRF_PRG | BRF_ESS }, //  5
-
 	{ "wwf.133",	0x100000, 0x5e1b1e3d, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
 	{ "wwf.132",	0x100000, 0x5943b3b2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
 	{ "wwf.131",	0x100000, 0x0815db22, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
 	{ "wwf.130",	0x100000, 0x9ee9a145, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
-
 	{ "wwf.129",	0x100000, 0xc644c2f4, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10
 	{ "wwf.128",	0x100000, 0xfcda4e9a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
 	{ "wwf.127",	0x100000, 0x45be7428, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
 	{ "wwf.126",	0x100000, 0xeaa276a8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
-
 	{ "wwf.125",	0x100000, 0xa19ebeed, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14
 	{ "wwf.124",	0x100000, 0xdc7d3dbb, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
 	{ "wwf.123",	0x100000, 0xe0ade56f, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
 	{ "wwf.122",	0x100000, 0x2800c78d, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
-
 	{ "wwf.121",	0x100000, 0xa28ffcba, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
 	{ "wwf.120",	0x100000, 0x3a05d371, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
 	{ "wwf.119",	0x100000, 0x97ffa659, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
 	{ "wwf.118",	0x100000, 0x46668e97, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
 };
-
 STD_ROM_PICK(wwfmanac)
 STD_ROM_FN(wwfmanac)
-
 struct BurnDriver BurnDrvWwfmanac = {
 	"wwfmanac", "wwfmania", NULL, NULL, "1995",
 	"WWF: Wrestlemania (Acid Clown Edition 2020.12.02 SP2)\0", NULL, "Midway", "MIDWAY Wolf-Unit",

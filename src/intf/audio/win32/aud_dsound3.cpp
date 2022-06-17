@@ -23,6 +23,16 @@ static int nAudBufferWrite = 0;
 static int nDSoundFps;								// Application fps * 100
 static long nDSoundVol = 0;
 
+static int DxSoundBufferDiff(int write, int read, int len)
+{
+	if (write >= read) {
+		return (write - read) > (len/2) ? read + len - write : write - read;
+	}
+	else {
+		return (read - write) > (len/2) ? write + len - read : read - write;
+	}
+}
+
 int DxBlankSound()
 {
 	void *pData1 = NULL, *pData2 = NULL;
@@ -57,7 +67,7 @@ static int DxSoundInit()
 
 	// Calculate the Seg Length and Loop length (round to nearest sample)
 	nAudSegLen = (nAudSampleRate[0] * 100 + (nDSoundFps >> 1)) / nDSoundFps;
-	nAudAllocSegLen = nAudSegLen << 2;
+	nAudAllocSegLen = nAudSegLen << 2; // 16 bit, 2 channels
 	nAudBufferLen = nAudBufferCount * nAudAllocSegLen;
 
 	// Make the format of the sound
@@ -138,23 +148,13 @@ static int DxSoundExit()
 	return 0;
 }
 
-static int AudioBufferDiff(int write, int read, int len)
-{
-	if (write >= read) {
-		return (write - read) > (len/2) ? read + len - write : write - read;
-	}
-	else {
-		return (read - write) > (len/2) ? write + len - read : read - write;
-	}
-}
-
 static int DxSoundCheck()
 {
 	DWORD nPlay = 0, nWrite = 0;
 	pdsbLoop->GetCurrentPosition(&nPlay, &nWrite);
 	nAudBufferRead = nPlay / nAudAllocSegLen;
 
-	int nDiff = AudioBufferDiff(nAudBufferWrite, nAudBufferRead, nAudBufferCount);
+	int nDiff = DxSoundBufferDiff(nAudBufferWrite, nAudBufferRead, nAudBufferCount);
 	if (nDiff < 0) {
 		//VidDebug("Dry Buffers", nDiff, nAudBufferRead);
 		nAudBufferWrite = nAudBufferRead;
@@ -182,8 +182,8 @@ static int DxSoundFrame()
 	pdsbLoop->GetCurrentPosition(&nPlay, &nWrite);
 	nAudBufferRead = nPlay / nAudAllocSegLen;
 
-	int nDiff = AudioBufferDiff(nAudBufferWrite, nAudBufferRead, nAudBufferCount);
-	if (nDiff > (nAudSegCount - 1)) {
+	int nDiff = DxSoundBufferDiff(nAudBufferWrite, nAudBufferRead, nAudBufferCount);
+	if (nDiff > (nAudSegCount[0] - 1)) {
 		//VidDebug("Writing too fast", nDiff, 0);
 		return 0;
 	}
@@ -256,7 +256,7 @@ static int DxGetSettings(InterfaceInfo* pInfo)
 {
 	TCHAR szString[MAX_PATH] = _T("");
 
-	_sntprintf(szString, MAX_PATH, _T("Audio is delayed by approx. %ims"), int(100000.0 / (nDSoundFps / (nAudSegCount - 1.0))));
+	_sntprintf(szString, MAX_PATH, _T("Audio is delayed by approx. %ims"), int(100000.0 / (nDSoundFps / (nAudSegCount[0] - 1.0))));
 	IntInfoAddStringModule(pInfo, szString);
 
 	return 0;

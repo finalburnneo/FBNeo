@@ -1,5 +1,6 @@
 // Run module
 #include "burner.h"
+#include <string.h>
 
 int bRunPause = 0;
 int bAltPause = 0;
@@ -15,6 +16,7 @@ int kNetVersion = NET_VERSION;			// Network version
 int kNetGame = 0;						// Non-zero if network is being used
 int kNetSpectator = 0;					// Non-zero if network replay is active
 int kNetLua = 1;						// Allow lua in network game
+char kNetQuarkId[128] = {};				// Network quark id
 
 #ifdef FBNEO_DEBUG
 int counter;								// General purpose variable used when debugging
@@ -40,6 +42,33 @@ void EmulatorAppDoFast(bool dofast) {
 	bAppDoFast = dofast;
 	bAppDoFastToggled = 0;
 }
+
+struct lua_hotkey_handler {
+	int prev_value;
+	UINT8 * macroSystemLuaHotkey_ref;
+	UINT8 macroSystemLuaHotkey_val;
+	std::string hotkey_name;
+
+	lua_hotkey_handler(
+		UINT8 * _macroSystemLuaHotkey_ref,
+		UINT8 _macroSystemLuaHotkey_val,
+		int _prev_value = 0,
+		std::string hotkey_name = "lua_hotkey"
+	) : macroSystemLuaHotkey_ref(_macroSystemLuaHotkey_ref) {}
+
+};
+
+std::vector<lua_hotkey_handler> hotkey_debounces = {
+	{ &macroSystemLuaHotkey1, macroSystemLuaHotkey1, 0 },
+	{ &macroSystemLuaHotkey2, macroSystemLuaHotkey2, 0 },
+	{ &macroSystemLuaHotkey3, macroSystemLuaHotkey3, 0 },
+	{ &macroSystemLuaHotkey4, macroSystemLuaHotkey4, 0 },
+	{ &macroSystemLuaHotkey5, macroSystemLuaHotkey5, 0 },
+	{ &macroSystemLuaHotkey6, macroSystemLuaHotkey6, 0 },
+	{ &macroSystemLuaHotkey7, macroSystemLuaHotkey7, 0 },
+	{ &macroSystemLuaHotkey8, macroSystemLuaHotkey8, 0 },
+	{ &macroSystemLuaHotkey9, macroSystemLuaHotkey9, 0 },
+};
 
 static void CheckSystemMacros() // These are the Pause / FFWD macros added to the input dialog
 {
@@ -68,6 +97,19 @@ static void CheckSystemMacros() // These are the Pause / FFWD macros added to th
 		} else {
 			prevFrame = 0;
 		}
+		// Lua hotkeys
+		for (int hotkey_num = 0; hotkey_num <= hotkey_debounces.size() - 1; hotkey_num++) {
+			// Use the reference to the hotkey variable in order to update our stored value
+			// Because the hotkeys are hard coded into variables this allows us to iterate on them
+			hotkey_debounces[hotkey_num].macroSystemLuaHotkey_val = *hotkey_debounces[hotkey_num].macroSystemLuaHotkey_ref;
+			if (
+				hotkey_debounces[hotkey_num].macroSystemLuaHotkey_val &&
+				hotkey_debounces[hotkey_num].macroSystemLuaHotkey_val != hotkey_debounces[hotkey_num].prev_value
+				) {
+				CallRegisteredLuaFunctions((LuaCallID)(LUACALL_HOTKEY_1 + hotkey_num));
+			}
+			hotkey_debounces[hotkey_num].prev_value = hotkey_debounces[hotkey_num].macroSystemLuaHotkey_val;
+		}
 	}
 	// Load State
 	if (macroSystemLoadState && macroSystemLoadState != prevLState) {
@@ -90,6 +132,7 @@ static int GetInput(bool bCopy)
 {
 	// get input
 	InputMake(bCopy);
+	GameInpClearOpposites(bCopy);
 
 	if (!kNetGame) {
 		CheckSystemMacros();
@@ -534,6 +577,40 @@ int RunMessageLoop()
 								}
 								break;
 
+							// Open (L)ua Dialog
+							case 'L': {
+								LuaOpenDialog();
+								break;
+							}
+							// (T)erminate Lua Window
+							case 'T': {
+								if (kNetLua) {
+									PostMessage(LuaConsoleHWnd, WM_CLOSE, 0, 0);
+								}
+								break;
+							}
+							// (E)xecute Lua Script
+							case 'E': {
+								if (kNetLua) {
+									PostMessage(LuaConsoleHWnd, WM_COMMAND, IDC_BUTTON_LUARUN, 0);
+								}
+								break;
+							}
+							// (P)ause Lua Scripting (This is the stop button)
+							case 'P': {
+								if (kNetLua) {
+									PostMessage(LuaConsoleHWnd, WM_COMMAND, IDC_BUTTON_LUASTOP, 0);
+								}
+								break;
+							}
+							// (B)rowse Lua Scripts
+							case 'B': {
+								if (kNetLua) {
+									PostMessage(LuaConsoleHWnd, WM_COMMAND, IDC_BUTTON_LUABROWSE, 0);
+								}
+								break;
+							}
+
 							// 'Silence' & 'Sound Restored' Code (added by CaptainCPS-X)
 							case 'S': {
 								TCHAR buffer[60];
@@ -549,8 +626,10 @@ int RunMessageLoop()
 								}
 								if (AudSoundSetVolume() == 0) {
 									VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_SOUND_NOVOLUME, true));
+									VidOverlayShowVolume(FBALoadStringEx(hAppInst, IDS_SOUND_NOVOLUME, true));
 								} else {
 									VidSNewShortMsg(buffer);
+									VidOverlayShowVolume(buffer);
 								}
 								break;
 							}
@@ -565,12 +644,13 @@ int RunMessageLoop()
 
 								if (AudSoundSetVolume() == 0) {
 									VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_SOUND_NOVOLUME, true));
+									VidOverlayShowVolume(FBALoadStringEx(hAppInst, IDS_SOUND_NOVOLUME, true));
 								} else {
 									TCHAR buffer[60];
 									_stprintf(buffer, FBALoadStringEx(hAppInst, IDS_SOUND_VOLUMESET, true), nAudVolume / 100);
 									VidSNewShortMsg(buffer);
+									VidOverlayShowVolume(buffer);
 								}
-								VidOverlayShowVolume(nAudVolume);
 								break;
 							}
 							case VK_OEM_MINUS: {
@@ -583,12 +663,13 @@ int RunMessageLoop()
 
 								if (AudSoundSetVolume() == 0) {
 									VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_SOUND_NOVOLUME, true));
+									VidOverlayShowVolume(FBALoadStringEx(hAppInst, IDS_SOUND_NOVOLUME, true));
 								} else {
 									TCHAR buffer[60];
 									_stprintf(buffer, FBALoadStringEx(hAppInst, IDS_SOUND_VOLUMESET, true), nAudVolume / 100);
 									VidSNewShortMsg(buffer);
+									VidOverlayShowVolume(buffer);
 								}
-								VidOverlayShowVolume(nAudVolume);
 								break;
 							}
 							case VK_MENU: {
@@ -599,6 +680,10 @@ int RunMessageLoop()
 							case '3':
 							case '4':
 							case '5':
+							case '6':
+							case '7':
+							case '8':
+							case '9':
 								if (kNetLua) {
 									CallRegisteredLuaFunctions((LuaCallID)(LUACALL_HOTKEY_1 + Msg.wParam - '1'));
 								}
@@ -701,8 +786,8 @@ int RunMessageLoop()
 									if (!bReplayFrameCounterDisplay) {
 										VidSKillTinyMsg();
 									}
-								} else if (!bEditActive) { // Backspace: toggles FPS counter
-									bShowFPS = bShowFPS ? 0 : 1;
+								} else if (!bEditActive) { // Backspace: toggles FPS
+									bShowFPS = (bShowFPS + 1) % (kNetGame ? 3 : 2);
 									DisplayFPS();
 								}
 								break;
@@ -716,7 +801,7 @@ int RunMessageLoop()
 								break;
 
 							case VK_TAB:
-								if (GetAsyncKeyState(VK_SHIFT)) {
+								if (GetAsyncKeyState(VK_SHIFT) & 0x80000000) {
 									nVidRunahead = (nVidRunahead + 1) % 3;
 									MenuUpdate();
 								}
@@ -735,6 +820,66 @@ int RunMessageLoop()
 									MenuUpdate();
 								}
 								break;
+							// 'Silence' & 'Sound Restored' Code (added by CaptainCPS-X)
+							case VK_MULTIPLY: if (bKeypadVolume) {
+								TCHAR buffer[60];
+								bMute = !bMute;
+
+								if (bMute) {
+									nOldAudVolume = nAudVolume;
+									nAudVolume = 0;// mute sound
+									_stprintf(buffer, FBALoadStringEx(hAppInst, IDS_SOUND_MUTE, true), nAudVolume / 100);
+								} else {
+									nAudVolume = nOldAudVolume;// restore volume
+									_stprintf(buffer, FBALoadStringEx(hAppInst, IDS_SOUND_MUTE_OFF, true), nAudVolume / 100);
+								}
+								if (AudSoundSetVolume() == 0) {
+									VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_SOUND_NOVOLUME, true));
+									VidOverlayShowVolume(FBALoadStringEx(hAppInst, IDS_SOUND_NOVOLUME, true));
+								} else {
+									VidSNewShortMsg(buffer);
+									VidOverlayShowVolume(buffer);
+								}
+								break;
+							}
+							case VK_ADD: if (bKeypadVolume) {
+								if (bMute) break; // if mute, not do this
+								nOldAudVolume = nAudVolume;
+								nAudVolume += 500;
+								if (nAudVolume > 10000) {
+									nAudVolume = 10000;
+								}
+
+								if (AudSoundSetVolume() == 0) {
+									VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_SOUND_NOVOLUME, true));
+									VidOverlayShowVolume(FBALoadStringEx(hAppInst, IDS_SOUND_NOVOLUME, true));
+								} else {
+									TCHAR buffer[60];
+									_stprintf(buffer, FBALoadStringEx(hAppInst, IDS_SOUND_VOLUMESET, true), nAudVolume / 100);
+									VidSNewShortMsg(buffer);
+									VidOverlayShowVolume(buffer);
+								}
+								break;
+							}
+							case VK_SUBTRACT: if (bKeypadVolume) {
+								if (bMute) break; // if mute, not do this
+								nOldAudVolume = nAudVolume;
+								nAudVolume -= 500;
+								if (nAudVolume < 0) {
+									nAudVolume = 0;
+								}
+
+								if (AudSoundSetVolume() == 0) {
+									VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_SOUND_NOVOLUME, true));
+									VidOverlayShowVolume(FBALoadStringEx(hAppInst, IDS_SOUND_NOVOLUME, true));
+								} else {
+									TCHAR buffer[60];
+									_stprintf(buffer, FBALoadStringEx(hAppInst, IDS_SOUND_VOLUMESET, true), nAudVolume / 100);
+									VidSNewShortMsg(buffer);
+									VidOverlayShowVolume(buffer);
+								}
+								break;
+							}
 						}
 					}
 				} else {

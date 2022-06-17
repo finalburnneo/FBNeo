@@ -3525,8 +3525,7 @@ static INT32 DrvFrame()
 		memset (DrvInputs, 0xff, 3 * sizeof(INT16));
 
 		// @FC
-		extern int kNetGame;
-		extern int kNetSpectator;
+		extern int kNetGame, kNetSpectator;
 		if (kNetGame || kNetSpectator) {
 			DrvDips[1] = 0xfe;
 			DrvDips[4] = 0x04;

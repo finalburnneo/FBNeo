@@ -11,7 +11,7 @@ static IXAudio2SourceVoice* pSourceVoice = NULL;
 static XAUDIO2_BUFFER sAudioBuffer;
 
 static BYTE* pAudioBuffers = NULL;
-static int nAudioBuffer = 0;
+static int nAudioBufferWrite = 0;
 
 static int nXAudio2Fps = 0;					// Application fps * 100
 static float nXAudio2Vol = 1.0f;
@@ -48,7 +48,7 @@ static int XAudio2Exit();
 static int XAudio2BlankSound()
 {
 	if (pAudioBuffers) {
-		memset(pAudioBuffers, 0, nAudSegCount * nAudAllocSegLen);
+		memset(pAudioBuffers, 0, nAudSegCount[1] * nAudAllocSegLen);
 	}
 
 	// Also blank the nAudNextSound buffer
@@ -125,12 +125,12 @@ static int XAudio2Init()
 
 	// create own buffers to store sound data because it must not be
 	// manipulated while the voice plays from it
-	pAudioBuffers = (BYTE *)malloc(nAudSegCount * nAudAllocSegLen);
+	pAudioBuffers = (BYTE *)malloc(nAudSegCount[1] * nAudAllocSegLen);
 	if (pAudioBuffers == NULL) {
 		XAudio2Exit();
 		return 1;
 	}
-	nAudioBuffer = 0;
+	nAudioBufferWrite = 0;
 
 	DspInit();
 
@@ -174,40 +174,6 @@ static int XAudio2Check()
 		return 1;
 	}
 
-	XAUDIO2_VOICE_STATE vState;
-	pSourceVoice->GetState(&vState);
-
-	if (vState.BuffersQueued < (unsigned int)(nAudSegCount - 1)) {
-		if (vState.BuffersQueued < 3) {
-			// buffers ran dry
-			//VidDebug("Close to dry Buffers", vState.BuffersQueued, 0);
-
-			// dsp update
-			if (nAudDSPModule[1] & 1) {
-				if (bRunPause)
-					AudWriteSilence();
-				else
-					DspDo(nAudNextSound, nAudSegLen);
-			}
-
-			// copy & protect the audio data in own memory area while playing it
-			if (kNetSpectator) {
-				memset(&pAudioBuffers[nAudioBuffer * nAudAllocSegLen], 0, nAudAllocSegLen);
-			}
-			else {
-				memcpy(&pAudioBuffers[nAudioBuffer * nAudAllocSegLen], nAudNextSound, nAudAllocSegLen);
-			}
-
-			sAudioBuffer.AudioBytes = nAudAllocSegLen;
-			sAudioBuffer.pAudioData = &pAudioBuffers[nAudioBuffer * nAudAllocSegLen];
-
-			nAudioBuffer++;
-			nAudioBuffer %= (nAudSegCount);
-
-			pSourceVoice->SubmitSourceBuffer(&sAudioBuffer); // send buffer to queue
-		}
-	}
-
 	return 0;
 }
 
@@ -215,27 +181,24 @@ static int XAudio2Frame()
 {
 	XAUDIO2_VOICE_STATE vState;
 	pSourceVoice->GetState(&vState);
-	if (vState.BuffersQueued == (nAudSegCount - 1)) {
+
+	if (vState.BuffersQueued >= (nAudSegCount[1] - 1)) {
 		// No more buffers allowed to queue
 		return 0;
 	}
 
 	// dsp update
 	if (nAudDSPModule[1] & 1) {
-		if (bRunPause)
-			AudWriteSilence();
-		else
-			DspDo(nAudNextSound, nAudSegLen);
+		DspDo(nAudNextSound, nAudSegLen);
 	}
 
 	// copy & protect the audio data in own memory area while playing it
-	memcpy(&pAudioBuffers[nAudioBuffer * nAudAllocSegLen], nAudNextSound, nAudAllocSegLen);
+	memcpy(&pAudioBuffers[nAudioBufferWrite * nAudAllocSegLen], nAudNextSound, nAudAllocSegLen);
 
 	sAudioBuffer.AudioBytes = nAudAllocSegLen;
-	sAudioBuffer.pAudioData = &pAudioBuffers[nAudioBuffer * nAudAllocSegLen];
+	sAudioBuffer.pAudioData = &pAudioBuffers[nAudioBufferWrite * nAudAllocSegLen];
 
-	nAudioBuffer++;
-	nAudioBuffer %= (nAudSegCount);
+	nAudioBufferWrite = (nAudioBufferWrite + 1) % nAudSegCount[1];
 
 	pSourceVoice->SubmitSourceBuffer(&sAudioBuffer); // send buffer to queue
 
@@ -297,7 +260,7 @@ static int XAudio2SetVolume()
 static int XAudio2GetSettings(InterfaceInfo* pInfo)
 {
 	TCHAR szString[MAX_PATH] = _T("");
-	_sntprintf(szString, MAX_PATH, _T("Audio is delayed by approx. %ims"), int(100000.0 / (nXAudio2Fps / (nAudSegCount - 1.0))));
+	_sntprintf(szString, MAX_PATH, _T("Audio is delayed by approx. %ims"), int(100000.0 / (nXAudio2Fps / (nAudSegCount[1] - 1.0))));
 	IntInfoAddStringModule(pInfo, szString);
 	return 0;
 }

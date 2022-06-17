@@ -121,6 +121,8 @@ int ConfigAppLoad()
 		VAR(bVidScanlines);
 		VAR(nVidScanIntensity);
 		VAR(bMonitorAutoCheck);
+		VAR(bKeypadVolume);
+		VAR(bHitboxSOCD);
 		VAR(bForce60Hz);
 		VAR(bAlwaysDrawFrames);
 		VAR(bShowFPS);
@@ -174,13 +176,18 @@ int ConfigAppLoad()
 
 		// Sound
 		VAR(nAudSelect);
-		VAR(nAudSegCount);
+		VAR(nAudExclusive);
 		VAR(nInterpolation);
 		VAR(nFMInterpolation);
 		VAR(nAudSampleRate[0]);
 		VAR(nAudDSPModule[0]);
 		VAR(nAudSampleRate[1]);
 		VAR(nAudDSPModule[1]);
+		VAR(nAudSampleRate[2]);
+		VAR(nAudDSPModule[2]);
+		VAR(nAudSegCount[0]);
+		VAR(nAudSegCount[1]);
+		VAR(nAudSegCount[2]);
 
 		// Other
 		STR(szPlaceHolder);
@@ -462,6 +469,10 @@ int ConfigAppSave()
 	VAR64(nVidBlitterOpt[4]);
 	_ftprintf(h, _T("\n// If non-zero, attempt to auto-detect the monitor resolution and aspect ratio\n"));
 	VAR(bMonitorAutoCheck);
+	_ftprintf(h, _T("\n// If non-zero, keypad +/-/* will be used for volume shortcuts\n"));
+	VAR(bKeypadVolume);
+	_ftprintf(h, _T("\n// If non-zero, use Hitbox style for SOCD\n"));
+	VAR(bHitboxSOCD);
 	_ftprintf(h, _T("\n// If non-zero, force all games to use a 60Hz refresh rate\n"));
 	VAR(bForce60Hz);
 	_ftprintf(h, _T("\n// If zero, skip frames when needed to keep the emulation running at full speed\n"));
@@ -537,8 +548,8 @@ int ConfigAppSave()
 	_ftprintf(h, _T("// --- Sound ------------------------------------------------------------------\n"));
 	_ftprintf(h, _T("\n// The selected audio plugin\n"));
 	VAR(nAudSelect);
-	_ftprintf(h, _T("\n// Number of frames in sound buffer (= sound lag)\n"));
-	VAR(nAudSegCount);
+	_ftprintf(h, _T("\n// Use exclusive mode for audio driver (otherwise share device with system)\n"));
+	VAR(nAudExclusive);
 	_ftprintf(h, _T("\n// The order of PCM/ADPCM interpolation\n"));
 	VAR(nInterpolation);
 	_ftprintf(h, _T("\n// The order of FM interpolation\n"));
@@ -547,14 +558,26 @@ int ConfigAppSave()
 	_ftprintf(h, _T("// --- DirectSound plugin settings --------------------------------------------\n"));
 	_ftprintf(h, _T("\n// Sample rate\n"));
 	VAR(nAudSampleRate[0]);
+	_ftprintf(h, _T("\n// Number of frames in sound buffer (= sound lag)\n"));
+	VAR(nAudSegCount[0]);
 	_ftprintf(h, _T("\n// DSP module to use for sound enhancement: 0 = none, 1 = low-pass filter\n"));
 	VAR(nAudDSPModule[0]);
 	_ftprintf(h, _T("\n"));
 	_ftprintf(h, _T("// --- XAudio2 plugin settings ------------------------------------------------\n"));
 	_ftprintf(h, _T("\n// Sample rate\n"));
 	VAR(nAudSampleRate[1]);
+	_ftprintf(h, _T("\n// Number of frames in sound buffer (= sound lag)\n"));
+	VAR(nAudSegCount[1]);
 	_ftprintf(h, _T("\n// DSP module to use for sound enhancement: 0 = none, 1 = low-pass filter, 2 = reverb\n"));
 	VAR(nAudDSPModule[1]);
+	_ftprintf(h, _T("\n"));
+	_ftprintf(h, _T("// --- Wasapi plugin settings ------------------------------------------------\n"));
+	_ftprintf(h, _T("\n// Sample rate\n"));
+	VAR(nAudSampleRate[2]);
+	_ftprintf(h, _T("\n// Number of frames in sound buffer (= sound lag)\n"));
+	VAR(nAudSegCount[2]);
+	_ftprintf(h, _T("\n// DSP module to use for sound enhancement: 0 = none, 1 = low-pass filter, 2 = reverb\n"));
+	VAR(nAudDSPModule[2]);
 
 	_ftprintf(h, _T("\n\n\n"));
 	_ftprintf(h, _T("// --- UI ---------------------------------------------------------------------\n"));

@@ -2023,7 +2023,7 @@ INT32 VidSSetStats(double fps, INT32 ping, INT32 delay)
 		swprintf(szPing, _T("%2.2ffps"), fps);
 	}
 	else {
-		swprintf(szPing, _T("%2.2ffps | %dms (%d-%d)"), fps, ping, delay, nVidRunahead);
+		swprintf(szPing, _T("%2.2ffps d%d/ra%d p%dms"), fps, delay, nVidRunahead, ping);
 	}
 
 	bDrawTV = true;

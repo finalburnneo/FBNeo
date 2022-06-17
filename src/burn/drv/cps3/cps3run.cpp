@@ -220,18 +220,26 @@ void cps3_flash_write(flash_chip * chip, UINT32 addr, UINT32 data)
 
 inline static void Cps3ClearOpposites(UINT16* nJoystickInputs)
 {
-	if ((*nJoystickInputs & 0x03) == 0x03) {
-		*nJoystickInputs &= ~0x03;
-	}
-	if ((*nJoystickInputs & 0x0c) == 0x0c) {
-		*nJoystickInputs &= ~0x0c;
-	}
+	extern int kNetVersion;
 
-	if ((*nJoystickInputs & 0x0300) == 0x0300) {
-		*nJoystickInputs &= ~0x0300;
-	}
-	if ((*nJoystickInputs & 0x0c00) == 0x0c00) {
-		*nJoystickInputs &= ~0x0c00;
+	if (cps3_clear_opposites) {
+		// p1 down + up = neutral
+		if ((*nJoystickInputs & 0x03) == 0x03) {
+			*nJoystickInputs &= ~0x03;
+		}
+		// p1 left + right = neutral
+		if ((*nJoystickInputs & 0x0c) == 0x0c) {
+			*nJoystickInputs &= ~0x0c;
+		}
+
+		// p2 down + up = neutral
+		if ((*nJoystickInputs & 0x0300) == 0x0300) {
+			*nJoystickInputs &= ~0x0300;
+		}
+		// p2 left + right = neutral
+		if ((*nJoystickInputs & 0x0c00) == 0x0c00) {
+			*nJoystickInputs &= ~0x0c00;
+		}
 	}
 }
 
@@ -1138,7 +1146,8 @@ INT32 cps3Init()
 
 	BurnSetRefreshRate(59.59949);
 
-	cps3_clear_opposites = _tcsstr(BurnDrvGetText(DRV_NAME), _T("jojo")) != NULL;
+	extern int kNetVersion;
+	cps3_clear_opposites = _tcsstr(BurnDrvGetText(DRV_NAME), _T("jojo")) != NULL && kNetVersion < NET_VERSION_SOCD;
 
 	// calc graphic and sound roms size
 	ii = 0; cps3_data_rom_size = 0;
@@ -2065,9 +2074,7 @@ INT32 cps3Frame()
 	}
 
 	// Clear Opposites
-	if (cps3_clear_opposites) {
-		Cps3ClearOpposites(&Cps3Input[0]);
-	}
+	Cps3ClearOpposites(&Cps3Input[0]);
 
 	for (INT32 i=0; i<4; i++) {
 

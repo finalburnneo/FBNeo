@@ -323,7 +323,7 @@ UINT16 TMS34010HostRead(INT32 reg)
 
 UINT8 TMS34010ReadByte(UINT32 address)
 {
-	address <<= 3;
+	//address <<= 3;
     UINT8 *pr = g_mmap->map[PFN(address)];
     if ((uintptr_t)pr >= MAXHANDLER) {
         // address is bit-address

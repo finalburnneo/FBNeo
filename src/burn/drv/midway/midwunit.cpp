@@ -26,7 +26,6 @@ UINT8 nWolfUnitJoy1[32];
 UINT8 nWolfUnitJoy2[32];
 UINT8 nWolfUnitJoy3[32];
 UINT8 nWolfUnitDSW[2];
-
 UINT8 nWolfReset = 0;
 static UINT32 DrvInputs[4];
 
@@ -117,13 +116,10 @@ static UINT16 WolfUnitIoRead(UINT32 address)
     switch (offset) {
 		case 0: return ~DrvInputs[0];
 		case 1: return ~DrvInputs[1];
-		
-		//case 2: return nWolfUnitDSW[0] | (nWolfUnitDSW[1] << 8);
 		case 2:
 		{
-			extern int kNetGame;
-			extern int kNetSpectator;
-
+			// @FC
+			extern int kNetGame, kNetSpectator;
 			if (kNetGame || kNetSpectator)
 			{
 				// @FC forced dipswitches (NOTE: DIPB=SW2 & DIPA=SW1)
@@ -138,7 +134,6 @@ static UINT16 WolfUnitIoRead(UINT32 address)
 			return nWolfUnitDSW[0] | (nWolfUnitDSW[1] << 8);
 			break;
 		}
-
 		case 3: return ~DrvInputs[3];
 		case 4: {
 			sound_sync();
@@ -479,8 +474,8 @@ INT32 WolfUnitInit()
 
     for (INT32 i = 0; i < 16; i++) nIOShuffle[i] = i % 8;
 
-	is_umk3 = (strstr(BurnDrvGetTextA(DRV_NAME), "umk3") ? 1 : 0);
 	is_wwfmania = (strstr(BurnDrvGetTextA(DRV_NAME), "wwfmania") ? 1 : 0);
+	is_umk3 = (strstr(BurnDrvGetTextA(DRV_NAME), "umk3") ? 1 : 0);
 	is_openice = (strstr(BurnDrvGetTextA(DRV_NAME), "openice") ? 1 : 0);
 	is_nbaht = (strstr(BurnDrvGetTextA(DRV_NAME), "nbahangt") ? 1 : 0);
 	is_nbamht = (strstr(BurnDrvGetTextA(DRV_NAME), "nbamht") ? 1 : 0);
@@ -631,6 +626,9 @@ INT32 WolfUnitExit()
 
 	is_wwfmania = 0;
 	is_umk3 = 0;
+	is_openice = 0;
+	is_nbaht = 0;
+	is_nbamht = 0;
 
     return 0;
 }

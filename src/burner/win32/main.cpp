@@ -31,7 +31,7 @@
 HINSTANCE hAppInst = NULL;			// Application Instance
 HANDLE hMainThread;
 long int nMainThreadID;
-int nAppProcessPriority = NORMAL_PRIORITY_CLASS;
+int nAppProcessPriority = HIGH_PRIORITY_CLASS;	// High priority class
 int nAppShowCmd;
 
 static TCHAR szCmdLine[1024] = _T("");
@@ -53,6 +53,8 @@ bool bNoChangeNumLock = 1;
 static bool bNumlockStatus;
 
 bool bMonitorAutoCheck = true;
+bool bKeypadVolume = true;
+bool bHitboxSOCD = false;
 
 // Used for the load/save dialog in commdlg.h (savestates, input replay, wave logging)
 TCHAR szChoice[MAX_PATH] = _T("");
@@ -723,7 +725,6 @@ static int AppInit()
 	bVidTripleBuffer = 0; // no triple buffer
 	bVidScanlines = 0; // no ddraw scanlines
 	bVidDWMSync = 0; // no dwm sync
-	nAudSegCount = nAudSegCount < 4 ? 4 : nAudSegCount;
 	bHardwareGammaOnly = 0; // hardware gamma only
 	bSaveInputs = 1; // save inputs for each game
 	nSplashTime = 0; // no splash time please

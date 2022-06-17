@@ -22,8 +22,8 @@ int MediaInit()
 	nBurnSoundRate = 0;					// Assume no sound
 	pBurnSoundOut = NULL;
 	if (bAudOkay) {
-		nBurnSoundRate = nAudSampleRate[nAudSelect];
-		nBurnSoundLen = nAudSegLen;
+		nBurnSoundRate = AudSoundGetSampleRate();
+		nBurnSoundLen = AudSoundGetSegLen();
 	}
 
 	if (!bVidOkay) {

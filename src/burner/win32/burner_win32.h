@@ -115,6 +115,8 @@ extern bool bQuietLoading;
 
 extern bool bNoChangeNumLock;
 extern bool bMonitorAutoCheck;
+extern bool bKeypadVolume;
+extern bool bHitboxSOCD;
 
 // Used for the load/save dialog in commdlg.h
 extern TCHAR szChoice[MAX_PATH];					// File chosen by the user
@@ -239,6 +241,7 @@ extern int kNetVersion;
 extern int kNetGame;
 extern int kNetSpectator;
 extern int kNetLua;
+extern char kNetQuarkId[128];
 
 int RunIdleDelay(int frames);
 int RunIdle();
@@ -268,6 +271,7 @@ void DeActivateChat();
 int BurnerLoadDriver(TCHAR *szDriverName);
 int StartFromReset(TCHAR *szDriverName);
 void PausedRedraw(void);
+void LuaOpenDialog();
 INT32 is_netgame_or_recording();
 
 // menu.cpp

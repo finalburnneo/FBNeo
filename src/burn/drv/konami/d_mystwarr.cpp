@@ -2858,8 +2858,7 @@ static INT32 DrvFrame()
 		}
 
 		// @FC
-		extern int kNetGame;
-		extern int kNetSpectator;
+		extern int kNetGame, kNetSpectator;
 		if (kNetGame || kNetSpectator) {
 			DrvDips[0]= 0xe0;
 		}

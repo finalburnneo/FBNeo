@@ -1161,29 +1161,6 @@ struct registerPointerMap
 
 #define RPM_ENTRY(name,var) {name, (unsigned int*)&var, sizeof(var)},
 
-registerPointerMap m68000RegPointerMap [] = {
-	/*
-	RPM_ENTRY("pc", M68000_regs.pc)
-	RPM_ENTRY("d0", M68000_regs.d[0])
-	RPM_ENTRY("d1", M68000_regs.d[1])
-	RPM_ENTRY("d2", M68000_regs.d[2])
-	RPM_ENTRY("d3", M68000_regs.d[3])
-	RPM_ENTRY("d4", M68000_regs.d[4])
-	RPM_ENTRY("d5", M68000_regs.d[5])
-	RPM_ENTRY("d6", M68000_regs.d[6])
-	RPM_ENTRY("d7", M68000_regs.d[7])
-	RPM_ENTRY("a0", M68000_regs.a[0])
-	RPM_ENTRY("a1", M68000_regs.a[1])
-	RPM_ENTRY("a2", M68000_regs.a[2])
-	RPM_ENTRY("a3", M68000_regs.a[3])
-	RPM_ENTRY("a4", M68000_regs.a[4])
-	RPM_ENTRY("a5", M68000_regs.a[5])
-	RPM_ENTRY("a6", M68000_regs.a[6])
-	RPM_ENTRY("a7", M68000_regs.a[7])
-	*/
-	{}
-};
-
 registerPointerMap z80RegPointerMap [] = {
 	/*	RPM_ENTRY("prvpc", Z80.prvpc.w.l)
 	RPM_ENTRY("pc", Z80.pc.w.l)
@@ -1205,41 +1182,95 @@ struct cpuToRegisterMap
 }
 cpuToRegisterMaps [] =
 {
-	{"m68000.", m68000RegPointerMap},
 	{"z80.", z80RegPointerMap},
 };
-
+char* m68k_reg_map[] = {
+	"m68000.d0",
+	"m68000.d1",
+	"m68000.d2",
+	"m68000.d3",
+	"m68000.d4",
+	"m68000.d5",
+	"m68000.d6",
+	"m68000.d7",
+	"m68000.a0",
+	"m68000.a1",
+	"m68000.a2",
+	"m68000.a3",
+	"m68000.a4",
+	"m68000.a5",
+	"m68000.a6",
+	"m68000.a7",
+	"m68000.pc",
+	"m68000.sr",	/* Status Register */
+	"m68000.sp",	/* The current Stack Pointer (located in A7) */
+	"m68000.usp",	/* User Stack Pointer */
+	"m68000.isp",	/* Interrupt Stack Pointer */
+	"m68000.msp",	/* Master Stack Pointer */
+	"m68000.sfc",	/* Source Function Code */
+	"m68000.dfc",	/* Destination Function Code */
+	"m68000.vbr",	/* Vector Base Register */
+	"m68000.cacr",	/* Cache Control Register */
+	"m68000.caar",	/* Cache Address Register */
+	/* Assumed registers */
+	/* These are cheat registers which emulate the 1-longword prefetch
+	 * present in the 68000 and 68010.
+	*/
+	"m68000.prefaddr",	// M68K_REG_PREF_ADDR,	/* Last prefetch address */
+	"m68000.prefdata",	// M68K_REG_PREF_DATA,	/* Last prefetch data */
+	/* Convenience registers */
+	"m68000.ppc",		// M68K_REG_PPC,		/* Previous value in the program counter */
+	"m68000.ir",		// M68K_REG_IR,			/* Instruction register */
+	"m68000.cputype",	// M68K_REG_CPU_TYPE	/* Type of CPU being run */
+	0
+};
 
 //DEFINE_LUA_FUNCTION(memory_getregister, "cpu_dot_registername_string")
-static int memory_getregister(lua_State *L)
+static int memory_getregister(lua_State* L)
 {
-	const char* qualifiedRegisterName = luaL_checkstring(L,1);
-	lua_settop(L,0);
-	for(int cpu = 0; cpu < sizeof(cpuToRegisterMaps)/sizeof(*cpuToRegisterMaps); cpu++)
-	{
-		cpuToRegisterMap ctrm = cpuToRegisterMaps[cpu];
-		int cpuNameLen = strlen(ctrm.cpuName);
-		if(!strnicmp(qualifiedRegisterName, ctrm.cpuName, cpuNameLen))
-		{
-			qualifiedRegisterName += cpuNameLen;
-			for(int reg = 0; ctrm.rpmap[reg].dataSize; reg++)
-			{
-				registerPointerMap rpm = ctrm.rpmap[reg];
-				if(!stricmp(qualifiedRegisterName, rpm.registerName))
-				{
-					switch(rpm.dataSize)
-					{ default:
-					case 1: lua_pushinteger(L, *(unsigned char*)rpm.pointer); break;
-					case 2: lua_pushinteger(L, *(unsigned short*)rpm.pointer); break;
-					case 4: lua_pushinteger(L, *(unsigned long*)rpm.pointer); break;
-					}
-					return 1;
-				}
-			}
-			lua_pushnil(L);
-			return 1;
-		}
+	const char* qualifiedRegisterName = luaL_checkstring(L, 1);
+	lua_settop(L, 0);
+
+	if (!strnicmp(qualifiedRegisterName, "m68000", 6)) {
+		for (int reg_num = 0; m68k_reg_map[reg_num]; reg_num++ ){
+			if (!stricmp(qualifiedRegisterName, m68k_reg_map[reg_num])) {
+				lua_pushinteger(L, m68k_get_reg(NULL, (m68k_register_t)reg_num));
+				return 1;
+			};
+		};
 	}
+
+	// Keeping previous logic commented but intact in case someone wants to work on the Z80 regs or create an abstraction
+	// Currently, simply importing the Z80_Regs struct throws an error
+	// Loop through all of the CPUs
+	//for(int cpu = 0; cpu < sizeof(cpuToRegisterMaps)/sizeof(*cpuToRegisterMaps); cpu++)
+	//{
+	//	cpuToRegisterMap ctrm = cpuToRegisterMaps[cpu]; // Sets the cpu in the struct i.e. if 0 then rpmap = cpuToRegisterMaps[0] e.g. m68k
+	//	int cpuNameLen = strlen(ctrm.cpuName);//Gets the index of the cpu name
+	//	// compare non case sensitive, first n chars of string 1 and 2 returns 0 if same, thus ! returns 1 if they are =
+	//	// In this case e.g ! strnicmp("pc", "m68000.", "0x07"), meaning it is comparing pc with the 7th char of e.g. m68000.pc 
+	//	if(!strnicmp(qualifiedRegisterName, ctrm.cpuName, cpuNameLen))
+	//	{
+	//		qualifiedRegisterName += cpuNameLen; // add the register to the end e.g. m68000.d0
+	//		for(int reg = 0; ctrm.rpmap[reg].dataSize; reg++) // iterate from 0 to data size
+	//		{
+	//			registerPointerMap rpm = ctrm.rpmap[reg]; // get the register
+	//			if(!stricmp(qualifiedRegisterName, rpm.registerName)) // stricmp returns 0 if equiv, so this returns 1 if they are
+	//			{
+	//				switch(rpm.dataSize)
+	//				{ default:
+	//				case 1: lua_pushinteger(L, *(unsigned char*)rpm.pointer); break;
+	//				case 2: lua_pushinteger(L, *(unsigned short*)rpm.pointer); break;
+	//				case 4: lua_pushinteger(L, *(unsigned long*)rpm.pointer); break;
+	//				}
+	//				return 1;
+	//			}
+	//		}
+	//		lua_pushnil(L);
+	//		return 1;
+	//	}
+
+	//}
 	lua_pushnil(L);
 	return 1;
 }
@@ -1249,30 +1280,39 @@ static int memory_setregister(lua_State *L)
 	const char* qualifiedRegisterName = luaL_checkstring(L,1);
 	unsigned long value = (unsigned long)(luaL_checkinteger(L,2));
 	lua_settop(L,0);
-	for(int cpu = 0; cpu < sizeof(cpuToRegisterMaps)/sizeof(*cpuToRegisterMaps); cpu++)
-	{
-		cpuToRegisterMap ctrm = cpuToRegisterMaps[cpu];
-		int cpuNameLen = strlen(ctrm.cpuName);
-		if(!_strnicmp(qualifiedRegisterName, ctrm.cpuName, cpuNameLen))
-		{
-			qualifiedRegisterName += cpuNameLen;
-			for(int reg = 0; ctrm.rpmap[reg].dataSize; reg++)
-			{
-				registerPointerMap rpm = ctrm.rpmap[reg];
-				if(!stricmp(qualifiedRegisterName, rpm.registerName))
-				{
-					switch(rpm.dataSize)
-					{ default:
-					case 1: *(unsigned char*)rpm.pointer = (unsigned char)(value & 0xFF); break;
-					case 2: *(unsigned short*)rpm.pointer = (unsigned short)(value & 0xFFFF); break;
-					case 4: *(unsigned long*)rpm.pointer = value; break;
-					}
-					return 0;
-				}
-			}
-			return 0;
-		}
-	}
+	if (!strnicmp(qualifiedRegisterName, "m68000", 6)) {
+		for (int reg_num = 0; m68k_reg_map[reg_num]; reg_num++) {
+			if (!stricmp(qualifiedRegisterName, m68k_reg_map[reg_num])) {
+				m68k_set_reg((m68k_register_t)reg_num, value);
+				return 1;
+			};
+		};
+	};
+	// Previous logic here, see notes in memory_getregister
+	//for(int cpu = 0; cpu < sizeof(cpuToRegisterMaps)/sizeof(*cpuToRegisterMaps); cpu++)
+	//{
+	//	cpuToRegisterMap ctrm = cpuToRegisterMaps[cpu];
+	//	int cpuNameLen = strlen(ctrm.cpuName);
+	//	if(!_strnicmp(qualifiedRegisterName, ctrm.cpuName, cpuNameLen))
+	//	{
+	//		qualifiedRegisterName += cpuNameLen;
+	//		for(int reg = 0; ctrm.rpmap[reg].dataSize; reg++)
+	//		{
+	//			registerPointerMap rpm = ctrm.rpmap[reg];
+	//			if(!stricmp(qualifiedRegisterName, rpm.registerName))
+	//			{
+	//				switch(rpm.dataSize)
+	//				{ default:
+	//				case 1: *(unsigned char*)rpm.pointer = (unsigned char)(value & 0xFF); break;
+	//				case 2: *(unsigned short*)rpm.pointer = (unsigned short)(value & 0xFFFF); break;
+	//				case 4: *(unsigned long*)rpm.pointer = value; break;
+	//				}
+	//				return 0;
+	//			}
+	//		}
+	//		return 0;
+	//	}
+	//}
 	return 0;
 }
 

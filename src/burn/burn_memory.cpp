@@ -57,26 +57,12 @@ UINT8 *_BurnMalloc(INT32 size, char *file, INT32 line)
 	return NULL; // Freak out!
 }
 
-UINT8 *BurnRealloc(void *ptr, INT32 size)
-{
-	UINT8 *mptr = (UINT8*)ptr;
+enum {
+	MEM_FREE = 0,
+	MEM_REALLOC
+};
 
-	for (INT32 i = 0; i < MAX_MEM_PTR; i++)
-	{
-		if (memptr[i] == mptr) {
-			INT32 spill = (OOB_CHECKER) ? OOB_CHECK : 0;
-			memptr[i] = (UINT8*)realloc(ptr, size + spill);
-			mem_allocated -= memsize[i];
-			mem_allocated += size;
-			memsize[i] = size;
-			return memptr[i];
-		}
-	}
-
-	return NULL;
-}
-
-static void check_overwrite(INT32 i)
+static void check_overwrite(INT32 i, INT32 type)
 {
 	if (OOB_CHECKER == 0) return;
 
@@ -87,7 +73,7 @@ static void check_overwrite(INT32 i)
 
 	for (INT32 z = 0; z < OOB_CHECK; z++) {
 		if (p[size + z] != 0) {
-			bprintf(0, _T("burn_memory.cpp: OOB detected in allocated index %d @ %x!!\n"), i, z);
+			bprintf(0, _T("burn_memory.cpp(%s): OOB detected in allocated index %d @ %x!!\n"), (type == MEM_FREE) ? _T("BurnFree()") : _T("BurnRealloc()"), i, z);
 			found_oob = 1;
 		}
 	}
@@ -95,6 +81,28 @@ static void check_overwrite(INT32 i)
 	if (found_oob) {
 		bprintf(0, _T("->OOB memory issue detected in allocated index %d, please let FBNeo team know!\n"), i);
 	}
+}
+
+UINT8 *BurnRealloc(void *ptr, INT32 size)
+{
+	UINT8 *mptr = (UINT8*)ptr;
+
+	for (INT32 i = 0; i < MAX_MEM_PTR; i++)
+	{
+		if (memptr[i] == mptr) {
+			check_overwrite(i, MEM_REALLOC);
+			INT32 spill = (OOB_CHECKER) ? OOB_CHECK : 0;
+			memptr[i] = (UINT8*)realloc(ptr, size + spill);
+			if (memsize[i] > size)
+				memset (memptr[i] + size, 0, spill); // after realloc, we need to set previously used content to 0
+			mem_allocated -= memsize[i];
+			mem_allocated += size;
+			memsize[i] = size;
+			return memptr[i];
+		}
+	}
+
+	return NULL;
 }
 
 // call BurnFree() instead of "free" (see macro in burnint.h)
@@ -105,7 +113,7 @@ void _BurnFree(void *ptr)
 	for (INT32 i = 0; i < MAX_MEM_PTR; i++)
 	{
 		if (mptr != NULL && memptr[i] == mptr) {
-			check_overwrite(i);
+			check_overwrite(i, MEM_FREE);
 			free (memptr[i]);
 			memptr[i] = NULL;
 

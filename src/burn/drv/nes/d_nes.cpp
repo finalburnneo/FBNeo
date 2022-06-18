@@ -15674,6 +15674,25 @@ struct BurnDriver BurnDrvnes_jackalem = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Matendouji (T-Chi)
+// https://www.ppxclub.com/forum.php?mod=viewthread&tid=713661
+static struct BurnRomInfo nes_matendoujicRomDesc[] = {
+	{ "Matendouji (T-Chi).nes",          524304, 0x919e863f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_matendoujic)
+STD_ROM_FN(nes_matendoujic)
+
+struct BurnDriver BurnDrvnes_matendoujic = {
+	"nes_matendoujic", "nes_matendouji", NULL, NULL, "2022",
+	"Matendouji (T-Chi)\0", NULL, "Ni You De Wu Cai Yu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG, 0,
+	NESGetZipName, nes_matendoujicRomInfo, nes_matendoujicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Flintstones, The - The Rescue of Dino & Hoppy (T-Chi)
 // http://www.nesbbs.com/bbs/thread-53671-1-1.html
 static struct BurnRomInfo nes_flintresdinhopcRomDesc[] = {

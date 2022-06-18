@@ -1,4 +1,4 @@
-// FB Alpha 4 Enraya driver module
+// FB Neo 4 Enraya driver module
 // Based on MAME driver by Tomasz Slanina
 
 #include "tiles_generic.h"
@@ -67,6 +67,24 @@ static struct BurnInputInfo UnkpacgInputList[] = {
 };
 
 STDINPUTINFO(Unkpacg)
+
+static struct BurnInputInfo UnksigInputList[] = {
+	{"Coin 1",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"Coin 2",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"Coin 3",			BIT_DIGITAL,	DrvJoy1 + 2,	"p3 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 start"	},
+	{"P1 Deal",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 deal"   },
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 5,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
+	{"P1 Fire",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 1,	"dips"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 0,	"dips"		},
+};
+
+STDINPUTINFO(Unksig)
 
 static struct BurnDIPInfo Enraya4DIPList[]=
 {
@@ -147,6 +165,13 @@ static struct BurnDIPInfo UnkpacgDIPList[]=
 };
 
 STDDIPINFO(Unkpacg)
+
+static struct BurnDIPInfo UnksigDIPList[] =
+{
+	DIP_OFFSET(0x01)
+};
+
+STDDIPINFOEXT(Unksig, Unkpacg, Unksig)
 
 static void __fastcall enraya4_write(UINT16 address, UINT8 data)
 {
@@ -237,7 +262,7 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvZ80ROM		= Next; Next += 0x00c000;
+	DrvZ80ROM		= Next; Next += 0x010000;	// unkpacga (0x8000 * 2)
 
 	DrvGfxROM		= Next; Next += 0x010000;
 
@@ -279,7 +304,7 @@ static INT32 DrvGfxDecode()
 
 static void DrvPrgDecode()
 {
-	for (INT32 i = 0x8000; i < 0xa000; i++) {
+	for (INT32 i = 0x8000; i < 0x10000; i++) {
 		DrvZ80ROM[i] = (DrvZ80ROM[i] & 0xfc) | ((DrvZ80ROM[i] & 1) << 1) | ((DrvZ80ROM[i] >> 1) & 1);
 	}
 }
@@ -299,41 +324,109 @@ static INT32 DrvInit(INT32 game, INT32 sbit)
 	MemIndex();
 
 	{
-		if (BurnLoadRom(DrvZ80ROM + 0x00000, 0, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM + 0x08000, 1, 1)) return 1;
+		//---------------------------------------------------------
+		// Prg
 
-		if (game == 0)	// 4enraya
-		{
+		if (7 == game) {	// unksiga
+			UINT8* tmp = (UINT8*)BurnMalloc(0x10000 * 2);
+			if (NULL == tmp) return 1;
+
+			for (INT32 i = 0, j = 0; i < 2; i++, j += 0x8000) {
+				if (BurnLoadRom(tmp + i * 0x10000, i, 1)) {
+					BurnFree(tmp);
+					return 1;
+				}
+				memcpy(DrvZ80ROM + j, tmp + i * 0x10000, 0x2000);
+			}
+			BurnFree(tmp);
+		} else {	// unkpacg
+			if (BurnLoadRom(DrvZ80ROM + 0x00000, 0, 1)) return 1;
+			if (8 != game)	//unksigb
+				if (BurnLoadRom(DrvZ80ROM + 0x08000, 1, 1)) return 1;
+		}
+		if (6 == game) {	// unksig
+			for (INT32 i = 0; i < 0x8000 * 2; i += 0x8000) {
+				memmove(DrvZ80ROM + i, DrvZ80ROM + i + 0x6000, 0x2000);
+				memset(DrvZ80ROM + i + 0x2000, 0, 0x6000);
+			}
+		}
+		if (8 == game) {	// unksigb
+			memset(DrvZ80ROM + 0x4000, 0, 0xc000);
+			memmove(DrvZ80ROM + 0x8000, DrvZ80ROM + 0x0000, 0x2000);
+			memmove(DrvZ80ROM + 0x0000, DrvZ80ROM + 0x2000, 0x2000);
+		}
+
+		//---------------------------------------------------------
+		// Gfx
+
+		if (0 == game || 5 == game) {	// 4enraya / unkpacgd
 			if (BurnLoadRom(DrvGfxROM + 0x00000, 2, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM + 0x02000, 3, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM + 0x04000, 4, 1)) return 1;
-		}
-		else
-		{
+		} else if (3 == game || 4 == game || 6 == game || 7 == game || 8 == game) {	// unkpacga / unkpacgb / unksig /unksiga /unksigb
+			UINT32 nRomLen = (7 == game) ? 0x10000 : 0x8000;
+			UINT32 nOffset = (6 == game || 8 == game) ? 0x6000 : ((7 == game) ? 0x8000 : 0x2000);
+			INT32 nNumber = (8 == game) ? 2 : 3;
+			INT32 nIndex = (8 == game) ? 1 : 2;
+			INT32 i, j, k;
+
+			UINT8* tmp = (UINT8*)BurnMalloc(nRomLen * nNumber);
+			if (NULL == tmp) return 1;
+
+			for (i = 0, j = nIndex, k = 0; i < nRomLen * nNumber; i += nRomLen, j++, k += 0x2000) {
+				if (BurnLoadRom(tmp + i, j, 1)) {
+					BurnFree(tmp);
+					return 1;
+				}
+				memcpy(DrvGfxROM + k, tmp + i + nOffset, 0x2000);
+			}
+			BurnFree(tmp);
+
+			if (8 == game) {	//unksigb
+				if (BurnLoadRom(DrvGfxROM + k, j, 1)) return 1;
+			}
+		} else {	// unkpacg
 			if (BurnLoadRom(DrvGfxROM + 0x02000, 2, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM + 0x04000, 3, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM + 0x00000, 4, 1)) return 1;
 		}
 
-		if (game) DrvPrgDecode(); // unkpacg
-		DrvGfxDecode();
+		//---------------------------------------------------------
+		// Crypt
+
+		switch (game) {
+			case 1:	// unkpacg
+			case 3:	// unkpacga
+			case 4:	// unkpacgb
+			case 6:	// unksig
+			case 7:	// unksiga
+				DrvPrgDecode();
+				break;
+			default:
+				break;
+		}
+		DrvGfxDecode();	// 0x10000 Max (0x400 * 8 * 8)
 	}
+
+	//---------------------------------------------------------
+	// Map & Other
 
 	ZetInit(0);
 	ZetOpen(0);
 
-	if (game == 0)	// 4enraya
-	{
-		ZetMapMemory(DrvZ80ROM,			0x0000, 0xbfff, MAP_ROM);
-		ZetMapMemory(DrvZ80RAM,			0xc000, 0xcfff, MAP_RAM);
-	//	ZetMapMemory(DrvVidRAM,			0xd000, 0xdfff, MAP_WRITE);
-	}
-	else		// unkpacg
-	{
-		ZetMapMemory(DrvZ80ROM,			0x0000, 0x1fff, MAP_ROM);
-		ZetMapMemory(DrvNVRAM,			0x6000, 0x6fff, MAP_RAM);
-	//	ZetMapMemory(DrvVidRAM,			0x7000, 0x7fff, MAP_WRITE);
-		ZetMapMemory(DrvZ80ROM + 0x8000,	0x8000, 0x9fff, MAP_ROM);
+	if (0 == game) {		// 4enraya
+		ZetMapMemory(DrvZ80ROM,          0x0000, 0xbfff, MAP_ROM);
+		ZetMapMemory(DrvZ80RAM,          0xc000, 0xcfff, MAP_RAM);
+	//	ZetMapMemory(DrvVidRAM,          0xd000, 0xdfff, MAP_WRITE);
+	} else if (3 == game) {	// unkpacga
+		ZetMapMemory(DrvZ80ROM + 0x6000, 0x0000, 0x1fff, MAP_ROM);
+		ZetMapMemory(DrvNVRAM,           0x6000, 0x6fff, MAP_RAM);
+		ZetMapMemory(DrvZ80ROM + 0x8000, 0x8000, 0xffff, MAP_ROM);
+	} else {				// unkpacg
+		ZetMapMemory(DrvZ80ROM,          0x0000, 0x1fff, MAP_ROM);
+		ZetMapMemory(DrvNVRAM,           0x6000, 0x6fff, MAP_RAM);
+	//	ZetMapMemory(DrvVidRAM,          0x7000, 0x7fff, MAP_WRITE);
+		ZetMapMemory(DrvZ80ROM + 0x8000, 0x8000, 0x9fff, MAP_ROM);
 	}
 
 	ZetSetOutHandler(enraya4_out_port);
@@ -531,15 +624,15 @@ struct BurnDriver BurnDrvEnrayaa4 = {
 };
 
 
-// unknown Pac-Man gambling game
+// unknown 'Pac-Man' gambling game (set 1)
 
 static struct BurnRomInfo unkpacgRomDesc[] = {
 	{ "1.u14",   0x2000, 0x848c4143, BRF_ESS | BRF_PRG }, //  0 Z80 Code
 	{ "2.u46",   0x2000, 0x9e6e0bd3, BRF_ESS | BRF_PRG }, //  1
 
-	{ "3.u20",   0x2000, 0xd00b04ea, BRF_GRA },	      //  2 Graphics
-	{ "4.u19",   0x2000, 0x4a123a3d, BRF_GRA },	      //  3
-	{ "5.u18",   0x2000, 0x44f272d2, BRF_GRA },	      //  4
+	{ "3.u20",   0x2000, 0xd00b04ea, BRF_GRA },           //  2 Graphics
+	{ "4.u19",   0x2000, 0x4a123a3d, BRF_GRA },           //  3
+	{ "5.u18",   0x2000, 0x44f272d2, BRF_GRA },           //  4
 };
 
 STD_ROM_PICK(unkpacg)
@@ -552,10 +645,244 @@ static INT32 unkpacgInit()
 
 struct BurnDriver BurnDrvUnkpacg = {
 	"unkpacg", NULL, NULL, NULL, "199?",
-	"unknown Pac-Man gambling game\0", NULL, "unknown", "Miscellaneous",
+	"unknown 'Pac-Man' gambling game (set 1)\0", NULL, "unknown", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, unkpacgRomInfo, unkpacgRomName, NULL, NULL, NULL, NULL, UnkpacgInputInfo, UnkpacgDIPInfo,
 	unkpacgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8,
+	256, 224, 4, 3
+};
+
+
+// Pucman
+
+static struct BurnRomInfo unkpacgaRomDesc[] = {
+	// first 0x5fff are 0xff filled
+	{ "p1.bin",	0x8000, 0x386bd2da, BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "p2.bin",	0x8000, 0x7878d7f3, BRF_ESS | BRF_PRG }, //  1
+
+	// 1ST AND 2ND HALF IDENTICAL
+	{ "r.bin",	0x8000, 0xb0d7b67a, BRF_GRA },           //  2 Graphics
+	{ "b.bin",	0x8000, 0x5b26dce5, BRF_GRA },           //  3
+	{ "g.bin",	0x8000, 0xe12d34e0, BRF_GRA },           //  4
+};
+
+STD_ROM_PICK(unkpacga)
+STD_ROM_FN(unkpacga)
+
+static INT32 unkpacgaInit()
+{
+	return DrvInit(3, 2);
+}
+
+struct BurnDriver BurnDrvUnkpacga = {
+	"unkpacga", "unkpacg", NULL, NULL, "199?",
+	"Pucman\0", NULL, "IDI SRL", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, unkpacgaRomInfo, unkpacgaRomName, NULL, NULL, NULL, NULL, UnkpacgInputInfo, UnkpacgDIPInfo,
+	unkpacgaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8,
+	256, 224, 4, 3
+};
+
+
+// unknown 'Pac-Man' gambling game (set 2)
+
+static struct BurnRomInfo unkpacgbRomDesc[] = {
+	{ "p1.bin",	0x8000, 0x5cc6b5e1, BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "p2.bin",	0x8000, 0x06b42740, BRF_ESS | BRF_PRG }, //  1
+
+	// 1ST AND 2ND HALF IDENTICAL
+	{ "r.bin",	0x8000, 0xb0d7b67a, BRF_GRA },           //  2 Graphics
+	{ "b.bin",	0x8000, 0x5b26dce5, BRF_GRA },           //  3
+	{ "g.bin",	0x8000, 0xe12d34e0, BRF_GRA },           //  4
+};
+
+STD_ROM_PICK(unkpacgb)
+STD_ROM_FN(unkpacgb)
+
+static INT32 unkpacgbInit()
+{
+	return DrvInit(4, 2);
+}
+
+struct BurnDriver BurnDrvUnkpacgb = {
+	"unkpacgb", "unkpacg", NULL, NULL, "199?",
+	"unknown 'Pac-Man' gambling game (set 2)\0", NULL, "unknown", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, unkpacgbRomInfo, unkpacgbRomName, NULL, NULL, NULL, NULL, UnkpacgInputInfo, UnkpacgDIPInfo,
+	unkpacgbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8,
+	256, 224, 4, 3
+};
+
+
+// Coco Louco
+
+static struct BurnRomInfo unkpacgcRomDesc[] = {
+	{ "4",	0x2000, 0x9f620694, BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "5",	0x2000, 0xb107ad7e, BRF_ESS | BRF_PRG }, //  1
+
+	{ "1",	0x2000, 0xd00b04ea, BRF_GRA },           //  2 Graphics
+	{ "2",	0x2000, 0x4a123a3d, BRF_GRA },           //  3
+	{ "3",	0x2000, 0xf7cd9de0, BRF_GRA },           //  4
+};
+
+STD_ROM_PICK(unkpacgc)
+STD_ROM_FN(unkpacgc)
+
+static INT32 unkpacgcInit()
+{
+	return DrvInit(2, 2);
+}
+
+struct BurnDriver BurnDrvUnkpacgc = {
+	"unkpacgc", "unkpacg", NULL, NULL, "1988",
+	"Coco Louco\0", NULL, "unknown", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, unkpacgcRomInfo, unkpacgcRomName, NULL, NULL, NULL, NULL, UnkpacgInputInfo, UnkpacgDIPInfo,
+	unkpacgcInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8,
+	256, 224, 4, 3
+};
+
+
+// unknown 'Pac Man with cars' gambling game
+
+static struct BurnRomInfo unkpacgdRomDesc[] = {
+	// only the first program ROM differs from unkpacgc and only slightly
+	{ "2",	0x2000, 0x4a545bf6, BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "1",	0x2000, 0xb107ad7e, BRF_ESS | BRF_PRG }, //  1
+
+	// these are different: they change the characters from pacman related to car racing related
+	{ "3",	0x2000, 0xce47a9da, BRF_GRA },           //  2 Graphics
+	{ "4",	0x2000, 0x9a404e8c, BRF_GRA },           //  3
+	{ "5",	0x2000, 0x32d8d105, BRF_GRA },           //  4
+};
+
+STD_ROM_PICK(unkpacgd)
+STD_ROM_FN(unkpacgd)
+
+static INT32 unkpacgdInit()
+{
+	return DrvInit(5, 2);
+}
+
+struct BurnDriver BurnDrvUnkpacgd = {
+	"unkpacgd", "unkpacg", NULL, NULL, "1988",
+	"unknown 'Pac Man with cars' gambling game\0", NULL, "unknown", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, unkpacgdRomInfo, unkpacgdRomName, NULL, NULL, NULL, NULL, UnkpacgInputInfo, UnkpacgDIPInfo,
+	unkpacgdInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8,
+	256, 224, 4, 3
+};
+
+
+// unknown 'Space Invaders' gambling game (encrypted, set 1)
+// All ROMs are 0x8000 but only the last 0x2000 of each is used.
+
+static struct BurnRomInfo unksigRomDesc[] = {
+	{ "i.bin",	0x8000, 0x902efc27, BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "ii.bin",	0x8000, 0x855c1ea3, BRF_ESS | BRF_PRG }, //  1
+
+	{ "r.bin",	0x8000, 0xf8a358fe, BRF_GRA },           //  2 Graphics
+	{ "b.bin",	0x8000, 0x56ac5874, BRF_GRA },           //  3
+	{ "v.bin",	0x8000, 0x4c5a7e43, BRF_GRA },           //  4
+};
+
+STD_ROM_PICK(unksig)
+STD_ROM_FN(unksig)
+
+static INT32 unksigInit()
+{
+	return DrvInit(6, 2);
+}
+
+struct BurnDriver BurnDrvUnksig = {
+	"unksig", NULL, NULL, NULL, "199?",
+	"unknown 'Space Invaders' gambling game (encrypted, set 1)\0", NULL, "unknown", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, unksigRomInfo, unksigRomName, NULL, NULL, NULL, NULL, UnksigInputInfo, UnksigDIPInfo,
+	unksigInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8,
+	256, 224, 4, 3
+};
+
+
+// unknown 'Space Invaders' gambling game (encrypted, set 2)
+/*
+  Unknown 'Space Invaders' gambling game
+  All ROMs are 0x10000 but with a lot of addressing issues
+
+  1.bin    BADADDR    ---xxxxxxxxxxxxx
+  2.bin    BADADDR    ---xxxxxxxxxxxxx
+  b.bin    BADADDR    x-xxxxxxxxxxxxxx
+  r.bin    BADADDR    x-xxxxxxxxxxxxxx
+  v.bin    BADADDR    x-xxxxxxxxxxxxxx
+
+  The game has both (Space Invaders & Pac-Man) graphics sets.
+  Maybe a leftover?...
+*/
+
+static struct BurnRomInfo unksigaRomDesc[] = {
+	// Identical 0x2000 segments
+	{ "1.bin",	0x10000, 0x089a4a63, BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "2.bin",	0x10000, 0x970632fd, BRF_ESS | BRF_PRG }, //  1
+
+	// tileset 0000-03ff = Space Invaders GFX.
+	// tileset 0400-07ff = Pac-Man GFX.
+	{ "b.bin",	0x10000, 0xdd257fb6, BRF_GRA },           //  2 Graphics
+	{ "r.bin",	0x10000, 0x38e9feba, BRF_GRA },           //  3
+	{ "v.bin",	0x10000, 0xcc597c7b, BRF_GRA },           //  4
+};
+
+STD_ROM_PICK(unksiga)
+STD_ROM_FN(unksiga)
+
+static INT32 unksigaInit()
+{
+	return DrvInit(7, 2);
+}
+
+struct BurnDriver BurnDrvUnksiga = {
+	"unksiga", "unksig", NULL, NULL, "199?",
+	"unknown 'Space Invaders' gambling game (encrypted, set 2)\0", NULL, "unknown", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, unksigaRomInfo, unksigaRomName, NULL, NULL, NULL, NULL, UnksigInputInfo, UnksigDIPInfo,
+	unksigaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8,
+	256, 224, 4, 3
+};
+
+
+// unknown 'Space Invaders' gambling game (unencrypted)
+// This set has been found with GFX ROMs of different sizes, but same relevant data.
+// Program ROM isn't encrypted and has further differences to the two other sets.
+
+static struct BurnRomInfo unksigbRomDesc[] = {
+	// 1ST AND 2ND HALF IDENTICAL
+	{ "u144",	0x08000, 0x8f19f1d3, BRF_ESS | BRF_PRG }, //  0 Z80 Code
+
+	{ "u172",	0x08000, 0xf8a358fe, BRF_GRA },           //  1 Graphics
+	{ "u171",	0x08000, 0x56ac5874, BRF_GRA },           //  2
+	{ "u170",	0x02000, 0xf9c686fc, BRF_GRA },           //  3
+};
+
+STD_ROM_PICK(unksigb)
+STD_ROM_FN(unksigb)
+
+static INT32 unksigbInit()
+{
+	return DrvInit(8, 2);
+}
+
+struct BurnDriver BurnDrvUnksigb = {
+	"unksigb", "unksig", NULL, NULL, "199?",
+	"unknown 'Space Invaders' gambling game (unencrypted)\0", NULL, "unknown", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, unksigbRomInfo, unksigbRomName, NULL, NULL, NULL, NULL, UnksigInputInfo, UnksigDIPInfo,
+	unksigbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8,
 	256, 224, 4, 3
 };

@@ -5459,11 +5459,11 @@
 		<description>Voyage - A Sorceress Vacation (HB, v1.05)</description>
 		<year>2021</year>
 		<manufacturer>SNAGS</manufacturer>
-		<rom name="Voyage - A Sorceress Vacation v1.03.sms" size="524288" crc="76a1d277"/>
+		<rom name="Voyage - A Sorceress Vacation v1.05.sms" size="524288" crc="76a1d277"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="WaimanuSMS">
+	<game name="waimanusms">
 		<comment>Homebrew</comment>
 		<description>Waimanu: Scary Monsters Saga (HB)</description>
 		<year>2015</year>

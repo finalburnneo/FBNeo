@@ -2989,6 +2989,7 @@ DRV		BurnDrvgg_cocakid;
 DRV		BurnDrvgg_cocakide;
 DRV		BurnDrvLadybugb2;
 DRV		BurnDrvcv_coco;
+DRV		BurnDrvUnkpacgc;
 DRV		BurnSpecCocoa2e1;
 DRV		BurnSpecCocoa2e1pt;
 DRV		BurnSpecCocoa2e1sp;
@@ -9253,6 +9254,7 @@ DRV		BurnDrvMatchit;
 DRV		BurnSpecmtchotd;
 DRV		BurnDrvmd_maten;
 DRV		BurnDrvnes_matendouji;
+DRV		BurnDrvnes_matendoujic;
 DRV		BurnDrvmd_mathblst;
 DRV		BurnDrvCHF_mthquiz1;
 DRV		BurnDrvCHF_mthquiz2;
@@ -9469,7 +9471,6 @@ DRV		BurnDrvnes_metalmec;
 DRV		BurnDrvMetlsavr;
 DRV		BurnDrvnes_metalslagloj;
 DRV		BurnDrvnes_metalslaglo;
-DRV		BurnDrvmslughb;
 DRV		BurnDrvmslugdg;
 DRV		BurnDrvngpc_mslug1st;
 DRV		BurnDrvngpc_mslug2ndd;
@@ -9484,12 +9485,13 @@ DRV		BurnDrvMSlug2t;
 DRV		BurnDrvmslug2unity;
 DRV		BurnDrvmslug3c;
 DRV		BurnDrvmslug3eb;
+DRV		BurnDrvmslug3lw;
 DRV		BurnDrvmslug3g;
 DRV		BurnDrvmslug3v;
 DRV		BurnDrvmslug3h;
 DRV		BurnDrvmslug3;
 DRV		BurnDrvmslug3a;
-DRV		BurnDrvmslug3rb;
+DRV		BurnDrvmslug3x;
 DRV		BurnDrvmslug3unity;
 DRV		BurnDrvmslug4a;
 DRV		BurnDrvmslug4ar;
@@ -9506,11 +9508,10 @@ DRV		BurnDrvmslug5c;
 DRV		BurnDrvmslug5mg;
 DRV		BurnDrvms5pcb;
 DRV		BurnDrvmslug5g;
-DRV		BurnDrvmslug5wd;
-DRV		BurnDrvMslug5w;
 DRV		BurnDrvmslug5h;
 DRV		BurnDrvmslug5;
 DRV		BurnDrvmslug5sgf;
+DRV		BurnDrvmslug5w;
 DRV		BurnDrvmslug5x;
 DRV		BurnDrvms5plus;
 DRV		BurnDrvmslug5unity;
@@ -12094,6 +12095,7 @@ DRV		BurnDrvpuckman;
 DRV		BurnDrvpuckmod;
 DRV		BurnDrvpacmansp;
 DRV		BurnDrvpuckmanf;
+DRV		BurnDrvUnkpacga;
 DRV		BurnDrvmd_puggsy;
 DRV		BurnDrvmd_puggsys;
 DRV		BurnDrvmd_puggsyp;
@@ -17391,8 +17393,13 @@ DRV		BurnDrvnes_univesol;
 DRV		BurnDrvMSX_univunk;
 DRV		BurnDrvUniwarsa;
 DRV		BurnDrvUniwars;
-DRV		BurnDrvmd_unknown2;
+DRV		BurnDrvUnkpacgd;
 DRV		BurnDrvUnkpacg;
+DRV		BurnDrvUnkpacgb;
+DRV		BurnDrvUnksig;
+DRV		BurnDrvUnksiga;
+DRV		BurnDrvUnksigb;
+DRV		BurnDrvmd_unknown2;
 DRV		BurnDrvmd_unnecess;
 DRV		BurnDrvmd_uspknight;
 DRV		BurnSpecuntouchb;
@@ -21771,6 +21778,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_cocakide,		// Coca Cola Kid (T-Eng, v1.1)
 	&BurnDrvLadybugb2,			// Coccinelle (bootleg of Lady Bug, set 2)
 	&BurnDrvcv_coco,			// CoCo and the Evil Robots (HB, v1.01)
+	&BurnDrvUnkpacgc,			// Coco Louco
 	&BurnSpecCocoa2e1,			// Cocoa 2, 24 Hour Parsley People - Episode 1 (English) (128K) (HB)
 	&BurnSpecCocoa2e1pt,		// Cocoa 2, 24 Hour Parsley People - Episode 1 (Portuguese) (128K) (HB)
 	&BurnSpecCocoa2e1sp,		// Cocoa 2, 24 Hour Parsley People - Episode 1 (Spanish) (128K) (HB)
@@ -28035,6 +28043,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecmtchotd,			// Match of the Day (128K)
 	&BurnDrvmd_maten,			// Maten no Soumetsu (Jpn)
 	&BurnDrvnes_matendouji,		// Matendouji (Japan)
+	&BurnDrvnes_matendoujic,	// Matendouji (T-Chi)
 	&BurnDrvmd_mathblst,		// Math Blaster - Episode 1 (USA)
 	&BurnDrvCHF_mthquiz1,		// Math Quiz 1
 	&BurnDrvCHF_mthquiz2,		// Math Quiz 2
@@ -28251,7 +28260,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMetlsavr,			// Metal Saver
 	&BurnDrvnes_metalslagloj,	// Metal Slader Glory (Japan)
 	&BurnDrvnes_metalslaglo,	// Metal Slader Glory (T-Eng)
-	&BurnDrvmslughb,			// Metal Slug (HB)
 	&BurnDrvmslugdg,			// Metal Slug (Multifunction Hack, 20180430)
 	&BurnDrvngpc_mslug1st,		// Metal Slug - 1st Mission (World)
 	&BurnDrvngpc_mslug2ndd,		// Metal Slug - 2nd Mission (Demo)
@@ -28266,12 +28274,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmslug2unity,		// Metal Slug 2 - Super Vehicle-001/II Unity (Added Timer Ver. 2021-01-22)
 	&BurnDrvmslug3c,			// Metal Slug 3 (Enemies Reset, Hack)
 	&BurnDrvmslug3eb,			// Metal Slug 3 (Green Blue, Hack)
+	&BurnDrvmslug3lw,			// Metal Slug 3 (Last Bullet Remix, Hack)
 	&BurnDrvmslug3g,			// Metal Slug 3 (Multifunction Hack, 20190119)
 	&BurnDrvmslug3v,			// Metal Slug 3 (NGH-2560) (Enhanced Violence Version, hack by EEZEZY)
 	&BurnDrvmslug3h,			// Metal Slug 3 (NGH-2560)
 	&BurnDrvmslug3,				// Metal Slug 3 (NGM-2560)
 	&BurnDrvmslug3a,			// Metal Slug 3 (NGM-2560, earlier)
-	&BurnDrvmslug3rb,			// Metal Slug 3 (The Last Warhear, Hack)
+	&BurnDrvmslug3x,			// Metal Slug 3 (X, Homebrew, 20220203)
 	&BurnDrvmslug3unity,		// Metal Slug 3 Unity (Added Timer Ver. 2021-02-13)
 	&BurnDrvmslug4a,			// Metal Slug 4 (20th Anniversary)
 	&BurnDrvmslug4ar,			// Metal Slug 4 (Enemies Reset Fusion 20th Anniversary, Hack)
@@ -28288,12 +28297,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmslug5mg,			// Metal Slug 5 (Enemy Demons, Hack)
 	&BurnDrvms5pcb,				// Metal Slug 5 (JAMMA PCB)
 	&BurnDrvmslug5g,			// Metal Slug 5 (Multifunction Hack, 20170523)
-	&BurnDrvmslug5wd,			// Metal Slug 5 (New Campaign)
-	&BurnDrvMslug5w,			// Metal Slug 5 (New Campaign, 2016-03-10)
 	&BurnDrvmslug5h,			// Metal Slug 5 (NGH-2680)
 	&BurnDrvmslug5,				// Metal Slug 5 (NGM-2680)
 	&BurnDrvmslug5sgf,			// Metal Slug 5 (Remake Final FC2 Version, Hack)
-	&BurnDrvmslug5x,			// Metal Slug 5 (X, Hack)
+	&BurnDrvmslug5w,			// Metal Slug 5 (The New War, Hack)
+	&BurnDrvmslug5x,			// Metal Slug 5 (X Final Ver, Hack, 20220606)
 	&BurnDrvms5plus,			// Metal Slug 5 Plus (bootleg)
 	&BurnDrvmslug5unity,		// Metal Slug 5 Unity (Added Timer Ver. 2021-04-23)
 	&BurnDrvmslug3b6,			// Metal Slug 6 (Metal Slug 3 bootleg)
@@ -30876,6 +30884,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpuckmod,			// Puck Man (Japan set 2)
 	&BurnDrvpacmansp,			// Puck Man (Spanish, 'Made in Greece' bootleg)
 	&BurnDrvpuckmanf,			// PuckMan (speedup hack)
+	&BurnDrvUnkpacga,			// Pucman
 	&BurnDrvmd_puggsy,			// Puggsy (Euro)
 	&BurnDrvmd_puggsys,			// Puggsy (Hack, Spanish)
 	&BurnDrvmd_puggsyp,			// Puggsy (Prototype)
@@ -36173,8 +36182,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_univunk,		// Universe Unknown (HB)
 	&BurnDrvUniwarsa,			// UniWar S (bootleg)
 	&BurnDrvUniwars,			// UniWar S
+	&BurnDrvUnkpacgd,			// unknown 'Pac Man with cars' gambling game
+	&BurnDrvUnkpacg,			// unknown 'Pac-Man' gambling game (set 1)
+	&BurnDrvUnkpacgb,			// unknown 'Pac-Man' gambling game (set 2)
+	&BurnDrvUnksig,				// unknown 'Space Invaders' gambling game (encrypted, set 1)
+	&BurnDrvUnksiga,			// unknown 'Space Invaders' gambling game (encrypted, set 2)
+	&BurnDrvUnksigb,			// unknown 'Space Invaders' gambling game (unencrypted)
 	&BurnDrvmd_unknown2,		// Unknown Game 2 (Rockman-related?) [no comment, NOT WORKING]
-	&BurnDrvUnkpacg,			// unknown Pac-Man gambling game
 	&BurnDrvmd_unnecess,		// Unnecessary Roughness 95 (USA)
 	&BurnDrvmd_uspknight,		// Unstoppable Knight (HB)
 	&BurnSpecuntouchb,			// Untouchables, The (128K)

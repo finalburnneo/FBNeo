@@ -9948,6 +9948,14 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="matendoujic" cloneof="matendouji" romof="matendouji">
+		<description>Matendouji (T-Chi)</description>
+		<year>2022</year>
+		<manufacturer>Ni You De Wu Cai Yu</manufacturer>
+		<rom name="Matendouji (T-Chi).nes" size="524304" crc="919e863f"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="mawthornej" cloneof="mawthorne" romof="mawthorne">
 		<comment>Homebrew</comment>
 		<description>Mawthorne (Japan) (HB)</description>

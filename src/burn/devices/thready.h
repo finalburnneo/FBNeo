@@ -89,6 +89,10 @@ struct threadystruct
 		}
 	}
 
+	void scan() {
+		SCAN_VAR(startup_frame);
+	}
+
 	void reset() {
 		startup_frame = STARTUP_FRAMES;
 	}
@@ -192,6 +196,10 @@ struct threadystruct
 		}
 	}
 
+	void scan() {
+		SCAN_VAR(startup_frame);
+	}
+
 	void reset() {
 		startup_frame = STARTUP_FRAMES;
 	}
@@ -258,6 +266,9 @@ struct threadystruct
 	}
 
 	void exit() {
+	}
+
+	void scan() {
 	}
 
 	void reset() {

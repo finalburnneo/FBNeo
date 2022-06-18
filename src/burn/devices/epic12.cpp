@@ -292,14 +292,14 @@ static void run_blitter_cb()
 
 void epic12_exit()
 {
+	thready.exit();
+
 	BurnFree(m_bitmaps);
 
 	if (pal16) {
 		BurnFree(pal16);
 		pal16 = NULL;
 	}
-
-	thready.exit();
 }
 
 void epic12_init(INT32 ram_size, UINT16 *ram, UINT8 *dippy)
@@ -1000,5 +1000,6 @@ void epic12_scan(INT32 nAction, INT32 *pnMin)
 	SCAN_VAR(m_delay_scale);
 	SCAN_VAR(m_blitter_busy);
 	ScanVar(m_bitmaps, m_gfx_size * 4, "epic12 vram");
+	thready.scan();
 }
 

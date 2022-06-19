@@ -26,6 +26,10 @@ static bool bAppDoFast = 0;
 static bool bAppDoFasttoggled = 0;
 static int nFastSpeed = 6;
 
+// SlowMo T.A. feature
+int nSlowMo = 0;
+static int flippy = 0; // free running RunFrame() counter
+
 // For System Macros (below)
 static int prevPause = 0, prevFFWD = 0, prevFrame = 0, prevSState = 0, prevLState = 0, prevUState = 0;
 UINT32 prevPause_debounce = 0;
@@ -179,6 +183,12 @@ int RunFrame(int bDraw, int bPause)
 
 		if (!nVidFullscreen && bVidDWMSync)     // Sync to DWM (Win7+, windowed)
 			SuperWaitVBlank();
+	}
+
+	flippy++;
+	if (nSlowMo) { // SlowMo T.A.
+		if (nSlowMo == 1) {	if ((flippy % 4) == 0) return 0; } // 75% speed
+		else if ((flippy % ((nSlowMo-1) * 2)) < (((nSlowMo-1) * 2) - 1)) return 0; // 50% and less
 	}
 
 	if (!bDrvOkay) {

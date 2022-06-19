@@ -906,6 +906,12 @@
 #define ID_LUA_OPEN							11812
 #define ID_LUA_CLOSE_ALL					11813
 
+#define ID_SLOMO_0                          11815
+#define ID_SLOMO_1                          11816
+#define ID_SLOMO_2                          11817
+#define ID_SLOMO_3                          11818
+#define ID_SLOMO_4                          11819
+
 #define MENU_AVISTART					    11827
 #define MENU_AVISTOP					    11828
 #define MENU_AVIINTAUD					    11829

@@ -238,6 +238,7 @@ extern bool bBurnGunDrawReticles;
 extern int bRunPause;
 extern int bAltPause;
 extern int bAlwaysDrawFrames;
+extern int nSlowMo;
 //extern INT32 bRunAhead;  // in burn.h! (partially platform agnostic feature)
 extern int kNetGame;
 int RunIdle();

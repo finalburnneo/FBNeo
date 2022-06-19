@@ -5243,6 +5243,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="diathieves">
+		<comment>Homebrew</comment>
+		<description>Diamond Thieves (HB)</description>
+		<year>2022</year>
+		<manufacturer>Manganga Team - Mega Cat Studios</manufacturer>
+		<rom name="Diamond Thieves (2022)(Mega Cat Studios).bin" size="2097152" crc="b66fa98f"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="dicktrs" cloneof="dicktr" romof="dicktr">
 		<comment>Hack</comment>
 		<description>Dick Tracy (Hack, Spanish)</description>
@@ -8375,7 +8384,7 @@
 	</game>
 	<game name="hpotter2" cloneof="mickmack" romof="mickmack">
 		<comment>Hack</comment>
-		<description>Harry Potter and the Chamber of Secrets (Rus)</description>
+		<description>Harry Potter and the Chamber of Secrets (Unl) (Rus)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="harry potter 2.bin" size="1048576" crc="1684479f"/>
@@ -10926,9 +10935,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="meganser">
+		<comment>Network Tool</comment>
 		<description>Mega Anser (Jpn)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<year>1989</year>
+		<manufacturer>SEGA</manufacturer>
 		<rom name="mega anser (jpn).bin" size="524288" crc="08ece367"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10950,9 +10960,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="megabm8">
+		<comment>Demo</comment>
 		<description>Mega Bomberman - 8 Player Demo</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<year>1994</year>
+		<manufacturer>Factor 5</manufacturer>
 		<rom name="mega bomberman - 8 player demo (unl).bin" size="1048576" crc="d41c0d81"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11237,9 +11248,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="meganet">
+		<comment>Network Tool</comment>
 		<description>MegaNet (Bra)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<year>1995</year>
+		<manufacturer>Tec Toy</manufacturer>
 		<rom name="meganet (bra).bin" size="262144" crc="fab33cc2"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11294,9 +11306,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="mercss" cloneof="mercs" romof="mercs">
+		<comment>Hack</comment>
 		<description>Mercs (Hack, Spanish)</description>
 		<year>2017</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="mercs (hack, spanish).bin" size="1048576" crc="db0a96e0"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11322,7 +11335,7 @@
 	<game name="metalfng">
 		<description>Metal Fangs (Jpn)</description>
 		<year>1993</year>
-		<manufacturer>Victor Interactive Software</manufacturer>
+		<manufacturer>Victor Musical Instruments</manufacturer>
 		<rom name="metal fangs (jpn).bin" size="524288" crc="a8df1c4c"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11354,14 +11367,16 @@
 		<driver status="good"/>
 	</game>
 	<game name="mwalks" cloneof="mwalk" romof="mwalk">
+		<comment>Hack</comment>
 		<description>Michael Jackson's Moonwalker (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>jackic</manufacturer>
 		<rom name="michael jackson's moonwalker (hack, spanish).bin" size="524288" crc="6d849e61"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mwalkp" cloneof="mwalk" romof="mwalk">
+		<comment>Prototype</comment>
 		<description>Michael Jackson's Moonwalker (Prototype, 19900424)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
@@ -11617,9 +11632,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="mightmg3">
+		<comment>Prototype</comment>
 		<description>Might and Magic III - Isles of Terra (USA, Prototype)</description>
 		<year>1993</year>
-		<manufacturer>FCI?</manufacturer>
+		<manufacturer>CRI</manufacturer>
 		<rom name="might and magic iii - isles of terra (usa) (prototype).bin" size="2097152" crc="6ef7104a"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11627,7 +11643,7 @@
 	<game name="mmpr">
 		<description>Mighty Morphin Power Rangers (Euro)</description>
 		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Sega - Banpresto</manufacturer>
 		<rom name="mighty morphin power rangers (euro).bin" size="2097152" crc="7f96e663"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11636,39 +11652,43 @@
 		<comment>Hack</comment>
 		<description>Mighty Morphin Power Rangers (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Banpresto</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="mighty morphin power rangers (hack, spanish).bin" size="2097152" crc="5a34dc26"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mmprp6" cloneof="mmpr" romof="mmpr">
+		<comment>Prototype</comment>
 		<description>Mighty Morphin Power Rangers (Prototype, 19940708)</description>
 		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Sega - Banpresto</manufacturer>
 		<rom name="mighty morphin power rangers (prototype - jul 08, 1994).bin" size="2097152" crc="e6916c54"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mmprp5" cloneof="mmpr" romof="mmpr">
+		<comment>Prototype</comment>
 		<description>Mighty Morphin Power Rangers (Prototype, 19940718)</description>
 		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Sega - Banpresto</manufacturer>
 		<rom name="mighty morphin power rangers (prototype - jul 18, 1994).bin" size="2097152" crc="5accdb1a"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mmprp2" cloneof="mmpr" romof="mmpr">
+		<comment>Prototype</comment>
 		<description>Mighty Morphin Power Rangers (Prototype, 19940809)</description>
 		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Sega - Banpresto</manufacturer>
 		<rom name="mighty morphin power rangers (prototype - aug 09, 1994).bin" size="2097152" crc="4356fe0a"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mmprp1" cloneof="mmpr" romof="mmpr">
+		<comment>Prototype</comment>
 		<description>Mighty Morphin Power Rangers (Prototype, 19940810)</description>
 		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Sega - Banpresto</manufacturer>
 		<rom name="mighty morphin power rangers (prototype - aug 10, 1994).bin" size="2097152" crc="e79cd214"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11676,29 +11696,31 @@
 	<game name="mmpru" cloneof="mmpr" romof="mmpr">
 		<description>Mighty Morphin Power Rangers (USA)</description>
 		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Sega - Banpresto</manufacturer>
 		<rom name="mighty morphin power rangers (usa).bin" size="2097152" crc="715158a9"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mmprp4" cloneof="mmpr" romof="mmpr">
+		<comment>Prototype</comment>
 		<description>Mighty Morphin Power Rangers (USA, Prototype, 19940804)</description>
 		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Sega - Banpresto</manufacturer>
 		<rom name="mighty morphin power rangers (prototype - aug 04, 1994).bin" size="2097152" crc="f3ae5aaf"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mmprp3" cloneof="mmpr" romof="mmpr">
+		<comment>Prototype</comment>
 		<description>Mighty Morphin Power Rangers (USA, Prototype, 19940808)</description>
 		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Sega - Banpresto</manufacturer>
 		<rom name="mighty morphin power rangers (prototype - aug 08, 1994).bin" size="2097152" crc="57644549"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mmprfe">
-		<description>Mighty Morphin Power Rangers - The Fighting Edition (Rus)</description>
+		<description>Mighty Morphin Power Rangers - The Fighting Edition (Unl) (Rus)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="mighty morphin power ranger - the fighting edition (unl).bin" size="2097152" crc="b53ff16c"/>
@@ -11708,7 +11730,7 @@
 	<game name="mmprtm">
 		<description>Mighty Morphin Power Rangers - The Movie (Euro)</description>
 		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Sega - Banpresto</manufacturer>
 		<rom name="mighty morphin power rangers - the movie (euro).bin" size="2097152" crc="254a4972"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11717,7 +11739,7 @@
 		<comment>Hack</comment>
 		<description>Mighty Morphin Power Rangers - The Movie (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Banpresto</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="mighty morphin power rangers - the movie (hack, spanish).bin" size="2097152" crc="cb3852b1"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11725,39 +11747,43 @@
 	<game name="mmprtmu" cloneof="mmprtm" romof="mmprtm">
 		<description>Mighty Morphin Power Rangers - The Movie (USA)</description>
 		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Sega - Banpresto</manufacturer>
 		<rom name="mighty morphin power rangers - the movie (usa).bin" size="2097152" crc="aa941cbc"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mmprtmp4" cloneof="mmprtm" romof="mmprtm">
+		<comment>Prototype</comment>
 		<description>Mighty Morphin Power Rangers - The Movie (USA, Prototype, 19950713)</description>
 		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Sega - Banpresto</manufacturer>
 		<rom name="mighty morphin power rangers - the movie (prototype - jul 13, 1995).bin" size="2097152" crc="227bf7fd"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mmprtmp3" cloneof="mmprtm" romof="mmprtm">
+		<comment>Prototype</comment>
 		<description>Mighty Morphin Power Rangers - The Movie (USA, Prototype, 19950717)</description>
 		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Sega - Banpresto</manufacturer>
 		<rom name="mighty morphin power rangers - the movie (prototype - jul 17, 1995).bin" size="2097152" crc="579de657"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mmprtmp2" cloneof="mmprtm" romof="mmprtm">
+		<comment>Prototype</comment>
 		<description>Mighty Morphin Power Rangers - The Movie (USA, Prototype, 19950722)</description>
 		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Sega - Banpresto</manufacturer>
 		<rom name="mighty morphin power rangers - the movie (prototype - jul 22, 1995).bin" size="2097152" crc="c2ca3a8b"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mmprtmp1" cloneof="mmprtm" romof="mmprtm">
+		<comment>Prototype</comment>
 		<description>Mighty Morphin Power Rangers - The Movie (USA, Prototype, 19950724)</description>
 		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Sega - Banpresto</manufacturer>
 		<rom name="mighty morphin power rangers - the movie (prototype - jul 24, 1995).bin" size="2097152" crc="3429fa3a"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11800,6 +11826,14 @@
 		<year>1995</year>
 		<manufacturer>Data East</manufacturer>
 		<rom name="minnesota fats - pool legend (usa).bin" size="1048576" crc="38174f40"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="miraclep">
+		<description>Miracle Piano Teaching System, The (USA)</description>
+		<year>1992</year>
+		<manufacturer>The Software Toolworks</manufacturer>
+		<rom name="miracle piano teaching system, the (usa).bin" size="524288" crc="a719542e"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -12762,6 +12796,32 @@
 		<year>1994</year>
 		<manufacturer>Koei</manufacturer>
 		<rom name="uncharted waters - new horizons (usa).bin" size="2097152" crc="ead69824"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tnzsac" cloneof="tnzs" romof="tnzs">
+		<comment>Hack</comment>
+		<description>New Zealand Story, The (Hack, Arcade Colors)</description>
+		<year>2020</year>
+		<manufacturer>fabio</manufacturer>
+		<rom name="new zealand story, The (hack - arcade colors).bin" size="524288" crc="0a35d853"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tnzss" cloneof="tnzs" romof="tnzs">
+		<comment>Hack</comment>
+		<description>New Zealand Story, The (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="the new zealand story (hack, spanish).bin" size="524288" crc="684d738a"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tnzs">
+		<description>New Zealand Story, The (Jpn)</description>
+		<year>1990</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="new zealand story, the (jpn).bin" size="524288" crc="1c77ad21"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -16402,6 +16462,23 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="seconds">
+		<description>Second Samurai, The (Euro)</description>
+		<year>1994</year>
+		<manufacturer>Vivid Games - Psygnosis</manufacturer>
+		<rom name="second samurai (euro).bin" size="1048576" crc="78e92143"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="secondss" cloneof="seconds" romof="seconds">
+		<comment>Hack</comment>
+		<description>Second Samurai, The (Hack, Spanish)</description>
+		<year>2013</year>
+		<manufacturer>pepodmc</manufacturer>
+		<rom name="the second samurai (hack, spanish).bin" size="1048576" crc="ab66b8fc"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="segachnla" cloneof="segachnl" romof="segachnl">
 		<description>Sega Channel (General Instrument) (USA)</description>
 		<year>199?</year>
@@ -17070,6 +17147,39 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bartvssm1" cloneof="bartvssm" romof="bartvssm">
+		<description>Simpsons, The - Bart Vs The Space Mutants (Euro, USA)</description>
+		<year>1992</year>
+		<manufacturer>Flying Edge</manufacturer>
+		<rom name="simpsons, the - bart vs the space mutants (euro, usa).bin" size="524288" crc="c8620574"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bartvssm">
+		<description>Simpsons, The - Bart Vs The Space Mutants (Euro, USA, Rev. A)</description>
+		<year>1992</year>
+		<manufacturer>Flying Edge</manufacturer>
+		<rom name="mpr-14759a.bin" size="524288" crc="db70e8ca"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bartvssms" cloneof="bartvssm" romof="bartvssm">
+		<comment>Hack</comment>
+		<description>Simpsons, The - Bart Vs The Space Mutants (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="the simpsons - bart vs the space mutants (hack, spanish).bin" size="524288" crc="310ef622"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bartnigh">
+		<description>Simpsons, The - Bart's Nightmare (Euro, USA)</description>
+		<year>1993</year>
+		<manufacturer>Flying Edge</manufacturer>
+		<rom name="simpsons, the - bart's nightmare (euro, usa).bin" size="1048576" crc="24d7507c"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="skelkrew">
 		<description>Skeleton Krew (Euro)</description>
 		<year>1995</year>
@@ -17172,7 +17282,7 @@
 	</game>
 	<game name="snezkoro" cloneof="mickmack" romof="mickmack">
 		<comment>Hack</comment>
-		<description>Snezhnaya Koroleva (Rus)</description>
+		<description>Snezhnaya Koroleva (Unl) (Rus)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="snow queen (unl).bin" size="2097152" crc="e6c07946"/>
@@ -20871,38 +20981,6 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="miraclep">
-		<description>The Miracle Piano Teaching System (USA)</description>
-		<year>1992</year>
-		<manufacturer>Software Toolworks</manufacturer>
-		<rom name="miracle piano teaching system, the (usa).bin" size="524288" crc="a719542e"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="tnzsac" cloneof="tnzs" romof="tnzs">
-		<description>The New Zealand Story (Hack, Arcade Colors)</description>
-		<year>2020</year>
-		<manufacturer>Taito - fabio</manufacturer>
-		<rom name="new zealand story, The (hack - arcade colors).bin" size="524288" crc="0a35d853"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="tnzss" cloneof="tnzs" romof="tnzs">
-		<description>The New Zealand Story (Hack, Spanish)</description>
-		<year>2019</year>
-		<manufacturer>Taito</manufacturer>
-		<rom name="the new zealand story (hack, spanish).bin" size="524288" crc="684d738a"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="tnzs">
-		<description>The New Zealand Story (Jpn)</description>
-		<year>1990</year>
-		<manufacturer>Taito</manufacturer>
-		<rom name="new zealand story, the (jpn).bin" size="524288" crc="1c77ad21"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="ottifant">
 		<description>The Ottifants (Euro)</description>
 		<year>1993</year>
@@ -20925,56 +21003,6 @@
 		<year>2013</year>
 		<manufacturer>Aquaslash &amp; Pals</manufacturer>
 		<rom name="The S Factor - Sonia And Silver (Hack By Aquaslash &amp; Pals).bin" size="1300053" crc="366e8cd4"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="seconds">
-		<description>The Second Samurai (Euro)</description>
-		<year>1994</year>
-		<manufacturer>Psygnosis</manufacturer>
-		<rom name="second samurai (euro).bin" size="1048576" crc="78e92143"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="secondss" cloneof="seconds" romof="seconds">
-		<comment>Hack</comment>
-		<description>The Second Samurai (Hack, Spanish)</description>
-		<year>2013</year>
-		<manufacturer>pepodmc</manufacturer>
-		<rom name="the second samurai (hack, spanish).bin" size="1048576" crc="ab66b8fc"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="bartvssm1" cloneof="bartvssm" romof="bartvssm">
-		<description>The Simpsons - Bart Vs The Space Mutants (Euro, USA)</description>
-		<year>1992</year>
-		<manufacturer>Flying Edge</manufacturer>
-		<rom name="simpsons, the - bart vs the space mutants (euro, usa).bin" size="524288" crc="c8620574"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="bartvssm">
-		<description>The Simpsons - Bart Vs The Space Mutants (Euro, USA, Rev. A)</description>
-		<year>1992</year>
-		<manufacturer>Flying Edge</manufacturer>
-		<rom name="mpr-14759a.bin" size="524288" crc="db70e8ca"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="bartvssms" cloneof="bartvssm" romof="bartvssm">
-		<comment>Hack</comment>
-		<description>The Simpsons - Bart Vs The Space Mutants (Hack, Spanish)</description>
-		<year>2018</year>
-		<manufacturer>Wave</manufacturer>
-		<rom name="the simpsons - bart vs the space mutants (hack, spanish).bin" size="524288" crc="310ef622"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="bartnigh">
-		<description>The Simpsons - Bart's Nightmare (Euro, USA)</description>
-		<year>1993</year>
-		<manufacturer>Flying Edge</manufacturer>
-		<rom name="simpsons, the - bart's nightmare (euro, usa).bin" size="1048576" crc="24d7507c"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

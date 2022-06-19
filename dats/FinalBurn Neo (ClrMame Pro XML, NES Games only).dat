@@ -546,6 +546,14 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="uninvitedj" cloneof="uninvited" romof="uninvited">
+		<description>Akuma no Shoutaijou (Japan)</description>
+		<year>1989</year>
+		<manufacturer>Kemco</manufacturer>
+		<rom name="Akuma no Shoutaijou (J)(1989)(Kemco).nes" size="262160" crc="0c9dbb04"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="akumadenjc" cloneof="castliii" romof="castliii">
 		<comment>Hack</comment>
 		<description>Akumajou Densetsu (Hack, Spanish v1.1)</description>
@@ -4893,6 +4901,23 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="erika">
+		<comment>Hack</comment>
+		<description>Erika and Satoru's Dream Adventure (T-Eng)</description>
+		<year>2022</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
+		<rom name="Erika to Satoru no Yume Bouken (T-Eng)(2022)(Stardust Crusaders).nes" size="393232" crc="cfb795ac"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="erikaj" cloneof="erika" romof="erika">
+		<description>Erika to Satoru no Yume Bouken (Japan)</description>
+		<year>1988</year>
+		<manufacturer>Namcot</manufacturer>
+		<rom name="Erika to Satoru no Yume Bouken (J)(Namco)(1988).nes" size="262160" crc="e9f199aa"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="escapfroatl">
 		<comment>Prototype</comment>
 		<description>Escape From Atlantis, The (Prototype)</description>
@@ -7118,8 +7143,8 @@
 	</game>
 	<game name="hellokitwor">
 		<description>Hello Kitty World (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1992</year>
+		<manufacturer>Character Soft</manufacturer>
 		<rom name="Hello Kitty World (Japan).nes" size="131088" crc="54dc10cd"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8128,8 +8153,8 @@
 	</game>
 	<game name="juuoukij" cloneof="juuouki" romof="juuouki">
 		<description>Juuouki (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Asmik</manufacturer>
 		<rom name="Juuouki (Japan).nes" size="262160" crc="4de1c214"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8818,9 +8843,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="lagrangepoint">
+		<comment>Hack</comment>
 		<description>Lagrange Point (T-eng)</description>
-		<year>1991</year>
-		<manufacturer>Konami</manufacturer>
+		<year>2014</year>
+		<manufacturer>Aeon Genesis</manufacturer>
 		<rom name="Lagrange Point (T-eng).nes" size="524304" crc="9e13caa2"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8912,8 +8938,8 @@
 	<game name="laweste">
 		<comment>Hack</comment>
 		<description>Law of the West (T-Eng)</description>
-		<year>1987-2020</year>
-		<manufacturer>Pony Canyon - GAFF Translations</manufacturer>
+		<year>2020</year>
+		<manufacturer>GAFF Translations</manufacturer>
 		<rom name="Law of the West T-Eng (2020)(GAFF Translations).nes" size="262160" crc="34437445"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8929,16 +8955,17 @@
 	</game>
 	<game name="laylaj" cloneof="layla" romof="layla">
 		<description>Layla (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1986</year>
+		<manufacturer>dB-SOFT</manufacturer>
 		<rom name="Layla (Japan).nes" size="131088" crc="d9381fe7"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="layla">
+		<comment>Hack</comment>
 		<description>Layla (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2017</year>
+		<manufacturer>Supper</manufacturer>
 		<rom name="Layla (T-Eng).nes" size="262160" crc="3f4f9465"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8977,9 +9004,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="legenbal">
+		<comment>Hack</comment>
 		<description>Legend of Balubalouk (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2017</year>
+		<manufacturer>Psyklax</manufacturer>
 		<rom name="Legend of Balubalouk (T-Eng).nes" size="131088" crc="661c0a1b"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9146,19 +9174,20 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="lionkinlegc" cloneof="lionkinleg" romof="lionkinleg">
-		<description>Lion King Legend, The (China)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
-		<rom name="Lion King Legend, The (China).nes" size="524304" crc="1309fa69"/>
+	<game name="lionkinleg">
+		<comment>Hack</comment>
+		<description>Lion King Legend, The (T-Eng)</description>
+		<year>2015</year>
+		<manufacturer>pacnsacdave</manufacturer>
+		<rom name="Lion King Legend, The (T-Eng).nes" size="524304" crc="0f95fc73"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="lionkinleg">
-		<description>Lion King Legend, The (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
-		<rom name="Lion King Legend, The (T-Eng).nes" size="524304" crc="0f95fc73"/>
+	<game name="lionkinlegc" cloneof="lionkinleg" romof="lionkinleg">
+		<description>Lion King Legend, The (Unl) (Ch)</description>
+		<year>1996</year>
+		<manufacturer>Waixing</manufacturer>
+		<rom name="Lion King Legend, The (China).nes" size="524304" crc="1309fa69"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -12718,6 +12747,15 @@
 		<year>1990</year>
 		<manufacturer>Kemco</manufacturer>
 		<rom name="Rescue - The Embassy Mission (USA).nes" size="262160" crc="0e4fe1f3"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="rickrolled">
+		<comment>Demo, Homebrew</comment>
+		<description>Rick Rolled! (HB, Tech-Demo)</description>
+		<year>2009</year>
+		<manufacturer>Frantik</manufacturer>
+		<rom name="Rick Rolled! Tech-Demo (2009) (Frantik).nes" size="262160" crc="c1be91f9"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -16474,10 +16512,19 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="uninvitedu" cloneof="uninvited" romof="uninvited">
+		<comment>Hack</comment>
+		<description>Uninvited Uncensored (Hack, v1.0f)</description>
+		<year>2022</year>
+		<manufacturer>Safaribans</manufacturer>
+		<rom name="Uninvited Uncensored v1.0f (2022)(Safaribans).nes" size="262160" crc="7226c684"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="univesol">
 		<description>Universe Soldiers, The (Ch)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1993</year>
+		<manufacturer>Whirlwind Manu</manufacturer>
 		<rom name="Universe Soldiers, The (Ch).nes" size="65552" crc="74bbcb02"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>

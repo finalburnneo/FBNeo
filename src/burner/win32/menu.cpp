@@ -1024,6 +1024,18 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_GEARSHIFT, BurnShiftEnabled ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_LIGHTGUNRETICLES, bBurnGunDrawReticles ? MF_CHECKED : MF_UNCHECKED);
 
+	// SlowMo T.A. feature radioselektor
+	if (nSlowMo >= 0 && nSlowMo <= 4) {
+		// verify parameter OK
+		var = ID_SLOMO_0 + nSlowMo;
+	} else {
+		// not OK, use default
+		nSlowMo = 0;
+		var = ID_SLOMO_0;
+	}
+
+	CheckMenuRadioItem(hMenu, ID_SLOMO_0, ID_SLOMO_4, var, MF_BYCOMMAND);
+
 #ifdef INCLUDE_AVI_RECORDING
 	if (nAvi3x <= 1) {
 		nAvi3x = 1;
@@ -1324,6 +1336,12 @@ void MenuEnableItems()
 		EnableMenuItem(hMenu, MENU_MEMCARD_INSERT,		MF_GRAYED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_MEMCARD_EJECT,		MF_GRAYED | MF_BYCOMMAND);
 
+		EnableMenuItem(hMenu, ID_SLOMO_0,				MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, ID_SLOMO_1,				MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, ID_SLOMO_2,				MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, ID_SLOMO_3,				MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, ID_SLOMO_4,				MF_ENABLED | MF_BYCOMMAND);
+
 		EnableMenuItem(hMenu, ID_LUA_OPEN,				MF_ENABLED | MF_BYCOMMAND);
 		if (LuaConsoleHWnd) {
 			EnableMenuItem(hMenu, ID_LUA_CLOSE_ALL,		MF_ENABLED | MF_BYCOMMAND);
@@ -1440,6 +1458,11 @@ void MenuEnableItems()
 		bAltPause = 0;
 
 		EnableMenuItem(hMenu, MENU_LOAD,				MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, ID_SLOMO_0,				MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, ID_SLOMO_1,				MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, ID_SLOMO_2,				MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, ID_SLOMO_3,				MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, ID_SLOMO_4,				MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, ID_LUA_OPEN,				MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, ID_LUA_CLOSE_ALL,			MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_MEMCARD_CREATE,		MF_GRAYED  | MF_BYCOMMAND);

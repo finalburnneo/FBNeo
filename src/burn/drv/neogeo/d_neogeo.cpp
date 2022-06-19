@@ -15935,7 +15935,7 @@ struct BurnDriver BurnDrvmslug5b2 = {
 // GOTVG
 // mslug5hp00 in HBMAME.
 
-static struct BurnRomInfo mslug5gRomDesc[] = {
+static struct BurnRomInfo mslug5dRomDesc[] = {
 	{ "268-p1d.bin",	0x600000, 0x3be747ab, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "268d-s1.rom",	0x020000, 0x64952683, 2 | BRF_GRA },           //  1 Text layer tiles
@@ -15957,15 +15957,15 @@ static struct BurnRomInfo mslug5gRomDesc[] = {
 	{ "268d-v4.rom",	0x400000, 0x969ff3b2, 5 | BRF_SND },           // 14
 };
 
-STDROMPICKEXT(mslug5g, mslug5g, neogeo)
-STD_ROM_FN(mslug5g)
+STDROMPICKEXT(mslug5d, mslug5d, neogeo)
+STD_ROM_FN(mslug5d)
 
-struct BurnDriver BurnDrvmslug5g = {
-	"mslug5g", "mslug5", "neogeo", NULL, "2017",
+struct BurnDriver BurnDrvmslug5d = {
+	"mslug5d", "mslug5", "neogeo", NULL, "2017",
 	"Metal Slug 5 (Multifunction Hack, 20170523)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
-	NULL, mslug5gRomInfo, mslug5gRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, mslug5dRomInfo, mslug5dRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
@@ -21350,8 +21350,8 @@ static struct BurnRomInfo mslugxlbRomDesc[] = {
 
 	{ "250-s1.s1",		0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "250-c1.c1",		0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
-	{ "250-c2.c2",		0x800000, 0x31679821, 3 | BRF_GRA },           //  4 
+	{ "250-c1lb.c1",	0x800000, 0xd52e8702, 3 | BRF_GRA },           //  3 Sprite data
+	{ "250-c2lb.c2",	0x800000, 0xedec334c, 3 | BRF_GRA },           //  4 
 	{ "250-c3.c3",		0x800000, 0xfd602019, 3 | BRF_GRA },           //  5 
 	{ "250-c4.c4",		0x800000, 0x31354513, 3 | BRF_GRA },           //  6 
 	{ "250-c5.c5",		0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7 

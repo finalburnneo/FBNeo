@@ -1,4 +1,4 @@
-// Warp Warp emu-layer for FB Alpha by dink, based on Mirko & Chris Hardy's MAME driver & sound core code by Juergen Buchmueller
+// Warp Warp emu-layer for FB Neo by dink, based on Mirko & Chris Hardy's MAME driver & sound core code by Juergen Buchmueller
 
 #include "tiles_generic.h"
 #include "driver.h"
@@ -957,10 +957,11 @@ static INT32 DrvInit()
 		}
 		GfxDecode(0x100, 1, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvGFX1ROM, DrvCharGFX);
 	} else
-	if (bombbeemode) {
+	if (bombbeemode) { // bombbee
 		bprintf(0, _T("bombbee/cutieq mode\n"));
 		if (BurnLoadRom(DrvZ80ROM + 0x0000, 0, 1)) return 1;
-		if (BurnLoadRom(DrvGFX1ROM        , 1, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x1000, 1, 1)) return 1;
+		if (BurnLoadRom(DrvGFX1ROM        , 2, 1)) return 1;
 		GfxDecode(0x100, 1, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvGFX1ROM, DrvCharGFX);
 
 	} else
@@ -1523,9 +1524,11 @@ INT32 BombbeeInit()
 // Bomb Bee
 
 static struct BurnRomInfo bombbeeRomDesc[] = {
-	{ "bombbee.1k",	0x2000, 0x9f8cd7af, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+//	{ "bombbee.1k",	0x2000, 0x9f8cd7af, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "tmm333.2k",	0x1000, 0xa442f22b, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "tmm333.1k",	0x1000, 0x81f805b3, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "bombbee.4c",	0x0800, 0x5f37d569, 1 | BRF_GRA }, //  1 gfx1
+	{ "tmm334.4c",	0x0800, 0x5f37d569, 1 | BRF_GRA },           //  2 gfx1
 };
 
 STD_ROM_PICK(bombbee)

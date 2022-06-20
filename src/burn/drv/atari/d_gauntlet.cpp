@@ -63,32 +63,31 @@ static UINT8 DrvGameType;
 
 static struct BurnInputInfo GauntletInputList[] =
 {
-	{"Coin 1", 				BIT_DIGITAL  , DrvInputPort5 + 3, 	"p1 coin"   },
-	{"Coin 2", 				BIT_DIGITAL  , DrvInputPort5 + 2, 	"p2 coin"   },
-	{"Coin 3", 				BIT_DIGITAL  , DrvInputPort5 + 1, 	"p3 coin"   },
-	{"Coin 4", 				BIT_DIGITAL  , DrvInputPort5 + 0, 	"p4 coin"   },
-
+	{"P1 Coin",				BIT_DIGITAL  , DrvInputPort5 + 3, 	"p1 coin"   },
 	{"P1 Up", 				BIT_DIGITAL  , DrvInputPort0 + 7, 	"p1 up"     },
 	{"P1 Down", 			BIT_DIGITAL  , DrvInputPort0 + 6, 	"p1 down"   },
 	{"P1 Left", 			BIT_DIGITAL  , DrvInputPort0 + 5, 	"p1 left"   },
 	{"P1 Right", 			BIT_DIGITAL  , DrvInputPort0 + 4, 	"p1 right"  },
 	{"P1 Fire 1", 			BIT_DIGITAL  , DrvInputPort0 + 1, 	"p1 fire 1" },
 	{"P1 Fire 2", 			BIT_DIGITAL  , DrvInputPort0 + 0, 	"p1 fire 2" },
-	
+
+	{"P2 Coin",				BIT_DIGITAL  , DrvInputPort5 + 2, 	"p2 coin"   },
 	{"P2 Up", 				BIT_DIGITAL  , DrvInputPort1 + 7, 	"p2 up"     },
 	{"P2 Down", 			BIT_DIGITAL  , DrvInputPort1 + 6, 	"p2 down"   },
 	{"P2 Left", 			BIT_DIGITAL  , DrvInputPort1 + 5, 	"p2 left"   },
 	{"P2 Right", 			BIT_DIGITAL  , DrvInputPort1 + 4, 	"p2 right"  },
 	{"P2 Fire 1", 			BIT_DIGITAL  , DrvInputPort1 + 1, 	"p2 fire 1" },
 	{"P2 Fire 2", 			BIT_DIGITAL  , DrvInputPort1 + 0, 	"p2 fire 2" },
-	
+
+	{"P3 Coin",				BIT_DIGITAL  , DrvInputPort5 + 1, 	"p3 coin"   },
 	{"P3 Up", 				BIT_DIGITAL  , DrvInputPort2 + 7,	"p3 up"     },
 	{"P3 Down", 			BIT_DIGITAL  , DrvInputPort2 + 6,	"p3 down"   },
 	{"P3 Left", 			BIT_DIGITAL  , DrvInputPort2 + 5,	"p3 left"   },
 	{"P3 Right", 			BIT_DIGITAL  , DrvInputPort2 + 4,	"p3 right"  },
 	{"P3 Fire 1" , 			BIT_DIGITAL  , DrvInputPort2 + 1,	"p3 fire 1" },
 	{"P3 Fire 2", 			BIT_DIGITAL  , DrvInputPort2 + 0,	"p3 fire 2" },
-	
+
+	{"P4 Coin",				BIT_DIGITAL  , DrvInputPort5 + 0, 	"p4 coin"   },
 	{"P4 Up", 				BIT_DIGITAL  , DrvInputPort3 + 7,	"p4 up"     },
 	{"P4 Down", 			BIT_DIGITAL  , DrvInputPort3 + 6,	"p4 down"   },
 	{"P4 Left", 			BIT_DIGITAL  , DrvInputPort3 + 5,	"p4 left"   },
@@ -104,30 +103,30 @@ static struct BurnInputInfo GauntletInputList[] =
 STDINPUTINFO(Gauntlet)
 
 static struct BurnInputInfo Vindctr2InputList[] = {
-	{"Coin 1",				BIT_DIGITAL,	DrvInputPort5 + 3,	"p1 coin"	},
-	{"Coin 1",				BIT_DIGITAL,	DrvInputPort5 + 2,	"p2 coin"	},
-	{"Coin 2",				BIT_DIGITAL,	DrvInputPort5 + 1,	"p3 coin"	},
-	{"Coin 3",				BIT_DIGITAL,	DrvInputPort5 + 0,	"p4 coin"	},
-
+	{"P1 Coin",				BIT_DIGITAL,	DrvInputPort5 + 3,	"p1 coin"	},
 	{"P1 Start",			BIT_DIGITAL,	DrvInputPort2 + 0,	"p1 start"	},
 	{"P1 Left Stick Up",	BIT_DIGITAL,	DrvInputPort0 + 4,	"p1 up"		},
 	{"P1 Left Stick Down",	BIT_DIGITAL,	DrvInputPort0 + 6,	"p1 down"	},
-	{"P1 Right Stick Up",	BIT_DIGITAL,	DrvInputPort0 + 5,	"p3 up"		},
-	{"P1 Right Stick Down",	BIT_DIGITAL,	DrvInputPort0 + 7,	"p3 down"	},
 	{"P1 Left Stick Fire",	BIT_DIGITAL,	DrvInputPort0 + 0,	"p1 fire 1"	},
 	{"P1 Left Stick Thumb",	BIT_DIGITAL,	DrvInputPort0 + 2,	"p1 fire 2"	},
+	{"P1 Right Stick Up",	BIT_DIGITAL,	DrvInputPort0 + 5,	"p3 up"		},
+	{"P1 Right Stick Down",	BIT_DIGITAL,	DrvInputPort0 + 7,	"p3 down"	},
 	{"P1 Right Stick Fire",	BIT_DIGITAL,	DrvInputPort0 + 1,	"p1 fire 3"	},
 	{"P1 Right Stick Thumb",BIT_DIGITAL,	DrvInputPort0 + 3,	"p1 fire 4"	},
 
+	{"P2 Coin",				BIT_DIGITAL,	DrvInputPort5 + 2,	"p2 coin"	},
 	{"P2 Start",			BIT_DIGITAL,	DrvInputPort2 + 1,	"p2 start"	},
 	{"P2 Left Stick Up",	BIT_DIGITAL,	DrvInputPort1 + 4,	"p2 up"		},
 	{"P2 Left Stick Down",	BIT_DIGITAL,	DrvInputPort1 + 6,	"p2 down"	},
-	{"P2 Right Stick Up",	BIT_DIGITAL,	DrvInputPort1 + 5,	"p4 up"		},
-	{"P2 Right Stick Down",	BIT_DIGITAL,	DrvInputPort1 + 7,	"p4 down"	},
 	{"P2 Left Stick Fire",	BIT_DIGITAL,	DrvInputPort1 + 0,	"p2 fire 1"	},
 	{"P2 Left Stick Thumb",	BIT_DIGITAL,	DrvInputPort1 + 2,	"p2 fire 2"	},
+	{"P2 Right Stick Up",	BIT_DIGITAL,	DrvInputPort1 + 5,	"p4 up"		},
+	{"P2 Right Stick Down",	BIT_DIGITAL,	DrvInputPort1 + 7,	"p4 down"	},
 	{"P2 Right Stick Fire",	BIT_DIGITAL,	DrvInputPort1 + 1,	"p2 fire 3"	},
 	{"P2 Right Stick Thumb",BIT_DIGITAL,	DrvInputPort1 + 3,	"p2 fire 4"	},
+
+	{"P3 Coin",				BIT_DIGITAL,	DrvInputPort5 + 1,	"p3 coin"	},
+	{"P4 Coin",				BIT_DIGITAL,	DrvInputPort5 + 0,	"p4 coin"	},
 
 	{"Reset",				BIT_DIGITAL,	&DrvReset,			"reset"		},
 	{"Dip 1",				BIT_DIPSWITCH,	DrvDip + 0,			"dip"		},

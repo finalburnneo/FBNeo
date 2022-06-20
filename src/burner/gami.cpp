@@ -25,6 +25,7 @@ UINT8 macroSystemFrame = 0;
 UINT8 macroSystemSaveState = 0;
 UINT8 macroSystemLoadState = 0;
 UINT8 macroSystemUNDOState = 0;
+UINT8 macroSystemSlowMo[5] = { 0, 0, 0, 0, 0 };
 UINT8 macroSystemLuaHotkey1 = 0;
 UINT8 macroSystemLuaHotkey2 = 0;
 UINT8 macroSystemLuaHotkey3 = 0;
@@ -359,6 +360,56 @@ static void GameInpInitMacros()
 			pgi->Macro.nSysMacro = 1;
 			sprintf(pgi->Macro.szName, "System UNDO State");
 			pgi->Macro.pVal[0] = &macroSystemUNDOState;
+			pgi->Macro.nVal[0] = 1;
+			nMacroCount++;
+			pgi++;
+
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+			pgi->Macro.nSysMacro = 1;
+			sprintf(pgi->Macro.szName, "System SlowMo Normal");
+			pgi->Macro.pVal[0] = &macroSystemSlowMo[0];
+			pgi->Macro.nVal[0] = 1;
+			nMacroCount++;
+			pgi++;
+
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+			pgi->Macro.nSysMacro = 1;
+			sprintf(pgi->Macro.szName, "System SlowMo Slow");
+			pgi->Macro.pVal[0] = &macroSystemSlowMo[1];
+			pgi->Macro.nVal[0] = 1;
+			nMacroCount++;
+			pgi++;
+
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+			pgi->Macro.nSysMacro = 1;
+			sprintf(pgi->Macro.szName, "System SlowMo Slower");
+			pgi->Macro.pVal[0] = &macroSystemSlowMo[2];
+			pgi->Macro.nVal[0] = 1;
+			nMacroCount++;
+			pgi++;
+
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+			pgi->Macro.nSysMacro = 1;
+			sprintf(pgi->Macro.szName, "System SlowMo Slowest");
+			pgi->Macro.pVal[0] = &macroSystemSlowMo[3];
+			pgi->Macro.nVal[0] = 1;
+			nMacroCount++;
+			pgi++;
+
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+			pgi->Macro.nSysMacro = 1;
+			sprintf(pgi->Macro.szName, "System SlowMo Slowerest");
+			pgi->Macro.pVal[0] = &macroSystemSlowMo[4];
 			pgi->Macro.nVal[0] = 1;
 			nMacroCount++;
 			pgi++;

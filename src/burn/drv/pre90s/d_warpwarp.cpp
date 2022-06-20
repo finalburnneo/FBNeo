@@ -957,11 +957,17 @@ static INT32 DrvInit()
 		}
 		GfxDecode(0x100, 1, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvGFX1ROM, DrvCharGFX);
 	} else
-	if (bombbeemode) { // bombbee
+	if (bombbeemode) {
 		bprintf(0, _T("bombbee/cutieq mode\n"));
 		if (BurnLoadRom(DrvZ80ROM + 0x0000, 0, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM + 0x1000, 1, 1)) return 1;
-		if (BurnLoadRom(DrvGFX1ROM        , 2, 1)) return 1;
+
+		if (0 == strcmp(BurnDrvGetTextA(DRV_NAME), "bombbee")) { // bombbee
+			if (BurnLoadRom(DrvZ80ROM + 0x1000, 1, 1)) return 1;
+			if (BurnLoadRom(DrvGFX1ROM,         2, 1)) return 1;
+		} else { // cutieq
+			if (BurnLoadRom(DrvGFX1ROM,         1, 1)) return 1;
+		}
+
 		GfxDecode(0x100, 1, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvGFX1ROM, DrvCharGFX);
 
 	} else

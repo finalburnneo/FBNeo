@@ -272,19 +272,11 @@ static UINT8 __fastcall cybertnk_main_read_byte(UINT32 address)
 		case 0x1100d5: {
 			switch (mux_data) {
 				case 0x00: {
-#ifndef __LIBRETRO__
-					return 0xff - scalerange(BurnGunReturnX(0), 0x00, 0xff, 0x34, 0xa7);
-#else
 					return 0xff - scalerange(BurnGunReturnX(0), 0x2d, 0xd8, 0x34, 0xa7);
-#endif
 				}
 
 				case 0x01: {
-#ifndef __LIBRETRO__
-					return 0xff - scalerange(BurnGunReturnY(0), 0x00, 0xff, 0x3a, 0xc0);
-#else
 					return 0xff - scalerange(BurnGunReturnY(0), 0x0f, 0xa9, 0x3a, 0xc0);
-#endif
 				}
 				
 				case 0x02: {
@@ -589,6 +581,7 @@ static INT32 DrvInit()
 	BurnY8950SetRoute(1, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	BurnGunInit(2, false);
+	BurnGunSetBox(0, 0x2d, 0xd8, 0x0f, 0xa9);
 
 	GenericTilesInit();
 

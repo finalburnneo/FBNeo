@@ -9514,7 +9514,7 @@ DRV		BurnDrvmslug5b2;
 DRV		BurnDrvmslug5c;
 DRV		BurnDrvmslug5mg;
 DRV		BurnDrvms5pcb;
-DRV		BurnDrvmslug5g;
+DRV		BurnDrvmslug5d;
 DRV		BurnDrvmslug5h;
 DRV		BurnDrvmslug5;
 DRV		BurnDrvmslug5sgf;
@@ -25408,7 +25408,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGrdnstrm,			// Guardian Storm (horizontal, not encrypted)
 	&BurnDrvGrdnstrmv,			// Guardian Storm (vertical)
 	&BurnDrvGrdianslbss,		// Guardians (Field Edition, Hack)\0Denjin Makai II (Field Edition, Hack)
-	&BurnDrvGrdianske,			// Guardians (Kerron Edition, Hack)\0Denjin Makai II (Kerron Edition, Hack)
+	&BurnDrvGrdianske,			// Guardians (Heart Dream)\0Denjin Makai II (Heart Dream)
 	&BurnDrvGrdianslbs,			// Guardians (LBS Edition, Hack)\0Denjin Makai II (LBS Edition, Hack)
 	&BurnDrvGrdianssy,			// Guardians (Shen Yue Edition, Hack)\0Denjin Makai II (Shen Yue Edition, Hack)
 	&BurnDrvGrdians,			// Guardians\0Denjin Makai II
@@ -28312,7 +28312,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmslug5c,			// Metal Slug 5 (Enemies Reset, Hack)
 	&BurnDrvmslug5mg,			// Metal Slug 5 (Enemy Demons, Hack)
 	&BurnDrvms5pcb,				// Metal Slug 5 (JAMMA PCB)
-	&BurnDrvmslug5g,			// Metal Slug 5 (Multifunction Hack, 20170523)
+	&BurnDrvmslug5d,			// Metal Slug 5 (Multifunction Hack, 20170523)
 	&BurnDrvmslug5h,			// Metal Slug 5 (NGH-2680)
 	&BurnDrvmslug5,				// Metal Slug 5 (NGM-2680)
 	&BurnDrvmslug5sgf,			// Metal Slug 5 (Remake Final FC2 Version, Hack)

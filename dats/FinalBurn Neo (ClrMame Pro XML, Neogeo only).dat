@@ -9410,7 +9410,7 @@
 		<video type="raster" orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mslug5g" cloneof="mslug5" romof="mslug5">
+	<game name="mslug5d" cloneof="mslug5" romof="mslug5">
 		<comment>Hack</comment>
 		<description>Metal Slug 5 (Multifunction Hack, 20170523)</description>
 		<year>2017</year>
@@ -10134,8 +10134,8 @@
 		<rom name="250-p1lb.p1" size="1048576" crc="41fc71cc"/>
 		<rom name="250-p2lb.ep1" size="4194304" crc="6a114e1a"/>
 		<rom name="250-s1.s1" merge="250-s1.s1" size="131072" crc="fb6f441d"/>
-		<rom name="250-c1.c1" merge="250-c1.c1" size="8388608" crc="09a52c6f"/>
-		<rom name="250-c2.c2" merge="250-c2.c2" size="8388608" crc="31679821"/>
+		<rom name="250-c1lb.c1" size="8388608" crc="d52e8702"/>
+		<rom name="250-c2lb.c2" size="8388608" crc="edec334c"/>
 		<rom name="250-c3.c3" merge="250-c3.c3" size="8388608" crc="fd602019"/>
 		<rom name="250-c4.c4" merge="250-c4.c4" size="8388608" crc="31354513"/>
 		<rom name="250-c5.c5" merge="250-c5.c5" size="8388608" crc="a4b56124"/>

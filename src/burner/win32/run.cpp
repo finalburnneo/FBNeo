@@ -88,6 +88,17 @@ static void CheckSystemMacros() // These are the Pause / FFWD macros added to th
 		} else {
 			prevFrame = 0;
 		}
+
+		// SlowMo
+		int slow = macroSystemSlowMo[0] * 1 + macroSystemSlowMo[1] * 2 + macroSystemSlowMo[2] * 3 + macroSystemSlowMo[3] * 4 + macroSystemSlowMo[4] * 5;
+		if (slow) {
+			slow -= 1;
+			if (slow >= 0 && slow <= 4) {
+				nSlowMo = slow;
+				MenuUpdateSlowMo();
+			}
+		}
+
 		for (int hotkey_num = 0; hotkey_debounces[hotkey_num].macroSystemLuaHotkey_ref != NULL; hotkey_num++) {
 			// Use the reference to the hotkey variable in order to update our stored value
 			// Because the hotkeys are hard coded into variables this allows us to iterate on them

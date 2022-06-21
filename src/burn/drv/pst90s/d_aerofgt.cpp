@@ -2864,7 +2864,7 @@ struct BurnDriver BurnDrvTurbofrc = {
 	"turbofrc", NULL, NULL, NULL, "1991",
 	"Turbo Force (World, set 1)\0", NULL, "Video System Co.", "Video System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 3, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 3, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, turbofrcRomInfo, turbofrcRomName, NULL, NULL, NULL, NULL, turbofrcInputInfo, turbofrcDIPInfo,
 	turbofrcInit,DrvExit,DrvFrame,turbofrcDraw,DrvScan,&DrvRecalc,0x400,
 	240,352,3,4
@@ -2906,7 +2906,7 @@ struct BurnDriver BurnDrvTurbofrco = {
 	"turbofrco", "turbofrc", NULL, NULL, "1991",
 	"Turbo Force (World, set 2)\0", NULL, "Video System Co.", "Video System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 3, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 3, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, turbofrcoRomInfo, turbofrcoRomName, NULL, NULL, NULL, NULL, turbofrcInputInfo, turbofrcDIPInfo,
 	turbofrcInit,DrvExit,DrvFrame,turbofrcDraw,DrvScan,&DrvRecalc,0x400,
 	240,352,3,4
@@ -2947,7 +2947,7 @@ struct BurnDriver BurnDrvTurbofrcu = {
 	"turbofrcu", "turbofrc", NULL, NULL, "1991",
 	"Turbo Force (US)\0", NULL, "Video System Co.", "Video System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 3, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 3, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, turbofrcuRomInfo, turbofrcuRomName, NULL, NULL, NULL, NULL, turbofrcInputInfo, turbofrcDIPInfo,
 	turbofrcInit,DrvExit,DrvFrame,turbofrcDraw,DrvScan,&DrvRecalc,0x400,
 	240,352,3,4
@@ -3105,7 +3105,7 @@ struct BurnDriver BurnDrvKaratblz = {
 	"karatblz", NULL, NULL, NULL, "1991",
 	"Karate Blazers (World, set 1)\0", NULL, "Video System Co.", "Video System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, karatblzRomInfo, karatblzRomName, NULL, NULL, NULL, NULL, karatblzInputInfo, karatblzDIPInfo,
 	karatblzInit,DrvExit,DrvFrame,karatblzDraw,DrvScan,&DrvRecalc,0x400,
 	352,240,4,3
@@ -3142,7 +3142,7 @@ struct BurnDriver BurnDrvKaratbla = {
 	"karatblza", "karatblz", NULL, NULL, "1991",
 	"Karate Blazers (World, set 2)\0", NULL, "Video System Co.", "Video System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, karatblaRomInfo, karatblaRomName, NULL, NULL, NULL, NULL, karatblzInputInfo, karatblzDIPInfo,
 	karatblzInit,DrvExit,DrvFrame,karatblzDraw,DrvScan,&DrvRecalc,0x400,
 	352,240,4,3
@@ -3179,7 +3179,7 @@ struct BurnDriver BurnDrvKaratblu = {
 	"karatblzu", "karatblz", NULL, NULL, "1991",
 	"Karate Blazers (US)\0", NULL, "Video System Co.", "Video System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, karatbluRomInfo, karatbluRomName, NULL, NULL, NULL, NULL, karatblzInputInfo, karatblzDIPInfo,
 	karatblzInit,DrvExit,DrvFrame,karatblzDraw,DrvScan,&DrvRecalc,0x400,
 	352,240,4,3
@@ -3216,7 +3216,7 @@ struct BurnDriver BurnDrvKaratblt = {
 	"karatblzt", "karatblz", NULL, NULL, "1991",
 	"Karate Blazers (World, Tecmo license)\0", NULL, "Video System Co. (Tecmo license)", "Video System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, karatbltRomInfo, karatbltRomName, NULL, NULL, NULL, NULL, karatblzInputInfo, karatblzDIPInfo,
 	karatblzInit,DrvExit,DrvFrame,karatblzDraw,DrvScan,&DrvRecalc,0x400,
 	352,240,4,3
@@ -3253,7 +3253,7 @@ struct BurnDriver BurnDrvKaratblj = {
 	"karatblzj", "karatblz", NULL, NULL, "1991",
 	"Toushin Blazers (Japan, Tecmo license)\0", NULL, "Video System Co. (Tecmo license)", "Video System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, karatbljRomInfo, karatbljRomName, NULL, NULL, NULL, NULL, karatblzInputInfo, karatblzDIPInfo,
 	karatblzInit,DrvExit,DrvFrame,karatblzDraw,DrvScan,&DrvRecalc,0x400,
 	352,240,4,3

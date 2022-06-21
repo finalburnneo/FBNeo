@@ -25,6 +25,7 @@ INT32 BurnPaddleY[MAX_GUNS];
 
 struct GunWrap { INT32 xmin; INT32 xmax; INT32 ymin; INT32 ymax; };
 static GunWrap BurnGunWrapInf[MAX_GUNS]; // Paddle/Dial use
+static GunWrap BurnGunBoxInf[MAX_GUNS]; // Gun use
 
 #define a 0,
 #define b 1,
@@ -85,6 +86,14 @@ void BurnGunSetCoords(INT32 player, INT32 x, INT32 y)
 	//BurnGunY[player] = (y * nBurnGunMaxY / 0xff) << 8;
 	BurnGunX[player] = (x - 8) << 8; // based on emulated resolution
 	BurnGunY[player] = (y - 8) << 8;
+}
+
+void BurnGunSetBox(INT32 num, INT32 xmin, INT32 xmax, INT32 ymin, INT32 ymax)
+{
+	BurnGunBoxInf[num].xmin = ((xmin * nBurnGunMaxX / 0xff) - 8) << 8;
+	BurnGunBoxInf[num].xmax = ((xmax * nBurnGunMaxX / 0xff) - 8) << 8;
+	BurnGunBoxInf[num].ymin = ((ymin * nBurnGunMaxY / 0xff) - 8) << 8;
+	BurnGunBoxInf[num].ymax = ((ymax * nBurnGunMaxY / 0xff) - 8) << 8;
 }
 
 UINT8 BurnGunReturnX(INT32 num)
@@ -521,19 +530,16 @@ void BurnGunMakeInputs(INT32 num, INT16 x, INT16 y)
 
 	if (bBurnRunAheadFrame) return; // remove jitter w/runahead
 
-	const INT32 MinX = -8 * 0x100;
-	const INT32 MinY = -8 * 0x100;
-
 	if (y == 1 || y == -1) y = 0;
 	if (x == 1 || x == -1) x = 0; // prevent walking crosshair
 
 	BurnGunX[num] += x;
 	BurnGunY[num] += y;
 
-	if (BurnGunX[num] < MinX) BurnGunX[num] = MinX;
-	if (BurnGunX[num] > MinX + nBurnGunMaxX * 0x100) BurnGunX[num] = MinX + nBurnGunMaxX * 0x100;
-	if (BurnGunY[num] < MinY) BurnGunY[num] = MinY;
-	if (BurnGunY[num] > MinY + nBurnGunMaxY * 0x100) BurnGunY[num] = MinY + nBurnGunMaxY * 0x100;
+	if (BurnGunX[num] < BurnGunBoxInf[num].xmin) BurnGunX[num] = BurnGunBoxInf[num].xmin;
+	if (BurnGunX[num] > BurnGunBoxInf[num].xmax) BurnGunX[num] = BurnGunBoxInf[num].xmax;
+	if (BurnGunY[num] < BurnGunBoxInf[num].ymin) BurnGunY[num] = BurnGunBoxInf[num].ymin;
+	if (BurnGunY[num] > BurnGunBoxInf[num].ymax) BurnGunY[num] = BurnGunBoxInf[num].ymax;
 
 	for (INT32 i = 0; i < nBurnGunNumPlayers; i++)
 		GunTargetUpdate(i);
@@ -582,6 +588,7 @@ void BurnGunInit(INT32 nNumPlayers, bool bDrawTargets)
 		BurnGunY[i] = ((nBurnGunMaxY >> 1) - 8) << 8;
 
 		BurnPaddleSetWrap(i, 0, 0xf0, 0, 0xf0); // Paddle/dial stuff
+		BurnGunSetBox(i, 0, 0xff, 0, 0xff); // Gun stuff
 	}
 
 	// Trackball stuff (init)

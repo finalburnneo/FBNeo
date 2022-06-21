@@ -717,8 +717,10 @@ static void pf_update(INT32 tmap, INT32 scrollx, INT32 scrolly, UINT16 *rowscrol
 		INT32 rownum = 512;
 
 		if (size == 8) {
-			rows /= 2;
-			rownum /= 2;
+			if ( deco16_layer_height[tmap] == 32 ) {
+				rows /= 2;
+				rownum /= 2;
+			}
 			if (rows == 0) rows = 1;
 		}
 

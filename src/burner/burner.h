@@ -146,6 +146,7 @@ extern UINT8 macroSystemFrame;
 extern UINT8 macroSystemSaveState;
 extern UINT8 macroSystemLoadState;
 extern UINT8 macroSystemUNDOState;
+extern UINT8 macroSystemSlowMo[5];
 extern UINT8 macroSystemLuaHotkey1;
 extern UINT8 macroSystemLuaHotkey2;
 extern UINT8 macroSystemLuaHotkey3;

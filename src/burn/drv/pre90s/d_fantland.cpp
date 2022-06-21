@@ -4,6 +4,7 @@
 #include "tiles_generic.h"
 #include "nec_intf.h"
 #include "z80_intf.h"
+#include "burn_gun.h" // for dial (wheels runner)
 #include "burn_ym2151.h"
 #include "burn_ym3526.h"
 #include "sn76496.h"
@@ -38,6 +39,8 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[4];
 static UINT8 DrvReset;
 
+static INT16 Analog[2];
+
 static INT32 game_select = 0;
 
 static struct BurnInputInfo FantlandInputList[] = {
@@ -66,15 +69,18 @@ static struct BurnInputInfo FantlandInputList[] = {
 
 STDINPUTINFO(Fantland)
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo WheelrunInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Left",			BIT_DIGITAL,	DrvFake + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvFake + 1,	"p1 right"	},
+	A("P1 Wheel", 		BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"),
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 1"	},
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 coin"	},
 	{"P2 Left",			BIT_DIGITAL,	DrvFake + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvFake + 3,	"p2 right"	},
+	A("P2 Wheel", 		BIT_ANALOG_REL, &Analog[1],		"p2 x-axis"),
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 1"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
@@ -190,42 +196,43 @@ STDDIPINFO(Galaxygn)
 
 static struct BurnDIPInfo WheelrunDIPList[]=
 {
-	{0x09, 0xff, 0xff, 0xff, NULL			},
-	{0x0a, 0xff, 0xff, 0xdf, NULL			},
+	DIP_OFFSET(0x0b)
+	{0x00, 0xff, 0xff, 0xff, NULL			},
+	{0x01, 0xff, 0xff, 0xdf, NULL			},
 
 	{0   , 0xfe, 0   ,    8, "Coinage"		},
-	{0x09, 0x01, 0x07, 0x01, "4 Coins 1 Credits"	},
-	{0x09, 0x01, 0x07, 0x02, "3 Coins 1 Credits"	},
-	{0x09, 0x01, 0x07, 0x03, "2 Coins 1 Credits"	},
-	{0x09, 0x01, 0x07, 0x07, "1 Coin  1 Credits"	},
-	{0x09, 0x01, 0x07, 0x06, "1 Coin  2 Credits"	},
-	{0x09, 0x01, 0x07, 0x05, "1 Coin  3 Credits"	},
-	{0x09, 0x01, 0x07, 0x04, "1 Coin  4 Credits"	},
-	{0x09, 0x01, 0x07, 0x00, "Free Play"		},
+	{0x00, 0x01, 0x07, 0x01, "4 Coins 1 Credits"	},
+	{0x00, 0x01, 0x07, 0x02, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0x07, 0x03, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x07, 0x07, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x07, 0x06, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x07, 0x05, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0x07, 0x04, "1 Coin  4 Credits"	},
+	{0x00, 0x01, 0x07, 0x00, "Free Play"		},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x09, 0x01, 0x08, 0x00, "Off"			},
-	{0x09, 0x01, 0x08, 0x08, "On"			},
+	{0x00, 0x01, 0x08, 0x00, "Off"			},
+	{0x00, 0x01, 0x08, 0x08, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
-	{0x09, 0x01, 0x10, 0x00, "No"			},
-	{0x09, 0x01, 0x10, 0x10, "Yes"			},
+	{0x00, 0x01, 0x10, 0x00, "No"			},
+	{0x00, 0x01, 0x10, 0x10, "Yes"			},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x09, 0x01, 0x60, 0x60, "Normal"		},
-	{0x09, 0x01, 0x60, 0x40, "Hard"			},
-	{0x09, 0x01, 0x60, 0x20, "Harder"		},
-	{0x09, 0x01, 0x60, 0x00, "Hardest"		},
+	{0x00, 0x01, 0x60, 0x60, "Normal"		},
+	{0x00, 0x01, 0x60, 0x40, "Hard"			},
+	{0x00, 0x01, 0x60, 0x20, "Harder"		},
+	{0x00, 0x01, 0x60, 0x00, "Hardest"		},
 
 	{0   , 0xfe, 0   ,    8, "Wheel Sensitivity"	},
-	{0x0a, 0x01, 0xff, 0x7f, "0"			},
-	{0x0a, 0x01, 0xff, 0xbf, "1"			},
-	{0x0a, 0x01, 0xff, 0xdf, "2"			},
-	{0x0a, 0x01, 0xff, 0xef, "3"			},
-	{0x0a, 0x01, 0xff, 0xf7, "4"			},
-	{0x0a, 0x01, 0xff, 0xfb, "5"			},
-	{0x0a, 0x01, 0xff, 0xfd, "6"			},
-	{0x0a, 0x01, 0xff, 0xfe, "7"			},
+	{0x01, 0x01, 0xff, 0x7f, "0"			},
+	{0x01, 0x01, 0xff, 0xbf, "1"			},
+	{0x01, 0x01, 0xff, 0xdf, "2"			},
+	{0x01, 0x01, 0xff, 0xef, "3"			},
+	{0x01, 0x01, 0xff, 0xf7, "4"			},
+	{0x01, 0x01, 0xff, 0xfb, "5"			},
+	{0x01, 0x01, 0xff, 0xfd, "6"			},
+	{0x01, 0x01, 0xff, 0xfe, "7"			},
 };
 
 STDDIPINFO(Wheelrun)
@@ -661,6 +668,8 @@ static INT32 WheelrunInit()
 	SN76489AInit(1, 3500000, 1);
 	SN76496SetRoute(1, 0.60, BURN_SND_ROUTE_BOTH);
 
+	BurnTrackballInit(1);
+
 	GenericTilesInit();
 
 	DrvDoReset();
@@ -678,6 +687,7 @@ static INT32 DrvExit()
 		BurnYM2151Exit();
 		DACExit();
 	} else if (game_select == 2) {
+		BurnTrackballExit();
 		ZetExit();
 		BurnYM3526Exit();
 		SN76496Exit();
@@ -843,6 +853,25 @@ static INT32 FantlandFrame()
 	return 0;
 }
 
+static INT32 wheel_target[2];
+static INT32 wheel_adder[2];
+
+static void wheel_tick(INT32 player)
+{
+	wheel_target[player] = (INT8)BurnTrackballRead(0, player) / 2 + 0x04;
+	if (wheel_target[player] > 7) wheel_target[player] = 7;
+	else if (wheel_target[player] < 1) wheel_target[player] = 1;
+	BurnTrackballReadReset(0, player);
+
+	if (wheel_adder[player] > wheel_target[player])
+		wheel_adder[player]--;
+	else if (wheel_adder[player] < wheel_target[player])
+		wheel_adder[player]++;
+	else wheel_adder[player] = wheel_target[player]; // derp!
+
+	DrvInputs[player] &= ~0x70;
+	DrvInputs[player] |= wheel_target[player] << 4;
+}
 
 static INT32 WheelrunFrame()
 {
@@ -866,12 +895,12 @@ static INT32 WheelrunFrame()
 		DrvInputs[0] &= ~0x70;
 		DrvInputs[1] &= ~0x70;
 
-		UINT8 nWheel = ((DrvFake[0] ? 5 : 0) | (DrvFake[1] ? 3 : 0)) << 4;
-		if (nWheel == 0) nWheel = 0x40;
-		DrvInputs[0] |= nWheel;
-		nWheel = ((DrvFake[2] ? 5 : 0) | (DrvFake[3] ? 3 : 0)) << 4;
-		if (nWheel == 0) nWheel = 0x40;
-		DrvInputs[1] |= nWheel;
+		BurnTrackballConfig(0, AXIS_REVERSED, AXIS_REVERSED);
+		BurnTrackballFrame(0, Analog[0], Analog[1], 1, 0xf);
+		BurnTrackballUDLR(0, DrvFake[2], DrvFake[3], DrvFake[0], DrvFake[1]);
+		BurnTrackballUpdate(0);
+		wheel_tick(0);
+		wheel_tick(1);
 	}
 
 	INT32 nInterleave = 10;
@@ -935,6 +964,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (game_select == 2)
 		{
 			ZetScan(nAction);
+
+			BurnTrackballScan();
+
+			SCAN_VAR(wheel_adder);
+			SCAN_VAR(wheel_target);
 
 			ZetOpen(0);
 			BurnYM3526Scan(nAction, pnMin);

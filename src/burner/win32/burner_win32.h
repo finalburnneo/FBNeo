@@ -302,6 +302,8 @@ void MenuDestroy();
 int SetMenuPriority();
 void MenuUpdate();
 void MenuUpdateVolume();
+void MenuUpdateSlowMo();
+
 void CreateArcaderesItem();
 void MenuEnableItems();
 bool MenuHandleKeyboard(MSG*);

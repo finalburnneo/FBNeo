@@ -994,13 +994,13 @@ static struct BurnRomInfo grdianslbssRomDesc[] = {
 STD_ROM_PICK(grdianslbss)
 STD_ROM_FN(grdianslbss)
 
-// Denjin Makai II (Kerron Edition)
+// Denjin Makai II (Heart Dream)
 // Hack by Bindi
-// GOTVG 2022/02/18
+// GOTVG 2022/06/06
 
 static struct BurnRomInfo grdianskeRomDesc[] = {
-	{ "u2_ke.bin",		0x080000, 0x4df70687, BRF_ESS | BRF_PRG },	// 68000 code
-	{ "u3_ke.bin",		0x080000, 0x24353274, BRF_ESS | BRF_PRG },
+	{ "u2_ke.bin",		0x080000, 0xba4a9452, BRF_ESS | BRF_PRG },	// 68000 code
+	{ "u3_ke.bin",		0x080000, 0xd1713d73, BRF_ESS | BRF_PRG },
 	{ "u4.bin",			0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
 	{ "u5.bin",			0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
 
@@ -3852,7 +3852,7 @@ struct BurnDriver BurnDrvGrdianssy = {
 };
 
 struct BurnDriver BurnDrvGrdianslbs = {
-	"grdianslbs", "grdians", NULL, NULL, "2022-02-08",
+	"grdianslbs", "grdians", NULL, NULL, "2022",
 	"Guardians (LBS Edition, Hack)\0Denjin Makai II (LBS Edition, Hack)\0", NULL, "Hack", "Newer Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
@@ -3862,7 +3862,7 @@ struct BurnDriver BurnDrvGrdianslbs = {
 };
 
 struct BurnDriver BurnDrvGrdianslbss = {
-	"grdianslbss", "grdians", NULL, NULL, "2021-04-29",
+	"grdianslbss", "grdians", NULL, NULL, "2021",
 	"Guardians (Field Edition, Hack)\0Denjin Makai II (Field Edition, Hack)\0", NULL, "Hack", "Newer Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
@@ -3872,8 +3872,8 @@ struct BurnDriver BurnDrvGrdianslbss = {
 };
 
 struct BurnDriver BurnDrvGrdianske = {
-	"grdianske", "grdians", NULL, NULL, "2022-02-18",
-	"Guardians (Kerron Edition, Hack)\0Denjin Makai II (Kerron Edition, Hack)\0", NULL, "Hack", "Newer Seta",
+	"grdianske", "grdians", NULL, NULL, "2022",
+	"Guardians (Heart Dream)\0Denjin Makai II (Heart Dream)\0", NULL, "Hack", "Newer Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
 	NULL, grdianskeRomInfo, grdianskeRomName, NULL, NULL, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,

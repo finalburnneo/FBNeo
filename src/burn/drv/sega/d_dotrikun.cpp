@@ -1,4 +1,4 @@
-// FB Alpha Dottori Kun driver module
+// FB Neo Dottori Kun driver module
 // Based on MAME driver by Takahiro Nogi
 
 #include "tiles_generic.h"
@@ -212,7 +212,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 // Dottori Kun (new version)
 
 static struct BurnRomInfo dotrikunRomDesc[] = {
-	{ "14479a.mpr",	0x4000, 0xb77a50db, BRF_ESS | BRF_PRG }, //  Z80 code
+	{ "mpr-14479a.ic2",	0x4000, 0xb77a50db, BRF_ESS | BRF_PRG }, //  Z80 code
 };
 
 STD_ROM_PICK(dotrikun)
@@ -232,7 +232,7 @@ struct BurnDriver BurnDrvdotrikun = {
 // Dottori Kun (old version)
 
 static struct BurnRomInfo dotriku2RomDesc[] = {
-	{ "epr-13141.ic2",	0x4000, 0xa6aa7fa5, BRF_ESS | BRF_PRG }, //  Z80 code
+	{ "mpr-14479.ic2",	0x4000, 0xa6aa7fa5, BRF_ESS | BRF_PRG }, //  Z80 code
 };
 
 STD_ROM_PICK(dotriku2)
@@ -252,7 +252,7 @@ struct BurnDriver BurnDrvdotriku2 = {
 // Dottori-Man Jr. 
 
 static struct BurnRomInfo dotrimanRomDesc[] = {
-	{ "14479a.mpr",	0x4000, 0x4ba6d2f5, BRF_ESS | BRF_PRG }, //  Z80 code
+	{ "dotriman.bin",	0x4000, 0x4ba6d2f5, BRF_ESS | BRF_PRG }, //  Z80 code
 };
 
 STD_ROM_PICK(dotriman)

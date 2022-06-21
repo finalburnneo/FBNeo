@@ -876,6 +876,15 @@ BEGIN
         MENUITEM "Adjust CPU speed...",					MENU_SETCPUCLOCK, GRAYED
         MENUITEM "Reset CPU speed to 100%",				MENU_RESETCPUCLOCK, GRAYED
         MENUITEM SEPARATOR
+		POPUP "Slow-Mo"
+        BEGIN
+            MENUITEM "Normal",							ID_SLOMO_0, GRAYED
+            MENUITEM "Slow",							ID_SLOMO_1, GRAYED
+            MENUITEM "Slower",							ID_SLOMO_2, GRAYED
+            MENUITEM "Slowest",							ID_SLOMO_3, GRAYED
+            MENUITEM "Slowerest",						ID_SLOMO_4, GRAYED
+        END
+        MENUITEM SEPARATOR
 		POPUP "Lua Scripting..."
         BEGIN
             MENUITEM "&New Lua Script Window...",		ID_LUA_OPEN, GRAYED

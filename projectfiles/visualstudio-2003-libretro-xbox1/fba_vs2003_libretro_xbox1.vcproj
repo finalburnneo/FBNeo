@@ -1174,9 +1174,6 @@
 							RelativePath="..\..\src\burn\drv\pst90s\d_unico.cpp">
 						</File>
 						<File
-							RelativePath="..\..\src\burn\drv\pst90s\d_vmetal.cpp">
-						</File>
-						<File
 							RelativePath="..\..\src\burn\drv\pst90s\d_welltris.cpp">
 						</File>
 						<File

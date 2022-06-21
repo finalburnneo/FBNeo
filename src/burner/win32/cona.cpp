@@ -269,6 +269,8 @@ int ConfigAppLoad()
 		VAR(bBurnGunDrawReticles);
 		VAR(bSkipStartupCheck);
 
+		VAR(nSlowMo);
+
 #ifdef INCLUDE_AVI_RECORDING
 		VAR(nAvi3x);
 #endif
@@ -700,6 +702,9 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// If non-zero, DISABLE start-up rom scan (if needed).\n"));
 	VAR(bSkipStartupCheck);
+
+	_ftprintf(h, _T("\n// If non-zero, enable SlowMo T.A. [0 - 4]\n"));
+	VAR(nSlowMo);
 
 #ifdef INCLUDE_AVI_RECORDING
 	_ftprintf(h, _T("\n// If non-zero, enable 1x - 3x pixel output for the AVI writer.\n"));

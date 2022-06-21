@@ -49,21 +49,21 @@ static UINT32 scanline;
 static void partial_update();
 
 static struct BurnInputInfo ToobinInputList[] = {
-	{"Coin 1",						BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
-	{"Coin 2",						BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
-	{"Coin 3",						BIT_DIGITAL,	DrvJoy2 + 2,	"p3 coin"	},
-
+	{"P1 Coin",						BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Throw",					BIT_DIGITAL,	DrvJoy1 + 8,	"p1 fire 1"	},
 	{"P1 Right Paddle Forward",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 2"	},
 	{"P1 Left Paddle Forward",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 3"	},
 	{"P1 Left Paddle Backward",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 4"	},
 	{"P1 Right Paddle Backward",	BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 5"	},
 
+	{"P2 Coin",						BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
 	{"P2 Throw",					BIT_DIGITAL,	DrvJoy1 + 9,	"p2 fire 1"	},
 	{"P2 Right Paddle Forward",		BIT_DIGITAL,	DrvJoy1 + 0,	"p2 fire 2"	},
 	{"P2 Left Paddle Forward",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 fire 3"	},
 	{"P2 Left Paddle Backward",		BIT_DIGITAL,	DrvJoy1 + 2,	"p2 fire 4"	},
 	{"P2 Right Paddle Backward",	BIT_DIGITAL,	DrvJoy1 + 3,	"p2 fire 5"	},
+
+	{"P3 Coin",						BIT_DIGITAL,	DrvJoy2 + 2,	"p3 coin"	},
 
 	{"Reset",						BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",						BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -146,11 +146,13 @@ static void __fastcall toobin_main_write_word(UINT32 address, UINT16 data)
 		case 0xff8600:
 			partial_update();
 			playfield_scrollx = (data >> 6) & 0x3ff;
+			atarimo_set_xscroll(0, playfield_scrollx);
 		return;
 
 		case 0xff8700:
 			partial_update();
 			playfield_scrolly = (data >> 6) & 0x1ff;
+			atarimo_set_yscroll(0, playfield_scrolly);
 		return;
 	}
 
@@ -370,12 +372,7 @@ static INT32 DrvInit()
 		0					// callback routine for special entries
 	};
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		INT32 k = 0;
@@ -469,7 +466,7 @@ static INT32 DrvExit()
 	AtariMoExit();
 	AtariEEPROMExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -540,8 +537,6 @@ static INT32 DrvDraw()
 
 	GenericTilemapSetScrollX(0, playfield_scrollx);
 	GenericTilemapSetScrollY(0, playfield_scrolly);
-	atarimo_set_xscroll(0, playfield_scrollx);
-	atarimo_set_yscroll(0, playfield_scrolly);
 
 	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0); // opaque!!
 	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, 1 | TMAP_SET_GROUP(1));

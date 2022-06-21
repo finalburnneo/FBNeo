@@ -26,6 +26,7 @@ extern void BurnGunDrawTarget(INT32 num, INT32 x, INT32 y);
 extern void BurnGunMakeInputs(INT32 num, INT16 x, INT16 y);
 void BurnGunDrawTargets(); // call this after BurnTransferCopy();
 INT32 BurnGunIsActive(); // is the gun system active?
+void BurnGunSetBox(INT32 num, INT32 xmin, INT32 xmax, INT32 ymin, INT32 ymax);
 void BurnGunSetCoords(INT32 player, INT32 x, INT32 y); // manually set the gun coords, for libretro's lightgun emulation
 
 // NOTE: *depreciated* BurnPaddle is now the lowlevel code for BurnTrackball!

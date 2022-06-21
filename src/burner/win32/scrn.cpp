@@ -2085,6 +2085,14 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			bBurnGunDrawReticles = !bBurnGunDrawReticles;
 			break;
 
+		case ID_SLOMO_0:
+		case ID_SLOMO_1:
+		case ID_SLOMO_2:
+		case ID_SLOMO_3:
+		case ID_SLOMO_4:
+			nSlowMo = id - ID_SLOMO_0;
+			break;
+
 #ifdef INCLUDE_AVI_RECORDING
 		case MENU_AVI1X:
 			nAvi3x = 1;

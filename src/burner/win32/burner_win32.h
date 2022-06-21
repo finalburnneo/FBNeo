@@ -238,6 +238,7 @@ extern bool bBurnGunDrawReticles;
 extern int bRunPause;
 extern int bAltPause;
 extern int bAlwaysDrawFrames;
+extern int nSlowMo;
 //extern INT32 bRunAhead;  // in burn.h! (partially platform agnostic feature)
 extern int kNetGame;
 int RunIdle();
@@ -301,6 +302,8 @@ void MenuDestroy();
 int SetMenuPriority();
 void MenuUpdate();
 void MenuUpdateVolume();
+void MenuUpdateSlowMo();
+
 void CreateArcaderesItem();
 void MenuEnableItems();
 bool MenuHandleKeyboard(MSG*);

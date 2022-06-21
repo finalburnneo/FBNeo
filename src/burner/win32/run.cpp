@@ -26,6 +26,10 @@ static bool bAppDoFast = 0;
 static bool bAppDoFasttoggled = 0;
 static int nFastSpeed = 6;
 
+// SlowMo T.A. feature
+int nSlowMo = 0;
+static int flippy = 0; // free running RunFrame() counter
+
 // For System Macros (below)
 static int prevPause = 0, prevFFWD = 0, prevFrame = 0, prevSState = 0, prevLState = 0, prevUState = 0;
 UINT32 prevPause_debounce = 0;
@@ -84,6 +88,17 @@ static void CheckSystemMacros() // These are the Pause / FFWD macros added to th
 		} else {
 			prevFrame = 0;
 		}
+
+		// SlowMo
+		int slow = macroSystemSlowMo[0] * 1 + macroSystemSlowMo[1] * 2 + macroSystemSlowMo[2] * 3 + macroSystemSlowMo[3] * 4 + macroSystemSlowMo[4] * 5;
+		if (slow) {
+			slow -= 1;
+			if (slow >= 0 && slow <= 4) {
+				nSlowMo = slow;
+				MenuUpdateSlowMo();
+			}
+		}
+
 		for (int hotkey_num = 0; hotkey_debounces[hotkey_num].macroSystemLuaHotkey_ref != NULL; hotkey_num++) {
 			// Use the reference to the hotkey variable in order to update our stored value
 			// Because the hotkeys are hard coded into variables this allows us to iterate on them
@@ -179,6 +194,12 @@ int RunFrame(int bDraw, int bPause)
 
 		if (!nVidFullscreen && bVidDWMSync)     // Sync to DWM (Win7+, windowed)
 			SuperWaitVBlank();
+	}
+
+	flippy++;
+	if (nSlowMo) { // SlowMo T.A.
+		if (nSlowMo == 1) {	if ((flippy % 4) == 0) return 0; } // 75% speed
+		else if ((flippy % ((nSlowMo-1) * 2)) < (((nSlowMo-1) * 2) - 1)) return 0; // 50% and less
 	}
 
 	if (!bDrvOkay) {

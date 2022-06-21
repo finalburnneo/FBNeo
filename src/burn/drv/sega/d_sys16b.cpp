@@ -1370,6 +1370,16 @@ static struct BurnDIPInfo GoldnaxeDIPList[]=
 	{0x15, 0x01, 0x02, 0x02, "Off"                                },
 	{0x15, 0x01, 0x02, 0x00, "On"                                 },
 
+	{0   , 0xfe, 0   , 8   , "Difficulty"                         },
+	{0x15, 0x01, 0x3c, 0x00, "Special"                            },
+	{0x15, 0x01, 0x3c, 0x14, "Easiest"                            },
+	{0x15, 0x01, 0x3c, 0x34, "Easier"                             },
+	{0x15, 0x01, 0x3c, 0x1c, "Easy"                               },
+	{0x15, 0x01, 0x3c, 0x3c, "Normal"                             },
+	{0x15, 0x01, 0x3c, 0x38, "Hard"                               },
+	{0x15, 0x01, 0x3c, 0x2c, "Harder"                             },
+	{0x15, 0x01, 0x3c, 0x28, "Hardest"                            },
+/*
 	{0   , 0xfe, 0   , 4   , "Lives"                              },
 	{0x15, 0x01, 0x0c, 0x08, "1"                                  },
 	{0x15, 0x01, 0x0c, 0x0c, "2"                                  },
@@ -1381,7 +1391,7 @@ static struct BurnDIPInfo GoldnaxeDIPList[]=
 	{0x15, 0x01, 0x30, 0x30, "3"                                  },
 	{0x15, 0x01, 0x30, 0x10, "4"                                  },
 	{0x15, 0x01, 0x30, 0x00, "5"                                  },
-
+*/
 	// Dip 2
 	SYSTEM16B_COINAGE(0x16)
 };

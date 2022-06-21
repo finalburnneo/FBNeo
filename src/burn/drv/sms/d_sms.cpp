@@ -27649,7 +27649,7 @@ STD_ROM_PICK(sms_waimanu)
 STD_ROM_FN(sms_waimanu)
 
 struct BurnDriver BurnDrvsms_waimanu = {
-	"sms_WaimanuSMS", NULL, NULL, NULL, "2015",
+	"sms_waimanusms", NULL, NULL, NULL, "2015",
 	"Waimanu: Scary Monsters Saga (HB)\0", NULL, "Disjointed Studio", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
@@ -27889,7 +27889,7 @@ struct BurnDriver BurnDrvsms_novdmvdp = {
 // Voyage - A Sorceress Vacation (HB, v1.05)
 
 static struct BurnRomInfo sms_voyageRomDesc[] = {
-	{ "Voyage - A Sorceress Vacation v1.03.sms",	524288, 0x76a1d277, BRF_PRG | BRF_ESS },
+	{ "Voyage - A Sorceress Vacation v1.05.sms",	524288, 0x76a1d277, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_voyage)

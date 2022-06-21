@@ -1065,6 +1065,6 @@ void SN76477_init(INT32 num)
 void SN76477_scan(INT32 nAction, INT32* pnMin)
 {
 	for (INT32 i = 0; i < sn76477_num; i++) {
-		ScanVar(sn76477, sizeof(SN76477), "sn76477 chippy");
+		ScanVar(sn76477[i], sizeof(SN76477), "sn76477 chippy");
 	}
 }

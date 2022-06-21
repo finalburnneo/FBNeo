@@ -734,7 +734,6 @@ $$DRV_PST90S {
 	    ../../src/burn/drv/pst90s/d_tecmosys.cpp \
 	    ../../src/burn/drv/pst90s/d_tumbleb.cpp \
 	    ../../src/burn/drv/pst90s/d_unico.cpp \
-	    ../../src/burn/drv/pst90s/d_vmetal.cpp \
 	    ../../src/burn/drv/pst90s/d_welltris.cpp \
 	    ../../src/burn/drv/pst90s/d_wwfwfest.cpp \
 	    ../../src/burn/drv/pst90s/d_xorworld.cpp \

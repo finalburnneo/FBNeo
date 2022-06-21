@@ -43,9 +43,14 @@ struct MenuItem
 #define RESET 6
 #define CHEATMENU 7
 
+#define TITLELENGTH 31
+char MenuTitle[TITLELENGTH + 1] = "FinalBurn Neo\0";
+
 // menu item tracking
 static UINT16 current_menu = MAINMENU;
 static UINT16 current_selected_item = 0;
+UINT16 firstMenuLine = 0;
+UINT16 maxLinesMenu = 16;
 
 static INT32 cheatcount = 0;
 
@@ -66,18 +71,21 @@ int QuickLoad()
 
 int MainMenuSelected()
 {
-  current_selected_item = 0;
-  current_menu = MAINMENU;
-  return 0;
+	snprintf(MenuTitle, TITLELENGTH, "FinalBurn Neo");
+	current_selected_item = 0;
+	current_menu = MAINMENU;
+	return 0;
 }
 
 int CheatMenuSelected()
 {
-  current_selected_item = 0;
-  current_menu = CHEATMENU;
+	current_selected_item = 0;
+	current_menu = CHEATMENU;
 	cheatcount = 0;
 	int i = 0;
 	CheatInfo* pCurrentCheat = pCheatInfo;
+
+	snprintf(MenuTitle, TITLELENGTH, "Cheats");
 
 	while (pCurrentCheat) {
 		pCurrentCheat = pCurrentCheat->pNext;
@@ -99,18 +107,20 @@ int CheatMenuSelected()
 
 int ControllerMenuSelected()
 {
-  current_selected_item = 0;
-  current_menu = CONTROLLERMENU;
-  //TODO work out UI for controller mappings
-  return 0;
+	snprintf(MenuTitle, TITLELENGTH, "Controller Options");
+	current_selected_item = 0;
+	current_menu = CONTROLLERMENU;
+	//TODO work out UI for controller mappings
+	return 0;
 }
 
 int DIPMenuSelected()
 {
-  current_selected_item = 0;
-  current_menu = DIPMENU;
-  //TODO Load the dips into an array of MenuItems
-  return 0;
+	current_selected_item = 0;
+	current_menu = DIPMENU;
+	snprintf(MenuTitle, TITLELENGTH, "DIP Switches");
+	//TODO Load the dips into an array of MenuItems
+	return 0;
 }
 
 int BackToGameSelected()
@@ -164,47 +174,61 @@ void ingame_gui_exit()
 
 void ingame_gui_render()
 {
-  SDL_SetRenderDrawColor(sdlRenderer, 0x1a, 0x1e, 0x1d, SDL_ALPHA_OPAQUE);
-  SDL_RenderClear(sdlRenderer);
-  SDL_RenderCopy(sdlRenderer, screenshotTexture, &title_texture_rect, &dest_title_texture_rect);
-  incolor(fbn_color, /* unused */ 0);
-  inprint(sdlRenderer, "FinalBurn Neo", 10, 10);
-  inprint(sdlRenderer, "=============", 10, 20);
-
-  switch (current_menu)
-  {
-      case MAINMENU:
-        current_item_count = MAINMENU_COUNT;
-        current_menu_items = mainMenu;
-        break;
-		  case DIPMENU:
-		  	current_item_count = DIPMENU_COUNT;
-		  	current_menu_items = dipMenu;
-		  	break;
-		  case CONTROLLERMENU:
-			 	current_item_count = CONTROLLERMENU_COUNT;
-			 	current_menu_items = controllerMenu;
-			 	break;
-			case CHEATMENU:
-				current_item_count = cheatcount;
-				current_menu_items = cheatMenu;
-				break;
-  }
-
-  for(int i=0; i < current_item_count; i ++)
+	SDL_SetRenderDrawColor(sdlRenderer, 0, 0, 0, SDL_ALPHA_OPAQUE);   // Changed background color to black as the old color would stay visible after returning to game
+	SDL_RenderClear(sdlRenderer);
+	if (current_menu == MAINMENU) {		// Show screenshot only in main menu because it can make text hard to read in some sub menus
+		SDL_RenderCopy(sdlRenderer, screenshotTexture, &title_texture_rect, &dest_title_texture_rect);
+	}
+	incolor(fbn_color, /* unused */ 0);
+	inprint(sdlRenderer, MenuTitle, 10, 10);
+	inprint(sdlRenderer, "==============================", 10, 20);
+	switch (current_menu)
 	{
-		if (i ==current_selected_item)
-		{
+		case MAINMENU:
+			current_item_count = MAINMENU_COUNT;
+			current_menu_items = mainMenu;
+			break;
+		case DIPMENU:
+			current_item_count = DIPMENU_COUNT;
+			current_menu_items = dipMenu;
+			break;
+		case CONTROLLERMENU:
+			current_item_count = CONTROLLERMENU_COUNT;
+			current_menu_items = controllerMenu;
+			break;
+		case CHEATMENU:
+			current_item_count = cheatcount;
+			current_menu_items = cheatMenu;
+			break;
+	}
+
+	int c = 0;
+	// Keep selected line always visible in screen
+	if (current_selected_item > firstMenuLine + maxLinesMenu) {
+		firstMenuLine = current_selected_item - maxLinesMenu;
+	} else if (current_selected_item < firstMenuLine) {
+		firstMenuLine = current_selected_item;
+	}
+
+	if (firstMenuLine > 0) {
+		incolor(normal_color, /* unused */ 0);
+		inprint(sdlRenderer, "( ... more ... )", 10, 30+(10*c));
+	}
+
+	for (int i = firstMenuLine; ((i < current_item_count) && (i < firstMenuLine + maxLinesMenu + 1)); i++) {
+		if (i == current_selected_item) {
 			calcSelectedItemColor();
-		}
-		else
-		{
+		} else {
 			incolor(normal_color, /* unused */ 0);
 		}
-    inprint(sdlRenderer,current_menu_items[i].name , 10, 30+(10*i));
-  }
-
-  SDL_RenderPresent(sdlRenderer);
+		c++;
+		inprint(sdlRenderer,current_menu_items[i].name , 10, 30+(10*c));
+	}
+	if (current_item_count > firstMenuLine + maxLinesMenu + 1 ) {
+		incolor(normal_color, /* unused */ 0);
+		inprint(sdlRenderer, "( ... more ... )", 10, 40+(10*c));
+	}
+	SDL_RenderPresent(sdlRenderer);
 }
 
 int ingame_gui_process()
@@ -252,42 +276,45 @@ int ingame_gui_process()
 
 void ingame_gui_start(SDL_Renderer* renderer)
 {
-  int finished = 0;
+	int finished = 0;
 
-  sdlRenderer = renderer;
-  SDL_GetRendererOutputSize(sdlRenderer, &screenW, &screenH);
+	sdlRenderer = renderer;
+	SDL_GetRendererOutputSize(sdlRenderer, &screenW, &screenH);
 
-  screenshot =  SDL_CreateRGBSurface(0, screenW, screenH, 32, rmask, gmask, bmask, amask);
-  SDL_RenderReadPixels(renderer, NULL, SDL_PIXELFORMAT_ARGB8888, screenshot->pixels, screenshot->pitch);
-  screenshotTexture = SDL_CreateTextureFromSurface(renderer, screenshot);
-  SDL_FreeSurface(screenshot);
-  screenshot = NULL;
+	screenshot =  SDL_CreateRGBSurface(0, screenW, screenH, 32, rmask, gmask, bmask, amask);
+	SDL_RenderReadPixels(renderer, NULL, SDL_PIXELFORMAT_ARGB8888, screenshot->pixels, screenshot->pitch);
+	screenshotTexture = SDL_CreateTextureFromSurface(renderer, screenshot);
+	SDL_FreeSurface(screenshot);
+	screenshot = NULL;
 
 	title_texture_rect.x = 0; //the x coordinate
 	title_texture_rect.y = 0; // the y coordinate
 	title_texture_rect.w = screenW; //the width of the texture
 	title_texture_rect.h = screenH; //the height of the texture
 
-	dest_title_texture_rect.x = 150; //the x coordinate
-	dest_title_texture_rect.y = 0; // the y coordinate
-	dest_title_texture_rect.w = 100; //the width of the texture
-	dest_title_texture_rect.h = 100; //the height of the texture
+	UINT16 gameH = maxLinesMenu * 10 + 60;
+	UINT16 gameW = gameH * screenW / screenH;
 
-  ingame_gui_init();
+	dest_title_texture_rect.x = gameW * 2;	// the x coordinate
+	dest_title_texture_rect.y = gameH / 6;	// the y coordinate
+	dest_title_texture_rect.w = gameW / 3;	// the width of the texture
+	dest_title_texture_rect.h = gameH / 3;	// the height of the texture
 
-  while (!finished)
-  {
+	ingame_gui_init();
+
+	while (!finished)
+	{
 		starting_stick = SDL_GetTicks();
 
-    finished = ingame_gui_process();
-    ingame_gui_render();
-	// limit 5 FPS (free CPU usage)
+		finished = ingame_gui_process();
+		ingame_gui_render();
+		// limit 5 FPS (free CPU usage)
 		if ( ( 1000 / 5 ) > SDL_GetTicks() - starting_stick)
 		{
 			SDL_Delay( 1000 / 5 - ( SDL_GetTicks() - starting_stick ) );
 		}
-  }
+	}
 
-  ingame_gui_exit();
+	ingame_gui_exit();
 
 }

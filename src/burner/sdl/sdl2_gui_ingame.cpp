@@ -42,15 +42,16 @@ struct MenuItem
 #define SCREENSHOT 5
 #define RESET 6
 #define CHEATMENU 7
+#define CHEATOPTIONSMENU 8
+
+#define TITLELENGTH 31
+char MenuTitle[TITLELENGTH + 1] = "FinalBurn Neo\0";
 
 // menu item tracking
 static UINT16 current_menu = MAINMENU;
 static UINT16 current_selected_item = 0;
-
-static INT32 cheatcount = 0;
-
-struct MenuItem cheatMenu[255];
-
+UINT16 firstMenuLine = 0;
+UINT16 maxLinesMenu = 16;
 
 int QuickSave()
 {
@@ -66,51 +67,133 @@ int QuickLoad()
 
 int MainMenuSelected()
 {
-  current_selected_item = 0;
-  current_menu = MAINMENU;
-  return 0;
+	snprintf(MenuTitle, TITLELENGTH, "FinalBurn Neo");
+	current_selected_item = 0;
+	current_menu = MAINMENU;
+	return 0;
 }
+
+// Cheats related stuff
+struct MenuItem cheatMenu[CHEAT_MAX_ADDRESS];
+struct MenuItem cheatOptionsMenu[CHEAT_MAX_OPTIONS];
+UINT16 cheatcount = 0;
+UINT16 cheatoptionscount = 0;
+UINT16 current_selected_cheat = 0;
+bool isCheatActivated[CHEAT_MAX_ADDRESS - 2] = {false}; // Array to keed track of activated cheats and use a different color in list
+bool stayCurrentCheat = false;
+int CheatMenuSelected();
+int CheatOptionsMenuSelected();
+
+int IgnoreSelection()
+{
+	return 0;
+}
+
+int SelectedCheatOption()
+{
+	CheatEnable(current_selected_cheat, current_selected_item);
+	stayCurrentCheat = true;
+	CheatOptionsMenuSelected();
+	return 0;
+}
+
+int CheatOptionsMenuSelected()
+{
+	if (stayCurrentCheat) stayCurrentCheat = false;
+	else {
+		current_selected_cheat = current_selected_item;
+		current_selected_item = 0;
+	}
+	current_menu = CHEATOPTIONSMENU;
+	cheatoptionscount = 0;
+	CheatInfo* pCurrentCheat = pCheatInfo;
+
+	for (int i = 0; i < current_selected_cheat; i++) {
+		pCurrentCheat = pCurrentCheat->pNext;
+	}   // Skip to selected cheat number
+
+	snprintf(MenuTitle, TITLELENGTH, pCurrentCheat->szCheatName);
+
+	for (int i = 0; pCurrentCheat->pOption[i]; i++) {
+		if (_tcslen(pCurrentCheat->pOption[i]->szOptionName) && strcmp(pCurrentCheat->pOption[i]->szOptionName, " ")) {
+
+			// Look for check boxes...
+			if ((pCurrentCheat->pOption[i]->szOptionName[0] == '[') && (pCurrentCheat->pOption[i]->szOptionName[2] == ']') && (pCurrentCheat->pOption[i]->szOptionName[3] == ' ')) {
+				if (i == pCurrentCheat->nCurrent) pCurrentCheat->pOption[i]->szOptionName[1] = 'X';  // Active cheat option
+				else pCurrentCheat->pOption[i]->szOptionName[1] = ' ';                               // Not active option
+			} else {
+				// Add check boxes
+				char tmpoptionname[CHEAT_MAX_NAME] = {0};
+				if (i == pCurrentCheat->nCurrent) snprintf(tmpoptionname, CHEAT_MAX_NAME, "[X] %s", pCurrentCheat->pOption[i]->szOptionName);  // Active cheat option
+				else snprintf(tmpoptionname, CHEAT_MAX_NAME, "[ ] %s", pCurrentCheat->pOption[i]->szOptionName);                               // Not active option
+				snprintf(pCurrentCheat->pOption[i]->szOptionName, CHEAT_MAX_NAME, tmpoptionname);
+			}
+
+			cheatOptionsMenu[i] = (MenuItem){pCurrentCheat->pOption[i]->szOptionName, SelectedCheatOption, NULL};
+
+		} else cheatOptionsMenu[i] = (MenuItem){".\0", IgnoreSelection, NULL};    // Ignore cheats options without name
+		cheatoptionscount++;
+	}
+
+	cheatOptionsMenu[cheatoptionscount] = (MenuItem){"BACK\0", CheatMenuSelected, NULL};
+	cheatoptionscount++;
+	return 0;
+}
+
+int DisableAllCheats()
+{
+	for (int i = 0; i < CHEAT_MAX_ADDRESS - 2; i++) {
+		if (isCheatActivated[i]) {
+			CheatEnable(i, 0);
+			isCheatActivated[i] = false;
+		}
+	}
+	return 0;
+	}
 
 int CheatMenuSelected()
 {
-  current_selected_item = 0;
-  current_menu = CHEATMENU;
+	current_selected_item = 0;
+	current_menu = CHEATMENU;
 	cheatcount = 0;
 	int i = 0;
 	CheatInfo* pCurrentCheat = pCheatInfo;
 
-	while (pCurrentCheat) {
+	snprintf(MenuTitle, TITLELENGTH, "Cheats");
+
+	while ((pCurrentCheat) && (i < CHEAT_MAX_ADDRESS - 2)) {  // Save two lines for DISABLE ALL and for BACK
+		if (_tcslen(pCurrentCheat->szCheatName) && strcmp(pCurrentCheat->szCheatName, " ")) {
+			cheatMenu[i] = (MenuItem){pCurrentCheat->szCheatName, CheatOptionsMenuSelected, NULL};
+			if (pCurrentCheat->nCurrent) isCheatActivated[i] = true;
+			else isCheatActivated[i] = false;
+		} else cheatMenu[i] = (MenuItem){".\0", IgnoreSelection, NULL};    // Ignore cheats without name
 		pCurrentCheat = pCurrentCheat->pNext;
 		i++;
 	}
-	int c = 0;
-	pCurrentCheat = pCheatInfo;
-	while (pCurrentCheat)
-	{
-		cheatMenu[c] = (MenuItem){pCurrentCheat->szCheatName, MainMenuSelected, NULL};
-		pCurrentCheat = pCurrentCheat->pNext;
-		c++;
-	}
+	cheatMenu[i] = (MenuItem){"DISABLE ALL CHEATS\0", DisableAllCheats, NULL};
 	i++;
-	cheatMenu[i] = (MenuItem){"BACK \0", MainMenuSelected, NULL};
-	cheatcount = i;
-  return 0;
+
+	cheatMenu[i] = (MenuItem){"BACK\0", MainMenuSelected, NULL};
+	cheatcount = i + 1;
+	return 0;
 }
 
 int ControllerMenuSelected()
 {
-  current_selected_item = 0;
-  current_menu = CONTROLLERMENU;
-  //TODO work out UI for controller mappings
-  return 0;
+	snprintf(MenuTitle, TITLELENGTH, "Controller Options");
+	current_selected_item = 0;
+	current_menu = CONTROLLERMENU;
+	//TODO work out UI for controller mappings
+	return 0;
 }
 
 int DIPMenuSelected()
 {
-  current_selected_item = 0;
-  current_menu = DIPMENU;
-  //TODO Load the dips into an array of MenuItems
-  return 0;
+	current_selected_item = 0;
+	current_menu = DIPMENU;
+	snprintf(MenuTitle, TITLELENGTH, "DIP Switches");
+	//TODO Load the dips into an array of MenuItems
+	return 0;
 }
 
 int BackToGameSelected()
@@ -151,8 +234,7 @@ static UINT16 current_item_count = MAINMENU_COUNT;
 
 void ingame_gui_init()
 {
-  AudSoundStop();
-	cheatcount = 0;
+	AudSoundStop();
 }
 
 void ingame_gui_exit()
@@ -164,47 +246,67 @@ void ingame_gui_exit()
 
 void ingame_gui_render()
 {
-  SDL_SetRenderDrawColor(sdlRenderer, 0x1a, 0x1e, 0x1d, SDL_ALPHA_OPAQUE);
-  SDL_RenderClear(sdlRenderer);
-  SDL_RenderCopy(sdlRenderer, screenshotTexture, &title_texture_rect, &dest_title_texture_rect);
-  incolor(fbn_color, /* unused */ 0);
-  inprint(sdlRenderer, "FinalBurn Neo", 10, 10);
-  inprint(sdlRenderer, "=============", 10, 20);
-
-  switch (current_menu)
-  {
-      case MAINMENU:
-        current_item_count = MAINMENU_COUNT;
-        current_menu_items = mainMenu;
-        break;
-		  case DIPMENU:
-		  	current_item_count = DIPMENU_COUNT;
-		  	current_menu_items = dipMenu;
-		  	break;
-		  case CONTROLLERMENU:
-			 	current_item_count = CONTROLLERMENU_COUNT;
-			 	current_menu_items = controllerMenu;
-			 	break;
-			case CHEATMENU:
-				current_item_count = cheatcount;
-				current_menu_items = cheatMenu;
-				break;
-  }
-
-  for(int i=0; i < current_item_count; i ++)
+	SDL_SetRenderDrawColor(sdlRenderer, 0, 0, 0, SDL_ALPHA_OPAQUE);   // Changed background color to black as the old color would stay visible after returning to game
+	SDL_RenderClear(sdlRenderer);
+	if (current_menu == MAINMENU) {		// Show screenshot only in main menu because it can make text hard to read in some sub menus
+		SDL_RenderCopy(sdlRenderer, screenshotTexture, &title_texture_rect, &dest_title_texture_rect);
+	}
+	incolor(fbn_color, /* unused */ 0);
+	inprint(sdlRenderer, MenuTitle, 10, 10);
+	inprint(sdlRenderer, "==============================", 10, 20);
+	switch (current_menu)
 	{
-		if (i ==current_selected_item)
-		{
+		case MAINMENU:
+			current_item_count = MAINMENU_COUNT;
+			current_menu_items = mainMenu;
+			break;
+		case DIPMENU:
+			current_item_count = DIPMENU_COUNT;
+			current_menu_items = dipMenu;
+			break;
+		case CONTROLLERMENU:
+			current_item_count = CONTROLLERMENU_COUNT;
+			current_menu_items = controllerMenu;
+			break;
+		case CHEATMENU:
+			current_item_count = cheatcount;
+			current_menu_items = cheatMenu;
+			break;
+		case CHEATOPTIONSMENU:
+			current_item_count = cheatoptionscount;
+			current_menu_items = cheatOptionsMenu;
+			break;
+	}
+
+	int c = 0;
+	// Keep selected line always visible in screen
+	if (current_selected_item > firstMenuLine + maxLinesMenu) {
+		firstMenuLine = current_selected_item - maxLinesMenu;
+	} else if (current_selected_item < firstMenuLine) {
+		firstMenuLine = current_selected_item;
+	}
+
+	if (firstMenuLine > 0) {
+		incolor(normal_color, /* unused */ 0);
+		inprint(sdlRenderer, "( ... more ... )", 10, 30+(10*c));
+	}
+
+	for (int i = firstMenuLine; ((i < current_item_count) && (i < firstMenuLine + maxLinesMenu + 1)); i++) {
+		if (i == current_selected_item) {
 			calcSelectedItemColor();
-		}
-		else
-		{
+		} else if ((current_menu == CHEATMENU) && isCheatActivated[i]) {
+			incolor(0x009000, /* unused */ 0);
+		} else {
 			incolor(normal_color, /* unused */ 0);
 		}
-    inprint(sdlRenderer,current_menu_items[i].name , 10, 30+(10*i));
-  }
-
-  SDL_RenderPresent(sdlRenderer);
+		c++;
+		inprint(sdlRenderer,current_menu_items[i].name , 10, 30+(10*c));
+	}
+	if (current_item_count > firstMenuLine + maxLinesMenu + 1 ) {
+		incolor(normal_color, /* unused */ 0);
+		inprint(sdlRenderer, "( ... more ... )", 10, 40+(10*c));
+	}
+	SDL_RenderPresent(sdlRenderer);
 }
 
 int ingame_gui_process()
@@ -252,42 +354,45 @@ int ingame_gui_process()
 
 void ingame_gui_start(SDL_Renderer* renderer)
 {
-  int finished = 0;
+	int finished = 0;
 
-  sdlRenderer = renderer;
-  SDL_GetRendererOutputSize(sdlRenderer, &screenW, &screenH);
+	sdlRenderer = renderer;
+	SDL_GetRendererOutputSize(sdlRenderer, &screenW, &screenH);
 
-  screenshot =  SDL_CreateRGBSurface(0, screenW, screenH, 32, rmask, gmask, bmask, amask);
-  SDL_RenderReadPixels(renderer, NULL, SDL_PIXELFORMAT_ARGB8888, screenshot->pixels, screenshot->pitch);
-  screenshotTexture = SDL_CreateTextureFromSurface(renderer, screenshot);
-  SDL_FreeSurface(screenshot);
-  screenshot = NULL;
+	screenshot =  SDL_CreateRGBSurface(0, screenW, screenH, 32, rmask, gmask, bmask, amask);
+	SDL_RenderReadPixels(renderer, NULL, SDL_PIXELFORMAT_ARGB8888, screenshot->pixels, screenshot->pitch);
+	screenshotTexture = SDL_CreateTextureFromSurface(renderer, screenshot);
+	SDL_FreeSurface(screenshot);
+	screenshot = NULL;
 
 	title_texture_rect.x = 0; //the x coordinate
 	title_texture_rect.y = 0; // the y coordinate
 	title_texture_rect.w = screenW; //the width of the texture
 	title_texture_rect.h = screenH; //the height of the texture
 
-	dest_title_texture_rect.x = 150; //the x coordinate
-	dest_title_texture_rect.y = 0; // the y coordinate
-	dest_title_texture_rect.w = 100; //the width of the texture
-	dest_title_texture_rect.h = 100; //the height of the texture
+	UINT16 gameH = maxLinesMenu * 10 + 60;
+	UINT16 gameW = gameH * screenW / screenH;
 
-  ingame_gui_init();
+	dest_title_texture_rect.x = gameW * 2;	// the x coordinate
+	dest_title_texture_rect.y = gameH / 6;	// the y coordinate
+	dest_title_texture_rect.w = gameW / 3;	// the width of the texture
+	dest_title_texture_rect.h = gameH / 3;	// the height of the texture
 
-  while (!finished)
-  {
+	ingame_gui_init();
+
+	while (!finished)
+	{
 		starting_stick = SDL_GetTicks();
 
-    finished = ingame_gui_process();
-    ingame_gui_render();
-	// limit 5 FPS (free CPU usage)
+		finished = ingame_gui_process();
+		ingame_gui_render();
+		// limit 5 FPS (free CPU usage)
 		if ( ( 1000 / 5 ) > SDL_GetTicks() - starting_stick)
 		{
 			SDL_Delay( 1000 / 5 - ( SDL_GetTicks() - starting_stick ) );
 		}
-  }
+	}
 
-  ingame_gui_exit();
+	ingame_gui_exit();
 
 }

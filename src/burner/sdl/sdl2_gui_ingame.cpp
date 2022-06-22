@@ -373,7 +373,7 @@ void ingame_gui_start(SDL_Renderer* renderer)
 	UINT16 gameH = maxLinesMenu * 10 + 60;
 	UINT16 gameW = gameH * screenW / screenH;
 
-	dest_title_texture_rect.x = gameW * 2;	// the x coordinate
+	dest_title_texture_rect.x = gameW * 2 / 5;	// the x coordinate
 	dest_title_texture_rect.y = gameH / 6;	// the y coordinate
 	dest_title_texture_rect.w = gameW / 3;	// the width of the texture
 	dest_title_texture_rect.h = gameH / 3;	// the height of the texture

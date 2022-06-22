@@ -73,6 +73,16 @@ int MainMenuSelected()
 	return 0;
 }
 
+
+// Controllers stuff
+#define JOYSTICK_DEAD_ZONE 8000
+#define MAX_JOYSTICKS 4
+// #define BUTTONS_TO_MAP 8
+
+UINT16 current_selected_joystick = 0;
+UINT16 default_joystick = 0;
+
+
 // Cheats related stuff
 struct MenuItem cheatMenu[CHEAT_MAX_ADDRESS];
 struct MenuItem cheatOptionsMenu[CHEAT_MAX_OPTIONS];
@@ -312,44 +322,108 @@ void ingame_gui_render()
 int ingame_gui_process()
 {
 	SDL_Event e;
-
 	while (SDL_PollEvent(&e))
 	{
-		if (e.type == SDL_QUIT)
+		switch (e.type)
 		{
-			return 1;
+			case SDL_QUIT:
+				return 1;
+				break;
+			case SDL_KEYDOWN:
+				switch (e.key.keysym.sym)
+				{
+					case SDLK_TAB:
+						return 1;
+						break;
+					case SDLK_UP:
+						if (current_selected_item > 0) current_selected_item--;
+						break;
+					case SDLK_DOWN:
+						if (current_selected_item < current_item_count - 1) current_selected_item++;
+						break;
+					case SDLK_LEFT:
+						if (current_selected_item > 10) current_selected_item -= 10;
+						else current_selected_item = 0;
+						break;
+					case SDLK_RIGHT:
+						if (current_selected_item < current_item_count - 11) current_selected_item += 10;
+						else current_selected_item = current_item_count - 1;
+						break;
+					case SDLK_RETURN:
+						if (current_menu_items[current_selected_item].menuFunction!=NULL)
+						{
+							int (*menuFunction)();
+							menuFunction = current_menu_items[current_selected_item].menuFunction;
+							return menuFunction();
+						}
+						break;
+				}
+				break;
+			case SDL_JOYAXISMOTION:
+				if (e.jaxis.which == current_selected_joystick) {
+					switch (e.jaxis.axis)
+					{
+						case 1:
+							if ((e.jaxis.value < -JOYSTICK_DEAD_ZONE) && (current_selected_item > 0)) current_selected_item--;
+							else if ((e.jaxis.value > JOYSTICK_DEAD_ZONE) && (current_selected_item < current_item_count - 1)) current_selected_item++;
+							break;
+						case 0:
+							if (e.jaxis.value < -JOYSTICK_DEAD_ZONE) {
+								if (current_selected_item > 10) current_selected_item -= 10;
+								else current_selected_item = 0;
+							} else if (e.jaxis.value > JOYSTICK_DEAD_ZONE) {
+								if (current_selected_item < current_item_count - 11) current_selected_item += 10;
+								else current_selected_item = current_item_count - 1;
+							}
+							break;
+					}
+				}
+				break;
+			case SDL_JOYHATMOTION:
+				if (e.jhat.which == current_selected_joystick) {
+					switch (e.jhat.value)
+					{
+						case SDL_HAT_UP:
+							if (current_selected_item > 0) current_selected_item--;
+							break;
+						case SDL_HAT_DOWN:
+							if (current_selected_item < current_item_count - 1) current_selected_item++;
+							break;
+						case SDL_HAT_LEFT:
+							if (current_selected_item > 10) current_selected_item -= 10;
+							else current_selected_item = 0;
+							break;
+						case SDL_HAT_RIGHT:
+							if (current_selected_item < current_item_count - 11) current_selected_item += 10;
+							else current_selected_item = current_item_count - 1;
+							break;
+					}
+				}
+				break;
+			case SDL_JOYBUTTONDOWN:
+				if (e.jbutton.which == current_selected_joystick) {
+//					if ((current_menu == MAPPINGMENU) && (current_selected_item < BUTTONS_TO_MAP)) mappedbuttons[current_selected_item] = e.jbutton.button;	// Store pressed button
+					if (current_menu_items[current_selected_item].menuFunction!=NULL) {		// Execute selected option
+						int (*menuFunction)();
+						menuFunction = current_menu_items[current_selected_item].menuFunction;
+						return menuFunction();
+					}
+				}
+				break;
+			case SDL_CONTROLLERDEVICEREMOVED:
+			case SDL_JOYDEVICEREMOVED:
+				// Try not to lose total control but this solution has many ways to fail
+				for (int i = 0; (i < SDL_NumJoysticks()) && (i < MAX_JOYSTICKS); i++) {
+					if (SDL_GameControllerNameForIndex(i) != NULL) {
+						default_joystick = i;
+						current_selected_joystick = i;
+						break;
+					}
+				}
+				break;
 		}
-    if (e.type == SDL_KEYDOWN)
-    {
-      switch (e.key.keysym.sym)
-      {
-      case SDLK_TAB:
-        return 1;
-        break;
-			case SDLK_UP:
-				if (current_selected_item > 0)
-				{
-					current_selected_item--;
-				}
-				break;
-			case SDLK_DOWN:
-				if (current_selected_item < current_item_count-1)
-				{
-					current_selected_item++;
-				}
-				break;
-			case SDLK_RETURN:
-				if (current_menu_items[current_selected_item].menuFunction!=NULL)
-				{
-					int (*menuFunction)();
-					menuFunction = current_menu_items[current_selected_item].menuFunction;
-					return menuFunction();
-				}
-				break;
-      }
-    }
-  }
-  return 0;
+	}
+	return 0;
 }
 
 void ingame_gui_start(SDL_Renderer* renderer)
@@ -365,10 +439,10 @@ void ingame_gui_start(SDL_Renderer* renderer)
 	SDL_FreeSurface(screenshot);
 	screenshot = NULL;
 
-	title_texture_rect.x = 0; //the x coordinate
-	title_texture_rect.y = 0; // the y coordinate
-	title_texture_rect.w = screenW; //the width of the texture
-	title_texture_rect.h = screenH; //the height of the texture
+	title_texture_rect.x = 0;			// the x coordinate
+	title_texture_rect.y = 0;			// the y coordinate
+	title_texture_rect.w = screenW;		// the width of the texture
+	title_texture_rect.h = screenH;		// the height of the texture
 
 	UINT16 gameH = maxLinesMenu * 10 + 60;
 	UINT16 gameW = gameH * screenW / screenH;
@@ -377,7 +451,19 @@ void ingame_gui_start(SDL_Renderer* renderer)
 	dest_title_texture_rect.y = gameH / 6;	// the y coordinate
 	dest_title_texture_rect.w = gameW / 3;	// the width of the texture
 	dest_title_texture_rect.h = gameH / 3;	// the height of the texture
+	
+	// Set default joystick to use
+	// When first joystick is removed "joystick 0" is no longer available
+	for (int i = 0; (i < SDL_NumJoysticks()) && (i < MAX_JOYSTICKS); i++) {
+		if (SDL_GameControllerNameForIndex(i) != NULL) {
+			default_joystick = i;
+			current_selected_joystick = i;
+			break;
+		}
+	}
 
+	SDL_JoystickEventState(SDL_ENABLE);
+	SDL_GameControllerEventState(SDL_ENABLE);
 	ingame_gui_init();
 
 	while (!finished)
@@ -394,5 +480,6 @@ void ingame_gui_start(SDL_Renderer* renderer)
 	}
 
 	ingame_gui_exit();
-
+	SDL_GameControllerEventState(SDL_IGNORE);
+	SDL_JoystickEventState(SDL_IGNORE);
 }

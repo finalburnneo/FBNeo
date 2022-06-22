@@ -3,8 +3,8 @@
 
 #include "burner.h"
 
-
-#define MAX_JOYSTICKS (8)
+#define MAX_JOYSTICKS 4				// Changed from 8 to 4, only 4 are supported anyway
+#define JOYSTICK_DEAD_ZONE 8000		// Replace DEADZONE to make it coherent with other declarations
 
 static int FBKtoSDL[512] = { 0 };
 static int SDLtoFBK[512] = { -1 };
@@ -399,6 +399,7 @@ int SDLinpInit()
 	for (int i = 0; i < nJoystickCount; i++) {
 		SDLinpJoystickInit(i);
 	}
+	SDL_GameControllerEventState(SDL_IGNORE);
 	SDL_JoystickEventState(SDL_IGNORE);
 
 	// Set up the keyboard
@@ -445,7 +446,7 @@ static int ReadJoystick()
 		return 0;
 	}
 
-	SDL_JoystickUpdate();
+	SDL_GameControllerUpdate();		// This updates Joysticks too
 
 	// All joysticks have been Read this frame
 	bJoystickRead = 1;
@@ -532,7 +533,6 @@ static int JoystickState(int i, int nSubCode)
 	}
 
 	if (nSubCode < 0x10) {										// Joystick directions
-		const int DEADZONE = 0x4000;
 
 		// we have two checks per axis
 		if (SDL_JoystickNumAxes(JoyList[i])*2 <= nSubCode) {
@@ -540,22 +540,22 @@ static int JoystickState(int i, int nSubCode)
 		}
 
 		switch (nSubCode) {
-		case 0x00: return SDL_JoystickGetAxis(JoyList[i], 0) < -DEADZONE;		// Left
-		case 0x01: return SDL_JoystickGetAxis(JoyList[i], 0) > DEADZONE;		// Right
-		case 0x02: return SDL_JoystickGetAxis(JoyList[i], 1) < -DEADZONE;		// Up
-		case 0x03: return SDL_JoystickGetAxis(JoyList[i], 1) > DEADZONE;		// Down
-		case 0x04: return SDL_JoystickGetAxis(JoyList[i], 2) < -DEADZONE;
-		case 0x05: return SDL_JoystickGetAxis(JoyList[i], 2) > DEADZONE;
-		case 0x06: return SDL_JoystickGetAxis(JoyList[i], 3) < -DEADZONE;
-		case 0x07: return SDL_JoystickGetAxis(JoyList[i], 3) > DEADZONE;
-		case 0x08: return SDL_JoystickGetAxis(JoyList[i], 4) < -DEADZONE;
-		case 0x09: return SDL_JoystickGetAxis(JoyList[i], 4) > DEADZONE;
-		case 0x0A: return SDL_JoystickGetAxis(JoyList[i], 5) < -DEADZONE;
-		case 0x0B: return SDL_JoystickGetAxis(JoyList[i], 5) > DEADZONE;
-		case 0x0C: return SDL_JoystickGetAxis(JoyList[i], 6) < -DEADZONE;
-		case 0x0D: return SDL_JoystickGetAxis(JoyList[i], 6) > DEADZONE;
-		case 0x0E: return SDL_JoystickGetAxis(JoyList[i], 7) < -DEADZONE;
-		case 0x0F: return SDL_JoystickGetAxis(JoyList[i], 7) > DEADZONE;
+		case 0x00: return SDL_JoystickGetAxis(JoyList[i], 0) < -JOYSTICK_DEAD_ZONE;		// Left
+		case 0x01: return SDL_JoystickGetAxis(JoyList[i], 0) > JOYSTICK_DEAD_ZONE;		// Right
+		case 0x02: return SDL_JoystickGetAxis(JoyList[i], 1) < -JOYSTICK_DEAD_ZONE;		// Up
+		case 0x03: return SDL_JoystickGetAxis(JoyList[i], 1) > JOYSTICK_DEAD_ZONE;		// Down
+		case 0x04: return SDL_JoystickGetAxis(JoyList[i], 2) < -JOYSTICK_DEAD_ZONE;
+		case 0x05: return SDL_JoystickGetAxis(JoyList[i], 2) > JOYSTICK_DEAD_ZONE;
+		case 0x06: return SDL_JoystickGetAxis(JoyList[i], 3) < -JOYSTICK_DEAD_ZONE;
+		case 0x07: return SDL_JoystickGetAxis(JoyList[i], 3) > JOYSTICK_DEAD_ZONE;
+		case 0x08: return SDL_JoystickGetAxis(JoyList[i], 4) < -JOYSTICK_DEAD_ZONE;
+		case 0x09: return SDL_JoystickGetAxis(JoyList[i], 4) > JOYSTICK_DEAD_ZONE;
+		case 0x0A: return SDL_JoystickGetAxis(JoyList[i], 5) < -JOYSTICK_DEAD_ZONE;
+		case 0x0B: return SDL_JoystickGetAxis(JoyList[i], 5) > JOYSTICK_DEAD_ZONE;
+		case 0x0C: return SDL_JoystickGetAxis(JoyList[i], 6) < -JOYSTICK_DEAD_ZONE;
+		case 0x0D: return SDL_JoystickGetAxis(JoyList[i], 6) > JOYSTICK_DEAD_ZONE;
+		case 0x0E: return SDL_JoystickGetAxis(JoyList[i], 7) < -JOYSTICK_DEAD_ZONE;
+		case 0x0F: return SDL_JoystickGetAxis(JoyList[i], 7) > JOYSTICK_DEAD_ZONE;
 		}
 	}
 	if (nSubCode < 0x20) {										// POV hat controls

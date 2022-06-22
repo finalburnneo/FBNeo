@@ -2307,6 +2307,13 @@ static INT32 GameInpOtherOne(struct GameInp* pgi, char* szi, char *szn)
 		}
 	}
 
+	// SG-1000 pause button
+	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SG1000) {
+		if (strcmp("Console Pause", szn) == 0) {
+			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_START, szn);
+		}
+	}
+
 	// Service buttons needed for service menu navigation on qix hardware
 	if ((parentrom && strcmp(parentrom, "qix") == 0) ||
 		(drvname && strcmp(drvname, "qix") == 0) ||

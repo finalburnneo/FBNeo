@@ -37,12 +37,13 @@ struct MenuItem
 #define MAINMENU 0
 #define DIPMENU 1
 #define CONTROLLERMENU 2
-#define SAVESTATE 3
-#define LOADSTATE 4
-#define SCREENSHOT 5
-#define RESET 6
-#define CHEATMENU 7
-#define CHEATOPTIONSMENU 8
+#define MAPPINGMENU 3
+#define SAVESTATE 4
+#define LOADSTATE 5
+#define SCREENSHOT 6
+#define RESET 7
+#define CHEATMENU 8
+#define CHEATOPTIONSMENU 9
 
 #define TITLELENGTH 31
 char MenuTitle[TITLELENGTH + 1] = "FinalBurn Neo\0";
@@ -77,10 +78,198 @@ int MainMenuSelected()
 // Controllers stuff
 #define JOYSTICK_DEAD_ZONE 8000
 #define MAX_JOYSTICKS 4
-// #define BUTTONS_TO_MAP 8
+#define BUTTONS_TO_MAP 8
 
+struct MenuItem controllerMenu[MAX_JOYSTICKS + 1];	// One more for BACK
+UINT16 controllermenucount = 0;
+struct MenuItem mappingMenu[BUTTONS_TO_MAP + 3];	// Three more for RESET and SAVE and BACK
 UINT16 current_selected_joystick = 0;
 UINT16 default_joystick = 0;
+const char* joystickNames[MAX_JOYSTICKS];
+
+char buttonsList[BUTTONS_TO_MAP][64] = {
+	"Button A (or weak kick):\0", 
+	"Button B (or middle kick):\0", 
+	"Button X (or weak punch):\0", 
+	"Button Y (or middle punch):\0", 
+	"Button LEFT_SHOULDER (or strong punch):\0", 
+	"Button RIGHT_SHOULDER (or strong kick):\0", 
+	"Button BACK (or COIN):\0", 
+	"Button START:\0"};
+char mappingMenuList[BUTTONS_TO_MAP][64];
+int mappedbuttons[BUTTONS_TO_MAP] = {-1,-1,-1,-1,-1,-1,-1,-1};
+
+int ControllerMenuSelected();
+extern bool do_reload_game;	// To reload game when buttons mapping changed
+static char* szSDLconfigPath = NULL;
+
+int SaveMappedButtons()
+{
+	char guid_str[512];
+	SDL_JoystickGetGUIDString(SDL_JoystickGetDeviceGUID(current_selected_joystick), guid_str, sizeof(guid_str));
+
+	char *gamecontrollerdbline = NULL;
+	size_t len = 0;
+	ssize_t nread;
+	FILE* gamecontrollerdbfile;
+	FILE* tempfile;
+	bool buttonsaremapped = false, overwritedb = false;
+	char* pos = NULL;
+	char gamecontrollerdbpath[MAX_PATH] = { 0 };
+	char tempgamecontrollerdbpath[MAX_PATH] = { 0 };
+	if (szSDLconfigPath == NULL) {
+		szSDLconfigPath = SDL_GetPrefPath("fbneo", "config");
+	}
+	snprintf(gamecontrollerdbpath, MAX_PATH, "%sgamecontrollerdb.txt", szSDLconfigPath);
+	snprintf(tempgamecontrollerdbpath, MAX_PATH, "%sgamecontrollerdb.TEMP.txt", szSDLconfigPath);
+
+	for (int i = 0; i < BUTTONS_TO_MAP; i++) {
+		if (mappedbuttons[i] > -1) {
+			buttonsaremapped = true;
+			break;
+		}
+	}
+	if (buttonsaremapped) {
+		// Delete old mappings for this joystick that may exist in gamecontrollerdb.txt
+		if (((gamecontrollerdbfile = fopen(gamecontrollerdbpath, "rt")) != NULL) && ((tempfile = fopen(tempgamecontrollerdbpath, "wt")) != NULL)) {
+			while ((nread = getline(&gamecontrollerdbline, &len, gamecontrollerdbfile)) != -1) {
+				pos = strstr(gamecontrollerdbline, guid_str);
+				if (pos) overwritedb = true;	// Old mapping found, ignore line and overwrite gamecontrollerdb.txt
+				else {
+					if (gamecontrollerdbline[nread - 1] == '\n') fprintf(tempfile, "%s", gamecontrollerdbline);
+					else fprintf(tempfile, "%s\n", gamecontrollerdbline);
+				}
+			}
+			free(gamecontrollerdbline);
+			fclose(tempfile);
+			fclose(gamecontrollerdbfile);
+			if (overwritedb) {
+				remove(gamecontrollerdbpath);
+				rename(tempgamecontrollerdbpath, gamecontrollerdbpath);
+			}
+			else remove(tempgamecontrollerdbpath);
+		}
+		// Add new mapping string to gamecontrollerdb.txt
+		if ((gamecontrollerdbfile = fopen(gamecontrollerdbpath, "at")) != NULL) {
+			fprintf(gamecontrollerdbfile, "%s,", guid_str);
+			fprintf(gamecontrollerdbfile, "%s,", joystickNames[current_selected_joystick]);
+			if (mappedbuttons[0] > -1) fprintf(gamecontrollerdbfile, "a:b%d,", mappedbuttons[0]);
+			if (mappedbuttons[1] > -1) fprintf(gamecontrollerdbfile, "b:b%d,", mappedbuttons[1]);
+			if (mappedbuttons[2] > -1) fprintf(gamecontrollerdbfile, "x:b%d,", mappedbuttons[2]);
+			if (mappedbuttons[3] > -1) fprintf(gamecontrollerdbfile, "y:b%d,", mappedbuttons[3]);
+			if (mappedbuttons[4] > -1) fprintf(gamecontrollerdbfile, "leftshoulder:b%d,", mappedbuttons[4]);
+			if (mappedbuttons[5] > -1) fprintf(gamecontrollerdbfile, "rightshoulder:b%d,", mappedbuttons[5]);
+			if (mappedbuttons[6] > -1) fprintf(gamecontrollerdbfile, "back:b%d,", mappedbuttons[6]);
+			if (mappedbuttons[7] > -1) fprintf(gamecontrollerdbfile, "start:b%d,", mappedbuttons[7]);
+#ifdef SDL_WINDOWS
+			fprintf(gamecontrollerdbfile, "leftx:a0,lefty:a1,platform:Windows,\n");
+#else
+	#ifdef DARWIN
+			fprintf(gamecontrollerdbfile, "leftx:a0,lefty:a1,platform:Mac OS X,\n");
+	#else
+			fprintf(gamecontrollerdbfile, "leftx:a0,lefty:a1,platform:Linux,\n");
+	#endif
+#endif
+			fclose(gamecontrollerdbfile);
+			printf("Saved mapping of \"%s\" in: %s\n", joystickNames[current_selected_joystick], gamecontrollerdbpath);
+			SDL_GameControllerAddMappingsFromFile(gamecontrollerdbpath);	// Load updated mappings
+			current_selected_joystick = default_joystick;	// Return control to first joystick
+			MainMenuSelected();				// Go back to Main Menu
+			SDL_Event sdlevent = {};		// Force exit and reload game to load new mapping
+			sdlevent.type = SDL_KEYUP;
+			sdlevent.key.keysym.sym = SDLK_F12;
+			SDL_PushEvent(&sdlevent);
+			do_reload_game = true;
+			return 1;
+		}
+	}
+	return 0;
+}
+
+int UpdateMappingMenuSelected()
+{
+	for (int i = 0; i < BUTTONS_TO_MAP; i++) {
+		if (mappedbuttons[i] > -1) {
+			snprintf(mappingMenuList[i], 64, "%s button %d", buttonsList[i], mappedbuttons[i]);
+		} else snprintf(mappingMenuList[i], 64, "%s none", buttonsList[i]);
+		mappingMenu[i] = (MenuItem){mappingMenuList[i], UpdateMappingMenuSelected, NULL};
+	}
+	return 0;
+}
+
+int ResetMappedButtons()
+{
+	for (int i = 0; i < BUTTONS_TO_MAP; i++) {
+		mappedbuttons[i] = -1;
+	}
+	UpdateMappingMenuSelected();
+	return 0;
+}
+
+// Use current_selected_item as the joystick index
+int MappingMenuSelected()
+{
+	current_selected_joystick = current_selected_item;
+	snprintf(MenuTitle, TITLELENGTH, joystickNames[current_selected_joystick]);
+	current_selected_item = 0;
+	current_menu = MAPPINGMENU;
+
+	SDL_GameControllerButtonBind bind;
+	SDL_GameController *currentGameController = SDL_GameControllerOpen(current_selected_joystick);
+	if (currentGameController)
+	{
+		bind = SDL_GameControllerGetBindForButton(currentGameController, SDL_CONTROLLER_BUTTON_A );
+		mappedbuttons[0] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(currentGameController, SDL_CONTROLLER_BUTTON_B);
+		mappedbuttons[1] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(currentGameController, SDL_CONTROLLER_BUTTON_X );
+		mappedbuttons[2] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(currentGameController, SDL_CONTROLLER_BUTTON_Y);
+		mappedbuttons[3] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(currentGameController, SDL_CONTROLLER_BUTTON_LEFTSHOULDER  );
+		mappedbuttons[4] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(currentGameController, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER );
+		mappedbuttons[5] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(currentGameController, SDL_CONTROLLER_BUTTON_BACK   );
+		mappedbuttons[6] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(currentGameController, SDL_CONTROLLER_BUTTON_START  );
+		mappedbuttons[7] = bind.value.button;
+	} else for (int i = 0; i < BUTTONS_TO_MAP; i++) {
+		mappedbuttons[i] = -1;
+	}
+
+	for (int i = 0; i < BUTTONS_TO_MAP; i++) {
+		if (mappedbuttons[i] > -1) {
+			snprintf(mappingMenuList[i], 64, "%s button %d", buttonsList[i], mappedbuttons[i]);
+		} else snprintf(mappingMenuList[i], 64, "%s none", buttonsList[i]);
+		mappingMenu[i] = (MenuItem){mappingMenuList[i], UpdateMappingMenuSelected, NULL};
+	}
+	mappingMenu[BUTTONS_TO_MAP] = (MenuItem){"Save mapping (exit game to load new mapping)\0", SaveMappedButtons, NULL};
+	mappingMenu[BUTTONS_TO_MAP + 1] = (MenuItem){"Reset mapping\0", ResetMappedButtons, NULL};
+	mappingMenu[BUTTONS_TO_MAP + 2] = (MenuItem){"BACK\0", ControllerMenuSelected, NULL};
+	
+	SDL_GameControllerClose(currentGameController);		// Is this necessary?
+	return 0;
+}
+
+int ControllerMenuSelected()
+{
+	snprintf(MenuTitle, TITLELENGTH, "Controller Options");
+	current_selected_item = 0;
+	current_menu = CONTROLLERMENU;
+	controllermenucount = 0;
+	current_selected_joystick = default_joystick;	// Return control to first joystick
+
+	for (int i = 0; (i < SDL_NumJoysticks()) && (i < MAX_JOYSTICKS); i++) {
+		joystickNames[i] = SDL_GameControllerNameForIndex(i);
+		if (joystickNames[i] == NULL) joystickNames[i] = SDL_JoystickNameForIndex(i);	// Get joystick name if got no game controller name
+		controllerMenu[i] = (MenuItem){joystickNames[i], MappingMenuSelected, NULL};
+		controllermenucount++;
+	}
+	controllerMenu[controllermenucount] = (MenuItem){"BACK\0", MainMenuSelected, NULL};
+	controllermenucount++;
+  return 0;
+}
 
 
 // Cheats related stuff
@@ -188,15 +377,6 @@ int CheatMenuSelected()
 	return 0;
 }
 
-int ControllerMenuSelected()
-{
-	snprintf(MenuTitle, TITLELENGTH, "Controller Options");
-	current_selected_item = 0;
-	current_menu = CONTROLLERMENU;
-	//TODO work out UI for controller mappings
-	return 0;
-}
-
 int DIPMenuSelected()
 {
 	current_selected_item = 0;
@@ -227,13 +407,6 @@ struct MenuItem mainMenu[MAINMENU_COUNT] =
 #define DIPMENU_COUNT 1
 
 struct MenuItem dipMenu[DIPMENU_COUNT] =
-{
-	{"BACK \0", MainMenuSelected, NULL},
-};
-
-#define CONTROLLERMENU_COUNT 1
-
-struct MenuItem controllerMenu[CONTROLLERMENU_COUNT] =
 {
 	{"BACK \0", MainMenuSelected, NULL},
 };
@@ -275,8 +448,12 @@ void ingame_gui_render()
 			current_menu_items = dipMenu;
 			break;
 		case CONTROLLERMENU:
-			current_item_count = CONTROLLERMENU_COUNT;
+			current_item_count = controllermenucount;
 			current_menu_items = controllerMenu;
+			break;
+		case MAPPINGMENU:
+			current_item_count = BUTTONS_TO_MAP + 3;
+			current_menu_items = mappingMenu;
 			break;
 		case CHEATMENU:
 			current_item_count = cheatcount;
@@ -402,7 +579,13 @@ int ingame_gui_process()
 				break;
 			case SDL_JOYBUTTONDOWN:
 				if (e.jbutton.which == current_selected_joystick) {
-//					if ((current_menu == MAPPINGMENU) && (current_selected_item < BUTTONS_TO_MAP)) mappedbuttons[current_selected_item] = e.jbutton.button;	// Store pressed button
+					if ((current_menu == MAPPINGMENU) && (current_selected_item < BUTTONS_TO_MAP)) {
+						mappedbuttons[current_selected_item] = e.jbutton.button;	// Store pressed button
+						for (int i = 0; i < BUTTONS_TO_MAP; i++) {
+							if ((i != current_selected_item) && (mappedbuttons[i] == mappedbuttons[current_selected_item]))
+								mappedbuttons[i] = -1;		// Remove duplicated buttons
+						}
+					}
 					if (current_menu_items[current_selected_item].menuFunction!=NULL) {		// Execute selected option
 						int (*menuFunction)();
 						menuFunction = current_menu_items[current_selected_item].menuFunction;

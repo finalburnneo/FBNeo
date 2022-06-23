@@ -35,12 +35,14 @@ TCHAR szAppBurnVer[16];
 char videofiltering[3];
 
 #ifdef BUILD_SDL2
+bool do_reload_game = false;	// To reload game when buttons mapping changed
 SDL_Window* sdlWindow = NULL;
 
 static char* szSDLeepromPath = NULL;
 static char* szSDLhiscorePath = NULL;
 static char* szSDLHDDPath = NULL;
 static char* szSDLSamplePath = NULL;
+static char* szSDLconfigPath = NULL;
 #endif
 
 #define set_commandline_option_not_config(i,v) i = v;
@@ -231,27 +233,26 @@ void generateDats()
 
 void DoGame(int gameToRun)
 {
-
-	if (!DrvInit(gameToRun, 0))
-	{
-		MediaInit();
-		if(usejoy) 
+	do {
+		do_reload_game = false;
+		if (!DrvInit(gameToRun, 0))
 		{
+			MediaInit();
 			Init_Joysticks(usejoy);
+			RunMessageLoop();
 		}
-		RunMessageLoop();
-	}
-	else
-	{
-		printf("There was an error loading your selected game.\n");
-	}
+		else
+		{
+			printf("There was an error loading your selected game.\n");
+		}
 
-	if (bSaveconfig)
-	{
-		ConfigAppSave();
-	}
-	DrvExit();
-	MediaExit();
+		if (bSaveconfig)
+		{
+			ConfigAppSave();
+		}
+		DrvExit();
+		MediaExit();
+	} while (do_reload_game);
 }
 
 void bye(void)
@@ -397,6 +398,16 @@ int main(int argc, char* argv[])
 	_stprintf(szAppEEPROMPath, _T("%s"), szSDLeepromPath);
 	_stprintf(szAppHDDPath, _T("%s"), szSDLHDDPath);
 	_stprintf(szAppSamplesPath, _T("%s"), szSDLSamplePath);
+
+
+    // Load mapping from file if it exists
+	char gamecontrollerdbfile[MAX_PATH] = { 0 };
+	if (szSDLconfigPath == NULL) {
+		szSDLconfigPath = SDL_GetPrefPath("fbneo", "config");
+	}
+	snprintf(gamecontrollerdbfile, MAX_PATH, "%sgamecontrollerdb.txt", szSDLconfigPath);
+
+	if (SDL_GameControllerAddMappingsFromFile(gamecontrollerdbfile) > 0) printf("Game controller mappings loaded from: %s\n", gamecontrollerdbfile);
 #endif
 
 	fail = ConfigAppLoad();

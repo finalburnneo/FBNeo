@@ -34,8 +34,8 @@ int gameSelectedFromFilter = -1;
 TCHAR szAppBurnVer[16];
 char videofiltering[3];
 
-#ifdef BUILD_SDL2
 bool do_reload_game = false;	// To reload game when buttons mapping changed
+#ifdef BUILD_SDL2
 SDL_Window* sdlWindow = NULL;
 
 static char* szSDLeepromPath = NULL;

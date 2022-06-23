@@ -8342,9 +8342,10 @@ DRV		BurnSpeckungfum;
 DRV		BurnDrvKungfub;
 DRV		BurnDrvKungfub2;
 DRV		BurnDrvKungfub3;
-DRV		BurnDrvKungfumd;
 DRV		BurnDrvcv_kungfumstr;
+DRV		BurnDrvKungfumd;
 DRV		BurnDrvKungfum;
+DRV		BurnDrvKungfub3s;
 DRV		BurnDrvKungfuta;
 DRV		BurnDrvMSX_kungfut;
 DRV		BurnDrvMSX_kungfuta;
@@ -13311,6 +13312,7 @@ DRV		BurnDrvsg1k_3ninmjt;
 DRV		BurnDrvSandscrpb;
 DRV		BurnDrvSandscrpa;
 DRV		BurnDrvSandscrp;
+DRV		BurnDrvnes_sangokushi;
 DRV		BurnDrvsms_sangoku3;
 DRV		BurnDrvCpsWofa;
 DRV		BurnDrvCpsWofabl;
@@ -27140,9 +27142,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKungfub,			// Kung-Fu Master (bootleg set 1)
 	&BurnDrvKungfub2,			// Kung-Fu Master (bootleg set 2)
 	&BurnDrvKungfub3,			// Kung-Fu Master (bootleg set 3)
-	&BurnDrvKungfumd,			// Kung-Fu Master (Data East)
 	&BurnDrvcv_kungfumstr,		// Kung-Fu Master (SGM) (HB)
-	&BurnDrvKungfum,			// Kung-Fu Master
+	&BurnDrvKungfumd,			// Kung-Fu Master (US)
+	&BurnDrvKungfum,			// Kung-Fu Master (World)
+	&BurnDrvKungfub3s,			// Kung-Fu Senjyo (bootleg, Spanish)
 	&BurnDrvKungfuta,			// Kung-Fu Taikun (alt)
 	&BurnDrvMSX_kungfut,		// Kung-Fu Taikun (Jpn)
 	&BurnDrvMSX_kungfuta,		// Kung-Fu Taikun (Jpn, Alt)
@@ -32109,6 +32112,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSandscrpb,			// Sand Scorpion (Chinese Title Screen, Revised Hardware)
 	&BurnDrvSandscrpa,			// Sand Scorpion (Earlier)
 	&BurnDrvSandscrp,			// Sand Scorpion
+	&BurnDrvnes_sangokushi,		// Sangokushi - Chuugen no Hasha (Japan)
 	&BurnDrvsms_sangoku3,		// Sangokushi 3 (Kor)
 	&BurnDrvCpsWofa,			// Sangokushi II (921005 Asia)
 	&BurnDrvCpsWofabl,			// Sangokushi II (Asia, bootleg, set 1)

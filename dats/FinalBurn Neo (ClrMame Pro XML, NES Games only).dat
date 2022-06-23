@@ -13304,6 +13304,14 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="sangokushi">
+		<description>Sangokushi - Chuugen no Hasha (Japan)</description>
+		<year>1988</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="Sangokushi - Chuugen no Hasha (Japan).nes" size="262160" crc="231ec446"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="sangokushiiihanoucc">
 		<comment>Hack</comment>
 		<description>Sangokushi II - Hanou No Tairiku (T-Chi)</description>

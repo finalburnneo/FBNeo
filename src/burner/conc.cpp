@@ -392,7 +392,7 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 		while (i < nLen)
 		{
 			if (szLine[i] == '=' && i < 4) j = i+1;
-			if (szLine[i] == ',' || szLine[i] == '\n')
+			if (szLine[i] == ',' || szLine[i] == '\r' || szLine[i] == '\n')
 			{
 				if (pCurrentCheat->pOption[n] == NULL) {
 					pCurrentCheat->pOption[n] = (CheatOption*)malloc(sizeof(CheatOption));
@@ -413,7 +413,7 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 		{
 			if (i == nLen) break;
 
-			if (szLine[i] == ',' || szLine[i] == '\n')
+			if (szLine[i] == ',' || szLine[i] == '\r' || szLine[i] == '\n')
 			{
 				_tcsncpy (tmp, szLine + j, i-j);
 				tmp[i-j] = '\0';
@@ -550,7 +550,7 @@ static INT32 ConfigParseMAMEFile_internal(FILE *fz, const TCHAR *name)
 
 		INT32 c0[16], c1 = 0;					// find colons / break
 		for (INT32 i = 0; i < nLen; i++)
-			if (szLine[i] == ':' || szLine[i] == '\n')
+			if (szLine[i] == ':' || szLine[i] == '\r' || szLine[i] == '\n')
 				c0[c1++] = i;
 
 		tmpcpy(1);						// control flags

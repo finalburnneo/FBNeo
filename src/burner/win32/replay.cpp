@@ -51,11 +51,22 @@ static INT32 nPrintInputsActive[2] = { 0, 0 };
 struct MovieExtInfo
 {
 	// date & time
-	UINT32 year, month, day;
+	UINT32 year, month;
+	UINT16 day, dayofweek;
 	UINT32 hour, minute, second;
 };
 
-struct MovieExtInfo MovieInfo = { 0, 0, 0, 0, 0, 0 };
+struct MovieExtInfo MovieInfo = { 0, 0, 0, 0, 0, 0, 0 };
+
+static char *ReplayDecodeDateTime()
+{
+	static char ttime[64];
+	int fixhour = (MovieInfo.hour>12) ? MovieInfo.hour-12 : MovieInfo.hour;
+	if (fixhour == 0) fixhour = 12;
+	sprintf(ttime, "%02d/%02d/%04d @ %02d:%02d:%02d%s", MovieInfo.month+1, MovieInfo.day, 2000 + (MovieInfo.year%100), fixhour, MovieInfo.minute, MovieInfo.second, (MovieInfo.hour>12) ? "pm" : "am");
+
+	return &ttime[0];
+}
 
 static INT32 ReplayDialog();
 static INT32 RecordDialog();
@@ -387,12 +398,13 @@ INT32 StartRecord()
 					time_t nLocalTime = time(NULL);
 					tm* tmLocalTime = localtime(&nLocalTime);
 
-					MovieInfo.hour   = tmLocalTime->tm_hour;
-					MovieInfo.minute = tmLocalTime->tm_min;
-					MovieInfo.second = tmLocalTime->tm_sec;
-					MovieInfo.month  = tmLocalTime->tm_mon;
-					MovieInfo.day    = tmLocalTime->tm_mday;
-					MovieInfo.year   = tmLocalTime->tm_year;
+					MovieInfo.hour		= tmLocalTime->tm_hour;
+					MovieInfo.minute	= tmLocalTime->tm_min;
+					MovieInfo.second	= tmLocalTime->tm_sec;
+					MovieInfo.month		= tmLocalTime->tm_mon;
+					MovieInfo.day		= tmLocalTime->tm_mday;
+					MovieInfo.dayofweek	= tmLocalTime->tm_wday;
+					MovieInfo.year		= tmLocalTime->tm_year;
 
 					fwrite(&MovieInfo, 1, sizeof(MovieInfo), fp);
 				}
@@ -535,7 +547,7 @@ INT32 StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 					if (nThisMovieVersion >= 0x0401) {
 						bprintf(0, _T("loading ext movie version!!\n"));
 						fread(&MovieInfo, 1, sizeof(MovieInfo), fp);
-						bprintf(0, _T("Ext Info: %d:%d:%d %d/%d/%d\n"), MovieInfo.hour, MovieInfo.minute, MovieInfo.second, MovieInfo.year, MovieInfo.month, MovieInfo.day);
+						bprintf(0, _T("Ext Info: %S\n"), ReplayDecodeDateTime());
 					}
 					fread(&nThisFBVersion, 1, 4, fp);
 					INT32 nEmbedPosition = ftell(fp);
@@ -1008,7 +1020,7 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 	if (nThisMovieVersion >= 0x0401) {
 		fread(&MovieInfo, 1, sizeof(MovieInfo), fd);
 		bprintf(0, _T("Movie Version %X\n"), nThisMovieVersion);
-		bprintf(0, _T("Ext Info: %d:%d:%d %d/%d/%d\n"), MovieInfo.hour, MovieInfo.minute, MovieInfo.second, MovieInfo.year, MovieInfo.month, MovieInfo.day);
+		bprintf(0, _T("Ext Info: %S\n"), ReplayDecodeDateTime());
 	}
 	fread(&nThisFBVersion, 1, 4, fd);
 
@@ -1076,9 +1088,7 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 			sprintf(szRecordedFrom, "%s", (bStartFromReset) ? "Power-On" : "Savestate");
 
 		if (nThisMovieVersion >= 0x0401) {
-			int fixhour = (MovieInfo.hour>12) ? MovieInfo.hour-12 : MovieInfo.hour;
-			if (fixhour == 0) fixhour = 12;
-			sprintf(szRecordedTime, "%02d/%02d/%04d @ %02d:%02d:%02d%s", MovieInfo.month+1, MovieInfo.day, 2000 + (MovieInfo.year%100), fixhour, MovieInfo.minute, MovieInfo.second, (MovieInfo.hour>12) ? "pm" : "am");
+			strcpy(szRecordedTime, ReplayDecodeDateTime());
 		}
 
 		SetDlgItemTextA(hDlg, IDC_LENGTH, szLengthString);

@@ -34471,6 +34471,23 @@ struct BurnDriver BurnDrvnes_firenice = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_sangokushiRomDesc[] = {
+	{ "Sangokushi - Chuugen no Hasha (Japan).nes",          262160, 0x231ec446, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_sangokushi)
+STD_ROM_FN(nes_sangokushi)
+
+struct BurnDriver BurnDrvnes_sangokushi = {
+	"nes_sangokushi", NULL, NULL, NULL, "1988",
+	"Sangokushi - Chuugen no Hasha (Japan)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_RPG, 0,
+	NESGetZipName, nes_sangokushiRomInfo, nes_sangokushiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_solonokagi2RomDesc[] = {
 	{ "Solomon no Kagi 2 - Coolmintou Kyuushutsu Sakusen (Jpn)(1992)(Tecmo).nes",          262160, 0xf033b827, BRF_ESS | BRF_PRG },
 };

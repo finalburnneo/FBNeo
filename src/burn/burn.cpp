@@ -1049,14 +1049,15 @@ void StateRunAheadLoad()
 struct MovieExtInfo
 {
 	// date & time
-	UINT32 year, month, day;
+	UINT32 year, month;
+	UINT16 day, dayofweek;
 	UINT32 hour, minute, second;
 };
 
 #if !defined(BUILD_SDL) && !defined(BUILD_SDL2) && !defined(BUILD_MACOS)
 extern struct MovieExtInfo MovieInfo; // from replay.cpp
 #else
-struct MovieExtInfo MovieInfo = { 0, 0, 0, 0, 0, 0 };
+struct MovieExtInfo MovieInfo = { 0, 0, 0, 0, 0, 0, 0 };
 #endif
 
 void BurnGetLocalTime(tm *nTime)
@@ -1067,6 +1068,7 @@ void BurnGetLocalTime(tm *nTime)
 			nTime->tm_min = MovieInfo.minute;
 			nTime->tm_hour = MovieInfo.hour;
 			nTime->tm_mday = MovieInfo.day;
+			nTime->tm_wday = MovieInfo.dayofweek;
 			nTime->tm_mon = MovieInfo.month;
 			nTime->tm_year = MovieInfo.year;
 		} else {

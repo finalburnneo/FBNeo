@@ -22,6 +22,7 @@ static bool bFlipped = false;
 static SDL_Rect dstrect;
 static char Windowtitle[512];
 
+extern UINT16 maxLinesMenu;	// sdl2_gui_ingame.cpp: number of lines to show in ingame menus
 
 void RenderMessage()
 {
@@ -249,10 +250,12 @@ static int Init()
 #endif
 	if (nRotateGame)
 	{
+		maxLinesMenu = display_w / 10 - 6;		// Get number of lines to show in ingame menus
 		SDL_RenderSetLogicalSize(sdlRenderer, display_h, display_w);
 	}
 	else
 	{
+		maxLinesMenu = display_h / 10 - 6;		// Get number of lines to show in ingame menus
 		SDL_RenderSetLogicalSize(sdlRenderer, display_w, display_h);
 	}
 

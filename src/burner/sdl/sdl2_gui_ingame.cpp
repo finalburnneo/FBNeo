@@ -199,7 +199,27 @@ int UpdateMappingMenuSelected()
 
 int ResetMappedButtons()
 {
-	for (int i = 0; i < BUTTONS_TO_MAP; i++) {
+	SDL_GameControllerButtonBind bind;
+	SDL_GameController *currentGameController = SDL_GameControllerOpen(current_selected_joystick);
+	if (currentGameController)
+	{
+		bind = SDL_GameControllerGetBindForButton(currentGameController, SDL_CONTROLLER_BUTTON_A );
+		mappedbuttons[0] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(currentGameController, SDL_CONTROLLER_BUTTON_B);
+		mappedbuttons[1] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(currentGameController, SDL_CONTROLLER_BUTTON_X );
+		mappedbuttons[2] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(currentGameController, SDL_CONTROLLER_BUTTON_Y);
+		mappedbuttons[3] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(currentGameController, SDL_CONTROLLER_BUTTON_LEFTSHOULDER  );
+		mappedbuttons[4] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(currentGameController, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER );
+		mappedbuttons[5] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(currentGameController, SDL_CONTROLLER_BUTTON_BACK   );
+		mappedbuttons[6] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(currentGameController, SDL_CONTROLLER_BUTTON_START  );
+		mappedbuttons[7] = bind.value.button;
+	} else for (int i = 0; i < BUTTONS_TO_MAP; i++) {
 		mappedbuttons[i] = -1;
 	}
 	UpdateMappingMenuSelected();

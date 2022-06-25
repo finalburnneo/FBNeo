@@ -2623,6 +2623,7 @@ typedef struct
 	INT32		adpcm_out;		/* (speedup) hiro-shi!!		*/
 	INT8		vol_mul;		/* volume in "0.75dB" steps	*/
 	UINT8		vol_shift;		/* volume in "-6dB" steps	*/
+	UINT8       pan_raw;        /* to re-connect pan pointer*/
 	INT32		*pan;			/* &out_adpcm[OPN_xxxx] 	*/
 } ADPCM_CH;
 
@@ -2853,6 +2854,7 @@ static void FM_ADPCMAWrite(YM2610 *F2610,int r,int v)
 			}
 
 			adpcm[c].pan    = &out_adpcm[(v>>6)&0x03];
+			adpcm[c].pan_raw = (v>>6)&0x03;
 
 			/* calc pcm * volume data */
 			adpcm[c].adpcm_out = ((adpcm[c].adpcm_acc * adpcm[c].vol_mul) >> adpcm[c].vol_shift) & ~3;	/* multiply, shift and mask out low 2 bits */
@@ -2896,13 +2898,20 @@ static void FMsave_state_adpcma(const char *name,int num,ADPCM_CH *adpcm)
 	{
 		sprintf(state_name,"%s.CH%d",name,ch);
 
-		state_save_register_UINT8 (state_name, num, "flag"    , &adpcm->flag      , 1);
-		state_save_register_UINT8 (state_name, num, "data"    , &adpcm->now_data  , 1);
-		state_save_register_UINT32(state_name, num, "addr"    , &adpcm->now_addr  , 1);
-		state_save_register_UINT32(state_name, num, "step"    , &adpcm->now_step  , 1);
-		state_save_register_INT32 (state_name, num, "a_acc"   , &adpcm->adpcm_acc , 1);
-		state_save_register_INT32 (state_name, num, "a_step"  , &adpcm->adpcm_step, 1);
-		state_save_register_INT32 (state_name, num, "a_out"   , &adpcm->adpcm_out , 1);
+		state_save_register_UINT8 (state_name, num, "flag"      , &adpcm->flag      , 1);
+		state_save_register_UINT8 (state_name, num, "flagMask"  , &adpcm->flagMask  , 1);
+		state_save_register_UINT8 (state_name, num, "data"      , &adpcm->now_data  , 1);
+		state_save_register_UINT32(state_name, num, "addr"      , &adpcm->now_addr  , 1);
+		state_save_register_UINT32(state_name, num, "step"      , &adpcm->now_step  , 1);
+		state_save_register_UINT32(state_name, num, "start"     , &adpcm->start     , 1);
+		state_save_register_UINT32(state_name, num, "end"       , &adpcm->end       , 1);
+		state_save_register_UINT8 (state_name, num, "IL"        , &adpcm->IL        , 1);
+		state_save_register_INT32 (state_name, num, "a_acc"     , &adpcm->adpcm_acc , 1);
+		state_save_register_INT32 (state_name, num, "a_step"    , &adpcm->adpcm_step, 1);
+		state_save_register_INT32 (state_name, num, "a_out"     , &adpcm->adpcm_out , 1);
+		state_save_register_INT8  (state_name, num, "vol_mul"   , &adpcm->vol_mul   , 1);
+		state_save_register_UINT8 (state_name, num, "vol_shift" , &adpcm->vol_shift, 1);
+		state_save_register_UINT8 (state_name, num, "pan_raw"   , &adpcm->pan_raw   , 1);
 	}
 }
 #endif /* _STATE_H */
@@ -3119,7 +3128,7 @@ void YM2608UpdateOne(int num, INT16 **buffer, int length)
 #ifdef _STATE_H
 static void YM2608_postload(void)
 {
-	int num , r;
+	int num, r, ch;
 
 	FM_IS_POSTLOADING = 1;
 
@@ -3155,10 +3164,19 @@ static void YM2608_postload(void)
 			}
 		/* FM channels */
 		/*FM_channel_postload(F2608->CH,6);*/
+
+
+		for(ch=0;ch<6;ch++) // re-connect pan pointer -dink
+		{
+			F2608->adpcm[ch].pan    = &out_adpcm[F2608->adpcm[ch].pan_raw&0x03];
+		}
+
+		// ADPCMA postload below is bad luck! (wc90, tail2nos) - saved all channel regs instead. -dink june 2022
 		/* rhythm(ADPCMA) */
-		FM_ADPCMAWrite(F2608,1,F2608->REGS[0x111]);
-		for( r=0x08 ; r<0x0c ; r++)
-			FM_ADPCMAWrite(F2608,r,F2608->REGS[r+0x110]);
+		//FM_ADPCMAWrite(F2608,1,F2608->REGS[0x111]);
+		//for( r=0x08 ; r<0x0c ; r++)
+		//	FM_ADPCMAWrite(F2608,r,F2608->REGS[r+0x110]);
+
 		/* Delta-T ADPCM unit */
 		YM_DELTAT_postload(&F2608->deltaT , &F2608->REGS[0x100] );
 	}

@@ -1,6 +1,11 @@
 #include "retro_common.h"
 #include "retro_memory.h"
 
+// 2022-06-25 : hiscores are now part of the (fast) savestates, and for better or worse will now be synced within a runahead/netplay context.
+//              as a side-effect, runahead savestates are now optimized for single instance and support for 2-instances runahead won't be guaranteed anymore.
+//              having the frontend provide proper savestate context will be required to improve this situation.
+//              see https://github.com/libretro/RetroArch/issues/13498 and https://github.com/libretro/RetroArch/issues/8571
+
 // Cheevos support
 static void* pMainRamData = NULL;
 static size_t nMainRamSize = 0;
@@ -240,9 +245,9 @@ size_t retro_serialize_size()
 	kNetGame = nAudioVideoEnable & 4 ? 1 : 0;
 	if (kNetGame == 1) {
 		// Hiscores are causing desync in netplay
-		EnableHiscores = false;
+		//EnableHiscores = false;
 		// Some data isn't required for netplay
-		nAction |= ACB_NET_OPT;
+		nAction |= ACB_NET_OPT | ACB_RUNAHEAD;
 	}
 
 	// Don't try to cache state size, it's causing more issues than it solves (ngp)
@@ -285,9 +290,9 @@ bool retro_serialize(void *data, size_t size)
 	kNetGame = nAudioVideoEnable & 4 ? 1 : 0;
 	if (kNetGame == 1) {
 		// Hiscores are causing desync in netplay
-		EnableHiscores = false;
+		//EnableHiscores = false;
 		// Some data isn't required for netplay
-		nAction |= ACB_NET_OPT;
+		nAction |= ACB_NET_OPT | ACB_RUNAHEAD;
 	}
 
 	BurnAcb = StateWriteAcb;
@@ -312,9 +317,9 @@ bool retro_unserialize(const void *data, size_t size)
 	kNetGame = nAudioVideoEnable & 4 ? 1 : 0;
 	if (kNetGame == 1) {
 		// Hiscores are causing desync in netplay
-		EnableHiscores = false;
+		//EnableHiscores = false;
 		// Some data isn't required for netplay
-		nAction |= ACB_NET_OPT;
+		nAction |= ACB_NET_OPT | ACB_RUNAHEAD;
 	}
 
 	BurnAcb = StateReadAcb;

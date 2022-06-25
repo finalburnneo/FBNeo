@@ -5414,6 +5414,7 @@ DRV		BurnDrvCpsFfightu2;
 DRV		BurnDrvCpsFfight;
 DRV		BurnDrvCpsFfighta;
 DRV		BurnDrvnes_finalfight3;
+DRV		BurnDrvCpsFfightaemgc;
 DRV		BurnDrvCpsFfightae;
 DRV		BurnDrvFinalgdr;
 DRV		BurnDrvMSX_fjustice;
@@ -11955,6 +11956,8 @@ DRV		BurnDrvmd_premierm;
 DRV		BurnDrvmd_premrm97;
 DRV		BurnDrvMSX_prettykngdm;
 DRV		BurnDrvSailorMoonjee;
+DRV		BurnDrvSailorMoonffj;
+DRV		BurnDrvSailorMoonrot;
 DRV		BurnDrvSailorMoonO;
 DRV		BurnDrvSailorMoonOh;
 DRV		BurnDrvSailorMoonOj;
@@ -21136,7 +21139,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsDinou,			// Cadillacs & Dinosaurs (930201 USA)
 	&BurnDrvCpsDino,			// Cadillacs & Dinosaurs (930201 World)
 	&BurnDrvCpsDinoa,			// Cadillacs & Dinosaurs (930223 Asia TW)
-	&BurnDrvCpsDinore,			// Cadillacs & Dinosaurs Readjusted (Hack, v1.0)
+	&BurnDrvCpsDinore,			// Cadillacs & Dinosaurs Readjusted (Hack, v1.1)
 	&BurnDrvCpsDinosyn,			// Cadillacs and Dinosaurs (30th-Anniversary, Hack)
 	&BurnDrvCpsDinopic,			// Cadillacs and Dinosaurs (bootleg set 1 (with PIC16c57), 930201 etc)
 	&BurnDrvCpsDinopic2,		// Cadillacs and Dinosaurs (bootleg set 2 (with PIC16c57), 930201 etc)
@@ -24214,6 +24217,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsFfight,			// Final Fight (World, set 1)
 	&BurnDrvCpsFfighta,			// Final Fight (World, set 2)
 	&BurnDrvnes_finalfight3,	// Final Fight 3 (Unl)
+	&BurnDrvCpsFfightaemgc,		// Final Fight 30th Anniversary Edition (Mad Gear's City Hack)
 	&BurnDrvCpsFfightae,		// Final Fight 30th Anniversary Edition
 	&BurnDrvFinalgdr,			// Final Godori (Korea, version 2.20.5915)
 	&BurnDrvMSX_fjustice,		// Final Justice (Jpn)
@@ -30755,6 +30759,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_premrm97,		// Premier Manager 97 (Euro)
 	&BurnDrvMSX_prettykngdm,	// Pretty Kingdom (HB)
 	&BurnDrvSailorMoonjee,		// Pretty Soldier Sailor Moon (Enhanced Edition v5 Final, Hack)
+	&BurnDrvSailorMoonffj,		// Pretty Soldier Sailor Moon (Fighting For Justice, Hack)
+	&BurnDrvSailorMoonrot,		// Pretty Soldier Sailor Moon (Reign of Terror, Hack)
 	&BurnDrvSailorMoonO,		// Pretty Soldier Sailor Moon (ver. 95/03/21, Europe)
 	&BurnDrvSailorMoonOh,		// Pretty Soldier Sailor Moon (ver. 95/03/21, Hong Kong)
 	&BurnDrvSailorMoonOj,		// Pretty Soldier Sailor Moon (ver. 95/03/21, Japan)
@@ -34410,7 +34416,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSpnchout,			// Super Punch-Out!! (Rev B)
 	&BurnDrvCpsSpf2xpri,		// Super Puzzle Fighter 2 X' Balance Patch (Hack)
 	&BurnDrvCpsSpf2tb,			// Super Puzzle Fighter II Turbo (Boss Hack)(USA 960620)
-	&BurnDrvCpsSpf2tcb,			// Super Puzzle Fighter II Turbo (Color Blind Hack)
+	&BurnDrvCpsSpf2tcb,			// Super Puzzle Fighter II Turbo (Color Blind Hack, v1.1)
 	&BurnDrvCpsSpf2ta,			// Super Puzzle Fighter II Turbo (Super Puzzle Fighter 2 Turbo 960529 Asia)
 	&BurnDrvCpsSpf2t,			// Super Puzzle Fighter II Turbo (Super Puzzle Fighter 2 Turbo 960529 Euro)
 	&BurnDrvCpsSpf2th,			// Super Puzzle Fighter II Turbo (Super Puzzle Fighter 2 Turbo 960531 Hispanic)

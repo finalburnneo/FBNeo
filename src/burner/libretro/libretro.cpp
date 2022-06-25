@@ -1192,10 +1192,7 @@ void retro_run()
 		// Note: "Hard Disable Audio" bit will only be set
 		// when using second instance runahead
 		if (nAudioVideoEnable & 8) // "Hard Disable Audio"
-		{
 			bEmulateAudio = bPresentAudio = false;
-			bIsLikelySecondInstanceRunAhead = true;
-		}
 		else
 			bPresentAudio = (nAudioVideoEnable & 2); // "Enable Audio"
 	}

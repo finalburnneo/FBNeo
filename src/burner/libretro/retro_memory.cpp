@@ -5,6 +5,8 @@
 //              as a side-effect, runahead savestates are now optimized for single instance and support for 2-instances runahead won't be guaranteed anymore.
 //              having the frontend provide proper savestate context will be required to improve this situation.
 //              see https://github.com/libretro/RetroArch/issues/13498 and https://github.com/libretro/RetroArch/issues/8571
+//              also introduced an ugly workaround to detect second instance in running loop and try to adjust savestates from that information,
+//              however this information is coming late (savestates start before running loop) so there is no guarantee it'll work properly
 
 // Cheevos support
 static void* pMainRamData = NULL;
@@ -13,6 +15,8 @@ static bool bMainRamFound = false;
 static int nMemoryCount = 0;
 static struct retro_memory_descriptor sMemoryDescriptors[10] = {};
 static bool bMemoryMapFound = false;
+
+bool bIsLikelySecondInstanceRunAhead = false;
 
 static int StateGetMainRamAcb(BurnArea *pba)
 {
@@ -247,7 +251,7 @@ size_t retro_serialize_size()
 		// Hiscores are causing desync in netplay
 		//EnableHiscores = false;
 		// Some data isn't required for netplay
-		nAction |= ACB_NET_OPT | ACB_RUNAHEAD;
+		nAction |= ACB_NET_OPT | (bIsLikelySecondInstanceRunAhead ? ACB_2RUNAHEAD : ACB_RUNAHEAD);
 	}
 
 	// Don't try to cache state size, it's causing more issues than it solves (ngp)
@@ -292,7 +296,7 @@ bool retro_serialize(void *data, size_t size)
 		// Hiscores are causing desync in netplay
 		//EnableHiscores = false;
 		// Some data isn't required for netplay
-		nAction |= ACB_NET_OPT | ACB_RUNAHEAD;
+		nAction |= ACB_NET_OPT | (bIsLikelySecondInstanceRunAhead ? ACB_2RUNAHEAD : ACB_RUNAHEAD);
 	}
 
 	BurnAcb = StateWriteAcb;
@@ -319,7 +323,7 @@ bool retro_unserialize(const void *data, size_t size)
 		// Hiscores are causing desync in netplay
 		//EnableHiscores = false;
 		// Some data isn't required for netplay
-		nAction |= ACB_NET_OPT | ACB_RUNAHEAD;
+		nAction |= ACB_NET_OPT | (bIsLikelySecondInstanceRunAhead ? ACB_2RUNAHEAD : ACB_RUNAHEAD);
 	}
 
 	BurnAcb = StateReadAcb;

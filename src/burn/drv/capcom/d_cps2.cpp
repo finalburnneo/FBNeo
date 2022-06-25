@@ -6935,7 +6935,7 @@ STD_ROM_FN(Spf2tb)
 
 static struct BurnRomInfo Spf2tcbRomDesc[] = {
 	{ "pzfe.03",         0x080000, 0x2af51954, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "pzfcb.04",        0x080000, 0xd1aaf86c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pzfcb.04",        0x080000, 0x14f163a7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
 	{ "pzf.14m",         0x100000, 0x2d4881cb, CPS2_GFX | BRF_GRA },
 	{ "pzf.16m",         0x100000, 0x4b0fd1be, CPS2_GFX | BRF_GRA },
@@ -11375,8 +11375,8 @@ struct BurnDriver BurnDrvCpsSpf2tb = {
 };
 
 struct BurnDriver BurnDrvCpsSpf2tcb = {
-	"spf2tcb", "spf2t", NULL, NULL, "2021",
-	"Super Puzzle Fighter II Turbo (Color Blind Hack)\0", NULL, "Capcom", "CPS2",
+	"spf2tcb", "spf2t", NULL, NULL, "2022",
+	"Super Puzzle Fighter II Turbo (Color Blind Hack, v1.1)\0", NULL, "hack", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_PUZZLE, FBF_SF,
 	NULL, Spf2tcbRomInfo, Spf2tcbRomName, NULL, NULL, NULL, NULL, Spf2tInputInfo, NULL,

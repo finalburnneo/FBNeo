@@ -5,9 +5,9 @@
 #include "z80_intf.h"
 #include "burn_ym2608.h"
 
-static UINT8 Wc90InputPort0[6] = {0, 0, 0, 0, 0, 0};
-static UINT8 Wc90InputPort1[6] = {0, 0, 0, 0, 0, 0};
-static UINT8 Wc90InputPort2[6] = {0, 0, 0, 0, 0, 0};
+static UINT8 Wc90InputPort0[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+static UINT8 Wc90InputPort1[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+static UINT8 Wc90InputPort2[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 Wc90Dip[2]        = {0, 0};
 static UINT8 Wc90Input[3]      = {0x00, 0x00, 0x00};
 static UINT8 Wc90Reset         = 0;
@@ -55,17 +55,11 @@ static INT32 Wc90SoundLatch = 0;
 static INT32 Wc90Z80BankAddress1;
 static INT32 Wc90Z80BankAddress2;
 
-static INT32 nCyclesDone[3], nCyclesTotal[3];
-static INT32 nCyclesSegment;
-
 static INT32 nTileType;
 
 static struct BurnInputInfo Wc90InputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , Wc90InputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , Wc90InputPort2 + 2, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , Wc90InputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , Wc90InputPort2 + 3, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , Wc90InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , Wc90InputPort2 + 2, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , Wc90InputPort0 + 0, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , Wc90InputPort0 + 1, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , Wc90InputPort0 + 2, "p1 left"   },
@@ -73,6 +67,8 @@ static struct BurnInputInfo Wc90InputList[] = {
 	{"P1 Fire 1"         , BIT_DIGITAL  , Wc90InputPort0 + 4, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , Wc90InputPort0 + 5, "p1 fire 2" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , Wc90InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , Wc90InputPort2 + 3, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , Wc90InputPort1 + 0, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , Wc90InputPort1 + 1, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , Wc90InputPort1 + 2, "p2 left"   },
@@ -102,15 +98,11 @@ inline static void Wc90MakeInputs()
 	Wc90Input[0] = Wc90Input[1] = 0x00;
 	Wc90Input[2] = 0x03;
 
-	for (INT32 i = 0; i < 6; i++) {
-		Wc90Input[0] |= (Wc90InputPort0[i] & 1) << i;
-		Wc90Input[1] |= (Wc90InputPort1[i] & 1) << i;
+	for (INT32 i = 0; i < 8; i++) {
+		Wc90Input[0] ^= (Wc90InputPort0[i] & 1) << i;
+		Wc90Input[1] ^= (Wc90InputPort1[i] & 1) << i;
+		Wc90Input[2] ^= (Wc90InputPort2[i] & 1) << i;
 	}
-	
-	if (Wc90InputPort2[0]) Wc90Input[2] -= 0x01;
-	if (Wc90InputPort2[1]) Wc90Input[2] -= 0x02;
-	if (Wc90InputPort2[2]) Wc90Input[2] |= 0x04;
-	if (Wc90InputPort2[3]) Wc90Input[2] |= 0x08;
 
 	Wc90ClearOpposites(&Wc90Input[0]);
 	Wc90ClearOpposites(&Wc90Input[1]);
@@ -327,14 +319,14 @@ static INT32 Wc90DoReset()
 
 	Wc90SoundLatch = 0;
 
-	for (INT32 i = 0; i < 3; i++) {
-		ZetOpen(i);
-		ZetReset();
-		ZetClose();
-	}
+	ZetReset(0);
+	ZetReset(1);
 
+	ZetOpen(2);
+	ZetReset();
 	BurnYM2608Reset();
-	
+	ZetClose();
+
 	HiscoreReset();
 
 	return 0;
@@ -342,11 +334,7 @@ static INT32 Wc90DoReset()
 
 static void wc90FMIRQHandler(INT32, INT32 nStatus)
 {
-	if (nStatus & 1) {
-		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (nStatus & 1) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static inline void wc90SendSoundCommand(INT32 nCommand)
@@ -356,7 +344,21 @@ static inline void wc90SendSoundCommand(INT32 nCommand)
 	ZetNmi(2);
 }
 
-UINT8 __fastcall Wc90Read1(UINT16 a)
+static void bank_switch_main(INT32 data)
+{
+	Wc90Z80BankAddress1 = data;
+
+	ZetMapMemory(Wc90Z80Rom1 + 0x10000 + ((data & 0xf8) << 8), 0xf000, 0xf7ff, MAP_ROM);
+}
+
+static void bank_switch_sub(INT32 data)
+{
+	Wc90Z80BankAddress2 = data;
+
+	ZetMapMemory(Wc90Z80Rom2 + 0x10000 + ((data & 0xf8) << 8), 0xf000, 0xf7ff, MAP_ROM);
+}
+
+static UINT8 __fastcall Wc90Read1(UINT16 a)
 {
 	switch (a) {
 		case 0xfc00: {
@@ -383,7 +385,7 @@ UINT8 __fastcall Wc90Read1(UINT16 a)
 	return 0;
 }
 
-void __fastcall Wc90Write1(UINT16 a, UINT8 d)
+static void __fastcall Wc90Write1(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xfc02: {
@@ -452,27 +454,23 @@ void __fastcall Wc90Write1(UINT16 a, UINT8 d)
 		}
 
 		case 0xfce0: {
-			Wc90Z80BankAddress1 = 0x10000 + ((d & 0xf8) << 8);
-			ZetMapArea(0xf000, 0xf7ff, 0, Wc90Z80Rom1 + Wc90Z80BankAddress1);
-			ZetMapArea(0xf000, 0xf7ff, 2, Wc90Z80Rom1 + Wc90Z80BankAddress1);
+			bank_switch_main(d);
 			return;
 		}
 	}
 }
 
-void __fastcall Wc90Write2(UINT16 a, UINT8 d)
+static void __fastcall Wc90Write2(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xfc00: {
-			Wc90Z80BankAddress2 = 0x10000 + ((d & 0xf8) << 8);
-			ZetMapArea(0xf000, 0xf7ff, 0, Wc90Z80Rom2 + Wc90Z80BankAddress2);
-			ZetMapArea(0xf000, 0xf7ff, 2, Wc90Z80Rom2 + Wc90Z80BankAddress2);
+			bank_switch_sub(d);
 			return;
 		}
 	}
 }
 
-UINT8 __fastcall Wc90Read3(UINT16 a)
+static UINT8 __fastcall Wc90Read3(UINT16 a)
 {
 	switch (a) {
 		case 0xf800: {
@@ -491,26 +489,14 @@ UINT8 __fastcall Wc90Read3(UINT16 a)
 	return 0;
 }
 
-void __fastcall Wc90Write3(UINT16 a, UINT8 d)
+static void __fastcall Wc90Write3(UINT16 a, UINT8 d)
 {
 	switch (a) {
-		case 0xf800: {
-			BurnYM2608Write(0, d);
-			return;
-		}
-
-		case 0xf801: {
-			BurnYM2608Write(1, d);
-			return;
-		}
-
-		case 0xf802: {
-			BurnYM2608Write(2, d);
-			return;
-		}
-
+		case 0xf800:
+		case 0xf801:
+		case 0xf802:
 		case 0xf803: {
-			BurnYM2608Write(3, d);
+			BurnYM2608Write(a & 3, d);
 			return;
 		}
 	}
@@ -716,35 +702,7 @@ static void Wc90RenderCharLayer()
 
 static void Wc90RenderSprite(INT32 Code, INT32 Colour, INT32 FlipX, INT32 FlipY, INT32 x, INT32 y)
 {
-	if (x > 15 && x < 240 && y > 15 && y < 208) {
-		if (!FlipY) {
-			if (!FlipX) {
-				Render16x16Tile_Mask(pTransDraw, Code, x, y, Colour, 4, 0, 0, Wc90Sprites);
-			} else {
-				Render16x16Tile_Mask_FlipX(pTransDraw, Code, x, y, Colour, 4, 0, 0, Wc90Sprites);
-			}
-		} else {
-			if (!FlipX) {
-				Render16x16Tile_Mask_FlipY(pTransDraw, Code, x, y, Colour, 4, 0, 0, Wc90Sprites);
-			} else {
-				Render16x16Tile_Mask_FlipXY(pTransDraw, Code, x, y, Colour, 4, 0, 0, Wc90Sprites);
-			}
-		}
-	} else {
-		if (!FlipY) {
-			if (!FlipX) {
-				Render16x16Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 0, Wc90Sprites);
-			} else {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 0, Wc90Sprites);
-			}
-		} else {
-			if (!FlipX) {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 0, Wc90Sprites);
-			} else {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 0, Wc90Sprites);
-			}
-		}
-	}
+	Draw16x16MaskTile(pTransDraw, Code, x, y, FlipX, FlipY, Colour, 4, 0, 0, Wc90Sprites);
 }
 
 static const char p32x32[4][4] = {
@@ -1007,7 +965,9 @@ static INT32 Wc90Frame()
 	if (Wc90Reset) Wc90DoReset();
 
 	Wc90MakeInputs();
-	
+
+	INT32 nCyclesDone[3], nCyclesTotal[3];
+
 	nCyclesTotal[0] = (INT32)((INT64)8000000 * nBurnCPUSpeedAdjust / (0x0100 * 59.17));
 	nCyclesTotal[1] = (INT32)((INT64)8000000 * nBurnCPUSpeedAdjust / (0x0100 * 59.17));
 	nCyclesTotal[2] = (INT32)(double)(4000000 / 59.17);
@@ -1017,36 +977,24 @@ static INT32 Wc90Frame()
 	ZetNewFrame();
 	
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nNext, nCurrentCPU;
-
-		nCurrentCPU = 0;
-		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == 261) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		ZetOpen(0);
+		CPU_RUN(0, Zet);
+		if (i == 261) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
-		nCurrentCPU = 1;
-		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == 261) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		ZetOpen(1);
+		CPU_RUN(1, Zet);
+		if (i == 261) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 		
-		nCurrentCPU = 2;
-		ZetOpen(nCurrentCPU);
-		BurnTimerUpdate(i * (nCyclesTotal[2] / nInterleave));
+		ZetOpen(2);
+		CPU_RUN_TIMER(2);
 		ZetClose();
 	}
 
-	ZetOpen(2);
-	BurnTimerEndFrame(nCyclesTotal[2]);
 	if (pBurnSoundOut) {
 		BurnYM2608Update(pBurnSoundOut, nBurnSoundLen);
 	}
-	ZetClose();
 
 	if (pBurnDraw) BurnDrvRedraw();
 
@@ -1187,7 +1135,7 @@ static INT32 Wc90Init()
 	BurnTimerAttachZet(4000000);
 	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
 	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
-	BurnYM2608SetRoute(BURN_SND_YM2608_AY8910_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
+	BurnYM2608SetRoute(BURN_SND_YM2608_AY8910_ROUTE, 0.25, BURN_SND_ROUTE_BOTH);
 	
 	Wc90DoReset();
 
@@ -1250,8 +1198,6 @@ static INT32 Wc90Scan(INT32 nAction,INT32 *pnMin)
 		BurnYM2608Scan(nAction, pnMin);
 
 		SCAN_VAR(Wc90SoundLatch);
-		SCAN_VAR(Wc90Input);
-		SCAN_VAR(Wc90Dip);
 		SCAN_VAR(Wc90Scroll0YLo);
 		SCAN_VAR(Wc90Scroll0YHi);
 		SCAN_VAR(Wc90Scroll0XLo);
@@ -1266,18 +1212,16 @@ static INT32 Wc90Scan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(Wc90Scroll2XHi);
 		SCAN_VAR(Wc90Z80BankAddress1);
 		SCAN_VAR(Wc90Z80BankAddress2);
-		
-		if (nAction & ACB_WRITE) {
-			ZetOpen(0);
-			ZetMapArea(0xf000, 0xf7ff, 0, Wc90Z80Rom1 + Wc90Z80BankAddress1);
-			ZetMapArea(0xf000, 0xf7ff, 2, Wc90Z80Rom1 + Wc90Z80BankAddress1);
-			ZetClose();
-			
-			ZetOpen(1);
-			ZetMapArea(0xf000, 0xf7ff, 0, Wc90Z80Rom2 + Wc90Z80BankAddress2);
-			ZetMapArea(0xf000, 0xf7ff, 2, Wc90Z80Rom2 + Wc90Z80BankAddress2);
-			ZetClose();
-		}
+	}
+
+	if (nAction & ACB_WRITE) {
+		ZetOpen(0);
+		bank_switch_main(Wc90Z80BankAddress1);
+		ZetClose();
+
+		ZetOpen(1);
+		bank_switch_sub(Wc90Z80BankAddress2);
+		ZetClose();
 	}
 
 	return 0;

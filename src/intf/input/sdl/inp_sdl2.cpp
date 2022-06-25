@@ -271,55 +271,36 @@ void setup_kemaps(void)
 // Sets up one Joystick (for example the range of the joystick's axes)
 static int SDLinpJoystickInit(int i)
 {
-   
-   SDL_GameControllerButtonBind bind;
- 
-   JoyList[i] = SDL_JoystickOpen(i);
+	SDL_GameControllerButtonBind bind;
 
-// need this for any mapps that need done might just read a local file and do a readme on how to add your controller this will do for now
-   SDL_JoystickGUID guid = SDL_JoystickGetGUID(JoyList[i]);
-   char guid_str[1024];
-   SDL_JoystickGetGUIDString(guid, guid_str, sizeof(guid_str));
+	JoyList[i] = SDL_JoystickOpen(i);
+	GCList[i]  = SDL_GameControllerOpen(i);
 
-   char *mapping ="03000000ff1100003133000000000000,GameStation Gear Pc control pad,a:b2,b:b1,y:b0,x:b3,start:b11,back:b10,leftshoulder:b4,rightshoulder:b5,dpup:h0.1,dpleft:h0.8,dpdown:h0.4,dpright:h0.2,leftx:a0,lefty:a1,rightx:a2,righty:a4,lefttrigger:b6,righttrigger:b7,leftstick:b8,rightstick:b9,";
-// remap my problamatic old gamepad that conflicts with sdl2 see https://github.com/gabomdq/SDL_GameControllerDB/issues/308#event-2941370014
-   const char* name = SDL_JoystickName(JoyList[i]);
-   if ( (strcmp(guid_str, "03000000ff1100003133000000000000") == 0) && (strcmp(name, "PC Game Controller       ") == 0) )
-   {
-      SDL_GameControllerAddMapping(mapping) ;
-   }
+	if (GCList[i])
+	{
+		bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_A );
+		buttons[i][0] = bind.value.button;
 
-   GCList[i]  = SDL_GameControllerOpen(i);
-   if (GCList[i])
-   {
-	   
-	   mapping = SDL_GameControllerMapping(GCList[i]);
-	   //printf("%s: mapping %s\n", SDL_GameControllerName(temp), mapping);   
-		
-	   bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_A );
-	   buttons[i][0] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_B);
+		buttons[i][1] = bind.value.button;
 
-	   bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_B);
-	   buttons[i][1] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_X );
+		buttons[i][2] = bind.value.button;
 
-	   bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_X );
-	   buttons[i][2] = bind.value.button;
-	   
-	   bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_Y);
-	   buttons[i][3] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_Y);
+		buttons[i][3] = bind.value.button;
 
-	   bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_LEFTSHOULDER  );
-	   buttons[i][4] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_LEFTSHOULDER  );
+		buttons[i][4] = bind.value.button;
 
-	   bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_RIGHTSHOULDER );
-	   buttons[i][5] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_RIGHTSHOULDER );
+		buttons[i][5] = bind.value.button;
 
-	   bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_BACK   );
-	   buttons[i][6] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_BACK   );
+		buttons[i][6] = bind.value.button;
 
-	   bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_START  );
-	   buttons[i][7] = bind.value.button;
-
+		bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_START  );
+		buttons[i][7] = bind.value.button;
    }
 
 	return 0;

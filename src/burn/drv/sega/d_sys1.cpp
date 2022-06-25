@@ -3344,6 +3344,35 @@ static struct BurnRomInfo WboyuRomDesc[] = {
 STD_ROM_PICK(Wboyu)
 STD_ROM_FN(Wboyu)
 
+static struct BurnRomInfo WboybltRomDesc[] = {
+	{ "1.bin",         	   0x004000, 0x67d5af52, BRF_ESS | BRF_PRG }, 	 //  0	Z80 #1 Program Code
+	{ "2.bin",             0x004000, 0xe0d36862, BRF_ESS | BRF_PRG }, 	 //  1	Z80 #1 Program Code
+	{ "3.bin",             0x004000, 0x8dba0aad, BRF_ESS | BRF_PRG }, 	 //  2	Z80 #1 Program Code
+
+	{ "14.bin",      	   0x002000, 0x78ae1e7b, BRF_ESS | BRF_PRG }, 	 //  3	Z80 #2 Program Code
+
+	{ "9.bin",       	   0x002000, 0x08d609ca, BRF_GRA },		  		 //  4 Tiles
+	{ "8.bin",       	   0x002000, 0x6f61fdf1, BRF_GRA },		  		 //  5 Tiles
+	{ "11.bin",       	   0x002000, 0x6a0d2c2d, BRF_GRA },		  		 //  6 Tiles
+	{ "10.bin",       	   0x002000, 0xa8e281c7, BRF_GRA },		  		 //  7 Tiles
+	{ "13.bin",       	   0x002000, 0x89305df4, BRF_GRA },		  		 //  8 Tiles
+	{ "12.bin",       	   0x002000, 0x60f806b1, BRF_GRA },		  		 //  9 Tiles
+
+	{ "4.bin",      	   0x004000, 0xc2891722, BRF_GRA },		  		 //  10 Sprites
+	{ "6.bin",       	   0x004000, 0x2d3a421b, BRF_GRA },		  		 //  11 Sprites
+	{ "5.bin",      	   0x004000, 0x8d622c50, BRF_GRA },		  		 //  12 Sprites
+	{ "7.bin",       	   0x004000, 0x007c2f1b, BRF_GRA },		  		 //  13 Sprites
+
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  		 //  14 Timing PROM
+	
+	{ "tbp24s10n",         0x000100, 0x00000000, BRF_OPT | BRF_NODUMP }, //  15 decryption_prom
+	
+	{ "pal20l10cns",       0x000100, 0x00000000, BRF_OPT | BRF_NODUMP }, //  16 decryption_pal
+};
+
+STD_ROM_PICK(Wboyblt)
+STD_ROM_FN(Wboyblt)
+
 static struct BurnRomInfo WbdeluxeRomDesc[] = {
 	{ "wbd1.bin",          0x002000, 0xa1bedbd7, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "ic130_03.bin",      0x002000, 0x56463ede, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
@@ -7262,6 +7291,16 @@ struct BurnDriver BurnDrvWboy5 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Wboy5RomInfo, Wboy5RomName, NULL, NULL, NULL, NULL, WboyInputInfo, Wboy3DIPInfo,
+	WboyoInit, System1Exit, System1Frame, System1Render, System1Scan,
+	NULL, 0x800, 512, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvWboyblt = {
+	"wboyblt", "wboy", NULL, NULL, "1986",
+	"Wonder Boy (Tecfri bootleg)\0", NULL, "bootleg (Tecfri)", "System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, WboybltRomInfo, WboybltRomName, NULL, NULL, NULL, NULL, WboyInputInfo, Wboy3DIPInfo,
 	WboyoInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 512, 224, 4, 3
 };

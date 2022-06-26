@@ -26,14 +26,6 @@ static SDL_Rect dest_title_texture_rect;
 static int screenW = 0;
 static int screenH = 0;
 
-
-struct MenuItem
-{
-	const char* name;			// The filename of the zip file (without extension)
-  int (*menuFunction)();
-  char* (*menuText)();
-};
-
 #define MAINMENU 0
 #define DIPMENU 1
 #define CONTROLLERMENU 2
@@ -48,11 +40,26 @@ struct MenuItem
 #define TITLELENGTH 31
 char MenuTitle[TITLELENGTH + 1] = "FinalBurn Neo\0";
 
+struct MenuItem
+{
+	const char* name;
+  int (*menuFunction)();
+  char* (*menuText)();
+};
+
 // menu item tracking
 static UINT16 current_menu = MAINMENU;
 static UINT16 current_selected_item = 0;
 UINT16 firstMenuLine = 0;
 UINT16 maxLinesMenu = 16;
+
+int MainMenuSelected()
+{
+	snprintf(MenuTitle, TITLELENGTH, "FinalBurn Neo");
+	current_selected_item = 0;
+	current_menu = MAINMENU;
+	return 0;
+}
 
 int QuickSave()
 {
@@ -64,14 +71,6 @@ int QuickLoad()
 {
   QuickState(0);
   return 1;
-}
-
-int MainMenuSelected()
-{
-	snprintf(MenuTitle, TITLELENGTH, "FinalBurn Neo");
-	current_selected_item = 0;
-	current_menu = MAINMENU;
-	return 0;
 }
 
 
@@ -293,24 +292,22 @@ int ControllerMenuSelected()
 
 
 // Cheats related stuff
-struct MenuItem cheatMenu[CHEAT_MAX_ADDRESS];
-struct MenuItem cheatOptionsMenu[CHEAT_MAX_OPTIONS];
+static struct MenuItem cheatMenu[CHEAT_MAX_ADDRESS + 2];		// Add two lines for DISABLE ALL and for BACK
+static struct MenuItem cheatOptionsMenu[CHEAT_MAX_OPTIONS + 1];		// Add one line for BACK
 UINT16 cheatcount = 0;
 UINT16 cheatoptionscount = 0;
 UINT16 current_selected_cheat = 0;
-bool isCheatActivated[CHEAT_MAX_ADDRESS - 2] = {false}; // Array to keed track of activated cheats and use a different color in list
+bool isCheatActivated[CHEAT_MAX_ADDRESS]; // Array to keed track of activated cheats and use a different color in list
 bool stayCurrentCheat = false;
+CheatInfo* pCurrentCheat = NULL;
+static char previousdrvnamecheats[32];
 int CheatMenuSelected();
 int CheatOptionsMenuSelected();
-
-int IgnoreSelection()
-{
-	return 0;
-}
 
 int SelectedCheatOption()
 {
 	CheatEnable(current_selected_cheat, current_selected_item);
+	isCheatActivated[current_selected_cheat] = current_selected_item;
 	stayCurrentCheat = true;
 	CheatOptionsMenuSelected();
 	return 0;
@@ -322,78 +319,77 @@ int CheatOptionsMenuSelected()
 	else {
 		current_selected_cheat = current_selected_item;
 		current_selected_item = 0;
+		pCurrentCheat = pCheatInfo;
+		for (int i = 0; i < current_selected_cheat; i++) {
+			pCurrentCheat = pCurrentCheat->pNext;
+		}   // Skip to selected cheat number
 	}
-	current_menu = CHEATOPTIONSMENU;
+
 	cheatoptionscount = 0;
-	CheatInfo* pCurrentCheat = pCheatInfo;
-
-	for (int i = 0; i < current_selected_cheat; i++) {
-		pCurrentCheat = pCurrentCheat->pNext;
-	}   // Skip to selected cheat number
-
-	snprintf(MenuTitle, TITLELENGTH, pCurrentCheat->szCheatName);
-
-	for (int i = 0; pCurrentCheat->pOption[i]; i++) {
-		if (_tcslen(pCurrentCheat->pOption[i]->szOptionName) && strcmp(pCurrentCheat->pOption[i]->szOptionName, " ")) {
-
-			// Look for check boxes...
-			if ((pCurrentCheat->pOption[i]->szOptionName[0] == '[') && (pCurrentCheat->pOption[i]->szOptionName[2] == ']') && (pCurrentCheat->pOption[i]->szOptionName[3] == ' ')) {
-				if (i == pCurrentCheat->nCurrent) pCurrentCheat->pOption[i]->szOptionName[1] = 'X';  // Active cheat option
-				else pCurrentCheat->pOption[i]->szOptionName[1] = ' ';                               // Not active option
-			} else {
-				// Add check boxes
-				char tmpoptionname[CHEAT_MAX_NAME] = {0};
-				if (i == pCurrentCheat->nCurrent) snprintf(tmpoptionname, CHEAT_MAX_NAME, "[X] %s", pCurrentCheat->pOption[i]->szOptionName);  // Active cheat option
-				else snprintf(tmpoptionname, CHEAT_MAX_NAME, "[ ] %s", pCurrentCheat->pOption[i]->szOptionName);                               // Not active option
-				snprintf(pCurrentCheat->pOption[i]->szOptionName, CHEAT_MAX_NAME, tmpoptionname);
-			}
-
-			cheatOptionsMenu[i] = (MenuItem){pCurrentCheat->pOption[i]->szOptionName, SelectedCheatOption, NULL};
-
-		} else cheatOptionsMenu[i] = (MenuItem){".\0", IgnoreSelection, NULL};    // Ignore cheats options without name
+	for (int i = 0; pCurrentCheat->pOption[i] && (i < CHEAT_MAX_OPTIONS); i++) {
+		// Look for check boxes...
+		if ((pCurrentCheat->pOption[i]->szOptionName[0] == '[') && (pCurrentCheat->pOption[i]->szOptionName[2] == ']') && (pCurrentCheat->pOption[i]->szOptionName[3] == ' ')) {
+			if (i == pCurrentCheat->nCurrent) pCurrentCheat->pOption[i]->szOptionName[1] = 'X';  // Active cheat option
+			else pCurrentCheat->pOption[i]->szOptionName[1] = ' ';                               // Not active option
+		} else {
+			// Add check boxes
+			char tmpoptionname[CHEAT_MAX_NAME] = {0};
+			if (i == pCurrentCheat->nCurrent) snprintf(tmpoptionname, CHEAT_MAX_NAME, "[X] %s", pCurrentCheat->pOption[i]->szOptionName);  // Active cheat option
+			else snprintf(tmpoptionname, CHEAT_MAX_NAME, "[ ] %s", pCurrentCheat->pOption[i]->szOptionName);                               // Not active option
+			snprintf(pCurrentCheat->pOption[i]->szOptionName, CHEAT_MAX_NAME, tmpoptionname);
+		}
+		cheatOptionsMenu[i] = (MenuItem){pCurrentCheat->pOption[i]->szOptionName, SelectedCheatOption, NULL};
 		cheatoptionscount++;
 	}
-
-	cheatOptionsMenu[cheatoptionscount] = (MenuItem){"BACK\0", CheatMenuSelected, NULL};
-	cheatoptionscount++;
+	if (cheatoptionscount) {
+		cheatOptionsMenu[cheatoptionscount] = (MenuItem){"BACK\0", CheatMenuSelected, NULL};
+		cheatoptionscount++;
+		current_menu = CHEATOPTIONSMENU;
+		snprintf(MenuTitle, TITLELENGTH, pCurrentCheat->szCheatName);
+	}
 	return 0;
 }
 
 int DisableAllCheats()
 {
-	for (int i = 0; i < CHEAT_MAX_ADDRESS - 2; i++) {
+	for (int i = 0; i < CHEAT_MAX_ADDRESS; i++) {
 		if (isCheatActivated[i]) {
 			CheatEnable(i, 0);
 			isCheatActivated[i] = false;
 		}
 	}
 	return 0;
-	}
+}
 
 int CheatMenuSelected()
 {
 	current_selected_item = 0;
 	current_menu = CHEATMENU;
-	cheatcount = 0;
 	int i = 0;
-	CheatInfo* pCurrentCheat = pCheatInfo;
 
 	snprintf(MenuTitle, TITLELENGTH, "Cheats");
+	const char* drvname = BurnDrvGetTextA(DRV_NAME);
 
-	while ((pCurrentCheat) && (i < CHEAT_MAX_ADDRESS - 2)) {  // Save two lines for DISABLE ALL and for BACK
-		if (_tcslen(pCurrentCheat->szCheatName) && strcmp(pCurrentCheat->szCheatName, " ")) {
+	if (strcmp(previousdrvnamecheats, drvname)) {		// It's a new or different game, rebuild cheatMenu
+		snprintf(previousdrvnamecheats, 32, drvname);
+		for (int i = 0; i < CHEAT_MAX_ADDRESS; i++) {
+			isCheatActivated[i] = false;
+		}
+		cheatcount = 0;
+		pCurrentCheat = pCheatInfo;
+		while ((pCurrentCheat) && (i < CHEAT_MAX_ADDRESS)) {
 			cheatMenu[i] = (MenuItem){pCurrentCheat->szCheatName, CheatOptionsMenuSelected, NULL};
 			if (pCurrentCheat->nCurrent) isCheatActivated[i] = true;
 			else isCheatActivated[i] = false;
-		} else cheatMenu[i] = (MenuItem){".\0", IgnoreSelection, NULL};    // Ignore cheats without name
-		pCurrentCheat = pCurrentCheat->pNext;
+			pCurrentCheat = pCurrentCheat->pNext;
+			i++;
+		}
+		cheatMenu[i] = (MenuItem){"DISABLE ALL CHEATS\0", DisableAllCheats, NULL};
 		i++;
-	}
-	cheatMenu[i] = (MenuItem){"DISABLE ALL CHEATS\0", DisableAllCheats, NULL};
-	i++;
 
-	cheatMenu[i] = (MenuItem){"BACK\0", MainMenuSelected, NULL};
-	cheatcount = i + 1;
+		cheatMenu[i] = (MenuItem){"BACK\0", MainMenuSelected, NULL};
+		cheatcount = i + 1;
+	}
 	return 0;
 }
 

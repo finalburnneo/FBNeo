@@ -400,7 +400,25 @@ static unsigned char bJoystickRead = 0;
 static unsigned char bMouseRead = 0;
 static struct { unsigned char buttons; int xdelta; int ydelta; } SDLinpMouseState;
 
-#define SDL_KEY_IS_DOWN(key) (FBKtoSDL[key] > 0 ? SDLinpKeyboardState[FBKtoSDL[key]] : 0)
+bool do_reset_game = false;		// To reset game without reloading
+
+// Simulate F3 key pressed if reset game is requested
+int SDL_KEY_IS_DOWN(int key)
+{
+	if (FBKtoSDL[key] > 0) {
+		switch (key) {
+			case FBK_F3:
+				if (do_reset_game) {
+					do_reset_game = false;
+					return 1;
+				} else {
+					return SDLinpKeyboardState[SDL_SCANCODE_F3];
+				}
+			default:
+				return SDLinpKeyboardState[FBKtoSDL[key]];
+		}
+	} else return 0;
+}
 
 // Call before checking for Input in a frame
 int SDLinpStart()

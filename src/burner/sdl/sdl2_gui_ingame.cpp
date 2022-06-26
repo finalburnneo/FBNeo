@@ -28,14 +28,18 @@ static int screenH = 0;
 
 #define MAINMENU 0
 #define DIPMENU 1
-#define CONTROLLERMENU 2
-#define MAPPINGMENU 3
-#define SAVESTATE 4
-#define LOADSTATE 5
-#define SCREENSHOT 6
-#define RESET 7
-#define CHEATMENU 8
-#define CHEATOPTIONSMENU 9
+#define DIPOPTIONSMENU 2
+#define CONTROLLERMENU 3
+#define MAPPINGMENU 4
+#define CHEATMENU 5
+#define CHEATOPTIONSMENU 6
+#define SAVESTATE 7
+#define LOADSTATE 9
+#define SCREENSHOT 9
+#define RESET 10
+
+#define MAINMENU_COUNT 8
+#define RESETMENU_COUNT 2
 
 #define TITLELENGTH 31
 char MenuTitle[TITLELENGTH + 1] = "FinalBurn Neo\0";
@@ -43,8 +47,8 @@ char MenuTitle[TITLELENGTH + 1] = "FinalBurn Neo\0";
 struct MenuItem
 {
 	const char* name;
-  int (*menuFunction)();
-  char* (*menuText)();
+	int (*menuFunction)();
+	char* (*menuText)();
 };
 
 // menu item tracking
@@ -61,16 +65,112 @@ int MainMenuSelected()
 	return 0;
 }
 
-int QuickSave()
+
+// Reset game related stuff
+extern bool do_reset_game;
+
+int ResetGameNow()
 {
-  QuickState(1);
-  return 1;
+	do_reset_game = true;
+	MainMenuSelected();
+	return 1;
 }
 
-int QuickLoad()
+int ResetMenuSelected()
 {
-  QuickState(0);
-  return 1;
+	snprintf(MenuTitle, TITLELENGTH, "Reset?");
+	current_selected_item = 0;
+	current_menu = RESET;
+	return 0;
+}
+
+struct MenuItem ResetMenu[RESETMENU_COUNT] =
+{
+	{"Reset game now!\0", ResetGameNow, NULL},
+	{"BACK\0", MainMenuSelected, NULL},
+};
+
+
+// DIP switches related stuff
+static struct MenuItem dipMenu[MAXDIPSWITCHES + 2];			// Add two lines for RESET ALL SWITCHES and BACK
+static struct MenuItem DIPOptionsMenu[MAXDIPOPTIONS + 1];	// Add one line for BACK
+static UINT16 dipmenucount = 0;
+UINT16 dipoptionscount = 0;
+UINT16 current_selected_dipgroup = 0;
+bool isDIPchanged[MAXDIPSWITCHES];							// Array to keed track of changed DIPs and use a different color in list
+static char previousdrvnamedips[32];
+int DIPMenuSelected();
+extern struct GroupOfDIPSwitches GroupDIPSwitchesArray[MAXDIPSWITCHES];
+
+
+int resetAllDIPSwitches()
+{
+	int i = 0;
+	int j = 0;
+
+	InpDIPSWResetDIPs();
+	for (i = 0; i < MAXDIPSWITCHES; i++) isDIPchanged[i] = false;
+	for (j = 0; j < dipmenucount - 2; j++) {
+		for (i = 0; i < GroupDIPSwitchesArray[j].dipSwitch.nSetting; i++) {
+			if (i == GroupDIPSwitchesArray[j].DefaultDIPOption) GroupDIPSwitchesArray[j].OptionsNamesWithCheckBoxes[i][1] = 'X';
+			else GroupDIPSwitchesArray[j].OptionsNamesWithCheckBoxes[i][1] = ' ';
+		}
+	}
+	do_reset_game = true;
+	return 0;
+}
+
+int setDIPSwitch()
+{
+	if (GroupDIPSwitchesArray[current_selected_dipgroup].SelectedDIPOption != current_selected_item) {
+		isDIPchanged[current_selected_dipgroup] = setDIPSwitchOption(current_selected_dipgroup, current_selected_item);
+		do_reset_game = true;
+	}
+  return 0;
+}
+
+int DIPOptionsMenuSelected()
+{
+	current_selected_dipgroup = current_selected_item;
+	snprintf(MenuTitle, TITLELENGTH, GroupDIPSwitchesArray[current_selected_dipgroup].dipSwitch.szText);
+	current_selected_item = 0;
+	current_menu = DIPOPTIONSMENU;
+
+	for (int i = 0; i < GroupDIPSwitchesArray[current_selected_dipgroup].dipSwitch.nSetting; i++) {
+		DIPOptionsMenu[i] = (MenuItem){GroupDIPSwitchesArray[current_selected_dipgroup].OptionsNamesWithCheckBoxes[i], setDIPSwitch, NULL};
+	}
+	DIPOptionsMenu[GroupDIPSwitchesArray[current_selected_dipgroup].dipSwitch.nSetting] = (MenuItem){"BACK\0", DIPMenuSelected, NULL};
+	dipoptionscount = GroupDIPSwitchesArray[current_selected_dipgroup].dipSwitch.nSetting + 1;
+	return 0;
+}
+
+int DIPMenuSelected()
+{
+	current_selected_item = 0;
+	current_menu = DIPMENU;
+	snprintf(MenuTitle, TITLELENGTH, "DIP Switches");
+	const char* drvname = BurnDrvGetTextA(DRV_NAME);
+
+	if (strcmp(previousdrvnamedips, drvname)) {			// It's a new or different game, rebuild GroupDIPSwitchesArray
+		snprintf(previousdrvnamedips, 32, drvname);		// Save new game name
+		dipmenucount = InpDIPSWCreate();
+		int i = 0;
+		while (i < dipmenucount) {
+			dipMenu[i] = (MenuItem){GroupDIPSwitchesArray[i].dipSwitch.szText, DIPOptionsMenuSelected, NULL};
+			isDIPchanged[i] = (GroupDIPSwitchesArray[i].DefaultDIPOption != GroupDIPSwitchesArray[i].SelectedDIPOption );
+			i++;
+		}
+		if (dipmenucount > 0) {
+			dipMenu[dipmenucount] = (MenuItem){"RESET ALL DIPSWITCHES\0", resetAllDIPSwitches, NULL};
+			dipmenucount++;
+			dipMenu[dipmenucount] = (MenuItem){"BACK\0", MainMenuSelected, NULL};
+			dipmenucount++;
+		} else {
+			dipMenu[0] = (MenuItem){"BACK (no DIP switches found)\0", MainMenuSelected, NULL};
+			dipmenucount = 1;
+		}
+	}
+	return 0;
 }
 
 
@@ -393,39 +493,38 @@ int CheatMenuSelected()
 	return 0;
 }
 
-int DIPMenuSelected()
+// Save state related stuff
+int QuickSave()
 {
-	current_selected_item = 0;
-	current_menu = DIPMENU;
-	snprintf(MenuTitle, TITLELENGTH, "DIP Switches");
-	//TODO Load the dips into an array of MenuItems
-	return 0;
+	QuickState(1);
+	return 1;
 }
 
+// Load state related stuff
+int QuickLoad()
+{
+	QuickState(0);
+	return 1;
+}
+
+// Main menu related stuff
 int BackToGameSelected()
 {
 	return 1;
 }
 
-#define MAINMENU_COUNT 7
-
 struct MenuItem mainMenu[MAINMENU_COUNT] =
 {
- {"DIP Switches\0", DIPMenuSelected, NULL},
- {"Controller Options\0", ControllerMenuSelected, NULL},
- {"Cheats\0", CheatMenuSelected, NULL},
- {"Save State\0", QuickSave, NULL},
- {"Load State\0", QuickLoad, NULL},
- {"Save Screenshot\0", MakeScreenShot, NULL},
- {"Back to Game!\0", BackToGameSelected, NULL},
+	{"DIP Switches\0", DIPMenuSelected, NULL},
+	{"Controller Options\0", ControllerMenuSelected, NULL},
+	{"Cheats\0", CheatMenuSelected, NULL},
+	{"Save State\0", QuickSave, NULL},
+	{"Load State\0", QuickLoad, NULL},
+	{"Save Screenshot\0", MakeScreenShot, NULL},
+	{"Reset the game\0", ResetMenuSelected, NULL},
+	{"Back to Game!\0", BackToGameSelected, NULL},
 };
 
-#define DIPMENU_COUNT 1
-
-struct MenuItem dipMenu[DIPMENU_COUNT] =
-{
-	{"BACK \0", MainMenuSelected, NULL},
-};
 
 // menu instance tracking
 struct MenuItem *current_menu_items = mainMenu;
@@ -460,8 +559,12 @@ void ingame_gui_render()
 			current_menu_items = mainMenu;
 			break;
 		case DIPMENU:
-			current_item_count = DIPMENU_COUNT;
+			current_item_count = dipmenucount;
 			current_menu_items = dipMenu;
+			break;
+		case DIPOPTIONSMENU:
+			current_item_count = dipoptionscount;
+			current_menu_items = DIPOptionsMenu;
 			break;
 		case CONTROLLERMENU:
 			current_item_count = controllermenucount;
@@ -479,6 +582,10 @@ void ingame_gui_render()
 			current_item_count = cheatoptionscount;
 			current_menu_items = cheatOptionsMenu;
 			break;
+		case RESET:
+			current_item_count = RESETMENU_COUNT;
+			current_menu_items = ResetMenu;
+			break;
 	}
 
 	int c = 0;
@@ -493,11 +600,12 @@ void ingame_gui_render()
 		incolor(normal_color, /* unused */ 0);
 		inprint(sdlRenderer, "( ... more ... )", 10, 30+(10*c));
 	}
-
 	for (int i = firstMenuLine; ((i < current_item_count) && (i < firstMenuLine + maxLinesMenu + 1)); i++) {
 		if (i == current_selected_item) {
 			calcSelectedItemColor();
 		} else if ((current_menu == CHEATMENU) && isCheatActivated[i]) {
+			incolor(0x009000, /* unused */ 0);
+		} else if ((current_menu == DIPMENU) && isDIPchanged[i]) {
 			incolor(0x009000, /* unused */ 0);
 		} else {
 			incolor(normal_color, /* unused */ 0);
@@ -650,7 +758,7 @@ void ingame_gui_start(SDL_Renderer* renderer)
 	dest_title_texture_rect.y = gameH / 6;	// the y coordinate
 	dest_title_texture_rect.w = gameW / 3;	// the width of the texture
 	dest_title_texture_rect.h = gameH / 3;	// the height of the texture
-	
+
 	// Set default joystick to use
 	// When first joystick is removed "joystick 0" is no longer available
 	for (int i = 0; (i < SDL_NumJoysticks()) && (i < MAX_JOYSTICKS); i++) {

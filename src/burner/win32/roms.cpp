@@ -111,6 +111,16 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 //					if (GetDlgItemText(hDlg, IDC_ROMSDIR_EDIT1 + i, buffer, sizeof(buffer)) && lstrcmp(szAppRomPaths[i], buffer)) {
 					GetDlgItemText(hDlg, IDC_ROMSDIR_EDIT1 + i, buffer, sizeof(buffer));
 					if (lstrcmp(szAppRomPaths[i], buffer)) chOk = true;
+
+					// add trailing backslash
+					int strLen = _tcslen(buffer);
+					if (strLen) {
+						if ( buffer[strLen - 1] != _T('\\') && buffer[strLen - 1] != _T('/') ) {
+							buffer[strLen] = _T('\\');
+							buffer[strLen + 1] = _T('\0');
+						}
+					}
+
 					lstrcpy(szAppRomPaths[i], buffer);
 //					}
 				}

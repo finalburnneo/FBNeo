@@ -168,7 +168,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		case WM_CLOSE: {
 			hParent = NULL;
 			EndDialog(hDlg, 0);
-			if (chOk) {
+			if (chOk && bSkipStartupCheck == false) {
 				bRescanRoms = true;
 				CreateROMInfo(hDlg);
 			}

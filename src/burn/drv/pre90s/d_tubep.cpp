@@ -702,6 +702,8 @@ static INT32 DrvDoReset()
 
 	sprite_timer = -1;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1599,7 +1601,7 @@ struct BurnDriver BurnDrvTubep = {
 	"tubep", NULL, NULL, NULL, "1984",
 	"Tube Panic\0", NULL, "Nichibutsu / Fujitek", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, tubepRomInfo, tubepRomName, NULL, NULL, NULL, NULL, TubepInputInfo, TubepDIPInfo,
 	TubepInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4020,
 	256, 224, 4, 3
@@ -1675,7 +1677,7 @@ struct BurnDriver BurnDrvTubepb = {
 	"tubepb", "tubep", NULL, NULL, "1984",
 	"Tube Panic (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, tubepbRomInfo, tubepbRomName, NULL, NULL, NULL, NULL, TubepInputInfo, TubepbDIPInfo,
 	TubepbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4020,
 	256, 224, 4, 3
@@ -1735,7 +1737,7 @@ struct BurnDriver BurnDrvRjammer = {
 	"rjammer", NULL, NULL, NULL, "1984",
 	"Roller Jammer\0", NULL, "Nichibutsu / Alice", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, rjammerRomInfo, rjammerRomName, NULL, NULL, NULL, NULL, RjammerInputInfo, RjammerDIPInfo,
 	RjammerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3

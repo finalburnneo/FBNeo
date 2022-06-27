@@ -3300,24 +3300,24 @@ struct BurnDriver BurnDrvRtype2jc = {
 // Hammerin' Harry (World, M81 hardware)
 
 static struct BurnRomInfo hharryRomDesc[] = {
-	{ "a-h0-v.rom",		0x20000, 0xc52802a5, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "a-l0-v.rom",		0x20000, 0xf463074c, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "a-h1-0.rom",		0x10000, 0x3ae21335, 0x01 | BRF_PRG | BRF_ESS }, //  2
-	{ "a-l1-0.rom",		0x10000, 0xbc6ac5f9, 0x01 | BRF_PRG | BRF_ESS }, //  3
+	{ "gen=m81=_a-h0-v.rom",	0x20000, 0xc52802a5, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "gen=m81=_a-l0-v.rom",	0x20000, 0xf463074c, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "gen=m81=_a-h1-0.rom",	0x10000, 0x3ae21335, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "gen=m81=_a-l1-0.rom",	0x10000, 0xbc6ac5f9, 0x01 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "a-sp-0.rom",		0x10000, 0x80e210e7, 0x06 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+	{ "gen=m81=_a-sp-0.rom",	0x10000, 0x80e210e7, 0x06 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 
-	{ "hh_00.rom",		0x20000, 0xec5127ef, 0x02 | BRF_GRA },           //  5 Sprites
-	{ "hh_10.rom",		0x20000, 0xdef65294, 0x02 | BRF_GRA },           //  6
-	{ "hh_20.rom",		0x20000, 0xbb0d6ad4, 0x02 | BRF_GRA },           //  7
-	{ "hh_30.rom",		0x20000, 0x4351044e, 0x02 | BRF_GRA },           //  8
+	{ "hh_00.rom",				0x20000, 0xec5127ef, 0x02 | BRF_GRA },           //  5 Sprites
+	{ "hh_10.rom",				0x20000, 0xdef65294, 0x02 | BRF_GRA },           //  6
+	{ "hh_20.rom",				0x20000, 0xbb0d6ad4, 0x02 | BRF_GRA },           //  7
+	{ "hh_30.rom",				0x20000, 0x4351044e, 0x02 | BRF_GRA },           //  8
 
-	{ "hh_a0.rom",		0x20000, 0xc577ba5f, 0x03 | BRF_GRA },           //  9 Foreground & Background Tiles
-	{ "hh_a1.rom",		0x20000, 0x429d12ab, 0x03 | BRF_GRA },           // 10
-	{ "hh_a2.rom",		0x20000, 0xb5b163b0, 0x03 | BRF_GRA },           // 11
-	{ "hh_a3.rom",		0x20000, 0x8ef566a1, 0x03 | BRF_GRA },           // 12
+	{ "hh_a0.rom",				0x20000, 0xc577ba5f, 0x03 | BRF_GRA },           //  9 Foreground & Background Tiles
+	{ "hh_a1.rom",				0x20000, 0x429d12ab, 0x03 | BRF_GRA },           // 10
+	{ "hh_a2.rom",				0x20000, 0xb5b163b0, 0x03 | BRF_GRA },           // 11
+	{ "hh_a3.rom",				0x20000, 0x8ef566a1, 0x03 | BRF_GRA },           // 12
 
-	{ "a-v0-0.rom",		0x20000, 0xfaaacaff, 0x05 | BRF_SND },           // 13 DAC Samples
+	{ "gen=m81=_a-v0-0.rom",	0x20000, 0xfaaacaff, 0x05 | BRF_SND },           // 13 DAC Samples
 };
 
 STD_ROM_PICK(hharry)

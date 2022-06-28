@@ -524,6 +524,10 @@ static INT32 MemIndex()
 
 	RamEnd                 = Next;
 
+	Wc90CharTiles          = Next; Next += (2048 *  8 *  8);
+	Wc90BgTiles            = Next; Next += (2048 * 16 * 16);
+	Wc90FgTiles            = Next; Next += (2048 * 16 * 16);
+	Wc90Sprites            = Next; Next += (4096 * 16 * 16);
 
 	Wc90Palette            = (UINT32*)Next; Next += 0x00400 * sizeof(UINT32);
 

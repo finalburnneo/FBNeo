@@ -11,6 +11,7 @@ static UINT8 Wc90InputPort2[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 Wc90Dip[2]        = {0, 0};
 static UINT8 Wc90Input[3]      = {0x00, 0x00, 0x00};
 static UINT8 Wc90Reset         = 0;
+static HoldCoin<2> hold_coin;
 
 static UINT8 *Mem              = NULL;
 static UINT8 *MemEnd           = NULL;
@@ -101,6 +102,9 @@ inline static void Wc90MakeInputs()
 		Wc90Input[1] ^= (Wc90InputPort1[i] & 1) << i;
 		Wc90Input[2] ^= (Wc90InputPort2[i] & 1) << i;
 	}
+
+	hold_coin.checklow(0, Wc90Input[2], 1<<0, 1);
+	hold_coin.checklow(1, Wc90Input[2], 1<<1, 1);
 
 	Wc90ClearOpposites(&Wc90Input[0]);
 	Wc90ClearOpposites(&Wc90Input[1]);
@@ -324,6 +328,8 @@ static INT32 Wc90DoReset()
 	ZetReset();
 	BurnYM2608Reset();
 	ZetClose();
+
+	hold_coin.reset();
 
 	HiscoreReset();
 
@@ -1229,6 +1235,8 @@ static INT32 Wc90Scan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(Wc90Scroll2XHi);
 		SCAN_VAR(Wc90Z80BankAddress1);
 		SCAN_VAR(Wc90Z80BankAddress2);
+
+		hold_coin.scan();
 	}
 
 	if (nAction & ACB_WRITE) {

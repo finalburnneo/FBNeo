@@ -5444,6 +5444,7 @@ DRV		BurnDrvnes_finalmission;
 DRV		BurnDrvpce_finalsols;
 DRV		BurnDrvpce_finalsol;
 DRV		BurnDrvFstarfrcj;
+DRV		BurnDrvFstarfrcja;
 DRV		BurnDrvFstarfrc;
 DRV		BurnDrvFstarfrcw;
 DRV		BurnDrvcv_finaltst;
@@ -18065,6 +18066,7 @@ DRV		BurnDrvWboy2u;
 DRV		BurnDrvWboy3;
 DRV		BurnDrvWboy4;
 DRV		BurnDrvWboy5;
+DRV		BurnDrvWboyblt;
 DRV		BurnDrvWbmlvcd;
 DRV		BurnDrvWbmld;
 DRV		BurnDrvWbmljod;
@@ -24246,7 +24248,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_finalmission,	// Final Mission (T-Eng)
 	&BurnDrvpce_finalsols,		// Final Soldier (Special Version)
 	&BurnDrvpce_finalsol,		// Final Soldier
-	&BurnDrvFstarfrcj,			// Final Star Force (Japan)
+	&BurnDrvFstarfrcj,			// Final Star Force (Japan, set 1)
+	&BurnDrvFstarfrcja,			// Final Star Force (Japan, set 2)
 	&BurnDrvFstarfrc,			// Final Star Force (US)
 	&BurnDrvFstarfrcw,			// Final Star Force (World?)
 	&BurnDrvcv_finaltst,		// Final Test Cartridge (Prototype)
@@ -36868,6 +36871,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvWboy3,				// Wonder Boy (set 3, 315-5135)
 	&BurnDrvWboy4,				// Wonder Boy (set 4, 315-5162)
 	&BurnDrvWboy5,				// Wonder Boy (set 5, bootleg)
+	&BurnDrvWboyblt,			// Wonder Boy (Tecfri bootleg)
 	&BurnDrvWbmlvcd,			// Wonder Boy - Monster Land (decrypted bootleg of English, Virtual Console release)
 	&BurnDrvWbmld,				// Wonder Boy - Monster Land (decrypted bootleg of Japan New Ver., MC-8123, 317-0043)
 	&BurnDrvWbmljod,			// Wonder Boy - Monster Land (decrypted bootleg of Japan Old Ver., MC-8123, 317-0043)

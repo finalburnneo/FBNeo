@@ -1,4 +1,4 @@
-// FB Alpha - World Cup '90 driver
+// FB Neo - World Cup '90 driver
 // Based on MAME driver by Ernesto Corvi
 
 #include "tiles_generic.h"
@@ -11,6 +11,7 @@ static UINT8 Wc90InputPort2[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 Wc90Dip[2]        = {0, 0};
 static UINT8 Wc90Input[3]      = {0x00, 0x00, 0x00};
 static UINT8 Wc90Reset         = 0;
+static HoldCoin<2> hold_coin;
 
 static UINT8 *Mem              = NULL;
 static UINT8 *MemEnd           = NULL;
@@ -54,8 +55,6 @@ static INT32 Wc90SoundLatch = 0;
 
 static INT32 Wc90Z80BankAddress1;
 static INT32 Wc90Z80BankAddress2;
-
-static INT32 nTileType;
 
 static struct BurnInputInfo Wc90InputList[] = {
 	{"P1 Coin"           , BIT_DIGITAL  , Wc90InputPort2 + 0, "p1 coin"   },
@@ -103,6 +102,9 @@ inline static void Wc90MakeInputs()
 		Wc90Input[1] ^= (Wc90InputPort1[i] & 1) << i;
 		Wc90Input[2] ^= (Wc90InputPort2[i] & 1) << i;
 	}
+
+	hold_coin.checklow(0, Wc90Input[2], 1<<0, 1);
+	hold_coin.checklow(1, Wc90Input[2], 1<<1, 1);
 
 	Wc90ClearOpposites(&Wc90Input[0]);
 	Wc90ClearOpposites(&Wc90Input[1]);
@@ -327,6 +329,8 @@ static INT32 Wc90DoReset()
 	BurnYM2608Reset();
 	ZetClose();
 
+	hold_coin.reset();
+
 	HiscoreReset();
 
 	return 0;
@@ -530,6 +534,7 @@ static INT32 MemIndex()
 	Wc90BgTiles            = Next; Next += (2048 * 16 * 16);
 	Wc90FgTiles            = Next; Next += (2048 * 16 * 16);
 	Wc90Sprites            = Next; Next += (4096 * 16 * 16);
+
 	Wc90Palette            = (UINT32*)Next; Next += 0x00400 * sizeof(UINT32);
 
 	MemEnd                 = Next;
@@ -559,11 +564,7 @@ static void Wc90RenderBgLayer()
 			y -= 16;
 			if (x > 968) x -= 1024;
 
-			if (x > 15 && x < 240 && y > 15 && y < 208) {
-				Render16x16Tile(pTransDraw, Code, x, y, Colour, 4, 768, Wc90BgTiles);
-			} else {
-				Render16x16Tile_Clip(pTransDraw, Code, x, y, Colour, 4, 768, Wc90BgTiles);
-			}
+			Draw16x16Tile(pTransDraw, Code, x, y, 0, 0, Colour, 4, 768, Wc90BgTiles);
 
 			TileIndex++;
 		}
@@ -592,11 +593,7 @@ static void Wc90tRenderBgLayer()
 			y -= 16;
 			if (x > 968) x -= 1024;
 
-			if (x > 15 && x < 240 && y > 15 && y < 208) {
-				Render16x16Tile(pTransDraw, Code, x, y, Colour, 4, 768, Wc90BgTiles);
-			} else {
-				Render16x16Tile_Clip(pTransDraw, Code, x, y, Colour, 4, 768, Wc90BgTiles);
-			}
+			Draw16x16Tile(pTransDraw, Code, x, y, 0, 0, Colour, 4, 768, Wc90BgTiles);
 
 			TileIndex++;
 		}
@@ -625,11 +622,7 @@ static void Wc90RenderFgLayer()
 			y -= 16;
 			if (x > 968) x -= 1024;
 
-			if (x > 15 && x < 240 && y > 15 && y < 208) {
-				Render16x16Tile_Mask(pTransDraw, Code, x, y, Colour, 4, 0, 512, Wc90FgTiles);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 512, Wc90FgTiles);
-			}
+			Draw16x16MaskTile(pTransDraw, Code, x, y, 0, 0, Colour, 4, 0, 512, Wc90FgTiles);
 
 			TileIndex++;
 		}
@@ -658,11 +651,7 @@ static void Wc90tRenderFgLayer()
 			y -= 16;
 			if (x > 968) x -= 1024;
 
-			if (x > 15 && x < 240 && y > 15 && y < 208) {
-				Render16x16Tile_Mask(pTransDraw, Code, x, y, Colour, 4, 0, 512, Wc90FgTiles);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 512, Wc90FgTiles);
-			}
+			Draw16x16MaskTile(pTransDraw, Code, x, y, 0, 0, Colour, 4, 0, 512, Wc90FgTiles);
 
 			TileIndex++;
 		}
@@ -689,11 +678,7 @@ static void Wc90RenderCharLayer()
 
 			y -= 16;
 
-			if (x > 7 && x < 248 && y > 7 && y < 216) {
-				Render8x8Tile_Mask(pTransDraw, Code, x, y, Colour, 4, 0, 256, Wc90CharTiles);
-			} else {
-				Render8x8Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 256, Wc90CharTiles);
-			}
+			Draw8x8MaskTile(pTransDraw, Code, x, y, 0, 0, Colour, 4, 0, 256, Wc90CharTiles);
 
 			TileIndex++;
 		}
@@ -702,7 +687,7 @@ static void Wc90RenderCharLayer()
 
 static void Wc90RenderSprite(INT32 Code, INT32 Colour, INT32 FlipX, INT32 FlipY, INT32 x, INT32 y)
 {
-	Draw16x16MaskTile(pTransDraw, Code, x, y, FlipX, FlipY, Colour, 4, 0, 0, Wc90Sprites);
+	Draw16x16MaskTile(pTransDraw, Code & 0xfff, x, y, FlipX, FlipY, Colour, 4, 0, 0, Wc90Sprites);
 }
 
 static const char p32x32[4][4] = {
@@ -1011,6 +996,48 @@ static INT32 SpritePlaneOffsets[4] = { 0, 1, 2, 3 };
 static INT32 SpriteXOffsets[16]    = { 0, 4, 0x200000, 0x200004, 8, 12, 0x200008, 0x20000c, 128, 132, 0x200080, 0x200084, 136, 140, 0x200088, 0x20008c };
 static INT32 SpriteYOffsets[16]    = { 0, 16, 32, 48, 64, 80, 96, 112, 256, 272, 288, 304, 320, 336, 352, 368 };
 
+static INT32 readbitX(const UINT8 *src, INT32 bitnum, INT32 &ssize)
+{
+	if ( (bitnum / 8) > ssize) ssize = (bitnum / 8);
+
+	return src[bitnum / 8] & (0x80 >> (bitnum % 8));
+}
+
+static void GfxDecodeX(INT32 num, INT32 numPlanes, INT32 xSize, INT32 ySize, INT32 planeoffsets[], INT32 xoffsets[], INT32 yoffsets[], INT32 modulo, UINT8 *pSrc, UINT8 *pDest)
+{
+	INT32 c;
+
+	INT32 src_len = 0;
+	INT32 dst_len = 0;
+
+	for (c = 0; c < num; c++) {
+		INT32 plane, x, y;
+
+		UINT8 *dp = pDest + (c * xSize * ySize);
+		memset(dp, 0, xSize * ySize);
+
+		if ( (c * xSize + ySize) > dst_len ) dst_len = (c * xSize + ySize);
+
+		for (plane = 0; plane < numPlanes; plane++) {
+			INT32 planebit = 1 << (numPlanes - 1 - plane);
+			INT32 planeoffs = (c * modulo) + planeoffsets[plane];
+
+			for (y = 0; y < ySize; y++) {
+				INT32 yoffs = planeoffs + yoffsets[y];
+				dp = pDest + (c * xSize * ySize) + (y * xSize);
+				if ( (c * xSize * ySize) + (y * xSize) > dst_len ) dst_len = (c * xSize * ySize) + (y * xSize);
+
+				for (x = 0; x < xSize; x++) {
+					if (readbitX(pSrc, yoffs + xoffsets[x], src_len)) dp[x] |= planebit;
+				}
+			}
+		}
+	}
+
+	bprintf(0, _T("gfxdecode  src / dst size:  %x   %x\n"), src_len, dst_len);
+
+}
+
 static INT32 Wc90Init()
 {
 	INT32 nRet = 0, nLen;
@@ -1035,24 +1062,24 @@ static INT32 Wc90Init()
 
 	memset(Wc90TempGfx, 0, 0x80000);
 	nRet = BurnLoadRom(Wc90TempGfx + 0x00000,  5, 1); if (nRet != 0) return 1;
-	GfxDecode(2048, 4, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x100, Wc90TempGfx, Wc90CharTiles);
+	GfxDecodeX(2048, 4, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x100, Wc90TempGfx, Wc90CharTiles);
 
 	memset(Wc90TempGfx, 0, 0x80000);
 	nRet = BurnLoadRom(Wc90TempGfx + 0x00000,  6, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Wc90TempGfx + 0x20000,  7, 1); if (nRet != 0) return 1;
-	GfxDecode(2048, 4, 16, 16, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x400, Wc90TempGfx, Wc90FgTiles);
+	GfxDecodeX(2048, 4, 16, 16, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x400, Wc90TempGfx, Wc90FgTiles);
 
 	memset(Wc90TempGfx, 0, 0x80000);
 	nRet = BurnLoadRom(Wc90TempGfx + 0x00000,  8, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Wc90TempGfx + 0x20000,  9, 1); if (nRet != 0) return 1;
-	GfxDecode(2048, 4, 16, 16, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x400, Wc90TempGfx, Wc90BgTiles);
+	GfxDecodeX(2048, 4, 16, 16, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x400, Wc90TempGfx, Wc90BgTiles);
 
 	memset(Wc90TempGfx, 0, 0x80000);
 	nRet = BurnLoadRom(Wc90TempGfx + 0x00000, 10, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Wc90TempGfx + 0x20000, 11, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Wc90TempGfx + 0x40000, 12, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Wc90TempGfx + 0x60000, 13, 1); if (nRet != 0) return 1;
-	GfxDecode(4096, 4, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x200, Wc90TempGfx, Wc90Sprites);
+	GfxDecodeX(4096, 4, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x200, Wc90TempGfx, Wc90Sprites);
 
 	BurnFree(Wc90TempGfx);
 
@@ -1144,8 +1171,6 @@ static INT32 Wc90Init()
 
 static INT32 Wc90tInit()
 {
-	nTileType = 1;
-	
 	return Wc90Init();
 }
 
@@ -1170,8 +1195,6 @@ static INT32 Wc90Exit()
 	Wc90Scroll2XLo = 0;
 	Wc90Scroll2XHi = 0;
 	Wc90SoundLatch = 0;
-	
-	nTileType = 0;
 
 	return 0;
 }
@@ -1212,6 +1235,8 @@ static INT32 Wc90Scan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(Wc90Scroll2XHi);
 		SCAN_VAR(Wc90Z80BankAddress1);
 		SCAN_VAR(Wc90Z80BankAddress2);
+
+		hold_coin.scan();
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -1234,7 +1259,7 @@ struct BurnDriver BurnDrvYm2608 = {
 	BDF_GAME_WORKING | BDF_BOARDROM, 0, HARDWARE_MISC_PRE90S, GBF_BIOS, 0,
 	NULL, Ym2608RomInfo, Ym2608RomName, NULL, NULL, NULL, NULL, Wc90InputInfo, NULL,
 	NULL, NULL, NULL, NULL, NULL,
-	NULL, 0x1800, 320, 224, 4, 3
+	NULL, 0x400, 256, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvWc90 = {

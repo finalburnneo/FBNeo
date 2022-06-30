@@ -283,6 +283,12 @@ enum retro_language
    RETRO_LANGUAGE_HEBREW              = 21,
    RETRO_LANGUAGE_ASTURIAN            = 22,
    RETRO_LANGUAGE_FINNISH             = 23,
+   RETRO_LANGUAGE_INDONESIAN          = 24,
+   RETRO_LANGUAGE_SWEDISH             = 25,
+   RETRO_LANGUAGE_UKRAINIAN           = 26,
+   RETRO_LANGUAGE_CZECH               = 27,
+   RETRO_LANGUAGE_CATALAN_VALENCIA    = 28,
+   RETRO_LANGUAGE_CATALAN             = 29,
    RETRO_LANGUAGE_LAST,
 
    /* Ensure sizeof(enum) == sizeof(int) */
@@ -1712,6 +1718,53 @@ enum retro_mod
                                             * the retro_core_options_v2_intl::local struct will be ignored.
                                             */
 
+#define RETRO_ENVIRONMENT_SET_CORE_OPTIONS_UPDATE_DISPLAY_CALLBACK 69
+                                           /* const struct retro_core_options_update_display_callback * --
+                                            * Allows a frontend to signal that a core must update
+                                            * the visibility of any dynamically hidden core options,
+                                            * and enables the frontend to detect visibility changes.
+                                            * Used by the frontend to update the menu display status
+                                            * of core options without requiring a call of retro_run().
+                                            * Must be called in retro_set_environment().
+                                            */
+
+#define RETRO_ENVIRONMENT_SET_VARIABLE 70
+                                           /* const struct retro_variable * --
+                                            * Allows an implementation to notify the frontend
+                                            * that a core option value has changed.
+                                            *
+                                            * retro_variable::key and retro_variable::value
+                                            * must match strings that have been set previously
+                                            * via one of the following:
+                                            *
+                                            * - RETRO_ENVIRONMENT_SET_VARIABLES
+                                            * - RETRO_ENVIRONMENT_SET_CORE_OPTIONS
+                                            * - RETRO_ENVIRONMENT_SET_CORE_OPTIONS_INTL
+                                            * - RETRO_ENVIRONMENT_SET_CORE_OPTIONS_V2
+                                            * - RETRO_ENVIRONMENT_SET_CORE_OPTIONS_V2_INTL
+                                            *
+                                            * After changing a core option value via this
+                                            * callback, RETRO_ENVIRONMENT_GET_VARIABLE_UPDATE
+                                            * will return true.
+                                            *
+                                            * If data is NULL, no changes will be registered
+                                            * and the callback will return true; an
+                                            * implementation may therefore pass NULL in order
+                                            * to test whether the callback is supported.
+                                            */
+
+#define RETRO_ENVIRONMENT_GET_THROTTLE_STATE (71 | RETRO_ENVIRONMENT_EXPERIMENTAL)
+                                           /* struct retro_throttle_state * --
+                                            * Allows an implementation to get details on the actual rate
+                                            * the frontend is attempting to call retro_run().
+                                            */
+
+#define RETRO_ENVIRONMENT_GET_SAVESTATE_CONTEXT (72 | RETRO_ENVIRONMENT_EXPERIMENTAL)
+                                           /* int * --
+                                            * Tells the core about the context the frontend is asking for savestate.
+                                            * (see enum retro_savestate_context)
+                                            */
+
 /* VFS functionality */
 
 /* File paths:
@@ -2949,6 +3002,35 @@ enum retro_pixel_format
    RETRO_PIXEL_FORMAT_UNKNOWN  = INT_MAX
 };
 
+enum retro_savestate_context
+{
+   /* Standard savestate written to disk. */
+   RETRO_SAVESTATE_CONTEXT_NORMAL                 = 0,
+
+   /* Savestate where you are guaranteed that the same instance will load the save state.
+    * You can store internal pointers to code or data.
+    * It's still a full serialization and deserialization, and could be loaded or saved at any time. 
+    * It won't be written to disk or sent over the network.
+    */
+   RETRO_SAVESTATE_CONTEXT_RUNAHEAD_SAME_INSTANCE = 1,
+
+   /* Savestate where you are guaranteed that the same emulator binary will load that savestate.
+    * You can skip anything that would slow down saving or loading state but you can not store internal pointers. 
+    * It won't be written to disk or sent over the network.
+    * Example: "Second Instance" runahead
+    */
+   RETRO_SAVESTATE_CONTEXT_RUNAHEAD_SAME_BINARY   = 2,
+
+   /* Savestate used within a rollback netplay feature.
+    * You should skip anything that would unnecessarily increase bandwidth usage.
+    * It won't be written to disk but it will be sent over the network.
+    */
+   RETRO_SAVESTATE_CONTEXT_ROLLBACK_NETPLAY       = 3,
+
+   /* Ensure sizeof() == sizeof(int). */
+   RETRO_SAVESTATE_CONTEXT_UNKNOWN                = INT_MAX
+};
+
 struct retro_message
 {
    const char *msg;        /* Message to be displayed. */
@@ -3420,6 +3502,10 @@ struct retro_core_option_definition
    const char *default_value;
 };
 
+#ifdef __PS3__
+#undef local
+#endif
+
 struct retro_core_options_intl
 {
    /* Pointer to an array of retro_core_option_definition structs
@@ -3551,6 +3637,25 @@ struct retro_core_options_v2_intl
    struct retro_core_options_v2 *local;
 };
 
+/* Used by the frontend to monitor changes in core option
+ * visibility. May be called each time any core option
+ * value is set via the frontend.
+ * - On each invocation, the core must update the visibility
+ *   of any dynamically hidden options using the
+ *   RETRO_ENVIRONMENT_SET_CORE_OPTIONS_DISPLAY environment
+ *   callback.
+ * - On the first invocation, returns 'true' if the visibility
+ *   of any core option has changed since the last call of
+ *   retro_load_game() or retro_load_game_special().
+ * - On each subsequent invocation, returns 'true' if the
+ *   visibility of any core option has changed since the last
+ *   time the function was called. */
+typedef bool (RETRO_CALLCONV *retro_core_options_update_display_callback_t)(void);
+struct retro_core_options_update_display_callback
+{
+   retro_core_options_update_display_callback_t callback;
+};
+
 struct retro_game_info
 {
    const char *path;       /* Path to game, UTF-8 encoded.
@@ -3636,6 +3741,43 @@ struct retro_fastforwarding_override
     * 'inhibit_toggle' is set to false, or the core
     * is unloaded */
    bool inhibit_toggle;
+};
+
+/* During normal operation. Rate will be equal to the core's internal FPS. */
+#define RETRO_THROTTLE_NONE              0
+
+/* While paused or stepping single frames. Rate will be 0. */
+#define RETRO_THROTTLE_FRAME_STEPPING    1
+
+/* During fast forwarding.
+ * Rate will be 0 if not specifically limited to a maximum speed. */
+#define RETRO_THROTTLE_FAST_FORWARD      2
+
+/* During slow motion. Rate will be less than the core's internal FPS. */
+#define RETRO_THROTTLE_SLOW_MOTION       3
+
+/* While rewinding recorded save states. Rate can vary depending on the rewind
+ * speed or be 0 if the frontend is not aiming for a specific rate. */
+#define RETRO_THROTTLE_REWINDING         4
+
+/* While vsync is active in the video driver and the target refresh rate is
+ * lower than the core's internal FPS. Rate is the target refresh rate. */
+#define RETRO_THROTTLE_VSYNC             5
+
+/* When the frontend does not throttle in any way. Rate will be 0.
+ * An example could be if no vsync or audio output is active. */
+#define RETRO_THROTTLE_UNBLOCKED         6
+
+struct retro_throttle_state
+{
+   /* The current throttling mode. Should be one of the values above. */
+   unsigned mode;
+
+   /* How many times per second the frontend aims to call retro_run.
+    * Depending on the mode, it can be 0 if there is no known fixed rate.
+    * This won't be accurate if the total processing time of the core and
+    * the frontend is longer than what is available for one frame. */
+   float rate;
 };
 
 /* Callbacks */

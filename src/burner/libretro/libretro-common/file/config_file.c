@@ -26,10 +26,6 @@
 #include <ctype.h>
 #include <errno.h>
 
-#ifdef ORBIS
-#include <sys/fcntl.h>
-#include <orbisFile.h>
-#endif
 #include <retro_miscellaneous.h>
 #include <compat/strl.h>
 #include <compat/posix_string.h>
@@ -412,6 +408,20 @@ static void config_file_add_sub_conf(config_file_t *conf, char *path,
          conf->path);
 }
 
+void config_file_add_reference(config_file_t *conf, char *path)
+{
+   /* It is expected that the conf has it's path already set */
+   char short_path[PATH_MAX_LENGTH];
+   
+   short_path[0] = '\0';
+   
+   if (!conf->references)
+      conf->references = path_linked_list_new();
+
+   fill_pathname_abbreviated_or_relative(short_path, conf->path, path, sizeof(short_path));
+   path_linked_list_add_path(conf->references, short_path);
+}
+
 static int config_file_load_internal(
       struct config_file *conf,
       const char *path, unsigned depth, config_file_cb_t *cb)
@@ -585,7 +595,7 @@ static bool config_file_parse_line(config_file_t *conf,
          if (!path)
             return false;
 
-         config_file_set_reference_path(conf, path);
+         config_file_add_reference(conf, path);
 
          if (!path)
             return false;
@@ -706,32 +716,13 @@ static int config_file_from_string_internal(
    return 0;
 }
 
-void config_file_set_reference_path(config_file_t *conf, char *path)
-{
-   /* It is expected that the conf has it's path already set */
-   
-   char short_path[PATH_MAX_LENGTH];
-   
-   short_path[0] = '\0';
-
-   if (!conf)
-      return;
-
-   if (conf->reference)
-   {
-      free(conf->reference);
-      conf->reference = NULL;
-   }
-
-   fill_pathname_abbreviated_or_relative(short_path, conf->path, path, sizeof(short_path));
-   
-   conf->reference = strdup(short_path);
-}
 
 bool config_file_deinitialize(config_file_t *conf)
 {
    struct config_include_list *inc_tmp = NULL;
    struct config_entry_list *tmp       = NULL;
+   struct path_linked_list *ref_tmp = NULL;
+
    if (!conf)
       return false;
 
@@ -766,8 +757,7 @@ bool config_file_deinitialize(config_file_t *conf)
          free(hold);
    }
 
-   if (conf->reference)
-      free(conf->reference);
+   path_linked_list_free(conf->references);
 
    if (conf->path)
       free(conf->path);
@@ -909,7 +899,7 @@ void config_file_initialize(struct config_file *conf)
    conf->entries                  = NULL;
    conf->tail                     = NULL;
    conf->last                     = NULL;
-   conf->reference                = NULL;
+   conf->references               = NULL;
    conf->includes                 = NULL;
    conf->include_depth            = 0;
    conf->guaranteed_no_duplicates = false;
@@ -1338,23 +1328,13 @@ bool config_file_write(config_file_t *conf, const char *path, bool sort)
 
    if (!string_is_empty(path))
    {
-#ifdef ORBIS
-      int fd     = orbisOpen(path,O_RDWR|O_CREAT,0644);
-      if (fd < 0)
-         return false;
-      config_file_dump_orbis(conf,fd);
-      orbisClose(fd);
-#else
       void* buf  = NULL;
       FILE *file = (FILE*)fopen_utf8(path, "wb");
       if (!file)
          return false;
 
-      /* TODO: this is only useful for a few platforms, find which and add ifdef */
-#if !defined(PSP)
       buf = calloc(1, 0x4000);
       setvbuf(file, (char*)buf, _IOFBF, 0x4000);
-#endif
 
       config_file_dump(conf, file, sort);
 
@@ -1362,7 +1342,6 @@ bool config_file_write(config_file_t *conf, const char *path, bool sort)
          fclose(file);
       if (buf)
          free(buf);
-#endif
 
       /* Only update modified flag if config file
        * is actually written to disk */
@@ -1374,62 +1353,17 @@ bool config_file_write(config_file_t *conf, const char *path, bool sort)
    return true;
 }
 
-#ifdef ORBIS
-void config_file_dump_orbis(config_file_t *conf, int fd)
-{
-   struct config_entry_list       *list = NULL;
-   struct config_include_list *includes = conf->includes;
-  
-   if (conf->reference)
-   {
-      pathname_make_slashes_portable(conf->reference);
-      fprintf(file, "#reference \"%s\"\n", conf->reference);
-   }
-
-
-   list          = config_file_merge_sort_linked_list(
-         (struct config_entry_list*)conf->entries,
-         config_file_sort_compare_func);
-   conf->entries = list;
-
-   while (list)
-   {
-      if (!list->readonly && list->key)
-      {
-         char newlist[256];
-         snprintf(newlist, sizeof(newlist),
-               "%s = %s\n", list->key, list->value);
-         orbisWrite(fd, newlist, strlen(newlist));
-      }
-      list = list->next;
-   }
-
-   /* Config files are read from the top down - if
-    * duplicate entries are found then the topmost
-    * one in the list takes precedence. This means
-    * '#include' directives must go *after* individual
-    * config entries, otherwise they will override
-    * any custom-set values */
-   while (includes)
-   {
-      char cad[256];
-      snprintf(cad, sizeof(cad),
-            "#include %s\n", includes->path);
-      orbisWrite(fd, cad, strlen(cad));
-      includes = includes->next;
-   }
-}
-#endif
-
 void config_file_dump(config_file_t *conf, FILE *file, bool sort)
 {
    struct config_entry_list       *list = NULL;
    struct config_include_list *includes = conf->includes;
+   struct path_linked_list *ref_tmp = conf->references;
 
-   if (conf->reference)
+   while (ref_tmp)
    {
-      pathname_make_slashes_portable(conf->reference);
-      fprintf(file, "#reference \"%s\"\n", conf->reference);
+      pathname_make_slashes_portable(ref_tmp->path);
+      fprintf(file, "#reference \"%s\"\n", ref_tmp->path);
+      ref_tmp = ref_tmp->next;
    }
 
    if (sort)

@@ -61,6 +61,15 @@
 #include <ibxm/ibxm.h>
 #endif
 
+#ifdef HAVE_THREADS
+#include <rthreads/rthreads.h>
+#define AUDIO_MIXER_LOCK(voice)   slock_lock(voice->lock)
+#define AUDIO_MIXER_UNLOCK(voice) slock_unlock(voice->lock)
+#else
+#define AUDIO_MIXER_LOCK(voice)   do {} while(0)
+#define AUDIO_MIXER_UNLOCK(voice) do {} while(0)
+#endif
+
 #define AUDIO_MIXER_MAX_VOICES      8
 #define AUDIO_MIXER_TEMP_BUFFER 8192
 
@@ -117,7 +126,7 @@ struct audio_mixer_sound
 
 struct audio_mixer_voice
 {
-   union
+   struct
    {
       struct
       {
@@ -183,12 +192,16 @@ struct audio_mixer_voice
    unsigned type;
    float    volume;
    bool     repeat;
-
+#ifdef HAVE_THREADS
+   slock_t *lock;
+#endif
 };
 
 /* TODO/FIXME - static globals */
 static struct audio_mixer_voice s_voices[AUDIO_MIXER_MAX_VOICES] = {0};
 static unsigned s_rate = 0;
+
+static void audio_mixer_release(audio_mixer_voice_t* voice);
 
 #ifdef HAVE_RWAV
 static bool wav_to_float(const rwav_t* wav, float** pcm, size_t samples_out)
@@ -267,28 +280,27 @@ static bool wav_to_float(const rwav_t* wav, float** pcm, size_t samples_out)
 }
 
 static bool one_shot_resample(const float* in, size_t samples_in,
-      unsigned rate, float** out, size_t* samples_out)
+      unsigned rate, const char *resampler_ident, enum resampler_quality quality,
+      float** out, size_t* samples_out)
 {
    struct resampler_data info;
    void* data                         = NULL;
    const retro_resampler_t* resampler = NULL;
    float ratio                        = (double)s_rate / (double)rate;
 
-   if (!retro_resampler_realloc(&data, &resampler, NULL,
-            RESAMPLER_QUALITY_DONTCARE, ratio))
+   if (!retro_resampler_realloc(&data, &resampler,
+         resampler_ident, quality, ratio))
       return false;
 
-   /*
-    * Allocate on a 16-byte boundary, and pad to a multiple of 16 bytes. We
-    * add four more samples in the formula below just as safeguard, because
+   /* Allocate on a 16-byte boundary, and pad to a multiple of 16 bytes. We
+    * add 16 more samples in the formula below just as safeguard, because
     * resampler->process sometimes reports more output samples than the
     * formula below calculates. Ideally, audio resamplers should have a
     * function to return the number of samples they will output given a
-    * count of input samples.
-    */
-   *samples_out                       = samples_in * ratio + 4;
+    * count of input samples. */
+   *samples_out                       = (size_t)(samples_in * ratio);
    *out                               = (float*)memalign_alloc(16,
-         ((*samples_out + 15) & ~15) * sizeof(float));
+         (((*samples_out + 16) + 15) & ~15) * sizeof(float));
 
    if (*out == NULL)
       return false;
@@ -312,7 +324,15 @@ void audio_mixer_init(unsigned rate)
    s_rate = rate;
 
    for (i = 0; i < AUDIO_MIXER_MAX_VOICES; i++)
-      s_voices[i].type = AUDIO_MIXER_TYPE_NONE;
+   {
+      audio_mixer_voice_t *voice = &s_voices[i];
+
+      voice->type = AUDIO_MIXER_TYPE_NONE;
+#ifdef HAVE_THREADS
+      if (!voice->lock)
+         voice->lock = slock_new();
+#endif
+   }
 }
 
 void audio_mixer_done(void)
@@ -320,15 +340,25 @@ void audio_mixer_done(void)
    unsigned i;
 
    for (i = 0; i < AUDIO_MIXER_MAX_VOICES; i++)
-      s_voices[i].type = AUDIO_MIXER_TYPE_NONE;
+   {
+      audio_mixer_voice_t *voice = &s_voices[i];
+
+      AUDIO_MIXER_LOCK(voice);
+      audio_mixer_release(voice);
+      AUDIO_MIXER_UNLOCK(voice);
+#ifdef HAVE_THREADS
+      slock_free(voice->lock);
+      voice->lock = NULL;
+#endif
+   }
 }
 
-audio_mixer_sound_t* audio_mixer_load_wav(void *buffer, int32_t size)
+audio_mixer_sound_t* audio_mixer_load_wav(void *buffer, int32_t size,
+      const char *resampler_ident, enum resampler_quality quality)
 {
 #ifdef HAVE_RWAV
    /* WAV data */
    rwav_t wav;
-   enum rwav_state rwav_ret;
    /* WAV samples converted to float */
    float* pcm                 = NULL;
    size_t samples             = 0;
@@ -342,7 +372,7 @@ audio_mixer_sound_t* audio_mixer_load_wav(void *buffer, int32_t size)
    wav.subchunk2size          = 0;
    wav.samples                = NULL;
 
-   if ((rwav_ret = rwav_load(&wav, buffer, size)) != RWAV_ITERATE_DONE)
+   if ((rwav_load(&wav, buffer, size)) != RWAV_ITERATE_DONE)
       return NULL;
 
    samples       = wav.numsamples * 2;
@@ -354,8 +384,9 @@ audio_mixer_sound_t* audio_mixer_load_wav(void *buffer, int32_t size)
    {
       float* resampled           = NULL;
 
-      if (!one_shot_resample(pcm, samples,
-               wav.samplerate, &resampled, &samples))
+      if (!one_shot_resample(pcm, samples, wav.samplerate,
+            resampler_ident, quality,
+            &resampled, &samples))
          return NULL;
 
       memalign_free((void*)pcm);
@@ -515,6 +546,8 @@ static bool audio_mixer_play_ogg(
       audio_mixer_sound_t* sound,
       audio_mixer_voice_t* voice,
       bool repeat, float volume,
+      const char *resampler_ident,
+      enum resampler_quality quality,
       audio_mixer_stop_cb_t stop_cb)
 {
    stb_vorbis_info info;
@@ -538,14 +571,20 @@ static bool audio_mixer_play_ogg(
       ratio = (double)s_rate / (double)info.sample_rate;
 
       if (!retro_resampler_realloc(&resampler_data,
-               &resamp, NULL, RESAMPLER_QUALITY_DONTCARE,
+               &resamp, resampler_ident, quality,
                ratio))
          goto error;
    }
 
+   /* Allocate on a 16-byte boundary, and pad to a multiple of 16 bytes. We
+    * add 16 more samples in the formula below just as safeguard, because
+    * resampler->process sometimes reports more output samples than the
+    * formula below calculates. Ideally, audio resamplers should have a
+    * function to return the number of samples they will output given a
+    * count of input samples. */
    samples                         = (unsigned)(AUDIO_MIXER_TEMP_BUFFER * ratio);
    ogg_buffer                      = (float*)memalign_alloc(16,
-         ((samples + 15) & ~15) * sizeof(float));
+         (((samples + 16) + 15) & ~15) * sizeof(float));
 
    if (!ogg_buffer)
    {
@@ -553,14 +592,6 @@ static bool audio_mixer_play_ogg(
          resamp->free(resampler_data);
       goto error;
    }
-
-   /* "system" menu sounds may reuse the same voice without freeing anything first, so do that here if needed */
-   if (voice->types.ogg.stream)
-      stb_vorbis_close(voice->types.ogg.stream);
-   if (voice->types.ogg.resampler && voice->types.ogg.resampler_data)
-      voice->types.ogg.resampler->free(voice->types.ogg.resampler_data);
-   if (voice->types.ogg.buffer)
-      memalign_free(voice->types.ogg.buffer);
 
    voice->types.ogg.resampler      = resamp;
    voice->types.ogg.resampler_data = resampler_data;
@@ -577,6 +608,17 @@ error:
    stb_vorbis_close(stb_vorbis);
    return false;
 }
+
+static void audio_mixer_release_ogg(audio_mixer_voice_t* voice)
+{
+   if (voice->types.ogg.stream)
+      stb_vorbis_close(voice->types.ogg.stream);
+   if (voice->types.ogg.resampler && voice->types.ogg.resampler_data)
+      voice->types.ogg.resampler->free(voice->types.ogg.resampler_data);
+   if (voice->types.ogg.buffer)
+      memalign_free(voice->types.ogg.buffer);
+}
+
 #endif
 
 #ifdef HAVE_IBXM
@@ -634,12 +676,6 @@ static bool audio_mixer_play_mod(
       goto error;
    }
 
-   /* FIXME: stopping and then starting a mod stream will crash here in dispose_replay (ASAN says struct replay is misaligned?) */
-   if (voice->types.mod.stream)
-      dispose_replay(voice->types.mod.stream);
-   if (voice->types.mod.buffer)
-      memalign_free(voice->types.mod.buffer);
-
    voice->types.mod.buffer         = (int*)mod_buffer;
    voice->types.mod.buf_samples    = buf_samples;
    voice->types.mod.stream         = replay;
@@ -656,6 +692,14 @@ error:
    return false;
 
 }
+
+static void audio_mixer_release_mod(audio_mixer_voice_t* voice)
+{
+   if (voice->types.mod.stream)
+      dispose_replay(voice->types.mod.stream);
+   if (voice->types.mod.buffer)
+      memalign_free(voice->types.mod.buffer);
+}
 #endif
 
 #ifdef HAVE_DR_FLAC
@@ -663,6 +707,8 @@ static bool audio_mixer_play_flac(
       audio_mixer_sound_t* sound,
       audio_mixer_voice_t* voice,
       bool repeat, float volume,
+      const char *resampler_ident,
+      enum resampler_quality quality,
       audio_mixer_stop_cb_t stop_cb)
 {
    float ratio                     = 1.0f;
@@ -679,14 +725,20 @@ static bool audio_mixer_play_flac(
       ratio = (double)s_rate / (double)(dr_flac->sampleRate);
 
       if (!retro_resampler_realloc(&resampler_data,
-               &resamp, NULL, RESAMPLER_QUALITY_DONTCARE,
+               &resamp, resampler_ident, quality,
                ratio))
          goto error;
    }
 
+   /* Allocate on a 16-byte boundary, and pad to a multiple of 16 bytes. We
+    * add 16 more samples in the formula below just as safeguard, because
+    * resampler->process sometimes reports more output samples than the
+    * formula below calculates. Ideally, audio resamplers should have a
+    * function to return the number of samples they will output given a
+    * count of input samples. */
    samples                         = (unsigned)(AUDIO_MIXER_TEMP_BUFFER * ratio);
-   flac_buffer                      = (float*)memalign_alloc(16,
-         ((samples + 15) & ~15) * sizeof(float));
+   flac_buffer                     = (float*)memalign_alloc(16,
+         (((samples + 16) + 15) & ~15) * sizeof(float));
 
    if (!flac_buffer)
    {
@@ -694,13 +746,6 @@ static bool audio_mixer_play_flac(
          resamp->free(resampler_data);
       goto error;
    }
-
-   if (voice->types.flac.stream)
-      drflac_close(voice->types.flac.stream);
-   if (voice->types.flac.resampler && voice->types.flac.resampler_data)
-      voice->types.flac.resampler->free(voice->types.flac.resampler_data);
-   if (voice->types.flac.buffer)
-      memalign_free(voice->types.flac.buffer);
 
    voice->types.flac.resampler      = resamp;
    voice->types.flac.resampler_data = resampler_data;
@@ -717,6 +762,16 @@ error:
    drflac_close(dr_flac);
    return false;
 }
+
+static void audio_mixer_release_flac(audio_mixer_voice_t* voice)
+{
+   if (voice->types.flac.stream)
+      drflac_close(voice->types.flac.stream);
+   if (voice->types.flac.resampler && voice->types.flac.resampler_data)
+      voice->types.flac.resampler->free(voice->types.flac.resampler_data);
+   if (voice->types.flac.buffer)
+      memalign_free(voice->types.flac.buffer);
+}
 #endif
 
 #ifdef HAVE_DR_MP3
@@ -724,6 +779,8 @@ static bool audio_mixer_play_mp3(
       audio_mixer_sound_t* sound,
       audio_mixer_voice_t* voice,
       bool repeat, float volume,
+      const char *resampler_ident,
+      enum resampler_quality quality,
       audio_mixer_stop_cb_t stop_cb)
 {
    float ratio                     = 1.0f;
@@ -732,12 +789,6 @@ static bool audio_mixer_play_mp3(
    void *resampler_data            = NULL;
    const retro_resampler_t* resamp = NULL;
    bool res;
-
-   if (voice->types.mp3.stream.pData)
-   {
-      drmp3_uninit(&voice->types.mp3.stream);
-      memset(&voice->types.mp3.stream, 0, sizeof(voice->types.mp3.stream));
-   }
 
    res = drmp3_init_memory(&voice->types.mp3.stream, (const unsigned char*)sound->types.mp3.data, sound->types.mp3.size, NULL);
 
@@ -749,14 +800,20 @@ static bool audio_mixer_play_mp3(
       ratio = (double)s_rate / (double)(voice->types.mp3.stream.sampleRate);
 
       if (!retro_resampler_realloc(&resampler_data,
-               &resamp, NULL, RESAMPLER_QUALITY_DONTCARE,
+               &resamp, resampler_ident, quality,
                ratio))
          goto error;
    }
 
+   /* Allocate on a 16-byte boundary, and pad to a multiple of 16 bytes. We
+    * add 16 more samples in the formula below just as safeguard, because
+    * resampler->process sometimes reports more output samples than the
+    * formula below calculates. Ideally, audio resamplers should have a
+    * function to return the number of samples they will output given a
+    * count of input samples. */
    samples                         = (unsigned)(AUDIO_MIXER_TEMP_BUFFER * ratio);
    mp3_buffer                      = (float*)memalign_alloc(16,
-         ((samples + 15) & ~15) * sizeof(float));
+         (((samples + 16) + 15) & ~15) * sizeof(float));
 
    if (!mp3_buffer)
    {
@@ -764,12 +821,6 @@ static bool audio_mixer_play_mp3(
          resamp->free(resampler_data);
       goto error;
    }
-
-   /* "system" menu sounds may reuse the same voice without freeing anything first, so do that here if needed */
-   if (voice->types.mp3.resampler && voice->types.mp3.resampler_data)
-      voice->types.mp3.resampler->free(voice->types.mp3.resampler_data);
-   if (voice->types.mp3.buffer)
-      memalign_free(voice->types.mp3.buffer);
 
    voice->types.mp3.resampler      = resamp;
    voice->types.mp3.resampler_data = resampler_data;
@@ -785,10 +836,24 @@ error:
    drmp3_uninit(&voice->types.mp3.stream);
    return false;
 }
+
+static void audio_mixer_release_mp3(audio_mixer_voice_t* voice)
+{
+   if (voice->types.mp3.resampler && voice->types.mp3.resampler_data)
+      voice->types.mp3.resampler->free(voice->types.mp3.resampler_data);
+   if (voice->types.mp3.buffer)
+      memalign_free(voice->types.mp3.buffer);
+   if (voice->types.mp3.stream.pData)
+      drmp3_uninit(&voice->types.mp3.stream);
+}
+
 #endif
 
-audio_mixer_voice_t* audio_mixer_play(audio_mixer_sound_t* sound, bool repeat,
-      float volume, audio_mixer_stop_cb_t stop_cb)
+audio_mixer_voice_t* audio_mixer_play(audio_mixer_sound_t* sound,
+      bool repeat, float volume,
+      const char *resampler_ident,
+      enum resampler_quality quality,
+      audio_mixer_stop_cb_t stop_cb)
 {
    unsigned i;
    bool res                   = false;
@@ -802,6 +867,17 @@ audio_mixer_voice_t* audio_mixer_play(audio_mixer_sound_t* sound, bool repeat,
       if (voice->type != AUDIO_MIXER_TYPE_NONE)
          continue;
 
+      AUDIO_MIXER_LOCK(voice);
+
+      if (voice->type != AUDIO_MIXER_TYPE_NONE)
+      {
+         AUDIO_MIXER_UNLOCK(voice);
+         continue;
+      }
+
+      /* claim the voice, also helps with cleanup on error */
+      voice->type = sound->type;
+
       switch (sound->type)
       {
          case AUDIO_MIXER_TYPE_WAV:
@@ -809,7 +885,8 @@ audio_mixer_voice_t* audio_mixer_play(audio_mixer_sound_t* sound, bool repeat,
             break;
          case AUDIO_MIXER_TYPE_OGG:
 #ifdef HAVE_STB_VORBIS
-            res = audio_mixer_play_ogg(sound, voice, repeat, volume, stop_cb);
+            res = audio_mixer_play_ogg(sound, voice, repeat, volume,
+                  resampler_ident, quality, stop_cb);
 #endif
             break;
          case AUDIO_MIXER_TYPE_MOD:
@@ -819,12 +896,14 @@ audio_mixer_voice_t* audio_mixer_play(audio_mixer_sound_t* sound, bool repeat,
             break;
          case AUDIO_MIXER_TYPE_FLAC:
 #ifdef HAVE_DR_FLAC
-            res = audio_mixer_play_flac(sound, voice, repeat, volume, stop_cb);
+            res = audio_mixer_play_flac(sound, voice, repeat, volume,
+                  resampler_ident, quality, stop_cb);
 #endif
             break;
          case AUDIO_MIXER_TYPE_MP3:
 #ifdef HAVE_DR_MP3
-            res = audio_mixer_play_mp3(sound, voice, repeat, volume, stop_cb);
+            res = audio_mixer_play_mp3(sound, voice, repeat, volume,
+                  resampler_ident, quality, stop_cb);
 #endif
             break;
          case AUDIO_MIXER_TYPE_NONE:
@@ -836,16 +915,59 @@ audio_mixer_voice_t* audio_mixer_play(audio_mixer_sound_t* sound, bool repeat,
 
    if (res)
    {
-      voice->type     = sound->type;
       voice->repeat   = repeat;
       voice->volume   = volume;
       voice->sound    = sound;
       voice->stop_cb  = stop_cb;
+      AUDIO_MIXER_UNLOCK(voice);
    }
    else
+   {
+      if(i < AUDIO_MIXER_MAX_VOICES)
+      {
+         audio_mixer_release(voice);
+         AUDIO_MIXER_UNLOCK(voice);
+      }
       voice = NULL;
+   }
 
    return voice;
+}
+
+/* Need to hold lock for voice.  */
+static void audio_mixer_release(audio_mixer_voice_t* voice)
+{
+   if (!voice)
+      return;
+
+   switch (voice->type)
+   {
+#ifdef HAVE_STB_VORBIS
+      case AUDIO_MIXER_TYPE_OGG:
+         audio_mixer_release_ogg(voice);
+         break;
+#endif
+#ifdef HAVE_IBXM
+      case AUDIO_MIXER_TYPE_MOD:
+         audio_mixer_release_mod(voice);
+         break;
+#endif
+#ifdef HAVE_DR_FLAC
+      case AUDIO_MIXER_TYPE_FLAC:
+         audio_mixer_release_flac(voice);
+         break;
+#endif
+#ifdef HAVE_DR_MP3
+      case AUDIO_MIXER_TYPE_MP3:
+         audio_mixer_release_mp3(voice);
+         break;
+#endif
+      default:
+         break;
+   }
+
+   memset(&voice->types, 0, sizeof(voice->types));
+   voice->type = AUDIO_MIXER_TYPE_NONE;
 }
 
 void audio_mixer_stop(audio_mixer_voice_t* voice)
@@ -855,10 +977,13 @@ void audio_mixer_stop(audio_mixer_voice_t* voice)
 
    if (voice)
    {
+      AUDIO_MIXER_LOCK(voice);
       stop_cb     = voice->stop_cb;
       sound       = voice->sound;
 
-      voice->type = AUDIO_MIXER_TYPE_NONE;
+      audio_mixer_release(voice);
+
+      AUDIO_MIXER_UNLOCK(voice);
 
       if (stop_cb)
          stop_cb(sound, AUDIO_MIXER_SOUND_STOPPED);
@@ -898,7 +1023,7 @@ again:
       if (voice->stop_cb)
          voice->stop_cb(voice->sound, AUDIO_MIXER_SOUND_FINISHED);
 
-      voice->type = AUDIO_MIXER_TYPE_NONE;
+      audio_mixer_release(voice);
    }
    else
    {
@@ -919,6 +1044,9 @@ static void audio_mixer_mix_ogg(float* buffer, size_t num_frames,
    unsigned buf_free                = (unsigned)(num_frames * 2);
    unsigned temp_samples            = 0;
    float* pcm                       = NULL;
+
+   if (!voice->types.ogg.stream)
+      return;
 
    if (voice->types.ogg.position == voice->types.ogg.samples)
    {
@@ -944,7 +1072,7 @@ again:
          if (voice->stop_cb)
             voice->stop_cb(voice->sound, AUDIO_MIXER_SOUND_FINISHED);
 
-         voice->type = AUDIO_MIXER_TYPE_NONE;
+         audio_mixer_release(voice);
          goto cleanup;
       }
 
@@ -1022,7 +1150,7 @@ again:
          if (voice->stop_cb)
             voice->stop_cb(voice->sound, AUDIO_MIXER_SOUND_FINISHED);
 
-         voice->type = AUDIO_MIXER_TYPE_NONE;
+         audio_mixer_release(voice);
          return;
       }
 
@@ -1086,7 +1214,7 @@ again:
          if (voice->stop_cb)
             voice->stop_cb(voice->sound, AUDIO_MIXER_SOUND_FINISHED);
 
-         voice->type = AUDIO_MIXER_TYPE_NONE;
+         audio_mixer_release(voice);
          return;
       }
 
@@ -1157,7 +1285,7 @@ again:
          if (voice->stop_cb)
             voice->stop_cb(voice->sound, AUDIO_MIXER_SOUND_FINISHED);
 
-         voice->type = AUDIO_MIXER_TYPE_NONE;
+         audio_mixer_release(voice);
          return;
       }
 
@@ -1206,7 +1334,11 @@ void audio_mixer_mix(float* buffer, size_t num_frames,
 
    for (i = 0; i < AUDIO_MIXER_MAX_VOICES; i++, voice++)
    {
-      float volume = (override) ? volume_override : voice->volume;
+      float volume;
+
+      AUDIO_MIXER_LOCK(voice);
+
+      volume = (override) ? volume_override : voice->volume;
 
       switch (voice->type)
       {
@@ -1236,6 +1368,8 @@ void audio_mixer_mix(float* buffer, size_t num_frames,
          case AUDIO_MIXER_TYPE_NONE:
             break;
       }
+
+      AUDIO_MIXER_UNLOCK(voice);
    }
 
    for (j = 0, sample = buffer; j < num_frames * 2; j++, sample++)
@@ -1260,5 +1394,7 @@ void audio_mixer_voice_set_volume(audio_mixer_voice_t *voice, float val)
    if (!voice)
       return;
 
+   AUDIO_MIXER_LOCK(voice);
    voice->volume = val;
+   AUDIO_MIXER_UNLOCK(voice);
 }

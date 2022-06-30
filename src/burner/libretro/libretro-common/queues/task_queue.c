@@ -66,6 +66,7 @@ static struct retro_task_impl *impl_current = NULL;
 static bool task_threaded_enable            = false;
 
 #ifdef HAVE_THREADS
+static uintptr_t main_thread_id             = 0;
 static slock_t *running_lock                = NULL;
 static slock_t *finished_lock               = NULL;
 static slock_t *property_lock               = NULL;
@@ -422,6 +423,13 @@ static void retro_task_threaded_wait(retro_task_condition_fn_t cond, void* data)
       slock_lock(running_lock);
       wait = (tasks_running.front && !tasks_running.front->when);
       slock_unlock(running_lock);
+
+      if (!wait)
+      {
+         slock_lock(finished_lock);
+         wait = (tasks_finished.front && !tasks_finished.front->when);
+         slock_unlock(finished_lock);
+      }
    } while (wait && (!cond || cond(data)));
 }
 
@@ -614,6 +622,7 @@ void task_queue_init(bool threaded, retro_task_queue_msg_t msg_push)
    impl_current = &impl_regular;
 
 #ifdef HAVE_THREADS
+   main_thread_id = sthread_get_current_thread_id();
    if (threaded)
    {
       task_threaded_enable = true;
@@ -748,6 +757,15 @@ void task_queue_retriever_info_free(task_retriever_info_t *list)
       free(list);
       list = info;
    }
+}
+
+bool task_is_on_main_thread(void)
+{
+#ifdef HAVE_THREADS
+   return sthread_get_current_thread_id() == main_thread_id;
+#else
+   return true;
+#endif
 }
 
 void task_set_finished(retro_task_t *task, bool finished)

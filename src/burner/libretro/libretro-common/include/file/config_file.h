@@ -54,12 +54,12 @@ RETRO_BEGIN_DECLS
 struct config_file
 {
    char *path;
-   char *reference;
    struct config_entry_list **entries_map;
    struct config_entry_list *entries;
    struct config_entry_list *tail;
    struct config_entry_list *last;
    struct config_include_list *includes;
+   struct path_linked_list *references;
    unsigned include_depth;
    bool guaranteed_no_duplicates;
    bool modified;
@@ -109,7 +109,7 @@ config_file_t *config_file_new_from_path_to_string(const char *path);
 /* Frees config file. */
 void config_file_free(config_file_t *conf);
 
-void config_file_set_reference_path(config_file_t *conf, char *path);
+void config_file_add_reference(config_file_t *conf, char *path);
 
 bool config_file_deinitialize(config_file_t *conf);
 
@@ -213,10 +213,6 @@ bool config_file_write(config_file_t *conf, const char *path, bool val);
 /* Dump the current config to an already opened file.
  * Does not close the file. */
 void config_file_dump(config_file_t *conf, FILE *file, bool val);
-
-#ifdef ORBIS
-void config_file_dump_orbis(config_file_t *conf, int fd);
-#endif
 
 bool config_file_exists(const char *path);
 

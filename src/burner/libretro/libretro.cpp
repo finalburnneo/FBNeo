@@ -1099,6 +1099,14 @@ void retro_init()
 
 	// Check RETRO_ENVIRONMENT_SET_AUDIO_BUFFER_STATUS_CALLBACK support
 	bLibretroSupportsAudioBuffStatus = environ_cb(RETRO_ENVIRONMENT_SET_AUDIO_BUFFER_STATUS_CALLBACK, NULL);
+
+	// Check RETRO_ENVIRONMENT_GET_SAVESTATE_CONTEXT support
+	bLibretroSupportsSavestateContext = environ_cb(RETRO_ENVIRONMENT_GET_SAVESTATE_CONTEXT, NULL);
+	if (!bLibretroSupportsSavestateContext)
+	{
+		HandleMessage(RETRO_LOG_WARN, "[FBNeo] Frontend doesn't support RETRO_ENVIRONMENT_GET_SAVESTATE_CONTEXT\n");
+		HandleMessage(RETRO_LOG_WARN, "[FBNeo] hiscore.dat requires this feature to work in a runahead context\n");
+	}
 }
 
 void retro_deinit()

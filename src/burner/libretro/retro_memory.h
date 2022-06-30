@@ -4,4 +4,6 @@
 void CheevosInit();
 void CheevosExit();
 
+extern bool bLibretroSupportsSavestateContext;
+
 #endif

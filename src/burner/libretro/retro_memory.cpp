@@ -14,6 +14,8 @@ static int nMemoryCount = 0;
 static struct retro_memory_descriptor sMemoryDescriptors[10] = {};
 static bool bMemoryMapFound = false;
 
+bool bLibretroSupportsSavestateContext = false;
+
 static int StateGetMainRamAcb(BurnArea *pba)
 {
 	if(!pba->szName)
@@ -190,9 +192,13 @@ size_t retro_get_memory_size(unsigned id)
 // Savestates support
 static UINT8 *pStateBuffer;
 static UINT32 nStateLen;
+static UINT32 nStateTmpLen;
 
 static int StateWriteAcb(BurnArea *pba)
 {
+	nStateTmpLen += pba->nLen;
+	if (nStateTmpLen > nStateLen)
+		return 1;
 	memcpy(pStateBuffer, pba->Data, pba->nLen);
 	pStateBuffer += pba->nLen;
 
@@ -201,6 +207,9 @@ static int StateWriteAcb(BurnArea *pba)
 
 static int StateReadAcb(BurnArea *pba)
 {
+	nStateTmpLen += pba->nLen;
+	if (nStateTmpLen > nStateLen)
+		return 1;
 	memcpy(pba->Data, pStateBuffer, pba->nLen);
 	pStateBuffer += pba->nLen;
 
@@ -219,6 +228,8 @@ static int StateLenAcb(BurnArea *pba)
 
 static INT32 LibretroAreaScan(INT32 nAction)
 {
+	nStateTmpLen = 0;
+
 	// The following value is sometimes used in game logic (xmen6p, ...),
 	// and will lead to various issues if not handled properly.
 	// On standalone, this value is stored in savestate files headers,
@@ -228,6 +239,42 @@ static INT32 LibretroAreaScan(INT32 nAction)
 	BurnAreaScan(nAction, 0);
 
 	return 0;
+}
+
+static void TweakScanFlags(INT32 &nAction)
+{
+	if (bLibretroSupportsSavestateContext)
+	{
+		int nSavestateContext = RETRO_SAVESTATE_CONTEXT_NORMAL;
+		environ_cb(RETRO_ENVIRONMENT_GET_SAVESTATE_CONTEXT, &nSavestateContext);
+		// With RETRO_ENVIRONMENT_GET_SAVESTATE_CONTEXT, we can guess accurately
+		switch (nSavestateContext)
+		{
+			case RETRO_SAVESTATE_CONTEXT_RUNAHEAD_SAME_INSTANCE:
+				nAction |= ACB_RUNAHEAD;
+				break;
+			case RETRO_SAVESTATE_CONTEXT_RUNAHEAD_SAME_BINARY:
+				nAction |= ACB_2RUNAHEAD;
+				break;
+			case RETRO_SAVESTATE_CONTEXT_ROLLBACK_NETPLAY:
+				// for safety, hiscores should stay disabled until https://github.com/libretro/RetroArch/issues/8571 is fully fixed
+				EnableHiscores = false;
+				nAction |= ACB_NET_OPT;
+				break;
+		}
+	}
+	else
+	{
+		// With RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, we can't guess accurately, so let's use safest tweaks
+		int nAudioVideoEnable = -1;
+		environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &nAudioVideoEnable);
+		kNetGame = nAudioVideoEnable & 4 ? 1 : 0;
+		if (kNetGame == 1)
+		{
+			EnableHiscores = false;
+			nAction |= ACB_NET_OPT;
+		}
+	}
 }
 
 size_t retro_serialize_size()
@@ -240,15 +287,7 @@ size_t retro_serialize_size()
 	INT32 nAction = ACB_FULLSCAN | ACB_READ;
 
 	// Tweaking from context
-	int nAudioVideoEnable = -1;
-	environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &nAudioVideoEnable);
-	kNetGame = nAudioVideoEnable & 4 ? 1 : 0;
-	if (kNetGame == 1) {
-		// Hiscores are causing desync in netplay
-		//EnableHiscores = false;
-		// Some data isn't required for netplay
-		nAction |= ACB_NET_OPT | ACB_RUNAHEAD;
-	}
+	TweakScanFlags(nAction);
 
 	// Don't try to cache state size, it's causing more issues than it solves (ngp)
 	nStateLen = 0;
@@ -285,20 +324,16 @@ bool retro_serialize(void *data, size_t size)
 	INT32 nAction = ACB_FULLSCAN | ACB_READ;
 
 	// Tweaking from context
-	int nAudioVideoEnable = -1;
-	environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &nAudioVideoEnable);
-	kNetGame = nAudioVideoEnable & 4 ? 1 : 0;
-	if (kNetGame == 1) {
-		// Hiscores are causing desync in netplay
-		//EnableHiscores = false;
-		// Some data isn't required for netplay
-		nAction |= ACB_NET_OPT | ACB_RUNAHEAD;
-	}
+	TweakScanFlags(nAction);
 
 	BurnAcb = StateWriteAcb;
 	pStateBuffer = (UINT8*)data;
 
 	LibretroAreaScan(nAction);
+
+	// size is bigger than expected
+	if (nStateTmpLen > size)
+		return false;
 
 	return true;
 }
@@ -312,20 +347,16 @@ bool retro_unserialize(const void *data, size_t size)
 	INT32 nAction = ACB_FULLSCAN | ACB_WRITE;
 
 	// Tweaking from context
-	int nAudioVideoEnable = -1;
-	environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &nAudioVideoEnable);
-	kNetGame = nAudioVideoEnable & 4 ? 1 : 0;
-	if (kNetGame == 1) {
-		// Hiscores are causing desync in netplay
-		//EnableHiscores = false;
-		// Some data isn't required for netplay
-		nAction |= ACB_NET_OPT | ACB_RUNAHEAD;
-	}
+	TweakScanFlags(nAction);
 
 	BurnAcb = StateReadAcb;
 	pStateBuffer = (UINT8*)data;
 
 	LibretroAreaScan(nAction);
+
+	// size is bigger than expected
+	if (nStateTmpLen > size)
+		return false;
 
 	// Some driver require to recalc palette after loading savestates
 	BurnRecalcPal();

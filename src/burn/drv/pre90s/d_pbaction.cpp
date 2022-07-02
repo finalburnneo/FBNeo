@@ -265,6 +265,8 @@ static INT32 DrvDoReset()
 	nmi_mask = 0;
 	scroll = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -712,7 +714,7 @@ struct BurnDriver BurnDrvPbaction = {
 	"pbaction", NULL, NULL, NULL, "1985",
 	"Pinball Action (set 1)\0", NULL, "Tehkan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
 	NULL, pbactionRomInfo, pbactionRomName, NULL, NULL, NULL, NULL, PbactionInputInfo, PbactionDIPInfo,
 	PbactionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -754,7 +756,7 @@ struct BurnDriver BurnDrvPbaction2 = {
 	"pbaction2", "pbaction", NULL, NULL, "1985",
 	"Pinball Action (set 2, encrypted)\0", NULL, "Tehkan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
 	NULL, pbaction2RomInfo, pbaction2RomName, NULL, NULL, NULL, NULL, PbactionInputInfo, PbactionDIPInfo,
 	Pbaction2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -795,7 +797,7 @@ struct BurnDriver BurnDrvPbaction3 = {
 	"pbaction3", "pbaction", NULL, NULL, "1985",
 	"Pinball Action (set 3, encrypted)\0", NULL, "Tehkan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
 	NULL, pbaction3RomInfo, pbaction3RomName, NULL, NULL, NULL, NULL, PbactionInputInfo, PbactionDIPInfo,
 	Pbaction3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -837,7 +839,7 @@ struct BurnDriver BurnDrvPbaction4 = {
 	"pbaction4", "pbaction", NULL, NULL, "1985",
 	"Pinball Action (set 4, encrypted)\0", NULL, "Tehkan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
 	NULL, pbaction4RomInfo, pbaction4RomName, NULL, NULL, NULL, NULL, PbactionInputInfo, PbactionDIPInfo,
 	Pbaction4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -876,7 +878,7 @@ struct BurnDriver BurnDrvPbactiont = {
 	"pbactiont", "pbaction", NULL, NULL, "1985",
 	"Pinball Action (Tecfri License)\0", NULL, "Tehkan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
 	NULL, pbactiontRomInfo, pbactiontRomName, NULL, NULL, NULL, NULL, PbactionInputInfo, PbactionDIPInfo,
 	PbactionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4

@@ -1,4 +1,4 @@
-// FB Alpha Mitchell driver module
+// FB Neo Mitchell driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"
@@ -916,41 +916,62 @@ STD_ROM_PICK(Mstworld)
 STD_ROM_FN(Mstworld)
 
 static struct BurnRomInfo MarukinRomDesc[] = {
-	{ "mg3-01.9d",     0x08000, 0x04357973, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "mg3-02.10d",    0x20000, 0x50d08da0, BRF_ESS | BRF_PRG }, //	 1
-	
-	{ "mg3-a.3k",      0x80000, 0x420f1de7, BRF_GRA },	     //  2	Characters
-	{ "mg3-b.4k",      0x80000, 0xd8de13fa, BRF_GRA },	     //  3
-	{ "mg3-c.6k",      0x80000, 0xfbeb66e8, BRF_GRA },	     //  4
-	{ "mg3-d.7k",      0x80000, 0x8f6bd831, BRF_GRA },	     //  5
-	
-	{ "mg3-05.2g",     0x20000, 0x7a738d2d, BRF_GRA },	     //  6	Sprites
-	{ "mg3-04.1g",     0x20000, 0x56f30515, BRF_GRA },	     //  7
-	
-	{ "mg3-e.1d",      0x80000, 0x106c2fa9, BRF_SND },	     //  8	Samples
+	{ "mg3-01b.9d",		0x08000, 0x529d4389, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
+	{ "mg3-02b.10d",	0x20000, 0xe8a8f14e, BRF_ESS | BRF_PRG }, //  1
+
+	{ "mg3-a.3k",		0x80000, 0x420f1de7, BRF_GRA },           //  2 Characters
+	{ "mg3-b.4k",		0x80000, 0xd8de13fa, BRF_GRA },           //  3
+	{ "mg3-c.6k",		0x80000, 0xfbeb66e8, BRF_GRA },           //  4
+	{ "mg3-d.7k",		0x80000, 0x8f6bd831, BRF_GRA },           //  5
+
+	{ "mg3-05.2g",		0x20000, 0x7a738d2d, BRF_GRA },           //  6 Sprites
+	{ "mg3-04.1g",		0x20000, 0x56f30515, BRF_GRA },           //  7
+
+	{ "mg3-e.1d",		0x80000, 0x106c2fa9, BRF_SND },           //  8 Samples / banked
+
+	{ "mj3c.10f",		0x00117, 0xf59ba8d2, BRF_OPT },           //  9 PLDs / pal16l8bcn
+	{ "mj3p.14k",		0x00117, 0x2c87be87, BRF_OPT },           // 10
 };
 
 STD_ROM_PICK(Marukin)
 STD_ROM_FN(Marukin)
 
+static struct BurnRomInfo MarukinaRomDesc[] = {
+	{ "mg3-01.9d",		0x08000, 0x04357973, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
+	{ "mg3-02.10d",		0x20000, 0x50d08da0, BRF_ESS | BRF_PRG }, //  1
+	
+	{ "mg3-a.3k",		0x80000, 0x420f1de7, BRF_GRA },           //  2 Characters
+	{ "mg3-b.4k",		0x80000, 0xd8de13fa, BRF_GRA },           //  3
+	{ "mg3-c.6k",		0x80000, 0xfbeb66e8, BRF_GRA },           //  4
+	{ "mg3-d.7k",		0x80000, 0x8f6bd831, BRF_GRA },           //  5
+	
+	{ "mg3-05.2g",		0x20000, 0x7a738d2d, BRF_GRA },           //  6 Sprites
+	{ "mg3-04.1g",		0x20000, 0x56f30515, BRF_GRA },           //  7
+	
+	{ "mg3-e.1d",		0x80000, 0x106c2fa9, BRF_SND },           //  8 Samples
+};
+
+STD_ROM_PICK(Marukina)
+STD_ROM_FN(Marukina)
+
 static struct BurnRomInfo Qtono1RomDesc[] = {
-	{ "q3-05.rom",     0x08000, 0x1dd0a344, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "q3-06.rom",     0x20000, 0xbd6a2110, BRF_ESS | BRF_PRG }, //	 1
-	{ "q3-07.rom",     0x20000, 0x61e53c4f, BRF_ESS | BRF_PRG }, //	 2
+	{ "q3-05.rom",		0x08000, 0x1dd0a344, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "q3-06.rom",		0x20000, 0xbd6a2110, BRF_ESS | BRF_PRG }, //  1
+	{ "q3-07.rom",		0x20000, 0x61e53c4f, BRF_ESS | BRF_PRG }, //  2
 	
-	{ "q3-08.rom",     0x20000, 0x1533b978, BRF_GRA },	     //  3	Characters
-	{ "q3-09.rom",     0x20000, 0xa32db2f2, BRF_GRA },	     //  4
-	{ "q3-10.rom",     0x20000, 0xed681aa8, BRF_GRA },	     //  5
-	{ "q3-11.rom",     0x20000, 0x38b2fd10, BRF_GRA },	     //  6
-	{ "q3-18.rom",     0x20000, 0x9e4292ac, BRF_GRA },	     //  7
-	{ "q3-19.rom",     0x20000, 0xb7f6d40f, BRF_GRA },	     //  8
-	{ "q3-20.rom",     0x20000, 0x6cd7f38d, BRF_GRA },	     //  9
-	{ "q3-21.rom",     0x20000, 0xb4aa6b4b, BRF_GRA },	     //  10
+	{ "q3-08.rom",		0x20000, 0x1533b978, BRF_GRA },           //  3	Characters
+	{ "q3-09.rom",		0x20000, 0xa32db2f2, BRF_GRA },           //  4
+	{ "q3-10.rom",		0x20000, 0xed681aa8, BRF_GRA },           //  5
+	{ "q3-11.rom",		0x20000, 0x38b2fd10, BRF_GRA },           //  6
+	{ "q3-18.rom",		0x20000, 0x9e4292ac, BRF_GRA },           //  7
+	{ "q3-19.rom",		0x20000, 0xb7f6d40f, BRF_GRA },           //  8
+	{ "q3-20.rom",		0x20000, 0x6cd7f38d, BRF_GRA },           //  9
+	{ "q3-21.rom",		0x20000, 0xb4aa6b4b, BRF_GRA },           // 10
 	
-	{ "q3-16.rom",     0x20000, 0x863d6836, BRF_GRA },	     //  11	Sprites
-	{ "q3-17.rom",     0x20000, 0x459bf59c, BRF_GRA },	     //  12
+	{ "q3-16.rom",		0x20000, 0x863d6836, BRF_GRA },           // 11	Sprites
+	{ "q3-17.rom",		0x20000, 0x459bf59c, BRF_GRA },           // 12
 	
-	{ "q3-01.rom",     0x20000, 0x6c1be591, BRF_SND },	     //  13	Samples
+	{ "q3-01.rom",		0x20000, 0x6c1be591, BRF_SND },           // 13	Samples
 };
 
 STD_ROM_PICK(Qtono1)
@@ -3383,10 +3404,20 @@ struct BurnDriver BurnDrvMstworld = {
 
 struct BurnDriver BurnDrvMarukin = {
 	"marukin", NULL, NULL, NULL, "1990",
-	"Super Marukin-Ban (Japan 901017)\0", NULL, "Yuga", "Miscellaneous",
+	"Super Marukin-Ban (Japan 911128)\0", NULL, "Yuga", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, MarukinRomInfo, MarukinRomName, NULL, NULL, NULL, NULL, MarukinInputInfo, NULL,
+	MarukinInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	NULL, 0x800, 384, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvMarukina = {
+	"marukina", "marukin", NULL, NULL, "1990",
+	"Super Marukin-Ban (Japan 901017)\0", NULL, "Yuga", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
+	NULL, MarukinaRomInfo, MarukinaRomName, NULL, NULL, NULL, NULL, MarukinInputInfo, NULL,
 	MarukinInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };

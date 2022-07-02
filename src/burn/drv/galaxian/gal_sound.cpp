@@ -50,7 +50,7 @@ double GalNoiseWavePos;
 double GalLfoWavePos[3];
 INT32 GalPitch;
 INT32 GalVol;
-static double GalCounter;
+static INT32 GalCounter;
 static INT32 GalCountDown;
 INT32 GalLfoVolume[3];
 double GalLfoFreq;
@@ -933,7 +933,7 @@ static void GalRenderNoiseSample(INT16 *pSoundBuf, INT32 nLength)
 	
 	for (INT32 i = 0; i < nLength; i += 2) {
 		INT16 Sample = (INT16)(GalNoiseWave[(INT32)Addr] * ((double)GalNoiseVolume / 100));
-		Sample >>= 4;
+		Sample /= 10;
 		
 		INT32 nLeftSample = 0, nRightSample = 0;
 			
@@ -969,14 +969,13 @@ static void GalRenderToneWave(INT16 *pSoundBuf, INT32 nLength)
 			INT32 mix = 0;
 
 			for (j = 0; j < STEPS; j++) {
-				if (GalCountDown >= 256) {
-					GalCounter = GalCounter + ((double)96000 / nBurnSoundRate);
-					if (GalCounter > TOOTHSAW_LENGTH) GalCounter = 0;
-					GalCountDown = GalPitch;
+				if (GalCountDown >= (256 * nBurnSoundRate / 96000)) {
+					GalCounter = (GalCounter + 1) % TOOTHSAW_LENGTH;
+					GalCountDown = GalPitch * nBurnSoundRate / 96000;
 				}
 				GalCountDown++;
 
-				mix += w[(INT32)GalCounter % TOOTHSAW_LENGTH];
+				mix += w[GalCounter % TOOTHSAW_LENGTH];
 			}
 			
 			INT16 Sample = mix / STEPS;
@@ -1139,10 +1138,8 @@ void GalaxianLfoFreqWrite(UINT32 Offset, UINT8 d)
 	r1 = 1.0 / r1;
 
 	rx = rx + 2000000.0 * r0 / (r0 + r1);
-	
-	GalLfoFreqFrameVar = (1000000000 / ((MAXFREQ - MINFREQ) * 639 * rx)) * 100;
-	
-//	bprintf(PRINT_NORMAL, _T("Offset %x, rx %f, %f\n"), Offset, (MAXFREQ - MINFREQ) * 639 * rx, GalLfoFreqFrameVar);
+
+	GalLfoFreqFrameVar = (1000000 / (639 * rx / (MAXFREQ - MINFREQ))) * STEPS;
 }
 
 void GalaxianSoundUpdateTimers()

@@ -2348,6 +2348,8 @@ static INT32 DrvDoReset()
 	DrvDial1 = 0x3f;
 	scanline_counter = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -3979,7 +3981,7 @@ struct BurnDriver BurnDrvNemesis = {
 	"nemesis", NULL, NULL, NULL, "1985",
 	"Nemesis (ROM version)\0", NULL, "Konami", "GX400",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_KONAMI_68K_Z80, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_HORSHOOT, 0,
 	NULL, nemesisRomInfo, nemesisRomName, NULL, NULL, NULL, NULL, NemesisInputInfo, NemesisDIPInfo,
 	NemesisInit, DrvExit, NemesisFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
@@ -4011,7 +4013,7 @@ struct BurnDriver BurnDrvNemesisuk = {
 	"nemesisuk", "nemesis", NULL, NULL, "1985",
 	"Nemesis (World?, ROM version)\0", NULL, "Konami", "GX400",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_HORSHOOT, 0,
 	NULL, nemesisukRomInfo, nemesisukRomName, NULL, NULL, NULL, NULL, NemesisInputInfo, NemesisDIPInfo,
 	NemesisInit, DrvExit, NemesisFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
@@ -4043,7 +4045,7 @@ struct BurnDriver BurnDrvKonamigt = {
 	"konamigt", NULL, NULL, NULL, "1985",
 	"Konami GT\0", NULL, "Konami", "GX561",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_KONAMI_68K_Z80, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_RACING, 0,
 	NULL, konamigtRomInfo, konamigtRomName, NULL, NULL, NULL, NULL, KonamigtInputInfo, KonamigtDIPInfo,
 	KonamigtInit, DrvExit, KonamigtFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
@@ -4072,7 +4074,7 @@ struct BurnDriver BurnDrvSalamand = {
 	"salamand", NULL, NULL, NULL, "1986",
 	"Salamander (version D)\0", NULL, "Konami", "GX587",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_KONAMI_68K_Z80, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_HORSHOOT, 0,
 	NULL, salamandRomInfo, salamandRomName, NULL, NULL, NULL, NULL, SalamandInputInfo, SalamandDIPInfo,
 	SalamandInit, DrvExit, SalamandFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
@@ -4101,7 +4103,7 @@ struct BurnDriver BurnDrvSalamandj = {
 	"salamandj", "salamand", NULL, NULL, "1986",
 	"Salamander (version J)\0", NULL, "Konami", "GX587",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_HORSHOOT, 0,
 	NULL, salamandjRomInfo, salamandjRomName, NULL, NULL, NULL, NULL, SalamandInputInfo, SalamandDIPInfo,
 	SalamandInit, DrvExit, SalamandFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
@@ -4130,7 +4132,7 @@ struct BurnDriver BurnDrvLifefrce = {
 	"lifefrce", "salamand", NULL, NULL, "1986",
 	"Lifeforce (US)\0", NULL, "Konami", "GX587",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_HORSHOOT, 0,
 	NULL, lifefrceRomInfo, lifefrceRomName, NULL, NULL, NULL, NULL, SalamandInputInfo, SalamandDIPInfo,
 	SalamandInit, DrvExit, SalamandFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
@@ -4159,7 +4161,7 @@ struct BurnDriver BurnDrvLifefrcej = {
 	"lifefrcej", "salamand", NULL, NULL, "1987",
 	"Lifeforce (Japan)\0", NULL, "Konami", "GX587",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_HORSHOOT, 0,
 	NULL, lifefrcejRomInfo, lifefrcejRomName, NULL, NULL, NULL, NULL, LifefrcejInputInfo, LifefrcejDIPInfo,
 	SalamandInit, DrvExit, SalamandFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
@@ -4187,7 +4189,7 @@ struct BurnDriver BurnDrvTwinbee = {
 	"twinbee", NULL, NULL, NULL, "1985",
 	"TwinBee (ROM version)\0", NULL, "Konami", "GX412",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, twinbeeRomInfo, twinbeeRomName, NULL, NULL, NULL, NULL, TwinbeeInputInfo, TwinbeeDIPInfo,
 	Gx400Init, DrvExit, Gx400Frame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4
@@ -4215,7 +4217,7 @@ struct BurnDriver BurnDrvGradius = {
 	"gradius", "nemesis", NULL, NULL, "1985",
 	"Gradius (Japan, ROM version)\0", NULL, "Konami", "GX456",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_HORSHOOT, 0,
 	NULL, gradiusRomInfo, gradiusRomName, NULL, NULL, NULL, NULL, GradiusInputInfo, GradiusDIPInfo,
 	Gx400Init, DrvExit, Gx400Frame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
@@ -4243,7 +4245,7 @@ struct BurnDriver BurnDrvGwarrior = {
 	"gwarrior", NULL, NULL, NULL, "1985",
 	"Galactic Warriors\0", NULL, "Konami", "GX578",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_KONAMI_68K_Z80, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VSFIGHT, 0,
 	NULL, gwarriorRomInfo, gwarriorRomName, NULL, NULL, NULL, NULL, GwarriorInputInfo, GwarriorDIPInfo,
 	Gx400Init, DrvExit, Gx400Frame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
@@ -4271,7 +4273,7 @@ struct BurnDriver BurnDrvRf2 = {
 	"rf2", "konamigt", NULL, NULL, "1985",
 	"Konami RF2 - Red Fighter\0", NULL, "Konami", "GX561",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_RACING, 0,
 	NULL, rf2RomInfo, rf2RomName, NULL, NULL, NULL, NULL, KonamigtInputInfo, KonamigtDIPInfo,
 	Rf2_gx400Init, DrvExit, Gx400Frame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
@@ -4298,7 +4300,7 @@ struct BurnDriver BurnDrvBlkpnthr = {
 	"blkpnthr", NULL, NULL, NULL, "1987",
 	"Black Panther\0", NULL, "Konami", "GX604",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, blkpnthrRomInfo, blkpnthrRomName, NULL, NULL, NULL, NULL, BlkpnthrInputInfo, BlkpnthrDIPInfo,
 	BlkpnthrInit, DrvExit, BlkpnthrFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
@@ -4329,7 +4331,7 @@ struct BurnDriver BurnDrvCitybomb = {
 	"citybomb", NULL, NULL, NULL, "1987",
 	"City Bomber (World)\0", NULL, "Konami", "GX787",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_KONAMI_68K_Z80, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_SHOOT, 0,
 	NULL, citybombRomInfo, citybombRomName, NULL, NULL, NULL, NULL, CitybombInputInfo, CitybombDIPInfo,
 	CitybombInit, DrvExit, CitybombFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4
@@ -4360,7 +4362,7 @@ struct BurnDriver BurnDrvCitybombj = {
 	"citybombj", "citybomb", NULL, NULL, "1987",
 	"City Bomber (Japan)\0", NULL, "Konami", "GX787",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_KONAMI_68K_Z80, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_SHOOT, 0,
 	NULL, citybombjRomInfo, citybombjRomName, NULL, NULL, NULL, NULL, CitybombInputInfo, CitybombDIPInfo,
 	CitybombInit, DrvExit, CitybombFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4
@@ -4387,7 +4389,7 @@ struct BurnDriver BurnDrvKittenk = {
 	"kittenk", NULL, NULL, NULL, "1988",
 	"Kitten Kaboodle\0", NULL, "Konami", "GX712",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_KONAMI_68K_Z80, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_PUZZLE, 0,
 	NULL, kittenkRomInfo, kittenkRomName, NULL, NULL, NULL, NULL, NyanpaniInputInfo, NyanpaniDIPInfo,
 	NyanpaniInit, DrvExit, CitybombFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
@@ -4414,7 +4416,7 @@ struct BurnDriver BurnDrvNyanpani = {
 	"nyanpani", "kittenk", NULL, NULL, "1988",
 	"Nyan Nyan Panic (Japan)\0", NULL, "Konami", "GX712",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_PUZZLE, 0,
 	NULL, nyanpaniRomInfo, nyanpaniRomName, NULL, NULL, NULL, NULL, NyanpaniInputInfo, NyanpaniDIPInfo,
 	NyanpaniInit, DrvExit, CitybombFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
@@ -4443,7 +4445,7 @@ struct BurnDriver BurnDrvHcrash = {
 	"hcrash", NULL, NULL, NULL, "1987",
 	"Hyper Crash (version D)\0", NULL, "Konami", "GX790",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_KONAMI_68K_Z80, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_RACING, 0,
 	NULL, hcrashRomInfo, hcrashRomName, NULL, NULL, NULL, NULL, HcrashInputInfo, HcrashDIPInfo,
 	HcrashInit, DrvExit, HcrashFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
@@ -4472,7 +4474,7 @@ struct BurnDriver BurnDrvHcrashc = {
 	"hcrashc", "hcrash", NULL, NULL, "1987",
 	"Hyper Crash (version C)\0", NULL, "Konami", "GX790",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_RACING, 0,
 	NULL, hcrashcRomInfo, hcrashcRomName, NULL, NULL, NULL, NULL, HcrashInputInfo, HcrashDIPInfo,
 	HcrashInit, DrvExit, HcrashFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
@@ -4530,7 +4532,7 @@ struct BurnDriver BurnDrvGradiusb = {
 	"gradiusb", "nemesis", "bubsys", NULL, "1985",
 	"Gradius (Bubble System)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_HORSHOOT, 0,
 	NULL, gradiusbRomInfo, gradiusbRomName, NULL, NULL, NULL, NULL, BubsysInputInfo, BubsysDIPInfo,
 	BubsysInit, DrvExit, Gx400Frame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
@@ -4559,7 +4561,7 @@ struct BurnDriver BurnDrvTwinbeeb = {
 	"twinbeeb", "twinbee", NULL, NULL, "1985",
 	"TwinBee (Bubble System)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, twinbeebRomInfo, twinbeebRomName, NULL, NULL, NULL, NULL, BubsysInputInfo, BubsysDIPInfo,
 	TwinbeebInit, DrvExit, Gx400Frame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4

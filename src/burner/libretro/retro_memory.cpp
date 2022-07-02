@@ -257,8 +257,6 @@ static void TweakScanFlags(INT32 &nAction)
 				nAction |= ACB_2RUNAHEAD;
 				break;
 			case RETRO_SAVESTATE_CONTEXT_ROLLBACK_NETPLAY:
-				// for safety, hiscores should stay disabled until https://github.com/libretro/RetroArch/issues/8571 is fully fixed
-				EnableHiscores = false;
 				nAction |= ACB_NET_OPT;
 				break;
 		}
@@ -271,6 +269,8 @@ static void TweakScanFlags(INT32 &nAction)
 		kNetGame = nAudioVideoEnable & 4 ? 1 : 0;
 		if (kNetGame == 1)
 		{
+			// Older versions of retroarch suffer from https://github.com/libretro/RetroArch/issues/8571
+			// So we disable hiscores
 			EnableHiscores = false;
 			nAction |= ACB_NET_OPT;
 		}

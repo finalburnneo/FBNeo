@@ -4902,6 +4902,7 @@ DRV		BurnDrvnes_erika;
 DRV		BurnDrvnes_erikaj;
 DRV		BurnDrvgg_ernieeg;
 DRV		BurnDrvMSX_eruka;
+DRV		BurnDrvmd_escape2042pt;
 DRV		BurnDrvmd_escape2042;
 DRV		BurnDrvnes_escapfroatl;
 DRV		BurnSpecEscapemonjasen;
@@ -9696,6 +9697,8 @@ DRV		BurnDrvmd_ditkapf1;
 DRV		BurnSpecMiketheguitar2;
 DRV		BurnDrvnes_miketysspunout;
 DRV		BurnSpecMiketheguitar;
+DRV		BurnDrvmd_mikeyeldey;
+DRV		BurnDrvmd_mikeyeldey95;
 DRV		BurnSpecMikie;
 DRV		BurnDrvMikiehs;
 DRV		BurnDrvMSX_mikie;
@@ -11143,6 +11146,7 @@ DRV		BurnDrvP47acesa;
 DRV		BurnDrvP47aces;
 DRV		BurnSpecP47thunderbolt;
 DRV		BurnDrvPgemeni;
+DRV		BurnDrvmd_pod;
 DRV		BurnDrvnes_powc;
 DRV		BurnDrvpow;
 DRV		BurnDrvpowa;
@@ -15085,6 +15089,7 @@ DRV		BurnDrvSfiii3j;
 DRV		BurnDrvSfiii3n;
 DRV		BurnDrvSfiii3ur1;
 DRV		BurnDrvSfiii3u;
+DRV		BurnDrvSfiii3ws;
 DRV		BurnDrvSfiii3th;
 DRV		BurnDrvSfiiia;
 DRV		BurnDrvSfiiin;
@@ -19739,7 +19744,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecaspargpmas,		// Aspar GP Master (Spanish) (48K)
 	&BurnDrvMSX_aspargp,		// Aspar GP Master (Spanish)
 	&BurnDrvnes_aspectstarn,	// Aspect Star N (HB)
-	&BurnDrvmd_asscreed,		// Assassins Creed (Rus)
+	&BurnDrvmd_asscreed,		// Assassins Creed (Unl) (Rus)
 	&BurnDrvAssaultj,			// Assault (Japan)
 	&BurnDrvAssault,			// Assault (Rev B)
 	&BurnDrvsms_assaultc1,		// Assault City (Euro)
@@ -19891,7 +19896,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_avpoker,		// AV Poker
 	&BurnDrvnes_avpregirfig,	// AV Pretty Girl Fight (Unl)
 	&BurnSpecavalon,			// Avalon (48K)
-	&BurnDrvmd_avatar,			// Avatar (Rus)
+	&BurnDrvmd_avatar,			// Avatar (Unl) (Rus)
 	&BurnDrvAvefenix,			// Ave Fenix (Electrogame, Spanish bootleg of Phoenix)
 	&BurnDrvAvefenixl,			// Ave Fenix (Laguna, Spanish bootleg of Phoenix)
 	&BurnDrvAvefenixrf,			// Ave Fenix (Recreativos Franco, Spanish bootleg of Phoenix)
@@ -20349,7 +20354,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_bejeweled,		// Bejeweled (HB)
 	&BurnDrvBlswhstla,			// Bells & Whistles (Asia, version M)
 	&BurnDrvBlswhstl,			// Bells & Whistles (World, version L)
-	&BurnDrvmd_ben10,			// Ben 10 (Rus)
+	&BurnDrvmd_ben10,			// Ben 10 (Unl) (Rus)
 	&BurnDrvpce_benkei1,		// Benkei Gaiden (Alt)
 	&BurnDrvpce_benkei,			// Benkei Gaiden
 	&BurnSpecBennyhil128,		// Benny Hill's Madcap Chase! (128K) (Hack)
@@ -23707,7 +23712,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_erikaj,			// Erika to Satoru no Yume Bouken (Japan)
 	&BurnDrvgg_ernieeg,			// Ernie Els Golf (Euro)
 	&BurnDrvMSX_eruka,			// Eruka Fan Book (HB)
-	&BurnDrvmd_escape2042,		// Escape 2042 (HB)
+	&BurnDrvmd_escape2042pt,	// Escape 2042 (HB, Hack Portuguese)
+	&BurnDrvmd_escape2042,		// Escape 2042 (M3) (HB)
 	&BurnDrvnes_escapfroatl,	// Escape From Atlantis, The (Prototype)
 	&BurnSpecEscapemonjasen,	// Escape from M.O.N.J.A.S. (English) (48K) (HB)
 	&BurnSpecEscapemonjases,	// Escape from M.O.N.J.A.S. (Spanish) (48K) (HB)
@@ -25636,7 +25642,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_harleglo,		// Harlem Globetrotters (USA)
 	&BurnDrvnes_harrydwarf,		// Harry Dwarf (HB)
 	&BurnDrvMSX_hfox,			// Harry Fox MSX Special (Jpn)
-	&BurnDrvmd_hpotter,			// Harry Potter (Rus)
+	&BurnDrvmd_hpotter,			// Harry Potter (Unl) (Rus)
 	&BurnDrvmd_hpotter2,		// Harry Potter and the Chamber of Secrets (Unl) (Rus)
 	&BurnDrvMSX_showjumph,		// Harvey Smith's Showjumper (Euro, Hacked Protection)
 	&BurnDrvHasamu,				// Hasamu (Japan)
@@ -25731,7 +25737,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvHeberpop,			// Hebereke no Popoon (Japan)
 	&BurnDrvnes_hector87,		// Hector '87 (Japan)
 	&BurnDrvsg1k_heibaiqi,		// Hei Bai Qi (Tw)
-	&BurnDrvmd_heitao,			// Hei Tao 2 - Super Big 2 (Chi)
+	&BurnDrvmd_heitao,			// Hei Tao 2 - Super Big 2 (Unl) (Chi)
 	&BurnDrvHeiankyo,			// Heiankyo Alien
 	&BurnDrvnes_heisetenbakj,	// Heisei Tensai Bakabon (Japan)
 	&BurnDrvnes_heisetenbak,	// Heisei Tensai Bakabon (T-Eng)
@@ -28501,6 +28507,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecMiketheguitar2,	// Mike the Guitar - The Shooter (128K) (HB)
 	&BurnDrvnes_miketysspunout,	// Mike Tyson's Punch-Out!! (Japan, USA) (Rev A)
 	&BurnSpecMiketheguitar,		// Mike, The Guitar (128K) (HB)
+	&BurnDrvmd_mikeyeldey,		// Mikeyeldey the album (HB)
+	&BurnDrvmd_mikeyeldey95,	// Mikeyeldey95 (HB)
 	&BurnSpecMikie,				// Mikie (48K)
 	&BurnDrvMikiehs,			// Mikie (High School Graffiti)
 	&BurnDrvMSX_mikie,			// Mikie - Shinnyuushain Tooru-Kun (Jpn)
@@ -29948,6 +29956,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvP47aces,			// P-47 Aces (ver 1.1)
 	&BurnSpecP47thunderbolt,	// P-47 Thunderbolt (128K)
 	&BurnDrvPgemeni,			// P-GeMeni (060123)
+	&BurnDrvmd_pod,				// P.O.D. Proof Of Destruction (GlobalHack)
 	&BurnDrvnes_powc,			// P.O.W. - Prisoners of War (Hack, Spanish v1.0)
 	&BurnDrvpow,				// P.O.W. - Prisoners of War (US version 1)
 	&BurnDrvpowa,				// P.O.W. - Prisoners of War (US version 1, mask ROM sprites )
@@ -33890,6 +33899,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSfiii3n,			// Street Fighter III 3rd Strike: Fight for the Future (Japan 990608, NO CD)
 	&BurnDrvSfiii3ur1,			// Street Fighter III 3rd Strike: Fight for the Future (USA 990512)
 	&BurnDrvSfiii3u,			// Street Fighter III 3rd Strike: Fight for the Future (USA 990608)
+	&BurnDrvSfiii3ws,			// Street Fighter III 3rd Strike: Fight for the Future (Widescreen 20220701)
 	&BurnDrvSfiii3th,			// Street Fighter III 3rd Strike: Fight for the Future | re:THIRD update
 	&BurnDrvSfiiia,				// Street Fighter III: New Generation (Asia 970204)
 	&BurnDrvSfiiin,				// Street Fighter III: New Generation (Asia 970204, NO CD, bios set 1)

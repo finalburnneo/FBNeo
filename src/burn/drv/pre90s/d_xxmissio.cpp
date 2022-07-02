@@ -1,9 +1,6 @@
 // FB Alpha XX Mission driver module
 // Based on MAME driver by Uki
 
-// todo/weird: hiccup in sprite layer when bombing turrets, not sure what's
-// going on here.  fixed with a hack (1mhz oc) for now.
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym2203.h"
@@ -26,6 +23,8 @@ static UINT8 *DrvShareRAM1;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
+
+static INT32 nExtraCycles[2];
 
 static UINT8 scrollx;
 static UINT8 scrollx_shifted;
@@ -69,54 +68,55 @@ STDINPUTINFO(Xxmissio)
 
 static struct BurnDIPInfo XxmissioDIPList[]=
 {
-	{0x10, 0xff, 0xff, 0xd7, NULL			},
-	{0x11, 0xff, 0xff, 0xef, NULL			},
+	DIP_OFFSET(0x10)
+	{0x00, 0xff, 0xff, 0xd7, NULL			},
+	{0x01, 0xff, 0xff, 0xef, NULL			},
 
 	{0   , 0xfe, 0   ,    4, "Coinage"		},
-	{0x10, 0x01, 0x03, 0x00, "3 Coins 1 Credits"	},
-	{0x10, 0x01, 0x03, 0x02, "2 Coins 1 Credits"	},
-	{0x10, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
-	{0x10, 0x01, 0x03, 0x01, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x03, 0x00, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0x03, 0x02, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x03, 0x01, "1 Coin  2 Credits"	},
 
 //	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-//	{0x10, 0x01, 0x04, 0x04, "Off"			},
-//	{0x10, 0x01, 0x04, 0x00, "On"			},
+//	{0x00, 0x01, 0x04, 0x04, "Off"			},
+//	{0x00, 0x01, 0x04, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x10, 0x01, 0x08, 0x08, "Off"			},
-	{0x10, 0x01, 0x08, 0x00, "On"			},
+	{0x00, 0x01, 0x08, 0x08, "Off"			},
+	{0x00, 0x01, 0x08, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x10, 0x01, 0x10, 0x10, "Normal"		},
-	{0x10, 0x01, 0x10, 0x00, "Hard"			},
+	{0x00, 0x01, 0x10, 0x10, "Normal"		},
+	{0x00, 0x01, 0x10, 0x00, "Hard"			},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x10, 0x01, 0x20, 0x00, "Upright"		},
-	{0x10, 0x01, 0x20, 0x20, "Cocktail"		},
+	{0x00, 0x01, 0x20, 0x00, "Upright"		},
+	{0x00, 0x01, 0x20, 0x20, "Cocktail"		},
 
 	{0   , 0xfe, 0   ,    2, "Endless Game (Cheat)"	},
-	{0x10, 0x01, 0x40, 0x40, "Off"			},
-	{0x10, 0x01, 0x40, 0x00, "On"			},
+	{0x00, 0x01, 0x40, 0x40, "Off"			},
+	{0x00, 0x01, 0x40, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x10, 0x01, 0x80, 0x80, "Off"			},
-	{0x10, 0x01, 0x80, 0x00, "On"			},
+	{0x00, 0x01, 0x80, 0x80, "Off"			},
+	{0x00, 0x01, 0x80, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x11, 0x01, 0x03, 0x01, "2"			},
-	{0x11, 0x01, 0x03, 0x03, "3"			},
-	{0x11, 0x01, 0x03, 0x02, "4"			},
-	{0x11, 0x01, 0x03, 0x00, "5"			},
+	{0x01, 0x01, 0x03, 0x01, "2"			},
+	{0x01, 0x01, 0x03, 0x03, "3"			},
+	{0x01, 0x01, 0x03, 0x02, "4"			},
+	{0x01, 0x01, 0x03, 0x00, "5"			},
 
 	{0   , 0xfe, 0   ,    2, "First Bonus"		},
-	{0x11, 0x01, 0x04, 0x04, "30000"		},
-	{0x11, 0x01, 0x04, 0x00, "40000"		},
+	{0x01, 0x01, 0x04, 0x04, "30000"		},
+	{0x01, 0x01, 0x04, 0x00, "40000"		},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Every"		},
-	{0x11, 0x01, 0x18, 0x18, "50000"		},
-	{0x11, 0x01, 0x18, 0x08, "70000"		},
-	{0x11, 0x01, 0x18, 0x10, "90000"		},
-	{0x11, 0x01, 0x18, 0x00, "None"			},
+	{0x01, 0x01, 0x18, 0x18, "50000"		},
+	{0x01, 0x01, 0x18, 0x08, "70000"		},
+	{0x01, 0x01, 0x18, 0x10, "90000"		},
+	{0x01, 0x01, 0x18, 0x00, "None"			},
 };
 
 STDDIPINFO(Xxmissio)
@@ -133,6 +133,21 @@ static void palette_update(INT32 entry)
 	b |= b << 4;
 
 	DrvPalette[entry] = BurnHighCol(r,g,b,0);
+}
+
+static void sync_sub()
+{
+	ZetCPUPush(1);
+	BurnTimerUpdate(ZetTotalCycles(0));
+	ZetCPUPop();
+}
+
+static void sync_main()
+{
+	INT32 cyc = ZetTotalCycles(1) - ZetTotalCycles(0);
+	if (cyc > 0) {
+		ZetRun(0, cyc);
+	}
 }
 
 static void __fastcall xxmission_main_write(UINT16 address, UINT8 data)
@@ -159,6 +174,7 @@ static void __fastcall xxmission_main_write(UINT16 address, UINT8 data)
 
 		case 0xa002:
 		{
+			sync_sub();
 			switch (data)
 			{
 				case 0x00: cpu_status |= 0x20; break;
@@ -168,7 +184,6 @@ static void __fastcall xxmission_main_write(UINT16 address, UINT8 data)
 					cpu_status &= ~0x08;
 					ZetSetVector(1, 0x10);
 					ZetSetIRQLine(1, 0, CPU_IRQSTATUS_HOLD);
-					ZetRunEnd(0); // allow sub to catch up
 				}
 				break;
 			}
@@ -216,6 +231,7 @@ static void __fastcall xxmission_sub_write(UINT16 address, UINT8 data)
 
 		case 0xa002:
 		{
+			sync_main();
 			switch (data)
 			{
 				case 0x00: cpu_status |= 0x10; break;
@@ -225,7 +241,6 @@ static void __fastcall xxmission_sub_write(UINT16 address, UINT8 data)
 					cpu_status &= ~0x04;
 					ZetSetVector(0, 0x10);
 					ZetSetIRQLine(0, 0, CPU_IRQSTATUS_HOLD);
-					ZetRunEnd(1); // allow main to catch up
 				}
 				break;
 			}
@@ -257,6 +272,7 @@ static UINT8 __fastcall xxmission_read(UINT16 address)
 			return DrvInputs[address & 1];
 
 		case 0xa002:
+			if (ZetGetActive() == 0) sync_sub(); else sync_main();
 			return (cpu_status & 0xfd) | ((vblank) ? 0x00 : 0x02); // status!
 	}
 
@@ -303,6 +319,8 @@ static INT32 DrvDoReset()
 	scrolly = 0;
 	cpu_status = 0;
 	flipscreen = 0;
+
+	nExtraCycles[0] = nExtraCycles[1] = 0;
 
 	HiscoreReset();
 
@@ -413,7 +431,7 @@ static INT32 DrvInit()
 	BurnYM2203Init(2,  1500000, NULL, 0);
 	BurnYM2203SetPorts(0, &DrvYM2203ReadPortA, &DrvYM2203ReadPortB, NULL, NULL);
 	BurnYM2203SetPorts(1, NULL, NULL, &DrvYM2203WritePortA, &DrvYM2203WritePortB);
-	BurnTimerAttachZet(4000000);
+	BurnTimerAttachZet(3000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE,   0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.15, BURN_SND_ROUTE_BOTH);
@@ -541,38 +559,40 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { 4000000 / 60, 4000000 / 60 };
+	INT32 nInterleave = 100;
+	INT32 nCyclesTotal[2] = { 3000000 / 60, 3000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
-	vblank = 0;
+	ZetIdle(0, nExtraCycles[0]); // syncint
+	ZetIdle(1, nExtraCycles[1]); // timer
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		CPU_RUN(0, Zet);
-
-		if (i == 224) {
+		if (i == 0) {
 			vblank = 1;
 			cpu_status &= ~0x20;
-			ZetSetVector(0xff);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-
-			if (pBurnDraw) {
-				DrvDraw();
-			}
 		}
+		if (i == 14) { vblank = 0; }
+		CPU_RUN_SYNCINT(0, Zet);
 		ZetClose();
 
 		ZetOpen(1);
-		CPU_RUN_TIMER(1);
-		if (i == ((nInterleave / 2) - 2) || i == (nInterleave - 2)) { // 120hz
+		if (i == 0 || i == 49) { // 120hz
 			cpu_status &= ~0x10;
-			ZetSetVector(0xff);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
+		CPU_RUN_TIMER(1);
 		ZetClose();
+
+		if (i == 48 && pBurnDraw) {
+			DrvDraw();
+		}
 	}
+
+	nExtraCycles[0] = ZetTotalCycles(0) - nCyclesTotal[0];
+	nExtraCycles[1] = ZetTotalCycles(1) - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);

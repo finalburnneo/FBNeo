@@ -9895,6 +9895,7 @@ DRV		BurnDrvMstworld;
 DRV		BurnDrvmd_monstinc;
 DRV		BurnDrvMSX_montanajohn;
 DRV		BurnSpecMontecarlocasino;
+DRV		BurnDrvnes_monterev;
 DRV		BurnDrvsms_montezum;
 DRV		BurnDrvsms_montezump;
 DRV		BurnDrvcv_montezum;
@@ -10992,6 +10993,7 @@ DRV		BurnDrvmd_onslau;
 DRV		BurnDrvmd_onslaus;
 DRV		BurnDrvnes_onyankotown;
 DRV		BurnDrvOoparts;
+DRV		BurnDrvnes_oopiquest;
 DRV		BurnSpecOoze;
 DRV		BurnDrvnes_oozerdx;
 DRV		BurnDrvmd_ooze;
@@ -12007,13 +12009,12 @@ DRV		BurnDrvnes_princeofpersias;
 DRV		BurnDrvmd_ppersiau;
 DRV		BurnDrvnes_princeofpersia;
 DRV		BurnDrvgg_ppersiau;
+DRV		BurnDrvmd_ppersiar;
 DRV		BurnDrvmd_ppersia2r;
 DRV		BurnDrvmd_ppersia2;
 DRV		BurnDrvmd_ppersia2s;
 DRV		BurnDrvcv_princessquest;
 DRV		BurnDrvMSX_princessquest;
-DRV		BurnDrvnes_princtominsalkij;
-DRV		BurnDrvnes_princtominsalkit;
 DRV		BurnDrvnes_princtominsalki;
 DRV		BurnDrvmd_pringles;
 //		BurnDrvngpc_ppaa01;		// no comment
@@ -13257,6 +13258,8 @@ DRV		BurnDrvnes_saiyuukiworld;
 DRV		BurnDrvnes_saiyuukiworldc;
 DRV		BurnDrvnes_saiyuwor2;
 DRV		BurnDrvnes_saiyuwor2c;
+DRV		BurnDrvnes_princtominsalkij;
+DRV		BurnDrvnes_princtominsalkit;
 DRV		BurnSpecsalamand;
 DRV		BurnDrvnes_salamander;
 DRV		BurnDrvMSX_salamand;
@@ -15547,6 +15550,7 @@ DRV		BurnDrvmd_smario64;
 DRV		BurnDrvmd_smb;
 DRV		BurnDrvmd_smbb;
 DRV		BurnDrvmd_smba;
+DRV		BurnDrvMarukina;
 DRV		BurnDrvMarukin;
 DRV		BurnDrvnes_smaruo;
 DRV		BurnDrvSgmast;
@@ -28705,6 +28709,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_monstinc,		// Monsters, Inc. (Rus)
 	&BurnDrvMSX_montanajohn,	// Montana John and the Templar's Treasure (HB)
 	&BurnSpecMontecarlocasino,	// Monte Carlo Casino (128K)
+	&BurnDrvnes_monterev,		// Montezuma's Revenge (HB)
 	&BurnDrvsms_montezum,		// Montezuma's Revenge Featuring Panama Joe (USA)
 	&BurnDrvsms_montezump,		// Montezuma's Revenge Featuring Panama Joe (USA, Prototype)
 	&BurnDrvcv_montezum,		// Montezuma's Revenge
@@ -29802,6 +29807,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_onslaus,			// Onslaught (Hack, Spanish)
 	&BurnDrvnes_onyankotown,	// Onyanko Town (Japan)
 	&BurnDrvOoparts,			// OOPArts (prototype, joystick hack)
+	&BurnDrvnes_oopiquest,		// Oopi's Quest (HB, v1.2.0)
 	&BurnSpecOoze,				// Ooze (128K) (HB)
 	&BurnDrvnes_oozerdx,		// Ooze Redux (HB)
 	&BurnDrvmd_ooze,			// Ooze, The (Euro)
@@ -30020,7 +30026,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_pacmania,		// Pac-Mania (Euro)
 	&BurnDrvmd_pacmania,		// Pac-Mania (Euro, USA)
 	&BurnDrvPacmaniaj,			// Pac-Mania (Japan)
-	&BurnDrvnes_pacmania,		// Pac-Mania (USA) (Unl)
+	&BurnDrvnes_pacmania,		// Pac-Mania (USA)
 	&BurnDrvPacmania,			// Pac-Mania
 	&BurnDrvmd_pacpanic,		// Pac-Panic (Euro)
 	&BurnDrvsg1k_pacar,			// Pacar (Euro, Jpn)
@@ -30817,13 +30823,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_ppersiau,		// Prince of Persia (USA)
 	&BurnDrvnes_princeofpersia,	// Prince of Persia (USA)
 	&BurnDrvgg_ppersiau,		// Prince of Persia (USA, SMS Mode)
+	&BurnDrvmd_ppersiar,		// Prince of Persia - Remastered Edition (Hack, v1.0)
 	&BurnDrvmd_ppersia2r,		// Prince of Persia 2 - Remastered Edition (Hack, v1.5)
 	&BurnDrvmd_ppersia2,		// Prince of Persia 2 - The Shadow and the Flame (Euro, Prototype)
-	&BurnDrvmd_ppersia2s,		// Prince of Persia 2 - The Shadow and the Flame (Hack, Spanish) ( Prototype)
+	&BurnDrvmd_ppersia2s,		// Prince of Persia 2 - The Shadow and the Flame (Hack, Spanish)
 	&BurnDrvcv_princessquest,	// Princess Quest (HB)
 	&BurnDrvMSX_princessquest,	// Princess Quest (HB)
-	&BurnDrvnes_princtominsalkij,// Princess Tomato in Salad Kingdom (Japan)
-	&BurnDrvnes_princtominsalkit,// Princess Tomato in Salad Kingdom (T-Eng)
 	&BurnDrvnes_princtominsalki,// Princess Tomato in Salad Kingdom (USA)
 	&BurnDrvmd_pringles,		// Pringles the Game (HB)
 //	&BurnDrvngpc_ppaa01,		// Prize Game - PP-AA01 Pusher Program (Jpn) [no comment]
@@ -32067,6 +32072,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_saiyuukiworldc,	// Saiyuuki World (T-Chi, v1.04)
 	&BurnDrvnes_saiyuwor2,		// Saiyuuki World 2 - Tenjoukai no Majin (Japan)
 	&BurnDrvnes_saiyuwor2c,		// Saiyuuki World 2 - Tenjoukai no Majin (T-Chi)
+	&BurnDrvnes_princtominsalkij,// Salad no Kuni no Tomato Hime (Japan)
+	&BurnDrvnes_princtominsalkit,// Salad no Kuni no Tomato Hime (T-Eng, v1.03)
 	&BurnSpecsalamand,			// Salamander (48K)
 	&BurnDrvnes_salamander,		// Salamander (Japan)
 	&BurnDrvMSX_salamand,		// Salamander (Jpn)
@@ -34357,7 +34364,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_smb,				// Super Mario World ~ Super Mario Bros. (Pirate)
 	&BurnDrvmd_smbb,			// Super Mario World ~ Super Mario Bros. (Pirate, Alt 2)
 	&BurnDrvmd_smba,			// Super Mario World ~ Super Mario Bros. (Pirate, Alt)
-	&BurnDrvMarukin,			// Super Marukin-Ban (Japan 901017)
+	&BurnDrvMarukina,			// Super Marukin-Ban (Japan 901017)
+	&BurnDrvMarukin,			// Super Marukin-Ban (Japan 911128)
 	&BurnDrvnes_smaruo,			// Super Maruo
 	&BurnDrvSgmast,				// Super Masters Golf (World?, Floppy Based, FD1094 317-0058-05d?)
 	&BurnDrvmd_smoverkill,		// Super Maximum Overkill (HB)

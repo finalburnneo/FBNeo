@@ -1836,7 +1836,7 @@
 	<game name="blackbas2j" cloneof="blackbas2" romof="blackbas2">
 		<description>Black Bass 2, The (Japan)</description>
 		<year>1988</year>
-		<manufacturer>Hot-B</manufacturer>
+		<manufacturer>HOT-B</manufacturer>
 		<rom name="Black Bass 2, The (Japan).nes" size="131088" crc="5a514495"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2376,8 +2376,8 @@
 	</game>
 	<game name="captainsaver" cloneof="powerblade2" romof="powerblade2">
 		<description>Captain Saver (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1992</year>
+		<manufacturer>Taito</manufacturer>
 		<rom name="Captain Saver (Japan).nes" size="262160" crc="fc97fc14"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10690,6 +10690,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="monterev">
+		<comment>Homebrew</comment>
+		<description>Montezuma's Revenge (HB)</description>
+		<year>2022</year>
+		<manufacturer>2nd Dimension</manufacturer>
+		<rom name="Montezuma's Revenge (2022)(2nd Dimension).nes" size="40976" crc="02cfc8a7"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="mooncrystalj" cloneof="mooncrystal" romof="mooncrystal">
 		<description>Moon Crystal (Japan)</description>
 		<year>1992</year>
@@ -11504,6 +11513,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="oopiquest">
+		<comment>Homebrew</comment>
+		<description>Oopi's Quest (HB, v1.2.0)</description>
+		<year>2022</year>
+		<manufacturer>Kenney</manufacturer>
+		<rom name="Oopi's Quest v1.2.0 (2022)(Kenney).nes" size="40976" crc="34de6da0"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="oozerdx">
 		<comment>Homebrew</comment>
 		<description>Ooze Redux (HB)</description>
@@ -11604,7 +11622,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pacmania">
-		<description>Pac-Mania (USA) (Unl)</description>
+		<description>Pac-Mania (USA)</description>
 		<year>1990</year>
 		<manufacturer>Tengen</manufacturer>
 		<rom name="Pac-Mania (USA) (Unl).nes" size="98320" crc="e2428b3c"/>
@@ -11614,7 +11632,7 @@
 	<game name="palamedes">
 		<description>Palamedes (USA)</description>
 		<year>1990</year>
-		<manufacturer>HOT・B</manufacturer>
+		<manufacturer>HOT-B</manufacturer>
 		<rom name="Palamedes (USA).nes" size="65552" crc="c3cd6c66"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11622,15 +11640,15 @@
 	<game name="palamii">
 		<description>Palamedes II - Star Twinkle, Hoshi no Mabataki (Japan)</description>
 		<year>1991</year>
-		<manufacturer>HOT・B</manufacturer>
+		<manufacturer>HOT-B</manufacturer>
 		<rom name="Palamedes II - Star Twinkle, Hoshi no Mabataki (Japan).nes" size="65552" crc="0fdad901"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="pandababy">
 		<description>Panda Baby (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1997</year>
+		<manufacturer>Dragon Co.</manufacturer>
 		<rom name="Panda Baby (Unl).nes" size="524304" crc="042f5b25"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11679,16 +11697,16 @@
 	</game>
 	<game name="papillongals">
 		<description>Papillon Gals (Japan) (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1989</year>
+		<manufacturer>Joy Van &amp; Kinema Music</manufacturer>
 		<rom name="Papillon Gals (Japan) (Unl).nes" size="98320" crc="5b273e7f"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="parallelworld">
 		<description>Parallel World (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Varie</manufacturer>
 		<rom name="Parallel World (Japan).nes" size="262160" crc="da1d8662"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11760,8 +11778,8 @@
 	</game>
 	<game name="peekaboopoker">
 		<description>Peek-A-Boo Poker (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1991</year>
+		<manufacturer>Panesian</manufacturer>
 		<rom name="Peek-A-Boo Poker (Unl).nes" size="98320" crc="38f4ac1c"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11776,8 +11794,8 @@
 	</game>
 	<game name="pengusea">
 		<description>Penguin &amp; Seal, The (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1989</year>
+		<manufacturer>Sachen</manufacturer>
 		<rom name="Penguin &amp; Seal, The (Unl).nes" size="24592" crc="8daf3827"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11881,9 +11899,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="pinbacvbyred" cloneof="pinball" romof="pinball">
+		<comment>Hack</comment>
 		<description>Pinball CV by Redrum (Hack)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2003</year>
+		<manufacturer>Redrum</manufacturer>
 		<rom name="Pinball CV by Redrum (Hack).nes" size="24592" crc="d61066d8"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11985,8 +12004,8 @@
 	</game>
 	<game name="popoteam">
 		<description>Po Po Team (Taiwan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1992</year>
+		<manufacturer>Sachen</manufacturer>
 		<rom name="Po Po Team (Taiwan).nes" size="196624" crc="1b461169"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12075,9 +12094,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="powerblazer">
+		<comment>Hack</comment>
 		<description>Power Blazer (T-Eng)</description>
-		<year>1990</year>
-		<manufacturer>Taito</manufacturer>
+		<year>2017</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Power Blazer (T-Eng).nes" size="262160" crc="a9bd2381"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12092,16 +12112,16 @@
 	</game>
 	<game name="powerraniii">
 		<description>Power Rangers III (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1995</year>
+		<manufacturer>J.Y. Company</manufacturer>
 		<rom name="Power Rangers III (Unl).nes" size="393232" crc="94192c10"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="powerrangersiv">
 		<description>Power Rangers IV (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1995</year>
+		<manufacturer>J.Y. Company</manufacturer>
 		<rom name="Power Rangers IV (Unl).nes" size="393232" crc="4faed070"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12179,22 +12199,6 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="princtominsalkij" cloneof="princtominsalki" romof="princtominsalki">
-		<description>Princess Tomato in Salad Kingdom (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
-		<rom name="Princess Tomato in Salad Kingdom (Japan).nes" size="262160" crc="5085d4f4"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="princtominsalkit" cloneof="princtominsalki" romof="princtominsalki">
-		<description>Princess Tomato in Salad Kingdom (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
-		<rom name="Princess Tomato in Salad Kingdom (T-Eng).nes" size="524304" crc="a395e0b5"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
 	<game name="princtominsalki">
 		<description>Princess Tomato in Salad Kingdom (USA)</description>
 		<year>1991</year>
@@ -12248,8 +12252,8 @@
 	</game>
 	<game name="pulveration">
 		<description>Pulveration (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>200?</year>
+		<manufacturer>Nice Code Software</manufacturer>
 		<rom name="Pulveration (Unl).nes" size="40976" crc="27de9c6e"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12331,15 +12335,15 @@
 	<game name="pyramid">
 		<description>Pyramid (Unl)</description>
 		<year>1990</year>
-		<manufacturer>AVE</manufacturer>
+		<manufacturer>Sachen</manufacturer>
 		<rom name="Pyramid (Unl).nes" size="24592" crc="afee5df1"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="pyramidii">
 		<description>Pyramid II (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Sachen</manufacturer>
 		<rom name="Pyramid II (Unl).nes" size="81936" crc="36f1ad35"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13276,6 +13280,23 @@
 		<year>2019</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="Saiyuuki World 2 - Tenjoukai no Majin (T-Chi).nes" size="262160" crc="784fc411"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="princtominsalkij" cloneof="princtominsalki" romof="princtominsalki">
+		<description>Salad no Kuni no Tomato Hime (Japan)</description>
+		<year>1988</year>
+		<manufacturer>Hudson Soft</manufacturer>
+		<rom name="Princess Tomato in Salad Kingdom (Japan).nes" size="262160" crc="5085d4f4"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="princtominsalkit" cloneof="princtominsalki" romof="princtominsalki">
+		<comment>Hack</comment>
+		<description>Salad no Kuni no Tomato Hime (T-Eng, v1.03)</description>
+		<year>2021</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
+		<rom name="Salad no Kuni no Tomato Hime (2021)(T-Eng, v1.03)(Stardust Crusaders).nes" size="524304" crc="6b333e13"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

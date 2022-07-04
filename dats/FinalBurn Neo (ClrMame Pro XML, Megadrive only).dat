@@ -14781,9 +14781,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="predatr2s" cloneof="predatr2" romof="predatr2">
+		<comment>Hack</comment>
 		<description>Predator 2 (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Arena</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="predator 2 (hack, spanish).bin" size="1048576" crc="ab9bbe50"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -14829,14 +14830,16 @@
 		<driver status="good"/>
 	</game>
 	<game name="ppersias" cloneof="ppersia" romof="ppersia">
+		<comment>Hack</comment>
 		<description>Prince of Persia (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Tengen</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="prince of persia (hack, spanish).bin" size="1048576" crc="a7d7f64d"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="ppersiap" cloneof="ppersia" romof="ppersia">
+		<comment>Prototype</comment>
 		<description>Prince of Persia (Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Tengen</manufacturer>
@@ -14845,6 +14848,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ppersiap1" cloneof="ppersia" romof="ppersia">
+		<comment>Prototype</comment>
 		<description>Prince of Persia (Prototype, Earlier)</description>
 		<year>1993</year>
 		<manufacturer>Tengen</manufacturer>
@@ -14860,8 +14864,17 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ppersiar" cloneof="ppersia" romof="ppersia">
+		<comment>Hack</comment>
+		<description>Prince of Persia - Remastered Edition (Hack, v1.0)</description>
+		<year>2022</year>
+		<manufacturer>Linkuei</manufacturer>
+		<rom name="Prince of Persia - Remastered Edition (2022)(Linkuei).bin" size="1323702" crc="d97467a1"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ppersia2r" cloneof="ppersia2" romof="ppersia2">
-		<comment>Homebrew</comment>
+		<comment>Hack</comment>
 		<description>Prince of Persia 2 - Remastered Edition (Hack, v1.5)</description>
 		<year>2019</year>
 		<manufacturer>Linkuei</manufacturer>
@@ -14870,6 +14883,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ppersia2">
+		<comment>Prototype</comment>
 		<description>Prince of Persia 2 - The Shadow and the Flame (Euro, Prototype)</description>
 		<year>1995</year>
 		<manufacturer>Psygnosis</manufacturer>
@@ -14878,9 +14892,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ppersia2s" cloneof="ppersia2" romof="ppersia2">
-		<description>Prince of Persia 2 - The Shadow and the Flame (Hack, Spanish) ( Prototype)</description>
+		<comment>Hack</comment>
+		<description>Prince of Persia 2 - The Shadow and the Flame (Hack, Spanish)</description>
 		<year>2017</year>
-		<manufacturer>Psygnosis</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="prince of persia 2 - the shadow and the flame (hack, spanish) ( prototype).bin" size="2097152" crc="59da6398"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

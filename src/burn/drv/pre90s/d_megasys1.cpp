@@ -2885,8 +2885,8 @@ static INT32 SystemInit(INT32 nSystem, void (*pRomLoadCallback)())
 
 		BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, 0);
 		BurnTimerAttachZet(3000000);
-		BurnYM2203SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
-		BurnYM2203SetAllRoutes(1, 0.50, BURN_SND_ROUTE_BOTH);
+		BurnYM2203SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
+		BurnYM2203SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 
 		layer_color_config[0] = 0;
 		layer_color_config[1] = 0x200;
@@ -2910,16 +2910,16 @@ static INT32 SystemInit(INT32 nSystem, void (*pRomLoadCallback)())
 		BurnYM2151InitBuffered(3500000, 1, NULL, 0);
 		BurnTimerAttachSek(7000000);
 		BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
-		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.80, BURN_SND_ROUTE_LEFT);
-		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.80, BURN_SND_ROUTE_RIGHT);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.35, BURN_SND_ROUTE_LEFT);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.35, BURN_SND_ROUTE_RIGHT);
 
 		MSM6295Init(0, ((system_select == 0xD) ? 2000000 : 4000000) / 132, 1);
-		MSM6295SetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
+		MSM6295SetRoute(0, 0.10, BURN_SND_ROUTE_BOTH);
 		MSM6295SetBank(0, DrvSndROM0, 0x00000, 0x3ffff);
 
 		// not in system D
 		MSM6295Init(1, 4000000 / 132, 1);
-		MSM6295SetRoute(1, 0.30, BURN_SND_ROUTE_BOTH);
+		MSM6295SetRoute(1, 0.10, BURN_SND_ROUTE_BOTH);
 		MSM6295SetBank(1, DrvSndROM1, 0x00000, 0x3ffff);
 	}
 

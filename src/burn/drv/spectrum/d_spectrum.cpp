@@ -36478,3 +36478,99 @@ struct BurnDriver BurnSpecMojonisn = {
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
+
+// Bufonada (English) (128K) (HB)
+
+static struct BurnRomInfo SpecBufonadaeRomDesc[] = {
+	{ "Bufonada 128K EN (2022)(Roolandoo).tap", 48242, 0x03516fbe, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecBufonadae, SpecBufonadae, Spec128)
+STD_ROM_FN(SpecBufonadae)
+
+struct BurnDriver BurnSpecBufonadae = {
+	"spec_bufonadae", NULL, "spec_spec128", NULL, "2022",
+	"Bufonada (English) (128K) (HB)\0", NULL, "Roolandoo", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecBufonadaeRomInfo, SpecBufonadaeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Bufonada (Spanish) (128K) (HB)
+
+
+static struct BurnRomInfo SpecBufonadasRomDesc[] = {
+	{ "Bufonada 128K ES (2022)(Roolandoo).tap", 48242, 0x2b5c7742, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecBufonadas, SpecBufonadas, Spec128)
+STD_ROM_FN(SpecBufonadas)
+
+struct BurnDriver BurnSpecBufonadas = {
+	"spec_bufonadas", "spec_bufonadae", "spec_spec128", NULL, "2022",
+	"Bufonada (Spanish) (128K) (HB)\0", NULL, "Roolandoo", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecBufonadasRomInfo, SpecBufonadasRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// ghoSte's Grunge (128K) (HB)
+
+static struct BurnRomInfo SpecGhosteRomDesc[] = {
+	{ "ghoSte's Grunge 128K (2022)(Buck).tap", 38696, 0x95860a70, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecGhoste, SpecGhoste, Spec128)
+STD_ROM_FN(SpecGhoste)
+
+struct BurnDriver BurnSpecGhoste = {
+	"spec_ghoste", NULL, "spec_spec128", NULL, "2022",
+	"ghoSte's Grunge (128K) (HB)\0", NULL, "Buck", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecGhosteRomInfo, SpecGhosteRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecCursorKeysDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Paleto Jones and Bartolo's Flute (English) (48K) (HB)
+
+static struct BurnRomInfo SpecPaletoj2enRomDesc[] = {
+	{ "Paleto Jones and Bartolo's Flute EN 48K (2022)(Mananuk).tap", 41476, 0xad013c6c, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecPaletoj2en, SpecPaletoj2en, Spectrum)
+STD_ROM_FN(SpecPaletoj2en)
+
+struct BurnDriver BurnSpecPaletoj2en = {
+	"spec_paletoj2en", NULL, "spec_spectrum", NULL, "2022",
+	"Paleto Jones and Bartolo's Flute (English) (48K) (HB)\0", NULL, "Mananuk", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecPaletoj2enRomInfo, SpecPaletoj2enRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Paleto Jones y la flauta de Bartolo (Spanish) (48K) (HB)
+
+static struct BurnRomInfo SpecPaletoj2spRomDesc[] = {
+	{ "Paleto Jones y la flauta de Bartolo SP 48K (2022)(Mananuk).tap", 41498, 0xb2be31f3, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecPaletoj2sp, SpecPaletoj2sp, Spectrum)
+STD_ROM_FN(SpecPaletoj2sp)
+
+struct BurnDriver BurnSpecPaletoj2sp = {
+	"spec_paletoj2sp", "spec_paletoj2en", "spec_spectrum", NULL, "2022",
+	"Paleto Jones y la flauta de Bartolo (Spanish) (48K) (HB)\0", NULL, "Mananuk", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecPaletoj2spRomInfo, SpecPaletoj2spRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

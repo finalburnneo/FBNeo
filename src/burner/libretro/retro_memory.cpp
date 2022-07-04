@@ -257,6 +257,7 @@ static void TweakScanFlags(INT32 &nAction)
 				nAction |= ACB_2RUNAHEAD;
 				break;
 			case RETRO_SAVESTATE_CONTEXT_ROLLBACK_NETPLAY:
+				EnableHiscores = false;
 				nAction |= ACB_NET_OPT;
 				break;
 		}

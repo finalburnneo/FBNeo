@@ -243,6 +243,8 @@ static INT32 LibretroAreaScan(INT32 nAction)
 
 static void TweakScanFlags(INT32 &nAction)
 {
+	// note: due to the fact all hosts would require the same version of hiscore.dat to properly scan the same memory ranges,
+	//       hiscores can't work reliably in a netplay environment, and we should never enable them in that context
 	if (bLibretroSupportsSavestateContext)
 	{
 		int nSavestateContext = RETRO_SAVESTATE_CONTEXT_NORMAL;
@@ -265,14 +267,12 @@ static void TweakScanFlags(INT32 &nAction)
 	}
 	else
 	{
-		// With RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, we can't guess accurately, so let's use safest tweaks
+		// With RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, we can't guess accurately, so let's use the safest tweaks (netplay)
 		int nAudioVideoEnable = -1;
 		environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &nAudioVideoEnable);
 		kNetGame = nAudioVideoEnable & 4 ? 1 : 0;
 		if (kNetGame == 1)
 		{
-			// Older versions of retroarch suffer from https://github.com/libretro/RetroArch/issues/8571
-			// So we disable hiscores
 			EnableHiscores = false;
 			nAction |= ACB_NET_OPT;
 		}

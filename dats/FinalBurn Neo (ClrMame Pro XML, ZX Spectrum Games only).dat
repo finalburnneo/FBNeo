@@ -2843,6 +2843,28 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bufonadae" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Bufonada (English) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Roolandoo</manufacturer>
+		<rom name="Bufonada 128K EN (2022)(Roolandoo).tap" size="48242" crc="03516fbe"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bufonadas" cloneof="bufonadae" romof="bufonadae">
+		<comment>Homebrew</comment>
+		<description>Bufonada (Spanish) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Roolandoo</manufacturer>
+		<rom name="Bufonada 128K ES (2022)(Roolandoo).tap" size="48242" crc="2b5c7742"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="buggyboy" romof="spec128">
 		<comment>Use 'P', 'L' and SPACE to set options</comment>
 		<description>Buggy Boy (128K)</description>
@@ -7202,6 +7224,17 @@
 		<year>1989</year>
 		<manufacturer>Activision</manufacturer>
 		<rom name="Ghostbusters II (1989)(Activision)[t].tap" size="174896" crc="1594430c"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ghoste" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>ghoSte's Grunge (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Buck</manufacturer>
+		<rom name="ghoSte's Grunge 128K (2022)(Buck).tap" size="38696" crc="95860a70"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -12190,6 +12223,26 @@
 		<year>2021</year>
 		<manufacturer>Mananuk</manufacturer>
 		<rom name="Paletojones 48K (2021)(Mananuk).tap" size="44486" crc="9c9ec285"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="paletoj2en" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Paleto Jones and Bartolo's Flute (English) (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Mananuk</manufacturer>
+		<rom name="Paleto Jones and Bartolo's Flute EN 48K (2022)(Mananuk).tap" size="41476" crc="ad013c6c"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="paletoj2sp" cloneof="paletoj2en" romof="paletoj2en">
+		<comment>Homebrew</comment>
+		<description>Paleto Jones y la flauta de Bartolo (Spanish) (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Mananuk</manufacturer>
+		<rom name="Paleto Jones y la flauta de Bartolo SP 48K (2022)(Mananuk).tap" size="41498" crc="b2be31f3"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

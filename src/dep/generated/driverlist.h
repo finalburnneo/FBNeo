@@ -2203,6 +2203,8 @@ DRV		BurnDrvmd_budokan;
 DRV		BurnDrvmd_budokanp;
 DRV		BurnDrvmd_budokanu;
 DRV		BurnSpecBbwws;
+DRV		BurnSpecBufonadae;
+DRV		BurnSpecBufonadas;
 DRV		BurnDrvmd_bughunt;
 DRV		BurnDrvpce_bughunt;
 DRV		BurnSpecBuggyboy;
@@ -6204,6 +6206,7 @@ DRV		BurnSpecghostb2;
 DRV		BurnDrvMSX_ghostbs2;
 DRV		BurnDrvnes_ghostbustersii;
 DRV		BurnDrvnes_ghostbrm;
+DRV		BurnSpecGhoste;
 DRV		BurnDrvghostlop;
 DRV		BurnDrvGmgalax;
 DRV		BurnSpecgng_48;
@@ -11276,6 +11279,8 @@ DRV		BurnDrvPalamed;
 DRV		BurnDrvnes_palamedes;
 DRV		BurnDrvnes_palamii;
 DRV		BurnSpecPaletojones;
+DRV		BurnSpecPaletoj2en;
+DRV		BurnSpecPaletoj2sp;
 DRV		BurnDrvsg1k_palikat;
 DRV		BurnDrvnes_pandababy;
 DRV		BurnDrvnes_pandaworld;
@@ -21017,6 +21022,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_budokanp,		// Budokan - The Martial Spirit (Prototype, 19900925)
 	&BurnDrvmd_budokanu,		// Budokan - The Martial Spirit (USA)
 	&BurnSpecBbwws,				// Buffalo Bill's Wild West Show (128K)
+	&BurnSpecBufonadae,			// Bufonada (English) (128K) (HB)
+	&BurnSpecBufonadas,			// Bufonada (Spanish) (128K) (HB)
 	&BurnDrvmd_bughunt,			// Bug Hunt (HB)
 	&BurnDrvpce_bughunt,		// Bug Hunt (HB)
 	&BurnSpecBuggyboy,			// Buggy Boy (128K)
@@ -25018,6 +25025,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_ghostbs2,		// Ghostbusters II (Euro)
 	&BurnDrvnes_ghostbustersii,	// Ghostbusters II (USA)
 	&BurnDrvnes_ghostbrm,		// Ghostbusters Remastered (HB, v1.1)
+	&BurnSpecGhoste,			// ghoSte's Grunge (128K) (HB)
 	&BurnDrvghostlop,			// Ghostlop (prototype)
 	&BurnDrvGmgalax,			// Ghostmuncher Galaxian (bootleg)
 	&BurnSpecgng_48,			// Ghosts 'n' Goblins (48K)
@@ -30090,6 +30098,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_palamedes,		// Palamedes (USA)
 	&BurnDrvnes_palamii,		// Palamedes II - Star Twinkle, Hoshi no Mabataki (Japan)
 	&BurnSpecPaletojones,		// Paleto Jones (48K) (HB)
+	&BurnSpecPaletoj2en,		// Paleto Jones and Bartolo's Flute (English) (48K) (HB)
+	&BurnSpecPaletoj2sp,		// Paleto Jones y la flauta de Bartolo (Spanish) (48K) (HB)
 	&BurnDrvsg1k_palikat,		// Palikat (HB)
 	&BurnDrvnes_pandababy,		// Panda Baby (Unl)
 	&BurnDrvnes_pandaworld,		// Panda World (HB)

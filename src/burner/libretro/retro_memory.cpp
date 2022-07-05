@@ -218,10 +218,10 @@ static int StateReadAcb(BurnArea *pba)
 
 static int StateLenAcb(BurnArea *pba)
 {
-#ifdef FBNEO_DEBUG
-	HandleMessage(RETRO_LOG_INFO, "state debug: name %s, len %d\n", pba->szName, pba->nLen);
-#endif
 	nStateLen += pba->nLen;
+#ifdef FBNEO_DEBUG
+	HandleMessage(RETRO_LOG_INFO, "state debug: name %s, len %d, total %d\n", pba->szName, pba->nLen, nStateLen);
+#endif
 
 	return 0;
 }

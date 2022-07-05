@@ -2607,8 +2607,8 @@ static struct BurnDIPInfo GhoulsDIPList[]=
 	{0x14, 0x01, 0x10, 0x10, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
-	{0x14, 0x01, 0x20, 0x00, "Off"                    },
-	{0x14, 0x01, 0x20, 0x10, "On"                     },
+	{0x14, 0x01, 0x20, 0x20, "Off"                    },
+	{0x14, 0x01, 0x20, 0x00, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
 	{0x14, 0x01, 0x40, 0x40, "No"                     },
@@ -2656,13 +2656,17 @@ static struct BurnDIPInfo GhoulsuDIPList[]=
 	{0x14, 0x01, 0x03, 0x01, "4"                      },
 	{0x14, 0x01, 0x03, 0x02, "5"                      },
 
-	{0   , 0xfe, 0   , 2   , "Flip"                   },
+	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
 	{0x14, 0x01, 0x10, 0x00, "Off"                    },
 	{0x14, 0x01, 0x10, 0x10, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
+	{0x14, 0x01, 0x20, 0x20, "Off"                    },
+	{0x14, 0x01, 0x20, 0x00, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
-	{0x14, 0x01, 0x40, 0x40, "Off"                    },
-	{0x14, 0x01, 0x40, 0x00, "On"                     },
+	{0x14, 0x01, 0x40, 0x40, "No"                     },
+	{0x14, 0x01, 0x40, 0x00, "Yes"                    },
 	
 	{0   , 0xfe, 0   , 2   , "Game Mode"              },
 	{0x14, 0x01, 0x80, 0x00, "Game"                   },
@@ -2709,6 +2713,10 @@ static struct BurnDIPInfo DaimakaiDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Flip"                   },
 	{0x14, 0x01, 0x10, 0x00, "Off"                    },
 	{0x14, 0x01, 0x10, 0x10, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
+	{0x14, 0x01, 0x20, 0x20, "Off"                    },
+	{0x14, 0x01, 0x20, 0x00, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
 	{0x14, 0x01, 0x40, 0x40, "Off"                    },

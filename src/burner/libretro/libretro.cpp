@@ -1120,7 +1120,7 @@ void retro_reset()
 	// Saving minimal savestate (handle some machine settings)
 	// note : This is only useful to avoid losing nvram when switching from mvs to aes/unibios and resetting,
 	//        it can actually be "harmful" in other games (trackfld)
-	if (bIsNeogeoCartGame && BurnStateSave(g_autofs_path, 0) == 0 && path_is_valid(g_autofs_path))
+	if (bIsNeogeoCartGame && BurnNvramSave(g_autofs_path) == 0 && path_is_valid(g_autofs_path))
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] EEPROM succesfully saved to %s\n", g_autofs_path);
 
 	if (pgi_reset)
@@ -1141,7 +1141,7 @@ void retro_reset()
 	ForceFrameStep();
 
 	// Loading minimal savestate (handle some machine settings)
-	if (bIsNeogeoCartGame && BurnStateLoad(g_autofs_path, 0, NULL) == 0)
+	if (bIsNeogeoCartGame && BurnNvramLoad(g_autofs_path) == 0)
 	{
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] EEPROM succesfully loaded from %s\n", g_autofs_path);
 		// eeproms are loading nCurrentFrame, but we probably don't want this
@@ -1870,10 +1870,17 @@ static bool retro_load_game_common()
 
 		// Loading minimal savestate (handle some machine settings)
 		snprintf_nowarn (g_autofs_path, sizeof(g_autofs_path), "%s%cfbneo%c%s.fs", g_save_dir, PATH_DEFAULT_SLASH_C(), PATH_DEFAULT_SLASH_C(), BurnDrvGetTextA(DRV_NAME));
-		if (BurnStateLoad(g_autofs_path, 0, NULL) == 0) {
-			HandleMessage(RETRO_LOG_INFO, "[FBNeo] EEPROM succesfully loaded from %s\n", g_autofs_path);
-			// eeproms are loading nCurrentFrame, but we probably don't want this
-			nCurrentFrame = 0;
+		if (BurnNvramLoad(g_autofs_path) == 0) {
+			HandleMessage(RETRO_LOG_INFO, "[FBNeo] EEPROM successfully loaded from %s\n", g_autofs_path);
+		}
+		else
+		{
+			if (BurnStateLoad(g_autofs_path, 0, NULL) == 0) {
+				HandleMessage(RETRO_LOG_INFO, "[FBNeo] Headered & compressed EEPROM successfully loaded from %s\n", g_autofs_path);
+				HandleMessage(RETRO_LOG_INFO, "[FBNeo] It will be converted to unheadered & uncompressed format at exit\n");
+				// eeproms are loading nCurrentFrame, but we probably don't want this
+				nCurrentFrame = 0;
+			}
 		}
 
 		if (BurnDrvGetTextA(DRV_COMMENT) && strlen(BurnDrvGetTextA(DRV_COMMENT)) > 0) {
@@ -2080,7 +2087,7 @@ void retro_unload_game(void)
 			MemCardEject();
 		}
 		// Saving minimal savestate (handle some machine settings)
-		if (BurnStateSave(g_autofs_path, 0) == 0 && path_is_valid(g_autofs_path))
+		if (BurnNvramSave(g_autofs_path) == 0 && path_is_valid(g_autofs_path))
 			HandleMessage(RETRO_LOG_INFO, "[FBNeo] EEPROM succesfully saved to %s\n", g_autofs_path);
 		BurnDrvExit();
 		if (nGameType == RETRO_GAME_TYPE_NEOCD)

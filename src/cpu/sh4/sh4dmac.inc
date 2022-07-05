@@ -101,6 +101,10 @@ static int sh4_dma_transfer(int channel, int timermode, UINT32 chcr, UINT32 *sar
 	if (timermode == 1) // timer actvated after a time based on the number of words to transfer
 	{
 		INT32 cycles = 2*count+1;
+
+		// scale dma timing to selected cpu rate
+		cycles = (cycles * m_ratio_rev) / ratio_multi;
+
 		m_dma_timer_active[channel] = 1;
 		//m_dma_timer[channel]->adjust(cycles_to_attotime(2*count+1), channel);
 		//bprintf(0, _T("dma timer %d cycles!\n"), cycles);

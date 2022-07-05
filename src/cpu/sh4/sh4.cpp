@@ -161,6 +161,7 @@ static int	   m_pm_divider; // clock divider of timer unit
 // see notes in Sh3SetClockCV1k
 #define ratio_multi 100000 // float -> int, format ii.fffff  (for speed)
 static int     m_ratio;
+static int     m_ratio_rev;
 
 static int     m_fpu_sz;
 static int     m_fpu_pr;
@@ -396,6 +397,7 @@ void Sh3SetClockCV1k(INT32 clock)
 	// scale-up using integer representing floating point (ii.fffff, 1 = 100000 (ratio_multi))
 	//m_ratio_needed = m_pm_divider * ratio_multi;
 	m_ratio = ((double)(12800000 * 8) / clock) * ratio_multi;
+	m_ratio_rev = ((double)clock / (12800000 * 8)) * ratio_multi;
 }
 
 INT32 sh4_get_cpu_speed() {

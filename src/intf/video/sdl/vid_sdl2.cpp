@@ -23,6 +23,7 @@ static SDL_Rect dstrect;
 static char Windowtitle[512];
 
 extern UINT16 maxLinesMenu;	// sdl2_gui_ingame.cpp: number of lines to show in ingame menus
+extern bool didReinitialise;
 
 void RenderMessage()
 {
@@ -333,6 +334,10 @@ static int vidScale(RECT*, int, int)
 // Run one frame and render the screen
 static int Frame(bool bRedraw)                                          // bRedraw = 0
 {
+	if ((didReinitialise) && (pVidImage == NULL)) {
+		Exit();
+		Init();
+	}
 	if (pVidImage == NULL)
 	{
 		return 1;

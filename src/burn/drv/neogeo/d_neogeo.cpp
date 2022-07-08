@@ -16445,6 +16445,43 @@ struct BurnDriver BurnDrvsdodgebh = {
 	0x1000,	304, 224, 4, 3
 };
 
+// The King of Fighters '94 (portuguese edition) by BisonSAS and Mr.Fox
+// https://romhackers.org/traducoes/arcade/neo-geo/the-king-of-fighters-94-neogeo-br-team/
+
+static struct BurnRomInfo kof94brRomDesc[] = {
+	{ "055-p1br.p1",  0x200000, 0x0138a992, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ mask rom TC5316200
+
+	{ "055-s1.s1",    0x020000, 0x825976c1, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
+
+	{ "055-c1br.c1",  0x200000, 0x6fb14154, 3 | BRF_GRA },           //  2 Sprite data 		/ mask rom TC5316200
+	{ "055-c2.c2",    0x200000, 0x15e096a7, 3 | BRF_GRA },           //  3 					/ mask rom TC5316200
+	{ "055-c3.c3",    0x200000, 0x54f66254, 3 | BRF_GRA },           //  4 					/ mask rom TC5316200
+	{ "055-c4.c4",    0x200000, 0x0b01765f, 3 | BRF_GRA },           //  5 					/ mask rom TC5316200
+	{ "055-c5.c5",    0x200000, 0xee759363, 3 | BRF_GRA },           //  6 					/ mask rom TC5316200
+	{ "055-c6.c6",    0x200000, 0x498da52c, 3 | BRF_GRA },           //  7 					/ mask rom TC5316200
+	{ "055-c7.c7",    0x200000, 0x62f66888, 3 | BRF_GRA },           //  8 					/ mask rom TC5316200
+	{ "055-c8.c8",    0x200000, 0xfe0a235d, 3 | BRF_GRA },           //  9 					/ mask rom TC5316200
+
+	{ "055-m1.m1",    0x020000, 0xf6e77cf5, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code 		/ mask rom TC531001
+
+	{ "055-v1.v1",    0x200000, 0x8889596d, 5 | BRF_SND },           // 11 Sound data 		/ mask rom TC5316200
+	{ "055-v2.v2",    0x200000, 0x25022b27, 5 | BRF_SND },           // 12 					/ mask rom TC5316200
+	{ "055-v3.v3",    0x200000, 0x83cf32c0, 5 | BRF_SND },           // 13 					/ mask rom TC5316200
+};
+
+STDROMPICKEXT(kof94br, kof94br, neogeo)
+STD_ROM_FN(kof94br)
+
+struct BurnDriver BurnDrvKof94br = {
+	"kof94br", "kof94", "neogeo", NULL, "1994",
+	"The King of Fighters '94 (Portuguese edition Hack)\0", "Translation ROM - Portuguese BRA", "SNK", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof94brRomInfo, kof94brRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
 // The King of Fighters '94 (Hack Boss Remixed)
 
 static struct BurnRomInfo kof94rzRomDesc[] = {
@@ -20865,11 +20902,11 @@ struct BurnDriver BurnDrvNblktiger = {
 	0x1000, 304, 224, 4, 3
 };
 
-// The Eye of Typhoon (Beta 5 Version)
+// The Eye of Typhoon (Beta 6 Version)
 // https://ozzyouzo.itch.io/teot
 
 static struct BurnRomInfo teotRomDesc[] = {
-	{ "teot-p1.bin",    0x0100000, 0x1cd69227, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "teot-p1.bin",    0x0100000, 0x49b25c64, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "teot-p2.bin",    0x0800000, 0x68dc7463, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
 
 	{ "teot-s1.bin",    0x0020000, 0x6d05f74b, 2 | BRF_GRA },           //  2 Text layer tiles
@@ -20888,7 +20925,7 @@ STD_ROM_FN(teot)
 
 struct BurnDriver BurnDrvTeot = {
 	"teot", NULL, "neogeo", NULL, "2022",
-	"The Eye of Typhoon (Beta 5 Version)\0", NULL, "OzzyOuzo", "Neo Geo MVS",
+	"The Eye of Typhoon (Beta 6 Version)\0", NULL, "OzzyOuzo", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
 	NULL, teotRomInfo, teotRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesDIPInfo,

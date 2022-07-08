@@ -1,8 +1,10 @@
 #include "burner.h"
 
+bool didReinitialise = false;
+
 void Reinitialise()
 {
-	//POST_INITIALISE_MESSAGE;
+	didReinitialise = true;
 	VidReInitialise();
 }
 

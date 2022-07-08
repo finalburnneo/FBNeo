@@ -802,7 +802,7 @@ STDDIPINFO(Lghost)
 
 static struct BurnDIPInfo MwalkDIPList[]=
 {
-	DIP_OFFSET(0x1f)
+	DIP_OFFSET(0x1e)
 	// Default Values
 	{0x00, 0xff, 0xff, 0xff, NULL                                 },
 	{0x01, 0xff, 0xff, 0xcd, NULL                                 },

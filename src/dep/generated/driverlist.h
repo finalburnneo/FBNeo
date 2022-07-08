@@ -4904,6 +4904,7 @@ DRV		BurnDrvnes_erika;
 DRV		BurnDrvnes_erikaj;
 DRV		BurnDrvgg_ernieeg;
 DRV		BurnDrvMSX_eruka;
+DRV		BurnDrvmd_escape2042ptg;
 DRV		BurnDrvmd_escape2042pt;
 DRV		BurnDrvmd_escape2042;
 DRV		BurnDrvnes_escapfroatl;
@@ -12933,6 +12934,7 @@ DRV		BurnDrvmd_roadblstp;
 DRV		BurnDrvmd_roadblst;
 DRV		BurnDrvnes_roadblasters;
 DRV		BurnDrvcv_robeeblr;
+DRV		BurnDrvmd_robertcop2;
 DRV		BurnDrvcv_robinha;
 DRV		BurnSpecRobinhoodlegendquest;
 DRV		BurnDrvnes_robinhoo;
@@ -16445,6 +16447,7 @@ DRV		BurnDrvCpsKodr1;
 DRV		BurnDrvCpsKod;
 DRV		BurnDrvKof94rz;
 DRV		BurnDrvKof94;
+DRV		BurnDrvKof94br;
 DRV		BurnDrvKof95b;
 DRV		BurnDrvKof95h;
 DRV		BurnDrvKof95a;
@@ -23723,8 +23726,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_erikaj,			// Erika to Satoru no Yume Bouken (Japan)
 	&BurnDrvgg_ernieeg,			// Ernie Els Golf (Euro)
 	&BurnDrvMSX_eruka,			// Eruka Fan Book (HB)
-	&BurnDrvmd_escape2042pt,	// Escape 2042 (HB, Hack Portuguese)
-	&BurnDrvmd_escape2042,		// Escape 2042 (M3) (HB)
+	&BurnDrvmd_escape2042ptg,	// Escape 2042 (HB, Hack Portuguese + Graphics v1.1)
+	&BurnDrvmd_escape2042pt,	// Escape 2042 (HB, Hack Portuguese v1.1)
+	&BurnDrvmd_escape2042,		// Escape 2042 (M4) (HB)
 	&BurnDrvnes_escapfroatl,	// Escape From Atlantis, The (Prototype)
 	&BurnSpecEscapemonjasen,	// Escape from M.O.N.J.A.S. (English) (48K) (HB)
 	&BurnSpecEscapemonjases,	// Escape from M.O.N.J.A.S. (Spanish) (48K) (HB)
@@ -24619,7 +24623,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecFury,				// Fury, The (128K)
 	&BurnDrvsms_pitpot,			// Fushigi no Oshiro Pit Pot (Jpn, MyCard)
 	&BurnDrvsms_pitpot1,		// Fushigi no Oshiro Pit Pot (Jpn, Pirate?)
-	&BurnDrvmd_nadiae,			// Fushigi no Umi no Nadia (Hack, English)
+	&BurnDrvmd_nadiae,			// Fushigi no Umi no Nadia (Hack, English v1.1)
 	&BurnDrvmd_nadia,			// Fushigi no Umi no Nadia (Jpn)
 	&BurnDrvpce_alice,			// Fushigi no Yume no Alice
 	&BurnDrvmd_futbol,			// Futbol Argentino 98 - Pasion de Multitudes (Pirate)
@@ -31752,6 +31756,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_roadblst,		// RoadBlasters (USA)
 	&BurnDrvnes_roadblasters,	// RoadBlasters (USA)
 	&BurnDrvcv_robeeblr,		// Robee Blaster (HB)
+	&BurnDrvmd_robertcop2,		// RobertCop 2 Full Edition (Unl)
 	&BurnDrvcv_robinha,			// Robin Hood (Alt)
 	&BurnSpecRobinhoodlegendquest,// Robin Hood - Legend Quest (128K)
 	&BurnDrvnes_robinhoo,		// Robin Hood - Prince of Thieves (USA)
@@ -35201,7 +35206,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTheendss,			// The End (SegaSA / Sonic)
 	&BurnDrvTheends,			// The End (Stern)
 	&BurnDrvTheend,				// The End
-	&BurnDrvTeot,				// The Eye of Typhoon (Beta 5 Version)
+	&BurnDrvTeot,				// The Eye of Typhoon (Beta 6 Version)
 	&BurnDrvFlstoryj,			// The FairyLand Story (Japan)
 	&BurnDrvFlstory,			// The FairyLand Story
 	&BurnDrvDaraku,				// The Fallen Angels (World) / Daraku Tenshi - The Fallen Angels (Japan)
@@ -35264,6 +35269,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsKod,				// The King of Dragons (World 910805)
 	&BurnDrvKof94rz,			// The King of Fighters '94 (Hack Boss Remixed)
 	&BurnDrvKof94,				// The King of Fighters '94 (NGM-055)(NGH-055)
+	&BurnDrvKof94br,			// The King of Fighters '94 (Portuguese edition Hack)
 	&BurnDrvKof95b,				// The King of Fighters '95 (Enable Hidden Characters V.[?])
 	&BurnDrvKof95h,				// The King of Fighters '95 (NGH-084)
 	&BurnDrvKof95a,				// The King of Fighters '95 (NGH-084, alternate board)

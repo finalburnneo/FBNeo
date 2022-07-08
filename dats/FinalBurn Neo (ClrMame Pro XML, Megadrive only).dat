@@ -6320,18 +6320,27 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="escape2042pt" cloneof="escape2042" romof="escape2042">
-		<comment>Hack, Homebrew</comment>
-		<description>Escape 2042 (HB, Hack Portuguese)</description>
+	<game name="escape2042ptg" cloneof="escape2042" romof="escape2042">
+		<comment>Hack, Homebrew, Hack Color: portas e cartoes coloridos</comment>
+		<description>Escape 2042 (HB, Hack Portuguese + Graphics v1.1)</description>
 		<year>2022</year>
 		<manufacturer>Afsblood</manufacturer>
-		<rom name="Escape 2042 PT (2022)(Afsblood).bin" size="4194304" crc="21e7f22b"/>
+		<rom name="cape 2042 PT v1.1 Hack Color (2022)(Afsblood).bin" size="4194304" crc="0a51eccc"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="escape2042pt" cloneof="escape2042" romof="escape2042">
+		<comment>Hack, Homebrew</comment>
+		<description>Escape 2042 (HB, Hack Portuguese v1.1)</description>
+		<year>2022</year>
+		<manufacturer>Afsblood</manufacturer>
+		<rom name="Escape 2042 PT v1.1 (2022)(Afsblood).bin" size="4194304" crc="f6fc656a"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="escape2042">
 		<comment>Homebrew</comment>
-		<description>Escape 2042 (M3) (HB)</description>
+		<description>Escape 2042 (M4) (HB)</description>
 		<year>2018</year>
 		<manufacturer>OrionSoft</manufacturer>
 		<rom name="Escape 2042 (HB).bin" size="4194304" crc="0d81511c"/>
@@ -7466,9 +7475,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="nadiae" cloneof="nadia" romof="nadia">
-		<description>Fushigi no Umi no Nadia (Hack, English)</description>
-		<year>2011</year>
-		<manufacturer>Namcot</manufacturer>
+		<comment>Hack</comment>
+		<description>Fushigi no Umi no Nadia (Hack, English v1.1)</description>
+		<year>2022</year>
+		<manufacturer>KingMike's Translations</manufacturer>
 		<rom name="fushigi no umi no nadia (english translation).md" size="1572864" crc="8dec9c35"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -12191,9 +12201,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="mushas" cloneof="musha" romof="musha">
+		<comment>Hack</comment>
 		<description>Musha - Metallic Uniframe Super Hybrid Armor (Hack, Spanish)</description>
 		<year>2017</year>
-		<manufacturer>Seismic</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="musha - metallic uniframe super hybrid armor (hack, spanish).bin" size="524288" crc="8013ed8b"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -12255,17 +12266,19 @@
 		<driver status="good"/>
 	</game>
 	<game name="mystdefs" cloneof="mystdef" romof="mystdef">
+		<comment>Hack</comment>
 		<description>Mystic Defender (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="mystic defender (hack, spanish).bin" size="524288" crc="2df12159"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mysticfs" cloneof="mysticf" romof="mysticf">
+		<comment>Hack</comment>
 		<description>Mystical Fighter (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Dreamworks/NCS</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="mystical fighter (hack, spanish).bin" size="524288" crc="56c54ae8"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -15906,6 +15919,14 @@
 		<year>1991</year>
 		<manufacturer>Tengen</manufacturer>
 		<rom name="roadblasters (usa).bin" size="524288" crc="ec6cd5f0"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="robertcop2">
+		<description>RobertCop 2 Full Edition (Unl)</description>
+		<year>199?</year>
+		<manufacturer>Unknown</manufacturer>
+		<rom name="RobertCop 2 Full Edition (Unl)(199X).bin" size="2097152" crc="fc88d889"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

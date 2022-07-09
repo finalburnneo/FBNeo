@@ -8650,7 +8650,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug4a" cloneof="mslug4" romof="mslug4">
-		<comment>Hack, Enter [Soft Dip] to turn on level display</comment>
+		<comment>Hack</comment>
 		<description>Metal Slug 4 (20th Anniversary)</description>
 		<year>2021</year>
 		<manufacturer>hack</manufacturer>

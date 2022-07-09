@@ -156,7 +156,7 @@ static int __cdecl MemCardDoGetSize(struct BurnArea* pba)
 static int MemCardGetSize()
 {
 	BurnAcb = MemCardDoGetSize;
-	BurnAreaScan(ACB_MEMCARD, &nMinVersion);
+	BurnAreaScan(ACB_MEMCARD | ACB_MEMCARD_ACTION, &nMinVersion);
 
 	return 0;
 }
@@ -266,7 +266,7 @@ int	MemCardInsert()
 {
 	if ((nMemoryCardStatus & 1) && (nMemoryCardStatus & 2) == 0) {
 		BurnAcb = MemCardDoInsert;
-		BurnAreaScan(ACB_WRITE | ACB_MEMCARD, &nMinVersion);
+		BurnAreaScan(ACB_WRITE | ACB_MEMCARD | ACB_MEMCARD_ACTION, &nMinVersion);
 	}
 
 	return 0;
@@ -289,7 +289,7 @@ int	MemCardEject()
 	if ((nMemoryCardStatus & 1) && (nMemoryCardStatus & 2)) {
 		BurnAcb = MemCardDoEject;
 		nMinVersion = 0;
-		BurnAreaScan(ACB_READ | ACB_MEMCARD, &nMinVersion);
+		BurnAreaScan(ACB_READ | ACB_MEMCARD | ACB_MEMCARD_ACTION, &nMinVersion);
 	}
 
 	return 0;

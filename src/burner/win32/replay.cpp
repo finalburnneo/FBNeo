@@ -354,6 +354,21 @@ INT32 StartRecord()
 	bReplayReadOnly = false;
 	bReplayShowMovement = false;
 
+	{
+		// Get date/time -before- starting game.
+		memset(&MovieInfo, 0, sizeof(MovieInfo));
+		time_t nLocalTime = time(NULL);
+		tm* tmLocalTime = localtime(&nLocalTime);
+
+		MovieInfo.hour		= tmLocalTime->tm_hour;
+		MovieInfo.minute	= tmLocalTime->tm_min;
+		MovieInfo.second	= tmLocalTime->tm_sec;
+		MovieInfo.month		= tmLocalTime->tm_mon;
+		MovieInfo.day		= tmLocalTime->tm_mday;
+		MovieInfo.dayofweek	= tmLocalTime->tm_wday;
+		MovieInfo.year		= tmLocalTime->tm_year;
+	}
+
 	if (bStartFromReset) {
 		movieFlags |= MOVIE_FLAG_FROM_POWERON;
 		if(!StartFromReset(NULL)) {
@@ -392,19 +407,8 @@ INT32 StartRecord()
 				fwrite(&nZero, 1, 4, fp);				// undo count
 				fwrite(&nMovieVersion, 1, 4, fp);		// ThisMovieVersion
 
-				memset(&MovieInfo, 0, sizeof(MovieInfo));
 				if (nMovieVersion >= 0x0401) {
 					bprintf(0, _T("nMovieVersion %X .. writing date stuff!\n"), nMovieVersion);
-					time_t nLocalTime = time(NULL);
-					tm* tmLocalTime = localtime(&nLocalTime);
-
-					MovieInfo.hour		= tmLocalTime->tm_hour;
-					MovieInfo.minute	= tmLocalTime->tm_min;
-					MovieInfo.second	= tmLocalTime->tm_sec;
-					MovieInfo.month		= tmLocalTime->tm_mon;
-					MovieInfo.day		= tmLocalTime->tm_mday;
-					MovieInfo.dayofweek	= tmLocalTime->tm_wday;
-					MovieInfo.year		= tmLocalTime->tm_year;
 
 					fwrite(&MovieInfo, 1, sizeof(MovieInfo), fp);
 				}

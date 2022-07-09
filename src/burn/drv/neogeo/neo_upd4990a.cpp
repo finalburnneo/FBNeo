@@ -21,11 +21,21 @@ static struct {
 	UINT8 TP; UINT8 nPrevCLK; UINT8 nPrevSTB;
 } uPD4990A;
 
+static INT32 (*totcyc_cb)() = NULL;
+static UINT32 nuPD4990ATicks;
+
 static UINT32 nOneSecond;
 
-INT32 uPD4990AInit(UINT32 nTicksPerSecond)
+INT32 uPD4990AInit(UINT32 nTicksPerSecond, INT32 (*cpu_totcyc_callback)())
 {
 	nOneSecond = nTicksPerSecond;
+
+	totcyc_cb = cpu_totcyc_callback;
+
+	if (totcyc_cb == NULL) {
+		bprintf(0, _T("neo_uPD04990AInit() cycle callback can't be NULL.\n"));
+		return 1;
+	}
 
 	uPD4990A.nRegister[0] = uPD4990A.nRegister[1] = 0;
 
@@ -67,8 +77,16 @@ void uPD4990AExit()
 {
 }
 
-void uPD4990AUpdate(UINT32 nTicks)
+void uPD4990ANewFrame(INT32 nOverflowTicks)
 {
+	nuPD4990ATicks = nOverflowTicks;
+}
+
+void uPD4990AUpdate()
+{
+	UINT32 nTicks = totcyc_cb() - nuPD4990ATicks;
+	nuPD4990ATicks = totcyc_cb();
+
 	if (uPD4990A.nTPMode != 2) {
 		uPD4990A.nTPCount += nTicks;
 
@@ -148,6 +166,7 @@ void uPD4990AScan(INT32 nAction, INT32* pnMin)
 void uPD4990AWrite(UINT8 CLK, UINT8 STB, UINT8 DATA)
 {
 //	bprintf(PRINT_NORMAL, _T("  - uPD4990A written: CLK: %i, STB: %i DATA IN: %i (PC: %06X).\n"), CLK ? 1 : 0, STB ? 1 : 0, DATA ? 1 : 0, SekGetPC(-1));
+	uPD4990AUpdate();
 
 	if (STB && uPD4990A.nPrevSTB == 0) {						// Process command
 
@@ -267,11 +286,11 @@ void uPD4990AWrite(UINT8 CLK, UINT8 STB, UINT8 DATA)
 	uPD4990A.nPrevSTB = STB;
 }
 
-UINT8 uPD4990ARead(UINT32 nTicks)
+UINT8 uPD4990ARead()
 {
 	UINT8 OUT;
 
-	uPD4990AUpdate(nTicks);
+	uPD4990AUpdate();
 
 	if (uPD4990A.nMode == 0) {								// 1Hz pulse appears at output
 		OUT = (uPD4990A.nCount >= (nOneSecond >> 1));

@@ -220,8 +220,6 @@ static INT32 nInputSelect;
 static UINT8* NeoInputBank;
 static UINT32 nAnalogAxis[2] = { 0, 0 };
 
-static UINT32 nuPD4990ATicks;
-
 static UINT32 nIRQOffset;
 
 #define NO_IRQ_PENDING (0x7FFFFFFF)
@@ -1105,9 +1103,7 @@ static UINT8 __fastcall vliner_timing(UINT32 sekAddress)
 		case 0x320001: {
 //			if (!bAESBIOS) {
 			if (nBIOS != 14 && nBIOS != 16 && nBIOS != 17) {
-				UINT8 nuPD4990AOutput = uPD4990ARead(SekTotalCycles() - nuPD4990ATicks);
-				nuPD4990ATicks = SekTotalCycles();
-				return 0x3F | (nuPD4990AOutput << 6);
+				return 0x3F | (uPD4990ARead() << 6);
 			}
 
 			return (0x3f) & 0xE7;
@@ -1326,7 +1322,9 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 			ba.nAddress = 0;
 			ba.szName	= "Memory card";
 
-			if ((nAction & ACB_TYPEMASK) == ACB_MEMCARD) {
+			if ((nAction & ACB_TYPEMASK) == ACB_MEMCARD && nAction & ACB_MEMCARD_ACTION) {
+				// Insertion and removal of memcard (see burner/win32/memcard.cpp)
+				bprintf(0, _T("memcard insertion or removal here.\n"));
 				if (nAction & ACB_WRITE) {
 					bMemoryCardInserted = true;
 				}
@@ -1342,7 +1340,6 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 					}
 				}
 			}
-
 			BurnAcb(&ba);
 		}
 	}
@@ -1523,12 +1520,16 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 
 		SCAN_VAR(nAnalogAxis);
 
-		SCAN_VAR(nuPD4990ATicks);
+		SCAN_VAR(nCycles68KSync);
 
 		SCAN_OFF(Neo68KFix[nNeoActiveSlot], Neo68KROM[nNeoActiveSlot], nAction);
 
 		SCAN_VAR(nLEDLatch);
 		SCAN_VAR(nLED);
+
+#if defined CYCLE_LOG
+		SCAN_VAR(derpframe);
+#endif
 
 //			BurnGameFeedback(sizeof(nLED), nLED);
 
@@ -1586,13 +1587,6 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 			SCAN_VAR(nNeoCDSpriteSlot);
 
 			CDEmuScan(nAction, pnMin);
-
-#if defined CYCLE_LOG
-			SCAN_VAR(derpframe);
-#else
-			INT32 dframe = 0; // keep compatibility with CYCLE_LOG on or off
-			SCAN_VAR(dframe);
-#endif
 		}
 
 		if (nAction & ACB_WRITE) {
@@ -1983,9 +1977,7 @@ static UINT8 __fastcall neogeoReadByte(UINT32 sekAddress)
 			}
 
 			if (nNeoSystemType & NEO_SYS_MVS) {
-				UINT8 nuPD4990AOutput = uPD4990ARead(SekTotalCycles() - nuPD4990ATicks);
-				nuPD4990ATicks = SekTotalCycles();
-				return (~NeoInputBank[3] & 0x3F) | (nuPD4990AOutput << 6);
+				return (~NeoInputBank[3] & 0x3F) | (uPD4990ARead() << 6);
 			}
 
 			return (~NeoInputBank[3] & 0x7F) & 0xE7;
@@ -3802,7 +3794,6 @@ static INT32 neogeoReset()
 
 	nAnalogAxis[0] = nAnalogAxis[1] = 0;
 
-	nuPD4990ATicks = 0;
 	nCycles68KSync = 0;
 
 	nInputSelect = 0;
@@ -4201,7 +4192,7 @@ static INT32 NeoInitCommon()
 
 	NeoInitPalette();
 
-	uPD4990AInit(12000000);
+	uPD4990AInit(12000000, SekTotalCycles);
 	nPrevBurnCPUSpeedAdjust = -1;
 
 	if (nNeoSystemType & NEO_SYS_CD) {
@@ -4831,7 +4822,7 @@ INT32 NeoFrame()
 	SekIdle(nCyclesExtra[0]);
 	ZetIdle(nCyclesExtra[1]);
 
-	nuPD4990ATicks = nCyclesExtra[0];
+	uPD4990ANewFrame(nCyclesExtra[0]);
 
 	// Run 68000
 	// Do scanlines: [248, 263] == [248, 264)
@@ -4914,7 +4905,7 @@ INT32 NeoFrame()
 		bRenderLineByLine = /*(!bNeoCDIRQEnabled) &&*/ bRenderMode;
 	}
 
-	bRenderImage = pBurnDraw != NULL && bNeoEnableGraphics;
+	bRenderImage = bNeoEnableGraphics;
 	bForceUpdateOnStatusRead = bRenderImage && bRenderLineByLine;
 	bForcePartialRender = false;
 
@@ -5056,9 +5047,9 @@ INT32 NeoFrame()
 			bprintf(PRINT_NORMAL, _T(" -- Drawing slice: %3i - %3i.\n"), nSliceStart, nSliceEnd);
 #endif
 
-			if (bNeoEnableSprites) NeoRenderSprites();				// Render sprites
+			if (bNeoEnableSprites && pBurnDraw) NeoRenderSprites();		// Render sprites
 		}
-		if (bNeoEnableText) NeoRenderText();						// Render text layer
+		if (bNeoEnableText && pBurnDraw) NeoRenderText();				// Render text layer
 	}
 
 	if ( ((nNeoSystemType & NEO_SYS_CD) && (nff0004 & 0x0030) == 0x0030) || (~nNeoSystemType & NEO_SYS_CD) ) {
@@ -5104,7 +5095,7 @@ INT32 NeoFrame()
 	}
 
 	// Update the uPD4990 until the end of the frame
-	uPD4990AUpdate(SekTotalCycles() - nuPD4990ATicks);
+	uPD4990AUpdate();
 
 #if defined EMULATE_WATCHDOG
 	// Handle the watchdog

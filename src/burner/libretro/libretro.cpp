@@ -1618,7 +1618,7 @@ static int MemCardDoEject(struct BurnArea* pba)
 static int MemCardInsert()
 {
 	BurnAcb = MemCardDoInsert;
-	BurnAreaScan(ACB_WRITE | ACB_MEMCARD, &nMinVersion);
+	BurnAreaScan(ACB_WRITE | ACB_MEMCARD | ACB_MEMCARD_ACTION, &nMinVersion);
 
 	return 0;
 }
@@ -1627,7 +1627,7 @@ static int MemCardEject()
 {
 	BurnAcb = MemCardDoEject;
 	nMinVersion = 0;
-	BurnAreaScan(ACB_READ | ACB_MEMCARD, &nMinVersion);
+	BurnAreaScan(ACB_READ | ACB_MEMCARD | ACB_MEMCARD_ACTION, &nMinVersion);
 
 	return 0;
 }

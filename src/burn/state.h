@@ -22,18 +22,19 @@ void StateRunAheadSave();
 void StateRunAheadLoad();
 
 /* flags to use for nAction */
-#define ACB_READ		 (1<<0)
-#define ACB_WRITE		 (1<<1)
+#define ACB_READ				(1<<0)
+#define ACB_WRITE				(1<<1)
 
-#define ACB_MEMORY_ROM	 (1<<2)
-#define ACB_NVRAM		 (1<<3)
-#define ACB_MEMCARD		 (1<<4)
-#define ACB_MEMORY_RAM	 (1<<5)
-#define ACB_DRIVER_DATA	 (1<<6)
+#define ACB_MEMORY_ROM			(1<<2)
+#define ACB_NVRAM				(1<<3)
+#define ACB_MEMCARD				(1<<4)
+#define ACB_MEMCARD_ACTION		(1<<14) // Insertion / Removal action
+#define ACB_MEMORY_RAM			(1<<5)
+#define ACB_DRIVER_DATA			(1<<6)
 
-#define ACB_RUNAHEAD	 (1<<7) // for single instance runahead
-#define ACB_2RUNAHEAD	 (1<<8) // for second instance runahead
-#define ACB_NET_OPT		 (1<<9) // for netplay
+#define ACB_RUNAHEAD			(1<<7) // for single instance runahead
+#define ACB_2RUNAHEAD			(1<<8) // for second instance runahead
+#define ACB_NET_OPT				(1<<9) // for netplay
 
 #define ACB_FULLSCAN	(ACB_NVRAM | ACB_MEMCARD | ACB_MEMORY_RAM | ACB_DRIVER_DATA)
 

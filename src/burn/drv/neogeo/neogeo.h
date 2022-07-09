@@ -160,11 +160,12 @@ void neogeo_cmc50_m1_decrypt();
 // neo_upd4990a.cpp
 void uPD4990AExit();
 void uPD499ASetTicks(UINT32 nTicksPerSecond);
-INT32 uPD4990AInit(UINT32 nTicksPerSecond);
+INT32 uPD4990AInit(UINT32 nTicksPerSecond, INT32 (*cpu_totcyc_callback)());
+void uPD4990ANewFrame(INT32 nOverflowTicks);
 void uPD4990AScan(INT32 nAction, INT32* pnMin);
-void uPD4990AUpdate(UINT32 nTicks);
+void uPD4990AUpdate();
 void uPD4990AWrite(UINT8 CLK, UINT8 STB, UINT8 DATA);
-UINT8 uPD4990ARead(UINT32 nTicks);
+UINT8 uPD4990ARead();
 
 // d_neogeo.cpp
 void kf2k3pcb_bios_decode();

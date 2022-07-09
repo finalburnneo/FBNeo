@@ -60,39 +60,39 @@ static UINT8 DrvNMI = 0;
 
 static UINT8 dip_changed;
 
-static struct BurnRomInfo emptyRomDesc[] = {
+static struct BurnRomInfo emptyRomDesc[] = { // burn bios requirement
 	{ "",                    0,          0, 0 },
 };
 
 static struct BurnInputInfo MSXInputList[] = {
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"},
-	{"P1 Right",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"},
-	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
-	{"P1 Button 2",	BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"			},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"		},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"		},
+	{"P1 Right",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"		},
+	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"		},
+	{"P1 Button 2",	BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"		},
 
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"},
-	{"P2 Right",	BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"},
-	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
-	{"P2 Button 2",	BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"			},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"		},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"		},
+	{"P2 Right",	BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"		},
+	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"		},
+	{"P2 Button 2",	BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"		},
 
-	{"Key F1",	    BIT_DIGITAL,	DrvJoy4 + 3,	"p1 F1" },
-	{"Key F2",	    BIT_DIGITAL,	DrvJoy4 + 4,	"p1 F2" },
-	{"Key F3",	    BIT_DIGITAL,	DrvJoy4 + 5,	"p1 F3" },
-	{"Key F4",	    BIT_DIGITAL,	DrvJoy4 + 6,	"p1 F4" },
-	{"Key F5",	    BIT_DIGITAL,	DrvJoy4 + 7,	"p1 F5" },
-	{"Key F6",	    BIT_DIGITAL,	DrvJoy4 + 8,	"p1 F6" },
+	{"Key F1",	    BIT_DIGITAL,	DrvJoy4 + 3,	"p1 F1"			},
+	{"Key F2",	    BIT_DIGITAL,	DrvJoy4 + 4,	"p1 F2"			},
+	{"Key F3",	    BIT_DIGITAL,	DrvJoy4 + 5,	"p1 F3"			},
+	{"Key F4",	    BIT_DIGITAL,	DrvJoy4 + 6,	"p1 F4"			},
+	{"Key F5",	    BIT_DIGITAL,	DrvJoy4 + 7,	"p1 F5"			},
+	{"Key F6",	    BIT_DIGITAL,	DrvJoy4 + 8,	"p1 F6"			},
 
-	{"Key UP",	    BIT_DIGITAL,	DrvJoy4 + 9,	"p1 KEYUP" },
-	{"Key DOWN",	BIT_DIGITAL,	DrvJoy4 + 10,	"p1 KEYDOWN" },
-	{"Key LEFT",	BIT_DIGITAL,	DrvJoy4 + 11,	"p1 KEYLEFT" },
-	{"Key RIGHT",	BIT_DIGITAL,	DrvJoy4 + 12,	"p1 KEYRIGHT" },
+	{"Key UP",	    BIT_DIGITAL,	DrvJoy4 + 9,	"p1 KEYUP"		},
+	{"Key DOWN",	BIT_DIGITAL,	DrvJoy4 + 10,	"p1 KEYDOWN"	},
+	{"Key LEFT",	BIT_DIGITAL,	DrvJoy4 + 11,	"p1 KEYLEFT"	},
+	{"Key RIGHT",	BIT_DIGITAL,	DrvJoy4 + 12,	"p1 KEYRIGHT"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	    "reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	    "reset"			},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"			},
 };
 
 STDINPUTINFO(MSX)
@@ -286,6 +286,7 @@ static UINT8 SCCReg[MAXSLOTS]; // Konami-scc enable register
 
 static UINT8 Kana, KanaByte; // Kanji-rom stuff
 
+static INT32 lastshifted;
 static UINT8 ppiC_row;
 static UINT8 keyRows[12];
 static INT32 charMatrix[][3] = {
@@ -331,7 +332,7 @@ static INT32 charMatrix[][3] = {
 	{/*VK_SHIFT       */0x10,  6, 0},
 	{/*VK_CONTROL     */0x11,  6, 1},
 	{/*VK_TAB         */0x09,  7, 3},
-	//{VK_STOP, 	  7, 4},
+	{/*CTRL-C         */0x03,  7, 4}, // STOP
 	{/*VK_BACK        */0x08,  7, 5},
 	//{VK_HOME,	  8, 1},
 	//{VK_INSERT,   8, 2},
@@ -376,9 +377,7 @@ static void keyInput(UINT8 kchar, UINT8 onoff) { // input from emulator
 
 void msxKeyCallback(UINT8 code, UINT8 KeyType, UINT8 down)
 {
-	static INT32 lastshifted = 0;
-
-	//bprintf(0, _T(" %c:%S,"), code, (down==1)?"DOWN":"UP");
+	//bprintf(0, _T(" %c(%x):%S,"), code, code, (down==1)?"DOWN":"UP");
 	if (SwapSlash && code == '/') code = 0xe0;
 
 	if (lastshifted) memset(&keyRows, 0, sizeof(keyRows));
@@ -1362,6 +1361,7 @@ static INT32 DrvDoReset()
 
 	Kana = 0;
 	KanaByte = 0;
+	lastshifted = 0;
 
 	msxinit(CurRomSize[0]);
 
@@ -1714,6 +1714,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(CASAutoLoadPos);
 		SCAN_VAR(CASAutoLoadTicker);
 		SCAN_VAR(CASFrameCounter);
+
+		SCAN_VAR(Kana);
+		SCAN_VAR(KanaByte);
+		SCAN_VAR(lastshifted);
+		SCAN_VAR(ppiC_row);
 	}
 
 	if (nAction & ACB_WRITE) {

@@ -60,138 +60,140 @@ static UINT8 DrvNMI = 0;
 
 static UINT8 dip_changed;
 
-static struct BurnRomInfo emptyRomDesc[] = {
+static struct BurnRomInfo emptyRomDesc[] = { // burn bios requirement
 	{ "",                    0,          0, 0 },
 };
 
 static struct BurnInputInfo MSXInputList[] = {
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"},
-	{"P1 Right",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"},
-	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
-	{"P1 Button 2",	BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"			},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"		},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"		},
+	{"P1 Right",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"		},
+	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"		},
+	{"P1 Button 2",	BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"		},
 
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"},
-	{"P2 Right",	BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"},
-	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
-	{"P2 Button 2",	BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"			},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"		},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"		},
+	{"P2 Right",	BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"		},
+	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"		},
+	{"P2 Button 2",	BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"		},
 
-	{"Key F1",	    BIT_DIGITAL,	DrvJoy4 + 3,	"p1 F1" },
-	{"Key F2",	    BIT_DIGITAL,	DrvJoy4 + 4,	"p1 F2" },
-	{"Key F3",	    BIT_DIGITAL,	DrvJoy4 + 5,	"p1 F3" },
-	{"Key F4",	    BIT_DIGITAL,	DrvJoy4 + 6,	"p1 F4" },
-	{"Key F5",	    BIT_DIGITAL,	DrvJoy4 + 7,	"p1 F5" },
-	{"Key F6",	    BIT_DIGITAL,	DrvJoy4 + 8,	"p1 F6" },
+	{"Key F1",	    BIT_DIGITAL,	DrvJoy4 + 3,	"p1 F1"			},
+	{"Key F2",	    BIT_DIGITAL,	DrvJoy4 + 4,	"p1 F2"			},
+	{"Key F3",	    BIT_DIGITAL,	DrvJoy4 + 5,	"p1 F3"			},
+	{"Key F4",	    BIT_DIGITAL,	DrvJoy4 + 6,	"p1 F4"			},
+	{"Key F5",	    BIT_DIGITAL,	DrvJoy4 + 7,	"p1 F5"			},
+	{"Key F6",	    BIT_DIGITAL,	DrvJoy4 + 8,	"p1 F6"			},
 
-	{"Key UP",	    BIT_DIGITAL,	DrvJoy4 + 9,	"p1 KEYUP" },
-	{"Key DOWN",	BIT_DIGITAL,	DrvJoy4 + 10,	"p1 KEYDOWN" },
-	{"Key LEFT",	BIT_DIGITAL,	DrvJoy4 + 11,	"p1 KEYLEFT" },
-	{"Key RIGHT",	BIT_DIGITAL,	DrvJoy4 + 12,	"p1 KEYRIGHT" },
+	{"Key UP",	    BIT_DIGITAL,	DrvJoy4 + 9,	"p1 KEYUP"		},
+	{"Key DOWN",	BIT_DIGITAL,	DrvJoy4 + 10,	"p1 KEYDOWN"	},
+	{"Key LEFT",	BIT_DIGITAL,	DrvJoy4 + 11,	"p1 KEYLEFT"	},
+	{"Key RIGHT",	BIT_DIGITAL,	DrvJoy4 + 12,	"p1 KEYRIGHT"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	    "reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Key STOP",	BIT_DIGITAL,	DrvJoy4 + 13,	"p1 STOP"		},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	    "reset"			},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"			},
 };
 
 STDINPUTINFO(MSX)
 
 static struct BurnDIPInfo MSXDIPList[]=
 {
-	//{0x17, 0xff, 0xff, 0x10, NULL		},
+	//{0x18, 0xff, 0xff, 0x10, NULL		},
 
 	{0   , 0xfe, 0   ,    2, "BIOS - NOTE: Changes require re-start!"	},
-	{0x17, 0x01, 0x01, 0x00, "Normal (REQ: msx.rom)"	},
-	{0x17, 0x01, 0x01, 0x01, "Japanese (REQ: msxj.rom, kanji.rom" },
+	{0x18, 0x01, 0x01, 0x00, "Normal (REQ: msx.rom)"	},
+	{0x18, 0x01, 0x01, 0x01, "Japanese (REQ: msxj.rom, kanji.rom" },
 
 	{0   , 0xfe, 0   ,    2, "Hertz"	},
-	{0x17, 0x01, 0x10, 0x00, "50hz (Europe)"	},
-	{0x17, 0x01, 0x10, 0x10, "60hz (Japan, US)"	},
+	{0x18, 0x01, 0x10, 0x00, "50hz (Europe)"	},
+	{0x18, 0x01, 0x10, 0x10, "60hz (Japan, US)"	},
 
 	{0   , 0xfe, 0   ,    2, "Key-Clicker / 1-Bit DAC"	},
-	{0x17, 0x01, 0x02, 0x00, "Off"	},
-	{0x17, 0x01, 0x02, 0x02, "On"	},
+	{0x18, 0x01, 0x02, 0x00, "Off"	},
+	{0x18, 0x01, 0x02, 0x02, "On"	},
 
 	{0   , 0xfe, 0   ,    2, "Swap Joyports"	},
-	{0x17, 0x01, 0x20, 0x00, "Normal"	},
-	{0x17, 0x01, 0x20, 0x20, "Swapped"	},
+	{0x18, 0x01, 0x20, 0x00, "Normal"	},
+	{0x18, 0x01, 0x20, 0x20, "Swapped"	},
 
 	{0   , 0xfe, 0   ,    2, "Map Cursor Keys to Joy #1"	},
-	{0x17, 0x01, 0x80, 0x00, "Off"	},
-	{0x17, 0x01, 0x80, 0x80, "On"	},
+	{0x18, 0x01, 0x80, 0x00, "Off"	},
+	{0x18, 0x01, 0x80, 0x80, "On"	},
 
 	{0   , 0xfe, 0   ,    4, "Tape Side"	},
-	{0x17, 0x01, 0x44, 0x00, "Side A"	},
-	{0x17, 0x01, 0x44, 0x04, "Side B"	},
-	{0x17, 0x02, 0x44, 0x40, "Side C"	},
-	{0x17, 0x02, 0x44, 0x44, "Side D"	},
+	{0x18, 0x01, 0x44, 0x00, "Side A"	},
+	{0x18, 0x01, 0x44, 0x04, "Side B"	},
+	{0x18, 0x02, 0x44, 0x40, "Side C"	},
+	{0x18, 0x02, 0x44, 0x44, "Side D"	},
 
 	{0   , 0xfe, 0,       2, "Sprite Limit"	},
-	{0x17, 0x01, 0x08, 0x00, "Enabled"				},
-	{0x17, 0x01, 0x08, 0x08, "Disabled (hack)"				},
+	{0x18, 0x01, 0x08, 0x00, "Enabled"				},
+	{0x18, 0x01, 0x08, 0x08, "Disabled (hack)"				},
 };
 
 static struct BurnDIPInfo MSXDefaultDIPList[]=
 {
-	{0x17, 0xff, 0xff, 0x10, NULL		},
+	{0x18, 0xff, 0xff, 0x10, NULL		},
 };
 
 static struct BurnDIPInfo MSXJBIOSDIPList[]=
 {
-	{0x17, 0xff, 0xff, 0x11, NULL		},
+	{0x18, 0xff, 0xff, 0x11, NULL		},
 };
 
 static struct BurnDIPInfo MSXJBIOSMapCursorToJoy1DIPList[]=
 {
-	{0x17, 0xff, 0xff, 0x11+0x80, NULL		},
+	{0x18, 0xff, 0xff, 0x11+0x80, NULL		},
 };
 
 static struct BurnDIPInfo MSX50hzJoySwapDIPList[]=
 {
-	{0x17, 0xff, 0xff, 0x20, NULL		},
+	{0x18, 0xff, 0xff, 0x20, NULL		},
 };
 
 static struct BurnDIPInfo MSX50hzDIPList[]=
 {
-	{0x17, 0xff, 0xff, 0x00, NULL		},
+	{0x18, 0xff, 0xff, 0x00, NULL		},
 };
 
 static struct BurnDIPInfo MSXJoySwapDIPList[]=
 {
-	{0x17, 0xff, 0xff, 0x30, NULL		},
+	{0x18, 0xff, 0xff, 0x30, NULL		},
 };
 
 static struct BurnDIPInfo MSXJoySwapKeyClickerDIPList[]=
 {
-	{0x17, 0xff, 0xff, 0x30+0x02, NULL		},
+	{0x18, 0xff, 0xff, 0x30+0x02, NULL		},
 };
 
 static struct BurnDIPInfo MSXMapCursorToJoy1DIPList[]=
 {
-	{0x17, 0xff, 0xff, 0x80, NULL		},
+	{0x18, 0xff, 0xff, 0x80, NULL		},
 };
 
 static struct BurnDIPInfo MSXMapCursorToJoy1_60hzDIPList[]=
 {
-	{0x17, 0xff, 0xff, 0x80+0x10, NULL		},
+	{0x18, 0xff, 0xff, 0x80+0x10, NULL		},
 };
 
 #if 0
 static struct BurnDIPInfo MSXMapCursorToJoy1KeyClickerDIPList[]=
 {
-	{0x17, 0xff, 0xff, 0x80, NULL		},
+	{0x18, 0xff, 0xff, 0x80, NULL		},
 };
 #endif
 
 static struct BurnDIPInfo MSXMapCursorToJoy1_60hzKeyClickerDIPList[]=
 {
-	{0x17, 0xff, 0xff, 0x80+0x10+0x02, NULL		},
+	{0x18, 0xff, 0xff, 0x80+0x10+0x02, NULL		},
 };
 
 static struct BurnDIPInfo MSXKeyClickerDACDIPList[]=
 {
-	{0x17, 0xff, 0xff, 0x02, NULL		},
+	{0x18, 0xff, 0xff, 0x02, NULL		},
 };
 
 STDDIPINFOEXT(MSX, MSXDefault, MSX)
@@ -286,6 +288,7 @@ static UINT8 SCCReg[MAXSLOTS]; // Konami-scc enable register
 
 static UINT8 Kana, KanaByte; // Kanji-rom stuff
 
+static INT32 lastshifted;
 static UINT8 ppiC_row;
 static UINT8 keyRows[12];
 static INT32 charMatrix[][3] = {
@@ -331,7 +334,7 @@ static INT32 charMatrix[][3] = {
 	{/*VK_SHIFT       */0x10,  6, 0},
 	{/*VK_CONTROL     */0x11,  6, 1},
 	{/*VK_TAB         */0x09,  7, 3},
-	//{VK_STOP, 	  7, 4},
+	{/*CTRL-C         */0x03,  7, 4}, // STOP
 	{/*VK_BACK        */0x08,  7, 5},
 	//{VK_HOME,	  8, 1},
 	//{VK_INSERT,   8, 2},
@@ -376,9 +379,7 @@ static void keyInput(UINT8 kchar, UINT8 onoff) { // input from emulator
 
 void msxKeyCallback(UINT8 code, UINT8 KeyType, UINT8 down)
 {
-	static INT32 lastshifted = 0;
-
-	//bprintf(0, _T(" %c:%S,"), code, (down==1)?"DOWN":"UP");
+	//bprintf(0, _T(" %c(%x):%S,"), code, code, (down==1)?"DOWN":"UP");
 	if (SwapSlash && code == '/') code = 0xe0;
 
 	if (lastshifted) memset(&keyRows, 0, sizeof(keyRows));
@@ -1362,6 +1363,7 @@ static INT32 DrvDoReset()
 
 	Kana = 0;
 	KanaByte = 0;
+	lastshifted = 0;
 
 	msxinit(CurRomSize[0]);
 
@@ -1603,6 +1605,8 @@ static INT32 DrvFrame()
 		keyInput(0xf5, DrvJoy4[7]);
 		keyInput(0xf6, DrvJoy4[8]);
 
+		keyInput(0x03, DrvJoy4[13]); // STOP
+
 		if (MapCursorToJoy1)
 		{ // Mapped to Joy #1
 			keyInput(0xf8, DrvJoy1[0]);  // Key UP
@@ -1714,6 +1718,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(CASAutoLoadPos);
 		SCAN_VAR(CASAutoLoadTicker);
 		SCAN_VAR(CASFrameCounter);
+
+		SCAN_VAR(Kana);
+		SCAN_VAR(KanaByte);
+		SCAN_VAR(lastshifted);
+		SCAN_VAR(ppiC_row);
 	}
 
 	if (nAction & ACB_WRITE) {

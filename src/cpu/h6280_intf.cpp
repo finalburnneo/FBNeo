@@ -283,6 +283,8 @@ void h6280Init(INT32 nCpu)
 	sPointer->h6280Read = NULL;
 	sPointer->h6280WriteIO = NULL;
 
+	h6280SetVDCPenalty(1); // default on
+
 	CpuCheatRegister(nCpu, &H6280Config);
 }
 

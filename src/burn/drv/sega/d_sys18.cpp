@@ -264,7 +264,7 @@ static struct BurnInputInfo LghostInputList[] = {
 STDINPUTINFO(Lghost)
 
 static struct BurnInputInfo MwalkInputList[] = {
-	{"P1 Coin"           , BIT_DIGITAL  , System16InputPort0 + 0, "p1 coin"   },
+	{"P1 Coin"           , BIT_DIGITAL  , System16InputPort0 + 7, "p1 coin"   },
 	{"P1 Start"          , BIT_DIGITAL  , System16InputPort0 + 4, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , System16InputPort1 + 5, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , System16InputPort1 + 4, "p1 down"   },
@@ -284,7 +284,7 @@ static struct BurnInputInfo MwalkInputList[] = {
 	{"P2 Fire 2"         , BIT_DIGITAL  , System16InputPort2 + 1, "p2 fire 2" },
 	{"P2 Service"        , BIT_DIGITAL  , System16InputPort2 + 3, "service2"  },
 
-	{"P3 Coin"           , BIT_DIGITAL  , System16InputPort0 + 7, "p3 coin"   },
+	{"P3 Coin"           , BIT_DIGITAL  , System16InputPort0 + 0, "p3 coin"   },
 	{"P3 Start"          , BIT_DIGITAL  , System16InputPort3 + 3, "p3 start"  },
 	{"P3 Up"             , BIT_DIGITAL  , System16InputPort3 + 5, "p3 up"     },
 	{"P3 Down"           , BIT_DIGITAL  , System16InputPort3 + 4, "p3 down"   },
@@ -844,12 +844,28 @@ static struct BurnDIPInfo MwalkDIPList[]=
 
 STDDIPINFO(Mwalk)
 
-static struct BurnDIPInfo MwalkuDIPList[]=
+static void MwalkFixInputs()
 {
-	DIP_OFFSET(0x1f)
+	// Depending on dips, coin changes
+	if (System16Dip[1] & 0x20) { // Common "Coin Chute"
+		if (System16InputPort0[7]) System16InputPort0[0] = 1;
+	}
+}
+
+static void MwalkudFixInputs()
+{
+	// Depending on dips, coin changes
+	if (~System16Dip[1] & 0x20) { // Common "Coin Chute"
+		if (System16InputPort0[7]) System16InputPort0[0] = 1;
+	}
+}
+
+static struct BurnDIPInfo MwalkudDIPList[]=
+{
+	DIP_OFFSET(0x1e)
 	// Default Values
 	{0x00, 0xff, 0xff, 0xff, NULL                                 },
-	{0x01, 0xff, 0xff, 0xcd, NULL                                 },
+	{0x01, 0xff, 0xff, 0xfd, NULL                                 },
 
 	// Dip 1
 	SYSTEM18_COINAGE(0x00)
@@ -886,7 +902,7 @@ static struct BurnDIPInfo MwalkuDIPList[]=
 	{0x01, 0x01, 0xc0, 0x00, "Hardest"                            },
 };
 
-STDDIPINFO(Mwalku)
+STDDIPINFO(Mwalkud)
 
 static struct BurnDIPInfo ShdancerDIPList[]=
 {
@@ -3858,13 +3874,27 @@ struct BurnDriver BurnDrvLghostud = {
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
+static INT32 MwalkInit()
+{
+	System16MakeInputsDo = MwalkFixInputs;
+
+	return System16Init();
+}
+
+static INT32 MwalkudInit()
+{
+	System16MakeInputsDo = MwalkudFixInputs;
+
+	return System16Init();
+}
+
 struct BurnDriver BurnDrvMWalk = {
 	"mwalk", NULL, NULL, NULL, "1990",
 	"Michael Jackson's Moonwalker (set 3, World, FD1094/8751 317-0159)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
 	NULL, MwalkRomInfo, MwalkRomName, NULL, NULL, NULL, NULL, MwalkInputInfo, MwalkDIPInfo,
-	System16Init, System18Exit, System18Frame, System18Render, System18Scan,
+	MwalkInit, System18Exit, System18Frame, System18Render, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -3874,7 +3904,7 @@ struct BurnDriver BurnDrvMWalkd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
 	NULL, MwalkdRomInfo, MwalkdRomName, NULL, NULL, NULL, NULL, MwalkInputInfo, MwalkDIPInfo,
-	System16Init, System18Exit, System18Frame, System18Render, System18Scan,
+	MwalkInit, System18Exit, System18Frame, System18Render, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -3884,7 +3914,7 @@ struct BurnDriver BurnDrvMWalkj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
 	NULL, MwalkjRomInfo, MwalkjRomName, NULL, NULL, NULL, NULL, MwalkInputInfo, MwalkDIPInfo,
-	System16Init, System18Exit, System18Frame, System18Render, System18Scan,
+	MwalkInit, System18Exit, System18Frame, System18Render, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -3894,7 +3924,7 @@ struct BurnDriver BurnDrvMWalkjd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
 	NULL, MwalkjdRomInfo, MwalkjdRomName, NULL, NULL, NULL, NULL, MwalkInputInfo, MwalkDIPInfo,
-	System16Init, System18Exit, System18Frame, System18Render, System18Scan,
+	MwalkInit, System18Exit, System18Frame, System18Render, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -3903,8 +3933,8 @@ struct BurnDriver BurnDrvMWalku = {
 	"Michael Jackson's Moonwalker (US) (FD1094/8751 317-0158)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
-	NULL, MwalkuRomInfo, MwalkuRomName, NULL, NULL, NULL, NULL, MwalkInputInfo, MwalkuDIPInfo,
-	System16Init, System18Exit, System18Frame, System18Render, System18Scan,
+	NULL, MwalkuRomInfo, MwalkuRomName, NULL, NULL, NULL, NULL, MwalkInputInfo, MwalkDIPInfo,
+	MwalkInit, System18Exit, System18Frame, System18Render, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -3913,8 +3943,8 @@ struct BurnDriver BurnDrvMWalkud = {
 	"Michael Jackson's Moonwalker (US) (bootleg of FD1094/8751 317-0158 set)\0", NULL, "bootleg", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
-	NULL, MwalkudRomInfo, MwalkudRomName, NULL, NULL, NULL, NULL, MwalkInputInfo, MwalkuDIPInfo,
-	System16Init, System18Exit, System18Frame, System18Render, System18Scan,
+	NULL, MwalkudRomInfo, MwalkudRomName, NULL, NULL, NULL, NULL, MwalkInputInfo, MwalkudDIPInfo,
+	MwalkudInit, System18Exit, System18Frame, System18Render, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 

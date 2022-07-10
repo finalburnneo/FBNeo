@@ -26,6 +26,8 @@ extern INT32 nh6280CpuCount;
 
 void h6280SetIRQLine(INT32 line, INT32 state);
 
+void h6280SetVDCPenalty(INT32 enabled);
+
 INT32 h6280Scan(INT32 nAction);
 
 INT32 h6280TotalCycles();

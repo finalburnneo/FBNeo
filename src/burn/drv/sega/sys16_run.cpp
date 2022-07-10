@@ -174,6 +174,7 @@ System16CustomLoadRom System16CustomLoadRomDo;
 System16CustomDecryptOpCode System16CustomDecryptOpCodeDo;
 System16ProcessAnalogControls System16ProcessAnalogControlsDo;
 System16MakeAnalogInputs System16MakeAnalogInputsDo;
+System16MakeAnalogInputs System16MakeInputsDo;
 
 /*====================================================
 Inputs
@@ -191,6 +192,8 @@ inline static void System16ClearOpposites(UINT8* nJoystickInputs)
 
 inline static void System16MakeInputs()
 {
+	if (System16MakeInputsDo) System16MakeInputsDo();
+
 	// Reset Inputs
 	System16Input[0] = System16Input[1] = System16Input[2] = System16Input[3] = System16Input[4] = System16Input[5] = System16Input[6] = 0;
 
@@ -2738,7 +2741,8 @@ INT32 System16Exit()
  	System16CustomLoadRomDo = NULL;
  	System16CustomDecryptOpCodeDo = NULL;
  	System16ProcessAnalogControlsDo = NULL;
- 	System16MakeAnalogInputsDo = NULL;
+	System16MakeAnalogInputsDo = NULL;
+	System16MakeInputsDo = NULL;
 	System16I8751InitialConfig = NULL;
  	
  	memset(multiply, 0, sizeof(multiply));

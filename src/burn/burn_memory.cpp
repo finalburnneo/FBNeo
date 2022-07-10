@@ -93,8 +93,7 @@ UINT8 *BurnRealloc(void *ptr, INT32 size)
 			check_overwrite(i, MEM_REALLOC);
 			INT32 spill = (OOB_CHECKER) ? OOB_CHECK : 0;
 			memptr[i] = (UINT8*)realloc(ptr, size + spill);
-			if (memsize[i] > size)
-				memset (memptr[i] + size, 0, spill); // after realloc, we need to set previously used content to 0
+			if (spill) memset (memptr[i] + size, 0, spill);
 			mem_allocated -= memsize[i];
 			mem_allocated += size;
 			memsize[i] = size;

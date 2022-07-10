@@ -485,6 +485,13 @@ static INT32 CommonInit(int type)
 		h6280SetWritePortHandler(pce_write_port);
 		h6280SetWriteHandler(pce_write);
 		h6280SetReadHandler(pce_read);
+
+		if (strcmp(BurnDrvGetTextA(DRV_NAME), "pce_f1pilot") == 0 ||
+		    strcmp(BurnDrvGetTextA(DRV_NAME), "pce_wonderm") == 0) {
+			bprintf(0, _T("**  (PCE) Using timing hack for F-1 Pilot / Wonder Momo\n"));
+			h6280SetVDCPenalty(0);
+		}
+
 		h6280Close();
 
 		interrupt = pce_interrupt;
@@ -643,7 +650,7 @@ INT32 PCEFrame()
 	INT32 nCyclesDone[1] = { nExtraCycles };
 
 	h6280Open(0);
-
+	h6280Idle(nExtraCycles);
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone[0] += h6280Run(1128/3); // 1128 m-cycles brings us to hblank. "/ 3" m-cycles -> cpu cycles
@@ -654,7 +661,7 @@ INT32 PCEFrame()
 		// air zonk, crash ingame when moving up
 		// side arms, playfield bounce ingame (note: bottom selection cut-off is normal - if you're seeing the whole thing, you've most certainly broken other games.)
 		// huzero, corruption above the "Sc 000000"
-		// cadash, bouncing playfield, corrupted HUD
+		// cadash, bouncing playfield, corrupted HUD *not entirely fixed - game intro*
 		// ghost manor, crash while going down the slide / moving around a bit
 		CPU_RUN_SYNCINT(0, h6280); // finish line cycles
 		interrupt();       // advance line in vdc & vbl @ last line

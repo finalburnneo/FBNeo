@@ -3371,8 +3371,11 @@ int Sh2Run(int cycles)
 
 static void Sh2SetIRQLine_Internal(const int line, int state)
 {
-	INT32 hold = (state == CPU_IRQSTATUS_HOLD);
-	if (hold) state = CPU_IRQSTATUS_ACK;
+	INT32 hold = 0;
+	if (state == CPU_IRQSTATUS_HOLD) {
+		state = CPU_IRQSTATUS_ACK;
+		hold = 1;
+	}
 
 	if (sh2->irq_line_state[line] == state) return;
 	sh2->irq_line_state[line] = state;

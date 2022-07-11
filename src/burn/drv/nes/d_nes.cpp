@@ -21301,7 +21301,7 @@ struct BurnDriver BurnDrvnes_virus = {
 // Homebrew (hand-added)
 
 static struct BurnRomInfo nes_fullquietRomDesc[] = {
-	{ "Full Quiet (Test Card)(2021)(Retrotainment Games).nes",          524304, 0x03055116, BRF_ESS | BRF_PRG },
+	{ "Full Quiet (Test Cart)(2021)(Retrotainment Games).nes",          524304, 0x03055116, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_fullquiet)
@@ -21309,7 +21309,7 @@ STD_ROM_FN(nes_fullquiet)
 
 struct BurnDriver BurnDrvnes_fullquiet = {
 	"nes_fullquiet", NULL, NULL, NULL, "2021",
-	"Full Quiet (Test Card Prototype) (HB)\0", NULL, "Retrotainment Games", "Miscellaneous",
+	"Full Quiet (Test Cart Prototype) (HB)\0", NULL, "Retrotainment Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_PROTOTYPE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
 	NESGetZipName, nes_fullquietRomInfo, nes_fullquietRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -43323,10 +43323,10 @@ STD_ROM_PICK(nes_parisdakralspe)
 STD_ROM_FN(nes_parisdakralspe)
 
 struct BurnDriver BurnDrvnes_parisdakralspe = {
-	"nes_parisdakralspe", NULL, NULL, NULL, "1988",
-	"Paris-Dakar Rally Special (T-Eng)\0", NULL, "CBS / Sony Group", "Miscellaneous",
+	"nes_parisdakralspe", NULL, NULL, NULL, "2013",
+	"Paris-Dakar Rally Special (T-Eng)\0", NULL, "MrRichard999", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RACING | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RACING | GBF_ADV, 0,
 	NESGetZipName, nes_parisdakralspeRomInfo, nes_parisdakralspeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -43374,10 +43374,10 @@ STD_ROM_PICK(nes_parodiusda)
 STD_ROM_FN(nes_parodiusda)
 
 struct BurnDriver BurnDrvnes_parodiusda = {
-	"nes_parodiusda", NULL, NULL, NULL, "1990",
-	"Parodius Da! (T-Eng)\0", NULL, "Konami", "Miscellaneous",
+	"nes_parodiusda", NULL, NULL, NULL, "2011",
+	"Parodius Da! (T-Eng)\0", NULL, "Stardust Crusaders", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_HORSHOOT, 0,
 	NESGetZipName, nes_parodiusdaRomInfo, nes_parodiusdaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -43765,8 +43765,8 @@ STD_ROM_PICK(nes_policeman)
 STD_ROM_FN(nes_policeman)
 
 struct BurnDriver BurnDrvnes_policeman = {
-	"nes_policeman", NULL, NULL, NULL, "1989?",
-	"Policeman (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_policeman", NULL, NULL, NULL, "1992",
+	"Policeman (Unl)\0", NULL, "Micro Genius", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_policemanRomInfo, nes_policemanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -44938,8 +44938,8 @@ STD_ROM_PICK(nes_roadworker)
 STD_ROM_FN(nes_roadworker)
 
 struct BurnDriver BurnDrvnes_roadworker = {
-	"nes_roadworker", NULL, NULL, NULL, "1989?",
-	"Road Worker (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_roadworker", NULL, NULL, NULL, "200?",
+	"Road Worker (Unl)\0", NULL, "Nice Code Software", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_roadworkerRomInfo, nes_roadworkerRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -45006,8 +45006,8 @@ STD_ROM_PICK(nes_roboccowars)
 STD_ROM_FN(nes_roboccowars)
 
 struct BurnDriver BurnDrvnes_roboccowars = {
-	"nes_roboccowars", NULL, NULL, NULL, "1989?",
-	"Robocco Wars (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_roboccowars", NULL, NULL, NULL, "1991",
+	"Robocco Wars (Japan)\0", NULL, "IGS", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_roboccowarsRomInfo, nes_roboccowarsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -45091,8 +45091,8 @@ STD_ROM_PICK(nes_robocvster)
 STD_ROM_FN(nes_robocvster)
 
 struct BurnDriver BurnDrvnes_robocvster = {
-	"nes_robocvster", NULL, NULL, NULL, "1989?",
-	"RoboCop Vs The Terminator (USA)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_robocvster", NULL, NULL, NULL, "1993",
+	"RoboCop Vs The Terminator (USA)\0", NULL, "Virgin Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_robocvsterRomInfo, nes_robocvsterRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -45142,8 +45142,8 @@ STD_ROM_PICK(nes_rockball)
 STD_ROM_FN(nes_rockball)
 
 struct BurnDriver BurnDrvnes_rockball = {
-	"nes_rockball", NULL, NULL, NULL, "1989?",
-	"Rockball (Asia) (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_rockball", NULL, NULL, NULL, "1993",
+	"Rockball (Asia) (Unl)\0", NULL, "Sachen", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_rockballRomInfo, nes_rockballRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -45193,8 +45193,8 @@ STD_ROM_PICK(nes_rocketman)
 STD_ROM_FN(nes_rocketman)
 
 struct BurnDriver BurnDrvnes_rocketman = {
-	"nes_rocketman", NULL, NULL, NULL, "1989?",
-	"Rocketman (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_rocketman", NULL, NULL, NULL, "2007",
+	"Rocketman (Unl)\0", NULL, "Nice Code Software", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_rocketmanRomInfo, nes_rocketmanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -45346,8 +45346,8 @@ STD_ROM_PICK(nes_rodland)
 STD_ROM_FN(nes_rodland)
 
 struct BurnDriver BurnDrvnes_rodland = {
-	"nes_rodland", NULL, NULL, NULL, "1989?",
-	"Rod Land (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_rodland", NULL, NULL, NULL, "1992",
+	"Rod Land (Japan)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_rodlandRomInfo, nes_rodlandRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -45465,10 +45465,10 @@ STD_ROM_PICK(nes_romancia)
 STD_ROM_FN(nes_romancia)
 
 struct BurnDriver BurnDrvnes_romancia = {
-	"nes_romancia", NULL, NULL, NULL, "1987",
-	"Romancia (T-Eng)\0", NULL, "Tokyo Shoseki", "Miscellaneous",
+	"nes_romancia", NULL, NULL, NULL, "2008",
+	"Romancia (T-Eng)\0", NULL, "DvD Translations", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
 	NESGetZipName, nes_romanciaRomInfo, nes_romanciaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

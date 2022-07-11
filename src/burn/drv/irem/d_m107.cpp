@@ -60,7 +60,6 @@ typedef struct _m107_layer m107_layer;
 struct _m107_layer
 {
 	INT32 enable;
-	INT32 wide;
 	INT32 enable_rowscroll;
 
 	UINT16 scrollx;
@@ -155,8 +154,8 @@ STDINPUTINFO(Dsoccr94)
 static struct BurnDIPInfo FirebarrDIPList[]=
 {
 	{0x14, 0xff, 0xff, 0xfb, NULL							},
-	{0x15, 0xff, 0xff, 0xa3, NULL							},
-	{0x16, 0xff, 0xff, 0xf5, NULL							},
+	{0x15, 0xff, 0xff, 0xbf, NULL							},
+	{0x16, 0xff, 0xff, 0xff, NULL							},
 
 	{0   , 0xfe, 0   ,    4, "Rapid Fire"					},
 	{0x14, 0x01, 0x0c, 0x00, "Button 1 Normal, Button 3 Rapid Fire"			},
@@ -336,10 +335,13 @@ static UINT8 __fastcall m107ReadPort(UINT32 port)
 	{
 		case 0x00: return  DrvInput[0];
 		case 0x01: return  DrvInput[1];
+
 		case 0x02: return (DrvInput[4] & 0x7f) | vblank;
-		case 0x03: return  DrvInput[7];
+		case 0x03: return  DrvInput[5];
+
 		case 0x04: return  DrvInput[6];
-		case 0x05: return  DrvInput[5];
+		case 0x05: return  DrvInput[7];
+
 		case 0x06: return  DrvInput[2];
 		case 0x07: return  DrvInput[3];
 
@@ -585,7 +587,6 @@ static INT32 MemIndex(INT32 gfxlen1, INT32 gfxlen2)
 
 	RamEnd			= Next;
 
-	// scanned separately from ram due to pointers in structs
 	m107_layers[0]	= (struct _m107_layer*)Next; Next += sizeof(struct _m107_layer);
 	m107_layers[1]	= (struct _m107_layer*)Next; Next += sizeof(struct _m107_layer);
 	m107_layers[2]	= (struct _m107_layer*)Next; Next += sizeof(struct _m107_layer);
@@ -1038,12 +1039,10 @@ static INT32 DrvFrame()
 		VezClose();
 	}
 
-	VezOpen(1);
 	if (pBurnSoundOut) {
 		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		iremga20_update(0, pBurnSoundOut, nBurnSoundLen);
 	}
-	VezClose();
 
 	return 0;
 }
@@ -1058,17 +1057,12 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 	struct BurnArea ba;
 
 	if (nAction & ACB_MEMORY_RAM)
-	{	
+	{
 		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = RamStart;
-		ba.nLen	  = RamEnd-RamStart;
-		ba.szName = "All Ram";
+		ba.Data		= RamStart;
+		ba.nLen		= RamEnd-RamStart;
+		ba.szName	= "All Ram";
 		BurnAcb(&ba);
-
-		ScanVar(m107_layers[0], STRUCT_SIZE_HELPER(_m107_layer, scrolly), "m107 pf0");
-		ScanVar(m107_layers[1], STRUCT_SIZE_HELPER(_m107_layer, scrolly), "m107 pf1");
-		ScanVar(m107_layers[2], STRUCT_SIZE_HELPER(_m107_layer, scrolly), "m107 pf2");
-		ScanVar(m107_layers[3], STRUCT_SIZE_HELPER(_m107_layer, scrolly), "m107 pf3");
 	}
 
 	if (nAction & ACB_DRIVER_DATA)

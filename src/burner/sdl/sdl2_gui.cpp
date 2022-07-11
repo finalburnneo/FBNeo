@@ -32,8 +32,9 @@ static unsigned int thirdscreenwidth = 0;
 static unsigned int listoffsetY = 0;
 static unsigned int listwidthY = 0;
 
-const int JOYSTICK_DEAD_ZONE = 8000;
+#define JOYSTICK_DEAD_ZONE 8000				// Changed only to be coherent with all other JOYSTICK_DEAD_ZONE declarations
 SDL_GameController* gGameController = NULL;
+SDL_Joystick *gJoystick = NULL;				// For better compatibility with unmapped game controllers
 
 static SDL_Rect title_texture_rect;
 static SDL_Rect dest_title_texture_rect;
@@ -823,13 +824,15 @@ void gui_exit()
 		SDL_GameControllerClose( gGameController );
 		gGameController = NULL;
 	}
-
+	if (gJoystick!=NULL) {
+		SDL_JoystickClose( gJoystick );
+		gJoystick = NULL;
+	}
 	if (filterGames!=NULL)
 	{
 		free(filterGames);
 		filterGames = NULL;
 	}
-
 	kill_inline_font();
 	if (titleTexture != NULL) {
 		SDL_DestroyTexture(titleTexture);
@@ -858,15 +861,21 @@ void gui_init()
 	else
 	{
 		for (int i = 0; i < SDL_NumJoysticks(); ++i) {
-		    if (SDL_IsGameController(i)) {
-		        gGameController = SDL_GameControllerOpen(i);
-		        if (gGameController) {
-					printf("Found a joypad : %s\n", SDL_GameControllerName(gGameController));
-		            break;
-		        } else {
-		            printf("Could not open gamecontroller %i: %s\n", i, SDL_GetError());
-		        }
-		    }
+			gJoystick = SDL_JoystickOpen(i);
+			if (gJoystick) {
+				if (SDL_IsGameController(i)) {
+					gGameController = SDL_GameControllerOpen(i);
+					if (gGameController) {
+						printf("Found a game controller: %s\n", SDL_GameControllerName(gGameController));
+					}
+				} else {
+					// Even if not mapped, a game controller can be used as joystick
+					printf("Found a joystick: %s\n", SDL_JoystickName(gJoystick));
+				}
+				break;
+			} else {
+				printf("Could not open joystick %i: %s\n", i, SDL_GetError());
+			}
 		}
 	}
 
@@ -1018,7 +1027,7 @@ void gui_render()
 	renderPanel(sdlRenderer,  0, nVidGuiHeight - 65, nVidGuiWidth, nVidGuiHeight,  0x41, 0x1d, 0xf2);
 
 	incolor(fbn_color, /* unused */ 0);
-	inprint(sdlRenderer, "FinalBurn Neo  ** F1 - Rescan / F2 - Filter Missing / F3 - System Filter / F4 - Filter Clones / F5 - Reset / F12 - Quit **", 10, 5);
+	inprint(sdlRenderer, "FB Neo *** A/ENTER: Start game  B/F5: Reset Filters  X/F4: Filter Clones  Y/F2: Filter Missing  COIN/F3: System Filter  START/F1: Rescan ROMs  F12: Quit ***", 10, 5);
 	if (strlen(systemName) != 0) {
 		snprintf(newLine, MAX_STRING_SIZE, "Filter System: %s / Missing: %s / Clones: %s / Showing : %d of %d", systemName, (bShowAvailableOnly?"No":"Yes"), (bShowClones?"Yes":"No"), filterGamesCount, (nBurnDrvCount + 1 - REDUCE_TOTAL_SETS_BIOS));
 		inprint(sdlRenderer, newLine, 10, 15);
@@ -1103,74 +1112,140 @@ int gui_process()
 	while (!quit)
 	{
 		starting_stick = SDL_GetTicks();
+		SDL_JoystickEventState(SDL_ENABLE);
+		SDL_GameControllerEventState(SDL_ENABLE);
 
 		while (SDL_PollEvent(&e))
 		{
 			switch (e.type)
 			{
 				case SDL_WINDOWEVENT:
-        switch (e.window.event)
+					switch (e.window.event)
 					{
 						case SDL_WINDOWEVENT_SIZE_CHANGED:
-								nVidGuiWidth = e.window.data1;
-								nVidGuiHeight = e.window.data2;
+							nVidGuiWidth = e.window.data1;
+							nVidGuiHeight = e.window.data2;
 
-								SDL_RenderSetLogicalSize(sdlRenderer, nVidGuiWidth, nVidGuiHeight);
+							SDL_RenderSetLogicalSize(sdlRenderer, nVidGuiWidth, nVidGuiHeight);
 
+							halfscreenheight = nVidGuiHeight / 2;
+							halfscreenwidth = nVidGuiWidth / 2;
+							thirdscreenheight =nVidGuiHeight/ 3;
+							thirdscreenwidth = nVidGuiWidth / 3;
 
-								halfscreenheight = nVidGuiHeight / 2;
-								halfscreenwidth = nVidGuiWidth / 2;
-								thirdscreenheight =nVidGuiHeight/ 3;
-								thirdscreenwidth = nVidGuiWidth / 3;
+							//gamesperscreen = (thirdscreenheight * 2) / 11;
+							gamesperscreen = (nVidGuiHeight-55) / 11;
+							gamesperscreen_halfway = gamesperscreen / 2;
 
-								//gamesperscreen = (thirdscreenheight * 2) / 11;
-								gamesperscreen = (nVidGuiHeight-55) / 11;
-								gamesperscreen_halfway = gamesperscreen / 2;
-
-								listoffsetY = 0;
-								listwidthY = thirdscreenwidth * 2;								
-		            break;
+							listoffsetY = 0;
+							listwidthY = thirdscreenwidth * 2;								
+							break;
 					}
-				break;
-				case SDL_CONTROLLERAXISMOTION:
-					switch (e.caxis.axis)
+					break;
+				case SDL_CONTROLLERDEVICEREMOVED:
+				case SDL_JOYDEVICEREMOVED:
+					if (!SDL_GameControllerGetAttached(gGameController) && !SDL_JoystickGetAttached(gJoystick)) {
+						if (gGameController!=NULL) {
+							SDL_GameControllerClose( gGameController );
+							gGameController = NULL;
+						}
+						if (gJoystick!=NULL) {
+							SDL_JoystickClose( gJoystick );
+							gJoystick = NULL;
+						}
+						for (int i = 0; i < SDL_NumJoysticks(); ++i) {
+							gJoystick = SDL_JoystickOpen(i);
+							if (gJoystick) {
+								if (SDL_IsGameController(i)) {
+									gGameController = SDL_GameControllerOpen(i);
+									if (gGameController) {
+										printf("Found a game controller: %s\n", SDL_GameControllerName(gGameController));
+									}
+								} else {
+									printf("Found a joystick: %s\n", SDL_JoystickName(gJoystick));
+								}
+								break;
+							} else {
+								printf("Could not open joystick %i: %s\n", i, SDL_GetError());
+							}
+						}
+					}
+					break;
+				case SDL_JOYAXISMOTION:				// Using this instead of CONTROLLERAXIS for compatibility with unmapped controllers
+					switch (e.jaxis.axis)
 					{
-						case SDL_CONTROLLER_AXIS_LEFTY:
-							if (e.caxis.value <= -JOYSTICK_DEAD_ZONE)
+						case 1:
+							if (e.jaxis.value < -JOYSTICK_DEAD_ZONE)
 								startGame--;
-							else if (e.caxis.value >= JOYSTICK_DEAD_ZONE)
+							else if (e.jaxis.value > JOYSTICK_DEAD_ZONE)
 								startGame++;
 							break;
-						case SDL_CONTROLLER_AXIS_LEFTX:
-							if (e.caxis.value <= -JOYSTICK_DEAD_ZONE)
+						case 0:
+							if (e.jaxis.value < -JOYSTICK_DEAD_ZONE)
 								startGame -= 10;
-							else if (e.caxis.value >= JOYSTICK_DEAD_ZONE)
+							else if (e.jaxis.value > JOYSTICK_DEAD_ZONE)
 								startGame += 10;
 							break;
 					}
 					break;
-				case SDL_CONTROLLERBUTTONDOWN:
-				case SDL_CONTROLLERBUTTONUP:
-					switch (e.cbutton.button)
+				case SDL_JOYHATMOTION:				// Using this instead of DPAD for compatibility with unmapped controllers
+					switch (e.jhat.value)
 					{
-						case SDL_CONTROLLER_BUTTON_DPAD_UP:
+						case SDL_HAT_UP:
 							startGame--;
 							break;
-						case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
+						case SDL_HAT_DOWN:
 							startGame++;
 							break;
-						case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
+						case SDL_HAT_LEFT:
 							startGame -= 10;
 							break;
-						case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+						case SDL_HAT_RIGHT:
 							startGame += 10;
 							break;
-						case SDL_CONTROLLER_BUTTON_A:
+					}
+					break;
+				case SDL_JOYBUTTONDOWN:
+					if (gGameController == NULL) {	// Don't use JOYBUTTON if game controller is mapped
+						previousSelected = -1;
+						nBurnDrvActive = gametoplay;
+						if (gameAv[nBurnDrvActive])
+						{
+							SDL_GameControllerEventState(SDL_IGNORE);
+							SDL_JoystickEventState(SDL_IGNORE);
+							return gametoplay;
+						}
+					}
+					break;
+				case SDL_CONTROLLERBUTTONDOWN:
+					switch (e.cbutton.button)
+					{
 						case SDL_CONTROLLER_BUTTON_START:
+							RefreshRomList(true);
+							break;
+						case SDL_CONTROLLER_BUTTON_BACK:
+							SwapSystemToCheck();
+							break;
+						case SDL_CONTROLLER_BUTTON_X:
+							bShowClones = !bShowClones;
+							DoFilterGames();
+							break;
+						case SDL_CONTROLLER_BUTTON_Y:
+							bShowAvailableOnly = !bShowAvailableOnly;
+							DoFilterGames();
+							break;
+						case SDL_CONTROLLER_BUTTON_B:
+							reset_filters();
+							SystemToCheck();
+							DoFilterGames();
+							break;
+						case SDL_CONTROLLER_BUTTON_A:
 							previousSelected = -1;
 							nBurnDrvActive = gametoplay;
 							if (gameAv[nBurnDrvActive])
 							{
+								SDL_GameControllerEventState(SDL_IGNORE);
+								SDL_JoystickEventState(SDL_IGNORE);
 								return gametoplay;
 							}
 							break;
@@ -1193,16 +1268,11 @@ int gui_process()
 					break;
 				case SDL_MOUSEWHEEL:
 					if (e.wheel.y > 0) // scroll up
-					{
 						startGame--;
-					}
 					else if (e.wheel.y < 0) // scroll down
-					{
 						startGame++;
-					}
 					break;
 				case SDL_MOUSEBUTTONDOWN:
-				{
 					switch (e.button.button)
 					{
 						case SDL_BUTTON_LEFT:
@@ -1210,6 +1280,8 @@ int gui_process()
 							nBurnDrvActive = gametoplay;
 							if (gameAv[nBurnDrvActive])
 							{
+								SDL_GameControllerEventState(SDL_IGNORE);
+								SDL_JoystickEventState(SDL_IGNORE);
 								return gametoplay;
 							}
 							break;
@@ -1217,44 +1289,34 @@ int gui_process()
 							quit = 1;
 							break;
 					}
-				}
-				break;
+					break;
 				case SDL_KEYDOWN:
-				{
 					switch (e.key.keysym.sym)
 					{
 						case SDLK_UP:
 							startGame--;
 							break;
-
 						case SDLK_DOWN:
 							startGame++;
 							break;
-
 						case SDLK_HOME:
 							startGame = -gamesperscreen_halfway;
 							break;
-
 						case SDLK_END:
 							startGame = filterGamesCount;
 							break;
-
 						case SDLK_PAGEUP:
 							startGame -= gamesperscreen_halfway;
 							break;
-
 						case SDLK_PAGEDOWN:
 							startGame += gamesperscreen_halfway;
 							break;
-
 						case SDLK_LEFT:
 							startGame -= 10;
 							break;
-
 						case SDLK_RIGHT:
 							startGame += 10;
 							break;
-
 						case SDLK_w:
 							findNextLetter();
 							break;
@@ -1264,15 +1326,14 @@ int gui_process()
 						case SDLK_KP_ENTER:
 						case SDLK_RETURN:
 							if (e.key.keysym.mod & KMOD_ALT)
-							{
 								SetFullscreen(!GetFullscreen());
-							}
-							else
-							{
+							else {
 								nBurnDrvActive = gametoplay;
 								previousSelected = 0;
 								if (gameAv[nBurnDrvActive])
 								{
+									SDL_GameControllerEventState(SDL_IGNORE);
+									SDL_JoystickEventState(SDL_IGNORE);
 									return gametoplay;
 								}
 							}
@@ -1299,12 +1360,8 @@ int gui_process()
 						case SDLK_F12:
 							quit = 1;
 							break;
-
-						default:
-							break;
 					}
-				}
-				break;
+					break;
 			}
 		}
 

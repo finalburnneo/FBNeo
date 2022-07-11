@@ -1,14 +1,12 @@
-// FB Alpha Super Kaneko Nova System driver module by iq_132, fixups by dink
+// FB Neo Super Kaneko Nova System driver module by iq_132, fixups by dink
 // Based on MAME driver by Sylvain Glaize and David Haywood
-//
-// notes: vblokbr/sarukani prefers 60hz w/the speedhack, or it gets stuck in testmode.
-//
 
 #include "tiles_generic.h"
 #include "ymz280b.h"
 #include "sknsspr.h"
 #include "sh2_intf.h"
 #include "lowpass2.h"
+#include "burn_gun.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -67,13 +65,8 @@ static INT32 sprite_kludge_y;
 static UINT8 DrvJoy1[32];
 static UINT8 DrvDips[2];
 static UINT32 DrvInputs[3];
-static INT16 DrvAnalogPort0 = 0;
-static INT16 DrvAnalogPort1 = 0;
+static INT16 Analog[2] = { 0, 0 };
 static UINT8 DrvReset;
-
-static UINT8 PaddleX[2] = { 0, 0 };
-
-static INT32 sixtyhz = 0;
 
 static INT32 nGfxLen0 = 0;
 static INT32 nRedrawTiles = 0;
@@ -90,33 +83,33 @@ static struct BurnRomInfo emptyRomDesc[] = {
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 
 static struct BurnInputInfo VblokbrkInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 24,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 25,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 26,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 27,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 28,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 29,	"p1 fire 2"},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 30,	"p1 fire 3"},
-	A("P1 Paddle",           BIT_ANALOG_REL, &DrvAnalogPort0,"p1 z-axis"),
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 24,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 25,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 26,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 27,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 28,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 29,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 30,	"p1 fire 3"	},
+	A("P1 Paddle",      BIT_ANALOG_REL, &Analog[0],		"p1 z-axis"),
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 16,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 17,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 18,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 19,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 20,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 21,	"p2 fire 2"},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 22,	"p2 fire 3"},
-	A("P2 Paddle",          BIT_ANALOG_REL, &DrvAnalogPort1,"p2 z-axis"),
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 11,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 16,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 17,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 18,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 19,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 20,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 21,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 22,	"p2 fire 3"	},
+	A("P2 Paddle",      BIT_ANALOG_REL, &Analog[1],		"p2 z-axis"),
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 14,	"service"},
-	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 13,	"tilt"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 14,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 13,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 #undef A
@@ -124,31 +117,31 @@ static struct BurnInputInfo VblokbrkInputList[] = {
 STDINPUTINFO(Vblokbrk)
 
 static struct BurnInputInfo SknsInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 24,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 25,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 26,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 27,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 28,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 29,	"p1 fire 2"},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 30,	"p1 fire 3"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 24,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 25,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 26,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 27,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 28,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 29,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 30,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 16,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 17,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 18,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 19,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 20,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 21,	"p2 fire 2"},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 22,	"p2 fire 3"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 11,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 16,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 17,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 18,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 19,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 20,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 21,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 22,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 14,	"service"},
-	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 13,	"tilt"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 14,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 13,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Skns)
@@ -234,29 +227,29 @@ static struct BurnDIPInfo VblokbrkDIPList[]=
 STDDIPINFO(Vblokbrk)
 
 static struct BurnInputInfo CyvernInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 24,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 25,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 26,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 27,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 28,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 29,	"p1 fire 2"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 24,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 25,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 26,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 27,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 28,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 29,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 16,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 17,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 18,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 19,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 20,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 21,	"p2 fire 2"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 11,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 16,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 17,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 18,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 19,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 20,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 21,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 14,	"service"},
-	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 13,	"tilt"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 14,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 13,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Cyvern)
@@ -522,36 +515,35 @@ static UINT32 skns_hit_r(UINT32 adr)
 	}
 }
 
-
 static UINT32 skns_msm6242_r(UINT32 offset)
 {
-	time_t nLocalTime = time(NULL); // ripped from pgm_run.cpp
-	tm* tmLocalTime = localtime(&nLocalTime);
+	tm tmLocalTime;
+	BurnGetLocalTime(&tmLocalTime);
 
 	UINT32 value = 0;
 
 	switch ((offset >> 2) & 3)
 	{
 		case 0:
-			value  = (tmLocalTime->tm_sec % 10)<<24;
-			value |= (tmLocalTime->tm_sec / 10)<<16;
-			value |= (tmLocalTime->tm_min % 10)<<8;
-			value |= (tmLocalTime->tm_min / 10);
+			value  = (tmLocalTime.tm_sec % 10)<<24;
+			value |= (tmLocalTime.tm_sec / 10)<<16;
+			value |= (tmLocalTime.tm_min % 10)<<8;
+			value |= (tmLocalTime.tm_min / 10);
 			break;
 		case 1:
-			value  = (tmLocalTime->tm_hour % 10)<<24;
-			value |= (tmLocalTime->tm_hour / 10)<<16;
-			value |= (tmLocalTime->tm_mday % 10)<<8;
-			value |= (tmLocalTime->tm_mday / 10);
+			value  = (tmLocalTime.tm_hour % 10)<<24;
+			value |= (tmLocalTime.tm_hour / 10)<<16;
+			value |= (tmLocalTime.tm_mday % 10)<<8;
+			value |= (tmLocalTime.tm_mday / 10);
 			break;
 		case 2:
-			value  = ((tmLocalTime->tm_mon + 1) % 10) << 24;
-			value |= ((tmLocalTime->tm_mon + 1) / 10) << 16;
-			value |=  (tmLocalTime->tm_year % 10) << 8;
-			value |= ((tmLocalTime->tm_year / 10) % 10);
+			value  = ((tmLocalTime.tm_mon + 1) % 10) << 24;
+			value |= ((tmLocalTime.tm_mon + 1) / 10) << 16;
+			value |=  (tmLocalTime.tm_year % 10) << 8;
+			value |= ((tmLocalTime.tm_year / 10) % 10);
 			break;
 		case 3:
-			value  = (tmLocalTime->tm_wday)<<24;
+			value  = (tmLocalTime.tm_wday)<<24;
 			value |= (1)<<16;
 			value |= (6)<<8;
 			value |= (4);
@@ -842,7 +834,7 @@ static void __fastcall suprnova_write_word(UINT32 address, UINT16 data)
 		*((UINT16*)(DrvGfxRAM + ((address & 0x3fffe) ^ 2))) = data;
 #else
 		*((UINT16*)(DrvGfxRAM + ((address & 0x3fffe)))) = data;
-#endif		
+#endif
 		decode_graphics_ram(address);
 		return;
 
@@ -917,6 +909,142 @@ static UINT8 __fastcall suprnova_hack_read_byte(UINT32 a)
 #endif
 }
 
+// simple timer system -dink 2019, v2.1 (2022-upgreydde ver.)
+struct dtimer
+{
+	INT32 running;
+	UINT32 time_trig;
+	UINT32 time_current;
+	INT32 timer_param;
+	INT32 timer_prescaler;
+	UINT32 prescale_counter;
+	INT32 retrig;
+	void (*timer_exec)(int);
+
+	void scan() {
+		SCAN_VAR(running);
+		SCAN_VAR(time_trig);
+		SCAN_VAR(time_current);
+		SCAN_VAR(timer_param);
+		SCAN_VAR(timer_prescaler);
+		SCAN_VAR(prescale_counter);
+		SCAN_VAR(retrig);
+	}
+
+	void start(UINT32 trig_at, INT32 tparam, INT32 run_now, INT32 retrigger) {
+		running = run_now;
+		if (tparam != -1) timer_param = tparam;
+		time_trig = trig_at;
+		time_current = 0;
+		//prescale_counter = 0; <-- not here!
+		retrig = retrigger;
+		//if (counter) bprintf(0, _T("timer %d START:  %d  cycles - running: %d\n"), timer_param, time_trig, running);
+		//if (counter) bprintf(0, _T("timer %d   running %d - timeleft  %d  time_trig %d  time_current %d\n"), timer_param, running, time_trig - time_current, time_trig, time_current);
+	}
+
+	void init(INT32 tparam, void (*callback)(int)) {
+		config(tparam, callback);
+		reset();
+	}
+
+	void config(INT32 tparam, void (*callback)(int)) {
+		timer_param = tparam;
+		timer_exec = callback;
+		timer_prescaler = 1;// * ratio_multi;
+	}
+
+	void set_prescaler(INT32 prescale) {
+		timer_prescaler = prescale;
+	}
+
+	void run_prescale(INT32 cyc) {
+		prescale_counter += cyc;// * m_ratio;
+		while (prescale_counter >= timer_prescaler) {
+			prescale_counter -= timer_prescaler;
+
+			// note: we can't optimize this, f.ex:
+			//run(prescale_counter / timer_prescaler); prescale_counter %= timer_prescaler;
+			// why? when the timer hits, the prescaler can & will change.
+
+			// note2:
+			//run(1);  this is just the contents of run(1) from below
+			if (running) {
+				time_current += 1;
+
+				if (time_current >= time_trig) { // should be while (retrig needs this, not used by sh4)
+					//if (counter) bprintf(0, _T("timer %d hits @ %d\n"), timer_param, time_current);
+
+					if (retrig == 0) {
+						running = 0;
+						//time_trig = -1;
+						//stop();
+						//break;
+					}
+					if (timer_exec) {
+						timer_exec(timer_param); // NOTE: this cb _might_ re-start/init the timer!
+					}
+					//time_current -= time_trig;
+				}
+			}
+		}
+	}
+
+	void run(INT32 cyc) {
+		if (running) {
+			time_current += cyc;
+
+			if (time_current >= time_trig) {
+				//bprintf(0, _T("timer %d hits @ %d\n"), timer_param, time_current);
+
+				if (retrig == 0) {
+					running = 0;
+					//time_trig = -1;
+					//stop();
+					//break;
+				}
+				if (timer_exec) {
+					timer_exec(timer_param); // NOTE: this cb _might_ re-start/init the timer!
+				}
+				time_current -= time_trig;
+
+				//if (running == 0) break;
+			}
+		}
+	}
+
+	void reset() {
+		stop();
+		prescale_counter = 0; // this must be free-running (only reset here!)
+	}
+	void stop() {
+		if (retrig == 0) { running = 0; }
+		time_current = 0;
+	}
+	INT32 isrunning() {
+		return running;
+	}
+	UINT32 timeleft() {
+		return time_trig - time_current;
+	}
+
+	INT32 msec_to_cycles(INT32 mhz, double msec) {
+		return ((double)((double)mhz / 1000) * msec);
+	}
+	INT32 usec_to_cycles(INT32 mhz, double usec) {
+		return ((double)((double)mhz / 1000000) * usec);
+	}
+	INT32 nsec_to_cycles(INT32 mhz, double nsec) {
+		return ((double)((double)mhz / 1000000000) * nsec);
+	}
+};
+
+static void irq_cb(INT32 t_param)
+{
+	Sh2SetIRQLine(t_param, CPU_IRQSTATUS_HOLD);
+}
+
+static dtimer irqtimers[3];
+
 #ifdef LSB_FIRST
 static void BurnSwapEndian(UINT8 *src, INT32 len)
 {
@@ -960,21 +1088,21 @@ static INT32 MemIndex(INT32 gfxlen0)
 
 	RamEnd			= Next;
 
-	DrvTmpScreenBuf		= Next; Next += 0x10000;
+	DrvTmpScreenBuf	= Next; Next += 0x10000;
 
-	DrvTmpScreenA		= (UINT16*)Next; Next += 1024 * 1024 * sizeof(INT16);
-	DrvTmpScreenB		= (UINT16*)Next; Next += 1024 * 1024 * sizeof(INT16);
-	DrvTmpScreenC		= (UINT16*)Next; Next += 320 * 240 * sizeof(INT16);
-	DrvTmpScreenA2		= (UINT16*)Next; Next += 320 * 240 * sizeof(INT16);
-	DrvTmpScreenB2		= (UINT16*)Next; Next += 320 * 240 * sizeof(INT16);
+	DrvTmpScreenA	= (UINT16*)Next; Next += 1024 * 1024 * sizeof(INT16);
+	DrvTmpScreenB	= (UINT16*)Next; Next += 1024 * 1024 * sizeof(INT16);
+	DrvTmpScreenC	= (UINT16*)Next; Next += 320 * 240 * sizeof(INT16);
+	DrvTmpScreenA2	= (UINT16*)Next; Next += 320 * 240 * sizeof(INT16);
+	DrvTmpScreenB2	= (UINT16*)Next; Next += 320 * 240 * sizeof(INT16);
 	pDrvTmpDraw		= (UINT32*)Next;
 	DrvTmpDraw		= (UINT32*)Next; Next += 320 * 240 * sizeof(INT32);
 
 	DrvTmpFlagA		= Next; Next += 1024 * 1024;
 	DrvTmpFlagB		= Next; Next += 1024 * 1024;
 
-	DrvTmpFlagA2		= Next; Next += 320 * 240;
-	DrvTmpFlagB2		= Next; Next += 320 * 240;
+	DrvTmpFlagA2	= Next; Next += 320 * 240;
+	DrvTmpFlagB2	= Next; Next += 320 * 240;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x10000 * sizeof(INT32);
 
@@ -1002,6 +1130,10 @@ static INT32 DrvDoReset()
 	}
 	Sh2Close();
 
+	irqtimers[0].reset();
+	irqtimers[1].reset();
+	irqtimers[2].reset();
+
 	YMZ280BReset();
 
 	hit.disconnect = (region != 2) ? 1 : 0;
@@ -1016,8 +1148,6 @@ static INT32 DrvDoReset()
 
 	nRedrawTiles = 1;
 	olddepths[0] = olddepths[1] = 0xff;
-
-	PaddleX[0] = PaddleX[1] = 0;
 
 	HiscoreReset();
 
@@ -1047,7 +1177,7 @@ static INT32 DrvLoad(INT32 nLoadRoms)
 				if (BurnLoadRom(LoadPr + 1, i+1, 2)) return 1;
 			}
 			LoadPr += ri.nLen * 2;
-			i++; 
+			i++;
 
 			continue;
 		}
@@ -1069,7 +1199,7 @@ static INT32 DrvLoad(INT32 nLoadRoms)
 
 			continue;
 		}
-		
+
 		if ((ri.nType & 7) == 4) {
 			if (nLoadRoms) {
 				if (BurnLoadRom(LoadFg, i, 1)) return 1;
@@ -1104,6 +1234,16 @@ static INT32 DrvInit(INT32 bios)
 	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex(nGfxLen0);
+
+	irqtimers[0].init(9, irq_cb);
+	irqtimers[0].start(1824, -1, 1, 1); // 1834 = 1 line @ 262 lpf!
+
+	// should be 8ms, using 8.13ms to correct music looping in sengekis
+	irqtimers[1].init(11, irq_cb);
+	irqtimers[1].start(irqtimers[1].msec_to_cycles(28636000, 8.13), -1, 1, 1);
+
+	irqtimers[2].init(15, irq_cb);
+	irqtimers[2].start(irqtimers[2].msec_to_cycles(28636000, 2), -1, 1, 1);
 
 	{
 		if (DrvLoad(1)) return 1;
@@ -1150,16 +1290,23 @@ static INT32 DrvInit(INT32 bios)
 		sh2_busyloop_speedhack_mode2 = 1;
 	}
 
-	if (!sixtyhz) BurnSetRefreshRate(59.5971);
+	BurnSetRefreshRate(59.5971);
 
 	YMZ280BInit(16666666, NULL);
-	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 0.65, BURN_SND_ROUTE_LEFT);
-	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 0.65, BURN_SND_ROUTE_RIGHT);
+	if (sprite_kludge_y == -272) { //sengeki striker is need attenuation
+		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 0.45, BURN_SND_ROUTE_LEFT);
+		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 0.45, BURN_SND_ROUTE_RIGHT);
+	} else {
+		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 0.65, BURN_SND_ROUTE_LEFT);
+		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 0.65, BURN_SND_ROUTE_RIGHT);
+	}
 
 	skns_init();
 	skns_sprite_kludge(sprite_kludge_x, sprite_kludge_y);
 
 	GenericTilesInit();
+
+	BurnTrackballInit(1); // vblokbrk/sarukani paddle
 
 	{ // filter (for cyvern)
 		LP1 = new LowPass2(10900, nBurnSoundRate, 0.13, 1.0, 2300, 0.01, 1.0);
@@ -1183,11 +1330,11 @@ static INT32 DrvExit()
 
 	BurnFree(AllMem);
 
+	BurnTrackballExit();
+
 	suprnova_alt_enable_background = 0;
 	Vblokbrk = 0;
 	nGfxLen0 = 0;
-
-	sixtyhz = 0;
 
 	speedhack_address = ~0;
 	memset (speedhack_pc, 0, 2 * sizeof(INT32));
@@ -1238,7 +1385,7 @@ static void draw_layer(UINT8 *source, UINT8 *previous, UINT16 *dest, UINT8 *prid
 
 		INT32 flipx = (attr >> 31) & 1;
 		INT32 flipy = (attr >> 30) & 1;
-	
+
 		color <<= 8;
 		UINT8 *pri = prid + sy * 1024 + sx;
 		UINT16 *dst = dest + sy * 1024 + sx;
@@ -1684,12 +1831,11 @@ static INT32 DrvDraw()
 	return 0;
 }
 
-static UINT8 Paddle_incdec(UINT32 PaddlePortnum, UINT32 player) {
-	UINT8 Temp = ProcessAnalog(PaddlePortnum, 0, 1, 0x01, 0xff);
-	if (Temp > 0x90) PaddleX[player]-=15;
-	if (Temp < 0x70) PaddleX[player]+=15;
-	return PaddleX[player];
+static UINT8 read_paddle(INT32 num)
+{
+	return (BurnTrackballRead(0, num)*2) & 0xff;
 }
+
 
 static INT32 DrvFrame()
 {
@@ -1703,36 +1849,55 @@ static INT32 DrvFrame()
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 		}
 
+		BurnTrackballConfig(0, AXIS_REVERSED, AXIS_REVERSED);
+		BurnTrackballFrame(0, Analog[0], Analog[1], 0x01, 0x1f);
+		BurnTrackballUpdate(0);
+
 		DrvInputs[1] = 0x0000ff00 | DrvDips[0];
-		DrvInputs[1] |= (Paddle_incdec(DrvAnalogPort0, 0) << 24) | (Paddle_incdec(DrvAnalogPort1, 1) << 16);
+		DrvInputs[1] |= (read_paddle(0) << 24) | (read_paddle(1) << 16);
 		DrvInputs[2] = 0xffffffff;
 	}
 
-	UINT32 nTotalCycles = (sixtyhz) ? (28638000 / 60) : (INT32)(28638000 / 59.5971);
+	INT32 nCyclesTotal = (INT32)(28638000 / 59.5971);
 	INT32 nCyclesDone = 0;
 	INT32 nInterleave = 262;
+	INT32 ran = 0;
+	INT32 nSoundBufferPos = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		nCyclesDone += Sh2Run(((i + 1) * nTotalCycles / nInterleave) - nCyclesDone);
+		if (i == 0) Sh2SetIRQLine(1, CPU_IRQSTATUS_HOLD);
+		if (i == 240) Sh2SetIRQLine(5, CPU_IRQSTATUS_HOLD);
 
-		if (i == 1) {
-			Sh2SetIRQLine(1, CPU_IRQSTATUS_AUTO);
-		} else if (i == 240) {
-			Sh2SetIRQLine(5, CPU_IRQSTATUS_AUTO);
-		}
-		{ // fire irq9 every interleave iteration.
-			Sh2SetIRQLine(9, CPU_IRQSTATUS_AUTO);
-			if (i%125==0 && i!=0) { //125 = every 8 ms (per 261 interleave)
-				Sh2SetIRQLine(11, CPU_IRQSTATUS_AUTO);
-			}
-			if (i%31==0 && i!=0) { //31=every 2 ms
-				Sh2SetIRQLine(15, CPU_IRQSTATUS_AUTO);
+		// run cpu
+		ran = Sh2Run(((i + 1) * nCyclesTotal / nInterleave) - nCyclesDone);
+		nCyclesDone += ran;
+
+		// run timers
+		irqtimers[0].run(ran);
+		irqtimers[1].run(ran);
+		irqtimers[2].run(ran);
+
+		if ((i & 7) == 0) {
+			// Render sound segment
+			if (pBurnSoundOut) {
+				INT32 nSegmentEnd = nBurnSoundLen * i / nInterleave;
+				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+				YMZ280BRender(pSoundBuf, nSegmentEnd - nSoundBufferPos);
+				nSoundBufferPos = nSegmentEnd;
 			}
 		}
 	}
 
 	if (pBurnSoundOut) {
-		YMZ280BRender(pBurnSoundOut, nBurnSoundLen);
+		// Make sure the buffer is entirely filled.
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			if (nSegmentLength) {
+				YMZ280BRender(pSoundBuf, nSegmentLength);
+			}
+		}
+
 		if (LP1 && LP2 && (DrvDips[1] & 2)) { // Cyvern "Headache Filter" dip
 			LP1->Filter(pBurnSoundOut + 0, nBurnSoundLen); // Left
 			LP2->Filter(pBurnSoundOut + 1, nBurnSoundLen); // Right
@@ -1754,7 +1919,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (pnMin != NULL) {
 		*pnMin =  0x029707;
 	}
-	
+
 	if (nAction & ACB_MEMORY_RAM) {
 		ba.Data		= AllRam;
 		ba.nLen		= RamEnd - AllRam;
@@ -1768,10 +1933,15 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName	= "RAM Tiles";
 		BurnAcb(&ba);
 	}
-	
+
 	if (nAction & ACB_DRIVER_DATA) {
 		Sh2Scan(nAction);
+		irqtimers[0].scan();
+		irqtimers[1].scan();
+		irqtimers[2].scan();
 		YMZ280BScan(nAction, pnMin);
+
+		BurnTrackballScan(); // vblokbrk / sarukani paddle
 
 		SCAN_VAR(hit);
 		SCAN_VAR(suprnova_alt_enable_sprites);
@@ -1787,7 +1957,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(bright_v3_b);
 		SCAN_VAR(use_spc_bright);
 		SCAN_VAR(use_v3_bright);
-		SCAN_VAR(PaddleX);
 	}
 
 	if (nAction & ACB_NVRAM) {
@@ -1815,7 +1984,7 @@ static struct BurnRomInfo sknsRomDesc[] = {
 	{ "sknsa1.u10",		0x80000, 0x745e5212, BRF_BIOS}, //  2 Asia
 	{ "sknsu1.u10",		0x80000, 0x384d21ec, BRF_BIOS}, //  3 USA
 	{ "sknsk1.u10",		0x80000, 0xff1c9f79, BRF_BIOS}, //  4 Korea
-	
+
 #if defined (ROM_VERIFY)
 	{ "supernova_modbios-japan.u10", 0x080000, 0xb8d3190c, BRF_OPT },
 	{ "supernova-modbios-korea.u10", 0x080000, 0x1d90517c, BRF_OPT },
@@ -1987,7 +2156,6 @@ static INT32 SengekisInit()
 
 	speedhack_address = 0x60b74bc;
 	speedhack_pc[0] = 0x60006ec + 2;
-	sixtyhz = 1;
 
 	return DrvInit(2 /*asia*/);
 }
@@ -2031,7 +2199,6 @@ static INT32 SengekisjInit()
 
 	speedhack_address = 0x60b7380;
 	speedhack_pc[0] = 0x60006ec + 2;
-	sixtyhz = 1;
 
 	return DrvInit(0 /*japan*/);
 }
@@ -2366,12 +2533,12 @@ static struct BurnRomInfo galpani4RomDesc[] = {
 
 	{ "gp4-200-00.u16",	0x200000, 0xf0781376, 3 | BRF_GRA },           //  4 Background Tiles
 	{ "gp4-201-00.u18",	0x200000, 0x10c4b183, 3 | BRF_GRA },           //  5
-	
+
 	{ "gp4-300-00.u4",	0x200000, 0x8374663a, 5 | BRF_SND },           //  6 YMZ280b Samples
 	{ "gp4-301-00.u7",	0x200000, 0x53e9f8fb, 5 | BRF_SND },           //  7 Different then GP4-301-01 used below
-		
+
 	{ "skns-r09.u9",	0x000117, 0xb02058d9, 0 | BRF_OPT },		   //  8 plds
-	{ "skns-r11.u11",	0x000117, 0xa9f05af4, 0 | BRF_OPT },		   
+	{ "skns-r11.u11",	0x000117, 0xa9f05af4, 0 | BRF_OPT },
 };
 
 STDROMPICKEXT(galpani4, galpani4, skns)
@@ -2947,7 +3114,7 @@ static struct BurnRomInfo galpans3RomDesc[] = {
 	{ "u24.bin",		0x800000, 0x70613168, 2 | BRF_GRA },           //  2 Sprites
 
 	{ "u16.bin",		0x800000, 0xa96daf2a, 3 | BRF_GRA },           //  3 Background Tiles
- 
+
 	{ "u4.bin",		0x400000, 0xbf5736c6, 5 | BRF_SND },           //  4 YMZ280b Samples
 };
 
@@ -3189,7 +3356,6 @@ static INT32 VblokbrkInit()
 	sprite_kludge_y = -1;
 	suprnova_alt_enable_background = 1;
 	Vblokbrk = 1;
-	sixtyhz = 1;
 
 	return DrvInit(1 /*Europe*/);
 }
@@ -3228,7 +3394,6 @@ static INT32 VblokbrkaInit()
 	sprite_kludge_y = -1;
 	suprnova_alt_enable_background = 1;
 	Vblokbrk = 1;
-	sixtyhz = 1;
 
 	return DrvInit(2 /*Asia*/);
 }
@@ -3267,7 +3432,6 @@ static INT32 SarukaniInit()
 	sprite_kludge_y = -1;
 	suprnova_alt_enable_background = 1;
 	Vblokbrk = 1;
-	sixtyhz = 1;
 
 	return DrvInit(0 /*Japan*/);
 }

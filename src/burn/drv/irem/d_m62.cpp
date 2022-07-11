@@ -1,4 +1,4 @@
-// FB Alpha Irem M62 system driver
+// FB Neo Irem M62 system driver
 // Based on MAME driver by smf and David Haywood
 
 #include "tiles_generic.h"
@@ -1134,6 +1134,39 @@ static struct BurnRomInfo Kungfub3RomDesc[] = {
 
 STD_ROM_PICK(Kungfub3)
 STD_ROM_FN(Kungfub3)
+
+static struct BurnRomInfo Kungfub3sRomDesc[] = {
+	{ "4.bin",		0x04000, 0x9f49bdcd, BRF_ESS | BRF_PRG }, //  0	Z80 Program Code
+	{ "5.bin",		0x04000, 0x8e7e4c56, BRF_ESS | BRF_PRG }, //  1
+
+	{ "3.bin",		0x02000, 0xb4293435, BRF_ESS | BRF_PRG }, //  2	M6803 Program Code
+	{ "2.bin",		0x02000, 0xc81e31ea, BRF_ESS | BRF_PRG }, //  3
+	{ "1.bin",		0x02000, 0xd99fb995, BRF_ESS | BRF_PRG }, //  4
+
+	{ "8.bin",		0x02000, 0x6b2cc9c8, BRF_GRA },           //  5	Characters	/ BAD DUMP
+	{ "7.bin",		0x02000, 0xc648f558, BRF_GRA },           //  6
+	{ "6.bin",		0x02000, 0xfbe9276e, BRF_GRA },           //  7
+
+	{ "11.bin",		0x04000, 0x710e0a1f, BRF_GRA },           //  8	Sprites
+	{ "12.bin",		0x04000, 0xed719d7b, BRF_GRA },           //  9
+	{ "9.bin",		0x04000, 0x05fcce8b, BRF_GRA },           // 10
+	{ "10.bin",		0x04000, 0x51fc1301, BRF_GRA },           // 11
+	{ "14.bin",		0x04000, 0x1df11d81, BRF_GRA },           // 12
+	{ "13.bin",		0x04000, 0x2d3b69dd, BRF_GRA },           // 13
+
+	// PROMs were not dumped on this set
+	{ "g-1j-.bin",	0x00100, 0x668e6bca, BRF_GRA },           // 14	PROM (Tile Palette Red Component)
+	{ "b-1m-.bin",	0x00100, 0x76c05a9c, BRF_GRA },           // 15	PROM (Sprite Palette Red Component)
+	{ "g-1f-.bin",	0x00100, 0x964b6495, BRF_GRA },           // 16	PROM (Tile Palette Green Component)
+	{ "b-1n-.bin",	0x00100, 0x23f06b99, BRF_GRA },           // 17	PROM (Sprite Palette Green Component)
+	{ "g-1h-.bin",	0x00100, 0x550563e1, BRF_GRA },           // 18	PROM (Tile Palette Blue Component)
+	{ "b-1l-.bin",	0x00100, 0x35e45021, BRF_GRA },           // 19	PROM (Sprite Palette Blue Component)
+	{ "b-5f-.bin",	0x00020, 0x7a601c3d, BRF_GRA },           // 20	PROM (Sprite Height)
+	{ "b-6f-.bin",	0x00100, 0x82c20d12, BRF_GRA },           // 21	PROM (Video Timing)
+};
+
+STD_ROM_PICK(Kungfub3s)
+STD_ROM_FN(Kungfub3s)
 
 static struct BurnRomInfo BattroadRomDesc[] = {
 	{ "br-a-4e.b",            0x02000, 0x9bf14768, BRF_ESS | BRF_PRG }, //  0	Z80 Program Code
@@ -4755,7 +4788,7 @@ STD_SAMPLE_FN(M62)
 
 struct BurnDriver BurnDrvKungfum = {
 	"kungfum", NULL, NULL, NULL, "1984",
-	"Kung-Fu Master\0", NULL, "Irem", "Irem M62",
+	"Kung-Fu Master (World)\0", NULL, "Irem", "Irem M62",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
 	NULL, KungfumRomInfo, KungfumRomName, NULL, NULL, NULL, NULL, M62InputInfo, KungfumDIPInfo,
@@ -4765,7 +4798,7 @@ struct BurnDriver BurnDrvKungfum = {
 
 struct BurnDriver BurnDrvKungfumd = {
 	"kungfumd", "kungfum", NULL, NULL, "1984",
-	"Kung-Fu Master (Data East)\0", NULL, "Irem (Data East License)", "Irem M62",
+	"Kung-Fu Master (US)\0", NULL, "Irem (Data East USA license)", "Irem M62",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
 	NULL, KungfumdRomInfo, KungfumdRomName, NULL, NULL, NULL, NULL, M62InputInfo, KungfumDIPInfo,
@@ -4807,8 +4840,18 @@ struct BurnDriver BurnDrvKungfub3 = {
 	"kungfub3", "kungfum", NULL, NULL, "1984",
 	"Kung-Fu Master (bootleg set 3)\0", NULL, "bootleg", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
 	NULL, Kungfub3RomInfo, Kungfub3RomName, NULL, NULL, NULL, NULL, M62InputInfo, KungfumDIPInfo,
+	Kungfub3Init, M62Exit, M62Frame, KungfumDraw, M62Scan,
+	NULL, 0x200, 256, 246, 4, 3
+};
+
+struct BurnDriver BurnDrvKungfub3s = {
+	"kungfub3s", "kungfum", NULL, NULL, "1984",
+	"Kung-Fu Senjyo (bootleg, Spanish)\0", NULL, "bootleg", "Irem M62",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
+	NULL, Kungfub3sRomInfo, Kungfub3sRomName, NULL, NULL, NULL, NULL, M62InputInfo, KungfumDIPInfo,
 	Kungfub3Init, M62Exit, M62Frame, KungfumDraw, M62Scan,
 	NULL, 0x200, 256, 246, 4, 3
 };

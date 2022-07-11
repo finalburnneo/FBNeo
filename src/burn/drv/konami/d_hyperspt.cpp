@@ -402,6 +402,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	ZetClose();
 	watchdog = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1030,7 +1032,7 @@ struct BurnDriver BurnDrvRoadf = {
 	"roadf", NULL, NULL, NULL, "1984",
 	"Road Fighter (set 1)\0", NULL, "Konami", "GX461",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
 	NULL, roadfRomInfo, roadfRomName, NULL, NULL, NULL, NULL, RoadfInputInfo, RoadfDIPInfo,
 	RoadfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -1069,7 +1071,7 @@ struct BurnDriver BurnDrvRoadf2 = {
 	"roadf2", "roadf", NULL, NULL, "1984",
 	"Road Fighter (set 2)\0", NULL, "Konami", "GX461",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
 	NULL, roadf2RomInfo, roadf2RomName, NULL, NULL, NULL, NULL, RoadfInputInfo, RoadfDIPInfo,
 	RoadfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -1114,7 +1116,7 @@ struct BurnDriver BurnDrvRoadf3 = {
 	"roadf3", "roadf", NULL, NULL, "1984",
 	"Road Fighter (set 3, conversion hack on Hyper Sports PCB)\0", NULL, "hack", "GX330",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
 	NULL, roadf3RomInfo, roadf3RomName, NULL, NULL, NULL, NULL, RoadfInputInfo, RoadfDIPInfo,
 	Roadf3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4

@@ -3,8 +3,8 @@
 
 #include "burner.h"
 
-
-#define MAX_JOYSTICKS (8)
+#define MAX_JOYSTICKS 4				// Changed from 8 to 4, only 4 are supported anyway
+#define JOYSTICK_DEAD_ZONE 8000		// Replace DEADZONE to make it coherent with other declarations
 
 static int FBKtoSDL[512] = { 0 };
 static int SDLtoFBK[512] = { -1 };
@@ -271,55 +271,36 @@ void setup_kemaps(void)
 // Sets up one Joystick (for example the range of the joystick's axes)
 static int SDLinpJoystickInit(int i)
 {
-   
-   SDL_GameControllerButtonBind bind;
- 
-   JoyList[i] = SDL_JoystickOpen(i);
+	SDL_GameControllerButtonBind bind;
 
-// need this for any mapps that need done might just read a local file and do a readme on how to add your controller this will do for now
-   SDL_JoystickGUID guid = SDL_JoystickGetGUID(JoyList[i]);
-   char guid_str[1024];
-   SDL_JoystickGetGUIDString(guid, guid_str, sizeof(guid_str));
+	JoyList[i] = SDL_JoystickOpen(i);
+	GCList[i]  = SDL_GameControllerOpen(i);
 
-   char *mapping ="03000000ff1100003133000000000000,GameStation Gear Pc control pad,a:b2,b:b1,y:b0,x:b3,start:b11,back:b10,leftshoulder:b4,rightshoulder:b5,dpup:h0.1,dpleft:h0.8,dpdown:h0.4,dpright:h0.2,leftx:a0,lefty:a1,rightx:a2,righty:a4,lefttrigger:b6,righttrigger:b7,leftstick:b8,rightstick:b9,";
-// remap my problamatic old gamepad that conflicts with sdl2 see https://github.com/gabomdq/SDL_GameControllerDB/issues/308#event-2941370014
-   const char* name = SDL_JoystickName(JoyList[i]);
-   if ( (strcmp(guid_str, "03000000ff1100003133000000000000") == 0) && (strcmp(name, "PC Game Controller       ") == 0) )
-   {
-      SDL_GameControllerAddMapping(mapping) ;
-   }
+	if (GCList[i])
+	{
+		bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_A );
+		buttons[i][0] = bind.value.button;
 
-   GCList[i]  = SDL_GameControllerOpen(i);
-   if (GCList[i])
-   {
-	   
-	   mapping = SDL_GameControllerMapping(GCList[i]);
-	   //printf("%s: mapping %s\n", SDL_GameControllerName(temp), mapping);   
-		
-	   bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_A );
-	   buttons[i][0] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_B);
+		buttons[i][1] = bind.value.button;
 
-	   bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_B);
-	   buttons[i][1] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_X );
+		buttons[i][2] = bind.value.button;
 
-	   bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_X );
-	   buttons[i][2] = bind.value.button;
-	   
-	   bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_Y);
-	   buttons[i][3] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_Y);
+		buttons[i][3] = bind.value.button;
 
-	   bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_LEFTSHOULDER  );
-	   buttons[i][4] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_LEFTSHOULDER  );
+		buttons[i][4] = bind.value.button;
 
-	   bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_RIGHTSHOULDER );
-	   buttons[i][5] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_RIGHTSHOULDER );
+		buttons[i][5] = bind.value.button;
 
-	   bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_BACK   );
-	   buttons[i][6] = bind.value.button;
+		bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_BACK   );
+		buttons[i][6] = bind.value.button;
 
-	   bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_START  );
-	   buttons[i][7] = bind.value.button;
-
+		bind = SDL_GameControllerGetBindForButton(GCList[i], SDL_CONTROLLER_BUTTON_START  );
+		buttons[i][7] = bind.value.button;
    }
 
 	return 0;
@@ -399,6 +380,7 @@ int SDLinpInit()
 	for (int i = 0; i < nJoystickCount; i++) {
 		SDLinpJoystickInit(i);
 	}
+	SDL_GameControllerEventState(SDL_IGNORE);
 	SDL_JoystickEventState(SDL_IGNORE);
 
 	// Set up the keyboard
@@ -418,7 +400,25 @@ static unsigned char bJoystickRead = 0;
 static unsigned char bMouseRead = 0;
 static struct { unsigned char buttons; int xdelta; int ydelta; } SDLinpMouseState;
 
-#define SDL_KEY_IS_DOWN(key) (FBKtoSDL[key] > 0 ? SDLinpKeyboardState[FBKtoSDL[key]] : 0)
+bool do_reset_game = false;		// To reset game without reloading
+
+// Simulate F3 key pressed if reset game is requested
+int SDL_KEY_IS_DOWN(int key)
+{
+	if (FBKtoSDL[key] > 0) {
+		switch (key) {
+			case FBK_F3:
+				if (do_reset_game) {
+					do_reset_game = false;
+					return 1;
+				} else {
+					return SDLinpKeyboardState[SDL_SCANCODE_F3];
+				}
+			default:
+				return SDLinpKeyboardState[FBKtoSDL[key]];
+		}
+	} else return 0;
+}
 
 // Call before checking for Input in a frame
 int SDLinpStart()
@@ -445,7 +445,7 @@ static int ReadJoystick()
 		return 0;
 	}
 
-	SDL_JoystickUpdate();
+	SDL_GameControllerUpdate();		// This updates Joysticks too
 
 	// All joysticks have been Read this frame
 	bJoystickRead = 1;
@@ -532,7 +532,6 @@ static int JoystickState(int i, int nSubCode)
 	}
 
 	if (nSubCode < 0x10) {										// Joystick directions
-		const int DEADZONE = 0x4000;
 
 		// we have two checks per axis
 		if (SDL_JoystickNumAxes(JoyList[i])*2 <= nSubCode) {
@@ -540,22 +539,22 @@ static int JoystickState(int i, int nSubCode)
 		}
 
 		switch (nSubCode) {
-		case 0x00: return SDL_JoystickGetAxis(JoyList[i], 0) < -DEADZONE;		// Left
-		case 0x01: return SDL_JoystickGetAxis(JoyList[i], 0) > DEADZONE;		// Right
-		case 0x02: return SDL_JoystickGetAxis(JoyList[i], 1) < -DEADZONE;		// Up
-		case 0x03: return SDL_JoystickGetAxis(JoyList[i], 1) > DEADZONE;		// Down
-		case 0x04: return SDL_JoystickGetAxis(JoyList[i], 2) < -DEADZONE;
-		case 0x05: return SDL_JoystickGetAxis(JoyList[i], 2) > DEADZONE;
-		case 0x06: return SDL_JoystickGetAxis(JoyList[i], 3) < -DEADZONE;
-		case 0x07: return SDL_JoystickGetAxis(JoyList[i], 3) > DEADZONE;
-		case 0x08: return SDL_JoystickGetAxis(JoyList[i], 4) < -DEADZONE;
-		case 0x09: return SDL_JoystickGetAxis(JoyList[i], 4) > DEADZONE;
-		case 0x0A: return SDL_JoystickGetAxis(JoyList[i], 5) < -DEADZONE;
-		case 0x0B: return SDL_JoystickGetAxis(JoyList[i], 5) > DEADZONE;
-		case 0x0C: return SDL_JoystickGetAxis(JoyList[i], 6) < -DEADZONE;
-		case 0x0D: return SDL_JoystickGetAxis(JoyList[i], 6) > DEADZONE;
-		case 0x0E: return SDL_JoystickGetAxis(JoyList[i], 7) < -DEADZONE;
-		case 0x0F: return SDL_JoystickGetAxis(JoyList[i], 7) > DEADZONE;
+		case 0x00: return SDL_JoystickGetAxis(JoyList[i], 0) < -JOYSTICK_DEAD_ZONE;		// Left
+		case 0x01: return SDL_JoystickGetAxis(JoyList[i], 0) > JOYSTICK_DEAD_ZONE;		// Right
+		case 0x02: return SDL_JoystickGetAxis(JoyList[i], 1) < -JOYSTICK_DEAD_ZONE;		// Up
+		case 0x03: return SDL_JoystickGetAxis(JoyList[i], 1) > JOYSTICK_DEAD_ZONE;		// Down
+		case 0x04: return SDL_JoystickGetAxis(JoyList[i], 2) < -JOYSTICK_DEAD_ZONE;
+		case 0x05: return SDL_JoystickGetAxis(JoyList[i], 2) > JOYSTICK_DEAD_ZONE;
+		case 0x06: return SDL_JoystickGetAxis(JoyList[i], 3) < -JOYSTICK_DEAD_ZONE;
+		case 0x07: return SDL_JoystickGetAxis(JoyList[i], 3) > JOYSTICK_DEAD_ZONE;
+		case 0x08: return SDL_JoystickGetAxis(JoyList[i], 4) < -JOYSTICK_DEAD_ZONE;
+		case 0x09: return SDL_JoystickGetAxis(JoyList[i], 4) > JOYSTICK_DEAD_ZONE;
+		case 0x0A: return SDL_JoystickGetAxis(JoyList[i], 5) < -JOYSTICK_DEAD_ZONE;
+		case 0x0B: return SDL_JoystickGetAxis(JoyList[i], 5) > JOYSTICK_DEAD_ZONE;
+		case 0x0C: return SDL_JoystickGetAxis(JoyList[i], 6) < -JOYSTICK_DEAD_ZONE;
+		case 0x0D: return SDL_JoystickGetAxis(JoyList[i], 6) > JOYSTICK_DEAD_ZONE;
+		case 0x0E: return SDL_JoystickGetAxis(JoyList[i], 7) < -JOYSTICK_DEAD_ZONE;
+		case 0x0F: return SDL_JoystickGetAxis(JoyList[i], 7) > JOYSTICK_DEAD_ZONE;
 		}
 	}
 	if (nSubCode < 0x20) {										// POV hat controls

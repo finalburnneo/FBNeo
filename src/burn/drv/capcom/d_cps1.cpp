@@ -2607,8 +2607,8 @@ static struct BurnDIPInfo GhoulsDIPList[]=
 	{0x14, 0x01, 0x10, 0x10, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
-	{0x14, 0x01, 0x20, 0x00, "Off"                    },
-	{0x14, 0x01, 0x20, 0x10, "On"                     },
+	{0x14, 0x01, 0x20, 0x20, "Off"                    },
+	{0x14, 0x01, 0x20, 0x00, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
 	{0x14, 0x01, 0x40, 0x40, "No"                     },
@@ -2656,13 +2656,17 @@ static struct BurnDIPInfo GhoulsuDIPList[]=
 	{0x14, 0x01, 0x03, 0x01, "4"                      },
 	{0x14, 0x01, 0x03, 0x02, "5"                      },
 
-	{0   , 0xfe, 0   , 2   , "Flip"                   },
+	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
 	{0x14, 0x01, 0x10, 0x00, "Off"                    },
 	{0x14, 0x01, 0x10, 0x10, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
+	{0x14, 0x01, 0x20, 0x20, "Off"                    },
+	{0x14, 0x01, 0x20, 0x00, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
-	{0x14, 0x01, 0x40, 0x40, "Off"                    },
-	{0x14, 0x01, 0x40, 0x00, "On"                     },
+	{0x14, 0x01, 0x40, 0x40, "No"                     },
+	{0x14, 0x01, 0x40, 0x00, "Yes"                    },
 	
 	{0   , 0xfe, 0   , 2   , "Game Mode"              },
 	{0x14, 0x01, 0x80, 0x00, "Game"                   },
@@ -2709,6 +2713,10 @@ static struct BurnDIPInfo DaimakaiDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Flip"                   },
 	{0x14, 0x01, 0x10, 0x00, "Off"                    },
 	{0x14, 0x01, 0x10, 0x10, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
+	{0x14, 0x01, 0x20, 0x20, "Off"                    },
+	{0x14, 0x01, 0x20, 0x00, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
 	{0x14, 0x01, 0x40, 0x40, "Off"                    },
@@ -15860,6 +15868,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "dynwarjr"      , CPS_B_21_DEF, mapper_TK22B , 0, NULL                },
 	{ "ffight"        , CPS_B_04    , mapper_S224B , 0, NULL                },
 	{ "ffightae"      , CPS_B_21_DEF, mapper_S224B , 0, NULL                },
+	{ "ffightaemgc"   , CPS_B_21_DEF, mapper_S224B , 0, NULL                },
 	{ "ffighta"       , CPS_B_04    , mapper_S224B , 0, NULL                },
 	{ "ffightu"       , CPS_B_04    , mapper_S224B , 0, NULL                },
 	{ "ffightu1"      , CPS_B_04    , mapper_S224B , 0, NULL                },
@@ -24901,6 +24910,42 @@ struct BurnDriver BurnDrvCpsFfightae = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+// Final Fight 30th Anniversary Edition (Mad Gear's City Hack), hacked by ZombieMaster with the FFAEE Editor
+// Edtior Link: https://gamehackfan.github.io/ffaee
+
+static struct BurnRomInfo FfightaemgcRomDesc[] = {
+	{ "ffaemgc-23m.8h",     0x080000, 0xc16be586, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "ffaemgc-22m.7h",     0x080000, 0x4994c1c8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "ffaemgc-5m.7a",      0x080000, 0x91a909bd, BRF_GRA | CPS1_TILES },
+	{ "ffaemgc-7m.9a",      0x080000, 0x89f8b4cd, BRF_GRA | CPS1_TILES },
+	{ "ffaemgc-1m.3a",      0x080000, 0xd5469303, BRF_GRA | CPS1_TILES },
+	{ "ffaemgc-3m.5a",      0x080000, 0x0c6302bf, BRF_GRA | CPS1_TILES },
+
+	{ "ff_09.12b",          0x010000, 0xb8367eb5, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "ff_18.11c",          0x020000, 0x375c66e7, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "ff_19.12c",          0x020000, 0x1ef137f9, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "s224b.1a",           0x000117, 0xcdc4413e, BRF_OPT },	// b-board PLDs
+	{ "iob1.11e",           0x000117, 0x3abc0700, BRF_OPT },
+};
+
+STD_ROM_PICK(Ffightaemgc)
+STD_ROM_FN(Ffightaemgc)
+
+struct BurnDriver BurnDrvCpsFfightaemgc = {
+	"ffightaemgc", "ffight", NULL, NULL, "2022",
+	"Final Fight 30th Anniversary Edition (Mad Gear's City Hack)\0", NULL, "ZombieMaster", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, FfightaemgcRomInfo, FfightaemgcRomName, NULL, NULL, NULL, NULL, FfightaeInputInfo, FfightaeDIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 // Captain Commando (Enhanced edition 1 V 4, Hack)
 // Hacked by unknown
 // GOTVG 2015-12-05
@@ -25111,7 +25156,7 @@ struct BurnDriver BurnDrvCpsDinogae = {
 // source: https://gamehackfan.github.io/dinore/
 
 static struct BurnRomInfo DinoreRomDesc[] = {
-	{ "cde_re.10f",    0x200000, 0x530b7e43, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cde_re.10f",    0x200000, 0x282e9cd8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "cd-1m.3a",      0x080000, 0x8da4f917, BRF_GRA | CPS1_TILES },
 	{ "cd-3m.5a",      0x080000, 0x6c40f603, BRF_GRA | CPS1_TILES },
@@ -25146,7 +25191,7 @@ STD_ROM_FN(Dinore)
 
 struct BurnDriver BurnDrvCpsDinore = {
 	"dinore", "dino", NULL, NULL, "2022",
-	"Cadillacs & Dinosaurs Readjusted (Hack, v1.0)\0", NULL, "GameHackFan", "CPS1 / QSound",
+	"Cadillacs & Dinosaurs Readjusted (Hack, v1.1)\0", NULL, "GameHackFan", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, DinoreRomInfo, DinoreRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,

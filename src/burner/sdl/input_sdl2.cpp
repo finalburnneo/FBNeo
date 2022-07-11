@@ -60,7 +60,8 @@ static bool usesStreetFighterLayout()
    return  bStreetFighterLayout;
 }
 
-static int GameInpConfig(int nPlayer, int nPcDev, int nAnalog) {
+static int GameInpConfig(int nPlayer, int nPcDev, int nAnalog)
+{
    struct GameInp* pgi = NULL;
    unsigned int i;
    for (i = 0, pgi = GameInp; i < nGameInpCount; i++, pgi++) {
@@ -83,49 +84,15 @@ static int GameInpConfig(int nPlayer, int nPcDev, int nAnalog) {
    return 0;
 }
 
-static void GameInpConfigOne(int nPlayer, int nPcDev, int nAnalog, struct GameInp* pgi, char* szi) {
-   switch (nPcDev) {
-   case 0:
-      GamcPlayer(pgi, szi, nPlayer, -1); // Keyboard
-      GamcAnalogKey(pgi, szi, nPlayer, nAnalog);
-      GamcMisc(pgi, szi, nPlayer);
-      MapJoystick(pgi, szi, nPlayer, nPcDev);
-      break;
-   case 1:
-      GamcPlayer(pgi, szi, nPlayer, 0); // Joystick 1
-      GamcAnalogJoy(pgi, szi, nPlayer, 0, nAnalog);
-      GamcMisc(pgi, szi, nPlayer);
-      MapJoystick(pgi, szi, nPlayer, nPcDev);
-      break;
-   case 2:
-      GamcPlayer(pgi, szi, nPlayer, 1); // Joystick 2
-      GamcAnalogJoy(pgi, szi, nPlayer, 1, nAnalog);
-      GamcMisc(pgi, szi, nPlayer);
-      MapJoystick(pgi, szi, nPlayer, nPcDev);
+static void GameInpConfigOne(int nPlayer, int nPcDev, int nAnalog, struct GameInp* pgi, char* szi)
+{
 
-      break;
-   case 3:
-      GamcPlayer(pgi, szi, nPlayer, 2); // Joystick 3
-      GamcAnalogJoy(pgi, szi, nPlayer, 2, nAnalog);
-      GamcMisc(pgi, szi, nPlayer);
-      break;
-   case 4:
-      GamcPlayerHotRod(pgi, szi, nPlayer, 0x10, nAnalog); // X-Arcade left side
-      GamcMisc(pgi, szi, -1);
-      break;
-   case 5:
-      GamcPlayerHotRod(pgi, szi, nPlayer, 0x11, nAnalog); // X-Arcade right side
-      GamcMisc(pgi, szi, -1);
-      break;
-   case 6:
-      GamcPlayerHotRod(pgi, szi, nPlayer, 0x00, nAnalog); // HotRod left side
-      GamcMisc(pgi, szi, -1);
-      break;
-   case 7:
-      GamcPlayerHotRod(pgi, szi, nPlayer, 0x01, nAnalog); // HotRod right size
-      GamcMisc(pgi, szi, -1);
-      break;
-   }
+	GamcPlayer(pgi, szi, nPlayer, nPcDev - 1);
+	// nPcDev == 0 is Keyboard, nPcDev == 1 is joy0, etc.
+	if (nPcDev) GamcAnalogJoy(pgi, szi, nPlayer, nPcDev - 1, nAnalog);
+	else GamcAnalogKey(pgi, szi, nPlayer, nAnalog);
+	GamcMisc(pgi, szi, nPlayer);
+	MapJoystick(pgi, szi, nPlayer, nPcDev);
 }
 
 INT32 MapJoystick(struct GameInp* pgi, char* szi, INT32 nPlayer, INT32 nDevice)
@@ -299,22 +266,18 @@ INT32 display_set_controls()
 
 INT32 Init_Joysticks(int p_one_use_joystick)
 {
-   if (!p_one_use_joystick)
-   {
-      /*keyboard p1, joy0 p2) */
-      GameInpConfig(0, 0, 1);
-      GameInpConfig(1, 1, 1);
-   }
-   else
-   {
-      /*init all joysticks (4 max atm) to map or the default will think 
-      p1 is keyboard and p2 p3 p4 is joy 0 1 2 instead of joy 1 2 3 */
-      
-      for (int i = 0; i < 4; ++i)
-      {
-         GameInpConfig(i, i+1, 1);
-      }
-   }
-   display_set_controls();
-   return 0;
-};
+	if (p_one_use_joystick) {
+		/*init all joysticks (4 max atm) to map or the default will think 
+		p1 is keyboard and p2 p3 p4 is joy 0 1 2 instead of joy 1 2 3 */
+		for (int i = 0; i < 4; ++i) {
+			GameInpConfig(i, i+1, 1);
+		}
+	} else {
+		/*keyboard p1, joy0 p2, joy1 p3, joy2 p4) */
+		for (int i = 0; i < 4; ++i) {
+			GameInpConfig(i, i, 1);
+		}
+	}
+	display_set_controls();
+	return 0;
+}

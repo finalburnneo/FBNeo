@@ -1223,7 +1223,7 @@ INT32 SekInit(INT32 nCount, INT32 nCPUType)
 		}
 		#if defined (BUILD_WIN32)
 			m68k_set_pc_changed_callback(CallLuaExec);
-		#endif	
+		#endif
 #endif
 
 #ifdef EMU_A68K
@@ -1291,8 +1291,10 @@ INT32 SekExit()
 
 #ifdef EMU_M68K
 		SekCPUExitM68K(i);
+		#if defined (BUILD_WIN32)
+			m68k_set_pc_changed_callback(NULL);
+		#endif
 #endif
-		m68k_set_pc_changed_callback(NULL);
 		// Deallocate other context data
 		if (SekExt[i]) {
 			free(SekExt[i]);

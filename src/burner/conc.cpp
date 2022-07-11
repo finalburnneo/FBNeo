@@ -392,7 +392,7 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 		while (i < nLen)
 		{
 			if (szLine[i] == '=' && i < 4) j = i+1;
-			if (szLine[i] == ',' || szLine[i] == '\n')
+			if (szLine[i] == ',' || szLine[i] == '\r' || szLine[i] == '\n')
 			{
 				if (pCurrentCheat->pOption[n] == NULL) {
 					pCurrentCheat->pOption[n] = (CheatOption*)malloc(sizeof(CheatOption));
@@ -413,7 +413,7 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 		{
 			if (i == nLen) break;
 
-			if (szLine[i] == ',' || szLine[i] == '\n')
+			if (szLine[i] == ',' || szLine[i] == '\r' || szLine[i] == '\n')
 			{
 				_tcsncpy (tmp, szLine + j, i-j);
 				tmp[i-j] = '\0';
@@ -457,8 +457,10 @@ static INT32 ConfigParseMAMEFile_internal(FILE *fz, const TCHAR *name)
 {
 #define AddressInfo()	\
 	INT32 k = (flags >> 20) & 3;	\
+	INT32 cpu = (flags >> 24) & 0x1f; \
+	if (cpu & 0xfff00) cpu = 0; \
 	for (INT32 i = 0; i < k+1; i++) {	\
-		pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nCPU = 0;	\
+		pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nCPU = cpu;	\
 		if ((flags & 0xf0000000) == 0x80000000) { \
 			pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].bRelAddress = 1; \
 			pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nRelAddressOffset = nAttrib; \
@@ -550,7 +552,7 @@ static INT32 ConfigParseMAMEFile_internal(FILE *fz, const TCHAR *name)
 
 		INT32 c0[16], c1 = 0;					// find colons / break
 		for (INT32 i = 0; i < nLen; i++)
-			if (szLine[i] == ':' || szLine[i] == '\n')
+			if (szLine[i] == ':' || szLine[i] == '\r' || szLine[i] == '\n')
 				c0[c1++] = i;
 
 		tmpcpy(1);						// control flags

@@ -961,14 +961,14 @@ static INT32 MemIndex()
 
 	BurnPalette		= (UINT32*)Next; Next += 0x8000 * sizeof(UINT32);
 
-	DrvNVRAM		= Next; Next += 0x0000080;
-	DrvEEPROM		= Next; Next += 0x0008000;
+	DrvNVRAM		= Next; Next += 0x000080 * 0x100;
+	DrvEEPROM		= Next; Next += 0x000080;
 
 	AllRam			= Next;
 
-	DrvMainRAM		= Next; Next += 0x4000000;
-	BurnPalRAM		= Next; Next += 0x0100000;
-	DrvTileRAM		= Next; Next += 0x0400000;
+	DrvMainRAM		= Next; Next += 0x400000;
+	BurnPalRAM		= Next; Next += 0x010000;
+	DrvTileRAM		= Next; Next += 0x040000;
 
 	RamEnd			= Next;
 
@@ -1078,8 +1078,8 @@ static void sound_type_1_init() // aoh
 	MSM6295Init(1, 4000000 / MSM6295_PIN7_HIGH, 1);
 	MSM6295SetBank(0, DrvSndROM[0], 0x00000, 0x3ffff);
 	MSM6295SetBank(1, DrvSndROM[1], 0x00000, 0x3ffff);
-	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
-	MSM6295SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 0.55, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 0.55, BURN_SND_ROUTE_BOTH);
 
 	sound_type = 1;
 }

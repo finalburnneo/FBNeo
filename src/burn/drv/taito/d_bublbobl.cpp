@@ -2934,19 +2934,19 @@ static INT32 TokioFrame()
 
 	BublboblMakeInputs();
 
-	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[4] = { 6000000 / 60, 6000000 / 60, 3000000 / 60, 4000000 / 60 };
+	INT32 nInterleave = 264*8;
+	INT32 nCyclesTotal[4] = { 6000000 / 60, 6000000 / 60, 3000000 / 60, 3000000 / 60 };
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		ZetOpen(0);
 		CPU_RUN(0, Zet);
-		if (i == 224) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		if (i == 240*8) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
 		CPU_RUN(1, Zet);
-		if (i == 224) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		if (i == 240*8) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(2);
@@ -2961,7 +2961,7 @@ static INT32 TokioFrame()
 			CPU_RUN(3, m6805);
 		}
 
-		if (i == 224 && pBurnDraw) DrvDraw();
+		if (i == 240*8 && pBurnDraw) DrvDraw();
 	}
 
 	if (pBurnSoundOut) {

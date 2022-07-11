@@ -748,6 +748,8 @@ static INT32 DrvDoReset()
 	protection_counter = 0;
 	protection_data = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1290,7 +1292,7 @@ struct BurnDriver BurnDrvPerfrman = {
 	"perfrman", NULL, NULL, NULL, "1985",
 	"Performan (Japan)\0", NULL, "Toaplan / Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_SHOOT, 0,
 	NULL, perfrmanRomInfo, perfrmanRomName, NULL, NULL, NULL, NULL, SlapfighInputInfo, PerfrmanDIPInfo,
 	PerfrmanInit, DrvExit, DrvFrame, PerfrmanDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 256, 3, 4
@@ -1329,7 +1331,7 @@ struct BurnDriver BurnDrvPerfrmanu = {
 	"perfrmanu", "perfrman", NULL, NULL, "1985",
 	"Performan (US)\0", NULL, "Toaplan / Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_SHOOT, 0,
 	NULL, perfrmanuRomInfo, perfrmanuRomName, NULL, NULL, NULL, NULL, SlapfighInputInfo, PerfrmanDIPInfo,
 	PerfrmanInit, DrvExit, DrvFrame, PerfrmanDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 256, 3, 4
@@ -1383,7 +1385,7 @@ struct BurnDriver BurnDrvTigerh = {
 	"tigerh", NULL, NULL, NULL, "1985",
 	"Tiger Heli (US)\0", NULL, "Toaplan / Taito America Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
 	NULL, tigerhRomInfo, tigerhRomName, NULL, NULL, NULL, NULL, TigerhInputInfo, TigerhDIPInfo,
 	TigerhInit, DrvExit, DrvFrame, SlapfighDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 280, 3, 4
@@ -1426,7 +1428,7 @@ struct BurnDriver BurnDrvTigerhj = {
 	"tigerhj", "tigerh", NULL, NULL, "1985",
 	"Tiger Heli (Japan)\0", NULL, "Toaplan / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
 	NULL, tigerhjRomInfo, tigerhjRomName, NULL, NULL, NULL, NULL, TigerhInputInfo, TigerhDIPInfo,
 	TigerhInit, DrvExit, DrvFrame, SlapfighDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 280, 3, 4
@@ -1490,7 +1492,7 @@ struct BurnDriver BurnDrvTigerhb1 = {
 	"tigerhb1", "tigerh", NULL, NULL, "1985",
 	"Tiger Heli (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
 	NULL, tigerhb1RomInfo, tigerhb1RomName, NULL, NULL, NULL, NULL, TigerhInputInfo, TigerhDIPInfo,
 	Tigerhb1Init, DrvExit, DrvFrame, SlapfighDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 280, 3, 4
@@ -1531,7 +1533,7 @@ struct BurnDriver BurnDrvTigerhb2 = {
 	"tigerhb2", "tigerh", NULL, NULL, "1985",
 	"Tiger Heli (bootleg set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
 	NULL, tigerhb2RomInfo, tigerhb2RomName, NULL, NULL, NULL, NULL, TigerhInputInfo, TigerhDIPInfo,
 	TigerhInit, DrvExit, DrvFrame, SlapfighDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 280, 3, 4
@@ -1572,7 +1574,7 @@ struct BurnDriver BurnDrvTigerhb3 = {
 	"tigerhb3", "tigerh", NULL, NULL, "1985",
 	"Tiger Heli (bootleg set 3)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
 	NULL, tigerhb3RomInfo, tigerhb3RomName, NULL, NULL, NULL, NULL, TigerhInputInfo, TigerhDIPInfo,
 	TigerhInit, DrvExit, DrvFrame, SlapfighDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 280, 3, 4
@@ -1619,7 +1621,7 @@ struct BurnDriver BurnDrvAlcon = {
 	"alcon", NULL, NULL, NULL, "1986",
 	"Alcon (US)\0", NULL, "Toaplan / Taito America Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
 	NULL, alconRomInfo, alconRomName, NULL, NULL, NULL, NULL, SlapfighInputInfo, SlapfighDIPInfo,
 	SlapfighInit, DrvExit, DrvFrame, SlapfighDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 280, 3, 4
@@ -1666,7 +1668,7 @@ struct BurnDriver BurnDrvSlapfigh = {
 	"slapfigh", "alcon", NULL, NULL, "1986",
 	"Slap Fight (A77 set, 8606M PCB)\0", NULL, "Toaplan / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
 	NULL, slapfighRomInfo, slapfighRomName, NULL, NULL, NULL, NULL, SlapfighInputInfo, SlapfighDIPInfo,
 	SlapfighInit, DrvExit, DrvFrame, SlapfighDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 280, 3, 4
@@ -1714,7 +1716,7 @@ struct BurnDriver BurnDrvSlapfigha = {
 	"slapfigha", "alcon", NULL, NULL, "1986",
 	"Slap Fight (A76 set, GX-006-A PCB)\0", NULL, "Toaplan / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
 	NULL, slapfighaRomInfo, slapfighaRomName, NULL, NULL, NULL, NULL, SlapfighInputInfo, SlapfighDIPInfo,
 	SlapfighInit, DrvExit, DrvFrame, SlapfighDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 280, 3, 4
@@ -1754,7 +1756,7 @@ struct BurnDriver BurnDrvSlapfighb1 = {
 	"slapfighb1", "alcon", NULL, NULL, "1986",
 	"Slap Fight (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
 	NULL, slapfighb1RomInfo, slapfighb1RomName, NULL, NULL, NULL, NULL, SlapfighInputInfo, SlapfighDIPInfo,
 	SlapfighInit, DrvExit, DrvFrame, SlapfighDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 280, 3, 4
@@ -1815,7 +1817,7 @@ struct BurnDriver BurnDrvSlapfighb2 = {
 	"slapfighb2", "alcon", NULL, NULL, "1986",
 	"Slap Fight (bootleg set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
 	NULL, slapfighb2RomInfo, slapfighb2RomName, NULL, NULL, NULL, NULL, SlapfighInputInfo, SlapfighDIPInfo,
 	Slapfighb2Init, DrvExit, DrvFrame, SlapfighDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 280, 3, 4
@@ -1871,7 +1873,7 @@ struct BurnDriver BurnDrvSlapfighb3 = {
 	"slapfighb3", "alcon", NULL, NULL, "1986",
 	"Slap Fight (bootleg set 3)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
 	NULL, slapfighb3RomInfo, slapfighb3RomName, NULL, NULL, NULL, NULL, SlapfighInputInfo, SlapfighDIPInfo,
 	Slapfighb3Init, DrvExit, DrvFrame, SlapfighDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 280, 3, 4
@@ -1914,7 +1916,7 @@ struct BurnDriver BurnDrvGrdian = {
 	"grdian", NULL, NULL, NULL, "1986",
 	"Guardian (US)\0", NULL, "Toaplan / Taito America Corporation (Kitkorp license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TOAPLAN_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_SCRFIGHT, 0,
 	NULL, grdianRomInfo, grdianRomName, NULL, NULL, NULL, NULL, SlapfighInputInfo, GetstarDIPInfo,
 	SlapfighInit, DrvExit, DrvFrame, SlapfighDraw, DrvScan, &DrvRecalc, 0x100,
 	280, 240, 4, 3
@@ -1957,7 +1959,7 @@ struct BurnDriver BurnDrvGetstarj = {
 	"getstarj", "grdian", NULL, NULL, "1986",
 	"Get Star (Japan)\0", NULL, "Toaplan / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TOAPLAN_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_SCRFIGHT, 0,
 	NULL, getstarjRomInfo, getstarjRomName, NULL, NULL, NULL, NULL, SlapfighInputInfo, GetstarjDIPInfo,
 	SlapfighInit, DrvExit, DrvFrame, SlapfighDraw, DrvScan, &DrvRecalc, 0x100,
 	280, 240, 4, 3
@@ -2050,7 +2052,7 @@ struct BurnDriver BurnDrvGetstarb1 = {
 	"getstarb1", "grdian", NULL, NULL, "1986",
 	"Get Star (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TOAPLAN_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_SCRFIGHT, 0,
 	NULL, getstarb1RomInfo, getstarb1RomName, NULL, NULL, NULL, NULL, SlapfighInputInfo, GetstarjDIPInfo,
 	Getstarb1Init, DrvExit, DrvFrame, SlapfighDraw, DrvScan, &DrvRecalc, 0x100,
 	280, 240, 4, 3
@@ -2129,7 +2131,7 @@ struct BurnDriver BurnDrvGetstarb2 = {
 	"getstarb2", "grdian", NULL, NULL, "1986",
 	"Get Star (bootleg set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TOAPLAN_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_SCRFIGHT, 0,
 	NULL, getstarb2RomInfo, getstarb2RomName, NULL, NULL, NULL, NULL, Getstarb2InputInfo, Getstarb2DIPInfo,
 	Getstarb2Init, DrvExit, DrvFrame, SlapfighDraw, DrvScan, &DrvRecalc, 0x100,
 	280, 240, 4, 3

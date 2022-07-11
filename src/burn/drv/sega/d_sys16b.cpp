@@ -9305,7 +9305,7 @@ struct BurnDriver BurnDrvAfightere = {
 	"afightere", "afighter", NULL, NULL, "1991",
 	"Action Fighter (System 16B, unprotected, analog controls)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_HORSHOOT, 0,
 	NULL, AfightereRomInfo, AfightereRomName, NULL, NULL, NULL, NULL, Afighter_analogInputInfo, Afighter_analogDIPInfo,
 	AfighterAnalogInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
@@ -9315,7 +9315,7 @@ struct BurnDriver BurnDrvAfighterf = {
 	"afighterf", "afighter", NULL, NULL, "1991",
 	"Action Fighter (System 16B, FD1089B 317-unknown, analog controls)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089B_ENC | HARDWARE_SEGA_5358_SMALL, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089B_ENC | HARDWARE_SEGA_5358_SMALL, GBF_HORSHOOT, 0,
 	NULL, AfighterfRomInfo, AfighterfRomName, NULL, NULL, NULL, NULL, Afighter_analogInputInfo, Afighter_analogDIPInfo,
 	AfighterAnalogInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
@@ -9325,7 +9325,7 @@ struct BurnDriver BurnDrvAfighterg = {
 	"afighterg", "afighter", NULL, NULL, "1991",
 	"Action Fighter (System 16B, FD1089B 317-unknown)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089B_ENC | HARDWARE_SEGA_5358_SMALL, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089B_ENC | HARDWARE_SEGA_5358_SMALL, GBF_HORSHOOT, 0,
 	NULL, AfightergRomInfo, AfightergRomName, NULL, NULL, NULL, NULL, System16bInputInfo, AfighterDIPInfo,
 	AfighterInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
@@ -9335,7 +9335,7 @@ struct BurnDriver BurnDrvAfighterh = {
 	"afighterh", "afighter", NULL, NULL, "1991",
 	"Action Fighter (System 16B, FD1089A 317-0018)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358_SMALL, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358_SMALL, GBF_HORSHOOT, 0,
 	NULL, AfighterhRomInfo, AfighterhRomName, NULL, NULL, NULL, NULL, System16bInputInfo, AfighterDIPInfo,
 	AfighterInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
@@ -9355,7 +9355,7 @@ struct BurnDriver BurnDrvAliensyn3 = {
 	"aliensyn3", "aliensyn", NULL, NULL, "1987",
 	"Alien Syndrome (set 3, System 16B, FD1089A 317-0033)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL | HARDWARE_SEGA_FD1089A_ENC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL | HARDWARE_SEGA_FD1089A_ENC, GBF_MAZE, 0,
 	NULL, Aliensyn3RomInfo, Aliensyn3RomName, NULL, NULL, NULL, NULL, System16bfire1InputInfo, AliensynDIPInfo,
 	AliensynInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9365,7 +9365,7 @@ struct BurnDriver BurnDrvAliensyn7 = {
 	"aliensyn7", "aliensyn", NULL, NULL, "1987",
 	"Alien Syndrome (set 7, System 16B, MC-8123B 317-00xx)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL | HARDWARE_SEGA_MC8123_ENC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL | HARDWARE_SEGA_MC8123_ENC, GBF_MAZE, 0,
 	NULL, Aliensyn7RomInfo, Aliensyn7RomName, NULL, NULL, NULL, NULL, System16bfire1InputInfo, AliensynDIPInfo,
 	AliensynInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9405,7 +9405,7 @@ struct BurnDriver BurnDrvAltbeast2 = {
 	"altbeast2", "altbeast", NULL, NULL, "1988",
 	"Altered Beast (set 2, MC-8123B 317-0066)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_MC8123_ENC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_MC8123_ENC, GBF_SCRFIGHT, 0,
 	NULL, Altbeast2RomInfo, Altbeast2RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9415,7 +9415,7 @@ struct BurnDriver BurnDrvAltbeastj1 = {
 	"altbeastj1", "altbeast", NULL, NULL, "1988",
 	"Juuouki (set 1, Japan, FD1094 317-0065)\0", NULL, "Sega", "System 16B",
 	L"Juuoki (set 1, Japan, FD1094 317-0065)\0\u7363\u738B\u8A18\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
 	NULL, Altbeastj1RomInfo, Altbeastj1RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9425,7 +9425,7 @@ struct BurnDriver BurnDrvAltbeastj3 = {
 	"altbeastj3", "altbeast", NULL, NULL, "1988",
 	"Juuouki (set 3, Japan, FD1094 317-0068)\0", NULL, "Sega", "System 16B",
 	L"Juuoki (set 3, Japan, FD1094 317-0068)\0\u7363\u738B\u8A18\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
 	NULL, Altbeastj3RomInfo, Altbeastj3RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
 	Altbeast4Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9455,7 +9455,7 @@ struct BurnDriver BurnDrvAltbeast5 = {
 	"altbeast5", "altbeast", NULL, NULL, "1988",
 	"Altered Beast (set 5, FD1094 317-0069)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
 	NULL, Altbeast5RomInfo, Altbeast5RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
 	Altbeast4Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9465,7 +9465,7 @@ struct BurnDriver BurnDrvAltbeast5d = {
 	"altbeast5d", "altbeast", NULL, NULL, "1988",
 	"Altered Beast (set 5, FD1094 317-0069 decrypted)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
 	NULL, Altbeast5dRomInfo, Altbeast5dRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
 	Altbeast4Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9475,7 +9475,7 @@ struct BurnDriver BurnDrvAltbeast6 = {
 	"altbeast6", "altbeast", NULL, NULL, "1988",
 	"Altered Beast (set 6, 8751 317-0076)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
 	NULL, Altbeast6RomInfo, Altbeast6RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
 	Altbeast6Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9485,7 +9485,7 @@ struct BurnDriverD BurnDrvAltbeastbl = {
 	"altbeastbl", "altbeast", NULL, NULL, "1988",
 	"Altered Beast (Datsu bootleg)\0", "no Sound", "bootleg (Datsu)", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_INVERT_TILES, GBF_SCRFIGHT, 0,
+	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_INVERT_TILES, GBF_SCRFIGHT, 0,
 	NULL, AltbeastblRomInfo, AltbeastblRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
 	AltbeastblInit, System16Exit, System16BFrame, System16BootlegRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9495,7 +9495,7 @@ struct BurnDriverD BurnDrvMutantwarr = {
 	"mutantwarr", "altbeast", NULL, NULL, "1988",
 	"Mutant Warrior (Altered Beast - Datsu bootleg)\0", "no Sound", "bootleg (Datsu)", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_INVERT_TILES, GBF_SCRFIGHT, 0,
+	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_INVERT_TILES, GBF_SCRFIGHT, 0,
 	NULL, MutantwarrRomInfo, MutantwarrRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
 	AltbeastblInit, System16Exit, System16BFrame, System16BootlegRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9505,7 +9505,7 @@ struct BurnDriver BurnDrvAtomicp = {
 	"atomicp", NULL, NULL, NULL, "1990",
 	"Atomic Point (Korea)\0", NULL, "Philco", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_YM2413, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_YM2413, GBF_PUZZLE, 0,
 	NULL, AtomicpRomInfo, AtomicpRomName, NULL, NULL, NULL, NULL, AtomicpInputInfo, AtomicpDIPInfo,
 	AtomicpInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9515,7 +9515,7 @@ struct BurnDriver BurnDrvAurail = {
 	"aurail", NULL, NULL, NULL, "1990",
 	"Aurail (set 3, US, unprotected)\0", NULL, "Sega / Westone", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_VERSHOOT, 0,
 	NULL, AurailRomInfo, AurailRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, AurailDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9525,7 +9525,7 @@ struct BurnDriver BurnDrvAurail1 = {
 	"aurail1", "aurail", NULL, NULL, "1990",
 	"Aurail (set 2, World, FD1089B 317-0168)\0", NULL, "Sega / Westone", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1089B_ENC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1089B_ENC, GBF_VERSHOOT, 0,
 	NULL, Aurail1RomInfo, Aurail1RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, AurailDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9545,7 +9545,7 @@ struct BurnDriver BurnDrvAurailj = {
 	"aurailj", "aurail", NULL, NULL, "1990",
 	"Aurail (set 1, Japan, FD1089A 317-0167)\0", NULL, "Sega / Westone", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1089A_ENC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1089A_ENC, GBF_VERSHOOT, 0,
 	NULL, AurailjRomInfo, AurailjRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, AurailDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9565,7 +9565,7 @@ struct BurnDriver BurnDrvBayroute = {
 	"bayroute", NULL, NULL, NULL, "1989",
 	"Bay Route (set 3, World, FD1094 317-0116)\0", NULL, "Sunsoft / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_RUNGUN, 0,
 	NULL, BayrouteRomInfo, BayrouteRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, BayrouteDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9585,7 +9585,7 @@ struct BurnDriver BurnDrvBayroutej = {
 	"bayroutej", "bayroute", NULL, NULL, "1989",
 	"Bay Route (set 2, Japan, FD1094 317-0115)\0", NULL, "Sunsoft / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_RUNGUN, 0,
 	NULL, BayroutejRomInfo, BayroutejRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, BayrouteDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9605,7 +9605,7 @@ struct BurnDriver BurnDrvBayroute1 = {
 	"bayroute1", "bayroute", NULL, NULL, "1989",
 	"Bay Route (set 1, US, unprotected)\0", "", "Sunsoft / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_RUNGUN, 0,
 	NULL, Bayroute1RomInfo, Bayroute1RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, BayrouteDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9645,7 +9645,7 @@ struct BurnDriver BurnDrvCotton = {
 	"cotton", NULL, NULL, NULL, "1991",
 	"Cotton (set 3, World, FD1094 317-0181a)\0", NULL, "Success / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_HORSHOOT, 0,
 	NULL, CottonRomInfo, CottonRomName, NULL, NULL, NULL, NULL, System16bInputInfo, CottonDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9665,7 +9665,7 @@ struct BurnDriver BurnDrvCottonu = {
 	"cottonu", "cotton", NULL, NULL, "1991",
 	"Cotton (set 2, US, FD1094 317-0180)\0", NULL, "Success / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_HORSHOOT, 0,
 	NULL, CottonuRomInfo, CottonuRomName, NULL, NULL, NULL, NULL, System16bInputInfo, CottonDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9685,7 +9685,7 @@ struct BurnDriver BurnDrvCottonj = {
 	"cottonj", "cotton", NULL, NULL, "1991",
 	"Cotton (set 2, Japan, Rev B, FD1094 317-0179b))\0", NULL, "Success / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_HORSHOOT, 0,
 	NULL, CottonjRomInfo, CottonjRomName, NULL, NULL, NULL, NULL, System16bInputInfo, CottonDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9705,7 +9705,7 @@ struct BurnDriver BurnDrvCottonja = {
 	"cottonja", "cotton", NULL, NULL, "1991",
 	"Cotton (set 1, Japan, Rev A, FD1094 317-0179a))\0", NULL, "Success / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_HORSHOOT, 0,
 	NULL, CottonjaRomInfo, CottonjaRomName, NULL, NULL, NULL, NULL, System16bInputInfo, CottonDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9725,7 +9725,7 @@ struct BurnDriver BurnDrvDdux = {
 	"ddux", NULL, NULL, NULL, "1989",
 	"Dynamite Dux (set 2, FD1094 317-0096)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
 	NULL, DduxRomInfo, DduxRomName, NULL, NULL, NULL, NULL, System16bInputInfo, DduxDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9745,7 +9745,7 @@ struct BurnDriver BurnDrvDduxj = {
 	"dduxj", "ddux", NULL, NULL, "1989",
 	"Dynamite Dux (set 2, Japan, FD1094 317-0094)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
 	NULL, DduxjRomInfo, DduxjRomName, NULL, NULL, NULL, NULL, System16bInputInfo, DduxDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9775,7 +9775,7 @@ struct BurnDriver BurnDrvDduxbl = {
 	"dduxbl", "ddux", NULL, NULL, "1989",
 	"Dynamite Dux (bootleg)\0", NULL, "bootleg", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_INVERT_TILES | HARDWARE_SEGA_5358, GBF_SCRFIGHT, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_INVERT_TILES | HARDWARE_SEGA_5358, GBF_SCRFIGHT, 0,
 	NULL, DduxblRomInfo, DduxblRomName, NULL, NULL, NULL, NULL, System16bInputInfo, DduxDIPInfo,
 	DduxblInit, System16Exit, System16BFrame, System16BootlegRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9785,7 +9785,7 @@ struct BurnDriver BurnDrvDunkshot = {
 	"dunkshot", NULL, NULL, NULL, "1987",
 	"Dunk Shot (Rev C, FD1089 317-0022)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358_SMALL, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358_SMALL, GBF_SPORTSMISC, 0,
 	NULL, DunkshotRomInfo, DunkshotRomName, NULL, NULL, NULL, NULL, DunkshotInputInfo, DunkshotDIPInfo,
 	DunkshotInit, DunkshotExit, System16BFrame, System16BAltRender, DunkshotScan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9795,7 +9795,7 @@ struct BurnDriver BurnDrvDunkshota = {
 	"dunkshota", "dunkshot", NULL, NULL, "1987",
 	"Dunk Shot (Rev A, FD1089 317-0022)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358_SMALL, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358_SMALL, GBF_SPORTSMISC, 0,
 	NULL, DunkshotaRomInfo, DunkshotaRomName, NULL, NULL, NULL, NULL, DunkshotInputInfo, DunkshotDIPInfo,
 	DunkshotInit, DunkshotExit, System16BFrame, System16BAltRender, DunkshotScan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9805,7 +9805,7 @@ struct BurnDriver BurnDrvDunkshoto = {
 	"dunkshoto", "dunkshot", NULL, NULL, "1986",
 	"Dunk Shot (FD1089 317-0022)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358_SMALL, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358_SMALL, GBF_SPORTSMISC, 0,
 	NULL, DunkshotoRomInfo, DunkshotoRomName, NULL, NULL, NULL, NULL, DunkshotInputInfo, DunkshotDIPInfo,
 	DunkshotInit, DunkshotExit, System16BFrame, System16BAltRender, DunkshotScan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9855,7 +9855,7 @@ struct BurnDriver BurnDrvEswatj1 = {
 	"eswatj1", "eswat", NULL, NULL, "1989",
 	"E-Swat - Cyber Police (set 1, Japan, FD1094 317-0131)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_RUNGUN, 0,
 	NULL, Eswatj1RomInfo, Eswatj1RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, EswatDIPInfo,
 	Eswatj1Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9895,7 +9895,7 @@ struct BurnDriver BurnDrvEswatbl = {
 	"eswatbl", "eswat", NULL, NULL, "1989",
 	"E-Swat - Cyber Police (bootleg)\0", NULL, "bootleg", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797, GBF_RUNGUN, 0,
 	NULL, EswatblRomInfo, EswatblRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, EswatDIPInfo,
 	EswatblInit, System16Exit, System16BFrame, System16BootlegRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9925,7 +9925,7 @@ struct BurnDriver BurnDrvFantzoneta = {
 	"fantzoneta", "fantzone", NULL, NULL, "2008",
 	"Fantasy Zone (Time Attack, bootleg)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_HORSHOOT, 0,
 	NULL, FantzonetaRomInfo, FantzonetaRomName, NULL, NULL, NULL, NULL, System16bInputInfo, FantzonetaDIPInfo,
 	FantzonetaInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9975,7 +9975,7 @@ struct BurnDriver BurnDrvFpoint = {
 	"fpoint", NULL, NULL, NULL, "1989",
 	"Flash Point (set 2, Japan, FD1094 317-0127A)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_5358, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_5358, GBF_PUZZLE, 0,
 	NULL, FpointRomInfo, FpointRomName, NULL, NULL, NULL, NULL, System16bfire1InputInfo, FpointDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9995,7 +9995,7 @@ struct BurnDriver BurnDrvFpoint1 = {
 	"fpoint1", "fpoint", NULL, NULL, "1989",
 	"Flash Point (set 1, Japan, FD1094 317-0127A)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
 	NULL, Fpoint1RomInfo, Fpoint1RomName, NULL, NULL, NULL, NULL, System16bfire1InputInfo, FpointDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10015,7 +10015,7 @@ struct BurnDriver BurnDrvFpointbl = {
 	"fpointbl", "fpoint", NULL, NULL, "1989",
 	"Flash Point (World, bootleg)\0", NULL, "bootleg", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_INVERT_TILES, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_INVERT_TILES, GBF_PUZZLE, 0,
 	NULL, FpointblRomInfo, FpointblRomName, NULL, NULL, NULL, NULL, FpointblInputInfo, FpointDIPInfo,
 	FpointblInit, System16Exit, System16BFrame, System16BootlegRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10025,7 +10025,7 @@ struct BurnDriver BurnDrvFpointbj = {
 	"fpointbj", "fpoint", NULL, NULL, "1989",
 	"Flash Point (Japan, bootleg)\0", NULL, "bootleg", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_INVERT_TILES, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_INVERT_TILES, GBF_PUZZLE, 0,
 	NULL, FpointbjRomInfo, FpointbjRomName, NULL, NULL, NULL, NULL, FpointblInputInfo, FpointDIPInfo,
 	FpointblInit, System16Exit, System16BFrame, System16BootlegRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10045,7 +10045,7 @@ struct BurnDriver BurnDrvGoldnaxe1 = {
 	"goldnaxe1", "goldnaxe", NULL, NULL, "1989",
 	"Golden Axe (set 1, World, FD1094 317-0110)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
 	NULL, Goldnaxe1RomInfo, Goldnaxe1RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, GoldnaxeDIPInfo,
 	Goldnaxe3Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10065,7 +10065,7 @@ struct BurnDriver BurnDrvGoldnaxe2 = {
 	"goldnaxe2", "goldnaxe", NULL, NULL, "1989",
 	"Golden Axe (set 2, US, 8751 317-0112)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_SCRFIGHT, 0,
 	NULL, Goldnaxe2RomInfo, Goldnaxe2RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, GoldnaxeDIPInfo,
 	GoldnaxeInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10075,7 +10075,7 @@ struct BurnDriver BurnDrvGoldnaxe3 = {
 	"goldnaxe3", "goldnaxe", NULL, NULL, "1989",
 	"Golden Axe (set 3, World, FD1094 317-0120)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
 	NULL, Goldnaxe3RomInfo, Goldnaxe3RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, GoldnaxeDIPInfo,
 	Goldnaxe3Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10115,7 +10115,7 @@ struct BurnDriver BurnDrvGoldnaxeu = {
 	"goldnaxeu", "goldnaxe", NULL, NULL, "1989",
 	"Golden Axe (set 5, US, FD1094 317-0122)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
 	NULL, GoldnaxeuRomInfo, GoldnaxeuRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, GoldnaxeDIPInfo,
 	Goldnaxe3Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10135,7 +10135,7 @@ struct BurnDriver BurnDrvHwchamp = {
 	"hwchamp", NULL, NULL, NULL, "1987",
 	"Heavyweight Champ (set 1)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_VSFIGHT, 0,
 	NULL, HwchampRomInfo, HwchampRomName, NULL, NULL, NULL, NULL, HwchampInputInfo, HwchampDIPInfo,
 	HwchampInit, HwchampExit, System16BFrame, System16BRender, HwchampScan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10145,7 +10145,7 @@ struct BurnDriver BurnDrvHwchampa = {
 	"hwchampa", "hwchamp", NULL, NULL, "1987",
 	"Heavyweight Champ (set 2)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_VSFIGHT, 0,
 	NULL, HwchampaRomInfo, HwchampaRomName, NULL, NULL, NULL, NULL, HwchampInputInfo, HwchampDIPInfo,
 	HwchampInit, HwchampExit, System16BFrame, System16BRender, HwchampScan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10155,7 +10155,7 @@ struct BurnDriver BurnDrvHwchampj = {
 	"hwchampj", "hwchamp", NULL, NULL, "1987",
 	"Heavyweight Champ (Japan, FD1094 317-0046)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_VSFIGHT, 0,
 	NULL, HwchampjRomInfo, HwchampjRomName, NULL, NULL, NULL, NULL, HwchampInputInfo, HwchampDIPInfo,
 	HwchampInit, HwchampExit, System16BFrame, System16BRender, HwchampScan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10185,7 +10185,7 @@ struct BurnDriver BurnDrvMvp = {
 	"mvp", NULL, NULL, NULL, "1989",
 	"MVP (set 2, US, FD1094 317-0143)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797 | HARDWARE_SEGA_FD1094_ENC, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797 | HARDWARE_SEGA_FD1094_ENC, GBF_SPORTSMISC, 0,
 	NULL, MvpRomInfo, MvpRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, MvpDIPInfo,
 	MvpInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10205,7 +10205,7 @@ struct BurnDriver BurnDrvMvpj = {
 	"mvpj", "mvp", NULL, NULL, "1989",
 	"MVP (set 1, Japan, FD1094 317-0142)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_SPORTSMISC, 0,
 	NULL, MvpjRomInfo, MvpjRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, MvpDIPInfo,
 	MvpjInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10225,7 +10225,7 @@ struct BurnDriver BurnDrvPasssht = {
 	"passsht", NULL, NULL, NULL, "1988",
 	"Passing Shot (World, 2 Players, FD1094 317-0080)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
 	NULL, PassshtRomInfo, PassshtRomName, NULL, NULL, NULL, NULL, System16bfire4InputInfo, PassshtDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
@@ -10245,7 +10245,7 @@ struct BurnDriver BurnDrvPassshta = {
 	"passshta", "passsht", NULL, NULL, "1988",
 	"Passing Shot (World, 4 Players, FD1094 317-0074)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
 	NULL, PassshtaRomInfo, PassshtaRomName, NULL, NULL, NULL, NULL, PassshtInputInfo, PassshtaDIPInfo,
 	Passsht4Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
@@ -10265,7 +10265,7 @@ struct BurnDriver BurnDrvPassshtj = {
 	"passshtj", "passsht", NULL, NULL, "1988",
 	"Passing Shot (Japan, 4 Players, FD1094 317-0070)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
 	NULL, PassshtjRomInfo, PassshtjRomName, NULL, NULL, NULL, NULL, PassshtInputInfo, PassshtaDIPInfo,
 	Passsht4Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
@@ -10285,7 +10285,7 @@ struct BurnDriverD BurnDrvPassshtb = {
 	"passshtb", "passsht", NULL, NULL, "1988",
 	"Passing Shot (bootleg, 2 Players)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	0 | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
+	0 | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
 	NULL, PassshtbRomInfo, PassshtbRomName, NULL, NULL, NULL, NULL, PassshtInputInfo, PassshtDIPInfo,
 	PassshtbInit, System16Exit, System16BFrame, System16BootlegRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
@@ -10295,7 +10295,7 @@ struct BurnDriver BurnDrvCencourt = {
 	"cencourt", "passsht", NULL, NULL, "1988",
 	"Center Court (World, 4 Players, prototype, MC-8123B)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_MC8123_ENC, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_MC8123_ENC, GBF_SPORTSMISC, 0,
 	NULL, CencourtRomInfo, CencourtRomName, NULL, NULL, NULL, NULL, PassshtInputInfo, CencourtDIPInfo,
 	Passsht4Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
@@ -10345,7 +10345,7 @@ struct BurnDriver BurnDrvSdib = {
 	"sdib", "sdi", NULL, NULL, "1987",
 	"SDI - Strategic Defense Initiative (System 16B, FD1089A 317-0028)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
 	NULL, SdibRomInfo, SdibRomName, NULL, NULL, NULL, NULL, SdiInputInfo, SdibDIPInfo,
 	SdibInit, SdibExit, System16BFrame, System16BRender, SdibScan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10355,7 +10355,7 @@ struct BurnDriver BurnDrvSdibl = {
 	"sdibl", "sdi", NULL, NULL, "1987",
 	"SDI - Strategic Defense Initiative (bootleg, original hardware)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
 	NULL, SdiblRomInfo, SdiblRomName, NULL, NULL, NULL, NULL, SdiInputInfo, SdibDIPInfo,
 	SdiblInit, SdibExit, System16BFrame, System16BRender, SdibScan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10365,7 +10365,7 @@ struct BurnDriver BurnDrvSdibl2 = {
 	"sdibl2", "sdi", NULL, NULL, "1987",
 	"SDI - Strategic Defense Initiative (bootleg, set 1)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
 	NULL, Sdibl2RomInfo, Sdibl2RomName, NULL, NULL, NULL, NULL, SdiInputInfo, SdibDIPInfo,
 	Sdibl2Init, SdibExit, System16BFrame, System16BRender, SdibScan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10375,7 +10375,7 @@ struct BurnDriver BurnDrvSdibl3 = {
 	"sdibl3", "sdi", NULL, NULL, "1987",
 	"SDI - Strategic Defense Initiative (bootleg, set 2)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
 	NULL, Sdibl3RomInfo, Sdibl3RomName, NULL, NULL, NULL, NULL, SdiInputInfo, SdibDIPInfo,
 	Sdibl2Init, SdibExit, System16BFrame, System16BRender, SdibScan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10385,7 +10385,7 @@ struct BurnDriver BurnDrvSdibl4 = {
 	"sdibl4", "sdi", NULL, NULL, "1987",
 	"SDI - Strategic Defense Initiative (bootleg, set 3)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
 	NULL, Sdibl4RomInfo, Sdibl4RomName, NULL, NULL, NULL, NULL, SdiInputInfo, SdibDIPInfo,
 	Sdibl2Init, SdibExit, System16BFrame, System16BRender, SdibScan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10395,7 +10395,7 @@ struct BurnDriver BurnDrvSdibl5 = {
 	"sdibl5", "sdi", NULL, NULL, "1987",
 	"SDI - Strategic Defense Initiative (bootleg, set 4)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
 	NULL, Sdibl5RomInfo, Sdibl5RomName, NULL, NULL, NULL, NULL, SdiInputInfo, SdibDIPInfo,
 	Sdibl2Init, SdibExit, System16BFrame, System16BRender, SdibScan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10405,7 +10405,7 @@ struct BurnDriver BurnDrvSdibl6 = {
 	"sdibl6", "sdi", NULL, NULL, "1987",
 	"SDI - Strategic Defense Initiative (bootleg, set 5)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
 	NULL, Sdibl6RomInfo, Sdibl6RomName, NULL, NULL, NULL, NULL, SdiInputInfo, SdibDIPInfo,
 	Sdibl2Init, SdibExit, System16BFrame, System16BRender, SdibScan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10415,7 +10415,7 @@ struct BurnDriver BurnDrvDefense = {
 	"defense", "sdi", NULL, NULL, "1987",
 	"Defense (System 16B, FD1089A 317-0028)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
 	NULL, DefenseRomInfo, DefenseRomName, NULL, NULL, NULL, NULL, SdiInputInfo, SdibDIPInfo,
 	SdibInit, SdibExit, System16BFrame, System16BRender, SdibScan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10425,7 +10425,7 @@ struct BurnDriver BurnDrvShinobi2 = {
 	"shinobi2", "shinobi", NULL, NULL, "1987",
 	"Shinobi (set 2, System 16B, FD1094 317-0049)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
 	NULL, Shinobi2RomInfo, Shinobi2RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, ShinobiDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10445,7 +10445,7 @@ struct BurnDriver BurnDrvShinobi3 = {
 	"shinobi3", "shinobi", NULL, NULL, "1987",
 	"Shinobi (set 3, System 16B, MC-8123B 317-0054)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_MC8123_ENC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_MC8123_ENC, GBF_PLATFORM, 0,
 	NULL, Shinobi3RomInfo, Shinobi3RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, ShinobiDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10455,7 +10455,7 @@ struct BurnDriver BurnDrvShinobi4 = {
 	"shinobi4", "shinobi", NULL, NULL, "1987",
 	"Shinobi (set 4, System 16B, MC-8123B 317-0054)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_MC8123_ENC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_MC8123_ENC, GBF_PLATFORM, 0,
 	NULL, Shinobi4RomInfo, Shinobi4RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, ShinobiDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10465,7 +10465,7 @@ struct BurnDriver BurnDrvShinobi5 = {
 	"shinobi5", "shinobi", NULL, NULL, "1987",
 	"Shinobi (set 5, System 16B, unprotected)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_PLATFORM, 0,
 	NULL, Shinobi5RomInfo, Shinobi5RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, ShinobiDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10475,7 +10475,7 @@ struct BurnDriver BurnDrvShinobi6 = {
 	"shinobi6", "shinobi", NULL, NULL, "1987",
 	"Shinobi (set 6, System 16B, unprotected)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_PLATFORM, 0,
 	NULL, Shinobi6RomInfo, Shinobi6RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, ShinobiDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10495,7 +10495,7 @@ struct BurnDriver BurnDrvSnapper = {
 	"snapper", NULL, NULL, NULL, "1990",
 	"Snapper (Korea)\0", NULL, "Philko", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_YM2413, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_YM2413, GBF_MAZE, 0,
 	NULL, SnapperRomInfo, SnapperRomName, NULL, NULL, NULL, NULL, SnapperInputInfo, SnapperDIPInfo,
 	SnapperInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10505,7 +10505,7 @@ struct BurnDriver BurnDrvSonicbom = {
 	"sonicbom", NULL, NULL, NULL, "1987",
 	"Sonic Boom (FD1094 317-0053)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_FD1094_ENC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_FD1094_ENC, GBF_VERSHOOT, 0,
 	NULL, SonicbomRomInfo, SonicbomRomName, NULL, NULL, NULL, NULL, System16bInputInfo, SonicbomDIPInfo,
 	SonicbomInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
@@ -10535,7 +10535,7 @@ struct BurnDriver BurnDrvTetris1 = {
 	"tetris1", "tetris", NULL, NULL, "1988",
 	"Tetris (set 1, Japan, System 16B, FD1094 317-0091)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
 	NULL, Tetris1RomInfo, Tetris1RomName, NULL, NULL, NULL, NULL, System16bfire1InputInfo, TetrisDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10555,7 +10555,7 @@ struct BurnDriver BurnDrvTetris2 = {
 	"tetris2", "tetris", NULL, NULL, "1988",
 	"Tetris (set 2, Japan, System 16B, FD1094 317-0092)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
 	NULL, Tetris2RomInfo, Tetris2RomName, NULL, NULL, NULL, NULL, System16bfire1InputInfo, TetrisDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10575,7 +10575,7 @@ struct BurnDriver BurnDrvTetrisbl = {
 	"tetrisbl", "tetris", NULL, NULL, "1988",
 	"Tetris (bootleg)\0", NULL, "bootleg", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B, GBF_PUZZLE, 0,
 	NULL, TetrisblRomInfo, TetrisblRomName, NULL, NULL, NULL, NULL, System16bfire1InputInfo, TetrisDIPInfo,
 	TetrisblInit, System16Exit, System16BFrame, System16BootlegRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10585,7 +10585,7 @@ struct BurnDriver BurnDrvTimescan = {
 	"timescan", NULL, NULL, NULL, "1987",
 	"Time Scanner (set 2, System 16B)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_PINBALL, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_PINBALL, 0,
 	NULL, TimescanRomInfo, TimescanRomName, NULL, NULL, NULL, NULL, System16bDip3InputInfo, TimescanDIPInfo,
 	TimescanInit, System16Exit, System16BFrame, System16BAltRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
@@ -10595,7 +10595,7 @@ struct BurnDriver BurnDrvToryumon = {
 	"toryumon", NULL, NULL, NULL, "1994",
 	"Toryumon\0", NULL, "Sega / Westone", "System 16B",
 	L"Toryumon\0\u767B\u9F8D\u9580\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797, GBF_PUZZLE, 0,
 	NULL, ToryumonRomInfo, ToryumonRomName, NULL, NULL, NULL, NULL, System16bfire1InputInfo, ToryumonDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10605,7 +10605,7 @@ struct BurnDriver BurnDrvTturf = {
 	"tturf", NULL, NULL, NULL, "1989",
 	"Tough Turf (set 2, Japan, 8751 317-0104)\0", NULL, "Sega / Sunsoft", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_SCRFIGHT, 0,
 	NULL, TturfRomInfo, TturfRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, TturfDIPInfo,
 	TturfInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10615,7 +10615,7 @@ struct BurnDriver BurnDrvTturfu = {
 	"tturfu", "tturf", NULL, NULL, "1989",
 	"Tough Turf (set 1, US, 8751 317-0099)\0", NULL, "Sega / Sunsoft", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_SCRFIGHT, 0,
 	NULL, TturfuRomInfo, TturfuRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, TturfDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10635,7 +10635,7 @@ struct BurnDriver BurnDrvWb3 = {
 	"wb3", NULL, NULL, NULL, "1988",
 	"Wonder Boy III - Monster Lair (set 6, World, System 16B, 8751 317-0098)\0", NULL, "Sega / Westone", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_PLATFORM, 0,
 	NULL, Wb3RomInfo, Wb3RomName, NULL, NULL, NULL, NULL, System16bInputInfo, Wb3DIPInfo,
 	Wb3Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10645,7 +10645,7 @@ struct BurnDriver BurnDrvWb32 = {
 	"wb32", "wb3", NULL, NULL, "1988",
 	"Wonder Boy III - Monster Lair (set 2, Japan, System 16B, FD1094 317-0085)\0", NULL, "Sega / Westone", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
 	NULL, Wb32RomInfo, Wb32RomName, NULL, NULL, NULL, NULL, System16bInputInfo, Wb3DIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10665,7 +10665,7 @@ struct BurnDriver BurnDrvWb33 = {
 	"wb33", "wb3", NULL, NULL, "1988",
 	"Wonder Boy III - Monster Lair (set 3, World, System 16B, FD1094 317-0089)\0", NULL, "Sega / Westone", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
 	NULL, Wb33RomInfo, Wb33RomName, NULL, NULL, NULL, NULL, System16bInputInfo, Wb3DIPInfo,
 	Wb33Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10685,7 +10685,7 @@ struct BurnDriver BurnDrvWb34 = {
 	"wb34", "wb3", NULL, NULL, "1988",
 	"Wonder Boy III - Monster Lair (set 4, Japan, System 16B, FD1094 317-0087)\0", NULL, "Sega / Westone", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
 	NULL, Wb34RomInfo, Wb34RomName, NULL, NULL, NULL, NULL, System16bInputInfo, Wb3DIPInfo,
 	Wb33Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10705,7 +10705,7 @@ struct BurnDriverD BurnDrvWb3bbl = {
 	"wb3bbl", "wb3", NULL, NULL, "1988",
 	"Wonder Boy III - Monster Lair (bootleg)\0", NULL, "bootleg", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_INVERT_TILES, GBF_PLATFORM, 0,
+	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_INVERT_TILES, GBF_PLATFORM, 0,
 	NULL, Wb3bblRomInfo, Wb3bblRomName, NULL, NULL, NULL, NULL, System16bInputInfo, Wb3DIPInfo,
 	Wb3bblInit, System16Exit, System16BFrame, System16BootlegRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10715,7 +10715,7 @@ struct BurnDriver BurnDrvWrestwar = {
 	"wrestwar", NULL, NULL, NULL, "1988",
 	"Wrestle War (set 3, World, 8751 317-0103)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_VSFIGHT, 0,
 	NULL, WrestwarRomInfo, WrestwarRomName, NULL, NULL, NULL, NULL, System16bInputInfo, WrestwarDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
@@ -10725,7 +10725,7 @@ struct BurnDriver BurnDrvWrestwar1 = {
 	"wrestwar1", "wrestwar", NULL, NULL, "1988",
 	"Wrestle War (set 1, Japan, FD1094 317-0090)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_VSFIGHT, 0,
 	NULL, Wrestwar1RomInfo, Wrestwar1RomName, NULL, NULL, NULL, NULL, System16bInputInfo, WrestwarDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
@@ -10745,7 +10745,7 @@ struct BurnDriver BurnDrvWrestwar2 = {
 	"wrestwar2", "wrestwar", NULL, NULL, "1988",
 	"Wrestle War (set 2, World, FD1094 317-0102)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_VSFIGHT, 0,
 	NULL, Wrestwar2RomInfo, Wrestwar2RomName, NULL, NULL, NULL, NULL, System16bInputInfo, WrestwarDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4

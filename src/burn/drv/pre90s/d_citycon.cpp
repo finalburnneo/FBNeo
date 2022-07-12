@@ -207,6 +207,8 @@ static INT32 DrvDoReset()
 	flipscreen = 0;
 	scrollx = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -616,7 +618,7 @@ struct BurnDriver BurnDrvCitycon = {
 	"citycon", NULL, NULL, NULL, "1985",
 	"City Connection (set 1)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, cityconRomInfo, cityconRomName, NULL, NULL, NULL, NULL, CityconInputInfo, CityconDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 224, 4, 3
@@ -660,7 +662,7 @@ struct BurnDriver BurnDrvCitycona = {
 	"citycona", "citycon", NULL, NULL, "1985",
 	"City Connection (set 2)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, cityconaRomInfo, cityconaRomName, NULL, NULL, NULL, NULL, CityconInputInfo, CityconDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 224, 4, 3
@@ -697,7 +699,7 @@ struct BurnDriver BurnDrvCruisin = {
 	"cruisin", "citycon", NULL, NULL, "1985",
 	"Cruisin\0", NULL, "Jaleco (Kitkorp license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, cruisinRomInfo, cruisinRomName, NULL, NULL, NULL, NULL, CityconInputInfo, CityconDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 224, 4, 3

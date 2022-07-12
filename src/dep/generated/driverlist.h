@@ -5769,6 +5769,7 @@ DRV		BurnDrvMSX_fruitsrca;
 DRV		BurnSpecFkngmili;
 DRV		BurnDrvnes_fudoumyououden;
 DRV		BurnDrvFjbuster;
+DRV		BurnDrvnes_fullquiet;
 DRV		BurnDrvFullthrl;
 DRV		BurnDrvmd_funngame;
 DRV		BurnDrvmd_funngameu;
@@ -6044,6 +6045,7 @@ DRV		BurnDrvGardia;
 DRV		BurnDrvGardiab;			// no comment [NOT WORKING]
 DRV		BurnDrvGardiaj;			// no comment [NOT WORKING]
 #endif
+DRV		BurnDrvnes_garfiop;
 DRV		BurnSpecGarfield;
 DRV		BurnDrvgg_garfield;
 DRV		BurnDrvmd_garfield;
@@ -7050,6 +7052,7 @@ DRV		BurnDrvnes_hokutonoken2;
 DRV		BurnDrvnes_hokutonoken3c;
 DRV		BurnDrvnes_hokutonoken3;
 DRV		BurnDrvnes_hokutonoken4;
+DRV		BurnDrvnes_hokutonokenop;
 DRV		BurnDrvMSX_holein1;
 DRV		BurnDrvMSX_holein1b;
 DRV		BurnDrvMSX_holein1c;
@@ -10823,6 +10826,7 @@ DRV		BurnDrvMSX_ninjapri;
 DRV		BurnDrvsg1k_ninjapri;
 DRV		BurnDrvMSX_ninjapria;
 DRV		BurnDrvcv_ninjaprincess;
+DRV		BurnDrvnes_ninjarahoi;
 DRV		BurnDrvRyukendn;
 DRV		BurnDrvRyukendna;
 DRV		BurnDrvpce_nryukend;
@@ -10854,7 +10858,6 @@ DRV		BurnSpecNinjakul2;
 DRV		BurnSpecNinjakul;
 DRV		BurnDrvNinjakun;
 DRV		BurnDrvnes_ninjarahoij;
-DRV		BurnDrvnes_ninjarahoi;
 DRV		BurnDrvMSX_ninjakag;
 DRV		BurnDrvMSX_ninjakaga;
 DRV		BurnDrvgg_ninku;
@@ -24591,6 +24594,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecFkngmili,			// Fucking Mili (English) (48K) (HB)
 	&BurnDrvnes_fudoumyououden,	// Fudou Myouou Den (Japan)
 	&BurnDrvFjbuster,			// Fujiyama Buster (Japan)
+	&BurnDrvnes_fullquiet,		// Full Quiet (Test Cart Prototype) (HB)
 	&BurnDrvFullthrl,			// Full Throttle (Japan)
 	&BurnDrvmd_funngame,		// Fun 'N Games (Euro)
 	&BurnDrvmd_funngameu,		// Fun 'N' Games (USA)
@@ -24866,6 +24870,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGardiab,			// Gardia (317-0007?, bootleg) [no comment, NOT WORKING]
 	&BurnDrvGardiaj,			// Gardia (Japan, 317-0006) [no comment, NOT WORKING]
 #endif
+	&BurnDrvnes_garfiop,		// Garfield - A Week of Garfield OVERHAUL Project (Hack)
 	&BurnSpecGarfield,			// Garfield - Big Fat Hairy Deal (48K)
 	&BurnDrvgg_garfield,		// Garfield - Caught in the Act (Euro, USA)
 	&BurnDrvmd_garfield,		// Garfield - Caught in the Act (Euro, USA)
@@ -25872,6 +25877,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_hokutonoken3c,	// Hokuto no Ken 3 - Shin Seiki Souzou Seiken Restuden (Hack, Spanish v1.0)
 	&BurnDrvnes_hokutonoken3,	// Hokuto no Ken 3 - Shin Seiki Souzou Seiken Restuden (Japan)
 	&BurnDrvnes_hokutonoken4,	// Hokuto no Ken 4 - Shichisei Haken Den (Japan)
+	&BurnDrvnes_hokutonokenop,	// Hokuto no Ken OVERHAUL Patch (Hack)
 	&BurnDrvMSX_holein1,		// Hole in One (Jpn)
 	&BurnDrvMSX_holein1b,		// Hole in One (Jpn, Alt 2)
 	&BurnDrvMSX_holein1c,		// Hole in One (Jpn, Alt 3)
@@ -29645,6 +29651,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_ninjapri,		// Ninja Princess (Jpn)
 	&BurnDrvMSX_ninjapria,		// Ninja Princess (Jpn, Alt)
 	&BurnDrvcv_ninjaprincess,	// Ninja Princess (SGM) (HB)
+	&BurnDrvnes_ninjarahoi,		// Ninja Rahoi! (T-eng)
 	&BurnDrvRyukendn,			// Ninja Ryukenden (Japan, set 1)
 	&BurnDrvRyukendna,			// Ninja Ryukenden (Japan, set 2)
 	&BurnDrvpce_nryukend,		// Ninja Ryukenden
@@ -29676,7 +29683,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecNinjakul,			// Ninjakul in the AUIC Temple (128K) (HB)
 	&BurnDrvNinjakun,			// Ninjakun Majou no Bouken
 	&BurnDrvnes_ninjarahoij,	// Ninjara Hoi! (Japan)
-	&BurnDrvnes_ninjarahoi,		// Ninjara Hoi! (T-eng)
 	&BurnDrvMSX_ninjakag,		// Ninjya Kage (Jpn)
 	&BurnDrvMSX_ninjakaga,		// Ninjya Kage (Jpn, Alt)
 	&BurnDrvgg_ninku,			// Ninku (Jpn)

@@ -5972,6 +5972,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="fullquiet">
+		<comment>Homebrew, Prototype</comment>
+		<description>Full Quiet (Test Cart Prototype) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Retrotainment Games</manufacturer>
+		<rom name="Full Quiet (Test Cart)(2021)(Retrotainment Games).nes" size="524304" crc="03055116"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="funhouse">
 		<description>Fun House (USA)</description>
 		<year>1991</year>
@@ -6212,6 +6221,15 @@
 		<year>200?</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="Garden War (Unl).nes" size="65552" crc="588a838e"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="garfiop" cloneof="garfi" romof="garfi">
+		<comment>Hack, Graphics improvement</comment>
+		<description>Garfield - A Week of Garfield OVERHAUL Project (Hack)</description>
+		<year>2022</year>
+		<manufacturer>Rani Baker</manufacturer>
+		<rom name="Garfield - A Week of Garfield OVERHAUL Project (2022)(Rani Baker).nes" size="163856" crc="46f0726f"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -7337,6 +7355,15 @@
 		<year>1991</year>
 		<manufacturer>TOEI Animation</manufacturer>
 		<rom name="Hokuto no Ken 4 - Shichisei Haken Den Jpn (1991)(Shouei System).nes" size="262160" crc="06e95541"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="hokutonokenop" cloneof="hokutonoken" romof="hokutonoken">
+		<comment>Hack, Graphics improvement</comment>
+		<description>Hokuto no Ken OVERHAUL Patch (Hack)</description>
+		<year>2022</year>
+		<manufacturer>Rani Baker</manufacturer>
+		<rom name="Hokuto no Ken OVERHAUL Patch (2022)(Rani Baker).nes" size="65552" crc="b02b18fa"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -10984,9 +11011,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="nantebas">
+		<comment>Hack</comment>
 		<description>Nantettatte!! Baseball (T-eng)</description>
-		<year>1990</year>
-		<manufacturer>Sunsoft</manufacturer>
+		<year>2019</year>
+		<manufacturer>pacnsacdave</manufacturer>
 		<rom name="Nantettatte!! Baseball (T-eng).nes" size="262160" crc="294713b4"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11025,9 +11053,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="nekkekakden">
+		<comment>Hack</comment>
 		<description>Nekketsu Kakutou Densetsu (T-eng)</description>
-		<year>1992</year>
-		<manufacturer>Technos</manufacturer>
+		<year>1998</year>
+		<manufacturer>oRdErEDchaos</manufacturer>
 		<rom name="Nekketsu Kakutou Densetsu (T-eng).nes" size="262160" crc="23d650f2"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11051,8 +11080,8 @@
 	</game>
 	<game name="nekkestrbas">
 		<description>Nekketsu! Street Basket - Ganbare Dunk Heroes (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1993</year>
+		<manufacturer>Technos</manufacturer>
 		<rom name="Nekketsu! Street Basket - Ganbare Dunk Heroes (Japan).nes" size="262160" crc="a2952508"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11305,9 +11334,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjajaj">
+		<comment>Hack</comment>
 		<description>Ninja Jajamaru - Ginga Daisakusen (T-eng)</description>
-		<year>1991</year>
-		<manufacturer>Jaleco</manufacturer>
+		<year>2002</year>
+		<manufacturer>HTI</manufacturer>
 		<rom name="Ninja Jajamaru - Ginga Daisakusen (T-eng).nes" size="262160" crc="89ee0ed9"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11334,6 +11364,15 @@
 		<year>2021</year>
 		<manufacturer>Kool Doob</manufacturer>
 		<rom name="Ninja of the 4 Seasons (2021)(Kool Doob).nes" size="524304" crc="3943cf5f"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="ninjarahoi">
+		<comment>Hack</comment>
+		<description>Ninja Rahoi! (T-eng)</description>
+		<year>2014</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
+		<rom name="Ninjara Hoi! (T-eng).nes" size="524304" crc="23dbc962"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -11390,8 +11429,8 @@
 	</game>
 	<game name="ninjakunashnosh">
 		<description>Ninja-kun - Ashura no Shou (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1988</year>
+		<manufacturer>UPL</manufacturer>
 		<rom name="Ninja-kun - Ashura no Shou (Japan).nes" size="131088" crc="eb195015"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11409,14 +11448,6 @@
 		<year>1990</year>
 		<manufacturer>ASCII</manufacturer>
 		<rom name="Ninjara Hoi! (Japan).nes" size="524304" crc="aea19f21"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="ninjarahoi">
-		<description>Ninjara Hoi! (T-eng)</description>
-		<year>1990</year>
-		<manufacturer>ASCII</manufacturer>
-		<rom name="Ninjara Hoi! (T-eng).nes" size="524304" crc="23dbc962"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -11541,16 +11572,17 @@
 	</game>
 	<game name="outlandersj" cloneof="outlanders" romof="outlanders">
 		<description>Outlanders (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1987</year>
+		<manufacturer>Victor</manufacturer>
 		<rom name="Outlanders (Japan).nes" size="131088" crc="49a9f043"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="outlanders">
+		<comment>Hack</comment>
 		<description>Outlanders (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2019</year>
+		<manufacturer>GAFF Translations</manufacturer>
 		<rom name="Outlanders (T-Eng).nes" size="262160" crc="f0b0c8fe"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11736,9 +11768,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="parisdakralspe">
+		<comment>Hack</comment>
 		<description>Paris-Dakar Rally Special (T-Eng)</description>
-		<year>1988</year>
-		<manufacturer>CBS / Sony Group</manufacturer>
+		<year>2013</year>
+		<manufacturer>MrRichard999</manufacturer>
 		<rom name="Paris-Dakar Rally Special (T-Eng).nes" size="163856" crc="e2b9be12"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11769,9 +11802,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="parodiusda">
+		<comment>Hack</comment>
 		<description>Parodius Da! (T-Eng)</description>
-		<year>1990</year>
-		<manufacturer>Konami</manufacturer>
+		<year>2011</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Parodius Da! (T-Eng).nes" size="393232" crc="7012e75a"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12029,8 +12063,8 @@
 	</game>
 	<game name="policeman">
 		<description>Policeman (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1992</year>
+		<manufacturer>Micro Genius</manufacturer>
 		<rom name="Policeman (Unl).nes" size="131088" crc="6b1ddc17"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12823,8 +12857,8 @@
 	</game>
 	<game name="roadworker">
 		<description>Road Worker (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>200?</year>
+		<manufacturer>Nice Code Software</manufacturer>
 		<rom name="Road Worker (Unl).nes" size="49168" crc="7877b76d"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12855,8 +12889,8 @@
 	</game>
 	<game name="roboccowars">
 		<description>Robocco Wars (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1991</year>
+		<manufacturer>IGS</manufacturer>
 		<rom name="Robocco Wars (Japan).nes" size="393232" crc="134f6648"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12922,8 +12956,8 @@
 	</game>
 	<game name="robocvster">
 		<description>RoboCop Vs The Terminator (USA)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1993</year>
+		<manufacturer>Virgin Games</manufacturer>
 		<rom name="RoboCop Vs The Terminator (USA).nes" size="262160" crc="f5d0e8e1"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12955,8 +12989,8 @@
 	</game>
 	<game name="rockball">
 		<description>Rockball (Asia) (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1993</year>
+		<manufacturer>Sachen</manufacturer>
 		<rom name="Rockball (Asia) (Unl).nes" size="131088" crc="9490c38e"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -12979,8 +13013,8 @@
 	</game>
 	<game name="rocketman">
 		<description>Rocketman (Unl)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2007</year>
+		<manufacturer>Nice Code Software</manufacturer>
 		<rom name="Rocketman (Unl).nes" size="40976" crc="c18196f2"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13069,8 +13103,8 @@
 	</game>
 	<game name="rodland">
 		<description>Rod Land (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1992</year>
+		<manufacturer>Jaleco</manufacturer>
 		<rom name="Rod Land (Japan).nes" size="131088" crc="3da3a621"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13133,9 +13167,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="romancia">
+		<comment>Hack</comment>
 		<description>Romancia (T-Eng)</description>
-		<year>1987</year>
-		<manufacturer>Tokyo Shoseki</manufacturer>
+		<year>2008</year>
+		<manufacturer>DvD Translations</manufacturer>
 		<rom name="Romancia (T-Eng).nes" size="131088" crc="c0785ed4"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>

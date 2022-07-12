@@ -604,6 +604,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	nmi_mask = 0;
 	flipscreen = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -987,7 +989,7 @@ struct BurnDriver BurnDrvGyrodine = {
 	"gyrodine", NULL, NULL, NULL, "1984",
 	"Gyrodine\0", NULL, "Crux", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, gyrodineRomInfo, gyrodineRomName, NULL, NULL, NULL, NULL, KyugoInputInfo, GyrodineDIPInfo,
 	GyrodineInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	224, 288, 3, 4
@@ -1031,7 +1033,7 @@ struct BurnDriver BurnDrvGyrodinet = {
 	"gyrodinet", "gyrodine", NULL, NULL, "1984",
 	"Gyrodine (Taito Corporation license)\0", NULL, "Crux (Taito Corporation license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, gyrodinetRomInfo, gyrodinetRomName, NULL, NULL, NULL, NULL, KyugoInputInfo, GyrodineDIPInfo,
 	GyrodineInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	224, 288, 3, 4
@@ -1075,7 +1077,7 @@ struct BurnDriver BurnDrvBuzzard = {
 	"buzzard", "gyrodine", NULL, NULL, "1984",
 	"Buzzard\0", NULL, "Crux", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, buzzardRomInfo, buzzardRomName, NULL, NULL, NULL, NULL, KyugoInputInfo, GyrodineDIPInfo,
 	GyrodineInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	224, 288, 3, 4
@@ -1125,7 +1127,7 @@ struct BurnDriver BurnDrvRepulse = {
 	"repulse", NULL, NULL, NULL, "1985",
 	"Repulse\0", NULL, "Crux / Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, repulseRomInfo, repulseRomName, NULL, NULL, NULL, NULL, KyugoInputInfo, RepulseDIPInfo,
 	RepulseInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	224, 288, 3, 4
@@ -1174,7 +1176,7 @@ struct BurnDriver BurnDrvlstwar99 = {
 	"99lstwar", "repulse", NULL, NULL, "1985",
 	"'99: The Last War (set 1)\0", NULL, "Crux / Proma", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, lstwar99RomInfo, lstwar99RomName, NULL, NULL, NULL, NULL, KyugoInputInfo, RepulseDIPInfo,
 	RepulseInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	224, 288, 3, 4
@@ -1223,7 +1225,7 @@ struct BurnDriver BurnDrvlstwar99a = {
 	"99lstwara", "repulse", NULL, NULL, "1985",
 	"'99: The Last War (set 2)\0", NULL, "Crux / Proma", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, lstwar99aRomInfo, lstwar99aRomName, NULL, NULL, NULL, NULL, KyugoInputInfo, RepulseDIPInfo,
 	RepulseInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	224, 288, 3, 4
@@ -1274,7 +1276,7 @@ struct BurnDriver BurnDrv99lstwark = {
 	"99lstwark", "repulse", NULL, NULL, "1985",
 	"'99: The Last War (Kyugo)\0", NULL, "Crux / Kyugo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, lstwar99kRomInfo, lstwar99kRomName, NULL, NULL, NULL, NULL, KyugoInputInfo, RepulseDIPInfo,
 	RepulseInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	224, 288, 3, 4
@@ -1323,7 +1325,7 @@ struct BurnDriver BurnDrvlstwar99b = {
 	"99lstwarb", "repulse", NULL, NULL, "1985",
 	"'99: The Last War (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, lstwar99bRomInfo, lstwar99bRomName, NULL, NULL, NULL, NULL, KyugoInputInfo, RepulseDIPInfo,
 	RepulseInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	224, 288, 3, 4
@@ -1368,7 +1370,7 @@ struct BurnDriver BurnDrvSonofphx = {
 	"sonofphx", "repulse", NULL, NULL, "1985",
 	"Son of Phoenix (bootleg of Repulse)\0", NULL, "bootleg (Associated Overseas MFR, Inc.)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, sonofphxRomInfo, sonofphxRomName, NULL, NULL, NULL, NULL, KyugoInputInfo, RepulseDIPInfo,
 	RepulseInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	224, 288, 3, 4
@@ -1418,7 +1420,7 @@ struct BurnDriver BurnDrvFlashgal = {
 	"flashgal", NULL, NULL, NULL, "1985",
 	"Flashgal (set 1)\0", NULL, "Kyugo / Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, flashgalRomInfo, flashgalRomName, NULL, NULL, NULL, NULL, KyugoInputInfo, FlashgalDIPInfo,
 	RepulseInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	288, 224, 4, 3
@@ -1468,7 +1470,7 @@ struct BurnDriver BurnDrvFlashgalk = {
 	"flashgalk", "flashgal", NULL, NULL, "1985",
 	"Flashgal (set 1, Kyugo logo)\0", NULL, "Kyugo / Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, flashgalkRomInfo, flashgalkRomName, NULL, NULL, NULL, NULL, KyugoInputInfo, FlashgalDIPInfo,
 	RepulseInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	288, 224, 4, 3
@@ -1523,7 +1525,7 @@ struct BurnDriver BurnDrvFlashgala = {
 	"flashgala", "flashgal", NULL, NULL, "1985",
 	"Flashgal (set 2)\0", NULL, "Kyugo / Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, flashgalaRomInfo, flashgalaRomName, NULL, NULL, NULL, NULL, KyugoInputInfo, FlashgalDIPInfo,
 	FlashgalaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	288, 224, 4, 3
@@ -1571,7 +1573,7 @@ struct BurnDriver BurnDrvSrdmissn = {
 	"srdmissn", NULL, NULL, NULL, "1986",
 	"S.R.D. Mission\0", NULL, "Kyugo / Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, srdmissnRomInfo, srdmissnRomName, NULL, NULL, NULL, NULL, KyugoInputInfo, SrdmissnDIPInfo,
 	SrdmissnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	224, 288, 3, 4
@@ -1618,7 +1620,7 @@ struct BurnDriver BurnDrvFx = {
 	"fx", "srdmissn", NULL, NULL, "1986",
 	"F-X (bootleg of S.R.D. Mission)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, fxRomInfo, fxRomName, NULL, NULL, NULL, NULL, KyugoInputInfo, SrdmissnDIPInfo,
 	SrdmissnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	224, 288, 3, 4
@@ -1679,7 +1681,7 @@ struct BurnDriver BurnDrvAirwolf = {
 	"airwolf", NULL, NULL, NULL, "1987",
 	"Airwolf\0", NULL, "Kyugo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, airwolfRomInfo, airwolfRomName, NULL, NULL, NULL, NULL, KyugoInputInfo, AirwolfDIPInfo,
 	AirwolfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	288, 224, 4, 3
@@ -1721,7 +1723,7 @@ struct BurnDriver BurnDrvAirwolfa = {
 	"airwolfa", "airwolf", NULL, NULL, "1987",
 	"Airwolf (US)\0", NULL, "Kyugo (United Amusements license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, airwolfaRomInfo, airwolfaRomName, NULL, NULL, NULL, NULL, KyugoInputInfo, AirwolfDIPInfo,
 	AirwolfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	288, 224, 4, 3
@@ -1764,7 +1766,7 @@ struct BurnDriver BurnDrvSkywolf = {
 	"skywolf", "airwolf", NULL, NULL, "1987",
 	"Sky Wolf (set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, skywolfRomInfo, skywolfRomName, NULL, NULL, NULL, NULL, KyugoInputInfo, SkywolfDIPInfo,
 	SrdmissnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	288, 224, 4, 3
@@ -1806,7 +1808,7 @@ struct BurnDriver BurnDrvSkywolf2 = {
 	"skywolf2", "airwolf", NULL, NULL, "1987",
 	"Sky Wolf (set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, skywolf2RomInfo, skywolf2RomName, NULL, NULL, NULL, NULL, KyugoInputInfo, AirwolfDIPInfo,
 	SrdmissnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	288, 224, 4, 3
@@ -1865,7 +1867,7 @@ struct BurnDriver BurnDrvSkywolf3 = {
 	"skywolf3", "airwolf", NULL, NULL, "1987",
 	"Sky Wolf (set 3)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, skywolf3RomInfo, skywolf3RomName, NULL, NULL, NULL, NULL, KyugoInputInfo, AirwolfDIPInfo,
 	Skywolf3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	288, 224, 4, 3
@@ -1919,7 +1921,7 @@ struct BurnDriver BurnDrvLegend = {
 	"legend", NULL, NULL, NULL, "1986",
 	"Legend\0", NULL, "Kyugo / Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, legendRomInfo, legendRomName, NULL, NULL, NULL, NULL, KyugoInputInfo, LegendDIPInfo,
 	LegendInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	288, 224, 4, 3
@@ -1970,7 +1972,7 @@ struct BurnDriver BurnDrvLegendb = {
 	"legendb", "legend", NULL, NULL, "1986",
 	"Legion (bootleg of Legend)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, legendbRomInfo, legendbRomName, NULL, NULL, NULL, NULL, KyugoInputInfo, LegendDIPInfo,
 	LegendInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	288, 224, 4, 3

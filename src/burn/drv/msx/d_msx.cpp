@@ -19848,7 +19848,7 @@ struct BurnDriver BurnDrvMSX_magical = {
 	"Magical Stones (HB)\0", NULL, "Dioniso (Alfonso D.C.)", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
-	MSXGetZipName, MSX_magicalRomInfo, MSX_magicalRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	MSXGetZipName, MSX_magicalRomInfo, MSX_magicalRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursorDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

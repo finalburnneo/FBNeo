@@ -136,8 +136,9 @@ void GetHistoryDatHardwareToken(char *to_string);
 extern INT32 nAutoFireRate;
 
 // Player Default Controls
-extern INT32 nPlayerDefaultControls[8];
-extern TCHAR szPlayerDefaultIni[5][MAX_PATH];
+#define MAX_JOYSTICKS 4
+extern INT32 nPlayerDefaultControls[MAX_JOYSTICKS];
+extern TCHAR szPlayerDefaultIni[MAX_JOYSTICKS][MAX_PATH];
 
 // mappable System Macros for the Input Dialogue
 extern UINT8 macroSystemPause;

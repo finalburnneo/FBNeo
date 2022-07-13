@@ -2,8 +2,8 @@
 #include "burner.h"
 
 // Player Default Controls
-INT32 nPlayerDefaultControls[8] = {0, 1, 2, 3, 8, 8, 8, 8};
-TCHAR szPlayerDefaultIni[5][MAX_PATH] = { _T(""), _T(""), _T(""), _T(""), _T("") };
+INT32 nPlayerDefaultControls[MAX_JOYSTICKS] = {0, 1, 2, 3};				// Was 8, only 4 are supported anyway
+TCHAR szPlayerDefaultIni[MAX_JOYSTICKS][MAX_PATH] = { _T(""), _T(""), _T(""), _T("") };		// Was 5, only 4 are supported anyway
 
 // Mapping of PC inputs to game inputs
 struct GameInp* GameInp = NULL;
@@ -1750,48 +1750,12 @@ static INT32 GameInpAutoOne(struct GameInp* pgi, char* szi)
 {
 	for (INT32 i = 0; i < nMaxPlayers; i++) {
 		INT32 nSlide = nPlayerDefaultControls[i] >> 4;
-		switch (nPlayerDefaultControls[i] & 0x0F) {
-			case 0:										// Keyboard
-				GamcAnalogKey(pgi, szi, i, nSlide);
-				GamcPlayer(pgi, szi, i, -1);
-				GamcMisc(pgi, szi, i);
-				break;
-			case 1:										// Joystick 1
-				GamcAnalogJoy(pgi, szi, i, 0, nSlide);
-				GamcPlayer(pgi, szi, i, 0);
-				GamcMisc(pgi, szi, i);
-				break;
-			case 2:										// Joystick 2
-				GamcAnalogJoy(pgi, szi, i, 1, nSlide);
-				GamcPlayer(pgi, szi, i, 1);
-				GamcMisc(pgi, szi, i);
-				break;
-			case 3:										// Joystick 3
-				GamcAnalogJoy(pgi, szi, i, 2, nSlide);
-				GamcPlayer(pgi, szi, i, 2);
-				GamcMisc(pgi, szi, i);
-				break;
-			case 4:										// X-Arcade left side
-				GamcMisc(pgi, szi, i);
-				GamcPlayerHotRod(pgi, szi, i, 0x10, nSlide);
-				break;
-			case 5:										// X-Arcade right side
-				GamcMisc(pgi, szi, i);
-				GamcPlayerHotRod(pgi, szi, i, 0x11, nSlide);
-				break;
-			case 6:										// Hot Rod left side
-				GamcMisc(pgi, szi, i);
-				GamcPlayerHotRod(pgi, szi, i, 0x00, nSlide);
-				break;
-			case 7:										// Hot Rod right side
-				GamcMisc(pgi, szi, i);
-				GamcPlayerHotRod(pgi, szi, i, 0x01, nSlide);
-				break;
-			default:
-				GamcMisc(pgi, szi, i);
-		}
+		// Why the bitwise AND operator that was here? (nPlayerDefaultControls[i] & 0x0F)
+		if (nPlayerDefaultControls[i] > -1) GamcAnalogJoy(pgi, szi, i, nPlayerDefaultControls[i], nSlide);
+		else GamcAnalogKey(pgi, szi, i, nSlide);			// Use keyboard (-1) for player 1
+		GamcPlayer(pgi, szi, i, nPlayerDefaultControls[i]);
+		GamcMisc(pgi, szi, i);
 	}
-
 	return 0;
 }
 
@@ -2048,7 +2012,12 @@ void GetHistoryDatHardwareToken(char *to_string)
 
 INT32 ConfigGameLoadHardwareDefaults()
 {
+#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
+	TCHAR *szFolderName = _T("");
+	TCHAR szFileName[MAX_PATH] = _T("");
+#else
 	TCHAR *szFileName = _T("");
+#endif
 	INT32 nApplyHardwareDefaults = 0;
 
 	INT32 nHardwareFlag = (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK);
@@ -2058,7 +2027,16 @@ INT32 ConfigGameLoadHardwareDefaults()
 		for (INT32 hw = 0; gamehw_cfg[i].hw[hw] != 0; hw++) {
 			if (gamehw_cfg[i].hw[hw] == nHardwareFlag)
 			{
+#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
+				szFolderName = SDL_GetPrefPath(NULL, "fbneo");		// Get fbneo folder path
+				#if defined(UNICODE)
+				swprintf(szFileName, MAX_PATH, L"%s%s", szFolderName, gamehw_cfg[i].ini);
+				#else
+				snprintf(szFileName, MAX_PATH, "%s%s", szFolderName, gamehw_cfg[i].ini);
+				#endif
+#else
 				szFileName = gamehw_cfg[i].ini;
+#endif
 				nApplyHardwareDefaults = 1;
 				break;
 			}
@@ -2082,12 +2060,7 @@ INT32 GameInpDefault()
 	UINT32 i;
 
 	for (INT32 nPlayer = 0; nPlayer < nMaxPlayers; nPlayer++) {
-
-		if ((nPlayerDefaultControls[nPlayer] & 0x0F) != 0x0F) {
-			continue;
-		}
-
-		GameInputAutoIni(nPlayer, szPlayerDefaultIni[nPlayer], false);
+		if ((nPlayerDefaultControls[nPlayer] & 0x0F) == 0x0F) GameInputAutoIni(nPlayer, szPlayerDefaultIni[nPlayer], false);
 	}
 
 	// Fill all inputs still undefined

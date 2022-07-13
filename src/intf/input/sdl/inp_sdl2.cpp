@@ -3,7 +3,6 @@
 
 #include "burner.h"
 
-#define MAX_JOYSTICKS 4				// Changed from 8 to 4, only 4 are supported anyway
 #define JOYSTICK_DEAD_ZONE 8000		// Replace DEADZONE to make it coherent with other declarations
 
 static int FBKtoSDL[512] = { 0 };

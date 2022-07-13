@@ -176,7 +176,6 @@ int DIPMenuSelected()
 
 // Controllers stuff
 #define JOYSTICK_DEAD_ZONE 8000
-#define MAX_JOYSTICKS 4
 #define BUTTONS_TO_MAP 8
 
 struct MenuItem controllerMenu[MAX_JOYSTICKS + 1];	// One more for BACK
@@ -385,7 +384,8 @@ int ControllerMenuSelected()
 		controllerMenu[i] = (MenuItem){joystickNames[i], MappingMenuSelected, NULL};
 		controllermenucount++;
 	}
-	controllerMenu[controllermenucount] = (MenuItem){"BACK\0", MainMenuSelected, NULL};
+	if (controllermenucount > 0) controllerMenu[controllermenucount] = (MenuItem){"BACK\0", MainMenuSelected, NULL};
+	else controllerMenu[controllermenucount] = (MenuItem){"BACK (no controllers found)\0", MainMenuSelected, NULL};
 	controllermenucount++;
   return 0;
 }

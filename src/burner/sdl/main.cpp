@@ -15,7 +15,7 @@
 
 #include "burner.h"
 
-INT32 Init_Joysticks(int p1_use_joystick);
+// INT32 Init_Joysticks(int p1_use_joystick);
 
 int  nAppVirtualFps = 0;         // App fps * 100
 bool bRunPause = 0;
@@ -237,7 +237,7 @@ void DoGame(int gameToRun)
 		if (!DrvInit(gameToRun, 0))
 		{
 			MediaInit();
-			Init_Joysticks(usejoy);
+			// Init_Joysticks(usejoy);
 			RunMessageLoop();
 		}
 		else
@@ -341,6 +341,11 @@ int main(int argc, char* argv[])
 		{
 			return 0;
 		}
+	}
+
+	if (!usejoy) {		// Player 1 will use keyboard
+		for (int j = 0; j < MAX_JOYSTICKS; j++) 
+			nPlayerDefaultControls[j] = nPlayerDefaultControls[j] - 1;
 	}
 
 	// Do these bits before override via ConfigAppLoad

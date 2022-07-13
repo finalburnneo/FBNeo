@@ -86,7 +86,6 @@ static int GameInpConfig(int nPlayer, int nPcDev, int nAnalog)
 
 static void GameInpConfigOne(int nPlayer, int nPcDev, int nAnalog, struct GameInp* pgi, char* szi)
 {
-
 	GamcPlayer(pgi, szi, nPlayer, nPcDev - 1);
 	// nPcDev == 0 is Keyboard, nPcDev == 1 is joy0, etc.
 	if (nPcDev) GamcAnalogJoy(pgi, szi, nPlayer, nPcDev - 1, nAnalog);
@@ -263,21 +262,24 @@ INT32 display_set_controls()
    return 0;
 }
 
-
+/*
+// This seems to be useless and was restoring inputs to defaults
+// ignoring any inputs defined in <romname>.ini by the user
 INT32 Init_Joysticks(int p_one_use_joystick)
 {
 	if (p_one_use_joystick) {
-		/*init all joysticks (4 max atm) to map or the default will think 
-		p1 is keyboard and p2 p3 p4 is joy 0 1 2 instead of joy 1 2 3 */
-		for (int i = 0; i < 4; ++i) {
+		// init all joysticks (4 max atm) to map or the default will think 
+		// p1 is keyboard and p2 p3 p4 is joy 0 1 2 instead of joy 1 2 3
+		for (int i = 0; i < nMaxPlayers; ++i) {
 			GameInpConfig(i, i+1, 1);
 		}
 	} else {
-		/*keyboard p1, joy0 p2, joy1 p3, joy2 p4) */
-		for (int i = 0; i < 4; ++i) {
+		// keyboard p1, joy0 p2, joy1 p3, joy2 p4)
+		for (int i = 0; i < nMaxPlayers; ++i) {
 			GameInpConfig(i, i, 1);
 		}
 	}
 	display_set_controls();
 	return 0;
 }
+*/

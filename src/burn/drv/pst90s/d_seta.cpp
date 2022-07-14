@@ -6050,8 +6050,6 @@ static void blockcar68kInit()
 	SekSetWriteWordHandler(1,		setaSoundRegWriteWord);
 	SekSetWriteByteHandler(1,		setaSoundRegWriteByte);
 	SekClose();
-
-	memcpy (DrvSndROM + 0x80000, DrvSndROM, 0x80000);
 }
 
 static void zombraid68kInit()
@@ -9499,13 +9497,13 @@ struct BurnDriver BurnDrvAtehate = {
 // Block Carnival / Thunder & Lightning 2
 
 static struct BurnRomInfo blockcarRomDesc[] = {
-	{ "u1.a1",			0x20000, 0x4313fb00, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "u4.a3",			0x20000, 0x2237196d, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "u1.a1",				0x020000, 0x4313fb00, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "u4.a3",				0x020000, 0x2237196d, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "bl-chr-0.j3",	0x80000, 0xa33300ca, 0x03 | BRF_GRA },           //  2 Sprites
-	{ "bl-chr-1.l3",	0x80000, 0x563de808, 0x03 | BRF_GRA },           //  3
+	{ "bl-chr-0.u6.j3",		0x080000, 0xa33300ca, 0x03 | BRF_GRA },           //  2 Sprites
+	{ "bl-chr-1.u9.l3",		0x080000, 0x563de808, 0x03 | BRF_GRA },           //  3
 
-	{ "bl-snd-0.a13",	0x80000, 0xa92dabaf, 0x06 | BRF_SND },           //  4 x1-010 Samples
+	{ "bl-snd-0.u39.a13",	0x100000, 0x9c2130a2, 0x06 | BRF_SND },           //  4 x1-010 Samples
 };
 
 STD_ROM_PICK(blockcar)

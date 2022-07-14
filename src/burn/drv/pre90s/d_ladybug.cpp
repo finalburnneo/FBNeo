@@ -587,6 +587,8 @@ static INT32 DrvDoReset()
 	stars_state = 0;
 	vblank = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1421,7 +1423,7 @@ struct BurnDriver BurnDrvLadybug = {
 	"ladybug", NULL, NULL, NULL, "1981",
 	"Lady Bug\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, ladybugRomInfo, ladybugRomName, NULL, NULL, NULL, NULL, LadybugInputInfo, LadybugDIPInfo,
 	LadybugInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	196, 240, 3, 4
@@ -1456,7 +1458,7 @@ struct BurnDriver BurnDrvLadybugb = {
 	"ladybugb", "ladybug", NULL, NULL, "1981",
 	"Lady Bug (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, ladybugbRomInfo, ladybugbRomName, NULL, NULL, NULL, NULL, LadybugInputInfo, LadybugDIPInfo,
 	LadybugInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	196, 240, 3, 4
@@ -1491,7 +1493,7 @@ struct BurnDriver BurnDrvLadybugb2 = {
 	"ladybugb2", "ladybug", NULL, NULL, "1981",
 	"Coccinelle (bootleg of Lady Bug, set 2)\0", NULL, "bootleg (Model Racing)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, ladybugb2RomInfo, ladybugb2RomName, NULL, NULL, NULL, NULL, LadybugInputInfo, LadybugDIPInfo,
 	LadybugInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	196, 240, 3, 4
@@ -1533,7 +1535,7 @@ struct BurnDriver BurnDrvSnapjack = {
 	"snapjack", NULL, NULL, NULL, "1982",
 	"Snap Jack\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, snapjackRomInfo, snapjackRomName, NULL, NULL, NULL, NULL, LadybugInputInfo, SnapjackDIPInfo,
 	SnapJackInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	240, 196, 4, 3
@@ -1574,7 +1576,7 @@ struct BurnDriver BurnDrvCavenger = {
 	"cavenger", NULL, NULL, NULL, "1981",
 	"Cosmic Avenger\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, cavengerRomInfo, cavengerRomName, NULL, NULL, NULL, NULL, LadybugInputInfo, CavengerDIPInfo,
 	CavengerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	240, 196, 4, 3
@@ -1615,7 +1617,7 @@ struct BurnDriver BurnDrvDorodon = {
 	"dorodon", NULL, NULL, NULL, "1982",
 	"Dorodon (set 1)\0", NULL, "Falcon", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, dorodonRomInfo, dorodonRomName, NULL, NULL, NULL, NULL, LadybugInputInfo, DorodonDIPInfo,
 	DorodonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	196, 240, 3, 4
@@ -1650,7 +1652,7 @@ struct BurnDriver BurnDrvDorodon2 = {
 	"dorodon2", "dorodon", NULL, NULL, "1982",
 	"Dorodon (set 2)\0", NULL, "Falcon", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, dorodon2RomInfo, dorodon2RomName, NULL, NULL, NULL, NULL, LadybugInputInfo, DorodonDIPInfo,
 	DorodonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	196, 240, 3, 4
@@ -1688,7 +1690,7 @@ struct BurnDriver BurnDrvSraider = {
 	"sraider", NULL, NULL, NULL, "1982",
 	"Space Raider\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, sraiderRomInfo, sraiderRomName, NULL, NULL, NULL, NULL, SraiderInputInfo, SraiderDIPInfo,
 	SraiderInit, DrvExit, SraiderFrame, SraiderDraw, DrvScan, &DrvRecalc, 0x82,
 	192, 240, 3, 4
@@ -1723,7 +1725,7 @@ struct BurnDriver BurnDrvMrsdyna = {
 	"mrsdyna", NULL, NULL, NULL, "1982",
 	"Mrs. Dynamite\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, mrsdynaRomInfo, mrsdynaRomName, NULL, NULL, NULL, NULL, SraiderInputInfo, MrsdynaDIPInfo,
 	MrsdynaInit, DrvExit, SraiderFrame, MrsdynaDraw, DrvScan, &DrvRecalc, 0x82,
 	192, 240, 3, 4

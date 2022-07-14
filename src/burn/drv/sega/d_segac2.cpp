@@ -1,7 +1,7 @@
 // FinalBurn Neo Sega System C/C2 driver module
 // Based on MAME driver by David Haywood and Aaron Giles
 
-// System C/C2 vdp note:
+// System C/C2 vdp note: (Ribbit)
 // System C mixes the raw data from the sprite & other layers externally
 // Because of this the sprite:sprite masking (x == 0) feature, internal to the
 // 315-5313 vdp, is not used.  When properly implemented and coming from the
@@ -2083,7 +2083,7 @@ static INT32 SegaC2Init(UINT8 (*prot_read_cb)(UINT8))
 	BurnTimerAttachNull(53693175 / 6);
 	BurnYM3438SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 
-	SN76496Init(0, 53693175 / 15, 0);
+	SN76496Init(0, 53693175 / 15, 1);
 	SN76496SetBuffered(SekTotalCycles, 53693175 / 6);
 	SN76496SetRoute(0, 0.35, BURN_SND_ROUTE_BOTH);
 
@@ -3663,6 +3663,7 @@ static INT32 DrvFrame()
 		if (sound_rom_length) {
 			UPD7759Render(pBurnSoundOut, nBurnSoundLen);
 		}
+		SN76496Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	nExtraCycles[0] = SekTotalCycles() - nCyclesTotal[0];

@@ -3303,6 +3303,8 @@ static INT32 ExplbrkrDoReset()
 	MSM6295Reset();
 	MSM6295Bank0 = 0;
 
+	HiscoreReset();
+
 	return nRet;
 }
 
@@ -7678,7 +7680,7 @@ struct BurnDriver BurnDrvExplbrkr = {
 	"explbrkr", NULL, NULL, NULL, "1992",
 	"Explosive Breaker (World)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KANEKO16, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO16, GBF_VERSHOOT, 0,
 	NULL, ExplbrkrRomInfo, ExplbrkrRomName, NULL, NULL, NULL, NULL, ExplbrkrInputInfo, ExplbrkrDIPInfo,
 	ExplbrkrInit, ExplbrkrExit, ExplbrkrFrame, ExplbrkrFrameRender, ExplbrkrScan,
 	NULL, 0x1000, 224, 256, 3, 4
@@ -7688,7 +7690,7 @@ struct BurnDriver BurnDrvExplbrkrk = {
 	"explbrkrk", "explbrkr", NULL, NULL, "1992",
 	"Explosive Breaker (Korea)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KANEKO16, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO16, GBF_VERSHOOT, 0,
 	NULL, ExplbrkrkRomInfo, ExplbrkrkRomName, NULL, NULL, NULL, NULL, ExplbrkrInputInfo, ExplbrkrDIPInfo,
 	ExplbrkrInit, ExplbrkrExit, ExplbrkrFrame, ExplbrkrFrameRender, ExplbrkrScan,
 	NULL, 0x1000, 224, 256, 3, 4
@@ -7698,7 +7700,7 @@ struct BurnDriver BurnDrvBakubrkr = {
 	"bakubrkr", "explbrkr", NULL, NULL, "1992",
 	"Bakuretsu Breaker (Japan)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KANEKO16, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO16, GBF_VERSHOOT, 0,
 	NULL, BakubrkrRomInfo, BakubrkrRomName, NULL, NULL, NULL, NULL, ExplbrkrInputInfo, ExplbrkrDIPInfo,
 	ExplbrkrInit, ExplbrkrExit, ExplbrkrFrame, ExplbrkrFrameRender, ExplbrkrScan,
 	NULL, 0x1000, 224, 256, 3, 4

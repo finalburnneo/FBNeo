@@ -506,6 +506,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	watchdog = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -813,7 +815,7 @@ struct BurnDriver BurnDrvMegadon = {
 	"megadon", NULL, NULL, NULL, "1982",
 	"Megadon\0", NULL, "Epos Corporation (Photar Industries License)", "EPOS Tristar",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, megadonRomInfo, megadonRomName, NULL, NULL, NULL, NULL, MegadonInputInfo, MegadonDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	236, 272, 3, 4
@@ -842,7 +844,7 @@ struct BurnDriverD BurnDrvCatapult = {
 	"catapult", NULL, NULL, NULL, "1982",
 	"Catapult\0", "Bad dump", "Epos Corporation", "EPOS Tristar",
 	NULL, NULL, NULL, NULL,
-	BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, catapultRomInfo, catapultRomName, NULL, NULL, NULL, NULL, SuprglobInputInfo, CatapultDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	236, 272, 3, 4
@@ -871,7 +873,7 @@ struct BurnDriver BurnDrvSuprglob = {
 	"suprglob", NULL, NULL, NULL, "1983",
 	"Super Glob\0", NULL, "Epos Corporation", "EPOS Tristar",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, suprglobRomInfo, suprglobRomName, NULL, NULL, NULL, NULL, SuprglobInputInfo, SuprglobDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	236, 272, 3, 4
@@ -900,7 +902,7 @@ struct BurnDriver BurnDrvTheglob = {
 	"theglob", "suprglob", NULL, NULL, "1983",
 	"The Glob\0", NULL, "Epos Corporation", "EPOS Tristar",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, theglobRomInfo, theglobRomName, NULL, NULL, NULL, NULL, SuprglobInputInfo, SuprglobDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	236, 272, 3, 4
@@ -929,7 +931,7 @@ struct BurnDriver BurnDrvTheglob2 = {
 	"theglob2", "suprglob", NULL, NULL, "1983",
 	"The Glob (earlier)\0", NULL, "Epos Corporation", "EPOS Tristar",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, theglob2RomInfo, theglob2RomName, NULL, NULL, NULL, NULL, SuprglobInputInfo, SuprglobDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	236, 272, 3, 4
@@ -958,7 +960,7 @@ struct BurnDriver BurnDrvTheglob3 = {
 	"theglob3", "suprglob", NULL, NULL, "1983",
 	"The Glob (set 3)\0", NULL, "Epos Corporation", "EPOS Tristar",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, theglob3RomInfo, theglob3RomName, NULL, NULL, NULL, NULL, SuprglobInputInfo, SuprglobDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	236, 272, 3, 4
@@ -987,7 +989,7 @@ struct BurnDriver BurnDrvIgmo = {
 	"igmo", NULL, NULL, NULL, "1984",
 	"IGMO\0", NULL, "Epos Corporation", "EPOS Tristar",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, igmoRomInfo, igmoRomName, NULL, NULL, NULL, NULL, SuprglobInputInfo, IgmoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	236, 272, 3, 4
@@ -1016,7 +1018,7 @@ struct BurnDriver BurnDrvEeekk = {
 	"eeekk", NULL, NULL, NULL, "1983",
 	"Eeekk!\0", NULL, "Epos Corporation", "EPOS Tristar",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, eeekkRomInfo, eeekkRomName, NULL, NULL, NULL, NULL, SuprglobInputInfo, EeekkDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	236, 272, 3, 4
@@ -1042,7 +1044,7 @@ struct BurnDriver BurnDrvDealer = {
 	"dealer", NULL, NULL, NULL, "198?",
 	"The Dealer\0", "Incorrect Colors", "Epos Corporation", "EPOS Tristar",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_CASINO, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_CASINO, 0,
 	NULL, dealerRomInfo, dealerRomName, NULL, NULL, NULL, NULL, DealerInputInfo, DealerDIPInfo,
 	DealerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	236, 272, 3, 4
@@ -1068,7 +1070,7 @@ struct BurnDriver BurnDrvRevngr84 = {
 	"revngr84", NULL, NULL, NULL, "1984",
 	"Revenger '84 (set 1)\0", NULL, "Epos Corporation", "EPOS Tristar",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, revngr84RomInfo, revngr84RomName, NULL, NULL, NULL, NULL, Revngr84InputInfo, Revngr84DIPInfo,
 	DealerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	236, 272, 3, 4
@@ -1093,7 +1095,7 @@ struct BurnDriver BurnDrvRevenger = {
 	"revenger", "revngr84", NULL, NULL, "1984",
 	"Revenger '84 (set 2)\0", "Bad dump", "Epos Corporation", "EPOS Tristar",
 	NULL, NULL, NULL, NULL,
-	BDF_ORIENTATION_VERTICAL | BDF_CLONE, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, revengerRomInfo, revengerRomName, NULL, NULL, NULL, NULL, Revngr84InputInfo, Revngr84DIPInfo,
 	DealerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	236, 272, 3, 4

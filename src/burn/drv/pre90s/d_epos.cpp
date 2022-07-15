@@ -32,6 +32,7 @@ static UINT8 *DealerZ80Bank2;
 static UINT8 *DealerInputMultiplex;
 
 static UINT8 dealer_hw = 0;
+static UINT8 game_prot;
 
 static int watchdog;
 
@@ -347,7 +348,7 @@ static UINT8 __fastcall epos_read_port(UINT16 port)
 			return DrvDips[0];
 
 		case 0x01:
-			return DrvInputs[0]; 
+			return (DrvInputs[0] & ~0xc0) | (game_prot & 0xc0);
 
 		case 0x02:
 			return DrvInputs[1];
@@ -511,6 +512,39 @@ static INT32 DrvDoReset(INT32 full_reset)
 	return 0;
 }
 
+struct prot_s {
+	char set[16][16];
+	INT32 prot;
+};
+
+static prot_s gamelist[] = {
+	{ {"megadon", "\0", }, 				0xc0 },
+	{ {"igmo", "\0", }, 				0xc0 },
+	{ {"dealer", "\0", }, 				0xc0 },
+	{ {"beastf", "\0", }, 				0xc0 },
+	{ {"revngr84", "revenger", "\0", }, 0xc0 },
+	{ {"eeekk", "\0", }, 				0x00 },
+	{ {"catapult", "\0", },				0xc0 },
+	{ {"suprglob", "theglob",
+	"theglob2", "theglob3" "\0", }, 	0x80 },
+	{ {"\0", }, 0 },
+};
+
+static void init_prot()
+{
+	game_prot = 0xc0;
+
+	for (INT32 i = 0; gamelist[i].prot != -1; i++) {
+		for (INT32 setnum = 0; gamelist[i].set[setnum][0] != '\0'; setnum++) {
+			if (!strcmp(BurnDrvGetTextA(DRV_NAME), gamelist[i].set[setnum])) {
+				bprintf(0, _T("*** found prot for %S\n"), gamelist[i].set[setnum]);
+				game_prot = gamelist[i].prot;
+				break;
+			}
+		}
+	}
+}
+
 static void DrvColPromInit(INT32 num)
 {
 	UINT8 prom[32] = { // in case the set lacks a prom dump
@@ -582,12 +616,7 @@ static INT32 MemIndex()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM + 0x0000, 0, 1)) return 1;
@@ -602,6 +631,8 @@ static INT32 DrvInit()
 		DrvColPromInit(8);
 		DrvPaletteInit();
 	}
+
+	init_prot();
 
 	ZetInit(0);
 	ZetOpen(0);
@@ -630,12 +661,7 @@ static UINT8 AY8910_0_portA(UINT32)
 
 static INT32 DealerInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM + 0x0000, 0, 1)) return 1;
@@ -648,6 +674,8 @@ static INT32 DealerInit()
 		DrvPaletteInit();
 		DealerDecode();
 	}
+
+	init_prot();
 
 	ZetInit(0);
 	ZetOpen(0);
@@ -687,7 +715,7 @@ static INT32 DrvExit()
 		ppi8255_exit();
 	}
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	dealer_hw = 0;
 
@@ -742,7 +770,7 @@ static INT32 DrvFrame()
 
 	ZetOpen(0);
 	ZetRun(2750000 / 60);
-	ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+	ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 	ZetClose();
 
 	if (pBurnSoundOut) {

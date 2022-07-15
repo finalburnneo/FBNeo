@@ -2048,7 +2048,12 @@ void GetHistoryDatHardwareToken(char *to_string)
 
 INT32 ConfigGameLoadHardwareDefaults()
 {
+#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
+	TCHAR *szFolderName = _T("");
+	TCHAR szFileName[MAX_PATH] = _T("");
+#else
 	TCHAR *szFileName = _T("");
+#endif
 	INT32 nApplyHardwareDefaults = 0;
 
 	INT32 nHardwareFlag = (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK);
@@ -2058,7 +2063,16 @@ INT32 ConfigGameLoadHardwareDefaults()
 		for (INT32 hw = 0; gamehw_cfg[i].hw[hw] != 0; hw++) {
 			if (gamehw_cfg[i].hw[hw] == nHardwareFlag)
 			{
+#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
+				szFolderName = SDL_GetPrefPath(NULL, "fbneo");		// Get fbneo folder path
+				#if defined(UNICODE)
+				swprintf(szFileName, MAX_PATH, L"%s%s", szFolderName, gamehw_cfg[i].ini);
+				#else
+				snprintf(szFileName, MAX_PATH, "%s%s", szFolderName, gamehw_cfg[i].ini);
+				#endif
+#else
 				szFileName = gamehw_cfg[i].ini;
+#endif
 				nApplyHardwareDefaults = 1;
 				break;
 			}

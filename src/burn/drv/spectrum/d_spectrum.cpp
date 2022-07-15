@@ -36574,3 +36574,22 @@ struct BurnDriver BurnSpecPaletoj2sp = {
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
+
+// T.C.Q. ZX (128K) (HB)
+
+static struct BurnRomInfo SpecTcqzxRomDesc[] = {
+	{ "T.C.Q. ZX 128K (2022)(Amaweks).tap", 36372, 0xf74fa56e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecTcqzx, SpecTcqzx, Spec128)
+STD_ROM_FN(SpecTcqzx)
+
+struct BurnDriver BurnSpecTcqzx = {
+	"spec_tcqzx", NULL, "spec_spec128", NULL, "2022",
+	"T.C.Q. ZX (128K) (HB)\0", NULL, "Amaweks", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecTcqzxRomInfo, SpecTcqzxRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

@@ -1694,6 +1694,7 @@ DRV		BurnDrvMSX_birdchairs;
 DRV		BurnDrvnes_birdweek;
 DRV		BurnDrvBirdtrya;
 DRV		BurnDrvBirdtry;
+DRV		BurnDrvBirdtryb;
 DRV		BurnDrvbirdiy;
 DRV		BurnSpecBirdycant;
 DRV		BurnSpecBiscuitsih;
@@ -14937,6 +14938,7 @@ DRV		BurnDrvCpsSfa3h;
 DRV		BurnDrvCpsSfa3ud;
 DRV		BurnDrvCpsSfa3u;
 DRV		BurnDrvCpsSfa3xl;
+DRV		BurnDrvCpsSfa3ce;
 DRV		BurnSpecStreetfighter2;
 DRV		BurnDrvsms_sf2;
 DRV		BurnDrvCpsSf2amf;
@@ -16699,8 +16701,9 @@ DRV		BurnDrvCps3wondersr1;
 DRV		BurnDrvCps3wonders;
 DRV		BurnDrvCps3wondersu;
 DRV		BurnDrvcv_threshld;
-DRV		BurnDrvnes_thundlig;
 DRV		BurnDrvThunderl;
+DRV		BurnDrvThunderla;
+DRV		BurnDrvnes_thundlig;
 DRV		BurnDrvMSX_thndrbal;
 DRV		BurnDrvMSX_thndrbala;
 DRV		BurnSpecthndrbld;
@@ -17002,7 +17005,8 @@ DRV		BurnDrvMSX_tortillaes;
 DRV		BurnDrvnes_tortoises;
 DRV		BurnDrvToryumon;
 DRV		BurnDrvpce_etercity;
-DRV		BurnDrvTotcarnp;
+DRV		BurnDrvTotcarnp1;
+DRV		BurnDrvTotcarnp2;
 DRV		BurnDrvTotcarn;
 DRV		BurnSpecTeclipse;
 DRV		BurnSpecTeclipse2;
@@ -20519,6 +20523,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_birdweek,		// Bird Week (Japan)
 	&BurnDrvBirdtrya,			// Birdie Try (Japan revision 2)
 	&BurnDrvBirdtry,			// Birdie Try (Japan revision 2, revision 1 MCU)
+	&BurnDrvBirdtryb,			// Birdie Try (Japan revision S)
 	&BurnDrvbirdiy,				// Birdiy
 	&BurnSpecBirdycant,			// Birdy Cantabile (48K) (HB)
 	&BurnSpecBiscuitsih,		// Biscuits In Hell (48K-128K) (HB)
@@ -33762,6 +33767,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSfa3ud,			// Street Fighter Alpha 3 (980904 USA Phoenix Edition)
 	&BurnDrvCpsSfa3u,			// Street Fighter Alpha 3 (980904 USA)
 	&BurnDrvCpsSfa3xl,			// Street Fighter Alpha 3 - Xiang Long Edition (Hack by pipi899, Ver.2009-05-10)
+	&BurnDrvCpsSfa3ce,			// Street Fighter Alpha 3 Challenger's Edition
 	&BurnSpecStreetfighter2,	// Street Fighter II (128K)
 	&BurnDrvsms_sf2,			// Street Fighter II (Bra)
 	&BurnDrvCpsSf2amf,			// Street Fighter II - Champion Edition (Alpha Magic-F bootleg set 1, 920313 etc)
@@ -35524,8 +35530,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCps3wonders,		// Three Wonders (wonder 3 910520 etc)
 	&BurnDrvCps3wondersu,		// Three Wonders (wonder 3 910520 USA)
 	&BurnDrvcv_threshld,		// Threshold
+	&BurnDrvThunderl,			// Thunder & Lightning (set 1)
+	&BurnDrvThunderla,			// Thunder & Lightning (set 2)
 	&BurnDrvnes_thundlig,		// Thunder & Lightning (USA)
-	&BurnDrvThunderl,			// Thunder & Lightning
 	&BurnDrvMSX_thndrbal,		// Thunder Ball (Jpn)
 	&BurnDrvMSX_thndrbala,		// Thunder Ball (Jpn, Alt)
 	&BurnSpecthndrbld,			// Thunder Blade (128K)
@@ -35827,7 +35834,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_tortoises,		// Tortoises (HB)
 	&BurnDrvToryumon,			// Toryumon
 	&BurnDrvpce_etercity,		// Toshi Tensou Keikaku - Eternal City
-	&BurnDrvTotcarnp,			// Total Carnage (prototype, proto v 1.0 01/25/92)
+	&BurnDrvTotcarnp1,			// Total Carnage (prototype, proto v 1.0 01/25/92)
+	&BurnDrvTotcarnp2,			// Total Carnage (prototype, proto v 2.0 02/10/92)
 	&BurnDrvTotcarn,			// Total Carnage (rev LA1 03/10/92)
 	&BurnSpecTeclipse,			// Total Eclipse (48K)
 	&BurnSpecTeclipse2,			// Total Eclipse 2 - The Sphinx Jinx (48K)
@@ -35838,10 +35846,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_totallyrad,		// Totally Rad (USA)
 	&BurnDrvsms_totowld3,		// Toto World 3 (Kor)
 	&BurnDrvnes_totsumac,		// Totsuzen! Machoman (Japan)
-	&BurnDrvTouchgoe,			// Touch & Go (earlier revision)
-	&BurnDrvTouchgok,			// Touch & Go (Korea, unprotected)
-	&BurnDrvTouchgon,			// Touch & Go (Non North America)
-	&BurnDrvTouchgo,			// Touch & Go (World)
+	&BurnDrvTouchgoe,			// Touch and Go (earlier revision)
+	&BurnDrvTouchgok,			// Touch and Go (Korea, unprotected)
+	&BurnDrvTouchgon,			// Touch and Go (Non North America)
+	&BurnDrvTouchgo,			// Touch and Go (World)
 	&BurnDrvTdfeverj,			// TouchDown Fever (Japan) [no comment, NOT WORKING]
 	&BurnDrvTdfever,			// TouchDown Fever (US) [no comment, NOT WORKING]
 	&BurnDrvTdfever2b,			// TouchDown Fever 2 (bootleg) [no comment, NOT WORKING]

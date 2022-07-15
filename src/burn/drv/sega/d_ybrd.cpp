@@ -1088,7 +1088,7 @@ static struct BurnRomInfo PdriftRomDesc[] = {
 	{ "epr-11897.ic3",    0x20000, 0x4463cb95, SYS16_ROM_PROM | BRF_OPT },
 	{ "epr-11898.ic4",    0x20000, 0x5d19d767, SYS16_ROM_PROM | BRF_OPT },
 
-	{ "epr-11485.ic37",   0x08000, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "epr-11485.ic27",   0x08000, 0x069b4201, BRF_OPT },
 };
 
 
@@ -1159,7 +1159,7 @@ static struct BurnRomInfo PdriftaRomDesc[] = {
 	{ "epr-11897.ic3",    0x20000, 0x4463cb95, SYS16_ROM_PROM | BRF_OPT },
 	{ "epr-11898.ic4",    0x20000, 0x5d19d767, SYS16_ROM_PROM | BRF_OPT },
 
-	{ "epr-11485.ic37",   0x08000, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "epr-11485.ic27",   0x08000, 0x069b4201, BRF_OPT },
 };
 
 
@@ -1230,7 +1230,7 @@ static struct BurnRomInfo PdrifteRomDesc[] = {
 	{ "epr-11897.ic3",    0x20000, 0x4463cb95, SYS16_ROM_PROM | BRF_OPT },
 	{ "epr-11898.ic4",    0x20000, 0x5d19d767, SYS16_ROM_PROM | BRF_OPT },
 
-	{ "epr-11485.ic37",   0x08000, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "epr-11485.ic27",   0x08000, 0x069b4201, BRF_OPT },
 };
 
 
@@ -1290,18 +1290,18 @@ static struct BurnRomInfo PdriftjRomDesc[] = {
 	{ "epr-11787.79",     0x20000, 0xe631dc12, SYS16_ROM_SPRITES2 | BRF_GRA },
 	{ "epr-11788.107",    0x20000, 0x8464c66e, SYS16_ROM_SPRITES2 | BRF_GRA },
 
-	{ "epr-11899.102",    0x10000, 0xed9fa889, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11753.ic102",  0x10000, 0xe81f5748, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 
-	{ "mpr-11754.107",    0x80000, 0xebeb8484, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "epr-11756.106",    0x20000, 0x12e43f8a, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "epr-11755.105",    0x20000, 0xc2db1244, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "mpr-11894.ic107",  0x40000, 0xb1e573f2, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-11893.ic106",  0x40000, 0x58b40f19, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-11892.ic105",  0x40000, 0x3248a758, SYS16_ROM_PCMDATA | BRF_SND },
 
 	{ "epr-11895.ic1",    0x20000, 0xee99a6fd, SYS16_ROM_PROM | BRF_OPT },
 	{ "epr-11896.ic2",    0x20000, 0x4bebc015, SYS16_ROM_PROM | BRF_OPT },
 	{ "epr-11897.ic3",    0x20000, 0x4463cb95, SYS16_ROM_PROM | BRF_OPT },
 	{ "epr-11898.ic4",    0x20000, 0x5d19d767, SYS16_ROM_PROM | BRF_OPT },
 
-	{ "epr-11485.ic37",   0x08000, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "epr-11485.ic27",   0x08000, 0x069b4201, BRF_OPT },
 };
 
 
@@ -2038,6 +2038,32 @@ static INT32 PdriftInit()
 	return nRet;
 }
 
+static INT32 PdriftjInit()
+{
+	Pdrift_analog_adder = Pdrift_analog_target = 0x80;
+
+	System16ProcessAnalogControlsDo = PdriftProcessAnalogControls;
+
+	System16HasGears = true;
+
+	System16PCMDataSizePreAllocate = 0x180000;
+
+	INT32 nRet = System16Init();
+
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x0c0000);
+	memcpy(pTemp, System16PCMData, 0x0c0000);
+	memset(System16PCMData, 0, 0x180000);
+	memcpy(System16PCMData + 0x000000, pTemp + 0x000000, 0x40000);
+	memcpy(System16PCMData + 0x040000, pTemp + 0x000000, 0x40000);
+	memcpy(System16PCMData + 0x080000, pTemp + 0x040000, 0x40000);
+	memcpy(System16PCMData + 0x0c0000, pTemp + 0x040000, 0x40000);
+	memcpy(System16PCMData + 0x100000, pTemp + 0x080000, 0x40000);
+	memcpy(System16PCMData + 0x140000, pTemp + 0x080000, 0x40000);
+	BurnFree(pTemp);
+
+	return nRet;
+}
+
 static INT32 RchaseInit()
 {
 	BurnGunInit(2, false);
@@ -2185,7 +2211,7 @@ struct BurnDriver BurnDrvPdriftj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_RACING, 0,
 	NULL, PdriftjRomInfo, PdriftjRomName, NULL, NULL, NULL, NULL, PdriftInputInfo, PdriftjDIPInfo,
-	PdriftInit, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
+	PdriftjInit, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };
 

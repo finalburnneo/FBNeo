@@ -6050,8 +6050,6 @@ static void blockcar68kInit()
 	SekSetWriteWordHandler(1,		setaSoundRegWriteWord);
 	SekSetWriteByteHandler(1,		setaSoundRegWriteByte);
 	SekClose();
-
-	memcpy (DrvSndROM + 0x80000, DrvSndROM, 0x80000);
 }
 
 static void zombraid68kInit()
@@ -9401,7 +9399,7 @@ struct BurnDriver BurnDrvWits = {
 };
 
 
-// Thunder & Lightning
+// Thunder & Lightning (set 1)
 
 static struct BurnRomInfo thunderlRomDesc[] = {
 	{ "m4",			0x08000, 0x1e6b9462, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -9414,6 +9412,8 @@ static struct BurnRomInfo thunderlRomDesc[] = {
 
 	{ "r28",		0x80000, 0xa043615d, 0x06 | BRF_SND },           //  6 x1-010 Samples
 	{ "r27",		0x80000, 0xcb8425a3, 0x06 | BRF_SND },           //  7
+	
+	{ "tl-9",		0x00117, 0x3b62882d, 0x00 | BRF_OPT },			 //  8 plds
 };
 
 STD_ROM_PICK(thunderl)
@@ -9421,10 +9421,41 @@ STD_ROM_FN(thunderl)
 
 struct BurnDriver BurnDrvThunderl = {
 	"thunderl", NULL, NULL, NULL, "1990",
-	"Thunder & Lightning\0", NULL, "Seta", "Seta",
+	"Thunder & Lightning (set 1)\0", NULL, "Seta", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA1, GBF_BREAKOUT, 0,
 	NULL, thunderlRomInfo, thunderlRomName, NULL, NULL, NULL, NULL, ThunderlInputInfo, ThunderlDIPInfo,
+	witsInit, DrvExit, DrvFrame, setaNoLayersDraw, DrvScan, &DrvRecalc, 0x200,
+	240, 384, 3, 4
+};
+
+
+// Thunder & Lightning (set 2)
+
+static struct BurnRomInfo thunderlaRomDesc[] = {
+	{ "tl-1-1.u1",	0x08000, 0x3d4b1888, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tl-1-2.u4",	0x08000, 0x974dddda, 0x01 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "t17",		0x20000, 0x599a632a, 0x0b | BRF_GRA },           //  2 Sprites
+	{ "t16",		0x20000, 0x3aeef91c, 0x0b | BRF_GRA },           //  3
+	{ "t15",		0x20000, 0xb97a7b56, 0x0b | BRF_GRA },           //  4
+	{ "t14",		0x20000, 0x79c707be, 0x0b | BRF_GRA },           //  5
+
+	{ "r28",		0x80000, 0xa043615d, 0x06 | BRF_SND },           //  6 x1-010 Samples
+	{ "r27",		0x80000, 0xcb8425a3, 0x06 | BRF_SND },           //  7
+	
+	{ "tl-9",		0x00117, 0x3b62882d, 0x00 | BRF_OPT },			 //  8 plds
+};
+
+STD_ROM_PICK(thunderla)
+STD_ROM_FN(thunderla)
+
+struct BurnDriver BurnDrvThunderla = {
+	"thunderla", "thunderl", NULL, NULL, "1990",
+	"Thunder & Lightning (set 2)\0", NULL, "Seta", "Seta",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA1, GBF_BREAKOUT, 0,
+	NULL, thunderlaRomInfo, thunderlaRomName, NULL, NULL, NULL, NULL, ThunderlInputInfo, ThunderlDIPInfo,
 	witsInit, DrvExit, DrvFrame, setaNoLayersDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 384, 3, 4
 };
@@ -9466,13 +9497,13 @@ struct BurnDriver BurnDrvAtehate = {
 // Block Carnival / Thunder & Lightning 2
 
 static struct BurnRomInfo blockcarRomDesc[] = {
-	{ "u1.a1",			0x20000, 0x4313fb00, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "u4.a3",			0x20000, 0x2237196d, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "u1.a1",				0x020000, 0x4313fb00, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "u4.a3",				0x020000, 0x2237196d, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "bl-chr-0.j3",	0x80000, 0xa33300ca, 0x03 | BRF_GRA },           //  2 Sprites
-	{ "bl-chr-1.l3",	0x80000, 0x563de808, 0x03 | BRF_GRA },           //  3
+	{ "bl-chr-0.u6.j3",		0x080000, 0xa33300ca, 0x03 | BRF_GRA },           //  2 Sprites
+	{ "bl-chr-1.u9.l3",		0x080000, 0x563de808, 0x03 | BRF_GRA },           //  3
 
-	{ "bl-snd-0.a13",	0x80000, 0xa92dabaf, 0x06 | BRF_SND },           //  4 x1-010 Samples
+	{ "bl-snd-0.u39.a13",	0x100000, 0x9c2130a2, 0x06 | BRF_SND },           //  4 x1-010 Samples
 };
 
 STD_ROM_PICK(blockcar)

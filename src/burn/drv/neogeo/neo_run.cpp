@@ -4499,6 +4499,8 @@ INT32 NeoExit()
 
 INT32 NeoRender()
 {
+	if (!pBurnDraw) return 0;
+
 	NeoUpdatePalette();							// Update the palette
 	NeoClearScreen();
 
@@ -4962,7 +4964,7 @@ INT32 NeoFrame()
 					bprintf(PRINT_NORMAL, _T(" -- Drawing slice: %3i - %3i.\n"), nSliceStart, nSliceEnd);
 #endif
 
-					if (bNeoEnableSprites) NeoRenderSprites();		// Render sprites
+					if (bNeoEnableSprites && pBurnDraw) NeoRenderSprites();		// Render sprites
 				}
 			}
 
@@ -5019,7 +5021,7 @@ INT32 NeoFrame()
 						bprintf(PRINT_NORMAL, _T(" -- Drawing slice: %3i - %3i.\n"), nSliceStart, nSliceEnd);
 #endif
 
-						if (bNeoEnableSprites) NeoRenderSprites();		// Render sprites
+						if (bNeoEnableSprites && pBurnDraw) NeoRenderSprites();		// Render sprites
 					}
 				}
 

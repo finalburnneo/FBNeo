@@ -1626,11 +1626,13 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 				ZetClose();
 
 				if (NeoCallbackActive && NeoCallbackActive->pBankswitch) {
+					SekOpen(0);
 					NeoCallbackActive->pBankswitch();
+					SekClose();
 				} else {
 					if ((BurnDrvGetHardwareCode() & HARDWARE_SNK_CONTROLMASK) != HARDWARE_SNK_GAMBLING && fatfury2mode == 0) {
 						SekOpen(0);
-						SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2FFFFF, MAP_ROM);
+						NeoMapBank();
 						SekClose();
 					}
 				}

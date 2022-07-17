@@ -1149,7 +1149,7 @@ struct BurnDriver BurnDrvCabalus = {
 	"cabalus", "cabal", NULL, NULL, "1988",
 	"Cabal (US set 1, Trackball)\0", NULL, "TAD Corporation (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, cabalusRomInfo, cabalusRomName, NULL, NULL, NULL, NULL, DrvTrkInputInfo, DrvTrkDIPInfo,
 	CabalusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -1193,7 +1193,7 @@ struct BurnDriver BurnDrvCabalus2 = {
 	"cabalus2", "cabal", NULL, NULL, "1988",
 	"Cabal (US set 2, Trackball)\0", NULL, "TAD Corporation (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, cabalus2RomInfo, cabalus2RomName, NULL, NULL, NULL, NULL, DrvTrkInputInfo, DrvTrkDIPInfo,
 	Cabalus2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3

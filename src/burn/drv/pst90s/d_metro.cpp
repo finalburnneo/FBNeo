@@ -1,11 +1,9 @@
-// FB Alpha Metro driver module
+// FB Neo Metro driver module
 // Based on MAME driver by Luca Elia and David Haywood
 
 /*
 	Tofix:
- 		Sky alert priorities
- 		blzntrnd roz offset
-
+ 		blzntrnd tilemaps blanked on left side
 
  	Needs porting:
 		dokyusei	(ym2413+msm6295 sound)
@@ -4316,8 +4314,6 @@ static INT32 Z80Frame()
 		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[1]);
-
 	if (pBurnSoundOut) {
 		BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
 	}
@@ -4505,8 +4501,6 @@ static INT32 YMF278bFrame()
 		}
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[0]);
-
 	if (pBurnSoundOut) {
 		BurnYMF278BUpdate(nBurnSoundLen);
 	}
@@ -4670,7 +4664,7 @@ STD_ROM_FN(blzntrnd)
 
 struct BurnDriver BurnDrvBlzntrnd = {
 	"blzntrnd", NULL, NULL, NULL, "1994",
-	"Blazing Tornado\0", NULL, "Human Amusement", "Miscellaneous",
+	"Blazing Tornado\0", "gfx issues", "Human Amusement", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, blzntrndRomInfo, blzntrndRomName, NULL, NULL, NULL, NULL, BlzntrndInputInfo, BlzntrndDIPInfo,

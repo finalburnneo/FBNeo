@@ -10186,6 +10186,18 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="minefind" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Mine Finder (HB, v1.2)</description>
+		<year>2022</year>
+		<manufacturer>Paolo F. Pugno</manufacturer>
+		<rom name="Mine Finder v1.2 (2022)(Paolo F. Pugno).rom" size="16384" crc="429b6ade"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="minimagos" romof="msx">
 		<comment>Homebrew</comment>
 		<description>MiniMagos (HB)</description>
@@ -10269,10 +10281,10 @@
 	</game>
 	<game name="mix" romof="msx">
 		<comment>Homebrew</comment>
-		<description>Mix (HB, v1.1)</description>
+		<description>Mix (HB, v1.2)</description>
 		<year>2022</year>
 		<manufacturer>Uninteresting</manufacturer>
-		<rom name="Mix v1.1 (2022)(uninteresting).rom" size="16384" crc="ae5c8bdb"/>
+		<rom name="Mix v1.2 (2022)(Uninteresting).rom" size="16384" crc="7bc49d78"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -15338,6 +15350,18 @@
 		<year>2004</year>
 		<manufacturer>Dioniso (Alfonso D.C.)</manufacturer>
 		<rom name="tvirus.rom" size="8192" crc="72b26927"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tcqmsx" romof="msx">
+		<comment>Homebrew</comment>
+		<description>T.C.Q. (HB)</description>
+		<year>2022</year>
+		<manufacturer>Amaweks</manufacturer>
+		<rom name="T.C.Q. (2022)(Amaweks).rom" size="49152" crc="beb5b313"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

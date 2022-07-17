@@ -16321,6 +16321,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="tcqzx" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>T.C.Q. ZX (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Amaweks</manufacturer>
+		<rom name="T.C.Q. ZX 128K (2022)(Amaweks).tap" size="36372" crc="f74fa56e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="taichitortoise" romof="spec128">
 		<description>Tai Chi Tortoise (128K)</description>
 		<year>1991</year>

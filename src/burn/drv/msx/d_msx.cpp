@@ -32398,10 +32398,10 @@ struct BurnDriver BurnDrvMSX_blacksea = {
 	272, 228, 4, 3
 };
 
-// Mix (HB, v1.1)
+// Mix (HB, v1.2)
 
 static struct BurnRomInfo MSX_mixRomDesc[] = {
-	{ "Mix v1.1 (2022)(uninteresting).rom",	16384, 0xae5c8bdb, BRF_PRG | BRF_ESS },
+	{ "Mix v1.2 (2022)(Uninteresting).rom",	16384, 0x7bc49d78, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_mix, MSX_mix, msx_msx)
@@ -32409,7 +32409,7 @@ STD_ROM_FN(MSX_mix)
 
 struct BurnDriver BurnDrvMSX_mix = {
 	"msx_mix", NULL, "msx_msx", NULL, "2022",
-	"Mix (HB, v1.1)\0", NULL, "Uninteresting", "MSX",
+	"Mix (HB, v1.2)\0", NULL, "Uninteresting", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_mixRomInfo, MSX_mixRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -32451,6 +32451,44 @@ struct BurnDriver BurnDrvMSX_virgilsexpt = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_virgilsexptRomInfo, MSX_virgilsexptRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Mine Finder (HB, v1.2)
+
+static struct BurnRomInfo MSX_minefindRomDesc[] = {
+	{ "Mine Finder v1.2 (2022)(Paolo F. Pugno).rom",	16384, 0x429b6ade, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_minefind, MSX_minefind, msx_msx)
+STD_ROM_FN(MSX_minefind)
+
+struct BurnDriver BurnDrvMSX_minefind = {
+	"msx_minefind", NULL, "msx_msx", NULL, "2022",
+	"Mine Finder (HB, v1.2)\0", NULL, "Paolo F. Pugno", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_minefindRomInfo, MSX_minefindRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// T.C.Q. (HB)
+
+static struct BurnRomInfo MSX_tcqmsxRomDesc[] = {
+	{ "T.C.Q. (2022)(Amaweks).rom",	49152, 0xbeb5b313, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_tcqmsx, MSX_tcqmsx, msx_msx)
+STD_ROM_FN(MSX_tcqmsx)
+
+struct BurnDriver BurnDrvMSX_tcqmsx = {
+	"msx_tcqmsx", NULL, "msx_msx", NULL, "2022",
+	"T.C.Q. (HB)\0", NULL, "Amaweks", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM | GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_tcqmsxRomInfo, MSX_tcqmsxRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

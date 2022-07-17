@@ -1626,11 +1626,13 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 				ZetClose();
 
 				if (NeoCallbackActive && NeoCallbackActive->pBankswitch) {
+					SekOpen(0);
 					NeoCallbackActive->pBankswitch();
+					SekClose();
 				} else {
 					if ((BurnDrvGetHardwareCode() & HARDWARE_SNK_CONTROLMASK) != HARDWARE_SNK_GAMBLING && fatfury2mode == 0) {
 						SekOpen(0);
-						SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2FFFFF, MAP_ROM);
+						NeoMapBank();
 						SekClose();
 					}
 				}
@@ -4499,6 +4501,8 @@ INT32 NeoExit()
 
 INT32 NeoRender()
 {
+	if (!pBurnDraw) return 0;
+
 	NeoUpdatePalette();							// Update the palette
 	NeoClearScreen();
 
@@ -4962,7 +4966,7 @@ INT32 NeoFrame()
 					bprintf(PRINT_NORMAL, _T(" -- Drawing slice: %3i - %3i.\n"), nSliceStart, nSliceEnd);
 #endif
 
-					if (bNeoEnableSprites) NeoRenderSprites();		// Render sprites
+					if (bNeoEnableSprites && pBurnDraw) NeoRenderSprites();		// Render sprites
 				}
 			}
 
@@ -5019,7 +5023,7 @@ INT32 NeoFrame()
 						bprintf(PRINT_NORMAL, _T(" -- Drawing slice: %3i - %3i.\n"), nSliceStart, nSliceEnd);
 #endif
 
-						if (bNeoEnableSprites) NeoRenderSprites();		// Render sprites
+						if (bNeoEnableSprites && pBurnDraw) NeoRenderSprites();		// Render sprites
 					}
 				}
 

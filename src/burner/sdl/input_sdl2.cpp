@@ -277,6 +277,5 @@ INT32 Init_Joysticks(int p_one_use_joystick)
 			GameInpConfig(i, i, 1);
 		}
 	}
-	display_set_controls();
 	return 0;
 }

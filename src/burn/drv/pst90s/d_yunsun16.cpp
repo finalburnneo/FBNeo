@@ -40,51 +40,51 @@ static UINT8 DrvReset;
 static INT32 is_magicbub = 0;
 
 static struct BurnInputInfo MagicbubInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 11,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Magicbub)
 
 static struct BurnInputInfo BombkickInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 11,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Bombkick)
@@ -318,13 +318,11 @@ STDDIPINFO(Paprazzi)
 
 static void set_sample_bank(INT32 bank)
 {
-	if (bank != soundbank) {
-		soundbank = bank;
-		memcpy(DrvSndROM + 0x20000, DrvSndROM + 0x40000 + (soundbank * 0x20000), 0x20000);
-	}
+	soundbank = bank;
+	MSM6295SetBank(0, DrvSndROM + (0x20000 * bank), 0x20000, 0x3ffff);
 }
 
-void __fastcall magicbub_main_write_word(UINT32 address, UINT16 data)
+static void __fastcall magicbub_main_write_word(UINT32 address, UINT16 data)
 {
 	switch (address)
 	{
@@ -345,7 +343,7 @@ void __fastcall magicbub_main_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall magicbub_main_write_byte(UINT32 address, UINT8 data)
+static void __fastcall magicbub_main_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -369,7 +367,7 @@ void __fastcall magicbub_main_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-UINT16 __fastcall magicbub_main_read_word(UINT32 address)
+static UINT16 __fastcall magicbub_main_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -383,7 +381,7 @@ UINT16 __fastcall magicbub_main_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall magicbub_main_read_byte(UINT32 address)
+static UINT8 __fastcall magicbub_main_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -411,7 +409,7 @@ UINT8 __fastcall magicbub_main_read_byte(UINT32 address)
 	return 0;
 }		
 
-void __fastcall magicbub_sound_out(UINT16 port, UINT8 data)
+static void __fastcall magicbub_sound_out(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
@@ -429,7 +427,7 @@ void __fastcall magicbub_sound_out(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall magicbub_sound_in(UINT16 port)
+static UINT8 __fastcall magicbub_sound_in(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -458,16 +456,11 @@ static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 
 static void DrvYM3812IrqHandler(INT32, INT32 nStatus)
 {
-	if (nStatus) {
-		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	SekOpen(0);
@@ -478,11 +471,11 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
+	MSM6295SetBank(0, DrvSndROM, 0x00000, 0x1ffff);
+	set_sample_bank(0);
+
 	MSM6295Reset(0);
 	BurnYM3812Reset();
-
-	memcpy (DrvSndROM, DrvSndROM + 0x40000, 0x40000);
-	soundbank = 1;
 
 	return 0;
 }
@@ -497,7 +490,6 @@ static INT32 MemIndex()
 	DrvGfxROM0		= Next; Next += 0x400000;
 	DrvGfxROM1		= Next; Next += 0x200000;
 
-	MSM6295ROM		= Next;
 	DrvSndROM		= Next; Next += 0x080000 + 0x40000;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x2000 * sizeof(UINT32);
@@ -514,7 +506,7 @@ static INT32 MemIndex()
 
 	scroll			= (UINT16*)Next; Next += 0x000004 * sizeof(UINT16);
 	soundlatch		= Next; Next += 0x000001;
-	video_priority		= Next; Next += 0x000001;
+	video_priority	= Next; Next += 0x000001;
 
 	RamEnd			= Next;
 	MemEnd			= Next;
@@ -557,12 +549,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit(INT32 game_select)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		INT32 offset = 0;
@@ -651,7 +638,7 @@ static INT32 DrvInit(INT32 game_select)
 		if (BurnLoadRom(DrvGfxROM1 + 0x080000, offset + 2, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM1 + 0x0c0000, offset + 3, 1)) return 1;
 
-		if (BurnLoadRom(DrvSndROM  + 0x040000, offset + 4, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM  + 0x000000, offset + 4, 1)) return 1;
 
 		DrvGfxDecode();
 	}
@@ -704,7 +691,7 @@ static INT32 DrvExit()
 	ZetExit();
 	GenericTilesExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	is_magicbub = 0;
 
@@ -787,19 +774,7 @@ static void draw_sprites(INT32 pri)
 		INT32 flipx	= attr & 0x20;
 		INT32 flipy	= attr & 0x40;
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, attr & 0x1f, 4, 15, 0, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, attr & 0x1f, 4, 15, 0, DrvGfxROM1);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, attr & 0x1f, 4, 15, 0, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, attr & 0x1f, 4, 15, 0, DrvGfxROM1);
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, attr & 0x1f, 4, 15, 0, DrvGfxROM1);
 	}
 }
 
@@ -870,18 +845,12 @@ static INT32 DrvFrame()
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nSegment = nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += SekRun(nSegment);
+		CPU_RUN(0, Sek);
 		if (i == (nInterleave - 1)) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
 		if (is_magicbub != 1) continue;
 
-		nSegment = nCyclesTotal[1] / nInterleave;
-		BurnTimerUpdateYM3812((1 + i) * nSegment);
-	}
-
-	if (is_magicbub == 1) {
-		BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+		CPU_RUN_TIMER_YM3812(1);
 	}
 
 	if (pBurnSoundOut) {
@@ -924,10 +893,10 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		MSM6295Scan(nAction, pnMin);
 
 		SCAN_VAR(soundbank);
+	}
 
-		INT32 bank = soundbank;
-		soundbank = -1;
-		set_sample_bank(bank);
+	if (nAction & ACB_WRITE) {
+		set_sample_bank(soundbank);
 	}
 
 	return 0;
@@ -1137,7 +1106,7 @@ struct BurnDriver BurnDrvPaprazzi = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, paprazziRomInfo, paprazziRomName, NULL, NULL, NULL, NULL, MagicbubInputInfo, PaprazziDIPInfo,
 	PaprazziInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	224, 384, 3, 4
+	224, 380, 3, 4
 };
 
 
@@ -1175,7 +1144,7 @@ struct BurnDriver BurnDrvShocking = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, shockingRomInfo, shockingRomName, NULL, NULL, NULL, NULL, MagicbubInputInfo, ShockingDIPInfo,
 	ShockingInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	384, 224, 4, 3
+	380, 224, 4, 3
 };
 
 
@@ -1208,7 +1177,7 @@ struct BurnDriver BurnDrvBombkick = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, bombkickRomInfo, bombkickRomName, NULL, NULL, NULL, NULL, BombkickInputInfo, BombkickDIPInfo,
 	ShockingInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	384, 224, 4, 3
+	380, 224, 4, 3
 };
 
 
@@ -1241,5 +1210,5 @@ struct BurnDriver BurnDrvBombkicka = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, bombkickaRomInfo, bombkickaRomName, NULL, NULL, NULL, NULL, BombkickInputInfo, BombkickDIPInfo,
 	ShockingInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	384, 224, 4, 3
+	380, 224, 4, 3
 };

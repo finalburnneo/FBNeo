@@ -3415,6 +3415,7 @@ static INT32 blzntrndInit()
 
 	i4x00_set_offsets(0, 0, 0);
 	i4x00_set_extrachip_callback(blzntrnd_zoomchip_draw);
+	i4x00_set_blazing();
 
 	vblank_bit = 0;
 	irq_line = 1;

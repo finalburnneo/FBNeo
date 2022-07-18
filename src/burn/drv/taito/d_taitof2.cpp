@@ -4932,8 +4932,6 @@ static INT32 TaitoF2DoReset()
 	TaitoF2TilePriority[0] = TaitoF2TilePriority[1] = TaitoF2TilePriority[2] = TaitoF2TilePriority[3] = TaitoF2TilePriority[4] = 0;
 	TaitoF2SpritePriority[0] = TaitoF2SpritePriority[1] = TaitoF2SpritePriority[2] = TaitoF2SpritePriority[3] = 0;
 
-	HiscoreReset();
-
 	return 0;
 }
 

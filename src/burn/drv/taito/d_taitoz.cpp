@@ -3454,8 +3454,6 @@ static INT32 TaitoZDoReset()
 
 	SciSpriteFrame = 0;
 
-	HiscoreReset();
-
 	return 0;
 }
 

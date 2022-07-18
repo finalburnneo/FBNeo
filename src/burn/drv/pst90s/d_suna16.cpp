@@ -56,9 +56,7 @@ static UINT8 bestofbest_prot = 0;
 static UINT8 z80bankdata[2];
 
 static struct BurnInputInfo BestbestInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy1 + 15,	 "p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy2 + 15,	 "p2 coin"  },
-
+	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy1 + 15,	 "p1 coin"  },
 	{"P1 Start"     , BIT_DIGITAL  , DrvJoy1 + 14,	 "p1 start" },
 	{"P1 Up"        , BIT_DIGITAL  , DrvJoy1 + 0,    "p1 up"    },
 	{"P1 Down"      , BIT_DIGITAL  , DrvJoy1 + 1,    "p1 down"  },
@@ -71,6 +69,7 @@ static struct BurnInputInfo BestbestInputList[] = {
 	{"P1 Button 5"  , BIT_DIGITAL  , DrvJoy1 + 10,	 "p1 fire 5"},
 	{"P1 Button 6"  , BIT_DIGITAL  , DrvJoy1 + 11,	 "p1 fire 6"},
 
+	{"P2 Coin"      , BIT_DIGITAL  , DrvJoy2 + 15,	 "p2 coin"  },
 	{"P2 Start"     , BIT_DIGITAL  , DrvJoy2 + 14,	 "p2 start" },
 	{"P2 Up"        , BIT_DIGITAL  , DrvJoy2 + 0,    "p2 up"    },
 	{"P2 Down"      , BIT_DIGITAL  , DrvJoy2 + 1,    "p2 down"  },
@@ -85,17 +84,15 @@ static struct BurnInputInfo BestbestInputList[] = {
 
 	{"Service"      , BIT_DIGITAL  , DrvJoy3 + 6,    "service"  },
 
-	{"Reset",	  BIT_DIGITAL  , &DrvReset,	"reset"     },
-	{"Dip 1",	  BIT_DIPSWITCH, DrvDips + 0,	"dip"	    },
-	{"Dip 2",	  BIT_DIPSWITCH, DrvDips + 1,	"dip"	    },
+	{"Reset",	  BIT_DIGITAL  , &DrvReset,			 "reset"    },
+	{"Dip 1",	  BIT_DIPSWITCH, DrvDips + 0,		 "dip"	    },
+	{"Dip 2",	  BIT_DIPSWITCH, DrvDips + 1,		 "dip"	    },
 };
 
 STDINPUTINFO(Bestbest)
 
 static struct BurnInputInfo UballoonInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy1 + 15,	 "p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy2 + 15,	 "p2 coin"  },
-
+	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy1 + 15,	 "p1 coin"  },
 	{"P1 Start"     , BIT_DIGITAL  , DrvJoy1 + 14,	 "p1 start" },
 	{"P1 Up"        , BIT_DIGITAL  , DrvJoy1 + 0,    "p1 up"    },
 	{"P1 Down"      , BIT_DIGITAL  , DrvJoy1 + 1,    "p1 down"  },
@@ -104,6 +101,7 @@ static struct BurnInputInfo UballoonInputList[] = {
 	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy1 + 4,	 "p1 fire 1"},
 	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy1 + 5,	 "p1 fire 2"},
 
+	{"P2 Coin"      , BIT_DIGITAL  , DrvJoy2 + 15,	 "p2 coin"  },
 	{"P2 Start"     , BIT_DIGITAL  , DrvJoy2 + 14,	 "p2 start" },
 	{"P2 Up"        , BIT_DIGITAL  , DrvJoy2 + 0,    "p2 up"    },
 	{"P2 Down"      , BIT_DIGITAL  , DrvJoy2 + 1,    "p2 down"  },
@@ -114,20 +112,16 @@ static struct BurnInputInfo UballoonInputList[] = {
 
 	{"Service"      , BIT_DIGITAL  , DrvJoy1 + 12,   "service"  },
 
-	{"Reset",	  BIT_DIGITAL  , &DrvReset,	"reset"     },
-	{"Dip 1",	  BIT_DIPSWITCH, DrvDips + 0,	"dip"	    },
-	{"Dip 2",	  BIT_DIPSWITCH, DrvDips + 1,	"dip"	    },
-	{"Dip 3",	  BIT_DIPSWITCH, DrvDips + 2,	"dip"	    },
+	{"Reset",	  BIT_DIGITAL  , &DrvReset,			 "reset"    },
+	{"Dip 1",	  BIT_DIPSWITCH, DrvDips + 0,		 "dip"	    },
+	{"Dip 2",	  BIT_DIPSWITCH, DrvDips + 1,		 "dip"	    },
+	{"Dip 3",	  BIT_DIPSWITCH, DrvDips + 2,		 "dip"	    },
 };
 
 STDINPUTINFO(Uballoon)
 
 static struct BurnInputInfo BssoccerInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy6 + 4,	 "p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy6 + 5,	 "p2 coin"  },
-	{"Coin 3"       , BIT_DIGITAL  , DrvJoy6 + 6,	 "p3 coin"  },
-	{"Coin 4"       , BIT_DIGITAL  , DrvJoy6 + 7,	 "p4 coin"  },
-
+	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy6 + 4,	 "p1 coin"  },
 	{"P1 Start"     , BIT_DIGITAL  , DrvJoy1 + 7,	 "p1 start" },
 	{"P1 Up"        , BIT_DIGITAL  , DrvJoy1 + 0,    "p1 up"    },
 	{"P1 Down"      , BIT_DIGITAL  , DrvJoy1 + 1,    "p1 down"  },
@@ -137,6 +131,7 @@ static struct BurnInputInfo BssoccerInputList[] = {
 	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy1 + 5,	 "p1 fire 2"},
 	{"P1 Button 3"  , BIT_DIGITAL  , DrvJoy1 + 6,	 "p1 fire 3"},
 
+	{"P2 Coin"      , BIT_DIGITAL  , DrvJoy6 + 5,	 "p2 coin"  },
 	{"P2 Start"     , BIT_DIGITAL  , DrvJoy2 + 7,	 "p2 start" },
 	{"P2 Up"        , BIT_DIGITAL  , DrvJoy2 + 0,    "p2 up"    },
 	{"P2 Down"      , BIT_DIGITAL  , DrvJoy2 + 1,    "p2 down"  },
@@ -146,6 +141,7 @@ static struct BurnInputInfo BssoccerInputList[] = {
 	{"P2 Button 2"  , BIT_DIGITAL  , DrvJoy2 + 5,	 "p2 fire 2"},
 	{"P2 Button 3"  , BIT_DIGITAL  , DrvJoy2 + 6,	 "p2 fire 3"},
 
+	{"P3 Coin"      , BIT_DIGITAL  , DrvJoy6 + 6,	 "p3 coin"  },
 	{"P3 Start"     , BIT_DIGITAL  , DrvJoy3 + 7,	 "p3 start" },
 	{"P3 Up"        , BIT_DIGITAL  , DrvJoy3 + 0,    "p3 up"    },
 	{"P3 Down"      , BIT_DIGITAL  , DrvJoy3 + 1,    "p3 down"  },
@@ -155,6 +151,7 @@ static struct BurnInputInfo BssoccerInputList[] = {
 	{"P3 Button 2"  , BIT_DIGITAL  , DrvJoy3 + 5,	 "p3 fire 2"},
 	{"P3 Button 3"  , BIT_DIGITAL  , DrvJoy3 + 6,	 "p3 fire 3"},
 
+	{"P4 Coin"      , BIT_DIGITAL  , DrvJoy6 + 7,	 "p4 coin"  },
 	{"P4 Start"     , BIT_DIGITAL  , DrvJoy4 + 7,	 "p4 start" },
 	{"P4 Up"        , BIT_DIGITAL  , DrvJoy4 + 0,    "p4 up"    },
 	{"P4 Down"      , BIT_DIGITAL  , DrvJoy4 + 1,    "p4 down"  },
@@ -166,24 +163,23 @@ static struct BurnInputInfo BssoccerInputList[] = {
 
 	{"Service"      , BIT_DIGITAL  , DrvJoy3 + 6,    "service"  },
 
-	{"Reset",	  BIT_DIGITAL  , &DrvReset,	"reset"     },
-	{"Dip 1",	  BIT_DIPSWITCH, DrvDips + 0,	"dip"	    },
-	{"Dip 2",	  BIT_DIPSWITCH, DrvDips + 1,	"dip"	    },
-	{"Dip 3",	  BIT_DIPSWITCH, DrvDips + 2,	"dip"	    },
+	{"Reset",	  BIT_DIGITAL  , &DrvReset,			 "reset"    },
+	{"Dip 1",	  BIT_DIPSWITCH, DrvDips + 0,		 "dip"	    },
+	{"Dip 2",	  BIT_DIPSWITCH, DrvDips + 1,		 "dip"	    },
+	{"Dip 3",	  BIT_DIPSWITCH, DrvDips + 2,		 "dip"	    },
 };
 
 STDINPUTINFO(Bssoccer)
 
 static struct BurnInputInfo SunaqInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy1 + 7,	 "p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy2 + 7,	 "p2 coin"  },
-
+	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy1 + 7,	 "p1 coin"  },
 	{"P1 Start"     , BIT_DIGITAL  , DrvJoy1 + 6,	 "p1 start" },
 	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy1 + 0,	 "p1 fire 1"},
 	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy1 + 1,	 "p1 fire 2"},
 	{"P1 Button 3"  , BIT_DIGITAL  , DrvJoy1 + 2,	 "p1 fire 3"},
 	{"P1 Button 4"  , BIT_DIGITAL  , DrvJoy1 + 3,	 "p1 fire 4"},
 
+	{"P2 Coin"      , BIT_DIGITAL  , DrvJoy2 + 7,	 "p2 coin"  },
 	{"P2 Start"     , BIT_DIGITAL  , DrvJoy2 + 6,	 "p2 start" },
 	{"P2 Button 1"  , BIT_DIGITAL  , DrvJoy2 + 0,	 "p2 fire 1"},
 	{"P2 Button 2"  , BIT_DIGITAL  , DrvJoy2 + 1,	 "p2 fire 2"},
@@ -192,8 +188,8 @@ static struct BurnInputInfo SunaqInputList[] = {
 
 	{"Service"      , BIT_DIGITAL  , DrvJoy3 + 6,    "service"  },
 
-	{"Reset",	  BIT_DIGITAL  , &DrvReset,	"reset"	    },
-	{"Dip 1",	  BIT_DIPSWITCH, DrvDips + 0,	"dip"	    },
+	{"Reset",	      BIT_DIGITAL  , &DrvReset,		 "reset"	},
+	{"Dip 1",	      BIT_DIPSWITCH, DrvDips + 0,	 "dip"	    },
 };
 
 STDINPUTINFO(Sunaq)
@@ -1412,11 +1408,7 @@ static void bestbest_ay8910_write_a(UINT32,UINT32)
 
 static void bestbestFMIRQHandler(INT32, INT32 nStatus)
 {
-	if (nStatus) {
-		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 bestbestSynchroniseStream(INT32 nSoundRate)
@@ -1426,16 +1418,9 @@ static INT32 bestbestSynchroniseStream(INT32 nSoundRate)
 
 static INT32 BestbestInit()
 {
-	INT32 nLen;
-
 	game_select = 0;
 
-	AllMem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (DrvLoadRoms()) return 1;
 
@@ -1500,16 +1485,9 @@ static INT32 BestbestInit()
 
 static INT32 SunaqInit()
 {
-	INT32 nLen;
-
 	game_select = 1;
 
-	AllMem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (DrvLoadRoms()) return 1;
 
@@ -1540,9 +1518,10 @@ static INT32 SunaqInit()
 	ZetSetOutHandler(bssoccer_sound1_out);
 	ZetClose();
 
-	BurnYM2151Init(3579545);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachZet(3579500);
 
 	DACInit(0, 0, 2, ZetTotalCycles, 6000000);
 	DACInit(1, 0, 2, ZetTotalCycles, 6000000);
@@ -1559,16 +1538,9 @@ static INT32 SunaqInit()
 
 static INT32 UballoonInit()
 {
-	INT32 nLen;
-
 	game_select = 2;
 
-	AllMem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (DrvLoadRoms()) return 1;
 
@@ -1600,9 +1572,10 @@ static INT32 UballoonInit()
 	ZetSetOutHandler(uballoon_sound1_out);
 	ZetClose();
 
-	BurnYM2151Init(3579545);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachZet(3579500);
 
 	DACInit(0, 0, 1, ZetTotalCycles, 5333333);
 	DACInit(1, 0, 1, ZetTotalCycles, 5333333);
@@ -1618,16 +1591,9 @@ static INT32 UballoonInit()
 
 static INT32 BssoccerInit()
 {
-	INT32 nLen;
-
 	game_select = 3;
 
-	AllMem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (DrvLoadRoms()) return 1;
 
@@ -1665,9 +1631,10 @@ static INT32 BssoccerInit()
 	ZetSetOutHandler(bssoccer_sound2_out);
 	ZetClose();
 
-	BurnYM2151Init(3579545);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.20, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.20, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachZet(3579500);
 
 	DACInit(0, 0, 1, ZetTotalCycles, 5333333);
 	DACInit(1, 0, 1, ZetTotalCycles, 5333333);
@@ -1687,7 +1654,7 @@ static INT32 BssoccerInit()
 
 static INT32 DrvExit()
 {
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	if (game_select) {
 		BurnYM2151Exit();
@@ -1798,19 +1765,7 @@ static void draw_sprites(UINT16 *sprites, UINT8 *gfx_base, INT32 max_tile)
 					continue;
 				}
 
-				if (tile_flipy) {
-					if (tile_flipx) {
-						Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, tile, sx, sy, color, 4, 0x0f, 0, gfx_base);
-					} else {
-						Render8x8Tile_Mask_FlipY_Clip(pTransDraw, tile, sx, sy, color, 4, 0x0f, 0, gfx_base);
-					}
-				} else {
-					if (tile_flipx) {
-						Render8x8Tile_Mask_FlipX_Clip(pTransDraw, tile, sx, sy, color, 4, 0x0f, 0, gfx_base);
-					} else {
-						Render8x8Tile_Mask_Clip(pTransDraw, tile, sx, sy, color, 4, 0x0f, 0, gfx_base);
-					}
-				}
+				Draw8x8MaskTile(pTransDraw, tile, sx, sy, tile_flipx, tile_flipy, color, 4, 0x0f, 0, gfx_base);
 			}
 
 			tile_y += tile_yinc;
@@ -1949,7 +1904,6 @@ static INT32 SunaqFrame()
 	INT32 nInterleave = 50;
 	INT32 nCyclesTotal[3] = { 6000000 / 60, 3579500 / 60, 6000000 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	SekOpen(0);
 
@@ -1959,30 +1913,16 @@ static INT32 SunaqFrame()
 		if (i == nInterleave-1) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 		ZetOpen(0);
-		CPU_RUN(1, Zet);
+		CPU_RUN_TIMER(1);
 		ZetClose();
 
 		ZetOpen(1);
 		CPU_RUN(2, Zet);
 		ZetClose();
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-		}
-
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -2009,7 +1949,6 @@ static INT32 UballoonFrame()
 	INT32 nInterleave = 50;
 	INT32 nCyclesTotal[3] = { 8000000 / 60, 3579500 / 60, 5333333 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	SekOpen(0);
 
@@ -2019,34 +1958,17 @@ static INT32 UballoonFrame()
 		if (i == nInterleave-1) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 		ZetOpen(0);
-		CPU_RUN(1, Zet);
+		CPU_RUN_TIMER(1);
 		ZetClose();
 
 		ZetOpen(1);
 		CPU_RUN(2, Zet);
 		ZetClose();
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-		}
-
-		ZetOpen(1);
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
 	}
 
 	SekClose();
@@ -2070,7 +1992,6 @@ static INT32 BssoccerFrame()
 	INT32 nInterleave = 50;
 	INT32 nCyclesTotal[4] = { 8000000 / 60, 3579500 / 60, 5333333 / 60, 5333333 / 60 };
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	SekNewFrame();
 	ZetNewFrame();
@@ -2084,7 +2005,7 @@ static INT32 BssoccerFrame()
 		if (i == (nInterleave    )-1) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 		ZetOpen(0);
-		CPU_RUN(1, Zet);
+		CPU_RUN_TIMER(1);
 		ZetClose();
 
 		ZetOpen(1);
@@ -2094,27 +2015,11 @@ static INT32 BssoccerFrame()
 		ZetOpen(2);
 		CPU_RUN(3, Zet);
 		ZetClose();
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-		}
-
-		ZetOpen(1);
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
 	}
 
 	SekClose();
@@ -2151,6 +2056,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (game_select) {
 			BurnYM2151Scan(nAction, pnMin);
 		} else {
+			BurnYM3526Scan(nAction, pnMin);
 			AY8910Scan(nAction, pnMin);
 		}
 
@@ -2161,8 +2067,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(color_bank);
 		SCAN_VAR(bestofbest_prot);
 
-		SCAN_VAR(z80bankdata[0]);
-		SCAN_VAR(z80bankdata[1]);
+		SCAN_VAR(z80bankdata);
 	}
 
 	if (game_select == 3) {

@@ -1,11 +1,6 @@
 #include "retro_common.h"
 #include "retro_memory.h"
 
-// 2022-06-25 : hiscores are now part of the (fast) savestates, and for better or worse will now be synced within a runahead/netplay context.
-//              as a side-effect, runahead savestates are now optimized for single instance and support for 2-instances runahead won't be guaranteed anymore.
-//              having the frontend provide proper savestate context will be required to improve this situation.
-//              see https://github.com/libretro/RetroArch/issues/13498 and https://github.com/libretro/RetroArch/issues/8571
-
 // Cheevos support
 static void* pMainRamData = NULL;
 static size_t nMainRamSize = 0;

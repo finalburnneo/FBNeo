@@ -4255,6 +4255,24 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="skazkav1" cloneof="skazkav2" romof="skazkav2">
+		<comment>Homebrew</comment>
+		<description>Skazka (HB, v1.0)</description>
+		<year>2022</year>
+		<manufacturer>SteveProXNA</manufacturer>
+		<rom name="Skazka v1.0 (2022)(SteveProXNA).sms" size="262144" crc="40eec164"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="skazkav2">
+		<comment>Homebrew</comment>
+		<description>Skazka (HB, v2.0)</description>
+		<year>2022</year>
+		<manufacturer>SteveProXNA</manufacturer>
+		<rom name="Skazka v2.0 (2022)(SteveProXNA).sms" size="262144" crc="47ab1630"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="skbn">
 		<comment>Homebrew</comment>
 		<description>SKBN (HB, v1.3)</description>

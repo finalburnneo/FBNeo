@@ -1092,8 +1092,10 @@ DRV		BurnDrvAvefenixl;
 DRV		BurnDrvAvefenixrf;
 DRV		BurnSpecavenger;
 DRV		BurnDrvMSX_avenger;
+DRV		BurnDrvAvengerb;
+DRV		BurnDrvAvengera;
 DRV		BurnDrvAvengers;
-DRV		BurnDrvAvenger2;
+DRV		BurnDrvAvengerc;
 DRV		BurnDrvAvengrgsj;
 DRV		BurnDrvAvengrgs;
 DRV		BurnDrvAvspirit;
@@ -13933,6 +13935,8 @@ DRV		BurnDrvnes_skateordie;
 DRV		BurnDrvnes_skateordie2;
 DRV		BurnSpecSkateball;
 DRV		BurnDrvCskater;
+DRV		BurnDrvsms_skazkav1;
+DRV		BurnDrvsms_skazkav2;
 DRV		BurnDrvsms_skbn;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvSkelagon;		// Bad Dump
@@ -19924,8 +19928,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAvefenixrf,			// Ave Fenix (Recreativos Franco, Spanish bootleg of Phoenix)
 	&BurnSpecavenger,			// Avenger (128K)
 	&BurnDrvMSX_avenger,		// Avenger (Euro)
-	&BurnDrvAvengers,			// Avengers (US set 1)
-	&BurnDrvAvenger2,			// Avengers (US set 2)
+	&BurnDrvAvengerb,			// Avengers (US)
+	&BurnDrvAvengera,			// Avengers (US, revision A)
+	&BurnDrvAvengers,			// Avengers (US, revision C)
+	&BurnDrvAvengerc,			// Avengers (US, unknown revision)
 	&BurnDrvAvengrgsj,			// Avengers In Galactic Storm (Japan)
 	&BurnDrvAvengrgs,			// Avengers In Galactic Storm (US)
 	&BurnDrvAvspirit,			// Avenging Spirit
@@ -25858,7 +25864,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_hiryunokenspe,	// Hiryuu no Ken Special - Fighting Wars (Japan)
 	&BurnDrvHishouza,			// Hishou Zame (Japan)
 	&BurnDrvpce_xserd,			// Hisou Kihei - Xserd
-	&BurnDrvBuraiken,			// Hissatsu Buraiken (Japan)
+	&BurnDrvBuraiken,			// Hissatsu Buraiken (Japan, revision A)
 	&BurnSpecHitsquad,			// Hit Squad, The (48K)
 	&BurnDrvHiticej,			// Hit the Ice (Japan)
 	&BurnDrvHitice,				// Hit the Ice (US)
@@ -32765,6 +32771,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_skateordie2,	// Skate or Die 2 - The Search for Double Trouble (USA)
 	&BurnSpecSkateball,			// Skateball (48K)
 	&BurnDrvCskater,			// Skater (DECO Cassette) (Japan)
+	&BurnDrvsms_skazkav1,		// Skazka (HB, v1.0)
+	&BurnDrvsms_skazkav2,		// Skazka (HB, v2.0)
 	&BurnDrvsms_skbn,			// SKBN (HB, v1.3)
 #if defined FBNEO_DEBUG
 	&BurnDrvSkelagon,			// Skelagon [Bad Dump]
@@ -34910,7 +34918,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTbowl,				// Tecmo Bowl (World, set 1)
 	&BurnDrvTbowla,				// Tecmo Bowl (World, set 2)
 	&BurnDrvmd_tecmocupi,		// Tecmo Cup (Hack, Italian)
-	&BurnDrvmd_tecmocup,		// Tecmo Cup (Jpn, Prototype?)
+	&BurnDrvmd_tecmocup,		// Tecmo Cup (Jpn, Prototype)
 	&BurnDrvnes_tecmocup,		// Tecmo Cup - Soccer Game (USA)
 	&BurnDrvTknight,			// Tecmo Knight
 	&BurnDrvnes_tecmonbabas,	// Tecmo NBA Basketball (USA)

@@ -1017,6 +1017,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="arrowp" cloneof="arrow" romof="arrow">
+		<comment>Prototype</comment>
 		<description>Arrow Flash (USA, Prototype)</description>
 		<year>1990</year>
 		<manufacturer>Renovation</manufacturer>
@@ -1066,6 +1067,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aofp" cloneof="aof" romof="aof">
+		<comment>Prototype</comment>
 		<description>Art of Fighting (Prototype, 19940711)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -1370,6 +1372,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bobp" cloneof="bob" romof="bob">
+		<comment>Prototype</comment>
 		<description>B.O.B. (USA, Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Electronic Arts</manufacturer>
@@ -1378,6 +1381,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="babyboom1" cloneof="babyboom" romof="babyboom">
+		<comment>Prototype</comment>
 		<description>Baby Boom (Prototype, 19940603)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
@@ -1386,6 +1390,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="babyboom2" cloneof="babyboom" romof="babyboom">
+		<comment>Prototype</comment>
 		<description>Baby Boom (Prototype, 19940606)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
@@ -1394,6 +1399,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="babyboom">
+		<comment>Prototype</comment>
 		<description>Baby Boom (Prototype, 19940811)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
@@ -1402,6 +1408,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="babyd">
+		<comment>Prototype</comment>
 		<description>Baby's Day Out (USA, Prototype)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
@@ -1410,6 +1417,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="babydo" cloneof="babyd" romof="babyd">
+		<comment>Prototype</comment>
 		<description>Baby's Day Out (USA, Prototype, Earlier)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
@@ -1877,6 +1885,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="battlesqp" cloneof="battlesq" romof="battlesq">
+		<comment>Prototype</comment>
 		<description>Battle Squadron (Prototype, 19910118)</description>
 		<year>1990</year>
 		<manufacturer>Electronic Arts</manufacturer>
@@ -1960,6 +1969,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="beastbal">
+		<comment>Prototype</comment>
 		<description>Beastball (Prototype)</description>
 		<year>199?</year>
 		<manufacturer>Spectrum Holobyte</manufacturer>
@@ -2008,6 +2018,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="beavisup" cloneof="beavis" romof="beavis">
+		<comment>Prototype</comment>
 		<description>Beavis and Butt-Head (USA, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Viacom New Media</manufacturer>
@@ -2264,6 +2275,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="beyondzt">
+		<comment>Prototype</comment>
 		<description>Beyond Zero Tolerance (USA, Prototype)</description>
 		<year>1995</year>
 		<manufacturer>Accolade</manufacturer>
@@ -2339,6 +2351,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="biohazrbp1" cloneof="biohazrb" romof="biohazrb">
+		<comment>Prototype</comment>
 		<description>Bio Hazard Battle (Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
@@ -2347,6 +2360,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="biohazrbp" cloneof="biohazrb" romof="biohazrb">
+		<comment>Prototype</comment>
 		<description>Bio Hazard Battle (USA, Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
@@ -2395,6 +2409,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bmaster2p" cloneof="bmaster2" romof="bmaster2">
+		<comment>Prototype</comment>
 		<description>Blaster Master 2 (USA, Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -2469,6 +2484,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bodycop" cloneof="bodyco" romof="bodyco">
+		<comment>Prototype</comment>
 		<description>Body Count (Euro, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -2477,6 +2493,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bodycop5" cloneof="bodyco" romof="bodyco">
+		<comment>Prototype</comment>
 		<description>Body Count (USA, Prototype, 19940127)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -2485,6 +2502,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bodycop4" cloneof="bodyco" romof="bodyco">
+		<comment>Prototype</comment>
 		<description>Body Count (USA, Prototype, 19940208)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -2493,6 +2511,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bodycop3" cloneof="bodyco" romof="bodyco">
+		<comment>Prototype</comment>
 		<description>Body Count (USA, Prototype, 19940303)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -2501,6 +2520,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bodycop2" cloneof="bodyco" romof="bodyco">
+		<comment>Prototype</comment>
 		<description>Body Count (USA, Prototype, 19940308)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -2600,6 +2620,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonkersp5" cloneof="bonkers" romof="bonkers">
+		<comment>Prototype</comment>
 		<description>Bonkers (USA, Prototype, 19940328)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -2608,6 +2629,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonkersp4" cloneof="bonkers" romof="bonkers">
+		<comment>Prototype</comment>
 		<description>Bonkers (USA, Prototype, 19940503)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -2616,6 +2638,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonkersp3" cloneof="bonkers" romof="bonkers">
+		<comment>Prototype</comment>
 		<description>Bonkers (USA, Prototype, 19941004)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -2624,6 +2647,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonkersp2" cloneof="bonkers" romof="bonkers">
+		<comment>Prototype</comment>
 		<description>Bonkers (USA, Prototype, 19941025)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -2632,6 +2656,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonkersp1" cloneof="bonkers" romof="bonkers">
+		<comment>Prototype</comment>
 		<description>Bonkers (USA, Prototype, 19941029)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -2769,6 +2794,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bubbap" cloneof="bubba" romof="bubba">
+		<comment>Prototype</comment>
 		<description>Bubba'n'Stix (Euro, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Core Design</manufacturer>
@@ -2857,6 +2883,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="budokanp" cloneof="budokan" romof="budokan">
+		<comment>Prototype</comment>
 		<description>Budokan - The Martial Spirit (Prototype, 19900925)</description>
 		<year>1990</year>
 		<manufacturer>Electronic Arts</manufacturer>
@@ -3098,6 +3125,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="captavenup" cloneof="captaven" romof="captaven">
+		<comment>Prototype</comment>
 		<description>Captain America and the Avengers (USA, Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Data East</manufacturer>
@@ -3300,6 +3328,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="champwcsp" cloneof="champwcs" romof="champwcs">
+		<comment>Prototype</comment>
 		<description>Champions World Class Soccer (Prototype, 19940318)</description>
 		<year>1993</year>
 		<manufacturer>Flying Edge</manufacturer>
@@ -3685,6 +3714,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cliffhp" cloneof="cliffh" romof="cliffh">
+		<comment>Prototype</comment>
 		<description>Cliffhanger (Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Sony Imagesoft</manufacturer>
@@ -3734,6 +3764,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="colleg96p" cloneof="colleg96" romof="colleg96">
+		<comment>Prototype</comment>
 		<description>College Football USA 96 (USA, Prototype 19950621)</description>
 		<year>1995</year>
 		<manufacturer>Electronic Arts</manufacturer>
@@ -3750,6 +3781,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="collncp19" cloneof="collnc" romof="collnc">
+		<comment>Prototype</comment>
 		<description>College Football's National Championship (Prototype, 19940413)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -3758,6 +3790,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="collncp18" cloneof="collnc" romof="collnc">
+		<comment>Prototype</comment>
 		<description>College Football's National Championship (Prototype, 19940418)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -3766,6 +3799,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="collncp17" cloneof="collnc" romof="collnc">
+		<comment>Prototype</comment>
 		<description>College Football's National Championship (Prototype, 19940419)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -3774,6 +3808,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="collncp16" cloneof="collnc" romof="collnc">
+		<comment>Prototype</comment>
 		<description>College Football's National Championship (Prototype, 19940429)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -3782,6 +3817,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="collncp15" cloneof="collnc" romof="collnc">
+		<comment>Prototype</comment>
 		<description>College Football's National Championship (Prototype, 19940503)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -3790,6 +3826,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="collncp14" cloneof="collnc" romof="collnc">
+		<comment>Prototype</comment>
 		<description>College Football's National Championship (Prototype, 19940506)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -3798,6 +3835,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="collncp13" cloneof="collnc" romof="collnc">
+		<comment>Prototype</comment>
 		<description>College Football's National Championship (Prototype, 19940511-A)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -3806,6 +3844,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="collncp12" cloneof="collnc" romof="collnc">
+		<comment>Prototype</comment>
 		<description>College Football's National Championship (Prototype, 19940517-A)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -3814,6 +3853,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="collncp11" cloneof="collnc" romof="collnc">
+		<comment>Prototype</comment>
 		<description>College Football's National Championship (Prototype, 19940520)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -3822,6 +3862,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="collncp10" cloneof="collnc" romof="collnc">
+		<comment>Prototype</comment>
 		<description>College Football's National Championship (Prototype, 19940525)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -3830,6 +3871,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="collncp09" cloneof="collnc" romof="collnc">
+		<comment>Prototype</comment>
 		<description>College Football's National Championship (Prototype, 19940531)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -3838,6 +3880,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="collncp08" cloneof="collnc" romof="collnc">
+		<comment>Prototype</comment>
 		<description>College Football's National Championship (Prototype, 19940601)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -3846,6 +3889,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="collncp07" cloneof="collnc" romof="collnc">
+		<comment>Prototype</comment>
 		<description>College Football's National Championship (Prototype, 19940603)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -3854,6 +3898,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="collncp06" cloneof="collnc" romof="collnc">
+		<comment>Prototype</comment>
 		<description>College Football's National Championship (Prototype, 19940607)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -3862,6 +3907,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="collncp05" cloneof="collnc" romof="collnc">
+		<comment>Prototype</comment>
 		<description>College Football's National Championship (Prototype, 19940608)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -3870,6 +3916,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="collncp04" cloneof="collnc" romof="collnc">
+		<comment>Prototype</comment>
 		<description>College Football's National Championship (Prototype, 19940614)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -3878,6 +3925,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="collncp03" cloneof="collnc" romof="collnc">
+		<comment>Prototype</comment>
 		<description>College Football's National Championship (Prototype, 19940615)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -3886,6 +3934,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="collncp02" cloneof="collnc" romof="collnc">
+		<comment>Prototype</comment>
 		<description>College Football's National Championship (Prototype, 19940618)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -3894,6 +3943,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="collncp01" cloneof="collnc" romof="collnc">
+		<comment>Prototype</comment>
 		<description>College Football's National Championship (Prototype, 19940620)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -3958,6 +4008,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="combat">
+		<comment>Prototype</comment>
 		<description>Combat Aces (Prototype)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
@@ -4632,6 +4683,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cyborgjp" cloneof="cyborgj" romof="cyborgj">
+		<comment>Prototype</comment>
 		<description>Cyborg Justice (Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
@@ -5010,6 +5062,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="demomanp" cloneof="demoman" romof="demoman">
+		<comment>Prototype</comment>
 		<description>Demolition Man (USA, Prototype)</description>
 		<year>1995</year>
 		<manufacturer>Acclaim Entertainment</manufacturer>
@@ -5175,6 +5228,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="devilishp" cloneof="devilish" romof="devilish">
+		<comment>Prototype</comment>
 		<description>Devilish - The Next Possession (Prototype, 19920116)</description>
 		<year>1992</year>
 		<manufacturer>Sage's Creation</manufacturer>
@@ -5474,6 +5528,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dominus">
+		<comment>Prototype</comment>
 		<description>Dominus (USA, Prototype)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
@@ -5793,6 +5848,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dlair">
+		<comment>Prototype</comment>
 		<description>Dragon's Lair (USA, Prototype)</description>
 		<year>199?</year>
 		<manufacturer>Taito</manufacturer>
@@ -5850,6 +5906,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dunep" cloneof="dune2" romof="dune2">
+		<comment>Prototype</comment>
 		<description>Dune - The Battle for Arrakis (Prototype, 19940111)</description>
 		<year>1993</year>
 		<manufacturer>Virgin Interactive</manufacturer>
@@ -5973,6 +6030,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dheadjp" cloneof="dhead" romof="dhead">
+		<comment>Prototype</comment>
 		<description>Dynamite Headdy (Jpn, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -5981,6 +6039,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dheadp3" cloneof="dhead" romof="dhead">
+		<comment>Prototype</comment>
 		<description>Dynamite Headdy (Prototype, 19940614-CABEZA)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -5989,6 +6048,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dheadp2" cloneof="dhead" romof="dhead">
+		<comment>Prototype</comment>
 		<description>Dynamite Headdy (Prototype, 19940616)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -5997,6 +6057,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dheadp1" cloneof="dhead" romof="dhead">
+		<comment>Prototype</comment>
 		<description>Dynamite Headdy (Prototype, 19940622)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -6686,6 +6747,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="exosquadup" cloneof="exosquad" romof="exosquad">
+		<comment>Prototype</comment>
 		<description>Exo Squad (USA, Prototype)</description>
 		<year>1995</year>
 		<manufacturer>Playmates Interactive</manufacturer>
@@ -6743,6 +6805,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="f15se2up" cloneof="f15se2" romof="f15se2">
+		<comment>Prototype</comment>
 		<description>F-15 Strike Eagle II (USA, Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Microprose</manufacturer>
@@ -7734,6 +7797,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gauntlt4jp" cloneof="gauntlt4" romof="gauntlt4">
+		<comment>Prototype</comment>
 		<description>Gauntlet (Jpn, CENSOR Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Tengen</manufacturer>
@@ -15036,6 +15100,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="psychop" cloneof="psycho" romof="psycho">
+		<comment>Prototype</comment>
 		<description>Psycho Pinball (Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Codemasters</manufacturer>
@@ -17926,6 +17991,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicp" cloneof="sonic" romof="sonic">
+		<comment>Prototype</comment>
 		<description>Sonic the Hedgehog (Prototype)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
@@ -20582,10 +20648,11 @@
 		<driver status="good"/>
 	</game>
 	<game name="tecmocup">
-		<description>Tecmo Cup (Jpn, Prototype?)</description>
+		<comment>Prototype</comment>
+		<description>Tecmo Cup (Jpn, Prototype)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
-		<rom name="tecmo cup (jpn) (prototype?) (bad dump).bin" size="524288" crc="88fdd060"/>
+		<rom name="tecmo cup (jpn) (prototype) (bad dump).bin" size="524288" crc="88fdd060"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -21554,6 +21621,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dinohirep3" cloneof="dinohire" romof="dinohire">
+		<comment>Prototype</comment>
 		<description>Tom Mason's Dinosaurs for Hire (Prototype, 19930426)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
@@ -21562,6 +21630,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dinohirep2" cloneof="dinohire" romof="dinohire">
+		<comment>Prototype</comment>
 		<description>Tom Mason's Dinosaurs for Hire (Prototype, 19930427)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
@@ -21570,6 +21639,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dinohirep1" cloneof="dinohire" romof="dinohire">
+		<comment>Prototype</comment>
 		<description>Tom Mason's Dinosaurs for Hire (Prototype, 19930502)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>

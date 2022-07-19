@@ -200,7 +200,6 @@ int mappedbuttons[BUTTONS_TO_MAP] = {-1,-1,-1,-1,-1,-1,-1,-1};
 
 int ControllerMenuSelected();
 extern bool do_reload_game;	// To reload game when buttons mapping changed
-static char* szSDLconfigPath = NULL;
 
 int SaveMappedButtons()
 {
@@ -216,11 +215,11 @@ int SaveMappedButtons()
 	char* pos = NULL;
 	char gamecontrollerdbpath[MAX_PATH] = { 0 };
 	char tempgamecontrollerdbpath[MAX_PATH] = { 0 };
-	if (szSDLconfigPath == NULL) {
-		szSDLconfigPath = SDL_GetPrefPath("fbneo", "config");
-	}
-	snprintf(gamecontrollerdbpath, MAX_PATH, "%sgamecontrollerdb.txt", szSDLconfigPath);
-	snprintf(tempgamecontrollerdbpath, MAX_PATH, "%sgamecontrollerdb.TEMP.txt", szSDLconfigPath);
+	TCHAR *szSDLconfigPath = NULL;
+	szSDLconfigPath = SDL_GetPrefPath("fbneo", "config");
+	_stprintf(gamecontrollerdbpath, _T("%sgamecontrollerdb.txt"), szSDLconfigPath);
+	_stprintf(tempgamecontrollerdbpath, _T("%sgamecontrollerdb.TEMP.txt"), szSDLconfigPath);
+	SDL_free(szSDLconfigPath);
 
 	for (int i = 0; i < BUTTONS_TO_MAP; i++) {
 		if (mappedbuttons[i] > -1) {
@@ -485,11 +484,15 @@ int CheatMenuSelected()
 			pCurrentCheat = pCurrentCheat->pNext;
 			i++;
 		}
-		cheatMenu[i] = (MenuItem){"DISABLE ALL CHEATS\0", DisableAllCheats, NULL};
-		i++;
-
-		cheatMenu[i] = (MenuItem){"BACK\0", MainMenuSelected, NULL};
-		cheatcount = i + 1;
+		if (i > 0) {
+			cheatMenu[i] = (MenuItem){"DISABLE ALL CHEATS\0", DisableAllCheats, NULL};
+			i++;
+			cheatMenu[i] = (MenuItem){"BACK\0", MainMenuSelected, NULL};
+			cheatcount = i + 1;
+		} else {
+			cheatMenu[i] = (MenuItem){"BACK (no cheats found)\0", MainMenuSelected, NULL};
+			cheatcount = 1;
+		}
 	}
 	return 0;
 }

@@ -39,7 +39,7 @@ static INT16 Analog[4];
 
 static UINT8 DrvJoy1[32];
 static UINT32 DrvInputs[1];
-static UINT8 DrvDips[1];
+static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo LinkypipInputList[] = {
@@ -62,6 +62,7 @@ static struct BurnInputInfo LinkypipInputList[] = {
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Linkypip)
@@ -86,6 +87,7 @@ static struct BurnInputInfo IronfortInputList[] = {
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Ironfort)
@@ -110,6 +112,7 @@ static struct BurnInputInfo IronfortcInputList[] = {
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Ironfortc)
@@ -137,6 +140,7 @@ static struct BurnInputInfo HidnctchInputList[] = {
 	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 14,	"service"	},
 	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 15,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Hidnctch)
@@ -164,6 +168,7 @@ static struct BurnInputInfo Hidctch2InputList[] = {
 	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 14,	"service"	},
 	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 15,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Hidctch2)
@@ -191,6 +196,7 @@ static struct BurnInputInfo CandyInputList[] = {
 	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 14,	"service"	},
 	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 15,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Candy)
@@ -216,6 +222,7 @@ static struct BurnInputInfo RaccoonInputList[] = {
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 14,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Raccoon)
@@ -242,6 +249,7 @@ static struct BurnInputInfo LandbrkInputList[] = {
 	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 14,	"service"	},
 	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 15,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Landbrk)
@@ -268,6 +276,7 @@ static struct BurnInputInfo PenfanInputList[] = {
 	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 14,	"service"	},
 	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 15,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Penfan)
@@ -294,6 +303,7 @@ static struct BurnInputInfo StealseeInputList[] = {
 	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 14,	"service"	},
 	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 15,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Stealsee)
@@ -318,6 +328,7 @@ static struct BurnInputInfo PuzzlekgInputList[] = {
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Puzzlekg)
@@ -339,217 +350,244 @@ static struct BurnInputInfo Hidctch3InputList[] = {
 	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 14,	"service"	},
 	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 15,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 #undef A
 
 STDINPUTINFO(Hidctch3)
 
-static struct BurnDIPInfo LinkypipDIPList[]=
+static struct BurnDIPInfo SpeedhackDIPList[]=
 {
-	{0x10, 0xff, 0xff, 0xff, NULL						},
+	{0x01, 0xff, 0xff, 0x00, NULL						},
 
-	{0   , 0xfe, 0   ,    4, "Don't Touch"				},
-	{0x10, 0x01, 0x03, 0x00, "Fail (0)"					},
-	{0x10, 0x01, 0x03, 0x01, "Fail (1)"					},
-	{0x10, 0x01, 0x03, 0x02, "Fail (2)"					},
-	{0x10, 0x01, 0x03, 0x03, "Working (3)"				},
-
-	{0   , 0xfe, 0   ,    4, "Coinage"					},
-	{0x10, 0x01, 0x0c, 0x00, "4 Coins 1 Credits"		},
-	{0x10, 0x01, 0x0c, 0x04, "3 Coins 1 Credits"		},
-	{0x10, 0x01, 0x0c, 0x08, "2 Coins 1 Credits"		},
-	{0x10, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"		},
+	{0   , 0xfe, 0   ,    2, "Speed Hacks (needs restart)"},
+	{0x01, 0x01, 0x01, 0x00, "Off"						},
+	{0x01, 0x01, 0x01, 0x01, "On"						},
 };
 
-STDDIPINFO(Linkypip)
+static struct BurnDIPInfo Fort2bDIPList[]=
+{
+	DIP_OFFSET(0x12)
+	{0x00, 0xff, 0xff, 0xff, NULL						},
+};
+
+STDDIPINFOEXT(Fort2b, Speedhack, Fort2b)
+
+static struct BurnDIPInfo LinkypipDIPList[]=
+{
+	DIP_OFFSET(0x10)
+	{0x00, 0xff, 0xff, 0xff, NULL						},
+
+	{0   , 0xfe, 0   ,    4, "Don't Touch"				},
+	{0x00, 0x01, 0x03, 0x00, "Fail (0)"					},
+	{0x00, 0x01, 0x03, 0x01, "Fail (1)"					},
+	{0x00, 0x01, 0x03, 0x02, "Fail (2)"					},
+	{0x00, 0x01, 0x03, 0x03, "Working (3)"				},
+
+	{0   , 0xfe, 0   ,    4, "Coinage"					},
+	{0x00, 0x01, 0x0c, 0x00, "4 Coins 1 Credits"		},
+	{0x00, 0x01, 0x0c, 0x04, "3 Coins 1 Credits"		},
+	{0x00, 0x01, 0x0c, 0x08, "2 Coins 1 Credits"		},
+	{0x00, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"		},
+};
+
+STDDIPINFOEXT(Linkypip, Speedhack, Linkypip)
 
 static struct BurnDIPInfo IronfortDIPList[]=
 {
-	{0x10, 0xff, 0xff, 0xff, NULL						},
+	DIP_OFFSET(0x10)
+	{0x00, 0xff, 0xff, 0xff, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Show Dip Info"			},
-	{0x10, 0x01, 0x01, 0x01, "Off"						},
-	{0x10, 0x01, 0x01, 0x00, "On"						},
+	{0x00, 0x01, 0x01, 0x01, "Off"						},
+	{0x00, 0x01, 0x01, 0x00, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"				},
-	{0x10, 0x01, 0x02, 0x00, "Off"						},
-	{0x10, 0x01, 0x02, 0x02, "On"						},
+	{0x00, 0x01, 0x02, 0x00, "Off"						},
+	{0x00, 0x01, 0x02, 0x02, "On"						},
 
 	{0   , 0xfe, 0   ,    4, "Lives"					},
-	{0x10, 0x01, 0x0c, 0x08, "1"						},
-	{0x10, 0x01, 0x0c, 0x04, "2"						},
-	{0x10, 0x01, 0x0c, 0x0c, "3"						},
-	{0x10, 0x01, 0x0c, 0x00, "4"						},
+	{0x00, 0x01, 0x0c, 0x08, "1"						},
+	{0x00, 0x01, 0x0c, 0x04, "2"						},
+	{0x00, 0x01, 0x0c, 0x0c, "3"						},
+	{0x00, 0x01, 0x0c, 0x00, "4"						},
 
 	{0   , 0xfe, 0   ,    4, "Coinage"					},
-	{0x10, 0x01, 0x30, 0x10, "3 Coins 1 Credits"		},
-	{0x10, 0x01, 0x30, 0x20, "2 Coins 1 Credits"		},
-	{0x10, 0x01, 0x30, 0x30, "1 Coin  1 Credits"		},
-	{0x10, 0x01, 0x30, 0x00, "Free Play"				},
+	{0x00, 0x01, 0x30, 0x10, "3 Coins 1 Credits"		},
+	{0x00, 0x01, 0x30, 0x20, "2 Coins 1 Credits"		},
+	{0x00, 0x01, 0x30, 0x30, "1 Coin  1 Credits"		},
+	{0x00, 0x01, 0x30, 0x00, "Free Play"				},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"				},
-	{0x10, 0x01, 0xc0, 0x00, "Very Hard"				},
-	{0x10, 0x01, 0xc0, 0x40, "Hard"						},
-	{0x10, 0x01, 0xc0, 0xc0, "Normal"					},
-	{0x10, 0x01, 0xc0, 0x80, "Easy"						},
+	{0x00, 0x01, 0xc0, 0x00, "Very Hard"				},
+	{0x00, 0x01, 0xc0, 0x40, "Hard"						},
+	{0x00, 0x01, 0xc0, 0xc0, "Normal"					},
+	{0x00, 0x01, 0xc0, 0x80, "Easy"						},
 };
 
-STDDIPINFO(Ironfort)
+STDDIPINFOEXT(Ironfort, Speedhack, Ironfort)
 
 static struct BurnDIPInfo IronfortcDIPList[]=
 {
-	{0x10, 0xff, 0xff, 0xff, NULL						},
+	DIP_OFFSET(0x10)
+	{0x00, 0xff, 0xff, 0xff, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Show Dip Info"			},
-	{0x10, 0x01, 0x01, 0x01, "Off"						},
-	{0x10, 0x01, 0x01, 0x00, "On"						},
+	{0x00, 0x01, 0x01, 0x01, "Off"						},
+	{0x00, 0x01, 0x01, 0x00, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Free Play"				},
-	{0x10, 0x01, 0x02, 0x02, "Off"						},
-	{0x10, 0x01, 0x02, 0x00, "On"						},
+	{0x00, 0x01, 0x02, 0x02, "Off"						},
+	{0x00, 0x01, 0x02, 0x00, "On"						},
 
 	{0   , 0xfe, 0   ,    4, "Lives"					},
-	{0x10, 0x01, 0x0c, 0x08, "1"						},
-	{0x10, 0x01, 0x0c, 0x04, "2"						},
-	{0x10, 0x01, 0x0c, 0x0c, "3"						},
-	{0x10, 0x01, 0x0c, 0x00, "4"						},
+	{0x00, 0x01, 0x0c, 0x08, "1"						},
+	{0x00, 0x01, 0x0c, 0x04, "2"						},
+	{0x00, 0x01, 0x0c, 0x0c, "3"						},
+	{0x00, 0x01, 0x0c, 0x00, "4"						},
 
 	{0   , 0xfe, 0   ,    4, "Coinage"					},
-	{0x10, 0x01, 0x30, 0x00, "4 Coins 1 Credits"		},
-	{0x10, 0x01, 0x30, 0x10, "3 Coins 1 Credits"		},
-	{0x10, 0x01, 0x30, 0x20, "2 Coins 1 Credits"		},
-	{0x10, 0x01, 0x30, 0x30, "1 Coin  1 Credits"		},
+	{0x00, 0x01, 0x30, 0x00, "4 Coins 1 Credits"		},
+	{0x00, 0x01, 0x30, 0x10, "3 Coins 1 Credits"		},
+	{0x00, 0x01, 0x30, 0x20, "2 Coins 1 Credits"		},
+	{0x00, 0x01, 0x30, 0x30, "1 Coin  1 Credits"		},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"				},
-	{0x10, 0x01, 0xc0, 0x00, "Very Hard"				},
-	{0x10, 0x01, 0xc0, 0x40, "Hard"						},
-	{0x10, 0x01, 0xc0, 0xc0, "Normal"					},
-	{0x10, 0x01, 0xc0, 0x80, "Easy"						},
+	{0x00, 0x01, 0xc0, 0x00, "Very Hard"				},
+	{0x00, 0x01, 0xc0, 0x40, "Hard"						},
+	{0x00, 0x01, 0xc0, 0xc0, "Normal"					},
+	{0x00, 0x01, 0xc0, 0x80, "Easy"						},
 };
 
-STDDIPINFO(Ironfortc)
+STDDIPINFOEXT(Ironfortc, Speedhack, Ironfortc)
 
 static struct BurnDIPInfo HidnctchDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0x03, NULL						},
+	DIP_OFFSET(0x13)
+	{0x00, 0xff, 0xff, 0x03, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"				},
-	{0x13, 0x01, 0x01, 0x01, "Off"						},
-	{0x13, 0x01, 0x01, 0x00, "On"						},
+	{0x00, 0x01, 0x01, 0x01, "Off"						},
+	{0x00, 0x01, 0x01, 0x00, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Show Counters"			},
-	{0x13, 0x01, 0x02, 0x02, "Off"						},
-	{0x13, 0x01, 0x02, 0x00, "On"						},
+	{0x00, 0x01, 0x02, 0x02, "Off"						},
+	{0x00, 0x01, 0x02, 0x00, "On"						},
 };
 
-STDDIPINFO(Hidnctch)
+STDDIPINFOEXT(Hidnctch, Speedhack, Hidnctch)
 
 static struct BurnDIPInfo Hidctch2DIPList[]=
 {
-	{0x13, 0xff, 0xff, 0xff, NULL						},
+	DIP_OFFSET(0x13)
+	{0x00, 0xff, 0xff, 0xff, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"				},
-	{0x13, 0x01, 0x01, 0x01, "Off"						},
-	{0x13, 0x01, 0x01, 0x00, "On"						},
+	{0x00, 0x01, 0x01, 0x01, "Off"						},
+	{0x00, 0x01, 0x01, 0x00, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Show Counters"			},
-	{0x13, 0x01, 0x02, 0x02, "Off"						},
-	{0x13, 0x01, 0x02, 0x00, "On"						},
+	{0x00, 0x01, 0x02, 0x02, "Off"						},
+	{0x00, 0x01, 0x02, 0x00, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Skip ROM DATA Check"		},
-	{0x13, 0x01, 0x08, 0x08, "Off"						},
-	{0x13, 0x01, 0x08, 0x00, "On"						},
+	{0x00, 0x01, 0x08, 0x08, "Off"						},
+	{0x00, 0x01, 0x08, 0x00, "On"						},
 };
 
-STDDIPINFO(Hidctch2)
+STDDIPINFOEXT(Hidctch2, Speedhack, Hidctch2)
 
 static struct BurnDIPInfo CandyDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0xff, NULL						},
+	DIP_OFFSET(0x13)
+	{0x00, 0xff, 0xff, 0xff, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Free Play"				},
-	{0x13, 0x01, 0x01, 0x01, "Off"						},
-	{0x13, 0x01, 0x01, 0x00, "On"						},
+	{0x00, 0x01, 0x01, 0x01, "Off"						},
+	{0x00, 0x01, 0x01, 0x00, "On"						},
 };
 
-STDDIPINFO(Candy)
+STDDIPINFOEXT(Candy, Speedhack, Candy)
 
 static struct BurnDIPInfo Hidctch3DIPList[]=
 {
-	{0x0c, 0xff, 0xff, 0xff, NULL						},
+	DIP_OFFSET(0x0c)
+	{0x00, 0xff, 0xff, 0xff, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"				},
-	{0x0c, 0x01, 0x01, 0x01, "Off"						},
-	{0x0c, 0x01, 0x01, 0x00, "On"						},
+	{0x00, 0x01, 0x01, 0x01, "Off"						},
+	{0x00, 0x01, 0x01, 0x00, "On"						},
 };
 
-STDDIPINFO(Hidctch3)
+STDDIPINFOEXT(Hidctch3, Speedhack, Hidctch3)
 
 static struct BurnDIPInfo RaccoonDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0x0f, NULL						},
+	DIP_OFFSET(0x11)
+	{0x00, 0xff, 0xff, 0x0f, NULL						},
 
 	{0   , 0xfe, 0   ,    4, "Coinage"					},
-	{0x11, 0x01, 0x0f, 0x0d, "4 Coins 1 Credits"		},
-	{0x11, 0x01, 0x0f, 0x0e, "3 Coins 1 Credits"		},
-	{0x11, 0x01, 0x0f, 0x0c, "2 Coins 1 Credits"		},
-	{0x11, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
+	{0x00, 0x01, 0x0f, 0x0d, "4 Coins 1 Credits"		},
+	{0x00, 0x01, 0x0f, 0x0e, "3 Coins 1 Credits"		},
+	{0x00, 0x01, 0x0f, 0x0c, "2 Coins 1 Credits"		},
+	{0x00, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
 };
 
-STDDIPINFO(Raccoon)
+STDDIPINFOEXT(Raccoon, Speedhack, Raccoon)
 
 static struct BurnDIPInfo LandbrkDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0xff, NULL						},
+	DIP_OFFSET(0x12)
+	{0x00, 0xff, 0xff, 0xff, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"				},
-	{0x12, 0x01, 0x01, 0x01, "Off"						},
-	{0x12, 0x01, 0x01, 0x00, "On"						},
+	{0x00, 0x01, 0x01, 0x01, "Off"						},
+	{0x00, 0x01, 0x01, 0x00, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Show Counters"			},
-	{0x12, 0x01, 0x02, 0x02, "Off"						},
-	{0x12, 0x01, 0x02, 0x00, "On"						},
+	{0x00, 0x01, 0x02, 0x02, "Off"						},
+	{0x00, 0x01, 0x02, 0x00, "On"						},
 };
 
-STDDIPINFO(Landbrk)
+STDDIPINFOEXT(Landbrk, Speedhack, Landbrk)
 
 static struct BurnDIPInfo PenfanDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0xff, NULL						},
+	DIP_OFFSET(0x12)
+	{0x00, 0xff, 0xff, 0xff, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"				},
-	{0x12, 0x01, 0x08, 0x08, "Off"						},
-	{0x12, 0x01, 0x08, 0x00, "On"						},
+	{0x00, 0x01, 0x08, 0x08, "Off"						},
+	{0x00, 0x01, 0x08, 0x00, "On"						},
 };
 
-STDDIPINFO(Penfan)
+STDDIPINFOEXT(Penfan, Speedhack, Penfan)
 
 static struct BurnDIPInfo StealseeDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0xff, NULL						},
+	DIP_OFFSET(0x12)
+	{0x00, 0xff, 0xff, 0xff, NULL						},
 };
 
-STDDIPINFO(Stealsee)
+STDDIPINFOEXT(Stealsee, Speedhack, Stealsee)
 
 static struct BurnDIPInfo PuzzlekgDIPList[]=
 {
-	{0x10, 0xff, 0xff, 0xff, NULL						},
+	DIP_OFFSET(0x10)
+	{0x00, 0xff, 0xff, 0xff, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"				},
-	{0x10, 0x01, 0x0f, 0x0f, "Off"						},
-	{0x10, 0x01, 0x0f, 0x00, "On"						},
+	{0x00, 0x01, 0x0f, 0x0f, "Off"						},
+	{0x00, 0x01, 0x0f, 0x00, "On"						},
 };
 
-STDDIPINFO(Puzzlekg)
+STDDIPINFOEXT(Puzzlekg, Speedhack, Puzzlekg)
 
 static void set_vidrambank(INT32 data)
 {
-	if (vidrambank != (data & 0x80) >> 7)
-	{
-		vidrambank = (data & 0x80) >> 7;
+	vidrambank = (data & 0x80) >> 7;
 
-		E132XSMapMemory(DrvVidRAM + (vidrambank * 0x40000), 0x90000000, 0x9003ffff, MAP_ROM);
-	}
+	E132XSMapMemory(DrvVidRAM + (vidrambank * 0x40000), 0x90000000, 0x9003ffff, MAP_ROM);
 }
 
 static inline void soundcpu_sync()
@@ -726,6 +764,7 @@ static UINT16 eolith_read_word(UINT32 address)
 
 static UINT8 eolith_read_byte(UINT32 address)
 {
+	//bprintf(0, _T("rb %x\n"), address);
 	// probably not used..
 
 	return 0;
@@ -819,8 +858,8 @@ static INT32 MemIndex()
 
 	AllRam		= Next;
 
-	DrvMainRAM	= Next; Next += 0x200000;
-	DrvExtraRAM	= Next; Next += 0x200000;
+	DrvMainRAM	= Next; Next += 0x100000;
+	DrvExtraRAM	= Next; Next += 0x100000;
 	DrvVidRAM	= Next; Next += 0x080000;
 
 	RamEnd		= Next;
@@ -897,11 +936,15 @@ static INT32 CommonInit(INT32 clock, void (*pLoadCallback)())
 	if (DrvLoadRoms()) return 1;
 
 	cpu_clock = clock;
+	if (DrvDips[1] & 0x01) {
+		bprintf(0, _T("*** EOLITH: using Speedhack (20mhz) mode\n"));
+		cpu_clock = 20000000;
+	}
 
 	E132XSInit(0, TYPE_E132N, cpu_clock);
 	E132XSOpen(0);
-	E132XSMapMemory(DrvMainRAM,			0x00000000, 0x001fffff, MAP_RAM);
-	E132XSMapMemory(DrvExtraRAM,		0x40000000, 0x401fffff, MAP_RAM);
+	E132XSMapMemory(DrvMainRAM,			0x00000000, 0x000fffff, MAP_RAM);
+	E132XSMapMemory(DrvExtraRAM,		0x40000000, 0x400fffff, MAP_RAM);
 //	E132XSMapMemory(DrvVidRAM,			0x90000000, 0x9003ffff, MAP_ROM); // handler ??
 	E132XSMapMemory(DrvMainROM,			0xfd000000, 0xfeffffff, MAP_ROM);
 	E132XSMapMemory(DrvBootROM,			0xfff80000, 0xffffffff, MAP_ROM);
@@ -979,9 +1022,16 @@ static void draw_bitmap()
 
 	for (INT32 y = 0; y < 240; y++)
 	{
-		for (INT32 x = 0; x < 320; x++)
+		for (INT32 x = 0; x < 320; x += 8)
 		{
-			dst[x] = BURN_ENDIAN_SWAP_INT16(ram[x]) & 0x7fff;
+			dst[x + 0] = BURN_ENDIAN_SWAP_INT16(ram[x + 0]) & 0x7fff;
+			dst[x + 1] = BURN_ENDIAN_SWAP_INT16(ram[x + 1]) & 0x7fff;
+			dst[x + 2] = BURN_ENDIAN_SWAP_INT16(ram[x + 2]) & 0x7fff;
+			dst[x + 3] = BURN_ENDIAN_SWAP_INT16(ram[x + 3]) & 0x7fff;
+			dst[x + 4] = BURN_ENDIAN_SWAP_INT16(ram[x + 4]) & 0x7fff;
+			dst[x + 5] = BURN_ENDIAN_SWAP_INT16(ram[x + 5]) & 0x7fff;
+			dst[x + 6] = BURN_ENDIAN_SWAP_INT16(ram[x + 6]) & 0x7fff;
+			dst[x + 7] = BURN_ENDIAN_SWAP_INT16(ram[x + 7]) & 0x7fff;
 		}
 
 		ram += 336;
@@ -1102,11 +1152,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(soundbank);
 		SCAN_VAR(vidrambank);
 		SCAN_VAR(soundlatch);
+
+		BurnRandomScan(nAction);
 	}
 
 	if (nAction & ACB_WRITE) {
 		E132XSOpen(0);
-		set_vidrambank(vidrambank);
+		set_vidrambank((vidrambank & 1) << 7);
 		E132XSClose();
 	}
 
@@ -1968,7 +2020,7 @@ struct BurnDriver BurnDrvFort2b = {
 	"Fortress 2 Blue Arcade (World) (ver 1.01 / pcb ver 3.05)\0", NULL, "Eolith", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, fort2bRomInfo, fort2bRomName, NULL, NULL, NULL, NULL, PenfanInputInfo, NULL,
+	NULL, fort2bRomInfo, fort2bRomName, NULL, NULL, NULL, NULL, PenfanInputInfo, Fort2bDIPInfo,
 	Fort2bInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3
 };
@@ -2005,7 +2057,7 @@ struct BurnDriver BurnDrvFort2ba = {
 	"Fortress 2 Blue Arcade (Korea) (ver 1.00 / pcb ver 3.05)\0", NULL, "Eolith", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, fort2baRomInfo, fort2baRomName, NULL, NULL, NULL, NULL, PenfanInputInfo, NULL,
+	NULL, fort2baRomInfo, fort2baRomName, NULL, NULL, NULL, NULL, PenfanInputInfo, Fort2bDIPInfo,
 	Fort2bInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3
 };

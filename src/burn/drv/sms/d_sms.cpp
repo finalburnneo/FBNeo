@@ -30163,3 +30163,41 @@ struct BurnDriver BurnDrvsms_gberetrmk = {
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
+
+// Skazka (HB, v2.0)
+
+static struct BurnRomInfo sms_skazkav2RomDesc[] = {
+	{ "Skazka v2.0 (2022)(SteveProXNA).sms",	262144, 0x47ab1630, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_skazkav2)
+STD_ROM_FN(sms_skazkav2)
+
+struct BurnDriver BurnDrvsms_skazkav2 = {
+	"sms_skazkav2", NULL, NULL, NULL, "2022",
+	"Skazka (HB, v2.0)\0", NULL, "SteveProXNA", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ADV, 0,
+	SMSGetZipName, sms_skazkav2RomInfo, sms_skazkav2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Skazka (HB, v1.0)
+
+static struct BurnRomInfo sms_skazkav1RomDesc[] = {
+	{ "Skazka v1.0 (2022)(SteveProXNA).sms",	262144, 0x40eec164, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_skazkav1)
+STD_ROM_FN(sms_skazkav1)
+
+struct BurnDriver BurnDrvsms_skazkav1 = {
+	"sms_skazkav1", "sms_skazkav2", NULL, NULL, "2022",
+	"Skazka (HB, v1.0)\0", NULL, "SteveProXNA", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ADV, 0,
+	SMSGetZipName, sms_skazkav1RomInfo, sms_skazkav1RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};

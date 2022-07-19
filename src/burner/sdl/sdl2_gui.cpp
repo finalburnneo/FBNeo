@@ -57,7 +57,7 @@ SDL_Texture* LoadTitleImage(SDL_Renderer* renderer, SDL_Texture* loadedTexture)
 	int currentSelected = nBurnDrvActive;
 	nBurnDrvActive = gametoplay;
 #ifndef _WIN32
-	snprintf(titlePath, MAX_PATH, "%s%s.png", szAppTitlesPath, BurnDrvGetTextA(0));
+	_stprintf(titlePath,_T("%s%s.png"), szAppTitlesPath, BurnDrvGetTextA(0));
 #else
 	snprintf(titlePath, MAX_PATH, "support\\titles\\%s.png", BurnDrvGetTextA(0));
 #endif
@@ -83,7 +83,10 @@ SDL_Texture* LoadTitleImage(SDL_Renderer* renderer, SDL_Texture* loadedTexture)
 static void CreateRomDatName(TCHAR* szRomDat)
 {
 #if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
-	_stprintf(szRomDat, _T("%s/roms.found"), SDL_GetPrefPath("fbneo", "config"));
+	TCHAR *szSDLconfigPath = NULL;
+	szSDLconfigPath = SDL_GetPrefPath("fbneo", "config");
+	_stprintf(szRomDat, _T("%s/roms.found"), szSDLconfigPath);
+	SDL_free(szSDLconfigPath);
 #else
 	_stprintf(szRomDat, _T("fbneo.dat"));
 #endif

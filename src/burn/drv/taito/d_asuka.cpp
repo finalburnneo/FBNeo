@@ -1144,8 +1144,6 @@ static INT32 DrvDoReset()
 
 	hold_coin.reset();
 
-	HiscoreReset();
-
 	return 0;
 }
 

@@ -6,22 +6,15 @@ const INT32 nConfigMinVersion = 0x020921;
 
 bool bSaveInputs = true;
 
-#ifdef BUILD_SDL2
-static char* szSDLconfigPath = NULL;
-#endif
-
 static TCHAR* GameConfigName()
 {
 	static TCHAR szName[MAX_PATH];
 
-	#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)	
-	 	if (szSDLconfigPath == NULL) {
-			szSDLconfigPath = SDL_GetPrefPath("fbneo", "config");
-		}
+	#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
 		if (NeoCDInfo_ID()) {
-		  snprintf(szName, MAX_PATH, "%sngcd_%s.ini", szSDLconfigPath, BurnDrvGetText(DRV_NAME));
+		  _stprintf(szName, _T("%sngcd_%s.ini"), szAppEEPROMPath, BurnDrvGetText(DRV_NAME));
 		} else {
-			snprintf(szName, MAX_PATH, "%s%s.ini", szSDLconfigPath, BurnDrvGetText(DRV_NAME));
+			_stprintf(szName, _T("%s%s.ini"), szAppEEPROMPath, BurnDrvGetText(DRV_NAME));
 		}
 	#else
 		// Return the path of the config file for this game
@@ -55,8 +48,13 @@ INT32 ConfigGameLoad(bool bOverWrite)
 		TCHAR *szValue;
 		INT32 nLen = _tcslen(szLine);
 
-		// Get rid of the linefeed at the end
+		// Get rid of the linefeed and carriage return at the end
 		if (szLine[nLen - 1] == 10) {
+			szLine[nLen - 1] = 0;
+			nLen--;
+		}
+		if (szLine[nLen - 1] == 13)
+		{
 			szLine[nLen - 1] = 0;
 			nLen--;
 		}

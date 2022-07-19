@@ -134,23 +134,6 @@ public:
 };
 
 // support_paths.cpp
-extern TCHAR szAppPreviewsPath[MAX_PATH];
-extern TCHAR szAppTitlesPath[MAX_PATH];
-extern TCHAR szAppSelectPath[MAX_PATH];
-extern TCHAR szAppVersusPath[MAX_PATH];
-extern TCHAR szAppHowtoPath[MAX_PATH];
-extern TCHAR szAppScoresPath[MAX_PATH];
-extern TCHAR szAppBossesPath[MAX_PATH];
-extern TCHAR szAppGameoverPath[MAX_PATH];
-extern TCHAR szAppFlyersPath[MAX_PATH];
-extern TCHAR szAppMarqueesPath[MAX_PATH];
-extern TCHAR szAppControlsPath[MAX_PATH];
-extern TCHAR szAppCabinetsPath[MAX_PATH];
-extern TCHAR szAppPCBsPath[MAX_PATH];
-extern TCHAR szAppCheatsPath[MAX_PATH];
-extern TCHAR szAppHistoryPath[MAX_PATH];
 extern TCHAR szAppListsPath[MAX_PATH];
 extern TCHAR szAppDatListsPath[MAX_PATH];
-extern TCHAR szAppIpsPath[MAX_PATH];
-extern TCHAR szAppIconsPath[MAX_PATH];
 extern TCHAR szAppArchivesPath[MAX_PATH];

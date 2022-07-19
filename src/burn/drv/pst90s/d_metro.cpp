@@ -3,7 +3,7 @@
 
 /*
 	Tofix:
- 		blzntrnd tilemaps blanked on left side
+		?
 
  	Needs porting:
 		dokyusei	(ym2413+msm6295 sound)
@@ -3413,8 +3413,9 @@ static INT32 blzntrndInit()
 	K053936Init(0, DrvK053936RAM, 0x40000, 256 * 8, 512 * 8, pBlzntrnd_roz_callback);
 	K053936SetOffset(0, -69-8, -21);
 
-	i4x00_set_offsets(8, 8, 8);
+	i4x00_set_offsets(0, 0, 0);
 	i4x00_set_extrachip_callback(blzntrnd_zoomchip_draw);
+	i4x00_set_blazing();
 
 	vblank_bit = 0;
 	irq_line = 1;
@@ -4664,7 +4665,7 @@ STD_ROM_FN(blzntrnd)
 
 struct BurnDriver BurnDrvBlzntrnd = {
 	"blzntrnd", NULL, NULL, NULL, "1994",
-	"Blazing Tornado\0", "gfx issues", "Human Amusement", "Miscellaneous",
+	"Blazing Tornado\0", NULL, "Human Amusement", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, blzntrndRomInfo, blzntrndRomName, NULL, NULL, NULL, NULL, BlzntrndInputInfo, BlzntrndDIPInfo,

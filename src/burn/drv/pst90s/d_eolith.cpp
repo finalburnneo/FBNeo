@@ -358,12 +358,20 @@ STDINPUTINFO(Hidctch3)
 
 static struct BurnDIPInfo SpeedhackDIPList[]=
 {
-	{0x01, 0xff, 0xff, 0x01, NULL						},
+	{0x01, 0xff, 0xff, 0x00, NULL						},
 
-	{0   , 0xfe, 0   ,    2, "Speed Hacks"				},
+	{0   , 0xfe, 0   ,    2, "Speed Hacks (needs restart)"},
 	{0x01, 0x01, 0x01, 0x00, "Off"						},
 	{0x01, 0x01, 0x01, 0x01, "On"						},
 };
+
+static struct BurnDIPInfo Fort2bDIPList[]=
+{
+	DIP_OFFSET(0x12)
+	{0x00, 0xff, 0xff, 0xff, NULL						},
+};
+
+STDDIPINFOEXT(Fort2b, Speedhack, Fort2b)
 
 static struct BurnDIPInfo LinkypipDIPList[]=
 {
@@ -2012,7 +2020,7 @@ struct BurnDriver BurnDrvFort2b = {
 	"Fortress 2 Blue Arcade (World) (ver 1.01 / pcb ver 3.05)\0", NULL, "Eolith", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, fort2bRomInfo, fort2bRomName, NULL, NULL, NULL, NULL, PenfanInputInfo, NULL,
+	NULL, fort2bRomInfo, fort2bRomName, NULL, NULL, NULL, NULL, PenfanInputInfo, Fort2bDIPInfo,
 	Fort2bInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3
 };
@@ -2049,7 +2057,7 @@ struct BurnDriver BurnDrvFort2ba = {
 	"Fortress 2 Blue Arcade (Korea) (ver 1.00 / pcb ver 3.05)\0", NULL, "Eolith", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, fort2baRomInfo, fort2baRomName, NULL, NULL, NULL, NULL, PenfanInputInfo, NULL,
+	NULL, fort2baRomInfo, fort2baRomName, NULL, NULL, NULL, NULL, PenfanInputInfo, Fort2bDIPInfo,
 	Fort2bInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3
 };

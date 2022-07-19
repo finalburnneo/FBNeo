@@ -291,10 +291,12 @@ size_t retro_serialize_size()
 	// Tweaking from context
 	TweakScanFlags(nAction);
 
-	// Don't try to cache state size, it's causing more issues than it solves (ngp)
+	// If libretro is ask several times, we should always send the highest value ever computed
+	INT32 nStateLenPrev = nStateLen;
+
+	// Compute size
 	nStateLen = 0;
 	BurnAcb = StateLenAcb;
-
 	LibretroAreaScan(nAction);
 
 	// cv1k and ngp/ngpc need overallocation
@@ -306,6 +308,10 @@ size_t retro_serialize_size()
 			nStateLen += (128*1024);
 			break;
 	}
+
+	// Replace size by previous value if it was higher
+	if (nStateLenPrev > nStateLen)
+		nStateLen = nStateLenPrev;
 
 	return nStateLen;
 }

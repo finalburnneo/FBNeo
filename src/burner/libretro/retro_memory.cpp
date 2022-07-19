@@ -291,7 +291,7 @@ size_t retro_serialize_size()
 	// Tweaking from context
 	TweakScanFlags(nAction);
 
-	// If libretro is ask several times, we should always send the highest value ever computed
+	// Store previous size
 	INT32 nStateLenPrev = nStateLen;
 
 	// Compute size
@@ -309,7 +309,9 @@ size_t retro_serialize_size()
 			break;
 	}
 
-	// Replace size by previous value if it was higher
+	// The frontend doesn't handle it well when different savestates
+	// with different sizes are used concurrently for runahead & rewind,
+	// so we always keep the largest computed size
 	if (nStateLenPrev > nStateLen)
 		nStateLen = nStateLenPrev;
 

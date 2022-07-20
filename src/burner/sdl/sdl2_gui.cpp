@@ -85,7 +85,7 @@ static void CreateRomDatName(TCHAR* szRomDat)
 #if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
 	TCHAR *szSDLconfigPath = NULL;
 	szSDLconfigPath = SDL_GetPrefPath("fbneo", "config");
-	_stprintf(szRomDat, _T("%s/roms.found"), szSDLconfigPath);
+	_stprintf(szRomDat, _T("%sroms.found"), szSDLconfigPath);
 	SDL_free(szSDLconfigPath);
 #else
 	_stprintf(szRomDat, _T("fbneo.dat"));

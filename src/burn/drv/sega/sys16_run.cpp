@@ -3585,6 +3585,15 @@ INT32 System16Scan(INT32 nAction,INT32 *pnMin)
 			ba.szName = "Work Ram";
 			BurnAcb(&ba);
 		}
+
+		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_OUTRUN) {
+			// shangon saves hs here
+			memset(&ba, 0, sizeof(ba));
+			ba.Data = System16ExtraRam;
+			ba.nLen = System16ExtraRamSize;
+			ba.szName = "Extra Ram";
+			BurnAcb(&ba);
+		}
 	}
 	
 	if (nAction & ACB_MEMORY_RAM) {

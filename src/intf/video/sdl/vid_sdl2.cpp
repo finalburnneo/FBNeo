@@ -141,6 +141,8 @@ static int Init()
 			printf("Flipped\n");
 #endif
 			bFlipped = 1;
+		} else {
+			bFlipped = 0;
 		}
 	}
 
@@ -335,6 +337,7 @@ static int vidScale(RECT*, int, int)
 static int Frame(bool bRedraw)                                          // bRedraw = 0
 {
 	if ((didReinitialise) && (pVidImage == NULL)) {
+		didReinitialise = false;
 		Exit();
 		Init();
 	}

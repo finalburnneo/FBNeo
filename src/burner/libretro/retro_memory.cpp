@@ -354,6 +354,12 @@ bool retro_unserialize(const void *data, size_t size)
 	// Tweaking from context
 	TweakScanFlags(nAction);
 
+	// second instance runahead never calls retro_serialize_size(),
+	// but to avoid overflows nStateLen is required in this core's savestate logic,
+	// so we use "size" to update nStateLen
+	if (size > nStateLen)
+		nStateLen = size;
+
 	BurnAcb = StateReadAcb;
 	pStateBuffer = (UINT8*)data;
 

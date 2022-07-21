@@ -40,18 +40,24 @@ static INT32 NvramInfo(int* pnLen)
 INT32 BurnNvramLoad(TCHAR* szName)
 {
 	INT32 nLen = 0;
+	char ReadHeader[4];
 
 	FILE* fp = _tfopen(szName, _T("rb"));
 	if (fp == NULL) {
 		return 1;
 	}
 
-	NvramInfo(&nLen);
-	fseek(fp, 0L, SEEK_END);
-	if (nLen != ftell(fp)) {
+	// cancel the loading of older headered/compressed nvrams
+	memset(ReadHeader, 0, 4);
+	fread(ReadHeader, 1, 4, fp);
+	if (memcmp(ReadHeader, "FS1 ", 4)) {
 		fclose(fp);
 		return 1;
 	}
+	fseek(fp, 0L, SEEK_SET);
+
+	fseek(fp, 0L, SEEK_END);
+	nLen = ftell(fp);
 	fseek(fp, 0L, SEEK_SET);
 
 	UINT8 *data = (UINT8*)malloc(nLen);

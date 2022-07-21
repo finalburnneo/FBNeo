@@ -35,8 +35,6 @@ static UINT8 DrvDips[1];
 static UINT8 DrvReset;
 static UINT8 DrvInputs[3];
 
-static INT32 nCyclesDone[2];
-
 static UINT8 *soundlatch;
 static UINT8 *coin_control;
 static UINT8 *okibank;
@@ -55,29 +53,29 @@ static INT32 fg_page_reg;
 static INT32 nGame = 0;
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 5,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 4,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 7,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 5,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 4,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 3,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 3,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Drv)
@@ -152,10 +150,10 @@ static void deniam16_set_okibank(INT32 bank)
 {
 	*okibank = bank;
 
-	MSM6295ROM = DrvSndROM + (*okibank ? 0x40000 : 0x00000);
+	MSM6295SetBank(0, DrvSndROM + ((bank) ? 0x40000 : 0x00000), 0x00000, 0x3ffff);
 }
 
-UINT8 __fastcall deniam16_read_byte(UINT32 address)
+static UINT8 __fastcall deniam16_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -181,7 +179,7 @@ UINT8 __fastcall deniam16_read_byte(UINT32 address)
 	return 0;
 }
 
-void __fastcall deniam16_write_byte(UINT32 address, UINT8 data)
+static void __fastcall deniam16_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -216,7 +214,7 @@ void __fastcall deniam16_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-void __fastcall deniam16_sound_out(UINT16 port, UINT8 data)
+static void __fastcall deniam16_sound_out(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
@@ -238,7 +236,7 @@ void __fastcall deniam16_sound_out(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall deniam16_sound_in(UINT16 port)
+static UINT8 __fastcall deniam16_sound_in(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -252,29 +250,13 @@ UINT8 __fastcall deniam16_sound_in(UINT16 port)
 	return 0;
 }
 
-inline static INT32 deniam16ZetSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)(ZetTotalCycles() * nSoundRate / 6250000);
-}
-
-inline static INT32 deniam16SekSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)(SekTotalCycles() * nSoundRate / 12500000);
-}
-
 void deniam16YM3812IrqHandler(INT32, INT32 nStatus)
 {
-	if (nStatus) {
-		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	SekOpen(0);
@@ -282,13 +264,11 @@ static INT32 DrvDoReset()
 	SekClose();
 
 	ZetOpen(0);
-	ZetReset();
-	ZetClose();
-
+	deniam16_set_okibank(0);
 	MSM6295Reset(0);
 	BurnYM3812Reset();
-
-	deniam16_set_okibank(0);
+	ZetReset();
+	ZetClose();
 
 	return 0;
 }
@@ -303,7 +283,6 @@ static INT32 MemIndex()
 	DrvGfxROM0	= Next; Next += 0x400000;
 	DrvGfxROM1	= Next; Next += 0x400000;
 
-	MSM6295ROM	= Next;
 	DrvSndROM	= Next; Next += 0x100000;
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0800 * sizeof(UINT32);
@@ -321,7 +300,7 @@ static INT32 MemIndex()
 
 	DrvZ80RAM	= Next; Next += 0x000800;
 
-	coin_control	= Next; Next += 0x000001;
+	coin_control= Next; Next += 0x000001;
 	soundlatch	= Next; Next += 0x000001;
 	okibank		= Next; Next += 0x000001;
 
@@ -373,12 +352,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM + 0x000001,	 0, 2)) return 1;
@@ -454,6 +428,7 @@ static INT32 DrvInit()
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0xf7ff, 0, DrvZ80ROM);
 	ZetMapArea(0x0000, 0xf7ff, 2, DrvZ80ROM);
+
 	ZetMapArea(0xf800, 0xffff, 0, DrvZ80RAM);
 	ZetMapArea(0xf800, 0xffff, 1, DrvZ80RAM);
 	ZetMapArea(0xf800, 0xffff, 2, DrvZ80RAM);
@@ -462,11 +437,11 @@ static INT32 DrvInit()
 	ZetClose();
 
 	if (nGame != 2) {
-		BurnYM3812Init(1, 3125000, &deniam16YM3812IrqHandler, deniam16ZetSynchroniseStream, 0);
+		BurnYM3812Init(1, 3125000, &deniam16YM3812IrqHandler, 0);
 		BurnTimerAttachYM3812(&ZetConfig, 6250000);
 		BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.60, BURN_SND_ROUTE_BOTH);
 	} else {
-		BurnYM3812Init(1, 3125000, NULL, deniam16SekSynchroniseStream, 0);
+		BurnYM3812Init(1, 3125000, NULL, 0);
 		BurnTimerAttachYM3812(&SekConfig, 12500000);
 		BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.60, BURN_SND_ROUTE_BOTH);
 	}
@@ -490,9 +465,7 @@ static INT32 DrvExit()
 	SekExit();
 	ZetExit();
 
-	BurnFree (AllMem);
-
-	MSM6295ROM = NULL;
+	BurnFreeMemIndex();
 
 	nGame = 0;
 
@@ -756,36 +729,30 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	INT32 nInterleave = 10;
-	INT32 nCyclesSegment;
 	INT32 nCyclesTotal[2] = { 12500000 / 60, 6250000 / 60 };
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesSegment = nCyclesTotal[0] / nInterleave;
-
-		nCyclesDone[0] = SekRun(nCyclesSegment);
+		CPU_RUN(0, Sek);
 
 		if (nGame == 2) continue;
 
-		nCyclesSegment = nCyclesTotal[1] / nInterleave;
-
-		BurnTimerUpdateYM3812(i * nCyclesSegment);
+		CPU_RUN_TIMER_YM3812(1);
 	}
 
 	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
+	ZetClose();
+	SekClose();
+
 	if (pBurnSoundOut) {
-		if (nGame != 2) BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
-	SekClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -795,7 +762,7 @@ static INT32 DrvFrame()
 }
 
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -803,7 +770,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029698;
 	}
 
-	if (nAction & ACB_VOLATILE) {	
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -814,12 +781,11 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SekScan(nAction);
 		ZetScan(nAction);
 
-		SCAN_VAR(nCyclesDone[0]);
-		SCAN_VAR(nCyclesDone[1]);
-
 		BurnYM3812Scan(nAction, pnMin);
 		MSM6295Scan(nAction, pnMin);
+	}
 
+	if (nAction & ACB_WRITE) {
 		deniam16_set_okibank(*okibank);
 	}
 

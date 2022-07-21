@@ -373,7 +373,7 @@ static INT32 DrvInit()
 	qs1000_init(DrvQSROM, DrvSndROM, 0x1000000);
 	qs1000_set_write_handler(3, qs1000_p3_write);
 	qs1000_set_read_handler(1, qs1000_p1_read);
-	qs1000_set_volume(0.25);
+	qs1000_set_volume(0.75);
 
 	GenericTilesInit();
 

@@ -2494,6 +2494,7 @@ DRV		BurnDrvMSX_carrace;
 DRV		BurnDrvMSX_carraceb;
 DRV		BurnDrvMSX_carracea;
 DRV		BurnSpecCargaprof;
+DRV		BurnDrvCarket;
 DRV		BurnSpeccarlossainz;
 DRV		BurnDrvMSX_csainz;
 DRV		BurnDrvCarnivalc;
@@ -21330,6 +21331,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_carraceb,		// Car-Race (Jpn, Alt 2)
 	&BurnDrvMSX_carracea,		// Car-Race (Jpn, Alt)
 	&BurnSpecCargaprof,			// Carga de Profundidade (48K) (HB)
+	&BurnDrvCarket,				// Carket Ball
 	&BurnSpeccarlossainz,		// Carlos Sainz (Spanish) (128K)
 	&BurnDrvMSX_csainz,			// Carlos Sainz - Campeonato del Mundo (Spanish)
 	&BurnDrvCarnivalc,			// Carnival (cocktail)

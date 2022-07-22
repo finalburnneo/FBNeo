@@ -397,6 +397,8 @@ static INT32 DrvDoReset()
 
 	starfield_init();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -883,7 +885,7 @@ struct BurnDriver BurnDrvGaplus = {
 	"gaplus", NULL, NULL, "gaplus", "1984",
 	"Gaplus (GP2 rev. B)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, gaplusRomInfo, gaplusRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
 	GaplusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -929,7 +931,7 @@ struct BurnDriver BurnDrvGaplusa = {
 	"gaplusa", "gaplus", NULL, "gaplus", "1984",
 	"Gaplus (GP2)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, gaplusaRomInfo, gaplusaRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
 	GaplusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -980,7 +982,7 @@ struct BurnDriver BurnDrvGaplusd = {
 	"gaplusd", "gaplus", NULL, "gaplus", "1984",
 	"Gaplus (GP2 rev D, alternate hardware)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, gaplusdRomInfo, gaplusdRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
 	GaplusdInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -1026,7 +1028,7 @@ struct BurnDriver BurnDrvGaplust = {
 	"gaplust", "gaplus", NULL, "gaplus", "1992",
 	"Gaplus (Tecfri PCB)\0", NULL, "bootleg (Tecfri)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, gaplustRomInfo, gaplustRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
 	GaplusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -1072,7 +1074,7 @@ struct BurnDriver BurnDrvGalaga3 = {
 	"galaga3", "gaplus", NULL,"gaplus", "1984",
 	"Galaga 3 (GP3 rev. D)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, galaga3RomInfo, galaga3RomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
 	GaplusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -1118,7 +1120,7 @@ struct BurnDriver BurnDrvGalaga3a = {
 	"galaga3a", "gaplus", NULL, "gaplus", "1984",
 	"Galaga 3 (GP3 rev. C)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, galaga3aRomInfo, galaga3aRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
 	GaplusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -1164,7 +1166,7 @@ struct BurnDriver BurnDrvGalaga3b = {
 	"galaga3b", "gaplus", NULL, "gaplus", "1984",
 	"Galaga 3 (GP3)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, galaga3bRomInfo, galaga3bRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
 	GaplusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -1208,7 +1210,7 @@ struct BurnDriver BurnDrvGalaga3c = {
 	"galaga3c", "gaplus", NULL, "gaplus", "1984",
 	"Galaga 3 (set 4)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, galaga3cRomInfo, galaga3cRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
 	GaplusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -1252,7 +1254,7 @@ struct BurnDriver BurnDrvGalaga3m = {
 	"galaga3m", "gaplus", NULL, "gaplus", "1984",
 	"Galaga 3 (set 5)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, galaga3mRomInfo, galaga3mRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
 	GaplusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4

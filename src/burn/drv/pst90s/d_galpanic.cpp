@@ -1072,6 +1072,8 @@ static INT32 DrvDoReset()
 	SndBank = 0;
 	MSM6295Reset(0);
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -2151,7 +2153,7 @@ struct BurnDriver BurnDrvGalpanic = {
 	"galpanic", NULL, NULL, NULL, "1990",
 	"Gals Panic (Unprotected)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, GalpanicRomInfo, GalpanicRomName, NULL, NULL, NULL, NULL, GalpanicInputInfo, GalpanicDIPInfo,
 	GalpanicInit, GalpanicExit, GalpanicFrame, GalpanicDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	224, 256, 3, 4
@@ -2161,7 +2163,7 @@ struct BurnDriver BurnDrvFantasia = {
 	"fantasia", NULL, NULL, NULL, "1994",
 	"Fantasia (940429 PCB, set 1)\0", NULL, "Comad / New Japan System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, FantasiaRomInfo, FantasiaRomName, NULL, NULL, NULL, NULL, GalpanicInputInfo, FantasiaDIPInfo,
 	FantasiaInit, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	224, 256, 3, 4
@@ -2171,7 +2173,7 @@ struct BurnDriver BurnDrvFantasiaa = {
 	"fantasiaa", "fantasia", NULL, NULL, "1994",
 	"Fantasia (940307 PCB)\0", NULL, "Comad / New Japan System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, FantasiaaRomInfo, FantasiaaRomName, NULL, NULL, NULL, NULL, GalpanicInputInfo, FantasiaDIPInfo,
 	FantasiaInit, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	224, 256, 3, 4
@@ -2181,7 +2183,7 @@ struct BurnDriver BurnDrvFantasiab = {
 	"fantasiab", "fantasia", NULL, NULL, "1994",
 	"Fantasia (940429 PCB, set 2)\0", NULL, "Comad / New Japan System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, FantasiabRomInfo, FantasiabRomName, NULL, NULL, NULL, NULL, GalpanicInputInfo, FantasiaDIPInfo,
 	FantasiaInit, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	224, 256, 3, 4
@@ -2191,7 +2193,7 @@ struct BurnDriver BurnDrvFantasian = {
 	"fantasian", "fantasia", NULL, NULL, "1994",
 	"Fantasia (940803 PCB)\0", NULL, "Comad / New Japan System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, FantasianRomInfo, FantasianRomName, NULL, NULL, NULL, NULL, GalpanicInputInfo, FantasiaDIPInfo,
 	FantasiaInit, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	224, 256, 3, 4
@@ -2201,7 +2203,7 @@ struct BurnDriver BurnDrvSupmodel = {
 	"supmodel", NULL, NULL, NULL, "1994",
 	"Super Model\0", NULL, "Comad / New Japan System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, SupmodelRomInfo, SupmodelRomName, NULL, NULL, NULL, NULL, GalpanicInputInfo, FantasiaDIPInfo,
 	FantasiaInit, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	224, 256, 3, 4
@@ -2211,7 +2213,7 @@ struct BurnDriver BurnDrvNewfant = {
 	"newfant", NULL, NULL, NULL, "1995",
 	"New Fantasia (1995 copyright)\0", NULL, "Comad / New Japan System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, NewfantRomInfo, NewfantRomName, NULL, NULL, NULL, NULL, GalpanicInputInfo, FantasiaDIPInfo,
 	FantasiaInit, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	224, 256, 3, 4
@@ -2221,7 +2223,7 @@ struct BurnDriver BurnDrvNewfanta = {
 	"newfanta", "newfant", NULL, NULL, "1995",
 	"New Fantasia (1994 copyright)\0", NULL, "Comad / New Japan System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, NewfantaRomInfo, NewfantaRomName, NULL, NULL, NULL, NULL, GalpanicInputInfo, FantasiaDIPInfo,
 	FantasiaInit, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	224, 256, 3, 4
@@ -2231,7 +2233,7 @@ struct BurnDriver BurnDrvFantsy95 = {
 	"fantsy95", "newfant", NULL, NULL, "1995",
 	"Fantasy '95\0", NULL, "Hi-max Technology Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, Fantsy95RomInfo, Fantsy95RomName, NULL, NULL, NULL, NULL, GalpanicInputInfo, FantasiaDIPInfo,
 	FantasiaInit, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	224, 256, 3, 4
@@ -2241,7 +2243,7 @@ struct BurnDriver BurnDrvMissw96 = {
 	"missw96", NULL, NULL, NULL, "1996",
 	"Miss World '96 (Nude) (set1)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, Missw96RomInfo, Missw96RomName, NULL, NULL, NULL, NULL, GalpanicInputInfo, Missw96DIPInfo,
 	Missw96Init, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	256, 224, 4, 3
@@ -2251,7 +2253,7 @@ struct BurnDriver BurnDrvMissw96a = {
 	"missw96a", "missw96", NULL, NULL, "1996",
 	"Miss World '96 (Nude) (set 2)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, Missw96aRomInfo, Missw96aRomName, NULL, NULL, NULL, NULL, GalpanicInputInfo, Missw96DIPInfo,
 	Missw96Init, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	256, 224, 4, 3
@@ -2261,7 +2263,7 @@ struct BurnDriver BurnDrvMissw96b = {
 	"missw96b", "missw96", NULL, NULL, "1996",
 	"Miss World '96 (Nude) (set 3)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, Missw96bRomInfo, Missw96bRomName, NULL, NULL, NULL, NULL, GalpanicInputInfo, Missw96DIPInfo,
 	Missw96Init, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	256, 224, 4, 3
@@ -2271,7 +2273,7 @@ struct BurnDriver BurnDrvMissw96c = {
 	"missw96c", "missw96", NULL, NULL, "1996",
 	"Miss World '96 (Nude) (set 4)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, Missw96cRomInfo, Missw96cRomName, NULL, NULL, NULL, NULL, GalpanicInputInfo, Missw96DIPInfo,
 	Missw96Init, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	256, 224, 4, 3
@@ -2281,7 +2283,7 @@ struct BurnDriver BurnDrvMissmw96 = {
 	"missmw96", "missw96", NULL, NULL, "1996",
 	"Miss Mister World '96 (Nude)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, Missmw96RomInfo, Missmw96RomName, NULL, NULL, NULL, NULL, GalpanicInputInfo, Missw96DIPInfo,
 	Missw96Init, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	256, 224, 4, 3
@@ -2291,7 +2293,7 @@ struct BurnDriver BurnDrvFantsia2 = {
 	"fantsia2", NULL, NULL, NULL, "1997",
 	"Fantasia II (Explicit)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, Fantsia2RomInfo, Fantsia2RomName, NULL, NULL, NULL, NULL, GalpanicInputInfo, Missw96DIPInfo,
 	Fantsia2Init, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	256, 224, 4, 3
@@ -2301,7 +2303,7 @@ struct BurnDriver BurnDrvFantsia2a = {
 	"fantsia2a", "fantsia2", NULL, NULL, "1997",
 	"Fantasia II (Less Explicit)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, Fantsia2aRomInfo, Fantsia2aRomName, NULL, NULL, NULL, NULL, GalpanicInputInfo, Missw96DIPInfo,
 	Fantsia2Init, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	256, 224, 4, 3
@@ -2311,7 +2313,7 @@ struct BurnDriver BurnDrvFantsia2n = {
 	"fantsia2n", "fantsia2", NULL, NULL, "1998",
 	"Fantasia II (1998)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, Fantsia2nRomInfo, Fantsia2nRomName, NULL, NULL, NULL, NULL, GalpanicInputInfo, Missw96DIPInfo,
 	Fantsia2Init, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	256, 224, 4, 3
@@ -2331,7 +2333,7 @@ struct BurnDriver BurnDrvMissw02 = {
 	"missw02", NULL, NULL, NULL, "2002",
 	"Miss World 2002\0", NULL, "Daigom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, Missw02RomInfo, Missw02RomName, NULL, NULL, NULL, NULL, GalpanicInputInfo, Missw96DIPInfo,
 	WownfantInit, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	256, 224, 4, 3
@@ -2371,7 +2373,7 @@ struct BurnDriver BurnDrvZipzap = {
 	"zipzap", NULL, NULL, NULL, "1995",
 	"Zip & Zap\0", "Imperfect GFXs, No Sound", "Barko Corp", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
 	NULL, ZipzapRomInfo, ZipzapRomName, NULL, NULL, NULL, NULL, GalhustlInputInfo, ZipzapDIPInfo,
 	ZipzapInit, GalpanicExit, GalhustlFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	224, 256, 3, 4

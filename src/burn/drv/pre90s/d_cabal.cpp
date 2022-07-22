@@ -822,7 +822,6 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 10000000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -831,31 +830,20 @@ static INT32 DrvFrame()
 	{
 		CPU_RUN(0, Sek);
 
-		CPU_RUN(1, Zet);
+		CPU_RUN_TIMER(1);
 
 		if ((i%64) == 63 && !is_joyver) {
 			BurnTrackballUpdate(0);
 			BurnTrackballUpdate(1);
 		}
 
-		if (i == 240)
+		if (i == 240) {
 			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			seibu_sound_update(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
 		}
-
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength > 0) {
-			seibu_sound_update(pSoundBuf, nSegmentLength);
-		}
+		seibu_sound_update(pBurnSoundOut, nBurnSoundLen);
 		seibu_sound_update_cabal(pBurnSoundOut, nBurnSoundLen);
 	}
 

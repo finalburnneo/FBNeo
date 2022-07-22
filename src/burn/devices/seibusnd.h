@@ -11,6 +11,7 @@ extern UINT8 *SeibuADPCMData[2];
 extern INT32 SeibuADPCMDataLen[2];
 
 extern INT32 seibu_coin_input;
+extern INT32 seibu_fm_type;
 
 unsigned char seibu_main_word_read(INT32 offset);
 void seibu_main_word_write(INT32 offset, UINT8 data);

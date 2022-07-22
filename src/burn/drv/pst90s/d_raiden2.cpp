@@ -47,11 +47,12 @@ static UINT16 layer_enable;
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
-static UINT8 DrvJoy4[4];
+static UINT8 DrvJoy4[16];
 static UINT8 DrvDips[4];
 static UINT16 DrvInputs[3];
 static UINT8 DrvReset;
-static INT32 hold_coin[4];
+
+static HoldCoin<4> hold_coin;
 
 static UINT16 prg_bank = 0;
 static UINT8 mg_bank = 0;
@@ -62,218 +63,218 @@ static UINT8 tx_bank = 0;
 static INT32 game_select = 0; // 0 raiden2, 1 raidendx, 2 zeroteam, 3 xsedae, 4 = r2dx, 5 nzeroteam, 6 zerotm2k
 
 static struct BurnInputInfo Raiden2InputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 3,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 3,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Raiden2)
 
 static struct BurnInputInfo RaidendxInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 3,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 3,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Raidendx)
 
 static struct BurnInputInfo ZeroteamInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"	},
 
-	{"P3 Coin",		BIT_DIGITAL,	DrvJoy4 + 2,	"p3 coin"	},
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoy4 + 2,	"p3 coin"	},
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy3 + 4,	"p3 start"	},
-	{"P3 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p3 up"		},
-	{"P3 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p3 down"	},
-	{"P3 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p3 left"	},
+	{"P3 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p3 up"		},
+	{"P3 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p3 down"	},
+	{"P3 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p3 left"	},
 	{"P3 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p3 right"	},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p3 fire 2"	},
 	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p3 fire 3"	},
 
-	{"P4 Coin",		BIT_DIGITAL,	DrvJoy4 + 3,	"p4 coin"	},
+	{"P4 Coin",			BIT_DIGITAL,	DrvJoy4 + 3,	"p4 coin"	},
 	{"P4 Start",		BIT_DIGITAL,	DrvJoy3 + 5,	"p4 start"	},
-	{"P4 Up",		BIT_DIGITAL,	DrvJoy2 + 8,	"p4 up"		},
-	{"P4 Down",		BIT_DIGITAL,	DrvJoy2 + 9,	"p4 down"	},
-	{"P4 Left",		BIT_DIGITAL,	DrvJoy2 + 10,	"p4 left"	},
+	{"P4 Up",			BIT_DIGITAL,	DrvJoy2 + 8,	"p4 up"		},
+	{"P4 Down",			BIT_DIGITAL,	DrvJoy2 + 9,	"p4 down"	},
+	{"P4 Left",			BIT_DIGITAL,	DrvJoy2 + 10,	"p4 left"	},
 	{"P4 Right",		BIT_DIGITAL,	DrvJoy2 + 11,	"p4 right"	},
 	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy2 + 12,	"p4 fire 1"	},
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy2 + 13,	"p4 fire 2"	},
 	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy2 + 14,	"p4 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 3,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 3,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Zeroteam)
 
 static struct BurnInputInfo Rdx_v33InputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 15,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
-	{"Service 1",	BIT_DIGITAL,	DrvJoy2 + 3,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
+	{"Service 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Rdx_v33)
 
 static struct BurnInputInfo NzeroteaInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Nzerotea)
 
 static struct BurnInputInfo Zerotm2kInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"	},
 
-	{"P3 Coin",		BIT_DIGITAL,	DrvJoy4 + 2,	"p3 coin"	},
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoy4 + 2,	"p3 coin"	},
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p3 start"	},
-	{"P3 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p3 up"		},
-	{"P3 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p3 down"	},
-	{"P3 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p3 left"	},
+	{"P3 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p3 up"		},
+	{"P3 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p3 down"	},
+	{"P3 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p3 left"	},
 	{"P3 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p3 right"	},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p3 fire 2"	},
 	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p3 fire 3"	},
 
-	{"P4 Coin",		BIT_DIGITAL,	DrvJoy4 + 3,	"p4 coin"	},
+	{"P4 Coin",			BIT_DIGITAL,	DrvJoy4 + 3,	"p4 coin"	},
 	{"P4 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p4 start"	},
-	{"P4 Up",		BIT_DIGITAL,	DrvJoy2 + 8,	"p4 up"		},
-	{"P4 Down",		BIT_DIGITAL,	DrvJoy2 + 9,	"p4 down"	},
-	{"P4 Left",		BIT_DIGITAL,	DrvJoy2 + 10,	"p4 left"	},
+	{"P4 Up",			BIT_DIGITAL,	DrvJoy2 + 8,	"p4 up"		},
+	{"P4 Down",			BIT_DIGITAL,	DrvJoy2 + 9,	"p4 down"	},
+	{"P4 Left",			BIT_DIGITAL,	DrvJoy2 + 10,	"p4 left"	},
 	{"P4 Right",		BIT_DIGITAL,	DrvJoy2 + 11,	"p4 right"	},
 	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy2 + 12,	"p4 fire 1"	},
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy2 + 13,	"p4 fire 2"	},
 	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy2 + 14,	"p4 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 4,	"service"	},
-	{"Service Mode",    BIT_DIGITAL,	DrvJoy3 + 5,	"diag"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 4,	"service"	},
+	{"Service Mode",    BIT_DIGITAL,	DrvJoy3 + 5,	"diag"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Zerotm2k)
@@ -647,8 +648,8 @@ static struct {
 } cop_collision_info[2];
 
 static UINT16 cop_hit_status, cop_hit_baseadr;
-INT16 cop_hit_val[3];
-UINT16 cop_hit_val_stat;
+static INT16 cop_hit_val[3];
+static UINT16 cop_hit_val_stat;
 static UINT32 cop_sort_ram_addr, cop_sort_lookup;
 static UINT16 cop_sort_param;
 
@@ -2091,8 +2092,8 @@ static INT32 DrvDoReset()
 
 	if (game_select >= 4) sprites_cur_start = 0x1000 - 8; // or no sprites in newzeroteam
 
-	memset (hold_coin, 0, 4 * sizeof(INT32));
-	
+	hold_coin.reset();
+
 	HiscoreReset();
 
 	return 0;
@@ -3390,42 +3391,25 @@ static INT32 ZeroteamDraw() // sprite priorities different
 
 	return 0;
 }
-static UINT32 framecntr = 0;
-static UINT32 seibu_start = 0;
 
 static void compile_inputs()
 {
 	memset (DrvInputs, 0xff, 3*sizeof(short));
+	UINT8 coin = 0xff;
 	for (INT32 i = 0; i < 16; i++) {
 		DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 		DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+		coin         ^= (DrvJoy4[i] & 1) << i;
 	}
 
 	DrvInputs[2] = (DrvInputs[2] & 0x00ff) | (DrvDips[2] << 8);
 
-	// hold coin down for a few frames so that it registers
-	static INT32 previous_coin = seibu_coin_input;
-	seibu_coin_input = 0xff;
-
-	for (INT32 i = 0; i < 4; i++) {
-		if ((previous_coin & (1 << i)) == 0 && DrvJoy4[i]) {
-			hold_coin[i] = 4;
-			framecntr = 0;
-		}
-
-		if (hold_coin[i]) { // only hold for 4 frames, with no extra from input holddown.
-			hold_coin[i]--;
-			if (framecntr & 1)
-				seibu_start = 1;
-			if (seibu_start)
-				seibu_coin_input ^= (1 << i);
-			if (!hold_coin[i])
-				seibu_start = 0;
-		}
-	}
-	//bprintf(0, _T("%X"), (seibu_coin_input == 0xff) ? 0 : seibu_coin_input);
-	framecntr++;
+	hold_coin.checklow(0, coin, 1<<0, 4);
+	hold_coin.checklow(1, coin, 1<<1, 4);
+	hold_coin.checklow(2, coin, 1<<2, 4);
+	hold_coin.checklow(3, coin, 1<<3, 4);
+	seibu_coin_input = coin;
 }
 
 static INT32 DrvFrame()
@@ -3440,61 +3424,6 @@ static INT32 DrvFrame()
 	compile_inputs();
 
 	INT32 nInterleave = 128;
-	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { (16000000 * 100) / 5547, (3579545 * 100) / 5547 };
-	INT32 nCyclesDone[2] = { 0, 0 };
-
-	ZetOpen(0);
-	VezOpen(0);
-	
-	for (INT32 i = 0; i < nInterleave; i++)
-	{
-		INT32 nSegment = nCyclesTotal[0] / nInterleave;
-
-		nCyclesDone[0] += VezRun(nSegment);
-		if (i == (nInterleave-2)) VezSetIRQLineAndVector(0, 0xc0/4, CPU_IRQSTATUS_AUTO);
-
-		nSegment = (nCyclesTotal[1] / nInterleave) * (i+1);
-		nCyclesDone[1] += ZetRun(nSegment - ZetTotalCycles());
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			seibu_sound_update(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
-	}
-
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			seibu_sound_update(pSoundBuf, nSegmentLength);
-		}
-	}
-	
-	VezClose();
-	ZetClose();
-
-	if (pBurnDraw) {
-		BurnDrvRedraw();
-	}
-
-	return 0;
-}
-
-static INT32 ZeroteamFrame()
-{
-	if (DrvReset) {
-		DrvDoReset();
-	}
-
-	VezNewFrame();
-	ZetNewFrame();
-
-	compile_inputs();
-
-	INT32 nInterleave = 128;
 	INT32 nCyclesTotal[2] = { (16000000 * 100) / 5547, (3579545 * 100) / 5547 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -3503,15 +3432,15 @@ static INT32 ZeroteamFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = nCyclesTotal[0] / nInterleave;
+		CPU_RUN(0, Vez);
+		if (i == (nInterleave-2)) VezSetIRQLineAndVector(0, 0xc0/4, CPU_IRQSTATUS_ACK);
 
-		nCyclesDone[0] += VezRun(nSegment);
-		if (i == (nInterleave-2)) VezSetIRQLineAndVector(0, 0xc0/4, CPU_IRQSTATUS_AUTO);
-
-		BurnTimerUpdateYM3812(i * (nCyclesTotal[1] / nInterleave));
+		if (seibu_fm_type == 0) {
+			CPU_RUN_TIMER_YM3812(1);
+		} else {
+			CPU_RUN_TIMER(1);
+		}
 	}
-
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
 		seibu_sound_update(pBurnSoundOut, nBurnSoundLen);
@@ -3593,6 +3522,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(r2dx_okibank);
 
 		SeibuCopScan(nAction);
+
+		hold_coin.scan();
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -4939,7 +4870,7 @@ struct BurnDriver BurnDrvZeroteam = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamRomInfo, zeroteamRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
-	ZeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };
 
@@ -4983,7 +4914,7 @@ struct BurnDriver BurnDrvZeroteama = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamaRomInfo, zeroteamaRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
-	ZeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };
 
@@ -5035,7 +4966,7 @@ struct BurnDriver BurnDrvZeroteamb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteambRomInfo, zeroteambRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
-	ZeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };
 
@@ -5079,7 +5010,7 @@ struct BurnDriver BurnDrvZeroteamc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamcRomInfo, zeroteamcRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
-	ZeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };
 
@@ -5124,7 +5055,7 @@ struct BurnDriver BurnDrvZeroteamd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamdRomInfo, zeroteamdRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
-	ZeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };
 
@@ -5168,7 +5099,7 @@ struct BurnDriver BurnDrvZeroteams = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamsRomInfo, zeroteamsRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
-	ZeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };
 
@@ -5222,7 +5153,7 @@ struct BurnDriver BurnDrvZeroteamsr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamsrRomInfo, zeroteamsrRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
-	ZeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };
 
@@ -5366,7 +5297,7 @@ struct BurnDriver BurnDrvNzeroteam = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, nzeroteamRomInfo, nzeroteamRomName, NULL, NULL, NULL, NULL, NzeroteaInputInfo, NzeroteaDIPInfo,
-	NzeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	NzeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };
 
@@ -5405,7 +5336,7 @@ struct BurnDriver BurnDrvNzeroteama = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, nzeroteamaRomInfo, nzeroteamaRomName, NULL, NULL, NULL, NULL, NzeroteaInputInfo, NzeroteaDIPInfo,
-	NzeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	NzeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };
 
@@ -5440,6 +5371,6 @@ struct BurnDriver BurnDrvZerotm2k = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zerotm2kRomInfo, zerotm2kRomName, NULL, NULL, NULL, NULL, Zerotm2kInputInfo, NULL,
-	Zerotm2kInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	Zerotm2kInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };

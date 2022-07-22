@@ -22174,6 +22174,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="umk3h06" cloneof="umk3" romof="umk3">
+		<comment>Hack</comment>
+		<description>Ultimate Mortal Kombat 3 Arcade (Hack, v0.6)</description>
+		<year>2012</year>
+		<manufacturer>Nemesis_c</manufacturer>
+		<rom name="Ultimate Mortal Kombat 3 Arcade Hack Ver. 0.6 (By Nemesis_c).bin" size="6248922" crc="d8c152ff"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="umk3h" cloneof="umk3" romof="umk3">
 		<description>Ultimate Mortal Kombat 3 Arcade (Hack, v0.71)</description>
 		<year>2012?</year>

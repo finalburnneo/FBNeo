@@ -17387,6 +17387,7 @@ DRV		BurnDrvUmk3r11;
 DRV		BurnDrvUmk3;
 DRV		BurnDrvnes_ultimmorkom3;
 DRV		BurnDrvmd_umk3u;
+DRV		BurnDrvmd_umk3h06;
 DRV		BurnDrvmd_umk3h;
 DRV		BurnDrvmd_umk3mh;
 DRV		BurnDrvUmk3p;
@@ -36224,6 +36225,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvUmk3,				// Ultimate Mortal Kombat 3 (rev 1.2)
 	&BurnDrvnes_ultimmorkom3,	// Ultimate Mortal Kombat 3 (Unl)
 	&BurnDrvmd_umk3u,			// Ultimate Mortal Kombat 3 (USA)
+	&BurnDrvmd_umk3h06,			// Ultimate Mortal Kombat 3 Arcade (Hack, v0.6)
 	&BurnDrvmd_umk3h,			// Ultimate Mortal Kombat 3 Arcade (Hack, v0.71)
 	&BurnDrvmd_umk3mh,			// Ultimate Mortal Kombat 3 Mini (Hack, v13)
 	&BurnDrvUmk3p,				// Ultimate Mortal Kombat 3 Plus (Hack, Beta 2)

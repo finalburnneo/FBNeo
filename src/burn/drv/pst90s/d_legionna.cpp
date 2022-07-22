@@ -39,9 +39,10 @@ static UINT16 layer_disable;
 static INT32 flipscreen;
 static INT32 scroll[7];
 static INT32 sample_bank;
-static INT32 coin_inserted_counter[2];
 
+static HoldCoin<4> hold_coin;
 static INT32 coin_hold_length = 4;
+
 static UINT32 sprite_size;
 
 static UINT8 DrvJoy1[16];
@@ -174,6 +175,7 @@ static struct BurnInputInfo DenjinmkInputList[] = {
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"	},
 
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoy4 + 2,	"p3 coin"	},
 	{"P3 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p3 up"		},
 	{"P3 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p3 down"	},
 	{"P3 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p3 left"	},
@@ -181,6 +183,7 @@ static struct BurnInputInfo DenjinmkInputList[] = {
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p3 fire 2"	},
 
+	{"P4 Coin",			BIT_DIGITAL,	DrvJoy4 + 3,	"p4 coin"	},
 	{"P4 Up",			BIT_DIGITAL,	DrvJoy2 + 8,	"p4 up"		},
 	{"P4 Down",			BIT_DIGITAL,	DrvJoy2 + 9,	"p4 down"	},
 	{"P4 Left",			BIT_DIGITAL,	DrvJoy2 + 10,	"p4 left"	},
@@ -450,60 +453,61 @@ STDDIPINFO(Godzilla)
 
 static struct BurnDIPInfo DenjinmkDIPList[]=
 {
-	{0x1f, 0xff, 0xff, 0xff, NULL						},
-	{0x20, 0xff, 0xff, 0xff, NULL						},
+	DIP_OFFSET(0x21)
+	{0x00, 0xff, 0xff, 0xff, NULL						},
+	{0x01, 0xff, 0xff, 0xff, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"				},
-	{0x1f, 0x01, 0x10, 0x10, "Off"						},
-	{0x1f, 0x01, 0x10, 0x00, "On"						},
+	{0x00, 0x01, 0x10, 0x10, "Off"						},
+	{0x00, 0x01, 0x10, 0x00, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"				},
-	{0x1f, 0x01, 0x20, 0x00, "No"						},
-	{0x1f, 0x01, 0x20, 0x20, "Yes"						},
+	{0x00, 0x01, 0x20, 0x00, "No"						},
+	{0x00, 0x01, 0x20, 0x20, "Yes"						},
 
 	{0,    0xfe, 0,       2, "Service Mode"				},
-	{0x1f, 0x01, 0x40, 0x40, "Off"                      },
-	{0x1f, 0x01, 0x40, 0x00, "On"						},
+	{0x00, 0x01, 0x40, 0x40, "Off"                      },
+	{0x00, 0x01, 0x40, 0x00, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Language"					},
-	{0x1f, 0x01, 0x80, 0x80, "Japanese"					},
-	{0x1f, 0x01, 0x80, 0x00, "English"					},
+	{0x00, 0x01, 0x80, 0x80, "Japanese"					},
+	{0x00, 0x01, 0x80, 0x00, "English"					},
 
 	{0   , 0xfe, 0   ,    16, "Coin A"					},
-	{0x20, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"		},
-	{0x20, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"		},
-	{0x20, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"		},
-	{0x20, 0x01, 0x0f, 0x06, "3 Coins 5 Credits"		},
-	{0x20, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"		},
-	{0x20, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"		},
-	{0x20, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
-	{0x20, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"		},
-	{0x20, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"		},
-	{0x20, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"		},
-	{0x20, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"		},
-	{0x20, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"		},
-	{0x20, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"		},
-	{0x20, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"		},
-	{0x20, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"		},
-	{0x20, 0x01, 0x0f, 0x00, "Free Play"				},
+	{0x01, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"		},
+	{0x01, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"		},
+	{0x01, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"		},
+	{0x01, 0x01, 0x0f, 0x06, "3 Coins 5 Credits"		},
+	{0x01, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"		},
+	{0x01, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"		},
+	{0x01, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
+	{0x01, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"		},
+	{0x01, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"		},
+	{0x01, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"		},
+	{0x01, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"		},
+	{0x01, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"		},
+	{0x01, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"		},
+	{0x01, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"		},
+	{0x01, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"		},
+	{0x01, 0x01, 0x0f, 0x00, "Free Play"				},
 
 	{0   , 0xfe, 0   ,    16, "Coin B"					},
-	{0x20, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"		},
-	{0x20, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"		},
-	{0x20, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"		},
-	{0x20, 0x01, 0xf0, 0x60, "3 Coins 5 Credits"		},
-	{0x20, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"		},
-	{0x20, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"		},
-	{0x20, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
-	{0x20, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"		},
-	{0x20, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"		},
-	{0x20, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"		},
-	{0x20, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"		},
-	{0x20, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"		},
-	{0x20, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"		},
-	{0x20, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"		},
-	{0x20, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"		},
-	{0x20, 0x01, 0xf0, 0x00, "Free Play"				},
+	{0x01, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"		},
+	{0x01, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"		},
+	{0x01, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"		},
+	{0x01, 0x01, 0xf0, 0x60, "3 Coins 5 Credits"		},
+	{0x01, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"		},
+	{0x01, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"		},
+	{0x01, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
+	{0x01, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"		},
+	{0x01, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"		},
+	{0x01, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"		},
+	{0x01, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"		},
+	{0x01, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"		},
+	{0x01, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"		},
+	{0x01, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"		},
+	{0x01, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"		},
+	{0x01, 0x01, 0xf0, 0x00, "Free Play"				},
 };
 
 STDDIPINFO(Denjinmk)
@@ -884,7 +888,8 @@ static INT32 DrvDoReset()
 	layer_disable = 0;
 	flipscreen = 0;
 	memset (scroll, 0, sizeof(scroll));
-	memset (coin_inserted_counter, 0, sizeof(coin_inserted_counter));
+
+	hold_coin.reset();
 
 	HiscoreReset();
 
@@ -1005,12 +1010,7 @@ static INT32 LegionnaInit()
 {
 	sprite_size = 0x200000;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		INT32 k = 0;
@@ -1084,12 +1084,7 @@ static INT32 HeatbrlInit()
 {
 	sprite_size = 0x200000;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		INT32 k = 0;
@@ -1164,12 +1159,7 @@ static INT32 GodzillaInit()
 {
 	sprite_size = 0x600000;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		INT32 k = 0;
@@ -1258,12 +1248,7 @@ static INT32 DenjinmkInit()
 
 	BurnSetRefreshRate(56.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		INT32 k = 0;
@@ -1317,6 +1302,9 @@ static INT32 DenjinmkInit()
 	seibu_cop_config(1, videowrite_cb_w, palette_write_xbgr555);
 
 	seibu_sound_init(1, 0x20000, 3579545, 3579545, 1000000 / 132);
+	BurnYM2151SetAllRoutes(0.90, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
+
 	coin_hold_length = 2; // this game only likes coin held for 2 frames
 	denjinmk_hack = 1; // special handling for seibusnd reads
 
@@ -1348,12 +1336,7 @@ static INT32 GrainbowInit()
 {
 	sprite_size = 0x200000;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		INT32 k = 0;
@@ -1433,7 +1416,7 @@ static INT32 DrvExit()
 
 	denjinmk_hack = 0;
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -1670,27 +1653,26 @@ static INT32 DrvFrame()
 
 	{
 		memset (DrvInputs, 0xff, sizeof(DrvInputs));
+		UINT8 coin = 0;
 		seibu_coin_input = 0;
 
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
-			seibu_coin_input ^= (DrvJoy4[i] & 1) << i;
+			coin		 ^= (DrvJoy4[i] & 1) << i;
 		}
 
-		for (INT32 i = 0; i < 2; i++) {
-			if (seibu_coin_input & (1 << i)) {
-				coin_inserted_counter[i]++;
-				if (coin_inserted_counter[i] >= coin_hold_length) seibu_coin_input &= ~(1 << i);
-			} else {
-				coin_inserted_counter[i] = 0;
-			}
-		}
+		hold_coin.check(0, coin, 1<<0, coin_hold_length);
+		hold_coin.check(1, coin, 1<<1, coin_hold_length);
+		hold_coin.check(2, coin, 1<<2, coin_hold_length);
+		hold_coin.check(3, coin, 1<<3, coin_hold_length);
+		coin |= coin >> 2; // p2,p3 coin are fake inputs, mirrored to p1,p2
+		seibu_coin_input = coin & 0x3;
 	}
 
 	INT32 nInterleave = 288;
-	INT32 nCyclesTotal[2] = { 10000000 / 60, 3579545 / 60 };
+	INT32 nCyclesTotal[2] = { (10000000 * 100) / nBurnFPS, (3579545 * 100) / nBurnFPS };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
@@ -1701,10 +1683,12 @@ static INT32 DrvFrame()
 		CPU_RUN(0, Sek);
 		if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		if (seibu_fm_type == 0) {
+			CPU_RUN_TIMER_YM3812(1);
+		} else {
+			CPU_RUN_TIMER(1);
+		}
 	}
-
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -1712,74 +1696,6 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		seibu_sound_update(pBurnSoundOut, nBurnSoundLen);
-	}
-
-	ZetClose();
-	SekClose();
-
-	return 0;
-}
-
-static INT32 DrvYM2151Frame()
-{
-	if (DrvReset) {
-		DrvDoReset();
-	}
-
-	{
-		memset (DrvInputs, 0xff, sizeof(DrvInputs));
-		seibu_coin_input = 0;
-
-		for (INT32 i = 0; i < 16; i++) {
-			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
-			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
-			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
-			seibu_coin_input ^= (DrvJoy4[i] & 1) << i;
-		}
-
-		for (INT32 i = 0; i < 2; i++) {
-			if (seibu_coin_input & (1 << i)) {
-				coin_inserted_counter[i]++;
-				if (coin_inserted_counter[i] >= coin_hold_length) seibu_coin_input &= ~(1 << i);
-			} else {
-				coin_inserted_counter[i] = 0;
-			}
-		}
-	}
-
-	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { (10000000 * 100) / nBurnFPS, (3579545 * 100) / nBurnFPS };
-	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSoundBufferPos = 0;
-
-	SekOpen(0);
-	ZetOpen(0);
-
-	for (INT32 i = 0; i < nInterleave; i++)
-	{
-		CPU_RUN(0, Sek);
-		if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-
-		CPU_RUN(1, Zet);
-
-		if (pBurnSoundOut && ((i%4)==3)) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			seibu_sound_update(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
-	}
-
-	if (pBurnDraw) {
-		BurnDrvRedraw();
-	}
-
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength > 0) {
-			seibu_sound_update(pSoundBuf, nSegmentLength);
-		}
 	}
 
 	ZetClose();
@@ -1817,7 +1733,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(scroll);
 		SCAN_VAR(sample_bank);
-		SCAN_VAR(coin_inserted_counter);
 	}
 
 	return 0;
@@ -2237,7 +2152,7 @@ struct BurnDriver BurnDrvGodzilla = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, godzillaRomInfo, godzillaRomName, NULL, NULL, NULL, NULL, GodzillaInputInfo, GodzillaDIPInfo,
-	GodzillaInit, DrvExit, DrvYM2151Frame, GodzillaDraw, DrvScan, &DrvRecalc, 0x801,
+	GodzillaInit, DrvExit, DrvFrame, GodzillaDraw, DrvScan, &DrvRecalc, 0x801,
 	320, 224, 4, 3
 };
 
@@ -2282,7 +2197,7 @@ struct BurnDriver BurnDrvDenjinmk = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, denjinmkRomInfo, denjinmkRomName, NULL, NULL, NULL, NULL, DenjinmkInputInfo, DenjinmkDIPInfo,
-	DenjinmkInit, DrvExit, DrvYM2151Frame, DenjinmkDraw, DrvScan, &DrvRecalc, 0x801,
+	DenjinmkInit, DrvExit, DrvFrame, DenjinmkDraw, DrvScan, &DrvRecalc, 0x801,
 	320, 256, 4, 3
 };
 
@@ -2327,7 +2242,7 @@ struct BurnDriver BurnDrvDenjinmka = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, denjinmkaRomInfo, denjinmkaRomName, NULL, NULL, NULL, NULL, DenjinmkInputInfo, DenjinmkDIPInfo,
-	DenjinmkInit, DrvExit, DrvYM2151Frame, DenjinmkDraw, DrvScan, &DrvRecalc, 0x801,
+	DenjinmkInit, DrvExit, DrvFrame, DenjinmkDraw, DrvScan, &DrvRecalc, 0x801,
 	320, 256, 4, 3
 };
 
@@ -2366,7 +2281,7 @@ struct BurnDriver BurnDrvGrainbow = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, grainbowRomInfo, grainbowRomName, NULL, NULL, NULL, NULL, GrainbowInputInfo, GrainbowDIPInfo,
-	GrainbowInit, DrvExit, DrvYM2151Frame, GrainbowDraw, DrvScan, &DrvRecalc, 0x801,
+	GrainbowInit, DrvExit, DrvFrame, GrainbowDraw, DrvScan, &DrvRecalc, 0x801,
 	320, 224, 4, 3
 };
 
@@ -2405,6 +2320,6 @@ struct BurnDriver BurnDrvGrainbowk = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, grainbowkRomInfo, grainbowkRomName, NULL, NULL, NULL, NULL, GrainbowInputInfo, GrainbowDIPInfo,
-	GrainbowInit, DrvExit, DrvYM2151Frame, GrainbowDraw, DrvScan, &DrvRecalc, 0x801,
+	GrainbowInit, DrvExit, DrvFrame, GrainbowDraw, DrvScan, &DrvRecalc, 0x801,
 	320, 224, 4, 3
 };

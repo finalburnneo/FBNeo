@@ -2060,23 +2060,8 @@ static void sound_bankswitch(INT32 data)
 
 static void __fastcall citybomb_sound_write(UINT16 address, UINT8 data)
 {
-	if ((address & 0xff80) == 0x9800) {
-		K051649WaveformWrite(address & 0x7f, data);
-		return;
-	}
-
-	if ((address & 0xfff0) == 0x9880) {
-		if (address <= 0x9889)
-			K051649FrequencyWrite(address & 0x0f, data);
-		else if (address <= 0x988e)
-			K051649VolumeWrite(address - 0x988a, data);
-		else if (address == 0x988f)
-			K051649KeyonoffWrite(data);
-		return;
-	}
-
-	if ((address & 0xffe0) == 0x98e0) {
-		// k051649_test_w
+	if ((address & 0xff00) == 0x9800) {
+		K051649Write(address & 0xff, data);
 		return;
 	}
 
@@ -2100,13 +2085,8 @@ static void __fastcall citybomb_sound_write(UINT16 address, UINT8 data)
 
 static UINT8 __fastcall citybomb_sound_read(UINT16 address)
 {
-	if ((address & 0xff80) == 0x9800) {
-		return K051649WaveformRead(address & 0x7f);
-	}
-
-	if ((address & 0xffe0) == 0x98e0) {
-		// k051649_test_r
-		return 0;
+	if ((address & 0xff00) == 0x9800) {
+		return K051649Read(address & 0xff);
 	}
 
 	if ((address & 0xfff0) == 0xb000) {

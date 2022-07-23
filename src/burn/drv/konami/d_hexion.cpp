@@ -21,8 +21,8 @@ static UINT8 *DrvVidRAM;
 static UINT8 *DrvZ80RAM;
 static UINT8 *flipscreen;
 
-static UINT32  *DrvPalette;
-static UINT32  *Palette;
+static UINT32 *DrvPalette;
+static UINT32 *Palette;
 static UINT8 DrvRecalc;
 
 static INT32 cpubank;
@@ -30,6 +30,8 @@ static INT32 bankctrl;
 static INT32 rambank;
 static INT32 pmcbank;
 static INT32 gfxrom_select;
+static INT32 ccu_timer;
+static INT32 ccu_timer_latch;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -41,29 +43,29 @@ static UINT8 DrvReset;
 static INT32 is_bootleg = 0;
 
 static struct BurnInputInfo HexionInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Hexion)
@@ -142,12 +144,24 @@ static void bankswitch(INT32 data)
 	ZetMapMemory(DrvZ80ROM + (cpubank << 13), 0x8000, 0x9fff, MAP_ROM);
 }
 
-void __fastcall hexion_write(UINT16 address, UINT8 data)
+static void __fastcall hexion_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
 		case 0xdfff:
 			bankctrl = data;
+		return;
+
+		case 0xf00d:
+			ccu_timer_latch = data;
+		return;
+
+		case 0xf00e:
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+		return;
+
+		case 0xf00f:
+			ZetSetIRQLine(0x20, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0xf200:
@@ -199,32 +213,15 @@ void __fastcall hexion_write(UINT16 address, UINT8 data)
 		return;
 	}
 
-	if ((address & 0xff80) == 0xe800) {
-		K051649WaveformWrite(address & 0x7f, data);
+	if (address >= 0xe800 && address <= 0xe8ff) {
+		K051649Write(address & 0xff, data);
 		return;
 	}
 
-	if ((address & 0xfff0) == 0xe880) {
-		if (address <= 0xe889) {
-			K051649FrequencyWrite(address & 0x0f, data);
-			return;
-		}
-
-		if (address == 0xe88f) {
-			K051649KeyonoffWrite(data);
-			return;
-		}
-
-		if (address >= 0xe88a) {
-			K051649VolumeWrite(address - 0xe88a, data);
-			return;
-		}
-
-		return;
-	}
+	//bprintf(0, _T("wb %x  %x\n"), address, data);
 }
 
-UINT8 __fastcall hexion_read(UINT16 address)
+static UINT8 __fastcall hexion_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -263,13 +260,17 @@ UINT8 __fastcall hexion_read(UINT16 address)
 		return 0;
 	}
 
+	if ((address & 0xff00) == 0xe800) {
+		return K051649Read(address & 0xff);
+	}
+
+	//bprintf(0, _T("rb %x\n"), address);
+
 	return 0;
 }
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	ZetOpen(0);
@@ -286,6 +287,8 @@ static INT32 DrvDoReset()
 	rambank = 0;
 	pmcbank = 0;
 	gfxrom_select = 0;
+	ccu_timer = 0;
+	ccu_timer_latch = 0;
 
 	return 0;
 }
@@ -297,7 +300,7 @@ static INT32 MemIndex()
 	DrvZ80ROM	= Next; Next += 0x020000;
 
 	DrvGfxROM	= Next; Next += 0x080000;
-	DrvGfxROMExp	= Next; Next += 0x100000;
+	DrvGfxROMExp= Next; Next += 0x100000;
 
 	MSM6295ROM	= Next;
 	DrvSndROM0	= Next; Next += 0x100000;
@@ -375,12 +378,7 @@ static INT32 DrvInit()
 {
 	is_bootleg = (BurnDrvGetFlags() & BDF_BOOTLEG) ? 1 : 0;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM,		0, 1)) return 1;
@@ -415,7 +413,8 @@ static INT32 DrvInit()
 	MSM6295Init(1, 1056000 / 132, 1);
 	MSM6295SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
 
-	K051649Init(1500000);
+	K051649Init(3000000/2);
+	K051649SetSync(ZetTotalCycles, 6000000);
 	K051649SetRoute(0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -434,7 +433,7 @@ static INT32 DrvExit()
 
 	ZetExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	MSM6295ROM = NULL;
 
@@ -502,9 +501,6 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = nBurnSoundLen;
-	INT32 nSoundBufferPos = 0;
-	
 	if (DrvReset) {
 		DrvDoReset();
 	}
@@ -525,44 +521,44 @@ static INT32 DrvFrame()
 	}
 	
 	ZetNewFrame();
-	
+
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[1] = { 6000000 / 60 };
 	INT32 nCyclesDone[1] = { 0 };
+	INT32 nSoundBufferPos = 0;
 
 	ZetOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nNext, nCyclesSegment;
+		CPU_RUN(0, Zet);
 
-		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[0];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		if (i == (nInterleave / 3)) ZetNmi();
-		if (i == ((nInterleave / 3) * 2)) ZetNmi();
-		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
-		nCyclesDone[0] += nCyclesSegment;
+		if (i == nInterleave-1) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+
+		{ // ccu timer c/o Lord Nightmare
+			ccu_timer--;
+			if (ccu_timer <= 0) {
+				ZetSetIRQLine(0x20, CPU_IRQSTATUS_ACK);
+				ccu_timer = ccu_timer_latch;
+			}
+		}
 
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			memset (pSoundBuf, 0, nSegmentLength * 2 * 2);
 			MSM6295Render(pSoundBuf, nSegmentLength);
-			if (is_bootleg == 0) {
-				K051649Update(pSoundBuf, nSegmentLength);
-			}
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
 	ZetClose();
-	
+
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			memset (pSoundBuf, 0, nSegmentLength * 2 * 2);
 			MSM6295Render(pSoundBuf, nSegmentLength);
-			if (is_bootleg == 0) {
-				K051649Update(pSoundBuf, nSegmentLength);
-			}
+		}
+
+		if (is_bootleg == 0) {
+			K051649Update(pBurnSoundOut, nBurnSoundLen);
 		}
 	}
 
@@ -600,6 +596,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(rambank);
 		SCAN_VAR(pmcbank);
 		SCAN_VAR(gfxrom_select);
+		SCAN_VAR(ccu_timer_latch);
+		SCAN_VAR(ccu_timer);
 	}
 
 	if (nAction & ACB_WRITE) {

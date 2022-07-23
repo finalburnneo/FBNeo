@@ -24,15 +24,15 @@
 
 #include "burnint.h"
 #include "k051649.h"
+#include "stream.h"
 
-#define FREQBASEBITS	16
-
-static UINT32 nUpdateStep;
+static Stream stream;
 
 /* this structure defines the parameters for a channel */
 typedef struct
 {
-	UINT64 counter;
+	UINT32 counter;
+	INT32 clock;
 	INT32 frequency;
 	INT32 volume;
 	INT32 key;
@@ -43,6 +43,8 @@ typedef struct _k051649_state k051649_state;
 struct _k051649_state
 {
 	k051649_sound_channel channel_list[5];
+
+	UINT8 test;
 
 	/* global sound parameters */
 	INT32 mclock,rate;
@@ -81,9 +83,8 @@ static void make_mixer_table(INT32 voices)
 	}
 }
 
-
 /* generate sound to the mix buffer */
-void K051649Update(INT16 *pBuf, INT32 samples)
+static void update_INT(INT16 **streams, INT32 samples_len)
 {
 #if defined FBNEO_DEBUG
 	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649Update called without init\n"));
@@ -91,61 +92,55 @@ void K051649Update(INT16 *pBuf, INT32 samples)
 
 	info = &Chips[0];
 	k051649_sound_channel *voice=info->channel_list;
-	INT16 *mix;
 	INT32 i,v,j;
-	double gain = info->gain;
 
 	/* zap the contents of the mixer buffer */
-	memset(info->mixer_buffer, 0, samples * sizeof(INT16));
+	memset(info->mixer_buffer, 0, samples_len * sizeof(INT16));
 
 	for (j=0; j<5; j++)
 	{
 		// channel is halted for freq < 9
 		if (voice[j].frequency > 8)
 		{
-			const INT8 *w = voice[j].waveform;			/* 19991207.CAB */
 			v=voice[j].volume * voice[j].key;
-			INT32 c=voice[j].counter;
-			INT32 step = (INT32)((((((float)info->mclock / (float)((voice[j].frequency+1) * 16))*(float)(1<<FREQBASEBITS)) / (float)(info->rate / 32)) * nUpdateStep) / 32768);
-			mix = info->mixer_buffer;
+			int a = voice[j].counter;
+			int c = voice[j].clock;
+			const int step = voice[j].frequency;
 
 			/* add our contribution */
-			for (i = 0; i < samples; i++)
+			for (i = 0; i < samples_len; i++)
 			{
-				INT32 offs;
-
-				c+= step;
-				offs = (c >> 16) & 0x1f;
-				*mix++ += ((w[offs] * v)>>3);
+				c += 32;
+				while (c > step)
+				{
+					a = (a + 1) & 0x1f;
+					c -= step+1;
+				}
+				info->mixer_buffer[i] += (voice[j].waveform[a] * v) >> 3;
 			}
 
-			/* update the counter for this voice */
-			voice[j].counter = c;
+			// update the counter for this voice
+			voice[j].counter = a;
+			voice[j].clock = c;
 		}
 	}
 
-	/* mix it down */
-	mix = info->mixer_buffer;
-	for (i = 0; i < samples; i++) {
-		INT32 output = info->mixer_lookup[*mix++];
-		
-		output = BURN_SND_CLIP(output);
-		output = (INT32)(output * gain);
-		output = BURN_SND_CLIP(output);
-		
-		INT32 nLeftSample = 0, nRightSample = 0;
-		
-		if ((info->output_dir & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample += output;
-		}
-		if ((info->output_dir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample += output;
-		}
+	INT16 *mixer = streams[0];
 
-		pBuf[0] = BURN_SND_CLIP(pBuf[0] + nLeftSample);
-		pBuf[1] = BURN_SND_CLIP(pBuf[1] + nRightSample);
-		pBuf += 2;
+	for (j = 0; j < samples_len; j++)
+	{
+		mixer[j] = info->mixer_lookup[info->mixer_buffer[j]];
 	}
+}
+
+void K051649Update(INT16 *pBuf, INT32 samples)
+{
+	if (samples != nBurnSoundLen) {
+		bprintf(0, _T("K051649Update(): once per frame, please!\n"));
+		return;
+	}
+
+	stream.render(pBuf, samples);
 }
 
 void K051649Init(INT32 clock)
@@ -160,7 +155,8 @@ void K051649Init(INT32 clock)
 	info->gain = 1.00;
 	info->output_dir = BURN_SND_ROUTE_BOTH;
 	
-	nUpdateStep = (INT32)(((float)info->rate / nBurnSoundRate) * 32768);
+	stream.init(info->rate, nBurnSoundRate, 1, 1, update_INT);
+    stream.set_volume(1.00);
 
 	/* allocate a buffer to mix into - 1 second's worth should be more than enough */
 	info->mixer_buffer = (INT16 *)BurnMalloc(2 * sizeof(INT16) * info->rate);
@@ -172,12 +168,19 @@ void K051649Init(INT32 clock)
 	K051649Reset(); // clear things on init.
 }
 
+void K051649SetSync(INT32 (*pCPUCyclesCB)(), INT32 nCPUMhz)
+{
+	stream.set_buffered(pCPUCyclesCB, nCPUMhz);
+}
+
 void K051649SetRoute(double nVolume, INT32 nRouteDir)
 {
 	info = &Chips[0];
 	
 	info->gain = nVolume;
 	info->output_dir = nRouteDir;
+
+	stream.set_volume(nVolume);
 }
 
 void K051649Exit()
@@ -193,7 +196,7 @@ void K051649Exit()
 	BurnFree (info->mixer_buffer);
 	BurnFree (info->mixer_table);
 	
-	nUpdateStep = 0;
+	stream.exit();
 	
 	DebugSnd_K051649Initted = 0;
 }
@@ -211,7 +214,7 @@ void K051649Reset()
 	/* reset all the voices */
 	for (i = 0; i < 5; i++) {
 		voice[i].frequency = 0;
-		voice[i].volume = 0;
+		voice[i].volume = 0xf;
 		voice[i].key = 0;
 		voice[i].counter = 0;
 		memset(&voice[i].waveform, 0, 32);
@@ -250,6 +253,11 @@ void K051649WaveformWrite(INT32 offset, INT32 data)
 	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649WaveformWrite called without init\n"));
 #endif
 
+	// waveram is read-only?
+	if (info->test & 0x40 || (info->test & 0x80 && offset >= 0x60))
+		return;
+
+
 	info = &Chips[0];
 	info->channel_list[offset>>5].waveform[offset&0x1f]=data;
 	/* SY 20001114: Channel 5 shares the waveform with channel 4 */
@@ -264,6 +272,17 @@ UINT8 K051649WaveformRead(INT32 offset)
 #endif
 
 	info = &Chips[0];
+
+	// test-register bits 6/7 expose the internal counter
+	if (info->test & 0xc0)
+	{
+		stream.update();
+
+		if (offset >= 0x60)
+			offset += info->channel_list[3 + (info->test >> 6 & 1)].counter;
+		else if (info->test & 0x40)
+			offset += info->channel_list[offset >> 5].counter;
+	}
 	return info->channel_list[offset>>5].waveform[offset&0x1f];
 }
 
@@ -296,17 +315,22 @@ void K051649FrequencyWrite(INT32 offset, INT32 data)
 	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649FrequencyWrite called without init\n"));
 #endif
 	INT32 freq_hi = offset & 1;
+	offset >>= 1;
 
 	info = &Chips[0];
 
-	if (info->channel_list[offset>>1].frequency < 9)
-		info->channel_list[offset>>1].counter |= ((1 << FREQBASEBITS) - 1);
+	if (info->test & 0x20) {
+		info->channel_list[offset].clock = 0;
+		info->channel_list[offset].counter = 0;
+	} else if (info->channel_list[offset].frequency < 9) {
+		info->channel_list[offset].clock = 0;
+	}
 
 	// update frequency
 	if (freq_hi)
-		info->channel_list[offset>>1].frequency = (info->channel_list[offset>>1].frequency & 0x0ff) | (data << 8 & 0xf00);
+		info->channel_list[offset].frequency = (info->channel_list[offset].frequency & 0x0ff) | (data << 8 & 0xf00);
 	else
-		info->channel_list[offset>>1].frequency = (info->channel_list[offset>>1].frequency & 0xf00) | data;
+		info->channel_list[offset].frequency = (info->channel_list[offset].frequency & 0xf00) | data;
 }
 
 void K051649KeyonoffWrite(INT32 data)
@@ -323,3 +347,61 @@ void K051649KeyonoffWrite(INT32 data)
 	info->channel_list[4].key=(data&16) ? 1 : 0;
 }
 
+UINT8 K051649Read(INT32 offset)
+{
+	stream.update();
+
+	offset &= 0xff;
+
+	if (offset < 0x80) {
+		return K051649WaveformRead(offset);
+	}
+
+	offset &= ~0x10; // mirror
+
+	if (offset >= 0xe0) { // test register
+		info = &Chips[0];
+		info->test = 0xff;
+		return 0xff;
+	}
+
+	return 0;
+}
+
+void K051649Write(INT32 offset, UINT8 data)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649Write called without init\n"));
+#endif
+
+	stream.update();
+	offset &= 0xff;
+
+	if ((offset & 0x80) == 0x00) {
+		K051649WaveformWrite(offset & 0x7f, data);
+		return;
+	}
+
+	offset &= ~0x10; // mirror
+
+	if (offset >= 0x80 && offset <= 0x89) { // freq register
+		K051649FrequencyWrite(offset & 0xf, data);
+		return;
+	}
+
+	if (offset >= 0x8a && offset <= 0x8e) { // volume register
+		K051649VolumeWrite(offset - 0x8a, data);
+		return;
+	}
+
+	if (offset == 0x8f) {
+		K051649KeyonoffWrite(data);
+		return;
+	}
+
+	if (offset >= 0xe0) { // test register
+		info = &Chips[0];
+		info->test = data;
+		return;
+	}
+}

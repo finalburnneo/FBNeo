@@ -511,6 +511,14 @@ int QuickLoad()
 	return 1;
 }
 
+// Screenshot related stuff
+int MakeScreenShotSelected()
+{
+	if (MakeScreenShot()) UpdateMessage("There was some error saving the screenshot!");
+	else UpdateMessage("Screenshot saved.");
+	return 1;
+}
+
 // Main menu related stuff
 int BackToGameSelected()
 {
@@ -524,7 +532,7 @@ struct MenuItem mainMenu[MAINMENU_COUNT] =
 	{"Cheats\0", CheatMenuSelected, NULL},
 	{"Save State\0", QuickSave, NULL},
 	{"Load State\0", QuickLoad, NULL},
-	{"Save Screenshot\0", MakeScreenShot, NULL},
+	{"Save Screenshot\0", MakeScreenShotSelected, NULL},
 	{"Reset the game\0", ResetMenuSelected, NULL},
 	{"Back to Game!\0", BackToGameSelected, NULL},
 };

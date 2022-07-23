@@ -646,24 +646,7 @@ static void Mapper_write(UINT16 address, UINT8 data)
 		SCCReg[PSlot] = (data == 0x3f) ? 1 : 0;
 
 	if (((address & 0xdf00) == 0x9800) && SCCReg[PSlot]) { // Handle Konami-SCC (+)
-		UINT16 offset = address & 0x00ff;
-
-		if (offset < 0x80) {
-			K051649WaveformWrite(offset, data);
-		}
-		else if (offset < 0xa0)	{
-			offset &= 0xf;
-
-			if (offset < 0xa) {
-				K051649FrequencyWrite(offset, data);
-			}
-			else if (offset < 0xf) {
-				K051649VolumeWrite(offset - 0xa, data);
-			}
-			else {
-				K051649KeyonoffWrite(data);
-			}
-		}
+		K051649Write(address & 0xff, data);
 
 		return;
 	}
@@ -841,7 +824,7 @@ static INT32 Mapper_read(UINT16 address, UINT8 *data)
   if (PSlot >= MAXSLOTS) return 0;
 
   if (((address & 0xdf00) == 0x9800) && SCCReg[PSlot]) { // Handle Konami-SCC (+)
-	  *data = (address & 0x80) ? 0xff : K051649WaveformRead(address & 0x7f);
+	  *data = K051649Read(address & 0xff);
 	  return 1;
   }
 

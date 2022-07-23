@@ -266,28 +266,8 @@ static void sound_bankswitch(INT32 data)
 
 void __fastcall hcastle_sound_write(UINT16 address, UINT8 data)
 {
-	if ((address & 0xff80) == 0x9800) {
-		K051649WaveformWrite(address & 0x7f, data);
-		return;
-	}
-
-	if ((address & 0xfff0) == 0x9880) {
-		address &= 0x000f;
-
-		if (address <= 0x09) {
-			K051649FrequencyWrite(address & 0x0f, data);
-			return;
-		}
-
-		if (address == 0x0f) {
-			K051649KeyonoffWrite(data);
-			return;
-		}
-
-		if (address >= 0x0a) {
-			K051649VolumeWrite(address - 0x988a, data);
-		}
-
+	if ((address & 0xff00) == 0x9800) {
+		K051649Write(address & 0xff, data);
 		return;
 	}
 

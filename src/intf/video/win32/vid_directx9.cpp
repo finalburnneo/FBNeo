@@ -2071,6 +2071,11 @@ static int dx9AltSetHardFX(int nHardFX)
 		pVidEffect->SetParamFloat2("texture_size", nTextureWidth, nTextureHeight);
 		pVidEffect->SetParamFloat2("video_size", (nRotateGame ? nGameHeight : nGameWidth) + 0.5f, nRotateGame ? nGameWidth : nGameHeight + 0.5f);
 	}
+	else
+	{
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_HARDFX_MODULE), HardFXFilenames[nHardFX - 1]);
+		FBAPopupDisplay(PUF_TYPE_ERROR);
+	}
 
 	return r;
 }

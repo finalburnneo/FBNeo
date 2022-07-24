@@ -2014,7 +2014,7 @@ static INT32 DrvFrame()
 			M6809Close();
 
 			M6809Open(2);
-			CPU_RUN(2, M6809);
+			CPU_RUN_TIMER(2);
 			if (i == S1VBL) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			M6809Close();
 

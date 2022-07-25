@@ -10517,7 +10517,7 @@ static INT32 gg_decode(char *gg_code, UINT16 &address, UINT8 &value, INT32 &comp
 	return 0;
 }
 
-const INT32 cheat_MAX = 0x10;
+const INT32 cheat_MAX = 0x100;
 static INT32 cheats_active = 0;
 
 struct cheat_struct {
@@ -10535,7 +10535,7 @@ void nes_add_cheat(char *code) // 6/8 character game genie codes allowed
 	UINT8 value;
 	INT32 compare;
 
-	if (!gg_decode(code, address, value, compare)) {
+	if (!gg_decode(code, address, value, compare) && cheats_active < (cheat_MAX-1)) {
 		strncpy(cheats[cheats_active].code, code, 9);
 		cheats[cheats_active].address = address;
 		cheats[cheats_active].value = value;
@@ -10543,7 +10543,11 @@ void nes_add_cheat(char *code) // 6/8 character game genie codes allowed
 		bprintf(0, _T("cheat #%d (%S) added.  (%x, %x, %d)\n"), cheats_active, cheats[cheats_active].code, address, value, compare);
 		cheats_active++;
 	} else {
-		bprintf(0, _T("nes cheat engine: bad GameGenie code %S\n"), code);
+		if (cheats_active < (cheat_MAX-1)) {
+			bprintf(0, _T("nes cheat engine: bad GameGenie code %S\n"), code);
+		} else {
+			bprintf(0, _T("nes cheat engine: too many active!\n"));
+		}
 	}
 }
 

@@ -3789,7 +3789,7 @@ static INT32 common_type1_init(INT32 video_type, INT32 gfx_len, INT32 load_roms,
 	}
 	SekClose();
 
-	sound_system = sound_type;
+	sound_system = sound_type & 0x0f;
 
 	if (sound_system == 2)
 	{
@@ -3802,10 +3802,10 @@ static INT32 common_type1_init(INT32 video_type, INT32 gfx_len, INT32 load_roms,
 		upd7810SetWritePortHandler(metro_upd7810_write_port);
 
 		BurnYM2413Init(3579545);
-		BurnYM2413SetAllRoutes(1.40, BURN_SND_ROUTE_BOTH);
+		BurnYM2413SetAllRoutes((sound_type & 0x10) ? 10.80 : 4.80, BURN_SND_ROUTE_BOTH);
 
 		MSM6295Init(0, 1056000 / 132, 1);
-		MSM6295SetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
+		MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 	}
 
 	if (sound_system == 5)
@@ -3964,7 +3964,7 @@ static void dharmaRomCallback()
 
 static INT32 dharmaInit()
 {
-	return common_type1_init(4200, 0x200000, 2, dharmaMapCallback, dharmaRomCallback, 2/*udp*/);
+	return common_type1_init(4200, 0x200000, 2, dharmaMapCallback, dharmaRomCallback, 2 | 0x10/*udp*/);
 }
 
 static INT32 dharmajInit()

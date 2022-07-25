@@ -228,6 +228,8 @@ static INT32 DrvDoReset()
 	flipscreen = 0;
 	priority = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -521,7 +523,7 @@ struct BurnDriver BurnDrvbankp = {
 	"bankp", NULL, NULL, NULL, "1984",
 	"Bank Panic\0", NULL, "[Sanritsu] Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 3, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 3, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, bankpRomInfo, bankpRomName, NULL, NULL, NULL, NULL, bankpInputInfo, bankpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 224, 4, 3

@@ -1985,8 +1985,8 @@ static INT32 DrvFrame()
 
 		if (quester) {
 			BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
-			BurnTrackballFrame(0, Analog[0], Analog[1], 0x02, 0x0f);
-			BurnTrackballUDLR(0, DrvJoy2[1], DrvJoy2[0], DrvJoy1[1], DrvJoy1[0]);
+			BurnTrackballFrame(0, Analog[0], Analog[1], 0x02, 0x3f);
+			BurnTrackballUDLR(0, DrvJoy2[1], DrvJoy2[0], DrvJoy1[1], DrvJoy1[0], 8);
 			BurnTrackballUpdate(0);
 		}
 	}

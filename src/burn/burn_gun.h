@@ -44,6 +44,7 @@ void BurnPaddleMakeInputs(INT32 num, BurnDialINF &dial, INT16 x, INT16 y);
 // see d_millipede.cpp, d_cabal or d_tempest.cpp for hook-up examples
 
 void BurnTrackballInit(INT32 nNumPlayers);
+void BurnTrackballInit(INT32 nNumPlayers, INT32 nDefault);
 
 #define AXIS_NORMAL 0
 #define AXIS_REVERSED 1
@@ -82,6 +83,7 @@ INT32 BurnTrackballGetVelocity(INT32 dev);
 void BurnTrackballReadReset(); // all devices
 void BurnTrackballReadReset(INT32 num, INT32 isB);
 void BurnTrackballReadReset(INT32 dev);
+void BurnTrackballSetResetDefault(INT32 nDefault); // default is 0
 
 #define BurnTrackballExit BurnGunExit
 #define BurnTrackballScan BurnGunScan

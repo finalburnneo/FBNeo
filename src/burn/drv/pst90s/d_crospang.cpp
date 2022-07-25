@@ -340,11 +340,6 @@ static UINT8 __fastcall crospang_sound_in(UINT16 port)
 	return 0;
 }
 
-inline static INT32 crospangSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)(ZetTotalCycles() * nSoundRate / 3579545);
-}
-
 static void crospangYM3812IrqHandler(INT32, INT32 nStatus)
 {
 	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
@@ -352,8 +347,6 @@ static void crospangYM3812IrqHandler(INT32, INT32 nStatus)
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	SekOpen(0);
@@ -361,11 +354,10 @@ static INT32 DrvDoReset()
 	SekClose();
 
 	ZetOpen(0);
-	ZetReset();
-	ZetClose();
-
 	BurnYM3812Reset();
 	MSM6295Reset(0);
+	ZetReset();
+	ZetClose();
 
 	*tile_banksel = 0;
 	tile_bank[0] = 0;
@@ -499,12 +491,7 @@ static INT32 pitapatLoadRoms()
 
 static INT32 DrvInit(INT32 (*pRomLoadCallback)())
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM + 0x000000,	0, 2)) return 1;
@@ -547,7 +534,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)())
 	ZetSetInHandler(crospang_sound_in);
 	ZetClose();
 
-	BurnYM3812Init(1, 3579545, &crospangYM3812IrqHandler, crospangSynchroniseStream, 0);
+	BurnYM3812Init(1, 3579545, &crospangYM3812IrqHandler, 0);
 	BurnTimerAttachYM3812(&ZetConfig, 3579545);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
@@ -570,7 +557,7 @@ static INT32 DrvExit()
 	SekExit();
 	ZetExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	MSM6295ROM = NULL;
 

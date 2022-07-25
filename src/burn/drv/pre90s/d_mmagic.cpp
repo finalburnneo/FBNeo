@@ -4,6 +4,7 @@
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "samples.h"
+#include "burn_gun.h" // paddle
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -28,19 +29,22 @@ static UINT8 DrvJoy2[8];
 static UINT8 DrvDips[1];
 static UINT8 DrvInputs[1];
 
-static INT32 Paddle = 0;
+static INT16 Analog[1];
 
 static UINT8 DrvReset;
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo MmagicInputList[] = {
-	{"Coin",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 coin"	},
-	{"Start 1",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 start"	},
-	{"Start 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p2 start"	},
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 coin"	},
+	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 1,	"p1 start"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"   },
 	{"P1 Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"  },
+	A("P1 Paddle",	BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"),
 	{"P1 Button 1", BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"P2 Start",	BIT_DIGITAL,	DrvJoy1 + 2,	"p2 start"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dips",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
@@ -48,23 +52,24 @@ STDINPUTINFO(Mmagic)
 
 static struct BurnDIPInfo MmagicDIPList[]=
 {
-	{0x07, 0xff, 0xff, 0xff, NULL		},
+	DIP_OFFSET(0x08)
+	{0x00, 0xff, 0xff, 0xff, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"	},
-	{0x07, 0x01, 0x01, 0x01, "Off"		},
-	{0x07, 0x01, 0x01, 0x00, "On"		},
+	{0x00, 0x01, 0x01, 0x01, "Off"			},
+	{0x00, 0x01, 0x01, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"	},
-	{0x07, 0x01, 0x06, 0x00, "30000"	},
-	{0x07, 0x01, 0x06, 0x02, "20000"	},
-	{0x07, 0x01, 0x06, 0x04, "15000"	},
-	{0x07, 0x01, 0x06, 0x06, "10000"	},
+	{0x00, 0x01, 0x06, 0x00, "30000"		},
+	{0x00, 0x01, 0x06, 0x02, "20000"		},
+	{0x00, 0x01, 0x06, 0x04, "15000"		},
+	{0x00, 0x01, 0x06, 0x06, "10000"		},
 
-	{0   , 0xfe, 0   ,    4, "Lives"	},
-	{0x07, 0x01, 0x18, 0x00, "6"		},
-	{0x07, 0x01, 0x18, 0x08, "5"		},
-	{0x07, 0x01, 0x18, 0x10, "4"		},
-	{0x07, 0x01, 0x18, 0x18, "3"		},
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x00, 0x01, 0x18, 0x00, "6"			},
+	{0x00, 0x01, 0x18, 0x08, "5"			},
+	{0x00, 0x01, 0x18, 0x10, "4"			},
+	{0x00, 0x01, 0x18, 0x18, "3"			},
 };
 
 STDDIPINFO(Mmagic)
@@ -123,7 +128,7 @@ static UINT8 __fastcall mmagic_read_port(UINT16 port)
 	switch (port & 0xff)
 	{
 		case 0x85:
-			return Paddle & 0xff;
+			return BurnTrackballRead(0, 0) & 0xff;
 
 		case 0x86:
 			return DrvInputs[0];
@@ -145,11 +150,12 @@ static INT32 DrvDoReset()
 
 	BurnSampleReset();
 
+	BurnTrackballReadReset();
+
 	ball_pos[0] = 0;
 	ball_pos[1] = 0;
 	prev_audio = 0;
 	video_color = 0;
-	Paddle = 0x70; // middle
 
 	return 0;
 }
@@ -179,12 +185,7 @@ static INT32 MemIndex()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvI8085ROM + 0x0000,  0, 1)) return 1;
@@ -216,6 +217,8 @@ static INT32 DrvInit()
 
 	GenericTilesInit();
 
+	BurnTrackballInit(1, 0x70); // set default value to 0x70
+
 	DrvDoReset();
 
 	return 0;
@@ -229,7 +232,9 @@ static INT32 DrvExit()
 
 	BurnSampleExit();
 
-	BurnFree(AllMem);
+	BurnTrackballExit();
+
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -321,16 +326,16 @@ static INT32 DrvFrame()
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 		}
 
-		// Paddle stuff
-		if (DrvJoy2[0]) Paddle -= 8;
-		if (DrvJoy2[1]) Paddle += 8;
-		if (Paddle < 0) Paddle = 0;
-		if (Paddle > 0xd8) Paddle = 0xd8;
+		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
+		BurnTrackballConfigStartStopPoints(0, 0x00, 0xd8, 0x00, 0xd8);
+		BurnTrackballFrame(0, Analog[0], 0, 0x02, 0x3f);
+		BurnTrackballUDLR(0, 0, 0, DrvJoy2[0], DrvJoy2[1], 8);
+		BurnTrackballUpdate(0);
 	}
 
 	INT32 nInterleave = 262;
-	INT32 nCyclesTotal = 6144000 / 60;
-	INT32 nCyclesDone = 0;
+	INT32 nCyclesTotal[1] = { 6144000 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
 
 	ZetOpen(0);
 
@@ -338,9 +343,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = nCyclesTotal / nInterleave;
-
-		nCyclesDone += ZetRun(nSegment);
+		CPU_RUN(0, Zet);
 
 		if (i == 192) vblank = 1;
 	}
@@ -376,11 +379,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		ZetScan(nAction);
 		BurnSampleScan(nAction, pnMin);
+		BurnTrackballScan();
 
 		SCAN_VAR(ball_pos);
 		SCAN_VAR(prev_audio);
 		SCAN_VAR(video_color);
-		SCAN_VAR(Paddle);
 	}
 
 	return 0;
@@ -407,7 +410,7 @@ static struct BurnRomInfo mmagicRomDesc[] = {
 	{ "1ai.2a",	0x0400, 0xec772e2e, 1 | BRF_PRG | BRF_ESS }, //  0 I8085A Code
 	{ "2ai.3a",	0x0400, 0xe5d482ca, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "3ai.4a",	0x0400, 0xe8d38deb, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "4ai.45a",	0x0400, 0x3048bd6c, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "4ai.45a",0x0400, 0x3048bd6c, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "5ai.5a",	0x0400, 0x2cab8f04, 1 | BRF_PRG | BRF_ESS }, //  4
 
 	{ "6h.6hi",	0x0200, 0xb6321b6f, 2 | BRF_GRA },           //  5 Tiles

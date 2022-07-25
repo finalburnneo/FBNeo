@@ -378,6 +378,8 @@ static INT32 DrvInit()
 {
 	is_bootleg = (BurnDrvGetFlags() & BDF_BOOTLEG) ? 1 : 0;
 
+	BurnSetRefreshRate(54.25);
+
 	BurnAllocMemIndex();
 
 	{
@@ -522,7 +524,7 @@ static INT32 DrvFrame()
 	
 	ZetNewFrame();
 
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 288;
 	INT32 nCyclesTotal[1] = { 6000000 / 60 };
 	INT32 nCyclesDone[1] = { 0 };
 	INT32 nSoundBufferPos = 0;

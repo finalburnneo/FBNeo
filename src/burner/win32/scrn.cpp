@@ -904,12 +904,12 @@ int BurnerLoadDriver(TCHAR *szDriverName)
 	return 0;
 }
 
-int StartFromReset(TCHAR *szDriverName)
+int StartFromReset(TCHAR *szDriverName, bool bLoadSram)
 {
 	if (!bDrvOkay || (szDriverName && _tcscmp(szDriverName, BurnDrvGetText(DRV_NAME))) ) {
-		bSramLoad = false;
+		bSramLoad = bLoadSram;
 		BurnerLoadDriver(szDriverName);
-		bSramLoad = true;
+		bSramLoad = true; // back to default
 		return 1;
 	}
 	//if(nBurnDrvActive < 1) return 0;
@@ -924,7 +924,7 @@ int StartFromReset(TCHAR *szDriverName)
 	SplashDestroy(1);
 	StopReplay();
 
-	DrvInit(nOldDrvSelect, false);	// Init the game driver, without loading SRAM
+	DrvInit(nOldDrvSelect, bLoadSram);	// Init the game driver, load SRAM?
 	MenuEnableItems();
 	bAltPause = 0;
 	AudSoundPlay();			// Restart sound

@@ -24,6 +24,7 @@ bool bReplayFrameCounterDisplay = 1;
 TCHAR szFilter[1024];
 INT32 movieFlags = 0;
 bool bStartFromReset = true;
+bool bWithNVRAM = false;
 TCHAR szCurrentMovieFilename[MAX_PATH] = _T("");
 UINT32 nTotalFrames = 0;
 UINT32 nReplayCurrentFrame;
@@ -32,9 +33,10 @@ UINT32 nReplayCurrentFrame;
 INT32 nReplayExternalDataCount = 0;
 UINT8 *ReplayExternalData = NULL;
 
-#define MOVIE_FLAG_FROM_POWERON (1<<1)
+#define MOVIE_FLAG_FROM_POWERON			(1<<1)
+#define MOVIE_FLAG_WITH_NVRAM			(1<<2) // to be used w/FROM_POWERON (if selected)
 
-const UINT32 nMovieVersion = 0x0401;
+const UINT32 nMovieVersion = 0x0402;
 UINT32 nThisMovieVersion = 0;
 UINT32 nThisFBVersion = 0;
 
@@ -371,12 +373,18 @@ INT32 StartRecord()
 
 	if (bStartFromReset) {
 		movieFlags |= MOVIE_FLAG_FROM_POWERON;
-		if(!StartFromReset(NULL)) {
+
+		if (bWithNVRAM) { // only applies w/FROM_POWERON
+			movieFlags |= MOVIE_FLAG_WITH_NVRAM;
+		}
+
+		if(!StartFromReset(NULL, bWithNVRAM)) {
 			bprintf(0, _T("*** Replay(record): error starting game.\n"));
 			movieFlags = 0;
 			return 1;
 		}
 	}
+
 	{
 		const char szFileHeader[] = "FB1 ";				// File identifier
 		fp = _tfopen(szChoice, _T("w+b"));
@@ -388,10 +396,17 @@ INT32 StartRecord()
 		} else {
 			fwrite(&szFileHeader, 1, 4, fp);
 			fwrite(&movieFlags, 1, 4, fp);
-			if (bStartFromReset)
-				nRet = 1;
+			if (bStartFromReset) {
+				if (movieFlags & MOVIE_FLAG_WITH_NVRAM) {
+					nRet = BurnStateSaveEmbed(fp, -1, 0); // Embed contents of NVRAM
+				} else {
+					nRet = 1; // don't embed nvram, but say everything's OK
+				}
+			}
 			else
-				nRet = BurnStateSaveEmbed(fp, -1, 1);
+			{
+				nRet = BurnStateSaveEmbed(fp, -1, 1);	// Embed Save-State + NVRAM
+			}
 			if (nRet >= 0) {
 				const char szChunkHeader[] = "FR1 ";	// Chunk identifier
 				INT32 nZero = 0;
@@ -514,12 +529,16 @@ INT32 StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 			if (movieFlags&MOVIE_FLAG_FROM_POWERON) { // Starts from reset
 				bStartFromReset = 1;
 				if (!bReplayDontClose)
-					if(!StartFromReset(wszStartupGame)) {
+					if(!StartFromReset(wszStartupGame, (movieFlags & MOVIE_FLAG_WITH_NVRAM))) {
 						bprintf(0, _T("*** Replay(playback): error starting game.\n"));
 						movieFlags = 0;
 						return 0;
 					}
-				nRet = 0;
+				if (movieFlags & MOVIE_FLAG_WITH_NVRAM) { // Get NVRAM
+					nRet = BurnStateLoadEmbed(fp, -1, 0, &DrvInitCallback);
+				} else {
+					nRet = 0;
+				}
 			}
 			else {// Load the savestate associated with the recording
 				bStartFromReset = 0;
@@ -964,7 +983,7 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 
 	bStartFromReset = (movieFlagsTemp&MOVIE_FLAG_FROM_POWERON) ? 1 : 0; // Starts from reset
 
-	if (!bStartFromReset) {
+	if (!bStartFromReset || (bStartFromReset && movieFlagsTemp & MOVIE_FLAG_WITH_NVRAM)) {
 		memset(ReadHeader, 0, 4);
 		fread(ReadHeader, 1, 4, fd);						// Read identifier
 		if (memcmp(ReadHeader, szSavestateHeader, 4)) {		// Not the chunk type
@@ -1079,17 +1098,21 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 		char szFramesString[32];
 		char szLengthString[32];
 		char szUndoCountString[32];
-		char szRecordedFrom[32];
+		char szRecordedFrom[256];
 		char szRecordedTime[32] = { 0 };
+		char szStartType[32];
 
 		sprintf(szFramesString, "%d", nFrames);
 		sprintf(szLengthString, "%02d:%02d:%02d", nHours, nMinutes % 60, nSeconds % 60);
 		sprintf(szUndoCountString, "%d", nUndoCount);
 		if (nThisFBVersion && !nFileVer) nFileVer = nThisFBVersion;
+
+		sprintf(szStartType, "%s %s", (bStartFromReset) ? "Power-On" : "Savestate", (bStartFromReset && movieFlagsTemp & MOVIE_FLAG_WITH_NVRAM) ? "w/NVRAM" : "");
+
 		if (nFileVer)
-			sprintf(szRecordedFrom, "%s, v%x.%x.%x.%02x", (bStartFromReset) ? "Power-On" : "Savestate", nFileVer >> 20, (nFileVer >> 16) & 0x0F, (nFileVer >> 8) & 0xFF, nFileVer & 0xFF);
+			sprintf(szRecordedFrom, "%s, v%x.%x.%x.%02x", szStartType, nFileVer >> 20, (nFileVer >> 16) & 0x0F, (nFileVer >> 8) & 0xFF, nFileVer & 0xFF);
 		else
-			sprintf(szRecordedFrom, "%s", (bStartFromReset) ? "Power-On" : "Savestate");
+			sprintf(szRecordedFrom, "%s", szStartType);
 
 		if (nThisMovieVersion >= 0x0401) {
 			strcpy(szRecordedTime, ReplayDecodeDateTime());
@@ -1274,6 +1297,9 @@ static BOOL CALLBACK RecordDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 		SetDlgItemText(hDlg, IDC_FILENAME, szFilename);
 		SetDlgItemTextW(hDlg, IDC_METADATA, L"");
 		CheckDlgButton(hDlg, IDC_REPLAYRESET, BST_UNCHECKED);
+		CheckDlgButton(hDlg, IDC_REPLAYNVRAM, BST_CHECKED);
+
+		EnableWindow(GetDlgItem(hDlg, IDC_REPLAYNVRAM), FALSE);
 
 		VerifyRecordingFilename(hDlg);
 
@@ -1287,6 +1313,16 @@ static BOOL CALLBACK RecordDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 		} else {
 			INT32 wID = LOWORD(wParam);
 			switch (wID) {
+				case IDC_REPLAYRESET:
+					{
+						// w/NVRAM option only available w/From Power-on
+						if (BST_CHECKED == SendDlgItemMessage(hDlg, IDC_REPLAYRESET, BM_GETCHECK, 0, 0)) {
+							EnableWindow(GetDlgItem(hDlg, IDC_REPLAYNVRAM), TRUE);
+						} else {
+							EnableWindow(GetDlgItem(hDlg, IDC_REPLAYNVRAM), FALSE);
+						}
+					}
+					return TRUE;
 				case IDC_BROWSE:
 					{
 						_stprintf(szChoice, _T("%s"), BurnDrvGetText(DRV_NAME));
@@ -1304,8 +1340,14 @@ static BOOL CALLBACK RecordDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 					GetDlgItemText(hDlg, IDC_FILENAME, szChoice, MAX_PATH);
 					GetDlgItemTextW(hDlg, IDC_METADATA, szAuthInfo, MAX_METADATA-64-1);
 					bStartFromReset = false;
+					bWithNVRAM = false;
 					if (BST_CHECKED == SendDlgItemMessage(hDlg, IDC_REPLAYRESET, BM_GETCHECK, 0, 0)) {
 						bStartFromReset = true;
+
+						if (BST_CHECKED == SendDlgItemMessage(hDlg, IDC_REPLAYNVRAM, BM_GETCHECK, 0, 0)) {
+							bWithNVRAM = true;
+						}
+
 						// add "romset," to beginning of metadata
 						_stprintf(wszMetadata, _T("%s,%s"), BurnDrvGetText(DRV_NAME), szAuthInfo);
 					} else {
